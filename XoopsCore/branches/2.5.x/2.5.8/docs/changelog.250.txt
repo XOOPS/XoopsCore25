@@ -1,6 +1,11 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===============================
+NOT RELEASED: Version 2.5.8 Beta 1
+===============================
+Bugfixes:
+
+===============================
 2014/06/14: Version 2.5.7 Final
 ===============================
 - updated XoopsMediaUploader to use system memory values from php.ini, and to offer random file names (mamba/luciorota/zyspec)
