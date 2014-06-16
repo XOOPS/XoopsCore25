@@ -1,0 +1,129 @@
+/*
+ * Default Admin Theme
+ *
+ * @copyright       Xoops Project <http://www.xoops.org/>
+ * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @package         themes
+ * @since           2.5.x
+ * @author          Xoops Design Theme <http://www.xoops.org/>
+ * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ *
+ * @version         $Id
+*/ /*======= forms ========*/
+input,button,select {
+	vertical-align: middle;
+}
+
+fieldset {
+	margin: .5em;
+	padding: 1em;
+	border: 1px solid #333;
+	color: #000;
+	background-color: #f0f0f0;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	-khtml-border-radius: 6px;
+	border-radius: 6px;
+}
+
+legend {
+	padding: .5em;
+	font-size: 1.1em;
+	font-weight: bolder;
+}
+
+label,.caption-text {
+	margin-bottom: .5em;
+	padding-right: .5em;
+	font-weight: bold;
+}
+
+select {
+	background-color: #f7f7f7;
+	color: #333;
+	font-size: 1em;
+	border: 2px inset #f1f3f8 !important;
+}
+
+select[name=timezone_offset] {
+	font-size: 1em;
+}
+
+textarea {
+	width: 95%;
+	max-height: 300px;
+	overflow: auto;
+}
+
+input[type=submit],input[type=reset],input[type=button],.xo-formbuttons,.formButton,button
+	{
+	margin: 2px 5px 2px 5px;
+	background-color: #D3D2D6;
+	padding: 4px 8px;
+	color: #405A80;
+	font-size: 1em;
+	font-weight: bold;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+	-moz-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+	-webkit-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+	-khtml-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+	cursor: pointer;
+}
+
+input[type=submit]:hover,input[type=reset]:hover,input[type=button]:hover,.xo-formbuttons:hover,.formButton:hover,button:hover
+	{
+	background-color: #E6EBFF;
+	padding: 4px 8px;
+	color: inherit;
+	cursor: pointer;
+}
+
+input[type=text],input[type=password],input[type=checkbox],input[type=file],textarea
+	{
+	border: 1px solid #ccc;
+	margin: 2px 5px 2px 0;
+	padding: 2px;
+	background-color: #f7f7f7;
+	padding-left: .2em;
+	color: inherit;
+	border: #ccc solid 1px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	border-radius: 5px;
+	
+}
+
+input[type=text],input[type=password],input[type=file] {
+	background-color: #f7f7f7;
+	color: #333;
+}
+
+input[type=text]:hover,input[type=password]:hover,input[type=file]:hover,input[type=checkbox]:hover,textarea:hover
+	{
+	background-color: #EFEFEF;
+	color: inherit;
+	border: 1px solid #E9CB38;
+}
+
+input[type=text]:focus,input[type=password]:focus,input[type=file]:focus,input[type=checkbox]:focus,textarea:focus
+	{
+	background-color: #F4FAFF;
+	color: #333;
+	border: #139EE8 solid 1px;
+	outline: 1px solid #139EE8;
+	-moz-outline-radius: 5px;
+	-webkit-outline-radius: 5px;
+	-khtml-outline-radius: 5px;
+	border-outline: 5px;
+}
+
+input[type=checkbox],input[type=radio] {
+	margin: 3px;
+	padding: 2px;
+}

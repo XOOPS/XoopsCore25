@@ -1,0 +1,238 @@
+LANGUAGE DIFFERENCES
+=====================
+
+Below are language differences from a version to next version.
+
+===============================
+2014/06/14: Version 2.5.7 Final
+===============================
+ADDED/DELETED DEFINES
+
+/install/language/english/install.php
+- added define('WRITTEN_LICENSE',"Written XOOPS %s License Key: <strong>%s</strong>");
+
+===============================
+2014/03/18: Version 2.5.7 RC1
+===============================
+ADDED/DELETED DEFINES
+
+/modules/system/language/english/admin.php
+- added define('_AM_SYSTEM_USAGE',"Usage");
+- added define('_AM_SYSTEM_ACTIVE',"Active");
+
+
+===============================
+2012/04/15: Version 2.5.5
+===============================
+ADDED/DELETED DEFINES
+
+/Frameworks/moduleclasses/moduleadmin/language/english/main.php
+- added define("_AM_MODULEADMIN_HOME", "Home");
+- added define("_AM_MODULEADMIN_DASHBOARD", "Dashboard");
+- added define("_AM_MODULEADMIN_ABOUT", "About");
+- added define("_AM_MODULEADMIN_PERMISSIONS", "Permissions");
+- added define("_AM_MODULEADMIN_ABOUT_RELEASEDATE","Released: ");
+- added define("_AM_MODULEADMIN_ABOUT_AUTHOR","Author: ");
+- added define("_AM_MODULEADMIN_ABOUT_CREDITS","Credits: ");
+- added define("_AM_MODULEADMIN_ABOUT_LICENSE","License: ");
+- added define("_AM_MODULEADMIN_ABOUT_AUTHOR_NAME","Author name: ");
+- added define("_AM_MODULEADMIN_ABOUT_AUTHOR_INFO","Author Info");
+- added define("_AM_MODULEADMIN_ADMIN_FOOTER", "<div class='center smallsmall italic pad5'>This module is maintained by the <a class='tooltip' rel='external' href='http://xoops.org/' title='Visit XOOPS Community'>XOOPS Community</a></div>");
+
+/language/english/calendar.php
+- added define("_CAL_FORMAT","Y-m-d");
+
+/xoops_lib/modules/protector/language/english/modinfo.php
+
+- added  define($constpref."_ADMINHOME","Home");
+- added define($constpref."_ADMINABOUT","About");
+- added define($constpref.'_STOPFORUMSPAM_ACTION','Stop Forum Spam');
+- added define($constpref.'_STOPFORUMSPAM_ACTIONDSC','Checks POST data against spammers registered on www.stopforumspam.com database. Requires php CURL lib.');
+
+
+/install/language/english/install.php
+- added define( "FILTER_FUNCTIONS", "Filter functions");
+
+/language/english/global.php
+- added define('_DBDATESTRING', 'Y-m-d');
+- added define('_DBTIMESTRING', 'H:i:s');
+- added define('_DBTIMESTAMPSTRING', 'Y-m-d H:i:s');
+
+/language/english/pmsg.php
+- added define('_PM_READ', 'Already Read');
+
+/modules/system/language/english/admin.php
+- added define("_AM_SYSTEM_UNINSTALL","Uninstall");
+
+SEE ALSO:
+/modules/profile/docs/lang_diff.txt
+
+===============================
+2011/11/17: Version 2.5.4 
+===============================
+
+/Frameworks/moduleclasses/moduleadmin/language/english/main.php
+_AM_MODULEADMIN_CONFIG_DB
+_AM_MODULEADMIN_CONFIG_ADMIN
+
+===============================
+2011/10/10: Version 2.5.4 RC
+===============================
+
+NEW FILES:
+modules/pm/language/english/help/help.html
+modules/profile/language/english/help/help.html
+modules/protector/language/english/help/help.html
+
+ADDED/DELETED DEFINES
+
+/language/english/pmsg.php
+delete define('_PM_READ', 'Already Read');
+
+/language/english/user.php
+- added define('_US_SKYPE', 'Skype');
+- added define('_US_FACEBOOK', 'Facebook');
+
+/modules/pm/language/english/main.php
+- deleted define("_PM_RECEIVE","RECEIVE");
+- deleted define("_PM_POST","POST");
+- deleted define("_PM_READBOX","READBOX");
+- deleted define("_PM_RSAVEBOX","Receive_SAVEBOX");
+- deleted define("_PM_SENTBOX","SENTBOX");
+- deleted define("_PM_PSAVEBOX","Post_SAVEBOX");
+- deleted define("_PM_SAVED","Saved Successfully");
+- deleted define("_PM_TOC","From: ");
+- deleted define("_PM_UID","Sender's ID");
+
+/language/english/findusers.php
+- added define('_MA_USER_FACEBOOK', 'Facebook Link'); //TO DO
+- added define('_MA_USER_SKYPE', 'Skype Link');//TO DO
+
+/modules/pm/language/english/modinfo.php
+- added define("_PM_MI_ABOUT", "About");
+
+/modules/profile/language/english/admin.php
+- added define('_PROFILE_AM_ACTION', 'Action');
+
+/modules/profile/language/english/modinfo.php
+- added define("_PROFILE_MI_ABOUT", "About");
+- added define("_PROFILE_MI_HOME", "Home");
+
+
+/modules/system/language/english/admin/preferences.php 
+- deleted define("_AM_SYSTEM_PREFERENCES_NAV_MD_AM_GENERAL","General Settings");
+- deleted define("_AM_SYSTEM_PREFERENCES_NAV_MD_AM_USERSETTINGS","User Info Settings");
+- deleted define("_AM_SYSTEM_PREFERENCES_NAV_MD_AM_METAFOOTER","Meta Tags and Footer");
+- deleted define("_AM_SYSTEM_PREFERENCES_NAV_MD_AM_CENSOR","Word Censoring Options");
+- deleted define("_AM_SYSTEM_PREFERENCES_NAV_MD_AM_SEARCH","Search Options");
+- deleted define("_AM_SYSTEM_PREFERENCES_NAV_MD_AM_MAILER","Email Setup");
+- deleted define("_AM_SYSTEM_PREFERENCES_NAV_MD_AM_AUTHENTICATION","Authentication Options");*/
+- deleted define("_AM_SYSTEM_PREFERENCES_NAV_TIPS_MD_AM_GENERAL","A faire");
+- deleted define("_AM_SYSTEM_PREFERENCES_NAV_TIPS_MD_AM_USERSETTINGS","A faire");
+- deleted define("_AM_SYSTEM_PREFERENCES_NAV_TIPS_MD_AM_METAFOOTER","A faire");
+- deleted define("_AM_SYSTEM_PREFERENCES_NAV_TIPS_MD_AM_CENSOR","A faire");
+- deleted define("_AM_SYSTEM_PREFERENCES_NAV_TIPS_MD_AM_SEARCH","A faire");
+- deleted define("_AM_SYSTEM_PREFERENCES_NAV_TIPS_MD_AM_MAILER","A faire");
+- deleted define("_AM_SYSTEM_PREFERENCES_NAV_TIPS_MD_AM_AUTHENTICATION","A faire");
+- deleted define("_MD_AM_LOADINGIMG", "Display loading... image?");
+- deleted define("_MD_AM_CHNGUTHEME", "Change all users' theme");
+
+/modules/system/language/english/admin/users.php
+- added define("_AM_SYSTEM_USERS_ACCEPT_EMAIL","Accept email from Admin");
+
+- deleted define("_AM_SYSTEM_USERS_NAV_MANAGER","Users Manager");
+- deleted define("_AM_SYSTEM_USERS_USERPOST","User Posts");
+- deleted define("_AM_SYSTEM_USERS_STORIES","Stories");
+- deleted define("_AM_SYSTEM_USERS_COMMENTS","Comments");
+- deleted define("_AM_SYSTEM_USERS_PTBBTSDIYT","Push the button below to synchronize data if you think the above user posts info does not seem to indicate the actual status");
+- deleted define("_AM_SYSTEM_USERS_CNGTCOM","Could not get total comments");
+- deleted define("_AM_SYSTEM_USERS_CNGTST","Could not get total stories");
+- deleted define("_AM_SYSTEM_USERS_LIST","List");
+- deleted define("_AM_SYSTEM_USERS_USERPOST","User Posts");
+- deleted define("_AM_SYSTEM_USERS_STORIES","Stories");
+- deleted define("_AM_SYSTEM_USERS_COMMENTS","Comments");
+- deleted define("_AM_SYSTEM_USERS_PTBBTSDIYT","Push the button below to synchronize data if you think the above user posts info does not indicate the actual status");
+- deleted define("_AM_SYSTEM_USERS_CNGTCOM","Could not get all comments");
+- deleted define("_AM_SYSTEM_USERS_CNGTST","Could not get all stories");
+- deleted define("_AM_SYSTEM_USERS_LIST","List");
+
+xoops_lib/modules/protector/language/english/admin.php
+- added define("_AM_ADV_REGISTERGLOBALS2","and place in it the line below:");
+
+CHANGED FILES:
+
+/modules/system/language/english/admin/users.php (Mamba)/
+/language/english/mail_template/activated.tpl
+/language/english/mail_template/adminactivate.tpl
+/language/english/mail_template/lostpass1.tpl
+/language/english/mail_template/lostpass2.tpl
+/language/english/mail_template/register.tpl
+/language/english/mail_template/welcome.tpl
+/modules/system/language/english/admin/avatars.php
+/modules/system/language/english/admin/banners.php
+/modules/system/language/english/admin/blocksadmin.php
+/modules/system/language/english/admin/comments.php
+/modules/system/language/english/admin/preferences.php
+/modules/system/language/english/admin/userrank.php
+/modules/system/language/english/admin/users.php
+/modules/system/language/english/help/mailusers.html
+/modules/system/language/english/help/preferences.html
+/modules/system/language/english/admin.php
+/modules/system/language/english/blocks.php
+/modules/system/language/english/modinfo.php
+/modules/system/themes/default/language/english/admin.php
+/modules/system/themes/zetadigme/language/english/admin.php
+/themes/suico/language/english/main.php
+/themes/zetagenesis/language/english/main.php
+
+
+===============================
+2011/10/05: Version 2.5.4 Beta
+===============================
+- updated several English translations (DCrussader/Mamba)
+- deleted language/english/calendar.php _CAL_DEF_DATE_FORMAT
+- deleted language/english/calendar.php _CAL_TT_DATE_FORMAT
+- deleted modules/system/language/english/admin/users.php _AM_SYSTEM_USERS_NAV_MANAGER
+- deleted modules/system/language/english/admin/preferences.php _MD_AM_LOADINGIMG
+- deleted modules/system/language/english/admin/preferences.php _MD_AM_CHNGUTHEME
+- deleted modules/pm/language/english/admin/main.php _PM_RECEIVE, _PM_POST, _PM_READBOX, _PM_RSAVEBOX, _PM_SENTBOX, _PM_PSAVEBOX, _PM_SAVED, _PM_TOC
+- added /modules/profile/language/english/admin.php _PROFILE_AM_ACTION
+- added /modules/profile/language/english/main.php _PROFILE_MI_ABOUT
+- added /modules/profile/language/english/main.php _PROFILE_MI_HOME
+- added /modules/pm/language/english/modinfo.php _PM_MI_ABOUT
+- added modules/system/language/english/admin/users.php _AM_SYSTEM_USERS_FACEBOOK, _AM_SYSTEM_USERS_SKYPE
+- added language/english/user.php _US_SKYPE, _US_FACEBOOK
+
+xoops_lib/modules/protector/language/english/modinfo.php
+- added define($constpref.'_STOPFORUMSPAM_ACTION','Stop Forum Spam');
+- added define($constpref.'_STOPFORUMSPAM_ACTIONDSC','Checks POST data against spammers registered on www.stopforumspam.com database. Requires php CURL lib.');
+
+
+
+===============================
+2011/09/06: Version 2.5.2 RC
+===============================
+ - added language/english/misc.php _MSC_CLICK_TO_OPEN_IMAGE, _MSC_RESIZED_IMAGE, _MSC_ORIGINAL_IMAGE
+ - added language/english/pmsg.php _PM_SURE_TO_DELETE, _PM_READ
+ - added modules/pm/language/english/admin/main.php _PM_READ, _PM_SUBJECT_ICONS
+ - modules\system/language/english/admin/tplsets.php _AM_SYSTEM_TEMPLATES_SET
+ - removed modules/system/themes/default/language/english/admin/admin.php _OXYGEN_XOOPSENGINE
+ - removed modules/system/language/english/admin/blocksadmin.php _AM_SYSTEM_BLOCKS_SAVE
+ - added language/english/calendar.php _CAL_DEF_DATE_FORMAT
+ - added language/english/calendar.php _CAL_TT_DATE_FORMAT
+
+===============================
+2011/03/15: Version 2.5.1 RC
+===============================
+
+Added Language constants:
+  modules/system/language/english/admin/images.php _AM_SYSTEM_IMAGES_URL
+  modules/system/themes/default/language/english/admin/admin.php _OXYGEN_XOOPSENGINE
+
+Modified Language constants:
+  modules/system/themes/default/language/english/admin/admin.php _OXYGEN_ABOUT_TEXT, _OXYGEN_WEBSITE
+  modules/system/language/english/helper/help_center.html, modulesadmin.html
+
+Removed Language constants:
+  modules/system/themes/default/language/english/admin/admin.php _OXYGEN_XGIFTSHOP, _OXYGEN_XDONATIONS, _OXYGEN_XDONATIONS_TEXT, _OXYGEN_KEY, _OXYGEN_LICENSE, _OXYGEN_SOURCEFORGE_TEXT, _OXYGEN_POWERED_BY
+  modules/system/themes/default/language/english/admin/admin.php _OXYGEN_XGIFTSHOP, _OXYGEN_XDONATIONS, _OXYGEN_XDONATIONS_TEXT, _OXYGEN_KEY, _OXYGEN_LICENSE, _OXYGEN_SOURCEFORGE_TEXT, _OXYGEN_POWERED_BY

@@ -1,0 +1,43 @@
+/*
+ * Default Admin Theme
+ *
+ * @copyright       Xoops Project <http://www.xoops.org/>
+ * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @package         themes
+ * @since           2.5.x
+ * @author          Xoops Design Theme <http://www.xoops.org/>
+ * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ *
+ * @version         $Id
+*/
+
+#choosestyle a {
+	font-family: tahoma, Helvetica, sans-serif;
+	font-size: 10px;
+	border: 1px solid #ccc;
+	margin: 2px 4px 2px 4px;
+	float: right;
+	background-color: #f9f9f9;
+	color: #333;
+	padding: 3px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-khtml-border-radius: 4px;
+	border-radius: 4px;
+	box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+	-moz-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+	-webkit-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+	-khtml-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+	cursor: pointer;
+}
+
+#choosestyle a:hover {
+	background-color: #C2CEEF;
+	color: #000;
+	text-decoration: none;
+	box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+	-moz-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+	-webkit-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+	-khtml-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+	cursor: pointer;
+} 

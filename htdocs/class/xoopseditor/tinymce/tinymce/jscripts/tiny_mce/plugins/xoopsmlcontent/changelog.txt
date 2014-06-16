@@ -1,0 +1,17 @@
+Tinymce plugin Xoopsmlcontent Changelog
+
+============================
+2009/02/15: Version 1.1
+============================
++ improved :  (dugris)
+
+============================
+2008-07-02: Version 1.0
+============================
++ added support for Xlanguage module (luciorota)
+
+
+============================
+2005-03-10: Version 1.0
+============================
+- Xoopsmlcontent plugin for tinyeditor (ralf57)

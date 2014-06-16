@@ -1,0 +1,40 @@
+Please read this if you experience a problem with saving changed Permissions in module's Admin, and would like to fix it yourself.
+
+However, before you do it, we recommend to check first the XOOPS Website for an updated version of the module.
+
+1) as stated in Changelog, XOOPS 2.5.6 addresses some security issues. 
+
+2) These issues have been addressed in the Core, and as a result we've made minor changses in the file grouppermform.php. These changes should have no impact on standard modules
+
+3) Unfortunately, some module developers copied and use the file grouppermform.php locally. If there were no custom changes to that file, then you can find the location where the local file is called, and change it so the module calls the Core grouppermform.php.
+
+For example, in the Jobs module, go to admin/groupperms.php around line 33 and find this line:
+
+include_once XOOPS_ROOT_PATH . "/modules/$mydirname/class/grouppermform.php";
+
+replace it with this:
+
+include_once XOOPS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
+
+4) Otherwise, if there are custom changes to the file grouppermform.php and you want to keep using it, then change that file as follow: 
+
+a) aronud Line 28, after the line
+
+xoops_load('XoopsFormHidden');
+
+add:
+
+xoops_load('XoopsFormHiddenToken');
+
+b) around line 86, after:
+$this->addElement(new XoopsFormHidden('modid', $this->_modid));
+
+add:
+
+$this->addElement(new XoopsFormHiddenToken($permname));
+
+And this should solve the issue.
+
+5) As always, if in doubt, ask on the XOOPS Forums! 
+
+XOOPS Development Team

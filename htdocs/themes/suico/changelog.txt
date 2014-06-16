@@ -1,0 +1,39 @@
+Suico Theme (in memory of our friend Marcello Brandao - RIP) - Changelog
+
+============================
+Version 1.0 ( for xoops 2.5.0 )
+============================
+- add/separate header and footer (kris_fr)
+- fix in reset.css, extras.css and style.css (kris_fr / Mariane & Xoops Design Team)
+
+
+============================
+Version 1.0 Beta 2 ( for xoops 2.4.5 )
+============================
+- Cleaning code (kris_fr)
+- Redefining and limiting the colors used (kris_fr / Mariane & Xoops Design Team)
+- Remove jquery-1.4.1.min.js to use that comes with the core (kris_fr)
+
+============================
+Version 1.0 Beta 1 ( for xoops 2.4.5 )
+============================
+- Add border-radius and border-shadow in footer (kris_fr / voltan)
+- Add current link in mainmenu block (kris_fr / mariane / trabis)
+- Add current link in globalnav (kris_fr)
+- Add style for text selection (kris_fr)
+- fix bug tabs li in publisher module (kris_fr / mariane)
+
+============================
+Version 1.0 Alpha 2 ( for xoops 2.4.5 )
+============================
+- Improved new xo_userbar.html with popup for login and member infos (kris_fr & Xoops Design Team for help and debug)
+- Add smarty plugin for member infos (kris_fr / Dugris)
+- Fixed bug for display footer in admin mode
+- Fixed bug for display horizontal menu (kris_fr / Burning)
+- Fixed bug for width columns (kris_fr / Burning)
+- Fixed color for input form [kris_fr / Burning)
+
+============================
+Version 1.0 Alpha 1 ( for xoops 2.4.x )
+============================
+- first work : design and code (kris_fr & Xoops Design Team for help and debug)

@@ -1,0 +1,30 @@
+<meta http-equiv="content-type" content="text/html; charset=<{$xoops_charset}>" />
+<title><{if $xoops_pagetitle !=''}><{$xoops_pagetitle}> : <{/if}><{$xoops_sitename}></title>
+<meta name="robots" content="<{$xoops_meta_robots}>" />
+<meta name="keywords" content="<{$xoops_meta_keywords}>" />
+<meta name="description" content="<{$xoops_meta_description}>" />
+<meta name="rating" content="<{$xoops_meta_rating}>" />
+<meta name="author" content="<{$xoops_meta_author}>" />
+<meta name="copyright" content="<{$xoops_meta_copyright}>" />
+<meta name="generator" content="XOOPS" />
+<{if $url}>
+    <meta http-equiv="Refresh" content="<{$time}>; url=<{$url}>" />
+<{/if}>
+
+<{if $isMsie}>
+    <noscript>
+    <meta http-equiv="refresh" content="0; url=<{xoAppUrl . xoops_theme_select=default}>" />
+    </noscript>
+<{/if}>
+
+<link rel="alternate" type="application/rss+xml" title="<{$smarty.const.THEME_RSS}>" href="<{xoAppUrl backend.php}>" />
+
+<link rel="shortcut icon" type="image/ico" href="<{xoImgUrl icons/favicon.ico}>" />
+<link rel="icon" type="image/png" href="<{xoImgUrl icons/icon.png}>" />
+
+
+<link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl xoops.css}>" />
+<link rel="stylesheet" type="text/css" media="all" href="<{xoImgUrl css/layout-soup.css}>" />
+<link rel="stylesheet" type="text/css" media="all" title="Color" href="<{xoImgUrl css/style.css}>" />
+
+<{$xoops_module_header}>

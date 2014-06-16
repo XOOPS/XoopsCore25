@@ -1,0 +1,779 @@
+[mlimg]
+[xlang:en]
+= SUMMARY =
+
+Protector is a module to defend your CMS origined from XOOPS2 from various and malicious attacks.
+
+This module can protect a various kind of attacks like:
+
+- DoS
+- Bad Crawlers (like bots collecting e-mails...)
+- SQL Injection
+- XSS (not all though)
+- System globals pollution
+- Session hi-jacking
+- Null-bytes
+- Directory Traversal
+- Some kind of CSRF (fatal in XOOPS <= 2.0.9.2)
+- Brute Force
+- Camouflaged Image File Uploading (== IE Content-Type XSS)
+- Executable File Uploading Attack
+- XMLRPC's eval() and SQL Injection Attacks
+- SPAMs for comment, trackback etc.
+
+Protector defends you CMS from these attacks, and it records into its log. 
+
+Of course, all vulnerablities can't be prevented.
+Be not overconfident, please.
+
+However, I [color=ff0000][b]strongly[/b][/color] recommend installing this module to all XOOPS/ImpressCMS/XCL sites with any versions.
+
+
+
+= INSTALL =
+
+First, define XOOPS_TRUST_PATH into mainfile.php if you've never done it yet.
+
+Copy html/modules/protector in the archive into your XOOPS_ROOT_PATH/modules/
+Copy xoops_trust_path/modules/protector in the archive into your XOOPS_TRUST_PATH/modules/
+
+Turn permission of XOOPS_TRUST_PATH/modules/protector/configs writable
+
+After Protector is installed, edit your mainfile.php like this:
+[code]
+	[color=ff0000]include XOOPS_TRUST_PATH.'/modules/protector/include/precheck.inc.php' ;[/color]
+	if (!isset($xoopsOption['nocommon']) [color=0000ff]&& XOOPS_ROOT_PATH != ''[/color] ) {
+		include XOOPS_ROOT_PATH."/include/common.php";
+	}
+	[color=ff0000]include XOOPS_TRUST_PATH.'/modules/protector/include/postcheck.inc.php' ;[/color]
+[/code]
+Just add two red-colored lines.
+If the blue-colored part is different from your mainfile.php, don't mind it.
+
+Both pre-check and post-check are needed.
+
+An option "DENY by .htaccess" is added on version 2.34.
+If you try this option, set writable XOOPS_ROOT_PATH/.htaccess
+Before installing this, you should compare it to the security risks which .htaccess is writable.
+
+
+= How to rescue =
+
+If you've been banned from Protector, just delete files under XOOPS_TRUST_PATH/modules/protector/configs/
+
+The setting and controller of "rescue password" has been eliminated.
+
+
+= How to install it into XOOPS Cube Legacy 2.1 =
+
+Almost the same as installing into XOOPS 2.0.x.
+There is just a different with the patching point in mainfile.php.
+Refer this.
+[code]
+    if (!defined('_LEGACY_PREVENT_LOAD_CORE_') && XOOPS_ROOT_PATH != '') {
+        include XOOPS_TRUST_PATH.'/modules/protector/include/precheck.inc.php' ;
+        @include_once XOOPS_ROOT_PATH.'/include/cubecore_init.php';
+        if (!isset($xoopsOption['nocommon']) && !defined('_LEGACY_PREVENT_EXEC_COMMON_')) {
+            include XOOPS_ROOT_PATH.'/include/common.php';
+        }
+        include XOOPS_TRUST_PATH.'/modules/protector/include/postcheck.inc.php' ;
+    }
+[/code]
+
+
+= How to install it into ImpressCMS =
+
+You need not patch to mainfile.php.
+Just copy extras/ImpressCMS/preload/protector.php in the archive into your preload/ of ImpressCMS.
+
+I thank vaughan about releasing the preload.
+
+original usage written by vaughan:
+----------------------------------
+Install the module the same way as any other module.
+
+You do not need to edit mainfile.php when using ImpressCMS, instead locate the ImpressCMS_Extras directory
+inside the protector package, and copy the preload directory to your root ImpressCMS directory, so that your
+ImpressCMS preload folder contains the file protector.php
+
+your root ImpressCMS directory is the directory on your server where mainfile.php is located.
+
+example: htdocs/preload/protector.php
+----------------------------------
+
+
+= UPGRADE from Protector 2.x =
+
+- remove two lines for Protector from your mainfile.php
+- remove all files under XOOPS_ROOT_PATH/modules/protector/ via FTP etc.
+- upload files in the archive (refer INSTALL)
+- do "upgrade" Protector in modulesadmin
+- add two lines for Protector into your mainfile.php
+
+Note: "XOOPS_TRUST_PATH" for 3.0 instead of "XOOPS_ROOT_PATH" for 2.x
+
+
+= Using filter-plugin =
+
+You can try filter-plugins in XOOPS_TRUST_PATH/modules/protector/filters_byconfig/ just by copying them into filters_enabled.
+Since XOOPS_TRUST_PATH can be shared by multi-sites, you may want to set a filter enabled for a site but disabled for the other site.
+If you want to turn a filter on for a specific site, input the name of the filter into Protector's preferences.
+Of course, you can make filter-plugins as you like because it is easy to create.
+
+Here is an introduction for filter-plugins in this archive.
+
+- postcommon_post_deny_by_rbl.php
+an anti-SPAM plugin.
+All of Post from IP registered in RBL will be rejected.
+This plugin can slow the performance of Post, especially chat modules.
+
+- postcommon_post_deny_by_httpbl.php
+an anti-SPAM plugin.
+All of Post from IP registered in http:BL will be rejected.
+Before using it, get HTTPBL_KEY from http://www.projecthoneypot.org/ and set it into the filter file.
+define( 'PROTECTOR_HTTPBL_KEY' , '............' ) ;
+
+- postcommon_post_need_multibyte.php
+an anti-SPAM plugin.
+Post without multi-byte characters will be rejected.
+This plugin is only for sites of japanese, tchinese, schinese, and korean.
+
+-postcommon_post_htmlpurify4guest.php
+All post data sent by guests will be purified by HTMLPurifier.
+If you allow guests posting HTML, I strongly recommend you to enable it.
+
+-postcommon_register_insert_js_check.php
+This plugin prevents your site from robot's user registering.
+Required JavaScript working on the vistors browser.
+
+-bruteforce_overrun_message.php
+Specify a message for visitors tried wrong passwords more than the specified times.
+All plugins named *_message.php specifys the message for rejected accesses.
+
+-precommon_bwlimit_errorlog.php
+When band width limitaion works unfortunately, this plugin logs it into Apache's error_log.
+All plugins named *_errorlog.php log some informations into Apaches error_log.
+
+
+= NEW FEATURE SINCE 3.3: DBLayer trapping anti-SQL-Injection
+
+This feature can beat almost malicious SQL Injection attacks if you uses some modules vulnerable to "SQL Injection".
+
+However, you have to patch a file "class/database/databasefactory.php" to enable the feature.
+
+I prepared patches/ folder, and it contains patched databasefactory.php for each cores.
+
+Of course, I welcome if each core teams adpot the patches as HEAD :-)
+
+The latest version of these cores are ready for this feature:
+
+- XCL2.1.x
+- ImpressCMS 1.x
+
+Thank you minahito and marcan!
+
+
+= CHANGES =
+
+3.50 beta (2009/11/17)
+- modified filters can be turned on/off by preferences of Protector
+- moved filters under filters_disabled/ into filters_byconfig/
+- added manipulation checker against ftp worms or silent raiders
+
+3.41 (2009/11/17)
+- fixed some swf/swc files are confused often
+- added language files
+-- polish_utf8 (thx jagi)
+
+3.40 (2009/09/16)
+- numbered as a STABLE version
+- renamed from "Xoops Protector" to "Protector" simply
+- modified module icons for some forked cores (thx rene)
+- modified postcommon_post_need_multibyte with func_overload (thx orange) 3.40a
+- updated language files
+-- spanish (thx Colossus) 3.40b
+
+3.36 beta (2009/08/27)
+- updated HTMLPurifier into 4.0.0
+- added a filter postcommon_post_htmlpurify4everyone.php
+- added a filter postcommon_post_register_moratorium.php 3.36a
+- updated language files
+-- persian (thx voltan) 3.36a
+
+3.35 beta (2009/08/13)
+- fixed english modinfo.php is always loaded. (thx Phoenyx)
+- modified comment attacking detection of DBL anti-SQL-Injection again
+- defined some constants for detecting Protector's mode for module maintainers
+-- PROTECTOR_ENABLED_ANTI_SQL_INJECTION
+-- PROTECTOR_ENABLED_ANTI_XSS
+- updated language files
+-- arabic (thx Onasre) 3.35a
+
+3.34 beta (2009/07/06)
+- modified comment attacking detection of DBL anti-SQL-Injection
+- added an option for some environment always enables DBL trapping
+
+3.33 beta (2009/04/03)
+- stopped to force rewriting PHP_SELF and PATH_INFO (thx nao-pon)
+- added checking PHP_SELF into bigumbrella anti-XSS
+- added a constant PROTECTOR_VERSION
+- modified compatibities with ImpressCMS (thx vaughan)
+- fixed "none" option for F5Attack and Crawler cannot work finen (thx ChaFx)
+- turned default value of bugumbrella anti-XSS on
+
+3.32 beta (2009/01/27)
+- fixed DBL anti-SQL-Injection is skipped on condition nocommon=1 (thx naao)
+- updated language files
+-- persian (thx voltan)
+-- de_utf8 (ths Rene) 3.32a
+
+3.31 beta (2009/01/20)
+- fixed DBL anti-SQL-Injection's wrong detection by db->quiteString() with "
+- updated language files
+-- spanish (thx Colossus)
+
+3.30 beta (2009/01/14)
+- added DBLayer trapping anti-SQL-Injection
+- added a filter precommon_bwlimit_errorlog.php
+- added a filter precommon_badip_errorlog.php
+- updated language files
+-- spanish (thx Colossus)
+- modified precommon_bwlimit_*.php returns 503 error (thx Colossus) 3.30a
+
+3.22 (2008/12/03)
+- modified the condition the cookie 'deleted' is sent as autologin_uname
+- added a checker for the privacy of XOOPS_TRUST_PATH into the Advisory
+- added language files
+-- nederlands (thx Cath)
+- updated language files
+-- persian (thx voltan) 3.22a
+- modified page navigation (thx McDonald) 3.22a
+
+3.21 (2008/11/21)
+- added a preferences for bandwidth limitation
+- enabled precommon_badip_message.php as default
+- modified messages by precommon filter
+- updated language files
+-- spanish (thx Colossus) 3.21a
+- fixed fatal typo in protector.php (thx rohi) 3.21a
+
+3.20 (2008/09/17)
+- numbered as a stable version
+- updated language files
+-- arabic (onasre)
+- fixed language files
+-- de_utf8
+- added language files
+-- italian (thx Defcon1) 3.20a
+- added a method isMobile() into ProtectorFilterAbstract 3.20b
+
+3.17 beta (2008/04/24)
+- modified URLs with the same hostname as XOOPS_URL are not counted as URI SPAM
+- updated language files
+-- persian (thx stranger and voltan) 3.17a
+- added language files
+-- de_utf8 (thx wuddel) 3.17a
+
+3.16 beta (2008/01/08)
+- added a filter postcommon_post_deny_by_httpbl for antispam by honeypotproject
+- updated language files
+-- polish (thx kurak_bu)
+
+3.15 beta (2007/10/18)
+- added "compact log"
+- added "remove all log"
+- added language files
+-- fr_utf8 (thx gigamaster)
+
+3.14 beta (2007/09/17)
+- imported HTMLPurifier (special thx! Edward Z. Yang) PHP5 only
+- added filtering point (spamcheck, crawler, f5attack, bruteforce, purge)
+- added filter plugins
+-- postcommon_post_htmlpurify4guest (guest's post will be purified) only PHP5
+-- spamcheck_overrun_message
+-- crawler_overrun_message
+-- f5attack_overrun_message
+-- bruteforce_overrun_message
+-- prepurge_exit_message
+
+3.13 beta (2007/08/22)
+- modified the filter structure from function to class
+- added filtering point (badip, register)
+- added filter plugins
+-- postcommon_register_insert_js_check (against registering SPAM)
+-- precommon_badip_message (displays a message on rejecting the IP)
+-- precommon_badip_redirection (redirects somewhere on rejecting the IP)
+
+3.12 beta (2007/08/16)
+- fixed for controllers with $xoopsOption['nocommon']=true
+
+3.11 beta (2007/08/16)
+- modified ordering precheck and postcheck
+- removed a rbl server from postcommon_post_deny_by_rbl.php
+- added language files
+-- french (thx Christian)
+
+3.10 beta (2007/07/30)
+- modified precheck getting config via local cache
+- modified precheck does not connect MySQL as possible
+- fixed "reliable IP" does not work well
+- modified mainfile patch can be inserted before protector installation
+- added a logic to check some folder's permission on installing protector
+- modified IP denying pattern. 'full', 'foward match', and 'preg match'
+- added denied IP moratorium
+- added a warning if the directory for configs is not writable
+
+3.04 (2007/06/13)
+- added a check against the phpmailer command-injection vulnerability.
+- modified postcommon_post_need_multibyte (3.04a)
+
+3.03 (2007/06/03)
+- added a protection against installer attack
+- changed language name
+-- ja_utf8 (formerly japaneseutf) 3.03a
+
+3.02 (2007/04/08)
+- modified compatibility of the option "force_intval"
+- fixed wrong link in advisory.php (thx genet)
+- added a method module can skip DoS/crawler check (define a constant)
+- updated D3 system
+- added language files
+-- persian (thx voltan)
+-- russian (thx West) 3.02a
+-- arabic (thx onasre) 3.02b
+-- japaneseutf 3.02c
+
+3.01 (2007/02/10)
+- modified the rule for sorting IPs
+- added language files
+-- portuguesebr (thx beduino)
+-- spanish (thx PepeMty)
+-- polish (thx kurak_bu) 3.01a
+-- german (thx wuddel) 3.01b
+- modified module_icon.php 3.01c
+- fixed typo in module_icon.php 3.01d
+
+3.00 (2007/02/06)
+- marked as a stable version
+- fixed typo in log level
+- fixed multibyte plugin never denies registered users (thx mizukami)
+- modified compatibility with 2.2.x from xoops.org 3.00a
+
+3.00beta2 (2007/01/31)
+- added plugin system (just postcommon_post_*)
+- added filtering-plugins
+-- postcommon_post_deny_by_rbl.php (deny SPAM by RBL)
+-- postcommon_post_need_multibyte.php (deny SPAM by character type)
+
+3.00beta (2007/01/30)
+- moved almost files under XOOPS_TRUST_PATH
+- modified denying IP from DB to a file under configs
+- removed rescue feature (just remove a file via FTP)
+- added allowed IPs for user of group=1
+- modified table structures (compatible MySQL5)
+- added BigUmbrella anti-XSS system
+- added anti-SPAM feature
+
+= THANKS =
+ - Kikuchi  (Traditional Chinese language files)
+ - Marcelo Yuji Himoro (Brazilian Portuguese and Spanish language files)
+ - HMN (French language files)
+ - Defkon1 (Italian language files)
+ - Dirk Louwers (Dutch language files)
+ - Rene (German language files)
+ - kokko (Finnish language files)
+ - Tomasz (Polski language files)
+ - Sergey (Russian language files)
+ - Bezoops (Spanish language files)
+These contributions was made for v2.x
+I'm appreciated new language files for v3.0 :-)
+
+Moreover, I thank to JM2 and minahito -zx team- about having taught me kindly.
+You are very great programmers!
+
+
+[/xlang:en][xlang:ja]
+
+●要旨
+
+Protector は、XOOPS2ベースの各種CMSを様々な悪意ある攻撃から守るためのモジュールです。
+
+このモジュールでは、以下の攻撃を防ぎます。
+
+- DoS
+- 悪意あるクローラー（メール収集ボットなど）
+- SQL Injection
+- XSS （といっても、全てではありません）
+- システムグローバル変数汚染
+- セッションハイジャック
+- ヌルバイト攻撃
+- ディレクトリ遡り攻撃
+- いくつかの危険なCSRF (XOOPS 2.0.9.2以下に存在するもの)
+- Brute Force （パスワード総当たり）
+- 拡張子偽装画像ファイルアップロード (すなわち、IE Content-Type XSS)
+- 実行可能なファイルをアップロードする攻撃
+- XMLRPC関連
+- コメントSPAM/トラックバックSPAM等、あらゆるSPAM
+
+これらの攻撃からあなたのXOOPS2ベースCMSを守り、ログに記録します。
+
+ただし、このモジュールはあくまで、最大公約数的な防御しか行いません。
+一部の3rdパーティモジュールに見られるような穴の一部は防げるかもしれませんが、すべての穴を防ぎきるものではなく、過信は禁物です。
+
+その限界は承知の上で、すべてのXOOPS2ベースCMSユーザーに対して、インストールを[color=ff0000][b]強く[/b][/color]お勧めします。
+
+
+
+●利用方法
+
+インストールには、XOOPS_TRUST_PATHの設定が必要です。
+
+アーカイブのhtml内を、XOOPS_ROOT_PATH側にコピーし、アーカイブのxoops_trust_path内を、XOOPS_TRUST_PATH側にコピーします。
+
+モジュール管理からインストールできれば、正しくファイルが置けています。
+
+ただ、それだけではまったく動作していませんので、mainfile.php からも呼び出すようにすることが絶対必要条件です。
+
+Protector をインストール後、お使いのXOOPS2ベースCMSの mainfile.php の一番下のあたりに
+[code]
+	[color=ff0000]include XOOPS_TRUST_PATH.'/modules/protector/include/precheck.inc.php' ;[/color]
+	if (!isset($xoopsOption['nocommon']) [color=0000ff]&& XOOPS_ROOT_PATH != ''[/color] ) {
+		include XOOPS_ROOT_PATH."/include/common.php";
+	}
+	[color=ff0000]include XOOPS_TRUST_PATH.'/modules/protector/include/postcheck.inc.php' ;[/color]
+[/code]
+と、赤くなっている２行を追加して下さい。
+
+青色の部分は、最初にインストールした時のバージョンによって異なりますが、違っていても気にしなくて結構です。
+
+バージョン3から、システムモジュール由来のIPアクセス拒否は利用しなくなりました。XOOPS_TRUST_PATH/modules/protector/configs を書込許可してください。Protectorが拒否IPを自動登録する場合、ここに記述するようになります。
+
+もし、なんらかの理由で、自分自身がIP拒否リストに載ってしまった場合、バージョン2まではレスキューパスワードを利用していましたが、バージョン3からは、FTP等で XOOPS_TRUST_PATH/modules/protector/configs 内のファイルを編集または削除してください。
+
+2.34から、実験的に、.htaccessによるDoS防御というオプションを追加しました。これを利用する場合、XOOPS_ROOT_PATHにある.htaccessを書込可能とする必要があります。導入する際には、.htaccessファイルが書込可能である、というリスクと比較して下さい。
+
+
+●XOOPS Cube Legacy 2.1へのインストール
+
+特段違いはありません。
+mainfile.php の書き換えポイントの周辺が違うので、パッチを当てた後を示しておきます。
+[code]
+    if (!defined('_LEGACY_PREVENT_LOAD_CORE_') && XOOPS_ROOT_PATH != '') {
+        include XOOPS_TRUST_PATH.'/modules/protector/include/precheck.inc.php' ;
+        @include_once XOOPS_ROOT_PATH.'/include/cubecore_init.php';
+        if (!isset($xoopsOption['nocommon']) && !defined('_LEGACY_PREVENT_EXEC_COMMON_')) {
+            include XOOPS_ROOT_PATH.'/include/common.php';
+        }
+        include XOOPS_TRUST_PATH.'/modules/protector/include/postcheck.inc.php' ;
+    }
+[/code]
+
+
+●ImpressCMSへのインストール
+
+mainfile.php へのパッチは必要ありません。
+アーカイブの extras/ImpressCMS/preload/protector.php を、ご利用中のImpressCMSのpreloadフォルダにコピーしてください。
+
+preloadを提供してくれたvaughanに感謝します。
+
+
+●バージョン2からのバージョンアップ
+
+まず、mainfile.php から、Protectorに関する行を削除してください。
+
+次に、いったんXOOPS_ROOT_PATH/modules/protector/ 内のファイルを全て削除します。
+
+すぐに、インストールと同様に全ファイルをアップロードします。
+
+管理画面からモジュール管理に入って、Protectorモジュールをアップデートします。
+
+最後に、再度、mainfile.phpを編集し、precheckおよびpostcheckを有効にしてください。バージョン2では、XOOPS_ROOT_PATH となっていた部分が、バージョン3では、XOOPS_TRUST_PATH となっていることに注意が必要です。
+
+
+●フィルタープラグインの利用
+
+V3から、XOOPS_TRUST_PATH/modules/protector/filters_enabled/ にフィルタープラグインを格納することで、追加チェックや追加メッセージ・ロギングなどができるようになりました。作成や改造も簡単なはずです。
+
+このアーカイブ内にデフォルトで用意されているフィルタープラグインのうち一般的なものを紹介します。
+
+- postcommon_post_deny_by_rbl.php
+スパム対策用。
+RBLを利用してPOSTをはねます。
+RBLに登録されたIPからの投稿はすべてSPAMだと判定します。問い合わせが入るため、投稿時の処理がやや重くなるかもしれません。（特にChatなどでは影響があるかも）
+
+- postcommon_post_deny_by_httpbl.php
+スパム対策用。
+http:BLを利用してPOSTをはねます。
+利用する前に、ファイルをエディタで開いて、
+define( 'PROTECTOR_HTTPBL_KEY' , '............' ) ;
+この行を書き換えます。HTTPBL_KEYは、http://www.projecthoneypot.org/ から取得してください。
+
+-postcommon_post_need_multibyte.php
+スパム対策用。
+投稿に日本語が含まれていることを要求するプラグイン。
+日本語が１文字も含まれていない100byte以上の文字列があったらSPAMだと判定します。
+
+-postcommon_post_htmlpurify4guest.php
+ゲストによるPOSTデータすべてについて、HTMLPurifierを通過させるフィルターです。
+ゲストにHTMLを許可している場合では有効にすることを強くお勧めします。
+
+-postcommon_register_insert_js_check.php
+ロボットによるユーザ登録を防ぐプラグイン。
+登録しようとするユーザのブラウザでJavaScriptが動作している必要があります。
+
+-bruteforce_overrun_message.php
+パスワードを指定回数以上間違えた時のメッセージを指定します。*_message.php というフィルタープラグインはいずれも、メッセージを指定するタイプのフィルターです。
+
+-precommon_bwlimit_errorlog.php
+過負荷防止機能が働いた時に、その旨をApacheのエラーログに記録します。
+*_errorlog.php というフィルタープラグインはいずれも、エラーログに記録するタイプのフィルターです。
+
+
+いずれも、XOOPS_TRUST_PATH/modules/protector/filters_byconfig/ に置いてあるので、必要に応じて、filters_enabled にコピーしてください。
+XOOPS_TRUST_PATHは、複数サイトに利用出来る仕様なので、あるフィルターをサイトによって使い分けたいケースもあるでしょう。
+その場合は、Protectorの一般設定に、利用したいフィルター名を記述してください。もちろん、記述のないサイトでは有効化されません。
+
+
+●3.3からの新機能: DBレイヤートラップanti-SQL-Injection
+
+Protector-3.3以降、データベースレイヤーを乗っ取って、動的なSQL Injection対策をする機能を追加しました。これによって、ほとんどのSQL Injection脆弱性は無害化できる気がします。（わざと穴を空けるつもりならいくらでも手はあるので、保証はしません）
+
+これを有効にするためには、原理的にデータベースファクトリクラスにパッチを当てる必要があります。
+
+patches/ フォルダに、各コア用のパッチ済データベースファクトリクラスファイルが用意されているので、この機能を利用したい場合には、これで上書きしてください。
+
+もちろん、各コアチームが積極的にこのパッチをHEADに採用してくれるのがベストだと考えています。パッチについても、なるべく採用しやすい形にしたつもりです。
+
+なお、以下のコアの最新版は、この機能のパッチが最初から当たっています。（対応ありがとうございます）
+
+- XCL2.1.x
+- ImpressCMS 1.x
+
+
+●変更履歴
+
+3.50 beta (2009/11/17)
+- 各サイトのProtector一般設定でフィルターのON/OFFをコントロール可能とした
+- filters_disabled に収まっていたフィルターをfilters_byconfigへ移動した
+- FTPワームや第三者によるサイト改ざんチェッカーを新設した
+
+3.41 (2009/11/17)
+- swfファイルのファイルタイプ誤認に対応
+- 言語ファイル追加
+-- polish_utf8 (thx jagi)
+
+3.40 (2009/09/16)
+- 安定版として番号を振り直した
+- "Xoops Protector" という名前をやめてシンプルに "Protector" へと変更した
+- ImpressCMSおよびXCL対応アイコンを用意した (thx rene)
+- 一部環境でのpostcommon_post_need_multibyteの動作不良に対応 (thx orange) 3.40a
+- 言語ファイル更新
+-- spanish (thx Colossus) 3.40b
+
+3.36 beta (2009/08/27)
+- HTMLPurifier を 4.0.0 に更新
+- フィルター追加
+-- postcommon_post_htmlpurify4everyone.php (POSTが常にHTMLPurifierを通過する)
+-- postcommon_post_register_moratorium.php (登録直後のURL付投稿を禁止する) 3.36a
+- 言語ファイル更新
+-- persian (thx voltan) 3.36a
+
+3.35 beta (2009/08/13)
+- ImpressCMS等でmodinfo.phpが常に英語になっていたのを修正 (thx Phoenyx)
+- DBLT-ASIのコメントに対する動作をリクエストから判断するように修正した
+- モジュールメンテナーのために、Protectorの動作モードを知るための定数を定義した
+-- PROTECTOR_ENABLED_ANTI_SQL_INJECTION
+-- PROTECTOR_ENABLED_ANTI_XSS
+- 言語ファイル更新
+-- arabic (thx Onasre) 3.35a
+
+3.34 beta (2009/07/06)
+- DBレイヤートラップanti-SQL-Injection(DBLT-ASI)のコメントに対する動作を緩和した
+- DBレイヤートラップが常にONになってしまう環境に対応するオプションの追加
+
+3.33 beta (2009/04/03)
+- PHP_SELFやPATH_INFOの特殊文字強制変換をやめた (thx nao-pon)
+- PHP_SELFも大きな傘anti-XSSの対象に加えた
+- PROTECTOR_VERSION 定数で、Protectorのバージョンを確認できるようにした
+- ImpressCMS へのインストール方法やHTMLPurifierの適用を改善した (thx vaughan)
+- F5Attackやクローラーで「ログのみ」の処理がおかしかったのを修正 (thx ChaFx)
+- 大きな傘Anti-XSSの初期値を有効に変更した
+
+3.32 beta (2009/01/27)
+- nocommon状況でのDBレイヤートラップanti-SQL-Injection動作を回避した (thx naao)
+- 言語ファイル更新
+-- persian (thx voltan)
+
+3.31 beta (2009/01/20)
+- 一般設定などでダブルクオーテーションがあるとSQL Injectionと判定される問題を修正
+- 言語ファイル更新
+-- spanish (thx Colossus)
+
+3.30 beta (2009/01/14)
+- DBレイヤートラップanti-SQL-Injectionを実装した
+- 過負荷中のフィルターがかかった場合にエラーログを吐くフィルターを追加
+- 不正IPとして弾かれたアクセスについてエラーログを吐くフィルターを追加
+- 言語ファイル更新
+-- spanish (thx Colossus)
+- 過負荷対策フィルターについては503エラーを返すようにした (thx Colossus) 3.30a
+
+3.22 (2008/12/03)
+- 削除済クッキーが'deleted'という値で送られ、BruteForce扱いとなる現象に対応
+- セキュリティガイドにXOOPS_TRUST_PATHがプライベートとなっているかのチェックを追加
+- 言語ファイル追加
+-- nederlands (thx Cath)
+- 言語ファイル更新
+-- persian (thx voltan) 3.22a
+- ページナビを下にも表示するようにした (thx McDonald) 3.22a
+
+3.21 (2008/11/21)
+- 一般設定に帯域制限を追加
+- IP BANを喰った相手に解除時間を知らせるメッセージをデフォルトにした
+- precommonフィルターでも言語指定を可能にした
+- 言語ファイル更新
+-- spanish (thx Colossus) 3.21a
+- 拒否IPリストを更新出来なくなっていたのを修正 (thx rohi) 3.21a
+
+3.20 (2008/09/17)
+- 安定版としてバージョン番号をふり直した
+- 言語ファイル更新
+-- arabic (onasre)
+- 言語ファイル修正
+-- de_utf8
+- 言語ファイル追加
+-- italian (thx Defcon1) 3.20a
+- 携帯判定メソッド isMobile() をProtectorFilterAbstractクラスに追加 3.20b
+
+3.17 beta (2008/04/24)
+- URI SPAM判定で、自ホストと同一の場合は通過するようにした
+- 言語ファイル更新
+-- persian (thx stranger and voltan) 3.17a
+- 言語ファイル追加
+-- de_utf8 (thx wuddel) 3.17a
+
+3.16 beta (2008/01/08)
+- SPAMフィルター追加 postcommon_post_deny_by_httpbl (honeypotproject.orgのBL利用)
+- 言語ファイル更新
+-- polish (thx kurak_bu)
+
+3.15 beta (2007/10/18)
+- ログのコンパクト化追加
+- ログの全削除追加
+- 言語ファイル追加
+-- fr_utf8 (thx gigamaster)
+
+3.14 beta (2007/09/17)
+- HTMLPurifier導入 (special thx! Edward Z. Yang) ※PHP4ではまともに動きません
+- フィルターポイントを追加 (spamcheck, crawler, f5attack, bruteforce, purge)
+- フィルタープラグイン追加
+-- ゲスト投稿のすべてをHTMLPurifierに通過させるフィルター (PHP5専用)
+-- SPAM判定された時にメッセージを表示する（リダイレクトする）フィルター
+-- 悪質クローラ判定された時にメッセージを表示する（リダイレクトする）フィルター
+-- F5アタック判定された時にメッセージを表示する（リダイレクトする）フィルター
+-- ブルートフォース時にメッセージを表示する（リダイレクトする）フィルター
+-- その他排斥処理される直前にメッセージを表示する（リダイレクトする）フィルター
+
+3.13 beta (2007/08/22)
+- フィルタープラグインをグローバル関数からクラスに変更
+- フィルターポイントを追加 (badip, register)
+- フィルタープラグイン追加
+-- ユーザ登録時にJavaScriptチェックを入れるフィルター(ユーザ登録SPAM対策)
+-- 拒否IP時にメッセージを表示するフィルター
+-- 拒否IP時にリダイレクトするフィルター
+
+3.12 beta (2007/08/16)
+- $xoopsOption['nocommon'] が動作していなかったバグの修正
+
+3.11 beta (2007/08/16)
+- mainfile.php へのパッチでprecheckとpostcheckを取り違えても動くように対応
+- RBLフィルターのデフォルトからniku.2ch.netを削除
+- 言語ファイル追加
+-- フランス語 (thx Christian)
+
+3.10 beta (2007/07/30)
+- precheckのconfigは、ローカルキャッシュから取得するようにした
+- MySQLへの二重コネクションを極力排除した
+- 信用できるIPが一部で機能していないバグの修正
+- インストールとmainfileパッチの順番が逆でもエラーが出ないようにした
+- ホダ塾インストーラだとフォルダのパーミッションを事前にチェックするロジックの追加
+- 拒否IPを「一致」「前方一致」「正規表現」のいずれでも表記できるようにした
+- 拒否IPに時間制限を設けた
+- configsディレクトリが書込禁止になっている場合のWarningを追加
+
+3.04 (2007/06/13)
+- phpmailerのコマンド実行脆弱性に対するチェックを追加した
+- postcommon_post_need_multibyte のチェックをもう少し強力にした (3.04a)
+
+3.03 (2007/06/03)
+- インストーラアタックへの対策を追加した
+- 言語名変更
+-- ja_utf8 (以前のjapaneseutf) 3.03a
+
+3.02 (2007/04/08)
+- ID風変数の強制変換の処理をもう少し緩やかにした
+- セキュリティガイドのリンク切れを修正
+- DoS/crawlerチェックをスキップできる手段の提供（ある定数を定義する）
+- D3システムのアップデート
+- 言語ファイル追加
+-- persian (thx voltan)
+-- russian (thx West) 3.02a
+-- arabic (thx onasre) 3.02b
+-- japaneseutf 3.02c
+
+3.01 (2007/02/10)
+- IPソートルールの変更
+- 言語ファイル追加
+-- portuguesebr (thx beduino)
+-- spanish (thx PepeMty)
+-- polish (thx kurak_bu) 3.01a
+-- german (thx wuddel) 3.01b
+- module_icon.php をキャッシュ可能に 3.01c
+- module_icon.php のtypo修正 3.01d
+
+3.00 (2007/02/06)
+- 安定版としてのリリース
+- ログレベル指定ミスの修正
+- マルチバイトプラグインが登録ユーザのPOSTを弾かないように修正 (thx mizukami)
+- 本家版2.2.xとの相性問題の改善 3.00a
+
+3.00beta2 (2007/01/31)
+- プラグインシステムの導入 (とりあえず postcommon_post_* というタイプのみ)
+- フィルタープラグインの追加
+-- postcommon_post_deny_by_rbl.php (RBLによるIPベースなSPAM対策)
+-- postcommon_post_need_multibyte.php (文字種類によるSPAM対策)
+
+3.00beta (2007/01/30)
+- XOOPS_TRUST_PATH側に本体を置くことにした
+- IP拒否機能を単純なファイル処理(configsディレクトリ下)に変更した
+- グループ1になれるIPアドレス制限機能の追加（これも単なるファイル処理）
+- レスキュー機能の削除 （3.0以降は単にFTP等でファイルを削除すれば復活します）
+- テーブル構造の修正 (MySQL5対応)
+- BigUmbrella anti-XSS の導入
+- コメント・トラックバックSPAM対策機能追加
+- Cube 2.1 Legacy RC での動作確認
+
+
+●謝辞
+ - Kikuchi (繁体中国語ファイル)
+ - Marcelo Yuji Himoro (ブラジルのポルトガル語・スペイン語ファイル)
+ - HMN (フランス語ファイル)
+ - Defkon1 (イタリア語ファイル)
+ - Dirk Louwers (オランダ語ファイル)
+ - Rene (ドイツ語ファイル)
+ - kokko (フィンランド語ファイル)
+ - Tomasz (ポーランド語ファイル)
+ - Sergey (ロシア語ファイル)
+ - Bezoops (スペイン語ファイル)
+ (以上、バージョン2までの言語ファイル作成者です。バージョン3ではいったん削ってます。すみません）
+ - beduino (ブラジルのポルトガル語ファイル)
+ - PepeMty (スペイン語ファイル)
+ - kurak_bu (ポーランド語ファイル)
+ - wuddel (ドイツ語)
+ - voltan&stranger (ペルシャ語)
+ - onasre (アラビア語)
+
+
+また、このモジュール作成にあたり、様々なご指導・ご鞭撻をいただいた、zxチームの皆様、とりわけJM2さん、minahitoさんに、心より感謝いたします。
+
+
+[/xlang:ja]

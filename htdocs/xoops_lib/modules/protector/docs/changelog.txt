@@ -1,0 +1,417 @@
+[xlang:en]
+= CHANGES =
+
+CHANGES are moved into README after 2.57
+
+2.57 (2006/07/17)
+- fixed treating blob on backing up in prefix_manager (thx fbs777)
+- fixed some notices
+- updated gticket into version2
+- disabled onInstall (2.57a)
+
+2.56 (2006/03/30)
+- modified error handling when config can't be received
+- modified DOS/CRAWLER skipping for nocommon=1 module (thx sleo577)
+- updated german (thx rene) 2.56a
+
+2.55 (2006/02/11)
+- fixed anti-multiple-content-type allows .tar.gz (thx gusagi)
+- updated mymenu for compatibility with XC2.1
+- updated Spanish language files (thx bezoops)
+
+2.54 (2005/12/08)
+- added backup feature into prefix_manager (experimental)
+- added a check multiple dot file uploading (=multiple content-type for apache)
+- updated portuguesebr language files (thx Izzy)
+- modified anti camouflaged image file uploading system with some open_basedir restrictions (thx stefan88) - 2.54a
+- modified some initial settings and documents - 2.54a
+
+2.53 (2005/11/30)
+ - added anti camouflaged image file upload (==IE Content-Type XSS)
+ - modified the action when DB is busy
+ - fixed some bugs cause Notices
+ - modified imcompatibities with XOOPS 2.2.3
+ - moved document files under docs/ (for hiding protector's version)
+ - updated mymenu into 0.15a
+ - modified the action against PHP_SELF/PATH_INFO XSS
+ - modified the module icon (thx Argon)
+ - updated and renamed Polish language files from polski (thx Tomasz)
+ - updated French language files (thx marco)
+ - updated Italian language files (thx Defkon1)
+ - fixed packaging errors in zip files (thx Dave_L) 2.53a
+
+2.52 (2005/8/27)
+ - changed the feature of disabling xmlrpc.php in any path (wordpress etc.)
+ - modified the logging rule about xmlrpc.php
+ - added Russian language files (thx Sergey)
+
+2.51 (2005/8/24)
+ - added an option of IP mask bits against session hi-jacking
+ - added an advisory about session.use_trans_sid
+ - modified codes against PHP_SELF XSS
+ - updated French language files (thx HEMON)
+
+2.50 release (2005/8/22)
+ - added a protection against PHP_SELF XSS
+ - updated Brazilian Portuguese & Spanish language files (thx Yuji)
+
+2.50 beta2 (2005/7/31)
+ - changed "2.0.9.2 holes" into "disable features"
+ - added "num" select box
+ - updated Traditional Chinese language files (thx Kikuchi)
+ - updated Brazilian Portuguese & Spanish language files (thx Yuji)
+
+2.50 beta1 (2005/7/22)
+ - added an option "DOS/CRAWLER skip modules"
+ - modified adding some indexes of tables which protector accesses
+ - added an option "reliable IPs"
+ - added a feature of anti-BruteForceAttacks
+
+2.40 release (2005/7/21)
+ - added a protection from 'criteria attack' for xoops <= 2.0.10*
+ - modified Italian language files (thx Defkon1)
+ - added Finnish language files (thx kokko)
+ - added Polish language files (thx Tomasz)
+
+2.40RC2 (2005/4/4)
+ - modified the updating routine to delete old protector block (thx Dava_L)
+ - updated Brazilian Portuguese & Spanish language files (thx Yuji)
+
+2.40RC (2005/3/31)
+ - modified URI of attacking simulation in advisory (thx satanas)
+ - modified checking *check.inc.php included in advisory (thx peter & Dave_L)
+ - modified password for disabling bad_ips to be encrypted
+ - eliminate protector block
+ - modified only GET vars will be checked with "doubtful file spec"
+
+2.38 (2005/3/18)
+ - modified system of rollbacking .htaccess in DoS or CRAWLER
+ - updated Italian language files (thx Defkon1)
+
+2.37 (2005/3/9)
+ - fixed missing dbname quoting in prefix manager (thx king76)
+ - modified log level of Null-byte to 64
+
+2.36 (2005/3/9)
+ - modified the pattern of bad_ext
+
+2.35 (2005/3/5)
+ - updated myblocksadmin 0.27 & mymenu 0.12
+ - added a logging level
+ - added an option for disabling whole of Protector for debugging (thx Dave_L)
+ - updated Traditional Chinese language files (thx Kikuchi)
+ - updated French language files (thx HEMON) 2.35a
+ - updated Brazilian Portuguese & Spanish language files (thx Yuji) 2.35a
+
+2.34 (2005/2/18)
+ - fixed a typo in protecting session hijacking (thx blues)
+ - modified messages on forced exiting against specifical features (thx suin)
+ - added an option of 'Deny by .htaccess' against DoS experimentaly
+
+2.33 (2005/2/11)
+ - modified the action when '../../' found (thx mayor)
+ - modified IP check disabled with XoopsGTicket
+
+2.32 (2005/2/1)
+ - modified enabling "MySQL/Blocks debug" with strict checking (thx jseymour)
+
+2.31 (2005/1/30)
+ - fixed recognization of root controllers (thx nobunobu)
+ - modified compatibility with IIS (thx okuhiki)
+ - updated French language files (thx HMN)  (2.31a)
+ - added German language files (thx Rene)  (2.31b)
+
+2.30 release (2005/1/30)
+ - modified some default values of configs.
+ - updated Italian language files (thx Defkon1)
+ - updated Brazilian Portuguese & Spanish language files (thx Yuji)
+ - added Dutch language files (thx Dirk Louwers)
+
+2.30RC5 (2005/1/22)
+ - fixed some non-harmful typos
+ - updated Italian language files (thx Defkon1)
+
+2.30RC4 (2005/1/21)
+ - fixed postcheck.inc.php with $xoopsConfig['nocommon'] (thx dendeke)
+
+2.30RC3 (2005/1/21)
+ - modified anti null-byte from die to sanitize
+ - modified prefix manager a little
+ - added French language files (thx HMN)
+ - added Italian language files (thx Defkon1)
+
+2.30RC2 (2005/1/20)
+ - fixed prefix manager
+
+2.30RC (2005/1/19)
+ - added prefix manager
+ - added 2.0.9.2 specific patches (Special thx to zx team!)
+ - added checker against null-byte attack
+ - modified doubtful file specifications (thx minahito)
+ - added anti session hi-jacking
+ - added include/postcheck.inc.php (Notice: mainfile.php should be rewritten)
+ - modified options about contami & SQL Injections
+
+2.22 (2005/1/4) (not so important fixes)
+ - fixed a typo in check_dos_attack_* (thx Mithrandir)
+ - modified with REQUEST_URI for IIS
+ - updated myblocksadmin 0.22 & mymenu 0.07
+
+2.21 (2004/12/31)
+ - fixed a missing pattern with contami checking (thx onokazu)
+
+2.20 (2004/12/27)
+ - fixed a missing pattern with contami checking (thx JM2)
+ - fixed typo missing global for HTTP_*_VARS
+ - added logging doubtful file spec
+ - updated Brazilian Portuguese & Spanish language files (thx Marcelo Yuji Himoro)
+ - updated traditional Chinese language files (thx Kikuchi)
+
+2.20RC3 (2004/12/18)
+ - added "Patch doubtful file specifications" (thx JM2)
+ - added Spanish language files (thx Marcelo Yuji Himoro)
+
+2.20RC2 (2004/12/16)
+ - updated myblocksadmin (0.12) & mymenu (0.06)
+ - modified Brazilian Portuguese language files (thx Marcelo Yuji Himoro)
+
+2.20RC (2004/12/15)
+ - modified to use $_GET or $_POST instead of $HTTP_*_VARS (for PHP5)
+ - added a feature to rescue
+ - added to store user_agent
+ - modified Anti-DoS routine radically
+ - added each settings of "F5 attacks" and "high load crawlers"
+ - fixed not to "Force intval" against array
+ - modified a pattern finding UNION
+
+2.11 (2004/9/30)
+ - fixed some typos
+
+2.10a (2004/9/27)
+ - modified Brazilian Portuguese language files (thx Marcelo Yuji Himoro)
+
+2.10 (2004/9/22)
+ - added checker to uploaded files
+ - added security advisory
+ - modified as selectable whether sanitizing or not against SQL Injections
+ - fixed short tags (thx t_miyabi)
+ - added traditional Chinese language files (thx Kikuchi)
+
+2.01 (2004/9/11)
+ - added some checks of contamination to some super globals
+ - modified Brazilian Portuguese language files (thx Marcelo Yuji Himoro)
+
+2.0  (2004/9/10)
+ - The 1st release as Xoops Protector.
+
+
+
+[/xlang:en][xlang:ja]
+
+ﾂ｡ﾃｼﾃ甘堕ｹﾂｹﾃ催ｺﾃ偲ｲ
+
+3.0ﾂｰﾃ環ｹﾃ淞､ﾃ仰､ﾃ・､ﾂ､ﾂ､ﾃ・､ﾃ蹴EADMEﾃ・｢ﾂ､ﾃ仰ｰﾃ愿・ｰ
+
+2.57 (2006/07/17)
+- ﾂ･ﾃ猟･ﾃｬﾂ･ﾃ閉･ﾂ｣ﾂ･ﾃδ･ﾂｯﾂ･ﾂｹﾂ･ﾃ楪･ﾃ債｡ﾂｼﾂ･ﾂｸﾂ･ﾃ｣ﾂ､ﾃ篠･ﾃ青･ﾃδ･ﾂｯﾂ･ﾂ｢ﾂ･ﾃδ･ﾃ猟､ﾃ③LOBﾂ､ﾃ篠ｽﾃｨﾃ催ｽﾂ､ﾂｬﾂ､ﾂｪﾂ､ﾂｫﾂ､ﾂｷﾂ､ﾂｫﾂ､ﾃδ､ﾂｿﾂ､ﾃ篠､ﾃｲﾂｽﾂ､ﾃﾂｵ (thx fbs777)
+- ﾂ､ﾂ､ﾂ､ﾂｯﾂ､ﾃ・､ﾂｫﾂｽﾃ青､ﾃ・､ﾂ､ﾂ､ﾃｫNoticeﾂ､ﾃｲﾂｽﾂ､ﾃﾂｵ
+- gticket2 ﾂ､ﾃ仰ｹﾂｹﾂｿﾂｷ
+- onInstallﾂｽﾃｨﾃ催ｽﾂ､ﾃｲﾂ､ﾃ､ﾂ､ﾃ｡ﾂ､ﾂｿ (2.57a)
+
+2.56 (2006/03/30)
+- ﾂ･ﾂｳﾂ･ﾃｳﾂ･ﾃ閉･ﾂ｣ﾂ･ﾂｰﾂ､ﾂｬﾂｼﾃｨﾂ､ﾃｬﾂ､ﾃ環､ﾂ､ﾂ､ﾃ按､ﾂｭﾂ､ﾃ篠･ﾂｨﾂ･ﾃｩﾂ｡ﾂｼﾂｽﾃｨﾃ催ｽﾂ､ﾃｲﾂｶﾂｯﾃﾂｩﾂｽﾂｪﾃ篠ｻﾂ､ﾃ凝甘堕ｹﾂｹﾂ､ﾂｷﾂ､ﾂｿ
+- common.phpﾂ､ﾃｲﾃ・可､ﾃ淞ｹﾃｾﾂ､ﾃ楪､ﾃ環､ﾂ､ﾂ･ﾃ｢ﾂ･ﾂｸﾂ･ﾃ･ﾂ｡ﾂｼﾂ･ﾃｫﾂ､ﾃ仰､ﾃ・､ﾂ､ﾂ､ﾃ・､ﾃ｢ﾂ｡ﾂ｢DOS/CRAWLERﾂｽﾃｨﾃ催ｽﾂ､ﾃ仰､ﾂｫﾂ､ﾂｫﾂ､ﾃｩﾂ､ﾃ環､ﾂ､ﾃﾃ淌・ｪﾂ､ﾃｲﾃ債ｭﾂｸﾃｺﾂ､ﾃ仰､ﾂｷﾂ､ﾂｿ
+
+2.55 (2006/02/11)
+- ﾃ環｣ﾂｿﾃｴﾂ､ﾃ・ﾂ､ﾂｬﾃつｸﾂｺﾃ淞､ﾂｹﾂ､ﾃｫﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ､ﾃ・､ﾃ｢ﾂ｡ﾂ｢.tar.gzﾂ､ﾃﾂ､ﾂｱﾂ､ﾃ湘・個､ﾂｹﾂ､ﾃｨﾂ､ﾂｦﾂ､ﾃ仰ｽﾂ､ﾃﾂｵ (thx gusagi)
+- mymenuﾂ､ﾃ仰､ﾂｪﾂ､ﾂｱﾂ､ﾃｫXoopsCube 2.1ﾂ､ﾃ按､ﾃ篠ｸﾃ淞ｴﾂｹﾃﾂｭﾃ古､ﾃづｪﾂｲﾃｲﾂｾﾃ・
+- ﾂ･ﾂｹﾂ･ﾃ堋･ﾂ､ﾂ･ﾃｳﾂｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂｹﾂｹﾂｿﾂｷ (thx bezoops)
+
+2.54 (2005/12/08)
+- PREFIXﾂ･ﾃ楪･ﾃ債｡ﾂｼﾂ･ﾂｸﾂ･ﾃ｣ﾂ､ﾃ輝REFIXﾃ凝ｨﾂ､ﾃ篠･ﾃ青･ﾃδ･ﾂｯﾂ･ﾂ｢ﾂ･ﾃδ･ﾃ猟ｵﾂ｡ﾃ・ｽﾂ､ﾃｲﾂ､ﾃ・､ﾂｱﾂ､ﾂｿ (ﾂ､ﾃ楪､ﾃﾂｼﾃつｸﾂｳﾃε環ｳﾂｬﾂ､ﾃ・､ﾂｹ!)
+- ﾃ環｣ﾂｿﾃｴﾂ､ﾃ・ﾂ､ﾂｬﾃつｸﾂｺﾃ淞､ﾂｹﾂ､ﾃｫﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ､ﾃｲﾂ･ﾂ｢ﾂ･ﾃδ･ﾃ猟･ﾃｭﾂ｡ﾂｼﾂ･ﾃ可ｽﾃ静催ｨﾂ､ﾃ環､ﾂ､ﾂ､ﾃｨﾂ､ﾂｦﾂ､ﾃ凝甘堕ｹﾂｹ (Apacheﾂ､ﾃ篠ｻﾃ・催催づ青ｺﾃｶ)
+- ﾂ･ﾃ鳴･ﾃｩﾂ･ﾂｸﾂ･ﾃｫﾂ･ﾃ敖･ﾃｫﾂ･ﾃ按･ﾂｬﾂ･ﾃｫﾂｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ､ﾃ篠ｹﾂｹﾂｿﾂｷ (thx Izzy)
+- ﾂｵﾂｶﾃ・ｵﾂｲﾃｨﾃ・ｼﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ･ﾃ・･ﾂｧﾂ･ﾃδ･ﾂｫﾂ｡ﾂｼﾂ､ﾂｬopen_basedirﾃﾂｩﾂｸﾃつ､ﾃ仰､ﾃ陳､ﾃδ､ﾂｫﾂ､ﾂｫﾂ､ﾃδ､ﾃ・､ﾂ､ﾂ､ﾂｿﾂ､ﾃ篠､ﾃｲﾂｽﾂ､ﾃﾂｵ (thx stefan88) - 2.54a
+- ﾂｳﾃ・ｼﾃｯﾃﾃ淌・ｪﾂ､ﾃ篠ｽﾃｩﾂｴﾃｼﾃε債､ﾃｲﾂ､ﾂ､ﾂ､ﾂｯﾂ､ﾃ・､ﾂｫﾂ､ﾃ按｡ﾂ｢ﾂ･ﾃ可･ﾂｭﾂ･ﾃ･ﾂ･ﾃ｡ﾂ･ﾃｳﾂ･ﾃ按､ﾃ篠ｽﾂ､ﾃﾂｵ - 2.54a
+
+2.53 (2005/11/30)
+ - ﾂｵﾂｶﾃ・ｵﾂｲﾃｨﾃ・ｼﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ･ﾂ｢ﾂ･ﾃδ･ﾃ猟･ﾃｭﾂ｡ﾂｼﾂ･ﾃ可､ﾃ仰､ﾃｨﾂ､ﾃｫIEﾂ､ﾃ珊SSﾃづ青ｺﾃｶﾂ･ﾂｳﾂ｡ﾂｼﾂ･ﾃ可､ﾃ偲・可ｲﾃ・
+ - ﾂ･ﾃ・｡ﾂｼﾂ･ﾂｿﾂ･ﾃ卍｡ﾂｼﾂ･ﾂｹﾂ､ﾂｬbusyﾂｻﾃｾﾂ､ﾃ輝ath Disclosureﾂ､ﾃ按､ﾃ環､ﾃδ､ﾃ・､ﾂ､ﾂ､ﾂｿﾃ古､ﾃづｪﾂ､ﾃｲﾂｲﾃｾﾃ・ｱ
+ - Noticeﾂ､ﾃｲﾃ按ｯﾃﾂｸﾂ､ﾂｷﾂ､ﾃ・､ﾂ､ﾂ､ﾂｿﾂ､ﾂ､ﾂ､ﾂｯﾂ､ﾃ・､ﾂｫﾂ､ﾃ篠･ﾃ淞･ﾂｹﾂ､ﾃｲﾂｽﾂ､ﾃﾂｵ
+ - ﾂｴﾃ嘉催ｽﾂｲﾃｨﾃ古個､ﾂｬ XOOPS 2.2.3 ﾂ､ﾃ・･ﾂｨﾂ･ﾃｩﾂ｡ﾂｼﾂ､ﾃｲﾂｵﾂｯﾂ､ﾂｳﾂ､ﾂｷﾂ､ﾃ・､ﾂ､ﾂ､ﾂｿﾂｸﾃ淞ｴﾂｹﾃﾂｭﾃ古､ﾃづｪﾂ､ﾃ篠ｲﾃｾﾃ・ｱ
+ - ﾂ･ﾃ可･ﾂｭﾂ･ﾃ･ﾂ･ﾃ｡ﾂ･ﾃｳﾂ･ﾃ按､ﾃｲdocsﾂ･ﾃ・･ﾂ｣ﾂ･ﾃｬﾂ･ﾂｯﾂ･ﾃ按･ﾃｪﾂ､ﾃ仰ｰﾃ愿・ｰ (ﾂ･ﾃ可･ﾂｭﾂ･ﾃ･ﾂ･ﾃ｡ﾂ･ﾃｳﾂ･ﾃ按､ﾂｫﾂ､ﾃｩﾂ､ﾃ篠･ﾃ青｡ﾂｼﾂ･ﾂｸﾂ･ﾃｧﾂ･ﾃｳﾃ渉ｳﾂｱﾃ古凝可ｻﾃ淞｡ﾃ・
+ - updated mymenu into 0.15a
+ - PHP_SELF/PATH_INFO XSSﾃづ青ｺﾃｶﾂ､ﾃｲﾂ､ﾃ｢ﾂ､ﾂｦﾂｾﾂｯﾂ､ﾂｷﾂｴﾃ仰､ﾂｯﾂ､ﾂｷﾂ､ﾂｿﾂ｡ﾃ環ｶﾂｯﾃﾂｩﾂｽﾂｪﾃ篠ｻﾂ､ﾂｫﾂ､ﾃｩurlencodeﾃ・ｪﾃ・ｶﾂ､ﾃ仰｡ﾃ・
+ - ﾂ･ﾃ｢ﾂ･ﾂｸﾂ･ﾃ･ﾂ｡ﾂｼﾂ･ﾃｫﾂ･ﾂ｢ﾂ･ﾂ､ﾂ･ﾂｳﾂ･ﾃｳﾂ､ﾃ偲甘堕ｹﾂｹ (thx Argon)
+ - ﾂ･ﾃ敖｡ﾂｼﾂ･ﾃｩﾂ･ﾃｳﾂ･ﾃ可ｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ､ﾃ篠ｹﾂｹﾂｿﾂｷ (thx Tomasz)
+ - ﾂ･ﾃ閉･ﾃｩﾂ･ﾃｳﾂ･ﾂｹﾂｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ､ﾃ篠ｹﾂｹﾂｿﾂｷ (thx marco)
+ - ﾂ･ﾂ､ﾂ･ﾂｿﾂ･ﾃｪﾂ･ﾂ｢ﾂｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ､ﾃ篠ｹﾂｹﾂｿﾂｷ (thx Defkon1)
+ - zipﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ､ﾃ篠･ﾃ堕･ﾃδ･ﾂｱﾂ｡ﾂｼﾂ･ﾂｸﾂ･ﾃ淞･ﾂｹﾂ､ﾃｲﾂｽﾂ､ﾃﾂｵ (thx Dave_L) 2.53a
+
+2.52 (2005/8/27)
+ - WordPressﾂ･ﾃ｢ﾂ･ﾂｸﾂ･ﾃ･ﾂ｡ﾂｼﾂ･ﾃｫﾃ・ｹﾂ､ﾃ仰､ﾃ・､ﾂ､ﾂ､ﾃ・､ﾃ｢ﾂ｡ﾂ｢xmlrpc.phpﾂｵﾂ｡ﾃ・ｽﾂ､ﾃｲﾃ個ｵﾂｸﾃｺﾂｲﾂｽﾂ､ﾂｹﾂ､ﾃｫﾂ､ﾃｨﾂ､ﾂｦﾂ､ﾃ仰ｻﾃ・催催甘堕ｹﾂｹ
+ - xmlrpc ﾂｹﾂｶﾂｷﾃ｢ﾂ､ﾃ仰､ﾃ・､ﾂ､ﾂ､ﾃ・､ﾃ篠･ﾃｭﾂ･ﾂｰﾂ､ﾂｬﾂｽﾃ・環｣ﾂｽﾃ静偲渉､ﾂｵﾂ､ﾃｬﾂ､ﾃ環､ﾂ､ﾂ､ﾃｨﾂ､ﾂｦﾂ､ﾃ仰ｻﾃ・催催甘堕ｹﾂｹ
+ - ﾂ･ﾃｭﾂ･ﾂｷﾂ･ﾂ｢ﾂｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾃ・可ｲﾃ・(thx Sergey)
+
+2.51 (2005/8/24)
+ - ﾂ･ﾂｻﾂ･ﾃδ･ﾂｷﾂ･ﾃｧﾂ･ﾃｳﾂ･ﾃ渉･ﾂ､ﾂ･ﾂｸﾂ･ﾃ｣ﾂ･ﾃδ･ﾂｯﾃづ青ｺﾃｶﾂ､ﾃ・｡ﾂ｢IPﾂ･ﾃ楪･ﾂｹﾂ･ﾂｯﾂ､ﾃｲﾂｻﾃ佚・ｪﾂ､ﾃ・､ﾂｭﾂ､ﾃｫﾂ､ﾃｨﾂ､ﾂｦﾂ､ﾃ仰､ﾂｷﾂ､ﾂｿ
+ - session.use_trans_sid ﾂ､ﾃ仰､ﾃ・､ﾂ､ﾂ､ﾃ・､ﾃ偲εｭﾂｰﾃ閉ｽﾃｱﾂ､ﾂｭﾃ・可ｲﾃ・
+ - PHP_SELF XSS ﾃづ青ｺﾃｶﾂ･ﾂｳﾂ｡ﾂｼﾂ･ﾃ可､ﾃ篠ｲﾃｾﾃ・ｱ
+ - ﾂ･ﾃ閉･ﾃｩﾂ･ﾃｳﾂ･ﾂｹﾂｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂｹﾂｹﾂｿﾂｷ (thx HEMON)
+
+2.50 ﾃﾂｵﾂｼﾂｰﾃ暗・(2005/8/22)
+ - PHP_SELF XSS ﾃづ青ｺﾃｶﾂ･ﾂｳﾂ｡ﾂｼﾂ･ﾃ嘉・可ｲﾃ・
+ - ﾂ･ﾃ鳴･ﾃｩﾂ･ﾂｸﾂ･ﾃｫﾂ･ﾃ敖･ﾃｫﾂ･ﾃ按･ﾂｬﾂ･ﾃｫﾂｸﾃｬﾂ｡ﾂｦﾂ･ﾂｹﾂ･ﾃ堋･ﾂ､ﾂ･ﾃｳﾂｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ､ﾃｲﾂｹﾂｹﾂｿﾂｷ (thx Yuji)
+
+2.50 beta2 (2005/7/31)
+ - "2.0.9.2ﾂ､ﾃ篠ｷﾃｪ"ﾂ､ﾃ按､ﾂ､ﾂ､ﾂｦY/Nﾂ､ﾃ偲ﾃ淌・ｪﾂｹﾃﾃ古慊､ﾃｲﾂ｡ﾂ｢ﾃ・ｪﾃづｲﾂｼﾂｰﾂ､ﾃ・ﾂｵﾂ｡ﾃ・ｽﾃ個ｵﾂｸﾃｺﾂｲﾂｽ"ﾂ､ﾃ凝甘堕ｹﾂｹﾂ､ﾂｷﾂ､ﾂｿ
+ - ﾂ･ﾃｭﾂ･ﾂｰﾂｴﾃ嘉催ｽﾂ､ﾃ・･ﾃ堋｡ﾂｼﾂ･ﾂｸﾂ､ﾂ｢ﾂ､ﾂｿﾂ､ﾃｪﾂ､ﾃ偲可ｽﾂｼﾂｨﾂｷﾃｯﾂｿﾃｴﾂ､ﾃｲﾃ甘堕ｹﾂｹﾂ､ﾃ・､ﾂｭﾂ､ﾃｫﾂ､ﾃｨﾂ､ﾂｦﾂ､ﾃ仰､ﾂｷﾂ､ﾂｿ
+ - ﾃ暗凝づ偲εｦﾂｹﾃｱﾂｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ､ﾃｲﾂｹﾂｹﾂｿﾂｷ (thx Kikuchi)
+ - ﾂ･ﾃ鳴･ﾃｩﾂ･ﾂｸﾂ･ﾃｫﾂ･ﾃ敖･ﾃｫﾂ･ﾃ按･ﾂｬﾂ･ﾃｫﾂｸﾃｬﾂ｡ﾂｦﾂ･ﾂｹﾂ･ﾃ堋･ﾂ､ﾂ･ﾃｳﾂｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ､ﾃｲﾂｹﾂｹﾂｿﾂｷ (thx Yuji)
+
+2.50 beta1 (2005/7/22)
+ - ﾂ｡ﾃ縫oS/Crawlerﾂ･ﾃ・･ﾂｧﾂ･ﾃδ･ﾂｯﾂ､ﾃｲﾂ･ﾂｹﾂ･ﾂｭﾂ･ﾃδ･ﾃ猟､ﾂｹﾂ､ﾃｫﾂ･ﾃ｢ﾂ･ﾂｸﾂ･ﾃ･ﾂ｡ﾂｼﾂ･ﾃｫﾂ｡ﾃ猟､ﾃ按､ﾂ､ﾂ､ﾂｦﾂ･ﾂｪﾂ･ﾃ猟･ﾂｷﾂ･ﾃｧﾂ･ﾃｳﾂ､ﾃ偲・可ｲﾃ・
+ - indexﾂ､ﾃｲﾂ､ﾃ・､ﾂｱﾃ仰ｺﾂ､ﾃｬﾂ､ﾃ・､ﾂ､ﾂ､ﾂｿﾂ･ﾃ閉･ﾂ｣ﾂ｡ﾂｼﾂ･ﾃｫﾂ･ﾃ可､ﾃ仰､ﾂ｢ﾂ､ﾃｩﾂ､ﾂｿﾂ､ﾃ｡ﾂ､ﾃ・ndexﾃ嘉陛債ｿ
+ - ﾂ｡ﾃ鳴ｿﾂｮﾃ催堕､ﾂｹﾂ､ﾃｫIPﾂ･ﾂ｢ﾂ･ﾃ可･ﾃｬﾂ･ﾂｹﾂ｡ﾃ猟･ﾂｪﾂ･ﾃ猟･ﾂｷﾂ･ﾃｧﾂ･ﾃｳﾂ､ﾃ偲・可ｲﾃ・
+ - ﾂ･ﾃ堕･ﾂｹﾂ･ﾃｯﾂ｡ﾂｼﾂ･ﾃ嘉・ｭﾃ・ｶﾂ､ﾂｿﾂ､ﾃｪﾃ甘ｽﾂｼﾂｰﾂ､ﾃ伉､ﾃ偲づ青ｹﾂｳﾂｺﾃｶﾃ・可ｲﾃ・
+
+2.40 ﾃﾂｵﾂｼﾂｰﾃ暗・(2005/7/21)
+ - criteria attack ﾂ､ﾃ伉､ﾃ偲づ青ｺﾃｶﾂ･ﾂｳﾂ｡ﾂｼﾂ･ﾃ嘉・可ｲﾃ・(xoops <= 2.0.10*ﾃ催・
+ - ﾂ･ﾂ､ﾂ･ﾂｿﾂ･ﾃｪﾂ･ﾂ｢ﾂｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂｹﾂｹﾂｿﾂｷ (thx Defkon1)
+ - ﾂ･ﾃ閉･ﾂ｣ﾂ･ﾃｳﾂ･ﾃｩﾂ･ﾃｳﾂ･ﾃ可ｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾃ・可ｲﾃ・(thx kokko)
+ - ﾂ･ﾃ敖｡ﾂｼﾂ･ﾃｩﾂ･ﾃｳﾂ･ﾃ可ｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾃ・可ｲﾃ・(thx Tomasz)
+
+2.40RC2 (2005/4/4)
+ - ﾂ･ﾃ｢ﾂ･ﾂｸﾂ･ﾃ･ﾂ｡ﾂｼﾂ･ﾃｫﾂ･ﾂ｢ﾂ･ﾃδ･ﾃ猟･ﾃ・｡ﾂｼﾂ･ﾃ按ｻﾃｾﾂ､ﾃ仰･ﾃ鳴･ﾃｭﾂ･ﾃδ･ﾂｯﾂ､ﾃｲﾂｺﾃｯﾂｽﾃｼﾂ､ﾂｹﾂ､ﾃｫﾂ､ﾃｨﾂ､ﾂｦﾂ､ﾃ仰､ﾂｷﾂ､ﾂｿ (thx Dava_L)
+ - ﾂ･ﾃ鳴･ﾃｩﾂ･ﾂｸﾂ･ﾃｫﾂ･ﾃ敖･ﾃｫﾂ･ﾃ按･ﾂｬﾂ･ﾃｫﾂｸﾃｬﾂ｡ﾂｦﾂ･ﾂｹﾂ･ﾃ堋･ﾂ､ﾂ･ﾃｳﾂｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ､ﾃｲﾂｹﾂｹﾂｿﾂｷ (thx Yuji)
+
+2.40RC (2005/3/31)
+ - ﾂ･ﾃ鳴･ﾃｭﾂ･ﾃδ･ﾂｯﾂ､ﾃ・､ﾃ篠･ﾃ・･ﾂｧﾂ･ﾃδ･ﾂｯﾂ､ﾃ偲・ｴﾃ・・
+ - ﾃ・ｰﾂｺﾃｮﾂ･ﾃ・･ﾂｧﾂ･ﾃδ･ﾂｯﾃ催繕RIﾂ､ﾃ篠ｽﾂ､ﾃﾂｵ (thx satanas)
+ - *check.inc.phpﾂ､ﾂｬﾂｸﾃｺﾂ､ﾂ､ﾂ､ﾃ・､ﾂ､ﾂ､ﾃｫﾂ､ﾂｫﾂ､ﾃ可､ﾂｦﾂ､ﾂｫﾂ､ﾃ篠･ﾃ・･ﾂｧﾂ･ﾃδ･ﾂｯﾃ甘ｽﾃ仰｡ﾂ､ﾃｲﾂｽﾂ､ﾃﾂｵ (thx peter & Dave_L)
+ - IPﾂｵﾃｱﾃ暗敖ｲﾃｲﾂｽﾃｼﾂ･ﾃ堕･ﾂｹﾂ･ﾃｯﾂ｡ﾂｼﾂ･ﾃ可､ﾃ篠ｼﾂｫﾃ・ｰﾂ･ﾃ渉･ﾃδ･ﾂｷﾂ･ﾃ･ﾂｲﾂｽ
+ - ﾂ｡ﾃ鳴ｵﾂｿﾂ､ﾃｯﾂ､ﾂｷﾂ､ﾂ､ﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂｻﾃ佚・ｪﾂ､ﾃ篠ｶﾃ伉ｻﾃ淞｡ﾃ猟､ﾃｲﾂ｡ﾂ｢GETﾂ､ﾃﾂ､ﾂｱﾂ､ﾃｲﾃづ青ｾﾃ敖､ﾃ仰､ﾂｹﾂ､ﾃｫﾂ､ﾃｨﾂ､ﾂｦﾂ､ﾃ仰､ﾂｷﾂ､ﾂｿ
+
+2.38 (2005/3/18)
+ - DoSﾃづ青ｺﾃｶﾂ､ﾃ環､ﾃ可､ﾃ・｡ﾂ｢.htaccess DENYﾂ､ﾃｲﾂｻﾃ按､ﾂｦﾂｾﾃｬﾂｹﾃｧﾂ｡ﾂ｢ﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ､ﾂｬﾂｲﾃｵﾂ､ﾃｬﾂ､ﾂｿﾂｻﾃｾﾂ､ﾃ篠･ﾃｭﾂ｡ﾂｼﾂ･ﾃｫﾂ･ﾃ青･ﾃδ･ﾂｯﾃ・可ｲﾃ・
+ - ﾂ･ﾂ､ﾂ･ﾂｿﾂ･ﾃｪﾂ･ﾂ｢ﾂｸﾃｬﾂｸﾃﾂｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ､ﾃ篠ｹﾂｹﾂｿﾂｷ (thx Defkon1)
+
+2.37 (2005/3/9)
+ - prefix manager ﾂ､ﾃ⑤Bﾃ個ｾﾂ､ﾃ篠･ﾂｯﾂ･ﾂｪﾂ｡ﾂｼﾂ･ﾃ・･ﾂ｣ﾂ･ﾃｳﾂ･ﾂｰﾃ仰ｺﾂ､ﾃｬﾂ､ﾃｲﾂｽﾂ､ﾃﾂｵ (thx king76)
+ - Null-byte ﾂ､ﾃ｢ﾂ｡ﾂ｢quite ﾂ､ﾃ・ｾﾃδ､ﾂｨﾂ､ﾃｫﾂ､ﾃｨﾂ､ﾂｦﾂ､ﾃ・
+
+2.36 (2005/3/9)
+ - ﾂｶﾃ伉ｻﾃ淞ｳﾃ暗・･ﾂｻﾃ陳､ﾃ凝按ｴﾂ､ﾂｱﾂ､ﾂｬﾂ､ﾂ｢ﾂ､ﾃδ､ﾂｿﾂ､ﾃ篠､ﾃｲﾂｽﾂ､ﾃﾂｵ
+
+2.35 (2005/3/5)
+ - updated myblocksadmin 0.27 & mymenu 0.12
+ - ﾂ･ﾃｭﾂ･ﾂｰﾂ･ﾃｬﾂ･ﾃ卍･ﾃｫﾂ､ﾃ偲・ｳﾃ・ｾﾂ｡ﾃ環ｾﾃ慊､ﾂｷﾂ､ﾂｯﾂ､ﾃ舟EMOﾂｻﾂｲﾂｾﾃ按｡ﾃ・
+ - ﾂｰﾃｬﾂｻﾃｾﾃ・ｪﾂ､ﾃ凝・ｴﾃづ篠､ﾃ偲・ｰﾂｺﾃｮﾂ､ﾃｲOffﾂ､ﾃ仰､ﾂｹﾂ､ﾃｫﾂ･ﾂｪﾂ･ﾃ猟･ﾂｷﾂ･ﾃｧﾂ･ﾃｳﾂ､ﾃｲﾂ､ﾃ・､ﾂｱﾂ､ﾂｿ (thx Dave_L)
+ - ﾃ暗凝づ偲εｦﾂｹﾃｱﾂｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ､ﾃｲﾂｹﾂｹﾂｿﾂｷ (thx Kikuchi)
+ - ﾂ･ﾃ閉･ﾃｩﾂ･ﾃｳﾂ･ﾂｹﾂｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ､ﾃｲﾂｹﾂｹﾂｿﾂｷ (thx HEMON) 2.35a
+ - ﾂ･ﾃ鳴･ﾃｩﾂ･ﾂｸﾂ･ﾃｫﾂ･ﾃ敖･ﾃｫﾂ･ﾃ按･ﾂｬﾂ･ﾃｫﾂｸﾃｬﾂ｡ﾂｦﾂ･ﾂｹﾂ･ﾃ堋･ﾂ､ﾂ･ﾃｳﾂｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ､ﾃｲﾂｹﾂｹﾂｿﾂｷ (thx Yuji) 2.35a
+
+2.34 (2005/2/18)
+ - ﾂ･ﾂｻﾂ･ﾃδ･ﾂｷﾂ･ﾃｧﾂ･ﾃｳﾂ･ﾃ渉･ﾂ､ﾂ･ﾂｸﾂ･ﾃ｣ﾂ･ﾃδ･ﾂｯﾃづ青ｺﾃｶﾂ､ﾃ・･ﾂｲﾂ･ﾂｹﾂ･ﾃ按､ﾃ篠ｽﾃｨﾃ催ｽﾂ､ﾃｲﾂｴﾃ鳴ｰﾃ｣ﾂ､ﾃδ､ﾃ・､ﾂ､ﾂ､ﾂｿﾂ､ﾃ篠､ﾃｲﾂｽﾂ､ﾃﾂｵ (thx blues)
+ - ﾃ・ε・ｪﾂ･ﾃ堕･ﾂｿﾂ｡ﾂｼﾂ･ﾃｳﾃ凝可ｸﾃｦﾂ､ﾃ・ｶﾂｯﾃﾂｩﾂｽﾂｪﾃ篠ｻﾂ､ﾂｹﾂ､ﾃｫﾂｾﾃｬﾂｹﾃｧﾂ､ﾃ篠･ﾃ｡ﾂ･ﾃδ･ﾂｻﾂ｡ﾂｼﾂ･ﾂｸﾂ､ﾃｲﾂｽﾂ､ﾃﾂｵ (thx suin)
+ - DoSﾂｷﾃ湘凝可ｸﾃｦﾂ､ﾃ・｡ﾂ｢.htaccess ﾂ､ﾃ・DENY FROM ﾂ､ﾃｲﾂｽﾃｱﾂ､ﾂｭﾂｹﾃｾﾂ､ﾃﾂ､ﾃ按､ﾂ､ﾂ､ﾂｦﾂ･ﾂｪﾂ･ﾃ猟･ﾂｷﾂ･ﾃｧﾂ･ﾃｳﾂ､ﾃｲﾂｼﾃつｸﾂｳﾃ・ｪﾂ､ﾃ凝・可ｲﾃ・
+
+2.33 (2005/2/11)
+ - ﾂ｡ﾃ鳴ｵﾂｿﾂ､ﾃｯﾂ､ﾂｷﾂ､ﾂ､ﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂｻﾃ佚・ｪﾂ｡ﾃ猟､ﾃ・個ｵﾂｸﾃつ､ﾃ・.ﾂ､ﾂｬﾃ・ｽﾂ､ﾂｨﾂ､ﾃｫﾂ･ﾂｳﾂ｡ﾂｼﾂ･ﾃ可､ﾃｲﾂｽﾂ､ﾃﾂｵ (thx mayor)
+ - ﾂ･ﾃ・･ﾂｱﾂ･ﾃδ･ﾃ按･ﾂｷﾂ･ﾂｹﾂ･ﾃ・･ﾃﾂ､ﾂｫﾂ､ﾃｩIPﾂ･ﾃ・･ﾂｧﾂ･ﾃδ･ﾂｯﾂ､ﾃｲﾃ・督ｽﾃｼ
+
+2.32 (2005/2/1)
+ - ﾃ個ｵﾂｸﾃｺﾂｲﾂｽﾂ､ﾂｷﾂ､ﾃ・､ﾂ､ﾂ､ﾂｿMySQL/ﾂ･ﾃ鳴･ﾃｭﾂ･ﾃδ･ﾂｯﾂ･ﾃ・･ﾃ青･ﾃδ･ﾂｰﾂ､ﾃｲﾂ･ﾃ・･ﾂｧﾂ･ﾃδ･ﾂｯﾂ､ﾂｫﾂ､ﾂｱﾂ､ﾃ・､ﾂｫﾂ､ﾃｩﾃ・個､ﾂｹﾂ､ﾃｨﾂ､ﾂｦﾂ､ﾃ仰､ﾂｷﾂ､ﾂｿ (thx jseymour)
+
+2.31 (2005/1/30)
+ - ﾂ･ﾃ｢ﾂ･ﾂｸﾂ･ﾃ･ﾂ｡ﾂｼﾂ･ﾃｫﾃ・｢ﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ､ﾃｲﾂ･ﾃｫﾂ｡ﾂｼﾂ･ﾃ按･ﾂｳﾂ･ﾃｳﾂ･ﾃ按･ﾃｭﾂ｡ﾂｼﾂ･ﾃｩﾂ､ﾃ按ｸﾃｭﾃ・ｧﾂｼﾂｱﾂ､ﾂｹﾂ､ﾃｫﾃ古､ﾃづｪﾂ､ﾃ篠ｲﾃｲﾂｷﾃｨ (thx nobunobu)
+ - IISﾂｸﾃ淞ｴﾂｹﾃﾂｭﾂ､ﾃ篠ｲﾃｾﾃ・ｱ (thx okuhiki)
+ - ﾂ･ﾃ閉･ﾃｩﾂ･ﾃｳﾂ･ﾂｹﾂｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂｹﾂｹﾂｿﾂｷ (thx HMN)  (2.31a)
+ - ﾂ･ﾃ可･ﾂ､ﾂ･ﾃ・ｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ､ﾃｲﾃ・可ｲﾃ・(thx Rene)  (2.31b)
+
+2.30 ﾂ･ﾃｪﾂ･ﾃｪﾂ｡ﾂｼﾂ･ﾂｹﾃ暗・(2005/1/30)
+ - ﾂ､ﾂ､ﾂ､ﾂｯﾂ､ﾃ・､ﾂｫﾂ､ﾃ篠･ﾃ・･ﾃ閉･ﾂｩﾂ･ﾃｫﾂ･ﾃ暗ﾃ淌・ｪﾃε債､ﾃｲﾃ甘堕ｹﾂｹﾂ､ﾂｷﾂ､ﾂｿ
+ - ﾂ･ﾂ､ﾂ･ﾂｿﾂ･ﾃｪﾂ･ﾂ｢ﾂｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂｹﾂｹﾂｿﾂｷ (thx Defkon1)
+ - ﾂ･ﾃ鳴･ﾃｩﾂ･ﾂｸﾂ･ﾃｫﾂ･ﾃ敖･ﾃｫﾂ･ﾃ按･ﾂｬﾂ･ﾃｫﾂｸﾃｬﾂ｡ﾂｦﾂ･ﾂｹﾂ･ﾃ堋･ﾂ､ﾂ･ﾃｳﾂｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ､ﾃｲﾂｹﾂｹﾂｿﾂｷ (thx Marcelo Yuji Himoro)
+ - ﾂ･ﾂｪﾂ･ﾃｩﾂ･ﾃｳﾂ･ﾃﾂｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ､ﾃｲﾃ・可ｲﾃ・(thx Dirk Louwers)
+
+2.30RC5 (2005/1/22)
+ - ﾂｺﾃ卍､ﾂｫﾂ､ﾃ閣ypoﾂ､ﾃ篠ｽﾂ､ﾃﾂｵ (ﾂ､ﾂｵﾂ､ﾃ崢､ﾃ可ｽﾃ・催猟､ﾃ・､ﾃ渉､ﾃ環､ﾂ､ﾂ､ﾃ篠､ﾃ・､ﾂ｢ﾂ､ﾃｯﾂ､ﾃ・､ﾃ・ｾﾃ･ﾂｽﾃｱﾂ､ﾂｭﾂ､ﾂｹﾂ､ﾃｫﾃ可ｬﾃ催猟､ﾃ渉､ﾂ｢ﾂ､ﾃｪﾂ､ﾃ楪､ﾂｻﾂ､ﾃｳ)
+ - ﾂ･ﾂ､ﾂ･ﾂｿﾂ･ﾃｪﾂ･ﾂ｢ﾂｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂｹﾂｹﾂｿﾂｷ (thx Defkon1)
+
+2.30RC4 (2005/1/21)
+ - postcheck.inc.php ﾂ､ﾃ仰､ﾂｪﾂ､ﾂ､ﾂ､ﾃ・｡ﾂ｢nocommonﾂｾﾃｵﾃづ鳴､ﾃ篠･ﾂｨﾂ･ﾃｩﾂ｡ﾂｼﾂ､ﾃｲFix (thx dendeke)
+
+2.30RC3 (2005/1/21)
+ - ﾂ･ﾃ個･ﾃｫﾂ･ﾃ青･ﾂ､ﾂ･ﾃ暗環ｸﾂｻﾃｺﾃ偲ｳﾂ､ﾃ伉､ﾃ偲づ青ｺﾃｶﾂ､ﾃｲﾂ｡ﾂ｢ﾂｶﾂｯﾃﾂｩﾂｽﾂｪﾃ篠ｻﾂ､ﾂｫﾂ､ﾃｩﾂ･ﾂｵﾂ･ﾃ仰･ﾂｿﾂ･ﾂ､ﾂ･ﾂｺﾂ､ﾃ凝甘堕ｹﾂｹ
+ - PREFIX ﾂ･ﾃ楪･ﾃ債｡ﾂｼﾂ･ﾂｸﾂ･ﾃ｣ﾂ､ﾃ偲暗ｹﾃ・ｴﾃﾂｰ
+ - ﾂ･ﾃ閉･ﾃｩﾂ･ﾃｳﾂ･ﾂｹﾂｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ､ﾃｲﾃ・可ｲﾃ・(thx HMN)
+ - ﾂ･ﾂ､ﾂ･ﾂｿﾂ･ﾃｪﾂ･ﾂ｢ﾂｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ､ﾃｲﾃ・可ｲﾃ・(thx Defkon1)
+
+2.30RC2 (2005/1/20)
+ - PREFIX ﾂ･ﾃ楪･ﾃ債｡ﾂｼﾂ･ﾂｸﾂ･ﾃ｣ﾂ､ﾃ篠ｽﾂ､ﾃﾂｵ
+
+2.30RC (2005/1/19)
+ - PREFIX ﾂ･ﾃ楪･ﾃ債｡ﾂｼﾂ･ﾂｸﾂ･ﾃ｣ﾂ､ﾃ篠ｺﾃｮﾃﾂｮ
+ - 2.0.9.2ﾂｸﾃ・債ｭﾂｷﾃｪﾂ､ﾃ伉､ﾃ偲づ青ｱﾃｾ (Special thx to zx team!)
+ - ﾂ･ﾃ個･ﾃｫﾂ･ﾃ青･ﾂ､ﾂ･ﾃ暗環ｸﾂｻﾃｺﾃ偲ｳﾂ､ﾃ伉､ﾃ偲づ青ｺﾃｶ
+ - ﾂ･ﾃ・･ﾂ｣ﾂ･ﾃｬﾂ･ﾂｯﾂ･ﾃ按･ﾃｪﾃ・個､ﾃｪﾂ･ﾃ・･ﾂｧﾂ･ﾃδ･ﾂｯﾂ､ﾂｬﾂｴﾃ・､ﾂｫﾂ､ﾃδ､ﾂｿﾂ､ﾃ篠､ﾃｲﾂｲﾃｾﾃ・ｱ (thx minahito)
+ - ﾂ･ﾂｻﾂ･ﾃδ･ﾂｷﾂ･ﾃｧﾂ･ﾃｳﾂ･ﾃ渉･ﾂ､ﾂ･ﾂｸﾂ･ﾃ｣ﾂ･ﾃδ･ﾂｯﾃづ青ｺﾃｶﾂ､ﾃ偲・可ｲﾃ・
+ - postcheck.inc.php ﾂ､ﾃ偲・可ｲﾃ・(ﾂ･ﾃ堕･ﾃδ･ﾃ・､ﾃ偲・ｶﾂ､ﾃ・甘ｽﾂ､ﾂｬﾃ甘堕､ﾃｯﾂ､ﾃδ､ﾃ・､ﾂ､ﾂ､ﾃ楪､ﾂｹﾂ｡ﾃ・
+ - ﾃ甘堕ｿﾃｴﾂｱﾃｸﾃﾃｷﾂ｡ﾂｦSQL Injectionﾂ｣ﾂｲﾂｼﾃｯﾂ､ﾃ偲ﾃ淌・ｪﾃ甘ｽﾃ仰｡ﾂ､ﾃｲﾃ甘堕ｹﾂｹ
+
+2.22 (2005/1/4) (ﾂ､ﾂｽﾂ､ﾃｳﾂ､ﾃ環､ﾃ仰ｽﾃ・催猟､ﾂｸﾂ､ﾃ｣ﾂ､ﾃ環､ﾂ､ﾂｽﾂ､ﾃﾂｵﾂ､ﾃ・､ﾂｹ)
+ - check_dos_attack_* ﾂ､ﾃ仰､ﾂｪﾂ､ﾂｱﾂ､ﾃｫtypoﾂｽﾂ､ﾃﾂｵ (thx Mithrandir)
+ - IISﾂ､ﾃﾂ､ﾃ・EQUEST_URIﾂ､ﾂｬﾂｼﾃｨﾃ・ﾂ､ﾃ・､ﾂｭﾂ､ﾃ環､ﾂ､ﾂ､ﾂｳﾂ､ﾃ按､ﾃ伉､ﾃ偲づ青ｱﾃｾ
+ - updated myblocksadmin 0.22 & mymenu 0.07
+
+2.21 (2004/12/31)
+ - ﾃ甘堕ｿﾃｴﾂｱﾃｸﾃﾃｷﾂ､ﾃ篠･ﾃ・･ﾂｧﾂ･ﾃδ･ﾂｯﾃ渉ｳﾂ､ﾃｬﾂｽﾂ､ﾃﾂｵ (thx onokazu)
+
+2.20 (2004/12/27)
+ - ﾃ甘堕ｿﾃｴﾂｱﾃｸﾃﾃｷﾂ､ﾃ篠･ﾃ・･ﾂｧﾂ･ﾃδ･ﾂｯﾃ渉ｳﾂ､ﾃｬﾂｽﾂ､ﾃﾂｵ(thx JM2)
+ - HTTP_*_VARS ﾂ､ﾃ使lobalﾂｻﾃ佚・ｪﾃ仰ｺﾂ､ﾃｬﾂｽﾂ､ﾃﾂｵ
+ - ﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂｻﾃ佚・ｪﾃ・個､ﾃｪﾂ､ﾃｲﾂ･ﾃｭﾂ･ﾂｰﾂｵﾂｭﾃ渉ｿﾂ､ﾂｹﾂ､ﾃｫﾂ､ﾃｨﾂ､ﾂｦﾂ､ﾃ仰､ﾂｷﾂ､ﾂｿ
+ - ﾂ･ﾃ鳴･ﾃｩﾂ･ﾂｸﾂ･ﾃｫﾂ･ﾃ敖･ﾃｫﾂ･ﾃ按･ﾂｬﾂ･ﾃｫﾂｸﾃｬﾂ｡ﾂｦﾂ･ﾂｹﾂ･ﾃ堋･ﾂ､ﾂ･ﾃｳﾂｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ､ﾃｲﾂｹﾂｹﾂｿﾂｷ (thx Marcelo Yuji Himoro)
+ - ﾃ暗凝づ偲εｦﾂｹﾃｱﾂｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ､ﾃｲﾂｹﾂｹﾂｿﾂｷ (thx Kikuchi)
+
+2.20RC3 (2004/12/18)
+ - ﾂ｡ﾃ鳴ｵﾂｿﾂ､ﾃｯﾂ､ﾂｷﾂ､ﾂ､ﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂｻﾃ佚・ｪﾂ､ﾃｲﾂｶﾃ伉ｻﾃ淞､ﾂｹﾂ､ﾃｫﾂ｡ﾃ猟･ﾂｪﾂ･ﾃ猟･ﾂｷﾂ･ﾃｧﾂ･ﾃｳﾂ､ﾃ偲・可ｲﾃ・(thx JM2)
+ - ﾂ･ﾂｹﾂ･ﾃ堋･ﾂ､ﾂ･ﾃｳﾂｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ､ﾃｲﾃ・可ｲﾃ・(thx Marcelo Yuji Himoro)
+
+2.20RC2 (2004/12/16)
+ - updated myblocksadmin (0.12) & mymenu (0.06)
+ - ﾂ･ﾃ鳴･ﾃｩﾂ･ﾂｸﾂ･ﾃｫﾂ･ﾃ敖･ﾃｫﾂ･ﾃ按･ﾂｬﾂ･ﾃｫﾂｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ､ﾃｲﾂｹﾂｹﾂｿﾂｷ (thx Marcelo Yuji Himoro)
+
+2.20RC (2004/12/15)
+ - HTTP_*_VARSﾂ､ﾃ偲・堕ｻﾃ・(PHP5ﾃ催・
+ - ﾂ･ﾃｬﾂ･ﾂｹﾂ･ﾂｭﾂ･ﾃ･ﾂ｡ﾂｼﾂｵﾂ｡ﾃ・ｽﾂ､ﾃ偲・可ｲﾃ・
+ - ﾂ･ﾂｨﾂ｡ﾂｼﾂ･ﾂｸﾂ･ﾂｧﾂ･ﾃｳﾂ･ﾃ按､ﾃ｢ﾂｵﾂｭﾃ渉ｿﾂ､ﾂｹﾂ､ﾃｫﾂ､ﾃｨﾂ､ﾂｦﾂ､ﾃ凝甘堕ｹﾂｹ
+ - Anti-DoSﾂ､ﾃ篠･ﾃｫﾂ｡ﾂｼﾂ･ﾃ・･ﾃｳﾂ､ﾃｲﾂ､ﾃ楪､ﾃｫﾂ､ﾃ楪､ﾃｫﾂｽﾃｱﾂｴﾂｹﾂ､ﾂｨ
+ - F5ﾂ･ﾂ｢ﾂ･ﾂｿﾂ･ﾃδ･ﾂｯﾂ｡ﾂｦﾂ･ﾂｯﾂ･ﾃｭﾂ｡ﾂｼﾂ･ﾃｩﾂ｡ﾂｼﾂ｡ﾂｦﾂｴﾂｿﾂｷﾃ楪､ﾂｹﾂ､ﾃ卍､ﾂｭﾂ･ﾂｵﾂ｡ﾂｼﾂ･ﾃ・･ﾂｨﾂ･ﾃｳﾂ･ﾂｸﾂ･ﾃｳﾂ､ﾃ・｡ﾂ｢ﾂ､ﾂｽﾂ､ﾃｬﾂ､ﾂｾﾂ､ﾃｬﾂｽﾃｨﾃ催ｽﾃ環ｬﾂ､ﾂｱﾂ､ﾂｷﾂ､ﾂｿ
+ - ﾂｶﾂｯﾃﾂｩintvalﾂ､ﾂｬﾃ・崚偲ｳﾂ､ﾃ凝づ青､ﾂｷﾂ､ﾃ・､ﾃ｢ﾂｹﾃ板､ﾃｯﾂ､ﾃｬﾂ､ﾃ・､ﾂｷﾂ､ﾃ楪､ﾃδ､ﾃ・､ﾂ､ﾂ､ﾂｿﾂ､ﾃ篠､ﾃｲﾂｽﾂ､ﾃﾂｵ
+ - UNIONﾃ按ｯﾂｸﾂｫﾂ･ﾃ堕･ﾂｿﾂ｡ﾂｼﾂ･ﾃｳﾂ､ﾃ凝按ｴﾂ､ﾂｱﾂ､ﾂｬﾂ､ﾂ｢ﾂ､ﾃδ､ﾂｿﾂ､ﾃ篠､ﾃｲﾂｽﾂ､ﾃﾂｵ
+
+2.11 (2004/9/30)
+ - typo ﾂ､ﾂｬﾂ､ﾂ､ﾂ､ﾂｯﾂ､ﾃ・､ﾂｫﾂ､ﾂ｢ﾂ､ﾃδ､ﾂｿﾂ､ﾃ篠､ﾃ・ｽﾂ､ﾃﾂｵ
+
+2.10a (2004/9/27)
+ - ﾂ･ﾃ鳴･ﾃｩﾂ･ﾂｸﾂ･ﾃｫﾂ･ﾃ敖･ﾃｫﾂ･ﾃ按･ﾂｬﾂ･ﾃｫﾂｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ､ﾃｲﾂｹﾂｹﾂｿﾂｷ (thx Marcelo Yuji Himoro)
+
+2.10 (2004/9/22)
+ - ﾂ･ﾂ｢ﾂ･ﾃδ･ﾃ猟･ﾃｭﾂ｡ﾂｼﾂ･ﾃ可･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ､ﾃ篠ｳﾃ暗・･ﾂｻﾃ陳･ﾃ・･ﾂｧﾂ･ﾃδ･ﾂｯﾂ､ﾃｲﾃ・可ｲﾃ・
+ - SQL Injectionﾂ､ﾂｬﾂ､ﾃｩﾂ､ﾃ淞､ﾃ篠･ﾂｵﾂ･ﾃ仰･ﾂｿﾂ･ﾂ､ﾂ･ﾂｺﾂ､ﾃｲﾂ｡ﾂ｢ﾃ・ｪﾃづｲﾂｲﾃ・・ｽﾂ､ﾃ按､ﾂｷﾂ､ﾂｿ
+ - ﾂ･ﾂｻﾂ･ﾂｭﾂ･ﾃ･ﾂ･ﾃｪﾂ･ﾃ・･ﾂ｣ﾂ･ﾂｬﾂ･ﾂ､ﾂ･ﾃ可､ﾃｲﾃ・可ｲﾃ・
+ - 2ﾂｲﾃ閉ｽﾃｪﾂ､ﾂ｢ﾂ､ﾃδ､ﾂｿ short tag ﾂ､ﾃｲﾃ・卍､ﾂｷﾂ､ﾂｿ (thx t_miyabi)
+ - ﾃ暗凝づ偲εｦﾂｹﾃｱﾂｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ､ﾃｲﾃ・可ｲﾃ・(thx Kikuchi)
+
+2.01 (2004/9/11)
+ - ﾃ甘堕ｿﾃｴﾂｱﾃｸﾃﾃｷﾂ･ﾃ・･ﾂｧﾂ･ﾃδ･ﾂｯﾂ､ﾃ・つｭﾂ､ﾃｪﾂ､ﾃ環､ﾂｫﾂ､ﾃδ､ﾂｿﾂ､ﾃ篠､ﾃｲﾃ・可ｲﾃ・
+ - ﾂ･ﾃ鳴･ﾃｩﾂ･ﾂｸﾂ･ﾃｫﾂ､ﾃ篠･ﾃ敖･ﾃｫﾂ･ﾃ按･ﾂｬﾂ･ﾃｫﾂｸﾃｬﾂ･ﾃ閉･ﾂ｡ﾂ･ﾂ､ﾂ･ﾃｫﾂ､ﾃｲﾂｹﾂｹﾂｿﾂｷ (thx Marcelo Yuji Himoro)
+
+2.0  (2004/9/10)
+ - Xoops Protector ﾂ､ﾃ按､ﾂｷﾂ､ﾃ・､ﾃ篠ｺﾃ・ｽﾃｩﾂ､ﾃ篠･ﾃｪﾂ･ﾃｪﾂ｡ﾂｼﾂ･ﾂｹ
+
+
+
+[/xlang:ja]

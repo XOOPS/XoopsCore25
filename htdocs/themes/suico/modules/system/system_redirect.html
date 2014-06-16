@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<{$xoops_langcode}>" lang="<{$xoops_langcode}>">
+<head>
+<!-- Theme name -->
+	<{assign var=theme_name value=$xoTheme->folderName}>
+<!-- Directory html blocks files or additional html files by include -->
+	<{assign var=theme_name value=$xoTheme->folderName|cat:'/xotpl'}>
+<!-- Directory html plugins files -->	
+	<{assign var=theme_plugin value=$xoTheme->folderName|cat:'/xoplugins'}>
+<!-- Directory html javascript files -->	
+	<{assign var=theme_js value=$xoTheme->folderName|cat:'/js'}>
+<!-- Metas -->
+	<{includeq file="$theme_name/xo_metas.html"}>
+
+</head>
+<body id="xo-await">
+<div id="xo-wrapper" class="container center">
+	<div id="xo-redirect">
+		<div class="message">
+			<{$message}>
+			<br />
+			<img src="<{xoImgUrl img/await.gif}>" alt="<{$message}>"/>
+		</div>
+		<div class="notreload">
+			<{$lang_ifnotreload}>
+		</div>
+
+	<{if $xoops_logdump != ''}><div><{$xoops_logdump}></div><{/if}>
+	</div>
+</div>
+
+</body>
+</html>

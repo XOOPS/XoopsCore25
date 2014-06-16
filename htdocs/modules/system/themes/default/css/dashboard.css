@@ -1,0 +1,99 @@
+/*
+ * Default Admin Theme
+ *
+ * @copyright       Xoops Project <http://www.xoops.org/>
+ * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @package         themes
+ * @since           2.5.x
+ * @author          Xoops Design Theme <http://www.xoops.org/>
+ * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ *
+ * @version         $Id
+*/
+
+#xo-body-contain {
+	padding: 0;
+	margin: 0;
+}
+
+#xo-body {
+	margin: 0 auto;
+	background-color: #F7F7F7;
+	border: 2px solid #ccc;
+	padding: 8px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	-khtml-border-radius: 6px;
+	border-radius: 6px;
+	margin: 20px !important;
+}
+
+#xo-index {
+	width: 100%;
+	border: 0;
+	min-height: 200px;
+	clear: both;
+}
+
+#xo-index-bottom {
+	width: 100%;
+	border: 0;
+	clear: both;
+}
+
+#xo-body-icons {
+	width: 66%;
+	float: left;
+}
+
+#xo-tabs {
+	width: 32%;
+	float: right;
+}
+
+#xo-modules {
+	width: 66%;
+	float: left;
+}
+
+#xo-accordion {
+	width: 32%;
+	float: right;
+}
+
+#xo-content {
+	clear: both;
+}
+
+.xo-title {
+	font-size: 12px;
+	color: #606060;
+	background-position: left top;
+	background-repeat: no-repeat;
+	font-weight: bold;
+	height: 30px;
+	vertical-align: middle;
+	padding: 10px 40px 0 40px;
+	border-bottom: 3px solid #393e41;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+#xo-title-modules {
+	background-image: url(../img/modules.png);
+}
+
+#xo-title-icons {
+	background-image: url(../img/cp.png);
+}
+
+#xo-title-accordion {
+	background-image: url(../img/brightside.png);
+}
+
+.xo-index-option {
+	padding: 4px;
+	vertical-align: top;
+}
+#xo-module-log {text-align: center;}
+.logger {margin: 1em auto !important; text-align: left;}

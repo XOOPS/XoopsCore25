@@ -1,0 +1,8 @@
+<div id="xo-banner" class="commercial">
+    <a id="xo-main-logo" class="commercial" href="<{xoAppUrl /}>" title=""><img src="<{xoImgUrl img/header-logo_big.png}>" alt="<{$xoops_sitename}>" /></a>
+    <{if $xoops_banner and $xoops_banner != '&nbsp;'}>
+        <div id="xo-banner-ad"><{$xoops_banner|smarty:nodefaults}></div>
+    <{/if}>
+    <!-- include userbar -->
+    <{includeq file="$theme_name/userbar.html"}>
+</div>

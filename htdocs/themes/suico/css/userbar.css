@@ -1,0 +1,162 @@
+/*
+ * Suico theme
+ * In memory of Marcello Brandao
+ * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @package         themes
+ * @since           2.5.x
+ * @author          Kris <http://www.xoofoo.org/>
+ * @maintained      The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @thanks			http://www.sohtanaka.com
+ * @version         $Id$
+*/
+
+/*  ------------ Style for xo_userbar.html ------------- */
+#xo-userbar {
+	display: 					block;
+	float: 						right;
+	margin-top: 				4px;
+	background-color: 			transparent;
+	color: 						#333;
+	font-size:					.9em;
+	text-shadow: 				2px 2px 3px #aaa;
+}
+#xo-userbar form { display: inline;}
+#xo-userbar button {
+	background-image: 			none;
+	background-color: 			transparent;
+	color: 						inherit;
+	border: 					none;
+}
+#xo-userbar button:hover, #xo-userbar img:hover { border: 0 !important; opacity:.5; filter: alpha(opacity=50);}
+#xo-userbar input {
+	width: 						80px;
+	background-color: 			transparent;
+	padding-left: 				5px;
+	color: 						#fff;
+	border: 					1px solid #139EE8;
+	border-radius:				10px;
+		-moz-border-radius:		10px;
+		-webkit-border-radius:	10px;
+}
+#xo-userbar input:hover {}
+#xo-userbar input:focus {}
+#xo-userbar a img {margin-top: 0; padding-right: 3px !important;}
+#xo-userbar a.register {
+	color: 						#333;
+	font-weight: 				bold;
+	cursor: 					hand;
+	cursor: 					pointer;
+}
+#xo-userbar a.register:hover { color: #fff;}
+#xo-userbar a.highlight { background-color:transparent; color: #fff; font-style: italic; opacity: .5 !important; filter: alpha(opacity=50) !important;}
+#xo-userbar a.highlight:hover { opacity: 1 !important; filter: alpha(opacity=100) !important;}
+#xo-userbar a:hover {}
+
+/* for popup (general) */
+.xo-hideshow {
+	position: 					absolute;
+	width: 						100% !important;
+	height: 					100% !important;
+	top:						0 !important;
+	left: 						0;
+}
+#xo-fade {
+	background-color: 			#333; 
+	position: 					fixed; 
+	width: 						100%;
+	height: 					100%;
+	top: 						0;
+	left: 						0;
+	z-index: 					100;
+	opacity: 					.80;
+		filter:					alpha(opacity=80);
+		-ms-filter: 			"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+}
+.xo-popup {
+	float: 						left;
+	width: 						100%;
+	margin: 					10px 0;
+	background-color: 			#fff;
+	padding: 					10px 0;
+	border: 					1px solid #bbb;
+}
+.xo-popup img.cntrl {
+	position: 					absolute;
+	right: 						-20px;
+	top: 						-20px;
+}
+
+/* for login popup */
+.xo-popup_block {
+	float: 						left;
+	position: 					fixed;
+	width: 						480px;
+	top: 						20%;
+	left: 						50%;
+	margin: 					0 0 0 -250px;
+	z-index: 					100;
+	background-color: 			#ddd;
+	padding: 					10px 20px;
+	border: 					10px solid #fff;
+
+}
+/* for userinfo popup */
+.xo-popup_block1 {
+	float: 						left;
+	position: 					fixed;
+	width: 						480px;
+	top: 						12%;
+	left: 						50%;
+	margin: 					0 0 0 -250px;
+	z-index: 					100;
+	background-color: 			#ddd;
+	padding: 					10px 20px;
+	border: 					10px solid #fff;
+}
+.xo-popup_block1 .xo-popup td {padding-left: 2.5em;}
+.xo-popup_block1 span.xo-ulabel {display:inline-block; width: 130px; font-weight: bolder;}
+.xo-popup_block1 span.xo-uleft {display:inline-block; padding-left: 1em;}
+img.xo-uavatar, a img.xo-uavatar  {
+	padding : 					15px;
+	border: 					1px solid #ccc !important;
+	border-radius:				10px;
+		-moz-border-radius:			10px;
+		-webkit-border-radius:		10px;
+		-khtml-border-radius: 		10px;
+}
+.xo-uicons {
+	margin : 					.25em 2em .25em 2em;
+	padding : 					8px;
+	border: 					1px solid #ccc;
+	border-radius:				5px;
+		-moz-border-radius:			5px;
+		-webkit-border-radius:		5px;
+		-khtml-border-radius: 		5px;
+	box-shadow: 				1px 2px 3px rgba(0,0,0,0.5);
+		-moz-box-shadow: 		1px 2px 3px rgba(0,0,0,0.5);
+		-webkit-box-shadow: 	1px 2px 3px rgba(0,0,0,0.5);
+}
+/*--Making IE6 Understand Fixed Positioning--*/
+*html #xo-fade {
+	position: 					absolute;
+	top:						expression(eval(document.compatMode &&
+								document.compatMode=='CSS1Compat') ?
+								documentElement.scrollTop : document.body.scrollTop);
+}
+*html .xo-popup_block, *html .xo-popup_block1 {
+	position: 					absolute;
+	top:						expression(eval(document.compatMode &&
+								document.compatMode=='CSS1Compat') ?
+								documentElement.scrollTop
+								+((documentElement.clientHeight-this.clientHeight)/2)
+								: document.body.scrollTop
+								+((document.body.clientHeight-this.clientHeight)/2));
+	
+	left:						expression(eval(document.compatMode &&
+								document.compatMode=='CSS1Compat') ?
+								documentElement.scrollLeft 
+								+ (document.body.clientWidth /2 ) 
+								: document.body.scrollLeft 
+								+ (document.body.offsetWidth /2 ));
+}

@@ -1,0 +1,109 @@
+/*
+ * Default Admin Theme
+ *
+ * @copyright       Xoops Project <http://www.xoops.org/>
+ * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @package         themes
+ * @since           2.5.x
+ * @author          Xoops Design Theme <http://www.xoops.org/>
+ * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ *
+ * @version         $Id
+*/
+
+
+#xo_globalnav {
+	background: url(../img/dark/dark-menu.png) repeat-x;
+	/*padding: 4px;*/
+	border-top: 1px solid #000;
+	border-bottom: 1px solid #ccc;
+	font-weight: normal;
+	font-family: tahoma, Helvetica, sans-serif;
+	height: 28px;
+	list-style: none;
+}
+
+#xo_globalnav ul.menu {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+#xo_globalnav ul.menu * {
+	margin: 0;
+	padding: 0;
+}
+
+#xo_globalnav ul.menu a {
+	display: block;
+	color: #1F1F1F;
+	text-decoration: none;
+}
+
+#xo_globalnav ul.menu li {
+	position: relative;
+	float: left;
+	margin-right: 2px;
+	list-style: none;
+}
+
+#xo_globalnav ul.menu ul {
+	position: absolute;
+	/*top: 26px;*/ /*deactivate test and fix */
+	left: 0;
+	background: #d1d1d1;
+	display: none;
+	opacity: 0;
+}
+
+#xo_globalnav ul.menu ul li {
+	position: relative;
+	border: 1px solid #aaa;
+	border-top: none;
+	width: 168px;
+	margin: 0;
+	list-style: none;
+}
+
+#xo_globalnav ul.menu ul li a {
+	display: block;
+	padding: 3px 7px 5px;
+	background: #5F5F5F;
+	color: #f7f7f7;
+	/*background: #ddd  no-repeat left;
+        padding-left: 20px;*/
+}
+
+#xo_globalnav ul.menu ul li a:hover {
+	background-color: #333;
+	color: #f7f7f7;
+}
+
+#xo_globalnav ul.menu ul ul {
+	left: 168px;
+	top: -1px;
+	list-style: none;
+}
+
+#xo_globalnav ul.menu .menulink {
+	border: 1px solid #333;
+	padding: 5px 7px 4px;
+	font-weight: bold;
+	color: #ccc;
+	background: url(../img/dark/dark-menu.png) repeat-x;
+	width: 154px;
+}
+
+#xo_globalnav ul.menu .menulink:hover,ul.menu .menuhover {
+	border: 1px solid #ccc;
+	background: #333;
+}
+
+#xo_globalnav ul.menu .sub {
+	background: #5F5F5F url(../img/arrow.gif) 156px 8px no-repeat;
+	/*padding-left: 3px;*/
+}
+
+#xo_globalnav ul.menu .topline {
+	border-top: 1px solid #aaa;
+}

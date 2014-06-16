@@ -1,0 +1,835 @@
+XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
+
+===============================
+2014/06/14: Version 2.5.7 Final
+===============================
+- updated XoopsMediaUploader to use system memory values from php.ini, and to offer random file names (mamba/luciorota/zyspec)
+- added .tpl to XoopsList's getHtmlListAsArray (wizanda)
+- updating xBootstrap (voltan, Angelo Rocha)
+- moved all images, CSS, and JS files to /assets in modules Profile and PM (mamba)
+- renamed .html Smarty templates to .tpl in modules Profile and PM (mamba)
+- corrected English typos (cesag)
+- added missing .php file extension (AngeloRocha/Zyspec/rgriffith)
+- deprecated destoryVars($var) in object.php (cesag/rgriffith)
+- update phpmailer translation array to include all keys, and remove reassignment of $PHPMAILER_LANG as array() (cesag/rgriffith)
+- added XoopsRequest class (rgriffith)
+- removed hard-coded text from installation (mamba)
+
+Updated:
+ - TinyMCE to 3.5.11 (mamba)
+
+===============================
+2014/04/06: Version 2.5.7 RC 1
+===============================
+
+Bugfixes:
+- fixed System Module image manager html/js bugs (luciorota)
+- replaced "array_diff_assoc" with "array_diff_key" in /class/theme_blocks.php (masel/mamba)
+- icons for active module sections in System module not shown correctly (Slider84/mamba)  
+- added two new language definitions (see lang_diff.txt)
+- added Office 2007 MIME types (Voltan)
+- added xml MIME type (Goffy)
+- added new icons (mamba)
+
+Updated:
+ - jQuery to 1.11.0 (mamba)
+ - jQuery UI 1.10.4 (mamba)
+ - jQuery Lightbox to 1.2.3 (mamba)
+ - jQuery Form to 3.50.0 (mamba)
+ - jQuery Tablesorter to 2.5.11 (mamba)
+ - jGrowl to 1.2.14 (mamba)
+
+===============================
+2014/03/06: Version 2.5.7 Beta 1
+===============================
+Bugfixes:
+- ID: 1143 (old ID 430840)  class/module.errorhandler.php (uberrookie/zyspec)
+- ID: 1225 Restore user theme choice during "Remember me" processing. (rgriffith)
+- ID: 1226 Change value of clickable due to issues centering on CaricaFoto script (rgriffith)
+- ID: 1227 Sorting bug in Profile module search (Zyspec)
+- ID: 1246 Fallback to english for admin theme language files if no language specific file exists (rgriffith)
+- ID: 1261 Fix as proposed by Irmtfan (irmtfan/rgriffith)
+- ID: 1268 reduce db load if XoopsFormSelectUser is called multiple times in a page load (rgriffith)
+- ID: 1269 Block template file will not updated after update the module (irmtfan)
+- ID: 1270 template issue in email notifications (changed X_ITEM_TILE to X_ITEM_NAME) (alain01/slider84/mamba)
+- ID: 1271 install last page no css/js (tarik/rgriffith))
+- ID: 1272 delete functions always return true (rgriffith)
+- ID: 1273 template duplicate issue (irmtfan)
+- ID: 1274 prevent multiple inclusions of a module's xoops_version.php (irmtfan/rgriffith)
+- ID: 1278 _AM_SENDMTOUSERS missed (Mowaffaq/mamba)
+- ID: 1281 initialize arrays as empty arrays rather than null (rgriffith)
+- ID: 1285 check if session exists before attempting to start a new one (wishcraft)
+- ID: 1287 assigning "static" to various class methods (wishcraft/mamba)
+- ID: 1291 xoops_getModuleOption() did not respect $dirname (rgriffith)
+- ID: 1382 add cleanup of unused avatar resources to admin maintenance page (rgriffith)
+
+
+- reversing fix for potential lack of rendering css and javascript in Installer on the last screen by culex
+- removing @ in link[@rel*=style][title] in styleswitch.js (not needed in jQuery 1.83) (SMEDrieben/Mamba)
+- added missing "`" in upgrade from 2.0.18 to 2.3.0 (mamba)
+- fixing errors in upgrade from 2.4.0 to 2.4.1 (mamba,voltan)
+- added check for menu link description in ModuleAdmin
+- fixed wrong return icon in Smarty xoModuleIcons32
+- fixed issue with jGrows in xoops.css (xoobaru/tarik)
+- fix for deprecated "preg_replace/e" function in PHP 5.5 (mamba)
+- added: check if 'date.timezone' is set in php.ini, if not, set it to UTC (cesag/mamba)
+- assigned _SHORTDATESTRING to _CAL_FORMAT to have consistency in local languages (jcweb/guspel)
+- fixed bug in calendar.js (mamba)
+- added link to Module's Admin after "Update" (currently only to XOOPS Modules section) (mamba)
+- added placeholder for a link to upload test data, if available after installation (mamba)
+- solved bug into PM module readpmsg.php (escrime-info/slider84)
+- fixed missing check on variable in userinfo.php (cesag/mamba)
+- replaced extract($_POST) in /include/comment_delete.php with filters (mamba)
+- adding some missing generic default fonts (mamba)
+- removing some unreachable statements (mamba)
+- replacing deprecated HTML tags (mamba)
+- bug in commentrenderer.php (Roby73/irmtfan)
+- added missing info about new language constants in Fast Comments (irmtfan/mamba)
+- fixed Undefined index: uid in file /modules/profile/userinfo.php line 24 (cesag/mamba)
+- set minimum PHP version to 5.3.7 (mamba)
+- added missing apostrophe corrections for Date types in CleanVars in /class/model/write.php
+- added function escape to XoopsMySQLDatabase, needed for Formulize (jegelstaff)
+- added blank.gif images to ModuleAdmin icons (timgno)
+- addedd [soundcloud] BB code as supplied by (iHackCode/rgriffith)
+- fix for cancel button in javascript (currently it still entered the text, even if canceled) (mamba)
+- added "module_status" to show with module Version (mamba)
+- patch for input validation bypass issue reported by Tatane (tatane/rgriffith)
+- change default value for usercookie config to match change in 2.6.0. (rgriffith)
+- correct method used to determine the current effective language.(rgriffith)
+- fix errors "PHP Strict standards:  Redefining already defined constructor" under PHP 5.5 (rgriffith)
+- fix to correctly load the CSS file into the header in ModuleAdmin (Bleekk, Alfred)
+- added "title" to buttons in DHTML Editor (mamba)
+- updated required PHP and XOOPS versions, module versions in modules (cesag/mamba)
+- added xBootstrap theme (UI/UX Team: Angelo Rocha, Bleekk, Heyula)
+- added extra escape for "e" in YESTERDAY definition in locale.php, which was added in PHP 5.4 (madDan)
+- fixed PHP minimum version comparison in ModuleAdmin (mamba)
+- fixed System Module image manager and popup image manager save images in different directories(luciorota)
+- added PHPDoc comments for classes and functions (mamba)
+
+Security fixes
+- XSS issues reported by Mehdi Dadkhah (rgriffith)
+- Fix security issues reported by Pedro Ribeiro of Agile Information Security (rgriffith)
+- Fix XSS issue reported by Manuel Garcia Cardenas (rgriffith)
+
+Updated:
+ - jGrowl to 1.2.13 (mamba)
+ - jQuery Form to 3.42.0 (mamba)
+ - HTML Purifier to 4.6.0 (mamba)
+ - Smarty to 2.6.28 (mamba)
+ - TinyMCE to 3.5.10 (mamba)
+ - prototype.js to 1.7.1, Aug 2012 (rgriffith)
+
+===============================
+2013/04/21: Version 2.5.6 Final
+===============================
+Bugfixes:
+- updated English translations (Cesag,Mamba)
+- extra check for $noHtml in XoopsEditorHandler->get (luciorota)
+- fixing $GLOBAL typo in jquery.php (Zyspec)
+- improving protection against spam by turning off registration's 1st step saving (timgno)
+
+===============================
+2013/03/25: Version 2.5.6 RC1
+===============================
+Bugfixes:
+ - Array to string conversion (geekwright/mamba)
+ - issues with missing xoopscomments table (geekwright/sabahan/Mamba)
+ - bug with using reference for non-variables (geekwright/mamba)
+ - number of users when "all groups" selected was wrong (tatane/mamba)
+ - fix for potential lack of rendering css and javascript in Installer on the last screen (culex)
+ - fix for missing Protector logo under PHP 5.4 (mamba)
+ - replacing ereg with preg_match in userutility.php (pmartina/paul)
+ - #1219 dhtmltextarea editor accent not displayed (cesag/alain091)
+ - added missing call for user language in /profile/index.php (xoobaru/zyspec)
+
+Security fixes
+ - XSS/CSRF vulnerability in system/admin/groupperm.php (Dingjie Yang,Qualys/trabis)
+ - XSS/CSRF vulnerability in system/modulesadmin/main.php (Dingjie Yang,Qualys/trabis)
+ - XSS/CSRF vulnerability in system/admin/blocksadmin/main.php (Marcin,Ariko-Security Team/trabis)
+ - LFI vulnerability in system/admin/tplsets/jquery.php (Marcin,Ariko-Security Team/trabis)
+
+===============================
+2013/01/22: Version 2.5.6 Beta
+===============================
+Security fixes:
+ - XSS (Cross Site Scripting) vulnerability in Maintenance (Dingjie Yang,Qualys/trabis)
+
+Bugfixes:
+ - errors related to static functions, so it works on PHP 5.4 (Mamba)
+ - bug #1245 in class XoopsLoad.php (Alain91)
+
+Updated:
+ - TinyMCE to 3.5.8 (mamba)
+ - Smarty to 2.6.27 (mamba)
+ - jQuery to 1.8.3 (mamba)
+ - jQueryUI to version 1.10 (mamba)
+
+Added:
+- Fast Comment Hack (Voltan)
+
+===============================
+2012/04/15: Version 2.5.5 Final
+===============================
+Bugfixes:
+ - preventing division by zero in pagenav.php (timgno)
+ - ID: 3466534 tooltip "$ not defined" fix (culex)
+ - ID: 3513787 wrong cookie_domain (arion92fr)
+ - ID: 3518291 Fix of variables assigned by reference in formelementtray (mamba)
+ - problem in formtextdateselect (wishcraft)
+
+Updated:
+ - phpThumb to 1.7.11 (mamba)
+ - jGrowl to 1.2.6 (mowaffaq/mamba)
+
+===============================
+2012/03/14: Version 2.5.5 RC
+===============================
+Bugfixes:
+ - ID: 3494895 When changing the # of visible entries in Protector, it goes to Admin (jcweb/mamba)
+ - ID: 3494894 Calendar shows 40 days (peekay/mage)
+ - ID: 3494896 Image Manager category creation restrictions (voltan/mage)
+ - ID: 3494893 PM Messages deleted from Saved box (Danielw42/mage)
+ - ID: 3501897 Protector errors (cesag/XavierS)
+ - ID: 3511204 TinyEditor only loading in the 'Scoop' part of the News module (peekay/XavierS)
+ - ID: 3511205 Bug in fresh install in page_configsave.php (XavierS)
+
+Improved:
+ - replacing "msnbot" with "bingbot" in Protector (mamba)
+
+Updated:
+ - HTML Purifier to 4.4.0 (mamba)
+ - TinyMCE to 3.4.9 (mamba)
+ - jQuery to 1.72 (mamba)
+ - jQueryUI to version 1.8.18 (mamba)
+
+===============================
+2012/02/19: Version 2.5.5 Beta
+===============================
+Security fixes:
+ - XSS (Cross Site Scripting) vulnerability in PM module and tinymce (High-Tech Bridge Security Research Lab/trabis)
+
+Bugfixes:
+ - Templates Manager does not handle single quotes correctly (trabis)
+ - $xoTheme->addScript('', '', 'content here'); causes duplicate CDATA on cached pages (wishcraft/trabis)
+ - System admin maintenance table names are incorrect if db_prefix length is not 4 (trabis)
+ - System admin users advance search displays wrong results when using 'contains' or 'equal' in some fields (trabis)
+ - System admin users pagination not working correctly for some fields (trabis)
+ - System admin users blank page when site as many users (trabis)
+ - /class/object.php deprecated message, should be /class/xoopsobject.php (mamba/trabis)
+ - /class/module.php deprecated message, should be /class/xoopsmodule.php (mamba)
+ - /class/user.php deprecated message, should be /class/xoopsuser.php (mamba)
+ - ID: 3443381 Images stored in database not given correctly in edit mode (mage)
+ - ID: 3201929 Change upper limit for Banner impressions (mamba/mage)
+ - ID: 3432275 html structure (kris_fr/mage)
+ - ID: 3461539 Incorrect value for setOrder() in modulesadmin/main.php (mage)
+ - ID: 3469896 When deleting client, it doesn't delete finished banners (mamba/mage)
+ - ID: 3442270 Date format and Xoops 2.5.4 (cesag/formuss)
+
+Improved:
+ - Add key 'uid' on 'groups_users_link' table to allow joining 'users' table with better performance (trabis)
+ - Add Comments, Templates, and Uninstall links to Module's Admin (mamba)
+
+Updated:
+ - TinyMCE to 3.4.8 (mamba)
+ - jQuery to 1.71 (mamba)
+ - jQueryUI to version 1.8.17 (mamba)
+ - PhpMailer to version 5.2.1 (mamba)
+
+===============================
+2011/11/20: Version 2.5.4 Final
+===============================
+Bugfixes:
+ - ID: 3430112 Java problem in xoops editor (voltan/mamba/trabis)
+ - dhtml smilie is always inserted in the end (mamba/trabis)
+ - tinymce using body background color (trabis)
+ - jquery ui css no loaded correctly on admin side (trabis)
+ - ID: 3432017 HTML tags not closed (kris_fr/mamba)
+
+Updated:
+ - updated jQuery to 1.7 (mamba)
+
+===============================
+2011/10/10: Version 2.5.4 RC
+===============================
+Bugfixes:
+ - quoteConv causing problems with large number of quotes (Roby73/trabis)
+ - Cache bug. The key's not generated correctly (andrey3761/trabis)
+ - ID: 3425970 Unknown: Function split() (cesag/trabis)
+ - ID: 3424295 Undefined index: tplset (cesag/trabis)
+ - Preferences not using description field correctly, tooltip showing title and description without space (trabis)
+ - Extra height in admin page when warnings are not displayed (timgno/trabis)
+ - Files loaded with browse.php (*.js, *.css, etc) are not cached by the browser (trabis)
+ - ID: 3421180 CBB 4.05 and Xoops 2.5.4 error with Framework (cesag/trabis)
+
+Improved:
+ - Replacing deprecated Database::getInstance(); calls with XoopsDatabaseFactory::getDatabaseConnection(); (trabis)
+ - Logging deprecated methods and files that will be removed on XOOPS 2.6.0 (trabis)
+
+===============================
+2011/10/05: Version 2.5.4 Beta
+===============================
+Bugfixes:
+ - Remove a call of non existing css file in admin menu
+ - ID: 3419812 Drag and drop Xoops 2.5.3 bug (cesag/trabis)
+ - Calendar form element does not work properly (trabis)
+ - Make sure xoops_data/data is writable during install (trabis)
+ - ID: 3419332 Logout bug (cesag/trabis)
+
+Updated:
+ - Update jQueryUI to version 1.8.16 (voltan)
+ - Update tinymce to version 3.4.6 (ForMuss)
+ - Update PhpMailer to version 5.1 (dhsoft)
+ - Update jQuery o version 1.6.4 (ForMuss)
+ - Update Core modules (PM, Profile, Protector) to ModuleAdmin GUI (mamba)
+
+Deleted:
+ - Delete xoops_lib/data/secure.php file for exclude update error
+
+===============================
+2011/10/03: Version 2.5.3
+===============================
+Bugfixes:
+ - Style switcher does not work on default admin GUI(trabis)
+ - Reverting fix for bug ID: 2672723 Changed the code in Install to omits the SQL command: "ALTER DATABASE ... CHARACTER SET ..." (trabis)
+
+===============================
+2011/09/29: Version 2.5.2 Final
+===============================
+Bugfixes:
+ - ID: 3416069 - avatars upload problem (cesag/trabis)
+ - MyTextSanitizer::htmlSpecialChars() using UTF-8 by default (trabis)
+ - System Waiting block produces queries for inactive modules (trabis)
+ - 'Selected modules does not exist' if using inactive module on startpage (trabis)
+
+===============================
+2011/09/06: Version 2.5.2 RC
+===============================
+Security fixes:
+ - Removed support for script driven images!!! (High-Tech Bridge Security Research Lab/trabis)
+ - Fixed XSS (Cross Site Scripting) vulnerability in /include/formdhtmltextarea_preview.php (High-Tech Bridge Security Research Lab/trabis)
+Bugfixes:
+ - Protector Module - Added stopforumspam option (trabis)
+ - Modules admin does not show update warning for modules that have no main. (trabis)
+ - ID: 3411696 custom avatar is not deleted after user change avatar (sabahan)
+ - XoopsCaptcha does not load captcha configs correctly (trabis)
+ - XoopsCaptcha is not allowing the use of Frameworks folder (trabis)
+ - XoopsCaptcha(Method) is not extensible enough, can't add new captcha methods without hacking (trabis)
+ - ID: 2909799 Unbalanced [quote] introduces unbalanced <div> tag (ghia/trabis)
+ - ID: 2704039 backend.php does not work in 2.3.3 (drieben/trabis)
+ - ID: 3026492 Xoops Forms using Single Quotes For Html tags (catzwolf/trabis)
+ - ID: 3000518 Required fields for registration are not always enforced(csware/trabis)
+ - ID: 2795050 user profile Bug (zaza123/trabis)
+ - ID: 3014493 SQL structure duplicates wrongly PM module table (ghia/mamba)
+ - ID: 3139081 xoops_error displays array dump (madreus/trabis)
+ - ID: 2937966 Reusing loop variable in preferences (ghia/trabis)
+ - ID: 2843028 Bug fonction "checkRight" class XoopsGroupPerm (mageg/trabis)
+ - ID: 2827946 Required list message doesn't appear (daviddu54/trabis)
+ - cleanVars() does not enforce array() on vars of type 'array' (trabis)
+ - XoopsUserUtility::validate() {$uid} not set in query (trabis)
+ - ID: 3410742 Broken Message Icon Image for core pm. (sabahan/Mamba)
+ - ID: 2672723 Changed the code in Install to omits the SQL command: "ALTER DATABASE ... CHARACTER SET ..." if it's not needed. (bs_php)
+ - ID: 1988039 does not accept some valid email addresses (anderssk/trabis)
+ - ID: 1889743 Installation of module fails if SQL file ends with a comment (ojobazos/trabis)
+ - ID: 1811479 Showing the right block in the wrong place: Top page wrong d (nachenko/trabis)
+ - ID: 3409728 PM Module : Missing message icon in readpmsg.php (sabahan/Mamba)
+ - ID: 3409391 From module condition check error in pmlite.php (zyspec)
+ - ID: 2959764 Path with spaces causes bad login redirect (bhardie/trabis)
+ - ID: 2843027 Bug class criteria GroupBy (mageg/trabis)
+ - $block = new XoopsBlock($id); not assigning block vars. (trabis)
+ - ID: 3403521 System Block Class, getContent var case inconsistency (zyspec/trabis)
+ - ID: 2956172 Internet Explorer 8 and Alt-attribute (drieben/mamba)
+ - ID: 3408962 theme set during install & register (sabahan/formuss)
+ - ID: 3408955 comment display mode standardization (sabahan/formuss)
+ - ID: 3288975 javascript calendar date format localization (ianez/formuss)
+ - ID: 3059263 Word Censoring Options not work (trabis)
+ - ID: 3408572 zetadigme admin gui - top banner bug (sabahan)
+ - ID: 3090520 class xoopsform default date (philou_themes)
+ - ID: 3408236 PM Module - Missing Message Icon selector (sabahan/Mamba)
+ - ID: 2340215 Not possible to use URL link in images (marcoxoops/Mamba)
+ - ID: 3406494 Geshi support in textsanitizer, syntaxhighlight incomplete (zyspec/trabis)
+ - ID: 3074089 XoopsModelSync, synchronization method always returns true (zyspec/Formuss)
+ - ID: 3404935 Avatar for new users is set to 'blank.gif' (trabis/Formuss)
+ - ID: 3407347 Somewhat weird for the xoops_data, xoops_lib directory (trabis)
+ - ID: 3404306 message is delete directly no confirmation yes or no (trabis)
+ - ID: 3383092 Cache problems with Stylesheets (trabis)
+ - ID: 3406326 Setting of Message image not implemented in Core pmlite.php  (Mamba)
+ - ID: 3406244 Read/Unread PM Module indicator in Core  (sabahan/Mamba)
+ - ID: 3197093 formcheckbox.php validation not working in xoops 2.5.1a (Satrebil/trabis)
+ - ID: 2952506 Read/Unread PM Module indicator  (sarahmx/Mamba)
+ - ID: 3404307 read and unread pm icon (Sabahan/Mamba)
+ - ID: 3404000 display of empty profile field (sabahan/trabis)
+ - ID: 3403568 avatar problem (sabahan/Formuss)
+ - ID: 3291912 multilanguage Language Issue (sabahan/Formuss)
+ - ID: 3241757 Module Update Error Messages (zyspec/Formuss)
+ - ID: 3400039 When module is deactivated, blocks are still active (Mamba/Formuss)
+ - ID: 3252445 Setting avatar display "off" in System Avatar has no effect (Mamba/Formuss)
+ - ID: 2482129 Huge number of files created in /smarty_cache (trabis)
+ - ID: 3109230 Cloned template are not accessible (Drieben/Formuss)
+ - ID: 3288284 Uninitialized variable in gui.php (Mamba/Formuss)
+ - ID: 3252474 Missing "Delete" action icon on Custom Avatars (Mamba/Formuss)
+ - Fix an error for display admin template (Mage/Formuss)
+ - Activate/Deactivate module was not updating xoops_active_modules cache file(trabis)
+ - ID: 3273466 Banner : Add new advertiser (Tatane/Formuss)
+Added:
+ - Added renderValidationJS() for captcha (trabis)
+ - Recaptcha catpcha support (ghia/DhSoft/trabis)
+ - Preview button for blocks (trabis)
+ - "admin_warnings_enable" option in xoops_data/configs/xoopsconfig.php (trabis)
+ - Preload event 'checkcache' on header.php to allow disable caching on specific conditions (trabis)
+ - XoopsObject::getVar() case 'n' for XOBJ_DTYPE_ARRAY/XOBJ_DTYPE_UNICODE_ARRAY to allow getting raw value (trabis)
+Improved:
+ - Changed "debugLevel" default option to 2(admins only) in xoops_data/configs/xoopsconfig.php(trabis)
+ - XoopsGroupPermHandler::getRight() as new parameter $trueifadmin to allow modules to set admin permissions (trabis)
+ - subject icons in private messages to be set by sender and not by the system (mamba)
+ - Blocks admin using cookies to save select boxes status (trabis)
+ - Moved js and css from xo_scripts template into gui class(using $xoTheme) to avoid module conflicts
+ - require class/xoopslocal.php causing problems with RMCommon (mamba/trabis)
+
+===============================
+2011/04/12: Version 2.5.2 Beta
+===============================
+Bugfixes:
+ - Module names and orders were not able to update (phppp/aitor)
+ - Custom block was not able to add due to missing of 'block_type' (phppp/tatane/mr-reda04_fr/aitor)
+ - System avatars not set in DB (voltan)
+ - Improved translations (phppp/mamba)
+
+
+===============================
+2011/03/23: Version 2.5.1 Final
+===============================
+Bugfixes:
+ - ID: 3219412 Block Cloning : parent module (mid) not saved when cloning(trabis)
+ - ID: 3219408 Block management : data not saved when editing(trabis)
+ - ID: 3229007 Setting # of banner impressions has no effect(trabis)
+
+
+===============================
+2011/03/15: Version 2.5.1 RC
+===============================
+Updates:
+ - Updated suico and zetagenesis themes, zetadigme system admin theme (kris_fr)
+
+===============================
+2011/03/15: Version 2.5.1 RC
+===============================
+Security improvements:
+ - Added filters to output data to avoid potential XSS (phppp/Aung Khant)
+Updates:
+ - Update zetadigme admin gui (kris_fr)
+ - New MIME types (mojtabajml/kris_fr)
+ - Update jquery and jquery ui to last version (voltan)
+ - Fix bug in help page url in modules/system/class/gui.php (voltan)
+ - Add image URL show option in Image Manager (voltan)
+Bugfixes:
+ - ID: 3168899 Module weight Arrangment bug, change order only for visible blocks (trabis)
+ - ID: 3167970 Banner edit generates a new banner(trabis)
+ - ID: 3153597 Banner management: URL click mandatory(trabis)
+ - ID: 3111137 Module Block is cloned as custom block(trabis)
+
+
+===============================
+Updated 2010/10/23: Version 2.5.0
+===============================
+Bug Fixes:
+
+ - Fix security bug in Profile (gaba/phppp)
+ - Fix save in edit avatar and change path to avatar in form (formuss)
+ - include jQuery in admin page (formuss)
+ - Fix: Banners - "add" buttons disappear after deleting all banners. (trabis)
+ - Fix: Banners - Blank page when deleting clients. (trabis)
+ - Fix: Impossible to edit a user if uname contains a ', it shows uname already taken. (trabis)
+ - Fix: Some user defines(Error messages) were placed in blocks language file! They were moved to user language file and renamed. (trabis)
+ - Fix: Impossible to "delete" or "update groups" of selected users. Table sorting does not work with select fields! Table sorting was disabled for now. Also, the action for deleting users was not matching the action requested by the submit form.
+ - Improving fix for "Arbitrary file deletion" reported by Ono. Make sure file is inside "themes" directory. (onokazu/trabis)
+ - Fixing Xss attack, and possible sql injections on admin user page(reported by Ono).. (onokazu/trabis)
+ - Added 3 language constants for interest, occupation and location for usage on "search user" page. . (trabis)
+ - Altered 3 language constants for interest, occupation and location used on "add/edit user" page.. (trabis)
+ - Fixed error messages constants that were using old definitions. . (trabis)
+ - Fixing "full path disclosure" (onokazu/trabis)
+ - Fix an error when we commit with blank.gif (formuss)
+ - Add default image for avatar (formuss)
+ - Clean variables passed by submit (formuss)
+ - Add case in clean variable function (formuss)
+ - Load english language as default (formuss)
+ - Fix errors with _AM_SYSTEM_DBUPDATED define in sub file (formuss)
+ - Fix an error on banners client deletion (formuss)
+ - Fix banners error on search client name (formuss)
+ - Fix an error when add smilies with existing file (formuss)
+ - Fix banners error on search client name (formuss)
+ - Fix an error when add smilies with existing file (formuss)
+ - Fix an error with IE (formuss)
+ - Fix problem for changing module name (formuss)
+ - ID: 3089455 (wrong width in Profile Style.css) (Mamba)
+ - ID: 3081037 (Updated PHP & MySQL requirementes) (Anderssk/Mamba)
+ - ID: 3089251 (Checkboxes in Block Accees not working) (Mamba/Formuss)
+ - ID: 3085003 (Info buttons not linked) (Mamba/Formuss)
+ - ID: 3084587 (Typo in xmlrpc.php) (Wishcraft/Mamba)
+ - ID: 3000221 (TYPE=MyISAM replaced by ENGINE=MyISAM) (Ghia/Mamba)
+ - Division by zero in banners.php (trabis)
+ - $myts not defined in banners.php (trabis)
+ - function xoops_getbanner() may delete a newly created banner (trabis)
+ - ID: 3060263([code] still translate to double <code> tags in 2.4.5 Final/madreus)(trabis)
+ - Templates that use xoAppUrl or xoImgUrl (themes/default/modules/system/system_redirect.html, etc) do not compile correctly during module update (trabis)
+ - XOOPS_SYSTEM_COMMENT not defined, comment permissions not working correctly (trabis)
+ - Banner count being incremented in admin pages and twice for redirect pages (trabis)
+ - ID: 2153663 (Preview function/anderssk) (trabis)
+ - ID: 2929230 (DHTML AJAX can tackle server/ghia) (trabis)
+ - ID: 3033138 (XoopsLists::getHtmlList method needs updating/zyspec) (trabis)
+ - ID: 3023820 (Error in folder class/formuss) (trabis/formuss)
+ - XoopsFormDhtmlTextArea validation not working (trabis)
+ - Removing file class/xoopsform/formtree.php, class is not working and not following Xoops naming conventions (trabis)
+
+Design Fixes:
+ - update legacy admin gui (change link in header) - xoops 2.5.0 (kris_fr)
+ - correction of image links and cleaning css code in legacy admin gui (kris_fr)
+ - correction and cleaning css code and deleting unused images in installer (kris_fr)
+ - correction define language, cleaning css code and deleting unused files in zetadigme admin gui (kris_fr)
+ - fix tooltips in zetadigme admin gui (kris_fr)
+ - design template system_preferences.html in zetadigme admin gui (kris_fr)
+ - suico theme : delete french language, correction filemanager link and language define for baradmin/footerstatic, add if no avatar in userbar popup (kris_fr)
+ - suico theme : minors fixes for list : ol li (kris_fr)
+ - fix suico thm for ie (kris_fr)
+ - fix and cleaning css code in modules/system/css (kris_fr)
+ - complete generic class in modules/system/css/class.css (kris_fr)
+ - rebuild default admin gui based by morphogenesis 3.1.3 (voltan)
+   * incativ orange skin (voltan)
+ - add new style Sheet for installer and upgrade script (voltan)
+ - update zetagenesis theme for xoops 2.5.0 : add new links, images and language defines in footer admin (kris_fr)
+ - minors fixes css in zetagenesis theme : link hover for #xo-logger-tabs, accordion transition effect (kris_fr)
+ - remove old tag/style css in system blocks templates - replace by generic class (kris_fr)
+ - complete xoops.css with basic styles and generic class used in system module, themes and admin gui (kris_fr)
+ - replace old/tag styles by generic class for module system templates (kris_fr)
+ - little cosmetic cleaning / generic class in admin templates (kris_fr)
+ - cosmetic cleaning / generic class in pm module templates (kris_fr)
+ - cosmetic cleaning / generic class in profile module templates (kris_fr)
+ - cosmetic cleaning / generic class in php files (kris_fr)
+ - add xoops.css to system_imagemanager.html (kris_fr)
+ - add imagemanager.css for imagemanager.html (voltan)
+ - redesign fatal error message (kris_fr)
+ - redesign upgrade process (kris_fr)
+ - complete legacy admin gui : icons missing and link for help page (kris_fr)
+ - fix block theme with pm module (kris_fr)
+ - fix td align in pm_pmlite.html (kris_fr)
+ - fix cookie Styleswitch - problem with old orange style for default admin gui (kris_fr)
+ - fix color link under ie8/9 in default admin gui footer (kris_fr)
+ - add help page in zetadigme admin gui (kris_fr)
+
+XOOPS:
+ - user.php: User page
+   * Change destroy session for jGrowl redirection
+ - xoops.css: Xoops stylesheet
+   * Add jGrowl style
+ - class/smarty/xoops_plugins/resource.db.php: Smarty plugin (Modify)
+   * Search template for module, permit to have two template with the same name in different module
+   * Construct template path for front and backend side
+   * Fix an error for find template
+ - class/smarty/xoops_plugins/compiler.xoAdminIcons.php: Smarty plugin for find icons (Add)
+ - class/smarty/xoops_plugins/compiler.xoAdminNav.php:: Smarty plugin for breadcrumb (Add)
+ - class/theme.html: XOOPS Theme (Modify)
+   * Change path to admin theme
+ - include/defines.php: XOOPS Constants (Modify)
+   * Change path and url for admin area
+ - xoops_lib/Frameworks/jquery/jquery.js: JQuery file (Modify)
+   * Update jQuery to latest version
+ - xoops_lib/Frameworks/jquery/plugins/jquery.form.js (Add)
+ - xoops_lib/Frameworks/jquery/plugins/jquery.jgrowl.js (Add)
+ - xoops_lib/Frameworks/jquery/plugins/jquery.lightbox.js (Add)
+ - xoops_lib/Frameworks/jquery/plugins/jquery.tablesorter.js (Add)
+ - xoops_lib/Frameworks/jquery/plugins/jquery.ui.js (Add)
+ - include/comment_form.php (Modify)
+   * Add choice of text editor module system in the comment form
+
+Install:
+ - install/include/makedata.php: Save default data for system module (Modify)
+   * Add some new setting in config table and new template for admin
+ - install/language/english/mysql.lang.data.sql: SQL data
+   * Change folder location
+
+System module:
+ - /modules/system/admin/modulesadmin/modulesadmin.php
+  * Adding extra module-related links to the just installed modules (Add) Mamba
+ - modules/system/header.php: System constants (Add)
+   * use specific header for all system module
+ - modules/system/admin.php: Admin main page (Modify)
+   * use system function for load admin language file
+   * use template for main admin page
+   * Use function for get system setting
+ - modules/system/help.php: Help page (Add)
+   * Add content to help index page and first page of all modules (Voltan)
+ - modules/system/constants.php: System constants (Modify)
+   * Add new constant variables for system module
+ - modules/system/menu.php: System menu (Modify)
+   * Use user right for manage menu
+ - modules/system/class/gui.php: Xoops Cpanel GUI abstract class (Modify)
+   * Manage template file in admin side and move admin theme in specific folder
+ - modules/system/class/cpanel.php: Xoops Cpanel class (Modify)
+   * Change path to admin theme
+ - modules/system/xoops_version.php: System setting (Modify)
+   * Clean code and add admin template and system settings
+ - modules/system/blocks/system_blocks.php (Modify)
+   * Add waiting content for some modules
+
+pm module:
+ * Changing the admin menu. Using the menu generated by the module system
+ - modules/pm/admin/admin.php (Modify)
+ - modules/pm/admin/header.php (Modify)
+ - modules/pm/admin/prune.php (Modify)
+ - modules/pm/changelog.txt (Modify)
+ - modules/pm/xoops_version.php (Modify)
+
+profile module:
+ * Changing the admin menu. Using the menu generated by the module system
+ - modules/profile/admin/category.php (Modify)
+ - modules/profile/admin/field.php (Modify)
+ - modules/profile/admin/header.php (Modify)
+ - modules/profile/admin/header.php (Modify)
+ - modules/profile/admin/permissions.php (Modify)
+ - modules/profile/admin/step.php (Modify)
+ - modules/profile/admin/user.php (Modify)
+ - modules/profile/changelog.txt (Modify)
+ - modules/profile/xoops_version.php (Modify)
+
+
+Templates:
+ - modules/system/templates/admin: Folder for all admin template files (Add)
+ - modules/system/templates/admin/index.html: Secure HTML file (Add)
+ - modules/system/templates/admin/system_header.html: Template for breadcrumb, tips and help (Add)
+ - modules/system/templates/admin/system_avatar.html: Template for avatars (Add)
+ - modules/system/templates/admin/system_banners.html: Template for banners (Add)
+ - modules/system/templates/admin/system_blocks.html: Template for blocks (Add)
+ - modules/system/templates/admin/system_blocks_item.html: Sub template for blocks (Add)
+ - modules/system/templates/admin/system_comments.html: Template for comments (Add)
+ - modules/system/templates/admin/system_groups.html: Template for groups (Add)
+ - modules/system/templates/admin/system_images.html: Template for images (Add)
+ - modules/system/templates/admin/system_mailusers.html: Template for mail to users (Add)
+ - modules/system/templates/admin/system_maintenance.html: Template for maintenace (Add)
+ - modules/system/templates/admin/system_modules.html: Template for modules (Add)
+ - modules/system/templates/admin/system_modules_confirm.html: Template for modules (Add)
+ - modules/system/templates/admin/system_preferences.html: Template for preferences (Add)
+ - modules/system/templates/admin/system_smilies.html: Template for smilies (Add)
+ - modules/system/templates/admin/system_templates.html: Template for templates (Add)
+ - modules/system/templates/admin/system_userrank.html: Template for user ranks (Add)
+ - modules/system/templates/admin/system_users.html: Template for users (Add)
+ - modules/system/templates/admin/system_help.html: Template for help (Add)
+ - modules/system/templates/admin/system_index.html: Template for index (Add)
+
+Help:
+ - modules/system/language/english/help/avatars.html: Help file for avatars
+
+CSS:
+ - modules/system/css: Folder for CSS file (Add)
+   * Create a folder for put all CSS file used by system module
+ - modules/system/css/index.html: Secure HTML file (Add)
+ - modules/system/css/admin.css: CSS file for system module (Add)
+ - modules/system/css/button.css: CSS file for buttons (Add)
+ - modules/system/css/class.css: CSS file for standard class (Add)
+ - modules/system/css/admin.css: CSS file for help section (Add)
+ - modules/system/css/lightbox.css: CSS file for help lightbox (Add)
+ - modules/system/css/help.css: CSS file for help pages (Add)
+ - modules/system/css/code_mirror/*: Code mirror stylesheet files
+
+Images:
+ - modules/system/images/icons/*: Icons folder (Add)
+ - modules/system/images/breadcrumb/*: Breadcrumb folder (Add)
+ - modules/system/images/mimetypes/*: Mimetypes folder (Add)
+ - modules/system/images/bg_button.gif: Background images button (Add)
+ - modules/system/images/loading.gif: Loading images (Add)
+ - modules/system/images/spinner.gif: Small loading images (Add)
+ - modules/system/images/bg_content.gif (Delete)
+ - modules/system/images/bg_menu.gif (Delete)
+ - modules/system/images/check.gif (Delete)
+ - modules/system/images/hbar_left.gif (Delete)
+ - modules/system/images/hbar_middle.gif (Delete)
+ - modules/system/images/hbar_right.gif (Delete)
+ - modules/system/images/info.gif (Delete)
+ - modules/system/images/install.gif (Delete)
+ - modules/system/images/logo.gif (Delete)
+ - modules/system/images/menu.gif (Delete)
+ - modules/system/images/powered_by_xoops.gif (Delete)
+ - modules/system/images/uninstall.gif (Delete)
+ - modules/system/images/update.gif (Delete)
+ - modules/system/images/xoops2.gif (Delete)
+
+JS:
+ - modules/system/js: Folder fo JS files (Add)
+ - modules/system/js/index.html: Secure HTML file (Add)
+ - modules/system/js/admin.js: Main JS file for system module (Add)
+
+Breadcrumbs:
+ - modules/system/class/breadcrumb.php: Class for breadcrumb toolbar
+   * Manage the breadcrumb in system module
+
+Thumbs:
+ - modules/system/class/thumbs: Thumbs class for avatar and image gallery (Add)
+   * Class for generate thumbs images
+
+Avatars:
+ - edituser.php: Xoops edit user page (Modify)
+   * Create a specific folder in uploads directory for avatars
+ - modules/profile/edituser.php: Profile edit user page (Modify)
+   * Create a specific folder in uploads directory for avatars
+
+ - modules/system/admin/avatars/xoops_version.php: Avatars configuration files (Modify)
+   * Changes to use the same variables for image and help
+ - modules/system/admin/avatars/main.php: Main avatar managment (Modify)
+   * Code cleanup and use of a specific class to manage Avatars
+ - modules/system/class/avatar.php: System class for Avatars (Modify)
+   * Manage avatars with a specific class
+ - modules/system/language/english/admin/avatar.php: Avatar define variable (Modify)
+   * Changed define name to follow XOOPS standard
+
+Banners:
+ - modules/system/admin/banners/xoops_version.php: Banners configuration files (Modify)
+   * Changes to use the same variables for image and help
+ - modules/system/admin/banners/main.php: Main banners managment (Modify)
+   * Code cleanup and use of a specific class to manage Banners
+ - modules/system/admin/banners/banners.php (Delete)
+ - modules/system/class/banner.php: Banners Class Manager (Add)
+   * Manage banners with a specific class
+ - modules/system/class/bannerclient.php: Banners Client Class Manager (Add)
+   * Manage banners client with a specific class
+ - modules/system/class/bannerfinish.php: Banners Finish Class Manager (Add)
+   * Manage banners finish with a specific class
+ - modules/system/language/english/admin/banners.php: Banners define variable (Modify)
+   * Changed define name to follow XOOPS standard
+
+Blocks:
+ - modules/system/admin/blocksadmin/xoops_version.php: Blocks configuration files (Modify)
+   * Changes to use the same variables for image and help
+ - modules/system/admin/blocksadmin/main.php: Main block managment (Modify)
+   * Code cleanup and use of a specific class to manage Blocks
+ - modules/system/admin/blocksadmin/blockform.php (Delete)
+ - modules/system/admin/blocksadmin/blocksadmin.php (Delete)
+ - modules/system/class/block.php: Block Class Manager (Add)
+   * Manage blocks with a specific class
+ - modules/system/class/blocklinkmodule.php: Block link to module Class Manager (Add)
+ - modules/system/class/cookie.php: Class for manage cookie
+ - modules/system/language/english/admin/blocksadmin.php: Block define variable (Modify)
+   * Changed define name to follow XOOPS standard
+
+Comments:
+ - modules/system/admin/comments/xoops_version.php: Comments configuration files (Modify)
+   * Changes to use the same variables for image and help
+ - modules/system/admin/comments/main.php: Main comments managment (Modify)
+   * Code cleanup and use of a specific class to manage Comments
+ - modules/system/admin/comments/admin_header.php: Comment Header (Modify)
+ - modules/system/admin/comments/comment_delete.php: Comment delete file (Modify)
+ - modules/system/admin/comments/comment_edit.php: Comment edit file (Modify)
+ - modules/system/admin/comments/comment_post.php: Comment post file (Modify)
+ - modules/system/language/english/admin/comments.php: Comment define variable (Modify)
+   * Changed define name to follow XOOPS standard
+
+Find users:
+ - modules/system/admin/findusers/xoops_version.php: Find user configuration files (Delete)
+ - modules/system/admin/findusers/main.php: Main find user managment (Delete)
+ - modules/system/language/english/admin/findusers.php: Find user define variable (Delete)
+
+Groups:
+ - modules/system/admin/groups/xoops_version.php: Groups configuration files (Modify)
+   * Changes to use the same variables for image and help
+ - modules/system/admin/groups/main.php: Main groups managment (Modify)
+   * Code cleanup and use of a specific class to manage Comments
+ - modules/system/admin/groups/groupform.php (Delete)
+ - modules/system/admin/groups/groups.php (Delete)
+ - modules/system/class/group.php: Group Class Manager (Add)
+   * Manage group with a specific class
+   * Add All check box for group form
+ - modules/system/language/english/admin/groups.php: Groups define variable (Modify)
+   * Changed define name to follow XOOPS standard
+
+Images:
+ - modules/system/admin/images/xoops_version.php: Images configuration files (Modify)
+   * Changes to use the same variables for image and help
+ - modules/system/admin/images/main.php: Main Images managment (Modify)
+   * Code cleanup and use of a specific class to manage Images
+ - modules/system/language/english/admin/images.php: Images define variable (Modify)
+   * Changed define name to follow XOOPS standard
+
+Mail users:
+ - modules/system/admin/mailusers/xoops_version.php: Mail to users configuration files (Modify)
+   * Changes to use the same variables for image and help
+ - modules/system/admin/mailusers/main.php: Main mail to users managment (Modify)
+   * Code cleanup and use of a specific class to manage Mail to users
+ - modules/system/admin/groups/mailform.php (Delete)
+ - modules/system/admin/groups/mailusers.php (Delete)
+ - modules/system/language/english/admin/mailusers.php: Mail to users define variable (Modify)
+   * Changed define name to follow XOOPS standard
+
+Maintenance:
+ - modules/system/admin/maintenance/xoops_version.php: Maintenance configuration files (Add)
+   * Changes to use the same variables for image and help
+ - modules/system/admin/maintenance/main.php: Main Maintenance managment (Add)
+   * Use a specific class for manage maintenance
+ - modules/system/admin/maintenance/dump: Folder for database dump (Add)
+ - modules/system/class/maintenance.php: Maintenance Class Manager (Add)
+   * Manage maintenance with a specific class
+ - modules/system/language/english/admin/maintenance.php: Maintenance variable (Add)
+   * Changed define name to follow XOOPS standard
+
+Modules:
+ - modules/system/admin/modulesadmin/xoops_version.php: Maintenance configuration files (Modify)
+   * Changes to use the same variables for image and help
+ - modules/system/admin/modulesadmin/main.php: Main Maintenance managment (Modify)
+   * Update code and use drag'n drop for define position
+ - modules/system/modulesadmin/modulesadmin.php: Modules functions (Modify)
+   * Change header file and change log display
+ - modules/system/language/english/admin/modulesadmin.php: Maintenance variable (Modify)
+   * Changed define name to follow XOOPS standard
+
+Preferences:
+ - modules/system/admin/preferences/xoops_version.php: Preferences configuration files (Modify)
+   * Changes to use the same variables for image and help
+ - modules/system/admin/preferences/main.php: Preferences managment (Modify)
+   * Clean code for manage preferences
+ - modules/system/language/english/admin/preferences.php: Preferences variable (Modify)
+   * Changed define name to follow XOOPS standard
+
+Smilies:
+ - modules/system/admin/smilies/xoops_version.php: Smilies configuration files (Modify)
+   * Changes to use the same variables for image and help
+ - modules/system/admin/smilies/main.php: Smilies managment (Modify)
+   * Code cleanup and use of a specific class to manage smilies
+ - modules/system/admin/smilies/smileform.php (Delete)
+ - modules/system/admin/smilies/smilies.php (Delete)
+ - modules/system/class/smilies.php: Smilies Class Manager (Add)
+   * Manage smilies with a specific class
+ - modules/system/language/english/admin/smilies.php: Smilies variable (Modify)
+   * Changed define name to follow XOOPS standard
+
+Templates:
+ - modules/system/admin/tplsets/xoops_version.php: Templates configuration files (Modify)
+   * Changes to use the same variables for image and help
+ - modules/system/admin/tplsets/main.php: Templates managment (Modify)
+   * Change code for use template editor (code mirror)
+ - modules/system/admin/tplsets/jquery.php: jQuery File Tree PHP Connector (Add)
+ - modules/system/admin/tplsets/themeimgform.php (Delete)
+ - modules/system/admin/tplsets/tplform.php (Delete)
+ - modules/system/language/english/admin/tplsets.php: Templates variable (Modify)
+   * Changed define name to follow XOOPS standard
+
+Ranks
+ - modules/system/admin/userrank/xoops_version.php: User ranks configuration files (Modify)
+   * Changes to use the same variables for image and help
+ - modules/system/admin/userrank/main.php: User ranks managment (Modify)
+   * Code cleanup and use of a specific class to manage user ranks
+ - modules/system/admin/userrank/rankform.php (Delete)
+ - modules/system/admin/userrank/userrank.php (Delete)
+ - modules/system/class/userrank.php: User ranks Class Manager (Add)
+   * Manage user ranks with a specific class
+ - modules/system/language/english/admin/userrank.php: User ranks variable (Modify)
+   * Changed define name to follow XOOPS standard
+
+Users:
+ - modules/system/admin/users/xoops_version.php: User configuration files (Modify)
+   * Changes to use the same variables for image and help
+ - modules/system/admin/users/main.php: User managment (Modify)
+   * Code cleanup and use of a specific class to manage user
+ - modules/system/admin/users/users.php: Users functions (Modify)
+   * Code cleanup and use of a specific class to manage user
+ - modules/system/admin/users/jquery.php: jQuery File Tree PHP Connector (Add)
+ - modules/system/admin/users/userform.php (Delete)
+ - modules/system/class/users.php: User Class Manager (Add)
+   * Manage user with a specific class
+ - modules/system/language/english/admin/users.php: User variable (Modify)
+   * Changed define name to follow XOOPS standard

@@ -1,0 +1,17 @@
+<div id="help-template" class="outer">
+
+<h2 class="head">Welcome to: XOOPS Help center</h2>
+
+<h4 class="odd">How do I use XOOPS?</h4>
+<p class="even">XOOPS is a web application platform written in PHP for the MySQL database. Its object orientation makes it an ideal tool for developing small or large community websites, intra company and corporate portals, weblogs and much more. In order to use XOOPS effectively, you need to install modules that provide the functionality that you're looking for. There are many different modules in <a href="http://www.xoops.org/modules/repository/" rel="external" title="Module Repository">Module Repository</a>, from calendars, photo galleries, through news, bulletin boards, to weather updates.</p>
+
+<h4 class="odd">How do I use the Help Center?</h4>
+<p class="even">The Help Center is to provide you with basic information related to individual features of the Administration. Whenever you would like to know more about particular page you are on, just click the help icon in the right hand corner</p>
+
+<h4 class="odd">How I can create content in XOOPS?</h4>
+<p class="even">You'll need a module for it. This could be a News module, or a Content module. </p>
+
+<h4 class="odd">How I can get more help?</h4>
+<p class="even">Please visit our Support Forums at: <a href="http://www.xoops.org/modules/newbb" rel="external" title="Forum">http://www.xoops.org/modules/newbb</a> </p>
+
+</div>
