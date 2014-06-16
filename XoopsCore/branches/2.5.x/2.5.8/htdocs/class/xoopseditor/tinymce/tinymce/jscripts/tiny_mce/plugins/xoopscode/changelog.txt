@@ -1,0 +1,8 @@
+29-02-2008
+plugin updated for TinyMCE v3.0.1
+- renamed in Xoopsquotecode
+by luciorota
+
+10-03-2005
+Xquotecode plugin for tinyeditor
+by ralf57

@@ -1,0 +1,260 @@
+@import url(xosystpl.css);
+@import url(forms.css);
+@import url(blocks.css);
+@import url(content.css);
+@import url(xoopseditor.css);
+
+html {
+    padding:                0 10px;
+}
+body {
+    margin:                 0;
+    background-color:       #000;
+    padding:                0 10px;
+    color:                  #999;
+    font-family:            "Lucida Grande", Verdana, sans-serif;
+    font-size:              10pt;
+}
+
+/* ======= Body wrapper ======= */
+#xo-wrapper {}
+#xo-bgstatic {}
+#xo-canvas {
+    margin:                 0;
+    background-color:       #C6C7C9;
+    color:                  #000;
+}
+body.theme-dialog #xo-canvas {
+    margin:                 0 6px;
+}
+/*================= Content Zone ===================*/
+#xo-canvas-content {
+    background-color:       #c6c7c9;
+    padding:                12px;
+    color:                  inherit;
+}
+#xo-page {
+    padding-top:            10px;
+    width:                  100%; /* add by kris */
+}
+#xo-canvas-rightcolumn {
+    padding:                .5em;
+}
+#xo-content {
+    clear:                  both;
+    margin:                 0;
+    background-color:       inherit;
+    padding:                .5em;
+    color:                  #333;
+}
+
+#xo-content table td {
+    vertical-align:         top;
+}
+
+/* ============== header ================= */
+#xo-header {}
+
+/* ---------- Banner ---------- */
+#xo-banner {
+    clear:              both;
+    /* Use relative pos to ensure the banner ad img/flash is relative to the header */
+    position:               relative;
+    z-index:                100;
+    width:                  100%;
+    height:                 80px;
+    background:             #f1f1f1 url(../img/header-bg.png) repeat-x left bottom;
+    color:                  #7BADEA;
+}
+
+#xo-banner.commercial {
+    height:                 117px;
+    background-image:       url(../img/header-bg_big.png);
+}
+
+/*body.theme-dialog #xo-banner {
+    height:                 48px;
+    padding-top:            6px;
+    padding-left:           10px;
+}*/
+
+#xo-banner-ad {
+    position:               absolute;
+    top:                    7px;
+    right:                  5px;
+    width:                  480px;
+    height:                 72px;
+    background:             url(../img/bg-ad-top.png) no-repeat;
+    padding:                6px;
+}
+
+#xo-banner-ad object, #xo-banner-ad img {
+    display:                block;
+}
+
+/*---------------------- Site name in header ----------------------------*/
+#xo-site-title {}
+a#xo-site-title {}
+a:hover#xo-site-title {}
+#xo-site-title.commercial {}
+#xo-site-title .commercial a:hover {}
+/*----------------------- slogan in header ------------------------*/
+#xo-site-slogan {}
+#xo-site-slogan.commercial {}
+/*------------------------ logo ----------------------------*/
+#xo-main-logo {}
+#xo-main-logo.commercial {}
+/*-------- Bannder-----------*/
+#xo-banner form {}
+#xo-banner input {}
+/*============== Styles in userbar.html =================*/
+#xo-userbar {
+    position:               absolute;
+    color:                  #1251c6;
+    bottom:                 1px;
+    right:                  17px;
+    text-align:             right;
+}
+#xo-userbar form {
+    display:                inline;
+    padding:                0;
+}
+#xo-userbar button {
+    margin:                 0;
+    margin-bottom:          -2px;
+    background:             transparent none;
+    padding:                0;
+    color:                  #7BADEA;
+    border:                 0 none transparent;
+}
+#xo-userbar button img {
+    width:                  22px;
+    height:                 22px;
+}
+#xo-userbar button:hover {
+     border:                0 !important;
+ }
+#xo-userbar img {
+    width:                  26px;
+    height:                 26px;
+}
+#xo-userbar a {
+    color:                  #1251c6;
+    background-color:       inherit;
+    text-decoration:        none;
+}
+#xo-userbar a:hover {
+    color:                  #000;
+    background-color:       inherit;
+}
+#xo-uname {
+    font-weight:            bold;
+    font-size:              1.1em;
+}
+/*============= Style in globalnav.html ================*/
+#xo-globalnav {
+    min-height:             28px;
+    margin:                 0;
+    background:             #1479D6 url(../img/navbar-bg.png) repeat-x left bottom;
+    padding:                2px 0 0;
+    color:                  #fff;
+    font-size:              1.1em;
+    text-align:             center;
+    list-style-type:        none;
+}
+* html #xo-globalnav {
+    height:                 28px;
+}
+
+#xo-globalnav .x2-label {
+    display:                none;
+}
+
+#xo-globalnav li {
+    display:                inline;
+    margin:                 0;
+    padding-left:           .5em;
+    padding-right:          .5em;
+}
+
+#xo-globalnav a {
+    background-color:       inherit;
+    color:                  #fff;
+    text-decoration:        none;
+}
+
+#xo-globalnav a:hover {
+    background-color:       inherit;
+    color:                  #EAAD7B;
+    text-decoration:        none;
+}
+
+/* ===== Footer ===== */
+#xo-footer {
+    margin:                 0;
+    background-color:       #C6C7C9;
+    padding:                .5em;
+    color:                  #666;
+    font-size:              .9em;
+    text-align:             center;
+}
+
+body.theme-dialog #xo-footer {
+    padding:                .2em .5em;
+    font-size:              .8em;
+}
+#xo-footer a {
+    background-color:       inherit;
+    color:                  #333;
+}
+
+#xo-footer a:hover {
+    background-color:       inherit;
+    color:                  #fff;
+    text-decoration:        underline;
+}
+/*========== xo_footerstatic.html ==========*/
+#xo-footerstatic * { margin: 0; padding: 0;}
+#xo-footerstatic {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 30px;
+  background: none;
+  color: #000;
+  font-size: 11px;
+}
+body>#xo-footerstatic {  position: fixed;}
+#xo-footerstatic #controls {
+  margin: 0 20px 0 20px;
+  background-color: #fff;
+  line-height: 39px;
+  text-shadow:	2px 2px 3px #aaa;
+  border: 1px solid #b5b5b5;
+  border-bottom: none;
+}
+#xo-footerstatic #controls  { margin-top: 1px; background: #E7F4F7; padding: 3px 10px 0 10px;}
+#xo-footerstatic .separate { margin-left: 3px; border-left: 1px solid #b5b5b5;}
+#xo-footerstatic #controls ul, li { margin: 0;  padding: 0;}
+#xo-footerstatic #controls ul { list-style: none;}
+#xo-footerstatic #controls li { display: inline-block; height: 29px; line-height: 27px; padding-right: 6px;}
+#xo-footerstatic .icon { vertical-align: text-bottom;}
+#xo-footerstatic .icon-chat { padding-top: 3px;}
+#xo-footerstatic .chat, .icon-chat { float: right;}
+#xo-footerstatic .text { vertical-align: top;}
+
+/* ===== debug messages ===== */
+#xo-logger-output {
+    font-size:              .8em;
+	margin-bottom:			35px;
+}
+#xo-logger-tabs a:hover {background-color: transparent; color: #fff;}
+table #xo-logger-queries tr {width: 100%;)
+.outer {border: 1px solid silver;}
+.head {background-color: #c2cdd6; padding: 5px; font-weight: bold;}
+.even {background-color: #dee3e7; padding: 5px;}
+.odd {background-color: #E9E9E9; padding: 5px;}
+.foot {background-color: #c2cdd6; padding: 5px; font-weight: bold;}
+tr.even td {background-color: #dee3e7; padding: 5px;}
+tr.odd td {background-color: #E9E9E9; padding: 5px;}

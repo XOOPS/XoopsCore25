@@ -1,0 +1,233 @@
+（このメモはだいぶ古いので、あてになりません。ごめんなさい）
+
+
+●全体のフロー
+
+-(front-end).php
+ --mainfile.php
+   ---modules/protector/include/precheck.inc.php
+   ---include/common.php  (ここで初めてユーザーセッションが張られる）
+   ---modules/protector/include/postcheck.inc.php
+ --header.php
+   x ---modules/protector/blocks/protector_block.php (deleted)
+...
+
+mainfile.php へのパッチが全て
+
+
+
+●Anti-DoSの処理フロー
+
+・precheck.inc.php
+
+ここでの処理はなくなった。
+
+・postcheck.inc.php
+
+$protector->check_dos_attack() の呼び出し
+
+中身：
+  protector_access テーブルのガベコレ
+  同一IPから同一URIへの高頻度アクセスチェック (F5 Attack)
+   > protector_access テーブルへのレコード追加 (DELAYED INSERT)
+   > protector_access 内の同一IPレコードを最低でも5分先に延ばす（この処理、むしろ悪影響がありそうに思えるので、とりあえず外してみる）
+   > preferences で指定された処理を行ってfalseを返す
+   > banIP も即座にbad_ipsに登録する
+   > exit だけは、exit; する前に、ログ記録
+  USER_AGENT チェック
+   > 歓迎すべきUSER_AGENTなら、何も処理しないでOKとする
+   > USER_AGENTを詐称する悪意あるbotへの対策は今後の課題
+  同一IPから様々なURIへの高頻度アクセスチェック （メアド収集ボット等）
+  protector_access テーブルへのレコード追加 (DELAYED INSERT)
+   > preferences で指定された処理を行ってfalseを返す
+   > banIP も即座にbad_ipsに登録する
+   > exit だけは、exit; する前に、ログ記録
+  いずれにも該当しなければOK。
+
+返り値がfalseなら、ログ記録
+ここでは、purge() 処理などはしない
+
+
+・preferences で指定できる処理
+
+none   何も対抗処置はとらない。ログ記録だけ行う
+sleep  5秒数だけsleep()する。ApacheやMySQLの負荷を増やすだけかもしれず今は非推奨
+exit   即座にexitする
+banip  xoopsConfig の bad_ips に登録
+htaccess .htaccessにDENY FROMとして書き込む。uploads/.htaccess.bakがバックアップファイルで、バックアップがなくて、.htaccessがあれば自動作成。逆に、.htaccessの中身がなくてバックアップがある場合は、バックアップから書き戻す。uploads/は通常のパーミッションで問題ないが、.htaccessだけは、明示的に書込権限を与える必要あり。
+
+
+
+●不正ファイルアップロード対策
+
+precheck のみで行う。
+
+デフォルトでON。
+
+$_FILES を走査し、
+/(\.php|\.phtml|\.phtm|\.php3|\.php4|\.cgi|\.pl|\.asp)$/i
+というパターンに合致するファイル名があったら、即座にpurge()
+
+B-Wikiで自作ソフトを公開するなど、phpファイルを添付する用途では、この機能をOFFにする他ないだろう。
+
+モジュール側で、mainfile.php 呼び出し前に PROTECTOR_SKIP_FILESCHECKER を定義することでも、このチェックはスキップできる。B-Wikiなどが対応してくれると嬉しい。
+
+
+
+●システム変数汚染対策
+
+precheck のみで行う。
+
+見つかった時のデフォルト動作は、exit。
+
+$_POST, $_GET, $_COOKIE をリカーシヴに走査し、
+
+'GLOBALS'
+'_SESSION'
+'HTTP_SESSION_VARS'
+'_GET'
+'HTTP_GET_VARS'
+'_COOKIE'
+'HTTP_COOKIE_VARS'
+'_REQUEST'
+'_SERVER'
+'_ENV'
+'_FILES'
+'xoopsDB'
+'xoopsUser'
+'xoopsUserId'
+'xoopsUserGroups'
+'xoopsUserIsAdmin'
+'xoopsConfig'
+'xoopsOption'
+'xoopsModule'
+'xoopsModuleConfig'
+
+のインデックスが無いかを調べる。
+
+このチェックは、コンストラクタで行う
+
+precheck で見つかって、かつ、ban_ip 指定なら、とりあえずGETとPOSTだけ空にして、bad_ip登録予約。postcheckの時に、保護グループでなければban。
+
+即座に対応できる、という点で、普通に、exit が良いと思われる。
+
+
+
+●モジュール用IDの XSS , SQL Injection 対策
+
+precheck のみ。
+
+$_POST, $_GET, $_COOKIE を走査し、インデックスが 'id' で終わって、かつ、配列ではない変数については、intval() をかける
+
+デフォルトではOFF。
+
+
+
+●SQL Injection対策の２パターン
+
+postcheck のみ。common.php の後でも、ほぼ問題なかろう、という判断。
+
+$_POST, $_GET, $_COOKIE を再帰的に走査し、中身に、UNION または孤立した /* が無いかをチェックする
+
+（孤立した/* とは、対になる */ のない /* のこと。SQL Injectionにおいて、頻繁に使われる）
+
+見つかった場合のアクションはそれぞれ４段階選べる
+
+・何もしない
+
+・bit0 強制修正 （デフォルト）
+  UNION なら、UNI-ON と分解する
+  /* なら、最後に */ を付与する
+
+・bit1 終了
+  孤立した /* は普通に書込をしていても意外と良くあるパターンなので、掲示板などで投稿した途端、真っ白画面というのは、ちょっとビックリしてしまうだろう。
+
+・bit2 bad_ip 登録
+  終了でさえもビックリするのに、これはさすがにやりすぎか。
+
+
+
+●疑わしいファイル指定の禁止
+
+precheck でのみ行う。
+
+ファイル名をGETで直接指定する時に、ついチェックを忘れてディレクトリを遡られることを防ぐ。
+
+ファイルパスはかなりの厳密性を要求するので、意外とパターンは絞れる……と思っていたが、そうでもなさそう。
+
+とりあえず、ディレクトリを遡るためには、../ から開始するか、../../ というパターンを含む必要が絶対に必要なので、そういうパターン検知とした。
+
+もちろん、ヌルバイト対策は必要。
+
+デフォルトでON。
+
+2.3x までは、POSTについても行っていたが、POSTについて遡りチェックが必要なのは、2.0.9.2までのコア穴だけだろうから、そちらに移動した。
+
+
+
+●ヌルバイト対策
+
+コンストラクタで行う。（要するにprecheck）
+
+リクエスト文字列に \0 があると、各種チェックが有効に効かない。
+もともと、\0 が存在すること自体おかしいので、リカーシヴにチェックして、
+見つかった場合は、スペースに変換する。
+
+デフォルトでON。
+
+
+
+●セッションハイジャック対策
+
+postcheck のみ。
+
+セッションでIPを持ち、同一セッションで異なるIPアクセスが来た時点でロ
+グアウトさせる。
+
+ただし、プロクシのロードバランス・回線の二重化・携帯アクセスなどでは、
+アクセス毎にIPアドレスが変わることは良くあるので、とりあえずはグルー
+プ毎の対応とした。
+
+管理者グループだけ、IPチェックを有効にするのが、一番バランスがとれて
+いるとは思う。（デフォルトもそうなっている）
+
+
+
+●XOOPSコアバージョン固有の穴ふさぎ
+
+とりあえず、2.0.9.2 で見つかった穴を、Protector的手法で塞いでみた。
+一応、2.4からは、デフォルトをoffとしている。
+
+
+
+●拒否IPリストに載ってしまった時の救済策
+
+XOOPS_URL/modules/protector/admin/rescue.php
+で、あらかじめ設定しておいたパスワードを入力すれば、IP拒否そのものを中断する
+
+ただし、このパスワードはあらかじめ設定しておく必要がある。
+初期状態（パスワードが空文字）の場合、この救済策は無効となる。
+
+precheck で、この値を見て、md5化されていないなら、強制的にmd5ハッシュをとったものに置き換える。その判断基準は最初の３文字が'*=*'であるかどうか。とんでもない方法であることは自覚しているので突っ込まないでください :-)
+
+（でも、意外と良い方法かも）
+
+
+
+
+●ログレベル（暫定）
+
+ビットで対応
+--------------------------------
+1:   危険度の高いもの（デフォルト）
+     CONTAMI, UPLOAD
+     BruteForce, xmlrpc, CRITERIA,
+     misc debug, misc smilies, edituser avatar choose, findusersh
+     DBLayerTrapによるSQL Injection検出
+-------------------------------- Quiet
+16:  DoS, CRAWLER
+32:  NullByte, ISOCOM, UNION
+-------------------------------- quiet
+64:  ../ での遡り
+128: SPAM
+-------------------------------- full

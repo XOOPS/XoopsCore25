@@ -1,0 +1,67 @@
+/*
+ * Suico theme
+ * In memory of Marcello Brandao
+ * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @package         themes
+ * @since           2.5.x
+ * @author          Kris <http://www.xoofoo.org/>
+ * @maintained      The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @thanks			http://www.getintothis.com
+ * @version         $Id$
+*/
+
+#xo-wrapnav {width: 1020px; margin: 0 auto; font-size: .9em;}
+#menu1 { width : 550px; float:left;}
+.menu, .menu .toggle { height: 30px; line-height: 25px;}
+.menu .toggle {
+	display : 		block;
+	position: 		absolute;
+	background : 	#3390EF url(../img/navbar-bg.png) repeat-x left top;
+	color: 			#333;
+	font-family:	"Malgun Gothic", AppleGothic, Dotum, Lucida Grande, Verdana, Sans-serif;
+	font-weight: 	bold;
+
+	cursor: 		hand;
+	cursor: 		pointer;
+	z-index:		10;
+}
+.menu .toggle-hover { color: #fff;}
+.menu .items { position: absolute; margin-left : 100px !important;}
+.menu .items ul, .menu .items li { margin: 0; padding: 0; list-style-type: none;}
+.menu .items li {
+  float: 			left;
+  height: 			25px;
+  padding: 			0 20px 0 0;
+  line-height: 		25px;
+}
+.menu .items a {
+  text-decoration: none;
+  font-size: 		1em;
+  font-weight: 		bold;
+  color: 			#fff;
+}
+.menu .items a:hover { color: #333; text-shadow: 1px 1px 2px #aaa;}
+.menu .items a.current {color:#ff0000;}
+/* for current link */
+body#news .menu .xo-gbnavmod1 {background-color:transparent; color:#333; text-decoration: underline;}
+body#newbb .menu .xo-gbnavmod2 {background-color:transparent; color:#333; text-decoration: underline;}
+body#tdgallery.menu .xo-gbnavmod3 {background-color:transparent; color:#333; text-decoration: underline;}
+body#mytube .menu .xo-gbnavmod4 {background-color:transparent; color:#333; text-decoration: underline;}
+body#mylinks .menu .xo-gbnavmod5 {background-color:transparent; color:#333; text-decoration: underline;}
+body#mydownloads .menu .xo-gbnavmod6 {background-color:transparent; color:#333; text-decoration: underline;}
+body#contact .menu .xo-gbnavmodcontact {background-color:transparent; color:#333; text-decoration: underline;}
+body#sitemap .menu .xo-gbnavmodsitemap {background-color:transparent; color:#333; text-decoration: underline;}
+
+.clearfix:after {
+  content: 			".";
+  display: 			block;
+  height: 			0;
+  clear: 			both;
+  visibility: 		hidden;
+}
+.clearfix {display: inline-block;}
+/* Hides from IE-mac \*/
+* html .clearfix {height: 1%;}
+.clearfix {display: block;}
+/* End hide from IE-mac */

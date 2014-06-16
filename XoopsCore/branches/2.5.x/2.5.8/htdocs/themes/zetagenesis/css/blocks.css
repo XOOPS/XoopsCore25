@@ -1,0 +1,155 @@
+/* ===== columns list ===== */
+.xo-canvas-column ul {
+    margin:                 0;
+    padding:                .5em;
+    list-style-type:        none;
+}
+
+.xo-canvas-column ul ul {
+    padding-top:            0;
+    padding-bottom:         0;
+    padding-left:           1em;
+}
+
+/* ===== table cells in columns ===== */
+.xo-canvas-column .outer, .xo-canvas-column .outer td {
+    background-color:       transparent;
+    color:                  inherit;
+    border:                 0 none transparent !important;
+}
+
+.xo-canvas-column .outer, .xo-canvas-column .outer img {
+    margin:                 0;
+    padding:                0;
+    border:                 0 !important;
+}
+
+/* ===== left columns ===== */
+#xo-canvas-leftcolumn .xo-block {
+    margin-right:           11px;
+    margin-bottom:          10px;
+    background:             url(../img/bg-left_block.png) no-repeat left top;
+    padding-top:            4px;
+    width:                  170px; /* add by kris */
+}
+
+#xo-canvas-leftcolumn .xo-blocktitle {
+    min-height:             22px;
+    background-color:       transparent;
+    background:             url(../img/bg-left_blocktitle.png) no-repeat left bottom;
+    padding-bottom:         5px;
+    color:                  #555;
+    font-family:            "Lucida Grande", "Trebuchet MS", Verdana, sans-serif;
+    font-size:              1.1em;
+    font-weight:            bold;
+    text-align:             center;
+}
+
+#xo-canvas-leftcolumn .xo-blockcontent {
+    min-height:             110px;
+    background-color:       transparent;
+    background:             url(../img/bg-left_blockcontent.gif) no-repeat left top;
+    padding:                2px 8px 0;
+    color:                  #fff;
+}
+
+* html #xo-canvas-leftcolumn .xo-blockcontent {
+    height:                 110px;
+
+}
+
+#xo-canvas-leftcolumn .xo-blockcontent a {
+    background-color:       inherit;
+    color:                  #555;
+    text-decoration:         none;
+}
+
+#xo-canvas-leftcolumn .xo-blockcontent a:hover {
+    background-color:       inherit;
+    color:                  #000;
+    text-decoration:        none;
+}
+
+#xo-canvas-leftcolumn img {
+    margin:                 3px 3px 0 7px;
+    padding:                3px;
+    border:                 1px solid #999;
+}
+
+#xo-canvas-leftcolumn img:hover {
+    border:                 0;
+}
+
+/* ===== right column ===== */
+#xo-canvas-rightcolumn .xo-block { width: 170px; } /* add by kris */
+#xo-canvas-rightcolumn a {
+    background-color:       inherit;
+    color:                  #59709C;
+    text-decoration:        none;
+}
+
+#xo-canvas-rightcolumn a:hover {
+    background-color:       inherit;
+    color:                  #555;
+    text-decoration:        underline;
+}
+
+#xo-canvas-rightcolumn .xo-blocktitle {
+    background-color:       inherit;
+    color:                  #666F7D;
+    font-family:            "Lucida Grande", "Trebuchet MS", Verdana, sans-serif;
+    font-size:              1.1em;
+    font-weight:            bold;
+    text-align:             center;
+    border-bottom:          1px solid #ccc;
+}
+
+#xo-canvas-rightcolumn .xo-blockcontent {
+    padding:                .5em;
+}
+
+
+/* ======= center column ===========*/
+.xo-block ul {
+    margin:                 0;
+    padding:                0;
+    list-style-type:        none;
+}
+
+#xo-page .xo-blockszone .xo-blocktitle {
+    margin:                 0.5em;
+    background-color:       inherit;
+    padding:                0.25em;
+    color:                  #2652BA;
+    font-family:            "Lucida Grande", "Trebuchet MS", Verdana, sans-serif;
+    font-size:              1.2em;
+    font-weight:            bold;
+    border-bottom:          1px solid #ccc;
+}
+
+#xo-page .xo-blockszone .xo-blockcontent {
+    background-color:       inherit;
+    padding:                .5em;
+    color:                  #555;
+}
+
+#xo-page .xo-blockszone .xo-blockcontent img {
+    margin:                 3px 3px 0 7px;
+    padding:                3px;
+    border:                 0;
+}
+
+#xo-page .xo-blockszone .xo-blockcontent img:hover {
+    border:                 0;
+}
+
+#xo-page .xo-blockszone .xo-blockcontent a {
+    background-color:       inherit;
+    color:                  #1251c6;
+    text-decoration:        none;
+}
+
+#xo-page .xo-blockszone .xo-blockcontent a:hover {
+    background-color:       inherit;
+    color:                  #000;
+}

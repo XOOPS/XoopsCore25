@@ -1,0 +1,168 @@
+/*
+ * Suico theme
+ * In memory of Marcello Brandao
+ * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @package         themes
+ * @since           2.5.x
+ * @author          Kris <http://www.xoofoo.org/>
+ * @maintained      The XOOPS Project http://sourceforge.net/projects/xoops/
+ *
+ * @version         $Id$
+*/
+
+html, body {
+	width: 							99%;
+	margin:							0;
+	background-color:				#fff;
+	padding:						0;
+	font-family:					"Lucida Grande", Verdana, sans-serif;
+	color:							#000;
+}
+html {font-size:100.01%;}
+body {font-size:75%;}
+
+/* display none */
+#xo-noprint { display: none;}
+#xo-banner {display: none;}
+#xo-banner-ad { display: none;}
+#xo-canvas-leftcolumn { display: none;}
+#xo-canvas-rightcolumn { display: none;}
+#xo-userbar { display: none;}
+#xo-footerstatic { display: none;}
+#xo-banner-ad { display: none;}
+#xo-globalnav { display: none;}
+#xo-userbar {display:none;}
+#xo-blockviewall {display:none;}
+.xo-blockquickedit {display:none;}
+#xo-searchfooter {display:none;}
+#xo-rss {display:none;}
+#xo-logger-output  {display:none;}
+#system-select_notifications {display:none;}
+#xo-smiley { display: none;}
+#user_sigSmiley { display: none;}
+#user_sigStyletext { display: none;}
+select#user_sigFont, select#user_sigColor, select#user_sigFont, select#user_sigSize { display: none;}
+span#xoopsHiddenText { display: none;}
+hr {	display: none;}
+form [name=notification_select] { display: none;}
+input[type=submit], input[type=reset], input[type=button] {display:none;}
+
+/*================ display for print ====================*/
+h1, h2, h3, h4, h5, h6  {	text-decoration: none;}
+h1 { font-size: 1.3em; font-weight: bold;}
+h2 { font-size: 1.2em;}
+h3,h4,h5,h6 {font-size: 1em;}
+h1,h2,h3,h4,h5,h6 { page-break-after : avoid !important;}
+img { border: 0;}
+abbr, acronym { border: 0;}
+abbr[title]:after,acronym[title]:after{ content: " (" attr(title) ")";	font-style: italic;}
+blockquote,q {	font-style: italic;	quotes: "\00AB\00A0" "\00A0\00BB" "\0022" "\0022";}
+pre, code, table { page-break-inside : avoid !important;}
+pre {	border: 1px dotted;	padding: 12pt;}
+form, input, select { font-size: .9em;}
+input[type=text] {
+	border-width: 					0 0 1px 0 !important;
+	border-style: 					dotted;
+	border-color: 					#666;
+}
+input[type=checkbox] { margin: 0; border: none;}
+select {
+	font-size: 						.8em;
+	border-width: 					0 0 1px 0 !important;
+	border-style:					dotted;
+	border-color: 					#666;
+}
+textarea {
+	height: 						auto;
+	overflow: 						hidden;
+	font-size: 						.9em;
+	font-style: 					italic;
+	border: 						1px dotted #666 !important;
+}
+table th, thead {
+	padding-bottom: 				1em;
+	font-size: 						1.1em;
+	font-weight: 					bold;
+}
+#xo-page {
+	background-color: 				inherit;
+	color: 							#000;
+	font-size: 						1em;
+	line-height: 					1.2em;
+}
+#xo-footer {
+	margin-top: 					50px;
+	color: 							#777;
+	font-size: 						.8em;
+	text-align: 					center;
+}
+#xo-footer a {
+	background-color: 				inherit;
+	color: 							#999;
+	text-decoration: 				none;
+}
+.xo-blocktitle {
+	background-color: 				inherit;
+	padding: 						.5em 0 .5em 0;
+	color: 							#006cd5;
+	font-size: 						1.1em;
+}
+.xo-blockcontent {
+	font-size: 						.9em;
+	text-align: 					justify;
+}
+.xo-blockcontent a {
+	background-color: 				inherit;
+	color: 							#ff0000;
+	font-style: 					italic;
+	text-decoration : 				none;
+}
+.xo-blockcontent a:after,.xo-blockcontent a[href]:after {
+	background-color: 				inherit;
+	color: 							#999 !important;
+	content: 						" [\00A0" attr(href) "\00A0]";
+	font-size: 						.8em;
+	text-decoration: 				none;
+}
+.item {
+	background-color: 				inherit;
+	padding:						5px;
+	color: 							#000;
+}
+.itemFoot { display: none;}
+
+/* list */
+#xo-canvas-content ul {
+	margin: 						2px;
+	padding: 						2px;
+	font-size: 						.9em;
+	text-align: 					left;
+	list-style: 					square inside;
+}
+#xo-canvas-content li {}
+
+/* for newbb/cbb */
+td.foot { display: none;}
+form#quick_reply { display: none;}
+form[name=forum_jumpbox] { display: none;}
+select#topicoption, select#viewmode { display: none;}
+.comTitle {
+	background-color: 			inherit;
+	color: 						#006CD5;
+	font-size: 					.9em;
+}
+.comText { padding: 	2px;}
+.comUserStat { font-size: .7em;}
+.comUserStatCaption { font-size: .7em;}
+.comUserStatus {display:none;}
+.comUserRank {	font-size:1em;}
+.comUserRankText {font-size:.7em;
+}
+.comUserRankImg {}
+.comUserName {}
+.comUserImg {}
+.comDate { font-style: italic; font-size: .7em;}
+.comDateCaption {	font-size: .7em;}
+.signature { font-size: .7em; font-style: italic;}
+.itemPermaLink, .itemFoot, .itemAdminLink { display: none;}

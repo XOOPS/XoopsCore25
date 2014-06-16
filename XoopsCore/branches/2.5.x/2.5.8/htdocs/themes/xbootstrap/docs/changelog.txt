@@ -1,0 +1,73 @@
+1.02 2014-06-08 Final
+--------------------
+- Update pt-br lang (Angelo Rocha)
+- Add XOOPS Banners Support (Angelo Rocha)
+
+1.02 2014-06-08 Beta 2
+--------------------
+- Newbb index finished (Angelo Rocha)
+- Add Newbb viewtopic template (Angelo Rocha)
+- Add Newbb viewforum template (Angelo Rocha)
+
+1.02 2014-06-04 Beta 1
+--------------------
+- Add newbb template - Developing... (Angelo Rocha)
+- Add language support (Angelo Rocha)
+- Some bug fix in PM template (Angelo Rocha)
+- Add search block template (Angelo Rocha)
+- Add new users template (Angelo Rocha)
+- Add top users template (Angelo Rocha)
+- Add XOOPS Code Style (Angelo Rocha)
+- Add XOOPS Quote Style (Angelo Rocha)
+- Add search block template (Angelo Rocha)
+- Add shot theme in block of theme select (Angelo Rocha)
+- Add top search box (Angelo Rocha)
+
+1.01.3 2014-03-30
+--------------------
+- Add reads count in publisher template (Angelo Rocha)
+- Add width 100% in elements of publisher search block (Angelo Rocha)
+- Add style for xoopscodes class (Angelo Rocha)
+- Add new style for block tdmdownloads_block_new.html (Angelo Rocha)
+
+1.01.2 2014-03-16
+--------------------
+- Redesigning xoopstube (Angelo Rocha)
+- Added table of contents in style.css (Angelo Rocha)
+
+1.01 Final 2014-02-11
+--------------------
+- Bootstrap Upgraded to 3.1.0 (Angelo Rocha)
+- Add xoops.css to folder theme (removed reset) (Angelo Rocha)
+- Many css ajusts (Angelo Rocha)
+
+1.01 Beta 3 2014-01-29
+-------------------
+- Add xoopstube templates (Heyula)
+- Add news templates (Angelo Rocha)
+- Fixed HTML5 in IE 8 (Angelo Rocha)
+- Fixed Reponsive Layout IE 8 (Angelo Rocha)
+
+-1.01 Beta 2 2014-01-18
+-------------------
+- Add TDMDownloads template (Angelo Rocha)
+- Add Publisher templates (Bleekk)
+- Add XOOPS Faq template (Heyula)
+- Add Obituairies template (Heyula)
+
+1.01 Beta 1 2014-xx-xx
+-------------------
+- changed/added pictures (mamba)
+- added /docs folder (mamba)
+
+1.00 Final 2014-01-02
+-------------------
+First Release (Angelo Rocha)
+- Add new templates to:
+    - PM
+    - Profile
+    - extGallery
+    - XOOPS Comments
+    - XOOPS Notifications
+    - XOOPS Tags
+    - Contact

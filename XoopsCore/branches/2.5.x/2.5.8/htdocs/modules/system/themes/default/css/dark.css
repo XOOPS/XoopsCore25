@@ -1,0 +1,128 @@
+/*
+ * Default Admin Theme
+ *
+ * @copyright       Xoops Project <http://www.xoops.org/>
+ * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @package         themes
+ * @since           2.5.x
+ * @author          Xoops Design Theme <http://www.xoops.org/>
+ * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ *
+ * @version         $Id
+*/
+body {
+	background-color: #EBE9E1;
+}
+
+.outer {
+	border: 2px solid #CCCCCC;
+}
+
+.head {
+	background-color: #AFAFAF;
+}
+
+.even {
+	background-color: #EFEFEF;
+}
+
+.odd {
+	background-color: #DFDFDF;
+}
+
+#xo-logo-head {
+	background: url(../img/dark/dark-head.png) repeat-x;
+	border-bottom: 1px solid #000;
+}
+
+#xo_globalnav {
+	background: url(../img/dark/dark-menu.png) repeat-x;
+	border-top: 1px solid #000;
+	border-bottom: 1px solid #ccc;
+}
+
+#xo_globalnav ul.menu ul li a {
+	background: #5F5F5F;
+	color: #f7f7f7;
+}
+
+#xo_globalnav ul.menu ul li a:hover {
+	background-color: #333;
+	color: #f7f7f7;
+}
+
+#xo_globalnav ul.menu .menulink {
+	border: 1px solid #333;
+	color: #ccc;
+	background: url(../img/dark/dark-menu.png) repeat-x;
+}
+
+#xo_globalnav ul.menu .menulink:hover,ul.menu .menuhover {
+	border: 1px solid #ccc;
+	background: #333;
+}
+
+#xo_globalnav ul.menu .sub {
+	background: #5F5F5F url(../img/arrow-light.gif) 156px 8px no-repeat;
+}
+
+#choosestyle a {
+	border: 1px solid #CCCCCC;
+	background-color: #f9f9f9;
+	color: #333;
+}
+
+#xo-body {
+	background-color: #F7F7F7;
+	border: 2px solid #ccc;
+}
+
+#xo-nav-options {
+	background: url(../img/dark/dark-navcp.png) repeat-x;
+	border-top: 1px solid #000;
+	border-bottom: 1px solid #000;
+}
+
+#xo-nav-options a {
+	border: 1px solid #00536C;
+}
+
+#xo-nav-options a:hover {
+	background-color: #E0E6EF;
+	border-color: #ADD8E6;
+}
+
+#xo-nav-options .modname {
+	color: #1d1f24;
+}
+
+#xo-footer {
+	background-color: #333;
+	color: #f7f7f7;
+}
+
+#xo-icon a {
+	background-color: #f0f0f0;
+	color: #666666;
+	border: 1px solid #f9f9f9;
+}
+
+#xo-module-icons a {
+	background-color: #f0f0f0;
+	color: #666666;
+	border: 1px solid #f9f9f9;
+}
+
+#xo-icon a:hover,#xo-module-icons a:hover {
+	color: #1E90FF;
+	border-left: 1px solid #eee;
+	border-top: 1px solid #eee;
+	border-right: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	background: #f9f9f9;
+}
+
+#main-logo a {
+	background: url(../img/dark/header-logo_big.png) no-repeat !important
+		;
+}

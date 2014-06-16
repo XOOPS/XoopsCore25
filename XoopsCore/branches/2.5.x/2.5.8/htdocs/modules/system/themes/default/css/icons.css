@@ -1,0 +1,120 @@
+/*
+ * Default Admin Theme
+ *
+ * @copyright       Xoops Project <http://www.xoops.org/>
+ * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @package         themes
+ * @since           2.5.x
+ * @author          Xoops Design Theme <http://www.xoops.org/>
+ * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ *
+ * @version         $Id
+*/
+
+#xo-system-icons {
+	height: 200px;
+}
+
+#xo-module-icons,#xo-icon {
+	margin: 3px;
+	font-family: tahoma, Helvetica, sans-serif;
+	text-align: center;
+}
+
+#xo-module-icons {
+   min-height: 250px;
+}
+
+#xo-icon a {
+	display: block;
+	float: left;
+	height: 75px !important;
+	width: 70px !important;
+	vertical-align: middle;
+	text-decoration: none;
+	background-color: #f0f0f0;
+	padding: 2px;
+	margin: 3px;
+	color: #666666;
+	border: 1px solid #f9f9f9;
+	-moz-border-radius: 9px;
+	-webkit-border-radius: 9px;
+	-khtml-border-radius: 9px;
+	border-radius: 9px;
+	box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+	-moz-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+	-webkit-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+	-khtml-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+}
+
+#xo-module-icons a {
+	display: block;
+	float: left;
+	height: 80px !important;
+	width: 80px !important;
+	vertical-align: middle;
+	text-decoration: none;
+	background-color: #f0f0f0;
+	padding: 2px 5px 1px 5px;
+	margin: 3px;
+	color: #666666;
+	border: 1px solid #f9f9f9;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	-khtml-border-radius: 6px;
+	border-radius: 6px;
+	box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+	-moz-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+	-webkit-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+	-khtml-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+}
+
+#xo-icon a:hover,#xo-module-icons a:hover {
+	color: #1E90FF;
+	border-left: 1px solid #eee;
+	border-top: 1px solid #eee;
+	border-right: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	background: #f9f9f9;
+	filter: alpha(opacity =                                   80);
+	-moz-opacity: 0.8;
+	-webkit-opacity: 0.8;
+	-khtml-opacity: 0.8;
+	opacity: 0.8;
+	box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+	-moz-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+	-webkit-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+	-khtml-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+}
+
+#xo-icon img{
+	margin-top: 8px;
+	margin-bottom: 8px;
+}
+
+#xo-module-icons  img {
+	margin-top: 8px;
+	margin-bottom: 8px;
+	max-width: 70px !important;
+}
+
+#xo-icon span,#xo-module-icons span {
+	font-size: 10px;
+	font-weight: bold;
+	display: block;
+}
+
+#xo-icon span.uno,#xo-module-icons span.uno {
+	font-size: 11px;
+	font-weight: normal;
+	text-decoration: underline;
+	color: Blue;
+}
+
+#xo-icon span.unor,#xo-module-icons span.unor {
+	font-size: 11px;
+	font-weight: normal;
+	text-decoration: underline;
+	color: #CC0000;
+}
+ 

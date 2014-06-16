@@ -1,0 +1,344 @@
+/* ===== titles ===== */
+h1 { font-size:             1.6em;}
+h2 { font-size:             1.4em;}
+h3 { font-size:             1.2em;}
+h4 { font-size:             1.1em;}
+h5 { font-size:             .9em;}
+h6 { font-size:             .8em;}
+
+h1 {
+    clear:                  both;
+    margin-top:             .25em;
+    margin-bottom:          .5em;
+    background-color:       inherit;
+    padding-left:           .25em;
+    color:                  #1251c6;
+    font-weight:            bold;
+    border-bottom:          1px solid #ccc;
+}
+
+h1 a, h2 a{
+    background-color:       inherit;
+    color:                  #1251c6;
+    text-decoration:        none;
+}
+
+h1 a:hover, h2 a:hover {
+    text-decoration:        underline;
+}
+
+h4 {
+    padding:                15px 2px 5px 0;
+    font-weight:            bold;
+}
+
+/* ===== hypertext links ===== */
+a[rel~=alternate] {
+    float:                  right;
+}
+
+a {
+    background-color:       transparent;
+    color:                  #1251c6;
+    text-decoration:        none;
+}
+
+a:hover {
+    background-color:       transparent; /* modified by kris */
+    color:                  #000;
+}
+
+/* ===== images ===== */
+img {
+    border:                 0;
+}
+
+/* ===== other attributes of contents ===== */
+hr {
+    display:                none;
+}
+p {
+    line-height:            1.2em;
+    padding-bottom:         5px;
+}
+q {}
+cite {}
+em {}
+dfn {}
+strong {}
+del {}
+address {}
+bdo {
+    direction:              ltr;
+}
+
+/* ===== acronyms, abbreviation ===== */
+acronym, abbr {
+    border-bottom:          #666 1px dashed;
+    cursor:                 help;
+}
+
+acronym:hover, abbr:hover {
+    border-bottom-color:    #FF9900;
+}
+
+/* ===== lists ===== */
+#xo-canvas-content ul, #xo-canvas-content ol {
+    margin:                 2px;
+    padding:                2px;
+    text-align:             left;
+}
+
+#xo-canvas-content ul {
+    list-style:             disc inside;
+}
+
+#xo-canvas-content ol {
+    list-style:             decimal inside;
+}
+
+#xo-canvas-content li {
+    margin-left:            2px;
+    font-size:              .9em;
+    line-height:            1.4em;
+}
+
+/* ===== core messages ===== */
+.errorMsg,.confirmMsg, .resultMsg, .successMsg {
+    margin-top:             1em;
+    margin-bottom:          1em;
+    padding:                .8em;
+    font-size:              1.1em;
+    text-align:             center;
+    border:                 2px solid #ddd;
+}
+
+.errorMsg {
+    background-color:       #FBE3E4;
+    color:                  #D12F19;
+    border-color:           #FBC2C4;
+}
+
+.confirmMsg {
+    background-color:       #FFF6BF;
+    color:                  #817134;
+    border-color:           #FFD324;
+}
+
+.resultMsg, .successMsg {
+    background-color:       #E6EFC2;
+    color:                  #529214;
+    border-color:           #C6D880;
+}
+
+.errorMsg a {
+    background-color:       transparent;
+    color:                  #D12F19;
+}
+
+.confirmMsg a {
+    background-color:       transparent;
+    color:                  #817134;
+}
+
+.successMsg a {
+    background-color:       transparent;
+    color:                  #529214;
+}
+
+/* ===== Quote, code and signature ===== */
+.xoopsCode {}
+.xoopsQuote {}
+blockquote {
+	display:				block;
+    width:                  90%;
+    margin-left:            .5em;
+    background-color:       #f4faff;
+    padding:                .5em;
+    color:                  #555;
+    font-style:             normal;
+    border-color:           #8EC0F9;
+    border-style:           solid;
+    border-width:           1px 1px 1px 6px;
+}
+code {
+	display:				block;
+    width:                  90%;
+    max-height:             300px;
+    margin-left:            .5em;
+    overflow:               auto;
+    background-color:       #fff;
+    padding:                .5em;
+    color:                  #555;
+    font-size:              .9em;
+    font-family:            monospace;
+    border:                 1px solid #d0d0d0;
+}
+.signature {
+    font-size:              .9em;
+    font-style:             normal;
+}
+
+/* ===== Data: Entities list ===== */
+ul.xodata-list {
+    margin:                 0;
+    padding:                0;
+    list-style-type:        none;
+}
+
+caption {
+    font-weight:            bold;
+    font-style:             normal;
+}
+
+table.outer, table.xodata-list, table.xo-formfields {
+    width:                  100%;
+    background-color:       inherit;
+    color:                  #444;
+    border-spacing:         1px;
+}
+table.xodata-list {
+    border-spacing:         0;
+    border-collapse:        collapse;
+}
+.xodata-list .xodata-entity {
+    position:               relative;
+    margin-top:             1.7em;
+    margin-bottom:          1.7em;
+}
+
+table td {
+    padding:                0;
+    border-width:           0;
+}
+table th, table.outer th,
+#xo-page table.outer th.head,
+#xo-page table.xodata-list thead th,
+#xo-page table.xo-formfields thead th {
+    background:             #4AA3F6 url(../img/table-caption3.png) repeat-x left top;
+    padding:                2px .25em;
+    color:                  #fff;
+    font-weight:            bold;
+    border:                 1px solid #65ACEE;
+}
+
+table.outer th a,
+#xo-page table.xodata-list thead th a,
+#xo-page table.xo-formfields thead th a {
+    background-color:       inherit;
+    color:                  #eee;
+}
+
+table.outer td,
+#xo-page table.xodata-list tbody td,
+#xo-page table.xo-formfields tbody td {
+    background-color:       #fcfcfc;
+    padding:                2px .25em;
+    color:                  inherit;
+    border:                 1px solid #efefef;
+}
+
+#xo-canvas-rightcolumn .outer td {
+    font-size:              .9em;
+}
+table.outer .head,
+table.outer .head td,
+table.outer td.odd,
+#xo-page  table.xodata-list tbody th,
+#xo-page  table.xodata-list tbody td.odd,
+#xo-page  table.xo-formfields tbody th {
+    background-color:       #f4f4f6;
+    color:                  inherit;
+}
+#xo-page table.xodata-list tfoot td, #xo-page table.xodata-list tfoot th {
+    background-color:       #fcfcfc;
+    padding:                4px .25em;
+    color:                  inherit;
+    text-align:             center;
+    border:                 1px solid #efefef;
+}
+#xo-page  table.xo-formfields tbody th {
+    padding:                2px .5em;
+    vertical-align:         top;
+}
+#xo-page  table.xodata-list tbody th[scope=col] {
+    background:             #c5c5c5 url(../img/table-caption_grey.png) repeat-x left top;
+    color:                  inherit;
+}
+#xo-page  table.xodata-list {
+    border:                 1px solid #ccc;
+}
+.xodata-list .xodata-title, table.item td.itemHead {
+    background-color:       #f4f4f4;
+    color:                  #666;
+    padding:                .25em .5em;
+    font-size:              1.1em;
+}
+
+body.newbb .xodata-list .xodata-title {
+    margin:                 0;
+    background:             #4AA3F6 url(../img/table-caption3.png) repeat-x left top;
+    padding:                2px .25em;
+    color:                  #fff;
+    font-size:              1em;
+    font-weight:            bold;
+    border:                 1px solid #65ACEE;
+}
+.xodata-list .xodata-title a, table.item td.itemHead a {
+    background-color:       inherit;
+    color:                  #333;
+    font-weight:            bold;
+}
+.xodata-list .xodata-entity .xodata-header, .xodata-list .xodata-entity .xodata-body {
+    border-left:            1px solid #f0f0f0;
+    border-right:           1px solid #f0f0f0;
+}
+.xodata-list .xodata-body {
+    padding-bottom:         0;
+}
+.itemBody {
+    clear:                  both;
+    padding-top:            1em;
+    padding-bottom:         1em;
+}
+.xodata-list .itemBody {
+    padding:                0;
+}
+table.item {
+    margin-bottom:          1.5em;
+    border:                 1px solid #f0f0f0;
+}
+table.item table {
+    width:                  100% !important;
+}
+table.item table td {
+    padding:    .           25em .5em;
+}
+table.item .itemText {
+    margin:                 .25em 0;
+}
+table.item .itemFoot {
+    font-size:              .9em;;
+}
+table.item td.itemInfo, table.item td.itemBody {
+    border-left:            1px solid #f8f8f8;
+    border-right:           1px solid #f8f8f8;
+}
+.itemPoster {
+    font-size:              .9em;
+    font-style:             normal;
+}
+.itemPostDate {
+    font-size:              .9em;
+    font-style:             normal;
+}
+.itemStats {
+    font-size:              .9em;
+    font-style:             normal;
+}
+.itemAdminLink {
+    font-size:              .9em;
+}
+.itemPermaLink {
+    font-size:              .9em;
+}

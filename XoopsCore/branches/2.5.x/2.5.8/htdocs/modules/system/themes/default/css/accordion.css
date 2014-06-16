@@ -1,0 +1,82 @@
+/*
+ * Default Admin Theme
+ *
+ * @copyright       Xoops Project <http://www.xoops.org/>
+ * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @package         themes
+ * @since           2.5.x
+ * @author          Xoops Design Theme <http://www.xoops.org/>
+ * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ *
+ * @version         $Id
+*/
+
+#accordion {
+	border:1px solid #f5f5f5;	
+	background-color: #f0f0f0;
+	color: #333;
+	width: 100%;
+	box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+	-moz-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+	-webkit-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+	-khtml-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+}
+
+/* accordion header */
+#accordion h5 {
+	padding: 5px 10px;
+	cursor: pointer;
+	position: relative;
+	margin: 1px;
+	background: url(../img/accordion.png) repeat-x !important;
+	color: #fff;
+	border: 1px solid #FFF;
+	font-weight: bold;	
+}
+
+/* currently active header */
+#accordion h5.current {
+	cursor:default;
+	background-color: #f7f7f7;
+}
+
+/* accordion pane */
+#accordion .pane {
+	display:none;
+	padding:10px;
+	font-size:12px;
+	line-height: 120%;
+}
+
+.xgiftshop {	
+  text-align: center !important;
+}
+
+#xokeytitle {
+	padding: 2px;
+	font-size: 13px;
+	font-weight: bold;
+	color: #333;
+}
+
+#xokeynumber {
+   text-align: center;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	font-size: 13px;
+	font-weight: bold;
+	color: #92EF2C;
+}
+
+#xolicenses {
+	padding: 5px 18px 5px 18px !important;
+}
+
+#xolicenses a{
+	color: #45C5DF;
+}
+
+#xolicenses a:hover {
+	color: #FF0000;
+	text-decoration: none;
+}

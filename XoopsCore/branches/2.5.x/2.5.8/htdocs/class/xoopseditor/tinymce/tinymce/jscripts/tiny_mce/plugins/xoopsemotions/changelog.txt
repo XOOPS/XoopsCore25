@@ -1,0 +1,11 @@
+Tinymce plugin Xoopsemotions Changelog
+
+============================
+2009/02/15: Version 1.1
+============================
++ improved : Add tab to upload new xoopsemotions (dugris)
+
+============================
+2008/03/01: Version 1.0
+============================
+- Xoopsemotions plugin v1.0 created for TinyMCE v3.0.1 (luciorota)

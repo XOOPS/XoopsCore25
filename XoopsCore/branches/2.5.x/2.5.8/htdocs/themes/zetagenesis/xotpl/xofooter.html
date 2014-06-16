@@ -1,0 +1,1 @@
+<div id="xo-footer"><{$xoops_footer}></div>

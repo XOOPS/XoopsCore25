@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<{$xoops_langcode}>" lang="<{$xoops_langcode}>">
+<head>
+    <!-- Assign Theme name -->
+    <{assign var=theme_name value=$xoTheme->folderName}>
+    
+    <!-- Assign Theme path -->
+    <{assign var=theme_path value=$xoTheme->path}>
+
+    <!-- Title and meta -->
+    <meta http-equiv="content-language" content="<{$xoops_langcode}>" />
+    <meta http-equiv="content-type" content="text/html; charset=<{$xoops_charset}>" />
+    <title><{if $xoops_pagetitle !=''}><{$xoops_pagetitle}> - <{/if}><{$xoops_sitename}></title>
+    <meta name="robots" content="<{$xoops_meta_robots}>" />
+    <meta name="keywords" content="<{$xoops_meta_keywords}>" />
+    <meta name="description" content="<{$xoops_meta_description}>" />
+    <meta name="rating" content="<{$xoops_meta_rating}>" />
+    <meta name="author" content="<{$xoops_meta_author}>" />
+    <meta name="copyright" content="<{$xoops_meta_copyright}>" />
+    <meta name="generator" content="XOOPS" />
+
+    <!-- Rss -->
+    <link rel="alternate" type="application/rss+xml" title="" href="<{xoAppUrl backend.php}>" />
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/ico" href="<{$xoops_url}>/favicon.ico" />
+
+    <!-- customized header contents -->
+    <{$xoops_module_header}>
+</head>
+<body id="<{$xoops_dirname}>" class="<{$xoops_langcode}>">
+
+<table border="0" width="100%" cellspacing="0" cellpadding="0">
+    <tr>
+        <td class="bg_head">
+            <a href="<{$xoops_url}>/admin.php" rel="external" title="<{$xoops_sitename}>">
+                <img src="<{xoImgUrl img/xoops-logo.png}>" alt="<{$xoops_sitename}>" />
+            </a>
+        </td>
+        <td class="bg_head">&nbsp;</td>
+    </tr>
+    <tr>
+        <td align="left" colspan="3" class="bg5">
+            <table border="0" width="100%" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="1%"><img src="<{xoImgUrl img/hbar_left.gif}>" width="16" height="23" alt="" /></td>
+                    <td class="hbar_middle alignmiddle">&nbsp;<a href='<{$xoops_url}>/admin.php'><{$smarty.const._CPHOME}></a>&nbsp;|&nbsp;<a href='<{xoAppUrl modules/system/help.php}>'><{$smarty.const._AM_SYSTEM_HELP}></a>&nbsp;|&nbsp;<a href='<{$xoops_url}>/admin.php?xoopsorgnews=1'>XOOPS News</a></td>
+                    <td class="hbar_middle alignmiddle" align='right'><a href='<{$xoops_url}>/user.php?op=logout'><{$smarty.const._LOGOUT}></a>&nbsp;|&nbsp;<a href='<{$xoops_url}>/'><{$smarty.const._YOURHOME}></a> &nbsp;</td>
+                    <td width="1%"><img src="<{xoImgUrl img/hbar_right.gif}>" width="16" height="23" alt="" /></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<table border="0" width="100%" cellspacing="0" cellpadding="0">
+    <tr>
+        <td width="1%" valign="top" class="bg5 bg_menu" align="center"></td>
+        <td width="15%" valign="top" class="bg5" align="center">
+            <img src="<{xoImgUrl img/menu.gif}>" alt="" /><br />
+            <table border="0" cellpadding="4" cellspacing="0" width="100%">
+                <{foreach item=list from=$admin_menu}>
+                <tr><td align="center"><{$list.content}></td></tr>
+                <{/foreach}>
+            </table>
+            <br />
+        </td>
+        <td align="left" valign="top" width="82%">
+            <div class="content">
+                <{if $xo_system_menu}><br /><{$xo_system_menu}><{/if}>
+                <br />
+                <{$xoops_contents}>
+            </div><br />
+        </td>
+        <td width="1%" class="bg_content"></td>
+    </tr>
+    <tr>
+        <td align="center" colspan="4" class="bg5" height="15">
+            <table border='0' width='100%' cellspacing='0' cellpadding='0'>
+                <tr>
+                    <td width='1%'><img src='<{xoImgUrl img/hbar_left.gif}>' width='16' height='23' alt="" /></td>
+                    <td width='99%' class='hbar_middle alignmiddle center'>
+                        <div class='fontSmall'>Powered by&nbsp;<{$smarty.const.XOOPS_VERSION}> &copy; 2001-<{$smarty.now|date_format:"%Y"}> <a href='http://xoops.sourceforge.net/' rel='external' title='The XOOPS Project'>The XOOPS Project</a></div>
+                    </td>
+                    <td width='1%'><img src='<{xoImgUrl img/hbar_right.gif}>' width='10' height='23' alt="" /></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

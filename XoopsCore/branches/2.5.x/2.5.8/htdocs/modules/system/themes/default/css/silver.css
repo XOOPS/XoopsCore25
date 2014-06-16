@@ -1,0 +1,172 @@
+/*
+ * Default Admin Theme
+ *
+ * @copyright       Xoops Project <http://www.xoops.org/>
+ * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @package         themes
+ * @since           2.5.x
+ * @author          Xoops Design Theme <http://www.xoops.org/>
+ * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ *
+ * @version         $Id
+*/
+body {
+	background-color: #EBE9E1;
+}
+
+.outer {
+	border: 2px solid #D5D1DF;
+}
+
+.head {
+	background-color: #ebebeb;
+}
+
+.even {
+	background-color: #D1DBDF;
+}
+
+.odd {
+	background-color: #efefef;
+}
+
+#xo-logo-head {
+	background: url(../img/silver/header-bg_big.png) repeat-x;
+	border-bottom: 1px solid #fff;
+}
+
+#xo_globalnav {
+	background: url(../img/silver/header.gif);
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #ccc;
+}
+
+#xo_globalnav ul.menu ul li a {
+	background: #ddd;
+	color: #444;
+}
+
+#xo_globalnav ul.menu ul li a:hover {
+	background-color: #c5c5c5;
+	color: #000;
+}
+
+#xo_globalnav ul.menu .menulink {
+	border: 1px solid #ededed;
+	color: #333;
+	background: url(../img/silver/header.gif);
+}
+
+#xo_globalnav ul.menu .menulink:hover,ul.menu .menuhover {
+	border: 1px solid #aaa;
+	background: url(../img/silver/header_over.gif);
+}
+
+#xo_globalnav ul.menu .sub {
+	background: #ebebeb url(../img/arrow.gif) 156px 8px no-repeat;
+}
+
+#choosestyle a {
+	border: 1px solid #CCCCCC;
+	background-color: #595B5F;
+	color: #f7f7f7;
+}
+
+#xo-body {
+	background-color: #f7f7f7;
+	border: 2px solid #cfcfcf;
+}
+
+#xo-nav-options {
+	background: #e7e7e7;
+	border-top: 1px solid #FFFFFF;
+	border-bottom: 1px solid #CCCCCC;
+	background: -moz-linear-gradient(center bottom, rgb(321,321,321) 0%, rgb(191,191,191) 100%);
+	background: -webkit-gradient(linear, left bottom, left top, color-stop(0, rgb(321,321,321)), color-stop(1, rgb(191,191,191)));
+	background: -khtml-gradient(linear, left bottom, left top, color-stop(0, rgb(321,321,321)), color-stop(1, rgb(191,191,191)));
+}
+
+#xo-nav-options a {
+	border: 1px solid #DFE0FD;
+}
+
+#xo-nav-options a:hover {
+	background-color: #E7F4F7;
+	border-color: #ADD8E6;
+}
+
+#xo-nav-options .modname {
+	color: #606060;
+}
+
+#xo-footer {
+	background-color: #CFCFCF;
+	color: #666666;
+	background: -moz-linear-gradient(center bottom, rgb(191,191,191) 0%, rgb(207,207,207) 100%);
+	background: -webkit-gradient(linear, left bottom, left top, color-stop(0, rgb(191,191,191)), color-stop(1, rgb(207,207,207)));
+	background: -khtml-gradient(linear, left bottom, left top, color-stop(0, rgb(191,191,191)), color-stop(1, rgb(207,207,207)));
+}
+
+#xo-footer a {
+	color: #333;
+	background-color: transparent:
+}
+
+#xo-footer a:hover {
+	color: #53ADBF;
+	text-decoration: none;
+	background-color: transparent;
+}
+
+#xo-icon a {
+	background-color: #f0f0f0;
+	color: #666666;
+	border: 1px solid #f9f9f9;
+}
+
+#xo-module-icons a {
+	background-color: #f0f0f0;
+	color: #666666;
+	border: 1px solid #f9f9f9;
+}
+
+#xo-icon a:hover,#xo-module-icons a:hover {
+	color: #1E90FF;
+	border-left: 1px solid #eee;
+	border-top: 1px solid #eee;
+	border-right: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	background: #f9f9f9;
+}
+
+#main-logo a {
+	background: url(../img/silver/header-logo_big.png) no-repeat !important;
+}
+
+#accordion h5 {
+	background: #c7c7c7 !important;
+	color: #333 !important;
+}
+/*=========== logger ============*/
+#xo-logger-tabs {
+    background-color: #BFBFBF !important;
+    
+}
+
+div.jGrowl div.jGrowl-notification,div.jGrowl div.jGrowl-closer {
+	background: #5b5b5b;
+	color: #f7f7f7;
+	border: 2px solid #333;
+}
+
+input[type=submit],input[type=reset],input[type=button],.xo-formbuttons,.formButton,button
+	{
+	background-color: #595B5F;
+	color: #f7f7f7;
+}
+
+input[type=submit]:hover,input[type=reset]:hover,input[type=button]:hover,.xo-formbuttons:hover,.formButton:hover,button:hover
+	{
+	background-color: #C2CEEF;
+}
+#xo-modname {color : #898A8D;}

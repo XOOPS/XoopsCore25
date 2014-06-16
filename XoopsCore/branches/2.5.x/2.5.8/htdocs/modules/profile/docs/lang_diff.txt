@@ -1,0 +1,39 @@
+LANGUAGE DIFFERENCES
+=====================
+
+Below are language differences from a version to next version.
+
+Release 1.63
+=================
+admin.php
+-----------
+define('_PROFILE_AM_REQUIRED_TOGGLE', 'Toggle Required Field');
+define('_PROFILE_AM_REQUIRED_TOGGLE_SUCCESS', 'Successfully Changed Required Field ');
+define('_PROFILE_AM_REQUIRED_TOGGLE_FAILED', 'Changing Required Field Failed');
+
+define('_PROFILE_AM_SAVESTEP_TOGGLE', 'Toggle Save');
+define('_PROFILE_AM_SAVESTEP_TOGGLE_SUCCESS', 'Successfully Changed Save After Step');
+define('_PROFILE_AM_SAVESTEP_TOGGLE_FAILED', "Changing 'Save After Step' Failed");
+
+Release 1.62
+=================
+
+admin.php
+-----------
+define('_PROFILE_AM_ACTION', 'Action');
+
+
+main.php
+-----------
+
+define("_PROFILE_MI_ABOUT", "About");
+define("_PROFILE_MI_HOME", "Home");
+
+
+Release 1.86
+=================
+
+modinfo.php
+------------
+define('_PROFILE_MI_PROFILE_CAPTCHA_STEP1',"Use Captcha after the second Registration step?");
+define('_PROFILE_MI_PROFILE_CAPTCHA_STEP1_DESC',"Select 'Yes' to add extra measure against Spam registration by bots" );

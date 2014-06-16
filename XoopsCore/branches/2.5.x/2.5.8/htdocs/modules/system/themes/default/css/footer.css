@@ -1,0 +1,48 @@
+/*
+ * Default Admin Theme
+ *
+ * @copyright       Xoops Project <http://www.xoops.org/>
+ * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @package         themes
+ * @since           2.5.x
+ * @author          Xoops Design Theme <http://www.xoops.org/>
+ * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ *
+ * @version         $Id
+*/
+
+#xo-footer {
+	padding: 10px;
+	background-color: #333;
+	background: -moz-linear-gradient(center bottom, rgb(79,74,74) 0%, rgb(51,51,51) 100%);
+	background: -webkit-gradient(linear, left bottom, left top, color-stop(0, rgb(79,74,74)), color-stop(1, rgb(51,51,51)));
+	background: -khtml-gradient(linear, left bottom, left top, color-stop(0, rgb(79,74,74)), color-stop(1, rgb(51,51,51)));
+	border-top: 2px solid #afafaf;
+	text-align: center;
+	font-size: 10px;
+	font-weight: bold;
+	color: #f7f7f7;
+	height: 65px;
+}
+
+#xo-footer a {	color: #D5AE14; background-color: transparent;}
+
+#xo-footer a:hover {	color: #f7f7f7;	text-decoration: none; background-color: transparent;}
+
+#xo-footer-body {	height: 20px; margin: 10px auto; width: 500px;}
+
+#xo-footer-rss {
+	display: 		block;
+	float: 		left;
+	margin-left:        50px;
+	margin-top:        -40px;
+	text-align:		left;
+}
+
+#xo-uptop {
+	display: 		block;
+	float: 		right;
+	margin-right:      50px;
+	margin-top:        -30px;
+	text-align:		right;
+} 
