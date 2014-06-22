@@ -17,7 +17,7 @@
  * @version    $Id $
  **/
 
-include_once dirname(__FILE__) . '../../../include/cp_header.php';
+include_once dirname(__FILE__) . '/../../../include/cp_header.php';
 include_once dirname(__FILE__) . '/admin_header.php';
 xoops_cp_header();
 

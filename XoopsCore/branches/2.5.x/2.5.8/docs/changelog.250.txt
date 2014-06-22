@@ -41,7 +41,7 @@ Updated:
  - jQuery UI 1.10.4 (mamba)
  - jQuery Lightbox to 1.2.3 (mamba)
  - jQuery Form to 3.50.0 (mamba)
- - jQuery Tablesorter to 2.5.11 (mamba)
+ - jQuery Tablesorter to 2.15.11 (mamba)
  - jGrowl to 1.2.14 (mamba)
 
 ===============================
