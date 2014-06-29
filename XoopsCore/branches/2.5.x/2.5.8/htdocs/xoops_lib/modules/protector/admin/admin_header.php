@@ -17,7 +17,7 @@
  * @version         $Id$
  */
 
-//include_once dirname(dirname(dirname(dirname(__FILE__)))) . '/mainfile.php';
+//include_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
 include_once XOOPS_ROOT_PATH.'/mainfile.php';
 
 //include_once XOOPS_ROOT_PATH . '/include/cp_functions.php';

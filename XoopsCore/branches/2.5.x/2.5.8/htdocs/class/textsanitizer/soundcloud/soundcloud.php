@@ -12,7 +12,7 @@ class MytsSoundcloud extends MyTextSanitizerExtension
      */
     public function encode($textarea_id)
     {
-        $config = parent::loadConfig( dirname(__FILE__) );
+        $config = parent::loadConfig( __DIR__ );
 
         $code = "<img src='{$this->image_path}/soundcloud.png' alt='" . _XOOPS_FORM_ALT_SOUNDCLOUD
             . "' title='" .  _XOOPS_FORM_ALT_SOUNDCLOUD . "' '"
@@ -57,7 +57,7 @@ EOH;
     public static function myCallback($match)
     {
         $url = $match[1] . $match[2];
-        $config = parent::loadConfig(dirname(__FILE__));
+        $config = parent::loadConfig(__DIR__);
         if (!preg_match("/^http[s]?:\/\/(www\.)?soundcloud\.com\/(.*)/i", $url, $matches)) {
             trigger_error("Not matched: {$url}", E_USER_WARNING);
 

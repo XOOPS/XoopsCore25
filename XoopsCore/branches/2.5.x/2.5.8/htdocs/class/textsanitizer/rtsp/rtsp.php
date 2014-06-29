@@ -31,7 +31,7 @@ class MytsRtsp extends MyTextSanitizerExtension
      */
     function encode($textarea_id)
     {
-        $config = parent::loadConfig(dirname(__FILE__));
+        $config = parent::loadConfig(__DIR__);
         $code = "<img src='{$this->image_path}/rtspimg.gif' alt='" . _XOOPS_FORM_ALTRTSP . "' title='" . _XOOPS_FORM_ALTRTSP . "' '" . "' onclick='xoopsCodeRtsp(\"{$textarea_id}\",\""
             . htmlspecialchars(_XOOPS_FORM_ENTERRTSPURL, ENT_QUOTES) . "\",\""
             . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\""

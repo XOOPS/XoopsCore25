@@ -28,7 +28,7 @@
 // URL: http://www.xoops.org/                                                //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
-include_once dirname(__FILE__) . '/admin_header.php';
+include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 $indexAdmin = new ModuleAdmin();
 
@@ -104,4 +104,4 @@ case "delete":
 if ( isset($template_main)  ) {
     $GLOBALS['xoopsTpl']->display("db:{$template_main}");
 }
-include_once dirname(__FILE__) . '/admin_footer.php';
+include_once __DIR__ . '/admin_footer.php';

@@ -18,7 +18,7 @@
  * @version         $Id$
  */
 
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
+include __DIR__ . DIRECTORY_SEPARATOR . 'header.php';
 $myts =& MyTextSanitizer::getInstance();
 
 $limit_default = 20;
@@ -435,4 +435,4 @@ switch ($op ) {
         }
         break;
 }
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'footer.php';
+include __DIR__ . DIRECTORY_SEPARATOR . 'footer.php';

@@ -19,7 +19,7 @@
  */
 
 $xoopsOption['pagetype'] = "user";
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
+include __DIR__ . DIRECTORY_SEPARATOR . 'header.php';
 
 include $GLOBALS['xoops']->path('header.php');
 if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
@@ -62,7 +62,7 @@ if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
                     } else {
                         printf(_US_ACTVMAILOK, $thisuser->getVar('uname') );
                     }
-                    include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'footer.php';
+                    include __DIR__ . DIRECTORY_SEPARATOR . 'footer.php';
                 } else {
                     redirect_header(XOOPS_URL . '/user.php', 5, _US_ACTLOGIN, false);
                 }
@@ -106,4 +106,4 @@ if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
 }
 
 $xoBreadcrumbs[] = array('title' => _PROFILE_MA_REGISTER);
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'footer.php';
+include __DIR__ . DIRECTORY_SEPARATOR . 'footer.php';

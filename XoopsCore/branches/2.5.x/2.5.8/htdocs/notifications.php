@@ -17,7 +17,7 @@
  */
 
 $xoopsOption['pagetype'] = 'notification';
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'mainfile.php';
+include __DIR__ . DIRECTORY_SEPARATOR . 'mainfile.php';
 
 if (!is_object($xoopsUser)) {
     redirect_header('index.php', 3, _NOT_NOACCESS);

@@ -18,7 +18,7 @@
  * @version         $Id$
  */
 
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
+include __DIR__ . DIRECTORY_SEPARATOR . 'header.php';
 include_once $GLOBALS['xoops']->path('modules/system/constants.php');
 
 $uid = isset($_GET['uid'])? intval($_GET['uid']):0;
@@ -221,4 +221,4 @@ $GLOBALS['xoopsTpl']->assign('email', $email);
 $GLOBALS['xoopsTpl']->assign('avatar', $avatar);
 $GLOBALS['xoopsTpl']->assign('recent_activity', _PROFILE_MA_RECENTACTIVITY);
 $xoBreadcrumbs[] = array('title' => _PROFILE_MA_USERINFO);
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'footer.php';
+include __DIR__ . DIRECTORY_SEPARATOR . 'footer.php';

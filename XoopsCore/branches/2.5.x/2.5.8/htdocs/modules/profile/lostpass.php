@@ -18,7 +18,7 @@
  * @version         $Id$
  */
 
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
+include __DIR__ . DIRECTORY_SEPARATOR . 'header.php';
 $email = isset($_GET['email']) ? trim($_GET['email']) : '';
 $email = isset($_POST['email']) ? trim($_POST['email']) : $email;
 
@@ -63,7 +63,7 @@ if (empty($user)) {
         if (!$GLOBALS['xoopsDB']->queryF($sql)) {
             include $GLOBALS['xoops']->path('header.php');
             echo _US_MAILPWDNG;
-            include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'footer.php';
+            include __DIR__ . DIRECTORY_SEPARATOR . 'footer.php';
             exit();
         }
         redirect_header("user.php", 3, sprintf(_US_PWDMAILED, $user->getVar("uname")), false);
@@ -89,6 +89,6 @@ if (empty($user)) {
         echo "<h4>";
         printf(_US_CONFMAIL, $user->getVar('uname'));
         echo "</h4>";
-        include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'footer.php';
+        include __DIR__ . DIRECTORY_SEPARATOR . 'footer.php';
     }
 }

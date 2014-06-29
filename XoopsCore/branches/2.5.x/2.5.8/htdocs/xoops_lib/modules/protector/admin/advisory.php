@@ -5,7 +5,7 @@ $db =& XoopsDatabaseFactory::getDatabaseConnection();
 
 // beggining of Output
 xoops_cp_header();
-include dirname(__FILE__).'/mymenu.php' ;
+include __DIR__.'/mymenu.php' ;
 
 // open table for ADVISORY
 echo "<style>dd {margin-left: 32px;}</style>\n" ;

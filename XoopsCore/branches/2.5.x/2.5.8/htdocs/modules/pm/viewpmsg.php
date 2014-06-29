@@ -18,7 +18,7 @@
  * @version         $Id$
  */
 
-include_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'mainfile.php';
+include_once dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'mainfile.php';
 
 if (!is_object($GLOBALS['xoopsUser'])) {
     redirect_header(XOOPS_URL, 3, _NOPERM);
@@ -44,7 +44,7 @@ if (isset($_POST['delete_messages']) && isset($_POST['msg_id'])) {
     } else {
         $clean_msg_id = json_decode($_POST['msg_id'], true, 2);
         if (!empty($clean_msg_id)) {
-            $clean_msg_id = array_map("intval", $clean_msg_id);
+            $clean_msg_id = array_map("intval", (array) $clean_msg_id);
         }
         $size = count($clean_msg_id);
         $msg =& $clean_msg_id;

@@ -19,7 +19,7 @@
  */
 
 $xoopsOption['pagetype'] = 'user';
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
+include __DIR__ . DIRECTORY_SEPARATOR . 'header.php';
 
 $op = 'main';
 
@@ -48,7 +48,7 @@ if ( $op == 'main' ) {
         $GLOBALS['xoopsTpl']->assign('lang_youremail', _US_YOUREMAIL);
         $GLOBALS['xoopsTpl']->assign('lang_sendpassword', _US_SENDPASSWORD);
         $GLOBALS['xoopsTpl']->assign('mailpasswd_token', $GLOBALS['xoopsSecurity']->createToken());
-        include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'footer.php';
+        include __DIR__ . DIRECTORY_SEPARATOR . 'footer.php';
         exit();
     }
     if (!empty($_GET['xoops_redirect'])) {
@@ -113,9 +113,9 @@ if ($op == 'delete') {
         }
         $ok = !isset($_POST['ok']) ? 0 : intval($_POST['ok']);
         if ($ok != 1) {
-            include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
+            include __DIR__ . DIRECTORY_SEPARATOR . 'header.php';
             xoops_confirm(array('op' => 'delete', 'ok' => 1), 'user.php', _US_SURETODEL . '<br/>' . _US_REMOVEINFO);
-            include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'footer.php';
+            include __DIR__ . DIRECTORY_SEPARATOR . 'footer.php';
         } else {
             $del_uid = $GLOBALS['xoopsUser']->getVar("uid");
             $member_handler =& xoops_gethandler('member');

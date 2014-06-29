@@ -42,7 +42,7 @@ class XoopsGuiLegacy extends /* implements */ XoopsSystemGui
      */
     function __construct()
     {
-        include_once dirname(__FILE__) . "/cp_functions.php";
+        include_once __DIR__ . "/cp_functions.php";
     }
 
     function XoopsGuiLegacy()

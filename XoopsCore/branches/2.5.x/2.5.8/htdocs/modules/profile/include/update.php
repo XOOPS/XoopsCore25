@@ -17,7 +17,7 @@
  * @version         $Id$
  */
 
-$path = dirname(dirname(dirname(dirname(__FILE__))));
+$path = dirname(dirname(dirname(__DIR__)));
 require_once $path . DIRECTORY_SEPARATOR . 'include' . DIRECTORY_SEPARATOR . 'cp_header.php';
 
 function xoops_module_update_profile(&$module, $oldversion = null)
@@ -39,7 +39,7 @@ function xoops_module_update_profile(&$module, $oldversion = null)
         // Create new tables for new profile module
         $GLOBALS['xoopsDB']->queryFromFile(XOOPS_ROOT_PATH . "/modules/" . $module->getVar('dirname', 'n') . "/sql/mysql.sql");
 
-        include_once dirname(__FILE__) . "/install.php";
+        include_once __DIR__ . "/install.php";
         xoops_module_install_profile($module);
         $goupperm_handler =& xoops_getHandler("groupperm");
 

@@ -343,5 +343,5 @@ function write_key()
 {
     set_time_limit(180);
 
-    return xoPutLicenseKey(xoBuildLicenceKey(), XOOPS_ROOT_PATH . '/include/license.php', dirname(__FILE__) . '/license.dist.php');
+    return xoPutLicenseKey(xoBuildLicenceKey(), XOOPS_ROOT_PATH . '/include/license.php', __DIR__ . '/license.dist.php');
 }

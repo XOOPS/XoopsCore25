@@ -16,7 +16,7 @@
  * @version         $Id$
  */
 
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'mainfile.php';
+include __DIR__ . DIRECTORY_SEPARATOR . 'mainfile.php';
 
 XoopsLoad::load('XoopsFilterInput');
 if (isset($_REQUEST['target'])) {

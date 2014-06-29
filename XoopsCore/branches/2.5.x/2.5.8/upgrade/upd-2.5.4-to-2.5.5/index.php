@@ -115,7 +115,7 @@ class upgrade_255 extends xoopsUpgrade
 
     function upgrade_255()
     {
-        $this->xoopsUpgrade(basename(dirname(__FILE__)));
+        $this->xoopsUpgrade(basename(__DIR__));
     }
 
 }

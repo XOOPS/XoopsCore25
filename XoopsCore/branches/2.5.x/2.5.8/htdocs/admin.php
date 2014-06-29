@@ -15,7 +15,7 @@
  */
 $xoopsOption['pagetype'] = 'admin';
 
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'mainfile.php';
+include __DIR__ . DIRECTORY_SEPARATOR . 'mainfile.php';
 include_once $GLOBALS['xoops']->path('include/cp_functions.php');
 /**
  * Admin Authentication

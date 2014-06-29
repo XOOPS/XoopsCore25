@@ -34,7 +34,7 @@ if( file_exists( $mydirpath.'/'.$file ) ) {
 	$draw_dirname = false ;
 	$icon_fullpath = $mydirpath.'/module_icon.png' ;
 } else {
-	$icon_fullpath = dirname(__FILE__).'/images/'.$file ;
+	$icon_fullpath = __DIR__.'/images/'.$file ;
 }
 
 if( $draw_dirname && function_exists( 'imagecreatefrompng' ) && function_exists( 'imagecolorallocate' ) && function_exists( 'imagestring' ) && function_exists( 'imagepng' ) ) {

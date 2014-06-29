@@ -19,7 +19,7 @@
  */
 defined("XOOPS_ROOT_PATH") or die("XOOPS root path not defined");
 
-include_once dirname(dirname(__FILE__)) . '/include/common.php';
+include_once dirname(__DIR__) . '/include/common.php';
 
 class PublisherCategory extends XoopsObject
 {
@@ -132,16 +132,16 @@ class PublisherCategory extends XoopsObject
      */
     public function getCategoryPath($withAllLink = true)
     {
-       
+
         if (!$this->_categoryPath) {
 	          if ($withAllLink) {
-            		
+
             	if($this->getCategoryLink() != ""){
             		$ret = "<li>".$this->getCategoryLink()."</li>";
             	}else{
             		$ret = $this->getCategoryLink();
-            	}	
-				
+            	}
+
             } else {
                 $ret = $this->name();
             }
@@ -157,7 +157,7 @@ class PublisherCategory extends XoopsObject
         }
         return $this->_categoryPath;
     }
-	 
+
 	/* OLD Function
     public function getCategoryPath($withAllLink = true)
     {

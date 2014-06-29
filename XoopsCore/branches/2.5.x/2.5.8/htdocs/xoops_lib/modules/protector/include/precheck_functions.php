@@ -9,7 +9,7 @@ function protector_prepare()
     if( defined( '_INSTALL_CHARSET' ) && ! is_writable( XOOPS_ROOT_PATH.'/mainfile.php' ) ) die( 'To use installer, remove protector\'s lines from mainfile.php first.' ) ;
 
     // Protector class
-    require_once dirname(dirname(__FILE__)).'/class/protector.php' ;
+    require_once dirname(__DIR__).'/class/protector.php' ;
 
     // Protector object
     $protector =& Protector::getInstance() ;

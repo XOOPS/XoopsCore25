@@ -113,7 +113,7 @@ class XoopsGuiDefault extends XoopsSystemGui
         $tpl->append('navitems', array('link' => XOOPS_URL . '/admin.php', 'text' => _CPHOME, 'menu' => $menu));
 
         //add SYSTEM  Menu items
-        include dirname(__FILE__) . '/menu.php';
+        include __DIR__ . '/menu.php';
         if (empty($xoopsModule) || 'system' == $xoopsModule->getVar('dirname', 'n')) {
             $modpath = XOOPS_URL . '/admin.php';
             $modname = _OXYGEN_SYSOPTIONS;

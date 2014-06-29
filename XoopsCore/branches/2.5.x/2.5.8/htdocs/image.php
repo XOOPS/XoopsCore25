@@ -78,7 +78,7 @@ if (function_exists('mb_http_output')) {
 }
 
 $xoopsOption['nocommon'] = true;
-require_once dirname(__FILE__) . DS . 'mainfile.php';
+require_once __DIR__ . DS . 'mainfile.php';
 
 include_once XOOPS_ROOT_PATH . DS . 'include' . DS .'defines.php';
 include_once XOOPS_ROOT_PATH . DS . 'include' . DS . 'functions.php';

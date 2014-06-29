@@ -147,7 +147,7 @@ window.onload= function(){
         $menu[2]['icon'] = XOOPS_ADMINTHEME_URL . '/zetadigme/img/logout.png';
         $tpl->append('navitems', array('link' => XOOPS_URL . '/admin.php', 'text' => _CPHOME, 'menu' => $menu));
         //add SYSTEM  Menu items
-        include dirname(__FILE__) . '/menu.php';
+        include __DIR__ . '/menu.php';
         $system_options = $adminmenu;
         foreach (array_keys($adminmenu) as $item) {
             $system_options[$item]['link'] = empty($adminmenu[$item]['absolute']) ? XOOPS_URL . '/modules/system/' . $adminmenu[$item]['link'] : $adminmenu[$item]['link'];

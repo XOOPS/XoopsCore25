@@ -19,7 +19,7 @@
  */
 
 $xoopsOption['pagetype'] = 'user';
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
+include __DIR__ . DIRECTORY_SEPARATOR . 'header.php';
 
 $op = 'main';
 
@@ -115,7 +115,7 @@ if ($op == 'delete') {
         if ($ok != 1) {
             include $GLOBALS['xoops']->path('header.php');
             xoops_confirm(array('op' => 'delete', 'ok' => 1), 'user.php', _US_SURETODEL . '<br/>' . _US_REMOVEINFO);
-            include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'footer.php';
+            include __DIR__ . DIRECTORY_SEPARATOR . 'footer.php';
         } else {
             $del_uid = $GLOBALS['xoopsUser']->getVar("uid");
             $member_handler =& xoops_gethandler('member');

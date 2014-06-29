@@ -163,7 +163,7 @@ class upgrade_250 extends xoopsUpgrade
 
     function upgrade_250()
     {
-        $this->xoopsUpgrade(basename(dirname(__FILE__)));
+        $this->xoopsUpgrade(basename(__DIR__));
     }
 
 }

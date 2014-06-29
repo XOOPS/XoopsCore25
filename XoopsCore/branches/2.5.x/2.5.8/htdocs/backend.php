@@ -15,7 +15,7 @@
  * @version         $Id$
  */
 
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'mainfile.php';
+include __DIR__ . DIRECTORY_SEPARATOR . 'mainfile.php';
 
 $GLOBALS['xoopsLogger']->activated = false;
 if (function_exists('mb_http_output')) {
