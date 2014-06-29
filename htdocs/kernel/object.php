@@ -880,7 +880,7 @@ class XoopsObject
         }
         $loaded = 1;
 
-        $path = empty($this->plugin_path) ? dirname(__FILE__) . '/filters' : $this->plugin_path;
+        $path = empty($this->plugin_path) ? __DIR__ . '/filters' : $this->plugin_path;
         if (file_exists($file = $path . '/filter.php')) {
             include_once $file;
             foreach ($this->_filters as $f) {

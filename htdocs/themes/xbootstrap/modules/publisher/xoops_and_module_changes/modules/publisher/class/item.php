@@ -18,7 +18,7 @@
  * @version         $Id$
  */
 defined("XOOPS_ROOT_PATH") or die("XOOPS root path not defined");
-include_once dirname(dirname(__FILE__)) . '/include/common.php';
+include_once dirname(__DIR__) . '/include/common.php';
 class PublisherItem extends XoopsObject
 {
     /**
@@ -245,7 +245,7 @@ class PublisherItem extends XoopsObject
         if ($this->publisher->getConfig('item_disp_blocks_summary')) {
             $summary = $this->summary($maxLength, $format, $stripTags);
             if ($summary) {
-                $ret = $this->summary() . '' . $ret; 
+                $ret = $this->summary() . '' . $ret;
             }
         }
         if (!empty($stripTags)) {
@@ -543,7 +543,7 @@ class PublisherItem extends XoopsObject
      * @param int  $maxsize
      *
      * @return string
-     */     
+     */
     public function getItemLink($class = false, $maxsize = 0)
     {
         if ($class) {
@@ -562,7 +562,7 @@ class PublisherItem extends XoopsObject
         $postdate = $this->datesub();
         return sprintf(_CO_PUBLISHER_POSTEDBY, $posterName, $postdate);
     }
-	
+
 	/**
      * @return string
      */
@@ -571,7 +571,7 @@ class PublisherItem extends XoopsObject
         $posterName = $this->linkedPosterName();
         return $posterName;
     }
-	
+
 	/**
      * @return string
      */
@@ -823,7 +823,7 @@ class PublisherItem extends XoopsObject
         if (substr($color, 0, 1) != '#') {
             $color = '#' . $color;
         }
-        include_once dirname(__FILE__) . '/highlighter.php';
+        include_once __DIR__ . '/highlighter.php';
         $highlighter = new PublisherHighlighter();
         $highlighter->setReplacementString('<span style="font-weight: bolder; background-color: ' . $color . ';">\1</span>');
         return $highlighter->highlight($content, $keywords);

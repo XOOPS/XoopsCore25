@@ -1143,5 +1143,5 @@ function xoops_getUrlDomain($url)
     return $domain;
 }
 
-include_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'functions.encoding.php';
-include_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'functions.legacy.php';
+include_once __DIR__ . DIRECTORY_SEPARATOR . 'functions.encoding.php';
+include_once __DIR__ . DIRECTORY_SEPARATOR . 'functions.legacy.php';

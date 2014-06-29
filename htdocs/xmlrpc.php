@@ -18,7 +18,7 @@
 
 define('XOOPS_XMLRPC', 1);
 
-include dirname(__FILE__). DIRECTORY_SEPARATOR . 'mainfile.php';
+include __DIR__. DIRECTORY_SEPARATOR . 'mainfile.php';
 
 error_reporting(0);
 

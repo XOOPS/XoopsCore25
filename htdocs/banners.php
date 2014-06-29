@@ -20,7 +20,7 @@
  */
 
 $xoopsOption['pagetype'] = 'banners';
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'mainfile.php';
+include __DIR__ . DIRECTORY_SEPARATOR . 'mainfile.php';
 
 /********************************************/
 /* Function to let your client login to see */

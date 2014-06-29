@@ -16,7 +16,7 @@
  * @version         $Id$
  */
 
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'mainfile.php';
+include __DIR__ . DIRECTORY_SEPARATOR . 'mainfile.php';
 
 header("Content-Type: text/html");
 echo "<html><head><title>" . htmlspecialchars($xoopsConfig['sitename']) . "</title>

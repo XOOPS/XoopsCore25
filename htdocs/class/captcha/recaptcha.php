@@ -42,7 +42,7 @@ class XoopsCaptchaRecaptcha extends XoopsCaptchaMethod
      */
     function render()
     {
-        require_once dirname(__FILE__) . '/recaptcha/recaptchalib.php';
+        require_once __DIR__ . '/recaptcha/recaptchalib.php';
         $form = "<script type=\"text/javascript\">
             var RecaptchaOptions = {
             theme : '" . $this->config['theme']."',
@@ -64,7 +64,7 @@ class XoopsCaptchaRecaptcha extends XoopsCaptchaMethod
     function verify($sessionName)
     {
         $is_valid = false;
-        require_once dirname(__FILE__) . '/recaptcha/recaptchalib.php';
+        require_once __DIR__ . '/recaptcha/recaptchalib.php';
         if (!empty($_POST['recaptcha_response_field'])) {
             $resp = recaptcha_check_answer(
                 $this->config['private_key'],

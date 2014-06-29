@@ -33,7 +33,7 @@ class MytsSyntaxhighlight extends MyTextSanitizerExtension
      */
     function load(&$ts, $source, $language)
     {
-        $config = parent::loadConfig(dirname(__FILE__));
+        $config = parent::loadConfig(__DIR__);
         if (empty($config['highlight'])) {
             return "<pre>{$source}</pre>";
         }

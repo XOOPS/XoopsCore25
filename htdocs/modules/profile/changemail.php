@@ -18,7 +18,7 @@
  */
 
 $xoopsOption['pagetype'] = "user";
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
+include __DIR__ . DIRECTORY_SEPARATOR . 'header.php';
 $config_handler =& xoops_gethandler('config');
 $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
@@ -83,4 +83,4 @@ if (!isset($_POST['submit']) || !isset($_POST['passwd'])) {
 
 $xoBreadcrumbs[] = array('title' => _PROFILE_MA_CHANGEMAIL);
 
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'footer.php';
+include __DIR__ . DIRECTORY_SEPARATOR . 'footer.php';

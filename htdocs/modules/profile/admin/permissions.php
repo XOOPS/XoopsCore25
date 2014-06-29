@@ -17,7 +17,7 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @version         $Id$
  */
-include_once dirname(__FILE__) . '/admin_header.php';
+include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 $indexAdmin = new ModuleAdmin();
 echo $indexAdmin->addNavigation('permissions.php');
@@ -105,5 +105,5 @@ if ($op == "access") {
     }
 }
 $form->display();
-include_once dirname(__FILE__) . '/admin_footer.php';
+include_once __DIR__ . '/admin_footer.php';
 //xoops_cp_footer();

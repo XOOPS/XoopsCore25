@@ -31,7 +31,7 @@ class MytsFlash extends MyTextSanitizerExtension
      */
     function encode($textarea_id)
     {
-        $config = parent::loadConfig(dirname(__FILE__));
+        $config = parent::loadConfig(__DIR__);
         $code = "<img src='{$this->image_path}/swf.gif' alt='" . _XOOPS_FORM_ALTFLASH . "' title='" . _XOOPS_FORM_ALTFLASH . "' '" . "' onclick='xoopsCodeFlash(\"{$textarea_id}\",\""
             . htmlspecialchars(_XOOPS_FORM_ENTERFLASHURL, ENT_QUOTES) . "\",\""
             . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\""
@@ -98,7 +98,7 @@ EOF;
      */
     static function decode($url, $width, $height)
     {
-        $config = parent::loadConfig(dirname(__FILE__));
+        $config = parent::loadConfig(__DIR__);
 
         if ((empty($width) || empty($height)) && !empty($config['detect_dimension'])) {
             if (!$dimension = @getimagesize($url)) {

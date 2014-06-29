@@ -60,9 +60,9 @@ class upgrade_241 extends xoopsUpgrade
             return false;
         }
         if (XOOPS_LICENSE_KEY == '000000-000000-000000-000000-000000') {
-            return @$this->xoops_putLicenseKey($this->xoops_buildLicenceKey(), XOOPS_ROOT_PATH . '/include/license.php', dirname(__FILE__) . '/license.dist.php');
+            return @$this->xoops_putLicenseKey($this->xoops_buildLicenceKey(), XOOPS_ROOT_PATH . '/include/license.php', __DIR__ . '/license.dist.php');
         } else {
-            return @$this->xoops_upgradeLicenseKey($this->xoops_getPublicLicenceKey(), XOOPS_ROOT_PATH . '/include/license.php', dirname(__FILE__) . '/license.dist.php');
+            return @$this->xoops_upgradeLicenseKey($this->xoops_getPublicLicenceKey(), XOOPS_ROOT_PATH . '/include/license.php', __DIR__ . '/license.dist.php');
         }
     }
 
@@ -187,7 +187,7 @@ class upgrade_241 extends xoopsUpgrade
         // Private Key
         $xoops_serdat['file'] = $func(__FILE__);
         $xoops_serdat['basename'] = $func(basename(__FILE__));
-        $xoops_serdat['path'] = $func(dirname(__FILE__));
+        $xoops_serdat['path'] = $func(__DIR__);
 
         foreach ($_SERVER as $key => $data) {
             $xoops_serdat[$key] = substr($func(serialize($data)),0, 4);
@@ -240,7 +240,7 @@ class upgrade_241 extends xoopsUpgrade
 
     function upgrade_241()
     {
-        $this->xoopsUpgrade( basename(dirname(__FILE__)) );
+        $this->xoopsUpgrade( basename(__DIR__) );
     }
 
 }

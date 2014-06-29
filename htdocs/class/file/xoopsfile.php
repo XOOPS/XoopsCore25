@@ -71,7 +71,7 @@ class XoopsFile
         switch ($name) {
             case 'folder':
                 if (!class_exists('XoopsFolderHandler')) {
-                    if (file_exists($folder = dirname(__FILE__) . '/folder.php')) {
+                    if (file_exists($folder = __DIR__ . '/folder.php')) {
                         include $folder;
                     } else {
                         trigger_error('Require Item : ' . str_replace(XOOPS_ROOT_PATH, '', $folder) . ' In File ' . __FILE__ . ' at Line ' . __LINE__, E_USER_WARNING);
@@ -83,7 +83,7 @@ class XoopsFile
             case 'file':
             default:
                 if (!class_exists('XoopsFileHandler')) {
-                    if (file_exists($file = dirname(__FILE__) . '/file.php')) {
+                    if (file_exists($file = __DIR__ . '/file.php')) {
                         include $file;
                     } else {
                         trigger_error('Require File : ' . str_replace(XOOPS_ROOT_PATH, '', $file) . ' In File ' . __FILE__ . ' at Line ' . __LINE__, E_USER_WARNING);

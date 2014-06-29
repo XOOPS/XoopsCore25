@@ -17,9 +17,9 @@
  * @version    $Id $
  **/
 
-include_once dirname(__FILE__) . '/../../../include/cp_header.php';
+include_once __DIR__ . '/../../../include/cp_header.php';
 include '../../../class/xoopsformloader.php';
-include_once dirname(__FILE__) . '/admin_header.php';
+include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
 $aboutAdmin = new ModuleAdmin();
@@ -27,5 +27,5 @@ $aboutAdmin = new ModuleAdmin();
 echo $aboutAdmin->addNavigation('about.php');
 echo $aboutAdmin->renderabout('6KJ7RW5DR3VTJ', false);
 
-include_once dirname(__FILE__) . '/admin_footer.php';
+include_once __DIR__ . '/admin_footer.php';
 //xoops_cp_footer();

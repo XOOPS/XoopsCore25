@@ -19,7 +19,7 @@
  */
 
 $xoopsOption['pagetype'] = 'user';
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
+include __DIR__ . DIRECTORY_SEPARATOR . 'header.php';
 include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
 // If not a user, redirect
@@ -92,7 +92,7 @@ if ($op == 'save') {
 if ($op == 'editprofile') {
     $xoopsOption['template_main'] = 'profile_editprofile.tpl';
     include_once $GLOBALS['xoops']->path('header.php');
-    include_once dirname(__FILE__) . '/include/forms.php';
+    include_once __DIR__ . '/include/forms.php';
     $form = profile_getUserForm($GLOBALS['xoopsUser']);
     $form->assign($GLOBALS['xoopsTpl']);
     if (!empty($stop)) {
@@ -252,4 +252,4 @@ if ($op == 'avatarchoose') {
     }
     redirect_header('userinfo.php?uid=' . $uid, 0, _US_PROFUPDATED);
 }
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'footer.php';
+include __DIR__ . DIRECTORY_SEPARATOR . 'footer.php';

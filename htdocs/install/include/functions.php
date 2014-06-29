@@ -491,7 +491,7 @@ function xoBuildLicenceKey()
     // Private Key
     $xoops_serdat['file'] = $func(__FILE__);
     $xoops_serdat['basename'] = $func(basename(__FILE__));
-    $xoops_serdat['path'] = $func(dirname(__FILE__));
+    $xoops_serdat['path'] = $func(__DIR__);
 
     foreach ($_SERVER as $key => $data) {
         $xoops_serdat[$key] = substr($func(serialize($data)),0, 4);

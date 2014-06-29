@@ -20,7 +20,7 @@
  * @version         $Id$
  */
 
-include_once dirname(__FILE__) . '/header.php';
+include_once __DIR__ . '/header.php';
 
 $itemid = PublisherRequest::getInt('itemid');
 $item_page_id = PublisherRequest::getInt('page', -1);

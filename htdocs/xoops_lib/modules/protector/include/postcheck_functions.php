@@ -17,12 +17,12 @@ function protector_postcommon()
     }
 
     // configs writable check
-    if ( @$_SERVER['REQUEST_URI'] == '/admin.php' && ! is_writable( dirname(dirname(__FILE__)).'/configs' ) ) {
-        trigger_error( 'You should turn the directory ' . dirname(dirname(__FILE__)).'/configs writable' , E_USER_WARNING ) ;
+    if ( @$_SERVER['REQUEST_URI'] == '/admin.php' && ! is_writable( dirname(__DIR__).'/configs' ) ) {
+        trigger_error( 'You should turn the directory ' . dirname(__DIR__).'/configs writable' , E_USER_WARNING ) ;
     }
 
     // Protector object
-    require_once dirname(dirname(__FILE__)).'/class/protector.php' ;
+    require_once dirname(__DIR__).'/class/protector.php' ;
     $db =& XoopsDatabaseFactory::getDatabaseConnection();
     $protector =& Protector::getInstance() ;
     $protector->setConn( $db->conn ) ;

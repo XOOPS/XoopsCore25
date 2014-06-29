@@ -21,7 +21,7 @@ defined('DS') or define('DS', DIRECTORY_SEPARATOR);
 defined('NWLINE')or define('NWLINE', "\n");
 
 $xoopsOption['nocommon'] = true;
-require_once dirname(__FILE__) . DS . 'mainfile.php';
+require_once __DIR__ . DS . 'mainfile.php';
 
 error_reporting(0);
 

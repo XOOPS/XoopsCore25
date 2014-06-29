@@ -21,7 +21,7 @@
  * the file that will include this file must be located under xoops_url/modules/module_directory_name/admin_directory_name/
  */
 $xoopsOption['pagetype'] = 'admin';
-include_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'mainfile.php';
+include_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'mainfile.php';
 include_once $GLOBALS['xoops']->path('include/cp_functions.php');
 
 $moduleperm_handler =& xoops_gethandler('groupperm');

@@ -19,7 +19,7 @@
  */
 
 $xoopsOption['pagetype'] = "user";
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'header.php';
+include __DIR__ . DIRECTORY_SEPARATOR . 'header.php';
 if (!$GLOBALS['xoopsUser']) {
     redirect_header(XOOPS_URL, 2, _NOPERM);
 }
@@ -72,4 +72,4 @@ if (!isset($_POST['submit'])) {
     redirect_header(XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/userinfo.php?uid=' . $GLOBALS['xoopsUser']->getVar('uid'), 2, $msg);
 }
 
-include dirname(__FILE__) . DIRECTORY_SEPARATOR . 'footer.php';
+include __DIR__ . DIRECTORY_SEPARATOR . 'footer.php';

@@ -3,7 +3,16 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 ===============================
 NOT RELEASED: Version 2.5.8 Beta 1
 ===============================
-Bugfixes:
+- replaced "dirname(__FILE__)" with "__DIR__" since the min. PHP is now 5.3.7, and __DIR__ is faster  (mamba)
+
+===============================
+2014-06-20: Version 2.5.7 Final (Patch)
+===============================
+
+- Updating docu for the correct version of tablesorter (mamba)
+- Fix path specified for include (rgriffith, mamba)
+- added mainfile.php to /extras for use on servers where write to root is not possible (rgriffith)
+- fix for array issue in pm/viempmsg.php (Roby73/mamba)
 
 ===============================
 2014/06/14: Version 2.5.7 Final
@@ -30,7 +39,7 @@ Updated:
 Bugfixes:
 - fixed System Module image manager html/js bugs (luciorota)
 - replaced "array_diff_assoc" with "array_diff_key" in /class/theme_blocks.php (masel/mamba)
-- icons for active module sections in System module not shown correctly (Slider84/mamba)  
+- icons for active module sections in System module not shown correctly (Slider84/mamba)
 - added two new language definitions (see lang_diff.txt)
 - added Office 2007 MIME types (Voltan)
 - added xml MIME type (Goffy)

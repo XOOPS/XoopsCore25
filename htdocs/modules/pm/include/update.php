@@ -17,7 +17,7 @@
  * @version         $Id$
  */
 
-$path = dirname(dirname(dirname(dirname(__FILE__))));
+$path = dirname(dirname(dirname(__DIR__)));
 require_once $path . DIRECTORY_SEPARATOR . 'include'
                    . DIRECTORY_SEPARATOR . 'cp_header.php';
 

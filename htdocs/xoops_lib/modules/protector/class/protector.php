@@ -553,7 +553,7 @@ var $last_error_type = 'UNKNOWN' ;
 
     if ( ! empty( $this->_dblayertrap_doubtfuls ) || $force_override ) {
         @define('XOOPS_DB_ALTERNATIVE' , 'ProtectorMysqlDatabase' ) ;
-        require_once dirname(dirname(__FILE__)).'/class/ProtectorMysqlDatabase.class.php' ;
+        require_once dirname(__DIR__).'/class/ProtectorMysqlDatabase.class.php' ;
     }
 }
 
@@ -1277,7 +1277,7 @@ function disable_features()
      */
     function call_filter( $type , $dying_message = '' )
 {
-    require_once dirname(__FILE__).'/ProtectorFilter.php' ;
+    require_once __DIR__.'/ProtectorFilter.php' ;
     $filter_handler =& ProtectorFilterHandler::getInstance() ;
     $ret = $filter_handler->execute( $type ) ;
     if ($ret == false && $dying_message) {

@@ -10,11 +10,11 @@ $mydirpath = $registry->getEntry('mydirpath');
 $language  = $registry->getEntry('language');
 // end hack by Trabis
 
-if (file_exists(dirname(__FILE__) . '/language/' . $language . '/modinfo.php')) {
-    include dirname(__FILE__) . '/language/' . $language . '/modinfo.php';
+if (file_exists(__DIR__ . '/language/' . $language . '/modinfo.php')) {
+    include __DIR__ . '/language/' . $language . '/modinfo.php';
 } else {
-    if (file_exists(dirname(__FILE__) . '/language/english/modinfo.php')) {
-        include dirname(__FILE__) . '/language/english/modinfo.php';
+    if (file_exists(__DIR__ . '/language/english/modinfo.php')) {
+        include __DIR__ . '/language/english/modinfo.php';
     }
 }
 $constpref = '_MI_' . strtoupper($mydirname);
@@ -22,7 +22,7 @@ $constpref = '_MI_' . strtoupper($mydirname);
 
 $modversion['name']           = constant($constpref . '_NAME');
 $modversion['description']    = constant($constpref . '_DESC');
-$modversion['version']        = file_get_contents(dirname(__FILE__) . '/include/version.txt');
+$modversion['version']        = file_get_contents(__DIR__ . '/include/version.txt');
 $modversion['credits']        = "PEAK Corp.";
 $modversion['author']         = "GIJ=CHECKMATE<br />PEAK Corp.(http://www.peak.ne.jp/)";
 $modversion['help']           = 'page=help';

@@ -26,7 +26,7 @@ if ( ! function_exists( 'protector_notify_base' ) ) {
      */
     function protector_notify_base( $mydirname , $category , $item_id )
 {
-    include_once dirname(__FILE__).'/include/common_functions.php' ;
+    include_once __DIR__.'/include/common_functions.php' ;
 
     $db =& XoopsDatabaseFactory::getDatabaseConnection();
 

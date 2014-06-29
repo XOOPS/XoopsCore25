@@ -19,11 +19,11 @@
  * @version         $Id$
  */
 
-if (file_exists(dirname(__FILE__) . '/mainfile.php')) {
-    include dirname(__FILE__) . '/mainfile.php';
+if (file_exists(__DIR__ . '/mainfile.php')) {
+    include __DIR__ . '/mainfile.php';
 }
 if (!defined('XOOPS_MAINFILE_INCLUDED')) {
-    if (file_exists(dirname(__FILE__) . '/install/index.php')) {
+    if (file_exists(__DIR__ . '/install/index.php')) {
         header('Location: install/index.php');
         exit;
     }

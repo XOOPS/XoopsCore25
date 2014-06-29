@@ -17,7 +17,7 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @version         $Id$
  */
-include_once dirname(__FILE__) . '/admin_header.php';
+include_once __DIR__ . '/admin_header.php';
 
 //there is no way to override current tabs when using system menu
 //this dirty hack will have to do it
@@ -96,5 +96,5 @@ $add_form->assign($GLOBALS['xoopsTpl']);
 
 $GLOBALS['xoopsTpl']->display("db:profile_admin_visibility.tpl");
 
-include_once dirname(__FILE__) . '/admin_footer.php';
+include_once __DIR__ . '/admin_footer.php';
 //xoops_cp_footer();
