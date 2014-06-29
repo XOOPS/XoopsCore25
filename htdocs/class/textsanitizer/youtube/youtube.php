@@ -27,7 +27,7 @@ class MytsYoutube extends MyTextSanitizerExtension
      */
     function encode($textarea_id)
     {
-        $config = parent::loadConfig( __DIR__ );
+        $config = parent::loadConfig(__DIR__);
         $code = "<img src='{$this->image_path}/youtube.gif' alt='" . _XOOPS_FORM_ALTYOUTUBE . "' title='" . _XOOPS_FORM_ALTYOUTUBE . "' '" . "' onclick='xoopsCodeYoutube(\"{$textarea_id}\",\""
             . htmlspecialchars(_XOOPS_FORM_ENTERYOUTUBEURL, ENT_QUOTES) . "\",\""
             . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES)

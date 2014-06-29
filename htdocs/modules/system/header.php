@@ -15,7 +15,7 @@
  */
 
 // Include XOOPS control panel header
-include_once dirname( dirname( dirname( __FILE__ ) ) ) . '/include/cp_header.php';
+include_once dirname( dirname(__DIR__) ) . '/include/cp_header.php';
 // Check user rights
 if (is_object($xoopsUser)) {
     $admintest = 0;

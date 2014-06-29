@@ -9,9 +9,9 @@
 //////////////////////////////////////////////////////////////
 
 ob_start();
-if (!include_once(__DIR__.'/phpthumb.functions.php')) {
+if (!include_once(__DIR__ . '/phpthumb.functions.php')) {
     ob_end_flush();
-    die('failed to include_once("'.realpath(__DIR__.'/phpthumb.functions.php').'")');
+    die('failed to include_once("'.realpath(__DIR__ . '/phpthumb.functions.php').'")');
 }
 ob_end_clean();
 

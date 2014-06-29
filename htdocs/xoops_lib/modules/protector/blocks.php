@@ -8,8 +8,8 @@ $mydirpath  = $registry->getEntry('mydirpath');
 $language   = $registry->getEntry('language');
 // end hack by Trabis
 
-$mytrustdirname = basename( dirname( __FILE__ ) ) ;
-$mytrustdirpath = dirname( __FILE__ ) ;
+$mytrustdirname = basename(__DIR__) ;
+$mytrustdirpath = __DIR__ ;
 
 // language files
 //$language = empty( $GLOBALS['xoopsConfig']['language'] ) ? 'english' : $GLOBALS['xoopsConfig']['language'] ;  //hack by Trabis

@@ -12,7 +12,7 @@ class MytsSoundcloud extends MyTextSanitizerExtension
      */
     public function encode($textarea_id)
     {
-        $config = parent::loadConfig( __DIR__ );
+        $config = parent::loadConfig(__DIR__);
 
         $code = "<img src='{$this->image_path}/soundcloud.png' alt='" . _XOOPS_FORM_ALT_SOUNDCLOUD
             . "' title='" .  _XOOPS_FORM_ALT_SOUNDCLOUD . "' '"
