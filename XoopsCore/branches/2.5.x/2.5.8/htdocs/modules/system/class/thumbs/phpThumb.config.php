@@ -9,7 +9,7 @@
 //            THIS CONFIG FILE ONLY APPLIES TO phpThumb.php //
 //                                                         ///
 //////////////////////////////////////////////////////////////
-require dirname( dirname( dirname( __FILE__ ) ) ) . '/header.php';
+require dirname( dirname(__DIR__) ) . '/header.php';
 ob_start();
 if (!file_exists(__DIR__.'/phpthumb.functions.php') || !include_once(__DIR__.'/phpthumb.functions.php')) {
     ob_end_flush();

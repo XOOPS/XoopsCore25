@@ -72,7 +72,7 @@ class upgrade_231 extends xoopsUpgrade
     {
         $allowWebChanges = $GLOBALS['xoopsDB']->allowWebChanges;
         $GLOBALS['xoopsDB']->allowWebChanges = true;
-        $result = $GLOBALS['xoopsDB']->queryFromFile( __DIR__ . "/mysql.structure.sql" );
+        $result = $GLOBALS['xoopsDB']->queryFromFile(__DIR__ . "/mysql.structure.sql" );
         $GLOBALS['xoopsDB']->allowWebChanges = $allowWebChanges;
         return $result;
     }

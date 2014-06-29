@@ -3,7 +3,7 @@
 if( defined( 'XOOPS_ORETEKI' ) ) return ;
 
 global $xoopsModule;
-$mydirpath = dirname( dirname( __FILE__ ) ) ;
+$mydirpath = dirname(__DIR__) ;
 
 if( ! is_object( $xoopsModule ) ) die( '$xoopsModule is not set' )  ;
 

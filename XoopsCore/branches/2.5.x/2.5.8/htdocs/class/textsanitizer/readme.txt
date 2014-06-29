@@ -51,7 +51,7 @@ EOH;
     function decode($text)
     {
         // Load config data if any
-        $config = parent::loadConfig( __DIR__ );
+        $config = parent::loadConfig(__DIR__);
         if ( empty($text) || empty($config['enabled']) ) return $text;
         $ret = someFunctionToConvertTheTextToDefinedFormat($text);
         return $ret;
