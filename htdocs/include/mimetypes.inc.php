@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         kernel
  * @since           2.0.0
@@ -132,7 +132,7 @@ return array(
 	'3gp' => 'video/quicktime',
     'odt' => 'application/vnd.oasis.opendocument.text',
     'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
-    // Office 2007 
+    // Office 2007
     'docm'=>'application/vnd.ms-word.document.macroEnabled.12',
     'docx'=>'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     'dotm'=>'application/vnd.ms-word.template.macroEnabled.12',
@@ -146,4 +146,3 @@ return array(
     'xlsx'=>'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     'xps'=>'application/vnd.ms-xpsdocument'
     );
-    

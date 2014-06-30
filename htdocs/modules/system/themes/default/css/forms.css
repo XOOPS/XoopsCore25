@@ -1,7 +1,7 @@
 /*
  * Default Admin Theme
  *
- * @copyright       Xoops Project <http://www.xoops.org/>
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
  * @package         themes
  * @since           2.5.x
@@ -96,7 +96,7 @@ input[type=text],input[type=password],input[type=checkbox],input[type=file],text
 	-webkit-border-radius: 5px;
 	-khtml-border-radius: 5px;
 	border-radius: 5px;
-	
+
 }
 
 input[type=text],input[type=password],input[type=file] {

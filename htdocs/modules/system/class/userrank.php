@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @author      Gregory Mage (AKA Mage)
  * @package     system
@@ -21,7 +21,7 @@
 /**
  * System User ranks
  *
- * @copyright   copyright (c) 2000 XOOPS.org
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  * @package     system
  */
 class SystemUserrank extends XoopsObject
@@ -109,7 +109,7 @@ class SystemUserrank extends XoopsObject
  * This class is responsible for providing data access mechanisms to the data source
  * of XOOPS block class objects.
  *
- * @copyright   copyright (c) 2000 XOOPS.org
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  * @package     system
  * @subpackage  avatar
  */

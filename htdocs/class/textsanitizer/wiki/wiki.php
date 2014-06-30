@@ -12,7 +12,7 @@
 /**
  * TextSanitizer extension
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         class
  * @subpackage      textsanitizer

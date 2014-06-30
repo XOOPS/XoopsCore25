@@ -10,7 +10,7 @@
 */
 
 /**
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Gregory Mage (AKA Mage)
  * @package     system
@@ -22,7 +22,7 @@
 /**
  * System Banner Finish
  *
- * @copyright   copyright (c) 2000 XOOPS.org
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  * @package     system
  */
 class SystemBannerFinish extends XoopsObject
@@ -49,7 +49,7 @@ class SystemBannerFinish extends XoopsObject
  * This class is responsible for providing data access mechanisms to the data source
  * of XOOPS block class objects.
  *
- * @copyright   copyright (c) 2000 XOOPS.org
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  * @package     system
  * @subpackage  banner
  */

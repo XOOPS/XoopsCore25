@@ -11,7 +11,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @author      Maxime Cointin (AKA Kraven30)
  * @package     system
@@ -378,7 +378,7 @@ switch ($op) {
         $form->addElement( new XoopsFormButton( '', 'dir_button', _SUBMIT, 'submit'));
         echo $form->render();
         break;
-		
+
 	//Confirm delete directory
     case 'filemanager_confirm_delete_directory':
 		$path = system_CleanVars ( $_REQUEST, 'path', '', 'string' );
@@ -388,16 +388,16 @@ switch ($op) {
     // Delete one directory
     case 'filemanager_delete_directory':
 		$path = system_CleanVars ( $_REQUEST, 'path', '', 'string' );
-		
+
 		function deltree($dossier){
 			if(($dir=opendir($dossier))===false)
 				return;
-	 
+
 			while($name=readdir($dir)){
 				if($name==='.' or $name==='..')
 					continue;
 				$full_name=$dossier.'/'.$name;
-	 
+
 				if(is_dir($full_name))
 					deltree($full_name);
 				else unlink($full_name);
@@ -406,7 +406,7 @@ switch ($op) {
 			@rmdir($dossier);
 			return true;
         }
-		
+
         if(deltree($_REQUEST['path'])) {
 			xoops_result(_AM_SYSTEM_FILEMANAGER_DELDIR_OK);
 		} else {

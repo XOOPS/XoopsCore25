@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS project http://sourceforge.net/projects/xoops/
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         class
  * @subpackage      database
@@ -27,7 +27,7 @@ include_once XOOPS_ROOT_PATH . '/class/database/database.php';
  *
  * @abstract
  * @author Kazumi Ono <onokazu@xoops.org>
- * @copyright copyright (c) 2000-2014 XOOPS.org
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  * @package class
  * @subpackage database
  */
@@ -444,7 +444,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
  * Safe Connection to a MySQL database.
  *
  * @author Kazumi Ono <onokazu@xoops.org>
- * @copyright copyright (c) 2000-2003 XOOPS.org
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  * @package kernel
  * @subpackage database
  */
@@ -472,7 +472,7 @@ class XoopsMySQLDatabaseSafe extends XoopsMySQLDatabase
  * {@link query()} method for security reasons.
  *
  * @author Kazumi Ono <onokazu@xoops.org>
- * @copyright copyright (c) 2000-2003 XOOPS.org
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  * @package class
  * @subpackage database
  */

@@ -2,7 +2,7 @@
 /**
  * Functions handling module configs
  *
- * @copyright       The XOOPS project http://sourceforge.net/projects/xoops/
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @since           1.00

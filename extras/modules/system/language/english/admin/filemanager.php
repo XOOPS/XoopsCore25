@@ -1,12 +1,12 @@
 <?php
 /**
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * _LANGCODE    en
  * _CHARSET     UTF-8
  * @version     $Id$
  */
- 
+
  //Nav
 define('_AM_SYSTEM_FILEMANAGER_NAV_MANAGER','File Manager');
 define('_AM_SYSTEM_FILEMANAGER_NAV_MAIN','File Manager');

@@ -2,7 +2,7 @@
 // $Id$
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
+//                 copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)                         //
 //                       <http://www.xoops.org/>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
@@ -39,7 +39,7 @@ require_once XOOPS_ROOT_PATH.'/class/xml/xmltaghandler.php';
 *
 * @link      http://www.xoops.org/ Latest release of this class
 * @package   class
-* @copyright Copyright (c) 2001 xoops.org. All rights reserved.
+* @copyright (c) 2000-2014 XOOPS Project (www.xoops.org)
 * @author    Kazumi Ono <onokazu@xoops.org>
 * @version   $Id$
 * @access    public

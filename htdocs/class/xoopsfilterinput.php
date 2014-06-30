@@ -13,7 +13,7 @@
  * XoopsFilterInput is a class for filtering input from any data source
  *
  * Forked from the php input filter library by Daniel Morris
- * 
+ *
  * Original Contributors: Gianpaolo Racca, Ghislain Picard,
  *                        Marco Wandschneider, Chris Tobin and Andrew Eddie.
  *
@@ -26,7 +26,7 @@
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2005 Daniel Morris
  * @copyright 2005 - 2013 Open Source Matters, Inc. All rights reserved.
- * @copyright 2011-2013 The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright 2011-2014 The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release: 1.0
  * @link      http://xoops.org
@@ -121,11 +121,11 @@ class XoopsFilterInput
     }
 
     /**
-      * Method to be called by another php script. Processes for XSS and 
+      * Method to be called by another php script. Processes for XSS and
       * any specified bad code.
       *
       * @param Mixed $source - input string/array-of-string to be 'cleaned'
-      * 
+      *
       * @return String $source - 'cleaned' version of input parameter
       */
     public function process($source)
@@ -258,7 +258,7 @@ class XoopsFilterInput
       * Internal method to iteratively remove all unwanted tags and attributes
       *
       * @param String $source - input string to be 'cleaned'
-      * 
+      *
       * @return String $source - 'cleaned' version of input parameter
       */
     protected function remove($source)
@@ -275,9 +275,9 @@ class XoopsFilterInput
 
     /**
       * Internal method to strip a string of certain tags
-      * 
+      *
       * @param String $source - input string to be 'cleaned'
-      * 
+      *
       * @return String $source - 'cleaned' version of input parameter
       */
     protected function filterTags($source)
@@ -355,7 +355,7 @@ class XoopsFilterInput
                         $attr = substr($fromSpace, 0, $nextSpace);
                     }
                     // one or neither exist
-                    
+
                 } else {
                     // no more equals exist
                     $attr = substr($fromSpace, 0, $nextSpace);
@@ -406,7 +406,7 @@ class XoopsFilterInput
       * Internal method to strip a tag of certain attributes
       *
       * @param array $attrSet attributes
-      * 
+      *
       * @return Array $newSet stripped attributes
       */
     protected function filterAttr($attrSet)
@@ -483,7 +483,7 @@ class XoopsFilterInput
       * Try to convert to plaintext
       *
       * @param String $source string to decode
-      * 
+      *
       * @return String $source decoded
       */
     protected function decode($source)

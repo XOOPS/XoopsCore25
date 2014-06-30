@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package     system
  * @version     $Id$
@@ -21,7 +21,7 @@ include_once XOOPS_ROOT_PATH . '/kernel/user.php';
 /**
  * System Users
  *
- * @copyright   copyright (c) 2000 XOOPS.org
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  * @package     system
  */
 class SystemUsers extends XoopsUser
@@ -91,7 +91,7 @@ class SystemUsers extends XoopsUser
  * This class is responsible for providing data access mechanisms to the data source
  * of XOOPS block class objects.
  *
- * @copyright   copyright (c) 2000 XOOPS.org
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  * @package     system
  * @subpackage  avatar
  */
