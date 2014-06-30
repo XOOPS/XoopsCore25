@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  * @license GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package kernel
  * @subpackage auth
@@ -26,7 +26,7 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
  * @subpackage auth
  * @description Authentification class for Active Directory
  * @author Pierre-Eric MENUET <pemphp@free.fr>
- * @copyright copyright (c) 2000-2003 XOOPS.org
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  */
 include_once $GLOBALS['xoops']->path('class/auth/auth_ldap.php');
 
@@ -35,7 +35,7 @@ include_once $GLOBALS['xoops']->path('class/auth/auth_ldap.php');
  *
  * @package
  * @author John
- * @copyright Copyright (c) 2009
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  * @version $Id$
  * @access public
  */

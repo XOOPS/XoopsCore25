@@ -6,8 +6,8 @@
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
  * which is considered copyrighted (c) material of the original comment or credit authors.
- *  
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
+ *
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @package     system
  * @version     $Id:$
@@ -15,13 +15,13 @@
 
 /**
  * Change the status of an item (avatar, userrank, smilies) ajax post request
- * 
- * Exemple: 
+ *
+ * Exemple:
  * setStatus( {fct:'avatars', op:'display', avatar_id:1, avatar_display:0}, 'avt1', 'admin.php' )
- * 
- * @author   MusS   
- * 
- * @array   data    store of data 
+ *
+ * @author   MusS
+ *
+ * @array   data    store of data
  * @string  img     id of image
  * @file    file    file to call
  */
@@ -32,14 +32,14 @@ $(document).ready(function() {
         $("div#xo-system-help").slideToggle(1000);
 		$("a.help_view").toggle();
 		$("a.help_hide").toggle();
-	});	
-	
+	});
+
    $("a.help_hide").click(function(){
 		$("div#xo-system-help").slideToggle(1000);
 		$("a.help_view").toggle();
 		$("a.help_hide").toggle();
    });
-   
+
     if('function' == typeof($("").tablesorter)){
         // Banners
         $("#xo-bannerslist-sorter").tablesorter({sortList: [[0,0]], headers: {5:{sorter: false}}});
@@ -55,8 +55,8 @@ $(document).ready(function() {
         $("#xo-users-sorter").tablesorter({sortList: [[2,0]], headers: {0:{sorter: false}, 1:{sorter: false}, 7:{sorter: false}}});
         // Smilies
         $("#xo-smilies-sorter").tablesorter({sortList: [[0,0]], headers: { 1:{sorter: false}, 3:{sorter: false}, 4:{sorter: false}}});
-	} 
-    
+	}
+
     var c = system_readCookie('xoopsModsView');
 	if (c) system_switchModsView(c);
 
@@ -71,15 +71,15 @@ function system_displayHelp() {
 			height: "400px"
 		}, "fast");
 		$("div.panel_button").toggle();
-	
-	});	
-	
+
+	});
+
    $("div#hide_button").click(function(){
 		$("div#panel").animate({
 			height: "0px"
 		}, "fast");
-		
-	
+
+
    });
 }
 
@@ -106,12 +106,12 @@ function system_setStatus( data, img, file ) {
 
 /**
  * Show dialog (system info)
- * 
- * Exemple: 
- * display_dialog(id, true, true, 'slide', 'slide', 240, 450) 
- * 
- *@author   Kraven30  
- * 
+ *
+ * Exemple:
+ * display_dialog(id, true, true, 'slide', 'slide', 240, 450)
+ *
+ *@author   Kraven30
+ *
  * @string  id			id pop-pup
  * @string  bgiframe	bgiframe
  * @string  modal		modal
@@ -119,7 +119,7 @@ function system_setStatus( data, img, file ) {
  * @string  show		show
  * @string  height		height
  * @string  width		width
- */  
+ */
 function display_dialog(id, bgiframe, modal, hide, show, height, width) {
     $(document).ready(function(){
             $("#dialog"+id).dialog({
@@ -129,7 +129,7 @@ function display_dialog(id, bgiframe, modal, hide, show, height, width) {
     			show: show,
     			height: height,
     			width: width,
-                autoOpen: false	
+                autoOpen: false
     		});
     		$("#dialog"+id).dialog("open");
     });
@@ -148,11 +148,11 @@ function fadeIn(object){
 
 /**
  * Display select groups
- * 
- * @author  Kraven30  
+ *
+ * @author  Kraven30
  * @Example changeDisplay (value, option ,display_id);
- */ 
-function changeDisplay (value, option ,display_id) 
+ */
+function changeDisplay (value, option ,display_id)
 {
 	if(value == option) {
 		document.getElementById(display_id).style.display = "";
@@ -164,13 +164,13 @@ function changeDisplay (value, option ,display_id)
 
 /**
  * Display block preview
- * 
- * @author  MusS  
+ *
+ * @author  MusS
  * @Example blocks_preview();
- */  
+ */
 function blocks_preview() {
-    var queryString = $('#blockform').formSerialize(); 
-    
+    var queryString = $('#blockform').formSerialize();
+
     $.post( 'admin.php?type=preview', queryString ,
     function(reponse, textStatus) {
         if (textStatus=='success') {
@@ -181,7 +181,7 @@ function blocks_preview() {
     			modal: modal,
     			hide: true,
     			show: true,
-                autoOpen: false	
+                autoOpen: false
     		});
     		$("#xo-preview-dialog").dialog("open");
 		}
@@ -192,8 +192,8 @@ function blocks_preview() {
 /**
  * Synchronise user post
  *
- * @author  Kraven30   
- */  
+ * @author  Kraven30
+ */
 function display_post(uid)
 {
 	$('#display_post_'+uid).hide();
@@ -207,7 +207,7 @@ function display_post(uid)
 			$('#loading_'+uid).hide();
 			$("#display_post_"+uid).fadeIn('fast');
 		}
-	});	
+	});
 }
 function system_switchModsView (c)
 {
@@ -226,7 +226,7 @@ function system_moduleLargeView ()
     $('.xo-logonormal').fadeIn('fast');
     $('.xo-mods').addClass('hide');
     $('.xo-modsimages').removeClass('xo-actions');
-    
+
     system_eraseCookie('xoopsModsView');
     system_createCookie('xoopsModsView', 'large', 365);
 }
@@ -236,7 +236,7 @@ function system_moduleListView ()
     $('.xo-logonormal').fadeOut('fast');
     $('.xo-mods').removeClass('hide');
     $('.xo-modsimages').addClass('xo-actions');
-    
+
     system_eraseCookie('xoopsModsView');
     system_createCookie('xoopsModsView', 'list', 365);
 }

@@ -12,7 +12,7 @@
 /**
  *  TinyMCE settings for XOOPS
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @package         class
  * @subpackage      editor

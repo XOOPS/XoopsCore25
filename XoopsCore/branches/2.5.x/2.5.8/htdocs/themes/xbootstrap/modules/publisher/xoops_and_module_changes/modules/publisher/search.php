@@ -11,6 +11,7 @@
 
 /**
  * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
  * @package         Publisher
  * @subpackage      Action

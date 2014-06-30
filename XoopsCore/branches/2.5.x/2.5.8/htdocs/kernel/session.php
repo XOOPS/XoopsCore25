@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         kernel
  * @since           2.0.0
@@ -26,7 +26,7 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
  *
  * @author        Kazumi Ono    <onokazu@xoops.org>
  * @author        Taiwen Jiang <phppp@users.sourceforge.net>
- * @copyright    copyright (c) The XOOPS project XOOPS.org
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  */
 class XoopsSessionHandler
 {

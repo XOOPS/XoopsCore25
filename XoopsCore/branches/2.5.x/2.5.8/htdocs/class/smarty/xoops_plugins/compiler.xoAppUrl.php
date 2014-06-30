@@ -5,7 +5,7 @@
  * See the enclosed file LICENSE for licensing information.
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
- * @copyright   The XOOPS project http://www.xoops.org/
+ * @copyright    (c) 2000-2014 XOOPS Project (www.xoops.org)
  * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @author		Skalpa Keo <skalpa@xoops.org>
  * @package		xos_opal

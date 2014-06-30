@@ -2,7 +2,7 @@
 /**
  * XOOPS editor
  *
- * @copyright The XOOPS project http://www.xoops.org/
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  * @license GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @author Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since 2.3.0

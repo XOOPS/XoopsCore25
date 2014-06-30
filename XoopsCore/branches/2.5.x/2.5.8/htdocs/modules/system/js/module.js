@@ -10,13 +10,13 @@
 
 /**
  * Modules Javascript
- *  
- * @copyright   The XOOPS Project http://sourceforge.net/projects/xoops/
+ *
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author      Andricq Nicolas (AKA MusS) 
+ * @author      Andricq Nicolas (AKA MusS)
  * @version     $Id:$
  */
- 
+
 $(document).ready(
     function(){
         // Controls Drag + Drop

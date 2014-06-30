@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         kernel
  * @since           2.0.0
@@ -34,7 +34,7 @@ define('XOOPS_CONF_AUTH', 7);
  *
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  */
 class XoopsConfigItem extends XoopsObject
 {
@@ -251,7 +251,7 @@ class XoopsConfigItem extends XoopsObject
  * of XOOPS configuration class objects.
  *
  * @author       Kazumi Ono <onokazu@xoops.org>
- * @copyright    copyright (c) 2000-2003 XOOPS.org
+ * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
  */
 class XoopsConfigItemHandler extends XoopsObjectHandler
 {

@@ -16,7 +16,7 @@
  * because the install folder has been renamed. All assets should be loaded by this
  * point, and no further installer action is expected.
  *
- * @copyright   The XOOPS project http://www.xoops.org/
+ * @copyright    (c) 2000-2014 XOOPS Project (www.xoops.org)
  * @license     http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
  * @package     installer
  * @since       2.5.7

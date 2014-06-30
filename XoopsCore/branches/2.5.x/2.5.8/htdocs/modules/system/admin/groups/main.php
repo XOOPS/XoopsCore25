@@ -2,7 +2,7 @@
 // $Id$
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
-// Copyright (c) 2000 XOOPS.org                           //
+// copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)                           //
 // <http://www.xoops.org/>                             //
 // ------------------------------------------------------------------------ //
 // This program is free software; you can redistribute it and/or modify     //
