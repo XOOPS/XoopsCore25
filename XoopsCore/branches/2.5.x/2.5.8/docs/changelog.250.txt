@@ -5,6 +5,7 @@ NOT RELEASED: Version 2.5.8 Beta 1
 ===============================
 - replaced "dirname(__FILE__)" with "__DIR__" since the min. PHP is now 5.3.7, and __DIR__ is faster  (mamba)
 - updating some copyright notices
+- Fix issues when protector 'id_forceintval' preference is enabled, that manifests as an error when deleting private messages.  (rgriffith)
 - fix for Update setting Template import date to 0 (timgno/mamba)
 
 ===============================
