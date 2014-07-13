@@ -27,17 +27,17 @@ if (!is_object($xoopsUser)) {
     redirect_header("user.php", 2, $errormessage);
 } else {
     $pm_handler =& xoops_gethandler('privmessage');
-    if (isset($_POST['delete_messages']) && isset($_POST['msg_id'])) {
+    if (isset($_POST['delete_messages']) && (isset($_POST['msg_id']) || isset($_POST['msg_ids']))) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             echo implode('<br />', $GLOBALS['xoopsSecurity']->getErrors());
             exit();
         } elseif (empty($_REQUEST['ok'])) {
             include $GLOBALS['xoops']->path('header.php');
-            xoops_confirm(array('ok' => 1, 'delete_messages' => 1, 'msg_id'=> json_encode(array_map("intval", $_POST['msg_id']))), $_SERVER['REQUEST_URI'], _PM_SURE_TO_DELETE);
+            xoops_confirm(array('ok' => 1, 'delete_messages' => 1, 'msg_ids'=> json_encode(array_map("intval", $_POST['msg_id']))), $_SERVER['REQUEST_URI'], _PM_SURE_TO_DELETE);
             include $GLOBALS['xoops']->path('footer.php');
             exit();
         }
-        $clean_msg_id = json_decode($_POST['msg_id'], true, 2);
+        $clean_msg_id = json_decode($_POST['msg_ids'], true, 2);
         if (!empty($clean_msg_id)) {
             $clean_msg_id = array_map("intval", $clean_msg_id);
         }
