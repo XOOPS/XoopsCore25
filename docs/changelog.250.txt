@@ -5,6 +5,7 @@ NOT RELEASED: Version 2.5.8 Beta 1
 ===============================
 - replaced "dirname(__FILE__)" with "__DIR__" since the min. PHP is now 5.3.7, and __DIR__ is faster  (mamba)
 - updating some copyright notices
+- fix for Update setting Template import date to 0 (timgno/mamba)
 
 ===============================
 2014-06-20: Version 2.5.7 Final (Patch)

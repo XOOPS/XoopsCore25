@@ -582,7 +582,7 @@ switch ($op) {
                     $tplfile = empty($tplfiles) ? $tplfile_handler->create() : $tplfiles[0];
                     // END irmtfan solve templates duplicate issue
                         $tplfile->setVar('tpl_refid', $newmid);
-                        $tplfile->setVar('tpl_lastimported', 0);
+//                        $tplfile->setVar('tpl_lastimported', 0);
                         $tplfile->setVar('tpl_lastmodified', time());
                             $tplfile->setVar('tpl_type', $type);
                         $tplfile->setVar('tpl_source', $tpldata, true);
@@ -686,7 +686,7 @@ switch ($op) {
                                     $tplfile_new->setVar('tpl_source', $content, true);
                                     $tplfile_new->setVar('tpl_desc', $block['description'], true);
                                     $tplfile_new->setVar('tpl_lastmodified', time());
-                                    $tplfile_new->setVar('tpl_lastimported', 0);
+//                                    $tplfile_new->setVar('tpl_lastimported', 0);
                                     $tplfile_new->setVar(
                                         'tpl_file',
                                         $block['template'],
