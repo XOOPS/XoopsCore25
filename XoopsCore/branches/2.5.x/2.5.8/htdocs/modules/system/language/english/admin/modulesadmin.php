@@ -18,7 +18,7 @@ define('_AM_SYSTEM_MODULES_RUSUREUNINS',"Are you sure you would like to uninstal
 define('_AM_SYSTEM_MODULES_RUSUREUPD',"Press the button below to update this module");
 define('_AM_SYSTEM_MODULES_BTOMADMIN',"XOOPS Module Administration");
 define('_AM_SYSTEM_MODULES_INSTALLING',"Installing ");
-define('_AM_SYSTEM_MODULES_UNINSTAL',"Uninstall ");
+define('_AM_SYSTEM_MODULES_UNINSTALL',"Uninstall ");
 define('_AM_SYSTEM_MODULES_DEACTIVATE',"Deactivate ");
 define('_AM_SYSTEM_MODULES_ACTIVATE',"Activate ");
 define('_AM_SYSTEM_MODULES_UPDATING',"Updating ");
