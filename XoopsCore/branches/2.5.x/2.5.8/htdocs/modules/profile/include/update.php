@@ -116,7 +116,7 @@ function xoops_module_update_profile(&$module, $oldversion = null)
                 @unlink($templateDirectory . $v);
             }
         }
-        // Load class XoopsFile
+
         xoops_load('xoopsfile');
         //delete /images directory
         $imagesDirectory = XOOPS_ROOT_PATH . "/modules/" . $module->getVar('dirname', 'n') . "/images/";
@@ -126,6 +126,9 @@ function xoops_module_update_profile(&$module, $oldversion = null)
         $cssFile = XOOPS_ROOT_PATH . "/modules/" . $module->getVar('dirname', 'n') . "/templates/style.css";
         $folderHandler   = XoopsFile::getHandler("file", $cssFile);
         $folderHandler->delete($cssFile);
+        //delete .html entries from the tpl table
+        $sql = "DELETE FROM " . $GLOBALS['xoopsDB']->prefix("tplfile") . " WHERE `tpl_module` = '" .$module->getVar('dirname', 'n') . "' AND `tpl_file` LIKE '%.html%'";
+        $GLOBALS['xoopsDB']->queryF($sql);
     }
 
     $profile_handler =& xoops_getModuleHandler("profile", $module->getVar('dirname', 'n'));
