@@ -429,6 +429,11 @@ class XoopsRequest
             $var = trim($var);
         }
 
+        // convert $var in array if $type is ARRAY
+        if (strtoupper($type)) == 'ARRAY' && !is_array($var)) {
+            $var = array($var);
+        }
+
         // Now we handle input filtering
         if ($mask & 2) {
             // If the allow raw flag is set, do not modify the variable
