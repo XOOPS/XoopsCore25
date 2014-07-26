@@ -200,11 +200,11 @@ echo "
 <h3>"._AM_H3_PREFIXMAN."</h3>
 <table class='outer' width='95%'>
     <tr>
-        <th>PREFIX</th>
-        <th>TABLES</th>
-        <th>UPDATED</th>
-        <th>COPY</th>
-        <th>ACTIONS</th>
+        <th>"._AM_PROTECTOR_PREFIX."</th>
+        <th>"._AM_PROTECTOR_TABLES."</th>
+        <th>"._AM_PROTECTOR_UPDATED."</th>
+        <th>"._AM_PROTECTOR_COPY."</th>
+        <th>"._AM_PROTECTOR_ACTIONS."</th>
     </tr>
 " ;
 

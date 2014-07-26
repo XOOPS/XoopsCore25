@@ -48,3 +48,9 @@ define('_AM_ADV_CHECKCONTAMI',"Contamination");
 define('_AM_ADV_CHECKISOCOM',"Isolated Comments");
 //XOOPS 2.5.4
 define('_AM_ADV_REGISTERGLOBALS2',"and place in it the line below:");
+//XOOPS 2.5.8
+define('_AM_PROTECTOR_PREFIX',"Prefix");
+define('_AM_PROTECTOR_TABLES',"Tables");
+define('_AM_PROTECTOR_UPDATED',"Updated");
+define('_AM_PROTECTOR_COPY',"Copy");
+define('_AM_PROTECTOR_ACTIONS',"Actions");
