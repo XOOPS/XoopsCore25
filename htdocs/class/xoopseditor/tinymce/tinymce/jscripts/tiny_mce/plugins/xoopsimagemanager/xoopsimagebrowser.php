@@ -177,7 +177,7 @@ if ( ($isadmin) || ($catreadcount > 0) || ($catwritecount > 0) ) {
     }
     // Add new image - end
 
-    // Add new catégorie - start
+    // Add new category - start
     if ( !empty($_POST["op"]) && $op == "addcat" ) {
         if (!$GLOBALS["xoopsSecurity"]->check()) {
             redirect_header($current_file . "?target=" . $target, 3, implode("<br />", $GLOBALS["xoopsSecurity"]->getErrors()));
@@ -230,7 +230,7 @@ if ( ($isadmin) || ($catreadcount > 0) || ($catwritecount > 0) ) {
         }
         redirect_header($current_file . "?target=" . $target, 3,_MD_AM_DBUPDATED);
     }
-    // Add new catégorie - end
+    // Add new category - end
 
     // Update categorie - start
     if ( !empty($_POST["op"]) && $op == "updatecat" ) {
