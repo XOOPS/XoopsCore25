@@ -94,7 +94,7 @@ class TinyMCE
         }
 
         // get editor language (from ...)
-        if (is_readable(XOOPS_ROOT_PATH . $this->rootpath . '/langs/' . $this->config["language"] . '.js')) {
+        if (isset($this->config["language"]) && is_readable(XOOPS_ROOT_PATH . $this->rootpath . '/langs/' . $this->config["language"] . '.js')) {
             $this->setting["language"] = $this->config["language"];
             $configured[] = "language";
         }
@@ -298,7 +298,7 @@ class TinyMCE
         static $isTinyMceJsLoaded = false;
 
         $this->init();
-        if (self::$LastOfElementsTinymce!=$this->setting["elements"]) {
+        if (isset($this->setting["elements"]) && self::$LastOfElementsTinymce!=$this->setting["elements"]) {
                 $ret = "\n<!-- 'tiny_mce.js' SCRIPT NOT YET ".$this->setting["elements"]." -->\n"; //debug
 
                 return $ret;
