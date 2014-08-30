@@ -113,7 +113,7 @@ class XoopsLocalAbstract
     /**
      * Get description for setting time format
      */
-    function getTimeFormatDesc()
+    static function getTimeFormatDesc()
     {
         return _TIMEFORMAT_DESC;
     }
