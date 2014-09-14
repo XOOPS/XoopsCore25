@@ -17,7 +17,7 @@
  * @version         $Id$
  */
 
-require_once '../../../include/cp_header.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 
 if (!isset($GLOBALS['xoopsTpl']) || !is_object($GLOBALS['xoopsTpl'])) {
     include_once XOOPS_ROOT_PATH . '/class/template.php';

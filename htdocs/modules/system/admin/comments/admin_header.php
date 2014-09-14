@@ -25,7 +25,7 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-include '../../../../mainfile.php';
+include dirname(dirname(dirname(dirname(__DIR__)))) . '/mainfile.php';
 include $GLOBALS['xoops']->path('/include/cp_functions.php');
 if (is_object($xoopsUser)) {
 	$module_handler =& xoops_gethandler('module');

@@ -51,14 +51,14 @@ case "list":
     break;
 
 case "new":
-    include_once '../include/forms.php';
+    include_once dirname(__DIR__) . '/include/forms.php';
     $obj =& $handler->create();
     $form = $obj->getForm();
     $form->display();
     break;
 
 case "edit":
-    include_once '../include/forms.php';
+    include_once dirname(__DIR__) . '/include/forms.php';
     $obj = $handler->get($_REQUEST['id']);
     $form = $obj->getForm();
     $form->display();
@@ -79,7 +79,7 @@ case "save":
     if ( $handler->insert($obj)  ) {
         redirect_header('category.php', 3, sprintf(_PROFILE_AM_SAVEDSUCCESS, _PROFILE_AM_CATEGORY) );
     }
-    include_once '../include/forms.php';
+    include_once dirname(__DIR__) . '/include/forms.php';
     echo $obj->getHtmlErrors();
     $form =& $obj->getForm();
     $form->display();

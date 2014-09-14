@@ -36,14 +36,14 @@ switch ($op) {
 
     case "new":
         $obj =& $handler->create();
-        include_once '../include/forms.php';
+        include_once dirname(__DIR__) . '/include/forms.php';
         $form = profile_getStepForm($obj);;
         $form->display();
         break;
 
     case "edit":
         $obj =& $handler->get($_REQUEST['id']);
-        include_once '../include/forms.php';
+        include_once dirname(__DIR__) . '/include/forms.php';
         $form = profile_getStepForm($obj);;
         $form->display();
         break;

@@ -43,7 +43,7 @@ switch ($op) {
         break;
     case "new":
         xoops_loadLanguage("main", $GLOBALS['xoopsModule']->getVar('dirname', 'n') );
-        include_once '../include/forms.php';
+        include_once dirname(__DIR__) . '/include/forms.php';
         $obj =& $handler->createUser();
         $obj->setGroups(array(XOOPS_GROUP_USERS) );
         $form = profile_getUserForm($obj);
@@ -57,7 +57,7 @@ switch ($op) {
             // If not webmaster trying to edit a webmaster - disallow
             redirect_header("user.php", 3, _US_NOEDITRIGHT);
         }
-        include_once '../include/forms.php';
+        include_once dirname(__DIR__) . '/include/forms.php';
         $form = profile_getUserForm($obj);
         $form->display();
         break;
@@ -174,7 +174,7 @@ switch ($op) {
             }
         }
         $user->setGroups($new_groups);
-        include_once '../include/forms.php';
+        include_once dirname(__DIR__) . '/include/forms.php';
         echo $user->getHtmlErrors();
         $form = profile_getUserForm($user, $profile);
         $form->display();
