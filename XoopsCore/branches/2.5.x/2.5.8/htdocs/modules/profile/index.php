@@ -49,7 +49,7 @@ if ($op == 'main') {
         $GLOBALS['xoopsTpl']->assign('lang_youremail', _US_YOUREMAIL);
         $GLOBALS['xoopsTpl']->assign('lang_sendpassword', _US_SENDPASSWORD);
         $GLOBALS['xoopsTpl']->assign('mailpasswd_token', $GLOBALS['xoopsSecurity']->createToken());
-        include 'footer.php';
+        include __DIR__ . '/footer.php';
         exit();
     }
     if (!empty($_GET['xoops_redirect'])  ) {

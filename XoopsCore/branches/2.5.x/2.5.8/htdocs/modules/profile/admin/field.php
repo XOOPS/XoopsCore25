@@ -100,7 +100,7 @@ switch ($op) {
         break;
 
     case "new":
-        include_once '../include/forms.php';
+        include_once dirname(__DIR__) . '/include/forms.php';
         $obj  =& $profilefield_handler->create();
         $form = profile_getFieldForm($obj);
         $form->display();
@@ -111,7 +111,7 @@ switch ($op) {
         if (!$obj->getVar('field_config') && !$obj->getVar('field_show') && !$obj->getVar('field_edit')) { //If no configs exist
             redirect_header('field.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
         }
-        include_once '../include/forms.php';
+        include_once dirname(__DIR__) . '/include/forms.php';
         $form = profile_getFieldForm($obj);
         $form->display();
         break;
@@ -278,7 +278,7 @@ switch ($op) {
             $url = $redirect_to_edit ? 'field.php?op=edit&amp;id=' . $obj->getVar('field_id') : 'field.php';
             redirect_header($url, 3, sprintf(_PROFILE_AM_SAVEDSUCCESS, _PROFILE_AM_FIELD));
         }
-        include_once '../include/forms.php';
+        include_once dirname(__DIR__) . '/include/forms.php';
         echo $obj->getHtmlErrors();
         $form = profile_getFieldForm($obj);
         $form->display();

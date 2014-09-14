@@ -31,7 +31,7 @@
 
 
 // Include header
-include 'header.php';
+include __DIR__ . '/header.php';
 
 if ( isset($fct) && $fct == 'users' ) {
     $xoopsOption['pagetype'] = 'user';

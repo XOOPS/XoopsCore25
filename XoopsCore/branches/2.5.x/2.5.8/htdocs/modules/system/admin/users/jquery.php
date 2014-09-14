@@ -17,7 +17,7 @@
  * @version     $Id$
  */
 
-require '../../../../mainfile.php';
+require dirname(dirname(dirname(dirname(__DIR__)))) . '/mainfile.php';
 require(XOOPS_ROOT_PATH.'/header.php');
 
 // defined("XOOPS_ROOT_PATH") || die("XOOPS root path not defined");

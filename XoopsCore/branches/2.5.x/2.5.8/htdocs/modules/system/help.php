@@ -16,7 +16,7 @@
  */
 
 // Include header
-include 'header.php';
+include __DIR__ . '/header.php';
 
 $page = system_CleanVars($_REQUEST, 'page', '', 'string');
 $mid  = system_CleanVars($_REQUEST, 'mid', 0, 'int');
