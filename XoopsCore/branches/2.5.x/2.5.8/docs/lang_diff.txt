@@ -4,6 +4,15 @@ LANGUAGE DIFFERENCES
 Below are language differences from a version to next version.
 
 ===============================
+NOT RELEASED: Version 2.5.8 Beta
+===============================
+ADDED/DELETED DEFINES
+
+/install/language/english/install.php
+/modules/system/language/english/admin/modulesadmin.php
+- added define('_AM_SYSTEM_MODULES_INSTALL_MORE',"Install more modules");
+
+===============================
 2014/06/14: Version 2.5.7 Final
 ===============================
 ADDED/DELETED DEFINES
