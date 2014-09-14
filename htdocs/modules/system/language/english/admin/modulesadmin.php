@@ -167,3 +167,5 @@ define('_AM_SYSTEM_MODULES_CONFIRM_TIPS',
 </ul>");
 // 2.5.7
 define('_AM_SYSTEM_MODULES_INSTALL_TESTDATA',"Add Test Data");
+// 2.5.8
+define('_AM_SYSTEM_MODULES_INSTALL_MORE',"Install more modules");
