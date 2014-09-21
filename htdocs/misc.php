@@ -96,8 +96,8 @@ if ($action == "showpopups") {
             $counter = isset($_GET['start']) ? intval($_GET['start']) : 0;
             foreach ($avatarslist as $file => $name) {
                 echo '<td><img src="uploads/' . $file . '" alt="' . $name . '" style="padding:10px; vertical-align:top;"  /><br />' . $name . '<br /><input name="myimage" type="button" value="' . _SELECT . '" onclick="myimage_onclick(' . $counter . ')" /></td>';
-                $counter++;
-                $cntavs++;
+                ++$counter;
+                ++$cntavs;
                 if ($cntavs > 8) {
                     echo '</tr><tr>';
                     $cntavs = 0;
@@ -188,7 +188,7 @@ if ($action == "showpopups") {
             $count = count($onlines);
             $module_handler =& xoops_gethandler('module');
             $modules = $module_handler->getList(new Criteria('isactive', 1));
-            for ($i = 0; $i < $count; $i++) {
+            for ($i = 0; $i < $count; ++$i) {
                 if ($onlines[$i]['online_uid'] == 0) {
                     $onlineUsers[$i]['user'] = '';
                 } else {
@@ -199,7 +199,7 @@ if ($action == "showpopups") {
                 $onlineUsers[$i]['module'] = ($onlines[$i]['online_module'] > 0) ? $modules[$onlines[$i]['online_module']] : '';
             }
             $class = 'even';
-            for ($i = 0; $i < $count; $i++) {
+            for ($i = 0; $i < $count; ++$i) {
                 $class = ($class == 'odd') ? 'even' : 'odd';
                 echo '<tr style="vertical-align:middle; text-align: center;" class="' . $class . '">';
                 if (is_object($onlineUsers[$i]['user'])) {

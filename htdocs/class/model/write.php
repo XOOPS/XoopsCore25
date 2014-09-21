@@ -331,7 +331,7 @@ class XoopsModelWrite extends XoopsModelAbstract
     {
         if (is_array($this->handler->keyName)) {
             $clause = array();
-            for ($i = 0; $i < count($this->handler->keyName); $i++) {
+            for ($i = 0; $i < count($this->handler->keyName); ++$i) {
                 $clause[] = "`" . $this->handler->keyName[$i] . "` = " . $this->handler->db->quote($object->getVar($this->handler->keyName[$i]));
             }
             $whereclause = implode(" AND ", $clause);

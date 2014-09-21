@@ -200,7 +200,7 @@ class XoopsFormCheckBox extends XoopsFormElement
         $i = 0;
         $id_ele = 0;
         foreach ($ele_options as $value => $name) {
-            $id_ele ++;
+            ++$id_ele;
             if (! empty($this->columns)) {
                 if ($i % $this->columns == 0) {
                     $ret .= '<tr>';

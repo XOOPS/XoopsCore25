@@ -96,7 +96,7 @@ if ($op == 'list') {
                 $imgcount = count($images);
                 $max = ($imgcount > 10) ? 10 : $imgcount;
 
-                for ($i = 0; $i < $max; $i++) {
+                for ($i = 0; $i < $max; ++$i) {
                     if ($storetype == 'db') {
                         $lcode = '[img align=left id=' . $images[$i]->getVar('image_id') . ']' . $images[$i]->getVar('image_nicename') . '[/img]';
                         $code  = '[img align=center id=' . $images[$i]->getVar('image_id') . ']' . $images[$i]->getVar('image_nicename') . '[/img]';

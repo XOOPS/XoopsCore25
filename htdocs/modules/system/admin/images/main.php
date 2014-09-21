@@ -446,7 +446,7 @@ switch ( $op ) {
         $uploader->setPrefix('img');
         $err = array();
         $ucount = count($_POST['xoops_upload_file']);
-        for ($i = 0; $i < $ucount; $i++) {
+        for ($i = 0; $i < $ucount; ++$i) {
             if ($uploader->fetchMedia($_POST['xoops_upload_file'][$i])) {
                 if (!$uploader->upload()) {
                     $err[] = $uploader->getErrors();

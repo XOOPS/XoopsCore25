@@ -287,7 +287,7 @@ class XoopsForm
             } else {
                 $required_elements = &$formElement->getRequired();
                 $count = count($required_elements);
-                for ($i = 0; $i < $count; $i ++) {
+                for ($i = 0; $i < $count; ++$i) {
                     $this->_required[] = &$required_elements[$i];
                 }
             }
@@ -308,14 +308,14 @@ class XoopsForm
         } else {
             $ret = array();
             $count = count($this->_elements);
-            for ($i = 0; $i < $count; $i ++) {
+            for ($i = 0; $i < $count; ++$i) {
                 if (is_object($this->_elements[$i])) {
                     if (! $this->_elements[$i]->isContainer()) {
                         $ret[] = &$this->_elements[$i];
                     } else {
                         $elements = &$this->_elements[$i]->getElements(true);
                         $count2 = count($elements);
-                        for ($j = 0; $j < $count2; $j ++) {
+                        for ($j = 0; $j < $count2; ++$j) {
                             $ret[] = &$elements[$j];
                         }
                         unset($elements);
@@ -337,7 +337,7 @@ class XoopsForm
         $ret = array();
         $elements = &$this->getElements(true);
         $count = count($elements);
-        for ($i = 0; $i < $count; $i ++) {
+        for ($i = 0; $i < $count; ++$i) {
             $ret[] = $elements[$i]->getName();
         }
 
@@ -354,7 +354,7 @@ class XoopsForm
     {
         $elements = $this->getElements(true);
         $count = count($elements);
-        for ($i = 0; $i < $count; $i ++) {
+        for ($i = 0; $i < $count; ++$i) {
             if ($name == $elements[$i]->getName(false)) {
                 return $elements[$i];
             }
@@ -389,7 +389,7 @@ class XoopsForm
             // will not use getElementByName() for performance..
             $elements = &$this->getElements(true);
             $count = count($elements);
-            for ($i = 0; $i < $count; $i ++) {
+            for ($i = 0; $i < $count; ++$i) {
                 $name = $elements[$i]->getName(false);
                 if ($name && isset($values[$name]) && method_exists($elements[$i], 'setValue')) {
                     $elements[$i]->setValue($values[$name]);
@@ -427,7 +427,7 @@ class XoopsForm
         $elements = &$this->getElements(true);
         $count = count($elements);
         $values = array();
-        for ($i = 0; $i < $count; $i ++) {
+        for ($i = 0; $i < $count; ++$i) {
             $name = $elements[$i]->getName(false);
             if ($name && method_exists($elements[$i], 'getValue')) {
                 $values[$name] = &$elements[$i]->getValue($encode);

@@ -166,7 +166,7 @@ switch ($op) {
 
                                         // create template
                                         $templates =& $tpltpl_handler->find($tplsetname, 'module', null, $moddir);
-                                        for ($j=0; $j<count($templates); $j++) {
+                                        for ($j=0; $j<count($templates); ++$j) {
                                             $filename = $templates[$j]->getVar('tpl_file');
                                             if ($tplsetname == $tplset) {
                                                 $physical_file = XOOPS_THEME_PATH.'/'.$_REQUEST['select_theme'].'/modules/'.$moddir.'/'.$filename;
@@ -194,7 +194,7 @@ switch ($op) {
 
                                         // create block template
                                         $btemplates =& $tpltpl_handler->find($tplsetname, 'block', null, $moddir);
-                                        for ($k = 0; $k < count($btemplates); $k++) {
+                                        for ($k = 0; $k < count($btemplates); ++$k) {
                                             $filename = $btemplates[$k]->getVar('tpl_file');
                                             if ($tplsetname == $tplset) {
                                                 $physical_file = XOOPS_THEME_PATH.'/'.$_REQUEST['select_theme'].'/modules/'.$moddir.'/blocks/'.$filename;
@@ -251,10 +251,10 @@ switch ($op) {
                                 $class = "odd";
                                 $text .= '<table cellspacing="1" class="outer"><tr><th colspan="3" align="center">'._AM_SYSTEM_TEMPLATES_MODULES.ucfirst($module->getVar('dirname')).'</th></tr><tr><th align="center">'._AM_SYSTEM_TEMPLATES_TYPES.'</th><th  align="center">'._AM_SYSTEM_TEMPLATES_FILES.'</th><th>'._AM_SYSTEM_TEMPLATES_STATUS.'</th></tr>';
                                 $select_templates_modules = $_REQUEST['select_templates_modules'];
-                                for ($l=0; $l<count($_REQUEST['select_templates_modules']); $l++) {
+                                for ($l=0; $l<count($_REQUEST['select_templates_modules']); ++$l) {
                                     // create template
                                     $templates =& $tpltpl_handler->find($tplsetname, 'module', null, $moddir);
-                                    for ($j=0; $j<count($templates); $j++) {
+                                    for ($j=0; $j<count($templates); ++$j) {
                                         $filename = $templates[$j]->getVar('tpl_file');
                                         if ($tplsetname == $tplset) {
                                             $physical_file = XOOPS_THEME_PATH.'/'.$_REQUEST['select_theme'].'/modules/'.$moddir.'/'.$filename;
@@ -284,7 +284,7 @@ switch ($op) {
 
                                     // create block template
                                     $btemplates =& $tpltpl_handler->find($tplsetname, 'block', null, $moddir);
-                                    for ($k = 0; $k < count($btemplates); $k++) {
+                                    for ($k = 0; $k < count($btemplates); ++$k) {
                                         $filename = $btemplates[$k]->getVar('tpl_file');
                                         if ($tplsetname == $tplset) {
                                             $physical_file = XOOPS_THEME_PATH.'/'.$_REQUEST['select_theme'].'/modules/'.$moddir.'/blocks/'.$filename;

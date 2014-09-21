@@ -60,7 +60,7 @@ switch ($op) {
         if (!empty($_POST['memberslist_id'])) {
             $user_count = count($_POST['memberslist_id']);
             $display_names = "";
-            for ( $i = 0; $i < $user_count; $i++ ) {
+            for ( $i = 0; $i < $user_count; ++$i ) {
                 $uid_hidden = new XoopsFormHidden("mail_to_user[]", $_POST['memberslist_id'][$i]);
                 $form->addElement($uid_hidden);
                 $display_names .= "<a href='".XOOPS_URL."/userinfo.php?uid=".$_POST['memberslist_id'][$i]."' rel='external'>".XoopsUser::getUnameFromId($_POST['memberslist_id'][$i])."</a>, ";
@@ -243,7 +243,7 @@ switch ($op) {
             if ( $added_count > 0 ) {
                 $myts =& MyTextSanitizer::getInstance();
                 $xoopsMailer =& xoops_getMailer();
-                for ( $i = 0; $i < $added_count; $i++) {
+                for ( $i = 0; $i < $added_count; ++$i) {
                     $xoopsMailer->setToUsers($added[$i]);
                 }
                 $xoopsMailer->setFromName($myts->stripSlashesGPC($_POST['mail_fromname']));

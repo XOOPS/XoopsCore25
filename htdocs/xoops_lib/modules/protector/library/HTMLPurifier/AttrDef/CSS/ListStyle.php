@@ -76,7 +76,7 @@ class HTMLPurifier_AttrDef_CSS_ListStyle extends HTMLPurifier_AttrDef
                     }
                 }
                 $caught[$key] = $r;
-                $i++;
+                ++$i;
                 break;
             }
         }

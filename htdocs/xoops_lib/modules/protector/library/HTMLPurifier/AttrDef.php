@@ -97,16 +97,16 @@ abstract class HTMLPurifier_AttrDef
     {
         // flexibly parse it
         $ret = '';
-        for ($i = 0, $c = strlen($string); $i < $c; $i++) {
+        for ($i = 0, $c = strlen($string); $i < $c; ++$i) {
             if ($string[$i] === '\\') {
-                $i++;
+                ++$i;
                 if ($i >= $c) {
                     $ret .= '\\';
                     break;
                 }
                 if (ctype_xdigit($string[$i])) {
                     $code = $string[$i];
-                    for ($a = 1, $i++; $i < $c && $a < 6; $i++, $a++) {
+                    for ($a = 1, ++$i; $i < $c && $a < 6; ++$i, ++$a) {
                         if (!ctype_xdigit($string[$i])) {
                             break;
                         }

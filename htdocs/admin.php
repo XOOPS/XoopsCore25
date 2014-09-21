@@ -97,7 +97,7 @@ if (!empty($_GET['xoopsorgnews'])) {
                 if (false != $rss2parser->parse()) {
                     $_items = $rss2parser->getItems();
                     $count = count($_items);
-                    for ($i = 0; $i < $count; $i ++) {
+                    for ($i = 0; $i < $count; ++$i) {
                         $_items[$i]['title'] = XoopsLocal::convert_encoding($_items[$i]['title'], _CHARSET, 'UTF-8');
                         $_items[$i]['description'] = XoopsLocal::convert_encoding($_items[$i]['description'], _CHARSET, 'UTF-8');
                         $items[strval(strtotime($_items[$i]['pubdate'])) . "-" . strval(++$cnt)] = $_items[$i];

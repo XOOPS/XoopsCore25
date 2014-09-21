@@ -423,7 +423,7 @@ class Snoopy
             if($this->lastredirectaddr)
                 $URI = $this->lastredirectaddr;
             if (is_array($this->results)) {
-                for($x=0;$x<count($this->results);$x++)
+                for($x=0;$x<count($this->results);++$x)
                     $this->results[$x] = $this->_striplinks($this->results[$x]);
             } else
                 $this->results = $this->_striplinks($this->results);
@@ -455,7 +455,7 @@ class Snoopy
         if ($this->fetch($URI)) {
 
             if (is_array($this->results)) {
-                for($x=0;$x<count($this->results);$x++)
+                for($x=0;$x<count($this->results);++$x)
                     $this->results[$x] = $this->_stripform($this->results[$x]);
             } else
                 $this->results = $this->_stripform($this->results);
@@ -482,7 +482,7 @@ class Snoopy
     {
         if ($this->fetch($URI)) {
             if (is_array($this->results)) {
-                for($x=0;$x<count($this->results);$x++)
+                for($x=0;$x<count($this->results);++$x)
                     $this->results[$x] = $this->_striptext($this->results[$x]);
             } else
                 $this->results = $this->_striptext($this->results);
@@ -513,7 +513,7 @@ class Snoopy
             if($this->lastredirectaddr)
                 $URI = $this->lastredirectaddr;
             if (is_array($this->results)) {
-                for ($x=0;$x<count($this->results);$x++) {
+                for ($x=0;$x<count($this->results);++$x) {
                     $this->results[$x] = $this->_striplinks($this->results[$x]);
                     if($this->expandlinks)
                         $this->results[$x] = $this->_expandlinks($this->results[$x],$URI);
@@ -550,7 +550,7 @@ class Snoopy
             if($this->lastredirectaddr)
                 $URI = $this->lastredirectaddr;
             if (is_array($this->results)) {
-                for ($x=0;$x<count($this->results);$x++) {
+                for ($x=0;$x<count($this->results);++$x) {
                     $this->results[$x] = $this->_striptext($this->results[$x]);
                     if($this->expandlinks)
                         $this->results[$x] = $this->_expandlinks($this->results[$x],$URI);
@@ -931,7 +931,7 @@ class Snoopy
         // have we hit our frame depth and is there frame src to fetch?
         if (($this->_framedepth < $this->maxframes) && preg_match_all("'<frame\s+.*src[\s]*=[\'\"]?([^\'\"\>]+)'i",$results,$match)) {
             $this->results[] = $results;
-            for($x=0; $x<count($match[1]); $x++)
+            for($x=0; $x<count($match[1]); ++$x)
                 $this->_frameurls[] = $this->_expandlinks($match[1][$x],$URI_PARTS["scheme"]."://".$this->host);
         }
         // have we already fetched framed content?
@@ -1015,7 +1015,7 @@ class Snoopy
         if(!empty($this->user) || !empty($this->pass))
             $headers[] = "Authorization: BASIC ".base64_encode($this->user.":".$this->pass);
 
-        for ($curr_header = 0; $curr_header < count($headers); $curr_header++) {
+        for ($curr_header = 0; $curr_header < count($headers); ++$curr_header) {
             $safer_header = strtr( $headers[$curr_header], "\"", " " );
             $cmdline_params .= " -H \"".$safer_header."\"";
         }
@@ -1043,7 +1043,7 @@ class Snoopy
         $this->_redirectaddr = false;
         unset($this->headers);
 
-        for ($currentHeader = 0; $currentHeader < count($result_headers); $currentHeader++) {
+        for ($currentHeader = 0; $currentHeader < count($result_headers); ++$currentHeader) {
 
             // if a header begins with Location: or URI:, set the redirect
             if (preg_match("/^(Location: |URI: )/i",$result_headers[$currentHeader])) {
@@ -1077,7 +1077,7 @@ class Snoopy
         // have we hit our frame depth and is there frame src to fetch?
         if (($this->_framedepth < $this->maxframes) && preg_match_all("'<frame\s+.*src[\s]*=[\'\"]?([^\'\"\>]+)'i",$results,$match)) {
             $this->results[] = $results;
-            for($x=0; $x<count($match[1]); $x++)
+            for($x=0; $x<count($match[1]); ++$x)
                 $this->_frameurls[] = $this->_expandlinks($match[1][$x],$URI_PARTS["scheme"]."://".$this->host);
         }
         // have we already fetched framed content?
@@ -1099,7 +1099,7 @@ class Snoopy
 
     function setcookies()
     {
-        for ($x=0; $x<count($this->headers); $x++) {
+        for ($x=0; $x<count($this->headers); ++$x) {
         if(preg_match('/^set-cookie:[\s]+([^=]+)=([^;]+)/i', $this->headers[$x],$match))
             $this->cookies[$match[1]] = urldecode($match[2]);
         }

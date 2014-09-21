@@ -85,7 +85,7 @@ abstract class HTMLPurifier_Token
     public function rawPosition($l, $c)
     {
         if ($c === -1) {
-            $l++;
+            ++$l;
         }
         $this->line = $l;
         $this->col = $c;

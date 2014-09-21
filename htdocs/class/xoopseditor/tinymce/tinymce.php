@@ -133,7 +133,7 @@ class TinyMCE
             }
             $i = 0;
             foreach ($this->config["buttons"] as $button) {
-                $i++;
+                ++$i;
                 if (isset($button["before"])) {
                     $this->setting["theme_" . $this->setting["theme"] . "_buttons{$i}_add_before"] = $button["before"];
                 }
@@ -185,7 +185,7 @@ class TinyMCE
                 $configured[] = "fonts";
             }
 
-            for ($i=1 ; $i <= 4 ; $i++) {
+            for ($i=1 ; $i <= 4 ; ++$i) {
                 $buttons = array();
                 if ( isset($this->setting["theme_" . $this->setting["theme"] . "_buttons{$i}"]) ) {
                     $checklist = explode(",", $this->setting["theme_" . $this->setting["theme"] . "_buttons{$i}"] );

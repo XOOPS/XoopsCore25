@@ -88,14 +88,14 @@ class HTMLPurifier_Generator
 
         // Basic algorithm
         $html = '';
-        for ($i = 0, $size = count($tokens); $i < $size; $i++) {
+        for ($i = 0, $size = count($tokens); $i < $size; ++$i) {
             if ($this->_scriptFix && $tokens[$i]->name === 'script'
                 && $i + 2 < $size && $tokens[$i+2] instanceof HTMLPurifier_Token_End) {
                 // script special case
                 // the contents of the script block must be ONE token
                 // for this to work.
-                $html .= $this->generateFromToken($tokens[$i++]);
-                $html .= $this->generateScriptFromToken($tokens[$i++]);
+                $html .= $this->generateFromToken($tokens[++$i]);
+                $html .= $this->generateScriptFromToken($tokens[++$i]);
             }
             $html .= $this->generateFromToken($tokens[$i]);
         }

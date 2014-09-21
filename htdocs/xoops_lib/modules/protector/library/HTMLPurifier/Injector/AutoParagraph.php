@@ -223,7 +223,7 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
             $result[] = new HTMLPurifier_Token_Text($data);
             return;
         }
-        for ($i = 0; $i < $c; $i++) {
+        for ($i = 0; $i < $c; ++$i) {
             $par = $raw_paragraphs[$i];
             if (trim($par) !== '') {
                 $paragraphs[] = $par;

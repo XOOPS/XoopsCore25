@@ -62,7 +62,7 @@ function ProtectorMySQLDatabase()
     $strings = array() ;
     $current_string = '' ;
 
-    for ($i = 0 ; $i < $sql_len ; $i ++) {
+    for ($i = 0 ; $i < $sql_len ; ++$i) {
         $char = $sql[$i] ;
         if ($in_string) {
             while (1) {
@@ -81,7 +81,7 @@ function ProtectorMySQLDatabase()
                     $escaped_backslash = false ;
                     while ($i - $j > 0 && $sql[$i-$j] == '\\') {
                         $escaped_backslash = ! $escaped_backslash ;
-                        $j++;
+                        ++$j;
                     }
                     if ($escaped_backslash) {
                         $string_start = '' ;
@@ -89,7 +89,7 @@ function ProtectorMySQLDatabase()
                         $strings[] = $current_string ;
                         break ;
                     } else {
-                        $i++;
+                        ++$i;
                     }
                 }
             }

@@ -68,7 +68,7 @@ function xoops_ishexstr($hex, $checklen = 32)
         $checklen = $len;//And???
     }
     $hex = strtolower($hex);
-    for ($i = 0; $i < $len; $i++) {
+    for ($i = 0; $i < $len; ++$i) {
         if (!in_array($hex{$i}, $accepted)) {
             return false;
         }

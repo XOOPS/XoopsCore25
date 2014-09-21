@@ -80,7 +80,7 @@ class HTMLPurifier_AttrDef_CSS_Background extends HTMLPurifier_AttrDef
                 } else {
                     $caught[$key] = $r;
                 }
-                $i++;
+                ++$i;
                 break;
             }
         }

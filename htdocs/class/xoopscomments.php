@@ -144,7 +144,7 @@ class XoopsComments extends XoopsObject
         $arr = $mytree->getAllChild($this->getVar("comment_id"), "comment_id");
         $size = count($arr);
         if ($size > 0) {
-            for ($i = 0; $i < $size; $i++) {
+            for ($i = 0; $i < $size; ++$i) {
                 $sql = sprintf("DELETE FROM %s WHERE comment_bid = %u", $this->ctable, $arr[$i]['comment_id']);
                 if (!$result = $this->db->query($sql)) {
                     echo "Could not delete comment.";

@@ -43,8 +43,8 @@ class phpthumb_filters {
 					ImageFilledRectangle($gdimg_mask_blendtemp, 0, 0, ImageSX($gdimg_mask_blendtemp), ImageSY($gdimg_mask_blendtemp), $color_background);
 					ImageAlphaBlending($gdimg_mask_blendtemp, false);
 					ImageSaveAlpha($gdimg_mask_blendtemp, true);
-					for ($x = 0; $x < ImageSX($gdimg_image); $x++) {
-						for ($y = 0; $y < ImageSY($gdimg_image); $y++) {
+					for ($x = 0; $x < ImageSX($gdimg_image); ++$x) {
+						for ($y = 0; $y < ImageSY($gdimg_image); ++$y) {
 							//$RealPixel = phpthumb_functions::GetPixelColor($gdimg_mask_blendtemp, $x, $y);
 							$RealPixel = phpthumb_functions::GetPixelColor($gdimg_image, $x, $y);
 							$MaskPixel = phpthumb_functions::GrayscalePixel(phpthumb_functions::GetPixelColor($gdimg_mask_resized, $x, $y));
@@ -81,7 +81,7 @@ class phpthumb_filters {
         $hexcolor2 = ($hexcolor2 ? $hexcolor2 : '000000');
 
         ImageAlphaBlending($gdimg, true);
-        for ($i = 0; $i < $width; $i++) {
+        for ($i = 0; $i < $width; ++$i) {
             $alpha = round(($i / $width) * 127);
             $color1 = phpthumb_functions::ImageHexColorAllocate($gdimg, $hexcolor1, false, $alpha);
             $color2 = phpthumb_functions::ImageHexColorAllocate($gdimg, $hexcolor2, false, $alpha);
@@ -96,7 +96,7 @@ class phpthumb_filters {
 
 
 	public function Blur(&$gdimg, $radius=0.5) {
-		// Taken from Torstein Hønsi's phpUnsharpMask (see phpthumb.unsharp.php)
+		// Taken from Torstein HÃ¸nsi's phpUnsharpMask (see phpthumb.unsharp.php)
 
 		$radius = round(max(0, min($radius, 50)) * 2);
 		if (!$radius) {
@@ -113,7 +113,7 @@ class phpthumb_filters {
 
 			// Move copies of the image around one pixel at the time and merge them with weight
 			// according to the matrix. The same matrix is simply repeated for higher radii.
-			for ($i = 0; $i < $radius; $i++)	{
+			for ($i = 0; $i < $radius; ++$i)	{
 				ImageCopy     ($imgBlur, $gdimg, 0, 0, 1, 1, $w - 1, $h - 1);            // up left
 				ImageCopyMerge($imgBlur, $gdimg, 1, 1, 0, 0, $w,     $h,     50.00000);  // down right
 				ImageCopyMerge($imgBlur, $gdimg, 0, 1, 1, 0, $w - 1, $h,     33.33333);  // down left
@@ -174,8 +174,8 @@ class phpthumb_filters {
 
 		$scaling = (255 - abs($amount)) / 255;
 		$baseamount = (($amount > 0) ? $amount : 0);
-		for ($x = 0; $x < ImageSX($gdimg); $x++) {
-			for ($y = 0; $y < ImageSY($gdimg); $y++) {
+		for ($x = 0; $x < ImageSX($gdimg); ++$x) {
+			for ($y = 0; $y < ImageSY($gdimg); ++$y) {
 				$OriginalPixel = phpthumb_functions::GetPixelColor($gdimg, $x, $y);
 				foreach ($OriginalPixel as $key => $value) {
 					$NewPixel[$key] = round($baseamount + ($OriginalPixel[$key] * $scaling));
@@ -209,8 +209,8 @@ class phpthumb_filters {
 		} else {
 			$scaling = (255 - abs($amount)) / 255;
 		}
-		for ($x = 0; $x < ImageSX($gdimg); $x++) {
-			for ($y = 0; $y < ImageSY($gdimg); $y++) {
+		for ($x = 0; $x < ImageSX($gdimg); ++$x) {
+			for ($y = 0; $y < ImageSY($gdimg); ++$y) {
 				$OriginalPixel = phpthumb_functions::GetPixelColor($gdimg, $x, $y);
 				foreach ($OriginalPixel as $key => $value) {
 					$NewPixel[$key] = min(255, max(0, round($OriginalPixel[$key] * $scaling)));
@@ -252,8 +252,8 @@ class phpthumb_filters {
 			$TargetPixel['blue']  = hexdec(substr($targetColor, 4, 2));
 		}
 
-		for ($x = 0; $x < ImageSX($gdimg); $x++) {
-			for ($y = 0; $y < ImageSY($gdimg); $y++) {
+		for ($x = 0; $x < ImageSX($gdimg); ++$x) {
+			for ($y = 0; $y < ImageSY($gdimg); ++$y) {
 				$OriginalPixel = phpthumb_functions::GetPixelColor($gdimg, $x, $y);
 				if ($targetColor == 'gray') {
 					$TargetPixel = phpthumb_functions::GrayscalePixel($OriginalPixel);
@@ -330,7 +330,7 @@ class phpthumb_filters {
 
 		$scaling = min(ImageSX($gdimg) / (ImageSX($gdimg) + abs($width_shadow)), ImageSY($gdimg) / (ImageSY($gdimg) + abs($height_shadow)));
 
-		for ($i = 0; $i < $width; $i++) {
+		for ($i = 0; $i < $width; ++$i) {
 			$WidthAlpha[$i] = (abs(($width / 2) - $i) / $width);
 			$Offset['x'] = cos(deg2rad($angle)) * ($distance + $i);
 			$Offset['y'] = sin(deg2rad($angle)) * ($distance + $i);
@@ -346,15 +346,15 @@ class phpthumb_filters {
 			$transparent1 = phpthumb_functions::ImageColorAllocateAlphaSafe($gdimg_dropshadow_temp, 0, 0, 0, 127);
 			ImageFill($gdimg_dropshadow_temp, 0, 0, $transparent1);
 
-			for ($x = 0; $x < ImageSX($gdimg); $x++) {
-				for ($y = 0; $y < ImageSY($gdimg); $y++) {
+			for ($x = 0; $x < ImageSX($gdimg); ++$x) {
+				for ($y = 0; $y < ImageSY($gdimg); ++$y) {
 					$PixelMap[$x][$y] = phpthumb_functions::GetPixelColor($gdimg, $x, $y);
 				}
 			}
-			for ($x = 0; $x < $tempImageWidth; $x++) {
-				for ($y = 0; $y < $tempImageHeight; $y++) {
-					//for ($i = 0; $i < $width; $i++) {
-					for ($i = 0; $i < 1; $i++) {
+			for ($x = 0; $x < $tempImageWidth; ++$x) {
+				for ($y = 0; $y < $tempImageHeight; ++$y) {
+					//for ($i = 0; $i < $width; ++$i) {
+					for ($i = 0; $i < 1; ++$i) {
 						if (!isset($PixelMap[$x][$y]['alpha']) || ($PixelMap[$x][$y]['alpha'] > 0)) {
 							if (isset($PixelMap[$x + $Offset['x']][$y + $Offset['y']]['alpha']) && ($PixelMap[$x + $Offset['x']][$y + $Offset['y']]['alpha'] < 127)) {
 								$thisColor = phpthumb_functions::ImageHexColorAllocate($gdimg, $hexcolor, false, $PixelMap[$x + $Offset['x']][$y + $Offset['y']]['alpha']);
@@ -366,8 +366,8 @@ class phpthumb_filters {
 			}
 
 			ImageAlphaBlending($gdimg_dropshadow_temp, true);
-			for ($x = 0; $x < ImageSX($gdimg); $x++) {
-				for ($y = 0; $y < ImageSY($gdimg); $y++) {
+			for ($x = 0; $x < ImageSX($gdimg); ++$x) {
+				for ($y = 0; $y < ImageSY($gdimg); ++$y) {
 					if ($PixelMap[$x][$y]['alpha'] < 127) {
 						$thisColor = phpthumb_functions::ImageColorAllocateAlphaSafe($gdimg_dropshadow_temp, $PixelMap[$x][$y]['red'], $PixelMap[$x][$y]['green'], $PixelMap[$x][$y]['blue'], $PixelMap[$x][$y]['alpha']);
 						ImageSetPixel($gdimg_dropshadow_temp, $x, $y, $thisColor);
@@ -450,13 +450,13 @@ class phpthumb_filters {
 		if ($tempImage = phpthumb_functions::ImageCreateFunction(ImageSX($gdimg), ImageSY($gdimg))) {
 			if ($x) {
 				ImageCopy($tempImage, $gdimg, 0, 0, 0, 0, ImageSX($gdimg), ImageSY($gdimg));
-				for ($x = 0; $x < ImageSX($gdimg); $x++) {
+				for ($x = 0; $x < ImageSX($gdimg); ++$x) {
 					ImageCopy($gdimg, $tempImage, ImageSX($gdimg) - 1 - $x, 0, $x, 0, 1, ImageSY($gdimg));
 				}
 			}
 			if ($y) {
 				ImageCopy($tempImage, $gdimg, 0, 0, 0, 0, ImageSX($gdimg), ImageSY($gdimg));
-				for ($y = 0; $y < ImageSY($gdimg); $y++) {
+				for ($y = 0; $y < ImageSY($gdimg); ++$y) {
 					ImageCopy($gdimg, $tempImage, 0, ImageSY($gdimg) - 1 - $y, 0, $y, ImageSX($gdimg), 1);
 				}
 			}
@@ -476,18 +476,18 @@ class phpthumb_filters {
 		$color_frame = phpthumb_functions::ImageHexColorAllocate($gdimg, $hexcolor_frame);
 		$color1      = phpthumb_functions::ImageHexColorAllocate($gdimg, $hexcolor1);
 		$color2      = phpthumb_functions::ImageHexColorAllocate($gdimg, $hexcolor2);
-		for ($i = 0; $i < $edge_width; $i++) {
+		for ($i = 0; $i < $edge_width; ++$i) {
 			// outer bevel
 			ImageLine($gdimg,                   $i,                   $i,                   $i, ImageSY($gdimg) - $i, $color1); // left
 			ImageLine($gdimg,                   $i,                   $i, ImageSX($gdimg) - $i,                   $i, $color1); // top
 			ImageLine($gdimg, ImageSX($gdimg) - $i, ImageSY($gdimg) - $i, ImageSX($gdimg) - $i,                   $i, $color2); // right
 			ImageLine($gdimg, ImageSX($gdimg) - $i, ImageSY($gdimg) - $i,                   $i, ImageSY($gdimg) - $i, $color2); // bottom
 		}
-		for ($i = 0; $i < $frame_width; $i++) {
+		for ($i = 0; $i < $frame_width; ++$i) {
 			// actual frame
 			ImageRectangle($gdimg, $edge_width + $i, $edge_width + $i, ImageSX($gdimg) - $edge_width - $i, ImageSY($gdimg) - $edge_width - $i, $color_frame);
 		}
-		for ($i = 0; $i < $edge_width; $i++) {
+		for ($i = 0; $i < $edge_width; ++$i) {
 			// inner bevel
 			ImageLine($gdimg,                   $frame_width + $edge_width + $i,                   $frame_width + $edge_width + $i,                   $frame_width + $edge_width + $i, ImageSY($gdimg) - $frame_width - $edge_width - $i, $color2); // left
 			ImageLine($gdimg,                   $frame_width + $edge_width + $i,                   $frame_width + $edge_width + $i, ImageSX($gdimg) - $frame_width - $edge_width - $i,                   $frame_width + $edge_width + $i, $color2); // top
@@ -521,8 +521,8 @@ class phpthumb_filters {
 	public function HistogramAnalysis(&$gdimg, $calculateGray=false) {
 		$ImageSX = ImageSX($gdimg);
 		$ImageSY = ImageSY($gdimg);
-		for ($x = 0; $x < $ImageSX; $x++) {
-			for ($y = 0; $y < $ImageSY; $y++) {
+		for ($x = 0; $x < $ImageSX; ++$x) {
+			for ($y = 0; $y < $ImageSY; ++$y) {
 				$OriginalPixel = phpthumb_functions::GetPixelColor($gdimg, $x, $y);
 				@$Analysis['red'][$OriginalPixel['red']]++;
 				@$Analysis['green'][$OriginalPixel['green']]++;
@@ -567,7 +567,7 @@ class phpthumb_filters {
 		//	$range_min = min($min, 255);
 		//} else {
 			$countsum = 0;
-			for ($i = 0; $i <= 255; $i++) {
+			for ($i = 0; $i <= 255; ++$i) {
 				if ($method == 0) {
 					$countsum = max(@$Analysis['red'][$i], @$Analysis['green'][$i], @$Analysis['blue'][$i]);
 				} else {
@@ -605,8 +605,8 @@ class phpthumb_filters {
 
 		$ImageSX = ImageSX($gdimg);
 		$ImageSY = ImageSY($gdimg);
-		for ($x = 0; $x < $ImageSX; $x++) {
-			for ($y = 0; $y < $ImageSY; $y++) {
+		for ($x = 0; $x < $ImageSX; ++$x) {
+			for ($y = 0; $y < $ImageSY; ++$y) {
 				$OriginalPixel = phpthumb_functions::GetPixelColor($gdimg, $x, $y);
 				if ($band == '*') {
 					$new['red']   = min(255, max(0, ($OriginalPixel['red']   - $range_min) * $range_scale));
@@ -656,7 +656,7 @@ class phpthumb_filters {
 					}
 					$PeakValue = max($Analysis[$keys[$band]]);
 					$thisColor = phpthumb_functions::ImageHexColorAllocate($gdHistTemp, phpthumb_functions::IsHexColor(@$Colors[$key]) ? $Colors[$key] : $DefaultColors[$band]);
-					for ($x = 0; $x < $HistogramTempWidth; $x++) {
+					for ($x = 0; $x < $HistogramTempWidth; ++$x) {
 						ImageLine($gdHistTemp, $x, $HistogramTempHeight - 1, $x, $HistogramTempHeight - 1 - round(@$Analysis[$keys[$band]][$x] / $PeakValue * $HistogramTempHeight), $thisColor);
 					}
 					ImageLine($gdHistTemp, 0, $HistogramTempHeight - 1, $HistogramTempWidth - 1, $HistogramTempHeight - 1, $thisColor);
@@ -700,7 +700,7 @@ class phpthumb_filters {
 
 			$color_border = phpthumb_functions::ImageHexColorAllocate($gd_border_canvas, (phpthumb_functions::IsHexColor($hexcolor_border) ? $hexcolor_border : '000000'));
 
-			for ($i = 0; $i < $border_width; $i++) {
+			for ($i = 0; $i < $border_width; ++$i) {
 				ImageLine($gd_border_canvas,             floor($offset_x / 2) + $radius_x,                      $i, $output_width - $radius_x - ceil($offset_x / 2),                         $i, $color_border); // top
 				ImageLine($gd_border_canvas,             floor($offset_x / 2) + $radius_x, $output_height - 1 - $i, $output_width - $radius_x - ceil($offset_x / 2),    $output_height - 1 - $i, $color_border); // bottom
 				ImageLine($gd_border_canvas,                    floor($offset_x / 2) + $i,               $radius_y,                      floor($offset_x / 2) +  $i, $output_height - $radius_y, $color_border); // left
@@ -715,14 +715,14 @@ class phpthumb_filters {
 				// Problem: parallel arcs give strange/ugly antialiasing problems
 				// Solution: draw non-parallel arcs, from one side of the line thickness at the start angle
 				//   to the opposite edge of the line thickness at the terminating angle
-				for ($thickness_offset = 0; $thickness_offset < $border_width; $thickness_offset++) {
+				for ($thickness_offset = 0; $thickness_offset < $border_width; ++$thickness_offset) {
 					ImageArc($gd_border_canvas, floor($offset_x / 2) + 1 +                 $radius_x,              $thickness_offset - 1 + $radius_y, $radius_x * 2, $radius_y * 2, 180, 270, $color_border); // top-left
 					ImageArc($gd_border_canvas,                     $output_width - $radius_x - 1 - ceil($offset_x / 2),              $thickness_offset - 1 + $radius_y, $radius_x * 2, $radius_y * 2, 270, 360, $color_border); // top-right
 					ImageArc($gd_border_canvas,                     $output_width - $radius_x - 1 - ceil($offset_x / 2), $output_height - $thickness_offset - $radius_y, $radius_x * 2, $radius_y * 2,   0,  90, $color_border); // bottom-right
 					ImageArc($gd_border_canvas, floor($offset_x / 2) + 1 +                 $radius_x, $output_height - $thickness_offset - $radius_y, $radius_x * 2, $radius_y * 2,  90, 180, $color_border); // bottom-left
 				}
 				if ($border_width > 1) {
-					for ($thickness_offset = 0; $thickness_offset < $border_width; $thickness_offset++) {
+					for ($thickness_offset = 0; $thickness_offset < $border_width; ++$thickness_offset) {
 						ImageArc($gd_border_canvas, floor($offset_x / 2) + $thickness_offset + $radius_x,                                      $radius_y, $radius_x * 2, $radius_y * 2, 180, 270, $color_border); // top-left
 						ImageArc($gd_border_canvas, $output_width - $thickness_offset - $radius_x - 1 - ceil($offset_x / 2),                                      $radius_y, $radius_x * 2, $radius_y * 2, 270, 360, $color_border); // top-right
 						ImageArc($gd_border_canvas, $output_width - $thickness_offset - $radius_x - 1 - ceil($offset_x / 2),                     $output_height - $radius_y, $radius_x * 2, $radius_y * 2,   0,  90, $color_border); // bottom-right
@@ -767,14 +767,14 @@ class phpthumb_filters {
 				//$this->DebugMessage('Using alpha rotate', __FILE__, __LINE__);
 				if ($gdimg_rotate_mask = phpthumb_functions::ImageCreateFunction(ImageSX($gdimg_source), ImageSY($gdimg_source))) {
 
-					for ($i = 0; $i <= 255; $i++) {
+					for ($i = 0; $i <= 255; ++$i) {
 						$color_mask[$i] = ImageColorAllocate($gdimg_rotate_mask, $i, $i, $i);
 					}
 					ImageFilledRectangle($gdimg_rotate_mask, 0, 0, ImageSX($gdimg_rotate_mask), ImageSY($gdimg_rotate_mask), $color_mask[255]);
 					$imageX = ImageSX($gdimg_source);
 					$imageY = ImageSY($gdimg_source);
-					for ($x = 0; $x < $imageX; $x++) {
-						for ($y = 0; $y < $imageY; $y++) {
+					for ($x = 0; $x < $imageX; ++$x) {
+						for ($y = 0; $y < $imageY; ++$y) {
 							$pixelcolor = phpthumb_functions::GetPixelColor($gdimg_source, $x, $y);
 							ImageSetPixel($gdimg_rotate_mask, $x, $y, $color_mask[255 - round($pixelcolor['alpha'] * 255 / 127)]);
 						}
@@ -872,8 +872,8 @@ class phpthumb_filters {
 		}
 		$ImageSX = ImageSX($gdimg);
 		$ImageSY = ImageSY($gdimg);
-		for ($x = 0; $x < $ImageSX; $x++) {
-			for ($y = 0; $y < $ImageSY; $y++) {
+		for ($x = 0; $x < $ImageSX; ++$x) {
+			for ($y = 0; $y < $ImageSY; ++$y) {
 				$currentPixel = phpthumb_functions::GetPixelColor($gdimg, $x, $y);
 				$newColor = phpthumb_functions::ImageColorAllocateAlphaSafe($gdimg, (~$currentPixel['red'] & 0xFF), (~$currentPixel['green'] & 0xFF), (~$currentPixel['blue'] & 0xFF), $currentPixel['alpha']);
 				ImageSetPixel($gdimg, $x, $y, $newColor);
@@ -964,8 +964,8 @@ class phpthumb_filters {
 
 		$ImageSX = ImageSX($gdimg);
 		$ImageSY = ImageSY($gdimg);
-		for ($x = 0; $x < $ImageSX; $x++) {
-			for ($y = 0; $y < $ImageSY; $y++) {
+		for ($x = 0; $x < $ImageSX; ++$x) {
+			for ($y = 0; $y < $ImageSY; ++$y) {
 				$OriginalPixel = phpthumb_functions::GetPixelColor($gdimg, $x, $y);
 				$GrayPixel = phpthumb_functions::GrayscalePixel($OriginalPixel);
 
@@ -1012,8 +1012,8 @@ class phpthumb_filters {
 			$B = hexdec(substr($hexcolor, 4, 2));
 			$targetPixel = array('red'=>$R, 'green'=>$G, 'blue'=>$B);
 			$cutoffRange = $max_limit - $min_limit;
-			for ($x = 0; $x < $width; $x++) {
-				for ($y = 0; $y < $height; $y++) {
+			for ($x = 0; $x < $width; ++$x) {
+				for ($y = 0; $y < $height; ++$y) {
 					$currentPixel = phpthumb_functions::GetPixelColor($gdimg, $x, $y);
 					$colorDiff = phpthumb_functions::PixelColorDifferencePercent($currentPixel, $targetPixel);
 					$grayLevel = min($cutoffRange, MAX(0, -$min_limit + $colorDiff)) * (255 / MAX(1, $cutoffRange));
@@ -1031,8 +1031,8 @@ class phpthumb_filters {
 		$width  = ImageSX($gdimg);
 		$height = ImageSY($gdimg);
 		$cutoff = min(255, max(0, ($cutoff ? $cutoff : 128)));
-		for ($x = 0; $x < $width; $x++) {
-			for ($y = 0; $y < $height; $y++) {
+		for ($x = 0; $x < $width; ++$x) {
+			for ($y = 0; $y < $height; ++$y) {
 				$currentPixel = phpthumb_functions::GetPixelColor($gdimg, $x, $y);
 				$grayPixel = phpthumb_functions::GrayscalePixel($currentPixel);
 				if ($grayPixel['red'] < $cutoff) {
@@ -1090,8 +1090,8 @@ class phpthumb_filters {
 		$scaleG = $grayValue / $targetPixel['green'];
 		$scaleB = $grayValue / $targetPixel['blue'];
 
-		for ($x = 0; $x < ImageSX($gdimg); $x++) {
-			for ($y = 0; $y < ImageSY($gdimg); $y++) {
+		for ($x = 0; $x < ImageSX($gdimg); ++$x) {
+			for ($y = 0; $y < ImageSY($gdimg); ++$y) {
 				$currentPixel = phpthumb_functions::GetPixelColor($gdimg, $x, $y);
 				$newColor = phpthumb_functions::ImageColorAllocateAlphaSafe(
 					$gdimg,

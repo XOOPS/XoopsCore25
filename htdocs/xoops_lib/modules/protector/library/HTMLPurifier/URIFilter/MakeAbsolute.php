@@ -118,7 +118,7 @@ class HTMLPurifier_URIFilter_MakeAbsolute extends HTMLPurifier_URIFilter
     {
         $result = array();
         $is_folder = false;
-        for ($i = 0; isset($stack[$i]); $i++) {
+        for ($i = 0; isset($stack[$i]); ++$i) {
             $is_folder = false;
             // absorb an internally duplicated slash
             if ($stack[$i] == '' && $i && isset($stack[$i + 1])) {

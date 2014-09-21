@@ -173,7 +173,7 @@ foreach ($mids as $mid) {
         $results = $module->search('', '', 5, 0, $thisUser->getVar('uid'));
         $count = count($results);
         if (is_array($results) && $count > 0) {
-            for($i = 0; $i < $count; $i++) {
+            for($i = 0; $i < $count; ++$i) {
                 if (isset($results[$i]['image']) && $results[$i]['image'] != '') {
                     $results[$i]['image'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['image'];
                 } else {

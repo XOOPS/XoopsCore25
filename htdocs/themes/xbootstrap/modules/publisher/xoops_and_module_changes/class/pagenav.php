@@ -89,7 +89,7 @@ class XoopsPageNav
 							$ret .= '... ';
 						}
 					}
-					$counter ++;
+					++$counter;
 				}
 				$next = $this->current + $this->perpage;
 				if ($this->total > $next) {
@@ -125,7 +125,7 @@ class XoopsPageNav
                 } else {
                     $ret .= '<option value="' . $this->url . (($counter - 1) * $this->perpage) . $this->extra . '">' . $counter . '</option>';
                 }
-                $counter ++;
+                ++$counter;
             }
             $ret .= '</select>';
             if ($showbutton) {
@@ -171,7 +171,7 @@ class XoopsPageNav
                         $ret .= '<td class="paginact">...</td>';
                     }
                 }
-                $counter ++;
+                ++$counter;
             }
             $next = $this->current + $this->perpage;
             if ($this->total > $next) {

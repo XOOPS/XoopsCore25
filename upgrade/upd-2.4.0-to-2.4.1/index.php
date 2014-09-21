@@ -212,9 +212,9 @@ class upgrade_241 extends xoopsUpgrade
     {
         $strip = floor(strlen($xoops_key) / 6);
         $ret=0;
-        for ($i = 0; $i < strlen($xoops_key); $i++) {
+        for ($i = 0; $i < strlen($xoops_key); ++$i) {
             if ($i < $length) {
-                $uu++;
+                ++$uu;
                 if ($uu == $strip) {
                     $ret .= substr($xoops_key, $i, 1) . '-';
                     $uu = 0;

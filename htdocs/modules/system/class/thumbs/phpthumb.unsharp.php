@@ -3,7 +3,7 @@
 ////
 ////            Unsharp Mask for PHP - version 2.1.1
 ////
-////    Unsharp mask algorithm by Torstein Hønsi 2003-07.
+////    Unsharp mask algorithm by Torstein HÃ¸nsi 2003-07.
 ////             thoensi_at_netcom_dot_no.
 ////               Please leave this notice.
 ////
@@ -81,7 +81,7 @@ class phpUnsharpMask {
 
 			// Move copies of the image around one pixel at the time and merge them with weight
 			// according to the matrix. The same matrix is simply repeated for higher radii.
-			for ($i = 0; $i < $radius; $i++)    {
+			for ($i = 0; $i < $radius; ++$i)    {
 				ImageCopy(     $imgBlur,   $img,       0, 0, 1, 0, $w - 1, $h);               // left
 				ImageCopyMerge($imgBlur,   $img,       1, 0, 0, 0, $w    , $h,     50);       // right
 				ImageCopyMerge($imgBlur,   $img,       0, 0, 0, 0, $w    , $h,     50);       // center
@@ -94,8 +94,8 @@ class phpUnsharpMask {
 		if ($threshold > 0){
 			// Calculate the difference between the blurred pixels and the original
 			// and set the pixels
-			for ($x = 0; $x < $w-1; $x++)    { // each row
-				for ($y = 0; $y < $h; $y++)    { // each pixel
+			for ($x = 0; $x < $w-1; ++$x)    { // each row
+				for ($y = 0; $y < $h; ++$y)    { // each pixel
 
 					$rgbOrig = ImageColorAt($img, $x, $y);
 					$rOrig = (($rgbOrig >> 16) & 0xFF);
@@ -121,8 +121,8 @@ class phpUnsharpMask {
 				}
 			}
 		} else {
-			for ($x = 0; $x < $w; $x++)    { // each row
-				for ($y = 0; $y < $h; $y++)    { // each pixel
+			for ($x = 0; $x < $w; ++$x)    { // each row
+				for ($y = 0; $y < $h; ++$y)    { // each pixel
 					$rgbOrig = ImageColorAt($img, $x, $y);
 					$rOrig = (($rgbOrig >> 16) & 0xFF);
 					$gOrig = (($rgbOrig >>  8) & 0xFF);

@@ -9,6 +9,7 @@ NOT RELEASED: Version 2.5.8 Beta 1
 - fix for Update setting Template import date to 0 (timgno/mamba)
 - adding Adding language constants for Protector's Prefix Manager (slider84/mamba)
 - allowing for "https" URL in YouTube links in Textsanitizer (mamba)
+- converting $i++ to ++$i for improved performance (mamba)
 
 ===============================
 2014-06-20: Version 2.5.7 Final (Patch)

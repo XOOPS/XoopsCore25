@@ -115,7 +115,7 @@ class HTMLPurifier_LanguageFactory
                 // Go fallback
                 $raw_fallback = $this->getFallbackFor($code);
                 $fallback = $raw_fallback ? $raw_fallback : 'en';
-                $depth++;
+                ++$depth;
                 $lang = $this->create($config, $context, $fallback);
                 if (!$raw_fallback) {
                     $lang->error = true;

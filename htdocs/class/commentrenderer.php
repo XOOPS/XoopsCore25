@@ -99,7 +99,7 @@ class XoopsCommentRenderer
     function renderFlatView($admin_view = false)
     {
         $count = count($this->_comments);
-        for ($i = 0; $i < $count; $i++) {
+        for ($i = 0; $i < $count; ++$i) {
             if (false != $this->_useIcons) {
                 $title = $this->_getTitleIcon($this->_comments[$i]->getVar('com_icon')) . '&nbsp;' . $this->_comments[$i]->getVar('com_title');
             } else {
@@ -219,7 +219,7 @@ class XoopsCommentRenderer
             $current_prefix .= $prefix;
         }
         if (isset($thread[$key]['child']) && ! empty($thread[$key]['child'])) {
-            $depth++;
+            ++$depth;
             foreach ($thread[$key]['child'] as $childkey) {
                 if (!$admin_view && $thread[$childkey]['obj']->getVar('com_status') != XOOPS_COMMENT_ACTIVE) {
                     // skip this comment if it is not active and continue on processing its child comments instead
@@ -311,7 +311,7 @@ class XoopsCommentRenderer
             $prefix = $prefix + 25;
         }
         if (isset($thread[$key]['child']) && ! empty($thread[$key]['child'])) {
-            $depth++;
+            ++$depth;
             foreach ($thread[$key]['child'] as $childkey) {
                 if (!$admin_view && $thread[$childkey]['obj']->getVar('com_status') != XOOPS_COMMENT_ACTIVE) {
                     // skip this comment if it is not active and continue on processing its child comments instead

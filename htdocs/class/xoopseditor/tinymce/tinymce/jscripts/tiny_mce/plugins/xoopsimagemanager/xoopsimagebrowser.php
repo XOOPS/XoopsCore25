@@ -101,7 +101,7 @@ if ( ($isadmin) || ($catreadcount > 0) || ($catwritecount > 0) ) {
         if ($count > 0) {
             $image_handler =& xoops_gethandler("image");
             $error = array();
-            for ($i = 0; $i < $count; $i++) {
+            for ($i = 0; $i < $count; ++$i) {
                 $image =& $image_handler->get($image_id[$i]);
                 if (!is_object($image)) {
                     $error[] = sprintf(_FAILGETIMG, $image_id[$i]);
@@ -139,7 +139,7 @@ if ( ($isadmin) || ($catreadcount > 0) || ($catwritecount > 0) ) {
         $uploader->setPrefix("img");
         $err = array();
         $ucount = count($_POST["xoops_upload_file"]);
-        for ($i = 0; $i < $ucount; $i++) {
+        for ($i = 0; $i < $ucount; ++$i) {
             if ($uploader->fetchMedia($_POST["xoops_upload_file"][$i])) {
                 if (!$uploader->upload()) {
                     $err[] = $uploader->getErrors();
@@ -423,7 +423,7 @@ echo '<div class="panel_wrapper">';
             $imagecategories =& $imgcat_handler->getObjects();
             $catcount = count($imagecategories);
             $image_handler =& xoops_gethandler('image');
-            for ($i = 0; $i < $catcount; $i++) {
+            for ($i = 0; $i < $catcount; ++$i) {
                 echo '<tr valign="top" align="left"><td class="head">';
                 if ( in_array($imagecategories[$i]->getVar('imgcat_id'), array_keys($catreadlist)) ) {
                     // count images stored in this category

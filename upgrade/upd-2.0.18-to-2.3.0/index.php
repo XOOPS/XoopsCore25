@@ -333,7 +333,7 @@ class upgrade_230 extends xoopsUpgrade
                         $drop_index_querys[] = "ALTER TABLE `$table` DROP INDEX `$key_name`";
                         $tmp_gen_index_query = "ALTER TABLE `$table` ADD FULLTEXT `$key_name`(";
                         $fields_names = array_keys($column);
-                        for ($i = 1; $i <= count($column); $i++)
+                        for ($i = 1; $i <= count($column); ++$i)
                             $tmp_gen_index_query .= $fields_names[$i - 1] . (($i == count($column)) ? '' : ', ');
                         $gen_index_querys[] = $tmp_gen_index_query . ')';
                     }

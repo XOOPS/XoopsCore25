@@ -649,7 +649,7 @@ class XoopsObject
                                 if (in_array($i, $selected)) {
                                     $ret[] = $op;
                                 }
-                                $i++;
+                                ++$i;
                             }
 
                             return implode(', ', $ret);

@@ -52,7 +52,7 @@ class HTMLPurifier_Arborize
                     $closingTokens[$level][] = $end;
                 }
                 if ($node instanceof HTMLPurifier_Node_Element) {
-                    $level++;
+                    ++$level;
                     $nodes[$level] = new HTMLPurifier_Queue();
                     foreach ($node->children as $childNode) {
                         $nodes[$level]->push($childNode);

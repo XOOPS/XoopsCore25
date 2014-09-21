@@ -170,7 +170,7 @@ switch ($action) {
                 if (is_array($results) && $count > 0) {
                     $nomatch = false;
                     echo "<h4>" . $module->getVar('name') . "</h4>";
-                    for($i = 0; $i < $count; $i++) {
+                    for($i = 0; $i < $count; ++$i) {
                         if (isset($results[$i]['image']) && $results[$i]['image'] != "") {
                             echo "<img src='modules/" . $module->getVar('dirname') . "/" . $results[$i]['image'] . "' alt='" . $module->getVar('name') . "' />&nbsp;";
                         } else {
@@ -234,7 +234,7 @@ switch ($action) {
             }
             printf(_SR_SHOWING, $start + 1, $start + $count);
             echo "<h5>" . $module->getVar('name') . "</h5>";
-            for ($i = 0; $i < $count; $i ++) {
+            for ($i = 0; $i < $count; ++$i) {
                 if (isset($results[$i]['image']) && $results[$i]['image'] != '') {
                     echo "<img src='modules/" . $module->getVar('dirname', "n") . "/" . $results[$i]['image'] . "' alt='" . $module->getVar('name') . "' />&nbsp;";
                 } else {
