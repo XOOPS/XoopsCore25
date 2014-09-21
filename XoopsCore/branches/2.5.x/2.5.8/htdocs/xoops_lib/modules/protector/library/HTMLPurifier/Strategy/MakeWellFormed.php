@@ -161,7 +161,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
                 // infinite loop, but might hinder some advanced rewinding.
                 $rewind_offset = $this->injectors[$i]->getRewindOffset();
                 if (is_int($rewind_offset)) {
-                    for ($j = 0; $j < $rewind_offset; $j++) {
+                    for ($j = 0; $j < $rewind_offset; ++$j) {
                         if (empty($zipper->front)) break;
                         $token = $zipper->prev($token);
                         // indicate that other injectors should not process this token,
@@ -485,7 +485,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
 
             // insert tags, in FORWARD $j order: c,b,a with </a></b></c>
             $replace = array($token);
-            for ($j = 1; $j < $c; $j++) {
+            for ($j = 1; $j < $c; ++$j) {
                 // ...as well as from the insertions
                 $new_token = new HTMLPurifier_Token_End($skipped_tags[$j]->name);
                 $new_token->start = $skipped_tags[$j];

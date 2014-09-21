@@ -113,7 +113,7 @@ class phpthumb_functions {
 		$parts1 = explode('.', $version1);
 		$parts2 = explode('.', $version1);
 		$parts_count = max(count($parts1), count($parts2));
-		for ($i = 0; $i < $parts_count; $i++) {
+		for ($i = 0; $i < $parts_count; ++$i) {
 			$comparison = phpthumb_functions::version_compare_replacement_sub($version1, $version2, $operator);
 			if ($comparison != 0) {
 				return $comparison;
@@ -209,7 +209,7 @@ class phpthumb_functions {
 	static function HexCharDisplay($string) {
 		$len = strlen($string);
 		$output = '';
-		for ($i = 0; $i < $len; $i++) {
+		for ($i = 0; $i < $len; ++$i) {
 			$output .= ' 0x'.str_pad(dechex(ord($string{$i})), 2, '0', STR_PAD_LEFT);
 		}
 		return $output;
@@ -319,12 +319,12 @@ class phpthumb_functions {
 
 		$isTrueColor = ImageIsTrueColor($src_img);
 
-		for ($y = $src_y; $y < $src_y + $dst_h; $y++) {
+		for ($y = $src_y; $y < $src_y + $dst_h; ++$y) {
 			$sY   = $y * $scaleY;
 			$siY  = (int) $sY;
 			$siY2 = (int) $sY + $scaleY2;
 
-			for ($x = $src_x; $x < $src_x + $dst_w; $x++) {
+			for ($x = $src_x; $x < $src_x + $dst_w; ++$x) {
 				$sX   = $x * $scaleX;
 				$siX  = (int) $sX;
 				$siX2 = (int) $sX + $scaleX2;
@@ -376,8 +376,8 @@ class phpthumb_functions {
 
 	static function ImageCopyRespectAlpha(&$dst_im, &$src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $opacity_pct=100) {
 		$opacipct = $opacity_pct / 100;
-		for ($x = $src_x; $x < $src_w; $x++) {
-			for ($y = $src_y; $y < $src_h; $y++) {
+		for ($x = $src_x; $x < $src_w; ++$x) {
+			for ($y = $src_y; $y < $src_h; ++$y) {
 				$RealPixel    = phpthumb_functions::GetPixelColor($dst_im, $dst_x + $x, $dst_y + $y);
 				$OverlayPixel = phpthumb_functions::GetPixelColor($src_im, $x, $y);
 				$alphapct = $OverlayPixel['alpha'] / 127;
@@ -831,7 +831,7 @@ class phpthumb_functions {
 		}
 		$i = $startoffset;
 		$endoffset = count($directory_elements);
-		for ($i = $startoffset; $i <= $endoffset; $i++) {
+		for ($i = $startoffset; $i <= $endoffset; ++$i) {
 			$test_directory = implode(DIRECTORY_SEPARATOR, array_slice($directory_elements, 0, $i));
 			if (!$test_directory) {
 				continue;
@@ -986,7 +986,7 @@ if (!function_exists('preg_quote')) {
 		static $preg_quote_array = array();
 		if (empty($preg_quote_array)) {
 			$escapeables = '.\\+*?[^]$(){}=!<>|:';
-			for ($i = 0; $i < strlen($escapeables); $i++) {
+			for ($i = 0; $i < strlen($escapeables); ++$i) {
 				$strtr_preg_quote[$escapeables{$i}] = $delimiter.$escapeables{$i};
 			}
 		}

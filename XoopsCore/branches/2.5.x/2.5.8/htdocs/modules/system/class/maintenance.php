@@ -120,7 +120,7 @@ class SystemMaintenance
      */
     function CleanCache($cache)
     {
-        for ($i=0; $i<count($cache); $i++) {
+        for ($i=0; $i<count($cache); ++$i) {
             if ($cache[$i] == 1) {
                 $files = glob(XOOPS_VAR_PATH.'/caches/smarty_cache/*.*');
                 foreach ($files as $filename) {
@@ -159,11 +159,11 @@ class SystemMaintenance
     {
         $ret = '<table class="outer"><th>'._AM_SYSTEM_MAINTENANCE_TABLES1.'</th><th>'._AM_SYSTEM_MAINTENANCE_TABLES_OPTIMIZE.'</th><th>'._AM_SYSTEM_MAINTENANCE_TABLES_CHECK.'</th><th>'._AM_SYSTEM_MAINTENANCE_TABLES_REPAIR.'</th><th>'._AM_SYSTEM_MAINTENANCE_TABLES_ANALYZE.'</th>';
         $tab = array();
-        for ($i=0; $i<4; $i++) {
+        for ($i=0; $i<4; ++$i) {
             $tab[$i] = $i+1;
         }
         $tab1 = array();
-        for ($i=0; $i<4; $i++) {
+        for ($i=0; $i<4; ++$i) {
             if (in_array ($tab[$i], $maintenance) ) {
                 $tab1[$i] = $tab[$i];
             } else {
@@ -172,9 +172,9 @@ class SystemMaintenance
         }
         unset($tab);
         $class = 'odd';
-        for ($i=0; $i<count($tables); $i++) {
+        for ($i=0; $i<count($tables); ++$i) {
             $ret .= '<tr class="'.$class.'"><td align="center">'.$this->prefix.$tables[$i].'</td>';
-            for ($j=0; $j<4; $j++) {
+            for ($j=0; $j<4; ++$j) {
                 if ($tab1[$j] == 1) {
                     // Optimize
                     $result = $this->db->queryF('OPTIMIZE TABLE '.$this->prefix.$tables[$i]);
@@ -234,7 +234,7 @@ class SystemMaintenance
         $ret[0] .= "# Date : ".date('d-m-Y � H:i')." \n";
         $ret[1] = '<table class="outer"><tr><th width="30%">'._AM_SYSTEM_MAINTENANCE_DUMP_TABLES.'</th><th width="35%">'._AM_SYSTEM_MAINTENANCE_DUMP_STRUCTURES.'</th><th  width="35%">'._AM_SYSTEM_MAINTENANCE_DUMP_NB_RECORDS.'</th></tr>';
         $class = 'odd';
-        for ($i=0; $i<count($tables); $i++) {
+        for ($i=0; $i<count($tables); ++$i) {
             //structure
             $ret = $this->dump_table_structure($ret, $this->prefix.$tables[$i], $drop, $class);
             //data
@@ -263,7 +263,7 @@ class SystemMaintenance
         $ret[0] .= "# \n\n";
         $ret[1] = '<table class="outer"><tr><th width="30%">'._AM_SYSTEM_MAINTENANCE_DUMP_TABLES.'</th><th width="35%">'._AM_SYSTEM_MAINTENANCE_DUMP_STRUCTURES.'</th><th  width="35%">'._AM_SYSTEM_MAINTENANCE_DUMP_NB_RECORDS.'</th></tr>';
         $class = 'odd';
-        for ($i=0; $i<count($modules); $i++) {
+        for ($i=0; $i<count($modules); ++$i) {
             $module_handler =& xoops_gethandler('module');
             $module = $module_handler->getByDirname($modules[$i]);
             $ret[1] .= '<tr><th colspan="3" align="left">'.ucfirst($modules[$i]).'</th></tr>';
@@ -338,15 +338,15 @@ class SystemMaintenance
                 while ($i < $num_fields) {
                     $meta = mysql_fetch_field($result, $i);
                     array_push($field_type, $meta->type);
-                    $i++;
+                    ++$i;
                 }
 
                 $ret[0] .= "INSERT INTO `".$table."` values\n";
                 $index = 0;
                 while ( $row = $this->db->fetchRow($result) ) {
-                    $count++;
+                    ++$count;
                     $ret[0] .= "(";
-                    for ($i=0; $i < $num_fields; $i++) {
+                    for ($i=0; $i < $num_fields; ++$i) {
                         if ( is_null( $row[$i] ) ) {
                             $ret[0] .= "null";
                         } else {
@@ -370,7 +370,7 @@ class SystemMaintenance
                         $ret[0] .= ";";
                     }
                     $ret[0] .= "\n";
-                    $index++;
+                    ++$index;
                 }
             }
         }

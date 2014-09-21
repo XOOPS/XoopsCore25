@@ -92,7 +92,7 @@ class XoopsPreload
                             $file = substr($file, 0, -4);
                             $this->_preloads[$i]['module'] = $module;
                             $this->_preloads[$i]['file'] = $file;
-                            $i++;
+                            ++$i;
                         }
                     }
                 }

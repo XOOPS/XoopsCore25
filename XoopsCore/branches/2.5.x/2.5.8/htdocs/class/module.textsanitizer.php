@@ -445,7 +445,7 @@ class MyTextSanitizer
 //-------------------------------------------------------------------------------
         $count = sizeof($this->callbackPatterns);
 
-        for ($i = 0; $i < $count; $i++) {
+        for ($i = 0; $i < $count; ++$i) {
             $text = preg_replace_callback($this->callbackPatterns[$i], $this->callbacks[$i] , $text);
         }
 //------------------------------------------------------------------------------

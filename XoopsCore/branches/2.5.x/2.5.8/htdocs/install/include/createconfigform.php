@@ -43,7 +43,7 @@ function createConfigform( $config )
     $ret = array();
     $confcount = count( $config );
 
-    for ($i = 0; $i < $confcount; $i++) {
+    for ($i = 0; $i < $confcount; ++$i) {
         $conf_catid = $config[$i]->getVar('conf_catid');
         if ( !isset( $ret[$conf_catid] ) ) {
             $form_title = constant("PREF_" . $conf_catid);
@@ -68,7 +68,7 @@ function createConfigform( $config )
             $ele = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
             $options =& $config_handler->getConfigOptions(new Criteria('conf_id', $config[$i]->getVar('conf_id')));
             $opcount = count($options);
-            for ($j = 0; $j < $opcount; $j++) {
+            for ($j = 0; $j < $opcount; ++$j) {
                 $optval = defined($options[$j]->getVar('confop_value')) ? constant($options[$j]->getVar('confop_value')) : $options[$j]->getVar('confop_value');
                 $optkey = defined($options[$j]->getVar('confop_name')) ? constant($options[$j]->getVar('confop_name')) : $options[$j]->getVar('confop_name');
                 $ele->addOption($optval, $optkey);
@@ -79,7 +79,7 @@ function createConfigform( $config )
             $ele = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput(), 5, true);
             $options =& $config_handler->getConfigOptions(new Criteria('conf_id', $config[$i]->getVar('conf_id')));
             $opcount = count($options);
-            for ($j = 0; $j < $opcount; $j++) {
+            for ($j = 0; $j < $opcount; ++$j) {
                 $optval = defined($options[$j]->getVar('confop_value')) ? constant($options[$j]->getVar('confop_value')) : $options[$j]->getVar('confop_value');
                 $optkey = defined($options[$j]->getVar('confop_name')) ? constant($options[$j]->getVar('confop_name')) : $options[$j]->getVar('confop_name');
                 $ele->addOption($optval, $optkey);

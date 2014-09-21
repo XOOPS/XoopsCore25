@@ -307,30 +307,30 @@ function make_data(&$dbm, $adminname, $adminpass, $adminmail, $language, $gruops
     $conf=35;
     foreach ($editors as $dir) {
         $dbm->insert('configoption', " VALUES (".$conf.", '".$dir."', '".$dir."', 126)");
-        $conf++;
+        ++$conf;
     }
     foreach ($editors as $dir) {
         $dbm->insert('configoption', " VALUES (".$conf.", '".$dir."', '".$dir."', 127)");
-        $conf++;
+        ++$conf;
     }
     foreach ($editors as $dir) {
         $dbm->insert('configoption', " VALUES (".$conf.", '".$dir."', '".$dir."', 128)");
-        $conf++;
+        ++$conf;
     }
     $icons = XoopsLists::getDirListAsArray('../modules/system/images/icons');
     foreach ($icons as $dir) {
         $dbm->insert('configoption', " VALUES (".$conf.", '".$dir."', '".$dir."', 98)");
-        $conf++;
+        ++$conf;
     }
     $breadcrumb = XoopsLists::getDirListAsArray('../modules/system/images/breadcrumb');
     foreach ($breadcrumb as $dir) {
         $dbm->insert('configoption', " VALUES (".$conf.", '".$dir."', '".$dir."', 99)");
-        $conf++;
+        ++$conf;
     }
     $jqueryui = XoopsLists::getDirListAsArray('../modules/system/css/ui');
     foreach ($jqueryui as $dir) {
         $dbm->insert('configoption', " VALUES (".$conf.", '".$dir."', '".$dir."', 133)");
-        $conf++;
+        ++$conf;
     }
 
     return $gruops;

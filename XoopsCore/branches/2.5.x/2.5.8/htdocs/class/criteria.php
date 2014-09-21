@@ -235,7 +235,7 @@ class CriteriaCompo extends CriteriaElement
         $count = count($this->criteriaElements);
         if ($count > 0) {
             $render_string = $this->criteriaElements[0]->render();
-            for ($i = 1; $i < $count; $i++) {
+            for ($i = 1; $i < $count; ++$i) {
                 if (!$render = $this->criteriaElements[$i]->render())
                     continue;
                 $render_string .= (empty($render_string) ? "" : ' ' . $this->conditions[$i] . ' ') . $render;
@@ -271,7 +271,7 @@ class CriteriaCompo extends CriteriaElement
         $count = count($this->criteriaElements);
         if ($count > 0) {
             $retval = $this->criteriaElements[0]->renderLdap();
-            for ($i = 1; $i < $count; $i++) {
+            for ($i = 1; $i < $count; ++$i) {
                 $cond = strtoupper($this->conditions[$i]);
                 $op = ($cond == "OR") ? "|" : "&";
                 $retval = "({$op}{$retval}" . $this->criteriaElements[$i]->renderLdap() . ")";

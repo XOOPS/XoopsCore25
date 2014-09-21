@@ -65,7 +65,7 @@ class HTMLPurifier_AttrDef_CSS_Font extends HTMLPurifier_AttrDef
         $stage_1 = array('font-style', 'font-variant', 'font-weight');
         $final = ''; // output
 
-        for ($i = 0, $size = count($bits); $i < $size; $i++) {
+        for ($i = 0, $size = count($bits); $i < $size; ++$i) {
             if ($bits[$i] === '') {
                 continue;
             }
@@ -117,7 +117,7 @@ class HTMLPurifier_AttrDef_CSS_Font extends HTMLPurifier_AttrDef
                         // attempt to catch line-height
                         if ($line_height === false) {
                             // we need to scroll forward
-                            for ($j = $i + 1; $j < $size; $j++) {
+                            for ($j = $i + 1; $j < $size; ++$j) {
                                 if ($bits[$j] === '') {
                                     continue;
                                 }

@@ -103,7 +103,7 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
                     $closingNodes[$level][] = $node;
                 }
                 if ($node->childNodes && $node->childNodes->length) {
-                    $level++;
+                    ++$level;
                     $nodes[$level] = new HTMLPurifier_Queue();
                     foreach ($node->childNodes as $childNode) {
                         $nodes[$level]->push($childNode);

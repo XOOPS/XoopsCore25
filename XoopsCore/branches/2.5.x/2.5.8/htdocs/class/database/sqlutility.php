@@ -78,7 +78,7 @@ class SqlUtility
                         $escaped_backslash = false;
                         while ($i - $j > 0 && $sql[$i - $j] == '\\') {
                             $escaped_backslash = !$escaped_backslash;
-                            $j++;
+                            ++$j;
                         }
                         // ... if escaped backslashes: it's really the
                         // end of the string -> exit the loop
@@ -89,7 +89,7 @@ class SqlUtility
                         }
                         // ... else loop
                         else {
-                            $i++;
+                            ++$i;
                         }
                     } // end if...elseif...else
                 } // end for

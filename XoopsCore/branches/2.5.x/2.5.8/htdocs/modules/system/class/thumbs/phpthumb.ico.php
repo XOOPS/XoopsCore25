@@ -27,7 +27,7 @@ class phpthumb_ico {
 
 			$icXOR[$key] = '';
 			for ($y = $ImageHeights[$key] - 1; $y >= 0; $y--) {
-				for ($x = 0; $x < $ImageWidths[$key]; $x++) {
+				for ($x = 0; $x < $ImageWidths[$key]; ++$x) {
 					$argb = phpthumb_functions::GetPixelColor($gd_image, $x, $y);
 					$a = round(255 * ((127 - $argb['alpha']) / 127));
 					$r = $argb['red'];

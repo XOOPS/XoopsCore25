@@ -69,7 +69,7 @@ if ($mid > 0) {
                 if (($helpitem['name'] != '') && ($helpitem['link'] != '')) {
                     $list_help[$j]['name'] = $helpitem['name'];
                     $list_help[$j]['link'] = 'help.php?mid=' . $mid . '&amp;' . $helpitem['link'];
-                    $j++;
+                    ++$j;
                 }
             }
             $listed_mods[0]['help_page'] = $list_help;
@@ -168,7 +168,7 @@ if ($mid > 0) {
                             );
                     }
                     unset($modversion);
-                    $j++;
+                    ++$j;
                 }
             }
             unset($dirlist);
@@ -186,8 +186,8 @@ if ($mid > 0) {
                         $list_help[$j]['link']
                                                =
                             'help.php?mid=' . $module->getVar('mid', 'e') . '&amp;' . $helpitem['link'];
-                        $j++;
-                        $k++;
+                        ++$j;
+                        ++$k;
                     }
                 }
             }
@@ -208,8 +208,8 @@ if ($mid > 0) {
         }
         unset($list_help);
         unset($module);
-        $i++;
-        $j++;
+        ++$i;
+        ++$j;
     }
     $xoopsTpl->assign('list_mods', $listed_mods);
 

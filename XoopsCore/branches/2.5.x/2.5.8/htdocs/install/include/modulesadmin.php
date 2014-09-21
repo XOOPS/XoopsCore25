@@ -315,7 +315,7 @@ function xoops_module_install($dirname)
                                 unset($confop);
                             }
                         }
-                        $order++;
+                        ++$order;
                         if ($config_handler->insertConfig($confobj) != false) {
                             $msgs[] = '&nbsp;&nbsp;'.sprintf(_MD_AM_CONFIG_DATA_ADD, "<strong>".$config['name']."</strong>").$confop_msgs;
 
@@ -427,7 +427,7 @@ function &xoops_module_gettemplate($dirname, $template, $block = false)
         return $ret;
     }
     $count = count($lines);
-    for ($i = 0; $i < $count; $i++) {
+    for ($i = 0; $i < $count; ++$i) {
         $ret .= str_replace("\n", "\r\n", str_replace("\r\n", "\n", $lines[$i]));
     }
     return $ret;

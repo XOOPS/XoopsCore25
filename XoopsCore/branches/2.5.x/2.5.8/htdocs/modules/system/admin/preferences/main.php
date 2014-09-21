@@ -77,7 +77,7 @@ switch($op) {
         $criteria->add(new Criteria('conf_catid', $confcat_id));
         $config = $config_handler->getConfigs($criteria);
         $confcount = count($config);
-        for ($i = 0; $i < $confcount; $i++) {
+        for ($i = 0; $i < $confcount; ++$i) {
             $title = constant($config[$i]->getVar('conf_title'));
             $desc = ($config[$i]->getVar('conf_desc') != '') ? constant( $config[$i]->getVar('conf_desc') ) : '';
 
@@ -97,7 +97,7 @@ switch($op) {
                     $ele = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
                     $options = $config_handler->getConfigOptions(new Criteria('conf_id', $config[$i]->getVar('conf_id')));
                     $opcount = count($options);
-                    for ($j = 0; $j < $opcount; $j++) {
+                    for ($j = 0; $j < $opcount; ++$j) {
                         $optval = defined($options[$j]->getVar('confop_value')) ? constant($options[$j]->getVar('confop_value')) : $options[$j]->getVar('confop_value');
                         $optkey = defined($options[$j]->getVar('confop_name')) ? constant($options[$j]->getVar('confop_name')) : $options[$j]->getVar('confop_name');
                         $ele->addOption($optval, $optkey);
@@ -108,7 +108,7 @@ switch($op) {
                     $ele = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput(), 5, true);
                     $options = $config_handler->getConfigOptions(new Criteria('conf_id', $config[$i]->getVar('conf_id')));
                     $opcount = count($options);
-                    for ($j = 0; $j < $opcount; $j++) {
+                    for ($j = 0; $j < $opcount; ++$j) {
                         $optval = defined($options[$j]->getVar('confop_value')) ? constant($options[$j]->getVar('confop_value')) : $options[$j]->getVar('confop_value');
                         $optkey = defined($options[$j]->getVar('confop_name')) ? constant($options[$j]->getVar('confop_name')) : $options[$j]->getVar('confop_name');
                         $ele->addOption($optval, $optkey);
@@ -282,7 +282,7 @@ switch($op) {
         } elseif ($module->getInfo('adminindex')) {
             $form->addElement(new XoopsFormHidden('redirect', XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . $module->getInfo('adminindex')));
         }
-        for ($i = 0; $i < $count; $i++) {
+        for ($i = 0; $i < $count; ++$i) {
             $title = constant($config[$i]->getVar('conf_title'));
             $description = (defined($config[$i]->getVar('conf_desc'))) ? constant($config[$i]->getVar('conf_desc')) : '';
             switch ($config[$i]->getVar('conf_formtype')) {
@@ -301,7 +301,7 @@ switch($op) {
                     $ele = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
                     $options = $config_handler->getConfigOptions(new Criteria('conf_id', $config[$i]->getVar('conf_id')));
                     $opcount = count($options);
-                    for ($j = 0; $j < $opcount; $j++) {
+                    for ($j = 0; $j < $opcount; ++$j) {
                         $optval = defined($options[$j]->getVar('confop_value')) ? constant($options[$j]->getVar('confop_value')) : $options[$j]->getVar('confop_value');
                         $optkey = defined($options[$j]->getVar('confop_name')) ? constant($options[$j]->getVar('confop_name')) : $options[$j]->getVar('confop_name');
                         $ele->addOption($optval, $optkey);
@@ -312,7 +312,7 @@ switch($op) {
                     $ele = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput(), 5, true);
                     $options = $config_handler->getConfigOptions(new Criteria('conf_id', $config[$i]->getVar('conf_id')));
                     $opcount = count($options);
-                    for ($j = 0; $j < $opcount; $j++) {
+                    for ($j = 0; $j < $opcount; ++$j) {
                         $optval = defined($options[$j]->getVar('confop_value')) ? constant($options[$j]->getVar('confop_value')) : $options[$j]->getVar('confop_value');
                         $optkey = defined($options[$j]->getVar('confop_name')) ? constant($options[$j]->getVar('confop_name')) : $options[$j]->getVar('confop_name');
                         $ele->addOption($optval, $optkey);
@@ -409,7 +409,7 @@ switch($op) {
         $startmod_updated = false;
         $lang_updated = false;
         if ($count > 0) {
-            for ($i = 0; $i < $count; $i++) {
+            for ($i = 0; $i < $count; ++$i) {
                 $config =& $config_handler->getConfig($conf_ids[$i]);
                 $new_value =& ${$config->getVar('conf_name')};
                 if (is_array($new_value) || $new_value != $config->getVar('conf_value')) {
@@ -444,7 +444,7 @@ switch($op) {
                             // need to do this to pass to xoops_template_touch function
                             $GLOBALS['xoopsConfig']['template_set'] = $newtplset;
 
-                            for ($j = 0; $j < $dcount; $j++) {
+                            for ($j = 0; $j < $dcount; ++$j) {
                                 $found = $tplfile_handler->find($newtplset, 'block', $dtemplates[$j]->getVar('tpl_refid'), null);
                                 if (count($found) > 0) {
                                     // template for the new theme found, compile it
@@ -532,7 +532,7 @@ switch($op) {
             $preferences['id'] = $confcats[$i]->getVar('confcat_id');
             $preferences['image'] = system_AdminIcons( 'xoops/' . $image[$i]);
             $preferences['name'] = constant( $confcats[$i]->getVar('confcat_name') );
-            $count_prefs++;
+            ++$count_prefs;
             $preferences['newline'] = ($count_prefs % $nbcolonnes_pref == 1) ? true : false;
             $xoopsTpl->assign('newline', $preferences['newline']);
 

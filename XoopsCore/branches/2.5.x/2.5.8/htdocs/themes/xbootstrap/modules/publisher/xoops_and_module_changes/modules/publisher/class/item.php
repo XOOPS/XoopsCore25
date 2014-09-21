@@ -499,7 +499,7 @@ class PublisherItem extends XoopsObject
         $group_ids = array();
         foreach (array_keys($groups) as $i) {
             $group_ids[$j] = $i;
-            $j++;
+            ++$j;
         }
         $this->_groups_read = $group_ids;
     }
@@ -518,7 +518,7 @@ class PublisherItem extends XoopsObject
             $group_ids = array();
             foreach (array_keys($groups) as $i) {
                 $group_ids[$j] = $i;
-                $j++;
+                ++$j;
             }
         }
     }
@@ -807,7 +807,7 @@ class PublisherItem extends XoopsObject
                 $item['images'][$i]['thumb'] = PUBLISHER_URL . '/thumb.php?src=' . XOOPS_URL . '/uploads/' . $image->getVar('image_name') . '&amp;w=240';
             }
             $item['images'][$i]['name'] = $image->getVar('image_nicename');
-            $i++;
+            ++$i;
         }
         return $item;
     }
@@ -1556,7 +1556,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
         $count = count($queryarray);
         if (is_array($queryarray) && $count > 0) {
             $criteriaKeywords = new CriteriaCompo();
-            for ($i = 0; $i < count($queryarray); $i++) {
+            for ($i = 0; $i < count($queryarray); ++$i) {
                 $criteriaKeyword = new CriteriaCompo();
                 if (in_array('title', $searchin)) {
                     $criteriaKeyword->add(new Criteria('title', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');

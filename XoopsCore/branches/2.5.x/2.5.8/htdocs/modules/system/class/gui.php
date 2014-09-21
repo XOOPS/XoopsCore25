@@ -122,7 +122,7 @@ class XoopsSystemGui
                 foreach ($xoopsModule->adminmenu as $menu) {
                     if ( stripos( $_SERVER['REQUEST_URI'], $menu['link'] ) !== false ) $current = $i;
                     $menu_handler->addMenuTabs( $menu['link'], $menu['title']);
-                    $i++;
+                    ++$i;
                 }
                 if ($xoopsModule->getInfo('help')) {
                     if ( stripos( $_SERVER['REQUEST_URI'], 'admin/' . $xoopsModule->getInfo('help') ) !== false ) $current = $i;

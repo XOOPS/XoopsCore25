@@ -58,7 +58,7 @@ function make_sidebar($side)
         $xoopsTpl =& $GLOBALS['xoopsTpl'];
     }
     $xoopsLogger =& XoopsLogger::getInstance();
-    for ($i = 0; $i < $block_count; $i++) {
+    for ($i = 0; $i < $block_count; ++$i) {
         $bcachetime = intval($block_arr[$i]->getVar('bcachetime'));
         if (empty($bcachetime)) {
             $xoopsTpl->caching = 0;
@@ -136,7 +136,7 @@ function make_cblock()
         }
         $block_count = count($block_arr);
         $xoopsLogger =& XoopsLogger::getInstance();
-        for ($i = 0; $i < $block_count; $i++) {
+        for ($i = 0; $i < $block_count; ++$i) {
             $bcachetime = intval($block_arr[$i]->getVar('bcachetime'));
             if (empty($bcachetime)) {
                 $xoopsTpl->caching = 0;

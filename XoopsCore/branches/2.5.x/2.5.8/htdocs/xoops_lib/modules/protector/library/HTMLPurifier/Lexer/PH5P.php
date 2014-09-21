@@ -1519,7 +1519,7 @@ class HTML5
                 $e_name = $this->characters('0-9A-Za-z;', $this->char + 1);
                 $len = strlen($e_name);
 
-                for ($c = 1; $c <= $len; $c++) {
+                for ($c = 1; $c <= $len; ++$c) {
                     $id = substr($e_name, 0, $c);
                     $this->char++;
 
@@ -3046,7 +3046,7 @@ class HTML5TreeConstructer
                             $fe_s_pos = array_search($formatting_element, $this->stack, true);
                             $length = count($this->stack);
 
-                            for ($s = $fe_s_pos + 1; $s < $length; $s++) {
+                            for ($s = $fe_s_pos + 1; $s < $length; ++$s) {
                                 $category = $this->getElementCategory($this->stack[$s]->nodeName);
 
                                 if ($category !== self::PHRASING && $category !== self::FORMATTING) {
@@ -4477,7 +4477,7 @@ class HTML5TreeConstructer
 
         $leng = count($this->stack);
 
-        for ($n = 0; $n < $leng; $n++) {
+        for ($n = 0; $n < $leng; ++$n) {
             /* 1. Initialise node to be the current node (the bottommost node of
             the stack). */
             $node = $this->stack[$leng - 1 - $n];
@@ -4569,7 +4569,7 @@ class HTML5TreeConstructer
             /* 7. Let entry be the element one later than entry in the list of
             active formatting elements. */
             if (isset($step_seven) && $step_seven === true) {
-                $a++;
+                ++$a;
                 $entry = $this->a_formatting[$a];
             }
 

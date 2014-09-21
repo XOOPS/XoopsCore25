@@ -452,7 +452,7 @@ class upgrade_220 extends xoopsUpgrade
             if (empty($options) || !is_array($options)) $options = array();
             $count = count($options);
             //Convert array values to comma-separated
-            for ($i = 0; $i < $count; $i++) {
+            for ($i = 0; $i < $count; ++$i) {
                 if (is_array($options[$i])) {
                     $options[$i] = implode(',', $options[$i]);
                 }

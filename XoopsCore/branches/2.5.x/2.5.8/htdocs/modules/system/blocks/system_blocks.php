@@ -59,11 +59,11 @@ function b_system_online_show()
         $block = array();
         $guests = 0;
         $members = '';
-        for ($i = 0; $i < $total; $i++) {
+        for ($i = 0; $i < $total; ++$i) {
             if ($onlines[$i]['online_uid'] > 0) {
                 $members .= ' <a href="' . XOOPS_URL . '/userinfo.php?uid=' . $onlines[$i]['online_uid'] . '" title="' . $onlines[$i]['online_uname'] . '">' . $onlines[$i]['online_uname'] . '</a>,';
             } else {
-                $guests++;
+                ++$guests;
             }
         }
         $block['online_total'] = sprintf(_ONLINEPHRASE, $total);
@@ -332,7 +332,7 @@ function b_system_info_show($options)
                         $block['groups'][$i]['users'][] = array('id' => $userinfo['uid'], 'name' => $myts->htmlspecialchars($userinfo['uname']), 'msglink' => '&nbsp;', 'avatar' => XOOPS_UPLOAD_URL.'/'.$userinfo['user_avatar']);
                     }
                 }
-                $i++;
+                ++$i;
             }
         }
     } else {
@@ -360,7 +360,7 @@ function b_system_newmembers_show($options)
     $member_handler =& xoops_gethandler('member');
     $newmembers = $member_handler->getUsers($criteria);
     $count = count($newmembers);
-    for ($i = 0; $i < $count; $i++) {
+    for ($i = 0; $i < $count; ++$i) {
         if ($options[1] == 1) {
             $block['users'][$i]['avatar'] = $newmembers[$i]->getVar('user_avatar') != 'blank.gif' ? XOOPS_UPLOAD_URL.'/'.$newmembers[$i]->getVar('user_avatar') : '';
         } else {
@@ -385,7 +385,7 @@ function b_system_topposters_show($options)
     $criteria = new CriteriaCompo(new Criteria('level', 0, '>'));
     $limit = (!empty($options[0])) ? $options[0] : 10;
     $size = count($options);
-    for ($i = 2; $i < $size; $i++) {
+    for ($i = 2; $i < $size; ++$i) {
         $criteria->add(new Criteria('rank', $options[$i], '<>'));
     }
     $criteria->setOrder('DESC');
@@ -394,7 +394,7 @@ function b_system_topposters_show($options)
     $member_handler =& xoops_gethandler('member');
     $topposters = $member_handler->getUsers($criteria);
     $count = count($topposters);
-    for ($i = 0; $i < $count; $i++) {
+    for ($i = 0; $i < $count; ++$i) {
         $block['users'][$i]['rank'] = $i+1;
         if ($options[1] == 1) {
             $block['users'][$i]['avatar'] = $topposters[$i]->getVar('user_avatar') != 'blank.gif' ? XOOPS_UPLOAD_URL.'/'.$topposters[$i]->getVar('user_avatar') : '';
@@ -560,7 +560,7 @@ function b_system_topposters_edit($options)
     $size = count($options);
     foreach ($ranks as $k => $v) {
         $sel = "";
-        for ($i = 2; $i < $size; $i++) {
+        for ($i = 2; $i < $size; ++$i) {
             if ($k == $options[$i]) {
                 $sel = " selected='selected'";
             }

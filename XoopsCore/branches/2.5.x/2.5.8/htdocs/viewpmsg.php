@@ -43,7 +43,7 @@ if (!is_object($xoopsUser)) {
         }
         $size = count($clean_msg_id);
         $msg =& $clean_msg_id;
-        for ($i = 0; $i < $size; $i++) {
+        for ($i = 0; $i < $size; ++$i) {
             $pm =& $pm_handler->get(intval($msg[$i]));
             if ($pm->getVar('to_userid') == $xoopsUser->getVar('uid')) {
                 $pm_handler->delete($pm);
@@ -68,7 +68,7 @@ if (!is_object($xoopsUser)) {
     } else {
         $display = 1;
     }
-    for ($i = 0; $i < $total_messages; $i++) {
+    for ($i = 0; $i < $total_messages; ++$i) {
         $class = ($i % 2 == 0) ? 'even' : 'odd';
         echo "<tr class='$class txtleft'><td class='aligntop width2 txtcenter'><input type='checkbox' id='msg_id[]' name='msg_id[]' value='" . $pm_arr[$i]->getVar("msg_id") . "' /></td>\n";
         if ($pm_arr[$i]->getVar('read_msg') == 1) {

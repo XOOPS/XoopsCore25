@@ -342,7 +342,7 @@ function xoops_module_install($dirname)
                                 unset($confop);
                             }
                         }
-                        $order++;
+                        ++$order;
                         if ($config_handler->insertConfig($confobj) != false) {
                             $msgs[] = '&nbsp;&nbsp;' . sprintf(_AM_SYSTEM_MODULES_CONFIG_DATA_ADD, "<strong>" . $config['name'] . "</strong>") . $confop_msgs;
 
@@ -489,7 +489,7 @@ function &xoops_module_gettemplate($dirname, $template, $type = '')
         return $ret;
     }
     $count = count($lines);
-    for ($i = 0; $i < $count; $i++) {
+    for ($i = 0; $i < $count; ++$i) {
         $ret .= str_replace("\n", "\r\n", str_replace("\r\n", "\n", $lines[$i]));
     }
 
@@ -556,7 +556,7 @@ function xoops_module_uninstall($dirname)
             $tcount = count($templates);
             if ($tcount > 0) {
                 $msgs[] = _AM_SYSTEM_MODULES_TEMPLATES_DELETE;
-                for ($i = 0; $i < $tcount; $i++) {
+                for ($i = 0; $i < $tcount; ++$i) {
                     if (false === $tplfile_handler->delete($templates[$i])) {
                         $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_TEMPLATE_DELETE_DATA_FAILD, $templates[$i]->getVar('tpl_file')) . sprintf(_AM_SYSTEM_MODULES_TEMPLATE_ID, "<strong>" . $templates[$i]->getVar('tpl_id') . "</strong>") . '</span>';
                     } else {
@@ -571,7 +571,7 @@ function xoops_module_uninstall($dirname)
             if (is_array($block_arr)) {
                 $bcount = count($block_arr);
                 $msgs[] = _AM_SYSTEM_MODULES_BLOCKS_DELETE;
-                for ($i = 0; $i < $bcount; $i++) {
+                for ($i = 0; $i < $bcount; ++$i) {
                     if (false === $block_arr[$i]->delete()) {
                         $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_BLOCK_DELETE_ERROR, "<strong>" . $block_arr[$i]->getVar('name') . "</strong>") . sprintf(_AM_SYSTEM_MODULES_BLOCK_ID, "<strong>" . $block_arr[$i]->getVar('bid') . "</strong>") . '</span>';
                     } else {
@@ -581,7 +581,7 @@ function xoops_module_uninstall($dirname)
                         $templates = $tplfile_handler->find(null, 'block', $block_arr[$i]->getVar('bid'));
                         $btcount = count($templates);
                         if ($btcount > 0) {
-                            for ($j = 0; $j < $btcount; $j++) {
+                            for ($j = 0; $j < $btcount; ++$j) {
                                 if (!$tplfile_handler->delete($templates[$j])) {
                                     $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_BLOCK_DELETE_TEMPLATE_ERROR, $templates[$j]->getVar('tpl_file')).sprintf(_AM_SYSTEM_MODULES_TEMPLATE_ID, "<strong>".$templates[$j]->getVar('tpl_id') . "</strong>") . '</span>';
                                 } else {
@@ -650,7 +650,7 @@ function xoops_module_uninstall($dirname)
                 $confcount = count($configs);
                 if ($confcount > 0) {
                     $msgs[] = _AM_SYSTEM_MODULES_MODULE_DATA_DELETE;
-                    for ($i = 0; $i < $confcount; $i++) {
+                    for ($i = 0; $i < $confcount; ++$i) {
                         if (false === $config_handler->deleteConfig($configs[$i])) {
                             $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . _AM_SYSTEM_MODULES_CONFIG_DATA_DELETE_ERROR .  sprintf(_AM_SYSTEM_MODULES_GONFIG_ID, "<strong>" . $configs[$i]->getvar('conf_id') . "</strong>") . '</span>';
                         } else {
@@ -701,7 +701,7 @@ function xoops_module_activate( $mid )
     } else {
         $blocks = XoopsBlock::getByModule($module->getVar('mid'));
         $bcount = count($blocks);
-        for ($i = 0; $i < $bcount; $i++) {
+        for ($i = 0; $i < $bcount; ++$i) {
             $blocks[$i]->setVar('isactive', 1);
             $blocks[$i]->store();
         }
@@ -742,7 +742,7 @@ function xoops_module_deactivate($mid)
         } else {
             $blocks = XoopsBlock::getByModule($module->getVar('mid'));
             $bcount = count($blocks);
-            for ($i = 0; $i < $bcount; $i++) {
+            for ($i = 0; $i < $bcount; ++$i) {
                 $blocks[$i]->setVar('isactive', 0);
                 $blocks[$i]->store();
             }

@@ -150,7 +150,7 @@ function xoops_detectLanguage()
         $accepted = explode(',', $HTTP_ACCEPT_LANGUAGE);
         $acceptedCnt = count($accepted);
         reset($accepted);
-        for ($i = 0; $i < $acceptedCnt; $i++) {
+        for ($i = 0; $i < $acceptedCnt; ++$i) {
             $lang = xoops_analyzeLanguage($accepted[$i], 1);
             if (strncasecmp($lang,'en',2)) {
                 break;

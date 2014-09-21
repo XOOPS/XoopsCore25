@@ -261,7 +261,7 @@ class XoopsGroupFormCheckBox extends XoopsFormElement
             $prefix = '';
             $this->_renderOptionTree($tree, $this->_optionTree[$topitem], $prefix);
             $ret .= $tree . '</td>';
-            $cols ++;
+            ++$cols;
         }
         $ret .= '</tr></table></td><td class="even" valign="top">';
         $option_ids = array();

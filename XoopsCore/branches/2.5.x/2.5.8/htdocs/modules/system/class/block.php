@@ -384,7 +384,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
             $sql .= " AND (l.gperm_groupid=" . $groupid[0] . "";
             $size = count($groupid);
             if ($size > 1) {
-                for ($i = 1; $i < $size; $i ++) {
+                for ($i = 1; $i < $size; ++$i) {
                     $sql .= " OR l.gperm_groupid=" . $groupid[$i] . "";
                 }
             }

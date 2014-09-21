@@ -807,7 +807,7 @@ class phpthumb {
 					// shouldn't happen, but just in case, don't let it delete actual cache directory
 					continue;
 				} elseif (@rmdir($empty_dir)) {
-					$totalpurgeddirs++;
+					++$totalpurgeddirs;
 				} else {
 					$this->DebugMessage('failed to rmdir('.$empty_dir.')', __FILE__, __LINE__);
 				}
@@ -1118,7 +1118,7 @@ class phpthumb {
 			// do not use "cleaner" foreach version of this loop as later code relies on both $segments and $i
 			// http://support.silisoftware.com/phpBB3/viewtopic.php?t=964
 			$segments = explode(DIRECTORY_SEPARATOR, $path);
-			for ($i = 0; $i < count($segments); $i++) {
+			for ($i = 0; $i < count($segments); ++$i) {
 	            $this->applyPathSegment($parts, $segments[$i]);
 				$thispart = implode(DIRECTORY_SEPARATOR, $parts);
 				if ($this->isInOpenBasedir($thispart)) {
@@ -1496,7 +1496,7 @@ class phpthumb {
 			// $UnAllowedParameters contains options that can only be processed in GD, not ImageMagick
 			// note: 'fltr' *may* need to be processed by GD, but we'll check that in more detail below
 			$UnAllowedParameters = array('xto', 'ar', 'bg', 'bc');
-			// 'ra' may be part of this list, if not a multiple of 90°
+			// 'ra' may be part of this list, if not a multiple of 90Â°
 			foreach ($UnAllowedParameters as $parameter) {
 				if (isset($this->$parameter)) {
 					$this->DebugMessage('$this->useRawIMoutput=false because "'.$parameter.'" is set', __FILE__, __LINE__);
@@ -1798,12 +1798,12 @@ if (false) {
 								$contDiv10 = round(intval($parameter) / 10);
 								if ($contDiv10 > 0) {
 									$contDiv10 = min($contDiv10, 100);
-									for ($i = 0; $i < $contDiv10; $i++) {
+									for ($i = 0; $i < $contDiv10; ++$i) {
 										$commandline .= ' -contrast'; // increase contrast by 10%
 									}
 								} elseif ($contDiv10 < 0) {
 									$contDiv10 = max($contDiv10, -100);
-									for ($i = $contDiv10; $i < 0; $i++) {
+									for ($i = $contDiv10; $i < 0; ++$i) {
 										$commandline .= ' +contrast'; // decrease contrast by 10%
 									}
 								} else {
@@ -2439,7 +2439,7 @@ if (false) {
 				$this->DebugMessage('AntiOffsiteLinking() writing '.count($nohotlink_text_array).' lines of text "'.$message.'" (in #'.$this->config_error_textcolor.') on top of image', __FILE__, __LINE__);
 				foreach ($nohotlink_text_array as $textline) {
 					$leftoffset = max(0, round(($this->thumbnail_width - (strlen($textline) * ImageFontWidth($this->config_error_fontsize))) / 2));
-					ImageString($this->gdimg_output, $this->config_error_fontsize, $leftoffset, $topoffset + ($rowcounter++ * ImageFontHeight($this->config_error_fontsize)), $textline, $nohotlink_text_color);
+					ImageString($this->gdimg_output, $this->config_error_fontsize, $leftoffset, $topoffset + (++$rowcounter * ImageFontHeight($this->config_error_fontsize)), $textline, $nohotlink_text_color);
 				}
 
 			}
@@ -2476,13 +2476,13 @@ if (false) {
 
 					if ($img_alpha_mixdown_dither = @ImageCreateTrueColor(ImageSX($this->gdimg_output), ImageSY($this->gdimg_output))) {
 
-						for ($i = 0; $i <= 255; $i++) {
+						for ($i = 0; $i <= 255; ++$i) {
 							$dither_color[$i] = ImageColorAllocate($img_alpha_mixdown_dither, $i, $i, $i);
 						}
 
 						// scan through current truecolor image copy alpha channel to temp image as grayscale
-						for ($x = 0; $x < $this->thumbnail_width; $x++) {
-							for ($y = 0; $y < $this->thumbnail_height; $y++) {
+						for ($x = 0; $x < $this->thumbnail_width; ++$x) {
+							for ($y = 0; $y < $this->thumbnail_height; ++$y) {
 								$PixelColor = phpthumb_functions::GetPixelColor($this->gdimg_output, $x, $y);
 								ImageSetPixel($img_alpha_mixdown_dither, $x, $y, $dither_color[($PixelColor['alpha'] * 2)]);
 							}
@@ -2500,8 +2500,8 @@ if (false) {
 
 						// scan through alpha channel image and note pixels with >50% transparency
 						$TransparentPixels = array();
-						for ($x = 0; $x < $this->thumbnail_width; $x++) {
-							for ($y = 0; $y < $this->thumbnail_height; $y++) {
+						for ($x = 0; $x < $this->thumbnail_width; ++$x) {
+							for ($y = 0; $y < $this->thumbnail_height; ++$y) {
 								$AlphaChannelPixel = phpthumb_functions::GetPixelColor($img_alpha_mixdown_dither, $x, $y);
 								if ($AlphaChannelPixel['red'] > 127) {
 									ImageSetPixel($this->gdimg_output, $x, $y, $TransparentColor);
@@ -3055,7 +3055,7 @@ if (false) {
 
 					$OriginalJPEGquality = $this->thumbnailQuality;
 					if (strlen($imgdata) > $this->maxb) {
-						for ($i = 3; $i < 20; $i++) {
+						for ($i = 3; $i < 20; ++$i) {
 							$q = round(100 * (1 - log10($i / 2)));
 							ob_start();
 							ImageJPEG($this->gdimg_output, null, $q);
@@ -3488,7 +3488,7 @@ if (false) {
 
 		$this->cache_filename .= '.'.strtolower($this->thumbnailFormat);
 		$broad_directories = '';
-		for ($i = 0; $i < $this->config_cache_directory_depth; $i++) {
+		for ($i = 0; $i < $this->config_cache_directory_depth; ++$i) {
 			$broad_directories .= DIRECTORY_SEPARATOR.substr($broad_directory_name, 0, $i + 1);
 		}
 
@@ -3578,7 +3578,7 @@ if (false) {
 				$filesize = filesize($filename);
 				$blocksize = 8192;
 				$blockreads = ceil($filesize / $blocksize);
-				for ($i = 0; $i < $blockreads; $i++) {
+				for ($i = 0; $i < $blockreads; ++$i) {
 					$rawimagedata .= fread($fp, $blocksize);
 				}
 				fclose($fp);

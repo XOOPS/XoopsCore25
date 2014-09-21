@@ -113,7 +113,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
                 $top_comments = $comment_handler->getTopComments($xoopsModule->getVar('mid'), $com_itemid, $com_dborder);
                 $c_count = count($top_comments);
                 if ($c_count > 0) {
-                    for($i = 0; $i < $c_count; $i ++) {
+                    for($i = 0; $i < $c_count; ++$i) {
                         $comments = $comment_handler->getThread($top_comments[$i]->getVar('com_rootid'), $top_comments[$i]->getVar('com_id'));
                         if (false != $comments) {
                             include_once $GLOBALS['xoops']->path('class/commentrenderer.php');
@@ -130,7 +130,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
             $top_comments = $comment_handler->getTopComments($xoopsModule->getVar('mid'), $com_itemid, $com_dborder);
             $c_count = count($top_comments);
             if ($c_count > 0) {
-                for($i = 0; $i < $c_count; $i ++) {
+                for($i = 0; $i < $c_count; ++$i) {
                     $comments = $comment_handler->getThread($top_comments[$i]->getVar('com_rootid'), $top_comments[$i]->getVar('com_id'));
                     include_once $GLOBALS['xoops']->path('class/commentrenderer.php');
                     $renderer =& XoopsCommentRenderer::instance($xoopsTpl);

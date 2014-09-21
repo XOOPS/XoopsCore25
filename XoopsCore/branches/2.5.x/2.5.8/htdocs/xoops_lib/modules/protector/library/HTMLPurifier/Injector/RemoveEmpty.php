@@ -58,7 +58,7 @@ class HTMLPurifier_Injector_RemoveEmpty extends HTMLPurifier_Injector
         }
         $next = false;
         $deleted = 1; // the current tag
-        for ($i = count($this->inputZipper->back) - 1; $i >= 0; $i--, $deleted++) {
+        for ($i = count($this->inputZipper->back) - 1; $i >= 0; $i--, ++$deleted) {
             $next = $this->inputZipper->back[$i];
             if ($next instanceof HTMLPurifier_Token_Text) {
                 if ($next->is_whitespace) {
@@ -84,7 +84,7 @@ class HTMLPurifier_Injector_RemoveEmpty extends HTMLPurifier_Injector
                 return;
             }
             $token = $deleted + 1;
-            for ($b = 0, $c = count($this->inputZipper->front); $b < $c; $b++) {
+            for ($b = 0, $c = count($this->inputZipper->front); $b < $c; ++$b) {
                 $prev = $this->inputZipper->front[$b];
                 if ($prev instanceof HTMLPurifier_Token_Text && $prev->is_whitespace) {
                     continue;

@@ -114,7 +114,7 @@ class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
             $go = false;
             $def = empty($stack) ? $definition->info_parent_def : $definition->info[$node->name];
             while (isset($node->children[$ix])) {
-                $child = $node->children[$ix++];
+                $child = $node->children[++$ix];
                 if ($child instanceof HTMLPurifier_Node_Element) {
                     $go = true;
                     $stack[] = array($node, $is_inline, $excludes, $ix);

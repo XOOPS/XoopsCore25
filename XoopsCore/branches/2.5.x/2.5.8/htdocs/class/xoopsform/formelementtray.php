@@ -101,7 +101,7 @@ class XoopsFormElementTray extends XoopsFormElement
         } else {
             $required_elements = $formElement->getRequired();
             $count = count( $required_elements );
-            for ($i = 0 ; $i < $count; $i++) {
+            for ($i = 0 ; $i < $count; ++$i) {
                 $this->_required[] = &$required_elements[$i];
             }
         }
@@ -128,13 +128,13 @@ class XoopsFormElementTray extends XoopsFormElement
         } else {
             $ret = array();
             $count = count( $this->_elements );
-            for ($i = 0; $i < $count; $i++) {
+            for ($i = 0; $i < $count; ++$i) {
                 if ( !$this->_elements[$i]->isContainer() ) {
                     $ret[] = &$this->_elements[$i];
                 } else {
                     $elements = &$this->_elements[$i]->getElements( true );
                     $count2 = count( $elements );
-                    for ($j = 0; $j < $count2; $j++) {
+                    for ($j = 0; $j < $count2; ++$j) {
                         $ret[] = &$elements[$j];
                     }
                     unset( $elements );
@@ -174,7 +174,7 @@ class XoopsFormElementTray extends XoopsFormElement
             }
             $ret .= $ele->render() . NWLINE ;
             if ( !$ele->isHidden() ) {
-                $count++;
+                ++$count;
             }
         }
 

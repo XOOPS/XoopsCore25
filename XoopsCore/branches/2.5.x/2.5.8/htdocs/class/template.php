@@ -305,7 +305,7 @@ function xoops_template_clear_module_cache($mid)
     if ($count > 0) {
         $xoopsTpl = new XoopsTpl();
         $xoopsTpl->caching = 2;
-        for ($i = 0; $i < $count; $i++) {
+        for ($i = 0; $i < $count; ++$i) {
             if ($block_arr[$i]->getVar('template') != '') {
                 $xoopsTpl->clear_cache('db:' . $block_arr[$i]->getVar('template'), 'blk_' . $block_arr[$i]->getVar('bid'));
             }

@@ -140,7 +140,7 @@ if (!$_SESSION['XoopsEmotions'] && !$admin) {
             echo "<div class='xoopsEmotions'>";
             $count = count($smiles);
 
-            for ($i = 0; $i < $count; $i++) {
+            for ($i = 0; $i < $count; ++$i) {
                 if ($op == '') {
                     if ($smiles[$i]['display']) {
                         echo '<img class="xoopsEmotions" onclick="XoopsemotionsDialog.insert(this);" src="' . XOOPS_UPLOAD_URL . '/' . $smiles[$i]['smile_url'] . '" alt="' . $myts->htmlspecialchars($smiles[$i]['emotion']) . '" title="' . $myts->htmlspecialchars($smiles[$i]['emotion']) . '" />';

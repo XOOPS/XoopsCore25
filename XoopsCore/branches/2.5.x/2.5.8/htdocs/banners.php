@@ -149,7 +149,7 @@ function bannerstats()
                   <td>{$clicks}</td>
                   <td>{$percent}%</td>
                   <td><a href='banners.php?op=EmailStats&amp;cid={$cid}&amp;bid={$bid}' title='" . _BANNERS_STATS . "'>" . _BANNERS_STATS . "</a></td></tr></tbody>";
-            $i++;
+            ++$i;
         }
         echo "</table>
               <br /><br />

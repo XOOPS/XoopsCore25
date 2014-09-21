@@ -11,17 +11,17 @@ class HTMLPurifier_AttrDef_CSS_FontFamily extends HTMLPurifier_AttrDef
     public function __construct()
     {
         $this->mask = '_- ';
-        for ($c = 'a'; $c <= 'z'; $c++) {
+        for ($c = 'a'; $c <= 'z'; ++$c) {
             $this->mask .= $c;
         }
-        for ($c = 'A'; $c <= 'Z'; $c++) {
+        for ($c = 'A'; $c <= 'Z'; ++$c) {
             $this->mask .= $c;
         }
-        for ($c = '0'; $c <= '9'; $c++) {
+        for ($c = '0'; $c <= '9'; ++$c) {
             $this->mask .= $c;
         } // cast-y, but should be fine
         // special bytes used by UTF-8
-        for ($i = 0x80; $i <= 0xFF; $i++) {
+        for ($i = 0x80; $i <= 0xFF; ++$i) {
             // We don't bother excluding invalid bytes in this range,
             // because the our restriction of well-formed UTF-8 will
             // prevent these from ever occurring.

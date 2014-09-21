@@ -122,7 +122,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
             // special case to set up context
             if ($position_next_lt === $cursor) {
                 $inside_tag = true;
-                $cursor++;
+                ++$cursor;
             }
 
             if (!$inside_tag && $position_next_lt !== false) {
@@ -174,7 +174,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                 if ($strlen_segment < 1) {
                     // there's nothing to process!
                     $token = new HTMLPurifier_Token_Text('<');
-                    $cursor++;
+                    ++$cursor;
                     continue;
                 }
 
@@ -483,7 +483,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
             if ($first_char == '=') {
                 // key="value"
 
-                $cursor++;
+                ++$cursor;
                 $cursor += strspn($string, $this->_whitespace, $cursor);
 
                 if ($cursor === false) {
@@ -497,7 +497,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
 
                 if ($char == '"' || $char == "'") {
                     // it's quoted, end bound is $char
-                    $cursor++;
+                    ++$cursor;
                     $value_begin = $cursor;
                     $cursor = strpos($string, $char, $cursor);
                     $value_end = $cursor;
@@ -519,7 +519,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                     $value = '';
                 }
                 $array[$key] = $this->parseData($value);
-                $cursor++;
+                ++$cursor;
             } else {
                 // boolattr
                 if ($key !== '') {

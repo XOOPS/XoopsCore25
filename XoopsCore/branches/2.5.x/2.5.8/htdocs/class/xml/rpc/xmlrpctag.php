@@ -68,7 +68,7 @@ class XoopsXmlRpcResponse extends XoopsXmlRpcDocument
     {
         $count = count($this->_tags);
         $payload = '';
-        for ($i = 0; $i < $count; $i++) {
+        for ($i = 0; $i < $count; ++$i) {
             if (!$this->_tags[$i]->isFault()) {
                 $payload .= $this->_tags[$i]->render();
             } else {
@@ -103,7 +103,7 @@ class XoopsXmlRpcRequest extends XoopsXmlRpcDocument
     {
         $count = count($this->_tags);
         $payload = '';
-        for ($i = 0; $i < $count; $i++) {
+        for ($i = 0; $i < $count; ++$i) {
             $payload .= '<param>'.$this->_tags[$i]->render().'</param>';
         }
 
@@ -407,7 +407,7 @@ class XoopsXmlRpcArray extends XoopsXmlRpcTag
     {
         $count = count($this->_tags);
         $ret = '<value><array><data>';
-        for ($i = 0; $i < $count; $i++) {
+        for ($i = 0; $i < $count; ++$i) {
             $ret .= $this->_tags[$i]->render();
         }
         $ret .= '</data></array></value>';
@@ -443,7 +443,7 @@ class XoopsXmlRpcStruct extends XoopsXmlRpcTag
     {
         $count = count($this->_tags);
         $ret = '<value><struct>';
-        for ($i = 0; $i < $count; $i++) {
+        for ($i = 0; $i < $count; ++$i) {
             $ret .= '<member><name>'.$this->encode($this->_tags[$i]['name']).'</name>'.$this->_tags[$i]['value']->render().'</member>';
         }
         $ret .= '</struct></value>';

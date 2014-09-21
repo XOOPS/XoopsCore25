@@ -211,7 +211,7 @@ abstract class HTMLPurifier_Injector
             $nesting = 0;
         }
         if ($current instanceof HTMLPurifier_Token_Start) {
-            $nesting++;
+            ++$nesting;
         } elseif ($current instanceof HTMLPurifier_Token_End) {
             if ($nesting <= 0) {
                 return false;

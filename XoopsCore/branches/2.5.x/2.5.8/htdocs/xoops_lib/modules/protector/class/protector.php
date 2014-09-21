@@ -353,7 +353,7 @@ var $last_error_type = 'UNKNOWN' ;
     $pos = 0 ;
     foreach ($bad_ips as $bad_ip => $jailed_time) {
         if( $jailed_time >= time() ) break ;
-        $pos ++ ;
+        ++$pos ;
     }
     $bad_ips = array_slice( $bad_ips , $pos ) ;
 
@@ -1149,7 +1149,7 @@ function bigumbrella_init()
         $count = -1 ;
         foreach ( preg_split( '#https?\:\/\/#i' , $val ) as $fragment ) {
             if ( strncmp( $fragment , $http_host , strlen( $http_host ) ) !== 0 ) {
-                $count ++ ;
+                ++$count ;
             }
         }
         if( $count > 0 ) $this->_spamcount_uri += $count ;

@@ -105,21 +105,21 @@ class HTMLPurifier_AttrDef_CSS_BackgroundPosition extends HTMLPurifier_AttrDef
                     }
                 }
                 $keywords[$status] = $lbit;
-                $i++;
+                ++$i;
             }
 
             // test for length
             $r = $this->length->validate($bit, $config, $context);
             if ($r !== false) {
                 $measures[] = $r;
-                $i++;
+                ++$i;
             }
 
             // test for percentage
             $r = $this->percentage->validate($bit, $config, $context);
             if ($r !== false) {
                 $measures[] = $r;
-                $i++;
+                ++$i;
             }
         }
 

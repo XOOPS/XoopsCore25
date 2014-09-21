@@ -104,7 +104,7 @@ switch ($op) {
             }
             $install_mods[] = $module->getInfo('dirname');
             unset($module);
-            $i++;
+            ++$i;
         }
         // Get module to install
         $dirlist        = XoopsLists::getModulesList();
@@ -115,7 +115,7 @@ switch ($op) {
                 clearstatcache();
                 $file = trim($file);
                 if (!in_array($file, $install_mods)) {
-                    $i++;
+                    ++$i;
                 }
             }
         }
@@ -177,7 +177,7 @@ switch ($op) {
                     $toinstall_mods[$i]['description'] = $module->getInfo('description');
                     $toinstall_mods[$i]['mid']         = $i; // Use only for display popup
                     unset($module);
-                    $i++;
+                    ++$i;
                 }
             }
         }
@@ -202,7 +202,7 @@ switch ($op) {
                         if (!$module_handler->insert($module)) {
                             $error = true;
                         }
-                        $i++;
+                        ++$i;
                     }
                 }
             }
@@ -246,7 +246,7 @@ switch ($op) {
             $modifs_mods[$i]['oldname']   = $myts->htmlspecialchars($myts->stripSlashesGPC($oldname[$mid]));
             $modifs_mods[$i]['newname']   = $myts->htmlspecialchars(trim($myts->stripslashesGPC($newname[$mid])));
             $modifs_mods[$i]['newstatus'] = (isset($newstatus[$mid])) ? $myts->htmlspecialchars($newstatus[$mid]) : 0;
-            $i++;
+            ++$i;
         }
         $xoopsTpl->assign('modifs_mods', $modifs_mods);
         $xoopsTpl->assign('input_security', $GLOBALS['xoopsSecurity']->getTokenHTML());
@@ -268,7 +268,7 @@ switch ($op) {
             }
             $blocks = XoopsBlock::getByModule($module_id);
             $bcount = count($blocks);
-            for ($i = 0; $i < $bcount; $i++) {
+            for ($i = 0; $i < $bcount; ++$i) {
                 $blocks[$i]->setVar('isactive', !$old);
                 $blocks[$i]->store();
             }
@@ -551,7 +551,7 @@ switch ($op) {
             if (is_array($deltpl)) {
                 // delete template file entry in db
                 $dcount = count($deltpl);
-                for ($i = 0; $i < $dcount; $i++) {
+                for ($i = 0; $i < $dcount; ++$i) {
                     if (!$tplfile_handler->delete($deltpl[$i])) {
                         $delng[] = $deltpl[$i]->getVar('tpl_file');
                     }
@@ -659,7 +659,7 @@ switch ($op) {
                         $fresult = $xoopsDB->query($sql);
                         $fcount  = 0;
                         while ($fblock = $xoopsDB->fetchArray($fresult)) {
-                            $fcount++;
+                            ++$fcount;
                             $sql
                                     =
                                 "UPDATE " . $xoopsDB->prefix("newblocks") . " SET name='" . addslashes($block['name'])
@@ -848,7 +848,7 @@ switch ($op) {
                                 $tplfiles = $tplfile_handler->find(null, 'block', $block->getVar('bid'));
                                 if (is_array($tplfiles)) {
                                     $btcount = count($tplfiles);
-                                    for ($k = 0; $k < $btcount; $k++) {
+                                    for ($k = 0; $k < $btcount; ++$k) {
                                         if (!$tplfile_handler->delete($tplfiles[$k])) {
                                             $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">'
                                                 . _AM_SYSTEM_MODULES_BLOCK_DEPRECATED_ERROR . '(ID: <strong>'
@@ -877,7 +877,7 @@ switch ($op) {
             $config_delng   = array();
             if ($confcount > 0) {
                 $msgs[] = _AM_SYSTEM_MODULES_MODULE_DATA_DELETE;
-                for ($i = 0; $i < $confcount; $i++) {
+                for ($i = 0; $i < $confcount; ++$i) {
                     if (!$config_handler->deleteConfig($configs[$i])) {
                         $msgs[]
                             = '&nbsp;&nbsp;<span style="color:#ff0000;">' . _AM_SYSTEM_MODULES_GONFIG_DATA_DELETE_ERROR
@@ -1065,7 +1065,7 @@ switch ($op) {
                                 unset($confop);
                             }
                         }
-                        $order++;
+                        ++$order;
                         if (false != $config_handler->insertConfig($confobj)) {
                             //$msgs[] = '&nbsp;&nbsp;Config <strong>'.$config['name'].'</strong> added to the database.'.$confop_msgs;
                             $msgs[] = "&nbsp;&nbsp;" . sprintf(

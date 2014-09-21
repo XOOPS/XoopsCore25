@@ -119,7 +119,7 @@ class HTMLPurifier_UnitConverter
         $log = (int)floor(log(abs($n), 10));
         $cp = ($log < 0) ? $this->internalPrecision - $log : $this->internalPrecision; // internal precision
 
-        for ($i = 0; $i < 2; $i++) {
+        for ($i = 0; $i < 2; ++$i) {
 
             // Determine what unit IN THIS SYSTEM we need to convert to
             if ($dest_state === $state) {

@@ -969,7 +969,7 @@ class PHPMailer
             }
           }
         }
-        $index++;
+        ++$index;
         if (!$connection) {
           throw new phpmailerException($this->Lang('connect_host'));
         }
@@ -1112,10 +1112,10 @@ class PHPMailer
 
     $line = explode($this->LE, $message);
     $message = '';
-    for ($i = 0 ;$i < count($line); $i++) {
+    for ($i = 0 ;$i < count($line); ++$i) {
       $line_part = explode(' ', $line[$i]);
       $buf = '';
-      for ($e = 0; $e<count($line_part); $e++) {
+      for ($e = 0; $e<count($line_part); ++$e) {
         $word = $line_part[$e];
         if ($qp_mode and (strlen($word) > $length)) {
           $space_left = $length - strlen($buf) - 1;
@@ -1318,7 +1318,7 @@ class PHPMailer
     }
 
     // Add custom headers
-    for ($index = 0; $index < count($this->CustomHeader); $index++) {
+    for ($index = 0; $index < count($this->CustomHeader); ++$index) {
       $result .= $this->HeaderLine(trim($this->CustomHeader[$index][0]), $this->EncodeHeader(trim($this->CustomHeader[$index][1])));
     }
     if (!$this->sign_key_file) {
@@ -1918,7 +1918,7 @@ class PHPMailer
         $offset = $avgLength - $lookBack;
         $chunk = mb_substr($str, $i, $offset, $this->CharSet);
         $chunk = base64_encode($chunk);
-        $lookBack++;
+        ++$lookBack;
       } while (strlen($chunk) > $length);
 
       $encoded .= $chunk . $this->LE;
@@ -1950,7 +1950,7 @@ class PHPMailer
     while ( list(, $line) = each($lines) ) {
       $linlen = strlen($line);
       $newline = '';
-      for ($i = 0; $i < $linlen; $i++) {
+      for ($i = 0; $i < $linlen; ++$i) {
         $c = substr( $line, $i, 1 );
         $dec = ord( $c );
         if ( ( $i == 0 ) && ( $dec == 46 ) ) { // convert first point in the line into =2E
@@ -2593,7 +2593,7 @@ class PHPMailer
   {
     $tmp = '';
     $line = '';
-    for ($i = 0; $i < strlen($txt); $i++) {
+    for ($i = 0; $i < strlen($txt); ++$i) {
       $ord = ord($txt[$i]);
       if ( ((0x21 <= $ord) && ($ord <= 0x3A)) || $ord == 0x3C || ((0x3E <= $ord) && ($ord <= 0x7E)) ) {
         $line .= $txt[$i];

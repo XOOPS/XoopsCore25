@@ -439,7 +439,7 @@ function xoops_makepass()
                        'st', 'fi', 'rst', 'gr', 'oup', 'boy', 'ea', 'gle', 'tr',
                        'ail', 'bi', 'ble', 'brb', 'pri', 'dee', 'kay', 'en', 'be', 'se');
     srand((double) microtime() * 1000000);
-    for ($count = 1; $count <= 4; $count ++) {
+    for ($count = 1; $count <= 4; ++$count) {
         if (rand() % 10 == 1) {
             $makepass .= sprintf('%0.0f', (rand() % 50) + 1);
         } else {
@@ -464,7 +464,7 @@ function checkEmail($email, $antispam = false)
     }
     $email_array = explode("@", $email);
     $local_array = explode(".", $email_array[0]);
-    for ($i = 0; $i < sizeof($local_array); $i++) {
+    for ($i = 0; $i < sizeof($local_array); ++$i) {
         if (!preg_match("/^(([A-Za-z0-9!#$%&'*+\/\=?^_`{|}~-][A-Za-z0-9!#$%&'*+\/\=?^_`{|}~\.-]{0,63})|(\"[^(\\|\")]{0,62}\"))$/", $local_array[$i])) {
             return false;
         }
@@ -474,7 +474,7 @@ function checkEmail($email, $antispam = false)
         if (sizeof($domain_array) < 2) {
             return false; // Not enough parts to domain
         }
-        for ($i = 0; $i < sizeof($domain_array); $i++) {
+        for ($i = 0; $i < sizeof($domain_array); ++$i) {
             if (!preg_match("/^(([A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9])|([A-Za-z0-9]+))$/", $domain_array[$i])) {
                 return false;
             }
@@ -850,7 +850,7 @@ function xoops_comment_delete($module_id, $item_id)
         if (is_array($comments)) {
             $count = count($comments);
             $deleted_num = array();
-            for ($i = 0; $i < $count; $i++) {
+            for ($i = 0; $i < $count; ++$i) {
                 if (false != $comment_handler->delete($comments[$i])) {
                     // store poster ID and deleted post number into array for later use
                     $poster_id = $comments[$i]->getVar('com_uid');
