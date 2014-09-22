@@ -94,8 +94,8 @@ class HTMLPurifier_Generator
                 // script special case
                 // the contents of the script block must be ONE token
                 // for this to work.
-                $html .= $this->generateFromToken($tokens[++$i]);
-                $html .= $this->generateScriptFromToken($tokens[++$i]);
+                $html .= $this->generateFromToken($tokens[$i++]);
+                $html .= $this->generateScriptFromToken($tokens[$i++]);
             }
             $html .= $this->generateFromToken($tokens[$i]);
         }

@@ -215,7 +215,7 @@ foreach ($prefixes as $prefix) {
     $has_xoopscomments = false ;
     foreach ($tables as $table) {
         if( $table == $prefix['name'] . '_xoopscomments' ) $has_xoopscomments = true ;
-        if( substr( $table , 0 , strlen( $prefix['name'] ) + 1 ) === $prefix['name'] . '_' ) ++$table_count ;
+        if( substr( $table , 0 , strlen( $prefix['name'] ) + 1 ) === $prefix['name'] . '_' ) ++$table_count;
     }
 
     // check if prefix_xoopscomments exists

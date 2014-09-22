@@ -50,7 +50,7 @@ function smarty_core_write_cache_file($params, &$smarty)
                     $level--;
                     unset($results[$i]);
                 } else { // opening tag
-                    if (++$level > 0) unset($results[$i]);
+                    if ($level++ > 0) unset($results[$i]);
                 }
                 ++$j;
             } elseif ($level > 0) {

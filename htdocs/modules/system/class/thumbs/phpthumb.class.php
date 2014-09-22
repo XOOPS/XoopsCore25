@@ -2439,7 +2439,7 @@ if (false) {
 				$this->DebugMessage('AntiOffsiteLinking() writing '.count($nohotlink_text_array).' lines of text "'.$message.'" (in #'.$this->config_error_textcolor.') on top of image', __FILE__, __LINE__);
 				foreach ($nohotlink_text_array as $textline) {
 					$leftoffset = max(0, round(($this->thumbnail_width - (strlen($textline) * ImageFontWidth($this->config_error_fontsize))) / 2));
-					ImageString($this->gdimg_output, $this->config_error_fontsize, $leftoffset, $topoffset + (++$rowcounter * ImageFontHeight($this->config_error_fontsize)), $textline, $nohotlink_text_color);
+					ImageString($this->gdimg_output, $this->config_error_fontsize, $leftoffset, $topoffset + ($rowcounter++ * ImageFontHeight($this->config_error_fontsize)), $textline, $nohotlink_text_color);
 				}
 
 			}
