@@ -368,13 +368,13 @@ class phpthumb_bmp {
 					// BYTE    rgbGreen;
 					// BYTE    rgbRed;
 					// BYTE    rgbReserved;
-					$blue  = $this->LittleEndian2Int(substr($BMPpalette, ++$paletteoffset, 1));
-					$green = $this->LittleEndian2Int(substr($BMPpalette, ++$paletteoffset, 1));
-					$red   = $this->LittleEndian2Int(substr($BMPpalette, ++$paletteoffset, 1));
+					$blue  = $this->LittleEndian2Int(substr($BMPpalette, $paletteoffset++, 1));
+					$green = $this->LittleEndian2Int(substr($BMPpalette, $paletteoffset++, 1));
+					$red   = $this->LittleEndian2Int(substr($BMPpalette, $paletteoffset++, 1));
 					if (($thisfile_bmp['type_os'] == 'OS/2') && ($thisfile_bmp['type_version'] == 1)) {
 						// no padding byte
 					} else {
-						++$paletteoffset; // padding byte
+						$paletteoffset++; // padding byte
 					}
 					$thisfile_bmp['palette'][$i] = (($red << 16) | ($green << 8) | ($blue));
 				}
@@ -395,7 +395,7 @@ class phpthumb_bmp {
 						case 1:
 							for ($row = ($thisfile_bmp_header_raw['height'] - 1); $row >= 0; $row--) {
 								for ($col = 0; $col < $thisfile_bmp_header_raw['width']; $col = $col) {
-									$paletteindexbyte = ord($BMPpixelData{++$pixeldataoffset});
+									$paletteindexbyte = ord($BMPpixelData{$pixeldataoffset++});
 									for ($i = 7; $i >= 0; $i--) {
 										$paletteindex = ($paletteindexbyte & (0x01 << $i)) >> $i;
 										$thisfile_bmp['data'][$row][$col] = $thisfile_bmp['palette'][$paletteindex];
@@ -404,7 +404,7 @@ class phpthumb_bmp {
 								}
 								while (($pixeldataoffset % 4) != 0) {
 									// lines are padded to nearest DWORD
-									++$pixeldataoffset;
+									$pixeldataoffset++;
 								}
 							}
 							break;
@@ -412,7 +412,7 @@ class phpthumb_bmp {
 						case 4:
 							for ($row = ($thisfile_bmp_header_raw['height'] - 1); $row >= 0; $row--) {
 								for ($col = 0; $col < $thisfile_bmp_header_raw['width']; $col = $col) {
-									$paletteindexbyte = ord($BMPpixelData{++$pixeldataoffset});
+									$paletteindexbyte = ord($BMPpixelData{$pixeldataoffset++});
 									for ($i = 1; $i >= 0; $i--) {
 										$paletteindex = ($paletteindexbyte & (0x0F << (4 * $i))) >> (4 * $i);
 										$thisfile_bmp['data'][$row][$col] = $thisfile_bmp['palette'][$paletteindex];
@@ -421,7 +421,7 @@ class phpthumb_bmp {
 								}
 								while (($pixeldataoffset % 4) != 0) {
 									// lines are padded to nearest DWORD
-									++$pixeldataoffset;
+									$pixeldataoffset++;
 								}
 							}
 							break;
@@ -429,12 +429,12 @@ class phpthumb_bmp {
 						case 8:
 							for ($row = ($thisfile_bmp_header_raw['height'] - 1); $row >= 0; $row--) {
 								for ($col = 0; $col < $thisfile_bmp_header_raw['width']; ++$col) {
-									$paletteindex = ord($BMPpixelData{++$pixeldataoffset});
+									$paletteindex = ord($BMPpixelData{$pixeldataoffset++});
 									$thisfile_bmp['data'][$row][$col] = $thisfile_bmp['palette'][$paletteindex];
 								}
 								while (($pixeldataoffset % 4) != 0) {
 									// lines are padded to nearest DWORD
-									++$pixeldataoffset;
+									$pixeldataoffset++;
 								}
 							}
 							break;
@@ -447,7 +447,7 @@ class phpthumb_bmp {
 								}
 								while (($pixeldataoffset % 4) != 0) {
 									// lines are padded to nearest DWORD
-									++$pixeldataoffset;
+									$pixeldataoffset++;
 								}
 							}
 							break;
@@ -460,7 +460,7 @@ class phpthumb_bmp {
 								}
 								while (($pixeldataoffset % 4) != 0) {
 									// lines are padded to nearest DWORD
-									++$pixeldataoffset;
+									$pixeldataoffset++;
 								}
 							}
 							break;
@@ -481,8 +481,8 @@ class phpthumb_bmp {
 						case 8:
 							$pixelcounter = 0;
 							while ($pixeldataoffset < strlen($BMPpixelData)) {
-								$firstbyte  = $this->LittleEndian2Int(substr($BMPpixelData, ++$pixeldataoffset, 1));
-								$secondbyte = $this->LittleEndian2Int(substr($BMPpixelData, ++$pixeldataoffset, 1));
+								$firstbyte  = $this->LittleEndian2Int(substr($BMPpixelData, $pixeldataoffset++, 1));
+								$secondbyte = $this->LittleEndian2Int(substr($BMPpixelData, $pixeldataoffset++, 1));
 								if ($firstbyte == 0) {
 
 									// escaped/absolute mode - the first byte of the pair can be set to zero to
@@ -503,8 +503,8 @@ class phpthumb_bmp {
 											// delta - The 2 bytes following the escape contain unsigned values
 											// indicating the horizontal and vertical offsets of the next pixel
 											// from the current position.
-											$colincrement = $this->LittleEndian2Int(substr($BMPpixelData, ++$pixeldataoffset, 1));
-											$rowincrement = $this->LittleEndian2Int(substr($BMPpixelData, ++$pixeldataoffset, 1));
+											$colincrement = $this->LittleEndian2Int(substr($BMPpixelData, $pixeldataoffset++, 1));
+											$rowincrement = $this->LittleEndian2Int(substr($BMPpixelData, $pixeldataoffset++, 1));
 											$col = ($pixelcounter % $thisfile_bmp_header_raw['width']) + $colincrement;
 											$row = ($thisfile_bmp_header_raw['height'] - 1 - (($pixelcounter - $col) / $thisfile_bmp_header_raw['width'])) - $rowincrement;
 											$pixelcounter = ($row * $thisfile_bmp_header_raw['width']) + $col;
@@ -516,7 +516,7 @@ class phpthumb_bmp {
 											// number of bytes that follow, each of which contains the color index
 											// of a single pixel. Each run must be aligned on a word boundary.
 											for ($i = 0; $i < $secondbyte; ++$i) {
-												$paletteindex = $this->LittleEndian2Int(substr($BMPpixelData, ++$pixeldataoffset, 1));
+												$paletteindex = $this->LittleEndian2Int(substr($BMPpixelData, $pixeldataoffset++, 1));
 												$col = $pixelcounter % $thisfile_bmp_header_raw['width'];
 												$row = $thisfile_bmp_header_raw['height'] - 1 - (($pixelcounter - $col) / $thisfile_bmp_header_raw['width']);
 												$thisfile_bmp['data'][$row][$col] = $thisfile_bmp['palette'][$paletteindex];
@@ -524,7 +524,7 @@ class phpthumb_bmp {
 											}
 											while (($pixeldataoffset % 2) != 0) {
 												// Each run must be aligned on a word boundary.
-												++$pixeldataoffset;
+												$pixeldataoffset++;
 											}
 											break;
 									}
@@ -557,8 +557,8 @@ class phpthumb_bmp {
 						case 4:
 							$pixelcounter = 0;
 							while ($pixeldataoffset < strlen($BMPpixelData)) {
-								$firstbyte  = $this->LittleEndian2Int(substr($BMPpixelData, ++$pixeldataoffset, 1));
-								$secondbyte = $this->LittleEndian2Int(substr($BMPpixelData, ++$pixeldataoffset, 1));
+								$firstbyte  = $this->LittleEndian2Int(substr($BMPpixelData, $pixeldataoffset++, 1));
+								$secondbyte = $this->LittleEndian2Int(substr($BMPpixelData, $pixeldataoffset++, 1));
 								if ($firstbyte == 0) {
 
 									// escaped/absolute mode - the first byte of the pair can be set to zero to
@@ -579,8 +579,8 @@ class phpthumb_bmp {
 											// delta - The 2 bytes following the escape contain unsigned values
 											// indicating the horizontal and vertical offsets of the next pixel
 											// from the current position.
-											$colincrement = $this->LittleEndian2Int(substr($BMPpixelData, ++$pixeldataoffset, 1));
-											$rowincrement = $this->LittleEndian2Int(substr($BMPpixelData, ++$pixeldataoffset, 1));
+											$colincrement = $this->LittleEndian2Int(substr($BMPpixelData, $pixeldataoffset++, 1));
+											$rowincrement = $this->LittleEndian2Int(substr($BMPpixelData, $pixeldataoffset++, 1));
 											$col = ($pixelcounter % $thisfile_bmp_header_raw['width']) + $colincrement;
 											$row = ($thisfile_bmp_header_raw['height'] - 1 - (($pixelcounter - $col) / $thisfile_bmp_header_raw['width'])) - $rowincrement;
 											$pixelcounter = ($row * $thisfile_bmp_header_raw['width']) + $col;
@@ -593,13 +593,13 @@ class phpthumb_bmp {
 											// each run must be aligned on a word boundary.
 											unset($paletteindexes);
 											for ($i = 0; $i < ceil($secondbyte / 2); ++$i) {
-												$paletteindexbyte = $this->LittleEndian2Int(substr($BMPpixelData, ++$pixeldataoffset, 1));
+												$paletteindexbyte = $this->LittleEndian2Int(substr($BMPpixelData, $pixeldataoffset++, 1));
 												$paletteindexes[] = ($paletteindexbyte & 0xF0) >> 4;
 												$paletteindexes[] = ($paletteindexbyte & 0x0F);
 											}
 											while (($pixeldataoffset % 2) != 0) {
 												// Each run must be aligned on a word boundary.
-												++$pixeldataoffset;
+												$pixeldataoffset++;
 											}
 
 											foreach ($paletteindexes as $dummy => $paletteindex) {
@@ -652,13 +652,13 @@ class phpthumb_bmp {
 								return false;
 							}
 							while ((($thisfile_bmp_header_raw['red_mask'] >> $redshift) & 0x01) == 0) {
-								++$redshift;
+								$redshift++;
 							}
 							while ((($thisfile_bmp_header_raw['green_mask'] >> $greenshift) & 0x01) == 0) {
-								++$greenshift;
+								$greenshift++;
 							}
 							while ((($thisfile_bmp_header_raw['blue_mask'] >> $blueshift) & 0x01) == 0) {
-								++$blueshift;
+								$blueshift++;
 							}
 							for ($row = ($thisfile_bmp_header_raw['height'] - 1); $row >= 0; $row--) {
 								for ($col = 0; $col < $thisfile_bmp_header_raw['width']; ++$col) {
@@ -672,7 +672,7 @@ class phpthumb_bmp {
 								}
 								while (($pixeldataoffset % 4) != 0) {
 									// lines are padded to nearest DWORD
-									++$pixeldataoffset;
+									$pixeldataoffset++;
 								}
 							}
 							break;
