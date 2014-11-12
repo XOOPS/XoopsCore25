@@ -36,12 +36,12 @@ if ($msg_id > 0) {
 
 if (is_object($pm) && ($pm->getVar('from_userid') != $GLOBALS['xoopsUser']->getVar('uid'))
     && ($pm->getVar('to_userid') != $GLOBALS['xoopsUser']->getVar('uid'))
-){
+) {
     redirect_header(XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar("dirname", "n") . '/index.php', 2, _NOPERM);
     exit();
 }
 
-if (is_object($pm) && !empty($_POST['action']) ) {
+if (is_object($pm) && !empty($_POST['action'])) {
     if (!$GLOBALS['xoopsSecurity']->check()) {
         echo implode('<br />', $GLOBALS['xoopsSecurity']->getErrors());
         exit();
@@ -49,7 +49,7 @@ if (is_object($pm) && !empty($_POST['action']) ) {
     $res = false;
     if (!empty($_REQUEST['email_message'])) {
         $res = $pm_handler->sendEmail($pm, $GLOBALS['xoopsUser']);
-    } else if (!empty($_REQUEST['move_message'])
+    } elseif (!empty($_REQUEST['move_message'])
                && $_REQUEST['op'] != 'save'
                && !$GLOBALS['xoopsUser']->isAdmin()
                && $pm_handler->getSavecount() >= $GLOBALS['xoopsModuleConfig']['max_save']
@@ -58,10 +58,12 @@ if (is_object($pm) && !empty($_POST['action']) ) {
     } else {
         switch ($_REQUEST['op']) {
             case 'out':
-                if ($pm->getVar('from_userid') != $GLOBALS['xoopsUser']->getVar('uid')) break;
+                if ($pm->getVar('from_userid') != $GLOBALS['xoopsUser']->getVar('uid')) {
+                    break;
+                }
                 if (!empty($_REQUEST['delete_message'])) {
                     $res = $pm_handler->setFromdelete($pm);
-                } else if (!empty($_REQUEST['move_message'])) {
+                } elseif (!empty($_REQUEST['move_message'])) {
                     $res = $pm_handler->setFromsave($pm);
                 }
                 break;
@@ -70,7 +72,7 @@ if (is_object($pm) && !empty($_POST['action']) ) {
                     if (!empty($_REQUEST['delete_message'])) {
                         $res1 = $pm_handler->setTodelete($pm);
                         $res1 = ($res1) ? $pm_handler->setTosave($pm, 0) : false;
-                    } else if (!empty($_REQUEST['move_message'])) {
+                    } elseif (!empty($_REQUEST['move_message'])) {
                         $res1 = $pm_handler->setTosave($pm, 0);
                     }
                 }
@@ -78,7 +80,7 @@ if (is_object($pm) && !empty($_POST['action']) ) {
                     if (!empty($_REQUEST['delete_message'])) {
                         $res2 = $pm_handler->setFromDelete($pm);
                         $res2 = ($res2) ? $pm_handler->setFromsave($pm, 0) : false;
-                    } else if (!empty($_REQUEST['move_message'])) {
+                    } elseif (!empty($_REQUEST['move_message'])) {
                         $res2 = $pm_handler->setFromsave($pm, 0);
                     }
                 }
@@ -92,14 +94,14 @@ if (is_object($pm) && !empty($_POST['action']) ) {
                 }
                 if (!empty($_REQUEST['delete_message'])) {
                     $res = $pm_handler->setTodelete($pm);
-                } else if (!empty($_REQUEST['move_message'])) {
+                } elseif (!empty($_REQUEST['move_message'])) {
                     $res = $pm_handler->setTosave($pm);
                 }
                 break;
         }
     }
     $res_message = isset($res_message) ? $res_message : (($res) ? _PM_ACTION_DONE : _PM_ACTION_ERROR);
-    redirect_header('viewpmsg.php?op=' . htmlspecialchars($_REQUEST['op'] ) , 2, $res_message);
+    redirect_header('viewpmsg.php?op=' . htmlspecialchars($_REQUEST['op']), 2, $res_message);
 }
 $start = !empty($_GET['start']) ? intval($_GET['start']) : 0;
 $total_messages = !empty($_GET['total_messages']) ? intval($_GET['total_messages']) : 0;
@@ -111,10 +113,10 @@ if (!is_object($pm)) {
         $criteria = new CriteriaCompo(new Criteria('from_delete', 0));
         $criteria->add(new Criteria('from_userid', $GLOBALS['xoopsUser']->getVar('uid')));
         $criteria->add(new Criteria('from_save', 0));
-    } else if ($_REQUEST['op'] == "save") {
+    } elseif ($_REQUEST['op'] == "save") {
         $crit_to = new CriteriaCompo(new Criteria('to_delete', 0));
         $crit_to->add(new Criteria('to_save', 1));
-        $crit_to->add(new Criteria('to_userid',$GLOBALS['xoopsUser']->getVar('uid')));
+        $crit_to->add(new Criteria('to_userid', $GLOBALS['xoopsUser']->getVar('uid')));
         $crit_from = new CriteriaCompo(new Criteria('from_delete', 0));
         $crit_from->add(new Criteria('from_save', 1));
         $crit_from->add(new Criteria('from_userid', $GLOBALS['xoopsUser']->getVar('uid')));
@@ -139,7 +141,7 @@ $pmform = new XoopsForm('', 'pmform', 'readpmsg.php', 'post', true);
 if (is_object($pm) && !empty($pm)) {
     if ($pm->getVar('from_userid') != $GLOBALS['xoopsUser']->getVar('uid')) {
         $reply_button = new XoopsFormButton('', 'send', _PM_REPLY);
-		$reply_button->setExtra("onclick='javascript:openWithSelfMain(\"" . XOOPS_URL . "/modules/pm/pmlite.php?reply=1&msg_id=".$pm->getVar("msg_id")."\", \"pmlite\", 565,500);'");
+        $reply_button->setExtra("onclick='javascript:openWithSelfMain(\"" . XOOPS_URL . "/modules/pm/pmlite.php?reply=1&msg_id=".$pm->getVar("msg_id")."\", \"pmlite\", 565,500);'");
         $pmform->addElement($reply_button);
     }
     $pmform->addElement(new XoopsFormButton('', 'delete_message', _PM_DELETE, 'submit'));
@@ -168,6 +170,7 @@ if (is_object($pm) && !empty($pm)) {
 
     $message = $pm->getValues();
     $message['msg_time'] = formatTimestamp($pm->getVar("msg_time"));
+    $message['msg_image'] = htmlspecialchars($message['msg_image'], ENT_QUOTES);
 }
 $GLOBALS['xoopsTpl']->assign('message', $message);
 $GLOBALS['xoopsTpl']->assign('op', $_REQUEST['op']);

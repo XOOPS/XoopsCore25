@@ -21,27 +21,27 @@ $xoopsPreload =& XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.pmlite.start');
 
 xoops_loadLanguage('pmsg');
+XoopsLoad::load('XoopsRequest');
 
-
-//------------------------------ mamba
 include $GLOBALS['xoops']->path('class/xoopsformloader.php');
 $icon='';
 $icons_radio = new XoopsFormRadio(_MESSAGEICON, 'icon', $icon);
 $subject_icons = XoopsLists::getSubjectsList();
-//------------------------------- mamba
 
-$reply = !empty($_GET['reply']) ? 1 : 0;
-$send = !empty($_GET['send']) ? 1 : 0;
-$send2 = !empty($_GET['send2']) ? 1 : 0;
-$to_userid = !empty($_GET['to_userid']) ? intval($_GET['to_userid']) : 0;
-$msg_id = !empty($_GET['msg_id']) ? intval($_GET['msg_id']) : 0;
-if (empty($_GET['refresh']) && isset($_POST['op']) && $_POST['op'] != "submit") {
+$op = XoopsRequest::getCmd('op', '', 'POST');
+
+$reply     = XoopsRequest::getBool('reply', 0, 'GET');
+$send      = XoopsRequest::getBool('send', 0, 'GET');
+$send2     = XoopsRequest::getBool('send2', 0, 'GET');
+$to_userid = XoopsRequest::getInt('to_userid', 0, 'GET');
+$msg_id    = XoopsRequest::getInt('msg_id', 0, 'GET');
+if (empty($_GET['refresh']) && $op != "submit") {
     $jump = "pmlite.php?refresh=" . time() . "";
     if ($send == 1) {
         $jump .= "&amp;send=" . $send . "";
-    } else if ($send2 == 1) {
+    } elseif ($send2 == 1) {
         $jump .= "&amp;send2=" . $send2 . "&amp;to_userid=" . $to_userid . "";
-    } else if ($reply == 1) {
+    } elseif ($reply == 1) {
         $jump .= "&amp;reply=" . $reply . "&amp;msg_id=" . $msg_id . "";
     } else {
     }
@@ -50,32 +50,37 @@ if (empty($_GET['refresh']) && isset($_POST['op']) && $_POST['op'] != "submit") 
 }
 
 xoops_header();
+
+$method = XoopsRequest::getMethod();
+$safeMethods = array('GET', 'HEAD');
+if (!in_array($method, $safeMethods)) {
+    if (!$GLOBALS['xoopsSecurity']->check()) {
+        echo "<br /><br /><div><h4>" . _ERRORS . "</h4><br />";
+        echo "[ <a href='javascript:history.go(-1)' title=''>" . _PM_GOBACK . "</a> ]</div>";
+        xoops_footer();
+        exit;
+    }
+}
+
 if (is_object($xoopsUser)) {
     $myts =& MyTextSanitizer::getInstance();
-    if (isset($_POST['op']) && $_POST['op'] == "submit") {
-        if (!$GLOBALS['xoopsSecurity']->check()) {
-            $security_error = true;
-        }
-        $res = $xoopsDB->query("SELECT COUNT(*) FROM " . $xoopsDB->prefix("users") . " WHERE uid=" . intval($_POST['to_userid']) . "");
+    if ($op == 'submit') {
+        $res = $xoopsDB->query("SELECT COUNT(*) FROM " . $xoopsDB->prefix("users") . " WHERE uid=" . XoopsRequest::getInt('to_userid', 0, 'POST') . "");
         list ($count) = $xoopsDB->fetchRow($res);
         if ($count != 1) {
             echo "<br /><br /><div><h4>" . _PM_USERNOEXIST . "<br />";
             echo _PM_PLZTRYAGAIN . "</h4><br />";
-            if (isset($security_error) && $security_error == true) {
-                echo implode('<br />', $GLOBALS['xoopsSecurity']->getErrors());
-            }
             echo "[ <a href='javascript:history.go(-1)' title=''>" . _PM_GOBACK . "</a> ]</div>";
         } else {
             $pm_handler =& xoops_gethandler('privmessage');
             $pm =& $pm_handler->create();
-//------------------ mamba
-if (isset($_POST['icon'])) {
-            $pm->setVar("msg_image", $_POST['icon']);
+            $msg_image = XoopsRequest::getCmd('icon', null, 'POST');
+            if (in_array($msg_image, $subject_icons)) {
+                $pm->setVar("msg_image", $msg_image);
             }
-//----------------- mamba
-            $pm->setVar("subject", $_POST['subject']);
-            $pm->setVar("msg_text", $_POST['message']);
-            $pm->setVar("to_userid", $_POST['to_userid']);
+            $pm->setVar("subject", XoopsRequest::getString('subject', null, 'POST'));
+            $pm->setVar("msg_text", XoopsRequest::getString('message', null, 'POST'));
+            $pm->setVar("to_userid", XoopsRequest::getInt('to_userid', 0, 'POST'));
             $pm->setVar("from_userid", $xoopsUser->getVar("uid"));
             if (!$pm_handler->insert($pm)) {
                 echo $pm->getHtmlErrors();
@@ -84,7 +89,7 @@ if (isset($_POST['icon'])) {
                 echo "<br /><br /><div style='text-align:center;'><h4>" . _PM_MESSAGEPOSTED . "</h4><br /><a href=\"javascript:window.opener.location='" . XOOPS_URL . "/viewpmsg.php';window.close();\" title=\"\">" . _PM_CLICKHERE . "</a><br /><br /><a href=\"javascript:window.close();\" title=\"\">" . _PM_ORCLOSEWINDOW . "</a></div>";
             }
         }
-    } else if ($reply == 1 || $send == 1 || $send2 == 1) {
+    } elseif ($reply == 1 || $send == 1 || $send2 == 1) {
         include_once $GLOBALS['xoops']->path('include/xoopscodes.php');
         if ($reply == 1) {
             $pm_handler =& xoops_gethandler('privmessage');
@@ -103,14 +108,14 @@ if (isset($_POST['icon'])) {
         echo "<table style=' text-align:left;' class='outer'><tr><td class='head txtright' style='width:25%'>" . _PM_TO . "</td>";
         if ($reply == 1) {
             echo "<td class='even'><input type='hidden' name='to_userid' value='" . $pm->getVar("from_userid") . "' />" . $pm_uname . "</td>";
-        } else if ($send2 == 1) {
+        } elseif ($send2 == 1) {
             $to_username = XoopsUser::getUnameFromId($to_userid);
             echo "<td class='even'><input type='hidden' name='to_userid' value='" . $to_userid . "' />" . $to_username . "</td>";
         } else {
-            require_once $GLOBALS['xoops']->path('class/xoopsform/formelement.php');
-            require_once $GLOBALS['xoops']->path('class/xoopsform/formselect.php');
-            require_once $GLOBALS['xoops']->path('class/xoopsform/formlabel.php');
-            require_once $GLOBALS['xoops']->path('class/xoopsform/formselectuser.php');
+            //require_once $GLOBALS['xoops']->path('class/xoopsform/formelement.php');
+            //require_once $GLOBALS['xoops']->path('class/xoopsform/formselect.php');
+            //require_once $GLOBALS['xoops']->path('class/xoopsform/formlabel.php');
+            //require_once $GLOBALS['xoops']->path('class/xoopsform/formselectuser.php');
             $user_sel = new XoopsFormSelectUser("", "to_userid");
             echo "<td class='even'>" . $user_sel->render();
             echo "</td>";
@@ -129,16 +134,14 @@ if (isset($_POST['icon'])) {
         }
         echo "</tr>";
 
-//----------------------------- mamba
-       echo "<tr>";
-       echo "<td class='head txtright' style='width:25%;'>" . _MESSAGEICON. "</td>";
-       foreach ($subject_icons as $iconfile) {
-         $icons_radio->addOption($iconfile, '<img src="' . XOOPS_URL . '/images/subject/' . $iconfile . '" alt="" />');
+        echo "<tr>";
+        echo "<td class='head txtright' style='width:25%;'>" . _MESSAGEICON. "</td>";
+        foreach ($subject_icons as $iconfile) {
+            $icons_radio->addOption($iconfile, '<img src="' . XOOPS_URL . '/images/subject/' . $iconfile . '" alt="" />');
         }
-       echo "<td class='even'>" . $icons_radio->render();
-       echo "</td>";
-       echo "</tr>";
-//------------------------------- mamba
+        echo "<td class='even'>" . $icons_radio->render();
+        echo "</td>";
+        echo "</tr>";
 
         echo "<tr style='vertical-align:top;'><td style='width:25%;' class='head txtright'>" . _PM_MESSAGEC . "</td>";
         echo "<td class='even'>";

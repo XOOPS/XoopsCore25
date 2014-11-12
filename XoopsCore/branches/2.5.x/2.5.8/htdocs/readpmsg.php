@@ -80,14 +80,12 @@ if (!is_object($xoopsUser)) {
         } else {
             echo $xoopsConfig['anonymous']; // we need to do this for deleted users
         }
-//------------- mamba
-        $iconName=$pm_arr[0]->getVar("msg_image", "E");
+        $iconName=htmlspecialchars($pm_arr[0]->getVar("msg_image", "E"), ENT_QUOTES);
         if ($iconName != '') {
-           echo "</td><td><img src='images/subject/" .$iconName . "' alt='' />&nbsp;" . _PM_SENTC . "" . formatTimestamp($pm_arr[0]->getVar("msg_time"));
+            echo "</td><td><img src='images/subject/" .$iconName . "' alt='' />&nbsp;" . _PM_SENTC . "" . formatTimestamp($pm_arr[0]->getVar("msg_time"));
         } else {
-           echo "</td><td>" . _PM_SENTC . "" . formatTimestamp($pm_arr[0]->getVar("msg_time"));
+            echo "</td><td>" . _PM_SENTC . "" . formatTimestamp($pm_arr[0]->getVar("msg_time"));
         }
-//------------- mamba
 
         echo "<hr /><br /><strong>" . $pm_arr[0]->getVar("subject") . "</strong><br /><br />\n";
         echo $pm_arr[0]->getVar("msg_text") . "<br /><br /></td></tr><tr class='foot'><td class='width20 txtleft' colspan='2'>";
