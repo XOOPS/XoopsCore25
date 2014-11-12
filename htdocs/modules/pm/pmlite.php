@@ -25,21 +25,27 @@ if (!defined('XOOPS_MAINFILE_INCLUDED')) {
     xoops_loadLanguage('main', 'pm');
 }
 
-$reply      = !empty($_GET['reply']) ? 1 : 0;
-$send       = !empty($_GET['send']) ? 1 : 0;
-$send2      = !empty($_GET['send2']) ? 1 : 0;
-$sendmod    = !empty($_POST['sendmod']) ? 1 : 0; // send from other modules with post data
-$to_userid  = isset($_GET['to_userid']) ? intval($_GET['to_userid']) : 0;
-$msg_id     = isset($_GET['msg_id']) ? intval($_GET['msg_id']) : 0;
+XoopsLoad::load('XoopsRequest');
 
-if (empty($_GET['refresh']) && isset($_POST['op']) && $_POST['op'] != "submit") {
+$subject_icons = XoopsLists::getSubjectsList();
+
+$op = XoopsRequest::getCmd('op', '', 'POST');
+
+$reply     = XoopsRequest::getBool('reply', 0, 'GET');
+$send      = XoopsRequest::getBool('send', 0, 'GET');
+$send2     = XoopsRequest::getBool('send2', 0, 'GET');
+$sendmod   = XoopsRequest::getBool('sendmod', 0, 'POST'); // send from other modules with post data
+$to_userid = XoopsRequest::getInt('to_userid', 0, 'GET');
+$msg_id    = XoopsRequest::getInt('msg_id', 0, 'GET');
+
+if (empty($_GET['refresh']) && $op != "submit") {
     $jump = "pmlite.php?refresh=" . time();
     if ($send == 1) {
-        $jump .= "&amp;send={$send}";
-    } else if ($send2 == 1) {
-        $jump .= "&amp;send2={$send2}&amp;to_userid={$to_userid}";
-    } else if ($reply == 1) {
-        $jump .= "&amp;reply={$reply}&amp;msg_id={$msg_id}";
+        $jump .= "&send={$send}";
+    } elseif ($send2 == 1) {
+        $jump .= "&send2={$send2}&to_userid={$to_userid}";
+    } elseif ($reply == 1) {
+        $jump .= "&reply={$reply}&msg_id={$msg_id}";
     } else {
     }
     header('location: ' . $jump);
@@ -53,28 +59,26 @@ if (!is_object($GLOBALS['xoopsUser'])) {
 xoops_header();
 
 $myts =& MyTextSanitizer::getInstance();
-if (isset($_POST['op']) && $_POST['op'] == "submit") {
+if ($op == "submit") {
     $member_handler =& xoops_gethandler('member');
-    $count = $member_handler->getUserCount(new Criteria('uid', intval($_POST['to_userid'])));
+    $count = $member_handler->getUserCount(new Criteria('uid', XoopsRequest::getInt('to_userid', 0, 'POST')));
     if ($count != 1) {
         echo "<br /><br /><div><h4>"._PM_USERNOEXIST."<br />";
         echo _PM_PLZTRYAGAIN."</h4><br />";
         echo "[ <a href='javascript:history.go(-1)'>"._PM_GOBACK."</a> ]</div>";
-    } else if ($GLOBALS['xoopsSecurity']->check()) {
+    } elseif ($GLOBALS['xoopsSecurity']->check()) {
         $pm_handler =& xoops_getModuleHandler('message', 'pm');
         $pm =& $pm_handler->create();
         $pm->setVar("msg_time", time());
-//------------------ mamba
-if (isset($_POST['icon'])) {
-            $pm->setVar("msg_image", $_POST['icon']);
+        $msg_image = XoopsRequest::getCmd('icon', null, 'POST');
+        if (in_array($msg_image, $subject_icons)) {
+            $pm->setVar("msg_image", $msg_image);
         }
-        //else $pm->setVar("msg_image", 'icon1.gif');
-//-----------------  mamba
-        $pm->setVar("subject", $_POST['subject']);
-        $pm->setVar("msg_text", $_POST['message']);
-        $pm->setVar("to_userid", $_POST['to_userid']);
+        $pm->setVar("subject", XoopsRequest::getString('subject', null, 'POST'));
+        $pm->setVar("msg_text", XoopsRequest::getString('message', null, 'POST'));
+        $pm->setVar("to_userid", XoopsRequest::getInt('to_userid', 0, 'POST'));
         $pm->setVar("from_userid", $GLOBALS['xoopsUser']->getVar("uid"));
-        if (isset($_REQUEST['savecopy']) && $_REQUEST['savecopy'] == 1) {
+        if (XoopsRequest::getBool('savecopy', 0)) {
             //PMs are by default not saved in outbox
             $pm->setVar('from_delete', 0);
         }
@@ -91,14 +95,14 @@ if (isset($_POST['icon'])) {
         echo "<br /><a href=\"javascript:window.close();\">"._PM_ORCLOSEWINDOW."</a>";
     }
 
-} else if ($reply == 1 || $send == 1 || $send2 == 1 || $sendmod == 1) {
+} elseif ($reply == 1 || $send == 1 || $send2 == 1 || $sendmod == 1) {
     if ($reply == 1) {
         $pm_handler =& xoops_getModuleHandler('message', 'pm');
         $pm =& $pm_handler->get($msg_id);
         if ($pm->getVar("to_userid") == $GLOBALS['xoopsUser']->getVar('uid')) {
             $pm_uname = XoopsUser::getUnameFromId($pm->getVar("from_userid"));
             $message  = "[quote]\n";
-            $message .= sprintf(_PM_USERWROTE , $pm_uname);
+            $message .= sprintf(_PM_USERWROTE, $pm_uname);
             $message .= "\n" . $pm->getVar("msg_text", "E") . "\n[/quote]";
         } else {
             unset($pm);
@@ -118,11 +122,11 @@ if (isset($_POST['icon'])) {
         }
         $GLOBALS['xoopsTpl']->assign('to_username', $pm_uname);
         $pmform->addElement(new XoopsFormHidden('to_userid', $pm->getVar("from_userid")));
-    } else if ($sendmod == 1) {
-        $GLOBALS['xoopsTpl']->assign('to_username', XoopsUser::getUnameFromId($_POST["to_userid"]));
-        $pmform->addElement(new XoopsFormHidden('to_userid', intval($_POST["to_userid"])));
-        $subject = $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['subject']));
-        $message = $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['message']));
+    } elseif ($sendmod == 1) {
+        $GLOBALS['xoopsTpl']->assign('to_username', XoopsUser::getUnameFromId(XoopsRequest::getInt("to_userid", 0, 'POST')));
+        $pmform->addElement(new XoopsFormHidden('to_userid', XoopsRequest::getInt("to_userid", 0, 'POST')));
+        $subject = $myts->htmlSpecialChars(XoopsRequest::getString('subject', '', 'POST'));
+        $message = $myts->htmlSpecialChars(XoopsRequest::getString('message', '', 'POST'));
     } else {
         if ($send2 == 1) {
             $GLOBALS['xoopsTpl']->assign('to_username', XoopsUser::getUnameFromId($to_userid, false));
@@ -136,18 +140,10 @@ if (isset($_POST['icon'])) {
     }
     $pmform->addElement(new XoopsFormText('', 'subject', 30, 100, $subject), true);
 
-//----------------------------- mamba
- $msg_image='';
- $icons_radio = new XoopsFormRadio(_MESSAGEICON, 'msg_image', $msg_image);
- $subject_icons = XoopsLists::getSubjectsList();
- // foreach ($subject_icons as $iconfile) {
-    // $icons_radio->addOption($iconfile, '<img src="' . XOOPS_URL . '/images/subject/' . $iconfile . '" alt="" />');
- // }
- // $pmform->addElement($icons_radio, true);
-
- $xoopsTpl->assign('radio_icons', $subject_icons);
-//-------------------------------  mamba
-
+    $msg_image='';
+    $icons_radio = new XoopsFormRadio(_MESSAGEICON, 'msg_image', $msg_image);
+    //$subject_icons = XoopsLists::getSubjectsList();
+    $xoopsTpl->assign('radio_icons', $subject_icons);
 
     $pmform->addElement(new XoopsFormDhtmlTextArea('', 'message', $message, 8, 37), true);
     $pmform->addElement(new XoopsFormRadioYN('', 'savecopy', 0));

@@ -76,11 +76,11 @@ if (!is_object($xoopsUser)) {
         } else {
             echo "<td class='aligntop width5 txtcenter'><img src='images/email_notread.png' alt='" . _PM_NOTREAD . "' title='" . _PM_NOTREAD . "' /></td>\n";
         }
-        $iconName=$pm_arr[$i]->getVar("msg_image", "E");
+        $iconName=htmlspecialchars($pm_arr[$i]->getVar("msg_image", "E"), ENT_QUOTES);
         if ($iconName != '') {
-           echo "<td class='aligntop width5 txtcenter'><img src='images/subject/" . $iconName . "' alt='' /></td>\n";
+            echo "<td class='aligntop width5 txtcenter'><img src='images/subject/" . $iconName . "' alt='' /></td>\n";
         } else {
-           echo "<td class='aligntop width5 txtcenter'></td>\n";
+            echo "<td class='aligntop width5 txtcenter'></td>\n";
         }
         $postername = XoopsUser::getUnameFromId($pm_arr[$i]->getVar("from_userid"));
         echo "<td class='alignmiddle width10'>";
