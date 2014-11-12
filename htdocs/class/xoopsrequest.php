@@ -430,7 +430,7 @@ class XoopsRequest
         }
 
         // convert $var in array if $type is ARRAY
-        if (strtoupper($type)) == 'ARRAY' && !is_array($var)) {
+        if (strtoupper($type) == 'ARRAY' && !is_array($var)) {
             $var = array($var);
         }
 
