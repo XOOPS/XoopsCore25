@@ -130,6 +130,14 @@ if (file_exists($file = $GLOBALS['xoops']->path('var/configs/xoopsconfig.php')))
     trigger_error('File Path Error: ' . 'var/configs/xoopsconfig.php' . ' does not exist.');
 }
 
+/**
+ * clickjack protection - Add option to HTTP header restrictig using site in an iframe
+ */
+$xFrameOptions =  isset($xoopsConfig['xFrameOptions']) ? $xoopsConfig['xFrameOptions'] : 'sameorigin';
+if (!headers_sent() && !empty($xFrameOptions)) {
+    header('X-Frame-Options: ' .$xFrameOptions);
+}
+
 //check if user set a local timezone (from XavierS)
 // $xoops_server_timezone="Etc/GMT";
 // if ($xoopsConfig["server_TZ"]>0) {
