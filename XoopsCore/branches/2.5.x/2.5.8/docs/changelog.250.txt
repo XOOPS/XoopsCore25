@@ -20,7 +20,7 @@ Security fixes
 
 
 ===============================
-2014-06-20: Version 2.5.7 Final (Patch)
+2014-06-20: Version 2.5.7 Final (Patch 1)
 ===============================
 
 - Updating docu for the correct version of tablesorter (mamba)
