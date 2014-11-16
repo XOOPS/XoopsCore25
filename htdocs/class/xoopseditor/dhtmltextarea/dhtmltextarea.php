@@ -17,7 +17,7 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @version         $Id$
  */
-defined( 'XOOPS_ROOT_PATH' ) or die( 'Restricted access' );
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 xoops_load('XoopsEditor');
 

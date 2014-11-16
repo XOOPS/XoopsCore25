@@ -11,7 +11,7 @@
  * @version         $Id$
  */
 
-if (!defined("XOOPS_ROOT_PATH")) { die("XOOPS root path not defined"); }
+defined("XOOPS_ROOT_PATH") || die("XOOPS root path not defined");
 
 // Add your code here to check access by groups
 

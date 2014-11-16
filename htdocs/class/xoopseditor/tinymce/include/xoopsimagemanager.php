@@ -11,7 +11,7 @@
  * @version         $Id$
  */
 
-if (!defined("XOOPS_ROOT_PATH")) { die("XOOPS root path not defined"); }
+defined("XOOPS_ROOT_PATH") || die("XOOPS root path not defined");
 
 // check categories readability by group
 $groups = is_object( $GLOBALS["xoopsUser"] ) ? $GLOBALS["xoopsUser"]->getGroups() : array( XOOPS_GROUP_ANONYMOUS );

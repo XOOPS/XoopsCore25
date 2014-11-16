@@ -1,6 +1,6 @@
 <?php
 // edit for xoops 2.4 core by phppp and trabis
-if( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'set XOOPS_TRUST_PATH into mainfile.php' ) ;
+defined("XOOPS_TRUST_PATH") || die('set XOOPS_TRUST_PATH into mainfile.php');
 
 $mytrustdirname = 'protector';
 

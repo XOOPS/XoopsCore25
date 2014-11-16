@@ -62,7 +62,7 @@ class ModuleAdmin
         /**
          * version is rev of this class
          */
-        Include_once 'xoops_version.php';
+        include_once 'xoops_version.php';
         $version = XOOPS_FRAMEWORKS_MODULEADMIN_VERSION;
 
         return $version;
@@ -77,7 +77,7 @@ class ModuleAdmin
         /**
          * version is rev of this class
          */
-        Include_once 'xoops_version.php';
+        include_once 'xoops_version.php';
         $releasedate = XOOPS_FRAMEWORKS_MODULEADMIN_RELEASEDATE;
 
         return $releasedate;
