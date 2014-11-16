@@ -1,7 +1,7 @@
 <?php
 
-require '../../mainfile.php' ;
-if( ! defined( 'XOOPS_TRUST_PATH' ) ) die( 'set XOOPS_TRUST_PATH in mainfile.php' ) ;
+require dirname(dirname(__DIR__)) . '/mainfile.php';
+defined("XOOPS_TRUST_PATH") || die('set XOOPS_TRUST_PATH into mainfile.php');
 
 $mydirname = basename(__DIR__) ;
 $mydirpath = __DIR__ ;

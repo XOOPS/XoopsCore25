@@ -223,23 +223,17 @@ class XoopsUserUtility
         $proxy_ip = '';
         if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $proxy_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else
-            if (!empty($_SERVER['HTTP_X_FORWARDED'])) {
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED'])) {
                 $proxy_ip = $_SERVER['HTTP_X_FORWARDED'];
-            } else
-                if (! empty($_SERVER['HTTP_FORWARDED_FOR'])) {
+            } elseif (! empty($_SERVER['HTTP_FORWARDED_FOR'])) {
                     $proxy_ip = $_SERVER['HTTP_FORWARDED_FOR'];
-                } else
-                    if (!empty($_SERVER['HTTP_FORWARDED'])) {
+                } elseif (!empty($_SERVER['HTTP_FORWARDED'])) {
                         $proxy_ip = $_SERVER['HTTP_FORWARDED'];
-                    } else
-                        if (!empty($_SERVER['HTTP_VIA'])) {
+                    } elseif (!empty($_SERVER['HTTP_VIA'])) {
                             $proxy_ip = $_SERVER['HTTP_VIA'];
-                        } else
-                            if (!empty($_SERVER['HTTP_X_COMING_FROM'])) {
+                        } elseif (!empty($_SERVER['HTTP_X_COMING_FROM'])) {
                                 $proxy_ip = $_SERVER['HTTP_X_COMING_FROM'];
-                            } else
-                                if (!empty($_SERVER['HTTP_COMING_FROM'])) {
+                            } elseif (!empty($_SERVER['HTTP_COMING_FROM'])) {
                                     $proxy_ip = $_SERVER['HTTP_COMING_FROM'];
                                 }
         if (!empty($proxy_ip) && $is_ip = preg_match('/^([0-9]{1,3}.){3,3}[0-9]{1,3}/', $proxy_ip, $regs) && count($regs) > 0) {

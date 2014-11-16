@@ -16,7 +16,7 @@
  * @version         $Id$
  * @package         xoopseditor
  */
-defined( 'XOOPS_ROOT_PATH' ) or die( 'Restricted access' );
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 return $config = array( 'class' => 'FormDhtmlTextArea',
 	'file' => XOOPS_ROOT_PATH . '/class/xoopseditor/dhtmltextarea/dhtmltextarea.php',
