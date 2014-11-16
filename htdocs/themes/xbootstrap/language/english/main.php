@@ -1,5 +1,8 @@
 <?php
 
+define("THEME_INFO", "Info");
+define("THEME_CLOSE", "Close");
+
 //Nav Menu
 define("THEME_HOME", "Home");
 define("THEME_MODULE1", "About");
@@ -24,6 +27,11 @@ define("THEME_FORUM_DESCRIPTION", "Description");
 define("THEME_NEWBB_SEARCH_FORUM", "Search in forum...");
 define("THEME_NEWBB_SEARCH_TOPIC", "Search in topic...");
 define("THEME_FORUM_DESC", "About This Forum");
+define("THEME_FORUM_NEWTOPIC", "New Topic");
+define("THEME_FORUM_REGISTER", "Register");
+define("THEME_FORUM_SEARCH", "Search");
+define("THEME_FORUM_ADVSEARCH", "Advanced Search");
+define("THEME_FORUM_REPLY", "Reply");
 
 //Block login
 define("THEME_LOGIN", "Your Username");

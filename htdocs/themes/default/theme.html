@@ -93,7 +93,9 @@
             <!-- End center top blocks loop -->
 
             <!-- Start content module page -->
-            <{if $xoops_contents && ($xoops_contents != ' ') }><div id="content"><{$xoops_contents}></div><{/if}>
+            <{if $xoops_contents && ($xoops_contents != ' ') }>
+            <div id="content"><{$xoops_contents}></div>
+            <{/if}>
             <!-- End content module -->
 
             <!-- Start center bottom blocks loop -->
@@ -138,6 +140,45 @@
             </td>
         <{/if}>
         <!-- End right blocks loop -->
+
+
+        <!-- =============================== Start footer blocks loop ===============================  -->
+        <{if $xoBlocks.footer_left || $xoBlocks.footer_right || $xoBlocks.footer_center}>
+        <table>
+
+            <tr>
+                <{if $xoBlocks.footer_left}>
+                <td id="footerLeft">
+                    <{foreach from=$xoBlocks.footer_left item=block}>
+                    <{include file="$theme_name/theme_blockfooter_l.html"}>
+                    <{/foreach}>
+                </td>
+                <{/if}>
+
+
+
+                <{if $xoBlocks.footer_center}>
+                <td id="footerCenter">
+                    <{foreach from=$xoBlocks.footer_center item=block}>
+                    <{include file="$theme_name/theme_blockfooter_c.html"}>
+                    <{/foreach}>
+                </td>
+                <{/if}>
+
+                <{if $xoBlocks.footer_right}>
+                <td id="footerRight">
+                    <{foreach from=$xoBlocks.footer_right item=block}>
+                    <{include file="$theme_name/theme_blockfooter_r.html"}>
+                    <{/foreach}>
+                </td>
+                <{/if}>
+
+            </tr>
+        </table>
+
+        <{/if}>
+        <!-- ===============================  End footer blocks loop =============================== -->
+
     </tr>
 </table>
 

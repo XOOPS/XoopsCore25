@@ -40,6 +40,12 @@ define('_AM_SYSTEM_BLOCKS_CBRIGHT',"Center Block - Right");
 define('_AM_SYSTEM_BLOCKS_CBCENTER',"Center Block - Center");
 define('_AM_SYSTEM_BLOCKS_CBBOTTOMLEFT',"Center Block - Bottom left");
 define('_AM_SYSTEM_BLOCKS_CBBOTTOMRIGHT',"Center Block - Bottom right");
+
+define('_AM_SYSTEM_BLOCKS_CBFOOTERLEFT',"Footer Block - Left");
+define('_AM_SYSTEM_BLOCKS_CBFOOTERCENTER',"Footer Block - Center");
+define('_AM_SYSTEM_BLOCKS_CBFOOTERRIGHT',"Footer Block - Right");
+
+
 define('_AM_SYSTEM_BLOCKS_CBBOTTOM',"Center Block - Bottom");
 define('_AM_SYSTEM_BLOCKS_WEIGHT',"Weight");
 define('_AM_SYSTEM_BLOCKS_VISIBLE',"Visible");
@@ -76,3 +82,7 @@ define('_AM_SYSTEM_BLOCKS_TIPS',
 <li>Add a new custom block</li>
 <li>Set block online or offline by clicking on <img class="tooltip" width="16" src="%s" alt="'._AM_SYSTEM_BLOCKS_DISPLAY.'" title="'._AM_SYSTEM_BLOCKS_DISPLAY.'"/> or <img class="tooltip" width="16" src="%s" alt="'._AM_SYSTEM_BLOCKS_HIDE.'" title="'._AM_SYSTEM_BLOCKS_HIDE.'" /></li>
 </ul>');
+
+define('_AM_SYSTEM_BLOCKS_FOOTER_LEFT', 'Footer Left');
+define('_AM_SYSTEM_BLOCKS_FOOTER_CENTER', 'Footer Center');
+define('_AM_SYSTEM_BLOCKS_FOOTER_RIGHT', 'Footer Right');

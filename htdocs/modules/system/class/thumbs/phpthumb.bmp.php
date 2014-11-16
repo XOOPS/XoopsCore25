@@ -516,7 +516,7 @@ class phpthumb_bmp {
 											// number of bytes that follow, each of which contains the color index
 											// of a single pixel. Each run must be aligned on a word boundary.
 											for ($i = 0; $i < $secondbyte; ++$i) {
-												$paletteindex = $this->LittleEndian2Int(substr($BMPpixelData, $pixeldataoffset++, 1));
+                                                $paletteindex = $this->LittleEndian2Int(substr($BMPpixelData, ++$pixeldataoffset, 1));
 												$col = $pixelcounter % $thisfile_bmp_header_raw['width'];
 												$row = $thisfile_bmp_header_raw['height'] - 1 - (($pixelcounter - $col) / $thisfile_bmp_header_raw['width']);
 												$thisfile_bmp['data'][$row][$col] = $thisfile_bmp['palette'][$paletteindex];

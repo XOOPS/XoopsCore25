@@ -3,27 +3,25 @@
 
 <div class="tdm-category row">
     <{foreach item=category from=$categories}>
-        <div class="col-xs-6 col-sm-4 col-md-2 tdm-category-list">
-            <a class="btn btn-primary btn-md" title="<{$category.title}>" href="<{$xoops_url}>/modules/tdmdownloads/viewcat.php?cid=<{$category.id}>">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 tdm-category-list">
+            <a class="btn btn-primary btn-md btn-block" title="<{$category.title}>" href="<{$xoops_url}>/modules/tdmdownloads/viewcat.php?cid=<{$category.id}>">
                 <{$category.title}>
             </a>
 
-            <{if $category.image != ""}>
-                <a title="<{$category.title}>" href="<{$xoops_url}>/modules/tdmdownloads/viewcat.php?cid=<{$category.id}>" class="tdm-category-image">
-                    <img class="<{$img_float}>" src="<{$category.image}>" alt="<{$category.title}>">
-                </a>
-            <{/if}>
+            <a title="<{$category.title}>" href="<{$xoops_url}>/modules/tdmdownloads/viewcat.php?cid=<{$category.id}>" class="tdm-category-image">
+                <img class="<{$img_float}>" src="<{$category.image}>" alt="<{$category.title}>">
+            </a>
 
             <!-- Category Description -->
             <div class="aligncenter">
                 <{if $category.description_main != ""}>
-                <button class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal">+</button>
+                <button class="btn btn-success btn-xs" data-toggle="modal" data-target="#tdmDesc-<{$category.id}>">+</button>
                     <{else}>
-                        <button class="btn btn-xs disabled" data-toggle="modal" data-target="#myModal">+</button>
+                        <button class="btn btn-xs disabled" data-toggle="modal">+</button>
                 <{/if}>
             </div>
-
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            
+            <div class="modal fade" id="tdmDesc-<{$category.id}>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header"><h4 class="modal-title aligncenter"><{$category.title}></h4></div>
@@ -40,11 +38,11 @@
                 </div>
             </div>
             <!-- End Category Description -->
-
+                    
             <{if $category.subcategories != ""}>
                 <{$smarty.const._MD_TDMDOWNLOADS_INDEX_SCAT}>
                 <ul><{$category.subcategories}></ul>
-
+                    
             <{/if}>
         </div><!-- .tdm-category-list -->
     <{/foreach}>
@@ -55,12 +53,12 @@
         <img src="images/rss.gif" alt="<{$smarty.const._MD_TDMDOWNLOADS_RSS}>">
     </a>
 </div>
-
+                    
 <div class="tdm-downloads-info row">
 <{if $bl_affichage==1}>
-<div class="col-md-12"><h2><{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLNAME}>:</h1></div>
+<div class="col-md-12"><h3><{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLNAME}>:</h3></div>
+<{if $bl_date != ""}>
 <div class="col-sm-4 col-md-4">
-    <{if $bl_date != ""}>
         <h3 class="tdm-title"><span class="glyphicon glyphicon-calendar"></span> <{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLDATE}></h3>
         <ul class="list-unstyled">
         <{foreach item=bl_date from=$bl_date}>
@@ -120,7 +118,7 @@
     <{/if}>
 </div>
 <{/if}>
-
+    
 </div><!-- .tdmdownloads -->
 
 <{include file="db:system_notification_select.html"}>

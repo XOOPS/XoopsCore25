@@ -13,9 +13,11 @@ To have paginations like on demo page and screenshots:
     to
    your_xoops/xoops.css
    
-   
------ XOOPS Tube module ---
+----- Avatars Dimensions --
+Recomended avatars dimensions:
+350x350
 
+----- XOOPS Tube module ---
 Recomended xoops tube thumbs dimensions:
 300x250
 

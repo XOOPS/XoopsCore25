@@ -102,7 +102,15 @@ class xos_logos_PageBuilder
             XOOPS_CENTERBLOCK_RIGHT => 'page_topright' ,
             XOOPS_CENTERBLOCK_BOTTOMLEFT => 'page_bottomleft' ,
             XOOPS_CENTERBLOCK_BOTTOM => 'page_bottomcenter' ,
-            XOOPS_CENTERBLOCK_BOTTOMRIGHT => 'page_bottomright');
+            XOOPS_CENTERBLOCK_BOTTOMRIGHT => 'page_bottomright',
+
+
+            XOOPS_FOOTERBLOCK_LEFT => 'footer_left',
+            XOOPS_FOOTERBLOCK_RIGHT => 'footer_center' ,
+            XOOPS_FOOTERBLOCK_CENTER => 'footer_right' ,
+            XOOPS_FOOTERBLOCK_ALL => 'footer_all' );
+
+
         foreach ($oldzones as $zone) {
             $this->blocks[$zone] = array();
         }
