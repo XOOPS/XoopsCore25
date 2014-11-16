@@ -31,6 +31,12 @@ define('XOOPS_CENTERBLOCK_ALL', 6);
 define('XOOPS_CENTERBLOCK_BOTTOMLEFT', 7);
 define('XOOPS_CENTERBLOCK_BOTTOMRIGHT', 8);
 define('XOOPS_CENTERBLOCK_BOTTOM', 9);
+//bottom blocks (Timgno)
+define('XOOPS_FOOTERBLOCK_LEFT', 10);
+define('XOOPS_FOOTERBLOCK_CENTER', 11);
+define('XOOPS_FOOTERBLOCK_RIGHT', 12);
+define('XOOPS_FOOTERBLOCK_ALL', 13);
+
 define('XOOPS_BLOCK_INVISIBLE', 0);
 define('XOOPS_BLOCK_VISIBLE', 1);
 define('XOOPS_MATCH_START', 0);
@@ -85,7 +91,7 @@ body {font-size: 12px; background-color: #f0f0f0; text-align: center;}
     margin: 150px auto;
     text-align: center;
     background-color: #fff;
-    background-image: url(images/img_errors.png);
+    background-image: url(/images/img_errors.png);
     background-repeat: no-repeat;
     background-position: 30px 50px;
     padding-left: 300px;

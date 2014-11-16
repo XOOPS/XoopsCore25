@@ -89,7 +89,11 @@ class SystemBlock extends XoopsBlock
             5 => _AM_SYSTEM_BLOCKS_CBCENTER,
             7 => _AM_SYSTEM_BLOCKS_CBBOTTOMLEFT,
             8 => _AM_SYSTEM_BLOCKS_CBBOTTOMRIGHT,
-            9 => _AM_SYSTEM_BLOCKS_CBBOTTOM));
+            9 => _AM_SYSTEM_BLOCKS_CBBOTTOM,
+			10 => _AM_SYSTEM_BLOCKS_CBFOOTERLEFT,
+            11 => _AM_SYSTEM_BLOCKS_CBFOOTERCENTER,
+            12 => _AM_SYSTEM_BLOCKS_CBFOOTERRIGHT));
+
         $form->addElement($side_select);
         // Order
         $form->addElement(new XoopsFormText(_AM_SYSTEM_BLOCKS_WEIGHT, 'weight', 2, 5, $this->getVar('weight')));
@@ -399,6 +403,8 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
                 $side = "(b.side=0 OR b.side=1)";
             } elseif ($side == XOOPS_CENTERBLOCK_ALL) {
                 $side = "(b.side=3 OR b.side=4 OR b.side=5 OR b.side=7 OR b.side=8 OR b.side=9 )";
+			} elseif ($side == XOOPS_FOOTERBLOCK_ALL) {
+                $side = "(b.side=10 OR b.side=11 OR b.side=12 )";
             } else {
                 $side = "b.side=" . $side;
             }

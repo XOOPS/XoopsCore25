@@ -369,6 +369,8 @@ class XoopsBlock extends XoopsObject
                 $side = "(b.side=0 OR b.side=1)";
             } elseif ($side == XOOPS_CENTERBLOCK_ALL) {
                 $side = "(b.side=3 OR b.side=4 OR b.side=5 OR b.side=7 OR b.side=8 OR b.side=9 )";
+			} elseif ($side == XOOPS_FOOTERBLOCK_ALL) {
+                $side = "(b.side=10 OR b.side=11 OR b.side=12 )";
             } else {
                 $side = "b.side=" . $side;
             }
@@ -411,10 +413,12 @@ class XoopsBlock extends XoopsObject
         $where_query = " WHERE isactive=" . $isactive;
         if (isset($side)) {
             // get both sides in sidebox? (some themes need this)
-            if ($side == 2) {
+            if ($side == XOOPS_SIDEBLOCK_BOTH) {
                 $side = "(side=0 OR side=1)";
-            } elseif ($side == 6) {
+            } elseif ($side == XOOPS_CENTERBLOCK_ALL) {
                 $side = "(side=3 OR side=4 OR side=5 OR side=7 OR side=8 OR side=9)";
+			} elseif ($side == XOOPS_FOOTERBLOCK_ALL) {
+                $side = "(side=10 OR side=11 OR side=12)";
             } else {
                 $side = "side=" . $side;
             }

@@ -1,16 +1,30 @@
+1.04 Alpha 1 NOT RELEASED
+-------------------
+- added Footer Blocks (mamba)
+
+1.03 2014-11-15 Final
+-------------------
+- Support to newbb module (Angelo Rocha)
+- Update Bootstrap vertion to 3.3.1 (Angelo Rocha)
+- Update pm and profile extension template files (Angelo Rocha)
+- Fix grid layout (Angelo Rocha)
+- Other minors Adjusts (Angelo Rocha)
+- Add Masonry Cascading grid layout library - http://masonry.desandro.com/ (Angelo Rocha)
+- New news module grid (Angelo Rocha)
+- Add grid function in js.js (Angelo Rocha)
+- Fix bug in tdmdownloads, div unclosed (Angelo Rocha)
+- Fix bug in tdmdownloads, modal description link ID (Angelo Rocha)
+- Fix tdmdownloads index grid (Angelo Rocha)
+- New extgallery grid system (Angelo Rocha)
+
 1.02 2014-06-08 Final
 --------------------
 - Update pt-br lang (Angelo Rocha)
 - Add XOOPS Banners Support (Angelo Rocha)
-
-1.02 2014-06-08 Beta 2
---------------------
 - Newbb index finished (Angelo Rocha)
 - Add Newbb viewtopic template (Angelo Rocha)
 - Add Newbb viewforum template (Angelo Rocha)
-
-1.02 2014-06-04 Beta 1
---------------------
+- Add newbb_viewforum_subforum template (Angelo Rocha)
 - Add newbb template - Developing... (Angelo Rocha)
 - Add language support (Angelo Rocha)
 - Some bug fix in PM template (Angelo Rocha)
@@ -40,23 +54,14 @@
 - Bootstrap Upgraded to 3.1.0 (Angelo Rocha)
 - Add xoops.css to folder theme (removed reset) (Angelo Rocha)
 - Many css ajusts (Angelo Rocha)
-
-1.01 Beta 3 2014-01-29
--------------------
 - Add xoopstube templates (Heyula)
 - Add news templates (Angelo Rocha)
 - Fixed HTML5 in IE 8 (Angelo Rocha)
 - Fixed Reponsive Layout IE 8 (Angelo Rocha)
-
--1.01 Beta 2 2014-01-18
--------------------
 - Add TDMDownloads template (Angelo Rocha)
 - Add Publisher templates (Bleekk)
 - Add XOOPS Faq template (Heyula)
 - Add Obituairies template (Heyula)
-
-1.01 Beta 1 2014-xx-xx
--------------------
 - changed/added pictures (mamba)
 - added /docs folder (mamba)
 

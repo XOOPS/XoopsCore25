@@ -15,20 +15,20 @@
         <{$topic_description}>
     <{/if}>
 
-    <div class="row">
+    <div id="xoopsgrid" class="row">
     <{section name=i loop=$columns}>
         <{foreach item=story from=$columns[i]}>
-        <div class="col-md-6 home-news-loop">
+        <div class="col-xs-12 col-md-6 home-news-loop">
             <{if $story.picture != ""}>
-                <div class="home-thumbnails hidden-xs">
+                <div class="home-thumbnails">
                     <img src="<{$story.picture}>" alt="<{$story.pictureinfo}>" class="img-responsive">
                 </div><!-- .home-thumbnails -->
             <{else}>
-                <div class="home-thumbnails hidden-xs">
+                <div class="home-thumbnails">
                     <img src="<{$xoops_imageurl}>images/tdm-no-image.jpg" alt="" class="img-responsive">
                 </div><!-- .home-thumbnails -->
             <{/if}>
-        <h3 class="xoops-default-title one-line-title"><{$story.news_title|strip_tags}></h3>
+        <h3 class="xoops-default-title"><{$story.news_title|strip_tags}></h3>
         <div class="excerpt-news"><{$story.text}></div>
         <{$story.morelink}>
         </div>
