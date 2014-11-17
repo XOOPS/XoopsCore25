@@ -589,7 +589,7 @@ class XoopsMediaUploader
         } else {
             $ret = '';
             if (count($this->errors) > 0) {
-                $ret = '<h4>' . sprintf(_ER_UP_ERRORSRETURNED, $this->mediaName) . '</h4>';
+                $ret = '<h4>' . sprintf(_ER_UP_ERRORSRETURNED, htmlspecialchars($this->mediaName, ENT_QUOTES)) . '</h4>';
                 foreach ($this->errors as $error) {
                     $ret .= $error . '<br />';
                 }
