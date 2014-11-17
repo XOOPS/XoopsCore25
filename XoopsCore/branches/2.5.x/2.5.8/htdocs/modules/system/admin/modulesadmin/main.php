@@ -36,6 +36,7 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
 
 include_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
 include_once XOOPS_ROOT_PATH . '/modules/system/admin/modulesadmin/modulesadmin.php';
+XoopsLoad::load('XoopsFilterInput');
 
 if (isset($_POST)) {
     foreach ($_POST as $k => $v) {
@@ -88,6 +89,7 @@ switch ($op) {
         $install_mods   = array();
         foreach ($installed_mods as $module) {
             $listed_mods[$i]                = $module->toArray();
+            $listed_mods[$i]['name']        = htmlspecialchars($module->getVar('name'), ENT_QUOTES);
             $listed_mods[$i]['image']       = $module->getInfo('image');
             $listed_mods[$i]['adminindex']  = $module->getInfo('adminindex');
             $listed_mods[$i]['version']     = round($module->getVar('version') / 100, 2);
@@ -166,7 +168,7 @@ switch ($op) {
                 if (!in_array($file, $install_mods)) {
                     $module =& $module_handler->create();
                     $module->loadInfo($file);
-                    $toinstall_mods[$i]['name']        = $module->getInfo('name');
+                    $toinstall_mods[$i]['name']        = htmlspecialchars($module->getInfo('name'), ENT_QUOTES);
                     $toinstall_mods[$i]['dirname']     = $module->getInfo('dirname');
                     $toinstall_mods[$i]['image']       = $module->getInfo('image');
                     $toinstall_mods[$i]['version']     = round($module->getInfo('version'), 2);
@@ -242,6 +244,7 @@ switch ($op) {
         $module      = empty($_POST['module']) ? array() : $_POST['module'];
         foreach ($module as $mid) {
             $mid                          = (int) $mid;
+            $newname[$mid] = trim(XoopsFilterInput::clean($newname[$mid], 'STRING'));
             $modifs_mods[$i]['mid']       = $mid;
             $modifs_mods[$i]['oldname']   = $myts->htmlspecialchars($myts->stripSlashesGPC($oldname[$mid]));
             $modifs_mods[$i]['newname']   = $myts->htmlspecialchars(trim($myts->stripslashesGPC($newname[$mid])));
@@ -306,7 +309,7 @@ switch ($op) {
                     $ret[] = xoops_module_deactivate($mid);
                 }
             }
-            $newname[$mid] = trim($newname[$mid]);
+            $newname[$mid] = trim(XoopsFilterInput::clean($newname[$mid], 'STRING'));
             if ($oldname[$mid] != $newname[$mid]) {
                 $ret[] = xoops_module_change($mid, $newname[$mid]);
                 $write = true;
