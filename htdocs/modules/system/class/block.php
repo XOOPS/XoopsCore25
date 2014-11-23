@@ -91,8 +91,8 @@ class SystemBlock extends XoopsBlock
             8 => _AM_SYSTEM_BLOCKS_CBBOTTOMRIGHT,
             9 => _AM_SYSTEM_BLOCKS_CBBOTTOM,
 			10 => _AM_SYSTEM_BLOCKS_CBFOOTERLEFT,
-            11 => _AM_SYSTEM_BLOCKS_CBFOOTERCENTER,
-            12 => _AM_SYSTEM_BLOCKS_CBFOOTERRIGHT));
+            11 => _AM_SYSTEM_BLOCKS_CBFOOTERRIGHT,
+            12 => _AM_SYSTEM_BLOCKS_CBFOOTERCENTER));
 
         $form->addElement($side_select);
         // Order
