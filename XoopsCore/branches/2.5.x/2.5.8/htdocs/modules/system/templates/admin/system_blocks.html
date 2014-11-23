@@ -75,6 +75,26 @@
                             <{includeq file="db:system_blocks_item.html" blocks=$blocks side=8}>
                         </td>
                     </tr>
+                    <tr>
+					<!-- Start Footer Blocks (By Timgno) -->
+                    <table id="xo-block-footer">
+                        <tr>
+                            <td side="10" class="xo-blocksection">
+                                <div class="xo-title"><{$smarty.const._AM_SYSTEM_BLOCKS_SIDEFOOTERLEFT}></div>
+                                <{includeq file="db:system_blocks_item.html" blocks=$blocks side=10}>
+                            </td>
+                            <td side="12" class="xo-blocksection">
+                                <div class="xo-title"><{$smarty.const._AM_SYSTEM_BLOCKS_SIDEFOOTERCENTER}></div>
+                                <{includeq file="db:system_blocks_item.html" blocks=$blocks side=12}>
+                            </td>
+                            <td side="11" class="xo-blocksection">
+                                <div class="xo-title"><{$smarty.const._AM_SYSTEM_BLOCKS_SIDEFOOTERRIGHT}></div>
+                                <{includeq file="db:system_blocks_item.html" blocks=$blocks side=11}>
+                            </td>
+                        </tr>
+                    </table>
+					<!-- End Footer Blocks (By Timgno) -->
+                  </tr>
                 </table>
             </td>
         </tr>

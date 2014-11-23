@@ -29,6 +29,11 @@ define('_AM_SYSTEM_BLOCKS_SIDERIGHT',"Right");
 define('_AM_SYSTEM_BLOCKS_SIDEBOTTOMLEFT',"Bottom Left");
 define('_AM_SYSTEM_BLOCKS_SIDEBOTTOMCENTER',"Bottom Center");
 define('_AM_SYSTEM_BLOCKS_SIDEBOTTOMRIGHT',"Bottom Right");
+
+define('_AM_SYSTEM_BLOCKS_SIDEFOOTERLEFT',"Footer Left");
+define('_AM_SYSTEM_BLOCKS_SIDEFOOTERCENTER',"Footer Center");
+define('_AM_SYSTEM_BLOCKS_SIDEFOOTERRIGHT',"Footer Right");
+
 define('_AM_SYSTEM_BLOCKS_ADD',"Add Block");
 define('_AM_SYSTEM_BLOCKS_MANAGE',"Manage Block");
 define('_AM_SYSTEM_BLOCKS_NAME',"Name");
@@ -44,7 +49,6 @@ define('_AM_SYSTEM_BLOCKS_CBBOTTOMRIGHT',"Center Block - Bottom right");
 define('_AM_SYSTEM_BLOCKS_CBFOOTERLEFT',"Footer Block - Left");
 define('_AM_SYSTEM_BLOCKS_CBFOOTERCENTER',"Footer Block - Center");
 define('_AM_SYSTEM_BLOCKS_CBFOOTERRIGHT',"Footer Block - Right");
-
 
 define('_AM_SYSTEM_BLOCKS_CBBOTTOM',"Center Block - Bottom");
 define('_AM_SYSTEM_BLOCKS_WEIGHT',"Weight");

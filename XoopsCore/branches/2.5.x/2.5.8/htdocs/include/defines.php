@@ -31,7 +31,7 @@ define('XOOPS_CENTERBLOCK_ALL', 6);
 define('XOOPS_CENTERBLOCK_BOTTOMLEFT', 7);
 define('XOOPS_CENTERBLOCK_BOTTOMRIGHT', 8);
 define('XOOPS_CENTERBLOCK_BOTTOM', 9);
-//bottom blocks (Timgno)
+// Footer blocks (Timgno)
 define('XOOPS_FOOTERBLOCK_LEFT', 10);
 define('XOOPS_FOOTERBLOCK_CENTER', 11);
 define('XOOPS_FOOTERBLOCK_RIGHT', 12);
