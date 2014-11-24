@@ -13,6 +13,7 @@ NOT RELEASED: Version 2.5.8 Beta 1
 - reverting couple of $i++ conversions (zyspec/mamba)
 - updated xBootstrap to Bootstrap 3.3.1 (Angelo Rocha)
 - Some code cleanup for private messages (Dingjie （Daniel） Yang/rgriffith)
+- Adding Footer blocks (timgno/mamba)
 
 Security fixes
 - ID: 1295 Added X-Frame-Options header to prevent clickjacking in modern browsers, reported by Narendra Bhati. 

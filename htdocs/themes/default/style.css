@@ -69,7 +69,7 @@ input.formButton {}
 #centercolumn th {background-color: #2A75C5; color: #fff; vertical-align: middle;}
 
 #centerCcolumn, #bottomCcolumn {padding: 0 3px 1px 3px;}
-#centerCcolumn .blockTitle, #bottomCcolumn .blockTitle {padding: 3px; color: #2A75C5; font-weight: bold; margin-top: 0; margin-right: 0;  margin-left: 0; font-size:1.1em;}
+#centerCcolumn .blockTitle, #bottomCcolumn .blockTitle  {padding: 3px; color: #2A75C5; font-weight: bold; margin-top: 0; margin-right: 0;  margin-left: 0; font-size:1.1em;}
 #centerCcolumn .blockContent, #bottomCcolumn .blockContent {border-left: 1px solid #ccc; border-right: 1px solid #ccc; border-bottom: 1px solid #ddd; padding: 3px; margin-right: 0;  margin-left: 0; margin-bottom: 2px; line-height: 1.2em;}
 
 #centerLcolumn, #bottomLcolumn, #centerRcolumn, #bottomRcolumn {
@@ -88,6 +88,18 @@ input.formButton {}
 #rightcolumn th {background-color: #2A75C5; color: #fff; vertical-align: middle;}
 #rightcolumn .blockTitle {padding: 3px; background-color: #ddd; color: #2A75C5; font-weight: bold;}
 #rightcolumn .blockContent {padding: 3px; line-height: 1.2em;}
+
+/* ------------------  start Footer Blocks -----------------  */
+
+#footerLeft .blockTitle, #footerCenter .blockTitle, #footerRight .blockTitle {
+    padding: 3px;
+    color: #2A75C5;
+    font-weight: bold;
+}
+
+#footerLeft .blockContent, #footerCenter .blockContent, #footerRight .blockContent {border-left: 1px solid #ccc; border-right: 1px solid #ccc; border-bottom: 1px solid #ddd; padding: 3px; margin-right: 0;  margin-left: 0; margin-bottom: 2px; line-height: 1.2em;}
+
+/* ------------------  end Footer Blocks -----------------  */
 
 #footerbar { background-image: url(hbar.gif); font-size:.9em; height : 23px;}
 #footerbar td { vertical-align : middle; text-align:center;}
