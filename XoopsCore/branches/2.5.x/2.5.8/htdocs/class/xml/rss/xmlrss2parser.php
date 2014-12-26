@@ -28,7 +28,7 @@
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
-defined("XOOPS_ROOT_PATH") || die("XOOPS root path not defined");
+defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
 require_once(XOOPS_ROOT_PATH.'/class/xml/saxparser.php');
 require_once(XOOPS_ROOT_PATH.'/class/xml/xmltaghandler.php');
 

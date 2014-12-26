@@ -32,21 +32,21 @@ img.right {
     width:              16px;
     height:             19px;
     text-align:         center;
-    background-image:   url(./images/pagneutral.gif);
+    background-image:   url(/images/pagneutral.gif);
 }
 .pagact {
     font-size:          10px;
     width:              16px;
     height:             19px;
     text-align:         center;
-    background-image:   url(./images/pagact.gif);
+    background-image:   url(/images/pagact.gif);
 }
 .paginact {
     font-size:          10px;
     width:              16px;
     height:             19px;
     text-align:         center;
-    background-image:   url(./images/paginact.gif);
+    background-image:   url(/images/paginact.gif);
 }
 /* For required elements in XOOPS form */
 .xoops-form-element-caption .caption-marker { display: none;}
@@ -356,7 +356,7 @@ div.jGrowl div.jGrowl-closer {height: 15px; padding-top: 4px; padding-bottom: 4p
 	box-shadow: 0 0 20px #787878;
 		-webkit-box-shadow:0 0 20px #787878;
 		-moz-box-shadow:0 0 20px #787878;
-		filter:progid:DXImageTransform.Microsoft.Shadow(color='#bbbbbb', Direction=135, Strength=5); 
+		filter:progid:DXImageTransform.Microsoft.Shadow(color='#bbbbbb', Direction=135, Strength=5);
 		zoom: 1;
 }
 .boxrelief {

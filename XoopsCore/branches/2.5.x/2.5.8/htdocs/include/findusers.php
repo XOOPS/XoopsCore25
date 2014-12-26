@@ -25,7 +25,7 @@ if (!empty($_REQUEST['token'])) {
     if ($GLOBALS['xoopsSecurity']->validateToken($_REQUEST['token'], false)) {
         $denied = false;
     }
-} else if (is_object($xoopsUser) && $xoopsUser->isAdmin()) {
+} elseif (is_object($xoopsUser) && $xoopsUser->isAdmin()) {
     $denied = false;
 }
 if ($denied) {
@@ -538,14 +538,14 @@ if (empty($_POST["user_submit"])) {
         if (!empty($_POST['user_mailok'])) {
             if ($_POST['user_mailok'] == "mailng") {
                 $criteria->add(new Criteria('user_mailok', 0));
-            } else if ($_POST['user_mailok'] == "mailok") {
+            } elseif ($_POST['user_mailok'] == "mailok") {
                 $criteria->add(new Criteria('user_mailok', 1));
             }
         }
         if (!empty($_POST['user_avatar'])) {
             if ($_POST['user_avatar'] == "y") {
                 $criteria->add(new Criteria('user_avatar', "('', 'blank.gif')", 'NOT IN'));
-            } else if ($_POST['user_avatar'] == "n") {
+            } elseif ($_POST['user_avatar'] == "n") {
                 $criteria->add(new Criteria('user_avatar', "('', 'blank.gif')", 'IN'));
             }
         }
@@ -595,7 +595,7 @@ if (empty($_POST["user_submit"])) {
             $subquery = $matches[1];
 
         // Query without alias
-        } else if (preg_match("/select[\s]+.*[\s]+from[\s]+(" . $xoopsDB->prefix("users") . "\b.*)/i", $query, $matches)) {
+        } elseif (preg_match("/select[\s]+.*[\s]+from[\s]+(" . $xoopsDB->prefix("users") . "\b.*)/i", $query, $matches)) {
             $alias = "";
             $subquery = $matches[1];
 
@@ -675,7 +675,7 @@ if (empty($_POST["user_submit"])) {
         echo "<div>" . $hiddenform;
         echo "<a href='#' onclick='javascript:document.findnext.start.value=0;document.findnext.user_submit.value=0;document.findnext.submit();'>" . _MA_USER_SEARCHAGAIN . "</a>\n";
         echo "</div>";
-    } else if ($start < $total) {
+    } elseif ($start < $total) {
         if (!empty($total)) {
             echo sprintf(_MA_USER_USERSFOUND, $total) . "<br />";
         }
@@ -763,7 +763,7 @@ if (empty($_POST["user_submit"])) {
                 while ($counter <= $currentpage) {
                     if ($counter == $currentpage) {
                         $hiddenform .= "<strong>" . $counter . "</strong> ";
-                    } else if (($counter > $currentpage - 4 && $counter < $currentpage + 4) || $counter == 1) {
+                    } elseif (($counter > $currentpage - 4 && $counter < $currentpage + 4) || $counter == 1) {
                         $hiddenform .= "<a href='#" . $counter . "' onclick='javascript:document.findnext.start.value=" . ($counter - 1) * $limit . ";document.findnext.submit();'>" . $counter . "</a> ";
                         if ($counter == 1 && $currentpage > 5) {
                             $hiddenform .= "... ";
@@ -775,7 +775,7 @@ if (empty($_POST["user_submit"])) {
                 while ($counter <= $totalpages) {
                     if ($counter == $currentpage) {
                         $hiddenform .= "<strong>" . $counter . "</strong> ";
-                    } else if (($counter > $currentpage - 4 && $counter < $currentpage + 4) || $counter == 1 || $counter == $totalpages) {
+                    } elseif (($counter > $currentpage - 4 && $counter < $currentpage + 4) || $counter == 1 || $counter == $totalpages) {
                         if ($counter == $totalpages && $currentpage < $totalpages - 4) {
                             $hiddenform .= "... ";
                         }

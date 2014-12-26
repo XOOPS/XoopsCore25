@@ -121,7 +121,7 @@ if (!empty($_GET['xoopsorgnews'])) {
                     $ret .= '&nbsp;&nbsp;<a href="' . htmlspecialchars($items[$i]['guid']) . '" rel="external" title="">' . _MORE . '</a>';
                 }
                 $ret .= '</td></tr>';
-            } else if ($items[$i]['guid'] != "") {
+            } elseif ($items[$i]['guid'] != "") {
                 $ret .= '<tr><td class="even aligntop"></td><td colspan="2" class="odd"><a href="' . htmlspecialchars($items[$i]['guid']) . '" rel="external">' . _MORE . '</a></td></tr>';
             }
         }

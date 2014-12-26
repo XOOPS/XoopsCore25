@@ -290,10 +290,10 @@ class Smarty_Compiler extends Smarty {
                     if ($this->php_handling == SMARTY_PHP_PASSTHRU) {
                         /* echo php contents */
                         $text_blocks[$curr_tb] = str_replace('%%%SMARTYSP'.$curr_sp.'%%%', '<?php echo \''.str_replace("'", "\'", $sp_match[1][$curr_sp]).'\'; ?>'."\n", $text_blocks[$curr_tb]);
-                    } else if ($this->php_handling == SMARTY_PHP_QUOTE) {
+                    } elseif ($this->php_handling == SMARTY_PHP_QUOTE) {
                         /* quote php tags */
                         $text_blocks[$curr_tb] = str_replace('%%%SMARTYSP'.$curr_sp.'%%%', htmlspecialchars($sp_match[1][$curr_sp]), $text_blocks[$curr_tb]);
-                    } else if ($this->php_handling == SMARTY_PHP_REMOVE) {
+                    } elseif ($this->php_handling == SMARTY_PHP_REMOVE) {
                         /* remove php tags */
                         $text_blocks[$curr_tb] = str_replace('%%%SMARTYSP'.$curr_sp.'%%%', '', $text_blocks[$curr_tb]);
                     } else {
@@ -582,9 +582,9 @@ class Smarty_Compiler extends Smarty {
             default:
                 if ($this->_compile_compiler_tag($tag_command, $tag_args, $output)) {
                     return $output;
-                } else if ($this->_compile_block_tag($tag_command, $tag_args, $tag_modifier, $output)) {
+                } elseif ($this->_compile_block_tag($tag_command, $tag_args, $tag_modifier, $output)) {
                     return $output;
-                } else if ($this->_compile_custom_tag($tag_command, $tag_args, $tag_modifier, $output)) {
+                } elseif ($this->_compile_custom_tag($tag_command, $tag_args, $tag_modifier, $output)) {
                     return $output;
                 } else {
                     $this->_syntax_error("unrecognized tag '$tag_command'", E_USER_ERROR, __FILE__, __LINE__);
@@ -624,7 +624,7 @@ class Smarty_Compiler extends Smarty {
          * Otherwise we need to load plugin file and look for the function
          * inside it.
          */
-        else if ($plugin_file = $this->_get_plugin_filepath('compiler', $tag_command)) {
+        elseif ($plugin_file = $this->_get_plugin_filepath('compiler', $tag_command)) {
             $found = true;
 
             include_once $plugin_file;
@@ -699,7 +699,7 @@ class Smarty_Compiler extends Smarty {
          * Otherwise we need to load plugin file and look for the function
          * inside it.
          */
-        else if ($plugin_file = $this->_get_plugin_filepath('block', $tag_command)) {
+        elseif ($plugin_file = $this->_get_plugin_filepath('block', $tag_command)) {
             $found = true;
 
             include_once $plugin_file;
@@ -716,7 +716,7 @@ class Smarty_Compiler extends Smarty {
 
         if (!$found) {
             return false;
-        } else if (!$have_function) {
+        } elseif (!$have_function) {
             $this->_syntax_error($message, E_USER_WARNING, __FILE__, __LINE__);
             return true;
         }
@@ -784,7 +784,7 @@ class Smarty_Compiler extends Smarty {
          * Otherwise we need to load plugin file and look for the function
          * inside it.
          */
-        else if ($plugin_file = $this->_get_plugin_filepath('function', $tag_command)) {
+        elseif ($plugin_file = $this->_get_plugin_filepath('function', $tag_command)) {
             $found = true;
 
             include_once $plugin_file;
@@ -801,7 +801,7 @@ class Smarty_Compiler extends Smarty {
 
         if (!$found) {
             return false;
-        } else if (!$have_function) {
+        } elseif (!$have_function) {
             $this->_syntax_error($message, E_USER_WARNING, __FILE__, __LINE__);
             return true;
         }
@@ -979,7 +979,7 @@ class Smarty_Compiler extends Smarty {
             if ($arg_name == 'file') {
                 $include_file = $arg_value;
                 continue;
-            } else if ($arg_name == 'assign') {
+            } elseif ($arg_name == 'assign') {
                 $assign_var = $arg_value;
                 continue;
             }
@@ -1566,13 +1566,13 @@ class Smarty_Compiler extends Smarty {
                            boolean value. */
                         if (preg_match('~^(on|yes|true)$~', $token)) {
                             $token = 'true';
-                        } else if (preg_match('~^(off|no|false)$~', $token)) {
+                        } elseif (preg_match('~^(off|no|false)$~', $token)) {
                             $token = 'false';
-                        } else if ($token == 'null') {
+                        } elseif ($token == 'null') {
                             $token = 'null';
-                        } else if (preg_match('~^' . $this->_num_const_regexp . '|0[xX][0-9a-fA-F]+$~', $token)) {
+                        } elseif (preg_match('~^' . $this->_num_const_regexp . '|0[xX][0-9a-fA-F]+$~', $token)) {
                             /* treat integer literally */
-                        } else if (!preg_match('~^' . $this->_obj_call_regexp . '|' . $this->_var_regexp . '(?:' . $this->_mod_regexp . ')*$~', $token)) {
+                        } elseif (!preg_match('~^' . $this->_obj_call_regexp . '|' . $this->_var_regexp . '(?:' . $this->_mod_regexp . ')*$~', $token)) {
                             /* treat as a string, double-quote it escaping quotes */
                             $token = '"'.addslashes($token).'"';
                         }
@@ -1642,32 +1642,27 @@ class Smarty_Compiler extends Smarty {
                     $this->_parse_modifiers($return, $match[2]);
                 }
                 return $return;
-            }
-        elseif(preg_match('~^' . $this->_num_const_regexp . '(?:' . $this->_mod_regexp . '*)$~', $val)) {
+            } elseif(preg_match('~^' . $this->_num_const_regexp . '(?:' . $this->_mod_regexp . '*)$~', $val)) {
                 // numerical constant
                 preg_match('~^(' . $this->_num_const_regexp . ')('. $this->_mod_regexp . '*)$~', $val, $match);
                 if($match[2] != '') {
                     $this->_parse_modifiers($match[1], $match[2]);
                     return $match[1];
                 }
-            }
-        elseif(preg_match('~^' . $this->_si_qstr_regexp . '(?:' . $this->_mod_regexp . '*)$~', $val)) {
+            } elseif(preg_match('~^' . $this->_si_qstr_regexp . '(?:' . $this->_mod_regexp . '*)$~', $val)) {
                 // single quoted text
                 preg_match('~^(' . $this->_si_qstr_regexp . ')('. $this->_mod_regexp . '*)$~', $val, $match);
                 if($match[2] != '') {
                     $this->_parse_modifiers($match[1], $match[2]);
                     return $match[1];
                 }
-            }
-        elseif(preg_match('~^' . $this->_cvar_regexp . '(?:' . $this->_mod_regexp . '*)$~', $val)) {
+            } elseif(preg_match('~^' . $this->_cvar_regexp . '(?:' . $this->_mod_regexp . '*)$~', $val)) {
                 // config var
                 return $this->_parse_conf_var($val);
-            }
-        elseif(preg_match('~^' . $this->_svar_regexp . '(?:' . $this->_mod_regexp . '*)$~', $val)) {
+            } elseif(preg_match('~^' . $this->_svar_regexp . '(?:' . $this->_mod_regexp . '*)$~', $val)) {
                 // section var
                 return $this->_parse_section_prop($val);
-            }
-        elseif(!in_array($val, $this->_permitted_tokens) && !is_numeric($val)) {
+            } elseif(!in_array($val, $this->_permitted_tokens) && !is_numeric($val)) {
             // literal string
             return $this->_expand_quoted_text('"' . strtr($val, array('\\' => '\\\\', '"' => '\\"')) .'"');
         }
@@ -1777,8 +1772,7 @@ class Smarty_Compiler extends Smarty {
                 }
             } elseif(is_numeric($_var_name) && is_numeric(substr($var_expr, 0, 1))) {
                 // because . is the operator for accessing arrays thru inidizes we need to put it together again for floating point numbers
-                if(count($_indexes) > 0)
-                {
+                if(count($_indexes) > 0) {
                     $_var_name .= implode("", $_indexes);
                     $_indexes = array();
                 }
@@ -1804,12 +1798,12 @@ class Smarty_Compiler extends Smarty {
                         $_var_section_prop = isset($_var_parts[1]) ? $_var_parts[1] : 'index';
                         $_output .= "[\$this->_sections['$_var_section']['$_var_section_prop']]";
                     }
-                } else if (substr($_index, 0, 1) == '.') {
+                } elseif (substr($_index, 0, 1) == '.') {
                     if (substr($_index, 1, 1) == '$')
                         $_output .= "[\$this->_tpl_vars['" . substr($_index, 2) . "']]";
                     else
                         $_output .= "['" . substr($_index, 1) . "']";
-                } else if (substr($_index,0,2) == '->') {
+                } elseif (substr($_index,0,2) == '->') {
                     if(substr($_index,2,2) == '__') {
                         $this->_syntax_error('call to internal object members is not allowed', E_USER_ERROR, __FILE__, __LINE__);
                     } elseif($this->security && substr($_index, 2, 1) == '_') {
@@ -2350,16 +2344,16 @@ class Smarty_Compiler extends Smarty {
  */
 function _smarty_sort_length($a, $b)
 {
-    if($a == $b)
+    if ($a == $b) {
         return 0;
+    }
 
-    if(strlen($a) == strlen($b))
+    if (strlen($a) == strlen($b)) {
         return ($a > $b) ? -1 : 1;
+    }
 
     return (strlen($a) > strlen($b)) ? -1 : 1;
 }
 
 
 /* vim: set et: */
-
-?>

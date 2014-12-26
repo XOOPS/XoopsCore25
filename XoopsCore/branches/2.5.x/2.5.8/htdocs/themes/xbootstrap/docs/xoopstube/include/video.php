@@ -365,5 +365,3 @@ function xtube_showvideo($vidid, $source, $screenshot, $picurl) {
 
     return $showvideo;
 }
-
-?>
