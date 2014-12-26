@@ -17,8 +17,11 @@
  * @version     $Id$
  */
 
-defined('XOOPS_ROOT_PATH') or die('Restricted access');
+defined("XOOPS_ROOT_PATH") || exit('Restricted access');
 
+/**
+ * Class XoopsPageNav
+ */
 class XoopsPageNav
 {
     /**
@@ -33,7 +36,7 @@ class XoopsPageNav
     /**
      * *#@-
      */
-
+    
     /**
      * Constructor
      *
@@ -54,7 +57,7 @@ class XoopsPageNav
         }
         $this->url = $_SERVER['PHP_SELF'] . '?' . trim($start_name) . '=';
     }
-
+    
     /**
      * Create text navigation
      *
@@ -89,7 +92,7 @@ class XoopsPageNav
 							$ret .= '... ';
 						}
 					}
-					++$counter;
+                    ++$counter;
 				}
 				$next = $this->current + $this->perpage;
 				if ($this->total > $next) {
@@ -100,7 +103,7 @@ class XoopsPageNav
 		}
         return $ret;
     }
-
+    
     /**
      * Create a navigational dropdown list
      *
@@ -135,7 +138,7 @@ class XoopsPageNav
         }
         return $ret;
     }
-
+    
     /**
      * Create navigation with images
      *
@@ -185,4 +188,4 @@ class XoopsPageNav
     }
 }
 
-?>
+
