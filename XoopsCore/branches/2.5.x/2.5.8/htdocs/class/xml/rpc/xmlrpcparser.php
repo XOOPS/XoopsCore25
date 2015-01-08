@@ -168,7 +168,6 @@ class XoopsXmlRpcParser extends SaxParser
         return $this->_tempValue;
     }
 
-/
     function resetTempValue()
     {
         unset($this->_tempValue);
