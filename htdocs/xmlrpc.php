@@ -25,7 +25,7 @@ error_reporting(0);
 include_once $GLOBALS['xoops']->path('class/xml/rpc/xmlrpctag.php');
 include_once $GLOBALS['xoops']->path('class/xml/rpc/xmlrpcparser.php');
 
-$GLOBALS['xoopsLogger']->activate(false);
+$GLOBALS['xoopsLogger']->activated = false;
 
 $response = new XoopsXmlRpcResponse();
 $parser = new XoopsXmlRpcParser(rawurlencode($GLOBALS['HTTP_RAW_POST_DATA']));
