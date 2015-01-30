@@ -11,7 +11,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
+ * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         kernel
  * @subpackage      form
@@ -34,7 +34,7 @@ class XoopsFormSelectUser extends XoopsFormElementTray
      *
      * @param string $caption      form element caption
      * @param string $name         form element name
-     * @param bool   $include_anon Include user "anonymous"?
+     * @param bool   $includeAnonymous Include user "anonymous"?
      * @param mixed  $value        Pre-selected value (or array of them).
      *                             For an item with massive members, such as "Registered Users", "$value"
      *                             should be used to store selected temporary users only instead of all
@@ -42,7 +42,7 @@ class XoopsFormSelectUser extends XoopsFormElementTray
      * @param int    $size         Number or rows. "1" makes a drop-down-list.
      * @param bool   $multiple     Allow multiple selections?
      */
-    public function XoopsFormSelectUser($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false)
+    public function XoopsFormSelectUser($caption, $name, $includeAnonymous = false, $value = null, $size = 1, $multiple = false)
     {
         /**
          * @var mixed array|false - cache any result for this session.
@@ -51,7 +51,7 @@ class XoopsFormSelectUser extends XoopsFormElementTray
          * @todo this should be replaced with better interface, with autocomplete style search
          * and user specific MRU cache
          */
-        static $querycache = false;
+        static $queryCache = false;
 
         /**
          * @var int - limit to this many rows
@@ -69,12 +69,12 @@ class XoopsFormSelectUser extends XoopsFormElementTray
         $cachekey = 'formselectuser';
 
         $select_element = new XoopsFormSelect('', $name, $value, $size, $multiple);
-        if ($include_anon) {
+        if ($includeAnonymous) {
             $select_element->addOption(0, $GLOBALS['xoopsConfig']['anonymous']);
         }
-        $member_handler =& xoops_gethandler('member');
+        $member_handler = xoops_gethandler('member');
         $value = is_array($value) ? $value : (empty($value) ? array() : array($value));
-        if (count($value) > 0) {
+        if (($multiple === false) && (count($value) > 1)) {
             // simple case - we have a set of uids in $values
             $criteria = new Criteria('uid', '(' . implode(',', $value) . ')', 'IN');
             $criteria->setSort('uname');
@@ -83,10 +83,10 @@ class XoopsFormSelectUser extends XoopsFormElementTray
         } else {
             // open ended case - no selection criteria
             // we will always cache this version to reduce expense
-            if (empty($querycache)) {
+            if (empty($queryCache)) {
                 XoopsLoad::load('XoopsCache');
-                $querycache = XoopsCache::read($cachekey);
-                if ($querycache===false) {
+                $queryCache = XoopsCache::read($cachekey);
+                if ($queryCache === false) {
                     $criteria = new CriteriaCompo();
                     if ($limit <= $member_handler->getUserCount()) {
                         // if we have more than $limit users, we will select who to show based on last_login
@@ -97,15 +97,15 @@ class XoopsFormSelectUser extends XoopsFormElementTray
                         $criteria->setSort('uname');
                         $criteria->setOrder('ASC');
                     }
-                    $querycache = $member_handler->getUserList($criteria);
-                    asort($querycache);
-                    XoopsCache::write($cachekey, $querycache, $cachettl); // won't do anything different if write fails
+                    $queryCache = $member_handler->getUserList($criteria);
+                    asort($queryCache);
+                    XoopsCache::write($cachekey, $queryCache, $cachettl); // won't do anything different if write fails
                 }
             }
-            $users = $querycache;
+            $users = $queryCache;
         }
         $select_element->addOptionArray($users);
-        if ($limit>count($users)) {
+        if ($limit > count($users)) {
             $this->XoopsFormElementTray($caption, "", $name);
             $this->addElement($select_element);
 
