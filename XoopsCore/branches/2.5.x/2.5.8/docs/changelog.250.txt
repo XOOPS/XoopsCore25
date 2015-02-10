@@ -14,10 +14,18 @@ NOT RELEASED: Version 2.5.8 Beta 1
 - updated xBootstrap to Bootstrap 3.3.1 (Angelo Rocha)
 - Some code cleanup for private messages (Dingjie （Daniel） Yang/rgriffith)
 - Adding Footer blocks (timgno/mamba)
+- fixing a bug in xmlrpc.php (wppd/rgriffith)
+- remove addrFormat override in XoopsMultiMailer (rgriffith)
+- patch from Xoops 2.5.6 XoopsFormSelectUser is not compatible with some old modules like xNews (luciorota)
+
 
 Security fixes
 - ID: 1295 Added X-Frame-Options header to prevent clickjacking in modern browsers, reported by Narendra Bhati. 
   By default set to 'sameorigin', but can be overridden by setting desired value in 'xFrameOptions' key in xoopsconfig.  (rgriffith)
+
+Updated:
+ - TinyMCE to 3.5.11 (mamba)
+ - PHPMailer to 5.2.9 (rgriffith)
 
 
 ===============================
