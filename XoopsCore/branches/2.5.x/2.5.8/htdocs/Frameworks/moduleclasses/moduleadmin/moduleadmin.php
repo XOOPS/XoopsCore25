@@ -178,8 +178,8 @@ class ModuleAdmin
         }
         $ret .= "<div class=\"xo-buttons\">\n";
         foreach (array_keys( $this -> _itemButton) as $i) {
-            $ret .= "<a class='ui-corner-all tooltip' href='" . $this -> _itemButton[$i]['link'] . "' title='" . $this -> _itemButton[$i]['title'] . "'>";
-            $ret .= "<img src='" . $path . $this -> _itemButton[$i]['icon'] . "' title='" . $this -> _itemButton[$i]['title'] . "' />" . $this -> _itemButton[$i]['title'] . ' ' . $this -> _itemButton[$i]['extra'];
+            $ret .= "<a class='ui-corner-all tooltip' href='" . $this -> _itemButton[$i]['link'] . "' title='" . $this -> _itemButton[$i]['title']  . "' " . $this -> _itemButton[$i]['extra']. ">";
+            $ret .= "<img src='" . $path . $this -> _itemButton[$i]['icon'] . "' title='" . $this -> _itemButton[$i]['title'] .  "' alt='" . $this -> _itemButton[$i]['title']  . "' />" . $this -> _itemButton[$i]['title'] ;
             $ret .= "</a>\n";
             $ret .= $delimeter;
         }
