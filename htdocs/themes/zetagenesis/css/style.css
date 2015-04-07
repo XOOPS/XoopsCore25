@@ -17,6 +17,8 @@ body {
 }
 
 /* ======= Body wrapper ======= */
+.push_down{margin-top:30px;}
+
 #xo-wrapper {}
 #xo-bgstatic {}
 #xo-canvas {
@@ -213,6 +215,51 @@ body.theme-dialog #xo-footer {
     color:                  #fff;
     text-decoration:        underline;
 }
+
+/*========== xo_headerstatic.html ==========*/
+#xo-headerstatic * { margin: 0; padding: 0}
+#xo-headerstatic {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+    background: none;
+    color: #000;
+    font-size: 11px;
+    z-index: 99999;
+    border-style: solid;
+    border-width: thin;
+}
+
+body>#xo-headerstatic {  position: fixed;}
+#xo-headerstatic #controls {
+    margin: 0px 20px 0px 20px;
+    background-color: #fff;
+    line-height: 20px;
+    text-shadow:	2px 2px 3px #aaa;
+    border: 2px solid #b5b5b5;
+    border-bottom: none;
+}
+
+body#xo-banner #xo-headerstatic {
+    padding:                0 50px 0 50px;
+    margin: 50px 50px 0px 50px;
+
+}
+
+#xo-headerstatic #controls  { margin-top: 0px; background: #E7F4F7; padding: 3px 10px 0 10px;}
+#xo-headerstatic .separate { margin-left: 3px; border-left: 1px solid #b5b5b5;}
+#xo-headerstatic #controls ul, li { margin: 0;  padding: 0;}
+#xo-headerstatic #controls ul { list-style: none;}
+#xo-headerstatic #controls li { display: inline-block; height: 20px; line-height: 27px; padding-right: 6px;}
+#xo-headerstatic .icon { vertical-align: text-bottom;}
+#xo-headerstatic .icon-chat { padding-top: 3px;}
+#xo-headerstatic .chat, .icon-chat { float: right;}
+#xo-headerstatic .text { vertical-align: top;}
+
+
 /*========== xo_footerstatic.html ==========*/
 #xo-footerstatic * { margin: 0; padding: 0;}
 #xo-footerstatic {
@@ -250,7 +297,7 @@ body>#xo-footerstatic {  position: fixed;}
 	margin-bottom:			35px;
 }
 #xo-logger-tabs a:hover {background-color: transparent; color: #fff;}
-table #xo-logger-queries tr {width: 100%;)
+table #xo-logger-queries tr {width: 100%;}
 .outer {border: 1px solid silver;}
 .head {background-color: #c2cdd6; padding: 5px; font-weight: bold;}
 .even {background-color: #dee3e7; padding: 5px;}

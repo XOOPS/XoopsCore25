@@ -20,7 +20,10 @@
 <{elseif $xoBlocks.canvas_left}><{assign var=columns_layout value='leftcolumn-layout'}>
 <{elseif $xoBlocks.canvas_right}><{assign var=columns_layout value='rightcolumn-layout'}>
 <{/if}>
-<div id="xo-wrapper" class="<{$xoops_dirname}>">
+<{if $xoops_isadmin}>
+<{includeq file="$theme_name/xo_headerstatic.html"}>
+<{/if}>
+<div id="xo-wrapper" class="<{$xoops_dirname}> <{if $xoops_isadmin}>push_down<{/if}>">
     <div id="xo-bgstatic" class="<{$xoops_dirname}>"></div>
     <div id="xo-canvas"<{if $columns_layout}> class="<{$columns_layout}>"<{/if}>>
         <div id="xo-header" class="<{$xoops_dirname}>">
@@ -41,7 +44,7 @@
                     }>
                 <{/if}>
                 <td id="xo-page">
-                    <{if $xoBlocks.page_topleft or $xoBlocks.page_topcenter or $xoBlocks.page_topright}>
+                    <{if $xoBlocks.page_topleft || $xoBlocks.page_topcenter || $xoBlocks.page_topright}>
                         <div class="xo-blockszone xo-<{$theme_top_order}>pageblocks" id="xo-page-topblocks">
                             <{includeq file="$theme_name/centerblocks.html" topbottom=top lcr=$theme_top_order|substr:0:1}>
                             <{includeq file="$theme_name/centerblocks.html" topbottom=top lcr=$theme_top_order|substr:1:1}>
@@ -49,7 +52,7 @@
                         </div>
                     <{/if}>
                     <{if $xoops_contents && ($xoops_contents != ' ') }><div id="xo-content"><{$xoops_contents}></div><{/if}>
-                    <{if $xoBlocks.page_bottomleft or $xoBlocks.page_bottomcenter or $xoBlocks.page_bottomright}>
+                    <{if $xoBlocks.page_bottomleft || $xoBlocks.page_bottomcenter || $xoBlocks.page_bottomright}>
                         <div class="xo-blockszone xo-<{$theme_bottom_order}>pageblocks" id="xo-page-bottomblocks">
                             <{includeq file="$theme_name/centerblocks.html" topbottom=bottom lcr=$theme_bottom_order|substr:0:1}>
                             <{includeq file="$theme_name/centerblocks.html" topbottom=bottom lcr=$theme_bottom_order|substr:1:1}>
@@ -72,8 +75,5 @@
     <!--{xo-logger-output}-->
 
     </div>
-	<{if $xoops_isadmin}>
-	<{includeq file="$theme_name/xo_footerstatic.html"}>
-	<{/if}>
 </body>
 </html>
