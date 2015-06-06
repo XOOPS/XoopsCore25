@@ -43,7 +43,7 @@ if (!$publisher->getConfig('perm_search') || !$gperm_handler->checkRight('global
 }
 
 $xoopsConfig["module_cache"][$module_id] = 0;
-$xoopsOption["template_main"] = 'publisher_search.html';
+$xoopsOption["template_main"] = 'publisher_search.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
 
 $module_info_search = $publisher->getModule()->getInfo("search");
@@ -257,4 +257,3 @@ if ($xoopsConfigSearch["keyword_min"] > 0) {
 }
 
 include XOOPS_ROOT_PATH . "/footer.php";
-?>
