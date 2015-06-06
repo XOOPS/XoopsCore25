@@ -250,7 +250,7 @@ class XoopsGuiDefault extends XoopsSystemGui
         //add OPTIONS/Links Menu Items
         $menu = array();
         $menu[] = array(
-            'link'      => 'http://sourceforge.net/projects/xoops/',
+            'link'      => 'http://xoops.org',
             'title'     => _OXYGEN_XOOPSPROJECT,
             'absolute'  => 1);
         $menu[] = array(

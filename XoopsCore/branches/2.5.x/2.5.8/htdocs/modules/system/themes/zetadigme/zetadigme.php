@@ -298,8 +298,8 @@ window.onload= function(){
         'absolute'  => 1,
         'icon'     => XOOPS_ADMINTHEME_URL . '/zetadigme/icons/xoops.png');
         $menu[] = array(
-        'link'      => 'http://sourceforge.net/projects/xoops/',
-        'title'     => 'Sourceforge',
+        'link'      => 'http://xoops.org',
+        'title'     => 'XOOPS',
         'absolute'  => 1);
         $tpl->append('navitems', array('link' => XOOPS_URL . '/admin.php','text' => _AD_INTERESTSITES, 'menu' => $menu));
     //add OPTIONS/links for local support
