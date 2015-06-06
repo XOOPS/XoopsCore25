@@ -14,7 +14,7 @@
  *
  * Not used yet, for forward compatibility
  *
- * @copyright    (c) 2000-2014 XOOPS Project (www.xoops.org)
+ * @copyright    (c) 2000-2015 XOOPS Project (www.xoops.org)
  * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @author      Taiwen Jiang <phppp@users.sourceforge.net>
  * @since       2.3
@@ -23,7 +23,7 @@
 
 
 return array(
-        'copyright'        => '(c) 2000-2014 XOOPS Project (www.xoops.org)',
+        'copyright'        => '(c) 2000-2015 XOOPS Project (www.xoops.org)',
         // Types of language constants
         "languages" => array("main", "admin"),
 );

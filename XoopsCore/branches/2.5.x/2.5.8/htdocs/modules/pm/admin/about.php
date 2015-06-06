@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
-* @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
+* @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  * @license      GNU GPL (http://www.gnu.org/licenses/gpl-2.0.html/)
  * @package    XoopsPartners
  * @since        2.5.0

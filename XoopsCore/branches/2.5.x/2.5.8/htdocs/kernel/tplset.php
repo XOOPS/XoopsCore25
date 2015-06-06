@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         kernel
  * @since           2.0.0
@@ -23,7 +23,7 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
  * A Template Set File
  *
  * @author Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  *
  * @package kernel
  **/

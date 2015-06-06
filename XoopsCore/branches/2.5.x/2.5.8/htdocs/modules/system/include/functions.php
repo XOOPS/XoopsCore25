@@ -8,7 +8,7 @@
  * of supporting developers from this source code or any supporting source code
  * which is considered copyrighted (c) material of the original comment or credit authors.
  *
- * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @package     system
  * @version     $Id$

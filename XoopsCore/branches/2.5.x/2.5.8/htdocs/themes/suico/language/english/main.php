@@ -2,7 +2,7 @@
 /*
  * Suico theme
  * In memory of Marcello Brandao
- * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
  * @package         themes
  * @since           2.5.x
