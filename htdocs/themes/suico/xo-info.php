@@ -14,7 +14,7 @@
  *
  * Not used yet, for forward compatibility
  *
- * @copyright    (c) 2000-2014 XOOPS Project (www.xoops.org)
+ * @copyright    (c) 2000-2015 XOOPS Project (www.xoops.org)
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      Taiwen Jiang <phppp@users.sourceforge.net>
  * @since       2.3

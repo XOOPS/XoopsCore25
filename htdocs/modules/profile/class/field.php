@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         profile
  * @since           2.3.0
@@ -22,7 +22,7 @@
 
 /**
  * @package kernel
- * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  */
 class ProfileField extends XoopsObject
 {
@@ -426,7 +426,7 @@ class ProfileField extends XoopsObject
 
 /**
  * @package kernel
- * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  */
 class ProfileFieldHandler extends XoopsPersistableObjectHandler
 {

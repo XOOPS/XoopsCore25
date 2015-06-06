@@ -25,7 +25,7 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
  * @subpackage auth
  * @description Authentification class for standard LDAP Server V2 or V3
  * @author Pierre-Eric MENUET <pemphp@free.fr>
- * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  */
 if (file_exists($file = $GLOBALS['xoops']->path('class/auth/auth_provisionning.php'))) {
     include_once $file;
@@ -42,7 +42,7 @@ if (!class_exists('XoopsAuthProvisionning')) {
  *
  * @package
  * @author John
- * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  * @version $Id$
  * @access public
  */
