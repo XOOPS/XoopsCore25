@@ -339,7 +339,7 @@ class XoopsCommentRenderer
     // Start edit by voltan
     function _getPosterName($poster_id, $poster_user, $poster_website)
     {
-        $poster['id'] = intval($poster_id);
+        $poster['id'] = (int)($poster_id);
         if ($poster['id'] > 0) {
             $com_poster =& $this->_memberHandler->getUser($poster_id);
             if (is_object($com_poster)) {
@@ -374,7 +374,7 @@ class XoopsCommentRenderer
     // Start edit by voltan
     function _getPosterArray($poster_id, $poster_user, $poster_website)
     {
-        $poster['id'] = intval($poster_id);
+        $poster['id'] = (int)($poster_id);
         if ($poster['id'] > 0) {
             $com_poster =& $this->_memberHandler->getUser($poster['id']);
             if (is_object($com_poster)) {

@@ -29,7 +29,7 @@ if (('system' != $xoopsModule->getVar('dirname') && XOOPS_COMMENT_APPROVENONE ==
 
 xoops_loadLanguage('comment');
 
-$com_id = isset($_GET['com_id']) ? intval($_GET['com_id']) : 0;
+$com_id = isset($_GET['com_id']) ? (int)($_GET['com_id']) : 0;
 $com_mode = isset($_GET['com_mode']) ? htmlspecialchars(trim($_GET['com_mode']), ENT_QUOTES) : '';
 
 if ($com_mode == '') {
@@ -47,7 +47,7 @@ if (!isset($_GET['com_order'])) {
         $com_order = $xoopsConfig['com_order'];
     }
 } else {
-    $com_order = intval($_GET['com_order']);
+    $com_order = (int)($_GET['com_order']);
 }
 
 /**

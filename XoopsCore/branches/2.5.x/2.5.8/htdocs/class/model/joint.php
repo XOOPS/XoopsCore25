@@ -144,7 +144,7 @@ class XoopsModelJoint extends XoopsModelAbstract
             return false;
         }
         $myrow = $this->handler->db->fetchArray($result);
-        return intval($myrow["count"]);
+        return (int)($myrow["count"]);
     }
 
     /**

@@ -62,8 +62,8 @@ class XoopsFormText extends XoopsFormElement
     {
         $this->setCaption($caption);
         $this->setName($name);
-        $this->_size = intval($size);
-        $this->_maxlength = intval($maxlength);
+        $this->_size = (int)($size);
+        $this->_maxlength = (int)($maxlength);
         $this->setValue($value);
     }
 

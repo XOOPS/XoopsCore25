@@ -1115,8 +1115,8 @@ class phpthumb_filters {
 		ImageAlphaBlending($gdimg, true);
 
 		if (preg_match('#^([0-9\\.\\-]*)x([0-9\\.\\-]*)(@[LCR])?$#i', $alignment, $matches)) {
-			$originOffsetX = intval($matches[1]);
-			$originOffsetY = intval($matches[2]);
+			$originOffsetX = (int)($matches[1]);
+			$originOffsetY = (int)($matches[2]);
 			$alignment = (@$matches[4] ? $matches[4] : 'L');
 			$margin = 0;
 		} else {
@@ -1143,7 +1143,7 @@ class phpthumb_filters {
 
 		if (@is_readable($ttffont) && is_file($ttffont)) {
 
-			$opacity = 100 - intval(max(min($opacity, 100), 0));
+			$opacity = 100 - (int)(max(min($opacity, 100), 0));
 			$letter_color_text = phpthumb_functions::ImageHexColorAllocate($gdimg, $hex_color, false, $opacity * 1.27);
 
 			$this->DebugMessage('Using TTF font "'.$ttffont.'"', __FILE__, __LINE__);
@@ -1437,8 +1437,8 @@ class phpthumb_filters {
 			$watermark_margin_x = ((($margin_x > 0) && ($margin_x < 1)) ? round((1 - $margin_x) * $img_source_width)  : $margin_x);
 			$watermark_margin_y = ((($margin_y > 0) && ($margin_y < 1)) ? round((1 - $margin_y) * $img_source_height) : $margin_y);
 			if (preg_match('#^([0-9\\.\\-]*)x([0-9\\.\\-]*)$#i', $alignment, $matches)) {
-				$watermark_destination_x = intval($matches[1]);
-				$watermark_destination_y = intval($matches[2]);
+				$watermark_destination_x = (int)($matches[1]);
+				$watermark_destination_y = (int)($matches[2]);
 			} else {
 				switch ($alignment) {
 					case '*':

@@ -233,7 +233,7 @@ if (empty($_SESSION['xoopsUserId'])
     && !empty($_COOKIE[$xoopsConfig['usercookie']])
 ) {
     $hash_data = @explode("{-}", $_COOKIE[$xoopsConfig['usercookie']], 2);
-    list($_SESSION['xoopsUserId'], $hash_login) = array($hash_data[0], strval(@$hash_data[1]));
+    list($_SESSION['xoopsUserId'], $hash_login) = array($hash_data[0], (string)(@$hash_data[1]));
     unset($hash_data);
 }
 
@@ -248,7 +248,7 @@ if (!empty($_SESSION['xoopsUserId'])) {
         session_destroy();
         setcookie($xoopsConfig['usercookie'], 0, - 1, '/');
     } else {
-        if ((intval($xoopsUser->getVar('last_login')) + 60 * 5) < time()) {
+        if (((int)($xoopsUser->getVar('last_login')) + 60 * 5) < time()) {
             $sql = "UPDATE " . $xoopsDB->prefix('users')
                  . " SET last_login = '" . time()
                  . "' WHERE uid = " . $_SESSION['xoopsUserId'];
@@ -278,7 +278,7 @@ if (!empty($_SESSION['xoopsUserId'])) {
  * Note: temporary solution only. Will be re-designed in XOOPS 3.0
  */
 if ($xoopsLogger->activated) {
-    $level = isset($xoopsConfig['debugLevel']) ? intval($xoopsConfig['debugLevel']) : 0;
+    $level = isset($xoopsConfig['debugLevel']) ? (int)($xoopsConfig['debugLevel']) : 0;
     if (($level == 2 && empty($xoopsUserIsAdmin)) || ($level == 1 && !$xoopsUser)) {
         error_reporting(0);
         $xoopsLogger->activated = false;

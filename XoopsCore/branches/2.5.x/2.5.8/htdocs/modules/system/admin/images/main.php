@@ -47,10 +47,10 @@ if (isset($_GET['op'])) {
     $op = trim($_GET['op']);
 }
 if (isset($_GET['image_id'])) {
-    $image_id = intval($_GET['image_id']);
+    $image_id = (int)($_GET['image_id']);
 }
 if (isset($_GET['imgcat_id'])) {
-    $imgcat_id = intval($_GET['imgcat_id']);
+    $imgcat_id = (int)($_GET['imgcat_id']);
 }
 
 $gperm_handler =& xoops_gethandler('groupperm');
@@ -229,7 +229,7 @@ switch ( $op ) {
         $criteria->setSort('image_weight ASC, image_id');
         $criteria->setOrder('DESC');
         $imgcount = $image_handler->getCount($criteria);
-        $start = isset($_GET['start']) ? intval($_GET['start']) : 0;
+        $start = isset($_GET['start']) ? (int)($_GET['start']) : 0;
         $criteria->setStart($start);
         $criteria->setLimit(xoops_getModuleOption('images_pager', 'system'));
         $images = $image_handler->getObjects($criteria, true, false);
@@ -437,7 +437,7 @@ switch ( $op ) {
             redirect_header('admin.php?fct=images', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         $imgcat_handler =& xoops_gethandler('imagecategory');
-        $imagecategory =& $imgcat_handler->get(intval($imgcat_id));
+        $imagecategory =& $imgcat_handler->get((int)($imgcat_id));
         if (!is_object($imagecategory)) {
             redirect_header('admin.php?fct=images',1);
         }
@@ -662,7 +662,7 @@ switch ( $op ) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=images', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        $imgcat_id = intval($imgcat_id);
+        $imgcat_id = (int)($imgcat_id);
         if ($imgcat_id <= 0) {
             redirect_header('admin.php?fct=images',1);
         }

@@ -70,7 +70,7 @@ class XoopsBlock extends XoopsObject
             if (is_array($id)) {
                 $this->assignVars($id);
             } else {
-                $this->load(intval($id));
+                $this->load((int)($id));
             }
         }
     }
@@ -82,7 +82,7 @@ class XoopsBlock extends XoopsObject
      */
     function load($id)
     {
-        $id = intval($id);
+        $id = (int)($id);
         $sql = 'SELECT * FROM ' . $this->db->prefix('newblocks') . ' WHERE bid = ' . $id;
         $arr = $this->db->fetchArray($this->db->query($sql));
         $this->assignVars($arr);
@@ -467,7 +467,7 @@ class XoopsBlock extends XoopsObject
      */
     static function getByModule($moduleid, $asobject = true)
     {
-        $moduleid = intval($moduleid);
+        $moduleid = (int)($moduleid);
         $db =& XoopsDatabaseFactory::getDatabaseConnection();
         if ($asobject == true) {
             $sql = $sql = "SELECT * FROM " . $db->prefix("newblocks") . " WHERE mid=" . $moduleid;
@@ -500,7 +500,7 @@ class XoopsBlock extends XoopsObject
      */
     function getAllByGroupModule($groupid, $module_id = 0, $toponlyblock = false, $visible = null, $orderby = 'b.weight, m.block_id', $isactive = 1)
     {
-        $isactive = intval($isactive);
+        $isactive = (int)($isactive);
         $db =& XoopsDatabaseFactory::getDatabaseConnection();
         $ret = array();
         if (isset($groupid)) {
@@ -508,8 +508,8 @@ class XoopsBlock extends XoopsObject
             if (is_array($groupid)) {
                 $sql .= ' AND gperm_groupid IN (' . implode(',', $groupid) . ')';
             } else {
-                if (intval($groupid) > 0) {
-                    $sql .= ' AND gperm_groupid=' . intval($groupid);
+                if ((int)($groupid) > 0) {
+                    $sql .= ' AND gperm_groupid=' . (int)($groupid);
                 }
             }
             $result = $db->query($sql);
@@ -524,11 +524,11 @@ class XoopsBlock extends XoopsObject
         $sql = 'SELECT b.* FROM ' . $db->prefix('newblocks') . ' b, ' . $db->prefix('block_module_link') . ' m WHERE m.block_id=b.bid';
         $sql .= ' AND b.isactive=' . $isactive;
         if (isset($visible)) {
-            $sql .= ' AND b.visible=' . intval($visible);
+            $sql .= ' AND b.visible=' . (int)($visible);
         }
         if (!isset($module_id)) {
         } elseif (!empty($module_id)) {
-            $sql .= ' AND m.module_id IN (0,' . intval($module_id);
+            $sql .= ' AND m.module_id IN (0,' . (int)($module_id);
             if ($toponlyblock) {
                 $sql .= ',-1';
             }
@@ -585,13 +585,13 @@ class XoopsBlock extends XoopsObject
         $non_grouped = array_diff($bids, $grouped);
         if (!empty($non_grouped)) {
             $sql = 'SELECT b.* FROM ' . $db->prefix('newblocks') . ' b, ' . $db->prefix('block_module_link') . ' m WHERE m.block_id=b.bid';
-            $sql .= ' AND b.isactive=' . intval($isactive);
+            $sql .= ' AND b.isactive=' . (int)($isactive);
             if (isset($visible)) {
-                $sql .= ' AND b.visible=' . intval($visible);
+                $sql .= ' AND b.visible=' . (int)($visible);
             }
             if (!isset($module_id)) {
             } elseif (!empty($module_id)) {
-                $sql .= ' AND m.module_id IN (0,' . intval($module_id);
+                $sql .= ' AND m.module_id IN (0,' . (int)($module_id);
                 if ($toponlyblock) {
                     $sql .= ',-1';
                 }
@@ -626,8 +626,8 @@ class XoopsBlock extends XoopsObject
      */
     function countSimilarBlocks($moduleId, $funcNum, $showFunc = null)
     {
-        $funcNum = intval($funcNum);
-        $moduleId = intval($moduleId);
+        $funcNum = (int)($funcNum);
+        $moduleId = (int)($moduleId);
         if ($funcNum < 1 || $moduleId < 1) {
             // invalid query
             return 0;

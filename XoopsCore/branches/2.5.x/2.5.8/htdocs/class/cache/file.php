@@ -196,7 +196,7 @@ class XoopsCacheFile extends XoopsCacheEngine
         }
         $cachetime = $this->file->read(11);
 
-        if ($cachetime !== false && intval($cachetime) < time()) {
+        if ($cachetime !== false && (int)($cachetime) < time()) {
             $this->file->close();
             $this->file->delete();
 

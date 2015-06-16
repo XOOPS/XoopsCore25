@@ -392,7 +392,7 @@ function xoops_getUserTimestamp($time, $timeoffset = '')
             $timeoffset = $xoopsConfig['default_TZ'];
         }
     }
-    $usertimestamp = intval($time) + (floatval($timeoffset) - $xoopsConfig['server_TZ']) * 3600;
+    $usertimestamp = (int)($time) + (floatval($timeoffset) - $xoopsConfig['server_TZ']) * 3600;
 
     return $usertimestamp;
 }
@@ -622,7 +622,7 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
         $xoopsTpl->assign('time', 300);
         $xoopsTpl->assign('xoops_logdump', $xoopsLogger->dump());
     } else {
-        $xoopsTpl->assign('time', intval($time));
+        $xoopsTpl->assign('time', (int)($time));
     }
     if (!empty($_SERVER['REQUEST_URI']) && $addredirect && strstr($url, 'user.php')) {
         if (!strstr($url, '?')) {
@@ -744,8 +744,8 @@ function xoops_getrank($rank_id = 0, $posts = 0)
 {
     $db =& XoopsDatabaseFactory::getDatabaseConnection();
     $myts =& MyTextSanitizer::getInstance();
-    $rank_id = intval($rank_id);
-    $posts = intval($posts);
+    $rank_id = (int)($rank_id);
+    $posts = (int)($posts);
     if ($rank_id != 0) {
         $sql = "SELECT rank_title AS title, rank_image AS image FROM " . $db->prefix('ranks') . " WHERE rank_id = " . $rank_id;
     } else {
@@ -827,9 +827,9 @@ function xoops_notification_deletebyitem($module_id, $category, $item_id)
 function xoops_comment_count($module_id, $item_id = null)
 {
     $comment_handler =& xoops_gethandler('comment');
-    $criteria = new CriteriaCompo(new Criteria('com_modid', intval($module_id)));
+    $criteria = new CriteriaCompo(new Criteria('com_modid', (int)($module_id)));
     if (isset($item_id)) {
-        $criteria->add(new Criteria('com_itemid', intval($item_id)));
+        $criteria->add(new Criteria('com_itemid', (int)($item_id)));
     }
 
     return $comment_handler->getCount($criteria);
@@ -844,7 +844,7 @@ function xoops_comment_count($module_id, $item_id = null)
  */
 function xoops_comment_delete($module_id, $item_id)
 {
-    if (intval($module_id) > 0 && intval($item_id) > 0) {
+    if ((int)($module_id) > 0 && (int)($item_id) > 0) {
         $comment_handler =& xoops_gethandler('comment');
         $comments =& $comment_handler->getByItemId($module_id, $item_id);
         if (is_array($comments)) {
@@ -888,7 +888,7 @@ function xoops_comment_delete($module_id, $item_id)
 function xoops_groupperm_deletebymoditem($module_id, $perm_name, $item_id = null)
 {
     // do not allow system permissions to be deleted
-    if (intval($module_id) <= 1) {
+    if ((int)($module_id) <= 1) {
         return false;
     }
     $gperm_handler =& xoops_gethandler('groupperm');

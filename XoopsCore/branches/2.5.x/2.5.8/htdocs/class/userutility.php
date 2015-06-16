@@ -300,7 +300,7 @@ class XoopsUserUtility
     static function getUnameFromId($userid, $usereal = false, $linked = false)
     {
         $myts =& MyTextSanitizer::getInstance();
-        $userid = intval($userid);
+        $userid = (int)($userid);
         $username = '';
         if ($userid > 0) {
             $member_handler = &xoops_gethandler('member');

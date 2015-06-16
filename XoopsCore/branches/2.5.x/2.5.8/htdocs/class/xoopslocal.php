@@ -133,11 +133,11 @@ class XoopsLocalAbstract
         if ($format == 'rss' || $format == 'r') {
             $TIME_ZONE = '';
             if (isset($GLOBALS['xoopsConfig']['server_TZ'])) {
-                $server_TZ = abs(intval($GLOBALS['xoopsConfig']['server_TZ'] * 3600.0));
+                $server_TZ = abs((int)($GLOBALS['xoopsConfig']['server_TZ'] * 3600.0));
                 $prefix = ($GLOBALS['xoopsConfig']['server_TZ'] < 0) ? ' -' : ' +';
                 $TIME_ZONE = $prefix . date('Hi', $server_TZ);
             }
-            $date = gmdate('D, d M Y H:i:s', intval($time)) . $TIME_ZONE;
+            $date = gmdate('D, d M Y H:i:s', (int)($time)) . $TIME_ZONE;
 
             return $date;
         }

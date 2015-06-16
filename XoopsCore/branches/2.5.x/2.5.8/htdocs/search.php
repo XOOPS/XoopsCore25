@@ -55,19 +55,19 @@ if (!empty($_GET['andor'])) {
 }
 $mid = $uid = $start = 0;
 if (!empty($_GET['mid'])) {
-    $mid = intval($_GET['mid']);
+    $mid = (int)($_GET['mid']);
 } else if (!empty($_POST['mid'])) {
-    $mid = intval($_POST['mid']);
+    $mid = (int)($_POST['mid']);
 }
 if (!empty($_GET['uid'])) {
-    $uid = intval($_GET['uid']);
+    $uid = (int)($_GET['uid']);
 } else if (!empty($_POST['uid'])) {
-    $uid = intval($_POST['uid']);
+    $uid = (int)($_POST['uid']);
 }
 if (!empty($_GET['start'])) {
-    $start = intval($_GET['start']);
+    $start = (int)($_GET['start']);
 } else if (!empty($_POST['start'])) {
-    $start = intval($_POST['start']);
+    $start = (int)($_POST['start']);
 }
 
 $queries = array();
@@ -162,7 +162,7 @@ switch ($action) {
         }
         echo '<br />';
         foreach ($mids as $mid) {
-            $mid = intval($mid);
+            $mid = (int)($mid);
             if (in_array($mid, $available_modules)) {
                 $module = $modules[$mid];
                 $results = $module->search($queries, $andor, 5, 0);
@@ -181,12 +181,12 @@ switch ($action) {
                         }
                         echo "<strong><a href='" . $results[$i]['link'] . "' title=''>" . $myts->htmlspecialchars($results[$i]['title']) . "</a></strong><br />\n";
                         echo "<span class='x-small'>";
-                        $results[$i]['uid'] = @intval($results[$i]['uid']);
+                        $results[$i]['uid'] = @(int)($results[$i]['uid']);
                         if (!empty($results[$i]['uid'])) {
                             $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
                             echo "&nbsp;&nbsp;<a href='" . XOOPS_URL . "/userinfo.php?uid=" . $results[$i]['uid'] . "' title=''>" . $uname . "</a>\n";
                         }
-                        echo !empty($results[$i]['time']) ? " (" . formatTimestamp(intval($results[$i]['time'])) . ")" : "";
+                        echo !empty($results[$i]['time']) ? " (" . formatTimestamp((int)($results[$i]['time'])) . ")" : "";
                         echo "</span><br />\n";
                     }
                     if ($count >= 5) {
@@ -245,12 +245,12 @@ switch ($action) {
                 }
                 echo "<strong><a href='" . $results[$i]['link'] . "'>" . $myts->htmlspecialchars($results[$i]['title']) . "</a></strong><br />\n";
                 echo "<span class='x-small'>";
-                $results[$i]['uid'] = @intval($results[$i]['uid']);
+                $results[$i]['uid'] = @(int)($results[$i]['uid']);
                 if (!empty($results[$i]['uid'])) {
                     $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
                     echo "&nbsp;&nbsp;<a href='" . XOOPS_URL . "/userinfo.php?uid=" . $results[$i]['uid'] . "'>" . $uname . "</a>\n";
                 }
-                echo !empty($results[$i]['time']) ? " (" . formatTimestamp(intval($results[$i]['time'])) . ")" : "";
+                echo !empty($results[$i]['time']) ? " (" . formatTimestamp((int)($results[$i]['time'])) . ")" : "";
                 echo "</span><br />\n";
             }
             echo '<table><tr>';

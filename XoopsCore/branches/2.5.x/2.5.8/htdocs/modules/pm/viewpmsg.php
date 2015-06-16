@@ -31,7 +31,7 @@ include $GLOBALS['xoops']->path('header.php');
 $valid_op_requests = array('out', 'save', 'in');
 $_REQUEST['op'] = !empty($_REQUEST['op']) && in_array($_REQUEST['op'], $valid_op_requests) ? $_REQUEST['op'] : 'in' ;
 
-$start = empty($_REQUEST["start"]) ? 0 : intval($_REQUEST["start"]);
+$start = empty($_REQUEST["start"]) ? 0 : (int)($_REQUEST["start"]);
 $pm_handler =& xoops_getModuleHandler('message');
 
 if (isset($_POST['delete_messages']) && (isset($_POST['msg_id']) || isset($_POST['msg_ids']))) {

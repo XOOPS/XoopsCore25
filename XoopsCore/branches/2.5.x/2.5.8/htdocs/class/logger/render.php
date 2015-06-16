@@ -146,7 +146,7 @@ if (empty($mode) || $mode == 'blocks') {
     $ret .= '<table id="xo-logger-blocks" class="outer"><tr><th colspan="2">' . _LOGGER_BLOCKS . '</th></tr>';
     foreach ($this->blocks as $b) {
         if ($b['cached']) {
-            $ret .= '<tr><td class="' . $class . '"><strong>' . $b['name'] . ':</strong> ' . sprintf(_LOGGER_CACHED, intval($b['cachetime'])) . '</td></tr>';
+            $ret .= '<tr><td class="' . $class . '"><strong>' . $b['name'] . ':</strong> ' . sprintf(_LOGGER_CACHED, (int)($b['cachetime'])) . '</td></tr>';
         } else {
             $ret .= '<tr><td class="' . $class . '"><strong>' . $b['name'] . ':</strong> ' . _LOGGER_NOT_CACHED . '</td></tr>';
         }

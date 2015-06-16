@@ -108,7 +108,7 @@ switch ($op) {
             $xoBreadCrumb->render();
             $error = '';
             foreach ($_REQUEST['memberslist_id'] as $del) {
-                $del = intval($del);
+                $del = (int)($del);
                 $user =& $member_handler->getUser($del);
                 $groups = $user->getGroups();
                 if (in_array(XOOPS_GROUP_ADMIN, $groups)) {
@@ -273,7 +273,7 @@ switch ($op) {
                     } else {
                         $groups_failed = array();
                         foreach ($_REQUEST['groups'] as $group) {
-                            $group = intval($group);
+                            $group = (int)($group);
                             if (!$member_handler->addUserToGroup($group, $newuser->getVar('uid'))) {
                                 $groups_failed[] = $group;
                             }
@@ -435,8 +435,8 @@ switch ($op) {
             $form->addElement($op_hidden);
 
             // if this is to find users for a specific group
-            if ( !empty($_GET['group']) && intval($_GET['group']) > 0 ) {
-                $group_hidden = new XoopsFormHidden("group", intval($_GET['group']));
+            if ( !empty($_GET['group']) && (int)($_GET['group']) > 0 ) {
+                $group_hidden = new XoopsFormHidden("group", (int)($_GET['group']));
                 $form->addElement($group_hidden);
             }
             $form->addElement($submit_button);
@@ -453,7 +453,7 @@ switch ($op) {
 
             $criteria = new CriteriaCompo();
             if ( !empty($_REQUEST['user_uname']) ) {
-                $match = (!empty($_REQUEST['user_uname_match'])) ? intval($_REQUEST['user_uname_match']) : XOOPS_MATCH_START;
+                $match = (!empty($_REQUEST['user_uname_match'])) ? (int)($_REQUEST['user_uname_match']) : XOOPS_MATCH_START;
                 switch ($match) {
                 case XOOPS_MATCH_START:
                     $criteria->add(new Criteria('uname', $myts->addSlashes(trim($_REQUEST['user_uname'])).'%', 'LIKE'));
@@ -472,7 +472,7 @@ switch ($op) {
                 $requete_search .= 'uname : '.$_REQUEST['user_uname'].' et user_uname_match='.$_REQUEST['user_uname_match'].'<br />';
             }
             if ( !empty($_REQUEST['user_name']) ) {
-                $match = (!empty($_REQUEST['user_name_match'])) ? intval($_REQUEST['user_name_match']) : XOOPS_MATCH_START;
+                $match = (!empty($_REQUEST['user_name_match'])) ? (int)($_REQUEST['user_name_match']) : XOOPS_MATCH_START;
                 switch ($match) {
                 case XOOPS_MATCH_START:
                     $criteria->add(new Criteria('name', $myts->addSlashes(trim($_REQUEST['user_name'])).'%', 'LIKE'));
@@ -491,7 +491,7 @@ switch ($op) {
                 $requete_search .= 'name : '.$_REQUEST['user_name'].' et user_name_match='.$_REQUEST['user_name_match'].'<br />';
             }
             if ( !empty($_REQUEST['user_email']) ) {
-                $match = (!empty($_REQUEST['user_email_match'])) ? intval($_REQUEST['user_email_match']) : XOOPS_MATCH_START;
+                $match = (!empty($_REQUEST['user_email_match'])) ? (int)($_REQUEST['user_email_match']) : XOOPS_MATCH_START;
                 switch ($match) {
                 case XOOPS_MATCH_START:
                     $criteria->add(new Criteria('email', $myts->addSlashes(trim($_REQUEST['user_email'])).'%', 'LIKE'));
@@ -516,7 +516,7 @@ switch ($op) {
                 $requete_search .= 'url : '.$_REQUEST['user_url'].'<br />';
             }
             if ( !empty($_REQUEST['user_icq']) ) {
-                $match = (!empty($_REQUEST['user_icq_match'])) ? intval($_REQUEST['user_icq_match']) : XOOPS_MATCH_START;
+                $match = (!empty($_REQUEST['user_icq_match'])) ? (int)($_REQUEST['user_icq_match']) : XOOPS_MATCH_START;
                 switch ($match) {
                 case XOOPS_MATCH_START:
                     $criteria->add(new Criteria('user_icq', $myts->addSlashes(trim($_REQUEST['user_icq'])).'%', 'LIKE'));
@@ -535,7 +535,7 @@ switch ($op) {
                 $requete_search .= 'icq : '.$_REQUEST['user_icq'].' et user_icq_match='.$_REQUEST['user_icq_match'].'<br />';
             }
             if ( !empty($_REQUEST['user_aim']) ) {
-                $match = (!empty($_REQUEST['user_aim_match'])) ? intval($_REQUEST['user_aim_match']) : XOOPS_MATCH_START;
+                $match = (!empty($_REQUEST['user_aim_match'])) ? (int)($_REQUEST['user_aim_match']) : XOOPS_MATCH_START;
                 switch ($match) {
                 case XOOPS_MATCH_START:
                     $criteria->add(new Criteria('user_aim', $myts->addSlashes(trim($_REQUEST['user_aim'])).'%', 'LIKE'));
@@ -554,7 +554,7 @@ switch ($op) {
                 $requete_search .= 'aim : '.$_REQUEST['user_aim'].' et user_aim_match='.$_REQUEST['user_aim_match'].'<br />';
             }
             if ( !empty($_REQUEST['user_yim']) ) {
-                $match = (!empty($_REQUEST['user_yim_match'])) ? intval($_REQUEST['user_yim_match']) : XOOPS_MATCH_START;
+                $match = (!empty($_REQUEST['user_yim_match'])) ? (int)($_REQUEST['user_yim_match']) : XOOPS_MATCH_START;
                 switch ($match) {
                 case XOOPS_MATCH_START:
                     $criteria->add(new Criteria('user_yim', $myts->addSlashes(trim($_REQUEST['user_yim'])).'%', 'LIKE'));
@@ -573,7 +573,7 @@ switch ($op) {
                 $requete_search .= 'yim : '.$_REQUEST['user_yim'].' et user_yim_match='.$_REQUEST['user_yim_match'].'<br />';
             }
             if ( !empty($_REQUEST['user_msnm']) ) {
-                $match = (!empty($_REQUEST['user_msnm_match'])) ? intval($_REQUEST['user_msnm_match']) : XOOPS_MATCH_START;
+                $match = (!empty($_REQUEST['user_msnm_match'])) ? (int)($_REQUEST['user_msnm_match']) : XOOPS_MATCH_START;
                 switch ($match) {
                 case XOOPS_MATCH_START:
                     $criteria->add(new Criteria('user_msnm', $myts->addSlashes(trim($_REQUEST['user_msnm'])).'%', 'LIKE'));
@@ -611,7 +611,7 @@ switch ($op) {
             }
 
             if ( !empty($_REQUEST['user_lastlog_more']) && is_numeric($_REQUEST['user_lastlog_more']) ) {
-                $f_user_lastlog_more = intval(trim($_REQUEST['user_lastlog_more']));
+                $f_user_lastlog_more = (int)(trim($_REQUEST['user_lastlog_more']));
                 $time = time() - (60 * 60 * 24 * $f_user_lastlog_more);
                 if ($time > 0) {
                     $criteria->add(new Criteria('last_login', $time, '<'));
@@ -621,7 +621,7 @@ switch ($op) {
             }
 
             if ( !empty($_REQUEST['user_lastlog_less']) && is_numeric($_REQUEST['user_lastlog_less']) ) {
-                $f_user_lastlog_less = intval(trim($_REQUEST['user_lastlog_less']));
+                $f_user_lastlog_less = (int)(trim($_REQUEST['user_lastlog_less']));
                 $time = time() - (60 * 60 * 24 * $f_user_lastlog_less);
                 if ($time > 0) {
                     $criteria->add(new Criteria('last_login', $time, '>'));
@@ -631,7 +631,7 @@ switch ($op) {
             }
 
             if ( !empty($_REQUEST['user_reg_more']) && is_numeric($_REQUEST['user_reg_more']) ) {
-                $f_user_reg_more = intval(trim($_REQUEST['user_reg_more']));
+                $f_user_reg_more = (int)(trim($_REQUEST['user_reg_more']));
                 $time = time() - (60 * 60 * 24 * $f_user_reg_more);
                 if ($time > 0) {
                     $criteria->add(new Criteria('user_regdate', $time, '<'));
@@ -641,7 +641,7 @@ switch ($op) {
             }
 
             if ( !empty($_REQUEST['user_reg_less']) && is_numeric($_REQUEST['user_reg_less']) ) {
-                $f_user_reg_less = intval($_REQUEST['user_reg_less']);
+                $f_user_reg_less = (int)($_REQUEST['user_reg_less']);
                 $time = time() - (60 * 60 * 24 * $f_user_reg_less);
                 if ($time > 0) {
                     $criteria->add(new Criteria('user_regdate', $time, '>'));
@@ -651,13 +651,13 @@ switch ($op) {
             }
 
             if ( !empty($_REQUEST['user_posts_more']) && is_numeric($_REQUEST['user_posts_more']) ) {
-                $criteria->add(new Criteria('posts', intval($_REQUEST['user_posts_more']), '>'));
+                $criteria->add(new Criteria('posts', (int)($_REQUEST['user_posts_more']), '>'));
                 $requete_pagenav .= '&amp;user_posts_more='. htmlspecialchars($_REQUEST["user_posts_more"]);
                 $requete_search .= 'posts plus de : '.$_REQUEST['user_posts_more'].'<br />';
             }
 
             if ( !empty($_REQUEST['user_posts_less']) && is_numeric($_REQUEST['user_posts_less']) ) {
-                $criteria->add(new Criteria('posts', intval($_REQUEST['user_posts_less']), '<'));
+                $criteria->add(new Criteria('posts', (int)($_REQUEST['user_posts_less']), '<'));
                 $requete_pagenav .= '&amp;user_posts_less='. htmlspecialchars($_REQUEST["user_posts_less"]);
                 $requete_search .= 'post moins de : '.$_REQUEST['user_posts_less'].'<br />';
             }
@@ -723,7 +723,7 @@ switch ($op) {
                 $requete_search .= 'limit : '.$user_limit.'<br />';
             }
 
-            $start = (!empty($_REQUEST['start'])) ? intval($_REQUEST['start']) : 0;
+            $start = (!empty($_REQUEST['start'])) ? (int)($_REQUEST['start']) : 0;
 
             if ( isset($_REQUEST['selgroups']) ) {
                 if ($_REQUEST['selgroups'] != 0) {

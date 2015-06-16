@@ -357,7 +357,7 @@ if (empty($_POST["user_submit"])) {
     include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
     $form = new XoopsThemeForm(_MA_USER_FINDUS, "uesr_findform", "findusers.php", 'post', true);
-    $mode = intval(@$_REQUEST["mode"]);
+    $mode = (int)(@$_REQUEST["mode"]);
     if (FINDUSERS_MODE_QUERY == $mode) {
         $form->addElement(new XoopsFormTextArea(_MA_USER_QUERY, "query", @$_POST["query"]));
     } else {
@@ -413,7 +413,7 @@ if (empty($_POST["user_submit"])) {
 
             $ranks = $rank_handler->getList();
             $ranks[0] = _ALL;
-            $rank_select = new XoopsFormSelect(_MA_USER_RANK, 'rank', intval(@$_POST['rank']));
+            $rank_select = new XoopsFormSelect(_MA_USER_RANK, 'rank', (int)(@$_POST['rank']));
             $rank_select->addOptionArray($ranks);
             $form->addElement($url_text);
             $form->addElement($location_text);
@@ -453,7 +453,7 @@ if (empty($_POST["user_submit"])) {
         $form->addElement($sort_select);
         $form->addElement($order_select);
     }
-    $form->addElement(new XoopsFormText(_MA_USER_LIMIT, "limit", 6, 6, empty($_REQUEST["limit"]) ? 50 : intval($_REQUEST["limit"])));
+    $form->addElement(new XoopsFormText(_MA_USER_LIMIT, "limit", 6, 6, empty($_REQUEST["limit"]) ? 50 : (int)($_REQUEST["limit"])));
     $form->addElement(new XoopsFormHidden("mode", $mode));
     $form->addElement(new XoopsFormHidden("target", @$_REQUEST["target"]));
     $form->addElement(new XoopsFormHidden("multiple", @$_REQUEST["multiple"]));
@@ -476,13 +476,13 @@ if (empty($_POST["user_submit"])) {
 
 } else {
     $myts =& MyTextSanitizer::getInstance();
-    $limit = empty($_POST['limit']) ? 50 : intval($_POST['limit']);
-    $start = intval(@$_POST['start']);
+    $limit = empty($_POST['limit']) ? 50 : (int)($_POST['limit']);
+    $start = (int)(@$_POST['start']);
     if (!isset($_POST["query"])) {
         $criteria = new CriteriaCompo();
         foreach (array_keys($items_match) as $var) {
             if (!empty($_POST[$var])) {
-                $match = (! empty($_POST["{$var}_match"])) ? intval($_POST["{$var}_match"]) : XOOPS_MATCH_START;
+                $match = (! empty($_POST["{$var}_match"])) ? (int)($_POST["{$var}_match"]) : XOOPS_MATCH_START;
                 $value = str_replace("_", "\\\_", $myts->addSlashes(trim($_POST[$var])));
                 switch ($match) {
                     case XOOPS_MATCH_START:
@@ -517,23 +517,23 @@ if (empty($_POST["user_submit"])) {
             "last_login" ,
             "user_regdate") as $var) {
             if (!empty($_POST["{$var}_more"]) && is_numeric($_POST["{$var}_more"])) {
-                $time = time() - (60 * 60 * 24 * intval(trim($_POST["{$var}_more"])));
+                $time = time() - (60 * 60 * 24 * (int)(trim($_POST["{$var}_more"])));
                 if ($time > 0) {
                     $criteria->add(new Criteria($var, $time, '<='));
                 }
             }
             if (!empty($_POST["{$var}_less"]) && is_numeric($_POST["{$var}_less"])) {
-                $time = time() - (60 * 60 * 24 * intval(trim($_POST["{$var}_less"])));
+                $time = time() - (60 * 60 * 24 * (int)(trim($_POST["{$var}_less"])));
                 if ($time > 0) {
                     $criteria->add(new Criteria($var, $time, '>='));
                 }
             }
         }
         if (!empty($_POST['posts_more']) && is_numeric($_POST['posts_more'])) {
-            $criteria->add(new Criteria('posts', intval($_POST['posts_more']), '<='));
+            $criteria->add(new Criteria('posts', (int)($_POST['posts_more']), '<='));
         }
         if (!empty($_POST['posts_less']) && is_numeric($_POST['posts_less'])) {
-            $criteria->add(new Criteria('posts', intval($_POST['posts_less']), '>='));
+            $criteria->add(new Criteria('posts', (int)($_POST['posts_less']), '>='));
         }
         if (!empty($_POST['user_mailok'])) {
             if ($_POST['user_mailok'] == "mailng") {
@@ -554,13 +554,13 @@ if (empty($_POST["user_submit"])) {
                 1 => 1 ,
                 2 => 0 ,
                 3 => - 1);
-            $level = isset($level_value[intval($_POST["level"])]) ? $level_value[intval($_POST["level"])] : 1;
+            $level = isset($level_value[(int)($_POST["level"])]) ? $level_value[(int)($_POST["level"])] : 1;
             $criteria->add(new Criteria("level", $level));
         }
         if (!empty($_POST['rank'])) {
             $rank_obj = $rank_handler->get($_POST['rank']);
             if ($rank_obj->getVar("rank_special")) {
-                $criteria->add(new Criteria("rank", intval($_POST['rank'])));
+                $criteria->add(new Criteria("rank", (int)($_POST['rank'])));
             } else {
                 if ($rank_obj->getVar("rank_min")) {
                     $criteria->add(new Criteria('posts', $rank_obj->getVar("rank_min"), '>='));
@@ -619,7 +619,7 @@ if (empty($_POST["user_submit"])) {
 
     echo $js_adduser = '
         <script type="text/javascript">
-        var multiple=' . intval($_REQUEST['multiple']) . ';
+        var multiple=' . (int)($_REQUEST['multiple']) . ';
         function addusers()
         {
             var sel_str = "";
@@ -651,7 +651,7 @@ if (empty($_POST["user_submit"])) {
     ';
 
     echo "</html><body>";
-    echo "<a href='findusers.php?target=" . htmlspecialchars(@$_POST["target"], ENT_QUOTES) . "&amp;multiple=" . intval(@$_POST["multiple"]) . "&amp;token=" . htmlspecialchars($token, ENT_QUOTES) . "'>" . _MA_USER_FINDUS . "</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;" . _MA_USER_RESULTS . "<br /><br />";
+    echo "<a href='findusers.php?target=" . htmlspecialchars(@$_POST["target"], ENT_QUOTES) . "&amp;multiple=" . (int)(@$_POST["multiple"]) . "&amp;token=" . htmlspecialchars($token, ENT_QUOTES) . "'>" . _MA_USER_FINDUS . "</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;" . _MA_USER_RESULTS . "<br /><br />";
     if (empty($start) && empty($foundusers)) {
         echo "<h4>" . _MA_USER_NOFOUND, "</h4>";
         $hiddenform = "<form name='findnext' action='findusers.php' method='post'>";

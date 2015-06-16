@@ -27,7 +27,7 @@ if (('system' != $xoopsModule->getVar('dirname') && XOOPS_COMMENT_APPROVENONE ==
 
 xoops_loadLanguage('comment');
 
-$com_itemid = isset($_GET['com_itemid']) ? intval($_GET['com_itemid']) : 0;
+$com_itemid = isset($_GET['com_itemid']) ? (int)($_GET['com_itemid']) : 0;
 if ($com_itemid > 0) {
     include_once $GLOBALS['xoops']->path('header.php');
     if (isset($com_replytitle)) {
@@ -60,7 +60,7 @@ if ($com_itemid > 0) {
             $com_order = $xoopsConfig['com_order'];
         }
     } else {
-        $com_order = intval($_GET['com_order']);
+        $com_order = (int)($_GET['com_order']);
     }
     $com_id = 0;
     $noname = 0;

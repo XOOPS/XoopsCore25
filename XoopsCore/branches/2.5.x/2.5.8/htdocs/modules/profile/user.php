@@ -92,7 +92,7 @@ if ($op == 'logout') {
 }
 
 if ($op == 'actv') {
-    $id = intval($_GET['id']);
+    $id = (int)($_GET['id']);
     $actkey = trim($_GET['actkey']);
     redirect_header("activate.php?op=actv&amp;id={$id}&amp;actkey={$actkey}", 1, '');
     exit();
@@ -111,7 +111,7 @@ if ($op == 'delete') {
             redirect_header(XOOPS_URL . '/', 5, _US_ADMINNO);
             exit();
         }
-        $ok = !isset($_POST['ok']) ? 0 : intval($_POST['ok']);
+        $ok = !isset($_POST['ok']) ? 0 : (int)($_POST['ok']);
         if ($ok != 1) {
             include __DIR__ . DIRECTORY_SEPARATOR . 'header.php';
             xoops_confirm(array('op' => 'delete', 'ok' => 1), 'user.php', _US_SURETODEL . '<br/>' . _US_REMOVEINFO);

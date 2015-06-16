@@ -161,7 +161,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea
                 $GLOBALS['xoTheme']->addScript('/class/textsanitizer/image/image.js', array('type' => 'text/javascript'));
             }
             $button = // "<br />" .
-"<input " . "   id='" . $this->getName() . "_preview_button'" . "   type='button' " . "   value='" . _PREVIEW . "' " . "   onclick=\"form_instantPreview('" . XOOPS_URL . "', '" . $this->getName() . "','" . XOOPS_URL . "/images', " . intval($this->doHtml) . ", '" . $GLOBALS['xoopsSecurity']->createToken() . "')\"" . " />";
+"<input " . "   id='" . $this->getName() . "_preview_button'" . "   type='button' " . "   value='" . _PREVIEW . "' " . "   onclick=\"form_instantPreview('" . XOOPS_URL . "', '" . $this->getName() . "','" . XOOPS_URL . "/images', " . (int)($this->doHtml) . ", '" . $GLOBALS['xoopsSecurity']->createToken() . "')\"" . " />";
             $ret .= "<br />" . "<div id='" . $this->getName() . "_hidden' style='display: block;'> " . "   <fieldset>" . "       <legend>" . $button . "</legend>" . "       <div id='" . $this->getName() . "_hidden_data'>" . _XOOPS_FORM_PREVIEW_CONTENT . "</div>" . "   </fieldset>" . "</div>";
         }
         // Load javascript

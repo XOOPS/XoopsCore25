@@ -1720,8 +1720,8 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
         $ret = array();
         $catsCount = array();
         $sql = 'SELECT c.parentid, i.categoryid, COUNT(*) AS count FROM ' . $this->db->prefix('publisher_items') . ' AS i INNER JOIN ' . $this->db->prefix('publisher_categories') . ' AS c ON i.categoryid=c.categoryid';
-        if (intval($cat_id) > 0) {
-            $sql .= ' WHERE i.categoryid = ' . intval($cat_id);
+        if ((int)($cat_id) > 0) {
+            $sql .= ' WHERE i.categoryid = ' . (int)($cat_id);
             $sql .= ' AND i.status IN (' . implode(',', $status) . ')';
         } else {
             $sql .= ' WHERE i.status IN (' . implode(',', $status) . ')';

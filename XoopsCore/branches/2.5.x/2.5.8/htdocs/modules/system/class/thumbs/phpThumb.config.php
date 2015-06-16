@@ -111,7 +111,7 @@ if (phpthumb_functions::version_compare_replacement(phpversion(), '4.3.2', '>=')
     $PHPTHUMB_CONFIG['max_source_pixels'] = 0;         // no memory limit
 } else {
     // calculate default max_source_pixels as 1/6 of memory limit configuration
-    $PHPTHUMB_CONFIG['max_source_pixels'] = round(max(intval(ini_get('memory_limit')), intval(get_cfg_var('memory_limit'))) * 1048576 / 6);
+    $PHPTHUMB_CONFIG['max_source_pixels'] = round(max((int)(ini_get('memory_limit')), (int)(get_cfg_var('memory_limit'))) * 1048576 / 6);
     //$PHPTHUMB_CONFIG['max_source_pixels'] = 0;       // no memory limit
     //$PHPTHUMB_CONFIG['max_source_pixels'] = 1920000; // allow 1600x1200 images (2Mpx), no larger (about 12MB memory required)
     //$PHPTHUMB_CONFIG['max_source_pixels'] = 2795000; // 16MB memory limit

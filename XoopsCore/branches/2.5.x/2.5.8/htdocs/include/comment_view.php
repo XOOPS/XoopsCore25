@@ -32,7 +32,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
     xoops_loadLanguage('comment');
 
     $comment_config = $xoopsModule->getInfo('comments');
-    $com_itemid = (trim($comment_config['itemName']) != '' && isset($_GET[$comment_config['itemName']])) ? intval($_GET[$comment_config['itemName']]) : 0;
+    $com_itemid = (trim($comment_config['itemName']) != '' && isset($_GET[$comment_config['itemName']])) ? (int)($_GET[$comment_config['itemName']]) : 0;
     if ($com_itemid > 0) {
         $com_mode = isset($_GET['com_mode']) ? htmlspecialchars(trim($_GET['com_mode']), ENT_QUOTES) : '';
         if ($com_mode == '') {
@@ -49,7 +49,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
                 $com_order = $xoopsConfig['com_order'];
             }
         } else {
-            $com_order = intval($_GET['com_order']);
+            $com_order = (int)($_GET['com_order']);
         }
         if ($com_order != XOOPS_COMMENT_OLD1ST) {
             $xoopsTpl->assign(array(
@@ -69,8 +69,8 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
             $admin_view = false;
         }
 
-        $com_id = isset($_GET['com_id']) ? intval($_GET['com_id']) : 0;
-        $com_rootid = isset($_GET['com_rootid']) ? intval($_GET['com_rootid']) : 0;
+        $com_id = isset($_GET['com_id']) ? (int)($_GET['com_id']) : 0;
+        $com_rootid = isset($_GET['com_rootid']) ? (int)($_GET['com_rootid']) : 0;
         $comment_handler = & xoops_gethandler('comment');
         if ($com_mode == 'flat') {
             $comments = $comment_handler->getByItemId($xoopsModule->getVar('mid'), $com_itemid, $com_dborder);

@@ -164,7 +164,7 @@ class XoopsImageHandler extends XoopsObjectHandler
     function &get($id, $getbinary = true)
     {
         $image = false;
-        $id = intval($id);
+        $id = (int)($id);
         if ($id > 0) {
             $sql = 'SELECT i.*, b.image_body FROM ' . $this->db->prefix('image') . ' i LEFT JOIN ' . $this->db->prefix('imagebody') . ' b ON b.image_id=i.image_id WHERE i.image_id=' . $id;
             if (!$result = $this->db->query($sql)) {
@@ -331,9 +331,9 @@ class XoopsImageHandler extends XoopsObjectHandler
      **/
     function getList($imgcat_id, $image_display = null)
     {
-        $criteria = new CriteriaCompo(new Criteria('imgcat_id', intval($imgcat_id)));
+        $criteria = new CriteriaCompo(new Criteria('imgcat_id', (int)($imgcat_id)));
         if (isset($image_display)) {
-            $criteria->add(new Criteria('image_display', intval($image_display)));
+            $criteria->add(new Criteria('image_display', (int)($image_display)));
         }
         $images = $this->getObjects($criteria, false, true);
         $ret = array();

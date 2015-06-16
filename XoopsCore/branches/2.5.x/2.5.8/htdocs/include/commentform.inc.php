@@ -58,10 +58,10 @@ if (!$xoopsUser) {
     $cform->addElement(new XoopsFormCaptcha());
 }
 
-$cform->addElement(new XoopsFormHidden('pid', intval($pid)));
-$cform->addElement(new XoopsFormHidden('comment_id', intval($comment_id)));
-$cform->addElement(new XoopsFormHidden('item_id', intval($item_id)));
-$cform->addElement(new XoopsFormHidden('order', intval($order)));
+$cform->addElement(new XoopsFormHidden('pid', (int)($pid)));
+$cform->addElement(new XoopsFormHidden('comment_id', (int)($comment_id)));
+$cform->addElement(new XoopsFormHidden('item_id', (int)($item_id)));
+$cform->addElement(new XoopsFormHidden('order', (int)($order)));
 $button_tray = new XoopsFormElementTray('' ,'&nbsp;');
 $button_tray->addElement(new XoopsFormButton('', 'preview', _PREVIEW, 'submit'));
 $button_tray->addElement(new XoopsFormButton('', 'post', _CM_POSTCOMMENT, 'submit'));

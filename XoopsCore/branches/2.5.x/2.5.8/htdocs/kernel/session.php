@@ -168,7 +168,7 @@ class XoopsSessionHandler
             return true;
         }
 
-        $mintime = time() - intval($expire);
+        $mintime = time() - (int)($expire);
         $sql = sprintf('DELETE FROM %s WHERE sess_updated < %u', $this->db->prefix('session'), $mintime);
         return $this->db->queryF($sql);
     }
@@ -253,7 +253,7 @@ class XoopsSessionHandler
     {
         global $xoopsConfig;
         $session_name = ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '') ? $xoopsConfig['session_name'] : session_name();
-        $session_expire = !is_null($expire) ? intval($expire) : (($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '') ? $xoopsConfig['session_expire'] * 60 : ini_get("session.cookie_lifetime"));
+        $session_expire = !is_null($expire) ? (int)($expire) : (($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '') ? $xoopsConfig['session_expire'] * 60 : ini_get("session.cookie_lifetime"));
         $session_id = empty($sess_id) ? session_id() : $sess_id;
         setcookie($session_name, $session_id, $session_expire ? time() + $session_expire : 0, '/', XOOPS_COOKIE_DOMAIN, false, true);
     }

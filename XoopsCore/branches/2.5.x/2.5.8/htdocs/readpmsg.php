@@ -33,11 +33,11 @@ if (!is_object($xoopsUser)) {
             exit();
         } elseif (empty($_REQUEST['ok'])) {
             include $GLOBALS['xoops']->path('header.php');
-            xoops_confirm(array('ok' => 1, 'delete' => 1, 'msg_id'=> intval($_POST['msg_id'])), $_SERVER['REQUEST_URI'], _PM_SURE_TO_DELETE);
+            xoops_confirm(array('ok' => 1, 'delete' => 1, 'msg_id'=> (int)($_POST['msg_id'])), $_SERVER['REQUEST_URI'], _PM_SURE_TO_DELETE);
             include $GLOBALS['xoops']->path('footer.php');
             exit();
         }
-        $pm =& $pm_handler->get(intval($_POST['msg_id']));
+        $pm =& $pm_handler->get((int)($_POST['msg_id']));
         if (!is_object($pm) || $pm->getVar('to_userid') != $xoopsUser->getVar('uid') || !$pm_handler->delete($pm)) {
             exit();
         } else {
@@ -45,8 +45,8 @@ if (!is_object($xoopsUser)) {
             exit();
         }
     }
-    $start = !empty($_GET['start']) ? intval($_GET['start']) : 0;
-    $total_messages = !empty($_GET['total_messages']) ? intval($_GET['total_messages']) : 0;
+    $start = !empty($_GET['start']) ? (int)($_GET['start']) : 0;
+    $total_messages = !empty($_GET['total_messages']) ? (int)($_GET['total_messages']) : 0;
     include $GLOBALS['xoops']->path('header.php');
     $criteria = new Criteria('to_userid', $xoopsUser->getVar('uid'));
     $criteria->setLimit(1);

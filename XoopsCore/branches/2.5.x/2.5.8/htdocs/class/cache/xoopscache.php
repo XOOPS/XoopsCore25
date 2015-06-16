@@ -247,7 +247,7 @@ class XoopsCache
         if (!$duration) {
             $duration = $settings['duration'];
         }
-        $duration = is_numeric($duration) ? intval($duration) : strtotime($duration) - time();
+        $duration = is_numeric($duration) ? (int)($duration) : strtotime($duration) - time();
 
         if ($duration < 1) {
             return false;
@@ -394,7 +394,7 @@ class XoopsCache
         if (empty($key)) {
             return false;
         }
-        $key = str_replace(array('/', '.'), '_', strval($key));
+        $key = str_replace(array('/', '.'), '_', (string)($key));
 
         return $key;
     }

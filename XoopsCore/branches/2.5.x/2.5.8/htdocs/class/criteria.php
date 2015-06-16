@@ -121,7 +121,7 @@ class CriteriaElement
      */
     function setLimit($limit = 0)
     {
-        $this->limit = intval($limit);
+        $this->limit = (int)($limit);
     }
 
     /**
@@ -139,7 +139,7 @@ class CriteriaElement
      */
     function setStart($start = 0)
     {
-        $this->start = intval($start);
+        $this->start = (int)($start);
     }
 
     /**

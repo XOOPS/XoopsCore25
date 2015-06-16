@@ -57,10 +57,10 @@ if (isset($_SESSION[$opkey])) {
 }
 
 $op           = !isset($_POST[$current_opname]) ? 'register' : $_POST[$current_opname];
-$current_step = isset($_POST['step']) ? intval($_POST['step']) : 0;
+$current_step = isset($_POST['step']) ? (int)($_POST['step']) : 0;
 
 // The newly introduced variable $_SESSION['profile_post'] is contaminated by $_POST, thus we use an old vaiable to hold uid parameter
-$uid = !empty($_SESSION['profile_register_uid']) ? intval($_SESSION['profile_register_uid']) : 0;
+$uid = !empty($_SESSION['profile_register_uid']) ? (int)($_SESSION['profile_register_uid']) : 0;
 
 // First step is already secured by with the captcha Token so lets check the others
 if ($current_step > 0 && !$GLOBALS['xoopsSecurity']->check()) {
@@ -179,7 +179,7 @@ if ($current_step == 1) {
     $url        = isset($_POST['url']) ? $myts->stripSlashesGPC(trim($_POST['url'])) : '';
     $pass       = isset($_POST['pass']) ? $myts->stripSlashesGPC(trim($_POST['pass'])) : '';
     $vpass      = isset($_POST['vpass']) ? $myts->stripSlashesGPC(trim($_POST['vpass'])) : '';
-    $agree_disc = (isset($_POST['agree_disc']) && intval($_POST['agree_disc'])) ? 1 : 0;
+    $agree_disc = (isset($_POST['agree_disc']) && (int)($_POST['agree_disc'])) ? 1 : 0;
 
     if ($GLOBALS['xoopsConfigUser']['reg_dispdsclmr'] != 0 && $GLOBALS['xoopsConfigUser']['reg_disclaimer'] != '') {
         if (empty($agree_disc)) {

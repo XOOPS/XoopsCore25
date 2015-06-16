@@ -23,7 +23,7 @@ include __DIR__ . DIRECTORY_SEPARATOR . 'header.php';
 
 include $GLOBALS['xoops']->path('header.php');
 if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
-    $id = intval($_GET['id']);
+    $id = (int)($_GET['id']);
     $actkey = trim($_GET['actkey']);
     if (empty($id)) {
         redirect_header(XOOPS_URL, 1, '');

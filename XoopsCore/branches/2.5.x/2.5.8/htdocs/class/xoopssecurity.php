@@ -69,7 +69,7 @@ class XoopsSecurity
         }
         $token_data = array(
             'id' => $token_id ,
-            'expire' => time() + intval($timeout));
+            'expire' => time() + (int)($timeout));
         array_push($_SESSION[$name . '_SESSION'], $token_data);
 
         return md5($token_id . $_SERVER['HTTP_USER_AGENT'] . XOOPS_DB_PREFIX);

@@ -30,7 +30,7 @@ xoops_loadLanguage('user');
 include_once $GLOBALS['xoops']->path('class/module.textsanitizer.php');
 include_once $GLOBALS['xoops']->path('modules/system/constants.php');
 
-$uid = intval($_GET['uid']);
+$uid = (int)($_GET['uid']);
 if ($uid <= 0) {
     redirect_header('index.php', 3, _US_SELECTNG);
     exit();

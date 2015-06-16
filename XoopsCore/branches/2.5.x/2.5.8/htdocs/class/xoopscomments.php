@@ -69,7 +69,7 @@ class XoopsComments extends XoopsObject
             if (is_array($id)) {
                 $this->assignVars($id);
             } else {
-                $this->load(intval($id));
+                $this->load((int)($id));
             }
         }
     }
@@ -81,7 +81,7 @@ class XoopsComments extends XoopsObject
      */
     function load($id)
     {
-        $id = intval($id);
+        $id = (int)($id);
         $sql = "SELECT * FROM " . $this->ctable . " WHERE comment_id=" . $id;
         $arr = $this->db->fetchArray($this->db->query($sql));
         $this->assignVars($arr);
@@ -244,12 +244,12 @@ class XoopsComments extends XoopsObject
         if ($order == 1) {
             echo " selected='selected'";
         }
-        echo ">" . _NEWESTFIRST . "</option></select><input type='hidden' name='item_id' value='" . intval($item_id) . "' /><input type='submit' value='" . _CM_REFRESH . "' />";
+        echo ">" . _NEWESTFIRST . "</option></select><input type='hidden' name='item_id' value='" . (int)($item_id) . "' /><input type='submit' value='" . _CM_REFRESH . "' />";
         if ($xoopsConfig['anonpost'] == 1 || $xoopsUser) {
             if ($mode != "flat" || $mode != "nocomments" || $mode != "thread") {
                 $mode = "flat";
             }
-            echo "&nbsp;<input type='button' onclick='location=\"newcomment.php?item_id=" . intval($item_id) . "&amp;order=" . intval($order) . "&amp;mode=" . $mode . "\"' value='" . _CM_POSTCOMMENT . "' />";
+            echo "&nbsp;<input type='button' onclick='location=\"newcomment.php?item_id=" . (int)($item_id) . "&amp;order=" . (int)($order) . "&amp;mode=" . $mode . "\"' value='" . _CM_POSTCOMMENT . "' />";
         }
         echo "</td></tr></table></form>";
     }
@@ -297,13 +297,13 @@ class XoopsComments extends XoopsObject
             $ip_image = "<img src='" . XOOPS_URL . "/images/icons/ip.gif' alt='' />";
         }
         if ($adminview || ($xoopsUser && $this->getVar("user_id") == $xoopsUser->getVar("uid"))) {
-            $edit_image = "<a href='editcomment.php?comment_id=" . $this->getVar("comment_id") . "&amp;mode=" . $mode . "&amp;order=" . intval($order) . "'><img src='" . XOOPS_URL . "/images/icons/edit.gif' alt='" . _EDIT . "' /></a>";
+            $edit_image = "<a href='editcomment.php?comment_id=" . $this->getVar("comment_id") . "&amp;mode=" . $mode . "&amp;order=" . (int)($order) . "'><img src='" . XOOPS_URL . "/images/icons/edit.gif' alt='" . _EDIT . "' /></a>";
         }
         if ($xoopsConfig['anonpost'] || $xoopsUser) {
-            $reply_image = "<a href='replycomment.php?comment_id=" . $this->getVar("comment_id") . "&amp;mode=" . $mode . "&amp;order=" . intval($order) . "'><img src='" . XOOPS_URL . "/images/icons/reply.gif' alt='" . _REPLY . "' /></a>";
+            $reply_image = "<a href='replycomment.php?comment_id=" . $this->getVar("comment_id") . "&amp;mode=" . $mode . "&amp;order=" . (int)($order) . "'><img src='" . XOOPS_URL . "/images/icons/reply.gif' alt='" . _REPLY . "' /></a>";
         }
         if ($adminview) {
-            $delete_image = "<a href='deletecomment.php?comment_id=" . $this->getVar("comment_id") . "&amp;mode=" . $mode . "&amp;order=" . intval($order) . "'><img src='" . XOOPS_URL . "/images/icons/delete.gif' alt='" . _DELETE . "' /></a>";
+            $delete_image = "<a href='deletecomment.php?comment_id=" . $this->getVar("comment_id") . "&amp;mode=" . $mode . "&amp;order=" . (int)($order) . "'><img src='" . XOOPS_URL . "/images/icons/delete.gif' alt='" . _DELETE . "' /></a>";
         }
 
         if ($poster) {

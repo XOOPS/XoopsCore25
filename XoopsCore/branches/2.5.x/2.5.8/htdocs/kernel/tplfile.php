@@ -198,7 +198,7 @@ class XoopsTplfileHandler extends XoopsObjectHandler
     function &get($id, $getsource = false)
     {
         $tplfile = false;
-        $id = intval($id);
+        $id = (int)($id);
         if ($id > 0) {
             if (!$getsource) {
                 $sql = 'SELECT * FROM ' . $this->db->prefix('tplfile') . ' WHERE tpl_id=' . $id;

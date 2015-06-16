@@ -335,7 +335,7 @@ class RpcIntHandler extends XmlTagHandler
      */
     function handleCharacterData(&$parser, &$data)
     {
-        $parser->setTempValue(intval($data));
+        $parser->setTempValue((int)($data));
     }
 }
 
@@ -409,7 +409,7 @@ class RpcStringHandler extends XmlTagHandler
      */
     function handleCharacterData(&$parser, &$data)
     {
-        $parser->setTempValue(strval($data));
+        $parser->setTempValue((string)($data));
     }
 }
 

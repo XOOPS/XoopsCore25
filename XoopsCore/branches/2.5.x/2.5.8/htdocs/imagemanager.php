@@ -52,7 +52,7 @@ if ($op == 'list') {
     $xoopsTpl->assign('lang_close', _CLOSE);
     if ($catcount > 0) {
         $xoopsTpl->assign('lang_go', _GO);
-        $catshow = (!isset($_GET['cat_id'])) ? 0 : intval($_GET['cat_id']);
+        $catshow = (!isset($_GET['cat_id'])) ? 0 : (int)($_GET['cat_id']);
         $catshow = (!empty($catshow) && in_array($catshow, array_keys($catlist))) ? $catshow : 0;
         $xoopsTpl->assign('show_cat', $catshow);
         if ($catshow > 0) {
@@ -80,7 +80,7 @@ if ($op == 'list') {
                 $xoopsTpl->assign('lang_image', _IMAGE);
                 $xoopsTpl->assign('lang_imagename', _IMAGENAME);
                 $xoopsTpl->assign('lang_imagemime', _IMAGEMIME);
-                $start = isset($_GET['start']) ? intval($_GET['start']) : 0;
+                $start = isset($_GET['start']) ? (int)($_GET['start']) : 0;
                 $criteria->setLimit(10);
                 $criteria->setStart($start);
                 $storetype = $imgcat->getVar('imgcat_storetype');
@@ -131,7 +131,7 @@ if ($op == 'list') {
 
 if ($op == 'upload') {
     $imgcat_handler =& xoops_gethandler('imagecategory');
-    $imgcat_id = intval($_GET['imgcat_id']);
+    $imgcat_id = (int)($_GET['imgcat_id']);
     $imgcat =& $imgcat_handler->get($imgcat_id);
     $error = false;
     if (!is_object($imgcat)) {
@@ -183,7 +183,7 @@ if ($op == 'doupload') {
     if ($GLOBALS['xoopsSecurity']->check()) {
         $image_nicename = isset($_POST['image_nicename']) ? $_POST['image_nicename'] : '';
         $xoops_upload_file = isset($_POST['xoops_upload_file']) ? $_POST['xoops_upload_file'] : array();
-        $imgcat_id = isset($_POST['imgcat_id']) ? intval($_POST['imgcat_id']) : 0;
+        $imgcat_id = isset($_POST['imgcat_id']) ? (int)($_POST['imgcat_id']) : 0;
         include_once $GLOBALS['xoops']->path('class/uploader.php');
         $imgcat_handler =& xoops_gethandler('imagecategory');
         $imgcat =& $imgcat_handler->get($imgcat_id);
