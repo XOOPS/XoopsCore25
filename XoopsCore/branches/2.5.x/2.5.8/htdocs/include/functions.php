@@ -392,7 +392,7 @@ function xoops_getUserTimestamp($time, $timeoffset = '')
             $timeoffset = $xoopsConfig['default_TZ'];
         }
     }
-    $usertimestamp = (int)($time) + (floatval($timeoffset) - $xoopsConfig['server_TZ']) * 3600;
+    $usertimestamp = (int)($time) + ((float)($timeoffset) - $xoopsConfig['server_TZ']) * 3600;
 
     return $usertimestamp;
 }

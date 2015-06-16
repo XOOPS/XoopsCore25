@@ -768,7 +768,7 @@ class XoopsObject
                         $cleanv = !is_string($cleanv) ? (int)($cleanv) : strtotime($cleanv);
                         break;
                     case XOBJ_DTYPE_FLOAT:
-                        $cleanv = floatval($cleanv);
+                        $cleanv = (float)($cleanv);
                         break;
                     case XOBJ_DTYPE_DECIMAL:
                         $cleanv = doubleval($cleanv);
