@@ -561,7 +561,7 @@ class phpthumb_filters {
 		// pixel in the image could throw off the whole system. Instead, count up/down
 		// from the limit and allow <threshold> (default = 0.1%) of brightest/darkest
 		// pixels to be clipped to min/max
-		$threshold = floatval($threshold) / 100;
+		$threshold = (float)($threshold) / 100;
 		$clip_threshold = ImageSX($gdimg) * ImageSX($gdimg) * $threshold;
 		//if ($min >= 0) {
 		//	$range_min = min($min, 255);

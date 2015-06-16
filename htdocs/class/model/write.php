@@ -217,7 +217,7 @@ class XoopsModelWrite extends XoopsModelAbstract
                     break;
 
                 case XOBJ_DTYPE_FLOAT:
-                    $cleanv = floatval($cleanv);
+                    $cleanv = (float)($cleanv);
                     break;
 
                 case XOBJ_DTYPE_DECIMAL:

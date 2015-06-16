@@ -1866,7 +1866,7 @@ if (false) {
 
 						case 'gam':
 							@list($amount) = explode('|', $parameter);
-							$amount = min(max(floatval($amount), 0.001), 10);
+							$amount = min(max((float)($amount), 0.001), 10);
 							if (number_format($amount, 3) != '1.000') {
 								if ($this->ImageMagickSwitchAvailable('gamma')) {
 									$commandline .= ' -gamma '.escapeshellarg($amount);
@@ -1938,7 +1938,7 @@ if (false) {
 							@list($band, $method, $threshold) = explode('|', $parameter);
 							$band      = ($band ? preg_replace('#[^RGBA\\*]#', '', strtoupper($band))       : '*');
 							$method    = ((strlen($method) > 0)    ? (int)($method)                        :   2);
-							$threshold = ((strlen($threshold) > 0) ? min(max(floatval($threshold), 0), 100) : 0.1);
+							$threshold = ((strlen($threshold) > 0) ? min(max((float)($threshold), 0), 100) : 0.1);
 
 							$band = preg_replace('#[^RGBA\\*]#', '', strtoupper($band));
 
@@ -1999,7 +1999,7 @@ if (false) {
 						case 'wb':
 							if ($this->ImageMagickSwitchAvailable(array('channel', 'contrast-stretch'))) {
 								@list($threshold) = explode('|', $parameter);
-								$threshold = (!empty($threshold) ? min(max(floatval($threshold), 0), 100) : 0.1);
+								$threshold = (!empty($threshold) ? min(max((float)($threshold), 0), 100) : 0.1);
 								$threshold = preg_replace('#[^0-9\\.]#', '', $threshold); // should be unneccesary, but just to be double-sure
 								//$commandline .= ' -channel R -contrast-stretch '.escapeshellarg($threshold.'%'); // doesn't work on Windows because most versions of PHP do not properly
 								//$commandline .= ' -channel G -contrast-stretch '.escapeshellarg($threshold.'%'); // escape special characters (such as %) and just replace them with spaces
@@ -2226,7 +2226,7 @@ if (false) {
 			$rotate_angle = 0;
 			if ($this->ra) {
 
-				$rotate_angle = floatval($this->ra);
+				$rotate_angle = (float)($this->ra);
 
 			} else {
 
@@ -2646,7 +2646,7 @@ if (false) {
 						@list($band, $method, $threshold) = explode('|', $parameter, 3);
 						$band      = ($band ? preg_replace('#[^RGBA\\*]#', '', strtoupper($band)) : '*');
 						$method    = ((strlen($method) > 0)    ? (int)($method)                  :   2);
-						$threshold = ((strlen($threshold) > 0) ? floatval($threshold)             : 0.1);
+						$threshold = ((strlen($threshold) > 0) ? (float)($threshold)             : 0.1);
 
 						$phpthumbFilters->HistogramStretch($this->gdimg_output, $band, $method, $threshold);
 						break;
