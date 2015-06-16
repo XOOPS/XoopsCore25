@@ -21,7 +21,7 @@
 include __DIR__ . DIRECTORY_SEPARATOR . 'header.php';
 include_once $GLOBALS['xoops']->path('modules/system/constants.php');
 
-$uid = isset($_GET['uid'])? intval($_GET['uid']):0;
+$uid = isset($_GET['uid'])? (int)($_GET['uid']):0;
 if ($uid <= 0) {
     if (is_object($GLOBALS['xoopsUser'])  ) {
         $uid = $GLOBALS['xoopsUser']->getVar('uid');

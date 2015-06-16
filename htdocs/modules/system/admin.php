@@ -49,7 +49,7 @@ if ($admintest != 0) {
             // Get System permission handler
             $sysperm_handler =& xoops_gethandler('groupperm');
 
-            $category = !empty($modversion['category']) ? intval($modversion['category']) : 0;
+            $category = !empty($modversion['category']) ? (int)($modversion['category']) : 0;
             unset($modversion);
 
             if ($category > 0) {
@@ -131,7 +131,7 @@ if (false != $error) {
             if ($modversion['hasAdmin']) {
 
                 if ( xoops_getModuleOption('active_' . $directory, 'system') ) {
-                    $category = isset($modversion['category']) ? intval($modversion['category']) : 0;
+                    $category = isset($modversion['category']) ? (int)($modversion['category']) : 0;
                     if ( false != $all_ok || in_array($modversion['category'], $ok_syscats)) {
                         $menu['file']  = $directory;
                         $menu['title'] = trim($modversion['name']);
@@ -140,7 +140,7 @@ if (false != $error) {
                         $menu['status'] = true;
                     }
                 } else {
-                    $category = isset($modversion['category']) ? intval($modversion['category']) : 0;
+                    $category = isset($modversion['category']) ? (int)($modversion['category']) : 0;
                     if ( false != $all_ok || in_array($modversion['category'], $ok_syscats)) {
                         $menu['file']  = $directory;
                         $menu['title'] = trim($modversion['name']);

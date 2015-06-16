@@ -172,7 +172,7 @@ class xos_logos_PageBuilder
             'weight' => $xobject->getVar('weight') ,
             'lastmod' => $xobject->getVar('last_modified'));
 
-        $bcachetime = intval($xobject->getVar('bcachetime'));
+        $bcachetime = (int)($xobject->getVar('bcachetime'));
         if (empty($bcachetime)) {
             $template->caching = 0;
         } else {

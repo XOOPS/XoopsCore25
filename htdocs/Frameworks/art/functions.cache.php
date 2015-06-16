@@ -59,7 +59,7 @@ define("FRAMEWORKS_ART_FUNCTIONS_CACHE", true);
 {
     global $xoopsModule;
 
-    $name = ($name) ? $name : strval(time());
+    $name = ($name) ? $name : (string)(time());
     $dirname = ($dirname) ? $dirname : (is_object($xoopsModule) ? $xoopsModule->getVar("dirname", "n") : "system");
 
     xoops_load('XoopsCache');

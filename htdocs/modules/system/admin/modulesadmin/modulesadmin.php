@@ -224,7 +224,7 @@ function xoops_module_install($dirname)
                             $template = trim($block['template']);
                         }
                         $block_name = addslashes(trim($block['name']));
-                        $sql = "INSERT INTO " . $db->prefix("newblocks") . " (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES ($newbid, $newmid, " . intval($blockkey) . ", '$options', '" . $block_name . "','" . $block_name . "', '', 0, 0, 0, 'M', 'H', 1, '" . addslashes($dirname) . "', '" . addslashes(trim($block['file'])) . "', '" . addslashes(trim($block['show_func'])) . "', '" . addslashes($edit_func) . "', '" . $template . "', 0, " . time() . ")";
+                        $sql = "INSERT INTO " . $db->prefix("newblocks") . " (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES ($newbid, $newmid, " . (int)($blockkey) . ", '$options', '" . $block_name . "','" . $block_name . "', '', 0, 0, 0, 'M', 'H', 1, '" . addslashes($dirname) . "', '" . addslashes(trim($block['file'])) . "', '" . addslashes(trim($block['show_func'])) . "', '" . addslashes($edit_func) . "', '" . $template . "', 0, " . time() . ")";
                         if (!$db->query($sql)) {
                             $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_BLOCK_ADD_ERROR, "<strong>" . $block['name'] . "</strong>") . sprintf(_AM_SYSTEM_MODULES_BLOCK_ADD_ERROR_DATABASE, "<strong>" . $db->error() . "</strong>") . "</span>";
                         } else {

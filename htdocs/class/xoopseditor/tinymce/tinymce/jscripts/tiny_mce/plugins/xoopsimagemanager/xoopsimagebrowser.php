@@ -78,15 +78,15 @@ if (isset($_GET["target"])) {
 }
 
 if (isset($_GET["image_id"])) {
-    $image_id = intval($_GET["image_id"]);
+    $image_id = (int)($_GET["image_id"]);
 }
 
 if (isset($_GET["imgcat_id"])) {
-    $imgcat_id = intval($_GET["imgcat_id"]);
+    $imgcat_id = (int)($_GET["imgcat_id"]);
 }
 
 if (isset($imgcat_id)) {
-    $imgcat_id = intval($imgcat_id);
+    $imgcat_id = (int)($imgcat_id);
 }
 $target = htmlspecialchars($target);
 
@@ -129,7 +129,7 @@ if ( ($isadmin) || ($catreadcount > 0) || ($catwritecount > 0) ) {
         if (!$GLOBALS["xoopsSecurity"]->check()) {
             redirect_header($current_file . "?target=" . $target, 3, implode("<br />", $GLOBALS["xoopsSecurity"]->getErrors()));
         }
-        $imgcat =& $imgcat_handler->get(intval($imgcat_id));
+        $imgcat =& $imgcat_handler->get((int)($imgcat_id));
         if (!is_object($imgcat)) {
             redirect_header($current_file . "?target=" . $target, 3);
         }
@@ -308,7 +308,7 @@ if ( ($isadmin) || ($catreadcount > 0) || ($catwritecount > 0) ) {
         if (!$GLOBALS["xoopsSecurity"]->check()) {
             redirect_header($current_file . "?target=" . $target, 3, implode("<br />", $GLOBALS["xoopsSecurity"]->getErrors()));
         }
-        $imgcat_id = intval($imgcat_id);
+        $imgcat_id = (int)($imgcat_id);
         if ($imgcat_id <= 0) {
             redirect_header($current_file . "?target=" . $target, 3);
         }
@@ -358,7 +358,7 @@ if ( ($isadmin) || ($catreadcount > 0) || ($catwritecount > 0) ) {
        if (!$GLOBALS["xoopsSecurity"]->check()) {
            redirect_header($current_file . "?target=" . $target, 3, implode("<br />", $GLOBALS["xoopsSecurity"]->getErrors()));
        }
-       $image_id = intval($image_id);
+       $image_id = (int)($image_id);
        if ($image_id <= 0) {
            redirect_header($current_file . "?target=" . $target, 3);
        }
@@ -448,7 +448,7 @@ echo '<div class="panel_wrapper">';
 
     //list images - start
     if ($op == 'listimg') {
-        $imgcat_id = intval($imgcat_id);
+        $imgcat_id = (int)($imgcat_id);
         if ($imgcat_id <= 0) {
             redirect_header($current_file . '?target=' . $target, 1);
         }
@@ -461,7 +461,7 @@ echo '<div class="panel_wrapper">';
 
         $criteria = new Criteria('imgcat_id', $imgcat_id);
         $imgcount = $image_handler->getCount($criteria);
-        $start = isset($_GET['start']) ? intval($_GET['start']) : 0;
+        $start = isset($_GET['start']) ? (int)($_GET['start']) : 0;
         $criteria->setStart($start);
         $criteria->setLimit(20);
         $images =& $image_handler->getObjects($criteria, true, false);

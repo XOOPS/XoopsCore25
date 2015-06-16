@@ -44,7 +44,7 @@ if (!is_object($xoopsUser)) {
         $size = count($clean_msg_id);
         $msg =& $clean_msg_id;
         for ($i = 0; $i < $size; ++$i) {
-            $pm =& $pm_handler->get(intval($msg[$i]));
+            $pm =& $pm_handler->get((int)($msg[$i]));
             if ($pm->getVar('to_userid') == $xoopsUser->getVar('uid')) {
                 $pm_handler->delete($pm);
             }

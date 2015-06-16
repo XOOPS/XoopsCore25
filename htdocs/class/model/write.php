@@ -73,8 +73,8 @@ class XoopsModelWrite extends XoopsModelAbstract
                         continue;
                     }
                     $cleanv = xoops_convert_encode($cleanv);
-                    if (isset($v['maxlength']) && strlen($cleanv) > intval($v['maxlength'])) {
-                        $errors[] = sprintf(_XOBJ_ERR_SHORTERTHAN, $k, intval($v['maxlength']));
+                    if (isset($v['maxlength']) && strlen($cleanv) > (int)($v['maxlength'])) {
+                        $errors[] = sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int)($v['maxlength']));
                         continue;
                     }
                     if (!$v['not_gpc']) {
@@ -107,8 +107,8 @@ class XoopsModelWrite extends XoopsModelAbstract
                         $errors[] = sprintf(_XOBJ_ERR_REQUIRED, $k);
                         continue;
                     }
-                    if (isset($v['maxlength']) && strlen($cleanv) > intval($v['maxlength'])) {
-                        $errors[] = sprintf(_XOBJ_ERR_SHORTERTHAN, $k, intval($v['maxlength']));
+                    if (isset($v['maxlength']) && strlen($cleanv) > (int)($v['maxlength'])) {
+                        $errors[] = sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int)($v['maxlength']));
                         continue;
                     }
                     if (!$v['not_gpc']) {
@@ -213,7 +213,7 @@ class XoopsModelWrite extends XoopsModelAbstract
                     break;
 
                 case XOBJ_DTYPE_INT:
-                    $cleanv = intval($cleanv);
+                    $cleanv = (int)($cleanv);
                     break;
 
                 case XOBJ_DTYPE_FLOAT:
@@ -251,7 +251,7 @@ class XoopsModelWrite extends XoopsModelAbstract
                 case XOBJ_DTYPE_STIME:
                 case XOBJ_DTYPE_MTIME:
                 case XOBJ_DTYPE_LTIME:
-                    $cleanv = !is_string($cleanv) ? intval($cleanv) : strtotime($cleanv);
+                    $cleanv = !is_string($cleanv) ? (int)($cleanv) : strtotime($cleanv);
                     break;
 
                 default:

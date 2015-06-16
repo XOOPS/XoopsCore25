@@ -41,7 +41,7 @@ class XoopsFormDateTime extends XoopsFormElementTray
     function XoopsFormDateTime($caption, $name, $size = 15, $value = 0, $showtime = true)
     {
         $this->XoopsFormElementTray($caption, '&nbsp;');
-        $value = intval($value);
+        $value = (int)($value);
         $value = ($value > 0) ? $value : time();
         $datetime = getDate($value);
         $this->addElement(new XoopsFormTextDateSelect('', $name . '[date]', $size, $value, $showtime));

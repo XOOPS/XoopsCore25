@@ -356,7 +356,7 @@ class ProfileField extends XoopsObject
             case "timezone":
                 include_once $GLOBALS['xoops']->path('class/xoopslists.php');
                 $timezones = XoopsLists::getTimeZoneList();
-                $value = empty($value) ? "0" : strval($value);
+                $value = empty($value) ? "0" : (string)($value);
 
                 return $timezones[str_replace('.0', '', $value)];
                 break;
@@ -403,7 +403,7 @@ class ProfileField extends XoopsObject
 
             case "datetime":
                 if (!empty($value)) {
-                    return strtotime($value['date']) + intval($value['time']);
+                    return strtotime($value['date']) + (int)($value['time']);
                 }
 
                 return $value;

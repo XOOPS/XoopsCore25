@@ -61,29 +61,29 @@ class phpthumb_functions {
 		switch ($operator) {
 			case '<':
 			case 'lt':
-				return intval($version1 < $version2);
+				return (int)($version1 < $version2);
 				break;
 			case '<=':
 			case 'le':
-				return intval($version1 <= $version2);
+				return (int)($version1 <= $version2);
 				break;
 			case '>':
 			case 'gt':
-				return intval($version1 > $version2);
+				return (int)($version1 > $version2);
 				break;
 			case '>=':
 			case 'ge':
-				return intval($version1 >= $version2);
+				return (int)($version1 >= $version2);
 				break;
 			case '==':
 			case '=':
 			case 'eq':
-				return intval($version1 == $version2);
+				return (int)($version1 == $version2);
 				break;
 			case '!=':
 			case '<>':
 			case 'ne':
-				return intval($version1 != $version2);
+				return (int)($version1 != $version2);
 				break;
 		}
 		if ($version1 == $version2) {
@@ -223,7 +223,7 @@ class phpthumb_functions {
 
 	static function ImageColorAllocateAlphaSafe(&$gdimg_hexcolorallocate, $R, $G, $B, $alpha=false) {
 		if (phpthumb_functions::version_compare_replacement(phpversion(), '4.3.2', '>=') && ($alpha !== false)) {
-			return ImageColorAllocateAlpha($gdimg_hexcolorallocate, $R, $G, $B, intval($alpha));
+			return ImageColorAllocateAlpha($gdimg_hexcolorallocate, $R, $G, $B, (int)($alpha));
 		} else {
 			return ImageColorAllocate($gdimg_hexcolorallocate, $R, $G, $B);
 		}
@@ -417,7 +417,7 @@ class phpthumb_functions {
 			// limited by height
 			$new_width = $new_height * $old_aspect_ratio;
 		}
-		return array(intval(round($new_width)), intval(round($new_height)));
+		return array((int)(round($new_width)), (int)(round($new_height)));
 	}
 
 
@@ -521,7 +521,7 @@ class phpthumb_functions {
 				$cache_gd_version[0] = (float) substr($gd_info['GD Version'], 0, 3); // e.g. "1.6" (not "1.6.2 or higher")
 			}
 		}
-		return $cache_gd_version[intval($fullstring)];
+		return $cache_gd_version[(int)($fullstring)];
 	}
 
 
@@ -536,7 +536,7 @@ class phpthumb_functions {
 			while (!feof($fp)) {
 				$headerline = fgets($fp, 4096);
 				if (preg_match('#^Content-Length: (.*)#i', $headerline, $matches)) {
-					$size = intval($matches[1]);
+					$size = (int)($matches[1]);
 					break;
 				}
 			}
@@ -653,7 +653,7 @@ class phpthumb_functions {
 				}
 				if (preg_match('#^HTTP/[\\.0-9]+ ([0-9]+) (.+)$#i', rtrim($line), $matches)) {
 					list($dummy, $errno, $errstr) = $matches;
-					$errno = intval($errno);
+					$errno = (int)($errno);
 				} elseif (preg_match('#^Location: (.*)$#i', rtrim($line), $matches)) {
 					$header_newlocation = $matches[1];
 				}

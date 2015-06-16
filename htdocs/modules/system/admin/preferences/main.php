@@ -195,7 +195,7 @@ switch($op) {
                     if (count($modules) > 0) {
                         $ele = new XoopsFormElementTray($title, '<br />');
                         foreach (array_keys($modules) as $mid) {
-                            $c_val = isset($currrent_val[$mid]) ? intval($currrent_val[$mid]) : null;
+                            $c_val = isset($currrent_val[$mid]) ? (int)($currrent_val[$mid]) : null;
                             $selform = new XoopsFormSelect($modules[$mid]->getVar('name'), $config[$i]->getVar('conf_name')."[$mid]", $c_val);
                             $selform->addOptionArray($cache_options);
                             $ele->addElement($selform);
@@ -248,7 +248,7 @@ switch($op) {
     case 'showmod':
 
         $config_handler =& xoops_gethandler('config');
-        $mod = isset($_REQUEST['mod']) ? intval($_REQUEST['mod']) : 0;
+        $mod = isset($_REQUEST['mod']) ? (int)($_REQUEST['mod']) : 0;
         if ($mod <= 0) {
             header('Location: admin.php?fct=preferences');
             exit();
@@ -492,7 +492,7 @@ switch($op) {
         }
 
         if (!empty($use_mysession) && $xoopsConfig['use_mysession'] == 0 && $session_name != '') {
-            setcookie($session_name, session_id(), time()+(60*intval($session_expire)), '/', XOOPS_COOKIE_DOMAIN, 0);
+            setcookie($session_name, session_id(), time()+(60*(int)($session_expire)), '/', XOOPS_COOKIE_DOMAIN, 0);
         }
 
         // Clean cached files, may take long time

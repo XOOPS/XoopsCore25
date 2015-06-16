@@ -420,7 +420,7 @@ function b_system_comments_show($options)
     include_once XOOPS_ROOT_PATH.'/include/comment_constants.php';
     $comment_handler =& xoops_gethandler('comment');
     $criteria = new CriteriaCompo(new Criteria('com_status', XOOPS_COMMENT_ACTIVE));
-    $criteria->setLimit(intval($options[0]));
+    $criteria->setLimit((int)($options[0]));
     $criteria->setSort('com_created');
     $criteria->setOrder('DESC');
 
@@ -530,7 +530,7 @@ function b_system_notification_show()
  */
 function b_system_comments_edit($options)
 {
-    $inputtag = "<input type='text' name='options[]' value='".intval($options[0])."' />";
+    $inputtag = "<input type='text' name='options[]' value='".(int)($options[0])."' />";
     $form = sprintf(_MB_SYSTEM_DISPLAYC, $inputtag);
 
     return $form;
@@ -544,7 +544,7 @@ function b_system_comments_edit($options)
 function b_system_topposters_edit($options)
 {
     include_once XOOPS_ROOT_PATH.'/class/xoopslists.php';
-    $inputtag = "<input type='text' name='options[]' value='".intval($options[0])."' />";
+    $inputtag = "<input type='text' name='options[]' value='".(int)($options[0])."' />";
     $form = sprintf(_MB_SYSTEM_DISPLAY,$inputtag);
     $form .= "<br />"._MB_SYSTEM_DISPLAYA."&nbsp;<input type='radio' id='options[]' name='options[]' value='1'";
     if ($options[1] == 1) {
@@ -640,7 +640,7 @@ function b_system_themes_show($options)
     }
     $block = array();
     if ($options[0] == 1) {
-        $block['theme_select'] = "<img vspace=\"2\" id=\"xoops_theme_img\" src=\"".XOOPS_THEME_URL."/".$xoopsConfig['theme_set']."/shot.gif\" alt=\"screenshot\" width=\"".intval($options[1])."\" /><br /><select id=\"xoops_theme_select\" name=\"xoops_theme_select\" onchange=\"showImgSelected('xoops_theme_img', 'xoops_theme_select', 'themes', '/shot.gif', '".XOOPS_URL."');\">".$theme_options."</select><input type=\"submit\" value=\""._GO."\" />";
+        $block['theme_select'] = "<img vspace=\"2\" id=\"xoops_theme_img\" src=\"".XOOPS_THEME_URL."/".$xoopsConfig['theme_set']."/shot.gif\" alt=\"screenshot\" width=\"".(int)($options[1])."\" /><br /><select id=\"xoops_theme_select\" name=\"xoops_theme_select\" onchange=\"showImgSelected('xoops_theme_img', 'xoops_theme_select', 'themes', '/shot.gif', '".XOOPS_URL."');\">".$theme_options."</select><input type=\"submit\" value=\""._GO."\" />";
     } else {
         $block['theme_select'] = '<select name="xoops_theme_select" onchange="submit();" size="3">'.$theme_options.'</select>';
     }

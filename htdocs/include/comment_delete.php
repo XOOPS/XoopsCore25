@@ -105,7 +105,7 @@ if (false != $accesserror) {
     if ($ref != '') {
         redirect_header($ref, 2, _NOPERM);
     } else {
-        redirect_header($redirect_page . '?' . $comment_config['itemName'] . '=' . intval($com_itemid), 2, _NOPERM);
+        redirect_header($redirect_page . '?' . $comment_config['itemName'] . '=' . (int)($com_itemid), 2, _NOPERM);
     }
     exit();
 }

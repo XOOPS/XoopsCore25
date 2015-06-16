@@ -137,7 +137,7 @@ class SystemAvatarHandler extends XoopsAvatarHandler
     function &get($id)
     {
         $avatar = false;
-        $id = intval($id);
+        $id = (int)($id);
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('avatar') . ' WHERE avatar_id=' . $id;
             if (!$result = $this->db->query($sql)) {

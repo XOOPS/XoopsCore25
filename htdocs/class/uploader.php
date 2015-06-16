@@ -130,7 +130,7 @@ class XoopsMediaUploader
         $maxUploadInBytes   = $this->return_bytes(ini_get('upload_max_filesize'));
         $maxPostInBytes     = $this->return_bytes(ini_get('post_max_size'));
         $memoryLimitInBytes = $this->return_bytes(ini_get('memory_limit'));
-        if (intval($maxFileSize) > 0) {
+        if ((int)($maxFileSize) > 0) {
             $maxFileSizeInBytes = $this->return_bytes($maxFileSize);
             $newMaxFileSize     = min($maxFileSizeInBytes, $maxUploadInBytes, $maxPostInBytes, $memoryLimitInBytes);
         } else {
@@ -139,10 +139,10 @@ class XoopsMediaUploader
         $this->maxFileSize = $newMaxFileSize;
 
         if (isset($maxWidth)) {
-            $this->maxWidth = intval($maxWidth);
+            $this->maxWidth = (int)($maxWidth);
         }
         if (isset($maxHeight)) {
-            $this->maxHeight = intval($maxHeight);
+            $this->maxHeight = (int)($maxHeight);
         }
         if (isset($randomFilename)) {
             $this->randomFilename = $randomFilename;
@@ -210,7 +210,7 @@ class XoopsMediaUploader
 
             return false;
         } else if (is_array($_FILES[$media_name]['name']) && isset($index)) {
-            $index = intval($index);
+            $index = (int)($index);
             $this->mediaName = (get_magic_quotes_gpc()) ? stripslashes($_FILES[$media_name]['name'][$index]) : $_FILES[$media_name]['name'][$index];
             if ($this->randomFilename) {
                 $unique = uniqid(time());
@@ -240,7 +240,7 @@ class XoopsMediaUploader
             }
         }
         $this->errors = array();
-        if (intval($this->mediaSize) < 0) {
+        if ((int)($this->mediaSize) < 0) {
             $this->setErrors(_ER_UP_INVALIDFILESIZE);
 
             return false;
@@ -271,7 +271,7 @@ class XoopsMediaUploader
      */
     function setTargetFileName($value)
     {
-        $this->targetFileName = strval(trim($value));
+        $this->targetFileName = (string)(trim($value));
     }
 
     /**
@@ -281,7 +281,7 @@ class XoopsMediaUploader
      */
     function setPrefix($value)
     {
-        $this->prefix = strval(trim($value));
+        $this->prefix = (string)(trim($value));
     }
 
     /**

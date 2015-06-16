@@ -49,7 +49,7 @@ if ($op == 'saveuser') {
     }
     $uid = 0;
     if (!empty($_POST['uid'])) {
-        $uid = intval($_POST['uid']);
+        $uid = (int)($_POST['uid']);
     }
     if (empty($uid) || $xoopsUser->getVar('uid') != $uid) {
         redirect_header('index.php', 3, _US_NOEDITRIGHT);
@@ -290,7 +290,7 @@ if ($op == 'avatarupload') {
         $xoops_upload_file = $_POST['xoops_upload_file'];
     }
     if (!empty($_POST['uid'])) {
-        $uid = intval($_POST['uid']);
+        $uid = (int)($_POST['uid']);
     }
     if (empty($uid) || $xoopsUser->getVar('uid') != $uid) {
         redirect_header('index.php', 3, _US_NOEDITRIGHT);
@@ -346,7 +346,7 @@ if ($op == 'avatarchoose') {
     }
     $uid = 0;
     if (!empty($_POST['uid'])) {
-        $uid = intval($_POST['uid']);
+        $uid = (int)($_POST['uid']);
     }
     if (empty($uid) || $xoopsUser->getVar('uid') != $uid) {
         redirect_header('index.php', 3, _US_NOEDITRIGHT);

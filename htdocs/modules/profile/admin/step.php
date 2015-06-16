@@ -81,9 +81,9 @@ switch ($op) {
 
     case 'toggle':
         if (isset($_GET['step_id'])) {
-            $field_id=intval($_GET['step_id']);
+            $field_id=(int)($_GET['step_id']);
             if (isset($_GET['step_save'])) {
-                $step_save = intval($_GET['step_save']);
+                $step_save = (int)($_GET['step_save']);
                 profile_stepsave_toggle($step_id, $step_save);
             }
         }

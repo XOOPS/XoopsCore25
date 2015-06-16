@@ -420,7 +420,7 @@ class XoopsCaptchaMethod
      */
     function getCode()
     {
-        return strval($this->code);
+        return (string)($this->code);
     }
 
     /**

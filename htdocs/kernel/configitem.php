@@ -161,7 +161,7 @@ class XoopsConfigItem extends XoopsObject
     {
         switch ($this->getVar('conf_valuetype')) {
             case 'int':
-                return intval($this->getVar('conf_value', 'N'));
+                return (int)($this->getVar('conf_value', 'N'));
                 break;
             case 'array':
                 $value = @unserialize($this->getVar('conf_value', 'N'));
@@ -281,7 +281,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
     function &get($id)
     {
         $config = false;
-        $id = intval($id);
+        $id = (int)($id);
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('config') . ' WHERE conf_id=' . $id;
             if (! $result = $this->db->query($sql)) {
