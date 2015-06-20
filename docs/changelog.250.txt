@@ -19,6 +19,8 @@ NOT RELEASED: Version 2.5.8 Beta 1
 - patch from Xoops 2.5.6 XoopsFormSelectUser is not compatible with some old modules like xNews (luciorota)
 - fix "setExtra" in moduleadmin.php, Admin buttons can now use "onClick" assignments (mamba)
 - updated XOOPS copyright to 2015, changed links to http://xoops.org (mamba)
+- replaced intval() with (int) (mamba)
+- added possibility to include full icon URL in module's menu.php (mamba)
 
 
 Security fixes
