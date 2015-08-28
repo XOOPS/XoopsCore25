@@ -147,3 +147,5 @@ define('_AM_SYSTEM_USERS_PSEUDO_ERROR',"User name %s already exists");
 define('_AM_SYSTEM_USERS_MAIL_ERROR',"User email %s already exists");
 //2.5.4
 define('_AM_SYSTEM_USERS_ACCEPT_EMAIL',"Accept email from Admin");
+//2.5.8
+define('_AM_SYSTEM_USERS_ACTIVATE', 'Activate User');
