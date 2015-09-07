@@ -1,8 +1,8 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
-===============================
-NOT RELEASED: Version 2.5.8 Beta 1
-===============================
+===================================
+2.5.8 Beta 1		NOT RELEASED 
+===================================
 - replaced "dirname(__FILE__)" with "__DIR__" since the min. PHP is now 5.3.7, and __DIR__ is faster  (mamba)
 - updating some copyright notices (mamba)
 - fix issues when protector 'id_forceintval' preference is enabled, that manifests as an error when deleting private messages.  (rgriffith)
@@ -32,20 +32,21 @@ Updated:
  - PHPMailer to 5.2.9 (rgriffith)
  - jQuery to 1.11.3 (mamba)
  - jQuery UI 1.11.4 (mamba)
+ - jGrowl to 1.4.3 (mamba)
 
 
-===============================
-2014-06-20: Version 2.5.7 Final (Patch 1)
-===============================
+===================================
+2.5.7 Final (Patch 1)	2014-06-20
+===================================
 
 - Updating docu for the correct version of tablesorter (mamba)
 - Fix path specified for include (rgriffith, mamba)
 - added mainfile.php to /extras for use on servers where write to root is not possible (rgriffith)
 - fix for array issue in pm/viempmsg.php (Roby73/mamba)
 
-===============================
-2014/06/14: Version 2.5.7 Final
-===============================
+===================================
+2.5.7 Final		2014/06/14 
+===================================
 - updated XoopsMediaUploader to use system memory values from php.ini, and to offer random file names (mamba/luciorota/zyspec)
 - added .tpl to XoopsList's getHtmlListAsArray (wizanda)
 - updating xBootstrap (voltan, Angelo Rocha)
@@ -61,9 +62,9 @@ Updated:
 Updated:
  - TinyMCE to 3.5.11 (mamba)
 
-===============================
-2014/04/06: Version 2.5.7 RC 1
-===============================
+===================================
+2.5.7 RC 1		2014/04/06 
+===================================
 
 Bugfixes:
 - fixed System Module image manager html/js bugs (luciorota)
@@ -82,9 +83,9 @@ Updated:
  - jQuery Tablesorter to 2.15.11 (mamba)
  - jGrowl to 1.2.14 (mamba)
 
-===============================
-2014/03/06: Version 2.5.7 Beta 1
-===============================
+===================================
+2.5.7 Beta 1		2014/03/06 
+===================================
 Bugfixes:
 - ID: 1143 (old ID 430840)  class/module.errorhandler.php (uberrookie/zyspec)
 - ID: 1225 Restore user theme choice during "Remember me" processing. (rgriffith)
@@ -162,18 +163,18 @@ Updated:
  - TinyMCE to 3.5.10 (mamba)
  - prototype.js to 1.7.1, Aug 2012 (rgriffith)
 
-===============================
-2013/04/21: Version 2.5.6 Final
-===============================
+===================================
+2.5.6 Final		2013/04/21 
+===================================
 Bugfixes:
 - updated English translations (Cesag,Mamba)
 - extra check for $noHtml in XoopsEditorHandler->get (luciorota)
 - fixing $GLOBAL typo in jquery.php (Zyspec)
 - improving protection against spam by turning off registration's 1st step saving (timgno)
 
-===============================
-2013/03/25: Version 2.5.6 RC1
-===============================
+===================================
+2.5.6 RC1		2013/03/25 
+===================================
 Bugfixes:
  - Array to string conversion (geekwright/mamba)
  - issues with missing xoopscomments table (geekwright/sabahan/Mamba)
@@ -191,9 +192,9 @@ Security fixes
  - XSS/CSRF vulnerability in system/admin/blocksadmin/main.php (Marcin,Ariko-Security Team/trabis)
  - LFI vulnerability in system/admin/tplsets/jquery.php (Marcin,Ariko-Security Team/trabis)
 
-===============================
-2013/01/22: Version 2.5.6 Beta
-===============================
+===================================
+2.5.6 Beta		2013/01/22 
+===================================
 Security fixes:
  - XSS (Cross Site Scripting) vulnerability in Maintenance (Dingjie Yang,Qualys/trabis)
 
@@ -210,9 +211,9 @@ Updated:
 Added:
 - Fast Comment Hack (Voltan)
 
-===============================
-2012/04/15: Version 2.5.5 Final
-===============================
+===================================
+2.5.5 Final		2012/04/15 
+===================================
 Bugfixes:
  - preventing division by zero in pagenav.php (timgno)
  - ID: 3466534 tooltip "$ not defined" fix (culex)
@@ -224,9 +225,9 @@ Updated:
  - phpThumb to 1.7.11 (mamba)
  - jGrowl to 1.2.6 (mowaffaq/mamba)
 
-===============================
-2012/03/14: Version 2.5.5 RC
-===============================
+===================================
+2.5.5 RC		2012/03/14 
+===================================
 Bugfixes:
  - ID: 3494895 When changing the # of visible entries in Protector, it goes to Admin (jcweb/mamba)
  - ID: 3494894 Calendar shows 40 days (peekay/mage)
@@ -245,9 +246,9 @@ Updated:
  - jQuery to 1.72 (mamba)
  - jQueryUI to version 1.8.18 (mamba)
 
-===============================
-2012/02/19: Version 2.5.5 Beta
-===============================
+===================================
+2.5.5 Beta		2012/02/19 
+===================================
 Security fixes:
  - XSS (Cross Site Scripting) vulnerability in PM module and tinymce (High-Tech Bridge Security Research Lab/trabis)
 
@@ -278,9 +279,9 @@ Updated:
  - jQueryUI to version 1.8.17 (mamba)
  - PhpMailer to version 5.2.1 (mamba)
 
-===============================
-2011/11/20: Version 2.5.4 Final
-===============================
+===================================
+2.5.4 Final		2011/11/20 
+===================================
 Bugfixes:
  - ID: 3430112 Java problem in xoops editor (voltan/mamba/trabis)
  - dhtml smilie is always inserted in the end (mamba/trabis)
@@ -291,9 +292,9 @@ Bugfixes:
 Updated:
  - updated jQuery to 1.7 (mamba)
 
-===============================
-2011/10/10: Version 2.5.4 RC
-===============================
+===================================
+2.5.4 RC		2011/10/10 
+===================================
 Bugfixes:
  - quoteConv causing problems with large number of quotes (Roby73/trabis)
  - Cache bug. The key's not generated correctly (andrey3761/trabis)
@@ -308,9 +309,9 @@ Improved:
  - Replacing deprecated Database::getInstance(); calls with XoopsDatabaseFactory::getDatabaseConnection(); (trabis)
  - Logging deprecated methods and files that will be removed on XOOPS 2.6.0 (trabis)
 
-===============================
-2011/10/05: Version 2.5.4 Beta
-===============================
+===================================
+2.5.4 Beta		2011/10/05 
+===================================
 Bugfixes:
  - Remove a call of non existing css file in admin menu
  - ID: 3419812 Drag and drop Xoops 2.5.3 bug (cesag/trabis)
@@ -328,25 +329,25 @@ Updated:
 Deleted:
  - Delete xoops_lib/data/secure.php file for exclude update error
 
-===============================
-2011/10/03: Version 2.5.3
-===============================
+===================================
+2.5.3			2011/10/03 
+===================================
 Bugfixes:
  - Style switcher does not work on default admin GUI(trabis)
  - Reverting fix for bug ID: 2672723 Changed the code in Install to omits the SQL command: "ALTER DATABASE ... CHARACTER SET ..." (trabis)
 
-===============================
-2011/09/29: Version 2.5.2 Final
-===============================
+===================================
+2.5.2 Final		2011/09/29 
+===================================
 Bugfixes:
  - ID: 3416069 - avatars upload problem (cesag/trabis)
  - MyTextSanitizer::htmlSpecialChars() using UTF-8 by default (trabis)
  - System Waiting block produces queries for inactive modules (trabis)
  - 'Selected modules does not exist' if using inactive module on startpage (trabis)
 
-===============================
-2011/09/06: Version 2.5.2 RC
-===============================
+===================================
+2.5.2 RC		2011/09/06 
+===================================
 Security fixes:
  - Removed support for script driven images!!! (High-Tech Bridge Security Research Lab/trabis)
  - Fixed XSS (Cross Site Scripting) vulnerability in /include/formdhtmltextarea_preview.php (High-Tech Bridge Security Research Lab/trabis)
@@ -428,9 +429,9 @@ Improved:
  - Moved js and css from xo_scripts template into gui class(using $xoTheme) to avoid module conflicts
  - require class/xoopslocal.php causing problems with RMCommon (mamba/trabis)
 
-===============================
-2011/04/12: Version 2.5.2 Beta
-===============================
+===================================
+2.5.2 Beta		2011/04/12 
+===================================
 Bugfixes:
  - Module names and orders were not able to update (phppp/aitor)
  - Custom block was not able to add due to missing of 'block_type' (phppp/tatane/mr-reda04_fr/aitor)
@@ -438,24 +439,24 @@ Bugfixes:
  - Improved translations (phppp/mamba)
 
 
-===============================
-2011/03/23: Version 2.5.1 Final
-===============================
+===================================
+2.5.1 Final		2011/03/23 
+===================================
 Bugfixes:
  - ID: 3219412 Block Cloning : parent module (mid) not saved when cloning(trabis)
  - ID: 3219408 Block management : data not saved when editing(trabis)
  - ID: 3229007 Setting # of banner impressions has no effect(trabis)
 
 
-===============================
-2011/03/15: Version 2.5.1 RC
-===============================
+===================================
+2.5.1 RC		2011/03/15
+===================================
 Updates:
  - Updated suico and zetagenesis themes, zetadigme system admin theme (kris_fr)
 
-===============================
-2011/03/15: Version 2.5.1 RC
-===============================
+===================================
+2.5.1 RC		2011/03/15 
+===================================
 Security improvements:
  - Added filters to output data to avoid potential XSS (phppp/Aung Khant)
 Updates:
@@ -471,9 +472,9 @@ Bugfixes:
  - ID: 3111137 Module Block is cloned as custom block(trabis)
 
 
-===============================
-Updated 2010/10/23: Version 2.5.0
-===============================
+===================================
+2.5.0			2010/10/23 
+===================================
 Bug Fixes:
 
  - Fix security bug in Profile (gaba/phppp)
