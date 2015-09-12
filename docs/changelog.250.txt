@@ -21,6 +21,7 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - updated XOOPS copyright to 2015, changed links to http://xoops.org (mamba)
 - replaced intval() with (int) (mamba)
 - added possibility to include full icon URL in module's menu.php (mamba)
+- added strong { font-weight: bold; } to reset.css (mamba)
 
 
 Security fixes
