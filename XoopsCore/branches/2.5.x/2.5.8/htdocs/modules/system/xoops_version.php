@@ -175,7 +175,7 @@ $modversion['blocks'][12]['file'] = 'system_blocks.php';
 $modversion['blocks'][12]['name'] = _MI_SYSTEM_BNAME13;
 $modversion['blocks'][12]['description'] = 'Shows theme selection box';
 $modversion['blocks'][12]['show_func'] = 'b_system_themes_show';
-$modversion['blocks'][12]['options'] = '0|80';
+$modversion['blocks'][12]['options'] =  '0|80|3';
 $modversion['blocks'][12]['edit_func'] = 'b_system_themes_edit';
 $modversion['blocks'][12]['template'] = 'system_block_themes.html';
 

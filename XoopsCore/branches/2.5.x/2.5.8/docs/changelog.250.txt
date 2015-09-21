@@ -24,6 +24,7 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - added strong { font-weight: bold; } to reset.css (mamba)
 - added .tpl option for module Help files (mamba)
 - fix moved "count($tagsArray)" and "count($attrArray)" outside of FOR loop in xoopsfilterinput.php (mamba)
+- add option to set height of Themes block (mamba)
 
 
 Security fixes
