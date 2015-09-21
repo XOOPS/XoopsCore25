@@ -22,6 +22,7 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - replaced intval() with (int) (mamba)
 - added possibility to include full icon URL in module's menu.php (mamba)
 - added strong { font-weight: bold; } to reset.css (mamba)
+- added .tpl option for module Help files (mamba)
 
 
 Security fixes
