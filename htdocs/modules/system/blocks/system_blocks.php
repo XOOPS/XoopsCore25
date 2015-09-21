@@ -642,7 +642,7 @@ function b_system_themes_show($options)
     if ($options[0] == 1) {
         $block['theme_select'] = "<img vspace=\"2\" id=\"xoops_theme_img\" src=\"".XOOPS_THEME_URL."/".$xoopsConfig['theme_set']."/shot.gif\" alt=\"screenshot\" width=\"".(int)($options[1])."\" /><br /><select id=\"xoops_theme_select\" name=\"xoops_theme_select\" onchange=\"showImgSelected('xoops_theme_img', 'xoops_theme_select', 'themes', '/shot.gif', '".XOOPS_URL."');\">".$theme_options."</select><input type=\"submit\" value=\""._GO."\" />";
     } else {
-        $block['theme_select'] = '<select name="xoops_theme_select" onchange="submit();" size="3">'.$theme_options.'</select>';
+        $block['theme_select'] = '<select name="xoops_theme_select" onchange="submit();" size="'. $options[2] .'">'.$theme_options.'</select>';
     }
 
     $block['theme_select'] .= '<br />('.sprintf(_MB_SYSTEM_NUMTHEME, '<strong>'.count($xoopsConfig['theme_set_allowed']).'</strong>').')<br />';
@@ -671,6 +671,8 @@ function b_system_themes_edit($options)
     $form .= '&nbsp;<input type="radio" name="options[0]" value="0"'.$chk.' />'._NO;
     $form .= '<br />'._MB_SYSTEM_THWIDTH.'&nbsp;';
     $form .= "<input type='text' name='options[1]' value='".$options[1]."' />";
+        $form .= '<br />'._MB_SYSTEM_BLOCK_HEIGHT.'&nbsp;';
+    $form .= "<input type='text' name='options[2]' value='".$options[2]."' />";
 
     return $form;
 }

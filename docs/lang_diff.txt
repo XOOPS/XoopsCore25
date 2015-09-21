@@ -12,6 +12,12 @@ ADDED/DELETED DEFINES
 /modules/system/language/english/admin/modulesadmin.php
 - added define('_AM_SYSTEM_MODULES_INSTALL_MORE',"Install more modules");
 
+/modules/system/language/english/admin\users.php
+define('_AM_SYSTEM_USERS_ACTIVATE', 'Activate User');
+
+/modules/system/language/english/blocks.php
+define('_MB_SYSTEM_BLOCK_HEIGHT',"Block Height (lines)");	
+
 ===============================
 2014/06/14: Version 2.5.7 Final
 ===============================
