@@ -23,6 +23,7 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - added possibility to include full icon URL in module's menu.php (mamba)
 - added strong { font-weight: bold; } to reset.css (mamba)
 - added .tpl option for module Help files (mamba)
+- fix moved "count($tagsArray)" and "count($attrArray)" outside of FOR loop in xoopsfilterinput.php (mamba)
 
 
 Security fixes

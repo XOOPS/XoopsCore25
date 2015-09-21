@@ -66,10 +66,12 @@ class XoopsFilterInput
         $xssAuto = 1
     ) {
         // make sure user defined arrays are in lowercase
-        for ($i = 0; $i < count($tagsArray); ++$i) {
+        $tagsArrayCount = count($tagsArray);
+        for ($i = 0; $i < $tagsArrayCount; ++$i) {
             $tagsArray[$i] = strtolower($tagsArray[$i]);
         }
-        for ($i = 0; $i < count($attrArray); ++$i) {
+        $attrArrayCount = count($attrArray);
+        for ($i = 0; $i < $attrArrayCount; ++$i) {
             $attrArray[$i] = strtolower($attrArray[$i]);
         }
         // assign to member vars
@@ -378,7 +380,8 @@ class XoopsFilterInput
                 if (!$isCloseTag) {
                     $attrSet = $this->filterAttr($attrSet);
                     $preTag .= '<' . $tagName;
-                    for ($i = 0; $i < count($attrSet); ++$i) {
+                    $attrSetCount = count($attrSet);
+                    for ($i = 0; $i < $attrSetCount; ++$i) {
                         $preTag .= ' ' . $attrSet[$i];
                     }
                     // reformat single tags to XHTML
@@ -413,7 +416,8 @@ class XoopsFilterInput
     {
         $newSet = array();
         // process attributes
-        for ($i = 0; $i <count($attrSet); ++$i) {
+        $attrSetCount = count($attrSet);
+        for ($i = 0; $i < $attrSetCount; ++$i) {
             // skip blank spaces in tag
             if (!$attrSet[$i]) {
                 continue;
