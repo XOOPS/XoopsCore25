@@ -879,7 +879,7 @@ class PHPMailer
                 if (version_compare(PCRE_VERSION, '8.0.3') >= 0) {
                     $patternselect = 'pcre8';
                 }
-            } elseif (function_exists('extension_loaded') and extension_loaded('pcre')) {
+            } elseif (function_exists('extension_loaded') && extension_loaded('pcre')) {
                 //Fall back to older PCRE
                 $patternselect = 'pcre';
             } else {
@@ -912,7 +912,7 @@ class PHPMailer
             case 'noregex':
                 //No PCRE! Do something _very_ approximate!
                 //Check the address is 3 chars or longer and contains an @ that's not the first or last char
-                return (strlen($address) >= 3 and strpos($address, '@') >= 1 and strpos($address, '@') != strlen($address) - 1);
+                return (strlen($address) >= 3 && strpos($address, '@') >= 1 && strpos($address, '@') != strlen($address) - 1);
             case 'php':
             default:
                 return (boolean)filter_var($address, FILTER_VALIDATE_EMAIL);
@@ -965,7 +965,7 @@ class PHPMailer
             $this->error_count = 0; // reset errors
             $this->setMessageType();
             // Refuse to send an empty message unless we are specifically allowing it
-            if (!$this->AllowEmpty and empty($this->Body)) {
+            if (!$this->AllowEmpty && empty($this->Body)) {
                 throw new phpmailerException($this->lang('empty_message'), self::STOP_CRITICAL);
             }
 
@@ -1113,7 +1113,7 @@ class PHPMailer
         } else {
             $params = sprintf('-f%s', $this->Sender);
         }
-        if ($this->Sender != '' and !ini_get('safe_mode')) {
+        if ($this->Sender != '' && !ini_get('safe_mode')) {
             $old_from = ini_get('sendmail_from');
             ini_set('sendmail_from', $this->Sender);
         }
@@ -1206,7 +1206,7 @@ class PHPMailer
         }
 
         // Only send the DATA command if we have viable recipients
-        if ((count($this->all_recipients) > count($bad_rcpt)) and !$this->smtp->data($header . $body)) {
+        if ((count($this->all_recipients) > count($bad_rcpt)) && !$this->smtp->data($header . $body)) {
             throw new phpmailerException($this->lang('data_not_accepted'), self::STOP_CRITICAL);
         }
         if ($this->SMTPKeepAlive == true) {
@@ -1262,7 +1262,7 @@ class PHPMailer
             // If it's not specified, the default value is used
             $prefix = '';
             $tls    = ($this->SMTPSecure === 'tls');
-            if ($hostinfo[2] === 'ssl' or ($hostinfo[2] == '' and $this->SMTPSecure === 'ssl')) {
+            if ($hostinfo[2] === 'ssl' or ($hostinfo[2] == '' && $this->SMTPSecure === 'ssl')) {
                 $prefix = 'ssl://';
                 $tls    = false; // Can't have SSL and TLS at once
             } elseif ($hostinfo[2] === 'tls') {
@@ -1272,7 +1272,7 @@ class PHPMailer
             $host  = $hostinfo[3];
             $port  = $this->Port;
             $tport = (integer)$hostinfo[4];
-            if ($tport > 0 and $tport < 65536) {
+            if ($tport > 0 && $tport < 65536) {
                 $port = $tport;
             }
             if ($this->smtp->connect($prefix . $host, $port, $this->Timeout, $options)) {
@@ -1460,7 +1460,7 @@ class PHPMailer
             $line_partCount = count($line_part);
             for ($e = 0; $e < $line_partCount; $e++) {
                 $word = $line_part[$e];
-                if ($qp_mode and (strlen($word) > $length)) {
+                if ($qp_mode && (strlen($word) > $length)) {
                     $space_left = $length - strlen($buf) - $crlflen;
                     if ($e != 0) {
                         if ($space_left > 20) {
@@ -1506,7 +1506,7 @@ class PHPMailer
                     $buf_o = $buf;
                     $buf .= ($e == 0) ? $word : (' ' . $word);
 
-                    if (strlen($buf) > $length and $buf_o != '') {
+                    if (strlen($buf) > $length && $buf_o != '') {
                         $message .= $buf_o . $soft_break;
                         $buf = $word;
                     }
@@ -1629,7 +1629,7 @@ class PHPMailer
         }
 
         // sendmail and mail() extract Bcc from the header before sending
-        if (($this->Mailer === 'sendmail' or $this->Mailer === 'qmail' or $this->Mailer === 'mail') and count($this->bcc) > 0) {
+        if (($this->Mailer === 'sendmail' or $this->Mailer === 'qmail' or $this->Mailer === 'mail') && count($this->bcc) > 0) {
             $result .= $this->addrAppend('Bcc', $this->bcc);
         }
 
@@ -1759,13 +1759,13 @@ class PHPMailer
 
         $bodyEncoding = $this->Encoding;
         $bodyCharSet  = $this->CharSet;
-        if ($bodyEncoding === '8bit' and !$this->has8bitChars($this->Body)) {
+        if ($bodyEncoding === '8bit' && !$this->has8bitChars($this->Body)) {
             $bodyEncoding = '7bit';
             $bodyCharSet  = 'us-ascii';
         }
         $altBodyEncoding = $this->Encoding;
         $altBodyCharSet  = $this->CharSet;
-        if ($altBodyEncoding === '8bit' and !$this->has8bitChars($this->AltBody)) {
+        if ($altBodyEncoding === '8bit' && !$this->has8bitChars($this->AltBody)) {
             $altBodyEncoding = '7bit';
             $altBodyCharSet  = 'us-ascii';
         }
@@ -2712,7 +2712,7 @@ class PHPMailer
         $result = 'localhost.localdomain';
         if (!empty($this->Hostname)) {
             $result = $this->Hostname;
-        } elseif (isset($_SERVER) and array_key_exists('SERVER_NAME', $_SERVER) and !empty($_SERVER['SERVER_NAME'])) {
+        } elseif (isset($_SERVER) && array_key_exists('SERVER_NAME', $_SERVER) && !empty($_SERVER['SERVER_NAME'])) {
             $result = $_SERVER['SERVER_NAME'];
         } elseif (function_exists('gethostname') && gethostname() !== false) {
             $result = gethostname();

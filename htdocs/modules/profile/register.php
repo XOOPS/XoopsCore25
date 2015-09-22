@@ -38,7 +38,7 @@ $config_handler             =& xoops_getHandler('config');
 $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 if (empty($GLOBALS['xoopsConfigUser']['allow_register'])) {
     redirect_header('index.php', 6, _US_NOREGISTER);
-    exit();
+
 }
 
 // get the key we need to access our 'op' in $_POST
@@ -65,7 +65,7 @@ $uid = !empty($_SESSION['profile_register_uid']) ? (int)($_SESSION['profile_regi
 // First step is already secured by with the captcha Token so lets check the others
 if ($current_step > 0 && !$GLOBALS['xoopsSecurity']->check()) {
     redirect_header('user.php', 5, _PROFILE_MA_EXPIRED);
-    exit();
+
 }
 
 $criteria = new CriteriaCompo();
@@ -74,7 +74,7 @@ $regstep_handler =& xoops_getModuleHandler('regstep');
 
 if (!$steps = $regstep_handler->getAll($criteria, null, false, false)) {
     redirect_header(XOOPS_URL . '/', 6, _PROFILE_MA_NOSTEPSAVAILABLE);
-    exit();
+
 }
 
 foreach (array_keys($steps) as $key) {

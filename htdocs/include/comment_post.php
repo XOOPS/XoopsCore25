@@ -250,7 +250,7 @@ switch ($op) {
             }
             if (false != $accesserror) {
                 redirect_header($redirect_page . '=' . $com_itemid . '&amp;com_id=' . $com_id . '&amp;com_mode=' . $com_mode . '&amp;com_order=' . $com_order, 1, _NOPERM);
-                exit();
+
             }
         } else {
             $comment = $comment_handler->create();
@@ -298,7 +298,7 @@ switch ($op) {
                 $uid    = 0;
                 if ($xoopsModuleConfig['com_anonpost'] != 1) {
                     redirect_header($redirect_page . '=' . $com_itemid . '&amp;com_id=' . $com_id . '&amp;com_mode=' . $com_mode . '&amp;com_order=' . $com_order, 1, _NOPERM);
-                    exit();
+
                 }
             }
             if ($uid == 0) {

@@ -113,7 +113,7 @@ switch ($op) {
         // Check security
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=maintenance', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-            exit();
+
         }
         //Define Breadcrumb and tips
         $xoBreadCrumb->addLink(_AM_SYSTEM_MAINTENANCE_NAV_MANAGER, system_adminVersion('maintenance', 'adminpath'));
@@ -186,7 +186,7 @@ switch ($op) {
         // Check security
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=maintenance', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-            exit();
+
         }
         //Define Breadcrumb and tips
         $xoBreadCrumb->addLink(_AM_SYSTEM_MAINTENANCE_NAV_MANAGER, system_adminVersion('maintenance', 'adminpath'));

@@ -408,7 +408,7 @@ switch ($op) {
     case 'save':
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=images', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-            exit();
+
         }
         // Get image handler
         $image_handler =& xoops_getHandler('image');

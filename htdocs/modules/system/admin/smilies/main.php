@@ -139,7 +139,7 @@ switch ($op) {
     case "save_smilie":
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=smilies', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-            exit();
+
         }
         // Define Breadcrumb and tips
         $xoBreadCrumb->addLink(_AM_SYSTEM_SMILIES_NAV_ADD);

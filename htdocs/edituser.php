@@ -27,7 +27,6 @@ include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 // If not a user, redirect
 if (!is_object($xoopsUser)) {
     redirect_header('index.php', 3, _US_NOEDITRIGHT);
-    exit();
 }
 
 // initialize $op variable
@@ -45,7 +44,6 @@ $myts            =& MyTextSanitizer::getInstance();
 if ($op === 'saveuser') {
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header('index.php', 3, _US_NOEDITRIGHT . "<br />" . implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-        exit();
     }
     $uid = 0;
     if (!empty($_POST['uid'])) {
@@ -53,7 +51,6 @@ if ($op === 'saveuser') {
     }
     if (empty($uid) || $xoopsUser->getVar('uid') != $uid) {
         redirect_header('index.php', 3, _US_NOEDITRIGHT);
-        exit();
     }
     $errors = array();
     if ($xoopsConfigUser['allow_chgmail'] == 1) {
@@ -283,7 +280,6 @@ if ($op === 'avatarform') {
 if ($op === 'avatarupload') {
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header('index.php', 3, _US_NOEDITRIGHT . "<br />" . implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-        exit();
     }
     $xoops_upload_file = array();
     $uid               = 0;
@@ -295,7 +291,6 @@ if ($op === 'avatarupload') {
     }
     if (empty($uid) || $xoopsUser->getVar('uid') != $uid) {
         redirect_header('index.php', 3, _US_NOEDITRIGHT);
-        exit();
     }
     if ($xoopsConfigUser['avatar_allow_upload'] == 1 && $xoopsUser->getVar('posts') >= $xoopsConfigUser['avatar_minposts']) {
         include_once $GLOBALS['xoops']->path('class/uploader.php');
@@ -343,7 +338,6 @@ if ($op === 'avatarupload') {
 if ($op === 'avatarchoose') {
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header('index.php', 3, _US_NOEDITRIGHT . "<br />" . implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-        exit();
     }
     $uid = 0;
     if (!empty($_POST['uid'])) {
@@ -351,7 +345,6 @@ if ($op === 'avatarchoose') {
     }
     if (empty($uid) || $xoopsUser->getVar('uid') != $uid) {
         redirect_header('index.php', 3, _US_NOEDITRIGHT);
-        exit();
     }
     $user_avatar = '';
     $avt_handler =& xoops_getHandler('avatar');

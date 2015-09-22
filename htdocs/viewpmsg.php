@@ -51,7 +51,7 @@ if (!is_object($xoopsUser)) {
             unset($pm);
         }
         redirect_header("viewpmsg.php", 1, _PM_DELETED);
-        exit();
+
     }
     include $GLOBALS['xoops']->path('header.php');
     $criteria = new Criteria('to_userid', $xoopsUser->getVar('uid'));

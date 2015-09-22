@@ -25,7 +25,7 @@ include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 // If not a user, redirect
 if (!is_object($GLOBALS['xoopsUser'])) {
     redirect_header(XOOPS_URL, 3, _US_NOEDITRIGHT);
-    exit();
+
 }
 
 $myts                       =& MyTextSanitizer::getInstance();
@@ -157,7 +157,7 @@ if ($op === 'avatarupload') {
     }
     if (empty($uid) || $GLOBALS['xoopsUser']->getVar('uid') != $uid) {
         redirect_header('index.php', 3, _US_NOEDITRIGHT);
-        exit();
+
     }
     if ($GLOBALS['xoopsConfigUser']['avatar_allow_upload'] == 1 && $GLOBALS['xoopsUser']->getVar('posts') >= $GLOBALS['xoopsConfigUser']['avatar_minposts']) {
         include_once $GLOBALS['xoops']->path('class/uploader.php');
@@ -208,7 +208,7 @@ if ($op === 'avatarchoose') {
     }
     if (empty($uid) || $GLOBALS['xoopsUser']->getVar('uid') != $uid) {
         redirect_header('index.php', 3, _US_NOEDITRIGHT);
-        exit();
+
     }
     $user_avatar = '';
     $avt_handler =& xoops_getHandler('avatar');

@@ -24,7 +24,6 @@ xoops_loadLanguage('pmsg');
 
 if (!is_object($xoopsUser)) {
     redirect_header("user.php", 0);
-    exit();
 } else {
     $pm_handler =& xoops_getHandler('privmessage');
     if (!empty($_POST['delete'])) {
@@ -42,7 +41,6 @@ if (!is_object($xoopsUser)) {
             exit();
         } else {
             redirect_header("viewpmsg.php", 1, _PM_DELETED);
-            exit();
         }
     }
     $start          = !empty($_GET['start']) ? (int)($_GET['start']) : 0;

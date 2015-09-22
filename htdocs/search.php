@@ -75,17 +75,17 @@ $queries = array();
 if ($action === "results") {
     if ($query == "") {
         redirect_header("search.php", 1, _SR_PLZENTER);
-        exit();
+
     }
 } elseif ($action === "showall") {
     if ($query == "" || empty($mid)) {
         redirect_header("search.php", 1, _SR_PLZENTER);
-        exit();
+
     }
 } elseif ($action === "showallbyuser") {
     if (empty($mid) || empty($uid)) {
         redirect_header("search.php", 1, _SR_PLZENTER);
-        exit();
+
     }
 }
 
@@ -118,13 +118,13 @@ if ($action !== 'showallbyuser') {
         }
         if (count($queries) == 0) {
             redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
-            exit();
+
         }
     } else {
         $query = trim($query);
         if (strlen($query) < $xoopsConfigSearch['keyword_min']) {
             redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
-            exit();
+
         }
         $queries = array($myts->addSlashes($query));
     }

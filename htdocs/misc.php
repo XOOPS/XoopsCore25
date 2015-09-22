@@ -143,7 +143,6 @@ if ($action === "showpopups") {
                 }
                 if (!isset($_POST['yname']) || trim($_POST['yname']) == "" || $ymail == '' || !isset($_POST['fname']) || trim($_POST['fname']) == "" || !isset($_POST['fmail']) || trim($_POST['fmail']) == '') {
                     redirect_header(XOOPS_URL . "/misc.php?action=showpopups&amp;type=friend&amp;op=sendform", 2, _MSC_NEEDINFO);
-                    exit();
                 }
                 $yname = $myts->stripSlashesGPC(trim($_POST['yname']));
                 $fname = $myts->stripSlashesGPC(trim($_POST['fname']));
@@ -151,7 +150,6 @@ if ($action === "showpopups") {
                 if (!checkEmail($fmail) || !checkEmail($ymail) || preg_match("/[\\0-\\31]/", $yname)) {
                     $errormessage = _MSC_INVALIDEMAIL1 . "<br />" . _MSC_INVALIDEMAIL2 . "";
                     redirect_header(XOOPS_URL . "/misc.php?action=showpopups&amp;type=friend&amp;op=sendform", 2, $errormessage);
-                    exit();
                 }
                 $xoopsMailer =& xoops_getMailer();
                 $xoopsMailer->setTemplate("tellfriend.tpl");

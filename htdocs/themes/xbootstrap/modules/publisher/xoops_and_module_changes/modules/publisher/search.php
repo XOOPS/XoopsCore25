@@ -29,7 +29,7 @@ $config_handler    =& xoops_getHandler("config");
 $xoopsConfigSearch = $config_handler->getConfigsByCat(XOOPS_CONF_SEARCH);
 if (empty($xoopsConfigSearch["enable_search"])) {
     redirect_header(PUBLISHER_URL . "/index.php", 2, _NOPERM);
-    exit();
+
 }
 
 $groups        = $xoopsUser ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
@@ -39,7 +39,7 @@ $module_id     = $publisher->getModule()->mid();
 //Checking permissions
 if (!$publisher->getConfig('perm_search') || !$gperm_handler->checkRight('global', _PUBLISHER_SEARCH, $groups, $module_id)) {
     redirect_header(PUBLISHER_URL, 2, _NOPERM);
-    exit();
+
 }
 
 $xoopsConfig["module_cache"][$module_id] = 0;
@@ -89,12 +89,12 @@ if (!(empty($_POST["submit"]) && empty($term))) {
         }
         if (count($queries) == 0) {
             redirect_header(PUBLISHER_URL . "/search.php", 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch["keyword_min"]));
-            exit();
+
         }
     } else {
         if (strlen($query) < $xoopsConfigSearch["keyword_min"]) {
             redirect_header(PUBLISHER_URL . "/search.php", 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch["keyword_min"]));
-            exit();
+
         }
         $queries = array($myts->addSlashes($query));
     }
@@ -107,7 +107,7 @@ if (!(empty($_POST["submit"]) && empty($term))) {
         $search_username = $myts->addSlashes($search_username);
         if (!$result = $xoopsDB->query("SELECT uid FROM " . $xoopsDB->prefix("users") . " WHERE uname LIKE " . $xoopsDB->quoteString("%$search_username%"))) {
             redirect_header(PUBLISHER_URL . "/search.php", 1, _CO_PUBLISHER_ERROR);
-            exit();
+
         }
         $uid = array();
         while ($row = $xoopsDB->fetchArray($result)) {

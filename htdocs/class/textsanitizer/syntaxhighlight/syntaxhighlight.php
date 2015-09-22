@@ -61,7 +61,7 @@ class MytsSyntaxhighlight extends MyTextSanitizerExtension
     {
         $text          = trim($text);
         $addedtag_open = 0;
-        if (!strpos($text, "<?php") and (substr($text, 0, 5) !== "<?php")) {
+        if (!strpos($text, "<?php") && (substr($text, 0, 5) !== "<?php")) {
             $text          = "<?php " . $text;
             $addedtag_open = 1;
         }

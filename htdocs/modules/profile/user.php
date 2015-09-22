@@ -88,14 +88,14 @@ if ($op === 'logout') {
     }
     $message = _US_LOGGEDOUT . '<br />' . _US_THANKYOUFORVISIT;
     redirect_header(XOOPS_URL . '/', 1, $message);
-    exit();
+
 }
 
 if ($op === 'actv') {
     $id     = (int)($_GET['id']);
     $actkey = trim($_GET['actkey']);
     redirect_header("activate.php?op=actv&amp;id={$id}&amp;actkey={$actkey}", 1, '');
-    exit();
+
 }
 
 if ($op === 'delete') {
@@ -103,13 +103,13 @@ if ($op === 'delete') {
     $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
     if (!$GLOBALS['xoopsUser'] || $GLOBALS['xoopsConfigUser']['self_delete'] != 1) {
         redirect_header(XOOPS_URL . '/', 5, _US_NOPERMISS);
-        exit();
+
     } else {
         $groups = $GLOBALS['xoopsUser']->getGroups();
         if (in_array(XOOPS_GROUP_ADMIN, $groups)) {
             // users in the webmasters group may not be deleted
             redirect_header(XOOPS_URL . '/', 5, _US_ADMINNO);
-            exit();
+
         }
         $ok = !isset($_POST['ok']) ? 0 : (int)($_POST['ok']);
         if ($ok != 1) {

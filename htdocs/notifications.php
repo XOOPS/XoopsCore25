@@ -21,7 +21,6 @@ include __DIR__ . '/mainfile.php';
 
 if (!is_object($xoopsUser)) {
     redirect_header('index.php', 3, _NOT_NOACCESS);
-    exit();
 }
 
 $uid = $xoopsUser->getVar('uid');

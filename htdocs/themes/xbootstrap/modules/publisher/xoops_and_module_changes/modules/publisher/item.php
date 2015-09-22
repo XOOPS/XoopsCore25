@@ -28,7 +28,7 @@ $item_page_id = PublisherRequest::getInt('page', -1);
 
 if ($itemid == 0) {
     redirect_header("javascript:history.go(-1)", 1, _MD_PUBLISHER_NOITEMSELECTED);
-    exit();
+
 }
 
 // Creating the item object for the selected item
@@ -37,7 +37,7 @@ $itemObj = $publisher->getHandler('item')->get($itemid);
 // if the selected item was not found, exit
 if (!$itemObj) {
     redirect_header("javascript:history.go(-1)", 1, _MD_PUBLISHER_NOITEMSELECTED);
-    exit();
+
 }
 
 $xoopsOption['template_main'] = 'publisher_item.tpl';

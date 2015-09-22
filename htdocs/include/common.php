@@ -304,13 +304,13 @@ if (file_exists('./xoops_version.php')) {
     if ($xoopsUser) {
         if (!$moduleperm_handler->checkRight('module_read', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
             redirect_header(XOOPS_URL, 1, _NOPERM, false);
-            exit();
+
         }
         $xoopsUserIsAdmin = $xoopsUser->isAdmin($xoopsModule->getVar('mid'));
     } else {
         if (!$moduleperm_handler->checkRight('module_read', $xoopsModule->getVar('mid'), XOOPS_GROUP_ANONYMOUS)) {
             redirect_header(XOOPS_URL . '/user.php?from=' . $xoopsModule->getVar('dirname', 'n'), 1, _NOPERM);
-            exit();
+
         }
     }
 

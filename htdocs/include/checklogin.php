@@ -43,7 +43,7 @@ $uname = $clean_uname;
 $pass  = $clean_pass;
 if ($uname == '' || $pass == '') {
     redirect_header(XOOPS_URL . '/user.php', 1, _US_INCORRECTLOGIN);
-    exit();
+
 }
 
 $member_handler =& xoops_getHandler('member');
@@ -59,7 +59,7 @@ $user      = $xoopsAuth->authenticate($myts->addSlashes($uname), $myts->addSlash
 if (false != $user) {
     if (0 == $user->getVar('level')) {
         redirect_header(XOOPS_URL . '/index.php', 5, _US_NOACTTPADM);
-        exit();
+
     }
     if ($xoopsConfig['closesite'] == 1) {
         $allowed = false;
@@ -71,7 +71,7 @@ if (false != $user) {
         }
         if (!$allowed) {
             redirect_header(XOOPS_URL . '/index.php', 1, _NOPERM);
-            exit();
+
         }
     }
     $user->setVar('last_login', time());

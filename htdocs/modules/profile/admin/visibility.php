@@ -38,7 +38,7 @@ if (isset($_REQUEST['submit'])) {
     $visibility->setVar('profile_group', $_REQUEST['pg']);
     $visibility_handler->insert($visibility, true);
     redirect_header("visibility.php", 2, sprintf(_PROFILE_AM_SAVEDSUCCESS, _PROFILE_AM_PROF_VISIBLE));
-    exit();
+
 }
 if ($op === "del") {
     $criteria = new CriteriaCompo(new Criteria('field_id', (int)($_REQUEST['field_id'])));
@@ -46,7 +46,7 @@ if ($op === "del") {
     $criteria->add(new Criteria('profile_group', (int)($_REQUEST['pg'])));
     $visibility_handler->deleteAll($criteria, true);
     redirect_header("visibility.php", 2, sprintf(_PROFILE_AM_DELETEDSUCCESS, _PROFILE_AM_PROF_VISIBLE));
-    exit();
+
 }
 
 include_once $GLOBALS['xoops']->path("/class/xoopsformloader.php");

@@ -60,4 +60,3 @@ define('_AM_SYSTEM_FILEMANAGER_DIR_RYSDEL', 'Are you sure to delete this folder?
 define('_AM_SYSTEM_FILEMANAGER_FILE_SUCCESS', 'File successfully created');
 define('_AM_SYSTEM_FILEMANAGER_SUREDEL', 'Are you sure to delete this file %s?');
 define('_AM_SYSTEM_FILEMANAGER_DIR_SUREDEL', 'Are you sure you want to delete this directory %s?<br />Warning: all subdirectories and files file will be deleted');
-?>

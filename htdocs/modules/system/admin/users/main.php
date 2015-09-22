@@ -291,7 +291,7 @@ switch ($op) {
                             xoops_load("XoopsUserUtility");
                             XoopsUserUtility::sendWelcome($newuser);
                             redirect_header("admin.php?fct=users", 1, _AM_SYSTEM_DBUPDATED);
-                            exit();
+
                         }
                     }
                 }

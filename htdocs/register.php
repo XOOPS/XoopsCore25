@@ -36,7 +36,6 @@ $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
 if (empty($xoopsConfigUser['allow_register'])) {
     redirect_header('index.php', 6, _US_NOREGISTER);
-    exit();
 }
 
 /**
@@ -213,7 +212,7 @@ switch ($op) {
             if ($xoopsConfigUser['activation_type'] == 1) {
                 XoopsUserUtility::sendWelcome($newuser);
                 redirect_header('index.php', 4, _US_ACTLOGIN);
-                exit();
+
             }
             // Sending notification email to user for self activation
             if ($xoopsConfigUser['activation_type'] == 0) {
@@ -280,7 +279,7 @@ switch ($op) {
         $actkey = $clean_actkey;
         if (empty($id)) {
             redirect_header('index.php', 1, '');
-            exit();
+
         }
         $member_handler =& xoops_getHandler('member');
         $thisuser       =& $member_handler->getUser($id);

@@ -105,7 +105,7 @@ switch ($op) {
                 $protected = array('', 'class', 'Frameworks', 'images', 'include', 'kernel', 'language', 'modules', 'themes', 'uploads', 'xoops_lib', 'xoops_data');
                 foreach ($protected as $folder) {
                     $root_path = XOOPS_ROOT_PATH . '/' . $folder . '/';
-                    if (eregi($root_path, $path_file)) {
+                    if (false !== stripos($path_file, $root_path)) {
                         if (($root_path == $path_file)) {
                             $verif = false;
                         }
@@ -404,7 +404,7 @@ switch ($op) {
             }
 
             while ($name = readdir($dir)) {
-                if ($name === '.' or $name === '..') {
+                if ($name === '.' || $name === '..') {
                     continue;
                 }
                 $full_name = $dossier . '/' . $name;

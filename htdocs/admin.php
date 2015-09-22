@@ -23,11 +23,9 @@ include_once $GLOBALS['xoops']->path('include/cp_functions.php');
 if ($xoopsUser) {
     if (!$xoopsUser->isAdmin(-1)) {
         redirect_header('index.php', 2, _AD_NORIGHT);
-        exit();
     }
 } else {
     redirect_header('index.php', 2, _AD_NORIGHT);
-    exit();
 }
 
 xoops_cp_header();

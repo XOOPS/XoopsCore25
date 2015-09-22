@@ -50,13 +50,11 @@ if (isset($xoopsConfig['startpage']) && $xoopsConfig['startpage'] != "" && $xoop
     if ($xoopsUser) {
         if (!$moduleperm_handler->checkRight('module_read', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
             redirect_header(XOOPS_URL, 1, _NOPERM, false);
-            exit();
         }
         $xoopsUserIsAdmin = $xoopsUser->isAdmin($xoopsModule->getVar('mid'));
     } else {
         if (!$moduleperm_handler->checkRight('module_read', $xoopsModule->getVar('mid'), XOOPS_GROUP_ANONYMOUS)) {
             redirect_header(XOOPS_URL . "/user.php", 1, _NOPERM);
-            exit();
         }
     }
     if ($xoopsModule->getVar('hasconfig') == 1 || $xoopsModule->getVar('hascomments') == 1 || $xoopsModule->getVar('hasnotification') == 1) {
