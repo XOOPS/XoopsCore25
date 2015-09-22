@@ -1629,7 +1629,7 @@ class PHPMailer
         }
 
         // sendmail and mail() extract Bcc from the header before sending
-        if (($this->Mailer === 'sendmail' || $this->Mailer === 'qmail' or $this->Mailer === 'mail') && count($this->bcc) > 0) {
+        if (($this->Mailer === 'sendmail' || $this->Mailer === 'qmail' || $this->Mailer === 'mail') && count($this->bcc) > 0) {
             $result .= $this->addrAppend('Bcc', $this->bcc);
         }
 
