@@ -1262,7 +1262,7 @@ class PHPMailer
             // If it's not specified, the default value is used
             $prefix = '';
             $tls    = ($this->SMTPSecure === 'tls');
-            if ($hostinfo[2] === 'ssl' or ($hostinfo[2] == '' && $this->SMTPSecure === 'ssl')) {
+            if ($hostinfo[2] === 'ssl' || ($hostinfo[2] == '' && $this->SMTPSecure === 'ssl')) {
                 $prefix = 'ssl://';
                 $tls    = false; // Can't have SSL and TLS at once
             } elseif ($hostinfo[2] === 'tls') {
@@ -1629,7 +1629,7 @@ class PHPMailer
         }
 
         // sendmail and mail() extract Bcc from the header before sending
-        if (($this->Mailer === 'sendmail' or $this->Mailer === 'qmail' or $this->Mailer === 'mail') && count($this->bcc) > 0) {
+        if (($this->Mailer === 'sendmail' || $this->Mailer === 'qmail' or $this->Mailer === 'mail') && count($this->bcc) > 0) {
             $result .= $this->addrAppend('Bcc', $this->bcc);
         }
 
@@ -2679,7 +2679,7 @@ class PHPMailer
         $this->error_count++;
         if ($this->Mailer === 'smtp' && null !== ($this->smtp)) {
             $lasterror = $this->smtp->getError();
-            if (!empty($lasterror) and array_key_exists('smtp_msg', $lasterror)) {
+            if (!empty($lasterror) && array_key_exists('smtp_msg', $lasterror)) {
                 $msg .= '<p>' . $this->lang('smtp_error') . $lasterror['smtp_msg'] . "</p>\n";
             }
         }
