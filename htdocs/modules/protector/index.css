@@ -1,0 +1,366 @@
+/* general - xoops */
+/* xoopsCode */
+
+#post_reference dd div.xoopsCode,
+#post_preview dd div.xoopsCode,
+div.pico_body div.xoopsCode{
+	width				:95%;
+	overflow				:auto;
+	margin				:10px 0;}
+
+/* xoopsQuote */
+
+div.pico_body blockquote{
+	margin				:0;
+	padding				:5px;}
+div.pico_body div.xoopsQuote{
+	margin				:0;
+	padding				:0;}
+#post_reference dd blockquote,
+#post_preview dd blockquote{
+	margin				:0;
+	padding				:5px;}
+
+/* pico_breadcrumbs */
+
+div.pico_breadcrumbs{
+	font-size				:95%;
+	padding				:0 0 3px;
+	border-bottom			:1px #aaa solid;}
+
+/* head */
+
+.pico_head{
+	clear				:both;
+	padding				:3px 8px;}
+.pico_head *{
+	vertical-align		:middle;}
+.pico_head p{
+	font-weight			:normal;
+	font-size				:95%;
+	margin				:0;
+	padding				:0 0 2px;}
+
+/* h1 */
+
+.pico_title{
+	font-size				:130%;
+	margin				:3px 0 15px;}
+.pico_title *{
+	vertical-align		:middle;}
+
+/* h2 */
+
+.pico_head h2{
+	font-size				:120%;
+	margin				:0;
+	padding				:0;}
+.pico_head h2.invisible {
+	background-color		:#f00;}
+.pico_head h2.yetapproval {
+	background-color		:#0ff;}
+.pico_head h2 img{
+	vertical-align		:middle;}
+h2.pico_head{
+	font-size				:120%;
+	padding				:3px 8px;}
+h2.pico_tree{
+	margin-bottom			:4px;}
+
+/* h3 */
+
+h3.pico_head_h3{
+	margin				:5px 0 0;
+	padding				:2px 8px;
+	border-bottom			:1px #999 solid;}
+
+/* inc_eachpost.html */
+/* msgnum */
+
+.pico_msgnum{
+	font-size				:95%;
+	font-weight			:normal;}
+
+/* pico_info, pico_info_sub, pico_info_ctrl */
+
+.pico_info{
+	margin				:2px 0 0;
+	padding				:3px 8px;
+	background-color		:#eee;}
+.pico_info_sub{
+	padding				:2px 8px 3px;
+	background-color		:#fff;}
+.pico_info_ctrl{
+	text-align			:right;
+	clear				:both;
+	margin				:2px -2px 2px;
+	padding				:3px 10px;
+	background-color		:#fff;
+	border-top			:1px #aaa dotted;
+	border-bottom			:1px #aaa solid;}
+.pico_info *,.pico_info_sub *,.pico_info_ctrl *{
+	vertical-align		:middle;}
+
+/* pico_body */
+
+.pico_body{
+	margin				:0 -2px;
+	padding				:15px 8px;
+	border-top			:1px #aaa solid;}
+
+/* pico_avatar */
+
+.pico_avatar{
+	float				:right;
+	margin				:0 0 5px;}
+
+
+/* main_listposts.html */
+/* pico_wrap */
+
+.pico_wrap{
+	clear				:both;
+	border-top			:1px #aaa solid;
+	border-right			:1px #aaa solid;
+	border-left			:1px #aaa solid;
+	padding				:2px 2px 0;}
+
+/* pico_orderctrl */
+
+p.pico_viewctrl{
+	margin				:0;
+	padding				:3px;
+	text-align			:right;}
+
+/* pico_topicinfo */
+
+.pico_topicinfo{
+	text-align			:left;
+	margin				:0;
+	padding				:2px;}
+
+/* pico_ctrl */
+
+.pico_ctrl{
+	text-align			:center;
+	clear				:both;
+	margin				:-8px 0 10px;
+	padding				:8px;
+	background-color		:#eee;}
+.pico_ctrl *{
+	vertical-align		:middle;}
+.pico_ctrl p,.pico_ctrl form{
+	padding				:3px;
+	margin				:0;}
+
+ul.pico_othertopics,ul.pico_othertopics li{
+	list-style			:none outside;
+	text-align			:center;
+	margin				:0;
+	padding				:0;}
+ul.pico_othertopics li{
+	padding-bottom		:10px;}
+ul.pico_othertopics li{
+	width				:33%;
+	float				:left;}
+
+div.pico_topctrl{
+	float				:left;
+	width				:auto;}
+
+div.pico_topctrl_icons{
+	float				:right;
+	width				:100px;}
+
+a.topic_icon_ctrl{
+	text-indent			:-9000px;
+	display				:block;
+	width				:20px;
+	height				:16px;
+	background-repeat		:no-repeat;
+	float				:left;}
+
+/* main_viewpost.html */
+/* eachbranch */
+
+ul.pico_eachbranch{
+	margin				:0;
+	padding				:0;}
+ul.pico_eachbranch li{
+	list-style			:none outside;
+	margin				:0;
+	padding				:0;}
+ul.pico_eachbranch li img{
+	vertical-align		:middle;}
+
+/* pico_currenttopic */
+
+.pico_eachbranch li.pico_eachbranchitem{
+	background-color		:#eee;}
+.pico_eachbranch li.pico_currenttopic{
+	background-color		:#fff;}
+
+/* main_listforums.html */
+/* pico_subcategories */
+
+ul.pico_subcategories li{
+	list-style			:none outside;}
+
+/* pico_main_listcategories.html */
+/* infomations*/
+
+dl.pico_bbsinfo{
+	font-size			:95%;
+	margin			:0;
+	float				:left;}
+dl.pico_bbsinfo dt,dl.pico_bbsinfo dd{
+	display			:inline;
+	margin			:0;}
+dl.pico_bbsinfo dd{
+	margin			:0 5px 0 0;}
+dl.pico_timeinfo{
+	clear			:both;
+	font-size			:95%;
+	margin			:0;
+	padding			:0 0 10px;
+	float			:left;}
+dl.pico_timeinfo dt,dl.pico_timeinfo dd{
+	display			:inline;
+	margin			:0;}
+dl.pico_timeinfo dd{
+	margin			:0 5px 0 0;}
+
+ul.pico_listforums li{
+	list-style			:none outside;}
+
+/* main_listtopics.html */
+/* pico_bbsviewctrl */
+
+div.pico_bbsviewctrl{
+	line-height			:100%;
+	float				:left;
+	padding-bottom		:3px;}
+div.pico_bbsviewctrl form{
+	margin				:0;
+	padding				:0;}
+div.pico_bbsviewctrl form *,p.pico_bbsviewctrl *{
+	vertical-align		:middle;
+	margin				:0;
+	padding				:0;}
+
+/* pico_pagenav */
+
+.pico_pagenav{
+	text-align			:right;
+	padding				:3px;}
+
+table.pico_table{
+	clear				:both;}
+table.pico_table thead th,
+table.pico_table td{
+	text-align			:center !important;
+	padding				:3px;
+	vertical-align		:middle;}
+table.pico_table td.pico_topictitle,
+table.pico_table td.pico_posters{
+	text-align			:left !important;}
+table.pico_table td.pico_mainicon{
+	padding				:0;}
+
+table.pico_table td img{
+	vertical-align		:middle;
+	margin-right			:3px;}
+
+table.pico_table td dl{
+	text-align			:left;
+	margin				:0 -3px;
+	padding				:0;}
+table.pico_table td dt{
+	margin				:0;
+	padding				:3px 3px 5px;}
+table.pico_table td dd{
+	margin				:0;
+	padding				:0 3px 5px;}
+table.pico_table td dd.pico_td_topicinfo{
+	margin				:0;
+	padding				:3px 3px 1px;
+	border-top			:1px #777 dashed;
+	font-size				:95%;}
+
+/* pico_iconexp */
+
+div.pico_iconexps ul.pico_iconexp{
+	width				:45%;
+	float				:left;}
+
+ul.pico_iconexp{
+	padding-bottom		:15px;}
+
+ul.pico_iconexp li{
+	list-style			:none outside;
+	padding				:3px 0;}
+
+ul.pico_iconexp li img{
+	vertical-align		:middle;
+	margin-right			:3px;}
+
+
+/* pico forms */
+
+#post_reference dd,
+#post_preview dd{
+	margin				:0;}
+
+/* table.pico_form_table */
+
+table.pico_form_table td,
+table.pico_form_table th{
+	vertical-align		:top !important;
+	text-align			:left;}
+
+/* pico_submit */
+
+p.pico_submit{
+	text-align			:center;
+	margin				:0;
+	padding				:10px;}
+
+/* edit colors */
+/* titles */
+
+div.pico_msgtitle h2{
+	background-color		:#555;}
+div.pico_msgtitle h2.invisible {
+	background-color			:#f00;}
+div.pico_msgtitle h2.yetapproval {
+	background-color			:#0ff;}
+div.pico_msgtitle h2 a{
+	color				:#fff;}
+div.pico_msgtitle h2 a:hover{
+	color				:#f4b343;}
+
+.pico_head ,h2.pico_head{
+	color				:#fff;
+	background-color		:#555;}
+.pico_head a,h2.pico_head a{
+	color				:#fff;}
+.pico_head a:hover,h2.pico_head a:hover{
+	color				:#f4b343;}
+
+/*.pico_table th,
+.pico_form_table th,
+.pico_table thead th,
+.pico_form_table thead th{
+	text-align			:left !important;
+	background-color		:#555 !important;}
+.pico_table tr.even td,
+.pico_form_table tr.even td{
+	background-color		:#dfdfdd !important;}
+.pico_table tr.odd td,
+.pico_form_table tr.odd td{
+	background-color		:#f3f3f3 !important;} */
+
+h2.attn {
+	background-color			:#f00;}
+.pico_form_table th { color: black;}
+

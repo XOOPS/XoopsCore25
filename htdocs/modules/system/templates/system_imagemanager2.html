@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<{$xoops_langcode}>" lang="<{$xoops_langcode}>">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=<{$xoops_charset}>" />
+<meta http-equiv="content-language" content="<{$xoops_langcode}>" />
+<title><{$xoops_sitename}> <{$lang_imgmanager}></title>
+<{$image_form.javascript}>
+<link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl xoops.css}>" />
+<link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl modules/system/css/imagemanager.css}>" />
+
+<{php}> 
+$language = $GLOBALS['xoopsConfig']['language'];
+if(file_exists(XOOPS_ROOT_PATH.'/language/'.$language.'/style.css')){ 
+echo "<link rel=\"stylesheet\" type=\"text/css\" media=\"all\" href=\"language/$language/style.css\" />";
+}
+<{/php}>
+
+</head>
+
+<body onload="window.resizeTo(<{$xsize}>, <{$ysize}>);">
+   <table cellspacing="0" id="imagenav">
+    <tr>
+      <td id="addimage" class="txtleft"><a href="<{$xoops_url}>/imagemanager.php?target=<{$target}>&amp;cat_id=<{$show_cat}>" title="<{$lang_imgmanager}>"><{$lang_imgmanager}></a></td>
+    </tr>
+  </table>
+
+  <form name="<{$image_form.name}>" id="<{$image_form.name}>" action="<{$image_form.action}>" method="<{$image_form.method}>" <{$image_form.extra}>>
+    <table id="imageform" cellspacing="">
+    <!-- start of form elements loop -->
+    <{foreach item=element from=$image_form.elements}>
+      <{if $element.hidden != true}>
+      <tr class="aligntop">
+        <td class="caption"><{$element.caption}></td>
+        <td class="body"><{$element.body}></td>
+      </tr>
+      <{else}>
+      <{$element.body}>
+      <{/if}>
+    <{/foreach}>
+    <!-- end of form elements loop -->
+    </table>
+  </form>
+
+
+  <div id="footer">
+    <input value="<{$lang_close}>" type="button" onclick="javascript:window.close();" />
+  </div>
+
+  </body>
+</html>

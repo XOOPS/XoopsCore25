@@ -1,0 +1,122 @@
+XOOPS 2.5.7 Final
+
+The XOOPS Development Team is pleased to announce the release of XOOPS 2.5.7 Final. 
+
+This release is focused on making XOOPS 2.5.7 compatible with PHP 5.5.x, and on security enhancements
+
+See the Changelog for more details.
+ 
+System requirements
+-----------------------------------
+
+PHP:
+Any PHP version >= 5.3.7 (PHP 5.4+ is strongly recommended)
+
+MySQL:
+MySQL server 5.0+
+
+Web server:
+Any server supporting the required PHP version (Apache highly recommended)
+
+
+Downloading XOOPS
+-----------------------------------
+
+You can get this release package from the [url=https://sourceforge.net/projects/xoops/files/XOOPS%20Core%20%28stable%20releases%29/XOOPS_2.5.7/]Sourceforge repository[/url].
+There are .zip, .7z, and .gz archives provided.
+
+
+Installing XOOPS (new installation)
+-----------------------------------
+
+    1. Copy the content of the htdocs/ folder where it can be accessed by your server
+    2. Ensure that directories:
+        - uploads/, 
+        - uploads/avatars/
+        - uploads/images/
+        - uploads/ranks/
+        - uploads/smilies/
+        - xoops_lib/modules/protector/configs/
+       and files:
+        - mainfile.php and 
+        - include/license.php
+       are writable by the web server
+    3. For security considerations, you are encouraged to move directories "/xoops_lib" (for XOOPS libraries) and "/xoops_data" (for XOOPS data) out of Document Root, and change the folder names.
+    4. Make the directory xoops_data/ writable; Create (if not already present) and make the directories xoops_data/caches/, xoops_data/caches/xoops_cache/, xoops_data/caches/smarty_cache/ and  xoops_data/caches/smarty_compile/ writable.
+    5. Access the folder where you installed the htdocs/ files using your web browser to launch the installation wizard
+
+
+Installing Protector in XOOPS
+-----------------------------------
+We also highly recommend the installation of the PROTECTOR module which will bring additional security protection and logging capabilities to your site.
+
+
+Upgrading from a previous version
+-----------------------------------
+
+Upgrading from 2.5.x:
+-----------------------------------
+    1. Get the right update package from the sourceforge file repository
+    2. Overwrite files in XOOPS directory on your server with the content of /htdocs
+        * make sure that you copy the content of /xoops_lib to whatever directory you keep it on the server now (it should be your current XOOPS_TRUST_PATH directory), then delete the /xoops_lib directory. There can NOT be two directories with the content of /xoops_lib
+    3. Update the "System" module from the modules administration interface, as well as "Profile", "PM",  and "Protector", as they have new GUI. 
+    4) Clear caches, using the Admin's Maintenance function
+
+Upgrading from versions older than 2.5.0:
+------------------------------------------    
+    Following are instructions for upgrading from XOOPS 2.4.5 to 2.5 provided by John Healy:
+    0. Verify the system requirements, in particular the version of PHP. Backup your XOOPS database and site directory. (There are several ways to do these actions, which are discussed elsewhere.) Turning your site off is optional.
+        Change the permissions on mainfile.php and /include/license.php to be writable, for example:
+                File         		Normal For upgrade
+                mainfile.php 		400 	700
+                /include/license.php 	444 	777
+        Get the correct update package from the SourceForge file repository.
+    1. In the upgrade package folder, move the "upgrade" folder inside the "htdocs" folder, if it's not already there. Remove the install folder from the "htdocs" folder, if it's there. Remove the mainfile.php file from the "htdocs" folder, if it's there.
+        If you've moved the xoops_data and xoops_lib folders outside your site's root directory, move these folders out of the "htdocs" folder in the upgrade package folder.
+    2. Delete the /modules/system directory on your current XOOPS site (to get rid of any old unnecessary files). 
+    3. Overwrite the files in the XOOPS directory on your current XOOPS site with the content of "htdocs" folder of the upgrade package. (There are several ways to do this action, which are discussed elsewhere.)
+        As noted above, if relocated, overwrite the files in your current xoops_data and xoops_lib with the content of those in the upgrade package.
+    4. If you have Protector previously installed, open the "mainfile.php" file , and remove the Pre-check and Post-check lines shown below (if they exist):
+        include XOOPS_TRUST_PATH.'/modules/protector/include/precheck.inc.php' ;
+        include XOOPS_TRUST_PATH.'/modules/protector/include/postcheck.inc.php' ;
+    5. At your site's address (URL), login as administrator. Access <your.site.url>/upgrade/ with a browser, and follow the instructions (and any for updating your XOOPS database). After all updates have been applied (green checkmarks), note the link in the Updater to update the "system" module, and do so.
+    6. Delete the "upgrade" folder from your site's "htdocs" directory.
+    7. Update (reload) other modules, especially "Profile", "PM", and "Protector," if necessary.
+    8. Change permissions on the files noted above back to their normal state.
+    9. Turn your site back on, if you turned it off earlier.
+
+
+Debug information display level
+-----------------------------------
+
+Debug information display level is enabled at a different level of users: to all users, to members or to admins only.
+The configuration can be set in /xoops_data/configs/xoopsconfig.php
+As a default, the display level is set for Admin only.
+
+Files integrity check
+-----------------------------------
+
+The full XOOPS package is released with a script able to check if all the system files have been correctly uploaded to the server. To use it, follow these instructions:
+
+    1. Upload the checksum.php and checksum.md5 files located in the XOOPS package root to your XOOPS server folder (putting them next to mainfile.php).
+    2. Execute checksum.php with your browser
+    3. If necessary, re-upload the missing or corrupted system files
+    4. Remove checksum.php and checksum.md5 from your server
+
+
+Modules
+-----------------------------------
+
+This release contains only the "system-related modules". You are invited to browse the XOOPS modules repository to if you need additional functionality. Note: as a new repository is being built, the current repository is not up-to-date, PLEASE VISIT INDIVIDUAL DEVELOPERS' WEBSITES TO MAKE SURE YOU ARE USING LATEST VERSION OF MODULES.
+
+
+How to contribute
+-----------------------------------
+Bug report: http://sourceforge.net/tracker/?group_id=41586&atid=430840
+Patch and enhancement: http://sourceforge.net/tracker/?group_id=41586&atid=430842
+Feature design: http://sourceforge.net/tracker/?group_id=41586&atid=430843
+Release announcement: https://lists.sourceforge.net/lists/listinfo/xoops-announcement
+
+
+XOOPS Development Team
+June 14, 2014

@@ -1,0 +1,105 @@
+/*============= Règles principale du squelette ============*/
+#xo-canvas-columns {
+    width:                  100%;
+    border-collapse:        collapse;
+}
+#xo-canvas-leftcolumn {
+    width:                  170px;
+}
+#xo-page {
+    min-height:             400px;
+    color:                  #000;
+    background-color:       #fff;
+    border-color:           #b6b7b8;
+    border-style:           solid;
+    border-width:           1px 2px 2px 1px;
+}
+* html #xo-page {
+    height:                 400px;
+}
+#xo-canvas-rightcolumn {
+    width:                  170px;
+    color:                  #a0a0a0;
+    background-color:       #f6f6f6;
+    border-width:           1px 2px 2px 0;
+    border-style:           solid;
+    border-color:           #b6b7b8;
+}
+#xo-canvas-leftcolumn, #xo-page, #xo-canvas-rightcolumn {
+    vertical-align:         top;
+}
+/*========== Règles pour les configurations spécifiques des colonnes ===========*/
+#xo-canvas.leftcolumn-layout #xo-canvas-columns, #xo-canvas.threecolumns-layout #xo-canvas-columns {}
+#xo-canvas.rightcolumn-layout #xo-page, #xo-canvas.threecolumns-layout #xo-page {
+    border-right-width:     0;
+}
+#xo-canvas-bottom, #xo-canvas-footer {}
+/*=========== Blocs centraux =============*/
+#xo-page-topblocks {
+    padding:                0 10px;
+}
+#xo-page-bottomblocks {
+    padding:                0 10px 10px;
+}
+#xo-page .xo-blockszone .xo-block {
+    margin-bottom:          10px;
+    border:                 1px solid #c6c1c1;
+    background:             url(../img/centerblock-inner_old.png) repeat-x left top;
+}
+#xo-page-topleftblocks, #xo-page-bottomleftblocks {
+    float:                  left;
+    width:                  49.5%;
+}
+#xo-page-toprightblocks, #xo-page-bottomrightblocks {
+    float:                  right;
+    width:                  49.5%;
+}
+#xo-page-topcenterblocks, #xo-page-bottomcenterblocks {
+    clear:                  both;
+}
+#xo-page .xo-lcrpageblocks .xo-blockszone, #xo-page .xo-lcrpageblocks .xo-blockszone {
+    float:                  left;
+    clear:                  none;
+    width:                  33%;
+}
+.xo-lcrpageblocks #xo-page-topleftblocks,
+.xo-lcrpageblocks #xo-page-topcenterblocks,
+.xo-lcrpageblocks #xo-page-bottomleftblocks,
+.xo-lcrpageblocks #xo-page-bottomcenterblocks {
+    margin-right:           .5%;
+}
+#xo-page .xo-blockszone .xo-blockcontent {
+    min-height:             50px;
+}
+* html #xo-page .xo-blockszone .xo-blockcontent {
+    height:                 50px;
+}
+#xo-page-topblocks .xo-block,
+#xo-page-bottomblocks .xo-block {
+    padding-top:            2px;
+}
+#xo-page-topblocks *>.xo-block,
+#xo-page-bottomblocks *>.xo-block {
+    padding-top:            0;
+}
+#xo-page .xo-blockszone > .xo-block {
+    border-style:           none solid none none;
+    background:             url(../img/centerblock-inner.png) no-repeat left top;
+    padding-left:           4px !important;
+}
+#xo-page .xo-blockszone .xo-block:before {
+    background:             url(../img/centerblock-tr.png) no-repeat right top;
+    display:                block;
+    content:                url(../img/centerblock-tl.png);
+    height:                 7px;
+    margin-left:            -4px !important;
+    margin-right:           -1px !important;
+}
+#xo-page .xo-blockszone .xo-block:after {
+    display:                block;
+    content:                url(../img/centerblock-bl.png);
+    background:             url(../img/centerblock-br.png) no-repeat right top;
+    height:                 7px;
+    margin-left:            -4px !important;
+    margin-right:           -1px !important;
+}

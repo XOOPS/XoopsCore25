@@ -1,0 +1,14 @@
+<div id="help-template" class="outer">
+
+<h1 class="head">Help: Maintenance</h1>
+<h4 class="odd">Description</h4>
+
+<p class="even">
+Maintenance provides several basic functions to help you in maintaining your XOOPS installation and keep it healthy:<br /><br />
+
+- clean cache folder<br />
+- empty the session table<br />
+- perform maintenance of the database tables (analyze, check, optimize, and repair) <br /><br />
+
+You can also perform a "Dump" of the whole database or individual tables for backup purposes. </p>
+</div> 

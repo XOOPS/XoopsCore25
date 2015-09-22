@@ -1,0 +1,149 @@
+/* ===== main menu block ===== */
+#mainmenu a, #system-block_mainmenu a {
+    display:                block;
+    margin:                 0;
+    padding:                2px;
+    font-weight:            500;
+}
+
+#mainmenu a:hover, #system-block_mainmenu a:hover {
+    text-decoration:        none !important;
+}
+
+#mainmenu a.menuTop, #mainmenu a.menuMain, #system-block_mainmenu a.menuTop, #system-block_mainmenu a.menuMain {
+    padding-left:           8px;
+}
+
+#mainmenu a.menuSub, #system-block_mainmenu a.menuSub {
+    background-color:       inherit;
+    padding-left:           20px;
+    color:                  #294d9f !important;
+    font-size:              .8em;
+    font-style:             normal;
+}
+
+#mainmenu a.menuSub:hover, #system-block_mainmenu a.menuSub:hover {
+    background-color:       inherit;
+    color:                  #000;
+    text-decoration:        underline !important;
+}
+#system-block_mainmenu a.maincurrent, #mainmenu a.maincurrent {background-color:transparent; color:#000 !important; text-decoration: underline !important;}
+#xo-back { text-align: center; }
+/* ===== user menu block ===== */
+#system-block_usermenu {}
+#usermenu a, #system-block_usermenu a {
+    display:                block;
+    padding-bottom:         2px;
+    font-size:              .9em;
+    font-style:             normal;
+}
+
+#usermenu a:hover, #system-block_usermenu a:hover {}
+#usermenu a.menuTop, #system-block_usermenu a.menuTop {}
+#usermenu a.highlight, #system-block_usermenu .highlight {
+    background-color:       #333;
+    color:                  #ff0000;
+}
+
+#system-search {
+    text-align:             center;
+}
+
+#system-search fieldset {
+    margin:                 .5em;
+    padding:                0;
+}
+
+#system-search input[type=text] {
+    width:                  120px;
+    margin:                 0;
+}
+
+#system-login {
+    text-align:             center;
+}
+
+#system-login input {
+    width:                  120px;
+}
+/*=========== Règles nécessaires pour les anciens templates des modules ============*/
+#usermenu a, #mainmenu a { display: block;}
+.xo-canvas-column .menuSub { padding-left: 1em;}
+
+/*============== Styles for system_siteclosed.html =================*/
+#xo-siteclose {
+    width:                  400px;
+    margin:                 100px auto;
+    background-color:       #e2e2e2;
+    padding:                30px;
+    color:                  #000;
+    font-size:              1.2em;
+    font-weight:            bold;
+    text-align:             center;
+    border:                 1px solid #666;
+}
+/*============== Styles for system_redirect.html =================*/
+#xo-redirect {
+    width:                  780px;
+    margin:                 50px auto;
+    padding:                1em;
+    font-weight:            bold;
+    text-align:             center;
+}
+#xo-redirect .notreload {
+    height:                 28px;
+    background-color:       inherit;
+    padding-top:            2px;
+    color:                  #fff;
+}
+#xo-redirect .notreload a {
+    background-color:       inherit;
+    color:                  #ff0000;
+    font-weight:            bold;
+    text-decoration:        none;
+}
+#xo-redirect .message {
+    min-height:             60px;
+    background-color:       #f3f3f3;
+    padding:                1em;
+    color:                  #333;
+    font-size:              1.1em;
+    text-align:             center;
+    border:                 1px solid #666;
+}
+#xo-redirect .message img{
+    padding:                1em;
+}
+
+/*============== Styles for pagenav =================*/
+#xo-pagenav {
+    margin:                 7px 0;
+    text-align:             center;
+    font-size:              1.05em;
+}
+#xo-pagenav a {
+    text-decoration:        none;
+}
+#xo-pagenav a:hover {
+    color:                  #1251c6;
+    background-color:       #c2cdd6;
+    border:                 1px solid #fff;
+}
+.xo-pagact {
+    margin:                 0;
+    padding:                .2em .5em;
+    color:                  #1251c6;
+    background-color:       #c2cdd6;
+    border:                 1px solid #fff;
+}
+.xo-counterpage, .xo-pagarrow {
+    margin:                 0;
+    padding:                .2em .5em;
+    color:                  #000;
+    background-color:       #fff;
+    border:                 1px solid #000;
+}
+.xo-counterpage:hover {}
+.xo-pagarrow {
+    letter-spacing:         0.2em;
+}
