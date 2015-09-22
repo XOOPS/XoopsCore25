@@ -33,7 +33,7 @@ class HTMLPurifier_PropertyList
 
     /**
      * Recursively retrieves the value for a key
-     * @param string $name
+     * @param  string $name
      * @throws HTMLPurifier_Exception
      */
     public function get($name)
@@ -51,7 +51,7 @@ class HTMLPurifier_PropertyList
     /**
      * Sets the value of a key, for this plist
      * @param string $name
-     * @param mixed $value
+     * @param mixed  $value
      */
     public function set($name, $value)
     {
@@ -60,7 +60,7 @@ class HTMLPurifier_PropertyList
 
     /**
      * Returns true if a given key exists
-     * @param string $name
+     * @param  string $name
      * @return bool
      */
     public function has($name)
@@ -85,7 +85,7 @@ class HTMLPurifier_PropertyList
     /**
      * Squashes this property list and all of its property lists into a single
      * array, and returns the array. This value is cached by default.
-     * @param bool $force If true, ignores the cache and regenerates the array.
+     * @param  bool $force If true, ignores the cache and regenerates the array.
      * @return array
      */
     public function squash($force = false)
@@ -120,3 +120,4 @@ class HTMLPurifier_PropertyList
 }
 
 // vim: et sw=4 sts=4
+

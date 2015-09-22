@@ -10,12 +10,12 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         profile
- * @since           2.3.0
- * @author          Jan Pedersen
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             profile
+ * @since               2.3.0
+ * @author              Jan Pedersen
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: visibility.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 include_once __DIR__ . '/admin_header.php';
 
@@ -27,30 +27,30 @@ xoops_cp_header();
 
 $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : "visibility";
 
-$visibility_handler = xoops_getmodulehandler('visibility');
-$field_handler =& xoops_getmodulehandler('field');
-$fields = $field_handler->getList();
+$visibility_handler =& xoops_getModuleHandler('visibility');
+$field_handler      =& xoops_getModuleHandler('field');
+$fields             = $field_handler->getList();
 
-if ( isset($_REQUEST['submit'])  ) {
+if (isset($_REQUEST['submit'])) {
     $visibility = $visibility_handler->create();
     $visibility->setVar('field_id', $_REQUEST['field_id']);
     $visibility->setVar('user_group', $_REQUEST['ug']);
     $visibility->setVar('profile_group', $_REQUEST['pg']);
     $visibility_handler->insert($visibility, true);
-    redirect_header("visibility.php", 2, sprintf(_PROFILE_AM_SAVEDSUCCESS, _PROFILE_AM_PROF_VISIBLE) );
+    redirect_header("visibility.php", 2, sprintf(_PROFILE_AM_SAVEDSUCCESS, _PROFILE_AM_PROF_VISIBLE));
     exit();
 }
-if ($op == "del") {
-    $criteria = new CriteriaCompo(new Criteria('field_id', (int)($_REQUEST['field_id']) ));
-    $criteria->add(new Criteria('user_group', (int)($_REQUEST['ug']) ));
-    $criteria->add(new Criteria('profile_group', (int)($_REQUEST['pg']) ));
+if ($op === "del") {
+    $criteria = new CriteriaCompo(new Criteria('field_id', (int)($_REQUEST['field_id'])));
+    $criteria->add(new Criteria('user_group', (int)($_REQUEST['ug'])));
+    $criteria->add(new Criteria('profile_group', (int)($_REQUEST['pg'])));
     $visibility_handler->deleteAll($criteria, true);
-    redirect_header("visibility.php", 2, sprintf(_PROFILE_AM_DELETEDSUCCESS, _PROFILE_AM_PROF_VISIBLE) );
+    redirect_header("visibility.php", 2, sprintf(_PROFILE_AM_DELETEDSUCCESS, _PROFILE_AM_PROF_VISIBLE));
     exit();
 }
 
-include_once $GLOBALS['xoops']->path( "/class/xoopsformloader.php" );
-$opform = new XoopsSimpleForm('', 'opform', 'permissions.php', "get");
+include_once $GLOBALS['xoops']->path("/class/xoopsformloader.php");
+$opform    = new XoopsSimpleForm('', 'opform', 'permissions.php', "get");
 $op_select = new XoopsFormSelect("", 'op', $op);
 $op_select->setExtra('onchange="document.forms.opform.submit()"');
 $op_select->addOption('visibility', _PROFILE_AM_PROF_VISIBLE);
@@ -61,14 +61,14 @@ $opform->addElement($op_select);
 $opform->display();
 
 $criteria = new CriteriaCompo();
-$criteria->setGroupby("field_id, user_group, profile_group");
+$criteria->setGroupBy("field_id, user_group, profile_group");
 $criteria->setSort('field_id');
 $criteria->setOrder('DESC');
 $visibilities = $visibility_handler->getAll($criteria, false, false, true);
 
-$member_handler = xoops_gethandler('member');
-$groups = $member_handler->getGroupList();
-$groups[0] = _PROFILE_AM_FIELDVISIBLETOALL;
+$member_handler =& xoops_getHandler('member');
+$groups         = $member_handler->getGroupList();
+$groups[0]      = _PROFILE_AM_FIELDVISIBLETOALL;
 asort($groups);
 
 $GLOBALS['xoopsTpl']->assign('fields', $fields);
@@ -91,10 +91,11 @@ $sel_pg = new XoopsFormSelect(_PROFILE_AM_FIELDVISIBLEON, 'pg');
 $sel_pg->addOptionArray($groups);
 $add_form->addElement($sel_pg);
 
-$add_form->addElement(new XoopsFormButton('', 'submit', _ADD, 'submit') );
+$add_form->addElement(new XoopsFormButton('', 'submit', _ADD, 'submit'));
 $add_form->assign($GLOBALS['xoopsTpl']);
 
 $GLOBALS['xoopsTpl']->display("db:profile_admin_visibility.tpl");
 
 include_once __DIR__ . '/admin_footer.php';
 //xoops_cp_footer();
+

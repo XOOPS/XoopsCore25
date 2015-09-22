@@ -4,7 +4,7 @@
     Author:            Angelo Rocha
     Author URL:        www.angelorocha.com.br
     Licence:           GPL v3
-    
+
     Contacts
     Twitter:            https://twitter.com/_AngeloRocha
     Google Plus:        https://plus.google.com/+AngeloRocha/posts
@@ -64,7 +64,7 @@ a.navbar-brand.xlogo{padding: 5px 20px 0 5px;}
 
 /* 2. XOOPS Codes */
 .xoopsQuote blockquote{font-size: 0.9em; border-left: 2px solid #EEE; padding-left: 10px; font-style: italic; color: #969696;}
-.xoopsCode {background:url(images/code.png); overflow-x: auto; border: 1px solid #EEE; padding-left: 10px}
+.xoopsCode {background:url(images/code.png); overflow-x: auto; border: 1px solid #EEE; padding-left: 10px;}
 .xoopsCode code{background-color: transparent; line-height: 25px; position: relative; padding: 0; white-space: nowrap;}
 .xoopsCode code > span{position: relative; z-index: 5;}
 
@@ -94,7 +94,7 @@ section.news-item{margin-bottom:20px;}
 .news-header img{position:relative; min-width:100%; max-width:100%;}
 .news-header > h2.news-title{background:url(images/alpha.png); position:absolute; bottom:10%; left:0; padding:10px; margin:0; color:#FFF; font-size:1.8em; z-index:5;}
 .news-header > h2.news-title > a{color:#CF9;}
-.news-header > h2.news-title > a:after{content:": "}
+.news-header > h2.news-title > a:after{content:": ";}
 h2.news-no-image{font-size:1.5em; margin:0; line-height:inherit;}
 strong.hit-counter{background:#333; color:#FFF; border-radius:5px 5px 0 0; padding:0 10px 0 10px; font-size:0.8em; line-height:20px;}
 .xoops-news-navigation{padding:10px 0 10px 0;}
@@ -141,7 +141,7 @@ ul.userblock > li span.badge{background: #47A447; position: absolute; bottom: 0;
 .xoops-comment-author li.poster-rank{margin-bottom:10px;}
 .xoops-comment-author strong.poster-rank{font-size:0.8em ;}
 .xoops-comment-author img.image-avatar{width:100%; border:1px solid #CCC;}
-.xoops-comment-author.col-md-2{padding-right:0}
+.xoops-comment-author.col-md-2{padding-right:0;}
 
 .xoops-comment-text > div{display: none;}
 .xoops-comment-text p.message-text{background:#EAEAEA; padding:10px; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; position:relative;}
@@ -317,7 +317,7 @@ ul.tdm-new-download-block li:last-child{border-bottom: none;}
 .newbb-header-icons{}
 .newbb-header-icons div{margin-bottom: 10px;}
 .newbb-category-list{}
-.newbb-category-list a.pull-right{margin-left: 5px}
+.newbb-category-list a.pull-right{margin-left: 5px;}
 .newbb-list-foruns{border-bottom: 1px solid #EAEAEA; padding-bottom: 5px;}
 .xoops-newbb-list-foruns:last-child{border-bottom: none;}
 

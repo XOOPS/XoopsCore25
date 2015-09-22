@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: xmlrpcparser.php 13090 2015-06-16 20:44:29Z beckmi $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2015 XOOPS Project (www.xoops.org)            //
@@ -28,83 +28,82 @@
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
-defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
-require_once XOOPS_ROOT_PATH.'/class/xml/saxparser.php';
-require_once XOOPS_ROOT_PATH.'/class/xml/xmltaghandler.php';
+defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+require_once XOOPS_ROOT_PATH . '/class/xml/saxparser.php';
+require_once XOOPS_ROOT_PATH . '/class/xml/xmltaghandler.php';
 
 /**
-* Class RSS Parser
-*
-* This class offers methods to parse RSS Files
-*
-* @link      http://www.xoops.org/ Latest release of this class
-* @package   class
-* @copyright (c) 2000-2015 XOOPS Project (www.xoops.org)
-* @author    Kazumi Ono <onokazu@xoops.org>
-* @version   $Id$
-* @access    public
-*/
-
+ * Class RSS Parser
+ *
+ * This class offers methods to parse RSS Files
+ *
+ * @link          http://www.xoops.org/ Latest release of this class
+ * @package       class
+ * @copyright (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @author        Kazumi Ono <onokazu@xoops.org>
+ * @version       $Id: xmlrpcparser.php 13090 2015-06-16 20:44:29Z beckmi $
+ * @access        public
+ */
 class XoopsXmlRpcParser extends SaxParser
 {
-
     /**
-    * @access private
-    * @var    array
-    */
-    var $_param;
-
-    /**
-    * @access private
-    * @var    string
-    */
-    var $_methodName;
-
-    /**
-    * @access private
-    * @var    array
-    */
-    var $_tempName;
-
-    /**
-    * @access private
-    * @var    array
-    */
-    var $_tempValue;
+     * @access private
+     * @var    array
+     */
+    public $_param;
 
     /**
      * @access private
-    * @var    array
-    */
-    var $_tempMember;
+     * @var    string
+     */
+    public $_methodName;
 
     /**
-    * @access private
-    * @var    array
-    */
-    var $_tempStruct;
+     * @access private
+     * @var    array
+     */
+    public $_tempName;
 
     /**
-    * @access private
-    * @var    array
-    */
-    var $_tempArray;
+     * @access private
+     * @var    array
+     */
+    public $_tempValue;
 
     /**
-    * @access private
-    * @var    array
-    */
-    var $_workingLevel = array();
+     * @access private
+     * @var    array
+     */
+    public $_tempMember;
 
     /**
-    * Constructor of the class
-    * @access
-    * @author
-    * @see
-    */
-    function XoopsXmlRpcParser(&$input)
+     * @access private
+     * @var    array
+     */
+    public $_tempStruct;
+
+    /**
+     * @access private
+     * @var    array
+     */
+    public $_tempArray;
+
+    /**
+     * @access private
+     * @var    array
+     */
+    public $_workingLevel = array();
+
+    /**
+     * Constructor of the class
+     * @access
+     * @author
+     * @see
+     * @param $input
+     */
+    public function __construct(&$input)
     {
-        $this->SaxParser($input);
+        parent::__construct($input);
         $this->addTagHandler(new RpcMethodNameHandler());
         $this->addTagHandler(new RpcIntHandler());
         $this->addTagHandler(new RpcDoubleHandler());
@@ -120,27 +119,37 @@ class XoopsXmlRpcParser extends SaxParser
     }
 
     /**
+     * @param $input
+     */
+    public function XoopsXmlRpcParser(&$input)
+    {
+        $this->__construct($input);
+    }
+
+    /**
      * This Method starts the parsing of the specified RDF File. The File can be a local or a remote File.
      *
      * @param $name
      *
      * @return void
      */
-    function setTempName($name)
+    public function setTempName($name)
     {
         $this->_tempName[$this->getWorkingLevel()] = $name;
     }
 
-    function getTempName()
+    /**
+     * @return mixed
+     */
+    public function getTempName()
     {
         return $this->_tempName[$this->getWorkingLevel()];
     }
 
-
     /**
      * @param $value
      */
-    function setTempValue($value)
+    public function setTempValue($value)
     {
         if (is_array($value)) {
             settype($this->_tempValue, 'array');
@@ -163,12 +172,12 @@ class XoopsXmlRpcParser extends SaxParser
     /**
      * @return array
      */
-    function getTempValue()
+    public function getTempValue()
     {
         return $this->_tempValue;
     }
 
-    function resetTempValue()
+    public function resetTempValue()
     {
         unset($this->_tempValue);
     }
@@ -177,113 +186,110 @@ class XoopsXmlRpcParser extends SaxParser
      * @param $name
      * @param $value
      */
-    function setTempMember($name, $value)
+    public function setTempMember($name, $value)
     {
         $this->_tempMember[$this->getWorkingLevel()][$name] = $value;
     }
 
-    function getTempMember()
+    /**
+     * @return mixed
+     */
+    public function getTempMember()
     {
         return $this->_tempMember[$this->getWorkingLevel()];
     }
 
-    function resetTempMember()
+    public function resetTempMember()
     {
         $this->_tempMember[$this->getCurrentLevel()] = array();
     }
 
-
-    function setWorkingLevel()
+    public function setWorkingLevel()
     {
-        array_push($this->_workingLevel, $this->getCurrentLevel());
+        $this->_workingLevel[] = $this->getCurrentLevel();
     }
 
-
-    function getWorkingLevel()
+    public function getWorkingLevel()
     {
         return $this->_workingLevel[count($this->_workingLevel) - 1];
     }
 
-
-    function releaseWorkingLevel()
+    public function releaseWorkingLevel()
     {
         array_pop($this->_workingLevel);
     }
 
-
     /**
      * @param $member
      */
-    function setTempStruct($member)
+    public function setTempStruct($member)
     {
-        $key = key($member);
+        $key                                               = key($member);
         $this->_tempStruct[$this->getWorkingLevel()][$key] = $member[$key];
     }
 
-
-    function getTempStruct()
+    /**
+     * @return mixed
+     */
+    public function getTempStruct()
     {
         return $this->_tempStruct[$this->getWorkingLevel()];
     }
 
-
-    function resetTempStruct()
+    public function resetTempStruct()
     {
         $this->_tempStruct[$this->getCurrentLevel()] = array();
     }
 
-
     /**
      * @param $value
      */
-    function setTempArray($value)
+    public function setTempArray($value)
     {
         $this->_tempArray[$this->getWorkingLevel()][] = $value;
     }
 
-
-    function getTempArray()
+    /**
+     * @return mixed
+     */
+    public function getTempArray()
     {
         return $this->_tempArray[$this->getWorkingLevel()];
     }
 
-    function resetTempArray()
+    public function resetTempArray()
     {
         $this->_tempArray[$this->getCurrentLevel()] = array();
     }
 
-
     /**
      * @param $methodName
      */
-    function setMethodName($methodName)
+    public function setMethodName($methodName)
     {
         $this->_methodName = $methodName;
     }
 
-
     /**
      * @return string
      */
-    function getMethodName()
+    public function getMethodName()
     {
         return $this->_methodName;
     }
 
-
     /**
      * @param $value
      */
-    function setParam($value)
+    public function setParam($value)
     {
         $this->_param[] = $value;
     }
 
-
     /**
      * @return array
      */
-    function &getParam()
+    public function &getParam()
     {
         return $this->_param;
     }
@@ -294,22 +300,19 @@ class XoopsXmlRpcParser extends SaxParser
  */
 class RpcMethodNameHandler extends XmlTagHandler
 {
-
-
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'methodName';
     }
-
 
     /**
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
         $parser->setMethodName($data);
     }
@@ -320,11 +323,10 @@ class RpcMethodNameHandler extends XmlTagHandler
  */
 class RpcIntHandler extends XmlTagHandler
 {
-
     /**
      * @return array
      */
-    function getName()
+    public function getName()
     {
         return array('int', 'i4');
     }
@@ -333,7 +335,7 @@ class RpcIntHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
         $parser->setTempValue((int)($data));
     }
@@ -344,11 +346,10 @@ class RpcIntHandler extends XmlTagHandler
  */
 class RpcDoubleHandler extends XmlTagHandler
 {
-
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'double';
     }
@@ -357,9 +358,9 @@ class RpcDoubleHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
-        $data = (float) $data;
+        $data = (float)$data;
         $parser->setTempValue($data);
     }
 }
@@ -369,11 +370,10 @@ class RpcDoubleHandler extends XmlTagHandler
  */
 class RpcBooleanHandler extends XmlTagHandler
 {
-
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'boolean';
     }
@@ -382,9 +382,9 @@ class RpcBooleanHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
-        $data = (boolean) $data;
+        $data = (boolean)$data;
         $parser->setTempValue($data);
     }
 }
@@ -394,11 +394,10 @@ class RpcBooleanHandler extends XmlTagHandler
  */
 class RpcStringHandler extends XmlTagHandler
 {
-
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'string';
     }
@@ -407,7 +406,7 @@ class RpcStringHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
         $parser->setTempValue((string)($data));
     }
@@ -418,11 +417,10 @@ class RpcStringHandler extends XmlTagHandler
  */
 class RpcDateTimeHandler extends XmlTagHandler
 {
-
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'dateTime.iso8601';
     }
@@ -431,10 +429,10 @@ class RpcDateTimeHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
         $matches = array();
-        if (!preg_match("/^([0-9]{4})([0-9]{2})([0-9]{2})T([0-9]{2}):([0-9]{2}):([0-9]{2})$/", $data, $matches)) {
+        if (!preg_match("/^(\d{4})(\d{2})(\d{2})T(\d{2}):(\d{2}):(\d{2})$/", $data, $matches)) {
             $parser->setTempValue(time());
         } else {
             $parser->setTempValue(gmmktime($matches[4], $matches[5], $matches[6], $matches[2], $matches[3], $matches[1]));
@@ -447,11 +445,10 @@ class RpcDateTimeHandler extends XmlTagHandler
  */
 class RpcBase64Handler extends XmlTagHandler
 {
-
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'base64';
     }
@@ -460,7 +457,7 @@ class RpcBase64Handler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
         $parser->setTempValue(base64_decode($data));
     }
@@ -471,11 +468,10 @@ class RpcBase64Handler extends XmlTagHandler
  */
 class RpcNameHandler extends XmlTagHandler
 {
-
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'name';
     }
@@ -484,14 +480,14 @@ class RpcNameHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
         switch ($parser->getParentTag()) {
-        case 'member':
-            $parser->setTempName($data);
-            break;
-        default:
-            break;
+            case 'member':
+                $parser->setTempName($data);
+                break;
+            default:
+                break;
         }
     }
 }
@@ -501,32 +497,30 @@ class RpcNameHandler extends XmlTagHandler
  */
 class RpcValueHandler extends XmlTagHandler
 {
-
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'value';
     }
-
 
     /**
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
         switch ($parser->getParentTag()) {
-        case 'member':
-            $parser->setTempValue($data);
-            break;
-        case 'data':
-        case 'array':
-            $parser->setTempValue($data);
-            break;
-        default:
-            break;
+            case 'member':
+                $parser->setTempValue($data);
+                break;
+            case 'data':
+            case 'array':
+                $parser->setTempValue($data);
+                break;
+            default:
+                break;
         }
     }
 
@@ -534,28 +528,27 @@ class RpcValueHandler extends XmlTagHandler
      * @param $parser
      * @param $attributes
      */
-    function handleBeginElement(&$parser, &$attributes)
+    public function handleBeginElement(&$parser, &$attributes)
     {
         //$parser->resetTempValue();
     }
 
-
     /**
      * @param $parser
      */
-    function handleEndElement(&$parser)
+    public function handleEndElement(&$parser)
     {
         switch ($parser->getCurrentTag()) {
-        case 'member':
-            $parser->setTempMember($parser->getTempName(), $parser->getTempValue());
-            break;
-        case 'array':
-        case 'data':
-            $parser->setTempArray($parser->getTempValue());
-            break;
-        default:
-            $parser->setParam($parser->getTempValue());
-            break;
+            case 'member':
+                $parser->setTempMember($parser->getTempName(), $parser->getTempValue());
+                break;
+            case 'array':
+            case 'data':
+                $parser->setTempArray($parser->getTempValue());
+                break;
+            default:
+                $parser->setParam($parser->getTempValue());
+                break;
         }
         $parser->resetTempValue();
     }
@@ -566,11 +559,10 @@ class RpcValueHandler extends XmlTagHandler
  */
 class RpcMemberHandler extends XmlTagHandler
 {
-
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'member';
     }
@@ -579,7 +571,7 @@ class RpcMemberHandler extends XmlTagHandler
      * @param $parser
      * @param $attributes
      */
-    function handleBeginElement(&$parser, &$attributes)
+    public function handleBeginElement(&$parser, &$attributes)
     {
         $parser->setWorkingLevel();
         $parser->resetTempMember();
@@ -588,7 +580,7 @@ class RpcMemberHandler extends XmlTagHandler
     /**
      * @param $parser
      */
-    function handleEndElement(&$parser)
+    public function handleEndElement(&$parser)
     {
         $member =& $parser->getTempMember();
         $parser->releaseWorkingLevel();
@@ -601,11 +593,10 @@ class RpcMemberHandler extends XmlTagHandler
  */
 class RpcArrayHandler extends XmlTagHandler
 {
-
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'array';
     }
@@ -614,7 +605,7 @@ class RpcArrayHandler extends XmlTagHandler
      * @param $parser
      * @param $attributes
      */
-    function handleBeginElement(&$parser, &$attributes)
+    public function handleBeginElement(&$parser, &$attributes)
     {
         $parser->setWorkingLevel();
         $parser->resetTempArray();
@@ -623,7 +614,7 @@ class RpcArrayHandler extends XmlTagHandler
     /**
      * @param $parser
      */
-    function handleEndElement(&$parser)
+    public function handleEndElement(&$parser)
     {
         $parser->setTempValue($parser->getTempArray());
         $parser->releaseWorkingLevel();
@@ -638,27 +629,25 @@ class RpcStructHandler extends XmlTagHandler
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'struct';
     }
-
 
     /**
      * @param $parser
      * @param $attributes
      */
-    function handleBeginElement(&$parser, &$attributes)
+    public function handleBeginElement(&$parser, &$attributes)
     {
         $parser->setWorkingLevel();
         $parser->resetTempStruct();
     }
 
-
     /**
      * @param $parser
      */
-    function handleEndElement(&$parser)
+    public function handleEndElement(&$parser)
     {
         $parser->setTempValue($parser->getTempStruct());
         $parser->releaseWorkingLevel();

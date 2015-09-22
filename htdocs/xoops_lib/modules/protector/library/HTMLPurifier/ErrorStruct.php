@@ -8,14 +8,13 @@
  */
 class HTMLPurifier_ErrorStruct
 {
-
     /**
      * Possible values for $children first-key. Note that top-level structures
      * are automatically token-level.
      */
-    const TOKEN     = 0;
-    const ATTR      = 1;
-    const CSSPROP   = 2;
+    const TOKEN   = 0;
+    const ATTR    = 1;
+    const CSSPROP = 2;
 
     /**
      * Type of this struct.
@@ -48,21 +47,22 @@ class HTMLPurifier_ErrorStruct
     public $children = array();
 
     /**
-     * @param string $type
-     * @param string $id
+     * @param  string $type
+     * @param  string $id
      * @return mixed
      */
     public function getChild($type, $id)
     {
         if (!isset($this->children[$type][$id])) {
-            $this->children[$type][$id] = new HTMLPurifier_ErrorStruct();
+            $this->children[$type][$id]       = new HTMLPurifier_ErrorStruct();
             $this->children[$type][$id]->type = $type;
         }
+
         return $this->children[$type][$id];
     }
 
     /**
-     * @param int $severity
+     * @param int    $severity
      * @param string $message
      */
     public function addError($severity, $message)
@@ -72,3 +72,4 @@ class HTMLPurifier_ErrorStruct
 }
 
 // vim: et sw=4 sts=4
+

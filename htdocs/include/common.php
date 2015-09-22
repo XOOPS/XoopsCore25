@@ -10,9 +10,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package kernel
- * @version $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @version             $Id: common.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 defined('XOOPS_MAINFILE_INCLUDED') or die('Restricted access');
 
@@ -26,7 +26,7 @@ global $xoops, $xoopsPreload, $xoopsLogger, $xoopsErrorHandler, $xoopsSecurity, 
  * YOU SHOULD NEVER USE THE FOLLOWING TO CONSTANTS, THEY WILL BE REMOVED
  */
 defined('DS') or define('DS', DIRECTORY_SEPARATOR);
-defined('NWLINE')or define('NWLINE', "\n");
+defined('NWLINE') or define('NWLINE', "\n");
 
 /**
  * Include files with definitions
@@ -73,7 +73,7 @@ $xoopsSecurity->checkSuperglobals();
  * Create Instantance XoopsLogger Object
  */
 XoopsLoad::load('xoopslogger');
-$xoopsLogger =& XoopsLogger::getInstance();
+$xoopsLogger       =& XoopsLogger::getInstance();
 $xoopsErrorHandler =& XoopsLogger::getInstance();
 $xoopsLogger->startTime();
 $xoopsLogger->startTime('XOOPS Boot');
@@ -95,13 +95,13 @@ include_once $xoops->path('include/functions.php');
  */
 //define('XOOPS_COOKIE_DOMAIN', ($domain = xoops_getBaseDomain(XOOPS_URL)) == 'localhost' ? '' : '.' . $domain);
 //When you don't use Localhost but your "computer name" as domain you can't use session cookies
-define('XOOPS_COOKIE_DOMAIN', (strpos($domain = xoops_getBaseDomain(XOOPS_URL),'.')) === FALSE ? '' : '.' . $domain); //by arion92fr
+define('XOOPS_COOKIE_DOMAIN', (strpos($domain = xoops_getBaseDomain(XOOPS_URL), '.')) === false ? '' : '.' . $domain); //by arion92fr
 
 /**
  * Check Proxy;
  * Requires functions
  */
-if ($_SERVER['REQUEST_METHOD'] != 'POST' || ! $xoopsSecurity->checkReferer(XOOPS_DB_CHKREF)) {
+if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !$xoopsSecurity->checkReferer(XOOPS_DB_CHKREF)) {
     define('XOOPS_DB_PROXY', 1);
 }
 
@@ -116,15 +116,15 @@ $xoopsDB =& XoopsDatabaseFactory::getDatabaseConnection();
  * Get xoops configs
  * Requires functions and database loaded
  */
-$config_handler =& xoops_gethandler('config');
-$xoopsConfig = $config_handler->getConfigsByCat(XOOPS_CONF);
+$config_handler =& xoops_getHandler('config');
+$xoopsConfig    = $config_handler->getConfigsByCat(XOOPS_CONF);
 
 /**
  * Merge file and db configs.
  */
 if (file_exists($file = $GLOBALS['xoops']->path('var/configs/xoopsconfig.php'))) {
     $fileConfigs = include $file;
-    $xoopsConfig = array_merge($xoopsConfig, (array) $fileConfigs);
+    $xoopsConfig = array_merge($xoopsConfig, (array)$fileConfigs);
     unset($fileConfigs, $file);
 } else {
     trigger_error('File Path Error: ' . 'var/configs/xoopsconfig.php' . ' does not exist.');
@@ -133,16 +133,16 @@ if (file_exists($file = $GLOBALS['xoops']->path('var/configs/xoopsconfig.php')))
 /**
  * clickjack protection - Add option to HTTP header restrictig using site in an iframe
  */
-$xFrameOptions =  isset($xoopsConfig['xFrameOptions']) ? $xoopsConfig['xFrameOptions'] : 'sameorigin';
+$xFrameOptions = isset($xoopsConfig['xFrameOptions']) ? $xoopsConfig['xFrameOptions'] : 'sameorigin';
 if (!headers_sent() && !empty($xFrameOptions)) {
-    header('X-Frame-Options: ' .$xFrameOptions);
+    header('X-Frame-Options: ' . $xFrameOptions);
 }
 
 //check if user set a local timezone (from XavierS)
 // $xoops_server_timezone="Etc/GMT";
 // if ($xoopsConfig["server_TZ"]>0) {
-	// $xoops_server_timezone .="+".$xoopsConfig["server_TZ"]; } else{
-	// $xoops_server_timezone .=$xoopsConfig["server_TZ"]; } date_default_timezone_set($xoops_server_timezone);
+// $xoops_server_timezone .="+".$xoopsConfig["server_TZ"]; } else{
+// $xoops_server_timezone .=$xoopsConfig["server_TZ"]; } date_default_timezone_set($xoops_server_timezone);
 
 //check if 'date.timezone' is set in php.ini
 if (!ini_get('date.timezone')) {
@@ -184,26 +184,18 @@ xoops_loadLanguage('pagetype');
 /**
  * User Sessions
  */
-$xoopsUser = '';
+$xoopsUser        = '';
 $xoopsUserIsAdmin = false;
-$member_handler =& xoops_gethandler('member');
-$sess_handler =& xoops_gethandler('session');
-if ($xoopsConfig['use_ssl']
-    && isset($_POST[$xoopsConfig['sslpost_name']])
-    && $_POST[$xoopsConfig['sslpost_name']] != ''
-) {
+$member_handler   =& xoops_getHandler('member');
+$sess_handler     =& xoops_getHandler('session');
+if ($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && $_POST[$xoopsConfig['sslpost_name']] != '') {
     session_id($_POST[$xoopsConfig['sslpost_name']]);
-} else if ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && $xoopsConfig['session_expire'] > 0) {
+} elseif ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && $xoopsConfig['session_expire'] > 0) {
     session_name($xoopsConfig['session_name']);
     session_cache_expire($xoopsConfig['session_expire']);
     @ini_set('session.gc_maxlifetime', $xoopsConfig['session_expire'] * 60);
 }
-session_set_save_handler(array(&$sess_handler, 'open'),
-                         array(&$sess_handler, 'close'),
-                         array(&$sess_handler, 'read'),
-                         array(&$sess_handler, 'write'),
-                         array(&$sess_handler, 'destroy'),
-                         array(&$sess_handler, 'gc'));
+session_set_save_handler(array(&$sess_handler, 'open'), array(&$sess_handler, 'close'), array(&$sess_handler, 'read'), array(&$sess_handler, 'write'), array(&$sess_handler, 'destroy'), array(&$sess_handler, 'gc'));
 
 if (function_exists('session_status')) {
     if (session_status() !== PHP_SESSION_ACTIVE) {
@@ -217,21 +209,14 @@ if (function_exists('session_status')) {
 /**
  * Remove expired session for xoopsUserId
  */
-if ($xoopsConfig['use_mysession']
-    && $xoopsConfig['session_name'] != ''
-    && !isset($_COOKIE[$xoopsConfig['session_name']])
-    && !empty($_SESSION['xoopsUserId'])
-) {
+if ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && !isset($_COOKIE[$xoopsConfig['session_name']]) && !empty($_SESSION['xoopsUserId'])) {
     unset($_SESSION['xoopsUserId']);
 }
 
 /**
  * Load xoopsUserId from cookie if "Remember me" is enabled.
  */
-if (empty($_SESSION['xoopsUserId'])
-    && !empty($xoopsConfig['usercookie'])
-    && !empty($_COOKIE[$xoopsConfig['usercookie']])
-) {
+if (empty($_SESSION['xoopsUserId']) && !empty($xoopsConfig['usercookie']) && !empty($_COOKIE[$xoopsConfig['usercookie']])) {
     $hash_data = @explode("{-}", $_COOKIE[$xoopsConfig['usercookie']], 2);
     list($_SESSION['xoopsUserId'], $hash_login) = array($hash_data[0], (string)(@$hash_data[1]));
     unset($hash_data);
@@ -244,14 +229,12 @@ if (!empty($_SESSION['xoopsUserId'])) {
     $xoopsUser =& $member_handler->getUser($_SESSION['xoopsUserId']);
     if (!is_object($xoopsUser) || (isset($hash_login) && md5($xoopsUser->getVar('pass') . XOOPS_DB_NAME . XOOPS_DB_PASS . XOOPS_DB_PREFIX) != $hash_login)) {
         $xoopsUser = '';
-        $_SESSION = array();
+        $_SESSION  = array();
         session_destroy();
-        setcookie($xoopsConfig['usercookie'], 0, - 1, '/');
+        setcookie($xoopsConfig['usercookie'], 0, -1, '/');
     } else {
         if (((int)($xoopsUser->getVar('last_login')) + 60 * 5) < time()) {
-            $sql = "UPDATE " . $xoopsDB->prefix('users')
-                 . " SET last_login = '" . time()
-                 . "' WHERE uid = " . $_SESSION['xoopsUserId'];
+            $sql = "UPDATE " . $xoopsDB->prefix('users') . " SET last_login = '" . time() . "' WHERE uid = " . $_SESSION['xoopsUserId'];
             @$xoopsDB->queryF($sql);
         }
         $sess_handler->update_cookie();
@@ -298,16 +281,16 @@ $xoops->themeSelect();
  * Closed Site
  */
 if ($xoopsConfig['closesite'] == 1) {
-	include_once $xoops->path('include/site-closed.php');
+    include_once $xoops->path('include/site-closed.php');
 }
 
 /**
  * Load Xoops Module
  */
 if (file_exists('./xoops_version.php')) {
-    $url_arr = explode('/', strstr($_SERVER['PHP_SELF'], '/modules/'));
-    $module_handler =& xoops_gethandler( 'module' );
-    $xoopsModule =& $module_handler->getByDirname($url_arr[2]);
+    $url_arr        = explode('/', strstr($_SERVER['PHP_SELF'], '/modules/'));
+    $module_handler =& xoops_getHandler('module');
+    $xoopsModule    =& $module_handler->getByDirname($url_arr[2]);
     unset($url_arr);
 
     if (!$xoopsModule || !$xoopsModule->getVar('isactive')) {
@@ -317,7 +300,7 @@ if (file_exists('./xoops_version.php')) {
         exit();
     }
 
-    $moduleperm_handler =& xoops_gethandler('groupperm');
+    $moduleperm_handler =& xoops_getHandler('groupperm');
     if ($xoopsUser) {
         if (!$moduleperm_handler->checkRight('module_read', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
             redirect_header(XOOPS_URL, 1, _NOPERM, false);
@@ -331,19 +314,19 @@ if (file_exists('./xoops_version.php')) {
         }
     }
 
-    if ($xoopsModule->getVar('dirname', 'n') != 'system') {
+    if ($xoopsModule->getVar('dirname', 'n') !== 'system') {
         if (file_exists($file = $xoops->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/language/' . $xoopsConfig['language'] . '/main.php'))) {
             include_once $file;
-        } else if (file_exists($file = $xoops->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/language/english/main.php'))) {
+        } elseif (file_exists($file = $xoops->path('modules/' . $xoopsModule->getVar('dirname', 'n') . '/language/english/main.php'))) {
             include_once $file;
         }
         unset($file);
     }
 
-    if ($xoopsModule->getVar('hasconfig') == 1 || $xoopsModule->getVar('hascomments') == 1 || $xoopsModule->getVar('hasnotification') == 1 ) {
+    if ($xoopsModule->getVar('hasconfig') == 1 || $xoopsModule->getVar('hascomments') == 1 || $xoopsModule->getVar('hasnotification') == 1) {
         $xoopsModuleConfig = $config_handler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
     }
-} else if ($xoopsUser) {
+} elseif ($xoopsUser) {
     $xoopsUserIsAdmin = $xoopsUser->isAdmin(1);
 }
 

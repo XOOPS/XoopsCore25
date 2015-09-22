@@ -10,8 +10,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @version     $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @version             $Id: secure.dist.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 // Database
@@ -19,7 +19,9 @@
 define("XOOPS_DB_TYPE", "mysql");
 
 // Set the database charset if applicable
-if (defined("XOOPS_DB_CHARSET")) die('Restricted Access');
+if (defined("XOOPS_DB_CHARSET")) {
+    die('Restricted Access');
+}
 define("XOOPS_DB_CHARSET", "");
 
 // Table Prefix

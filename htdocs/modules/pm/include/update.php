@@ -10,20 +10,28 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         pm
- * @since           2.3.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             pm
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: update.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 $path = dirname(dirname(dirname(__DIR__)));
-require_once $path . DIRECTORY_SEPARATOR . 'include'
-                   . DIRECTORY_SEPARATOR . 'cp_header.php';
+require_once $path . '/include' . '/cp_header.php';
 
+/**
+ * @param      $module
+ * @param null $oldversion
+ * @return bool
+ */
+/**
+ * @param      $module
+ * @param null $oldversion
+ * @return bool
+ */
 function xoops_module_update_pm(&$module, $oldversion = null)
 {
-
     if ($oldversion <= 100) {
         global $xoopsDB;
         // Check pm table version
@@ -47,7 +55,7 @@ function xoops_module_update_pm(&$module, $oldversion = null)
         $template_list     = array_diff(scandir($templateDirectory), array('..', '.'));
         foreach ($template_list as $k => $v) {
             $fileinfo = new SplFileInfo($templateDirectory . $v);
-            if ($fileinfo->getExtension() == 'html' && $fileinfo->getFilename() != 'index.html') {
+            if ($fileinfo->getExtension() === 'html' && $fileinfo->getFilename() !== 'index.html') {
                 @unlink($templateDirectory . $v);
             }
         }
@@ -55,10 +63,10 @@ function xoops_module_update_pm(&$module, $oldversion = null)
         xoops_load('xoopsfile');
         //remove /images directory
         $imagesDirectory = XOOPS_ROOT_PATH . "/modules/" . $module->getVar('dirname', 'n') . "/images/";
-        $folderHandler = XoopsFile::getHandler("folder", $imagesDirectory);
+        $folderHandler   = XoopsFile::getHandler("folder", $imagesDirectory);
         $folderHandler->delete($imagesDirectory);
         //delete .html entries from the tpl table
-        $sql = "DELETE FROM " . $xoopsDB->prefix("tplfile") . " WHERE `tpl_module` = '" .$module->getVar('dirname', 'n') . "' AND `tpl_file` LIKE '%.html%'";
+        $sql = "DELETE FROM " . $xoopsDB->prefix("tplfile") . " WHERE `tpl_module` = '" . $module->getVar('dirname', 'n') . "' AND `tpl_file` LIKE '%.html%'";
         $xoopsDB->queryF($sql);
     }
 

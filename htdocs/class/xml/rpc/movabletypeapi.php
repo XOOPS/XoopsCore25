@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: movabletypeapi.php 13082 2015-06-06 21:59:41Z beckmi $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2015 XOOPS Project (www.xoops.org)            //
@@ -28,25 +28,25 @@
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
-defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
-require_once XOOPS_ROOT_PATH.'/class/xml/rpc/xmlrpcapi.php';
+defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+require_once XOOPS_ROOT_PATH . '/class/xml/rpc/xmlrpcapi.php';
 
 /**
  * Class MovableTypeApi
  */
-class MovableTypeApi extends XoopsXmlRpcApi
+class movabletypeapi extends XoopsXmlRpcApi
 {
     /**
      * @param $params
      * @param $response
      * @param $module
      */
-    function MovableTypeApi(&$params, &$response, &$module)
+    public function MovableTypeApi(&$params, &$response, &$module)
     {
         $this->XoopsXmlRpcApi($params, $response, $module);
     }
 
-    function getCategoryList()
+    public function getCategoryList()
     {
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
@@ -70,17 +70,17 @@ class MovableTypeApi extends XoopsXmlRpcApi
         }
     }
 
-    function getPostCategories()
+    public function getPostCategories()
     {
         $this->response->add(new XoopsXmlRpcFault(107));
     }
 
-    function setPostCategories()
+    public function setPostCategories()
     {
         $this->response->add(new XoopsXmlRpcFault(107));
     }
 
-    function supportedMethods()
+    public function supportedMethods()
     {
         $this->response->add(new XoopsXmlRpcFault(107));
     }

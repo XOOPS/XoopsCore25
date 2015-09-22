@@ -15,8 +15,7 @@ class HTMLPurifier_AttrTransform_ImgSpace extends HTMLPurifier_AttrTransform
      */
     protected $css = array(
         'hspace' => array('left', 'right'),
-        'vspace' => array('top', 'bottom')
-    );
+        'vspace' => array('top', 'bottom'));
 
     /**
      * @param string $attr
@@ -30,9 +29,9 @@ class HTMLPurifier_AttrTransform_ImgSpace extends HTMLPurifier_AttrTransform
     }
 
     /**
-     * @param array $attr
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
+     * @param  array                $attr
+     * @param  HTMLPurifier_Config  $config
+     * @param  HTMLPurifier_Context $context
      * @return array
      */
     public function transform($attr, $config, $context)
@@ -54,8 +53,10 @@ class HTMLPurifier_AttrTransform_ImgSpace extends HTMLPurifier_AttrTransform
             $style .= "$property:{$width}px;";
         }
         $this->prependCSS($attr, $style);
+
         return $attr;
     }
 }
 
 // vim: et sw=4 sts=4
+

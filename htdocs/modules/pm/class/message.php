@@ -10,12 +10,12 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         pm
- * @since           2.3.0
- * @author          Jan Pedersen
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             pm
+ * @since               2.3.0
+ * @author              Jan Pedersen
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: message.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 /**
@@ -31,9 +31,9 @@ class PmMessage extends XoopsObject
     /**
      *
      */
-    function __construct()
+    public function __construct()
     {
-        $this->XoopsObject();
+        parent::__construct();
         $this->initVar('msg_id', XOBJ_DTYPE_INT, null, false);
         $this->initVar('msg_image', XOBJ_DTYPE_OTHER, 'icon1.gif', false, 100);
         $this->initVar('subject', XOBJ_DTYPE_TXTBOX, null, true, 255);
@@ -48,7 +48,7 @@ class PmMessage extends XoopsObject
         $this->initVar('to_save', XOBJ_DTYPE_INT, 0, false);
     }
 
-    function PmMessage()
+    public function PmMessage()
     {
         $this->__construct();
     }
@@ -59,19 +59,18 @@ class PmMessage extends XoopsObject
  */
 class PmMessageHandler extends XoopsPersistableObjectHandler
 {
-
     /**
-     * @param null|object $db
+     * @param null|XoopsDatabase $db
      */
-    function __construct(&$db)
+    public function __construct(XoopsDatabase $db)
     {
         parent::__construct($db, "priv_msgs", 'PmMessage', 'msg_id', 'subject');
     }
 
     /**
-     * @param $db
+     * @param XoopsDatabase $db
      */
-    function PmMessageHandler(&$db)
+    public function PmMessageHandler(XoopsDatabase $db)
     {
         $this->__construct($db);
     }
@@ -79,23 +78,23 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
     /**
      * Mark a message as read
      *
-     * @param object $pm  {@link PmMessage} object
+     * @param PmMessage $pm {@link PmMessage} object
      * @param int    $val
      *
      * @return bool
      */
-    function setRead($pm, $val = 1)
+    public function setRead(PmMessage $pm, $val = 1)
     {
         return $this->updateAll('read_msg', (int)($val), new Criteria('msg_id', $pm->getVar('msg_id')), true);
     }
 
     /**
      * Mark a message as from_delete = 1 or removes it if the recipient has also deleted it
-     * @param  object $pm  {@link PmMessage} object
+     * @param  PmMessage $pm {@link PmMessage} object
      * @param  int    $val
      * @return bool
      */
-    function setFromdelete($pm, $val = 1)
+    public function setFromdelete(PmMessage $pm, $val = 1)
     {
         if ($pm->getVar('to_delete') == 0) {
             return $this->updateAll('from_delete', (int)($val), new Criteria('msg_id', $pm->getVar('msg_id')));
@@ -106,11 +105,11 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
 
     /**
      * Mark a message as to_delete = 1 or removes it if the sender has also deleted it or sent by anonymous
-     * @param  object $pm  {@link PmMessage} object
+     * @param  PmMessage $pm {@link PmMessage} object
      * @param  int    $val
      * @return bool
      */
-    function setTodelete($pm, $val = 1)
+    public function setTodelete(PmMessage $pm, $val = 1)
     {
         if ($pm->getVar('from_delete') == 0 || $pm->getVar('from_userid') == 0) {
             return $this->updateAll('to_delete', (int)($val), new Criteria('msg_id', $pm->getVar('msg_id')));
@@ -121,32 +120,32 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
 
     /**
      * Mark a message as from_save = 1
-     * @param  object $pm  {@link PmMessage} object
+     * @param  PmMessage $pm {@link PmMessage} object
      * @param  int    $val
      * @return bool
      */
-    function setFromsave($pm, $val = 1)
+    public function setFromsave(PmMessage $pm, $val = 1)
     {
         return $this->updateAll('from_save', (int)($val), new Criteria('msg_id', $pm->getVar('msg_id')));
     }
 
     /**
      * Mark a message as to_save = 1
-     * @param  object $pm  {@link PmMessage} object
+     * @param  PmMessage $pm {@link PmMessage} object
      * @param  int    $val
      * @return bool
      */
-    function setTosave($pm, $val = 1)
+    public function setTosave(PmMessage $pm, $val = 1)
     {
         return $this->updateAll('to_save', (int)($val), new Criteria('msg_id', $pm->getVar('msg_id')));
     }
 
     /**
      * get user's message count in savebox
-     * @param  object $user
+     * @param  XoopsUser $user
      * @return int
      **/
-    function getSavecount($user = null)
+    public function getSavecount(XoopsUser $user = null)
     {
         if (!is_object($user)) {
             $user =& $GLOBALS["xoopsUser"];
@@ -165,11 +164,11 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
 
     /**
      * Send a message to user's email
-     * @param  object $pm   {@link XoopsPrivmessage} object
-     * @param  object $user
+     * @param  XoopsPrivmessage $pm {@link XoopsPrivmessage} object
+     * @param  XoopsUser $user
      * @return bool
      **/
-    function sendEmail($pm, $user)
+    public function sendEmail(XoopsPrivmessage $pm, XoopsUser $user)
     {
         global $xoopsConfig;
 
@@ -181,16 +180,16 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
         $msg .= formatTimestamp($pm->getVar("msg_time"));
         $msg .= "\n";
         $from = new XoopsUser($pm->getVar("from_userid"));
-        $to = new XoopsUser($pm->getVar("to_userid"));
+        $to   = new XoopsUser($pm->getVar("to_userid"));
         $msg .= sprintf(_PM_EMAIL_FROM, $from->getVar("uname") . " (" . XOOPS_URL . "/userinfo.php?uid=" . $pm->getVar("from_userid") . ")");
         $msg .= "\n";
         $msg .= sprintf(_PM_EMAIL_TO, $to->getVar("uname") . " (" . XOOPS_URL . "/userinfo.php?uid=" . $pm->getVar("to_userid") . ")");
         $msg .= "\n";
         $msg .= _PM_EMAIL_MESSAGE . ":\n";
         $msg .= "\n" . $pm->getVar("subject") . "\n";
-        $msg .= "\n" . strip_tags( str_replace(array("<p>", "</p>", "<br />", "<br />"), "\n", $pm->getVar("msg_text")) ) . "\n\n";
+        $msg .= "\n" . strip_tags(str_replace(array("<p>", "</p>", "<br />", "<br />"), "\n", $pm->getVar("msg_text"))) . "\n\n";
         $msg .= "--------------\n";
-        $msg .= $xoopsConfig['sitename'] . ": ". XOOPS_URL . "\n";
+        $msg .= $xoopsConfig['sitename'] . ": " . XOOPS_URL . "\n";
 
         $xoopsMailer =& xoops_getMailer();
         $xoopsMailer->useMail();
@@ -204,11 +203,11 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-    * Get {@link XoopsForm} for setting prune criteria
-    *
-    * @return object
-    **/
-    function getPruneForm()
+     * Get {@link XoopsForm} for setting prune criteria
+     *
+     * @return XoopsForm
+     **/
+    public function getPruneForm()
     {
         include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
         $form = new XoopsThemeForm(_PM_AM_PRUNE, 'form', 'prune.php', 'post', true);

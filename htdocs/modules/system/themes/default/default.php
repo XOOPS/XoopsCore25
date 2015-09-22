@@ -25,7 +25,7 @@ xoops_load('gui', 'system');
  * @author      BitC3R0     <BitC3R0@gmail.com>
  * @author      trabis      <lusopoemas@gmail.com>
  * @version     1.2
- * @version     $Id$
+ * @version     $Id: default.php 13092 2015-06-20 20:30:30Z beckmi $
  */
 
 /**
@@ -33,15 +33,14 @@ xoops_load('gui', 'system');
  */
 class XoopsGuiDefault extends XoopsSystemGui
 {
-
     /**
      *
      */
-    function __construct()
+    public function __construct()
     {
     }
 
-    function XoopsGuiDefault()
+    public function XoopsGuiDefault()
     {
         $this->__construct();
     }
@@ -49,12 +48,12 @@ class XoopsGuiDefault extends XoopsSystemGui
     /**
      * @return bool
      */
-    function validate()
+    public function validate()
     {
         return true;
     }
 
-    function header()
+    public function header()
     {
         parent::header();
 
@@ -68,7 +67,7 @@ class XoopsGuiDefault extends XoopsSystemGui
         $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/default/js/tooltip.js');
         $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/default/js/tabs.jquery.tools.min.js');
 
-        $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/default/css/style.css' );
+        $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/default/css/style.css');
         $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/default/css/dark.css', array('title' => 'dark', 'media' => 'screen'));
         $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/default/css/silver.css', array('title' => 'silver', 'media' => 'screen'));
         $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/default/css/orange.css', array('title' => 'orange', 'media' => 'screen'));
@@ -80,62 +79,62 @@ class XoopsGuiDefault extends XoopsSystemGui
         $tpl->assign('lang_mysql_version', mysql_get_server_info());
         $tpl->assign('lang_server_api', PHP_SAPI);
         $tpl->assign('lang_os_name', PHP_OS);
-        $tpl->assign('safe_mode', ini_get( 'safe_mode' ) ? 'On' : 'Off');
-        $tpl->assign('register_globals', ini_get( 'register_globals' ) ? 'On' : 'Off');
-        $tpl->assign('magic_quotes_gpc', ini_get( 'magic_quotes_gpc' ) ? 'On' : 'Off');
-        $tpl->assign('allow_url_fopen', ini_get( 'allow_url_fopen' ) ? 'On' : 'Off');
-        $tpl->assign('fsockopen', function_exists( 'fsockopen' ) ? 'On' : 'Off');
-        $tpl->assign('allow_call_time_pass_reference', ini_get( 'allow_call_time_pass_reference' ) ? 'On' : 'Off');
-        $tpl->assign('post_max_size', ini_get( 'post_max_size' ));
-        $tpl->assign('max_input_time', ini_get( 'max_input_time' ));
-        $tpl->assign('output_buffering', ini_get( 'output_buffering' ));
-        $tpl->assign('max_execution_time', ini_get( 'max_execution_time' ));
-        $tpl->assign('memory_limit', ini_get( 'memory_limit' ));
-        $tpl->assign('file_uploads', ini_get( 'file_uploads' ) ? 'On' : 'Off');
-        $tpl->assign('upload_max_filesize', ini_get( 'upload_max_filesize' ));
+        $tpl->assign('safe_mode', ini_get('safe_mode') ? 'On' : 'Off');
+        $tpl->assign('register_globals', ini_get('register_globals') ? 'On' : 'Off');
+        $tpl->assign('magic_quotes_gpc', ini_get('magic_quotes_gpc') ? 'On' : 'Off');
+        $tpl->assign('allow_url_fopen', ini_get('allow_url_fopen') ? 'On' : 'Off');
+        $tpl->assign('fsockopen', function_exists('fsockopen') ? 'On' : 'Off');
+        $tpl->assign('allow_call_time_pass_reference', ini_get('allow_call_time_pass_reference') ? 'On' : 'Off');
+        $tpl->assign('post_max_size', ini_get('post_max_size'));
+        $tpl->assign('max_input_time', ini_get('max_input_time'));
+        $tpl->assign('output_buffering', ini_get('output_buffering'));
+        $tpl->assign('max_execution_time', ini_get('max_execution_time'));
+        $tpl->assign('memory_limit', ini_get('memory_limit'));
+        $tpl->assign('file_uploads', ini_get('file_uploads') ? 'On' : 'Off');
+        $tpl->assign('upload_max_filesize', ini_get('upload_max_filesize'));
         $tpl->assign('xoops_sitename', $xoopsConfig['sitename']);
 
         // ADD MENU *****************************************
 
         //Add  CONTROL PANEL  Menu  items
-        $menu = array();
-        $menu[0]['link'] = XOOPS_URL;
-        $menu[0]['title'] = _YOURHOME;
+        $menu                = array();
+        $menu[0]['link']     = XOOPS_URL;
+        $menu[0]['title']    = _YOURHOME;
         $menu[0]['absolute'] = 1;
-        $menu[1]['link'] = XOOPS_URL . '/admin.php?xoopsorgnews=1';
-        $menu[1]['title'] = _OXYGEN_NEWS;
+        $menu[1]['link']     = XOOPS_URL . '/admin.php?xoopsorgnews=1';
+        $menu[1]['title']    = _OXYGEN_NEWS;
         $menu[1]['absolute'] = 1;
-        $menu[1]['icon'] = XOOPS_ADMINTHEME_URL . '/default/images/xoops.png';
-        $menu[2]['link'] = XOOPS_URL . '/user.php?op=logout';
-        $menu[2]['title'] = _LOGOUT;
+        $menu[1]['icon']     = XOOPS_ADMINTHEME_URL . '/default/images/xoops.png';
+        $menu[2]['link']     = XOOPS_URL . '/user.php?op=logout';
+        $menu[2]['title']    = _LOGOUT;
         $menu[2]['absolute'] = 1;
-        $menu[2]['icon'] = XOOPS_ADMINTHEME_URL . '/default/images/logout.png';
+        $menu[2]['icon']     = XOOPS_ADMINTHEME_URL . '/default/images/logout.png';
         $tpl->append('navitems', array('link' => XOOPS_URL . '/admin.php', 'text' => _CPHOME, 'menu' => $menu));
 
         //add SYSTEM  Menu items
         include __DIR__ . '/menu.php';
-        if (empty($xoopsModule) || 'system' == $xoopsModule->getVar('dirname', 'n')) {
+        if (empty($xoopsModule) || 'system' === $xoopsModule->getVar('dirname', 'n')) {
             $modpath = XOOPS_URL . '/admin.php';
             $modname = _OXYGEN_SYSOPTIONS;
-            $modid = 1;
-            $moddir = 'system';
+            $modid   = 1;
+            $moddir  = 'system';
 
             $mod_options = $adminmenu;
             foreach (array_keys($mod_options) as $item) {
-                $mod_options[$item]['link'] = empty($mod_options[$item]['absolute']) ? XOOPS_URL . '/modules/'.$moddir.'/' . $mod_options[$item]['link'] : $mod_options[$item]['link'];
+                $mod_options[$item]['link'] = empty($mod_options[$item]['absolute']) ? XOOPS_URL . '/modules/' . $moddir . '/' . $mod_options[$item]['link'] : $mod_options[$item]['link'];
                 $mod_options[$item]['icon'] = empty($mod_options[$item]['icon']) ? '' : XOOPS_ADMINTHEME_URL . '/default/' . $mod_options[$item]['icon'];
                 unset($mod_options[$item]['icon_small']);
             }
         } else {
-            $moddir = $xoopsModule->getVar('dirname', 'n');
+            $moddir  = $xoopsModule->getVar('dirname', 'n');
             $modpath = XOOPS_URL . '/modules/' . $moddir;
             $modname = $xoopsModule->getVar('name');
-            $modid = $xoopsModule->getVar('mid');
+            $modid   = $xoopsModule->getVar('mid');
 
             $mod_options = $xoopsModule->getAdminMenu();
             foreach (array_keys($mod_options) as $item) {
                 $mod_options[$item]['link'] = empty($mod_options[$item]['absolute']) ? XOOPS_URL . "/modules/{$moddir}/" . $mod_options[$item]['link'] : $mod_options[$item]['link'];
-//                $mod_options[$item]['icon'] = empty($mod_options[$item]['icon']) ? '' : XOOPS_URL . "/modules/{$moddir}/" . $mod_options[$item]['icon'];
+                //                $mod_options[$item]['icon'] = empty($mod_options[$item]['icon']) ? '' : XOOPS_URL . "/modules/{$moddir}/" . $mod_options[$item]['icon'];
                 //mb for direct URL access to icons in modules Admin
                 $mod_options[$item]['icon'] = empty($mod_options[$item]['icon']) ? '' : (filter_var($mod_options[$item]['icon'], FILTER_VALIDATE_URL) ? $mod_options[$item]['icon'] : (XOOPS_URL . "/modules/{$moddir}/" . $mod_options[$item]['icon']));
             }
@@ -148,136 +147,138 @@ class XoopsGuiDefault extends XoopsSystemGui
         $tpl->assign('moddir', $moddir);
 
         // add MODULES  Menu items
-        $module_handler =& xoops_gethandler('module');
-        $criteria = new CriteriaCompo();
+        $module_handler =& xoops_getHandler('module');
+        $criteria       = new CriteriaCompo();
         $criteria->add(new Criteria('hasadmin', 1));
         $criteria->add(new Criteria('isactive', 1));
         $criteria->setSort('mid');
         $mods = $module_handler->getObjects($criteria);
 
-        $menu = array();
-        $moduleperm_handler =& xoops_gethandler('groupperm');
+        $menu               = array();
+        $moduleperm_handler =& xoops_getHandler('groupperm');
         foreach ($mods as $mod) {
-            $rtn = array();
+            $rtn        = array();
             $modOptions = array();                                                         //add for sub menus
-            $sadmin = $moduleperm_handler->checkRight('module_admin', $mod->getVar('mid'), $xoopsUser->getGroups());
+            $sadmin     = $moduleperm_handler->checkRight('module_admin', $mod->getVar('mid'), $xoopsUser->getGroups());
             if ($sadmin) {
                 $info = $mod->getInfo();
                 if (!empty($info['adminindex'])) {
-                    $rtn['link'] = XOOPS_URL . '/modules/'. $mod->getVar('dirname', 'n') . '/' . $info['adminindex'];
+                    $rtn['link'] = XOOPS_URL . '/modules/' . $mod->getVar('dirname', 'n') . '/' . $info['adminindex'];
                 } else {
                     $rtn['link'] = XOOPS_URL . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $mod->getVar('mid');
                 }
-                $rtn['title'] = htmlspecialchars($mod->name(), ENT_QUOTES);
+                $rtn['title']    = htmlspecialchars($mod->name(), ENT_QUOTES);
                 $rtn['absolute'] = 1;
-                $rtn['url'] = XOOPS_URL . '/modules/'. $mod->getVar('dirname', 'n') . '/'; //add for sub menus
-                $modOptions = $mod->getAdminMenu();                                        //add for sub menus
-                $rtn['options'] = $modOptions;                                             //add for sub menus
+                $rtn['url']      = XOOPS_URL . '/modules/' . $mod->getVar('dirname', 'n') . '/'; //add for sub menus
+                $modOptions      = $mod->getAdminMenu();                                        //add for sub menus
+                $rtn['options']  = $modOptions;                                             //add for sub menus
 
-                if (isset($info['icon']) && $info['icon'] != '' ) {
+                if (isset($info['icon']) && $info['icon'] !== '') {
                     $rtn['icon'] = XOOPS_URL . '/modules/' . $mod->getVar('dirname', 'n') . '/' . $info['icon'];
                 }
                 $menu[] = $rtn;
             }
-
         }
-        $tpl->append('navitems', array('link' => XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin',
-        'text' => _AM_SYSTEM_MODULES, 'dir' => $mod->getVar('dirname', 'n'), 'menu' => $menu));
+        $tpl->append('navitems', array(
+            'link' => XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin',
+            'text' => _AM_SYSTEM_MODULES,
+            'dir'  => $mod->getVar('dirname', 'n'),
+            'menu' => $menu));
 
         // add preferences menu
         $menu = array();
 
-        $OPT = array();
+        $OPT   = array();
         $OPT[] = array(
-            'link'      => 'admin.php?fct=preferences&amp;op=show&amp;confcat_id=1',
-            'title'     => _OXYGEN_GENERAL,
-            'absolute'  => 1,
-            'icon'     => XOOPS_ADMINTHEME_URL . '/default/icons/prefs_small.png');
-        $OPT[] = array(
-            'link'      => 'admin.php?fct=preferences&amp;op=show&amp;confcat_id=2',
-            'title'     => _OXYGEN_USERSETTINGS,
-            'absolute'  => 1,
+            'link'     => 'admin.php?fct=preferences&amp;op=show&amp;confcat_id=1',
+            'title'    => _OXYGEN_GENERAL,
+            'absolute' => 1,
             'icon'     => XOOPS_ADMINTHEME_URL . '/default/icons/prefs_small.png');
         $OPT[] = array(
-            'link'      => 'admin.php?fct=preferences&amp;op=show&amp;confcat_id=3',
-            'title'     => _OXYGEN_METAFOOTER,
-            'absolute'  => 1,
+            'link'     => 'admin.php?fct=preferences&amp;op=show&amp;confcat_id=2',
+            'title'    => _OXYGEN_USERSETTINGS,
+            'absolute' => 1,
             'icon'     => XOOPS_ADMINTHEME_URL . '/default/icons/prefs_small.png');
         $OPT[] = array(
-            'link'      => 'admin.php?fct=preferences&amp;op=show&amp;confcat_id=4',
-            'title'     => _OXYGEN_CENSOR,
-            'absolute'  => 1,
+            'link'     => 'admin.php?fct=preferences&amp;op=show&amp;confcat_id=3',
+            'title'    => _OXYGEN_METAFOOTER,
+            'absolute' => 1,
             'icon'     => XOOPS_ADMINTHEME_URL . '/default/icons/prefs_small.png');
         $OPT[] = array(
-            'link'      => 'admin.php?fct=preferences&amp;op=show&amp;confcat_id=5',
-            'title'     => _OXYGEN_SEARCH,
-            'absolute'  => 1,
+            'link'     => 'admin.php?fct=preferences&amp;op=show&amp;confcat_id=4',
+            'title'    => _OXYGEN_CENSOR,
+            'absolute' => 1,
             'icon'     => XOOPS_ADMINTHEME_URL . '/default/icons/prefs_small.png');
         $OPT[] = array(
-            'link'      => 'admin.php?fct=preferences&amp;op=show&amp;confcat_id=6',
-            'title'     => _OXYGEN_MAILER,
-            'absolute'  => 1,
+            'link'     => 'admin.php?fct=preferences&amp;op=show&amp;confcat_id=5',
+            'title'    => _OXYGEN_SEARCH,
+            'absolute' => 1,
             'icon'     => XOOPS_ADMINTHEME_URL . '/default/icons/prefs_small.png');
-       $OPT[] = array(
-            'link'      => 'admin.php?fct=preferences&amp;op=show&amp;confcat_id=7',
-            'title'     => _OXYGEN_AUTHENTICATION,
-            'absolute'  => 1,
+        $OPT[] = array(
+            'link'     => 'admin.php?fct=preferences&amp;op=show&amp;confcat_id=6',
+            'title'    => _OXYGEN_MAILER,
+            'absolute' => 1,
             'icon'     => XOOPS_ADMINTHEME_URL . '/default/icons/prefs_small.png');
-       $OPT[] = array(
-            'link'      => 'admin.php?fct=preferences&amp;op=showmod&amp;mod=1',
-            'title'     => _OXYGEN_MODULESETTINGS,
-            'absolute'  => 1,
+        $OPT[] = array(
+            'link'     => 'admin.php?fct=preferences&amp;op=show&amp;confcat_id=7',
+            'title'    => _OXYGEN_AUTHENTICATION,
+            'absolute' => 1,
+            'icon'     => XOOPS_ADMINTHEME_URL . '/default/icons/prefs_small.png');
+        $OPT[] = array(
+            'link'     => 'admin.php?fct=preferences&amp;op=showmod&amp;mod=1',
+            'title'    => _OXYGEN_MODULESETTINGS,
+            'absolute' => 1,
             'icon'     => XOOPS_ADMINTHEME_URL . '/default/icons/prefs_small.png');
 
         $menu[] = array(
-            'link'      => XOOPS_URL . '/modules/system/admin.php?fct=preferences',
-            'title'     => _OXYGEN_SYSOPTIONS,
-            'absolute'  => 1,
-            'url'     => XOOPS_URL . '/modules/system/',
-            'options' => $OPT);
+            'link'     => XOOPS_URL . '/modules/system/admin.php?fct=preferences',
+            'title'    => _OXYGEN_SYSOPTIONS,
+            'absolute' => 1,
+            'url'      => XOOPS_URL . '/modules/system/',
+            'options'  => $OPT);
 
         foreach ($mods as $mod) {
-            $rtn = array();
+            $rtn    = array();
             $sadmin = $moduleperm_handler->checkRight('module_admin', $mod->getVar('mid'), $xoopsUser->getGroups());
             if ($sadmin && ($mod->getVar('hasnotification') || is_array($mod->getInfo('config')) || is_array($mod->getInfo('comments')))) {
-                $rtn['link'] = XOOPS_URL . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $mod->getVar('mid');
-                $rtn['title'] = htmlspecialchars($mod->name(), ENT_QUOTES);
+                $rtn['link']     = XOOPS_URL . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $mod->getVar('mid');
+                $rtn['title']    = htmlspecialchars($mod->name(), ENT_QUOTES);
                 $rtn['absolute'] = 1;
-                $rtn['icon'] = XOOPS_ADMINTHEME_URL . '/gui/oxygen/icons/prefs_small.png';
-                $menu[] = $rtn;
+                $rtn['icon']     = XOOPS_ADMINTHEME_URL . '/gui/oxygen/icons/prefs_small.png';
+                $menu[]          = $rtn;
             }
         }
         $tpl->append('navitems', array('link' => XOOPS_URL . '/modules/system/admin.php?fct=preferences', 'text' => _OXYGEN_SITEPREF, 'dir' => $mod->getVar('dirname', 'n'), 'menu' => $menu));
 
         //add OPTIONS/Links Menu Items
-        $menu = array();
+        $menu   = array();
         $menu[] = array(
-            'link'      => 'http://xoops.org',
-            'title'     => _OXYGEN_XOOPSPROJECT,
-            'absolute'  => 1);
+            'link'     => 'http://xoops.org',
+            'title'    => _OXYGEN_XOOPSPROJECT,
+            'absolute' => 1);
         $menu[] = array(
-            'link'      => 'http://xoops.org',
-            'title'     => _OXYGEN_WEBSITE,
-            'absolute'  => 1,
+            'link'     => 'http://xoops.org',
+            'title'    => _OXYGEN_WEBSITE,
+            'absolute' => 1,
             'icon'     => XOOPS_ADMINTHEME_URL . '/default/images/xoops.png');
         $menu[] = array(
-            'link'      => 'http://www.xoops.org/modules/repository/',
-            'title'     => _OXYGEN_XOOPSMODULES,
-            'absolute'  => 1,
+            'link'     => 'http://www.xoops.org/modules/repository/',
+            'title'    => _OXYGEN_XOOPSMODULES,
+            'absolute' => 1,
             'icon'     => XOOPS_ADMINTHEME_URL . '/default/images/xoops.png');
         $menu[] = array(
-            'link'      => 'http://www.xoops.org/modules/extgallery/',
-            'title'     => _OXYGEN_XOOPSTHEMES,
-            'absolute'  => 1,
+            'link'     => 'http://www.xoops.org/modules/extgallery/',
+            'title'    => _OXYGEN_XOOPSTHEMES,
+            'absolute' => 1,
             'icon'     => XOOPS_ADMINTHEME_URL . '/default/images/tweb.png');
 
-        $tpl->append('navitems', array('link' => XOOPS_URL . '/admin.php','text' => _OXYGEN_INTERESTSITES, 'menu' => $menu));
+        $tpl->append('navitems', array('link' => XOOPS_URL . '/admin.php', 'text' => _OXYGEN_INTERESTSITES, 'menu' => $menu));
 
         //add OPTIONS/links for local support
-        if (file_exists($file = XOOPS_ADMINTHEME_PATH . '/default/language/' . $xoopsConfig['language'] . '/localsupport.php' )) {
+        if (file_exists($file = XOOPS_ADMINTHEME_PATH . '/default/language/' . $xoopsConfig['language'] . '/localsupport.php')) {
             $links = include XOOPS_ADMINTHEME_PATH . '/default/language/' . $xoopsConfig['language'] . '/localsupport.php';
-            if ( count($links) > 0 ) {
-                $tpl->append('navitems', array('link' => XOOPS_URL . '/admin.php','text' => _OXYGEN_LOCALSUPPORT, 'menu' => $links));
+            if (count($links) > 0) {
+                $tpl->append('navitems', array('link' => XOOPS_URL . '/admin.php', 'text' => _OXYGEN_LOCALSUPPORT, 'menu' => $links));
             }
         }
 
@@ -286,32 +287,30 @@ class XoopsGuiDefault extends XoopsSystemGui
                 include $file;
             }
 
-            return;
+            return null;
         }
 
         foreach ($mods as $mod) {
-
-            $sadmin = $moduleperm_handler->checkRight ( 'module_admin', $mod->getVar ( 'mid' ), $xoopsUser->getGroups () );
+            $sadmin = $moduleperm_handler->checkRight('module_admin', $mod->getVar('mid'), $xoopsUser->getGroups());
             if ($sadmin) {
-                $rtn = array ();
-                $info = $mod->getInfo ();
-                if (! empty ( $info ['adminindex'] )) {
-                    $rtn ['link'] = XOOPS_URL . '/modules/' . $mod->getVar ( 'dirname', 'n' ) . '/' . $info ['adminindex'];
+                $rtn  = array();
+                $info = $mod->getInfo();
+                if (!empty($info ['adminindex'])) {
+                    $rtn ['link'] = XOOPS_URL . '/modules/' . $mod->getVar('dirname', 'n') . '/' . $info ['adminindex'];
                 } else {
-                    $rtn ['link'] = XOOPS_URL . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $mod->getVar ( 'mid' );
+                    $rtn ['link'] = XOOPS_URL . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $mod->getVar('mid');
                 }
-                $rtn ['title'] = htmlspecialchars($mod->getVar ('name'), ENT_QUOTES);
+                $rtn ['title']       = htmlspecialchars($mod->getVar('name'), ENT_QUOTES);
                 $rtn ['description'] = $mod->getInfo('description');
-                $rtn ['absolute'] = 1;
-                if (isset ( $info ['icon_big'] )) {
-                    $rtn ['icon'] = XOOPS_URL . '/modules/' . $mod->getVar ( 'dirname', 'n' ) . '/' . $info ['icon_big'];
-                } elseif (isset ( $info ['image'] )) {
-                    $rtn ['icon'] = XOOPS_URL . '/modules/' . $mod->getVar ( 'dirname', 'n' ) . '/' . $info ['image'];
+                $rtn ['absolute']    = 1;
+                if (isset($info ['icon_big'])) {
+                    $rtn ['icon'] = XOOPS_URL . '/modules/' . $mod->getVar('dirname', 'n') . '/' . $info ['icon_big'];
+                } elseif (isset($info ['image'])) {
+                    $rtn ['icon'] = XOOPS_URL . '/modules/' . $mod->getVar('dirname', 'n') . '/' . $info ['image'];
                 }
 
-                $tpl->append ( 'modules', $rtn );
+                $tpl->append('modules', $rtn);
             }
-
         }
     }
 }

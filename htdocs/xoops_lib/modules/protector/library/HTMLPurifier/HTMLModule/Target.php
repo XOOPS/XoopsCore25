@@ -17,12 +17,12 @@ class HTMLPurifier_HTMLModule_Target extends HTMLPurifier_HTMLModule
     {
         $elements = array('a');
         foreach ($elements as $name) {
-            $e = $this->addBlankElement($name);
+            $e       = $this->addBlankElement($name);
             $e->attr = array(
-                'target' => new HTMLPurifier_AttrDef_HTML_FrameTarget()
-            );
+                'target' => new HTMLPurifier_AttrDef_HTML_FrameTarget());
         }
     }
 }
 
 // vim: et sw=4 sts=4
+

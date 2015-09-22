@@ -10,13 +10,13 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package     core
- * @since       2.3.0
- * @author      Taiwen Jiang <phppp@users.sourceforge.net>
- * @version     $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             core
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: xoopslocal.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * XoopsLocalWrapper
@@ -29,7 +29,7 @@ class XoopsLocalWrapper
      *
      * @return bool
      */
-    static function load($language = null)
+    public static function load($language = null)
     {
         if (class_exists('Xoopslocal')) {
             return true;
@@ -51,11 +51,12 @@ function xoops_local()
 {
     // get parameters
     $func_args = func_get_args();
-    $func = array_shift($func_args);
+    $func      = array_shift($func_args);
+
     // local method defined
     return call_user_func_array(array(
-        'XoopsLocal' ,
-        $func), $func_args);
+                                    'XoopsLocal',
+                                    $func), $func_args);
 }
 
 XoopsLocalWrapper::load();

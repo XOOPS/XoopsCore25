@@ -10,20 +10,20 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         pm
- * @since           2.3.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             pm
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: menu.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 $path = dirname(dirname(dirname(__DIR__)));
 include_once $path . '/mainfile.php';
 
 $dirname         = basename(dirname(__DIR__));
-$module_handler  = xoops_gethandler('module');
+$module_handler  =& xoops_getHandler('module');
 $module          = $module_handler->getByDirname($dirname);
 $pathIcon32      = $module->getInfo('icons32');
 $pathModuleAdmin = $module->getInfo('dirmoduleadmin');
@@ -37,15 +37,15 @@ include_once $fileinc;
 
 $adminmenu = array();
 
-$i = 1;
+$i                      = 1;
 $adminmenu[$i]['title'] = _PM_MI_INDEX;
-$adminmenu[$i]['link'] = "admin/admin.php";
-$adminmenu[$i]['icon']  = $pathIcon32.'/home.png' ;
+$adminmenu[$i]['link']  = "admin/admin.php";
+$adminmenu[$i]['icon']  = $pathIcon32 . '/home.png';
 ++$i;
 $adminmenu[$i]['title'] = _PM_MI_PRUNE;
-$adminmenu[$i]['link'] = "admin/prune.php";
-$adminmenu[$i]['icon']  = $pathIcon32.'/prune.png' ;
+$adminmenu[$i]['link']  = "admin/prune.php";
+$adminmenu[$i]['icon']  = $pathIcon32 . '/prune.png';
 ++$i;
 $adminmenu[$i]['title'] = _PM_MI_ABOUT;
 $adminmenu[$i]['link']  = 'admin/about.php';
-$adminmenu[$i]['icon']  = $pathIcon32.'/about.png';
+$adminmenu[$i]['icon']  = $pathIcon32 . '/about.png';

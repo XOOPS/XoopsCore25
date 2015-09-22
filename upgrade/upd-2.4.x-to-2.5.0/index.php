@@ -10,11 +10,11 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package     upgrader
- * @since       2.5.0
- * @author      Andricq Nicolas (AKA MusS)
- * @version     $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             upgrader
+ * @since               2.5.0
+ * @author              Andricq Nicolas (AKA MusS)
+ * @version             $Id: index.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 require_once 'dbmanager.php';
@@ -24,7 +24,7 @@ require_once 'dbmanager.php';
  */
 class upgrade_250 extends xoopsUpgrade
 {
-    var $tasks = array('config','templates');
+    var $tasks = array('config', 'templates');
 
     /**
      * Check if cpanel config already exists
@@ -33,7 +33,7 @@ class upgrade_250 extends xoopsUpgrade
     function check_config()
     {
         $sql = "SELECT COUNT(*) FROM `" . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` IN ('break1', 'usetips')";
-        if (!$result = $GLOBALS['xoopsDB']->queryF( $sql ) ) {
+        if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
             return false;
         }
         list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
@@ -47,7 +47,7 @@ class upgrade_250 extends xoopsUpgrade
     function check_templates()
     {
         $sql = "SELECT COUNT(*) FROM `" . $GLOBALS['xoopsDB']->prefix('tplfile') . "` WHERE `tpl_file` IN ('system_header.html') AND `tpl_type` = 'admin'";
-        if (!$result = $GLOBALS['xoopsDB']->queryF( $sql ) ) {
+        if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
             return false;
         }
         list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
@@ -63,20 +63,20 @@ class upgrade_250 extends xoopsUpgrade
         $dbm = new db_manager();
 
         $sql = "SELECT conf_id FROM `" . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` IN ('cpanel')";
-        if (!$result = $GLOBALS['xoopsDB']->queryF( $sql ) ) {
+        if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
             return false;
         }
         $count = $GLOBALS['xoopsDB']->fetchRow($result);
 
         $sql = "UPDATE `" . $GLOBALS['xoopsDB']->prefix('config') . "` SET `conf_value` = 'default' WHERE `conf_id` = " . $count[0];
-        if (!$result = $GLOBALS['xoopsDB']->queryF( $sql ) ) {
+        if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
             return false;
         }
 
         $dbm->insert('config', " (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) VALUES (1, 0, 'break1', '_MI_SYSTEM_PREFERENCE_BREAK_GENERAL', 'head', '', 'line_break', 'textbox', 0)");
         $dbm->insert('config', " (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) VALUES (1, 0, 'usetips', '_MI_SYSTEM_PREFERENCE_TIPS', '1', '_MI_SYSTEM_PREFERENCE_TIPS_DSC', 'yesno', 'int', 10)");
         $icon_id = $dbm->insert('config', " (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) VALUES (1, 0, 'typeicons', '_MI_SYSTEM_PREFERENCE_ICONS', 'default', '', 'select', 'text', 20)");
-        $bc_id = $dbm->insert('config', " (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) VALUES (1, 0, 'typebreadcrumb', '_MI_SYSTEM_PREFERENCE_BREADCRUMB', 'default', '', 'select', 'text', 30)");
+        $bc_id   = $dbm->insert('config', " (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) VALUES (1, 0, 'typebreadcrumb', '_MI_SYSTEM_PREFERENCE_BREADCRUMB', 'default', '', 'select', 'text', 30)");
         $dbm->insert('config', " (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) VALUES (1, 0, 'break2', '_MI_SYSTEM_PREFERENCE_BREAK_ACTIVE', 'head', '', 'line_break', 'textbox', 40)");
         $dbm->insert('config', " (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) VALUES (1, 0, 'active_avatars', '_MI_SYSTEM_PREFERENCE_ACTIVE_AVATARS', '1', '', 'yesno', 'int', 50)");
         $dbm->insert('config', " (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) VALUES (1, 0, 'active_banners', '_MI_SYSTEM_PREFERENCE_ACTIVE_BANNERS', '1', '', 'yesno', 'int', 60)");
@@ -104,8 +104,8 @@ class upgrade_250 extends xoopsUpgrade
         $dbm->insert('config', " (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) VALUES (1, 0, 'users_pager', '_MI_SYSTEM_PREFERENCE_USERS_PAGER', '20', '', 'textbox', 'int', 280)");
         $dbm->insert('config', " (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) VALUES (1, 0, 'break4', '_MI_SYSTEM_PREFERENCE_BREAK_EDITOR', 'head', '', 'line_break', 'textbox', 290)");
         $block_id = $dbm->insert('config', " (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) VALUES (1, 0, 'blocks_editor', '_MI_SYSTEM_PREFERENCE_BLOCKS_EDITOR', 'dhtmltextarea', '_MI_SYSTEM_PREFERENCE_BLOCKS_EDITOR_DSC', 'select', 'text', 300)");
-        $com_id = $dbm->insert('config', " (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) VALUES (1, 0, 'comments_editor', '_MI_SYSTEM_PREFERENCE_COMMENTS_EDITOR', 'dhtmltextarea', '_MI_SYSTEM_PREFERENCE_COMMENTS_EDITOR_DSC', 'select', 'text', 310)");
-        $main_id = $dbm->insert('config', " (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) VALUES (1, 0, 'general_editor', '_MI_SYSTEM_PREFERENCE_GENERAL_EDITOR', 'dhtmltextarea', '_MI_SYSTEM_PREFERENCE_GENERAL_EDITOR_DSC', 'select', 'text', 320)");
+        $com_id   = $dbm->insert('config', " (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) VALUES (1, 0, 'comments_editor', '_MI_SYSTEM_PREFERENCE_COMMENTS_EDITOR', 'dhtmltextarea', '_MI_SYSTEM_PREFERENCE_COMMENTS_EDITOR_DSC', 'select', 'text', 310)");
+        $main_id  = $dbm->insert('config', " (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) VALUES (1, 0, 'general_editor', '_MI_SYSTEM_PREFERENCE_GENERAL_EDITOR', 'dhtmltextarea', '_MI_SYSTEM_PREFERENCE_GENERAL_EDITOR_DSC', 'select', 'text', 320)");
         $dbm->insert('config', " (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) VALUES (1, 0, 'redirect', '_MI_SYSTEM_PREFERENCE_REDIRECT', 'admin.php?fct=preferences', '', 'hidden', 'text', 330)");
         $dbm->insert('config', " (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) VALUES (1, 0, 'com_anonpost', '_MI_SYSTEM_PREFERENCE_ANONPOST', '', '', 'hidden', 'text', 340)");
         $jquery_id = $dbm->insert('config', " (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) VALUES (1, 0, 'jquery_theme', '_MI_SYSTEM_PREFERENCE_JQUERY_THEME', 'base', '', 'select', 'text', 35)");
@@ -113,27 +113,27 @@ class upgrade_250 extends xoopsUpgrade
         $dbm->insert('config', " (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) VALUES (0, 1, 'redirect_message_ajax', '_MD_AM_CUSTOM_REDIRECT', '1', '_MD_AM_CUSTOM_REDIRECT_DESC', 'yesno', 'int', 12)");
 
         require_once '../class/xoopslists.php';
-        $editors = XoopsLists::getDirListAsArray( '../class/xoopseditor' );
+        $editors = XoopsLists::getDirListAsArray('../class/xoopseditor');
         foreach ($editors as $dir) {
-            $dbm->insert('configoption', " (confop_name,confop_value,conf_id) VALUES ('".$dir."', '".$dir."', $block_id)");
+            $dbm->insert('configoption', " (confop_name,confop_value,conf_id) VALUES ('" . $dir . "', '" . $dir . "', $block_id)");
         }
         foreach ($editors as $dir) {
-            $dbm->insert('configoption', " (confop_name,confop_value,conf_id) VALUES ('".$dir."', '".$dir."', $com_id)");
+            $dbm->insert('configoption', " (confop_name,confop_value,conf_id) VALUES ('" . $dir . "', '" . $dir . "', $com_id)");
         }
         foreach ($editors as $dir) {
-            $dbm->insert('configoption', " (confop_name,confop_value,conf_id) VALUES ('".$dir."', '".$dir."', $main_id)");
+            $dbm->insert('configoption', " (confop_name,confop_value,conf_id) VALUES ('" . $dir . "', '" . $dir . "', $main_id)");
         }
         $icons = XoopsLists::getDirListAsArray('../modules/system/images/icons');
         foreach ($icons as $dir) {
-            $dbm->insert('configoption', " (confop_name,confop_value,conf_id) VALUES ('".$dir."', '".$dir."', $icon_id)");
+            $dbm->insert('configoption', " (confop_name,confop_value,conf_id) VALUES ('" . $dir . "', '" . $dir . "', $icon_id)");
         }
         $breadcrumb = XoopsLists::getDirListAsArray('../modules/system/images/breadcrumb');
         foreach ($breadcrumb as $dir) {
-            $dbm->insert('configoption', " (confop_name,confop_value,conf_id) VALUES ('".$dir."', '".$dir."', $bc_id)");
+            $dbm->insert('configoption', " (confop_name,confop_value,conf_id) VALUES ('" . $dir . "', '" . $dir . "', $bc_id)");
         }
         $jqueryui = XoopsLists::getDirListAsArray('../modules/system/css/ui');
         foreach ($jqueryui as $dir) {
-            $dbm->insert('configoption', " (confop_name,confop_value,conf_id) VALUES ('".$dir."', '".$dir."', $jquery_id)");
+            $dbm->insert('configoption', " (confop_name,confop_value,conf_id) VALUES ('" . $dir . "', '" . $dir . "', $jquery_id)");
         }
 
         return true;
@@ -142,16 +142,17 @@ class upgrade_250 extends xoopsUpgrade
     /**
      * @return bool
      */
-    function apply_templates() {
+    function apply_templates()
+    {
 
         include_once '../modules/system/xoops_version.php';
 
-        $dbm = new db_manager();
+        $dbm  = new db_manager();
         $time = time();
         foreach ($modversion['templates'] as $tplfile) {
             // Admin templates
-            if ( isset($tplfile['type']) && $tplfile['type'] == 'admin' && $fp = fopen('../modules/system/templates/admin/' . $tplfile['file'], 'r')) {
-                $newtplid = $dbm->insert('tplfile', " VALUES (0, 1, 'system', 'default', '" . addslashes($tplfile['file']) . "', '" . addslashes($tplfile['description']) . "', " . $time . ", " . $time . ", 'admin')");
+            if (isset($tplfile['type']) && $tplfile['type'] == 'admin' && $fp = fopen('../modules/system/templates/admin/' . $tplfile['file'], 'r')) {
+                $newtplid  = $dbm->insert('tplfile', " VALUES (0, 1, 'system', 'default', '" . addslashes($tplfile['file']) . "', '" . addslashes($tplfile['description']) . "', " . $time . ", " . $time . ", 'admin')");
                 $tplsource = fread($fp, filesize('../modules/system/templates/admin/' . $tplfile['file']));
                 fclose($fp);
                 $dbm->insert('tplsource', " (tpl_id, tpl_source) VALUES (" . $newtplid . ", '" . addslashes($tplsource) . "')");

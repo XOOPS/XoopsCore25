@@ -10,14 +10,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         class
- * @subpackage      textsanitizer
- * @since           2.3.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             class
+ * @subpackage          textsanitizer
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: flash.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Class MytsFlash
@@ -29,14 +29,10 @@ class MytsFlash extends MyTextSanitizerExtension
      *
      * @return array
      */
-    function encode($textarea_id)
+    public function encode($textarea_id)
     {
-        $config = parent::loadConfig(__DIR__);
-        $code = "<img src='{$this->image_path}/swf.gif' alt='" . _XOOPS_FORM_ALTFLASH . "' title='" . _XOOPS_FORM_ALTFLASH . "' '" . "' onclick='xoopsCodeFlash(\"{$textarea_id}\",\""
-            . htmlspecialchars(_XOOPS_FORM_ENTERFLASHURL, ENT_QUOTES) . "\",\""
-            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\""
-            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES) . "\", \"" . $config['detect_dimension']
-            . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
+        $config     = parent::loadConfig(__DIR__);
+        $code       = "<img src='{$this->image_path}/swf.gif' alt='" . _XOOPS_FORM_ALTFLASH . "' title='" . _XOOPS_FORM_ALTFLASH . "' '" . "' onclick='xoopsCodeFlash(\"{$textarea_id}\",\"" . htmlspecialchars(_XOOPS_FORM_ENTERFLASHURL, ENT_QUOTES) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES) . "\", \"" . $config['detect_dimension'] . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
         $javascript = <<<EOF
             function xoopsCodeFlash(id, enterFlashPhrase, enterFlashHeightPhrase, enterFlashWidthPhrase, enableDimensionDetect)
             {
@@ -58,7 +54,7 @@ class MytsFlash extends MyTextSanitizerExtension
 EOF;
 
         return array(
-            $code ,
+            $code,
             $javascript);
     }
 
@@ -67,9 +63,9 @@ EOF;
      *
      * @return string
      */
-    static function myCallback($match)
+    public static function myCallback($match)
     {
-    return self::decode( $match[5], $match[3], $match[4] );
+        return self::decode($match[5], $match[3], $match[4]);
     }
 
     /**
@@ -77,15 +73,16 @@ EOF;
      *
      * @return bool
      */
-    function load(&$ts)
+    public function load(&$ts)
     {
-//        $ts->patterns[] = "/\[(swf|flash)=(['\"]?)([^\"']*),([^\"']*)\\2]([^\"]*)\[\/\\1\]/esU";
-//        $ts->replacements[] = __CLASS__ . "::decode( '\\5', '\\3', '\\4' )";
+        //        $ts->patterns[] = "/\[(swf|flash)=(['\"]?)([^\"']*),([^\"']*)\\2]([^\"]*)\[\/\\1\]/esU";
+        //        $ts->replacements[] = __CLASS__ . "::decode( '\\5', '\\3', '\\4' )";
 
-//mb------------------------------
+        //mb------------------------------
         $ts->callbackPatterns[] = "/\[(swf|flash)=(['\"]?)([^\"']*),([^\"']*)\\2]([^\"]*)\[\/\\1\]/sU";
-        $ts->callbacks[] = __CLASS__ . "::myCallback";
-//mb------------------------------
+        $ts->callbacks[]        = __CLASS__ . "::myCallback";
+
+        //mb------------------------------
         return true;
     }
 
@@ -96,7 +93,7 @@ EOF;
      *
      * @return string
      */
-    static function decode($url, $width, $height)
+    public static function decode($url, $width, $height)
     {
         $config = parent::loadConfig(__DIR__);
 
@@ -106,11 +103,11 @@ EOF;
             }
             if (!empty($width)) {
                 $height = $dimension[1] * $width / $dimension[0];
-            } elseif (! empty($height)) {
+            } elseif (!empty($height)) {
                 $width = $dimension[0] * $height / $dimension[1];
             } else {
-                list ($width, $height) = array(
-                    $dimension[0] ,
+                list($width, $height) = array(
+                    $dimension[0],
                     $dimension[1]);
             }
         }

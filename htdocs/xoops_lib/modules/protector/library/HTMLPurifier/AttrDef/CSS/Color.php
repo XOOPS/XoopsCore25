@@ -5,11 +5,10 @@
  */
 class HTMLPurifier_AttrDef_CSS_Color extends HTMLPurifier_AttrDef
 {
-
     /**
-     * @param string $color
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
+     * @param  string               $color
+     * @param  HTMLPurifier_Config  $config
+     * @param  HTMLPurifier_Context $context
      * @return bool|string
      */
     public function validate($color, $config, $context)
@@ -40,7 +39,7 @@ class HTMLPurifier_AttrDef_CSS_Color extends HTMLPurifier_AttrDef
             if (count($parts) !== 3) {
                 return false;
             }
-            $type = false; // to ensure that they're all the same type
+            $type      = false; // to ensure that they're all the same type
             $new_parts = array();
             foreach ($parts as $part) {
                 $part = trim($part);
@@ -81,13 +80,13 @@ class HTMLPurifier_AttrDef_CSS_Color extends HTMLPurifier_AttrDef
                 }
             }
             $new_triad = implode(',', $new_parts);
-            $color = "rgb($new_triad)";
+            $color     = "rgb($new_triad)";
         } else {
             // hexadecimal handling
             if ($color[0] === '#') {
                 $hex = substr($color, 1);
             } else {
-                $hex = $color;
+                $hex   = $color;
                 $color = '#' . $color;
             }
             $length = strlen($hex);
@@ -98,8 +97,10 @@ class HTMLPurifier_AttrDef_CSS_Color extends HTMLPurifier_AttrDef
                 return false;
             }
         }
+
         return $color;
     }
 }
 
 // vim: et sw=4 sts=4
+

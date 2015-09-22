@@ -24,9 +24,9 @@ class HTMLPurifier_ChildDef_Empty extends HTMLPurifier_ChildDef
     }
 
     /**
-     * @param HTMLPurifier_Node[] $children
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
+     * @param  HTMLPurifier_Node[]  $children
+     * @param  HTMLPurifier_Config  $config
+     * @param  HTMLPurifier_Context $context
      * @return array
      */
     public function validateChildren($children, $config, $context)
@@ -36,3 +36,4 @@ class HTMLPurifier_ChildDef_Empty extends HTMLPurifier_ChildDef
 }
 
 // vim: et sw=4 sts=4
+

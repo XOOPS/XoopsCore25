@@ -10,51 +10,54 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @author          Skalpa Keo <skalpa@xoops.org>
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @since           2.3.0
- * @package         kernel
- * @subpackage      xos_opal_Theme
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @author              Skalpa Keo <skalpa@xoops.org>
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @since               2.3.0
+ * @package             kernel
+ * @subpackage          xos_opal_Theme
+ * @version             $Id: theme.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * xos_opal_ThemeFactory
  *
- * @author Skalpa Keo
- * @package xos_opal
+ * @author     Skalpa Keo
+ * @package    xos_opal
  * @subpackage xos_opal_Theme
- * @since 2.3.0
+ * @since      2.3.0
  */
 class xos_opal_ThemeFactory
 {
-    var $xoBundleIdentifier = 'xos_opal_ThemeFactory';
+    public $xoBundleIdentifier = 'xos_opal_ThemeFactory';
     /**
      * Currently enabled themes (if empty, all the themes in themes/ are allowed)
      *
      * @var array
      */
-    var $allowedThemes = array();
+    public $allowedThemes = array();
     /**
      * Default theme to instanciate if none specified
      *
      * @var string
      */
-    var $defaultTheme = 'default';
+    public $defaultTheme = 'default';
     /**
      * If users are allowed to choose a custom theme
      *
      * @var bool
      */
-    var $allowUserSelection = true;
+    public $allowUserSelection = true;
 
     /**
      * Instanciate the specified theme
+     * @param array $options
+     * @param array $initArgs
+     * @return null|xos_opal_Theme
      */
-    function &createInstance($options = array(), $initArgs = array())
+    public function &createInstance($options = array(), $initArgs = array())
     {
         // Grab the theme folder from request vars if present
         if (empty($options['folderName'])) {
@@ -63,16 +66,16 @@ class xos_opal_ThemeFactory
                 if (isset($_SESSION) && $this->allowUserSelection) {
                     $_SESSION[$this->xoBundleIdentifier]['defaultTheme'] = $req;
                 }
-            } else if (isset($_SESSION[$this->xoBundleIdentifier]['defaultTheme'])) {
+            } elseif (isset($_SESSION[$this->xoBundleIdentifier]['defaultTheme'])) {
                 $options['folderName'] = $_SESSION[$this->xoBundleIdentifier]['defaultTheme'];
-            } else if (empty($options['folderName']) || ! $this->isThemeAllowed($options['folderName'])) {
+            } elseif (empty($options['folderName']) || !$this->isThemeAllowed($options['folderName'])) {
                 $options['folderName'] = $this->defaultTheme;
             }
             $GLOBALS['xoopsConfig']['theme_set'] = $options['folderName'];
         }
         $options['path'] = XOOPS_THEME_PATH . '/' . $options['folderName'];
-        $inst = null;
-        $inst = new xos_opal_Theme();
+        $inst            = null;
+        $inst            = new xos_opal_Theme();
         foreach ($options as $k => $v) {
             $inst->$k = $v;
         }
@@ -87,7 +90,7 @@ class xos_opal_ThemeFactory
      * @param  string $name
      * @return bool
      */
-    function isThemeAllowed($name)
+    public function isThemeAllowed($name)
     {
         return (empty($this->allowedThemes) || in_array($name, $this->allowedThemes));
     }
@@ -96,11 +99,11 @@ class xos_opal_ThemeFactory
 /**
  * xos_opal_AdminThemeFactory
  *
- * @author Andricq Nicolas (AKA MusS)
- * @author trabis
- * @package xos_opal
+ * @author     Andricq Nicolas (AKA MusS)
+ * @author     trabis
+ * @package    xos_opal
  * @subpackage xos_opal_Theme
- * @since 2.4.0
+ * @since      2.4.0
  */
 class xos_opal_AdminThemeFactory extends xos_opal_ThemeFactory
 {
@@ -110,23 +113,22 @@ class xos_opal_AdminThemeFactory extends xos_opal_ThemeFactory
      *
      * @return null|xos_opal_Theme
      */
-    function &createInstance($options = array(), $initArgs = array())
+    public function &createInstance($options = array(), $initArgs = array())
     {
-        $options["plugins"] = array();
+        $options["plugins"]      = array();
         $options['renderBanner'] = false;
-        $inst =& parent::createInstance($options, $initArgs);
-        $inst->path = XOOPS_ADMINTHEME_PATH . '/' . $inst->folderName;
-        $inst->url = XOOPS_ADMINTHEME_URL . '/' . $inst->folderName;
+        $inst                    =& parent::createInstance($options, $initArgs);
+        $inst->path              = XOOPS_ADMINTHEME_PATH . '/' . $inst->folderName;
+        $inst->url               = XOOPS_ADMINTHEME_URL . '/' . $inst->folderName;
         $inst->template->assign(array(
-            'theme_path'  => $inst->path,
-            'theme_tpl'   => $inst->path.'/xotpl',
-            'theme_url'   => $inst->url,
-            'theme_img'   => $inst->url.'/img',
-            'theme_icons' => $inst->url.'/icons',
-            'theme_css'   => $inst->url.'/css',
-            'theme_js'    => $inst->url.'/js',
-            'theme_lang'  => $inst->url.'/language',
-            ));
+                                    'theme_path'  => $inst->path,
+                                    'theme_tpl'   => $inst->path . '/xotpl',
+                                    'theme_url'   => $inst->url,
+                                    'theme_img'   => $inst->url . '/img',
+                                    'theme_icons' => $inst->url . '/icons',
+                                    'theme_css'   => $inst->url . '/css',
+                                    'theme_js'    => $inst->url . '/js',
+                                    'theme_lang'  => $inst->url . '/language'));
 
         return $inst;
     }
@@ -142,84 +144,84 @@ class xos_opal_Theme
      *
      * @var bool
      */
-    var $renderBanner = true;
+    public $renderBanner = true;
     /**
      * The name of this theme
      *
      * @var string
      */
-    var $folderName = '';
+    public $folderName = '';
     /**
      * Physical path of this theme folder
      *
      * @var string
      */
-    var $path = '';
-    var $url = '';
+    public $path = '';
+    public $url  = '';
 
     /**
      * Whether or not the theme engine should include the output generated by php
      *
      * @var string
      */
-    var $bufferOutput = true;
+    public $bufferOutput = true;
     /**
      * Canvas-level template to use
      *
      * @var string
      */
-    var $canvasTemplate = 'theme.html';
+    public $canvasTemplate = 'theme.html';
 
-     /**
+    /**
      * Theme folder path
      *
      * @var string
      */
-    var $themesPath = 'themes';
+    public $themesPath = 'themes';
 
     /**
      * Content-level template to use
      *
      * @var string
      */
-    var $contentTemplate = '';
+    public $contentTemplate = '';
 
-    var $contentCacheLifetime = 0;
-    var $contentCacheId = null;
+    public $contentCacheLifetime = 0;
+    public $contentCacheId       ;
 
     /**
      * Text content to display right after the contentTemplate output
      *
      * @var string
      */
-    var $content = '';
+    public $content = '';
     /**
      * Page construction plug-ins to use
      *
      * @var array
      * @access public
      */
-    var $plugins = array(
+    public $plugins     = array(
         'xos_logos_PageBuilder');
-    var $renderCount = 0;
+    public $renderCount = 0;
     /**
      * Pointer to the theme template engine
      *
      * @var XoopsTpl
      */
-    var $template = false;
+    public $template = false;
 
     /**
      * Array containing the document meta-information
      *
      * @var array
      */
-    var $metas = array(
+    public $metas = array(
         //'http' => array(
         //    'Content-Script-Type' => 'text/javascript' ,
         //    'Content-Style-Type' => 'text/css') ,
-        'meta' => array() ,
-        'link' => array() ,
+        'meta'   => array(),
+        'link'   => array(),
         'script' => array());
 
     /**
@@ -227,20 +229,20 @@ class xos_opal_Theme
      *
      * @var array
      */
-    var $htmlHeadStrings = array();
+    public $htmlHeadStrings = array();
     /**
      * Custom variables that will always be assigned to the template
      *
      * @var array
      */
-    var $templateVars = array();
+    public $templateVars = array();
 
     /**
      * User extra information for cache id, like language, user groups
      *
      * @var boolean
      */
-    var $use_extra_cache_id = true;
+    public $use_extra_cache_id = true;
 
     /**
      * *#@-
@@ -262,50 +264,50 @@ class xos_opal_Theme
      * @param  array $options
      * @return bool
      */
-    function xoInit($options = array())
+    public function xoInit($options = array())
     {
-        $this->path = XOOPS_THEME_PATH . '/' . $this->folderName;
-        $this->url = XOOPS_THEME_URL . '/' . $this->folderName;
-        $this->template = null;
-        $this->template = new XoopsTpl();
+        $this->path                   = XOOPS_THEME_PATH . '/' . $this->folderName;
+        $this->url                    = XOOPS_THEME_URL . '/' . $this->folderName;
+        $this->template               = null;
+        $this->template               = new XoopsTpl();
         $this->template->currentTheme =& $this;
         $this->template->assign_by_ref('xoTheme', $this);
         $this->template->assign(array(
-            'xoops_theme' => $GLOBALS['xoopsConfig']['theme_set'] ,
-            'xoops_imageurl' => XOOPS_THEME_URL . '/' . $GLOBALS['xoopsConfig']['theme_set'] . '/',
-            'xoops_themecss' => xoops_getcss($GLOBALS['xoopsConfig']['theme_set']),
-            'xoops_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES),
-            'xoops_sitename' => htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES),
-            'xoops_slogan' => htmlspecialchars($GLOBALS['xoopsConfig']['slogan'], ENT_QUOTES),
-            'xoops_dirname' => isset($GLOBALS['xoopsModule'])&& is_object($GLOBALS['xoopsModule']) ? $GLOBALS['xoopsModule']->getVar('dirname') : 'system',
-            'xoops_banner' => ($GLOBALS['xoopsConfig']['banners'] && $this->renderBanner) ? xoops_getbanner() : '&nbsp;',
-            'xoops_pagetitle' => isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule']) ? $GLOBALS['xoopsModule']->getVar('name') : htmlspecialchars($GLOBALS['xoopsConfig']['slogan'], ENT_QUOTES)));
+                                    'xoops_theme'      => $GLOBALS['xoopsConfig']['theme_set'],
+                                    'xoops_imageurl'   => XOOPS_THEME_URL . '/' . $GLOBALS['xoopsConfig']['theme_set'] . '/',
+                                    'xoops_themecss'   => xoops_getcss($GLOBALS['xoopsConfig']['theme_set']),
+                                    'xoops_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES),
+                                    'xoops_sitename'   => htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES),
+                                    'xoops_slogan'     => htmlspecialchars($GLOBALS['xoopsConfig']['slogan'], ENT_QUOTES),
+                                    'xoops_dirname'    => isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule']) ? $GLOBALS['xoopsModule']->getVar('dirname') : 'system',
+                                    'xoops_banner'     => ($GLOBALS['xoopsConfig']['banners'] && $this->renderBanner) ? xoops_getbanner() : '&nbsp;',
+                                    'xoops_pagetitle'  => isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule']) ? $GLOBALS['xoopsModule']->getVar('name') : htmlspecialchars($GLOBALS['xoopsConfig']['slogan'], ENT_QUOTES)));
 
         if (isset($GLOBALS['xoopsUser']) && is_object($GLOBALS['xoopsUser'])) {
             $this->template->assign(array(
-                'xoops_isuser' => true,
-                'xoops_avatar' => XOOPS_UPLOAD_URL . "/" . $GLOBALS['xoopsUser']->getVar('user_avatar'),
-                'xoops_userid' => $GLOBALS['xoopsUser']->getVar('uid'),
-                'xoops_uname' => $GLOBALS['xoopsUser']->getVar('uname'),
-                'xoops_name' => $GLOBALS['xoopsUser']->getVar('name'),
-                'xoops_isadmin' => $GLOBALS['xoopsUserIsAdmin'],
-                'xoops_usergroups' => $GLOBALS['xoopsUser']->getGroups()));
+                                        'xoops_isuser'     => true,
+                                        'xoops_avatar'     => XOOPS_UPLOAD_URL . "/" . $GLOBALS['xoopsUser']->getVar('user_avatar'),
+                                        'xoops_userid'     => $GLOBALS['xoopsUser']->getVar('uid'),
+                                        'xoops_uname'      => $GLOBALS['xoopsUser']->getVar('uname'),
+                                        'xoops_name'       => $GLOBALS['xoopsUser']->getVar('name'),
+                                        'xoops_isadmin'    => $GLOBALS['xoopsUserIsAdmin'],
+                                        'xoops_usergroups' => $GLOBALS['xoopsUser']->getGroups()));
         } else {
             $this->template->assign(array(
-                'xoops_isuser' => false,
-                'xoops_isadmin' => false,
-                'xoops_usergroups' => array(XOOPS_GROUP_ANONYMOUS)));
+                                        'xoops_isuser'     => false,
+                                        'xoops_isadmin'    => false,
+                                        'xoops_usergroups' => array(XOOPS_GROUP_ANONYMOUS)));
         }
 
         // Meta tags
-        $config_handler =& xoops_gethandler('config');
-        $criteria = new CriteriaCompo(new Criteria('conf_modid', 0));
+        $config_handler =& xoops_getHandler('config');
+        $criteria       = new CriteriaCompo(new Criteria('conf_modid', 0));
         $criteria->add(new Criteria('conf_catid', XOOPS_CONF_METAFOOTER));
         $config = $config_handler->getConfigs($criteria, true);
         foreach (array_keys($config) as $i) {
-            $name = $config[$i]->getVar('conf_name', 'n');
+            $name  = $config[$i]->getVar('conf_name', 'n');
             $value = $config[$i]->getVar('conf_value', 'n');
-            if (substr($name, 0, 5) == 'meta_') {
+            if (substr($name, 0, 5) === 'meta_') {
                 $this->addMeta('meta', substr($name, 5), $value);
             } else {
                 // prefix each tag with 'xoops_'
@@ -319,13 +321,13 @@ class xos_opal_Theme
         if ($this->bufferOutput) {
             ob_start();
         }
-        $GLOBALS['xoTheme'] =& $this;
+        $GLOBALS['xoTheme']  =& $this;
         $GLOBALS['xoopsTpl'] =& $this->template;
         // Instanciate and initialize all the theme plugins
         foreach ($this->plugins as $k => $bundleId) {
             if (!is_object($bundleId)) {
-                $this->plugins[$bundleId] = null;
-                $this->plugins[$bundleId] = new $bundleId();
+                $this->plugins[$bundleId]        = null;
+                $this->plugins[$bundleId]        = new $bundleId();
                 $this->plugins[$bundleId]->theme =& $this;
                 $this->plugins[$bundleId]->xoInit();
                 unset($this->plugins[$k]);
@@ -344,7 +346,7 @@ class xos_opal_Theme
      * @param  string $extraString extra string
      * @return string complete cache id
      */
-    function generateCacheId($cache_id, $extraString = '')
+    public function generateCacheId($cache_id, $extraString = '')
     {
         static $extra_string;
         if (!$this->use_extra_cache_id) {
@@ -378,13 +380,13 @@ class xos_opal_Theme
      *
      * @return bool
      */
-    function checkCache()
+    public function checkCache()
     {
-        if ($_SERVER['REQUEST_METHOD'] != 'POST' && $this->contentCacheLifetime) {
-            $template = $this->contentTemplate ? $this->contentTemplate : 'db:system_dummy.html';
-            $this->template->caching = 2;
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' && $this->contentCacheLifetime) {
+            $template                       = $this->contentTemplate ? : 'db:system_dummy.html';
+            $this->template->caching        = 2;
             $this->template->cache_lifetime = $this->contentCacheLifetime;
-            $uri = str_replace(XOOPS_URL, '', $_SERVER['REQUEST_URI']);
+            $uri                            = str_replace(XOOPS_URL, '', $_SERVER['REQUEST_URI']);
             // Clean uri by removing session id
             if (defined('SID') && SID && strpos($uri, SID)) {
                 $uri = preg_replace("/([\?&])(" . SID . "$|" . SID . "&)/", "\\1", $uri);
@@ -418,7 +420,7 @@ class xos_opal_Theme
      *
      * @return bool
      */
-    function render($canvasTpl = null, $pageTpl = null, $contentTpl = null, $vars = array())
+    public function render($canvasTpl = null, $pageTpl = null, $contentTpl = null, $vars = array())
     {
         if ($this->renderCount) {
             return false;
@@ -436,7 +438,7 @@ class xos_opal_Theme
             foreach ($content['metas'] as $type => $value) {
                 $this->metas[$type] = array_merge($this->metas[$type], $content['metas'][$type]);
             }
-            $GLOBALS['xoopsOption']['xoops_pagetitle'] = $content['xoops_pagetitle'];
+            $GLOBALS['xoopsOption']['xoops_pagetitle']     = $content['xoops_pagetitle'];
             $GLOBALS['xoopsOption']['xoops_module_header'] = $content['header'];
         }
 
@@ -448,9 +450,9 @@ class xos_opal_Theme
         //save meta information of cached pages
         if ($this->contentCacheLifetime && $this->contentCacheId && !$contentTpl) {
             $content['htmlHeadStrings'] = $this->htmlHeadStrings;
-            $content['metas'] = $this->metas;
+            $content['metas']           = $this->metas;
             $content['xoops_pagetitle'] = $this->template->get_template_vars('xoops_pagetitle');
-            $content['header'] = $header;
+            $content['header']          = $header;
             $cache->write($this->contentCacheId, $content);
         }
 
@@ -509,8 +511,10 @@ class xos_opal_Theme
      *     <li>style.css - localization stylesheet</li>
      *     <li>script.js - localization script</li>
      * </ul>
+     * @param string $type
+     * @return bool
      */
-    function loadLocalization($type = "main")
+    public function loadLocalization($type = "main")
     {
         $language = $GLOBALS['xoopsConfig']['language'];
         // Load global localization stylesheet if available
@@ -537,9 +541,9 @@ class xos_opal_Theme
      *
      * @return bool|mixed
      */
-    function addLanguage($type = "main", $language = null)
+    public function addLanguage($type = "main", $language = null)
     {
-        $language = is_null($language) ? $GLOBALS["xoopsConfig"]["language"] : $language;
+        $language = (null === ($language)) ? $GLOBALS["xoopsConfig"]["language"] : $language;
         if (!file_exists($fileinc = $this->path . "/language/{$language}/{$type}.php")) {
             if (!file_exists($fileinc = $this->path . "/language/english/{$type}.php")) {
                 return false;
@@ -550,7 +554,7 @@ class xos_opal_Theme
         return $ret;
     }
 
-     /**
+    /**
      * *#@+
      *
      * @tasktype 20 Manipulating page meta-information
@@ -582,13 +586,13 @@ class xos_opal_Theme
      * @param  string $name       Element Name in array scripts are stored in.
      * @return void
      */
-    function addScript($src = '', $attributes = array(), $content = '', $name = '')
+    public function addScript($src = '', $attributes = array(), $content = '', $name = '')
     {
         if (empty($attributes)) {
             $attributes = array();
         }
         if (!empty($src)) {
-            $src = $GLOBALS['xoops']->url($this->resourcePath($src));
+            $src               = $GLOBALS['xoops']->url($this->resourcePath($src));
             $attributes['src'] = $src;
         }
         if (!empty($content)) {
@@ -612,13 +616,13 @@ class xos_opal_Theme
      * @param  string $name       Element Name in array stylesheets are stored in.
      * @return void
      */
-    function addStylesheet($src = '', $attributes = array(), $content = '', $name = '')
+    public function addStylesheet($src = '', $attributes = array(), $content = '', $name = '')
     {
         if (empty($attributes)) {
             $attributes = array();
         }
         if (!empty($src)) {
-            $src = $GLOBALS['xoops']->url($this->resourcePath($src));
+            $src                = $GLOBALS['xoops']->url($this->resourcePath($src));
             $attributes['href'] = $src;
         }
         if (!isset($attributes['type'])) {
@@ -641,7 +645,7 @@ class xos_opal_Theme
      * @param array  $attributes Additional attributes to add to the <link> element
      * @param string $name       Element Name in array links are stored in.
      */
-    function addLink($rel, $href = '', $attributes = array(), $name = '')
+    public function addLink($rel, $href = '', $attributes = array(), $name = '')
     {
         if (empty($attributes)) {
             $attributes = array();
@@ -658,8 +662,11 @@ class xos_opal_Theme
 
     /**
      * Set a meta http-equiv value
+     * @param      $name
+     * @param null $value
+     * @return string
      */
-    function addHttpMeta($name, $value = null)
+    public function addHttpMeta($name, $value = null)
     {
         if (isset($value)) {
             return $this->addMeta('http', $name, $value);
@@ -669,8 +676,12 @@ class xos_opal_Theme
 
     /**
      * Change output page meta-information
+     * @param string $type
+     * @param string $name
+     * @param string $value
+     * @return string
      */
-    function addMeta($type = 'meta', $name = '', $value = '')
+    public function addMeta($type = 'meta', $name = '', $value = '')
     {
         if (!isset($this->metas[$type])) {
             $this->metas[$type] = array();
@@ -694,7 +705,7 @@ class xos_opal_Theme
      *
      * @return void
      */
-    function headContent($params, $content, &$smarty, &$repeat)
+    public function headContent($params, $content, &$smarty, &$repeat)
     {
         if (!$repeat) {
             $this->htmlHeadStrings[] = $content;
@@ -704,11 +715,11 @@ class xos_opal_Theme
     /**
      * xos_opal_Theme::renderMetas()
      *
-     * @param  mixed       $type
-     * @param  mixed       $return
+     * @param  mixed $type
+     * @param  mixed $return
      * @return bool|string
      */
-    function renderMetas($type = null, $return = false)
+    public function renderMetas($type = null, $return = false)
     {
         $str = '';
         if (!isset($type)) {
@@ -769,27 +780,27 @@ class xos_opal_Theme
      * @param  string $tagName
      * @return string
      */
-    function genElementId($tagName = 'xos')
+    public function genElementId($tagName = 'xos')
     {
         static $cache = array();
         if (!isset($cache[$tagName])) {
             $cache[$tagName] = 1;
         }
 
-        return $tagName . '-' . $cache[$tagName] ++;
+        return $tagName . '-' . $cache[$tagName]++;
     }
 
     /**
      * Transform an attributes collection to an XML string
      *
-     * @param  array  $coll
+     * @param  array $coll
      * @return string
      */
-    function renderAttributes($coll)
+    public function renderAttributes($coll)
     {
         $str = '';
         foreach ($coll as $name => $val) {
-            if ($name != '_') {
+            if ($name !== '_') {
                 $str .= ' ' . $name . '="' . htmlspecialchars($val, ENT_QUOTES) . '"';
             }
         }
@@ -803,9 +814,9 @@ class xos_opal_Theme
      * @param  string $path
      * @return string
      */
-    function resourcePath($path)
+    public function resourcePath($path)
     {
-        if (substr($path, 0, 1) == '/') {
+        if (substr($path, 0, 1) === '/') {
             $path = substr($path, 1);
         }
 

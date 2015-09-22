@@ -10,11 +10,11 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license      GNU GPL (http://www.gnu.org/licenses/gpl-2.0.html/)
- * @package    xoopsPoll
- * @since        2.5.0
- * @author     Mage, Mamba
- * @version    $Id $
+ * @license             GNU GPL (http://www.gnu.org/licenses/gpl-2.0.html/)
+ * @package             xoopsPoll
+ * @since               2.5.0
+ * @author              Mage, Mamba
+ * @version             $Id $
  **/
 
 include_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
@@ -26,6 +26,6 @@ $module_info =& $module_handler->get($xoopsModule->getVar("mid"));
 $aboutAdmin = new ModuleAdmin();
 
 echo $aboutAdmin->addNavigation('about.php');
-echo $aboutAdmin->renderabout('6KJ7RW5DR3VTJ', false);
+echo $aboutAdmin->renderAbout('6KJ7RW5DR3VTJ', false);
 
 include_once __DIR__ . '/admin_footer.php';

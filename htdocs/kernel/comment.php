@@ -10,31 +10,30 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @since           2.0.0
- * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @since               2.0.0
+ * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @version             $Id: comment.php 13090 2015-06-16 20:44:29Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * A Comment
  *
- * @package     kernel
+ * @package             kernel
  *
- * @author        Kazumi Ono    <onokazu@xoops.org>
+ * @author              Kazumi Ono    <onokazu@xoops.org>
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  */
 class XoopsComment extends XoopsObject
 {
-
     /**
      * Constructor
      **/
-    function XoopsComment()
+    public function __construct()
     {
-        $this->XoopsObject();
+        parent::__construct();
         $this->initVar('com_id', XOBJ_DTYPE_INT, null, false);
         $this->initVar('com_pid', XOBJ_DTYPE_INT, 0, false);
         $this->initVar('com_modid', XOBJ_DTYPE_INT, null, false);
@@ -62,82 +61,107 @@ class XoopsComment extends XoopsObject
         $this->initVar('dobr', XOBJ_DTYPE_INT, 0, false);
     }
 
+    public function XoopsComment()
+    {
+        $this->__construct();
+    }
+
     /**
      * Returns Class Base Variable com_id
+     * @param string $format
+     * @return mixed
      */
-    function id($format = 'N')
+    public function id($format = 'N')
     {
         return $this->getVar('com_id', $format);
     }
 
     /**
      * Returns Class Base Variable com_id
+     * @param string $format
+     * @return mixed
      */
-    function com_id($format = '')
+    public function com_id($format = '')
     {
         return $this->getVar('com_id', $format);
     }
 
     /**
      * Returns Class Base Variable com_pid
+     * @param string $format
+     * @return mixed
      */
-    function com_pid($format = '')
+    public function com_pid($format = '')
     {
         return $this->getVar('com_pid', $format);
     }
 
     /**
      * Returns Class Base Variable com_modid
+     * @param string $format
+     * @return mixed
      */
-    function com_modid($format = '')
+    public function com_modid($format = '')
     {
         return $this->getVar('com_modid', $format);
     }
 
     /**
      * Returns Class Base Variable com_icon
+     * @param string $format
+     * @return mixed
      */
-    function com_icon($format = '')
+    public function com_icon($format = '')
     {
         return $this->getVar('com_icon', $format);
     }
 
     /**
      * Returns Class Base Variable bid
+     * @param string $format
+     * @return mixed
      */
-    function com_title($format = '')
+    public function com_title($format = '')
     {
         return $this->getVar('com_title', $format);
     }
 
     /**
      * Returns Class Base Variable com_text
+     * @param string $format
+     * @return mixed
      */
-    function com_text($format = '')
+    public function com_text($format = '')
     {
         return $this->getVar('com_text', $format);
     }
 
     /**
      * Returns Class Base Variable com_created
+     * @param string $format
+     * @return mixed
      */
-    function com_created($format = '')
+    public function com_created($format = '')
     {
         return $this->getVar('com_created', $format);
     }
 
     /**
      * Returns Class Base Variable com_modified
+     * @param string $format
+     * @return mixed
      */
-    function com_modified($format = '')
+    public function com_modified($format = '')
     {
         return $this->getVar('com_modified', $format);
     }
 
     /**
      * Returns Class Base Variable com_uid
+     * @param string $format
+     * @return mixed
      */
-    function com_uid($format = '')
+    public function com_uid($format = '')
     {
         return $this->getVar('com_uid', $format);
     }
@@ -145,22 +169,30 @@ class XoopsComment extends XoopsObject
     // Start Add by voltan
     /**
      * Returns Class Base Variable com_user
+     * @param string $format
+     * @return mixed
      */
-    function com_user($format = '')
+    public function com_user($format = '')
     {
         return $this->getVar('com_user', $format);
     }
+
     /**
      * Returns Class Base Variable com_email
+     * @param string $format
+     * @return mixed
      */
-    function com_email($format = '')
+    public function com_email($format = '')
     {
         return $this->getVar('com_email', $format);
     }
+
     /**
      * Returns Class Base Variable com_url
+     * @param string $format
+     * @return mixed
      */
-    function com_url($format = '')
+    public function com_url($format = '')
     {
         return $this->getVar('com_url', $format);
     }
@@ -168,88 +200,110 @@ class XoopsComment extends XoopsObject
 
     /**
      * Returns Class Base Variable com_ip
+     * @param string $format
+     * @return mixed
      */
-    function com_ip($format = '')
+    public function com_ip($format = '')
     {
         return $this->getVar('com_ip', $format);
     }
 
     /**
      * Returns Class Base Variable com_sig
+     * @param string $format
+     * @return mixed
      */
-    function com_sig($format = '')
+    public function com_sig($format = '')
     {
         return $this->getVar('com_sig', $format);
     }
 
     /**
      * Returns Class Base Variable com_itemid
+     * @param string $format
+     * @return mixed
      */
-    function com_itemid($format = '')
+    public function com_itemid($format = '')
     {
         return $this->getVar('com_itemid', $format);
     }
 
     /**
      * Returns Class Base Variable com_rootid
+     * @param string $format
+     * @return mixed
      */
-    function com_rootid($format = '')
+    public function com_rootid($format = '')
     {
         return $this->getVar('com_rootid', $format);
     }
 
     /**
      * Returns Class Base Variable com_status
+     * @param string $format
+     * @return mixed
      */
-    function com_status($format = '')
+    public function com_status($format = '')
     {
         return $this->getVar('com_status', $format);
     }
 
     /**
      * Returns Class Base Variable com_exparams
+     * @param string $format
+     * @return mixed
      */
-    function com_exparams($format = '')
+    public function com_exparams($format = '')
     {
         return $this->getVar('com_exparams', $format);
     }
 
     /**
      * Returns Class Base Variable bid
+     * @param string $format
+     * @return mixed
      */
-    function dohtml($format = '')
+    public function dohtml($format = '')
     {
         return $this->getVar('dohtml', $format);
     }
 
     /**
      * Returns Class Base Variable dosmiley
+     * @param string $format
+     * @return mixed
      */
-    function dosmiley($format = '')
+    public function dosmiley($format = '')
     {
         return $this->getVar('dosmiley', $format);
     }
 
     /**
      * Returns Class Base Variable doxcode
+     * @param string $format
+     * @return mixed
      */
-    function doxcode($format = '')
+    public function doxcode($format = '')
     {
         return $this->getVar('doxcode', $format);
     }
 
     /**
      * Returns Class Base Variable doimage
+     * @param string $format
+     * @return mixed
      */
-    function doimage($format = '')
+    public function doimage($format = '')
     {
         return $this->getVar('doimage', $format);
     }
 
     /**
      * Returns Class Base Variable dobr
+     * @param string $format
+     * @return mixed
      */
-    function dobr($format = '')
+    public function dobr($format = '')
     {
         return $this->getVar('dobr', $format);
     }
@@ -259,7 +313,7 @@ class XoopsComment extends XoopsObject
      *
      * @return bool
      */
-    function isRoot()
+    public function isRoot()
     {
         return ($this->getVar('com_id') == $this->getVar('com_rootid'));
     }
@@ -272,10 +326,10 @@ class XoopsComment extends XoopsObject
  * of XOOPS comment class objects.
  *
  *
- * @package     kernel
- * @subpackage  comment
+ * @package             kernel
+ * @subpackage          comment
  *
- * @author        Kazumi Ono    <onokazu@xoops.org>
+ * @author              Kazumi Ono    <onokazu@xoops.org>
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  */
 class XoopsCommentHandler extends XoopsObjectHandler
@@ -285,9 +339,9 @@ class XoopsCommentHandler extends XoopsObjectHandler
      *
      * @param bool $isNew Flag the object as "new"?
      *
-     * @return object
+     * @return XoopsComment
      */
-    function &create($isNew = true)
+    public function &create($isNew = true)
     {
         $comment = new XoopsComment();
         if ($isNew) {
@@ -302,12 +356,12 @@ class XoopsCommentHandler extends XoopsObjectHandler
      *
      * @param int $id ID
      *
-     * @return object {@link XoopsComment}, FALSE on fail
+     * @return XoopsComment {@link XoopsComment}, FALSE on fail
      **/
-    function &get($id)
+    public function &get($id)
     {
         $comment = false;
-        $id = (int)($id);
+        $id      = (int)($id);
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('xoopscomments') . ' WHERE com_id=' . $id;
             if (!$result = $this->db->query($sql)) {
@@ -326,17 +380,17 @@ class XoopsCommentHandler extends XoopsObjectHandler
     /**
      * Write a comment to database
      *
-     * @param object &$comment
+     * @param XoopsComment &$comment
      *
      * @return bool
      **/
-    function insert(&$comment)
+    public function insert(XoopsComment $comment)
     {
         /**
          * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
          * @TODO: change XoopsCommentHandler extends XoopsObjectHandler to: XoopsCommentHandler extends XoopsPersistableObjectHandler or $this->className won't work
          */
-//        if (!(class_exists($this->className) && $obj instanceof $this->className)) {
+        //        if (!(class_exists($this->className) && $obj instanceof $this->className)) {
         if (!is_a($comment, 'xoopscomment')) {
             return false;
         }
@@ -352,7 +406,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
         // Start edit by voltan
         if ($comment->isNew()) {
             $com_id = $this->db->genId('xoopscomments_com_id_seq');
-            $sql = sprintf("INSERT INTO %s (com_id, com_pid, com_modid, com_icon, com_title, com_text, com_created, com_modified, com_uid, com_user, com_email, com_url, com_ip, com_sig, com_itemid, com_rootid, com_status, com_exparams, dohtml, dosmiley, doxcode, doimage, dobr) VALUES (%u, %u, %u, %s, %s, %s, %u, %u, %u, %s, %s, %s, %s, %u, %u, %u, %u, %s, %u, %u, %u, %u, %u)", $this->db->prefix('xoopscomments'), $com_id, $com_pid, $com_modid, $this->db->quoteString($com_icon), $this->db->quoteString($com_title), $this->db->quoteString($com_text), $com_created, $com_modified, $com_uid, $this->db->quoteString($com_user), $this->db->quoteString($com_email), $this->db->quoteString($com_url), $this->db->quoteString($com_ip), $com_sig, $com_itemid, $com_rootid, $com_status, $this->db->quoteString($com_exparams), $dohtml, $dosmiley, $doxcode, $doimage, $dobr);
+            $sql    = sprintf("INSERT INTO %s (com_id, com_pid, com_modid, com_icon, com_title, com_text, com_created, com_modified, com_uid, com_user, com_email, com_url, com_ip, com_sig, com_itemid, com_rootid, com_status, com_exparams, dohtml, dosmiley, doxcode, doimage, dobr) VALUES (%u, %u, %u, %s, %s, %s, %u, %u, %u, %s, %s, %s, %s, %u, %u, %u, %u, %s, %u, %u, %u, %u, %u)", $this->db->prefix('xoopscomments'), $com_id, $com_pid, $com_modid, $this->db->quoteString($com_icon), $this->db->quoteString($com_title), $this->db->quoteString($com_text), $com_created, $com_modified, $com_uid, $this->db->quoteString($com_user), $this->db->quoteString($com_email), $this->db->quoteString($com_url), $this->db->quoteString($com_ip), $com_sig, $com_itemid, $com_rootid, $com_status, $this->db->quoteString($com_exparams), $dohtml, $dosmiley, $doxcode, $doimage, $dobr);
         } else {
             $sql = sprintf("UPDATE %s SET com_pid = %u, com_icon = %s, com_title = %s, com_text = %s, com_created = %u, com_modified = %u, com_uid = %u, com_user = %s, com_email = %s, com_url = %s, com_ip = %s, com_sig = %u, com_itemid = %u, com_rootid = %u, com_status = %u, com_exparams = %s, dohtml = %u, dosmiley = %u, doxcode = %u, doimage = %u, dobr = %u WHERE com_id = %u", $this->db->prefix('xoopscomments'), $com_pid, $this->db->quoteString($com_icon), $this->db->quoteString($com_title), $this->db->quoteString($com_text), $com_created, $com_modified, $com_uid, $this->db->quoteString($com_user), $this->db->quoteString($com_email), $this->db->quoteString($com_url), $this->db->quoteString($com_ip), $com_sig, $com_itemid, $com_rootid, $com_status, $this->db->quoteString($com_exparams), $dohtml, $dosmiley, $doxcode, $doimage, $dobr, $com_id);
         }
@@ -371,11 +425,11 @@ class XoopsCommentHandler extends XoopsObjectHandler
     /**
      * Delete a {@link XoopsComment} from the database
      *
-     * @param object &$comment
+     * @param XoopsComment $comment
      *
      * @return bool
      **/
-    function delete(&$comment)
+    public function delete(XoopsComment $comment)
     {
         /**
          * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
@@ -394,16 +448,16 @@ class XoopsCommentHandler extends XoopsObjectHandler
     /**
      * Get some {@link XoopsComment}s
      *
-     * @param object $criteria
+     * @param CriteriaElement $criteria
      * @param bool   $id_as_key Use IDs as keys into the array?
      *
      * @return array Array of {@link XoopsComment} objects
      **/
-    function getObjects($criteria = null, $id_as_key = false)
+    public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
-        $ret = array();
+        $ret   = array();
         $limit = $start = 0;
-        $sql = 'SELECT * FROM ' . $this->db->prefix('xoopscomments');
+        $sql   = 'SELECT * FROM ' . $this->db->prefix('xoopscomments');
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
             $sort = ($criteria->getSort() != '') ? $criteria->getSort() : 'com_id';
@@ -421,7 +475,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
             if (!$id_as_key) {
                 $ret[] =& $comment;
             } else {
-                $ret[$myrow['com_id']] = & $comment;
+                $ret[$myrow['com_id']] = &$comment;
             }
             unset($comment);
         }
@@ -432,20 +486,20 @@ class XoopsCommentHandler extends XoopsObjectHandler
     /**
      * Count Comments
      *
-     * @param object $criteria {@link CriteriaElement}
+     * @param CriteriaElement $criteria {@link CriteriaElement}
      *
      * @return int Count
      **/
-    function getCount($criteria = null)
+    public function getCount(CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('xoopscomments');
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-        if (!$result = & $this->db->query($sql)) {
+        if (!$result = &$this->db->query($sql)) {
             return 0;
         }
-        list ($count) = $this->db->fetchRow($result);
+        list($count) = $this->db->fetchRow($result);
 
         return $count;
     }
@@ -453,11 +507,11 @@ class XoopsCommentHandler extends XoopsObjectHandler
     /**
      * Delete multiple comments
      *
-     * @param object $criteria {@link CriteriaElement}
+     * @param CriteriaElement $criteria {@link CriteriaElement}
      *
      * @return bool
      **/
-    function deleteAll($criteria = null)
+    public function deleteAll(CriteriaElement $criteria = null)
     {
         $sql = 'DELETE FROM ' . $this->db->prefix('xoopscomments');
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
@@ -473,14 +527,14 @@ class XoopsCommentHandler extends XoopsObjectHandler
     /**
      * Get a list of comments
      *
-     * @param object $criteria {@link CriteriaElement}
+     * @param CriteriaElement $criteria {@link CriteriaElement}
      *
      * @return array Array of raw database records
      **/
-    function getList($criteria = null)
+    public function getList(CriteriaElement $criteria = null)
     {
         $comments = $this->getObjects($criteria, true);
-        $ret = array();
+        $ret      = array();
         foreach (array_keys($comments) as $i) {
             $ret[$i] = $comments[$i]->getVar('com_title');
         }
@@ -500,7 +554,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
      *
      * @return array Array of {@link XoopsComment} objects
      **/
-    function getByItemId($module_id, $item_id, $order = null, $status = null, $limit = null, $start = 0)
+    public function getByItemId($module_id, $item_id, $order = null, $status = null, $limit = null, $start = 0)
     {
         $criteria = new CriteriaCompo(new Criteria('com_modid', (int)($module_id)));
         $criteria->add(new Criteria('com_itemid', (int)($item_id)));
@@ -527,7 +581,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
      *
      * @return array Array of {@link XoopsComment} objects
      **/
-    function getCountByItemId($module_id, $item_id, $status = null)
+    public function getCountByItemId($module_id, $item_id, $status = null)
     {
         $criteria = new CriteriaCompo(new Criteria('com_modid', (int)($module_id)));
         $criteria->add(new Criteria('com_itemid', (int)($item_id)));
@@ -548,7 +602,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
      *
      * @return array Array of {@link XoopsComment} objects
      **/
-    function getTopComments($module_id, $item_id, $order, $status = null)
+    public function getTopComments($module_id, $item_id, $order, $status = null)
     {
         $criteria = new CriteriaCompo(new Criteria('com_modid', (int)($module_id)));
         $criteria->add(new Criteria('com_itemid', (int)($item_id)));
@@ -570,7 +624,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
      *
      * @return array Array of {@link XoopsComment} objects
      **/
-    function getThread($comment_rootid, $comment_id, $status = null)
+    public function getThread($comment_rootid, $comment_id, $status = null)
     {
         $criteria = new CriteriaCompo(new Criteria('com_rootid', (int)($comment_rootid)));
         $criteria->add(new Criteria('com_id', (int)($comment_id), '>='));
@@ -584,13 +638,13 @@ class XoopsCommentHandler extends XoopsObjectHandler
     /**
      * Update
      *
-     * @param object &$comment    {@link XoopsComment} object
+     * @param XoopsComment $comment    {@link XoopsComment} object
      * @param string $field_name  Name of the field
      * @param mixed  $field_value Value to write
      *
      * @return bool
      **/
-    function updateByField(&$comment, $field_name, $field_value)
+    public function updateByField(XoopsComment $comment, $field_name, $field_value)
     {
         $comment->unsetNew();
         $comment->setVar($field_name, $field_value);
@@ -601,10 +655,10 @@ class XoopsCommentHandler extends XoopsObjectHandler
     /**
      * Delete all comments for one whole module
      *
-     * @param  int  $module_id ID of the module
+     * @param  int $module_id ID of the module
      * @return bool
      **/
-    function deleteByModule($module_id)
+    public function deleteByModule($module_id)
     {
         return $this->deleteAll(new Criteria('com_modid', (int)($module_id)));
     }

@@ -10,15 +10,15 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @subpackage      form
- * @since           2.0.0
- * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @subpackage          form
+ * @since               2.0.0
+ * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @version             $Id: formtextarea.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 xoops_load('XoopsFormElement');
 
@@ -33,7 +33,7 @@ class XoopsFormTextArea extends XoopsFormElement
      * @var int
      * @access private
      */
-    var $_cols;
+    public $_cols;
 
     /**
      * number of rows
@@ -41,7 +41,7 @@ class XoopsFormTextArea extends XoopsFormElement
      * @var int
      * @access private
      */
-    var $_rows;
+    public $_rows;
 
     /**
      * initial content
@@ -49,18 +49,18 @@ class XoopsFormTextArea extends XoopsFormElement
      * @var string
      * @access private
      */
-    var $_value;
+    public $_value;
 
     /**
      * Constuctor
      *
      * @param string $caption caption
-     * @param string $name name
-     * @param string $value initial content
-     * @param int $rows number of rows
-     * @param int $cols number of columns
+     * @param string $name    name
+     * @param string $value   initial content
+     * @param int    $rows    number of rows
+     * @param int    $cols    number of columns
      */
-    function XoopsFormTextArea($caption, $name, $value = "", $rows = 5, $cols = 50)
+    public function __construct($caption, $name, $value = "", $rows = 5, $cols = 50)
     {
         $this->setCaption($caption);
         $this->setName($name);
@@ -74,7 +74,7 @@ class XoopsFormTextArea extends XoopsFormElement
      *
      * @return int
      */
-    function getRows()
+    public function getRows()
     {
         return $this->_rows;
     }
@@ -84,7 +84,7 @@ class XoopsFormTextArea extends XoopsFormElement
      *
      * @return int
      */
-    function getCols()
+    public function getCols()
     {
         return $this->_cols;
     }
@@ -92,10 +92,10 @@ class XoopsFormTextArea extends XoopsFormElement
     /**
      * Get initial content
      *
-     * @param bool $encode To sanitizer the text? Default value should be "true"; however we have to set "false" for backward compatibility
+     * @param  bool $encode To sanitizer the text? Default value should be "true"; however we have to set "false" for backward compatibility
      * @return string
      */
-    function getValue($encode = false)
+    public function getValue($encode = false)
     {
         return $encode ? htmlspecialchars($this->_value) : $this->_value;
     }
@@ -105,7 +105,7 @@ class XoopsFormTextArea extends XoopsFormElement
      *
      * @param  $value string
      */
-    function setValue($value)
+    public function setValue($value)
     {
         $this->_value = $value;
     }
@@ -115,7 +115,7 @@ class XoopsFormTextArea extends XoopsFormElement
      *
      * @return sting HTML
      */
-    function render()
+    public function render()
     {
         return "<textarea name='" . $this->getName() . "' id='" . $this->getName() . "'  title='" . $this->getTitle() . "' rows='" . $this->getRows() . "' cols='" . $this->getCols() . "'" . $this->getExtra() . ">" . $this->getValue() . "</textarea>";
     }

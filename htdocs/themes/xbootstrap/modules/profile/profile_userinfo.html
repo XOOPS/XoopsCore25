@@ -10,16 +10,16 @@
         <{if $email}>
             <li><span class="label label-info"><{$email}></span></li>
         <{/if}>
-	</ul>
+    </ul>
     </div><!-- .aligncenter -->
 </div><!-- .col-md-6 .aligncenter -->
 
 <div class="col-xs-6 col-md-6">
 <{if !$user_ownpage && $xoops_isuser == true}>
     <form name="usernav" action="user.php" method="post">
-        <input class="btn btn-success" type="button" value="<{$smarty.const._PROFILE_MA_SENDPM}>" onclick="javascript:openWithSelfMain('<{$xoops_url}>/pmlite.php?send2=1&amp;to_userid=<{$user_uid}>', 'pmlite', 450, 380);">
+        <input class="btn btn-success" type="button" value="<{$smarty.const._PROFILE_MA_SENDPM}>" onclick="openWithSelfMain('<{$xoops_url}>/pmlite.php?send2=1&amp;to_userid=<{$user_uid}>', 'pmlite', 450, 380);">
     </form>
-<{/if}>        
+<{/if}>
 
 <{if $user_ownpage == true}>
 
@@ -27,7 +27,7 @@
         <input class="btn btn-success btn-xs btn-block" type="button" value="<{$lang_editprofile}>" onclick="location='<{$xoops_url}>/modules/<{$xoops_dirname}>/edituser.php'">
         <input class="btn btn-success btn-xs btn-block" type="button" value="<{$lang_changepassword}>" onclick="location='<{$xoops_url}>/modules/<{$xoops_dirname}>/changepass.php'">
         <{if $user_changeemail}>
-		<input class="btn btn-success btn-xs btn-block" type="button" value="<{$smarty.const._PROFILE_MA_CHANGEMAIL}>" onclick="location='<{$xoops_url}>/modules/<{$xoops_dirname}>/changemail.php'">
+        <input class="btn btn-success btn-xs btn-block" type="button" value="<{$smarty.const._PROFILE_MA_CHANGEMAIL}>" onclick="location='<{$xoops_url}>/modules/<{$xoops_dirname}>/changemail.php'">
         <{/if}>
 
         <{if $user_candelete == true}>

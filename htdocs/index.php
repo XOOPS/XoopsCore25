@@ -10,13 +10,13 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         core
- * @since           2.0.0
- * @author          Kazumi Ono <webmaster@myweb.ne.jp>
- * @author          Skalpa Keo <skalpa@xoops.org>
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             core
+ * @since               2.0.0
+ * @author              Kazumi Ono <webmaster@myweb.ne.jp>
+ * @author              Skalpa Keo <skalpa@xoops.org>
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: index.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 if (file_exists(__DIR__ . '/mainfile.php')) {
@@ -38,15 +38,15 @@ if (isset($xoopsConfig['startpage']) && $xoopsConfig['startpage'] != "" && $xoop
     define("XOOPS_STARTPAGE_REDIRECTED", 1);
 
     global $xoopsModuleConfig;
-    $module_handler =& xoops_gethandler('module');
-    $xoopsModule =& $module_handler->getByDirname($xoopsConfig['startpage']);
+    $module_handler =& xoops_getHandler('module');
+    $xoopsModule    =& $module_handler->getByDirname($xoopsConfig['startpage']);
     if (!$xoopsModule || !$xoopsModule->getVar('isactive')) {
         include_once $GLOBALS['xoops']->path('header.php');
         echo "<h4>" . _MODULENOEXIST . "</h4>";
         include_once $GLOBALS['xoops']->path('footer.php');
         exit();
     }
-    $moduleperm_handler =& xoops_gethandler('groupperm');
+    $moduleperm_handler =& xoops_getHandler('groupperm');
     if ($xoopsUser) {
         if (!$moduleperm_handler->checkRight('module_read', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
             redirect_header(XOOPS_URL, 1, _NOPERM, false);
@@ -66,7 +66,7 @@ if (isset($xoopsConfig['startpage']) && $xoopsConfig['startpage'] != "" && $xoop
     chdir('modules/' . $xoopsConfig['startpage'] . '/');
     xoops_loadLanguage('main', $xoopsModule->getVar('dirname', 'n'));
     $parsed = parse_url(XOOPS_URL);
-    $url = isset($parsed['scheme']) ? $parsed['scheme'] . '://' : 'http://';
+    $url    = isset($parsed['scheme']) ? $parsed['scheme'] . '://' : 'http://';
     if (isset($parsed['host'])) {
         $url .= $parsed['host'];
         if (isset($parsed['port'])) {
@@ -80,7 +80,7 @@ if (isset($xoopsConfig['startpage']) && $xoopsConfig['startpage'] != "" && $xoop
     include $GLOBALS['xoops']->path('modules/' . $xoopsConfig['startpage'] . '/index.php');
     exit();
 } else {
-    $xoopsOption['show_cblock'] = 1;
+    $xoopsOption['show_cblock']   = 1;
     $xoopsOption['template_main'] = "db:system_homepage.html";
     include $GLOBALS['xoops']->path('header.php');
     include $GLOBALS['xoops']->path('footer.php');

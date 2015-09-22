@@ -10,30 +10,30 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @since           2.0.0
- * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @since               2.0.0
+ * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @version             $Id: privmessage.php 13090 2015-06-16 20:44:29Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Private Messages
  *
- * @author Kazumi Ono <onokazu@xoops.org>
+ * @author              Kazumi Ono <onokazu@xoops.org>
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  *
- * @package kernel
+ * @package             kernel
  **/
 class XoopsPrivmessage extends XoopsObject
 {
     /**
      * constructor
      **/
-    function XoopsPrivmessage()
+    public function __construct()
     {
-        $this->XoopsObject();
+        parent::__construct();
         $this->initVar('msg_id', XOBJ_DTYPE_INT, null, false);
         $this->initVar('msg_image', XOBJ_DTYPE_OTHER, null, false, 100);
         $this->initVar('subject', XOBJ_DTYPE_TXTBOX, null, true, 255);
@@ -44,78 +44,100 @@ class XoopsPrivmessage extends XoopsObject
         $this->initVar('read_msg', XOBJ_DTYPE_INT, 0, false);
     }
 
+    public function XoopsPrivmessage()
+    {
+        $this->__construct();
+    }
+
     /**
      * Returns Class Base Variable msg_id
+     * @param string $format
+     * @return mixed
      */
-    function id($format = 'N')
+    public function id($format = 'N')
     {
         return $this->getVar('msg_id', $format);
     }
 
     /**
      * Returns Class Base Variable msg_id
+     * @param string $format
+     * @return mixed
      */
-    function msg_id($format = '')
+    public function msg_id($format = '')
     {
         return $this->getVar('msg_id', $format);
     }
 
     /**
      * Returns Class Base Variable msg_image
+     * @param string $format
+     * @return mixed
      */
-    function msg_image($format = '')
+    public function msg_image($format = '')
     {
         return $this->getVar('msg_image', $format);
     }
 
     /**
      * Returns Class Base Variable subject
+     * @param string $format
+     * @return mixed
      */
-    function subject($format = '')
+    public function subject($format = '')
     {
         return $this->getVar('subject', $format);
     }
 
     /**
      * Returns Class Base Variable not_id
+     * @param string $format
+     * @return mixed
      */
-    function from_userid($format = '')
+    public function from_userid($format = '')
     {
         return $this->getVar('from_userid', $format);
     }
 
     /**
      * Returns Class Base Variable to_userid
+     * @param string $format
+     * @return mixed
      */
-    function to_userid($format = '')
-        {
+    public function to_userid($format = '')
+    {
         return $this->getVar('to_userid', $format);
-        }
+    }
 
     /**
      * Returns Class Base Variable msg_time
+     * @param string $format
+     * @return mixed
      */
-    function msg_time($format = '')
+    public function msg_time($format = '')
     {
         return $this->getVar('msg_time', $format);
     }
 
     /**
      * Returns Class Base Variable msg_text
+     * @param string $format
+     * @return mixed
      */
-    function msg_text($format = '')
+    public function msg_text($format = '')
     {
         return $this->getVar('msg_text', $format);
     }
 
     /**
      * Returns Class Base Variable read_msg
+     * @param string $format
+     * @return mixed
      */
-    function read_msg($format = '')
+    public function read_msg($format = '')
     {
         return $this->getVar('read_msg', $format);
     }
-
 }
 
 /**
@@ -124,35 +146,36 @@ class XoopsPrivmessage extends XoopsObject
  * This class is responsible for providing data access mechanisms to the data source
  * of XOOPS private message class objects.
  *
- * @package		kernel
+ * @package             kernel
  *
- * @author		Kazumi Ono	<onokazu@xoops.org>
+ * @author              Kazumi Ono    <onokazu@xoops.org>
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  *
- * @version		$Revision$ - $Date$
+ * @version             $Revision: 13090 $ - $Date: 2015-06-16 16:44:29 -0400 (Tue, 16 Jun 2015) $
  */
 class XoopsPrivmessageHandler extends XoopsObjectHandler
 {
     /**
      * Create a new {@link XoopsPrivmessage} object
-     * @param 	bool 	$isNew 	Flag as "new"?
-     * @return 	object
+     * @param  bool $isNew Flag as "new"?
+     * @return XoopsPrivmessage
      **/
-    function &create($isNew = true)
+    public function &create($isNew = true)
     {
         $pm = new XoopsPrivmessage();
         if ($isNew) {
             $pm->setNew();
         }
+
         return $pm;
     }
 
     /**
      * Load a {@link XoopsPrivmessage} object
-     * @param 	int 	$id ID of the message
-     * @return 	object
+     * @param  int $id ID of the message
+     * @return XoopsPrivmessage
      **/
-    function &get($id)
+    public function &get($id)
     {
         $pm = false;
         $id = (int)($id);
@@ -167,17 +190,18 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
                 $pm->assignVars($this->db->fetchArray($result));
             }
         }
+
         return $pm;
     }
 
     /**
      * Insert a message in the database
      *
-     * @param 	object 	$pm		{@link XoopsPrivmessage} object
-     * @param 	bool 	$force 	flag to force the query execution skip request method check, which might be required in some situations
-     * @return 	bool
+     * @param  XoopsPrivmessage $pm    {@link XoopsPrivmessage} object
+     * @param  bool   $force flag to force the query execution skip request method check, which might be required in some situations
+     * @return bool
      **/
-    function insert(&$pm, $force = false)
+    public function insert(XoopsPrivmessage $pm, $force = false)
     {
         /**
          * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
@@ -197,7 +221,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
         }
         if ($pm->isNew()) {
             $msg_id = $this->db->genId('priv_msgs_msg_id_seq');
-            $sql = sprintf("INSERT INTO %s (msg_id, msg_image, subject, from_userid, to_userid, msg_time, msg_text, read_msg) VALUES (%u, %s, %s, %u, %u, %u, %s, %u)", $this->db->prefix('priv_msgs'), $msg_id, $this->db->quoteString($msg_image), $this->db->quoteString($subject), $from_userid, $to_userid, time(), $this->db->quoteString($msg_text), 0);
+            $sql    = sprintf("INSERT INTO %s (msg_id, msg_image, subject, from_userid, to_userid, msg_time, msg_text, read_msg) VALUES (%u, %s, %s, %u, %u, %u, %s, %u)", $this->db->prefix('priv_msgs'), $msg_id, $this->db->quoteString($msg_image), $this->db->quoteString($subject), $from_userid, $to_userid, time(), $this->db->quoteString($msg_text), 0);
         } else {
             $sql = sprintf("UPDATE %s SET msg_image = %s, subject = %s, from_userid = %u, to_userid = %u, msg_text = %s, read_msg = %u WHERE msg_id = %u", $this->db->prefix('priv_msgs'), $this->db->quoteString($msg_image), $this->db->quoteString($subject), $from_userid, $to_userid, $this->db->quoteString($msg_text), $read_msg, $msg_id);
         }
@@ -209,15 +233,16 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
             $msg_id = $this->db->getInsertId();
         }
         $pm->assignVar('msg_id', $msg_id);
+
         return true;
     }
 
     /**
      * Delete from the database
-     * @param 	object 	$pm 	{@link XoopsPrivmessage} object
-     * @return 	bool
+     * @param  XoopsPrivmessage $pm {@link XoopsPrivmessage} object
+     * @return bool
      **/
-    function delete(&$pm)
+    public function delete(XoopsPrivmessage $pm)
     {
         /**
          * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
@@ -229,25 +254,26 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
         if (!$result = $this->db->query(sprintf("DELETE FROM %s WHERE msg_id = %u", $this->db->prefix('priv_msgs'), $pm->getVar('msg_id')))) {
             return false;
         }
+
         return true;
     }
 
     /**
      * Load messages from the database
-     * @param 	object 	$criteria 	{@link CriteriaElement} object
-     * @param 	bool 	$id_as_key 	use ID as key into the array?
-     * @return 	array	Array of {@link XoopsPrivmessage} objects
+     * @param  CriteriaElement $criteria  {@link CriteriaElement} object
+     * @param  bool   $id_as_key use ID as key into the array?
+     * @return array  Array of {@link XoopsPrivmessage} objects
      **/
-    function getObjects($criteria = null, $id_as_key = false)
+    public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
-        $ret = array();
+        $ret   = array();
         $limit = $start = 0;
-        $sql = 'SELECT * FROM ' . $this->db->prefix('priv_msgs');
+        $sql   = 'SELECT * FROM ' . $this->db->prefix('priv_msgs');
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
-            $sort = ! in_array($criteria->getSort(), array(
-                'msg_id' ,
-                'msg_time' ,
+            $sort = !in_array($criteria->getSort(), array(
+                'msg_id',
+                'msg_time',
                 'from_userid')) ? 'msg_id' : $criteria->getSort();
             $sql .= ' ORDER BY ' . $sort . ' ' . $criteria->getOrder();
             $limit = $criteria->getLimit();
@@ -267,15 +293,16 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
             }
             unset($pm);
         }
+
         return $ret;
     }
 
     /**
      * Count message
-     * @param 	object 	$criteria = null 	{@link CriteriaElement} object
-     * @return 	int
+     * @param  CriteriaElement $criteria = null     {@link CriteriaElement} object
+     * @return int
      **/
-    function getCount($criteria = null)
+    public function getCount(CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('priv_msgs');
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
@@ -284,16 +311,17 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
         if (!$result = $this->db->query($sql)) {
             return 0;
         }
-        list ($count) = $this->db->fetchRow($result);
+        list($count) = $this->db->fetchRow($result);
+
         return $count;
     }
 
     /**
      * Mark a message as read
-     * @param 	object 	$pm 	{@link XoopsPrivmessage} object
-     * @return 	bool
+     * @param  XoopsPrivmessage $pm {@link XoopsPrivmessage} object
+     * @return bool
      **/
-    function setRead(&$pm)
+    public function setRead(XoopsPrivmessage $pm)
     {
         /**
          * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
@@ -306,6 +334,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
         if (!$this->db->queryF($sql)) {
             return false;
         }
+
         return true;
     }
 }

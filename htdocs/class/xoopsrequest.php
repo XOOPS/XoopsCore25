@@ -16,20 +16,19 @@
  * request variables.  This includes $_POST, $_GET, and naturally $_REQUEST.  Variables
  * can be passed through an input filter to avoid injection or returned raw.
  *
- * @category  Xmf\Module\Request
- * @package   Xmf
- * @author    Richard Griffith <richard@geekwright.com>
- * @author    trabis <lusopoemas@gmail.com>
- * @author    Joomla!
+ * @category            Xmf\Module\Request
+ * @package             Xmf
+ * @author              Richard Griffith <richard@geekwright.com>
+ * @author              trabis <lusopoemas@gmail.com>
+ * @author              Joomla!
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @version   Release: 1.0
- * @link      http://xoops.org
- * @since     1.0
+ * @license             GNU GPL 2 or later (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @version             Release: 1.0
+ * @link                http://xoops.org
+ * @since               1.0
  */
-class XoopsRequest
+class xoopsrequest
 {
-
     /**
      * Available masks for cleaning variables
      */
@@ -74,7 +73,7 @@ class XoopsRequest
      * @param string $type    Return type for the variable, for valid values see {@link XoopsFilterInput::clean()}.
      * @param int    $mask    Filter mask for the variable
      *
-     * @return mixed  Requested variable
+     * @return mixed Requested variable
      */
     public static function getVar($name, $default = null, $hash = 'default', $type = 'none', $mask = 0)
     {
@@ -84,7 +83,7 @@ class XoopsRequest
             $hash = strtoupper($_SERVER['REQUEST_METHOD']);
         }
         $type = strtoupper($type);
-        $sig = $hash . $type . $mask;
+        $sig  = $hash . $type . $mask;
 
         // Get the input hash
         switch ($hash) {
@@ -108,7 +107,7 @@ class XoopsRequest
                 break;
             default:
                 $input = &$_REQUEST;
-                $hash = 'REQUEST';
+                $hash  = 'REQUEST';
                 break;
         }
 
@@ -117,7 +116,7 @@ class XoopsRequest
             $var = XoopsRequest::cleanVar($input[$name], $mask, $type);
 
             // Handle magic quotes compatability
-            if (get_magic_quotes_gpc() && ($var != $default) && ($hash != 'FILES')) {
+            if (get_magic_quotes_gpc() && ($var != $default) && ($hash !== 'FILES')) {
                 $var = XoopsRequest::stripSlashesRecursive($var);
             }
         } else {
@@ -143,7 +142,7 @@ class XoopsRequest
      * @param int    $default Default value if the variable does not exist
      * @param string $hash    Where the var should come from (POST, GET, FILES, COOKIE, METHOD)
      *
-     * @return int    Requested variable
+     * @return int Requested variable
      */
     public static function getInt($name, $default = 0, $hash = 'default')
     {
@@ -161,7 +160,7 @@ class XoopsRequest
      * @param float  $default Default value if the variable does not exist
      * @param string $hash    Where the var should come from (POST, GET, FILES, COOKIE, METHOD)
      *
-     * @return float  Requested variable
+     * @return float Requested variable
      */
     public static function getFloat($name, $default = 0.0, $hash = 'default')
     {
@@ -239,16 +238,15 @@ class XoopsRequest
     public static function getString($name, $default = '', $hash = 'default', $mask = 0)
     {
         // Cast to string, in case XoopsRequest::ALLOWRAW was specified for mask
-        return (string) XoopsRequest::getVar($name, $default, $hash, 'string', $mask);
+        return (string)XoopsRequest::getVar($name, $default, $hash, 'string', $mask);
     }
 
     /**
      * Fetches and returns an array
      *
-     * @param string $name    Variable name
-     * @param string $default Default value if the variable does not exist
-     * @param string $hash    Where the var should come from (POST, GET, FILES, COOKIE, METHOD)
-     *
+     * @param string       $name    Variable name
+     * @param array|string $default Default value if the variable does not exist
+     * @param string       $hash    Where the var should come from (POST, GET, FILES, COOKIE, METHOD)
      * @return array
      */
     public static function getArray($name, $default = array(), $hash = 'default')
@@ -267,7 +265,7 @@ class XoopsRequest
      */
     public static function getText($name, $default = '', $hash = 'default')
     {
-        return (string) XoopsRequest::getVar($name, $default, $hash, 'string', XoopsRequest::ALLOWRAW);
+        return (string)XoopsRequest::getVar($name, $default, $hash, 'string', XoopsRequest::ALLOWRAW);
     }
 
     /**
@@ -278,7 +276,7 @@ class XoopsRequest
      * @param string  $hash      Hash
      * @param boolean $overwrite Boolean
      *
-     * @return string  Previous value
+     * @return string Previous value
      */
     public static function setVar($name, $value = null, $hash = 'method', $overwrite = true)
     {
@@ -297,15 +295,15 @@ class XoopsRequest
 
         switch ($hash) {
             case 'GET':
-                $_GET[$name] = $value;
+                $_GET[$name]     = $value;
                 $_REQUEST[$name] = $value;
                 break;
             case 'POST':
-                $_POST[$name] = $value;
+                $_POST[$name]    = $value;
                 $_REQUEST[$name] = $value;
                 break;
             case 'COOKIE':
-                $_COOKIE[$name] = $value;
+                $_COOKIE[$name]  = $value;
                 $_REQUEST[$name] = $value;
                 break;
             case 'FILES':
@@ -343,7 +341,7 @@ class XoopsRequest
      * @param string $hash to get (POST, GET, FILES, METHOD)
      * @param int    $mask Filter mask for the variable
      *
-     * @return mixed  Request hash
+     * @return mixed Request hash
      */
     public static function get($hash = 'default', $mask = 0)
     {
@@ -378,7 +376,7 @@ class XoopsRequest
         }
 
         // Handle magic quotes compatability
-        if (get_magic_quotes_gpc() && ($hash != 'FILES')) {
+        if (get_magic_quotes_gpc() && ($hash !== 'FILES')) {
             $input = XoopsRequest::stripSlashesRecursive($input);
         }
 
@@ -408,12 +406,12 @@ class XoopsRequest
      *
      * @param mixed  $var  The input variable.
      * @param int    $mask Filter bit mask.
-     *  - 1=no trim: If this flag is cleared and the input is a string,
-     *    the string will have leading and trailing whitespace trimmed.
-     *  - 2=allow_raw: If set, no more filtering is performed, higher bits are ignored.
-     *  - 4=allow_html: HTML is allowed, but passed through a safe HTML filter first.
-     *    If set, no more filtering is performed.
-     *  - If no bits other than the 1 bit is set, a strict filter is applied.
+     *                     - 1=no trim: If this flag is cleared and the input is a string,
+     *                     the string will have leading and trailing whitespace trimmed.
+     *                     - 2=allow_raw: If set, no more filtering is performed, higher bits are ignored.
+     *                     - 4=allow_html: HTML is allowed, but passed through a safe HTML filter first.
+     *                     If set, no more filtering is performed.
+     *                     - If no bits other than the 1 bit is set, a strict filter is applied.
      * @param string $type The variable type. See {@link XoopsFilterInput::clean()}.
      *
      * @return string
@@ -430,7 +428,7 @@ class XoopsRequest
         }
 
         // convert $var in array if $type is ARRAY
-        if (strtoupper($type) == 'ARRAY' && !is_array($var)) {
+        if (strtoupper($type) === 'ARRAY' && !is_array($var)) {
             $var = array($var);
         }
 
@@ -441,13 +439,13 @@ class XoopsRequest
             XoopsLoad::load('xoopsfilterinput');
             if ($mask & 4) {
                 // If the allow html flag is set, apply a safe html filter to the variable
-                if (is_null($safeHtmlFilter)) {
+                if (null === ($safeHtmlFilter)) {
                     $safeHtmlFilter = XoopsFilterInput::getInstance(null, null, 1, 1);
                 }
                 $var = $safeHtmlFilter->clean($var, $type);
             } else {
                 // Since no allow flags were set, we will apply the most strict filter to the variable
-                if (is_null($noHtmlFilter)) {
+                if (null === ($noHtmlFilter)) {
                     $noHtmlFilter = XoopsFilterInput::getInstance();
                 }
                 $var = $noHtmlFilter->clean($var, $type);
@@ -479,7 +477,6 @@ class XoopsRequest
         return $var;
     }
 
-
     /**
      * Strips slashes recursively on an array
      *
@@ -489,8 +486,7 @@ class XoopsRequest
      */
     private static function stripSlashesRecursive($value)
     {
-        $value = is_array($value) ? array_map(array('XoopsRequest', 'stripSlashesRecursive'), $value)
-            : stripslashes($value);
+        $value = is_array($value) ? array_map(array('XoopsRequest', 'stripSlashesRecursive'), $value) : stripslashes($value);
 
         return $value;
     }

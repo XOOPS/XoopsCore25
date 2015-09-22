@@ -10,12 +10,12 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @subpackage      Xoop Notifications Select
- * @since           2.0.0
- * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @subpackage          Xoop Notifications Select
+ * @since               2.0.0
+ * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @version             $Id: notification_update.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 if (!defined('XOOPS_ROOT_PATH') || !is_object($xoopsModule)) {
     die('Restricted access');
@@ -54,15 +54,15 @@ if (!$GLOBALS['xoopsSecurity']->check()) {
 // read by this script.  That way a module can really customize its
 // look as to where/how the notification options are made available.
 $update_list = $_POST['not_list'];
-$module_id = $xoopsModule->getVar('mid');
-$user_id = is_object($xoopsUser) ? $xoopsUser->getVar('uid') : 0;
+$module_id   = $xoopsModule->getVar('mid');
+$user_id     = is_object($xoopsUser) ? $xoopsUser->getVar('uid') : 0;
 
 // For each event, update the notification depending on the status.
 // If status=1, subscribe to the event; otherwise, unsubscribe.
 
 // FIXME: right now I just ignore database errors (e.g. if already
 //  subscribed)... deal with this more gracefully?
-$notification_handler =& xoops_gethandler('notification');
+$notification_handler =& xoops_getHandler('notification');
 foreach ($update_list as $update_item) {
     list($category, $item_id, $event) = preg_split('/,/', $update_item['params']);
     $status = !empty($update_item['status']) ? 1 : 0;
@@ -71,7 +71,6 @@ foreach ($update_list as $update_item) {
     } else {
         $notification_handler->subscribe($category, $item_id, $event);
     }
-
 }
 
 // TODO: something like grey box summary of actions (like multiple comment
@@ -103,5 +102,5 @@ foreach (array_keys($redirect_args) as $arg) {
     }
 }
 
-redirect_header ($_POST['not_redirect'].$argstring, 3, _NOT_UPDATEOK);
+redirect_header($_POST['not_redirect'] . $argstring, 3, _NOT_UPDATEOK);
 exit();

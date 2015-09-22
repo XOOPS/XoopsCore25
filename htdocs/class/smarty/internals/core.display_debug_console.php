@@ -1,7 +1,7 @@
 <?php
 /**
  * Smarty plugin
- * @package Smarty
+ * @package    Smarty
  * @subpackage plugins
  */
 
@@ -13,6 +13,7 @@
  * Purpose:  display the javascript debug console window
  * @param array Format: null
  * @param Smarty
+ * @return string
  */
 function smarty_core_display_debug_console($params, &$smarty)
 {
@@ -31,10 +32,10 @@ function smarty_core_display_debug_console($params, &$smarty)
     $_ldelim_orig = $smarty->left_delimiter;
     $_rdelim_orig = $smarty->right_delimiter;
 
-    $smarty->left_delimiter = '{';
+    $smarty->left_delimiter  = '{';
     $smarty->right_delimiter = '}';
 
-    $_compile_id_orig = $smarty->_compile_id;
+    $_compile_id_orig    = $smarty->_compile_id;
     $smarty->_compile_id = null;
 
     $_compile_path = $smarty->_get_compile_path($smarty->debug_tpl);
@@ -49,7 +50,7 @@ function smarty_core_display_debug_console($params, &$smarty)
 
     $smarty->_compile_id = $_compile_id_orig;
 
-    $smarty->left_delimiter = $_ldelim_orig;
+    $smarty->left_delimiter  = $_ldelim_orig;
     $smarty->right_delimiter = $_rdelim_orig;
 
     return $_results;

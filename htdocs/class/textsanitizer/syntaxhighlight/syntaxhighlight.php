@@ -10,14 +10,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         class
- * @subpackage      textsanitizer
- * @since           2.3.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             class
+ * @subpackage          textsanitizer
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: syntaxhighlight.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Class MytsSyntaxhighlight
@@ -31,7 +31,7 @@ class MytsSyntaxhighlight extends MyTextSanitizerExtension
      *
      * @return bool|mixed|string
      */
-    function load(&$ts, $source, $language)
+    public function load(&$ts, $source, $language)
     {
         $config = parent::loadConfig(__DIR__);
         if (empty($config['highlight'])) {
@@ -39,9 +39,9 @@ class MytsSyntaxhighlight extends MyTextSanitizerExtension
         }
         $source = $ts->undoHtmlSpecialChars($source);
         $source = stripslashes($source);
-        if ($config['highlight'] == 'geshi') {
+        if ($config['highlight'] === 'geshi') {
             $language = str_replace('=', '', $language);
-            $language = ($language) ? $language : $config['language'];
+            $language = ($language) ? : $config['language'];
             $language = strtolower($language);
             if ($source2 = MytsSyntaxhighlight::geshi($source, $language)) {
                 return $source2;
@@ -57,12 +57,12 @@ class MytsSyntaxhighlight extends MyTextSanitizerExtension
      *
      * @return mixed|string
      */
-    function php($text)
+    public function php($text)
     {
-        $text = trim($text);
+        $text          = trim($text);
         $addedtag_open = 0;
-        if (!strpos($text, "<?php") and (substr($text, 0, 5) != "<?php")) {
-            $text = "<?php " . $text;
+        if (!strpos($text, "<?php") and (substr($text, 0, 5) !== "<?php")) {
+            $text          = "<?php " . $text;
             $addedtag_open = 1;
         }
         $addedtag_close = 0;
@@ -90,11 +90,11 @@ class MytsSyntaxhighlight extends MyTextSanitizerExtension
             $pos_close = strrpos($buffer, '?&gt;');
         }
 
-        $str_open = ($addedtag_open) ? substr($buffer, 0, $pos_open) : "";
+        $str_open  = ($addedtag_open) ? substr($buffer, 0, $pos_open) : "";
         $str_close = ($pos_close) ? substr($buffer, $pos_close + 5) : "";
 
-        $length_open = ($addedtag_open) ? $pos_open + 14 : 0;
-        $length_text = ($pos_close) ? $pos_close - $length_open : 0;
+        $length_open  = ($addedtag_open) ? $pos_open + 14 : 0;
+        $length_text  = ($pos_close) ? $pos_close - $length_open : 0;
         $str_internal = ($length_text) ? substr($buffer, $length_open, $length_text) : substr($buffer, $length_open);
 
         $buffer = $str_open . $str_internal . $str_close;
@@ -108,7 +108,7 @@ class MytsSyntaxhighlight extends MyTextSanitizerExtension
      *
      * @return bool
      */
-    function geshi($source, $language)
+    public function geshi($source, $language)
     {
         if (!@xoops_load("geshi", "framework")) {
             return false;

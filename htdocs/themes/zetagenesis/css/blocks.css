@@ -35,8 +35,7 @@
 
 #xo-canvas-leftcolumn .xo-blocktitle {
     min-height:             22px;
-    background-color:       transparent;
-    background:             url(../img/bg-left_blocktitle.png) no-repeat left bottom;
+    background: transparent url(../img/bg-left_blocktitle.png) no-repeat left bottom;
     padding-bottom:         5px;
     color:                  #555;
     font-family:            "Lucida Grande", "Trebuchet MS", Verdana, sans-serif;
@@ -47,8 +46,7 @@
 
 #xo-canvas-leftcolumn .xo-blockcontent {
     min-height:             110px;
-    background-color:       transparent;
-    background:             url(../img/bg-left_blockcontent.gif) no-repeat left top;
+    background: transparent url(../img/bg-left_blockcontent.gif) no-repeat left top;
     padding:                2px 8px 0;
     color:                  #fff;
 }

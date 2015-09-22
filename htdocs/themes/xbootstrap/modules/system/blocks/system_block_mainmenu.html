@@ -4,7 +4,7 @@
     <{foreach item=module from=$block.modules}>
     <li class="<{if $module.highlight}>active<{/if}>">
         <a href="<{$xoops_url}>/modules/<{$module.directory}>/" title="<{$module.name}>"><span class="glyphicon glyphicon-ok"></span>
-        	<{$module.name}>
+            <{$module.name}>
         </a>
         <ul>
             <{foreach item=sublink from=$module.sublinks}>
@@ -12,7 +12,7 @@
                    <a class="dropdown" href="<{$sublink.url}>" title="<{$sublink.name}>"><{$sublink.name}></a>
                 </li>
             <{/foreach}>
-		</ul>
+        </ul>
     </li>
 <{/foreach}>
 <!-- end module menu loop -->

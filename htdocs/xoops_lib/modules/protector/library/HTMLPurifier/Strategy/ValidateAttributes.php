@@ -3,14 +3,12 @@
 /**
  * Validate all attributes in the tokens.
  */
-
 class HTMLPurifier_Strategy_ValidateAttributes extends HTMLPurifier_Strategy
 {
-
     /**
-     * @param HTMLPurifier_Token[] $tokens
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
+     * @param  HTMLPurifier_Token[] $tokens
+     * @param  HTMLPurifier_Config  $config
+     * @param  HTMLPurifier_Context $context
      * @return HTMLPurifier_Token[]
      */
     public function execute($tokens, $config, $context)
@@ -38,8 +36,10 @@ class HTMLPurifier_Strategy_ValidateAttributes extends HTMLPurifier_Strategy
             $validator->validateToken($token, $config, $context);
         }
         $context->destroy('CurrentToken');
+
         return $tokens;
     }
 }
 
 // vim: et sw=4 sts=4
+

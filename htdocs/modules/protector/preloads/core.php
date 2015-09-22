@@ -10,28 +10,28 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
- * @package         protector
- * @since           2.4.0
- * @author          trabis <lusopoemas@gmail.com>
- * @version         $Id$
+ * @license             http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @package             protector
+ * @since               2.4.0
+ * @author              trabis <lusopoemas@gmail.com>
+ * @version             $Id: core.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-// defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 /**
  * Protector core preloads
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author          trabis <lusopoemas@gmail.com>
+ * @license             http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @author              trabis <lusopoemas@gmail.com>
  */
 class ProtectorCorePreload extends XoopsPreloadItem
 {
     /**
      * @param $args
      */
-    static function eventCoreIncludeCommonStart($args)
+    public static function eventCoreIncludeCommonStart($args)
     {
         include XOOPS_TRUST_PATH . '/modules/protector/include/precheck.inc.php';
     }
@@ -39,19 +39,18 @@ class ProtectorCorePreload extends XoopsPreloadItem
     /**
      * @param $args
      */
-    function eventCoreIncludeCommonEnd($args)
+    public function eventCoreIncludeCommonEnd($args)
     {
-            include XOOPS_TRUST_PATH . '/modules/protector/include/postcheck.inc.php';
-        }
+        include XOOPS_TRUST_PATH . '/modules/protector/include/postcheck.inc.php';
+    }
 
     /**
      * @param $args
      */
-    static function eventCoreClassDatabaseDatabasefactoryConnection($args)
+    public static function eventCoreClassDatabaseDatabasefactoryConnection($args)
     {
         if (defined('XOOPS_DB_ALTERNATIVE') && class_exists(XOOPS_DB_ALTERNATIVE)) {
             $args[0] = XOOPS_DB_ALTERNATIVE;
         }
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * TextSanitizer extension
  *
@@ -10,14 +11,13 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         class
- * @subpackage      textsanitizer
- * @since           2.3.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             class
+ * @subpackage          textsanitizer
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: youtube.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-
 class MytsYoutube extends MyTextSanitizerExtension
 {
     /**
@@ -25,13 +25,10 @@ class MytsYoutube extends MyTextSanitizerExtension
      *
      * @return array
      */
-    function encode($textarea_id)
+    public function encode($textarea_id)
     {
-        $config = parent::loadConfig(__DIR__);
-        $code = "<img src='{$this->image_path}/youtube.gif' alt='" . _XOOPS_FORM_ALTYOUTUBE . "' title='" . _XOOPS_FORM_ALTYOUTUBE . "' '" . "' onclick='xoopsCodeYoutube(\"{$textarea_id}\",\""
-            . htmlspecialchars(_XOOPS_FORM_ENTERYOUTUBEURL, ENT_QUOTES) . "\",\""
-            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES)
-            . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES) . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
+        $config     = parent::loadConfig(__DIR__);
+        $code       = "<img src='{$this->image_path}/youtube.gif' alt='" . _XOOPS_FORM_ALTYOUTUBE . "' title='" . _XOOPS_FORM_ALTYOUTUBE . "' '" . "' onclick='xoopsCodeYoutube(\"{$textarea_id}\",\"" . htmlspecialchars(_XOOPS_FORM_ENTERYOUTUBEURL, ENT_QUOTES) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES) . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
         $javascript = <<<EOH
             function xoopsCodeYoutube(id, enterFlashPhrase, enterFlashHeightPhrase, enterFlashWidthPhrase)
             {
@@ -60,23 +57,23 @@ EOH;
      *
      * @return string
      */
-    static function myCallback($match)
-{
-    return  self::decode( $match[4], $match[2], $match[3] );
-}
+    public static function myCallback($match)
+    {
+        return self::decode($match[4], $match[2], $match[3]);
+    }
 
     /**
      * @param $ts
      */
-    function load(&$ts)
+    public function load(&$ts)
     {
-//        $ts->patterns[] = "/\[youtube=(['\"]?)([^\"']*),([^\"']*)\\1]([^\"]*)\[\/youtube\]/esU";
-//        $ts->replacements[] = __CLASS__ . "::decode( '\\4', '\\2', '\\3' )";
+        //        $ts->patterns[] = "/\[youtube=(['\"]?)([^\"']*),([^\"']*)\\1]([^\"]*)\[\/youtube\]/esU";
+        //        $ts->replacements[] = __CLASS__ . "::decode( '\\4', '\\2', '\\3' )";
 
-//mb------------------------------
+        //mb------------------------------
         $ts->callbackPatterns[] = "/\[youtube=(['\"]?)([^\"']*),([^\"']*)\\1]([^\"]*)\[\/youtube\]/sU";
-        $ts->callbacks[] = __CLASS__ . "::myCallback";
-//mb------------------------------
+        $ts->callbacks[]        = __CLASS__ . "::myCallback";
+        //mb------------------------------
     }
 
     /**
@@ -86,7 +83,7 @@ EOH;
      *
      * @return string
      */
-    static function decode($url, $width, $height)
+    public static function decode($url, $width, $height)
     {
         if (!preg_match("/^http[s]?:\/\/(www\.)?youtube\.com\/watch\?v=(.*)/i", $url, $matches)) {
             trigger_error("Not matched: {$url} {$width} {$height}", E_USER_WARNING);
@@ -95,21 +92,18 @@ EOH;
         }
         $src = "http://www.youtube.com/v/" . $matches[2];
         if (empty($width) || empty($height)) {
-            if (!$dimension = @getimagesize($src) ) {
+            if (!$dimension = @getimagesize($src)) {
                 return "";
             }
             if (!empty($width)) {
-                $height = $dimension[1] * $width /  $dimension[0];
+                $height = $dimension[1] * $width / $dimension[0];
             } elseif (!empty($height)) {
-                $width = $dimension[0] * $height /  $dimension[1];
+                $width = $dimension[0] * $height / $dimension[1];
             } else {
                 list($width, $height) = array($dimension[0], $dimension[1]);
             }
         }
-        $code = "<object width='{$width}' height='{$height}'><param name='movie' value='{$src}'></param>" .
-                "<param name='wmode' value='transparent'></param>" .
-                "<embed src='{$src}' type='application/x-shockwave-flash' wmode='transparent' width='425' height='350'></embed>" .
-                "</object>";
+        $code = "<object width='{$width}' height='{$height}'><param name='movie' value='{$src}'></param>" . "<param name='wmode' value='transparent'></param>" . "<embed src='{$src}' type='application/x-shockwave-flash' wmode='transparent' width='425' height='350'></embed>" . "</object>";
 
         return $code;
     }

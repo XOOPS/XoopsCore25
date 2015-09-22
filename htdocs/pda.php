@@ -10,13 +10,13 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         core
- * @since           2.0.0
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             core
+ * @since               2.0.0
+ * @version             $Id: pda.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-include __DIR__ . DIRECTORY_SEPARATOR . 'mainfile.php';
+include __DIR__ . '/mainfile.php';
 
 header("Content-Type: text/html");
 echo "<html><head><title>" . htmlspecialchars($xoopsConfig['sitename']) . "</title>
@@ -25,7 +25,7 @@ echo "<html><head><title>" . htmlspecialchars($xoopsConfig['sitename']) . "</tit
       </head>
       <body>";
 
-$sql = "SELECT storyid, title FROM " . $xoopsDB->prefix("stories") . " WHERE published>0 AND published<" . time() . " ORDER BY published DESC";
+$sql    = "SELECT storyid, title FROM " . $xoopsDB->prefix("stories") . " WHERE published>0 AND published<" . time() . " ORDER BY published DESC";
 $result = $xoopsDB->query($sql, 10, 0);
 //TODO Remove this hardcoded string
 if (!$result) {
@@ -34,7 +34,7 @@ if (!$result) {
     echo "<img src='images/logo.gif' alt='" . htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES) . "' border='0' /><br />";
     echo "<h2>" . htmlspecialchars($xoopsConfig['slogan']) . "</h2>";
     echo "<div>";
-    while (list ($storyid, $title) = $xoopsDB->fetchRow($result)) {
+    while (list($storyid, $title) = $xoopsDB->fetchRow($result)) {
         echo "<a href='" . XOOPS_URL . "/modules/news/print.php?storyid=$storyid'>" . htmlspecialchars($title) . "</a><br />";
     }
     echo "</div>";

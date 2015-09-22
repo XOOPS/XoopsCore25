@@ -16,19 +16,18 @@
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
  * @copyright    (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
- * @package     upgrader
- * @since       2.3.0
- * @author      Taiwen Jiang <phppp@users.sourceforge.net>
- * @version     $Id$
+ * @license          http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @package          upgrader
+ * @since            2.3.0
+ * @author           Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version          $Id: abstract.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-
 class xoopsUpgrade
 {
-    var $usedFiles = array( );
-    var $tasks = array( );
+    var $usedFiles      = array();
+    var $tasks          = array();
     var $languageFolder = null;
-    var $logs = array();
+    var $logs           = array();
 
     /**
      * @param null $dirname
@@ -65,11 +64,13 @@ class xoopsUpgrade
      */
     function apply()
     {
-        $step = get_class($this);
+        $step  = get_class($this);
         $tasks = $_SESSION['xoops_upgrade'][$step];
         foreach ($tasks as $task) {
             $res = $this->{"apply_{$task}"}();
-            if (!$res) return false;
+            if (!$res) {
+                return false;
+            }
             array_shift($_SESSION['xoops_upgrade'][$step]);
         }
 

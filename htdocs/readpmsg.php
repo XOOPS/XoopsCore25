@@ -10,13 +10,13 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         core
- * @since           2.0.0
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             core
+ * @since               2.0.0
+ * @version             $Id: readpmsg.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
-include __DIR__ . DIRECTORY_SEPARATOR . 'mainfile.php';
+include __DIR__ . '/mainfile.php';
 $xoopsPreload =& XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.readpmsg.start');
 
@@ -26,14 +26,14 @@ if (!is_object($xoopsUser)) {
     redirect_header("user.php", 0);
     exit();
 } else {
-    $pm_handler =& xoops_gethandler('privmessage');
+    $pm_handler =& xoops_getHandler('privmessage');
     if (!empty($_POST['delete'])) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             echo implode('<br />', $GLOBALS['xoopsSecurity']->getErrors());
             exit();
         } elseif (empty($_REQUEST['ok'])) {
             include $GLOBALS['xoops']->path('header.php');
-            xoops_confirm(array('ok' => 1, 'delete' => 1, 'msg_id'=> (int)($_POST['msg_id'])), $_SERVER['REQUEST_URI'], _PM_SURE_TO_DELETE);
+            xoops_confirm(array('ok' => 1, 'delete' => 1, 'msg_id' => (int)($_POST['msg_id'])), $_SERVER['REQUEST_URI'], _PM_SURE_TO_DELETE);
             include $GLOBALS['xoops']->path('footer.php');
             exit();
         }
@@ -45,7 +45,7 @@ if (!is_object($xoopsUser)) {
             exit();
         }
     }
-    $start = !empty($_GET['start']) ? (int)($_GET['start']) : 0;
+    $start          = !empty($_GET['start']) ? (int)($_GET['start']) : 0;
     $total_messages = !empty($_GET['total_messages']) ? (int)($_GET['total_messages']) : 0;
     include $GLOBALS['xoops']->path('header.php');
     $criteria = new Criteria('to_userid', $xoopsUser->getVar('uid'));
@@ -80,9 +80,9 @@ if (!is_object($xoopsUser)) {
         } else {
             echo $xoopsConfig['anonymous']; // we need to do this for deleted users
         }
-        $iconName=htmlspecialchars($pm_arr[0]->getVar("msg_image", "E"), ENT_QUOTES);
+        $iconName = htmlspecialchars($pm_arr[0]->getVar("msg_image", "E"), ENT_QUOTES);
         if ($iconName != '') {
-            echo "</td><td><img src='images/subject/" .$iconName . "' alt='' />&nbsp;" . _PM_SENTC . "" . formatTimestamp($pm_arr[0]->getVar("msg_time"));
+            echo "</td><td><img src='images/subject/" . $iconName . "' alt='' />&nbsp;" . _PM_SENTC . "" . formatTimestamp($pm_arr[0]->getVar("msg_time"));
         } else {
             echo "</td><td>" . _PM_SENTC . "" . formatTimestamp($pm_arr[0]->getVar("msg_time"));
         }
@@ -99,7 +99,7 @@ if (!is_object($xoopsUser)) {
         echo "<a href='#" . $pm_arr[0]->getVar("msg_id") . "' onclick='javascript:document.delete" . $pm_arr[0]->getVar("msg_id") . ".submit();'><img src='" . XOOPS_URL . "/images/icons/delete.gif' alt='" . _PM_DELETE . "' /></a>";
         echo "</td></tr><tr><td class='txtright' colspan='2'>";
         $previous = $start - 1;
-        $next = $start + 1;
+        $next     = $start + 1;
         if ($previous >= 0) {
             echo "<a href='readpmsg.php?start=" . $previous . "&amp;total_messages=" . $total_messages . "' title=''>" . _PM_PREVIOUS . "</a> | ";
         } else {

@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: system_blocks.php 13090 2015-06-16 20:44:29Z beckmi $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2015 XOOPS Project (www.xoops.org)            //
@@ -35,7 +35,7 @@
 function b_system_online_show()
 {
     global $xoopsUser, $xoopsModule;
-    $online_handler =& xoops_gethandler('online');
+    $online_handler =& xoops_getHandler('online');
     mt_srand((double) microtime()*1000000);
     // set gc probabillity to 10% for now..
     if (mt_rand(1, 100) < 11) {
@@ -120,12 +120,12 @@ function b_system_main_show()
     $block = array();
     $block['lang_home'] = _MB_SYSTEM_HOME;
     $block['lang_close'] = _CLOSE;
-    $module_handler =& xoops_gethandler('module');
+    $module_handler =& xoops_getHandler('module');
     $criteria = new CriteriaCompo(new Criteria('hasmain', 1));
     $criteria->add(new Criteria('isactive', 1));
     $criteria->add(new Criteria('weight', 0, '>'));
     $modules = $module_handler->getObjects($criteria, true);
-    $moduleperm_handler =& xoops_gethandler('groupperm');
+    $moduleperm_handler =& xoops_getHandler('groupperm');
     $groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
     $read_allowed = $moduleperm_handler->getItemIds('module_read', $groups);
     foreach (array_keys($modules) as $i) {
@@ -183,7 +183,7 @@ function b_system_user_show()
     $criteria = new CriteriaCompo(new Criteria('read_msg', 0));
     $criteria->add(new Criteria('to_userid', $xoopsUser->getVar('uid')));
 
-    $pm_handler =& xoops_gethandler('privmessage');
+    $pm_handler =& xoops_getHandler('privmessage');
 
     $xoopsPreload =& XoopsPreload::getInstance();
     $xoopsPreload->triggerEvent('system.blocks.system_blocks.usershow', array(&$pm_handler));
@@ -203,7 +203,7 @@ function b_system_waiting_show()
 {
     global $xoopsUser;
     $xoopsDB =& XoopsDatabaseFactory::getDatabaseConnection();
-    $module_handler =& xoops_gethandler('module');
+    $module_handler =& xoops_getHandler('module');
     $block = array();
 
     // waiting content for news
@@ -357,12 +357,12 @@ function b_system_newmembers_show($options)
     $criteria->setOrder('DESC');
     $criteria->setSort('user_regdate');
     $criteria->setLimit($limit);
-    $member_handler =& xoops_gethandler('member');
+    $member_handler =& xoops_getHandler('member');
     $newmembers = $member_handler->getUsers($criteria);
     $count = count($newmembers);
     for ($i = 0; $i < $count; ++$i) {
         if ($options[1] == 1) {
-            $block['users'][$i]['avatar'] = $newmembers[$i]->getVar('user_avatar') != 'blank.gif' ? XOOPS_UPLOAD_URL.'/'.$newmembers[$i]->getVar('user_avatar') : '';
+            $block['users'][$i]['avatar'] = $newmembers[$i]->getVar('user_avatar') !== 'blank.gif' ? XOOPS_UPLOAD_URL.'/'.$newmembers[$i]->getVar('user_avatar') : '';
         } else {
             $block['users'][$i]['avatar'] = '';
         }
@@ -391,13 +391,13 @@ function b_system_topposters_show($options)
     $criteria->setOrder('DESC');
     $criteria->setSort('posts');
     $criteria->setLimit($limit);
-    $member_handler =& xoops_gethandler('member');
+    $member_handler =& xoops_getHandler('member');
     $topposters = $member_handler->getUsers($criteria);
     $count = count($topposters);
     for ($i = 0; $i < $count; ++$i) {
         $block['users'][$i]['rank'] = $i+1;
         if ($options[1] == 1) {
-            $block['users'][$i]['avatar'] = $topposters[$i]->getVar('user_avatar') != 'blank.gif' ? XOOPS_UPLOAD_URL.'/'.$topposters[$i]->getVar('user_avatar') : '';
+            $block['users'][$i]['avatar'] = $topposters[$i]->getVar('user_avatar') !== 'blank.gif' ? XOOPS_UPLOAD_URL.'/'.$topposters[$i]->getVar('user_avatar') : '';
         } else {
             $block['users'][$i]['avatar'] = '';
         }
@@ -418,7 +418,7 @@ function b_system_comments_show($options)
 {
     $block = array();
     include_once XOOPS_ROOT_PATH.'/include/comment_constants.php';
-    $comment_handler =& xoops_gethandler('comment');
+    $comment_handler =& xoops_getHandler('comment');
     $criteria = new CriteriaCompo(new Criteria('com_status', XOOPS_COMMENT_ACTIVE));
     $criteria->setLimit((int)($options[0]));
     $criteria->setSort('com_created');
@@ -426,7 +426,7 @@ function b_system_comments_show($options)
 
     // Check modules permissions
     global $xoopsUser;
-    $moduleperm_handler =& xoops_gethandler('groupperm');
+    $moduleperm_handler =& xoops_getHandler('groupperm');
     $gperm_groupid = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
     $criteria1 = new CriteriaCompo(new Criteria('gperm_name','module_read','='));
     $criteria1->add(new Criteria('gperm_groupid', '('.implode(',', $gperm_groupid).')', 'IN'));
@@ -442,8 +442,8 @@ function b_system_comments_show($options)
     // Check modules permissions
 
     $comments = $comment_handler->getObjects($criteria, true);
-    $member_handler =& xoops_gethandler('member');
-    $module_handler =& xoops_gethandler('module');
+    $member_handler =& xoops_getHandler('member');
+    $module_handler =& xoops_getHandler('module');
     $modules = $module_handler->getObjects(new Criteria('hascomments', 1), true);
     $comment_config = array();
     foreach (array_keys($comments) as $i) {
@@ -487,7 +487,7 @@ function b_system_notification_show()
     if (empty($xoopsUser) || !notificationEnabled('block')) {
         return false; // do not display block
     }
-    $notification_handler =& xoops_gethandler('notification');
+    $notification_handler =& xoops_getHandler('notification');
     // Now build the a nested associative array of info to pass
     // to the block template.
     $block = array();

@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: admin_header.php 13082 2015-06-06 21:59:41Z beckmi $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2015 XOOPS Project (www.xoops.org)            //
@@ -28,17 +28,17 @@
 include dirname(dirname(dirname(dirname(__DIR__)))) . '/mainfile.php';
 include $GLOBALS['xoops']->path('/include/cp_functions.php');
 if (is_object($xoopsUser)) {
-	$module_handler =& xoops_gethandler('module');
-	$xoopsModule =& $module_handler->getByDirname('system');
-	if (!in_array( XOOPS_GROUP_ADMIN, $xoopsUser->getGroups() )) {
+    $module_handler =& xoops_getHandler('module');
+    $xoopsModule    =& $module_handler->getByDirname('system');
+    if (!in_array(XOOPS_GROUP_ADMIN, $xoopsUser->getGroups())) {
         include_once $GLOBALS['xoops']->path('modules/system/constants.php');
-		$sysperm_handler =& xoops_gethandler('groupperm');
-		if (!$sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $xoopsUser->getGroups())) {
-			redirect_header(XOOPS_URL . '/', 3, _NOPERM);;
-			exit();
-		}
-	}
+        $sysperm_handler =& xoops_getHandler('groupperm');
+        if (!$sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $xoopsUser->getGroups())) {
+            redirect_header(XOOPS_URL . '/', 3, _NOPERM);;
+            exit();
+        }
+    }
 } else {
-	redirect_header(XOOPS_URL.'/', 3, _NOPERM);
-	exit();
+    redirect_header(XOOPS_URL . '/', 3, _NOPERM);
+    exit();
 }

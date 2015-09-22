@@ -10,14 +10,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @subpackage      form
- * @since           2.0.0
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @subpackage          form
+ * @since               2.0.0
+ * @version             $Id: tableform.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 xoops_load('XoopsForm');
 
@@ -41,11 +41,9 @@ class XoopsTableForm extends XoopsForm
      *
      * @return string
      */
-    function render()
+    public function render()
     {
-        $ret = $this->getTitle() . NWLINE
-             . '<form name="' . $this->getName() . '" id="' . $this->getName() . '" action="' . $this->getAction() . '" method="' . $this->getMethod() . '"' . $this->getExtra() . '>'
-             . NWLINE . '<table border="0" width="100%">' . NWLINE;
+        $ret    = $this->getTitle() . NWLINE . '<form name="' . $this->getName() . '" id="' . $this->getName() . '" action="' . $this->getAction() . '" method="' . $this->getMethod() . '"' . $this->getExtra() . '>' . NWLINE . '<table border="0" width="100%">' . NWLINE;
         $hidden = "";
         foreach ($this->getElements() as $ele) {
             if (!$ele->isHidden()) {
@@ -64,6 +62,7 @@ class XoopsTableForm extends XoopsForm
             }
         }
         $ret .= '</table>' . NWLINE . ' ' . $hidden . '</form>' . NWLINE;
+
         return $ret;
     }
 }

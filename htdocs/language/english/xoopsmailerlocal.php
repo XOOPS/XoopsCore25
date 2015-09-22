@@ -12,34 +12,34 @@
  *  Xoops Language
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @subpackage      Xoops Mailer Local Language
- * @since           2.3.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @subpackage          Xoops Mailer Local Language
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: xoopsmailerlocal.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 /**
  * Localize the mail functions
  *
  * The English localization is solely for demonstration
  */
 // Do not change the class name
-class XoopsMailerLocal extends XoopsMailer
+class xoopsmailerlocal extends XoopsMailer
 {
     /**
      * Constructer
      *
      * @return XoopsMailerLocal
      */
-    function XoopsMailerLocal()
+    public function __construct()
     {
         $this->XoopsMailer();
         // It is supposed no need to change the charset
         $this->charSet = strtolower(_CHARSET);
         // You MUST specify the language code value so that the file exists: XOOPS_ROOT_PAT/class/mail/phpmailer/language/lang-["your-language-code"].php
-        $this->multimailer->SetLanguage("en");
+        $this->multimailer->setLanguage("en");
     }
     // Multibyte languages are encouraged to make their proper method for encoding FromName
     /**
@@ -47,7 +47,7 @@ class XoopsMailerLocal extends XoopsMailer
      *
      * @return mixed
      */
-    function encodeFromName($text)
+    public function encodeFromName($text)
     {
         // Activate the following line if needed
         // $text = "=?{$this->charSet}?B?".base64_encode($text)."?=";
@@ -59,7 +59,7 @@ class XoopsMailerLocal extends XoopsMailer
      *
      * @return mixed
      */
-    function encodeSubject($text)
+    public function encodeSubject($text)
     {
         // Activate the following line if needed
         // $text = "=?{$this->charSet}?B?".base64_encode($text)."?=";

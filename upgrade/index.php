@@ -10,12 +10,12 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         upgrader
- * @since           2.3.0
- * @author          Skalpa Keo <skalpa@xoops.org>
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             upgrader
+ * @since               2.3.0
+ * @author              Skalpa Keo <skalpa@xoops.org>
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: index.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 @include_once '../mainfile.php';
@@ -43,7 +43,7 @@ function getDirList($dirname)
     $dirlist = array();
     if (is_dir($dirname) && $handle = opendir($dirname)) {
         while (false !== ($file = readdir($handle))) {
-            if (substr( $file, 0, 1 ) != '.'  && strtolower($file) != 'cvs') {
+            if (substr($file, 0, 1) != '.' && strtolower($file) != 'cvs') {
                 if (is_dir("{$dirname}/{$file}")) {
                     $dirlist[] = $file;
                 }
@@ -58,17 +58,17 @@ function getDirList($dirname)
 }
 
 /**
- * @param        $db
+ * @param XoopsDatabase $db
  * @param        $table
  * @param        $field
  * @param string $condition
  *
  * @return bool
  */
-function getDbValue(&$db, $table, $field, $condition = '')
+function getDbValue(XoopsDatabase $db, $table, $field, $condition = '')
 {
-    $table = $db->prefix( $table );
-    $sql = "SELECT `{$field}` FROM `{$table}`";
+    $table = $db->prefix($table);
+    $sql   = "SELECT `{$field}` FROM `{$table}`";
     if ($condition) {
         $sql .= " WHERE {$condition}";
     }
@@ -109,7 +109,7 @@ if (!$xoopsUser || !$xoopsUser->isAdmin()) {
     include_once "login.php";
 } else {
     $op = @$_REQUEST['action'];
-    if (empty( $_SESSION['xoops_upgrade']['steps'])) {
+    if (empty($_SESSION['xoops_upgrade']['steps'])) {
         $op = '';
     }
     if (empty($op)) {
@@ -118,20 +118,20 @@ if (!$xoopsUser || !$xoopsUser->isAdmin()) {
         $next = array_shift($_SESSION['xoops_upgrade']['steps']);
         printf('<h2>' . _PERFORMING_UPGRADE . '</h2>', $next);
         $upgrader = include_once "{$next}/index.php";
-        $res = $upgrader->apply();
+        $res      = $upgrader->apply();
         if ($message = $upgrader->message()) {
             echo "<p>" . $message . "</p>";
         }
 
         if (!$res) {
-            array_unshift( $_SESSION['xoops_upgrade']['steps'], $next );
+            array_unshift($_SESSION['xoops_upgrade']['steps'], $next);
             echo '<a id="link-next" href="index.php?action=next">' . _RELOAD . '</a>';
         } else {
-            if (empty( $_SESSION['xoops_upgrade']['steps'])) {
-                 $text = _FINISH;
+            if (empty($_SESSION['xoops_upgrade']['steps'])) {
+                $text = _FINISH;
             } else {
-                list($key, $val) = each( $_SESSION['xoops_upgrade']['steps'] );
-                $text = sprintf( _APPLY_NEXT, $val );
+                list($key, $val) = each($_SESSION['xoops_upgrade']['steps']);
+                $text = sprintf(_APPLY_NEXT, $val);
             }
             echo '<a id="link-next" href="index.php?action=next">' . $text . '</a>';
         }

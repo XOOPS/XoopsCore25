@@ -10,7 +10,6 @@
  */
 class HTMLPurifier_PercentEncoder
 {
-
     /**
      * Reserved characters to preserve when using encode().
      * @type array
@@ -33,10 +32,10 @@ class HTMLPurifier_PercentEncoder
         for ($i = 97; $i <= 122; ++$i) { // lower-case
             $this->preserve[$i] = true;
         }
-        $this->preserve[45] = true; // Dash         -
-        $this->preserve[46] = true; // Period       .
-        $this->preserve[95] = true; // Underscore   _
-        $this->preserve[126]= true; // Tilde        ~
+        $this->preserve[45]  = true; // Dash         -
+        $this->preserve[46]  = true; // Period       .
+        $this->preserve[95]  = true; // Underscore   _
+        $this->preserve[126] = true; // Tilde        ~
 
         // extra letters not to escape
         if ($preserve !== false) {
@@ -53,7 +52,7 @@ class HTMLPurifier_PercentEncoder
      *      Assumes that the string has already been normalized, making any
      *      and all percent escape sequences valid. Percents will not be
      *      re-escaped, regardless of their status in $preserve
-     * @param string $string String to be encoded
+     * @param  string $string String to be encoded
      * @return string Encoded string.
      */
     public function encode($string)
@@ -66,6 +65,7 @@ class HTMLPurifier_PercentEncoder
                 $ret .= $string[$i];
             }
         }
+
         return $ret;
     }
 
@@ -74,7 +74,7 @@ class HTMLPurifier_PercentEncoder
      * @warning This function is affected by $preserve, even though the
      *          usual desired behavior is for this not to preserve those
      *          characters. Be careful when reusing instances of PercentEncoder!
-     * @param string $string String to normalize
+     * @param  string $string String to normalize
      * @return string
      */
     public function normalize($string)
@@ -83,7 +83,7 @@ class HTMLPurifier_PercentEncoder
             return '';
         }
         $parts = explode('%', $string);
-        $ret = array_shift($parts);
+        $ret   = array_shift($parts);
         foreach ($parts as $part) {
             $length = strlen($part);
             if ($length < 2) {
@@ -104,8 +104,10 @@ class HTMLPurifier_PercentEncoder
             $encoding = strtoupper($encoding);
             $ret .= '%' . $encoding . $text;
         }
+
         return $ret;
     }
 }
 
 // vim: et sw=4 sts=4
+

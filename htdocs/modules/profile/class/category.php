@@ -10,18 +10,18 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         profile
- * @since           2.3.0
- * @author          Jan Pedersen
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             profile
+ * @since               2.3.0
+ * @author              Jan Pedersen
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: category.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-// defined('XOOPS_ROOT_PATH') || die("XOOPS root path not defined");
+// defined('XOOPS_ROOT_PATH') || exit("XOOPS root path not defined");
 
 /**
- * @package kernel
+ * @package             kernel
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  */
 class ProfileCategory extends XoopsObject
@@ -29,7 +29,7 @@ class ProfileCategory extends XoopsObject
     /**
      *
      */
-    function __construct()
+    public function __construct()
     {
         $this->initVar('cat_id', XOBJ_DTYPE_INT, null, true);
         $this->initVar('cat_title', XOBJ_DTYPE_TXTBOX);
@@ -38,13 +38,13 @@ class ProfileCategory extends XoopsObject
     }
 
     /**
-    * Get {@link XoopsThemeForm} for adding/editing categories
-    *
-    * @param mixed $action URL to submit to or false for $_SERVER['REQUEST_URI']
-    *
-    * @return object
-    */
-    function getForm($action = false)
+     * Get {@link XoopsThemeForm} for adding/editing categories
+     *
+     * @param mixed $action URL to submit to or false for $_SERVER['REQUEST_URI']
+     *
+     * @return object
+     */
+    public function getForm($action = false)
     {
         if ($action === false) {
             $action = $_SERVER['REQUEST_URI'];
@@ -62,7 +62,7 @@ class ProfileCategory extends XoopsObject
         $form->addElement(new XoopsFormTextArea(_PROFILE_AM_DESCRIPTION, 'cat_description', $this->getVar('cat_description', 'e')));
         $form->addElement(new XoopsFormText(_PROFILE_AM_WEIGHT, 'cat_weight', 35, 35, $this->getVar('cat_weight', 'e')));
 
-        $form->addElement(new XoopsFormHidden('op', 'save') );
+        $form->addElement(new XoopsFormHidden('op', 'save'));
         $form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
 
         return $form;
@@ -70,15 +70,15 @@ class ProfileCategory extends XoopsObject
 }
 
 /**
- * @package kernel
+ * @package             kernel
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  */
 class ProfileCategoryHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * @param null|object $db
+     * @param null|XoopsDatabase $db
      */
-    function __construct(&$db)
+    public function __construct(XoopsDatabase $db)
     {
         parent::__construct($db, "profile_category", "profilecategory", "cat_id", 'cat_title');
     }

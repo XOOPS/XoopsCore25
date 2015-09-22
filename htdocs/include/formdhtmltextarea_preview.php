@@ -10,36 +10,36 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         xoopsform
- * @since           2.3.0
- * @author          Vinod <smartvinu@gmail.com>
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             xoopsform
+ * @since               2.3.0
+ * @author              Vinod <smartvinu@gmail.com>
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: formdhtmltextarea_preview.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-include_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'mainfile.php';
+include_once dirname(__DIR__) . '/mainfile.php';
 
 $xoopsLogger->activated = false;
-$myts =& MyTextSanitizer::getInstance();
+$myts                   =& MyTextSanitizer::getInstance();
 
 $content = $myts->stripSlashesGPC($_POST['text']);
 
 if (!$GLOBALS['xoopsSecurity']->validateToken(@$_POST['token'], false)) {
     $content = 'Direct access is not allowed!!!';
 }
-$html = empty($_POST['html']) ? 0 : 1;
+$html    = empty($_POST['html']) ? 0 : 1;
 $content = $myts->displayTarea($content, $html, 1, 1, 1, 1);
 if (preg_match_all('/%u([[:alnum:]]{4})/', $content, $matches)) {
     foreach ($matches[1] as $uniord) {
-        $utf = '&#x' . $uniord . ';';
+        $utf     = '&#x' . $uniord . ';';
         $content = str_replace('%u' . $uniord, $utf, $content);
     }
     $content = urldecode($content);
 }
 
-if (! headers_sent()) {
+if (!headers_sent()) {
     $charset = (defined('_CHARSET') ? _CHARSET : 'UTF-8');
-    header('Content-Type:text/html; charset='.$charset);
+    header('Content-Type:text/html; charset=' . $charset);
     header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
     header('Cache-Control: private, no-cache');
     header('Pragma: no-cache');

@@ -10,12 +10,12 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         profile
- * @since           2.3.0
- * @author          Jan Pedersen
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             profile
+ * @since               2.3.0
+ * @author              Jan Pedersen
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: field.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
@@ -28,17 +28,17 @@ echo $indexAdmin->renderButton('right', '');
 
 $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : (isset($_REQUEST['id']) ? "edit" : 'list');
 
-$profilefield_handler =& xoops_getmodulehandler('field');
+$profilefield_handler =& xoops_getModuleHandler('field');
 
 switch ($op) {
     default:
     case "list":
         $fields = $profilefield_handler->getObjects(null, true, false);
 
-        $module_handler =& xoops_gethandler('module');
+        $module_handler =& xoops_getHandler('module');
         $modules        = $module_handler->getObjects(null, true);
 
-        $cat_handler =& xoops_getmodulehandler('category');
+        $cat_handler =& xoops_getModuleHandler('category');
         $criteria    = new CriteriaCompo();
         $criteria->setSort('cat_weight');
         $cats = $cat_handler->getObjects($criteria, true);
@@ -52,16 +52,18 @@ switch ($op) {
         }
         $GLOBALS['xoopsTpl']->assign('categories', $categories);
         unset($categories);
-        $valuetypes = array(            XOBJ_DTYPE_ARRAY   => _PROFILE_AM_ARRAY,
+        $valuetypes = array(
+            XOBJ_DTYPE_ARRAY   => _PROFILE_AM_ARRAY,
             XOBJ_DTYPE_EMAIL   => _PROFILE_AM_EMAIL,
             XOBJ_DTYPE_INT     => _PROFILE_AM_INT,
             XOBJ_DTYPE_TXTAREA => _PROFILE_AM_TXTAREA,
             XOBJ_DTYPE_TXTBOX  => _PROFILE_AM_TXTBOX,
             XOBJ_DTYPE_URL     => _PROFILE_AM_URL,
             XOBJ_DTYPE_OTHER   => _PROFILE_AM_OTHER,
-            XOBJ_DTYPE_MTIME   => _PROFILE_AM_DATE        );
+            XOBJ_DTYPE_MTIME   => _PROFILE_AM_DATE);
 
-        $fieldtypes = array('checkbox'     => _PROFILE_AM_CHECKBOX,
+        $fieldtypes = array(
+            'checkbox'     => _PROFILE_AM_CHECKBOX,
             'group'        => _PROFILE_AM_GROUP,
             'group_multi'  => _PROFILE_AM_GROUPMULTI,
             'language'     => _PROFILE_AM_LANGUAGE,
@@ -81,13 +83,12 @@ switch ($op) {
             'rank'         => _PROFILE_AM_RANK);
 
         foreach (array_keys($fields) as $i) {
-            $fields[$i]['canEdit']=$fields[$i]['field_config'] || $fields[$i]['field_show'] || $fields[$i]['field_edit'];
+            $fields[$i]['canEdit']               = $fields[$i]['field_config'] || $fields[$i]['field_show'] || $fields[$i]['field_edit'];
             $fields[$i]['canDelete']             = $fields[$i]['field_config'];
             $fields[$i]['fieldtype']             = $fieldtypes[$fields[$i]['field_type']];
             $fields[$i]['valuetype']             = $valuetypes[$fields[$i]['field_valuetype']];
             $categories[$fields[$i]['cat_id']][] = $fields[$i];
             $weights[$fields[$i]['cat_id']][]    = $fields[$i]['field_weight'];
-
         }
         //sort fields order in categories
         foreach (array_keys($categories) as $i) {
@@ -135,7 +136,7 @@ switch ($op) {
             if (count($ids) > 0) {
                 $errors = array();
                 //if there are changed fields, fetch the fieldcategory objects
-                $field_handler =& xoops_getmodulehandler('field');
+                $field_handler =& xoops_getModuleHandler('field');
                 $fields        = $field_handler->getObjects(new Criteria('field_id', "(" . implode(',', $ids) . ")", "IN"), true);
                 foreach ($ids as $i) {
                     $fields[$i]->setVar('field_weight', (int)($weight[$i]));
@@ -191,7 +192,9 @@ switch ($op) {
 
             if (!empty($_REQUEST['addOption'])) {
                 foreach ($_REQUEST['addOption'] as $option) {
-                    if (empty($option['value'])) continue;
+                    if (empty($option['value'])) {
+                        continue;
+                    }
                     $options[$option['key']] = $option['value'];
                     $redirect_to_edit        = true;
                 }
@@ -219,11 +222,13 @@ switch ($op) {
             $obj->setVar('field_weight', $_REQUEST['field_weight']);
             $obj->setVar('cat_id', $_REQUEST['field_category']);
         }
-        if ( /*$obj->getVar('field_edit') && */isset($_REQUEST['step_id']) ) {
+        if (/*$obj->getVar('field_edit') && */
+        isset($_REQUEST['step_id'])
+        ) {
             $obj->setVar('step_id', $_REQUEST['step_id']);
         }
         if ($profilefield_handler->insert($obj)) {
-            $groupperm_handler =& xoops_gethandler('groupperm');
+            $groupperm_handler =& xoops_getHandler('groupperm');
 
             $perm_arr = array();
             if ($obj->getVar('field_show')) {
@@ -268,7 +273,6 @@ switch ($op) {
                             $groupperm_handler->deleteAll($criteria);
                         }
                         unset($groups);
-
                     } else {
                         $groupperm_handler->deleteAll($criteria);
                     }
@@ -299,7 +303,7 @@ switch ($op) {
                 echo $obj->getHtmlErrors();
             }
         } else {
-            xoops_confirm(array('ok' => 1,'id' => $_REQUEST['id'],'op' => 'delete'), $_SERVER['REQUEST_URI'], sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('field_title')));
+            xoops_confirm(array('ok' => 1, 'id' => $_REQUEST['id'], 'op' => 'delete'), $_SERVER['REQUEST_URI'], sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('field_title')));
         }
         break;
 

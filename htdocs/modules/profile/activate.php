@@ -10,27 +10,27 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         profile
- * @since           2.3.0
- * @author          Jan Pedersen
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             profile
+ * @since               2.3.0
+ * @author              Jan Pedersen
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: activate.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 $xoopsOption['pagetype'] = "user";
-include __DIR__ . DIRECTORY_SEPARATOR . 'header.php';
+include __DIR__ . '/header.php';
 
 include $GLOBALS['xoops']->path('header.php');
 if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
-    $id = (int)($_GET['id']);
+    $id     = (int)($_GET['id']);
     $actkey = trim($_GET['actkey']);
     if (empty($id)) {
         redirect_header(XOOPS_URL, 1, '');
         exit();
     }
-    $member_handler =& xoops_gethandler('member');
-    $thisuser =& $member_handler->getUser($id);
+    $member_handler =& xoops_getHandler('member');
+    $thisuser       =& $member_handler->getUser($id);
     if (!is_object($thisuser)) {
         redirect_header(XOOPS_URL, 1, '');
         exit();
@@ -39,14 +39,14 @@ if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
         redirect_header(XOOPS_URL . '/', 5, _US_ACTKEYNOT);
     } else {
         if ($thisuser->getVar('level') > 0) {
-            redirect_header(XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n'). '/index.php', 5, _US_ACONTACT, false);
+            redirect_header(XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/index.php', 5, _US_ACONTACT, false);
         } else {
             if (false != $member_handler->activateUser($thisuser)) {
-                $config_handler =& xoops_gethandler('config');
+                $config_handler             =& xoops_getHandler('config');
                 $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
                 if ($GLOBALS['xoopsConfigUser']['activation_type'] == 2) {
-                    $myts =& MyTextSanitizer::getInstance();
-                    $xoopsMailer = xoops_getMailer();
+                    $myts        =& MyTextSanitizer::getInstance();
+                    $xoopsMailer =& xoops_getMailer();
                     $xoopsMailer->useMail();
                     $xoopsMailer->setTemplate('activated.tpl');
                     $xoopsMailer->assign('SITENAME', $GLOBALS['xoopsConfig']['sitename']);
@@ -55,14 +55,14 @@ if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
                     $xoopsMailer->setToUsers($thisuser);
                     $xoopsMailer->setFromEmail($GLOBALS['xoopsConfig']['adminmail']);
                     $xoopsMailer->setFromName($GLOBALS['xoopsConfig']['sitename']);
-                    $xoopsMailer->setSubject(sprintf(_US_YOURACCOUNT, $GLOBALS['xoopsConfig']['sitename']) );
+                    $xoopsMailer->setSubject(sprintf(_US_YOURACCOUNT, $GLOBALS['xoopsConfig']['sitename']));
                     include $GLOBALS['xoops']->path('header.php');
                     if (!$xoopsMailer->send()) {
-                        printf(_US_ACTVMAILNG, $thisuser->getVar('uname') );
+                        printf(_US_ACTVMAILNG, $thisuser->getVar('uname'));
                     } else {
-                        printf(_US_ACTVMAILOK, $thisuser->getVar('uname') );
+                        printf(_US_ACTVMAILOK, $thisuser->getVar('uname'));
                     }
-                    include __DIR__ . DIRECTORY_SEPARATOR . 'footer.php';
+                    include __DIR__ . '/footer.php';
                 } else {
                     redirect_header(XOOPS_URL . '/user.php', 5, _US_ACTLOGIN, false);
                 }
@@ -71,11 +71,11 @@ if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
             }
         }
     }
-// Not implemented yet: re-send activiation code
-} else if (!empty($_REQUEST['email']) && $xoopsConfigUser['activation_type'] != 0) {
-    $myts =& MyTextSanitizer::getInstance();
-    $member_handler =& xoops_gethandler('member');
-    $getuser =& $member_handler->getUsers(new Criteria('email', $myts->addSlashes(trim($_REQUEST['email']))));
+    // Not implemented yet: re-send activiation code
+} elseif (!empty($_REQUEST['email']) && $xoopsConfigUser['activation_type'] != 0) {
+    $myts           =& MyTextSanitizer::getInstance();
+    $member_handler =& xoops_getHandler('member');
+    $getuser        =& $member_handler->getUsers(new Criteria('email', $myts->addSlashes(trim($_REQUEST['email']))));
     if (count($getuser) == 0) {
         redirect_header(XOOPS_URL, 2, _US_SORRYNOTFOUND);
     }
@@ -91,7 +91,7 @@ if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
     $xoopsMailer->setToUsers($getuser[0]);
     $xoopsMailer->setFromEmail($GLOBALS['xoopsConfig']['adminmail']);
     $xoopsMailer->setFromName($GLOBALS['xoopsConfig']['sitename']);
-    $xoopsMailer->setSubject(sprintf(_US_USERKEYFOR, $getuser[0]->getVar('uname') ));
+    $xoopsMailer->setSubject(sprintf(_US_USERKEYFOR, $getuser[0]->getVar('uname')));
     if (!$xoopsMailer->send()) {
         echo _US_YOURREGMAILNG;
     } else {
@@ -100,10 +100,10 @@ if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
 } else {
     include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
     $form = new XoopsThemeForm('', 'form', 'activate.php');
-    $form->addElement(new XoopsFormText(_US_EMAIL, 'email', 25, 255) );
-    $form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit') );
+    $form->addElement(new XoopsFormText(_US_EMAIL, 'email', 25, 255));
+    $form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
     $form->display();
 }
 
 $xoBreadcrumbs[] = array('title' => _PROFILE_MA_REGISTER);
-include __DIR__ . DIRECTORY_SEPARATOR . 'footer.php';
+include __DIR__ . '/footer.php';

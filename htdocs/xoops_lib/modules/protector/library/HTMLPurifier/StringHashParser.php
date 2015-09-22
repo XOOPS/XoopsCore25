@@ -27,7 +27,6 @@
  */
 class HTMLPurifier_StringHashParser
 {
-
     /**
      * @type string
      */
@@ -35,7 +34,7 @@ class HTMLPurifier_StringHashParser
 
     /**
      * Parses a file that contains a single string-hash.
-     * @param string $file
+     * @param  string $file
      * @return array
      */
     public function parseFile($file)
@@ -49,12 +48,13 @@ class HTMLPurifier_StringHashParser
         }
         $ret = $this->parseHandle($fh);
         fclose($fh);
+
         return $ret;
     }
 
     /**
      * Parses a file that contains multiple string-hashes delimited by '----'
-     * @param string $file
+     * @param  string $file
      * @return array
      */
     public function parseMultiFile($file)
@@ -63,7 +63,7 @@ class HTMLPurifier_StringHashParser
             return false;
         }
         $ret = array();
-        $fh = fopen($file, 'r');
+        $fh  = fopen($file, 'r');
         if (!$fh) {
             return false;
         }
@@ -71,6 +71,7 @@ class HTMLPurifier_StringHashParser
             $ret[] = $this->parseHandle($fh);
         }
         fclose($fh);
+
         return $ret;
     }
 
@@ -79,15 +80,15 @@ class HTMLPurifier_StringHashParser
      * @note While it's possible to simulate in-memory parsing by using
      *       custom stream wrappers, if such a use-case arises we should
      *       factor out the file handle into its own class.
-     * @param resource $fh File handle with pointer at start of valid string-hash
-     *            block.
+     * @param  resource $fh File handle with pointer at start of valid string-hash
+     *                      block.
      * @return array
      */
     protected function parseHandle($fh)
     {
-        $state   = false;
-        $single  = false;
-        $ret     = array();
+        $state  = false;
+        $single = false;
+        $ret    = array();
         do {
             $line = fgets($fh);
             if ($line === false) {
@@ -118,19 +119,21 @@ class HTMLPurifier_StringHashParser
                     $line = trim($line);
                 } else {
                     // Use default declaration
-                    $state  = $this->default;
+                    $state = $this->default;
                 }
             }
             if ($single) {
                 $ret[$state] = $line;
-                $single = false;
-                $state  = false;
+                $single      = false;
+                $state       = false;
             } else {
                 $ret[$state] .= "$line\n";
             }
         } while (!feof($fh));
+
         return $ret;
     }
 }
 
 // vim: et sw=4 sts=4
+

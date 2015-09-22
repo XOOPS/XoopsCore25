@@ -10,14 +10,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2005-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         class
- * @subpackage      file
- * @since           2.3.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             class
+ * @subpackage          file
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: file.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Convenience class for reading, writing and appending to files.
@@ -33,21 +33,21 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
  * Redistributions of files must retain the above copyright notice.
  *
  * @filesource
- * @copyright Copyright 2005-2008, Cake Software Foundation, Inc.
- * @link http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
- * @package cake
+ * @copyright  Copyright 2005-2008, Cake Software Foundation, Inc.
+ * @link       http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
+ * @package    cake
  * @subpackage cake.cake.libs
- * @since CakePHP(tm) v 0.2.9
- * @version $Revision$
- * @modifiedby $LastChangedBy$
- * @lastmodified $Date$
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @since      CakePHP(tm) v 0.2.9
+ * @version    $Revision: 13082 $
+ * @modifiedby $LastChangedBy: beckmi $
+ * @lastmodified $Date: 2015-06-06 17:59:41 -0400 (Sat, 06 Jun 2015) $
+ * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
 /**
  * Convenience class for reading, writing and appending to files.
  *
- * @package cake
+ * @package    cake
  * @subpackage cake.cake.libs
  */
 class XoopsFileHandler
@@ -58,7 +58,7 @@ class XoopsFileHandler
      * @var object
      * @access public
      */
-    var $folder = null;
+    public $folder;
 
     /**
      * Filename
@@ -66,7 +66,7 @@ class XoopsFileHandler
      * @var string
      * @access public
      */
-    var $name = null;
+    public $name;
 
     /**
      * file info
@@ -74,7 +74,7 @@ class XoopsFileHandler
      * @var string
      * @access public
      */
-    var $info = array();
+    public $info = array();
 
     /**
      * Holds the file handler resource if the file is opened
@@ -82,7 +82,7 @@ class XoopsFileHandler
      * @var resource
      * @access public
      */
-    var $handle = null;
+    public $handle;
 
     /**
      * enable locking for file reading and writing
@@ -90,7 +90,7 @@ class XoopsFileHandler
      * @var boolean
      * @access public
      */
-    var $lock = null;
+    public $lock;
 
     /**
      * Constructor
@@ -100,7 +100,7 @@ class XoopsFileHandler
      * @param integer $mode   Mode to apply to the folder holding the file
      * @access private
      */
-    function __construct($path, $create = false, $mode = 0755)
+    public function __construct($path, $create = false, $mode = 0755)
     {
         XoopsLoad::load('XoopsFile');
         $this->folder = XoopsFile::getHandler('folder', dirname($path), $create, $mode);
@@ -125,7 +125,7 @@ class XoopsFileHandler
      * @param mixed $create
      * @param mixed $mode
      */
-    function XoopsFileHandler($path, $create = false, $mode = 0755)
+    public function XoopsFileHandler($path, $create = false, $mode = 0755)
     {
         $this->__construct($path, $create, $mode);
     }
@@ -135,7 +135,7 @@ class XoopsFileHandler
      *
      * @access private
      */
-    function __destruct()
+    public function __destruct()
     {
         $this->close();
     }
@@ -146,10 +146,10 @@ class XoopsFileHandler
      * @return boolean Success
      * @access public
      */
-    function create()
+    public function create()
     {
         $dir = $this->folder->pwd();
-        if (is_dir($dir) && is_writable($dir) && ! $this->exists()) {
+        if (is_dir($dir) && is_writable($dir) && !$this->exists()) {
             if (touch($this->pwd())) {
                 return true;
             }
@@ -166,7 +166,7 @@ class XoopsFileHandler
      * @return boolean True on success, false on failure
      * @access public
      */
-    function open($mode = 'r', $force = false)
+    public function open($mode = 'r', $force = false)
     {
         if (!$force && is_resource($this->handle)) {
             return true;
@@ -194,7 +194,7 @@ class XoopsFileHandler
      * @return mixed string on success, false on failure
      * @access public
      */
-    function read($bytes = false, $mode = 'rb', $force = false)
+    public function read($bytes = false, $mode = 'rb', $force = false)
     {
         $success = false;
         if ($this->lock !== null) {
@@ -204,12 +204,12 @@ class XoopsFileHandler
         }
         if ($bytes === false) {
             $success = file_get_contents($this->pwd());
-        } else if ($this->open($mode, $force) === true) {
+        } elseif ($this->open($mode, $force) === true) {
             if (is_int($bytes)) {
                 $success = fread($this->handle, $bytes);
             } else {
                 $data = '';
-                while (! feof($this->handle)) {
+                while (!feof($this->handle)) {
                     $data .= fgets($this->handle, 4096);
                 }
                 $success = trim($data);
@@ -230,13 +230,13 @@ class XoopsFileHandler
      * @return mixed   True on success, false on failure (set mode), false on failure or integer offset on success (get mode)
      * @access public
      */
-    function offset($offset = false, $seek = SEEK_SET)
+    public function offset($offset = false, $seek = SEEK_SET)
     {
         if ($offset === false) {
             if (is_resource($this->handle)) {
                 return ftell($this->handle);
             }
-        } else if ($this->open() === true) {
+        } elseif ($this->open() === true) {
             return fseek($this->handle, $offset, $seek) === 0;
         }
 
@@ -251,17 +251,17 @@ class XoopsFileHandler
      * @return string
      * @access public
      */
-    function prepare($data)
+    public function prepare($data)
     {
         $lineBreak = "\n";
-        if (substr(PHP_OS, 0, 3) == 'WIN') {
+        if (substr(PHP_OS, 0, 3) === 'WIN') {
             $lineBreak = "\r\n";
         }
 
         return strtr($data, array(
-            "\r\n" => $lineBreak ,
-            "\n" => $lineBreak ,
-            "\r" => $lineBreak));
+            "\r\n" => $lineBreak,
+            "\n"   => $lineBreak,
+            "\r"   => $lineBreak));
     }
 
     /**
@@ -273,7 +273,7 @@ class XoopsFileHandler
      * @return boolean     Success
      * @access public
      */
-    function write($data, $mode = 'w', $force = false)
+    public function write($data, $mode = 'w', $force = false)
     {
         $success = false;
         if ($this->open($mode, $force) === true) {
@@ -301,7 +301,7 @@ class XoopsFileHandler
      * @return boolean     Success
      * @access public
      */
-    function append($data, $force = false)
+    public function append($data, $force = false)
     {
         return $this->write($data, 'a', $force);
     }
@@ -312,7 +312,7 @@ class XoopsFileHandler
      * @return boolean True if closing was successful or file was already closed, otherwise false
      * @access public
      */
-    function close()
+    public function close()
     {
         if (!is_resource($this->handle)) {
             return true;
@@ -327,7 +327,7 @@ class XoopsFileHandler
      * @return boolean Success
      * @access public
      */
-    function delete()
+    public function delete()
     {
         if ($this->exists()) {
             return unlink($this->pwd());
@@ -342,7 +342,7 @@ class XoopsFileHandler
      * @return string The File extension
      * @access public
      */
-    function info()
+    public function info()
     {
         if ($this->info == null) {
             $this->info = pathinfo($this->pwd());
@@ -360,7 +360,7 @@ class XoopsFileHandler
      * @return string The File extension
      * @access public
      */
-    function ext()
+    public function ext()
     {
         if ($this->info == null) {
             $this->info();
@@ -378,7 +378,7 @@ class XoopsFileHandler
      * @return string The File name without extension.
      * @access public
      */
-    function name()
+    public function name()
     {
         if ($this->info == null) {
             $this->info();
@@ -400,7 +400,7 @@ class XoopsFileHandler
      * @return string $ext the extension of the file
      * @access public
      */
-    function safe($name = null, $ext = null)
+    public function safe($name = null, $ext = null)
     {
         if (!$name) {
             $name = $this->name;
@@ -415,11 +415,11 @@ class XoopsFileHandler
     /**
      * Get md5 Checksum of file with previous check of Filesize
      *
-     * @param  mixed  $maxsize in MB or true to force
+     * @param  mixed $maxsize in MB or true to force
      * @return string md5 Checksum {@link http://php.net/md5_file See md5_file()}
      * @access public
      */
-    function md5($maxsize = 5)
+    public function md5($maxsize = 5)
     {
         if ($maxsize === true) {
             return md5_file($this->pwd());
@@ -439,7 +439,7 @@ class XoopsFileHandler
      * @return string Full path to file
      * @access public
      */
-    function pwd()
+    public function pwd()
     {
         return $this->folder->slashTerm($this->folder->pwd()) . $this->name;
     }
@@ -450,7 +450,7 @@ class XoopsFileHandler
      * @return boolean true if it exists, false otherwise
      * @access public
      */
-    function exists()
+    public function exists()
     {
         $exists = (file_exists($this->pwd()) && is_file($this->pwd()));
 
@@ -463,10 +463,10 @@ class XoopsFileHandler
      * @return string Permissions for the file
      * @access public
      */
-    function perms()
+    public function perms()
     {
         if ($this->exists()) {
-            return substr(sprintf('%o', fileperms($this->pwd())), - 4);
+            return substr(sprintf('%o', fileperms($this->pwd())), -4);
         }
 
         return false;
@@ -478,7 +478,7 @@ class XoopsFileHandler
      * @return string |int filesize as int or as a human-readable string
      * @access   public
      */
-    function size()
+    public function size()
     {
         if ($this->exists()) {
             return filesize($this->pwd());
@@ -493,7 +493,7 @@ class XoopsFileHandler
      * @return boolean true if its writable, false otherwise
      * @access public
      */
-    function writable()
+    public function writable()
     {
         return is_writable($this->pwd());
     }
@@ -504,7 +504,7 @@ class XoopsFileHandler
      * @return boolean true if its executable, false otherwise
      * @access public
      */
-    function executable()
+    public function executable()
     {
         return is_executable($this->pwd());
     }
@@ -515,7 +515,7 @@ class XoopsFileHandler
      * @return boolean true if file is readable, false otherwise
      * @access public
      */
-    function readable()
+    public function readable()
     {
         return is_readable($this->pwd());
     }
@@ -525,7 +525,7 @@ class XoopsFileHandler
      *
      * @return integer the Fileowner
      */
-    function owner()
+    public function owner()
     {
         if ($this->exists()) {
             return fileowner($this->pwd());
@@ -540,7 +540,7 @@ class XoopsFileHandler
      * @return integer the Filegroup
      * @access public
      */
-    function group()
+    public function group()
     {
         if ($this->exists()) {
             return filegroup($this->pwd());
@@ -555,7 +555,7 @@ class XoopsFileHandler
      * @return integer timestamp Timestamp of last access time
      * @access public
      */
-    function lastAccess()
+    public function lastAccess()
     {
         if ($this->exists()) {
             return fileatime($this->pwd());
@@ -570,7 +570,7 @@ class XoopsFileHandler
      * @return integer timestamp Timestamp of last modification
      * @access public
      */
-    function lastChange()
+    public function lastChange()
     {
         if ($this->exists()) {
             return filemtime($this->pwd());
@@ -585,7 +585,7 @@ class XoopsFileHandler
      * @return Folder Current folder
      * @access public
      */
-    function &folder()
+    public function &folder()
     {
         return $this->folder;
     }

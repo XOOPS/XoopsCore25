@@ -11,7 +11,6 @@
  */
 class HTMLPurifier_AttrDef_CSS_Composite extends HTMLPurifier_AttrDef
 {
-
     /**
      * List of objects that may process strings.
      * @type HTMLPurifier_AttrDef[]
@@ -28,9 +27,9 @@ class HTMLPurifier_AttrDef_CSS_Composite extends HTMLPurifier_AttrDef
     }
 
     /**
-     * @param string $string
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
+     * @param  string               $string
+     * @param  HTMLPurifier_Config  $config
+     * @param  HTMLPurifier_Context $context
      * @return bool|string
      */
     public function validate($string, $config, $context)
@@ -41,8 +40,10 @@ class HTMLPurifier_AttrDef_CSS_Composite extends HTMLPurifier_AttrDef
                 return $result;
             }
         }
+
         return false;
     }
 }
 
 // vim: et sw=4 sts=4
+

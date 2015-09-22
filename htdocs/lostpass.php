@@ -10,13 +10,13 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         core
- * @since           2.0.0
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             core
+ * @since               2.0.0
+ * @version             $Id: lostpass.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-include __DIR__ . DIRECTORY_SEPARATOR . 'mainfile.php';
+include __DIR__ . '/mainfile.php';
 
 $xoopsPreload =& XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.lostpass.start');
@@ -31,19 +31,19 @@ if ($email == '') {
     exit();
 }
 
-$myts =& MyTextSanitizer::getInstance();
-$member_handler =& xoops_gethandler('member');
-$getuser =& $member_handler->getUsers(new Criteria('email', $myts->addSlashes($email)));
+$myts           =& MyTextSanitizer::getInstance();
+$member_handler =& xoops_getHandler('member');
+$getuser        =& $member_handler->getUsers(new Criteria('email', $myts->addSlashes($email)));
 
 if (empty($getuser)) {
     $msg = _US_SORRYNOTFOUND;
     redirect_header("user.php", 2, $msg);
     exit();
 } else {
-    $code = isset($_GET['code']) ? trim($_GET['code']) : '';
+    $code   = isset($_GET['code']) ? trim($_GET['code']) : '';
     $areyou = substr($getuser[0]->getVar("pass"), 0, 5);
     if ($code != '' && $areyou == $code) {
-        $newpass = xoops_makepass();
+        $newpass     = xoops_makepass();
         $xoopsMailer =& xoops_getMailer();
         $xoopsMailer->useMail();
         $xoopsMailer->setTemplate("lostpass2.tpl");
@@ -56,7 +56,7 @@ if (empty($getuser)) {
         $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
         $xoopsMailer->setFromName($xoopsConfig['sitename']);
         $xoopsMailer->setSubject(sprintf(_US_NEWPWDREQ, XOOPS_URL));
-        if (! $xoopsMailer->send()) {
+        if (!$xoopsMailer->send()) {
             echo $xoopsMailer->getErrors();
         }
         // Next step: add the new password to the database
@@ -84,7 +84,7 @@ if (empty($getuser)) {
         $xoopsMailer->setFromName($xoopsConfig['sitename']);
         $xoopsMailer->setSubject(sprintf(_US_NEWPWDREQ, $xoopsConfig['sitename']));
         include $GLOBALS['xoops']->path('header.php');
-        if (! $xoopsMailer->send()) {
+        if (!$xoopsMailer->send()) {
             echo $xoopsMailer->getErrors();
         }
         echo "<h4>";

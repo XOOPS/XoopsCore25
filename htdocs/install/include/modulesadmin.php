@@ -4,15 +4,15 @@
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
  * @copyright    (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
- * @package     installer
- * @since       2.3.0
- * @author      Haruki Setoyama  <haruki@planewave.org>
- * @author      Kazumi Ono <webmaster@myweb.ne.jp>
- * @author      Skalpa Keo <skalpa@xoops.org>
- * @author      Taiwen Jiang <phppp@users.sourceforge.net>
- * @author      DuGris (aka L. JEN) <dugris@frxoops.org>
- * @version     $Id$
+ * @license          http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @package          installer
+ * @since            2.3.0
+ * @author           Haruki Setoyama  <haruki@planewave.org>
+ * @author           Kazumi Ono <webmaster@myweb.ne.jp>
+ * @author           Skalpa Keo <skalpa@xoops.org>
+ * @author           Taiwen Jiang <phppp@users.sourceforge.net>
+ * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
+ * @version          $Id: modulesadmin.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 defined('XOOPS_INSTALL') or die('XOOPS Installation wizard die');
@@ -25,7 +25,7 @@ function xoops_module_install($dirname)
     $dirname = trim($dirname);
     $db =& $GLOBALS["xoopsDB"];
     $reservedTables = array('avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config', 'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset', 'imgset_tplset_link', 'imgsetimg', 'groups','groups_users_link','group_permission', 'online', 'bannerclient', 'banner', 'bannerfinish', 'priv_msgs', 'ranks', 'session', 'smiles', 'users', 'newblocks', 'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications', 'banner', 'bannerclient', 'bannerfinish');
-    $module_handler =& xoops_gethandler('module');
+    $module_handler =& xoops_getHandler('module');
     if ($module_handler->getCount(new Criteria('dirname', $dirname)) == 0) {
         $module =& $module_handler->create();
         $module->loadInfoAsVar($dirname);
@@ -141,7 +141,7 @@ function xoops_module_install($dirname)
                 $newmid = $module->getVar('mid');
                 unset($created_tables);
                 $msgs[] = "<p>"._MD_AM_INSERT_DATA_DONE. sprintf(_MD_AM_MODULEID, "<strong>".$newmid."</strong>");
-                $tplfile_handler =& xoops_gethandler('tplfile');
+                $tplfile_handler =& xoops_getHandler('tplfile');
                 $templates = $module->getInfo('templates');
                 if ($templates != false) {
                     $msgs[] = _MD_AM_TEMPLATES_ADD;
@@ -291,7 +291,7 @@ function xoops_module_install($dirname)
 
                 if ($configs != false) {
                     $msgs[] = _MD_AM_MODULE_DATA_ADD;
-                    $config_handler =& xoops_gethandler('config');
+                    $config_handler =& xoops_getHandler('config');
                     $order = 0;
                     foreach ($configs as $config) {
                         $confobj =& $config_handler->createConfig();
@@ -335,7 +335,7 @@ function xoops_module_install($dirname)
             // retrieve all block ids for this module
             $blocks = XoopsBlock::getByModule($newmid, false);
             $msgs[] = _MD_AM_GROUP_SETTINGS_ADD;
-            $gperm_handler =& xoops_gethandler('groupperm');
+            $gperm_handler =& xoops_getHandler('groupperm');
             foreach ($groups as $mygroup) {
                 if ($gperm_handler->checkRight('module_admin', 0, $mygroup)) {
                     $mperm =& $gperm_handler->create();

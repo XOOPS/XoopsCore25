@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: xoops_version.php 13082 2015-06-06 21:59:41Z beckmi $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2015 XOOPS Project (www.xoops.org)            //
@@ -35,10 +35,10 @@ $modversion['description'] = _AM_SYSTEM_BANS_DESC;
 $modversion['author']      = '';
 $modversion['credits']     = 'The XOOPS Project; The MPN SE Project; Francisco Burzi <br>( http://phpnuke.org/ ); Kraven30 (Cointin Maxime); ';
 $modversion['help']        = 'page=banners';
-$modversion['license'] = "GPL see LICENSE";
+$modversion['license']     = "GPL see LICENSE";
 $modversion['official']    = 1;
 $modversion['image']       = 'banners.png';
 
-$modversion['hasAdmin']    = 1;
-$modversion['adminpath']   = 'admin.php?fct=banners';
-$modversion['category']    = XOOPS_SYSTEM_BANNER;
+$modversion['hasAdmin']  = 1;
+$modversion['adminpath'] = 'admin.php?fct=banners';
+$modversion['category']  = XOOPS_SYSTEM_BANNER;

@@ -10,11 +10,11 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package     upgrader
- * @author      Haruki Setoyama  <haruki@planewave.org>
- * @version     $Id$
- * @access      public
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             upgrader
+ * @author              Haruki Setoyama  <haruki@planewave.org>
+ * @version             $Id: dbmanager.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @access              public
  **/
 
 include_once XOOPS_ROOT_PATH . '/class/logger/xoopslogger.php';
@@ -26,7 +26,7 @@ include_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
  * Database manager
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @package     upgrader
+ * @package             upgrader
  */
 class db_manager
 {
@@ -113,7 +113,7 @@ class db_manager
                         if (!isset($this->f_tables['insert'][$table])) {
                             $this->f_tables['insert'][$table] = 1;
                         } else {
-                             $this->f_tables['insert'][$table]++;
+                            $this->f_tables['insert'][$table]++;
                         }
                     }
                 } else if ($prefixed_query[1] == 'ALTER TABLE') {
@@ -127,7 +127,7 @@ class db_manager
                         }
                     }
                 } else if ($prefixed_query[1] == 'DROP TABLE') {
-                    if ($this->db->query('DROP TABLE '.$table) != false) {
+                    if ($this->db->query('DROP TABLE ' . $table) != false) {
                         if (!isset($this->s_tables['drop'][$table])) {
                             $this->s_tables['drop'][$table] = 1;
                         }
@@ -144,25 +144,23 @@ class db_manager
     }
 
     var $successStrings = array(
-        'create'    => 'create',
-        'insert'    => 'insert',
-        'alter'     => 'alter',
-        'drop'      => 'drop',
-        );
+        'create' => 'create',
+        'insert' => 'insert',
+        'alter'  => 'alter',
+        'drop'   => 'drop',);
     var $failureStrings = array(
-        'create'    => 'fail',
-        'insert'    => 'fail',
-        'alter'     => 'error',
-        'drop'      => 'error',
-        );
+        'create' => 'fail',
+        'insert' => 'fail',
+        'alter'  => 'error',
+        'drop'   => 'error',);
 
     /**
      * @return string
      */
     function report()
     {
-        $commands = array( 'create', 'insert', 'alter', 'drop' );
-        $content = '<ul class="log">';
+        $commands = array('create', 'insert', 'alter', 'drop');
+        $content  = '<ul class="log">';
         foreach ($commands as $cmd) {
             if (!@empty($this->s_tables[$cmd])) {
                 foreach ($this->s_tables[$cmd] as $key => $val) {
@@ -173,7 +171,7 @@ class db_manager
             }
         }
         foreach ($commands as $cmd) {
-            if (!@empty( $this->f_tables[$cmd])) {
+            if (!@empty($this->f_tables[$cmd])) {
                 foreach ($this->f_tables[$cmd] as $key => $val) {
                     $content .= '<li class="failure">';
                     $content .= ($cmd != 'insert') ? sprintf($this->failureStrings[$cmd], $key) : sprintf($this->failureStrings[$cmd], $val, $key);
@@ -232,7 +230,7 @@ class db_manager
     {
         $this->db->connect();
         $table = $this->db->prefix($table);
-        $query = 'INSERT INTO ' . $table . ' '. $query;
+        $query = 'INSERT INTO ' . $table . ' ' . $query;
         if (!$this->db->queryF($query)) {
             if (!isset($this->f_tables['insert'][$table])) {
                 $this->f_tables['insert'][$table] = 1;
@@ -286,7 +284,7 @@ class db_manager
     function tableExists($table)
     {
         $table = trim($table);
-        $ret = false;
+        $ret   = false;
         if ($table != '') {
             $this->db->connect();
             $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix($table);

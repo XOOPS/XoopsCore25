@@ -1,31 +1,31 @@
 <?php
-// $Id$
+// $Id: install2.php 12041 2013-09-14 14:06:17Z beckmi $
 // _LANGCODE: en
 // _CHARSET : UTF-8
 // Translator: XOOPS Translation Team
 // License
-define('LICENSE_NOT_WRITEABLE','License is %s . <br/><span style="colour:#ff0000">Make ../include/license.php Writable</span>');
-define('LICENSE_IS_WRITEABLE','License is %s');
-define('_INSTALL_WEBMASTER','Webmasters');
-define('_INSTALL_WEBMASTERD','Webmasters of this site');
-define('_INSTALL_REGUSERS','Registered Users');
-define('_INSTALL_REGUSERSD','Registered Users Group');
-define('_INSTALL_ANONUSERS','Anonymous Users');
-define('_INSTALL_ANONUSERSD','Anonymous Users Group');
+define('LICENSE_NOT_WRITEABLE', 'License is %s . <br/><span style="colour:#ff0000">Make ../include/license.php Writable</span>');
+define('LICENSE_IS_WRITEABLE', 'License is %s');
+define('_INSTALL_WEBMASTER', 'Webmasters');
+define('_INSTALL_WEBMASTERD', 'Webmasters of this site');
+define('_INSTALL_REGUSERS', 'Registered Users');
+define('_INSTALL_REGUSERSD', 'Registered Users Group');
+define('_INSTALL_ANONUSERS', 'Anonymous Users');
+define('_INSTALL_ANONUSERSD', 'Anonymous Users Group');
 /**
-* New Group types
-*/
-define('_INSTALL_BANNEDUSERS','Banned Users');
-define('_INSTALL_BANNEDUSERSD','Banned user group');
-define('_INSTALL_MODERATORUSERS','Moderators');
-define('_INSTALL_MODERATORUSERSD','These are Moderators for your website');
-define('_INSTALL_SUBMITTERUSERS','Submitters');
-define('_INSTALL_SUBMITTERUSERSD','This group can submit articles to your website');
-define('_INSTALL_DEVELOPEUSERS','Developer');
-define('_INSTALL_DEVELOPEUSERSD','This user has developer privileges and can see developer debugging messages.');
-define('_INSTALL_L165',"The site is currently closed for maintenance. Please come back later.");
-define('_INSTALL_ANON',"Anonymous");
-define('_INSTALL_DISCLMR',"While the administrators and moderators of this site will attempt to remove
+ * New Group types
+ */
+define('_INSTALL_BANNEDUSERS', 'Banned Users');
+define('_INSTALL_BANNEDUSERSD', 'Banned user group');
+define('_INSTALL_MODERATORUSERS', 'Moderators');
+define('_INSTALL_MODERATORUSERSD', 'These are Moderators for your website');
+define('_INSTALL_SUBMITTERUSERS', 'Submitters');
+define('_INSTALL_SUBMITTERUSERSD', 'This group can submit articles to your website');
+define('_INSTALL_DEVELOPEUSERS', 'Developer');
+define('_INSTALL_DEVELOPEUSERSD', 'This user has developer privileges and can see developer debugging messages.');
+define('_INSTALL_L165', "The site is currently closed for maintenance. Please come back later.");
+define('_INSTALL_ANON', "Anonymous");
+define('_INSTALL_DISCLMR', "While the administrators and moderators of this site will attempt to remove
 or edit any generally objectionable material as quickly as possible, it is
 impossible to review every message. Therefore you acknowledge that all posts
 made to this site express the views and opinions of the author and not the

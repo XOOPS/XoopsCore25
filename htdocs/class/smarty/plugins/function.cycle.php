@@ -1,7 +1,7 @@
 <?php
 /**
  * Smarty plugin
- * @package Smarty
+ * @package    Smarty
  * @subpackage plugins
  */
 
@@ -30,12 +30,12 @@
  * {cycle name=row values="one,two,three" reset=true}
  * {cycle name=row}
  * </pre>
- * @link http://smarty.php.net/manual/en/language.function.cycle.php {cycle}
+ * @link     http://smarty.php.net/manual/en/language.function.cycle.php {cycle}
  *       (Smarty online manual)
- * @author Monte Ohrt <monte at ohrt dot com>
- * @author credit to Mark Priatel <mpriatel@rogers.com>
- * @author credit to Gerard <gerard@interfold.com>
- * @author credit to Jason Sweat <jsweat_php@yahoo.com>
+ * @author   Monte Ohrt <monte at ohrt dot com>
+ * @author   credit to Mark Priatel <mpriatel@rogers.com>
+ * @author   credit to Gerard <gerard@interfold.com>
+ * @author   credit to Jason Sweat <jsweat_php@yahoo.com>
  * @version  1.3
  * @param array
  * @param Smarty
@@ -45,19 +45,20 @@ function smarty_function_cycle($params, &$smarty)
 {
     static $cycle_vars;
 
-    $name = (empty($params['name'])) ? 'default' : $params['name'];
-    $print = (isset($params['print'])) ? (bool)$params['print'] : true;
+    $name    = (empty($params['name'])) ? 'default' : $params['name'];
+    $print   = (isset($params['print'])) ? (bool)$params['print'] : true;
     $advance = (isset($params['advance'])) ? (bool)$params['advance'] : true;
-    $reset = (isset($params['reset'])) ? (bool)$params['reset'] : false;
+    $reset   = (isset($params['reset'])) ? (bool)$params['reset'] : false;
 
-    if (!in_array('values', array_keys($params))) {
-        if(!isset($cycle_vars[$name]['values'])) {
+//    if (!in_array('values', array_keys($params))) {
+        if (!array_key_exists('values', $params)) {
+        if (!isset($cycle_vars[$name]['values'])) {
             $smarty->trigger_error("cycle: missing 'values' parameter");
-            return;
+
+            return null;
         }
     } else {
-        if(isset($cycle_vars[$name]['values'])
-            && $cycle_vars[$name]['values'] != $params['values'] ) {
+        if (isset($cycle_vars[$name]['values']) && $cycle_vars[$name]['values'] != $params['values']) {
             $cycle_vars[$name]['index'] = 0;
         }
         $cycle_vars[$name]['values'] = $params['values'];
@@ -69,13 +70,13 @@ function smarty_function_cycle($params, &$smarty)
         $cycle_vars[$name]['delimiter'] = ',';
     }
 
-    if(is_array($cycle_vars[$name]['values'])) {
+    if (is_array($cycle_vars[$name]['values'])) {
         $cycle_array = $cycle_vars[$name]['values'];
     } else {
-        $cycle_array = explode($cycle_vars[$name]['delimiter'],$cycle_vars[$name]['values']);
+        $cycle_array = explode($cycle_vars[$name]['delimiter'], $cycle_vars[$name]['values']);
     }
 
-    if(!isset($cycle_vars[$name]['index']) || $reset ) {
+    if (!isset($cycle_vars[$name]['index']) || $reset) {
         $cycle_vars[$name]['index'] = 0;
     }
 
@@ -84,14 +85,14 @@ function smarty_function_cycle($params, &$smarty)
         $smarty->assign($params['assign'], $cycle_array[$cycle_vars[$name]['index']]);
     }
 
-    if($print) {
+    $retval = null;
+    if ($print) {
         $retval = $cycle_array[$cycle_vars[$name]['index']];
-    } else {
-        $retval = null;
+
     }
 
-    if($advance) {
-        if ( $cycle_vars[$name]['index'] >= count($cycle_array) -1 ) {
+    if ($advance) {
+        if ($cycle_vars[$name]['index'] >= count($cycle_array) - 1) {
             $cycle_vars[$name]['index'] = 0;
         } else {
             $cycle_vars[$name]['index']++;

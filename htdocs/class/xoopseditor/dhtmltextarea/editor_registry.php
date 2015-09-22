@@ -10,17 +10,17 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @author          Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
- * @since           2.3.0
- * @version         $Id$
- * @package         xoopseditor
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @author              Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
+ * @since               2.3.0
+ * @version             $Id: editor_registry.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @package             xoopseditor
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-return $config = array( 'class' => 'FormDhtmlTextArea',
-	'file' => XOOPS_ROOT_PATH . '/class/xoopseditor/dhtmltextarea/dhtmltextarea.php',
-	'title' => _XOOPS_EDITOR_DHTMLTEXTAREA,
-	'order' => 2,
-	'nohtml' => 1
-	);
+return $config = array(
+    'class'  => 'FormDhtmlTextArea',
+    'file'   => XOOPS_ROOT_PATH . '/class/xoopseditor/dhtmltextarea/dhtmltextarea.php',
+    'title'  => _XOOPS_EDITOR_DHTMLTEXTAREA,
+    'order'  => 2,
+    'nohtml' => 1);

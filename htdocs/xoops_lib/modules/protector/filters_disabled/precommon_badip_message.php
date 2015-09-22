@@ -5,10 +5,9 @@
  */
 class protector_precommon_badip_message extends ProtectorFilterAbstract
 {
-    function execute()
+    public function execute()
     {
-        echo _MD_PROTECTOR_YOUAREBADIP ;
-        exit ;
+        echo _MD_PROTECTOR_YOUAREBADIP;
+        exit;
     }
-
 }

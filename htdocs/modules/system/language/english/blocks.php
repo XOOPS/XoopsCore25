@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: blocks.php 12363 2014-03-08 10:39:06Z beckmi $
 // _LANGCODE: en
 // _CHARSET : UTF-8
 // Translator: XOOPS Translation Team
@@ -45,4 +45,4 @@ define('_MB_SYSTEM_THSHOW',"Display screenshot image");
 define('_MB_SYSTEM_THWIDTH',"Screenshot image width");
 define('_MB_SYSTEM_REMEMBERME',"Remember me");
 //2.5.8
-define('_MB_SYSTEM_BLOCK_HEIGHT',"Block Height (lines)");	
+define('_MB_SYSTEM_BLOCK_HEIGHT',"Block Height (lines)");

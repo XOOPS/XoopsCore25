@@ -1,10 +1,9 @@
 <?php
 /**
  * Smarty plugin
- * @package Smarty
+ * @package    Smarty
  * @subpackage plugins
  */
-
 
 /**
  * Smarty strip modifier plugin
@@ -15,7 +14,7 @@
  *           with a single space or supplied replacement string.<br>
  * Example:  {$var|strip} {$var|strip:"&nbsp;"}
  * Date:     September 25th, 2002
- * @link http://smarty.php.net/manual/en/language.modifier.strip.php
+ * @link     http://smarty.php.net/manual/en/language.modifier.strip.php
  *          strip (Smarty online manual)
  * @author   Monte Ohrt <monte at ohrt dot com>
  * @version  1.0

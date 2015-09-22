@@ -10,14 +10,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @subpackage      model
- * @since           2.3.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @subpackage          model
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: read.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Object render handler class.
@@ -26,19 +26,18 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
  *
  * {@link XoopsObjectAbstract}
  */
-
 class XoopsModelRead extends XoopsModelAbstract
 {
     /**
      * get all objects matching a condition
      *
-     * @param object $criteria {@link CriteriaElement} to match
-     * @param array $fields variables to fetch
-     * @param bool $asObject flag indicating as object, otherwise as array
-     * @param bool $id_as_key use the ID as key for the array
-     * @return array of objects/array {@link XoopsObject}
+     * @param  CriteriaElement $criteria  {@link CriteriaElement} to match
+     * @param  array  $fields    variables to fetch
+     * @param  bool   $asObject  flag indicating as object, otherwise as array
+     * @param  bool   $id_as_key use the ID as key for the array
+     * @return array  of objects/array {@link XoopsObject}
      */
-    function &getAll($criteria = null, $fields = null, $asObject = true, $id_as_key = true)
+    public function &getAll(CriteriaElement $criteria = null, $fields = null, $asObject = true, $id_as_key = true)
     {
         if (is_array($fields) && count($fields) > 0) {
             if (!in_array($this->handler->keyName, $fields)) {
@@ -50,7 +49,7 @@ class XoopsModelRead extends XoopsModelAbstract
         }
         $limit = null;
         $start = null;
-        $sql = "SELECT {$select} FROM `{$this->handler->table}`";
+        $sql   = "SELECT {$select} FROM `{$this->handler->table}`";
         if (isset($criteria) && is_subclass_of($criteria, "criteriaelement")) {
             $sql .= " " . $criteria->renderWhere();
             if ($groupby = $criteria->getGroupby()) {
@@ -67,7 +66,7 @@ class XoopsModelRead extends XoopsModelAbstract
             //$sql .= " ORDER BY `{$this->handler->keyName}` DESC";
         }
         $result = $this->handler->db->query($sql, $limit, $start);
-        $ret = array();
+        $ret    = array();
         if ($asObject) {
             while ($myrow = $this->handler->db->fetchArray($result)) {
                 $object =& $this->handler->create(false);
@@ -91,6 +90,7 @@ class XoopsModelRead extends XoopsModelAbstract
             }
             unset($object);
         }
+
         return $ret;
     }
 
@@ -99,26 +99,27 @@ class XoopsModelRead extends XoopsModelAbstract
      *
      * For performance consideration, getAll() is recommended
      *
-     * @param object $criteria {@link CriteriaElement} conditions to be met
-     * @param bool $id_as_key use the ID as key for the array
-     * @param bool $as_object return an array of objects?
+     * @param  CriteriaElement $criteria  {@link CriteriaElement} conditions to be met
+     * @param  bool   $id_as_key use the ID as key for the array
+     * @param  bool   $as_object return an array of objects?
      * @return array
      */
-    function &getObjects($criteria = null, $id_as_key = false, $as_object = true)
+    public function &getObjects(CriteriaElement $criteria = null, $id_as_key = false, $as_object = true)
     {
         $objects = $this->getAll($criteria, null, $as_object, $id_as_key);
+
         return $objects;
     }
 
     /**
      * Retrieve a list of objects data
      *
-     * @param object $criteria {@link CriteriaElement} conditions to be met
-     * @param int $limit Max number of objects to fetch
-     * @param int $start Which record to start at
+     * @param  CriteriaElement $criteria {@link CriteriaElement} conditions to be met
+     * @param  int    $limit    Max number of objects to fetch
+     * @param  int    $start    Which record to start at
      * @return array
      */
-    function getList($criteria = null, $limit = 0, $start = 0)
+    public function getList(CriteriaElement $criteria = null, $limit = 0, $start = 0)
     {
         $ret = array();
         if ($criteria == null) {
@@ -148,19 +149,20 @@ class XoopsModelRead extends XoopsModelAbstract
             // identifiers should be textboxes, so sanitize them like that
             $ret[$myrow[$this->handler->keyName]] = empty($this->handler->identifierName) ? 1 : $myts->htmlSpecialChars($myrow[$this->handler->identifierName]);
         }
+
         return $ret;
     }
 
     /**
      * get IDs of objects matching a condition
      *
-     * @param object $criteria {@link CriteriaElement} to match
-     * @return array of object IDs
+     * @param  CriteriaElement $criteria {@link CriteriaElement} to match
+     * @return array  of object IDs
      */
-    function &getIds($criteria = null)
+    public function &getIds(CriteriaElement $criteria = null)
     {
-        $ret = array();
-        $sql = "SELECT `{$this->handler->keyName}` FROM `{$this->handler->table}`";
+        $ret   = array();
+        $sql   = "SELECT `{$this->handler->keyName}` FROM `{$this->handler->table}`";
         $limit = $start = null;
         if (isset($criteria) && is_subclass_of($criteria, "criteriaelement")) {
             $sql .= ' ' . $criteria->renderWhere();
@@ -173,6 +175,7 @@ class XoopsModelRead extends XoopsModelAbstract
         while ($myrow = $this->handler->db->fetchArray($result)) {
             $ret[] = $myrow[$this->handler->keyName];
         }
+
         return $ret;
     }
 
@@ -181,37 +184,38 @@ class XoopsModelRead extends XoopsModelAbstract
      *
      * {@link CriteriaCompo}
      *
-     * @param int $limit Max number of objects to fetch
-     * @param int $start Which record to start at
-     * @param object $criteria {@link CriteriaElement} to match
-     * @param array $fields variables to fetch
-     * @param bool $asObject flag indicating as object, otherwise as array
-     * @return array of objects    {@link XoopsObject}
+     * @param  int    $limit    Max number of objects to fetch
+     * @param  int    $start    Which record to start at
+     * @param  CriteriaElement $criteria {@link CriteriaElement} to match
+     * @param  array  $fields   variables to fetch
+     * @param  bool   $asObject flag indicating as object, otherwise as array
+     * @return array  of objects    {@link XoopsObject}
      */
-    function &getByLimit($limit = 0, $start = 0, $criteria = null, $fields = null, $asObject = true)
+    public function &getByLimit($limit = 0, $start = 0, CriteriaElement $criteria = null, $fields = null, $asObject = true)
     {
         $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . '() is deprecated, please use getAll instead.');
         if (isset($criteria) && is_subclass_of($criteria, "criteriaelement")) {
             $criteria->setLimit($limit);
             $criteria->setStart($start);
-        } else if (!empty($limit)) {
+        } elseif (!empty($limit)) {
             $criteria = new CriteriaCompo();
             $criteria->setLimit($limit);
             $criteria->setStart($start);
         }
         $ret = $this->handler->getAll($criteria, $fields, $asObject);
+
         return $ret;
     }
 
     /**
      * Convert a database resultset to a returnable array
      *
-     * @param object $result database resultset
-     * @param bool $id_as_key - should NOT be used with joint keys
-     * @param bool $as_object
+     * @param  object $result    database resultset
+     * @param  bool   $id_as_key - should NOT be used with joint keys
+     * @param  bool   $as_object
      * @return array
      */
-    function convertResultSet($result, $id_as_key = false, $as_object = true)
+    public function convertResultSet($result, $id_as_key = false, $as_object = true)
     {
         $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . '() is deprecated.');
         $ret = array();
@@ -222,7 +226,7 @@ class XoopsModelRead extends XoopsModelAbstract
                 if ($as_object) {
                     $ret[] =& $obj;
                 } else {
-                    $row = array();
+                    $row  = array();
                     $vars = $obj->getVars();
                     foreach (array_keys($vars) as $i) {
                         $row[$i] = $obj->getVar($i);
@@ -233,7 +237,7 @@ class XoopsModelRead extends XoopsModelAbstract
                 if ($as_object) {
                     $ret[$myrow[$this->handler->keyName]] =& $obj;
                 } else {
-                    $row = array();
+                    $row  = array();
                     $vars = $obj->getVars();
                     foreach (array_keys($vars) as $i) {
                         $row[$i] = $obj->getVar($i);

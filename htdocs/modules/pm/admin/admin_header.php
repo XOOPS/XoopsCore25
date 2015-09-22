@@ -10,13 +10,12 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         pm
- * @since           2.3.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             pm
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: admin_header.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-
 
 $path = dirname(dirname(dirname(__DIR__)));
 include_once $path . '/mainfile.php';
@@ -35,14 +34,14 @@ xoops_loadLanguage('admin', $thisModuleDir);
 xoops_loadLanguage('modinfo', $thisModuleDir);
 xoops_loadLanguage('main', $thisModuleDir);
 
-$pathIcon16 = '../'.$xoopsModule->getInfo('icons16');
-$pathIcon32 = '../'.$xoopsModule->getInfo('icons32');
+$pathIcon16      = '../' . $xoopsModule->getInfo('icons16');
+$pathIcon32      = '../' . $xoopsModule->getInfo('icons32');
 $pathModuleAdmin = $xoopsModule->getInfo('dirmoduleadmin');
 
-include_once $GLOBALS['xoops']->path($pathModuleAdmin.'/moduleadmin.php');
+include_once $GLOBALS['xoops']->path($pathModuleAdmin . '/moduleadmin.php');
 
 if ($xoopsUser) {
-    $moduleperm_handler =& xoops_gethandler('groupperm');
+    $moduleperm_handler =& xoops_getHandler('groupperm');
     if (!$moduleperm_handler->checkRight('module_admin', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
         redirect_header(XOOPS_URL, 1, _NOPERM);
         exit();
@@ -53,8 +52,8 @@ if ($xoopsUser) {
 }
 
 if (!isset($xoopsTpl) || !is_object($xoopsTpl)) {
-  include_once(XOOPS_ROOT_PATH."/class/template.php");
-  $xoopsTpl = new XoopsTpl();
+    include_once(XOOPS_ROOT_PATH . "/class/template.php");
+    $xoopsTpl = new XoopsTpl();
 }
 
 //$xoopsTpl->assign('pathIcon16', $pathIcon16);

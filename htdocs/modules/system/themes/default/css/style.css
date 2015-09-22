@@ -10,7 +10,7 @@
  *
  * @version         $Id
 */
-	/* ==================== Import other stylesheets ==================== */
+    /* ==================== Import other stylesheets ==================== */
 @import url(reset.css);
 @import url(dashboard.css);
 @import url(buttonbar.css);
@@ -34,84 +34,80 @@ html {
 }
 
 body {
-	background-color: #EBE9E1;
-	background: -moz-linear-gradient(center bottom, rgb(235,233,225) 0%, rgb(223,220,209) 100%);
-	background: -webkit-gradient(linear, left bottom, left top, color-stop(0, rgb(235,233,225)), color-stop(1, rgb(223,220,209)));
-	background: -khtml-gradient(linear, left bottom, left top, color-stop(0, rgb(235,233,225)), color-stop(1, rgb(223,220,209)));
-	font-size: 11px;
-	font-family: Verdana, tahoma, Helvetica, sans-serif;
-	margin: 0;
-	padding: 0;
+    background-color: #EBE9E1;
+    background: -moz-linear-gradient(center bottom, rgb(235,233,225) 0%, rgb(223,220,209) 100%);
+    background: -webkit-gradient(linear, left bottom, left top, color-stop(0, rgb(235,233,225)), color-stop(1, rgb(223,220,209)));
+    font-size: 11px;
+    font-family: Verdana, tahoma, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 hr {
-	height: 0px;
-	border: 1px #0c1713 solid;
-	width: 99%;
+    height: 0;
+    border: 1px #0c1713 solid;
+    width: 99%;
 }
 
 ul {
-	margin: 2px;
-	padding: 2px;
-	list-style: decimal inside;
-	text-align: left;
+    margin: 2px;
+    padding: 2px;
+    list-style: decimal inside;
+    text-align: left;
 }
 
 li {
-	margin-left: 2px;
-	list-style: square inside;
-	color: #000;
+    margin-left: 2px;
+    list-style: square inside;
+    color: #000;
 }
 
 a:link {
-	text-decoration: none;
-	color: #4177A6;
-	font-weight: bold;
-	background-color: transparent;
+    text-decoration: none;
+    color: #4177A6;
+    font-weight: bold;
+    background-color: transparent;
 }
 
 a:visited {
-	text-decoration: none;
-	color: #4177A6;
-	font-weight: bold;
-	background-color: transparent;
+    text-decoration: none;
+    color: #4177A6;
+    font-weight: bold;
+    background-color: transparent;
 }
 
 a:hover {
-	text-decoration: underline;
-	color: #FF4500;
-	font-weight: bold;
-	background-color: transparent;
+    text-decoration: underline;
+    color: #FF4500;
+    font-weight: bold;
+    background-color: transparent;
 }
 
 /* ==================== xo_head.html ==================== */
 #xo-logo-head {
-	padding: 0;
-	text-align: left;
-	background: url(../img/dark/dark-head.png) repeat-x;
-	border-bottom: 1px solid #000;
-	height: 72px;
+    padding: 0;
+    text-align: left;
+    background: url(../img/dark/dark-head.png) repeat-x;
+    border-bottom: 1px solid #000;
+    height: 72px;
 }
 
 #main-logo a {
-	float: left;
-	background: url(../img/dark/header-logo_big.png) no-repeat !important
-		;
-	height: 72px !important;
-	width: 160px !important;
+    float: left;
+    background: url(../img/dark/header-logo_big.png) no-repeat !important
+        ;
+    height: 72px !important;
+    width: 160px !important;
 }
 
 #xo-headnav {
-	padding-top: 5px;
-	padding-bottom: 5px;
-	padding-right: 50px;
-	padding-left: 50px;
-	float: right;
+    padding: 5px 50px;
+    float: right;
 }
 
 /* ==================== jGrowl ==================== */
 div.jGrowl div.jGrowl-notification,div.jGrowl div.jGrowl-closer {
-	background: #EEEDED;
-	color: #333;
-	border: 2px solid #666;
+    background: #EEEDED;
+    color: #333;
+    border: 2px solid #666;
 }

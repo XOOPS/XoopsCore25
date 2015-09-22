@@ -11,36 +11,35 @@
 
 /**
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author      Gregory Mage (AKA Mage)
- * @package     system
- * @version     $Id$
+ * @license             http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @author              Gregory Mage (AKA Mage)
+ * @package             system
+ * @version             $Id: bannerfinish.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-// defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 /**
  * System Banner Finish
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @package     system
+ * @package             system
  */
 class SystemBannerFinish extends XoopsObject
 {
     /**
      *
      */
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
-        $this->initVar( 'bid', XOBJ_DTYPE_INT, null, false, 5 );
-        $this->initVar( 'cid', XOBJ_DTYPE_INT, null, false, 5 );
-        $this->initVar( 'impressions', XOBJ_DTYPE_INT, null, false, 8 );
-        $this->initVar( 'clicks', XOBJ_DTYPE_INT, null, false, 8 );
-        $this->initVar( 'datestart', XOBJ_DTYPE_INT, null, false, 10 );
-        $this->initVar( 'dateend', XOBJ_DTYPE_INT, null, false, 10 );
+        $this->initVar('bid', XOBJ_DTYPE_INT, null, false, 5);
+        $this->initVar('cid', XOBJ_DTYPE_INT, null, false, 5);
+        $this->initVar('impressions', XOBJ_DTYPE_INT, null, false, 8);
+        $this->initVar('clicks', XOBJ_DTYPE_INT, null, false, 8);
+        $this->initVar('datestart', XOBJ_DTYPE_INT, null, false, 10);
+        $this->initVar('dateend', XOBJ_DTYPE_INT, null, false, 10);
     }
-
 }
 
 /**
@@ -50,18 +49,16 @@ class SystemBannerFinish extends XoopsObject
  * of XOOPS block class objects.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @package     system
- * @subpackage  banner
+ * @package             system
+ * @subpackage          banner
  */
 class SystemBannerfinishHandler extends XoopsPersistableObjectHandler
 {
-
     /**
-     * @param null|object $db
+     * @param null|XoopsDatabase $db
      */
-    function __construct( $db )
+    public function __construct(XoopsDatabase $db)
     {
-        parent::__construct( $db, 'bannerfinish', 'SystemBannerFinish', 'bid', 'cid' );
+        parent::__construct($db, 'bannerfinish', 'SystemBannerFinish', 'bid', 'cid');
     }
-
 }

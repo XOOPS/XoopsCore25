@@ -10,14 +10,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         class
- * @subpackage      cache
- * @since           2.3.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             class
+ * @subpackage          cache
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @version         $Id$
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * File Storage engine for cache
@@ -34,22 +34,22 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
  * Redistributions of files must retain the above copyright notice.
  *
  * @filesource
- * @copyright Copyright 2005-2008, Cake Software Foundation, Inc.
- * @link http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
- * @package cake
+ * @copyright  Copyright 2005-2008, Cake Software Foundation, Inc.
+ * @link       http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
+ * @package    cake
  * @subpackage cake.cake.libs.cache
- * @since CakePHP(tm) v 1.2.0.4933
+ * @since      CakePHP(tm) v 1.2.0.4933
  * @version $Revision$
  * @modifiedby $LastChangedBy$
  * @lastmodified $Date$
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
 /**
  * File Storage engine for cache
  *
- * @todo use the File and Folder classes (if it's not a too big performance hit)
- * @package cake
+ * @todo       use the File and Folder classes (if it's not a too big performance hit)
+ * @package    cake
  * @subpackage cake.cake.libs.cache
  */
 class XoopsCacheFile extends XoopsCacheEngine
@@ -60,7 +60,7 @@ class XoopsCacheFile extends XoopsCacheEngine
      * @var object
      * @access private
      */
-    var $file = null;
+    private $file;
 
     /**
      * settings
@@ -70,10 +70,10 @@ class XoopsCacheFile extends XoopsCacheEngine
      *                serialize = serialize the data, default => false
      *
      * @var array
-     * @see CacheEngine::__defaults
+     * @see    CacheEngine::__defaults
      * @access public
      */
-    var $settings = array();
+    public $settings = array();
 
     /**
      * Set to true if FileEngine::init(); and FileEngine::active(); do not fail.
@@ -81,7 +81,7 @@ class XoopsCacheFile extends XoopsCacheEngine
      * @var boolean
      * @access private
      */
-    var $active = false;
+    private $active = false;
 
     /**
      * True unless FileEngine::active(); fails
@@ -89,7 +89,7 @@ class XoopsCacheFile extends XoopsCacheEngine
      * @var boolean
      * @access private
      */
-    var $init = true;
+    private $init = true;
 
     /**
      * Initialize the Cache Engine
@@ -97,14 +97,14 @@ class XoopsCacheFile extends XoopsCacheEngine
      * Called automatically by the cache frontend
      * To reinitialize the settings call Cache::engine('EngineName', [optional] settings = array());
      *
-     * @param array $settings array of setting for the engine
+     * @param  array $settings array of setting for the engine
      * @return boolean True if the engine has been successfully initialized, false if not
      * @access   public
      */
-    function init($settings = array())
+    public function init($settings = array())
     {
         parent::init($settings);
-        $defaults = array('path' => XOOPS_VAR_PATH . '/caches/xoops_cache' , 'extension' => '.php' , 'prefix' => 'xoops_' , 'lock' => false , 'serialize' => false , 'duration' => 31556926);
+        $defaults       = array('path' => XOOPS_VAR_PATH . '/caches/xoops_cache', 'extension' => '.php', 'prefix' => 'xoops_', 'lock' => false, 'serialize' => false, 'duration' => 31556926);
         $this->settings = array_merge($defaults, $this->settings);
         if (!isset($this->file)) {
             XoopsLoad::load('XoopsFile');
@@ -124,7 +124,7 @@ class XoopsCacheFile extends XoopsCacheEngine
      * @return boolean True if garbage collection was successful, false on failure
      * @access public
      */
-    function gc()
+    public function gc()
     {
         return $this->clear(true);
     }
@@ -132,15 +132,15 @@ class XoopsCacheFile extends XoopsCacheEngine
     /**
      * Write data for key into cache
      *
-     * @param  string  $key      Identifier for the data
-     * @param  mixed   $data     Data to be cached
-     * @param  mixed   $duration How long to cache the data, in seconds
+     * @param  string $key      Identifier for the data
+     * @param  mixed  $data     Data to be cached
+     * @param  mixed  $duration How long to cache the data, in seconds
      * @return boolean True if the data was successfully cached, false on failure
      * @access public
      */
-    function write($key, $data = null, $duration = null)
+    public function write($key, $data = null, $duration = null)
     {
-        if (!isset($data) || ! $this->init) {
+        if (!isset($data) || !$this->init) {
             return false;
         }
 
@@ -151,12 +151,12 @@ class XoopsCacheFile extends XoopsCacheEngine
         if ($duration == null) {
             $duration = $this->settings['duration'];
         }
-        $windows = false;
+        $windows   = false;
         $lineBreak = "\n";
 
-        if (substr(PHP_OS, 0, 3) == "WIN") {
+        if (substr(PHP_OS, 0, 3) === "WIN") {
             $lineBreak = "\r\n";
-            $windows = true;
+            $windows   = true;
         }
         $expires = time() + $duration;
         if (!empty($this->settings['serialize'])) {
@@ -186,9 +186,9 @@ class XoopsCacheFile extends XoopsCacheEngine
      * @return mixed  The cached data, or false if the data doesn't exist, has expired, or if there was an error fetching it
      * @access public
      */
-    function read($key)
+    public function read($key)
     {
-        if ($this->setKey($key) === false || ! $this->init) {
+        if ($this->setKey($key) === false || !$this->init) {
             return false;
         }
         if ($this->settings['lock']) {
@@ -212,7 +212,7 @@ class XoopsCacheFile extends XoopsCacheEngine
                 XoopsLoad::load('XoopsUtility');
                 $data = XoopsUtility::recursive('stripslashes', $data);
             }
-        } else if ($data && empty($this->settings['serialize'])) {
+        } elseif ($data && empty($this->settings['serialize'])) {
             $data = eval($data);
         }
         $this->file->close();
@@ -223,13 +223,13 @@ class XoopsCacheFile extends XoopsCacheEngine
     /**
      * Delete a key from the cache
      *
-     * @param  string  $key Identifier for the data
+     * @param  string $key Identifier for the data
      * @return boolean True if the value was successfully deleted, false if it didn't exist or couldn't be removed
      * @access public
      */
-    function delete($key)
+    public function delete($key)
     {
-        if ($this->setKey($key) === false || ! $this->init) {
+        if ($this->setKey($key) === false || !$this->init) {
             return false;
         }
 
@@ -243,14 +243,14 @@ class XoopsCacheFile extends XoopsCacheEngine
      * @return boolean True if the cache was successfully cleared, false otherwise
      * @access public
      */
-    function clear($check = true)
+    public function clear($check = true)
     {
         if (!$this->init) {
             return false;
         }
         $dir = dir($this->settings['path']);
         if ($check) {
-            $now = time();
+            $now       = time();
             $threshold = $now - $this->settings['duration'];
         }
         while (($entry = $dir->read()) !== false) {
@@ -285,25 +285,26 @@ class XoopsCacheFile extends XoopsCacheEngine
      * @return mixed  Absolute cache file for the given key or false if erroneous
      * @access private
      */
-    function setKey($key)
+    private function setKey($key)
     {
         $this->file->folder->cd($this->settings['path']);
-        $this->file->name = $this->settings['prefix'] . $key . $this->settings['extension'];
+        $this->file->name   = $this->settings['prefix'] . $key . $this->settings['extension'];
         $this->file->handle = null;
-        $this->file->info = null;
+        $this->file->info   = null;
         if (!$this->file->folder->inPath($this->file->pwd(), true)) {
             return false;
         }
     }
+
     /**
      * Determine is cache directory is writable
      *
      * @return boolean
      * @access private
      */
-    function active()
+    private function active()
     {
-        if (!$this->active && $this->init && ! is_writable($this->settings['path'])) {
+        if (!$this->active && $this->init && !is_writable($this->settings['path'])) {
             $this->init = false;
             trigger_error(sprintf('%s is not writable', $this->settings['path']), E_USER_WARNING);
         } else {

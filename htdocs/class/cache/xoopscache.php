@@ -10,19 +10,19 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         class
- * @subpackage      cache
- * @since           2.3.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             class
+ * @subpackage          cache
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: xoopscache.php 13090 2015-06-16 20:44:29Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Caching for CakePHP.
  *
- * @package cake
+ * @package    cake
  * @subpackage cake.cake.libs
  */
 class XoopsCache
@@ -33,8 +33,8 @@ class XoopsCache
      * @var object
      * @access protected
      */
-    var $engine = null;
-    // static $engine = null;
+    protected static $engine;
+    // private static $engine = null;
 
     /**
      * Cache configuration stack
@@ -42,7 +42,7 @@ class XoopsCache
      * @var array
      * @access private
      */
-    var $configs = array();
+    private $configs = array();
 
     /**
      * Holds name of the current configuration being used
@@ -50,12 +50,12 @@ class XoopsCache
      * @var array
      * @access private
      */
-    var $name = null;
+    private $name;
 
     /**
      * XoopsCache::__construct()
      */
-    function __construct()
+    public function __construct()
     {
     }
 
@@ -65,11 +65,11 @@ class XoopsCache
      * @return object
      * @access public
      */
-    static function &getInstance()
+    public static function &getInstance()
     {
         static $instance;
         if (!isset($instance)) {
-            $class = __CLASS__;
+            $class    = __CLASS__;
             $instance = new $class();
         }
 
@@ -83,7 +83,7 @@ class XoopsCache
      * @return mixed $engine object or null
      * @access private
      */
-    function loadEngine($name)
+    private function loadEngine($name)
     {
         if (!class_exists('XoopsCache' . ucfirst($name))) {
             if (file_exists($file = __DIR__ . '/' . strtolower($name) . '.php')) {
@@ -106,9 +106,9 @@ class XoopsCache
      * @return array  (engine, settings) on success, false on failure
      * @access public
      */
-    function config($name = 'default', $settings = array())
+    public function config($name = 'default', $settings = array())
     {
-        $_this =& XoopsCache::getInstance();
+        $_this = XoopsCache::getInstance();
         if (is_array($name)) {
             extract($name);
         }
@@ -118,7 +118,7 @@ class XoopsCache
         } elseif (!empty($settings)) {
             $_this->configs[$name] = $settings;
         } elseif ($_this->configs !== null && isset($_this->configs[$_this->name])) {
-            $name = $_this->name;
+            $name     = $_this->name;
             $settings = $_this->configs[$_this->name];
         } else {
             $name = 'default';
@@ -140,7 +140,7 @@ class XoopsCache
 
                 return false;
             }
-            $_this->name = $name;
+            $_this->name           = $name;
             $_this->configs[$name] = $_this->settings($engine);
         }
 
@@ -152,19 +152,19 @@ class XoopsCache
     /**
      * Set the cache engine to use or modify settings for one instance
      *
-     * @param  string  $name     Name of the engine (without 'Engine')
-     * @param  array   $settings Optional associative array of settings passed to the engine
+     * @param  string $name     Name of the engine (without 'Engine')
+     * @param  array  $settings Optional associative array of settings passed to the engine
      * @return boolean True on success, false on failure
      * @access public
      */
-    function engine($name = 'file', $settings = array())
+    public function engine($name = 'file', $settings = array())
     {
         if (!$name) {
             return false;
         }
 
         $cacheClass = 'XoopsCache' . ucfirst($name);
-        $_this =& XoopsCache::getInstance();
+        $_this      = XoopsCache::getInstance();
         if (!isset($_this->engine[$name])) {
             if ($_this->loadEngine($name) === false) {
                 trigger_error("Cache Engine {$name} is not loaded", E_USER_WARNING);
@@ -194,9 +194,9 @@ class XoopsCache
      *
      * @access public
      */
-    function gc()
+    public function gc()
     {
-        $_this =& XoopsCache::getInstance();
+        $_this  = XoopsCache::getInstance();
         $config = $_this->config();
         extract($config);
         $_this->engine[$engine]->gc();
@@ -205,22 +205,22 @@ class XoopsCache
     /**
      * Write data for key into cache
      *
-     * @param  string  $key      Identifier for the data
-     * @param  mixed   $value    Data to be cached - anything except a resource
-     * @param  mixed   $duration Optional - string configuration name OR how long to cache the data, either in seconds or a
+     * @param  string $key       Identifier for the data
+     * @param  mixed  $value     Data to be cached - anything except a resource
+     * @param  mixed  $duration  Optional - string configuration name OR how long to cache the data, either in seconds or a
      *                           string that can be parsed by the strtotime() function OR array('config' => 'default', 'duration' => '3600')
      * @return boolean True if the data was successfully cached, false on failure
      * @access public
      */
-    static function write($key, $value, $duration = null)
+    public static function write($key, $value, $duration = null)
     {
-        $key = substr(md5(XOOPS_URL), 0, 8) . '_' . $key;
-        $_this =& XoopsCache::getInstance();
+        $key    = substr(md5(XOOPS_URL), 0, 8) . '_' . $key;
+        $_this  = XoopsCache::getInstance();
         $config = null;
         if (is_array($duration)) {
             extract($duration);
         } elseif (isset($_this->configs[$duration])) {
-            $config = $duration;
+            $config   = $duration;
             $duration = null;
         }
         $config = $_this->config($config);
@@ -266,10 +266,10 @@ class XoopsCache
      * @return mixed  The cached data, or false if the data doesn't exist, has expired, or if there was an error fetching it
      * @access public
      */
-    static function read($key, $config = null)
+    public static function read($key, $config = null)
     {
-        $key = substr(md5(XOOPS_URL), 0, 8) . '_' . $key;
-        $_this =& XoopsCache::getInstance();
+        $key    = substr(md5(XOOPS_URL), 0, 8) . '_' . $key;
+        $_this  = XoopsCache::getInstance();
         $config = $_this->config($config);
 
         if (!is_array($config)) {
@@ -293,15 +293,15 @@ class XoopsCache
     /**
      * Delete a key from the cache
      *
-     * @param  string  $key    Identifier for the data
-     * @param  string  $config name of the configuration to use
+     * @param  string $key    Identifier for the data
+     * @param  string $config name of the configuration to use
      * @return boolean True if the value was successfully deleted, false if it didn't exist or couldn't be removed
      * @access public
      */
-    static function delete($key, $config = null)
+    public static function delete($key, $config = null)
     {
-        $key = substr(md5(XOOPS_URL), 0, 8) . '_' . $key;
-        $_this =& XoopsCache::getInstance();
+        $key   = substr(md5(XOOPS_URL), 0, 8) . '_' . $key;
+        $_this = XoopsCache::getInstance();
 
         $config = $_this->config($config);
         extract($config);
@@ -328,9 +328,9 @@ class XoopsCache
      * @return boolean True if the cache was successfully cleared, false otherwise
      * @access public
      */
-    function clear($check = false, $config = null)
+    public function clear($check = false, $config = null)
     {
-        $_this =& XoopsCache::getInstance();
+        $_this  = XoopsCache::getInstance();
         $config = $_this->config($config);
         extract($config);
 
@@ -347,14 +347,13 @@ class XoopsCache
      * Check if Cache has initialized a working storage engine
      *
      * @param string $engine Name of the engine
-     *
-     * @param string $configs Name of the configuration setting
      * @return bool
+     * @internal param string $configs Name of the configuration setting
      * @access   public
      */
-    function isInitialized($engine = null)
+    public function isInitialized($engine = null)
     {
-        $_this =& XoopsCache::getInstance();
+        $_this = XoopsCache::getInstance();
         if (!$engine && isset($_this->configs[$_this->name]['engine'])) {
             $engine = $_this->configs[$_this->name]['engine'];
         }
@@ -369,13 +368,13 @@ class XoopsCache
      * @return array  list of settings for this engine
      * @access public
      */
-    function settings($engine = null)
+    public function settings($engine = null)
     {
-        $_this =& XoopsCache::getInstance();
+        $_this = XoopsCache::getInstance();
         if (!$engine && isset($_this->configs[$_this->name]['engine'])) {
             $engine = $_this->configs[$_this->name]['engine'];
         }
-        if (isset($_this->engine[$engine]) && ! is_null($_this->engine[$engine])) {
+        if (isset($_this->engine[$engine]) && null !== ($_this->engine[$engine])) {
             return $_this->engine[$engine]->settings();
         }
 
@@ -389,7 +388,7 @@ class XoopsCache
      * @return mixed  string $key or false
      * @access private
      */
-    function key($key)
+    public function key($key)
     {
         if (empty($key)) {
             return false;
@@ -403,7 +402,7 @@ class XoopsCache
 /**
  * Abstract class for storage engine for caching
  *
- * @package core
+ * @package    core
  * @subpackage cache
  */
 class XoopsCacheEngine
@@ -414,22 +413,22 @@ class XoopsCacheEngine
      * @var int
      * @access public
      */
-    var $settings;
+    public $settings;
 
     /**
      * Iitialize the cache engine
      *
      * Called automatically by the cache frontend
      *
-     * @param  array   $settings Associative array of parameters for the engine
+     * @param  array $settings Associative array of parameters for the engine
      * @return boolean True if the engine has been successfully initialized, false if not
      * @access   public
      */
-    function init($settings = array())
+    public function init($settings = array())
     {
         $this->settings = array_merge(array(
-            'duration' => 31556926 ,
-            'probability' => 100), $settings);
+                                          'duration'    => 31556926,
+                                          'probability' => 100), $settings);
 
         return true;
     }
@@ -441,20 +440,20 @@ class XoopsCacheEngine
      *
      * @access public
      */
-    function gc()
+    public function gc()
     {
     }
 
     /**
      * Write value for a key into cache
      *
-     * @param  string  $key      Identifier for the data
-     * @param  mixed   $value    Data to be cached
-     * @param  mixed   $duration How long to cache the data, in seconds
+     * @param  string $key      Identifier for the data
+     * @param  mixed  $value    Data to be cached
+     * @param  mixed  $duration How long to cache the data, in seconds
      * @return boolean True if the data was successfully cached, false on failure
      * @access public
      */
-    function write($key, $value = null, $duration = null)
+    public function write($key, $value = null, $duration = null)
     {
         trigger_error(sprintf(__('Method write() not implemented in %s', true), get_class($this)), E_USER_ERROR);
     }
@@ -466,7 +465,7 @@ class XoopsCacheEngine
      * @return mixed  The cached data, or false if the data doesn't exist, has expired, or if there was an error fetching it
      * @access public
      */
-    function read($key)
+    public function read($key)
     {
         trigger_error(sprintf(__('Method read() not implemented in %s', true), get_class($this)), E_USER_ERROR);
     }
@@ -474,11 +473,11 @@ class XoopsCacheEngine
     /**
      * Delete a key from the cache
      *
-     * @param  string  $key Identifier for the data
+     * @param  string $key Identifier for the data
      * @return boolean True if the value was successfully deleted, false if it didn't exist or couldn't be removed
      * @access public
      */
-    function delete($key)
+    public function delete($key)
     {
     }
 
@@ -489,7 +488,7 @@ class XoopsCacheEngine
      * @return boolean True if the cache was successfully cleared, false otherwise
      * @access public
      */
-    function clear($check)
+    public function clear($check)
     {
     }
 
@@ -499,7 +498,7 @@ class XoopsCacheEngine
      * @return array settings
      * @access public
      */
-    function settings()
+    public function settings()
     {
         return $this->settings;
     }

@@ -1,4 +1,4 @@
-/*============= Règles principale du squelette ============*/
+/*============= RÃ¨gles principale du squelette ============*/
 #xo-canvas-columns {
     width:                  100%;
     border-collapse:        collapse;
@@ -28,7 +28,7 @@
 #xo-canvas-leftcolumn, #xo-page, #xo-canvas-rightcolumn {
     vertical-align:         top;
 }
-/*========== Règles pour les configurations spécifiques des colonnes ===========*/
+/*========== RÃ¨gles pour les configurations spÃ©cifiques des colonnes ===========*/
 #xo-canvas.leftcolumn-layout #xo-canvas-columns, #xo-canvas.threecolumns-layout #xo-canvas-columns {}
 #xo-canvas.rightcolumn-layout #xo-page, #xo-canvas.threecolumns-layout #xo-page {
     border-right-width:     0;

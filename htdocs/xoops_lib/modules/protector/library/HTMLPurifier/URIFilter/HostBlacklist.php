@@ -17,19 +17,20 @@ class HTMLPurifier_URIFilter_HostBlacklist extends HTMLPurifier_URIFilter
     protected $blacklist = array();
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param  HTMLPurifier_Config $config
      * @return bool
      */
     public function prepare($config)
     {
         $this->blacklist = $config->get('URI.HostBlacklist');
+
         return true;
     }
 
     /**
-     * @param HTMLPurifier_URI $uri
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
+     * @param  HTMLPurifier_URI     $uri
+     * @param  HTMLPurifier_Config  $config
+     * @param  HTMLPurifier_Context $context
      * @return bool
      */
     public function filter(&$uri, $config, $context)
@@ -39,8 +40,10 @@ class HTMLPurifier_URIFilter_HostBlacklist extends HTMLPurifier_URIFilter
                 return false;
             }
         }
+
         return true;
     }
 }
 
 // vim: et sw=4 sts=4
+

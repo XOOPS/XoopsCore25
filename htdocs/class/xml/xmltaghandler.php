@@ -1,54 +1,52 @@
 <?php
-// $Id$
+// $Id: xmltaghandler.php 12033 2013-09-14 03:16:44Z beckmi $
 /*******************************************************************************
-    Location: <strong>xml/XmlTagHandler</strong><br>
-     <br>
-    XmlTagHandler<br>
-    <br>
-    Copyright &copy; 2001 eXtremePHP.  All rights reserved.<br>
-    <br>
-    @author Ken Egervari, Remi Michalski<br>
+ * Location: <strong>xml/XmlTagHandler</strong><br>
+ * <br>
+ * XmlTagHandler<br>
+ * <br>
+ * Copyright &copy; 2001 eXtremePHP.  All rights reserved.<br>
+ * <br>
+ * @author Ken Egervari, Remi Michalski<br>
  *******************************************************************************/
-
-class XmlTagHandler
+class xmltaghandler
 {
-
     /****************************************************************************
-
      ****************************************************************************/
-    function XmlTagHandler()
+    public function XmlTagHandler()
     {
     }
 
     /****************************************************************************
-
      ****************************************************************************/
-    function getName()
+    public function getName()
     {
         return '';
     }
 
     /****************************************************************************
-
-     ****************************************************************************/
-    function handleBeginElement(&$parser, &$attributes)
+     ***************************************************************************
+     * @param $parser
+     * @param $attributes
+     */
+    public function handleBeginElement(&$parser, &$attributes)
     {
-
     }
 
     /****************************************************************************
-
-     ****************************************************************************/
-    function handleEndElement(&$parser)
+     ***************************************************************************
+     * @param $parser
+     */
+    public function handleEndElement(&$parser)
     {
-
     }
 
     /****************************************************************************
-
-     ****************************************************************************/
-    function handleCharacterData(&$parser, &$data)
+     ***************************************************************************
+     * @param $parser
+     * @param $data
+     */
+    public function handleCharacterData(&$parser, &$data)
     {
-
     }
 }

@@ -10,16 +10,16 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         profile
- * @since           2.3.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             profile
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: changemail.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 $xoopsOption['pagetype'] = "user";
-include __DIR__ . DIRECTORY_SEPARATOR . 'header.php';
-$config_handler =& xoops_gethandler('config');
+include __DIR__ . '/header.php';
+$config_handler             =& xoops_getHandler('config');
 $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
 if (!$GLOBALS['xoopsUser'] || $GLOBALS['xoopsConfigUser']['allow_chgmail'] != 1) {
@@ -38,9 +38,9 @@ if (!isset($_POST['submit']) || !isset($_POST['passwd'])) {
     $form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
     $form->assign($GLOBALS['xoopsTpl']);
 } else {
-    $myts =& MyTextSanitizer::getInstance();
-    $pass = @$myts->stripSlashesGPC(trim($_POST['passwd']));
-    $email = @$myts->stripSlashesGPC(trim($_POST['newmail']));
+    $myts   =& MyTextSanitizer::getInstance();
+    $pass   = @$myts->stripSlashesGPC(trim($_POST['passwd']));
+    $email  = @$myts->stripSlashesGPC(trim($_POST['newmail']));
     $errors = array();
     if (md5($pass) != $GLOBALS['xoopsUser']->getVar('pass', 'n')) {
         $errors[] = _PROFILE_MA_WRONGPASSWORD;
@@ -55,7 +55,7 @@ if (!isset($_POST['submit']) || !isset($_POST['passwd'])) {
         //update password
         $GLOBALS['xoopsUser']->setVar('email', trim($_POST['newmail']));
 
-        $member_handler =& xoops_gethandler('member');
+        $member_handler =& xoops_getHandler('member');
         if ($member_handler->insertUser($GLOBALS['xoopsUser'])) {
             $msg = _PROFILE_MA_EMAILCHANGED;
 
@@ -73,9 +73,8 @@ if (!isset($_POST['submit']) || !isset($_POST['passwd'])) {
             $xoopsMailer->setFromName($GLOBALS['xoopsConfig']['sitename']);
             $xoopsMailer->setSubject(sprintf(_PROFILE_MA_NEWEMAIL, $GLOBALS['xoopsConfig']['sitename']));
             $xoopsMailer->send();
-
         } else {
-            $msg = implode('<br />', $GLOBALS['xoopsUser']->getErrors() );
+            $msg = implode('<br />', $GLOBALS['xoopsUser']->getErrors());
         }
     }
     redirect_header(XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/userinfo.php?uid=' . $GLOBALS['xoopsUser']->getVar('uid'), 2, $msg);
@@ -83,4 +82,4 @@ if (!isset($_POST['submit']) || !isset($_POST['passwd'])) {
 
 $xoBreadcrumbs[] = array('title' => _PROFILE_MA_CHANGEMAIL);
 
-include __DIR__ . DIRECTORY_SEPARATOR . 'footer.php';
+include __DIR__ . '/footer.php';

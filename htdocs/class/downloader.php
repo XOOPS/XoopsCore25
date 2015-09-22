@@ -10,14 +10,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @since           2.0.0
- * @author          Kazumi Ono <onokazu@xoops.org>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @since               2.0.0
+ * @author              Kazumi Ono <onokazu@xoops.org>
+ * @version             $Id: downloader.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Sends non HTML files through a http socket
@@ -29,9 +29,9 @@ class XoopsDownloader
      * *#@+
      * file information
      */
-    var $mimetype;
-    var $ext;
-    var $archiver;
+    public $mimetype;
+    public $ext;
+    public $archiver;
     /**
      * *#@-
      */
@@ -39,9 +39,15 @@ class XoopsDownloader
     /**
      * Constructor
      */
-    function XoopsDownloader()
+
+    public function __construct()
     {
         // EMPTY
+    }
+
+    public function XoopsDownloader()
+    {
+        $this->__construct();
     }
 
     /**
@@ -50,13 +56,13 @@ class XoopsDownloader
      * @param string $filename
      * @access private
      */
-    function _header($filename)
+    public function _header($filename)
     {
         if (function_exists('mb_http_output')) {
             mb_http_output('pass');
         }
         header('Content-Type: ' . $this->mimetype);
-        if (preg_match("/MSIE ([0-9]\.[0-9]{1,2})/", $_SERVER['HTTP_USER_AGENT'])) {
+        if (preg_match("/MSIE (\d\.\d{1,2})/", $_SERVER['HTTP_USER_AGENT'])) {
             header('Content-Disposition: attachment; filename="' . $filename . '"');
             header('Expires: 0');
             header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
@@ -74,7 +80,7 @@ class XoopsDownloader
      * @param string $filepath
      * @param string $newfilename
      */
-    function addFile($filepath, $newfilename = null)
+    public function addFile($filepath, $newfilename = null)
     {
         // EMPTY
     }
@@ -85,7 +91,7 @@ class XoopsDownloader
      * @param string $filepath
      * @param string $newfilename
      */
-    function addBinaryFile($filepath, $newfilename = null)
+    public function addBinaryFile($filepath, $newfilename = null)
     {
         // EMPTY
     }
@@ -93,11 +99,11 @@ class XoopsDownloader
     /**
      * XoopsDownloader::addFileData()
      *
-     * @param mixed $data
-     * @param string $filename
+     * @param mixed   $data
+     * @param string  $filename
      * @param integer $time
      */
-    function addFileData(&$data, $filename, $time = 0)
+    public function addFileData(&$data, $filename, $time = 0)
     {
         // EMPTY
     }
@@ -105,11 +111,11 @@ class XoopsDownloader
     /**
      * XoopsDownloader::addBinaryFileData()
      *
-     * @param mixed $data
-     * @param string $filename
+     * @param mixed   $data
+     * @param string  $filename
      * @param integer $time
      */
-    function addBinaryFileData(&$data, $filename, $time = 0)
+    public function addBinaryFileData(&$data, $filename, $time = 0)
     {
         // EMPTY
     }
@@ -117,10 +123,10 @@ class XoopsDownloader
     /**
      * XoopsDownloader::download()
      *
-     * @param string $name
+     * @param string  $name
      * @param boolean $gzip
      */
-    function download($name, $gzip = true)
+    public function download($name, $gzip = true)
     {
         // EMPTY
     }

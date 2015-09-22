@@ -13,10 +13,10 @@
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package         core
  * @since           2.0.0
- * @version         $Id$
+ * @version         $Id: misc.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
-include __DIR__ . DIRECTORY_SEPARATOR . 'mainfile.php';
+include __DIR__ . '/mainfile.php';
 
 xoops_loadLanguage('misc');
 
@@ -24,7 +24,7 @@ $action = isset($_GET['action']) ? strip_tags(trim($_GET['action'])) : '';
 $action = isset($_POST['action']) ? strip_tags(trim($_POST['action'])) : $action;
 $type = isset($_GET['type']) ? strip_tags(trim($_GET['type'])) : '';
 $type = isset($_POST['type']) ? strip_tags(trim($_POST['type'])) : $type;
-if ($action == "showpopups") {
+if ($action === "showpopups") {
     xoops_header(false);
     // show javascript close button?
     $closebutton = 1;
@@ -40,7 +40,7 @@ if ($action == "showpopups") {
                 xoopsInsertText(textareaDom, addSmilie);
                 textareaDom.focus();
 
-                return;
+//                return;
             }
             //-->
             </script>
@@ -54,7 +54,7 @@ if ($action == "showpopups") {
                     $rcolor = 'even';
                     foreach ($smiles as $key => $smile) {
                         echo "<tr class='$rcolor'><td>" . $smile['code'] . "</td><td>" . $smile['emotion'] . "</td><td><img onmouseover='style.cursor=\"hand\"' onclick='doSmilie(\" " . $smile['code'] . " \");' src='" . XOOPS_UPLOAD_URL . "/" . $smile['smile_url'] . "' alt='' /></td></tr>";
-                        $rcolor = ($rcolor == 'even') ? 'odd' : 'even';
+                        $rcolor = ($rcolor === 'even') ? 'odd' : 'even';
                     }
                 } else {
                     echo "Could not retrieve data from the database.";
@@ -90,7 +90,7 @@ if ($action == "showpopups") {
 <table width='100%'>
     <tr>
         <?php
-            $avatar_handler =& xoops_gethandler('avatar');
+            $avatar_handler =& xoops_getHandler('avatar');
             $avatarslist = $avatar_handler->getList('S');
             $cntavs = 0;
             $counter = isset($_GET['start']) ? (int)($_GET['start']) : 0;
@@ -106,7 +106,7 @@ if ($action == "showpopups") {
             echo '</tr></table></form></div>';
             break;
         case "friend":
-            if (!$GLOBALS['xoopsSecurity']->check() || ! isset($_POST['op']) || $_POST['op'] == "sendform") {
+            if (!$GLOBALS['xoopsSecurity']->check() || ! isset($_POST['op']) || $_POST['op'] === "sendform") {
                 if ($xoopsUser) {
                     $yname = $xoopsUser->getVar("uname", 'e');
                     $ymail = $xoopsUser->getVar("email", 'e');
@@ -134,7 +134,7 @@ if ($action == "showpopups") {
                 <tr><td class='head'>&nbsp;</td><td class='even'><input type='submit' value='" . _SEND . "' />&nbsp;<input value='" . _CLOSE . "' type='button' onclick='javascript:window.close();' />" . $GLOBALS['xoopsSecurity']->getTokenHTML() . "</td></tr>
                 </table></form>\n";
                 $closebutton = 0;
-            } elseif ($_POST['op'] == "sendsite") {
+            } elseif ($_POST['op'] === "sendsite") {
                 $myts =& MyTextsanitizer::getInstance();
                 if ($xoopsUser) {
                     $ymail = $xoopsUser->getVar("email");
@@ -178,7 +178,7 @@ if ($action == "showpopups") {
             echo '</head><body>';
             echo '<table style="width:100%;" cellspacing="1" class="outer"><tr><th colspan="3">' . _WHOSONLINE . '</th></tr>';
             $start = isset($_GET['start']) ? (int)($_GET['start']) : 0;
-            $online_handler =& xoops_gethandler('online');
+            $online_handler =& xoops_getHandler('online');
             $online_total = $online_handler->getCount();
             $limit = ($online_total > 20) ? 20 : $online_total;
             $criteria = new CriteriaCompo();
@@ -186,7 +186,7 @@ if ($action == "showpopups") {
             $criteria->setStart($start);
             $onlines = $online_handler->getAll($criteria);
             $count = count($onlines);
-            $module_handler =& xoops_gethandler('module');
+            $module_handler =& xoops_getHandler('module');
             $modules = $module_handler->getList(new Criteria('isactive', 1));
             for ($i = 0; $i < $count; ++$i) {
                 if ($onlines[$i]['online_uid'] == 0) {
@@ -200,7 +200,7 @@ if ($action == "showpopups") {
             }
             $class = 'even';
             for ($i = 0; $i < $count; ++$i) {
-                $class = ($class == 'odd') ? 'even' : 'odd';
+                $class = ($class === 'odd') ? 'even' : 'odd';
                 echo '<tr style="vertical-align:middle; text-align: center;" class="' . $class . '">';
                 if (is_object($onlineUsers[$i]['user'])) {
                     $avatar = $onlineUsers[$i]['user']->getVar('user_avatar') ? '<img src="' . XOOPS_UPLOAD_URL . '/' . $onlineUsers[$i]['user']->getVar('user_avatar') . '" alt="" />' : '&nbsp;';
@@ -232,7 +232,7 @@ if ($action == "showpopups") {
             break;
     }
     if ($closebutton) {
-        echo '<div style="text-align:center;"><input class="formButton" value="' . _CLOSE . '" type="button" onclick="javascript:window.close();" /></div>';
+        echo '<div style="text-align:center;"><input class="formButton" value="' . _CLOSE . '" type="button" onclick="window.close();" /></div>';
     }
     xoops_footer();
 }
@@ -272,4 +272,5 @@ function printCheckForm()
         //-->
     </script>
     <?php
+
 }

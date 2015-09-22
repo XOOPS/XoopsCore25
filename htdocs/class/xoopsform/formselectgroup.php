@@ -10,15 +10,15 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @subpackage      form
- * @since           2.0.0
- * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @subpackage          form
+ * @since               2.0.0
+ * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @version             $Id: formselectgroup.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Parent
@@ -35,19 +35,32 @@ class XoopsFormSelectGroup extends XoopsFormSelect
      *
      * @param string $caption
      * @param string $name
-     * @param bool $include_anon Include group "anonymous"?
-     * @param mixed $value Pre-selected value (or array of them).
-     * @param int $size Number or rows. "1" makes a drop-down-list.
-     * @param bool $multiple Allow multiple selections?
+     * @param bool   $include_anon Include group "anonymous"?
+     * @param mixed  $value        Pre-selected value (or array of them).
+     * @param int    $size         Number or rows. "1" makes a drop-down-list.
+     * @param bool   $multiple     Allow multiple selections?
      */
-    function XoopsFormSelectGroup($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false)
+    public function __construct($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false)
     {
-        $this->XoopsFormSelect($caption, $name, $value, $size, $multiple);
-        $member_handler = &xoops_gethandler('member');
-        if (! $include_anon) {
+        parent::__construct($caption, $name, $value, $size, $multiple);
+        $member_handler = &xoops_getHandler('member');
+        if (!$include_anon) {
             $this->addOptionArray($member_handler->getGroupList(new Criteria('groupid', XOOPS_GROUP_ANONYMOUS, '!=')));
         } else {
             $this->addOptionArray($member_handler->getGroupList());
         }
+    }
+
+    /**
+     * @param            $caption
+     * @param            $name
+     * @param bool|false $include_anon
+     * @param null       $value
+     * @param int        $size
+     * @param bool|false $multiple
+     */
+    public function XoopsFormSelectGroup($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false)
+    {
+        $this->__construct($caption, $name, $include_anon, $value, $size, $multiple);
     }
 }

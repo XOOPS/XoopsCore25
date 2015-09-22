@@ -20,7 +20,7 @@
       <tr>
         <td class="head"><{$element.caption}>
         <{if $element.description}>
-        	<div style="font-weight: normal"><{$element.description}></div>
+            <div style="font-weight: normal;"><{$element.description}></div>
         <{/if}>
         </td>
         <td class="<{cycle values='even,odd'}>"><{$element.body}></td>
@@ -48,7 +48,7 @@
       <tr>
         <td class="head"><{$element.caption}>
         <{if $element.description}>
-        	<div style="font-weight: normal"><{$element.description}></div>
+            <div style="font-weight: normal;"><{$element.description}></div>
         <{/if}>
         </td>
         <td class="<{cycle values='even,odd'}>"><{$element.body}></td>

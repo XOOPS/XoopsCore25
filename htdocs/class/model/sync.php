@@ -10,14 +10,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @subpackage      model
- * @since           2.3.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @subpackage          model
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: sync.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Object synchronization handler class.
@@ -26,6 +26,7 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
  *
  * {@link XoopsObjectAbstract}
  */
+
 /**
  * Usage of methods provided by XoopsModelSync:
  *
@@ -35,18 +36,17 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
  *                  $handler->field_object = "the_object_field"; // name of field in current table that will be used to link the linked table with current table; linked field name will be used if the field name is not set
  * Step #2: perform query
  */
-
 class XoopsModelSync extends XoopsModelAbstract
 {
     /**
      * Clean orphan objects against linked objects
      *
-     * @param string $table_link table of linked object for JOIN; deprecated, for backward compatibility
-     * @param string $field_link field of linked object for JOIN; deprecated, for backward compatibility
-     * @param string $field_object field of current object for JOIN; deprecated, for backward compatibility
-     * @return bool true on success
+     * @param  string $table_link   table of linked object for JOIN; deprecated, for backward compatibility
+     * @param  string $field_link   field of linked object for JOIN; deprecated, for backward compatibility
+     * @param  string $field_object field of current object for JOIN; deprecated, for backward compatibility
+     * @return bool   true on success
      */
-    function cleanOrphan($table_link = '', $field_link = '', $field_object = '')
+    public function cleanOrphan($table_link = '', $field_link = '', $field_object = '')
     {
         if (!empty($table_link)) {
             $this->handler->table_link = $table_link;
@@ -60,6 +60,7 @@ class XoopsModelSync extends XoopsModelAbstract
 
         if (empty($this->handler->field_object) || empty($this->handler->table_link) || empty($this->handler->field_link)) {
             trigger_error("The link information is not set for '" . get_class($this->handler) . "' yet.", E_USER_WARNING);
+
             return null;
         }
 
@@ -67,17 +68,15 @@ class XoopsModelSync extends XoopsModelAbstract
          * for MySQL 4.1+
          */
         if (version_compare(mysql_get_server_info(), "4.1.0", "ge")) {
-            $sql = "DELETE FROM `{$this->handler->table}`"
-                 . " WHERE (`{$this->handler->field_object}` NOT IN ( SELECT DISTINCT `{$this->handler->field_link}` FROM `{$this->handler->table_link}`) )";
+            $sql = "DELETE FROM `{$this->handler->table}`" . " WHERE (`{$this->handler->field_object}` NOT IN ( SELECT DISTINCT `{$this->handler->field_link}` FROM `{$this->handler->table_link}`) )";
         } else {
             // for 4.0+
-            $sql = "DELETE `{$this->handler->table}` FROM `{$this->handler->table}`"
-                 . " LEFT JOIN `{$this->handler->table_link}` AS aa ON `{$this->handler->table}`.`{$this->handler->field_object}` = aa.`{$this->handler->field_link}`"
-                 . " WHERE (aa.`{$this->handler->field_link}` IS NULL)";
+            $sql = "DELETE `{$this->handler->table}` FROM `{$this->handler->table}`" . " LEFT JOIN `{$this->handler->table_link}` AS aa ON `{$this->handler->table}`.`{$this->handler->field_object}` = aa.`{$this->handler->field_link}`" . " WHERE (aa.`{$this->handler->field_link}` IS NULL)";
         }
         if (!$result = $this->handler->db->queryF($sql)) {
             return false;
         }
+
         return true;
     }
 
@@ -87,9 +86,10 @@ class XoopsModelSync extends XoopsModelAbstract
      *
      * @return bool true on success
      */
-    function synchronization()
+    public function synchronization()
     {
         $retval = $this->cleanOrphan();
+
         return $retval;
     }
 }

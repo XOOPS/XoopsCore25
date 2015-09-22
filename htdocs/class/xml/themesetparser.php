@@ -10,14 +10,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         class
- * @subpackage      utility
- * @since           1.0.0
- * @author          Author: Kazumi Ono (AKA onokazu)
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             class
+ * @subpackage          utility
+ * @since               1.0.0
+ * @author              Author: Kazumi Ono (AKA onokazu)
+ * @version             $Id: themesetparser.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 include_once XOOPS_ROOT_PATH . '/class/xml/saxparser.php';
 include_once XOOPS_ROOT_PATH . '/class/xml/xmltaghandler.php';
@@ -27,17 +27,17 @@ include_once XOOPS_ROOT_PATH . '/class/xml/xmltaghandler.php';
  */
 class XoopsThemeSetParser extends SaxParser
 {
-    var $tempArr = array();
-    var $themeSetData = array();
-    var $imagesData = array();
-    var $templatesData = array();
+    public $tempArr       = array();
+    public $themeSetData  = array();
+    public $imagesData    = array();
+    public $templatesData = array();
 
     /**
      * @param $input
      */
-    function XoopsThemeSetParser(&$input)
+    public function __construct(&$input)
     {
-        $this->SaxParser($input);
+        parent::__construct($input);
         $this->addTagHandler(new ThemeSetThemeNameHandler());
         $this->addTagHandler(new ThemeSetDateCreatedHandler());
         $this->addTagHandler(new ThemeSetAuthorHandler());
@@ -54,12 +54,20 @@ class XoopsThemeSetParser extends SaxParser
     }
 
     /**
+     * @param $input
+     */
+    public function XoopsThemeSetParser(&$input)
+    {
+        $this->__construct($input);
+    }
+
+    /**
      * @param $name
      * @param $value
      */
-    function setThemeSetData($name, &$value)
+    public function setThemeSetData($name, &$value)
     {
-        $this->themeSetData[$name] = & $value;
+        $this->themeSetData[$name] = &$value;
     }
 
     /**
@@ -67,7 +75,7 @@ class XoopsThemeSetParser extends SaxParser
      *
      * @return array|bool
      */
-    function &getThemeSetData($name = null)
+    public function &getThemeSetData($name = null)
     {
         if (isset($name)) {
             if (isset($this->themeSetData[$name])) {
@@ -83,15 +91,15 @@ class XoopsThemeSetParser extends SaxParser
     /**
      * @param $imagearr
      */
-    function setImagesData(&$imagearr)
+    public function setImagesData(&$imagearr)
     {
-        $this->imagesData[] = & $imagearr;
+        $this->imagesData[] = &$imagearr;
     }
 
     /**
      * @return array
      */
-    function &getImagesData()
+    public function &getImagesData()
     {
         return $this->imagesData;
     }
@@ -99,15 +107,15 @@ class XoopsThemeSetParser extends SaxParser
     /**
      * @param $tplarr
      */
-    function setTemplatesData(&$tplarr)
+    public function setTemplatesData(&$tplarr)
     {
-        $this->templatesData[] = & $tplarr;
+        $this->templatesData[] = &$tplarr;
     }
 
     /**
      * @return array
      */
-    function &getTemplatesData()
+    public function &getTemplatesData()
     {
         return $this->templatesData;
     }
@@ -117,10 +125,10 @@ class XoopsThemeSetParser extends SaxParser
      * @param        $value
      * @param string $delim
      */
-    function setTempArr($name, &$value, $delim = '')
+    public function setTempArr($name, &$value, $delim = '')
     {
-        if (! isset($this->tempArr[$name])) {
-            $this->tempArr[$name] = & $value;
+        if (!isset($this->tempArr[$name])) {
+            $this->tempArr[$name] = &$value;
         } else {
             $this->tempArr[$name] .= $delim . $value;
         }
@@ -129,12 +137,12 @@ class XoopsThemeSetParser extends SaxParser
     /**
      * @return array
      */
-    function getTempArr()
+    public function getTempArr()
     {
         return $this->tempArr;
     }
 
-    function resetTempArr()
+    public function resetTempArr()
     {
         unset($this->tempArr);
         $this->tempArr = array();
@@ -146,16 +154,22 @@ class XoopsThemeSetParser extends SaxParser
  */
 class ThemeSetDateCreatedHandler extends XmlTagHandler
 {
-
-    function ThemeSetDateCreatedHandler()
+    /**
+     * ThemeSetDateCreatedHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function ThemeSetDateCreatedHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'dateCreated';
     }
@@ -164,7 +178,7 @@ class ThemeSetDateCreatedHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
         switch ($parser->getParentTag()) {
             case 'themeset':
@@ -181,15 +195,22 @@ class ThemeSetDateCreatedHandler extends XmlTagHandler
  */
 class ThemeSetAuthorHandler extends XmlTagHandler
 {
-    function ThemeSetAuthorHandler()
+    /**
+     * ThemeSetAuthorHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function ThemeSetAuthorHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'author';
     }
@@ -198,7 +219,7 @@ class ThemeSetAuthorHandler extends XmlTagHandler
      * @param $parser
      * @param $attributes
      */
-    function handleBeginElement(&$parser, &$attributes)
+    public function handleBeginElement(&$parser, &$attributes)
     {
         $parser->resetTempArr();
     }
@@ -206,7 +227,7 @@ class ThemeSetAuthorHandler extends XmlTagHandler
     /**
      * @param $parser
      */
-    function handleEndElement(&$parser)
+    public function handleEndElement(&$parser)
     {
         $parser->setCreditsData($parser->getTempArr());
     }
@@ -217,15 +238,22 @@ class ThemeSetAuthorHandler extends XmlTagHandler
  */
 class ThemeSetDescriptionHandler extends XmlTagHandler
 {
-    function ThemeSetDescriptionHandler()
+    /**
+     * ThemeSetDescriptionHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function ThemeSetDescriptionHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'description';
     }
@@ -234,7 +262,7 @@ class ThemeSetDescriptionHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
         switch ($parser->getParentTag()) {
             case 'template':
@@ -254,15 +282,22 @@ class ThemeSetDescriptionHandler extends XmlTagHandler
  */
 class ThemeSetGeneratorHandler extends XmlTagHandler
 {
-    function ThemeSetGeneratorHandler()
+    /**
+     * ThemeSetGeneratorHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function ThemeSetGeneratorHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'generator';
     }
@@ -271,7 +306,7 @@ class ThemeSetGeneratorHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
         switch ($parser->getParentTag()) {
             case 'themeset':
@@ -288,15 +323,22 @@ class ThemeSetGeneratorHandler extends XmlTagHandler
  */
 class ThemeSetNameHandler extends XmlTagHandler
 {
-    function ThemeSetNameHandler()
+    /**
+     * ThemeSetNameHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function ThemeSetNameHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'name';
     }
@@ -305,7 +347,7 @@ class ThemeSetNameHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
         switch ($parser->getParentTag()) {
             case 'themeset':
@@ -325,15 +367,22 @@ class ThemeSetNameHandler extends XmlTagHandler
  */
 class ThemeSetEmailHandler extends XmlTagHandler
 {
-    function ThemeSetEmailHandler()
+    /**
+     * ThemeSetEmailHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function ThemeSetEmailHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'email';
     }
@@ -342,7 +391,7 @@ class ThemeSetEmailHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
         switch ($parser->getParentTag()) {
             case 'author':
@@ -359,15 +408,22 @@ class ThemeSetEmailHandler extends XmlTagHandler
  */
 class ThemeSetLinkHandler extends XmlTagHandler
 {
-    function ThemeSetLinkHandler()
+    /**
+     * ThemeSetLinkHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function ThemeSetLinkHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'link';
     }
@@ -376,7 +432,7 @@ class ThemeSetLinkHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
         switch ($parser->getParentTag()) {
             case 'author':
@@ -393,15 +449,22 @@ class ThemeSetLinkHandler extends XmlTagHandler
  */
 class ThemeSetTemplateHandler extends XmlTagHandler
 {
-    function ThemeSetTemplateHandler()
+    /**
+     * ThemeSetTemplateHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function ThemeSetTemplateHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'template';
     }
@@ -410,7 +473,7 @@ class ThemeSetTemplateHandler extends XmlTagHandler
      * @param $parser
      * @param $attributes
      */
-    function handleBeginElement(&$parser, &$attributes)
+    public function handleBeginElement(&$parser, &$attributes)
     {
         $parser->resetTempArr();
         $parser->setTempArr('name', $attributes['name']);
@@ -419,7 +482,7 @@ class ThemeSetTemplateHandler extends XmlTagHandler
     /**
      * @param $parser
      */
-    function handleEndElement(&$parser)
+    public function handleEndElement(&$parser)
     {
         $parser->setTemplatesData($parser->getTempArr());
     }
@@ -430,15 +493,22 @@ class ThemeSetTemplateHandler extends XmlTagHandler
  */
 class ThemeSetImageHandler extends XmlTagHandler
 {
-    function ThemeSetImageHandler()
+    /**
+     * ThemeSetImageHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function ThemeSetImageHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'image';
     }
@@ -447,7 +517,7 @@ class ThemeSetImageHandler extends XmlTagHandler
      * @param $parser
      * @param $attributes
      */
-    function handleBeginElement(&$parser, &$attributes)
+    public function handleBeginElement(&$parser, &$attributes)
     {
         $parser->resetTempArr();
         $parser->setTempArr('name', $attributes[0]);
@@ -456,7 +526,7 @@ class ThemeSetImageHandler extends XmlTagHandler
     /**
      * @param $parser
      */
-    function handleEndElement(&$parser)
+    public function handleEndElement(&$parser)
     {
         $parser->setImagesData($parser->getTempArr());
     }
@@ -467,15 +537,22 @@ class ThemeSetImageHandler extends XmlTagHandler
  */
 class ThemeSetModuleHandler extends XmlTagHandler
 {
-    function ThemeSetModuleHandler()
+    /**
+     * ThemeSetModuleHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function ThemeSetModuleHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'module';
     }
@@ -484,7 +561,7 @@ class ThemeSetModuleHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
         switch ($parser->getParentTag()) {
             case 'template':
@@ -502,15 +579,22 @@ class ThemeSetModuleHandler extends XmlTagHandler
  */
 class ThemeSetFileTypeHandler extends XmlTagHandler
 {
-    function ThemeSetFileTypeHandler()
+    /**
+     * ThemeSetFileTypeHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function ThemeSetFileTypeHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'fileType';
     }
@@ -519,7 +603,7 @@ class ThemeSetFileTypeHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
         switch ($parser->getParentTag()) {
             case 'template':
@@ -536,15 +620,22 @@ class ThemeSetFileTypeHandler extends XmlTagHandler
  */
 class ThemeSetTagHandler extends XmlTagHandler
 {
-    function ThemeSetTagHandler()
+    /**
+     * ThemeSetTagHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function ThemeSetTagHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'tag';
     }
@@ -553,7 +644,7 @@ class ThemeSetTagHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
         switch ($parser->getParentTag()) {
             case 'image':

@@ -49,15 +49,14 @@ div .navResults{}
     margin-bottom: 12px;
 }
 #buttonbar_mod ul {
-    margin: 0;
-    margin-top: 15px;
+    margin: 15px 0 0;
     padding: 10px 10px 0;
     list-style: none;
 }
 #buttonbar_mod li { display: inline;  margin: 0;  padding: 0;}
 #buttonbar_mod a {
     float: left;
-    background: url(../images/menu/bg_tabs1.gif) no-repeat 0% -34px;
+    background: url(../images/menu/bg_tabs1.gif) no-repeat 0 -34px;
     margin: 0;
     padding: 0 0 0 9px;
     text-decoration: none;

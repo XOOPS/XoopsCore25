@@ -10,26 +10,26 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         profile
- * @since           2.3.0
- * @author          Jan Pedersen
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             profile
+ * @since               2.3.0
+ * @author              Jan Pedersen
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: index.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 $xoopsOption['pagetype'] = 'user';
-include __DIR__ . DIRECTORY_SEPARATOR . 'header.php';
+include __DIR__ . '/header.php';
 
 $op = 'main';
 
 if (isset($_POST['op'])) {
     $op = trim($_POST['op']);
-} else if (isset($_GET['op'])) {
+} elseif (isset($_GET['op'])) {
     $op = trim($_GET['op']);
 }
 
-if ($op == 'main') {
+if ($op === 'main') {
     if (!$GLOBALS['xoopsUser']) {
         $xoopsOption['template_main'] = 'system_userform.html';
         include $GLOBALS['xoops']->path('header.php');
@@ -52,16 +52,16 @@ if ($op == 'main') {
         include __DIR__ . '/footer.php';
         exit();
     }
-    if (!empty($_GET['xoops_redirect'])  ) {
-        $redirect = trim($_GET['xoops_redirect']);
+    if (!empty($_GET['xoops_redirect'])) {
+        $redirect   = trim($_GET['xoops_redirect']);
         $isExternal = false;
         if ($pos = strpos($redirect, '://')) {
-            $xoopsLocation = substr(XOOPS_URL, strpos( XOOPS_URL, '://' ) + 3);
+            $xoopsLocation = substr(XOOPS_URL, strpos(XOOPS_URL, '://') + 3);
             if (strcasecmp(substr($redirect, $pos + 3, strlen($xoopsLocation)), $xoopsLocation)) {
                 $isExternal = true;
             }
         }
-        if (!$isExternal ) {
+        if (!$isExternal) {
             header('Location: ' . $redirect);
             exit();
         }
@@ -70,20 +70,20 @@ if ($op == 'main') {
     exit();
 }
 
-if ($op == 'login') {
+if ($op === 'login') {
     include_once $GLOBALS['xoops']->path('include/checklogin.php');
     exit();
 }
 
-if ($op == 'logout') {
-    $message = '';
+if ($op === 'logout') {
+    $message  = '';
     $_SESSION = array();
     session_destroy();
-    setcookie($GLOBALS['xoopsConfig']['usercookie'], 0, - 1, '/');
+    setcookie($GLOBALS['xoopsConfig']['usercookie'], 0, -1, '/');
     setcookie($GLOBALS['xoopsConfig']['usercookie'], 0, -1, '/', XOOPS_COOKIE_DOMAIN, 0);
     // clear entry from online users table
     if (is_object($GLOBALS['xoopsUser'])) {
-        $online_handler =& xoops_gethandler('online');
+        $online_handler =& xoops_getHandler('online');
         $online_handler->destroy($GLOBALS['xoopsUser']->getVar('uid'));
     }
     $message = _US_LOGGEDOUT . '<br />' . _US_THANKYOUFORVISIT;
@@ -91,22 +91,22 @@ if ($op == 'logout') {
     exit();
 }
 
-if ($op == 'actv') {
-    $id = (int)($_GET['id']);
+if ($op === 'actv') {
+    $id     = (int)($_GET['id']);
     $actkey = trim($_GET['actkey']);
     redirect_header("activate.php?op=actv&amp;id={$id}&amp;actkey={$actkey}", 1, '');
     exit();
 }
 
-if ($op == 'delete') {
-    $config_handler =& xoops_gethandler('config');
+if ($op === 'delete') {
+    $config_handler             =& xoops_getHandler('config');
     $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
     if (!$GLOBALS['xoopsUser'] || $GLOBALS['xoopsConfigUser']['self_delete'] != 1) {
         redirect_header(XOOPS_URL . '/', 5, _US_NOPERMISS);
         exit();
     } else {
         $groups = $GLOBALS['xoopsUser']->getGroups();
-        if (in_array(XOOPS_GROUP_ADMIN, $groups)){
+        if (in_array(XOOPS_GROUP_ADMIN, $groups)) {
             // users in the webmasters group may not be deleted
             redirect_header(XOOPS_URL . '/', 5, _US_ADMINNO);
             exit();
@@ -115,12 +115,12 @@ if ($op == 'delete') {
         if ($ok != 1) {
             include $GLOBALS['xoops']->path('header.php');
             xoops_confirm(array('op' => 'delete', 'ok' => 1), 'user.php', _US_SURETODEL . '<br/>' . _US_REMOVEINFO);
-            include __DIR__ . DIRECTORY_SEPARATOR . 'footer.php';
+            include __DIR__ . '/footer.php';
         } else {
-            $del_uid = $GLOBALS['xoopsUser']->getVar("uid");
-            $member_handler =& xoops_gethandler('member');
+            $del_uid        = $GLOBALS['xoopsUser']->getVar("uid");
+            $member_handler =& xoops_getHandler('member');
             if (false != $member_handler->deleteUser($GLOBALS['xoopsUser'])) {
-                $online_handler =& xoops_gethandler('online');
+                $online_handler =& xoops_getHandler('online');
                 $online_handler->destroy($del_uid);
                 xoops_notification_deletebyuser($del_uid);
                 redirect_header(XOOPS_URL . '/', 5, _US_BEENDELED);

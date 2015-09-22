@@ -122,8 +122,7 @@ a:hover#xo-site-title {}
     padding:                0;
 }
 #xo-userbar button {
-    margin:                 0;
-    margin-bottom:          -2px;
+    margin: 0 0 -2px;
     background:             transparent none;
     padding:                0;
     color:                  #7BADEA;
@@ -217,7 +216,7 @@ body.theme-dialog #xo-footer {
 }
 
 /*========== xo_headerstatic.html ==========*/
-#xo-headerstatic * { margin: 0; padding: 0}
+#xo-headerstatic * { margin: 0; padding: 0;}
 #xo-headerstatic {
     position: absolute;
     top: 0;
@@ -229,27 +228,26 @@ body.theme-dialog #xo-footer {
     color: #000;
     font-size: 11px;
     z-index: 99999;
-    border-style: solid;
-    border-width: thin;
+    border: thin solid;
 }
 
 body>#xo-headerstatic {  position: fixed;}
 #xo-headerstatic #controls {
-    margin: 0px 20px 0px 20px;
+    margin: 0 20px 0 20px;
     background-color: #fff;
     line-height: 20px;
-    text-shadow:	2px 2px 3px #aaa;
+    text-shadow:    2px 2px 3px #aaa;
     border: 2px solid #b5b5b5;
     border-bottom: none;
 }
 
 body#xo-banner #xo-headerstatic {
     padding:                0 50px 0 50px;
-    margin: 50px 50px 0px 50px;
+    margin: 50px 50px 0 50px;
 
 }
 
-#xo-headerstatic #controls  { margin-top: 0px; background: #E7F4F7; padding: 3px 10px 0 10px;}
+#xo-headerstatic #controls  { margin-top: 0; background: #E7F4F7; padding: 3px 10px 0 10px;}
 #xo-headerstatic .separate { margin-left: 3px; border-left: 1px solid #b5b5b5;}
 #xo-headerstatic #controls ul, li { margin: 0;  padding: 0;}
 #xo-headerstatic #controls ul { list-style: none;}
@@ -277,7 +275,7 @@ body>#xo-footerstatic {  position: fixed;}
   margin: 0 20px 0 20px;
   background-color: #fff;
   line-height: 39px;
-  text-shadow:	2px 2px 3px #aaa;
+  text-shadow:    2px 2px 3px #aaa;
   border: 1px solid #b5b5b5;
   border-bottom: none;
 }
@@ -294,7 +292,7 @@ body>#xo-footerstatic {  position: fixed;}
 /* ===== debug messages ===== */
 #xo-logger-output {
     font-size:              .8em;
-	margin-bottom:			35px;
+    margin-bottom:            35px;
 }
 #xo-logger-tabs a:hover {background-color: transparent; color: #fff;}
 table #xo-logger-queries tr {width: 100%;}

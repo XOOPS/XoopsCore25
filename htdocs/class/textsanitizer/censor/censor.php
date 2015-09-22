@@ -10,14 +10,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         class
- * @subpackage      textsanitizer
- * @since           2.3.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             class
+ * @subpackage          textsanitizer
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: censor.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Replaces banned words in a string with their replacements or terminate current request
@@ -34,13 +34,13 @@ class MytsCensor extends MyTextSanitizerExtension
      *
      * @return mixed|string
      */
-    function load(&$ts, $text)
+    public function load(&$ts, $text)
     {
         static $censorConf;
         if (!isset($censorConf)) {
-            $config_handler = & xoops_gethandler('config');
-            $censorConf = $config_handler->getConfigsByCat(XOOPS_CONF_CENSOR);
-            $config = parent::loadConfig(__DIR__);
+            $config_handler = &xoops_getHandler('config');
+            $censorConf     = $config_handler->getConfigsByCat(XOOPS_CONF_CENSOR);
+            $config         = parent::loadConfig(__DIR__);
             //merge and allow config override
             $censorConf = array_merge($censorConf, $config);
         }
@@ -70,9 +70,9 @@ class MytsCensor extends MyTextSanitizerExtension
 
                     return $text;
                 }
-                $patterns[] = "/(^|[^0-9a-z_]){$bad}([^0-9a-z_]|$)/siU";
+                $patterns[]     = "/(^|[^0-9a-z_]){$bad}([^0-9a-z_]|$)/siU";
                 $replacements[] = "\\1{$replacement}\\2";
-                $text = preg_replace($patterns, $replacements, $text);
+                $text           = preg_replace($patterns, $replacements, $text);
             }
         }
 

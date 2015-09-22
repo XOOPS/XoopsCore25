@@ -10,15 +10,15 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         core
- * @since           2.0.0
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             core
+ * @since               2.0.0
+ * @version             $Id: xmlrpc.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 define('XOOPS_XMLRPC', 1);
 
-include __DIR__. DIRECTORY_SEPARATOR . 'mainfile.php';
+include __DIR__ . '/mainfile.php';
 
 error_reporting(0);
 
@@ -28,12 +28,12 @@ include_once $GLOBALS['xoops']->path('class/xml/rpc/xmlrpcparser.php');
 $GLOBALS['xoopsLogger']->activated = false;
 
 $response = new XoopsXmlRpcResponse();
-$parser = new XoopsXmlRpcParser(rawurlencode($GLOBALS['HTTP_RAW_POST_DATA']));
+$parser   = new XoopsXmlRpcParser(rawurlencode($GLOBALS['HTTP_RAW_POST_DATA']));
 if (!$parser->parse()) {
     $response->add(new XoopsXmlRpcFault(102));
 } else {
-    $module_handler =& xoops_gethandler('module');
-    $module =& $module_handler->getByDirname('news');
+    $module_handler =& xoops_getHandler('module');
+    $module         =& $module_handler->getByDirname('news');
     if (!is_object($module)) {
         $response->add(new XoopsXmlRpcFault(110));
     } else {
@@ -43,7 +43,7 @@ if (!$parser->parse()) {
                 include_once $GLOBALS['xoops']->path('class/xml/rpc/bloggerapi.php');
                 break;
             case 'metaWeblog':
-            	include_once $GLOBALS['xoops']->path('class/xml/rpc/metaweblogapi.php');
+                include_once $GLOBALS['xoops']->path('class/xml/rpc/metaweblogapi.php');
                 $rpc_api = new MetaWeblogApi($parser->getParam(), $response, $module);
                 break;
             case 'mt':
@@ -52,7 +52,7 @@ if (!$parser->parse()) {
                 break;
             case 'xoops':
             default:
-            	include_once $GLOBALS['xoops']->path('class/xml/rpc/xoopsapi.php');
+                include_once $GLOBALS['xoops']->path('class/xml/rpc/xoopsapi.php');
                 $rpc_api = new XoopsApi($parser->getParam(), $response, $module);
                 break;
         }

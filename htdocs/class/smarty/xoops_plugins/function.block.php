@@ -29,13 +29,15 @@
  */
 function smarty_function_block($params, &$smarty)
 {
-    if (!isset($params['id'])) return;
+    if (!isset($params['id'])) {
+        return null;
+    }
 
-    $display_title = (isset($params['display']) && $params['display'] == 'title') ? true : false;
-    $display_none = (isset($params['display']) && $params['display'] == 'none') ? true : false;
-    $options = (isset($params['options'])) ? $params['options'] : false;
-    $groups = (isset($params['groups'])) ? explode('|', $params['groups']) : false;
-    $cache = (isset($params['cache'])) ? (int)($params['cache']) : false;
+    $display_title = (isset($params['display']) && $params['display'] === 'title');
+    $display_none  = (isset($params['display']) && $params['display'] === 'none');
+    $options       = (isset($params['options'])) ? $params['options'] : false;
+    $groups        = (isset($params['groups'])) ? explode('|', $params['groups']) : false;
+    $cache         = (isset($params['cache'])) ? (int)($params['cache']) : false;
 
     $block_id = (int)($params['id']);
 
@@ -45,10 +47,11 @@ function smarty_function_block($params, &$smarty)
 
         $blockObj = new XoopsBlock($block_id);
 
-        if (!is_object($blockObj)) return;
+        if (!is_object($blockObj)) {
+            return null;
+        }
 
         $block_objs[$block_id] = $blockObj;
-
     } else {
         $blockObj = $block_objs[$block_id];
     }
@@ -61,9 +64,13 @@ function smarty_function_block($params, &$smarty)
     }
 
     if ($groups) {
-        if (!array_intersect($user_groups, $groups)) return;
+        if (!array_intersect($user_groups, $groups)) {
+            return null;
+        }
     } else {
-        if (!in_array($block_id, $allowed_blocks)) return;
+        if (!in_array($block_id, $allowed_blocks)) {
+            return null;
+        }
     }
 
     if ($options) {
@@ -74,16 +81,18 @@ function smarty_function_block($params, &$smarty)
         $blockObj->setVar('bcachetime', $cache);
     }
 
-    if ($display_title) return $blockObj->getVar('title');
+    if ($display_title) {
+        return $blockObj->getVar('title');
+    }
 
     $xoopsLogger =& XoopsLogger::getInstance();
-    $template =& $GLOBALS['xoopsTpl'];
+    $template    =& $GLOBALS['xoopsTpl'];
 
     $bcachetime = (int)($blockObj->getVar('bcachetime'));
     if (empty($bcachetime)) {
         $template->caching = 0;
     } else {
-        $template->caching = 2;
+        $template->caching        = 2;
         $template->cache_lifetime = $bcachetime;
     }
 
@@ -94,17 +103,18 @@ function smarty_function_block($params, &$smarty)
     if (!$bcachetime || !$template->is_cached($tplName, $cacheid)) {
         $xoopsLogger->addBlock($blockObj->getVar('name'));
         if (!($bresult = $blockObj->buildBlock())) {
-            return;
+            return null;
         }
         if (!$display_none) {
             $template->assign('block', $bresult);
-            $template->display( $tplName, $cacheid );
+            $template->display($tplName, $cacheid);
         }
     } else {
         $xoopsLogger->addBlock($blockObj->getVar('name'), true, $bcachetime);
         if (!$display_none) {
-            $template->display( $tplName, $cacheid );
+            $template->display($tplName, $cacheid);
         }
     }
     $template->setCompileId($blockObj->getVar('dirname', 'n'));
+    return null;
 }

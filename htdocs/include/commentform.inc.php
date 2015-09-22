@@ -10,14 +10,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @since           2.0.0
- * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @since               2.0.0
+ * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @version             $Id: commentform.inc.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 include_once $GLOBALS['xoops']->path('class/xoopslists.php');
 include $GLOBALS['xoops']->path('class/xoopsformloader.php');
@@ -28,14 +28,14 @@ if (!preg_match("/^" . _RE . "/i", $subject)) {
 }
 
 $cform->addElement(new XoopsFormText(_CM_TITLE, 'subject', 50, 255, $subject), true);
-$icons_radio = new XoopsFormRadio(_MESSAGEICON, 'icon', $icon);
+$icons_radio   = new XoopsFormRadio(_MESSAGEICON, 'icon', $icon);
 $subject_icons = XoopsLists::getSubjectsList();
 foreach ($subject_icons as $iconfile) {
     $icons_radio->addOption($iconfile, '<img src="' . XOOPS_URL . '/images/subject/' . $iconfile . '" alt="" />');
 }
 $cform->addElement($icons_radio);
 $cform->addElement(new XoopsFormDhtmlTextArea(_CM_MESSAGE, 'message', $message, 10, 50), true);
-$option_tray = new XoopsFormElementTray(_OPTIONS,'<br />');
+$option_tray = new XoopsFormElementTray(_OPTIONS, '<br />');
 if ($xoopsUser) {
     if ($xoopsConfig['anonpost'] == 1) {
         $noname_checkbox = new XoopsFormCheckBox('', 'noname', $noname);
@@ -62,7 +62,7 @@ $cform->addElement(new XoopsFormHidden('pid', (int)($pid)));
 $cform->addElement(new XoopsFormHidden('comment_id', (int)($comment_id)));
 $cform->addElement(new XoopsFormHidden('item_id', (int)($item_id)));
 $cform->addElement(new XoopsFormHidden('order', (int)($order)));
-$button_tray = new XoopsFormElementTray('' ,'&nbsp;');
+$button_tray = new XoopsFormElementTray('', '&nbsp;');
 $button_tray->addElement(new XoopsFormButton('', 'preview', _PREVIEW, 'submit'));
 $button_tray->addElement(new XoopsFormButton('', 'post', _CM_POSTCOMMENT, 'submit'));
 $cform->addElement($button_tray);

@@ -10,36 +10,36 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         profile
- * @since           2.4.0
- * @author          trabis <lusopoemas@gmail.com>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             profile
+ * @since               2.4.0
+ * @author              trabis <lusopoemas@gmail.com>
+ * @version             $Id: core.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-// defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 /**
  * Profile core preloads
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @author          trabis <lusopoemas@gmail.com>
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @author              trabis <lusopoemas@gmail.com>
  */
 class ProfileCorePreload extends XoopsPreloadItem
 {
     /**
      * @param $args
      */
-    function eventCoreUserStart($args)
+    public function eventCoreUserStart($args)
     {
         $op = 'main';
         if (isset($_POST['op'])) {
             $op = trim($_POST['op']);
-        } else if (isset($_GET['op'])) {
+        } elseif (isset($_GET['op'])) {
             $op = trim($_GET['op']);
         }
-        if ($op != 'login' && (empty($_GET['from']) || 'profile' != $_GET['from'])) {
+        if ($op !== 'login' && (empty($_GET['from']) || 'profile' !== $_GET['from'])) {
             header("location: ./modules/profile/user.php" . (empty($_SERVER['QUERY_STRING']) ? "" : "?" . $_SERVER['QUERY_STRING']));
             exit();
         }
@@ -48,7 +48,7 @@ class ProfileCorePreload extends XoopsPreloadItem
     /**
      * @param $args
      */
-    function eventCoreEdituserStart($args)
+    public function eventCoreEdituserStart($args)
     {
         header("location: ./modules/profile/edituser.php" . (empty($_SERVER['QUERY_STRING']) ? "" : "?" . $_SERVER['QUERY_STRING']));
         exit();
@@ -57,7 +57,7 @@ class ProfileCorePreload extends XoopsPreloadItem
     /**
      * @param $args
      */
-    function eventCoreLostpassStart($args)
+    public function eventCoreLostpassStart($args)
     {
         $email = isset($_GET['email']) ? trim($_GET['email']) : '';
         $email = isset($_POST['email']) ? trim($_POST['email']) : $email;
@@ -68,19 +68,18 @@ class ProfileCorePreload extends XoopsPreloadItem
     /**
      * @param $args
      */
-    function eventCoreRegisterStart($args)
+    public function eventCoreRegisterStart($args)
     {
-        header("location: ./modules/profile/register.php" . (empty($_SERVER['QUERY_STRING']) ? "" : "?" . $_SERVER['QUERY_STRING']) );
+        header("location: ./modules/profile/register.php" . (empty($_SERVER['QUERY_STRING']) ? "" : "?" . $_SERVER['QUERY_STRING']));
         exit();
     }
 
     /**
      * @param $args
      */
-    function eventCoreUserinfoStart($args)
+    public function eventCoreUserinfoStart($args)
     {
-        header("location: ./modules/profile/userinfo.php" . (empty($_SERVER['QUERY_STRING']) ? "" : "?" . $_SERVER['QUERY_STRING']) );
+        header("location: ./modules/profile/userinfo.php" . (empty($_SERVER['QUERY_STRING']) ? "" : "?" . $_SERVER['QUERY_STRING']));
         exit();
     }
-
 }

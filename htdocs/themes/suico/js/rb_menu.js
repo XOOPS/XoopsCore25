@@ -1,6 +1,6 @@
 /*
  * simple sliding menu using jQuery and Interface - http://www.getintothis.com
- * 
+ *
  * note: this library depends on jquery (http://www.jquery.com) and
  * interface (http://interface.eyecon.ro)
  *
@@ -39,29 +39,29 @@ $.fn.rb_menu = function(options) {
     var $menuItems = $menu.find('.items');
     var $toggle = $menu.find('.toggle');
 
-  	// add 'hover' class to trigger for css styling
-  	$toggle.hover(
-  	  function() {
-  		  $toggle.addClass('toggle-hover');
-  	  },
-  	  function() {
-  		  $toggle.removeClass('toggle-hover');
-  	  }
-  	);
+      // add 'hover' class to trigger for css styling
+      $toggle.hover(
+        function() {
+            $toggle.addClass('toggle-hover');
+        },
+        function() {
+            $toggle.removeClass('toggle-hover');
+        }
+      );
 
-  	if($self.options.hideOnLoad) {
-  		if($self.options.loadHideDelay <= 0) {
-  			$menuItems.hide();
-  			$menu.closed = true;
-  			$menu.unbind();
-  		} else {
-  			// let's hide the menu when the page is loading
-  			// after {loadHideDelay} milliseconds
-  			setTimeout( function() {
-  				$menu.hideMenu();
-  			}, $self.options.loadHideDelay);
-  		}
-  	}
+      if($self.options.hideOnLoad) {
+          if($self.options.loadHideDelay <= 0) {
+              $menuItems.hide();
+              $menu.closed = true;
+              $menu.unbind();
+          } else {
+              // let's hide the menu when the page is loading
+              // after {loadHideDelay} milliseconds
+              setTimeout( function() {
+                  $menu.hideMenu();
+              }, $self.options.loadHideDelay);
+          }
+      }
 
     // bind event defined by {triggerEvent} to the trigger
     // to open and close the menu
@@ -107,7 +107,7 @@ $.fn.rb_menu = function(options) {
               $menu.hover(
                 function(e) {
                   clearTimeout($menu.timeout);
-                }, 
+                },
                 function(e) {
                   $menu.timeout = setTimeout(function() {
                       $menu.hideMenu();

@@ -10,13 +10,13 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @since           2.0.0
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @since               2.0.0
+ * @version             $Id: defines.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Define required Defines (I guess lol )
@@ -117,7 +117,6 @@ body {font-size: 12px; background-color: #f0f0f0; text-align: center;}
         <p class='xo-siteblocked-desc'>Error : %s</p>
     </div>
 </body>
-</html>"
-);
+</html>");
 
 define('_XOOPS_FATAL_BACKTRACE', "Backtrace");

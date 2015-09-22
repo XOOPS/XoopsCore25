@@ -54,10 +54,10 @@ xxxxxxx;;;;;;;;;;::'''::::.:xxx####x`.....  ...  'xxxx;;#`;#;;x;'';xxxxxxxxxxxxx
 
 
 Thanks to:
-- Dean Edwards for IE8.js 		--> http://code.google.com/p/ie7-js/
-- Icons by Crystal Project		--> http://www.everaldo.com/crystal/
-- JQuery Project				--> http://jquery.org/
-- Soh Tanaka					--> http://www.sohtanaka.com
+- Dean Edwards for IE8.js         --> http://code.google.com/p/ie7-js/
+- Icons by Crystal Project        --> http://www.everaldo.com/crystal/
+- JQuery Project                --> http://jquery.org/
+- Soh Tanaka                    --> http://www.sohtanaka.com
 
 
 Kris - http://www.xoofoo.org

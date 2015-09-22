@@ -10,21 +10,21 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @since           2.0.0
- * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @since               2.0.0
+ * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @version             $Id: configcategory.php 13090 2015-06-16 20:44:29Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * A category of configs
  *
- * @author	Kazumi Ono	<onokazu@xoops.org>
+ * @author              Kazumi Ono    <onokazu@xoops.org>
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  *
- * @package     kernel
+ * @package             kernel
  */
 class XoopsConfigCategory extends XoopsObject
 {
@@ -32,46 +32,57 @@ class XoopsConfigCategory extends XoopsObject
      * Constructor
      *
      */
-    function XoopsConfigCategory()
+    public function __construct()
     {
-        $this->XoopsObject();
+        parent::__construct();
         $this->initVar('confcat_id', XOBJ_DTYPE_INT, null);
         $this->initVar('confcat_name', XOBJ_DTYPE_OTHER, null);
         $this->initVar('confcat_order', XOBJ_DTYPE_INT, 0);
     }
 
+    public function XoopsConfigCategory()
+    {
+        $this->__construct();
+    }
     /**
      * Returns Class Base Variable confcat_id
+     * @param string $format
+     * @return mixed
      */
-    function id($format = 'N')
+    public function id($format = 'N')
     {
         return $this->getVar('confcat_id', $format);
     }
 
     /**
      * Returns Class Base Variable confcat_id
+     * @param string $format
+     * @return mixed
      */
-    function confcat_id($format = '')
+    public function confcat_id($format = '')
     {
         return $this->getVar('confcat_id', $format);
     }
 
     /**
      * Returns Class Base Variable confcat_name
+     * @param string $format
+     * @return mixed
      */
-    function confcat_name($format = '')
+    public function confcat_name($format = '')
     {
         return $this->getVar('confcat_name', $format);
     }
 
     /**
      * Returns Class Base Variable confcat_order
+     * @param string $format
+     * @return mixed
      */
-    function confcat_order($format = '')
+    public function confcat_order($format = '')
     {
         return $this->getVar('confcat_order', $format);
     }
-
 }
 
 /**
@@ -80,41 +91,42 @@ class XoopsConfigCategory extends XoopsObject
  * This class is responsible for providing data access mechanisms to the data source
  * of XOOPS configuration category class objects.
  *
- * @author  Kazumi Ono <onokazu@xoops.org>
+ * @author              Kazumi Ono <onokazu@xoops.org>
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  *
- * @package     kernel
- * @subpackage  config
+ * @package             kernel
+ * @subpackage          config
  */
 class XoopsConfigCategoryHandler extends XoopsObjectHandler
 {
     /**
      * Create a new category
      *
-     * @param	bool    $isNew  Flag the new object as "new"?
+     * @param bool $isNew Flag the new object as "new"?
      *
-     * @return	object  New {@link XoopsConfigCategory}
+     * @return XoopsConfigCategory New {@link XoopsConfigCategory}
      */
-    function &create($isNew = true)
+    public function &create($isNew = true)
     {
         $confcat = new XoopsConfigCategory();
         if ($isNew) {
             $confcat->setNew();
         }
+
         return $confcat;
     }
 
     /**
      * Retrieve a {@link XoopsConfigCategory}
      *
-     * @param	int $id ID
+     * @param int $id ID
      *
-     * @return	object  {@link XoopsConfigCategory}, FALSE on fail
+     * @return XoopsConfigCategory {@link XoopsConfigCategory}, FALSE on fail
      */
-    function &get($id)
+    public function &get($id)
     {
         $confcat = false;
-        $id = (int)($id);
+        $id      = (int)($id);
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('configcategory') . ' WHERE confcat_id=' . $id;
             if (!$result = $this->db->query($sql)) {
@@ -126,17 +138,18 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
                 $confcat->assignVars($this->db->fetchArray($result), false);
             }
         }
+
         return $confcat;
     }
 
     /**
      * Store a {@link XoopsConfigCategory}
      *
-     * @param	object   &$confcat  {@link XoopsConfigCategory}
+     * @param XoopsConfigCategory &$confcat {@link XoopsConfigCategory}
      *
-     * @return	bool    TRUE on success
+     * @return bool TRUE on success
      */
-    function insert(&$confcat)
+    public function insert(XoopsConfigCategory $confcat)
     {
         /**
          * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
@@ -155,7 +168,7 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
         }
         if ($confcat->isNew()) {
             $confcat_id = $this->db->genId('configcategory_confcat_id_seq');
-            $sql = sprintf("INSERT INTO %s (confcat_id, confcat_name, confcat_order) VALUES (%u, %s, %u)", $this->db->prefix('configcategory'), $confcat_id, $this->db->quoteString($confcat_name), $confcat_order);
+            $sql        = sprintf("INSERT INTO %s (confcat_id, confcat_name, confcat_order) VALUES (%u, %s, %u)", $this->db->prefix('configcategory'), $confcat_id, $this->db->quoteString($confcat_name), $confcat_order);
         } else {
             $sql = sprintf("UPDATE %s SET confcat_name = %s, confcat_order = %u WHERE confcat_id = %u", $this->db->prefix('configcategory'), $this->db->quoteString($confcat_name), $confcat_order, $confcat_id);
         }
@@ -166,17 +179,18 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
             $confcat_id = $this->db->getInsertId();
         }
         $confcat->assignVar('confcat_id', $confcat_id);
+
         return $confcat_id;
     }
 
     /**
      * Delelete a {@link XoopsConfigCategory}
      *
-     * @param	object  &$confcat   {@link XoopsConfigCategory}
+     * @param XoopsConfigCategory $confcat {@link XoopsConfigCategory}
      *
-     * @return	bool    TRUE on success
+     * @return bool TRUE on success
      */
-    function delete(&$confcat)
+    public function delete(XoopsConfigCategory $confcat)
     {
         /**
          * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
@@ -189,27 +203,28 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
         if (!$result = $this->db->query($sql)) {
             return false;
         }
+
         return true;
     }
 
     /**
      * Get some {@link XoopsConfigCategory}s
      *
-     * @param	object  $criteria   {@link CriteriaElement}
-     * @param	bool    $id_as_key  Use the IDs as keys to the array?
+     * @param CriteriaElement $criteria  {@link CriteriaElement}
+     * @param bool   $id_as_key Use the IDs as keys to the array?
      *
-     * @return	array   Array of {@link XoopsConfigCategory}s
+     * @return array Array of {@link XoopsConfigCategory}s
      */
-    function getObjects($criteria = null, $id_as_key = false)
+    public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
-        $ret = array();
+        $ret   = array();
         $limit = $start = 0;
-        $sql = 'SELECT * FROM ' . $this->db->prefix('configcategory');
+        $sql   = 'SELECT * FROM ' . $this->db->prefix('configcategory');
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
             $sort = !in_array($criteria->getSort(), array(
-                'confcat_id' ,
-                'confcat_name' ,
+                'confcat_id',
+                'confcat_name',
                 'confcat_order')) ? 'confcat_order' : $criteria->getSort();
             $sql .= ' ORDER BY ' . $sort . ' ' . $criteria->getOrder();
             $limit = $criteria->getLimit();
@@ -225,19 +240,23 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
             if (!$id_as_key) {
                 $ret[] =& $confcat;
             } else {
-                $ret[$myrow['confcat_id']] = & $confcat;
+                $ret[$myrow['confcat_id']] = &$confcat;
             }
             unset($confcat);
         }
+
         return $ret;
     }
 
     /**#@+
      * @deprecated
+     * @param int $modid
+     * @return bool
      */
-    function getCatByModule($modid = 0)
+    public function getCatByModule($modid = 0)
     {
         trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+
         return false;
     }
     /**#@-*/

@@ -16,13 +16,13 @@
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
- * @package         core
- * @since           2.0.0
- * @author          Kazumi Ono <webmaster@myweb.ne.jp>
- * @version         $Id$
+ * @license             http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @package             core
+ * @since               2.0.0
+ * @author              Kazumi Ono <webmaster@myweb.ne.jp>
+ * @version             $Id: userinfo.php 13090 2015-06-16 20:44:29Z beckmi $
  */
-include __DIR__ . DIRECTORY_SEPARATOR . 'mainfile.php';
+include __DIR__ . '/mainfile.php';
 $xoopsPreload =& XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.userinfo.start');
 
@@ -36,14 +36,14 @@ if ($uid <= 0) {
     exit();
 }
 
-$gperm_handler =& xoops_gethandler('groupperm');
-$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+$gperm_handler =& xoops_getHandler('groupperm');
+$groups        = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 
 $isAdmin = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_USER, $groups);
 if (is_object($xoopsUser)) {
     if ($uid == $xoopsUser->getVar('uid')) {
-        $config_handler =& xoops_gethandler('config');
-        $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+        $config_handler               =& xoops_getHandler('config');
+        $xoopsConfigUser              = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
         $xoopsOption['template_main'] = 'system_userinfo.html';
         include $GLOBALS['xoops']->path('header.php');
         $xoopsTpl->assign('user_ownpage', true);
@@ -59,9 +59,9 @@ if (is_object($xoopsUser)) {
         }
         $thisUser =& $xoopsUser;
     } else {
-        $member_handler =& xoops_gethandler('member');
-        $thisUser =& $member_handler->getUser($uid);
-        if (! is_object($thisUser) || ! $thisUser->isActive()) {
+        $member_handler =& xoops_getHandler('member');
+        $thisUser       =& $member_handler->getUser($uid);
+        if (!is_object($thisUser) || !$thisUser->isActive()) {
             redirect_header("index.php", 3, _US_SELECTNG);
             exit();
         }
@@ -70,8 +70,8 @@ if (is_object($xoopsUser)) {
         $xoopsTpl->assign('user_ownpage', false);
     }
 } else {
-    $member_handler =& xoops_gethandler('member');
-    $thisUser =& $member_handler->getUser($uid);
+    $member_handler =& xoops_getHandler('member');
+    $thisUser       =& $member_handler->getUser($uid);
     if (!is_object($thisUser) || !$thisUser->isActive()) {
         redirect_header("index.php", 3, _US_SELECTNG);
         exit();
@@ -91,7 +91,7 @@ $xoopsTpl->assign('lang_allaboutuser', sprintf(_US_ALLABOUT, $thisUser->getVar('
 $xoopsTpl->assign('lang_avatar', _US_AVATAR);
 
 $avatar = "";
-if ($thisUser->getVar('user_avatar') && "blank.gif" != $thisUser->getVar('user_avatar')) {
+if ($thisUser->getVar('user_avatar') && "blank.gif" !== $thisUser->getVar('user_avatar')) {
     $avatar = XOOPS_UPLOAD_URL . "/" . $thisUser->getVar('user_avatar');
 }
 $xoopsTpl->assign('user_avatarurl', $avatar);
@@ -160,41 +160,40 @@ if (isset($userrank['image']) && $userrank['image']) {
 }
 $xoopsTpl->assign('user_ranktitle', $userrank['title']);
 $date = $thisUser->getVar("last_login");
-if (! empty($date)) {
+if (!empty($date)) {
     $xoopsTpl->assign('user_lastlogin', formatTimestamp($date, "m"));
 }
-$module_handler =& xoops_gethandler('module');
-$criteria = new CriteriaCompo(new Criteria('hassearch', 1));
+$module_handler =& xoops_getHandler('module');
+$criteria       = new CriteriaCompo(new Criteria('hassearch', 1));
 $criteria->add(new Criteria('isactive', 1));
 $mids = array_keys($module_handler->getList($criteria));
 foreach ($mids as $mid) {
     if ($gperm_handler->checkRight('module_read', $mid, $groups)) {
-        $module = $module_handler->get($mid);
+        $module  = $module_handler->get($mid);
         $results = $module->search('', '', 5, 0, $thisUser->getVar('uid'));
-        $count = count($results);
+        $count   = count($results);
         if (is_array($results) && $count > 0) {
-            for($i = 0; $i < $count; ++$i) {
+            for ($i = 0; $i < $count; ++$i) {
                 if (isset($results[$i]['image']) && $results[$i]['image'] != '') {
                     $results[$i]['image'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['image'];
                 } else {
                     $results[$i]['image'] = 'images/icons/posticon2.gif';
                 }
 
-                if (! preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
+                if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                     $results[$i]['link'] = "modules/" . $module->getVar('dirname') . "/" . $results[$i]['link'];
                 }
 
                 $results[$i]['title'] = $myts->htmlspecialchars($results[$i]['title']);
-                $results[$i]['time'] = $results[$i]['time'] ? formatTimestamp($results[$i]['time']) : '';
+                $results[$i]['time']  = $results[$i]['time'] ? formatTimestamp($results[$i]['time']) : '';
             }
+            $showall_link = '';
             if ($count == 5) {
                 $showall_link = '<a href="search.php?action=showallbyuser&amp;mid=' . $mid . '&amp;uid=' . $thisUser->getVar('uid') . '">' . _US_SHOWALL . '</a>';
-            } else {
-                $showall_link = '';
             }
             $xoopsTpl->append('modules', array(
-                'name' => $module->getVar('name') ,
-                'results' => $results ,
+                'name'         => $module->getVar('name'),
+                'results'      => $results,
                 'showall_link' => $showall_link));
         }
         unset($module);

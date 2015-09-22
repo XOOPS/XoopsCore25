@@ -4,7 +4,7 @@
     <div class="col-xs-10 col-md-10"><strong><{$lang_thread}></strong></div>
 </div>
 <{foreach item=comment from=$comments}>
-	<{include file="db:system_comment.html" comment=$comment}>
+    <{include file="db:system_comment.html" comment=$comment}>
 <{/foreach}>
 
 <{if $commentform}>
@@ -13,7 +13,7 @@
             <span class="glyphicon glyphicon-comment"></span> Add Comment
         </button>
     </div>
-    
+
     <!-- Modal -->
     <div class="modal fade" id="comments-form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog comments-modal">

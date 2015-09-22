@@ -10,9 +10,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @author      Andricq Nicolas (AKA MusS)
- * @version     $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @author              Andricq Nicolas (AKA MusS)
+ * @version             $Id: help.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 // Include header
@@ -32,7 +32,7 @@ $xoBreadCrumb->addLink(_AM_SYSTEM_HELP, 'help.php');
 
 // If $mid > 0, we're in a module's help section.
 if ($mid > 0) {
-    $module_handler =& xoops_gethandler('module');
+    $module_handler =& xoops_getHandler('module');
     $module         = $module_handler->get($mid);
 
     $xoBreadCrumb->addLink($module->getVar('name'), 'help.php?mid=' . $module->getVar('mid', 's'));
@@ -40,7 +40,7 @@ if ($mid > 0) {
     $xoBreadCrumb->render();
 
     // Special handling for the System Module
-    if ($module->getVar('dirname', 'e') == 'system') {
+    if ($module->getVar('dirname', 'e') === 'system') {
         xoops_load('xoopslists');
         $admin_dir = XOOPS_ROOT_PATH . '/modules/system/admin';
         $dirlist   = XoopsLists::getDirListAsArray($admin_dir);
@@ -66,7 +66,7 @@ if ($mid > 0) {
         $j              = 0;
         if (is_array($helplist)) {
             foreach ($helplist as $helpitem) {
-                if (($helpitem['name'] != '') && ($helpitem['link'] != '')) {
+                if (($helpitem['name'] !== '') && ($helpitem['link'] !== '')) {
                     $list_help[$j]['name'] = $helpitem['name'];
                     $list_help[$j]['link'] = 'help.php?mid=' . $mid . '&amp;' . $helpitem['link'];
                     ++$j;
@@ -75,8 +75,8 @@ if ($mid > 0) {
             $listed_mods[0]['help_page'] = $list_help;
             $xoopsTpl->assign('list_mods', $listed_mods);
         }
-        unset ($helplist);
-        if (($module->getInfo('help') != '') && ($j == 0)) {
+        unset($helplist);
+        if (($module->getInfo('help') !== '') && ($j == 0)) {
             $help['name'] = $module->getInfo('name');
             $help['link'] = 'help.php?mid=' . $mid . '&amp;' . $module->getInfo('help');
             $xoopsTpl->append_by_ref('help', $help);
@@ -86,29 +86,21 @@ if ($mid > 0) {
 
     $xoopsTpl->assign('modname', $module->getVar('name'));
 
-    if ($page != '') {
+    if ($page !== '') {
         // Call template
         if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/' . $xoopsConfig['language'] . '/help/' . $page . '.html')) {
             $helpcontent = $xoopsTpl->fetch(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/' . $xoopsConfig['language'] . '/help/' . $page . '.html');
-        } elseif (file_exists(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/' . $xoopsConfig['language'] . '/help/' . $page . '.tpl')) {
-            $helpcontent = $xoopsTpl->fetch(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/' . $xoopsConfig['language'] . '/help/' . $page . '.tpl');
-        } elseif (file_exists(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/english/help/' . $page . '.html')) {
-            $helpcontent = $xoopsTpl->fetch(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/english/help/' . $page . '.html');
-        } elseif (file_exists(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/english/help/' . $page . '.tpl')) {
-            $helpcontent = $xoopsTpl->fetch(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/english/help/' . $page . '.tpl');
         } else {
-            $xoopsTpl->assign('load_error', 1);
+            if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/english/help/' . $page . '.html')) {
+                $helpcontent = $xoopsTpl->fetch(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/english/help/' . $page . '.html');
+            } else {
+                $xoopsTpl->assign('load_error', 1);
+            }
         }
         $xoopsTpl->assign('helpcontent', $helpcontent);
     } else {
-        if (file_exists(
-            XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/' . $xoopsConfig['language'] . '/help/module_index.html'
-        )
-        ) {
-            $helpcontent = $xoopsTpl->fetch(
-                XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/'
-                . $xoopsConfig['language'] . '/help/module_index.html'
-            );
+        if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/' . $xoopsConfig['language'] . '/help/module_index.html')) {
+            $helpcontent = $xoopsTpl->fetch(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/' . $xoopsConfig['language'] . '/help/module_index.html');
         } else {
             $helpcontent = $module->getInfo('description');
             $helpcontent = '<div id="non-modhelp">' . $helpcontent . '</div>';
@@ -121,7 +113,7 @@ if ($mid > 0) {
     $xoBreadCrumb->render();
 
     // Get Module Handler
-    $module_handler =& xoops_gethandler('module');
+    $module_handler =& xoops_getHandler('module');
     $criteria       = new CriteriaCompo();
     $criteria->setOrder('weight');
 
@@ -143,7 +135,7 @@ if ($mid > 0) {
         $listed_mods[$i]['description'] = $module->getInfo('description');
 
         // Special handling for the System module
-        if ($module->getVar('dirname', 'e') == 'system') {
+        if ($module->getVar('dirname', 'e') === 'system') {
             xoops_load('xoopslists');
             $admin_dir = XOOPS_ROOT_PATH . '/modules/system/admin';
             $dirlist   = XoopsLists::getDirListAsArray($admin_dir);
@@ -152,12 +144,7 @@ if ($mid > 0) {
                     require $admin_dir . '/' . $directory . '/xoops_version.php';
                     if ($modversion['help']) {
                         $list_help[$j]['name'] = system_adminVersion($directory, 'name');
-                        $list_help[$j]['link']
-                                               =
-                            'help.php?mid=' . $module->getVar('mid', 'e') . '&amp;' . system_adminVersion(
-                                $directory,
-                                'help'
-                            );
+                        $list_help[$j]['link'] = 'help.php?mid=' . $module->getVar('mid', 'e') . '&amp;' . system_adminVersion($directory, 'help');
                     }
                     unset($modversion);
                     ++$j;
@@ -173,11 +160,9 @@ if ($mid > 0) {
             // Only build the list if one has been defined.
             if (is_array($helplist)) {
                 foreach ($helplist as $helpitem) {
-                    if (($helpitem['name'] != '') && ($helpitem['link'] != '')) {
+                    if (($helpitem['name'] !== '') && ($helpitem['link'] !== '')) {
                         $list_help[$j]['name'] = $helpitem['name'];
-                        $list_help[$j]['link']
-                                               =
-                            'help.php?mid=' . $module->getVar('mid', 'e') . '&amp;' . $helpitem['link'];
+                        $list_help[$j]['link'] = 'help.php?mid=' . $module->getVar('mid', 'e') . '&amp;' . $helpitem['link'];
                         ++$j;
                         ++$k;
                     }
@@ -186,32 +171,24 @@ if ($mid > 0) {
             unset($helplist);
 
             // If there is no help section ($k=0), and a lone help parameter has been defined.
-            if (($module->getInfo('help') != '') && ($k == 0)) {
+            if (($module->getInfo('help') !== '') && ($k == 0)) {
                 $list_help[$j]['name'] = $module->getInfo('name');
-                $list_help[$j]['link']
-                                       =
-                    'help.php?mid=' . $module->getVar('mid', 'e') . '&amp;' . $module->getInfo('help');
+                $list_help[$j]['link'] = 'help.php?mid=' . $module->getVar('mid', 'e') . '&amp;' . $module->getInfo('help');
             }
         }
 
         $listed_mods[$i]['help_page'] = $list_help;
-        if ($module->getInfo('help') == '') {
+        if ($module->getInfo('help') === '') {
             unset($listed_mods[$i]);
         }
-        unset($list_help);
-        unset($module);
+        unset($list_help, $module);
         ++$i;
         ++$j;
     }
     $xoopsTpl->assign('list_mods', $listed_mods);
 
-    if (file_exists(
-        XOOPS_ROOT_PATH . '/modules/system/language/' . $xoopsConfig['language'] . '/help/help_center.html'
-    )
-    ) {
-        $helpcontent = $xoopsTpl->fetch(
-            XOOPS_ROOT_PATH . '/modules/system/language/' . $xoopsConfig['language'] . '/help/help_center.html'
-        );
+    if (file_exists(XOOPS_ROOT_PATH . '/modules/system/language/' . $xoopsConfig['language'] . '/help/help_center.html')) {
+        $helpcontent = $xoopsTpl->fetch(XOOPS_ROOT_PATH . '/modules/system/language/' . $xoopsConfig['language'] . '/help/help_center.html');
     } else {
         $helpcontent = '<div id="non-modhelp">' . _MD_CPANEL_HELPCENTER . '</div>';
     }

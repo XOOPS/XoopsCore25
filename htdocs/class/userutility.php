@@ -10,20 +10,20 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @since           2.3.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: userutility.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * XoopsUserUtility
  *
  * @package Kernel
- * @author Taiwen Jiang <phppp@users.sourceforge.net>
+ * @author  Taiwen Jiang <phppp@users.sourceforge.net>
  */
 class XoopsUserUtility
 {
@@ -34,12 +34,12 @@ class XoopsUserUtility
      *
      * @return bool
      */
-    static function sendWelcome($user)
+    public static function sendWelcome($user)
     {
         global $xoopsConfigUser, $xoopsConfig;
 
         if (empty($xoopsConfigUser)) {
-            $config_handler =& xoops_gethandler('config');
+            $config_handler  =& xoops_getHandler('config');
             $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
         }
         if (empty($xoopsConfigUser['welcome_type'])) {
@@ -47,8 +47,8 @@ class XoopsUserUtility
         }
 
         if (!empty($user) && !is_object($user)) {
-            $member_handler =& xoops_gethandler('member');
-            $user =& $member_handler->getUser($user);
+            $member_handler =& xoops_getHandler('member');
+            $user           =& $member_handler->getUser($user);
         }
         if (!is_object($user)) {
             return false;
@@ -81,17 +81,17 @@ class XoopsUserUtility
      *
      * @return bool|string
      */
-    static function validate()
+    public static function validate()
     {
         global $xoopsUser;
 
-        $args = func_get_args();
+        $args     = func_get_args();
         $args_num = func_num_args();
 
-        $user = null;
+        $user  = null;
         $uname = null;
         $email = null;
-        $pass = null;
+        $pass  = null;
         $vpass = null;
 
         switch ($args_num) {
@@ -99,13 +99,13 @@ class XoopsUserUtility
                 $user = $args[0];
                 break;
             case 2:
-                list ($uname, $email) = $args;
+                list($uname, $email) = $args;
                 break;
             case 3:
-                list ($user, $pass, $vpass) = $args;
+                list($user, $pass, $vpass) = $args;
                 break;
             case 4:
-                list ($uname, $email, $pass, $vpass) = $args;
+                list($uname, $email, $pass, $vpass) = $args;
                 break;
             default:
                 return false;
@@ -115,14 +115,14 @@ class XoopsUserUtility
             $email = $user->getVar('email', 'n');
         }
 
-        $config_handler =& xoops_gethandler('config');
+        $config_handler  =& xoops_getHandler('config');
         $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
         xoops_loadLanguage('user');
         $myts =& MyTextSanitizer::getInstance();
 
         $xoopsUser_isAdmin = is_object($xoopsUser) && $xoopsUser->isAdmin();
-        $stop = '';
+        $stop              = '';
         // Invalid email address
         if (!checkEmail($email)) {
             $stop .= _US_INVALIDMAIL . '<br />';
@@ -171,24 +171,24 @@ class XoopsUserUtility
                     break;
                 }
             }
-        /**
-         * if (strrpos($uname, ' ') > 0) {
-         * $stop .= _US_NICKNAMENOSPACES . '<br />';
-         * }
-         */
+            /**
+             * if (strrpos($uname, ' ') > 0) {
+             * $stop .= _US_NICKNAMENOSPACES . '<br />';
+             * }
+             */
         }
         $xoopsDB =& XoopsDatabaseFactory::getDatabaseConnection();
         // Check if uname/email already exists if the user is a new one
-        $uid = is_object($user) ? $user->getVar('uid') : 0;
-        $sql = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix('users') . '` WHERE `uname` = ' . $xoopsDB->quote(addslashes($uname)) . (($uid > 0) ? " AND `uid` <> {$uid}" : '');
+        $uid    = is_object($user) ? $user->getVar('uid') : 0;
+        $sql    = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix('users') . '` WHERE `uname` = ' . $xoopsDB->quote(addslashes($uname)) . (($uid > 0) ? " AND `uid` <> {$uid}" : '');
         $result = $xoopsDB->query($sql);
-        list ($count) = $xoopsDB->fetchRow($result);
+        list($count) = $xoopsDB->fetchRow($result);
         if ($count > 0) {
             $stop .= _US_NICKNAMETAKEN . '<br />';
         }
-        $sql = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix('users') . '` WHERE `email` = ' . $xoopsDB->quote(addslashes($email)) . (($uid > 0) ? " AND `uid` <> {$uid}" : '');
+        $sql    = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix('users') . '` WHERE `email` = ' . $xoopsDB->quote(addslashes($email)) . (($uid > 0) ? " AND `uid` <> {$uid}" : '');
         $result = $xoopsDB->query($sql);
-        list ($count) = $xoopsDB->fetchRow($result);
+        list($count) = $xoopsDB->fetchRow($result);
         if ($count > 0) {
             $stop .= _US_EMAILTAKEN . '<br />';
         }
@@ -202,7 +202,7 @@ class XoopsUserUtility
         }
         if ((isset($pass)) && ($pass != $vpass)) {
             $stop .= _US_PASSNOTSAME . '<br />';
-        } else if (($pass != '') && (strlen($pass) < $xoopsConfigUser['minpass'])) {
+        } elseif (($pass != '') && (strlen($pass) < $xoopsConfigUser['minpass'])) {
             $stop .= sprintf(_US_PWDTOOSHORT, $xoopsConfigUser['minpass']) . '<br />';
         }
 
@@ -214,29 +214,29 @@ class XoopsUserUtility
      *
      * Adapted from PMA_getIp() [phpmyadmin project]
      *
-     * @param  bool  $asString requiring integer or dotted string
+     * @param  bool $asString requiring integer or dotted string
      * @return mixed string or integer value for the IP
      */
-    static function getIP($asString = false)
+    public static function getIP($asString = false)
     {
         // Gets the proxy ip sent by the user
         $proxy_ip = '';
         if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $proxy_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
         } elseif (!empty($_SERVER['HTTP_X_FORWARDED'])) {
-                $proxy_ip = $_SERVER['HTTP_X_FORWARDED'];
-            } elseif (! empty($_SERVER['HTTP_FORWARDED_FOR'])) {
-                    $proxy_ip = $_SERVER['HTTP_FORWARDED_FOR'];
-                } elseif (!empty($_SERVER['HTTP_FORWARDED'])) {
-                        $proxy_ip = $_SERVER['HTTP_FORWARDED'];
-                    } elseif (!empty($_SERVER['HTTP_VIA'])) {
-                            $proxy_ip = $_SERVER['HTTP_VIA'];
-                        } elseif (!empty($_SERVER['HTTP_X_COMING_FROM'])) {
-                                $proxy_ip = $_SERVER['HTTP_X_COMING_FROM'];
-                            } elseif (!empty($_SERVER['HTTP_COMING_FROM'])) {
-                                    $proxy_ip = $_SERVER['HTTP_COMING_FROM'];
-                                }
-        if (!empty($proxy_ip) && $is_ip = preg_match('/^([0-9]{1,3}.){3,3}[0-9]{1,3}/', $proxy_ip, $regs) && count($regs) > 0) {
+            $proxy_ip = $_SERVER['HTTP_X_FORWARDED'];
+        } elseif (!empty($_SERVER['HTTP_FORWARDED_FOR'])) {
+            $proxy_ip = $_SERVER['HTTP_FORWARDED_FOR'];
+        } elseif (!empty($_SERVER['HTTP_FORWARDED'])) {
+            $proxy_ip = $_SERVER['HTTP_FORWARDED'];
+        } elseif (!empty($_SERVER['HTTP_VIA'])) {
+            $proxy_ip = $_SERVER['HTTP_VIA'];
+        } elseif (!empty($_SERVER['HTTP_X_COMING_FROM'])) {
+            $proxy_ip = $_SERVER['HTTP_X_COMING_FROM'];
+        } elseif (!empty($_SERVER['HTTP_COMING_FROM'])) {
+            $proxy_ip = $_SERVER['HTTP_COMING_FROM'];
+        }
+        if (!empty($proxy_ip) && $is_ip = preg_match('/^(\d{1,3}.){3,3}\d{1,3}/', $proxy_ip, $regs) && count($regs) > 0) {
             $the_IP = $regs[0];
         } else {
             $the_IP = $_SERVER['REMOTE_ADDR'];
@@ -255,18 +255,18 @@ class XoopsUserUtility
      * @param  mixed $linked
      * @return array
      */
-    static function getUnameFromIds($uid, $usereal = false, $linked = false)
+    public static function getUnameFromIds($uid, $usereal = false, $linked = false)
     {
         if (!is_array($uid)) {
             $uid = array($uid);
         }
         $userid = array_map('intval', array_filter($uid));
 
-        $myts =& MyTextSanitizer::getInstance();
+        $myts  =& MyTextSanitizer::getInstance();
         $users = array();
         if (count($userid) > 0) {
             $xoopsDB =& XoopsDatabaseFactory::getDatabaseConnection();
-            $sql = 'SELECT uid, uname, name FROM ' . $xoopsDB->prefix('users') . ' WHERE level > 0 AND uid IN(' . implode(',', array_unique($userid)) . ')';
+            $sql     = 'SELECT uid, uname, name FROM ' . $xoopsDB->prefix('users') . ' WHERE level > 0 AND uid IN(' . implode(',', array_unique($userid)) . ')';
             if (!$result = $xoopsDB->query($sql)) {
                 return $users;
             }
@@ -292,19 +292,19 @@ class XoopsUserUtility
     /**
      * XoopsUserUtility::getUnameFromId()
      *
-     * @param  mixed  $userid
-     * @param  mixed  $usereal
-     * @param  mixed  $linked
+     * @param  mixed $userid
+     * @param  mixed $usereal
+     * @param  mixed $linked
      * @return string
      */
-    static function getUnameFromId($userid, $usereal = false, $linked = false)
+    public static function getUnameFromId($userid, $usereal = false, $linked = false)
     {
-        $myts =& MyTextSanitizer::getInstance();
-        $userid = (int)($userid);
+        $myts     =& MyTextSanitizer::getInstance();
+        $userid   = (int)($userid);
         $username = '';
         if ($userid > 0) {
-            $member_handler = &xoops_gethandler('member');
-            $user =& $member_handler->getUser($userid);
+            $member_handler = &xoops_getHandler('member');
+            $user           =& $member_handler->getUser($userid);
             if (is_object($user)) {
                 if ($usereal && $user->getVar('name')) {
                     $username = $user->getVar('name');

@@ -10,49 +10,51 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package kernel
- * @subpackage auth
- * @since 2.0
- * @author Pierre-Eric MENUET <pemphp@free.fr>
- * @version $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @subpackage          auth
+ * @since               2.0
+ * @author              Pierre-Eric MENUET <pemphp@free.fr>
+ * @version             $Id: auth_xoops.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  *
- * @package kernel
- * @subpackage auth
- * @description Authentification class for Native XOOPS
- * @author Pierre-Eric MENUET <pemphp@free.fr>
+ * @package             kernel
+ * @subpackage          auth
+ * @description         Authentification class for Native XOOPS
+ * @author              Pierre-Eric MENUET <pemphp@free.fr>
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  */
 class XoopsAuthXoops extends XoopsAuth
 {
     /**
      * Authentication Service constructor
+     * @param XoopsDatabase $dao
      */
-    function XoopsAuthXoops(&$dao)
+    public function __construct(XoopsDatabase $dao = null)
     {
-        $this->_dao = $dao;
+        $this->_dao        = $dao;
         $this->auth_method = 'xoops';
     }
 
     /**
      * Authenticate user
      *
-     * @param string $uname
-     * @param string $pwd
+     * @param  string $uname
+     * @param  string $pwd
      * @return bool
      */
-    function authenticate($uname, $pwd = null)
+    public function authenticate($uname, $pwd = null)
     {
-        $member_handler = &xoops_gethandler('member');
-        $user =& $member_handler->loginUser($uname, $pwd);
+        $member_handler =& xoops_getHandler('member');
+        $user           = $member_handler->loginUser($uname, $pwd);
         if ($user == false) {
             $this->setErrors(1, _US_INCORRECTLOGIN);
         }
+
         return $user;
     }
 }

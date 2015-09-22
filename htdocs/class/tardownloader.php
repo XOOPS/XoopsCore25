@@ -10,13 +10,13 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package     kernel
- * @since       2.0.0
- * @author      Kazumi Ono (http://www.myweb.ne.jp/, http://jp.xoops.org/)
- * @version     $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @since               2.0.0
+ * @author              Kazumi Ono (http://www.myweb.ne.jp/, http://jp.xoops.org/)
+ * @version             $Id: tardownloader.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * base class
@@ -38,11 +38,20 @@ class XoopsTarDownloader extends XoopsDownloader
      * @param string $ext      file extension
      * @param string $mimyType Mimetype
      */
-    function XoopsTarDownloader($ext = '.tar.gz', $mimyType = 'application/x-gzip')
+    public function __construct($ext = '.tar.gz', $mimyType = 'application/x-gzip')
     {
         $this->archiver = new tar();
-        $this->ext = trim($ext);
+        $this->ext      = trim($ext);
         $this->mimeType = trim($mimyType);
+    }
+
+    /**
+     * @param string $ext
+     * @param string $mimyType
+     */
+    public function XoopsTarDownloader($ext = '.tar.gz', $mimyType = 'application/x-gzip')
+    {
+        $this->__construct($ext, $mimyType);
     }
 
     /**
@@ -51,7 +60,7 @@ class XoopsTarDownloader extends XoopsDownloader
      * @param string $filepath    Full path to the file
      * @param string $newfilename Filename (if you don't want to use the original)
      */
-    function addFile($filepath, $newfilename = null)
+    public function addFile($filepath, $newfilename = null)
     {
         $this->archiver->addFile($filepath);
         if (isset($newfilename)) {
@@ -71,7 +80,7 @@ class XoopsTarDownloader extends XoopsDownloader
      * @param string $filepath    Full path to the file
      * @param string $newfilename Filename (if you don't want to use the original)
      */
-    function addBinaryFile($filepath, $newfilename = null)
+    public function addBinaryFile($filepath, $newfilename = null)
     {
         $this->archiver->addFile($filepath, true);
         if (isset($newfilename)) {
@@ -92,10 +101,10 @@ class XoopsTarDownloader extends XoopsDownloader
      * @param string  $filename Name for the file in the archive
      * @param integer $time
      */
-    function addFileData(&$data, $filename, $time = 0)
+    public function addFileData(&$data, $filename, $time = 0)
     {
         $dummyfile = XOOPS_CACHE_PATH . '/dummy_' . time() . '.html';
-        $fp = fopen($dummyfile, 'w');
+        $fp        = fopen($dummyfile, 'w');
         fwrite($fp, $data);
         fclose($fp);
         $this->archiver->addFile($dummyfile);
@@ -119,10 +128,10 @@ class XoopsTarDownloader extends XoopsDownloader
      * @param string  $filename Name for the file in the archive
      * @param integer $time
      */
-    function addBinaryFileData(&$data, $filename, $time = 0)
+    public function addBinaryFileData(&$data, $filename, $time = 0)
     {
         $dummyfile = XOOPS_CACHE_PATH . '/dummy_' . time() . '.html';
-        $fp = fopen($dummyfile, 'wb');
+        $fp        = fopen($dummyfile, 'wb');
         fwrite($fp, $data);
         fclose($fp);
         $this->archiver->addFile($dummyfile, true);
@@ -145,7 +154,7 @@ class XoopsTarDownloader extends XoopsDownloader
      * @param string  $name Filename
      * @param boolean $gzip Use GZ compression
      */
-    function download($name, $gzip = true)
+    public function download($name, $gzip = true)
     {
         $this->_header($name . $this->ext);
         echo $this->archiver->toTarOutput($name . $this->ext, $gzip);

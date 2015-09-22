@@ -16,13 +16,13 @@
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
- * @package         core
- * @since           2.0.0
- * @author          Kazumi Ono <webmaster@myweb.ne.jp>
- * @version         $Id$
+ * @license             http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @package             core
+ * @since               2.0.0
+ * @author              Kazumi Ono <webmaster@myweb.ne.jp>
+ * @version             $Id: user.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-include __DIR__ . DIRECTORY_SEPARATOR . 'mainfile.php';
+include __DIR__ . '/mainfile.php';
 $xoopsPreload =& XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.user.start');
 
@@ -32,14 +32,14 @@ XoopsLoad::load('XoopsFilterInput');
 $op = 'main';
 if (isset($_POST['op'])) {
     // from $_POST we use keys: op, ok
-    $op = trim(XoopsFilterInput::clean($_POST['op']));
-    $clean_ok=false;
+    $op       = trim(XoopsFilterInput::clean($_POST['op']));
+    $clean_ok = false;
     if (isset($_POST['ok'])) {
         $clean_ok = XoopsFilterInput::clean($_POST['ok'], 'BOOLEAN');
     }
 } elseif (isset($_GET['op'])) {
     // from $_GET we may use keys: op, xoops_redirect, id, actkey
-    $op = trim(XoopsFilterInput::clean($_GET['op']));
+    $op             = trim(XoopsFilterInput::clean($_GET['op']));
     $clean_redirect = '';
     if (isset($_GET['xoops_redirect'])) {
         $clean_redirect = XoopsFilterInput::clean($_GET['xoops_redirect'], 'WEBURL');
@@ -52,14 +52,12 @@ if (isset($_POST['op'])) {
     }
 }
 
-
-
-if ($op == 'login') {
+if ($op === 'login') {
     include_once $GLOBALS['xoops']->path('include/checklogin.php');
     exit();
 }
 
-if ($op == 'main') {
+if ($op === 'main') {
     if (!$xoopsUser) {
         $xoopsOption['template_main'] = 'system_userform.html';
         include $GLOBALS['xoops']->path('header.php');
@@ -85,7 +83,7 @@ if ($op == 'main') {
         exit();
     }
     if (!empty($clean_redirect)) {
-        $redirect = trim($clean_redirect);
+        $redirect   = trim($clean_redirect);
         $isExternal = false;
         if ($pos = strpos($redirect, '://')) {
             $xoopsLocation = substr(XOOPS_URL, strpos(XOOPS_URL, '://') + 3);
@@ -93,7 +91,7 @@ if ($op == 'main') {
                 $isExternal = true;
             }
         }
-        if (! $isExternal) {
+        if (!$isExternal) {
             header('Location: ' . $redirect);
             exit();
         }
@@ -102,16 +100,16 @@ if ($op == 'main') {
     exit();
 }
 
-if ($op == 'logout') {
+if ($op === 'logout') {
     $message = '';
     // Regenerate a new session id and destroy old session
     $GLOBALS["sess_handler"]->regenerate_id(true);
     $_SESSION = array();
-    setcookie($xoopsConfig['usercookie'], 0, - 1, '/', XOOPS_COOKIE_DOMAIN, 0);
-    setcookie($xoopsConfig['usercookie'], 0, - 1, '/');
+    setcookie($xoopsConfig['usercookie'], 0, -1, '/', XOOPS_COOKIE_DOMAIN, 0);
+    setcookie($xoopsConfig['usercookie'], 0, -1, '/');
     // clear entry from online users table
     if (is_object($xoopsUser)) {
-        $online_handler =& xoops_gethandler('online');
+        $online_handler =& xoops_getHandler('online');
         $online_handler->destroy($xoopsUser->getVar('uid'));
     }
     $message = _US_LOGGEDOUT . '<br />' . _US_THANKYOUFORVISIT;
@@ -119,16 +117,16 @@ if ($op == 'logout') {
     exit();
 }
 
-if ($op == 'actv') {
+if ($op === 'actv') {
     $GLOBALS['xoopsLogger']->addDeprecated("Deprecated code. The activation is now handled by register.php");
-    $id = isset($clean_id) ? $clean_id : 0;
+    $id     = isset($clean_id) ? $clean_id : 0;
     $actkey = isset($clean_actkey) ? $clean_actkey : '';
     redirect_header("register.php?id={$id}&amp;actkey={$actkey}", 1, '');
     exit();
 }
 
-if ($op == 'delete') {
-    $config_handler =& xoops_gethandler('config');
+if ($op === 'delete') {
+    $config_handler  =& xoops_getHandler('config');
     $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
     if (!$xoopsUser || $xoopsConfigUser['self_delete'] != 1) {
         redirect_header('index.php', 5, _US_NOPERMISS);
@@ -142,17 +140,13 @@ if ($op == 'delete') {
         }
         if (!$clean_ok) {
             include $GLOBALS['xoops']->path('header.php');
-            xoops_confirm(
-                array('op' => 'delete', 'ok' => 1),
-                'user.php',
-                _US_SURETODEL . '<br/>' . _US_REMOVEINFO
-            );
+            xoops_confirm(array('op' => 'delete', 'ok' => 1), 'user.php', _US_SURETODEL . '<br/>' . _US_REMOVEINFO);
             include $GLOBALS['xoops']->path('footer.php');
         } else {
-            $del_uid = $xoopsUser->getVar("uid");
-            $member_handler =& xoops_gethandler('member');
+            $del_uid        = $xoopsUser->getVar("uid");
+            $member_handler =& xoops_getHandler('member');
             if (false != $member_handler->deleteUser($xoopsUser)) {
-                $online_handler =& xoops_gethandler('online');
+                $online_handler =& xoops_getHandler('online');
                 $online_handler->destroy($del_uid);
                 xoops_notification_deletebyuser($del_uid);
                 redirect_header('index.php', 5, _US_BEENDELED);

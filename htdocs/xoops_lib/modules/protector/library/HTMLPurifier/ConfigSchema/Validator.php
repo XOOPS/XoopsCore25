@@ -10,7 +10,6 @@
  */
 class HTMLPurifier_ConfigSchema_Validator
 {
-
     /**
      * @type HTMLPurifier_ConfigSchema_Interchange
      */
@@ -40,13 +39,13 @@ class HTMLPurifier_ConfigSchema_Validator
 
     /**
      * Validates a fully-formed interchange object.
-     * @param HTMLPurifier_ConfigSchema_Interchange $interchange
+     * @param  HTMLPurifier_ConfigSchema_Interchange $interchange
      * @return bool
      */
     public function validate($interchange)
     {
         $this->interchange = $interchange;
-        $this->aliases = array();
+        $this->aliases     = array();
         // PHP is a bit lax with integer <=> string conversions in
         // arrays, so we don't use the identical !== comparison
         foreach ($interchange->directives as $i => $directive) {
@@ -56,6 +55,7 @@ class HTMLPurifier_ConfigSchema_Validator
             }
             $this->validateDirective($directive);
         }
+
         return true;
     }
 
@@ -65,7 +65,7 @@ class HTMLPurifier_ConfigSchema_Validator
      */
     public function validateId($id)
     {
-        $id_string = $id->toString();
+        $id_string       = $id->toString();
         $this->context[] = "id '$id_string'";
         if (!$id instanceof HTMLPurifier_ConfigSchema_Interchange_Id) {
             // handled by InterchangeBuilder
@@ -73,9 +73,7 @@ class HTMLPurifier_ConfigSchema_Validator
         }
         // keys are now unconstrained (we might want to narrow down to A-Za-z0-9.)
         // we probably should check that it has at least one namespace
-        $this->with($id, 'key')
-            ->assertNotEmpty()
-            ->assertIsString(); // implicit assertIsString handled by InterchangeBuilder
+        $this->with($id, 'key')->assertNotEmpty()->assertIsString(); // implicit assertIsString handled by InterchangeBuilder
         array_pop($this->context);
     }
 
@@ -85,18 +83,15 @@ class HTMLPurifier_ConfigSchema_Validator
      */
     public function validateDirective($d)
     {
-        $id = $d->id->toString();
+        $id              = $d->id->toString();
         $this->context[] = "directive '$id'";
         $this->validateId($d->id);
 
-        $this->with($d, 'description')
-            ->assertNotEmpty();
+        $this->with($d, 'description')->assertNotEmpty();
 
         // BEGIN - handled by InterchangeBuilder
-        $this->with($d, 'type')
-            ->assertNotEmpty();
-        $this->with($d, 'typeAllowsNull')
-            ->assertIsBool();
+        $this->with($d, 'type')->assertNotEmpty();
+        $this->with($d, 'typeAllowsNull')->assertIsBool();
         try {
             // This also tests validity of $d->type
             $this->parser->parse($d->default, $d->type, $d->typeAllowsNull);
@@ -131,9 +126,7 @@ class HTMLPurifier_ConfigSchema_Validator
         if (is_null($d->allowed)) {
             return;
         }
-        $this->with($d, 'allowed')
-            ->assertNotEmpty()
-            ->assertIsLookup(); // handled by InterchangeBuilder
+        $this->with($d, 'allowed')->assertNotEmpty()->assertIsLookup(); // handled by InterchangeBuilder
         if (is_string($d->default) && !isset($d->allowed[$d->default])) {
             $this->error('default', 'must be an allowed value');
         }
@@ -156,8 +149,7 @@ class HTMLPurifier_ConfigSchema_Validator
         if (is_null($d->valueAliases)) {
             return;
         }
-        $this->with($d, 'valueAliases')
-            ->assertIsArray(); // handled by InterchangeBuilder
+        $this->with($d, 'valueAliases')->assertIsArray(); // handled by InterchangeBuilder
         $this->context[] = 'valueAliases';
         foreach ($d->valueAliases as $alias => $real) {
             if (!is_string($alias)) {
@@ -189,8 +181,7 @@ class HTMLPurifier_ConfigSchema_Validator
      */
     public function validateDirectiveAliases($d)
     {
-        $this->with($d, 'aliases')
-            ->assertIsArray(); // handled by InterchangeBuilder
+        $this->with($d, 'aliases')->assertIsArray(); // handled by InterchangeBuilder
         $this->context[] = 'aliases';
         foreach ($d->aliases as $alias) {
             $this->validateId($alias);
@@ -246,3 +237,4 @@ class HTMLPurifier_ConfigSchema_Validator
 }
 
 // vim: et sw=4 sts=4
+

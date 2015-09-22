@@ -10,14 +10,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         class
- * @subpackage      editor
- * @since           2.3.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             class
+ * @subpackage          editor
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: sampleform.inc.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Edit form with selected editor
@@ -25,8 +25,8 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
 $sample_form = new XoopsThemeForm('', 'sample_form', 'action.php');
 $sample_form->setExtra('enctype="multipart/form-data"');
 // Not required but for user-friendly concern
-$editor = ! empty($_REQUEST['editor']) ? $_REQUEST['editor'] : '';
-if (! empty($editor)) {
+$editor = !empty($_REQUEST['editor']) ? $_REQUEST['editor'] : '';
+if (!empty($editor)) {
     setcookie('editor', $editor); // save to cookie
 } else {
     // Or use user pre-selected editor through profile
@@ -39,14 +39,13 @@ if (! empty($editor)) {
     // options for the editor
     // required configs
     $options['editor'] = $editor;
-    $options['name'] = 'required_element';
-    $options['value'] = empty($_REQUEST['message']) ? "" : $_REQUEST['message'];
+    $options['name']   = 'required_element';
+    $options['value']  = empty($_REQUEST['message']) ? "" : $_REQUEST['message'];
     // optional configs
-    $options['rows'] = 25; // default value = 5
-    $options['cols'] = 60; // default value = 50
-    $options['width'] = '100%'; // default value = 100%
+    $options['rows']   = 25; // default value = 5
+    $options['cols']   = 60; // default value = 50
+    $options['width']  = '100%'; // default value = 100%
     $options['height'] = '400px'; // default value = 400px
-
 
     // "textarea": if the selected editor with name of $editor can not be created, the editor "textarea" will be used
     // if no $onFailure is set, then the first available editor will be used

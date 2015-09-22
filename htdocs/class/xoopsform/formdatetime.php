@@ -10,58 +10,69 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @subpackage      form
- * @since           2.0.0
- * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @subpackage          form
+ * @since               2.0.0
+ * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @version             $Id: formdatetime.php 13090 2015-06-16 20:44:29Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Date and time selection field
  *
- * @author 		Kazumi Ono <onokazu@xoops.org>
- * @package 	kernel
- * @subpackage 	form
- * @access 		public
+ * @author         Kazumi Ono <onokazu@xoops.org>
+ * @package        kernel
+ * @subpackage     form
+ * @access         public
  */
 class XoopsFormDateTime extends XoopsFormElementTray
 {
     /**
      * XoopsFormDateTime::XoopsFormDateTime()
      *
-     * @param mixed $caption
-     * @param mixed $name
+     * @param mixed   $caption
+     * @param mixed   $name
      * @param integer $size
      * @param integer $value
-     * @param mixed $showtime
+     * @param mixed   $showtime
      */
-    function XoopsFormDateTime($caption, $name, $size = 15, $value = 0, $showtime = true)
+    public function __construct($caption, $name, $size = 15, $value = 0, $showtime = true)
     {
-        $this->XoopsFormElementTray($caption, '&nbsp;');
-        $value = (int)($value);
-        $value = ($value > 0) ? $value : time();
-        $datetime = getDate($value);
+        parent::__construct($caption, '&nbsp;');
+        $value    = (int)($value);
+        $value    = ($value > 0) ? $value : time();
+        $datetime = getdate($value);
         $this->addElement(new XoopsFormTextDateSelect('', $name . '[date]', $size, $value, $showtime));
 
         if ($showtime) {
-        $timearray = array();
-        for ($i = 0; $i < 24; ++$i) {
-            for ($j = 0; $j < 60; $j = $j + 10) {
-                $key = ($i * 3600) + ($j * 60);
-                $timearray[$key] = ($j != 0) ? $i . ':' . $j : $i . ':0' . $j;
+            $timearray = array();
+            for ($i = 0; $i < 24; ++$i) {
+                for ($j = 0; $j < 60; $j += 10) {
+                    $key             = ($i * 3600) + ($j * 60);
+                    $timearray[$key] = ($j != 0) ? $i . ':' . $j : $i . ':0' . $j;
+                }
             }
-        }
-        ksort($timearray);
+            ksort($timearray);
 
-        $timeselect = new XoopsFormSelect('', $name . '[time]', $datetime['hours'] * 3600 + 600 * ceil($datetime['minutes'] / 10));
-        $timeselect->addOptionArray($timearray);
-        $this->addElement($timeselect);
+            $timeselect = new XoopsFormSelect('', $name . '[time]', $datetime['hours'] * 3600 + 600 * ceil($datetime['minutes'] / 10));
+            $timeselect->addOptionArray($timearray);
+            $this->addElement($timeselect);
         } else {
             $this->addElement(new XoopsFormHidden($name . '[time]', 0));
         }
+    }
 
+    /**
+     * @param           $caption
+     * @param           $name
+     * @param int       $size
+     * @param int       $value
+     * @param bool|true $showtime
+     */
+    public function XoopsFormDateTime($caption, $name, $size = 15, $value = 0, $showtime = true)
+    {
+        $this->__construct($caption, $name, $size, $value, $showtime);
     }
 }

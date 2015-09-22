@@ -6,7 +6,6 @@
  */
 class HTMLPurifier_ErrorCollector
 {
-
     /**
      * Identifiers for the returned error array. These are purposely numeric
      * so list() can be used.
@@ -56,16 +55,16 @@ class HTMLPurifier_ErrorCollector
      */
     public function __construct($context)
     {
-        $this->locale    =& $context->get('Locale');
-        $this->context   = $context;
-        $this->_current  =& $this->_stacks[0];
-        $this->errors    =& $this->_stacks[0];
+        $this->locale   =& $context->get('Locale');
+        $this->context  = $context;
+        $this->_current =& $this->_stacks[0];
+        $this->errors   =& $this->_stacks[0];
     }
 
     /**
      * Sends an error message to the collector for later use
-     * @param int $severity Error severity, PHP error style (don't use E_USER_)
-     * @param string $msg Error message text
+     * @param int    $severity Error severity, PHP error style (don't use E_USER_)
+     * @param string $msg      Error message text
      */
     public function send($severity, $msg)
     {
@@ -78,7 +77,7 @@ class HTMLPurifier_ErrorCollector
 
         $token = $this->context->get('CurrentToken', true);
         $line  = $token ? $token->line : $this->context->get('CurrentLine', true);
-        $col   = $token ? $token->col  : $this->context->get('CurrentCol', true);
+        $col   = $token ? $token->col : $this->context->get('CurrentCol', true);
         $attr  = $this->context->get('CurrentAttr', true);
 
         // perform special substitutions, also add custom parameters
@@ -104,19 +103,18 @@ class HTMLPurifier_ErrorCollector
         }
 
         // (numerically indexed)
-        $error = array(
+        $error            = array(
             self::LINENO   => $line,
             self::SEVERITY => $severity,
             self::MESSAGE  => $msg,
-            self::CHILDREN => array()
-        );
+            self::CHILDREN => array());
         $this->_current[] = $error;
 
         // NEW CODE BELOW ...
         // Top-level errors are either:
         //  TOKEN type, if $value is set appropriately, or
         //  "syntax" type, if $value is null
-        $new_struct = new HTMLPurifier_ErrorStruct();
+        $new_struct       = new HTMLPurifier_ErrorStruct();
         $new_struct->type = HTMLPurifier_ErrorStruct::TOKEN;
         if ($token) {
             $new_struct->value = clone $token;
@@ -167,8 +165,8 @@ class HTMLPurifier_ErrorCollector
 
     /**
      * Default HTML formatting implementation for error messages
-     * @param HTMLPurifier_Config $config Configuration, vital for HTML output nature
-     * @param array $errors Errors array to display; used for recursion.
+     * @param  HTMLPurifier_Config $config Configuration, vital for HTML output nature
+     * @param  array               $errors Errors array to display; used for recursion.
      * @return string
      */
     public function getHTMLFormatted($config, $errors = null)
@@ -200,12 +198,11 @@ class HTMLPurifier_ErrorCollector
         } else {
             return '<ul><li>' . implode('</li><li>', $ret) . '</li></ul>';
         }
-
     }
 
     private function _renderStruct(&$ret, $struct, $line = null, $col = null)
     {
-        $stack = array($struct);
+        $stack         = array($struct);
         $context_stack = array(array());
         while ($current = array_pop($stack)) {
             $context = array_pop($context_stack);
@@ -232,7 +229,7 @@ class HTMLPurifier_ErrorCollector
             }
             foreach ($current->children as $array) {
                 $context[] = $current;
-                $stack = array_merge($stack, array_reverse($array, true));
+                $stack     = array_merge($stack, array_reverse($array, true));
                 for ($i = count($array); $i > 0; $i--) {
                     $context_stack[] = $context;
                 }
@@ -242,3 +239,4 @@ class HTMLPurifier_ErrorCollector
 }
 
 // vim: et sw=4 sts=4
+

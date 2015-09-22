@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: xoops_version.php 13082 2015-06-06 21:59:41Z beckmi $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2015 XOOPS Project (www.xoops.org)            //
@@ -35,10 +35,10 @@ $modversion['description'] = _AM_SYSTEM_SMLS_DESC;
 $modversion['author']      = '';
 $modversion['credits']     = 'The XOOPS Project; The MPN SE Project; Gregory Mage (AKA Mage)';
 $modversion['help']        = 'page=smilies';
-$modversion['license'] = "GPL see LICENSE";
+$modversion['license']     = "GPL see LICENSE";
 $modversion['official']    = 1;
 $modversion['image']       = 'smilies.png';
 
-$modversion['hasAdmin']    = 1;
-$modversion['adminpath']   = 'admin.php?fct=smilies';
-$modversion['category']    = XOOPS_SYSTEM_SMILE;
+$modversion['hasAdmin']  = 1;
+$modversion['adminpath'] = 'admin.php?fct=smilies';
+$modversion['category']  = XOOPS_SYSTEM_SMILE;

@@ -48,7 +48,7 @@ class HTMLPurifier_ChildDef_Custom extends HTMLPurifier_ChildDef
         if ($raw{0} != '(') {
             $raw = "($raw)";
         }
-        $el = '[#a-zA-Z0-9_.-]+';
+        $el  = '[#a-zA-Z0-9_.-]+';
         $reg = $raw;
 
         // COMPLICATED! AND MIGHT BE BUGGY! I HAVE NO CLUE WHAT I'M
@@ -73,15 +73,15 @@ class HTMLPurifier_ChildDef_Custom extends HTMLPurifier_ChildDef
     }
 
     /**
-     * @param HTMLPurifier_Node[] $children
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
+     * @param  HTMLPurifier_Node[]  $children
+     * @param  HTMLPurifier_Config  $config
+     * @param  HTMLPurifier_Context $context
      * @return bool
      */
     public function validateChildren($children, $config, $context)
     {
         $list_of_children = '';
-        $nesting = 0; // depth into the nest
+        $nesting          = 0; // depth into the nest
         foreach ($children as $node) {
             if (!empty($node->is_whitespace)) {
                 continue;
@@ -90,13 +90,11 @@ class HTMLPurifier_ChildDef_Custom extends HTMLPurifier_ChildDef
         }
         // add leading comma to deal with stray comma declarations
         $list_of_children = ',' . rtrim($list_of_children, ',');
-        $okay =
-            preg_match(
-                '/^,?' . $this->_pcre_regex . '$/',
-                $list_of_children
-            );
+        $okay             = preg_match('/^,?' . $this->_pcre_regex . '$/', $list_of_children);
+
         return (bool)$okay;
     }
 }
 
 // vim: et sw=4 sts=4
+

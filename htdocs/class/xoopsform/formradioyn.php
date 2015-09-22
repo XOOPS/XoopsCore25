@@ -10,15 +10,15 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @subpackage      form
- * @since           2.0.0
- * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @subpackage          form
+ * @since               2.0.0
+ * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @version             $Id: formradioyn.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 xoops_load('XoopsFormRadio');
 
@@ -35,13 +35,25 @@ class XoopsFormRadioYN extends XoopsFormRadio
      * @param string $caption
      * @param string $name
      * @param string $value Pre-selected value, can be "0" (No) or "1" (Yes)
-     * @param string $yes String for "Yes"
-     * @param string $no String for "No"
+     * @param string $yes   String for "Yes"
+     * @param string $no    String for "No"
      */
-    function XoopsFormRadioYN($caption, $name, $value = null, $yes = _YES, $no = _NO)
+    public function __construct($caption, $name, $value = null, $yes = _YES, $no = _NO)
     {
-        $this->XoopsFormRadio($caption, $name, $value);
+        parent::__construct($caption, $name, $value);
         $this->addOption(1, $yes);
         $this->addOption(0, $no);
+    }
+
+    /**
+     * @param        $caption
+     * @param        $name
+     * @param null   $value
+     * @param string $yes
+     * @param string $no
+     */
+    public function XoopsFormRadioYN($caption, $name, $value = null, $yes = _YES, $no = _NO)
+    {
+        $this->__construct($caption, $name, $value, $yes, $no);
     }
 }

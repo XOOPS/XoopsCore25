@@ -3,18 +3,18 @@
  * Module admin functions
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @since           1.00
- * @version         $Id$
- * @package         Frameworks
- * @subpackage      art
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @since               1.00
+ * @version             $Id: functions.admin.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @package             Frameworks
+ * @subpackage          art
  */
 
-if(!defined("FRAMEWORKS_ART_FUNCTIONS_ADMIN")):
-define("FRAMEWORKS_ART_FUNCTIONS_ADMIN", true);
+if (!defined("FRAMEWORKS_ART_FUNCTIONS_ADMIN")):
+    define("FRAMEWORKS_ART_FUNCTIONS_ADMIN", true);
 
-defined("FRAMEWORKS_ART_FUNCTIONS_INI") || include_once __DIR__ . "/functions.ini.php";
+    defined("FRAMEWORKS_ART_FUNCTIONS_INI") || include_once __DIR__ . "/functions.ini.php";
 
     /**
      * @param        $currentoption
@@ -22,17 +22,17 @@ defined("FRAMEWORKS_ART_FUNCTIONS_INI") || include_once __DIR__ . "/functions.in
      *
      * @return bool
      */
-    function loadModuleAdminMenu ($currentoption = -1, $breadcrumb = "")
-{
-    if (!$adminmenu = $GLOBALS["xoopsModule"]->getAdminMenu()) {
-        return false;
-    }
+    function loadModuleAdminMenu($currentoption = -1, $breadcrumb = "")
+    {
+        if (!$adminmenu = $GLOBALS["xoopsModule"]->getAdminMenu()) {
+            return false;
+        }
 
-    $breadcrumb = empty($breadcrumb) ? $adminmenu[$currentoption]["title"] : $breadcrumb;
-    $module_link = XOOPS_URL . "/modules/" . $GLOBALS["xoopsModule"]->getVar("dirname") . "/";
-    $image_link = XOOPS_URL . "/Frameworks/compat/include";
+        $breadcrumb  = empty($breadcrumb) ? $adminmenu[$currentoption]["title"] : $breadcrumb;
+        $module_link = XOOPS_URL . "/modules/" . $GLOBALS["xoopsModule"]->getVar("dirname") . "/";
+        $image_link  = XOOPS_URL . "/Frameworks/compat/include";
 
-    $adminmenu_text ='
+        $adminmenu_text = '
     <style type="text/css">
     <!--
     #buttontop { float: left; width: 100%; background: #e7e7e7; font-size: 93%; line-height: normal; border-top: 1px solid black; border-left: 1px solid black; border-right: 1px solid black; margin: 0;}
@@ -66,17 +66,17 @@ defined("FRAMEWORKS_ART_FUNCTIONS_INI") || include_once __DIR__ . "/functions.in
     <div id="buttonbar">
      <ul>
     ';
-    foreach (array_keys($adminmenu) as $key) {
-        $adminmenu_text .= (($currentoption == $key) ? '<li class="current">' : '<li>') . '<a href="' . $module_link . $adminmenu[$key]["link"] . '"><span>' . $adminmenu[$key]["title"] . '</span></a></li>';
-    }
-    if ( $GLOBALS["xoopsModule"]->getVar("hasconfig") || $GLOBALS["xoopsModule"]->getVar("hascomments") || $GLOBALS["xoopsModule"]->getVar("hasnotification") ) {
-        $adminmenu_text .= '<li><a href="' . XOOPS_URL . '/modules/system/admin.php?fct=preferences&op=showmod&mod=' . $GLOBALS["xoopsModule"]->getVar("mid") . '"><span>' . _PREFERENCES . '</span></a></li>';
-    }
-    $adminmenu_text .= '
+        foreach (array_keys($adminmenu) as $key) {
+            $adminmenu_text .= (($currentoption == $key) ? '<li class="current">' : '<li>') . '<a href="' . $module_link . $adminmenu[$key]["link"] . '"><span>' . $adminmenu[$key]["title"] . '</span></a></li>';
+        }
+        if ($GLOBALS["xoopsModule"]->getVar("hasconfig") || $GLOBALS["xoopsModule"]->getVar("hascomments") || $GLOBALS["xoopsModule"]->getVar("hasnotification")) {
+            $adminmenu_text .= '<li><a href="' . XOOPS_URL . '/modules/system/admin.php?fct=preferences&op=showmod&mod=' . $GLOBALS["xoopsModule"]->getVar("mid") . '"><span>' . _PREFERENCES . '</span></a></li>';
+        }
+        $adminmenu_text .= '
      </ul>
     </div>
     <br style="clear:both;" />';
 
-    echo $adminmenu_text;
-}
+        echo $adminmenu_text;
+    }
 endif;

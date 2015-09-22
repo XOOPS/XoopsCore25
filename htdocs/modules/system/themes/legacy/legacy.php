@@ -15,37 +15,37 @@ xoops_load("gui", "system");
  * Xoops Cpanel legacy GUI class
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
- * @package     system
- * @usbpackage  GUI
- * @since       2.3.0
- * @author      Taiwen Jiang <phppp@users.sourceforge.net>
- * @version     $Id$
+ * @license             http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @package             system
+ * @usbpackage          GUI
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: legacy.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-
-class XoopsGuiLegacy extends /* implements */ XoopsSystemGui
+class XoopsGuiLegacy extends /* implements */
+    XoopsSystemGui
 {
     /**
      * Reference to template object
      */
-    var $template;
+    public $template;
 
     /**
      * Holding navigation
      */
-    var $navigation;
+    public $navigation;
 
-    var $menu;
+    public $menu;
 
     /**
      *
      */
-    function __construct()
+    public function __construct()
     {
         include_once __DIR__ . "/cp_functions.php";
     }
 
-    function XoopsGuiLegacy()
+    public function XoopsGuiLegacy()
     {
         $this->__construct();
     }
@@ -53,12 +53,12 @@ class XoopsGuiLegacy extends /* implements */ XoopsSystemGui
     /**
      * @return bool
      */
-    function validate()
+    public function validate()
     {
         return true;
     }
 
-    function flush()
+    public function flush()
     {
         @unlink(XOOPS_CACHE_PATH . '/adminmenu.php');
     }
@@ -67,9 +67,9 @@ class XoopsGuiLegacy extends /* implements */ XoopsSystemGui
      * @access  private
      *
      */
-    function generateMenu()
+    public function generateMenu()
     {
-        xoops_legacy_module_write_admin_menu( xoops_legacy_module_get_admin_menu() );
+        xoops_legacy_module_write_admin_menu(xoops_legacy_module_get_admin_menu());
 
         return true;
     }
@@ -77,7 +77,7 @@ class XoopsGuiLegacy extends /* implements */ XoopsSystemGui
     /**
      * @return bool
      */
-    function header()
+    public function header()
     {
         parent::header();
         $tpl =& $this->template;
@@ -93,7 +93,7 @@ class XoopsGuiLegacy extends /* implements */ XoopsSystemGui
     /**
      * @return bool
      */
-    function footer()
+    public function footer()
     {
         xoops_legacy_cp_footer();
         parent::footer();

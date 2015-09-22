@@ -10,23 +10,23 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         Kernel
- * @subpackage      mail
- * @since           2.0.0
- * @author          Author: Jochen Büînagel (job@buennagel.com)
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             Kernel
+ * @subpackage          mail
+ * @since               2.0.0
+ * @author              Author: Jochen Büînagel (job@buennagel.com)
+ * @version             $Id: xoopsmultimailer.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 /**
  *
- * @package class
+ * @package    class
  * @subpackage mail
  * @filesource
- * @author Jochen Büînagel <jb@buennagel.com>
+ * @author     Jochen Büînagel <jb@buennagel.com>
  */
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 /**
  * load the base class
  */
@@ -46,12 +46,12 @@ include_once XOOPS_ROOT_PATH . '/class/mail/phpmailer/class.phpmailer.php';
  * If you have problems sending mail with "mail()", you can edit the member variables
  * to suit your setting. Later this will be possible through the admin panel.
  *
- * @todo Make a page in the admin panel for setting mailer preferences.
- * @package class
+ * @todo       Make a page in the admin panel for setting mailer preferences.
+ * @package    class
  * @subpackage mail
- * @author Jochen Buennagel <job@buennagel.com>
+ * @author     Jochen Buennagel <job@buennagel.com>
  */
-class XoopsMultiMailer extends PHPMailer
+class xoopsmultimailer extends PHPMailer
 {
     /**
      * 'from' address
@@ -59,7 +59,7 @@ class XoopsMultiMailer extends PHPMailer
      * @var string
      * @access private
      */
-    var $From = '';
+    public $From = '';
 
     /**
      * 'from' name
@@ -67,7 +67,7 @@ class XoopsMultiMailer extends PHPMailer
      * @var string
      * @access private
      */
-    var $FromName = '';
+    public $FromName = '';
 
     // can be 'smtp', 'sendmail', or 'mail'
     /**
@@ -84,7 +84,7 @@ class XoopsMultiMailer extends PHPMailer
      * @var string
      * @access private
      */
-    var $Mailer = 'mail';
+    public $Mailer = 'mail';
 
     /**
      * set if $Mailer is 'sendmail'
@@ -95,7 +95,7 @@ class XoopsMultiMailer extends PHPMailer
      * @var string
      * @access private
      */
-    var $Sendmail = '/usr/sbin/sendmail';
+    public $Sendmail = '/usr/sbin/sendmail';
 
     /**
      * SMTP Host.
@@ -105,7 +105,7 @@ class XoopsMultiMailer extends PHPMailer
      * @var string
      * @access private
      */
-    var $Host = '';
+    public $Host = '';
 
     /**
      * Does your SMTP host require SMTPAuth authentication?
@@ -113,7 +113,7 @@ class XoopsMultiMailer extends PHPMailer
      * @var boolean
      * @access private
      */
-    var $SMTPAuth = false;
+    public $SMTPAuth = false;
 
     /**
      * Username for authentication with your SMTP host.
@@ -123,7 +123,7 @@ class XoopsMultiMailer extends PHPMailer
      * @var string
      * @access private
      */
-    var $Username = '';
+    public $Username = '';
 
     /**
      * Password for SMTPAuth.
@@ -133,35 +133,34 @@ class XoopsMultiMailer extends PHPMailer
      * @var string
      * @access private
      */
-    var $Password = '';
+    public $Password = '';
 
     /**
      * Constructor
      *
      * @access public
-     * @return void
      */
-    function XoopsMultiMailer()
+    public function __construct()
     {
-        $config_handler = &xoops_gethandler('config');
+        $config_handler    = &xoops_getHandler('config');
         $xoopsMailerConfig = $config_handler->getConfigsByCat(XOOPS_CONF_MAILER);
-        $this->From = $xoopsMailerConfig['from'];
+        $this->From        = $xoopsMailerConfig['from'];
         if ($this->From == '') {
             $this->From = $GLOBALS['xoopsConfig']['adminmail'];
         }
         $this->Sender = $this->From;
-        if ($xoopsMailerConfig['mailmethod'] == 'smtpauth') {
-            $this->Mailer = 'smtp';
+        if ($xoopsMailerConfig['mailmethod'] === 'smtpauth') {
+            $this->Mailer   = 'smtp';
             $this->SMTPAuth = true;
             // TODO: change value type of xoopsConfig 'smtphost' from array to text
-            $this->Host = implode(';', $xoopsMailerConfig['smtphost']);
+            $this->Host     = implode(';', $xoopsMailerConfig['smtphost']);
             $this->Username = $xoopsMailerConfig['smtpuser'];
             $this->Password = $xoopsMailerConfig['smtppass'];
         } else {
-            $this->Mailer = $xoopsMailerConfig['mailmethod'];
+            $this->Mailer   = $xoopsMailerConfig['mailmethod'];
             $this->SMTPAuth = false;
             $this->Sendmail = $xoopsMailerConfig['sendmailpath'];
-            $this->Host = implode(';', $xoopsMailerConfig['smtphost']);
+            $this->Host     = implode(';', $xoopsMailerConfig['smtphost']);
         }
         $this->CharSet = strtolower(_CHARSET);
         $xoopsLanguage = preg_replace('/[^a-zA-Z0-9_-]/', '', $GLOBALS['xoopsConfig']['language']);
@@ -169,9 +168,9 @@ class XoopsMultiMailer extends PHPMailer
             include XOOPS_ROOT_PATH . '/language/' . $xoopsLanguage . '/phpmailer.php';
             $this->language = $PHPMAILER_LANG;
         } else {
-            $this->SetLanguage('en', XOOPS_ROOT_PATH . '/class/mail/phpmailer/language/');
+            $this->setLanguage('en', XOOPS_ROOT_PATH . '/class/mail/phpmailer/language/');
         }
-        $this->PluginDir = XOOPS_ROOT_PATH . '/class/mail/phpmailer/';
+        $this->pluginDir = XOOPS_ROOT_PATH . '/class/mail/phpmailer/';
     }
 
     /**
@@ -183,7 +182,7 @@ class XoopsMultiMailer extends PHPMailer
      *
      * @return string
      */
-    function AddrFormat($addr)
+    public function AddrFormat($addr)
     {
         if (empty($addr[1])) {
             $formatted = $addr[0];

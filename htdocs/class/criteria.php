@@ -10,16 +10,16 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @subpackage      database
- * @since           2.0.0
- * @author          Kazumi Ono <onokazu@xoops.org>
- * @author          Nathan Dial
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @subpackage          database
+ * @since               2.0.0
+ * @author              Kazumi Ono <onokazu@xoops.org>
+ * @author              Nathan Dial
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: criteria.php 13090 2015-06-16 20:44:29Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * A criteria (grammar?) for a database query.
@@ -35,45 +35,50 @@ class CriteriaElement
      *
      * @var string
      */
-    var $order = 'ASC';
+    public $order = 'ASC';
 
     /**
      *
      * @var string
      */
-    var $sort = '';
+    public $sort = '';
 
     /**
      * Number of records to retrieve
      *
      * @var int
      */
-    var $limit = 0;
+    public $limit = 0;
 
     /**
      * Offset of first record
      *
      * @var int
      */
-    var $start = 0;
+    public $start = 0;
 
     /**
      *
      * @var string
      */
-    var $groupby = '';
+    public $groupby = '';
 
     /**
      * Constructor
      */
-    function CriteriaElement()
+    public function __construct()
     {
+    }
+
+    public function CriteriaElement()
+    {
+        $this->__construct();
     }
 
     /**
      * Render the criteria element
      */
-    function render()
+    public function render()
     {
     }
 
@@ -81,7 +86,7 @@ class CriteriaElement
      *
      * @param string $sort
      */
-    function setSort($sort)
+    public function setSort($sort)
     {
         $this->sort = $sort;
     }
@@ -90,7 +95,7 @@ class CriteriaElement
      *
      * @return string
      */
-    function getSort()
+    public function getSort()
     {
         return $this->sort;
     }
@@ -99,9 +104,9 @@ class CriteriaElement
      *
      * @param string $order
      */
-    function setOrder($order)
+    public function setOrder($order)
     {
-        if ('DESC' == strtoupper($order)) {
+        if ('DESC' === strtoupper($order)) {
             $this->order = 'DESC';
         }
     }
@@ -110,7 +115,7 @@ class CriteriaElement
      *
      * @return string
      */
-    function getOrder()
+    public function getOrder()
     {
         return $this->order;
     }
@@ -119,7 +124,7 @@ class CriteriaElement
      *
      * @param int $limit
      */
-    function setLimit($limit = 0)
+    public function setLimit($limit = 0)
     {
         $this->limit = (int)($limit);
     }
@@ -128,7 +133,7 @@ class CriteriaElement
      *
      * @return int
      */
-    function getLimit()
+    public function getLimit()
     {
         return $this->limit;
     }
@@ -137,7 +142,7 @@ class CriteriaElement
      *
      * @param int $start
      */
-    function setStart($start = 0)
+    public function setStart($start = 0)
     {
         $this->start = (int)($start);
     }
@@ -146,7 +151,7 @@ class CriteriaElement
      *
      * @return int
      */
-    function getStart()
+    public function getStart()
     {
         return $this->start;
     }
@@ -155,7 +160,7 @@ class CriteriaElement
      *
      * @param string $group
      */
-    function setGroupby($group)
+    public function setGroupBy($group)
     {
         $this->groupby = $group;
     }
@@ -164,13 +169,13 @@ class CriteriaElement
      *
      * @return string
      */
-    function getGroupby()
+    public function getGroupby()
     {
         return $this->groupby ? " GROUP BY {$this->groupby}" : "";
     }
-/**
- * *#@-
- */
+    /**
+     * *#@-
+     */
 }
 
 /**
@@ -184,22 +189,22 @@ class CriteriaCompo extends CriteriaElement
      *
      * @var array Array of {@link CriteriaElement} objects
      */
-    var $criteriaElements = array();
+    public $criteriaElements = array();
 
     /**
      * Conditions
      *
      * @var array
      */
-    var $conditions = array();
+    public $conditions = array();
 
     /**
      * Constructor
      *
-     * @param object $ele
+     * @param CriteriaElement|null $ele
      * @param string $condition
      */
-    function CriteriaCompo($ele = null, $condition = 'AND')
+    public function __construct(CriteriaElement $ele = null, $condition = 'AND')
     {
         if (isset($ele)) {
             $this->add($ele, $condition);
@@ -207,18 +212,26 @@ class CriteriaCompo extends CriteriaElement
     }
 
     /**
+     * @param CriteriaElement|null $ele
+     * @param string               $condition
+     */
+    public function CriteriaCompo(CriteriaElement $ele = null, $condition = 'AND')
+    {
+        $this->__construct($ele, $condition);
+    }
+
+    /**
      * Add an element
      *
-     * @param object $criteriaElement
-     * @param string $condition
-     *
+     * @param CriteriaElement|object $criteriaElement
+     * @param string                 $condition
      * @return object reference to this collection
      */
-    function &add(&$criteriaElement, $condition = 'AND')
+    public function &add(CriteriaElement $criteriaElement, $condition = 'AND')
     {
         if (is_object($criteriaElement)) {
             $this->criteriaElements[] =& $criteriaElement;
-            $this->conditions[] = $condition;
+            $this->conditions[]       = $condition;
         }
 
         return $this;
@@ -229,15 +242,16 @@ class CriteriaCompo extends CriteriaElement
      *
      * @return string
      */
-    function render()
+    public function render()
     {
-        $ret = '';
+        $ret   = '';
         $count = count($this->criteriaElements);
         if ($count > 0) {
             $render_string = $this->criteriaElements[0]->render();
             for ($i = 1; $i < $count; ++$i) {
-                if (!$render = $this->criteriaElements[$i]->render())
+                if (!$render = $this->criteriaElements[$i]->render()) {
                     continue;
+                }
                 $render_string .= (empty($render_string) ? "" : ' ' . $this->conditions[$i] . ' ') . $render;
             }
             $ret = empty($render_string) ? '' : "({$render_string})";
@@ -251,7 +265,7 @@ class CriteriaCompo extends CriteriaElement
      *
      * @return string
      */
-    function renderWhere()
+    public function renderWhere()
     {
         $ret = $this->render();
         $ret = ($ret != '') ? 'WHERE ' . $ret : $ret;
@@ -265,15 +279,15 @@ class CriteriaCompo extends CriteriaElement
      * @return string
      * @author Nathan Dial ndial@trillion21.com
      */
-    function renderLdap()
+    public function renderLdap()
     {
         $retval = '';
-        $count = count($this->criteriaElements);
+        $count  = count($this->criteriaElements);
         if ($count > 0) {
             $retval = $this->criteriaElements[0]->renderLdap();
             for ($i = 1; $i < $count; ++$i) {
-                $cond = strtoupper($this->conditions[$i]);
-                $op = ($cond == "OR") ? "|" : "&";
+                $cond   = strtoupper($this->conditions[$i]);
+                $op     = ($cond === "OR") ? "|" : "&";
                 $retval = "({$op}{$retval}" . $this->criteriaElements[$i]->renderLdap() . ")";
             }
         }
@@ -292,11 +306,11 @@ class Criteria extends CriteriaElement
      *
      * @var string
      */
-    var $prefix;
-    var $function;
-    var $column;
-    var $operator;
-    var $value;
+    public $prefix;
+    public $function;
+    public $column;
+    public $operator;
+    public $value;
 
     /**
      * Constructor
@@ -307,13 +321,25 @@ class Criteria extends CriteriaElement
      * @param string $prefix
      * @param string $function
      */
-    function Criteria($column, $value = '', $operator = '=', $prefix = '', $function = '')
+    public function __construct($column, $value = '', $operator = '=', $prefix = '', $function = '')
     {
-        $this->prefix = $prefix;
+        $this->prefix   = $prefix;
         $this->function = $function;
-        $this->column = $column;
-        $this->value = $value;
+        $this->column   = $column;
+        $this->value    = $value;
         $this->operator = $operator;
+    }
+
+    /**
+     * @param        $column
+     * @param string $value
+     * @param string $operator
+     * @param string $prefix
+     * @param string $function
+     */
+    public function Criteria($column, $value = '', $operator = '=', $prefix = '', $function = '')
+    {
+        $this->__construct($column, $value, $operator, $prefix, $function);
     }
 
     /**
@@ -321,22 +347,22 @@ class Criteria extends CriteriaElement
      *
      * @return string
      */
-    function render()
+    public function render()
     {
         $clause = (!empty($this->prefix) ? "{$this->prefix}." : "") . $this->column;
         if (!empty($this->function)) {
             $clause = sprintf($this->function, $clause);
         }
-        if (in_array(strtoupper($this->operator), array('IS NULL' , 'IS NOT NULL'))) {
+        if (in_array(strtoupper($this->operator), array('IS NULL', 'IS NOT NULL'))) {
             $clause .= ' ' . $this->operator;
         } else {
             if ('' === ($value = trim($this->value))) {
                 return '';
             }
-            if (!in_array(strtoupper($this->operator), array('IN' , 'NOT IN'))) {
-                if ((substr($value, 0, 1) != '`') && (substr($value, - 1) != '`')) {
+            if (!in_array(strtoupper($this->operator), array('IN', 'NOT IN'))) {
+                if ((substr($value, 0, 1) !== '`') && (substr($value, -1) !== '`')) {
                     $value = "'{$value}'";
-                } else if (!preg_match('/^[a-zA-Z0-9_\.\-`]*$/', $value)) {
+                } elseif (!preg_match('/^[a-zA-Z0-9_\.\-`]*$/', $value)) {
                     $value = '``';
                 }
             }
@@ -352,22 +378,22 @@ class Criteria extends CriteriaElement
      * @return string
      * @author Nathan Dial ndial@trillion21.com, improved by Pierre-Eric MENUET pemen@sourceforge.net
      */
-    function renderLdap()
+    public function renderLdap()
     {
-        if ($this->operator == '>') {
+        if ($this->operator === '>') {
             $this->operator = '>=';
         }
-        if ($this->operator == '<') {
+        if ($this->operator === '<') {
             $this->operator = '<=';
         }
 
-        if ($this->operator == '!=' || $this->operator == '<>') {
+        if ($this->operator === '!=' || $this->operator === '<>') {
             $operator = '=';
-            $clause = "(!(" . $this->column . $operator . $this->value . "))";
+            $clause   = "(!(" . $this->column . $operator . $this->value . "))";
         } else {
-            if ($this->operator == 'IN') {
-                $newvalue = str_replace(array('(' , ')'), '', $this->value);
-                $tab = explode(',', $newvalue);
+            if ($this->operator === 'IN') {
+                $newvalue = str_replace(array('(', ')'), '', $this->value);
+                $tab      = explode(',', $newvalue);
                 foreach ($tab as $uid) {
                     $clause .= "({$this->column}={$uid})";
                 }
@@ -385,7 +411,7 @@ class Criteria extends CriteriaElement
      *
      * @return string
      */
-    function renderWhere()
+    public function renderWhere()
     {
         $cond = $this->render();
 

@@ -1,17 +1,19 @@
 <?php
 /**
  * Smarty plugin
- * @package Smarty
+ * @package    Smarty
  * @subpackage plugins
  */
 
 /**
  * write out a file to disk
  *
- * @param string $filename
- * @param string $contents
- * @param boolean $create_dirs
- * @return boolean
+ * @param $params
+ * @param $smarty
+ * @return bool
+ * @internal param string $filename
+ * @internal param string $contents
+ * @internal param bool $create_dirs
  */
 function smarty_core_write_file($params, &$smarty)
 {
@@ -27,9 +29,10 @@ function smarty_core_write_file($params, &$smarty)
     $_tmp_file = tempnam($_dirname, 'wrt');
 
     if (!($fd = @fopen($_tmp_file, 'wb'))) {
-        $_tmp_file = $_dirname . DIRECTORY_SEPARATOR . uniqid('wrt');
+        $_tmp_file = $_dirname . DIRECTORY_SEPARATOR . uniqid('wrt', true);
         if (!($fd = @fopen($_tmp_file, 'wb'))) {
             $smarty->trigger_error("problem writing temporary file '$_tmp_file'");
+
             return false;
         }
     }
@@ -37,7 +40,7 @@ function smarty_core_write_file($params, &$smarty)
     fwrite($fd, $params['contents']);
     fclose($fd);
 
-    if (DIRECTORY_SEPARATOR == '\\' || !@rename($_tmp_file, $params['filename'])) {
+    if (DIRECTORY_SEPARATOR === '\\' || !@rename($_tmp_file, $params['filename'])) {
         // On platforms and filesystems that cannot overwrite with rename()
         // delete the file before renaming it -- because windows always suffers
         // this, it is short-circuited to avoid the initial rename() attempt

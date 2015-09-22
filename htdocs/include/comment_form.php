@@ -10,11 +10,11 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @since           2.0.0
- * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @since               2.0.0
+ * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @version             $Id: comment_form.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 if (!defined('XOOPS_ROOT_PATH') || !is_object($xoopsModule)) {
@@ -47,30 +47,29 @@ if (isset($xoopsModuleConfig['com_rule'])) {
 $cform->addElement(new XoopsFormText(_CM_TITLE, 'com_title', 50, 255, $com_title), true);
 // Start add by voltan
 if (!($com_user == '' && $com_email == '') || !$xoopsUser) {
-	$cform->addElement(new XoopsFormText(_CM_USER, 'com_user', 50, 60, $com_user), true);
-	$cform->addElement(new XoopsFormText(_CM_EMAIL, 'com_email', 50, 60, $com_email), true);
-	$cform->addElement(new XoopsFormText(_CM_URL, 'com_url', 50, 60, $com_url), false);
+    $cform->addElement(new XoopsFormText(_CM_USER, 'com_user', 50, 60, $com_user), true);
+    $cform->addElement(new XoopsFormText(_CM_EMAIL, 'com_email', 50, 60, $com_email), true);
+    $cform->addElement(new XoopsFormText(_CM_URL, 'com_url', 50, 60, $com_url), false);
 }
 // End add by voltan
-$icons_radio = new XoopsFormRadio(_MESSAGEICON, 'com_icon', $com_icon);
+$icons_radio   = new XoopsFormRadio(_MESSAGEICON, 'com_icon', $com_icon);
 $subject_icons = XoopsLists::getSubjectsList();
 foreach ($subject_icons as $iconfile) {
     $icons_radio->addOption($iconfile, '<img src="' . XOOPS_URL . '/images/subject/' . $iconfile . '" alt="" />');
 }
 $cform->addElement($icons_radio);
 // editor
-$editor = xoops_getModuleOption('comments_editor', 'system' );
-if ( class_exists( 'XoopsFormEditor' ) ) {
-    $configs=array(
+$editor = xoops_getModuleOption('comments_editor', 'system');
+if (class_exists('XoopsFormEditor')) {
+    $configs = array(
         'name'   => 'com_text',
         'value'  => $com_text,
         'rows'   => 25,
         'cols'   => 90,
         'width'  => '100%',
         'height' => '400px',
-        'editor' => $editor
-    );
-    $cform->addElement( new XoopsFormEditor(_CM_MESSAGE, 'com_text', $configs, false, $onfailure = 'textarea' ));
+        'editor' => $editor);
+    $cform->addElement(new XoopsFormEditor(_CM_MESSAGE, 'com_text', $configs, false, $onfailure = 'textarea'));
 } else {
     $cform->addElement(new XoopsFormDhtmlTextArea(_CM_MESSAGE, 'com_text', $com_text, 10, 50), true);
 }
@@ -78,13 +77,13 @@ $option_tray = new XoopsFormElementTray(_OPTIONS, '<br />');
 $button_tray = new XoopsFormElementTray('', '&nbsp;');
 
 if (is_object($xoopsUser)) {
-	if (isset($xoopsModuleConfig['com_anonpost'])) {
-		if ($xoopsModuleConfig['com_anonpost'] == 1) {
-			$noname = !empty($noname) ? 1 : 0;
-			$noname_checkbox = new XoopsFormCheckBox('', 'noname', $noname);
-			$noname_checkbox->addOption(1, _POSTANON);
-			$option_tray->addElement($noname_checkbox);
-		}
+    if (isset($xoopsModuleConfig['com_anonpost'])) {
+        if ($xoopsModuleConfig['com_anonpost'] == 1) {
+            $noname          = !empty($noname) ? 1 : 0;
+            $noname_checkbox = new XoopsFormCheckBox('', 'noname', $noname);
+            $noname_checkbox->addOption(1, _POSTANON);
+            $option_tray->addElement($noname_checkbox);
+        }
     }
     if (false != $xoopsUser->isAdmin($com_modid)) {
         // show status change box when editing (comment id is not empty)
@@ -92,21 +91,20 @@ if (is_object($xoopsUser)) {
             include_once $GLOBALS['xoops']->path('include/comment_constants.php');
             $status_select = new XoopsFormSelect(_CM_STATUS, 'com_status', $com_status);
             $status_select->addOptionArray(array(
-                XOOPS_COMMENT_PENDING => _CM_PENDING ,
-                XOOPS_COMMENT_ACTIVE => _CM_ACTIVE ,
-                XOOPS_COMMENT_HIDDEN => _CM_HIDDEN));
+                                               XOOPS_COMMENT_PENDING => _CM_PENDING,
+                                               XOOPS_COMMENT_ACTIVE  => _CM_ACTIVE,
+                                               XOOPS_COMMENT_HIDDEN  => _CM_HIDDEN));
             $cform->addElement($status_select);
             $button_tray->addElement(new XoopsFormButton('', 'com_dodelete', _DELETE, 'submit'));
         }
-        if ( isset( $editor ) && in_array( $editor, array( 'textarea', 'dhtmltextarea' ) ) ) {
+        if (isset($editor) && in_array($editor, array('textarea', 'dhtmltextarea'))) {
             $html_checkbox = new XoopsFormCheckBox('', 'dohtml', $dohtml);
             $html_checkbox->addOption(1, _CM_DOHTML);
             $option_tray->addElement($html_checkbox);
         }
     }
 }
-if ( isset( $editor ) && in_array( $editor, array( 'textarea', 'dhtmltextarea' ) ) ) {
-
+if (isset($editor) && in_array($editor, array('textarea', 'dhtmltextarea'))) {
 }
 $smiley_checkbox = new XoopsFormCheckBox('', 'dosmiley', $dosmiley);
 $smiley_checkbox->addOption(1, _CM_DOSMILEY);
@@ -114,13 +112,13 @@ $option_tray->addElement($smiley_checkbox);
 $xcode_checkbox = new XoopsFormCheckBox('', 'doxcode', $doxcode);
 $xcode_checkbox->addOption(1, _CM_DOXCODE);
 $option_tray->addElement($xcode_checkbox);
-if ( isset( $editor ) && in_array( $editor, array( 'textarea', 'dhtmltextarea' ) ) ) {
+if (isset($editor) && in_array($editor, array('textarea', 'dhtmltextarea'))) {
     $br_checkbox = new XoopsFormCheckBox('', 'dobr', $dobr);
     $br_checkbox->addOption(1, _CM_DOAUTOWRAP);
     $option_tray->addElement($br_checkbox);
 } else {
-    $cform->addElement( new xoopsFormHidden( 'dohtml', 1 ) );
-    $cform->addElement( new xoopsFormHidden( 'dobr', 0 ) );
+    $cform->addElement(new xoopsFormHidden('dohtml', 1));
+    $cform->addElement(new xoopsFormHidden('dobr', 0));
 }
 $cform->addElement($option_tray);
 if (!$xoopsUser) {
@@ -134,18 +132,17 @@ $cform->addElement(new XoopsFormHidden('com_order', $com_order));
 $cform->addElement(new XoopsFormHidden('com_mode', $com_mode));
 
 // add module specific extra params
-if ('system' != $xoopsModule->getVar('dirname')) {
+if ('system' !== $xoopsModule->getVar('dirname')) {
     $comment_config = $xoopsModule->getInfo('comments');
     if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
         $myts =& MyTextSanitizer::getInstance();
         foreach ($comment_config['extraParams'] as $extra_param) {
             // This routine is included from forms accessed via both GET and POST
+            $hidden_value = '';
             if (isset($_POST[$extra_param])) {
                 $hidden_value = $myts->stripSlashesGPC($_POST[$extra_param]);
-            } else if (isset($_GET[$extra_param])) {
+            } elseif (isset($_GET[$extra_param])) {
                 $hidden_value = $myts->stripSlashesGPC($_GET[$extra_param]);
-            } else {
-                $hidden_value = '';
             }
             $cform->addElement(new XoopsFormHidden($extra_param, $hidden_value));
         }

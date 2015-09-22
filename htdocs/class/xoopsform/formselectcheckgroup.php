@@ -14,24 +14,25 @@
  *  Xoops Form Class Elements
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @subpackage      form
- * @since           2.3.0
- * @author          John Neill <catzwolf@xoops.org>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @subpackage          form
+ * @since               2.3.0
+ * @author              John Neill <catzwolf@xoops.org>
+ * @version             $Id: formselectcheckgroup.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 xoops_load('XoopsFormCheckBox');
+
 /**
  * Xoops Form Select Check Groups
  *
- * @author 		John Neill <catzwolf@xoops.org>
+ * @author              John Neill <catzwolf@xoops.org>
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @package 	kernel
- * @subpackage 	form
- * @access 		public
+ * @package             kernel
+ * @subpackage          form
+ * @access              public
  */
 class XoopsFormSelectCheckGroup extends XoopsFormCheckBox
 {
@@ -45,14 +46,26 @@ class XoopsFormSelectCheckGroup extends XoopsFormCheckBox
      * @param bool   $multiple Allow multiple selections?
      *
      */
-    function XoopsFormSelectCheckGroup($caption, $name, $value = null, $size = 1, $multiple = false)
+    public function __construct($caption, $name, $value = null, $size = 1, $multiple = false)
     {
-        $member_handler = &xoops_gethandler('member');
+        $member_handler   = &xoops_getHandler('member');
         $this->userGroups = $member_handler->getGroupList();
-        $this->XoopsFormCheckBox($caption, $name, $value, '', true);
+        parent::__construct($caption, $name, $value, '', true);
         $this->columns = 3;
         foreach ($this->userGroups as $group_id => $group_name) {
             $this->addOption($group_id, $group_name);
         }
+    }
+
+    /**
+     * @param            $caption
+     * @param            $name
+     * @param null       $value
+     * @param int        $size
+     * @param bool|false $multiple
+     */
+    public function XoopsFormSelectCheckGroup($caption, $name, $value = null, $size = 1, $multiple = false)
+    {
+        $this->__construct($caption, $name, $value, $size, $multiple);
     }
 }

@@ -15,16 +15,16 @@
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
  * @copyright    (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
- * @package     installer
- * @since       2.3.0
- * @author      Haruki Setoyama  <haruki@planewave.org>
- * @author      Kazumi Ono <webmaster@myweb.ne.jp>
- * @author      Skalpa Keo <skalpa@xoops.org>
- * @author      Taiwen Jiang <phppp@users.sourceforge.net>
- * @author      DuGris (aka L. JEN) <dugris@frxoops.org>
- * @version     $Id$
-**/
+ * @license          http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @package          installer
+ * @since            2.3.0
+ * @author           Haruki Setoyama  <haruki@planewave.org>
+ * @author           Kazumi Ono <webmaster@myweb.ne.jp>
+ * @author           Skalpa Keo <skalpa@xoops.org>
+ * @author           Taiwen Jiang <phppp@users.sourceforge.net>
+ * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
+ * @version          $Id: page_siteinit.php 13082 2015-06-06 21:59:41Z beckmi $
+ **/
 
 require_once './include/common.inc.php';
 defined('XOOPS_INSTALL') or die('XOOPS Installation wizard die');
@@ -36,33 +36,35 @@ $vars =& $_SESSION['siteconfig'];
 
 $error =& $_SESSION['error'];
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $vars['adminname'] = $_POST['adminname'];
-    $vars['adminmail'] = $_POST['adminmail'];
-    $vars['adminpass'] = $_POST['adminpass'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $vars['adminname']  = $_POST['adminname'];
+    $vars['adminmail']  = $_POST['adminmail'];
+    $vars['adminpass']  = $_POST['adminpass'];
     $vars['adminpass2'] = $_POST['adminpass2'];
-    $error = array();
+    $error              = array();
 
-    if (empty( $vars['adminname'])) {
+    if (empty($vars['adminname'])) {
         $error['name'][] = ERR_REQUIRED;
     }
-    if (empty( $vars['adminmail'])) {
+    if (empty($vars['adminmail'])) {
         $error['email'][] = ERR_REQUIRED;
     }
-    if (empty( $vars['adminpass'])) {
+    if (empty($vars['adminpass'])) {
         $error['pass'][] = ERR_REQUIRED;
     }
     if (!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $vars['adminmail'])) {
         $error['email'][] = ERR_INVALID_EMAIL;
     }
-    if ($vars['adminpass'] != $vars['adminpass2'] ) {
+    if ($vars['adminpass'] != $vars['adminpass2']) {
         $error['pass'][] = ERR_PASSWORD_MATCH;
     }
     if ($error) {
         $wizard->redirectToPage('+0');
+
         return 200;
     } else {
         $wizard->redirectToPage('+1');
+
         return 302;
     }
 } else {
@@ -75,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     $res = $dbm->query("SELECT COUNT(*) FROM " . $dbm->db->prefix("users"));
-    list ($isadmin) = $dbm->db->fetchRow($res);
+    list($isadmin) = $dbm->db->fetchRow($res);
 }
 
 ob_start();
@@ -85,9 +87,10 @@ if ($isadmin) {
     $pageHasHelp = false;
     echo "<div class='x2-note errorMsg'>" . ADMIN_EXIST . "</div>\n";
 } else {
-?>
+    ?>
     <fieldset>
-        <legend><?php echo LEGEND_ADMIN_ACCOUNT; ?></legend>
+        <legend><?php echo LEGEND_ADMIN_ACCOUNT;
+            ?></legend>
 
         <?php
         echo '<script type="text/javascript">
@@ -101,7 +104,7 @@ if ($isadmin) {
                 desc[6] = "' . PASSWORD_STRONGEST . '";
         </script>';
 
-        echo xoFormField( 'adminname',    $vars['adminname'], ADMIN_LOGIN_LABEL );
+        echo xoFormField('adminname', $vars['adminname'], ADMIN_LOGIN_LABEL);
         if (!empty($error["name"])) {
             echo '<ul class="diags1">';
             foreach ($error["name"] as $errmsg) {
@@ -110,7 +113,7 @@ if ($isadmin) {
             echo '</ul>';
         }
 
-        echo xoFormField( 'adminmail',    $vars['adminmail'], ADMIN_EMAIL_LABEL );
+        echo xoFormField('adminmail', $vars['adminmail'], ADMIN_EMAIL_LABEL);
         if (!empty($error["email"])) {
             echo '<ul class="diags1">';
             foreach ($error["email"] as $errmsg) {
@@ -122,39 +125,49 @@ if ($isadmin) {
 
         <div id="password">
             <div id="passwordinput">
-            <?php
-            echo xoPassField('adminpass',    '', ADMIN_PASS_LABEL);
-            echo xoPassField('adminpass2',    '', ADMIN_CONFIRMPASS_LABEL);
-            if (!empty($error["pass"])) {
-                echo '<ul class="diags1">';
-                foreach ($error["pass"] as $errmsg) {
-                    echo '<li class="failure">' . $errmsg . '</li>';
+                <?php
+                echo xoPassField('adminpass', '', ADMIN_PASS_LABEL);
+                echo xoPassField('adminpass2', '', ADMIN_CONFIRMPASS_LABEL);
+                if (!empty($error["pass"])) {
+                    echo '<ul class="diags1">';
+                    foreach ($error["pass"] as $errmsg) {
+                        echo '<li class="failure">' . $errmsg . '</li>';
+                    }
+                    echo '</ul>';
                 }
-                echo '</ul>';
-            }
-            ?>
+                ?>
             </div>
 
             <div id="passwordmetter" class="xoform-help">
-                <label class="xolabel" for='passwordStrength'><strong><?php echo PASSWORD_LABEL; ?></strong></label>
+                <label class="xolabel" for='passwordStrength'><strong><?php echo PASSWORD_LABEL;
+                        ?></strong></label>
+
                 <div id='passwordStrength' class='strength0'>
-                    <span id='passwordDescription'><?php echo PASSWORD_DESC; ?></span>
+                    <span id='passwordDescription'><?php echo PASSWORD_DESC;
+                        ?></span>
                 </div>
 
-                <label class="xolabel" for='password_generator'><strong><?php echo PASSWORD_GENERATOR; ?></strong></label>
+                <label class="xolabel" for='password_generator'><strong><?php echo PASSWORD_GENERATOR;
+                        ?></strong></label>
+
                 <div id="passwordgenerator">
-                    <input type='text' name='generated_pw' id='generated_pw' value='' /><br />
-                    <button type='button' onclick='javascript:suggestPassword(14);'/><?php echo PASSWORD_GENERATE; ?></button>
-                    <button type='button' onclick='javascript:suggestPasswordCopy("adminpass");'/><?php echo PASSWORD_COPY; ?></button>
+                    <input type='text' name='generated_pw' id='generated_pw' value=''/><br/>
+                    <button type='button' onclick='suggestPassword(14);'/>
+                    <?php echo PASSWORD_GENERATE;
+                    ?></button>
+                    <button type='button' onclick='suggestPasswordCopy("adminpass");'/>
+                    <?php echo PASSWORD_COPY;
+                    ?></button>
                 </div>
             </div>
         </div>
-        <br style="clear: both;" />
+        <br style="clear: both;"/>
     </fieldset>
     <script type="text/javascript">
         showHideHelp(this);
     </script>
-<?php
+    <?php
+
 }
 $content = ob_get_contents();
 ob_end_clean();

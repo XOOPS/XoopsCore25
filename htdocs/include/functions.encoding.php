@@ -16,13 +16,13 @@
  *  Xoops Functions
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @since           2.4.0
- * @author          Simon
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @since               2.4.0
+ * @author              Simon
+ * @version             $Id: functions.encoding.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * xoops_hex2bin()
@@ -32,8 +32,10 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
  */
 function xoops_hex2bin($hex)
 {
-    if (!is_string($hex)) return null;
-    $r = '';
+    if (!is_string($hex)) {
+        return null;
+    }
+    $r   = '';
     $len = strlen($hex);
     for ($a = 0; $a < $len; $a += 2) {
         $r .= chr(hexdec($hex{$a} . $hex{($a + 1)}));
@@ -56,14 +58,14 @@ function xoops_bin2hex($bin)
 /**
  * xoops_ishexstr()
  *
- * @param hex string $hex
+ * @param hex      string $hex
  * @param checklen int $checklen
  * @return boolean
  */
 function xoops_ishexstr($hex, $checklen = 32)
 {
     $accepted = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f');
-    $len = strlen($hex);
+    $len      = strlen($hex);
     if ($checklen > $len) {
         $checklen = $len;//And???
     }
@@ -80,8 +82,8 @@ function xoops_ishexstr($hex, $checklen = 32)
 /**
  * xoops_convert_encode()
  *
- * @param value of array  $data
- * @param string          $store_method
+ * @param        value of array  $data
+ * @param string $store_method
  *
  * @return boolean
  */
@@ -104,8 +106,8 @@ function xoops_convert_encode($data, $store_method = "urlcode")
 /**
  * xoops_convert_decode()
  *
- * @param value of array  $data
- * @param string          $store_method
+ * @param        value of array  $data
+ * @param string $store_method
  * @return boolean
  */
 function xoops_convert_decode($data, $store_method = "urlcode")
@@ -127,9 +129,9 @@ function xoops_convert_decode($data, $store_method = "urlcode")
 /**
  * xoops_aw_encode()
  *
- * @param value of array $value
- * @param key of array   $key
- * @param string         $store_method
+ * @param        value of array $value
+ * @param        key   of array   $key
+ * @param string $store_method
  * @return boolean
  */
 function xoops_aw_encode($value, $key, $store_method = "urlcode")
@@ -140,8 +142,8 @@ function xoops_aw_encode($value, $key, $store_method = "urlcode")
 /**
  * xoops_aw_decode()
  *
- * @param value of array $value
- * @param key of array $key
+ * @param        value of array $value
+ * @param        key   of array $key
  * @param string $store_method
  * @return boolean
  */

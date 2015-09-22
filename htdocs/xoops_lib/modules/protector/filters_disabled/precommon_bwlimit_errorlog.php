@@ -5,14 +5,13 @@
  */
 class protector_precommon_bwlimit_errorlog extends ProtectorFilterAbstract
 {
-    function execute()
+    public function execute()
     {
-        header( 'HTTP/1.0 503 Service unavailable' ) ;
-        header( 'Retry-After: 600' ) ;
+        header('HTTP/1.0 503 Service unavailable');
+        header('Retry-After: 600');
 
-        echo _MD_PROTECTOR_BANDWIDTHLIMITED ;
-        error_log( 'Protector: bwlimit '.@$_SERVER['REMOTE_ADDR'] , 0 ) ;
-        exit ;
+        echo _MD_PROTECTOR_BANDWIDTHLIMITED;
+        error_log('Protector: bwlimit ' . @$_SERVER['REMOTE_ADDR'], 0);
+        exit;
     }
-
 }

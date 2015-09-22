@@ -10,16 +10,16 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @since           2.0.0
- * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @since               2.0.0
+ * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @version             $Id: old_theme_functions.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 // These are needed when viewing old modules (that don't use Smarty template files) when a theme that use Smarty templates are selected.
 // function_exists check is needed for inclusion from the admin side
-if (! function_exists('opentable')) {
+if (!function_exists('opentable')) {
     /**
      * @param string $width
      */
@@ -30,7 +30,7 @@ if (! function_exists('opentable')) {
     }
 }
 
-if (! function_exists('closetable')) {
+if (!function_exists('closetable')) {
     function CloseTable()
     {
         $GLOBALS['xoopsLogger']->addDeprecated("Function '" . __FUNCTION__ . "' in '" . __FILE__ . "' is deprecated, should not be used any more");
@@ -38,7 +38,7 @@ if (! function_exists('closetable')) {
     }
 }
 
-if (! function_exists('themecenterposts')) {
+if (!function_exists('themecenterposts')) {
     /**
      * @param $title
      * @param $content

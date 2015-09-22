@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: xoopsapi.php 13090 2015-06-16 20:44:29Z beckmi $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2015 XOOPS Project (www.xoops.org)            //
@@ -28,26 +28,25 @@
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
-defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
-require_once XOOPS_ROOT_PATH.'/class/xml/rpc/xmlrpcapi.php';
+defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+require_once XOOPS_ROOT_PATH . '/class/xml/rpc/xmlrpcapi.php';
 
 /**
  * Class XoopsApi
  */
-class XoopsApi extends XoopsXmlRpcApi
+class xoopsapi extends XoopsXmlRpcApi
 {
-
     /**
      * @param $params
      * @param $response
      * @param $module
      */
-    function XoopsApi(&$params, &$response, &$module)
+    public function XoopsApi(&$params, &$response, &$module)
     {
         $this->XoopsXmlRpcApi($params, $response, $module);
     }
 
-    function newPost()
+    public function newPost()
     {
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
@@ -73,12 +72,12 @@ class XoopsApi extends XoopsXmlRpcApi
                 if (count($missing) > 0) {
                     $msg = '';
                     foreach ($missing as $m) {
-                        $msg .= '<'.$m.'> ';
+                        $msg .= '<' . $m . '> ';
                     }
                     $this->response->add(new XoopsXmlRpcFault(109, $msg));
                 } else {
                     // will be removed... don't worry if this looks bad
-                    include_once XOOPS_ROOT_PATH.'/modules/news/class/class.newsstory.php';
+                    include_once XOOPS_ROOT_PATH . '/modules/news/class/class.newsstory.php';
                     $story = new NewsStory();
                     $error = false;
                     if ((int)($this->params[4]) > 0) {
@@ -135,7 +134,7 @@ class XoopsApi extends XoopsXmlRpcApi
         }
     }
 
-    function editPost()
+    public function editPost()
     {
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
@@ -160,13 +159,13 @@ class XoopsApi extends XoopsXmlRpcApi
                 if (count($missing) > 0) {
                     $msg = '';
                     foreach ($missing as $m) {
-                        $msg .= '<'.$m.'> ';
+                        $msg .= '<' . $m . '> ';
                     }
                     $this->response->add(new XoopsXmlRpcFault(109, $msg));
                 } else {
                     // will be removed... don't worry if this looks bad
-                    include_once XOOPS_ROOT_PATH.'/modules/news/class/class.newsstory.php';
-                    $story = new NewsStory($this->params[0]);
+                    include_once XOOPS_ROOT_PATH . '/modules/news/class/class.newsstory.php';
+                    $story   = new NewsStory($this->params[0]);
                     $storyid = $story->storyid();
                     if (empty($storyid)) {
                         $this->response->add(new XoopsXmlRpcFault(106));
@@ -198,7 +197,7 @@ class XoopsApi extends XoopsXmlRpcApi
         }
     }
 
-    function deletePost()
+    public function deletePost()
     {
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
@@ -207,7 +206,7 @@ class XoopsApi extends XoopsXmlRpcApi
                 $this->response->add(new XoopsXmlRpcFault(111));
             } else {
                 // will be removed... don't worry if this looks bad
-                include_once XOOPS_ROOT_PATH.'/modules/news/class/class.newsstory.php';
+                include_once XOOPS_ROOT_PATH . '/modules/news/class/class.newsstory.php';
                 $story = new NewsStory($this->params[0]);
                 if (!$story->delete()) {
                     $this->response->add(new XoopsXmlRpcFault(106));
@@ -224,42 +223,42 @@ class XoopsApi extends XoopsXmlRpcApi
      *
      * @return array
      */
-    function &getPost($respond=true)
+    public function &getPost($respond = true)
     {
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
             // will be removed... don't worry if this looks bad
-            include_once XOOPS_ROOT_PATH.'/modules/news/class/class.newsstory.php';
+            include_once XOOPS_ROOT_PATH . '/modules/news/class/class.newsstory.php';
             $story = new NewsStory($this->params[0]);
-            $ret = array('uid' => $story->uid(), 'published' => $story->published(), 'storyid' => $story->storyId(), 'title' => $story->title('Edit'), 'hometext' => $story->hometext('Edit'), 'moretext' => $story->bodytext('Edit'));
+            $ret   = array('uid' => $story->uid(), 'published' => $story->published(), 'storyid' => $story->storyId(), 'title' => $story->title('Edit'), 'hometext' => $story->hometext('Edit'), 'moretext' => $story->bodytext('Edit'));
             if (!$respond) {
                 return $ret;
             } else {
                 if (!$ret) {
                     $this->response->add(new XoopsXmlRpcFault(106));
                 } else {
-                    $struct = new XoopsXmlRpcStruct();
+                    $struct  = new XoopsXmlRpcStruct();
                     $content = '';
                     foreach ($ret as $key => $value) {
                         switch ($key) {
-                        case 'uid':
-                            $struct->add('userid', new XoopsXmlRpcString($value));
-                            break;
-                        case 'published':
-                            $struct->add('dateCreated', new XoopsXmlRpcDatetime($value));
-                            break;
-                        case 'storyid':
-                            $struct->add('postid', new XoopsXmlRpcString($value));
-                            $struct->add('link', new XoopsXmlRpcString(XOOPS_URL.'/modules/news/article.php?item_id='.$value));
-                            $struct->add('permaLink', new XoopsXmlRpcString(XOOPS_URL.'/modules/news/article.php?item_id='.$value));
-                            break;
-                        case 'title':
-                            $struct->add('title', new XoopsXmlRpcString($value));
-                            break;
-                        default :
-                            $content .= '<'.$key.'>'.trim($value).'</'.$key.'>';
-                            break;
+                            case 'uid':
+                                $struct->add('userid', new XoopsXmlRpcString($value));
+                                break;
+                            case 'published':
+                                $struct->add('dateCreated', new XoopsXmlRpcDatetime($value));
+                                break;
+                            case 'storyid':
+                                $struct->add('postid', new XoopsXmlRpcString($value));
+                                $struct->add('link', new XoopsXmlRpcString(XOOPS_URL . '/modules/news/article.php?item_id=' . $value));
+                                $struct->add('permaLink', new XoopsXmlRpcString(XOOPS_URL . '/modules/news/article.php?item_id=' . $value));
+                                break;
+                            case 'title':
+                                $struct->add('title', new XoopsXmlRpcString($value));
+                                break;
+                            default :
+                                $content .= '<' . $key . '>' . trim($value) . '</' . $key . '>';
+                                break;
                         }
                     }
                     $struct->add('description', new XoopsXmlRpcString($content));
@@ -274,19 +273,19 @@ class XoopsApi extends XoopsXmlRpcApi
      *
      * @return array
      */
-    function &getRecentPosts($respond=true)
+    public function &getRecentPosts($respond = true)
     {
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
-            include_once XOOPS_ROOT_PATH.'/modules/news/class/class.newsstory.php';
+            include_once XOOPS_ROOT_PATH . '/modules/news/class/class.newsstory.php';
             if (isset($this->params[4]) && (int)($this->params[4]) > 0) {
                 $stories =& NewsStory::getAllPublished((int)($this->params[3]), 0, $this->params[4]);
             } else {
                 $stories =& NewsStory::getAllPublished((int)($this->params[3]));
             }
             $scount = count($stories);
-            $ret = array();
+            $ret    = array();
             for ($i = 0; $i < $scount; ++$i) {
                 $ret[] = array('uid' => $stories[$i]->uid(), 'published' => $stories[$i]->published(), 'storyid' => $stories[$i]->storyId(), 'title' => $stories[$i]->title('Edit'), 'hometext' => $stories[$i]->hometext('Edit'), 'moretext' => $stories[$i]->bodytext('Edit'));
             }
@@ -296,30 +295,30 @@ class XoopsApi extends XoopsXmlRpcApi
                 if (count($ret) == 0) {
                     $this->response->add(new XoopsXmlRpcFault(106, 'Found 0 Entries'));
                 } else {
-                    $arr = new XoopsXmlRpcArray();
+                    $arr   = new XoopsXmlRpcArray();
                     $count = count($ret);
                     for ($i = 0; $i < $count; ++$i) {
-                        $struct = new XoopsXmlRpcStruct();
+                        $struct  = new XoopsXmlRpcStruct();
                         $content = '';
                         foreach ($ret[$i] as $key => $value) {
                             switch ($key) {
-                            case 'uid':
-                                $struct->add('userid', new XoopsXmlRpcString($value));
-                                break;
-                            case 'published':
-                                $struct->add('dateCreated', new XoopsXmlRpcDatetime($value));
-                                break;
-                            case 'storyid':
-                                $struct->add('postid', new XoopsXmlRpcString($value));
-                                $struct->add('link', new XoopsXmlRpcString(XOOPS_URL.'/modules/news/article.php?item_id='.$value));
-                                $struct->add('permaLink', new XoopsXmlRpcString(XOOPS_URL.'/modules/news/article.php?item_id='.$value));
-                                break;
-                            case 'title':
-                                $struct->add('title', new XoopsXmlRpcString($value));
-                                break;
-                            default :
-                                $content .= '<'.$key.'>'.trim($value).'</'.$key.'>';
-                                break;
+                                case 'uid':
+                                    $struct->add('userid', new XoopsXmlRpcString($value));
+                                    break;
+                                case 'published':
+                                    $struct->add('dateCreated', new XoopsXmlRpcDatetime($value));
+                                    break;
+                                case 'storyid':
+                                    $struct->add('postid', new XoopsXmlRpcString($value));
+                                    $struct->add('link', new XoopsXmlRpcString(XOOPS_URL . '/modules/news/article.php?item_id=' . $value));
+                                    $struct->add('permaLink', new XoopsXmlRpcString(XOOPS_URL . '/modules/news/article.php?item_id=' . $value));
+                                    break;
+                                case 'title':
+                                    $struct->add('title', new XoopsXmlRpcString($value));
+                                    break;
+                                default :
+                                    $content .= '<' . $key . '>' . trim($value) . '</' . $key . '>';
+                                    break;
                             }
                         }
                         $struct->add('description', new XoopsXmlRpcString($content));
@@ -337,15 +336,15 @@ class XoopsApi extends XoopsXmlRpcApi
      *
      * @return array
      */
-    function &getCategories($respond=true)
+    public function &getCategories($respond = true)
     {
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
-            include_once XOOPS_ROOT_PATH.'/class/xoopstopic.php';
+            include_once XOOPS_ROOT_PATH . '/class/xoopstopic.php';
             $this->db = &XoopsDatabaseFactory::getDatabaseConnection();
-            $xt = new XoopsTopic($db->prefix('topics'));
-            $ret = $xt->getTopicsList();
+            $xt       = new XoopsTopic($db->prefix('topics'));
+            $ret      = $xt->getTopicsList();
             if (!$respond) {
                 return $ret;
             } else {

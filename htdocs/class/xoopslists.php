@@ -10,13 +10,13 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package     kernel
- * @since       2.0.0
- * @version     $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @since               2.0.0
+ * @version             $Id: xoopslists.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 if (!defined('XOOPS_LISTS_INCLUDED')) {
     define('XOOPS_LISTS_INCLUDED', 1);
@@ -24,52 +24,52 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
     /**
      * XoopsLists
      *
-     * @author John Neill <catzwolf@xoops.org>
+     * @author              John Neill <catzwolf@xoops.org>
      * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
-     * @package kernel
-     * @subpackage form
-     * @access public
+     * @package             kernel
+     * @subpackage          form
+     * @access              public
      */
-    class XoopsLists
+    class xoopslists
     {
         /**
          * @return array
          */
-        static function getTimeZoneList()
+        public static function getTimeZoneList()
         {
             xoops_loadLanguage('timezone');
 
             $time_zone_list = array(
-                '-12' => _TZ_GMTM12 ,
-                '-11' => _TZ_GMTM11 ,
-                '-10' => _TZ_GMTM10 ,
-                '-9' => _TZ_GMTM9 ,
-                '-8' => _TZ_GMTM8 ,
-                '-7' => _TZ_GMTM7 ,
-                '-6' => _TZ_GMTM6 ,
-                '-5' => _TZ_GMTM5 ,
-                '-4' => _TZ_GMTM4 ,
-                '-3.5' => _TZ_GMTM35 ,
-                '-3' => _TZ_GMTM3 ,
-                '-2' => _TZ_GMTM2 ,
-                '-1' => _TZ_GMTM1 ,
-                '0' => _TZ_GMT0 ,
-                '1' => _TZ_GMTP1 ,
-                '2' => _TZ_GMTP2 ,
-                '3' => _TZ_GMTP3 ,
-                '3.5' => _TZ_GMTP35 ,
-                '4' => _TZ_GMTP4 ,
-                '4.5' => _TZ_GMTP45 ,
-                '5' => _TZ_GMTP5 ,
-                '5.5' => _TZ_GMTP55 ,
-                '6' => _TZ_GMTP6 ,
-                '7' => _TZ_GMTP7 ,
-                '8' => _TZ_GMTP8 ,
-                '9' => _TZ_GMTP9 ,
-                '9.5' => _TZ_GMTP95 ,
-                '10' => _TZ_GMTP10 ,
-                '11' => _TZ_GMTP11 ,
-                '12' => _TZ_GMTP12);
+                '-12'  => _TZ_GMTM12,
+                '-11'  => _TZ_GMTM11,
+                '-10'  => _TZ_GMTM10,
+                '-9'   => _TZ_GMTM9,
+                '-8'   => _TZ_GMTM8,
+                '-7'   => _TZ_GMTM7,
+                '-6'   => _TZ_GMTM6,
+                '-5'   => _TZ_GMTM5,
+                '-4'   => _TZ_GMTM4,
+                '-3.5' => _TZ_GMTM35,
+                '-3'   => _TZ_GMTM3,
+                '-2'   => _TZ_GMTM2,
+                '-1'   => _TZ_GMTM1,
+                '0'    => _TZ_GMT0,
+                '1'    => _TZ_GMTP1,
+                '2'    => _TZ_GMTP2,
+                '3'    => _TZ_GMTP3,
+                '3.5'  => _TZ_GMTP35,
+                '4'    => _TZ_GMTP4,
+                '4.5'  => _TZ_GMTP45,
+                '5'    => _TZ_GMTP5,
+                '5.5'  => _TZ_GMTP55,
+                '6'    => _TZ_GMTP6,
+                '7'    => _TZ_GMTP7,
+                '8'    => _TZ_GMTP8,
+                '9'    => _TZ_GMTP9,
+                '9.5'  => _TZ_GMTP95,
+                '10'   => _TZ_GMTP10,
+                '11'   => _TZ_GMTP11,
+                '12'   => _TZ_GMTP12);
 
             return $time_zone_list;
         }
@@ -77,7 +77,7 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
         /**
          * gets list of themes folder from themes directory
          */
-        static function getThemesList()
+        public static function getThemesList()
         {
             return XoopsLists::getDirListAsArray(XOOPS_THEME_PATH . '/');
         }
@@ -85,7 +85,7 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
         /**
          * gets a list of module folders from the modules directory
          */
-        static function getModulesList()
+        public static function getModulesList()
         {
             return XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/modules/');
         }
@@ -93,27 +93,30 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
         /**
          * gets list of editors folder from xoopseditor directory
          */
-        static function getEditorList()
+        public static function getEditorList()
         {
             return XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/class/xoopseditor/');
         }
 
         /**
          * gets list of name of directories inside a directory
+         * @param $dirname
+         * @return array
          */
-        static function getDirListAsArray($dirname)
+        public static function getDirListAsArray($dirname)
         {
             $ignored = array(
-                'cvs' ,
+                'cvs',
                 '_darcs');
-            $list = array();
-            if (substr($dirname, - 1) != '/') {
+            $list    = array();
+            if (substr($dirname, -1) !== '/') {
                 $dirname .= '/';
             }
             if ($handle = opendir($dirname)) {
                 while ($file = readdir($handle)) {
-                    if (substr($file, 0, 1) == '.' || in_array(strtolower($file), $ignored))
+                    if (substr($file, 0, 1) === '.' || in_array(strtolower($file), $ignored)) {
                         continue;
+                    }
                     if (is_dir($dirname . $file)) {
                         $list[$file] = $file;
                     }
@@ -128,17 +131,20 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
 
         /**
          * gets list of all files in a directory
+         * @param        $dirname
+         * @param string $prefix
+         * @return array
          */
-        static function getFileListAsArray($dirname, $prefix = '')
+        public static function getFileListAsArray($dirname, $prefix = '')
         {
             $filelist = array();
-            if (substr($dirname, - 1) == '/') {
-                $dirname = substr($dirname, 0, - 1);
+            if (substr($dirname, -1) === '/') {
+                $dirname = substr($dirname, 0, -1);
             }
             if (is_dir($dirname) && $handle = opendir($dirname)) {
                 while (false !== ($file = readdir($handle))) {
-                    if (! preg_match('/^[\.]{1,2}$/', $file) && is_file($dirname . '/' . $file)) {
-                        $file = $prefix . $file;
+                    if (!preg_match('/^[\.]{1,2}$/', $file) && is_file($dirname . '/' . $file)) {
+                        $file            = $prefix . $file;
                         $filelist[$file] = $file;
                     }
                 }
@@ -152,14 +158,17 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
 
         /**
          * gets list of image file names in a directory
+         * @param        $dirname
+         * @param string $prefix
+         * @return array
          */
-        static function getImgListAsArray($dirname, $prefix = '')
+        public static function getImgListAsArray($dirname, $prefix = '')
         {
             $filelist = array();
             if ($handle = opendir($dirname)) {
                 while (false !== ($file = readdir($handle))) {
                     if (preg_match('/(\.gif|\.jpg|\.png)$/i', $file)) {
-                        $file = $prefix . $file;
+                        $file            = $prefix . $file;
                         $filelist[$file] = $file;
                     }
                 }
@@ -173,14 +182,17 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
 
         /**
          * gets list of html file names in a certain directory
+         * @param        $dirname
+         * @param string $prefix
+         * @return array
          */
-        static function getHtmlListAsArray($dirname, $prefix = '')
+        public static function getHtmlListAsArray($dirname, $prefix = '')
         {
             $filelist = array();
             if ($handle = opendir($dirname)) {
                 while (false !== ($file = readdir($handle))) {
-                    if ((preg_match('/(\.htm|\.html|\.xhtml|\.tpl)$/i', $file) && ! is_dir($file))) {
-                        $file = $prefix . $file;
+                    if ((preg_match('/(\.htm|\.html|\.xhtml|\.tpl)$/i', $file) && !is_dir($file))) {
+                        $file            = $prefix . $file;
                         $filelist[$file] = $prefix . $file;
                     }
                 }
@@ -195,8 +207,10 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
         /**
          * gets list of avatar file names in a certain directory
          *                             if directory is not specified, default directory will be searched
+         * @param string $avatar_dir
+         * @return array
          */
-        static function getAvatarsList($avatar_dir = '')
+        public static function getAvatarsList($avatar_dir = '')
         {
             $avatars = array();
             if ($avatar_dir != '') {
@@ -211,7 +225,7 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
         /**
          * gets list of all avatar image files inside default avatars directory
          */
-        static function getAllAvatarsList()
+        public static function getAllAvatarsList()
         {
             $avatars = array();
             $dirlist = array();
@@ -230,8 +244,10 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
         /**
          * gets list of subject icon image file names in a certain directory
          *                             if directory is not specified, default directory will be searched
+         * @param string $sub_dir
+         * @return array
          */
-        static function getSubjectsList($sub_dir = '')
+        public static function getSubjectsList($sub_dir = '')
         {
             $subjects = array();
             if ($sub_dir != '') {
@@ -246,7 +262,7 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
         /**
          * gets list of language folders inside default language directory
          */
-        static function getLangList()
+        public static function getLangList()
         {
             $lang_list = array();
             $lang_list = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/language/');
@@ -259,10 +275,10 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
          *
          * @return array
          */
-        static function getCountryList()
+        public static function getCountryList()
         {
             xoops_loadLanguage('countries');
-            $country_list = array (
+            $country_list = array(
                 ""   => "-",
                 "AD" => _COUNTRY_AD,
                 "AE" => _COUNTRY_AE,
@@ -516,8 +532,7 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
                 "ZA" => _COUNTRY_ZA,
                 "ZM" => _COUNTRY_ZM,
                 "ZR" => _COUNTRY_ZR,    //  Not listed in ISO 3166
-                "ZW" => _COUNTRY_ZW
-            );
+                "ZW" => _COUNTRY_ZW);
             asort($country_list);
             reset($country_list);
 
@@ -531,67 +546,67 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
          *
          * @return array
          */
-        static function getHtmlList()
+        public static function getHtmlList()
         {
             $html_list = array(
-                'a' => '&lt;a&gt;',
-                'abbr' => '&lt;abbr&gt;',
-                'acronym' => '&lt;acronym&gt;',
-                'address' => '&lt;address&gt;',
-                'b' => '&lt;b&gt;',
-                'bdo' => '&lt;bdo&gt;',
-                'big' => '&lt;big&gt;',
+                'a'          => '&lt;a&gt;',
+                'abbr'       => '&lt;abbr&gt;',
+                'acronym'    => '&lt;acronym&gt;',
+                'address'    => '&lt;address&gt;',
+                'b'          => '&lt;b&gt;',
+                'bdo'        => '&lt;bdo&gt;',
+                'big'        => '&lt;big&gt;',
                 'blockquote' => '&lt;blockquote&gt;',
-                'br' => '&lt;br&gt;',
-                'caption' => '&lt;caption&gt;',
-                'cite' => '&lt;cite&gt;',
-                'code' => '&lt;code&gt;',
-                'col' => '&lt;col&gt;',
-                'colgroup' => '&lt;colgroup&gt;',
-                'dd' => '&lt;dd&gt;',
-                'del' => '&lt;del&gt;',
-                'dfn' => '&lt;dfn&gt;',
-                'div' => '&lt;div&gt;',
-                'dl' => '&lt;dl&gt;',
-                'dt' => '&lt;dt&gt;',
-                'em' => '&lt;em&gt;',
-                'font' => '&lt;font&gt;',
-                'h1' => '&lt;h1&gt;',
-                'h2' => '&lt;h2&gt;',
-                'h3' => '&lt;h3&gt;',
-                'h4' => '&lt;h4&gt;',
-                'h5' => '&lt;h5&gt;',
-                'h6' => '&lt;h6&gt;',
-                'hr' => '&lt;hr&gt;',
-                'i' => '&lt;i&gt;',
-                'img' => '&lt;img&gt;',
-                'ins' => '&lt;ins&gt;',
-                'kbd' => '&lt;kbd&gt;',
-                'li' => '&lt;li&gt;',
-                'map' => '&lt;map&gt;',
-                'object' => '&lt;object&gt;',
-                'ol' => '&lt;ol&gt;',
-                'p' => '&lt;p&gt;',
-                'pre' => '&lt;pre&gt;',
-                's' => '&lt;s&gt;',
-                'samp' => '&lt;samp&gt;',
-                'small' => '&lt;small&gt;',
-                'span' => '&lt;span&gt;',
-                'strike' => '&lt;strike&gt;',
-                'strong' => '&lt;strong&gt;',
-                'sub' => '&lt;sub&gt;',
-                'sup' => '&lt;sup&gt;',
-                'table' => '&lt;table&gt;',
-                'tbody' => '&lt;tbody&gt;',
-                'td' => '&lt;td&gt;',
-                'tfoot' => '&lt;tfoot&gt;',
-                'th' => '&lt;th&gt;',
-                'thead' => '&lt;thead&gt;',
-                'tr' => '&lt;tr&gt;',
-                'tt' => '&lt;tt&gt;',
-                'u' => '&lt;u&gt;',
-                'ul' => '&lt;ul&gt;',
-                'var' => '&lt;var&gt;');
+                'br'         => '&lt;br&gt;',
+                'caption'    => '&lt;caption&gt;',
+                'cite'       => '&lt;cite&gt;',
+                'code'       => '&lt;code&gt;',
+                'col'        => '&lt;col&gt;',
+                'colgroup'   => '&lt;colgroup&gt;',
+                'dd'         => '&lt;dd&gt;',
+                'del'        => '&lt;del&gt;',
+                'dfn'        => '&lt;dfn&gt;',
+                'div'        => '&lt;div&gt;',
+                'dl'         => '&lt;dl&gt;',
+                'dt'         => '&lt;dt&gt;',
+                'em'         => '&lt;em&gt;',
+                'font'       => '&lt;font&gt;',
+                'h1'         => '&lt;h1&gt;',
+                'h2'         => '&lt;h2&gt;',
+                'h3'         => '&lt;h3&gt;',
+                'h4'         => '&lt;h4&gt;',
+                'h5'         => '&lt;h5&gt;',
+                'h6'         => '&lt;h6&gt;',
+                'hr'         => '&lt;hr&gt;',
+                'i'          => '&lt;i&gt;',
+                'img'        => '&lt;img&gt;',
+                'ins'        => '&lt;ins&gt;',
+                'kbd'        => '&lt;kbd&gt;',
+                'li'         => '&lt;li&gt;',
+                'map'        => '&lt;map&gt;',
+                'object'     => '&lt;object&gt;',
+                'ol'         => '&lt;ol&gt;',
+                'p'          => '&lt;p&gt;',
+                'pre'        => '&lt;pre&gt;',
+                's'          => '&lt;s&gt;',
+                'samp'       => '&lt;samp&gt;',
+                'small'      => '&lt;small&gt;',
+                'span'       => '&lt;span&gt;',
+                'strike'     => '&lt;strike&gt;',
+                'strong'     => '&lt;strong&gt;',
+                'sub'        => '&lt;sub&gt;',
+                'sup'        => '&lt;sup&gt;',
+                'table'      => '&lt;table&gt;',
+                'tbody'      => '&lt;tbody&gt;',
+                'td'         => '&lt;td&gt;',
+                'tfoot'      => '&lt;tfoot&gt;',
+                'th'         => '&lt;th&gt;',
+                'thead'      => '&lt;thead&gt;',
+                'tr'         => '&lt;tr&gt;',
+                'tt'         => '&lt;tt&gt;',
+                'u'          => '&lt;u&gt;',
+                'ul'         => '&lt;ul&gt;',
+                'var'        => '&lt;var&gt;');
             asort($html_list);
             reset($html_list);
 
@@ -603,12 +618,12 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
          *
          * @return array
          */
-        static function getUserRankList()
+        public static function getUserRankList()
         {
-            $db =& XoopsDatabaseFactory::getDatabaseConnection();
-            $myts =& MyTextSanitizer::getInstance();
-            $sql = sprintf('SELECT rank_id, rank_title FROM ' . $db->prefix('ranks') . ' WHERE rank_special = %u', 1);
-            $ret = array();
+            $db     =& XoopsDatabaseFactory::getDatabaseConnection();
+            $myts   =& MyTextSanitizer::getInstance();
+            $sql    = sprintf('SELECT rank_id, rank_title FROM ' . $db->prefix('ranks') . ' WHERE rank_special = %u', 1);
+            $ret    = array();
             $result = $db->query($sql);
             while ($myrow = $db->fetchArray($result)) {
                 $ret[$myrow['rank_id']] = $myts->htmlspecialchars($myrow['rank_title']);

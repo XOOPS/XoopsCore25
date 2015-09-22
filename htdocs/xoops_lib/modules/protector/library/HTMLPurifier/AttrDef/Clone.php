@@ -21,9 +21,9 @@ class HTMLPurifier_AttrDef_Clone extends HTMLPurifier_AttrDef
     }
 
     /**
-     * @param string $v
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
+     * @param  string               $v
+     * @param  HTMLPurifier_Config  $config
+     * @param  HTMLPurifier_Context $context
      * @return bool|string
      */
     public function validate($v, $config, $context)
@@ -32,7 +32,7 @@ class HTMLPurifier_AttrDef_Clone extends HTMLPurifier_AttrDef
     }
 
     /**
-     * @param string $string
+     * @param  string $string
      * @return HTMLPurifier_AttrDef
      */
     public function make($string)
@@ -42,3 +42,4 @@ class HTMLPurifier_AttrDef_Clone extends HTMLPurifier_AttrDef
 }
 
 // vim: et sw=4 sts=4
+

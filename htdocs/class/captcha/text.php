@@ -10,14 +10,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         class
- * @subpackage      CAPTCHA
- * @since           2.3.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             class
+ * @subpackage          CAPTCHA
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: text.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Class XoopsCaptchaText
@@ -29,7 +29,7 @@ class XoopsCaptchaText extends XoopsCaptchaMethod
      *
      * @return string|void
      */
-    function render()
+    public function render()
     {
         $form = $this->loadText() . '&nbsp;&nbsp; <input type="text" name="' . $this->config['name'] . '" id="' . $this->config['name'] . '" size="' . $this->config['num_chars'] . '" maxlength="' . $this->config['num_chars'] . '" value="" />';
         $form .= '<br />' . _CAPTCHA_RULE_TEXT;
@@ -45,10 +45,10 @@ class XoopsCaptchaText extends XoopsCaptchaMethod
      *
      * @return string
      */
-    function loadText()
+    public function loadText()
     {
-        $val_a = rand(0, 9);
-        $val_b = rand(0, 9);
+        $val_a = mt_rand(0, 9);
+        $val_b = mt_rand(0, 9);
         if ($val_a > $val_b) {
             $expression = "{$val_a} - {$val_b} = ?";
             $this->code = $val_a - $val_b;
@@ -57,6 +57,6 @@ class XoopsCaptchaText extends XoopsCaptchaMethod
             $this->code = $val_a + $val_b;
         }
 
-        return '<span style="font-style: normal; font-weight: bold; font-size: 100%; font-color: #333; border: 1px solid #333; padding: 1px 5px;">'.$expression.'</span>';
+        return '<span style="font-style: normal; font-weight: bold; font-size: 100%; color: #333; border: 1px solid #333; padding: 1px 5px;">' . $expression . '</span>';
     }
 }

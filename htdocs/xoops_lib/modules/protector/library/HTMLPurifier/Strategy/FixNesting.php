@@ -28,14 +28,12 @@
  * @todo Enable nodes to be bubbled out of the structure.  This is
  *       easier with our new algorithm.
  */
-
 class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
 {
-
     /**
-     * @param HTMLPurifier_Token[] $tokens
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
+     * @param  HTMLPurifier_Token[] $tokens
+     * @param  HTMLPurifier_Config  $config
+     * @param  HTMLPurifier_Context $context
      * @return array|HTMLPurifier_Token[]
      */
     public function execute($tokens, $config, $context)
@@ -101,46 +99,52 @@ class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
         // children.
 
         $parent_def = $definition->info_parent_def;
-        $stack = array(
-            array($top_node,
-                  $parent_def->descendants_are_inline,
-                  $parent_def->excludes, // exclusions
-                  0)
-            );
+        $stack      = array(
+            array(
+                $top_node,
+                $parent_def->descendants_are_inline,
+                $parent_def->excludes, // exclusions
+                0));
 
         while (!empty($stack)) {
             list($node, $is_inline, $excludes, $ix) = array_pop($stack);
             // recursive call
-            $go = false;
+            $go  = false;
             $def = empty($stack) ? $definition->info_parent_def : $definition->info[$node->name];
             while (isset($node->children[$ix])) {
                 $child = $node->children[$ix++];
                 if ($child instanceof HTMLPurifier_Node_Element) {
-                    $go = true;
+                    $go      = true;
                     $stack[] = array($node, $is_inline, $excludes, $ix);
-                    $stack[] = array($child,
+                    $stack[] = array(
+                        $child,
                         // ToDo: I don't think it matters if it's def or
                         // child_def, but double check this...
                         $is_inline || $def->descendants_are_inline,
-                        empty($def->excludes) ? $excludes
-                                              : array_merge($excludes, $def->excludes),
+                        empty($def->excludes) ? $excludes : array_merge($excludes, $def->excludes),
                         0);
                     break;
                 }
             };
-            if ($go) continue;
+            if ($go) {
+                continue;
+            }
             list($token, $d) = $node->toTokenPair();
             // base case
             if ($excludes_enabled && isset($excludes[$node->name])) {
                 $node->dead = true;
-                if ($e) $e->send(E_ERROR, 'Strategy_FixNesting: Node excluded');
+                if ($e) {
+                    $e->send(E_ERROR, 'Strategy_FixNesting: Node excluded');
+                }
             } else {
                 // XXX I suppose it would be slightly more efficient to
                 // avoid the allocation here and have children
                 // strategies handle it
                 $children = array();
                 foreach ($node->children as $child) {
-                    if (!$child->dead) $children[] = $child;
+                    if (!$child->dead) {
+                        $children[] = $child;
+                    }
                 }
                 $result = $def->child->validateChildren($children, $config, $context);
                 if ($result === true) {
@@ -148,7 +152,9 @@ class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
                     $node->children = $children;
                 } elseif ($result === false) {
                     $node->dead = true;
-                    if ($e) $e->send(E_ERROR, 'Strategy_FixNesting: Node removed');
+                    if ($e) {
+                        $e->send(E_ERROR, 'Strategy_FixNesting: Node removed');
+                    }
                 } else {
                     $node->children = $result;
                     if ($e) {
@@ -179,3 +185,4 @@ class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
 }
 
 // vim: et sw=4 sts=4
+

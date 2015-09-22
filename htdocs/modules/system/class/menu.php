@@ -10,13 +10,13 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @author      John Neill (AKA Catzwolf)
- * @author      Andricq Nicolas (AKA MusS)
- * @version     $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @author              John Neill (AKA Catzwolf)
+ * @author              Andricq Nicolas (AKA MusS)
+ * @version             $Id: menu.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-// defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 /**
  * Class SystemMenuHandler
@@ -27,16 +27,16 @@ class SystemMenuHandler
      *
      * @var string
      */
-    var $_menutop = array();
-    var $_menutabs = array();
-    var $_obj;
-    var $_header;
-    var $_subheader;
+    public $_menutop  = array();
+    public $_menutabs = array();
+    public $_obj;
+    public $_header;
+    public $_subheader;
 
     /**
      * Constructor
      */
-    function __construct()
+    public function __construct()
     {
         global $xoopsModule;
         $this->_obj =& $xoopsModule;
@@ -45,7 +45,7 @@ class SystemMenuHandler
     /**
      * @param $addon
      */
-    function getAddon($addon)
+    public function getAddon($addon)
     {
         $this->_obj =& $addon;
     }
@@ -54,9 +54,9 @@ class SystemMenuHandler
      * @param        $value
      * @param string $name
      */
-    function addMenuTop($value, $name = "")
+    public function addMenuTop($value, $name = '')
     {
-        if ($name != "") {
+        if ($name !== '') {
             $this->_menutop[$value] = $name;
         } else {
             $this->_menutop[$value] = $value;
@@ -67,10 +67,10 @@ class SystemMenuHandler
      * @param      $options
      * @param bool $multi
      */
-    function addMenuTopArray($options, $multi = true)
+    public function addMenuTopArray($options, $multi = true)
     {
         if (is_array($options)) {
-            if ($multi == true) {
+            if ($multi === true) {
                 foreach ($options as $k => $v) {
                     $this->addOptionTop($k, $v);
                 }
@@ -86,9 +86,9 @@ class SystemMenuHandler
      * @param        $value
      * @param string $name
      */
-    function addMenuTabs($value, $name = "")
+    public function addMenuTabs($value, $name = '')
     {
-        if ($name != "") {
+        if ($name !== '') {
             $this->_menutabs[$value] = $name;
         } else {
             $this->_menutabs[$value] = $value;
@@ -99,10 +99,10 @@ class SystemMenuHandler
      * @param      $options
      * @param bool $multi
      */
-    function addMenuTabsArray($options, $multi = true)
+    public function addMenuTabsArray($options, $multi = true)
     {
         if (is_array($options)) {
-            if ($multi == true) {
+            if ($multi === true) {
                 foreach ($options as $k => $v) {
                     $this->addMenuTabsTop($k, $v);
                 }
@@ -117,7 +117,7 @@ class SystemMenuHandler
     /**
      * @param $value
      */
-    function addHeader($value)
+    public function addHeader($value)
     {
         $this->_header = $value;
     }
@@ -125,7 +125,7 @@ class SystemMenuHandler
     /**
      * @param $value
      */
-    function addSubHeader($value)
+    public function addSubHeader($value)
     {
         $this->_subheader = $value;
     }
@@ -135,12 +135,12 @@ class SystemMenuHandler
      *
      * @return string
      */
-    function breadcrumb_nav($basename = "Home")
+    public function breadcrumb_nav($basename = "Home")
     {
         global $bc_site, $bc_label;
-        $site = $bc_site;
+        $site       = $bc_site;
         $return_str = "<a href=\"/\">$basename</a>";
-        $str = substr(dirname( xoops_getenv('PHP_SELF')), 1);
+        $str        = substr(dirname(xoops_getenv('PHP_SELF')), 1);
 
         $arr = explode('/', $str);
         $num = count($arr);
@@ -150,7 +150,7 @@ class SystemMenuHandler
                 $return_str .= ' &gt; <a href="' . $site . $val . '/">' . $bc_label[$val] . '</a>';
                 $site .= $val . '/';
             }
-        } else if ($num == 1) {
+        } elseif ($num == 1) {
             $arr = $str;
             $return_str .= ' &gt; <a href="' . $bc_site . $arr . '/">' . $bc_label[$arr] . '</a>';
         }
@@ -164,11 +164,11 @@ class SystemMenuHandler
      *
      * @return string
      */
-    function render($currentoption = 1, $display = true)
+    public function render($currentoption = 1, $display = true)
     {
         global $modversion;
         $_dirname = $this->_obj->getVar('dirname');
-        $i = 0;
+        $i        = 0;
 
         /**
          * Selects current menu tab
@@ -176,9 +176,9 @@ class SystemMenuHandler
         foreach ($this->_menutabs as $k => $menus) {
             $menuItems[] = $menus;
         }
-        $breadcrumb = $menuItems[$currentoption];
+        $breadcrumb                = $menuItems[$currentoption];
         $menuItems[$currentoption] = 'current';
-        $menu = "<div id='buttontop_mod'>";
+        $menu                      = "<div id='buttontop_mod'>";
         $menu .= "<table style='width: 100%; padding: 0;' cellspacing='0'>\n<tr>";
         $menu .= "<td style='font-size: 10px; text-align: left; color: #2F5376; padding: 0 6px; line-height: 18px;'>";
         foreach ($this->_menutop as $k => $v) {
@@ -187,19 +187,19 @@ class SystemMenuHandler
         $menu = substr($menu, 0, -1);
 
         $menu .= "</td>";
-        $menu .= "<td style='text-align: right;'><strong>" . $this->_obj->getVar( 'name' ) . "</strong> : " . $breadcrumb . "</td>";
+        $menu .= "<td style='text-align: right;'><strong>" . $this->_obj->getVar('name') . "</strong> : " . $breadcrumb . "</td>";
         $menu .= "</tr>\n</table>\n";
         $menu .= "</div>\n";
         $menu .= "<div id='buttonbar_mod'><ul>";
         foreach ($this->_menutabs as $k => $v) {
-            $menu .= "<li id='" . $menuItems[$i] . "'><a href='" . XOOPS_URL . "/modules/" . $this->_obj->getVar( 'dirname' ) . "/" . $k . "'><span>$v</span></a></li>\n";
+            $menu .= "<li id='" . $menuItems[$i] . "'><a href='" . XOOPS_URL . "/modules/" . $this->_obj->getVar('dirname') . "/" . $k . "'><span>$v</span></a></li>\n";
             ++$i;
         }
         $menu .= "</ul>\n</div>\n";
         if ($this->_header) {
             $menu .= "<h4 class='admin_header'>";
-            if (isset( $modversion['name'])) {
-                if ($modversion['image'] && $this->_obj->getVar( 'mid' ) == 1) {
+            if (isset($modversion['name'])) {
+                if ($modversion['image'] && $this->_obj->getVar('mid') == 1) {
                     $system_image = XOOPS_URL . '/modules/system/images/system/' . $modversion['image'];
                 } else {
                     $system_image = XOOPS_URL . '/modules/' . $_dirname . '/images/' . $modversion['image'];
@@ -215,7 +215,7 @@ class SystemMenuHandler
         }
         $menu .= '<div class="clear">&nbsp;</div>';
         unset($this->_obj);
-        if ($display == true) {
+        if ($display === true) {
             echo $menu;
         } else {
             return $menu;

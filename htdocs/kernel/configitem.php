@@ -10,13 +10,13 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @since           2.0.0
- * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @since               2.0.0
+ * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @version             $Id: configitem.php 13090 2015-06-16 20:44:29Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**#@+
  * Config type
@@ -33,24 +33,23 @@ define('XOOPS_CONF_AUTH', 7);
 /**
  *
  *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @author              Kazumi Ono    <onokazu@xoops.org>
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  */
 class XoopsConfigItem extends XoopsObject
 {
-
     /**
      * Config options
      *
-     * @var	array
-     * @access	private
+     * @var array
+     * @access    private
      */
-    var $_confOptions = array();
+    public $_confOptions = array();
 
     /**
      * Constructor
      */
-    function XoopsConfigItem()
+    public function __construct()
     {
         $this->initVar('conf_id', XOBJ_DTYPE_INT, null, false);
         $this->initVar('conf_modid', XOBJ_DTYPE_INT, null, false);
@@ -64,90 +63,116 @@ class XoopsConfigItem extends XoopsObject
         $this->initVar('conf_order', XOBJ_DTYPE_INT);
     }
 
+    public function XoopsConfigItem()
+    {
+        $this->__construct();
+    }
     /**
      * Returns Class Base Variable conf_id
+     * @param string $format
+     * @return mixed
      */
-    function id($format = 'N')
+    public function id($format = 'N')
     {
         return $this->getVar('conf_id', $format);
     }
 
     /**
      * Returns Class Base Variable conf_id
+     * @param string $format
+     * @return mixed
      */
-    function conf_id($format = '')
+    public function conf_id($format = '')
     {
         return $this->getVar('conf_id', $format);
     }
 
     /**
      * Returns Class Base Variable conf_modid
+     * @param string $format
+     * @return mixed
      */
-    function conf_modid($format = '')
+    public function conf_modid($format = '')
     {
         return $this->getVar('conf_modid', $format);
     }
 
     /**
      * Returns Class Base Variable conf_catid
+     * @param string $format
+     * @return mixed
      */
-    function conf_catid($format = '')
+    public function conf_catid($format = '')
     {
         return $this->getVar('conf_catid', $format);
     }
 
     /**
      * Returns Class Base Variable conf_name
+     * @param string $format
+     * @return mixed
      */
-    function conf_name($format = '')
+    public function conf_name($format = '')
     {
         return $this->getVar('conf_name', $format);
     }
 
     /**
      * Returns Class Base Variable conf_title
+     * @param string $format
+     * @return mixed
      */
-    function conf_title($format = '')
+    public function conf_title($format = '')
     {
         return $this->getVar('conf_title', $format);
     }
 
     /**
      * Returns Class Base Variable conf_value
+     * @param string $format
+     * @return mixed
      */
-    function conf_value($format = '')
+    public function conf_value($format = '')
     {
         return $this->getVar('conf_value', $format);
     }
 
     /**
      * Returns Class Base Variable conf_desc
+     * @param string $format
+     * @return mixed
      */
-    function conf_desc($format = '')
+    public function conf_desc($format = '')
     {
         return $this->getVar('conf_desc', $format);
     }
 
     /**
      * Returns Class Base Variable conf_formtype
+     * @param string $format
+     * @return mixed
      */
-    function conf_formtype($format = '')
+    public function conf_formtype($format = '')
     {
         return $this->getVar('conf_formtype', $format);
     }
 
     /**
      * Returns Class Base Variable conf_valuetype
+     * @param string $format
+     * @return mixed
      */
-    function conf_valuetype($format = '')
+    public function conf_valuetype($format = '')
     {
         return $this->getVar('conf_valuetype', $format);
     }
 
     /**
      * Returns Class Base Variable conf_order
+     * @param string $format
+     * @return mixed
      */
-    function conf_order($format = '')
+    public function conf_order($format = '')
     {
         return $this->getVar('conf_order', $format);
     }
@@ -157,7 +182,7 @@ class XoopsConfigItem extends XoopsObject
      *
      * @return string
      */
-    function getConfValueForOutput()
+    public function getConfValueForOutput()
     {
         switch ($this->getVar('conf_valuetype')) {
             case 'int':
@@ -166,11 +191,11 @@ class XoopsConfigItem extends XoopsObject
             case 'array':
                 $value = @unserialize($this->getVar('conf_value', 'N'));
 
-                return $value ? $value : array();
+                return $value ? : array();
             case 'float':
                 $value = $this->getVar('conf_value', 'N');
 
-                return (float) $value;
+                return (float)$value;
                 break;
             case 'textarea':
                 return $this->getVar('conf_value');
@@ -183,10 +208,10 @@ class XoopsConfigItem extends XoopsObject
     /**
      * Set a config value
      *
-     * @param mixed &$value      Value
+     * @param mixed &$value Value
      * @param bool  $force_slash
      */
-    function setConfValueForInput(&$value, $force_slash = false)
+    public function setConfValueForInput(&$value, $force_slash = false)
     {
         switch ($this->getVar('conf_valuetype')) {
             case 'array':
@@ -209,7 +234,7 @@ class XoopsConfigItem extends XoopsObject
      *
      * @param mixed $option either a {@link XoopsConfigItemOption} object or an array of them
      */
-    function setConfOptions($option)
+    public function setConfOptions($option)
     {
         if (is_array($option)) {
             $count = count($option);
@@ -228,17 +253,17 @@ class XoopsConfigItem extends XoopsObject
      *
      * @return array array of {@link XoopsConfigItemOption}
      */
-    function &getConfOptions()
+    public function &getConfOptions()
     {
         return $this->_confOptions;
     }
 
     /**
-    * Clear options from this item
-    *
-    * @return void
-    **/
-    function clearConfOptions()
+     * Clear options from this item
+     *
+     * @return void
+     **/
+    public function clearConfOptions()
     {
         $this->_confOptions = array();
     }
@@ -250,7 +275,7 @@ class XoopsConfigItem extends XoopsObject
  * This class is responsible for providing data access mechanisms to the data source
  * of XOOPS configuration class objects.
  *
- * @author       Kazumi Ono <onokazu@xoops.org>
+ * @author              Kazumi Ono <onokazu@xoops.org>
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  */
 class XoopsConfigItemHandler extends XoopsObjectHandler
@@ -259,10 +284,10 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
      * Create a new {@link XoopsConfigItem}
      *
      * @see     XoopsConfigItem
-     * @param  bool   $isNew Flag the config as "new"?
-     * @return object reference to the new config
+     * @param  bool $isNew Flag the config as "new"?
+     * @return XoopsConfigItem reference to the new config
      */
-    function &create($isNew = true)
+    public function &create($isNew = true)
     {
         $config = new XoopsConfigItem();
         if ($isNew) {
@@ -275,21 +300,21 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
     /**
      * Load a config from the database
      *
-     * @param  int    $id ID of the config
-     * @return object reference to the config, FALSE on fail
+     * @param  int $id ID of the config
+     * @return XoopsConfigItem reference to the config, FALSE on fail
      */
-    function &get($id)
+    public function &get($id)
     {
         $config = false;
-        $id = (int)($id);
+        $id     = (int)($id);
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('config') . ' WHERE conf_id=' . $id;
-            if (! $result = $this->db->query($sql)) {
+            if (!$result = $this->db->query($sql)) {
                 return $config;
             }
             $numrows = $this->db->getRowsNum($result);
             if ($numrows == 1) {
-                $myrow = $this->db->fetchArray($result);
+                $myrow  = $this->db->fetchArray($result);
                 $config = new XoopsConfigItem();
                 $config->assignVars($myrow);
             }
@@ -301,10 +326,10 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
     /**
      * Write a config to the database
      *
-     * @param  object &$config {@link XoopsConfigItem} object
+     * @param  XoopsConfigItem &$config {@link XoopsConfigItem} object
      * @return mixed  FALSE on fail.
      */
-    function insert(&$config)
+    public function insert(&$config)
     {
         /**
          * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
@@ -323,7 +348,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
         }
         if ($config->isNew()) {
             $conf_id = $this->db->genId('config_conf_id_seq');
-            $sql = sprintf("INSERT INTO %s (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) VALUES (%u, %u, %u, %s, %s, %s, %s, %s, %s, %u)", $this->db->prefix('config'), $conf_id, $conf_modid, $conf_catid, $this->db->quoteString($conf_name), $this->db->quoteString($conf_title), $this->db->quoteString($conf_value), $this->db->quoteString($conf_desc), $this->db->quoteString($conf_formtype), $this->db->quoteString($conf_valuetype), $conf_order);
+            $sql     = sprintf("INSERT INTO %s (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) VALUES (%u, %u, %u, %s, %s, %s, %s, %s, %s, %u)", $this->db->prefix('config'), $conf_id, $conf_modid, $conf_catid, $this->db->quoteString($conf_name), $this->db->quoteString($conf_title), $this->db->quoteString($conf_value), $this->db->quoteString($conf_desc), $this->db->quoteString($conf_formtype), $this->db->quoteString($conf_valuetype), $conf_order);
         } else {
             $sql = sprintf("UPDATE %s SET conf_modid = %u, conf_catid = %u, conf_name = %s, conf_title = %s, conf_value = %s, conf_desc = %s, conf_formtype = %s, conf_valuetype = %s, conf_order = %u WHERE conf_id = %u", $this->db->prefix('config'), $conf_modid, $conf_catid, $this->db->quoteString($conf_name), $this->db->quoteString($conf_title), $this->db->quoteString($conf_value), $this->db->quoteString($conf_desc), $this->db->quoteString($conf_formtype), $this->db->quoteString($conf_valuetype), $conf_order, $conf_id);
         }
@@ -341,10 +366,10 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
     /**
      * Delete a config from the database
      *
-     * @param  object &$config Config to delete
+     * @param  XoopsConfigItem &$config Config to delete
      * @return bool   Successful?
      */
-    function delete(&$config)
+    public function delete(&$config)
     {
         /**
          * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
@@ -363,15 +388,15 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
     /**
      * Get configs from the database
      *
-     * @param  object $criteria  {@link CriteriaElement}
+     * @param  CriteriaElement $criteria  {@link CriteriaElement}
      * @param  bool   $id_as_key return the config's id as key?
      * @return array  Array of {@link XoopsConfigItem} objects
      */
-    function getObjects($criteria = null, $id_as_key = false)
+    public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
-        $ret = array();
+        $ret   = array();
         $limit = $start = 0;
-        $sql = 'SELECT * FROM ' . $this->db->prefix('config');
+        $sql   = 'SELECT * FROM ' . $this->db->prefix('config');
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
             $sql .= ' ORDER BY conf_order ASC';
@@ -388,7 +413,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
             if (!$id_as_key) {
                 $ret[] =& $config;
             } else {
-                $ret[$myrow['conf_id']] = & $config;
+                $ret[$myrow['conf_id']] = &$config;
             }
             unset($config);
         }
@@ -399,22 +424,22 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
     /**
      * Count configs
      *
-     * @param  object $criteria {@link CriteriaElement}
+     * @param  CriteriaElement $criteria {@link CriteriaElement}
      * @return int    Count of configs matching $criteria
      */
-    function getCount($criteria = null)
+    public function getCount(CriteriaElement $criteria = null)
     {
-        $ret = array();
+        $ret   = array();
         $limit = $start = 0;
-        $sql = 'SELECT * FROM ' . $this->db->prefix('config');
+        $sql   = 'SELECT * FROM ' . $this->db->prefix('config');
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-        $result = & $this->db->query($sql);
+        $result = &$this->db->query($sql);
         if (!$result) {
             return false;
         }
-        list ($count) = $this->db->fetchRow($result);
+        list($count) = $this->db->fetchRow($result);
 
         return $count;
     }

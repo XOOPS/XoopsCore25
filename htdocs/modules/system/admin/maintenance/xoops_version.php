@@ -1,7 +1,7 @@
 <?php
 /**
  * Mail user settings
-*
+ *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
  * which is considered copyrighted (c) material of the original comment or credit authors.
@@ -10,10 +10,10 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @author      Cointin Maxime (AKA Kraven30)
- * @package     system
- * @version     $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @author              Cointin Maxime (AKA Kraven30)
+ * @package             system
+ * @version             $Id: xoops_version.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 $modversion['name']        = _AM_SYSTEM_MAINTENANCE;
@@ -26,6 +26,6 @@ $modversion['license']     = 'http://www.fsf.org/copyleft/gpl.html';
 $modversion['official']    = 1;
 $modversion['image']       = 'maintenance.png';
 
-$modversion['hasAdmin']    = 1;
-$modversion['adminpath']   = 'admin.php?fct=maintenance';
-$modversion['category']    = XOOPS_SYSTEM_MAINTENANCE;
+$modversion['hasAdmin']  = 1;
+$modversion['adminpath'] = 'admin.php?fct=maintenance';
+$modversion['category']  = XOOPS_SYSTEM_MAINTENANCE;

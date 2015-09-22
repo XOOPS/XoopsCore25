@@ -28,10 +28,9 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
      * @type array
      */
     public $fixesForLevel = array(
-        'light' => array(),
+        'light'  => array(),
         'medium' => array(),
-        'heavy' => array()
-    );
+        'heavy'  => array());
 
     /**
      * Lazy load constructs the module by determining the necessary
@@ -47,17 +46,16 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
         $this->makeFixesForLevel($fixes);
 
         // figure out which fixes to use
-        $level = $config->get('HTML.TidyLevel');
+        $level        = $config->get('HTML.TidyLevel');
         $fixes_lookup = $this->getFixesForLevel($level);
 
         // get custom fix declarations: these need namespace processing
-        $add_fixes = $config->get('HTML.TidyAdd');
+        $add_fixes    = $config->get('HTML.TidyAdd');
         $remove_fixes = $config->get('HTML.TidyRemove');
 
         foreach ($fixes as $name => $fix) {
             // needs to be refactored a little to implement globbing
-            if (isset($remove_fixes[$name]) ||
-                (!isset($add_fixes[$name]) && !isset($fixes_lookup[$name]))) {
+            if (isset($remove_fixes[$name]) || (!isset($add_fixes[$name]) && !isset($fixes_lookup[$name]))) {
                 unset($fixes[$name]);
             }
         }
@@ -69,8 +67,8 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
     /**
      * Retrieves all fixes per a level, returning fixes for that specific
      * level as well as all levels below it.
-     * @param string $level level identifier, see $levels for valid values
-     * @return array Lookup up table of fixes
+     * @param  string $level level identifier, see $levels for valid values
+     * @return array  Lookup up table of fixes
      */
     public function getFixesForLevel($level)
     {
@@ -85,10 +83,8 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
             }
         }
         if ($i == $c) {
-            trigger_error(
-                'Tidy level ' . htmlspecialchars($level) . ' not recognized',
-                E_USER_WARNING
-            );
+            trigger_error('Tidy level ' . htmlspecialchars($level) . ' not recognized', E_USER_WARNING);
+
             return array();
         }
         $ret = array();
@@ -97,6 +93,7 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
                 $ret[$fix] = true;
             }
         }
+
         return $ret;
     }
 
@@ -112,10 +109,8 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
             return;
         }
         if (!isset($this->fixesForLevel[$this->defaultLevel])) {
-            trigger_error(
-                'Default level ' . $this->defaultLevel . ' does not exist',
-                E_USER_ERROR
-            );
+            trigger_error('Default level ' . $this->defaultLevel . ' does not exist', E_USER_ERROR);
+
             return;
         }
         $this->fixesForLevel[$this->defaultLevel] = array_keys($fixes);
@@ -144,11 +139,11 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
                         }
                     } else {
                         $type = "info_$type";
-                        $e = $this;
+                        $e    = $this;
                     }
                     // PHP does some weird parsing when I do
                     // $e->$type[$attr], so I have to assign a ref.
-                    $f =& $e->$type;
+                    $f        =& $e->$type;
                     $f[$attr] = $fix;
                     break;
                 case 'tag_transform':
@@ -177,7 +172,7 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
      * @param $name String name of fix
      * @return array(string $fix_type, array $fix_parameters)
      * @note $fix_parameters is type dependant, see populate() for usage
-     *       of these parameters
+     *              of these parameters
      */
     public function getFixType($name)
     {
@@ -205,6 +200,7 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
                 $property = 'pre';
             }
             $type = 'attr_transform_' . $property;
+
             return array($type, $params);
         }
 
@@ -214,7 +210,6 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
         }
 
         return array($property, $params);
-
     }
 
     /**
@@ -228,3 +223,4 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
 }
 
 // vim: et sw=4 sts=4
+

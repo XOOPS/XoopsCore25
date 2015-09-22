@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id: xoops.js 8289 2011-11-15 01:19:44Z beckmi $ */
 function xoops$()
 {
     var elements = new Array();
@@ -49,7 +49,7 @@ function xoopsGetFormElement(fname, ctlname)
 
 function justReturn()
 {
-    return;
+    //return;
 }
 
 function openWithSelfMain(url, name, width, height, returnwindow)
@@ -108,11 +108,7 @@ function appendSelectOption(selectMenuId, optionName, optionValue)
 function disableElement(target)
 {
     var targetDom = xoopsGetElementById(target);
-    if (targetDom.disabled != true) {
-        targetDom.disabled = true;
-    } else {
-        targetDom.disabled = false;
-    }
+    targetDom.disabled = targetDom.disabled != true;
 }
 
 function xoopsCheckAll(form, switchId)
@@ -206,7 +202,7 @@ function xoopsCodeSmilie(id, smilieCode)
     var textareaDom = xoopsGetElementById(id);
     xoopsInsertText(textareaDom, smilieCode);
     textareaDom.focus();
-    return;
+    //return;
 }
 function showImgSelected(imgId, selectId, imgDir, extra, xoopsUrl)
 {

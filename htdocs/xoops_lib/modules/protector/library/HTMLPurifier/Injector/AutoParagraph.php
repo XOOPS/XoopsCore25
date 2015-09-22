@@ -23,8 +23,9 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
      */
     private function _pStart()
     {
-        $par = new HTMLPurifier_Token_Start('p');
+        $par                                         = new HTMLPurifier_Token_Start('p');
         $par->armor['MakeWellFormed_TagClosedError'] = true;
+
         return $par;
     }
 
@@ -87,8 +88,7 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
                 }
             }
             // Is the current parent a <p> tag?
-        } elseif (!empty($this->currentNesting) &&
-            $this->currentNesting[count($this->currentNesting) - 1]->name == 'p') {
+        } elseif (!empty($this->currentNesting) && $this->currentNesting[count($this->currentNesting) - 1]->name == 'p') {
             // State 3.1: ...<p>PAR1
             //                  ----
 
@@ -125,9 +125,7 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
 
                     if (!$prev instanceof HTMLPurifier_Token_Start) {
                         // Token wasn't adjacent
-                        if ($prev instanceof HTMLPurifier_Token_Text &&
-                            substr($prev->data, -2) === "\n\n"
-                        ) {
+                        if ($prev instanceof HTMLPurifier_Token_Text && substr($prev->data, -2) === "\n\n") {
                             // State 1.1.4: <div><p>PAR1</p>\n\n<b>
                             //                                  ---
                             // Quite frankly, this should be handled by splitText
@@ -204,23 +202,24 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
     /**
      * Splits up a text in paragraph tokens and appends them
      * to the result stream that will replace the original
-     * @param string $data String text data that will be processed
-     *    into paragraphs
+     * @param string               $data   String text data that will be processed
+     *                                     into paragraphs
      * @param HTMLPurifier_Token[] $result Reference to array of tokens that the
-     *    tags will be appended onto
+     *                                     tags will be appended onto
      */
     private function _splitText($data, &$result)
     {
         $raw_paragraphs = explode("\n\n", $data);
-        $paragraphs = array(); // without empty paragraphs
-        $needs_start = false;
-        $needs_end = false;
+        $paragraphs     = array(); // without empty paragraphs
+        $needs_start    = false;
+        $needs_end      = false;
 
         $c = count($raw_paragraphs);
         if ($c == 1) {
             // There were no double-newlines, abort quickly. In theory this
             // should never happen.
             $result[] = new HTMLPurifier_Token_Text($data);
+
             return;
         }
         for ($i = 0; $i < $c; ++$i) {
@@ -292,7 +291,7 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
     /**
      * Returns true if passed token is inline (and, ergo, allowed in
      * paragraph tags)
-     * @param HTMLPurifier_Token $token
+     * @param  HTMLPurifier_Token $token
      * @return bool
      */
     private function _isInline($token)
@@ -313,7 +312,7 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
             $nesting = 0;
         }
         $ok = false;
-        $i = null;
+        $i  = null;
         while ($this->forwardUntilEndToken($i, $current, $nesting)) {
             $result = $this->_checkNeedsP($current);
             if ($result !== null) {
@@ -321,13 +320,14 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
                 break;
             }
         }
+
         return $ok;
     }
 
     /**
      * Determines if a particular token requires an earlier inline token
      * to get a paragraph. This should be used with _forwardUntilEndToken
-     * @param HTMLPurifier_Token $current
+     * @param  HTMLPurifier_Token $current
      * @return bool
      */
     private function _checkNeedsP($current)
@@ -349,8 +349,10 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
                 //      ----
             }
         }
+
         return null;
     }
 }
 
 // vim: et sw=4 sts=4
+

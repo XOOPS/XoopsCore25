@@ -3,7 +3,7 @@
 /**
  * Structure that stores an HTML element definition. Used by
  * HTMLPurifier_HTMLDefinition and HTMLPurifier_HTMLModule.
- * @note This class is inspected by HTMLPurifier_Printer_HTMLDefinition.
+ * @note    This class is inspected by HTMLPurifier_Printer_HTMLDefinition.
  *       Please update that class too.
  * @warning If you add new properties to this class, you MUST update
  *          the mergeIn() method.
@@ -63,7 +63,7 @@ class HTMLPurifier_ElementDef
 
     /**
      * Abstract string representation of internal ChildDef rules.
-     * @see HTMLPurifier_ContentSets for how this is parsed and then transformed
+     * @see     HTMLPurifier_ContentSets for how this is parsed and then transformed
      * into an HTMLPurifier_ChildDef.
      * @warning This is a temporary variable that is not available after
      *      being processed by HTMLDefinition
@@ -137,10 +137,11 @@ class HTMLPurifier_ElementDef
      */
     public static function create($content_model, $content_model_type, $attr)
     {
-        $def = new HTMLPurifier_ElementDef();
-        $def->content_model = $content_model;
+        $def                     = new HTMLPurifier_ElementDef();
+        $def->content_model      = $content_model;
         $def->content_model_type = $content_model_type;
-        $def->attr = $attr;
+        $def->attr               = $attr;
+
         return $def;
     }
 
@@ -171,17 +172,16 @@ class HTMLPurifier_ElementDef
             $this->attr[$k] = $v;
         }
         $this->_mergeAssocArray($this->excludes, $def->excludes);
-        $this->attr_transform_pre = array_merge($this->attr_transform_pre, $def->attr_transform_pre);
+        $this->attr_transform_pre  = array_merge($this->attr_transform_pre, $def->attr_transform_pre);
         $this->attr_transform_post = array_merge($this->attr_transform_post, $def->attr_transform_post);
 
         if (!empty($def->content_model)) {
-            $this->content_model =
-                str_replace("#SUPER", $this->content_model, $def->content_model);
-            $this->child = false;
+            $this->content_model = str_replace("#SUPER", $this->content_model, $def->content_model);
+            $this->child         = false;
         }
         if (!empty($def->content_model_type)) {
             $this->content_model_type = $def->content_model_type;
-            $this->child = false;
+            $this->child              = false;
         }
         if (!is_null($def->child)) {
             $this->child = $def->child;
@@ -214,3 +214,4 @@ class HTMLPurifier_ElementDef
 }
 
 // vim: et sw=4 sts=4
+

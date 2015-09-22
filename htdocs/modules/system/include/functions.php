@@ -9,15 +9,20 @@
  * which is considered copyrighted (c) material of the original comment or credit authors.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
- * @package     system
- * @version     $Id$
+ * @license             http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @package             system
+ * @version             $Id: functions.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 /**
  * Get variables passed by GET or POST method
  *
  * Comment by Taiwen Jiang (a.k.a. phppp): THE METHOD IS NOT COMPLETE AND NOT SAFE. YOU ARE ENCOURAGED TO USE PHP'S NATIVE FILTER_VAR OR FILTER_INPUT FUNCTIONS DIRECTLY BEFORE WE MIGRATE TO XOOPS 3.
+ * @param        $global
+ * @param        $key
+ * @param string $default
+ * @param string $type
+ * @return int|mixed|string
  */
 function system_CleanVars(&$global, $key, $default = '', $type = 'int')
 {
@@ -31,7 +36,8 @@ function system_CleanVars(&$global, $key, $default = '', $type = 'int')
         case 'string':
             $ret = (isset($global[$key])) ? filter_var($global[$key], FILTER_SANITIZE_MAGIC_QUOTES) : $default;
             break;
-        case 'int': default:
+        case 'int':
+        default:
             $ret = (isset($global[$key])) ? filter_var($global[$key], FILTER_SANITIZE_NUMBER_INT) : $default;
             break;
     }
@@ -46,9 +52,9 @@ function system_CleanVars(&$global, $key, $default = '', $type = 'int')
  * System language loader wrapper
  *
  *
- * @param   string  $name       Name of language file to be loaded, without extension
- * @param   string  $domain     Module dirname; global language file will be loaded if $domain is set to 'global' or not specified
- * @param   string  $language   Language to be loaded, current language content will be loaded if not specified
+ * @param   string $name     Name of language file to be loaded, without extension
+ * @param   string $domain   Module dirname; global language file will be loaded if $domain is set to 'global' or not specified
+ * @param   string $language Language to be loaded, current language content will be loaded if not specified
  * @return  boolean
  * @todo    expand domain to multiple categories, e.g. module:system, framework:filter, etc.
  *
@@ -62,11 +68,11 @@ function system_loadLanguage($name, $domain = '', $language = null)
         return false;
     }
     $language = empty($language) ? $GLOBALS['xoopsConfig']['language'] : $language;
-    $path = 'modules/' . $domain . '/language/';
-    if ( file_exists($file = $GLOBALS['xoops']->path( $path . $language . '/admin/' . $name . '.php') ) ) {
+    $path     = 'modules/' . $domain . '/language/';
+    if (file_exists($file = $GLOBALS['xoops']->path($path . $language . '/admin/' . $name . '.php'))) {
         $ret = include_once $file;
     } else {
-        $ret = include_once $GLOBALS['xoops']->path( $path . 'english/admin/' . $name . '.php');
+        $ret = include_once $GLOBALS['xoops']->path($path . 'english/admin/' . $name . '.php');
     }
 
     return $ret;
@@ -86,10 +92,9 @@ function system_adminVersion($version, $value = '')
     }
     $path = XOOPS_ROOT_PATH . '/modules/system/admin/' . $version . '/xoops_version.php';
     if (file_exists($path)) {
-
         include $path;
 
-        $retvalue = $modversion[$value];
+        $retvalue                            = $modversion[$value];
         $tblVersion[$version . '.' . $value] = $retvalue;
 
         return $retvalue;
@@ -103,7 +108,7 @@ function system_adminVersion($version, $value = '')
  */
 function system_AdminIcons($img)
 {
-    $style='default';
+    $style = 'default';
 
     $url = $GLOBALS['xoops']->url('modules/system/images/icons/' . $style . '/' . $img);
 
@@ -134,14 +139,11 @@ function system_loadTemplate($name)
  */
 function modify_chmod($value_chmod, $path_file, $id)
 {
-    $chmod = '<div id="loading_' . $id . '" align="center" style="display:none;">'
-           . '<img src="./images/mimetypes/spinner.gif" title="Loading" alt="Loading" width="12px"/></div>'
-           . '<div id="chmod' . $id . '">'
-           . '<select size="1" onChange="filemanager_modify_chmod(\'' . $path_file . '\', \'' . $id . '\')" name="chmod" id="chmod">';
+    $chmod = '<div id="loading_' . $id . '" align="center" style="display:none;">' . '<img src="./images/mimetypes/spinner.gif" title="Loading" alt="Loading" width="12px"/></div>' . '<div id="chmod' . $id . '">' . '<select size="1" onChange="filemanager_modify_chmod(\'' . $path_file . '\', \'' . $id . '\')" name="chmod" id="chmod">';
     if ($value_chmod == 777) {
-        $chmod .= '<option value="777" selected><span style="color:green">777</span></option>';
+        $chmod .= '<option value="777" selected><span style="color:green;">777</span></option>';
     } else {
-        $chmod .= '<option value="777"><span style="color:green">777</span></option>';
+        $chmod .= '<option value="777"><span style="color:green;">777</span></option>';
     }
 
     if ($value_chmod == 776) {
@@ -175,7 +177,7 @@ function modify_chmod($value_chmod, $path_file, $id)
     }
 
     if ($value_chmod == 444) {
-        $chmod .= '<option value="444" selected><span style="color:red">444</span></option>';
+        $chmod .= '<option value="444" selected><span style="color:red;">444</span></option>';
     } else {
         $chmod .= '<option value="444">444</option>';
     }

@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: index.php 13082 2015-06-06 21:59:41Z beckmi $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2015 XOOPS Project (www.xoops.org)            //
@@ -33,7 +33,7 @@ xoops_cp_header();
 
 $indexAdmin = new ModuleAdmin();
 //-----------------------
-// $xpPartnerHandler =& xoops_getmodulehandler('partners', $xoopsModule->getVar('dirname'));
+// $xpPartnerHandler =& xoops_getModuleHandler('partners', $xoopsModule->getVar('dirname'));
 
 // $totalPartners = $xpPartnerHandler->getCount();
 // $totalNonActivePartners = $xpPartnerHandler->getCount(new Criteria('status', 0, '='));
@@ -51,3 +51,4 @@ echo $indexAdmin->renderIndex();
 
 include_once __DIR__ . '/admin_footer.php';
 //xoops_cp_footer();
+

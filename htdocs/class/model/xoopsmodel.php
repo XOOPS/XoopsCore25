@@ -10,20 +10,21 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @subpackage      model
- * @since           2.3.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @subpackage          model
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: xoopsmodel.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 include_once XOOPS_ROOT_PATH . '/kernel/object.php';
+
 /**
  * Factory for object handlers
  *
- * @author Taiwen Jiang <phppp@users.sourceforge.net>
+ * @author  Taiwen Jiang <phppp@users.sourceforge.net>
  * @package kernel
  */
 class XoopsModelFactory
@@ -31,20 +32,21 @@ class XoopsModelFactory
     /**
      * static private
      */
-    var $handlers = array();
+    public $handlers = array();
 
     /**
      * XoopsModelFactory::__construct()
      */
-    function __construct()
+    public function __construct()
     {
     }
 
     /**
      * XoopsModelFactory::XoopsModelFactory()
      */
-    function XoopsModelFactory()
+    public function XoopsModelFactory()
     {
+        $this->__construct();
     }
 
     /**
@@ -52,11 +54,11 @@ class XoopsModelFactory
      *
      * @access public
      */
-    function getInstance()
+    public function getInstance()
     {
         static $instance;
         if (!isset($instance)) {
-            $class = __CLASS__;
+            $class    = __CLASS__;
             $instance = new $class();
         }
 
@@ -68,21 +70,21 @@ class XoopsModelFactory
      *
      * @access   public
      *
-     * @param object $ohandler reference to {@link XoopsPersistableObjectHandler}
-     * @param string $name    handler name
-     * @param mixed  $args    args
+     * @param XoopsPersistableObjectHandler $ohandler reference to {@link XoopsPersistableObjectHandler}
+     * @param string $name     handler name
+     * @param mixed  $args     args
      *
-     * @internal param object $ohandler reference to {@link XoopsPersistableObjectHandler}
+     * @internal param XoopsPersistableObjectHandler $ohandler reference to {@link XoopsPersistableObjectHandler}
      * @return object of handler
      */
-    static function loadHandler($ohandler, $name, $args = null)
+    public static function loadHandler(XoopsPersistableObjectHandler $ohandler, $name, $args = null)
     {
         static $handlers;
         if (!isset($handlers[$name])) {
             if (file_exists($file = __DIR__ . '/' . $name . '.php')) {
                 include_once $file;
                 $className = 'XoopsModel' . ucfirst($name);
-                $handler = new $className();
+                $handler   = new $className();
             } elseif (xoops_load('model', 'framework')) {
                 $handler = XoopsModel::loadHandler($name);
             }
@@ -105,7 +107,7 @@ class XoopsModelFactory
 /**
  * abstract class object handler
  *
- * @author Taiwen Jiang <phppp@users.sourceforge.net>
+ * @author  Taiwen Jiang <phppp@users.sourceforge.net>
  * @package kernel
  */
 class XoopsModelAbstract
@@ -113,11 +115,11 @@ class XoopsModelAbstract
     /**
      * holds referenced to handler object
      *
-     * @var object
-     * @param object $ohandler reference to {@link XoopsPersistableObjectHandler}
+     * @var   object
+     * @param XoopsPersistableObjectHandler $ohandler reference to {@link XoopsPersistableObjectHandler}
      * @access protected
      */
-    var $handler;
+    public $handler;
 
     /**
      * constructor
@@ -125,8 +127,10 @@ class XoopsModelAbstract
      * normally, this is called from child classes only
      *
      * @access protected
+     * @param null $args
+     * @param null $handler
      */
-    function __construct($args = null, $handler = null)
+    public function __construct($args = null, $handler = null)
     {
         $this->setHandler($handler);
         $this->setVars($args);
@@ -140,7 +144,7 @@ class XoopsModelAbstract
      *
      * @return void
      */
-    function XoopsObjectAbstract($args = null, $handler = null)
+    public function XoopsObjectAbstract($args = null, $handler = null)
     {
         $this->__construct($args, $handler);
     }
@@ -151,7 +155,7 @@ class XoopsModelAbstract
      * @param  mixed $handler
      * @return bool
      */
-    function setHandler($handler)
+    public function setHandler($handler)
     {
         if (is_object($handler) && is_a($handler, 'XoopsPersistableObjectHandler')) {
             $this->handler =& $handler;
@@ -168,7 +172,7 @@ class XoopsModelAbstract
      * @param  mixed $args
      * @return bool
      */
-    function setVars($args)
+    public function setVars($args)
     {
         if (!empty($args) && is_array($args)) {
             foreach ($args as $key => $value) {

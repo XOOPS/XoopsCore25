@@ -30,7 +30,7 @@ class HTMLPurifier_DefinitionCacheFactory
 
     /**
      * Retrieves an instance of global definition cache factory.
-     * @param HTMLPurifier_DefinitionCacheFactory $prototype
+     * @param  HTMLPurifier_DefinitionCacheFactory $prototype
      * @return HTMLPurifier_DefinitionCacheFactory
      */
     public static function instance($prototype = null)
@@ -42,13 +42,14 @@ class HTMLPurifier_DefinitionCacheFactory
             $instance = new HTMLPurifier_DefinitionCacheFactory();
             $instance->setup();
         }
+
         return $instance;
     }
 
     /**
      * Registers a new definition cache object
      * @param string $short Short name of cache object, for reference
-     * @param string $long Full class name of cache object, for construction
+     * @param string $long  Full class name of cache object, for construction
      */
     public function register($short, $long)
     {
@@ -57,8 +58,8 @@ class HTMLPurifier_DefinitionCacheFactory
 
     /**
      * Factory method that creates a cache object based on configuration
-     * @param string $type Name of definitions handled by cache
-     * @param HTMLPurifier_Config $config Config instance
+     * @param  string              $type   Name of definitions handled by cache
+     * @param  HTMLPurifier_Config $config Config instance
      * @return mixed
      */
     public function create($type, $config)
@@ -70,8 +71,7 @@ class HTMLPurifier_DefinitionCacheFactory
         if (!empty($this->caches[$method][$type])) {
             return $this->caches[$method][$type];
         }
-        if (isset($this->implementations[$method]) &&
-            class_exists($class = $this->implementations[$method], false)) {
+        if (isset($this->implementations[$method]) && class_exists($class = $this->implementations[$method], false)) {
             $cache = new $class($type);
         } else {
             if ($method != 'Serializer') {
@@ -86,6 +86,7 @@ class HTMLPurifier_DefinitionCacheFactory
             $cache = $new_cache;
         }
         $this->caches[$method][$type] = $cache;
+
         return $this->caches[$method][$type];
     }
 
@@ -96,7 +97,7 @@ class HTMLPurifier_DefinitionCacheFactory
     public function addDecorator($decorator)
     {
         if (is_string($decorator)) {
-            $class = "HTMLPurifier_DefinitionCache_Decorator_$decorator";
+            $class     = "HTMLPurifier_DefinitionCache_Decorator_$decorator";
             $decorator = new $class;
         }
         $this->decorators[$decorator->name] = $decorator;
@@ -104,3 +105,4 @@ class HTMLPurifier_DefinitionCacheFactory
 }
 
 // vim: et sw=4 sts=4
+

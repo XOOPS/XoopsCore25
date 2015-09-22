@@ -28,18 +28,18 @@ class HTMLPurifier_AttrDef_CSS_Multiple extends HTMLPurifier_AttrDef
 
     /**
      * @param HTMLPurifier_AttrDef $single HTMLPurifier_AttrDef to multiply
-     * @param int $max Max number of values allowed (usually four)
+     * @param int                  $max    Max number of values allowed (usually four)
      */
     public function __construct($single, $max = 4)
     {
         $this->single = $single;
-        $this->max = $max;
+        $this->max    = $max;
     }
 
     /**
-     * @param string $string
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
+     * @param  string               $string
+     * @param  HTMLPurifier_Config  $config
+     * @param  HTMLPurifier_Context $context
      * @return bool|string
      */
     public function validate($string, $config, $context)
@@ -48,9 +48,9 @@ class HTMLPurifier_AttrDef_CSS_Multiple extends HTMLPurifier_AttrDef
         if ($string === '') {
             return false;
         }
-        $parts = explode(' ', $string); // parseCDATA replaced \r, \t and \n
+        $parts  = explode(' ', $string); // parseCDATA replaced \r, \t and \n
         $length = count($parts);
-        $final = '';
+        $final  = '';
         for ($i = 0, $num = 0; $i < $length && $num < $this->max; ++$i) {
             if (ctype_space($parts[$i])) {
                 continue;
@@ -64,8 +64,10 @@ class HTMLPurifier_AttrDef_CSS_Multiple extends HTMLPurifier_AttrDef
         if ($final === '') {
             return false;
         }
+
         return rtrim($final);
     }
 }
 
 // vim: et sw=4 sts=4
+

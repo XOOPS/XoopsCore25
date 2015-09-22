@@ -10,37 +10,37 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @author      Kazumi Ono (AKA onokazu)
- * @author      Gregory Mage (AKA Mage)
- * @package     system
- * @version     $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @author              Kazumi Ono (AKA onokazu)
+ * @author              Gregory Mage (AKA Mage)
+ * @package             system
+ * @version             $Id: smilies.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-// defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 /**
  * System Smilies
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @package     system
+ * @package             system
  */
 class SystemSmilies extends XoopsObject
 {
     /**
      *
      */
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
-        $this->initVar('id',XOBJ_DTYPE_INT,null,false,5);
-        $this->initVar('code',XOBJ_DTYPE_TXTBOX,null,false);
-        $this->initVar('smile_url',XOBJ_DTYPE_TXTBOX,null,false);
-        $this->initVar('emotion',XOBJ_DTYPE_TXTBOX,null,false);
-        $this->initVar('display',XOBJ_DTYPE_INT,null,false,1);
+        $this->initVar('id', XOBJ_DTYPE_INT, null, false, 5);
+        $this->initVar('code', XOBJ_DTYPE_TXTBOX, null, false);
+        $this->initVar('smile_url', XOBJ_DTYPE_TXTBOX, null, false);
+        $this->initVar('emotion', XOBJ_DTYPE_TXTBOX, null, false);
+        $this->initVar('display', XOBJ_DTYPE_INT, null, false, 1);
     }
 
-    function smilies()
+    public function smilies()
     {
         $this->__construct();
     }
@@ -50,12 +50,12 @@ class SystemSmilies extends XoopsObject
      *
      * @return XoopsThemeForm
      */
-    function getForm($action = false)
+    public function getForm($action = false)
     {
         if ($this->isNew()) {
             $blank_img = 'blank.gif';
         } else {
-            $blank_img = str_replace( 'smilies/', '', $this->getVar('smile_url', 'e') );
+            $blank_img = str_replace('smilies/', '', $this->getVar('smile_url', 'e'));
         }
         if ($action === false) {
             $action = $_SERVER['REQUEST_URI'];
@@ -68,20 +68,20 @@ class SystemSmilies extends XoopsObject
         $form->addElement(new XoopsFormText(_AM_SYSTEM_SMILIES_CODE, 'code', 26, 25, $this->getVar('code')), true);
         $form->addElement(new XoopsFormText(_AM_SYSTEM_SMILIES_DESCRIPTION, 'emotion', 50, 50, $this->getVar('emotion')), true);
 
-        $imgtray_img = new XoopsFormElementTray( _AM_SYSTEM_SMILIES_FILE, '<br />' );
-        $imgpath_img = sprintf( _AM_SYSTEM_SMILIES_IMAGE_PATH, XOOPS_UPLOAD_PATH . '/smilies/' );
-        $imageselect_img = new XoopsFormSelect( $imgpath_img, 'smile_url', $blank_img );
-        $image_array_img = XoopsLists::getImgListAsArray( XOOPS_UPLOAD_PATH . '/smilies' );
+        $imgtray_img     = new XoopsFormElementTray(_AM_SYSTEM_SMILIES_FILE, '<br />');
+        $imgpath_img     = sprintf(_AM_SYSTEM_SMILIES_IMAGE_PATH, XOOPS_UPLOAD_PATH . '/smilies/');
+        $imageselect_img = new XoopsFormSelect($imgpath_img, 'smile_url', $blank_img);
+        $image_array_img = XoopsLists::getImgListAsArray(XOOPS_UPLOAD_PATH . '/smilies');
         $imageselect_img->addOption("$blank_img", $blank_img);
         foreach ($image_array_img as $image_img) {
             $imageselect_img->addOption("$image_img", $image_img);
         }
-        $imageselect_img->setExtra( 'onchange="showImgSelected(\'xo-smilies-img\', \'smile_url\', \'smilies\', \'\', \'' . XOOPS_UPLOAD_URL . '\' )"' );
-        $imgtray_img->addElement( $imageselect_img, false);
-        $imgtray_img->addElement( new XoopsFormLabel( '', "<br /><img src='" . XOOPS_UPLOAD_URL . "/smilies/" . $blank_img . "' name='image_img' id='xo-smilies-img' alt='' />" ) );
+        $imageselect_img->setExtra('onchange="showImgSelected(\'xo-smilies-img\', \'smile_url\', \'smilies\', \'\', \'' . XOOPS_UPLOAD_URL . '\' )"');
+        $imgtray_img->addElement($imageselect_img, false);
+        $imgtray_img->addElement(new XoopsFormLabel('', "<br /><img src='" . XOOPS_UPLOAD_URL . "/smilies/" . $blank_img . "' name='image_img' id='xo-smilies-img' alt='' />"));
 
-        $fileseltray_img = new XoopsFormElementTray('<br />','<br /><br />');
-        $fileseltray_img->addElement(new XoopsFormFile(_AM_SYSTEM_SMILIES_UPLOADS , 'smile_url', 500000),false);
+        $fileseltray_img = new XoopsFormElementTray('<br />', '<br /><br />');
+        $fileseltray_img->addElement(new XoopsFormFile(_AM_SYSTEM_SMILIES_UPLOADS, 'smile_url', 500000), false);
         $fileseltray_img->addElement(new XoopsFormLabel(''), false);
         $imgtray_img->addElement($fileseltray_img);
         $form->addElement($imgtray_img);
@@ -109,18 +109,16 @@ class SystemSmilies extends XoopsObject
  * of XOOPS block class objects.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @package     system
- * @subpackage  avatar
+ * @package             system
+ * @subpackage          avatar
  */
 class systemsmiliesHandler extends XoopsPersistableObjectHandler
 {
-
     /**
-     * @param null|object $db
+     * @param null|XoopsDatabase $db
      */
-    function __construct($db)
+    public function __construct(XoopsDatabase $db)
     {
         parent::__construct($db, 'smiles', 'SystemSmilies', 'id', 'code');
     }
-
 }

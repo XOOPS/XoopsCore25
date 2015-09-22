@@ -10,14 +10,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         core
- * @since           2.0.0
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             core
+ * @since               2.0.0
+ * @version             $Id: notifications.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 $xoopsOption['pagetype'] = 'notification';
-include __DIR__ . DIRECTORY_SEPARATOR . 'mainfile.php';
+include __DIR__ . '/mainfile.php';
 
 if (!is_object($xoopsUser)) {
     redirect_header('index.php', 3, _NOT_NOACCESS);
@@ -29,12 +29,12 @@ $uid = $xoopsUser->getVar('uid');
 $op = 'list';
 if (isset($_POST['op'])) {
     $op = trim($_POST['op']);
-} else if (isset($_GET['op'])) {
+} elseif (isset($_GET['op'])) {
     $op = trim($_GET['op']);
 }
 if (isset($_POST['delete'])) {
     $op = 'delete';
-} else if (isset($_GET['delete'])) {
+} elseif (isset($_GET['delete'])) {
     $op = 'delete';
 }
 if (isset($_POST['delete_ok'])) {
@@ -58,26 +58,26 @@ switch ($op) {
         // Get an array of all notifications for the selected user
         $criteria = new Criteria('not_uid', $uid);
         $criteria->setSort('not_modid,not_category,not_itemid');
-        $notification_handler =& xoops_gethandler('notification');
-        $notifications = $notification_handler->getObjects($criteria);
+        $notification_handler =& xoops_getHandler('notification');
+        $notifications        = $notification_handler->getObjects($criteria);
 
         // Generate the info for the template
-        $module_handler =& xoops_gethandler('module');
+        $module_handler =& xoops_getHandler('module');
         include_once $GLOBALS['xoops']->path('include/notification_functions.php');
-        $modules = array();
-        $prev_modid = - 1;
-        $prev_category = - 1;
-        $prev_item = - 1;
+        $modules       = array();
+        $prev_modid    = -1;
+        $prev_category = -1;
+        $prev_item     = -1;
         foreach ($notifications as $n) {
             $modid = $n->getVar('not_modid');
             if ($modid != $prev_modid) {
-                $prev_modid = $modid;
-                $prev_category = - 1;
-                $prev_item = - 1;
-                $module =& $module_handler->get($modid);
+                $prev_modid      = $modid;
+                $prev_category   = -1;
+                $prev_item       = -1;
+                $module          =& $module_handler->get($modid);
                 $modules[$modid] = array(
-                    'id' => $modid ,
-                    'name' => $module->getVar('name') ,
+                    'id'         => $modid,
+                    'name'       => $module->getVar('name'),
                     'categories' => array());
                 // TODO: note, we could auto-generate the url from the id
                 // and category info... (except when category has multiple
@@ -88,13 +88,13 @@ switch ($op) {
                 // topic ID doesn't give us the ID of the forum which is
                 // a required argument...
                 // Get the lookup function, if exists
-                $not_config = $module->getInfo('notification');
+                $not_config  = $module->getInfo('notification');
                 $lookup_func = '';
-                if (! empty($not_config['lookup_file'])) {
+                if (!empty($not_config['lookup_file'])) {
                     $lookup_file = $GLOBALS['xoops']->path('modules/' . $module->getVar('dirname') . '/' . $not_config['lookup_file']);
                     if (file_exists($lookup_file)) {
                         include_once $lookup_file;
-                        if (! empty($not_config['lookup_func']) && function_exists($not_config['lookup_func'])) {
+                        if (!empty($not_config['lookup_func']) && function_exists($not_config['lookup_func'])) {
                             $lookup_func = $not_config['lookup_func'];
                         }
                     }
@@ -102,40 +102,40 @@ switch ($op) {
             }
             $category = $n->getVar('not_category');
             if ($category != $prev_category) {
-                $prev_category = $category;
-                $prev_item = - 1;
-                $category_info = & notificationCategoryInfo($category, $modid);
+                $prev_category                            = $category;
+                $prev_item                                = -1;
+                $category_info                            = &notificationCategoryInfo($category, $modid);
                 $modules[$modid]['categories'][$category] = array(
-                    'name' => $category ,
-                    'title' => $category_info['title'] ,
+                    'name'  => $category,
+                    'title' => $category_info['title'],
                     'items' => array());
             }
             $item = $n->getVar('not_itemid');
             if ($item != $prev_item) {
                 $prev_item = $item;
-                if (! empty($lookup_func)) {
+                if (!empty($lookup_func)) {
                     $item_info = $lookup_func($category, $item);
                 } else {
                     $item_info = array(
-                        'name' => '[' . _NOT_NAMENOTAVAILABLE . ']' ,
-                        'url' => '');
+                        'name' => '[' . _NOT_NAMENOTAVAILABLE . ']',
+                        'url'  => '');
                 }
                 $modules[$modid]['categories'][$category]['items'][$item] = array(
-                    'id' => $item ,
-                    'name' => $item_info['name'] ,
-                    'url' => $item_info['url'] ,
+                    'id'            => $item,
+                    'name'          => $item_info['name'],
+                    'url'           => $item_info['url'],
                     'notifications' => array());
             }
-            $event_info =& notificationEventInfo($category, $n->getVar('not_event'), $n->getVar('not_modid'));
+            $event_info                                                                  =& notificationEventInfo($category, $n->getVar('not_event'), $n->getVar('not_modid'));
             $modules[$modid]['categories'][$category]['items'][$item]['notifications'][] = array(
-                'id' => $n->getVar('not_id') ,
-                'module_id' => $n->getVar('not_modid') ,
-                'category' => $n->getVar('not_category') ,
-                'category_title' => $category_info['title'] ,
-                'item_id' => $n->getVar('not_itemid') ,
-                'event' => $n->getVar('not_event') ,
-                'event_title' => $event_info['title'] ,
-                'user_id' => $n->getVar('not_uid'));
+                'id'             => $n->getVar('not_id'),
+                'module_id'      => $n->getVar('not_modid'),
+                'category'       => $n->getVar('not_category'),
+                'category_title' => $category_info['title'],
+                'item_id'        => $n->getVar('not_itemid'),
+                'event'          => $n->getVar('not_event'),
+                'event_title'    => $event_info['title'],
+                'user_id'        => $n->getVar('not_uid'));
         }
         $xoopsOption['template_main'] = 'system_notification_list.html';
         include $GLOBALS['xoops']->path('header.php');
@@ -175,9 +175,9 @@ switch ($op) {
         }
         include $GLOBALS['xoops']->path('header.php');
         $hidden_vars = array(
-            'uid' => $uid ,
-            'delete_ok' => 1 ,
-            'del_not' => $_POST['del_not']);
+            'uid'       => $uid,
+            'delete_ok' => 1,
+            'del_not'   => $_POST['del_not']);
         echo '<h4>' . _NOT_DELETINGNOTIFICATIONS . '</h4>';
         xoops_confirm($hidden_vars, xoops_getenv('PHP_SELF'), _NOT_RUSUREDEL);
         include $GLOBALS['xoops']->path('footer.php');
@@ -193,7 +193,7 @@ switch ($op) {
         if (empty($_POST['del_not'])) {
             redirect_header('notifications.php', 2, _NOT_NOTHINGTODELETE);
         }
-        $notification_handler =& xoops_gethandler('notification');
+        $notification_handler =& xoops_getHandler('notification');
         foreach ($_POST['del_not'] as $n_array) {
             foreach ($n_array as $n) {
                 $notification =& $notification_handler->get($n);

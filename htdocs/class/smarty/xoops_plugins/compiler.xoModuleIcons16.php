@@ -12,27 +12,31 @@
  * xoModuleIcons16 Smarty compiler plug-in
  *
  * @copyright    (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author		Andricq Nicolas (AKA MusS)
- * @since       2.5.2
- * @version		$Id$
+ * @license          http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @author           Andricq Nicolas (AKA MusS)
+ * @since            2.5.2
+ * @version          $Id: compiler.xoModuleIcons16.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @param $argStr
+ * @param $smarty
+ * @return string
  */
 
 function smarty_compiler_xoModuleIcons16($argStr, &$smarty)
 {
     global $xoops, $xoTheme;
 
-//    $icons = xoops_getModuleOption('typeicons', 'system');
-//    if ( $icons == '' ) $icons = 'default';
+    //    $icons = xoops_getModuleOption('typeicons', 'system');
+    //    if ( $icons == '' ) $icons = 'default';
 
-if ( file_exists( $xoops->path('Frameworks/moduleclasses/icons/16/index.html'))) {
-        $url = $xoops->url( 'Frameworks/moduleclasses/icons/16/' . $argStr );
+    if (file_exists($xoops->path('Frameworks/moduleclasses/icons/16/index.html'))) {
+        $url = $xoops->url('Frameworks/moduleclasses/icons/16/' . $argStr);
     } else {
-        if ( file_exists( $xoops->path('modules/system/images/icons/default/' . $argStr ))) {
-            $url = $xoops->url( 'modules/system/images/icons/default/' . $argStr );
+        if (file_exists($xoops->path('modules/system/images/icons/default/' . $argStr))) {
+            $url = $xoops->url('modules/system/images/icons/default/' . $argStr);
         } else {
-            $url = $xoops->url( 'modules/system/images/icons/default/xoops/xoops.png' );
+            $url = $xoops->url('modules/system/images/icons/default/xoops/xoops.png');
         }
     }
-    return "\necho '" . addslashes( $url ) . "';";
+
+    return "\necho '" . addslashes($url) . "';";
 }

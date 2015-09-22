@@ -10,15 +10,15 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @since           2.0
- * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @author          Skalpa Keo <skalpa@xoops.org>
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @since               2.0
+ * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @author              Skalpa Keo <skalpa@xoops.org>
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: formcheckbox.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 xoops_load('XoopsFormElement');
 
@@ -33,7 +33,7 @@ class XoopsFormCheckBox extends XoopsFormElement
      * @var array
      * @access private
      */
-    var $_options = array();
+    public $_options = array();
 
     /**
      * pre-selected values in array
@@ -41,7 +41,7 @@ class XoopsFormCheckBox extends XoopsFormElement
      * @var array
      * @access private
      */
-    var $_value = array();
+    public $_value = array();
 
     /**
      * HTML to seperate the elements
@@ -49,7 +49,7 @@ class XoopsFormCheckBox extends XoopsFormElement
      * @var string
      * @access private
      */
-    var $_delimeter;
+    public $_delimeter;
 
     /**
      * Column number for rendering
@@ -57,17 +57,17 @@ class XoopsFormCheckBox extends XoopsFormElement
      * @var int
      * @access public
      */
-    var $columns;
+    public $columns;
 
     /**
      * Constructor
      *
      * @param string $caption
      * @param string $name
-     * @param mixed  $value     Either one value as a string or an array of them.
+     * @param mixed  $value Either one value as a string or an array of them.
      * @param string $delimeter
      */
-    function XoopsFormCheckBox($caption, $name, $value = null, $delimeter = '&nbsp;')
+    public function __construct($caption, $name, $value = null, $delimeter = '&nbsp;')
     {
         $this->setCaption($caption);
         $this->setName($name);
@@ -79,14 +79,25 @@ class XoopsFormCheckBox extends XoopsFormElement
     }
 
     /**
+     * @param        $caption
+     * @param        $name
+     * @param null   $value
+     * @param string $delimeter
+     */
+    public function XoopsFormCheckBox($caption, $name, $value = null, $delimeter = '&nbsp;')
+    {
+        $this->__construct($caption, $name, $value, $delimeter);
+    }
+
+    /**
      * Get the "value"
      *
-     * @param  bool  $encode To sanitizer the text?
+     * @param  bool $encode To sanitizer the text?
      * @return array
      */
-    function getValue($encode = false)
+    public function getValue($encode = false)
     {
-        if (! $encode) {
+        if (!$encode) {
             return $this->_value;
         }
         $value = array();
@@ -103,7 +114,7 @@ class XoopsFormCheckBox extends XoopsFormElement
      * @param array $value
      *
      */
-    function setValue($value)
+    public function setValue($value)
     {
         $this->_value = array();
         if (is_array($value)) {
@@ -121,7 +132,7 @@ class XoopsFormCheckBox extends XoopsFormElement
      * @param string $value
      * @param string $name
      */
-    function addOption($value, $name = '')
+    public function addOption($value, $name = '')
     {
         if ($name != '') {
             $this->_options[$value] = $name;
@@ -135,7 +146,7 @@ class XoopsFormCheckBox extends XoopsFormElement
      *
      * @param array $options Associative array of value->name pairs
      */
-    function addOptionArray($options)
+    public function addOptionArray($options)
     {
         if (is_array($options)) {
             foreach ($options as $k => $v) {
@@ -150,9 +161,9 @@ class XoopsFormCheckBox extends XoopsFormElement
      * @param  bool|int $encode To sanitizer the text? potential values: 0 - skip; 1 - only for value; 2 - for both value and name
      * @return array    Associative array of value->name pairs
      */
-    function getOptions($encode = false)
+    public function getOptions($encode = false)
     {
-        if (! $encode) {
+        if (!$encode) {
             return $this->_options;
         }
         $value = array();
@@ -166,10 +177,10 @@ class XoopsFormCheckBox extends XoopsFormElement
     /**
      * Get the delimiter of this group
      *
-     * @param  bool   $encode To sanitizer the text?
+     * @param  bool $encode To sanitizer the text?
      * @return string The delimiter
      */
-    function getDelimeter($encode = false)
+    public function getDelimeter($encode = false)
     {
         return $encode ? htmlspecialchars(str_replace('&nbsp;', ' ', $this->_delimeter)) : $this->_delimeter;
     }
@@ -179,29 +190,29 @@ class XoopsFormCheckBox extends XoopsFormElement
      *
      * @return string
      */
-    function render()
+    public function render()
     {
-        $ele_name = $this->getName();
-        $ele_title = $this->getTitle();
-        $ele_id = $ele_name;
-        $ele_value = $this->getValue();
-        $ele_options = $this->getOptions();
-        $ele_extra = $this->getExtra();
+        $ele_name      = $this->getName();
+        $ele_title     = $this->getTitle();
+        $ele_id        = $ele_name;
+        $ele_value     = $this->getValue();
+        $ele_options   = $this->getOptions();
+        $ele_extra     = $this->getExtra();
         $ele_delimeter = empty($this->columns) ? $this->getDelimeter() : '';
 
-        if (count($ele_options) > 1 && substr($ele_name, - 2, 2) != '[]') {
-            $ele_name = $ele_name . '[]';
+        if (count($ele_options) > 1 && substr($ele_name, -2, 2) !== '[]') {
+            $ele_name .= '[]';
             $this->setName($ele_name);
         }
         $ret = '';
-        if (! empty($this->columns)) {
+        if (!empty($this->columns)) {
             $ret .= '<table><tr>';
         }
-        $i = 0;
+        $i      = 0;
         $id_ele = 0;
         foreach ($ele_options as $value => $name) {
             ++$id_ele;
-            if (! empty($this->columns)) {
+            if (!empty($this->columns)) {
                 if ($i % $this->columns == 0) {
                     $ret .= '<tr>';
                 }
@@ -212,15 +223,15 @@ class XoopsFormCheckBox extends XoopsFormElement
             if (count($ele_value) > 0 && in_array($value, $ele_value)) {
                 $ret .= ' checked="checked"';
             }
-            $ret .= $ele_extra . ' />'."<label name='xolb_{$ele_name}' for='{$ele_id}{$id_ele}'>" . $name . "</label>" . $ele_delimeter ;
-            if (! empty($this->columns)) {
+            $ret .= $ele_extra . ' />' . "<label name='xolb_{$ele_name}' for='{$ele_id}{$id_ele}'>" . $name . "</label>" . $ele_delimeter;
+            if (!empty($this->columns)) {
                 $ret .= '</td>';
-                if (++ $i % $this->columns == 0) {
+                if (++$i % $this->columns == 0) {
                     $ret .= '</tr>';
                 }
             }
         }
-        if (! empty($this->columns)) {
+        if (!empty($this->columns)) {
             if ($span = $i % $this->columns) {
                 $ret .= '<td colspan="' . ($this->columns - $span) . '"></td></tr>';
             }
@@ -235,17 +246,17 @@ class XoopsFormCheckBox extends XoopsFormElement
      *
      * @seealso XoopsForm::renderValidationJS
      */
-    function renderValidationJS()
+    public function renderValidationJS()
     {
         // render custom validation code if any
-        if (! empty($this->customValidationCode)) {
+        if (!empty($this->customValidationCode)) {
             return implode(NWLINE, $this->customValidationCode);
             // generate validation code if required
         } elseif ($this->isRequired()) {
-            $eltname = $this->getName();
+            $eltname    = $this->getName();
             $eltcaption = $this->getCaption();
-            $eltmsg = empty($eltcaption) ? sprintf(_FORM_ENTER, $eltname) : sprintf(_FORM_ENTER, $eltcaption);
-            $eltmsg = str_replace('"', '\"', stripslashes($eltmsg));
+            $eltmsg     = empty($eltcaption) ? sprintf(_FORM_ENTER, $eltname) : sprintf(_FORM_ENTER, $eltcaption);
+            $eltmsg     = str_replace('"', '\"', stripslashes($eltmsg));
 
             return NWLINE . "var hasChecked = false; var checkBox = myform.elements['{$eltname}']; if (checkBox.length) {for (var i = 0; i < checkBox.length; i++) {if (checkBox[i].checked == true) {hasChecked = true; break;}}} else {if (checkBox.checked == true) {hasChecked = true;}}if (!hasChecked) {window.alert(\"{$eltmsg}\");if (checkBox.length) {checkBox[0].focus();} else {checkBox.focus();}return false;}";
         }

@@ -9,22 +9,24 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 /**
-* Installer data generation file
-*
-* See the enclosed file license.txt for licensing information.
-* If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
-*
-* @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
-* @license http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
-* @package installer
-* @since 2.3.0
-* @author Haruki Setoyama <haruki@planewave.org>
-* @author Kazumi Ono <webmaster@myweb.ne.jp>
-* @author Skalpa Keo <skalpa@xoops.org>
-* @author Taiwen Jiang <phppp@users.sourceforge.net>
-* @author DuGris (aka L. JEN) <dugris@frxoops.org>
-* @version $Id$
-*/
+ * Installer data generation file
+ *
+ * See the enclosed file license.txt for licensing information.
+ * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
+ *
+ * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @license             http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @package             installer
+ * @since               2.3.0
+ * @author              Haruki Setoyama <haruki@planewave.org>
+ * @author              Kazumi Ono <webmaster@myweb.ne.jp>
+ * @author              Skalpa Keo <skalpa@xoops.org>
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @author              DuGris (aka L. JEN) <dugris@frxoops.org>
+ * @version             $Id: makedata.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @param $dbm
+ * @return bool
+ */
 // include_once './class/dbmanager.php';
 // RMV
 // TODO: Shouldn't we insert specific field names??  That way we can use
@@ -32,8 +34,8 @@
 // of missing fields in install file, when add new fields to database)
 function make_groups(&$dbm)
 {
-    $gruops['XOOPS_GROUP_ADMIN'] = $dbm->insert('groups', " VALUES (1, '" . addslashes(_INSTALL_WEBMASTER) . "', '" . addslashes(_INSTALL_WEBMASTERD) . "', 'Admin')");
-    $gruops['XOOPS_GROUP_USERS'] = $dbm->insert('groups', " VALUES (2, '" . addslashes(_INSTALL_REGUSERS) . "', '" . addslashes(_INSTALL_REGUSERSD) . "', 'User')" );
+    $gruops['XOOPS_GROUP_ADMIN']     = $dbm->insert('groups', " VALUES (1, '" . addslashes(_INSTALL_WEBMASTER) . "', '" . addslashes(_INSTALL_WEBMASTERD) . "', 'Admin')");
+    $gruops['XOOPS_GROUP_USERS']     = $dbm->insert('groups', " VALUES (2, '" . addslashes(_INSTALL_REGUSERS) . "', '" . addslashes(_INSTALL_REGUSERSD) . "', 'User')");
     $gruops['XOOPS_GROUP_ANONYMOUS'] = $dbm->insert('groups', " VALUES (3, '" . addslashes(_INSTALL_ANONUSERS) . "', '" . addslashes(_INSTALL_ANONUSERSD) . "', 'Anonymous')");
     if (!$gruops['XOOPS_GROUP_ADMIN'] || !$gruops['XOOPS_GROUP_USERS'] || !$gruops['XOOPS_GROUP_ANONYMOUS']) {
         return false;
@@ -92,7 +94,7 @@ function make_data(&$dbm, $adminname, $adminpass, $adminmail, $language, $gruops
     $dbm->insert('tplset', " VALUES (1, 'default', 'XOOPS Default Template Set', '', " . $time . ")");
     // system modules
     if (file_exists('../modules/system/language/' . $language . '/modinfo.php')) {
-        include '../modules/system/language/'. $language . '/modinfo.php';
+        include '../modules/system/language/' . $language . '/modinfo.php';
     } else {
         include '../modules/system/language/english/modinfo.php';
         $language = 'english';
@@ -125,14 +127,13 @@ function make_data(&$dbm, $adminname, $adminpass, $adminmail, $language, $gruops
 
     foreach ($modversion['blocks'] as $func_num => $newblock) {
         if ($fp = fopen('../modules/system/templates/blocks/' . $newblock['template'], 'r')) {
+            $visible = 0;
             if (in_array($newblock['template'], array('system_block_user.html', 'system_block_login.html', 'system_block_mainmenu.html'))) {
                 $visible = 1;
-            } else {
-                $visible = 0;
             }
-            $options = !isset($newblock['options']) ? '' : trim($newblock['options']);
+            $options   = !isset($newblock['options']) ? '' : trim($newblock['options']);
             $edit_func = !isset($newblock['edit_func']) ? '' : trim($newblock['edit_func']);
-            $newbid = $dbm->insert('newblocks', " VALUES (0, 1, " . $func_num . ", '" . addslashes($options) . "', '" . addslashes($newblock['name']) . "', '" . addslashes($newblock['name']) . "', '', 0, 0, " . $visible . ", 'S', 'H', 1, 'system', '" . addslashes($newblock['file']) . "', '" . addslashes($newblock['show_func']) . "', '" . addslashes($edit_func) . "', '" . addslashes($newblock['template']) . "', 0, " . $time . ")");
+            $newbid    = $dbm->insert('newblocks', " VALUES (0, 1, " . $func_num . ", '" . addslashes($options) . "', '" . addslashes($newblock['name']) . "', '" . addslashes($newblock['name']) . "', '', 0, 0, " . $visible . ", 'S', 'H', 1, 'system', '" . addslashes($newblock['file']) . "', '" . addslashes($newblock['show_func']) . "', '" . addslashes($edit_func) . "', '" . addslashes($newblock['template']) . "', 0, " . $time . ")");
             // $newbid = $xoopsDB->getInsertId();
             $newtplid = $dbm->insert('tplfile', " VALUES (0, " . $newbid . ", 'system', 'default', '" . addslashes($newblock['template']) . "', '" . addslashes($newblock['description']) . "', " . $time . ", " . $time . ", 'block')");
             // $newtplid = $xoopsDB->getInsertId();
@@ -146,13 +147,13 @@ function make_data(&$dbm, $adminname, $adminpass, $adminmail, $language, $gruops
         }
     }
     // data for table 'users'
-    $temp = md5($adminpass);
+    $temp    = md5($adminpass);
     $regdate = time();
     // $dbadminname= addslashes($adminname);
     // RMV-NOTIFY (updated for extra columns in user table)
     $dbm->insert('users', " VALUES (1,'','" . addslashes($adminname) . "','" . addslashes($adminmail) . "','" . XOOPS_URL . "/','avatars/blank.gif','" . $regdate . "','','','',1,'','','','','" . $temp . "',0,0,7,5,'default','0.0'," . time() . ",'flat',0,1,0,'','','',0)");
     // data for table 'block_module_link'
-    $sql = 'SELECT bid, side FROM ' . $dbm->prefix('newblocks');
+    $sql    = 'SELECT bid, side FROM ' . $dbm->prefix('newblocks');
     $result = $dbm->query($sql);
 
     while ($myrow = $dbm->fetchArray($result)) {
@@ -303,33 +304,33 @@ function make_data(&$dbm, $adminname, $adminpass, $adminmail, $language, $gruops
     $dbm->insert('config', " VALUES (134, 0, 1, 'redirect_message_ajax', '_MD_AM_CUSTOM_REDIRECT', '1', '_MD_AM_CUSTOM_REDIRECT_DESC', 'yesno', 'int', 12)");
 
     require_once '../class/xoopslists.php';
-    $editors = XoopsLists::getDirListAsArray( '../class/xoopseditor' );
-    $conf=35;
+    $editors = XoopsLists::getDirListAsArray('../class/xoopseditor');
+    $conf    = 35;
     foreach ($editors as $dir) {
-        $dbm->insert('configoption', " VALUES (".$conf.", '".$dir."', '".$dir."', 126)");
+        $dbm->insert('configoption', " VALUES (" . $conf . ", '" . $dir . "', '" . $dir . "', 126)");
         ++$conf;
     }
     foreach ($editors as $dir) {
-        $dbm->insert('configoption', " VALUES (".$conf.", '".$dir."', '".$dir."', 127)");
+        $dbm->insert('configoption', " VALUES (" . $conf . ", '" . $dir . "', '" . $dir . "', 127)");
         ++$conf;
     }
     foreach ($editors as $dir) {
-        $dbm->insert('configoption', " VALUES (".$conf.", '".$dir."', '".$dir."', 128)");
+        $dbm->insert('configoption', " VALUES (" . $conf . ", '" . $dir . "', '" . $dir . "', 128)");
         ++$conf;
     }
     $icons = XoopsLists::getDirListAsArray('../modules/system/images/icons');
     foreach ($icons as $dir) {
-        $dbm->insert('configoption', " VALUES (".$conf.", '".$dir."', '".$dir."', 98)");
+        $dbm->insert('configoption', " VALUES (" . $conf . ", '" . $dir . "', '" . $dir . "', 98)");
         ++$conf;
     }
     $breadcrumb = XoopsLists::getDirListAsArray('../modules/system/images/breadcrumb');
     foreach ($breadcrumb as $dir) {
-        $dbm->insert('configoption', " VALUES (".$conf.", '".$dir."', '".$dir."', 99)");
+        $dbm->insert('configoption', " VALUES (" . $conf . ", '" . $dir . "', '" . $dir . "', 99)");
         ++$conf;
     }
     $jqueryui = XoopsLists::getDirListAsArray('../modules/system/css/ui');
     foreach ($jqueryui as $dir) {
-        $dbm->insert('configoption', " VALUES (".$conf.", '".$dir."', '".$dir."', 133)");
+        $dbm->insert('configoption', " VALUES (" . $conf . ", '" . $dir . "', '" . $dir . "', 133)");
         ++$conf;
     }
 

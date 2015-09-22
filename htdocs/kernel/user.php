@@ -10,20 +10,20 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @since           2.0.0
- * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @since               2.0.0
+ * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @version             $Id: user.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Class for users
- * @author Kazumi Ono <onokazu@xoops.org>
+ * @author              Kazumi Ono <onokazu@xoops.org>
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @package kernel
+ * @package             kernel
  */
 class XoopsUser extends XoopsObject
 {
@@ -32,29 +32,28 @@ class XoopsUser extends XoopsObject
      * @var array
      * @access private
      */
-    var $_groups = array();
+    public $_groups = array();
     /**
      * @var bool is the user admin?
      * @access private
      */
-    var $_isAdmin = null;
+    public $_isAdmin;
     /**
      * @var string user's rank
      * @access private
      */
-    var $_rank = null;
+    public $_rank;
     /**
      * @var bool is the user online?
      * @access private
      */
-    var $_isOnline = null;
+    public $_isOnline;
 
     /**
      * constructor
-     * @param array $id Array of key-value-pairs to be assigned to the user. (for backward compatibility only)
-     * @param int   $id ID of the user to be loaded from the database.
+     * @param array|null $id ID of the user to be loaded from the database.
      */
-    function XoopsUser($id = null)
+    public function __construct($id = null)
     {
         $this->initVar('uid', XOBJ_DTYPE_INT, null, false);
         $this->initVar('name', XOBJ_DTYPE_TXTBOX, null, false, 60);
@@ -93,8 +92,8 @@ class XoopsUser extends XoopsObject
             if (is_array($id)) {
                 $this->assignVars($id);
             } else {
-                $member_handler = & xoops_gethandler('member');
-                $user =& $member_handler->getUser($id);
+                $member_handler =& xoops_getHandler('member');
+                $user           =& $member_handler->getUser($id);
                 foreach ($user->vars as $k => $v) {
                     $this->assignVar($k, $v['value']);
                 }
@@ -103,12 +102,20 @@ class XoopsUser extends XoopsObject
     }
 
     /**
+     * @param null $id
+     */
+    public function XoopsUser($id = null)
+    {
+        $this->__construct($id);
+    }
+
+    /**
      * check if the user is a guest user
      *
      * @return bool returns false
      *
      */
-    function isGuest()
+    public function isGuest()
     {
         return false;
     }
@@ -117,17 +124,17 @@ class XoopsUser extends XoopsObject
      * Updated by Catzwolf 11 Jan 2004
      * find the username for a given ID
      *
-     * @param  int    $userid  ID of the user to find
-     * @param  int    $usereal switch for usename or realname
+     * @param  int $userid  ID of the user to find
+     * @param  int $usereal switch for usename or realname
      * @return string name of the user. name for 'anonymous' if not found.
      */
-    static function getUnameFromId($userid, $usereal = 0)
+    public static function getUnameFromId($userid, $usereal = 0)
     {
-        $userid = (int)($userid);
+        $userid  = (int)($userid);
         $usereal = (int)($usereal);
         if ($userid > 0) {
-            $member_handler = & xoops_gethandler('member');
-            $user =& $member_handler->getUser($userid);
+            $member_handler = &xoops_getHandler('member');
+            $user           =& $member_handler->getUser($userid);
             if (is_object($user)) {
                 $ts =& MyTextSanitizer::getInstance();
                 if ($usereal) {
@@ -151,9 +158,9 @@ class XoopsUser extends XoopsObject
      *
      * @deprecated
      */
-    function incrementPost()
+    public function incrementPost()
     {
-        $member_handler =& xoops_gethandler('member');
+        $member_handler =& xoops_getHandler('member');
 
         return $member_handler->updateUserByField($this, 'posts', $this->getVar('posts') + 1);
     }
@@ -163,7 +170,7 @@ class XoopsUser extends XoopsObject
      *
      * @param array $groupsArr Array of groups that user belongs to
      */
-    function setGroups($groupsArr)
+    public function setGroups($groupsArr)
     {
         if (is_array($groupsArr)) {
             $this->_groups =& $groupsArr;
@@ -175,11 +182,11 @@ class XoopsUser extends XoopsObject
      *
      * @return array array of groups
      */
-    function &getGroups()
+    public function &getGroups()
     {
         if (empty($this->_groups)) {
-            $member_handler =& xoops_gethandler('member');
-            $this->_groups = $member_handler->getGroupsByUser($this->getVar('uid'));
+            $member_handler =& xoops_getHandler('member');
+            $this->_groups  = $member_handler->getGroupsByUser($this->getVar('uid'));
         }
 
         return $this->_groups;
@@ -191,7 +198,7 @@ class XoopsUser extends XoopsObject
      * @return array array of groups
      * @deprecated
      */
-    function &groups()
+    public function &groups()
     {
         $groups = $this->getGroups();
 
@@ -205,17 +212,17 @@ class XoopsUser extends XoopsObject
      * - If you don't specify any module ID, the current module will be checked.<br />
      * - If you set the module_id to -1, it will return true if the user has admin rights for at least one module
      *
-     * @param  int  $module_id check if user is admin of this module
+     * @param  int $module_id check if user is admin of this module
      * @return bool is the user admin of that module?
      */
-    function isAdmin($module_id = null)
+    public function isAdmin($module_id = null)
     {
-        if (is_null($module_id)) {
+        if (null === ($module_id)) {
             $module_id = isset($GLOBALS['xoopsModule']) ? $GLOBALS['xoopsModule']->getVar('mid', 'n') : 1;
         } elseif ((int)($module_id) < 1) {
             $module_id = 0;
         }
-        $moduleperm_handler =& xoops_gethandler('groupperm');
+        $moduleperm_handler =& xoops_getHandler('groupperm');
 
         return $moduleperm_handler->checkRight('module_admin', $module_id, $this->getGroups());
     }
@@ -224,7 +231,7 @@ class XoopsUser extends XoopsObject
      * get the user's rank
      * @return array array of rank ID and title
      */
-    function rank()
+    public function rank()
     {
         if (!isset($this->_rank)) {
             $this->_rank = xoops_getrank($this->getVar('rank'), $this->getVar('posts'));
@@ -237,7 +244,7 @@ class XoopsUser extends XoopsObject
      * is the user activated?
      * @return bool
      */
-    function isActive()
+    public function isActive()
     {
         if ($this->getVar('level') == 0) {
             return false;
@@ -250,11 +257,11 @@ class XoopsUser extends XoopsObject
      * is the user currently logged in?
      * @return bool
      */
-    function isOnline()
+    public function isOnline()
     {
         if (!isset($this->_isOnline)) {
-            $onlinehandler =& xoops_gethandler('online');
-            $this->_isOnline = ($onlinehandler->getCount(new Criteria('online_uid', $this->getVar('uid'))) > 0) ? true : false;
+            $onlinehandler   =& xoops_getHandler('online');
+            $this->_isOnline = ($onlinehandler->getCount(new Criteria('online_uid', $this->getVar('uid'))) > 0);// ? true : false;
         }
 
         return $this->_isOnline;
@@ -265,7 +272,7 @@ class XoopsUser extends XoopsObject
      * @param  string $format
      * @return int
      */
-    function uid($format = '')
+    public function uid($format = '')
     {
         return $this->getVar('uid', $format);
     }
@@ -275,7 +282,7 @@ class XoopsUser extends XoopsObject
      * @param  string $format
      * @return int
      */
-    function id($format = 'N')
+    public function id($format = 'N')
     {
         return $this->getVar('uid', $format);
     }
@@ -285,7 +292,7 @@ class XoopsUser extends XoopsObject
      * @param  string $format format for the output, see {@link XoopsObject::getVar($format = '')}
      * @return string
      */
-    function name($format = 'S')
+    public function name($format = 'S')
     {
         return $this->getVar('name', $format);
     }
@@ -295,7 +302,7 @@ class XoopsUser extends XoopsObject
      * @param  string $format format for the output, see {@link XoopsObject::getVar($format = '')}
      * @return string
      */
-    function uname($format = 'S')
+    public function uname($format = 'S')
     {
         return $this->getVar('uname', $format);
     }
@@ -306,7 +313,7 @@ class XoopsUser extends XoopsObject
      * @param  string $format format for the output, see {@link XoopsObject::getVar($format = '')}
      * @return string
      */
-    function email($format = 'S')
+    public function email($format = 'S')
     {
         return $this->getVar('email', $format);
     }
@@ -316,7 +323,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    function url($format = 'S')
+    public function url($format = 'S')
     {
         return $this->getVar('url', $format);
     }
@@ -326,7 +333,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    function user_avatar($format = 'S')
+    public function user_avatar($format = 'S')
     {
         return $this->getVar('user_avatar', $format);
     }
@@ -336,7 +343,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    function user_regdate($format = '')
+    public function user_regdate($format = '')
     {
         return $this->getVar('user_regdate', $format);
     }
@@ -346,7 +353,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    function user_icq($format = 'S')
+    public function user_icq($format = 'S')
     {
         return $this->getVar('user_icq', $format);
     }
@@ -356,7 +363,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    function user_from($format = 'S')
+    public function user_from($format = 'S')
     {
         return $this->getVar('user_from', $format);
     }
@@ -366,7 +373,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    function user_sig($format = 'S')
+    public function user_sig($format = 'S')
     {
         return $this->getVar('user_sig', $format);
     }
@@ -376,7 +383,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    function user_viewemail($format = '')
+    public function user_viewemail($format = '')
     {
         return $this->getVar('user_viewemail', $format);
     }
@@ -386,7 +393,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    function actkey($format = '')
+    public function actkey($format = '')
     {
         return $this->getVar('actkey', $format);
     }
@@ -396,7 +403,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    function user_aim($format = 'S')
+    public function user_aim($format = 'S')
     {
         return $this->getVar('user_aim', $format);
     }
@@ -406,7 +413,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    function user_yim($format = 'S')
+    public function user_yim($format = 'S')
     {
         return $this->getVar('user_yim', $format);
     }
@@ -416,7 +423,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    function user_msnm($format = 'S')
+    public function user_msnm($format = 'S')
     {
         return $this->getVar('user_msnm', $format);
     }
@@ -426,7 +433,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    function pass($format = '')
+    public function pass($format = '')
     {
         return $this->getVar('pass', $format);
     }
@@ -436,7 +443,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    function posts($format = '')
+    public function posts($format = '')
     {
         return $this->getVar('posts', $format);
     }
@@ -446,7 +453,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    function attachsig($format = '')
+    public function attachsig($format = '')
     {
         return $this->getVar('attachsig', $format);
     }
@@ -456,7 +463,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    function level($format = '')
+    public function level($format = '')
     {
         return $this->getVar('level', $format);
     }
@@ -466,7 +473,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    function theme($format = '')
+    public function theme($format = '')
     {
         return $this->getVar('theme', $format);
     }
@@ -476,7 +483,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    function timezone($format = '')
+    public function timezone($format = '')
     {
         return $this->getVar('timezone_offset', $format);
     }
@@ -486,7 +493,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    function umode($format = '')
+    public function umode($format = '')
     {
         return $this->getVar('umode', $format);
     }
@@ -496,7 +503,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    function uorder($format = '')
+    public function uorder($format = '')
     {
         return $this->getVar('uorder', $format);
     }
@@ -507,7 +514,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    function notify_method($format = '')
+    public function notify_method($format = '')
     {
         return $this->getVar('notify_method', $format);
     }
@@ -517,7 +524,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    function notify_mode($format = '')
+    public function notify_mode($format = '')
     {
         return $this->getVar('notify_mode', $format);
     }
@@ -527,7 +534,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    function user_occ($format = 'S')
+    public function user_occ($format = 'S')
     {
         return $this->getVar('user_occ', $format);
     }
@@ -537,7 +544,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    function bio($format = 'S')
+    public function bio($format = 'S')
     {
         return $this->getVar('bio', $format);
     }
@@ -547,7 +554,7 @@ class XoopsUser extends XoopsObject
      *
      * @return mixed
      */
-    function user_intrest($format = 'S')
+    public function user_intrest($format = 'S')
     {
         return $this->getVar('user_intrest', $format);
     }
@@ -556,7 +563,7 @@ class XoopsUser extends XoopsObject
     /**#@+
      * @deprecated
      */
-    function getProfile()
+    public function getProfile()
     {
         trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 
@@ -567,9 +574,9 @@ class XoopsUser extends XoopsObject
 
 /**
  * Class that represents a guest user
- * @author Kazumi Ono <onokazu@xoops.org>
+ * @author              Kazumi Ono <onokazu@xoops.org>
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @package kernel
+ * @package             kernel
  */
 class XoopsGuestUser extends XoopsUser
 {
@@ -579,7 +586,7 @@ class XoopsGuestUser extends XoopsUser
      * @return bool returns true
      *
      */
-    function isGuest()
+    public function isGuest()
     {
         return true;
     }
@@ -597,17 +604,22 @@ class XoopsGuestUser extends XoopsUser
 class XoopsUserHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * @param null|object $db
+     * @param XoopsDatabase|null| $db
      */
-    function __construct(&$db)
+    public function __construct(XoopsDatabase $db)
     {
         parent::__construct($db, 'users', 'XoopsUser', 'uid', 'uname');
     }
 
     /**#@+
      * @deprecated
+     * @param bool $uname
+     * @param      $pwd
+     * @param bool $md5
+     * @return bool|object
      */
-    function &loginUser($uname, $pwd, $md5 = false) {
+    public function &loginUser($uname, $pwd, $md5 = false)
+    {
         trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 
         return false;
@@ -620,7 +632,7 @@ class XoopsUserHandler extends XoopsPersistableObjectHandler
      *
      * @return bool
      */
-    function updateUserByField($fieldName, $fieldValue, $uid)
+    public function updateUserByField($fieldName, $fieldValue, $uid)
     {
         trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 

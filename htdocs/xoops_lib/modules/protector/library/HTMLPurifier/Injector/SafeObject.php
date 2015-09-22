@@ -32,23 +32,22 @@ class HTMLPurifier_Injector_SafeObject extends HTMLPurifier_Injector
      */
     protected $addParam = array(
         'allowScriptAccess' => 'never',
-        'allowNetworking' => 'internal',
-    );
+        'allowNetworking'   => 'internal',);
 
     /**
      * @type array
      */
     protected $allowedParam = array(
-        'wmode' => true,
-        'movie' => true,
-        'flashvars' => true,
-        'src' => true,
+        'wmode'           => true,
+        'movie'           => true,
+        'flashvars'       => true,
+        'src'             => true,
         'allowFullScreen' => true, // if omitted, assume to be 'false'
     );
 
     /**
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
+     * @param  HTMLPurifier_Config  $config
+     * @param  HTMLPurifier_Context $context
      * @return void
      */
     public function prepare($config, $context)
@@ -63,8 +62,8 @@ class HTMLPurifier_Injector_SafeObject extends HTMLPurifier_Injector
     {
         if ($token->name == 'object') {
             $this->objectStack[] = $token;
-            $this->paramStack[] = array();
-            $new = array($token);
+            $this->paramStack[]  = array();
+            $new                 = array($token);
             foreach ($this->addParam as $name => $value) {
                 $new[] = new HTMLPurifier_Token_Empty('param', array('name' => $name, 'value' => $value));
             }
@@ -75,22 +74,19 @@ class HTMLPurifier_Injector_SafeObject extends HTMLPurifier_Injector
                 $i = count($this->objectStack) - 1;
                 if (!isset($token->attr['name'])) {
                     $token = false;
+
                     return;
                 }
                 $n = $token->attr['name'];
                 // We need this fix because YouTube doesn't supply a data
                 // attribute, which we need if a type is specified. This is
                 // *very* Flash specific.
-                if (!isset($this->objectStack[$i]->attr['data']) &&
-                    ($token->attr['name'] == 'movie' || $token->attr['name'] == 'src')
-                ) {
+                if (!isset($this->objectStack[$i]->attr['data']) && ($token->attr['name'] == 'movie' || $token->attr['name'] == 'src')) {
                     $this->objectStack[$i]->attr['data'] = $token->attr['value'];
                 }
                 // Check if the parameter is the correct value but has not
                 // already been added
-                if (!isset($this->paramStack[$i][$n]) &&
-                    isset($this->addParam[$n]) &&
-                    $token->attr['name'] === $this->addParam[$n]) {
+                if (!isset($this->paramStack[$i][$n]) && isset($this->addParam[$n]) && $token->attr['name'] === $this->addParam[$n]) {
                     // keep token, and add to param stack
                     $this->paramStack[$i][$n] = true;
                 } elseif (isset($this->allowedParam[$n])) {
@@ -119,3 +115,4 @@ class HTMLPurifier_Injector_SafeObject extends HTMLPurifier_Injector
 }
 
 // vim: et sw=4 sts=4
+

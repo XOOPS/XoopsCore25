@@ -4,27 +4,29 @@
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
  * @copyright    (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
- * @package     installer
- * @since       2.3.0
- * @author      Haruki Setoyama  <haruki@planewave.org>
- * @author      Kazumi Ono <webmaster@myweb.ne.jp>
- * @author      Skalpa Keo <skalpa@xoops.org>
- * @author      Taiwen Jiang <phppp@users.sourceforge.net>
- * @author      DuGris (aka L. JEN) <dugris@frxoops.org>
- * @version     $Id$
+ * @license          http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @package          installer
+ * @since            2.3.0
+ * @author           Haruki Setoyama  <haruki@planewave.org>
+ * @author           Kazumi Ono <webmaster@myweb.ne.jp>
+ * @author           Skalpa Keo <skalpa@xoops.org>
+ * @author           Taiwen Jiang <phppp@users.sourceforge.net>
+ * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
+ * @version          $Id: functions.php 13090 2015-06-16 20:44:29Z beckmi $
+ * @param string $hash
+ * @return bool
  */
 
 function install_acceptUser($hash = '')
 {
     $GLOBALS['xoopsUser'] = null;
-    $hash_data = @explode("-", $_COOKIE['xo_install_user'], 2);
-    list($uname, $hash_login) = array($hash_data[0], (string)( @$hash_data[1] ));
+    $hash_data            = @explode("-", $_COOKIE['xo_install_user'], 2);
+    list($uname, $hash_login) = array($hash_data[0], (string)(@$hash_data[1]));
     if (empty($uname) || empty($hash_login)) {
         return false;
     }
-    $memebr_handler =& xoops_gethandler('member');
-    $user = array_pop($memebr_handler->getUsers(new Criteria('uname', $uname)));
+    $memebr_handler =& xoops_getHandler('member');
+    $user           = array_pop($memebr_handler->getUsers(new Criteria('uname', $uname)));
     if ($hash_login != md5($user->getVar('pass') . XOOPS_DB_NAME . XOOPS_DB_PASS . XOOPS_DB_PREFIX)) {
         return false;
     }
@@ -34,8 +36,8 @@ function install_acceptUser($hash = '')
 
         return $res;
     }
-    $GLOBALS['xoopsUser'] = $user;
-    $_SESSION['xoopsUserId'] = $GLOBALS['xoopsUser']->getVar('uid');
+    $GLOBALS['xoopsUser']        = $user;
+    $_SESSION['xoopsUserId']     = $GLOBALS['xoopsUser']->getVar('uid');
     $_SESSION['xoopsUserGroups'] = $GLOBALS['xoopsUser']->getGroups();
 
     return true;
@@ -60,17 +62,17 @@ function install_finalize($installer_modified)
  * @param        $label
  * @param string $help
  */
-function xoFormField( $name, $value, $label, $help = '' )
+function xoFormField($name, $value, $label, $help = '')
 {
-    $myts = MyTextSanitizer::getInstance();
+    $myts  = MyTextSanitizer::getInstance();
     $label = $myts->htmlspecialchars($label, ENT_QUOTES, _INSTALL_CHARSET, false);
-    $name = $myts->htmlspecialchars($name, ENT_QUOTES, _INSTALL_CHARSET, false);
+    $name  = $myts->htmlspecialchars($name, ENT_QUOTES, _INSTALL_CHARSET, false);
     $value = $myts->htmlspecialchars($value, ENT_QUOTES);
     echo "<label class='xolabel' for='$name'>$label</label>\n";
     if ($help) {
         echo '<div class="xoform-help">' . $help . "</div>\n";
     }
-    if ($name == "adminname") {
+    if ($name === "adminname") {
         echo "<input type='text' name='$name' id='$name' value='$value' maxlength='25' />";
     } else {
         echo "<input type='text' name='$name' id='$name' value='$value' />";
@@ -85,16 +87,16 @@ function xoFormField( $name, $value, $label, $help = '' )
  */
 function xoPassField($name, $value, $label, $help = '')
 {
-    $myts = MyTextSanitizer::getInstance();
-    $label = $myts->htmlspecialchars( $label, ENT_QUOTES, _INSTALL_CHARSET, false);
-    $name = $myts->htmlspecialchars( $name, ENT_QUOTES, _INSTALL_CHARSET, false);
-    $value = $myts->htmlspecialchars( $value, ENT_QUOTES );
+    $myts  = MyTextSanitizer::getInstance();
+    $label = $myts->htmlspecialchars($label, ENT_QUOTES, _INSTALL_CHARSET, false);
+    $name  = $myts->htmlspecialchars($name, ENT_QUOTES, _INSTALL_CHARSET, false);
+    $value = $myts->htmlspecialchars($value, ENT_QUOTES);
     echo "<label class='xolabel' for='{$name}'>{$label}</label>\n";
     if ($help) {
         echo '<div class="xoform-help">' . $help . "</div>\n";
     }
 
-    if ($name == "adminpass") {
+    if ($name === "adminpass") {
         echo "<input type='password' name='{$name}' id='{$name}' value='{$value}' onkeyup='passwordStrength(this.value)' />";
     } else {
         echo "<input type='password' name='{$name}' id='{$name}' value='{$value}' />";
@@ -114,7 +116,7 @@ function getDirList($dirname)
     $dirlist = array();
     if ($handle = opendir($dirname)) {
         while ($file = readdir($handle)) {
-            if ($file{0} != '.' && is_dir($dirname . $file)) {
+            if ($file{0} !== '.' && is_dir($dirname . $file)) {
                 $dirlist[] = $file;
             }
         }
@@ -156,7 +158,7 @@ function xoDiag($status = -1, $str = '')
 function xoDiagBoolSetting($name, $wanted = false, $severe = false)
 {
     $setting = strtolower(ini_get($name));
-    $setting = (empty($setting) || $setting == 'off' || $setting == 'false') ? false : true;
+    $setting = (empty($setting) || $setting === 'off' || $setting === 'false');// ? false : true;
     if ($setting == $wanted) {
         return xoDiag(1, $setting ? 'ON' : 'OFF');
     } else {
@@ -171,20 +173,19 @@ function xoDiagBoolSetting($name, $wanted = false, $severe = false)
  */
 function xoDiagIfWritable($path)
 {
-    $path = "../" . $path;
+    $path  = "../" . $path;
     $error = true;
     if (!is_dir($path)) {
         if (file_exists($path)) {
             @chmod($path, 0666);
-            $error = !is_writeable($path);
+            $error = !is_writable($path);
         }
     } else {
         @chmod($path, 0777);
-        $error = !is_writeable($path);
+        $error = !is_writable($path);
     }
 
     return xoDiag($error ? -1 : 1, $error ? ' ' : ' ');
-
 }
 
 /**
@@ -212,28 +213,28 @@ function genPathCheckHtml($path, $valid)
     if ($valid) {
         switch ($path) {
             case 'root':
-            $msg = sprintf(XOOPS_FOUND, XOOPS_VERSION);
-            break;
+                $msg = sprintf(XOOPS_FOUND, XOOPS_VERSION);
+                break;
 
             case 'lib':
             case 'data':
             default:
-            $msg = XOOPS_PATH_FOUND;
-            break;
+                $msg = XOOPS_PATH_FOUND;
+                break;
         }
 
         return '<span class="pathmessage"><img src="img/yes.png" alt="Success" />' . $msg . '</span>';
     } else {
         switch ($path) {
             case 'root':
-            $msg = ERR_NO_XOOPS_FOUND;
-            break;
+                $msg = ERR_NO_XOOPS_FOUND;
+                break;
 
             case 'lib':
             case 'data':
             default:
-            $msg = ERR_COULD_NOT_ACCESS;
-            break;
+                $msg = ERR_COULD_NOT_ACCESS;
+                break;
         }
 
         return '<span class="pathmessage"><img src="img/no.png" alt="Error" /> ' . $msg . '</span>';
@@ -248,14 +249,16 @@ function genPathCheckHtml($path, $valid)
 function getDbCharsets($link)
 {
     static $charsets = array();
-    if ($charsets) return $charsets;
+    if ($charsets) {
+        return $charsets;
+    }
 
     $charsets["utf8"] = "UTF-8 Unicode";
-    $ut8_available = false;
+    $ut8_available    = false;
     if ($result = mysql_query("SHOW CHARSET", $link)) {
         while ($row = mysql_fetch_assoc($result)) {
             $charsets[$row["Charset"]] = $row["Description"];
-            if ($row["Charset"] == "utf8") {
+            if ($row["Charset"] === "utf8") {
                 $ut8_available = true;
             }
         }
@@ -313,7 +316,7 @@ function validateDbCharset($link, &$charset, &$collation)
     $charsets = getDbCharsets($link);
     if (!isset($charsets[$charset])) {
         $error = sprintf(ERR_INVALID_DBCHARSET, $charset);
-    } else if (!empty($collation)) {
+    } elseif (!empty($collation)) {
         $collations = getDbCollations($link, $charset);
         if (!isset($collations[$collation])) {
             $error = sprintf(ERR_INVALID_DBCOLLATION, $collation);
@@ -342,9 +345,9 @@ function xoFormFieldCollation($name, $value, $label, $help, $link, $charset)
         return "";
     }
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts  = MyTextSanitizer::getInstance();
     $label = $myts->htmlspecialchars($label, ENT_QUOTES, _INSTALL_CHARSET, false);
-    $name = $myts->htmlspecialchars($name, ENT_QUOTES, _INSTALL_CHARSET, false);
+    $name  = $myts->htmlspecialchars($name, ENT_QUOTES, _INSTALL_CHARSET, false);
     $value = $myts->htmlspecialchars($value, ENT_QUOTES);
 
     $field = "<label class='xolabel' for='{$name}'>{$label}</label>\n";
@@ -354,7 +357,7 @@ function xoFormFieldCollation($name, $value, $label, $help, $link, $charset)
     $field .= "<select name='{$name}' id='{$name}'\">";
 
     $collation_default = "";
-    $options = "";
+    $options           = "";
     foreach ($collations as $key => $isDefault) {
         if ($isDefault) {
             $collation_default = $key;
@@ -363,7 +366,7 @@ function xoFormFieldCollation($name, $value, $label, $help, $link, $charset)
         $options .= "<option value='{$key}'" . (($value == $key) ? " selected='selected'" : "") . ">{$key}</option>";
     }
     if ($collation_default) {
-        $field .= "<option value='{$collation_default}'" . ( ($value == $collation_default || empty($value)) ? " 'selected'" : "" ) . ">{$collation_default} (Default)</option>";
+        $field .= "<option value='{$collation_default}'" . (($value == $collation_default || empty($value)) ? " 'selected'" : "") . ">{$collation_default} (Default)</option>";
     }
     $field .= $options;
     $field .= "</select>";
@@ -399,7 +402,7 @@ function xoFormBlockCollation($name, $value, $label, $help, $link, $charset)
  *
  * @return string
  */
-function xoFormFieldCharset( $name, $value, $label, $help = '', $link )
+function xoFormFieldCharset($name, $value, $label, $help = '', $link)
 {
     if (version_compare(mysql_get_server_info($link), "4.1.0", "lt")) {
         return "";
@@ -411,14 +414,14 @@ function xoFormFieldCharset( $name, $value, $label, $help = '', $link )
     $charsets = array();
     if (isset($chars["utf8"])) {
         $charsets["utf8"] = $chars["utf8"];
-        unset ($chars["utf8"]);
+        unset($chars["utf8"]);
     }
     ksort($chars);
     $charsets = array_merge($charsets, $chars);
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts  = MyTextSanitizer::getInstance();
     $label = $myts->htmlspecialchars($label, ENT_QUOTES, _INSTALL_CHARSET, false);
-    $name = $myts->htmlspecialchars($name, ENT_QUOTES, _INSTALL_CHARSET, false);
+    $name  = $myts->htmlspecialchars($name, ENT_QUOTES, _INSTALL_CHARSET, false);
     $value = $myts->htmlspecialchars($value, ENT_QUOTES);
 
     $field = "<label class='xolabel' for='{$name}'>{$label}</label>\n";
@@ -438,17 +441,20 @@ function xoFormFieldCharset( $name, $value, $label, $help = '', $link )
 /**
  * *#@+
  * Xoops Write Licence System Key
+ * @param        $system_key
+ * @param        $licensefile
+ * @param string $license_file_dist
+ * @return string
  */
 function xoPutLicenseKey($system_key, $licensefile, $license_file_dist = 'license.dist.php')
 {
     chmod($licensefile, 0777);
-    $fver = fopen($licensefile, 'w');
+    $fver     = fopen($licensefile, 'w');
     $fver_buf = file($license_file_dist);
     foreach ($fver_buf as $line => $value) {
+        $ret = $value;
         if (strpos($value, 'XOOPS_LICENSE_KEY') > 0) {
             $ret = 'define(\'XOOPS_LICENSE_KEY\', \'' . $system_key . "');";
-        } else {
-            $ret = $value;
         }
         fwrite($fver, $ret, strlen($ret));
     }
@@ -465,44 +471,44 @@ function xoPutLicenseKey($system_key, $licensefile, $license_file_dist = 'licens
 function xoBuildLicenceKey()
 {
     $xoops_serdat = array();
-    srand((((float) ('0' . substr(microtime(), strpos(microtime(), ' ') + 1, strlen(microtime()) - strpos(microtime(), ' ') + 1))) * mt_rand(30, 99999)));
-    srand((((float) ('0' . substr(microtime(), strpos(microtime(), ' ') + 1, strlen(microtime()) - strpos(microtime(), ' ') + 1))) * mt_rand(30, 99999)));
+    mt_srand((((float)('0' . substr(microtime(), strpos(microtime(), ' ') + 1, strlen(microtime()) - strpos(microtime(), ' ') + 1))) * mt_rand(30, 99999)));
+    mt_srand((((float)('0' . substr(microtime(), strpos(microtime(), ' ') + 1, strlen(microtime()) - strpos(microtime(), ' ') + 1))) * mt_rand(30, 99999)));
     $checksums = array(1 => 'md5', 2 => 'sha1');
-    $type = rand(1, 2);
-    $func = $checksums[$type];
+    $type      = mt_rand(1, 2);
+    $func      = $checksums[$type];
 
     error_reporting(0);
 
     // Public Key
     if ($xoops_serdat['version'] = $func(XOOPS_VERSION)) {
-        $xoops_serdat['version'] = substr($xoops_serdat['version'],0, 6);
+        $xoops_serdat['version'] = substr($xoops_serdat['version'], 0, 6);
     }
     if ($xoops_serdat['licence'] = $func(XOOPS_LICENSE_CODE)) {
-        $xoops_serdat['licence'] = substr($xoops_serdat['licence'],0, 2);
+        $xoops_serdat['licence'] = substr($xoops_serdat['licence'], 0, 2);
     }
     if ($xoops_serdat['license_text'] = $func(XOOPS_LICENSE_TEXT)) {
-        $xoops_serdat['license_text'] = substr($xoops_serdat['license_text'],0, 2);
+        $xoops_serdat['license_text'] = substr($xoops_serdat['license_text'], 0, 2);
     }
 
     if ($xoops_serdat['domain_host'] = $func($_SERVER['HTTP_HOST'])) {
-        $xoops_serdat['domain_host'] = substr($xoops_serdat['domain_host'],0, 2);
+        $xoops_serdat['domain_host'] = substr($xoops_serdat['domain_host'], 0, 2);
     }
 
     // Private Key
-    $xoops_serdat['file'] = $func(__FILE__);
+    $xoops_serdat['file']     = $func(__FILE__);
     $xoops_serdat['basename'] = $func(basename(__FILE__));
-    $xoops_serdat['path'] = $func(__DIR__);
+    $xoops_serdat['path']     = $func(__DIR__);
 
     foreach ($_SERVER as $key => $data) {
-        $xoops_serdat[$key] = substr($func(serialize($data)),0, 4);
+        $xoops_serdat[$key] = substr($func(serialize($data)), 0, 4);
     }
 
     foreach ($xoops_serdat as $key => $data) {
         $xoops_key .= $data;
     }
     while (strlen($xoops_key) > 40) {
-        $lpos = rand(18, strlen($xoops_key));
-        $xoops_key = substr($xoops_key, 0, $lpos).substr($xoops_key, $lpos + 1 , strlen($xoops_key) - ($lpos + 1));
+        $lpos      = mt_rand(18, strlen($xoops_key));
+        $xoops_key = substr($xoops_key, 0, $lpos) . substr($xoops_key, $lpos + 1, strlen($xoops_key) - ($lpos + 1));
     }
 
     return xoStripeKey($xoops_key);
@@ -511,14 +517,17 @@ function xoBuildLicenceKey()
 /**
  * *#@+
  * Xoops Stripe Licence System Key
+ * @param $xoops_key
+ * @return mixed|string
  */
 function xoStripeKey($xoops_key)
 {
-    $uu = 0;
-    $num = 6;
+    $uu     = 0;
+    $num    = 6;
     $length = 30;
-    $strip = floor(strlen($xoops_key) / 6);
-    for ($i = 0; $i < strlen($xoops_key); ++$i) {
+    $strip  = floor(strlen($xoops_key) / 6);
+    $strlen = strlen($xoops_key);
+    for ($i = 0; $i < $strlen; ++$i) {
         if ($i < $length) {
             ++$uu;
             if ($uu == $strip) {

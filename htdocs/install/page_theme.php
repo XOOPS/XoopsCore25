@@ -4,37 +4,37 @@
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
  * @copyright    (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
- * @package     installer
- * @since       2.3.0
- * @author      Haruki Setoyama  <haruki@planewave.org>
- * @author      Kazumi Ono <webmaster@myweb.ne.jp>
- * @author      Skalpa Keo <skalpa@xoops.org>
- * @author      Taiwen Jiang <phppp@users.sourceforge.net>
- * @author      DuGris (aka L. JEN) <dugris@frxoops.org>
- * @version     $Id$
-**/
+ * @license          http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @package          installer
+ * @since            2.3.0
+ * @author           Haruki Setoyama  <haruki@planewave.org>
+ * @author           Kazumi Ono <webmaster@myweb.ne.jp>
+ * @author           Skalpa Keo <skalpa@xoops.org>
+ * @author           Taiwen Jiang <phppp@users.sourceforge.net>
+ * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
+ * @version          $Id: page_theme.php 13082 2015-06-06 21:59:41Z beckmi $
+ **/
 
 $xoopsOption['checkadmin'] = true;
-$xoopsOption['hascommon'] = true;
+$xoopsOption['hascommon']  = true;
 require_once './include/common.inc.php';
 defined('XOOPS_INSTALL') or die('XOOPS Installation wizard die');
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $config_handler = xoops_gethandler('config');
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $config_handler =& xoops_getHandler('config');
     if (array_key_exists('conf_ids', $_REQUEST)) {
         foreach ($_REQUEST['conf_ids'] as $key => $conf_id) {
-            $config =& $config_handler->getConfig( $conf_id );
-            $new_value = $_REQUEST[ $config->getVar('conf_name')] ;
+            $config    =& $config_handler->getConfig($conf_id);
+            $new_value = $_REQUEST[$config->getVar('conf_name')];
             $config->setConfValueForInput($new_value);
             $config_handler->insertConfig($config);
         }
     }
 
-    $member_handler =& xoops_gethandler('member');
-    $member_handler->updateUsersByField('theme', $new_value );
+    $member_handler =& xoops_getHandler('member');
+    $member_handler->updateUsersByField('theme', $new_value);
 
-    $wizard->redirectToPage( '+1' );
+    $wizard->redirectToPage('+1');
 }
 
 $pageHasForm = true;
@@ -44,14 +44,14 @@ if (!@include_once "../modules/system/language/{$wizard->language}/admin/prefere
     include_once '../modules/system/language/english/admin/preferences.php';
 }
 
-$config_handler = xoops_gethandler('config');
-$criteria = new CriteriaCompo();
+$config_handler =& xoops_getHandler('config');
+$criteria       = new CriteriaCompo();
 $criteria->add(new Criteria('conf_modid', 0));
 $criteria->add(new Criteria('conf_name', 'theme_set'));
 
-$config = array_pop( $config_handler->getConfigs($criteria) );
+$config = array_pop($config_handler->getConfigs($criteria));
 include './include/createconfigform.php';
 $wizard->form = createThemeform($config);
-$content = $wizard->CreateForm();
+$content      = $wizard->CreateForm();
 
 include './include/install_tpl.php';

@@ -10,15 +10,15 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @subpackage      form
- * @since           2.0.0
- * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @subpackage          form
+ * @since               2.0.0
+ * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @version             $Id: formhidden.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * A hidden field
@@ -31,15 +31,15 @@ class XoopsFormHidden extends XoopsFormElement
      * @var string
      * @access private
      */
-    var $_value;
+    public $_value;
 
     /**
      * Constructor
      *
-     * @param string $name "name" attribute
+     * @param string $name  "name" attribute
      * @param string $value "value" attribute
      */
-    function XoopsFormHidden($name, $value)
+    public function __construct($name, $value)
     {
         $this->setName($name);
         $this->setHidden();
@@ -48,12 +48,20 @@ class XoopsFormHidden extends XoopsFormElement
     }
 
     /**
+     * @param $name
+     * @param $value
+     */
+    public function XoopsFormHidden($name, $value)
+    {
+        $this->__construct($name, $value);
+    }
+    /**
      * Get the "value" attribute
      *
-     * @param bool $encode To sanitizer the text?
+     * @param  bool $encode To sanitizer the text?
      * @return string
      */
-    function getValue($encode = false)
+    public function getValue($encode = false)
     {
         return $encode ? htmlspecialchars($this->_value, ENT_QUOTES) : $this->_value;
     }
@@ -61,9 +69,10 @@ class XoopsFormHidden extends XoopsFormElement
     /**
      * Sets the "value" attribute
      *
-     * @patam $value	string
+     * @patam $value    string
+     * @param $value
      */
-    function setValue($value)
+    public function setValue($value)
     {
         $this->_value = $value;
     }
@@ -73,7 +82,7 @@ class XoopsFormHidden extends XoopsFormElement
      *
      * @return string HTML
      */
-    function render()
+    public function render()
     {
         return '<input type="hidden" name="' . $this->getName() . '" id="' . $this->getName() . '" value="' . $this->getValue() . '" />';
     }

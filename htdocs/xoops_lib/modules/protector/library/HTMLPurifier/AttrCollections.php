@@ -3,10 +3,8 @@
 /**
  * Defines common attribute collections that modules reference
  */
-
 class HTMLPurifier_AttrCollections
 {
-
     /**
      * Associative array of attribute collections, indexed by name.
      * @type array
@@ -17,8 +15,8 @@ class HTMLPurifier_AttrCollections
      * Performs all expansions on internal data for use by other inclusions
      * It also collects all attribute collection extensions from
      * modules
-     * @param HTMLPurifier_AttrTypes $attr_types HTMLPurifier_AttrTypes instance
-     * @param HTMLPurifier_HTMLModule[] $modules Hash array of HTMLPurifier_HTMLModule members
+     * @param HTMLPurifier_AttrTypes    $attr_types HTMLPurifier_AttrTypes instance
+     * @param HTMLPurifier_HTMLModule[] $modules    Hash array of HTMLPurifier_HTMLModule members
      */
     public function __construct($attr_types, $modules)
     {
@@ -31,10 +29,7 @@ class HTMLPurifier_AttrCollections
                 foreach ($coll as $attr_i => $attr) {
                     if ($attr_i === 0 && isset($this->info[$coll_i][$attr_i])) {
                         // merge in includes
-                        $this->info[$coll_i][$attr_i] = array_merge(
-                            $this->info[$coll_i][$attr_i],
-                            $attr
-                        );
+                        $this->info[$coll_i][$attr_i] = array_merge($this->info[$coll_i][$attr_i], $attr);
                         continue;
                     }
                     $this->info[$coll_i][$attr_i] = $attr;
@@ -89,7 +84,7 @@ class HTMLPurifier_AttrCollections
     /**
      * Expands all string identifiers in an attribute array by replacing
      * them with the appropriate values inside HTMLPurifier_AttrTypes
-     * @param array &$attr Reference to attribute array
+     * @param array                  &$attr      Reference to attribute array
      * @param HTMLPurifier_AttrTypes $attr_types HTMLPurifier_AttrTypes instance
      */
     public function expandIdentifiers(&$attr, $attr_types)
@@ -112,7 +107,7 @@ class HTMLPurifier_AttrCollections
             if ($required = (strpos($def_i, '*') !== false)) {
                 // rename the definition
                 unset($attr[$def_i]);
-                $def_i = trim($def_i, '*');
+                $def_i        = trim($def_i, '*');
                 $attr[$def_i] = $def;
             }
 
@@ -131,7 +126,7 @@ class HTMLPurifier_AttrCollections
             }
 
             if ($t = $attr_types->get($def)) {
-                $attr[$def_i] = $t;
+                $attr[$def_i]           = $t;
                 $attr[$def_i]->required = $required;
             } else {
                 unset($attr[$def_i]);
@@ -141,3 +136,4 @@ class HTMLPurifier_AttrCollections
 }
 
 // vim: et sw=4 sts=4
+

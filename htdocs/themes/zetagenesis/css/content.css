@@ -150,19 +150,18 @@ acronym:hover, abbr:hover {
 .xoopsCode {}
 .xoopsQuote {}
 blockquote {
-	display:				block;
+    display:                block;
     width:                  90%;
     margin-left:            .5em;
     background-color:       #f4faff;
     padding:                .5em;
     color:                  #555;
     font-style:             normal;
-    border-color:           #8EC0F9;
-    border-style:           solid;
-    border-width:           1px 1px 1px 6px;
+    border: 1px solid #8EC0F9;
+    border-left-width: 6px;
 }
 code {
-	display:				block;
+    display:                block;
     width:                  90%;
     max-height:             300px;
     margin-left:            .5em;

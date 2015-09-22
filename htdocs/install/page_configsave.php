@@ -15,16 +15,16 @@
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
  * @copyright    (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
- * @package     installer
- * @since       2.3.0
- * @author      Haruki Setoyama  <haruki@planewave.org>
- * @author      Kazumi Ono <webmaster@myweb.ne.jp>
- * @author      Skalpa Keo <skalpa@xoops.org>
- * @author      Taiwen Jiang <phppp@users.sourceforge.net>
- * @author      DuGris (aka L. JEN) <dugris@frxoops.org>
- * @version     $Id$
-**/
+ * @license          http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @package          installer
+ * @since            2.3.0
+ * @author           Haruki Setoyama  <haruki@planewave.org>
+ * @author           Kazumi Ono <webmaster@myweb.ne.jp>
+ * @author           Skalpa Keo <skalpa@xoops.org>
+ * @author           Taiwen Jiang <phppp@users.sourceforge.net>
+ * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
+ * @version          $Id: page_configsave.php 13082 2015-06-06 21:59:41Z beckmi $
+ **/
 
 require_once './include/common.inc.php';
 defined('XOOPS_INSTALL') or die('XOOPS Installation wizard die');
@@ -37,7 +37,7 @@ $vars =& $_SESSION['settings'];
 if (empty($vars['ROOT_PATH'])) {
     $wizard->redirectToPage('pathsettings');
     exit();
-} else if (empty($vars['DB_HOST'])) {
+} elseif (empty($vars['DB_HOST'])) {
     $wizard->redirectToPage('dbsettings');
     exit();
 }
@@ -48,34 +48,36 @@ if (!@copy($vars['ROOT_PATH'] . '/mainfile.dist.php', $vars['ROOT_PATH'] . '/mai
 } else {
     clearstatcache();
 
-    $rewrite = array( 'GROUP_ADMIN'      => 1,
-                      'GROUP_USERS'      => 2,
-                      'GROUP_ANONYMOUS'  => 3
-                    );
+    $rewrite = array(
+        'GROUP_ADMIN'     => 1,
+        'GROUP_USERS'     => 2,
+        'GROUP_ANONYMOUS' => 3);
 
     $rewrite = array_merge($rewrite, $vars);
     if (!$file = fopen($vars['ROOT_PATH'] . '/mainfile.php', "r")) {
         $error = ERR_READ_MAINFILE;
     } else {
-        $content = fread($file, filesize( $vars['ROOT_PATH'] . '/mainfile.php'));
+        $content = fread($file, filesize($vars['ROOT_PATH'] . '/mainfile.php'));
         fclose($file);
 
         foreach ($rewrite as $key => $val) {
-            if ($key == 'authorized') continue;
-            if (is_int($val) && preg_match("/(define\()([\"'])(XOOPS_{$key})\\2,\s*([0-9]+)\s*\)/", $content)) {
-                $content = preg_replace("/(define\()([\"'])(XOOPS_{$key})\\2,\s*([0-9]+)\s*\)/", "define('XOOPS_{$key}', {$val})", $content);
-            } else if(preg_match("/(define\()([\"'])(XOOPS_{$key})\\2,\s*([\"'])(.*?)\\4\s*\)/", $content)) {
-                $val = str_replace('$', '\$', addslashes($val));
+            if ($key === 'authorized') {
+                continue;
+            }
+            if (is_int($val) && preg_match("/(define\()([\"'])(XOOPS_{$key})\\2,\s*(\d+)\s*\)/", $content)) {
+                $content = preg_replace("/(define\()([\"'])(XOOPS_{$key})\\2,\s*(\d+)\s*\)/", "define('XOOPS_{$key}', {$val})", $content);
+            } elseif (preg_match("/(define\()([\"'])(XOOPS_{$key})\\2,\s*([\"'])(.*?)\\4\s*\)/", $content)) {
+                $val     = str_replace('$', '\$', addslashes($val));
                 $content = preg_replace("/(define\()([\"'])(XOOPS_{$key})\\2,\s*([\"'])(.*?)\\4\s*\)/", "define('XOOPS_{$key}', '{$val}')", $content);
             } else {
                 //$this->error = true;
                 //$this->report .= _NGIMG.sprintf( ERR_WRITING_CONSTANT, "<strong>$val</strong>")."<br />\n";
             }
         }
-        if (!$file = fopen( $vars['ROOT_PATH'] . '/mainfile.php', "w")) {
+        if (!$file = fopen($vars['ROOT_PATH'] . '/mainfile.php', "w")) {
             $error = ERR_WRITE_MAINFILE;
         } else {
-            if (fwrite( $file, $content ) == -1) {
+            if (fwrite($file, $content) == -1) {
                 $error = ERR_WRITE_MAINFILE;
             }
             fclose($file);
@@ -90,33 +92,34 @@ if (!@copy($vars['ROOT_PATH'] . '/mainfile.dist.php', $vars['ROOT_PATH'] . '/mai
 
 //from XavierS:
 if (!@copy($vars['VAR_PATH'] . '/data/secure.dist.php', $vars['VAR_PATH'] . '/data/secure.php')) {
-   $error = ERR_COPY_MAINFILE.$vars['VAR_PATH'] . '/data/secure.dist.php';
-   } else {
-   clearstatcache();
+    $error = ERR_COPY_MAINFILE . $vars['VAR_PATH'] . '/data/secure.dist.php';
+} else {
+    clearstatcache();
 
-
-   $rewrite = array_merge($rewrite, $vars);
+    $rewrite = array_merge($rewrite, $vars);
 
     $rewrite = array_merge($rewrite, $vars);
     if (!$file = fopen($rewrite['VAR_PATH'] . '/data/secure.php', "r")) {
         $error = ERR_READ_MAINFILE;
     } else {
-        $content = fread($file, filesize( $rewrite['VAR_PATH'] . '/data/secure.php'));
+        $content = fread($file, filesize($rewrite['VAR_PATH'] . '/data/secure.php'));
         fclose($file);
 
         foreach ($rewrite as $key => $val) {
-            if ($key == 'authorized') continue;
-            if (is_int($val) && preg_match("/(define\()([\"'])(XOOPS_{$key})\\2,\s*([0-9]+)\s*\)/", $content)) {
-                $content = preg_replace("/(define\()([\"'])(XOOPS_{$key})\\2,\s*([0-9]+)\s*\)/", "define('XOOPS_{$key}', {$val})", $content);
-            } else if(preg_match("/(define\()([\"'])(XOOPS_{$key})\\2,\s*([\"'])(.*?)\\4\s*\)/", $content)) {
-                $val = str_replace('$', '\$', addslashes($val));
+            if ($key === 'authorized') {
+                continue;
+            }
+            if (is_int($val) && preg_match("/(define\()([\"'])(XOOPS_{$key})\\2,\s*(\d+)\s*\)/", $content)) {
+                $content = preg_replace("/(define\()([\"'])(XOOPS_{$key})\\2,\s*(\d+)\s*\)/", "define('XOOPS_{$key}', {$val})", $content);
+            } elseif (preg_match("/(define\()([\"'])(XOOPS_{$key})\\2,\s*([\"'])(.*?)\\4\s*\)/", $content)) {
+                $val     = str_replace('$', '\$', addslashes($val));
                 $content = preg_replace("/(define\()([\"'])(XOOPS_{$key})\\2,\s*([\"'])(.*?)\\4\s*\)/", "define('XOOPS_{$key}', '{$val}')", $content);
             }
         }
-        if (!$file = fopen( $rewrite['VAR_PATH'] . '/data/secure.php', "w")) {
+        if (!$file = fopen($rewrite['VAR_PATH'] . '/data/secure.php', "w")) {
             $error = ERR_WRITE_MAINFILE;
         } else {
-            if (fwrite( $file, $content ) == -1) {
+            if (fwrite($file, $content) == -1) {
                 $error = ERR_WRITE_MAINFILE;
             }
             fclose($file);
@@ -126,22 +129,26 @@ if (!@copy($vars['VAR_PATH'] . '/data/secure.dist.php', $vars['VAR_PATH'] . '/da
 
 $_SESSION['settings']['authorized'] = false;
 if (empty($error)) {
-    $_SESSION['UserLogin'] = true;
+    $_SESSION['UserLogin']              = true;
     $_SESSION['settings']['authorized'] = true;
     ob_start();
-?>
-
-<div class="caption"><?php echo SAVED_MAINFILE; ?></div>
-<div class='x2-note confirmMsg'><?php echo SAVED_MAINFILE_MSG; ?></div>
-<ul class='diags'>
-    <?php
-    foreach ($vars as $k => $v) {
-        if ($k == 'authorized') continue;
-        echo "<li><strong>XOOPS_{$k}</strong> " . IS_VALOR . " {$v}</li>";
-    }
     ?>
-</ul>
-<?php
+
+    <div class="caption"><?php echo SAVED_MAINFILE;
+        ?></div>
+    <div class='x2-note confirmMsg'><?php echo SAVED_MAINFILE_MSG;
+        ?></div>
+    <ul class='diags'>
+        <?php
+        foreach ($vars as $k => $v) {
+            if ($k === 'authorized') {
+                continue;
+            }
+            echo "<li><strong>XOOPS_{$k}</strong> " . IS_VALOR . " {$v}</li>";
+        }
+        ?>
+    </ul>
+    <?php
     $content = ob_get_contents();
     ob_end_clean();
 } else {

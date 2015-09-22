@@ -8,7 +8,6 @@
  */
 class HTMLPurifier_IDAccumulator
 {
-
     /**
      * Lookup table of IDs we've accumulated.
      * @public
@@ -17,27 +16,29 @@ class HTMLPurifier_IDAccumulator
 
     /**
      * Builds an IDAccumulator, also initializing the default blacklist
-     * @param HTMLPurifier_Config $config Instance of HTMLPurifier_Config
-     * @param HTMLPurifier_Context $context Instance of HTMLPurifier_Context
+     * @param  HTMLPurifier_Config  $config  Instance of HTMLPurifier_Config
+     * @param  HTMLPurifier_Context $context Instance of HTMLPurifier_Context
      * @return HTMLPurifier_IDAccumulator Fully initialized HTMLPurifier_IDAccumulator
      */
     public static function build($config, $context)
     {
         $id_accumulator = new HTMLPurifier_IDAccumulator();
         $id_accumulator->load($config->get('Attr.IDBlacklist'));
+
         return $id_accumulator;
     }
 
     /**
      * Add an ID to the lookup table.
-     * @param string $id ID to be added.
-     * @return bool status, true if success, false if there's a dupe
+     * @param  string $id ID to be added.
+     * @return bool   status, true if success, false if there's a dupe
      */
     public function add($id)
     {
         if (isset($this->ids[$id])) {
             return false;
         }
+
         return $this->ids[$id] = true;
     }
 
@@ -55,3 +56,4 @@ class HTMLPurifier_IDAccumulator
 }
 
 // vim: et sw=4 sts=4
+

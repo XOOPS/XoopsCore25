@@ -15,24 +15,24 @@
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
  * @copyright    (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
- * @package     installer
- * @since       2.3.0
- * @author      Haruki Setoyama  <haruki@planewave.org>
- * @author      Kazumi Ono <webmaster@myweb.ne.jp>
- * @author      Skalpa Keo <skalpa@xoops.org>
- * @author      Taiwen Jiang <phppp@users.sourceforge.net>
- * @author      DuGris (aka L. JEN) <dugris@frxoops.org>
- * @version     $Id$
-**/
+ * @license          http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @package          installer
+ * @since            2.3.0
+ * @author           Haruki Setoyama  <haruki@planewave.org>
+ * @author           Kazumi Ono <webmaster@myweb.ne.jp>
+ * @author           Skalpa Keo <skalpa@xoops.org>
+ * @author           Taiwen Jiang <phppp@users.sourceforge.net>
+ * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
+ * @version          $Id: page_end.php 13082 2015-06-06 21:59:41Z beckmi $
+ **/
 
 require_once './include/common.inc.php';
 $_SESSION = array();
 setcookie('xo_install_user', '', null, null, null);
 defined('XOOPS_INSTALL') or die('XOOPS Installation wizard die');
 
-$install_rename_suffix = uniqid(substr(md5($x = mt_rand()) . $x, -10));
-$installer_modified = "install_remove_" . $install_rename_suffix;
+$install_rename_suffix = uniqid(substr(md5($x = mt_rand()) . $x, -10), true);
+$installer_modified    = "install_remove_" . $install_rename_suffix;
 
 $pageHasForm = false;
 

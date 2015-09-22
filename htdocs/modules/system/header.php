@@ -10,41 +10,41 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @version     $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @version             $Id: header.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 // Include XOOPS control panel header
-include_once dirname( dirname(__DIR__) ) . '/include/cp_header.php';
+include_once dirname(dirname(__DIR__)) . '/include/cp_header.php';
 // Check user rights
 if (is_object($xoopsUser)) {
-    $admintest = 0;
-    $xoopsModule =& XoopsModule::getByDirname( 'system' );
-    if ( !$xoopsUser->isAdmin( $xoopsModule->mid() ) ) {
-        redirect_header( XOOPS_URL, 3, _NOPERM );
+    $admintest   = 0;
+    $xoopsModule =& XoopsModule::getByDirname('system');
+    if (!$xoopsUser->isAdmin($xoopsModule->mid())) {
+        redirect_header(XOOPS_URL, 3, _NOPERM);
         exit();
     }
     $admintest = 1;
 } else {
-    redirect_header( XOOPS_URL, 3, _NOPERM );
+    redirect_header(XOOPS_URL, 3, _NOPERM);
     exit();
 }
 // XOOPS Class
-include_once $GLOBALS['xoops']->path( '/class/pagenav.php' );
-include_once $GLOBALS['xoops']->path( '/class/template.php' );
-include_once $GLOBALS['xoops']->path( '/class/xoopsformloader.php' );
-include_once $GLOBALS['xoops']->path( '/class/xoopslists.php' );
+include_once $GLOBALS['xoops']->path('/class/pagenav.php');
+include_once $GLOBALS['xoops']->path('/class/template.php');
+include_once $GLOBALS['xoops']->path('/class/xoopsformloader.php');
+include_once $GLOBALS['xoops']->path('/class/xoopslists.php');
 // System Class
-include_once $GLOBALS['xoops']->path( '/modules/system/class/breadcrumb.php' );
-include_once $GLOBALS['xoops']->path( '/modules/system/class/cookie.php' );
+include_once $GLOBALS['xoops']->path('/modules/system/class/breadcrumb.php');
+include_once $GLOBALS['xoops']->path('/modules/system/class/cookie.php');
 // Load Language
 xoops_loadLanguage('admin', 'system');
 // Include System files
-include_once $GLOBALS['xoops']->path( '/modules/system/include/functions.php' );
+include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 // include system category definitions
-include_once $GLOBALS['xoops']->path( '/modules/system/constants.php' );
+include_once $GLOBALS['xoops']->path('/modules/system/constants.php');
 // Get request variable
-$fct = system_CleanVars ( $_REQUEST, 'fct', '', 'string' );
+$fct = system_CleanVars($_REQUEST, 'fct', '', 'string');
 
-$xoBreadCrumb = new SystemBreadcrumb( $fct );
-$xoBreadCrumb->addLink ( _AM_SYSTEM_CPANEL, XOOPS_URL . '/admin.php', true );
+$xoBreadCrumb = new SystemBreadcrumb($fct);
+$xoBreadCrumb->addLink(_AM_SYSTEM_CPANEL, XOOPS_URL . '/admin.php', true);

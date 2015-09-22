@@ -1,12 +1,12 @@
 <?php
-// $Id$
+// $Id: class.tar.php 12795 2014-09-21 05:41:46Z beckmi $
 
 /**
  * package::i.tools
  *
- * php-downloader	v1.0	-	www.ipunkt.biz
+ * php-downloader    v1.0    -    www.ipunkt.biz
  *
- * (c)	2002 - www.ipunkt.biz (rok)
+ * (c)    2002 - www.ipunkt.biz (rok)
  */
 /**
  * =======================================================================
@@ -45,9 +45,9 @@
  * for the bug, please do send it to me so I can incorporate it into my release.
  *
  * Version History:
- * 1.0	04/10/2002	- InitialRelease
+ * 1.0    04/10/2002    - InitialRelease
  *
- * 2.0	04/11/2002	- Merged both tarReader and tarWriter
+ * 2.0    04/11/2002    - Merged both tarReader and tarWriter
  * classes into one
  * - Added support for gzipped tar files
  * Remember to name for .tar.gz or .tgz
@@ -57,12 +57,12 @@
  * functions to help users
  * - Added ability to remove files and
  * directories from archive
- * 2.1	04/12/2002	- Fixed serious bug in generating tar
+ * 2.1    04/12/2002    - Fixed serious bug in generating tar
  * - Created another example file
  * - Added check to make sure ZLIB is
  * installed before running GZIP
  * compression on TAR
- * 2.2	05/07/2002	- Added automatic detection of Gzipped
+ * 2.2    05/07/2002    - Added automatic detection of Gzipped
  * tar files (Thanks go to Jidgen Falch
  * for the idea)
  * - Changed "private" functions to have
@@ -84,21 +84,20 @@
  * This class works on both windows AND unix systems, and does
  * NOT rely on external applications!! Woohoo!
  *
- * @author Josh Barger <joshb@npt.com>
- * @copyright Copyright (C) 2002  Josh Barger
- * @package kernel
+ * @author     Josh Barger <joshb@npt.com>
+ * @copyright  Copyright (C) 2002  Josh Barger
+ * @package    kernel
  * @subpackage core
  */
-
 class tar
 {
     /**
      * *#@+
      * Unprocessed Archive Information
      */
-    var $filename;
-    var $isGzipped;
-    var $tar_file;
+    public $filename;
+    public $isGzipped;
+    public $tar_file;
     /**
      * *#@-
      */
@@ -107,10 +106,10 @@ class tar
      * *#@+
      * Processed Archive Information
      */
-    var $files;
-    var $directories;
-    var $numFiles;
-    var $numDirectories;
+    public $files;
+    public $directories;
+    public $numFiles;
+    public $numDirectories;
     /**
      * *#@-
      */
@@ -118,9 +117,14 @@ class tar
     /**
      * Class Constructor -- Does nothing...
      */
-    function tar()
+    public function __construct()
     {
         return true;
+    }
+
+    public function tar()
+    {
+        $this->__construct();
     }
 
     /**
@@ -132,7 +136,7 @@ class tar
      * @return int|string
      * @access private
      */
-    function __computeUnsignedChecksum($bytestring)
+    public function __computeUnsignedChecksum($bytestring)
     {
         $unsigned_chksum = '';
         for ($i = 0; $i < 512; ++$i) {
@@ -153,7 +157,7 @@ class tar
      * @return string
      * @access private
      */
-    function __parseNullPaddedString($string)
+    public function __parseNullPaddedString($string)
     {
         $position = strpos($string, chr(0));
 
@@ -166,17 +170,18 @@ class tar
      * @return bool always TRUE
      * @access private
      */
-    function __parseTar()
+    public function __parseTar()
     {
         // Read Files from archive
-        $tar_length = strlen($this->tar_file);
-        $main_offset = 0;
+        $tar_length     = strlen($this->tar_file);
+        $main_offset    = 0;
         $this->numFiles = 0;
         while ($main_offset < $tar_length) {
             // If we read a block of 512 nulls, we are at the end of the archive
-            if (substr($this->tar_file, $main_offset, 512) == str_repeat(chr(0), 512))
+            if (substr($this->tar_file, $main_offset, 512) == str_repeat(chr(0), 512)) {
                 break;
-                // Parse file name
+            }
+            // Parse file name
             $file_name = $this->__parseNullPaddedString(substr($this->tar_file, $main_offset, 100));
             // Parse the file mode
             $file_mode = substr($this->tar_file, $main_offset + 100, 8);
@@ -195,21 +200,22 @@ class tar
             // Parse Group name
             $file_gname = $this->__parseNullPaddedString(substr($this->tar_file, $main_offset + 297, 32));
             // Make sure our file is valid
-            if ($this->__computeUnsignedChecksum(substr($this->tar_file, $main_offset, 512)) != $file_chksum)
+            if ($this->__computeUnsignedChecksum(substr($this->tar_file, $main_offset, 512)) != $file_chksum) {
                 return false;
-                // Parse File Contents
+            }
+            // Parse File Contents
             $file_contents = substr($this->tar_file, $main_offset + 512, $file_size);
 
             /**
              * ### Unused Header Information ###
-             * $activeFile["typeflag"]		= substr($this->tar_file,$main_offset + 156,1);
-             * $activeFile["linkname"]		= substr($this->tar_file,$main_offset + 157,100);
-             * $activeFile["magic"]		= substr($this->tar_file,$main_offset + 257,6);
-             * $activeFile["version"]		= substr($this->tar_file,$main_offset + 263,2);
-             * $activeFile["devmajor"]		= substr($this->tar_file,$main_offset + 329,8);
-             * $activeFile["devminor"]		= substr($this->tar_file,$main_offset + 337,8);
-             * $activeFile["prefix"]		= substr($this->tar_file,$main_offset + 345,155);
-             * $activeFile["endheader"]	= substr($this->tar_file,$main_offset + 500,12);
+             * $activeFile["typeflag"]        = substr($this->tar_file,$main_offset + 156,1);
+             * $activeFile["linkname"]        = substr($this->tar_file,$main_offset + 157,100);
+             * $activeFile["magic"]        = substr($this->tar_file,$main_offset + 257,6);
+             * $activeFile["version"]        = substr($this->tar_file,$main_offset + 263,2);
+             * $activeFile["devmajor"]        = substr($this->tar_file,$main_offset + 329,8);
+             * $activeFile["devminor"]        = substr($this->tar_file,$main_offset + 337,8);
+             * $activeFile["prefix"]        = substr($this->tar_file,$main_offset + 345,155);
+             * $activeFile["endheader"]    = substr($this->tar_file,$main_offset + 500,12);
              */
 
             if ($file_size > 0) {
@@ -218,30 +224,30 @@ class tar
                 // Create us a new file in our array
                 $activeFile =& $this->files[];
                 // Asign Values
-                $activeFile["name"] = $file_name;
-                $activeFile["mode"] = $file_mode;
-                $activeFile["size"] = $file_size;
-                $activeFile["time"] = $file_time;
-                $activeFile["user_id"] = $file_uid;
-                $activeFile["group_id"] = $file_gid;
-                $activeFile["user_name"] = $file_uname;
+                $activeFile["name"]       = $file_name;
+                $activeFile["mode"]       = $file_mode;
+                $activeFile["size"]       = $file_size;
+                $activeFile["time"]       = $file_time;
+                $activeFile["user_id"]    = $file_uid;
+                $activeFile["group_id"]   = $file_gid;
+                $activeFile["user_name"]  = $file_uname;
                 $activeFile["group_name"] = $file_gname;
-                $activeFile["checksum"] = $file_chksum;
-                $activeFile["file"] = $file_contents;
+                $activeFile["checksum"]   = $file_chksum;
+                $activeFile["file"]       = $file_contents;
             } else {
                 // Increment number of directories
-                $this->numDirectories ++;
+                $this->numDirectories++;
                 // Create a new directory in our array
                 $activeDir =& $this->directories[];
                 // Assign values
-                $activeDir["name"] = $file_name;
-                $activeDir["mode"] = $file_mode;
-                $activeDir["time"] = $file_time;
-                $activeDir["user_id"] = $file_uid;
-                $activeDir["group_id"] = $file_gid;
-                $activeDir["user_name"] = $file_uname;
+                $activeDir["name"]       = $file_name;
+                $activeDir["mode"]       = $file_mode;
+                $activeDir["time"]       = $file_time;
+                $activeDir["user_id"]    = $file_uid;
+                $activeDir["group_id"]   = $file_gid;
+                $activeDir["user_name"]  = $file_uname;
                 $activeDir["group_name"] = $file_gname;
-                $activeDir["checksum"] = $file_chksum;
+                $activeDir["checksum"]   = $file_chksum;
             }
             // Move our offset the number of blocks we have processed
             $main_offset += 512 + (ceil($file_size / 512) * 512);
@@ -257,14 +263,14 @@ class tar
      * @return bool   always TRUE
      * @access private
      */
-    function __readTar($filename = '')
+    public function __readTar($filename = '')
     {
         // Set the filename to load
         if (!$filename) {
             $filename = $this->filename;
         }
         // Read in the TAR file
-        $fp = fopen($filename, 'rb');
+        $fp             = fopen($filename, 'rb');
         $this->tar_file = fread($fp, filesize($filename));
         fclose($fp);
 
@@ -273,7 +279,7 @@ class tar
                 return false;
             }
             $this->isGzipped = true;
-            $this->tar_file = gzinflate(substr($this->tar_file, 10, - 4));
+            $this->tar_file  = gzinflate(substr($this->tar_file, 10, -4));
         }
         // Parse the TAR file
         $this->__parseTar();
@@ -287,7 +293,7 @@ class tar
      * @return bool always TRUE
      * @access private
      */
-    function __generateTAR()
+    public function __generateTar()
     {
         // Clear any data currently in $this->tar_file
         unset($this->tar_file);
@@ -374,19 +380,15 @@ class tar
      * @param  string $filename
      * @return bool
      */
-    function openTAR($filename)
+    public function openTAR($filename)
     {
         // Clear any values from previous tar archives
-        unset($this->filename);
-        unset($this->isGzipped);
-        unset($this->tar_file);
-        unset($this->files);
-        unset($this->directories);
-        unset($this->numFiles);
-        unset($this->numDirectories);
+        unset($this->filename, $this->isGzipped, $this->tar_file, $this->files, $this->directories, $this->numFiles, $this->numDirectories);
+
         // If the tar file doesn't exist...
-        if (!file_exists($filename))
+        if (!file_exists($filename)) {
             return false;
+        }
 
         $this->filename = $filename;
         // Parse this file
@@ -401,7 +403,7 @@ class tar
      * @param  string $filename
      * @return bool
      */
-    function appendTar($filename)
+    public function appendTar($filename)
     {
         // If the tar file doesn't exist...
         if (!file_exists($filename)) {
@@ -418,7 +420,7 @@ class tar
      * @param  string $filename
      * @return string FALSE on fail
      */
-    function getFile($filename)
+    public function getFile($filename)
     {
         if ($this->numFiles > 0) {
             foreach ($this->files as $key => $information) {
@@ -437,7 +439,7 @@ class tar
      * @param  string $dirname
      * @return string FALSE on fail
      */
-    function getDirectory($dirname)
+    public function getDirectory($dirname)
     {
         if ($this->numDirectories > 0) {
             foreach ($this->directories as $key => $information) {
@@ -456,7 +458,7 @@ class tar
      * @param  string $filename
      * @return bool
      */
-    function containsFile($filename)
+    public function containsFile($filename)
     {
         if ($this->numFiles > 0) {
             foreach ($this->files as $key => $information) {
@@ -475,7 +477,7 @@ class tar
      * @param  string $dirname
      * @return bool
      */
-    function containsDirectory($dirname)
+    public function containsDirectory($dirname)
     {
         if ($this->numDirectories > 0) {
             foreach ($this->directories as $key => $information) {
@@ -494,20 +496,20 @@ class tar
      * @param  string $dirname
      * @return bool
      */
-    function addDirectory($dirname)
+    public function addDirectory($dirname)
     {
-        if (! file_exists($dirname)) {
+        if (!file_exists($dirname)) {
             return false;
         }
         // Get directory information
         $file_information = stat($dirname);
         // Add directory to processed data
         $this->numDirectories++;
-        $activeDir =& $this->directories[];
-        $activeDir['name'] = $dirname;
-        $activeDir['mode'] = $file_information['mode'];
-        $activeDir['time'] = $file_information['time'];
-        $activeDir['user_id'] = $file_information['uid'];
+        $activeDir             =& $this->directories[];
+        $activeDir['name']     = $dirname;
+        $activeDir['mode']     = $file_information['mode'];
+        $activeDir['time']     = $file_information['time'];
+        $activeDir['user_id']  = $file_information['uid'];
         $activeDir['group_id'] = $file_information['gid'];
         $activeDir['checksum'] = $checksum;
 
@@ -518,10 +520,10 @@ class tar
      * Add a file to the tar archive
      *
      * @param  string  $filename
-     * @param  boolean $binary   Binary file?
+     * @param  boolean $binary Binary file?
      * @return bool
      */
-    function addFile($filename, $binary = false)
+    public function addFile($filename, $binary = false)
     {
         // Make sure the file we are adding exists!
         if (!file_exists($filename)) {
@@ -543,17 +545,17 @@ class tar
         fclose($fp);
         // Add file to processed data
         $this->numFiles++;
-        $activeFile =& $this->files[];
-        $activeFile['name'] = $filename;
-        $activeFile['mode'] = $file_information['mode'];
-        $activeFile['user_id'] = $file_information['uid'];
-        $activeFile['group_id'] = $file_information['gid'];
-        $activeFile['size'] = $file_information['size'];
-        $activeFile['time'] = $file_information['mtime'];
-        $activeFile['checksum'] = isset($checksum) ? $checksum : '';
-        $activeFile['user_name'] = '';
+        $activeFile               =& $this->files[];
+        $activeFile['name']       = $filename;
+        $activeFile['mode']       = $file_information['mode'];
+        $activeFile['user_id']    = $file_information['uid'];
+        $activeFile['group_id']   = $file_information['gid'];
+        $activeFile['size']       = $file_information['size'];
+        $activeFile['time']       = $file_information['mtime'];
+        $activeFile['checksum']   = isset($checksum) ? $checksum : '';
+        $activeFile['user_name']  = '';
         $activeFile['group_name'] = '';
-        $activeFile['file'] = trim($file_contents);
+        $activeFile['file']       = trim($file_contents);
 
         return true;
     }
@@ -564,7 +566,7 @@ class tar
      * @param  string $filename
      * @return bool
      */
-    function removeFile($filename)
+    public function removeFile($filename)
     {
         if ($this->numFiles > 0) {
             foreach ($this->files as $key => $information) {
@@ -586,7 +588,7 @@ class tar
      * @param  string $dirname
      * @return bool
      */
-    function removeDirectory($dirname)
+    public function removeDirectory($dirname)
     {
         if ($this->numDirectories > 0) {
             foreach ($this->directories as $key => $information) {
@@ -607,7 +609,7 @@ class tar
      *
      * @return bool
      */
-    function saveTar()
+    public function saveTar()
     {
         if (!$this->filename) {
             return false;
@@ -622,10 +624,10 @@ class tar
      * Saves tar archive to a different file than the current file
      *
      * @param  string $filename
-     * @param  bool   $useGzip  Use GZ compression?
+     * @param  bool   $useGzip Use GZ compression?
      * @return bool
      */
-    function toTar($filename, $useGzip)
+    public function toTar($filename, $useGzip)
     {
         if (!$filename) {
             return false;
@@ -654,10 +656,10 @@ class tar
      * Sends tar archive to stdout
      *
      * @param  string $filename
-     * @param  bool   $useGzip  Use GZ compression?
+     * @param  bool   $useGzip Use GZ compression?
      * @return string
      */
-    function toTarOutput($filename, $useGzip)
+    public function toTarOutput($filename, $useGzip)
     {
         if (!$filename) {
             return false;

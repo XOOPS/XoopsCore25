@@ -10,13 +10,13 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         core
- * @since           2.0.0
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             core
+ * @since               2.0.0
+ * @version             $Id: imagemanager.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
-include __DIR__ . DIRECTORY_SEPARATOR . 'mainfile.php';
+include __DIR__ . '/mainfile.php';
 
 XoopsLoad::load('XoopsFilterInput');
 if (isset($_REQUEST['target'])) {
@@ -26,9 +26,9 @@ if (isset($_REQUEST['target'])) {
 }
 
 $op = 'list';
-if (isset($_GET['op']) && $_GET['op'] == 'upload') {
+if (isset($_GET['op']) && $_GET['op'] === 'upload') {
     $op = 'upload';
-} elseif (isset($_POST['op']) && $_POST['op'] == 'doupload') {
+} elseif (isset($_POST['op']) && $_POST['op'] === 'doupload') {
     $op = 'doupload';
 }
 
@@ -37,28 +37,29 @@ if (!is_object($xoopsUser)) {
 } else {
     $group = $xoopsUser->getGroups();
 }
-if ($op == 'list') {
+if ($op === 'list') {
     require_once $GLOBALS['xoops']->path('class/template.php');
     $xoopsTpl = new XoopsTpl();
     $xoopsTpl->assign('lang_imgmanager', _IMGMANAGER);
     $xoopsTpl->assign('sitename', htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES));
     $target = htmlspecialchars($target, ENT_QUOTES);
     $xoopsTpl->assign('target', $target);
-    $imgcat_handler =& xoops_gethandler('imagecategory');
-    $catlist =& $imgcat_handler->getList($group, 'imgcat_read', 1);
-    $catcount = count($catlist);
+    $imgcat_handler =& xoops_getHandler('imagecategory');
+    $catlist        =& $imgcat_handler->getList($group, 'imgcat_read', 1);
+    $catcount       = count($catlist);
     $xoopsTpl->assign('lang_align', _ALIGN);
     $xoopsTpl->assign('lang_add', _ADD);
     $xoopsTpl->assign('lang_close', _CLOSE);
     if ($catcount > 0) {
         $xoopsTpl->assign('lang_go', _GO);
         $catshow = (!isset($_GET['cat_id'])) ? 0 : (int)($_GET['cat_id']);
-        $catshow = (!empty($catshow) && in_array($catshow, array_keys($catlist))) ? $catshow : 0;
+//        $catshow = (!empty($catshow) && in_array($catshow, array_keys($catlist))) ? $catshow : 0;
+        $catshow = (!empty($catshow) && array_key_exists($catshow, $catlist)) ? $catshow : 0;
         $xoopsTpl->assign('show_cat', $catshow);
         if ($catshow > 0) {
             $xoopsTpl->assign('lang_addimage', _ADDIMAGE);
         }
-        $catlist = array('0' => '--') + $catlist;
+        $catlist     = array('0' => '--') + $catlist;
         $cat_options = '';
         foreach ($catlist as $c_id => $c_name) {
             $sel = '';
@@ -69,13 +70,13 @@ if ($op == 'list') {
         }
         $xoopsTpl->assign('cat_options', $cat_options);
         if ($catshow > 0) {
-            $image_handler =& xoops_gethandler('image');
-            $criteria = new CriteriaCompo(new Criteria('imgcat_id', $catshow));
+            $image_handler =& xoops_getHandler('image');
+            $criteria      = new CriteriaCompo(new Criteria('imgcat_id', $catshow));
             $criteria->add(new Criteria('image_display', 1));
             $total = $image_handler->getCount($criteria);
             if ($total > 0) {
-                $imgcat_handler =& xoops_gethandler('imagecategory');
-                $imgcat =& $imgcat_handler->get($catshow);
+                $imgcat_handler =& xoops_getHandler('imagecategory');
+                $imgcat         =& $imgcat_handler->get($catshow);
                 $xoopsTpl->assign('image_total', $total);
                 $xoopsTpl->assign('lang_image', _IMAGE);
                 $xoopsTpl->assign('lang_imagename', _IMAGENAME);
@@ -84,7 +85,7 @@ if ($op == 'list') {
                 $criteria->setLimit(10);
                 $criteria->setStart($start);
                 $storetype = $imgcat->getVar('imgcat_storetype');
-                if ($storetype == 'db') {
+                if ($storetype === 'db') {
                     $criteria->setSort('i.image_weight ASC, i.image_id');
                     $criteria->setOrder('DESC');
                     $images = $image_handler->getObjects($criteria, false, true);
@@ -94,10 +95,10 @@ if ($op == 'list') {
                     $images = $image_handler->getObjects($criteria, false, false);
                 }
                 $imgcount = count($images);
-                $max = ($imgcount > 10) ? 10 : $imgcount;
+                $max      = ($imgcount > 10) ? 10 : $imgcount;
 
                 for ($i = 0; $i < $max; ++$i) {
-                    if ($storetype == 'db') {
+                    if ($storetype === 'db') {
                         $lcode = '[img align=left id=' . $images[$i]->getVar('image_id') . ']' . $images[$i]->getVar('image_nicename') . '[/img]';
                         $code  = '[img align=center id=' . $images[$i]->getVar('image_id') . ']' . $images[$i]->getVar('image_nicename') . '[/img]';
                         $rcode = '[img align=right id=' . $images[$i]->getVar('image_id') . ']' . $images[$i]->getVar('image_nicename') . '[/img]';
@@ -112,7 +113,7 @@ if ($op == 'list') {
                 }
                 if ($total > 10) {
                     include_once $GLOBALS['xoops']->path('class/pagenav.php');
-                    $nav = new XoopsPageNav($total, 10, $start, 'start', 'target='.$target.'&amp;cat_id='.$catshow);
+                    $nav = new XoopsPageNav($total, 10, $start, 'start', 'target=' . $target . '&amp;cat_id=' . $catshow);
                     $xoopsTpl->assign('pagenav', $nav->renderNav());
                 }
             } else {
@@ -129,28 +130,28 @@ if ($op == 'list') {
     exit();
 }
 
-if ($op == 'upload') {
-    $imgcat_handler =& xoops_gethandler('imagecategory');
-    $imgcat_id = (int)($_GET['imgcat_id']);
-    $imgcat =& $imgcat_handler->get($imgcat_id);
-    $error = false;
+if ($op === 'upload') {
+    $imgcat_handler =& xoops_getHandler('imagecategory');
+    $imgcat_id      = (int)($_GET['imgcat_id']);
+    $imgcat         =& $imgcat_handler->get($imgcat_id);
+    $error          = false;
     if (!is_object($imgcat)) {
         $error = true;
     } else {
-        $imgcatperm_handler =& xoops_gethandler('groupperm');
+        $imgcatperm_handler =& xoops_getHandler('groupperm');
         if (is_object($xoopsUser)) {
-            if (! $imgcatperm_handler->checkRight('imgcat_write', $imgcat_id, $xoopsUser->getGroups())) {
+            if (!$imgcatperm_handler->checkRight('imgcat_write', $imgcat_id, $xoopsUser->getGroups())) {
                 $error = true;
             }
         } else {
-            if (! $imgcatperm_handler->checkRight('imgcat_write', $imgcat_id, XOOPS_GROUP_ANONYMOUS)) {
+            if (!$imgcatperm_handler->checkRight('imgcat_write', $imgcat_id, XOOPS_GROUP_ANONYMOUS)) {
                 $error = true;
             }
         }
     }
     if ($error != false) {
         xoops_header(false);
-        echo '</head><body><div style="text-align:center;"><input value="'._BACK.'" type="button" onclick="javascript:history.go(-1);" /></div>';
+        echo '</head><body><div style="text-align:center;"><input value="' . _BACK . '" type="button" onclick="history.go(-1);" /></div>';
         xoops_footer();
         exit();
     }
@@ -179,19 +180,19 @@ if ($op == 'upload') {
     exit();
 }
 
-if ($op == 'doupload') {
+if ($op === 'doupload') {
     if ($GLOBALS['xoopsSecurity']->check()) {
-        $image_nicename = isset($_POST['image_nicename']) ? $_POST['image_nicename'] : '';
+        $image_nicename    = isset($_POST['image_nicename']) ? $_POST['image_nicename'] : '';
         $xoops_upload_file = isset($_POST['xoops_upload_file']) ? $_POST['xoops_upload_file'] : array();
-        $imgcat_id = isset($_POST['imgcat_id']) ? (int)($_POST['imgcat_id']) : 0;
+        $imgcat_id         = isset($_POST['imgcat_id']) ? (int)($_POST['imgcat_id']) : 0;
         include_once $GLOBALS['xoops']->path('class/uploader.php');
-        $imgcat_handler =& xoops_gethandler('imagecategory');
-        $imgcat =& $imgcat_handler->get($imgcat_id);
-        $error = false;
+        $imgcat_handler =& xoops_getHandler('imagecategory');
+        $imgcat         =& $imgcat_handler->get($imgcat_id);
+        $error          = false;
         if (!is_object($imgcat)) {
             $error = true;
         } else {
-            $imgcatperm_handler =& xoops_gethandler('groupperm');
+            $imgcatperm_handler =& xoops_getHandler('groupperm');
             if (is_object($xoopsUser)) {
                 if (!$imgcatperm_handler->checkRight('imgcat_write', $imgcat_id, $xoopsUser->getGroups())) {
                     $error = true;
@@ -207,7 +208,7 @@ if ($op == 'doupload') {
     }
     if ($error != false) {
         xoops_header(false);
-        echo '</head><body><div style="text-align:center;">' . implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()) . '<br /><input value="' . _BACK . '" type="button" onclick="javascript:history.go(-1);" /></div>';
+        echo '</head><body><div style="text-align:center;">' . implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()) . '<br /><input value="' . _BACK . '" type="button" onclick="history.go(-1);" /></div>';
         xoops_footer();
         exit();
     }
@@ -217,8 +218,8 @@ if ($op == 'doupload') {
         if (!$uploader->upload()) {
             $err = $uploader->getErrors();
         } else {
-            $image_handler =& xoops_gethandler('image');
-            $image =& $image_handler->create();
+            $image_handler =& xoops_getHandler('image');
+            $image         =& $image_handler->create();
             $image->setVar('image_name', 'images/' . $uploader->getSavedFileName());
             $image->setVar('image_nicename', $image_nicename);
             $image->setVar('image_mimetype', $uploader->getMediaType());
@@ -226,8 +227,8 @@ if ($op == 'doupload') {
             $image->setVar('image_display', 1);
             $image->setVar('image_weight', 0);
             $image->setVar('imgcat_id', $imgcat_id);
-            if ($imgcat->getVar('imgcat_storetype') == 'db') {
-                $fp = @fopen($uploader->getSavedDestination(), 'rb');
+            if ($imgcat->getVar('imgcat_storetype') === 'db') {
+                $fp      = @fopen($uploader->getSavedDestination(), 'rb');
                 $fbinary = @fread($fp, filesize($uploader->getSavedDestination()));
                 @fclose($fp);
                 $image->setVar('image_body', $fbinary, true);
@@ -244,7 +245,7 @@ if ($op == 'doupload') {
     if (isset($err)) {
         xoops_header(false);
         xoops_error($err);
-        echo '</head><body><div style="text-align:center;"><input value="' . _BACK . '" type="button" onclick="javascript:history.go(-1);" /></div>';
+        echo '</head><body><div style="text-align:center;"><input value="' . _BACK . '" type="button" onclick="history.go(-1);" /></div>';
         xoops_footer();
         exit();
     }

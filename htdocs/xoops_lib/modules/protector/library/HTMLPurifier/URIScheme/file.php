@@ -23,9 +23,9 @@ class HTMLPurifier_URIScheme_file extends HTMLPurifier_URIScheme
     public $may_omit_host = true;
 
     /**
-     * @param HTMLPurifier_URI $uri
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
+     * @param  HTMLPurifier_URI     $uri
+     * @param  HTMLPurifier_Config  $config
+     * @param  HTMLPurifier_Context $context
      * @return bool
      */
     public function doValidate(&$uri, $config, $context)
@@ -37,8 +37,10 @@ class HTMLPurifier_URIScheme_file extends HTMLPurifier_URIScheme
         // While it seems to work on Firefox, the querystring has
         // no possible effect and is thus stripped.
         $uri->query = null;
+
         return true;
     }
 }
 
 // vim: et sw=4 sts=4
+

@@ -1,21 +1,23 @@
 <?php
 // start hack by Trabis
-if (!class_exists('ProtectorRegistry')) exit('Registry not found');
+if (!class_exists('ProtectorRegistry')) {
+    exit('Registry not found');
+}
 
-$registry   =& ProtectorRegistry::getInstance();
-$mydirname  = $registry->getEntry('mydirname');
-$mydirpath  = $registry->getEntry('mydirpath');
-$language   = $registry->getEntry('language');
+$registry  =& ProtectorRegistry::getInstance();
+$mydirname = $registry->getEntry('mydirname');
+$mydirpath = $registry->getEntry('mydirpath');
+$language  = $registry->getEntry('language');
 // end hack by Trabis
 
-eval( '
-function '.$mydirname.'_notify_iteminfo( $category, $item_id )
+eval('
+function ' . $mydirname . '_notify_iteminfo( $category, $item_id )
 {
-    return protector_notify_base( "'.$mydirname.'" , $category , $item_id ) ;
+    return protector_notify_base( "' . $mydirname . '" , $category , $item_id ) ;
 }
-' ) ;
+');
 
-if ( ! function_exists( 'protector_notify_base' ) ) {
+if (!function_exists('protector_notify_base')) {
 
     /**
      * @param $mydirname
@@ -24,21 +26,20 @@ if ( ! function_exists( 'protector_notify_base' ) ) {
      *
      * @return mixed
      */
-    function protector_notify_base( $mydirname , $category , $item_id )
-{
-    include_once __DIR__.'/include/common_functions.php' ;
+    function protector_notify_base($mydirname, $category, $item_id)
+    {
+        include_once __DIR__ . '/include/common_functions.php';
 
-    $db =& XoopsDatabaseFactory::getDatabaseConnection();
+        $db =& XoopsDatabaseFactory::getDatabaseConnection();
 
-    $module_handler =& xoops_gethandler( 'module' ) ;
-    $module =& $module_handler->getByDirname( $mydirname ) ;
+        $module_handler =& xoops_getHandler('module');
+        $module         =& $module_handler->getByDirname($mydirname);
 
-    if ($category == 'global') {
-        $item['name'] = '';
-        $item['url'] = '';
+        if ($category === 'global') {
+            $item['name'] = '';
+            $item['url']  = '';
 
-        return $item ;
+            return $item;
+        }
     }
-}
-
 }

@@ -27,19 +27,20 @@ class HTMLPurifier_URIFilter_SafeIframe extends HTMLPurifier_URIFilter
     // can't check HTML.SafeIframe in the 'prepare' step: we have to
     // defer till the actual filtering.
     /**
-     * @param HTMLPurifier_Config $config
+     * @param  HTMLPurifier_Config $config
      * @return bool
      */
     public function prepare($config)
     {
         $this->regexp = $config->get('URI.SafeIframeRegexp');
+
         return true;
     }
 
     /**
-     * @param HTMLPurifier_URI $uri
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
+     * @param  HTMLPurifier_URI     $uri
+     * @param  HTMLPurifier_Config  $config
+     * @param  HTMLPurifier_Context $context
      * @return bool
      */
     public function filter(&$uri, $config, $context)
@@ -60,9 +61,11 @@ class HTMLPurifier_URIFilter_SafeIframe extends HTMLPurifier_URIFilter
         if ($this->regexp === null) {
             return false;
         }
+
         // actually check the whitelists
         return preg_match($this->regexp, $uri->toString());
     }
 }
 
 // vim: et sw=4 sts=4
+

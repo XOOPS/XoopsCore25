@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Cookie class
  *
@@ -10,15 +11,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author      Andricq Nicolas (AKA MusS)
- * @package     system
- * @version     $Id$
+ * @license             http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @author              Andricq Nicolas (AKA MusS)
+ * @package             system
+ * @version             $Id: cookie.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-
-class Cookie
+class cookie
 {
     // Reserved session keys
     private static $_reserved = array('XOLOGGERVIEW', 'xoops_user');
@@ -27,7 +27,9 @@ class Cookie
     /**
      *
      */
-    private function __construct() {}
+    private function __construct()
+    {
+    }
 
     // Alias for delete() function
     /**
@@ -52,7 +54,7 @@ class Cookie
             // Check for key array
             if (is_array($key)) {
                 // Grab key/value pair
-                list ($k, $v) = each($key);
+                list($k, $v) = each($key);
 
                 // Set string representation
                 $key = $k . '[' . $v . ']';
@@ -62,10 +64,8 @@ class Cookie
 
                 // Unset the cookie
                 unset($_COOKIE[$k][$v]);
-            }
-
-            // Check for cookie array
-            else if (is_array($_COOKIE[$key])) {
+            } // Check for cookie array
+            elseif (is_array($_COOKIE[$key])) {
                 foreach ($_COOKIE[$key] as $k => $v) {
                     // Set string representation
                     $cookie = $key . '[' . $k . ']';
@@ -76,9 +76,7 @@ class Cookie
                     // Unset the cookie
                     unset($_COOKIE[$key][$k]);
                 }
-            }
-
-            // Unset single cookie
+            } // Unset single cookie
             else {
                 // Set expiration time to -1hr (will cause browser deletion)
                 setcookie($key, false, time() - 3600);
@@ -103,14 +101,16 @@ class Cookie
         // Check for array
         if (is_array($key)) {
             // Grab key/value pair
-            list ($k, $v) = each($key);
+            list($k, $v) = each($key);
 
             // Check for key/value pair and return
-            if (isset($_COOKIE[$k][$v])) return true;
+            if (isset($_COOKIE[$k][$v])) {
+                return true;
+            }
+        } // If key exists, return true
+        elseif (isset($_COOKIE[$key])) {
+            return true;
         }
-
-        // If key exists, return true
-        else if (isset($_COOKIE[$key])) return true;
 
         // Key does not exist
         return false;
@@ -130,17 +130,19 @@ class Cookie
         // Check for array
         if (is_array($key)) {
             // Grab key/value pair
-            list ($k, $v) = each($key);
+            list($k, $v) = each($key);
 
             // Check for key/value pair and return
-            if (isset($_COOKIE[$k][$v])) return $_COOKIE[$k][$v];
+            if (isset($_COOKIE[$k][$v])) {
+                return $_COOKIE[$k][$v];
+            }
+        } // Return single key if it's set
+        elseif (isset($_COOKIE[$key])) {
+            return $_COOKIE[$key];
+        } // Otherwise return null
+        else {
+            return null;
         }
-
-        // Return single key if it's set
-        else if (isset($_COOKIE[$key])) return $_COOKIE[$key];
-
-        // Otherwise return null
-        else return null;
     }
 
     // Return the cookie array
@@ -159,15 +161,13 @@ class Cookie
      * @param bool   $secure
      * @param bool   $httponly
      */
-    public static function set(
-        $key,
-        $value,
-        $expire = 0,            /* Default expire time (session, 1 week = 604800) */
-        $path = '',             /* Default path */
-        $domain = '',           /* Default domain */
-        $secure = false,        /* Does this cookie need a secure HTTPS connection? */
-        $httponly = true        /* Can non-HTTP services access this cookie (IE: javascript)? */
-    ){
+    public static function set($key, $value, $expire = 0,            /* Default expire time (session, 1 week = 604800) */
+                               $path = '',             /* Default path */
+                               $domain = '',           /* Default domain */
+                               $secure = false,        /* Does this cookie need a secure HTTPS connection? */
+                               $httponly = true        /* Can non-HTTP services access this cookie (IE: javascript)? */
+    )
+    {
         // Make sure they aren't trying to set a reserved word
         if (!in_array($key, self::$_reserved)) {
             // If $key is in array format, change it to string representation
@@ -175,10 +175,10 @@ class Cookie
 
             // Store the cookie
             setcookie($key, $value, $expire, $path, $domain, $secure, $httponly);
+        } // Otherwise, throw an error
+        else {
+            Error::warning('Could not set key -- it is reserved.', __CLASS__);
         }
-
-        // Otherwise, throw an error
-        else Error::warning('Could not set key -- it is reserved.', __CLASS__);
     }
 
     // Converts strings to arrays (or vice versa if toString = true)
@@ -195,15 +195,13 @@ class Cookie
             // If $key is in array format, change it to string representation
             if (is_array($key)) {
                 // Grab key/value pair
-                list ($k, $v) = each($key);
+                list($k, $v) = each($key);
 
                 // Set string representation
                 $key = $k . '[' . $v . ']';
             }
-        }
-
-        // Converting from string to array
-        else if (!is_array($key)) {
+        } // Converting from string to array
+        elseif (!is_array($key)) {
             // is this a string representation of an array?
             if (preg_match('/([\w\d]+)\[([\w\d]+)\]$/i', $key, $matches)) {
                 // Store as key/value pair

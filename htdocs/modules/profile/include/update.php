@@ -10,16 +10,26 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         profile
- * @since           2.3.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             profile
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: update.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 $path = dirname(dirname(dirname(__DIR__)));
-require_once $path . DIRECTORY_SEPARATOR . 'include' . DIRECTORY_SEPARATOR . 'cp_header.php';
+require_once $path . '/include' . '/cp_header.php';
 
+/**
+ * @param      $module
+ * @param null $oldversion
+ * @return bool
+ */
+/**
+ * @param      $module
+ * @param null $oldversion
+ * @return bool
+ */
 function xoops_module_update_profile(&$module, $oldversion = null)
 {
     if ($oldversion < 162) {
@@ -64,8 +74,7 @@ function xoops_module_update_profile(&$module, $oldversion = null)
             $field_handler->insert($object, true);
 
             $gperm_itemid = $object->getVar('field_id');
-            $sql = "UPDATE " . $GLOBALS['xoopsDB']->prefix("group_permission") . " SET gperm_itemid = " . $gperm_itemid . "   WHERE gperm_itemid = " . $myrow['fieldid'] . "       AND gperm_modid = "
-                . $module->getVar('mid') . "       AND gperm_name IN ('profile_edit', 'profile_search')";
+            $sql          = "UPDATE " . $GLOBALS['xoopsDB']->prefix("group_permission") . " SET gperm_itemid = " . $gperm_itemid . "   WHERE gperm_itemid = " . $myrow['fieldid'] . "       AND gperm_modid = " . $module->getVar('mid') . "       AND gperm_name IN ('profile_edit', 'profile_search')";
             $GLOBALS['xoopsDB']->queryF($sql);
 
             $groups_visible = $goupperm_handler->getGroupIds("profile_visible", $myrow['fieldid'], $module->getVar('mid'));
@@ -83,9 +92,7 @@ function xoops_module_update_profile(&$module, $oldversion = null)
 
         // Copy data from profile table
         foreach ($fields as $field) {
-            $GLOBALS['xoopsDB']->queryF(
-                "UPDATE `" . $GLOBALS['xoopsDB']->prefix("profile_profile") . "` u, `" . $GLOBALS['xoopsDB']->prefix("user_profile") . "` p SET u.{$field} = p.{$field} WHERE u.profile_id=p.profileid"
-            );
+            $GLOBALS['xoopsDB']->queryF("UPDATE `" . $GLOBALS['xoopsDB']->prefix("profile_profile") . "` u, `" . $GLOBALS['xoopsDB']->prefix("user_profile") . "` p SET u.{$field} = p.{$field} WHERE u.profile_id=p.profileid");
         }
 
         // Drop old profile table
@@ -105,14 +112,13 @@ function xoops_module_update_profile(&$module, $oldversion = null)
         $GLOBALS['xoopsDB']->queryF("UPDATE `" . $GLOBALS['xoopsDB']->prefix("profile_field") . "` SET `field_valuetype`=1 WHERE `field_name`='umode'");
     }
 
-
     if ($oldversion < 186) {
         // delete old html template files
         $templateDirectory = XOOPS_ROOT_PATH . "/modules/" . $module->getVar('dirname', 'n') . "/templates/";
         $template_list     = array_diff(scandir($templateDirectory), array('..', '.'));
         foreach ($template_list as $k => $v) {
             $fileinfo = new SplFileInfo($templateDirectory . $v);
-            if ($fileinfo->getExtension() == 'html' && $fileinfo->getFilename() != 'index.html') {
+            if ($fileinfo->getExtension() === 'html' && $fileinfo->getFilename() !== 'index.html') {
                 @unlink($templateDirectory . $v);
             }
         }
@@ -123,11 +129,11 @@ function xoops_module_update_profile(&$module, $oldversion = null)
         $folderHandler   = XoopsFile::getHandler("folder", $imagesDirectory);
         $folderHandler->delete($imagesDirectory);
         //delete /templates/style.css file
-        $cssFile = XOOPS_ROOT_PATH . "/modules/" . $module->getVar('dirname', 'n') . "/templates/style.css";
-        $folderHandler   = XoopsFile::getHandler("file", $cssFile);
+        $cssFile       = XOOPS_ROOT_PATH . "/modules/" . $module->getVar('dirname', 'n') . "/templates/style.css";
+        $folderHandler = XoopsFile::getHandler("file", $cssFile);
         $folderHandler->delete($cssFile);
         //delete .html entries from the tpl table
-        $sql = "DELETE FROM " . $GLOBALS['xoopsDB']->prefix("tplfile") . " WHERE `tpl_module` = '" .$module->getVar('dirname', 'n') . "' AND `tpl_file` LIKE '%.html%'";
+        $sql = "DELETE FROM " . $GLOBALS['xoopsDB']->prefix("tplfile") . " WHERE `tpl_module` = '" . $module->getVar('dirname', 'n') . "' AND `tpl_file` LIKE '%.html%'";
         $GLOBALS['xoopsDB']->queryF($sql);
     }
 

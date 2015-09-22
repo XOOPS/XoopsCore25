@@ -10,13 +10,13 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         core
- * @since           2.3.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             core
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: xoopseditor.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 xoops_load('XoopsFormTextArea');
 
@@ -25,22 +25,22 @@ xoops_load('XoopsFormTextArea');
  */
 class XoopsEditor extends XoopsFormTextArea
 {
-    var $isEnabled;
-    var $configs;
-    var $rootPath;
-    var $_rows = 5;
-    var $_cols = 50;
+    public $isEnabled;
+    public $configs;
+    public $rootPath;
+    public $_rows = 5;
+    public $_cols = 50;
 
     /**
      * Constructor
      */
-    function __construct()
+    public function __construct()
     {
         $args = func_get_args();
         // For backward compatibility
         if (!is_array($args[0])) {
             $i = 0;
-            foreach (array('caption' , 'name' , 'value' , 'rows' , 'cols' , 'hiddentext') as $key) {
+            foreach (array('caption', 'name', 'value', 'rows', 'cols', 'hiddentext') as $key) {
                 if (isset($args[$i])) {
                     $configs[$key] = $args[$i];
                 }
@@ -55,9 +55,9 @@ class XoopsEditor extends XoopsFormTextArea
         foreach ($configs as $key => $val) {
             if (method_exists($this, "set" . ucfirst($key))) {
                 $this->{"set" . ucfirst($key)}($val);
-            } else if (array_key_exists("_{$key}", $vars)) {
+            } elseif (array_key_exists("_{$key}", $vars)) {
                 $this->{"_{$key}"} = $val;
-            } else if (array_key_exists($key, $vars)) {
+            } elseif (array_key_exists($key, $vars)) {
                 $this->{$key} = $val;
             } else {
                 $this->configs[$key] = $val;
@@ -69,7 +69,7 @@ class XoopsEditor extends XoopsFormTextArea
     /**
      * @param $configs
      */
-    function XoopsEditor($configs)
+    public function XoopsEditor($configs)
     {
         $this->__construct($configs);
     }
@@ -77,7 +77,7 @@ class XoopsEditor extends XoopsFormTextArea
     /**
      * @return bool
      */
-    function isActive()
+    public function isActive()
     {
         $this->isEnabled = true;
 
@@ -89,27 +89,28 @@ class XoopsEditor extends XoopsFormTextArea
  * Editor handler
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package core
- * @since 2.3.0
- * @author Taiwen Jiang <phppp@users.sourceforge.net>
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             core
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
 class XoopsEditorHandler
 {
     // static $instance;
-    var $root_path = "";
-    var $nohtml = false;
-    var $allowed_editors = array();
+    public $root_path       = "";
+    public $nohtml          = false;
+    public $allowed_editors = array();
+
     /**
      * Enter description here...
      *
      */
-    function __construct()
+    public function __construct()
     {
         $this->root_path = XOOPS_ROOT_PATH . '/class/xoopseditor';
     }
 
-    function XoopsEditorHandler()
+    public function XoopsEditorHandler()
     {
         $this->__construct();
     }
@@ -121,11 +122,11 @@ class XoopsEditorHandler
      * @static
      * @staticvar object
      */
-    static function &getInstance()
+    public static function &getInstance()
     {
         static $instance;
         if (!isset($instance)) {
-            $class = __CLASS__;
+            $class    = __CLASS__;
             $instance = new $class();
         }
 
@@ -141,7 +142,7 @@ class XoopsEditorHandler
      *
      * @return null
      */
-    function get($name = '', $options = null, $noHtml = false, $OnFailure = '')
+    public function get($name = '', $options = null, $noHtml = false, $OnFailure = '')
     {
         if (array_key_exists($name, $this->getList($noHtml)) && $editor = $this->_loadEditor($name, $options)) {
             return $editor;
@@ -162,7 +163,7 @@ class XoopsEditorHandler
      *
      * @return array
      */
-    function getList($noHtml = false)
+    public function getList($noHtml = false)
     {
         /*
             Do NOT use this method statically, please use
@@ -177,22 +178,23 @@ class XoopsEditorHandler
         xoops_load('XoopsCache');
         $list = XoopsCache::read('editorlist');
         if (empty($list)) {
-            $list = array();
+            $list  = array();
             $order = array();
             xoops_load('XoopsLists');
             $_list = XoopsLists::getDirListAsArray($this->root_path . '/');
             foreach ($_list as $item) {
                 if (file_exists($file = $this->root_path . '/' . $item . '/language/' . $GLOBALS['xoopsConfig']['language'] . '.php')) {
                     include_once $file;
-                } else if (file_exists($file = $this->root_path . '/' . $item . '/language/english.php')) {
+                } elseif (file_exists($file = $this->root_path . '/' . $item . '/language/english.php')) {
                     include_once $file;
                 }
                 if (file_exists($file = $this->root_path . '/' . $item . '/editor_registry.php')) {
                     include $file;
-                    if (empty($config['order']))
+                    if (empty($config['order'])) {
                         continue;
-                    $order[] = $config['order'];
-                    $list[$item] = array('title' => $config['title'] , 'nohtml' => $config['nohtml']);
+                    }
+                    $order[]     = $config['order'];
+                    $list[$item] = array('title' => $config['title'], 'nohtml' => $config['nohtml']);
                 }
             }
             array_multisort($order, $list);
@@ -205,8 +207,9 @@ class XoopsEditorHandler
         }
         $_list = array();
         foreach ($editors as $name) {
-            if (!empty($noHtml) && empty($list[$name]['nohtml']))
+            if (!empty($noHtml) && empty($list[$name]['nohtml'])) {
                 continue;
+            }
             $_list[$name] = $list[$name]['title'];
         }
 
@@ -219,7 +222,7 @@ class XoopsEditorHandler
      * @param mixed $editor
      * @return
      */
-    function render($editor)
+    public function render($editor)
     {
         trigger_error(__CLASS__ . '::' . __FUNCTION__ . '() deprecated', E_USER_WARNING);
 
@@ -233,7 +236,7 @@ class XoopsEditorHandler
      * @param  mixed $options
      * @return void
      */
-    function setConfig($editor, $options)
+    public function setConfig($editor, $options)
     {
         if (method_exists($editor, 'setConfig')) {
             $editor->setConfig($options);
@@ -251,7 +254,7 @@ class XoopsEditorHandler
      * @param mixed $options
      * @return
      */
-    function _loadEditor($name, $options = null)
+    public function _loadEditor($name, $options = null)
     {
         $editor = null;
         if (empty($name) || !array_key_exists($name, $this->getList())) {
@@ -260,7 +263,7 @@ class XoopsEditorHandler
         $editor_path = $this->root_path . '/' . $name;
         if (file_exists($file = $editor_path . '/language/' . $GLOBALS['xoopsConfig']['language'] . '.php')) {
             include_once $file;
-        } else if (file_exists($file = $editor_path . '/language/english.php')) {
+        } elseif (file_exists($file = $editor_path . '/language/english.php')) {
             include_once $file;
         }
         if (file_exists($file = $editor_path . '/editor_registry.php')) {

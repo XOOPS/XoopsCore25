@@ -10,18 +10,18 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @since           2.0.0
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @since               2.0.0
+ * @version             $Id: footer.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 $xoopsPreload =& XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.footer.start');
 
-if (! defined("XOOPS_FOOTER_INCLUDED")) {
+if (!defined("XOOPS_FOOTER_INCLUDED")) {
     define("XOOPS_FOOTER_INCLUDED", 1);
 
     $xoopsLogger =& XoopsLogger::getInstance();
@@ -42,7 +42,7 @@ if (! defined("XOOPS_FOOTER_INCLUDED")) {
     } else {
         // RMV-NOTIFY
         include_once $GLOBALS['xoops']->path('include/notification_select.php');
-        if (! headers_sent()) {
+        if (!headers_sent()) {
             header('Content-Type:text/html; charset=' . _CHARSET);
             header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
             //header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');

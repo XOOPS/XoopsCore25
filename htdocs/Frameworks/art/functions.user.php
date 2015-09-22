@@ -3,17 +3,17 @@
  * user/member handlers
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @since           1.00
- * @version         $Id$
- * @package         Frameworks
- * @subpackage      art
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @since               1.00
+ * @version             $Id: functions.user.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @package             Frameworks
+ * @subpackage          art
  */
 if (!defined("FRAMEWORKS_ART_FUNCTIONS_USER")):
-define("FRAMEWORKS_ART_FUNCTIONS_USER", true);
+    define("FRAMEWORKS_ART_FUNCTIONS_USER", true);
 
-xoops_load('XoopsUserUtility');
+    xoops_load('XoopsUserUtility');
 
     /**
      * @param bool $asString
@@ -21,11 +21,11 @@ xoops_load('XoopsUserUtility');
      * @return mixed
      */
     function mod_getIP($asString = false)
-{
-    $GLOBALS['xoopsLogger']->addDeprecated("Deprecated function '" . __FUNCTION__ . "', use XoopsUserUtility directly.");
+    {
+        $GLOBALS['xoopsLogger']->addDeprecated("Deprecated function '" . __FUNCTION__ . "', use XoopsUserUtility directly.");
 
-    return XoopsUserUtility::getIP($asString);
-}
+        return XoopsUserUtility::getIP($asString);
+    }
 
     /**
      * @param      $uid
@@ -34,13 +34,13 @@ xoops_load('XoopsUserUtility');
      *
      * @return array
      */
-    function &mod_getUnameFromIds( $uid, $usereal = false, $linked = false )
-{
-    $GLOBALS['xoopsLogger']->addDeprecated("Deprecated function '" . __FUNCTION__ . "', use XoopsUserUtility directly.");
-    $ids = XoopsUserUtility::getUnameFromIds($uid, $usereal, $linked);
+    function &mod_getUnameFromIds($uid, $usereal = false, $linked = false)
+    {
+        $GLOBALS['xoopsLogger']->addDeprecated("Deprecated function '" . __FUNCTION__ . "', use XoopsUserUtility directly.");
+        $ids = XoopsUserUtility::getUnameFromIds($uid, $usereal, $linked);
 
-    return $ids;
-}
+        return $ids;
+    }
 
     /**
      * @param      $uid
@@ -49,11 +49,11 @@ xoops_load('XoopsUserUtility');
      *
      * @return string
      */
-    function mod_getUnameFromId( $uid, $usereal = 0, $linked = false)
-{
-    $GLOBALS['xoopsLogger']->addDeprecated("Deprecated function '" . __FUNCTION__ . "', user XoopsUserUtility directly.");
+    function mod_getUnameFromId($uid, $usereal = 0, $linked = false)
+    {
+        $GLOBALS['xoopsLogger']->addDeprecated("Deprecated function '" . __FUNCTION__ . "', user XoopsUserUtility directly.");
 
-    return XoopsUserUtility::getUnameFromId($uid, $usereal, $linked);
-}
+        return XoopsUserUtility::getUnameFromId($uid, $usereal, $linked);
+    }
 
 endif;

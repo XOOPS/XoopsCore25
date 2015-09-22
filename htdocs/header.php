@@ -10,16 +10,16 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         core
- * @since           2.0.0
- * @author          Kazumi Ono <webmaster@myweb.ne.jp>
- * @author          Skalpa Keo <skalpa@xoops.org>
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             core
+ * @since               2.0.0
+ * @author              Kazumi Ono <webmaster@myweb.ne.jp>
+ * @author              Skalpa Keo <skalpa@xoops.org>
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: header.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 $xoopsPreload =& XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.header.start');
@@ -30,7 +30,7 @@ $xoopsLogger =& XoopsLogger::getInstance();
 $xoopsLogger->stopTime('Module init');
 $xoopsLogger->startTime('XOOPS output init');
 
-if ($xoopsConfig['theme_set'] != 'default' && file_exists(XOOPS_THEME_PATH . '/' . $xoopsConfig['theme_set'] . '/theme.php')) {
+if ($xoopsConfig['theme_set'] !== 'default' && file_exists(XOOPS_THEME_PATH . '/' . $xoopsConfig['theme_set'] . '/theme.php')) {
     require_once $GLOBALS['xoops']->path('include/xoops13_header.php');
 } else {
     global $xoopsOption, $xoopsConfig, $xoopsModule;
@@ -48,10 +48,10 @@ if ($xoopsConfig['theme_set'] != 'default' && file_exists(XOOPS_THEME_PATH . '/'
         }
     }
 
-    $xoopsThemeFactory = null;
-    $xoopsThemeFactory = new xos_opal_ThemeFactory();
+    $xoopsThemeFactory                = null;
+    $xoopsThemeFactory                = new xos_opal_ThemeFactory();
     $xoopsThemeFactory->allowedThemes = $xoopsConfig['theme_set_allowed'];
-    $xoopsThemeFactory->defaultTheme = $xoopsConfig['theme_set'];
+    $xoopsThemeFactory->defaultTheme  = $xoopsConfig['theme_set'];
 
     /**
      * @var xos_opal_Theme
@@ -84,7 +84,7 @@ if ($xoopsConfig['theme_set'] != 'default' && file_exists(XOOPS_THEME_PATH . '/'
     if (!empty($xoopsModule)) {
         $xoTheme->contentCacheLifetime = @$xoopsConfig['module_cache'][$xoopsModule->getVar('mid', 'n')];
         // Tricky solution for setting cache time for homepage
-    } elseif (!empty($xoopsOption['template_main']) && $xoopsOption['template_main'] == 'db:system_homepage.html') {
+    } elseif (!empty($xoopsOption['template_main']) && $xoopsOption['template_main'] === 'db:system_homepage.html') {
         $xoTheme->contentCacheLifetime = 604800;
     }
 

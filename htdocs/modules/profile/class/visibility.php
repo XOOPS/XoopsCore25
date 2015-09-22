@@ -10,15 +10,15 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         profile
- * @since           2.3.0
- * @author          Jan Pedersen
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             profile
+ * @since               2.3.0
+ * @author              Jan Pedersen
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: visibility.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-// defined('XOOPS_ROOT_PATH') || die("XOOPS root path not defined");
+// defined('XOOPS_ROOT_PATH') || exit("XOOPS root path not defined");
 
 /**
  * Class ProfileVisibility
@@ -28,7 +28,7 @@ class ProfileVisibility extends XoopsObject
     /**
      *
      */
-    function __construct()
+    public function __construct()
     {
         $this->initVar('field_id', XOBJ_DTYPE_INT);
         $this->initVar('user_group', XOBJ_DTYPE_INT);
@@ -42,12 +42,12 @@ class ProfileVisibility extends XoopsObject
 class ProfileVisibilityHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * @param null|object $db
+     * @param null|XoopsDatabase $db
      */
-    function __construct(&$db)
+    public function __construct(XoopsDatabase $db)
     {
         parent::__construct($db, 'profile_visibility', 'profilevisibility', 'field_id');
-       }
+    }
 
     /**
      * Get fields visible to the $user_groups on a $profile_groups profile
@@ -57,10 +57,10 @@ class ProfileVisibilityHandler extends XoopsPersistableObjectHandler
      *
      * @return array
      */
-    function getVisibleFields($profile_groups, $user_groups = null)
+    public function getVisibleFields($profile_groups, $user_groups = null)
     {
         $profile_groups[] = $user_groups[] = 0;
-        $sql = "SELECT field_id FROM {$this->table} WHERE profile_group IN (" . implode(',', $profile_groups) . ")";
+        $sql              = "SELECT field_id FROM {$this->table} WHERE profile_group IN (" . implode(',', $profile_groups) . ")";
         $sql .= " AND user_group IN (" . implode(',', $user_groups) . ")";
         $field_ids = array();
         if ($result = $this->db->query($sql)) {

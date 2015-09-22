@@ -10,12 +10,12 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @since           2.0.0
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @since               2.0.0
+ * @version             $Id: backend.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-include __DIR__ . DIRECTORY_SEPARATOR . 'mainfile.php';
+include __DIR__ . '/mainfile.php';
 
 $GLOBALS['xoopsLogger']->activated = false;
 if (function_exists('mb_http_output')) {
@@ -24,8 +24,8 @@ if (function_exists('mb_http_output')) {
 header('Content-Type:text/xml; charset=utf-8');
 
 include_once $GLOBALS['xoops']->path('class/template.php');
-$tpl = new XoopsTpl();
-$tpl->caching = 2;
+$tpl                 = new XoopsTpl();
+$tpl->caching        = 2;
 $tpl->cache_lifetime = 3600;
 if (!$tpl->is_cached('db:system_rss.html')) {
     xoops_load('XoopsLocal');
@@ -59,10 +59,10 @@ if (!$tpl->is_cached('db:system_rss.html')) {
     if (!empty($sarray) && is_array($sarray)) {
         foreach ($sarray as $story) {
             $tpl->append('items', array(
-                'title' => XoopsLocal::convert_encoding(htmlspecialchars($story->title(), ENT_QUOTES)) ,
-                'link' => XOOPS_URL . '/modules/news/article.php?storyid=' . $story->storyid() ,
-                'guid' => XOOPS_URL . '/modules/news/article.php?storyid=' . $story->storyid() ,
-                'pubdate' => formatTimestamp($story->published(), 'rss') ,
+                'title'       => XoopsLocal::convert_encoding(htmlspecialchars($story->title(), ENT_QUOTES)),
+                'link'        => XOOPS_URL . '/modules/news/article.php?storyid=' . $story->storyid(),
+                'guid'        => XOOPS_URL . '/modules/news/article.php?storyid=' . $story->storyid(),
+                'pubdate'     => formatTimestamp($story->published(), 'rss'),
                 'description' => XoopsLocal::convert_encoding(htmlspecialchars($story->hometext(), ENT_QUOTES))));
         }
     }

@@ -11,23 +11,25 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @author      Maxime Cointin (AKA Kraven30)
- * @package     system
- * @version     $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @author              Maxime Cointin (AKA Kraven30)
+ * @package             system
+ * @version             $Id: jquery.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-include dirname( dirname(__DIR__) ) . '/header.php';
+include dirname(dirname(__DIR__)) . '/header.php';
 
-// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) exit( _NOPERM );
+if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid())) {
+    exit(_NOPERM);
+}
 
 error_reporting(0);
 $GLOBALS['xoopsLogger']->activated = false;
 
-if ( file_exists('./../../language/'.$xoopsConfig['language'].'"/admin/tplsets.php') ) {
-    include_once './../../language/'.$xoopsConfig['language'].'/admin/tplsets.php';
+if (file_exists('./../../language/' . $xoopsConfig['language'] . '"/admin/tplsets.php')) {
+    include_once './../../language/' . $xoopsConfig['language'] . '/admin/tplsets.php';
 } else {
     include_once './../../language/english/admin/tplsets.php';
 }
@@ -44,16 +46,15 @@ switch ($op) {
     // Display tree folder
     case "tpls_display_folder":
         $_REQUEST['dir'] = urldecode($_REQUEST['dir']);
-        $root = XOOPS_THEME_PATH;
-        if ( file_exists($root . $_REQUEST['dir']) ) {
+        $root            = XOOPS_THEME_PATH;
+        if (file_exists($root . $_REQUEST['dir'])) {
             $files = scandir($root . $_REQUEST['dir']);
             natcasesort($files);
-            if ( count($files) > 2 ) { /* The 2 accounts for . and .. */
+            if (count($files) > 2) { /* The 2 accounts for . and .. */
                 echo "<ul class=\"jqueryFileTree\" style=\"display: none;\">";
                 // All dirs
                 foreach ($files as $file) {
-
-                    if ( file_exists($root . $_REQUEST['dir'] . $file) && $file != '.' && $file != '..' && is_dir($root . $_REQUEST['dir'] . $file) ) {
+                    if (file_exists($root . $_REQUEST['dir'] . $file) && $file !== '.' && $file !== '..' && is_dir($root . $_REQUEST['dir'] . $file)) {
                         //retirer .svn
                         $file_no_valid = array('.svn', 'icons', 'img', 'images', 'language');
 
@@ -64,18 +65,17 @@ switch ($op) {
                 }
                 // All files
                 foreach ($files as $file) {
-                    if ( file_exists($root . $_REQUEST['dir'] . $file) && $file != '.' && $file != '..' && !is_dir($root . $_REQUEST['dir'] . $file) && $file != 'index.html' ) {
+                    if (file_exists($root . $_REQUEST['dir'] . $file) && $file !== '.' && $file !== '..' && !is_dir($root . $_REQUEST['dir'] . $file) && $file !== 'index.html') {
                         $ext = preg_replace('/^.*\./', '', $file);
 
-                        $extensions = array('.html', '.htm', '.css');
+                        $extensions      = array('.html', '.htm', '.css');
                         $extension_verif = strrchr($file, '.');
 
                         if (in_array($extension_verif, $extensions)) {
-                            echo "<li class=\"file ext_$ext\"><a href=\"#\" onclick=\"tpls_edit_file('".htmlentities($_REQUEST['dir'].$file)."', '".htmlentities($_REQUEST['dir'])."', '".htmlentities($file)."', '".$ext."');\" rel=\"tpls_edit_file('".htmlentities($_REQUEST['dir'].$file)."', '".htmlentities($_REQUEST['dir'])."', '".htmlentities($file)."', '".$ext."');\">" . htmlentities($file) . "</a></li>";
+                            echo "<li class=\"file ext_$ext\"><a href=\"#\" onclick=\"tpls_edit_file('" . htmlentities($_REQUEST['dir'] . $file) . "', '" . htmlentities($_REQUEST['dir']) . "', '" . htmlentities($file) . "', '" . $ext . "');\" rel=\"tpls_edit_file('" . htmlentities($_REQUEST['dir'] . $file) . "', '" . htmlentities($_REQUEST['dir']) . "', '" . htmlentities($file) . "', '" . $ext . "');\">" . htmlentities($file) . "</a></li>";
                         } else {
                             //echo "<li class=\"file ext_$ext\">" . htmlentities($file) . "</li>";
                         }
-
                     }
                 }
                 echo "</ul>";
@@ -84,21 +84,20 @@ switch ($op) {
         break;
     // Edit File
     case 'tpls_edit_file':
-        $path_file = realpath(XOOPS_ROOT_PATH.'/themes'.trim($_REQUEST['path_file']));
-        $path_file = str_replace('\\','/',$path_file);
+        $path_file = realpath(XOOPS_ROOT_PATH . '/themes' . trim($_REQUEST['path_file']));
+        $path_file = str_replace('\\', '/', $path_file);
 
         //Button restore
-        if (file_exists($path_file.'.back')) {
-            $restore = '<button class="ui-corner-all tooltip" type="button" onclick="tpls_restore(\''.$path_file.'\')" value="'._AM_SYSTEM_TEMPLATES_RESTORE.'" title="'._AM_SYSTEM_TEMPLATES_RESTORE.'">
-                            <img src="'.system_AdminIcons('revert.png').'" alt="'._AM_SYSTEM_TEMPLATES_RESTORE.'" />
+        $restore = '';
+        if (file_exists($path_file . '.back')) {
+            $restore = '<button class="ui-corner-all tooltip" type="button" onclick="tpls_restore(\'' . $path_file . '\')" value="' . _AM_SYSTEM_TEMPLATES_RESTORE . '" title="' . _AM_SYSTEM_TEMPLATES_RESTORE . '">
+                            <img src="' . system_AdminIcons('revert.png') . '" alt="' . _AM_SYSTEM_TEMPLATES_RESTORE . '" />
                         </button>';
-        } else {
-            $restore = '';
         }
         xoops_load('XoopsFile');
         XoopsFile::load('file');
 
-        $file = XoopsFile::getHandler('file', $path_file);
+        $file    = XoopsFile::getHandler('file', $path_file);
         $content = $file->read();
         if (empty($content)) {
             echo _AM_SYSTEM_TEMPLATES_EMPTY_FILE;
@@ -111,12 +110,12 @@ switch ($op) {
                     <td>
                           <div class="xo-btn-actions">
                               <div class="xo-buttons">
-                                  <button class="ui-corner-all tooltip" type="submit" value="'._AM_SYSTEM_TEMPLATES_SAVE.'" title="'._AM_SYSTEM_TEMPLATES_SAVE.'">
-                                      <img src="'.system_AdminIcons('save.png').'" alt="'._AM_SYSTEM_TEMPLATES_SAVE.'" />
+                                  <button class="ui-corner-all tooltip" type="submit" value="' . _AM_SYSTEM_TEMPLATES_SAVE . '" title="' . _AM_SYSTEM_TEMPLATES_SAVE . '">
+                                      <img src="' . system_AdminIcons('save.png') . '" alt="' . _AM_SYSTEM_TEMPLATES_SAVE . '" />
                                   </button>
-                                  '.$restore.'
-                                  <button class="ui-corner-all tooltip" type="button" onclick="$(\'#display_contenu\').hide();$(\'#display_form\').fadeIn(\'fast\');" title="'._AM_SYSTEM_TEMPLATES_CANCEL.'">
-                                      <img src="'.system_AdminIcons('cancel.png').'" alt="'._AM_SYSTEM_TEMPLATES_CANCEL.'" />
+                                  ' . $restore . '
+                                  <button class="ui-corner-all tooltip" type="button" onclick="$(\'#display_contenu\').hide();$(\'#display_form\').fadeIn(\'fast\');" title="' . _AM_SYSTEM_TEMPLATES_CANCEL . '">
+                                      <img src="' . system_AdminIcons('cancel.png') . '" alt="' . _AM_SYSTEM_TEMPLATES_CANCEL . '" />
                                   </button>
                                   <div class="clear"></div>
                              </div>
@@ -124,10 +123,10 @@ switch ($op) {
                     </td>
                 </tr>
                 <tr>
-                    <td><textarea id="code_mirror" name="templates" rows=24 cols=110>'.$content.'</textarea></td>
+                    <td><textarea id="code_mirror" name="templates" rows=24 cols=110>' . $content . '</textarea></td>
                 </tr>
               </table>';
-        echo '<input type="hidden" name="path_file" value="'.$path_file.'"><input type="hidden" name="file" value="'.trim($_REQUEST['file']).'"><input type="hidden" name="ext" value="'.$ext.'"></form>';
+        echo '<input type="hidden" name="path_file" value="' . $path_file . '"><input type="hidden" name="file" value="' . trim($_REQUEST['file']) . '"><input type="hidden" name="ext" value="' . $ext . '"></form>';
         break;
 
     // Restore backup file
@@ -137,11 +136,11 @@ switch ($op) {
         //check if the file is inside themes directory
         $valid_dir = stristr(realpath($_REQUEST['path_file']), realpath(XOOPS_ROOT_PATH . '/themes'));
 
-        $old_file = $_REQUEST['path_file'].'.back';
+        $old_file = $_REQUEST['path_file'] . '.back';
         $new_file = $_REQUEST['path_file'];
 
         $extension_verif = strrchr($new_file, '.');
-        if ($valid_dir && in_array($extension_verif, $extensions) && file_exists($old_file) && file_exists($new_file) ) {
+        if ($valid_dir && in_array($extension_verif, $extensions) && file_exists($old_file) && file_exists($new_file)) {
             if (unlink($new_file)) {
                 if (rename($old_file, $new_file)) {
                     xoops_result(_AM_SYSTEM_TEMPLATES_RESTORE_OK);

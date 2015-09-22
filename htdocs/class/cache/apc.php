@@ -10,14 +10,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         class
- * @subpackage      cache
- * @since           2.3.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             class
+ * @subpackage          cache
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @version         $Id$
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * APC storage engine for cache.
@@ -34,21 +34,21 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
  * Redistributions of files must retain the above copyright notice.
  *
  * @filesource
- * @copyright Copyright 2005-2008, Cake Software Foundation, Inc.
- * @link http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
- * @package cake
+ * @copyright  Copyright 2005-2008, Cake Software Foundation, Inc.
+ * @link       http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
+ * @package    cake
  * @subpackage cake.cake.libs.cache
- * @since CakePHP(tm) v 1.2.0.4933
+ * @since      CakePHP(tm) v 1.2.0.4933
  * @version $Revision$
  * @modifiedby $LastChangedBy$
  * @lastmodified $Date$
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
  */
 
 /**
  * APC storage engine for cache
  *
- * @package cake
+ * @package    cake
  * @subpackage cake.cake.libs.cache
  */
 class XoopsCacheApc extends XoopsCacheEngine
@@ -65,7 +65,7 @@ class XoopsCacheApc extends XoopsCacheEngine
      * @see      CacheEngine::__defaults
      * @access   public
      */
-    function init($settings = array())
+    public function init($settings = array())
     {
         parent::init($settings);
 
@@ -81,7 +81,7 @@ class XoopsCacheApc extends XoopsCacheEngine
      * @return boolean True if the data was successfully cached, false on failure
      * @access public
      */
-    function write($key, &$value, $duration)
+    public function write($key, $value, $duration)
     {
         return apc_store($key, $value, $duration);
     }
@@ -93,7 +93,7 @@ class XoopsCacheApc extends XoopsCacheEngine
      * @return mixed  The cached data, or false if the data doesn't exist, has expired, or if there was an error fetching it
      * @access public
      */
-    function read($key)
+    public function read($key)
     {
         return apc_fetch($key);
     }
@@ -101,11 +101,11 @@ class XoopsCacheApc extends XoopsCacheEngine
     /**
      * Delete a key from the cache
      *
-     * @param  string  $key Identifier for the data
+     * @param  string $key Identifier for the data
      * @return boolean True if the value was successfully deleted, false if it didn't exist or couldn't be removed
      * @access public
      */
-    function delete($key)
+    public function delete($key)
     {
         return apc_delete($key);
     }
@@ -116,7 +116,7 @@ class XoopsCacheApc extends XoopsCacheEngine
      * @return boolean True if the cache was successfully cleared, false otherwise
      * @access public
      */
-    function clear()
+    public function clear()
     {
         return apc_clear_cache('user');
     }

@@ -6,12 +6,12 @@
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
  * @copyright    (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @author		Skalpa Keo <skalpa@xoops.org>
- * @package		xos_opal
- * @subpackage	xos_opal_Smarty
- * @since       2.0.14
- * @version		$Id$
+ * @license          GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @author           Skalpa Keo <skalpa@xoops.org>
+ * @package          xos_opal
+ * @subpackage       xos_opal_Smarty
+ * @since            2.0.14
+ * @version          $Id: compiler.xoAppUrl.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 /**
@@ -46,6 +46,9 @@
  * // Use the value of the $sortby template variable in the URL
  * ([xoAppUrl "modules/something/yourpage.php?order=`$sortby`"])
  * </code>
+ * @param $argStr
+ * @param $compiler
+ * @return string
  */
 function smarty_compiler_xoAppUrl($argStr, &$compiler)
 {
@@ -54,11 +57,11 @@ function smarty_compiler_xoAppUrl($argStr, &$compiler)
 
     @list($url, $params) = explode(' ', $argStr, 2);
 
-    if (substr($url, 0, 1) == '/') {
+    if (substr($url, 0, 1) === '/') {
         $url = 'www' . $url;
     }
     // Static URL generation
-    if (strpos($argStr, '$') === false && $url != '.') {
+    if (strpos($argStr, '$') === false && $url !== '.') {
         if (isset($params)) {
             $params = $compiler->_parse_attrs($params, false);
             foreach ($params as $k => $v) {
@@ -69,21 +72,22 @@ function smarty_compiler_xoAppUrl($argStr, &$compiler)
             $url = $xoops->buildUrl($url, $params);
         }
         $url = $xoops->path($url, true);
+
         return "echo '" . addslashes(htmlspecialchars($url)) . "';";
     }
     // Dynamic URL generation
-    if ($url == '.') {
+    $str = "\$xoops->path('$url', true)";
+    if ($url === '.') {
         $str = "\$_SERVER['REQUEST_URI']";
-    } else {
-        $str = "\$xoops->path('$url', true)";
     }
     if (isset($params)) {
         $params = $compiler->_parse_attrs($params, false);
-        $str = "\$xoops->buildUrl($str, array(\n";
+        $str    = "\$xoops->buildUrl($str, array(\n";
         foreach ($params as $k => $v) {
             $str .= var_export($k, true) . " => $v,\n";
         }
         $str .= "))";
     }
+
     return "echo htmlspecialchars($str);";
 }

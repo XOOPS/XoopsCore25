@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: function.xoops_link.php 13082 2015-06-06 21:59:41Z beckmi $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2015 XOOPS Project (www.xoops.org)            //
@@ -31,7 +31,7 @@
  * Type:     function
  * Name:     xoops_link
  * Version:  1.0
- * Author:	 Skalpa Keo <skalpa@xoops.org>
+ * Author:     Skalpa Keo <skalpa@xoops.org>
  * Purpose:  format URL for linking to specific Xoops page
  * Input:    module = module to link to (optional, default to current module)
  *           page   = page to link to (optional, default to current page)
@@ -57,7 +57,7 @@ function smarty_function_xoops_link($params, &$smarty)
     $urlstr = '';
     if (isset($params['urlvars'])) {
         $szvars = explode('&', $params['urlvars']);
-        $vars = array();
+        $vars   = array();
         // Split the string making an array from the ('name','value') pairs
         foreach ($szvars as $szvar) {
             $pos = strpos($szvar, '=');
@@ -66,7 +66,7 @@ function smarty_function_xoops_link($params, &$smarty)
             } else {                         // Otherwise use current one (if any)
                 if (isset($_POST[$szvar])) {
                     $vars[] = array('name' => $szvar, 'value' => $_POST[$szvar]);
-                } elseif ( isset($_GET[$szvar]) ) {
+                } elseif (isset($_GET[$szvar])) {
                     $vars[] = array('name' => $szvar, 'value' => $_GET[$szvar]);
                 }
             }
@@ -82,7 +82,7 @@ function smarty_function_xoops_link($params, &$smarty)
 
     // Get default module/page from current ones if necessary
     $module = '';
-    $page = '';
+    $page   = '';
     if (!isset($params['module'])) {
         if (isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule'])) {
             $module = $GLOBALS['xoopsModule']->getVar('dirname');
@@ -91,7 +91,7 @@ function smarty_function_xoops_link($params, &$smarty)
         $module = $params['module'];
     }
     if (!isset($params['page'])) {
-        $cur = $_SERVER['PHP_SELF'];
+        $cur  = $_SERVER['PHP_SELF'];
         $page = substr($cur, strrpos($cur, '/') + 1);
     } else {
         $page = $params['page'];

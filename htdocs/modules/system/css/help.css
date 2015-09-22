@@ -21,8 +21,7 @@ p {
    margin: 5px auto;
    border-radius: 3px;
    -moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	-khtml-border-radius: 3px;
+    -webkit-border-radius: 3px;
 }
 
 #help-template {
@@ -37,10 +36,10 @@ p {
 }
 
 #non-modhelp {
-	padding: 20px;
-	background-color: #dfdfdf;
-	border:1px solid #ccc;
-	font-size: 12px;
-	font-weight: bold;
+    padding: 20px;
+    background-color: #dfdfdf;
+    border:1px solid #ccc;
+    font-size: 12px;
+    font-weight: bold;
 
 }

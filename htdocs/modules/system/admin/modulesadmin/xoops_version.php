@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: xoops_version.php 13082 2015-06-06 21:59:41Z beckmi $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2015 XOOPS Project (www.xoops.org)            //
@@ -35,10 +35,10 @@ $modversion['description'] = _AM_SYSTEM_MODULES_DESC;
 $modversion['author']      = '';
 $modversion['credits']     = 'The XOOPS Project; Kazumi Ono; Andricq Nicolas (AKA MusS)';
 $modversion['help']        = 'page=modulesadmin';
-$modversion['license'] = "GPL see LICENSE";
+$modversion['license']     = "GPL see LICENSE";
 $modversion['official']    = 1;
 $modversion['image']       = 'modules.png';
 
-$modversion['hasAdmin']    = 1;
-$modversion['adminpath']   = 'admin.php?fct=modulesadmin';
-$modversion['category']    = XOOPS_SYSTEM_MODULE;
+$modversion['hasAdmin']  = 1;
+$modversion['adminpath'] = 'admin.php?fct=modulesadmin';
+$modversion['category']  = XOOPS_SYSTEM_MODULE;

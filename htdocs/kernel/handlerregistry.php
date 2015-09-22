@@ -10,20 +10,20 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @since           2.0.0
- * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @since               2.0.0
+ * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @version             $Id: handlerregistry.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * A registry for holding references to {@link XoopsObjectHandler} classes
  *
- * @package     kernel
+ * @package             kernel
  *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @author              Kazumi Ono    <onokazu@xoops.org>
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  */
 class XoopsHandlerRegistry
@@ -31,10 +31,10 @@ class XoopsHandlerRegistry
     /**
      * holds references to handler class objects
      *
-     * @var     array
-     * @access	private
+     * @var array
+     * @access    private
      */
-    var $_handlers = array();
+    public $_handlers = array();
 
     /**
      * get a reference to the only instance of this class
@@ -44,24 +44,25 @@ class XoopsHandlerRegistry
      *
      * @static
      * @staticvar   object  The only instance of this class
-     * @return      object  Reference to the only instance of this class
+     * @return XoopsHandlerRegistry Reference to the only instance of this class
      */
-    function &instance()
+    public function &instance()
     {
         static $instance;
-        if (! isset($instance)) {
+        if (!isset($instance)) {
             $instance = new XoopsHandlerRegistry();
         }
+
         return $instance;
     }
 
     /**
      * Register a handler class object
      *
-     * @param	string  $name     Short name of a handler class
-     * @param	object  &$handler {@link XoopsObjectHandler} class object
+     * @param string $name     Short name of a handler class
+     * @param XoopsObjectHandler &$handler {@link XoopsObjectHandler} class object
      */
-    function setHandler($name, &$handler)
+    public function setHandler($name, XoopsObjectHandler $handler)
     {
         $this->_handlers['kernel'][$name] =& $handler;
     }
@@ -69,24 +70,25 @@ class XoopsHandlerRegistry
     /**
      * Get a registered handler class object
      *
-     * @param	string  $name     Short name of a handler class
+     * @param string $name Short name of a handler class
      *
-     * @return	object {@link XoopsObjectHandler}, FALSE if not registered
+     * @return XoopsObjectHandler {@link XoopsObjectHandler}, FALSE if not registered
      */
-    function &getHandler($name)
+    public function &getHandler($name)
     {
         if (!isset($this->_handlers['kernel'][$name])) {
             return false;
         }
+
         return $this->_handlers['kernel'][$name];
     }
 
     /**
      * Unregister a handler class object
      *
-     * @param	string  $name     Short name of a handler class
+     * @param string $name Short name of a handler class
      */
-    function unsetHandler($name)
+    public function unsetHandler($name)
     {
         unset($this->_handlers['kernel'][$name]);
     }
@@ -94,11 +96,11 @@ class XoopsHandlerRegistry
     /**
      * Register a handler class object for a module
      *
-     * @param	string  $module   Directory name of a module
-     * @param	string  $name     Short name of a handler class
-     * @param	object  &$handler {@link XoopsObjectHandler} class object
+     * @param string $module   Directory name of a module
+     * @param string $name     Short name of a handler class
+     * @param XoopsObjectHandler &$handler {@link XoopsObjectHandler} class object
      */
-    function setModuleHandler($module, $name, &$handler)
+    public function setModuleHandler($module, $name, XoopsObjectHandler $handler)
     {
         $this->_handlers['module'][$module][$name] =& $handler;
     }
@@ -106,28 +108,28 @@ class XoopsHandlerRegistry
     /**
      * Get a registered handler class object for a module
      *
-     * @param	string  $module   Directory name of a module
-     * @param	string  $name     Short name of a handler class
+     * @param string $module Directory name of a module
+     * @param string $name   Short name of a handler class
      *
-     * @return	object {@link XoopsObjectHandler}, FALSE if not registered
+     * @return XoopsObjectHandler {@link XoopsObjectHandler}, FALSE if not registered
      */
-    function &getModuleHandler($module, $name)
+    public function &getModuleHandler($module, $name)
     {
         if (!isset($this->_handlers['module'][$module][$name])) {
             return false;
         }
+
         return $this->_handlers['module'][$module][$name];
     }
 
     /**
      * Unregister a handler class object for a module
      *
-     * @param	string  $module   Directory name of a module
-     * @param	string  $name     Short name of a handler class
+     * @param string $module Directory name of a module
+     * @param string $name   Short name of a handler class
      */
-    function unsetModuleHandler($module, $name)
+    public function unsetModuleHandler($module, $name)
     {
         unset($this->_handlers['module'][$module][$name]);
     }
-
 }

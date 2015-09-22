@@ -10,22 +10,33 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @subpackage      form
- * @since           2.0.0
- * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @subpackage          form
+ * @since               2.0.0
+ * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @version             $Id: formtextdateselect.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
-defined('XOOPS_ROOT_PATH') ||  die("XOOPS root path not defined");
+defined('XOOPS_ROOT_PATH') || exit("XOOPS root path not defined");
 
 /**
  * A text field with calendar popup
  */
-
 class XoopsFormTextDateSelect extends XoopsFormText
 {
+    /**
+     * @param     $caption
+     * @param     $name
+     * @param int $size
+     * @param int $value
+     */
+    public function __construct($caption, $name, $size = 15, $value = 0)
+    {
+        $value = !is_numeric($value) ? time() : (int)($value);
+        $value = ($value == 0) ? time() : $value;
+        parent::__construct($caption, $name, $size, 25, $value);
+    }
 
     /**
      * @param     $caption
@@ -33,26 +44,23 @@ class XoopsFormTextDateSelect extends XoopsFormText
      * @param int $size
      * @param int $value
      */
-    function XoopsFormTextDateSelect($caption, $name, $size = 15, $value = 0)
+    public function XoopsFormTextDateSelect($caption, $name, $size = 15, $value = 0)
     {
-        $value = !is_numeric($value) ? time() : (int)($value);
-        $value = ($value == 0) ? time() : $value;
-        $this->XoopsFormText($caption, $name, $size, 25, $value);
+        $this->__construct($caption, $name, $size, $value);
     }
-
     /**
      * @return string
      */
-    function render()
+    public function render()
     {
         static $included = false;
         include_once XOOPS_ROOT_PATH . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/calendar.php';
 
-        $ele_name = $this->getName();
+        $ele_name  = $this->getName();
         $ele_value = $this->getValue(false);
         if (is_string($ele_value)) {
             $display_value = $ele_value;
-            $ele_value = time();
+            $ele_value     = time();
         } else {
             $display_value = date(_SHORTDATESTRING, $ele_value);
         }
@@ -63,7 +71,7 @@ class XoopsFormTextDateSelect extends XoopsFormText
             $GLOBALS['xoTheme']->addStylesheet('include/calendar-blue.css');
             if (!$included) {
                 $included = true;
-                $GLOBALS['xoTheme']->addScript('','', '
+                $GLOBALS['xoTheme']->addScript('', '', '
                     var calendar = null;
 
                     function selected(cal, date)

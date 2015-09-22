@@ -19,7 +19,7 @@ input.formButton {}
 
 .item {border: 1px solid #666;}
 .itemHead {padding: 3px; background-color: #2A75C5; color: #fff;}
-.itemInfo {text-align: right; padding: 3px; background-color: #efefef}
+.itemInfo {text-align: right; padding: 3px; background-color: #efefef;}
 .itemTitle a {font-size: 1.2em; font-weight: bold; font-variant: small-caps; color: #fff; background-color: transparent;}
 .itemPoster {font-size: .9em; font-style:italic;}
 .itemPostDate {font-size: .9em; font-style:italic;}
@@ -44,15 +44,15 @@ input.formButton {}
 /* fix for banner */
 #xo-bannerfix {
     /*position:               absolute;*/
-	position: relative;
-	float: right;
+    position: relative;
+    float: right;
     top:                    5px;
     right:                  25px;
     width:                  480px;
     height:                 72px;
     background:             url(bg-ad-top.png) no-repeat;
-	padding:				6px;
-	z-index:99;
+    padding:                6px;
+    z-index:99;
 }
 #xo-bannerfix object, #xo-bannerfix img {display: block;}
 /* end fix for banner */
@@ -106,7 +106,11 @@ input.formButton {}
 
 #mainmenu a {background-color: #e6e6e6; display: block; margin: 0; padding: 4px;}
 #mainmenu a:hover {background-color: #fff;}
-#mainmenu a.menuTop {padding-left: 3px; border-top: 1px solid #c0c0c0; border-right: 1px solid #666; border-bottom: 1px solid #666; border-left: 1px solid #c0c0c0;}
+#mainmenu a.menuTop {padding-left: 3px;
+    border: 1px solid #c0c0c0;
+    border-right-color: #666;
+    border-bottom-color: #666;
+}
 #mainmenu a.menuMain {padding-left: 3px; border-right: 1px solid #666; border-bottom: 1px solid #666; border-left: 1px solid #c0c0c0;}
 #mainmenu a.menuSub {padding-left: 9px; border-right: 1px solid #666; border-bottom: 1px solid #666; border-left: 1px solid #c0c0c0;}
 #mainmenu a.maincurrent {background-color:transparent; color:#ff9900;}
@@ -257,7 +261,6 @@ blockquote {font-style : italic; line-height:1.4em;}
 body.mceContentBody {
     margin:                 0;
     padding:                0;
-    background-color:       #fff;
-    background-image:       none;
+    background: #fff none;
     color:                  #000;
 }

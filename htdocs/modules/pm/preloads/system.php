@@ -10,31 +10,29 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         pm
- * @since           2.4.0
- * @author          trabis <lusopoemas@gmail.com>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             pm
+ * @since               2.4.0
+ * @author              trabis <lusopoemas@gmail.com>
+ * @version             $Id: system.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-// defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 /**
  * PM system preloads
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @author          trabis <lusopoemas@gmail.com>
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @author              trabis <lusopoemas@gmail.com>
  */
 class PmSystemPreload extends XoopsPreloadItem
 {
-
     /**
      * @param $args
      */
-    function eventSystemBlocksSystem_blocksUsershow($args)
+    public function eventSystemBlocksSystem_blocksUsershow($args)
     {
         $args[0] =& xoops_getModuleHandler('message', 'pm');
     }
-
 }

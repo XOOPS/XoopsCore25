@@ -15,16 +15,16 @@
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
  * @copyright    (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
- * @package     installer
- * @since       2.3.0
- * @author      Haruki Setoyama  <haruki@planewave.org>
- * @author      Kazumi Ono <webmaster@myweb.ne.jp>
- * @author      Skalpa Keo <skalpa@xoops.org>
- * @author      Taiwen Jiang <phppp@users.sourceforge.net>
- * @author      DuGris (aka L. JEN) <dugris@frxoops.org>
- * @version     $Id$
-**/
+ * @license          http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @package          installer
+ * @since            2.3.0
+ * @author           Haruki Setoyama  <haruki@planewave.org>
+ * @author           Kazumi Ono <webmaster@myweb.ne.jp>
+ * @author           Skalpa Keo <skalpa@xoops.org>
+ * @author           Taiwen Jiang <phppp@users.sourceforge.net>
+ * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
+ * @version          $Id: page_tablescreate.php 13082 2015-06-06 21:59:41Z beckmi $
+ **/
 
 require_once './include/common.inc.php';
 defined('XOOPS_INSTALL') or die('XOOPS Installation wizard die');
@@ -46,7 +46,7 @@ if (!$dbm->isConnectable()) {
 if ($dbm->tableExists('users')) {
     $content = '<div class="x2-note confirmMsg">' . XOOPS_TABLES_FOUND . '</div>';
 } else {
-    $result = $dbm->queryFromFile( './sql/' . XOOPS_DB_TYPE . '.structure.sql' );
+    $result  = $dbm->queryFromFile('./sql/' . XOOPS_DB_TYPE . '.structure.sql');
     $content = '<div class="x2-note successMsg">' . XOOPS_TABLES_CREATED . "</div><br />" . $dbm->report();
 }
 include './include/install_tpl.php';

@@ -10,22 +10,22 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package kernel
- * @subpackage auth
- * @since 2.0
- * @author Pierre-Eric MENUET <pemphp@free.fr>
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @subpackage          auth
+ * @since               2.0
+ * @author              Pierre-Eric MENUET <pemphp@free.fr>
  * @version $Id$
  */
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  *
- * @package kernel
- * @subpackage auth
- * @description Authentification class for Active Directory
- * @author Pierre-Eric MENUET <pemphp@free.fr>
+ * @package             kernel
+ * @subpackage          auth
+ * @description         Authentification class for Active Directory
+ * @author              Pierre-Eric MENUET <pemphp@free.fr>
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  */
 include_once $GLOBALS['xoops']->path('class/auth/auth_ldap.php');
@@ -34,32 +34,33 @@ include_once $GLOBALS['xoops']->path('class/auth/auth_ldap.php');
  * XoopsAuthAds
  *
  * @package
- * @author John
+ * @author              John
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  * @version $Id$
- * @access public
+ * @access              public
  */
 class XoopsAuthAds extends XoopsAuthLdap
 {
     /**
      * Authentication Service constructor
+     * @param XoopsDatabase $dao
      */
-    function XoopsAuthAds(&$dao)
+    public function __construct(XoopsDatabase $dao = null)
     {
-        parent::XoopsAuthLdap($dao);
+        parent::__construct($dao);
     }
 
     /**
      * Authenticate  user again LDAP directory (Bind)
      *         2 options :
-     * 		Authenticate directly with uname in the DN
-     * 		Authenticate with manager, search the dn
+     *         Authenticate directly with uname in the DN
+     *         Authenticate with manager, search the dn
      *
      * @param  string $uname Username
      * @param  string $pwd   Password
      * @return bool
      */
-    function authenticate($uname, $pwd = null)
+    public function authenticate($uname, $pwd = null)
     {
         $authenticated = false;
         if (!extension_loaded('ldap')) {
@@ -82,7 +83,7 @@ class XoopsAuthAds extends XoopsAuthLdap
             if (!$userUPN) {
                 return false;
             }
-                // We bind as user to test the credentials
+            // We bind as user to test the credentials
             $authenticated = ldap_bind($this->_ds, $userUPN, $this->cp1252_to_utf8(stripslashes($pwd)));
             if ($authenticated) {
                 // We load the Xoops User database
@@ -113,10 +114,11 @@ class XoopsAuthAds extends XoopsAuthLdap
      *
      * @return userDN or false
      */
-    function getUPN($uname)
+    public function getUPN($uname)
     {
         $userDN = $uname . '@' . $this->ldap_domain_name;
 
         return $userDN;
     }
 } // end class
+

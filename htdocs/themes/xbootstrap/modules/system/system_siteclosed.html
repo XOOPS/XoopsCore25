@@ -35,7 +35,7 @@
     <div class="aligncenter site-closed-logo">
         <img src="<{$xoops_imageurl}>images/logo.png" alt="<{$lang_login}>">
     </div>
-    
+
     <div class="xoops-site-closed-container">
     <blockquote><p class="text-muted"><{$lang_siteclosemsg}></p></blockquote>
         <form action="<{xoAppUrl user.php}>" method="post" role="form" class="form-horizontal">
@@ -46,18 +46,18 @@
             <span class="glyphicon glyphicon-user"></span>
             </div>
 
-        
+
             <label class="control-label"><{$lang_password}></label>
             <div class="input-container">
             <input type="password" name="pass" class="form-control" placeholder="Your Password">
             <span class="glyphicon glyphicon-lock"></span>
             </div>
-        
+
             <input type="hidden" name="xoops_redirect" value="<{$xoops_requesturi}>">
             <input type="hidden" name="xoops_login" value="1">
-			
+
             <div class="aligncenter">
-	            <input type="submit" value="<{$lang_login}>" class="btn btn-warning">
+                <input type="submit" value="<{$lang_login}>" class="btn btn-warning">
             </div>
 
         </form>

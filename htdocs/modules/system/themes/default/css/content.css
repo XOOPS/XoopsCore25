@@ -11,10 +11,10 @@
  * @version         $Id
 */
 h1,h2,h3,h4,h5,h6 {
-	margin: 0;
-	line-height: 1.2;
-	font-weight: bold;
-	font-style: normal;
+    margin: 0;
+    line-height: 1.2;
+    font-weight: bold;
+    font-style: normal;
 }
 
 h1 {font-size: 1.7em;}
@@ -25,77 +25,77 @@ h5 {font-size: 1em;}
 h6 {font-size: .8em;}
 
 h1 {
-	clear: both;
-	background-color: transparent;
-	padding-left: .25em;
-	margin-bottom: 1em;
+    clear: both;
+    background-color: transparent;
+    padding-left: .25em;
+    margin-bottom: 1em;
 }
 
 h1 a,h2 a {
-	background-color: transparent;
-	text-decoration: none;
+    background-color: transparent;
+    text-decoration: none;
 }
 
 h1 a:hover,h2 a:hover,h1 a:focus,h2 a:focus,h1 a:active,h2 a:active {
-	background-color: transparent;
-	text-decoration: underline;
-	outline: none;
+    background-color: transparent;
+    text-decoration: underline;
+    outline: none;
 }
 
 h2, h3 {
-	background-color: transparent;
-	margin-bottom: .5em;
+    background-color: transparent;
+    margin-bottom: .5em;
 }
 
 /* ==================== Style for images ==================== */
 img {
-	border: 0 !important;
+    border: 0 !important;
 }
 
 img.xo-icons {
-	margin-bottom: -3px;
+    margin-bottom: -3px;
 }
 
 p img {
-	margin-left: .5em;
-	margin-right: .5em;
+    margin-left: .5em;
+    margin-right: .5em;
 }
 
 a img:hover,a img:focus {
-	opacity: .5;
-	filter: alpha(opacity =             50);
+    opacity: .5;
+    filter: alpha(opacity =             50);
 }
 
 a img {
-	border: none;
+    border: none;
 }
 
 .imgsmile {
-	padding: 0 !important;
-	border: 0 !important;
-	margin-bottom: -2px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    margin-bottom: -2px !important;
 }
 
 img.xo-icons {
-	margin-bottom: -3px;
+    margin-bottom: -3px;
 }
 
 img.ui-datepicker-trigger {
-	margin: 3px;
+    margin: 3px;
 }
 
 /*================ Style for Quotes ================*/
 blockquote {
-	display: block;
-	width: 95%;
-	margin-right: 2em;
-	background-color: #FAFAFA;
-	padding: .5em;
-	color: #444;
-	line-height: 125%;
-	font-size: 11px;
-	text-align: justify;
-	border: 1px dashed #c2cdd6;
+    display: block;
+    width: 95%;
+    margin-right: 2em;
+    background-color: #FAFAFA;
+    padding: .5em;
+    color: #444;
+    line-height: 125%;
+    font-size: 11px;
+    text-align: justify;
+    border: 1px dashed #c2cdd6;
 }
 
 .xoopsQuote {
@@ -103,20 +103,20 @@ blockquote {
 }
 
 q,cite {
-	font-style: italic;
+    font-style: italic;
 }
 
 q cite,q q {
-	font-style: normal;
+    font-style: normal;
 }
 
 /* delete auto dobble quotes */
 q {
-	quotes: none;
+    quotes: none;
 }
 
 q:before,q:after {
-	content: ""; /* for Safari/Chrome */
+    content: ""; /* for Safari/Chrome */
 }
 
 /*================== Style for Codes =================*/
@@ -127,9 +127,8 @@ q:before,q:after {
   overflow: auto;
   margin: .5em;
   padding: .5em;
-  border-width: 1px 1px 1px 3px;
-  border-color: #c2cdd6;
-  border-style: solid;
+    border: 1px solid #c2cdd6;
+    border-left-width: 3px;
 }
 
 code {
@@ -143,147 +142,143 @@ code,pre {
 
 /* ==================== Links for Quotes ==================== */
 .xoopsQuote a:link,.xoopsQuote a:visited {
-	color: #444;
-	font-weight: bold;
-	background-color: transparent;
+    color: #444;
+    font-weight: bold;
+    background-color: transparent;
 }
 
 .xoopsQuote a:hover,.xoopsQuote a:active {
-	color: #1778cb;
-	background-color: transparent;
+    color: #1778cb;
+    background-color: transparent;
 }
 
 /* ==================== Redirect messages ==================== */
 .errorMsg {
-	background: #FBE3E4;
-	color: #D12F19;
-	text-align: center;
-	border: 2px solid #FBC2C4;
-	padding: 8px;
-	font-weight: bold;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	-khtml-border-radius: 4px;
-	border-radius: 4px;
-	line-height: 140%;
+    background: #FBE3E4;
+    color: #D12F19;
+    text-align: center;
+    border: 2px solid #FBC2C4;
+    padding: 8px;
+    font-weight: bold;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    line-height: 140%;
 }
 
 .confirmMsg {
-	background-color: #f3f3f3 !important;
-	color: #262F2E !important;
-	text-align: center;
-	border: 2px solid #ccc !important;
-	font-weight: bold;
-	width: 60%;
-	min-height: 120px !important;
-	margin: 80px auto;
-	padding: 8px;
-	padding-top: 30px !important;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 6px;
-	-khtml-border-radius: 6px;
-	border-radius: 6px;
-	line-height: 190%;
+    background-color: #f3f3f3 !important;
+    color: #262F2E !important;
+    text-align: center;
+    border: 2px solid #ccc !important;
+    font-weight: bold;
+    width: 60%;
+    min-height: 120px !important;
+    margin: 80px auto;
+    padding: 8px;
+    padding-top: 30px !important;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    line-height: 190%;
 }
 
 /* ==================== For redirect pages ====================*/
 .message,.notreload {
-	text-align: center;
+    text-align: center;
 }
 
 /* ==================== General small ==================== */
 .fontSmall {
-	font-size: 10px;
-	background-color: transparent;
+    font-size: 10px;
+    background-color: transparent;
 }
 
 a.fontSmall {
-	color: #006699;
+    color: #006699;
 }
 
 a.fontSmall:hover {
-	color: #C23030;
-	text-decoration: underline;
+    color: #C23030;
+    text-decoration: underline;
 }
 
 /*=============== styles for tables =================*/
 table {
-	margin: 0;
-	width: 100%;
-	border: none;
-	border-collapse: separate /*collapse*/;
-	border-spacing: 1px;
+    margin: 0;
+    width: 100%;
+    border: none;
+    border-collapse: separate /*collapse*/;
+    border-spacing: 1px;
 }
 
 th {
-	background-color: #2e323b;
-	color: #fff;
-	padding: 4px;
-	vertical-align: middle;
+    background-color: #2e323b;
+    color: #fff;
+    padding: 4px;
+    vertical-align: middle;
 }
 
 .outer {
-	width: 99%;
-	border: 2px solid #ccc;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	-khtml-border-radius: 3px;
-	border-radius: 3px;
-	margin: 5px;
+    width: 99%;
+    border: 2px solid #ccc;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    margin: 5px;
 }
 
 .head {
-	background-color: #AFAFAF;
-	padding: 5px;
-	font-weight: bold;
+    background-color: #AFAFAF;
+    padding: 5px;
+    font-weight: bold;
 }
 
 .even {
-	background-color: #EFEFEF;
-	padding: 5px;
-	border-bottom: 1px solid #ccc;
+    background-color: #EFEFEF;
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
 }
 
 .odd {
-	background-color: #DFDFDF;
-	padding: 5px;
-	border-bottom: 1px solid #ccc;
+    background-color: #DFDFDF;
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
 }
 
 .foot {
-	background-color: #E1E7EF;
-	padding: 5px;
-	font-weight: bold;
+    background-color: #E1E7EF;
+    padding: 5px;
+    font-weight: bold;
 }
 
 tr.head td {
-	background-color: #BDE3FB;
-	padding: 5px;
-	font-weight: bold;
+    background-color: #BDE3FB;
+    padding: 5px;
+    font-weight: bold;
 }
 
 tr.even td {
-	background-color: #fff;
-	padding: 5px;
-	border-bottom: 1px solid #ccc;
+    background-color: #fff;
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
 }
 
 tr.odd td {
-	background-color: #EFEFEF;
-	padding: 5px;
-	border-bottom: 1px solid #ccc;
+    background-color: #EFEFEF;
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
 }
 
 tr.foot td {
-	background-color: #E1E7EF;
-	padding: 5px;
-	font-weight: bold;
+    background-color: #E1E7EF;
+    padding: 5px;
+    font-weight: bold;
 }
 
 td.head {max-width: 300px !important;}
 /*============= XOOPS Editors =============*/
 body.mceContentBody {
-	background-color: #fff;
-	background-image: none;
-	color: #333;
+    background: #fff none;
+    color: #333;
 }

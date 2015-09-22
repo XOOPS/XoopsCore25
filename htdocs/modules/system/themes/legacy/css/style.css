@@ -1,15 +1,15 @@
 @charset "UTF-8";
 /* IMPORTANT, PLEASE RESPECT THIS SEMANTIC ORDER !!! :
-	- position box,
-	- width,
-	- heigth,
-	- margin,
-	- background-color,
-	- background-image,
-	- padding,
-	- content (color, style font, ...),
-	- border,
-	 ... */
+    - position box,
+    - width,
+    - heigth,
+    - margin,
+    - background-color,
+    - background-image,
+    - padding,
+    - content (color, style font, ...),
+    - border,
+     ... */
 
 /* General definitions */
 html, body {background-color : transparent; font-size: 10pt; font-family: Verdana, Arial, Helvetica, sans-serif; margin: 0; padding: 0;}
@@ -23,7 +23,7 @@ ul { margin: 2px; padding: 2px; list-style: decimal inside; text-align: left;}
 li { margin-left: 2px; color: #000; list-style: square inside;}
 
 /* titles */
-h1, h2, h3, h4, h5 {	padding: 0 0 0 .5em;}
+h1, h2, h3, h4, h5 {    padding: 0 0 0 .5em;}
 h1 { font-size: 1.4em;}
 h2 { font-size: 1.2em;}
 h3 { font-size: 1.1em;}
@@ -59,13 +59,16 @@ a.fontSmall { background-color: transparent; color: #006699;}
 a:hover.fontSmall { background-color: transparent; color: #C23030; text-decoration: underline;}
 
 /* ===== forms elements ===== */
-input {background-color: #fff; color:inherit; font-size: .8em; font-family: verdana, arial, helvetica, sans-serif; border-left: #000 1px solid;color: #000; border-bottom: #000 1px solid; border-right: #000 1px solid; border-top: #000 1px solid;}
+input {background-color: #fff; color:inherit; font-size: .8em; font-family: verdana, arial, helvetica, sans-serif;
+    color: #000;
+    border: 1px solid #000;
+}
 textarea { width: 430px; font-size: .8em; font-family: verdana, arial, helvetica, sans-serif; border: #000 1px solid;}
 input.formTextBox { background: #fff; color:inherit; font-size: .8em; font-family: verdana, arial, helvetica, sans-serif;border: #000 1px solid; }
 select { font-size: .8em; font-family: verdana, arial, helvetica, sans-serif; border: #000 1px solid;}
 
 /* ===== content module ===== */
-.content { text-align: justify; padding: 0 15px 0px 15px;}
+.content { text-align: justify; padding: 0 15px 0 15px;}
 
 .xoopsCenter { text-align:center;}
 
@@ -107,19 +110,13 @@ tr.foot td {background-color: #c2cdd6; padding: 5px; color:inherit; font-weight:
 
 /* ===== Table sorter ===== */
 table.tablesorter thead tr .header {
-	background-image: url(../img/unsort.gif);
-	background-repeat: no-repeat; 
-    background-position: center right; 
+    background: url(../img/unsort.gif) no-repeat center right;
 }
 table.tablesorter thead tr .headerSortUp {
-	background-image: url(../img/asc.gif);
-	background-repeat: no-repeat; 
-    background-position: center right; 
+    background: url(../img/asc.gif) no-repeat center right;
 }
 table.tablesorter thead tr .headerSortDown {
-	background-image: url(../img/desc.gif);
-	background-repeat: no-repeat; 
-    background-position: center right; 
+    background: url(../img/desc.gif) no-repeat center right;
 }
 /* ===== others styles ===== */
 #fileTree { overflow: auto;border: 1px solid #ccc;}

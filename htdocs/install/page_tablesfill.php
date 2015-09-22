@@ -15,15 +15,15 @@
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
  * @copyright    (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
- * @package     installer
- * @since       2.3.0
- * @author      Haruki Setoyama  <haruki@planewave.org>
- * @author      Kazumi Ono <webmaster@myweb.ne.jp>
- * @author      Skalpa Keo <skalpa@xoops.org>
- * @author      Taiwen Jiang <phppp@users.sourceforge.net>
- * @author      DuGris (aka L. JEN) <dugris@frxoops.org>
- * @version     $Id$
+ * @license          http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @package          installer
+ * @since            2.3.0
+ * @author           Haruki Setoyama  <haruki@planewave.org>
+ * @author           Kazumi Ono <webmaster@myweb.ne.jp>
+ * @author           Skalpa Keo <skalpa@xoops.org>
+ * @author           Taiwen Jiang <phppp@users.sourceforge.net>
+ * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
+ * @version          $Id: page_tablesfill.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 require_once './include/common.inc.php';
@@ -48,9 +48,9 @@ if (!$res) {
     exit();
 }
 
-list ($count) = $dbm->db->fetchRow( $res );
+list($count) = $dbm->db->fetchRow($res);
 $process = $count ? '' : 'insert';
-$update = false;
+$update  = false;
 
 extract($_SESSION['siteconfig'], EXTR_SKIP);
 if ($state = xoDiagIfWritable('include/license.php')) {
@@ -64,19 +64,19 @@ if ($process && is_writable('../include/license.php')) {
     $wizard->loadLangFile('install2');
     $language = $wizard->language;
 
-    $result = $dbm->queryFromFile('./sql/' . XOOPS_DB_TYPE . '.data.sql');
-    $result = $dbm->queryFromFile('./language/' . $language . '/' . XOOPS_DB_TYPE . '.lang.data.sql');
-    $group = make_groups( $dbm );
-    $result = make_data( $dbm, $adminname, $adminpass, $adminmail, $language, $group );
+    $result  = $dbm->queryFromFile('./sql/' . XOOPS_DB_TYPE . '.data.sql');
+    $result  = $dbm->queryFromFile('./language/' . $language . '/' . XOOPS_DB_TYPE . '.lang.data.sql');
+    $group   = make_groups($dbm);
+    $result  = make_data($dbm, $adminname, $adminpass, $adminmail, $language, $group);
     $content = '<div class="x2-note successMsg">' . DATA_INSERTED . "</div><br />" . $dbm->report();
     // Writes License Key
     $content .= '<div class="x2-note successMsg">' . sprintf(LICENSE_IS_WRITEABLE, $state) . "</div>";
     $content .= '<div class="x2-note successMsg">' . write_key() . "</div><br />";
-} else if ($update) {
+} elseif ($update) {
     $sql = "UPDATE " . $dbm->db->prefix("users") . " SET `uname` = '" . addslashes($adminname) . "', `email` = '" . addslashes($adminmail) . "', `user_regdate` = '" . time() . "', `pass` = '" . md5($adminpass) . "', `last_login` = '" . time() . "' WHERE uid = 1";
     $dbm->db->queryF($sql);
     $content = '';
-} else if ( !is_writable( '../include/license.php' ) ) {
+} elseif (!is_writable('../include/license.php')) {
     include_once './include/makedata.php';
     //$cm = 'dummy';
     $wizard->loadLangFile('install2');
@@ -87,7 +87,7 @@ if ($process && is_writable('../include/license.php')) {
 }
 
 setcookie('xo_install_user', '', null, null, null);
-if (!empty( $_SESSION['settings']['authorized'] ) && !empty($adminname) && !empty($adminpass)) {
+if (!empty($_SESSION['settings']['authorized']) && !empty($adminname) && !empty($adminpass)) {
     setcookie('xo_install_user', addslashes($adminname) . '-' . md5(md5($adminpass) . XOOPS_DB_NAME . XOOPS_DB_PASS . XOOPS_DB_PREFIX), null, null, null);
 }
 

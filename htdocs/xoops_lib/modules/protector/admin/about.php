@@ -9,12 +9,12 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
-* @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license      GNU GPL (http://www.gnu.org/licenses/gpl-2.0.html/)
- * @package    XoopsPartners
- * @since        2.5.0
- * @author     Mage, Mamba
- * @version    $Id $
+ * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @license             GNU GPL (http://www.gnu.org/licenses/gpl-2.0.html/)
+ * @package             XoopsPartners
+ * @since               2.5.0
+ * @author              Mage, Mamba
+ * @version             $Id $
  **/
 
 include '../../../include/cp_header.php';
@@ -25,7 +25,7 @@ xoops_cp_header();
 $aboutAdmin = new ModuleAdmin();
 
 echo $aboutAdmin->addNavigation('about.php');
-echo $aboutAdmin->renderabout('6KJ7RW5DR3VTJ', false);
+echo $aboutAdmin->renderAbout('6KJ7RW5DR3VTJ', false);
 
 include 'admin_footer.php';
 xoops_cp_footer();

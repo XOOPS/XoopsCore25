@@ -10,14 +10,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         class
- * @subpackage      editor
- * @since           2.3.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             class
+ * @subpackage          editor
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: dhtmltextarea.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 xoops_load('XoopsEditor');
 
@@ -25,10 +25,10 @@ xoops_load('XoopsEditor');
  * FormDhtmlTextArea
  *
  * @package
- * @author John
+ * @author              John
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @version $Id$
- * @access public
+ * @version             $Id: dhtmltextarea.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @access              public
  */
 class FormDhtmlTextArea extends XoopsEditor
 {
@@ -38,20 +38,20 @@ class FormDhtmlTextArea extends XoopsEditor
      * @var string
      * @access private
      */
-    var $_hiddenText = 'xoopsHiddenText';
+    public $_hiddenText = 'xoopsHiddenText';
 
     /**
      * FormDhtmlTextArea::__construct()
      *
      * @param array $options
      */
-    function __construct($options = array())
+    public function __construct($options = array())
     {
-        parent::__construct( $options );
+        parent::__construct($options);
         $this->rootPath = '/class/xoopseditor/' . basename(__DIR__);
-        $hiddenText = isset( $this->configs['hiddenText'] ) ? $this->configs['hiddenText'] : $this->_hiddenText;
+        $hiddenText     = isset($this->configs['hiddenText']) ? $this->configs['hiddenText'] : $this->_hiddenText;
         xoops_load('XoopsFormDhtmlTextArea');
-        $this->renderer = new XoopsFormDhtmlTextArea( '', $this->getName(), $this->getValue(), $this->getRows(), $this->getCols(), $hiddenText, $this->configs );
+        $this->renderer = new XoopsFormDhtmlTextArea('', $this->getName(), $this->getValue(), $this->getRows(), $this->getCols(), $hiddenText, $this->configs);
     }
 
     /**
@@ -59,7 +59,7 @@ class FormDhtmlTextArea extends XoopsEditor
      *
      * @param array $options
      */
-    function FormDhtmlTextArea($options = array())
+    public function FormDhtmlTextArea($options = array())
     {
         $this->__construct($options);
     }
@@ -69,7 +69,7 @@ class FormDhtmlTextArea extends XoopsEditor
      *
      * @return string
      */
-    function render()
+    public function render()
     {
         return $this->renderer->render();
     }

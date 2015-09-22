@@ -16,14 +16,13 @@
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
  * @copyright    (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
- * @package     upgrader
- * @since       2.4.0
- * @author      Taiwen Jiang <phppp@users.sourceforge.net>
- * @author      trabis <lusopoemas@gmail.com>
- * @version     $Id$
+ * @license          http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @package          upgrader
+ * @since            2.4.0
+ * @author           Taiwen Jiang <phppp@users.sourceforge.net>
+ * @author           trabis <lusopoemas@gmail.com>
+ * @version          $Id: index.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-
 class upgrade_240 extends xoopsUpgrade
 {
     var $tasks = array('keys', 'version');
@@ -65,7 +64,7 @@ class upgrade_240 extends xoopsUpgrade
     function xoops_putLicenseKey($system_key, $licensefile, $license_file_dist = 'license.dist.php')
     {
         chmod($licensefile, 0777);
-        $fver = fopen($licensefile, 'w');
+        $fver     = fopen($licensefile, 'w');
         $fver_buf = file($license_file_dist);
         foreach ($fver_buf as $line => $value) {
             if (strpos($value, 'XOOPS_LICENSE_KEY') > 0) {
@@ -88,44 +87,44 @@ class upgrade_240 extends xoopsUpgrade
     function xoops_buildLicenceKey()
     {
         $xoops_serdat = array();
-        srand((((float) ('0' . substr(microtime(), strpos(microtime(), ' ') + 1, strlen(microtime()) - strpos(microtime(), ' ') + 1))) * mt_rand(30, 99999)));
-        srand((((float) ('0' . substr(microtime(), strpos(microtime(), ' ') + 1, strlen(microtime()) - strpos(microtime(), ' ') + 1))) * mt_rand(30, 99999)));
+        srand((((float)('0' . substr(microtime(), strpos(microtime(), ' ') + 1, strlen(microtime()) - strpos(microtime(), ' ') + 1))) * mt_rand(30, 99999)));
+        srand((((float)('0' . substr(microtime(), strpos(microtime(), ' ') + 1, strlen(microtime()) - strpos(microtime(), ' ') + 1))) * mt_rand(30, 99999)));
         $checksums = array(1 => 'md5', 2 => 'sha1');
-        $type = rand(1, 2);
-        $func = $checksums[$type];
+        $type      = rand(1, 2);
+        $func      = $checksums[$type];
 
         error_reporting(0);
 
         // Public Key
         if ($xoops_serdat['version'] = $func(XOOPS_VERSION)) {
-            $xoops_serdat['version'] = substr($xoops_serdat['version'],0, 6);
+            $xoops_serdat['version'] = substr($xoops_serdat['version'], 0, 6);
         }
         if ($xoops_serdat['licence'] = $func(XOOPS_LICENSE_CODE)) {
-            $xoops_serdat['licence'] = substr($xoops_serdat['licence'],0, 2);
+            $xoops_serdat['licence'] = substr($xoops_serdat['licence'], 0, 2);
         }
         if ($xoops_serdat['license_text'] = $func(XOOPS_LICENSE_TEXT)) {
-            $xoops_serdat['license_text'] = substr($xoops_serdat['license_text'],0, 2);
+            $xoops_serdat['license_text'] = substr($xoops_serdat['license_text'], 0, 2);
         }
 
         if ($xoops_serdat['domain_host'] = $func($_SERVER['HTTP_HOST'])) {
-            $xoops_serdat['domain_host'] = substr($xoops_serdat['domain_host'],0, 2);
+            $xoops_serdat['domain_host'] = substr($xoops_serdat['domain_host'], 0, 2);
         }
 
         // Private Key
-        $xoops_serdat['file'] = $func(__FILE__);
+        $xoops_serdat['file']     = $func(__FILE__);
         $xoops_serdat['basename'] = $func(basename(__FILE__));
-        $xoops_serdat['path'] = $func(__DIR__);
+        $xoops_serdat['path']     = $func(__DIR__);
 
         foreach ($_SERVER as $key => $data) {
-            $xoops_serdat[$key] = substr($func(serialize($data)),0, 4);
+            $xoops_serdat[$key] = substr($func(serialize($data)), 0, 4);
         }
 
         foreach ($xoops_serdat as $key => $data) {
             $xoops_key .= $data;
         }
         while (strlen($xoops_key) > 40) {
-            $lpos = rand(18, strlen($xoops_key));
-            $xoops_key = substr($xoops_key, 0, $lpos).substr($xoops_key, $lpos + 1 , strlen($xoops_key) - ($lpos + 1));
+            $lpos      = rand(18, strlen($xoops_key));
+            $xoops_key = substr($xoops_key, 0, $lpos) . substr($xoops_key, $lpos + 1, strlen($xoops_key) - ($lpos + 1));
         }
 
         return $this->xoops_stripeKey($xoops_key);
@@ -137,10 +136,10 @@ class upgrade_240 extends xoopsUpgrade
      */
     function xoops_stripeKey($xoops_key)
     {
-        $uu = 0;
-        $num = 6;
+        $uu     = 0;
+        $num    = 6;
         $length = 30;
-        $strip = floor(strlen($xoops_key) / 6);
+        $strip  = floor(strlen($xoops_key) / 6);
         for ($i = 0; $i < strlen($xoops_key); ++$i) {
             if ($i < $length) {
                 ++$uu;
@@ -173,11 +172,11 @@ class upgrade_240 extends xoopsUpgrade
      */
     function check_keys()
     {
-        $tables['modules']        = array('isactive', 'weight', 'hascomments');
-        $tables['users']          = array('level');
-        $tables['online']         = array('online_updated', 'online_uid');
-        $tables['config']         = array('conf_order');
-        $tables['xoopscomments']  = array('com_status');
+        $tables['modules']       = array('isactive', 'weight', 'hascomments');
+        $tables['users']         = array('level');
+        $tables['online']        = array('online_updated', 'online_uid');
+        $tables['config']        = array('conf_order');
+        $tables['xoopscomments'] = array('com_status');
 
         foreach ($tables as $table => $keys) {
             $sql = "SHOW KEYS FROM `" . $GLOBALS['xoopsDB']->prefix($table) . "`";
@@ -204,13 +203,13 @@ class upgrade_240 extends xoopsUpgrade
      */
     function apply_keys()
     {
-        $tables['modules']        = array('isactive', 'weight', 'hascomments');
-        $tables['users']          = array('level');
-        $tables['online']         = array('online_updated', 'online_uid');
-        $tables['config']         = array('conf_order');
-        $tables['xoopscomments']  = array('com_status');
+        $tables['modules']       = array('isactive', 'weight', 'hascomments');
+        $tables['users']         = array('level');
+        $tables['online']        = array('online_updated', 'online_uid');
+        $tables['config']        = array('conf_order');
+        $tables['xoopscomments'] = array('com_status');
 
-        foreach ($tables as $table=>$keys) {
+        foreach ($tables as $table => $keys) {
             $sql = "SHOW KEYS FROM `" . $GLOBALS['xoopsDB']->prefix($table) . "`";
             if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
                 continue;
@@ -234,7 +233,7 @@ class upgrade_240 extends xoopsUpgrade
 
     function upgrade_240()
     {
-        $this->xoopsUpgrade( basename(__DIR__) );
+        $this->xoopsUpgrade(basename(__DIR__));
     }
 
 }

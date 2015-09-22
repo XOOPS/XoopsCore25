@@ -10,14 +10,13 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @version             $Id: xoopsobject.php 13082 2015-06-06 21:59:41Z beckmi $
  * @deprecated
  */
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
-
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 $GLOBALS['xoopsLogger']->addDeprecated("'/class/xoopsobject.php' is deprecated since XOOPS 2.5.4, please use 'kernel/object.php' instead.");
 

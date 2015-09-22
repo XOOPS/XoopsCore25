@@ -10,14 +10,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @since           2.0.0
- * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @since               2.0.0
+ * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: xoopscodes.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**#@+
  * @deprecated
@@ -34,24 +34,24 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
 function xoopsCodeTarea($textarea_id, $cols = 60, $rows = 15, $suffix = null)
 {
     xoops_load('XoopsFormDhtmlTextArea');
-    $hiddenText = isset($suffix) ? 'xoopsHiddenText' . trim($suffix) : 'xoopsHiddenText';
-    $content = isset($GLOBALS[$textarea_id]) ? $GLOBALS[$textarea_id] : '';
-    $text_editor = new XoopsFormDhtmlTextArea('', $textarea_id, $content, $rows, $cols, $hiddenText);
+    $hiddenText              = isset($suffix) ? 'xoopsHiddenText' . trim($suffix) : 'xoopsHiddenText';
+    $content                 = isset($GLOBALS[$textarea_id]) ? $GLOBALS[$textarea_id] : '';
+    $text_editor             = new XoopsFormDhtmlTextArea('', $textarea_id, $content, $rows, $cols, $hiddenText);
     $text_editor->htmlEditor = null;
-    $text_editor->smilies = false;
+    $text_editor->smilies    = false;
     echo $text_editor->render();
 }
 
 /**
  * Displays smilie image buttons used to insert smilie codes to a target textarea in a form
  *
- * @param   string  $textarea_id    a unique id of the target textarea
+ * @param   string $textarea_id a unique id of the target textarea
  */
 function xoopsSmilies($textarea_id)
 {
-    $myts =& MyTextSanitizer::getInstance();
-    $smiles = $myts->getSmileys(FALSE);
-    $count = count($smiles);
+    $myts   =& MyTextSanitizer::getInstance();
+    $smiles = $myts->getSmileys(false);
+    $count  = count($smiles);
     for ($i = 0; $i < $count; ++$i) {
         echo "<img src='" . XOOPS_UPLOAD_URL . "/" . htmlspecialchars($smiles[$i]['smile_url'], ENT_QUOTES) . "' border='0' alt='' onclick='xoopsCodeSmilie(\"{$textarea_id}\", \" " . $smiles[$i]['code'] . " \");' onmouseover='style.cursor=\"hand\"' />";
     }

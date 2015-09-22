@@ -5,7 +5,6 @@
  */
 class HTMLPurifier_AttrDef_CSS_FontFamily extends HTMLPurifier_AttrDef
 {
-
     protected $mask = null;
 
     public function __construct()
@@ -47,20 +46,19 @@ class HTMLPurifier_AttrDef_CSS_FontFamily extends HTMLPurifier_AttrDef
     }
 
     /**
-     * @param string $string
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
+     * @param  string               $string
+     * @param  HTMLPurifier_Config  $config
+     * @param  HTMLPurifier_Context $context
      * @return bool|string
      */
     public function validate($string, $config, $context)
     {
         static $generic_names = array(
-            'serif' => true,
+            'serif'      => true,
             'sans-serif' => true,
-            'monospace' => true,
-            'fantasy' => true,
-            'cursive' => true
-        );
+            'monospace'  => true,
+            'fantasy'    => true,
+            'cursive'    => true);
         $allowed_fonts = $config->get('CSS.AllowedFonts');
 
         // assume that no font names contain commas in them
@@ -211,9 +209,10 @@ class HTMLPurifier_AttrDef_CSS_FontFamily extends HTMLPurifier_AttrDef
         if ($final === '') {
             return false;
         }
+
         return $final;
     }
-
 }
 
 // vim: et sw=4 sts=4
+

@@ -10,24 +10,24 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @since           2.3.0
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @since               2.3.0
+ * @version             $Id: blockinstance.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 /**
  * XOOPS Block legacy Instance handler
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Xoops Block Instance
  *
- * @author Taiwen Jiang <phppp@users.sourceforge.net>
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  *
- * @package kernel
+ * @package             kernel
  */
 class XoopsBlockInstance
 {
@@ -35,45 +35,48 @@ class XoopsBlockInstance
      * Constructor
      *
      */
-    function __construct()
+    public function __construct()
     {
     }
 
     /**
      * Call Magic Function
      *
-     * @param string $name
-     * @param array $args
+     * @param  string $name
+     * @param  array  $args
      * @return null
      */
-    function __call($name, $args)
+    public function __call($name, $args)
     {
         trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? "" : " thus the method '{$name}' is not executed") . "!", E_USER_WARNING);
+
         return null;
     }
 
     /**
      * Set Magic Function
      *
-     * @param string $name
-     * @param array $args
+     * @param  string $name
+     * @param  array  $args
      * @return null
      */
-    function __set($name, $args)
+    public function __set($name, $args)
     {
         trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? "" : " thus the variable '{$name}' is not set") . "!", E_USER_WARNING);
+
         return false;
     }
 
     /**
      * Get Magic Function
      *
-     * @param string $name
+     * @param  string $name
      * @return null
      */
-    function __get($name)
+    public function __get($name)
     {
         trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? "" : " thus the variable '{$name}' is not vailable") . "!", E_USER_WARNING);
+
         return null;
     }
 }
@@ -84,10 +87,10 @@ class XoopsBlockInstance
  * This class is responsible for providing data access mechanisms to the data source
  * of XOOPS block class objects.
  *
- * @author  Taiwen Jiang <phppp@users.sourceforge.net>
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @package kernel
- * @subpackage block
+ * @package             kernel
+ * @subpackage          block
  */
 class XoopsBlockInstanceHandler
 {
@@ -95,45 +98,48 @@ class XoopsBlockInstanceHandler
      * Enter description here...
      *
      */
-    function __construct()
+    public function __construct()
     {
     }
 
     /**
      * Call Magic Function
      *
-     * @param string $name
-     * @param array $args
+     * @param  string $name
+     * @param  array  $args
      * @return null
      */
-    function __call($name, $args)
+    public function __call($name, $args)
     {
         trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? "" : " thus the method '{$name}' is not executed") . "!", E_USER_WARNING);
+
         return null;
     }
 
     /**
      * Set Magic Function
      *
-     * @param string $name
-     * @param array $args
+     * @param  string $name
+     * @param  array  $args
      * @return null
      */
-    function __set($name, $args)
+    public function __set($name, $args)
     {
         trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? "" : " thus the variable '{$name}' is not set") . "!", E_USER_WARNING);
+
         return false;
     }
 
     /**
      * Get Magic Function
      *
-     * @param string $name
+     * @param  string $name
      * @return null
      */
-    function __get($name)
+    public function __get($name)
     {
         trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? "" : " thus the variable '{$name}' is not vailable") . "!", E_USER_WARNING);
+
         return null;
     }
 }

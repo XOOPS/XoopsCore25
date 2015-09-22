@@ -10,51 +10,51 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @subpackage      form
- * @since           2.0.0
- * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @subpackage          form
+ * @since               2.0.0
+ * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @version             $Id: formbutton.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die("XOOPS root path not defined");
+defined('XOOPS_ROOT_PATH') || exit("XOOPS root path not defined");
 
 xoops_load('XoopsFormElement');
 
 /**
  *
  *
- * @package     kernel
- * @subpackage  form
+ * @package             kernel
+ * @subpackage          form
  *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @author              Kazumi Ono    <onokazu@xoops.org>
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  */
+
 /**
  * A button
  *
- * @author	Kazumi Ono	<onokazu@xoops.org>
+ * @author              Kazumi Ono    <onokazu@xoops.org>
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  *
- * @package     kernel
- * @subpackage  form
+ * @package             kernel
+ * @subpackage          form
  */
 class XoopsFormButton extends XoopsFormElement
 {
-
     /**
      * Value
-     * @var	string
-     * @access	private
+     * @var string
+     * @access    private
      */
-    var $_value;
+    public $_value;
 
     /**
      * Type of the button. This could be either "button", "submit", or "reset"
-     * @var	string
-     * @access	private
+     * @var string
+     * @access    private
      */
-    var $_type;
+    public $_type;
 
     /**
      * Constructor
@@ -64,7 +64,7 @@ class XoopsFormButton extends XoopsFormElement
      * @param string $value
      * @param string $type    Type of the button. Potential values: "button", "submit", or "reset"
      */
-    function XoopsFormButton($caption, $name, $value = "", $type = "button")
+    public function __construct($caption, $name, $value = "", $type = "button")
     {
         $this->setCaption($caption);
         $this->setName($name);
@@ -73,12 +73,23 @@ class XoopsFormButton extends XoopsFormElement
     }
 
     /**
+     * @param        $caption
+     * @param        $name
+     * @param string $value
+     * @param string $type
+     */
+    public function XoopsFormButton($caption, $name, $value = "", $type = "button")
+    {
+        $this->__construct($caption, $name, $value, $type);
+    }
+
+    /**
      * Get the initial value
      *
-     * @param  bool   $encode To sanitizer the text?
+     * @param  bool $encode To sanitizer the text?
      * @return string
      */
-    function getValue($encode = false)
+    public function getValue($encode = false)
     {
         return $encode ? htmlspecialchars($this->_value, ENT_QUOTES) : $this->_value;
     }
@@ -90,7 +101,7 @@ class XoopsFormButton extends XoopsFormElement
      *
      * @return string
      */
-    function setValue($value)
+    public function setValue($value)
     {
         $this->_value = $value;
     }
@@ -100,9 +111,9 @@ class XoopsFormButton extends XoopsFormElement
      *
      * @return string
      */
-    function getType()
+    public function getType()
     {
-        return in_array( strtolower($this->_type), array("button", "submit", "reset") ) ? $this->_type : "button";
+        return in_array(strtolower($this->_type), array("button", "submit", "reset")) ? $this->_type : "button";
     }
 
     /**
@@ -110,7 +121,7 @@ class XoopsFormButton extends XoopsFormElement
      *
      * @return string
      */
-    function render()
+    public function render()
     {
         return "<input type='" . $this->getType() . "' class='formButton' name='" . $this->getName() . "'  id='" . $this->getName() . "' value='" . $this->getValue() . "' title='" . $this->getValue() . "'" . $this->getExtra() . " />";
     }

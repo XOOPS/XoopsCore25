@@ -10,15 +10,15 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @subpackage      form
- * @since           2.0.0
- * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @subpackage          form
+ * @since               2.0.0
+ * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @version             $Id: formtext.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * A simple text field
@@ -31,7 +31,7 @@ class XoopsFormText extends XoopsFormElement
      * @var int
      * @access private
      */
-    var $_size;
+    public $_size;
 
     /**
      * Maximum length of the text
@@ -39,7 +39,7 @@ class XoopsFormText extends XoopsFormElement
      * @var int
      * @access private
      */
-    var $_maxlength;
+    public $_maxlength;
 
     /**
      * Initial text
@@ -47,24 +47,36 @@ class XoopsFormText extends XoopsFormElement
      * @var string
      * @access private
      */
-    var $_value;
+    public $_value;
 
     /**
      * Constructor
      *
-     * @param string $caption Caption
-     * @param string $name "name" attribute
-     * @param int $size Size
-     * @param int $maxlength Maximum length of text
-     * @param string $value Initial text
+     * @param string $caption   Caption
+     * @param string $name      "name" attribute
+     * @param int    $size      Size
+     * @param int    $maxlength Maximum length of text
+     * @param string $value     Initial text
      */
-    function XoopsFormText($caption, $name, $size, $maxlength, $value = '')
+    public function __construct($caption, $name, $size, $maxlength, $value = '')
     {
         $this->setCaption($caption);
         $this->setName($name);
-        $this->_size = (int)($size);
+        $this->_size      = (int)($size);
         $this->_maxlength = (int)($maxlength);
         $this->setValue($value);
+    }
+
+    /**
+     * @param        $caption
+     * @param        $name
+     * @param        $size
+     * @param        $maxlength
+     * @param string $value
+     */
+    public function XoopsFormText($caption, $name, $size, $maxlength, $value = '')
+    {
+        $this->__construct($caption, $name, $size, $maxlength, $value);
     }
 
     /**
@@ -72,7 +84,7 @@ class XoopsFormText extends XoopsFormElement
      *
      * @return int
      */
-    function getSize()
+    public function getSize()
     {
         return $this->_size;
     }
@@ -82,7 +94,7 @@ class XoopsFormText extends XoopsFormElement
      *
      * @return int
      */
-    function getMaxlength()
+    public function getMaxlength()
     {
         return $this->_maxlength;
     }
@@ -90,10 +102,10 @@ class XoopsFormText extends XoopsFormElement
     /**
      * Get initial content
      *
-     * @param bool $encode To sanitizer the text? Default value should be "true"; however we have to set "false" for backward compatibility
+     * @param  bool $encode To sanitizer the text? Default value should be "true"; however we have to set "false" for backward compatibility
      * @return string
      */
-    function getValue($encode = false)
+    public function getValue($encode = false)
     {
         return $encode ? htmlspecialchars($this->_value, ENT_QUOTES) : $this->_value;
     }
@@ -103,7 +115,7 @@ class XoopsFormText extends XoopsFormElement
      *
      * @param  $value string
      */
-    function setValue($value)
+    public function setValue($value)
     {
         $this->_value = $value;
     }
@@ -113,7 +125,7 @@ class XoopsFormText extends XoopsFormElement
      *
      * @return string HTML
      */
-    function render()
+    public function render()
     {
         return "<input type='text' name='" . $this->getName() . "' title='" . $this->getTitle() . "' id='" . $this->getName() . "' size='" . $this->getSize() . "' maxlength='" . $this->getMaxlength() . "' value='" . $this->getValue() . "'" . $this->getExtra() . " />";
     }

@@ -1,10 +1,9 @@
 <?php
 /**
  * Smarty plugin
- * @package Smarty
+ * @package    Smarty
  * @subpackage plugins
  */
-
 
 /**
  * Smarty {mailto} function plugin
@@ -38,7 +37,7 @@
  * {mailto address="me@domain.com" cc="you@domain.com,they@domain.com"}
  * {mailto address="me@domain.com" extra='class="mailto"'}
  * </pre>
- * @link http://smarty.php.net/manual/en/language.function.mailto.php {mailto}
+ * @link     http://smarty.php.net/manual/en/language.function.mailto.php {mailto}
  *          (Smarty online manual)
  * @version  1.2
  * @author   Monte Ohrt <monte at ohrt dot com>
@@ -53,7 +52,8 @@ function smarty_function_mailto($params, &$smarty)
 
     if (empty($params['address'])) {
         $smarty->trigger_error("mailto: missing 'address' parameter");
-        return;
+
+        return null;
     } else {
         $address = $params['address'];
     }
@@ -62,21 +62,22 @@ function smarty_function_mailto($params, &$smarty)
 
     // netscape and mozilla do not decode %40 (@) in BCC field (bug?)
     // so, don't encode it.
-    $search = array('%40', '%2C');
-    $replace  = array('@', ',');
+    $search     = array('%40', '%2C');
+    $replace    = array('@', ',');
     $mail_parms = array();
-    foreach ($params as $var=>$value) {
+    foreach ($params as $var => $value) {
         switch ($var) {
             case 'cc':
             case 'bcc':
             case 'followupto':
-                if (!empty($value))
-                    $mail_parms[] = $var.'='.str_replace($search,$replace,rawurlencode($value));
+                if (!empty($value)) {
+                    $mail_parms[] = $var . '=' . str_replace($search, $replace, rawurlencode($value));
+                }
                 break;
 
             case 'subject':
             case 'newsgroups':
-                $mail_parms[] = $var.'='.rawurlencode($value);
+                $mail_parms[] = $var . '=' . rawurlencode($value);
                 break;
 
             case 'extra':
@@ -88,76 +89,76 @@ function smarty_function_mailto($params, &$smarty)
     }
 
     $mail_parm_vals = '';
-    for ($i=0; $i<count($mail_parms); ++$i) {
-        $mail_parm_vals .= (0==$i) ? '?' : '&';
+    $mail_parmsCount = count($mail_parms);
+    for ($i = 0; $i < $mail_parmsCount; ++$i) {
+        $mail_parm_vals .= (0 == $i) ? '?' : '&';
         $mail_parm_vals .= $mail_parms[$i];
     }
     $address .= $mail_parm_vals;
 
     $encode = (empty($params['encode'])) ? 'none' : $params['encode'];
-    if (!in_array($encode,array('javascript','javascript_charcode','hex','none')) ) {
+    if (!in_array($encode, array('javascript', 'javascript_charcode', 'hex', 'none'))) {
         $smarty->trigger_error("mailto: 'encode' parameter must be none, javascript or hex");
-        return;
+
+        return null;
     }
 
-    if ($encode == 'javascript' ) {
-        $string = 'document.write(\'<a href="mailto:'.$address.'" '.$extra.'>'.$text.'</a>\');';
+    if ($encode === 'javascript') {
+        $string = 'document.write(\'<a href="mailto:' . $address . '" ' . $extra . '>' . $text . '</a>\');';
 
         $js_encode = '';
-        for ($x=0; $x < strlen($string); ++$x) {
+        $strLen = strlen($string);
+        for ($x = 0; $x < $strLen; ++$x) {
             $js_encode .= '%' . bin2hex($string[$x]);
         }
 
-        return '<script type="text/javascript">eval(unescape(\''.$js_encode.'\'))</script>';
+        return '<script type="text/javascript">eval(unescape(\'' . $js_encode . '\'))</script>';
+    } elseif ($encode === 'javascript_charcode') {
+        $string = '<a href="mailto:' . $address . '" ' . $extra . '>' . $text . '</a>';
 
-    } elseif ($encode == 'javascript_charcode' ) {
-        $string = '<a href="mailto:'.$address.'" '.$extra.'>'.$text.'</a>';
-
-        for($x = 0, $y = strlen($string); $x < $y; ++$x ) {
+        for ($x = 0, $y = strlen($string); $x < $y; ++$x) {
             $ord[] = ord($string[$x]);
         }
 
         $_ret = "<script type=\"text/javascript\" language=\"javascript\">\n";
         $_ret .= "<!--\n";
         $_ret .= "{document.write(String.fromCharCode(";
-        $_ret .= implode(',',$ord);
+        $_ret .= implode(',', $ord);
         $_ret .= "))";
         $_ret .= "}\n";
         $_ret .= "//-->\n";
         $_ret .= "</script>\n";
 
         return $_ret;
-
-
-    } elseif ($encode == 'hex') {
-
-        preg_match('!^(.*)(\?.*)$!',$address,$match);
-        if(!empty($match[2])) {
+    } elseif ($encode === 'hex') {
+        preg_match('!^(.*)(\?.*)$!', $address, $match);
+        if (!empty($match[2])) {
             $smarty->trigger_error("mailto: hex encoding does not work with extra attributes. Try javascript.");
-            return;
+
+            return null;
         }
         $address_encode = '';
-        for ($x=0; $x < strlen($address); ++$x) {
-            if(preg_match('!\w!',$address[$x])) {
+        $strLen = strlen($address);
+        for ($x = 0; $x < $strLen; ++$x) {
+            if (preg_match('!\w!', $address[$x])) {
                 $address_encode .= '%' . bin2hex($address[$x]);
             } else {
                 $address_encode .= $address[$x];
             }
         }
         $text_encode = '';
-        for ($x=0; $x < strlen($text); ++$x) {
-            $text_encode .= '&#x' . bin2hex($text[$x]).';';
+        $strLen = strlen($text);
+        for ($x = 0; $x < $strLen; ++$x) {
+            $text_encode .= '&#x' . bin2hex($text[$x]) . ';';
         }
 
         $mailto = "&#109;&#97;&#105;&#108;&#116;&#111;&#58;";
-        return '<a href="'.$mailto.$address_encode.'" '.$extra.'>'.$text_encode.'</a>';
 
+        return '<a href="' . $mailto . $address_encode . '" ' . $extra . '>' . $text_encode . '</a>';
     } else {
         // no encoding
-        return '<a href="mailto:'.$address.'" '.$extra.'>'.$text.'</a>';
-
+        return '<a href="mailto:' . $address . '" ' . $extra . '>' . $text . '</a>';
     }
-
 }
 
 /* vim: set expandtab: */

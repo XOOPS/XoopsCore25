@@ -10,20 +10,20 @@
  */
 
 /**
- * @copyright       The XUUPS Project http://sourceforge.net/projects/xuups/
+ * @copyright           The XUUPS Project http://sourceforge.net/projects/xuups/
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
- * @package         Publisher
- * @subpackage      Action
- * @since           1.0
- * @author          trabis <lusopoemas@gmail.com>
- * @author          The SmartFactory <www.smartfactory.ca>
- * @version         $Id$
+ * @license             http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @package             Publisher
+ * @subpackage          Action
+ * @since               1.0
+ * @author              trabis <lusopoemas@gmail.com>
+ * @author              The SmartFactory <www.smartfactory.ca>
+ * @version             $Id: item.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 include_once __DIR__ . '/header.php';
 
-$itemid = PublisherRequest::getInt('itemid');
+$itemid       = PublisherRequest::getInt('itemid');
 $item_page_id = PublisherRequest::getInt('page', -1);
 
 if ($itemid == 0) {
@@ -65,38 +65,38 @@ if (!$xoopsUser || ($xoopsUser->isAdmin($publisher->getModule()->mid()) && $publ
 // creating the Item objects that belong to the selected category
 switch ($publisher->getConfig('format_order_by')) {
     case 'title' :
-        $sort = 'title';
+        $sort  = 'title';
         $order = 'ASC';
         break;
 
     case 'date' :
-        $sort = 'datesub';
+        $sort  = 'datesub';
         $order = 'DESC';
         break;
 
     default :
-        $sort = 'weight';
+        $sort  = 'weight';
         $order = 'ASC';
         break;
 }
 
-if ($publisher->getConfig('item_other_items_type') == "previous_next") {
+if ($publisher->getConfig('item_other_items_type') === "previous_next") {
     // Retrieving the next and previous object
     $previous_item_link = '';
-    $previous_item_url = '';
-    $next_item_link = '';
-    $next_item_url = '';
+    $previous_item_url  = '';
+    $next_item_link     = '';
+    $next_item_url      = '';
 
     $previousObj = $publisher->getHandler('item')->getPreviousPublished($itemObj);
-    $nextObj = $publisher->getHandler('item')->getNextPublished($itemObj);
+    $nextObj     = $publisher->getHandler('item')->getNextPublished($itemObj);
     if (is_object($previousObj)) {
         $previous_item_link = $previousObj->getItemLink();
-        $previous_item_url = $previousObj->getItemUrl();
+        $previous_item_url  = $previousObj->getItemUrl();
     }
 
     if (is_object($nextObj)) {
         $next_item_link = $nextObj->getItemLink();
-        $next_item_url = $nextObj->getItemUrl();
+        $next_item_url  = $nextObj->getItemUrl();
     }
     unset($previousObj, $nextObj);
     $xoopsTpl->assign('previous_item_link', $previous_item_link);
@@ -106,13 +106,13 @@ if ($publisher->getConfig('item_other_items_type') == "previous_next") {
 }
 
 //CAREFUL!! with many items this will exhaust memory
-if ($publisher->getConfig('item_other_items_type') == "all") {
+if ($publisher->getConfig('item_other_items_type') === "all") {
     $itemsObj = $publisher->getHandler('item')->getAllPublished(0, 0, $categoryObj->categoryid(), $sort, $order, '', true, true);
-    $items = array();
+    $items    = array();
     foreach ($itemsObj as $theitemObj) {
         $theitem['titlelink'] = $theitemObj->getItemLink();
-        $theitem['datesub'] = $theitemObj->datesub();
-        $theitem['counter'] = $theitemObj->counter();
+        $theitem['datesub']   = $theitemObj->datesub();
+        $theitem['counter']   = $theitemObj->counter();
         if ($theitemObj->itemid() == $itemObj->itemid()) {
             $theitem['titlelink'] = $theitemObj->title();
         }
@@ -137,10 +137,10 @@ if ($itemObj->pagescount() > 0) {
 }
 
 // Creating the files object associated with this item
-$file = array();
-$files = array();
+$file          = array();
+$files         = array();
 $embeded_files = array();
-$filesObj = $itemObj->getFiles();
+$filesObj      = $itemObj->getFiles();
 
 // check if user has permission to modify files
 $hasFilePermissions = true;
@@ -149,13 +149,13 @@ if (!(publisher_userIsAdmin() || publisher_userIsModerator($itemObj))) {
 }
 
 foreach ($filesObj as $fileObj) {
-    $file = array();
+    $file        = array();
     $file['mod'] = false;
-    if ($hasFilePermissions || (is_object($xoopsUser) && $fileObj->getVar('uid') == $xoopsUser->getVar('uid') )) {
+    if ($hasFilePermissions || (is_object($xoopsUser) && $fileObj->getVar('uid') == $xoopsUser->getVar('uid'))) {
         $file['mod'] = true;
     }
 
-    if ($fileObj->mimetype() == 'application/x-shockwave-flash') {
+    if ($fileObj->mimetype() === 'application/x-shockwave-flash') {
         $file['content'] = $fileObj->displayFlash();
         if (strpos($item['maintext'], '[flash-' . $fileObj->getVar('fileid') . ']')) {
             $item['maintext'] = str_replace('[flash-' . $fileObj->getVar('fileid') . ']', $file['content'], $item['maintext']);
@@ -163,18 +163,18 @@ foreach ($filesObj as $fileObj) {
             $embeded_files[] = $file;
         }
     } else {
-        $file['fileid'] = $fileObj->fileid();
-        $file['name'] = $fileObj->name();
+        $file['fileid']      = $fileObj->fileid();
+        $file['name']        = $fileObj->name();
         $file['description'] = $fileObj->description();
-        $file['name'] = $fileObj->name();
-        $file['type'] = $fileObj->mimetype();
-        $file['datesub'] = $fileObj->datesub();
-        $file['hits'] = $fileObj->counter();
-        $files[] = $file;
+        $file['name']        = $fileObj->name();
+        $file['type']        = $fileObj->mimetype();
+        $file['datesub']     = $fileObj->datesub();
+        $file['hits']        = $fileObj->counter();
+        $files[]             = $file;
     }
 }
 
-$item['files'] = $files;
+$item['files']         = $files;
 $item['embeded_files'] = $embeded_files;
 unset($file, $embeded_files, $filesObj, $fileObj);
 
@@ -184,7 +184,7 @@ $xoopsTpl->assign('itemid', $itemObj->itemid());
 $xoopsTpl->assign('sectionname', $publisher->getModule()->getVar('name'));
 $xoopsTpl->assign('modulename', $publisher->getModule()->getVar('dirname'));
 $xoopsTpl->assign('module_home', publisher_moduleHome($publisher->getConfig('format_linked_path')));
-$xoopsTpl->assign('categoryPath', $item['categoryPath']."<li class=\"active\">".$item['title']."</li>");
+$xoopsTpl->assign('categoryPath', $item['categoryPath'] . "<li class=\"active\">" . $item['title'] . "</li>");
 $xoopsTpl->assign('commentatarticlelevel', $publisher->getConfig('perm_com_art_level'));
 $xoopsTpl->assign('com_rule', $publisher->getConfig('com_rule'));
 $xoopsTpl->assign('other_items', $publisher->getConfig('item_other_items_type'));
@@ -208,9 +208,9 @@ if ((($itemObj->cancomment() == 1) || !$publisher->getConfig('perm_com_art_level
     include_once XOOPS_ROOT_PATH . "/include/comment_view.php";
     // Problem with url_rewrite and posting comments :
     $xoopsTpl->assign(array(
-        'editcomment_link' => PUBLISHER_URL . '/comment_edit.php?com_itemid=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode . $link_extra,
-        'deletecomment_link' => PUBLISHER_URL . '/comment_delete.php?com_itemid=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode . $link_extra,
-        'replycomment_link' => PUBLISHER_URL . '/comment_reply.php?com_itemid=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode . $link_extra));
+                          'editcomment_link'   => PUBLISHER_URL . '/comment_edit.php?com_itemid=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode . $link_extra,
+                          'deletecomment_link' => PUBLISHER_URL . '/comment_delete.php?com_itemid=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode . $link_extra,
+                          'replycomment_link'  => PUBLISHER_URL . '/comment_reply.php?com_itemid=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode . $link_extra));
     $xoopsTpl->_tpl_vars['commentsnav'] = str_replace("self.location.href='", "self.location.href='" . PUBLISHER_URL . '/', $xoopsTpl->_tpl_vars['commentsnav']);
 }
 

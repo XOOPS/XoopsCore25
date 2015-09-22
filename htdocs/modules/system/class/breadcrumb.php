@@ -13,55 +13,55 @@
  * BreadCrumb Class
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author      Andricq Nicolas (AKA MusS)
- * @package     system
- * @version     $Id$
+ * @license             http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @author              Andricq Nicolas (AKA MusS)
+ * @package             system
+ * @version             $Id: breadcrumb.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-
 class SystemBreadcrumb
 {
     /* Variables */
-    var $_directory;
-    var $_bread = array();
-    var $_help;
-    var $_tips;
+    public $_directory;
+    public $_bread = array();
+    public $_help;
+    public $_tips;
 
     /**
      * @param $directory
      */
-    function __construct( $directory )
+    public function __construct($directory)
     {
         $this->_directory = $directory;
     }
 
     /**
      * Add link to breadcrumb
-     *
+     * @param string $title
+     * @param string $link
+     * @param bool   $home
      */
-    function addLink( $title='', $link='', $home=false )
+    public function addLink($title = '', $link = '', $home = false)
     {
         $this->_bread[] = array(
             'link'  => $link,
             'title' => $title,
-            'home'  => $home
-            );
+            'home'  => $home);
     }
 
     /**
      * Add Help link
-     *
+     * @param string $link
      */
-    function addHelp( $link = '')
+    public function addHelp($link = '')
     {
         $this->_help = $link;
     }
 
     /**
      * Add Tips
-     *
+     * @param $value
      */
-    function addTips($value)
+    public function addTips($value)
     {
         $this->_tips = $value;
     }
@@ -70,7 +70,7 @@ class SystemBreadcrumb
      * Render System BreadCrumb
      *
      */
-    function render()
+    public function render()
     {
         if (isset($GLOBALS['xoopsTpl'])) {
             $GLOBALS['xoopsTpl']->assign('xo_sys_breadcrumb', $this->_bread);
@@ -80,16 +80,16 @@ class SystemBreadcrumb
                     $GLOBALS['xoopsTpl']->assign('xo_sys_tips', $this->_tips);
                 }
             }
-                // Call template
-                if ( file_exists( XOOPS_ROOT_PATH . '/modules/system/language/' . $GLOBALS['xoopsConfig']['language'] . '/help/' . $this->_directory . '.html' ) ) {
-                    $GLOBALS['xoopsTpl']->assign( 'help_content', XOOPS_ROOT_PATH . '/modules/system/language/' . $GLOBALS['xoopsConfig']['language'] . '/help/' . $this->_directory . '.html' );
+            // Call template
+            if (file_exists(XOOPS_ROOT_PATH . '/modules/system/language/' . $GLOBALS['xoopsConfig']['language'] . '/help/' . $this->_directory . '.html')) {
+                $GLOBALS['xoopsTpl']->assign('help_content', XOOPS_ROOT_PATH . '/modules/system/language/' . $GLOBALS['xoopsConfig']['language'] . '/help/' . $this->_directory . '.html');
+            } else {
+                if (file_exists(XOOPS_ROOT_PATH . '/modules/system/language/english/help/' . $this->_directory . '.html')) {
+                    $GLOBALS['xoopsTpl']->assign('help_content', XOOPS_ROOT_PATH . '/modules/system/language/english/help/' . $this->_directory . '.html');
                 } else {
-                    if ( file_exists( XOOPS_ROOT_PATH . '/modules/system/language/english/help/' . $this->_directory . '.html' ) ) {
-                        $GLOBALS['xoopsTpl']->assign( 'help_content', XOOPS_ROOT_PATH.'/modules/system/language/english/help/' . $this->_directory . '.html' );
-                    } else {
-                        $GLOBALS['xoopsTpl']->assign('load_error', 1);
-                    }
+                    $GLOBALS['xoopsTpl']->assign('load_error', 1);
                 }
+            }
         } else {
             $out = $menu = '<style type="text/css" media="screen">@import ' . XOOPS_URL . '/modules/system/css/menu.css;</style>';
             $out .= '<ul id="xo-breadcrumb">';
@@ -111,5 +111,4 @@ class SystemBreadcrumb
             echo $out;
         }
     }
-
 }

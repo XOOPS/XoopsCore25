@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: index.php 13082 2015-06-06 21:59:41Z beckmi $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2015 XOOPS Project (www.xoops.org)            //
@@ -38,3 +38,4 @@ echo $indexAdmin->renderIndex();
 
 include 'admin_footer.php';
 //xoops_cp_footer();
+

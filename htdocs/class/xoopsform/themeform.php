@@ -10,14 +10,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @subpackage      form
- * @since           2.0.0
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @subpackage          form
+ * @since               2.0.0
+ * @version             $Id: themeform.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 xoops_load('XoopsForm');
 
@@ -34,7 +34,7 @@ class XoopsThemeForm extends XoopsForm
      * @param string $extra HTML to be displayed in the empty row.
      * @param string $class CSS class name for <td> tag
      */
-    function insertBreak($extra = '', $class = '')
+    public function insertBreak($extra = '', $class = '')
     {
         $class = ($class != '') ? " class='" . preg_replace('/[^A-Za-z0-9\s\s_-]/i', '', $class) . "'" : '';
         // Fix for $extra tag not showing
@@ -60,19 +60,19 @@ class XoopsThemeForm extends XoopsForm
      *
      * @return string
      */
-    function render()
+    public function render()
     {
         $ele_name = $this->getName();
-        $ret = '<form name="' . $ele_name . '" id="' . $ele_name . '" action="' . $this->getAction() . '" method="' . $this->getMethod() . '" onsubmit="return xoopsFormValidate_' . $ele_name . '();"' . $this->getExtra() . '>
+        $ret      = '<form name="' . $ele_name . '" id="' . $ele_name . '" action="' . $this->getAction() . '" method="' . $this->getMethod() . '" onsubmit="return xoopsFormValidate_' . $ele_name . '();"' . $this->getExtra() . '>
             <table width="100%" class="outer" cellspacing="1">
             <tr><th colspan="2">' . $this->getTitle() . '</th></tr>
         ';
-        $hidden = '';
-        $class = 'even';
+        $hidden   = '';
+        $class    = 'even';
         foreach ($this->getElements() as $ele) {
             if (!is_object($ele)) {
                 $ret .= $ele;
-            } else if (!$ele->isHidden()) {
+            } elseif (!$ele->isHidden()) {
                 if (!$ele->getNocolspan()) {
                     $ret .= '<tr valign="top" align="left"><td class="head">';
                     if (($caption = $ele->getCaption()) != '') {
@@ -101,6 +101,7 @@ class XoopsThemeForm extends XoopsForm
         }
         $ret .= '</table>' . NWLINE . ' ' . $hidden . '</form>' . NWLINE;
         $ret .= $this->renderValidationJS(true);
+
         return $ret;
     }
 }

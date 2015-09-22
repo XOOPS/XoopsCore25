@@ -10,29 +10,28 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         pm
- * @since           2.4.0
- * @author          trabis <lusopoemas@gmail.com>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             pm
+ * @since               2.4.0
+ * @author              trabis <lusopoemas@gmail.com>
+ * @version             $Id: core.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-// defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 /**
  * PM core preloads
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @author          trabis <lusopoemas@gmail.com>
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @author              trabis <lusopoemas@gmail.com>
  */
 class PmCorePreload extends XoopsPreloadItem
 {
-
     /**
      * @param $args
      */
-    function eventCorePmliteStart($args)
+    public function eventCorePmliteStart($args)
     {
         header("location: ./modules/pm/pmlite.php" . (empty($_SERVER['QUERY_STRING']) ? "" : "?" . $_SERVER['QUERY_STRING']));
         exit();
@@ -41,7 +40,7 @@ class PmCorePreload extends XoopsPreloadItem
     /**
      * @param $args
      */
-    function eventCoreReadpmsgStart($args)
+    public function eventCoreReadpmsgStart($args)
     {
         header("location: ./modules/pm/readpmsg.php" . (empty($_SERVER['QUERY_STRING']) ? "" : "?" . $_SERVER['QUERY_STRING']));
         exit();
@@ -50,7 +49,7 @@ class PmCorePreload extends XoopsPreloadItem
     /**
      * @param $args
      */
-    function eventCoreViewpmsgStart($args)
+    public function eventCoreViewpmsgStart($args)
     {
         header("location: ./modules/pm/viewpmsg.php" . (empty($_SERVER['QUERY_STRING']) ? "" : "?" . $_SERVER['QUERY_STRING']));
         exit();
@@ -59,9 +58,8 @@ class PmCorePreload extends XoopsPreloadItem
     /**
      * @param $args
      */
-    function eventCoreClassSmartyXoops_pluginsXoinboxcount($args)
+    public function eventCoreClassSmartyXoops_pluginsXoinboxcount($args)
     {
         $args[0] =& xoops_getModuleHandler('message', 'pm');
     }
-
 }

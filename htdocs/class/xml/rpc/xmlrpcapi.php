@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: xmlrpcapi.php 13082 2015-06-06 21:59:41Z beckmi $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2015 XOOPS Project (www.xoops.org)            //
@@ -34,44 +34,43 @@
  */
 class XoopsXmlRpcApi
 {
-
     // reference to method parameters
-    var $params;
+    public $params;
 
     // reference to xmlrpc document class object
-    var $response;
+    public $response;
 
     // reference to module class object
-    var $module;
+    public $module;
 
     // map between xoops tags and blogger specific tags
-    var $xoopsTagMap = array();
+    public $xoopsTagMap = array();
 
     // user class object
-    var $user;
+    public $user;
 
-    var $isadmin = false;
+    public $isadmin = false;
 
     /**
      * @param $params
      * @param $response
      * @param $module
      */
-    function XoopsXmlRpcApi(&$params, &$response, &$module)
+    public function __construct(&$params, &$response, &$module)
     {
-        $this->params =& $params;
+        $this->params   =& $params;
         $this->response =& $response;
-        $this->module =& $module;
+        $this->module   =& $module;
     }
 
     /**
      * @param      $user
      * @param bool $isadmin
      */
-    function _setUser(&$user, $isadmin = false)
+    public function _setUser(&$user, $isadmin = false)
     {
         if (is_object($user)) {
-            $this->user =& $user;
+            $this->user    =& $user;
             $this->isadmin = $isadmin;
         }
     }
@@ -82,19 +81,19 @@ class XoopsXmlRpcApi
      *
      * @return bool
      */
-    function _checkUser($username, $password)
+    public function _checkUser($username, $password)
     {
         if (isset($this->user)) {
             return true;
         }
-        $member_handler =& xoops_gethandler('member');
-        $this->user =& $member_handler->loginUser(addslashes($username), addslashes($password));
+        $member_handler =& xoops_getHandler('member');
+        $this->user     =& $member_handler->loginUser(addslashes($username), addslashes($password));
         if (!is_object($this->user)) {
             unset($this->user);
 
             return false;
         }
-        $moduleperm_handler =& xoops_gethandler('groupperm');
+        $moduleperm_handler =& xoops_getHandler('groupperm');
         if (!$moduleperm_handler->checkRight('module_read', $this->module->getVar('mid'), $this->user->getGroups())) {
             unset($this->user);
 
@@ -107,7 +106,7 @@ class XoopsXmlRpcApi
     /**
      * @return bool
      */
-    function _checkAdmin()
+    public function _checkAdmin()
     {
         if ($this->isadmin) {
             return true;
@@ -129,13 +128,14 @@ class XoopsXmlRpcApi
      *
      * @return array
      */
-    function &_getPostFields($post_id = null, $blog_id = null)
+    public function &_getPostFields($post_id = null, $blog_id = null)
     {
-        $ret = array();
-        $ret['title'] = array('required' => true, 'form_type' => 'textbox', 'value_type' => 'text');
-        $ret['hometext'] = array('required' => false, 'form_type' => 'textarea', 'data_type' => 'textarea');
-        $ret['moretext'] = array('required' => false, 'form_type' => 'textarea', 'data_type' => 'textarea');
+        $ret               = array();
+        $ret['title']      = array('required' => true, 'form_type' => 'textbox', 'value_type' => 'text');
+        $ret['hometext']   = array('required' => false, 'form_type' => 'textarea', 'data_type' => 'textarea');
+        $ret['moretext']   = array('required' => false, 'form_type' => 'textarea', 'data_type' => 'textarea');
         $ret['categories'] = array('required' => false, 'form_type' => 'select_multi', 'data_type' => 'array');
+
         /*
         if (!isset($blog_id)) {
             if (!isset($post_id)) {
@@ -157,7 +157,7 @@ class XoopsXmlRpcApi
      * @param $xoopstag
      * @param $blogtag
      */
-    function _setXoopsTagMap($xoopstag, $blogtag)
+    public function _setXoopsTagMap($xoopstag, $blogtag)
     {
         if (trim($blogtag) != '') {
             $this->xoopsTagMap[$xoopstag] = $blogtag;
@@ -169,7 +169,7 @@ class XoopsXmlRpcApi
      *
      * @return mixed
      */
-    function _getXoopsTagMap($xoopstag)
+    public function _getXoopsTagMap($xoopstag)
     {
         if (isset($this->xoopsTagMap[$xoopstag])) {
             return $this->xoopsTagMap[$xoopstag];
@@ -185,11 +185,11 @@ class XoopsXmlRpcApi
      *
      * @return string
      */
-    function _getTagCdata(&$text, $tag, $remove = true)
+    public function _getTagCdata(&$text, $tag, $remove = true)
     {
-        $ret = '';
+        $ret   = '';
         $match = array();
-        if (preg_match("/\<".$tag."\>(.*)\<\/".$tag."\>/is", $text, $match)) {
+        if (preg_match("/\<" . $tag . "\>(.*)\<\/" . $tag . "\>/is", $text, $match)) {
             if ($remove) {
                 $text = str_replace($match[0], '', $text);
             }
@@ -206,10 +206,10 @@ class XoopsXmlRpcApi
      *
      * @return $this|XoopsApi
      */
-    function &_getXoopsApi(&$params)
+    public function &_getXoopsApi(&$params)
     {
-        if (strtolower(get_class($this)) != 'xoopsapi') {
-            require_once(XOOPS_ROOT_PATH.'/class/xml/rpc/xoopsapi.php');
+        if (strtolower(get_class($this)) !== 'xoopsapi') {
+            require_once(XOOPS_ROOT_PATH . '/class/xml/rpc/xoopsapi.php');
 
             return new XoopsApi($params, $this->response, $this->module);
         } else {

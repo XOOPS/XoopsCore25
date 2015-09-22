@@ -10,17 +10,17 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @author          Skalpa Keo <skalpa@xoops.org>
- * @since           2.3.0
- * @package         kernel
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @author              Skalpa Keo <skalpa@xoops.org>
+ * @since               2.3.0
+ * @package             kernel
+ * @version             $Id: theme_blocks.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 /**
  * This file cannot be requested directly
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 include_once $GLOBALS['xoops']->path('class/xoopsblock.php');
 include_once $GLOBALS['xoops']->path('class/template.php');
@@ -28,15 +28,15 @@ include_once $GLOBALS['xoops']->path('class/template.php');
 /**
  * xos_logos_PageBuilder main class
  *
- * @package xos_logos
+ * @package    xos_logos
  * @subpackage xos_logos_PageBuilder
- * @author Skalpa Keo
- * @since 2.3.0
+ * @author     Skalpa Keo
+ * @since      2.3.0
  */
 class xos_logos_PageBuilder
 {
-    var $theme = false;
-    var $blocks = array();
+    public $theme  = false;
+    public $blocks = array();
 
     /**
      * xos_logos_PageBuilder::xoInit()
@@ -45,7 +45,7 @@ class xos_logos_PageBuilder
      *
      * @return bool
      */
-    function xoInit($options = array())
+    public function xoInit($options = array())
     {
         $this->retrieveBlocks();
         if ($this->theme) {
@@ -57,14 +57,17 @@ class xos_logos_PageBuilder
 
     /**
      * Called before a specific zone is rendered
+     * @param string $zone
      */
-    function preRender($zone = '')
+    public function preRender($zone = '')
     {
     }
+
     /**
      * Called after a specific zone is rendered
+     * @param string $zone
      */
-    function postRender($zone = '')
+    public function postRender($zone = '')
     {
     }
 
@@ -73,20 +76,20 @@ class xos_logos_PageBuilder
      *
      * @return void
      */
-    function retrieveBlocks()
+    public function retrieveBlocks()
     {
         global $xoopsConfig;
         $xoopsPreload =& XoopsPreload::getInstance();
 
         $startMod = ($xoopsConfig['startpage'] == '--') ? 'system' : $xoopsConfig['startpage'];
         if (isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule'])) {
-            list ($mid, $dirname) = array(
-                $GLOBALS['xoopsModule']->getVar('mid') ,
+            list($mid, $dirname) = array(
+                $GLOBALS['xoopsModule']->getVar('mid'),
                 $GLOBALS['xoopsModule']->getVar('dirname'));
-            $isStart = (substr($_SERVER['PHP_SELF'], - 9) == 'index.php' && $xoopsConfig['startpage'] == $dirname && empty($_SERVER['QUERY_STRING']));
+            $isStart = (substr($_SERVER['PHP_SELF'], -9) === 'index.php' && $xoopsConfig['startpage'] == $dirname && empty($_SERVER['QUERY_STRING']));
         } else {
-            list ($mid, $dirname) = array(
-                0 ,
+            list($mid, $dirname) = array(
+                0,
                 'system');
             $isStart = !empty($GLOBALS['xoopsOption']['show_cblock']);
         }
@@ -95,37 +98,34 @@ class xos_logos_PageBuilder
             XOOPS_GROUP_ANONYMOUS);
 
         $oldzones = array(
-            XOOPS_SIDEBLOCK_LEFT => 'canvas_left' ,
-            XOOPS_SIDEBLOCK_RIGHT => 'canvas_right' ,
-            XOOPS_CENTERBLOCK_LEFT => 'page_topleft' ,
-            XOOPS_CENTERBLOCK_CENTER => 'page_topcenter' ,
-            XOOPS_CENTERBLOCK_RIGHT => 'page_topright' ,
-            XOOPS_CENTERBLOCK_BOTTOMLEFT => 'page_bottomleft' ,
-            XOOPS_CENTERBLOCK_BOTTOM => 'page_bottomcenter' ,
+            XOOPS_SIDEBLOCK_LEFT          => 'canvas_left',
+            XOOPS_SIDEBLOCK_RIGHT         => 'canvas_right',
+            XOOPS_CENTERBLOCK_LEFT        => 'page_topleft',
+            XOOPS_CENTERBLOCK_CENTER      => 'page_topcenter',
+            XOOPS_CENTERBLOCK_RIGHT       => 'page_topright',
+            XOOPS_CENTERBLOCK_BOTTOMLEFT  => 'page_bottomleft',
+            XOOPS_CENTERBLOCK_BOTTOM      => 'page_bottomcenter',
             XOOPS_CENTERBLOCK_BOTTOMRIGHT => 'page_bottomright',
-
-
-            XOOPS_FOOTERBLOCK_LEFT => 'footer_left',
-            XOOPS_FOOTERBLOCK_RIGHT => 'footer_right' ,
-            XOOPS_FOOTERBLOCK_CENTER => 'footer_center' ,
-            XOOPS_FOOTERBLOCK_ALL => 'footer_all' );
-
+            XOOPS_FOOTERBLOCK_LEFT        => 'footer_left',
+            XOOPS_FOOTERBLOCK_RIGHT       => 'footer_right',
+            XOOPS_FOOTERBLOCK_CENTER      => 'footer_center',
+            XOOPS_FOOTERBLOCK_ALL         => 'footer_all');
 
         foreach ($oldzones as $zone) {
             $this->blocks[$zone] = array();
         }
         if ($this->theme) {
             $template =& $this->theme->template;
-            $backup = array(
-                $template->caching ,
+            $backup   = array(
+                $template->caching,
                 $template->cache_lifetime);
         } else {
             $template = null;
             $template = new XoopsTpl();
         }
         $xoopsblock = new XoopsBlock();
-        $block_arr = array();
-        $block_arr = $xoopsblock->getAllByGroupModule($groups, $mid, $isStart, XOOPS_BLOCK_VISIBLE);
+        $block_arr  = array();
+        $block_arr  = $xoopsblock->getAllByGroupModule($groups, $mid, $isStart, XOOPS_BLOCK_VISIBLE);
         $xoopsPreload->triggerEvent('core.class.theme_blocks.retrieveBlocks', array(&$this, &$template, &$block_arr));
         foreach ($block_arr as $block) {
             $side = $oldzones[$block->getVar('side')];
@@ -134,7 +134,7 @@ class xos_logos_PageBuilder
             }
         }
         if ($this->theme) {
-            list ($template->caching, $template->cache_lifetime) = $backup;
+            list($template->caching, $template->cache_lifetime) = $backup;
         }
     }
 
@@ -144,7 +144,7 @@ class xos_logos_PageBuilder
      * @param  mixed $cache_id
      * @return mixed
      */
-    function generateCacheId($cache_id)
+    public function generateCacheId($cache_id)
     {
         if ($this->theme) {
             $cache_id = $this->theme->generateCacheId($cache_id);
@@ -156,27 +156,27 @@ class xos_logos_PageBuilder
     /**
      * xos_logos_PageBuilder::buildBlock()
      *
-     * @param  mixed      $xobject
-     * @param  mixed      $template
+     * @param  mixed $xobject
+     * @param  mixed $template
      * @return array|bool
      */
-    function buildBlock($xobject, &$template)
+    public function buildBlock($xobject, &$template)
     {
         // The lame type workaround will change
         // bid is added temporarily as workaround for specific block manipulation
         $block = array(
-            'id' => $xobject->getVar('bid') ,
-            'module' => $xobject->getVar('dirname') ,
-            'title' => $xobject->getVar('title') ,
+            'id'      => $xobject->getVar('bid'),
+            'module'  => $xobject->getVar('dirname'),
+            'title'   => $xobject->getVar('title'),
             // 'name'        => strtolower( preg_replace( '/[^0-9a-zA-Z_]/', '', str_replace( ' ', '_', $xobject->getVar( 'name' ) ) ) ),
-            'weight' => $xobject->getVar('weight') ,
+            'weight'  => $xobject->getVar('weight'),
             'lastmod' => $xobject->getVar('last_modified'));
 
         $bcachetime = (int)($xobject->getVar('bcachetime'));
         if (empty($bcachetime)) {
             $template->caching = 0;
         } else {
-            $template->caching = 2;
+            $template->caching        = 2;
             $template->cache_lifetime = $bcachetime;
         }
         $template->setCompileId($xobject->getVar('dirname', 'n'));

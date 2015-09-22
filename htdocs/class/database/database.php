@@ -10,21 +10,21 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @subpackage      database
- * @since           1.0.0
- * @author          Kazumi Ono <onokazu@xoops.org>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @subpackage          database
+ * @since               1.0.0
+ * @author              Kazumi Ono <onokazu@xoops.org>
+ * @version             $Id: database.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * make sure this is only included once!
  */
 if (defined('XOOPS_C_DATABASE_INCLUDED')) {
-    return;
+    return null;
 }
 
 define('XOOPS_C_DATABASE_INCLUDED', 1);
@@ -33,8 +33,8 @@ define('XOOPS_C_DATABASE_INCLUDED', 1);
  * Abstract base class for Database access classes
  *
  * @abstract
- * @author Kazumi Ono <onokazu@xoops.org>
- * @package kernel
+ * @author     Kazumi Ono <onokazu@xoops.org>
+ * @package    kernel
  * @subpackage database
  */
 class XoopsDatabase
@@ -44,41 +44,49 @@ class XoopsDatabase
      *
      * @var string
      */
-     var $prefix = '';
+    public $prefix = '';
 
-     /**
-      * reference to a {@link XoopsLogger} object
-      *
-      * @see XoopsLogger
-      * @var object XoopsLogger
-      */
-     var $logger;
+    /**
+     * reference to a {@link XoopsLogger} object
+     *
+     * @see XoopsLogger
+     * @var object XoopsLogger
+     */
+    public $logger;
 
     /**
      * If statements that modify the database are selected
      *
      * @var boolean
      */
-    var $allowWebChanges = false;
+    public $allowWebChanges = false;
+
+    /**
+     * XoopsDatabase constructor.
+     */
+    public function __construct()
+    {
+        // exit('Cannot instantiate this class directly');
+    }
 
     /**
      * constructor
      *
      * will always fail, because this is an abstract class!
      */
-    function XoopsDatabase()
+    public function XoopsDatabase()
     {
-        // exit('Cannot instantiate this class directly');
+        $this->__construct();
     }
 
     /**
      * assign a {@link XoopsLogger} object to the database
      *
      * @see XoopsLogger
-     * @param object $logger reference to a {@link XoopsLogger} object
+     * @param XoopsLogger $logger reference to a {@link XoopsLogger} object
      */
 
-    function setLogger(&$logger)
+    public function setLogger(XoopsLogger $logger)
     {
         $this->logger = &$logger;
     }
@@ -88,7 +96,7 @@ class XoopsDatabase
      *
      * @param string $value table prefix
      */
-    function setPrefix($value)
+    public function setPrefix($value)
     {
         $this->prefix = $value;
     }
@@ -101,7 +109,7 @@ class XoopsDatabase
      * @param  string $tablename tablename
      * @return string prefixed tablename, just prefix if tablename is empty
      */
-    function prefix($tablename = '')
+    public function prefix($tablename = '')
     {
         if ($tablename != '') {
             return $this->prefix . '_' . $tablename;
@@ -121,7 +129,7 @@ class Database
     /**
      * @return object
      */
-    function &getInstance()
+    public function &getInstance()
     {
         if (is_object($GLOBALS['xoopsLogger'])) {
             $GLOBALS['xoopsLogger']->addDeprecated("'Database::getInstance();' is deprecated since XOOPS 2.5.4, please use 'XoopsDatabaseFactory::getDatabaseConnection();' instead.");

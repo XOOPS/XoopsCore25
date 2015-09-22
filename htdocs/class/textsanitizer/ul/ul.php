@@ -10,15 +10,15 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         class
- * @subpackage      textsanitizer
- * @since           2.3.0
- * @author          Wishcraft <simon@xoops.org>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             class
+ * @subpackage          textsanitizer
+ * @since               2.3.0
+ * @author              Wishcraft <simon@xoops.org>
+ * @version             $Id: ul.php 13082 2015-06-06 21:59:41Z beckmi $
  * @deprecated
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Class MytsUl
@@ -30,9 +30,9 @@ class MytsUl extends MyTextSanitizerExtension
      *
      * @return bool
      */
-    function load(&$ts)
+    public function load(&$ts)
     {
-        $ts->patterns[] = "/\[ul](.*)\[\/ul\]/sU";
+        $ts->patterns[]     = "/\[ul](.*)\[\/ul\]/sU";
         $ts->replacements[] = '<ul>\\1</ul>';
 
         return true;

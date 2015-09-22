@@ -55,7 +55,7 @@ div.calendar { position: relative; }
 
 .calendar thead .active { /* Active (pressed) buttons in header */
   background: #77c;
-  padding: 2px 0px 0px 2px;
+  padding: 2px 0 0 2px;
 }
 
 /* The body part -- contains all the days in month. */
@@ -89,7 +89,7 @@ div.calendar { position: relative; }
 
 .calendar tbody td.active { /* Active (pressed) cells <TD> */
   background: #cde;
-  padding: 2px 2px 0px 2px;
+  padding: 2px 2px 0 2px;
 }
 
 .calendar tbody td.selected { /* Cell showing today date */
@@ -143,7 +143,7 @@ div.calendar { position: relative; }
 
 .calendar tfoot .active { /* Active (pressed) style for buttons in footer */
   background: #77c;
-  padding: 2px 0px 0px 2px;
+  padding: 2px 0 0 2px;
 }
 
 /* Combo boxes (menus that display months/years for direct selection) */
@@ -151,8 +151,8 @@ div.calendar { position: relative; }
 .combo {
   position: absolute;
   display: none;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
   width: 4em;
   cursor: default;
   border: 1px solid #655;

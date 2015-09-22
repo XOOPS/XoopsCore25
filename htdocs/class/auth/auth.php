@@ -10,33 +10,34 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @subpackage      auth
- * @since           2.0
- * @author          Pierre-Eric MENUET <pemphp@free.fr>
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @subpackage          auth
+ * @since               2.0
+ * @author              Pierre-Eric MENUET <pemphp@free.fr>
  * @version         $Id$
  */
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  *
- * @package kernel
- * @subpackage auth
- * @description Authentification base class
- * @author Pierre-Eric MENUET <pemphp@free.fr>
+ * @package             kernel
+ * @subpackage          auth
+ * @description         Authentification base class
+ * @author              Pierre-Eric MENUET <pemphp@free.fr>
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  */
 class XoopsAuth
 {
-    var $_dao;
-    var $_errors;
+    public $_dao;
+    public $_errors;
 
     /**
      * Authentication Service constructor
+     * @param XoopsDatabase $dao
      */
-    function XoopsAuth(&$dao)
+    public function __construct(XoopsDatabase $dao = null)
     {
         $this->_dao = $dao;
     }
@@ -45,7 +46,7 @@ class XoopsAuth
      *
      * @abstract need to be write in the dervied class
      */
-    function authenticate()
+    public function authenticate()
     {
         $authenticated = false;
 
@@ -60,7 +61,7 @@ class XoopsAuth
      *
      * @access   public
      */
-    function setErrors($err_no, $err_str)
+    public function setErrors($err_no, $err_str)
     {
         $this->_errors[$err_no] = trim($err_str);
     }
@@ -71,7 +72,7 @@ class XoopsAuth
      * @return array an array of errors
      * @access public
      */
-    function getErrors()
+    public function getErrors()
     {
         return $this->_errors;
     }
@@ -82,7 +83,7 @@ class XoopsAuth
      * @return string html listing the errors
      * @access public
      */
-    function getHtmlErrors()
+    public function getHtmlErrors()
     {
         global $xoopsConfig;
         $ret = '<br>';

@@ -10,13 +10,13 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @since           2.0.14
- * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @since               2.0.14
+ * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @version             $Id: xoops13_header.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 $xoopsOption['theme_use_smarty'] = 0;
 
@@ -26,12 +26,12 @@ if (file_exists(XOOPS_THEME_PATH . '/' . $xoopsConfig['theme_set'] . '/language/
     include XOOPS_THEME_PATH . '/' . $xoopsConfig['theme_set'] . '/language/lang-english.php';
 }
 
-$config_handler = & xoops_gethandler('config');
+$config_handler        = &xoops_getHandler('config');
 $xoopsConfigMetaFooter = $config_handler->getConfigsByCat(XOOPS_CONF_METAFOOTER);
 
 xoops_header(false);
 include XOOPS_THEME_PATH . '/' . $xoopsConfig['theme_set'] . '/theme.php';
-$xoopsOption['show_rblock'] = (! empty($xoopsOption['show_rblock'])) ? $xoopsOption['show_rblock'] : 0;
+$xoopsOption['show_rblock'] = (!empty($xoopsOption['show_rblock'])) ? $xoopsOption['show_rblock'] : 0;
 
 // include Smarty template engine and initialize it
 require_once XOOPS_ROOT_PATH . '/class/template.php';
@@ -41,17 +41,19 @@ if ($xoopsConfig['debug_mode'] == 3) {
 }
 if ($xoopsUser != '') {
     $xoopsTpl->assign(array(
-        'xoops_isuser' => true ,
-        'xoops_userid' => $xoopsUser->getVar('uid') ,
-        'xoops_uname' => $xoopsUser->getVar('uname') ,
-        'xoops_isadmin' => $xoopsUserIsAdmin));
+                          'xoops_isuser'  => true,
+                          'xoops_userid'  => $xoopsUser->getVar('uid'),
+                          'xoops_uname'   => $xoopsUser->getVar('uname'),
+                          'xoops_isadmin' => $xoopsUserIsAdmin));
 }
 $xoopsTpl->assign('xoops_requesturi', htmlspecialchars($GLOBALS['xoopsRequestUri'], ENT_QUOTES));
 include XOOPS_ROOT_PATH . '/include/old_functions.php';
 
-if ($xoopsOption['show_cblock'] || (! empty($xoopsModule) && preg_match("/index\.php$/i", xoops_getenv('PHP_SELF')) && $xoopsConfig['startpage'] == $xoopsModule->getVar('dirname'))) {
+if ($xoopsOption['show_cblock'] || (!empty($xoopsModule) && preg_match("/index\.php$/i", xoops_getenv('PHP_SELF')) && $xoopsConfig['startpage'] == $xoopsModule->getVar('dirname'))) {
     $xoopsOption['show_rblock'] = $xoopsOption['show_cblock'] = 1;
 }
 themeheader($xoopsOption['show_rblock']);
-if ($xoopsOption['show_cblock'])
-    make_cblock(); //create center block
+if ($xoopsOption['show_cblock']) {
+    make_cblock();
+} //create center block
+

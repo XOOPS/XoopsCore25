@@ -10,12 +10,12 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @since           2.0.0
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @since               2.0.0
+ * @version             $Id: searchform.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
@@ -26,9 +26,9 @@ $search_form = new XoopsThemeForm(_SR_SEARCH, 'search', 'search.php', 'get');
 $search_form->addElement(new XoopsFormText(_SR_KEYWORDS, 'query', 30, 255, htmlspecialchars(stripslashes(implode(' ', $queries)), ENT_QUOTES)), true);
 $type_select = new XoopsFormSelect(_SR_TYPE, 'andor', $andor);
 $type_select->addOptionArray(array(
-    'AND' => _SR_ALL ,
-    'OR' => _SR_ANY ,
-    'exact' => _SR_EXACT));
+                                 'AND'   => _SR_ALL,
+                                 'OR'    => _SR_ANY,
+                                 'exact' => _SR_EXACT));
 $search_form->addElement($type_select);
 if (!empty($mids)) {
     $mods_checkbox = new XoopsFormCheckBox(_SR_SEARCHIN, 'mids[]', $mids);
@@ -42,7 +42,7 @@ if (empty($modules)) {
     if (!empty($available_modules)) {
         $criteria->add(new Criteria('mid', '(' . implode(',', $available_modules) . ')', 'IN'));
     }
-    $module_handler =& xoops_gethandler('module');
+    $module_handler =& xoops_getHandler('module');
     $mods_checkbox->addOptionArray($module_handler->getList($criteria));
 } else {
     foreach ($modules as $mid => $module) {

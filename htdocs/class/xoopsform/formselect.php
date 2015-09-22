@@ -10,28 +10,28 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @subpackage      form
- * @since           2.0.0
- * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @subpackage          form
+ * @since               2.0.0
+ * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: formselect.php 13090 2015-06-16 20:44:29Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 xoops_load('XoopsFormElement');
 
 /**
  * A select field
  *
- * @author 		Kazumi Ono <onokazu@xoops.org>
- * @author 		Taiwen Jiang <phppp@users.sourceforge.net>
- * @author 		John Neill <catzwolf@xoops.org>
+ * @author              Kazumi Ono <onokazu@xoops.org>
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @author              John Neill <catzwolf@xoops.org>
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @package 	kernel
- * @subpackage 	form
- * @access 		public
+ * @package             kernel
+ * @subpackage          form
+ * @access              public
  */
 class XoopsFormSelect extends XoopsFormElement
 {
@@ -41,7 +41,7 @@ class XoopsFormSelect extends XoopsFormElement
      * @var array
      * @access private
      */
-    var $_options = array();
+    public $_options = array();
 
     /**
      * Allow multiple selections?
@@ -49,7 +49,7 @@ class XoopsFormSelect extends XoopsFormElement
      * @var bool
      * @access private
      */
-    var $_multiple = false;
+    public $_multiple = false;
 
     /**
      * Number of rows. "1" makes a dropdown list.
@@ -57,7 +57,7 @@ class XoopsFormSelect extends XoopsFormElement
      * @var int
      * @access private
      */
-    var $_size;
+    public $_size;
 
     /**
      * Pre-selcted values
@@ -65,7 +65,7 @@ class XoopsFormSelect extends XoopsFormElement
      * @var array
      * @access private
      */
-    var $_value = array();
+    public $_value = array();
 
     /**
      * Constructor
@@ -76,15 +76,27 @@ class XoopsFormSelect extends XoopsFormElement
      * @param int    $size     Number or rows. "1" makes a drop-down-list
      * @param bool   $multiple Allow multiple selections?
      */
-    function XoopsFormSelect($caption, $name, $value = null, $size = 1, $multiple = false)
+    public function __construct($caption, $name, $value = null, $size = 1, $multiple = false)
     {
         $this->setCaption($caption);
         $this->setName($name);
         $this->_multiple = $multiple;
-        $this->_size = (int)($size);
+        $this->_size     = (int)($size);
         if (isset($value)) {
             $this->setValue($value);
         }
+    }
+
+    /**
+     * @param            $caption
+     * @param            $name
+     * @param null       $value
+     * @param int        $size
+     * @param bool|false $multiple
+     */
+    public function XoopsFormSelect($caption, $name, $value = null, $size = 1, $multiple = false)
+    {
+        $this->__construct($caption, $name, $value, $size, $multiple);
     }
 
     /**
@@ -92,7 +104,7 @@ class XoopsFormSelect extends XoopsFormElement
      *
      * @return bool
      */
-    function isMultiple()
+    public function isMultiple()
     {
         return $this->_multiple;
     }
@@ -102,7 +114,7 @@ class XoopsFormSelect extends XoopsFormElement
      *
      * @return int
      */
-    function getSize()
+    public function getSize()
     {
         return $this->_size;
     }
@@ -110,12 +122,12 @@ class XoopsFormSelect extends XoopsFormElement
     /**
      * Get an array of pre-selected values
      *
-     * @param  bool  $encode To sanitizer the text?
+     * @param  bool $encode To sanitizer the text?
      * @return array
      */
-    function getValue($encode = false)
+    public function getValue($encode = false)
     {
-        if (! $encode) {
+        if (!$encode) {
             return $this->_value;
         }
         $value = array();
@@ -131,7 +143,7 @@ class XoopsFormSelect extends XoopsFormElement
      *
      * @param  $value mixed
      */
-    function setValue($value)
+    public function setValue($value)
     {
         if (is_array($value)) {
             foreach ($value as $v) {
@@ -148,7 +160,7 @@ class XoopsFormSelect extends XoopsFormElement
      * @param string $value "value" attribute
      * @param string $name  "name" attribute
      */
-    function addOption($value, $name = '')
+    public function addOption($value, $name = '')
     {
         if ($name != '') {
             $this->_options[$value] = $name;
@@ -162,7 +174,7 @@ class XoopsFormSelect extends XoopsFormElement
      *
      * @param array $options Associative array of value->name pairs
      */
-    function addOptionArray($options)
+    public function addOptionArray($options)
     {
         if (is_array($options)) {
             foreach ($options as $k => $v) {
@@ -180,9 +192,9 @@ class XoopsFormSelect extends XoopsFormElement
      *
      * @return array Associative array of value->name pairs
      */
-    function getOptions($encode = false)
+    public function getOptions($encode = false)
     {
-        if (! $encode) {
+        if (!$encode) {
             return $this->_options;
         }
         $value = array();
@@ -198,24 +210,24 @@ class XoopsFormSelect extends XoopsFormElement
      *
      * @return string HTML
      */
-    function render()
+    public function render()
     {
-        $ele_name = $this->getName();
-        $ele_title = $this->getTitle();
-        $ele_value = $this->getValue();
+        $ele_name    = $this->getName();
+        $ele_title   = $this->getTitle();
+        $ele_value   = $this->getValue();
         $ele_options = $this->getOptions();
-        $ret = '<select size="' . $this->getSize() . '"' . $this->getExtra();
+        $ret         = '<select size="' . $this->getSize() . '"' . $this->getExtra();
         if ($this->isMultiple() != false) {
-            $ret .= ' name="' . $ele_name . '[]" id="' . $ele_name . '" title="'. $ele_title. '" multiple="multiple">' ;
+            $ret .= ' name="' . $ele_name . '[]" id="' . $ele_name . '" title="' . $ele_title . '" multiple="multiple">';
         } else {
-            $ret .= ' name="' . $ele_name . '" id="' . $ele_name . '" title="'. $ele_title. '">' ;
+            $ret .= ' name="' . $ele_name . '" id="' . $ele_name . '" title="' . $ele_title . '">';
         }
         foreach ($ele_options as $value => $name) {
             $ret .= '<option value="' . htmlspecialchars($value, ENT_QUOTES) . '"';
             if (count($ele_value) > 0 && in_array($value, $ele_value)) {
                 $ret .= ' selected="selected"';
             }
-            $ret .= '>' . $name . '</option>' ;
+            $ret .= '>' . $name . '</option>';
         }
         $ret .= '</select>';
 
@@ -227,17 +239,17 @@ class XoopsFormSelect extends XoopsFormElement
      *
      * @seealso XoopsForm::renderValidationJS
      */
-    function renderValidationJS()
+    public function renderValidationJS()
     {
         // render custom validation code if any
-        if (! empty($this->customValidationCode)) {
+        if (!empty($this->customValidationCode)) {
             return implode("\n", $this->customValidationCode);
             // generate validation code if required
         } elseif ($this->isRequired()) {
-            $eltname = $this->getName();
+            $eltname    = $this->getName();
             $eltcaption = $this->getCaption();
-            $eltmsg = empty($eltcaption) ? sprintf(_FORM_ENTER, $eltname) : sprintf(_FORM_ENTER, $eltcaption);
-            $eltmsg = str_replace('"', '\"', stripslashes($eltmsg));
+            $eltmsg     = empty($eltcaption) ? sprintf(_FORM_ENTER, $eltname) : sprintf(_FORM_ENTER, $eltcaption);
+            $eltmsg     = str_replace('"', '\"', stripslashes($eltmsg));
 
             return "\nvar hasSelected = false; var selectBox = myform.{$eltname};" . "for (i = 0; i < selectBox.options.length; i++) { if (selectBox.options[i].selected == true && selectBox.options[i].value != '') { hasSelected = true; break; } }" . "if (!hasSelected) { window.alert(\"{$eltmsg}\"); selectBox.focus(); return false; }";
         }

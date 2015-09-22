@@ -12,26 +12,26 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @since           2.0.0
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @since               2.0.0
+ * @version             $Id: xoopskernel.php 13082 2015-06-06 21:59:41Z beckmi $
  * @deprecated
  */
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Class xos_kernel_Xoops2
  */
 class xos_kernel_Xoops2
 {
-    var $paths = array('XOOPS' => array(), 'www' => array(), 'var' => array(), 'lib' => array(), 'modules' => array(), 'themes' => array());
+    public $paths = array('XOOPS' => array(), 'www' => array(), 'var' => array(), 'lib' => array(), 'modules' => array(), 'themes' => array());
 
     /**
      * Actual Xoops OS
      */
-    function xos_kernel_Xoops2()
+    public function __construct()
     {
         $this->paths['XOOPS']   = array(XOOPS_PATH, XOOPS_URL . 'browse.php');
         $this->paths['www']     = array(XOOPS_ROOT_PATH, XOOPS_URL);
@@ -41,10 +41,18 @@ class xos_kernel_Xoops2
         $this->paths['themes']  = array(XOOPS_ROOT_PATH . '/themes', XOOPS_URL . '/themes');
     }
 
+
+    public function xos_kernel_Xoops2()
+    {
+        $this->__construct();
+    }
     /**
      * Convert a XOOPS path to a physical one
+     * @param      $url
+     * @param bool $virtual
+     * @return mixed|string
      */
-    function path($url, $virtual = false)
+    public function path($url, $virtual = false)
     {
         // removed , $error_type = E_USER_WARNING
         $path = '';
@@ -59,23 +67,28 @@ class xos_kernel_Xoops2
             return $path;
         }
 
-        return !isset($this->paths[$root][1] ) ? '' : ($this->paths[$root][1] . '/' . $path);
+        return !isset($this->paths[$root][1]) ? '' : ($this->paths[$root][1] . '/' . $path);
     }
 
     /**
      * Convert a XOOPS path to an URL
+     * @param $url
+     * @return mixed|string
      */
-    function url($url )
+    public function url($url)
     {
         return (false !== strpos($url, '://') ? $url : $this->path($url, true));
     }
 
     /**
      * Build an URL with the specified request params
+     * @param       $url
+     * @param array $params
+     * @return string
      */
-    function buildUrl( $url, $params = array() )
+    public function buildUrl($url, $params = array())
     {
-        if ($url == '.') {
+        if ($url === '.') {
             $url = $_SERVER['REQUEST_URI'];
         }
         $split = explode('?', $url);
@@ -102,7 +115,7 @@ class xos_kernel_Xoops2
      *
      * @return bool
      */
-    function pathExists($path, $error_type)
+    public function pathExists($path, $error_type)
     {
         if (file_exists($path)) {
             return $path;
@@ -118,16 +131,16 @@ class xos_kernel_Xoops2
      *
      * @return void
      */
-    function gzipCompression()
+    public function gzipCompression()
     {
         /**
          * Disable gzip compression if PHP is run under CLI mode and needs refactored to work correctly
          */
-        if (empty($_SERVER['SERVER_NAME']) || substr(PHP_SAPI, 0, 3) == 'cli') {
+        if (empty($_SERVER['SERVER_NAME']) || substr(PHP_SAPI, 0, 3) === 'cli') {
             xoops_setConfigOption('gzip_compression', 0);
         }
 
-        if (xoops_getConfigOption('gzip_compression') == 1 && extension_loaded('zlib') && !ini_get( 'zlib.output_compression')) {
+        if (xoops_getConfigOption('gzip_compression') == 1 && extension_loaded('zlib') && !ini_get('zlib.output_compression')) {
             if (@ini_get('zlib.output_compression_level') < 0) {
                 ini_set('zlib.output_compression_level', 6);
             }
@@ -140,7 +153,7 @@ class xos_kernel_Xoops2
      *
      * @return void
      */
-    function pathTranslation()
+    public function pathTranslation()
     {
         /**
          * *#@+
@@ -148,7 +161,7 @@ class xos_kernel_Xoops2
          */
         if (!isset($_SERVER['PATH_TRANSLATED']) && isset($_SERVER['SCRIPT_FILENAME'])) {
             $_SERVER['PATH_TRANSLATED'] =& $_SERVER['SCRIPT_FILENAME']; // For Apache CGI
-        } else if (isset($_SERVER['PATH_TRANSLATED']) && !isset($_SERVER['SCRIPT_FILENAME'])) {
+        } elseif (isset($_SERVER['PATH_TRANSLATED']) && !isset($_SERVER['SCRIPT_FILENAME'])) {
             $_SERVER['SCRIPT_FILENAME'] =& $_SERVER['PATH_TRANSLATED']; // For IIS/2K now I think :-(
         }
         /**
@@ -159,7 +172,7 @@ class xos_kernel_Xoops2
             if (!($_SERVER['REQUEST_URI'] = @$_SERVER['PHP_SELF'])) {
                 $_SERVER['REQUEST_URI'] = $_SERVER['SCRIPT_NAME'];
             }
-            if (isset( $_SERVER['QUERY_STRING'])) {
+            if (isset($_SERVER['QUERY_STRING'])) {
                 $_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING'];
             }
         }
@@ -170,12 +183,12 @@ class xos_kernel_Xoops2
      *
      * @return void
      */
-    function themeSelect()
+    public function themeSelect()
     {
-        if (!empty($_POST['xoops_theme_select'] ) && in_array($_POST['xoops_theme_select'], xoops_getConfigOption('theme_set_allowed'))) {
+        if (!empty($_POST['xoops_theme_select']) && in_array($_POST['xoops_theme_select'], xoops_getConfigOption('theme_set_allowed'))) {
             xoops_setConfigOption('theme_set', $_POST['xoops_theme_select']);
             $_SESSION['xoopsUserTheme'] = $_POST['xoops_theme_select'];
-        } else if (!empty($_SESSION['xoopsUserTheme']) && in_array($_SESSION['xoopsUserTheme'], xoops_getConfigOption('theme_set_allowed'))) {
+        } elseif (!empty($_SESSION['xoopsUserTheme']) && in_array($_SESSION['xoopsUserTheme'], xoops_getConfigOption('theme_set_allowed'))) {
             xoops_setConfigOption('theme_set', $_SESSION['xoopsUserTheme']);
         }
     }

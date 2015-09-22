@@ -10,21 +10,21 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         class
- * @subpackage      textsanitizer
- * @since           2.3.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             class
+ * @subpackage          textsanitizer
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: textfilter.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Filter out possible malicious text
  * kses project at SF could be a good solution to check
  *
- * @param string    $text     text to filter
- * @param bool      $force     flag indicating to force filtering
+ * @param string $text  text to filter
+ * @param bool   $force flag indicating to force filtering
  * @return string   filtered text
  */
 class MytsTextfilter extends MyTextSanitizerExtension
@@ -36,7 +36,7 @@ class MytsTextfilter extends MyTextSanitizerExtension
      *
      * @return mixed
      */
-    function load(&$ts, $text, $force = false)
+    public function load(&$ts, $text, $force = false)
     {
         global $xoopsUser, $xoopsConfig, $xoopsUserIsAdmin;
         if (empty($force) && $xoopsUserIsAdmin) {
@@ -52,15 +52,16 @@ class MytsTextfilter extends MyTextSanitizerExtension
             return $text;
         }
 
-        $tags = array();
-        $search = array();
+        $tags    = array();
+        $search  = array();
         $replace = array();
-        $config = parent::loadConfig(__DIR__);
+        $config  = parent::loadConfig(__DIR__);
         if (!empty($config["patterns"])) {
             foreach ($config["patterns"] as $pattern) {
-                if (empty($pattern['search']))
+                if (empty($pattern['search'])) {
                     continue;
-                $search[] = $pattern['search'];
+                }
+                $search[]  = $pattern['search'];
                 $replace[] = $pattern['replace'];
             }
         }
@@ -73,19 +74,19 @@ class MytsTextfilter extends MyTextSanitizerExtension
         $tags[] = "VBSCRIPT";
         $tags[] = "JAVASCRIPT";
         foreach ($tags as $tag) {
-            $search[] = "/<" . $tag . "[^>]*?>.*?<\/" . $tag . ">/si";
+            $search[]  = "/<" . $tag . "[^>]*?>.*?<\/" . $tag . ">/si";
             $replace[] = " [!" . strtoupper($tag) . " FILTERED!] ";
         }
         // Set meta refresh tag
-        $search[] = "/<META[^>\/]*HTTP-EQUIV=(['\"])?REFRESH(\\1)[^>\/]*?\/>/si";
+        $search[]  = "/<META[^>\/]*HTTP-EQUIV=(['\"])?REFRESH(\\1)[^>\/]*?\/>/si";
         $replace[] = "";
         // Sanitizing scripts in IMG tag
         //$search[]= "/(<IMG[\s]+[^>\/]*SOURCE=)(['\"])?(.*)(\\2)([^>\/]*?\/>)/si";
         //$replace[]="";
         // Set iframe tag
-        $search[] = "/<IFRAME[^>\/]*SRC=(['\"])?([^>\/]*)(\\1)[^>\/]*?\/>/si";
+        $search[]  = "/<IFRAME[^>\/]*SRC=(['\"])?([^>\/]*)(\\1)[^>\/]*?\/>/si";
         $replace[] = " [!IFRAME FILTERED! \\2] ";
-        $search[] = "/<IFRAME[^>]*?>([^<]*)<\/IFRAME>/si";
+        $search[]  = "/<IFRAME[^>]*?>([^<]*)<\/IFRAME>/si";
         $replace[] = " [!IFRAME FILTERED! \\1] ";
         // action
         $text = preg_replace($search, $replace, $text);

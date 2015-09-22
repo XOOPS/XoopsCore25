@@ -2,7 +2,7 @@
 <div class="col-md-12">
     <ul class="breadcrumb">
         <li><a title="<{$extgalleryName}>" href="<{xoAppUrl modules/extgallery/}>"><{$extgalleryName}></a></li>
-        
+
         <{foreachq item=node from=$catPath name=breadcrumb}>
             <li><a href="<{xoAppUrl modules/extgallery/}>public-<{if $node.cat_isalbum}><{$display_type}><{else}>categories<{/if}>.php?id=<{$node.cat_id}>" title="<{$node.cat_name}>"><{$node.cat_name}></a></li>
         <{/foreach}>
@@ -21,7 +21,7 @@
                     </div>
                 <{/if}>
             </div>
-			
+
             <div class="col-xs-6 col-sm-6 col-md-6">
                 <ul class="pull-right list-unstyled">
                     <{if $prevId != 0}><li class="nav-btn"><a href="<{xoAppUrl modules/extgallery/}>public-photo.php?photoId=<{$prevId}>"><span class="glyphicon glyphicon-circle-arrow-left"></span></a><{else}></li><{/if}>
@@ -30,9 +30,9 @@
                     <li class="small"><{$totalPhoto}></li>
                     <{if $nextId != 0}><li class="nav-btn"><a href="<{xoAppUrl modules/extgallery/}>public-photo.php?photoId=<{$nextId}>"><span class="glyphicon glyphicon-circle-arrow-right"></span></a><{else}></li><{/if}>
                 </ul>
-			</div>
-		</div><!-- .row || .photo-nav-controls -->
-		
+            </div>
+        </div><!-- .row || .photo-nav-controls -->
+
         <{if $photo.photo_serveur}>
             <img src="<{$photo.photo_serveur}><{$photo.photo_name}>" alt="<{$photo.photo_desc}>" class="img-thumbnail">
         <{else}>
@@ -41,43 +41,43 @@
 </div><!-- .gallery-single-photo -->
 
 <div class="row gallery-image-details">
-	<{if $disp_ph_title == 1 }>
-	<!-- Start Photo Title -->
+    <{if $disp_ph_title == 1 }>
+    <!-- Start Photo Title -->
         <div class="col-md-12">
             <h3 class="gallerytitle"><{$photo.photo_title}></h3>
         </div>
-	<{/if}>
-	
-	<!-- Start Photo desc -->
+    <{/if}>
+
+    <!-- Start Photo desc -->
     <div class="col-md-12">
-		<{$photo.photo_desc}>
-	</div>
-    
-	<{if $enableExtra}>
-	<!-- Start extra field -->
-    <div class="col-md-12">
-		<{$photo.photo_extra}>
+        <{$photo.photo_desc}>
     </div>
-	<{/if}>
 
-	<{foreachq item=pluginLink from=$pluginPhotoAlbumLink}>
-        <a href="<{$pluginLink.link}><{$photo.photo_id}>" title="<{$pluginLink.name}>"><{$pluginLink.name}></a>
-	<{/foreach}>
-	<{foreachq item=pluginLink from=$photo.link}>
-        <a href="<{$pluginLink.link}><{$photo.photo_id}>" title="<{$pluginLink.name}>"><{$pluginLink.name}></a>
-	<{/foreach}>
+    <{if $enableExtra}>
+    <!-- Start extra field -->
+    <div class="col-md-12">
+        <{$photo.photo_extra}>
+    </div>
+    <{/if}>
 
-	<!-- Start XOOPS Tag -->
-	<{if $tags}>
+    <{foreachq item=pluginLink from=$pluginPhotoAlbumLink}>
+        <a href="<{$pluginLink.link}><{$photo.photo_id}>" title="<{$pluginLink.name}>"><{$pluginLink.name}></a>
+    <{/foreach}>
+    <{foreachq item=pluginLink from=$photo.link}>
+        <a href="<{$pluginLink.link}><{$photo.photo_id}>" title="<{$pluginLink.name}>"><{$pluginLink.name}></a>
+    <{/foreach}>
+
+    <!-- Start XOOPS Tag -->
+    <{if $tags}>
         <div class="col-md-12">
-			<{include file="db:tag_bar.html"}>
+            <{include file="db:tag_bar.html"}>
         </div>
-	<{/if}>
-	
-	<!-- Start social network and bookmarks -->
+    <{/if}>
+
+    <!-- Start social network and bookmarks -->
     <div class="col-md-12 aligncenter">
-		<div class='shareaholic-canvas' data-app='share_buttons' data-app-id='482507'></div>
-	</div>
+        <div class='shareaholic-canvas' data-app='share_buttons' data-app-id='482507'></div>
+    </div>
 </div><!-- .gallery-image-details -->
 
 <!-- Start Rating part -->
@@ -99,42 +99,42 @@
 <div class="text-center">
     <a href="#gallery-info" data-toggle="collapse" class="big-info-icon-link" title="Info"><span class="glyphicon glyphicon-info-sign"></span></a>
 </div>
-    
+
 <div class="panel-collapse collapse" id="gallery-info">
-    
-	<h3 class="gallerytitle aligncenter"><{$lang.photoInfo}></h3>
+
+    <h3 class="gallerytitle aligncenter"><{$lang.photoInfo}></h3>
     <ul class="list-unstyled photo-info">
     <{if $enable_submitter_lnk}>
-		<li><{$lang.submitter}> : <a title="<{$photo.user.uname}>" href="<{$xoops_url}>/userinfo.php?uid=<{$photo.user.uid}>"><{$photo.user.uname}></a>
+        <li><{$lang.submitter}> : <a title="<{$photo.user.uname}>" href="<{$xoops_url}>/userinfo.php?uid=<{$photo.user.uid}>"><{$photo.user.uname}></a>
         <a title="<{$lang.allPhotoBy}> <{$photo.user.uname}>" href="<{xoAppUrl modules/extgallery/}>public-useralbum.php?id=<{$photo.user.uid}>">
             <{$lang.allPhotoBy}> <{$photo.user.uname}>
         </a>
         </li>
-	<{/if}>
+    <{/if}>
 
-	<{if $enable_photo_hits}>
+    <{if $enable_photo_hits}>
     <li><{$lang.view}> : <{$photo.photo_hits}> <{$lang.hits}></li>
-	<{/if}>
-	
-	<{if $enable_resolution}>
+    <{/if}>
+
+    <{if $enable_resolution}>
     <li><{$lang.resolution}> : <{$photo.photo_res_x}> x <{$photo.photo_res_y}> <{$lang.pixels}> | <{$lang.fileSize}> : <{$photo.photo_size}> Kb</li>
-	<{/if}>
+    <{/if}>
 
-	<{if $enable_date}>
-	<li><{$lang.added}> : <{$photo.photo_date}></li>
-	<{/if}>
+    <{if $enable_date}>
+    <li><{$lang.added}> : <{$photo.photo_date}></li>
+    <{/if}>
 
-	<{if $canRate}>
-	<li><{$lang.score}> : <img src="images/rating_<{$rating}>.gif" alt="rating"> | <{$photo.photo_nbrating}> <{$lang.votes}></li>
-	<{/if}>
+    <{if $canRate}>
+    <li><{$lang.score}> : <img src="images/rating_<{$rating}>.gif" alt="rating"> | <{$photo.photo_nbrating}> <{$lang.votes}></li>
+    <{/if}>
 
-	<{if $canDownload && $enable_download}>
-	<li><a title="<{$lang.downloadOrig}>" href="<{xoAppUrl modules/extgallery/}>public-download.php?id=<{$photo.photo_id}>"><{$lang.downloadOrig}><img src="images/download.gif" alt="<{$lang.downloadOrig}>"></a> | <{$photo.photo_download}> <{$lang.donwloads}></li>
-	<{/if}>
-	
+    <{if $canDownload && $enable_download}>
+    <li><a title="<{$lang.downloadOrig}>" href="<{xoAppUrl modules/extgallery/}>public-download.php?id=<{$photo.photo_id}>"><{$lang.downloadOrig}><img src="images/download.gif" alt="<{$lang.downloadOrig}>"></a> | <{$photo.photo_download}> <{$lang.donwloads}></li>
+    <{/if}>
+
     <{if $canSendEcard && $enable_ecards}>
-	<li><a title="<{$lang.sendEcard}>" href="<{xoAppUrl modules/extgallery/}>public-sendecard.php?id=<{$photo.photo_id}>"><{$lang.sendEcard}> <img src="images/ecard.gif" alt="<{$lang.sendEcard}>"></a> | <{$photo.photo_ecard}> <{$lang.sends}></li>
-	<{/if}>
+    <li><a title="<{$lang.sendEcard}>" href="<{xoAppUrl modules/extgallery/}>public-sendecard.php?id=<{$photo.photo_id}>"><{$lang.sendEcard}> <img src="images/ecard.gif" alt="<{$lang.sendEcard}>"></a> | <{$photo.photo_ecard}> <{$lang.sends}></li>
+    <{/if}>
     </ul>
 </div>
 <{/if}>
@@ -146,7 +146,7 @@
             </a>
         </div>
     <{/if}>
-    
+
 </div><!-- .row || .extGalleryAlbum -->
 
 <{$commentsnav}>

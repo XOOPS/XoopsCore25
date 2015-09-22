@@ -19,11 +19,8 @@
 }
 #xo-logger-tabs {
     background-color: #4E4949;
-    padding-top: 8px;
-    padding-bottom: 8px;
     margin-top: -2px;
-    padding-left: 2%;
-    padding-right: 2%;
+    padding: 8px 2%;
     width: 96% !important;
 
 }

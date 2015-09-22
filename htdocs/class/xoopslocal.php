@@ -10,14 +10,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @since           2.3.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: xoopslocal.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Class XoopsLocalAbstract
@@ -34,9 +34,9 @@ class XoopsLocalAbstract
      *
      * @return mixed|string
      */
-    static function substr($str, $start, $length, $trimmarker = '...')
+    public static function substr($str, $start, $length, $trimmarker = '...')
     {
-        if (! XOOPS_USE_MULTIBYTES) {
+        if (!XOOPS_USE_MULTIBYTES) {
             return (strlen($str) - $start <= $length) ? substr($str, $start, $length) : substr($str, $start, $length - strlen($trimmarker)) . $trimmarker;
         }
         if (function_exists('mb_internal_encoding') && @mb_internal_encoding(_CHARSET)) {
@@ -51,10 +51,10 @@ class XoopsLocalAbstract
     /**
      * XoopsLocalAbstract::utf8_encode()
      *
-     * @param  mixed  $text
+     * @param  mixed $text
      * @return string
      */
-    static function utf8_encode($text)
+    public static function utf8_encode($text)
     {
         if (XOOPS_USE_MULTIBYTES == 1) {
             if (function_exists('mb_convert_encoding')) {
@@ -68,12 +68,12 @@ class XoopsLocalAbstract
     /**
      * XoopsLocalAbstract::convert_encoding()
      *
-     * @param  mixed        $text
-     * @param  string       $to
-     * @param  string       $from
+     * @param  mixed  $text
+     * @param  string $to
+     * @param  string $from
      * @return mixed|string
      */
-    static function convert_encoding($text, $to = 'utf-8', $from = '')
+    public static function convert_encoding($text, $to = 'utf-8', $from = '')
     {
         if (empty($text)) {
             return $text;
@@ -81,7 +81,7 @@ class XoopsLocalAbstract
         if (empty($from)) {
             $from = empty($GLOBALS['xlanguage']['charset_base']) ? _CHARSET : $GLOBALS['xlanguage']['charset_base'];
         }
-        if (empty($to) || ! strcasecmp($to, $from)) {
+        if (empty($to) || !strcasecmp($to, $from)) {
             return $text;
         }
 
@@ -89,7 +89,7 @@ class XoopsLocalAbstract
             $converted_text = @mb_convert_encoding($text, $to, $from);
         } elseif (function_exists('iconv')) {
             $converted_text = @iconv($from, $to . "//TRANSLIT", $text);
-        } elseif ('utf-8' == $to) {
+        } elseif ('utf-8' === $to) {
             $converted_text = utf8_encode($text);
         }
         $text = empty($converted_text) ? $text : $converted_text;
@@ -100,10 +100,10 @@ class XoopsLocalAbstract
     /**
      * XoopsLocalAbstract::trim()
      *
-     * @param  mixed  $text
+     * @param  mixed $text
      * @return string
      */
-    static function trim($text)
+    public static function trim($text)
     {
         $ret = trim($text);
 
@@ -113,7 +113,7 @@ class XoopsLocalAbstract
     /**
      * Get description for setting time format
      */
-    static function getTimeFormatDesc()
+    public static function getTimeFormatDesc()
     {
         return _TIMEFORMAT_DESC;
     }
@@ -122,19 +122,23 @@ class XoopsLocalAbstract
      * Function to display formatted times in user timezone
      *
      * Setting $timeoffset to null (by default) will skip timezone calculation for user, using default timezone instead, which is a MUST for cached contents
+     * @param        $time
+     * @param string $format
+     * @param null   $timeoffset
+     * @return string
      */
-    static function formatTimestamp($time, $format = 'l', $timeoffset = null)
+    public static function formatTimestamp($time, $format = 'l', $timeoffset = null)
     {
         global $xoopsConfig, $xoopsUser;
 
         $format_copy = $format;
-        $format = strtolower($format);
+        $format      = strtolower($format);
 
-        if ($format == 'rss' || $format == 'r') {
+        if ($format === 'rss' || $format === 'r') {
             $TIME_ZONE = '';
             if (isset($GLOBALS['xoopsConfig']['server_TZ'])) {
                 $server_TZ = abs((int)($GLOBALS['xoopsConfig']['server_TZ'] * 3600.0));
-                $prefix = ($GLOBALS['xoopsConfig']['server_TZ'] < 0) ? ' -' : ' +';
+                $prefix    = ($GLOBALS['xoopsConfig']['server_TZ'] < 0) ? ' -' : ' +';
                 $TIME_ZONE = $prefix . date('Hi', $server_TZ);
             }
             $date = gmdate('D, d M Y H:i:s', (int)($time)) . $TIME_ZONE;
@@ -142,7 +146,7 @@ class XoopsLocalAbstract
             return $date;
         }
 
-        if (($format == 'elapse' || $format == 'e') && $time < time()) {
+        if (($format === 'elapse' || $format === 'e') && $time < time()) {
             $elapse = time() - $time;
             if ($days = floor($elapse / (24 * 3600))) {
                 $num = $days > 1 ? sprintf(_DAYS, $days) : _DAY;
@@ -152,7 +156,7 @@ class XoopsLocalAbstract
                 $num = $minutes > 1 ? sprintf(_MINUTES, $minutes) : _MINUTE;
             } else {
                 $seconds = $elapse % 60;
-                $num = $seconds > 1 ? sprintf(_SECONDS, $seconds) : _SECOND;
+                $num     = $seconds > 1 ? sprintf(_SECONDS, $seconds) : _SECOND;
             }
             $ret = sprintf(_ELAPSE, $num);
 
@@ -198,19 +202,17 @@ class XoopsLocalAbstract
                         $monthy_timestamp[0] = mktime(0, 0, 0, 0, 0, date('Y', $current_timestamp));
                         $monthy_timestamp[1] = mktime(0, 0, 0, 0, 0, date('Y', $current_timestamp) + 1);
                     }
+                    $datestring = _YEARMONTHDAY;
                     if ($usertimestamp >= $monthy_timestamp[0] && $usertimestamp < $monthy_timestamp[1]) {
                         $datestring = _MONTHDAY;
-                    } else {
-                        $datestring = _YEARMONTHDAY;
                     }
                 }
                 break;
 
             default:
+                $datestring = _DATESTRING;
                 if ($format != '') {
                     $datestring = $format_copy;
-                } else {
-                    $datestring = _DATESTRING;
                 }
                 break;
         }
@@ -224,7 +226,7 @@ class XoopsLocalAbstract
      * @param  mixed $number
      * @return mixed
      */
-    function number_format($number)
+    public function number_format($number)
     {
         return $number;
     }
@@ -236,7 +238,7 @@ class XoopsLocalAbstract
      * @param  mixed $number
      * @return mixed
      */
-    function money_format($format, $number)
+    public function money_format($format, $number)
     {
         return $number;
     }
@@ -248,7 +250,7 @@ class XoopsLocalAbstract
      * @param  mixed $args
      * @return mixed
      */
-    function __call($name, $args)
+    public function __call($name, $args)
     {
         if (function_exists($name)) {
             return call_user_func_array($name, $args);

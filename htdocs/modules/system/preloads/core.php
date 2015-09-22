@@ -10,13 +10,13 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @author          Cointin Maxime (AKA Kraven30)
- * @author          Andricq Nicolas (AKA MusS)
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @author              Cointin Maxime (AKA Kraven30)
+ * @author              Andricq Nicolas (AKA MusS)
+ * @version             $Id: core.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-// defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 /**
  * Class SystemCorePreload
@@ -26,12 +26,12 @@ class SystemCorePreload extends XoopsPreloadItem
     /**
      * @param $args
      */
-    function eventCoreIncludeFunctionsRedirectheader($args)
+    public function eventCoreIncludeFunctionsRedirectheader($args)
     {
         global $xoopsConfig;
         $url = $args[0];
         if (preg_match("/[\\0-\\31]|about:|script:/i", $url)) {
-            if (!preg_match('/^\b(java)?script:([\s]*)history\.go\(-[0-9]*\)([\s]*[;]*[\s]*)$/si', $url)) {
+            if (!preg_match('/^\b(java)?script:([\s]*)history\.go\(-\d*\)([\s]*[;]*[\s]*)$/si', $url)) {
                 $url = XOOPS_URL;
             }
         }
@@ -45,7 +45,7 @@ class SystemCorePreload extends XoopsPreloadItem
     /**
      * @param $args
      */
-    function eventCoreHeaderCheckcache($args)
+    public function eventCoreHeaderCheckcache($args)
     {
         if (!empty($_SESSION['redirect_message'])) {
             $GLOBALS['xoTheme']->contentCacheLifetime = 0;
@@ -56,7 +56,7 @@ class SystemCorePreload extends XoopsPreloadItem
     /**
      * @param $args
      */
-    function eventCoreHeaderAddmeta($args)
+    public function eventCoreHeaderAddmeta($args)
     {
         if (!empty($_SESSION['redirect_message'])) {
             $GLOBALS['xoTheme']->addStylesheet('xoops.css');
@@ -75,7 +75,7 @@ class SystemCorePreload extends XoopsPreloadItem
     /**
      * @param $args
      */
-    function eventSystemClassGuiHeader($args)
+    public function eventSystemClassGuiHeader($args)
     {
         if (!empty($_SESSION['redirect_message'])) {
             $GLOBALS['xoTheme']->addStylesheet('xoops.css');

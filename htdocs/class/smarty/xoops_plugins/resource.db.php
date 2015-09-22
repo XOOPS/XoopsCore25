@@ -12,8 +12,12 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @version     $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @version             $Id: resource.db.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @param $tpl_name
+ * @param $tpl_source
+ * @param $smarty
+ * @return bool
  */
 function smarty_resource_db_source($tpl_name, &$tpl_source, &$smarty)
 {
@@ -23,8 +27,8 @@ function smarty_resource_db_source($tpl_name, &$tpl_source, &$smarty)
     if (is_object($tpl)) {
         $tpl_source = $tpl->getVar('tpl_source', 'n');
     } else {
-        $fp = fopen($tpl, 'r');
-        $filesize = filesize($tpl);
+        $fp         = fopen($tpl, 'r');
+        $filesize   = filesize($tpl);
         $tpl_source = ($filesize > 0) ? fread($fp, $filesize) : '';
         fclose($fp);
     }
@@ -87,11 +91,11 @@ function smarty_resource_db_tplinfo($tpl_name)
     if (isset($cache[$tpl_name])) {
         return $cache[$tpl_name];
     }
-    $tplset = $xoopsConfig['template_set'];
-    $theme = isset($xoopsConfig['theme_set']) ? $xoopsConfig['theme_set'] : 'default';
-    $tplfile_handler =& xoops_gethandler('tplfile');
+    $tplset          = $xoopsConfig['template_set'];
+    $theme           = isset($xoopsConfig['theme_set']) ? $xoopsConfig['theme_set'] : 'default';
+    $tplfile_handler =& xoops_getHandler('tplfile');
     // If we're not using the "default" template set, then get the templates from the DB
-    if ($tplset != "default") {
+    if ($tplset !== "default") {
         $tplobj = $tplfile_handler->find($tplset, null, null, null, $tpl_name, true);
         if (count($tplobj)) {
             return $cache[$tpl_name] = $tplobj[0];
@@ -105,21 +109,21 @@ function smarty_resource_db_tplinfo($tpl_name)
     }
     $tplobj = $tplobj[0];
     $module = $tplobj->getVar('tpl_module', 'n');
-    $type = $tplobj->getVar('tpl_type', 'n');
+    $type   = $tplobj->getVar('tpl_type', 'n');
     // Construct template path
     switch ($type) {
         case 'block':
             $directory = XOOPS_THEME_PATH;
-            $path = 'blocks/';
+            $path      = 'blocks/';
             break;
         case 'admin':
-            $theme = isset($xoopsConfig['cpanel']) ? $xoopsConfig['cpanel'] : 'default';
+            $theme     = isset($xoopsConfig['cpanel']) ? $xoopsConfig['cpanel'] : 'default';
             $directory = XOOPS_ADMINTHEME_PATH;
-            $path = 'admin/';
+            $path      = 'admin/';
             break;
         default:
             $directory = XOOPS_THEME_PATH;
-            $path = '';
+            $path      = '';
             break;
     }
     // First, check for an overloaded version within the theme folder
@@ -128,7 +132,7 @@ function smarty_resource_db_tplinfo($tpl_name)
         // If no custom version exists, get the tpl from its default location
         $filepath = XOOPS_ROOT_PATH . "/modules/{$module}/templates/{$path}{$tpl_name}";
         if (!file_exists($filepath)) {
-            return $cache[$tpl_name] = $tplobj ;
+            return $cache[$tpl_name] = $tplobj;
         }
     }
 

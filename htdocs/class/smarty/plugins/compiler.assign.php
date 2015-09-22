@@ -1,7 +1,7 @@
 <?php
 /**
  * Smarty plugin
- * @package Smarty
+ * @package    Smarty
  * @subpackage plugins
  */
 
@@ -11,12 +11,13 @@
  * Type:     compiler function<br>
  * Name:     assign<br>
  * Purpose:  assign a value to a template variable
- * @link http://smarty.php.net/manual/en/language.custom.functions.php#LANGUAGE.FUNCTION.ASSIGN {assign}
+ * @link   http://smarty.php.net/manual/en/language.custom.functions.php#LANGUAGE.FUNCTION.ASSIGN {assign}
  *       (Smarty online manual)
  * @author Monte Ohrt <monte at ohrt dot com> (initial author)
  * @author messju mohr <messju at lammfellpuschen dot de> (conversion to compiler function)
  * @param string containing var-attribute and value-attribute
  * @param Smarty_Compiler
+ * @return string|void
  */
 function smarty_compiler_assign($tag_attrs, &$compiler)
 {
@@ -24,12 +25,14 @@ function smarty_compiler_assign($tag_attrs, &$compiler)
 
     if (!isset($_params['var'])) {
         $compiler->_syntax_error("assign: missing 'var' parameter", E_USER_WARNING);
-        return;
+
+        return null;
     }
 
     if (!isset($_params['value'])) {
         $compiler->_syntax_error("assign: missing 'value' parameter", E_USER_WARNING);
-        return;
+
+        return null;
     }
 
     return "\$this->assign({$_params['var']}, {$_params['value']});";

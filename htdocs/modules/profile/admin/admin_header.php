@@ -10,11 +10,11 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         profile
- * @since           2.3.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             profile
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: admin_header.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 $path = dirname(dirname(dirname(__DIR__)));
@@ -34,8 +34,8 @@ xoops_loadLanguage('admin', $thisModuleDir);
 xoops_loadLanguage('modinfo', $thisModuleDir);
 xoops_loadLanguage('main', $thisModuleDir);
 
-$pathIcon16 = '../'.$xoopsModule->getInfo('icons16');
-$pathIcon32 = '../'.$xoopsModule->getInfo('icons32');
+$pathIcon16      = '../' . $xoopsModule->getInfo('icons16');
+$pathIcon32      = '../' . $xoopsModule->getInfo('icons32');
 $pathModuleAdmin = $xoopsModule->getInfo('dirmoduleadmin');
 
 $myts =& MyTextSanitizer::getInstance();
@@ -45,10 +45,10 @@ if (!isset($xoopsTpl) || !is_object($xoopsTpl)) {
     $xoopsTpl = new XoopsTpl();
 }
 
-include_once $GLOBALS['xoops']->path($pathModuleAdmin.'/moduleadmin.php');
+include_once $GLOBALS['xoops']->path($pathModuleAdmin . '/moduleadmin.php');
 
 xoops_loadLanguage('user');
-if ( !isset($GLOBALS['xoopsTpl']) || !is_object($GLOBALS['xoopsTpl'])  ) {
-    include_once $GLOBALS['xoops']->path( "/class/template.php" );
+if (!isset($GLOBALS['xoopsTpl']) || !is_object($GLOBALS['xoopsTpl'])) {
+    include_once $GLOBALS['xoops']->path("/class/template.php");
     $GLOBALS['xoopsTpl'] = new XoopsTpl();
 }

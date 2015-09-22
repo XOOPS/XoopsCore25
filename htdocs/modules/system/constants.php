@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: constants.php 13082 2015-06-06 21:59:41Z beckmi $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2015 XOOPS Project (www.xoops.org)            //
@@ -42,10 +42,10 @@ define("XOOPS_SYSTEM_TPLSET", 15);
 define("XOOPS_SYSTEM_FILEMANAGER", 16);
 define("XOOPS_SYSTEM_MAINTENANCE", 17);
 // Configuration Category
-define("SYSTEM_CAT_MAIN", 0 );
-define("SYSTEM_CAT_USER", 1 );
-define("SYSTEM_CAT_META", 2 );
-define("SYSTEM_CAT_WORD", 3 );
-define("SYSTEM_CAT_SEARCH", 4 );
-define("SYSTEM_CAT_MAIL", 5 );
-define("SYSTEM_CAT_AUTH", 6 );
+define("SYSTEM_CAT_MAIN", 0);
+define("SYSTEM_CAT_USER", 1);
+define("SYSTEM_CAT_META", 2);
+define("SYSTEM_CAT_WORD", 3);
+define("SYSTEM_CAT_SEARCH", 4);
+define("SYSTEM_CAT_MAIL", 5);
+define("SYSTEM_CAT_AUTH", 6);

@@ -10,11 +10,11 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         upgrader
- * @since           2.3.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             upgrader
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: language.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 /**
@@ -49,61 +49,60 @@
  * first.
  */
 $available_languages = array(
-    'af' => array('af|afrikaans', 'afrikaans'),
-    'ar' => array('ar([-_][[:alpha:]]{2})?|arabic', 'arabic'),
-    'bg' => array('bg|bulgarian', 'bulgarian'),
-    'ca' => array('ca|catalan', 'catalan'),
-    'cs' => array('cs|czech', 'czech'),
-    'da' => array('da|danish', 'danish'),
-    'de' => array('de([-_][[:alpha:]]{2})?|german', 'german'),
-    'el' => array('el|greek', 'greek'),
-    'en' => array('en([-_][[:alpha:]]{2})?|english', 'english'),
-    'es' => array('es([-_][[:alpha:]]{2})?|spanish', 'spanish'),
-    'et' => array('et|estonian', 'estonian'),
-    'fi' => array('fi|finnish', 'finnish'),
-    'fa' => array('fa|persian', 'persian'),
-    'fr' => array('fr([-_][[:alpha:]]{2})?|french', 'french'),
-    'gl' => array('gl|galician', 'galician'),
-    'he' => array('he|hebrew', 'hebrew'),
-    'hr' => array('hr|croatian', 'hrvatski'),
-    'hu' => array('hu|hungarian', 'hungarian'),
-    'id' => array('id|indonesian', 'indonesian'),
-    'it' => array('it|italian', 'italian'),
-    'ja' => array('ja|japanese', 'japanese'),
-    'ko' => array('ko|korean', 'koreano'),
-    'ka' => array('ka|georgian', 'georgian'),
-    'lt' => array('lt|lithuanian', 'lithuanian'),
-    'lv' => array('lv|latvian', 'latvian'),
-    'ms' => array('ms|malay', 'malay'),
-    'nl' => array('nl([-_][[:alpha:]]{2})?|nederlands', 'nederlands'),
-    'no' => array('no|norwegian', 'norwegian'),
-    'pl' => array('pl|polish', 'polish'),
+    'af'    => array('af|afrikaans', 'afrikaans'),
+    'ar'    => array('ar([-_][[:alpha:]]{2})?|arabic', 'arabic'),
+    'bg'    => array('bg|bulgarian', 'bulgarian'),
+    'ca'    => array('ca|catalan', 'catalan'),
+    'cs'    => array('cs|czech', 'czech'),
+    'da'    => array('da|danish', 'danish'),
+    'de'    => array('de([-_][[:alpha:]]{2})?|german', 'german'),
+    'el'    => array('el|greek', 'greek'),
+    'en'    => array('en([-_][[:alpha:]]{2})?|english', 'english'),
+    'es'    => array('es([-_][[:alpha:]]{2})?|spanish', 'spanish'),
+    'et'    => array('et|estonian', 'estonian'),
+    'fi'    => array('fi|finnish', 'finnish'),
+    'fa'    => array('fa|persian', 'persian'),
+    'fr'    => array('fr([-_][[:alpha:]]{2})?|french', 'french'),
+    'gl'    => array('gl|galician', 'galician'),
+    'he'    => array('he|hebrew', 'hebrew'),
+    'hr'    => array('hr|croatian', 'hrvatski'),
+    'hu'    => array('hu|hungarian', 'hungarian'),
+    'id'    => array('id|indonesian', 'indonesian'),
+    'it'    => array('it|italian', 'italian'),
+    'ja'    => array('ja|japanese', 'japanese'),
+    'ko'    => array('ko|korean', 'koreano'),
+    'ka'    => array('ka|georgian', 'georgian'),
+    'lt'    => array('lt|lithuanian', 'lithuanian'),
+    'lv'    => array('lv|latvian', 'latvian'),
+    'ms'    => array('ms|malay', 'malay'),
+    'nl'    => array('nl([-_][[:alpha:]]{2})?|nederlands', 'nederlands'),
+    'no'    => array('no|norwegian', 'norwegian'),
+    'pl'    => array('pl|polish', 'polish'),
     'pt-br' => array('pt[-_]br|brazilian portuguese', 'portuguesebr'),
-    'pt' => array('pt([-_][[:alpha:]]{2})?|portuguese', 'portuguese'),
-    'ro' => array('ro|romanian', 'romanian'),
-    'ru' => array('ru|russian', 'russian'),
-    'sk' => array('sk|slovak', 'slovak'),
-    'sq' => array('sq|albanian', 'albanian'),
-    'sr' => array('sr|serbian', 'serbian'),
-    'srp' => array('srp|serbian montenegrin', 'montenegrin'),
-    'sv' => array('sv|swedish', 'swedish'),
-    'tl' => array('tl|tagalok', 'tagalok'),
-    'th' => array('th|thai', 'thai'),
-    'tr' => array('tr|turkish', 'turkish'),
-    'uk' => array('uk|ukrainian', 'ukrainian'),
-    'ur' => array('ur|urdu', 'urdu'),
+    'pt'    => array('pt([-_][[:alpha:]]{2})?|portuguese', 'portuguese'),
+    'ro'    => array('ro|romanian', 'romanian'),
+    'ru'    => array('ru|russian', 'russian'),
+    'sk'    => array('sk|slovak', 'slovak'),
+    'sq'    => array('sq|albanian', 'albanian'),
+    'sr'    => array('sr|serbian', 'serbian'),
+    'srp'   => array('srp|serbian montenegrin', 'montenegrin'),
+    'sv'    => array('sv|swedish', 'swedish'),
+    'tl'    => array('tl|tagalok', 'tagalok'),
+    'th'    => array('th|thai', 'thai'),
+    'tr'    => array('tr|turkish', 'turkish'),
+    'uk'    => array('uk|ukrainian', 'ukrainian'),
+    'ur'    => array('ur|urdu', 'urdu'),
     'zh-tw' => array('zh[-_]tw|chinese traditional', 'tchinese'),
-    'zh-cn' => array('zh[-_]cn|chinese simplified', 'schinese'),
-    );
+    'zh-cn' => array('zh[-_]cn|chinese simplified', 'schinese'),);
 
 /**
  * Analyzes some PHP environment variables to find the most probable language
  * that should be used
  *
- * @param string $str string to analyze
+ * @param string  $str     string to analyze
  * @param integer $envType type of the PHP environment variable which value is $str
- * @global       array    the list of available translations
- * @global       string   the retained translation keyword
+ * @global        array    the list of available translations
+ * @global        string   the retained translation keyword
  * @access   private
  */
 function xoops_analyzeLanguage($str = '', $envType = '')
@@ -114,11 +113,10 @@ function xoops_analyzeLanguage($str = '', $envType = '')
         // $envType =  1 for the 'HTTP_ACCEPT_LANGUAGE' environment variable,
         //             2 for the 'HTTP_USER_AGENT' one
         $expr = $value[0];
-        if (strpos($expr, '[-_]') === FALSE) {
+        if (strpos($expr, '[-_]') === false) {
             $expr = str_replace('|', '([-_][[:alpha:]]{2,3})?|', $expr);
         }
-        if (($envType == 1 && eregi('^(' . $expr . ')(;q=[0-9]\\.[0-9])?$', $str))
-            || ($envType == 2 && eregi('(\(|\[|;[[:space:]])(' . $expr . ')(;|\]|\))', $str))) {
+        if (($envType == 1 && eregi('^(' . $expr . ')(;q=[0-9]\\.[0-9])?$', $str)) || ($envType == 2 && eregi('(\(|\[|;[[:space:]])(' . $expr . ')(;|\]|\))', $str))) {
             $lang = $key;
             break;
         }
@@ -142,17 +140,17 @@ function xoops_detectLanguage()
         $HTTP_USER_AGENT = $_SERVER['HTTP_USER_AGENT'];
     }
 
-    $lang = '';
-    $xoops_lang ='';
+    $lang       = '';
+    $xoops_lang = '';
     // 1. try to findout user's language by checking its HTTP_ACCEPT_LANGUAGE
     // variable
     if (empty($lang) && !empty($HTTP_ACCEPT_LANGUAGE)) {
-        $accepted = explode(',', $HTTP_ACCEPT_LANGUAGE);
+        $accepted    = explode(',', $HTTP_ACCEPT_LANGUAGE);
         $acceptedCnt = count($accepted);
         reset($accepted);
         for ($i = 0; $i < $acceptedCnt; ++$i) {
             $lang = xoops_analyzeLanguage($accepted[$i], 1);
-            if (strncasecmp($lang,'en',2)) {
+            if (strncasecmp($lang, 'en', 2)) {
                 break;
             }
         }

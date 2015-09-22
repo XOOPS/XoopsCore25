@@ -5,10 +5,9 @@
  */
 class HTMLPurifier_DefinitionCache_Null extends HTMLPurifier_DefinitionCache
 {
-
     /**
-     * @param HTMLPurifier_Definition $def
-     * @param HTMLPurifier_Config $config
+     * @param  HTMLPurifier_Definition $def
+     * @param  HTMLPurifier_Config     $config
      * @return bool
      */
     public function add($def, $config)
@@ -17,8 +16,8 @@ class HTMLPurifier_DefinitionCache_Null extends HTMLPurifier_DefinitionCache
     }
 
     /**
-     * @param HTMLPurifier_Definition $def
-     * @param HTMLPurifier_Config $config
+     * @param  HTMLPurifier_Definition $def
+     * @param  HTMLPurifier_Config     $config
      * @return bool
      */
     public function set($def, $config)
@@ -27,8 +26,8 @@ class HTMLPurifier_DefinitionCache_Null extends HTMLPurifier_DefinitionCache
     }
 
     /**
-     * @param HTMLPurifier_Definition $def
-     * @param HTMLPurifier_Config $config
+     * @param  HTMLPurifier_Definition $def
+     * @param  HTMLPurifier_Config     $config
      * @return bool
      */
     public function replace($def, $config)
@@ -37,7 +36,7 @@ class HTMLPurifier_DefinitionCache_Null extends HTMLPurifier_DefinitionCache
     }
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param  HTMLPurifier_Config $config
      * @return bool
      */
     public function remove($config)
@@ -46,7 +45,7 @@ class HTMLPurifier_DefinitionCache_Null extends HTMLPurifier_DefinitionCache
     }
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param  HTMLPurifier_Config $config
      * @return bool
      */
     public function get($config)
@@ -55,7 +54,7 @@ class HTMLPurifier_DefinitionCache_Null extends HTMLPurifier_DefinitionCache
     }
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param  HTMLPurifier_Config $config
      * @return bool
      */
     public function flush($config)
@@ -64,7 +63,7 @@ class HTMLPurifier_DefinitionCache_Null extends HTMLPurifier_DefinitionCache
     }
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param  HTMLPurifier_Config $config
      * @return bool
      */
     public function cleanup($config)
@@ -74,3 +73,4 @@ class HTMLPurifier_DefinitionCache_Null extends HTMLPurifier_DefinitionCache
 }
 
 // vim: et sw=4 sts=4
+

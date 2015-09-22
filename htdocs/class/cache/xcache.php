@@ -10,14 +10,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         class
- * @subpackage      cache
- * @since           2.3.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             class
+ * @subpackage          cache
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: xcache.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Xcache storage engine for cache.
@@ -34,21 +34,22 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
  * Redistributions of files must retain the above copyright notice.
  *
  * @filesource
- * @copyright Copyright 2005-2008, Cake Software Foundation, Inc.
- * @link http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
- * @package cake
+ * @copyright  Copyright 2005-2008, Cake Software Foundation, Inc.
+ * @link       http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
+ * @package    cake
  * @subpackage cake.cake.libs.cache
- * @since CakePHP(tm) v 1.2.0.4947
- * @version $Revision$
- * @modifiedby $LastChangedBy$
- * @lastmodified $Date$
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @since      CakePHP(tm) v 1.2.0.4947
+ * @version    $Revision: 13082 $
+ * @modifiedby $LastChangedBy: beckmi $
+ * @lastmodified $Date: 2015-06-06 17:59:41 -0400 (Sat, 06 Jun 2015) $
+ * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
  */
+
 /**
  * Xcache storage engine for cache
  *
- * @link http://trac.lighttpd.net/xcache/ Xcache
- * @package cake
+ * @link       http://trac.lighttpd.net/xcache/ Xcache
+ * @package    cake
  * @subpackage cake.cake.libs.cache
  */
 class XoopsCacheXcache extends XoopsCacheEngine
@@ -61,7 +62,7 @@ class XoopsCacheXcache extends XoopsCacheEngine
      * @var array
      * @access public
      */
-    var $settings = array();
+    public $settings = array();
 
     /**
      * Initialize the Cache Engine
@@ -69,14 +70,14 @@ class XoopsCacheXcache extends XoopsCacheEngine
      * Called automatically by the cache frontend
      * To reinitialize the settings call Cache::engine('EngineName', [optional] settings = array());
      *
-     * @param array $settings array of setting for the engine
+     * @param  array $settings array of setting for the engine
      * @return boolean True if the engine has been successfully initialized, false if not
      * @access   public
      */
-    function init($settings)
+    public function init($settings)
     {
         parent::init($settings);
-        $defaults = array('PHP_AUTH_USER' => 'cake' , 'PHP_AUTH_PW' => 'cake');
+        $defaults       = array('PHP_AUTH_USER' => 'cake', 'PHP_AUTH_PW' => 'cake');
         $this->settings = array_merge($defaults, $this->settings);
 
         return function_exists('xcache_info');
@@ -91,7 +92,7 @@ class XoopsCacheXcache extends XoopsCacheEngine
      * @return boolean True if the data was successfully cached, false on failure
      * @access public
      */
-    function write($key, &$value, $duration)
+    public function write($key, &$value, $duration)
     {
         return xcache_set($key, $value, $duration);
     }
@@ -103,7 +104,7 @@ class XoopsCacheXcache extends XoopsCacheEngine
      * @return mixed  The cached data, or false if the data doesn't exist, has expired, or if there was an error fetching it
      * @access public
      */
-    function read($key)
+    public function read($key)
     {
         if (xcache_isset($key)) {
             return xcache_get($key);
@@ -115,11 +116,11 @@ class XoopsCacheXcache extends XoopsCacheEngine
     /**
      * Delete a key from the cache
      *
-     * @param  string  $key Identifier for the data
+     * @param  string $key Identifier for the data
      * @return boolean True if the value was successfully deleted, false if it didn't exist or couldn't be removed
      * @access public
      */
-    function delete($key)
+    public function delete($key)
     {
         return xcache_unset($key);
     }
@@ -130,7 +131,7 @@ class XoopsCacheXcache extends XoopsCacheEngine
      * @return boolean True if the cache was successfully cleared, false otherwise
      * @access public
      */
-    function clear()
+    public function clear()
     {
         $result = true;
         $this->__auth();
@@ -155,10 +156,10 @@ class XoopsCacheXcache extends XoopsCacheEngine
      * @param bool $reverse Revert changes
      * @access   private
      */
-    function __auth($reverse = false)
+    private function __auth($reverse = false)
     {
         static $backup = array();
-        $keys = array('PHP_AUTH_USER' , 'PHP_AUTH_PW');
+        $keys = array('PHP_AUTH_USER', 'PHP_AUTH_PW');
         foreach ($keys as $key) {
             if ($reverse) {
                 if (isset($backup[$key])) {
@@ -172,7 +173,7 @@ class XoopsCacheXcache extends XoopsCacheEngine
                 if (!empty($value)) {
                     $backup[$key] = $value;
                 }
-                $varName = '__' . $key;
+                $varName       = '__' . $key;
                 $_SERVER[$key] = $this->settings[$varName];
             }
         }

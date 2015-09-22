@@ -16,16 +16,16 @@
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
  * @copyright    (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
- * @package     upgrader
- * @since       2.3.0
- * @author      Skalpa Keo <skalpa@xoops.org>
- * @author      Taiwen Jiang <phppp@users.sourceforge.net>
- * @version     $Id$
+ * @license          http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @package          upgrader
+ * @since            2.3.0
+ * @author           Skalpa Keo <skalpa@xoops.org>
+ * @author           Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version          $Id: settings_db.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-if ( !defined( 'XOOPS_ROOT_PATH' ) ) {
-    die( 'Bad installation: please add this folder to the XOOPS install you want to upgrade');
+if (!defined('XOOPS_ROOT_PATH')) {
+    die('Bad installation: please add this folder to the XOOPS install you want to upgrade');
 }
 
 $vars =& $_SESSION['settings'];
@@ -38,9 +38,9 @@ function getDbCharsets()
     $charsets = array();
 
     $charsets["utf8"] = array();
-    $ut8_available = false;
-    if ( $result = $GLOBALS["xoopsDB"]->queryF("SHOW CHARSET") ) {
-        while ( $row = $GLOBALS["xoopsDB"]->fetchArray($result) ) {
+    $ut8_available    = false;
+    if ($result = $GLOBALS["xoopsDB"]->queryF("SHOW CHARSET")) {
+        while ($row = $GLOBALS["xoopsDB"]->fetchArray($result)) {
             $charsets[$row["Charset"]]["desc"] = $row["Description"];
             if ($row["Charset"] == "utf8") {
                 $ut8_available = true;
@@ -60,10 +60,10 @@ function getDbCharsets()
 function getDbCollations()
 {
     $collations = array();
-    $charsets = getDbCharsets();
+    $charsets   = getDbCharsets();
 
-    if ( $result = $GLOBALS["xoopsDB"]->queryF("SHOW COLLATION") ) {
-        while ( $row = $GLOBALS["xoopsDB"]->fetchArray($result) ) {
+    if ($result = $GLOBALS["xoopsDB"]->queryF("SHOW COLLATION")) {
+        while ($row = $GLOBALS["xoopsDB"]->fetchArray($result)) {
             $charsets[$row["Charset"]]["collation"][] = $row["Collation"];
         }
     }
@@ -79,14 +79,14 @@ function getDbCollations()
  *
  * @return string
  */
-function xoFormFieldCollation( $name, $value, $label, $help = '' )
+function xoFormFieldCollation($name, $value, $label, $help = '')
 {
     $collations = getDbCollations();
 
-    $myts =& MyTextSanitizer::getInstance();
-    $label = $myts->htmlspecialchars( $label, ENT_QUOTES, _UPGRADE_CHARSET, false );
-    $name = $myts->htmlspecialchars( $name, ENT_QUOTES, _UPGRADE_CHARSET, false );
-    $value = $myts->htmlspecialchars( $value, ENT_QUOTES );
+    $myts  =& MyTextSanitizer::getInstance();
+    $label = $myts->htmlspecialchars($label, ENT_QUOTES, _UPGRADE_CHARSET, false);
+    $name  = $myts->htmlspecialchars($name, ENT_QUOTES, _UPGRADE_CHARSET, false);
+    $value = $myts->htmlspecialchars($value, ENT_QUOTES);
 
     $field = "<label for='$name'>$label</label>\n";
     if ($help) {
@@ -96,11 +96,11 @@ function xoFormFieldCollation( $name, $value, $label, $help = '' )
     $field .= "<option value=''>" . DB_COLLATION_NOCHANGE . "</option>";
 
     $collation_default = "";
-    $options = "";
+    $options           = "";
     foreach ($collations as $key => $charset) {
         $field .= "<optgroup label='{$key} - ({$charset['desc']})'>";
         foreach ($charset['collation'] as $collation) {
-            $field .= "<option value='{$collation}'" . ( ($value == $collation) ? " selected='selected'" : "" ) . ">{$collation}</option>";
+            $field .= "<option value='{$collation}'" . (($value == $collation) ? " selected='selected'" : "") . ">{$collation}</option>";
         }
         $field .= "</optgroup>";
     }
@@ -110,7 +110,7 @@ function xoFormFieldCollation( $name, $value, $label, $help = '' )
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && @$_POST['task'] == 'db') {
-    $params = array( 'DB_COLLATION' );
+    $params = array('DB_COLLATION');
     foreach ($params as $name) {
         $vars[$name] = isset($_POST[$name]) ? $_POST[$name] : "";
     }
@@ -118,22 +118,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && @$_POST['task'] == 'db') {
     return $vars;
 }
 
-if ( !isset( $vars['DB_COLLATION'] ) ) {
+if (!isset($vars['DB_COLLATION'])) {
     $vars['DB_COLLATION'] = '';
 }
 
 ?>
-<?php if ( !empty( $error ) ) echo '<div class="x2-note error">' . $error . "</div>\n"; ?>
+<?php if (!empty($error)) {
+    echo '<div class="x2-note error">' . $error . "</div>\n";
+} ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method='post'>
-<fieldset>
-    <legend><?php echo LEGEND_DATABASE; ?></legend>
-    <?php echo xoFormFieldCollation( 'DB_COLLATION',    $vars['DB_COLLATION'],    DB_COLLATION_LABEL, DB_COLLATION_HELP ); ?>
+    <fieldset>
+        <legend><?php echo LEGEND_DATABASE; ?></legend>
+        <?php echo xoFormFieldCollation('DB_COLLATION', $vars['DB_COLLATION'], DB_COLLATION_LABEL, DB_COLLATION_HELP); ?>
 
-</fieldset>
-<input type="hidden" name="action" value="next" />
-<input type="hidden" name="task" value="db" />
+    </fieldset>
+    <input type="hidden" name="action" value="next"/>
+    <input type="hidden" name="task" value="db"/>
 
-<div class="xo-formbuttons">
-    <button type="submit"><?php echo _SUBMIT; ?></button>
-</div>
+    <div class="xo-formbuttons">
+        <button type="submit"><?php echo _SUBMIT; ?></button>
+    </div>

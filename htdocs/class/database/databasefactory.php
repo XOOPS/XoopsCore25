@@ -10,27 +10,36 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @subpackage      database
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @subpackage          database
+ * @version             $Id: databasefactory.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * XoopsDatabaseFactory
  *
  * @package Kernel
- * @author Kazumi Ono <onokazu@xoops.org>
- * @access public
+ * @author  Kazumi Ono <onokazu@xoops.org>
+ * @access  public
  */
 class XoopsDatabaseFactory
 {
+
+    /**
+     * XoopsDatabaseFactory constructor.
+     */
+    public function __construct()
+    {
+    }
+
     /**
      * XoopsDatabaseFactory::XoopsDatabaseFactory()
      */
-    function XoopsDatabaseFactory()
+    public function XoopsDatabaseFactory()
     {
+        $this->__construct();
     }
 
     /**
@@ -43,7 +52,7 @@ class XoopsDatabaseFactory
      * @staticvar object  The only instance of database class
      * @return object Reference to the only instance of database class
      */
-    static function &getDatabaseConnection()
+    public static function &getDatabaseConnection()
     {
         static $instance;
         if (!isset($instance)) {
@@ -69,6 +78,7 @@ class XoopsDatabaseFactory
                 trigger_error('notrace:Failed to load database of type: ' . XOOPS_DB_TYPE . ' in file: ' . __FILE__ . ' at line ' . __LINE__, E_USER_WARNING);
             }
         }
+
         return $instance;
     }
 
@@ -80,7 +90,7 @@ class XoopsDatabaseFactory
      * @staticvar object  The only instance of database class
      * @return object Reference to the only instance of database class
      */
-    static function getDatabase()
+    public static function getDatabase()
     {
         static $database;
         if (!isset($database)) {
@@ -97,6 +107,7 @@ class XoopsDatabaseFactory
                 trigger_error('notrace:Failed to load database of type: ' . XOOPS_DB_TYPE . ' in file: ' . __FILE__ . ' at line ' . __LINE__, E_USER_WARNING);
             }
         }
+
         return $database;
     }
 }

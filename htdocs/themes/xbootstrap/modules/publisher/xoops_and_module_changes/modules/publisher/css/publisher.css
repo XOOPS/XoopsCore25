@@ -9,8 +9,8 @@
 .pub_article_t_bottom{ margin-bottom: 20px;}
 .pub_article_t_bottom figure{margin: 0; width: 100%;}
 .pub_article_t_bottom header h2{margin-top: 5px;}
-.pub_article_t_bottom h2.no-top-margin{margin-top: 0px;}
-.pub_article_t_bottom_info{margin-bottom: 15px;	border-top: 1px solid #D3CCD3; border-bottom: 1px solid #D3CCD3; padding: 4px 0; overflow: hidden; font-size: 11px;}
+.pub_article_t_bottom h2.no-top-margin{margin-top: 0;}
+.pub_article_t_bottom_info{margin-bottom: 15px;    border-top: 1px solid #D3CCD3; border-bottom: 1px solid #D3CCD3; padding: 4px 0; overflow: hidden; font-size: 11px;}
 /* END FULL WIDTH */
 
 /*-----------------------------------------------*/
@@ -19,13 +19,13 @@
 /*#articleslider{padding: 0 30px}*/
 .pub_article_t_top{margin-bottom: 20px;}
 .pub_article_t_top h2{font-size: 22px; line-height: 22px; margin: 0 0 30px 0; padding:15px 0 0 0;}
-.pub_article_t_top h2 a.titlelink{display: block; padding:0; margin: 0; vertical-align: baseline; outline: none; color: #333333}
+.pub_article_t_top h2 a.titlelink{display: block; padding:0; margin: 0; vertical-align: baseline; outline: none; color: #333333;}
 /* END INFO AS COLUMN ARTICLE */
 
 
 /*-----------------------------------------------*/
-.pub_article_extras{margin: 15px 0}
-.pub_article_extras .btn-primary a{color: inherit}
+.pub_article_extras{margin: 15px 0;}
+.pub_article_extras .btn-primary a{color: inherit;}
 .pub_pagenav{margin: 20px 0 0 0;font-size: 11px;}
 /*------------------------------------------------*/
 
@@ -33,8 +33,8 @@
 /* CATEGORY WF SECTION VIEW*/
 .article_wf{clear: both;padding: 20px 20px 25px 0;border-bottom: 1px solid #f2f2f2;}
 .article_wf_title{clear: both;padding-bottom: 10px;}
-.article_wf_title h3{margin-top: 5px;margin-bottom: 0px;}
-.article_wf_title font{font-size: 11px; padding: 0 16px 0 0; margin: 0; line-height: 12px; opacity:0.7;-moz-opacity:0.7} 
+.article_wf_title h3{margin-top: 5px;margin-bottom: 0;}
+.article_wf_title font{font-size: 11px; padding: 0 16px 0 0; margin: 0; line-height: 12px; opacity:0.7;-moz-opacity:0.7;}
 .article_wf_img{float: left; margin: 0 15px 10px 2px; position: relative; padding: 2px; line-height: 0;}
 .article_wf_img img{width: 210px;}
 .article_wf_summary{line-height: 1.5;}
@@ -42,10 +42,10 @@
 
 
 /*CATEGORY FULL VIEW*/
-.article_full{padding: 0;border: 1px solid #dddddd; -webkit-transition: all 0.2s ease-in-out; transition: all 0.2s ease-in-out;	max-width: 100%;height: auto; display: block; margin-bottom: 15px; box-sizing: border-box;}
+.article_full{padding: 0;border: 1px solid #dddddd; -webkit-transition: all 0.2s ease-in-out; transition: all 0.2s ease-in-out;    max-width: 100%;height: auto; display: block; margin-bottom: 15px; box-sizing: border-box;}
 .article_full_img_div{width: : 100%; max-height: 280px; overflow: hidden;}
 .article_full_img_div img{margin: -50px 0 0 0;padding: 0;width: 100%;}
-.article_full_category{background: #5CB85C;	color: #fff;padding: 4px 6px;position: absolute;right: 0;margin-right: 40px;font-size: 12px;}
+.article_full_category{background: #5CB85C;    color: #fff;padding: 4px 6px;position: absolute;right: 0;margin-right: 40px;font-size: 12px;}
 
 /*END CATEGORY FULL VIEW*/
 
@@ -53,12 +53,12 @@
 h4.pub_last_articles_wf{opacity:0.8;-moz-opacity:0.8; padding-bottom: 0; margin-bottom: 0}
 h4.pub_last_articles_list{opacity:0.8;-moz-opacity:0.8; padding-bottom: 5px; margin-bottom: 0}
 h4.pub_last_articles_full{opacity:0.8;-moz-opacity:0.8; padding-bottom: 20px; margin-bottom: 0}
-.article_list{clear: both; padding: 15px 15px 15px;	border-bottom: 1px solid #f2f2f2;}
+.article_list{clear: both; padding: 15px 15px 15px;    border-bottom: 1px solid #f2f2f2;}
 .article_list_title{padding-bottom: 10px;}
-.article_list_title h3{margin-top: 5px;	margin-bottom: 0px;}
-.article_list_title font{font-size: 11px; padding: 0 16px 0 0; margin: 0; line-height: 12px; opacity:0.7;-moz-opacity:0.7} 
-.article_list_img{float: left; margin: 0 15px 0px 2px; position: relative; padding: 2px; line-height: 0;}
-.article_list_img img{border: none;	width: 150px;}
+.article_list_title h3{margin-top: 5px;    margin-bottom: 0;}
+.article_list_title font{font-size: 11px; padding: 0 16px 0 0; margin: 0; line-height: 12px; opacity:0.7;-moz-opacity:0.7;}
+.article_list_img{float: left; margin: 0 15px 0 2px; position: relative; padding: 2px; line-height: 0;}
+.article_list_img img{border: none;    width: 150px;}
 /* END CATEGORY LIST VIEW*/
 
 
@@ -68,7 +68,7 @@ h4.pub_last_articles_full{opacity:0.8;-moz-opacity:0.8; padding-bottom: 20px; ma
 
 .spot_publisher_items_list {padding-top:10px;}
 .spot_article_wf_img{float: left; margin: 0 15px 10px 2px; position: relative; padding: 2px; line-height: 0;}
-.spot_article_wf_img img{padding:1px;border: 1px solid #CCCCCC;	width: 250px;}
+.spot_article_wf_img img{padding:1px;border: 1px solid #CCCCCC;    width: 250px;}
 
 /**
 * $Id: module.css,v 1.1 2007/06/05 18:28:24 marcan Exp $

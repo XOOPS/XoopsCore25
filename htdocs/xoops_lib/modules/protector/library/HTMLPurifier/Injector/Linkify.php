@@ -35,7 +35,6 @@ class HTMLPurifier_Injector_Linkify extends HTMLPurifier_Injector
         // Note: this regex is extremely permissive
         $bits = preg_split('#((?:https?|ftp)://[^\s\'",<>()]+)#Su', $token->data, -1, PREG_SPLIT_DELIM_CAPTURE);
 
-
         $token = array();
 
         // $i = index
@@ -57,3 +56,4 @@ class HTMLPurifier_Injector_Linkify extends HTMLPurifier_Injector
 }
 
 // vim: et sw=4 sts=4
+

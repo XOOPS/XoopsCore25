@@ -23,33 +23,33 @@
  * @author      BitC3R0     <BitC3R0@gmail.com>
  * @author      trabis      <lusopoemas@gmail.com>
  * @version     1.2
- * @version     $Id$
+ * @version     $Id: menu.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 $groups = $GLOBALS['xoopsUser']->getGroups();
 $all_ok = false;
 if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
-    $sysperm_handler =& xoops_gethandler('groupperm');
-    $ok_syscats = $sysperm_handler->getItemIds('system_admin', $groups);
+    $sysperm_handler =& xoops_getHandler('groupperm');
+    $ok_syscats      = $sysperm_handler->getItemIds('system_admin', $groups);
 } else {
     $all_ok = true;
 }
-require_once $GLOBALS['xoops']->path( '/class/xoopslists.php' );
+require_once $GLOBALS['xoops']->path('/class/xoopslists.php');
 // include system category definitions
-include_once $GLOBALS['xoops']->path( '/modules/system/constants.php' );
+include_once $GLOBALS['xoops']->path('/modules/system/constants.php');
 
-$admin_dir = $GLOBALS['xoops']->path( '/modules/system/admin' );
-$dirlist = XoopsLists::getDirListAsArray($admin_dir);
-$index = 0;
-foreach($dirlist as $file){
-    if ( file_exists($admin_dir.'/'.$file.'/xoops_version.php') ) {
-        include $admin_dir.'/'.$file.'/xoops_version.php';
+$admin_dir = $GLOBALS['xoops']->path('/modules/system/admin');
+$dirlist   = XoopsLists::getDirListAsArray($admin_dir);
+$index     = 0;
+foreach ($dirlist as $file) {
+    if (file_exists($admin_dir . '/' . $file . '/xoops_version.php')) {
+        include $admin_dir . '/' . $file . '/xoops_version.php';
         if ($modversion['hasAdmin']) {
-            if ( xoops_getModuleOption('active_' . $file, 'system' ) ) {
+            if (xoops_getModuleOption('active_' . $file, 'system')) {
                 $category = isset($modversion['category']) ? (int)($modversion['category']) : 0;
                 if (false != $all_ok || in_array($modversion['category'], $ok_syscats)) {
                     $adminmenu[$index]['title'] = trim($modversion['name']);
-                    $adminmenu[$index]['desc'] = trim($modversion['description']);
+                    $adminmenu[$index]['desc']  = trim($modversion['description']);
                     $adminmenu[$index]['link']  = 'admin.php?fct=' . $file;
                     $adminmenu[$index]['icon']  = 'icons/' . $modversion['image'];
                 }

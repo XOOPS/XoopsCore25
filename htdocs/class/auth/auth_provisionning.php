@@ -10,27 +10,27 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @subpackage      auth
- * @since           2.0
- * @author          Pierre-Eric MENUET <pemphp@free.fr>
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @subpackage          auth
+ * @since               2.0
+ * @author              Pierre-Eric MENUET <pemphp@free.fr>
  * @version         $Id$
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  *
- * @package kernel
- * @subpackage auth
- * @description Authentification provisionning class. This class is responsible to
+ * @package             kernel
+ * @subpackage          auth
+ * @description         Authentification provisionning class. This class is responsible to
  * provide synchronisation method to Xoops User Database
- * @author Pierre-Eric MENUET <pemphp@free.fr>
+ * @author              Pierre-Eric MENUET <pemphp@free.fr>
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  */
 class XoopsAuthProvisionning
 {
-    var $_auth_instance;
+    protected $_auth_instance;
 
     /**
      * XoopsAuthProvisionning::getInstance()
@@ -39,7 +39,7 @@ class XoopsAuthProvisionning
      *
      * @return \XoopsAuthProvisionning
      */
-    static function &getInstance(&$auth_instance)
+    public static function getInstance(XoopsAuth $auth_instance = null)
     {
         static $provis_instance;
         if (!isset($provis_instance)) {
@@ -51,20 +51,21 @@ class XoopsAuthProvisionning
 
     /**
      * Authentication Service constructor
+     * @param XoopsAuth $auth_instance
      */
-    function XoopsAuthProvisionning(&$auth_instance)
+    public function __construct(XoopsAuth $auth_instance = null)
     {
-        $this->_auth_instance =& $auth_instance;
-        $config_handler =& xoops_gethandler('config');
-        $config = $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
+        $this->_auth_instance = $auth_instance;
+        $config_handler       =& xoops_getHandler('config');
+        $config               = $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
         foreach ($config as $key => $val) {
             $this->$key = $val;
         }
-        $config_gen = $config_handler->getConfigsByCat(XOOPS_CONF);
+        $config_gen       = $config_handler->getConfigsByCat(XOOPS_CONF);
         $this->default_TZ = $config_gen['default_TZ'];
-        $this->theme_set = $config_gen['theme_set'];
-        $this->com_mode = $config_gen['com_mode'];
-        $this->com_order = $config_gen['com_order'];
+        $this->theme_set  = $config_gen['theme_set'];
+        $this->com_mode   = $config_gen['com_mode'];
+        $this->com_order  = $config_gen['com_order'];
     }
 
     /**
@@ -73,11 +74,11 @@ class XoopsAuthProvisionning
      * @param $uname
      * @return XoopsUser or false
      */
-    function getXoopsUser($uname)
+    public function getXoopsUser($uname)
     {
-        $member_handler =& xoops_gethandler('member');
-        $criteria = new Criteria('uname', $uname);
-        $getuser = $member_handler->getUsers($criteria);
+        $member_handler =& xoops_getHandler('member');
+        $criteria       = new Criteria('uname', $uname);
+        $getuser        = $member_handler->getUsers($criteria);
         if (count($getuser) == 1) {
             return $getuser[0];
         } else {
@@ -93,7 +94,7 @@ class XoopsAuthProvisionning
      * @param  null $pwd
      * @return bool
      */
-    function sync($datas, $uname, $pwd = null)
+    public function sync($datas, $uname, $pwd = null)
     {
         $xoopsUser = $this->getXoopsUser($uname);
         if (!$xoopsUser) { // Xoops User Database not exists
@@ -119,10 +120,10 @@ class XoopsAuthProvisionning
      * @param  null $pwd
      * @return bool
      */
-    function add($datas, $uname, $pwd = null)
+    public function add($datas, $uname, $pwd = null)
     {
-        $ret = false;
-        $member_handler =& xoops_gethandler('member');
+        $ret            = false;
+        $member_handler =& xoops_getHandler('member');
         // Create XOOPS Database User
         $newuser = $member_handler->createUser();
         $newuser->setVar('uname', $uname);
@@ -136,8 +137,9 @@ class XoopsAuthProvisionning
         $tab_mapping = explode('|', $this->ldap_field_mapping);
         foreach ($tab_mapping as $mapping) {
             $fields = explode('=', trim($mapping));
-            if ($fields[0] && $fields[1])
+            if ($fields[0] && $fields[1]) {
                 $newuser->setVar(trim($fields[0]), utf8_decode($datas[trim($fields[1])][0]));
+            }
         }
         if ($member_handler->insertUser($newuser)) {
             foreach ($this->ldap_provisionning_group as $groupid) {
@@ -162,10 +164,10 @@ class XoopsAuthProvisionning
      * @param  null $pwd
      * @return bool
      */
-    function change(&$xoopsUser, $datas, $uname, $pwd = null)
+    public function change(&$xoopsUser, $datas, $uname, $pwd = null)
     {
-        $ret = false;
-        $member_handler =& xoops_gethandler('member');
+        $ret            = false;
+        $member_handler =& xoops_getHandler('member');
         $xoopsUser->setVar('pass', md5(stripslashes($pwd)));
         $tab_mapping = explode('|', $this->ldap_field_mapping);
         foreach ($tab_mapping as $mapping) {
@@ -188,7 +190,7 @@ class XoopsAuthProvisionning
      *
      * @return bool
      */
-    function delete()
+    public function delete()
     {
     }
 
@@ -197,7 +199,7 @@ class XoopsAuthProvisionning
      *
      * @return bool
      */
-    function suspend()
+    public function suspend()
     {
     }
 
@@ -206,7 +208,7 @@ class XoopsAuthProvisionning
      *
      * @return bool
      */
-    function restore()
+    public function restore()
     {
     }
 
@@ -215,7 +217,8 @@ class XoopsAuthProvisionning
      *
      * @return bool
      */
-    function resetpwd()
+    public function resetpwd()
     {
     }
 } // end class
+

@@ -10,15 +10,15 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @subpackage      form
- * @since           2.0.0
- * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @subpackage          form
+ * @since               2.0.0
+ * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @version             $Id: formfile.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * A file upload field
@@ -31,16 +31,16 @@ class XoopsFormFile extends XoopsFormElement
      * @var int
      * @access private
      */
-    var $_maxFileSize;
+    public $_maxFileSize;
 
     /**
      * Constructor
      *
-     * @param string $caption Caption
-     * @param string $name "name" attribute
-     * @param int $maxfilesize Maximum size for an uploaded file
+     * @param string $caption     Caption
+     * @param string $name        "name" attribute
+     * @param int    $maxfilesize Maximum size for an uploaded file
      */
-    function XoopsFormFile($caption, $name, $maxfilesize)
+    public function __construct($caption, $name, $maxfilesize)
     {
         $this->setCaption($caption);
         $this->setName($name);
@@ -48,11 +48,20 @@ class XoopsFormFile extends XoopsFormElement
     }
 
     /**
+     * @param $caption
+     * @param $name
+     * @param $maxfilesize
+     */
+    public function XoopsFormFile($caption, $name, $maxfilesize)
+    {
+        $this->__construct($caption, $name, $maxfilesize);
+    }
+    /**
      * Get the maximum filesize
      *
      * @return int
      */
-    function getMaxFileSize()
+    public function getMaxFileSize()
     {
         return $this->_maxFileSize;
     }
@@ -62,8 +71,8 @@ class XoopsFormFile extends XoopsFormElement
      *
      * @return string HTML
      */
-    function render()
+    public function render()
     {
-        return '<input type="hidden" name="MAX_FILE_SIZE" value="' . $this->getMaxFileSize() . '" /><input type="file" name="' . $this->getName() . '" id="' . $this->getName() . '" title="' . $this->getTitle() . '" ' .$this->getExtra() . ' /><input type="hidden" name="xoops_upload_file[]" id="xoops_upload_file[]" value="' . $this->getName() . '" />';
+        return '<input type="hidden" name="MAX_FILE_SIZE" value="' . $this->getMaxFileSize() . '" /><input type="file" name="' . $this->getName() . '" id="' . $this->getName() . '" title="' . $this->getTitle() . '" ' . $this->getExtra() . ' /><input type="hidden" name="xoops_upload_file[]" id="xoops_upload_file[]" value="' . $this->getName() . '" />';
     }
 }

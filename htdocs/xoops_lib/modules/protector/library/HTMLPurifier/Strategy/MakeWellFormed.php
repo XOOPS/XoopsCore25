@@ -13,7 +13,6 @@
  */
 class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
 {
-
     /**
      * Array stream of tokens being processed.
      * @type HTMLPurifier_Token[]
@@ -57,9 +56,9 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
     protected $context;
 
     /**
-     * @param HTMLPurifier_Token[] $tokens
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
+     * @param  HTMLPurifier_Token[] $tokens
+     * @param  HTMLPurifier_Config  $config
+     * @param  HTMLPurifier_Context $context
      * @return HTMLPurifier_Token[]
      * @throws HTMLPurifier_Exception
      */
@@ -68,25 +67,25 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
         $definition = $config->getHTMLDefinition();
 
         // local variables
-        $generator = new HTMLPurifier_Generator($config, $context);
+        $generator           = new HTMLPurifier_Generator($config, $context);
         $escape_invalid_tags = $config->get('Core.EscapeInvalidTags');
         // used for autoclose early abortion
         $global_parent_allowed_elements = $definition->info_parent_def->child->getAllowedElements($config);
-        $e = $context->get('ErrorCollector', true);
-        $i = false; // injector index
+        $e                              = $context->get('ErrorCollector', true);
+        $i                              = false; // injector index
         list($zipper, $token) = HTMLPurifier_Zipper::fromArray($tokens);
-        if ($token === NULL) {
+        if ($token === null) {
             return array();
         }
         $reprocess = false; // whether or not to reprocess the same token
-        $stack = array();
+        $stack     = array();
 
         // member variables
-        $this->stack =& $stack;
-        $this->tokens =& $tokens;
-        $this->token =& $token;
-        $this->zipper =& $zipper;
-        $this->config = $config;
+        $this->stack   =& $stack;
+        $this->tokens  =& $tokens;
+        $this->token   =& $token;
+        $this->zipper  =& $zipper;
+        $this->config  = $config;
         $this->context = $context;
 
         // context variables
@@ -98,8 +97,8 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
 
         $this->injectors = array();
 
-        $injectors = $config->getBatch('AutoFormat');
-        $def_injectors = $definition->info_injector;
+        $injectors        = $config->getBatch('AutoFormat');
+        $def_injectors    = $definition->info_injector;
         $custom_injectors = $injectors['Custom'];
         unset($injectors['Custom']); // special case
         foreach ($injectors as $injector => $b) {
@@ -150,9 +149,8 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
         //      punt ($reprocess = true; continue;) and it does that for us.
 
         // isset is in loop because $tokens size changes during loop exec
-        for (;;
-             // only increment if we don't need to reprocess
-             $reprocess ? $reprocess = false : $token = $zipper->next($token)) {
+        for (; ; // only increment if we don't need to reprocess
+            $reprocess ? $reprocess = false : $token = $zipper->next($token)) {
 
             // check for a rewind
             if (is_int($i)) {
@@ -162,7 +160,9 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
                 $rewind_offset = $this->injectors[$i]->getRewindOffset();
                 if (is_int($rewind_offset)) {
                     for ($j = 0; $j < $rewind_offset; ++$j) {
-                        if (empty($zipper->front)) break;
+                        if (empty($zipper->front)) {
+                            break;
+                        }
                         $token = $zipper->prev($token);
                         // indicate that other injectors should not process this token,
                         // but we need to reprocess it
@@ -179,14 +179,14 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
             }
 
             // handle case of document end
-            if ($token === NULL) {
+            if ($token === null) {
                 // kill processing if stack is empty
                 if (empty($this->stack)) {
                     break;
                 }
 
                 // peek
-                $top_nesting = array_pop($this->stack);
+                $top_nesting   = array_pop($this->stack);
                 $this->stack[] = $top_nesting;
 
                 // send error [TagClosedSuppress]
@@ -218,7 +218,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
                         // XXX fuckup
                         $r = $token;
                         $injector->handleText($r);
-                        $token = $this->processToken($r, $i);
+                        $token     = $this->processToken($r, $i);
                         $reprocess = true;
                         break;
                     }
@@ -237,22 +237,14 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
             $ok = false;
             if ($type === 'empty' && $token instanceof HTMLPurifier_Token_Start) {
                 // claims to be a start tag but is empty
-                $token = new HTMLPurifier_Token_Empty(
-                    $token->name,
-                    $token->attr,
-                    $token->line,
-                    $token->col,
-                    $token->armor
-                );
-                $ok = true;
+                $token = new HTMLPurifier_Token_Empty($token->name, $token->attr, $token->line, $token->col, $token->armor);
+                $ok    = true;
             } elseif ($type && $type !== 'empty' && $token instanceof HTMLPurifier_Token_Empty) {
                 // claims to be empty but really is a start tag
                 // NB: this assignment is required
                 $old_token = $token;
-                $token = new HTMLPurifier_Token_End($token->name);
-                $token = $this->insertBefore(
-                    new HTMLPurifier_Token_Start($old_token->name, $old_token->attr, $old_token->line, $old_token->col, $old_token->armor)
-                );
+                $token     = new HTMLPurifier_Token_End($token->name);
+                $token     = $this->insertBefore(new HTMLPurifier_Token_Start($old_token->name, $old_token->attr, $old_token->line, $old_token->col, $old_token->armor));
                 // punt (since we had to modify the input stream in a non-trivial way)
                 $reprocess = true;
                 continue;
@@ -278,16 +270,16 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
                     // "easy" to reason about (for certain perverse definitions
                     // of "easy")
 
-                    $parent = array_pop($this->stack);
+                    $parent        = array_pop($this->stack);
                     $this->stack[] = $parent;
 
-                    $parent_def = null;
+                    $parent_def      = null;
                     $parent_elements = null;
-                    $autoclose = false;
+                    $autoclose       = false;
                     if (isset($definition->info[$parent->name])) {
-                        $parent_def = $definition->info[$parent->name];
+                        $parent_def      = $definition->info[$parent->name];
                         $parent_elements = $parent_def->child->getAllowedElements($config);
-                        $autoclose = !isset($parent_elements[$token->name]);
+                        $autoclose       = !isset($parent_elements[$token->name]);
                     }
 
                     if ($autoclose && $definition->info[$token->name]->wrap) {
@@ -295,11 +287,11 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
                         // element to make it valid in a context (for
                         // example, <ul><ul> needs a <li> in between)
                         $wrapname = $definition->info[$token->name]->wrap;
-                        $wrapdef = $definition->info[$wrapname];
+                        $wrapdef  = $definition->info[$wrapname];
                         $elements = $wrapdef->child->getAllowedElements($config);
                         if (isset($elements[$token->name]) && isset($parent_elements[$wrapname])) {
-                            $newtoken = new HTMLPurifier_Token_Start($wrapname);
-                            $token = $this->insertBefore($newtoken);
+                            $newtoken  = new HTMLPurifier_Token_Start($wrapname);
+                            $token     = $this->insertBefore($newtoken);
                             $reprocess = true;
                             continue;
                         }
@@ -322,8 +314,8 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
                                     break;
                                 }
                                 if ($definition->info[$token->name]->wrap) {
-                                    $wrapname = $definition->info[$token->name]->wrap;
-                                    $wrapdef = $definition->info[$wrapname];
+                                    $wrapname      = $definition->info[$token->name]->wrap;
+                                    $wrapdef       = $definition->info[$wrapname];
                                     $wrap_elements = $wrapdef->child->getAllowedElements($config);
                                     if (isset($wrap_elements[$token->name]) && isset($elements[$wrapname])) {
                                         $autoclose_ok = true;
@@ -334,7 +326,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
                         }
                         if ($autoclose_ok) {
                             // errors need to be updated
-                            $new_token = new HTMLPurifier_Token_End($parent->name);
+                            $new_token        = new HTMLPurifier_Token_End($parent->name);
                             $new_token->start = $parent;
                             // [TagClosedSuppress]
                             if ($e && !isset($parent->armor['MakeWellFormed_TagClosedError'])) {
@@ -348,8 +340,8 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
                                 $element = clone $parent;
                                 // [TagClosedAuto]
                                 $element->armor['MakeWellFormed_TagClosedError'] = true;
-                                $element->carryover = true;
-                                $token = $this->processToken(array($new_token, $token, $element));
+                                $element->carryover                              = true;
+                                $token                                           = $this->processToken(array($new_token, $token, $element));
                             } else {
                                 $token = $this->insertBefore($new_token);
                             }
@@ -359,7 +351,6 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
                         $reprocess = true;
                         continue;
                     }
-
                 }
                 $ok = true;
             }
@@ -374,7 +365,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
                     }
                     $r = $token;
                     $injector->handleElement($r);
-                    $token = $this->processToken($r, $i);
+                    $token     = $this->processToken($r, $i);
                     $reprocess = true;
                     break;
                 }
@@ -383,9 +374,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
                     if ($token instanceof HTMLPurifier_Token_Start) {
                         $this->stack[] = $token;
                     } elseif ($token instanceof HTMLPurifier_Token_End) {
-                        throw new HTMLPurifier_Exception(
-                            'Improper handling of end tag in start code; possible error in MakeWellFormed'
-                        );
+                        throw new HTMLPurifier_Exception('Improper handling of end tag in start code; possible error in MakeWellFormed');
                     }
                 }
                 continue;
@@ -429,9 +418,9 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
                     }
                     $r = $token;
                     $injector->handleEnd($r);
-                    $token = $this->processToken($r, $i);
+                    $token         = $this->processToken($r, $i);
                     $this->stack[] = $current_parent;
-                    $reprocess = true;
+                    $reprocess     = true;
                     break;
                 }
                 continue;
@@ -487,18 +476,18 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
             $replace = array($token);
             for ($j = 1; $j < $c; ++$j) {
                 // ...as well as from the insertions
-                $new_token = new HTMLPurifier_Token_End($skipped_tags[$j]->name);
+                $new_token        = new HTMLPurifier_Token_End($skipped_tags[$j]->name);
                 $new_token->start = $skipped_tags[$j];
                 array_unshift($replace, $new_token);
                 if (isset($definition->info[$new_token->name]) && $definition->info[$new_token->name]->formatting) {
                     // [TagClosedAuto]
-                    $element = clone $skipped_tags[$j];
-                    $element->carryover = true;
+                    $element                                         = clone $skipped_tags[$j];
+                    $element->carryover                              = true;
                     $element->armor['MakeWellFormed_TagClosedError'] = true;
-                    $replace[] = $element;
+                    $replace[]                                       = $element;
                 }
             }
-            $token = $this->processToken($replace);
+            $token     = $this->processToken($replace);
             $reprocess = true;
             continue;
         }
@@ -508,6 +497,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
         $context->destroy('InputZipper');
 
         unset($this->injectors, $this->stack, $this->tokens);
+
         return $zipper->toArray($token);
     }
 
@@ -527,9 +517,9 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
      * If $token is an integer, that number of tokens (with the first token
      * being the current one) will be deleted.
      *
-     * @param HTMLPurifier_Token|array|int|bool $token Token substitution value
-     * @param HTMLPurifier_Injector|int $injector Injector that performed the substitution; default is if
-     *        this is not an injector related operation.
+     * @param  HTMLPurifier_Token|array|int|bool $token    Token substitution value
+     * @param  HTMLPurifier_Injector|int         $injector Injector that performed the substitution; default is if
+     *                                                     this is not an injector related operation.
      * @throws HTMLPurifier_Exception
      */
     protected function processToken($token, $injector = -1)
@@ -564,13 +554,12 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
             // determine appropriate skips
             $oldskip = isset($old[0]) ? $old[0]->skip : array();
             foreach ($token as $object) {
-                $object->skip = $oldskip;
+                $object->skip            = $oldskip;
                 $object->skip[$injector] = true;
             }
         }
 
         return $r;
-
     }
 
     /**
@@ -598,3 +587,4 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
 }
 
 // vim: et sw=4 sts=4
+

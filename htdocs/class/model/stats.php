@@ -10,14 +10,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @subpackage      model
- * @since           2.3.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @subpackage          model
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: stats.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Object stats handler class.
@@ -26,23 +26,22 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
  *
  * {@link XoopsObjectAbstract}
  */
-
 class XoopsModelStats extends XoopsModelAbstract
 {
     /**
      * count objects matching a condition
      *
-     * @param object $criteria {@link CriteriaElement} to match
-     * @return int count of objects
+     * @param  CriteriaElement $criteria {@link CriteriaElement} to match
+     * @return int    count of objects
      */
-    function getCount($criteria = null)
+    public function getCount(CriteriaElement $criteria = null)
     {
-        $field = '';
+        $field   = '';
         $groupby = false;
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             if ($criteria->groupby != '') {
                 $groupby = true;
-                $field = $criteria->groupby . ", ";
+                $field   = $criteria->groupby . ", ";
             }
         }
         $sql = "SELECT {$field} COUNT(*) FROM `{$this->handler->table}`";
@@ -55,13 +54,15 @@ class XoopsModelStats extends XoopsModelAbstract
             return 0;
         }
         if ($groupby == false) {
-            list ($count) = $this->handler->db->fetchRow($result);
+            list($count) = $this->handler->db->fetchRow($result);
+
             return $count;
         } else {
             $ret = array();
-            while (list ($id, $count) = $this->handler->db->fetchRow($result)) {
+            while (list($id, $count) = $this->handler->db->fetchRow($result)) {
                 $ret[$id] = $count;
             }
+
             return $ret;
         }
     }
@@ -69,34 +70,32 @@ class XoopsModelStats extends XoopsModelAbstract
     /**
      * get counts matching a condition
      *
-     * @param object $criteria {@link CriteriaElement} to match
-     * @return array of conunts
+     * @param  CriteriaElement  $criteria {@link CriteriaElement} to match
+     * @return array  of conunts
      */
-    function getCounts($criteria = null)
+    public function getCounts(CriteriaElement $criteria = null)
     {
-        $ret = array();
-        $sql_where = '';
-        $limit = null;
-        $start = null;
+        $ret         = array();
+        $sql_where   = '';
+        $limit       = null;
+        $start       = null;
         $groupby_key = $this->handler->keyName;
         if (isset($criteria) && is_subclass_of($criteria, "criteriaelement")) {
             $sql_where = $criteria->renderWhere();
-            $limit = $criteria->getLimit();
-            $start = $criteria->getStart();
+            $limit     = $criteria->getLimit();
+            $start     = $criteria->getStart();
             if ($groupby = $criteria->groupby) {
                 $groupby_key = $groupby;
             }
         }
-        $sql = "SELECT {$groupby_key}, COUNT(*) AS count"
-             . " FROM `{$this->handler->table}`"
-             . " {$sql_where}"
-             . " GROUP BY {$groupby_key}";
+        $sql = "SELECT {$groupby_key}, COUNT(*) AS count" . " FROM `{$this->handler->table}`" . " {$sql_where}" . " GROUP BY {$groupby_key}";
         if (!$result = $this->handler->db->query($sql, $limit, $start)) {
             return $ret;
         }
-        while (list ($id, $count) = $this->handler->db->fetchRow($result)) {
+        while (list($id, $count) = $this->handler->db->fetchRow($result)) {
             $ret[$id] = $count;
         }
+
         return $ret;
     }
 }

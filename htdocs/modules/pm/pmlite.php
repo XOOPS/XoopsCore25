@@ -10,16 +10,16 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         pm
- * @since           2.3.0
- * @author          Jan Pedersen
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             pm
+ * @since               2.3.0
+ * @author              Jan Pedersen
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: pmlite.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 if (!defined('XOOPS_MAINFILE_INCLUDED')) {
-    include_once dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR . 'mainfile.php';
+    include_once dirname(dirname(__DIR__)) . '/mainfile.php';
 } else {
     chdir(XOOPS_ROOT_PATH . '/modules/pm/');
     xoops_loadLanguage('main', 'pm');
@@ -38,7 +38,7 @@ $sendmod   = XoopsRequest::getBool('sendmod', 0, 'POST'); // send from other mod
 $to_userid = XoopsRequest::getInt('to_userid', 0, 'GET');
 $msg_id    = XoopsRequest::getInt('msg_id', 0, 'GET');
 
-if (empty($_GET['refresh']) && $op != "submit") {
+if (empty($_GET['refresh']) && $op !== "submit") {
     $jump = "pmlite.php?refresh=" . time();
     if ($send == 1) {
         $jump .= "&send={$send}";
@@ -59,16 +59,16 @@ if (!is_object($GLOBALS['xoopsUser'])) {
 xoops_header();
 
 $myts =& MyTextSanitizer::getInstance();
-if ($op == "submit") {
-    $member_handler =& xoops_gethandler('member');
-    $count = $member_handler->getUserCount(new Criteria('uid', XoopsRequest::getInt('to_userid', 0, 'POST')));
+if ($op === "submit") {
+    $member_handler =& xoops_getHandler('member');
+    $count          = $member_handler->getUserCount(new Criteria('uid', XoopsRequest::getInt('to_userid', 0, 'POST')));
     if ($count != 1) {
-        echo "<br /><br /><div><h4>"._PM_USERNOEXIST."<br />";
-        echo _PM_PLZTRYAGAIN."</h4><br />";
-        echo "[ <a href='javascript:history.go(-1)'>"._PM_GOBACK."</a> ]</div>";
+        echo "<br /><br /><div><h4>" . _PM_USERNOEXIST . "<br />";
+        echo _PM_PLZTRYAGAIN . "</h4><br />";
+        echo "[ <a href='javascript:history.go(-1)'>" . _PM_GOBACK . "</a> ]</div>";
     } elseif ($GLOBALS['xoopsSecurity']->check()) {
         $pm_handler =& xoops_getModuleHandler('message', 'pm');
-        $pm =& $pm_handler->create();
+        $pm         =& $pm_handler->create();
         $pm->setVar("msg_time", time());
         $msg_image = XoopsRequest::getCmd('icon', null, 'POST');
         if (in_array($msg_image, $subject_icons)) {
@@ -84,21 +84,20 @@ if ($op == "submit") {
         }
         if (!$pm_handler->insert($pm)) {
             echo $pm->getHtmlErrors();
-            echo "<br /><a href='javascript:history.go(-1)'>"._PM_GOBACK."</a>";
+            echo "<br /><a href='javascript:history.go(-1)'>" . _PM_GOBACK . "</a>";
         } else {
             // @todo: Send notification email if user has selected this in the profile
 
-            echo "<br /><br /><div style='text-align:center;'><h4>" . _PM_MESSAGEPOSTED . "</h4><br /><a href=\"javascript:window.opener.location='".XOOPS_URL."/viewpmsg.php';window.close();\">"._PM_CLICKHERE."</a><br /><br /><a href=\"javascript:window.close();\">"._PM_ORCLOSEWINDOW."</a></div>";
+            echo "<br /><br /><div style='text-align:center;'><h4>" . _PM_MESSAGEPOSTED . "</h4><br /><a href=\"javascript:window.opener.location='" . XOOPS_URL . "/viewpmsg.php';window.close();\">" . _PM_CLICKHERE . "</a><br /><br /><a href=\"javascript:window.close();\">" . _PM_ORCLOSEWINDOW . "</a></div>";
         }
     } else {
         echo implode('<br />', $GLOBALS['xoopsSecurity']->getErrors());
-        echo "<br /><a href=\"javascript:window.close();\">"._PM_ORCLOSEWINDOW."</a>";
+        echo "<br /><a href=\"javascript:window.close();\">" . _PM_ORCLOSEWINDOW . "</a>";
     }
-
 } elseif ($reply == 1 || $send == 1 || $send2 == 1 || $sendmod == 1) {
     if ($reply == 1) {
         $pm_handler =& xoops_getModuleHandler('message', 'pm');
-        $pm =& $pm_handler->get($msg_id);
+        $pm         =& $pm_handler->get($msg_id);
         if ($pm->getVar("to_userid") == $GLOBALS['xoopsUser']->getVar('uid')) {
             $pm_uname = XoopsUser::getUnameFromId($pm->getVar("from_userid"));
             $message  = "[quote]\n";
@@ -140,7 +139,7 @@ if ($op == "submit") {
     }
     $pmform->addElement(new XoopsFormText('', 'subject', 30, 100, $subject), true);
 
-    $msg_image='';
+    $msg_image   = '';
     $icons_radio = new XoopsFormRadio(_MESSAGEICON, 'msg_image', $msg_image);
     //$subject_icons = XoopsLists::getSubjectsList();
     $xoopsTpl->assign('radio_icons', $subject_icons);

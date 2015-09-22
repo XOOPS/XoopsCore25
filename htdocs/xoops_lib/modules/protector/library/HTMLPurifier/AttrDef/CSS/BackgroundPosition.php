@@ -43,7 +43,6 @@
  */
 class HTMLPurifier_AttrDef_CSS_BackgroundPosition extends HTMLPurifier_AttrDef
 {
-
     /**
      * @type HTMLPurifier_AttrDef_CSS_Length
      */
@@ -56,37 +55,36 @@ class HTMLPurifier_AttrDef_CSS_BackgroundPosition extends HTMLPurifier_AttrDef
 
     public function __construct()
     {
-        $this->length = new HTMLPurifier_AttrDef_CSS_Length();
+        $this->length     = new HTMLPurifier_AttrDef_CSS_Length();
         $this->percentage = new HTMLPurifier_AttrDef_CSS_Percentage();
     }
 
     /**
-     * @param string $string
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
+     * @param  string               $string
+     * @param  HTMLPurifier_Config  $config
+     * @param  HTMLPurifier_Context $context
      * @return bool|string
      */
     public function validate($string, $config, $context)
     {
         $string = $this->parseCDATA($string);
-        $bits = explode(' ', $string);
+        $bits   = explode(' ', $string);
 
-        $keywords = array();
-        $keywords['h'] = false; // left, right
-        $keywords['v'] = false; // top, bottom
+        $keywords       = array();
+        $keywords['h']  = false; // left, right
+        $keywords['v']  = false; // top, bottom
         $keywords['ch'] = false; // center (first word)
         $keywords['cv'] = false; // center (second word)
-        $measures = array();
+        $measures       = array();
 
         $i = 0;
 
         $lookup = array(
-            'top' => 'v',
+            'top'    => 'v',
             'bottom' => 'v',
-            'left' => 'h',
-            'right' => 'h',
-            'center' => 'c'
-        );
+            'left'   => 'h',
+            'right'  => 'h',
+            'center' => 'c');
 
         foreach ($bits as $bit) {
             if ($bit === '') {
@@ -133,7 +131,7 @@ class HTMLPurifier_AttrDef_CSS_BackgroundPosition extends HTMLPurifier_AttrDef
         if ($keywords['h']) {
             $ret[] = $keywords['h'];
         } elseif ($keywords['ch']) {
-            $ret[] = $keywords['ch'];
+            $ret[]          = $keywords['ch'];
             $keywords['cv'] = false; // prevent re-use: center = center center
         } elseif (count($measures)) {
             $ret[] = array_shift($measures);
@@ -150,8 +148,10 @@ class HTMLPurifier_AttrDef_CSS_BackgroundPosition extends HTMLPurifier_AttrDef
         if (empty($ret)) {
             return false;
         }
+
         return implode(' ', $ret);
     }
 }
 
 // vim: et sw=4 sts=4
+

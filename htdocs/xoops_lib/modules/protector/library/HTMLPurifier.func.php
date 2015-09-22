@@ -8,9 +8,9 @@
 
 /**
  * Purify HTML.
- * @param string $html String HTML to purify
- * @param mixed $config Configuration to use, can be any value accepted by
- *        HTMLPurifier_Config::create()
+ * @param string $html   String HTML to purify
+ * @param mixed  $config Configuration to use, can be any value accepted by
+ *                       HTMLPurifier_Config::create()
  * @return string
  */
 function HTMLPurifier($html, $config = null)
@@ -19,7 +19,9 @@ function HTMLPurifier($html, $config = null)
     if (!$purifier) {
         $purifier = new HTMLPurifier();
     }
+
     return $purifier->purify($html, $config);
 }
 
 // vim: et sw=4 sts=4
+

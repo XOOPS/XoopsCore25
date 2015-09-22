@@ -1,4 +1,14 @@
 <?php
+/*
+ You may not change or alter any portion of this comment or credits
+ of supporting developers from this source code or any supporting source code
+ which is considered copyrighted (c) material of the original comment or credit authors.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*/
+
 /**
  * Cache engine For XOOPS
  *
@@ -10,14 +20,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         class
- * @subpackage      cache
- * @since           2.3.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             class
+ * @subpackage          cache
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @version         $Id$
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Database Storage engine for cache
@@ -34,20 +44,21 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
  * Redistributions of files must retain the above copyright notice.
  *
  * @filesource
- * @copyright Copyright 2005-2008, Cake Software Foundation, Inc.
- * @link http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
- * @package cake
+ * @copyright  Copyright 2005-2008, Cake Software Foundation, Inc.
+ * @link       http://www.cakefoundation.org/projects/info/cakephp CakePHP(tm) Project
+ * @package    cake
  * @subpackage cake.cake.libs.cache
- * @since CakePHP(tm) v 1.2.0.4933
- * @version $Revision$
- * @modifiedby $LastChangedBy$
- * @lastmodified $Date$
- * @license http://www.opensource.org/licenses/mit-license.php The MIT License
+ * @since      CakePHP(tm) v 1.2.0.4933
+ * @version    $Revision: 13082 $
+ * @modifiedby $LastChangedBy: beckmi $
+ * @lastmodified $Date: 2015-06-06 17:59:41 -0400 (Sat, 06 Jun 2015) $
+ * @license    http://www.opensource.org/licenses/mit-license.php The MIT License
  */
+
 /**
  * Database Storage engine for cache
  *
- * @package cake
+ * @package    cake
  * @subpackage cake.cake.libs.cache
  */
 class XoopsCacheModel extends XoopsCacheEngine
@@ -60,7 +71,7 @@ class XoopsCacheModel extends XoopsCacheEngine
      * @var array
      * @access public
      */
-    var $settings = array();
+    public $settings = array();
 
     /**
      * Model instance.
@@ -68,7 +79,7 @@ class XoopsCacheModel extends XoopsCacheEngine
      * @var object
      * @access private
      */
-    var $model = null;
+    public $model;
 
     /**
      * Model instance.
@@ -76,7 +87,7 @@ class XoopsCacheModel extends XoopsCacheEngine
      * @var object
      * @access private
      */
-    var $fields = array();
+    public $fields = array();
 
     /**
      * Initialize the Cache Engine
@@ -88,15 +99,15 @@ class XoopsCacheModel extends XoopsCacheEngine
      * @return boolean True if the engine has been successfully initialized, false if not
      * @access   public
      */
-    function init($settings)
+    public function init($settings)
     {
-        $xoopsDB =& XoopsDatabaseFactory::getDatabaseConnection();
+        $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
 
         parent::init($settings);
-        $defaults = array('fields' => array('data' , 'expires'));
+        $defaults       = array('fields' => array('data', 'expires'));
         $this->settings = array_merge($defaults, $this->settings);
-        $this->fields = $this->settings['fields'];
-        $this->model = new XoopsCacheModelHandler($xoopsDB);
+        $this->fields   = $this->settings['fields'];
+        $this->model    = new XoopsCacheModelHandler($xoopsDB);
 
         return true;
     }
@@ -106,7 +117,7 @@ class XoopsCacheModel extends XoopsCacheEngine
      *
      * @access public
      */
-    function gc()
+    public function gc()
     {
         return $this->model->deleteAll(new Criteria($this->fields[1], time, '<= '));
     }
@@ -120,16 +131,16 @@ class XoopsCacheModel extends XoopsCacheEngine
      * @return boolean True if the data was successfully cached, false on failure
      * @access public
      */
-    function write($key, $data, $duration)
+    public function write($key, $data, $duration)
     {
         // if (isset($this->settings['serialize'])) {
         $data = serialize($data);
         // }
-        if (! $data) {
+        if (!$data) {
             return false;
         }
         $cache_obj = $this->model->create();
-        $cache_obj->setVar($this->model::KEYNAME, $key);
+        $cache_obj->setVar($this->model->keyname, $key);
         $cache_obj->setVar($this->fields[0], $data);
         $cache_obj->setVar($this->fields[1], time() + $duration);
 
@@ -143,9 +154,9 @@ class XoopsCacheModel extends XoopsCacheEngine
      * @return mixed  The cached data, or false if the data doesn't exist, has expired, or if there was an error fetching it
      * @access public
      */
-    function read($key)
+    public function read($key)
     {
-        $criteria = new CriteriaCompo(new Criteria($this->model::KEYNAME, $key));
+        $criteria = new CriteriaCompo(new Criteria($this->model->keyname, $key));
         $criteria->add(new Criteria($this->fields[1], time(), ">"));
         $criteria->setLimit(1);
         $data = $this->model->getAll($criteria);
@@ -159,11 +170,11 @@ class XoopsCacheModel extends XoopsCacheEngine
     /**
      * Delete a key from the cache
      *
-     * @param  string  $key Identifier for the data
+     * @param  string $key Identifier for the data
      * @return boolean True if the value was successfully deleted, false if it didn't exist or couldn't be removed
      * @access public
      */
-    function delete($key)
+    public function delete($key)
     {
         return $this->model->delete($key);
     }
@@ -174,7 +185,7 @@ class XoopsCacheModel extends XoopsCacheEngine
      * @return boolean True if the cache was successfully cleared, false otherwise
      * @access public
      */
-    function clear()
+    public function clear()
     {
         return $this->model->deleteAll();
     }
@@ -184,22 +195,22 @@ class XoopsCacheModel extends XoopsCacheEngine
  * XoopsCacheModelObject
  *
  * @package
- * @author John
+ * @author              John
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @version $Id$
- * @access public
+ * @version             $Id: model.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @access              public
  */
 class XoopsCacheModelObject extends XoopsObject
 {
-    function XoopsCacheModelObject()
+    public function XoopsCacheModelObject()
     {
         $this->__construct();
     }
 
     /**
-     *
+     * Constructor
      */
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         $this->initVar('key', XOBJ_DTYPE_TXTBOX);
@@ -212,14 +223,14 @@ class XoopsCacheModelObject extends XoopsObject
  * XoopsCacheModelHandler
  *
  * @package
- * @author John
+ * @author              John
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @version $Id$
- * @access public
+ * @version             $Id: model.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @access              public
  */
 class XoopsCacheModelHandler extends XoopsPersistableObjectHandler
 {
-    const TABLE = 'cache_model';
+    const TABLE     = 'cache_model';
     const CLASSNAME = 'XoopsCacheModelObject';
-    const KEYNAME = 'key';
+    const KEYNAME   = 'key';
 }

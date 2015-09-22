@@ -6,7 +6,6 @@
  */
 class HTMLPurifier_ConfigSchema_Builder_Xml extends XMLWriter
 {
-
     /**
      * @type HTMLPurifier_ConfigSchema_Interchange
      */
@@ -25,7 +24,7 @@ class HTMLPurifier_ConfigSchema_Builder_Xml extends XMLWriter
         $this->startElement('div');
 
         $purifier = HTMLPurifier::getInstance();
-        $html = $purifier->purify($html);
+        $html     = $purifier->purify($html);
         $this->writeAttribute('xmlns', 'http://www.w3.org/1999/xhtml');
         $this->writeRaw($html);
 
@@ -33,7 +32,7 @@ class HTMLPurifier_ConfigSchema_Builder_Xml extends XMLWriter
     }
 
     /**
-     * @param mixed $var
+     * @param  mixed $var
      * @return string
      */
     protected function export($var)
@@ -41,6 +40,7 @@ class HTMLPurifier_ConfigSchema_Builder_Xml extends XMLWriter
         if ($var === array()) {
             return 'array()';
         }
+
         return var_export($var, true);
     }
 
@@ -142,3 +142,4 @@ class HTMLPurifier_ConfigSchema_Builder_Xml extends XMLWriter
 }
 
 // vim: et sw=4 sts=4
+

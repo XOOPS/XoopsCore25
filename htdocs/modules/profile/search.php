@@ -10,20 +10,20 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         profile
- * @since           2.3.0
- * @author          Jan Pedersen
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             profile
+ * @since               2.3.0
+ * @author              Jan Pedersen
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: search.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
-include __DIR__ . DIRECTORY_SEPARATOR . 'header.php';
+include __DIR__ . '/header.php';
 $myts =& MyTextSanitizer::getInstance();
 
-$limit_default = 20;
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : "search";
-$groups = $GLOBALS['xoopsUser'] ? $GLOBALS['xoopsUser']->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+$limit_default    = 20;
+$op               = isset($_REQUEST['op']) ? $_REQUEST['op'] : "search";
+$groups           = $GLOBALS['xoopsUser'] ? $GLOBALS['xoopsUser']->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 $searchable_types = array(
     'textbox',
     'select',
@@ -34,21 +34,21 @@ $searchable_types = array(
     'timezone',
     'language');
 
-switch ($op ) {
+switch ($op) {
     default:
     case "search":
-        $xoopsOption['cache_group'] = implode('', $groups);
+        $xoopsOption['cache_group']   = implode('', $groups);
         $xoopsOption['template_main'] = "profile_search.tpl";
         include $GLOBALS['xoops']->path('header.php');
         $xoBreadcrumbs[] = array('title' => _SEARCH);
-        $sortby_arr = array();
+        $sortby_arr      = array();
 
         // Dynamic fields
-        $profile_handler =& xoops_getmodulehandler('profile');
+        $profile_handler =& xoops_getModuleHandler('profile');
         // Get fields
         $fields = $profile_handler->loadFields();
         // Get ids of fields that can be searched
-        $gperm_handler =& xoops_gethandler('groupperm');
+        $gperm_handler     =& xoops_getHandler('groupperm');
         $searchable_fields = $gperm_handler->getItemIds('profile_search', $groups, $GLOBALS['xoopsModule']->getVar('mid'));
 
         include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
@@ -56,7 +56,7 @@ switch ($op ) {
 
         $name_tray = new XoopsFormElementTray(_US_NICKNAME);
         $name_tray->addElement(new XoopsFormSelectMatchOption('', 'uname_match'));
-        $name_tray->addElement(new XoopsFormText('', 'uname', 35, 255) );
+        $name_tray->addElement(new XoopsFormText('', 'uname', 35, 255));
         $searchform->addElement($name_tray);
 
         $email_tray = new XoopsFormElementTray(_US_EMAIL);
@@ -79,11 +79,11 @@ switch ($op ) {
             switch ($fields[$i]->getVar('field_type')) {
                 case "textbox":
                     if ($fields[$i]->getVar('field_valuetype') == XOBJ_DTYPE_INT) {
-                        $searchform->addElement(new XoopsFormText(sprintf(_PROFILE_MA_LARGERTHAN, $fields[$i]->getVar('field_title') ), $fields[$i]->getVar('field_name')."_larger", 35, 35));
-                        $searchform->addElement(new XoopsFormText(sprintf(_PROFILE_MA_SMALLERTHAN, $fields[$i]->getVar('field_title') ), $fields[$i]->getVar('field_name')."_smaller", 35, 35));
+                        $searchform->addElement(new XoopsFormText(sprintf(_PROFILE_MA_LARGERTHAN, $fields[$i]->getVar('field_title')), $fields[$i]->getVar('field_name') . "_larger", 35, 35));
+                        $searchform->addElement(new XoopsFormText(sprintf(_PROFILE_MA_SMALLERTHAN, $fields[$i]->getVar('field_title')), $fields[$i]->getVar('field_name') . "_smaller", 35, 35));
                     } else {
                         $tray = new XoopsFormElementTray($fields[$i]->getVar('field_title'));
-                        $tray->addElement(new XoopsFormSelectMatchOption('', $fields[$i]->getVar('field_name')."_match"));
+                        $tray->addElement(new XoopsFormSelectMatchOption('', $fields[$i]->getVar('field_name') . "_match"));
                         $tray->addElement(new XoopsFormText('', $fields[$i]->getVar('field_name'), 35, $fields[$i]->getVar('field_maxlength')));
                         $searchform->addElement($tray);
                         unset($tray);
@@ -93,7 +93,7 @@ switch ($op ) {
                 case "radio":
                 case "select":
                     $options = $fields[$i]->getVar('field_options');
-                    $size = MIN( count($options), 10 );
+                    $size    = min(count($options), 10);
                     $element = new XoopsFormSelect($fields[$i]->getVar('field_title'), $fields[$i]->getVar('field_name'), null, $size, true);
                     asort($options);
                     $element->addOptionArray($options);
@@ -111,8 +111,8 @@ switch ($op ) {
 
                 case "date":
                 case "datetime":
-                    $searchform->addElement(new XoopsFormTextDateSelect(sprintf(_PROFILE_MA_LATERTHAN, $fields[$i]->getVar('field_title') ), $fields[$i]->getVar('field_name')."_larger", 15, 0));
-                    $searchform->addElement(new XoopsFormTextDateSelect(sprintf(_PROFILE_MA_EARLIERTHAN, $fields[$i]->getVar('field_title') ), $fields[$i]->getVar('field_name')."_smaller", 15, time()));
+                    $searchform->addElement(new XoopsFormTextDateSelect(sprintf(_PROFILE_MA_LATERTHAN, $fields[$i]->getVar('field_title')), $fields[$i]->getVar('field_name') . "_larger", 15, 0));
+                    $searchform->addElement(new XoopsFormTextDateSelect(sprintf(_PROFILE_MA_EARLIERTHAN, $fields[$i]->getVar('field_title')), $fields[$i]->getVar('field_name') . "_smaller", 15, time()));
                     break;
 
                 case "timezone":
@@ -131,7 +131,7 @@ switch ($op ) {
             }
         }
         asort($sortby_arr);
-        $sortby_arr = array_merge(array("" => _NONE, "uname" =>_US_NICKNAME, "email" => _US_EMAIL), $sortby_arr);
+        $sortby_arr    = array_merge(array("" => _NONE, "uname" => _US_NICKNAME, "email" => _US_EMAIL), $sortby_arr);
         $sortby_select = new XoopsFormSelect(_PROFILE_MA_SORTBY, 'sortby');
         $sortby_select->addOptionArray($sortby_arr);
         $searchform->addElement($sortby_select);
@@ -150,9 +150,9 @@ switch ($op ) {
         $GLOBALS['xoopsTpl']->assign('page_title', _PROFILE_MA_SEARCH);
 
         //added count user
-        $member_handler =& xoops_gethandler('member');
-        $acttotal = $member_handler->getUserCount(new Criteria('level', 0, '>'));
-        $total = sprintf(_PROFILE_MA_ACTUS, "<span style='color:#ff0000;'>{$acttotal}</span>");
+        $member_handler =& xoops_getHandler('member');
+        $acttotal       = $member_handler->getUserCount(new Criteria('level', 0, '>'));
+        $total          = sprintf(_PROFILE_MA_ACTUS, "<span style='color:#ff0000;'>{$acttotal}</span>");
         $GLOBALS['xoopsTpl']->assign('total_users', $total);
         break;
 
@@ -163,20 +163,20 @@ switch ($op ) {
         $xoBreadcrumbs[] = array('link' => XOOPS_URL . "/modules/" . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/search.php', 'title' => _SEARCH);
         $xoBreadcrumbs[] = array('title' => _PROFILE_MA_RESULTS);
 
-        $member_handler =& xoops_gethandler('member');
+        $member_handler =& xoops_getHandler('member');
         // Dynamic fields
-        $profile_handler =& xoops_getmodulehandler('profile');
+        $profile_handler =& xoops_getModuleHandler('profile');
         // Get fields
         $fields = $profile_handler->loadFields();
         // Get ids of fields that can be searched
-        $gperm_handler =& xoops_gethandler('groupperm');
-        $searchable_fields = $gperm_handler->getItemIds('profile_search', $groups, $GLOBALS['xoopsModule']->getVar('mid') );
-        $searchvars = array();
-        $search_url = array();
+        $gperm_handler     =& xoops_getHandler('groupperm');
+        $searchable_fields = $gperm_handler->getItemIds('profile_search', $groups, $GLOBALS['xoopsModule']->getVar('mid'));
+        $searchvars        = array();
+        $search_url        = array();
 
         $criteria = new CriteriaCompo(new Criteria('level', 0, '>'));
 
-        if (isset($_REQUEST['uname']) && $_REQUEST['uname'] != '') {
+        if (isset($_REQUEST['uname']) && $_REQUEST['uname'] !== '') {
             $string = $myts->addSlashes(trim($_REQUEST['uname']));
             switch ($_REQUEST['uname_match']) {
                 case XOOPS_MATCH_START:
@@ -196,7 +196,7 @@ switch ($op ) {
             $search_url[] = "uname_match=" . $_REQUEST['uname_match'];
             $searchvars[] = "uname";
         }
-        if (isset($_REQUEST['email']) && $_REQUEST['email'] != '') {
+        if (isset($_REQUEST['email']) && $_REQUEST['email'] !== '') {
             $string = $myts->addSlashes(trim($_REQUEST['email']));
             switch ($_REQUEST['email_match']) {
                 case XOOPS_MATCH_START:
@@ -215,11 +215,11 @@ switch ($op ) {
             $search_url[] = "email=" . $_REQUEST['email'];
             $search_url[] = "email_match=" . $_REQUEST['email_match'];
             $criteria->add(new Criteria('email', $string, "LIKE"));
-            $criteria->add(new Criteria('user_viewemail', 1) );
+            $criteria->add(new Criteria('user_viewemail', 1));
         }
 
         //$search_url = array();
-        foreach (array_keys($fields) as $i ) {
+        foreach (array_keys($fields) as $i) {
             //Radio and Select fields
             if (!in_array($fields[$i]->getVar('field_id'), $searchable_fields) || !in_array($fields[$i]->getVar('field_type'), $searchable_types)) {
                 continue;
@@ -234,7 +234,7 @@ switch ($op ) {
                 switch ($fields[$i]->getVar('field_valuetype')) {
                     case XOBJ_DTYPE_OTHER:
                     case XOBJ_DTYPE_INT:
-                        $value = array_map('intval', $_REQUEST[$fieldname]);
+                        $value        = array_map('intval', $_REQUEST[$fieldname]);
                         $searchvars[] = $fieldname;
                         $criteria->add(new Criteria($fieldname, "(" . implode(',', $value) . ")", "IN"));
                         break;
@@ -242,7 +242,7 @@ switch ($op ) {
                     case XOBJ_DTYPE_URL:
                     case XOBJ_DTYPE_TXTBOX:
                     case XOBJ_DTYPE_TXTAREA:
-                        $value = array_map(array($GLOBALS['xoopsDB'], "quoteString"), $_REQUEST[$fieldname]);
+                        $value        = array_map(array($GLOBALS['xoopsDB'], "quoteString"), $_REQUEST[$fieldname]);
                         $searchvars[] = $fieldname;
                         $criteria->add(new Criteria($fieldname, "(" . implode(',', $value) . ")", "IN"));
                         break;
@@ -258,8 +258,8 @@ switch ($op ) {
                         switch ($fields[$i]->getVar('field_type')) {
                             case "date":
                             case "datetime":
-                                $value = $_REQUEST[$fieldname."_larger"];
-                                if (!($value = strtotime($_REQUEST[$fieldname."_larger"]))) {
+                                $value = $_REQUEST[$fieldname . "_larger"];
+                                if (!($value = strtotime($_REQUEST[$fieldname . "_larger"]))) {
                                     $value = (int)($_REQUEST[$fieldname . "_larger"]);
                                 }
                                 if ($value > 0) {
@@ -280,15 +280,15 @@ switch ($op ) {
                                 break;
 
                             default:
-                                if (isset($_REQUEST[$fieldname . "_larger"]) && (int)($_REQUEST[$fieldname . "_larger"]) != 0) {
-                                    $value = (int)($_REQUEST[$fieldname . "_larger"]);
+                                if (isset($_REQUEST[$fieldname . "_larger"]) && (int)($_REQUEST[$fieldname . "_larger"]) !== 0) {
+                                    $value        = (int)($_REQUEST[$fieldname . "_larger"]);
                                     $search_url[] = $fieldname . "_larger=" . $value;
                                     $searchvars[] = $fieldname;
                                     $criteria->add(new Criteria($fieldname, $value, ">="));
                                 }
 
-                                if (isset($_REQUEST[$fieldname . "_smaller"]) && (int)($_REQUEST[$fieldname . "_smaller"]) != 0) {
-                                    $value = (int)($_REQUEST[$fieldname . "_smaller"]);
+                                if (isset($_REQUEST[$fieldname . "_smaller"]) && (int)($_REQUEST[$fieldname . "_smaller"]) !== 0) {
+                                    $value        = (int)($_REQUEST[$fieldname . "_smaller"]);
                                     $search_url[] = $fieldname . "_smaller=" . $value;
                                     $searchvars[] = $fieldname;
                                     $criteria->add(new Criteria($fieldname, $value, "<="));
@@ -298,7 +298,7 @@ switch ($op ) {
 
                         if (isset($_REQUEST[$fieldname]) && !isset($_REQUEST[$fieldname . "_smaller"]) && !isset($_REQUEST[$fieldname . "_larger"])) {
                             if (!is_array($_REQUEST[$fieldname])) {
-                                $value = (int)($_REQUEST[$fieldname]);
+                                $value        = (int)($_REQUEST[$fieldname]);
                                 $search_url[] = $fieldname . "=" . $value;
                                 $criteria->add(new Criteria($fieldname, $value, "="));
                             } else {
@@ -316,9 +316,9 @@ switch ($op ) {
                     case XOBJ_DTYPE_URL:
                     case XOBJ_DTYPE_TXTBOX:
                     case XOBJ_DTYPE_TXTAREA:
-                        if (isset($_REQUEST[$fieldname]) && $_REQUEST[$fieldname] != "") {
+                        if (isset($_REQUEST[$fieldname]) && $_REQUEST[$fieldname] !== "") {
                             $value = $myts->addSlashes(trim($_REQUEST[$fieldname]));
-                            switch ($_REQUEST[$fieldname . '_match'] ) {
+                            switch ($_REQUEST[$fieldname . '_match']) {
                                 case XOOPS_MATCH_START:
                                     $value .= "%";
                                     break;
@@ -333,7 +333,7 @@ switch ($op ) {
                             }
                             $search_url[] = $fieldname . "=" . $_REQUEST[$fieldname];
                             $search_url[] = $fieldname . "_match=" . $_REQUEST[$fieldname . '_match'];
-                            $operator = "LIKE";
+                            $operator     = "LIKE";
                             $criteria->add(new Criteria($fieldname, $value, $operator));
                             $searchvars[] = $fieldname;
                         }
@@ -342,17 +342,17 @@ switch ($op ) {
             }
         }
 
-//        if ($_REQUEST['sortby'] == "name") {
-//            $criteria->setSort("name");
-//        } else if ($_REQUEST['sortby'] == "email") {
-//            $criteria->setSort("email");
-//        } else if ($_REQUEST['sortby'] == "uname") {
-//            $criteria->setSort("uname");
-//        } else if (isset($fields[$_REQUEST['sortby']])) {
-//            $criteria->setSort($fields[$_REQUEST['sortby']]->getVar('field_name'));
-//        }
+        //        if ($_REQUEST['sortby'] == "name") {
+        //            $criteria->setSort("name");
+        //        } else if ($_REQUEST['sortby'] == "email") {
+        //            $criteria->setSort("email");
+        //        } else if ($_REQUEST['sortby'] == "uname") {
+        //            $criteria->setSort("uname");
+        //        } else if (isset($fields[$_REQUEST['sortby']])) {
+        //            $criteria->setSort($fields[$_REQUEST['sortby']]->getVar('field_name'));
+        //        }
 
-// change by zyspec:
+        // change by zyspec:
         $sortby = 'uname';
         if (!empty($_REQUEST['sortby'])) {
             switch ($_REQUEST['sortby']) {
@@ -374,7 +374,7 @@ switch ($op ) {
         $searchgroups = array();
         if ($GLOBALS['xoopsUser'] && $GLOBALS['xoopsUser']->isAdmin()) {
             $searchgroups = empty($_REQUEST['selgroups']) ? array() : array_map("intval", $_REQUEST['selgroups']);
-            foreach($searchgroups as $group) {
+            foreach ($searchgroups as $group) {
                 $search_url[] = 'selgroups[]=' . $group;
             }
         }
@@ -388,16 +388,16 @@ switch ($op ) {
         $start = isset($_REQUEST['start']) ? (int)($_REQUEST['start']) : 0;
         $criteria->setStart($start);
 
-        list($users, $profiles, $total_users) = $profile_handler->search($criteria, $searchvars,$searchgroups);
+        list($users, $profiles, $total_users) = $profile_handler->search($criteria, $searchvars, $searchgroups);
 
-        $total =sprintf(_PROFILE_MA_FOUNDUSER, "<span class='red'>{$total_users}</span>")." ";
+        $total = sprintf(_PROFILE_MA_FOUNDUSER, "<span class='red'>{$total_users}</span>") . " ";
         $GLOBALS['xoopsTpl']->assign('total_users', $total);
 
         //Sort information
         foreach (array_keys($users) as $k) {
-            $userarray = array();
+            $userarray             = array();
             $userarray["output"][] = "<a href='userinfo.php?uid=" . $users[$k]->getVar('uid') . "' title=''>" . $users[$k]->getVar('uname') . "</a>";
-            $userarray["output"][] = ( $users[$k]->getVar('user_viewemail') == 1 || (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->isAdmin()) ) ? $users[$k]->getVar('email') : "";
+            $userarray["output"][] = ($users[$k]->getVar('user_viewemail') == 1 || (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->isAdmin())) ? $users[$k]->getVar('email') : "";
 
             foreach (array_keys($fields) as $i) {
                 if (in_array($fields[$i]->getVar('field_id'), $searchable_fields) && in_array($fields[$i]->getVar('field_type'), $searchable_types) && in_array($fields[$i]->getVar('field_name'), $searchvars)) {
@@ -421,8 +421,8 @@ switch ($op ) {
         if ($total_users > $limit) {
             $search_url[] = "op=results";
             $search_url[] = "order=" . $order;
-//TODO remove it for final release
-//            $search_url[] = "sortby=" . htmlspecialchars($_REQUEST['sortby']);
+            //TODO remove it for final release
+            //            $search_url[] = "sortby=" . htmlspecialchars($_REQUEST['sortby']);
             $search_url[] = "sortby=" . htmlspecialchars($sortby); // change by zyspec
             $search_url[] = "limit=" . $limit;
             if (isset($search_url)) {
@@ -435,4 +435,4 @@ switch ($op ) {
         }
         break;
 }
-include __DIR__ . DIRECTORY_SEPARATOR . 'footer.php';
+include __DIR__ . '/footer.php';

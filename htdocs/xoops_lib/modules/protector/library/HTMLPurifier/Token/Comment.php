@@ -20,19 +20,21 @@ class HTMLPurifier_Token_Comment extends HTMLPurifier_Token
      * Transparent constructor.
      *
      * @param string $data String comment data.
-     * @param int $line
-     * @param int $col
+     * @param int    $line
+     * @param int    $col
      */
     public function __construct($data, $line = null, $col = null)
     {
         $this->data = $data;
         $this->line = $line;
-        $this->col = $col;
+        $this->col  = $col;
     }
 
-    public function toNode() {
+    public function toNode()
+    {
         return new HTMLPurifier_Node_Comment($this->data, $this->line, $this->col);
     }
 }
 
 // vim: et sw=4 sts=4
+

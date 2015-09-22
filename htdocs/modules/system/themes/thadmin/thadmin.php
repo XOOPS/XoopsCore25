@@ -15,35 +15,35 @@ xoops_load("gui", "system");
  * Xoops Cpanel ThAdmin GUI class
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
- * @package     system
- * @usbpackage  GUI
- * @since       2.3.0
- * @author      Taiwen Jiang <phppp@users.sourceforge.net>
- * @version     $Id$
+ * @license             http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @package             system
+ * @usbpackage          GUI
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: thadmin.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-
-class XoopsGuiThadmin extends /* implements */ XoopsSystemGui
+class XoopsGuiThadmin extends /* implements */
+    XoopsSystemGui
 {
     /**
      * Reference to template object
      */
-    var $template;
+    public $template;
 
     /**
      * Holding navigation
      */
-    var $navigation;
+    public $navigation;
 
     /**
      *
      */
-    function __construct()
+    public function __construct()
     {
         include_once XOOPS_ROOT_PATH . "/modules/thadmin/include/cp_functions.php";
     }
 
-    function XoopsGuiThadmin()
+    public function XoopsGuiThadmin()
     {
         $this->__construct();
     }
@@ -51,9 +51,9 @@ class XoopsGuiThadmin extends /* implements */ XoopsSystemGui
     /**
      * @return bool
      */
-    function validate()
+    public function validate()
     {
-        $module_handler =& xoops_gethandler("module");
+        $module_handler =& xoops_getHandler("module");
         if ($admin_module = $module_handler->getByDirname("thadmin")) {
             if ($admin_module->getVar("isactive")) {
                 return true;
@@ -63,12 +63,12 @@ class XoopsGuiThadmin extends /* implements */ XoopsSystemGui
         return false;
     }
 
-    function header()
+    public function header()
     {
         xoops_thadmin_cp_header();
     }
 
-    function footer()
+    public function footer()
     {
         xoops_thadmin_cp_footer();
     }

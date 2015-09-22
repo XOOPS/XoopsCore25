@@ -10,15 +10,15 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @subpackage      form
- * @since           2.0.0
- * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @subpackage          form
+ * @since               2.0.0
+ * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @version             $Id: formlabel.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * A text label
@@ -31,7 +31,7 @@ class XoopsFormLabel extends XoopsFormElement
      * @var string
      * @access private
      */
-    var $_value;
+    public $_value;
 
     /**
      * Constructor
@@ -40,7 +40,7 @@ class XoopsFormLabel extends XoopsFormElement
      * @param string $value   Text
      * @param string $name
      */
-    function XoopsFormLabel($caption = '', $value = '', $name = '')
+    public function __construct($caption = '', $value = '', $name = '')
     {
         $this->setCaption($caption);
         $this->setName($name);
@@ -48,12 +48,21 @@ class XoopsFormLabel extends XoopsFormElement
     }
 
     /**
+     * @param string $caption
+     * @param string $value
+     * @param string $name
+     */
+    public function XoopsFormLabel($caption = '', $value = '', $name = '')
+    {
+        $this->__construct($caption, $value, $name);
+    }
+    /**
      * Get the "value" attribute
      *
-     * @param  bool   $encode To sanitizer the text?
+     * @param  bool $encode To sanitizer the text?
      * @return string
      */
-    function getValue($encode = false)
+    public function getValue($encode = false)
     {
         return $encode ? htmlspecialchars($this->_value, ENT_QUOTES) : $this->_value;
     }
@@ -63,7 +72,7 @@ class XoopsFormLabel extends XoopsFormElement
      *
      * @return string
      */
-    function render()
+    public function render()
     {
         return $this->getValue();
     }

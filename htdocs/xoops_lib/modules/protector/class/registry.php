@@ -3,26 +3,34 @@
 //  URL: http://www.xuups.com
 //  E-Mail: lusopoemas@gmail.com
 
-defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
+defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 /**
  * Class ProtectorRegistry
  */
 class ProtectorRegistry
 {
-    var $_entries;
-    var $_locks;
+    public $_entries;
+    public $_locks;
 
-    function ProtectorRegistry()
+    /**
+     * ProtectorRegistry constructor.
+     */
+    public function __construct()
     {
         $this->_entries = array();
-        $this->_locks = array();
+        $this->_locks   = array();
+    }
+
+    public function ProtectorRegistry()
+    {
+        $this->__construct();
     }
 
     /**
      * @return ProtectorRegistry
      */
-    static function &getInstance()
+    public static function &getInstance()
     {
         static $instance = false;
         if (!$instance) {
@@ -38,7 +46,7 @@ class ProtectorRegistry
      *
      * @return bool
      */
-    function setEntry($key, $item)
+    public function setEntry($key, $item)
     {
         if ($this->isLocked($key) == true) {
             trigger_error('Unable to set entry `' . $key . '`. Entry is locked.', E_USER_WARNING);
@@ -54,7 +62,7 @@ class ProtectorRegistry
     /**
      * @param $key
      */
-    function unsetEntry($key)
+    public function unsetEntry($key)
     {
         unset($this->_entries[$key]);
     }
@@ -64,7 +72,7 @@ class ProtectorRegistry
      *
      * @return null
      */
-    function getEntry($key)
+    public function getEntry($key)
     {
         if (isset($this->_entries[$key]) == false) {
             return null;
@@ -78,7 +86,7 @@ class ProtectorRegistry
      *
      * @return bool
      */
-    function isEntry($key)
+    public function isEntry($key)
     {
         return ($this->getEntry($key) !== null);
     }
@@ -88,7 +96,7 @@ class ProtectorRegistry
      *
      * @return bool
      */
-    function lockEntry($key)
+    public function lockEntry($key)
     {
         $this->_locks[$key] = true;
 
@@ -98,7 +106,7 @@ class ProtectorRegistry
     /**
      * @param $key
      */
-    function unlockEntry($key)
+    public function unlockEntry($key)
     {
         unset($this->_locks[$key]);
     }
@@ -108,14 +116,14 @@ class ProtectorRegistry
      *
      * @return bool
      */
-    function isLocked($key)
+    public function isLocked($key)
     {
         return (isset($this->_locks[$key]) == true);
     }
 
-    function unsetAll()
+    public function unsetAll()
     {
         $this->_entries = array();
-        $this->_locks = array();
+        $this->_locks   = array();
     }
 }

@@ -5,11 +5,10 @@
  */
 class protector_crawler_overrun_message extends ProtectorFilterAbstract
 {
-    function execute()
+    public function execute()
     {
         // header( 'Location: http://google.com/' ) ; // redirect somewhere
-        echo 'You have accessed too many times while short term' ; // write any message as you like
-        exit ;
+        echo 'You have accessed too many times while short term'; // write any message as you like
+        exit;
     }
-
 }

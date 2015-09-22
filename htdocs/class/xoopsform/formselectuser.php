@@ -17,9 +17,9 @@
  * @subpackage      form
  * @since           2.0.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @version         $Id: formselectuser.php 13081 2015-06-06 21:50:17Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 xoops_load('XoopsFormElementTray');
 xoops_load('XoopsFormSelect');
@@ -32,17 +32,17 @@ class XoopsFormSelectUser extends XoopsFormElementTray
     /**
      * Constructor
      *
-     * @param string $caption      form element caption
-     * @param string $name         form element name
+     * @param string $caption          form element caption
+     * @param string $name             form element name
      * @param bool   $includeAnonymous Include user "anonymous"?
-     * @param mixed  $value        Pre-selected value (or array of them).
-     *                             For an item with massive members, such as "Registered Users", "$value"
-     *                             should be used to store selected temporary users only instead of all
-     *                             members of that item
-     * @param int    $size         Number or rows. "1" makes a drop-down-list.
-     * @param bool   $multiple     Allow multiple selections?
+     * @param mixed  $value            Pre-selected value (or array of them).
+     *                                 For an item with massive members, such as "Registered Users", "$value"
+     *                                 should be used to store selected temporary users only instead of all
+     *                                 members of that item
+     * @param int    $size             Number or rows. "1" makes a drop-down-list.
+     * @param bool   $multiple         Allow multiple selections?
      */
-    public function XoopsFormSelectUser($caption, $name, $includeAnonymous = false, $value = null, $size = 1, $multiple = false)
+    public function __construct($caption, $name, $includeAnonymous = false, $value = null, $size = 1, $multiple = false)
     {
         /**
          * @var mixed array|false - cache any result for this session.
@@ -72,8 +72,8 @@ class XoopsFormSelectUser extends XoopsFormElementTray
         if ($includeAnonymous) {
             $select_element->addOption(0, $GLOBALS['xoopsConfig']['anonymous']);
         }
-        $member_handler = xoops_gethandler('member');
-        $value = is_array($value) ? $value : (empty($value) ? array() : array($value));
+        $member_handler =& xoops_getHandler('member');
+        $value          = is_array($value) ? $value : (empty($value) ? array() : array($value));
         if (($multiple === false) && (count($value) > 1)) {
             // simple case - we have a set of uids in $values
             $criteria = new Criteria('uid', '(' . implode(',', $value) . ')', 'IN');
@@ -106,10 +106,10 @@ class XoopsFormSelectUser extends XoopsFormElementTray
         }
         $select_element->addOptionArray($users);
         if ($limit > count($users)) {
-            $this->XoopsFormElementTray($caption, "", $name);
+            parent::__construct($caption, "", $name);
             $this->addElement($select_element);
 
-            return;
+            return null;
         }
 
         xoops_loadLanguage('findusers');
@@ -143,12 +143,25 @@ class XoopsFormSelectUser extends XoopsFormElementTray
                 return true;
             }
             </script>";
-        $token = $GLOBALS['xoopsSecurity']->createToken();
+        $token       = $GLOBALS['xoopsSecurity']->createToken();
         $action_tray = new XoopsFormElementTray("", " | ");
         $action_tray->addElement(new XoopsFormLabel('', '<a href="#" onclick="var sel = xoopsGetElementById(\'' . $name . '\');for (var i = sel.options.length-1; i >= 0; i--) {if (!sel.options[i].selected) {sel.options[i] = null;}}; return false;">' . _MA_USER_REMOVE . "</a>"));
         $action_tray->addElement(new XoopsFormLabel('', '<a href="#" onclick="openWithSelfMain(\'' . XOOPS_URL . '/include/findusers.php?target=' . $name . '&amp;multiple=' . $multiple . '&amp;token=' . $token . '\', \'userselect\', 800, 600, null); return false;" >' . _MA_USER_MORE . "</a>" . $js_addusers));
-        $this->XoopsFormElementTray($caption, '<br /><br />', $name);
+        parent::__construct($caption, '<br /><br />', $name);
         $this->addElement($select_element);
         $this->addElement($action_tray);
+    }
+
+    /**
+     * @param            $caption
+     * @param            $name
+     * @param bool|false $includeAnonymous
+     * @param null       $value
+     * @param int        $size
+     * @param bool|false $multiple
+     */
+    public function XoopsFormSelectUser($caption, $name, $includeAnonymous = false, $value = null, $size = 1, $multiple = false)
+    {
+        $this->__construct($caption, $name, $includeAnonymous, $value, $size, $multiple);
     }
 }

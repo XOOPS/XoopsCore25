@@ -10,24 +10,24 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @since           2.0.0
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @since               2.0.0
+ * @version             $Id: registerform.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 include_once $GLOBALS['xoops']->path('class/xoopslists.php');
 include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
-$email_tray = new XoopsFormElementTray(_US_EMAIL, '<br />');
-$email_text = new XoopsFormText('', 'email', 25, 60, $myts->htmlSpecialChars($email));
+$email_tray   = new XoopsFormElementTray(_US_EMAIL, '<br />');
+$email_text   = new XoopsFormText('', 'email', 25, 60, $myts->htmlSpecialChars($email));
 $email_option = new XoopsFormCheckBox('', 'user_viewemail', $user_viewemail);
 $email_option->addOption(1, _US_ALLOWVIEWEMAIL);
 $email_tray->addElement($email_text, true);
 $email_tray->addElement($email_option);
 
-$reg_form = new XoopsThemeForm(_US_USERREG, 'userinfo', 'register.php', 'post', true);
+$reg_form   = new XoopsThemeForm(_US_USERREG, 'userinfo', 'register.php', 'post', true);
 $uname_size = $xoopsConfigUser['maxuname'] < 25 ? $xoopsConfigUser['maxuname'] : 25;
 $reg_form->addElement(new XoopsFormText(_US_NICKNAME, 'uname', $uname_size, $uname_size, $myts->htmlSpecialChars($uname)), true);
 $reg_form->addElement($email_tray);
@@ -45,8 +45,8 @@ if ($xoopsConfigUser['reg_dispdsclmr'] != 0 && $xoopsConfigUser['reg_disclaimer'
     $disc_tray->addElement($disc_text);
     $agree_chk = new XoopsFormCheckBox('', 'agree_disc', $agree_disc);
     $agree_chk->addOption(1, _US_IAGREE);
-    $eltname = $agree_chk->getName();
-    $eltmsg = str_replace('"', '\"', stripslashes(sprintf(_FORM_ENTER, _US_IAGREE)));
+    $eltname                           = $agree_chk->getName();
+    $eltmsg                            = str_replace('"', '\"', stripslashes(sprintf(_FORM_ENTER, _US_IAGREE)));
     $agree_chk->customValidationCode[] = "if ( myform.{$eltname}.checked == false ) { window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }";
     $disc_tray->addElement($agree_chk, true);
     $reg_form->addElement($disc_tray);

@@ -25,7 +25,7 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - added .tpl option for module Help files (mamba)
 - fix moved "count($tagsArray)" and "count($attrArray)" outside of FOR loop in xoopsfilterinput.php (mamba)
 - add option to set height of Themes block (mamba)
-
+- removed -khtml CSS properties (mamba)
 
 Security fixes
 - ID: 1295 Added X-Frame-Options header to prevent clickjacking in modern browsers, reported by Narendra Bhati. 

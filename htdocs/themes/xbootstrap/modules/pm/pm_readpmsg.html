@@ -1,26 +1,26 @@
 <h4><{$smarty.const._PM_PRIVATEMESSAGE}></h4>
 <div class="message-current-tab">
     <{if $op==out}>
-		<div class="alert alert-success alert-dismissable">
+        <div class="alert alert-success alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-	            <strong><a href="viewpmsg.php?op=out" title="<{$smarty.const._PM_OUTBOX}>"><{$smarty.const._PM_OUTBOX}></a></strong>
+                <strong><a href="viewpmsg.php?op=out" title="<{$smarty.const._PM_OUTBOX}>"><{$smarty.const._PM_OUTBOX}></a></strong>
         </div>
     <{elseif $op == "save"}>
-		<div class="alert alert-success alert-dismissable">
+        <div class="alert alert-success alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-		        <strong><a href="viewpmsg.php?op=save" title="<{$smarty.const._PM_SAVEBOX}>"><{$smarty.const._PM_SAVEBOX}></a></strong>
-		</div>
+                <strong><a href="viewpmsg.php?op=save" title="<{$smarty.const._PM_SAVEBOX}>"><{$smarty.const._PM_SAVEBOX}></a></strong>
+        </div>
     <{else}>
-		<div class="alert alert-success alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>	
-		        <a href="viewpmsg.php?op=in" title="<{$smarty.const._PM_INBOX}>"><{$smarty.const._PM_INBOX}></a>
-		</div>
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <a href="viewpmsg.php?op=in" title="<{$smarty.const._PM_INBOX}>"><{$smarty.const._PM_INBOX}></a>
+        </div>
     <{/if}>
 </div>
 
 <{if $message}>
 <blockquote>
-	<p><{$message.subject}></p>
+    <p><{$message.subject}></p>
 </blockquote>
 
 <div class="row message-body">
@@ -49,7 +49,7 @@
 <p><{$message.msg_text}></p>
 
 <{foreach item=element from=$pmform.elements}>
-	<{$element.body}>
+    <{$element.body}>
 <{/foreach}>
 
 <div class="aligncenter comments-nav">
@@ -59,16 +59,16 @@
     </a>
     <{else}>
     <button class="btn btn-primary btn-sm" disabled="disabled">
-	    <span class="glyphicon glyphicon-circle-arrow-left"></span>
+        <span class="glyphicon glyphicon-circle-arrow-left"></span>
     </button>
     <{/if}>
     <{if ( $next < $total_messages ) }>
     <a class="btn btn-primary btn-sm" href="readpmsg.php?start=<{$next}>&amp;total_messages=<{$total_messages}>&amp;op=<{$op}>" title="<{$smarty.const._PM_NEXT}>">
-		<span class="glyphicon glyphicon-circle-arrow-right"></span>
+        <span class="glyphicon glyphicon-circle-arrow-right"></span>
     </a>
     <{else}>
-	<button class="btn btn-primary btn-sm" disabled="disabled">
-	    <span class="glyphicon glyphicon-circle-arrow-right"></span>
+    <button class="btn btn-primary btn-sm" disabled="disabled">
+        <span class="glyphicon glyphicon-circle-arrow-right"></span>
     </button>
     <{/if}>
     </div><!-- .message-read -->

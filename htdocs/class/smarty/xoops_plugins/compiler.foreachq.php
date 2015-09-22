@@ -6,12 +6,12 @@
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
  * @copyright    (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @author		Skalpa Keo <skalpa@xoops.org>
- * @package		xos_opal
- * @subpackage	xos_opal_Smarty
- * @since       2.0.14
- * @version		$Id$
+ * @license          GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @author           Skalpa Keo <skalpa@xoops.org>
+ * @package          xos_opal
+ * @subpackage       xos_opal_Smarty
+ * @since            2.0.14
+ * @version          $Id: compiler.foreachq.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 /**
@@ -40,12 +40,15 @@
  *   {$elt}
  * {/foreach}
  * </code>
+ * @param $argStr
+ * @param $comp
+ * @return string
  */
-function smarty_compiler_foreachq( $argStr, &$comp )
+function smarty_compiler_foreachq($argStr, &$comp)
 {
     $comp->_push_tag('foreach');
 
-    $attrs = $comp->_parse_attrs( $argStr, false );
+    $attrs = $comp->_parse_attrs($argStr, false);
 
     $arg_list = array();
 
@@ -63,20 +66,20 @@ function smarty_compiler_foreachq( $argStr, &$comp )
     }
 
     if (isset($attrs['key'])) {
-        $key  = $comp->_dequote($attrs['key']);
+        $key = $comp->_dequote($attrs['key']);
         if (!preg_match('~^\w+$~', $key)) {
             return $comp->_syntax_error("foreachq: 'key' must to be a variable name (literal string)", E_USER_ERROR, __FILE__, __LINE__);
         }
         $key_part = "\$this->_tpl_vars['$key'] => ";
     } else {
-        $key = null;
+        $key      = null;
         $key_part = '';
     }
 
+    $name = null;
     if (isset($attrs['name'])) {
         $name = $attrs['name'];
     } else {
-        $name = null;
     }
 
     $output = '';
@@ -95,7 +98,7 @@ function smarty_compiler_foreachq( $argStr, &$comp )
         //$output .= "if (count(\$_from)):\n";
         //$output .= "    foreach (\$_from as $key_part\$this->_tpl_vars['$item']):\n";
     }
+
     //$output .= '';
     return $output;
-
 }

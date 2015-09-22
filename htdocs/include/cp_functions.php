@@ -10,10 +10,10 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @since           2.0.0
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @since               2.0.0
+ * @version             $Id: cp_functions.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 define('XOOPS_CPFUNC_LOADED', 1);
@@ -90,16 +90,15 @@ function myTextForm($url, $value)
  */
 function xoopsfwrite()
 {
-    if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         return false;
     } else {
-
     }
-    if (! $GLOBALS['xoopsSecurity']->checkReferer()) {
+    if (!$GLOBALS['xoopsSecurity']->checkReferer()) {
         return false;
     } else {
-
     }
+
     return true;
 }
 
@@ -119,30 +118,29 @@ function xoops_module_get_admin_menu()
      * - php code Optimized by DuGris
      ************************************************************/
 
-    $left = 105;
-    $top = 135;
-    $js = "";
-    $moveLayers = "";
-    $shutdown = "";
+    $left            = 105;
+    $top             = 135;
+    $js              = "";
+    $moveLayers      = "";
+    $shutdown        = "";
     $firstleveltable = "";
-    $menu_layers = "";
+    $menu_layers     = "";
 
-    $module_handler =& xoops_gethandler('module');
-    $criteria = new CriteriaCompo();
+    $module_handler =& xoops_getHandler('module');
+    $criteria       = new CriteriaCompo();
     $criteria->add(new Criteria('hasadmin', 1));
     $criteria->add(new Criteria('isactive', 1));
     $criteria->setSort('mid');
     $mods = $module_handler->getObjects($criteria);
 
     foreach ($mods as $mod) {
-
-        $mid = $mod->getVar('mid');
+        $mid         = $mod->getVar('mid');
         $module_name = $mod->getVar('name');
-        $module_url = "\".XOOPS_URL.\"/modules/" . $mod->getVar('dirname') . "/" . trim($mod->getInfo('adminindex'));
-        $module_img = "<img class='admin_layer_img' src='\".XOOPS_URL.\"/modules/" . $mod->getVar('dirname') . "/" . $mod->getInfo('image') . "' alt='' />";
+        $module_url  = "\".XOOPS_URL.\"/modules/" . $mod->getVar('dirname') . "/" . trim($mod->getInfo('adminindex'));
+        $module_img  = "<img class='admin_layer_img' src='\".XOOPS_URL.\"/modules/" . $mod->getVar('dirname') . "/" . $mod->getInfo('image') . "' alt='' />";
         $module_desc = "<strong>\"._VERSION.\":</strong> " . round($mod->getVar('version') / 100, 2) . "<br /><strong>\"._DESCRIPTION.\":</strong> " . $mod->getInfo('description');
 
-        $top = $top + 15;
+        $top += 15;
         $js .= "\nfunction popUpL" . $mid . "() {\n    shutdown();\n    popUp('L" . $mid . "',true);}";
         $moveLayers .= "\n    setleft('L" . $mid . "'," . $left . ");\n    settop('L" . $mid . "'," . $top . ");";
         $shutdown .= "\n    popUp('L" . $mid . "',false);";
@@ -153,15 +151,15 @@ function xoops_module_get_admin_menu()
 
         if ($mod->getVar('hasnotification') || ($mod->getInfo('config') && is_array($mod->getInfo('config'))) || ($mod->getInfo('comments') && is_array($mod->getInfo('comments')))) {
             $adminmenu[] = array(
-                'link' => '".XOOPS_URL."/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $mid ,
-                'title' => _PREFERENCES ,
+                'link'     => '".XOOPS_URL."/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $mid,
+                'title'    => _PREFERENCES,
                 'absolute' => true);
         }
         if (count($adminmenu) != 0) {
             $currenttarget = "";
             foreach ($adminmenu as $menuitem) {
-                $menu_link = trim($menuitem['link']);
-                $menu_title = trim($menuitem['title']);
+                $menu_link   = trim($menuitem['link']);
+                $menu_title  = trim($menuitem['title']);
                 $menu_target = isset($menuitem['target']) ? " target='" . trim($menuitem['target']) . "'" : '';
                 if (isset($menuitem['absolute']) && $menuitem['absolute']) {
                     $menu_link = (empty($menu_link)) ? "#" : $menu_link;
@@ -183,6 +181,7 @@ function xoops_module_get_admin_menu()
     $content .= $firstleveltable . "\n";
     $content .= "\$xoops_admin_menu_dv = \"" . $menu_layers . "\";\n";
     $content .= "\n?" . ">";
+
     return $content;
 }
 
@@ -201,10 +200,12 @@ function xoops_module_write_admin_menu($content)
     $filename = XOOPS_CACHE_PATH . '/adminmenu.php';
     if (!$file = fopen($filename, 'w')) {
         echo 'failed open file';
+
         return false;
     }
-    if (fwrite($file, $content) == - 1) {
+    if (fwrite($file, $content) == -1) {
         echo 'failed write file';
+
         return false;
     }
     fclose($file);
@@ -212,6 +213,7 @@ function xoops_module_write_admin_menu($content)
     // write index.html file in cache folder
     // file is delete after clear_cache (smarty)
     xoops_write_index_file(XOOPS_CACHE_PATH);
+
     return true;
 }
 
@@ -230,19 +232,22 @@ function xoops_write_index_file($path = '')
         return false;
     }
 
-    $path = substr($path, - 1) == '/' ? substr($path, 0, - 1) : $path;
+    $path     = substr($path, -1) === '/' ? substr($path, 0, -1) : $path;
     $filename = $path . '/index.html';
     if (file_exists($filename)) {
         return true;
     }
     if (!$file = fopen($filename, 'w')) {
         echo 'failed open file';
+
         return false;
     }
-    if (fwrite($file, '<script>history.go(-1);</script>') == - 1) {
+    if (fwrite($file, '<script>history.go(-1);</script>') == -1) {
         echo 'failed write file';
+
         return false;
     }
     fclose($file);
+
     return true;
 }

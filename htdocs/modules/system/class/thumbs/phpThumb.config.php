@@ -9,11 +9,11 @@
 //            THIS CONFIG FILE ONLY APPLIES TO phpThumb.php //
 //                                                         ///
 //////////////////////////////////////////////////////////////
-require dirname( dirname(__DIR__) ) . '/header.php';
+require dirname(dirname(__DIR__)) . '/header.php';
 ob_start();
-if (!file_exists(__DIR__.'/phpthumb.functions.php') || !include_once(__DIR__.'/phpthumb.functions.php')) {
+if (!file_exists(__DIR__ . '/phpthumb.functions.php') || !include_once(__DIR__ . '/phpthumb.functions.php')) {
     ob_end_flush();
-    die('failed to include_once(phpthumb.functions.php) - realpath="'.realpath(__DIR__.'/phpthumb.functions.php').'"');
+    die('failed to include_once(phpthumb.functions.php) - realpath="' . realpath(__DIR__ . '/phpthumb.functions.php') . '"');
 }
 ob_end_clean();
 
@@ -37,9 +37,9 @@ $PHPTHUMB_CONFIG['cache_directory'] = XOOPS_CACHE_PATH;                         
 //$PHPTHUMB_CONFIG['cache_directory'] = './cache/';                                           // set the cache directory relative to the source image - must start with '.' (will not work to cache URL- or database-sourced images, please use an absolute directory name)
 //$PHPTHUMB_CONFIG['cache_directory'] = null;                                                 // disable thumbnail caching (not recommended)
 //if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') {
-//	$PHPTHUMB_CONFIG['cache_directory'] = __DIR__.'/cache/'; // set the cache directory to an absolute directory for all source images
+//    $PHPTHUMB_CONFIG['cache_directory'] = __DIR__.'/cache/'; // set the cache directory to an absolute directory for all source images
 //} else {
-//	$PHPTHUMB_CONFIG['cache_directory'] = '/tmp/persistent/phpthumb/cache/';
+//    $PHPTHUMB_CONFIG['cache_directory'] = '/tmp/persistent/phpthumb/cache/';
 //}
 
 $PHPTHUMB_CONFIG['cache_disable_warning'] = false; // If [cache_directory] is non-existant or not writable, and [cache_disable_warning] is false, an error image will be generated warning to either set the cache directory or disable the warning (to avoid people not knowing about the cache)
@@ -58,7 +58,6 @@ $PHPTHUMB_CONFIG['cache_maxsize'] = 10 * 1024 * 1024; // delete least-recently-a
 //$PHPTHUMB_CONFIG['cache_maxfiles'] = null;          // never delete cached thumbnails based on number of cached files
 $PHPTHUMB_CONFIG['cache_maxfiles'] = 200;             // delete least-recently-accessed cached thumbnails when more than [200] cached files are present (value is maximum number of cached files to keep)
 
-
 // * Source image cache configuration
 $PHPTHUMB_CONFIG['cache_source_enabled']   = true;                               // if true, source images obtained via HTTP are cached to $PHPTHUMB_CONFIG['cache_source_directory']
 $PHPTHUMB_CONFIG['cache_source_directory'] = XOOPS_CACHE_PATH;  // set the cache directory for unprocessed source images
@@ -66,7 +65,6 @@ $PHPTHUMB_CONFIG['cache_source_directory'] = XOOPS_CACHE_PATH;  // set the cache
 // * cache source modification date configuration
 $PHPTHUMB_CONFIG['cache_source_filemtime_ignore_local']  = false; // if true, local source images will not be checked for modification date and cached image will be used if available, even if source image is changed or removed
 $PHPTHUMB_CONFIG['cache_source_filemtime_ignore_remote'] = true;  // if true, remote source images will not be checked for modification date and cached image will be used if available, even if source image is changed or removed. WARNING: cached performance MUCH slower if this is set to false.
-
 
 // * Simplified cache filename configuration
 // Instead of creating unique cache filenames for all parameter combinations, create "simple" cache files (eg: "pic_thumb.jpg")
@@ -77,12 +75,10 @@ $PHPTHUMB_CONFIG['cache_default_only_suffix'] = '';           // cached in norma
 //$PHPTHUMB_CONFIG['cache_default_only_suffix'] = '*_thumb';  // cache 'pic.jpg' becomes 'pic_thumb.jpg' (or 'pic_thumb.png' if PNG output is selected, etc)
 //$PHPTHUMB_CONFIG['cache_default_only_suffix'] = 'small-*';  // cache 'pic.jpg' becomes 'small-pic.jpg' (or 'small-pic.png' if PNG output is selected, etc)
 
-$PHPTHUMB_CONFIG['cache_prefix'] = 'phpThumb_cache_'.(isset($_SERVER['SERVER_NAME']) ? str_replace('www.', '', $_SERVER['SERVER_NAME']).'_' : ''); // keep cache file separate by domain
+$PHPTHUMB_CONFIG['cache_prefix'] = 'phpThumb_cache_' . (isset($_SERVER['SERVER_NAME']) ? str_replace('www.', '', $_SERVER['SERVER_NAME']) . '_' : ''); // keep cache file separate by domain
 //$PHPTHUMB_CONFIG['cache_prefix'] = 'phpThumb_cache';                                                                                             // allow phpThumb to share 1 set of cached files even if accessed under different servername/domains on same server
 
 $PHPTHUMB_CONFIG['cache_force_passthru'] = true;  // if true, cached image data will always be passed to browser; if false, HTTP redirect will be used instead
-
-
 
 // * Temp directory configuration
 // phpThumb() may need to create temp files. Usually the system temp dir is writable and can be used.
@@ -91,7 +87,6 @@ $PHPTHUMB_CONFIG['cache_force_passthru'] = true;  // if true, cached image data 
 //$PHPTHUMB_CONFIG['temp_directory'] = null;                               // attempt to auto-detect
 //$PHPTHUMB_CONFIG['temp_directory'] = '/tmp/persistent/phpthumb/cache/';  // set to absolute path
 $PHPTHUMB_CONFIG['temp_directory'] = $PHPTHUMB_CONFIG['cache_directory'];  // set to same as cache directory
-
 
 // NOTE: "max_source_pixels" only affects GD-resized thumbnails. If you have ImageMagick
 //       installed it will bypass most of these limits
@@ -117,7 +112,6 @@ if (phpthumb_functions::version_compare_replacement(phpversion(), '4.3.2', '>=')
     //$PHPTHUMB_CONFIG['max_source_pixels'] = 2795000; // 16MB memory limit
     //$PHPTHUMB_CONFIG['max_source_pixels'] = 3871488; // allow 2272x1704 images (4Mpx), no larger (about 24MB memory required)
 }
-
 
 // ImageMagick configuration
 $PHPTHUMB_CONFIG['prefer_imagemagick']        = true;  // If true, use ImageMagick to resize thumbnails if possible, since it is usually faster than GD functions; if false only use ImageMagick if PHP memory limit is too low.
@@ -149,10 +143,10 @@ $PHPTHUMB_CONFIG['error_silent_die_on_error']   = false;    // simply die with n
 $PHPTHUMB_CONFIG['error_die_on_source_failure'] = true;     // die with error message if source image cannot be processed by phpThumb() (usually because source image is corrupt in some way). If false the source image will be passed through unprocessed, if true (default) an error message will be displayed.
 
 // * Off-server Thumbnailing Configuration:
-$PHPTHUMB_CONFIG['nohotlink_enabled']           = false;                                    // If false will allow thumbnailing from any source domain
-$PHPTHUMB_CONFIG['nohotlink_valid_domains']     = array(@$_SERVER['HTTP_HOST']);            // This is the list of domains for which thumbnails are allowed to be created. Note: domain only, do not include port numbers. The default value of the current domain should be fine in most cases, but if neccesary you can add more domains in here, in the format "www.example.com"
-$PHPTHUMB_CONFIG['nohotlink_erase_image']       = true;                                     // if true thumbnail is covered up with $PHPTHUMB_CONFIG['nohotlink_fill_color'] before text is applied, if false text is written over top of thumbnail
-$PHPTHUMB_CONFIG['nohotlink_text_message']      = 'Off-server thumbnailing is not allowed'; // text of error message
+$PHPTHUMB_CONFIG['nohotlink_enabled']       = false;                                    // If false will allow thumbnailing from any source domain
+$PHPTHUMB_CONFIG['nohotlink_valid_domains'] = array(@$_SERVER['HTTP_HOST']);            // This is the list of domains for which thumbnails are allowed to be created. Note: domain only, do not include port numbers. The default value of the current domain should be fine in most cases, but if neccesary you can add more domains in here, in the format "www.example.com"
+$PHPTHUMB_CONFIG['nohotlink_erase_image']   = true;                                     // if true thumbnail is covered up with $PHPTHUMB_CONFIG['nohotlink_fill_color'] before text is applied, if false text is written over top of thumbnail
+$PHPTHUMB_CONFIG['nohotlink_text_message']  = 'Off-server thumbnailing is not allowed'; // text of error message
 
 // * Off-server Linking Configuration:
 $PHPTHUMB_CONFIG['nooffsitelink_enabled']       = false;                                       // If false will allow thumbnails to be linked to from any domain, if true only domains listed below in 'nooffsitelink_valid_domains' will be allowed.
@@ -160,17 +154,15 @@ $PHPTHUMB_CONFIG['nooffsitelink_valid_domains'] = array(@$_SERVER['HTTP_HOST']);
 $PHPTHUMB_CONFIG['nooffsitelink_require_refer'] = false;                                      // If false will allow standalone calls to phpThumb(). If true then only requests with a $_SERVER['HTTP_REFERER'] value in 'nooffsitelink_valid_domains' are allowed.
 $PHPTHUMB_CONFIG['nooffsitelink_erase_image']   = false;                                      // if true thumbnail is covered up with $PHPTHUMB_CONFIG['nohotlink_fill_color'] before text is applied, if false text is written over top of thumbnail
 $PHPTHUMB_CONFIG['nooffsitelink_watermark_src'] = '/demo/images/watermark.png';                // webroot-relative image to overlay on hotlinked images
-$PHPTHUMB_CONFIG['nooffsitelink_text_message']  = 'Image taken from '.@$_SERVER['HTTP_HOST']; // text of error message (used if [nooffsitelink_watermark_src] is not a valid image)
-
+$PHPTHUMB_CONFIG['nooffsitelink_text_message']  = 'Image taken from ' . @$_SERVER['HTTP_HOST']; // text of error message (used if [nooffsitelink_watermark_src] is not a valid image)
 
 // * Border & Background default colors
 $PHPTHUMB_CONFIG['border_hexcolor']     = '000000'; // Default border color - usual HTML-style hex color notation (overridden with 'bc' parameter)
 $PHPTHUMB_CONFIG['background_hexcolor'] = 'FFFFFF'; // Default background color when thumbnail aspect ratio does not match fixed-dimension box - usual HTML-style hex color notation (overridden with 'bg' parameter)
 
 // * Watermark configuration
-$PHPTHUMB_CONFIG['ttf_directory'] = __DIR__.'/fonts'; // Base directory for TTF font files
+$PHPTHUMB_CONFIG['ttf_directory'] = __DIR__ . '/fonts'; // Base directory for TTF font files
 //$PHPTHUMB_CONFIG['ttf_directory'] = 'c:/windows/fonts';
-
 
 // * MySQL configuration
 // You may want to pull data from a database rather than a physical file
@@ -206,8 +198,8 @@ $PHPTHUMB_CONFIG['disable_imagecopyresampled']      = false;  // if true, ImageC
 $PHPTHUMB_CONFIG['disable_onlycreateable_passthru'] = true;   // if true, any image that can be parsed by GetImageSize() can be passed through; if false, only images that can be converted to GD by ImageCreateFrom(JPEG|GIF|PNG) functions are allowed
 
 // * HTTP remote file opening settings
-$PHPTHUMB_CONFIG['http_fopen_timeout']              = 10;   // timeout (in seconds) for fopen / curl / fsockopen
-$PHPTHUMB_CONFIG['http_follow_redirect']            = true; // if true (default), follow "302 Found" redirects to new URL; if false, return error message
+$PHPTHUMB_CONFIG['http_fopen_timeout']   = 10;   // timeout (in seconds) for fopen / curl / fsockopen
+$PHPTHUMB_CONFIG['http_follow_redirect'] = true; // if true (default), follow "302 Found" redirects to new URL; if false, return error message
 
 // * Speed optimizations configuration
 $PHPTHUMB_CONFIG['use_exif_thumbnail_for_speed'] = true; // If true, and EXIF thumbnail is available, and is larger or equal to output image dimensions, use EXIF thumbnail rather than actual source image for generating thumbnail. Benefit is only speed, avoiding resizing large image.
@@ -239,7 +231,8 @@ function phpThumbURL($ParameterString)
 {
     global $PHPTHUMB_CONFIG;
 
-    return str_replace(@$PHPTHUMB_CONFIG['document_root'], '', __DIR__).DIRECTORY_SEPARATOR.'phpThumb.php?'.$ParameterString.'&hash='.md5($ParameterString.@$PHPTHUMB_CONFIG['high_security_password']);
+    return str_replace(@$PHPTHUMB_CONFIG['document_root'], '', __DIR__) . DIRECTORY_SEPARATOR . 'phpThumb.php?' . $ParameterString . '&hash=' . md5($ParameterString . @$PHPTHUMB_CONFIG['high_security_password']);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+

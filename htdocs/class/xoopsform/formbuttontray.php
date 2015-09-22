@@ -3,23 +3,23 @@
  * XOOPS Form Class Elements
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @subpackage      form
- * @since           2.4.0
- * @author          John Neill <catzwolf@xoops.org>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @subpackage          form
+ * @since               2.4.0
+ * @author              John Neill <catzwolf@xoops.org>
+ * @version             $Id: formbuttontray.php 13082 2015-06-06 21:59:41Z beckmi $
  *
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * XoopsFormButtonTray
  *
- * @author 		John Neill <catzwolf@xoops.org>
- * @package 	kernel
- * @subpackage 	form
- * @access 		public
+ * @author         John Neill <catzwolf@xoops.org>
+ * @package        kernel
+ * @subpackage     form
+ * @access         public
  */
 class XoopsFormButtonTray extends XoopsFormElement
 {
@@ -29,7 +29,7 @@ class XoopsFormButtonTray extends XoopsFormElement
      * @var string
      * @access private
      */
-    var $_value;
+    public $_value;
 
     /**
      * Type of the button. This could be either "button", "submit", or "reset"
@@ -37,10 +37,10 @@ class XoopsFormButtonTray extends XoopsFormElement
      * @var string
      * @access private
      */
-    var $_type;
+    public $_type;
 
     /**
-     * XoopsFormButtonTray::XoopsFormButtonTray()
+     * Constructor
      *
      * @param mixed  $name
      * @param string $value
@@ -48,25 +48,36 @@ class XoopsFormButtonTray extends XoopsFormElement
      * @param string $onclick
      * @param bool   $showDelete
      */
-    function XoopsFormButtonTray( $name, $value = '', $type = '', $onclick = '', $showDelete = false )
+    public function __construct($name, $value = '', $type = '', $onclick = '', $showDelete = false)
     {
-        $this->setName( $name );
-        $this->setValue( $value );
-        $this->_type = ( !empty( $type ) ) ? $type : 'submit';
+        $this->setName($name);
+        $this->setValue($value);
+        $this->_type       = (!empty($type)) ? $type : 'submit';
         $this->_showDelete = $showDelete;
         if ($onclick) {
-            $this->setExtra( $onclick );
+            $this->setExtra($onclick);
         } else {
-            $this->setExtra( '' );
+            $this->setExtra('');
         }
     }
 
+    /**
+     * @param            $name
+     * @param string     $value
+     * @param string     $type
+     * @param string     $onclick
+     * @param bool|false $showDelete
+     */
+    public function XoopsFormButtonTray($name, $value = '', $type = '', $onclick = '', $showDelete = false)
+    {
+        $this->__construct($name, $value, $type, $onclick, $showDelete);
+    }
     /**
      * XoopsFormButtonTray::getValue()
      *
      * @return string
      */
-    function getValue()
+    public function getValue()
     {
         return $this->_value;
     }
@@ -78,7 +89,7 @@ class XoopsFormButtonTray extends XoopsFormElement
      *
      * @return void
      */
-    function setValue( $value )
+    public function setValue($value)
     {
         $this->_value = $value;
     }
@@ -88,7 +99,7 @@ class XoopsFormButtonTray extends XoopsFormElement
      *
      * @return string
      */
-    function getType()
+    public function getType()
     {
         return $this->_type;
     }
@@ -98,7 +109,7 @@ class XoopsFormButtonTray extends XoopsFormElement
      *
      * @return string|void
      */
-    function render()
+    public function render()
     {
         // onclick="this.form.elements.op.value=\'delfile\';
         $ret = '';

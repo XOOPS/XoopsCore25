@@ -10,17 +10,17 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @since           2.0.0
- * @author          Kazumi Ono <webmaster@myweb.ne.jp>
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @author          DuGris aka L. Jen <http://www.dugris.info>
- * @author          Kris <kris@frxoops.org>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @since               2.0.0
+ * @author              Kazumi Ono <webmaster@myweb.ne.jp>
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @author              DuGris aka L. Jen <http://www.dugris.info>
+ * @author              Kris <kris@frxoops.org>
+ * @version             $Id: banners.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 $xoopsOption['pagetype'] = 'banners';
-include __DIR__ . DIRECTORY_SEPARATOR . 'mainfile.php';
+include __DIR__ . '/mainfile.php';
 
 /********************************************/
 /* Function to let your client login to see */
@@ -97,13 +97,13 @@ function clientlogin()
 /*********************************************/
 function bannerstats()
 {
-    global $xoopsDB, $xoopsConfig, $xoopsLogger, $myts ;
+    global $xoopsDB, $xoopsConfig, $xoopsLogger, $myts;
     if ($_SESSION['banner_login'] == "" || $_SESSION['banner_pass'] == "") {
         redirect_header("banners.php", 2, _BANNERS_NO_LOGIN_DATA);
         exit();
     }
     $result = $xoopsDB->query(sprintf("SELECT cid, name, passwd FROM %s WHERE login=%s", $xoopsDB->prefix("bannerclient"), $xoopsDB->quoteString($_SESSION['banner_login'])));
-    list ($cid, $name, $passwd) = $xoopsDB->fetchRow($result);
+    list($cid, $name, $passwd) = $xoopsDB->fetchRow($result);
     if ($_SESSION['banner_pass'] == $passwd) {
         include $GLOBALS['xoops']->path('header.php');
         $GLOBALS["xoTheme"]->addStylesheet(null, null, '
@@ -128,8 +128,8 @@ function bannerstats()
               <tfoot><tr><td colspan='7'></td></tr></tfoot>";
 
         $result = $xoopsDB->query("SELECT bid, imptotal, impmade, clicks, date FROM " . $xoopsDB->prefix("banner") . " WHERE cid={$cid}");
-        $i = 0;
-        while (list ($bid, $imptotal, $impmade, $clicks, $date) = $xoopsDB->fetchRow($result)) {
+        $i      = 0;
+        while (list($bid, $imptotal, $impmade, $clicks, $date) = $xoopsDB->fetchRow($result)) {
             if ($impmade == 0) {
                 $percent = 0;
             } else {
@@ -156,7 +156,7 @@ function bannerstats()
               <h4 class='content_title'>" . _BANNERS_FOW_IN . htmlspecialchars($xoopsConfig['sitename']) . "</h4><hr />";
 
         $result = $xoopsDB->query("SELECT bid, imageurl, clickurl, htmlbanner, htmlcode FROM " . $xoopsDB->prefix("banner") . " WHERE cid={$cid}");
-        while (list ($bid, $imageurl, $clickurl, $htmlbanner, $htmlcode) = $xoopsDB->fetchRow($result)) {
+        while (list($bid, $imageurl, $clickurl, $htmlbanner, $htmlcode) = $xoopsDB->fetchRow($result)) {
             $numrows = $xoopsDB->getRowsNum($result);
             if ($numrows > 1) {
                 echo "<br />";
@@ -164,7 +164,7 @@ function bannerstats()
             if (!empty($htmlbanner) && !empty($htmlcode)) {
                 echo $myts->displayTarea($htmlcode);
             } else {
-                if (strtolower(substr($imageurl, strrpos($imageurl, "."))) == ".swf") {
+                if (strtolower(substr($imageurl, strrpos($imageurl, "."))) === ".swf") {
                     echo "<object type='application/x-shockwave-flash' width='468' height='60' data='{$imageurl}'>";
                     echo "<param name='movie' value='{$imageurl}' />";
                     echo "<param name='quality' value='high' />";
@@ -201,7 +201,7 @@ function bannerstats()
                   <tfoot><tr><td colspan='6'></td></tr></tfoot>";
 
             $i = 0;
-            while (list ($bid, $impressions, $clicks, $datestart, $dateend) = $xoopsDB->fetchRow($result)) {
+            while (list($bid, $impressions, $clicks, $datestart, $dateend) = $xoopsDB->fetchRow($result)) {
                 if ($impressions == 0) {
                     $percent = 0;
                 } else {
@@ -240,29 +240,29 @@ function EmailStats($cid, $bid)
         $cid = (int)($cid);
         $bid = (int)($bid);
         if ($result2 = $xoopsDB->query(sprintf("SELECT name, email, passwd FROM %s WHERE cid=%u AND login=%s", $xoopsDB->prefix("bannerclient"), $cid, $xoopsDB->quoteString($_SESSION['banner_login'])))) {
-            list ($name, $email, $passwd) = $xoopsDB->fetchRow($result2);
+            list($name, $email, $passwd) = $xoopsDB->fetchRow($result2);
             if ($_SESSION['banner_pass'] == $passwd) {
                 if ($email == "") {
                     redirect_header("banners.php", 3, sprintf(_BANNERS_MAIL_ERROR, $name));
                     exit();
                 } else {
                     if ($result = $xoopsDB->query("SELECT bid, imptotal, impmade, clicks, imageurl, clickurl, date FROM " . $xoopsDB->prefix("banner") . " WHERE bid={$bid} AND cid={$cid}")) {
-                        list ($bid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date) = $xoopsDB->fetchRow($result);
+                        list($bid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date) = $xoopsDB->fetchRow($result);
                         if ($impmade == 0) {
                             $percent = 0;
                         } else {
                             $percent = substr(100 * $clicks / $impmade, 0, 5);
                         }
                         if ($imptotal == 0) {
-                            $left = _BANNERS_UNLIMITED;
+                            $left     = _BANNERS_UNLIMITED;
                             $imptotal = _BANNERS_UNLIMITED;
                         } else {
                             $left = $imptotal - $impmade;
                         }
-                        $fecha = date("F jS Y, h:iA.");
-                        $subject = sprintf(_BANNERS_MAIL_SUBJECT, $xoopsConfig['sitename']);
-                        $message = sprintf(_BANNERS_MAIL_MESSAGE, $xoopsConfig['sitename'], $name, $bid, $imageurl, $clickurl, $imptotal, $impmade, $left, $clicks, $percent, $fecha);
-                        $xoopsMailer = & xoops_getMailer();
+                        $fecha       = date("F jS Y, h:iA.");
+                        $subject     = sprintf(_BANNERS_MAIL_SUBJECT, $xoopsConfig['sitename']);
+                        $message     = sprintf(_BANNERS_MAIL_MESSAGE, $xoopsConfig['sitename'], $name, $bid, $imageurl, $clickurl, $imptotal, $impmade, $left, $clicks, $percent, $fecha);
+                        $xoopsMailer = &xoops_getMailer();
                         $xoopsMailer->useMail();
                         $xoopsMailer->setToEmails($email);
                         $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
@@ -298,7 +298,7 @@ function change_banner_url_by_client($cid, $bid, $url)
         $bid = (int)($bid);
         $sql = sprintf("SELECT passwd FROM %s WHERE cid=%u AND login=%s", $xoopsDB->prefix("bannerclient"), $cid, $xoopsDB->quoteString($_SESSION['banner_login']));
         if ($result = $xoopsDB->query($sql)) {
-            list ($passwd) = $xoopsDB->fetchRow($result);
+            list($passwd) = $xoopsDB->fetchRow($result);
             if ($_SESSION['banner_pass'] == $passwd) {
                 $sql = sprintf("UPDATE %s SET clickurl=%s WHERE bid=%u AND cid=%u", $xoopsDB->prefix("banner"), $xoopsDB->quoteString($url), $bid, $cid);
                 if ($xoopsDB->query($sql)) {
@@ -321,7 +321,7 @@ function clickbanner($bid)
     $bid = (int)($bid);
     if ($bid > 0) {
         $bresult = $xoopsDB->query("SELECT clickurl FROM " . $xoopsDB->prefix("banner") . " WHERE bid={$bid}");
-        list ($clickurl) = $xoopsDB->fetchRow($bresult);
+        list($clickurl) = $xoopsDB->fetchRow($bresult);
         if ($clickurl) {
             if ($GLOBALS['xoopsSecurity']->checkReferer()) {
                 $xoopsDB->queryF("UPDATE " . $xoopsDB->prefix("banner") . " SET clicks=clicks+1 WHERE bid=$bid");
@@ -345,45 +345,43 @@ if (!empty($_POST['op'])) {
     // from $_POST we use keys: op, login, pass, url, pass, bid, cid
     $op = trim(XoopsFilterInput::clean($_POST['op'], 'STRING'));
 
-    $clean_login='';
+    $clean_login = '';
     if (isset($_POST['login'])) {
         $clean_login = trim(XoopsFilterInput::clean($myts->stripSlashesGPC($_POST['login']), 'STRING'));
     }
 
-    $clean_pass='';
+    $clean_pass = '';
     if (isset($_POST['pass'])) {
         $clean_pass = trim(XoopsFilterInput::clean($myts->stripSlashesGPC($_POST['pass']), 'STRING'));
     }
 
-    $clean_url='';
+    $clean_url = '';
     if (isset($_POST['url'])) {
         $clean_url = trim(XoopsFilterInput::clean($myts->stripSlashesGPC($_POST['url']), 'WEBURL'));
     }
 
-    $clean_bid=0;
+    $clean_bid = 0;
     if (isset($_POST['bid'])) {
         $clean_bid = XoopsFilterInput::clean($_POST['bid'], 'INT');
     }
 
-    $clean_cid=0;
+    $clean_cid = 0;
     if (isset($_POST['cid'])) {
         $clean_cid = XoopsFilterInput::clean($_POST['cid'], 'INT');
     }
-
 } elseif (!empty($_GET['op'])) {
     // from $_POST we use keys: op, bid, cid
     $op = trim(XoopsFilterInput::clean($_GET['op'], 'STRING'));
 
-    $clean_bid=0;
+    $clean_bid = 0;
     if (isset($_GET['bid'])) {
         $clean_bid = XoopsFilterInput::clean($_GET['bid'], 'INT');
     }
 
-    $clean_cid=0;
+    $clean_cid = 0;
     if (isset($_GET['cid'])) {
         $clean_cid = XoopsFilterInput::clean($_GET['cid'], 'INT');
     }
-
 }
 
 $myts =& MyTextSanitizer::getInstance();
@@ -393,14 +391,14 @@ switch ($op) {
         clickbanner($bid);
         break;
     case "Ok":
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!$GLOBALS['xoopsSecurity']->check(true, false, "BANNER_LOGIN")) {
                 redirect_header("banners.php", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
                 exit();
             }
 
             $_SESSION['banner_login'] = $clean_login;
-            $_SESSION['banner_pass'] = $clean_pass;
+            $_SESSION['banner_pass']  = $clean_pass;
         }
         bannerstats();
         break;

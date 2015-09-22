@@ -10,13 +10,13 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         core
- * @since           2.0.0
- * @version         $Id$
- * @todo            Will be refactored
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             core
+ * @since               2.0.0
+ * @version             $Id: checklogin.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @todo                Will be refactored
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 xoops_loadLanguage('user');
 
@@ -40,25 +40,25 @@ if (isset($_POST['xoops_redirect'])) {
 }
 
 $uname = $clean_uname;
-$pass = $clean_pass;
+$pass  = $clean_pass;
 if ($uname == '' || $pass == '') {
-    redirect_header(XOOPS_URL.'/user.php', 1, _US_INCORRECTLOGIN);
+    redirect_header(XOOPS_URL . '/user.php', 1, _US_INCORRECTLOGIN);
     exit();
 }
 
-$member_handler =& xoops_gethandler('member');
-$myts =& MyTextsanitizer::getInstance();
+$member_handler =& xoops_getHandler('member');
+$myts           =& MyTextsanitizer::getInstance();
 
 include_once $GLOBALS['xoops']->path('class/auth/authfactory.php');
 
 xoops_loadLanguage('auth');
 
 $xoopsAuth =& XoopsAuthFactory::getAuthConnection($myts->addSlashes($uname));
-$user = $xoopsAuth->authenticate($myts->addSlashes($uname), $myts->addSlashes($pass));
+$user      = $xoopsAuth->authenticate($myts->addSlashes($uname), $myts->addSlashes($pass));
 
 if (false != $user) {
     if (0 == $user->getVar('level')) {
-        redirect_header(XOOPS_URL.'/index.php', 5, _US_NOACTTPADM);
+        redirect_header(XOOPS_URL . '/index.php', 5, _US_NOACTTPADM);
         exit();
     }
     if ($xoopsConfig['closesite'] == 1) {
@@ -70,7 +70,7 @@ if (false != $user) {
             }
         }
         if (!$allowed) {
-            redirect_header(XOOPS_URL.'/index.php', 1, _NOPERM);
+            redirect_header(XOOPS_URL . '/index.php', 1, _NOPERM);
             exit();
         }
     }
@@ -79,10 +79,10 @@ if (false != $user) {
     }
     // Regenrate a new session id and destroy old session
     $GLOBALS["sess_handler"]->regenerate_id(true);
-    $_SESSION = array();
-    $_SESSION['xoopsUserId'] = $user->getVar('uid');
+    $_SESSION                    = array();
+    $_SESSION['xoopsUserId']     = $user->getVar('uid');
     $_SESSION['xoopsUserGroups'] = $user->getGroups();
-    $user_theme = $user->getVar('theme');
+    $user_theme                  = $user->getVar('theme');
     if (in_array($user_theme, $xoopsConfig['theme_set_allowed'])) {
         $_SESSION['xoopsUserTheme'] = $user_theme;
     }
@@ -98,11 +98,11 @@ if (false != $user) {
 
     if (!empty($clean_redirect) && !strpos($clean_redirect, 'register')) {
         $xoops_redirect = rawurldecode($clean_redirect);
-        $parsed = parse_url(XOOPS_URL);
-        $url = isset($parsed['scheme']) ? $parsed['scheme'].'://' : 'http://';
-        if (isset( $parsed['host'])) {
+        $parsed         = parse_url(XOOPS_URL);
+        $url            = isset($parsed['scheme']) ? $parsed['scheme'] . '://' : 'http://';
+        if (isset($parsed['host'])) {
             $url .= $parsed['host'];
-            if (isset( $parsed['port'])) {
+            if (isset($parsed['port'])) {
                 $url .= ':' . $parsed['port'];
             }
         } else {
@@ -120,11 +120,11 @@ if (false != $user) {
 
     // RMV-NOTIFY
     // Perform some maintenance of notification records
-    $notification_handler =& xoops_gethandler('notification');
+    $notification_handler =& xoops_getHandler('notification');
     $notification_handler->doLoginMaintenance($user->getVar('uid'));
 
     redirect_header($url, 1, sprintf(_US_LOGGINGU, $user->getVar('uname')), false);
-} else if (empty($clean_redirect)) {
+} elseif (empty($clean_redirect)) {
     redirect_header(XOOPS_URL . '/user.php', 5, $xoopsAuth->getHtmlErrors());
 } else {
     redirect_header(XOOPS_URL . '/user.php?xoops_redirect=' . urlencode($clean_redirect), 5, $xoopsAuth->getHtmlErrors(), false);

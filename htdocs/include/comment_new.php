@@ -10,18 +10,18 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @since           2.0.0
- * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @since               2.0.0
+ * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @version             $Id: comment_new.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 include_once $GLOBALS['xoops']->path('include/comment_constants.php');
 
-if (('system' != $xoopsModule->getVar('dirname') && XOOPS_COMMENT_APPROVENONE == $xoopsModuleConfig['com_rule']) || (! is_object($xoopsUser) && ! $xoopsModuleConfig['com_anonpost']) || ! is_object($xoopsModule)) {
+if (('system' !== $xoopsModule->getVar('dirname') && XOOPS_COMMENT_APPROVENONE == $xoopsModuleConfig['com_rule']) || (!is_object($xoopsUser) && !$xoopsModuleConfig['com_anonpost']) || !is_object($xoopsModule)) {
     redirect_header(XOOPS_URL . '/user.php', 1, _NOPERM);
 }
 
@@ -37,7 +37,7 @@ if ($com_itemid > 0) {
                   <tr><td><br />' . $com_replytext . '<br /></td></tr>
                   </table>';
         }
-        $myts =& MyTextSanitizer::getInstance();
+        $myts      =& MyTextSanitizer::getInstance();
         $com_title = $myts->htmlSpecialChars($com_replytitle);
         if (!preg_match("/^" . _RE . "/i", $com_title)) {
             $com_title = _RE . " " . xoops_substr($com_title, 0, 56);
@@ -62,20 +62,20 @@ if ($com_itemid > 0) {
     } else {
         $com_order = (int)($_GET['com_order']);
     }
-    $com_id = 0;
-    $noname = 0;
-    $dosmiley = 1;
-    $dohtml = 0;
-    $dobr = 1;
-    $doxcode = 1;
-    $com_icon = '';
-    $com_pid = 0;
+    $com_id     = 0;
+    $noname     = 0;
+    $dosmiley   = 1;
+    $dohtml     = 0;
+    $dobr       = 1;
+    $doxcode    = 1;
+    $com_icon   = '';
+    $com_pid    = 0;
     $com_rootid = 0;
-    $com_text = '';
+    $com_text   = '';
     // Start Add by voltan
-    $com_user = '';
+    $com_user  = '';
     $com_email = '';
-    $com_url = '';
+    $com_url   = '';
     // End Add by voltan
     include_once $GLOBALS['xoops']->path('include/comment_form.php');
     include_once $GLOBALS['xoops']->path('footer.php');

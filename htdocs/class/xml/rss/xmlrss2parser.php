@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: xmlrss2parser.php 13082 2015-06-06 21:59:41Z beckmi $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2015 XOOPS Project (www.xoops.org)            //
@@ -28,26 +28,26 @@
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
-defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
-require_once(XOOPS_ROOT_PATH.'/class/xml/saxparser.php');
-require_once(XOOPS_ROOT_PATH.'/class/xml/xmltaghandler.php');
+defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+require_once(XOOPS_ROOT_PATH . '/class/xml/saxparser.php');
+require_once(XOOPS_ROOT_PATH . '/class/xml/xmltaghandler.php');
 
 /**
  * Class XoopsXmlRss2Parser
  */
 class XoopsXmlRss2Parser extends SaxParser
 {
-    var $_tempArr = array();
-    var $_channelData = array();
-    var $_imageData = array();
-    var $_items = array();
+    public $_tempArr     = array();
+    public $_channelData = array();
+    public $_imageData   = array();
+    public $_items       = array();
 
     /**
      * @param $input
      */
-    function XoopsXmlRss2Parser(&$input)
+    public function __construct(&$input)
     {
-        $this->SaxParser($input);
+        parent::__construct($input);
         $this->useUtfEncoding();
         $this->addTagHandler(new RssChannelHandler());
         $this->addTagHandler(new RssTitleHandler());
@@ -75,10 +75,18 @@ class XoopsXmlRss2Parser extends SaxParser
     }
 
     /**
+     * @param $input
+     */
+    public function XoopsXmlRss2Parser(&$input)
+    {
+        $this->__construct($input);
+    }
+
+    /**
      * @param $name
      * @param $value
      */
-    function setChannelData($name, &$value)
+    public function setChannelData($name, &$value)
     {
         if (!isset($this->_channelData[$name])) {
             $this->_channelData[$name] =& $value;
@@ -92,7 +100,7 @@ class XoopsXmlRss2Parser extends SaxParser
      *
      * @return array|bool
      */
-    function &getChannelData($name = null)
+    public function &getChannelData($name = null)
     {
         if (isset($name)) {
             if (isset($this->_channelData[$name])) {
@@ -109,7 +117,7 @@ class XoopsXmlRss2Parser extends SaxParser
      * @param $name
      * @param $value
      */
-    function setImageData($name, &$value)
+    public function setImageData($name, &$value)
     {
         $this->_imageData[$name] =& $value;
     }
@@ -119,7 +127,7 @@ class XoopsXmlRss2Parser extends SaxParser
      *
      * @return array|bool
      */
-    function &getImageData($name = null)
+    public function &getImageData($name = null)
     {
         if (isset($name)) {
             if (isset($this->_imageData[$name])) {
@@ -136,7 +144,7 @@ class XoopsXmlRss2Parser extends SaxParser
     /**
      * @param $itemarr
      */
-    function setItems(&$itemarr)
+    public function setItems(&$itemarr)
     {
         $this->_items[] =& $itemarr;
     }
@@ -144,7 +152,7 @@ class XoopsXmlRss2Parser extends SaxParser
     /**
      * @return array
      */
-    function &getItems()
+    public function &getItems()
     {
         return $this->_items;
     }
@@ -154,24 +162,24 @@ class XoopsXmlRss2Parser extends SaxParser
      * @param        $value
      * @param string $delim
      */
-    function setTempArr($name, &$value, $delim = '')
+    public function setTempArr($name, &$value, $delim = '')
     {
         if (!isset($this->_tempArr[$name])) {
             $this->_tempArr[$name] =& $value;
         } else {
-            $this->_tempArr[$name] .= $delim.$value;
+            $this->_tempArr[$name] .= $delim . $value;
         }
     }
 
     /**
      * @return array
      */
-    function getTempArr()
+    public function getTempArr()
     {
         return $this->_tempArr;
     }
 
-    function resetTempArr()
+    public function resetTempArr()
     {
         unset($this->_tempArr);
         $this->_tempArr = array();
@@ -183,16 +191,22 @@ class XoopsXmlRss2Parser extends SaxParser
  */
 class RssChannelHandler extends XmlTagHandler
 {
-
-    function RssChannelHandler()
+    /**
+     * RssChannelHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function RssChannelHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'channel';
     }
@@ -203,16 +217,21 @@ class RssChannelHandler extends XmlTagHandler
  */
 class RssTitleHandler extends XmlTagHandler
 {
-
-    function RssTitleHandler()
+    /**
+     * RssTitleHandler constructor.
+     */
+    public function __construct()
     {
-
+    }
+    public function RssTitleHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'title';
     }
@@ -221,21 +240,21 @@ class RssTitleHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
         switch ($parser->getParentTag()) {
-        case 'channel':
-            $parser->setChannelData('title', $data);
-            break;
-        case 'image':
-            $parser->setImageData('title', $data);
-            break;
-        case 'item':
-        case 'textInput':
-            $parser->setTempArr('title', $data);
-            break;
-        default:
-            break;
+            case 'channel':
+                $parser->setChannelData('title', $data);
+                break;
+            case 'image':
+                $parser->setImageData('title', $data);
+                break;
+            case 'item':
+            case 'textInput':
+                $parser->setTempArr('title', $data);
+                break;
+            default:
+                break;
         }
     }
 }
@@ -245,16 +264,22 @@ class RssTitleHandler extends XmlTagHandler
  */
 class RssLinkHandler extends XmlTagHandler
 {
-
-    function RssLinkHandler()
+    /**
+     * RssLinkHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function RssLinkHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'link';
     }
@@ -263,21 +288,21 @@ class RssLinkHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
         switch ($parser->getParentTag()) {
-        case 'channel':
-            $parser->setChannelData('link', $data);
-            break;
-        case 'image':
-            $parser->setImageData('link', $data);
-            break;
-        case 'item':
-        case 'textInput':
-            $parser->setTempArr('link', $data);
-            break;
-        default:
-            break;
+            case 'channel':
+                $parser->setChannelData('link', $data);
+                break;
+            case 'image':
+                $parser->setImageData('link', $data);
+                break;
+            case 'item':
+            case 'textInput':
+                $parser->setTempArr('link', $data);
+                break;
+            default:
+                break;
         }
     }
 }
@@ -287,16 +312,22 @@ class RssLinkHandler extends XmlTagHandler
  */
 class RssDescriptionHandler extends XmlTagHandler
 {
-
-    function RssDescriptionHandler()
+    /**
+     * RssDescriptionHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function RssDescriptionHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'description';
     }
@@ -305,21 +336,21 @@ class RssDescriptionHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
         switch ($parser->getParentTag()) {
-        case 'channel':
-            $parser->setChannelData('description', $data);
-            break;
-        case 'image':
-            $parser->setImageData('description', $data);
-            break;
-        case 'item':
-        case 'textInput':
-            $parser->setTempArr('description', $data);
-            break;
-        default:
-            break;
+            case 'channel':
+                $parser->setChannelData('description', $data);
+                break;
+            case 'image':
+                $parser->setImageData('description', $data);
+                break;
+            case 'item':
+            case 'textInput':
+                $parser->setTempArr('description', $data);
+                break;
+            default:
+                break;
         }
     }
 }
@@ -329,16 +360,22 @@ class RssDescriptionHandler extends XmlTagHandler
  */
 class RssGeneratorHandler extends XmlTagHandler
 {
-
-    function RssGeneratorHandler()
+    /**
+     * RssGeneratorHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function RssGeneratorHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'generator';
     }
@@ -347,14 +384,14 @@ class RssGeneratorHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
         switch ($parser->getParentTag()) {
-        case 'channel':
-            $parser->setChannelData('generator', $data);
-            break;
-        default:
-            break;
+            case 'channel':
+                $parser->setChannelData('generator', $data);
+                break;
+            default:
+                break;
         }
     }
 }
@@ -364,16 +401,22 @@ class RssGeneratorHandler extends XmlTagHandler
  */
 class RssCopyrightHandler extends XmlTagHandler
 {
-
-    function RssCopyrightHandler()
+    /**
+     * RssCopyrightHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function RssCopyrightHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'copyright';
     }
@@ -382,14 +425,14 @@ class RssCopyrightHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
         switch ($parser->getParentTag()) {
-        case 'channel':
-            $parser->setChannelData('copyright', $data);
-            break;
-        default:
-            break;
+            case 'channel':
+                $parser->setChannelData('copyright', $data);
+                break;
+            default:
+                break;
         }
     }
 }
@@ -399,16 +442,22 @@ class RssCopyrightHandler extends XmlTagHandler
  */
 class RssNameHandler extends XmlTagHandler
 {
-
-    function RssNameHandler()
+    /**
+     * RssNameHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function RssNameHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'name';
     }
@@ -417,14 +466,14 @@ class RssNameHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
         switch ($parser->getParentTag()) {
-        case 'textInput':
-            $parser->setTempArr('name', $data);
-            break;
-        default:
-            break;
+            case 'textInput':
+                $parser->setTempArr('name', $data);
+                break;
+            default:
+                break;
         }
     }
 }
@@ -434,16 +483,22 @@ class RssNameHandler extends XmlTagHandler
  */
 class RssManagingEditorHandler extends XmlTagHandler
 {
-
-    function RssManagingEditorHandler()
+    /**
+     * RssManagingEditorHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function RssManagingEditorHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'managingEditor';
     }
@@ -452,14 +507,14 @@ class RssManagingEditorHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
         switch ($parser->getParentTag()) {
-        case 'channel':
-            $parser->setChannelData('editor', $data);
-            break;
-        default:
-            break;
+            case 'channel':
+                $parser->setChannelData('editor', $data);
+                break;
+            default:
+                break;
         }
     }
 }
@@ -469,16 +524,22 @@ class RssManagingEditorHandler extends XmlTagHandler
  */
 class RssLanguageHandler extends XmlTagHandler
 {
-
-    function RssLanguageHandler()
+    /**
+     * RssLanguageHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function RssLanguageHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'language';
     }
@@ -487,14 +548,14 @@ class RssLanguageHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
         switch ($parser->getParentTag()) {
-        case 'channel':
-            $parser->setChannelData('language', $data);
-            break;
-        default:
-            break;
+            case 'channel':
+                $parser->setChannelData('language', $data);
+                break;
+            default:
+                break;
         }
     }
 }
@@ -504,16 +565,22 @@ class RssLanguageHandler extends XmlTagHandler
  */
 class RssWebMasterHandler extends XmlTagHandler
 {
-
-    function RssWebMasterHandler()
+    /**
+     * RssWebMasterHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function RssWebMasterHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'webMaster';
     }
@@ -522,14 +589,14 @@ class RssWebMasterHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
         switch ($parser->getParentTag()) {
-        case 'channel':
-            $parser->setChannelData('webmaster', $data);
-            break;
-        default:
-            break;
+            case 'channel':
+                $parser->setChannelData('webmaster', $data);
+                break;
+            default:
+                break;
         }
     }
 }
@@ -539,16 +606,22 @@ class RssWebMasterHandler extends XmlTagHandler
  */
 class RssDocsHandler extends XmlTagHandler
 {
-
-    function RssDocsHandler()
+    /**
+     * RssDocsHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function RssDocsHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'docs';
     }
@@ -557,14 +630,14 @@ class RssDocsHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
         switch ($parser->getParentTag()) {
-        case 'channel':
-            $parser->setChannelData('docs', $data);
-            break;
-        default:
-            break;
+            case 'channel':
+                $parser->setChannelData('docs', $data);
+                break;
+            default:
+                break;
         }
     }
 }
@@ -574,16 +647,22 @@ class RssDocsHandler extends XmlTagHandler
  */
 class RssTtlHandler extends XmlTagHandler
 {
-
-    function RssTtlHandler()
+    /**
+     * RssTtlHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function RssTtlHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'ttl';
     }
@@ -592,14 +671,14 @@ class RssTtlHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
         switch ($parser->getParentTag()) {
-        case 'channel':
-            $parser->setChannelData('ttl', $data);
-            break;
-        default:
-            break;
+            case 'channel':
+                $parser->setChannelData('ttl', $data);
+                break;
+            default:
+                break;
         }
     }
 }
@@ -609,16 +688,14 @@ class RssTtlHandler extends XmlTagHandler
  */
 class RssTextInputHandler extends XmlTagHandler
 {
-
-    function RssWebMasterHandler()
+    public function RssWebMasterHandler()
     {
-
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'textInput';
     }
@@ -627,7 +704,7 @@ class RssTextInputHandler extends XmlTagHandler
      * @param $parser
      * @param $attributes
      */
-    function handleBeginElement(&$parser, &$attributes)
+    public function handleBeginElement(&$parser, &$attributes)
     {
         $parser->resetTempArr();
     }
@@ -635,7 +712,7 @@ class RssTextInputHandler extends XmlTagHandler
     /**
      * @param $parser
      */
-    function handleEndElement(&$parser)
+    public function handleEndElement(&$parser)
     {
         $parser->setChannelData('textinput', $parser->getTempArr());
     }
@@ -646,16 +723,22 @@ class RssTextInputHandler extends XmlTagHandler
  */
 class RssLastBuildDateHandler extends XmlTagHandler
 {
-
-    function RssLastBuildDateHandler()
+    /**
+     * RssLastBuildDateHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function RssLastBuildDateHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'lastBuildDate';
     }
@@ -664,14 +747,14 @@ class RssLastBuildDateHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
         switch ($parser->getParentTag()) {
-        case 'channel':
-            $parser->setChannelData('lastbuilddate', $data);
-            break;
-        default:
-            break;
+            case 'channel':
+                $parser->setChannelData('lastbuilddate', $data);
+                break;
+            default:
+                break;
         }
     }
 }
@@ -681,15 +764,22 @@ class RssLastBuildDateHandler extends XmlTagHandler
  */
 class RssImageHandler extends XmlTagHandler
 {
-
-    function RssImageHandler()
+    /**
+     * RssImageHandler constructor.
+     */
+    public function __construct()
     {
+    }
+
+    public function RssImageHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'image';
     }
@@ -700,16 +790,22 @@ class RssImageHandler extends XmlTagHandler
  */
 class RssUrlHandler extends XmlTagHandler
 {
-
-    function RssUrlHandler()
+    /**
+     * RssUrlHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function RssUrlHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'url';
     }
@@ -718,9 +814,9 @@ class RssUrlHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
-        if ($parser->getParentTag() == 'image') {
+        if ($parser->getParentTag() === 'image') {
             $parser->setImageData('url', $data);
         }
     }
@@ -731,16 +827,22 @@ class RssUrlHandler extends XmlTagHandler
  */
 class RssWidthHandler extends XmlTagHandler
 {
-
-    function RssWidthHandler()
+    /**
+     * RssWidthHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function RssWidthHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'width';
     }
@@ -749,9 +851,9 @@ class RssWidthHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
-        if ($parser->getParentTag() == 'image') {
+        if ($parser->getParentTag() === 'image') {
             $parser->setImageData('width', $data);
         }
     }
@@ -762,15 +864,22 @@ class RssWidthHandler extends XmlTagHandler
  */
 class RssHeightHandler extends XmlTagHandler
 {
-
-    function RssHeightHandler()
+    /**
+     * RssHeightHandler constructor.
+     */
+    public function __construct()
     {
+    }
+
+    public function RssHeightHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'height';
     }
@@ -779,9 +888,9 @@ class RssHeightHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
-        if ($parser->getParentTag() == 'image') {
+        if ($parser->getParentTag() === 'image') {
             $parser->setImageData('height', $data);
         }
     }
@@ -792,16 +901,22 @@ class RssHeightHandler extends XmlTagHandler
  */
 class RssItemHandler extends XmlTagHandler
 {
-
-    function RssItemHandler()
+    /**
+     * RssItemHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function RssItemHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'item';
     }
@@ -810,7 +925,7 @@ class RssItemHandler extends XmlTagHandler
      * @param $parser
      * @param $attributes
      */
-    function handleBeginElement(&$parser, &$attributes)
+    public function handleBeginElement(&$parser, &$attributes)
     {
         $parser->resetTempArr();
     }
@@ -818,10 +933,10 @@ class RssItemHandler extends XmlTagHandler
     /**
      * @param $parser
      */
-    function handleEndElement(&$parser)
+    public function handleEndElement(&$parser)
     {
         $items =& $parser->getTempArr();
-        $parser->setItems( $items );
+        $parser->setItems($items);
     }
 }
 
@@ -830,16 +945,22 @@ class RssItemHandler extends XmlTagHandler
  */
 class RssCategoryHandler extends XmlTagHandler
 {
-
-    function RssCategoryHandler()
+    /**
+     * RssCategoryHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function RssCategoryHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'category';
     }
@@ -848,17 +969,17 @@ class RssCategoryHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
         switch ($parser->getParentTag()) {
-        case 'channel':
-            $parser->setChannelData('category', $data);
-            break;
-        case 'item':
-            $parser->setTempArr('category', $data, ', ');
-            break;
-        default:
-            break;
+            case 'channel':
+                $parser->setChannelData('category', $data);
+                break;
+            case 'item':
+                $parser->setTempArr('category', $data, ', ');
+                break;
+            default:
+                break;
         }
     }
 }
@@ -868,16 +989,22 @@ class RssCategoryHandler extends XmlTagHandler
  */
 class RssCommentsHandler extends XmlTagHandler
 {
-
-    function RssCommentsHandler()
+    /**
+     * RssCommentsHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function RssCommentsHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'comments';
     }
@@ -886,9 +1013,9 @@ class RssCommentsHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
-        if ($parser->getParentTag() == 'item') {
+        if ($parser->getParentTag() === 'item') {
             $parser->setTempArr('comments', $data);
         }
     }
@@ -899,16 +1026,22 @@ class RssCommentsHandler extends XmlTagHandler
  */
 class RssPubDateHandler extends XmlTagHandler
 {
-
-    function RssPubDateHandler()
+    /**
+     * RssPubDateHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function RssPubDateHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'pubDate';
     }
@@ -917,17 +1050,17 @@ class RssPubDateHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
         switch ($parser->getParentTag()) {
-        case 'channel':
-            $parser->setChannelData('pubdate', $data);
-            break;
-        case 'item':
-            $parser->setTempArr('pubdate', $data);
-            break;
-        default:
-            break;
+            case 'channel':
+                $parser->setChannelData('pubdate', $data);
+                break;
+            case 'item':
+                $parser->setTempArr('pubdate', $data);
+                break;
+            default:
+                break;
         }
     }
 }
@@ -937,16 +1070,22 @@ class RssPubDateHandler extends XmlTagHandler
  */
 class RssGuidHandler extends XmlTagHandler
 {
-
-    function RssGuidHandler()
+    /**
+     * RssGuidHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function RssGuidHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'guid';
     }
@@ -955,9 +1094,9 @@ class RssGuidHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
-        if ($parser->getParentTag() == 'item') {
+        if ($parser->getParentTag() === 'item') {
             $parser->setTempArr('guid', $data);
         }
     }
@@ -968,16 +1107,14 @@ class RssGuidHandler extends XmlTagHandler
  */
 class RssAuthorHandler extends XmlTagHandler
 {
-
-    function RssGuidHandler()
+    public function RssGuidHandler()
     {
-
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'author';
     }
@@ -986,9 +1123,9 @@ class RssAuthorHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
-        if ($parser->getParentTag() == 'item') {
+        if ($parser->getParentTag() === 'item') {
             $parser->setTempArr('author', $data);
         }
     }
@@ -999,16 +1136,22 @@ class RssAuthorHandler extends XmlTagHandler
  */
 class RssSourceHandler extends XmlTagHandler
 {
-
-    function RssSourceHandler()
+    /**
+     * RssSourceHandler constructor.
+     */
+    public function __construct()
     {
+    }
 
+    public function RssSourceHandler()
+    {
+        $this->__construct();
     }
 
     /**
      * @return string
      */
-    function getName()
+    public function getName()
     {
         return 'source';
     }
@@ -1017,9 +1160,9 @@ class RssSourceHandler extends XmlTagHandler
      * @param $parser
      * @param $attributes
      */
-    function handleBeginElement(&$parser, &$attributes)
+    public function handleBeginElement(&$parser, &$attributes)
     {
-        if ($parser->getParentTag() == 'item') {
+        if ($parser->getParentTag() === 'item') {
             $parser->setTempArr('source_url', $attributes['url']);
         }
     }
@@ -1028,9 +1171,9 @@ class RssSourceHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData(&$parser, &$data)
     {
-        if ($parser->getParentTag() == 'item') {
+        if ($parser->getParentTag() === 'item') {
             $parser->setTempArr('source', $data);
         }
     }

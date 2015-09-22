@@ -7,7 +7,6 @@
  */
 class HTMLPurifier_ConfigSchema_Interchange
 {
-
     /**
      * Name of the application this schema is describing.
      * @type string
@@ -22,7 +21,7 @@ class HTMLPurifier_ConfigSchema_Interchange
 
     /**
      * Adds a directive array to $directives
-     * @param HTMLPurifier_ConfigSchema_Interchange_Directive $directive
+     * @param  HTMLPurifier_ConfigSchema_Interchange_Directive $directive
      * @throws HTMLPurifier_ConfigSchema_Exception
      */
     public function addDirective($directive)
@@ -40,8 +39,10 @@ class HTMLPurifier_ConfigSchema_Interchange
     public function validate()
     {
         $validator = new HTMLPurifier_ConfigSchema_Validator();
+
         return $validator->validate($this);
     }
 }
 
 // vim: et sw=4 sts=4
+

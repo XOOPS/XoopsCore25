@@ -33,11 +33,11 @@
     </a>
 
     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=pending#admin" title="<{$smarty.const._MD_TYPE_PENDING}>" class="btn btn-xs btn-primary">
-        <{if $wait_new_post}>(<font color="red"><{$wait_new_post}></font>)<{/if}> <{$smarty.const._MD_TYPE_PENDING}>
+        <{if $wait_new_post}>(<span style="color:red;"><{$wait_new_post}></span>)<{/if}> <{$smarty.const._MD_TYPE_PENDING}>
     </a>
 
     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=deleted#admin" title="<{$smarty.const._MD_TYPE_DELETED}>" class="btn btn-xs btn-primary">
-        <{if $delete_post}>(<font color="red"><{$delete_post}></font>)<{/if}> <{$smarty.const._MD_TYPE_DELETED}>
+        <{if $delete_post}>(<span style="color:red;"><{$delete_post}></span>)<{/if}> <{$smarty.const._MD_TYPE_DELETED}>
     </a>
 
     <{if $report_post}>

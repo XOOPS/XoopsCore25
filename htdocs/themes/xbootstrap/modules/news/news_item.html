@@ -1,20 +1,20 @@
 <section role="main" class="news-item">
-	<article role="article">
+    <article role="article">
     <{if $story.picture != ""}>
     <div class="news-header">
     <{if $story.poster != ""}><em><strong><{$lang_postedby}>: </strong><{$story.poster}><{/if}> <{$lang_on}> <{$story.posttime}></em>
-        
+
     <strong class="pull-right hit-counter"><{$story.hits}> <{$lang_reads}></strong>
-        
+
     <h2 class="news-title" role="heading"><{$story.topic_title}> <{$story.news_title}></h2>
         <a title="<{$story.news_title|strip_tags}>" data-toggle="modal" data-target="#myModal" href="#myModal">
             <img src="<{$story.picture}>" alt="<{$story.news_title|strip_tags}>">
         </a>
-	</div>
+    </div>
     <{else}>
     <h2 role="heading" class="news-no-image"><{$story.topic_title}>: <{$story.news_title}></h2>
     <{if $story.poster != ""}>
-        	<em><strong><{$lang_postedby}>: </strong><{$story.poster}><{/if}><{$lang_on}> <{$story.posttime}></em>
+            <em><strong><{$lang_postedby}>: </strong><{$story.poster}><{/if}><{$lang_on}> <{$story.posttime}></em>
             <strong class="pull-right hit-counter"><{$story.hits}> <{$lang_reads}></strong>
     <{/if}>
     <{if $story.files_attached}>

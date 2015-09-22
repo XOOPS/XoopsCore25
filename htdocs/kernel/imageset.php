@@ -10,69 +10,82 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @since           2.0.0
- * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @since               2.0.0
+ * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @version             $Id: imageset.php 13090 2015-06-16 20:44:29Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
- * @author  Kazumi Ono <onokazu@xoops.org>
+ * @author              Kazumi Ono <onokazu@xoops.org>
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  **/
 
 /**
  * XOOPS Image Sets
  *
- * @package     kernel
- * @author      Kazumi Ono  <onokazu@xoops.org>
+ * @package         kernel
+ * @author          Kazumi Ono  <onokazu@xoops.org>
  * @copyright   (c) 2000-2015 XOOPS Project - www.xoops.org
  */
 class XoopsImageset extends XoopsObject
 {
-
-    function XoopsImageset()
+    /**
+     * XoopsImageset constructor.
+     */
+    public function __construct()
     {
-        $this->XoopsObject();
+        parent::__construct();
         $this->initVar('imgset_id', XOBJ_DTYPE_INT, null, false);
         $this->initVar('imgset_name', XOBJ_DTYPE_TXTBOX, null, true, 50);
         $this->initVar('imgset_refid', XOBJ_DTYPE_INT, 0, false);
     }
 
+    public function XoopsImageset()
+    {
+        $this->__construct();
+    }
     /**
      * Returns Class Base Variable imgset_id
+     * @param string $format
+     * @return mixed
      */
-    function id($format = 'N')
+    public function id($format = 'N')
     {
         return $this->getVar('imgset_id', $format);
     }
 
     /**
      * Returns Class Base Variable imgset_id
+     * @param string $format
+     * @return mixed
      */
-    function imgset_id($format = '')
+    public function imgset_id($format = '')
     {
         return $this->getVar('imgset_id', $format);
     }
 
     /**
      * Returns Class Base Variable imgset_name
+     * @param string $format
+     * @return mixed
      */
-    function imgset_name($format = '')
+    public function imgset_name($format = '')
     {
         return $this->getVar('imgset_name', $format);
     }
 
     /**
      * Returns Class Base Variable imgset_refid
+     * @param string $format
+     * @return mixed
      */
-    function imgset_refid($format = '')
+    public function imgset_refid($format = '')
     {
         return $this->getVar('imgset_refid', $format);
     }
-
 }
 
 /**
@@ -89,9 +102,9 @@ class XoopsImagesetHandler extends XoopsObjectHandler
      * Create a new {@link XoopsImageSet}
      *
      * @param  boolean $isNew Flag the object as "new"
-     * @return object
+     * @return XoopsImageset
      **/
-    function &create($isNew = true)
+    public function &create($isNew = true)
     {
         $imgset = new XoopsImageset();
         if ($isNew) {
@@ -107,11 +120,11 @@ class XoopsImagesetHandler extends XoopsObjectHandler
      * @param int $id ID
      *
      * @internal param bool $getbinary
-     * @return object {@link XoopsImageSet}, FALSE on fail
+     * @return XoopsImageset {@link XoopsImageSet}, FALSE on fail
      */
-    function &get($id)
+    public function &get($id)
     {
-        $id = (int)($id);
+        $id     = (int)($id);
         $imgset = false;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('imgset') . ' WHERE imgset_id=' . $id;
@@ -131,11 +144,11 @@ class XoopsImagesetHandler extends XoopsObjectHandler
     /**
      * Write a {@link XoopsImageSet} object to the database
      *
-     * @param  object $imgset
+     * @param XoopsImageSet $imgset
      * @internal param object $image {@link XoopsImageSet}
      * @return bool
      */
-    function insert(&$imgset)
+    public function insert(XoopsImageSet $imgset)
     {
         /**
          * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
@@ -155,7 +168,7 @@ class XoopsImagesetHandler extends XoopsObjectHandler
         }
         if ($imgset->isNew()) {
             $imgset_id = $this->db->genId('imgset_imgset_id_seq');
-            $sql = sprintf("INSERT INTO %s (imgset_id, imgset_name, imgset_refid) VALUES (%u, %s, %u)", $this->db->prefix('imgset'), $imgset_id, $this->db->quoteString($imgset_name), $imgset_refid);
+            $sql       = sprintf("INSERT INTO %s (imgset_id, imgset_name, imgset_refid) VALUES (%u, %s, %u)", $this->db->prefix('imgset'), $imgset_id, $this->db->quoteString($imgset_name), $imgset_refid);
         } else {
             $sql = sprintf("UPDATE %s SET imgset_name = %s, imgset_refid = %u WHERE imgset_id = %u", $this->db->prefix('imgset'), $this->db->quoteString($imgset_name), $imgset_refid, $imgset_id);
         }
@@ -173,11 +186,11 @@ class XoopsImagesetHandler extends XoopsObjectHandler
     /**
      * Delete an XoopsImageSet from the database
      *
-     * @param  object $imgset
+     * @param XoopsImageSet $imgset
      * @internal param object $image {@link XoopsImageSet}
      * @return bool
      */
-    function delete(&$imgset)
+    public function delete(XoopsImageSet $imgset)
     {
         /**
          * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
@@ -198,16 +211,16 @@ class XoopsImagesetHandler extends XoopsObjectHandler
     /**
      * Load {@link XoopsImageSet}s from the database
      *
-     * @param  object  $criteria  {@link CriteriaElement}
-     * @param  boolean $id_as_key Use the ID as key into the array
+     * @param CriteriaElement $criteria  {@link CriteriaElement}
+     * @param boolean $id_as_key Use the ID as key into the array
      * @internal param bool $getbinary
-     * @return array   Array of {@link XoopsImageSet} objects
+     * @return array Array of {@link XoopsImageSet} objects
      */
-    function getObjects($criteria = null, $id_as_key = false)
+    public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
-        $ret = array();
+        $ret   = array();
         $limit = $start = 0;
-        $sql = 'SELECT DISTINCT i.* FROM ' . $this->db->prefix('imgset') . ' i LEFT JOIN ' . $this->db->prefix('imgset_tplset_link') . ' l ON l.imgset_id=i.imgset_id';
+        $sql   = 'SELECT DISTINCT i.* FROM ' . $this->db->prefix('imgset') . ' i LEFT JOIN ' . $this->db->prefix('imgset_tplset_link') . ' l ON l.imgset_id=i.imgset_id';
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
             $limit = $criteria->getLimit();
@@ -238,9 +251,9 @@ class XoopsImagesetHandler extends XoopsObjectHandler
      * @param  string $tplset_name
      * @return array
      */
-    function linkThemeset($imgset_id, $tplset_name)
+    public function linkThemeset($imgset_id, $tplset_name)
     {
-        $imgset_id = (int)($imgset_id);
+        $imgset_id   = (int)($imgset_id);
         $tplset_name = trim($tplset_name);
         if ($imgset_id <= 0 || $tplset_name == '') {
             return false;
@@ -248,7 +261,7 @@ class XoopsImagesetHandler extends XoopsObjectHandler
         if (!$this->unlinkThemeset($imgset_id, $tplset_name)) {
             return false;
         }
-        $sql = sprintf("INSERT INTO %s (imgset_id, tplset_name) VALUES (%u, %s)", $this->db->prefix('imgset_tplset_link'), $imgset_id, $this->db->quoteString($tplset_name));
+        $sql    = sprintf("INSERT INTO %s (imgset_id, tplset_name) VALUES (%u, %s)", $this->db->prefix('imgset_tplset_link'), $imgset_id, $this->db->quoteString($tplset_name));
         $result = $this->db->query($sql);
         if (!$result) {
             return false;
@@ -264,14 +277,14 @@ class XoopsImagesetHandler extends XoopsObjectHandler
      * @param  string $tplset_name
      * @return array
      */
-    function unlinkThemeset($imgset_id, $tplset_name)
+    public function unlinkThemeset($imgset_id, $tplset_name)
     {
-        $imgset_id = (int)($imgset_id);
+        $imgset_id   = (int)($imgset_id);
         $tplset_name = trim($tplset_name);
         if ($imgset_id <= 0 || $tplset_name == '') {
             return false;
         }
-        $sql = sprintf("DELETE FROM %s WHERE imgset_id = %u AND tplset_name = %s", $this->db->prefix('imgset_tplset_link'), $imgset_id, $this->db->quoteString($tplset_name));
+        $sql    = sprintf("DELETE FROM %s WHERE imgset_id = %u AND tplset_name = %s", $this->db->prefix('imgset_tplset_link'), $imgset_id, $this->db->quoteString($tplset_name));
         $result = $this->db->query($sql);
         if (!$result) {
             return false;
@@ -283,13 +296,13 @@ class XoopsImagesetHandler extends XoopsObjectHandler
     /**
      * Get a list of XoopsImageSet
      *
-     * @param  null  $refid
-     * @param  null  $tplset
+     * @param null $refid
+     * @param null $tplset
      * @internal param int $imgcat_id
      * @internal param bool $image_display
      * @return array Array of {@link XoopsImage} objects
      */
-    function getList($refid = null, $tplset = null)
+    public function getList($refid = null, $tplset = null)
     {
         $criteria = new CriteriaCompo();
         if (isset($refid)) {
@@ -299,7 +312,7 @@ class XoopsImagesetHandler extends XoopsObjectHandler
             $criteria->add(new Criteria('tplset_name', $tplset));
         }
         $imgsets = $this->getObjects($criteria, true);
-        $ret = array();
+        $ret     = array();
         foreach (array_keys($imgsets) as $i) {
             $ret[$i] = $imgsets[$i]->getVar('imgset_name');
         }

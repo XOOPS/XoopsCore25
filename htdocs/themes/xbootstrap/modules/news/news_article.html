@@ -25,37 +25,37 @@
         </a>
     <{/if}>
 </div>
-    <{/if}>	
+    <{/if}>
 </div><!-- .row -->
-    
+
 <div class="xoops-news-icons aligncenter">
     <{if $showicons == true}>
     <a href="<{$xoops_url}>/modules/news/print.php?storyid=<{$story.id}>" title="<{$lang_printerpage}>">
         <span class="glyphicon glyphicon-print"></span>
     </a>
-    
+
     <a target="_top" href="<{$mail_link}>" title="<{$lang_sendstory}>">
         <span class="glyphicon glyphicon-envelope"></span>
     </a>
-    
+
     <a target="_blank" href="<{$xoops_url}>/modules/news/makepdf.php?storyid=<{$story.id}>" title="<{$lang_pdfstory}>">
         <span class="glyphicon glyphicon-file"></span>
     </a>
    <{/if}>
-   
-	<{if $xoops_isadmin}>
+
+    <{if $xoops_isadmin}>
     <a href="<{$xoops_url}>/modules/news/submit.php?op=edit&storyid=<{$story.id}>" title="Edit">
-    	<span class="glyphicon glyphicon-edit"></span>
+        <span class="glyphicon glyphicon-edit"></span>
     </a>
-    
+
     <a href="<{$xoops_url}>/modules/news/admin/index.php?op=delete&storyid=<{$story.id}>" title="Delete">
-    	<span class="glyphicon glyphicon-trash"></span>
+        <span class="glyphicon glyphicon-trash"></span>
     </a>
     <{/if}>
 </div>
-    
+
 <{if $tags}>
-	<{include file="db:tag_bar.html"}>
+    <{include file="db:tag_bar.html"}>
 <{/if}>
 
 <{if $showsummary == true && $summary_count>0}>
@@ -69,7 +69,7 @@
 <{/if}>
 
 <{if $share == true}>
-	<div class='shareaholic-canvas' data-app='share_buttons' data-app-id='482507'></div>
+    <div class='shareaholic-canvas' data-app='share_buttons' data-app-id='482507'></div>
 <{/if}>
 
 <div class="comments-nav">

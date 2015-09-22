@@ -10,11 +10,11 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package     kernel
- * @since       2.0.0
- * @author      Kazumi Ono (http://www.myweb.ne.jp/, http://jp.xoops.org/)
- * @version     $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @since               2.0.0
+ * @author              Kazumi Ono (http://www.myweb.ne.jp/, http://jp.xoops.org/)
+ * @version             $Id: pagenav.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 defined("XOOPS_ROOT_PATH") || exit('Restricted access');
@@ -29,98 +29,110 @@ class XoopsPageNav
      *
      * @access private
      */
-    var $total;
-    var $perpage;
-    var $current;
-    var $url;
+    public $total;
+    public $perpage;
+    public $current;
+    public $url;
     /**
      * *#@-
      */
-    
+
     /**
      * Constructor
      *
-     * @param int $total_items Total number of items
-     * @param int $items_perpage Number of items per page
-     * @param int $current_start First item on the current page
-     * @param string $start_name Name for "start" or "offset"
-     * @param string $extra_arg Additional arguments to pass in the URL
+     * @param int    $total_items   Total number of items
+     * @param int    $items_perpage Number of items per page
+     * @param int    $current_start First item on the current page
+     * @param string $start_name    Name for "start" or "offset"
+     * @param string $extra_arg     Additional arguments to pass in the URL
      */
-    function XoopsPageNav($total_items, $items_perpage, $current_start, $start_name = "start", $extra_arg = "")
+    public function __construct($total_items, $items_perpage, $current_start, $start_name = "start", $extra_arg = "")
     {
-        $this->total = (int)($total_items);
+        $this->total   = (int)($total_items);
         $this->perpage = (int)($items_perpage);
         $this->current = (int)($current_start);
-        $this->extra = $extra_arg;
-        if ($extra_arg != '' && (substr($extra_arg, - 5) != '&amp;' || substr($extra_arg, - 1) != '&')) {
+        $this->extra   = $extra_arg;
+        if ($extra_arg != '' && (substr($extra_arg, -5) !== '&amp;' || substr($extra_arg, -1) !== '&')) {
             $this->extra = '&amp;' . $extra_arg;
         }
         $this->url = $_SERVER['PHP_SELF'] . '?' . trim($start_name) . '=';
     }
-    
+
+    /**
+     * @param        $total_items
+     * @param        $items_perpage
+     * @param        $current_start
+     * @param string $start_name
+     * @param string $extra_arg
+     */
+    public function XoopsPageNav($total_items, $items_perpage, $current_start, $start_name = "start", $extra_arg = "")
+    {
+        $this->__construct($total_items, $items_perpage, $current_start, $start_name, $extra_arg);
+    }
     /**
      * Create text navigation
      *
-     * @param integer $offset
+     * @param  integer $offset
      * @return string
      */
-    function renderNav($offset = 4)
+    public function renderNav($offset = 4)
     {
         $ret = '';
         if ($this->total <= $this->perpage) {
             return $ret;
         }
-		if(($this->total != 0) && ($this->perpage != 0)) {
-			$total_pages = ceil($this->total / $this->perpage);
-			if ($total_pages > 1) {
-				$ret .= '<div id="xoopspagenavbar">';
-				$prev = $this->current - $this->perpage;
-				if ($prev >= 0) {
-					$ret .= '<a href="' . $this->url . $prev . $this->extra . '" class="page gradient">&laquo;</a>';
-				}
-				$counter = 1;
-				$current_page = (int)(floor(($this->current + $this->perpage) / $this->perpage));
-				while ($counter <= $total_pages) {
-					if ($counter == $current_page) {
-						$ret .= '<strong class="page gradient" >(' . $counter . ')</strong> ';
-					} elseif (($counter > $current_page - $offset && $counter < $current_page + $offset) || $counter == 1 || $counter == $total_pages) {
-						if ($counter == $total_pages && $current_page < $total_pages - $offset) {
-							$ret .= '... ';
-						}
-						$ret .= '<a class="page gradient" href="' . $this->url . (($counter - 1) * $this->perpage) . $this->extra . '">' . $counter . '</a> ';
-						if ($counter == 1 && $current_page > 1 + $offset) {
-							$ret .= '... ';
-						}
-					}
+        if (($this->total != 0) && ($this->perpage != 0)) {
+            $total_pages = ceil($this->total / $this->perpage);
+            if ($total_pages > 1) {
+                $ret .= '<div id="xoopspagenavbar">';
+                $prev = $this->current - $this->perpage;
+                if ($prev >= 0) {
+                    $ret .= '<a href="' . $this->url . $prev . $this->extra . '" class="page gradient">&laquo;</a>';
+                }
+                $counter      = 1;
+                $current_page = (int)(floor(($this->current + $this->perpage) / $this->perpage));
+                while ($counter <= $total_pages) {
+                    if ($counter == $current_page) {
+                        $ret .= '<strong class="page gradient" >(' . $counter . ')</strong> ';
+                    } elseif (($counter > $current_page - $offset && $counter < $current_page + $offset) || $counter == 1 || $counter == $total_pages) {
+                        if ($counter == $total_pages && $current_page < $total_pages - $offset) {
+                            $ret .= '... ';
+                        }
+                        $ret .= '<a class="page gradient" href="' . $this->url . (($counter - 1) * $this->perpage) . $this->extra . '">' . $counter . '</a> ';
+                        if ($counter == 1 && $current_page > 1 + $offset) {
+                            $ret .= '... ';
+                        }
+                    }
                     ++$counter;
-				}
-				$next = $this->current + $this->perpage;
-				if ($this->total > $next) {
-					$ret .= '<a href="' . $this->url . $next . $this->extra . '" class="page gradient">&raquo;</a>';
-				}
-				$ret .= '</div> ';
-			}
-		}
+                }
+                $next = $this->current + $this->perpage;
+                if ($this->total > $next) {
+                    $ret .= '<a href="' . $this->url . $next . $this->extra . '" class="page gradient">&raquo;</a>';
+                }
+                $ret .= '</div> ';
+            }
+        }
+
         return $ret;
     }
-    
+
     /**
      * Create a navigational dropdown list
      *
-     * @param boolean $showbutton Show the "Go" button?
+     * @param  boolean $showbutton Show the "Go" button?
      * @return string
      */
-    function renderSelect($showbutton = false)
+    public function renderSelect($showbutton = false)
     {
         if ($this->total < $this->perpage) {
-            return;
+            return null;
         }
         $total_pages = ceil($this->total / $this->perpage);
-        $ret = '';
+        $ret         = '';
         if ($total_pages > 1) {
             $ret = '<form name="pagenavform">';
             $ret .= '<select name="pagenavselect" onchange="location=this.options[this.options.selectedIndex].value;">';
-            $counter = 1;
+            $counter      = 1;
             $current_page = (int)(floor(($this->current + $this->perpage) / $this->perpage));
             while ($counter <= $total_pages) {
                 if ($counter == $current_page) {
@@ -136,31 +148,32 @@ class XoopsPageNav
             }
             $ret .= '</form>';
         }
+
         return $ret;
     }
-    
+
     /**
      * Create navigation with images
      *
-     * @param integer $offset
+     * @param  integer $offset
      * @return string
      */
-    function renderImageNav($offset = 4)
+    public function renderImageNav($offset = 4)
     {
         if ($this->total < $this->perpage) {
-            return;
+            return null;
         }
         $total_pages = ceil($this->total / $this->perpage);
-        $ret = '';
+        $ret         = '';
         if ($total_pages > 1) {
-            $ret = '<table><tr>';
+            $ret  = '<table><tr>';
             $prev = $this->current - $this->perpage;
             if ($prev >= 0) {
                 $ret .= '<td class="pagneutral"><a href="' . $this->url . $prev . $this->extra . '">&lt;</a></td><td><img src="' . XOOPS_URL . '/images/blank.gif" width="6" alt="" /></td>';
             } else {
                 $ret .= '<td class="pagno"></a></td><td><img src="' . XOOPS_URL . '/images/blank.gif" width="6" alt="" /></td>';
             }
-            $counter = 1;
+            $counter      = 1;
             $current_page = (int)(floor(($this->current + $this->perpage) / $this->perpage));
             while ($counter <= $total_pages) {
                 if ($counter == $current_page) {
@@ -184,8 +197,7 @@ class XoopsPageNav
             }
             $ret .= '</tr></table>';
         }
+
         return $ret;
     }
 }
-
-

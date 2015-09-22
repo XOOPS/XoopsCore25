@@ -5,7 +5,6 @@
  */
 abstract class HTMLPurifier_URIScheme
 {
-
     /**
      * Scheme's default port (integer). If an explicit port number is
      * specified that coincides with the default port, it will be
@@ -45,20 +44,20 @@ abstract class HTMLPurifier_URIScheme
 
     /**
      * Validates the components of a URI for a specific scheme.
-     * @param HTMLPurifier_URI $uri Reference to a HTMLPurifier_URI object
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
-     * @return bool success or failure
+     * @param  HTMLPurifier_URI     $uri Reference to a HTMLPurifier_URI object
+     * @param  HTMLPurifier_Config  $config
+     * @param  HTMLPurifier_Context $context
+     * @return bool                 success or failure
      */
     abstract public function doValidate(&$uri, $config, $context);
 
     /**
      * Public interface for validating components of a URI.  Performs a
      * bunch of default actions. Don't overload this method.
-     * @param HTMLPurifier_URI $uri Reference to a HTMLPurifier_URI object
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
-     * @return bool success or failure
+     * @param  HTMLPurifier_URI     $uri Reference to a HTMLPurifier_URI object
+     * @param  HTMLPurifier_Config  $config
+     * @param  HTMLPurifier_Context $context
+     * @return bool                 success or failure
      */
     public function validate(&$uri, $config, $context)
     {
@@ -67,10 +66,8 @@ abstract class HTMLPurifier_URIScheme
         }
         // kludge: browsers do funny things when the scheme but not the
         // authority is set
-        if (!$this->may_omit_host &&
-            // if the scheme is present, a missing host is always in error
-            (!is_null($uri->scheme) && ($uri->host === '' || is_null($uri->host))) ||
-            // if the scheme is not present, a *blank* host is in error,
+        if (!$this->may_omit_host && // if the scheme is present, a missing host is always in error
+            (!is_null($uri->scheme) && ($uri->host === '' || is_null($uri->host))) || // if the scheme is not present, a *blank* host is in error,
             // since this translates into '///path' which most browsers
             // interpret as being 'http://path'.
             (is_null($uri->scheme) && $uri->host === '')
@@ -95,8 +92,10 @@ abstract class HTMLPurifier_URIScheme
                 }
             } while (false);
         }
+
         return $this->doValidate($uri, $config, $context);
     }
 }
 
 // vim: et sw=4 sts=4
+

@@ -15,15 +15,13 @@
  * Not used yet, for forward compatibility
  *
  * @copyright    (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @author      Taiwen Jiang <phppp@users.sourceforge.net>
- * @since       2.3
- * @version     $Id$
+ * @license          GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @author           Taiwen Jiang <phppp@users.sourceforge.net>
+ * @since            2.3
+ * @version          $Id: xo-info.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-
 return array(
-    'copyright'    => '&copy; XOOPS Core Team, maintained by XOOPS Design Team',
+    'copyright' => '&copy; XOOPS Core Team, maintained by XOOPS Design Team',
     // Types of language constants
-    "languages" => array("main", "admin"),
-);
+    "languages" => array("main", "admin"));

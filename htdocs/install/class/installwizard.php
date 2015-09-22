@@ -8,41 +8,41 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
+
 /**
  * See the enclosed file license.txt for licensing information.
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
  * @copyright    (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
- * @package     installer
- * @since       2.3.0
- * @author      Haruki Setoyama  <haruki@planewave.org>
- * @author      Kazumi Ono <webmaster@myweb.ne.jp>
- * @author      Skalpa Keo <skalpa@xoops.org>
- * @author      Taiwen Jiang <phppp@users.sourceforge.net>
- * @author      DuGris (aka L. JEN) <dugris@frxoops.org>
- * @version     $Id$
+ * @license          http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @package          installer
+ * @since            2.3.0
+ * @author           Haruki Setoyama  <haruki@planewave.org>
+ * @author           Kazumi Ono <webmaster@myweb.ne.jp>
+ * @author           Skalpa Keo <skalpa@xoops.org>
+ * @author           Taiwen Jiang <phppp@users.sourceforge.net>
+ * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
+ * @version          $Id: installwizard.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-
 class XoopsInstallWizard
 {
-    var $language = 'english';
-    var $pages = array();
-    var $currentPage = 'langselect';
-    var $pageIndex = 0;
-    var $configs = array();
+    public $language    = 'english';
+    public $pages       = array();
+    public $currentPage = 'langselect';
+    public $pageIndex   = 0;
+    public $configs     = array();
 
     /**
      * @return bool
      */
-    function xoInit()
+    public function xoInit()
     {
-        if (@empty( $_SERVER['REQUEST_URI'])) {
+        if (@empty($_SERVER['REQUEST_URI'])) {
             $_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'];
         }
 
         // Load the main language file
-        $this->initLanguage(!empty( $_COOKIE['xo_install_lang']) ? $_COOKIE['xo_install_lang'] : 'english');
+        $this->initLanguage(!empty($_COOKIE['xo_install_lang']) ? $_COOKIE['xo_install_lang'] : 'english');
         // Setup pages
         include_once './include/page.php';
         $this->pages = $pages;
@@ -83,7 +83,7 @@ class XoopsInstallWizard
             return false;
         }
 
-        $pagename = preg_replace('~(page_)(.*)~','$2', basename($_SERVER['PHP_SELF'], ".php"));
+        $pagename = preg_replace('~(page_)(.*)~', '$2', basename($_SERVER['PHP_SELF'], ".php"));
         $this->setPage($pagename);
 
         // Prevent client caching
@@ -96,10 +96,10 @@ class XoopsInstallWizard
     /**
      * @return bool
      */
-    function checkAccess()
+    public function checkAccess()
     {
         if (INSTALL_USER != '' && INSTALL_PASSWORD != '') {
-            if (!isset($_SERVER['PHP_AUTH_USER']) ) {
+            if (!isset($_SERVER['PHP_AUTH_USER'])) {
                 header('WWW-Authenticate: Basic realm="XOOPS Installer"');
                 header('HTTP/1.0 401 Unauthorized');
                 echo 'You can not access this XOOPS installer.';
@@ -125,7 +125,7 @@ class XoopsInstallWizard
         }
 
         if (empty($GLOBALS['xoopsUser']) && !empty($_COOKIE["xo_install_user"])) {
-            install_acceptUser( $_COOKIE["xo_install_user"] );
+            install_acceptUser($_COOKIE["xo_install_user"]);
         }
         if (empty($GLOBALS['xoopsUser'])) {
             redirect_header("../user.php");
@@ -140,7 +140,7 @@ class XoopsInstallWizard
     /**
      * @param $file
      */
-    function loadLangFile($file)
+    public function loadLangFile($file)
     {
         if (file_exists("./language/{$this->language}/{$file}.php")) {
             include_once "./language/{$this->language}/{$file}.php";
@@ -152,7 +152,7 @@ class XoopsInstallWizard
     /**
      * @param $language
      */
-    function initLanguage($language)
+    public function initLanguage($language)
     {
         $language = preg_replace("/[^a-z0-9_\-]/i", "", $language);
         if (!file_exists("./language/{$language}/install.php")) {
@@ -167,15 +167,15 @@ class XoopsInstallWizard
      *
      * @return bool|mixed
      */
-    function setPage($page)
+    public function setPage($page)
     {
         $pages = array_keys($this->pages);
-        if ((int) $page && $page >= 0 && $page < count($pages)) {
-            $this->pageIndex = $page;
+        if ((int)$page && $page >= 0 && $page < count($pages)) {
+            $this->pageIndex   = $page;
             $this->currentPage = $pages[$page];
-        } else if (isset( $this->pages[$page])) {
+        } elseif (isset($this->pages[$page])) {
             $this->currentPage = $page;
-            $this->pageIndex = array_search($this->currentPage, $pages);
+            $this->pageIndex   = array_search($this->currentPage, $pages);
         } else {
             return false;
         }
@@ -190,11 +190,11 @@ class XoopsInstallWizard
     /**
      * @return string
      */
-    function baseLocation()
+    public function baseLocation()
     {
-        $proto   = ( @$_SERVER['HTTPS'] == 'on') ? 'https' : 'http';
-        $host    = $_SERVER['HTTP_HOST'];
-        $base    = substr( $_SERVER['PHP_SELF'], 0, strrpos($_SERVER['PHP_SELF'], '/'));
+        $proto = (@$_SERVER['HTTPS'] === 'on') ? 'https' : 'http';
+        $host  = $_SERVER['HTTP_HOST'];
+        $base  = substr($_SERVER['PHP_SELF'], 0, strrpos($_SERVER['PHP_SELF'], '/'));
 
         return $proto . '://' . $host . $base;
     }
@@ -204,17 +204,17 @@ class XoopsInstallWizard
      *
      * @return string
      */
-    function pageURI( $page )
+    public function pageURI($page)
     {
-        $pages = array_keys($this->pages);
+        $pages     = array_keys($this->pages);
         $pageIndex = $this->pageIndex;
-        if (!(int) $page{0}) {
+        if (!(int)$page{0}) {
             if ($page{0} == '+') {
                 $pageIndex += substr($page, 1);
-            } else if ($page{0} == '-') {
+            } elseif ($page{0} == '-') {
                 $pageIndex -= substr($page, 1);
             } else {
-                $pageIndex = (int) array_search($page, $pages);
+                $pageIndex = (int)array_search($page, $pages);
             }
         }
         if (!isset($pages[$pageIndex])) {
@@ -234,10 +234,10 @@ class XoopsInstallWizard
      * @param int    $status
      * @param string $message
      */
-    function redirectToPage( $page, $status = 303, $message = 'See other' )
+    public function redirectToPage($page, $status = 303, $message = 'See other')
     {
-        $location = $this->pageURI( $page );
-        $proto = !@empty($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.1';
+        $location = $this->pageURI($page);
+        $proto    = !@empty($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.1';
         header("{$proto} {$status} {$message}");
         //header( "Status: $status $message" );
         header("Location: {$location}");
@@ -246,17 +246,17 @@ class XoopsInstallWizard
     /**
      * @return string
      */
-    function CreateForm()
+    public function CreateForm()
     {
         $hidden = '';
-        $ret = '';
+        $ret    = '';
 
         foreach ($this->form as $form) {
             $ret .= "<fieldset><legend>" . $form->getTitle() . "</legend>\n";
 
             foreach ($form->getElements() as $ele) {
                 if (is_object($ele)) {
-                    if (!$ele->isHidden() ) {
+                    if (!$ele->isHidden()) {
                         if (($caption = $ele->getCaption()) != '') {
                             $name = $ele->getName();
                             $ret .= "<label class='xolabel' for='" . $ele->getName() . "'>" . $caption . "</label>";
@@ -272,10 +272,9 @@ class XoopsInstallWizard
                     }
                 }
             }
-            $ret .= "</fieldset>\n" . $hidden. "\n" . $form->renderValidationJS(true);
+            $ret .= "</fieldset>\n" . $hidden . "\n" . $form->renderValidationJS(true);
         }
 
         return $ret;
     }
-
 }

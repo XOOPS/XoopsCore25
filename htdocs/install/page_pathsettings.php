@@ -15,16 +15,16 @@
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
  * @copyright    (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
- * @package     installer
- * @since       2.3.0
- * @author      Haruki Setoyama  <haruki@planewave.org>
- * @author      Kazumi Ono <webmaster@myweb.ne.jp>
- * @author      Skalpa Keo <skalpa@xoops.org>
- * @author      Taiwen Jiang <phppp@users.sourceforge.net>
- * @author      DuGris (aka L. JEN) <dugris@frxoops.org>
- * @version     $Id$
-**/
+ * @license          http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @package          installer
+ * @since            2.3.0
+ * @author           Haruki Setoyama  <haruki@planewave.org>
+ * @author           Kazumi Ono <webmaster@myweb.ne.jp>
+ * @author           Skalpa Keo <skalpa@xoops.org>
+ * @author           Taiwen Jiang <phppp@users.sourceforge.net>
+ * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
+ * @version          $Id: page_pathsettings.php 13082 2015-06-06 21:59:41Z beckmi $
+ **/
 
 require_once './include/common.inc.php';
 defined('XOOPS_INSTALL') or die('XOOPS Installation wizard die');
@@ -36,48 +36,47 @@ $pageHasHelp = true;
 
 $ctrl = new PathStuffController($wizard->configs['xoopsPathDefault'], $wizard->configs['dataPath']);
 
-if ($_SERVER['REQUEST_METHOD'] == 'GET' && @$_GET['var'] && @$_GET['action'] == 'checkpath') {
-    $path = $_GET['var'];
-    $ctrl->xoopsPath[$path] = htmlspecialchars( trim($_GET['path']) );
-    echo genPathCheckHtml( $path, $ctrl->checkPath($path) );
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && @$_GET['var'] && @$_GET['action'] === 'checkpath') {
+    $path                   = $_GET['var'];
+    $ctrl->xoopsPath[$path] = htmlspecialchars(trim($_GET['path']));
+    echo genPathCheckHtml($path, $ctrl->checkPath($path));
     exit();
 }
 $ctrl->execute();
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    return;
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    return null;
 }
 ob_start();
 ?>
-<script type="text/javascript">
-function removeTrailing(id, val)
-{
-    if (val[val.length-1] == '/') {
-        val = val.substr(0, val.length-1);
-        $(id).value = val;
-    }
+    <script type="text/javascript">
+        function removeTrailing(id, val) {
+            if (val[val.length - 1] == '/') {
+                val = val.substr(0, val.length - 1);
+                $(id).value = val;
+            }
 
-    return val;
-}
+            return val;
+        }
 
-function updPath( key, val )
-{
-    val = removeTrailing(key, val);
-    new Ajax.Updater(
-        key+'pathimg', '<?php echo $_SERVER['PHP_SELF']; ?>',
-        { method:'get',parameters:'action=checkpath&var='+key+'&path='+val }
-    );
-    $(key+'perms').style.display='none';
-}
-</script>
-<fieldset>
-    <legend><?php echo XOOPS_PATHS; ?></legend>
+        function updPath(key, val) {
+            val = removeTrailing(key, val);
+            new Ajax.Updater(
+                key + 'pathimg', '<?php echo $_SERVER['PHP_SELF']; ?>',
+                {method: 'get', parameters: 'action=checkpath&var=' + key + '&path=' + val}
+            );
+            $(key + 'perms').style.display = 'none';
+        }
+    </script>
+    <fieldset>
+        <legend><?php echo XOOPS_PATHS; ?></legend>
 
-    <label class="xolabel" for="root"><?php echo XOOPS_ROOT_PATH_LABEL; ?></label>
-    <div class="xoform-help"><?php echo XOOPS_ROOT_PATH_HELP; ?></div>
-        <input type="text" name="root" id="root" value="<?php echo $ctrl->xoopsPath['root']; ?>" onchange="updPath('root', this.value)" />
-        <span id="rootpathimg"><?php echo genPathCheckHtml( 'root', $ctrl->validPath['root'] ); ?></span>
+        <label class="xolabel" for="root"><?php echo XOOPS_ROOT_PATH_LABEL; ?></label>
+
+        <div class="xoform-help"><?php echo XOOPS_ROOT_PATH_HELP; ?></div>
+        <input type="text" name="root" id="root" value="<?php echo $ctrl->xoopsPath['root']; ?>" onchange="updPath('root', this.value)"/>
+        <span id="rootpathimg"><?php echo genPathCheckHtml('root', $ctrl->validPath['root']); ?></span>
         <?php
-        if ($ctrl->validPath['root'] && !empty( $ctrl->permErrors['root'])) {
+        if ($ctrl->validPath['root'] && !empty($ctrl->permErrors['root'])) {
             echo '<div id="rootperms" class="x2-note">';
             echo CHECKING_PERMISSIONS . '<br /><p>' . ERR_NEED_WRITE_ACCESS . '</p>';
             echo '<ul class="diags">';
@@ -93,14 +92,15 @@ function updPath( key, val )
             echo '<div id="rootperms" class="x2-note" style="display: none;" />';
         }
         ?>
-    </div>
+        </div>
 
-    <label class="xolabel" for="data"><?php echo XOOPS_DATA_PATH_LABEL; ?></label>
-    <div class="xoform-help"><?php echo XOOPS_DATA_PATH_HELP; ?></div>
-        <input type="text" name="data" id="data" value="<?php echo $ctrl->xoopsPath['data']; ?>" onchange="updPath('data', this.value)" />
-        <span id="datapathimg"><?php echo genPathCheckHtml('data', $ctrl->validPath['data'] ); ?></span>
+        <label class="xolabel" for="data"><?php echo XOOPS_DATA_PATH_LABEL; ?></label>
+
+        <div class="xoform-help"><?php echo XOOPS_DATA_PATH_HELP; ?></div>
+        <input type="text" name="data" id="data" value="<?php echo $ctrl->xoopsPath['data']; ?>" onchange="updPath('data', this.value)"/>
+        <span id="datapathimg"><?php echo genPathCheckHtml('data', $ctrl->validPath['data']); ?></span>
         <?php
-        if ($ctrl->validPath['data'] && !empty( $ctrl->permErrors['data'])) {
+        if ($ctrl->validPath['data'] && !empty($ctrl->permErrors['data'])) {
             echo '<div id="dataperms" class="x2-note">';
             echo CHECKING_PERMISSIONS . '<br /><p>' . ERR_NEED_WRITE_ACCESS . '</p>';
             echo '<ul class="diags">';
@@ -116,21 +116,24 @@ function updPath( key, val )
             echo '<div id="dataperms" class="x2-note" style="display: none;" />';
         }
         ?>
-    </div>
+        </div>
 
-    <label class="xolabel" for="lib"><?php echo XOOPS_LIB_PATH_LABEL; ?></label>
-    <div class="xoform-help"><?php echo XOOPS_LIB_PATH_HELP; ?></div>
-    <input type="text" name="lib" id="lib" value="<?php echo $ctrl->xoopsPath['lib']; ?>" onchange="updPath('lib', this.value)" />
-    <span id="libpathimg"><?php echo genPathCheckHtml('lib', $ctrl->validPath['lib']); ?></span>
-    <div id="libperms" class="x2-note" style="display: none;" />
-</fieldset>
+        <label class="xolabel" for="lib"><?php echo XOOPS_LIB_PATH_LABEL; ?></label>
 
-<fieldset>
-    <legend><?php echo XOOPS_URLS; ?></legend>
-    <label class="xolabel" for="url"><?php echo XOOPS_URL_LABEL; ?></label>
-    <div class="xoform-help"><?php echo XOOPS_URL_HELP; ?></div>
-    <input type="text" name="URL" id="url" value="<?php echo $ctrl->xoopsUrl; ?>" onchange="removeTrailing('url', this.value)" />
-</fieldset>
+        <div class="xoform-help"><?php echo XOOPS_LIB_PATH_HELP; ?></div>
+        <input type="text" name="lib" id="lib" value="<?php echo $ctrl->xoopsPath['lib']; ?>" onchange="updPath('lib', this.value)"/>
+        <span id="libpathimg"><?php echo genPathCheckHtml('lib', $ctrl->validPath['lib']); ?></span>
+
+        <div id="libperms" class="x2-note" style="display: none;"/>
+    </fieldset>
+
+    <fieldset>
+        <legend><?php echo XOOPS_URLS; ?></legend>
+        <label class="xolabel" for="url"><?php echo XOOPS_URL_LABEL; ?></label>
+
+        <div class="xoform-help"><?php echo XOOPS_URL_HELP; ?></div>
+        <input type="text" name="URL" id="url" value="<?php echo $ctrl->xoopsUrl; ?>" onchange="removeTrailing('url', this.value)"/>
+    </fieldset>
 
 <?php
 $content = ob_get_contents();

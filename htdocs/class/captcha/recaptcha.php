@@ -10,15 +10,15 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         class
- * @subpackage      CAPTCHA
- * @since           2.5.2
- * @author          trabis <lusopoemas@gmail.com>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             class
+ * @subpackage          CAPTCHA
+ * @since               2.5.2
+ * @author              trabis <lusopoemas@gmail.com>
+ * @version             $Id: recaptcha.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Class XoopsCaptchaRecaptcha
@@ -30,7 +30,7 @@ class XoopsCaptchaRecaptcha extends XoopsCaptchaMethod
      *
      * @return bool
      */
-    function isActive()
+    public function isActive()
     {
         return true;
     }
@@ -40,13 +40,13 @@ class XoopsCaptchaRecaptcha extends XoopsCaptchaMethod
      *
      * @return string
      */
-    function render()
+    public function render()
     {
         require_once __DIR__ . '/recaptcha/recaptchalib.php';
         $form = "<script type=\"text/javascript\">
             var RecaptchaOptions = {
-            theme : '" . $this->config['theme']."',
-            lang : '" . $this->config['lang']."'
+            theme : '" . $this->config['theme'] . "',
+            lang : '" . $this->config['lang'] . "'
             };
             </script>";
         $form .= recaptcha_get_html($this->config['public_key']);
@@ -61,21 +61,16 @@ class XoopsCaptchaRecaptcha extends XoopsCaptchaMethod
      *
      * @return bool
      */
-    function verify($sessionName)
+    public function verify($sessionName)
     {
         $is_valid = false;
         require_once __DIR__ . '/recaptcha/recaptchalib.php';
         if (!empty($_POST['recaptcha_response_field'])) {
-            $resp = recaptcha_check_answer(
-                $this->config['private_key'],
-                $_SERVER['REMOTE_ADDR'],
-                $_POST['recaptcha_challenge_field'],
-                $_POST['recaptcha_response_field']
-            );
+            $resp = recaptcha_check_answer($this->config['private_key'], $_SERVER['REMOTE_ADDR'], $_POST['recaptcha_challenge_field'], $_POST['recaptcha_response_field']);
             if (!$resp->is_valid) {
-              $this->message[] = $resp->error;
+                $this->message[] = $resp->error;
             } else {
-              $is_valid = true;
+                $is_valid = true;
             }
         }
 

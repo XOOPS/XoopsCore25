@@ -6,7 +6,6 @@
  */
 class HTMLPurifier_AttrDef_URI extends HTMLPurifier_AttrDef
 {
-
     /**
      * @type HTMLPurifier_URIParser
      */
@@ -22,24 +21,25 @@ class HTMLPurifier_AttrDef_URI extends HTMLPurifier_AttrDef
      */
     public function __construct($embeds_resource = false)
     {
-        $this->parser = new HTMLPurifier_URIParser();
+        $this->parser         = new HTMLPurifier_URIParser();
         $this->embedsResource = (bool)$embeds_resource;
     }
 
     /**
-     * @param string $string
+     * @param  string $string
      * @return HTMLPurifier_AttrDef_URI
      */
     public function make($string)
     {
         $embeds = ($string === 'embedded');
+
         return new HTMLPurifier_AttrDef_URI($embeds);
     }
 
     /**
-     * @param string $uri
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
+     * @param  string               $uri
+     * @param  HTMLPurifier_Config  $config
+     * @param  HTMLPurifier_Context $context
      * @return bool|string
      */
     public function validate($uri, $config, $context)
@@ -70,7 +70,7 @@ class HTMLPurifier_AttrDef_URI extends HTMLPurifier_AttrDef
 
             // chained filtering
             $uri_def = $config->getDefinition('URI');
-            $result = $uri_def->filter($uri, $config, $context);
+            $result  = $uri_def->filter($uri, $config, $context);
             if (!$result) {
                 break;
             }
@@ -96,16 +96,17 @@ class HTMLPurifier_AttrDef_URI extends HTMLPurifier_AttrDef
 
             // survived gauntlet
             $ok = true;
-
         } while (false);
 
         $context->destroy('EmbeddedURI');
         if (!$ok) {
             return false;
         }
+
         // back to string
         return $uri->toString();
     }
 }
 
 // vim: et sw=4 sts=4
+

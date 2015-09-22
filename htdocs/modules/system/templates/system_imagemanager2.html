@@ -8,9 +8,9 @@
 <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl xoops.css}>" />
 <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl modules/system/css/imagemanager.css}>" />
 
-<{php}> 
+<{php}>
 $language = $GLOBALS['xoopsConfig']['language'];
-if(file_exists(XOOPS_ROOT_PATH.'/language/'.$language.'/style.css')){ 
+if(file_exists(XOOPS_ROOT_PATH.'/language/'.$language.'/style.css')){
 echo "<link rel=\"stylesheet\" type=\"text/css\" media=\"all\" href=\"language/$language/style.css\" />";
 }
 <{/php}>
@@ -43,7 +43,7 @@ echo "<link rel=\"stylesheet\" type=\"text/css\" media=\"all\" href=\"language/$
 
 
   <div id="footer">
-    <input value="<{$lang_close}>" type="button" onclick="javascript:window.close();" />
+    <input value="<{$lang_close}>" type="button" onclick="window.close();" />
   </div>
 
   </body>

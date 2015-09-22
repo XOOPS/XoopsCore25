@@ -10,14 +10,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @subpackage      form
- * @since           2.0.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @subpackage          form
+ * @since               2.0.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version             $Id: formeditor.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 xoops_load('XoopsFormTextArea');
 
@@ -27,7 +27,7 @@ xoops_load('XoopsFormTextArea');
  */
 class XoopsFormEditor extends XoopsFormTextArea
 {
-    var $editor;
+    public $editor;
 
     /**
      * Constructor
@@ -35,24 +35,36 @@ class XoopsFormEditor extends XoopsFormTextArea
      * @param string $caption   Caption
      * @param string $name      Name for textarea field
      * @param array  $configs   configures: editor - editor identifier; name - textarea field name; width, height - dimensions for textarea; value - text content
-     * @param bool   $nohtml  use non-WYSIWYG editor onfailure
+     * @param bool   $nohtml    use non-WYSIWYG editor onfailure
      * @param string $OnFailure editor to be used if current one failed
      *
      */
-    function XoopsFormEditor($caption, $name, $configs = null, $nohtml = false, $OnFailure = '')
+    public function __construct($caption, $name, $configs = null, $nohtml = false, $OnFailure = '')
     {
         // Backward compatibility: $name -> editor name; $configs['name'] -> textarea field name
-        if (! isset($configs['editor'])) {
+        if (!isset($configs['editor'])) {
             $configs['editor'] = $name;
-            $name = $configs['name'];
+            $name              = $configs['name'];
             // New: $name -> textarea field name; $configs['editor'] -> editor name; $configs['name'] -> textarea field name
         } else {
             $configs['name'] = $name;
         }
-        $this->XoopsFormTextArea($caption, $name);
+        parent::__construct($caption, $name);
         xoops_load('XoopsEditorHandler');
         $editor_handler = XoopsEditorHandler::getInstance();
-        $this->editor = $editor_handler->get($configs['editor'], $configs, $nohtml, $OnFailure);
+        $this->editor   = $editor_handler->get($configs['editor'], $configs, $nohtml, $OnFailure);
+    }
+
+    /**
+     * @param            $caption
+     * @param            $name
+     * @param null       $configs
+     * @param bool|false $nohtml
+     * @param string     $OnFailure
+     */
+    public function XoopsFormEditor($caption, $name, $configs = null, $nohtml = false, $OnFailure = '')
+    {
+        $this->__construct($caption, $name, $configs, $nohtml, $OnFailure);
     }
 
     /**
@@ -60,14 +72,14 @@ class XoopsFormEditor extends XoopsFormTextArea
      * TEMPORARY SOLUTION to 'override' original renderValidationJS method
      * with custom XoopsEditor's renderValidationJS method
      */
-    function renderValidationJS()
+    public function renderValidationJS()
     {
         if (is_object($this->editor) && $this->isRequired()) {
             if (method_exists($this->editor, 'renderValidationJS')) {
                 $this->editor->setName($this->getName());
                 $this->editor->setCaption($this->getCaption());
                 $this->editor->_required = $this->isRequired();
-                $ret = $this->editor->renderValidationJS();
+                $ret                     = $this->editor->renderValidationJS();
 
                 return $ret;
             } else {
@@ -83,7 +95,7 @@ class XoopsFormEditor extends XoopsFormTextArea
      *
      * @return \sting
      */
-    function render()
+    public function render()
     {
         if (is_object($this->editor)) {
             return $this->editor->render();

@@ -1,10 +1,9 @@
 <?php
 /**
  * Smarty plugin
- * @package Smarty
+ * @package    Smarty
  * @subpackage plugins
  */
-
 
 /**
  * Smarty {eval} function plugin
@@ -12,22 +11,23 @@
  * Type:     function<br>
  * Name:     eval<br>
  * Purpose:  evaluate a template variable as a template<br>
- * @link http://smarty.php.net/manual/en/language.function.eval.php {eval}
+ * @link   http://smarty.php.net/manual/en/language.function.eval.php {eval}
  *       (Smarty online manual)
  * @author Monte Ohrt <monte at ohrt dot com>
  * @param array
  * @param Smarty
+ * @return string|void
  */
 function smarty_function_eval($params, &$smarty)
 {
-
     if (!isset($params['var'])) {
         $smarty->trigger_error("eval: missing 'var' parameter");
-        return;
+
+        return null;
     }
 
-    if($params['var'] == '') {
-        return;
+    if ($params['var'] == '') {
+        return null;
     }
 
     $smarty->_compile_source('evaluated template', $params['var'], $_var_compiled);
@@ -42,6 +42,7 @@ function smarty_function_eval($params, &$smarty)
     } else {
         return $_contents;
     }
+    return null;
 }
 
 /* vim: set expandtab: */

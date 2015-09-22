@@ -16,13 +16,13 @@
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
- * @package         core
- * @since           2.0.0
- * @author          Kazumi Ono <webmaster@myweb.ne.jp>
- * @version         $Id$
+ * @license             http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @package             core
+ * @since               2.0.0
+ * @author              Kazumi Ono <webmaster@myweb.ne.jp>
+ * @version             $Id: register.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-include __DIR__ . DIRECTORY_SEPARATOR . 'mainfile.php';
+include __DIR__ . '/mainfile.php';
 $xoopsPreload =& XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.register.start');
 
@@ -31,7 +31,7 @@ xoops_load('XoopsUserUtility');
 
 $myts =& MyTextSanitizer::getInstance();
 
-$config_handler =& xoops_gethandler('config');
+$config_handler  =& xoops_getHandler('config');
 $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
 if (empty($xoopsConfigUser['allow_register'])) {
@@ -57,59 +57,59 @@ function userCheck($uname, $email, $pass, $vpass)
 XoopsLoad::load('XoopsFilterInput');
 // from $_POST we use keys: op, uname, email, url, pass, vpass, timezone_offset,
 //                          user_viewemail, user_mailok, agree_disc
-$op='register';
+$op = 'register';
 if (isset($_POST['op'])) {
     $op = trim(XoopsFilterInput::clean($_POST['op'], 'STRING'));
 }
 
-$uname='';
+$uname = '';
 if (isset($_POST['uname'])) {
     $uname = trim(XoopsFilterInput::clean($myts->stripSlashesGPC($_POST['uname']), 'STRING'));
 }
 
-$email='';
+$email = '';
 if (isset($_POST['email'])) {
     $email = trim(XoopsFilterInput::clean($myts->stripSlashesGPC($_POST['email']), 'STRING'));
 }
 
-$url='';
+$url = '';
 if (isset($_POST['url'])) {
     $url = trim(XoopsFilterInput::clean($myts->stripSlashesGPC($_POST['url']), 'WEBURL'));
 }
 
-$pass='';
+$pass = '';
 if (isset($_POST['pass'])) {
     $pass = trim(XoopsFilterInput::clean($myts->stripSlashesGPC($_POST['pass']), 'STRING'));
 }
 
-$vpass='';
+$vpass = '';
 if (isset($_POST['vpass'])) {
     $vpass = trim(XoopsFilterInput::clean($myts->stripSlashesGPC($_POST['vpass']), 'STRING'));
 }
 
-$timezone_offset=$xoopsConfig['default_TZ'];
+$timezone_offset = $xoopsConfig['default_TZ'];
 if (isset($_POST['timezone_offset'])) {
     $timezone_offset = XoopsFilterInput::clean($_POST['timezone_offset'], 'FLOAT');
 }
 
-$user_viewemail=false;
+$user_viewemail = false;
 if (isset($_POST['user_viewemail'])) {
     $user_viewemail = XoopsFilterInput::clean($_POST['user_viewemail'], 'BOOL');
 }
 
-$user_mailok=false;
+$user_mailok = false;
 if (isset($_POST['user_mailok'])) {
     $user_mailok = XoopsFilterInput::clean($_POST['user_mailok'], 'BOOL');
 }
 
-$agree_disc=false;
+$agree_disc = false;
 if (isset($_POST['agree_disc'])) {
     $agree_disc = XoopsFilterInput::clean($_POST['agree_disc'], 'BOOL');
 }
 
 // from $_GET we may use keys: op, id, actkey
-$clean_id='';
-$clean_actkey='';
+$clean_id     = '';
+$clean_actkey = '';
 if (!isset($_POST['op']) && isset($_GET['op'])) {
     $op = XoopsFilterInput::clean($_GET['op'], 'STRING');
     if (isset($_GET['id'])) {
@@ -150,14 +150,12 @@ switch ($op) {
             echo "<input type='hidden' name='uname' value='" . $myts->htmlSpecialChars($uname) . "' />
                   <input type='hidden' name='email' value='" . $myts->htmlSpecialChars($email) . "' />
                   <input type='hidden' name='user_viewemail' value='" . $user_viewemail . "' />
-                  <input type='hidden' name='timezone_offset' value='" . (float) $timezone_offset . "' />
+                  <input type='hidden' name='timezone_offset' value='" . (float)$timezone_offset . "' />
                   <input type='hidden' name='url' value='" . $myts->htmlSpecialChars($url) . "' />
                   <input type='hidden' name='pass' value='" . $myts->htmlSpecialChars($pass) . "' />
                   <input type='hidden' name='vpass' value='" . $myts->htmlSpecialChars($vpass) . "' />
                   <input type='hidden' name='user_mailok' value='" . $user_mailok . "' />
-                  <br /><br /><input type='hidden' name='op' value='finish' />"
-                  . $GLOBALS['xoopsSecurity']->getTokenHTML()
-                  . "<input type='submit' value='" . _US_FINISH . "' /></form>";
+                  <br /><br /><input type='hidden' name='op' value='finish' />" . $GLOBALS['xoopsSecurity']->getTokenHTML() . "<input type='submit' value='" . _US_FINISH . "' /></form>";
         } else {
             echo "<span class='red'>$stop</span>";
             include $GLOBALS['xoops']->path('include/registerform.php');
@@ -178,8 +176,8 @@ switch ($op) {
             $stop .= $xoopsCaptcha->getMessage() . "<br />";
         }
         if (empty($stop)) {
-            $member_handler =& xoops_gethandler('member');
-            $newuser =& $member_handler->createUser();
+            $member_handler =& xoops_getHandler('member');
+            $newuser        =& $member_handler->createUser();
             $newuser->setVar('user_viewemail', $user_viewemail, true);
             $newuser->setVar('uname', $uname, true);
             $newuser->setVar('email', $email, true);
@@ -229,7 +227,7 @@ switch ($op) {
                 $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
                 $xoopsMailer->setFromName($xoopsConfig['sitename']);
                 $xoopsMailer->setSubject(sprintf(_US_USERKEYFOR, $uname));
-                if (! $xoopsMailer->send()) {
+                if (!$xoopsMailer->send()) {
                     echo _US_YOURREGMAILNG;
                 } else {
                     echo _US_YOURREGISTERED;
@@ -245,12 +243,12 @@ switch ($op) {
                 $xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
                 $xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
                 $xoopsMailer->assign('SITEURL', XOOPS_URL . "/");
-                $member_handler =& xoops_gethandler('member');
+                $member_handler =& xoops_getHandler('member');
                 $xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['activation_group']));
                 $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
                 $xoopsMailer->setFromName($xoopsConfig['sitename']);
                 $xoopsMailer->setSubject(sprintf(_US_USERKEYFOR, $uname));
-                if (! $xoopsMailer->send()) {
+                if (!$xoopsMailer->send()) {
                     echo _US_YOURREGMAILNG;
                 } else {
                     echo _US_YOURREGISTERED2;
@@ -260,7 +258,7 @@ switch ($op) {
                 $xoopsMailer =& xoops_getMailer();
                 $xoopsMailer->reset();
                 $xoopsMailer->useMail();
-                $member_handler =& xoops_gethandler('member');
+                $member_handler =& xoops_getHandler('member');
                 $xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['new_user_notify_group']));
                 $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
                 $xoopsMailer->setFromName($xoopsConfig['sitename']);
@@ -278,14 +276,14 @@ switch ($op) {
 
     case 'actv':
     case 'activate':
-        $id = $clean_id;
+        $id     = $clean_id;
         $actkey = $clean_actkey;
         if (empty($id)) {
             redirect_header('index.php', 1, '');
             exit();
         }
-        $member_handler =& xoops_gethandler('member');
-        $thisuser =& $member_handler->getUser($id);
+        $member_handler =& xoops_getHandler('member');
+        $thisuser       =& $member_handler->getUser($id);
         if (!is_object($thisuser)) {
             exit();
         }
@@ -296,10 +294,10 @@ switch ($op) {
                 redirect_header('user.php', 5, _US_ACONTACT, false);
             } else {
                 if (false != $member_handler->activateUser($thisuser)) {
-                    $config_handler =& xoops_gethandler('config');
+                    $config_handler  =& xoops_getHandler('config');
                     $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
                     if ($xoopsConfigUser['activation_type'] == 2) {
-                        $myts =& MyTextSanitizer::getInstance();
+                        $myts        =& MyTextSanitizer::getInstance();
                         $xoopsMailer =& xoops_getMailer();
                         $xoopsMailer->useMail();
                         $xoopsMailer->setTemplate('activated.tpl');

@@ -6,11 +6,10 @@
  */
 class HTMLPurifier_AttrDef_Lang extends HTMLPurifier_AttrDef
 {
-
     /**
-     * @param string $string
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
+     * @param  string               $string
+     * @param  HTMLPurifier_Config  $config
+     * @param  HTMLPurifier_Context $context
      * @return bool|string
      */
     public function validate($string, $config, $context)
@@ -20,7 +19,7 @@ class HTMLPurifier_AttrDef_Lang extends HTMLPurifier_AttrDef
             return false;
         }
 
-        $subtags = explode('-', $string);
+        $subtags     = explode('-', $string);
         $num_subtags = count($subtags);
 
         if ($num_subtags == 0) { // sanity check
@@ -79,8 +78,10 @@ class HTMLPurifier_AttrDef_Lang extends HTMLPurifier_AttrDef
             }
             $new_string .= '-' . $subtags[$i];
         }
+
         return $new_string;
     }
 }
 
 // vim: et sw=4 sts=4
+

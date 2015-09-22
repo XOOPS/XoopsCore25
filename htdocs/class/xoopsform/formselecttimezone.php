@@ -10,15 +10,15 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @subpackage      form
- * @since           2.0.0
- * @author          Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version         $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @subpackage          form
+ * @since               2.0.0
+ * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
+ * @version             $Id: formselecttimezone.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * lists of values
@@ -37,13 +37,24 @@ class XoopsFormSelectTimezone extends XoopsFormSelect
      *
      * @param string $caption
      * @param string $name
-     * @param mixed $value Pre-selected value (or array of them).
-     * 							Legal values are "-12" to "12" with some ".5"s strewn in ;-)
-     * @param int $size Number of rows. "1" makes a drop-down-box.
+     * @param mixed  $value   Pre-selected value (or array of them).
+     *                        Legal values are "-12" to "12" with some ".5"s strewn in ;-)
+     * @param int    $size    Number of rows. "1" makes a drop-down-box.
      */
-    function XoopsFormSelectTimezone($caption, $name, $value = null, $size = 1)
+    public function __construct($caption, $name, $value = null, $size = 1)
     {
-        $this->XoopsFormSelect($caption, $name, $value, $size);
+        parent::__construct($caption, $name, $value, $size);
         $this->addOptionArray(XoopsLists::getTimeZoneList());
+    }
+
+    /**
+     * @param      $caption
+     * @param      $name
+     * @param null $value
+     * @param int  $size
+     */
+    public function XoopsFormSelectTimezone($caption, $name, $value = null, $size = 1)
+    {
+        $this->__construct($caption, $name, $value, $size);
     }
 }

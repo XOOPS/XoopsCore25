@@ -6,12 +6,12 @@
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
  * @copyright    (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @author		Skalpa Keo <skalpa@xoops.org>
- * @package		xos_opal
- * @subpackage	xos_opal_Smarty
- * @since       2.0.14
- * @version		$Id$
+ * @license          GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @author           Skalpa Keo <skalpa@xoops.org>
+ * @package          xos_opal
+ * @subpackage       xos_opal_Smarty
+ * @since            2.0.14
+ * @version          $Id: compiler.xoImgUrl.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 /**
@@ -29,12 +29,15 @@
  * <b>Note:</b> the themes inheritance system can generate many filesystem accesses depending
  * on your themes configuration. Because of this, the use of the dynamic syntax with this plug-in
  * is not possible right now.
+ * @param $argStr
+ * @param $smarty
+ * @return string
  */
 
 function smarty_compiler_xoImgUrl($argStr, &$smarty)
 {
     global $xoops, $xoTheme;
     $path = (isset($xoTheme) && is_object($xoTheme)) ? $xoTheme->resourcePath($argStr) : $argStr;
-    return "\necho '" . addslashes($xoops->url($path)) . "';";
 
+    return "\necho '" . addslashes($xoops->url($path)) . "';";
 }

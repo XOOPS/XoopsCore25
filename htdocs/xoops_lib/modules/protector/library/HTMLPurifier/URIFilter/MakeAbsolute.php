@@ -20,33 +20,31 @@ class HTMLPurifier_URIFilter_MakeAbsolute extends HTMLPurifier_URIFilter
     protected $basePathStack = array();
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param  HTMLPurifier_Config $config
      * @return bool
      */
     public function prepare($config)
     {
-        $def = $config->getDefinition('URI');
+        $def        = $config->getDefinition('URI');
         $this->base = $def->base;
         if (is_null($this->base)) {
-            trigger_error(
-                'URI.MakeAbsolute is being ignored due to lack of ' .
-                'value for URI.Base configuration',
-                E_USER_WARNING
-            );
+            trigger_error('URI.MakeAbsolute is being ignored due to lack of ' . 'value for URI.Base configuration', E_USER_WARNING);
+
             return false;
         }
         $this->base->fragment = null; // fragment is invalid for base URI
-        $stack = explode('/', $this->base->path);
+        $stack                = explode('/', $this->base->path);
         array_pop($stack); // discard last segment
-        $stack = $this->_collapseStack($stack); // do pre-parsing
+        $stack               = $this->_collapseStack($stack); // do pre-parsing
         $this->basePathStack = $stack;
+
         return true;
     }
 
     /**
-     * @param HTMLPurifier_URI $uri
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
+     * @param  HTMLPurifier_URI     $uri
+     * @param  HTMLPurifier_Config  $config
+     * @param  HTMLPurifier_Context $context
      * @return bool
      */
     public function filter(&$uri, $config, $context)
@@ -54,10 +52,10 @@ class HTMLPurifier_URIFilter_MakeAbsolute extends HTMLPurifier_URIFilter
         if (is_null($this->base)) {
             return true;
         } // abort early
-        if ($uri->path === '' && is_null($uri->scheme) &&
-            is_null($uri->host) && is_null($uri->query) && is_null($uri->fragment)) {
+        if ($uri->path === '' && is_null($uri->scheme) && is_null($uri->host) && is_null($uri->query) && is_null($uri->fragment)) {
             // reference to current document
             $uri = clone $this->base;
+
             return true;
         }
         if (!is_null($uri->scheme)) {
@@ -84,7 +82,7 @@ class HTMLPurifier_URIFilter_MakeAbsolute extends HTMLPurifier_URIFilter
             $uri->path = $this->base->path;
         } elseif ($uri->path[0] !== '/') {
             // relative path, needs more complicated processing
-            $stack = explode('/', $uri->path);
+            $stack     = explode('/', $uri->path);
             $new_stack = array_merge($this->basePathStack, $stack);
             if ($new_stack[0] !== '' && !is_null($this->base->host)) {
                 array_unshift($new_stack, '');
@@ -106,17 +104,18 @@ class HTMLPurifier_URIFilter_MakeAbsolute extends HTMLPurifier_URIFilter
         if (is_null($uri->port)) {
             $uri->port = $this->base->port;
         }
+
         return true;
     }
 
     /**
      * Resolve dots and double-dots in a path stack
-     * @param array $stack
+     * @param  array $stack
      * @return array
      */
     private function _collapseStack($stack)
     {
-        $result = array();
+        $result    = array();
         $is_folder = false;
         for ($i = 0; isset($stack[$i]); ++$i) {
             $is_folder = false;
@@ -151,8 +150,10 @@ class HTMLPurifier_URIFilter_MakeAbsolute extends HTMLPurifier_URIFilter
         if ($is_folder) {
             $result[] = '';
         }
+
         return $result;
     }
 }
 
 // vim: et sw=4 sts=4
+

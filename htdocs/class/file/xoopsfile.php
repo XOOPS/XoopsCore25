@@ -10,14 +10,14 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright    (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package     class
- * @subpackage  file
- * @since       2.3.0
- * @author      Taiwen Jiang <phppp@users.sourceforge.net>
- * @version     $Id$
+ * @license          GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package          class
+ * @subpackage       file
+ * @since            2.3.0
+ * @author           Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version          $Id: xoopsfile.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * XoopsFile
@@ -26,19 +26,19 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
  * @author Taiwen Jiang <phppp@users.sourceforge.net>
  * @access public
  */
-class XoopsFile
+class xoopsfile
 {
     /**
      * XoopsFile::__construct()
      */
-    function __construct()
+    public function __construct()
     {
     }
 
     /**
      * XoopsFile::XoopsFile()
      */
-    function XoopsFile()
+    public function XoopsFile()
     {
         $this->__construct();
     }
@@ -48,11 +48,11 @@ class XoopsFile
      *
      * @return
      */
-    function getInstance()
+    public function getInstance()
     {
         static $instance;
         if (!isset($instance)) {
-            $class = __CLASS__;
+            $class    = __CLASS__;
             $instance = new $class();
         }
 
@@ -66,7 +66,7 @@ class XoopsFile
      *
      * @return bool
      */
-    static function load($name = 'file')
+    public static function load($name = 'file')
     {
         switch ($name) {
             case 'folder':
@@ -106,7 +106,7 @@ class XoopsFile
      * @param mixed  $mode
      * @return
      */
-    static function getHandler($name = 'file', $path = false, $create = false, $mode = null)
+    public static function getHandler($name = 'file', $path = false, $create = false, $mode = null)
     {
         $handler = null;
         XoopsFile::load($name);

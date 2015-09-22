@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: comment_delete.php 13082 2015-06-06 21:59:41Z beckmi $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2015 XOOPS Project (www.xoops.org)            //
@@ -25,4 +25,4 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 include './admin_header.php';
-include XOOPS_ROOT_PATH.'/include/comment_delete.php';
+include XOOPS_ROOT_PATH . '/include/comment_delete.php';

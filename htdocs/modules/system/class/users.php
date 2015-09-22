@@ -10,11 +10,11 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package     system
- * @version     $Id$
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             system
+ * @version             $Id: users.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-// defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 include_once XOOPS_ROOT_PATH . '/kernel/user.php';
 
@@ -22,14 +22,14 @@ include_once XOOPS_ROOT_PATH . '/kernel/user.php';
  * System Users
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @package     system
+ * @package             system
  */
 class SystemUsers extends XoopsUser
 {
     /**
      *
      */
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -37,7 +37,7 @@ class SystemUsers extends XoopsUser
     /**
      * @return XoopsThemeForm
      */
-    function getForm()
+    public function getForm()
     {
         if ($this->isNew()) {
             $blank_img = 'blank.gif';
@@ -45,7 +45,7 @@ class SystemUsers extends XoopsUser
             $blank_img = $this->getVar('avatar_file', 'e');
         }
         // Get User Config
-        $config_handler =& xoops_gethandler('config');
+        $config_handler  =& xoops_getHandler('config');
         $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
         $form = new XoopsThemeForm(_AM_SYSTEM_AVATAR_ADD, 'avatar_form', 'admin.php', "post", true);
@@ -53,23 +53,24 @@ class SystemUsers extends XoopsUser
         $form->addElement(new XoopsFormText(_IMAGENAME, 'avatar_name', 50, 255, $this->getVar('avatar_name', 'e')), true);
 
         $maxpixel = '<div class="small basic italic">' . _US_MAXPIXEL . '&nbsp;:&nbsp;' . $xoopsConfigUser['avatar_width'] . ' x ' . $xoopsConfigUser['avatar_height'] . '</div>';
-        $maxsize = '<div class="small basic italic">' . _US_MAXIMGSZ . '&nbsp;:&nbsp;' . $xoopsConfigUser['avatar_maxsize'] . '</div>';
+        $maxsize  = '<div class="small basic italic">' . _US_MAXIMGSZ . '&nbsp;:&nbsp;' . $xoopsConfigUser['avatar_maxsize'] . '</div>';
 
         $uploadirectory_img = '';
-        $imgtray_img = new XoopsFormElementTray(_IMAGEFILE . '<br /><br />' . $maxpixel . $maxsize, '<br />');
-        $imageselect_img = new XoopsFormSelect(sprintf(_AM_SYSTEM_AVATAR_USE_FILE, XOOPS_UPLOAD_PATH), 'avatar_file', $blank_img);
-        $image_array_img = XoopsLists::getImgListAsArray(XOOPS_UPLOAD_PATH);
+        $imgtray_img        = new XoopsFormElementTray(_IMAGEFILE . '<br /><br />' . $maxpixel . $maxsize, '<br />');
+        $imageselect_img    = new XoopsFormSelect(sprintf(_AM_SYSTEM_AVATAR_USE_FILE, XOOPS_UPLOAD_PATH), 'avatar_file', $blank_img);
+        $image_array_img    = XoopsLists::getImgListAsArray(XOOPS_UPLOAD_PATH);
         $imageselect_img->addOption("$blank_img", $blank_img);
         foreach ($image_array_img as $image_img) {
-            if (preg_match('#avt#', $image_img)) {
+//            if (preg_match('#avt#', $image_img)) {
+            if (false !== strpos(image_img, 'avt')) {
                 $imageselect_img->addOption("$image_img", $image_img);
             }
         }
-        $imageselect_img->setExtra("onchange='showImgSelected(\"image_img\", \"avatar_file\", \"".$uploadirectory_img."\", \"\", \"".XOOPS_UPLOAD_URL."\")'");
+        $imageselect_img->setExtra("onchange='showImgSelected(\"image_img\", \"avatar_file\", \"" . $uploadirectory_img . "\", \"\", \"" . XOOPS_UPLOAD_URL . "\")'");
         $imgtray_img->addElement($imageselect_img, false);
         $imgtray_img->addElement(new XoopsFormLabel('', "<br /><img src='" . XOOPS_UPLOAD_URL . "/" . $blank_img . "' name='image_img' id='image_img' alt='' />"));
-        $fileseltray_img = new XoopsFormElementTray('<br />','<br /><br />');
-        $fileseltray_img->addElement(new XoopsFormFile( _AM_SYSTEM_AVATAR_UPLOAD, 'avatar_file', 500000), false);
+        $fileseltray_img = new XoopsFormElementTray('<br />', '<br /><br />');
+        $fileseltray_img->addElement(new XoopsFormFile(_AM_SYSTEM_AVATAR_UPLOAD, 'avatar_file', 500000), false);
         $imgtray_img->addElement($fileseltray_img);
         $form->addElement($imgtray_img);
 
@@ -82,7 +83,6 @@ class SystemUsers extends XoopsUser
 
         return $form;
     }
-
 }
 
 /**
@@ -92,18 +92,17 @@ class SystemUsers extends XoopsUser
  * of XOOPS block class objects.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @package     system
- * @subpackage  avatar
+ * @package             system
+ * @subpackage          avatar
  */
 class SystemUsersHandler extends XoopsUserHandler
 {
     /**
-     * @param null|object $db
+     * @param null|XoopsDatabase $db
      */
-    function __construct($db)
+    public function __construct(XoopsDatabase $db)
     {
         parent::__construct($db);
         $this->className = 'SystemUsers';
     }
-
 }
