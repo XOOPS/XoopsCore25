@@ -12,20 +12,28 @@
  * @author      Andricq Nicolas (AKA MusS)
  * @version     $Id:$
  */
-div .navHeading{ text-align: right;  padding-top: 5px;  }
-div .navResults{}
+div .navHeading {
+    text-align: right;
+    padding-top: 5px;
+}
+
+div .navResults {
+}
+
 #container {
     width: 760px;
     margin: 0 auto;
     text-align: left;
     padding: 2px;
 }
-#box{
+
+#box {
     border: 1px solid #A9A9A9;
     margin-bottom: 12px;
     padding-left: 5px;
     padding-right: 5px;
 }
+
 #buttontop_mod {
     float: left;
     width: 100%;
@@ -37,6 +45,7 @@ div .navResults{}
     border-right: 1px solid #666;
     margin: 0;
 }
+
 #buttonbar_mod {
     float: left;
     width: 100%;
@@ -48,12 +57,19 @@ div .navResults{}
     border-bottom: 1px solid #666;
     margin-bottom: 12px;
 }
+
 #buttonbar_mod ul {
     margin: 15px 0 0;
     padding: 10px 10px 0;
     list-style: none;
 }
-#buttonbar_mod li { display: inline;  margin: 0;  padding: 0;}
+
+#buttonbar_mod li {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
 #buttonbar_mod a {
     float: left;
     background: url(../images/menu/bg_tabs1.gif) no-repeat 0 -34px;
@@ -63,6 +79,7 @@ div .navResults{}
     margin: 0 1px 0 0;
     text-decoration: none;
 }
+
 #buttonbar_mod a span {
     float: left;
     display: block;
@@ -73,16 +90,47 @@ div .navResults{}
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
 }
+
 /* Commented Backslash Hack hides rule from IE5-Mac \*/
-#buttonbar_mod a span {  float:none;}
+#buttonbar_mod a span {
+    float: none;
+}
+
 /* End IE5-Mac hack */
-#buttonbar_mod a:hover span { color:#333;}
-#buttonbar_mod #current a { background-position: 0 0;}
-#buttonbar_mod #current a span { background-position: 100% 0;  padding-bottom: 5px; color: #23649F;}
-#buttonbar_mod a:hover { background-position: 0 -69px;}
-#buttonbar_mod a:hover span { background-position: 100% -69px; color: #BC2A4D;}
-.admin_header { margin-top: 0; color: #191970;}
-.admin_subheader {  margin-top: 0; color: #191970;  padding-bottom: 12px;}
+#buttonbar_mod a:hover span {
+    color: #333;
+}
+
+#buttonbar_mod #current a {
+    background-position: 0 0;
+}
+
+#buttonbar_mod #current a span {
+    background-position: 100% 0;
+    padding-bottom: 5px;
+    color: #23649F;
+}
+
+#buttonbar_mod a:hover {
+    background-position: 0 -69px;
+}
+
+#buttonbar_mod a:hover span {
+    background-position: 100% -69px;
+    color: #BC2A4D;
+}
+
+.admin_header {
+    margin-top: 0;
+    color: #191970;
+}
+
+.admin_subheader {
+    margin-top: 0;
+    color: #191970;
+    padding-bottom: 12px;
+}
+
 div.confirmMsg {
     color: #776655;
     text-align: center;
@@ -94,7 +142,8 @@ div.confirmMsg {
     font-size: 11px;
     font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 }
-div.confirmButtons{
+
+div.confirmButtons {
     text-align: center;
     margin-left: 20%;
     margin-right: 20%;

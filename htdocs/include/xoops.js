@@ -1,6 +1,5 @@
 /* $Id: xoops.js 8289 2011-11-15 01:19:44Z beckmi $ */
-function xoops$()
-{
+function xoops$() {
     var elements = new Array();
 
     for (var i = 0; i < arguments.length; i++) {
@@ -20,40 +19,34 @@ function xoops$()
 }
 
 
-function xoopsGetElementById(id)
-{
+function xoopsGetElementById(id) {
     return xoops$(id);
 }
 
-function xoopsSetElementProp(name, prop, val)
-{
+function xoopsSetElementProp(name, prop, val) {
     var elt = xoopsGetElementById(name);
     if (elt) {
         elt[prop] = val;
     }
 }
 
-function xoopsSetElementStyle(name, prop, val)
-{
+function xoopsSetElementStyle(name, prop, val) {
     var elt = xoopsGetElementById(name);
     if (elt && elt.style) {
         elt.style[prop] = val;
     }
 }
 
-function xoopsGetFormElement(fname, ctlname)
-{
+function xoopsGetFormElement(fname, ctlname) {
     var frm = document.forms[fname];
     return frm ? frm.elements[ctlname] : null;
 }
 
-function justReturn()
-{
+function justReturn() {
     //return;
 }
 
-function openWithSelfMain(url, name, width, height, returnwindow)
-{
+function openWithSelfMain(url, name, width, height, returnwindow) {
     var options = "width=" + width + ",height=" + height + ",toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no";
 
     var new_window = window.open(url, name, options);
@@ -62,23 +55,19 @@ function openWithSelfMain(url, name, width, height, returnwindow)
     return (returnwindow != null ? new_window : void(0));
 }
 
-function setElementColor(id, color)
-{
+function setElementColor(id, color) {
     xoopsGetElementById(id).style.color = "#" + color;
 }
 
-function setElementFont(id, font)
-{
+function setElementFont(id, font) {
     xoopsGetElementById(id).style.fontFamily = font;
 }
 
-function setElementSize(id, size)
-{
+function setElementSize(id, size) {
     xoopsGetElementById(id).style.fontSize = size;
 }
 
-function changeDisplay(id)
-{
+function changeDisplay(id) {
     var elestyle = xoopsGetElementById(id).style;
     if (elestyle.display == "") {
         elestyle.display = "none";
@@ -87,32 +76,27 @@ function changeDisplay(id)
     }
 }
 
-function setVisible(id)
-{
+function setVisible(id) {
     xoopsGetElementById(id).style.visibility = "visible";
 }
 
-function setHidden(id)
-{
+function setHidden(id) {
     xoopsGetElementById(id).style.visibility = "hidden";
 }
 
-function appendSelectOption(selectMenuId, optionName, optionValue)
-{
+function appendSelectOption(selectMenuId, optionName, optionValue) {
     var selectMenu = xoopsGetElementById(selectMenuId);
     var newoption = new Option(optionName, optionValue);
     newoption.selected = true;
     selectMenu.options[selectMenu.options.length] = newoption;
 }
 
-function disableElement(target)
-{
+function disableElement(target) {
     var targetDom = xoopsGetElementById(target);
     targetDom.disabled = targetDom.disabled != true;
 }
 
-function xoopsCheckAll(form, switchId)
-{
+function xoopsCheckAll(form, switchId) {
     var eltForm = xoops$(form);
     var eltSwitch = xoops$(switchId);
     // You MUST NOT specify names, it's just kept for BC with the old lame crappy code
@@ -132,8 +116,7 @@ function xoopsCheckAll(form, switchId)
 }
 
 
-function xoopsCheckGroup(form, switchId, groupName)
-{
+function xoopsCheckGroup(form, switchId, groupName) {
     var eltForm = xoops$(form);
     var eltSwitch = xoops$(switchId);
     // You MUST NOT specify names, it's just kept for BC with the old lame crappy code
@@ -155,8 +138,7 @@ function xoopsCheckGroup(form, switchId, groupName)
     }
 }
 
-function xoopsCheckAllElements(elementIds, switchId)
-{
+function xoopsCheckAllElements(elementIds, switchId) {
     var switch_cbox = xoopsGetElementById(switchId);
     for (var i = 0; i < elementIds.length; i++) {
         var e = xoopsGetElementById(elementIds[i]);
@@ -166,15 +148,13 @@ function xoopsCheckAllElements(elementIds, switchId)
     }
 }
 
-function xoopsSavePosition(id)
-{
+function xoopsSavePosition(id) {
     var textareaDom = xoopsGetElementById(id);
     if (textareaDom.createTextRange) {
         textareaDom.caretPos = document.selection.createRange().duplicate();
     }
 }
-function xoopsInsertText(domobj, text)
-{
+function xoopsInsertText(domobj, text) {
     if (domobj.selectionEnd) {
         //firefox
         var start = domobj.selectionStart;
@@ -196,16 +176,14 @@ function xoopsInsertText(domobj, text)
     }
 }
 
-function xoopsCodeSmilie(id, smilieCode)
-{
+function xoopsCodeSmilie(id, smilieCode) {
     var revisedMessage;
     var textareaDom = xoopsGetElementById(id);
     xoopsInsertText(textareaDom, smilieCode);
     textareaDom.focus();
     //return;
 }
-function showImgSelected(imgId, selectId, imgDir, extra, xoopsUrl)
-{
+function showImgSelected(imgId, selectId, imgDir, extra, xoopsUrl) {
     if (xoopsUrl == null) {
         xoopsUrl = "./";
     }
@@ -218,8 +196,7 @@ function showImgSelected(imgId, selectId, imgDir, extra, xoopsUrl)
     }
 }
 
-function xoopsExternalLinks()
-{
+function xoopsExternalLinks() {
     if (!document.getElementsByTagName) {
         return;
     }
@@ -240,16 +217,14 @@ function xoopsExternalLinks()
     }
 }
 
-function xoopsOnloadEvent(func)
-{
+function xoopsOnloadEvent(func) {
     if (window.onload) {
         xoopsAddEvent(window, 'load', window.onload);
     }
     xoopsAddEvent(window, 'load', func);
 }
 
-function xoopsAddEvent(obj, evType, fn)
-{
+function xoopsAddEvent(obj, evType, fn) {
     if (obj.addEventListener) {
         obj.addEventListener(evType, fn, true);
         return true;

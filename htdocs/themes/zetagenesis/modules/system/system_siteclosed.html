@@ -12,29 +12,30 @@
 </head>
 <body>
 
-<div id="xo-canvas"<{if $columns_layout}> class="<{$columns_layout}>"<{/if}>>
-    <div class="xo-wrapper">
-        <div id="xo-bgstatic" class="<{$xoops_dirname}>"></div>
-        <div id="xo-header" class="<{$xoops_dirname}>">
-            <{if $xoops_banner and $xoops_banner != '&nbsp;'}>
-                <{includeq file="$theme_name/xobanner_commercial.html"}>
-            <{else}>
-                <{includeq file="$theme_name/xobanner.html"}>
-            <{/if}>
-            <!-- include navigation bar -->
-            <{includeq file="$theme_name/globalnav.html"}>
-        </div>
-
-        <div id="xo-canvas-content">
-            <div id="xo-page">
-                <div id="xo-siteclose"><{$lang_siteclosemsg}></div>
-            </div>
-        </div>
-
-        <!-- include footer -->
-        <{includeq file="$theme_name/xofooter.html"}>
-        <!--{xo-logger-output}-->
+<div id="xo-canvas"
+<{if $columns_layout}> class="<{$columns_layout}>"<{/if}>>
+<div class="xo-wrapper">
+    <div id="xo-bgstatic" class="<{$xoops_dirname}>"></div>
+    <div id="xo-header" class="<{$xoops_dirname}>">
+        <{if $xoops_banner and $xoops_banner != '&nbsp;'}>
+        <{includeq file="$theme_name/xobanner_commercial.html"}>
+        <{else}>
+        <{includeq file="$theme_name/xobanner.html"}>
+        <{/if}>
+        <!-- include navigation bar -->
+        <{includeq file="$theme_name/globalnav.html"}>
     </div>
+
+    <div id="xo-canvas-content">
+        <div id="xo-page">
+            <div id="xo-siteclose"><{$lang_siteclosemsg}></div>
+        </div>
+    </div>
+
+    <!-- include footer -->
+    <{includeq file="$theme_name/xofooter.html"}>
+    <!--{xo-logger-output}-->
+</div>
 </div>
 </body>
 </html>

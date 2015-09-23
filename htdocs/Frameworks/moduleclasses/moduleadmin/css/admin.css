@@ -33,7 +33,7 @@
     line-height: 15px; /* Safari */
 }
 
-*:first-child+html button[type] {
+*:first-child + html button[type] {
     padding: 3px 8px 4px 5px; /* IE7 */
 }
 
@@ -83,7 +83,6 @@
     font-weight: bold;
 }
 
-
 /* label */
 
 /* about */
@@ -93,16 +92,15 @@
     margin-bottom: 12px;
 }
 
-
 #about label {
     text-align: right;
     width: 200px;
     padding-right: 20px;
 }
 
-    br {
-        clear: left;
-    }
+br {
+    clear: left;
+}
 
 #about br {
     clear: both;
@@ -111,22 +109,22 @@
 /* InfoBox  for Tag, XoopsPartners module
 TODO Needs to be merged into the normal label/text */
 
-    infolabel,infotext {
-        display: block;
-        float: left;
-        margin-bottom: 2px;
-    }
-    infolabel {
-        text-align: right;
-        width: 150px;
-        padding-right: 20px;
-        /* font-weight: bold;*/
-    }
-    br {
-        clear: left;
-    }
+infolabel, infotext {
+    display: block;
+    float: left;
+    margin-bottom: 2px;
+}
 
+infolabel {
+    text-align: right;
+    width: 150px;
+    padding-right: 20px;
+    /* font-weight: bold;*/
+}
 
+br {
+    clear: left;
+}
 
 /* menu */
 div.rmmenuicon {

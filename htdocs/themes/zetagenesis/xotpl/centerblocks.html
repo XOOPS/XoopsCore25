@@ -7,26 +7,30 @@
 
 <{*
 <{if $xoBlocks[$zone]}>
-    <div class="xo-blockszone x2-secondary" id="xo-page-<{$topbottom}><{$lcr}>blocks">
-        <{foreach from=$xoBlocks[$zone] item=block}>
-            <div class="blockbg">
-                <div class="xo-block <{$block.module}>">
-                    <{if $block.title}><div class="xo-blocktitle"><{$block.title}></div><{/if}>
-                    <div class="xo-blockcontent"><{$block.content}></div>
-                </div>
-            </div>
-        <{/foreach}>
+<div class="xo-blockszone x2-secondary" id="xo-page-<{$topbottom}><{$lcr}>blocks">
+    <{foreach from=$xoBlocks[$zone] item=block}>
+    <div class="blockbg">
+        <div class="xo-block <{$block.module}>">
+            <{if $block.title}>
+            <div class="xo-blocktitle"><{$block.title}></div>
+            <{/if}>
+            <div class="xo-blockcontent"><{$block.content}></div>
+        </div>
     </div>
+    <{/foreach}>
+</div>
 <{/if}>
 *}>
 
 <{if $xoBlocks[$zone]}>
-    <div class="xo-blockszone x2-secondary" id="xo-page-<{$topbottom}><{$lcr}>blocks">
-        <{foreach from=$xoBlocks[$zone] item=block}>
-            <div class="xo-block <{$block.module}>">
-                <{if $block.title}><div class="xo-blocktitle"><{$block.title}></div><{/if}>
-                <div class="xo-blockcontent"><{$block.content}></div>
-            </div>
-        <{/foreach}>
+<div class="xo-blockszone x2-secondary" id="xo-page-<{$topbottom}><{$lcr}>blocks">
+    <{foreach from=$xoBlocks[$zone] item=block}>
+    <div class="xo-block <{$block.module}>">
+        <{if $block.title}>
+        <div class="xo-blocktitle"><{$block.title}></div>
+        <{/if}>
+        <div class="xo-blockcontent"><{$block.content}></div>
     </div>
+    <{/foreach}>
+</div>
 <{/if}>

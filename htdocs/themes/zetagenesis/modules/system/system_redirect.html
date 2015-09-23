@@ -12,14 +12,16 @@
     <div id="xo-redirect">
         <div class="message">
             <{$message}>
-            <br />
+            <br/>
             <img src="<{xoImgUrl img/ajax_indicator_01.gif}>" alt="<{$message}>"/>
         </div>
         <div class="notreload">
             <{$lang_ifnotreload}>
         </div>
 
-        <{if $xoops_logdump != ''}><div><{$xoops_logdump}></div><{/if}>
+        <{if $xoops_logdump != ''}>
+        <div><{$xoops_logdump}></div>
+        <{/if}>
     </div>
 </div>
 

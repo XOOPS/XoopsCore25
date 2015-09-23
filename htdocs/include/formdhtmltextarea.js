@@ -1,26 +1,25 @@
 /* $Id: formdhtmltextarea.js 7381 2011-08-29 05:36:17Z beckmi $ */
 
-function xoopsCodeUrl(id, enterUrlPhrase, enterWebsitePhrase)
-{
+function xoopsCodeUrl(id, enterUrlPhrase, enterWebsitePhrase) {
     if (enterUrlPhrase == null) {
         enterUrlPhrase = "Enter the URL of the link you want to add:";
     }
     var text = prompt(enterUrlPhrase, "");
     var domobj = xoopsGetElementById(id);
-    if ( text != null && text != "" ) {
+    if (text != null && text != "") {
         var selection = xoopsGetSelect(id);
-        if (selection.length > 0){
+        if (selection.length > 0) {
             var text2 = selection;
-        }else {
+        } else {
             var text2 = prompt(enterWebsitePhrase, "");
         }
-        if ( text2 != null ) {
-            if ( text2 == "" ) {
+        if (text2 != null) {
+            if (text2 == "") {
                 var result = "[url=" + text + "]" + text + "[/url]";
             } else {
                 var pos = text2.indexOf(unescape('%00'));
-                if(0 < pos){
-                    text2 = text2.substr(0,pos);
+                if (0 < pos) {
+                    text2 = text2.substr(0, pos);
                 }
                 var result = "[url=" + text + "]" + text2 + "[/url]";
             }
@@ -30,8 +29,7 @@ function xoopsCodeUrl(id, enterUrlPhrase, enterWebsitePhrase)
     domobj.focus();
 }
 
-function xoopsCodeImg(id, enterImgUrlPhrase, enterImgPosPhrase, imgPosRorLPhrase, errorImgPosPhrase, enterImgWidthPhrase)
-{
+function xoopsCodeImg(id, enterImgUrlPhrase, enterImgPosPhrase, imgPosRorLPhrase, errorImgPosPhrase, enterImgWidthPhrase) {
     if (enterImgUrlPhrase == null) {
         enterImgUrlPhrase = "Enter the URL of the image you want to add:";
     }
@@ -42,7 +40,7 @@ function xoopsCodeImg(id, enterImgUrlPhrase, enterImgPosPhrase, imgPosRorLPhrase
         var text = prompt(enterImgUrlPhrase, "");
     }
     var domobj = xoopsGetElementById(id);
-    if ( text != null && text != "" ) {
+    if (text != null && text != "") {
         if (enterImgPosPhrase == null) {
             enterImgPosPhrase = "Now, enter the position of the image.";
         }
@@ -53,21 +51,21 @@ function xoopsCodeImg(id, enterImgUrlPhrase, enterImgPosPhrase, imgPosRorLPhrase
             errorImgPosPhrase = "ERROR! Enter the position of the image:";
         }
         var text2 = prompt(enterImgPosPhrase + "\n" + imgPosRorLPhrase, "");
-        while ( ( text2 != "" ) && ( text2 != "r" ) && ( text2 != "R" ) && ( text2 != "l" ) && ( text2 != "L" ) && ( text2 != null ) ) {
-            text2 = prompt(errorImgPosPhrase + "\n" + imgPosRorLPhrase,"");
+        while (( text2 != "" ) && ( text2 != "r" ) && ( text2 != "R" ) && ( text2 != "l" ) && ( text2 != "L" ) && ( text2 != null )) {
+            text2 = prompt(errorImgPosPhrase + "\n" + imgPosRorLPhrase, "");
         }
-        if ( text2 == "l" || text2 == "L" ) {
+        if (text2 == "l" || text2 == "L") {
             text2 = " align=left";
-        } else if ( text2 == "r" || text2 == "R" ) {
+        } else if (text2 == "r" || text2 == "R") {
             text2 = " align=right";
         } else {
             text2 = "";
         }
 
         var text3 = prompt(enterImgWidthPhrase, "300");
-        if ( text3.length>0 ) {
-            text3 = " width="+text3;
-        }else {
+        if (text3.length > 0) {
+            text3 = " width=" + text3;
+        } else {
             text3 = "";
         }
 
@@ -77,27 +75,25 @@ function xoopsCodeImg(id, enterImgUrlPhrase, enterImgPosPhrase, imgPosRorLPhrase
     domobj.focus();
 }
 
-function xoopsCodeEmail(id, enterEmailPhrase)
-{
+function xoopsCodeEmail(id, enterEmailPhrase) {
     if (enterEmailPhrase == null) {
         enterEmailPhrase = "Enter the email address you want to add:";
     }
     var selection = xoopsGetSelect(id);
     if (selection.length > 0) {
         var text = selection;
-    }else {
+    } else {
         var text = prompt(enterEmailPhrase, "");
     }
     var domobj = xoopsGetElementById(id);
-    if ( text != null && text != "" ) {
+    if (text != null && text != "") {
         var result = "[email]" + text + "[/email]";
         xoopsInsertText(domobj, result);
     }
     domobj.focus();
 }
 
-function xoopsCodeQuote(id, enterQuotePhrase)
-{
+function xoopsCodeQuote(id, enterQuotePhrase) {
     if (enterQuotePhrase == null) {
         enterQuotePhrase = "Enter the text that you want to be quoted:";
     }
@@ -108,10 +104,10 @@ function xoopsCodeQuote(id, enterQuotePhrase)
         var text = prompt(enterQuotePhrase, "");
     }
     var domobj = xoopsGetElementById(id);
-    if ( text != null && text != "" ) {
+    if (text != null && text != "") {
         var pos = text.indexOf(unescape('%00'));
         if (0 < pos) {
-            text = text.substr(0,pos);
+            text = text.substr(0, pos);
         }
         var result = "[quote]" + text + "[/quote]";
         xoopsInsertText(domobj, result);
@@ -119,8 +115,7 @@ function xoopsCodeQuote(id, enterQuotePhrase)
     domobj.focus();
 }
 
-function xoopsCodeCode(id, enterCodePhrase)
-{
+function xoopsCodeCode(id, enterCodePhrase) {
     if (enterCodePhrase == null) {
         enterCodePhrase = "Enter the codes that you want to add.";
     }
@@ -131,15 +126,14 @@ function xoopsCodeCode(id, enterCodePhrase)
         var text = prompt(enterCodePhrase, "");
     }
     var domobj = xoopsGetElementById(id);
-    if ( text != null && text != "" ) {
+    if (text != null && text != "") {
         var result = "[code]" + text + "[/code]";
         xoopsInsertText(domobj, result);
     }
     domobj.focus();
 }
 
-function xoopsCodeText(id, hiddentext, enterTextboxPhrase)
-{
+function xoopsCodeText(id, hiddentext, enterTextboxPhrase) {
     var textareaDom = xoopsGetElementById(id);
     var textDom = xoopsGetElementById(id + "Addtext");
     var fontDom = xoopsGetElementById(id + "Font");
@@ -155,22 +149,22 @@ function xoopsCodeText(id, hiddentext, enterTextboxPhrase)
     var fontDomValue = fontDom.options[fontDom.options.selectedIndex].value;
     var colorDomValue = colorDom.options[colorDom.options.selectedIndex].value;
     var sizeDomValue = sizeDom.options[sizeDom.options.selectedIndex].value;
-    if ( textDomValue == "" ) {
+    if (textDomValue == "") {
         if (enterTextboxPhrase == null) {
             enterTextboxPhrase = "Please input text into the textbox.";
         }
         alert(enterTextboxPhrase);
         textDom.focus();
     } else {
-        if ( fontDomValue != "FONT") {
+        if (fontDomValue != "FONT") {
             textDomValue = "[font=" + fontDomValue + "]" + textDomValue + "[/font]";
             fontDom.options[0].selected = true;
         }
-        if ( colorDomValue != "COLOR") {
+        if (colorDomValue != "COLOR") {
             textDomValue = "[color=" + colorDomValue + "]" + textDomValue + "[/color]";
             colorDom.options[0].selected = true;
         }
-        if ( sizeDomValue != "SIZE") {
+        if (sizeDomValue != "SIZE") {
             textDomValue = "[size=" + sizeDomValue + "]" + textDomValue + "[/size]";
             sizeDom.options[0].selected = true;
         }
@@ -213,8 +207,7 @@ function xoopsCodeText(id, hiddentext, enterTextboxPhrase)
     }
 }
 
-function xoopsGetSelect(id)
-{
+function xoopsGetSelect(id) {
     if (window.getSelection) {
         ele = document.getElementById(id);
         var selection = ele.value.substring(
@@ -231,12 +224,11 @@ function xoopsGetSelect(id)
 }
 
 
-function xoopsSetElementAttribute(key, val, id, eid)
-{
+function xoopsSetElementAttribute(key, val, id, eid) {
     var text = xoopsGetSelect(id);
     if (text.length <= 0) {
         setVisible("xoopsHiddenText");
-        eval("setElement" + key.substr(0,1).toUpperCase() + key.substr(1,key.length) + "(eid, val)");
+        eval("setElement" + key.substr(0, 1).toUpperCase() + key.substr(1, key.length) + "(eid, val)");
         return;
     }
     var domobj = xoopsGetElementById(id);
@@ -244,8 +236,7 @@ function xoopsSetElementAttribute(key, val, id, eid)
     domobj.focus();
 }
 
-function makeBold(id)
-{
+function makeBold(id) {
     var eleStyle = xoopsGetElementById(id).style;
     if (eleStyle.fontWeight != "bold" && eleStyle.fontWeight != "700") {
         eleStyle.fontWeight = "bold";
@@ -254,8 +245,7 @@ function makeBold(id)
     }
 }
 
-function makeItalic(id)
-{
+function makeItalic(id) {
     var eleStyle = xoopsGetElementById(id).style;
     if (eleStyle.fontStyle != "italic") {
         eleStyle.fontStyle = "italic";
@@ -264,8 +254,7 @@ function makeItalic(id)
     }
 }
 
-function makeUnderline(id)
-{
+function makeUnderline(id) {
     var eleStyle = xoopsGetElementById(id).style;
     if (eleStyle.textDecoration != "underline") {
         eleStyle.textDecoration = "underline";
@@ -274,8 +263,7 @@ function makeUnderline(id)
     }
 }
 
-function makeLineThrough(id)
-{
+function makeLineThrough(id) {
     var eleStyle = xoopsGetElementById(id).style;
     if (eleStyle.textDecoration != "line-through") {
         eleStyle.textDecoration = "line-through";
@@ -284,8 +272,7 @@ function makeLineThrough(id)
     }
 }
 
-function xoopsMakeStyle(id, eid, val, func)
-{
+function xoopsMakeStyle(id, eid, val, func) {
     var text = xoopsGetSelect(id);
     if (text.length <= 0 && func.length > 0 && eid.length > 0) {
         setVisible(eid);
@@ -297,57 +284,49 @@ function xoopsMakeStyle(id, eid, val, func)
     domobj.focus();
 }
 
-function xoopsMakeBold(eid, id)
-{
+function xoopsMakeBold(eid, id) {
     xoopsMakeStyle(id, eid, "b", "makeBold");
 }
 
-function xoopsMakeItalic(eid, id)
-{
+function xoopsMakeItalic(eid, id) {
     xoopsMakeStyle(id, eid, "i", "makeItalic");
 }
 
-function xoopsMakeUnderline(eid, id)
-{
+function xoopsMakeUnderline(eid, id) {
     xoopsMakeStyle(id, eid, "u", "makeUnderline");
 }
 
-function xoopsMakeLineThrough(eid, id)
-{
+function xoopsMakeLineThrough(eid, id) {
     xoopsMakeStyle(id, eid, "d", "makeLineThrough");
 }
 
-function xoopsMakeCenter(eid, id)
-{
+function xoopsMakeCenter(eid, id) {
     xoopsMakeStyle(id, eid, "center", "");
 }
 
-function xoopsMakeLeft(eid, id)
-{
+function xoopsMakeLeft(eid, id) {
     xoopsMakeStyle(id, eid, "left", "");
 }
 
-function xoopsMakeRight(eid, id)
-{
+function xoopsMakeRight(eid, id) {
     xoopsMakeStyle(id, eid, "right", "");
 }
 
 // very rough calculation on text length
-function XoopsCheckLength(id, maxlength, currentLengthPhrase, maxLengthPhrase)
-{
+function XoopsCheckLength(id, maxlength, currentLengthPhrase, maxLengthPhrase) {
     var mb_len_extra = 2;
     var domobj = xoopsGetElementById(id);
     var len = domobj.value.length;
 
     if (len > 50 * 1024) {
         len_current = " > 50K";
-    } else if(len > 30 * 1024) {
+    } else if (len > 30 * 1024) {
         len_current = " 30-50K";
-    } else if(len > 10 * 1024) {
+    } else if (len > 10 * 1024) {
         len_current = " 10-30K";
-    } else if(len > 5 * 1024) {
+    } else if (len > 5 * 1024) {
         len_current = " 5-10K";
-    } else if(len > 1 * 1024) {
+    } else if (len > 1 * 1024) {
         len_current = " 1-5K";
     } else {
         len_current = len;
@@ -366,8 +345,7 @@ function XoopsCheckLength(id, maxlength, currentLengthPhrase, maxLengthPhrase)
 }
 
 
-function xoopsValidate(subjectId, textareaId, submitId, plzCompletePhrase, msgTooLongPhrase, allowedCharPhrase, currCharPhrase)
-{
+function xoopsValidate(subjectId, textareaId, submitId, plzCompletePhrase, msgTooLongPhrase, allowedCharPhrase, currCharPhrase) {
     var maxchars = 65535;
     var subjectDom = xoopsGetElementById(subjectId);
     var textareaDom = xoopsGetElementById(textareaId);
@@ -406,8 +384,7 @@ function xoopsValidate(subjectId, textareaId, submitId, plzCompletePhrase, msgTo
 // AJAX code for preview
 var form_area_id;
 var http_request = false;
-function makeRequest(area_id, url, arg, method)
-{
+function makeRequest(area_id, url, arg, method) {
     http_request = false;
     form_area_id = area_id;
 
@@ -422,7 +399,8 @@ function makeRequest(area_id, url, arg, method)
         } catch (e) {
             try {
                 http_request = new ActiveXObject("Microsoft.XMLHTTP");
-            } catch (e) {}
+            } catch (e) {
+            }
         }
     }
 
@@ -448,8 +426,7 @@ function makeRequest(area_id, url, arg, method)
     http_request.send(arg);
 }
 
-function alertContents()
-{
+function alertContents() {
     if (http_request.readyState == 4) {
         if (http_request.status == 200) {
             document.getElementById(form_area_id + '_hidden_data').innerHTML = http_request.responseText;
@@ -460,9 +437,8 @@ function alertContents()
 }
 
 
-function form_checkserver(area_id)
-{
-    if(!xdh_triggered[area_id]) {
+function form_checkserver(area_id) {
+    if (!xdh_triggered[area_id]) {
         alert(" Ohh.. Server Not Responding ... Please Try later ");
         xoopsGetElementById(area_id + '_preview_button').disabled = false;
         document.getElementById(area_id + '_hidden_data').innerHTML = "";
@@ -470,13 +446,12 @@ function form_checkserver(area_id)
     }
 }
 
-function form_instantPreview(xoopsUrl, area_id, imgurl, doHtml, token)
-{
+function form_instantPreview(xoopsUrl, area_id, imgurl, doHtml, token) {
     var imgUrl = xoopsUrl + '/images/form';
     var data = escape(xoopsGetElementById(area_id).value);
 
     var url_request = xoopsUrl + "/include/formdhtmltextarea_preview.php";//?text=" + data;
-    var args =  "text=" + data;
+    var args = "text=" + data;
 
     if (doHtml) {
         args += '&html=' + doHtml;

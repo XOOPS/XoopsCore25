@@ -8,7 +8,7 @@
 <div class="floatright">
     <div class="xo-buttons">
         <a class="ui-corner-all tooltip" href="admin.php?fct=userrank&amp;op=userrank_new" title="<{$smarty.const._AM_SYSTEM_USERRANK_ADD}>">
-            <img src="<{xoAdminIcons add.png}>" alt="<{$smarty.const._AM_SYSTEM_USERRANK_ADD}>" />
+            <img src="<{xoAdminIcons add.png}>" alt="<{$smarty.const._AM_SYSTEM_USERRANK_ADD}>"/>
             <{$smarty.const._AM_SYSTEM_USERRANK_ADD}>
         </a>
     </div>
@@ -31,14 +31,22 @@
         <td class="txtcenter"><{$userrank.rank_title}></td>
         <td class="txtcenter"><{$userrank.rank_min}></td>
         <td class="txtcenter"><{$userrank.rank_max}></td>
-        <td class="xo-actions txtcenter"><img id="loading_sml<{$userrank.rank_id}>" src="images/spinner.gif" style="display:none;" alt="<{$smarty.const._AM_SYSTEM_LOADING}>" /><img class="cursorpointer tooltip" id="sml<{$userrank.rank_id}>" onclick="system_setStatus( { fct: 'userrank', op: 'userrank_update_special', rank_id: <{$userrank.rank_id}> }, 'sml<{$userrank.rank_id}>', 'admin.php' )" src="<{if $userrank.rank_special}><{xoAdminIcons success.png}><{else}><{xoAdminIcons cancel.png}><{/if}>" alt="<{if $userrank.rank_special}><{$smarty.const._AM_SYSTEM_USERRANK_OFF}><{else}><{$smarty.const._AM_SYSTEM_USERRANK_ON}><{/if}>" title="<{if $userrank.rank_special}><{$smarty.const._AM_SYSTEM_USERRANK_OFF}><{else}><{$smarty.const._AM_SYSTEM_USERRANK_ON}><{/if}>" />
+        <td class="xo-actions txtcenter"><img id="loading_sml<{$userrank.rank_id}>" src="images/spinner.gif" style="display:none;"
+                                              alt="<{$smarty.const._AM_SYSTEM_LOADING}>"/><img class="cursorpointer tooltip"
+                                                                                               id="sml<{$userrank.rank_id}>"
+                                                                                               onclick="system_setStatus( { fct: 'userrank', op: 'userrank_update_special', rank_id: <{$userrank.rank_id}> }, 'sml<{$userrank.rank_id}>', 'admin.php' )"
+                                                                                               src="<{if $userrank.rank_special}><{xoAdminIcons success.png}><{else}><{xoAdminIcons cancel.png}><{/if}>"
+                                                                                               alt="<{if $userrank.rank_special}><{$smarty.const._AM_SYSTEM_USERRANK_OFF}><{else}><{$smarty.const._AM_SYSTEM_USERRANK_ON}><{/if}>"
+                                                                                               title="<{if $userrank.rank_special}><{$smarty.const._AM_SYSTEM_USERRANK_OFF}><{else}><{$smarty.const._AM_SYSTEM_USERRANK_ON}><{/if}>"/>
         </td>
         <td class="xo-actions txtcenter">
-            <a class="tooltip" href="admin.php?fct=userrank&amp;op=userrank_edit&amp;rank_id=<{$userrank.rank_id}>" title="<{$smarty.const._AM_SYSTEM_USERRANK_EDIT}>">
-                <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._AM_SYSTEM_USERRANK_EDIT}>" />
+            <a class="tooltip" href="admin.php?fct=userrank&amp;op=userrank_edit&amp;rank_id=<{$userrank.rank_id}>"
+               title="<{$smarty.const._AM_SYSTEM_USERRANK_EDIT}>">
+                <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._AM_SYSTEM_USERRANK_EDIT}>"/>
             </a>
-            <a class="tooltip" href="admin.php?fct=userrank&amp;op=userrank_delete&amp;rank_id=<{$userrank.rank_id}>" title="<{$smarty.const._AM_SYSTEM_USERRANK_DELETE}>">
-                <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._AM_SYSTEM_USERRANK_DELETE}>" />
+            <a class="tooltip" href="admin.php?fct=userrank&amp;op=userrank_delete&amp;rank_id=<{$userrank.rank_id}>"
+               title="<{$smarty.const._AM_SYSTEM_USERRANK_DELETE}>">
+                <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._AM_SYSTEM_USERRANK_DELETE}>"/>
             </a>
         </td>
     </tr>

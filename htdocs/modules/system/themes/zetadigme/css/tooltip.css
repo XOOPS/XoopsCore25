@@ -20,22 +20,26 @@
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
-    box-shadow:             3px 2px 3px rgba(0,0,0,0.5);
-    -moz-box-shadow:         3px 2px 3px rgba(0,0,0,0.5);
-    -webkit-box-shadow:     3px 2px 3px rgba(0,0,0,0.5);
-    filter: alpha(opacity = 80);
+    box-shadow: 3px 2px 3px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 3px 2px 3px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 3px 2px 3px rgba(0, 0, 0, 0.5);
+    filter: alpha(opacity=80);
     -moz-opacity: 0.8;
     -webkit-opacity: 0.8;
     opacity: 0.8;
 }
 
 #tooltip span {
-  font-size: 11px;
-  font-weight: bold;
-  text-align: center !important;
-  }
-a.tooltip span {text-shadow: 1px 1px 2px #ccc;}
+    font-size: 11px;
+    font-weight: bold;
+    text-align: center !important;
+}
+
+a.tooltip span {
+    text-shadow: 1px 1px 2px #ccc;
+}
+
 #tooltip img {
-  padding-bottom: 10px !important;
-  text-align: center !important;
+    padding-bottom: 10px !important;
+    text-align: center !important;
 }
