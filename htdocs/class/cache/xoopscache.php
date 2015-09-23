@@ -33,8 +33,8 @@ class XoopsCache
      * @var object
      * @access protected
      */
-    protected static $engine;
-    // private static $engine = null;
+
+    protected $engine = null;
 
     /**
      * Cache configuration stack
@@ -50,7 +50,7 @@ class XoopsCache
      * @var array
      * @access private
      */
-    private $name;
+    private $name = null;
 
     /**
      * XoopsCache::__construct()
@@ -346,7 +346,7 @@ class XoopsCache
     /**
      * Check if Cache has initialized a working storage engine
      *
-     * @param string $engine Name of the engine
+     * @param  string $engine Name of the engine
      * @return bool
      * @internal param string $configs Name of the configuration setting
      * @access   public
