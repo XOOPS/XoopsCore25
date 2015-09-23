@@ -90,12 +90,14 @@ if ($mid > 0) {
         // Call template
         if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/' . $xoopsConfig['language'] . '/help/' . $page . '.html')) {
             $helpcontent = $xoopsTpl->fetch(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/' . $xoopsConfig['language'] . '/help/' . $page . '.html');
+        } elseif (file_exists(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/' . $xoopsConfig['language'] . '/help/' . $page . '.tpl')) {
+            $helpcontent = $xoopsTpl->fetch(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/' . $xoopsConfig['language'] . '/help/' . $page . '.tpl');
+        } elseif (file_exists(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/english/help/' . $page . '.html')) {
+            $helpcontent = $xoopsTpl->fetch(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/english/help/' . $page . '.html');
+        } elseif (file_exists(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/english/help/' . $page . '.tpl')) {
+            $helpcontent = $xoopsTpl->fetch(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/english/help/' . $page . '.tpl');
         } else {
-            if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/english/help/' . $page . '.html')) {
-                $helpcontent = $xoopsTpl->fetch(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/english/help/' . $page . '.html');
-            } else {
-                $xoopsTpl->assign('load_error', 1);
-            }
+            $xoopsTpl->assign('load_error', 1);
         }
         $xoopsTpl->assign('helpcontent', $helpcontent);
     } else {
