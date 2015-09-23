@@ -122,10 +122,14 @@ if (!class_exists('XoopsGTicket')) {
         {
             global $xoopsModule;
 
+            if ('' === $salt) {
+                $salt = '$2y$07$' . str_replace('+', '.', base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)));
+            }
+
             // create a token
             list($usec, $sec) = explode(" ", microtime());
             $appendix_salt       = empty($_SERVER['PATH']) ? XOOPS_DB_NAME : $_SERVER['PATH'];
-            $token               = crypt($salt . $usec . $appendix_salt . $sec);
+            $token               = crypt($salt . $usec . $appendix_salt . $sec, $salt);
             $this->_latest_token = $token;
 
             if (empty($_SESSION['XOOPS_G_STUBS'])) {
