@@ -47,9 +47,10 @@ class XoopsImageset extends XoopsObject
     {
         $this->__construct();
     }
+
     /**
      * Returns Class Base Variable imgset_id
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function id($format = 'N')
@@ -59,7 +60,7 @@ class XoopsImageset extends XoopsObject
 
     /**
      * Returns Class Base Variable imgset_id
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function imgset_id($format = '')
@@ -69,7 +70,7 @@ class XoopsImageset extends XoopsObject
 
     /**
      * Returns Class Base Variable imgset_name
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function imgset_name($format = '')
@@ -79,7 +80,7 @@ class XoopsImageset extends XoopsObject
 
     /**
      * Returns Class Base Variable imgset_refid
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function imgset_refid($format = '')
@@ -212,7 +213,7 @@ class XoopsImagesetHandler extends XoopsObjectHandler
      * Load {@link XoopsImageSet}s from the database
      *
      * @param CriteriaElement $criteria  {@link CriteriaElement}
-     * @param boolean $id_as_key Use the ID as key into the array
+     * @param boolean         $id_as_key Use the ID as key into the array
      * @internal param bool $getbinary
      * @return array Array of {@link XoopsImageSet} objects
      */

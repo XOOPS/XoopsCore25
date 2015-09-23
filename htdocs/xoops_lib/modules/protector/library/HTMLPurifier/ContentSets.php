@@ -87,7 +87,9 @@ class HTMLPurifier_ContentSets
         $content_model = $def->content_model;
         if (is_string($content_model)) {
             // Assume that $this->keys is alphanumeric
-            $def->content_model = preg_replace_callback('/\b(' . implode('|', $this->keys) . ')\b/', array($this, 'generateChildDefCallback'), $content_model);
+            $def->content_model = preg_replace_callback('/\b(' . implode('|', $this->keys) . ')\b/', array(
+                $this,
+                'generateChildDefCallback'), $content_model);
             //$def->content_model = str_replace(
             //    $this->keys, $this->values, $content_model);
         }

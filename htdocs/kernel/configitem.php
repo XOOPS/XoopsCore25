@@ -67,9 +67,10 @@ class XoopsConfigItem extends XoopsObject
     {
         $this->__construct();
     }
+
     /**
      * Returns Class Base Variable conf_id
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function id($format = 'N')
@@ -79,7 +80,7 @@ class XoopsConfigItem extends XoopsObject
 
     /**
      * Returns Class Base Variable conf_id
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function conf_id($format = '')
@@ -89,7 +90,7 @@ class XoopsConfigItem extends XoopsObject
 
     /**
      * Returns Class Base Variable conf_modid
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function conf_modid($format = '')
@@ -99,7 +100,7 @@ class XoopsConfigItem extends XoopsObject
 
     /**
      * Returns Class Base Variable conf_catid
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function conf_catid($format = '')
@@ -109,7 +110,7 @@ class XoopsConfigItem extends XoopsObject
 
     /**
      * Returns Class Base Variable conf_name
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function conf_name($format = '')
@@ -119,7 +120,7 @@ class XoopsConfigItem extends XoopsObject
 
     /**
      * Returns Class Base Variable conf_title
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function conf_title($format = '')
@@ -129,7 +130,7 @@ class XoopsConfigItem extends XoopsObject
 
     /**
      * Returns Class Base Variable conf_value
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function conf_value($format = '')
@@ -139,7 +140,7 @@ class XoopsConfigItem extends XoopsObject
 
     /**
      * Returns Class Base Variable conf_desc
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function conf_desc($format = '')
@@ -149,7 +150,7 @@ class XoopsConfigItem extends XoopsObject
 
     /**
      * Returns Class Base Variable conf_formtype
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function conf_formtype($format = '')
@@ -159,7 +160,7 @@ class XoopsConfigItem extends XoopsObject
 
     /**
      * Returns Class Base Variable conf_valuetype
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function conf_valuetype($format = '')
@@ -169,7 +170,7 @@ class XoopsConfigItem extends XoopsObject
 
     /**
      * Returns Class Base Variable conf_order
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function conf_order($format = '')
@@ -191,7 +192,7 @@ class XoopsConfigItem extends XoopsObject
             case 'array':
                 $value = @unserialize($this->getVar('conf_value', 'N'));
 
-                return $value ? : array();
+                return $value ?: array();
             case 'float':
                 $value = $this->getVar('conf_value', 'N');
 
@@ -327,7 +328,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
      * Write a config to the database
      *
      * @param  XoopsConfigItem &$config {@link XoopsConfigItem} object
-     * @return mixed  FALSE on fail.
+     * @return mixed           FALSE on fail.
      */
     public function insert(&$config)
     {
@@ -367,7 +368,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
      * Delete a config from the database
      *
      * @param  XoopsConfigItem &$config Config to delete
-     * @return bool   Successful?
+     * @return bool            Successful?
      */
     public function delete(&$config)
     {
@@ -389,8 +390,8 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
      * Get configs from the database
      *
      * @param  CriteriaElement $criteria  {@link CriteriaElement}
-     * @param  bool   $id_as_key return the config's id as key?
-     * @return array  Array of {@link XoopsConfigItem} objects
+     * @param  bool            $id_as_key return the config's id as key?
+     * @return array           Array of {@link XoopsConfigItem} objects
      */
     public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
@@ -425,7 +426,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
      * Count configs
      *
      * @param  CriteriaElement $criteria {@link CriteriaElement}
-     * @return int    Count of configs matching $criteria
+     * @return int             Count of configs matching $criteria
      */
     public function getCount(CriteriaElement $criteria = null)
     {

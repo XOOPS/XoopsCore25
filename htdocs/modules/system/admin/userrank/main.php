@@ -91,7 +91,7 @@ switch ($op) {
                 $userrank['rank_min']     = $userrank_arr[$i]->getVar("rank_min");
                 $userrank['rank_max']     = $userrank_arr[$i]->getVar("rank_max");
                 $userrank['rank_special'] = $userrank_arr[$i]->getVar("rank_special");
-                $rank_img                 = ($userrank_arr[$i]->getVar("rank_image")) ? : 'blank.gif';
+                $rank_img                 = ($userrank_arr[$i]->getVar("rank_image")) ?: 'blank.gif';
                 $userrank['rank_image']   = '<img src="' . XOOPS_UPLOAD_URL . '/' . $rank_img . '" alt="" />';
                 $xoopsTpl->append_by_ref('userrank', $userrank);
                 unset($userrank);
@@ -202,8 +202,11 @@ switch ($op) {
             $xoBreadCrumb->addLink(_AM_SYSTEM_USERRANK_NAV_DELETE);
             $xoBreadCrumb->addHelp(system_adminVersion('userrank', 'help') . '#delete');
             $xoBreadCrumb->render();
-            $rank_img = ($obj->getVar("rank_image")) ? : 'blank.gif';
-            xoops_confirm(array("ok" => 1, "rank_id" => $_REQUEST["rank_id"], "op" => "userrank_delete"), $_SERVER["REQUEST_URI"], sprintf(_AM_SYSTEM_USERRANK_SUREDEL) . '<br \><img src="' . XOOPS_UPLOAD_URL . '/' . $rank_img . '" alt="" /><br \>');
+            $rank_img = ($obj->getVar("rank_image")) ?: 'blank.gif';
+            xoops_confirm(array(
+                              "ok"      => 1,
+                              "rank_id" => $_REQUEST["rank_id"],
+                              "op"      => "userrank_delete"), $_SERVER["REQUEST_URI"], sprintf(_AM_SYSTEM_USERRANK_SUREDEL) . '<br \><img src="' . XOOPS_UPLOAD_URL . '/' . $rank_img . '" alt="" /><br \>');
         }
         break;
 

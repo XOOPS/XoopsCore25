@@ -25,7 +25,6 @@ include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 // If not a user, redirect
 if (!is_object($GLOBALS['xoopsUser'])) {
     redirect_header(XOOPS_URL, 3, _US_NOEDITRIGHT);
-
 }
 
 $myts                       =& MyTextSanitizer::getInstance();
@@ -127,7 +126,7 @@ if ($op === 'avatarform') {
     $avatar_select   = new XoopsFormSelect('', 'user_avatar', $GLOBALS['xoopsUser']->getVar('user_avatar'));
     $avatar_list     = $avatar_handler->getList('S', true);
     $avatar_selected = $GLOBALS['xoopsUser']->getVar("user_avatar", "E");
-//    $avatar_selected = in_array($avatar_selected, array_keys($avatar_list)) ? $avatar_selected : "blank.gif";
+    //    $avatar_selected = in_array($avatar_selected, array_keys($avatar_list)) ? $avatar_selected : "blank.gif";
     $avatar_selected = array_key_exists($avatar_selected, $avatar_list) ? $avatar_selected : "blank.gif";
     $avatar_select->addOptionArray($avatar_list);
     $avatar_select->setExtra("onchange='showImgSelected(\"avatar\", \"user_avatar\", \"uploads\", \"\", \"" . XOOPS_URL . "\")'");
@@ -157,11 +156,15 @@ if ($op === 'avatarupload') {
     }
     if (empty($uid) || $GLOBALS['xoopsUser']->getVar('uid') != $uid) {
         redirect_header('index.php', 3, _US_NOEDITRIGHT);
-
     }
     if ($GLOBALS['xoopsConfigUser']['avatar_allow_upload'] == 1 && $GLOBALS['xoopsUser']->getVar('posts') >= $GLOBALS['xoopsConfigUser']['avatar_minposts']) {
         include_once $GLOBALS['xoops']->path('class/uploader.php');
-        $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH . '/avatars', array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'), $GLOBALS['xoopsConfigUser']['avatar_maxsize'], $GLOBALS['xoopsConfigUser']['avatar_width'], $GLOBALS['xoopsConfigUser']['avatar_height']);
+        $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH . '/avatars', array(
+            'image/gif',
+            'image/jpeg',
+            'image/pjpeg',
+            'image/x-png',
+            'image/png'), $GLOBALS['xoopsConfigUser']['avatar_maxsize'], $GLOBALS['xoopsConfigUser']['avatar_width'], $GLOBALS['xoopsConfigUser']['avatar_height']);
         if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
             $uploader->setPrefix('cavt');
             if ($uploader->upload()) {
@@ -208,7 +211,6 @@ if ($op === 'avatarchoose') {
     }
     if (empty($uid) || $GLOBALS['xoopsUser']->getVar('uid') != $uid) {
         redirect_header('index.php', 3, _US_NOEDITRIGHT);
-
     }
     $user_avatar = '';
     $avt_handler =& xoops_getHandler('avatar');
@@ -233,7 +235,7 @@ if ($op === 'avatarchoose') {
             include $GLOBALS['xoops']->path('footer.php');
             exit();
         }
-//        if ($oldavatar && preg_match("/^cavt/", strtolower(substr($oldavatar, 8)))) {
+        //        if ($oldavatar && preg_match("/^cavt/", strtolower(substr($oldavatar, 8)))) {
         if ($oldavatar && 0 === strpos(strtolower(substr($oldavatar, 8)), 'cavt')) {
             $avatars = $avt_handler->getObjects(new Criteria('avatar_file', $oldavatar));
             if (!empty($avatars) && count($avatars) == 1 && is_object($avatars[0])) {

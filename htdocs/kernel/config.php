@@ -76,6 +76,7 @@ class XoopsConfigHandler
     {
         $this->__construct($db);
     }
+
     /**
      * Create a config
      *
@@ -170,8 +171,8 @@ class XoopsConfigHandler
      * get one or more Configs
      *
      * @param CriteriaElement $criteria     {@link CriteriaElement}
-     * @param bool   $id_as_key    Use the configs' ID as keys?
-     * @param bool   $with_options get the options now?
+     * @param bool            $id_as_key    Use the configs' ID as keys?
+     * @param bool            $with_options get the options now?
      *
      * @return array Array of {@link XoopsConfigItem} objects
      */
@@ -253,7 +254,7 @@ class XoopsConfigHandler
      * Get one or more {@link XoopsConfigOption}s
      *
      * @param CriteriaElement $criteria  {@link CriteriaElement}
-     * @param bool   $id_as_key Use IDs as keys in the array?
+     * @param bool            $id_as_key Use IDs as keys in the array?
      *
      * @return array Array of {@link XoopsConfigOption}s
      */

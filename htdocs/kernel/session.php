@@ -79,6 +79,7 @@ class XoopsSessionHandler
     {
         $this->__construct($db);
     }
+
     /**
      * Open a session
      *

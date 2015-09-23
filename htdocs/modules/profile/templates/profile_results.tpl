@@ -15,7 +15,6 @@
             </tr>
         <{/foreach}>
     </table>
-
     <{$nav}>
 <{else}>
     <div class="errorMsg">

@@ -1459,8 +1459,10 @@ class phpthumb_filters
 
                             //                        ImageFill($gdimg_tiledwatermark, 0, 0, ImageColorTransparent($gdimg_tiledwatermark));
                             // tile the image as many times as can fit
-                            for ($x = $watermark_margin_x; $x < ($img_source_width + $watermark_source_width); $x += ($watermark_source_width + $watermark_margin_x)) {
-                                for ($y = $watermark_margin_y; $y < ($img_source_height + $watermark_source_height); $y += ($watermark_source_height + $watermark_margin_y)) {
+                            for ($x = $watermark_margin_x; $x < ($img_source_width + $watermark_source_width);
+                                 $x += ($watermark_source_width + $watermark_margin_x)) {
+                                for ($y = $watermark_margin_y; $y < ($img_source_height + $watermark_source_height);
+                                     $y += ($watermark_source_height + $watermark_margin_y)) {
                                     ImageCopy($gdimg_tiledwatermark, $img_watermark, $x, $y, 0, 0, min($watermark_source_width, $img_source_width - $x - $watermark_margin_x), min($watermark_source_height, $img_source_height - $y - $watermark_margin_y));
                                 }
                             }

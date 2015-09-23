@@ -192,7 +192,17 @@ switch ($op) {
                     $module_handler =& xoops_getHandler('module');
                     $modules        = $module_handler->getObjects(new Criteria('hasmain', 1), true);
                     $currrent_val   = $config[$i]->getConfValueForOutput();
-                    $cache_options  = array('0' => _NOCACHE, '30' => sprintf(_SECONDS, 30), '60' => _MINUTE, '300' => sprintf(_MINUTES, 5), '1800' => sprintf(_MINUTES, 30), '3600' => _HOUR, '18000' => sprintf(_HOURS, 5), '86400' => _DAY, '259200' => sprintf(_DAYS, 3), '604800' => _WEEK);
+                    $cache_options  = array(
+                        '0'      => _NOCACHE,
+                        '30'     => sprintf(_SECONDS, 30),
+                        '60'     => _MINUTE,
+                        '300'    => sprintf(_MINUTES, 5),
+                        '1800'   => sprintf(_MINUTES, 30),
+                        '3600'   => _HOUR,
+                        '18000'  => sprintf(_HOURS, 5),
+                        '86400'  => _DAY,
+                        '259200' => sprintf(_DAYS, 3),
+                        '604800' => _WEEK);
                     if (count($modules) > 0) {
                         $ele = new XoopsFormElementTray($title, '<br />');
                         foreach (array_keys($modules) as $mid) {
@@ -209,7 +219,17 @@ switch ($op) {
 
                 case 'site_cache':
                     $ele = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
-                    $ele->addOptionArray(array('0' => _NOCACHE, '30' => sprintf(_SECONDS, 30), '60' => _MINUTE, '300' => sprintf(_MINUTES, 5), '1800' => sprintf(_MINUTES, 30), '3600' => _HOUR, '18000' => sprintf(_HOURS, 5), '86400' => _DAY, '259200' => sprintf(_DAYS, 3), '604800' => _WEEK));
+                    $ele->addOptionArray(array(
+                                             '0'      => _NOCACHE,
+                                             '30'     => sprintf(_SECONDS, 30),
+                                             '60'     => _MINUTE,
+                                             '300'    => sprintf(_MINUTES, 5),
+                                             '1800'   => sprintf(_MINUTES, 30),
+                                             '3600'   => _HOUR,
+                                             '18000'  => sprintf(_HOURS, 5),
+                                             '86400'  => _DAY,
+                                             '259200' => sprintf(_DAYS, 3),
+                                             '604800' => _WEEK));
                     break;
 
                 case 'password':

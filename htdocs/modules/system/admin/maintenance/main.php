@@ -71,7 +71,11 @@ switch ($op) {
         $tables_tray->addElement($select_tables, false);
         $tables_tray->addElement(new xoopsFormLabel('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . _AM_SYSTEM_MAINTENANCE_DUMP_AND . '&nbsp;'));
         $choice  = new XoopsFormSelect('&nbsp;&nbsp;', "maintenance", '', 4, true);
-        $options = array('1' => _AM_SYSTEM_MAINTENANCE_CHOICE1, '2' => _AM_SYSTEM_MAINTENANCE_CHOICE2, '3' => _AM_SYSTEM_MAINTENANCE_CHOICE3, '4' => _AM_SYSTEM_MAINTENANCE_CHOICE4);
+        $options = array(
+            '1' => _AM_SYSTEM_MAINTENANCE_CHOICE1,
+            '2' => _AM_SYSTEM_MAINTENANCE_CHOICE2,
+            '3' => _AM_SYSTEM_MAINTENANCE_CHOICE3,
+            '4' => _AM_SYSTEM_MAINTENANCE_CHOICE4);
         $choice->addOptionArray($options);
         $tables_tray->addElement($choice, false);
         $form_maintenance->addElement($tables_tray);
@@ -113,7 +117,6 @@ switch ($op) {
         // Check security
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=maintenance', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-
         }
         //Define Breadcrumb and tips
         $xoBreadCrumb->addLink(_AM_SYSTEM_MAINTENANCE_NAV_MANAGER, system_adminVersion('maintenance', 'adminpath'));
@@ -186,7 +189,6 @@ switch ($op) {
         // Check security
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=maintenance', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-
         }
         //Define Breadcrumb and tips
         $xoBreadCrumb->addLink(_AM_SYSTEM_MAINTENANCE_NAV_MANAGER, system_adminVersion('maintenance', 'adminpath'));

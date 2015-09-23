@@ -226,5 +226,3 @@ define('_DBTIMESTAMPSTRING', 'Y-m-d H:i:s');
 //define('_XOBJ_ERR_INVALID_EMAIL', 'Invalid Email');
 //define('_XOBJ_ERR_INVALID_ENUMERATION', 'Invalid Enumeration');
 
-
-

@@ -53,9 +53,10 @@ class XoopsTplfile extends XoopsObject
     {
         $this->__construct();
     }
+
     /**
      * Returns Class Base Variable tpl_id
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function id($format = 'N')
@@ -65,7 +66,7 @@ class XoopsTplfile extends XoopsObject
 
     /**
      * Returns Class Base Variable tpl_id
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function tpl_id($format = '')
@@ -75,7 +76,7 @@ class XoopsTplfile extends XoopsObject
 
     /**
      * Returns Class Base Variable tpl_refid
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function tpl_refid($format = '')
@@ -85,7 +86,7 @@ class XoopsTplfile extends XoopsObject
 
     /**
      * Returns Class Base Variable tpl_tplset
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function tpl_tplset($format = '')
@@ -95,7 +96,7 @@ class XoopsTplfile extends XoopsObject
 
     /**
      * Returns Class Base Variable tpl_file
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function tpl_file($format = '')
@@ -105,7 +106,7 @@ class XoopsTplfile extends XoopsObject
 
     /**
      * Returns Class Base Variable tpl_desc
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function tpl_desc($format = '')
@@ -115,7 +116,7 @@ class XoopsTplfile extends XoopsObject
 
     /**
      * Returns Class Base Variable tpl_lastmodified
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function tpl_lastmodified($format = '')
@@ -125,7 +126,7 @@ class XoopsTplfile extends XoopsObject
 
     /**
      * Returns Class Base Variable tpl_lastimported
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function tpl_lastimported($format = '')
@@ -135,7 +136,7 @@ class XoopsTplfile extends XoopsObject
 
     /**
      * Returns Class Base Variable tpl_module
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function tpl_module($format = '')
@@ -145,7 +146,7 @@ class XoopsTplfile extends XoopsObject
 
     /**
      * Returns Class Base Variable tpl_type
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function tpl_type($format = '')
@@ -155,7 +156,7 @@ class XoopsTplfile extends XoopsObject
 
     /**
      * Returns Class Base Variable tpl_source
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function tpl_source($format = '')
@@ -399,9 +400,9 @@ class XoopsTplfileHandler extends XoopsObjectHandler
     /**
      * retrieve array of {@link XoopsBlock}s meeting certain conditions
      * @param  CriteriaElement $criteria  {@link CriteriaElement} with conditions for the blocks
-     * @param  bool   $getsource
-     * @param  bool   $id_as_key should the blocks' bid be the key for the returned array?
-     * @return array  {@link XoopsBlock}s matching the conditions
+     * @param  bool            $getsource
+     * @param  bool            $id_as_key should the blocks' bid be the key for the returned array?
+     * @return array           {@link XoopsBlock}s matching the conditions
      */
     public function getObjects(CriteriaElement $criteria = null, $getsource = false, $id_as_key = false)
     {

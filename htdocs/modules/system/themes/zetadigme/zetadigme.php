@@ -297,7 +297,11 @@ window.onload= function(){
             }
             //$menu[] = $rtn;
         }
-        $tpl->append('navitems', array('link' => XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin', 'text' => _THEME_SITEPREF, 'dir' => $mod->getVar('dirname', 'n'), 'menu' => $menu));
+        $tpl->append('navitems', array(
+            'link' => XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin',
+            'text' => _THEME_SITEPREF,
+            'dir'  => $mod->getVar('dirname', 'n'),
+            'menu' => $menu));
         //add OPTIONS/Links Menu Items
         $menu   = array();
         $menu[] = array(

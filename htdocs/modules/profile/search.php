@@ -160,7 +160,9 @@ switch ($op) {
         $xoopsOption['template_main'] = "profile_results.tpl";
         include_once $GLOBALS['xoops']->path('header.php');
         $GLOBALS['xoopsTpl']->assign('page_title', _PROFILE_MA_RESULTS);
-        $xoBreadcrumbs[] = array('link' => XOOPS_URL . "/modules/" . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/search.php', 'title' => _SEARCH);
+        $xoBreadcrumbs[] = array(
+            'link'  => XOOPS_URL . "/modules/" . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/search.php',
+            'title' => _SEARCH);
         $xoBreadcrumbs[] = array('title' => _PROFILE_MA_RESULTS);
 
         $member_handler =& xoops_getHandler('member');

@@ -77,8 +77,12 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
         $this->info['border-color'] = new HTMLPurifier_AttrDef_CSS_Multiple($border_color);
 
         $border_width = $this->info['border-top-width'] = $this->info['border-bottom-width'] = $this->info['border-left-width'] = $this->info['border-right-width'] = new HTMLPurifier_AttrDef_CSS_Composite(array(
-                                                                                                                                                                                                                 new HTMLPurifier_AttrDef_Enum(array('thin', 'medium', 'thick')),
-                                                                                                                                                                                                                 new HTMLPurifier_AttrDef_CSS_Length('0') //disallow negative
+                                                                                                                                                                                                                 new HTMLPurifier_AttrDef_Enum(array(
+                                                                                                                                                                                                                                                   'thin',
+                                                                                                                                                                                                                                                   'medium',
+                                                                                                                                                                                                                                                   'thick')),
+                                                                                                                                                                                                                 new HTMLPurifier_AttrDef_CSS_Length('0')
+                                                                                                                                                                                                                 //disallow negative
                                                                                                                                                                                                              ));
 
         $this->info['border-width'] = new HTMLPurifier_AttrDef_CSS_Multiple($border_width);

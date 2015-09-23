@@ -114,7 +114,6 @@ if ($op === 'logout') {
     }
     $message = _US_LOGGEDOUT . '<br />' . _US_THANKYOUFORVISIT;
     redirect_header('index.php', 1, $message);
-
 }
 
 if ($op === 'actv') {
@@ -122,7 +121,6 @@ if ($op === 'actv') {
     $id     = isset($clean_id) ? $clean_id : 0;
     $actkey = isset($clean_actkey) ? $clean_actkey : '';
     redirect_header("register.php?id={$id}&amp;actkey={$actkey}", 1, '');
-
 }
 
 if ($op === 'delete') {
@@ -130,13 +128,11 @@ if ($op === 'delete') {
     $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
     if (!$xoopsUser || $xoopsConfigUser['self_delete'] != 1) {
         redirect_header('index.php', 5, _US_NOPERMISS);
-
     } else {
         $groups = $xoopsUser->getGroups();
         if (in_array(XOOPS_GROUP_ADMIN, $groups)) {
             // users in the webmasters group may not be deleted
             redirect_header('user.php', 5, _US_ADMINNO);
-
         }
         if (!$clean_ok) {
             include $GLOBALS['xoops']->path('header.php');

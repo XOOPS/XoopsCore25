@@ -44,11 +44,9 @@ if ($xoopsUser) {
     $moduleperm_handler =& xoops_getHandler('groupperm');
     if (!$moduleperm_handler->checkRight('module_admin', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
         redirect_header(XOOPS_URL, 1, _NOPERM);
-
     }
 } else {
     redirect_header(XOOPS_URL . "/user.php", 1, _NOPERM);
-
 }
 
 if (!isset($xoopsTpl) || !is_object($xoopsTpl)) {

@@ -25,6 +25,7 @@ class ProtectorFilterAbstract
     {
         $this->__construct();
     }
+
     /**
      * @return bool
      */
@@ -50,7 +51,7 @@ class ProtectorFilterAbstract
  */
 class ProtectorFilterHandler
 {
-    public $protector   ;
+    public $protector;
     public $filters_base = '';
 
     /**
@@ -66,6 +67,7 @@ class ProtectorFilterHandler
     {
         $this->__construct();
     }
+
     /**
      * @return ProtectorFilterHandler
      */

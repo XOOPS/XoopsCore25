@@ -69,6 +69,7 @@ class XoopsPageNav
     {
         $this->__construct($total_items, $items_perpage, $current_start, $start_name, $extra_arg);
     }
+
     /**
      * Create text navigation
      *

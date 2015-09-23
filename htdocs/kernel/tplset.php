@@ -46,9 +46,10 @@ class XoopsTplset extends XoopsObject
     {
         $this->__construct();
     }
+
     /**
      * Returns Class Base Variable tplset_id
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function id($format = 'N')
@@ -58,7 +59,7 @@ class XoopsTplset extends XoopsObject
 
     /**
      * Returns Class Base Variable tplset_id
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function tplset_id($format = '')
@@ -68,7 +69,7 @@ class XoopsTplset extends XoopsObject
 
     /**
      * Returns Class Base Variable tplset_name
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function tplset_name($format = '')
@@ -78,7 +79,7 @@ class XoopsTplset extends XoopsObject
 
     /**
      * Returns Class Base Variable tplset_desc
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function tplset_desc($format = '')
@@ -88,7 +89,7 @@ class XoopsTplset extends XoopsObject
 
     /**
      * Returns Class Base Variable tplset_credits
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function tplset_credits($format = '')
@@ -98,7 +99,7 @@ class XoopsTplset extends XoopsObject
 
     /**
      * Returns Class Base Variable tplset_created
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function tplset_created($format = '')
@@ -257,8 +258,8 @@ class XoopsTplsetHandler extends XoopsObjectHandler
      * Get tplsets from the database
      *
      * @param  CriteriaElement $criteria  {@link CriteriaElement}
-     * @param  bool   $id_as_key return the tplsets id as key?
-     * @return array  Array of {@link XoopsTplset} objects
+     * @param  bool            $id_as_key return the tplsets id as key?
+     * @return array           Array of {@link XoopsTplset} objects
      */
     public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
@@ -292,7 +293,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
      * Count tplsets
      *
      * @param  CriteriaElement $criteria {@link CriteriaElement}
-     * @return int    Count of tplsets matching $criteria
+     * @return int             Count of tplsets matching $criteria
      */
     public function getCount(CriteriaElement $criteria = null)
     {
@@ -312,14 +313,14 @@ class XoopsTplsetHandler extends XoopsObjectHandler
      * get a list of tplsets matchich certain conditions
      *
      * @param  CriteriaElement $criteria conditions to match
-     * @return array  array of tplsets matching the conditions
+     * @return array           array of tplsets matching the conditions
      **/
     public function getList(CriteriaElement $criteria = null)
     {
         $ret     = array();
         $tplsets = $this->getObjects($criteria, true);
         foreach (array_keys($tplsets) as $i) {
-            $temp = $tplsets[$i]->getVar('tplset_name');
+            $temp       = $tplsets[$i]->getVar('tplset_name');
             $ret[$temp] = $temp;
         }
 

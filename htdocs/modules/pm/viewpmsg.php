@@ -22,7 +22,6 @@ include_once dirname(dirname(__DIR__)) . '/mainfile.php';
 
 if (!is_object($GLOBALS['xoopsUser'])) {
     redirect_header(XOOPS_URL, 3, _NOPERM);
-
 }
 $xoopsConfig['module_cache']  = 0; //disable caching since the URL will be the same, but content different from one user to another
 $xoopsOption['template_main'] = "pm_viewpmsg.tpl";
@@ -38,7 +37,11 @@ if (isset($_POST['delete_messages']) && (isset($_POST['msg_id']) || isset($_POST
     if (!$GLOBALS['xoopsSecurity']->check()) {
         $GLOBALS['xoopsTpl']->assign('errormsg', implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
     } elseif (empty($_REQUEST['ok'])) {
-        xoops_confirm(array('ok' => 1, 'delete_messages' => 1, 'op' => $_REQUEST['op'], 'msg_ids' => json_encode(array_map("intval", $_POST['msg_id']))), $_SERVER['REQUEST_URI'], _PM_SURE_TO_DELETE);
+        xoops_confirm(array(
+                          'ok'              => 1,
+                          'delete_messages' => 1,
+                          'op'              => $_REQUEST['op'],
+                          'msg_ids'         => json_encode(array_map("intval", $_POST['msg_id']))), $_SERVER['REQUEST_URI'], _PM_SURE_TO_DELETE);
         include $GLOBALS['xoops']->path('footer.php');
         exit();
     } else {

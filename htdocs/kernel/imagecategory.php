@@ -56,9 +56,10 @@ class XoopsImagecategory extends XoopsObject
     {
         $this->__construct();
     }
+
     /**
      * Returns Class Base Variable imgcat_id
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function id($format = 'N')
@@ -68,7 +69,7 @@ class XoopsImagecategory extends XoopsObject
 
     /**
      * Returns Class Base Variable imgcat_id
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function imgcat_id($format = '')
@@ -78,7 +79,7 @@ class XoopsImagecategory extends XoopsObject
 
     /**
      * Returns Class Base Variable imgcat_name
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function imgcat_name($format = '')
@@ -88,7 +89,7 @@ class XoopsImagecategory extends XoopsObject
 
     /**
      * Returns Class Base Variable imgcat_display
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function imgcat_display($format = '')
@@ -98,7 +99,7 @@ class XoopsImagecategory extends XoopsObject
 
     /**
      * Returns Class Base Variable imgcat_weight
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function imgcat_weight($format = '')
@@ -108,7 +109,7 @@ class XoopsImagecategory extends XoopsObject
 
     /**
      * Returns Class Base Variable imgcat_maxsize
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function imgcat_maxsize($format = '')
@@ -118,7 +119,7 @@ class XoopsImagecategory extends XoopsObject
 
     /**
      * Returns Class Base Variable imgcat_maxwidth
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function imgcat_maxwidth($format = '')
@@ -128,7 +129,7 @@ class XoopsImagecategory extends XoopsObject
 
     /**
      * Returns Class Base Variable imgcat_maxheight
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function imgcat_maxheight($format = '')
@@ -138,7 +139,7 @@ class XoopsImagecategory extends XoopsObject
 
     /**
      * Returns Class Base Variable imgcat_type
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function imgcat_type($format = '')
@@ -148,7 +149,7 @@ class XoopsImagecategory extends XoopsObject
 
     /**
      * Returns Class Base Variable imgcat_storetype
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function imgcat_storetype($format = '')
@@ -297,7 +298,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
     /**
      * Enter description here...
      *
-     * @param  CriteriaElement $criteria
+     * @param  CriteriaElement    $criteria
      * @param  bool|\unknown_type $id_as_key
      * @return unknown
      */

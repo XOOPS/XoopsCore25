@@ -43,6 +43,7 @@ class SystemMaintenance
     {
         $this->__construct();
     }
+
     /**
      * Display Tables
      *
@@ -164,7 +165,7 @@ class SystemMaintenance
             }
         }
         unset($tab);
-        $class = 'odd';
+        $class       = 'odd';
         $tablesCount = count($tables);
         for ($i = 0; $i < $tablesCount; ++$i) {
             $ret .= '<tr class="' . $class . '"><td align="center">' . $this->prefix . $tables[$i] . '</td>';
@@ -226,8 +227,8 @@ class SystemMaintenance
         $ret[0] = "# \n";
         $ret[0] .= "# Dump SQL, Generate by Xoops \n";
         $ret[0] .= "# Date : " . date('d-m-Y � H:i') . " \n";
-        $ret[1] = '<table class="outer"><tr><th width="30%">' . _AM_SYSTEM_MAINTENANCE_DUMP_TABLES . '</th><th width="35%">' . _AM_SYSTEM_MAINTENANCE_DUMP_STRUCTURES . '</th><th  width="35%">' . _AM_SYSTEM_MAINTENANCE_DUMP_NB_RECORDS . '</th></tr>';
-        $class  = 'odd';
+        $ret[1]      = '<table class="outer"><tr><th width="30%">' . _AM_SYSTEM_MAINTENANCE_DUMP_TABLES . '</th><th width="35%">' . _AM_SYSTEM_MAINTENANCE_DUMP_STRUCTURES . '</th><th  width="35%">' . _AM_SYSTEM_MAINTENANCE_DUMP_NB_RECORDS . '</th></tr>';
+        $class       = 'odd';
         $tablesCount = count($tables);
         for ($i = 0; $i < $tablesCount; ++$i) {
             //structure
@@ -256,8 +257,8 @@ class SystemMaintenance
         $ret[0] .= "# Dump SQL, Generate by Xoops \n";
         $ret[0] .= "# Date : " . date('d-m-Y � H:i') . " \n";
         $ret[0] .= "# \n\n";
-        $ret[1] = '<table class="outer"><tr><th width="30%">' . _AM_SYSTEM_MAINTENANCE_DUMP_TABLES . '</th><th width="35%">' . _AM_SYSTEM_MAINTENANCE_DUMP_STRUCTURES . '</th><th  width="35%">' . _AM_SYSTEM_MAINTENANCE_DUMP_NB_RECORDS . '</th></tr>';
-        $class  = 'odd';
+        $ret[1]       = '<table class="outer"><tr><th width="30%">' . _AM_SYSTEM_MAINTENANCE_DUMP_TABLES . '</th><th width="35%">' . _AM_SYSTEM_MAINTENANCE_DUMP_STRUCTURES . '</th><th  width="35%">' . _AM_SYSTEM_MAINTENANCE_DUMP_NB_RECORDS . '</th></tr>';
+        $class        = 'odd';
         $modulesCount = count($modules);
         for ($i = 0; $i < $modulesCount; ++$i) {
             $module_handler =& xoops_getHandler('module');
@@ -333,7 +334,7 @@ class SystemMaintenance
                 $i          = 0;
                 while ($i < $num_fields) {
                     $meta = mysql_fetch_field($result, $i);
-                    ($field_type[] =  $meta->type);
+                    ($field_type[] = $meta->type);
                     ++$i;
                 }
 

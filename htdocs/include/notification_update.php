@@ -41,12 +41,10 @@ xoops_loadLanguage('notification');
 
 if (!isset($_POST['not_submit'])) {
     redirect_header($_POST['not_redirect'], 3, _NOPERM);
-
 }
 
 if (!$GLOBALS['xoopsSecurity']->check()) {
     redirect_header($_POST['not_redirect'], 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-
 }
 
 // NOTE: in addition to the templates provided in the block and view

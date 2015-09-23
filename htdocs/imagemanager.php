@@ -53,7 +53,7 @@ if ($op === 'list') {
     if ($catcount > 0) {
         $xoopsTpl->assign('lang_go', _GO);
         $catshow = (!isset($_GET['cat_id'])) ? 0 : (int)($_GET['cat_id']);
-//        $catshow = (!empty($catshow) && in_array($catshow, array_keys($catlist))) ? $catshow : 0;
+        //        $catshow = (!empty($catshow) && in_array($catshow, array_keys($catlist))) ? $catshow : 0;
         $catshow = (!empty($catshow) && array_key_exists($catshow, $catlist)) ? $catshow : 0;
         $xoopsTpl->assign('show_cat', $catshow);
         if ($catshow > 0) {
@@ -109,7 +109,14 @@ if ($op === 'list') {
                         $rcode = '[img align=right]' . XOOPS_UPLOAD_URL . '/' . $images[$i]->getVar('image_name') . '[/img]';
                         $src   = XOOPS_UPLOAD_URL . '/' . $images[$i]->getVar('image_name');
                     }
-                    $xoopsTpl->append('images', array('id' => $images[$i]->getVar('image_id'), 'nicename' => $images[$i]->getVar('image_nicename'), 'mimetype' => $images[$i]->getVar('image_mimetype'), 'src' => $src, 'lxcode' => $lcode, 'xcode' => $code, 'rxcode' => $rcode));
+                    $xoopsTpl->append('images', array(
+                        'id'       => $images[$i]->getVar('image_id'),
+                        'nicename' => $images[$i]->getVar('image_nicename'),
+                        'mimetype' => $images[$i]->getVar('image_mimetype'),
+                        'src'      => $src,
+                        'lxcode'   => $lcode,
+                        'xcode'    => $code,
+                        'rxcode'   => $rcode));
                 }
                 if ($total > 10) {
                     include_once $GLOBALS['xoops']->path('class/pagenav.php');
@@ -212,7 +219,12 @@ if ($op === 'doupload') {
         xoops_footer();
         exit();
     }
-    $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH . '/images', array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'), $imgcat->getVar('imgcat_maxsize'), $imgcat->getVar('imgcat_maxwidth'), $imgcat->getVar('imgcat_maxheight'));
+    $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH . '/images', array(
+        'image/gif',
+        'image/jpeg',
+        'image/pjpeg',
+        'image/x-png',
+        'image/png'), $imgcat->getVar('imgcat_maxsize'), $imgcat->getVar('imgcat_maxwidth'), $imgcat->getVar('imgcat_maxheight'));
     $uploader->setPrefix('img');
     if ($uploader->fetchMedia($xoops_upload_file[0])) {
         if (!$uploader->upload()) {

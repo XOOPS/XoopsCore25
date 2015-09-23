@@ -48,9 +48,10 @@ class XoopsImage extends XoopsObject
     {
         $this->__construct();
     }
+
     /**
      * Returns Class Base Variable image_id
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function id($format = 'N')
@@ -60,7 +61,7 @@ class XoopsImage extends XoopsObject
 
     /**
      * Returns Class Base Variable image_id
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function image_id($format = '')
@@ -70,7 +71,7 @@ class XoopsImage extends XoopsObject
 
     /**
      * Returns Class Base Variable image_name
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function image_name($format = '')
@@ -80,7 +81,7 @@ class XoopsImage extends XoopsObject
 
     /**
      * Returns Class Base Variable image_nicename
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function image_nicename($format = '')
@@ -90,7 +91,7 @@ class XoopsImage extends XoopsObject
 
     /**
      * Returns Class Base Variable image_mimetype
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function image_mimetype($format = '')
@@ -100,7 +101,7 @@ class XoopsImage extends XoopsObject
 
     /**
      * Returns Class Base Variable image_created
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function image_created($format = '')
@@ -110,7 +111,7 @@ class XoopsImage extends XoopsObject
 
     /**
      * Returns Class Base Variable image_display
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function image_display($format = '')
@@ -120,7 +121,7 @@ class XoopsImage extends XoopsObject
 
     /**
      * Returns Class Base Variable image_weight
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function image_weight($format = '')
@@ -130,7 +131,7 @@ class XoopsImage extends XoopsObject
 
     /**
      * Returns Class Base Variable image_body
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function image_body($format = '')
@@ -140,7 +141,7 @@ class XoopsImage extends XoopsObject
 
     /**
      * Returns Class Base Variable imgcat_id
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function imgcat_id($format = '')
@@ -183,7 +184,7 @@ class XoopsImageHandler extends XoopsObjectHandler
      *
      * @param  int     $id ID
      * @param  boolean $getbinary
-     * @return XoopsImage  {@link XoopsImage}, FALSE on fail
+     * @return XoopsImage {@link XoopsImage}, FALSE on fail
      **/
     public function &get($id, $getbinary = true)
     {
@@ -294,10 +295,10 @@ class XoopsImageHandler extends XoopsObjectHandler
     /**
      * Load {@link XoopsImage}s from the database
      *
-     * @param  CriteriaElement  $criteria  {@link CriteriaElement}
-     * @param  boolean $id_as_key Use the ID as key into the array
-     * @param  boolean $getbinary
-     * @return array   Array of {@link XoopsImage} objects
+     * @param  CriteriaElement $criteria  {@link CriteriaElement}
+     * @param  boolean         $id_as_key Use the ID as key into the array
+     * @param  boolean         $getbinary
+     * @return array           Array of {@link XoopsImage} objects
      **/
     public function getObjects(CriteriaElement $criteria = null, $id_as_key = false, $getbinary = false)
     {

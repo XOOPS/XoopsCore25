@@ -64,7 +64,6 @@ if (is_object($GLOBALS['xoopsUser']) && $uid == $GLOBALS['xoopsUser']->getVar('u
     // Redirect if not a user or not active and the current user is not admin
     if (!is_object($thisUser) || (!$thisUser->isActive() && (!$GLOBALS['xoopsUser'] || !$GLOBALS['xoopsUser']->isAdmin()))) {
         redirect_header(XOOPS_URL . "/modules/" . $GLOBALS['xoopsModule']->getVar('dirname', 'n'), 3, _US_SELECTNG);
-
     }
 
     /**
@@ -99,7 +98,6 @@ if (is_object($GLOBALS['xoopsUser']) && $uid == $GLOBALS['xoopsUser']->getVar('u
 
     if ($rejected) {
         redirect_header(XOOPS_URL . "/modules/" . $GLOBALS['xoopsModule']->getVar('dirname', 'n'), 3, _NOPERM);
-
     }
 
     if (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->isAdmin()) {
@@ -206,7 +204,10 @@ if ($GLOBALS['xoopsModuleConfig']['profile_search']) {
                     if ($count == 5) {
                         $showall_link = '<a href="' . XOOPS_URL . '/search.php?action=showallbyuser&amp;mid=' . $mid . '&amp;uid=' . $thisUser->getVar('uid') . '">' . _US_SHOWALL . '</a>';
                     }
-                    $GLOBALS['xoopsTpl']->append('modules', array('name' => $modules[$mid]->getVar('name'), 'results' => $results, 'showall_link' => $showall_link));
+                    $GLOBALS['xoopsTpl']->append('modules', array(
+                        'name'         => $modules[$mid]->getVar('name'),
+                        'results'      => $results,
+                        'showall_link' => $showall_link));
                 }
                 unset($modules[$mid]);
             }

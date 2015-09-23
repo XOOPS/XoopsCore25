@@ -26,7 +26,6 @@ xoops_loadLanguage('user');
 
 if ($email == '') {
     redirect_header("user.php", 2, _US_SORRYNOTFOUND, false);
-
 }
 
 $myts           =& MyTextSanitizer::getInstance();
@@ -36,7 +35,6 @@ list($user) = $member_handler->getUsers(new Criteria('email', $myts->addSlashes(
 if (empty($user)) {
     $msg = _US_SORRYNOTFOUND;
     redirect_header("user.php", 2, $msg, false);
-
 } else {
     $code   = isset($_GET['code']) ? trim($_GET['code']) : '';
     $areyou = substr($user->getVar("pass"), 0, 5);

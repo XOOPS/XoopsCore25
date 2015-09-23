@@ -3954,7 +3954,29 @@ class phpthumb
             'ImageGIF',
             'ImagePNG',
             'ImageWBMP');
-        $ParameterNames      = array('src', 'new', 'w', 'h', 'f', 'q', 'sx', 'sy', 'sw', 'sh', 'far', 'bg', 'bc', 'file', 'goto', 'err', 'xto', 'ra', 'ar', 'aoe', 'iar', 'maxb');
+        $ParameterNames      = array(
+            'src',
+            'new',
+            'w',
+            'h',
+            'f',
+            'q',
+            'sx',
+            'sy',
+            'sw',
+            'sh',
+            'far',
+            'bg',
+            'bc',
+            'file',
+            'goto',
+            'err',
+            'xto',
+            'ra',
+            'ar',
+            'aoe',
+            'iar',
+            'maxb');
         $ConfigVariableNames = array(
             'document_root',
             'temp_directory',

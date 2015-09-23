@@ -44,7 +44,9 @@ $configs['extensions'] = array(
     'iconv'    => array('Iconv', sprintf(PHP_EXTENSION, ICONV_CONVERSION)),
     'xml'      => array('XML', sprintf(PHP_EXTENSION, XML_PARSING)),
     'zlib'     => array('Zlib', sprintf(PHP_EXTENSION, ZLIB_COMPRESSION)),
-    'gd'       => array((function_exists('gd_info') && $gdlib = @gd_info()) ? 'GD ' . $gdlib['GD Version'] : '', sprintf(PHP_EXTENSION, IMAGE_FUNCTIONS)),
+    'gd'       => array(
+        (function_exists('gd_info') && $gdlib = @gd_info()) ? 'GD ' . $gdlib['GD Version'] : '',
+        sprintf(PHP_EXTENSION, IMAGE_FUNCTIONS)),
     'exif'     => array('Exif', sprintf(PHP_EXTENSION, IMAGE_METAS)),
     'filter'   => array('Filter', sprintf(PHP_EXTENSION, FILTER_FUNCTIONS)));
 

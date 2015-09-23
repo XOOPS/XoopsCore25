@@ -13,10 +13,11 @@
             <td class='head width30 txtright'><{$smarty.const._PM_SUBJECT_ICONS}></td>
             <td class='even txtleft'>
 
-            <{foreachq item=icon from=$radio_icons}>
-                <input type='radio' name='icon' id='<{$icon}>' value='<{$icon}>'  /><label name='xolb_icon' for='<{$icon}>'><img src='<{xoAppUrl}>images/subject/<{$icon}>' alt="" /></label>
-            <{/foreach}>  </td>  
-        </tr>   
+                <{foreachq item=icon from=$radio_icons}>
+                <input type='radio' name='icon' id='<{$icon}>' value='<{$icon}>'/><label name='xolb_icon' for='<{$icon}>'><img
+                            src='<{xoAppUrl}>images/subject/<{$icon}>' alt=""/></label>
+                <{/foreach}>  </td>
+        </tr>
         <tr class='aligntop'>
             <td class='head width30 txtright'><{$smarty.const._PM_MESSAGEC}></td>
             <td class='even txtleft'><{$pmform.elements.message.body}></td>
@@ -24,7 +25,7 @@
         <tr class='aligntop'>
             <td class='head width30'><{$smarty.const._PM_SAVEINOUTBOX}></td>
             <td class='even'><{$pmform.elements.savecopy.body}></td>
-        </tr>                          
+        </tr>
         <tr>
             <td class='head'>&nbsp;</td>
             <td class='even'>

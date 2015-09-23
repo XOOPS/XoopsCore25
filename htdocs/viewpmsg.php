@@ -33,7 +33,10 @@ if (!is_object($xoopsUser)) {
             exit();
         } elseif (empty($_REQUEST['ok'])) {
             include $GLOBALS['xoops']->path('header.php');
-            xoops_confirm(array('ok' => 1, 'delete_messages' => 1, 'msg_ids' => json_encode(array_map("intval", $_POST['msg_id']))), $_SERVER['REQUEST_URI'], _PM_SURE_TO_DELETE);
+            xoops_confirm(array(
+                              'ok'              => 1,
+                              'delete_messages' => 1,
+                              'msg_ids'         => json_encode(array_map("intval", $_POST['msg_id']))), $_SERVER['REQUEST_URI'], _PM_SURE_TO_DELETE);
             include $GLOBALS['xoops']->path('footer.php');
             exit();
         }
@@ -51,7 +54,6 @@ if (!is_object($xoopsUser)) {
             unset($pm);
         }
         redirect_header("viewpmsg.php", 1, _PM_DELETED);
-
     }
     include $GLOBALS['xoops']->path('header.php');
     $criteria = new Criteria('to_userid', $xoopsUser->getVar('uid'));

@@ -43,9 +43,10 @@ class XoopsGroup extends XoopsObject
     {
         $this->__construct();
     }
+
     /**
      * Returns Class Base Variable groupid
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function id($format = 'N')
@@ -55,7 +56,7 @@ class XoopsGroup extends XoopsObject
 
     /**
      * Returns Class Base Variable groupid
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function groupid($format = '')
@@ -65,7 +66,7 @@ class XoopsGroup extends XoopsObject
 
     /**
      * Returns Class Base Variable name
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function name($format = '')
@@ -75,7 +76,7 @@ class XoopsGroup extends XoopsObject
 
     /**
      * Returns Class Base Variable description
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function description($format = '')
@@ -85,7 +86,7 @@ class XoopsGroup extends XoopsObject
 
     /**
      * Returns Class Base Variable group_type
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function group_type($format = '')
@@ -192,7 +193,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
      * remove a group from the database
      *
      * @param  XoopsGroup $group reference to the group to be removed
-     * @return bool   FALSE if failed
+     * @return bool       FALSE if failed
      */
     public function delete(&$group)
     {
@@ -214,8 +215,8 @@ class XoopsGroupHandler extends XoopsObjectHandler
      * retrieve groups from the database
      *
      * @param  CriteriaElement $criteria  {@link CriteriaElement} with conditions for the groups
-     * @param  bool   $id_as_key should the groups' IDs be used as keys for the associative array?
-     * @return mixed  Array of groups
+     * @param  bool            $id_as_key should the groups' IDs be used as keys for the associative array?
+     * @return mixed           Array of groups
      */
     public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
@@ -329,7 +330,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
      * inserts a membership in the database
      *
      * @param  XoopsMembership $mship reference to the membership object
-     * @return bool   TRUE if already in DB or successful, FALSE if failed
+     * @return bool            TRUE if already in DB or successful, FALSE if failed
      */
     public function insert(&$mship)
     {
@@ -369,7 +370,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
      * delete a membership from the database
      *
      * @param  XoopsMembership $mship reference to the membership object
-     * @return bool   FALSE if failed
+     * @return bool            FALSE if failed
      */
     public function delete(&$mship)
     {
@@ -392,8 +393,8 @@ class XoopsMembershipHandler extends XoopsObjectHandler
      * retrieve memberships from the database
      *
      * @param  CriteriaElement $criteria  {@link CriteriaElement} conditions to meet
-     * @param  bool   $id_as_key should the ID be used as the array's key?
-     * @return array  array of references
+     * @param  bool            $id_as_key should the ID be used as the array's key?
+     * @return array           array of references
      */
     public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {

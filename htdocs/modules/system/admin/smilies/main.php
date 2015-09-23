@@ -86,7 +86,7 @@ switch ($op) {
                 $smilies['code']        = $smilies_arr[$i]->getVar("code");
                 $smilies['emotion']     = $smilies_arr[$i]->getVar("emotion");
                 $smilies['display']     = $smilies_arr[$i]->getVar("display");
-                $smilies_img            = ($smilies_arr[$i]->getVar("smile_url")) ? : 'blank.gif';
+                $smilies_img            = ($smilies_arr[$i]->getVar("smile_url")) ?: 'blank.gif';
                 $smilies['image']       = '<img src="' . XOOPS_UPLOAD_URL . '/' . $smilies_img . '" alt="" />';
                 $smilies['edit_delete'] = '<a href="admin.php?fct=smilies&amp;op=edit_smilie&amp;smilies_id=' . $smilies_id . '">
                                            <img src="./images/icons/edit.png" border="0" alt="' . _AM_SYSTEM_SMILIES_EDIT . '" title="' . _AM_SYSTEM_SMILIES_EDIT . '"></a>
@@ -139,7 +139,6 @@ switch ($op) {
     case "save_smilie":
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=smilies', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-
         }
         // Define Breadcrumb and tips
         $xoBreadCrumb->addLink(_AM_SYSTEM_SMILIES_NAV_ADD);
@@ -208,8 +207,11 @@ switch ($op) {
             $xoBreadCrumb->addLink(_AM_SYSTEM_SMILIES_NAV_DELETE);
             $xoBreadCrumb->addHelp(system_adminVersion('smilies', 'help') . '#delete');
             $xoBreadCrumb->render();
-            $smilies_img = ($obj->getVar("smile_url")) ? : 'blank.gif';
-            xoops_confirm(array("ok" => 1, "smilies_id" => $_REQUEST["smilies_id"], "op" => "smilies_delete"), $_SERVER["REQUEST_URI"], sprintf(_AM_SYSTEM_SMILIES_SUREDEL) . '<br \><img src="' . XOOPS_UPLOAD_URL . '/' . $smilies_img . '" alt="" /><br \>');
+            $smilies_img = ($obj->getVar("smile_url")) ?: 'blank.gif';
+            xoops_confirm(array(
+                              "ok"         => 1,
+                              "smilies_id" => $_REQUEST["smilies_id"],
+                              "op"         => "smilies_delete"), $_SERVER["REQUEST_URI"], sprintf(_AM_SYSTEM_SMILIES_SUREDEL) . '<br \><img src="' . XOOPS_UPLOAD_URL . '/' . $smilies_img . '" alt="" /><br \>');
         }
         break;
 

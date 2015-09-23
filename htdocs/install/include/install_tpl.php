@@ -129,6 +129,7 @@ include_once '../language/' . $wizard->language . '/global.php';
                             <img id="help_button" src="img/help.png" alt="help" title="<?php echo SHOW_HIDE_HELP;
                             ?>" class="off" onclick="showHideHelp(this)"/>
                             <?php
+
                         } ?>
 
                         <h2><?php echo $wizard->pages[$wizard->currentPage]['title']; ?></h2>
@@ -143,17 +144,20 @@ include_once '../language/' . $wizard->language . '/global.php';
                                 ?>
                             </button>
                             <?php
+
                         } ?>
 
                         <?php if (@$pageHasForm) {
                         ?>
                         <button type="submit">
                             <?php
+
                             } else {
                             ?>
                             <button type="button" accesskey="n" onclick="location.href='<?php echo $wizard->pageURI('+1');
                             ?>'">
                                 <?php
+
                                 } ?>
                                 <?php echo BUTTON_NEXT; ?>
                             </button>

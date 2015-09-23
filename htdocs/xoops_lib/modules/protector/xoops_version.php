@@ -87,7 +87,11 @@ $modversion['config'][]  = array(
     'formtype'    => 'select',
     'valuetype'   => 'int',
     'default'     => 255,
-    'options'     => array($constpref . '_LOGLEVEL0' => 0, $constpref . '_LOGLEVEL15' => 15, $constpref . '_LOGLEVEL63' => 63, $constpref . '_LOGLEVEL255' => 255));
+    'options'     => array(
+        $constpref . '_LOGLEVEL0'   => 0,
+        $constpref . '_LOGLEVEL15'  => 15,
+        $constpref . '_LOGLEVEL63'  => 63,
+        $constpref . '_LOGLEVEL255' => 255));
 $modversion['config'][]  = array(
     'name'        => 'banip_time0',
     'title'       => $constpref . '_BANIP_TIME0',
@@ -152,7 +156,11 @@ $modversion['config'][] = array(
     'formtype'    => 'select',
     'valuetype'   => 'int',
     'default'     => 3,
-    'options'     => array($constpref . '_OPT_NONE' => 0, $constpref . '_OPT_EXIT' => 3, $constpref . '_OPT_BIPTIME0' => 7, $constpref . '_OPT_BIP' => 15));
+    'options'     => array(
+        $constpref . '_OPT_NONE'     => 0,
+        $constpref . '_OPT_EXIT'     => 3,
+        $constpref . '_OPT_BIPTIME0' => 7,
+        $constpref . '_OPT_BIP'      => 15));
 $modversion['config'][] = array(
     'name'        => 'isocom_action',
     'title'       => $constpref . '_ISOCOM_ACTION',
@@ -160,7 +168,12 @@ $modversion['config'][] = array(
     'formtype'    => 'select',
     'valuetype'   => 'int',
     'default'     => 0,
-    'options'     => array($constpref . '_OPT_NONE' => 0, $constpref . '_OPT_SAN' => 1, $constpref . '_OPT_EXIT' => 3, $constpref . '_OPT_BIPTIME0' => 7, $constpref . '_OPT_BIP' => 15));
+    'options'     => array(
+        $constpref . '_OPT_NONE'     => 0,
+        $constpref . '_OPT_SAN'      => 1,
+        $constpref . '_OPT_EXIT'     => 3,
+        $constpref . '_OPT_BIPTIME0' => 7,
+        $constpref . '_OPT_BIP'      => 15));
 $modversion['config'][] = array(
     'name'        => 'union_action',
     'title'       => $constpref . '_UNION_ACTION',
@@ -168,7 +181,12 @@ $modversion['config'][] = array(
     'formtype'    => 'select',
     'valuetype'   => 'int',
     'default'     => 0,
-    'options'     => array($constpref . '_OPT_NONE' => 0, $constpref . '_OPT_SAN' => 1, $constpref . '_OPT_EXIT' => 3, $constpref . '_OPT_BIPTIME0' => 7, $constpref . '_OPT_BIP' => 15));
+    'options'     => array(
+        $constpref . '_OPT_NONE'     => 0,
+        $constpref . '_OPT_SAN'      => 1,
+        $constpref . '_OPT_EXIT'     => 3,
+        $constpref . '_OPT_BIPTIME0' => 7,
+        $constpref . '_OPT_BIP'      => 15));
 $modversion['config'][] = array(
     'name'        => 'id_forceintval',
     'title'       => $constpref . '_ID_INTVAL',
@@ -333,7 +351,12 @@ $modversion['config'][] = array(
     'formtype'    => 'select',
     'valuetype'   => 'text',
     'default'     => 'none',
-    'options'     => array('_NONE' => 'none', $constpref . '_OPT_NONE' => 'log', $constpref . '_OPT_SAN' => 'san', $constpref . '_OPT_BIPTIME0' => 'biptime0', $constpref . '_OPT_BIP' => 'bip'));
+    'options'     => array(
+        '_NONE'                      => 'none',
+        $constpref . '_OPT_NONE'     => 'log',
+        $constpref . '_OPT_SAN'      => 'san',
+        $constpref . '_OPT_BIPTIME0' => 'biptime0',
+        $constpref . '_OPT_BIP'      => 'bip'));
 
 // Search
 $modversion['hasSearch'] = 0;

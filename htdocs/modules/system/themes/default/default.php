@@ -248,7 +248,11 @@ class XoopsGuiDefault extends XoopsSystemGui
                 $menu[]          = $rtn;
             }
         }
-        $tpl->append('navitems', array('link' => XOOPS_URL . '/modules/system/admin.php?fct=preferences', 'text' => _OXYGEN_SITEPREF, 'dir' => $mod->getVar('dirname', 'n'), 'menu' => $menu));
+        $tpl->append('navitems', array(
+            'link' => XOOPS_URL . '/modules/system/admin.php?fct=preferences',
+            'text' => _OXYGEN_SITEPREF,
+            'dir'  => $mod->getVar('dirname', 'n'),
+            'menu' => $menu));
 
         //add OPTIONS/Links Menu Items
         $menu   = array();

@@ -212,7 +212,6 @@ switch ($op) {
             if ($xoopsConfigUser['activation_type'] == 1) {
                 XoopsUserUtility::sendWelcome($newuser);
                 redirect_header('index.php', 4, _US_ACTLOGIN);
-
             }
             // Sending notification email to user for self activation
             if ($xoopsConfigUser['activation_type'] == 0) {
@@ -279,7 +278,6 @@ switch ($op) {
         $actkey = $clean_actkey;
         if (empty($id)) {
             redirect_header('index.php', 1, '');
-
         }
         $member_handler =& xoops_getHandler('member');
         $thisuser       =& $member_handler->getUser($id);

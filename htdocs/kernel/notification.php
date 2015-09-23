@@ -63,7 +63,7 @@ class XoopsNotification extends XoopsObject
 
     /**
      * Returns Class Base Variable not_id
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function id($format = 'N')
@@ -73,7 +73,7 @@ class XoopsNotification extends XoopsObject
 
     /**
      * Returns Class Base Variable not_id
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function not_id($format = '')
@@ -83,7 +83,7 @@ class XoopsNotification extends XoopsObject
 
     /**
      * Returns Class Base Variable not_modid
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function not_modid($format = '')
@@ -93,7 +93,7 @@ class XoopsNotification extends XoopsObject
 
     /**
      * Returns Class Base Variable mid
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function not_category($format = '')
@@ -103,7 +103,7 @@ class XoopsNotification extends XoopsObject
 
     /**
      * Returns Class Base Variable not_itemid
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function not_itemid($format = '')
@@ -113,7 +113,7 @@ class XoopsNotification extends XoopsObject
 
     /**
      * Returns Class Base Variable not_event
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function not_event($format = '')
@@ -123,7 +123,7 @@ class XoopsNotification extends XoopsObject
 
     /**
      * Returns Class Base Variable not_uid
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function not_uid($format = '')
@@ -133,7 +133,7 @@ class XoopsNotification extends XoopsObject
 
     /**
      * Returns Class Base Variable not_mode
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function not_mode($format = '')
@@ -325,8 +325,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
         /**
          * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
          */
-        if (!is_a($notification, 'xoopsnotification'))
-        {
+        if (!is_a($notification, 'xoopsnotification')) {
             return false;
         }
 
@@ -342,7 +341,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      * Get some {@link XoopsNotification}s
      *
      * @param CriteriaElement $criteria
-     * @param bool   $id_as_key Use IDs as keys into the array?
+     * @param bool            $id_as_key Use IDs as keys into the array?
      *
      * @return array Array of {@link XoopsNotification} objects
      **/
@@ -866,8 +865,8 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      * Update
      *
      * @param XoopsNotification $notification {@link XoopsNotification} object
-     * @param string $field_name    Name of the field
-     * @param mixed  $field_value   Value to write
+     * @param string            $field_name   Name of the field
+     * @param mixed             $field_value  Value to write
      *
      * @return bool
      **/

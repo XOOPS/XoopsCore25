@@ -24,7 +24,7 @@
  * Get {@link XoopsThemeForm} for adding/editing fields
  *
  * @param ProfileField $field  {@link ProfileField} object to get edit form for
- * @param mixed  $action URL to submit to - or false for $_SERVER['REQUEST_URI']
+ * @param mixed        $action URL to submit to - or false for $_SERVER['REQUEST_URI']
  *
  * @return object
  */
@@ -170,8 +170,8 @@ function profile_getFieldForm(ProfileField $field, $action = false)
                 $options   = $field->getVar('field_options');
                 asort($options);
                 // If options do not include an empty element, then add a blank option to prevent any default selection
-//                if (!in_array('', array_keys($options))) {
-            if (!array_key_exists('', $options)) {
+                //                if (!in_array('', array_keys($options))) {
+                if (!array_key_exists('', $options)) {
                     $element->addOption('', _NONE);
                 }
                 $element->addOptionArray($options);
@@ -185,8 +185,8 @@ function profile_getFieldForm(ProfileField $field, $action = false)
                 $options   = $field->getVar('field_options');
                 asort($options);
                 // If options do not include an empty element, then add a blank option to prevent any default selection
-//                if (!in_array('', array_keys($options))) {
-            if (!array_key_exists('', $options)) {
+                //                if (!in_array('', array_keys($options))) {
+                if (!array_key_exists('', $options)) {
                     $element->addOption('', _NONE);
                 }
                 $element->addOptionArray($options);
@@ -273,9 +273,9 @@ function profile_getFieldForm(ProfileField $field, $action = false)
  * Get {@link XoopsThemeForm} for registering new users
  *
  * @param XoopsUser $user
- * @param        $profile
+ * @param           $profile
  * @param XoopsUser $user {@link XoopsUser} to register
- * @param int    $step Which step we are at
+ * @param int       $step Which step we are at
  *
  * @internal param \profileRegstep $next_step
  * @return object
@@ -306,7 +306,9 @@ function profile_getRegisterForm(XoopsUser $user, $profile, $step = null)
     if ($step_no == 1) {
         //$uname_size = $GLOBALS['xoopsConfigUser']['maxuname'] < 35 ? $GLOBALS['xoopsConfigUser']['maxuname'] : 35;
 
-        $elements[0][] = array('element' => new XoopsFormText(_US_NICKNAME, 'uname', 35, $GLOBALS['xoopsConfigUser']['maxuname'], $user->getVar('uname', 'e')), 'required' => true);
+        $elements[0][] = array(
+            'element'  => new XoopsFormText(_US_NICKNAME, 'uname', 35, $GLOBALS['xoopsConfigUser']['maxuname'], $user->getVar('uname', 'e')),
+            'required' => true);
         $weights[0][]  = 0;
 
         $elements[0][] = array('element' => new XoopsFormText(_US_EMAIL, 'email', 35, 255, $user->getVar('email', 'e')), 'required' => true);
@@ -381,9 +383,9 @@ function profile_getRegisterForm(XoopsUser $user, $profile, $step = null)
 /**
  * Get {@link XoopsThemeForm} for editing a user
  *
- * @param XoopsUser $user {@link XoopsUser} to edit
- * @param ProfileProfile|null   $profile
- * @param bool   $action
+ * @param XoopsUser           $user {@link XoopsUser} to edit
+ * @param ProfileProfile|null $profile
+ * @param bool                $action
  *
  * @return object
  */
@@ -518,7 +520,7 @@ function profile_getUserForm(XoopsUser $user, ProfileProfile $profile = null, $a
  * Get {@link XoopsThemeForm} for editing a step
  *
  * @param ProfileRegstep|null $step {@link ProfileRegstep} to edit
- * @param bool   $action
+ * @param bool                $action
  *
  * @return object
  */

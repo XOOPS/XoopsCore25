@@ -7,7 +7,6 @@
             <{$itm.title}>
         <{/if}>
         </span>
-        
         <{if !$smarty.foreach.bcloop.last}>
             <span class="delimiter">&raquo;</span>
         <{/if}>

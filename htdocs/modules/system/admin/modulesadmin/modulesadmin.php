@@ -298,15 +298,25 @@ function xoops_module_install($dirname)
                 if ($configs != false) {
                     if ($module->getVar('hascomments') != 0) {
                         include_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
-                        $configs[] =  array(
+                        $configs[] = array(
                             'name'        => 'com_rule',
                             'title'       => '_CM_COMRULES',
                             'description' => '',
                             'formtype'    => 'select',
                             'valuetype'   => 'int',
                             'default'     => 1,
-                            'options'     => array('_CM_COMNOCOM' => XOOPS_COMMENT_APPROVENONE, '_CM_COMAPPROVEALL' => XOOPS_COMMENT_APPROVEALL, '_CM_COMAPPROVEUSER' => XOOPS_COMMENT_APPROVEUSER, '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN));
-                        ($configs[] =  array('name' => 'com_anonpost', 'title' => '_CM_COMANONPOST', 'description' => '', 'formtype' => 'yesno', 'valuetype' => 'int', 'default' => 0));
+                            'options'     => array(
+                                '_CM_COMNOCOM'        => XOOPS_COMMENT_APPROVENONE,
+                                '_CM_COMAPPROVEALL'   => XOOPS_COMMENT_APPROVEALL,
+                                '_CM_COMAPPROVEUSER'  => XOOPS_COMMENT_APPROVEUSER,
+                                '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN));
+                        ($configs[] = array(
+                            'name'        => 'com_anonpost',
+                            'title'       => '_CM_COMANONPOST',
+                            'description' => '',
+                            'formtype'    => 'yesno',
+                            'valuetype'   => 'int',
+                            'default'     => 0));
                     }
                 } else {
                     if ($module->getVar('hascomments') != 0) {
@@ -319,8 +329,18 @@ function xoops_module_install($dirname)
                             'formtype'    => 'select',
                             'valuetype'   => 'int',
                             'default'     => 1,
-                            'options'     => array('_CM_COMNOCOM' => XOOPS_COMMENT_APPROVENONE, '_CM_COMAPPROVEALL' => XOOPS_COMMENT_APPROVEALL, '_CM_COMAPPROVEUSER' => XOOPS_COMMENT_APPROVEUSER, '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN));
-                        $configs[] = array('name' => 'com_anonpost', 'title' => '_CM_COMANONPOST', 'description' => '', 'formtype' => 'yesno', 'valuetype' => 'int', 'default' => 0);
+                            'options'     => array(
+                                '_CM_COMNOCOM'        => XOOPS_COMMENT_APPROVENONE,
+                                '_CM_COMAPPROVEALL'   => XOOPS_COMMENT_APPROVEALL,
+                                '_CM_COMAPPROVEUSER'  => XOOPS_COMMENT_APPROVEUSER,
+                                '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN));
+                        $configs[] = array(
+                            'name'        => 'com_anonpost',
+                            'title'       => '_CM_COMANONPOST',
+                            'description' => '',
+                            'formtype'    => 'yesno',
+                            'valuetype'   => 'int',
+                            'default'     => 0);
                     }
                 }
                 // RMV-NOTIFY
@@ -337,7 +357,14 @@ function xoops_module_install($dirname)
                     $options['_NOT_CONFIG_ENABLEINLINE'] = XOOPS_NOTIFICATION_ENABLEINLINE;
                     $options['_NOT_CONFIG_ENABLEBOTH']   = XOOPS_NOTIFICATION_ENABLEBOTH;
 
-                    $configs[] = array('name' => 'notification_enabled', 'title' => '_NOT_CONFIG_ENABLE', 'description' => '_NOT_CONFIG_ENABLEDSC', 'formtype' => 'select', 'valuetype' => 'int', 'default' => XOOPS_NOTIFICATION_ENABLEBOTH, 'options' => $options);
+                    $configs[] = array(
+                        'name'        => 'notification_enabled',
+                        'title'       => '_NOT_CONFIG_ENABLE',
+                        'description' => '_NOT_CONFIG_ENABLEDSC',
+                        'formtype'    => 'select',
+                        'valuetype'   => 'int',
+                        'default'     => XOOPS_NOTIFICATION_ENABLEBOTH,
+                        'options'     => $options);
                     // Event-specific notification options
                     // FIXME: doesn't work when update module... can't read back the array of options properly...  " changing to &quot;
                     $options    = array();
@@ -355,7 +382,14 @@ function xoops_module_install($dirname)
                         unset($events);
                     }
                     unset($categories);
-                    $configs[] = array('name' => 'notification_events', 'title' => '_NOT_CONFIG_EVENTS', 'description' => '_NOT_CONFIG_EVENTSDSC', 'formtype' => 'select_multi', 'valuetype' => 'array', 'default' => array_values($options), 'options' => $options);
+                    $configs[] = array(
+                        'name'        => 'notification_events',
+                        'title'       => '_NOT_CONFIG_EVENTS',
+                        'description' => '_NOT_CONFIG_EVENTSDSC',
+                        'formtype'    => 'select_multi',
+                        'valuetype'   => 'array',
+                        'default'     => array_values($options),
+                        'options'     => $options);
                 }
 
                 if ($configs != false) {
@@ -474,10 +508,9 @@ function xoops_module_install($dirname)
             <a href="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname', 'e') . '/' . $module->getInfo('adminindex') . '">' . _AM_SYSTEM_MODULES_ADMIN . '</a>';
 
             $testdataDirectory = XOOPS_ROOT_PATH . '/modules/' . $module->getInfo('dirname', 'e') . '/testdata';
-            $msgTestData = '</div>';
+            $msgTestData       = '</div>';
             if (file_exists($testdataDirectory)) {
                 $msgTestData = $redDevider . ' <a href="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname', 'e') . '/testdata/index.php' . '">' . _AM_SYSTEM_MODULES_INSTALL_TESTDATA . '</a></div>';
-
             }
             $msgs[] = $msg0 . $msgBlocks . $msgAdmin . $msgTestData;
 
@@ -764,7 +797,7 @@ function xoops_module_activate($mid)
     xoops_template_clear_module_cache($module->getVar('mid'));
     // Display header
     $msgs[] = '<div id="xo-module-log">';
-    $msgs   .= xoops_module_log_header($module, _AM_SYSTEM_MODULES_ACTIVATE);
+    $msgs .= xoops_module_log_header($module, _AM_SYSTEM_MODULES_ACTIVATE);
     // Change value
     $module->setVar('isactive', 1);
     if (!$module_handler->insert($module)) {
@@ -800,7 +833,7 @@ function xoops_module_deactivate($mid)
     xoops_template_clear_module_cache($mid);
     // Display header
     $msgs[] = '<div id="xo-module-log">';
-    $msgs   .= xoops_module_log_header($module, _AM_SYSTEM_MODULES_DEACTIVATE);
+    $msgs .= xoops_module_log_header($module, _AM_SYSTEM_MODULES_DEACTIVATE);
     // Change value
     $module->setVar('isactive', 0);
     if ($module->getVar('dirname') === "system") {

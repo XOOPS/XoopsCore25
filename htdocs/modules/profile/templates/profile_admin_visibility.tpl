@@ -1,4 +1,4 @@
-<br />
+<br/>
 <div class="head">
     <form id="<{$addform.name}>" method="<{$addform.method}>" action="<{$addform.action}>">
         <{foreach item=element from=$addform.elements}>
@@ -20,8 +20,9 @@
                             <li>
                                 <{$smarty.const._PROFILE_AM_FIELDVISIBLEFOR}> <{$groups.$user_gid}>
                                 <{$smarty.const._PROFILE_AM_FIELDVISIBLEON}> <{$groups.$profile_gid}>
-                                <a href="visibility.php?op=del&amp;field_id=<{$field_id}>&amp;ug=<{$user_gid}>&amp;pg=<{$profile_gid}>" title="<{$smarty.const._DELETE}>">
-                                    <img src="<{$xoops_url}>/modules/profile/assets/images/no.png" alt="<{$smarty.const._DELETE}>" />
+                                <a href="visibility.php?op=del&amp;field_id=<{$field_id}>&amp;ug=<{$user_gid}>&amp;pg=<{$profile_gid}>"
+                                   title="<{$smarty.const._DELETE}>">
+                                    <img src="<{$xoops_url}>/modules/profile/assets/images/no.png" alt="<{$smarty.const._DELETE}>"/>
                                 </a>
                             </li>
                         <{/foreach}>

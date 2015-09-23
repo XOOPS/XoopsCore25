@@ -96,6 +96,7 @@ $xoopsLogger->startTime();
 /**
  * @param $etag
  * @param $last_modified
+ * @return null
  */
 function doConditionalGet($etag, $last_modified)
 {
@@ -148,7 +149,7 @@ function roundImageCorner($radius = 0, $rotate = 0, $color = DEFAULT_BACKGROUND_
 function findSharp($orig, $final)
 {
     // Function from Ryan Rud (http://adryrun.com)
-    $final  *= (750.0 / $orig);
+    $final *= (750.0 / $orig);
     $a      = 52;
     $b      = -0.27810650887573124;
     $c      = .00047337278106508946;

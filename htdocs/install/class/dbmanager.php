@@ -55,6 +55,7 @@ class db_manager
     {
         $this->__construct();
     }
+
     /**
      * @return bool
      */

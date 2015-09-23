@@ -1821,7 +1821,11 @@ class HTML5TreeConstructer
         THIS DIFFERS FROM THE SPEC: If the current node is either a title, style
         or script element, append the character to the current node regardless
         of its content. */
-        if (($token['type'] === HTML5::CHARACTR && preg_match('/^[\t\n\x0b\x0c ]+$/', $token['data'])) || ($token['type'] === HTML5::CHARACTR && in_array(end($this->stack)->nodeName, array('title', 'style', 'script')))) {
+        if (($token['type'] === HTML5::CHARACTR && preg_match('/^[\t\n\x0b\x0c ]+$/', $token['data'])) || ($token['type'] === HTML5::CHARACTR && in_array(end($this->stack)->nodeName, array(
+                    'title',
+                    'style',
+                    'script')))
+        ) {
             /* Append the character to the current node. */
             $this->insertText($token['data']);
 
@@ -3169,17 +3173,17 @@ class HTML5TreeConstructer
             /* An end tag whose tag name is one of: "body", "caption", "col",
             "colgroup", "html", "tbody", "td", "tfoot", "th", "thead", "tr" */
         } elseif ($token['type'] === HTML5::ENDTAG && in_array($token['name'], array(
-                                                                                 'body',
-                                                                                 'caption',
-                                                                                 'col',
-                                                                                 'colgroup',
-                                                                                 'html',
-                                                                                 'tbody',
-                                                                                 'td',
-                                                                                 'tfoot',
-                                                                                 'th',
-                                                                                 'thead',
-                                                                                 'tr'))
+                'body',
+                'caption',
+                'col',
+                'colgroup',
+                'html',
+                'tbody',
+                'td',
+                'tfoot',
+                'th',
+                'thead',
+                'tr'))
         ) {
             // Parse error. Ignore the token.
 
@@ -3265,15 +3269,15 @@ class HTML5TreeConstructer
             "tbody", "td", "tfoot", "th", "thead", "tr", or an end tag whose tag
             name is "table" */
         } elseif (($token['type'] === HTML5::STARTTAG && in_array($token['name'], array(
-                                                                                    'caption',
-                                                                                    'col',
-                                                                                    'colgroup',
-                                                                                    'tbody',
-                                                                                    'td',
-                                                                                    'tfoot',
-                                                                                    'th',
-                                                                                    'thead',
-                                                                                    'tr'))) || ($token['type'] === HTML5::ENDTAG && $token['name'] === 'table')
+                    'caption',
+                    'col',
+                    'colgroup',
+                    'tbody',
+                    'td',
+                    'tfoot',
+                    'th',
+                    'thead',
+                    'tr'))) || ($token['type'] === HTML5::ENDTAG && $token['name'] === 'table')
         ) {
             /* Parse error. Act as if an end tag with the tag name "caption"
             had been seen, then, if that token wasn't ignored, reprocess the
@@ -3287,15 +3291,15 @@ class HTML5TreeConstructer
             /* An end tag whose tag name is one of: "body", "col", "colgroup",
             "html", "tbody", "td", "tfoot", "th", "thead", "tr" */
         } elseif ($token['type'] === HTML5::ENDTAG && in_array($token['name'], array(
-                                                                                 'body',
-                                                                                 'col',
-                                                                                 'colgroup',
-                                                                                 'html',
-                                                                                 'tbody',
-                                                                                 'tfoot',
-                                                                                 'th',
-                                                                                 'thead',
-                                                                                 'tr'))
+                'body',
+                'col',
+                'colgroup',
+                'html',
+                'tbody',
+                'tfoot',
+                'th',
+                'thead',
+                'tr'))
         ) {
             // Parse error. Ignore the token.
 
@@ -3407,7 +3411,14 @@ class HTML5TreeConstructer
 
             /* A start tag whose tag name is one of: "caption", "col", "colgroup",
             "tbody", "tfoot", "thead", or an end tag whose tag name is "table" */
-        } elseif (($token['type'] === HTML5::STARTTAG && in_array($token['name'], array('caption', 'col', 'colgroup', 'tbody', 'tfoor', 'thead'))) || ($token['type'] === HTML5::STARTTAG && $token['name'] === 'table')) {
+        } elseif (($token['type'] === HTML5::STARTTAG && in_array($token['name'], array(
+                    'caption',
+                    'col',
+                    'colgroup',
+                    'tbody',
+                    'tfoor',
+                    'thead'))) || ($token['type'] === HTML5::STARTTAG && $token['name'] === 'table')
+        ) {
             /* If the stack of open elements does not have a tbody, thead, or
             tfoot element in table scope, this is a parse error. Ignore the
             token. (innerHTML case) */
@@ -3431,7 +3442,16 @@ class HTML5TreeConstructer
 
             /* An end tag whose tag name is one of: "body", "caption", "col",
             "colgroup", "html", "td", "th", "tr" */
-        } elseif ($token['type'] === HTML5::ENDTAG && in_array($token['name'], array('body', 'caption', 'col', 'colgroup', 'html', 'td', 'th', 'tr'))) {
+        } elseif ($token['type'] === HTML5::ENDTAG && in_array($token['name'], array(
+                'body',
+                'caption',
+                'col',
+                'colgroup',
+                'html',
+                'td',
+                'th',
+                'tr'))
+        ) {
             /* Parse error. Ignore the token. */
 
             /* Anything else */
@@ -3481,7 +3501,15 @@ class HTML5TreeConstructer
 
             /* A start tag whose tag name is one of: "caption", "col", "colgroup",
             "tbody", "tfoot", "thead", "tr" or an end tag whose tag name is "table" */
-        } elseif ($token['type'] === HTML5::STARTTAG && in_array($token['name'], array('caption', 'col', 'colgroup', 'tbody', 'tfoot', 'thead', 'tr'))) {
+        } elseif ($token['type'] === HTML5::STARTTAG && in_array($token['name'], array(
+                'caption',
+                'col',
+                'colgroup',
+                'tbody',
+                'tfoot',
+                'thead',
+                'tr'))
+        ) {
             /* Act as if an end tag with the tag name "tr" had been seen, then,
             if that token wasn't ignored, reprocess the current token. */
             $this->inRow(array(
@@ -3511,7 +3539,16 @@ class HTML5TreeConstructer
 
             /* An end tag whose tag name is one of: "body", "caption", "col",
             "colgroup", "html", "td", "th" */
-        } elseif ($token['type'] === HTML5::ENDTAG && in_array($token['name'], array('body', 'caption', 'col', 'colgroup', 'html', 'td', 'th', 'tr'))) {
+        } elseif ($token['type'] === HTML5::ENDTAG && in_array($token['name'], array(
+                'body',
+                'caption',
+                'col',
+                'colgroup',
+                'html',
+                'td',
+                'th',
+                'tr'))
+        ) {
             /* Parse error. Ignore the token. */
 
             /* Anything else */
@@ -3564,15 +3601,15 @@ class HTML5TreeConstructer
             /* A start tag whose tag name is one of: "caption", "col", "colgroup",
             "tbody", "td", "tfoot", "th", "thead", "tr" */
         } elseif ($token['type'] === HTML5::STARTTAG && in_array($token['name'], array(
-                                                                                   'caption',
-                                                                                   'col',
-                                                                                   'colgroup',
-                                                                                   'tbody',
-                                                                                   'td',
-                                                                                   'tfoot',
-                                                                                   'th',
-                                                                                   'thead',
-                                                                                   'tr'))
+                'caption',
+                'col',
+                'colgroup',
+                'tbody',
+                'td',
+                'tfoot',
+                'th',
+                'thead',
+                'tr'))
         ) {
             /* If the stack of open elements does not have a td or th element
             in table scope, then this is a parse error; ignore the token.
@@ -3591,15 +3628,15 @@ class HTML5TreeConstructer
             /* A start tag whose tag name is one of: "caption", "col", "colgroup",
             "tbody", "td", "tfoot", "th", "thead", "tr" */
         } elseif ($token['type'] === HTML5::STARTTAG && in_array($token['name'], array(
-                                                                                   'caption',
-                                                                                   'col',
-                                                                                   'colgroup',
-                                                                                   'tbody',
-                                                                                   'td',
-                                                                                   'tfoot',
-                                                                                   'th',
-                                                                                   'thead',
-                                                                                   'tr'))
+                'caption',
+                'col',
+                'colgroup',
+                'tbody',
+                'td',
+                'tfoot',
+                'th',
+                'thead',
+                'tr'))
         ) {
             /* If the stack of open elements does not have a td or th element
             in table scope, then this is a parse error; ignore the token.
@@ -3760,14 +3797,14 @@ class HTML5TreeConstructer
             /* An end tag whose tag name is one of: "caption", "table", "tbody",
             "tfoot", "thead", "tr", "td", "th" */
         } elseif (in_array($token['name'], array(
-                                             'caption',
-                                             'table',
-                                             'tbody',
-                                             'tfoot',
-                                             'thead',
-                                             'tr',
-                                             'td',
-                                             'th')) && $token['type'] === HTML5::ENDTAG
+                'caption',
+                'table',
+                'tbody',
+                'tfoot',
+                'thead',
+                'tr',
+                'td',
+                'th')) && $token['type'] === HTML5::ENDTAG
         ) {
             /* Parse error. */
             // w/e
@@ -4056,12 +4093,12 @@ class HTML5TreeConstructer
                 state. */
                 return false;
             } elseif ($table === true && in_array($node->tagName, array(
-                                                                    'caption',
-                                                                    'td',
-                                                                    'th',
-                                                                    'button',
-                                                                    'marquee',
-                                                                    'object'))
+                    'caption',
+                    'td',
+                    'th',
+                    'button',
+                    'marquee',
+                    'object'))
             ) {
                 /* 4. Otherwise, if the algorithm is the "has an element in scope"
                 variant (rather than the "has an element in table scope" variant),

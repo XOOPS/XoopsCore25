@@ -23,7 +23,9 @@ include dirname(dirname(__DIR__)) . '/mainfile.php';
 $xoopsOption['xoops_module_header'] = '<link rel="stylesheet" type="text/css" href="assets/css/style.css" />';
 
 $xoBreadcrumbs   = array();
-$xoBreadcrumbs[] = array("title" => $GLOBALS['xoopsModule']->getVar('name'), "link" => XOOPS_URL . "/modules/" . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/');
+$xoBreadcrumbs[] = array(
+    "title" => $GLOBALS['xoopsModule']->getVar('name'),
+    "link"  => XOOPS_URL . "/modules/" . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/');
 
 //disable cache
 $GLOBALS['xoopsConfig']['module_cache'][$GLOBALS['xoopsModule']->getVar('mid')] = 0;

@@ -7,7 +7,7 @@ class protector
 {
     public $mydirname;
 
-    public $_conn           ;
+    public $_conn;
     public $_conf            = array();
     public $_conf_serialized = '';
 
@@ -375,7 +375,7 @@ class protector
         }
 
         $bad_ips      = $this->get_bad_ips(true);
-        $bad_ips[$ip] = $jailed_time ? : 0x7fffffff;
+        $bad_ips[$ip] = $jailed_time ?: 0x7fffffff;
 
         return $this->write_file_badips($bad_ips);
     }
@@ -596,7 +596,7 @@ class protector
     }
 
     /**
-     * @param bool $force_override
+     * @param  bool $force_override
      * @return null
      */
     public function dblayertrap_init($force_override = false)
@@ -858,7 +858,23 @@ class protector
         // extensions never uploaded
         $bad_extensions = array('php', 'phtml', 'phtm', 'php3', 'php4', 'cgi', 'pl', 'asp');
         // extensions needed image check (anti-IE Content-Type XSS)
-        $image_extensions = array(1 => 'gif', 2 => 'jpg', 3 => 'png', 4 => 'swf', 5 => 'psd', 6 => 'bmp', 7 => 'tif', 8 => 'tif', 9 => 'jpc', 10 => 'jp2', 11 => 'jpx', 12 => 'jb2', 13 => 'swc', 14 => 'iff', 15 => 'wbmp', 16 => 'xbm');
+        $image_extensions = array(
+            1  => 'gif',
+            2  => 'jpg',
+            3  => 'png',
+            4  => 'swf',
+            5  => 'psd',
+            6  => 'bmp',
+            7  => 'tif',
+            8  => 'tif',
+            9  => 'jpc',
+            10 => 'jp2',
+            11 => 'jpx',
+            12 => 'jb2',
+            13 => 'swc',
+            14 => 'iff',
+            15 => 'wbmp',
+            16 => 'xbm');
 
         foreach ($_FILES as $_file) {
             if (!empty($_file['error'])) {
@@ -977,8 +993,8 @@ class protector
             if (preg_match('/\sUNION\s+(ALL|SELECT)/i', $str)) {
                 $this->message .= "Pattern like SQL injection found. ($val)\n";
                 if ($sanitize) {
-//                    $this->replace_doubtful($key, preg_replace('/union/i', 'uni-on', $val));
-                    $this->replace_doubtful($key, str_ireplace('union', 'uni-on',$val));
+                    //                    $this->replace_doubtful($key, preg_replace('/union/i', 'uni-on', $val));
+                    $this->replace_doubtful($key, str_ireplace('union', 'uni-on', $val));
                 }
                 $this->_safe_union     = false;
                 $this->last_error_type = 'UNION';

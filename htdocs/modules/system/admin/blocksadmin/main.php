@@ -259,7 +259,6 @@ switch ($op) {
     case 'preview':
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=blocksadmin', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-
         }
         // Initialize blocks handler
         $block_handler =& xoops_getModuleHandler('block');
@@ -274,7 +273,6 @@ switch ($op) {
     case 'save':
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=blocksadmin', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-
         }
         // Initialize blocks handler
         $block_handler =& xoops_getModuleHandler('block');
@@ -422,7 +420,6 @@ switch ($op) {
             $block = $block_handler->get($block_id);
             if ($block->getVar('block_type') === 'S') {
                 redirect_header('admin.php?fct=blocksadmin', 4, _AM_SYSTEM_BLOCKS_SYSTEMCANT);
-
             } elseif ($block->getVar('block_type') === 'M') {
                 // Fix for duplicated blocks created in 2.0.9 module update
                 // A module block can be deleted if there is more than 1 that
@@ -430,7 +427,6 @@ switch ($op) {
                 // be the one that was duplicated in 2.0.9
                 if (1 >= $count = $block_handler->countSimilarBlocks($block->getVar('mid'), $block->getVar('func_num'), $block->getVar('show_func'))) {
                     redirect_header('admin.php?fct=blocksadmin', 4, _AM_SYSTEM_BLOCKS_MODULECANT);
-
                 }
             }
             // Define main template
@@ -438,7 +434,10 @@ switch ($op) {
             // Call Header
             xoops_cp_header();
             // Display Question
-            xoops_confirm(array('op' => 'delete_ok', 'fct' => 'blocksadmin', 'bid' => $block->getVar('bid')), 'admin.php', sprintf(_AM_SYSTEM_BLOCKS_RUSUREDEL, $block->getVar('title')));
+            xoops_confirm(array(
+                              'op'  => 'delete_ok',
+                              'fct' => 'blocksadmin',
+                              'bid' => $block->getVar('bid')), 'admin.php', sprintf(_AM_SYSTEM_BLOCKS_RUSUREDEL, $block->getVar('title')));
             // Call Footer
             xoops_cp_footer();
         }
@@ -447,7 +446,6 @@ switch ($op) {
     case 'delete_ok':
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=blocksadmin', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-
         }
         // Initialize blocks handler
         $block_handler =& xoops_getModuleHandler('block');

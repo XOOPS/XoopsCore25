@@ -44,9 +44,10 @@ class XoopsConfigCategory extends XoopsObject
     {
         $this->__construct();
     }
+
     /**
      * Returns Class Base Variable confcat_id
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function id($format = 'N')
@@ -56,7 +57,7 @@ class XoopsConfigCategory extends XoopsObject
 
     /**
      * Returns Class Base Variable confcat_id
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function confcat_id($format = '')
@@ -66,7 +67,7 @@ class XoopsConfigCategory extends XoopsObject
 
     /**
      * Returns Class Base Variable confcat_name
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function confcat_name($format = '')
@@ -76,7 +77,7 @@ class XoopsConfigCategory extends XoopsObject
 
     /**
      * Returns Class Base Variable confcat_order
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function confcat_order($format = '')
@@ -211,7 +212,7 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
      * Get some {@link XoopsConfigCategory}s
      *
      * @param CriteriaElement $criteria  {@link CriteriaElement}
-     * @param bool   $id_as_key Use the IDs as keys to the array?
+     * @param bool            $id_as_key Use the IDs as keys to the array?
      *
      * @return array Array of {@link XoopsConfigCategory}s
      */

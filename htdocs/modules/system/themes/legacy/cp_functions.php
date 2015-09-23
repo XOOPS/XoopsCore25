@@ -109,7 +109,10 @@ function xoops_legacy_module_get_admin_menu()
         $adminmenu = $mod->getAdminMenu();
 
         if ($mod->getVar('hasnotification') || ($mod->getInfo('config') && is_array($mod->getInfo('config'))) || ($mod->getInfo('comments') && is_array($mod->getInfo('comments')))) {
-            $adminmenu[] = array('link' => '".XOOPS_URL."/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $mid, 'title' => _PREFERENCES, 'absolute' => true);
+            $adminmenu[] = array(
+                'link'     => '".XOOPS_URL."/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $mid,
+                'title'    => _PREFERENCES,
+                'absolute' => true);
         }
         if (count($adminmenu) != 0) {
             $currenttarget = "";

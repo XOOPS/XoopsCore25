@@ -44,9 +44,10 @@ class XoopsConfigOption extends XoopsObject
     {
         $this->__construct();
     }
+
     /**
      * Returns Class Base Variable confop_id
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function id($format = 'N')
@@ -56,7 +57,7 @@ class XoopsConfigOption extends XoopsObject
 
     /**
      * Returns Class Base Variable confop_id
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function confop_id($format = '')
@@ -66,7 +67,7 @@ class XoopsConfigOption extends XoopsObject
 
     /**
      * Returns Class Base Variable confop_name
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function confop_name($format = '')
@@ -76,7 +77,7 @@ class XoopsConfigOption extends XoopsObject
 
     /**
      * Returns Class Base Variable confop_value
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function confop_value($format = '')
@@ -86,7 +87,7 @@ class XoopsConfigOption extends XoopsObject
 
     /**
      * Returns Class Base Variable conf_id
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function conf_id($format = '')
@@ -155,7 +156,7 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
      * Insert a new option in the database
      *
      * @param  XoopsConfigOption &$confoption reference to a {@link XoopsConfigOption}
-     * @return bool   TRUE if successfull.
+     * @return bool              TRUE if successfull.
      */
     public function insert(&$confoption)
     {
@@ -195,7 +196,7 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
      * Delete an option
      *
      * @param  XoopsConfigOption &$confoption reference to a {@link XoopsConfigOption}
-     * @return bool   TRUE if successful
+     * @return bool              TRUE if successful
      */
     public function delete(&$confoption)
     {
@@ -217,7 +218,7 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
      * Get some {@link XoopsConfigOption}s
      *
      * @param CriteriaElement $criteria  {@link CriteriaElement}
-     * @param bool   $id_as_key Use the IDs as array-keys?
+     * @param bool            $id_as_key Use the IDs as array-keys?
      *
      * @return array Array of {@link XoopsConfigOption}s
      */

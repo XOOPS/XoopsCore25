@@ -54,7 +54,6 @@ if (empty($_GET['refresh']) && $op !== "submit") {
 
 if (!is_object($GLOBALS['xoopsUser'])) {
     redirect_header(XOOPS_URL, 3, _NOPERM);
-
 }
 xoops_header();
 

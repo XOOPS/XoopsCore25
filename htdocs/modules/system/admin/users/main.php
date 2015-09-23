@@ -100,7 +100,10 @@ switch ($op) {
             $xoBreadCrumb->addHelp(system_adminVersion('users', 'help') . '#delete');
             $xoBreadCrumb->addLink(_AM_SYSTEM_USERS_NAV_DELETE_USER);
             $xoBreadCrumb->render();
-            xoops_confirm(array('ok' => 1, 'uid' => $uid, 'op' => 'users_delete'), $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_USERS_FORM_SURE_DEL, $user->getVar('uname')));
+            xoops_confirm(array(
+                              'ok'  => 1,
+                              'uid' => $uid,
+                              'op'  => 'users_delete'), $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_USERS_FORM_SURE_DEL, $user->getVar('uname')));
         }
         break;
 
@@ -291,7 +294,6 @@ switch ($op) {
                             xoops_load("XoopsUserUtility");
                             XoopsUserUtility::sendWelcome($newuser);
                             redirect_header("admin.php?fct=users", 1, _AM_SYSTEM_DBUPDATED);
-
                         }
                     }
                 }
@@ -403,11 +405,22 @@ switch ($op) {
             $posts_more   = new XoopsFormText(_AM_SYSTEM_USERS_POSTSMORE, "user_posts_more", 10, 5);
             $posts_less   = new XoopsFormText(_AM_SYSTEM_USERS_POSTSLESS, "user_posts_less", 10, 5);
             $mailok_radio = new XoopsFormRadio(_AM_SYSTEM_USERS_SHOWMAILOK, "user_mailok", "both");
-            $mailok_radio->addOptionArray(array("mailok" => _AM_SYSTEM_USERS_MAILOK, "mailng" => _AM_SYSTEM_USERS_MAILNG, "both" => _AM_SYSTEM_USERS_BOTH));
+            $mailok_radio->addOptionArray(array(
+                                              "mailok" => _AM_SYSTEM_USERS_MAILOK,
+                                              "mailng" => _AM_SYSTEM_USERS_MAILNG,
+                                              "both"   => _AM_SYSTEM_USERS_BOTH));
             $type_radio = new XoopsFormRadio(_AM_SYSTEM_USERS_SHOWTYPE, "user_type", "actv");
-            $type_radio->addOptionArray(array("actv" => _AM_SYSTEM_USERS_ACTIVE, "inactv" => _AM_SYSTEM_USERS_INACTIVE, "both" => _AM_SYSTEM_USERS_BOTH));
+            $type_radio->addOptionArray(array(
+                                            "actv"   => _AM_SYSTEM_USERS_ACTIVE,
+                                            "inactv" => _AM_SYSTEM_USERS_INACTIVE,
+                                            "both"   => _AM_SYSTEM_USERS_BOTH));
             $sort_select = new XoopsFormSelect(_AM_SYSTEM_USERS_SORT, "user_sort");
-            $sort_select->addOptionArray(array("uname" => _AM_SYSTEM_USERS_UNAME, "email" => _AM_SYSTEM_USERS_EMAIL, "last_login" => _AM_SYSTEM_USERS_LASTLOGIN, "user_regdate" => _AM_SYSTEM_USERS_REGDATE, "posts" => _AM_SYSTEM_USERS_POSTS));
+            $sort_select->addOptionArray(array(
+                                             "uname"        => _AM_SYSTEM_USERS_UNAME,
+                                             "email"        => _AM_SYSTEM_USERS_EMAIL,
+                                             "last_login"   => _AM_SYSTEM_USERS_LASTLOGIN,
+                                             "user_regdate" => _AM_SYSTEM_USERS_REGDATE,
+                                             "posts"        => _AM_SYSTEM_USERS_POSTS));
             $order_select = new XoopsFormSelect(_AM_SYSTEM_USERS_ORDER, "user_order");
             $order_select->addOptionArray(array("ASC" => _AM_SYSTEM_USERS_ASC, "DESC" => _AM_SYSTEM_USERS_DESC));
             $limit_text    = new XoopsFormText(_AM_SYSTEM_USERS_LIMIT, "user_limit", 6, 2, 20);

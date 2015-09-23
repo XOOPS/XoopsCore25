@@ -38,6 +38,7 @@ class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
     {
         $this->__construct();
     }
+
     /**
      * @param $sql
      */

@@ -27,13 +27,11 @@ if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
     $actkey = trim($_GET['actkey']);
     if (empty($id)) {
         redirect_header(XOOPS_URL, 1, '');
-
     }
     $member_handler =& xoops_getHandler('member');
     $thisuser       =& $member_handler->getUser($id);
     if (!is_object($thisuser)) {
         redirect_header(XOOPS_URL, 1, '');
-
     }
     if ($thisuser->getVar('actkey') != $actkey) {
         redirect_header(XOOPS_URL . '/', 5, _US_ACTKEYNOT);

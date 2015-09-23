@@ -33,7 +33,6 @@ include_once $GLOBALS['xoops']->path('modules/system/constants.php');
 $uid = (int)($_GET['uid']);
 if ($uid <= 0) {
     redirect_header('index.php', 3, _US_SELECTNG);
-
 }
 
 $gperm_handler =& xoops_getHandler('groupperm');
@@ -63,7 +62,6 @@ if (is_object($xoopsUser)) {
         $thisUser       =& $member_handler->getUser($uid);
         if (!is_object($thisUser) || !$thisUser->isActive()) {
             redirect_header("index.php", 3, _US_SELECTNG);
-
         }
         $xoopsOption['template_main'] = 'system_userinfo.html';
         include $GLOBALS['xoops']->path('header.php');
@@ -74,7 +72,6 @@ if (is_object($xoopsUser)) {
     $thisUser       =& $member_handler->getUser($uid);
     if (!is_object($thisUser) || !$thisUser->isActive()) {
         redirect_header("index.php", 3, _US_SELECTNG);
-
     }
     $xoopsOption['template_main'] = 'system_userinfo.html';
     include $GLOBALS['xoops']->path('header.php');

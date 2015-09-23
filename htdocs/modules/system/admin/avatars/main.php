@@ -174,14 +174,18 @@ switch ($op) {
         // Check security
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=avatars', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-
         }
         $config_handler  =& xoops_getHandler('config');
         $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
         // Upload class
         include_once $GLOBALS['xoops']->path('/class/uploader.php');
 
-        $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH . '/avatars', array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'), $xoopsConfigUser['avatar_maxsize'], $xoopsConfigUser['avatar_width'], $xoopsConfigUser['avatar_height']);
+        $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH . '/avatars', array(
+            'image/gif',
+            'image/jpeg',
+            'image/pjpeg',
+            'image/x-png',
+            'image/png'), $xoopsConfigUser['avatar_maxsize'], $xoopsConfigUser['avatar_width'], $xoopsConfigUser['avatar_height']);
         // Get avatar handler
         $avt_handler =& xoops_getHandler('avatar');
         // Get avatar id

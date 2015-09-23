@@ -408,7 +408,6 @@ switch ($op) {
     case 'save':
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=images', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-
         }
         // Get image handler
         $image_handler =& xoops_getHandler('image');
@@ -443,7 +442,13 @@ switch ($op) {
             redirect_header('admin.php?fct=images', 1);
         }
         xoops_load('xoopsmediauploader');
-        $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH . '/images', array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png', 'image/bmp'), $imagecategory->getVar('imgcat_maxsize'), $imagecategory->getVar('imgcat_maxwidth'), $imagecategory->getVar('imgcat_maxheight'));
+        $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH . '/images', array(
+            'image/gif',
+            'image/jpeg',
+            'image/pjpeg',
+            'image/x-png',
+            'image/png',
+            'image/bmp'), $imagecategory->getVar('imgcat_maxsize'), $imagecategory->getVar('imgcat_maxwidth'), $imagecategory->getVar('imgcat_maxheight'));
         $uploader->setPrefix('img');
         $err    = array();
         $ucount = count($_POST['xoops_upload_file']);
@@ -511,7 +516,7 @@ switch ($op) {
             $readgroup = array();
         }
         if (!in_array(XOOPS_GROUP_ADMIN, $readgroup)) {
-            ($readgroup[] =  XOOPS_GROUP_ADMIN);
+            ($readgroup[] = XOOPS_GROUP_ADMIN);
         }
         foreach ($readgroup as $rgroup) {
             $imagecategoryperm =& $imagecategoryperm_handler->create();
@@ -526,7 +531,7 @@ switch ($op) {
             $writegroup = array();
         }
         if (!in_array(XOOPS_GROUP_ADMIN, $writegroup)) {
-            ($writegroup[] =  XOOPS_GROUP_ADMIN);
+            ($writegroup[] = XOOPS_GROUP_ADMIN);
         }
         foreach ($writegroup as $wgroup) {
             $imagecategoryperm =& $imagecategoryperm_handler->create();
@@ -621,7 +626,7 @@ switch ($op) {
             $readgroup = array();
         }
         if (!in_array(XOOPS_GROUP_ADMIN, $readgroup)) {
-            ($readgroup[] =  XOOPS_GROUP_ADMIN);
+            ($readgroup[] = XOOPS_GROUP_ADMIN);
         }
         foreach ($readgroup as $rgroup) {
             $imagecategoryperm =& $imagecategoryperm_handler->create();
@@ -636,7 +641,7 @@ switch ($op) {
             $writegroup = array();
         }
         if (!in_array(XOOPS_GROUP_ADMIN, $writegroup)) {
-            ($writegroup[] =  XOOPS_GROUP_ADMIN);
+            ($writegroup[] = XOOPS_GROUP_ADMIN);
         }
         foreach ($writegroup as $wgroup) {
             $imagecategoryperm =& $imagecategoryperm_handler->create();

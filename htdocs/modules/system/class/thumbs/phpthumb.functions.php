@@ -504,7 +504,28 @@ class phpthumb_functions
         // apache_lookup_uri() only works when PHP is installed as an Apache module.
         if (php_sapi_name() == 'apache') {
             //$property_exists_exists = function_exists('property_exists');
-            $keys = array('status', 'the_request', 'status_line', 'method', 'content_type', 'handler', 'uri', 'filename', 'path_info', 'args', 'boundary', 'no_cache', 'no_local_copy', 'allowed', 'send_bodyct', 'bytes_sent', 'byterange', 'clength', 'unparsed_uri', 'mtime', 'request_time');
+            $keys = array(
+                'status',
+                'the_request',
+                'status_line',
+                'method',
+                'content_type',
+                'handler',
+                'uri',
+                'filename',
+                'path_info',
+                'args',
+                'boundary',
+                'no_cache',
+                'no_local_copy',
+                'allowed',
+                'send_bodyct',
+                'bytes_sent',
+                'byterange',
+                'clength',
+                'unparsed_uri',
+                'mtime',
+                'request_time');
             if ($apacheLookupURIobject = @apache_lookup_uri($filename)) {
                 $apacheLookupURIarray = array();
                 foreach ($keys as $key) {
