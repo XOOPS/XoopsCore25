@@ -60,8 +60,8 @@ function smarty_function_math($params, &$smarty)
         'tan');
 
     foreach ($match[1] as $curr_var) {
-//        if ($curr_var && !in_array($curr_var, array_keys($params)) && !in_array($curr_var, $allowed_funcs)) {
-            if ($curr_var && !array_key_exists($curr_var, $params) && !in_array($curr_var, $allowed_funcs)) {
+        //        if ($curr_var && !in_array($curr_var, array_keys($params)) && !in_array($curr_var, $allowed_funcs)) {
+        if ($curr_var && !array_key_exists($curr_var, $params) && !in_array($curr_var, $allowed_funcs)) {
             $smarty->trigger_error("math: function call $curr_var not allowed");
 
             return null;
@@ -100,6 +100,7 @@ function smarty_function_math($params, &$smarty)
             $smarty->assign($params['assign'], sprintf($params['format'], $smarty_math_result));
         }
     }
+
     return null;
 }
 

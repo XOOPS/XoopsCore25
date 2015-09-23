@@ -38,38 +38,38 @@ class Smarty_Compiler extends Smarty
     /**#@+
      * @access private
      */
-    public $_folded_blocks        = array();    // keeps folded template blocks
-    public $_current_file        ;       // the current template being compiled
-    public $_current_line_no      = 1;          // line number for error messages
-    public $_capture_stack        = array();    // keeps track of nested capture buffers
-    public $_plugin_info          = array();    // keeps track of plugins to load
-    public $_init_smarty_vars     = false;
-    public $_permitted_tokens     = array('true', 'false', 'yes', 'no', 'on', 'off', 'null');
-    public $_db_qstr_regexp      ;        // regexps are setup in the constructor
-    public $_si_qstr_regexp      ;
-    public $_qstr_regexp         ;
-    public $_func_regexp         ;
-    public $_reg_obj_regexp      ;
-    public $_var_bracket_regexp  ;
-    public $_num_const_regexp    ;
-    public $_dvar_guts_regexp    ;
-    public $_dvar_regexp         ;
-    public $_cvar_regexp         ;
-    public $_svar_regexp         ;
-    public $_avar_regexp         ;
-    public $_mod_regexp          ;
-    public $_var_regexp          ;
+    public $_folded_blocks     = array();    // keeps folded template blocks
+    public $_current_file;       // the current template being compiled
+    public $_current_line_no   = 1;          // line number for error messages
+    public $_capture_stack     = array();    // keeps track of nested capture buffers
+    public $_plugin_info       = array();    // keeps track of plugins to load
+    public $_init_smarty_vars  = false;
+    public $_permitted_tokens  = array('true', 'false', 'yes', 'no', 'on', 'off', 'null');
+    public $_db_qstr_regexp;        // regexps are setup in the constructor
+    public $_si_qstr_regexp;
+    public $_qstr_regexp;
+    public $_func_regexp;
+    public $_reg_obj_regexp;
+    public $_var_bracket_regexp;
+    public $_num_const_regexp;
+    public $_dvar_guts_regexp;
+    public $_dvar_regexp;
+    public $_cvar_regexp;
+    public $_svar_regexp;
+    public $_avar_regexp;
+    public $_mod_regexp;
+    public $_var_regexp;
     public $_parenth_param_regexp;
-    public $_func_call_regexp    ;
-    public $_obj_ext_regexp      ;
-    public $_obj_start_regexp    ;
-    public $_obj_params_regexp   ;
-    public $_obj_call_regexp     ;
-    public $_cacheable_state      = 0;
-    public $_cache_attrs_count    = 0;
-    public $_nocache_count        = 0;
-    public $_cache_serial        ;
-    public $_cache_include       ;
+    public $_func_call_regexp;
+    public $_obj_ext_regexp;
+    public $_obj_start_regexp;
+    public $_obj_params_regexp;
+    public $_obj_call_regexp;
+    public $_cacheable_state   = 0;
+    public $_cache_attrs_count = 0;
+    public $_nocache_count     = 0;
+    public $_cache_serial;
+    public $_cache_include;
 
     public $_strip_depth        = 0;
     public $_additional_newline = "\n";
@@ -396,7 +396,9 @@ class Smarty_Compiler extends Smarty
             $_plugins_params = "array('plugins' => array(";
             foreach ($this->_plugin_info as $plugin_type => $plugins) {
                 foreach ($plugins as $plugin_name => $plugin_info) {
-                    $_plugins_params .= "array('$plugin_type', '$plugin_name', '" . strtr($plugin_info[0], array("'" => "\\'", "\\" => "\\\\")) . "', $plugin_info[1], ";
+                    $_plugins_params .= "array('$plugin_type', '$plugin_name', '" . strtr($plugin_info[0], array(
+                            "'"  => "\\'",
+                            "\\" => "\\\\")) . "', $plugin_info[1], ";
                     $_plugins_params .= $plugin_info[2] ? 'true),' : 'false),';
                 }
             }
@@ -1074,7 +1076,6 @@ class Smarty_Compiler extends Smarty
                     $show_attr_value = "(bool)$attr_value";
                     if (is_bool($attr_value)) {
                         $show_attr_value = $attr_value ? 'true' : 'false';
-
                     }
                     $output .= "{$section_props}['show'] = $show_attr_value;\n";
                     break;
@@ -1271,7 +1272,7 @@ class Smarty_Compiler extends Smarty
         }
 
         $is_arg_stack = array();
-        $tokensCount = count($tokens);
+        $tokensCount  = count($tokens);
         for ($i = 0; $i < $tokensCount; ++$i) {
             $token = &$tokens[$i];
 
@@ -1348,7 +1349,7 @@ class Smarty_Compiler extends Smarty
                     break;
 
                 case '(':
-                    ($is_arg_stack[] =  $i);
+                    ($is_arg_stack[] = $i);
                     break;
 
                 case 'is':
@@ -1863,7 +1864,7 @@ class Smarty_Compiler extends Smarty
     /**
      * parse configuration variable expression into PHP code
      *
-     * @param string $conf_var_expr
+     * @param  string $conf_var_expr
      * @return string
      */
     public function _parse_conf_var($conf_var_expr)
@@ -2300,7 +2301,7 @@ class Smarty_Compiler extends Smarty
      */
     public function _push_tag($open_tag)
     {
-        ($this->_tag_stack[] =  array($open_tag, $this->_current_line_no));
+        ($this->_tag_stack[] = array($open_tag, $this->_current_line_no));
     }
 
     /**
@@ -2347,9 +2348,9 @@ class Smarty_Compiler extends Smarty
  * compare to values by their string length
  *
  * @access private
- * @param string $a
- * @param string $b
- * @return int 0|-1|1
+ * @param  string $a
+ * @param  string $b
+ * @return int    0|-1|1
  */
 function _smarty_sort_length($a, $b)
 {

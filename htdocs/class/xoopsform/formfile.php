@@ -56,6 +56,7 @@ class XoopsFormFile extends XoopsFormElement
     {
         $this->__construct($caption, $name, $maxfilesize);
     }
+
     /**
      * Get the maximum filesize
      *

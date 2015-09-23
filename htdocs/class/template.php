@@ -73,6 +73,7 @@ class XoopsTpl extends Smarty
     {
         $this->__construct();
     }
+
     /**
      * Renders output from template data
      *
@@ -280,8 +281,8 @@ class XoopsTpl extends Smarty
 /**
  * function to update compiled template file in templates_c folder
  *
- * @param string  $tpl_id
- * @param boolean $clear_old
+ * @param  string  $tpl_id
+ * @param  boolean $clear_old
  * @return boolean
  */
 function xoops_template_touch($tpl_id, $clear_old = true)
@@ -302,7 +303,7 @@ function xoops_template_touch($tpl_id, $clear_old = true)
 /**
  * Clear the module cache
  *
- * @param int $mid Module ID
+ * @param  int $mid Module ID
  * @return void
  */
 function xoops_template_clear_module_cache($mid)

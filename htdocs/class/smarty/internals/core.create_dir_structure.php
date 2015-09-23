@@ -74,6 +74,7 @@ function smarty_core_create_dir_structure($params, &$smarty)
             $_new_dir .= '/';
         }
     }
+
     return null;
 }
 

@@ -59,7 +59,6 @@ class XoopsRank extends XoopsObject
         $this->initVar('rank_max', XOBJ_DTYPE_INT, 0);
         $this->initVar('rank_special', XOBJ_DTYPE_INT, 0);
         $this->initVar('rank_image', XOBJ_DTYPE_TXTBOX, "");
-
     }
 
     /**
@@ -142,8 +141,8 @@ class XoopsRankHandler extends XoopsObjectHandler
      * Get List
      *
      * @param  CriteriaElement $criteria
-     * @param  int   $limit
-     * @param  int   $start
+     * @param  int             $limit
+     * @param  int             $start
      * @return array
      */
     public function getList(CriteriaElement $criteria = null, $limit = 0, $start = 0)
@@ -258,7 +257,7 @@ class XoUserHandler extends XoopsObjectHandler
      * Get Count
      *
      * @param  CriteriaElement $criteria
-     * @param  array $groups
+     * @param  array           $groups
      * @return int
      */
     public function getCount(CriteriaElement $criteria = null, $groups = array())
@@ -289,7 +288,7 @@ class XoUserHandler extends XoopsObjectHandler
      * GetAll
      *
      * @param  CriteriaElement $criteria
-     * @param  array $groups
+     * @param  array           $groups
      * @return object
      */
     public function getAll(CriteriaElement $criteria = null, $groups = array())
@@ -707,7 +706,7 @@ if (empty($_POST["user_submit"])) {
                     $class = 'even';
                 }
                 ++$ucount;
-                $fuser_name = $foundusers[$j]->getVar("name") ? : "&nbsp;";
+                $fuser_name = $foundusers[$j]->getVar("name") ?: "&nbsp;";
                 echo "<tr class='$class'>
                     <td align='center'>";
                 if (!empty($_POST["multiple"])) {

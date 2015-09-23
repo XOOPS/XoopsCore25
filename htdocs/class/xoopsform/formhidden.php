@@ -55,6 +55,7 @@ class XoopsFormHidden extends XoopsFormElement
     {
         $this->__construct($name, $value);
     }
+
     /**
      * Get the "value" attribute
      *

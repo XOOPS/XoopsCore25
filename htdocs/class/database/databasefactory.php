@@ -26,7 +26,6 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class XoopsDatabaseFactory
 {
-
     /**
      * XoopsDatabaseFactory constructor.
      */

@@ -1121,10 +1121,10 @@ class Smarty
     /**
      * executes & returns or displays the template results
      *
-     * @param string  $resource_name
-     * @param string  $cache_id
-     * @param string  $compile_id
-     * @param boolean $display
+     * @param  string  $resource_name
+     * @param  string  $cache_id
+     * @param  string  $compile_id
+     * @param  boolean $display
      * @return mixed|string|void
      */
     public function fetch($resource_name, $cache_id = null, $compile_id = null, $display = false)
@@ -1174,7 +1174,7 @@ class Smarty
 
         if ($this->caching) {
             // save old cache_info, initialize cache_info
-            $_cache_info[] = $this->_cache_info;
+            $_cache_info[]     = $this->_cache_info;
             $this->_cache_info = array();
             $_params           = array(
                 'tpl_file'   => $resource_name,
@@ -1317,6 +1317,7 @@ class Smarty
                 return $_smarty_results;
             }
         }
+
         return null;
     }
 
@@ -1439,7 +1440,9 @@ class Smarty
             // if a _cache_serial was set, we also have to write an include-file:
             if ($this->_cache_include_info) {
                 require_once(SMARTY_CORE_DIR . 'core.write_compiled_include.php');
-                smarty_core_write_compiled_include(array_merge($this->_cache_include_info, array('compiled_content' => $_compiled_content, 'resource_name' => $resource_name)), $this);
+                smarty_core_write_compiled_include(array_merge($this->_cache_include_info, array(
+                    'compiled_content' => $_compiled_content,
+                    'resource_name'    => $resource_name)), $this);
             }
 
             $_params = array('compile_path' => $compile_path, 'compiled_content' => $_compiled_content);
@@ -1458,7 +1461,7 @@ class Smarty
      * @param  string $resource_name
      * @param  string $source_content
      * @param  string $compiled_content
-     * @param null    $cache_include_path
+     * @param  null   $cache_include_path
      * @return bool
      */
     public function _compile_source($resource_name, &$source_content, &$compiled_content, $cache_include_path = null)
@@ -1573,10 +1576,16 @@ class Smarty
                     // call resource functions to fetch the template source and timestamp
                     $_source_return = true;
                     if ($params['get_source']) {
-                        $_source_return = isset($this->_plugins['resource'][$_resource_type]) && call_user_func_array($this->_plugins['resource'][$_resource_type][0][0], array($_resource_name, &$params['source_content'], &$this));
+                        $_source_return = isset($this->_plugins['resource'][$_resource_type]) && call_user_func_array($this->_plugins['resource'][$_resource_type][0][0], array(
+                                $_resource_name,
+                                &$params['source_content'],
+                                &$this));
                     }
 
-                    $_timestamp_return = isset($this->_plugins['resource'][$_resource_type]) && call_user_func_array($this->_plugins['resource'][$_resource_type][0][1], array($_resource_name, &$params['resource_timestamp'], &$this));
+                    $_timestamp_return = isset($this->_plugins['resource'][$_resource_type]) && call_user_func_array($this->_plugins['resource'][$_resource_type][0][1], array(
+                            $_resource_name,
+                            &$params['resource_timestamp'],
+                            &$this));
 
                     $_return = $_source_return && $_timestamp_return;
                     break;
@@ -1589,7 +1598,12 @@ class Smarty
                 if (!is_callable($this->default_template_handler_func)) {
                     $this->trigger_error("default template handler function \"$this->default_template_handler_func\" doesn't exist.");
                 } else {
-                    $_return = call_user_func_array($this->default_template_handler_func, array($_params['resource_type'], $_params['resource_name'], &$params['source_content'], &$params['resource_timestamp'], &$this));
+                    $_return = call_user_func_array($this->default_template_handler_func, array(
+                        $_params['resource_type'],
+                        $_params['resource_name'],
+                        &$params['source_content'],
+                        &$params['resource_timestamp'],
+                        &$this));
                 }
             }
         }
@@ -1776,8 +1790,8 @@ class Smarty
     /**
      * unlink a file, possibly using expiration time
      *
-     * @param string  $resource
-     * @param integer $exp_time
+     * @param  string  $resource
+     * @param  integer $exp_time
      * @return bool
      */
     public function _unlink($resource, $exp_time = null)
@@ -1789,6 +1803,7 @@ class Smarty
         } else {
             return @unlink($resource);
         }
+
         return null;
     }
 
@@ -1928,9 +1943,9 @@ class Smarty
 
     /**
      * wrapper for include() retaining $this
-     * @param      $filename
-     * @param bool $once
-     * @param null $params
+     * @param        $filename
+     * @param  bool  $once
+     * @param  null  $params
      * @return mixed
      */
     public function _include($filename, $once = false, $params = null)
@@ -1944,8 +1959,8 @@ class Smarty
 
     /**
      * wrapper for eval() retaining $this
-     * @param      $code
-     * @param null $params
+     * @param        $code
+     * @param  null  $params
      * @return mixed
      */
     public function _eval($code, $params = null)

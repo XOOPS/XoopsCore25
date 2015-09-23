@@ -32,11 +32,9 @@ if ($xoopsUser) {
     unset($url_arr);
     if (!$moduleperm_handler->checkRight('module_admin', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
         redirect_header(XOOPS_URL, 1, _NOPERM);
-
     }
 } else {
     redirect_header(XOOPS_URL . '/user.php', 1, _NOPERM);
-
 }
 
 // set config values for this module

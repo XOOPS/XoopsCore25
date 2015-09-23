@@ -72,6 +72,7 @@ class XoopsFormElementTray extends XoopsFormElement
     {
         $this->__construct($caption, $delimeter, $name);
     }
+
     /**
      * Is this element a container of other elements?
      *
@@ -96,7 +97,7 @@ class XoopsFormElementTray extends XoopsFormElement
      * Add an element to the group
      *
      * @param XoopsFormElement $formElement {@link XoopsFormElement} to add
-     * @param bool   $required
+     * @param bool             $required
      *
      */
     public function addElement(XoopsFormElement $formElement, $required = false)

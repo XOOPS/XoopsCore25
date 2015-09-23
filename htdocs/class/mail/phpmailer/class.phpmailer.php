@@ -794,7 +794,7 @@ class PHPMailer
         }
         if ($kind !== 'Reply-To') {
             if (!isset($this->all_recipients[strtolower($address)])) {
-                ($this->$kind[] =  array($address, $name));
+                ($this->$kind[] = array($address, $name));
                 $this->all_recipients[strtolower($address)] = true;
 
                 return true;
@@ -1451,12 +1451,12 @@ class PHPMailer
             $message = substr($message, 0, -$lelen);
         }
 
-        $line    = explode($this->LE, $message); // Magic. We know fixEOL uses $LE
-        $message = '';
+        $line      = explode($this->LE, $message); // Magic. We know fixEOL uses $LE
+        $message   = '';
         $lineCount = count($line);
         for ($i = 0; $i < $lineCount; ++$i) {
-            $line_part = explode(' ', $line[$i]);
-            $buf       = '';
+            $line_part      = explode(' ', $line[$i]);
+            $buf            = '';
             $line_partCount = count($line_part);
             for ($e = 0; $e < $line_partCount; $e++) {
                 $word = $line_part[$e];
@@ -1546,7 +1546,7 @@ class PHPMailer
                     $foundSplitPos = true;
                 } elseif ($dec >= 192) { // First byte of a multi byte character
                     // Reduce maxLength to split at start of character
-                    $maxLength     -= ($lookBack - $encodedCharPos);
+                    $maxLength -= ($lookBack - $encodedCharPos);
                     $foundSplitPos = true;
                 } elseif ($dec < 192) { // Middle byte of a multi byte character, look further back
                     $lookBack += 3;
@@ -1876,7 +1876,10 @@ class PHPMailer
                 $file = tempnam(sys_get_temp_dir(), 'mail');
                 file_put_contents($file, $body); // @TODO check this worked
                 $signed = tempnam(sys_get_temp_dir(), 'signed');
-                if (@openssl_pkcs7_sign($file, $signed, 'file://' . realpath($this->sign_cert_file), array('file://' . realpath($this->sign_key_file), $this->sign_key_pass), null)) {
+                if (@openssl_pkcs7_sign($file, $signed, 'file://' . realpath($this->sign_cert_file), array(
+                    'file://' . realpath($this->sign_key_file),
+                    $this->sign_key_pass), null)
+                ) {
                     @unlink($file);
                     $body = file_get_contents($signed);
                     @unlink($signed);
@@ -3115,7 +3118,7 @@ class PHPMailer
      */
     public function DKIM_QP($txt)
     {
-        $line = '';
+        $line   = '';
         $strlen = strlen($txt);
         for ($i = 0; $i < $strlen; ++$i) {
             $ord = ord($txt[$i]);
@@ -3147,7 +3150,7 @@ class PHPMailer
         }
 
         $privKeyStr = file_get_contents($this->DKIM_private);
-        $privKey = $privKeyStr;
+        $privKey    = $privKeyStr;
         if ($this->DKIM_passphrase != '') {
             $privKey = openssl_pkey_get_private($privKeyStr, $this->DKIM_passphrase);
         }

@@ -231,7 +231,13 @@ class xoopsapi extends XoopsXmlRpcApi
             // will be removed... don't worry if this looks bad
             include_once XOOPS_ROOT_PATH . '/modules/news/class/class.newsstory.php';
             $story = new NewsStory($this->params[0]);
-            $ret   = array('uid' => $story->uid(), 'published' => $story->published(), 'storyid' => $story->storyId(), 'title' => $story->title('Edit'), 'hometext' => $story->hometext('Edit'), 'moretext' => $story->bodytext('Edit'));
+            $ret   = array(
+                'uid'       => $story->uid(),
+                'published' => $story->published(),
+                'storyid'   => $story->storyId(),
+                'title'     => $story->title('Edit'),
+                'hometext'  => $story->hometext('Edit'),
+                'moretext'  => $story->bodytext('Edit'));
             if (!$respond) {
                 return $ret;
             } else {
@@ -287,7 +293,13 @@ class xoopsapi extends XoopsXmlRpcApi
             $scount = count($stories);
             $ret    = array();
             for ($i = 0; $i < $scount; ++$i) {
-                $ret[] = array('uid' => $stories[$i]->uid(), 'published' => $stories[$i]->published(), 'storyid' => $stories[$i]->storyId(), 'title' => $stories[$i]->title('Edit'), 'hometext' => $stories[$i]->hometext('Edit'), 'moretext' => $stories[$i]->bodytext('Edit'));
+                $ret[] = array(
+                    'uid'       => $stories[$i]->uid(),
+                    'published' => $stories[$i]->published(),
+                    'storyid'   => $stories[$i]->storyId(),
+                    'title'     => $stories[$i]->title('Edit'),
+                    'hometext'  => $stories[$i]->hometext('Edit'),
+                    'moretext'  => $stories[$i]->bodytext('Edit'));
             }
             if (!$respond) {
                 return $ret;

@@ -41,15 +41,15 @@ class xos_kernel_Xoops2
         $this->paths['themes']  = array(XOOPS_ROOT_PATH . '/themes', XOOPS_URL . '/themes');
     }
 
-
     public function xos_kernel_Xoops2()
     {
         $this->__construct();
     }
+
     /**
      * Convert a XOOPS path to a physical one
-     * @param      $url
-     * @param bool $virtual
+     * @param               $url
+     * @param  bool         $virtual
      * @return mixed|string
      */
     public function path($url, $virtual = false)
@@ -82,8 +82,8 @@ class xos_kernel_Xoops2
 
     /**
      * Build an URL with the specified request params
-     * @param       $url
-     * @param array $params
+     * @param         $url
+     * @param  array  $params
      * @return string
      */
     public function buildUrl($url, $params = array())

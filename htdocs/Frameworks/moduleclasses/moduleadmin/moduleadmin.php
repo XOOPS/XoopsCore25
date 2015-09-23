@@ -26,7 +26,7 @@ class moduleadmin
     /**
      * Constructor
      */
-    protected function __construct()
+    public function __construct()
     {
         //global $xoopsModule, $xoTheme;
         global $xoopsModule;

@@ -88,7 +88,8 @@ echo '<meta http-equiv="content-language" content="' . _LANGCODE . '" />';
 <form>
     <div class="tabs">
         <ul>
-            <li id="tab_mlcontent" class="current"><span><a href="javascript:mcTabs.displayTab('tab_mlcontent','mlcontent_panel');" onmousedown="return false;">{#xoopsmlcontent_dlg.title}</a></span></li>
+            <li id="tab_mlcontent" class="current"><span><a href="javascript:mcTabs.displayTab('tab_mlcontent','mlcontent_panel');"
+                                                            onmousedown="return false;">{#xoopsmlcontent_dlg.title}</a></span></li>
         </ul>
     </div>
 

@@ -83,6 +83,7 @@ class XoopsFormRadio extends XoopsFormElement
     {
         $this->__construct($caption, $name, $value, $delimeter);
     }
+
     /**
      * Get the "value" attribute
      *

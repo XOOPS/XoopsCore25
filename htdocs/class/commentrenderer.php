@@ -34,7 +34,7 @@ class XoopsCommentRenderer
      * @access private
      */
     public $_tpl;
-    public $_comments   ;
+    public $_comments;
     public $_useIcons    = true;
     public $_doIconCheck = false;
     public $_memberHandler;
@@ -46,9 +46,9 @@ class XoopsCommentRenderer
     /**
      * Constructor
      *
-     * @param XoopsTpl  $tpl
-     * @param boolean $use_icons
-     * @param boolean $do_iconcheck
+     * @param XoopsTpl $tpl
+     * @param boolean  $use_icons
+     * @param boolean  $do_iconcheck
      *
      */
     public function __construct(XoopsTpl $tpl, $use_icons = true, $do_iconcheck = false)
@@ -72,12 +72,13 @@ class XoopsCommentRenderer
     {
         $this->__construct($tpl, $use_icons, $do_iconcheck);
     }
+
     /**
      * Access the only instance of this class
      *
-     * @param  XoopsTpl  $tpl reference to a {@link Smarty} object
-     * @param  boolean $use_icons
-     * @param  boolean $do_iconcheck
+     * @param  XoopsTpl $tpl reference to a {@link Smarty} object
+     * @param  boolean  $use_icons
+     * @param  boolean  $do_iconcheck
      * @return \XoopsCommentRenderer
      */
     public static function &instance(XoopsTpl $tpl, $use_icons = true, $do_iconcheck = false)
@@ -153,9 +154,10 @@ class XoopsCommentRenderer
      *
      * This method calls itself recursively
      *
-     * @param integer $comment_id Should be "0" when called by client
-     * @param boolean $admin_view
-     * @param boolean $show_nav
+     * @param  integer $comment_id Should be "0" when called by client
+     * @param  boolean $admin_view
+     * @param  boolean $show_nav
+     * @return null
      */
     public function renderThreadView($comment_id = 0, $admin_view = false, $show_nav = true)
     {
@@ -276,8 +278,8 @@ class XoopsCommentRenderer
      *
      * Danger: Recursive!
      *
-     * @param integer $comment_id Always "0" when called by client.
-     * @param boolean $admin_view
+     * @param  integer $comment_id Always "0" when called by client.
+     * @param  boolean $admin_view
      * @return null
      */
     public function renderNestView($comment_id = 0, $admin_view = false)

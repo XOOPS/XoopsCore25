@@ -3,20 +3,20 @@
  *  Xoopsemotions plugin for tinymce
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
- * @package         class / xoopseditor
- * @subpackage      tinymce / xoops plugins
- * @since           2.3.0
- * @author          ralf57
- * @author          luciorota <lucio.rota@gmail.com>
- * @author          Laurent JEN <dugris@frxoops.org>
- * @version         $Id: xoopsemotions.php 11937 2013-08-18 02:25:16Z beckmi $
+ * @license             http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @package             class / xoopseditor
+ * @subpackage          tinymce / xoops plugins
+ * @since               2.3.0
+ * @author              ralf57
+ * @author              luciorota <lucio.rota@gmail.com>
+ * @author              Laurent JEN <dugris@frxoops.org>
+ * @version             $Id: xoopsemotions.php 11937 2013-08-18 02:25:16Z beckmi $
  */
 
 // load mainfile.php - start
 $current_path = __DIR__;
 if (DIRECTORY_SEPARATOR != "/") {
-    $current_path = str_replace( DIRECTORY_SEPARATOR, "/", $current_path);
+    $current_path = str_replace(DIRECTORY_SEPARATOR, "/", $current_path);
 }
 $xoops_root_path = substr($current_path, 0, strpos(strtolower($current_path), "/class/xoopseditor/tinymce/"));
 include_once $xoops_root_path . "/mainfile.php";
@@ -32,18 +32,18 @@ xoops_loadLanguage("admin/smilies", "system");
 xoops_loadLanguage("misc");
 
 // include system category definitions - start
-include_once XOOPS_ROOT_PATH."/modules/system/constants.php";
+include_once XOOPS_ROOT_PATH . "/modules/system/constants.php";
 
 // check user/group
-$groups = is_object( $GLOBALS["xoopsUser"] ) ? $GLOBALS["xoopsUser"]->getGroups() : array( XOOPS_GROUP_ANONYMOUS );
+$groups        = is_object($GLOBALS["xoopsUser"]) ? $GLOBALS["xoopsUser"]->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 $gperm_handler =& xoops_gethandler('groupperm');
-$admin = $gperm_handler->checkRight( 'system_admin', XOOPS_SYSTEM_SMILE, $groups );
+$admin         = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_SMILE, $groups);
 
 $op = '';
 if (!empty($_GET['op'])) {
-    $op = trim( $_GET['op'] );
+    $op = trim($_GET['op']);
 } elseif (!empty($_POST['op'])) {
-    $op = trim( $_POST['op'] );
+    $op = trim($_POST['op']);
 }
 
 $myts =& MyTextSanitizer::getInstance();
@@ -53,19 +53,24 @@ if ($admin && $op == 'SmilesAdd') {
         redirect_header($current_file, 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
     }
     $db =& XoopsDatabaseFactory::getDatabaseConnection();
-    include_once XOOPS_ROOT_PATH.'/class/uploader.php';
-    $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'), 100000, 120, 120);
+    include_once XOOPS_ROOT_PATH . '/class/uploader.php';
+    $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, array(
+        'image/gif',
+        'image/jpeg',
+        'image/pjpeg',
+        'image/x-png',
+        'image/png'), 100000, 120, 120);
     $uploader->setPrefix('smil');
     if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
         if (!$uploader->upload()) {
             $err = $uploader->getErrors();
         } else {
-            $smile_url = $uploader->getSavedFileName();
-            $smile_code = $myts->stripSlashesGPC($_POST['smile_code']);
-            $smile_desc = $myts->stripSlashesGPC($_POST['smile_desc']);
+            $smile_url     = $uploader->getSavedFileName();
+            $smile_code    = $myts->stripSlashesGPC($_POST['smile_code']);
+            $smile_desc    = $myts->stripSlashesGPC($_POST['smile_desc']);
             $smile_display = (int)($_POST['smile_display']) > 0 ? 1 : 0;
-            $newid = $db->genId($db->prefix('smilies')."_id_seq");
-            $sql = sprintf("INSERT INTO %s (id, code, smile_url, emotion, display) VALUES (%d, %s, %s, %s, %d)", $db->prefix('smiles'), $newid, $db->quoteString($smile_code), $db->quoteString($smile_url), $db->quoteString($smile_desc), $smile_display);
+            $newid         = $db->genId($db->prefix('smilies') . "_id_seq");
+            $sql           = sprintf("INSERT INTO %s (id, code, smile_url, emotion, display) VALUES (%d, %s, %s, %s, %d)", $db->prefix('smiles'), $newid, $db->quoteString($smile_code), $db->quoteString($smile_url), $db->quoteString($smile_desc), $smile_display);
             if (!$db->query($sql)) {
                 $err = 'Failed storing smiley data into the database';
             }
@@ -76,15 +81,15 @@ if ($admin && $op == 'SmilesAdd') {
     if (!isset($err)) {
         unset($_SESSION['XoopsEmotions']);
         unset($_SESSION['XoopsEmotions_expire']);
-        redirect_header($current_file,2,_AM_DBUPDATED);
+        redirect_header($current_file, 2, _AM_DBUPDATED);
     } else {
-        redirect_header($current_file, 3, xoops_error($err) );
+        redirect_header($current_file, 3, xoops_error($err));
     }
 }
 
 $time = time();
-if ( !isset( $_SESSION['XoopsEmotions'] ) && @$_SESSION['XoopsEmotions_expire'] < $time ) {
-    $_SESSION['XoopsEmotions'] = $myts->getSmileys();
+if (!isset($_SESSION['XoopsEmotions']) && @$_SESSION['XoopsEmotions_expire'] < $time) {
+    $_SESSION['XoopsEmotions']        = $myts->getSmileys();
     $_SESSION['XoopsEmotions_expire'] = $time + 300;
 }
 
@@ -102,9 +107,9 @@ echo '<meta http-equiv="content-language" content="' . _LANGCODE . '" />';
     <script type="text/javascript" src="../../utils/form_utils.js"></script>
     <script type="text/javascript" src="../../utils/validate.js"></script>
     <script type="text/javascript" src="js/xoopsemotions.js"></script>
-    <link href="<?php echo xoops_getcss($xoopsConfig['theme_set']); ?>" rel="stylesheet" type="text/css" />
-    <link href="css/xoopsemotions.css" rel="stylesheet" type="text/css" />
-    <base target="_self" />
+    <link href="<?php echo xoops_getcss($xoopsConfig['theme_set']); ?>" rel="stylesheet" type="text/css"/>
+    <link href="css/xoopsemotions.css" rel="stylesheet" type="text/css"/>
+    <base target="_self"/>
 </head>
 <body>
 
@@ -123,7 +128,8 @@ if (!$_SESSION['XoopsEmotions'] && !$admin) {
 
 <div class="tabs">
     <ul>
-        <li id="tab_emotionsbrowser" class="current"><span><a href="javascript:mcTabs.displayTab('tab_emotionsbrowser','emotionsbrowser_panel');" onmousedown="return false;">{#xoopsemotions_dlg.tab_emotionsbrowser}</a></span></li>
+        <li id="tab_emotionsbrowser" class="current"><span><a href="javascript:mcTabs.displayTab('tab_emotionsbrowser','emotionsbrowser_panel');"
+                                                              onmousedown="return false;">{#xoopsemotions_dlg.tab_emotionsbrowser}</a></span></li>
         <?php
         if ($admin) {
             echo '<li id="tab_emotionsadmin"><span><a href="javascript:mcTabs.displayTab(\'tab_emotionsadmin\',\'emotionsadmin_panel\');" onmousedown="return false;">{#xoopsemotions_dlg.tab_emotionsadmin}</a></span></li>';
@@ -160,22 +166,22 @@ if (!$_SESSION['XoopsEmotions'] && !$admin) {
         }
         ?>
         <div class="mceActionPanel floatright">
-            <input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
+            <input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();"/>
         </div>
     </div>
 
     <div id="emotionsadmin_panel" class="panel" style="overflow:auto;">
         <?php
         if ($admin) {
-            include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
+            include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
             $smile_form = new XoopsThemeForm(_AM_ADDSMILE, 'smileform', $current_file, 'post', true);
             $smile_form->setExtra('enctype="multipart/form-data"');
             $smile_form->addElement(new XoopsFormText(_AM_SMILECODE, 'smile_code', 26, 25, ''), true);
             $smile_form->addElement(new XoopsFormText(_AM_SMILEEMOTION, 'smile_desc', 26, 25, ''), true);
             $smile_select = new XoopsFormFile('', 'smile_url', 5000000);
-            $smile_label = new XoopsFormLabel('', '<img src="'.XOOPS_UPLOAD_URL.'/blank.gif" alt="" />');
-            $smile_tray = new XoopsFormElementTray(_IMAGEFILE.':', '&nbsp;');
+            $smile_label  = new XoopsFormLabel('', '<img src="' . XOOPS_UPLOAD_URL . '/blank.gif" alt="" />');
+            $smile_tray   = new XoopsFormElementTray(_IMAGEFILE . ':', '&nbsp;');
             $smile_tray->addElement($smile_select);
             $smile_tray->addElement($smile_label);
             $smile_form->addElement($smile_tray);
@@ -189,7 +195,7 @@ if (!$_SESSION['XoopsEmotions'] && !$admin) {
         }
         ?>
         <div class="mceActionPanel floatright">
-            <input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
+            <input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();"/>
         </div>
     </div>
 

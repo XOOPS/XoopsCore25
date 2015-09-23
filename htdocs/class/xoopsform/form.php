@@ -137,6 +137,7 @@ class XoopsForm
     {
         $this->__construct($title, $name, $action, $method, $addtoken, $summary);
     }
+
     /**
      * *#@+
      * retrieves object serialisation/identification id (sha1 used)
@@ -146,8 +147,8 @@ class XoopsForm
      *
      * @deprecated
      * @access public
-     * @param        $object
-     * @param string $hashinfo
+     * @param         $object
+     * @param  string $hashinfo
      * @return string
      */
     public function getObjectID($object, $hashinfo = 'sha1')
@@ -294,7 +295,7 @@ class XoopsForm
      * Add an element to the form
      *
      * @param XoopsFormElement $formElement reference to a {@link XoopsFormElement}
-     * @param bool   $required    is this a "required" element?
+     * @param bool             $required    is this a "required" element?
      *
      */
     public function addElement(XoopsFormElement $formElement, $required = false)
@@ -615,7 +616,7 @@ class XoopsForm
             }
             $ele_name                 = $ele->getName();
             $ele_description          = $ele->getDescription();
-            $n                        = $ele_name ? : $i;
+            $n                        = $ele_name ?: $i;
             $elements[$n]['name']     = $ele_name;
             $elements[$n]['caption']  = $ele->getCaption();
             $elements[$n]['body']     = $ele->render();

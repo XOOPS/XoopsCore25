@@ -42,6 +42,7 @@ function smarty_function_eval($params, &$smarty)
     } else {
         return $_contents;
     }
+
     return null;
 }
 

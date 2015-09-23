@@ -222,7 +222,14 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea
         };
         $fontStr .= " + '</select> '";
         $fontStr .= "+ '<select id=\'{$textarea_id}Font\' onchange=\'xoopsSetElementAttribute(\"font\", this.options[this.selectedIndex].value, \"{$textarea_id}\", \"{$hiddentext}\");\'>'" . "+ '<option value=\'FONT\'>" . _FONT . "</option>'";
-        $fontarray = !empty($GLOBALS["formtextdhtml_fonts"]) ? $GLOBALS["formtextdhtml_fonts"] : array("Arial", "Courier", "Georgia", "Helvetica", "Impact", "Verdana", "Haettenschweiler");
+        $fontarray = !empty($GLOBALS["formtextdhtml_fonts"]) ? $GLOBALS["formtextdhtml_fonts"] : array(
+            "Arial",
+            "Courier",
+            "Georgia",
+            "Helvetica",
+            "Impact",
+            "Verdana",
+            "Haettenschweiler");
         foreach ($fontarray as $font) {
             $fontStr .= " + '<option value=\'{$font}\'>{$font}</option>'";
         };

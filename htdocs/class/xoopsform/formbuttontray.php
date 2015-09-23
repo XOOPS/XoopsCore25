@@ -72,6 +72,7 @@ class XoopsFormButtonTray extends XoopsFormElement
     {
         $this->__construct($name, $value, $type, $onclick, $showDelete);
     }
+
     /**
      * XoopsFormButtonTray::getValue()
      *

@@ -56,6 +56,7 @@ class XoopsFormLabel extends XoopsFormElement
     {
         $this->__construct($caption, $value, $name);
     }
+
     /**
      * Get the "value" attribute
      *

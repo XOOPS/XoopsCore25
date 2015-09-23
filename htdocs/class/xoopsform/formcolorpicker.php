@@ -52,6 +52,7 @@ class XoopsFormColorPicker extends XoopsFormText
     {
         $this->__construct($caption, $name, $value);
     }
+
     /**
      * XoopsFormColorPicker::render()
      *

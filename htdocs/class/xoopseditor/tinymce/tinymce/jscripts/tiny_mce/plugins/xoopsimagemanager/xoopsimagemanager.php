@@ -57,9 +57,12 @@ echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . _LANGCODE . '" la
 <form onsubmit="XoopsimagemanagerDialog.insert();return false;" action="#">
     <div class="tabs">
         <ul>
-            <li id="general_tab" class="current"><span><a href="javascript:mcTabs.displayTab('general_tab','general_panel');" onmousedown="return false;">{#xoopsimagemanager_dlg.tab_general}</a></span></li>
-            <li id="appearance_tab"><span><a href="javascript:mcTabs.displayTab('appearance_tab','appearance_panel');" onmousedown="return false;">{#xoopsimagemanager_dlg.tab_appearance}</a></span></li>
-            <li id="advanced_tab"><span><a href="javascript:mcTabs.displayTab('advanced_tab','advanced_panel');" onmousedown="return false;">{#xoopsimagemanager_dlg.tab_advanced}</a></span></li>
+            <li id="general_tab" class="current"><span><a href="javascript:mcTabs.displayTab('general_tab','general_panel');"
+                                                          onmousedown="return false;">{#xoopsimagemanager_dlg.tab_general}</a></span></li>
+            <li id="appearance_tab"><span><a href="javascript:mcTabs.displayTab('appearance_tab','appearance_panel');" onmousedown="return false;">{#xoopsimagemanager_dlg.tab_appearance}</a></span>
+            </li>
+            <li id="advanced_tab"><span><a href="javascript:mcTabs.displayTab('advanced_tab','advanced_panel');" onmousedown="return false;">{#xoopsimagemanager_dlg.tab_advanced}</a></span>
+            </li>
         </ul>
     </div>
 
@@ -76,7 +79,8 @@ echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . _LANGCODE . '" la
                             <table border="0" cellspacing="0" cellpadding="0">
                                 <tr>
                                     <td>
-                                        <input name="src" type="text" id="src" value="" onchange="XoopsimagemanagerDialog.showPreviewImage(this.value);"/>
+                                        <input name="src" type="text" id="src" value=""
+                                               onchange="XoopsimagemanagerDialog.showPreviewImage(this.value);"/>
                                         <?php echo imageBrowser("src", $canbrowse); ?>
                                     </td>
                                     <td id="srcbrowsercontainer">&nbsp;</td>
@@ -115,7 +119,8 @@ echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . _LANGCODE . '" la
                     <tr>
                         <td class="column1"><label id="alignlabel" for="align">{#xoopsimagemanager_dlg.align}</label></td>
                         <td>
-                            <select id="align" name="align" onchange="XoopsimagemanagerDialog.updateStyle('align');XoopsimagemanagerDialog.changeAppearance();">
+                            <select id="align" name="align"
+                                    onchange="XoopsimagemanagerDialog.updateStyle('align');XoopsimagemanagerDialog.changeAppearance();">
                                 <option value="">{#not_set}</option>
                                 <option value="baseline">{#xoopsimagemanager_dlg.align_baseline}</option>
                                 <option value="top">{#xoopsimagemanager_dlg.align_top}</option>
@@ -141,8 +146,10 @@ echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . _LANGCODE . '" la
                     <tr>
                         <td class="column1"><label id="widthlabel" for="width">{#xoopsimagemanager_dlg.dimensions}</label></td>
                         <td nowrap="nowrap">
-                            <input name="width" type="text" id="width" value="" size="5" maxlength="5" class="size" onchange="XoopsimagemanagerDialog.changeHeight();"/> x
-                            <input name="height" type="text" id="height" value="" size="5" maxlength="5" class="size" onchange="XoopsimagemanagerDialog.changeWidth();"/> px
+                            <input name="width" type="text" id="width" value="" size="5" maxlength="5" class="size"
+                                   onchange="XoopsimagemanagerDialog.changeHeight();"/> x
+                            <input name="height" type="text" id="height" value="" size="5" maxlength="5" class="size"
+                                   onchange="XoopsimagemanagerDialog.changeWidth();"/> px
                         </td>
                     </tr>
 
@@ -160,20 +167,23 @@ echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . _LANGCODE . '" la
 
                     <tr>
                         <td class="column1"><label id="vspacelabel" for="vspace">{#xoopsimagemanager_dlg.vspace}</label></td>
-                        <td><input name="vspace" type="text" id="vspace" value="" size="3" maxlength="3" class="number" onchange="XoopsimagemanagerDialog.updateStyle('vspace');XoopsimagemanagerDialog.changeAppearance();"
+                        <td><input name="vspace" type="text" id="vspace" value="" size="3" maxlength="3" class="number"
+                                   onchange="XoopsimagemanagerDialog.updateStyle('vspace');XoopsimagemanagerDialog.changeAppearance();"
                                    onblur="XoopsimagemanagerDialog.updateStyle('vspace');XoopsimagemanagerDialog.changeAppearance();"/>
                         </td>
                     </tr>
 
                     <tr>
                         <td class="column1"><label id="hspacelabel" for="hspace">{#xoopsimagemanager_dlg.hspace}</label></td>
-                        <td><input name="hspace" type="text" id="hspace" value="" size="3" maxlength="3" class="number" onchange="XoopsimagemanagerDialog.updateStyle('hspace');XoopsimagemanagerDialog.changeAppearance();"
+                        <td><input name="hspace" type="text" id="hspace" value="" size="3" maxlength="3" class="number"
+                                   onchange="XoopsimagemanagerDialog.updateStyle('hspace');XoopsimagemanagerDialog.changeAppearance();"
                                    onblur="XoopsimagemanagerDialog.updateStyle('hspace');XoopsimagemanagerDialog.changeAppearance();"/></td>
                     </tr>
 
                     <tr>
                         <td class="column1"><label id="borderlabel" for="border">{#xoopsimagemanager_dlg.border}</label></td>
-                        <td><input id="border" name="border" type="text" value="" size="3" maxlength="3" class="number" onchange="XoopsimagemanagerDialog.updateStyle('border');XoopsimagemanagerDialog.changeAppearance();"
+                        <td><input id="border" name="border" type="text" value="" size="3" maxlength="3" class="number"
+                                   onchange="XoopsimagemanagerDialog.updateStyle('border');XoopsimagemanagerDialog.changeAppearance();"
                                    onblur="XoopsimagemanagerDialog.updateStyle('border');XoopsimagemanagerDialog.changeAppearance();"/></td>
                     </tr>
 
@@ -184,7 +194,8 @@ echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . _LANGCODE . '" la
 
                     <tr>
                         <td class="column1"><label id="stylelabel" for="style">{#xoopsimagemanager_dlg.style}</label></td>
-                        <td colspan="2"><input id="style" name="style" type="text" value="" onchange="XoopsimagemanagerDialog.changeAppearance();"/></td>
+                        <td colspan="2"><input id="style" name="style" type="text" value="" onchange="XoopsimagemanagerDialog.changeAppearance();"/>
+                        </td>
                     </tr>
 
                     <!-- <tr>
@@ -199,7 +210,8 @@ echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . _LANGCODE . '" la
             <fieldset>
                 <legend>{#xoopsimagemanager_dlg.swap_image}</legend>
 
-                <input type="checkbox" id="onmousemovecheck" name="onmousemovecheck" class="checkbox" onclick="XoopsimagemanagerDialog.setSwapImage(this.checked);"/>
+                <input type="checkbox" id="onmousemovecheck" name="onmousemovecheck" class="checkbox"
+                       onclick="XoopsimagemanagerDialog.setSwapImage(this.checked);"/>
                 <label id="onmousemovechecklabel" for="onmousemovecheck">{#xoopsimagemanager_dlg.alt_image}</label>
 
                 <table border="0" cellpadding="4" cellspacing="0" width="100%">
@@ -219,7 +231,8 @@ echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . _LANGCODE . '" la
                     </tr>
                     <tr>
                         <td><label for="over_list">{#xoopsimagemanager_dlg.image_list}</label></td>
-                        <td><select id="over_list" name="over_list" onchange="document.getElementById('onmouseoversrc').value=this.options[this.selectedIndex].value;"></select></td>
+                        <td><select id="over_list" name="over_list"
+                                    onchange="document.getElementById('onmouseoversrc').value=this.options[this.selectedIndex].value;"></select></td>
                     </tr>
                     <tr>
                         <td class="column1"><label id="onmouseoutsrclabel" for="onmouseoutsrc">{#xoopsimagemanager_dlg.mouseout}</label></td>
@@ -237,7 +250,8 @@ echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . _LANGCODE . '" la
                     </tr>
                     <tr>
                         <td><label for="out_list">{#xoopsimagemanager_dlg.image_list}</label></td>
-                        <td><select id="out_list" name="out_list" onchange="document.getElementById('onmouseoutsrc').value=this.options[this.selectedIndex].value;"></select></td>
+                        <td><select id="out_list" name="out_list"
+                                    onchange="document.getElementById('onmouseoutsrc').value=this.options[this.selectedIndex].value;"></select></td>
                     </tr>
                 </table>
             </fieldset>

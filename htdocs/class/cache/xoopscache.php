@@ -34,7 +34,7 @@ class XoopsCache
      * @access protected
      */
 
-    protected $engine = null;
+    protected $engine;
 
     /**
      * Cache configuration stack
@@ -50,7 +50,7 @@ class XoopsCache
      * @var array
      * @access private
      */
-    private $name = null;
+    private $name;
 
     /**
      * XoopsCache::__construct()

@@ -11,6 +11,7 @@
  * @param $params
  * @param $smarty
  * @internal param string $type
+ * @return null
  */
 
 // $type

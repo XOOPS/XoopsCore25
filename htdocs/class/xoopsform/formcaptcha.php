@@ -82,6 +82,7 @@ class XoopsFormCaptcha extends XoopsFormElement
     {
         $this->__construct($caption, $name, $skipmember, $configs);
     }
+
     /**
      * @param $name
      * @param $val

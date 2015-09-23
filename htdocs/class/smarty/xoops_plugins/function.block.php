@@ -116,5 +116,6 @@ function smarty_function_block($params, &$smarty)
         }
     }
     $template->setCompileId($blockObj->getVar('dirname', 'n'));
+
     return null;
 }

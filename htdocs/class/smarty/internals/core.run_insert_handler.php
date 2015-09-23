@@ -68,6 +68,7 @@ function smarty_core_run_insert_handler($params, &$smarty)
             return $_content;
         }
     }
+
     return null;
 }
 

@@ -13,6 +13,7 @@
  * Purpose:  assign the $smarty interface variable
  * @param array Format: null
  * @param Smarty
+ * @return null
  */
 function smarty_core_assign_smarty_interface($params, &$smarty)
 {

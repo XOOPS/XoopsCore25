@@ -88,10 +88,12 @@ class Config_File
     {
         $this->__construct($config_path);
     }
+
     /**
      * Set the path where configuration files can be found.
      *
-     * @param string $config_path path to the config files
+     * @param  string $config_path path to the config files
+     * @return null
      */
     public function set_path($config_path)
     {
@@ -201,8 +203,8 @@ class Config_File
      * Get all global or section variable names.
      *
      * @param  string $file_name config file to get info for
-     * @param null    $section
-     * @return array an array of variables names from the specified file/section
+     * @param  null   $section
+     * @return array  an array of variables names from the specified file/section
      * @internal param string $section_name (optional) section to get info for
      */
     public function get_var_names($file_name, $section = null)
@@ -241,9 +243,9 @@ class Config_File
     /**
      * Load a configuration file manually.
      *
-     * @param string  $file_name    file name to load
-     * @param boolean $prepend_path whether current config path should be
-     *                              prepended to the filename
+     * @param  string  $file_name    file name to load
+     * @param  boolean $prepend_path whether current config path should be
+     *                               prepended to the filename
      * @return bool
      */
     public function load_file($file_name, $prepend_path = true)
@@ -272,8 +274,8 @@ class Config_File
     /**
      * Store the contents of a file manually.
      *
-     * @param string $config_file file name of the related contents
-     * @param string $contents    the file-contents to parse
+     * @param  string $config_file file name of the related contents
+     * @param  string $contents    the file-contents to parse
      * @return bool
      */
     public function set_file_contents($config_file, $contents)
@@ -286,7 +288,7 @@ class Config_File
     /**
      * parse the source of a configuration file manually.
      *
-     * @param string $contents the file-contents to parse
+     * @param  string $contents the file-contents to parse
      * @return array
      */
     public function parse_contents($contents)
@@ -366,11 +368,11 @@ class Config_File
 
     /**#@+ @access private */
     /**
-     * @param array   &$container
-     * @param string  $var_name
-     * @param mixed   $var_value
-     * @param boolean $booleanize determines whether $var_value is converted to
-     *                            to true/false
+     * @param  array   &$container
+     * @param  string  $var_name
+     * @param  mixed   $var_value
+     * @param  boolean $booleanize determines whether $var_value is converted to
+     *                             to true/false
      * @return null
      */
     public function _set_config_var(&$container, $var_name, $var_value, $booleanize)

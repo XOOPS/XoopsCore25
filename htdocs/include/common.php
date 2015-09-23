@@ -195,7 +195,13 @@ if ($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && $_
     session_cache_expire($xoopsConfig['session_expire']);
     @ini_set('session.gc_maxlifetime', $xoopsConfig['session_expire'] * 60);
 }
-session_set_save_handler(array(&$sess_handler, 'open'), array(&$sess_handler, 'close'), array(&$sess_handler, 'read'), array(&$sess_handler, 'write'), array(&$sess_handler, 'destroy'), array(&$sess_handler, 'gc'));
+session_set_save_handler(array(&$sess_handler, 'open'), array(&$sess_handler, 'close'), array(&$sess_handler, 'read'), array(
+    &$sess_handler,
+    'write'), array(
+                             &$sess_handler,
+                             'destroy'), array(
+                             &$sess_handler,
+                             'gc'));
 
 if (function_exists('session_status')) {
     if (session_status() !== PHP_SESSION_ACTIVE) {
@@ -304,13 +310,11 @@ if (file_exists('./xoops_version.php')) {
     if ($xoopsUser) {
         if (!$moduleperm_handler->checkRight('module_read', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
             redirect_header(XOOPS_URL, 1, _NOPERM, false);
-
         }
         $xoopsUserIsAdmin = $xoopsUser->isAdmin($xoopsModule->getVar('mid'));
     } else {
         if (!$moduleperm_handler->checkRight('module_read', $xoopsModule->getVar('mid'), XOOPS_GROUP_ANONYMOUS)) {
             redirect_header(XOOPS_URL . '/user.php?from=' . $xoopsModule->getVar('dirname', 'n'), 1, _NOPERM);
-
         }
     }
 

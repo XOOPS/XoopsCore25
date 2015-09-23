@@ -31,6 +31,7 @@ function smarty_function_popup_init($params, &$smarty)
     } else {
         $smarty->trigger_error("popup_init: missing src parameter");
     }
+
     return null;
 }
 

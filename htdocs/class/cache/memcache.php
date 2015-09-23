@@ -15,8 +15,7 @@
  * @subpackage          cache
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
-
+ * @version             $Id$
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -40,7 +39,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * @package    cake
  * @subpackage cake.cake.libs.cache
  * @since      CakePHP(tm) v 1.2.0.4933
- * @version $Revision$
+ * @version    $Revision$
  * @modifiedby $LastChangedBy$
  * @lastmodified $Date$
  * @license    http://www.opensource.org/licenses/mit-license.php The MIT License

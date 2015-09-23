@@ -223,6 +223,7 @@ class RssTitleHandler extends XmlTagHandler
     public function __construct()
     {
     }
+
     public function RssTitleHandler()
     {
         $this->__construct();

@@ -3,6 +3,7 @@
 /**
  * @param $params
  * @param $smarty
+ * @return null
  */
 function smarty_function_xoInboxCount($params, &$smarty)
 {

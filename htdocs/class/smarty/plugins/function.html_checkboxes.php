@@ -117,6 +117,7 @@ function smarty_function_html_checkboxes($params, &$smarty)
     } else {
         return implode("\n", $_html_result);
     }
+
     return null;
 }
 

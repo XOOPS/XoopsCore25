@@ -221,6 +221,7 @@ function smarty_function_fetch($params, &$smarty)
     } else {
         return $content;
     }
+
     return null;
 }
 
