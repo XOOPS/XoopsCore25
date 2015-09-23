@@ -88,7 +88,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea
             return null;
         }
         // Else, initialize
-        $this->XoopsFormTextArea($caption, $name, $value, $rows, $cols);
+        parent::__construct($caption, $name, $value, $rows, $cols);
         $this->_hiddenText = $hiddentext;
 
         if ($inLoop > 1) {
