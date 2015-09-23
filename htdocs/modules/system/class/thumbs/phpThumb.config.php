@@ -194,8 +194,8 @@ $PHPTHUMB_CONFIG['http_user_agent'] = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; 
 
 // * Compatibility settings
 $PHPTHUMB_CONFIG['disable_pathinfo_parsing']        = false;  // if true, $_SERVER[PATH_INFO] is not parsed. May be needed on some server configurations to allow normal behavior.
-$PHPTHUMB_CONFIG['disable_imagecopyresampled']      = false;  // if true, ImageCopyResampled is replaced with ImageCopyResampleBicubic. May be needed for buggy versions of PHP-GD.
-$PHPTHUMB_CONFIG['disable_onlycreateable_passthru'] = true;   // if true, any image that can be parsed by GetImageSize() can be passed through; if false, only images that can be converted to GD by ImageCreateFrom(JPEG|GIF|PNG) functions are allowed
+$PHPTHUMB_CONFIG['disable_imagecopyresampled']      = false;  // if true, imagecopyresampled is replaced with ImageCopyResampleBicubic. May be needed for buggy versions of PHP-GD.
+$PHPTHUMB_CONFIG['disable_onlycreateable_passthru'] = true;   // if true, any image that can be parsed by getimagesize() can be passed through; if false, only images that can be converted to GD by ImageCreateFrom(JPEG|GIF|PNG) functions are allowed
 
 // * HTTP remote file opening settings
 $PHPTHUMB_CONFIG['http_fopen_timeout']   = 10;   // timeout (in seconds) for fopen / curl / fsockopen
@@ -227,6 +227,10 @@ $PHPTHUMB_DEFAULTS_DISABLEGETPARAMS  = false; // if true, GETstring parameters w
 //   require_once($_SERVER['DOCUMENT_ROOT'].'/phpThumb/phpThumb.config.php');
 //   echo '<img src="'.phpThumbURL('src=/images/pic.jpg&w=50').'">';
 
+/**
+ * @param $ParameterString
+ * @return string
+ */
 function phpThumbURL($ParameterString)
 {
     global $PHPTHUMB_CONFIG;
