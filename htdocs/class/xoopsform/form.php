@@ -294,11 +294,11 @@ class XoopsForm
     /**
      * Add an element to the form
      *
-     * @param XoopsFormElement $formElement reference to a {@link XoopsFormElement}
+     * @param string|XoopsFormElement $formElement reference to a {@link XoopsFormElement}
      * @param bool             $required    is this a "required" element?
      *
      */
-    public function addElement(XoopsFormElement $formElement, $required = false)
+    public function addElement($formElement, $required = false)
     {
         if (is_string($formElement)) {
             $this->_elements[] = $formElement;
