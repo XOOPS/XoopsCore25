@@ -84,7 +84,7 @@ if ($xoopsConfig['theme_set'] !== 'default' && file_exists(XOOPS_THEME_PATH . '/
     if (!empty($xoopsModule)) {
         $xoTheme->contentCacheLifetime = @$xoopsConfig['module_cache'][$xoopsModule->getVar('mid', 'n')];
         // Tricky solution for setting cache time for homepage
-    } elseif (!empty($xoopsOption['template_main']) && $xoopsOption['template_main'] === 'db:system_homepage.html') {
+    } elseif (!empty($xoopsOption['template_main']) && $xoopsOption['template_main'] === 'db:system_homepage.tpl') {
         $xoTheme->contentCacheLifetime = 604800;
     }
 

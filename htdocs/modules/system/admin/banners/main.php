@@ -42,7 +42,7 @@ $banner_client_Handler =& xoops_getModuleHandler('bannerclient', 'system');
 // Get Action type
 $op = system_CleanVars($_REQUEST, 'op', 'default', 'string');
 // Define template
-$xoopsOption['template_main'] = 'system_banners.html';
+$xoopsOption['template_main'] = 'system_banners.tpl';
 // Call header
 xoops_cp_header();
 // Define Stylesheet

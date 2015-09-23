@@ -47,7 +47,7 @@ $op = system_CleanVars($_REQUEST, 'op', 'list', 'string');
 // Get smilies handler
 $smilies_Handler =& xoops_getModuleHandler("smilies", "system");
 // Define main template
-$xoopsOption['template_main'] = 'system_smilies.html';
+$xoopsOption['template_main'] = 'system_smilies.tpl';
 // Call Header
 xoops_cp_header();
 

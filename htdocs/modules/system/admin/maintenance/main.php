@@ -30,7 +30,7 @@ if (!xoops_getModuleOption('active_maintenance', 'system')) {
 // Get Action type
 $op = system_CleanVars($_REQUEST, 'op', 'list', 'string');
 // Define main template
-$xoopsOption['template_main'] = 'system_maintenance.html';
+$xoopsOption['template_main'] = 'system_maintenance.tpl';
 // Call Header
 xoops_cp_header();
 // Define Stylesheet

@@ -45,7 +45,7 @@ switch ($op) {
     case 'list':
     default:
         // Define main template
-        $xoopsOption['template_main'] = 'system_avatars.html';
+        $xoopsOption['template_main'] = 'system_avatars.tpl';
         // Call Header
         xoops_cp_header();
         // Define Stylesheet
@@ -85,7 +85,7 @@ switch ($op) {
         $type  = system_CleanVars($_REQUEST, 'type', 'c', 'string');
         $start = system_CleanVars($_REQUEST, 'start', 0, 'int');
         // Define main template
-        $xoopsOption['template_main'] = 'system_avatars.html';
+        $xoopsOption['template_main'] = 'system_avatars.tpl';
         // Call Header
         xoops_cp_header();
         // Define Stylesheet
@@ -141,7 +141,7 @@ switch ($op) {
 
     case 'edit':
         // Define main template
-        $xoopsOption['template_main'] = 'system_avatars.html';
+        $xoopsOption['template_main'] = 'system_avatars.tpl';
         // Call Header
         xoops_cp_header();
         // Define Stylesheet
@@ -219,7 +219,7 @@ switch ($op) {
         }
         if (count($err) > 0) {
             // Define main template
-            $xoopsOption['template_main'] = 'system_header.html';
+            $xoopsOption['template_main'] = 'system_header.tpl';
             // Call header
             xoops_cp_header();
             // Define Stylesheet
@@ -256,7 +256,7 @@ switch ($op) {
 
     case 'delfile':
         // Define main template
-        $xoopsOption['template_main'] = 'system_avatars.html';
+        $xoopsOption['template_main'] = 'system_avatars.tpl';
         // Call Header
         xoops_cp_header();
         // Define Stylesheet

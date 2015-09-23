@@ -52,7 +52,7 @@ $op = system_CleanVars($_REQUEST, 'op', 'list', 'string');
 // Get userrank handler
 $userrank_Handler =& xoops_getModuleHandler("userrank", "system");
 // Define main template
-$xoopsOption['template_main'] = 'system_userrank.html';
+$xoopsOption['template_main'] = 'system_userrank.tpl';
 // Call Header
 xoops_cp_header();
 

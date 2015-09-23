@@ -42,7 +42,7 @@ if (!xoops_getModuleOption('active_comments', 'system')) {
 // Get Action type
 $op = system_CleanVars($_REQUEST, 'op', 'default', 'string');
 // Define main template
-$xoopsOption['template_main'] = 'system_comments.html';
+$xoopsOption['template_main'] = 'system_comments.tpl';
 xoops_cp_header();
 // Define Stylesheet
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
@@ -69,7 +69,7 @@ $status_array[0] = _AM_SYSTEM_COMMENTS_FORM_ALL_STATUS;
 
 $comments = array();
 //$status   = (!isset($_REQUEST['status']) || !in_array((int)($_REQUEST['status']), array_keys($status_array))) ? 0 : (int)($_REQUEST['status']);
-$status   = (!isset($_REQUEST['status']) || !array_key_exists((int)($_REQUEST['status']), $status_array)) ? 0 : (int)($_REQUEST['status']);
+$status = (!isset($_REQUEST['status']) || !array_key_exists((int)($_REQUEST['status']), $status_array)) ? 0 : (int)($_REQUEST['status']);
 
 $module          = !isset($_REQUEST['module']) ? 0 : (int)($_REQUEST['module']);
 $modules_Handler =& xoops_getHandler('module');

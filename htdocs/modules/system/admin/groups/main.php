@@ -41,7 +41,7 @@ $op = system_CleanVars($_REQUEST, 'op', 'list', 'string');
 $groups_Handler =& xoops_getModuleHandler("group", "system");
 $member_handler = &xoops_getHandler('member');
 // Define main template
-$xoopsOption['template_main'] = 'system_groups.html';
+$xoopsOption['template_main'] = 'system_groups.tpl';
 // Call Header
 xoops_cp_header();
 $xoBreadCrumb->addLink(_AM_SYSTEM_GROUPS_NAV_MANAGER, system_adminVersion('groups', 'adminpath'));

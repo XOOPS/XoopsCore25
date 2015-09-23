@@ -22,7 +22,7 @@ $page = system_CleanVars($_REQUEST, 'page', '', 'string');
 $mid  = system_CleanVars($_REQUEST, 'mid', 0, 'int');
 
 // Define main template
-$xoopsOption['template_main'] = 'system_help.html';
+$xoopsOption['template_main'] = 'system_help.tpl';
 xoops_cp_header();
 // Define Stylesheet
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');

@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<{$xoops_langcode}>" lang="<{$xoops_langcode}>">
+<head>
+    <{assign var=theme_name value=$xoTheme->folderName|cat:'/xotpl'}>
+    <{assign var=theme_plugin value=$xoTheme->folderName|cat:'/xoplugins'}>
+
+    <!-- Metas -->
+    <{includeq file="$theme_name/xometas.tpl"}>
+
+    <!-- Scripts -->
+    <{includeq file="$theme_name/xoscripts.tpl"}>
+</head>
+<body>
+
+<div id="xo-canvas"
+        <{if $columns_layout}> class="<{$columns_layout}>"<{/if}>>
+    <div class="xo-wrapper">
+        <div id="xo-bgstatic" class="<{$xoops_dirname}>"></div>
+        <div id="xo-header" class="<{$xoops_dirname}>">
+            <{if $xoops_banner and $xoops_banner != '&nbsp;'}>
+                <{includeq file="$theme_name/xobanner_commercial.tpl"}>
+            <{else}>
+                <{includeq file="$theme_name/xobanner.tpl"}>
+            <{/if}>
+            <!-- include navigation bar -->
+            <{includeq file="$theme_name/globalnav.tpl"}>
+        </div>
+
+        <div id="xo-canvas-content">
+            <div id="xo-page">
+                <div id="xo-siteclose"><{$lang_siteclosemsg}></div>
+            </div>
+        </div>
+
+        <!-- include footer -->
+        <{includeq file="$theme_name/xofooter.tpl"}>
+        <!--{xo-logger-output}-->
+    </div>
+</div>
+</body>
+</html>

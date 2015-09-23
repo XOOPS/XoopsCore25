@@ -79,7 +79,7 @@ if (isset($xoopsConfig['startpage']) && $xoopsConfig['startpage'] != "" && $xoop
     exit();
 } else {
     $xoopsOption['show_cblock']   = 1;
-    $xoopsOption['template_main'] = "db:system_homepage.html";
+    $xoopsOption['template_main'] = "db:system_homepage.tpl";
     include $GLOBALS['xoops']->path('header.php');
     include $GLOBALS['xoops']->path('footer.php');
 }

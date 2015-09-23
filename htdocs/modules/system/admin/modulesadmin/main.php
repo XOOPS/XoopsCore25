@@ -59,7 +59,7 @@ switch ($op) {
 
     case 'list':
         // Define main template
-        $xoopsOption['template_main'] = 'system_modules.html';
+        $xoopsOption['template_main'] = 'system_modules.tpl';
         // Call Header
         xoops_cp_header();
         // Define Stylesheet
@@ -130,7 +130,7 @@ switch ($op) {
 
     case 'installlist':
         // Define main template
-        $xoopsOption['template_main'] = 'system_modules.html';
+        $xoopsOption['template_main'] = 'system_modules.tpl';
         // Call Header
         xoops_cp_header();
         // Define Stylesheet
@@ -210,7 +210,7 @@ switch ($op) {
 
     case 'confirm':
         // Define main template
-        $xoopsOption['template_main'] = 'system_modules_confirm.html';
+        $xoopsOption['template_main'] = 'system_modules_confirm.tpl';
         // Call Header
         xoops_cp_header();
         // Define Stylesheet
@@ -320,7 +320,7 @@ switch ($op) {
         //Set active modules in cache folder
         xoops_setActiveModules();
         // Define main template
-        $xoopsOption['template_main'] = 'system_modules_confirm.html';
+        $xoopsOption['template_main'] = 'system_modules_confirm.tpl';
         // Call Header
         xoops_cp_header();
         // Define Stylesheet
@@ -372,7 +372,7 @@ switch ($op) {
         //Set active modules in cache folder
         xoops_setActiveModules();
         // Define main template
-        $xoopsOption['template_main'] = 'system_header.html';
+        $xoopsOption['template_main'] = 'system_header.tpl';
         // Call Header
         xoops_cp_header();
         // Define Stylesheet
@@ -427,7 +427,7 @@ switch ($op) {
         //Set active modules in cache folder
         xoops_setActiveModules();
         // Define main template
-        $xoopsOption['template_main'] = 'system_header.html';
+        $xoopsOption['template_main'] = 'system_header.tpl';
         // Call Header
         xoops_cp_header();
         // Define Stylesheet
@@ -488,7 +488,7 @@ switch ($op) {
         $module->setVar('last_update', time());
         // Call Header
         // Define main template
-        $xoopsOption['template_main'] = 'system_header.html';
+        $xoopsOption['template_main'] = 'system_header.tpl';
         // Call Header
         xoops_cp_header();
         // Define Stylesheet
@@ -769,25 +769,25 @@ switch ($op) {
             if ($configs != false) {
                 if ($module->getVar('hascomments') != 0) {
                     include_once(XOOPS_ROOT_PATH . '/include/comment_constants.php');
-                    ($configs[] =  array(
-                                           'name'        => 'com_rule',
-                                           'title'       => '_CM_COMRULES',
-                                           'description' => '',
-                                           'formtype'    => 'select',
-                                           'valuetype'   => 'int',
-                                           'default'     => 1,
-                                           'options'     => array(
-                                               '_CM_COMNOCOM'        => XOOPS_COMMENT_APPROVENONE,
-                                               '_CM_COMAPPROVEALL'   => XOOPS_COMMENT_APPROVEALL,
-                                               '_CM_COMAPPROVEUSER'  => XOOPS_COMMENT_APPROVEUSER,
-                                               '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN)));
-                    ($configs[] =  array(
-                                           'name'        => 'com_anonpost',
-                                           'title'       => '_CM_COMANONPOST',
-                                           'description' => '',
-                                           'formtype'    => 'yesno',
-                                           'valuetype'   => 'int',
-                                           'default'     => 0));
+                    ($configs[] = array(
+                        'name'        => 'com_rule',
+                        'title'       => '_CM_COMRULES',
+                        'description' => '',
+                        'formtype'    => 'select',
+                        'valuetype'   => 'int',
+                        'default'     => 1,
+                        'options'     => array(
+                            '_CM_COMNOCOM'        => XOOPS_COMMENT_APPROVENONE,
+                            '_CM_COMAPPROVEALL'   => XOOPS_COMMENT_APPROVEALL,
+                            '_CM_COMAPPROVEUSER'  => XOOPS_COMMENT_APPROVEUSER,
+                            '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN)));
+                    ($configs[] = array(
+                        'name'        => 'com_anonpost',
+                        'title'       => '_CM_COMANONPOST',
+                        'description' => '',
+                        'formtype'    => 'yesno',
+                        'valuetype'   => 'int',
+                        'default'     => 0));
                 }
             } else {
                 if ($module->getVar('hascomments') != 0) {

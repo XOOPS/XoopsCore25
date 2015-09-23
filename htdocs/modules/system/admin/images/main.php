@@ -87,7 +87,7 @@ switch ($op) {
 
     case 'list':
         // Define main template
-        $xoopsOption['template_main'] = 'system_images.html';
+        $xoopsOption['template_main'] = 'system_images.tpl';
         // Call Header
         xoops_cp_header();
         // Define Stylesheet
@@ -208,7 +208,7 @@ switch ($op) {
         // Get image handler
         $image_handler =& xoops_getHandler('image');
         // Define main template
-        $xoopsOption['template_main'] = 'system_images.html';
+        $xoopsOption['template_main'] = 'system_images.tpl';
         // Call header
         xoops_cp_header();
         // Define Stylesheet
@@ -295,7 +295,7 @@ switch ($op) {
 
     case 'editimg':
         // Define main template
-        $xoopsOption['template_main'] = 'system_images.html';
+        $xoopsOption['template_main'] = 'system_images.tpl';
         // Call Header
         xoops_cp_header();
         // Define Stylesheet
@@ -574,7 +574,7 @@ switch ($op) {
         //$form->addElement(new XoopsFormButton('', 'imgcat_button', _SUBMIT, 'submit'));
         $form->addElement(new XoopsFormButtonTray('imgcat_button', _SUBMIT, 'submit', '', false));
         // Define main template
-        $xoopsOption['template_main'] = 'system_header.html';
+        $xoopsOption['template_main'] = 'system_header.tpl';
         // Call Header
         xoops_cp_header();
         // Define Stylesheet

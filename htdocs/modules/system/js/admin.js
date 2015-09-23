@@ -173,7 +173,7 @@ function blocks_preview() {
     $.post('admin.php?type=preview', queryString,
         function (reponse, textStatus) {
             if (textStatus == 'success') {
-                $("#xo-preview-block").html(reponse);
+                $("#xo-preview-block").tpl(reponse);
                 $("#xo-preview-dialog").dialog({modal: true});
                 if (!$("#xo-preview-dialog").dialog('isOpen')) {
                     $("#xo-preview-dialog").dialog({
@@ -201,7 +201,7 @@ function display_post(uid) {
         url: "./admin/users/jquery.php",
         data: "op=display_post&uid=" + uid,
         success: function (msg) {
-            $('#display_post_' + uid).html(msg);
+            $('#display_post_' + uid).tpl(msg);
             $('#loading_' + uid).hide();
             $("#display_post_" + uid).fadeIn('fast');
         }

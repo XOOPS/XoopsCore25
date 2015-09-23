@@ -3,7 +3,7 @@
 @import url(reset.css);
 @import url(tooltip.css);
 
-/*========== xo_footerstatic.html ==========*/
+/*========== xo_footerstatic.tpl ==========*/
 #xo-footerstatic * {
     margin: 0;
     padding: 0;
@@ -238,7 +238,7 @@ strong {
 .bg5 {
 }
 
-/*========== xo_banner.html ==========*/
+/*========== xo_banner.tpl ==========*/
 #xo-main-logo {
     padding-left: 10px;
 }
@@ -270,7 +270,7 @@ strong {
     color: #7BADEA;
 }
 
-/*========== xo_bluemove.html ==========*/
+/*========== xo_bluemove.tpl ==========*/
 #xo-banner-ad {
     display: block;
     position: absolute;
@@ -292,7 +292,7 @@ strong {
     padding: 6px;
 }
 
-/*========== xo_userbar.html ==========*/
+/*========== xo_userbar.tpl ==========*/
 #xo-userbar {
     float: right;
     height: 30px;
@@ -320,7 +320,7 @@ a#xo-uname {
     font-weight: bold;
 }
 
-/*========== xo_searchbar.html ==========*/
+/*========== xo_searchbar.tpl ==========*/
 #xo-searchbar {
     position: relative;
     float: right;
@@ -606,7 +606,7 @@ td.head {
     vertical-align: top;
 }
 
-/*========== xo_systembar.html ==========*/
+/*========== xo_systembar.tpl ==========*/
 #xo-globalnav {
     height: 30px;
     margin: 0;
@@ -709,7 +709,7 @@ td.head {
     display: block;
 }
 
-/*========== xo_toolsbar.html ==========*/
+/*========== xo_toolsbar.tpl ==========*/
 #navOptionsCP {
     margin-top: -10px;
     padding: 0 5px 0 5px;
@@ -732,7 +732,7 @@ td.head {
     height: 16px;
 }
 
-/*========== xo_menusystem.html and xo_modules.html ==========*/
+/*========== xo_menusystem.tpl and xo_modules.tpl ==========*/
 .CPbigTitle {
     height: 40px;
     background: no-repeat left top;
@@ -818,7 +818,7 @@ td.head {
     text-decoration: underline;
 }
 
-/*============= system_preferences.html ==============*/
+/*============= system_preferences.tpl ==============*/
 .xo-catsetting a {
     display: block;
     float: left;
@@ -849,7 +849,7 @@ td.head {
     border: 1px solid #1E90FF;
 }
 
-/*========== xo_accordion.html ==========*/
+/*========== xo_accordion.tpl ==========*/
 #xo-accordion {
     height: auto;
     line-height: 1.4em;
@@ -975,7 +975,7 @@ td.head {
     text-shadow: 1px 1px 2px #ccc;
 }
 
-/*========== xo_block.html ==========*/
+/*========== xo_block.tpl ==========*/
 #xo-blockcp {
     width: 100%;
     text-align: center;
@@ -1016,7 +1016,7 @@ td.head {
     line-height: 1.3em;
 }
 
-/*========== xo_footer.html ==========*/
+/*========== xo_footer.tpl ==========*/
 #xo-footer {
     height: 16px;
     background-color: #F1F1FC;

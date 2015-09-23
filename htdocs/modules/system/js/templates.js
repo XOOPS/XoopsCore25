@@ -21,7 +21,7 @@ function tpls_edit_file(path_file, path, file, extension) {
         data: "op=tpls_edit_file&path_file=" + path_file + "&file=" + file,
         success: function (msg) {
 
-            $('#display_contenu').html(msg);
+            $('#display_contenu').tpl(msg);
             $('#loading').hide();
             tpls_code_mirror(extension);
             $('#display_contenu').fadeIn('fast');
@@ -38,7 +38,7 @@ function tpls_restore(path_file) {
         url: "./admin/tplsets/jquery.php",
         data: "op=tpls_restore&path_file=" + path_file,
         success: function (msg) {
-            $('#display_message').html(msg);
+            $('#display_message').tpl(msg);
             $('#display_message').show();
             setTimeout(function () {
                 $('#display_message').hide();

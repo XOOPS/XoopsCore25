@@ -18,10 +18,10 @@
  * Get variables passed by GET or POST method
  *
  * Comment by Taiwen Jiang (a.k.a. phppp): THE METHOD IS NOT COMPLETE AND NOT SAFE. YOU ARE ENCOURAGED TO USE PHP'S NATIVE FILTER_VAR OR FILTER_INPUT FUNCTIONS DIRECTLY BEFORE WE MIGRATE TO XOOPS 3.
- * @param        $global
- * @param        $key
- * @param string $default
- * @param string $type
+ * @param                   $global
+ * @param                   $key
+ * @param  string           $default
+ * @param  string           $type
  * @return int|mixed|string
  */
 function system_CleanVars(&$global, $key, $default = '', $type = 'int')
@@ -52,10 +52,10 @@ function system_CleanVars(&$global, $key, $default = '', $type = 'int')
  * System language loader wrapper
  *
  *
- * @param   string $name     Name of language file to be loaded, without extension
- * @param   string $domain   Module dirname; global language file will be loaded if $domain is set to 'global' or not specified
- * @param   string $language Language to be loaded, current language content will be loaded if not specified
- * @return  boolean
+ * @param  string $name     Name of language file to be loaded, without extension
+ * @param  string $domain   Module dirname; global language file will be loaded if $domain is set to 'global' or not specified
+ * @param  string $language Language to be loaded, current language content will be loaded if not specified
+ * @return boolean
  * @todo    expand domain to multiple categories, e.g. module:system, framework:filter, etc.
  *
  */
@@ -122,7 +122,7 @@ function system_loadTemplate($name)
 {
     global $sysTpl, $xoopsModule;
 
-    $path = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/templates/admin/' . $name . '.html';
+    $path = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/templates/admin/' . $name . '.tpl';
     if (file_exists($path)) {
         echo $sysTpl->fetch($path);
     } else {

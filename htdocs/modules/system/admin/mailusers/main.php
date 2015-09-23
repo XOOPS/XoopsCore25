@@ -43,7 +43,7 @@ $limit = 100;
 // Get Action type
 $op = system_CleanVars($_REQUEST, 'op', 'list', 'string');
 // Define main template
-$xoopsOption['template_main'] = 'system_mailusers.html';
+$xoopsOption['template_main'] = 'system_mailusers.tpl';
 // Call Header
 xoops_cp_header();
 // Define Stylesheet

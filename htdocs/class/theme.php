@@ -53,8 +53,8 @@ class xos_opal_ThemeFactory
 
     /**
      * Instanciate the specified theme
-     * @param array $options
-     * @param array $initArgs
+     * @param  array $options
+     * @param  array $initArgs
      * @return null|xos_opal_Theme
      */
     public function &createInstance($options = array(), $initArgs = array())
@@ -170,7 +170,7 @@ class xos_opal_Theme
      *
      * @var string
      */
-    public $canvasTemplate = 'theme.html';
+    public $canvasTemplate = 'theme.tpl';
 
     /**
      * Theme folder path
@@ -187,7 +187,7 @@ class xos_opal_Theme
     public $contentTemplate = '';
 
     public $contentCacheLifetime = 0;
-    public $contentCacheId       ;
+    public $contentCacheId;
 
     /**
      * Text content to display right after the contentTemplate output
@@ -383,7 +383,7 @@ class xos_opal_Theme
     public function checkCache()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST' && $this->contentCacheLifetime) {
-            $template                       = $this->contentTemplate ? : 'db:system_dummy.html';
+            $template                       = $this->contentTemplate ?: 'db:system_dummy.html';
             $this->template->caching        = 2;
             $this->template->cache_lifetime = $this->contentCacheLifetime;
             $uri                            = str_replace(XOOPS_URL, '', $_SERVER['REQUEST_URI']);
@@ -511,7 +511,7 @@ class xos_opal_Theme
      *     <li>style.css - localization stylesheet</li>
      *     <li>script.js - localization script</li>
      * </ul>
-     * @param string $type
+     * @param  string $type
      * @return bool
      */
     public function loadLocalization($type = "main")
@@ -662,8 +662,8 @@ class xos_opal_Theme
 
     /**
      * Set a meta http-equiv value
-     * @param      $name
-     * @param null $value
+     * @param         $name
+     * @param  null   $value
      * @return string
      */
     public function addHttpMeta($name, $value = null)
@@ -676,9 +676,9 @@ class xos_opal_Theme
 
     /**
      * Change output page meta-information
-     * @param string $type
-     * @param string $name
-     * @param string $value
+     * @param  string $type
+     * @param  string $name
+     * @param  string $value
      * @return string
      */
     public function addMeta($type = 'meta', $name = '', $value = '')
