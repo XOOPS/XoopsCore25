@@ -347,6 +347,7 @@ function &notificationSubscribableCategoryInfo($module_id = null)
     $script_name = $script_url[count($script_url) - 1];
 
     $sub_categories = array();
+    if (null != $all_categories) {
     foreach ($all_categories as $category) {
         // Check the script name
         $subscribe_from = $category['subscribe_from'];
@@ -378,7 +379,7 @@ function &notificationSubscribableCategoryInfo($module_id = null)
             }
         }
     }
-
+	}
     return $sub_categories;
 }
 
