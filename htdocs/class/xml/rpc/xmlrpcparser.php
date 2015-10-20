@@ -48,49 +48,49 @@ class XoopsXmlRpcParser extends SaxParser
 {
     /**
      * @access private
-     * @var    array
+     * @var array
      */
     public $_param;
 
     /**
      * @access private
-     * @var    string
+     * @var string
      */
     public $_methodName;
 
     /**
      * @access private
-     * @var    array
+     * @var array
      */
     public $_tempName;
 
     /**
      * @access private
-     * @var    array
+     * @var array
      */
     public $_tempValue;
 
     /**
      * @access private
-     * @var    array
+     * @var array
      */
     public $_tempMember;
 
     /**
      * @access private
-     * @var    array
+     * @var array
      */
     public $_tempStruct;
 
     /**
      * @access private
-     * @var    array
+     * @var array
      */
     public $_tempArray;
 
     /**
      * @access private
-     * @var    array
+     * @var array
      */
     public $_workingLevel = array();
 
@@ -209,6 +209,9 @@ class XoopsXmlRpcParser extends SaxParser
         $this->_workingLevel[] = $this->getCurrentLevel();
     }
 
+    /**
+     * @return mixed
+     */
     public function getWorkingLevel()
     {
         return $this->_workingLevel[count($this->_workingLevel) - 1];

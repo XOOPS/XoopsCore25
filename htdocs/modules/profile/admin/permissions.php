@@ -69,7 +69,7 @@ $module_id = $GLOBALS['xoopsModule']->getVar('mid');
 include_once $GLOBALS['xoops']->path('/class/xoopsform/grouppermform.php');
 $form = new XoopsGroupPermForm($title_of_form, $module_id, $perm_name, $perm_desc, 'admin/permissions.php', $anonymous);
 
-if ($op === "access") {
+if ($op === 'access') {
     $member_handler =& xoops_getHandler('member');
     $glist          = $member_handler->getGroupList();
     foreach (array_keys($glist) as $i) {
@@ -81,9 +81,9 @@ if ($op === "access") {
     $profile_handler =& xoops_getModuleHandler('profile');
     $fields          = $profile_handler->loadFields();
 
-    if ($op !== "search") {
+    if ($op !== 'search') {
         foreach (array_keys($fields) as $i) {
-            if ($restriction == "" || $fields[$i]->getVar($restriction)) {
+            if ($restriction == '' || $fields[$i]->getVar($restriction)) {
                 $form->addItem($fields[$i]->getVar('field_id'), xoops_substr($fields[$i]->getVar('field_title'), 0, 25));
             }
         }
