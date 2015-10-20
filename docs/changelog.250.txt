@@ -27,7 +27,7 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - add option to set height of Themes block (mamba)
 - fix: Invalid argument supplied for foreach() (cesagonchu/mamba)
 - removed -khtml CSS properties (mamba)
-- fix profile/search (cesag/slider84)
+- fix profile/search (cesagonchu/slider84)
 
 Security fixes
 - ID: 1295 Added X-Frame-Options header to prevent clickjacking in modern browsers, reported by Narendra Bhati. 
