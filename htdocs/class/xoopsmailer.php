@@ -37,7 +37,7 @@ include_once $GLOBALS['xoops']->path('class/mail/xoopsmultimailer.php');
  * @subpackage mail
  * @author     Kazumi Ono <onokazu@xoops.org>
  */
-class xoopsmailer
+class XoopsMailer
 {
     /**
      * reference to a {@link XoopsMultiMailer}
