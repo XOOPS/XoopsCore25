@@ -155,9 +155,9 @@ switch ($op) {
             $form->addElement(new XoopsFormText(_AM_SYSTEM_IMAGES_IMGCATNAME, 'imgcat_name', 50, 255), true);
             $form->addElement(new XoopsFormSelectGroup(_AM_SYSTEM_IMAGES_IMGCATRGRP, 'readgroup', true, XOOPS_GROUP_ADMIN, 5, true));
             $form->addElement(new XoopsFormSelectGroup(_AM_SYSTEM_IMAGES_IMGCATWGRP, 'writegroup', true, XOOPS_GROUP_ADMIN, 5, true));
-            $form->addElement(new XoopsFormText(_IMGMAXSIZE, 'imgcat_maxsize', 10, 10, 50000));
-            $form->addElement(new XoopsFormText(_IMGMAXWIDTH, 'imgcat_maxwidth', 3, 4, 120));
-            $form->addElement(new XoopsFormText(_IMGMAXHEIGHT, 'imgcat_maxheight', 3, 4, 120));
+            $form->addElement(new XoopsFormText(_IMGMAXSIZE, 'imgcat_maxsize', 10, 10, 1000000));
+            $form->addElement(new XoopsFormText(_IMGMAXWIDTH, 'imgcat_maxwidth', 3, 4, 800));
+            $form->addElement(new XoopsFormText(_IMGMAXHEIGHT, 'imgcat_maxheight', 3, 4, 600));
             $form->addElement(new XoopsFormText(_AM_SYSTEM_IMAGES_IMGCATWEIGHT, 'imgcat_weight', 3, 4, 0));
             $form->addElement(new XoopsFormRadioYN(_AM_SYSTEM_IMAGES_IMGCATDISPLAY, 'imgcat_display', 1, _YES, _NO));
 

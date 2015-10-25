@@ -31,7 +31,7 @@ class XoopsFormElementTray extends XoopsFormElement
      * @var array
      * @access private
      */
-    public $_elements = array();
+    private $_elements = array();
 
     /**
      * required elements
@@ -46,7 +46,7 @@ class XoopsFormElementTray extends XoopsFormElement
      * @var string
      * @access private
      */
-    public $_delimeter;
+    private $_delimeter;
 
     /**
      * constructor
@@ -68,10 +68,11 @@ class XoopsFormElementTray extends XoopsFormElement
      * @param string $delimeter
      * @param string $name
      */
-    public function XoopsFormElementTray($caption, $delimeter = "&nbsp;", $name = "")
-    {
-        $this->__construct($caption, $delimeter, $name);
-    }
+//    public function XoopsFormElementTray($caption, $delimeter = "&nbsp;", $name = "")
+//    {
+//        $this->__construct($caption, $delimeter, $name);
+//    }
+
 
     /**
      * Is this element a container of other elements?
