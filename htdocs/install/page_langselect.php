@@ -44,7 +44,7 @@ setcookie('xo_install_user', '', null, null, null);
 
 $pageHasForm = true;
 $title       = LANGUAGE_SELECTION;
-$content     = '<select name="lang" size="10" style="min-width: 10em">';
+$content     = '<select name="lang" size="10" style="min-width: 10em;">';
 
 $languages = getDirList("./language/");
 foreach ($languages as $lang) {

@@ -99,7 +99,7 @@
 <div>
     {section name=templates loop=$_debug_tpls}
     {section name=indent loop=$_debug_tpls[templates].depth}&nbsp;&nbsp;&nbsp;{/section}
-    <font color={if $_debug_tpls[templates].type eq "template"}brown{elseif $_debug_tpls[templates].type eq "insert"}black{else}green{/if}>
+    <span $_debug_tpls[templates].type eq style="color: {if; "/> "template"}brown{elseif $_debug_tpls[templates].type eq "insert"}black{else}green{/if}>
     {$_debug_tpls[templates].filename|escape:html}</font>
     {if isset($_debug_tpls[templates].exec_time)}
         <span class="exectime">

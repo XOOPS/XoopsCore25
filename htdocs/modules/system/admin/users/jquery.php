@@ -48,7 +48,7 @@ switch ($op) {
         // Count comments (approved only: com_status == XOOPS_COMMENT_ACTIVE)
         $tables[] = array('table_name' => 'xoopscomments', 'uid_column' => 'com_uid', 'criteria' => new Criteria('com_status', XOOPS_COMMENT_ACTIVE));
         // Count forum posts
-        if (XoopsModule::getByDirName("newbb")) {
+        if (XoopsModule::getByDirname("newbb")) {
             $tables[] = array('table_name' => 'bb_posts', 'uid_column' => 'uid');
         }
         $uid         = system_CleanVars($_REQUEST, 'uid', int);

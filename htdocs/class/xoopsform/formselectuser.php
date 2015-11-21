@@ -46,8 +46,8 @@ class XoopsFormSelectUser extends XoopsFormElementTray
     {
         /**
          * @var mixed array|false - cache any result for this session.
-         * Some modules use multiple copies of this element on a single page, so this call will
-         * be made multiple times. This is only used when $value is null.
+         *            Some modules use multiple copies of this element on a single page, so this call will
+         *            be made multiple times. This is only used when $value is null.
          * @todo this should be replaced with better interface, with autocomplete style search
          * and user specific MRU cache
          */
@@ -109,7 +109,7 @@ class XoopsFormSelectUser extends XoopsFormElementTray
             parent::__construct($caption, "", $name);
             $this->addElement($select_element);
 
-            return null;
+            return;
         }
 
         xoops_loadLanguage('findusers');

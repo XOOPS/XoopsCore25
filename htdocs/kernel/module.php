@@ -297,7 +297,7 @@ class XoopsModule extends XoopsObject
 
     /**
      * Returns Class Base Variable mid
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function id($format = 'N')
@@ -307,7 +307,7 @@ class XoopsModule extends XoopsObject
 
     /**
      * Returns Class Base Variable mid
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function mid($format = '')
@@ -317,7 +317,7 @@ class XoopsModule extends XoopsObject
 
     /**
      * Returns Class Base Variable name
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function name($format = '')
@@ -327,7 +327,7 @@ class XoopsModule extends XoopsObject
 
     /**
      * Returns Class Base Variable version
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function version($format = '')
@@ -337,7 +337,7 @@ class XoopsModule extends XoopsObject
 
     /**
      * Returns Class Base Variable last_update
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function last_update($format = '')
@@ -347,7 +347,7 @@ class XoopsModule extends XoopsObject
 
     /**
      * Returns Class Base Variable weight
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function weight($format = '')
@@ -357,7 +357,7 @@ class XoopsModule extends XoopsObject
 
     /**
      * Returns Class Base Variable isactive
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function isactive($format = '')
@@ -367,7 +367,7 @@ class XoopsModule extends XoopsObject
 
     /**
      * Returns Class Base Variable dirname
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function dirname($format = '')
@@ -377,7 +377,7 @@ class XoopsModule extends XoopsObject
 
     /**
      * Returns Class Base Variable hasmain
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function hasmain($format = '')
@@ -387,7 +387,7 @@ class XoopsModule extends XoopsObject
 
     /**
      * Returns Class Base Variable hasadmin
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function hasadmin($format = '')
@@ -397,7 +397,7 @@ class XoopsModule extends XoopsObject
 
     /**
      * Returns Class Base Variable hassearch
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function hassearch($format = '')
@@ -407,7 +407,7 @@ class XoopsModule extends XoopsObject
 
     /**
      * Returns Class Base Variable hasconfig
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function hasconfig($format = '')
@@ -417,7 +417,7 @@ class XoopsModule extends XoopsObject
 
     /**
      * Returns Class Base Variable hascomments
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function hascomments($format = '')
@@ -427,7 +427,7 @@ class XoopsModule extends XoopsObject
 
     /**
      * Returns Class Base Variable hasnotification
-     * @param string $format
+     * @param  string $format
      * @return mixed
      */
     public function hasnotification($format = '')
@@ -440,7 +440,7 @@ class XoopsModule extends XoopsObject
      *
      * @return mixed
      */
-    public function &getByDirName($dirname)
+    public function &getByDirname($dirname)
     {
         $modhandler =& xoops_getHandler('module');
         $inst       =& $modhandler->getByDirname($dirname);
@@ -859,7 +859,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
      * Load some modules
      *
      * @param  CriteriaElement $criteria  {@link CriteriaElement}
-     * @param  boolean $id_as_key Use the ID as key into the array
+     * @param  boolean         $id_as_key Use the ID as key into the array
      * @return array
      */
     public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
@@ -915,8 +915,8 @@ class XoopsModuleHandler extends XoopsObjectHandler
      * returns an array of module names
      *
      * @param  CriteriaElement $criteria
-     * @param  boolean $dirname_as_key if true, array keys will be module directory names
-     *                                 if false, array keys will be module id
+     * @param  boolean         $dirname_as_key if true, array keys will be module directory names
+     *                                         if false, array keys will be module id
      * @return array
      */
     public function getList(CriteriaElement $criteria = null, $dirname_as_key = false)

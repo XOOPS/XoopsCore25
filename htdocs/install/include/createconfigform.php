@@ -55,7 +55,6 @@ function createConfigform($config)
         $title = constant($config[$i]->getVar('conf_title'));
 
         switch ($config[$i]->getVar('conf_formtype')) {
-
             case 'textarea':
                 $myts =& MyTextSanitizer::getInstance();
                 if ($config[$i]->getVar('conf_valuetype') === 'array') {

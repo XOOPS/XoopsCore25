@@ -20,9 +20,9 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Deprecated functions
- * @param        $name
- * @param string $module
- * @param string $default
+ * @param         $name
+ * @param  string $module
+ * @param  string $default
  * @return bool
  */
 
@@ -123,11 +123,13 @@ function OpenWaitBox()
     var DHTML = (document.getElementById || document.all || document.layers);
     function ap_getObj(name)
     {
-        if (document.getElementById) {
+        if (document.getElementById){
             return document.getElementById(name).style;
-        } elseif (document.all) {
+        } elseif (document.all)
+        {
             return document.all[name].style;
-        } elseif (document.layers) {
+        } elseif (document.layers)
+        {
             return document.layers[name];
         }
     }

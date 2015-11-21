@@ -312,7 +312,7 @@ class SMTP
         $this->edebug('Connection: opened', self::DEBUG_CONNECTION);
         // SMTP server can take longer to respond, give longer timeout for first read
         // Windows does not have support for this timeout function
-        if (substr(PHP_OS, 0, 3) != 'WIN') {
+        if (substr(PHP_OS, 0, 3) !== 'WIN') {
             $max = ini_get('max_execution_time');
             // Don't bother if unlimited
             if ($max != 0 && $timeout > $max) {
@@ -382,7 +382,7 @@ class SMTP
                 return false;
             }
 
-            self::edebug('Auth method requested: ' . ($authtype ? $authtype : 'UNKNOWN'), self::DEBUG_LOWLEVEL);
+            self::edebug('Auth method requested: ' . ($authtype ?: 'UNKNOWN'), self::DEBUG_LOWLEVEL);
             self::edebug(
                 'Auth methods available on the server: ' . implode(',', $this->server_caps['AUTH']),
                 self::DEBUG_LOWLEVEL
@@ -673,7 +673,7 @@ class SMTP
             //Send the lines to the server
             foreach ($lines_out as $line_out) {
                 //RFC2821 section 4.5.2
-                if (!empty($line_out) and $line_out[0] == '.') {
+                if (!empty($line_out) and $line_out[0] === '.') {
                     $line_out = '.' . $line_out;
                 }
                 $this->client_send($line_out . self::CRLF);
@@ -1010,10 +1010,10 @@ class SMTP
 
         // the tight logic knot ;)
         if (!array_key_exists($name, $this->server_caps)) {
-            if ($name == 'HELO') {
+            if ($name === 'HELO') {
                 return $this->server_caps['EHLO'];
             }
-            if ($name == 'EHLO' || array_key_exists('EHLO', $this->server_caps)) {
+            if ($name === 'EHLO' || array_key_exists('EHLO', $this->server_caps)) {
                 return false;
             }
             $this->setError('HELO handshake was used. Client knows nothing about server extensions');
@@ -1060,7 +1060,7 @@ class SMTP
             $this->edebug("SMTP -> get_lines(): \$str is  \"$str\"", self::DEBUG_LOWLEVEL);
             $data .= $str;
             // If 4th character is a space, we are done reading, break the loop, micro-optimisation over strlen
-            if ((isset($str[3]) and $str[3] == ' ')) {
+            if ((isset($str[3]) and $str[3] === ' ')) {
                 break;
             }
             // Timed-out? Log and break

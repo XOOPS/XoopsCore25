@@ -129,7 +129,6 @@ include_once '../language/' . $wizard->language . '/global.php';
                             <img id="help_button" src="img/help.png" alt="help" title="<?php echo SHOW_HIDE_HELP;
                             ?>" class="off" onclick="showHideHelp(this)"/>
                             <?php
-
                         } ?>
 
                         <h2><?php echo $wizard->pages[$wizard->currentPage]['title']; ?></h2>

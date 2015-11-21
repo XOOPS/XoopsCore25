@@ -55,7 +55,7 @@ if (!defined("FRAMEWORKS_ART_FUNCTIONS_INI")):
     /**
      * Load a collective functions of Frameworks
      *
-     * @param  string $group name of  the collective functions, empty for functions.php
+     * @param  string $group   name of  the collective functions, empty for functions.php
      * @param  string $dirname
      * @return bool
      */
@@ -78,9 +78,9 @@ if (!defined("FRAMEWORKS_ART_FUNCTIONS_INI")):
      *
      * The function is going to be formulated to use xos_kernel_Xoops2::loadService() in XOOPS 2.3+
      *
-     * @param    string $group   name of  the collective functions, empty for functions.php
-     * @param    string $dirname module dirname, optional
-     * @return    bool
+     * @param  string $group   name of  the collective functions, empty for functions.php
+     * @param  string $dirname module dirname, optional
+     * @return bool
      */
     function mod_loadFunctions($group = "", $dirname = "")
     {
@@ -100,9 +100,9 @@ if (!defined("FRAMEWORKS_ART_FUNCTIONS_INI")):
      * The class file should be located in /modules/MODULE/{$class}.renderer.php
      * The classf name should be defined as Capitalized(module_dirname)Capitalized(class_name)Renderer
      *
-     * @param    string $class   name of  the classname
-     * @param    string $dirname module dirname, optional
-     * @return    bool
+     * @param  string $class   name of  the classname
+     * @param  string $dirname module dirname, optional
+     * @return bool
      */
     function mod_loadRenderer($class, $dirname = "")
     {
@@ -119,7 +119,7 @@ if (!defined("FRAMEWORKS_ART_FUNCTIONS_INI")):
     /**
      * Get localized string if it is defined
      *
-     * @param    string $name string to be localized
+     * @param string $name string to be localized
      */
     if (!function_exists("mod_constant")) {
         /**
@@ -144,8 +144,8 @@ if (!defined("FRAMEWORKS_ART_FUNCTIONS_INI")):
     /**
      * Get completed DB prefix if it is defined
      *
-     * @param    string  $name  string to be completed
-     * @param    boolean $isRel relative - do not add XOOPS->DB prefix
+     * @param string  $name  string to be completed
+     * @param boolean $isRel relative - do not add XOOPS->DB prefix
      */
     if (!function_exists("mod_DB_prefix")) {
         /**
@@ -168,7 +168,7 @@ if (!defined("FRAMEWORKS_ART_FUNCTIONS_INI")):
     /**
      * Display contents of a variable, an array or an object or an array of objects
      *
-     * @param    mixed $message variable/array/object
+     * @param mixed $message variable/array/object
      */
     if (!function_exists("xoops_message")):
         /**
@@ -189,7 +189,7 @@ if (!defined("FRAMEWORKS_ART_FUNCTIONS_INI")):
                 return null;
             }
 
-            echo "<div style=\"clear:both\"> </div>";
+            echo "<div style=\"clear:both;\"> </div>";
             if (is_array($message) || is_object($message)) {
                 echo "<div><pre>";
                 print_r($message);
@@ -224,8 +224,8 @@ if (!defined("FRAMEWORKS_ART_FUNCTIONS_INI")):
     /**
      * Get dirname of a module according to current path
      *
-     * @param    string $current_path path to where the function is called
-     * @return    string    $dirname
+     * @param  string $current_path path to where the function is called
+     * @return string $dirname
      */
     function mod_getDirname($current_path = null)
     {
@@ -243,8 +243,8 @@ if (!defined("FRAMEWORKS_ART_FUNCTIONS_INI")):
      *
      * The function should be in functions.admin.php, however it requires extra inclusion in xoops_version.php if so
      *
-     * @param    string $dirname dirname of current module
-     * @return    bool
+     * @param  string $dirname dirname of current module
+     * @return bool
      */
     function mod_isModuleAction($dirname = "system")
     {

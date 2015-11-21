@@ -117,12 +117,12 @@ class PHPMailerOAuth extends PHPMailer
             // If it's not specified, the default value is used
             $prefix = '';
             $secure = $this->SMTPSecure;
-            $tls = ($this->SMTPSecure == 'tls');
-            if ('ssl' == $hostinfo[2] or ('' == $hostinfo[2] and 'ssl' == $this->SMTPSecure)) {
+            $tls = ($this->SMTPSecure === 'tls');
+            if ('ssl' === $hostinfo[2] or ('' == $hostinfo[2] and 'ssl' === $this->SMTPSecure)) {
                 $prefix = 'ssl://';
                 $tls = false; // Can't have SSL and TLS at the same time
                 $secure = 'ssl';
-            } elseif ($hostinfo[2] == 'tls') {
+            } elseif ($hostinfo[2] === 'tls') {
                 $tls = true;
                 // tls doesn't use a prefix
                 $secure = 'tls';
@@ -154,7 +154,7 @@ class PHPMailerOAuth extends PHPMailer
                     // * we have openssl extension
                     // * we are not already using SSL
                     // * the server offers STARTTLS
-                    if ($this->SMTPAutoTLS and $sslext and $secure != 'ssl' and $this->smtp->getServerExt('STARTTLS')) {
+                    if ($this->SMTPAutoTLS and $sslext and $secure !== 'ssl' and $this->smtp->getServerExt('STARTTLS')) {
                         $tls = true;
                     }
                     if ($tls) {
