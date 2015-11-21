@@ -1,5 +1,5 @@
 <?php
-// $Id: main.php 13090 2015-06-16 20:44:29Z beckmi $
+ // $Id: main.php 13090 2015-06-16 20:44:29Z beckmi $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2015 XOOPS Project (www.xoops.org)            //
@@ -298,10 +298,10 @@ switch ($op) {
                 $comments['comments_id']           = $com_id;
                 $comments['comments_poster']       = $comments_poster_uname;
                 $comments['comments_icon']         = $comments_icon;
-                $comments['comments_title']        = '<a href="admin.php?fct=comments&amp;op=comments_jump&amp;com_id=' . $comments_arr[$i]->getVar("com_id") . '">' . $comments_arr[$i]->getVar("com_title");
+                $comments['comments_title'] = $myts->htmlSpecialChars($comments_arr[$i]->getVar("com_title"));
                 $comments['comments_ip']           = $comments_arr[$i]->getVar('com_ip');
                 $comments['comments_date']         = formatTimestamp($comments_arr[$i]->getVar('com_created'));
-                $comments['comments_text']         = $myts->undoHtmlSpecialChars($comments_arr[$i]->getVar('com_text'));
+                $comments['comments_text'] = $myts->htmlSpecialChars($comments_arr[$i]->getVar('com_text'));
                 $comments['comments_status']       = @$status_array2[$comments_arr[$i]->getVar('com_status')];
                 $comments['comments_date_created'] = formatTimestamp($comments_arr[$i]->getVar('com_created'), 'm');
                 $comments['comments_modid']        = @$module_array[$comments_arr[$i]->getVar('com_modid')];

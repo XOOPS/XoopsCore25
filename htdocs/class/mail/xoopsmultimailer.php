@@ -35,7 +35,8 @@ if (!file_exists($file = XOOPS_ROOT_PATH . '/class/mail/phpmailer/class.phpmaile
 
     return false;
 }
-include_once XOOPS_ROOT_PATH . '/class/mail/phpmailer/class.phpmailer.php';
+require_once XOOPS_ROOT_PATH . '/class/mail/phpmailer/PHPMailerAutoload.php';
+//include_once XOOPS_ROOT_PATH . '/class/mail/phpmailer/class.phpmailer.php';
 
 /**
  * Mailer Class.
@@ -59,7 +60,7 @@ class xoopsmultimailer extends PHPMailer
      * @var string
      * @access private
      */
-    public $From = '';
+    private $From = '';
 
     /**
      * 'from' name
@@ -67,7 +68,7 @@ class xoopsmultimailer extends PHPMailer
      * @var string
      * @access private
      */
-    public $FromName = '';
+    private $FromName = '';
 
     // can be 'smtp', 'sendmail', or 'mail'
     /**
@@ -84,7 +85,7 @@ class xoopsmultimailer extends PHPMailer
      * @var string
      * @access private
      */
-    public $Mailer = 'mail';
+    private $Mailer = 'mail';
 
     /**
      * set if $Mailer is 'sendmail'
@@ -95,7 +96,7 @@ class xoopsmultimailer extends PHPMailer
      * @var string
      * @access private
      */
-    public $Sendmail = '/usr/sbin/sendmail';
+    private $Sendmail = '/usr/sbin/sendmail';
 
     /**
      * SMTP Host.
@@ -105,7 +106,7 @@ class xoopsmultimailer extends PHPMailer
      * @var string
      * @access private
      */
-    public $Host = '';
+    private $Host = '';
 
     /**
      * Does your SMTP host require SMTPAuth authentication?
@@ -113,7 +114,7 @@ class xoopsmultimailer extends PHPMailer
      * @var boolean
      * @access private
      */
-    public $SMTPAuth = false;
+    private $SMTPAuth = false;
 
     /**
      * Username for authentication with your SMTP host.
@@ -123,7 +124,7 @@ class xoopsmultimailer extends PHPMailer
      * @var string
      * @access private
      */
-    public $Username = '';
+    private $Username = '';
 
     /**
      * Password for SMTPAuth.
@@ -133,7 +134,7 @@ class xoopsmultimailer extends PHPMailer
      * @var string
      * @access private
      */
-    public $Password = '';
+    private $Password = '';
 
     /**
      * Constructor
@@ -170,26 +171,8 @@ class xoopsmultimailer extends PHPMailer
         } else {
             $this->setLanguage('en', XOOPS_ROOT_PATH . '/class/mail/phpmailer/language/');
         }
-        $this->pluginDir = XOOPS_ROOT_PATH . '/class/mail/phpmailer/';
+        //$this->pluginDir = XOOPS_ROOT_PATH . '/class/mail/phpmailer/';
     }
 
-    /**
-     * Formats an address correctly. This overrides the default addr_format method which does not seem to encode $FromName correctly
-     *
-     * @access private
-     *
-     * @param $addr
-     *
-     * @return string
-     */
-    public function AddrFormat($addr)
-    {
-        if (empty($addr[1])) {
-            $formatted = $addr[0];
-        } else {
-            $formatted = sprintf('%s <%s>', '=?' . $this->CharSet . '?B?' . base64_encode($addr[1]) . '?=', $addr[0]);
-        }
-
-        return $formatted;
-    }
+    
 }

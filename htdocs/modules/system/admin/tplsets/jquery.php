@@ -34,14 +34,11 @@ if (file_exists('./../../language/' . $xoopsConfig['language'] . '"/admin/tplset
     include_once './../../language/english/admin/tplsets.php';
 }
 
-if (isset($_REQUEST["op"])) {
-    $op = $_REQUEST["op"];
-} else {
-    @$op = "default";
-}
+XoopsLoad::load('XoopsRequest');
 
 $GLOBALS['xoopsLogger']->usePopup = true;
 
+$op = XoopsRequest::getCmd('op', 'default');
 switch ($op) {
     // Display tree folder
     case "tpls_display_folder":
@@ -84,7 +81,9 @@ switch ($op) {
         break;
     // Edit File
     case 'tpls_edit_file':
-        $path_file = realpath(XOOPS_ROOT_PATH . '/themes' . trim($_REQUEST['path_file']));
+        $clean_file = XoopsRequest::getString('file', '');
+        $clean_path_file = XoopsRequest::getString('path_file', '');
+        $path_file = realpath(XOOPS_ROOT_PATH.'/themes'.trim($clean_path_file));
         $path_file = str_replace('\\', '/', $path_file);
 
         //Button restore
@@ -102,7 +101,7 @@ switch ($op) {
         if (empty($content)) {
             echo _AM_SYSTEM_TEMPLATES_EMPTY_FILE;
         }
-        $ext = preg_replace('/^.*\./', '', $_REQUEST['path_file']);
+        $ext = preg_replace('/^.*\./', '', $clean_path_file);
 
         echo '<form name="back" action="admin.php?fct=tplsets&op=tpls_save" method="POST">
               <table border="0">
@@ -126,7 +125,10 @@ switch ($op) {
                     <td><textarea id="code_mirror" name="templates" rows=24 cols=110>' . $content . '</textarea></td>
                 </tr>
               </table>';
-        echo '<input type="hidden" name="path_file" value="' . $path_file . '"><input type="hidden" name="file" value="' . trim($_REQUEST['file']) . '"><input type="hidden" name="ext" value="' . $ext . '"></form>';
+        XoopsLoad::load('XoopsFormHiddenToken');
+        $xoopsToken = new XoopsFormHiddenToken();
+        echo $xoopsToken->render();
+        echo '<input type="hidden" name="path_file" value="'.$clean_path_file.'"><input type="hidden" name="file" value="'.trim($clean_file).'"><input type="hidden" name="ext" value="'.$ext.'"></form>';
         break;
 
     // Restore backup file

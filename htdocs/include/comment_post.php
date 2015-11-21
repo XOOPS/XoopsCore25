@@ -268,6 +268,7 @@ switch ($op) {
         break;
 
     case "post":
+        XoopsLoad::load('XoopsRequest');
         $doimage         = 1;
         $comment_handler =& xoops_getHandler('comment');
         // Start add by voltan
@@ -388,10 +389,8 @@ switch ($op) {
             }
             $comment->setVar('com_uid', $uid);
         }
-        $com_title = xoops_trim($_POST['com_title']);
-        $com_title = ($com_title == '') ? _NOTITLE : $com_title;
-        $comment->setVar('com_title', $com_title);
-        $comment->setVar('com_text', $_POST['com_text']);
+        $comment->setVar('com_title', XoopsRequest::getString('com_title', _NOTITLE, 'POST'));
+        $comment->setVar('com_text', XoopsRequest::getString('com_text', '', 'POST'));
         $comment->setVar('dohtml', $dohtml);
         $comment->setVar('dosmiley', $dosmiley);
         $comment->setVar('doxcode', $doxcode);

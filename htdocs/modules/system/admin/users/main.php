@@ -747,7 +747,7 @@ switch ($op) {
             if (isset($_REQUEST['selgroups'])) {
                 if ($_REQUEST['selgroups'] != 0) {
                     if (count($_REQUEST['selgroups']) == 1) {
-                        $groups = array(0 => $_REQUEST['selgroups']);
+                        $groups = array( 0 => (int) $_REQUEST['selgroups']);
                     } else {
                         $groups = array_map("intval", $_REQUEST['selgroups']);
                     }
@@ -778,7 +778,6 @@ switch ($op) {
 
             $xoopsTpl->assign('users_count', $users_count);
             $xoopsTpl->assign('users_display', true);
-            $xoopsTpl->assign('php_selft', $_SERVER['PHP_SELF']);
 
             //User limit
             //$user_limit = (!isset($_REQUEST['user_limit'])) ? 20 : $_REQUEST['user_limit'];

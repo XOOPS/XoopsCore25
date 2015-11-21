@@ -360,11 +360,23 @@ switch ($op) {
 
     // save
     case 'tpls_save':
-        $path_file = $_REQUEST['path_file'];
-        if (isset($path_file)) {
+        if (!$GLOBALS['xoopsSecurity']->check()) {
+            redirect_header('admin.php?fct=tplsets', 2, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+            exit();
+        }
+        XoopsLoad::load('XoopsRequest');
+        $clean_path_file = XoopsRequest::getString('path_file', '');
+        if (!empty($clean_path_file)) {
+            $path_file = realpath(XOOPS_ROOT_PATH.'/themes'.trim($clean_path_file));
+            $path_file = str_replace('\\','/',$path_file);
+            $pathInfo = pathinfo($path_file);
+            if (!in_array($pathInfo['extension'], array('css', 'html', 'tpl'))) {
+                redirect_header("admin.php?fct=tplsets", 2, _AM_SYSTEM_TEMPLATES_ERROR);
+                exit;
+            }
             // copy file
-            $copy_file = $path_file;
-            copy($copy_file, $path_file . '.back');
+            $copy_file = $path_file . '.back';
+            copy($path_file, $copy_file);
             // Save modif
             if (isset($_REQUEST['templates'])) {
                 $open = fopen("" . $path_file . "", "w+");

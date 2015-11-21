@@ -21,7 +21,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 /**
  * Class XoopsSecurity
  */
-class xoopssecurity
+class XoopsSecurity
 {
     public $errors = array();
 
@@ -111,8 +111,10 @@ class xoopssecurity
                 }
             }
         }
-        if (!$validFound) {
-            $xoopsLogger->addExtra('Token Validation', 'No valid token found');
+        if (!$validFound && !isset($str)) {
+            $str = 'No valid token found';
+            $this->setErrors($str);
+            $xoopsLogger->addExtra('Token Validation', $str);
         }
         $this->garbageCollection($name);
 
