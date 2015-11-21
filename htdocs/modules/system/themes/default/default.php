@@ -79,12 +79,12 @@ class XoopsGuiDefault extends XoopsSystemGui
         $tpl->assign('lang_mysql_version', mysql_get_server_info());
         $tpl->assign('lang_server_api', PHP_SAPI);
         $tpl->assign('lang_os_name', PHP_OS);
-        $tpl->assign('safe_mode', ini_get('safe_mode') ? 'On' : 'Off');
-        $tpl->assign('register_globals', ini_get('register_globals') ? 'On' : 'Off');
-        $tpl->assign('magic_quotes_gpc', ini_get('magic_quotes_gpc') ? 'On' : 'Off');
+//        $tpl->assign('safe_mode', ini_get('safe_mode') ? 'On' : 'Off');
+//        $tpl->assign('register_globals', ini_get('register_globals') ? 'On' : 'Off');
+//        $tpl->assign('magic_quotes_gpc', ini_get('magic_quotes_gpc') ? 'On' : 'Off');
         $tpl->assign('allow_url_fopen', ini_get('allow_url_fopen') ? 'On' : 'Off');
         $tpl->assign('fsockopen', function_exists('fsockopen') ? 'On' : 'Off');
-        $tpl->assign('allow_call_time_pass_reference', ini_get('allow_call_time_pass_reference') ? 'On' : 'Off');
+//        $tpl->assign('allow_call_time_pass_reference', ini_get('allow_call_time_pass_reference') ? 'On' : 'Off');
         $tpl->assign('post_max_size', ini_get('post_max_size'));
         $tpl->assign('max_input_time', ini_get('max_input_time'));
         $tpl->assign('output_buffering', ini_get('output_buffering'));

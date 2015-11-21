@@ -20,21 +20,21 @@
         <div class="article_wf">
             <div class="article_wf_title">
                 <h3><{$item.titlelink}></h3>
-                <font>
+                <span>
                     <span class="glyphicon glyphicon-tag"></span>&nbsp;<{$item.category}>
-                </font>
-                <font>
+                </span>
+                <span>
                     <span class="glyphicon glyphicon-user"></span>&nbsp;<{$item.who}>
-                </font>
-                <font>
+                </span>
+                <span>
                     <span class="glyphicon glyphicon-calendar"></span>&nbsp;<{$item.when}>
-                </font>
-                <font>
+                </span>
+                <span>
                     <span class="glyphicon glyphicon-comment"></span>&nbsp;<{$item.comments}>
-                </font>
-                <font>
+                </span>
+                <span>
                     <span class="glyphicon glyphicon-ok-circle"></span>&nbsp;<{$item.counter}> <{$smarty.const._MD_PUBLISHER_READS}>
-                </font>
+                </span>
             </div>
             <{if $item.image_path}>
                 <div class="article_wf_img">

@@ -190,7 +190,7 @@
                     <td style="text-align: center;"><{$item.datesub}></td>
                 <{/if}>
                 <{if $display_hits_col == 1}>
-                    <td style="text-align: center"><{$item.counter}></td>
+                    <td style="text-align: center;"><{$item.counter}></td>
                 <{/if}>
             </tr>
         <{/foreach}>

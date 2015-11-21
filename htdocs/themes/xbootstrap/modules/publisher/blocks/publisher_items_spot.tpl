@@ -18,18 +18,18 @@
             <div class="spot_publisher_items_list">
                 <div class="article_wf_title">
                     <h3><{$item.titlelink}></h3>
-                    <font>
+                    <span>
                         <span class="glyphicon glyphicon-tag"></span>&nbsp;<{$item.category}>
-                    </font>
-                    <font>
+                    </span>
+                    <span>
                         <span class="glyphicon glyphicon-user"></span>&nbsp;<{$item.who}>
-                    </font>
-                    <font>
+                    </span>
+                    <span>
                         <span class="glyphicon glyphicon-calendar"></span>&nbsp;<{$item.when}>
-                    </font>
-                    <font>
+                    </span>
+                    <span>
                         <span class="glyphicon glyphicon-comment"></span>&nbsp;<{$item.comments}>
-                    </font>
+                    </span>
                 </div>
                 <{if $item.image_path}>
                     <div class="spot_article_wf_img">
@@ -47,7 +47,7 @@
                         </a>
                     </div>
                 <{/if}>
-                <div style="clear: both"></div>
+                <div style="clear: both;"></div>
             </div>
         <{/if}>
     <{/foreach}>

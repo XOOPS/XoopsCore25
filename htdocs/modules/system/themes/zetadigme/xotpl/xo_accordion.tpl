@@ -27,18 +27,18 @@
                     <td><{$lang_os}></td>
                     <td><{$lang_os_name}></td>
                 </tr>
-                <tr>
-                    <td>safe_mode</td>
-                    <td><{$safe_mode}></td>
-                </tr>
-                <tr>
-                    <td>register_globals</td>
-                    <td><{$register_globals}></td>
-                </tr>
-                <tr>
-                    <td>magic_quotes_gpc</td>
-                    <td><{$magic_quotes_gpc}></td>
-                </tr>
+                <{*<tr>*}>
+                    <{*<td>safe_mode</td>*}>
+                    <{*<td><{$safe_mode}></td>*}>
+                <{*</tr>*}>
+                <{*<tr>*}>
+                    <{*<td>register_globals</td>*}>
+                    <{*<td><{$register_globals}></td>*}>
+                <{*</tr>*}>
+                <{*<tr>*}>
+                    <{*<td>magic_quotes_gpc</td>*}>
+                    <{*<td><{$magic_quotes_gpc}></td>*}>
+                <{*</tr>*}>
                 <tr>
                     <td>allow_url_fopen</td>
                     <td><{$allow_url_fopen}></td>
@@ -47,10 +47,10 @@
                     <td>fsockopen</td>
                     <td><{$fsockopen}></td>
                 </tr>
-                <tr>
-                    <td>allow_call_time_pass_reference</td>
-                    <td><{$allow_call_time_pass_reference}></td>
-                </tr>
+                <{*<tr>*}>
+                    <{*<td>allow_call_time_pass_reference</td>*}>
+                    <{*<td><{$allow_call_time_pass_reference}></td>*}>
+                <{*</tr>*}>
                 <tr>
                     <td>post_max_size</td>
                     <td><{$post_max_size}></td>

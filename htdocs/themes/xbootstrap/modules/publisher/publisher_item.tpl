@@ -44,7 +44,7 @@
                 <span style="font-size: 11px; padding: 0 0 0 16px; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
                     <span class="glyphicon glyphicon-comment"></span>&nbsp;<{$item.comments}>
                 </span>
-                <span style="font-size: 11px; padding: 0 0 0 16px; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8">
+                <span style="font-size: 11px; padding: 0 0 0 16px; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
                     <span class="glyphicon glyphicon-ok-circle"></span>&nbsp;<{$item.counter}> <{$smarty.const._MD_PUBLISHER_READS}>
                 </span>
         </h2>
@@ -67,7 +67,7 @@
                     <{/foreach}>
                 </div>
             <{elseif $item.image_path}>
-                <img style="margin-bottom:15px" class="img-responsive" src="<{$item.image_path}>" alt="<{$item.image_name}>"/>
+                <img style="margin-bottom:15px;" class="img-responsive" src="<{$item.image_path}>" alt="<{$item.image_name}>"/>
             <{/if}>
         </figure>
     <{/if}>
@@ -199,7 +199,7 @@
                     <td style="text-align: center;"><{$item.datesub}></td>
                 <{/if}>
                 <{if $display_hits_col == 1}>
-                    <td style="text-align: center"><{$item.counter}></td>
+                    <td style="text-align: center;"><{$item.counter}></td>
                 <{/if}>
             </tr>
         <{/foreach}>

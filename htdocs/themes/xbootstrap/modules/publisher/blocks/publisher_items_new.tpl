@@ -10,9 +10,9 @@
         <td>
             <strong><{$newitems.link}></strong>
             <br/>
-            <font style="padding: 3px 16px 0 0; font-size: 11px;"><span class="glyphicon glyphicon-user"></span>&nbsp;<{$newitems.poster}></font>
+            <span style="padding: 3px 16px 0 0; font-size: 11px;"><span class="glyphicon glyphicon-user"></span>&nbsp;<{$newitems.poster}></span>
             <{if $block.show_order == '1'}>
-                <font style="padding: 3px 16px 0 0; font-size: 11px;"><span class="glyphicon glyphicon-calendar"></span><{$newitems.new}></font>
+                <span style="padding: 3px 16px 0 0; font-size: 11px;"><span class="glyphicon glyphicon-calendar"></span><{$newitems.new}></span>
             <{/if}>
         </td>
     </tr>
