@@ -35,7 +35,7 @@
         </thead>
         <!--Display data-->
         <{if $users_count == true}>
-            <form name='memberslist' id='memberslist' action='<{$php_selft}>' method='POST'>
+        <form name='memberslist' id='memberslist' action='<{xoAppUrl modules/system/admin.php?fct=users}>' method='POST'>
                 <tbody>
                 <{foreach item=users from=$users}>
                     <tr class="<{cycle values='even,odd'}> alignmiddle">

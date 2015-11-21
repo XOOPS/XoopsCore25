@@ -62,7 +62,7 @@
     </table>
     <{foreach item=comments from=$comments_popup}>
         <!--Pop-pup-->
-        <div id='dialog<{$comments.comments_id}>' title='<{$comments.comments_icon}>&nbsp;&nbsp;<{$comments.comments_title}>' style='display:none;'>
+		<div id='dialog<{$comments.comments_id}>' title='<{$comments.comments_title}>' style='display:none;'>
             <img src="<{xoAdminIcons comment.png}>" alt="comments" title="comments" class="xo-commentsimg"/>
 
             <p><{$comments.comments_text}></p>
