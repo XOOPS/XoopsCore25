@@ -25,7 +25,7 @@
  * @subpackage          cache
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id$
+ * @version             $Id$
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -95,13 +95,13 @@ class XoopsCacheModel extends XoopsCacheEngine
      * Called automatically by the cache frontend
      * To reinitialize the settings call Cache::engine('EngineName', [optional] settings = array());
      *
-     * @param array $settings array of setting for the engine
+     * @param  array $settings array of setting for the engine
      * @return boolean True if the engine has been successfully initialized, false if not
      * @access   public
      */
     public function init($settings)
     {
-        $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
+        $xoopsDB =& XoopsDatabaseFactory::getDatabaseConnection();
 
         parent::init($settings);
         $defaults       = array('fields' => array('data', 'expires'));

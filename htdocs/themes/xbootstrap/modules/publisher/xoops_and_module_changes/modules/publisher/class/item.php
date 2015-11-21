@@ -44,7 +44,7 @@ class PublisherItem extends XoopsObject
     public function __construct($id = null)
     {
         $this->publisher = PublisherPublisher::getInstance();
-        $this->db        = XoopsDatabaseFactory::getDatabaseConnection();
+        $this->db        =& XoopsDatabaseFactory::getDatabaseConnection();
         $this->initVar("itemid", XOBJ_DTYPE_INT, 0);
         $this->initVar("categoryid", XOBJ_DTYPE_INT, 0, false);
         $this->initVar("title", XOBJ_DTYPE_TXTBOX, '', true, 255);
@@ -891,11 +891,11 @@ class PublisherItem extends XoopsObject
         $agent   = $_SERVER["HTTP_USER_AGENT"];
         $os      = '';
         $browser = '';
-//        if (preg_match("/Win/i", $agent)) {
+        //        if (preg_match("/Win/i", $agent)) {
         if (false !== stripos($agent, 'Win')) {
             $os = 'win';
         }
-//        if (preg_match("/MSIE/i", $agent)) {
+        //        if (preg_match("/MSIE/i", $agent)) {
         if (false !== stripos($agent, 'MSIE')) {
             $browser = 'msie';
         }
@@ -1098,7 +1098,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
      */
     public function &create($isNew = true)
     {
-        $obj = parent::create($isNew);
+        $obj =& parent::create($isNew);
         if ($isNew) {
             $obj->setDefaultPermissions();
         }
@@ -1115,7 +1115,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
      */
     public function &get($id)
     {
-        $obj = parent::get($id);
+        $obj =& parent::get($id);
         if (is_object($obj)) {
             $obj->assignOtherProperties();
         }
@@ -1127,7 +1127,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
      * insert a new item in the database
      *
      * @param PublisherItem $item reference to the {@link PublisherItem} object
-     * @param bool   $force
+     * @param bool          $force
      *
      * @return bool FALSE if failed, TRUE if already present and unchanged or successful
      */
@@ -1163,7 +1163,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
      * delete an item from the database
      *
      * @param PublisherItem $item reference to the ITEM to delete
-     * @param bool   $force
+     * @param bool          $force
      *
      * @return bool FALSE if failed.
      */
@@ -1191,8 +1191,8 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
      * retrieve items from the database
      *
      * @param CriteriaElement $criteria {@link CriteriaElement} conditions to be met
-     * @param string $id_key   what shall we use as array key ? none, itemid, categoryid
-     * @param string $notNullFields
+     * @param string          $id_key   what shall we use as array key ? none, itemid, categoryid
+     * @param string          $notNullFields
      *
      * @return array array of {@link PublisherItem} objects
      */
@@ -1248,7 +1248,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
      * count items matching a condition
      *
      * @param CriteriaElement $criteria {@link CriteriaElement} to match
-     * @param string $notNullFields
+     * @param string          $notNullFields
      *
      * @return int count of items
      */
@@ -1487,7 +1487,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
         $criteria->setStart($start);
         $criteria->setSort($sort);
         $criteria->setOrder($order);
-        $ret = $this->getObjects($criteria, $id_key, $notNullFields);
+        $ret =& $this->getObjects($criteria, $id_key, $notNullFields);
 
         return $ret;
     }
@@ -1528,7 +1528,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
     public function deleteAll(CriteriaElement $criteria = null)
     {
         //todo resource consuming, use get list instead?
-        $items = $this->getObjects($criteria);
+        $items =& $this->getObjects($criteria);
         foreach ($items as $item) {
             $this->delete($item);
         }
@@ -1608,7 +1608,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
         $count = count($queryarray);
         if (is_array($queryarray) && $count > 0) {
             $criteriaKeywords = new CriteriaCompo();
-            $queryarrayCount = count($queryarray);
+            $queryarrayCount  = count($queryarray);
             for ($i = 0; $i < $queryarrayCount; ++$i) {
                 $criteriaKeyword = new CriteriaCompo();
                 if (in_array('title', $searchin)) {
@@ -1673,7 +1673,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
             $order = 'DESC';
         }
         $criteria->setOrder($order);
-        $ret = $this->getObjects($criteria);
+        $ret =& $this->getObjects($criteria);
 
         return $ret;
     }
@@ -1752,10 +1752,10 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
         $newspaces = $spaces . '--';
         $thecount  = 0;
         foreach ($catsCount[$parentid] as $subCatId => $count) {
-            $thecount                  +=  $count;
+            $thecount += $count;
             $resultCatCounts[$subCatId] = $count;
             if (isset($catsCount[$subCatId])) {
-                $thecount                   += $this->countArticlesByCat($subCatId, $catsCount, $newspaces);
+                $thecount += $this->countArticlesByCat($subCatId, $catsCount, $newspaces);
                 $resultCatCounts[$subCatId] = $thecount;
             }
         }

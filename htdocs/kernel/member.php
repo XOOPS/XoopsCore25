@@ -227,7 +227,7 @@ class XoopsMemberHandler
      */
     public function getUserList(CriteriaElement $criteria = null)
     {
-        $users = $this->_uHandler->getObjects($criteria, true);
+        $users =& $this->_uHandler->getObjects($criteria, true);
         $ret   = array();
         foreach (array_keys($users) as $i) {
             $ret[$i] = $users[$i]->getVar('uname');
@@ -333,7 +333,7 @@ class XoopsMemberHandler
     {
         $criteria = new CriteriaCompo(new Criteria('uname', $uname));
         $criteria->add(new Criteria('pass', md5($pwd)));
-        $user = $this->_uHandler->getObjects($criteria, false);
+        $user =& $this->_uHandler->getObjects($criteria, false);
         if (!$user || count($user) != 1) {
             $user = false;
 
@@ -354,7 +354,7 @@ class XoopsMemberHandler
     {
         $criteria = new CriteriaCompo(new Criteria('uname', $uname));
         $criteria->add(new Criteria('pass', $md5pwd));
-        $user = $this->_uHandler->getObjects($criteria, false);
+        $user =& $this->_uHandler->getObjects($criteria, false);
         if (!$user || count($user) != 1) {
             $user = false;
 

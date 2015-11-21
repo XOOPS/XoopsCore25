@@ -660,7 +660,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
             return false;
         }
         $category_info =& notificationCategoryInfo($category, $module_id);
-        $event_info    = notificationEventInfo($category, $event, $module_id);
+        $event_info    =& notificationEventInfo($category, $event, $module_id);
         if (!in_array(notificationGenerateConfig($category_info, $event_info, 'option_name'), $mod_config['notification_events']) && empty($event_info['invisible'])) {
             return false;
         }

@@ -200,7 +200,7 @@ class XoopsUser extends XoopsObject
      */
     public function &groups()
     {
-        $groups = $this->getGroups();
+        $groups =& $this->getGroups();
 
         return $groups;
     }

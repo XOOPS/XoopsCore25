@@ -248,7 +248,7 @@ class MyTextSanitizer
             $xoopsDB =& XoopsDatabaseFactory::getDatabaseConnection();
             if ($getsmiles = $xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('smiles'))) {
                 while ($smiles = $xoopsDB->fetchArray($getsmiles)) {
-                    $this->smileys[] =  $smiles;
+                    $this->smileys[] = $smiles;
                 }
             }
         }
@@ -552,7 +552,7 @@ class MyTextSanitizer
     public function htmlSpecialChars($text, $quote_style = ENT_QUOTES, $charset = null, $double_encode = true)
     {
         if (version_compare(phpversion(), '5.2.3', '>=')) {
-            $text = htmlspecialchars($text, $quote_style, $charset ? : (defined('_CHARSET') ? _CHARSET : 'UTF-8'), $double_encode);
+            $text = htmlspecialchars($text, $quote_style, $charset ?: (defined('_CHARSET') ? _CHARSET : 'UTF-8'), $double_encode);
         } else {
             $text = htmlspecialchars($text, $quote_style);
         }
@@ -599,10 +599,10 @@ class MyTextSanitizer
             // decode xcode
             if ($image != 0) {
                 // image allowed
-                $text = $this->xoopsCodeDecode($text);
+                $text =& $this->xoopsCodeDecode($text);
             } else {
                 // image not allowed
-                $text = $this->xoopsCodeDecode($text, 0);
+                $text =& $this->xoopsCodeDecode($text, 0);
             }
         }
         if ($br != 0) {
@@ -631,7 +631,7 @@ class MyTextSanitizer
     public function &previewTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1)
     {
         $text = $this->stripSlashesGPC($text);
-        $text = $this->displayTarea($text, $html, $smiley, $xcode, $image, $br);
+        $text =& $this->displayTarea($text, $html, $smiley, $xcode, $image, $br);
 
         return $text;
     }
@@ -794,7 +794,7 @@ class MyTextSanitizer
     {
         $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated');
         $str = $this->htmlSpecialChars(str_replace('\"', '"', base64_decode($str)));
-        $str = $this->xoopsCodeDecode($str, $image);
+        $str =& $this->xoopsCodeDecode($str, $image);
 
         return $str;
     }
@@ -823,7 +823,7 @@ class MyTextSanitizer
             $text = $this->smiley($text);
         }
         if ($bbcode == 1) {
-            $text = $this->xoopsCodeDecode($text);
+            $text =& $this->xoopsCodeDecode($text);
         }
         $text = $this->nl2Br($text);
 
@@ -855,7 +855,7 @@ class MyTextSanitizer
             $text = $this->smiley($text);
         }
         if ($bbcode == 1) {
-            $text = $this->xoopsCodeDecode($text);
+            $text =& $this->xoopsCodeDecode($text);
         }
         $text = $this->nl2Br($text);
 
@@ -959,7 +959,7 @@ class MyTextSanitizer
     public function &makeTareaData4Show(&$text, $html = 1, $smiley = 1, $xcode = 1)
     {
         $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated');
-        $text = $this->displayTarea($text, $html, $smiley, $xcode);
+        $text =& $this->displayTarea($text, $html, $smiley, $xcode);
 
         return $text;
     }
@@ -989,7 +989,7 @@ class MyTextSanitizer
     public function &makeTareaData4Preview(&$text, $html = 1, $smiley = 1, $xcode = 1)
     {
         $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated');
-        $text = $this->previewTarea($text, $html, $smiley, $xcode);
+        $text =& $this->previewTarea($text, $html, $smiley, $xcode);
 
         return $text;
     }

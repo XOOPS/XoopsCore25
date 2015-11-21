@@ -199,7 +199,7 @@ switch ($op) {
         if ($uploader->fetchMedia('avatar_file')) {
             $uploader->setPrefix('savt');
             if (!$uploader->upload()) {
-                $err[] = $uploader->getErrors();
+                $err[] =& $uploader->getErrors();
             } else {
                 $avatar->setVars($_POST);
                 $avatar->setVar('avatar_file', 'avatars/' . $uploader->getSavedFileName());

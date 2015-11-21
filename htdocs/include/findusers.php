@@ -563,7 +563,7 @@ if (empty($_POST["user_submit"])) {
             $criteria->add(new Criteria("level", $level));
         }
         if (!empty($_POST['rank'])) {
-            $rank_obj = $rank_handler->get($_POST['rank']);
+            $rank_obj =& $rank_handler->get($_POST['rank']);
             if ($rank_obj->getVar("rank_special")) {
                 $criteria->add(new Criteria("rank", (int)($_POST['rank'])));
             } else {

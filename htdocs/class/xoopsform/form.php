@@ -377,7 +377,7 @@ class XoopsForm
      */
     public function &getElementByName($name)
     {
-        $elements = $this->getElements(true);
+        $elements =& $this->getElements(true);
         $count    = count($elements);
         for ($i = 0; $i < $count; ++$i) {
             if ($name == $elements[$i]->getName(false)) {
@@ -581,7 +581,7 @@ class XoopsForm
         }
         $formname = $this->getName();
         $js .= "function xoopsFormValidate_{$formname}() { var myform = window.document.{$formname}; ";
-        $elements = $this->getElements(true);
+        $elements =& $this->getElements(true);
         foreach ($elements as $elt) {
             if (method_exists($elt, 'renderValidationJS')) {
                 $js .= $elt->renderValidationJS();

@@ -157,7 +157,7 @@ function &notificationEvents($category_name, $enabled_only, $module_id = null)
     $config_handler = &xoops_getHandler('config');
     $mod_config     = $config_handler->getConfigsByCat(0, $module_id);
 
-    $category = notificationCategoryInfo($category_name, $module_id);
+    $category =& notificationCategoryInfo($category_name, $module_id);
 
     global $xoopsConfig;
     $event_array = array();
@@ -319,7 +319,7 @@ function notificationEventEnabled(&$category, &$event, &$module)
  */
 function &notificationEventInfo($category_name, $event_name, $module_id = null)
 {
-    $all_events = notificationEvents($category_name, false, $module_id);
+    $all_events =& notificationEvents($category_name, false, $module_id);
     foreach ($all_events as $event) {
         if ($event['name'] == $event_name) {
             return $event;
@@ -340,7 +340,7 @@ function &notificationEventInfo($category_name, $event_name, $module_id = null)
 
 function &notificationSubscribableCategoryInfo($module_id = null)
 {
-    $all_categories = notificationCategoryInfo('', $module_id);
+    $all_categories =& notificationCategoryInfo('', $module_id);
 
     // FIXME: better or more standardized way to do this?
     $script_url  = explode('/', $_SERVER['PHP_SELF']);

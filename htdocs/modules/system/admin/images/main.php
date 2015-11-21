@@ -455,7 +455,7 @@ switch ($op) {
         for ($i = 0; $i < $ucount; ++$i) {
             if ($uploader->fetchMedia($_POST['xoops_upload_file'][$i])) {
                 if (!$uploader->upload()) {
-                    $err[] = $uploader->getErrors();
+                    $err[] =& $uploader->getErrors();
                 } else {
                     $image_handler =& xoops_getHandler('image');
                     $image         =& $image_handler->create();

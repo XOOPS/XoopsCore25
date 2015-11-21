@@ -103,20 +103,20 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      */
     public function &get($uid, $createOnFailure = true)
     {
-        $obj = parent::get($uid);
+        $obj =& parent::get($uid);
         if (!is_object($obj) && $createOnFailure) {
-            $obj = $this->create();
+            $obj =& $this->create();
         }
 
         return $obj;
     }
 
     /**
-     * Create new {@link profileField} object
+     * Create new {@link ProfileField} object
      *
      * @param bool $isNew
      *
-     * @return object
+     * @return ProfileField
      */
     public function &createField($isNew = true)
     {
@@ -143,8 +143,8 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      * Fetch fields
      *
      * @param CriteriaElement $criteria  {@link CriteriaElement} object
-     * @param bool   $id_as_key return array with field IDs as key?
-     * @param bool   $as_object return array of objects?
+     * @param bool            $id_as_key return array with field IDs as key?
+     * @param bool            $as_object return array of objects?
      *
      * @return array
      **/
@@ -157,7 +157,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      * Insert a field in the database
      *
      * @param ProfileField $field
-     * @param bool   $force
+     * @param bool         $force
      *
      * @return bool
      */
@@ -170,7 +170,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      * Delete a field from the database
      *
      * @param ProfileField $field
-     * @param bool   $force
+     * @param bool         $force
      *
      * @return bool
      */
@@ -243,8 +243,8 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      * insert a new object in the database
      *
      * @param ProfileProfile $obj         reference to the object
-     * @param bool   $force       whether to force the query execution despite security settings
-     * @param bool   $checkObject check if the object is dirty and clean the attributes
+     * @param bool           $force       whether to force the query execution despite security settings
+     * @param bool           $checkObject check if the object is dirty and clean the attributes
      *
      * @return bool FALSE if failed, TRUE if already present and unchanged or successful
      */
@@ -276,8 +276,8 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      * Search profiles and users
      *
      * @param CriteriaElement $criteria   CriteriaElement
-     * @param array  $searchvars Fields to be fetched
-     * @param array  $groups     for Usergroups is selected (only admin!)
+     * @param array           $searchvars Fields to be fetched
+     * @param array           $groups     for Usergroups is selected (only admin!)
      *
      * @return array
      */
@@ -325,7 +325,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
         $users        = array();
         $profiles     = array();
         while ($myrow = $this->db->fetchArray($result)) {
-            $profile = $this->create(false);
+            $profile =& $this->create(false);
             $user    = $user_handler->create(false);
 
             foreach ($myrow as $name => $value) {

@@ -108,7 +108,7 @@ class XoopsCache
      */
     public function config($name = 'default', $settings = array())
     {
-        $_this = XoopsCache::getInstance();
+        $_this =& XoopsCache::getInstance();
         if (is_array($name)) {
             extract($name);
         }
@@ -164,7 +164,7 @@ class XoopsCache
         }
 
         $cacheClass = 'XoopsCache' . ucfirst($name);
-        $_this      = XoopsCache::getInstance();
+        $_this      =& XoopsCache::getInstance();
         if (!isset($_this->engine[$name])) {
             if ($_this->loadEngine($name) === false) {
                 trigger_error("Cache Engine {$name} is not loaded", E_USER_WARNING);
@@ -196,7 +196,7 @@ class XoopsCache
      */
     public function gc()
     {
-        $_this  = XoopsCache::getInstance();
+        $_this  =& XoopsCache::getInstance();
         $config = $_this->config();
         extract($config);
         $_this->engine[$engine]->gc();
@@ -215,7 +215,7 @@ class XoopsCache
     public static function write($key, $value, $duration = null)
     {
         $key    = substr(md5(XOOPS_URL), 0, 8) . '_' . $key;
-        $_this  = XoopsCache::getInstance();
+        $_this  =& XoopsCache::getInstance();
         $config = null;
         if (is_array($duration)) {
             extract($duration);
@@ -269,7 +269,7 @@ class XoopsCache
     public static function read($key, $config = null)
     {
         $key    = substr(md5(XOOPS_URL), 0, 8) . '_' . $key;
-        $_this  = XoopsCache::getInstance();
+        $_this  =& XoopsCache::getInstance();
         $config = $_this->config($config);
 
         if (!is_array($config)) {
@@ -301,7 +301,7 @@ class XoopsCache
     public static function delete($key, $config = null)
     {
         $key   = substr(md5(XOOPS_URL), 0, 8) . '_' . $key;
-        $_this = XoopsCache::getInstance();
+        $_this =& XoopsCache::getInstance();
 
         $config = $_this->config($config);
         extract($config);
@@ -330,7 +330,7 @@ class XoopsCache
      */
     public function clear($check = false, $config = null)
     {
-        $_this  = XoopsCache::getInstance();
+        $_this  =& XoopsCache::getInstance();
         $config = $_this->config($config);
         extract($config);
 
@@ -353,7 +353,7 @@ class XoopsCache
      */
     public function isInitialized($engine = null)
     {
-        $_this = XoopsCache::getInstance();
+        $_this =& XoopsCache::getInstance();
         if (!$engine && isset($_this->configs[$_this->name]['engine'])) {
             $engine = $_this->configs[$_this->name]['engine'];
         }
@@ -370,7 +370,7 @@ class XoopsCache
      */
     public function settings($engine = null)
     {
-        $_this = XoopsCache::getInstance();
+        $_this =& XoopsCache::getInstance();
         if (!$engine && isset($_this->configs[$_this->name]['engine'])) {
             $engine = $_this->configs[$_this->name]['engine'];
         }

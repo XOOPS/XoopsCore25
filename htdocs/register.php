@@ -170,7 +170,7 @@ switch ($op) {
             $stop .= implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()) . "<br />";
         }
         xoops_load('XoopsCaptcha');
-        $xoopsCaptcha = XoopsCaptcha::getInstance();
+        $xoopsCaptcha =& XoopsCaptcha::getInstance();
         if (!$xoopsCaptcha->verify()) {
             $stop .= $xoopsCaptcha->getMessage() . "<br />";
         }

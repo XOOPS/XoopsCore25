@@ -15,7 +15,7 @@
  * @subpackage          auth
  * @since               2.0
  * @author              Pierre-Eric MENUET <pemphp@free.fr>
- * @version         $Id$
+ * @version             $Id$
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
@@ -74,7 +74,7 @@ class XoopsAuthFactory
             }
             switch ($xoops_auth_method) {
                 case 'xoops':
-                    $dao = XoopsDatabaseFactory::getDatabaseConnection();
+                    $dao =& XoopsDatabaseFactory::getDatabaseConnection();
                     break;
                 case 'ldap':
                     $dao = null;

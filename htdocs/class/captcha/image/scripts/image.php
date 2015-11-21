@@ -52,7 +52,7 @@ class XoopsCaptchaImageHandler
     public function __construct()
     {
         xoops_load('XoopsCaptcha');
-        $this->captcha_handler = XoopsCaptcha::getInstance();
+        $this->captcha_handler =& XoopsCaptcha::getInstance();
         $this->config          = $this->captcha_handler->loadConfig("image");
     }
 
@@ -398,7 +398,7 @@ class XoopsCaptchaImageHandler
      *  Create CAPTCHA image with BMP
      *
      *  TODO
-     * @param string $file
+     * @param  string $file
      * @return string
      */
     public function createImageBmp($file = "")

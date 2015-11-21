@@ -93,7 +93,7 @@ if (!empty($_GET['xoopsorgnews'])) {
                 $rssdata    = $snoopy->results;
                 $rss2parser = new XoopsXmlRss2Parser($rssdata);
                 if (false != $rss2parser->parse()) {
-                    $_items = $rss2parser->getItems();
+                    $_items =& $rss2parser->getItems();
                     $count  = count($_items);
                     for ($i = 0; $i < $count; ++$i) {
                         $_items[$i]['title']                                                         = XoopsLocal::convert_encoding($_items[$i]['title'], _CHARSET, 'UTF-8');

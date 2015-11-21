@@ -1315,7 +1315,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
     {
         $object = null;
         if (empty($id)) {
-            $object = $this->create();
+            $object =& $this->create();
 
             return $object;
         }

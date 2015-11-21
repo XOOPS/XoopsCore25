@@ -175,7 +175,7 @@ class XoopsGroupPermForm extends XoopsForm
             $ret .= $this->_permDesc . '<br /><br />';
         }
         $ret .= '<form title="' . str_replace('"', '', $this->getTitle()) . '" name="' . $this->getName() . '" id="' . $this->getName() . '" action="' . $this->getAction() . '" method="' . $this->getMethod() . '"' . $this->getExtra() . '>' . '<table width="100%" class="outer" cellspacing="1" valign="top">';
-        $elements = $this->getElements();
+        $elements =& $this->getElements();
         $hidden   = '';
         foreach (array_keys($elements) as $i) {
             if (!is_object($elements[$i])) {

@@ -597,7 +597,7 @@ switch ($op) {
                         $funcfiles[] = $block['file'];
                         $template    = '';
                         if ((isset($block['template']) && trim($block['template']) != '')) {
-                            $content = xoops_module_gettemplate($dirname, $block['template'], 'blocks');
+                            $content =& xoops_module_gettemplate($dirname, $block['template'], 'blocks');
                         }
                         if (!$content) {
                             $content = '';

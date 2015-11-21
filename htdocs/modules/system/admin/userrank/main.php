@@ -162,7 +162,7 @@ switch ($op) {
             $uploader_rank_img->setPrefix("rank");
             $uploader_rank_img->fetchMedia("rank_image");
             if (!$uploader_rank_img->upload()) {
-                $errors = $uploader_rank_img->getErrors();
+                $errors =& $uploader_rank_img->getErrors();
                 redirect_header("javascript:history.go(-1)", 3, $errors);
             } else {
                 $obj->setVar("rank_image", 'ranks/' . $uploader_rank_img->getSavedFileName());

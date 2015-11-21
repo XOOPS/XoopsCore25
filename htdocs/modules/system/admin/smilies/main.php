@@ -163,7 +163,7 @@ switch ($op) {
             $uploader_smilies_img->setPrefix("smil");
             $uploader_smilies_img->fetchMedia("smile_url");
             if (!$uploader_smilies_img->upload()) {
-                $errors = $uploader_smilies_img->getErrors();
+                $errors =& $uploader_smilies_img->getErrors();
                 redirect_header("javascript:history.go(-1)", 3, $errors);
             } else {
                 $obj->setVar("smile_url", 'smilies/' . $uploader_smilies_img->getSavedFileName());

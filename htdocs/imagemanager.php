@@ -228,7 +228,7 @@ if ($op === 'doupload') {
     $uploader->setPrefix('img');
     if ($uploader->fetchMedia($xoops_upload_file[0])) {
         if (!$uploader->upload()) {
-            $err = $uploader->getErrors();
+            $err =& $uploader->getErrors();
         } else {
             $image_handler =& xoops_getHandler('image');
             $image         =& $image_handler->create();
