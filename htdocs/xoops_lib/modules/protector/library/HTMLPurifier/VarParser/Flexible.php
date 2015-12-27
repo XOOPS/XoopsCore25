@@ -8,9 +8,9 @@
 class HTMLPurifier_VarParser_Flexible extends HTMLPurifier_VarParser
 {
     /**
-     * @param  mixed $var
-     * @param  int   $type
-     * @param  bool  $allow_null
+     * @param mixed $var
+     * @param int $type
+     * @param bool $allow_null
      * @return array|bool|float|int|mixed|null|string
      * @throws HTMLPurifier_VarParserException
      */
@@ -33,13 +33,11 @@ class HTMLPurifier_VarParser_Flexible extends HTMLPurifier_VarParser
                 if (is_string($var) && ctype_digit($var)) {
                     $var = (int)$var;
                 }
-
                 return $var;
             case self::FLOAT:
                 if ((is_string($var) && is_numeric($var)) || is_int($var)) {
                     $var = (float)$var;
                 }
-
                 return $var;
             case self::BOOL:
                 if (is_int($var) && ($var === 0 || $var === 1)) {
@@ -53,7 +51,6 @@ class HTMLPurifier_VarParser_Flexible extends HTMLPurifier_VarParser
                         throw new HTMLPurifier_VarParserException("Unrecognized value '$var' for $type");
                     }
                 }
-
                 return $var;
             case self::ALIST:
             case self::HASH:
@@ -101,7 +98,6 @@ class HTMLPurifier_VarParser_Flexible extends HTMLPurifier_VarParser
                         foreach ($var as $key) {
                             $new[$key] = true;
                         }
-
                         return $new;
                     } else {
                         break;
@@ -109,18 +105,20 @@ class HTMLPurifier_VarParser_Flexible extends HTMLPurifier_VarParser
                 }
                 if ($type === self::ALIST) {
                     trigger_error("Array list did not have consecutive integer indexes", E_USER_WARNING);
-
                     return array_values($var);
                 }
                 if ($type === self::LOOKUP) {
                     foreach ($var as $key => $value) {
                         if ($value !== true) {
-                            trigger_error("Lookup array has non-true value at key '$key'; " . "maybe your input array was not indexed numerically", E_USER_WARNING);
+                            trigger_error(
+                                "Lookup array has non-true value at key '$key'; " .
+                                "maybe your input array was not indexed numerically",
+                                E_USER_WARNING
+                            );
                         }
                         $var[$key] = true;
                     }
                 }
-
                 return $var;
             default:
                 $this->errorInconsistent(__CLASS__, $type);
@@ -130,4 +128,3 @@ class HTMLPurifier_VarParser_Flexible extends HTMLPurifier_VarParser
 }
 
 // vim: et sw=4 sts=4
-

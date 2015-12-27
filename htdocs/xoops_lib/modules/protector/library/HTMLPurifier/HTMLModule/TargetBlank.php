@@ -16,10 +16,9 @@ class HTMLPurifier_HTMLModule_TargetBlank extends HTMLPurifier_HTMLModule
      */
     public function setup($config)
     {
-        $a                        = $this->addBlankElement('a');
+        $a = $this->addBlankElement('a');
         $a->attr_transform_post[] = new HTMLPurifier_AttrTransform_TargetBlank();
     }
 }
 
 // vim: et sw=4 sts=4
-

@@ -8,8 +8,10 @@
  *          automatically generated, it will have already absorbed the
  *          blacklist. If you're hacking around, make sure you use load()!
  */
+
 class HTMLPurifier_AttrDef_HTML_ID extends HTMLPurifier_AttrDef
 {
+
     // selector is NOT a valid thing to use for IDREFs, because IDREFs
     // *must* target IDs that exist, whereas selector #ids do not.
 
@@ -29,9 +31,9 @@ class HTMLPurifier_AttrDef_HTML_ID extends HTMLPurifier_AttrDef
     }
 
     /**
-     * @param  string               $id
-     * @param  HTMLPurifier_Config  $config
-     * @param  HTMLPurifier_Context $context
+     * @param string $id
+     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Context $context
      * @return bool|string
      */
     public function validate($id, $config, $context)
@@ -54,7 +56,11 @@ class HTMLPurifier_AttrDef_HTML_ID extends HTMLPurifier_AttrDef
                 $id = $prefix . $id;
             }
         } elseif ($config->get('Attr.IDPrefixLocal') !== '') {
-            trigger_error('%Attr.IDPrefixLocal cannot be used unless ' . '%Attr.IDPrefix is set', E_USER_WARNING);
+            trigger_error(
+                '%Attr.IDPrefixLocal cannot be used unless ' .
+                '%Attr.IDPrefix is set',
+                E_USER_WARNING
+            );
         }
 
         if (!$this->selector) {
@@ -73,7 +79,10 @@ class HTMLPurifier_AttrDef_HTML_ID extends HTMLPurifier_AttrDef
                 return false;
             }
             // primitive style of regexps, I suppose
-            $trim   = trim($id, 'A..Za..z0..9:-._');
+            $trim = trim(
+                $id,
+                'A..Za..z0..9:-._'
+            );
             $result = ($trim === '');
         }
 
@@ -94,4 +103,3 @@ class HTMLPurifier_AttrDef_HTML_ID extends HTMLPurifier_AttrDef
 }
 
 // vim: et sw=4 sts=4
-

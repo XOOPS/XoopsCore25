@@ -17,7 +17,7 @@
  * Purifier internals. Many of them, however, are public, and may be
  * edited by userspace code to tweak the behavior of HTMLDefinition.
  *
- * @note    This class is inspected by Printer_HTMLDefinition; please
+ * @note This class is inspected by Printer_HTMLDefinition; please
  *       update that class if things here change.
  *
  * @warning Directives that change this object's structure must be in
@@ -25,6 +25,7 @@
  */
 class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
 {
+
     // FULLY-PUBLIC VARIABLES ---------------------------------------------
 
     /**
@@ -96,6 +97,8 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
      */
     public $doctype;
 
+
+
     // RAW CUSTOMIZATION STUFF --------------------------------------------
 
     /**
@@ -103,9 +106,9 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
      * @note This is strictly convenience, and does not have a corresponding
      *       method in HTMLPurifier_HTMLModule
      * @param string $element_name Element name to add attribute to
-     * @param string $attr_name    Name of attribute
-     * @param mixed  $def          Attribute definition, can be string or object, see
-     *                             HTMLPurifier_AttrTypes for details
+     * @param string $attr_name Name of attribute
+     * @param mixed $def Attribute definition, can be string or object, see
+     *             HTMLPurifier_AttrTypes for details
      */
     public function addAttribute($element_name, $attr_name, $def)
     {
@@ -129,14 +132,13 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
         // assume that if the user is calling this, the element
         // is safe. This may not be a good idea
         $element = $module->addElement($element_name, $type, $contents, $attr_collections, $attributes);
-
         return $element;
     }
 
     /**
      * Adds a blank element to your HTML definition, for overriding
      * existing behavior
-     * @param  string $element_name
+     * @param string $element_name
      * @return HTMLPurifier_ElementDef
      * @see HTMLPurifier_HTMLModule::addBlankElement() for detailed
      *       parameter and return value descriptions.
@@ -145,7 +147,6 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
     {
         $module  = $this->getAnonymousModule();
         $element = $module->addBlankElement($element_name);
-
         return $element;
     }
 
@@ -158,10 +159,9 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
     public function getAnonymousModule()
     {
         if (!$this->_anonModule) {
-            $this->_anonModule       = new HTMLPurifier_HTMLModule();
+            $this->_anonModule = new HTMLPurifier_HTMLModule();
             $this->_anonModule->name = 'Anonymous';
         }
-
         return $this->_anonModule;
     }
 
@@ -250,7 +250,7 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
                 }
             }
         }
-        $this->info              = $this->manager->getElements();
+        $this->info = $this->manager->getElements();
         $this->info_content_sets = $this->manager->contentSets->lookup;
     }
 
@@ -264,16 +264,22 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
         if (isset($this->info_content_sets['Block'][$block_wrapper])) {
             $this->info_block_wrapper = $block_wrapper;
         } else {
-            trigger_error('Cannot use non-block element as block wrapper', E_USER_ERROR);
+            trigger_error(
+                'Cannot use non-block element as block wrapper',
+                E_USER_ERROR
+            );
         }
 
         $parent = $config->get('HTML.Parent');
-        $def    = $this->manager->getElement($parent, true);
+        $def = $this->manager->getElement($parent, true);
         if ($def) {
-            $this->info_parent     = $parent;
+            $this->info_parent = $parent;
             $this->info_parent_def = $def;
         } else {
-            trigger_error('Cannot use unrecognized element as parent', E_USER_ERROR);
+            trigger_error(
+                'Cannot use unrecognized element as parent',
+                E_USER_ERROR
+            );
             $this->info_parent_def = $this->manager->getElement($this->info_parent, true);
         }
 
@@ -282,7 +288,7 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
 
         // setup allowed elements -----------------------------------------
 
-        $allowed_elements   = $config->get('HTML.AllowedElements');
+        $allowed_elements = $config->get('HTML.AllowedElements');
         $allowed_attributes = $config->get('HTML.AllowedAttributes'); // retrieve early
 
         if (!is_array($allowed_elements) && !is_array($allowed_attributes)) {
@@ -314,7 +320,7 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
             // global attributes. It's possible that userland code uses
             // it, but HTMLModuleManager doesn't!
             foreach ($this->info_global_attr as $attr => $x) {
-                $keys   = array($attr, "*@$attr", "*.$attr");
+                $keys = array($attr, "*@$attr", "*.$attr");
                 $delete = true;
                 foreach ($keys as $key) {
                     if ($delete && isset($allowed_attributes[$key])) {
@@ -331,7 +337,7 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
 
             foreach ($this->info as $tag => $info) {
                 foreach ($info->attr as $attr => $x) {
-                    $keys   = array("$tag@$attr", $attr, "*@$attr", "$tag.$attr", "*.$attr");
+                    $keys = array("$tag@$attr", $attr, "*@$attr", "$tag.$attr", "*.$attr");
                     $delete = true;
                     foreach ($keys as $key) {
                         if ($delete && isset($allowed_attributes[$key])) {
@@ -343,7 +349,11 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
                     }
                     if ($delete) {
                         if ($this->info[$tag]->attr[$attr]->required) {
-                            trigger_error("Required attribute '$attr' in element '$tag' " . "was not allowed, which means '$tag' will not be allowed either", E_USER_WARNING);
+                            trigger_error(
+                                "Required attribute '$attr' in element '$tag' " .
+                                "was not allowed, which means '$tag' will not be allowed either",
+                                E_USER_WARNING
+                            );
                         }
                         unset($this->info[$tag]->attr[$attr]);
                     }
@@ -352,23 +362,33 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
             // emit errors
             foreach ($allowed_attributes_mutable as $elattr => $d) {
                 $bits = preg_split('/[.@]/', $elattr, 2);
-                $c    = count($bits);
+                $c = count($bits);
                 switch ($c) {
                     case 2:
                         if ($bits[0] !== '*') {
-                            $element   = htmlspecialchars($bits[0]);
+                            $element = htmlspecialchars($bits[0]);
                             $attribute = htmlspecialchars($bits[1]);
                             if (!isset($this->info[$element])) {
-                                trigger_error("Cannot allow attribute '$attribute' if element " . "'$element' is not allowed/supported $support");
+                                trigger_error(
+                                    "Cannot allow attribute '$attribute' if element " .
+                                    "'$element' is not allowed/supported $support"
+                                );
                             } else {
-                                trigger_error("Attribute '$attribute' in element '$element' not supported $support", E_USER_WARNING);
+                                trigger_error(
+                                    "Attribute '$attribute' in element '$element' not supported $support",
+                                    E_USER_WARNING
+                                );
                             }
                             break;
                         }
-                    // otherwise fall through
+                        // otherwise fall through
                     case 1:
                         $attribute = htmlspecialchars($bits[0]);
-                        trigger_error("Global attribute '$attribute' is not " . "supported in any elements $support", E_USER_WARNING);
+                        trigger_error(
+                            "Global attribute '$attribute' is not ".
+                            "supported in any elements $support",
+                            E_USER_WARNING
+                        );
                         break;
                 }
             }
@@ -385,12 +405,19 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
                 continue;
             }
             foreach ($info->attr as $attr => $x) {
-                if (isset($forbidden_attributes["$tag@$attr"]) || isset($forbidden_attributes["*@$attr"]) || isset($forbidden_attributes[$attr])) {
+                if (isset($forbidden_attributes["$tag@$attr"]) ||
+                    isset($forbidden_attributes["*@$attr"]) ||
+                    isset($forbidden_attributes[$attr])
+                ) {
                     unset($this->info[$tag]->attr[$attr]);
                     continue;
                 } elseif (isset($forbidden_attributes["$tag.$attr"])) { // this segment might get removed eventually
                     // $tag.$attr are not user supplied, so no worries!
-                    trigger_error("Error with $tag.$attr: tag.attr syntax not supported for " . "HTML.ForbiddenAttributes; use tag@attr instead", E_USER_WARNING);
+                    trigger_error(
+                        "Error with $tag.$attr: tag.attr syntax not supported for " .
+                        "HTML.ForbiddenAttributes; use tag@attr instead",
+                        E_USER_WARNING
+                    );
                 }
             }
         }
@@ -402,7 +429,10 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
                 continue;
             }
             if ($key[1] == '.') {
-                trigger_error("Error with $key: *.attr syntax not supported for HTML.ForbiddenAttributes; use attr instead", E_USER_WARNING);
+                trigger_error(
+                    "Error with $key: *.attr syntax not supported for HTML.ForbiddenAttributes; use attr instead",
+                    E_USER_WARNING
+                );
             }
         }
 
@@ -421,15 +451,15 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
      * separate lists for processing. Format is element[attr1|attr2],element2...
      * @warning Although it's largely drawn from TinyMCE's implementation,
      *      it is different, and you'll probably have to modify your lists
-     * @param  array $list String list to parse
+     * @param array $list String list to parse
      * @return array
-     * @todo    Give this its own class, probably static interface
+     * @todo Give this its own class, probably static interface
      */
     public function parseTinyMCEAllowedList($list)
     {
         $list = str_replace(array(' ', "\t"), '', $list);
 
-        $elements   = array();
+        $elements = array();
         $attributes = array();
 
         $chunks = preg_split('/(,|[\n\r]+)/', $list);
@@ -440,7 +470,7 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
             // remove TinyMCE element control characters
             if (!strpos($chunk, '[')) {
                 $element = $chunk;
-                $attr    = false;
+                $attr = false;
             } else {
                 list($element, $attr) = explode('[', $chunk);
             }
@@ -456,10 +486,8 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
                 $attributes["$element.$key"] = true;
             }
         }
-
         return array($elements, $attributes);
     }
 }
 
 // vim: et sw=4 sts=4
-

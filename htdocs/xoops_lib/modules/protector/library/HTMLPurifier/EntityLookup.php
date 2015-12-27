@@ -14,7 +14,7 @@ class HTMLPurifier_EntityLookup
     /**
      * Sets up the entity lookup table from the serialized file contents.
      * @param bool $file
-     * @note    The serialized contents are versioned, but were generated
+     * @note The serialized contents are versioned, but were generated
      *       using the maintenance script generate_entity_file.php
      * @warning This is not in constructor to help enforce the Singleton
      */
@@ -28,7 +28,7 @@ class HTMLPurifier_EntityLookup
 
     /**
      * Retrieves sole instance of the object.
-     * @param  bool|HTMLPurifier_EntityLookup $prototype Optional prototype of custom lookup table to overload with.
+     * @param bool|HTMLPurifier_EntityLookup $prototype Optional prototype of custom lookup table to overload with.
      * @return HTMLPurifier_EntityLookup
      */
     public static function instance($prototype = false)
@@ -41,10 +41,8 @@ class HTMLPurifier_EntityLookup
             $instance = new HTMLPurifier_EntityLookup();
             $instance->setup();
         }
-
         return $instance;
     }
 }
 
 // vim: et sw=4 sts=4
-

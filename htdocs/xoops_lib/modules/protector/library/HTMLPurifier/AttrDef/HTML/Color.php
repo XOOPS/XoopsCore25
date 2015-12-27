@@ -5,10 +5,11 @@
  */
 class HTMLPurifier_AttrDef_HTML_Color extends HTMLPurifier_AttrDef
 {
+
     /**
-     * @param  string               $string
-     * @param  HTMLPurifier_Config  $config
-     * @param  HTMLPurifier_Context $context
+     * @param string $string
+     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Context $context
      * @return bool|string
      */
     public function validate($string, $config, $context)
@@ -43,10 +44,8 @@ class HTMLPurifier_AttrDef_HTML_Color extends HTMLPurifier_AttrDef
         if ($length === 3) {
             $hex = $hex[0] . $hex[0] . $hex[1] . $hex[1] . $hex[2] . $hex[2];
         }
-
         return "#$hex";
     }
 }
 
 // vim: et sw=4 sts=4
-

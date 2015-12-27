@@ -34,9 +34,8 @@ class HTMLPurifier_Injector_RemoveSpansWithoutAttributes extends HTMLPurifier_In
     public function prepare($config, $context)
     {
         $this->attrValidator = new HTMLPurifier_AttrValidator();
-        $this->config        = $config;
-        $this->context       = $context;
-
+        $this->config = $config;
+        $this->context = $context;
         return parent::prepare($config, $context);
     }
 
@@ -83,4 +82,3 @@ class HTMLPurifier_Injector_RemoveSpansWithoutAttributes extends HTMLPurifier_In
 }
 
 // vim: et sw=4 sts=4
-

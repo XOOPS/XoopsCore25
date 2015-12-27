@@ -25,4 +25,3 @@ if (ini_get('zend.ze1_compatibility_mode')) {
 }
 
 // vim: et sw=4 sts=4
-

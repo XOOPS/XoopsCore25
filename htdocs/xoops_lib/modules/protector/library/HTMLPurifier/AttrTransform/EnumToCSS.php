@@ -27,21 +27,21 @@ class HTMLPurifier_AttrTransform_EnumToCSS extends HTMLPurifier_AttrTransform
     protected $caseSensitive = false;
 
     /**
-     * @param string $attr           Attribute name to transform from
-     * @param array  $enum_to_css    Lookup array of attribute values to CSS
-     * @param bool   $case_sensitive Case sensitivity indicator, default false
+     * @param string $attr Attribute name to transform from
+     * @param array $enum_to_css Lookup array of attribute values to CSS
+     * @param bool $case_sensitive Case sensitivity indicator, default false
      */
     public function __construct($attr, $enum_to_css, $case_sensitive = false)
     {
-        $this->attr          = $attr;
-        $this->enumToCSS     = $enum_to_css;
+        $this->attr = $attr;
+        $this->enumToCSS = $enum_to_css;
         $this->caseSensitive = (bool)$case_sensitive;
     }
 
     /**
-     * @param  array                $attr
-     * @param  HTMLPurifier_Config  $config
-     * @param  HTMLPurifier_Context $context
+     * @param array $attr
+     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Context $context
      * @return array
      */
     public function transform($attr, $config, $context)
@@ -61,10 +61,8 @@ class HTMLPurifier_AttrTransform_EnumToCSS extends HTMLPurifier_AttrTransform
             return $attr;
         }
         $this->prependCSS($attr, $this->enumToCSS[$value]);
-
         return $attr;
     }
 }
 
 // vim: et sw=4 sts=4
-

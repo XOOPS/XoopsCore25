@@ -11,6 +11,7 @@
  */
 class HTMLPurifier_Node_Text extends HTMLPurifier_Node
 {
+
     /**
      * PCDATA tag name compatible with DTD, see
      * HTMLPurifier_ChildDef_Custom for details.
@@ -34,22 +35,20 @@ class HTMLPurifier_Node_Text extends HTMLPurifier_Node
     /**
      * Constructor, accepts data and determines if it is whitespace.
      * @param string $data String parsed character data.
-     * @param int    $line
-     * @param int    $col
+     * @param int $line
+     * @param int $col
      */
     public function __construct($data, $is_whitespace, $line = null, $col = null)
     {
-        $this->data          = $data;
+        $this->data = $data;
         $this->is_whitespace = $is_whitespace;
-        $this->line          = $line;
-        $this->col           = $col;
+        $this->line = $line;
+        $this->col = $col;
     }
 
-    public function toTokenPair()
-    {
+    public function toTokenPair() {
         return array(new HTMLPurifier_Token_Text($this->data, $this->line, $this->col), null);
     }
 }
 
 // vim: et sw=4 sts=4
-

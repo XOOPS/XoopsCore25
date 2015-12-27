@@ -10,6 +10,7 @@
  */
 class HTMLPurifier_PercentEncoder
 {
+
     /**
      * Reserved characters to preserve when using encode().
      * @type array
@@ -23,23 +24,23 @@ class HTMLPurifier_PercentEncoder
     public function __construct($preserve = false)
     {
         // unreserved letters, ought to const-ify
-        for ($i = 48; $i <= 57; ++$i) { // digits
+        for ($i = 48; $i <= 57; $i++) { // digits
             $this->preserve[$i] = true;
         }
-        for ($i = 65; $i <= 90; ++$i) { // upper-case
+        for ($i = 65; $i <= 90; $i++) { // upper-case
             $this->preserve[$i] = true;
         }
-        for ($i = 97; $i <= 122; ++$i) { // lower-case
+        for ($i = 97; $i <= 122; $i++) { // lower-case
             $this->preserve[$i] = true;
         }
-        $this->preserve[45]  = true; // Dash         -
-        $this->preserve[46]  = true; // Period       .
-        $this->preserve[95]  = true; // Underscore   _
-        $this->preserve[126] = true; // Tilde        ~
+        $this->preserve[45] = true; // Dash         -
+        $this->preserve[46] = true; // Period       .
+        $this->preserve[95] = true; // Underscore   _
+        $this->preserve[126]= true; // Tilde        ~
 
         // extra letters not to escape
         if ($preserve !== false) {
-            for ($i = 0, $c = strlen($preserve); $i < $c; ++$i) {
+            for ($i = 0, $c = strlen($preserve); $i < $c; $i++) {
                 $this->preserve[ord($preserve[$i])] = true;
             }
         }
@@ -52,20 +53,19 @@ class HTMLPurifier_PercentEncoder
      *      Assumes that the string has already been normalized, making any
      *      and all percent escape sequences valid. Percents will not be
      *      re-escaped, regardless of their status in $preserve
-     * @param  string $string String to be encoded
+     * @param string $string String to be encoded
      * @return string Encoded string.
      */
     public function encode($string)
     {
         $ret = '';
-        for ($i = 0, $c = strlen($string); $i < $c; ++$i) {
+        for ($i = 0, $c = strlen($string); $i < $c; $i++) {
             if ($string[$i] !== '%' && !isset($this->preserve[$int = ord($string[$i])])) {
                 $ret .= '%' . sprintf('%02X', $int);
             } else {
                 $ret .= $string[$i];
             }
         }
-
         return $ret;
     }
 
@@ -74,7 +74,7 @@ class HTMLPurifier_PercentEncoder
      * @warning This function is affected by $preserve, even though the
      *          usual desired behavior is for this not to preserve those
      *          characters. Be careful when reusing instances of PercentEncoder!
-     * @param  string $string String to normalize
+     * @param string $string String to normalize
      * @return string
      */
     public function normalize($string)
@@ -83,7 +83,7 @@ class HTMLPurifier_PercentEncoder
             return '';
         }
         $parts = explode('%', $string);
-        $ret   = array_shift($parts);
+        $ret = array_shift($parts);
         foreach ($parts as $part) {
             $length = strlen($part);
             if ($length < 2) {
@@ -104,10 +104,8 @@ class HTMLPurifier_PercentEncoder
             $encoding = strtoupper($encoding);
             $ret .= '%' . $encoding . $text;
         }
-
         return $ret;
     }
 }
 
 // vim: et sw=4 sts=4
-

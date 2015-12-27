@@ -9,6 +9,7 @@
  */
 class HTMLPurifier_LanguageFactory
 {
+
     /**
      * Cache of language code information used to load HTMLPurifier_Language objects.
      * Structure is: $factory->cache[$language_code][$key] = $value
@@ -31,7 +32,7 @@ class HTMLPurifier_LanguageFactory
     protected $validator;
 
     /**
-     * Cached copy of __DIR__, directory of current file without
+     * Cached copy of dirname(__FILE__), directory of current file without
      * trailing slash.
      * @type string
      */
@@ -51,8 +52,8 @@ class HTMLPurifier_LanguageFactory
 
     /**
      * Retrieve sole instance of the factory.
-     * @param  HTMLPurifier_LanguageFactory $prototype Optional prototype to overload sole instance with,
-     *                                                 or bool true to reset to default factory.
+     * @param HTMLPurifier_LanguageFactory $prototype Optional prototype to overload sole instance with,
+     *                   or bool true to reset to default factory.
      * @return HTMLPurifier_LanguageFactory
      */
     public static function instance($prototype = null)
@@ -64,7 +65,6 @@ class HTMLPurifier_LanguageFactory
             $instance = new HTMLPurifier_LanguageFactory();
             $instance->setup();
         }
-
         return $instance;
     }
 
@@ -75,21 +75,25 @@ class HTMLPurifier_LanguageFactory
     public function setup()
     {
         $this->validator = new HTMLPurifier_AttrDef_Lang();
-        $this->dir       = HTMLPURIFIER_PREFIX . '/HTMLPurifier';
+        $this->dir = HTMLPURIFIER_PREFIX . '/HTMLPurifier';
     }
 
     /**
      * Creates a language object, handles class fallbacks
-     * @param  HTMLPurifier_Config  $config
-     * @param  HTMLPurifier_Context $context
-     * @param  bool|string          $code Code to override configuration with. Private parameter.
+     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Context $context
+     * @param bool|string $code Code to override configuration with. Private parameter.
      * @return HTMLPurifier_Language
      */
     public function create($config, $context, $code = false)
     {
         // validate language code
         if ($code === false) {
-            $code = $this->validator->validate($config->get('Core.Language'), $config, $context);
+            $code = $this->validator->validate(
+                $config->get('Core.Language'),
+                $config,
+                $context
+            );
         } else {
             $code = $this->validator->validate($code, $config, $context);
         }
@@ -110,8 +114,8 @@ class HTMLPurifier_LanguageFactory
             } else {
                 // Go fallback
                 $raw_fallback = $this->getFallbackFor($code);
-                $fallback     = $raw_fallback ? $raw_fallback : 'en';
-                ++$depth;
+                $fallback = $raw_fallback ? $raw_fallback : 'en';
+                $depth++;
                 $lang = $this->create($config, $context, $fallback);
                 if (!$raw_fallback) {
                     $lang->error = true;
@@ -120,20 +124,18 @@ class HTMLPurifier_LanguageFactory
             }
         }
         $lang->code = $code;
-
         return $lang;
     }
 
     /**
      * Returns the fallback language for language
      * @note Loads the original language into cache
-     * @param  string $code language code
+     * @param string $code language code
      * @return string|bool
      */
     public function getFallbackFor($code)
     {
         $this->loadLanguage($code);
-
         return $this->cache[$code]['fallback'];
     }
 
@@ -160,7 +162,7 @@ class HTMLPurifier_LanguageFactory
         if (!file_exists($filename)) {
             // skip the include: will rely solely on fallback
             $filename = $this->dir . '/Language/messages/en.php';
-            $cache    = array();
+            $cache = array();
         } else {
             include $filename;
             $cache = compact($this->keys);
@@ -171,7 +173,11 @@ class HTMLPurifier_LanguageFactory
 
             // infinite recursion guard
             if (isset($languages_seen[$code])) {
-                trigger_error('Circular fallback reference in language ' . $code, E_USER_ERROR);
+                trigger_error(
+                    'Circular fallback reference in language ' .
+                    $code,
+                    E_USER_ERROR
+                );
                 $fallback = 'en';
             }
             $language_seen[$code] = true;
@@ -196,10 +202,8 @@ class HTMLPurifier_LanguageFactory
 
         // save to cache for later retrieval
         $this->cache[$code] = $cache;
-
         return;
     }
 }
 
 // vim: et sw=4 sts=4
-

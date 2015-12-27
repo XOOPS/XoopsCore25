@@ -42,7 +42,7 @@ abstract class HTMLPurifier_Token
     public $carryover;
 
     /**
-     * @param  string $n
+     * @param string $n
      * @return null|string
      */
     public function __get($n)
@@ -74,7 +74,7 @@ abstract class HTMLPurifier_Token
     public function position($l = null, $c = null)
     {
         $this->line = $l;
-        $this->col  = $c;
+        $this->col = $c;
     }
 
     /**
@@ -85,10 +85,10 @@ abstract class HTMLPurifier_Token
     public function rawPosition($l, $c)
     {
         if ($c === -1) {
-            ++$l;
+            $l++;
         }
         $this->line = $l;
-        $this->col  = $c;
+        $this->col = $c;
     }
 
     /**
@@ -98,4 +98,3 @@ abstract class HTMLPurifier_Token
 }
 
 // vim: et sw=4 sts=4
-

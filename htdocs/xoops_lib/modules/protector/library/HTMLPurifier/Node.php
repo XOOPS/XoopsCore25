@@ -47,4 +47,3 @@ abstract class HTMLPurifier_Node
 }
 
 // vim: et sw=4 sts=4
-

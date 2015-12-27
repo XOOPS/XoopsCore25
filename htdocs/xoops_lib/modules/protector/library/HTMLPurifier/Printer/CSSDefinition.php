@@ -8,13 +8,13 @@ class HTMLPurifier_Printer_CSSDefinition extends HTMLPurifier_Printer
     protected $def;
 
     /**
-     * @param  HTMLPurifier_Config $config
+     * @param HTMLPurifier_Config $config
      * @return string
      */
     public function render($config)
     {
         $this->def = $config->getCSSDefinition();
-        $ret       = '';
+        $ret = '';
 
         $ret .= $this->start('div', array('class' => 'HTMLPurifier_Printer'));
         $ret .= $this->start('table');
@@ -42,4 +42,3 @@ class HTMLPurifier_Printer_CSSDefinition extends HTMLPurifier_Printer
 }
 
 // vim: et sw=4 sts=4
-

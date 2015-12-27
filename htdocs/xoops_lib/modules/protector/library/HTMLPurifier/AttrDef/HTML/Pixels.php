@@ -5,6 +5,7 @@
  */
 class HTMLPurifier_AttrDef_HTML_Pixels extends HTMLPurifier_AttrDef
 {
+
     /**
      * @type int
      */
@@ -19,9 +20,9 @@ class HTMLPurifier_AttrDef_HTML_Pixels extends HTMLPurifier_AttrDef
     }
 
     /**
-     * @param  string               $string
-     * @param  HTMLPurifier_Config  $config
-     * @param  HTMLPurifier_Context $context
+     * @param string $string
+     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Context $context
      * @return bool|string
      */
     public function validate($string, $config, $context)
@@ -53,12 +54,11 @@ class HTMLPurifier_AttrDef_HTML_Pixels extends HTMLPurifier_AttrDef
         if ($this->max !== null && $int > $this->max) {
             return (string)$this->max;
         }
-
         return (string)$int;
     }
 
     /**
-     * @param  string $string
+     * @param string $string
      * @return HTMLPurifier_AttrDef
      */
     public function make($string)
@@ -69,10 +69,8 @@ class HTMLPurifier_AttrDef_HTML_Pixels extends HTMLPurifier_AttrDef
             $max = (int)$string;
         }
         $class = get_class($this);
-
         return new $class($max);
     }
 }
 
 // vim: et sw=4 sts=4
-

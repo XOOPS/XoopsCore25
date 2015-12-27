@@ -19,18 +19,18 @@ class HTMLPurifier_AttrTransform_BoolToCSS extends HTMLPurifier_AttrTransform
 
     /**
      * @param string $attr attribute name to convert from
-     * @param string $css  CSS declarations to add to style (needs semicolon)
+     * @param string $css CSS declarations to add to style (needs semicolon)
      */
     public function __construct($attr, $css)
     {
         $this->attr = $attr;
-        $this->css  = $css;
+        $this->css = $css;
     }
 
     /**
-     * @param  array                $attr
-     * @param  HTMLPurifier_Config  $config
-     * @param  HTMLPurifier_Context $context
+     * @param array $attr
+     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Context $context
      * @return array
      */
     public function transform($attr, $config, $context)
@@ -40,10 +40,8 @@ class HTMLPurifier_AttrTransform_BoolToCSS extends HTMLPurifier_AttrTransform
         }
         unset($attr[$this->attr]);
         $this->prependCSS($attr, $this->css);
-
         return $attr;
     }
 }
 
 // vim: et sw=4 sts=4
-

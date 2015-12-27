@@ -30,7 +30,7 @@ abstract class HTMLPurifier_ChildDef
     /**
      * Get lookup of tag names that should not close this element automatically.
      * All other elements will do so.
-     * @param  HTMLPurifier_Config $config HTMLPurifier_Config object
+     * @param HTMLPurifier_Config $config HTMLPurifier_Config object
      * @return array
      */
     public function getAllowedElements($config)
@@ -41,13 +41,12 @@ abstract class HTMLPurifier_ChildDef
     /**
      * Validates nodes according to definition and returns modification.
      *
-     * @param  HTMLPurifier_Node[]  $children Array of HTMLPurifier_Node
-     * @param  HTMLPurifier_Config  $config   HTMLPurifier_Config object
-     * @param  HTMLPurifier_Context $context  HTMLPurifier_Context object
-     * @return bool|array           true to leave nodes as is, false to remove parent node, array of replacement children
+     * @param HTMLPurifier_Node[] $children Array of HTMLPurifier_Node
+     * @param HTMLPurifier_Config $config HTMLPurifier_Config object
+     * @param HTMLPurifier_Context $context HTMLPurifier_Context object
+     * @return bool|array true to leave nodes as is, false to remove parent node, array of replacement children
      */
     abstract public function validateChildren($children, $config, $context);
 }
 
 // vim: et sw=4 sts=4
-

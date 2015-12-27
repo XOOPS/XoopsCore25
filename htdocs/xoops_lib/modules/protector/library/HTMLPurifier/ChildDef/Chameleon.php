@@ -11,6 +11,7 @@
  */
 class HTMLPurifier_ChildDef_Chameleon extends HTMLPurifier_ChildDef
 {
+
     /**
      * Instance of the definition object to use when inline. Usually stricter.
      * @type HTMLPurifier_ChildDef_Optional
@@ -30,30 +31,37 @@ class HTMLPurifier_ChildDef_Chameleon extends HTMLPurifier_ChildDef
 
     /**
      * @param array $inline List of elements to allow when inline.
-     * @param array $block  List of elements to allow when block.
+     * @param array $block List of elements to allow when block.
      */
     public function __construct($inline, $block)
     {
-        $this->inline   = new HTMLPurifier_ChildDef_Optional($inline);
-        $this->block    = new HTMLPurifier_ChildDef_Optional($block);
+        $this->inline = new HTMLPurifier_ChildDef_Optional($inline);
+        $this->block = new HTMLPurifier_ChildDef_Optional($block);
         $this->elements = $this->block->elements;
     }
 
     /**
-     * @param  HTMLPurifier_Node[]  $children
-     * @param  HTMLPurifier_Config  $config
-     * @param  HTMLPurifier_Context $context
+     * @param HTMLPurifier_Node[] $children
+     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Context $context
      * @return bool
      */
     public function validateChildren($children, $config, $context)
     {
         if ($context->get('IsInline') === false) {
-            return $this->block->validateChildren($children, $config, $context);
+            return $this->block->validateChildren(
+                $children,
+                $config,
+                $context
+            );
         } else {
-            return $this->inline->validateChildren($children, $config, $context);
+            return $this->inline->validateChildren(
+                $children,
+                $config,
+                $context
+            );
         }
     }
 }
 
 // vim: et sw=4 sts=4
-

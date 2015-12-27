@@ -2,7 +2,7 @@
 
 /**
  * Validates a URI in CSS syntax, which uses url('http://example.com')
- * @note    While theoretically speaking a URI in a CSS document could
+ * @note While theoretically speaking a URI in a CSS document could
  *       be non-embedded, as of CSS2 there is no such usage so we're
  *       generalizing it. This may need to be changed in the future.
  * @warning Since HTMLPurifier_AttrDef_CSS blindly uses semicolons as
@@ -11,15 +11,16 @@
  */
 class HTMLPurifier_AttrDef_CSS_URI extends HTMLPurifier_AttrDef_URI
 {
+
     public function __construct()
     {
         parent::__construct(true); // always embedded
     }
 
     /**
-     * @param  string               $uri_string
-     * @param  HTMLPurifier_Config  $config
-     * @param  HTMLPurifier_Context $context
+     * @param string $uri_string
+     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Context $context
      * @return bool|string
      */
     public function validate($uri_string, $config, $context)
@@ -39,7 +40,7 @@ class HTMLPurifier_AttrDef_CSS_URI extends HTMLPurifier_AttrDef_URI
         $uri = trim(substr($uri_string, 0, $new_length));
 
         if (!empty($uri) && ($uri[0] == "'" || $uri[0] == '"')) {
-            $quote      = $uri[0];
+            $quote = $uri[0];
             $new_length = strlen($uri) - 1;
             if ($uri[$new_length] !== $quote) {
                 return false;
@@ -71,4 +72,3 @@ class HTMLPurifier_AttrDef_CSS_URI extends HTMLPurifier_AttrDef_URI
 }
 
 // vim: et sw=4 sts=4
-

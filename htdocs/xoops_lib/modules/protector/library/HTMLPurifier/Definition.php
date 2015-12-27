@@ -6,6 +6,7 @@
  */
 abstract class HTMLPurifier_Definition
 {
+
     /**
      * Has setup() been called yet?
      * @type bool
@@ -52,4 +53,3 @@ abstract class HTMLPurifier_Definition
 }
 
 // vim: et sw=4 sts=4
-

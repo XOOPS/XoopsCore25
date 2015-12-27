@@ -5,6 +5,7 @@
  */
 class HTMLPurifier_AttrDef_CSS_Length extends HTMLPurifier_AttrDef
 {
+
     /**
      * @type HTMLPurifier_Length|string
      */
@@ -26,9 +27,9 @@ class HTMLPurifier_AttrDef_CSS_Length extends HTMLPurifier_AttrDef
     }
 
     /**
-     * @param  string               $string
-     * @param  HTMLPurifier_Config  $config
-     * @param  HTMLPurifier_Context $context
+     * @param string $string
+     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Context $context
      * @return bool|string
      */
     public function validate($string, $config, $context)
@@ -69,10 +70,8 @@ class HTMLPurifier_AttrDef_CSS_Length extends HTMLPurifier_AttrDef
                 return false;
             }
         }
-
         return $length->toString();
     }
 }
 
 // vim: et sw=4 sts=4
-

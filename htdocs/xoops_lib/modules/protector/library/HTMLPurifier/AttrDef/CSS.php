@@ -13,10 +13,11 @@
  */
 class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
 {
+
     /**
-     * @param  string               $css
-     * @param  HTMLPurifier_Config  $config
-     * @param  HTMLPurifier_Context $context
+     * @param string $css
+     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Context $context
      * @return bool|string
      */
     public function validate($css, $config, $context)
@@ -32,7 +33,7 @@ class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
         // for details
 
         $declarations = explode(';', $css);
-        $propvalues   = array();
+        $propvalues = array();
 
         /**
          * Name of the current CSS property being validated.
@@ -49,8 +50,8 @@ class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
             }
             list($property, $value) = explode(':', $declaration, 2);
             $property = trim($property);
-            $value    = trim($value);
-            $ok       = false;
+            $value = trim($value);
+            $ok = false;
             do {
                 if (isset($definition->info[$property])) {
                     $ok = true;
@@ -71,7 +72,11 @@ class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
             // inefficient call, since the validator will do this again
             if (strtolower(trim($value)) !== 'inherit') {
                 // inherit works for everything (but only on the base property)
-                $result = $definition->info[$property]->validate($value, $config, $context);
+                $result = $definition->info[$property]->validate(
+                    $value,
+                    $config,
+                    $context
+                );
             } else {
                 $result = 'inherit';
             }
@@ -93,8 +98,9 @@ class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
         }
 
         return $new_declarations ? $new_declarations : false;
+
     }
+
 }
 
 // vim: et sw=4 sts=4
-

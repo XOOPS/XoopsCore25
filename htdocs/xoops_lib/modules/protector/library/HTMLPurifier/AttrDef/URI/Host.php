@@ -5,6 +5,7 @@
  */
 class HTMLPurifier_AttrDef_URI_Host extends HTMLPurifier_AttrDef
 {
+
     /**
      * IPv4 sub-validator.
      * @type HTMLPurifier_AttrDef_URI_IPv4
@@ -24,9 +25,9 @@ class HTMLPurifier_AttrDef_URI_Host extends HTMLPurifier_AttrDef
     }
 
     /**
-     * @param  string               $string
-     * @param  HTMLPurifier_Config  $config
-     * @param  HTMLPurifier_Context $context
+     * @param string $string
+     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Context $context
      * @return bool|string
      */
     public function validate($string, $config, $context)
@@ -43,12 +44,11 @@ class HTMLPurifier_AttrDef_URI_Host extends HTMLPurifier_AttrDef
         }
         if ($length > 1 && $string[0] === '[' && $string[$length - 1] === ']') {
             //IPv6
-            $ip    = substr($string, 1, $length - 2);
+            $ip = substr($string, 1, $length - 2);
             $valid = $this->ipv6->validate($ip, $config, $context);
             if ($valid === false) {
                 return false;
             }
-
             return '[' . $valid . ']';
         }
 
@@ -101,7 +101,7 @@ class HTMLPurifier_AttrDef_URI_Host extends HTMLPurifier_AttrDef
                 $new_parts = array();
                 foreach ($parts as $part) {
                     $encodable = false;
-                    for ($i = 0, $c = strlen($part); $i < $c; ++$i) {
+                    for ($i = 0, $c = strlen($part); $i < $c; $i++) {
                         if (ord($part[$i]) > 0x7a) {
                             $encodable = true;
                             break;
@@ -121,10 +121,8 @@ class HTMLPurifier_AttrDef_URI_Host extends HTMLPurifier_AttrDef
                 // XXX error reporting
             }
         }
-
         return false;
     }
 }
 
 // vim: et sw=4 sts=4
-

@@ -5,6 +5,7 @@
  */
 class HTMLPurifier_AttrDef_CSS_Number extends HTMLPurifier_AttrDef
 {
+
     /**
      * Indicates whether or not only positive values are allowed.
      * @type bool
@@ -20,9 +21,9 @@ class HTMLPurifier_AttrDef_CSS_Number extends HTMLPurifier_AttrDef
     }
 
     /**
-     * @param  string               $number
-     * @param  HTMLPurifier_Config  $config
-     * @param  HTMLPurifier_Context $context
+     * @param string $number
+     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Context $context
      * @return string|bool
      * @warning Some contexts do not pass $config, $context. These
      *          variables should not be used without checking HTMLPurifier_Length
@@ -51,7 +52,6 @@ class HTMLPurifier_AttrDef_CSS_Number extends HTMLPurifier_AttrDef
 
         if (ctype_digit($number)) {
             $number = ltrim($number, '0');
-
             return $number ? $sign . $number : '0';
         }
 
@@ -69,7 +69,7 @@ class HTMLPurifier_AttrDef_CSS_Number extends HTMLPurifier_AttrDef
             return false;
         }
 
-        $left  = ltrim($left, '0');
+        $left = ltrim($left, '0');
         $right = rtrim($right, '0');
 
         if ($right === '') {
@@ -77,10 +77,8 @@ class HTMLPurifier_AttrDef_CSS_Number extends HTMLPurifier_AttrDef
         } elseif (!ctype_digit($right)) {
             return false;
         }
-
         return $sign . $left . '.' . $right;
     }
 }
 
 // vim: et sw=4 sts=4
-

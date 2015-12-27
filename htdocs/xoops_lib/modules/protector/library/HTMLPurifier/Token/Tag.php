@@ -34,10 +34,10 @@ abstract class HTMLPurifier_Token_Tag extends HTMLPurifier_Token
      * Non-overloaded constructor, which lower-cases passed tag name.
      *
      * @param string $name String name.
-     * @param array  $attr Associative array of attributes.
-     * @param int    $line
-     * @param int    $col
-     * @param array  $armor
+     * @param array $attr Associative array of attributes.
+     * @param int $line
+     * @param int $col
+     * @param array $armor
      */
     public function __construct($name, $attr = array(), $line = null, $col = null, $armor = array())
     {
@@ -54,17 +54,15 @@ abstract class HTMLPurifier_Token_Tag extends HTMLPurifier_Token
                 }
             }
         }
-        $this->attr  = $attr;
-        $this->line  = $line;
-        $this->col   = $col;
+        $this->attr = $attr;
+        $this->line = $line;
+        $this->col = $col;
         $this->armor = $armor;
     }
 
-    public function toNode()
-    {
+    public function toNode() {
         return new HTMLPurifier_Node_Element($this->name, $this->attr, $this->line, $this->col, $this->armor);
     }
 }
 
 // vim: et sw=4 sts=4
-

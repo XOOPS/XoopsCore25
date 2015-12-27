@@ -50,9 +50,9 @@ class HTMLPurifier_ChildDef_Required extends HTMLPurifier_ChildDef
     public $type = 'required';
 
     /**
-     * @param  array                $children
-     * @param  HTMLPurifier_Config  $config
-     * @param  HTMLPurifier_Context $context
+     * @param array $children
+     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Context $context
      * @return array
      */
     public function validateChildren($children, $config, $context)
@@ -109,13 +109,10 @@ class HTMLPurifier_ChildDef_Required extends HTMLPurifier_ChildDef
         }
         if ($all_whitespace) {
             $this->whitespace = true;
-
             return false;
         }
-
         return $result;
     }
 }
 
 // vim: et sw=4 sts=4
-

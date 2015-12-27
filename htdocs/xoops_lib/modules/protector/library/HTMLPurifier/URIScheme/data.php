@@ -17,8 +17,9 @@ class HTMLPurifier_URIScheme_data extends HTMLPurifier_URIScheme
         // you better write validation code for other types if you
         // decide to allow them
         'image/jpeg' => true,
-        'image/gif'  => true,
-        'image/png'  => true,);
+        'image/gif' => true,
+        'image/png' => true,
+    );
     // this is actually irrelevant since we only write out the path
     // component
     /**
@@ -27,16 +28,16 @@ class HTMLPurifier_URIScheme_data extends HTMLPurifier_URIScheme
     public $may_omit_host = true;
 
     /**
-     * @param  HTMLPurifier_URI     $uri
-     * @param  HTMLPurifier_Config  $config
-     * @param  HTMLPurifier_Context $context
+     * @param HTMLPurifier_URI $uri
+     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Context $context
      * @return bool
      */
     public function doValidate(&$uri, $config, $context)
     {
-        $result       = explode(',', $uri->path, 2);
-        $is_base64    = false;
-        $charset      = null;
+        $result = explode(',', $uri->path, 2);
+        $is_base64 = false;
+        $charset = null;
         $content_type = null;
         if (count($result) == 2) {
             list($metadata, $data) = $result;
@@ -108,17 +109,16 @@ class HTMLPurifier_URIScheme_data extends HTMLPurifier_URIScheme
         }
         // ok, it's kosher, rewrite what we need
         $uri->userinfo = null;
-        $uri->host     = null;
-        $uri->port     = null;
+        $uri->host = null;
+        $uri->port = null;
         $uri->fragment = null;
-        $uri->query    = null;
-        $uri->path     = "$content_type;base64," . base64_encode($raw_data);
-
+        $uri->query = null;
+        $uri->path = "$content_type;base64," . base64_encode($raw_data);
         return true;
     }
 
     /**
-     * @param int    $errno
+     * @param int $errno
      * @param string $errstr
      */
     public function muteErrorHandler($errno, $errstr)

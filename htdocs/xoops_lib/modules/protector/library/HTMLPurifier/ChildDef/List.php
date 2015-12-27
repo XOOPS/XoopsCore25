@@ -23,9 +23,9 @@ class HTMLPurifier_ChildDef_List extends HTMLPurifier_ChildDef
     public $elements = array('li' => true, 'ul' => true, 'ol' => true);
 
     /**
-     * @param  array                $children
-     * @param  HTMLPurifier_Config  $config
-     * @param  HTMLPurifier_Context $context
+     * @param array $children
+     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Context $context
      * @return array
      */
     public function validateChildren($children, $config, $context)
@@ -56,7 +56,7 @@ class HTMLPurifier_ChildDef_List extends HTMLPurifier_ChildDef
             if ($node->name === 'li') {
                 // good
                 $current_li = $node;
-                $result[]   = $node;
+                $result[] = $node;
             } else {
                 // we want to tuck this into the previous li
                 // Invariant: we expect the node to be ol/ul
@@ -67,10 +67,10 @@ class HTMLPurifier_ChildDef_List extends HTMLPurifier_ChildDef
                 // for non-list. This distinction is not currently made.
                 if ($current_li === false) {
                     $current_li = new HTMLPurifier_Node_Element('li');
-                    $result[]   = $current_li;
+                    $result[] = $current_li;
                 }
                 $current_li->children[] = $node;
-                $current_li->empty      = false; // XXX fascinating! Check for this error elsewhere ToDo
+                $current_li->empty = false; // XXX fascinating! Check for this error elsewhere ToDo
             }
         }
         if (empty($result)) {
@@ -79,10 +79,8 @@ class HTMLPurifier_ChildDef_List extends HTMLPurifier_ChildDef
         if ($all_whitespace) {
             return false;
         }
-
         return $result;
     }
 }
 
 // vim: et sw=4 sts=4
-

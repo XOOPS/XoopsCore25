@@ -9,6 +9,7 @@
  */
 class HTMLPurifier_AttrDef_Integer extends HTMLPurifier_AttrDef
 {
+
     /**
      * Whether or not negative values are allowed.
      * @type bool
@@ -29,20 +30,20 @@ class HTMLPurifier_AttrDef_Integer extends HTMLPurifier_AttrDef
 
     /**
      * @param $negative Bool indicating whether or not negative values are allowed
-     * @param $zero     Bool indicating whether or not zero is allowed
+     * @param $zero Bool indicating whether or not zero is allowed
      * @param $positive Bool indicating whether or not positive values are allowed
      */
     public function __construct($negative = true, $zero = true, $positive = true)
     {
         $this->negative = $negative;
-        $this->zero     = $zero;
+        $this->zero = $zero;
         $this->positive = $positive;
     }
 
     /**
-     * @param  string               $integer
-     * @param  HTMLPurifier_Config  $config
-     * @param  HTMLPurifier_Context $context
+     * @param string $integer
+     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Context $context
      * @return bool|string
      */
     public function validate($integer, $config, $context)
@@ -88,4 +89,3 @@ class HTMLPurifier_AttrDef_Integer extends HTMLPurifier_AttrDef
 }
 
 // vim: et sw=4 sts=4
-

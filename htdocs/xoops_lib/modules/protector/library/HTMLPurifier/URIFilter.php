@@ -27,6 +27,7 @@
  */
 abstract class HTMLPurifier_URIFilter
 {
+
     /**
      * Unique identifier of filter.
      * @type string
@@ -50,7 +51,7 @@ abstract class HTMLPurifier_URIFilter
     /**
      * Performs initialization for the filter.  If the filter returns
      * false, this means that it shouldn't be considered active.
-     * @param  HTMLPurifier_Config $config
+     * @param HTMLPurifier_Config $config
      * @return bool
      */
     public function prepare($config)
@@ -60,15 +61,14 @@ abstract class HTMLPurifier_URIFilter
 
     /**
      * Filter a URI object
-     * @param  HTMLPurifier_URI     $uri    Reference to URI object variable
-     * @param  HTMLPurifier_Config  $config
-     * @param  HTMLPurifier_Context $context
-     * @return bool                 Whether or not to continue processing: false indicates
-     *                                      URL is no good, true indicates continue processing. Note that
-     *                                      all changes are committed directly on the URI object
+     * @param HTMLPurifier_URI $uri Reference to URI object variable
+     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Context $context
+     * @return bool Whether or not to continue processing: false indicates
+     *         URL is no good, true indicates continue processing. Note that
+     *         all changes are committed directly on the URI object
      */
     abstract public function filter(&$uri, $config, $context);
 }
 
 // vim: et sw=4 sts=4
-

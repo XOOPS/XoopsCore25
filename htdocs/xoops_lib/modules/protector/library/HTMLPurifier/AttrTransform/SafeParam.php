@@ -26,14 +26,14 @@ class HTMLPurifier_AttrTransform_SafeParam extends HTMLPurifier_AttrTransform
 
     public function __construct()
     {
-        $this->uri   = new HTMLPurifier_AttrDef_URI(true); // embedded
+        $this->uri = new HTMLPurifier_AttrDef_URI(true); // embedded
         $this->wmode = new HTMLPurifier_AttrDef_Enum(array('window', 'opaque', 'transparent'));
     }
 
     /**
-     * @param  array                $attr
-     * @param  HTMLPurifier_Config  $config
-     * @param  HTMLPurifier_Context $context
+     * @param array $attr
+     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Context $context
      * @return array
      */
     public function transform($attr, $config, $context)
@@ -61,7 +61,7 @@ class HTMLPurifier_AttrTransform_SafeParam extends HTMLPurifier_AttrTransform
                 break;
             case 'movie':
             case 'src':
-                $attr['name']  = "movie";
+                $attr['name'] = "movie";
                 $attr['value'] = $this->uri->validate($attr['value'], $config, $context);
                 break;
             case 'flashvars':
@@ -72,10 +72,8 @@ class HTMLPurifier_AttrTransform_SafeParam extends HTMLPurifier_AttrTransform
             default:
                 $attr['name'] = $attr['value'] = null;
         }
-
         return $attr;
     }
 }
 
 // vim: et sw=4 sts=4
-

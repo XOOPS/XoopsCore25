@@ -35,12 +35,13 @@ class HTMLPurifier_Injector_Linkify extends HTMLPurifier_Injector
         // Note: this regex is extremely permissive
         $bits = preg_split('#((?:https?|ftp)://[^\s\'",<>()]+)#Su', $token->data, -1, PREG_SPLIT_DELIM_CAPTURE);
 
+
         $token = array();
 
         // $i = index
         // $c = count
         // $l = is link
-        for ($i = 0, $c = count($bits), $l = false; $i < $c; ++$i, $l = !$l) {
+        for ($i = 0, $c = count($bits), $l = false; $i < $c; $i++, $l = !$l) {
             if (!$l) {
                 if ($bits[$i] === '') {
                     continue;
@@ -56,4 +57,3 @@ class HTMLPurifier_Injector_Linkify extends HTMLPurifier_Injector
 }
 
 // vim: et sw=4 sts=4
-

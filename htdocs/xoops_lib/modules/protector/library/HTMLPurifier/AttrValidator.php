@@ -7,17 +7,18 @@
  */
 class HTMLPurifier_AttrValidator
 {
+
     /**
      * Validates the attributes of a token, mutating it as necessary.
      * that has valid tokens
-     * @param HTMLPurifier_Token   $token   Token to validate.
-     * @param HTMLPurifier_Config  $config  Instance of HTMLPurifier_Config
+     * @param HTMLPurifier_Token $token Token to validate.
+     * @param HTMLPurifier_Config $config Instance of HTMLPurifier_Config
      * @param HTMLPurifier_Context $context Instance of HTMLPurifier_Context
      */
     public function validateToken($token, $config, $context)
     {
         $definition = $config->getHTMLDefinition();
-        $e          =& $context->get('ErrorCollector', true);
+        $e =& $context->get('ErrorCollector', true);
 
         // initialize IDAccumulator if necessary
         $ok =& $context->get('IDAccumulator', true);
@@ -32,7 +33,9 @@ class HTMLPurifier_AttrValidator
             $context->register('CurrentToken', $token);
         }
 
-        if (!$token instanceof HTMLPurifier_Token_Start && !$token instanceof HTMLPurifier_Token_Empty) {
+        if (!$token instanceof HTMLPurifier_Token_Start &&
+            !$token instanceof HTMLPurifier_Token_Empty
+        ) {
             return;
         }
 
@@ -89,12 +92,20 @@ class HTMLPurifier_AttrValidator
                     $result = false;
                 } else {
                     // validate according to the element's definition
-                    $result = $defs[$attr_key]->validate($value, $config, $context);
+                    $result = $defs[$attr_key]->validate(
+                        $value,
+                        $config,
+                        $context
+                    );
                 }
             } elseif (isset($d_defs[$attr_key])) {
                 // there is a global definition defined, validate according
                 // to the global definition
-                $result = $d_defs[$attr_key]->validate($value, $config, $context);
+                $result = $d_defs[$attr_key]->validate(
+                    $value,
+                    $config,
+                    $context
+                );
             } else {
                 // system never heard of the attribute? DELETE!
                 $result = false;
@@ -158,8 +169,10 @@ class HTMLPurifier_AttrValidator
         if (!$current_token) {
             $context->destroy('CurrentToken');
         }
+
     }
+
+
 }
 
 // vim: et sw=4 sts=4
-

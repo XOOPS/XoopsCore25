@@ -5,6 +5,7 @@
  */
 class HTMLPurifier_ConfigSchema_Interchange_Id
 {
+
     /**
      * @type string
      */
@@ -45,7 +46,7 @@ class HTMLPurifier_ConfigSchema_Interchange_Id
     }
 
     /**
-     * @param  string $id
+     * @param string $id
      * @return HTMLPurifier_ConfigSchema_Interchange_Id
      */
     public static function make($id)
@@ -55,4 +56,3 @@ class HTMLPurifier_ConfigSchema_Interchange_Id
 }
 
 // vim: et sw=4 sts=4
-

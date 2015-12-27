@@ -58,15 +58,18 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
     {
         $this->_tidy = new csstidy();
         $this->_tidy->set_cfg('lowercase_s', false);
-        $this->_id_attrdef    = new HTMLPurifier_AttrDef_HTML_ID(true);
+        $this->_id_attrdef = new HTMLPurifier_AttrDef_HTML_ID(true);
         $this->_class_attrdef = new HTMLPurifier_AttrDef_CSS_Ident();
-        $this->_enum_attrdef  = new HTMLPurifier_AttrDef_Enum(array(
-                                                                  'first-child',
-                                                                  'link',
-                                                                  'visited',
-                                                                  'active',
-                                                                  'hover',
-                                                                  'focus'));
+        $this->_enum_attrdef = new HTMLPurifier_AttrDef_Enum(
+            array(
+                'first-child',
+                'link',
+                'visited',
+                'active',
+                'hover',
+                'focus'
+            )
+        );
     }
 
     /**
@@ -80,9 +83,9 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
 
     /**
      * Removes inline <style> tags from HTML, saves them for later use
-     * @param  string               $html
-     * @param  HTMLPurifier_Config  $config
-     * @param  HTMLPurifier_Context $context
+     * @param string $html
+     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Context $context
      * @return string
      * @todo Extend to indicate non-text/css style blocks
      */
@@ -92,8 +95,8 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
         if ($tidy !== null) {
             $this->_tidy = $tidy;
         }
-        $html                = preg_replace_callback('#<style(?:\s.*)?>(.+)</style>#isU', array($this, 'styleCallback'), $html);
-        $style_blocks        = $this->_styleMatches;
+        $html = preg_replace_callback('#<style(?:\s.*)?>(.+)</style>#isU', array($this, 'styleCallback'), $html);
+        $style_blocks = $this->_styleMatches;
         $this->_styleMatches = array(); // reset
         $context->register('StyleBlocks', $style_blocks); // $context must not be reused
         if ($this->_tidy) {
@@ -101,18 +104,17 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
                 $style = $this->cleanCSS($style, $config, $context);
             }
         }
-
         return $html;
     }
 
     /**
      * Takes CSS (the stuff found in <style>) and cleans it.
      * @warning Requires CSSTidy <http://csstidy.sourceforge.net/>
-     * @param  string               $css CSS styling to clean
-     * @param  HTMLPurifier_Config  $config
-     * @param  HTMLPurifier_Context $context
+     * @param string $css CSS styling to clean
+     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Context $context
      * @throws HTMLPurifier_Exception
-     * @return string                 Cleaned CSS
+     * @return string Cleaned CSS
      */
     public function cleanCSS($css, $config, $context)
     {
@@ -135,9 +137,9 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
         set_error_handler('htmlpurifier_filter_extractstyleblocks_muteerrorhandler');
         $this->_tidy->parse($css);
         restore_error_handler();
-        $css_definition  = $config->getDefinition('CSS');
+        $css_definition = $config->getDefinition('CSS');
         $html_definition = $config->getDefinition('HTML');
-        $new_css         = array();
+        $new_css = array();
         foreach ($this->_tidy->css as $k => $decls) {
             // $decls are all CSS declarations inside an @ selector
             $new_decls = array();
@@ -208,17 +210,17 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
                 //        :visited, :active, :hover, :focus
 
                 // handle ruleset
-                $selectors     = array_map('trim', explode(',', $selector));
+                $selectors = array_map('trim', explode(',', $selector));
                 $new_selectors = array();
                 foreach ($selectors as $sel) {
                     // split on +, > and spaces
                     $basic_selectors = preg_split('/\s*([+> ])\s*/', $sel, -1, PREG_SPLIT_DELIM_CAPTURE);
                     // even indices are chunks, odd indices are
                     // delimiters
-                    $nsel  = null;
+                    $nsel = null;
                     $delim = null; // guaranteed to be non-null after
                     // two loop iterations
-                    for ($i = 0, $c = count($basic_selectors); $i < $c; ++$i) {
+                    for ($i = 0, $c = count($basic_selectors); $i < $c; $i++) {
                         $x = $basic_selectors[$i];
                         if ($i % 2) {
                             // delimiter
@@ -230,9 +232,9 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
                         } else {
                             // simple selector
                             $components = preg_split('/([#.:])/', $x, -1, PREG_SPLIT_DELIM_CAPTURE);
-                            $sdelim     = null;
-                            $nx         = null;
-                            for ($j = 0, $cc = count($components); $j < $cc; ++$j) {
+                            $sdelim = null;
+                            $nx = null;
+                            for ($j = 0, $cc = count($components); $j < $cc; $j++) {
                                 $y = $components[$j];
                                 if ($j === 0) {
                                     if ($y === '*' || isset($html_definition->info[$y = strtolower($y)])) {
@@ -315,20 +317,22 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
         }
         // remove stuff that shouldn't be used, could be reenabled
         // after security risks are analyzed
-        $this->_tidy->css       = $new_css;
-        $this->_tidy->import    = array();
-        $this->_tidy->charset   = null;
+        $this->_tidy->css = $new_css;
+        $this->_tidy->import = array();
+        $this->_tidy->charset = null;
         $this->_tidy->namespace = null;
-        $css                    = $this->_tidy->print->plain();
+        $css = $this->_tidy->print->plain();
         // we are going to escape any special characters <>& to ensure
         // that no funny business occurs (i.e. </style> in a font-family prop).
         if ($config->get('Filter.ExtractStyleBlocks.Escaping')) {
-            $css = str_replace(array('<', '>', '&'), array('\3C ', '\3E ', '\26 '), $css);
+            $css = str_replace(
+                array('<', '>', '&'),
+                array('\3C ', '\3E ', '\26 '),
+                $css
+            );
         }
-
         return $css;
     }
 }
 
 // vim: et sw=4 sts=4
-

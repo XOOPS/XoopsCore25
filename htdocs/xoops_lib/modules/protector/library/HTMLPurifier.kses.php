@@ -5,12 +5,12 @@
  * Emulation layer for code that used kses(), substituting in HTML Purifier.
  */
 
-require_once __DIR__ . '/HTMLPurifier.auto.php';
+require_once dirname(__FILE__) . '/HTMLPurifier.auto.php';
 
 function kses($string, $allowed_html, $allowed_protocols = null)
 {
-    $config             = HTMLPurifier_Config::createDefault();
-    $allowed_elements   = array();
+    $config = HTMLPurifier_Config::createDefault();
+    $allowed_elements = array();
     $allowed_attributes = array();
     foreach ($allowed_html as $element => $attributes) {
         $allowed_elements[$element] = true;
@@ -24,9 +24,7 @@ function kses($string, $allowed_html, $allowed_protocols = null)
         $config->set('URI.AllowedSchemes', $allowed_protocols);
     }
     $purifier = new HTMLPurifier($config);
-
     return $purifier->purify($string);
 }
 
 // vim: et sw=4 sts=4
-

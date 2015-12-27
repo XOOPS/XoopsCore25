@@ -15,6 +15,7 @@
  */
 abstract class HTMLPurifier_Injector
 {
+
     /**
      * Advisory name of injector, this is for friendly error messages.
      * @type string
@@ -79,9 +80,8 @@ abstract class HTMLPurifier_Injector
      */
     public function getRewindOffset()
     {
-        $r                  = $this->rewindOffset;
+        $r = $this->rewindOffset;
         $this->rewindOffset = false;
-
         return $r;
     }
 
@@ -90,9 +90,9 @@ abstract class HTMLPurifier_Injector
      * this allows references to important variables to be made within
      * the injector. This function also checks if the HTML environment
      * will work with the Injector (see checkNeeded()).
-     * @param  HTMLPurifier_Config  $config
-     * @param  HTMLPurifier_Context $context
-     * @return bool|string          Boolean false if success, string of missing needed element/attribute if failure
+     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Context $context
+     * @return bool|string Boolean false if success, string of missing needed element/attribute if failure
      */
     public function prepare($config, $context)
     {
@@ -107,7 +107,6 @@ abstract class HTMLPurifier_Injector
         $this->currentNesting =& $context->get('CurrentNesting');
         $this->currentToken   =& $context->get('CurrentToken');
         $this->inputZipper    =& $context->get('InputZipper');
-
         return false;
     }
 
@@ -115,8 +114,8 @@ abstract class HTMLPurifier_Injector
      * This function checks if the HTML environment
      * will work with the Injector: if p tags are not allowed, the
      * Auto-Paragraphing injector should not be enabled.
-     * @param  HTMLPurifier_Config $config
-     * @return bool|string         Boolean false if success, string of missing needed element/attribute if failure
+     * @param HTMLPurifier_Config $config
+     * @return bool|string Boolean false if success, string of missing needed element/attribute if failure
      */
     public function checkNeeded($config)
     {
@@ -137,21 +136,20 @@ abstract class HTMLPurifier_Injector
                 }
             }
         }
-
         return false;
     }
 
     /**
      * Tests if the context node allows a certain element
-     * @param  string $name Name of element to test for
-     * @return bool   True if element is allowed, false if it is not
+     * @param string $name Name of element to test for
+     * @return bool True if element is allowed, false if it is not
      */
     public function allowsElement($name)
     {
         if (!empty($this->currentNesting)) {
-            $parent_token           = array_pop($this->currentNesting);
+            $parent_token = array_pop($this->currentNesting);
             $this->currentNesting[] = $parent_token;
-            $parent                 = $this->htmlDefinition->info[$parent_token->name];
+            $parent = $this->htmlDefinition->info[$parent_token->name];
         } else {
             $parent = $this->htmlDefinition->info_parent_def;
         }
@@ -166,7 +164,6 @@ abstract class HTMLPurifier_Injector
                 return false;
             }
         }
-
         return true;
     }
 
@@ -175,9 +172,9 @@ abstract class HTMLPurifier_Injector
      * you reach the end of the input tokens.
      * @warning Please prevent previous references from interfering with this
      *          functions by setting $i = null beforehand!
-     * @param  int                $i       Current integer index variable for inputTokens
-     * @param  HTMLPurifier_Token $current Current token variable.
-     *                                     Do NOT use $token, as that variable is also a reference
+     * @param int $i Current integer index variable for inputTokens
+     * @param HTMLPurifier_Token $current Current token variable.
+     *          Do NOT use $token, as that variable is also a reference
      * @return bool
      */
     protected function forward(&$i, &$current)
@@ -191,7 +188,6 @@ abstract class HTMLPurifier_Injector
             return false;
         }
         $current = $this->inputZipper->back[$i];
-
         return true;
     }
 
@@ -199,10 +195,10 @@ abstract class HTMLPurifier_Injector
      * Similar to _forward, but accepts a third parameter $nesting (which
      * should be initialized at 0) and stops when we hit the end tag
      * for the node $this->inputIndex starts in.
-     * @param  int                $i       Current integer index variable for inputTokens
-     * @param  HTMLPurifier_Token $current Current token variable.
-     *                                     Do NOT use $token, as that variable is also a reference
-     * @param  int                $nesting
+     * @param int $i Current integer index variable for inputTokens
+     * @param HTMLPurifier_Token $current Current token variable.
+     *          Do NOT use $token, as that variable is also a reference
+     * @param int $nesting
      * @return bool
      */
     protected function forwardUntilEndToken(&$i, &$current, &$nesting)
@@ -215,14 +211,13 @@ abstract class HTMLPurifier_Injector
             $nesting = 0;
         }
         if ($current instanceof HTMLPurifier_Token_Start) {
-            ++$nesting;
+            $nesting++;
         } elseif ($current instanceof HTMLPurifier_Token_End) {
             if ($nesting <= 0) {
                 return false;
             }
             $nesting--;
         }
-
         return true;
     }
 
@@ -231,9 +226,9 @@ abstract class HTMLPurifier_Injector
      * you reach the beginning of input tokens.
      * @warning Please prevent previous references from interfering with this
      *          functions by setting $i = null beforehand!
-     * @param  int                $i       Current integer index variable for inputTokens
-     * @param  HTMLPurifier_Token $current Current token variable.
-     *                                     Do NOT use $token, as that variable is also a reference
+     * @param int $i Current integer index variable for inputTokens
+     * @param HTMLPurifier_Token $current Current token variable.
+     *          Do NOT use $token, as that variable is also a reference
      * @return bool
      */
     protected function backward(&$i, &$current)
@@ -247,7 +242,6 @@ abstract class HTMLPurifier_Injector
             return false;
         }
         $current = $this->inputZipper->front[$i];
-
         return true;
     }
 
@@ -285,4 +279,3 @@ abstract class HTMLPurifier_Injector
 }
 
 // vim: et sw=4 sts=4
-

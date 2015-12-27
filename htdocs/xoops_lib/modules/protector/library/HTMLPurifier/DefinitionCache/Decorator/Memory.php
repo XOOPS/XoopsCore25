@@ -26,8 +26,8 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends HTMLPurifier_Definit
     }
 
     /**
-     * @param  HTMLPurifier_Definition $def
-     * @param  HTMLPurifier_Config     $config
+     * @param HTMLPurifier_Definition $def
+     * @param HTMLPurifier_Config $config
      * @return mixed
      */
     public function add($def, $config)
@@ -36,13 +36,12 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends HTMLPurifier_Definit
         if ($status) {
             $this->definitions[$this->generateKey($config)] = $def;
         }
-
         return $status;
     }
 
     /**
-     * @param  HTMLPurifier_Definition $def
-     * @param  HTMLPurifier_Config     $config
+     * @param HTMLPurifier_Definition $def
+     * @param HTMLPurifier_Config $config
      * @return mixed
      */
     public function set($def, $config)
@@ -51,13 +50,12 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends HTMLPurifier_Definit
         if ($status) {
             $this->definitions[$this->generateKey($config)] = $def;
         }
-
         return $status;
     }
 
     /**
-     * @param  HTMLPurifier_Definition $def
-     * @param  HTMLPurifier_Config     $config
+     * @param HTMLPurifier_Definition $def
+     * @param HTMLPurifier_Config $config
      * @return mixed
      */
     public function replace($def, $config)
@@ -66,12 +64,11 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends HTMLPurifier_Definit
         if ($status) {
             $this->definitions[$this->generateKey($config)] = $def;
         }
-
         return $status;
     }
 
     /**
-     * @param  HTMLPurifier_Config $config
+     * @param HTMLPurifier_Config $config
      * @return mixed
      */
     public function get($config)
@@ -81,10 +78,8 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends HTMLPurifier_Definit
             return $this->definitions[$key];
         }
         $this->definitions[$key] = parent::get($config);
-
         return $this->definitions[$key];
     }
 }
 
 // vim: et sw=4 sts=4
-

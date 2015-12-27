@@ -8,6 +8,7 @@
  */
 class HTMLPurifier_AttrDef_HTML_LinkTypes extends HTMLPurifier_AttrDef
 {
+
     /**
      * Name config attribute to pull.
      * @type string
@@ -21,19 +22,23 @@ class HTMLPurifier_AttrDef_HTML_LinkTypes extends HTMLPurifier_AttrDef
     {
         $configLookup = array(
             'rel' => 'AllowedRel',
-            'rev' => 'AllowedRev');
+            'rev' => 'AllowedRev'
+        );
         if (!isset($configLookup[$name])) {
-            trigger_error('Unrecognized attribute name for link ' . 'relationship.', E_USER_ERROR);
-
+            trigger_error(
+                'Unrecognized attribute name for link ' .
+                'relationship.',
+                E_USER_ERROR
+            );
             return;
         }
         $this->name = $configLookup[$name];
     }
 
     /**
-     * @param  string               $string
-     * @param  HTMLPurifier_Config  $config
-     * @param  HTMLPurifier_Context $context
+     * @param string $string
+     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Context $context
      * @return bool|string
      */
     public function validate($string, $config, $context)
@@ -44,7 +49,7 @@ class HTMLPurifier_AttrDef_HTML_LinkTypes extends HTMLPurifier_AttrDef
         }
 
         $string = $this->parseCDATA($string);
-        $parts  = explode(' ', $string);
+        $parts = explode(' ', $string);
 
         // lookup to prevent duplicates
         $ret_lookup = array();
@@ -60,10 +65,8 @@ class HTMLPurifier_AttrDef_HTML_LinkTypes extends HTMLPurifier_AttrDef
             return false;
         }
         $string = implode(' ', array_keys($ret_lookup));
-
         return $string;
     }
 }
 
 // vim: et sw=4 sts=4
-

@@ -2,6 +2,7 @@
 
 class HTMLPurifier_ConfigSchema_InterchangeBuilder
 {
+
     /**
      * Used for processing DEFAULT, nothing else.
      * @type HTMLPurifier_VarParser
@@ -17,20 +18,19 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
     }
 
     /**
-     * @param  string $dir
+     * @param string $dir
      * @return HTMLPurifier_ConfigSchema_Interchange
      */
     public static function buildFromDirectory($dir = null)
     {
-        $builder     = new HTMLPurifier_ConfigSchema_InterchangeBuilder();
+        $builder = new HTMLPurifier_ConfigSchema_InterchangeBuilder();
         $interchange = new HTMLPurifier_ConfigSchema_Interchange();
-
         return $builder->buildDir($interchange, $dir);
     }
 
     /**
-     * @param  HTMLPurifier_ConfigSchema_Interchange $interchange
-     * @param  string                                $dir
+     * @param HTMLPurifier_ConfigSchema_Interchange $interchange
+     * @param string $dir
      * @return HTMLPurifier_ConfigSchema_Interchange
      */
     public function buildDir($interchange, $dir = null)
@@ -39,12 +39,12 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
             $dir = HTMLPURIFIER_PREFIX . '/HTMLPurifier/ConfigSchema/schema';
         }
         if (file_exists($dir . '/info.ini')) {
-            $info              = parse_ini_file($dir . '/info.ini');
+            $info = parse_ini_file($dir . '/info.ini');
             $interchange->name = $info['name'];
         }
 
         $files = array();
-        $dh    = opendir($dir);
+        $dh = opendir($dir);
         while (false !== ($file = readdir($dh))) {
             if (!$file || $file[0] == '.' || strrchr($file, '.') !== '.txt') {
                 continue;
@@ -57,24 +57,26 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
         foreach ($files as $file) {
             $this->buildFile($interchange, $dir . '/' . $file);
         }
-
         return $interchange;
     }
 
     /**
      * @param HTMLPurifier_ConfigSchema_Interchange $interchange
-     * @param string                                $file
+     * @param string $file
      */
     public function buildFile($interchange, $file)
     {
         $parser = new HTMLPurifier_StringHashParser();
-        $this->build($interchange, new HTMLPurifier_StringHash($parser->parseFile($file)));
+        $this->build(
+            $interchange,
+            new HTMLPurifier_StringHash($parser->parseFile($file))
+        );
     }
 
     /**
      * Builds an interchange object based on a hash.
-     * @param  HTMLPurifier_ConfigSchema_Interchange $interchange HTMLPurifier_ConfigSchema_Interchange object to build
-     * @param  HTMLPurifier_StringHash               $hash        source data
+     * @param HTMLPurifier_ConfigSchema_Interchange $interchange HTMLPurifier_ConfigSchema_Interchange object to build
+     * @param HTMLPurifier_StringHash $hash source data
      * @throws HTMLPurifier_ConfigSchema_Exception
      */
     public function build($interchange, $hash)
@@ -98,8 +100,8 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
     }
 
     /**
-     * @param  HTMLPurifier_ConfigSchema_Interchange $interchange
-     * @param  HTMLPurifier_StringHash               $hash
+     * @param HTMLPurifier_ConfigSchema_Interchange $interchange
+     * @param HTMLPurifier_StringHash $hash
      * @throws HTMLPurifier_ConfigSchema_Exception
      */
     public function buildDirective($interchange, $hash)
@@ -108,7 +110,7 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
 
         // These are required elements:
         $directive->id = $this->id($hash->offsetGet('ID'));
-        $id            = $directive->id->toString(); // convenience
+        $id = $directive->id->toString(); // convenience
 
         if (isset($hash['TYPE'])) {
             $type = explode('/', $hash->offsetGet('TYPE'));
@@ -122,7 +124,11 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
 
         if (isset($hash['DEFAULT'])) {
             try {
-                $directive->default = $this->varParser->parse($hash->offsetGet('DEFAULT'), $directive->type, $directive->typeAllowsNull);
+                $directive->default = $this->varParser->parse(
+                    $hash->offsetGet('DEFAULT'),
+                    $directive->type,
+                    $directive->typeAllowsNull
+                );
             } catch (HTMLPurifier_VarParserException $e) {
                 throw new HTMLPurifier_ConfigSchema_Exception($e->getMessage() . " in DEFAULT in directive hash '$id'");
             }
@@ -142,7 +148,7 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
 
         if (isset($hash['ALIASES'])) {
             $raw_aliases = trim($hash->offsetGet('ALIASES'));
-            $aliases     = preg_split('/\s*,\s*/', $raw_aliases);
+            $aliases = preg_split('/\s*,\s*/', $raw_aliases);
             foreach ($aliases as $alias) {
                 $directive->aliases[] = $this->id($alias);
             }
@@ -178,7 +184,7 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
 
     /**
      * Converts an array list into a lookup array.
-     * @param  array $array
+     * @param array $array
      * @return array
      */
     protected function lookup($array)
@@ -187,14 +193,13 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
         foreach ($array as $val) {
             $ret[$val] = true;
         }
-
         return $ret;
     }
 
     /**
      * Convenience function that creates an HTMLPurifier_ConfigSchema_Interchange_Id
      * object based on a string Id.
-     * @param  string $id
+     * @param string $id
      * @return HTMLPurifier_ConfigSchema_Interchange_Id
      */
     protected function id($id)
@@ -219,4 +224,3 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
 }
 
 // vim: et sw=4 sts=4
-

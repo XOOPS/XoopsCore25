@@ -5,6 +5,7 @@
  */
 class HTMLPurifier_ConfigSchema_Interchange_Directive
 {
+
     /**
      * ID of directive.
      * @type HTMLPurifier_ConfigSchema_Interchange_Id
@@ -65,7 +66,7 @@ class HTMLPurifier_ConfigSchema_Interchange_Directive
     public $version;
 
     /**
-     * ID of directive that supersedes this old directive.
+     * ID of directive that supercedes this old directive.
      * Null if not deprecated.
      * @type HTMLPurifier_ConfigSchema_Interchange_Id
      */
@@ -86,4 +87,3 @@ class HTMLPurifier_ConfigSchema_Interchange_Directive
 }
 
 // vim: et sw=4 sts=4
-

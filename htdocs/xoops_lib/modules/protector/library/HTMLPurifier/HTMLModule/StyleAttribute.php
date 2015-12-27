@@ -18,7 +18,8 @@ class HTMLPurifier_HTMLModule_StyleAttribute extends HTMLPurifier_HTMLModule
         // The inclusion routine differs from the Abstract Modules but
         // is in line with the DTD and XML Schemas.
         'Style' => array('style' => false), // see constructor
-        'Core'  => array(0 => array('Style')));
+        'Core' => array(0 => array('Style'))
+    );
 
     /**
      * @param HTMLPurifier_Config $config
@@ -30,4 +31,3 @@ class HTMLPurifier_HTMLModule_StyleAttribute extends HTMLPurifier_HTMLModule
 }
 
 // vim: et sw=4 sts=4
-

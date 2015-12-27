@@ -8,10 +8,11 @@
  */
 class HTMLPurifier_AttrDef_HTML_MultiLength extends HTMLPurifier_AttrDef_HTML_Length
 {
+
     /**
-     * @param  string               $string
-     * @param  HTMLPurifier_Config  $config
-     * @param  HTMLPurifier_Context $context
+     * @param string $string
+     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Context $context
      * @return bool|string
      */
     public function validate($string, $config, $context)
@@ -26,7 +27,7 @@ class HTMLPurifier_AttrDef_HTML_MultiLength extends HTMLPurifier_AttrDef_HTML_Le
             return $parent_result;
         }
 
-        $length    = strlen($string);
+        $length = strlen($string);
         $last_char = $string[$length - 1];
 
         if ($last_char !== '*') {
@@ -52,10 +53,8 @@ class HTMLPurifier_AttrDef_HTML_MultiLength extends HTMLPurifier_AttrDef_HTML_Le
         if ($int == 1) {
             return '*';
         }
-
         return ((string)$int) . '*';
     }
 }
 
 // vim: et sw=4 sts=4
-

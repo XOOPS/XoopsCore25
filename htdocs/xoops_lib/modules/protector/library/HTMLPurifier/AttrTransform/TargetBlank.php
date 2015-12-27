@@ -20,9 +20,9 @@ class HTMLPurifier_AttrTransform_TargetBlank extends HTMLPurifier_AttrTransform
     }
 
     /**
-     * @param  array                $attr
-     * @param  HTMLPurifier_Config  $config
-     * @param  HTMLPurifier_Context $context
+     * @param array $attr
+     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Context $context
      * @return array
      */
     public function transform($attr, $config, $context)
@@ -32,16 +32,14 @@ class HTMLPurifier_AttrTransform_TargetBlank extends HTMLPurifier_AttrTransform
         }
 
         // XXX Kind of inefficient
-        $url    = $this->parser->parse($attr['href']);
+        $url = $this->parser->parse($attr['href']);
         $scheme = $url->getSchemeObj($config, $context);
 
         if ($scheme->browsable && !$url->isBenign($config, $context)) {
             $attr['target'] = '_blank';
         }
-
         return $attr;
     }
 }
 
 // vim: et sw=4 sts=4
-

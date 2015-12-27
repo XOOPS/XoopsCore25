@@ -9,6 +9,22 @@ NEWS ( CHANGELOG and HISTORY )                                     HTMLPurifier
     . Internal change
 ==========================
 
+4.7.0, released 2015-08-04
+# opacity is now considered a "tricky" CSS property rather than a
+  proprietary one.
+! %AutoFormat.RemoveEmpty.Predicate for specifying exactly when
+  an element should be considered "empty" (maybe preserve if it
+  has attributes), and modify iframe support so that the iframe
+  is removed if it is missing a src attribute.  Thanks meeva for
+  reporting.
+- Don't truncate upon encountering </div> when using DOMLex.  Thanks
+  Myrto Christina for finally convincing me to fix this.
+- Update YouTube filter for new code.
+- Fix parsing of rgb() values with spaces in them for 'border'
+  attribute.
+- Don't remove foo="" attributes if foo is a boolean attribute.  Thanks
+  valME for reporting.
+
 4.6.0, released 2013-11-30
 # Secure URI munge hashing algorithm has changed to hash_hmac("sha256", $url, $secret).
   Please update any verification scripts you may have.
@@ -22,7 +38,7 @@ NEWS ( CHANGELOG and HISTORY )                                     HTMLPurifier
 - Eliminate quadratic behavior in DOMLex by using a proper queue.
   Thanks Ole Laursen for noticing this.
 - Rewritten MakeWellFormed/FixNesting implementation eliminates quadratic
-  behavior in the rest of the purification pipeline.  Thanks Chedburn
+  behavior in the rest of the purificaiton pipeline.  Thanks Chedburn
   Networks for sponsoring this work.
 - Made Linkify URL parser a bit less permissive, so that non-breaking
   spaces and commas are not included as part of URL.  Thanks nAS for fixing.
@@ -247,7 +263,7 @@ NEWS ( CHANGELOG and HISTORY )                                     HTMLPurifier
 
 3.3.0, released 2009-02-16
 ! Implement CSS property 'overflow' when %CSS.AllowTricky is true.
-! Implement generic property list classes
+! Implement generic property list classess
 - Fix bug with testEncodingSupportsASCII() algorithm when iconv() implementation
   does not do the "right thing" with characters not supported in the output
   set.
@@ -287,7 +303,7 @@ NEWS ( CHANGELOG and HISTORY )                                     HTMLPurifier
 ! %Core.AggressivelyFixLt is on by default. This causes more sensible
   processing of left angled brackets in smileys and other whatnot.
 ! Test scripts now have a 'type' parameter, which lets you say 'htmlpurifier',
-  'phpt', 'vtest', etc. in order to only execute those tests. This supersedes
+  'phpt', 'vtest', etc. in order to only execute those tests. This supercedes
   the --only-phpt parameter, although for backwards-compatibility the flag
   will still work.
 ! AutoParagraph auto-formatter will now preserve double-newlines upon output.
@@ -338,7 +354,7 @@ NEWS ( CHANGELOG and HISTORY )                                     HTMLPurifier
 . Added --quick option to multitest.php, which tests only the most recent
   release for each series.
 . Added --distro option to multitest.php, which accepts either 'normal' or
-  'standalone'. This supersedes --exclude-normal and --exclude-standalone
+  'standalone'. This supercedes --exclude-normal and --exclude-standalone
 
 3.1.1, released 2008-06-19
 # %URI.Munge now, by default, does not munge resources (for example, <img src="">)
@@ -488,7 +504,7 @@ NEWS ( CHANGELOG and HISTORY )                                     HTMLPurifier
 # HTMLPurifier->addFilter is deprecated; built-in filters can now be
   enabled using %Filter.$filter_name or by setting your own filters using
   %Filter.Custom
-# Directive-level safety properties superseded in favor of module-level
+# Directive-level safety properties superceded in favor of module-level
   safety. Internal method HTMLModule->addElement() has changed, although
   the externally visible HTMLDefinition->addElement has *not* changed.
 ! Extra utility classes for testing and non-library operations can
@@ -600,7 +616,7 @@ NEWS ( CHANGELOG and HISTORY )                                     HTMLPurifier
 - Fix warning emitted when a non-supported URI scheme is passed to the
   MakeAbsolute URIFilter, thanks NykO18 (again)
 - Further refine AutoParagraph injector. Behavior inside of elements
-  allowing paragraph tags clarified: only inline content delimited by
+  allowing paragraph tags clarified: only inline content delimeted by
   double newlines (not block elements) are paragraphed.
 - Buggy treatment of end tags of elements that have required attributes
   fixed (does not manifest on default tag-set)
@@ -875,7 +891,7 @@ NEWS ( CHANGELOG and HISTORY )                                     HTMLPurifier
   %Attr.IDBlacklistRegexp
 - Error messages are emitted when you attempt to "allow" elements or
   attributes that HTML Purifier does not support
-- Fix segfault in unit test. The problem is not very reproducible and
+- Fix segfault in unit test. The problem is not very reproduceable and
   I don't know what causes it, but a six line patch fixed it.
 
 1.5.0, released 2007-03-23
