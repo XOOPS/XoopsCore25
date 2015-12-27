@@ -40,7 +40,8 @@ Updated:
  - jQuery to 1.11.3 (mamba)
  - jQuery UI 1.11.4 (mamba)
  - jGrowl to 1.4.3 (mamba)
- - phpThumb to 1.7.14-201507071049
+ - phpThumb to 1.7.14-201507071049 (mamba)
+ - HTMLPurifier 4.7 (mamba)
 
 
 ===================================
