@@ -94,7 +94,7 @@ $myts =& MyTextSanitizer::getInstance();
     }
 } ?>
             </ul>
-            <?php 
+            <?php
 } else { ?>
                 <div id="dataperms" class="x2-note" style="display: none;"/>
             <?php } ?>

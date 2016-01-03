@@ -4,7 +4,7 @@
  * @package PHPMailer
  * @author Klemen Tušar <techouse@gmail.com>
  */
- 
+
 $PHPMAILER_LANG['authenticate']         = 'SMTP napaka: Avtentikacija ni uspela.';
 $PHPMAILER_LANG['connect_host']         = 'SMTP napaka: Ne morem vzpostaviti povezave s SMTP gostiteljem.';
 $PHPMAILER_LANG['data_not_accepted']    = 'SMTP napaka: Strežnik zavrača podatke.';

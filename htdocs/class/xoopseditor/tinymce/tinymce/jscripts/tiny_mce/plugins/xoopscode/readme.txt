@@ -7,7 +7,7 @@
 This plugin allows you and your site's users
 to add code and quoted text in a nice formatted box.
 It is also a workaround for cut/copy/paste protection in Gecko browsers.
-It simply adds a 
+It simply adds a
 <div class="xoopsQuote">your quoted text</div>
 when inserting quote or
 <div class="xoopsCode">your code</div>

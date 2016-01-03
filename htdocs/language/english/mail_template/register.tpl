@@ -17,5 +17,5 @@ request by clicking on the link below:
 -----------
 Best Regards
 {SITENAME}
-({SITEURL}) 
+({SITEURL})
 {ADMINMAIL}

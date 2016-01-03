@@ -444,7 +444,7 @@ class PHPMailer
      * @type string
      */
     public $XMailer = '';
-    
+
     /**
      * Only For XOAUTH - Google
      * Options: An empty string for PHPMailer default, Enter the email used to get access token
@@ -454,8 +454,8 @@ class PHPMailer
 //    public $RefreshToken = '';
 //    public $ClientId = '';
 //    public $ClientSecret = '';
-    
-    
+
+
     /**
      * An instance of the SMTP sender class.
      * @type SMTP
@@ -1384,7 +1384,7 @@ class PHPMailer
         if (is_null($this->smtp)) {
             $this->smtp = $this->getSMTPInstance();
         }
-       
+
         // Already connected?
         if ($this->smtp->connected()) {
             return true;
@@ -1459,10 +1459,10 @@ class PHPMailer
                     }
                     if ($this->SMTPAuth) {
                         if (!$this->smtp->authenticate(
-                            $this->Username, 
-                            $this->Password, 
-                            $this->AuthType, 
-                            $this->Realm, 
+                            $this->Username,
+                            $this->Password,
+                            $this->AuthType,
+                            $this->Realm,
                             $this->Workstation
                         )
                         ) {
@@ -3140,7 +3140,7 @@ class PHPMailer
                     }
                 } elseif (substr($url, 0, 4) !== 'cid:' && !preg_match('#^[A-z]+://#', $url)) {
                     // Do not change urls for absolute images (thanks to corvuscorax)
-					// Do not change urls that are already inline images
+                    // Do not change urls that are already inline images
                     $filename = basename($url);
                     $directory = dirname($url);
                     if ($directory === '.') {

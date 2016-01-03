@@ -6,6 +6,6 @@ Clicking on the link below will activate the profile of this user:
 {USERACTLINK}
 
 -----------
-{SITENAME} ({SITEURL}) 
+{SITENAME} ({SITEURL})
 webmaster
 {ADMINMAIL}

@@ -12,7 +12,7 @@ To have paginations like on demo page and screenshots:
  - Copy "themes/xBootstrap/modules/publisher/xoops_and_module_changes/xoops.css"
     to
    your_xoops/xoops.css
-   
+
 ----- Avatars Dimensions --
 Recomended avatars dimensions:
 350x350

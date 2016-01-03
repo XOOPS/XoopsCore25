@@ -11,7 +11,7 @@ user guide:
   XOOPS/class/xoopseditor/koivi
   XOOPS/class/xoopseditor/textarea
   XOOPS/class/xoopseditor/tinymce
-  
+
 3 configure preferences where applicable
 3.1 ./dhtmlext(all editors)/language/: make your local langauge file based on english.php
 3.3 ./dhtmlext(all editors)/editor_registry.php: set configurations for the editor: order - display order in case editor selection is used, 0 for disabled; nohtml - works for non-html syntax

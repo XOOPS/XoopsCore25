@@ -8,6 +8,6 @@ You can get your new password by clicking on the link below:
 If you didn't ask for this, don't worry. Just delete this Email.
 
 -----------
-{SITENAME} ({SITEURL}) 
+{SITENAME} ({SITEURL})
 webmaster
 {ADMINMAIL}

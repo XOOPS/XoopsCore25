@@ -29,14 +29,14 @@ pre.code {
 }
 
 .codemirror-iframe {
-	background: transparent;
-	color: black;
+    background: transparent;
+    color: black;
 }
 
 .CodeMirror-line-numbers {
-	font-size: 10pt;
-	margin: 0.4em;
-	padding-right: 0.4em;
-	text-align: right;
-	background: #FAF0E6;
+    font-size: 10pt;
+    margin: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    background: #FAF0E6;
 }

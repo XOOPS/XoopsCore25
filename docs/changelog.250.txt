@@ -1,7 +1,7 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
-2.5.8 Beta 1		NOT RELEASED 
+2.5.8 Beta 1        NOT RELEASED
 ===================================
 - replaced "dirname(__FILE__)" with "__DIR__" since the min. PHP is now 5.3.7, and __DIR__ is faster  (mamba)
 - updating some copyright notices (mamba)
@@ -40,7 +40,7 @@ Updated:
  - HTML Purifier to 4.7.0 (mamba)
 
 ===================================
-2.5.7.2 Final 	2016-01-02
+2.5.7.2 Final   2016-01-02
 ===================================
 
 This patch for XOOPS 2.5.7 corrects the following issues:
@@ -51,7 +51,7 @@ All XOOPS 2.5.7.1 users are advised to apply this patch as soon as possible. Any
 
 
 ===================================
-2.5.7.1 Final 	2014-06-20
+2.5.7.1 Final   2014-06-20
 ===================================
 
 This patch for XOOPS 2.5.7 corrects the following issues:
@@ -67,7 +67,7 @@ All XOOPS 2.5.7 users are advised to apply this patch as soon as possible. Any u
 
 
 ===================================
-2.5.7 Final		2014/06/14 
+2.5.7 Final     2014/06/14
 ===================================
 - updated XoopsMediaUploader to use system memory values from php.ini, and to offer random file names (mamba/luciorota/zyspec)
 - added .tpl to XoopsList's getHtmlListAsArray (wizanda)
@@ -85,7 +85,7 @@ Updated:
  - TinyMCE to 3.5.11 (mamba)
 
 ===================================
-2.5.7 RC 1		2014/04/06 
+2.5.7 RC 1      2014/04/06
 ===================================
 
 Bugfixes:
@@ -106,7 +106,7 @@ Updated:
  - jGrowl to 1.2.14 (mamba)
 
 ===================================
-2.5.7 Beta 1		2014/03/06 
+2.5.7 Beta 1        2014/03/06
 ===================================
 Bugfixes:
 - ID: 1143 (old ID 430840)  class/module.errorhandler.php (uberrookie/zyspec)
@@ -186,7 +186,7 @@ Updated:
  - prototype.js to 1.7.1, Aug 2012 (rgriffith)
 
 ===================================
-2.5.6 Final		2013/04/21 
+2.5.6 Final     2013/04/21
 ===================================
 Bugfixes:
 - updated English translations (Cesag,Mamba)
@@ -195,7 +195,7 @@ Bugfixes:
 - improving protection against spam by turning off registration's 1st step saving (timgno)
 
 ===================================
-2.5.6 RC1		2013/03/25 
+2.5.6 RC1       2013/03/25
 ===================================
 Bugfixes:
  - Array to string conversion (geekwright/mamba)
@@ -215,7 +215,7 @@ Security fixes
  - LFI vulnerability in system/admin/tplsets/jquery.php (Marcin,Ariko-Security Team/trabis)
 
 ===================================
-2.5.6 Beta		2013/01/22 
+2.5.6 Beta      2013/01/22
 ===================================
 Security fixes:
  - XSS (Cross Site Scripting) vulnerability in Maintenance (Dingjie Yang,Qualys/trabis)
@@ -234,7 +234,7 @@ Added:
 - Fast Comment Hack (Voltan)
 
 ===================================
-2.5.5 Final		2012/04/15 
+2.5.5 Final     2012/04/15
 ===================================
 Bugfixes:
  - preventing division by zero in pagenav.php (timgno)
@@ -248,7 +248,7 @@ Updated:
  - jGrowl to 1.2.6 (mowaffaq/mamba)
 
 ===================================
-2.5.5 RC		2012/03/14 
+2.5.5 RC        2012/03/14
 ===================================
 Bugfixes:
  - ID: 3494895 When changing the # of visible entries in Protector, it goes to Admin (jcweb/mamba)
@@ -269,7 +269,7 @@ Updated:
  - jQueryUI to version 1.8.18 (mamba)
 
 ===================================
-2.5.5 Beta		2012/02/19 
+2.5.5 Beta      2012/02/19
 ===================================
 Security fixes:
  - XSS (Cross Site Scripting) vulnerability in PM module and tinymce (High-Tech Bridge Security Research Lab/trabis)
@@ -302,7 +302,7 @@ Updated:
  - PhpMailer to version 5.2.1 (mamba)
 
 ===================================
-2.5.4 Final		2011/11/20 
+2.5.4 Final     2011/11/20
 ===================================
 Bugfixes:
  - ID: 3430112 Java problem in xoops editor (voltan/mamba/trabis)
@@ -315,7 +315,7 @@ Updated:
  - updated jQuery to 1.7 (mamba)
 
 ===================================
-2.5.4 RC		2011/10/10 
+2.5.4 RC        2011/10/10
 ===================================
 Bugfixes:
  - quoteConv causing problems with large number of quotes (Roby73/trabis)
@@ -332,7 +332,7 @@ Improved:
  - Logging deprecated methods and files that will be removed on XOOPS 2.6.0 (trabis)
 
 ===================================
-2.5.4 Beta		2011/10/05 
+2.5.4 Beta      2011/10/05
 ===================================
 Bugfixes:
  - Remove a call of non existing css file in admin menu
@@ -352,14 +352,14 @@ Deleted:
  - Delete xoops_lib/data/secure.php file for exclude update error
 
 ===================================
-2.5.3			2011/10/03 
+2.5.3           2011/10/03
 ===================================
 Bugfixes:
  - Style switcher does not work on default admin GUI(trabis)
  - Reverting fix for bug ID: 2672723 Changed the code in Install to omits the SQL command: "ALTER DATABASE ... CHARACTER SET ..." (trabis)
 
 ===================================
-2.5.2 Final		2011/09/29 
+2.5.2 Final     2011/09/29
 ===================================
 Bugfixes:
  - ID: 3416069 - avatars upload problem (cesag/trabis)
@@ -368,7 +368,7 @@ Bugfixes:
  - 'Selected modules does not exist' if using inactive module on startpage (trabis)
 
 ===================================
-2.5.2 RC		2011/09/06 
+2.5.2 RC        2011/09/06
 ===================================
 Security fixes:
  - Removed support for script driven images!!! (High-Tech Bridge Security Research Lab/trabis)
@@ -452,7 +452,7 @@ Improved:
  - require class/xoopslocal.php causing problems with RMCommon (mamba/trabis)
 
 ===================================
-2.5.2 Beta		2011/04/12 
+2.5.2 Beta      2011/04/12
 ===================================
 Bugfixes:
  - Module names and orders were not able to update (phppp/aitor)
@@ -462,7 +462,7 @@ Bugfixes:
 
 
 ===================================
-2.5.1 Final		2011/03/23 
+2.5.1 Final     2011/03/23
 ===================================
 Bugfixes:
  - ID: 3219412 Block Cloning : parent module (mid) not saved when cloning(trabis)
@@ -471,13 +471,13 @@ Bugfixes:
 
 
 ===================================
-2.5.1 RC		2011/03/15
+2.5.1 RC        2011/03/15
 ===================================
 Updates:
  - Updated suico and zetagenesis themes, zetadigme system admin theme (kris_fr)
 
 ===================================
-2.5.1 RC		2011/03/15 
+2.5.1 RC        2011/03/15
 ===================================
 Security improvements:
  - Added filters to output data to avoid potential XSS (phppp/Aung Khant)
@@ -495,7 +495,7 @@ Bugfixes:
 
 
 ===================================
-2.5.0			2010/10/23 
+2.5.0           2010/10/23
 ===================================
 Bug Fixes:
 

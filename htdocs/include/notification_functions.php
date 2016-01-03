@@ -379,7 +379,7 @@ function &notificationSubscribableCategoryInfo($module_id = null)
             }
         }
     }
-	}
+    }
     return $sub_categories;
 }
 

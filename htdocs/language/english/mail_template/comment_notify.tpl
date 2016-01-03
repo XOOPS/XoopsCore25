@@ -15,6 +15,6 @@ If this is an error or you wish not to receive further such notifications, pleas
 Please do not reply to this message.
 
 -----------
-{X_SITENAME} ({X_SITEURL}) 
+{X_SITENAME} ({X_SITEURL})
 webmaster
 {X_ADMINMAIL}

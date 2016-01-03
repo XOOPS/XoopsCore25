@@ -6,6 +6,6 @@ Site Name: {SITENAME}
 Site URL:  {SITEURL}
 
 -----------
-{SITENAME} ({SITEURL}) 
+{SITENAME} ({SITEURL})
 webmaster
 {ADMINMAIL}

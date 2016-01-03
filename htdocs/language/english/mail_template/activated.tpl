@@ -7,6 +7,6 @@ You can now login from the following URL with the password you have submitted at
 {SITEURL}user.php
 
 -----------
-{SITENAME} ({SITEURL}) 
+{SITENAME} ({SITEURL})
 webmaster
 {ADMINMAIL}

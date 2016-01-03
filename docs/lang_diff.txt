@@ -16,7 +16,7 @@ ADDED/DELETED DEFINES
 define('_AM_SYSTEM_USERS_ACTIVATE', 'Activate User');
 
 /modules/system/language/english/blocks.php
-define('_MB_SYSTEM_BLOCK_HEIGHT',"Block Height (lines)");	
+define('_MB_SYSTEM_BLOCK_HEIGHT',"Block Height (lines)");
 
 ===============================
 2014/06/14: Version 2.5.7 Final
@@ -83,7 +83,7 @@ SEE ALSO:
 /modules/profile/docs/lang_diff.txt
 
 ===============================
-2011/11/17: Version 2.5.4 
+2011/11/17: Version 2.5.4
 ===============================
 
 /Frameworks/moduleclasses/moduleadmin/language/english/main.php
@@ -134,7 +134,7 @@ delete define('_PM_READ', 'Already Read');
 - added define("_PROFILE_MI_HOME", "Home");
 
 
-/modules/system/language/english/admin/preferences.php 
+/modules/system/language/english/admin/preferences.php
 - deleted define("_AM_SYSTEM_PREFERENCES_NAV_MD_AM_GENERAL","General Settings");
 - deleted define("_AM_SYSTEM_PREFERENCES_NAV_MD_AM_USERSETTINGS","User Info Settings");
 - deleted define("_AM_SYSTEM_PREFERENCES_NAV_MD_AM_METAFOOTER","Meta Tags and Footer");

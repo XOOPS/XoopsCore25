@@ -50,7 +50,7 @@ Updates upon community:
 - Fixed: Functions for getting and setting system and module configs, no cleaning should be made (trabis)
 - Fixed: Changing &copy; into @ in some config values (trabis)
 - Fixed: Notifications box not including comments language (trabis)
-- Fixed: Profile module Field weight: > 9 incorrect display (trabis) 
+- Fixed: Profile module Field weight: > 9 incorrect display (trabis)
 - Improved: Cache file 'system_modules_active' is automatically created without need to update system module (trabis)
 
 Updates from Sourceforge trackers:
@@ -105,7 +105,7 @@ Updates upon community:
 - Added : missing index.html files (mamba, Culex)
 - Added : Frameworks/compat (trabis)
 - Added : define language for banner client ID (kris_fr)
-- Added : users real name can now be used in themes <{$xoops_name}> (kris_fr) 
+- Added : users real name can now be used in themes <{$xoops_name}> (kris_fr)
 - Added : comment for download module and theme in last page "xoops installer" (kris_fr)
 - Improved : rtl style in oxygen GUI (voltan)
 
@@ -114,7 +114,7 @@ Updates from Sourceforge trackers:
 
 Added Language defines:
   modules/system/language/english/admin/banners.php _AM_CLIENTID
-  
+
 Modified Language file:
   install/language/english/finish.php
 
@@ -139,7 +139,7 @@ Updates from Sourceforge trackers:
 ===============================
 Updates from Sourceforge trackers:
 - Fixed bug #2872644 : Find users bug - MAX_JOIN_SIZE (trabis/ghia/mowaffak)
-- Fixed bug #2877987 : setExtra of XoopsFormElement is unusable (trabis/instantzero) 
+- Fixed bug #2877987 : setExtra of XoopsFormElement is unusable (trabis/instantzero)
 - Fixed bug #2720792 : Hardcoded "Re:" in pmlite.php (trabis/arabxoops)
 
 Removed language defines:
@@ -327,12 +327,12 @@ Added Language defines:
 
 Removed language defines:
   /language/english/admin.php : _AD_PRESSGEN
-  
+
 Added Language File:
   /language/english/countries.php (trabis)
   /language/english/logger.php (trabis)
   /language/english/errors.php (Catzwolf)
-  
+
 Third-party updates:
 - Added nuSoap - sourceforge (wishcraft)
 - Upgraded Smarty to 2.6.26 (trabis)

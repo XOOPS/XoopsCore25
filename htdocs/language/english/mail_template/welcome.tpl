@@ -11,5 +11,5 @@ In case you have any problem or inconvenience using "{X_SITENAME}", please feel 
 Best regards,
 
 -----------
-{X_SITENAME}: {X_SITEURL} 
+{X_SITENAME}: {X_SITEURL}
 webmaster: {X_ADMINMAIL}

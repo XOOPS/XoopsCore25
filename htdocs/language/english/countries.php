@@ -58,7 +58,7 @@ define('_COUNTRY_CM','Cameroon');
 define('_COUNTRY_CN','China');
 define('_COUNTRY_CO','Colombia');
 define('_COUNTRY_CR','Costa Rica');
-define('_COUNTRY_CS','Serbia & Montenegro (former)');	//  Not listed in ISO 3166
+define('_COUNTRY_CS','Serbia & Montenegro (former)');   //  Not listed in ISO 3166
 define('_COUNTRY_CU','Cuba');
 define('_COUNTRY_CV','Cape Verde');
 define('_COUNTRY_CX','Christmas Island');
@@ -83,7 +83,7 @@ define('_COUNTRY_FK','Falkland Islands (Malvinas)');
 define('_COUNTRY_FM','Micronesia');
 define('_COUNTRY_FO','Faroe Islands');
 define('_COUNTRY_FR','France');
-define('_COUNTRY_FX','France, Metropolitan');	//  Not listed in ISO 3166
+define('_COUNTRY_FX','France, Metropolitan');   //  Not listed in ISO 3166
 define('_COUNTRY_GA','Gabon');
 define('_COUNTRY_GB','Great Britain (UK)');
 define('_COUNTRY_GD','Grenada');
@@ -217,7 +217,7 @@ define('_COUNTRY_SN','Senegal');
 define('_COUNTRY_SO','Somalia');
 define('_COUNTRY_SR','Suriname');
 define('_COUNTRY_ST','Sao Tome and Principe');
-define('_COUNTRY_SU','USSR (former)');	//  Not listed in ISO 3166
+define('_COUNTRY_SU','USSR (former)');  //  Not listed in ISO 3166
 define('_COUNTRY_SV','El Salvador');
 define('_COUNTRY_SY','Syria');
 define('_COUNTRY_SZ','Swaziland');
@@ -232,7 +232,7 @@ define('_COUNTRY_TL','Timor-Leste');
 define('_COUNTRY_TM','Turkmenistan');
 define('_COUNTRY_TN','Tunisia');
 define('_COUNTRY_TO','Tonga');
-define('_COUNTRY_TP','East Timor');	//  Not listed in ISO 3166, changed to TL
+define('_COUNTRY_TP','East Timor'); //  Not listed in ISO 3166, changed to TL
 define('_COUNTRY_TR','Turkey');
 define('_COUNTRY_TT','Trinidad and Tobago');
 define('_COUNTRY_TV','Tuvalu');
@@ -256,8 +256,8 @@ define('_COUNTRY_WF','Wallis and Futuna Islands');
 define('_COUNTRY_WS','Samoa');
 define('_COUNTRY_YE','Yemen');
 define('_COUNTRY_YT','Mayotte');
-define('_COUNTRY_YU','Yugoslavia (former)');	//  Not listed in ISO 3166
+define('_COUNTRY_YU','Yugoslavia (former)');    //  Not listed in ISO 3166
 define('_COUNTRY_ZA','South Africa');
 define('_COUNTRY_ZM','Zambia');
-define('_COUNTRY_ZR','Zaire');	//  Not listed in ISO 3166
+define('_COUNTRY_ZR','Zaire');  //  Not listed in ISO 3166
 define('_COUNTRY_ZW','Zimbabwe');
