@@ -38,6 +38,7 @@ Updated:
  - jGrowl to 1.4.3 (mamba)
  - phpThumb to 1.7.14-201512180757  (mamba)
  - HTML Purifier to 4.7.0 (mamba)
+ - Bootstrap to 3.3.6 (mamba)
 
 ===================================
 2.5.7.2 Final   2016-01-02
