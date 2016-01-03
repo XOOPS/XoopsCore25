@@ -3,22 +3,21 @@
 /**
  * Class upgrade_2017
  */
-class upgrade_2017 extends xoopsUpgrade
+class Upgrade_2017 extends xoopsUpgrade
 {
-
     /**
      * @return bool
      */
-    function isApplied()
+    public function isApplied()
     {
-        return ( /*$this->check_file_patch() &&*/
+        return (/*$this->check_file_patch() &&*/
         $this->check_auth_db());
     }
 
     /**
      * @return bool
      */
-    function apply()
+    public function apply()
     {
         return $this->apply_auth_db();
     }
@@ -26,7 +25,7 @@ class upgrade_2017 extends xoopsUpgrade
     /**
      * @return bool
      */
-    function check_file_patch()
+    public function check_file_patch()
     {
         /* $path = XOOPS_ROOT_PATH . '/class/auth';
         $lines = file( "$path/auth_provisionning.php");
@@ -43,7 +42,7 @@ class upgrade_2017 extends xoopsUpgrade
     /**
      * @return bool
      */
-    function check_auth_db()
+    public function check_auth_db()
     {
         $db    = $GLOBALS['xoopsDB'];
         $value = getDbValue($db, 'config', 'conf_id', "`conf_name` = 'ldap_use_TLS' AND `conf_catid` = " . XOOPS_CONF_AUTH);
@@ -54,7 +53,7 @@ class upgrade_2017 extends xoopsUpgrade
     /**
      * @param $sql
      */
-    function query($sql)
+    public function query($sql)
     {
         $db = $GLOBALS['xoopsDB'];
         if (!($ret = $db->queryF($sql))) {
@@ -65,14 +64,14 @@ class upgrade_2017 extends xoopsUpgrade
     /**
      * @return bool
      */
-    function apply_auth_db()
+    public function apply_auth_db()
     {
         $db = $GLOBALS['xoopsDB'];
 
         // Insert config values
         $table = $db->prefix('config');
         $data  = array(
-            'ldap_use_TLS' => "'_MD_AM_LDAP_USETLS', '0', '_MD_AM_LDAP_USETLS_DESC', 'yesno', 'int', 21",);
+            'ldap_use_TLS' => "'_MD_AM_LDAP_USETLS', '0', '_MD_AM_LDAP_USETLS_DESC', 'yesno', 'int', 21");
         foreach ($data as $name => $values) {
             if (!getDbValue($db, 'config', 'conf_id', "`conf_modid`=0 AND `conf_catid`=7 AND `conf_name`='$name'")) {
                 $this->query("INSERT INTO `$table` (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) " . "VALUES ( 0,7,'$name',$values)");
@@ -83,5 +82,5 @@ class upgrade_2017 extends xoopsUpgrade
     }
 }
 
-$upg = new upgrade_2017();
+$upg = new Upgrade_2017();
 return $upg;

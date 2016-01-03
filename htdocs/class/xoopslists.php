@@ -30,7 +30,7 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
      * @subpackage          form
      * @access              public
      */
-    class xoopslists
+    class XoopsLists
     {
         /**
          * @return array

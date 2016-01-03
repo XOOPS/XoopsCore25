@@ -11,5 +11,3 @@ Once the upgrade process is fully completed please <strong>go to module administ
 To cancel the upgrade, <a href='index.php'>click here</a>.<br /><br />
 Or to <a style='color:green; font-size:1.3em;' href='index.php?action=next&upd220=ok'>proceed</a>.
 ");
-
-?>

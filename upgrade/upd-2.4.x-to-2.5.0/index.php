@@ -22,15 +22,15 @@ require_once 'dbmanager.php';
 /**
  * Class upgrade_250
  */
-class upgrade_250 extends xoopsUpgrade
+class Upgrade_250 extends xoopsUpgrade
 {
-    var $tasks = array('config', 'templates');
+    public $tasks = array('config', 'templates');
 
     /**
      * Check if cpanel config already exists
      *
      */
-    function check_config()
+    public function check_config()
     {
         $sql = "SELECT COUNT(*) FROM `" . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` IN ('break1', 'usetips')";
         if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
@@ -44,7 +44,7 @@ class upgrade_250 extends xoopsUpgrade
     /**
      * @return bool
      */
-    function check_templates()
+    public function check_templates()
     {
         $sql = "SELECT COUNT(*) FROM `" . $GLOBALS['xoopsDB']->prefix('tplfile') . "` WHERE `tpl_file` IN ('system_header.html') AND `tpl_type` = 'admin'";
         if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
@@ -58,7 +58,7 @@ class upgrade_250 extends xoopsUpgrade
     /**
      * @return bool
      */
-    function apply_config()
+    public function apply_config()
     {
         $dbm = new db_manager();
 
@@ -142,16 +142,15 @@ class upgrade_250 extends xoopsUpgrade
     /**
      * @return bool
      */
-    function apply_templates()
+    public function apply_templates()
     {
-
         include_once '../modules/system/xoops_version.php';
 
         $dbm  = new db_manager();
         $time = time();
         foreach ($modversion['templates'] as $tplfile) {
             // Admin templates
-            if (isset($tplfile['type']) && $tplfile['type'] == 'admin' && $fp = fopen('../modules/system/templates/admin/' . $tplfile['file'], 'r')) {
+            if (isset($tplfile['type']) && $tplfile['type'] === 'admin' && $fp = fopen('../modules/system/templates/admin/' . $tplfile['file'], 'r')) {
                 $newtplid  = $dbm->insert('tplfile', " VALUES (0, 1, 'system', 'default', '" . addslashes($tplfile['file']) . "', '" . addslashes($tplfile['description']) . "', " . $time . ", " . $time . ", 'admin')");
                 $tplsource = fread($fp, filesize('../modules/system/templates/admin/' . $tplfile['file']));
                 fclose($fp);
@@ -162,12 +161,11 @@ class upgrade_250 extends xoopsUpgrade
         return true;
     }
 
-    function upgrade_250()
+    public function __construct()
     {
-        $this->xoopsUpgrade(basename(__DIR__));
+        parent::__construct(basename(__DIR__));
     }
-
 }
 
-$upg = new upgrade_250();
+$upg = new Upgrade_250();
 return $upg;

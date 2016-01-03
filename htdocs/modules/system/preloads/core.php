@@ -58,6 +58,12 @@ class SystemCorePreload extends XoopsPreloadItem
      */
     public function eventCoreHeaderAddmeta($args)
     {
+        if (defined("XOOPS_STARTPAGE_REDIRECTED") || (isset($GLOBALS['xoopsOption']['template_main']) && $GLOBALS['xoopsOption']['template_main'] === 'db:system_homepage.tpl')) {
+            if (is_object($GLOBALS['xoopsTpl'])) {
+                $GLOBALS['xoopsTpl']->assign('homepage', true);
+            }
+        }
+
         if (!empty($_SESSION['redirect_message'])) {
             $GLOBALS['xoTheme']->addStylesheet('xoops.css');
             $GLOBALS['xoTheme']->addScript('browse.php?Frameworks/jquery/jquery.js');

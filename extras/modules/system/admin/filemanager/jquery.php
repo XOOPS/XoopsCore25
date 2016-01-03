@@ -47,12 +47,12 @@ switch ($op) {
 
             if (count($files) > 2) { /* The 2 accounts for . and .. */
                 echo "<ul class=\"jqueryFileTree\" style=\"display: none;\">";
-                if ('/' == $_REQUEST['dir']) {
+                if ('/' === $_REQUEST['dir']) {
                     echo "<a href=\"admin.php?fct=filemanager\"><strong>/</strong></a>";
                 }
                 // All dirs
                 foreach ($files as $file) {
-                    if (file_exists($root . $_REQUEST['dir'] . $file) && $file != '.' && $file != '..' && is_dir($root . $_REQUEST['dir'] . $file)) {
+                    if (file_exists($root . $_REQUEST['dir'] . $file) && $file !== '.' && $file !== '..' && is_dir($root . $_REQUEST['dir'] . $file)) {
                         //retirer .svn
                         $file_no_valid = array('.svn', 'conf', 'db', 'locks', 'hooks', 'cache', 'templates_c');
 
@@ -132,10 +132,10 @@ switch ($op) {
                 // All files
                 echo '<table cellpadding="0" cellspacing="0"  border="0" align="center">
                         <tr>
-                            <td align="center" width="' . $width . '%" style="padding-bottom:12px">';
+                            <td align="center" width="' . $width . '%" style="padding-bottom:12px;">';
                 foreach ($files as $file) {
                     if (!preg_match('#.back#', $file)) {
-                        if (file_exists($path_file . $file) && $file != '.' && $file != '..' && !is_dir($path_file . $file)) {
+                        if (file_exists($path_file . $file) && $file !== '.' && $file !== '..' && !is_dir($path_file . $file)) {
                             //echo $path_file . $file.'<br />';
                             $unzip           = '';
                             $edit            = false;
@@ -206,7 +206,7 @@ switch ($op) {
                             $chmod = modify_chmod($chmod, $path_file . $file, $count_file);
 
                             //Img
-                            if ($extension_verif == 'picture') {
+                            if ($extension_verif === 'picture') {
                                 list($width, $height) = getimagesize($path_file . $file);
                                 if ($height > 60) {
                                     $img = '<img src="' . $url_file . $file . '" height="47" title="" alt="" />';
@@ -236,9 +236,9 @@ switch ($op) {
                             $newline = ($count_file % $nbcolonnes_file == 1) ? true : false;
 
                             if ($newline) {
-                                echo '</tr><tr><td align="center" style="padding-bottom:12px">';
+                                echo '</tr><tr><td align="center" style="padding-bottom:12px;">';
                             } else {
-                                echo '<td align="center" style="padding-bottom:12px">';
+                                echo '<td align="center" style="padding-bottom:12px;">';
                             }
                         }
                     }
@@ -479,5 +479,3 @@ switch ($op) {
         }
         break;
 }
-
-?>

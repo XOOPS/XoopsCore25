@@ -78,7 +78,7 @@ if (!$allowed) {
     $xoopsTpl->debugging      = false;
     $xoopsTpl->debugging_ctrl = 'none';
     $xoopsTpl->caching        = 0;
-    $xoopsTpl->display('db:system_siteclosed.html');
+    $xoopsTpl->display('db:system_siteclosed.tpl');
     exit();
 }
 unset($allowed, $group);

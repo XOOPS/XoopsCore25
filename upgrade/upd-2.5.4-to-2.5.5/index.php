@@ -14,16 +14,16 @@
  * @author           trabis <lusopoemas@gmail.com>
  * @version          $Id: index.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-class upgrade_255 extends xoopsUpgrade
+class Upgrade_255 extends xoopsUpgrade
 {
-    var $tasks = array('keys', 'imptotal');
+    public $tasks = array('keys', 'imptotal');
 
     /**
      * Check if keys already exist
      *
      * @return bool
      */
-    function check_keys()
+    public function check_keys()
     {
         $tables['groups_users_link'] = array('uid');
 
@@ -51,7 +51,7 @@ class upgrade_255 extends xoopsUpgrade
      *
      * @return bool
      */
-    function apply_keys()
+    public function apply_keys()
     {
         $tables['groups_users_link'] = array('uid');
 
@@ -82,7 +82,7 @@ class upgrade_255 extends xoopsUpgrade
      *
      * @return bool
      */
-    function check_imptotal()
+    public function check_imptotal()
     {
         $sql = "SELECT `imptotal` FROM `" . $GLOBALS['xoopsDB']->prefix('banner') . "` WHERE `bid` = 1";
         if ($result = $GLOBALS['xoopsDB']->queryF($sql)) {
@@ -97,7 +97,7 @@ class upgrade_255 extends xoopsUpgrade
      *
      * @return bool
      */
-    function apply_imptotal()
+    public function apply_imptotal()
     {
         $sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix("banner") . "` CHANGE `imptotal` `imptotal` INT( 10 ) UNSIGNED NOT NULL DEFAULT '0'";
         if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
@@ -107,14 +107,11 @@ class upgrade_255 extends xoopsUpgrade
         return true;
     }
 
-    function upgrade_255()
+    public function __construct()
     {
-        $this->xoopsUpgrade(basename(__DIR__));
+        parent::__construct(basename(__DIR__));
     }
-
 }
 
-$upg = new upgrade_255();
+$upg = new Upgrade_255();
 return $upg;
-
-?>

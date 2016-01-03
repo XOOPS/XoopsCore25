@@ -23,5 +23,3 @@ define("ERR_NEED_WRITE_ACCESS", "The server must be given write access to the fo
 define("IS_NOT_WRITABLE", "%s is NOT writable.");
 define("IS_WRITABLE", "%s is writable.");
 define("ERR_COULD_NOT_WRITE_MAINFILE", "Error writing content to mainfile.php, write the content into mainfile.php manually.");
-
-?>

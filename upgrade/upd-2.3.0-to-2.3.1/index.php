@@ -22,20 +22,20 @@
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
  * @version          $Id: index.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-class upgrade_231 extends xoopsUpgrade
+class Upgrade_231 extends xoopsUpgrade
 {
-    var $tasks = array('field');
+    public $tasks = array('field');
 
-    function upgrade_231()
+    public function __construct()
     {
-        $this->xoopsUpgrade(basename(__DIR__));
+        parent::__construct(basename(__DIR__));
     }
 
     /**
      * Check if field type already fixed for mysql strict mode
      *
      */
-    function check_field()
+    public function check_field()
     {
         $fields = array(
             "cache_data"     => "cache_model",
@@ -51,7 +51,7 @@ class upgrade_231 extends xoopsUpgrade
             "tplset_credits" => "tplset",
             "tpl_source"     => "tplsource",
             "user_sig"       => "users",
-            "bio"            => "users",);
+            "bio"            => "users");
         foreach ($fields as $field => $table) {
             $sql = "SHOW COLUMNS FROM `" . $GLOBALS['xoopsDB']->prefix($table) . "` LIKE '{$field}'";
             if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
@@ -61,7 +61,7 @@ class upgrade_231 extends xoopsUpgrade
                 if ($row['Field'] != $field) {
                     continue;
                 }
-                if (strtoupper($row['Null']) != "YES") {
+                if (strtoupper($row['Null']) !== "YES") {
                     return false;
                 }
             }
@@ -70,7 +70,7 @@ class upgrade_231 extends xoopsUpgrade
         return true;
     }
 
-    function apply_field()
+    public function apply_field()
     {
         $allowWebChanges                     = $GLOBALS['xoopsDB']->allowWebChanges;
         $GLOBALS['xoopsDB']->allowWebChanges = true;
@@ -81,7 +81,5 @@ class upgrade_231 extends xoopsUpgrade
     }
 }
 
-$upg = new upgrade_231();
+$upg = new Upgrade_231();
 return $upg;
-
-?>

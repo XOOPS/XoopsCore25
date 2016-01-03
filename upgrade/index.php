@@ -43,7 +43,7 @@ function getDirList($dirname)
     $dirlist = array();
     if (is_dir($dirname) && $handle = opendir($dirname)) {
         while (false !== ($file = readdir($handle))) {
-            if (substr($file, 0, 1) != '.' && strtolower($file) != 'cvs') {
+            if (substr($file, 0, 1) !== '.' && strtolower($file) !== 'cvs') {
                 if (is_dir("{$dirname}/{$file}")) {
                     $dirlist[] = $file;
                 }
@@ -92,10 +92,10 @@ if (empty($upgrade_language)) {
 
 if (file_exists("./language/{$upgrade_language}/upgrade.php")) {
     include_once "./language/{$upgrade_language}/upgrade.php";
-} else if (file_exists("./language/{$upgrade_language}_utf8/upgrade.php")) {
+} elseif (file_exists("./language/{$upgrade_language}_utf8/upgrade.php")) {
     include_once "./language/{$upgrade_language}_utf8/upgrade.php";
     $upgrade_language .= "_utf8";
-} else if (file_exists("./language/english/upgrade.php")) {
+} elseif (file_exists("./language/english/upgrade.php")) {
     include_once "./language/english/upgrade.php";
     $upgrade_language = 'english';
 } else {

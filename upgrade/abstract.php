@@ -22,17 +22,17 @@
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
  * @version          $Id: abstract.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-class xoopsUpgrade
+class XoopsUpgrade
 {
-    var $usedFiles      = array();
-    var $tasks          = array();
-    var $languageFolder = null;
-    var $logs           = array();
+    public $usedFiles      = array();
+    public $tasks          = array();
+    public $languageFolder = null;
+    public $logs           = array();
 
     /**
      * @param null $dirname
      */
-    function xoopsUpgrade($dirname = null)
+    public function __construct($dirname = null)
     {
         if ($dirname) {
             $this->loadLanguage($dirname);
@@ -42,7 +42,7 @@ class xoopsUpgrade
     /**
      * @return bool
      */
-    function isApplied()
+    public function isApplied()
     {
         $step = get_class($this);
         if (!isset($_SESSION['xoops_upgrade'][$step]) || !is_array($_SESSION['xoops_upgrade'][$step])) {
@@ -62,7 +62,7 @@ class xoopsUpgrade
     /**
      * @return bool
      */
-    function apply()
+    public function apply()
     {
         $step  = get_class($this);
         $tasks = $_SESSION['xoops_upgrade'][$step];
@@ -80,13 +80,13 @@ class xoopsUpgrade
     /**
      * @param $dirname
      */
-    function loadLanguage($dirname)
+    public function loadLanguage($dirname)
     {
         global $xoopsConfig, $upgrade_language;
 
         if (file_exists("./{$dirname}/language/{$upgrade_language}.php")) {
             include_once "./{$dirname}/language/{$upgrade_language}.php";
-        } else if (file_exists("./{$dirname}/language/english.php")) {
+        } elseif (file_exists("./{$dirname}/language/english.php")) {
             include_once "./{$dirname}/language/english.php";
         }
     }
@@ -94,7 +94,7 @@ class xoopsUpgrade
     /**
      * @return string
      */
-    function message()
+    public function message()
     {
         return empty($this->logs) ? "" : implode("<br />", $this->logs);
     }

@@ -220,5 +220,7 @@ class SystemMenuHandler
         } else {
             return $menu;
         }
+
+        return null;
     }
 }

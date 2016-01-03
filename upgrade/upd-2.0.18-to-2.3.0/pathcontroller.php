@@ -24,21 +24,21 @@
  */
 class PathStuffController
 {
-    var $xoopsPath   = array(
+    public $xoopsPath   = array(
         'lib'  => '',
-        'data' => '',);
-    var $path_lookup = array(
+        'data' => '');
+    public $path_lookup = array(
         'data' => 'VAR_PATH',
-        'lib'  => 'PATH',);
+        'lib'  => 'PATH');
 
-    var $validPath = array(
+    public $validPath = array(
         'data' => 0,
-        'lib'  => 0,);
+        'lib'  => 0);
 
-    var $permErrors = array(
-        'data' => null,);
+    public $permErrors = array(
+        'data' => null);
 
-    function PathStuffController()
+    public function PathStuffController()
     {
         if (isset($_SESSION['settings']['VAR_PATH'])) {
             foreach ($this->path_lookup as $req => $sess) {
@@ -70,11 +70,11 @@ class PathStuffController
     /**
      * @return bool
      */
-    function execute()
+    public function execute()
     {
         $this->readRequest();
         $valid = $this->validate();
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' && @$_POST['task'] == 'path') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && @$_POST['task'] === 'path') {
             foreach ($this->path_lookup as $req => $sess) {
                 $_SESSION['settings'][$sess] = $this->xoopsPath[$req];
             }
@@ -86,14 +86,14 @@ class PathStuffController
         }
     }
 
-    function readRequest()
+    public function readRequest()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' && @$_POST['task'] == 'path') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && @$_POST['task'] === 'path') {
             $request = $_POST;
             foreach ($this->path_lookup as $req => $sess) {
                 if (isset($request[$req])) {
                     $request[$req] = str_replace("\\", "/", trim($request[$req]));
-                    if (substr($request[$req], -1) == '/') {
+                    if (substr($request[$req], -1) === '/') {
                         $request[$req] = substr($request[$req], 0, -1);
                     }
                     $this->xoopsPath[$req] = $request[$req];
@@ -105,7 +105,7 @@ class PathStuffController
     /**
      * @return bool
      */
-    function validate()
+    public function validate()
     {
         foreach (array_keys($this->xoopsPath) as $path) {
             if ($this->checkPath($path)) {
@@ -134,17 +134,17 @@ class PathStuffController
      *
      * @return int
      */
-    function checkPath($PATH = '')
+    public function checkPath($PATH = '')
     {
         $ret = 1;
-        if ($PATH == 'lib' || empty($PATH)) {
+        if ($PATH === 'lib' || empty($PATH)) {
             $path = 'lib';
             if (is_dir($this->xoopsPath[$path]) && is_readable($this->xoopsPath[$path])) {
                 $this->validPath[$path] = 1;
             }
             $ret *= $this->validPath[$path];
         }
-        if ($PATH == 'data' || empty($PATH)) {
+        if ($PATH === 'data' || empty($PATH)) {
             $path = 'data';
             if (is_dir($this->xoopsPath[$path]) && is_readable($this->xoopsPath[$path])) {
                 $this->validPath[$path] = 1;
@@ -160,7 +160,7 @@ class PathStuffController
      * @param $path
      * @param $error
      */
-    function setPermission($parent, $path, &$error)
+    public function setPermission($parent, $path, &$error)
     {
         if (is_array($path)) {
             foreach (array_keys($path) as $item) {
@@ -188,17 +188,17 @@ class PathStuffController
      *
      * @return bool
      */
-    function checkPermissions($path = "data")
+    public function checkPermissions($path = "data")
     {
         $paths  = array(
             'data' => array(
                 'caches' => array(
                     'xoops_cache',
                     'smarty_cache',
-                    'smarty_compile',),
-                'configs',),);
+                    'smarty_compile'),
+                'configs'));
         $errors = array(
-            'data' => null,);
+            'data' => null);
         if (!isset($this->xoopsPath[$path])) {
             return false;
         }
@@ -225,7 +225,7 @@ class PathStuffController
      * @internal param bool $recurse
      * @return false on failure, method (u-ser,g-roup,w-orld) on success
      */
-    function makeWritable($path, $group = false, $create = true)
+    public function makeWritable($path, $group = false, $create = true)
     {
         if (!file_exists($path)) {
             if (!$create) {

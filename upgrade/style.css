@@ -34,7 +34,7 @@ h1 {
 h2 {font-size: 1.3em; margin: 0 0 30px 0;}
 h1, h2 {font-weight: normal;}
 a, a:hover,  a:visited {color: #333; text-decoration: none;}
-p { font-size: 1; margin-top: 12px; line-height: 2em;}
+p { font-size: 1px; margin-top: 12px; line-height: 2em;}
 .bold {font-weight: bold !important;}
 #check_results { width:30em; margin-left:70px;}
 #xo-loginupdate { padding-top: 2.5em;}
@@ -134,7 +134,7 @@ fieldset {
     padding:            .5em 1em;
 }
 legend {
-    font-size:            1.2;
+    font-size:            1.2em;
     font-weight:        bold;
     padding:            0 1em;
     display:            block;

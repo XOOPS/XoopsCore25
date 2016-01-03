@@ -27,7 +27,7 @@
  * @link                http://xoops.org
  * @since               1.0
  */
-class xoopsrequest
+class XoopsRequest
 {
     /**
      * Available masks for cleaning variables

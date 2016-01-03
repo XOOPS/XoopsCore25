@@ -85,14 +85,14 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea
         ++$inLoop;
         // Second loop, invalid, return directly
         if ($inLoop > 2) {
-            return;
+            return null;
         }
         // Else, initialize
         parent::__construct($caption, $name, $value, $rows, $cols);
         $this->_hiddenText = $hiddentext;
 
         if ($inLoop > 1) {
-            return;
+            return null;
         }
         if (!isset($options['editor'])) {
             if (isset($xoopsConfig['editor'])) {

@@ -23,18 +23,18 @@
  * @author           trabis <lusopoemas@gmail.com>
  * @version          $Id: index.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-class upgrade_240 extends xoopsUpgrade
+class Upgrade_240 extends xoopsUpgrade
 {
-    var $tasks = array('keys', 'version');
+    public $tasks = array('keys', 'version');
 
     /**
      * @return bool
      */
-    function check_version()
+    public function check_version()
     {
         if (defined('XOOPS_LICENSE_KEY') == false) {
             return false;
-        } else if (XOOPS_LICENSE_KEY == '000000-000000-000000-000000-000000') {
+        } elseif (XOOPS_LICENSE_KEY == '000000-000000-000000-000000-000000') {
             return false;
         } else {
             return true;
@@ -44,12 +44,12 @@ class upgrade_240 extends xoopsUpgrade
     /**
      * @return bool|string
      */
-    function apply_version()
+    public function apply_version()
     {
         set_time_limit(120);
         chmod('../include/license.php', 0777);
         if (!is_writable('../include/license.php')) {
-            echo "<p><span style='text-colour:#ff0000'>&nbsp;include/license.php - is not writeable</span> - Windows Read Only (Off) / UNIX chmod 0777</p>";
+            echo "<p><span style='text-colour:#ff0000;'>&nbsp;include/license.php - is not writeable</span> - Windows Read Only (Off) / UNIX chmod 0777</p>";
 
             return false;
         }
@@ -61,7 +61,7 @@ class upgrade_240 extends xoopsUpgrade
      * *#@+
      * Xoops Write Licence System Key
      */
-    function xoops_putLicenseKey($system_key, $licensefile, $license_file_dist = 'license.dist.php')
+    public function xoops_putLicenseKey($system_key, $licensefile, $license_file_dist = 'license.dist.php')
     {
         chmod($licensefile, 0777);
         $fver     = fopen($licensefile, 'w');
@@ -84,13 +84,13 @@ class upgrade_240 extends xoopsUpgrade
      * *#@+
      * Xoops Build Licence System Key
      */
-    function xoops_buildLicenceKey()
+    public function xoops_buildLicenceKey()
     {
         $xoops_serdat = array();
-        srand((((float)('0' . substr(microtime(), strpos(microtime(), ' ') + 1, strlen(microtime()) - strpos(microtime(), ' ') + 1))) * mt_rand(30, 99999)));
-        srand((((float)('0' . substr(microtime(), strpos(microtime(), ' ') + 1, strlen(microtime()) - strpos(microtime(), ' ') + 1))) * mt_rand(30, 99999)));
+        mt_srand((((float)('0' . substr(microtime(), strpos(microtime(), ' ') + 1, strlen(microtime()) - strpos(microtime(), ' ') + 1))) * mt_rand(30, 99999)));
+        mt_srand((((float)('0' . substr(microtime(), strpos(microtime(), ' ') + 1, strlen(microtime()) - strpos(microtime(), ' ') + 1))) * mt_rand(30, 99999)));
         $checksums = array(1 => 'md5', 2 => 'sha1');
-        $type      = rand(1, 2);
+        $type      = mt_rand(1, 2);
         $func      = $checksums[$type];
 
         error_reporting(0);
@@ -123,7 +123,7 @@ class upgrade_240 extends xoopsUpgrade
             $xoops_key .= $data;
         }
         while (strlen($xoops_key) > 40) {
-            $lpos      = rand(18, strlen($xoops_key));
+            $lpos      = mt_rand(18, strlen($xoops_key));
             $xoops_key = substr($xoops_key, 0, $lpos) . substr($xoops_key, $lpos + 1, strlen($xoops_key) - ($lpos + 1));
         }
 
@@ -134,7 +134,7 @@ class upgrade_240 extends xoopsUpgrade
      * *#@+
      * Xoops Stripe Licence System Key
      */
-    function xoops_stripeKey($xoops_key)
+    public function xoops_stripeKey($xoops_key)
     {
         $uu     = 0;
         $num    = 6;
@@ -170,7 +170,7 @@ class upgrade_240 extends xoopsUpgrade
      * Check if keys already exist
      *
      */
-    function check_keys()
+    public function check_keys()
     {
         $tables['modules']       = array('isactive', 'weight', 'hascomments');
         $tables['users']         = array('level');
@@ -201,7 +201,7 @@ class upgrade_240 extends xoopsUpgrade
      * Apply keys that are missing
      *
      */
-    function apply_keys()
+    public function apply_keys()
     {
         $tables['modules']       = array('isactive', 'weight', 'hascomments');
         $tables['users']         = array('level');
@@ -231,12 +231,11 @@ class upgrade_240 extends xoopsUpgrade
         return true;
     }
 
-    function upgrade_240()
+    public function __construct()
     {
-        $this->xoopsUpgrade(basename(__DIR__));
+        parent::__construct(basename(__DIR__));
     }
-
 }
 
-$upg = new upgrade_240();
+$upg = new Upgrade_240();
 return $upg;

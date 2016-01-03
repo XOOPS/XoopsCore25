@@ -51,8 +51,7 @@
 
     <{if $xoops_dirname == "system"}>
     <div class="aligncenter home-message row">
-        <div class="<{if $xoops_banner != "
-        "}>col-md-6<{else}>col-md-12<{/if}>">
+        <div class="<{if $xoops_banner != ""}>col-md-6<{else}>col-md-12<{/if}>">
         <h2><{$smarty.const.THEME_ABOUTUS}></h2>
 
         <p class="lead"><{$xoops_meta_description}></p>

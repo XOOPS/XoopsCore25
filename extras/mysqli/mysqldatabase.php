@@ -38,7 +38,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
      *
      * @var resource
      */
-    var $conn;
+    public $conn;
 
     /**
      * connect to the database
@@ -55,7 +55,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
             return false;
         }
 
-        $this->allowWebChanges = ($_SERVER['REQUEST_METHOD'] != 'GET');
+        $this->allowWebChanges = ($_SERVER['REQUEST_METHOD'] !== 'GET');
 
         if ($selectdb) {
             $dbname = constant('XOOPS_DB_NAME');
@@ -189,7 +189,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
      */
     public function freeRecordSet($result)
     {
-        return ((mysqli_free_result($result) || (is_object($result) && (get_class($result) == "mysqli_result"))) ? true : false);
+        return ((mysqli_free_result($result) || (is_object($result) && (get_class($result) === 'mysqli_result'))) ? true : false);
     }
 
     /**
@@ -499,7 +499,7 @@ class XoopsMySQLDatabaseProxy extends XoopsMySQLDatabase
     public function query($sql, $limit = 0, $start = 0)
     {
         $sql = ltrim($sql);
-        if (!$this->allowWebChanges && strtolower(substr($sql, 0, 6)) != 'select') {
+        if (!$this->allowWebChanges && strtolower(substr($sql, 0, 6)) !== 'select') {
             trigger_error('Database updates are not allowed during processing of a GET request', E_USER_WARNING);
 
             return false;
@@ -508,5 +508,3 @@ class XoopsMySQLDatabaseProxy extends XoopsMySQLDatabase
         return $this->queryF($sql, $limit, $start);
     }
 }
-
-?>

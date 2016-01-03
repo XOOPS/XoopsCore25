@@ -68,6 +68,28 @@ $modversion['templates'][] = array('file' => 'system_bannerlogin.tpl', 'descript
 $modversion['templates'][] = array('file' => 'system_banner.tpl', 'description' => '');
 $modversion['templates'][] = array('file' => 'system_bannerdisplay.tpl', 'description' => '');
 
+//as a transition to .tpl, we also use the .html extension
+
+$modversion['templates'][] = array('file' => 'system_imagemanager.html', 'description' => '');
+$modversion['templates'][] = array('file' => 'system_imagemanager2.html', 'description' => '');
+$modversion['templates'][] = array('file' => 'system_userinfo.html', 'description' => '');
+$modversion['templates'][] = array('file' => 'system_userform.html', 'description' => '');
+$modversion['templates'][] = array('file' => 'system_rss.html', 'description' => '');
+$modversion['templates'][] = array('file' => 'system_redirect.html', 'description' => '');
+$modversion['templates'][] = array('file' => 'system_comment.html', 'description' => '');
+$modversion['templates'][] = array('file' => 'system_comments_flat.html', 'description' => '');
+$modversion['templates'][] = array('file' => 'system_comments_thread.html', 'description' => '');
+$modversion['templates'][] = array('file' => 'system_comments_nest.html', 'description' => '');
+$modversion['templates'][] = array('file' => 'system_siteclosed.html', 'description' => '');
+$modversion['templates'][] = array('file' => 'system_dummy.html', 'description' => '');
+$modversion['templates'][] = array('file' => 'system_notification_list.html', 'description' => '');
+$modversion['templates'][] = array('file' => 'system_notification_select.html', 'description' => '');
+$modversion['templates'][] = array('file' => 'system_block_dummy.html', 'description' => '');
+$modversion['templates'][] = array('file' => 'system_homepage.html', 'description' => '');
+$modversion['templates'][] = array('file' => 'system_bannerlogin.html', 'description' => '');
+$modversion['templates'][] = array('file' => 'system_banner.html', 'description' => '');
+$modversion['templates'][] = array('file' => 'system_bannerdisplay.html', 'description' => '');
+
 // Admin Templates
 $modversion['templates'][] = array('file' => 'system_header.tpl', 'description' => '', 'type' => 'admin');
 $modversion['templates'][] = array('file' => 'system_banners.tpl', 'description' => '', 'type' => 'admin');

@@ -42,7 +42,7 @@ function getDbCharsets()
     if ($result = $GLOBALS["xoopsDB"]->queryF("SHOW CHARSET")) {
         while ($row = $GLOBALS["xoopsDB"]->fetchArray($result)) {
             $charsets[$row["Charset"]]["desc"] = $row["Description"];
-            if ($row["Charset"] == "utf8") {
+            if ($row["Charset"] === "utf8") {
                 $ut8_available = true;
             }
         }
@@ -109,7 +109,7 @@ function xoFormFieldCollation($name, $value, $label, $help = '')
     return $field;
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && @$_POST['task'] == 'db') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && @$_POST['task'] === 'db') {
     $params = array('DB_COLLATION');
     foreach ($params as $name) {
         $vars[$name] = isset($_POST[$name]) ? $_POST[$name] : "";

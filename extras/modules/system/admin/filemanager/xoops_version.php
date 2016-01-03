@@ -29,5 +29,3 @@ $modversion['image']       = 'filemanager.png';
 $modversion['hasAdmin']  = 1;
 $modversion['adminpath'] = 'admin.php?fct=filemanager';
 $modversion['category']  = XOOPS_SYSTEM_FILEMANAGER;
-
-?>

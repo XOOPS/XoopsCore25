@@ -17,11 +17,11 @@
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @version             $Id: index.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-class upgrade_220 extends xoopsUpgrade
+class Upgrade_220 extends xoopsUpgrade
 {
-    var $tasks = array('config', 'profile', 'block'/*, 'pm', 'module'*/);
+    public $tasks = array('config', 'profile', 'block'/*, 'pm', 'module'*/);
 
-    function upgrade_220()
+    public function __construct()
     {
         $this->xoopsUpgrade(basename(__DIR__));
     }
@@ -30,7 +30,7 @@ class upgrade_220 extends xoopsUpgrade
      * Check if config category already removed
      *
      */
-    function check_config()
+    public function check_config()
     {
         $sql    = "SHOW COLUMNS FROM `" . $GLOBALS['xoopsDB']->prefix('configcategory') . "` LIKE 'confcat_modid'";
         $result = $GLOBALS['xoopsDB']->queryF($sql);
@@ -48,7 +48,7 @@ class upgrade_220 extends xoopsUpgrade
      * Check if user profile table already converted
      *
      */
-    function check_profile()
+    public function check_profile()
     {
         $module_handler =& xoops_getHandler('module');
         if (!$profile_module = $module_handler->getByDirname('profile')) {
@@ -70,7 +70,7 @@ class upgrade_220 extends xoopsUpgrade
      * Check if block table already converted
      *
      */
-    function check_block()
+    public function check_block()
     {
         $sql    = "SHOW TABLES LIKE '" . $GLOBALS['xoopsDB']->prefix("block_instance") . "'";
         $result = $GLOBALS['xoopsDB']->queryF($sql);
@@ -87,7 +87,7 @@ class upgrade_220 extends xoopsUpgrade
     /**
      * @return bool
      */
-    function apply()
+    public function apply()
     {
         if (empty($_GET['upd220'])) {
             $this->logs[] = _CONFIRM_UPGRADE_220;
@@ -102,7 +102,7 @@ class upgrade_220 extends xoopsUpgrade
     /**
      * @return bool
      */
-    function apply_config()
+    public function apply_config()
     {
         global $xoopsDB;
 
@@ -153,8 +153,8 @@ class upgrade_220 extends xoopsUpgrade
         $profile_config_arr['reg_disclaimer']        = "";
         $profile_config_arr['allow_register']        = 1;
 
-        $module_handler = xoops_gethandler('module');
-        $config_handler = xoops_gethandler('config');
+        $module_handler =& xoops_getHandler('module');
+        $config_handler =& xoops_getHandler('config');
         $profile_module = $module_handler->getByDirname('profile');
         if (is_object($profile_module)) {
             $profile_config = $config_handler->getConfigs(new Criteria('conf_modid', $profile_module->getVar('mid')));
@@ -181,7 +181,7 @@ class upgrade_220 extends xoopsUpgrade
     /**
      * @return bool
      */
-    function apply_profile()
+    public function apply_profile()
     {
         global $xoopsDB;
         // Restore users table
@@ -256,9 +256,9 @@ class upgrade_220 extends xoopsUpgrade
      *
      * @return int|null|string
      */
-    function _block_lookup($block, $blocks)
+    public function _block_lookup($block, $blocks)
     {
-        if ($block['show_func'] == 'b_system_custom_show') {
+        if ($block['show_func'] === 'b_system_custom_show') {
             return 0;
         }
 
@@ -274,7 +274,7 @@ class upgrade_220 extends xoopsUpgrade
     /**
      * @return bool
      */
-    function apply_block()
+    public function apply_block()
     {
         global $xoopsDB;
         $xoopsDB->queryF("UPDATE " . $xoopsDB->prefix("block_module_link") . " SET module_id = -1, pageid = 0 WHERE module_id < 2 AND pageid = 1");
@@ -344,7 +344,7 @@ class upgrade_220 extends xoopsUpgrade
                     continue;
                 }
             }
-            if (empty($modversion['blocks']) && $dirname != 'system') {
+            if (empty($modversion['blocks']) && $dirname !== 'system') {
                 continue;
             }
 
@@ -378,7 +378,7 @@ class upgrade_220 extends xoopsUpgrade
                     continue;
                 }
             }
-            if (empty($modversion['blocks']) && $dirname != 'system') {
+            if (empty($modversion['blocks']) && $dirname !== 'system') {
                 continue;
             }
 
@@ -440,5 +440,5 @@ class upgrade_220 extends xoopsUpgrade
     }
 }
 
-$upg = new upgrade_220();
+$upg = new Upgrade_220();
 return $upg;

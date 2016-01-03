@@ -460,6 +460,8 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
 
             return $blockids;
         }
+
+        return null;
     }
 
     /**

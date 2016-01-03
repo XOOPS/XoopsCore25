@@ -13,14 +13,12 @@
  *  Xoops Version
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package         kernel
- * @version         $Id: license.dist.php 8066 2011-11-06 05:09:33Z beckmi $
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @package             kernel
+ * @version             $Id: license.dist.php 8066 2011-11-06 05:09:33Z beckmi $
  */
 defined('XOOPS_ROOT_PATH') or die('Restricted access');
 
 define('XOOPS_LICENSE_CODE', 'GPL');
 define('XOOPS_LICENSE_TEXT', 'GPL General Public License (GPL) (v. 2.0)');
 define('XOOPS_LICENSE_KEY', '000000-000000-000000-000000-0000000');
-
-?>

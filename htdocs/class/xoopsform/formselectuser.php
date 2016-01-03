@@ -109,7 +109,7 @@ class XoopsFormSelectUser extends XoopsFormElementTray
             parent::__construct($caption, "", $name);
             $this->addElement($select_element);
 
-            return;
+            return null;
         }
 
         xoops_loadLanguage('findusers');

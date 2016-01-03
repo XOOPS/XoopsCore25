@@ -15,4 +15,4 @@
                 }
             }
         }
-        xoopsOnloadEvent(startList); 
+        xoopsOnloadEvent(startList);

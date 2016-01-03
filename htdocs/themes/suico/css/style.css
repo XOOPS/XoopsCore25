@@ -1085,7 +1085,7 @@ div.dropdown select.menu, div.dropdown select.userbar {
     letter-spacing: 0.2em;
 }
 
-/* ============ Style for system_notification_select.html ============ */
+/* ============ Style for system_notification_select.tpl ============ */
 #notifbox {
     display: block;
     margin: .5em;

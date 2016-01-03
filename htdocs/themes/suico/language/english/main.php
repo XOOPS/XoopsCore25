@@ -11,17 +11,17 @@
  *
  * @version         $Id
 */
-// system_notification_select.html
+// system_notification_select.tpl
 define('THEME_SHOWHIDE_NOTIFICATION', "Show / Hide");
 define('THEME_SHOWHIDE_NOTIFICATION_DESC', "Show or hide the notification options");
 define('THEME_RSS', "RSS Feed");
 define('THEME_SEARCH', "Search");
 define('THEME_DESC_SEARCH', "Search site");
 define('THEME_KEYWORDS', "Enter keywords");
-// blockszone and centerblocks.html
+// blockszone and centerblocks.tpl
 define('THEME_THISBLOCK_EDIT', "Edit block");
 define('THEME_VIEWALL', "View All");
-// xo_globalnav.html
+// xo_globalnav.tpl
 define('THEME_NAVTITLE', "Navigation");
 define('THEME_HOME', "Home");
 define('THEME_HOME_DESC', "Back to home");
@@ -43,7 +43,7 @@ define('THEME_MODULE8', "");
 define('THEME_MODULE8_DESC', "");
 define('THEME_MODULE9', "");
 define('THEME_MODULE9_DESC', "");
-// module name in xo_globalnav.html  anomymous mode
+// module name in xo_globalnav.tpl  anomymous mode
 define('THEME_MODULE1a', "Credits");
 define('THEME_MODULE1a_DESC', "Website Credits");
 define('THEME_MODULE2a', "Location");
@@ -51,7 +51,7 @@ define('THEME_MODULE2a_DESC', "Find us on a map");
 define('THEME_CONTACT', "Contact");
 define('THEME_CONTACT_DESC', "Contact us");
 define('THEME_SITEMAP', "Sitemap");
-// xo_userbar.html
+// xo_userbar.tpl
 define('THEME_REGISTER', "Create account");
 define('THEME_REMEMBER', "Remember me");
 define('THEME_PSEUDO', "Username");
@@ -79,7 +79,7 @@ define('THEME_ULASTLOGIN', "Last login"); // add for suico theme
 define('THEME_UEDITPROFILE', "Edit profile"); // add for suico theme
 define('THEME_UEDITAVATAR', "Change avatar"); // add for suico theme
 define('THEME_UEDITPASSWORD', "Change password"); // add for suico theme
-/* ------------------- xo_footerstatic.html ------------------- */
+/* ------------------- xo_footerstatic.tpl ------------------- */
 define('_THEME_INBOX', "See your messages");
 define('_THEME_INBOX_NOTREAD', "message(s) not read");
 define('_THEME_NOTIFICATIONS', "See notifications");

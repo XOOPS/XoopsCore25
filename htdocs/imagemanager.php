@@ -133,7 +133,7 @@ if ($op === 'list') {
         $xoopsTpl->assign('xsize', 400);
         $xoopsTpl->assign('ysize', 180);
     }
-    $xoopsTpl->display('db:system_imagemanager.html');
+    $xoopsTpl->display('db:system_imagemanager.tpl');
     exit();
 }
 
@@ -183,7 +183,7 @@ if ($op === 'upload') {
     $form->addElement(new XoopsFormButton('', 'img_button', _SUBMIT, 'submit'));
     $form->assign($xoopsTpl);
     $xoopsTpl->assign('lang_close', _CLOSE);
-    $xoopsTpl->display('db:system_imagemanager2.html');
+    $xoopsTpl->display('db:system_imagemanager2.tpl');
     exit();
 }
 

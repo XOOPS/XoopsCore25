@@ -76,7 +76,9 @@ if (!$needUpgrade) {
 } else {
     if (!empty($files)) {
         echo '<div class="x2-note"><p>' . _NEED_UPGRADE . "<br />" . _SET_FILES_WRITABLE . "</p><ul>";
-        foreach ($files as $file) echo "<li>{$file}</li>\n";
+        foreach ($files as $file) {
+            echo "<li>{$file}</li>\n";
+        }
         echo "</ul></div>";
         echo '<a id="link-next" href="index.php">' . _RELOAD . '</a>';
     } else {

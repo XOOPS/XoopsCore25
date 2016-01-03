@@ -37,15 +37,6 @@ function SendSaveAsFileHeaderIfNeeded() {
 	return true;
 }
 
-function PasswordStrength($password) {
-	$strength = 0;
-	$strength += strlen(preg_replace('#[^a-z]#',       '', $password)) * 0.5; // lowercase characters are weak
-	$strength += strlen(preg_replace('#[^A-Z]#',       '', $password)) * 0.8; // uppercase characters are somewhat better
-	$strength += strlen(preg_replace('#[^0-9]#',       '', $password)) * 1.0; // numbers are somewhat better
-	$strength += strlen(preg_replace('#[a-zA-Z0-9]#',  '', $password)) * 2.0; // other non-alphanumeric characters are best
-	return $strength;
-}
-
 function RedirectToCachedFile() {
 	global $phpThumb;
 
@@ -198,7 +189,7 @@ if (!empty($phpThumb->config_high_security_enabled)) {
 	if (empty($_GET['hash'])) {
 		$phpThumb->config_disable_debug = false; // otherwise error message won't print
 		$phpThumb->ErrorImage('ERROR: missing hash');
-	} elseif (PasswordStrength($phpThumb->config_high_security_password) < 20) {
+	} elseif (phpthumb_functions::PasswordStrength($phpThumb->config_high_security_password) < 20) {
 		$phpThumb->config_disable_debug = false; // otherwise error message won't print
 		$phpThumb->ErrorImage('ERROR: $PHPTHUMB_CONFIG[high_security_password] is not complex enough');
 	} elseif ($_GET['hash'] != md5(str_replace($phpThumb->config_high_security_url_separator.'hash='.$_GET['hash'], '', $_SERVER['QUERY_STRING']).$phpThumb->config_high_security_password)) {
@@ -282,33 +273,90 @@ if ($phpThumb->config_nohotlink_enabled && $phpThumb->config_nohotlink_erase_ima
 }
 
 if ($phpThumb->config_mysql_query) {
-	if ($cid = @mysql_connect($phpThumb->config_mysql_hostname, $phpThumb->config_mysql_username, $phpThumb->config_mysql_password)) {
-		if (@mysql_select_db($phpThumb->config_mysql_database, $cid)) {
-			if ($result = @mysql_query($phpThumb->config_mysql_query, $cid)) {
-				if ($row = @mysql_fetch_array($result)) {
+	if ($phpThumb->config_mysql_extension == 'mysqli') {
 
-					mysql_free_result($result);
-					mysql_close($cid);
-					$phpThumb->setSourceData($row[0]);
-					unset($row);
+		$found_missing_function = false;
+		foreach (array('mysqli_connect') as $required_mysqli_function) {
+			if (!function_exists($required_mysqli_function)) {
+				$found_missing_function = $required_mysqli_function;
+				break;
+			}
+		}
+		if ($found_missing_function) {
+			$phpThumb->ErrorImage('SQL function unavailable: '.$found_missing_function);
+		} else {
+			$mysqli = new mysqli($phpThumb->config_mysql_hostname, $phpThumb->config_mysql_username, $phpThumb->config_mysql_password, $phpThumb->config_mysql_database);
+			if ($mysqli->connect_error) {
+				$phpThumb->ErrorImage('MySQLi connect error ('.$mysqli->connect_errno.') '.$mysqli->connect_error);
+			} else {
+				if ($result = $mysqli->query($phpThumb->config_mysql_query)) {
+					if ($row = $result->fetch_array()) {
 
+						$result->free();
+						$mysqli->close();
+						$phpThumb->setSourceData($row[0]);
+						unset($row);
+
+					} else {
+						$result->free();
+						$mysqli->close();
+						$phpThumb->ErrorImage('no matching data in database.');
+					}
 				} else {
-					mysql_free_result($result);
-					mysql_close($cid);
-					$phpThumb->ErrorImage('no matching data in database.');
+					$mysqli->close();
+					$phpThumb->ErrorImage('Error in MySQL query: "'.$mysqli->error.'"');
 				}
 			} else {
-				mysql_close($cid);
-				$phpThumb->ErrorImage('Error in MySQL query: "'.mysql_error($cid).'"');
+				$phpThumb->ErrorImage('cannot connect to MySQL server');
 			}
-		} else {
-			mysql_close($cid);
-			$phpThumb->ErrorImage('cannot select MySQL database: "'.mysql_error($cid).'"');
+			unset($_GET['id']);
 		}
+
+	} elseif ($phpThumb->config_mysql_extension == 'mysql') {
+
+		$found_missing_function = false;
+		//foreach (array('mysql_connect', 'mysql_select_db', 'mysql_query', 'mysql_fetch_array', 'mysql_free_result', 'mysql_close', 'mysql_error') as $required_mysql_function) {
+		foreach (array('mysql_connect') as $required_mysql_function) {
+			if (!function_exists($required_mysql_function)) {
+				$found_missing_function = $required_mysql_function;
+				break;
+			}
+		}
+		if ($found_missing_function) {
+			$phpThumb->ErrorImage('SQL function unavailable: '.$found_missing_function);
+		} else {
+			if ($cid = @mysql_connect($phpThumb->config_mysql_hostname, $phpThumb->config_mysql_username, $phpThumb->config_mysql_password)) {
+				if (@mysql_select_db($phpThumb->config_mysql_database, $cid)) {
+					if ($result = @mysql_query($phpThumb->config_mysql_query, $cid)) {
+						if ($row = @mysql_fetch_array($result)) {
+
+							mysql_free_result($result);
+							mysql_close($cid);
+							$phpThumb->setSourceData($row[0]);
+							unset($row);
+
+						} else {
+							mysql_free_result($result);
+							mysql_close($cid);
+							$phpThumb->ErrorImage('no matching data in database.');
+						}
+					} else {
+						mysql_close($cid);
+						$phpThumb->ErrorImage('Error in MySQL query: "'.mysql_error($cid).'"');
+					}
+				} else {
+					mysql_close($cid);
+					$phpThumb->ErrorImage('cannot select MySQL database: "'.mysql_error($cid).'"');
+				}
+			} else {
+				$phpThumb->ErrorImage('cannot connect to MySQL server');
+			}
+			unset($_GET['id']);
+		}
+
 	} else {
-		$phpThumb->ErrorImage('cannot connect to MySQL server');
+		$phpThumb->ErrorImage('config_mysql_extension not supported');
 	}
-	unset($_GET['id']);
 }
 
 ////////////////////////////////////////////////////////////////

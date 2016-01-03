@@ -52,9 +52,9 @@ function system_CleanVars(&$global, $key, $default = '', $type = 'int')
  * System language loader wrapper
  *
  *
- * @param  string $name     Name of language file to be loaded, without extension
- * @param  string $domain   Module dirname; global language file will be loaded if $domain is set to 'global' or not specified
- * @param  string $language Language to be loaded, current language content will be loaded if not specified
+ * @param  string  $name     Name of language file to be loaded, without extension
+ * @param  string  $domain   Module dirname; global language file will be loaded if $domain is set to 'global' or not specified
+ * @param  string  $language Language to be loaded, current language content will be loaded if not specified
  * @return boolean
  * @todo    expand domain to multiple categories, e.g. module:system, framework:filter, etc.
  *
@@ -99,6 +99,8 @@ function system_adminVersion($version, $value = '')
 
         return $retvalue;
     }
+
+    return null;
 }
 
 /**

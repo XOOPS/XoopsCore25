@@ -9,7 +9,7 @@ if (!defined('XOOPS_ROOT_PATH')) {
     exit();
 }
 include_once XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/user.php';
-$op = (isset($_POST['op']) && $_POST['op'] == 'dologin') ? 'dologin' : 'login';
+$op = (isset($_POST['op']) && $_POST['op'] === 'dologin') ? 'dologin' : 'login';
 
 $username = isset($_POST['username']) ? trim($_POST['username']) : '';
 $password = isset($_POST['userpass']) ? trim($_POST['userpass']) : '';
@@ -37,8 +37,8 @@ echo '
   <body>
 ';
 
-if ($op == 'dologin') {
-    $member_handler =& xoops_gethandler('member');
+if ($op === 'dologin') {
+    $member_handler =& xoops_getHandler('member');
     $myts           =& MyTextsanitizer::getInstance();
     $user           =& $member_handler->loginUser(addslashes($myts->stripSlashesGPC($username)), addslashes($myts->stripSlashesGPC($password)));
     if (is_object($user)) {
@@ -76,9 +76,9 @@ if ($op == 'dologin') {
     }
 }
 
-if ($op == 'login') {
+if ($op === 'login') {
     echo '
-    <div style="text-align: center; padding: 5; margin: 0">
+    <div style="text-align: center; padding: 5px; margin: 0;">
     <form action="login.php" method="post">
       <table class="outer" width="95%">
         <tr>
@@ -103,4 +103,3 @@ echo '
   </body>
 </html>
 ';
-?>

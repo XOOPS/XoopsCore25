@@ -143,6 +143,8 @@ class cookie
         else {
             return null;
         }
+
+        return null;
     }
 
     // Return the cookie array
@@ -166,8 +168,7 @@ class cookie
                                $domain = '',           /* Default domain */
                                $secure = false,        /* Does this cookie need a secure HTTPS connection? */
                                $httponly = true        /* Can non-HTTP services access this cookie (IE: javascript)? */
-    )
-    {
+    ) {
         // Make sure they aren't trying to set a reserved word
         if (!in_array($key, self::$_reserved)) {
             // If $key is in array format, change it to string representation

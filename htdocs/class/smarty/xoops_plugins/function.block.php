@@ -97,7 +97,7 @@ function smarty_function_block($params, &$smarty)
     }
 
     $template->setCompileId($blockObj->getVar('dirname', 'n'));
-    $tplName = ($tplName = $blockObj->getVar('template')) ? "db:{$tplName}" : "db:system_block_dummy.html";
+    $tplName = ($tplName = $blockObj->getVar('template')) ? "db:{$tplName}" : "db:system_block_dummy.tpl";
     $cacheid = 'blk_' . $block_id;
 
     if (!$bcachetime || !$template->is_cached($tplName, $cacheid)) {

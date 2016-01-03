@@ -3,24 +3,23 @@
 /**
  * Class upgrade_2014
  */
-class upgrade_2014 extends xoopsUpgrade
+class Upgrade_2014 extends xoopsUpgrade
 {
-
-    var $usedFiles = array('mainfile.php');
+    public $usedFiles = array('mainfile.php');
 
     /**
      * @return bool
      */
-    function isApplied()
+    public function isApplied()
     {
-        return ( /*$this->check_0523patch() &&*/
+        return (/*$this->check_0523patch() &&*/
         $this->check_auth_db());
     }
 
     /**
      * @return bool
      */
-    function apply()
+    public function apply()
     {
         return $this->apply_auth_db();
         /*
@@ -35,7 +34,7 @@ class upgrade_2014 extends xoopsUpgrade
     /**
      * @return bool
      */
-    function check_0523patch()
+    public function check_0523patch()
     {
         $lines = file('../mainfile.php');
         foreach ($lines as $line) {
@@ -51,7 +50,7 @@ class upgrade_2014 extends xoopsUpgrade
     /**
      * @return bool
      */
-    function apply_0523patch()
+    public function apply_0523patch()
     {
         $patchCode = "
     foreach ( array('GLOBALS', '_SESSION', 'HTTP_SESSION_VARS', '_GET', 'HTTP_GET_VARS', '_POST', 'HTTP_POST_VARS', '_COOKIE', 'HTTP_COOKIE_VARS', '_REQUEST', '_SERVER', 'HTTP_SERVER_VARS', '_ENV', 'HTTP_ENV_VARS', '_FILES', 'HTTP_POST_FILES', 'xoopsDB', 'xoopsUser', 'xoopsUserId', 'xoopsUserGroups', 'xoopsUserIsAdmin', 'xoopsConfig', 'xoopsOption', 'xoopsModule', 'xoopsModuleConfig', 'xoopsRequestUri') as \$bad_global ) {
@@ -62,7 +61,7 @@ class upgrade_2014 extends xoopsUpgrade
     }
 ";
         $manual    = "<h2>" . _MANUAL_INSTRUCTIONS . "</h2>\n<p>" . sprintf(_COPY_RED_LINES, "mainfile.php") . "</p>
-<pre style='border:1px solid black;width:650px;overflow:auto'><span style='color:#ff0000;font-weight:bold'>$patchCode</span>
+<pre style='border:1px solid black;width:650px;overflow:auto;'><span style='color:#ff0000;font-weight:bold;'>$patchCode</span>
     if (!isset(\$xoopsOption['nocommon']) && XOOPS_ROOT_PATH != '') {
         include XOOPS_ROOT_PATH.\"/include/common.php\";
     }
@@ -123,7 +122,7 @@ class upgrade_2014 extends xoopsUpgrade
     /**
      * @return bool
      */
-    function check_auth_db()
+    public function check_auth_db()
     {
         $db    = $GLOBALS['xoopsDB'];
         $value = getDbValue($db, 'config', 'conf_id', "`conf_name` = 'ldap_provisionning' AND `conf_catid` = " . XOOPS_CONF_AUTH);
@@ -134,7 +133,7 @@ class upgrade_2014 extends xoopsUpgrade
     /**
      * @param $sql
      */
-    function query($sql)
+    public function query($sql)
     {
         $db = $GLOBALS['xoopsDB'];
         if (!($ret = $db->queryF($sql))) {
@@ -145,7 +144,7 @@ class upgrade_2014 extends xoopsUpgrade
     /**
      * @return bool
      */
-    function apply_auth_db()
+    public function apply_auth_db()
     {
         $db = $GLOBALS['xoopsDB'];
 
@@ -178,7 +177,7 @@ class upgrade_2014 extends xoopsUpgrade
             'ldap_provisionning_group' => "'_MD_AM_LDAP_PROVIS_GROUP', 'a:1:{i:0;s:1:\"2\";}', '_MD_AM_LDAP_PROVIS_GROUP_DSC', 'group_multi', 'array', 14",
             'ldap_mail_attr'           => "'_MD_AM_LDAP_MAIL_ATTR', 'mail', '_MD_AM_LDAP_MAIL_ATTR_DESC', 'textbox', 'text', 15",
             'ldap_givenname_attr'      => "'_MD_AM_LDAP_GIVENNAME_ATTR', 'givenname', '_MD_AM_LDAP_GIVENNAME_ATTR_DSC', 'textbox', 'text', 16",
-            'ldap_surname_attr'        => "'_MD_AM_LDAP_SURNAME_ATTR', 'sn', '_MD_AM_LDAP_SURNAME_ATTR_DESC', 'textbox', 'text', 17",);
+            'ldap_surname_attr'        => "'_MD_AM_LDAP_SURNAME_ATTR', 'sn', '_MD_AM_LDAP_SURNAME_ATTR_DESC', 'textbox', 'text', 17");
         foreach ($data as $name => $values) {
             if (!getDbValue($db, 'config', 'conf_id', "`conf_modid`=0 AND `conf_catid`=7 AND `conf_name`='$name'")) {
                 $this->query("INSERT INTO `$table` (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) " . "VALUES ( 0,7,'$name',$values)");
@@ -190,7 +189,7 @@ class upgrade_2014 extends xoopsUpgrade
         $data  = array(
             '_MD_AM_AUTH_CONFOPTION_XOOPS' => 'xoops',
             '_MD_AM_AUTH_CONFOPTION_LDAP'  => 'ldap',
-            '_MD_AM_AUTH_CONFOPTION_AD'    => 'ad',);
+            '_MD_AM_AUTH_CONFOPTION_AD'    => 'ad');
         $this->query("DELETE FROM `$table` WHERE `conf_id`=$id");
         foreach ($data as $name => $value) {
             $this->query("INSERT INTO `$table` (confop_name, confop_value, conf_id) VALUES ('$name', '$value', $id)");
@@ -200,5 +199,5 @@ class upgrade_2014 extends xoopsUpgrade
     }
 }
 
-$upg = new upgrade_2014();
+$upg = new Upgrade_2014();
 return $upg;

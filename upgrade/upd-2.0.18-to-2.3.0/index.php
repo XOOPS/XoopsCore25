@@ -28,21 +28,21 @@ include_once __DIR__ . "/pathcontroller.php";
 /**
  * Class upgrade_230
  */
-class upgrade_230 extends xoopsUpgrade
+class Upgrade_230 extends xoopsUpgrade
 {
-    var $usedFiles = array('mainfile.php');
-    var $tasks     = array('config', 'cache', 'path', 'db', 'bmlink');
+    public $usedFiles = array('mainfile.php');
+    public $tasks     = array('config', 'cache', 'path', 'db', 'bmlink');
 
-    function upgrade_230()
+    public function __construct()
     {
-        $this->xoopsUpgrade(basename(__DIR__));
+        parent::__construct(basename(__DIR__));
     }
 
     /**
      * Check if cpanel config already exists
      *
      */
-    function check_config()
+    public function check_config()
     {
         $sql = "SELECT COUNT(*) FROM `" . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` IN ('welcome_type', 'cpanel')";
         if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
@@ -57,7 +57,7 @@ class upgrade_230 extends xoopsUpgrade
      * Check if cache_model table already exists
      *
      */
-    function check_cache()
+    public function check_cache()
     {
         $sql    = "SHOW TABLES LIKE '" . $GLOBALS['xoopsDB']->prefix("cache_model") . "'";
         $result = $GLOBALS['xoopsDB']->queryF($sql);
@@ -84,7 +84,7 @@ class upgrade_230 extends xoopsUpgrade
      * Check if primary key for `block_module_link` is already set
      *
      */
-    function check_bmlink()
+    public function check_bmlink()
     {
         // MySQL 5.0+
         //$sql = "SHOW KEYS FROM `" . $GLOBALS['xoopsDB']->prefix('block_module_link') . "` WHERE `KEY_NAME` LIKE 'PRIMARY'";
@@ -93,7 +93,7 @@ class upgrade_230 extends xoopsUpgrade
             return false;
         }
         while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
-            if ($row['Key_name'] == 'PRIMARY') {
+            if ($row['Key_name'] === 'PRIMARY') {
                 return true;
             }
         }
@@ -104,7 +104,7 @@ class upgrade_230 extends xoopsUpgrade
     /**
      * @return bool
      */
-    function apply_bmlink()
+    public function apply_bmlink()
     {
         $sql = "SHOW KEYS FROM `" . $GLOBALS['xoopsDB']->prefix('block_module_link') . "`";
         if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
@@ -113,7 +113,7 @@ class upgrade_230 extends xoopsUpgrade
         $keys_drop   = array();
         $primary_add = true;
         while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
-            if ($row['Key_name'] == 'PRIMARY') {
+            if ($row['Key_name'] === 'PRIMARY') {
                 $primary_add = false;
             }
             if (in_array($row['Key_name'], array('block_id', 'module_id'))) {
@@ -136,7 +136,7 @@ class upgrade_230 extends xoopsUpgrade
     /**
      * @return bool
      */
-    function apply_config()
+    public function apply_config()
     {
         $result = true;
         if (!isset($GLOBALS["xoopsConfig"]["cpanel"])) {
@@ -170,7 +170,7 @@ class upgrade_230 extends xoopsUpgrade
         return $result;
     }
 
-    function apply_cache()
+    public function apply_cache()
     {
         $allowWebChanges                     = $GLOBALS['xoopsDB']->allowWebChanges;
         $GLOBALS['xoopsDB']->allowWebChanges = true;
@@ -183,7 +183,7 @@ class upgrade_230 extends xoopsUpgrade
     /**
      * @return bool
      */
-    function check_path()
+    public function check_path()
     {
         if (!(defined("XOOPS_PATH") && defined("XOOPS_VAR_PATH") && defined("XOOPS_TRUST_PATH"))) {
             return false;
@@ -202,7 +202,7 @@ class upgrade_230 extends xoopsUpgrade
     /**
      * @return bool
      */
-    function apply_path()
+    public function apply_path()
     {
         return $this->update_configs('path');
     }
@@ -210,7 +210,7 @@ class upgrade_230 extends xoopsUpgrade
     /**
      * @return bool
      */
-    function check_db()
+    public function check_db()
     {
         $lines = file(XOOPS_ROOT_PATH . '/mainfile.php');
         foreach ($lines as $line) {
@@ -225,7 +225,7 @@ class upgrade_230 extends xoopsUpgrade
     /**
      * @return bool
      */
-    function apply_db()
+    public function apply_db()
     {
         return $this->update_configs('db');
     }
@@ -235,12 +235,12 @@ class upgrade_230 extends xoopsUpgrade
      *
      * @return bool
      */
-    function update_configs($task)
+    public function update_configs($task)
     {
         if (!$vars = $this->set_configs($task)) {
             return false;
         }
-        if ($task == "db" && !empty($vars["XOOPS_DB_COLLATION"])) {
+        if ($task === "db" && !empty($vars["XOOPS_DB_COLLATION"])) {
             if ($pos = strpos($vars["XOOPS_DB_COLLATION"], "_")) {
                 $vars["XOOPS_DB_CHARSET"] = substr($vars["XOOPS_DB_COLLATION"], 0, $pos);
                 $this->convert_db($vars["XOOPS_DB_CHARSET"], $vars["XOOPS_DB_COLLATION"]);
@@ -256,7 +256,7 @@ class upgrade_230 extends xoopsUpgrade
      *
      * @return bool
      */
-    function convert_db($charset, $collation)
+    public function convert_db($charset, $collation)
     {
         $sql = "ALTER DATABASE `" . XOOPS_DB_NAME . "` DEFAULT CHARACTER SET " . $GLOBALS["xoopsDB"]->quote($charset) . " COLLATE " . $GLOBALS["xoopsDB"]->quote($collation);
         if (!$GLOBALS["xoopsDB"]->queryF($sql)) {
@@ -282,7 +282,7 @@ class upgrade_230 extends xoopsUpgrade
      *
      * @return array
      */
-    function convert_table($tables, $charset, $collation)
+    public function convert_table($tables, $charset, $collation)
     {
         // Initialize vars.
         $string_querys     = array();
@@ -301,15 +301,15 @@ class upgrade_230 extends xoopsUpgrade
                 while ($result = $GLOBALS["xoopsDB"]->fetchArray($resource)) {
                     if (preg_match('/(char)|(text)|(enum)|(set)/', $result['Type'])) {
                         // String Type SQL Sentence.
-                        $string_querys[] = "ALTER TABLE `$table` MODIFY `" . $result['Field'] . '` ' . $result['Type'] . " CHARACTER SET $charset COLLATE $collation " . (((!empty($result['Default'])) || ($result['Default'] === '0') || ($result['Default'] === 0)) ? "DEFAULT '" . $result['Default'] . "' " : '') . ('YES' == $result['Null'] ? '' : 'NOT ') . 'NULL';
+                        $string_querys[] = "ALTER TABLE `$table` MODIFY `" . $result['Field'] . '` ' . $result['Type'] . " CHARACTER SET $charset COLLATE $collation " . (((!empty($result['Default'])) || ($result['Default'] === '0') || ($result['Default'] === 0)) ? "DEFAULT '" . $result['Default'] . "' " : '') . ('YES' === $result['Null'] ? '' : 'NOT ') . 'NULL';
 
                         // Binary String Type SQL Sentence.
                         if (preg_match('/(enum)|(set)/', $result['Type'])) {
-                            $binary_querys[] = "ALTER TABLE `$table` MODIFY `" . $result['Field'] . '` ' . $result['Type'] . ' CHARACTER SET binary ' . (((!empty($result['Default'])) || ($result['Default'] === '0') || ($result['Default'] === 0)) ? "DEFAULT '" . $result['Default'] . "' " : '') . ('YES' == $result['Null'] ? '' : 'NOT ') . 'NULL';
+                            $binary_querys[] = "ALTER TABLE `$table` MODIFY `" . $result['Field'] . '` ' . $result['Type'] . ' CHARACTER SET binary ' . (((!empty($result['Default'])) || ($result['Default'] === '0') || ($result['Default'] === 0)) ? "DEFAULT '" . $result['Default'] . "' " : '') . ('YES' === $result['Null'] ? '' : 'NOT ') . 'NULL';
                         } else {
                             $result['Type']  = preg_replace('/char/', 'binary', $result['Type']);
                             $result['Type']  = preg_replace('/text/', 'blob', $result['Type']);
-                            $binary_querys[] = "ALTER TABLE `$table` MODIFY `" . $result['Field'] . '` ' . $result['Type'] . ' ' . (((!empty($result['Default'])) || ($result['Default'] === '0') || ($result['Default'] === 0)) ? "DEFAULT '" . $result['Default'] . "' " : '') . ('YES' == $result['Null'] ? '' : 'NOT ') . 'NULL';
+                            $binary_querys[] = "ALTER TABLE `$table` MODIFY `" . $result['Field'] . '` ' . $result['Type'] . ' ' . (((!empty($result['Default'])) || ($result['Default'] === '0') || ($result['Default'] === 0)) ? "DEFAULT '" . $result['Default'] . "' " : '') . ('YES' === $result['Null'] ? '' : 'NOT ') . 'NULL';
                         }
                     }
                 }
@@ -342,7 +342,6 @@ class upgrade_230 extends xoopsUpgrade
                 // Generate the SQL Sentence for Optimize Table.
                 $optimize_querys[] = "OPTIMIZE TABLE `$table`";
             }
-
         }
         // End Converter Core
 
@@ -362,7 +361,7 @@ class upgrade_230 extends xoopsUpgrade
      *
      * @return bool
      */
-    function write_mainfile($vars)
+    public function write_mainfile($vars)
     {
         if (empty($vars)) {
             return false;
@@ -373,10 +372,10 @@ class upgrade_230 extends xoopsUpgrade
         $lines = file($file);
         foreach (array_keys($lines) as $ln) {
             if (preg_match("/(define\()([\"'])(XOOPS_[^\"']+)\\2,\s*([0-9]+)\s*\)/", $lines[$ln], $matches)) {
-                $val        = isset($vars[$matches[3]]) ? strval(constant($matches[3])) : (defined($matches[3]) ? strval(constant($matches[3])) : "0");
+                $val        = isset($vars[$matches[3]]) ? (string)(constant($matches[3])) : (defined($matches[3]) ? (string)(constant($matches[3])) : "0");
                 $lines[$ln] = preg_replace("/(define\()([\"'])(XOOPS_[^\"']+)\\2,\s*([0-9]+)\s*\)/", "define('" . $matches[3] . "', " . $val . " )", $lines[$ln]);
             } elseif (preg_match("/(define\()([\"'])(XOOPS_[^\"']+)\\2,\s*([\"'])([^\"']*?)\\4\s*\)/", $lines[$ln], $matches)) {
-                $val        = isset($vars[$matches[3]]) ? strval($vars[$matches[3]]) : (defined($matches[3]) ? strval(constant($matches[3])) : "");
+                $val        = isset($vars[$matches[3]]) ? (string)($vars[$matches[3]]) : (defined($matches[3]) ? (string)(constant($matches[3])) : "");
                 $lines[$ln] = preg_replace("/(define\()([\"'])(XOOPS_[^\"']+)\\2,\s*([\"'])(.*?)\\4\s*\)/", "define('" . $matches[3] . "', '" . $val . "' )", $lines[$ln]);
             }
         }
@@ -403,7 +402,7 @@ class upgrade_230 extends xoopsUpgrade
      *
      * @return array|bool
      */
-    function set_configs($task)
+    public function set_configs($task)
     {
         $ret     = array();
         $configs = include __DIR__ . "/settings_{$task}.php";
@@ -419,9 +418,8 @@ class upgrade_230 extends xoopsUpgrade
         }
 
         return $ret;
-
     }
 }
 
-$upg = new upgrade_230();
+$upg = new Upgrade_230();
 return $upg;

@@ -75,7 +75,7 @@ switch ($op) {
                 // All files
                 foreach ($files as $file) {
                     if (!preg_match('#.back#', $file)) {
-                        if (file_exists($root . $file) && $file != '.' && $file != '..' && !is_dir($root . $file)) {
+                        if (file_exists($root . $file) && $file !== '.' && $file !== '..' && !is_dir($root . $file)) {
                             $folder          = XoopsFile::getHandler('file', $root . $file);
                             $extension_verif = $folder->ext();
 
@@ -143,7 +143,7 @@ switch ($op) {
 
                             $file_arr['chmod'] = modify_chmod($file_arr['chmod'], $file_arr['path_file'], $count_file);
 
-                            if ($extension_verif == 'picture') {
+                            if ($extension_verif === 'picture') {
                                 list($width, $height) = getimagesize($root . $file);
                                 if ($height > 60) {
                                     $file_arr['img'] = '<img src="' . $url_file . $file . '" height="47" title="" alt="" />';
@@ -216,9 +216,8 @@ switch ($op) {
         $mimetypes = include $GLOBALS['xoops']->path('include/mimetypes.inc.php');
         $uploader  = new XoopsMediaUploader($path, $mimetypes, 500000);
         if ($uploader->fetchMedia('upload_file')) {
-
             if (!$uploader->upload()) {
-                $err[] = $uploader->getErrors();
+                $err[] =& $uploader->getErrors();
             }
         }
         if (isset($err)) {
@@ -261,5 +260,3 @@ switch ($op) {
 }
 
 xoops_cp_footer();
-
-?>

@@ -30,28 +30,41 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - fix profile/search (cesagonchu/slider84)
 - changed minimum image sizes in Image Manager to: 800x600, 1MB (mamba)
 
-Security fixes
-- ID: 1295 Added X-Frame-Options header to prevent clickjacking in modern browsers, reported by Narendra Bhati. 
-  By default set to 'sameorigin', but can be overridden by setting desired value in 'xFrameOptions' key in xoopsconfig.  (rgriffith)
-
 Updated:
  - TinyMCE to 3.5.11 (mamba)
  - PHPMailer to 5.2.13 (mamba)
  - jQuery to 1.11.3 (mamba)
  - jQuery UI 1.11.4 (mamba)
  - jGrowl to 1.4.3 (mamba)
- - phpThumb to 1.7.14-201507071049 (mamba)
- - HTMLPurifier 4.7 (mamba)
+ - phpThumb to 1.7.14-201512180757  (mamba)
+ - HTML Purifier to 4.7.0 (mamba)
+
+===================================
+2.5.7.2 Final 	2016-01-02
+===================================
+
+This patch for XOOPS 2.5.7 corrects the following issues:
+
+- multiple issues reported by Tim Coen (Curesec GmbH)
+
+All XOOPS 2.5.7.1 users are advised to apply this patch as soon as possible. Any users that are running an older XOOPS version are advised to update to XOOPS 2.5.7.2 now.
 
 
 ===================================
-2.5.7 Final (Patch 1)	2014-06-20
+2.5.7.1 Final 	2014-06-20
 ===================================
 
+This patch for XOOPS 2.5.7 corrects the following issues:
+
+- CSRF and XSS issues reported by Dingjie 'Daniel' Yang of Qualsys
+- XSS and best practice issues reported by Narendra Bhati
 - Updating docu for the correct version of tablesorter (mamba)
 - Fix path specified for include (rgriffith, mamba)
 - added mainfile.php to /extras for use on servers where write to root is not possible (rgriffith)
 - fix for array issue in pm/viempmsg.php (Roby73/mamba)
+
+All XOOPS 2.5.7 users are advised to apply this patch as soon as possible. Any users that are running an older XOOPS version are advised to update to XOOPS 2.5.7.1 now.
+
 
 ===================================
 2.5.7 Final		2014/06/14 

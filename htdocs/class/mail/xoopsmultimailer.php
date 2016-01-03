@@ -60,7 +60,7 @@ class xoopsmultimailer extends PHPMailer
      * @var string
      * @access private
      */
-    private $From = '';
+    public $From = '';
 
     /**
      * 'from' name

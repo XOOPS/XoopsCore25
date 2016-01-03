@@ -3,12 +3,12 @@
 /**
  * Class upgrade_2018
  */
-class upgrade_2018 extends xoopsUpgrade
+class Upgrade_2018 extends xoopsUpgrade
 {
     /**
      * @return bool
      */
-    function isApplied()
+    public function isApplied()
     {
         return $this->check_config_type();
     }
@@ -16,7 +16,7 @@ class upgrade_2018 extends xoopsUpgrade
     /**
      * @return bool
      */
-    function apply()
+    public function apply()
     {
         return $this->apply_alter_tables();
     }
@@ -24,13 +24,13 @@ class upgrade_2018 extends xoopsUpgrade
     /**
      * @return bool
      */
-    function check_config_type()
+    public function check_config_type()
     {
         $db     = $GLOBALS['xoopsDB'];
         $sql    = "SHOW COLUMNS FROM " . $db->prefix("config") . " LIKE 'conf_title'";
         $result = $db->queryF($sql);
         while ($row = $db->fetchArray($result)) {
-            if (strtolower(trim($row["Type"])) == "varchar(255)") {
+            if (strtolower(trim($row["Type"])) === "varchar(255)") {
                 return true;
             }
         }
@@ -41,7 +41,7 @@ class upgrade_2018 extends xoopsUpgrade
     /**
      * @param $sql
      */
-    function query($sql)
+    public function query($sql)
     {
         //echo $sql . "<br />";
         $db = $GLOBALS['xoopsDB'];
@@ -53,14 +53,14 @@ class upgrade_2018 extends xoopsUpgrade
     /**
      * @return bool
      */
-    function apply_alter_tables()
+    public function apply_alter_tables()
     {
         $db           = $GLOBALS['xoopsDB'];
         $this->fields = array(
             "config"         => array(
                 "conf_title" => "varchar(255) NOT NULL default ''",
                 "conf_desc"  => "varchar(255) NOT NULL default ''"),
-            "configcategory" => array("confcat_name" => "varchar(255) NOT NULL default ''"),);
+            "configcategory" => array("confcat_name" => "varchar(255) NOT NULL default ''"));
 
         foreach ($this->fields as $table => $data) {
             foreach ($data as $field => $property) {
@@ -73,5 +73,5 @@ class upgrade_2018 extends xoopsUpgrade
     }
 }
 
-$upg = new upgrade_2018();
+$upg = new Upgrade_2018();
 return $upg;

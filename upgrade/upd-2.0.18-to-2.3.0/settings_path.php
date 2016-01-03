@@ -87,14 +87,15 @@ $myts =& MyTextSanitizer::getInstance();
             <?php echo CHECKING_PERMISSIONS . '<br /><p>' . ERR_NEED_WRITE_ACCESS . '</p>'; ?>
             <ul class="diags">
                 <?php foreach ($ctrl->permErrors['data'] as $path => $result) {
-                    if ($result) {
-                        echo '<li class="success">' . sprintf(IS_WRITABLE, $path) . '</li>';
-                    } else {
-                        echo '<li class="failure">' . sprintf(IS_NOT_WRITABLE, $path) . '</li>';
-                    }
-                } ?>
+    if ($result) {
+        echo '<li class="success">' . sprintf(IS_WRITABLE, $path) . '</li>';
+    } else {
+        echo '<li class="failure">' . sprintf(IS_NOT_WRITABLE, $path) . '</li>';
+    }
+} ?>
             </ul>
-            <?php } else { ?>
+            <?php 
+} else { ?>
                 <div id="dataperms" class="x2-note" style="display: none;"/>
             <?php } ?>
         </div>

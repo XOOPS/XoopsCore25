@@ -26,7 +26,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * @author Taiwen Jiang <phppp@users.sourceforge.net>
  * @access public
  */
-class xoopsfile
+class XoopsFile
 {
     /**
      * XoopsFile::__construct()
