@@ -170,7 +170,7 @@ class xos_opal_Theme
      *
      * @var string
      */
-    public $canvasTemplate = 'theme.tpl';
+    public $canvasTemplate = 'theme.html';
 
     /**
      * Theme folder path
@@ -451,7 +451,7 @@ class xos_opal_Theme
         if ($this->contentCacheLifetime && $this->contentCacheId && !$contentTpl) {
             $content['htmlHeadStrings'] = $this->htmlHeadStrings;
             $content['metas']           = $this->metas;
-            $content['xoops_pagetitle'] =& $this->template->get_template_vars('xoops_pagetitle');
+            $content['xoops_pagetitle'] = $this->template->get_template_vars('xoops_pagetitle');
             $content['header']          = $header;
             $cache->write($this->contentCacheId, $content);
         }
@@ -495,7 +495,14 @@ class xos_opal_Theme
 
         // Do not cache the main (theme.html) template output
         $this->template->caching = 0;
-        $this->template->display($this->path . '/' . $this->canvasTemplate);
+        //mb -------------------------
+//        $this->template->display($this->path . '/' . $this->canvasTemplate);
+        if (file_exists($this->path . '/' . $this->canvasTemplate)) {
+            $this->template->display($this->path . '/' . $this->canvasTemplate);
+        } else {
+            $this->template->display($this->path . '/theme.tpl');
+        }
+        //mb -------------------------
         $this->renderCount++;
         $xoopsLogger->stopTime('Page rendering');
 
