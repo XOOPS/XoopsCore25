@@ -35,7 +35,7 @@ $GLOBALS['xoopsLogger']->addDeprecated("'/class/xoopscommments.php' is deprecate
  * @subpackage          comments
  * @access              public
  */
-class xoopscomments extends XoopsObject
+class XoopsComments extends XoopsObject
 {
     public $ctable;
     public $db;
@@ -327,7 +327,7 @@ class xoopscomments extends XoopsObject
                 $online_image = "<span style='color:#ee0000;font-weight:bold;'>" . _ONLINE . "</span>";
             }
             $profile_image = "<a href='" . XOOPS_URL . "/userinfo.php?uid=" . $poster->getVar("uid") . "'><img src='" . XOOPS_URL . "/images/icons/profile.gif' alt='" . _PROFILE . "' /></a>";
-            $pm_image = "";
+            $pm_image      = "";
             if ($xoopsUser) {
                 $pm_image = "<a href='javascript:openWithSelfMain(\"" . XOOPS_URL . "/pmlite.php?send2=1&amp;to_userid=" . $poster->getVar("uid") . "\",\"pmlite\",450,370);'><img src='" . XOOPS_URL . "/images/icons/pm.gif' alt='" . sprintf(_SENDPMTO, $poster->getVar("uname", "E")) . "' /></a>";
             }
@@ -396,7 +396,7 @@ class xoopscomments extends XoopsObject
         }
         $prefix = str_replace(".", "&nbsp;&nbsp;&nbsp;&nbsp;", $this->getVar("prefix"));
         $date   = formatTimestamp($this->getVar("date"), "m");
-        $icon = "icons/no_posticon.gif";
+        $icon   = "icons/no_posticon.gif";
         if ($this->getVar("icon") != "") {
             $icon = "subject/" . $this->getVar("icon", "E");
         }

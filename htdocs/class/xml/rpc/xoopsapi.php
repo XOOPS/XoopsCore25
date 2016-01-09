@@ -34,7 +34,7 @@ require_once XOOPS_ROOT_PATH . '/class/xml/rpc/xmlrpcapi.php';
 /**
  * Class XoopsApi
  */
-class xoopsapi extends XoopsXmlRpcApi
+class XoopsApi extends XoopsXmlRpcApi
 {
     /**
      * @param $params

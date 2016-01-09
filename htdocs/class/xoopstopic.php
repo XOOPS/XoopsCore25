@@ -27,7 +27,7 @@ include_once XOOPS_ROOT_PATH . '/class/xoopstree.php';
 /**
  * Class XoopsTopic
  */
-class xoopstopic
+class XoopsTopic
 {
     public $table;
     public $topic_id;
@@ -44,7 +44,7 @@ class xoopstopic
      */
     public function XoopsTopic($table, $topicid = 0)
     {
-        $this->db = &XoopsDatabaseFactory::getDatabaseConnection();
+        $this->db    = &XoopsDatabaseFactory::getDatabaseConnection();
         $this->table = $table;
         if (is_array($topicid)) {
             $this->makeTopic($topicid);

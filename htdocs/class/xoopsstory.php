@@ -28,7 +28,7 @@ include_once XOOPS_ROOT_PATH . "/kernel/user.php";
 /**
  * Class XoopsStory
  */
-class xoopsstory
+class XoopsStory
 {
     public $table;
     public $storyid;

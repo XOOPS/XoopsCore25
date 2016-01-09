@@ -31,7 +31,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  *
  * @package kernel
  */
-class xoopslogger
+class XoopsLogger
 {
     /**
      * *#@+
@@ -400,11 +400,11 @@ class xoopslogger
  *
  * @internal : Using a function and not calling the handler method directly because of old PHP versions
  * set_error_handler() have problems with the array( obj,methodname ) syntax
- * @param      $errNo
- * @param      $errStr
- * @param      $errFile
- * @param      $errLine
- * @param null $errContext
+ * @param       $errNo
+ * @param       $errStr
+ * @param       $errFile
+ * @param       $errLine
+ * @param  null $errContext
  * @return bool
  */
 function XoopsErrorHandler_HandleError($errNo, $errStr, $errFile, $errLine, $errContext = null)

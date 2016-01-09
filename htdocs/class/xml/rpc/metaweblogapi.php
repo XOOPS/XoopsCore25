@@ -34,7 +34,7 @@ require_once XOOPS_ROOT_PATH . '/class/xml/rpc/xmlrpcapi.php';
 /**
  * Class MetaWeblogApi
  */
-class metaweblogapi extends XoopsXmlRpcApi
+class MetaWeblogApi extends XoopsXmlRpcApi
 {
     /**
      * @param $params

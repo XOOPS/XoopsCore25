@@ -29,7 +29,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * @subpackage          XoopsTree
  * @access              public
  */
-class xoopstree
+class XoopsTree
 {
     public $table; //table with parent-child structure
     public $id; //name of unique id for records in table $table
@@ -125,7 +125,7 @@ class xoopstree
         }
         while (list($r_id) = $this->db->fetchRow($result)) {
             $idarray[] = $r_id;
-            $idarray = $this->getAllChildId($r_id, $order, $idarray);
+            $idarray   = $this->getAllChildId($r_id, $order, $idarray);
         }
 
         return $idarray;
@@ -152,7 +152,7 @@ class xoopstree
             return $idarray;
         }
         $idarray[] = $r_id;
-        $idarray = $this->getAllParentId($r_id, $order, $idarray);
+        $idarray   = $this->getAllParentId($r_id, $order, $idarray);
 
         return $idarray;
     }
@@ -314,7 +314,7 @@ class xoopstree
         }
         while ($row = $this->db->fetchArray($result)) {
             $parray[] = $row;
-            $parray = $this->getAllChild($row[$this->id], $order, $parray);
+            $parray   = $this->getAllChild($row[$this->id], $order, $parray);
         }
 
         return $parray;
@@ -343,8 +343,8 @@ class xoopstree
         }
         while ($row = $this->db->fetchArray($result)) {
             $row['prefix'] = $r_prefix . ".";
-            $parray[] = $row;
-            $parray = $this->getChildTreeArray($row[$this->id], $order, $parray, $row['prefix']);
+            $parray[]      = $row;
+            $parray        = $this->getChildTreeArray($row[$this->id], $order, $parray, $row['prefix']);
         }
 
         return $parray;

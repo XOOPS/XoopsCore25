@@ -32,7 +32,7 @@
  * @link      http://xoops.org
  * @since     2.5.7
  */
-class xoopsfilterinput
+class XoopsFilterInput
 {
     protected $tagsArray;         // default = empty array
     protected $attrArray;         // default = empty array

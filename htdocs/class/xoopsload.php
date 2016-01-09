@@ -22,7 +22,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 /**
  * Class XoopsLoad
  */
-class xoopsload
+class XoopsLoad
 {
     //static  $loaded;
     //static  $configs;
@@ -147,8 +147,8 @@ class xoopsload
      * Load module class
      *
      * @access private
-     * @param      $name
-     * @param null $dirname
+     * @param       $name
+     * @param  null $dirname
      * @return bool
      */
     public function loadModule($name, $dirname = null)

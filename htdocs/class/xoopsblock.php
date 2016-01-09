@@ -26,7 +26,7 @@ include_once $GLOBALS['xoops']->path('kernel/object.php');
 /**
  * Class XoopsBlock
  */
-class xoopsblock extends XoopsObject
+class XoopsBlock extends XoopsObject
 {
     public $db;
 

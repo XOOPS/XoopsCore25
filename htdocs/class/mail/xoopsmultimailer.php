@@ -52,7 +52,7 @@ require_once XOOPS_ROOT_PATH . '/class/mail/phpmailer/PHPMailerAutoload.php';
  * @subpackage mail
  * @author     Jochen Buennagel <job@buennagel.com>
  */
-class xoopsmultimailer extends PHPMailer
+class XoopsMultimailer extends PHPMailer
 {
     /**
      * 'from' address

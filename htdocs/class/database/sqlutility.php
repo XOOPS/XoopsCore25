@@ -26,7 +26,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * @package    kernel
  * @subpackage database
  */
-class sqlutility
+class SqlUtility
 {
     /**
      * Function from phpMyAdmin (http://phpwizard.net/projects/phpMyAdmin/)
@@ -117,7 +117,7 @@ class sqlutility
                 $start_of_comment = (($sql[$i] === '#') ? $i : $i - 2);
                 // if no "\n" exits in the remaining string, checks for "\r"
                 // (Mac eol style)
-                $end_of_comment = (strpos(' ' . $sql, "\012", $i + 2)) ? : strpos(' ' . $sql, "\015", $i + 2);
+                $end_of_comment = (strpos(' ' . $sql, "\012", $i + 2)) ?: strpos(' ' . $sql, "\015", $i + 2);
                 if (!$end_of_comment) {
                     // no eol found after '#', add the parsed part to the returned
                     // array and exit
@@ -145,9 +145,9 @@ class sqlutility
     /**
      * add a prefix.'_' to all tablenames in a query
      *
-     * @param string $query  valid SQL query string
-     * @param string $prefix prefix to add to all table names
-     * @return mixed FALSE on failure
+     * @param  string $query  valid SQL query string
+     * @param  string $prefix prefix to add to all table names
+     * @return mixed  FALSE on failure
      */
     public static function prefixQuery($query, $prefix)
     {
