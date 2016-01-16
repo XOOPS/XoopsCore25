@@ -128,7 +128,7 @@ function make_data(&$dbm, $adminname, $adminpass, $adminmail, $language, $gruops
     foreach ($modversion['blocks'] as $func_num => $newblock) {
         if ($fp = fopen('../modules/system/templates/blocks/' . $newblock['template'], 'r')) {
             $visible = 0;
-            if (in_array($newblock['template'], array('system_block_user.html', 'system_block_login.html', 'system_block_mainmenu.html'))) {
+            if (in_array($newblock['template'], array('system_block_user.tpl', 'system_block_login.tpl', 'system_block_mainmenu.tpl'))) {
                 $visible = 1;
             }
             $options   = !isset($newblock['options']) ? '' : trim($newblock['options']);
