@@ -157,9 +157,8 @@ function xoDiag($status = -1, $str = '')
  */
 function xoDiagBoolSetting($name, $wanted = false, $severe = false)
 {
-    $setting = strtolower(ini_get($name));
-    $setting = (empty($setting) || $setting === 'off' || $setting === 'false');// ? false : true;
-    if ($setting == $wanted) {
+    $setting = (bool) ini_get($name);
+    if ($setting === (bool) $wanted) {
         return xoDiag(1, $setting ? 'ON' : 'OFF');
     } else {
         return xoDiag($severe ? -1 : 0, $setting ? 'ON' : 'OFF');

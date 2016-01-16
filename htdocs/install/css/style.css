@@ -172,7 +172,7 @@ ul, ol {
 }
 
 #pageslist li.current {
-    background: #E9FF8F url(../img/bullet-current.png);
+    background: #E9FF8F url(../img/bullet-current.png) no-repeat left center;
     filter: alpha(opacity=60);
     -moz-opacity: 0.6;
     -webkit-opacity: 0.6;
