@@ -40,8 +40,8 @@ class MytsYoutube extends MyTextSanitizerExtension
                 }
                 var domobj = xoopsGetElementById(id);
                 if (text.length > 0) {
-                    var text2 = prompt(enterFlashWidthPhrase, "425");
-                    var text3 = prompt(enterFlashHeightPhrase, "350");
+                    var text2 = prompt(enterFlashWidthPhrase, "16x9");
+                    var text3 = prompt(enterFlashHeightPhrase, "");
                     var result = "[youtube="+text2+","+text3+"]" + text + "[/youtube]";
                     xoopsInsertText(domobj, result);
                 }
@@ -85,26 +85,51 @@ EOH;
      */
     public static function decode($url, $width, $height)
     {
-        if (!preg_match("/^http[s]?:\/\/(www\.)?youtube\.com\/watch\?v=(.*)/i", $url, $matches)) {
-            trigger_error("Not matched: {$url} {$width} {$height}", E_USER_WARNING);
+        // modernized responsive youtube handling suggested by XOOPS user xd9527 -- thanks!
+        // http://xoops.org/modules/newbb/viewtopic.php?post_id=359913
 
+        // match known youtube urls
+        // from: http://stackoverflow.com/questions/2936467/parse-youtube-video-id-using-preg-match/6382259#6382259
+        $youtubeRegex = '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)'
+            .'([^"&?/ ]{11})%i';
+
+        if (preg_match($youtubeRegex, $url, $match)) {
+            $videoId = $match[1]; // extract just the video id from a url
+        } elseif (preg_match('%^[^"&?/ ]{11}$%', $url)) {
+            $videoId = $url; // have a bare video id
+        } else {
+            trigger_error("Not matched: {$url} {$width} {$height}", E_USER_WARNING);
             return "";
         }
-        $src = "http://www.youtube.com/v/" . $matches[2];
-        if (empty($width) || empty($height)) {
-            if (!$dimension = @getimagesize($src)) {
-                return "";
-            }
-            if (!empty($width)) {
-                $height = $dimension[1] * $width / $dimension[0];
-            } elseif (!empty($height)) {
-                $width = $dimension[0] * $height / $dimension[1];
-            } else {
-                list($width, $height) = array($dimension[0], $dimension[1]);
-            }
-        }
-        $code = "<object width='{$width}' height='{$height}'><param name='movie' value='{$src}'></param>" . "<param name='wmode' value='transparent'></param>" . "<embed src='{$src}' type='application/x-shockwave-flash' wmode='transparent' width='425' height='350'></embed>" . "</object>";
 
+        $width = empty($width) ? 426 : (int) $width;
+        switch ($width) {
+            case 4:
+                $height = 3;
+                break;
+            case 16:
+                $height = 9;
+                break;
+            default:
+                $height = empty($height) ? 240 : (int) $height;
+                break;
+        }
+
+        $aspectRatio = $width/$height; // 16x9 = 1.777777778, 4x3 = 1.333333333
+        $responsiveAspect = ($aspectRatio < 1.4) ? 'embed-responsive-4by3' : 'embed-responsive-16by9';
+        if ($width < 17 && $height < 10) {
+            $scale = (int) 450 / $width;
+            $width = $width * $scale;
+            $height = $height * $scale;
+        }
+
+        $template = <<<'EOD'
+        <div class="embed-responsive %4$s">
+        <iframe class="embed-responsive-item" width="%2$d" height="%3$d" src="https://www.youtube.com/embed/%1$s" frameborder="0" allowfullscreen></iframe>
+        </div>
+EOD;
+
+        $code = sprintf($template, $videoId, $width, $height, $responsiveAspect);
         return $code;
     }
 }
