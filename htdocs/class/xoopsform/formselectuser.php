@@ -72,38 +72,42 @@ class XoopsFormSelectUser extends XoopsFormElementTray
         if ($includeAnonymous) {
             $select_element->addOption(0, $GLOBALS['xoopsConfig']['anonymous']);
         }
-        $member_handler =& xoops_getHandler('member');
+        $member_handler = xoops_getHandler('member');
         $value          = is_array($value) ? $value : (empty($value) ? array() : array($value));
-        if (($multiple === false) && (count($value) > 1)) {
-            // simple case - we have a set of uids in $values
+        $selectedUsers = array();
+        if (count($value) > 0) {
+            // fetch the set of uids in $value
             $criteria = new Criteria('uid', '(' . implode(',', $value) . ')', 'IN');
             $criteria->setSort('uname');
             $criteria->setOrder('ASC');
-            $users = $member_handler->getUserList($criteria);
-        } else {
-            // open ended case - no selection criteria
-            // we will always cache this version to reduce expense
-            if (empty($queryCache)) {
-                XoopsLoad::load('XoopsCache');
-                $queryCache = XoopsCache::read($cachekey);
-                if ($queryCache === false) {
-                    $criteria = new CriteriaCompo();
-                    if ($limit <= $member_handler->getUserCount()) {
-                        // if we have more than $limit users, we will select who to show based on last_login
-                        $criteria->setLimit($limit);
-                        $criteria->setSort('last_login');
-                        $criteria->setOrder('DESC');
-                    } else {
-                        $criteria->setSort('uname');
-                        $criteria->setOrder('ASC');
-                    }
-                    $queryCache = $member_handler->getUserList($criteria);
-                    asort($queryCache);
-                    XoopsCache::write($cachekey, $queryCache, $cachettl); // won't do anything different if write fails
-                }
-            }
-            $users = $queryCache;
+            $selectedUsers = $member_handler->getUserList($criteria);
         }
+
+        // get the full selection list
+        // we will always cache this version to reduce expense
+        if (empty($queryCache)) {
+            XoopsLoad::load('XoopsCache');
+            $queryCache = XoopsCache::read($cachekey);
+            if ($queryCache === false) {
+                $criteria = new CriteriaCompo();
+                if ($limit <= $member_handler->getUserCount()) {
+                    // if we have more than $limit users, we will select who to show based on last_login
+                    $criteria->setLimit($limit);
+                    $criteria->setSort('last_login');
+                    $criteria->setOrder('DESC');
+                } else {
+                    $criteria->setSort('uname');
+                    $criteria->setOrder('ASC');
+                }
+                $queryCache = $member_handler->getUserList($criteria);
+                asort($queryCache);
+                XoopsCache::write($cachekey, $queryCache, $cachettl); // won't do anything different if write fails
+            }
+        }
+
+        // merge with selected
+        $users = $selectedUsers + $queryCache;
+
         $select_element->addOptionArray($users);
         if ($limit > count($users)) {
             parent::__construct($caption, "", $name);
@@ -150,18 +154,5 @@ class XoopsFormSelectUser extends XoopsFormElementTray
         parent::__construct($caption, '<br /><br />', $name);
         $this->addElement($select_element);
         $this->addElement($action_tray);
-    }
-
-    /**
-     * @param            $caption
-     * @param            $name
-     * @param bool|false $includeAnonymous
-     * @param null       $value
-     * @param int        $size
-     * @param bool|false $multiple
-     */
-    public function XoopsFormSelectUser($caption, $name, $includeAnonymous = false, $value = null, $size = 1, $multiple = false)
-    {
-        $this->__construct($caption, $name, $includeAnonymous, $value, $size, $multiple);
     }
 }
