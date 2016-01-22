@@ -29,6 +29,7 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - removed -khtml CSS properties (mamba)
 - fix profile/search (cesagonchu/slider84)
 - changed minimum image sizes in Image Manager to: 800x600, 1MB (mamba)
+- added image sort order in TinyMCE image-manager plugin (elpaksu/Peekay)
 
 Updated:
  - TinyMCE to 3.5.11 (mamba)

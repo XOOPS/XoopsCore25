@@ -41,7 +41,7 @@ xoops_loadLanguage("/admin/images", "system");
 
 // include
 xoops_load("xoopsformloader");
-xoops_load("xoopsmodule");
+//xoops_load("xoopsmodule");
 include_once XOOPS_ROOT_PATH . "/include/cp_functions.php";
 include_once XOOPS_ROOT_PATH . "/modules/system/constants.php";
 
@@ -469,6 +469,8 @@ if ($op == 'listimg') {
     $imgcount = $image_handler->getCount($criteria);
     $start    = isset($_GET['start']) ? (int)($_GET['start']) : 0;
     $criteria->setStart($start);
+    $criteria->setSort('image_id');
+    $criteria->setOrder('DESC');
     $criteria->setLimit(20);
     $images =& $image_handler->getObjects($criteria, true, false);
 
