@@ -1,10 +1,10 @@
 <!-- the tabs -->
 <ul class="tabs">
     <li><a class="tooltip" href="#" title="<{$smarty.const._AM_SYSTEM_HELP}>"><img src='<{"$theme_icons/help.png"}>'/></a></li>
-    <li><a class="tooltip" href="#" title="<{block id=4 display=" title"}>"><img src='<{"$theme_icons/waiting.png"}>'/></a></li>
-    <li><a class="tooltip" href="#" title="<{block id=9 display=" title"}>"><img src='<{"$theme_icons/edituser.png"}>'/></a></li>
-    <li><a class="tooltip" href="#" title="<{block id=8 display=" title"}>"><img src='<{"$theme_icons/newuser.png"}>'/></a></li>
-    <li><a class="tooltip" href="#" title="<{block id=10 display=" title"}>"><img src='<{"$theme_icons/comments.png"}>'/></a></li>
+    <li><a class="tooltip" href="#" title="<{block id=4 display='title'}>"><img src='<{"$theme_icons/waiting.png"}>'/></a></li>
+    <li><a class="tooltip" href="#" title="<{block id=9 display='title'}>"><img src='<{"$theme_icons/edituser.png"}>'/></a></li>
+    <li><a class="tooltip" href="#" title="<{block id=8 display='title'}>"><img src='<{"$theme_icons/newuser.png"}>'/></a></li>
+    <li><a class="tooltip" href="#" title="<{block id=10 display='title'}>"><img src='<{"$theme_icons/comments.png"}>'/></a></li>
 </ul>
 
 <!-- tab "panes" -->
