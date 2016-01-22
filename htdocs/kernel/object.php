@@ -415,7 +415,7 @@ class XoopsObject
             return $ret;
         }
         $ret = $this->vars[$key]['value'];
-        $ts  = MyTextSanitizer::getInstance();
+        $ts  =& MyTextSanitizer::getInstance();
         switch ($this->vars[$key]['data_type']) {
             case XOBJ_DTYPE_UNICODE_TXTBOX:
             case XOBJ_DTYPE_TXTBOX:
@@ -1095,7 +1095,7 @@ class XoopsObjectHandler
     }
 
     /**
-     * delete obejct from database
+     * delete object from database
      *
      * @param XoopsObject $object
      * @abstract

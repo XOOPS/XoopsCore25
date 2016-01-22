@@ -6,7 +6,7 @@
     <div class="floatleft"><{$form_sort}></div>
     <div class="floatright">
         <div class="xo-buttons">
-            <button class="ui-corner-all" onclick="self.location.href='admin.php?fct=comments&amp;op=comments_form_purge'">
+            <button class="ui-corner-all" onclick="self.location.href='admin.php?fct=comments&op=comments_form_purge'">
                 <img src="<{xoAdminIcons clear.png}>" alt="<{$smarty.const._AM_SYSTEM_COMMENTS_FORM_PURGE}>"/>
                 <{$smarty.const._AM_SYSTEM_COMMENTS_FORM_PURGE}>
             </button>

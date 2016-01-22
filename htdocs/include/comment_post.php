@@ -34,7 +34,7 @@ if ('system' === $xoopsModule->getVar('dirname')) {
     $module          =& $module_handler->get($comment->getVar('com_modid'));
     $comment_config  = $module->getInfo('comments');
     $com_modid       = $module->getVar('mid');
-    $redirect_page   = XOOPS_URL . '/modules/system/admin.php?fct=comments&amp;com_modid=' . $com_modid . '&amp;com_itemid';
+    $redirect_page   = XOOPS_URL . '/modules/system/admin.php?fct=comments&com_modid=' . $com_modid . '&com_itemid';
     $moddir          = $module->getVar('dirname');
     unset($comment);
 } else {

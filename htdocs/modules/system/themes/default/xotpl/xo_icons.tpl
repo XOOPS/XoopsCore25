@@ -1,5 +1,5 @@
 <div class="xo-title" id="xo-title-icons"><{$lang_cp}></div>
-<!-- start system icons  -->
+<{*start system icons*}>
 <div id="xo-system-icons">
     <div id="xo-icon">
         <{foreach item=op from=$mod_options}>

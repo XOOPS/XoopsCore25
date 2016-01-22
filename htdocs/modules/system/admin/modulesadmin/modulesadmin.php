@@ -786,7 +786,6 @@ function xoops_module_uninstall($dirname)
  */
 function xoops_module_update($dirname)
 {
-
     global $xoopsUser, $xoopsConfig, $xoopsTpl;
     $dirname = trim($dirname);
     $xoopsDB =& $GLOBALS["xoopsDB"];
@@ -970,7 +969,6 @@ function xoops_module_update($dirname)
                                             $msgs[] = "&nbsp;&nbsp;" . sprintf(_AM_SYSTEM_MODULES_TEMPLATE_RECOMPILE, "<strong>" . $block['template'] . "</strong>");
                                         }
                                     }
-
                                 }
                             }
                         }

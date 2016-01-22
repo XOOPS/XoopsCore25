@@ -2,7 +2,7 @@
     <div id="xo-body">
         <{if $xoops_contents}>
             <div id="xo-content">
-                <!-- Display Admin menu -->
+                <{*Display Admin menu*}>
                 <{if $xo_system_menu}><{$xo_system_menu}><{/if}>
                 <{$xoops_contents}>
             </div>

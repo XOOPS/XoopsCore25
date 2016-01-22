@@ -266,7 +266,7 @@ function b_system_waiting_show()
     // waiting content for xoops comments
     $result = $xoopsDB->query("SELECT COUNT(*) FROM " . $xoopsDB->prefix("xoopscomments") . " WHERE com_status=1");
     if ($result) {
-        $block['modules'][7]['adminlink'] = XOOPS_URL . "/modules/system/admin.php?module=0&amp;status=1&amp;fct=comments";
+        $block['modules'][7]['adminlink'] = XOOPS_URL . "/modules/system/admin.php?module=0&amp;status=1&fct=comments";
         list($block['modules'][7]['pendingnum']) = $xoopsDB->fetchRow($result);
         $block['modules'][7]['lang_linkname'] = _MB_SYSTEM_COMPEND;
     }

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Xoops Cpanel GUI abstract class
  *

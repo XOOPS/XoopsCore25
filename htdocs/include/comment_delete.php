@@ -36,9 +36,9 @@ if (!empty($_POST)) {
 } else {
     $result = filter_input_array(INPUT_GET, $filters);
 }
-$com_mode  = $result['com_mode'] ? : 'flat';
-$com_order = $result['com_order'] ? : XOOPS_COMMENT_OLD1ST;
-$com_id    = $result['com_id'] ? : 0;
+$com_mode  = $result['com_mode'] ?: 'flat';
+$com_order = $result['com_order'] ?: XOOPS_COMMENT_OLD1ST;
+$com_id    = $result['com_id'] ?: 0;
 if ($result['op']) {
     $op = $result['op'];
 }
@@ -50,7 +50,7 @@ if ('system' === $xoopsModule->getVar('dirname')) {
     $module          =& $module_handler->get($comment->getVar('com_modid'));
     $comment_config  = $module->getInfo('comments');
     $com_modid       = $module->getVar('mid');
-    $redirect_page   = XOOPS_URL . '/modules/system/admin.php?fct=comments&amp;com_modid=' . $com_modid . '&amp;com_itemid';
+    $redirect_page   = XOOPS_URL . '/modules/system/admin.php?fct=comments&com_modid=' . $com_modid . '&com_itemid';
     $moddir          = $module->getVar('dirname');
     unset($comment);
 } else {

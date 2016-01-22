@@ -1089,7 +1089,6 @@ class Smarty
         } else {
             // var non-existant, return valid reference
             $_tmp = null;
-
             return $_tmp;
         }
     }
