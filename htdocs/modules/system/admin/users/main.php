@@ -109,6 +109,10 @@ switch ($op) {
 
     // Delete users
     case "action_group":
+        if (!$GLOBALS['xoopsSecurity']->check()) {
+            redirect_header("admin.php?fct=users", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+        }
+
         if ((@isset($_REQUEST['memberslist_id']) || @$_REQUEST['memberslist_id'] !== '')) {
             $xoBreadCrumb->render();
             $error = '';
@@ -829,6 +833,12 @@ switch ($op) {
 
             $xoopsTpl->assign('form_sort', $form);
             $xoopsTpl->assign('form_select_groups', $form_select_groups);
+
+            // add token to render in template
+            $tokenElement = new XoopsFormHiddenToken();
+            $token = $tokenElement->render();
+            $xoopsTpl->assign('form_token', $token);
+
             //echo $requete_search;
             if ($users_count > 0) {
                 //echo $requete_search;
