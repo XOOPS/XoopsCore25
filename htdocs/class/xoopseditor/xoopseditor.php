@@ -67,14 +67,6 @@ class XoopsEditor extends XoopsFormTextArea
     }
 
     /**
-     * @param $configs
-     */
-    public function XoopsEditor($configs)
-    {
-        $this->__construct($configs);
-    }
-
-    /**
      * @return bool
      */
     public function isActive()
@@ -108,11 +100,6 @@ class XoopsEditorHandler
     public function __construct()
     {
         $this->root_path = XOOPS_ROOT_PATH . '/class/xoopseditor';
-    }
-
-    public function XoopsEditorHandler()
-    {
-        $this->__construct();
     }
 
     /**

@@ -44,11 +44,6 @@ class XoopsPrivmessage extends XoopsObject
         $this->initVar('read_msg', XOBJ_DTYPE_INT, 0, false);
     }
 
-    public function XoopsPrivmessage()
-    {
-        $this->__construct();
-    }
-
     /**
      * Returns Class Base Variable msg_id
      * @param string $format

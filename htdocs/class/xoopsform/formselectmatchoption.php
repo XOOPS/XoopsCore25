@@ -45,15 +45,4 @@ class XoopsFormSelectMatchOption extends XoopsFormSelect
         $this->addOption(XOOPS_MATCH_EQUAL, _MATCHES);
         $this->addOption(XOOPS_MATCH_CONTAIN, _CONTAINS);
     }
-
-    /**
-     * @param      $caption
-     * @param      $name
-     * @param null $value
-     * @param int  $size
-     */
-    public function XoopsFormSelectMatchOption($caption, $name, $value = null, $size = 1)
-    {
-        $this->__construct($caption, $name, $value, $size);
-    }
 }

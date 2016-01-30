@@ -70,11 +70,6 @@ class CriteriaElement
     {
     }
 
-    public function CriteriaElement()
-    {
-        $this->__construct();
-    }
-
     /**
      * Render the criteria element
      */
@@ -212,15 +207,6 @@ class CriteriaCompo extends CriteriaElement
     }
 
     /**
-     * @param CriteriaElement|null $ele
-     * @param string               $condition
-     */
-    public function CriteriaCompo(CriteriaElement $ele = null, $condition = 'AND')
-    {
-        $this->__construct($ele, $condition);
-    }
-
-    /**
      * Add an element
      *
      * @param CriteriaElement|object $criteriaElement
@@ -328,18 +314,6 @@ class Criteria extends CriteriaElement
         $this->column   = $column;
         $this->value    = $value;
         $this->operator = $operator;
-    }
-
-    /**
-     * @param        $column
-     * @param string $value
-     * @param string $operator
-     * @param string $prefix
-     * @param string $function
-     */
-    public function Criteria($column, $value = '', $operator = '=', $prefix = '', $function = '')
-    {
-        $this->__construct($column, $value, $operator, $prefix, $function);
     }
 
     /**

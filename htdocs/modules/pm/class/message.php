@@ -47,11 +47,6 @@ class PmMessage extends XoopsObject
         $this->initVar('from_save', XOBJ_DTYPE_INT, 0, false);
         $this->initVar('to_save', XOBJ_DTYPE_INT, 0, false);
     }
-
-    public function PmMessage()
-    {
-        $this->__construct();
-    }
 }
 
 /**
@@ -65,14 +60,6 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
     public function __construct(XoopsDatabase $db)
     {
         parent::__construct($db, "priv_msgs", 'PmMessage', 'msg_id', 'subject');
-    }
-
-    /**
-     * @param XoopsDatabase $db
-     */
-    public function PmMessageHandler(XoopsDatabase $db)
-    {
-        $this->__construct($db);
     }
 
     /**

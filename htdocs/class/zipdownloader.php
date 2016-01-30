@@ -50,15 +50,6 @@ class XoopsZipDownloader extends XoopsDownloader
     }
 
     /**
-     * @param string $ext
-     * @param string $mimyType
-     */
-    public function XoopsZipDownloader($ext = '.zip', $mimyType = 'application/x-zip')
-    {
-        $this->__construct($ext, $mimyType);
-    }
-
-    /**
      * Add file
      *
      * @param string $filepath

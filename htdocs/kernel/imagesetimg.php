@@ -39,11 +39,6 @@ class XoopsImagesetimg extends XoopsObject
         $this->initVar('imgsetimg_imgset', XOBJ_DTYPE_INT, null, false);
     }
 
-    public function XoopsImagesetimg()
-    {
-        $this->__construct();
-    }
-
     /**
      * Returns Class Base Variable imgsetimg_id with default format N
      * @param  string $format

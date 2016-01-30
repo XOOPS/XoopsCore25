@@ -61,11 +61,6 @@ class XoopsComment extends XoopsObject
         $this->initVar('dobr', XOBJ_DTYPE_INT, 0, false);
     }
 
-    public function XoopsComment()
-    {
-        $this->__construct();
-    }
-
     /**
      * Returns Class Base Variable com_id
      * @param string $format

@@ -73,17 +73,6 @@ class XoopsFormButton extends XoopsFormElement
     }
 
     /**
-     * @param        $caption
-     * @param        $name
-     * @param string $value
-     * @param string $type
-     */
-    public function XoopsFormButton($caption, $name, $value = "", $type = "button")
-    {
-        $this->__construct($caption, $name, $value, $type);
-    }
-
-    /**
      * Get the initial value
      *
      * @param  bool $encode To sanitizer the text?

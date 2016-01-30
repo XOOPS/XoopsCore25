@@ -60,14 +60,6 @@ class XoopsFormTinymce extends XoopsEditor
     }
 
     /**
-     * @param $configs
-     */
-    public function XoopsFormTinymce($configs)
-    {
-        $this->__construct($configs);
-    }
-
-    /**
      * Renders the Javascript function needed for client-side for validation
      *
      * I'VE USED THIS EXAMPLE TO WRITE VALIDATION CODE

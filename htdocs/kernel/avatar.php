@@ -46,11 +46,6 @@ class XoopsAvatar extends XoopsObject
         $this->initVar('avatar_type', XOBJ_DTYPE_OTHER, 0, false);
     }
 
-    public function XoopsAvatar()
-    {
-        $this->__construct();
-    }
-
     /**
      * Returns Class Base Variable avatar_id
      * @param string $format

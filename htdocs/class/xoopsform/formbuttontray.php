@@ -62,18 +62,6 @@ class XoopsFormButtonTray extends XoopsFormElement
     }
 
     /**
-     * @param            $name
-     * @param string     $value
-     * @param string     $type
-     * @param string     $onclick
-     * @param bool|false $showDelete
-     */
-    public function XoopsFormButtonTray($name, $value = '', $type = '', $onclick = '', $showDelete = false)
-    {
-        $this->__construct($name, $value, $type, $onclick, $showDelete);
-    }
-
-    /**
      * XoopsFormButtonTray::getValue()
      *
      * @return string

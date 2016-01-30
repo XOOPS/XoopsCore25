@@ -63,16 +63,4 @@ class XoopsFormDateTime extends XoopsFormElementTray
             $this->addElement(new XoopsFormHidden($name . '[time]', 0));
         }
     }
-
-    /**
-     * @param           $caption
-     * @param           $name
-     * @param int       $size
-     * @param int       $value
-     * @param bool|true $showtime
-     */
-    public function XoopsFormDateTime($caption, $name, $size = 15, $value = 0, $showtime = true)
-    {
-        $this->__construct($caption, $name, $size, $value, $showtime);
-    }
 }

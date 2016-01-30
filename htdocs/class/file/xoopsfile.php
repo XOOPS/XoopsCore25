@@ -36,14 +36,6 @@ class XoopsFile
     }
 
     /**
-     * XoopsFile::XoopsFile()
-     */
-    public function XoopsFile()
-    {
-        $this->__construct();
-    }
-
-    /**
      * XoopsFile::getInstance()
      *
      * @return

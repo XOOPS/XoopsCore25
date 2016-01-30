@@ -87,19 +87,6 @@ class XoopsGroupPermForm extends XoopsForm
     }
 
     /**
-     * @param           $title
-     * @param           $modid
-     * @param           $permname
-     * @param           $permdesc
-     * @param string    $url
-     * @param bool|true $anonymous
-     */
-    public function XoopsGroupPermForm($title, $modid, $permname, $permdesc, $url = '', $anonymous = true)
-    {
-        $this->__construct($title, $modid, $permname, $permdesc, $url, $anonymous);
-    }
-
-    /**
      * Adds an item to which permission will be assigned
      *
      * @param string $itemName
@@ -236,17 +223,6 @@ class XoopsGroupFormCheckBox extends XoopsFormElement
             $this->setValue($values);
         }
         $this->_groupId = $groupId;
-    }
-
-    /**
-     * @param      $caption
-     * @param      $name
-     * @param      $groupId
-     * @param null $values
-     */
-    public function XoopsGroupFormCheckBox($caption, $name, $groupId, $values = null)
-    {
-        $this->__construct($caption, $name, $groupId, $values);
     }
 
     /**

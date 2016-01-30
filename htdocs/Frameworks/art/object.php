@@ -42,11 +42,6 @@ class ArtObject extends XoopsObject
     public function __construct()
     {
     }
-
-    public function ArtObject()
-    {
-        $this->__construct();
-    }
 }
 
 /**
@@ -73,22 +68,10 @@ class ArtObjectHandler extends XoopsPersistableObjectHandler
      * @param string $identifierName
      */
 
-    public function __construct(XoopsDatabase $db, $table, $className, $keyName, $identifierName)
+    public function __construct(XoopsDatabase $db, $table = "", $className = "", $keyName = "", $identifierName = false)
     {
         $this->db = $db;
         parent::__construct($db, $table, $className, $keyName, $identifierName);
-    }
-
-    /**
-     * @param XoopsDatabase $db
-     * @param string $table
-     * @param string $className
-     * @param string $keyName
-     * @param bool   $identifierName
-     */
-    public function ArtObjectHandler(XoopsDatabase $db, $table = "", $className = "", $keyName = "", $identifierName = false)
-    {
-        $this->__construct($db, $table, $className, $keyName, $identifierName);
     }
 
     /**

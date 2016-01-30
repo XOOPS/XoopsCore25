@@ -37,7 +37,7 @@ define('XOOPS_C_DATABASE_INCLUDED', 1);
  * @package    kernel
  * @subpackage database
  */
-class XoopsDatabase
+abstract class XoopsDatabase
 {
     /**
      * Prefix for tables in the database
@@ -67,16 +67,6 @@ class XoopsDatabase
     public function __construct()
     {
         // exit('Cannot instantiate this class directly');
-    }
-
-    /**
-     * constructor
-     *
-     * will always fail, because this is an abstract class!
-     */
-    public function XoopsDatabase()
-    {
-        $this->__construct();
     }
 
     /**

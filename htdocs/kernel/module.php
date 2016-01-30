@@ -63,11 +63,6 @@ class XoopsModule extends XoopsObject
         $this->initVar('hasnotification', XOBJ_DTYPE_INT, 0, false);
     }
 
-    public function XoopsModule()
-    {
-        $this->__construct();
-    }
-
     /**
      * Load module info
      *

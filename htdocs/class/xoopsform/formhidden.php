@@ -48,15 +48,6 @@ class XoopsFormHidden extends XoopsFormElement
     }
 
     /**
-     * @param $name
-     * @param $value
-     */
-    public function XoopsFormHidden($name, $value)
-    {
-        $this->__construct($name, $value);
-    }
-
-    /**
      * Get the "value" attribute
      *
      * @param  bool $encode To sanitizer the text?

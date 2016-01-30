@@ -21,11 +21,6 @@ class ProtectorFilterAbstract
         }
     }
 
-    public function ProtectorFilterAbstract()
-    {
-        $this->__construct();
-    }
-
     /**
      * @return bool
      */
@@ -57,15 +52,10 @@ class ProtectorFilterHandler
     /**
      * ProtectorFilterHandler constructor.
      */
-    public function __construct()
+    protected function __construct()
     {
         $this->protector    =& Protector::getInstance();
         $this->filters_base = dirname(__DIR__) . '/filters_enabled';
-    }
-
-    public function ProtectorFilterHandler()
-    {
-        $this->__construct();
     }
 
     /**

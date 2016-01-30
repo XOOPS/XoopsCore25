@@ -42,11 +42,6 @@ class XoopsTplset extends XoopsObject
         $this->initVar('tplset_created', XOBJ_DTYPE_INT, 0, false);
     }
 
-    public function XoopsTplset()
-    {
-        $this->__construct();
-    }
-
     /**
      * Returns Class Base Variable tplset_id
      * @param  string $format

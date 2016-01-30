@@ -70,14 +70,6 @@ class XoopsConfigHandler
     }
 
     /**
-     * @param XoopsDatabase $db
-     */
-    public function XoopsConfigHandler(XoopsDatabase $db)
-    {
-        $this->__construct($db);
-    }
-
-    /**
      * Create a config
      *
      * @see     XoopsConfigItem

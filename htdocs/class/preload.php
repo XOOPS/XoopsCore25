@@ -53,15 +53,10 @@ class XoopsPreload
      * Constructor
      *
      */
-    public function __construct()
+    protected function __construct()
     {
         $this->setPreloads();
         $this->setEvents();
-    }
-
-    public function XoopsPreload()
-    {
-        $this->__construct();
     }
 
     /**
@@ -166,10 +161,5 @@ class XoopsPreloadItem
      */
     public function __construct()
     {
-    }
-
-    public function XoopsPreloadItem()
-    {
-        $this->__construct();
     }
 }

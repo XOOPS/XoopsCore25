@@ -49,16 +49,6 @@ class XoopsCaptcha
     }
 
     /**
-     * Xoops Captcha Construct
-     *
-     * @return XoopsCaptcha
-     */
-    public function XoopsCaptcha()
-    {
-        $this->__construct();
-    }
-
-    /**
      * Get Instance
      *
      * @return Instance
@@ -382,16 +372,6 @@ class XoopsCaptchaMethod
     public function __construct($handler = null)
     {
         $this->handler = $handler;
-    }
-
-    /**
-     * XoopsCaptchaMethod::XoopsCaptchaMethod()
-     *
-     * @param mixed $handler
-     */
-    public function XoopsCaptchaMethod($handler = null)
-    {
-        $this->__construct($handler);
     }
 
     /**

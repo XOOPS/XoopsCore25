@@ -59,17 +59,6 @@ class XoopsObjectTree
     }
 
     /**
-     * @param      $objectArr
-     * @param      $myId
-     * @param      $parentId
-     * @param null $rootId
-     */
-    public function XoopsObjectTree(&$objectArr, $myId, $parentId, $rootId = null)
-    {
-        $this->__construct($objectArr, $myId, $parentId, $rootId);
-    }
-
-    /**
      * Initialize the object
      *
      * @access private

@@ -40,11 +40,6 @@ class XoopsGuiDefault extends XoopsSystemGui
     {
     }
 
-    public function XoopsGuiDefault()
-    {
-        $this->__construct();
-    }
-
     /**
      * @return bool
      */

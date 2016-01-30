@@ -74,17 +74,6 @@ class XoopsFormRadio extends XoopsFormElement
     }
 
     /**
-     * @param        $caption
-     * @param        $name
-     * @param null   $value
-     * @param string $delimeter
-     */
-    public function XoopsFormRadio($caption, $name, $value = null, $delimeter = '&nbsp;')
-    {
-        $this->__construct($caption, $name, $value, $delimeter);
-    }
-
-    /**
      * Get the "value" attribute
      *
      * @param  bool $encode To sanitizer the text?

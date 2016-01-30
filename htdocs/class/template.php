@@ -69,11 +69,6 @@ class XoopsTpl extends Smarty
                           'xoops_upload_url' => XOOPS_UPLOAD_URL));
     }
 
-    public function XoopsTpl()
-    {
-        $this->__construct();
-    }
-
     /**
      * Renders output from template data
      *

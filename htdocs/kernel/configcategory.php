@@ -40,11 +40,6 @@ class XoopsConfigCategory extends XoopsObject
         $this->initVar('confcat_order', XOBJ_DTYPE_INT, 0);
     }
 
-    public function XoopsConfigCategory()
-    {
-        $this->__construct();
-    }
-
     /**
      * Returns Class Base Variable confcat_id
      * @param  string $format

@@ -41,10 +41,6 @@ if (!class_exists('XoopsGTicket')) {
             }
         }
 
-        public function XoopsGTicket()
-        {
-            $this->__construct();
-        }
         // render form as plain html
         /**
          * @param string $salt

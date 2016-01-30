@@ -43,11 +43,6 @@ class XoopsGuiThadmin extends /* implements */
         include_once XOOPS_ROOT_PATH . "/modules/thadmin/include/cp_functions.php";
     }
 
-    public function XoopsGuiThadmin()
-    {
-        $this->__construct();
-    }
-
     /**
      * @return bool
      */

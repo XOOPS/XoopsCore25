@@ -39,11 +39,6 @@ class SystemMaintenance
         $this->prefix = $this->db->prefix . '_';
     }
 
-    public function SystemMaintenance()
-    {
-        $this->__construct();
-    }
-
     /**
      * Display Tables
      *

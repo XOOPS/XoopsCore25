@@ -56,16 +56,4 @@ class XoopsFormSelectCheckGroup extends XoopsFormCheckBox
             $this->addOption($group_id, $group_name);
         }
     }
-
-    /**
-     * @param            $caption
-     * @param            $name
-     * @param null       $value
-     * @param int        $size
-     * @param bool|false $multiple
-     */
-    public function XoopsFormSelectCheckGroup($caption, $name, $value = null, $size = 1, $multiple = false)
-    {
-        $this->__construct($caption, $name, $value, $size, $multiple);
-    }
 }

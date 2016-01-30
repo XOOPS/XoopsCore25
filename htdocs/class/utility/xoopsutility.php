@@ -38,14 +38,6 @@ class XoopsUtility
     }
 
     /**
-     * XoopsUtility Constructor
-     */
-    public function XoopsUtility()
-    {
-        $this->__construct();
-    }
-
-    /**
      * XoopsUtility::recursive()
      *
      * @param mixed $handler

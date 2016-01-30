@@ -68,18 +68,6 @@ class XoopsFormText extends XoopsFormElement
     }
 
     /**
-     * @param        $caption
-     * @param        $name
-     * @param        $size
-     * @param        $maxlength
-     * @param string $value
-     */
-    public function XoopsFormText($caption, $name, $size, $maxlength, $value = '')
-    {
-        $this->__construct($caption, $name, $size, $maxlength, $value);
-    }
-
-    /**
      * Get size
      *
      * @return int

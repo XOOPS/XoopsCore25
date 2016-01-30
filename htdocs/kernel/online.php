@@ -47,14 +47,6 @@ class XoopsOnlineHandler
     }
 
     /**
-     * @param XoopsDatabase $db
-     */
-    public function XoopsOnlineHandler(XoopsDatabase $db)
-    {
-        $this->__construct($db);
-    }
-
-    /**
      * Write online information to the database
      *
      * @param int    $uid    UID of the active user

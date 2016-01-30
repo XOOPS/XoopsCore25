@@ -45,11 +45,6 @@ class XoopsDownloader
         // EMPTY
     }
 
-    public function XoopsDownloader()
-    {
-        $this->__construct();
-    }
-
     /**
      * Send the HTTP header
      *

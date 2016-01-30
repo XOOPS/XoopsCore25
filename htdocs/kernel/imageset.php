@@ -43,11 +43,6 @@ class XoopsImageset extends XoopsObject
         $this->initVar('imgset_refid', XOBJ_DTYPE_INT, 0, false);
     }
 
-    public function XoopsImageset()
-    {
-        $this->__construct();
-    }
-
     /**
      * Returns Class Base Variable imgset_id
      * @param  string $format

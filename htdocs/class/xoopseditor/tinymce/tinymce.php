@@ -22,7 +22,7 @@
  * @author              Laurent JEN <dugris@frxoops.org>
  * @version             $Id $
  */
-class tinymce
+class TinyMCE
 {
     public        $rootpath;
     public        $config                = array();
@@ -41,15 +41,6 @@ class tinymce
         $this->xoopsPlugins            = $this->get_xoopsPlugins();
         self::$LastOfElementsTinymce   = $this->config["elements"];
         self::$ListOfElementsTinymce[] = self::$LastOfElementsTinymce;
-    }
-
-    // PHP 4 Contructor
-    /**
-     * @param $config
-     */
-    public function TinyMCE($config)
-    {
-        $this->__construct($config);
     }
 
     /**

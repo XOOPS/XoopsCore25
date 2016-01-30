@@ -202,11 +202,6 @@ class XoopsCacheModel extends XoopsCacheEngine
  */
 class XoopsCacheModelObject extends XoopsObject
 {
-    public function XoopsCacheModelObject()
-    {
-        $this->__construct();
-    }
-
     /**
      * Constructor
      */

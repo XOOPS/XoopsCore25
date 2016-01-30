@@ -37,16 +37,8 @@ class XoopsModelFactory
     /**
      * XoopsModelFactory::__construct()
      */
-    public function __construct()
+    protected function __construct()
     {
-    }
-
-    /**
-     * XoopsModelFactory::XoopsModelFactory()
-     */
-    public function XoopsModelFactory()
-    {
-        $this->__construct();
     }
 
     /**
@@ -134,19 +126,6 @@ class XoopsModelAbstract
     {
         $this->setHandler($handler);
         $this->setVars($args);
-    }
-
-    /**
-     * XoopsModelAbstract::XoopsObjectAbstract()
-     *
-     * @param mixed $args
-     * @param mixed $handler
-     *
-     * @return void
-     */
-    public function XoopsObjectAbstract($args = null, $handler = null)
-    {
-        $this->__construct($args, $handler);
     }
 
     /**

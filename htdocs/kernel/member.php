@@ -67,14 +67,6 @@ class XoopsMemberHandler
     }
 
     /**
-     * @param XoopsDatabase $db
-     */
-    public function XoopsMemberHandler(XoopsDatabase $db)
-    {
-        $this->__construct($db);
-    }
-
-    /**
      * create a new group
      *
      * @return XoopsGroup XoopsGroup reference to the new group

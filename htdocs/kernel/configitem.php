@@ -63,11 +63,6 @@ class XoopsConfigItem extends XoopsObject
         $this->initVar('conf_order', XOBJ_DTYPE_INT);
     }
 
-    public function XoopsConfigItem()
-    {
-        $this->__construct();
-    }
-
     /**
      * Returns Class Base Variable conf_id
      * @param  string $format

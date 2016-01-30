@@ -102,14 +102,6 @@ class XoopsUser extends XoopsObject
     }
 
     /**
-     * @param null $id
-     */
-    public function XoopsUser($id = null)
-    {
-        $this->__construct($id);
-    }
-
-    /**
      * check if the user is a guest user
      *
      * @return bool returns false

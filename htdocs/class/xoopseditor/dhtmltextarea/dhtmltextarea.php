@@ -55,16 +55,6 @@ class FormDhtmlTextArea extends XoopsEditor
     }
 
     /**
-     * FormDhtmlTextArea::FormDhtmlTextArea()
-     *
-     * @param array $options
-     */
-    public function FormDhtmlTextArea($options = array())
-    {
-        $this->__construct($options);
-    }
-
-    /**
      * FormDhtmlTextArea::render()
      *
      * @return string

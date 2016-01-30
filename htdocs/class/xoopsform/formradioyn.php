@@ -44,16 +44,4 @@ class XoopsFormRadioYN extends XoopsFormRadio
         $this->addOption(1, $yes);
         $this->addOption(0, $no);
     }
-
-    /**
-     * @param        $caption
-     * @param        $name
-     * @param null   $value
-     * @param string $yes
-     * @param string $no
-     */
-    public function XoopsFormRadioYN($caption, $name, $value = null, $yes = _YES, $no = _NO)
-    {
-        $this->__construct($caption, $name, $value, $yes, $no);
-    }
 }
