@@ -54,7 +54,6 @@ $xoTheme->addScript('modules/system/js/admin.js');
 $xoBreadCrumb->addLink(_AM_SYSTEM_USERS_NAV_MAIN, system_adminVersion('users', 'adminpath'));
 
 $uid = system_CleanVars($_REQUEST, 'uid', 0);
-//echo "<pre>"; var_dump($op); var_dump($_POST); echo"</pre>"; exit;
 switch ($op) {
 
     // Edit user
