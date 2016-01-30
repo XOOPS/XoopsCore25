@@ -102,6 +102,7 @@
                             <option value='delete_group'><{$smarty.const._AM_SYSTEM_USERS_DELETE_GROUPS}></option>
                         </select>
                         <{$form_select_groups}>
+                        <{$form_token}>
                         <input type="hidden" name="op" value="action_group">
                         <input type='submit' name='Submit'/>
                     </td>
