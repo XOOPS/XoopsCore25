@@ -64,17 +64,6 @@ class XoopsFormElementTray extends XoopsFormElement
     }
 
     /**
-     * @param        $caption
-     * @param string $delimeter
-     * @param string $name
-     */
-//    public function XoopsFormElementTray($caption, $delimeter = "&nbsp;", $name = "")
-//    {
-//        $this->__construct($caption, $delimeter, $name);
-//    }
-
-
-    /**
      * Is this element a container of other elements?
      *
      * @return bool true

@@ -34,14 +34,6 @@ class XoopsDatabaseFactory
     }
 
     /**
-     * XoopsDatabaseFactory::XoopsDatabaseFactory()
-     */
-    public function XoopsDatabaseFactory()
-    {
-        $this->__construct();
-    }
-
-    /**
      * Get a reference to the only instance of database class and connects to DB
      *
      * if the class has not been instantiated yet, this will also take

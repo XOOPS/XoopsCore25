@@ -44,11 +44,6 @@ class XoopsGroupPerm extends XoopsObject
         $this->initVar('gperm_name', XOBJ_DTYPE_OTHER, null, false);
     }
 
-    public function XoopsGroupPerm()
-    {
-        $this->__construct();
-    }
-
     /**
      * Returns Class Base Variable gperm_id
      * @param string $format

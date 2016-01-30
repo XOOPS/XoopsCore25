@@ -576,11 +576,6 @@ class Smarty
         $this->assign('SCRIPT_NAME', isset($_SERVER['SCRIPT_NAME']) ? $_SERVER['SCRIPT_NAME'] : @$GLOBALS['HTTP_SERVER_VARS']['SCRIPT_NAME']);
     }
 
-    public function Smarty()
-    {
-        $this->__construct();
-    }
-
     /**
      * assigns values to template variables
      *

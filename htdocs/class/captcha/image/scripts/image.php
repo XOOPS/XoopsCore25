@@ -56,11 +56,6 @@ class XoopsCaptchaImageHandler
         $this->config          = $this->captcha_handler->loadConfig("image");
     }
 
-    public function XoopsCaptchaImageHandler()
-    {
-        $this->__construct();
-    }
-
     public function loadImage()
     {
         $this->generateCode();

@@ -116,11 +116,6 @@ class XoopsObject
     {
     }
 
-    public function XoopsObject()
-    {
-        $this->__construct();
-    }
-
     /**
      * *#@+
      * used for new/clone objects
@@ -1058,14 +1053,6 @@ class XoopsObjectHandler
     }
 
     /**
-     * @param XoopsDatabase $db
-     */
-    public function XoopsObjectHandler(XoopsDatabase $db)
-    {
-        $this->__construct($db);
-    }
-
-    /**
      * creates a new object
      *
      * @abstract
@@ -1182,21 +1169,6 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
         if ($identifierName) {
             $this->identifierName = $identifierName;
         }
-    }
-
-    /**
-     * Constructor
-     *
-     * @access protected
-     * @param null   $db
-     * @param string $table
-     * @param string $className
-     * @param string $keyName
-     * @param string $identifierName
-     */
-    public function XoopsPersistableObjectHandler($db = null, $table = '', $className = '', $keyName = '', $identifierName = '')
-    {
-        $this->__construct($db, $table, $className, $keyName, $identifierName);
     }
 
     /**

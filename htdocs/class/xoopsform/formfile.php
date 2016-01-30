@@ -48,16 +48,6 @@ class XoopsFormFile extends XoopsFormElement
     }
 
     /**
-     * @param $caption
-     * @param $name
-     * @param $maxfilesize
-     */
-    public function XoopsFormFile($caption, $name, $maxfilesize)
-    {
-        $this->__construct($caption, $name, $maxfilesize);
-    }
-
-    /**
      * Get the maximum filesize
      *
      * @return int

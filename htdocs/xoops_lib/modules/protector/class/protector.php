@@ -3,7 +3,7 @@
 /**
  * Class Protector
  */
-class protector
+class Protector
 {
     public $mydirname;
 
@@ -53,11 +53,10 @@ class protector
 
     public $last_error_type = 'UNKNOWN';
 
-    // Constructor
     /**
-     * @return bool
+     * Constructor
      */
-    public function Protector()
+    protected function __construct()
     {
         $this->mydirname = 'protector';
 
@@ -69,7 +68,7 @@ class protector
         }
 
         if (!empty($this->_conf['global_disabled'])) {
-            return true;
+            return;
         }
 
         // die if PHP_SELF XSS found (disabled in 2.53)
@@ -117,7 +116,7 @@ class protector
      * @param $val
      * @param $key
      */
-    public function _initial_recursive($val, $key)
+    protected function _initial_recursive($val, $key)
     {
         if (is_array($val)) {
             foreach ($val as $subkey => $subval) {
@@ -576,7 +575,7 @@ class protector
      * @param $val
      * @return null
      */
-    public function _dblayertrap_check_recursive($val)
+    protected function _dblayertrap_check_recursive($val)
     {
         if (is_array($val)) {
             foreach ($val as $subval) {
@@ -622,7 +621,7 @@ class protector
     /**
      * @param $val
      */
-    public function _bigumbrella_check_recursive($val)
+    protected function _bigumbrella_check_recursive($val)
     {
         if (is_array($val)) {
             foreach ($val as $subval) {
@@ -1228,7 +1227,7 @@ class protector
 
     //
     /**
-     * @return bool
+     * @return bool|null
      */
     public function check_brute_force()
     {
@@ -1270,12 +1269,13 @@ class protector
         }
         // delayed insert
         $xoopsDB->queryF($sql4insertlog);
+        return;
     }
 
     /**
      * @param $val
      */
-    public function _spam_check_point_recursive($val)
+    protected function _spam_check_point_recursive($val)
     {
         if (is_array($val)) {
             foreach ($val as $subval) {

@@ -60,16 +60,6 @@ class XoopsRank extends XoopsObject
         $this->initVar('rank_special', XOBJ_DTYPE_INT, 0);
         $this->initVar('rank_image', XOBJ_DTYPE_TXTBOX, "");
     }
-
-    /**
-     * Xoops Rank
-     *
-     * @return XoopsRank
-     */
-    public function XoopsRank()
-    {
-        $this->__construct();
-    }
 }
 
 /**
@@ -86,17 +76,6 @@ class XoopsRankHandler extends XoopsObjectHandler
     public function __construct(XoopsDatabase $db)
     {
         parent::__construct($db);
-    }
-
-    /**
-     * Enter Xoops Ranks Handler
-     *
-     * @param  XoopsDatabase $db
-     * @return XoopsRankHandler
-     */
-    public function XoopsRankHandler(XoopsDatabase $db)
-    {
-        $this->__construct();
     }
 
     /**
@@ -198,16 +177,6 @@ class XoUser extends XoopsUser
             unset($this->vars[$var]);
         }
     }
-
-    /**
-     * XoUser
-     *
-     * @return XoUser
-     */
-    public function XoUser()
-    {
-        $this->__construct();
-    }
 }
 
 /**
@@ -224,17 +193,6 @@ class XoUserHandler extends XoopsObjectHandler
     public function __construct(XoopsDatabase $db)
     {
         parent::__construct($db);
-    }
-
-    /**
-     * Enter description here...
-     *
-     * @param  XoopsDatabase $db
-     * @return XoUserHandler
-     */
-    public function XoUserHandler(XoopsDatabase $db)
-    {
-        $this->__construct($db);
     }
 
     /**

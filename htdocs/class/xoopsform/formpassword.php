@@ -80,19 +80,6 @@ class XoopsFormPassword extends XoopsFormElement
     }
 
     /**
-     * @param            $caption
-     * @param            $name
-     * @param            $size
-     * @param            $maxlength
-     * @param string     $value
-     * @param bool|false $autoComplete
-     */
-    public function XoopsFormPassword($caption, $name, $size, $maxlength, $value = '', $autoComplete = false)
-    {
-        $this->__construct($caption, $name, $size, $maxlength, $value, $autoComplete);
-    }
-
-    /**
      * Get the field size
      *
      * @return int

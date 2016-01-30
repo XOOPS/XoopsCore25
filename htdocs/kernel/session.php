@@ -73,14 +73,6 @@ class XoopsSessionHandler
     }
 
     /**
-     * @param XoopsDatabase $db
-     */
-    public function XoopsSessionHandler(XoopsDatabase $db)
-    {
-        $this->__construct($db);
-    }
-
-    /**
      * Open a session
      *
      * @param string $save_path

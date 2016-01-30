@@ -119,14 +119,6 @@ class XoopsXmlRpcParser extends SaxParser
     }
 
     /**
-     * @param $input
-     */
-    public function XoopsXmlRpcParser(&$input)
-    {
-        $this->__construct($input);
-    }
-
-    /**
      * This Method starts the parsing of the specified RDF File. The File can be a local or a remote File.
      *
      * @param $name

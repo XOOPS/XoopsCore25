@@ -64,16 +64,6 @@ class XoopsCommentRenderer
     }
 
     /**
-     * @param XoopsTpl   $tpl
-     * @param bool|true  $use_icons
-     * @param bool|false $do_iconcheck
-     */
-    public function XoopsCommentRenderer(XoopsTpl $tpl, $use_icons = true, $do_iconcheck = false)
-    {
-        $this->__construct($tpl, $use_icons, $do_iconcheck);
-    }
-
-    /**
      * Access the only instance of this class
      *
      * @param  XoopsTpl $tpl reference to a {@link Smarty} object

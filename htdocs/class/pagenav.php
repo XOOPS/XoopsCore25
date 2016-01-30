@@ -59,18 +59,6 @@ class XoopsPageNav
     }
 
     /**
-     * @param        $total_items
-     * @param        $items_perpage
-     * @param        $current_start
-     * @param string $start_name
-     * @param string $extra_arg
-     */
-    public function XoopsPageNav($total_items, $items_perpage, $current_start, $start_name = "start", $extra_arg = "")
-    {
-        $this->__construct($total_items, $items_perpage, $current_start, $start_name, $extra_arg);
-    }
-
-    /**
      * Create text navigation
      *
      * @param  integer $offset

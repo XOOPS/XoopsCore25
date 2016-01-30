@@ -56,18 +56,6 @@ class XoopsFormEditor extends XoopsFormTextArea
     }
 
     /**
-     * @param            $caption
-     * @param            $name
-     * @param null       $configs
-     * @param bool|false $nohtml
-     * @param string     $OnFailure
-     */
-    public function XoopsFormEditor($caption, $name, $configs = null, $nohtml = false, $OnFailure = '')
-    {
-        $this->__construct($caption, $name, $configs, $nohtml, $OnFailure);
-    }
-
-    /**
      * renderValidationJS
      * TEMPORARY SOLUTION to 'override' original renderValidationJS method
      * with custom XoopsEditor's renderValidationJS method

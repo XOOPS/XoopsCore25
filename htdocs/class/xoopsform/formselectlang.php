@@ -42,15 +42,4 @@ class XoopsFormSelectLang extends XoopsFormSelect
         parent::__construct($caption, $name, $value, $size);
         $this->addOptionArray(XoopsLists::getLangList());
     }
-
-    /**
-     * @param      $caption
-     * @param      $name
-     * @param null $value
-     * @param int  $size
-     */
-    public function XoopsFormSelectLang($caption, $name, $value = null, $size = 1)
-    {
-        $this->__construct($caption, $name, $value, $size);
-    }
 }

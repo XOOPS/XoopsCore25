@@ -48,16 +48,6 @@ class XoopsFormLabel extends XoopsFormElement
     }
 
     /**
-     * @param string $caption
-     * @param string $value
-     * @param string $name
-     */
-    public function XoopsFormLabel($caption = '', $value = '', $name = '')
-    {
-        $this->__construct($caption, $value, $name);
-    }
-
-    /**
      * Get the "value" attribute
      *
      * @param  bool $encode To sanitizer the text?

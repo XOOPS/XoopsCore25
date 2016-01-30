@@ -34,11 +34,6 @@ class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
         $this->doubtful_needles  = array_merge($this->doubtful_needles, $this->doubtful_requests);
     }
 
-    public function ProtectorMySQLDatabase()
-    {
-        $this->__construct();
-    }
-
     /**
      * @param $sql
      */

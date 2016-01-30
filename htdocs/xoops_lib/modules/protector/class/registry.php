@@ -16,15 +16,10 @@ class ProtectorRegistry
     /**
      * ProtectorRegistry constructor.
      */
-    public function __construct()
+    protected function __construct()
     {
         $this->_entries = array();
         $this->_locks   = array();
-    }
-
-    public function ProtectorRegistry()
-    {
-        $this->__construct();
     }
 
     /**

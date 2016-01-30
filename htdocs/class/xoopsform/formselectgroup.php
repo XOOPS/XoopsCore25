@@ -50,17 +50,4 @@ class XoopsFormSelectGroup extends XoopsFormSelect
             $this->addOptionArray($member_handler->getGroupList());
         }
     }
-
-    /**
-     * @param            $caption
-     * @param            $name
-     * @param bool|false $include_anon
-     * @param null       $value
-     * @param int        $size
-     * @param bool|false $multiple
-     */
-    public function XoopsFormSelectGroup($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false)
-    {
-        $this->__construct($caption, $name, $include_anon, $value, $size, $multiple);
-    }
 }

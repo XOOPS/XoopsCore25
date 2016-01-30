@@ -82,14 +82,6 @@ class Config_File
     }
 
     /**
-     * @param null $config_path
-     */
-    public function Config_File($config_path = null)
-    {
-        $this->__construct($config_path);
-    }
-
-    /**
      * Set the path where configuration files can be found.
      *
      * @param  string $config_path path to the config files

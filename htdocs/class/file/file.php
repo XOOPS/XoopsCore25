@@ -119,18 +119,6 @@ class XoopsFileHandler
     }
 
     /**
-     * XoopsFileHandler::XoopsFileHandler()
-     *
-     * @param mixed $path
-     * @param mixed $create
-     * @param mixed $mode
-     */
-    public function XoopsFileHandler($path, $create = false, $mode = 0755)
-    {
-        $this->__construct($path, $create, $mode);
-    }
-
-    /**
      * Closes the current file if it is opened
      *
      * @access private

@@ -39,17 +39,6 @@ class XoopsFormTextDateSelect extends XoopsFormText
     }
 
     /**
-     * @param     $caption
-     * @param     $name
-     * @param int $size
-     * @param int $value
-     */
-    public function XoopsFormTextDateSelect($caption, $name, $size = 15, $value = 0)
-    {
-        $this->__construct($caption, $name, $size, $value);
-    }
-
-    /**
      * @return string
      */
     public function render()

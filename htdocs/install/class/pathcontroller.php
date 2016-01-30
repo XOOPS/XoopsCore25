@@ -93,15 +93,6 @@ class PathStuffController
         }
     }
 
-    /**
-     * @param $xoopsPathDefault
-     * @param $dataPath
-     */
-    public function PathStuffController($xoopsPathDefault, $dataPath)
-    {
-        $this->__construct($xoopsPathDefault, $dataPath);
-    }
-
     public function execute()
     {
         $this->readRequest();

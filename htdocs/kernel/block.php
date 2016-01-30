@@ -71,14 +71,6 @@ class XoopsBlock extends XoopsObject
     }
 
     /**
-     * @param null $id
-     */
-    public function XoopsBlock($id = null)
-    {
-        $this->__construct($id);
-    }
-
-    /**
      * Returns Class Base Variable bid
      * @param string $format
      * @return mixed

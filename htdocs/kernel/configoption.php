@@ -40,11 +40,6 @@ class XoopsConfigOption extends XoopsObject
         $this->initVar('conf_id', XOBJ_DTYPE_INT, 0);
     }
 
-    public function XoopsConfigOption()
-    {
-        $this->__construct();
-    }
-
     /**
      * Returns Class Base Variable confop_id
      * @param  string $format

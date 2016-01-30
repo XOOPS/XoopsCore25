@@ -122,11 +122,6 @@ class tar
         return true;
     }
 
-    public function tar()
-    {
-        $this->__construct();
-    }
-
     /**
      * Computes the unsigned Checksum of a file's header
      * to try to ensure valid file

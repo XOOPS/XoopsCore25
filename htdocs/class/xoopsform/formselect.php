@@ -88,18 +88,6 @@ class XoopsFormSelect extends XoopsFormElement
     }
 
     /**
-     * @param            $caption
-     * @param            $name
-     * @param null       $value
-     * @param int        $size
-     * @param bool|false $multiple
-     */
-    public function XoopsFormSelect($caption, $name, $value = null, $size = 1, $multiple = false)
-    {
-        $this->__construct($caption, $name, $value, $size, $multiple);
-    }
-
-    /**
      * Are multiple selections allowed?
      *
      * @return bool

@@ -51,11 +51,6 @@ class db_manager
         $this->db->setLogger(XoopsLogger::getInstance());
     }
 
-    public function db_manager()
-    {
-        $this->__construct();
-    }
-
     /**
      * @return bool
      */

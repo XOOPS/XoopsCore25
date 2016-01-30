@@ -29,11 +29,6 @@ class XoopsGuiZetadigme extends XoopsSystemGui
     {
     }
 
-    public function XoopsGuiZetadigme()
-    {
-        $this->__construct();
-    }
-
     /**
      * @return bool
      */

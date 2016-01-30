@@ -75,14 +75,6 @@ class XoopsXmlRss2Parser extends SaxParser
     }
 
     /**
-     * @param $input
-     */
-    public function XoopsXmlRss2Parser(&$input)
-    {
-        $this->__construct($input);
-    }
-
-    /**
      * @param $name
      * @param $value
      */
@@ -198,11 +190,6 @@ class RssChannelHandler extends XmlTagHandler
     {
     }
 
-    public function RssChannelHandler()
-    {
-        $this->__construct();
-    }
-
     /**
      * @return string
      */
@@ -222,11 +209,6 @@ class RssTitleHandler extends XmlTagHandler
      */
     public function __construct()
     {
-    }
-
-    public function RssTitleHandler()
-    {
-        $this->__construct();
     }
 
     /**
@@ -272,11 +254,6 @@ class RssLinkHandler extends XmlTagHandler
     {
     }
 
-    public function RssLinkHandler()
-    {
-        $this->__construct();
-    }
-
     /**
      * @return string
      */
@@ -318,11 +295,6 @@ class RssDescriptionHandler extends XmlTagHandler
      */
     public function __construct()
     {
-    }
-
-    public function RssDescriptionHandler()
-    {
-        $this->__construct();
     }
 
     /**
@@ -368,11 +340,6 @@ class RssGeneratorHandler extends XmlTagHandler
     {
     }
 
-    public function RssGeneratorHandler()
-    {
-        $this->__construct();
-    }
-
     /**
      * @return string
      */
@@ -407,11 +374,6 @@ class RssCopyrightHandler extends XmlTagHandler
      */
     public function __construct()
     {
-    }
-
-    public function RssCopyrightHandler()
-    {
-        $this->__construct();
     }
 
     /**
@@ -450,11 +412,6 @@ class RssNameHandler extends XmlTagHandler
     {
     }
 
-    public function RssNameHandler()
-    {
-        $this->__construct();
-    }
-
     /**
      * @return string
      */
@@ -489,11 +446,6 @@ class RssManagingEditorHandler extends XmlTagHandler
      */
     public function __construct()
     {
-    }
-
-    public function RssManagingEditorHandler()
-    {
-        $this->__construct();
     }
 
     /**
@@ -532,11 +484,6 @@ class RssLanguageHandler extends XmlTagHandler
     {
     }
 
-    public function RssLanguageHandler()
-    {
-        $this->__construct();
-    }
-
     /**
      * @return string
      */
@@ -571,11 +518,6 @@ class RssWebMasterHandler extends XmlTagHandler
      */
     public function __construct()
     {
-    }
-
-    public function RssWebMasterHandler()
-    {
-        $this->__construct();
     }
 
     /**
@@ -614,11 +556,6 @@ class RssDocsHandler extends XmlTagHandler
     {
     }
 
-    public function RssDocsHandler()
-    {
-        $this->__construct();
-    }
-
     /**
      * @return string
      */
@@ -653,11 +590,6 @@ class RssTtlHandler extends XmlTagHandler
      */
     public function __construct()
     {
-    }
-
-    public function RssTtlHandler()
-    {
-        $this->__construct();
     }
 
     /**
@@ -731,11 +663,6 @@ class RssLastBuildDateHandler extends XmlTagHandler
     {
     }
 
-    public function RssLastBuildDateHandler()
-    {
-        $this->__construct();
-    }
-
     /**
      * @return string
      */
@@ -772,11 +699,6 @@ class RssImageHandler extends XmlTagHandler
     {
     }
 
-    public function RssImageHandler()
-    {
-        $this->__construct();
-    }
-
     /**
      * @return string
      */
@@ -796,11 +718,6 @@ class RssUrlHandler extends XmlTagHandler
      */
     public function __construct()
     {
-    }
-
-    public function RssUrlHandler()
-    {
-        $this->__construct();
     }
 
     /**
@@ -835,11 +752,6 @@ class RssWidthHandler extends XmlTagHandler
     {
     }
 
-    public function RssWidthHandler()
-    {
-        $this->__construct();
-    }
-
     /**
      * @return string
      */
@@ -872,11 +784,6 @@ class RssHeightHandler extends XmlTagHandler
     {
     }
 
-    public function RssHeightHandler()
-    {
-        $this->__construct();
-    }
-
     /**
      * @return string
      */
@@ -907,11 +814,6 @@ class RssItemHandler extends XmlTagHandler
      */
     public function __construct()
     {
-    }
-
-    public function RssItemHandler()
-    {
-        $this->__construct();
     }
 
     /**
@@ -953,11 +855,6 @@ class RssCategoryHandler extends XmlTagHandler
     {
     }
 
-    public function RssCategoryHandler()
-    {
-        $this->__construct();
-    }
-
     /**
      * @return string
      */
@@ -997,11 +894,6 @@ class RssCommentsHandler extends XmlTagHandler
     {
     }
 
-    public function RssCommentsHandler()
-    {
-        $this->__construct();
-    }
-
     /**
      * @return string
      */
@@ -1032,11 +924,6 @@ class RssPubDateHandler extends XmlTagHandler
      */
     public function __construct()
     {
-    }
-
-    public function RssPubDateHandler()
-    {
-        $this->__construct();
     }
 
     /**
@@ -1076,11 +963,6 @@ class RssGuidHandler extends XmlTagHandler
      */
     public function __construct()
     {
-    }
-
-    public function RssGuidHandler()
-    {
-        $this->__construct();
     }
 
     /**
@@ -1142,11 +1024,6 @@ class RssSourceHandler extends XmlTagHandler
      */
     public function __construct()
     {
-    }
-
-    public function RssSourceHandler()
-    {
-        $this->__construct();
     }
 
     /**

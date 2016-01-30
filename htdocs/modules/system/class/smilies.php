@@ -40,11 +40,6 @@ class SystemSmilies extends XoopsObject
         $this->initVar('display', XOBJ_DTYPE_INT, null, false, 1);
     }
 
-    public function smilies()
-    {
-        $this->__construct();
-    }
-
     /**
      * @param bool $action
      *

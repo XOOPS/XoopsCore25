@@ -39,11 +39,6 @@ class XoopsGroup extends XoopsObject
         $this->initVar('group_type', XOBJ_DTYPE_OTHER, null, false);
     }
 
-    public function XoopsGroup()
-    {
-        $this->__construct();
-    }
-
     /**
      * Returns Class Base Variable groupid
      * @param  string $format
@@ -265,11 +260,6 @@ class XoopsMembership extends XoopsObject
         $this->initVar('linkid', XOBJ_DTYPE_INT, null, false);
         $this->initVar('groupid', XOBJ_DTYPE_INT, null, false);
         $this->initVar('uid', XOBJ_DTYPE_INT, null, false);
-    }
-
-    public function XoopsMembership()
-    {
-        $this->__construct();
     }
 }
 

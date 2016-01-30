@@ -41,15 +41,4 @@ class XoopsFormSelectTheme extends XoopsFormSelect
         parent::__construct($caption, $name, $value, $size);
         $this->addOptionArray(XoopsLists::getThemesList());
     }
-
-    /**
-     * @param      $caption
-     * @param      $name
-     * @param null $value
-     * @param int  $size
-     */
-    public function XoopsFormSelectTheme($caption, $name, $value = null, $size = 1)
-    {
-        $this->__construct($caption, $name, $value, $size);
-    }
 }

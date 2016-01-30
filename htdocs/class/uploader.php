@@ -152,22 +152,6 @@ class XoopsMediaUploader
     }
 
     /**
-     * Constructor
-     *
-     * @param string $uploadDir
-     * @param array  $allowedMimeTypes
-     * @param int    $maxFileSize
-     * @param int    $maxWidth
-     * @param int    $maxHeight
-     * @param bool   $randomFilename
-     */
-
-    public function XoopsMediaUploader($uploadDir, $allowedMimeTypes, $maxFileSize = 0, $maxWidth = 0, $maxHeight = null, $randomFilename = false)
-    {
-        $this->__construct($uploadDir, $allowedMimeTypes, $maxFileSize, $maxWidth, $maxHeight, $randomFilename);
-    }
-
-    /**
      * converts memory/file sizes as defined in php.ini to bytes
      *
      * @param $size_str

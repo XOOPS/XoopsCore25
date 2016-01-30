@@ -73,17 +73,6 @@ class XoopsFormCaptcha extends XoopsFormElement
     }
 
     /**
-     * @param string    $caption
-     * @param string    $name
-     * @param bool|true $skipmember
-     * @param array     $configs
-     */
-    public function XoopsFormCaptcha($caption = '', $name = 'xoopscaptcha', $skipmember = true, $configs = array())
-    {
-        $this->__construct($caption, $name, $skipmember, $configs);
-    }
-
-    /**
      * @param $name
      * @param $val
      *

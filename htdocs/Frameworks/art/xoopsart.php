@@ -19,11 +19,6 @@ class xoopsart
     {
     }
 
-    public function XoopsArt()
-    {
-        $this->__construct();
-    }
-
     /**
      * Load a collective functions of Frameworks
      *

@@ -52,11 +52,6 @@ class XoopsImagecategory extends XoopsObject
         $this->initVar('imgcat_storetype', XOBJ_DTYPE_OTHER, null, false);
     }
 
-    public function XoopsImagecategory()
-    {
-        $this->__construct();
-    }
-
     /**
      * Returns Class Base Variable imgcat_id
      * @param  string $format

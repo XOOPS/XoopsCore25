@@ -44,11 +44,6 @@ class XoopsImage extends XoopsObject
         $this->initVar('imgcat_id', XOBJ_DTYPE_INT, 0, false);
     }
 
-    public function XoopsImage()
-    {
-        $this->__construct();
-    }
-
     /**
      * Returns Class Base Variable image_id
      * @param  string $format

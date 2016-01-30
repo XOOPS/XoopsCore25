@@ -45,11 +45,6 @@ class XoopsGuiLegacy extends /* implements */
         include_once __DIR__ . "/cp_functions.php";
     }
 
-    public function XoopsGuiLegacy()
-    {
-        $this->__construct();
-    }
-
     /**
      * @return bool
      */

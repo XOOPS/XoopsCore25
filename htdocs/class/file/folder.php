@@ -134,16 +134,6 @@ class XoopsFolderHandler
     }
 
     /**
-     * @param      $path
-     * @param bool $create
-     * @param bool $mode
-     */
-    public function XoopsFolderHandler($path, $create = false, $mode = false)
-    {
-        $this->__construct($path, $create, $mode);
-    }
-
-    /**
      * Return current path.
      *
      * @return string Current path

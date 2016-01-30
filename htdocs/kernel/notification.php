@@ -49,11 +49,6 @@ class XoopsNotification extends XoopsObject
         $this->initVar('not_mode', XOBJ_DTYPE_INT, 0, false);
     }
 
-    public function XoopsNotification()
-    {
-        $this->__construct();
-    }
-
     // FIXME:???
     // To send email to multiple users simultaneously, we would need to move
     // the notify functionality to the handler class.  BUT, some of the tags

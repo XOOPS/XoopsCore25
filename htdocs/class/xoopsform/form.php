@@ -126,19 +126,6 @@ class XoopsForm
     }
 
     /**
-     * @param            $title
-     * @param            $name
-     * @param            $action
-     * @param string     $method
-     * @param bool|false $addtoken
-     * @param string     $summary
-     */
-    public function XoopsForm($title, $name, $action, $method = 'post', $addtoken = false, $summary = '')
-    {
-        $this->__construct($title, $name, $action, $method, $addtoken, $summary);
-    }
-
-    /**
      * *#@+
      * retrieves object serialisation/identification id (sha1 used)
      *

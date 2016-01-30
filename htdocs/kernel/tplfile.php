@@ -49,11 +49,6 @@ class XoopsTplfile extends XoopsObject
         $this->initVar('tpl_source', XOBJ_DTYPE_SOURCE, null, false);
     }
 
-    public function XoopsTplfile()
-    {
-        $this->__construct();
-    }
-
     /**
      * Returns Class Base Variable tpl_id
      * @param  string $format

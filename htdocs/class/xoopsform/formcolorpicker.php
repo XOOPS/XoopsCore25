@@ -44,16 +44,6 @@ class XoopsFormColorPicker extends XoopsFormText
     }
 
     /**
-     * @param        $caption
-     * @param        $name
-     * @param string $value
-     */
-    public function XoopsFormColorPicker($caption, $name, $value = '#FFFFFF')
-    {
-        $this->__construct($caption, $name, $value);
-    }
-
-    /**
      * XoopsFormColorPicker::render()
      *
      * @return string
