@@ -18,9 +18,8 @@
  * @deprecated
  */
 
-if (!defined('XOOPS_ROOT_PATH')) {
-    exit();
-}
+defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+
 $GLOBALS['xoopsLogger']->addDeprecated("'/class/xoopstory.php' is deprecated since XOOPS 2.5.4, please create your own class instead.");
 include_once XOOPS_ROOT_PATH . "/class/xoopstopic.php";
 include_once XOOPS_ROOT_PATH . "/kernel/user.php";
