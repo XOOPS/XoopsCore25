@@ -1,6 +1,6 @@
 <?php
 /**
- * MySQL access
+ * MySQL access using MySQLi extension
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,34 +11,24 @@
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @package             kernel
+ * @package             class
  * @subpackage          database
  * @since               1.0.0
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @version             $Id: mysqldatabase.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @author              Rodney Fulk <redheadedrod@hotmail.com>
+ * @version             $Id: mysqldatabase.php 8066 2011-11-06 05:09:33Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || exit('Restricted access');
+defined('XOOPS_ROOT_PATH') or die('Restricted access');
 
-/**
- *
- * @package             kernel
- * @subpackage          database
- * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- */
-
-/**
- * base class
- */
 include_once XOOPS_ROOT_PATH . '/class/database/database.php';
-// xoops_load( 'xoopsdatabase' );
+
 /**
- * connection to a mysql database
+ * connection to a mysql database using MySQLi extension
  *
  * @abstract
  * @author              Kazumi Ono <onokazu@xoops.org>
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @package             kernel
+ * @package             class
  * @subpackage          database
  */
 class XoopsMySQLDatabase extends XoopsDatabase
@@ -53,38 +43,35 @@ class XoopsMySQLDatabase extends XoopsDatabase
     /**
      * connect to the database
      *
-     * @param  bool $selectdb select the database now?
+     * @param bool $selectdb select the database now?
      * @return bool successful?
      */
     public function connect($selectdb = true)
     {
         static $db_charset_set;
-
-        if (!extension_loaded('mysql')) {
-            trigger_error('notrace:mysql extension not loaded', E_USER_ERROR);
+        if (!extension_loaded('mysqli')) {
+            trigger_error('notrace:mysqli extension not loaded', E_USER_ERROR);
 
             return false;
         }
 
         $this->allowWebChanges = ($_SERVER['REQUEST_METHOD'] !== 'GET');
 
-        if (XOOPS_DB_PCONNECT == 1) {
-            $this->conn = @mysql_pconnect(XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS);
+        if ($selectdb) {
+            $dbname = constant('XOOPS_DB_NAME');
         } else {
-            $this->conn = @mysql_connect(XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS);
+            $dbname = '';
+        }
+        if (XOOPS_DB_PCONNECT == 1) {
+            $this->conn = new mysqli("p:" . XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS, $dbname);
+        } else {
+            $this->conn = new mysqli(XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS, $dbname);
         }
 
         if (!$this->conn) {
             $this->logger->addQuery('', $this->error(), $this->errno());
 
             return false;
-        }
-        if ($selectdb != false) {
-            if (!mysql_select_db(XOOPS_DB_NAME)) {
-                $this->logger->addQuery('', $this->error(), $this->errno());
-
-                return false;
-            }
         }
         if (!isset($db_charset_set) && defined('XOOPS_DB_CHARSET') && XOOPS_DB_CHARSET) {
             $this->queryF("SET NAMES '" . XOOPS_DB_CHARSET . "'");
@@ -101,8 +88,8 @@ class XoopsMySQLDatabase extends XoopsDatabase
      * This is for compatibility only. Will always return 0, because MySQL supports
      * autoincrement for primary keys.
      *
-     * @param  string $sequence name of the sequence from which to get the next ID
-     * @return int    always 0, because mysql has support for autoincrement
+     * @param string $sequence name of the sequence from which to get the next ID
+     * @return int always 0, because mysql has support for autoincrement
      */
     public function genId($sequence)
     {
@@ -112,46 +99,45 @@ class XoopsMySQLDatabase extends XoopsDatabase
     /**
      * Get a result row as an enumerated array
      *
-     * @param  resource $result
+     * @param resource $result
      * @return array
      */
     public function fetchRow($result)
     {
-        return @mysql_fetch_row($result);
+        return @mysqli_fetch_row($result);
     }
 
     /**
      * Fetch a result row as an associative array
      *
-     * @param $result
-     *
+     * @param resource $result
      * @return array
      */
     public function fetchArray($result)
     {
-        return @mysql_fetch_assoc($result);
+        return @mysqli_fetch_assoc($result);
     }
 
     /**
      * Fetch a result row as an associative array
      *
-     * @param $result
+     * @param resource $result
      * @return array
      */
     public function fetchBoth($result)
     {
-        return @mysql_fetch_array($result, MYSQL_BOTH);
+        return @mysqli_fetch_array($result, MYSQLI_BOTH);
     }
 
     /**
-     * XoopsMySQLDatabase::fetchObjected()
+     * XoopsMySQLiDatabase::fetchObjected()
      *
-     * @param  mixed $result
-     * @return object|\stdClass
+     * @param mixed $result
+     * @return
      */
     public function fetchObject($result)
     {
-        return @mysql_fetch_object($result);
+        return @mysqli_fetch_object($result);
     }
 
     /**
@@ -161,18 +147,18 @@ class XoopsMySQLDatabase extends XoopsDatabase
      */
     public function getInsertId()
     {
-        return mysql_insert_id($this->conn);
+        return mysqli_insert_id($this->conn);
     }
 
     /**
      * Get number of rows in result
      *
-     * @param  resource $result query result
+     * @param resource $result
      * @return int
      */
     public function getRowsNum($result)
     {
-        return @mysql_num_rows($result);
+        return @mysqli_num_rows($result);
     }
 
     /**
@@ -182,26 +168,28 @@ class XoopsMySQLDatabase extends XoopsDatabase
      */
     public function getAffectedRows()
     {
-        return mysql_affected_rows($this->conn);
+        return mysqli_affected_rows($this->conn);
     }
 
     /**
      * Close MySQL connection
+     *
+     * @return void
      */
     public function close()
     {
-        mysql_close($this->conn);
+        mysqli_close($this->conn);
     }
 
     /**
      * will free all memory associated with the result identifier result.
      *
-     * @param  resource $result query result
-     * @return bool     TRUE on success or FALSE on failure.
+     * @param resource $ query result
+     * @return bool TRUE on success or FALSE on failure.
      */
     public function freeRecordSet($result)
     {
-        return mysql_free_result($result);
+        return ((mysqli_free_result($result) || (is_object($result) && (get_class($result) === 'mysqli_result'))) ? true : false);
     }
 
     /**
@@ -211,7 +199,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
      */
     public function error()
     {
-        return @mysql_error();
+        return @mysqli_error($this->conn);
     }
 
     /**
@@ -221,13 +209,13 @@ class XoopsMySQLDatabase extends XoopsDatabase
      */
     public function errno()
     {
-        return @mysql_errno();
+        return @mysqli_errno($this->conn);
     }
 
     /**
      * Returns escaped string text with single quotes around it to be safely stored in database
      *
-     * @param  string $str unescaped string text
+     * @param string $str unescaped string text
      * @return string escaped string text with single quotes around
      */
     public function quoteString($str)
@@ -237,12 +225,10 @@ class XoopsMySQLDatabase extends XoopsDatabase
 
     /**
      * Quotes a string for use in a query.
-     * @param $string
-     * @return string
      */
     public function quote($string)
     {
-        return "'" . str_replace("\\\"", '"', str_replace("\\&quot;", '&quot;', mysql_real_escape_string($string, $this->conn))) . "'";
+        return "'" . str_replace("\\\"", '"', str_replace("\\&quot;", '&quot;', mysqli_real_escape_string($this->conn, $string))) . "'";
     }
 
     /**
@@ -254,17 +240,17 @@ class XoopsMySQLDatabase extends XoopsDatabase
      */
     public function escape($string)
     {
-        return mysql_real_escape_string($string, $this->conn);
+        return mysqli_real_escape_string($this->conn, $string);
     }
 
     /**
      * perform a query on the database
      *
-     * @param  string $sql    a valid MySQL query
-     * @param  int    $limit  number of records to return
-     * @param  int    $start  offset of first record to return
+     * @param string $sql   a valid MySQL query
+     * @param int    $limit number of records to return
+     * @param int    $start offset of first record to return
      * @return resource query result or FALSE if successful
-     *                        or TRUE if successful and no result
+     *                      or TRUE if successful and no result
      */
     public function queryF($sql, $limit = 0, $start = 0)
     {
@@ -275,7 +261,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
             $sql = $sql . ' LIMIT ' . (int)$start . ', ' . (int)$limit;
         }
         $this->logger->startTime('query_time');
-        $result = mysql_query($sql, $this->conn);
+        $result = mysqli_query($this->conn, $sql);
         $this->logger->stopTime('query_time');
         $query_time = $this->logger->dumpTime('query_time', true);
         if ($result) {
@@ -307,8 +293,8 @@ class XoopsMySQLDatabase extends XoopsDatabase
     /**
      * perform queries from SQL dump file in a batch
      *
-     * @param  string $file file path to an SQL dump file
-     * @return bool   FALSE if failed reading SQL file or TRUE if the file has been read and queries executed
+     * @param string $file file path to an SQL dump file
+     * @return bool FALSE if failed reading SQL file or TRUE if the file has been read and queries executed
      */
     public function queryFromFile($file)
     {
@@ -334,36 +320,121 @@ class XoopsMySQLDatabase extends XoopsDatabase
     /**
      * Get field name
      *
-     * @param  resource $result query result
-     * @param  int      $offset numerical field index
+     * @param resource $result query result
+     * @param          int     $ numerical field index
      * @return string
      */
     public function getFieldName($result, $offset)
     {
-        return mysql_field_name($result, $offset);
+        return $result->fetch_field_direct($offset)->name;
     }
 
     /**
      * Get field type
      *
-     * @param  resource $result query result
-     * @param  int      $offset numerical field index
+     * @param resource $result query result
+     * @param int      $offset numerical field index
      * @return string
      */
     public function getFieldType($result, $offset)
     {
-        return mysql_field_type($result, $offset);
+        $typecode = $result->fetch_field_direct($offset)->type;
+        switch ($typecode) {
+            case MYSQLI_TYPE_DECIMAL:
+            case MYSQLI_TYPE_NEWDECIMAL:
+                $type = 'decimal';
+                break;
+            case MYSQLI_TYPE_BIT:
+                $type = 'bit';
+                break;
+            case MYSQLI_TYPE_TINY:
+            case MYSQLI_TYPE_CHAR:
+                $type = 'tinyint';
+                break;
+            case MYSQLI_TYPE_SHORT:
+                $type = 'smallint';
+                break;
+            case MYSQLI_TYPE_LONG:
+                $type = 'int';
+                break;
+            case MYSQLI_TYPE_FLOAT:
+                $type = 'float';
+                break;
+            case MYSQLI_TYPE_DOUBLE:
+                $type = 'double';
+                break;
+            case MYSQLI_TYPE_NULL:
+                $type = 'NULL';
+                break;
+            case MYSQLI_TYPE_TIMESTAMP:
+                $type = 'timestamp';
+                break;
+            case MYSQLI_TYPE_LONGLONG:
+                $type = 'bigint';
+                break;
+            case MYSQLI_TYPE_INT24:
+                $type = 'mediumint';
+                break;
+            case MYSQLI_TYPE_NEWDATE:
+            case MYSQLI_TYPE_DATE:
+                $type = 'date';
+                break;
+            case MYSQLI_TYPE_TIME:
+                $type = 'time';
+                break;
+            case MYSQLI_TYPE_DATETIME:
+                $type = 'datetime';
+                break;
+            case MYSQLI_TYPE_YEAR:
+                $type = 'year';
+                break;
+            case MYSQLI_TYPE_INTERVAL:
+                $type = 'interval';
+                break;
+            case MYSQLI_TYPE_ENUM:
+                $type = 'enum';
+                break;
+            case MYSQLI_TYPE_SET:
+                $type = 'set';
+                break;
+            case MYSQLI_TYPE_TINY_BLOB:
+                $type = 'tinyblob';
+                break;
+            case MYSQLI_TYPE_MEDIUM_BLOB:
+                $type = 'mediumblob';
+                break;
+            case MYSQLI_TYPE_LONG_BLOB:
+                $type = 'longblob';
+                break;
+            case MYSQLI_TYPE_BLOB:
+                $type = 'blob';
+                break;
+            case MYSQLI_TYPE_VAR_STRING:
+                $type = 'varchar';
+                break;
+            case MYSQLI_TYPE_STRING:
+                $type = 'char';
+                break;
+            case MYSQLI_TYPE_GEOMETRY:
+                $type = 'geometry';
+                break;
+            default:
+                $type = 'unknown';
+                break;
+        }
+
+        return $type;
     }
 
     /**
      * Get number of fields in result
      *
-     * @param  resource $result query result
+     * @param resource $result query result
      * @return int
      */
     public function getFieldsNum($result)
     {
-        return mysql_num_fields($result);
+        return mysqli_num_fields($result);
     }
 
     /**
@@ -373,7 +444,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
      */
     public function getServerVersion()
     {
-        return mysql_get_server_info($this->conn);
+        return mysqli_get_server_info($this->conn);
     }
 }
 
@@ -390,11 +461,11 @@ class XoopsMySQLDatabaseSafe extends XoopsMySQLDatabase
     /**
      * perform a query on the database
      *
-     * @param  string $sql    a valid MySQL query
-     * @param  int    $limit  number of records to return
-     * @param  int    $start  offset of first record to return
+     * @param string $sql   a valid MySQL query
+     * @param int    $limit number of records to return
+     * @param int    $start offset of first record to return
      * @return resource query result or FALSE if successful
-     *                        or TRUE if successful and no result
+     *                      or TRUE if successful and no result
      */
     public function query($sql, $limit = 0, $start = 0)
     {
@@ -410,7 +481,7 @@ class XoopsMySQLDatabaseSafe extends XoopsMySQLDatabase
  *
  * @author              Kazumi Ono <onokazu@xoops.org>
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @package             kernel
+ * @package             class
  * @subpackage          database
  */
 class XoopsMySQLDatabaseProxy extends XoopsMySQLDatabase
@@ -420,9 +491,9 @@ class XoopsMySQLDatabaseProxy extends XoopsMySQLDatabase
      *
      * this method allows only SELECT queries for safety.
      *
-     * @param  string $sql   a valid MySQL query
-     * @param  int    $limit number of records to return
-     * @param  int    $start offset of first record to return
+     * @param string $sql   a valid MySQL query
+     * @param int    $limit number of records to return
+     * @param int    $start offset of first record to return
      * @return resource query result or FALSE if unsuccessful
      */
     public function query($sql, $limit = 0, $start = 0)

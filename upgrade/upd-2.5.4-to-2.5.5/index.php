@@ -86,7 +86,8 @@ class Upgrade_255 extends xoopsUpgrade
     {
         $sql = "SELECT `imptotal` FROM `" . $GLOBALS['xoopsDB']->prefix('banner') . "` WHERE `bid` = 1";
         if ($result = $GLOBALS['xoopsDB']->queryF($sql)) {
-            $length = mysql_field_len($result, 0);
+            $fieldInfo = mysqli_fetch_field_direct($result, 0);
+            $length = $fieldInfo->length;
 
             return ($length == 8) ? false : true;
         }

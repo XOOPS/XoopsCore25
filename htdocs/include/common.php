@@ -32,6 +32,11 @@ include_once XOOPS_ROOT_PATH . DS . 'include' . DS . 'version.php';
 include_once XOOPS_ROOT_PATH . DS . 'include' . DS . 'license.php';
 
 /**
+ * PHP password_hash for pre 5.5
+ */
+include_once XOOPS_ROOT_PATH . DS . 'include' . DS . 'password.php';
+
+/**
  * Include XoopsLoad
  */
 require_once XOOPS_ROOT_PATH . DS . 'class' . DS . 'xoopsload.php';

@@ -38,15 +38,15 @@ if (!class_exists('ArtObject')) {
  */
 function mod_getMysqlVersion($conn = null)
 {
+    global $xoopsDB;
     static $mysql_version;
     if (isset($mysql_version)) {
         return $mysql_version;
     }
-    if (null !== ($conn)) {
-        $version = mysql_get_server_info($conn);
-    } else {
-        $version = mysql_get_server_info();
+    if (null === $conn) {
+        $conn = $xoopsDB->conn;
     }
+    $mysql_version = mysqli_get_server_info($conn);
 
     return $mysql_version;
 }

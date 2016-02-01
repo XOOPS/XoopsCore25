@@ -227,7 +227,7 @@ if ($op === 'editprofile') {
     $form->addElement($mailok_radio);
     $form->addElement($uid_hidden);
     $form->addElement($op_hidden);
-    $form->addElement($token_hidden);
+    //$form->addElement($token_hidden);
     $form->addElement($submit_button);
     if ($xoopsConfigUser['allow_chgmail'] == 1) {
         $form->setRequired($email_text);

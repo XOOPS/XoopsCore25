@@ -427,9 +427,9 @@ class XoopsNotificationHandler extends XoopsObjectHandler
     {
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('not_modid', (int)($module_id)));
-        $criteria->add(new Criteria('not_category', mysql_real_escape_string($category)));
+        $criteria->add(new Criteria('not_category', $this->db->escape($category)));
         $criteria->add(new Criteria('not_itemid', (int)($item_id)));
-        $criteria->add(new Criteria('not_event', mysql_real_escape_string($event)));
+        $criteria->add(new Criteria('not_event', $this->db->escape($event)));
         $criteria->add(new Criteria('not_uid', (int)($user_id)));
         $objects = $this->getObjects($criteria);
         if (count($objects) == 1) {
@@ -457,9 +457,9 @@ class XoopsNotificationHandler extends XoopsObjectHandler
     {
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('not_modid', (int)($module_id)));
-        $criteria->add(new Criteria('not_category', mysql_real_escape_string($category)));
+        $criteria->add(new Criteria('not_category', $this->db->escape($category)));
         $criteria->add(new Criteria('not_itemid', (int)($item_id)));
-        $criteria->add(new Criteria('not_event', mysql_real_escape_string($event)));
+        $criteria->add(new Criteria('not_event', $this->db->escape($event)));
         $criteria->add(new Criteria('not_uid', (int)($user_id)));
 
         return $this->getCount($criteria);
@@ -556,7 +556,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
     {
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('not_modid', (int)($module_id)));
-        $criteria->add(new Criteria('not_category', mysql_real_escape_string($category)));
+        $criteria->add(new Criteria('not_category', $this->db->escape($category)));
         if ($item_id) {
             $criteria->add(new Criteria('not_itemid', (int)($item_id)));
         }
@@ -669,9 +669,9 @@ class XoopsNotificationHandler extends XoopsObjectHandler
         }
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('not_modid', (int)($module_id)));
-        $criteria->add(new Criteria('not_category', mysql_real_escape_string($category)));
+        $criteria->add(new Criteria('not_category', $this->db->escape($category)));
         $criteria->add(new Criteria('not_itemid', (int)($item_id)));
-        $criteria->add(new Criteria('not_event', mysql_real_escape_string($event)));
+        $criteria->add(new Criteria('not_event', $this->db->escape($event)));
         $mode_criteria = new CriteriaCompo();
         $mode_criteria->add(new Criteria('not_mode', XOOPS_NOTIFICATION_MODE_SENDALWAYS), 'OR');
         $mode_criteria->add(new Criteria('not_mode', XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE), 'OR');
@@ -785,7 +785,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
         }
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('not_modid', (int)($module_id)));
-        $criteria->add(new Criteria('not_category', mysql_real_escape_string($category)));
+        $criteria->add(new Criteria('not_category', $this->db->escape($category)));
         $criteria->add(new Criteria('not_itemid', (int)($item_id)));
         $criteria->add(new Criteria('not_uid', (int)($user_id)));
         if (!is_array($events)) {
@@ -793,7 +793,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
         }
         $event_criteria = new CriteriaCompo();
         foreach ($events as $event) {
-            $event_criteria->add(new Criteria('not_event', mysql_real_escape_string($event)), 'OR');
+            $event_criteria->add(new Criteria('not_event', $this->db->escape($event)), 'OR');
         }
         $criteria->add($event_criteria);
 
@@ -829,7 +829,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
     {
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('not_modid', (int)($module_id)));
-        $criteria->add(new Criteria('not_category', mysql_real_escape_string($category)));
+        $criteria->add(new Criteria('not_category', $this->db->escapes($category)));
         $criteria->add(new Criteria('not_itemid', (int)($item_id)));
 
         return $this->deleteAll($criteria);

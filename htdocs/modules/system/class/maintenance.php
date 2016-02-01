@@ -328,7 +328,7 @@ class SystemMaintenance
                 $field_type = array();
                 $i          = 0;
                 while ($i < $num_fields) {
-                    $meta = mysql_fetch_field($result, $i);
+                    $meta = mysqli_fetch_field($result, $i);
                     ($field_type[] = $meta->type);
                     ++$i;
                 }
@@ -347,7 +347,7 @@ class SystemMaintenance
                                     $ret[0] .= $row[$i];
                                     break;
                                 default:
-                                    $ret[0] .= "'" . mysql_real_escape_string($row[$i]) . "'";
+                                    $ret[0] .= "'" . $this->db->escape($row[$i]) . "'";
                             }
                         }
                         if ($i < $num_fields - 1) {

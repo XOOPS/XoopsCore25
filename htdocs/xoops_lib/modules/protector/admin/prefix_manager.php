@@ -80,61 +80,83 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
     }
 
     $export_string = '';
+    $rowLimit = 100;
 
     while ($row_table = $db->fetchArray($srs)) {
         $table = $row_table['Name'];
         if (substr($table, 0, strlen($prefix) + 1) !== $prefix . '_') {
             continue;
         }
-        $drs = $db->queryF("SHOW CREATE TABLE `$table`");
-        $export_string .= "\nDROP TABLE IF EXISTS `$table`;\n" . mysql_result($drs, 0, 1) . ";\n\n";
-        $result      = mysql_query("SELECT * FROM `$table`");
-        $fields_cnt  = mysql_num_fields($result);
-        $field_flags = array();
-        for ($j = 0; $j < $fields_cnt; ++$j) {
-            $field_flags[$j] = mysql_field_flags($result, $j);
-        }
-        $search      = array("\x00", "\x0a", "\x0d", "\x1a");
-        $replace     = array('\0', '\n', '\r', '\Z');
-        $current_row = 0;
-        while ($row = mysql_fetch_row($result)) {
-            ++$current_row;
-            for ($j = 0; $j < $fields_cnt; ++$j) {
-                $fields_meta = mysql_fetch_field($result, $j);
-                // NULL
-                if (!isset($row[$j]) || null === ($row[$j])) {
-                    $values[] = 'NULL';
-                    // a number
-                    // timestamp is numeric on some MySQL 4.1
-                } elseif ($fields_meta->numeric && $fields_meta->type !== 'timestamp') {
-                    $values[] = $row[$j];
-                    // a binary field
-                    // Note: with mysqli, under MySQL 4.1.3, we get the flag
-                    // "binary" for those field types (I don't know why)
-                } elseif (false !== stripos($field_flags[$j], 'BINARY') && $fields_meta->type !== 'datetime' && $fields_meta->type !== 'date' && $fields_meta->type !== 'time' && $fields_meta->type !== 'timestamp') {
-                    // empty blobs need to be different, but '0' is also empty :-(
-                    if (empty($row[$j]) && $row[$j] != '0') {
-                        $values[] = '\'\'';
-                    } else {
-                        $values[] = '0x' . bin2hex($row[$j]);
-                    }
-                    // something else -> treat as a string
-                } else {
-                    $values[] = '\'' . str_replace($search, $replace, addslashes($row[$j])) . '\'';
-                } // end if
-            } // end for
+        $drawCreate = $db->queryF("SHOW CREATE TABLE `$table`");
+        $create = $db->fetchRow($drawCreate);
+        $db->freeRecordSet($drawCreate);
 
-            $export_string .= "INSERT INTO `$table` VALUES (" . implode(', ', $values) . ");\n";
-            unset($values);
-        } // end while
-        mysql_free_result($result);
+        $exportString .= "\nDROP TABLE IF EXISTS `$table`;\n{$create[1]};\n\n";
+        $result      = $db->query("SELECT * FROM `$table`");
+        $fieldCount  = $db->getFieldsNum($result);
+
+        $insertValues = '';
+
+        if ($db->getRowsNum($result)>0) {
+            $fieldInfo = array();
+            $insertNames = "INSERT INTO `$table` (";
+            for ($j = 0; $j < $fieldCount; ++$j) {
+                $field = $result->fetch_field_direct($j);
+                $fieldInfo[$field->name] = $field;
+                $insertNames .= ((0 === $j) ? '' : ', ') . $field->name;
+            }
+            $insertNames .= ")\nVALUES\n";
+
+            $rowCount = 0;
+            $insertValues = $insertNames;
+            while ($row = $db->fetchArray($result)) {
+                if ($rowCount >= $rowLimit) {
+                    $insertValues .= ");\n\n" . $insertNames;
+                    $rowCount = 0;
+                }
+                $insertValues .= (0 === $rowCount++) ? '(' : "),\n(";
+                $firstField = true;
+                foreach ($fieldInfo as $name => $field) {
+                    if (null === $row[$name]) {
+                        $value = 'null';
+                    } else {
+                        switch ($field->type) {
+                            case MYSQLI_TYPE_NULL:
+                                $value = 'NULL';
+                                break;
+                            case MYSQLI_TYPE_DECIMAL:
+                            case MYSQLI_TYPE_NEWDECIMAL:
+                            case MYSQLI_TYPE_BIT:
+                            case MYSQLI_TYPE_TINY:
+                            case MYSQLI_TYPE_SHORT:
+                            case MYSQLI_TYPE_LONG:
+                            case MYSQLI_TYPE_FLOAT:
+                            case MYSQLI_TYPE_DOUBLE:
+                            case MYSQLI_TYPE_LONGLONG:
+                            case MYSQLI_TYPE_INT24:
+                                $value = $row[$name];
+                                break;
+                            default:
+                                $value = $db->quote($row[$name]);
+                                break;
+                        }
+                    }
+                    $insertValues .= (($firstField) ? '' : ', ') . $value;
+                    $firstField = false;
+                }
+            }
+            $insertValues .= ");\n\n";
+        }
+
+        $exportString .= $insertValues;
+        $db->freeRecordSet($result);
     }
 
     header('Content-Type: Application/octet-stream');
     header('Content-Disposition: attachment; filename="' . $prefix . '_' . date('YmdHis') . '.sql"');
-    header('Content-Length: ' . strlen($export_string));
+    header('Content-Length: ' . strlen($exportString));
     set_time_limit(0);
-    echo $export_string;
+    echo $exportString;
     exit;
 
     // DROP TABLES
