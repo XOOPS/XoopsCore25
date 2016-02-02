@@ -116,7 +116,7 @@ if (phpthumb_functions::version_compare_replacement(phpversion(), '4.3.2', '>=')
 // ImageMagick configuration
 $PHPTHUMB_CONFIG['prefer_imagemagick']        = true;  // If true, use ImageMagick to resize thumbnails if possible, since it is usually faster than GD functions; if false only use ImageMagick if PHP memory limit is too low.
 $PHPTHUMB_CONFIG['imagemagick_use_thumbnail'] = true;  // If true, use ImageMagick's "-thumbnail" resizing parameter (if available) which removes extra non-image metadata (profiles, EXIF info, etc) resulting in much smaller filesize; if false, use "-resize" paramter which retains this info
-if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') {
+if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
     // Windows: set absolute pathname
     $PHPTHUMB_CONFIG['imagemagick_path'] = 'C:/ImageMagick/convert.exe';
 } else {
@@ -195,7 +195,7 @@ $PHPTHUMB_CONFIG['http_user_agent'] = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; 
 // * Compatibility settings
 $PHPTHUMB_CONFIG['disable_pathinfo_parsing']        = false;  // if true, $_SERVER[PATH_INFO] is not parsed. May be needed on some server configurations to allow normal behavior.
 $PHPTHUMB_CONFIG['disable_imagecopyresampled']      = false;  // if true, ImageCopyResampled is replaced with ImageCopyResampleBicubic. May be needed for buggy versions of PHP-GD.
-$PHPTHUMB_CONFIG['disable_onlycreateable_passthru'] = true;   // if true, any image that can be parsed by GetImageSize() can be passed through; if false, only images that can be converted to GD by ImageCreateFrom(JPEG|GIF|PNG) functions are allowed
+$PHPTHUMB_CONFIG['disable_onlycreateable_passthru'] = true;   // if true, any image that can be parsed by getimagesize() can be passed through; if false, only images that can be converted to GD by ImageCreateFrom(JPEG|GIF|PNG) functions are allowed
 
 // * HTTP remote file opening settings
 $PHPTHUMB_CONFIG['http_fopen_timeout']   = 10;   // timeout (in seconds) for fopen / curl / fsockopen
