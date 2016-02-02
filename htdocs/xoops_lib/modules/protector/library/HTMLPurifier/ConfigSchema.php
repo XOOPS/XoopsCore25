@@ -105,7 +105,7 @@ class HTMLPurifier_ConfigSchema
      */
     public function add($key, $default, $type, $allow_null)
     {
-        $obj = new stdclass();
+        $obj = new stdClass();
         $obj->type = is_int($type) ? $type : HTMLPurifier_VarParser::$types[$type];
         if ($allow_null) {
             $obj->allow_null = true;
@@ -152,7 +152,7 @@ class HTMLPurifier_ConfigSchema
      */
     public function addAlias($key, $new_key)
     {
-        $obj = new stdclass;
+        $obj = new stdClass;
         $obj->key = $new_key;
         $obj->isAlias = true;
         $this->info[$key] = $obj;

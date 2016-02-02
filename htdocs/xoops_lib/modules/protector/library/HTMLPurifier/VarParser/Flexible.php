@@ -43,9 +43,9 @@ class HTMLPurifier_VarParser_Flexible extends HTMLPurifier_VarParser
                 if (is_int($var) && ($var === 0 || $var === 1)) {
                     $var = (bool)$var;
                 } elseif (is_string($var)) {
-                    if ($var == 'on' || $var == 'true' || $var == '1') {
+                    if ($var === 'on' || $var === 'true' || $var == '1') {
                         $var = true;
-                    } elseif ($var == 'off' || $var == 'false' || $var == '0') {
+                    } elseif ($var === 'off' || $var === 'false' || $var == '0') {
                         $var = false;
                     } else {
                         throw new HTMLPurifier_VarParserException("Unrecognized value '$var' for $type");
@@ -124,6 +124,7 @@ class HTMLPurifier_VarParser_Flexible extends HTMLPurifier_VarParser
                 $this->errorInconsistent(__CLASS__, $type);
         }
         $this->errorGeneric($var, $type);
+        return null;
     }
 }
 
