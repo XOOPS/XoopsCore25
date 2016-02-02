@@ -83,11 +83,10 @@ class ArtObjectHandler extends XoopsPersistableObjectHandler
      */
     public function mysql_server_version($conn = null)
     {
-        if (null !== ($conn)) {
-            return mysql_get_server_info($conn);
-        } else {
-            return mysql_get_server_info();
+        if (null === ($conn)) {
+            $conn = $this->db->conn;
         }
+        return mysqli_get_server_info($conn);
     }
 
     /**
@@ -97,7 +96,7 @@ class ArtObjectHandler extends XoopsPersistableObjectHandler
      */
     public function mysql_major_version()
     {
-        $version = $this->mysql_server_version();
+        $version = $this->mysql_server_version($this->db->conn);
         if (version_compare($version, "5.0.0", "ge")) {
             $mysql_version = 5;
         } elseif (version_compare($version, "4.1.0", "ge")) {

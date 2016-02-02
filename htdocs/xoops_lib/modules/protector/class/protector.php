@@ -169,12 +169,12 @@ class Protector
             return false;
         }
 
-        $result = @mysql_query("SELECT conf_name,conf_value FROM " . XOOPS_DB_PREFIX . "_config WHERE conf_title like '" . $constpref . "%'", $this->_conn);
-        if (!$result || mysql_num_rows($result) < 5) {
+        $result = @mysqli_query($this->_conn, "SELECT conf_name,conf_value FROM " . XOOPS_DB_PREFIX . "_config WHERE conf_title like '" . $constpref . "%'");
+        if (!$result || mysqli_num_rows($result) < 5) {
             return false;
         }
         $db_conf = array();
-        while (list($key, $val) = mysql_fetch_row($result)) {
+        while (list($key, $val) = mysqli_fetch_row($result)) {
             $db_conf[$key] = $val;
         }
         $db_conf_serialized = serialize($db_conf);
@@ -267,11 +267,11 @@ class Protector
         }
 
         if (empty($this->_conn)) {
-            $this->_conn = @mysql_connect(XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS);
+            $this->_conn = @mysqli_connect(XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS);
             if (!$this->_conn) {
                 die('db connection failed.');
             }
-            if (!mysql_select_db(XOOPS_DB_NAME, $this->_conn)) {
+            if (!mysqli_select_db($this->_conn, XOOPS_DB_NAME)) {
                 die('db selection failed.');
             }
         }
@@ -280,8 +280,8 @@ class Protector
         $agent = @$_SERVER['HTTP_USER_AGENT'];
 
         if ($unique_check) {
-            $result = mysql_query('SELECT ip,type FROM ' . XOOPS_DB_PREFIX . '_' . $this->mydirname . '_log ORDER BY timestamp DESC LIMIT 1', $this->_conn);
-            list($last_ip, $last_type) = mysql_fetch_row($result);
+            $result = mysqli_query($this->_conn, 'SELECT ip,type FROM ' . XOOPS_DB_PREFIX . '_' . $this->mydirname . '_log ORDER BY timestamp DESC LIMIT 1');
+            list($last_ip, $last_type) = mysqli_fetch_row($result);
             if ($last_ip == $ip && $last_type == $type) {
                 $this->_logged = true;
 
@@ -289,7 +289,15 @@ class Protector
             }
         }
 
-        mysql_query("INSERT INTO " . XOOPS_DB_PREFIX . "_" . $this->mydirname . "_log SET ip='" . mysql_real_escape_string($ip) . "',agent='" . mysql_real_escape_string($agent) . "',type='" . mysql_real_escape_string($type) . "',description='" . mysql_real_escape_string($this->message) . "',uid='" . (int)($uid) . "',timestamp=NOW()", $this->_conn);
+        mysqli_query(
+            $this->_conn,
+            "INSERT INTO " . XOOPS_DB_PREFIX . "_" . $this->mydirname . "_log SET ip='"
+            . mysqli_real_escape_string($this->_conn, $ip) . "',agent='"
+            . mysqli_real_escape_string($this->_conn, $agent) . "',type='"
+            . mysqli_real_escape_string($this->_conn, $type) . "',description='"
+            . mysqli_real_escape_string($this->_conn, $this->message) . "',uid='"
+            . (int)($uid) . "',timestamp=NOW()"
+        );
         $this->_logged = true;
 
         return true;

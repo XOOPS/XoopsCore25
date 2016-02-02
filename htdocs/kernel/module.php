@@ -435,7 +435,7 @@ class XoopsModule extends XoopsObject
      *
      * @return mixed
      */
-    public function &getByDirname($dirname)
+    public static function &getByDirname($dirname)
     {
         $modhandler =& xoops_getHandler('module');
         $inst       =& $modhandler->getByDirname($dirname);

@@ -67,7 +67,7 @@ class XoopsModelSync extends XoopsModelAbstract
         /**
          * for MySQL 4.1+
          */
-        if (version_compare(mysql_get_server_info(), "4.1.0", "ge")) {
+        if (version_compare(mysqli_get_server_info($this->handler->db->conn), "4.1.0", "ge")) {
             $sql = "DELETE FROM `{$this->handler->table}`" . " WHERE (`{$this->handler->field_object}` NOT IN ( SELECT DISTINCT `{$this->handler->field_link}` FROM `{$this->handler->table_link}`) )";
         } else {
             // for 4.0+

@@ -254,8 +254,8 @@ function getDbCharsets($link)
 
     $charsets["utf8"] = "UTF-8 Unicode";
     $ut8_available    = false;
-    if ($result = mysql_query("SHOW CHARSET", $link)) {
-        while ($row = mysql_fetch_assoc($result)) {
+    if ($result = mysqli_query($link, "SHOW CHARSET")) {
+        while ($row = mysqli_fetch_assoc($result)) {
             $charsets[$row["Charset"]] = $row["Description"];
             if ($row["Charset"] === "utf8") {
                 $ut8_available = true;
@@ -282,8 +282,8 @@ function getDbCollations($link, $charset)
         return $collations[$charset];
     }
 
-    if ($result = mysql_query("SHOW COLLATION WHERE CHARSET = '" . mysql_real_escape_string($charset) . "'", $link)) {
-        while ($row = mysql_fetch_assoc($result)) {
+    if ($result = mysqli_query($link, "SHOW COLLATION WHERE CHARSET = '" . mysqli_real_escape_string($link, $charset) . "'")) {
+        while ($row = mysqli_fetch_assoc($result)) {
             $collations[$charset][$row["Collation"]] = $row["Default"] ? 1 : 0;
         }
     }
@@ -305,7 +305,7 @@ function validateDbCharset($link, &$charset, &$collation)
     if (empty($charset)) {
         $collation = "";
     }
-    if (version_compare(mysql_get_server_info($link), "4.1.0", "lt")) {
+    if (version_compare(mysqli_get_server_info($link), "4.1.0", "lt")) {
         $charset = $collation = "";
     }
     if (empty($charset) && empty($collation)) {
@@ -337,7 +337,7 @@ function validateDbCharset($link, &$charset, &$collation)
  */
 function xoFormFieldCollation($name, $value, $label, $help, $link, $charset)
 {
-    if (version_compare(mysql_get_server_info($link), "4.1.0", "lt")) {
+    if (version_compare(mysqli_get_server_info($link), "4.1.0", "lt")) {
         return "";
     }
     if (empty($charset) || !$collations = getDbCollations($link, $charset)) {
@@ -403,7 +403,7 @@ function xoFormBlockCollation($name, $value, $label, $help, $link, $charset)
  */
 function xoFormFieldCharset($name, $value, $label, $help = '', $link)
 {
-    if (version_compare(mysql_get_server_info($link), "4.1.0", "lt")) {
+    if (version_compare(mysqli_get_server_info($link), "4.1.0", "lt")) {
         return "";
     }
     if (!$chars = getDbCharsets($link)) {

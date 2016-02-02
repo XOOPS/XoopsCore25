@@ -109,7 +109,7 @@ CREATE TABLE xoopscomments (
   `com_user` varchar(60) NOT NULL DEFAULT '',
   `com_email` varchar(60) NOT NULL DEFAULT '',
   `com_url` varchar(60) NOT NULL DEFAULT '',
-  `com_ip` varchar(15) NOT NULL DEFAULT '',
+  `com_ip` varchar(45) NOT NULL DEFAULT '',
   `com_title` varchar(255) NOT NULL DEFAULT '',
   `com_text` text,
   `com_sig` tinyint(1) unsigned NOT NULL DEFAULT '0',
@@ -128,7 +128,7 @@ CREATE TABLE xoopscomments (
   KEY `com_status` (`com_status`),
   KEY `com_user` (`com_user`),
   KEY `com_email` (`com_email`)
-) ENGINE=MyISAM; 
+) ENGINE=MyISAM;
 # --------------------------------------------------------
 
 # RMV-NOTIFY
@@ -407,7 +407,7 @@ CREATE TABLE online (
   online_uname varchar(25) NOT NULL default '',
   online_updated int(10) unsigned NOT NULL default '0',
   online_module smallint(5) unsigned NOT NULL default '0',
-  online_ip varchar(15) NOT NULL default '',
+  online_ip varchar(45) NOT NULL default '',
   KEY online_module (online_module),
   KEY online_updated (online_updated),
   KEY online_uid (online_uid)
@@ -460,7 +460,7 @@ CREATE TABLE ranks (
 CREATE TABLE session (
   sess_id varchar(32) NOT NULL default '',
   sess_updated int(10) unsigned NOT NULL default '0',
-  sess_ip varchar(15) NOT NULL default '',
+  sess_ip varchar(45) NOT NULL default '',
   sess_data text,
   PRIMARY KEY  (sess_id),
   KEY updated (sess_updated)
@@ -546,7 +546,7 @@ CREATE TABLE users (
   user_aim varchar(18) NOT NULL default '',
   user_yim varchar(25) NOT NULL default '',
   user_msnm varchar(100) NOT NULL default '',
-  pass varchar(32) NOT NULL default '',
+  pass varchar(255) NOT NULL default '',
   posts mediumint(8) unsigned NOT NULL default '0',
   attachsig tinyint(1) unsigned NOT NULL default '0',
   rank smallint(5) unsigned NOT NULL default '0',

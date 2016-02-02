@@ -34,8 +34,8 @@ $pageHasHelp = true;
 
 $vars =& $_SESSION['settings'];
 
-$func_connect = empty($vars['DB_PCONNECT']) ? "mysql_connect" : "mysql_pconnect";
-if (!($link = @$func_connect($vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS'], true))) {
+$hostConnectPrefix = empty($vars['DB_PCONNECT']) ? '' : 'p:';
+if (!($link = @mysqli_connect($hostConnectPrefix.$vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS']))) {
     $error = ERR_NO_DBCONNECTION;
     $wizard->redirectToPage('-1', $error);
     exit();
@@ -58,17 +58,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($vars['DB_NAME'])) {
     $error    = validateDbCharset($link, $vars['DB_CHARSET'], $vars['DB_COLLATION']);
     $db_exist = true;
     if (empty($error)) {
-        if (!@mysql_select_db($vars['DB_NAME'], $link)) {
+        if (!@mysqli_select_db($link, $vars['DB_NAME'])) {
             // Database not here: try to create it
-            $result = mysql_query("CREATE DATABASE `" . $vars['DB_NAME'] . '`');
+            $result = mysqli_query($link, "CREATE DATABASE `" . $vars['DB_NAME'] . '`');
             if (!$result) {
                 $error    = ERR_NO_DATABASE;
                 $db_exist = false;
             }
         }
         if ($db_exist && $vars['DB_CHARSET']) {
-            $sql = "ALTER DATABASE `" . $vars['DB_NAME'] . "` DEFAULT CHARACTER SET " . mysql_real_escape_string($vars['DB_CHARSET']) . ($vars['DB_COLLATION'] ? " COLLATE " . mysql_real_escape_string($vars['DB_COLLATION']) : "");
-            if (!mysql_query($sql)) {
+            $sql = "ALTER DATABASE `" . $vars['DB_NAME'] . "` DEFAULT CHARACTER SET "
+                . mysqli_real_escape_string($link, $vars['DB_CHARSET'])
+                . ($vars['DB_COLLATION'] ? " COLLATE " . mysqli_real_escape_string($link, $vars['DB_COLLATION']) : "");
+            if (!mysqli_query($link, $sql)) {
                 $error = ERR_CHARSET_NOT_SET . $sql;
             }
         }

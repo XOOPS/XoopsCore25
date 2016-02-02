@@ -25,7 +25,7 @@ class Upgrade_256 extends xoopsUpgrade
      */
     public function __construct()
     {
-        $this->xoopsUpgrade(basename(__DIR__));
+        parent::__construct(basename(__DIR__));
     }
 
     /**
