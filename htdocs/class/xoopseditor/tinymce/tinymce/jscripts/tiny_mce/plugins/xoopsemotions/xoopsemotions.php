@@ -15,7 +15,7 @@
 
 // load mainfile.php - start
 $current_path = __DIR__;
-if (DIRECTORY_SEPARATOR != "/") {
+if (DIRECTORY_SEPARATOR !== "/") {
     $current_path = str_replace(DIRECTORY_SEPARATOR, "/", $current_path);
 }
 $xoops_root_path = substr($current_path, 0, strpos(strtolower($current_path), "/class/xoopseditor/tinymce/"));
@@ -36,7 +36,7 @@ include_once XOOPS_ROOT_PATH . "/modules/system/constants.php";
 
 // check user/group
 $groups        = is_object($GLOBALS["xoopsUser"]) ? $GLOBALS["xoopsUser"]->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
-$gperm_handler =& xoops_gethandler('groupperm');
+$gperm_handler =& xoops_getHandler('groupperm');
 $admin         = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_SMILE, $groups);
 
 $op = '';
@@ -48,7 +48,7 @@ if (!empty($_GET['op'])) {
 
 $myts =& MyTextSanitizer::getInstance();
 
-if ($admin && $op == 'SmilesAdd') {
+if ($admin && $op === 'SmilesAdd') {
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header($current_file, 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
     }

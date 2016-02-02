@@ -522,6 +522,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
                 $this->insert($notification);
             }
         }
+        return null;
     }
 
     // TODO: this will be to provide a list of everything a particular
@@ -742,6 +743,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
                 $notification->notifyUser($template_dir, $template, $subject, $tags);
             }
         }
+        return null;
     }
 
     /**

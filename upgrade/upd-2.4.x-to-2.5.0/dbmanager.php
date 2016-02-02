@@ -28,13 +28,13 @@ include_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  * @package             upgrader
  */
-class db_manager
+class Db_manager
 {
     public $s_tables = array();
     public $f_tables = array();
     public $db;
 
-    public function db_manager()
+    public function __construct()
     {
         $this->db = XoopsDatabaseFactory::getDatabase();
         $this->db->setPrefix(XOOPS_DB_PREFIX);

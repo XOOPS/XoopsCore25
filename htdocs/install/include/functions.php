@@ -30,7 +30,7 @@ function install_acceptUser($hash = '')
     if ($hash_login != md5($user->getVar('pass') . XOOPS_DB_NAME . XOOPS_DB_PASS . XOOPS_DB_PREFIX)) {
         return false;
     }
-    $myts = MyTextsanitizer::getInstance();
+    $myts = MyTextSanitizer::getInstance();
     if (is_object($GLOBALS['xoops']) && method_exists($GLOBALS['xoops'], 'acceptUser')) {
         $res = $GLOBALS['xoops']->acceptUser($uname, true, $msg);
 

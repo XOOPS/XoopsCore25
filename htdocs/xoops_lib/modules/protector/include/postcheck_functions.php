@@ -178,4 +178,5 @@ function protector_postcommon()
     if ($_SERVER['SCRIPT_FILENAME'] == XOOPS_ROOT_PATH . '/register.php') {
         $protector->call_filter('postcommon_register');
     }
+    return null;
 }

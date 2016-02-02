@@ -272,6 +272,7 @@ class XoopsApi extends XoopsXmlRpcApi
                 }
             }
         }
+        return null;
     }
 
     /**
@@ -341,6 +342,7 @@ class XoopsApi extends XoopsXmlRpcApi
                 }
             }
         }
+        return null;
     }
 
     /**
@@ -376,5 +378,6 @@ class XoopsApi extends XoopsXmlRpcApi
                 }
             }
         }
+        return null;
     }
 }

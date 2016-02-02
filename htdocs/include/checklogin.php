@@ -46,7 +46,7 @@ if ($uname == '' || $pass == '') {
 }
 
 $member_handler =& xoops_getHandler('member');
-$myts           =& MyTextsanitizer::getInstance();
+$myts           =& MyTextSanitizer::getInstance();
 
 include_once $GLOBALS['xoops']->path('class/auth/authfactory.php');
 

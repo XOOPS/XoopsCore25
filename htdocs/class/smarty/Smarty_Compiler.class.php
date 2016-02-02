@@ -599,6 +599,7 @@ class Smarty_Compiler extends Smarty
                 }
 
         }
+        return null;
     }
 
     /**
@@ -2336,6 +2337,7 @@ class Smarty_Compiler extends Smarty
             $message = " expected {/$_open_tag} (opened line $_line_no).";
         }
         $this->_syntax_error("mismatched tag {/$close_tag}.$message", E_USER_ERROR, __FILE__, __LINE__);
+        return null;
     }
 }
 

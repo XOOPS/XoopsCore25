@@ -13,7 +13,7 @@
  * @author           XOOPS Team
  * @version          $Id: index.php 9043 2012-02-22 02:51:38Z beckmi $
  */
-class Upgrade_256 extends xoopsUpgrade
+class Upgrade_256 extends XoopsUpgrade
 {
     public $tasks = array(
         'com_user',

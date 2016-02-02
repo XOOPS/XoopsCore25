@@ -300,6 +300,7 @@ class XoopsCacheFile extends XoopsCacheEngine
         if (!$this->file->folder->inPath($this->file->pwd(), true)) {
             return false;
         }
+        return null;
     }
 
     /**

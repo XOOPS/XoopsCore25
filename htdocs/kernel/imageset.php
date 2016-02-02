@@ -30,10 +30,10 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * @author          Kazumi Ono  <onokazu@xoops.org>
  * @copyright   (c) 2000-2015 XOOPS Project - www.xoops.org
  */
-class XoopsImageset extends XoopsObject
+class XoopsImageSet extends XoopsObject
 {
     /**
-     * XoopsImageset constructor.
+     * XoopsImageSet constructor.
      */
     public function __construct()
     {
@@ -98,11 +98,11 @@ class XoopsImagesetHandler extends XoopsObjectHandler
      * Create a new {@link XoopsImageSet}
      *
      * @param  boolean $isNew Flag the object as "new"
-     * @return XoopsImageset
+     * @return XoopsImageSet
      **/
     public function &create($isNew = true)
     {
-        $imgset = new XoopsImageset();
+        $imgset = new XoopsImageSet();
         if ($isNew) {
             $imgset->setNew();
         }
@@ -116,7 +116,7 @@ class XoopsImagesetHandler extends XoopsObjectHandler
      * @param int $id ID
      *
      * @internal param bool $getbinary
-     * @return XoopsImageset {@link XoopsImageSet}, FALSE on fail
+     * @return XoopsImageSet {@link XoopsImageSet}, FALSE on fail
      */
     public function &get($id)
     {
@@ -129,7 +129,7 @@ class XoopsImagesetHandler extends XoopsObjectHandler
             }
             $numrows = $this->db->getRowsNum($result);
             if ($numrows == 1) {
-                $imgset = new XoopsImageset();
+                $imgset = new XoopsImageSet();
                 $imgset->assignVars($this->db->fetchArray($result));
             }
         }
@@ -149,7 +149,7 @@ class XoopsImagesetHandler extends XoopsObjectHandler
         /**
          * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
          */
-        if (!is_a($imgset, 'xoopsimageset')) {
+        if (!is_a($imgset, 'XoopsImageSet')) {
             return false;
         }
 
@@ -191,7 +191,7 @@ class XoopsImagesetHandler extends XoopsObjectHandler
         /**
          * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
          */
-        if (!is_a($imgset, 'xoopsimageset')) {
+        if (!is_a($imgset, 'XoopsImageSet')) {
             return false;
         }
         $sql = sprintf("DELETE FROM %s WHERE imgset_id = %u", $this->db->prefix('imgset'), $imgset->getVar('imgset_id'));
@@ -227,7 +227,7 @@ class XoopsImagesetHandler extends XoopsObjectHandler
             return $ret;
         }
         while ($myrow = $this->db->fetchArray($result)) {
-            $imgset = new XoopsImageset();
+            $imgset = new XoopsImageSet();
             $imgset->assignVars($myrow);
             if (!$id_as_key) {
                 $ret[] =& $imgset;

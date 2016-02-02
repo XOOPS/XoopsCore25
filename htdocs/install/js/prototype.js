@@ -5391,7 +5391,7 @@ Prototype.Selector = (function () {
                 return a.compareDocumentPosition ? -1 : 1;
             }
 
-            return a.compareDocumentPosition(b) & 4 ? -1 : 1;
+            return a.compareDocumentPosition(b) && 4 ? -1 : 1;
         };
 
     } else {

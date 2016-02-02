@@ -381,7 +381,7 @@ switch ($op) {
 
                 case 'line_break':
                     $myts =& MyTextSanitizer::getInstance();
-                    $form->insertBreak('<center>' . $title . '</center>', $myts->htmlspecialchars($config[$i]->getConfValueForOutput()));
+                    $form->insertBreak('<div style="text-align:center">' . $title . '</div>', $myts->htmlspecialchars($config[$i]->getConfValueForOutput()));
                     break;
 
                 case 'textbox':

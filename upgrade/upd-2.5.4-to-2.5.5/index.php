@@ -14,7 +14,7 @@
  * @author           trabis <lusopoemas@gmail.com>
  * @version          $Id: index.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-class Upgrade_255 extends xoopsUpgrade
+class Upgrade_255 extends XoopsUpgrade
 {
     public $tasks = array('keys', 'imptotal');
 
@@ -91,6 +91,7 @@ class Upgrade_255 extends xoopsUpgrade
 
             return ($length == 8) ? false : true;
         }
+        return null;
     }
 
     /**

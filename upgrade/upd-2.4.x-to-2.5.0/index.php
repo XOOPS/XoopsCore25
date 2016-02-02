@@ -22,7 +22,7 @@ require_once 'dbmanager.php';
 /**
  * Class upgrade_250
  */
-class Upgrade_250 extends xoopsUpgrade
+class Upgrade_250 extends XoopsUpgrade
 {
     public $tasks = array('config', 'templates');
 

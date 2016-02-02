@@ -21,7 +21,7 @@ class Upgrade_258 extends XoopsUpgrade
         'users_pass',
         'com_ip',
         'sess_ip',
-        'online_ip',
+        'online_ip'
     );
 
     /**

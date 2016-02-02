@@ -141,6 +141,7 @@ class XoopsLoad
         if (class_exists($class)) {
             return $class;
         }
+        return null;
     }
 
     /**

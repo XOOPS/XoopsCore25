@@ -88,5 +88,6 @@ class XoopsFormEditor extends XoopsFormTextArea
         if (is_object($this->editor)) {
             return $this->editor->render();
         }
+        return null;
     }
 }

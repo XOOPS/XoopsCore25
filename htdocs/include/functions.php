@@ -641,6 +641,7 @@ function xoops_getbanner()
 
         return $bannerobject;
     }
+    return null;
 }
 
 /**

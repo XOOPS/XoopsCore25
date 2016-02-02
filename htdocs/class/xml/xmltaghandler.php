@@ -9,11 +9,11 @@
  * <br>
  * @author Ken Egervari, Remi Michalski<br>
  *******************************************************************************/
-class xmltaghandler
+class XmlTagHandler
 {
     /****************************************************************************
      ****************************************************************************/
-    public function XmlTagHandler()
+    public function __construct()
     {
     }
 

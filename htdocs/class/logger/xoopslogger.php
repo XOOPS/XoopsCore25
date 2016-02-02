@@ -416,4 +416,5 @@ function XoopsErrorHandler_HandleError($errNo, $errStr, $errFile, $errLine, $err
     // XOOPS should always be STRICT compliant thus the above lines makes no sense and will be removed! -- Added by Taiwen Jiang
     $logger =& XoopsLogger::getInstance();
     $logger->handleError($errNo, $errStr, $errFile, $errLine, $errContext);
+    return null;
 }

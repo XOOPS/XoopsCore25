@@ -39,6 +39,9 @@ function altsys_include_mymenu()
     }
 }
 
+/**
+ * @param $type
+ */
 function altsys_include_language_file($type)
 {
     $mylang = $GLOBALS['xoopsConfig']['language'];
@@ -60,6 +63,9 @@ define('ALTSYS_CORE_TYPE_ORE', 4); // ORETEKI by marijuana
 define('ALTSYS_CORE_TYPE_X22', 8); // 2.2 from xoops.org
 define('ALTSYS_CORE_TYPE_XC21L', 16); // XOOPS Cube 2.1 Legacy
 
+/**
+ * @return int
+ */
 function altsys_get_core_type()
 {
     if (defined('XOOPS_ORETEKI')) {
@@ -80,19 +86,29 @@ function altsys_get_core_type()
     }
 }
 
+/**
+ * @param $mid
+ * @param $coretype
+ * @return null|string
+ */
 function altsys_get_link2modpreferences($mid, $coretype)
 {
     switch ($coretype) {
-        case ALTSYS_CORE_TYPE_X20 :
-        case ALTSYS_CORE_TYPE_X20S :
-        case ALTSYS_CORE_TYPE_ORE :
-        case ALTSYS_CORE_TYPE_X22 :
+        case ALTSYS_CORE_TYPE_X20:
+        case ALTSYS_CORE_TYPE_X20S:
+        case ALTSYS_CORE_TYPE_ORE:
+        case ALTSYS_CORE_TYPE_X22:
             return XOOPS_URL . '/modules/system/admin.php?fct=preferences&op=showmod&mod=' . $mid;
-        case ALTSYS_CORE_TYPE_XC21L :
+        case ALTSYS_CORE_TYPE_XC21L:
             return XOOPS_URL . '/modules/legacy/admin/index.php?action=PreferenceEdit&confmod_id=' . $mid;
     }
+
+    return null;
 }
 
+/**
+ * @param $tpl_id
+ */
 function altsys_template_touch($tpl_id)
 {
     if (altsys_get_core_type() == ALTSYS_CORE_TYPE_X20S) {
