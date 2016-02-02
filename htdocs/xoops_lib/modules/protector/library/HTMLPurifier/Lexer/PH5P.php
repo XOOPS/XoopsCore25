@@ -494,6 +494,7 @@ class HTML5
                 return substr($this->data, $s, $l);
             }
         }
+        return null;
     }
 
     private function characters($char_class, $start)
@@ -1524,7 +1525,7 @@ class HTML5
 
                     if (in_array($id, $this->entities)) {
                         if ($e_name[$c - 1] !== ';') {
-                            if ($c < $len && $e_name[$c] == ';') {
+                            if ($c < $len && $e_name[$c] === ';') {
                                 $this->char++; // consume extra semicolon
                             }
                         }
@@ -1725,6 +1726,7 @@ class HTML5TreeConstructer
                 return $this->trailingEndPhase($token);
                 break;
         }
+        return null;
     }
 
     private function initPhase($token)
@@ -1780,6 +1782,7 @@ class HTML5TreeConstructer
             $text = $this->dom->createTextNode($token['data']);
             $this->dom->appendChild($text);
         }
+        return null;
     }
 
     private function rootElementPhase($token)
@@ -1830,6 +1833,7 @@ class HTML5TreeConstructer
             $this->phase = self::MAIN_PHASE;
             return $this->mainPhase($token);
         }
+        return null;
     }
 
     private function mainPhase($token)
@@ -1911,6 +1915,7 @@ class HTML5TreeConstructer
                     break;
             }
         }
+        return null;
     }
 
     private function beforeHead($token)
@@ -1972,6 +1977,7 @@ class HTML5TreeConstructer
         } elseif ($token['type'] === HTML5::ENDTAG) {
             /* Parse error. Ignore the token. */
         }
+        return null;
     }
 
     private function inHead($token)
@@ -2107,6 +2113,7 @@ class HTML5TreeConstructer
             /* Then, reprocess the current token. */
             return $this->afterHead($token);
         }
+        return null;
     }
 
     private function afterHead($token)
@@ -2170,6 +2177,7 @@ class HTML5TreeConstructer
 
             return $this->inBody($token);
         }
+        return null;
     }
 
     private function inBody($token)
@@ -3310,6 +3318,7 @@ class HTML5TreeConstructer
                 }
                 break;
         }
+        return null;
     }
 
     private function inTable($token)
@@ -3522,6 +3531,7 @@ class HTML5TreeConstructer
 
             $this->inBody($token);
         }
+        return null;
     }
 
     private function inCaption($token)
@@ -3617,7 +3627,8 @@ class HTML5TreeConstructer
             /* Process the token as if the insertion mode was "in body". */
             $this->inBody($token);
         }
-    }
+
+        return null;}
 
     private function inColumnGroup($token)
     {
@@ -3679,6 +3690,7 @@ class HTML5TreeConstructer
 
             return $this->inTable($token);
         }
+        return null;
     }
 
     private function inTableBody($token)
@@ -3778,6 +3790,7 @@ class HTML5TreeConstructer
             /* Process the token as if the insertion mode was "in table". */
             $this->inTable($token);
         }
+        return null;
     }
 
     private function inRow($token)
@@ -3876,6 +3889,7 @@ class HTML5TreeConstructer
             /* Process the token as if the insertion mode was "in table". */
             $this->inTable($token);
         }
+        return null;
     }
 
     private function inCell($token)
@@ -4015,6 +4029,7 @@ class HTML5TreeConstructer
             /* Process the token as if the insertion mode was "in body". */
             $this->inBody($token);
         }
+        return null;
     }
 
     private function inSelect($token)
@@ -4237,7 +4252,8 @@ class HTML5TreeConstructer
             $this->mode = self::IN_BODY;
             return $this->inBody($token);
         }
-    }
+
+        return null;}
 
     private function inFrameset($token)
     {
@@ -4388,7 +4404,8 @@ class HTML5TreeConstructer
         } elseif ($token['type'] === HTML5::EOF) {
             /* OMG DONE!! */
         }
-    }
+
+        return null;}
 
     private function insertElement($token, $append = true, $check = false)
     {
@@ -4520,6 +4537,7 @@ class HTML5TreeConstructer
             will always terminate in the previous step if the top of the stack
             is reached.) */
         }
+        return null;
     }
 
     private function reconstructActiveFormattingElements()
@@ -4592,6 +4610,7 @@ class HTML5TreeConstructer
                 break;
             }
         }
+        return null;
     }
 
     private function clearTheActiveFormattingElementsUpToTheLastMarker()

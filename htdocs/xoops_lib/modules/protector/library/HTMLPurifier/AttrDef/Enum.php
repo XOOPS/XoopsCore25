@@ -59,7 +59,7 @@ class HTMLPurifier_AttrDef_Enum extends HTMLPurifier_AttrDef
      */
     public function make($string)
     {
-        if (strlen($string) > 2 && $string[0] == 's' && $string[1] == ':') {
+        if (strlen($string) > 2 && $string[0] === 's' && $string[1] === ':') {
             $string = substr($string, 2);
             $sensitive = true;
         } else {

@@ -184,7 +184,7 @@ class HTMLPurifier_Config
                 'Cannot retrieve value of undefined directive ' . htmlspecialchars($key),
                 E_USER_WARNING
             );
-            return;
+            return null;
         }
         if (isset($this->def->info[$key]->isAlias)) {
             $d = $this->def->info[$key];
@@ -192,7 +192,7 @@ class HTMLPurifier_Config
                 'Cannot get value from aliased directive, use real name ' . $d->key,
                 E_USER_ERROR
             );
-            return;
+            return null;
         }
         if ($this->lock) {
             list($ns) = explode('.', $key);
@@ -204,7 +204,7 @@ class HTMLPurifier_Config
                     'is accessing directives that are not within its namespace',
                     E_USER_ERROR
                 );
-                return;
+                return null;
             }
         }
         return $this->plist->get($key);
@@ -229,7 +229,7 @@ class HTMLPurifier_Config
                 htmlspecialchars($namespace),
                 E_USER_WARNING
             );
-            return;
+            return null;
         }
         return $full[$namespace];
     }
@@ -373,7 +373,7 @@ class HTMLPurifier_Config
         // reset definitions if the directives they depend on changed
         // this is a very costly process, so it's discouraged
         // with finalization
-        if ($namespace == 'HTML' || $namespace == 'CSS' || $namespace == 'URI') {
+        if ($namespace === 'HTML' || $namespace === 'CSS' || $namespace === 'URI') {
             $this->definitions[$namespace] = null;
         }
 
@@ -626,11 +626,11 @@ class HTMLPurifier_Config
     private function initDefinition($type)
     {
         // quick checks failed, let's create the object
-        if ($type == 'HTML') {
+        if ($type === 'HTML') {
             $def = new HTMLPurifier_HTMLDefinition();
-        } elseif ($type == 'CSS') {
+        } elseif ($type === 'CSS') {
             $def = new HTMLPurifier_CSSDefinition();
-        } elseif ($type == 'URI') {
+        } elseif ($type === 'URI') {
             $def = new HTMLPurifier_URIDefinition();
         } else {
             throw new HTMLPurifier_Exception(
@@ -745,7 +745,7 @@ class HTMLPurifier_Config
             if (isset($def->isAlias)) {
                 continue;
             }
-            if ($directive == 'DefinitionID' || $directive == 'DefinitionRev') {
+            if ($directive === 'DefinitionID' || $directive === 'DefinitionRev') {
                 continue;
             }
             $ret[] = array($ns, $directive);

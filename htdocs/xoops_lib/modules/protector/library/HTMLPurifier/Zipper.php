@@ -138,6 +138,7 @@ class HTMLPurifier_Zipper
      * *unchanged!*
      *
      * @param Current contents of hole.
+     * @return array
      */
     public function splice($t, $delete, $replacement) {
         // delete

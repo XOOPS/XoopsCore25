@@ -11,7 +11,7 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
     public function add($def, $config)
     {
         if (!$this->checkDefType($def)) {
-            return;
+            return null;
         }
         $file = $this->generateFilePath($config);
         if (file_exists($file)) {
@@ -31,7 +31,7 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
     public function set($def, $config)
     {
         if (!$this->checkDefType($def)) {
-            return;
+            return null;
         }
         $file = $this->generateFilePath($config);
         if (!$this->_prepareDir($config)) {
@@ -48,7 +48,7 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
     public function replace($def, $config)
     {
         if (!$this->checkDefType($def)) {
-            return;
+            return null;
         }
         $file = $this->generateFilePath($config);
         if (!file_exists($file)) {
@@ -106,6 +106,7 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
             }
             unlink($dir . '/' . $filename);
         }
+        return null;
     }
 
     /**
@@ -131,6 +132,7 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
                 unlink($dir . '/' . $filename);
             }
         }
+        return null;
     }
 
     /**
