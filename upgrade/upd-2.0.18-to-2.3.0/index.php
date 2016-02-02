@@ -28,7 +28,7 @@ include_once __DIR__ . "/pathcontroller.php";
 /**
  * Class upgrade_230
  */
-class Upgrade_230 extends xoopsUpgrade
+class Upgrade_230 extends XoopsUpgrade
 {
     public $usedFiles = array('mainfile.php');
     public $tasks     = array('config', 'cache', 'path', 'db', 'bmlink');
@@ -272,6 +272,7 @@ class Upgrade_230 extends xoopsUpgrade
             //$GLOBALS["xoopsDB"]->queryF( "ALTER TABLE `{$table}` CONVERT TO CHARACTER SET " . $GLOBALS["xoopsDB"]->quote($charset) . " COLLATE " . $GLOBALS["xoopsDB"]->quote($collation) );
         }
         $this->convert_table($tables, $charset, $collation);
+        return null;
     }
 
     // Some code not ready to use

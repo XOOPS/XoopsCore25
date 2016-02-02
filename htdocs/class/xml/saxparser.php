@@ -12,7 +12,7 @@
  * <br>
  * @author Ken Egervari<br>
  *******************************************************************************/
-class saxparser
+class SaxParser
 {
     public $level;
     public $parser;
@@ -39,7 +39,7 @@ class saxparser
      ***************************************************************************
      * @param $input
      */
-    public function SaxParser(&$input)
+    public function __construct(&$input)
     {
         $this->level  = 0;
         $this->parser = xml_parser_create('UTF-8');
@@ -133,7 +133,7 @@ class saxparser
     ---------------------------------------------------------------------------*/
 
     /****************************************************************************
-     * @returns void
+
      ****************************************************************************/
     public function parse()
     {

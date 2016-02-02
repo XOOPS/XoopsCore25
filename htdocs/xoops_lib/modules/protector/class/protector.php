@@ -1277,7 +1277,7 @@ class Protector
         }
         // delayed insert
         $xoopsDB->queryF($sql4insertlog);
-        return;
+        return null;
     }
 
     /**

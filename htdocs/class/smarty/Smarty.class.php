@@ -1982,4 +1982,4 @@ class Smarty
     /**#@-*/
 }
 
-/* vim: set expandtab: */;
+/* vim: set expandtab: */

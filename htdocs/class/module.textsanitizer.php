@@ -423,7 +423,7 @@ class MyTextSanitizer
         $patterns[]     = "/\[i](.*)\[\/i\]/sU";
         $replacements[] = '<em>\\1</em>';
         $patterns[]     = "/\[u](.*)\[\/u\]/sU";
-        $replacements[] = '<u>\\1</u>';
+        $replacements[] = '<span style="text-decoration: underline;">\\1</span>';
         $patterns[]     = "/\[d](.*)\[\/d\]/sU";
         $replacements[] = '<del>\\1</del>';
         $patterns[]     = "/\[center](.*)\[\/center\]/sU";
@@ -715,6 +715,7 @@ class MyTextSanitizer
         foreach (array_keys($extensions) as $extension) {
             $this->executeExtension($extension);
         }
+        return null;
     }
 
     /**

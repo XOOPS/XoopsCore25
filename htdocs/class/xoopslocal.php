@@ -255,5 +255,6 @@ class XoopsLocalAbstract
         if (function_exists($name)) {
             return call_user_func_array($name, $args);
         }
+        return null;
     }
 }

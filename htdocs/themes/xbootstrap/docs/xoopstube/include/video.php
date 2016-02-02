@@ -91,7 +91,7 @@ function xtube_videothumb($vidid, $title, $source, $picurl, $screenshot, $width 
 
         // MetaCafe
         case 1:
-            list($metaclip) = split('[/]', $vidid);
+            list($metaclip) = preg_split('[/]', $vidid);
             $videothumb['metathumb'] = $metaclip;
             $thumb                   = '<img src="http://www.metacafe.com/thumb/' . $videothumb['metathumb'] . '.jpg" title="' . $title . '" alt="' . $title . '" width="' . $width . '" height="' . $height . '" style="padding: 0px; border-style: none;" />';
             break;

@@ -3,7 +3,7 @@
 /**
  * Class upgrade_2017
  */
-class Upgrade_2017 extends xoopsUpgrade
+class Upgrade_2017 extends XoopsUpgrade
 {
     /**
      * @return bool

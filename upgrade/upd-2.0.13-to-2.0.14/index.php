@@ -3,7 +3,7 @@
 /**
  * Class upgrade_2014
  */
-class Upgrade_2014 extends xoopsUpgrade
+class Upgrade_2014 extends XoopsUpgrade
 {
     public $usedFiles = array('mainfile.php');
 

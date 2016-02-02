@@ -275,6 +275,7 @@ class XoopsTopic
         if (isset($this->prefix)) {
             return $this->prefix;
         }
+        return null;
     }
 
     /**

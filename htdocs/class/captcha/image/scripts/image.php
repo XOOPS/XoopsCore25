@@ -406,6 +406,7 @@ class XoopsCaptchaImageHandler
         } else {
             return $image;
         }
+        return null;
     }
 }
 

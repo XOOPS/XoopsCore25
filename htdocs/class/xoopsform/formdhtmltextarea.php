@@ -219,7 +219,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea
         $fontStr = "<script type=\"text/javascript\">" . "var _editor_dialog = ''" . "+ '<select id=\'{$textarea_id}Size\' onchange=\'xoopsSetElementAttribute(\"size\", this.options[this.selectedIndex].value, \"{$textarea_id}\", \"{$hiddentext}\");\'>'" . "+ '<option value=\'SIZE\'>" . _SIZE . "</option>'";
         foreach ($GLOBALS["formtextdhtml_sizes"] as $_val => $_name) {
             $fontStr .= " + '<option value=\'{$_val}\'>{$_name}</option>'";
-        };
+        }
         $fontStr .= " + '</select> '";
         $fontStr .= "+ '<select id=\'{$textarea_id}Font\' onchange=\'xoopsSetElementAttribute(\"font\", this.options[this.selectedIndex].value, \"{$textarea_id}\", \"{$hiddentext}\");\'>'" . "+ '<option value=\'FONT\'>" . _FONT . "</option>'";
         $fontarray = !empty($GLOBALS["formtextdhtml_fonts"]) ? $GLOBALS["formtextdhtml_fonts"] : array(
@@ -232,7 +232,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea
             "Haettenschweiler");
         foreach ($fontarray as $font) {
             $fontStr .= " + '<option value=\'{$font}\'>{$font}</option>'";
-        };
+        }
         $fontStr .= " + '</select> '";
         $fontStr .= "+ '<select id=\'{$textarea_id}Color\' onchange=\'xoopsSetElementAttribute(\"color\", this.options[this.selectedIndex].value, \"{$textarea_id}\", \"{$hiddentext}\");\'>'" . "+ '<option value=\'COLOR\'>" . _COLOR . "</option>';" . "var _color_array = new Array('00', '33', '66', '99', 'CC', 'FF');
             for (var i = 0; i < _color_array.length; i ++) {

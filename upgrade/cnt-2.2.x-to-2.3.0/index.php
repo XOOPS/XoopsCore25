@@ -17,7 +17,7 @@
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @version             $Id: index.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-class Upgrade_220 extends xoopsUpgrade
+class Upgrade_220 extends XoopsUpgrade
 {
     public $tasks = array('config', 'profile', 'block'/*, 'pm', 'module'*/);
 

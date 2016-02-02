@@ -116,6 +116,7 @@ class XoopsFileHandler
                 return false;
             }
         }
+        return null;
     }
 
     /**

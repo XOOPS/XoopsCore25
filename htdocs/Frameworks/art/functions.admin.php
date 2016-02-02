@@ -78,5 +78,6 @@ if (!defined("FRAMEWORKS_ART_FUNCTIONS_ADMIN")):
     <br style="clear:both;" />';
 
         echo $adminmenu_text;
+        return null;
     }
 endif;

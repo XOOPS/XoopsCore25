@@ -679,6 +679,7 @@ class xos_opal_Theme
             return $this->addMeta('http', $name, $value);
         }
         unset($this->metas['http'][$name]);
+        return null;
     }
 
     /**

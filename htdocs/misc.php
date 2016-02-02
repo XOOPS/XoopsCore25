@@ -49,7 +49,7 @@ if ($action === "showpopups") {
             <table width="100%" class="outer">
             <tr><th colspan="3">' . _MSC_SMILIES . '</th></tr>
             <tr class="head"><td>' . _MSC_CODE . '</td><td>' . _MSC_EMOTION . '</td><td>' . _IMAGE . '</td></tr>';
-                $myts =& MyTextsanitizer::getInstance();
+                $myts =& MyTextSanitizer::getInstance();
                 if ($smiles = $myts->getSmileys()) {
                     $rcolor = 'even';
                     foreach ($smiles as $key => $smile) {
@@ -135,7 +135,7 @@ if ($action === "showpopups") {
                 </table></form>\n";
                 $closebutton = 0;
             } elseif ($_POST['op'] === "sendsite") {
-                $myts =& MyTextsanitizer::getInstance();
+                $myts =& MyTextSanitizer::getInstance();
                 if ($xoopsUser) {
                     $ymail = $xoopsUser->getVar("email");
                 } else {

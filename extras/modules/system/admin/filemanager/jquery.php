@@ -397,6 +397,10 @@ switch ($op) {
     case 'filemanager_delete_directory':
         $path = system_CleanVars($_REQUEST, 'path', '', 'string');
 
+        /**
+         * @param $dossier
+         * @return bool|null
+         */
         function deltree($dossier)
         {
             if (($dir = opendir($dossier)) === false) {

@@ -38,7 +38,7 @@ class PathStuffController
     public $permErrors = array(
         'data' => null);
 
-    public function PathStuffController()
+    public function __construct()
     {
         if (isset($_SESSION['settings']['VAR_PATH'])) {
             foreach ($this->path_lookup as $req => $sess) {
@@ -84,6 +84,7 @@ class PathStuffController
                 return false;
             }
         }
+        return null;
     }
 
     public function readRequest()
@@ -159,6 +160,7 @@ class PathStuffController
      * @param $parent
      * @param $path
      * @param $error
+     * @return null
      */
     public function setPermission($parent, $path, &$error)
     {
