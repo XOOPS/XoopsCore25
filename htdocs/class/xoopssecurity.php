@@ -9,11 +9,14 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package             kernel
- * @since               2.0.0
- * @version             $Id: xoopssecurity.php 13090 2015-06-16 20:44:29Z beckmi $
+ * @author    Kazumi Ono <onokazu@xoops.org>
+ * @author    Jan Pedersen <mithrandir@xoops.org>
+ * @author    John Neill <catzwolf@xoops.org>
+ * @copyright (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @license   GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @package   kernel
+ * @since     2.0.0
+ * @version   $Id: xoopssecurity.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
@@ -26,19 +29,11 @@ class XoopsSecurity
     public $errors = array();
 
     /**
-     * Constructor
-     *
-     **/
-    public function __construct()
-    {
-    }
-
-    /**
      * Check if there is a valid token in $_REQUEST[$name . '_REQUEST'] - can be expanded for more wide use, later (Mith)
      *
-     * @param bool        $clearIfValid whether to clear the token after validation
-     * @param bool|string $token        token to validate
-     * @param string      $name         session name
+     * @param bool         $clearIfValid whether to clear the token after validation
+     * @param string|false $token        token to validate
+     * @param string       $name         name of session variable
      *
      * @return bool
      */
@@ -51,7 +46,7 @@ class XoopsSecurity
      * Create a token in the user's session
      *
      * @param int    $timeout time in seconds the token should be valid
-     * @param string $name    session name
+     * @param string $name    name of session variable
      *
      * @return string token value
      */
@@ -78,9 +73,9 @@ class XoopsSecurity
     /**
      * Check if a token is valid. If no token is specified, $_REQUEST[$name . '_REQUEST'] is checked
      *
-     * @param bool|string $token        token to validate
-     * @param bool        $clearIfValid whether to clear the token value if valid
-     * @param string      $name         session name to validate
+     * @param string|false $token        token to validate
+     * @param bool         $clearIfValid whether to clear the token value if valid
+     * @param string       $name         session name to validate
      *
      * @return bool
      */
@@ -125,7 +120,9 @@ class XoopsSecurity
      * Clear all token values from user's session
      *
      * @param string $name session name
-     **/
+     *
+     * @return void
+     */
     public function clearTokens($name = 'XOOPS_TOKEN')
     {
         $_SESSION[$name . '_SESSION'] = array();
@@ -134,10 +131,10 @@ class XoopsSecurity
     /**
      * Check whether a token value is expired or not
      *
-     * @param string $token
+     * @param string $token token
      *
      * @return bool
-     **/
+     */
     public function filterToken($token)
     {
         return (!empty($token['expire']) && $token['expire'] >= time());
@@ -149,13 +146,12 @@ class XoopsSecurity
      * @param string $name session name
      *
      * @return void
-     **/
+     */
     public function garbageCollection($name = 'XOOPS_TOKEN')
     {
-        if (isset($_SESSION[$name . '_SESSION']) && count($_SESSION[$name . '_SESSION']) > 0) {
-            $_SESSION[$name . '_SESSION'] = array_filter($_SESSION[$name . '_SESSION'], array(
-                $this,
-                'filterToken'));
+        $sessionName = $name . '_SESSION';
+        if (!empty($_SESSION[$sessionName]) && is_array($_SESSION[$sessionName])) {
+            $_SESSION[$sessionName] = array_filter($_SESSION[$sessionName], array($this, 'filterToken'));
         }
     }
 
@@ -165,7 +161,7 @@ class XoopsSecurity
      * @param int $docheck 0 to not check the referer (used with XML-RPC), 1 to actively check it
      *
      * @return bool
-     **/
+     */
     public function checkReferer($docheck = 1)
     {
         $ref = xoops_getenv('HTTP_REFERER');
@@ -178,7 +174,6 @@ class XoopsSecurity
         if (strpos($ref, XOOPS_URL) !== 0) {
             return false;
         }
-
         return true;
     }
 
@@ -228,7 +223,7 @@ class XoopsSecurity
      * Should be changed to return bool and let the action be up to the calling script
      *
      * @return void
-     **/
+     */
     public function checkBadips()
     {
         global $xoopsConfig;
@@ -245,7 +240,7 @@ class XoopsSecurity
     /**
      * Get the HTML code for a XoopsFormHiddenToken object - used in forms that do not use XoopsForm elements
      *
-     * @param string $name
+     * @param string $name session token name
      *
      * @return string
      */
@@ -260,8 +255,10 @@ class XoopsSecurity
     /**
      * Add an error
      *
-     * @param string $error
-     **/
+     * @param string $error message
+     *
+     * @return void
+     */
     public function setErrors($error)
     {
         $this->errors[] = trim($error);

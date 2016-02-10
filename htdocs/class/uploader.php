@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
  * @author              Kazumi Ono (http://www.myweb.ne.jp/, http://jp.xoops.org/)
@@ -197,7 +197,7 @@ class XoopsMediaUploader
             $index           = (int)($index);
             $this->mediaName = (get_magic_quotes_gpc()) ? stripslashes($_FILES[$media_name]['name'][$index]) : $_FILES[$media_name]['name'][$index];
             if ($this->randomFilename) {
-                $unique          = uniqid(time(), true);
+                $unique          = uniqid();
                 $this->mediaName = '' . $unique . '--' . $this->mediaName;
             }
             $this->mediaType    = $_FILES[$media_name]['type'][$index];
@@ -208,7 +208,7 @@ class XoopsMediaUploader
             $media_name      =& $_FILES[$media_name];
             $this->mediaName = (get_magic_quotes_gpc()) ? stripslashes($media_name['name']) : $media_name['name'];
             if ($this->randomFilename) {
-                $unique          = uniqid(time(), true);
+                $unique          = uniqid();
                 $this->mediaName = '' . $unique . '--' . $this->mediaName;
             }
             $this->mediaType    = $media_name['type'];
@@ -392,7 +392,7 @@ class XoopsMediaUploader
         if (isset($this->targetFileName)) {
             $this->savedFileName = $this->targetFileName;
         } elseif (isset($this->prefix)) {
-            $this->savedFileName = uniqid($this->prefix, true) . '.' . strtolower($matched[1]);
+            $this->savedFileName = uniqid($this->prefix) . '.' . strtolower($matched[1]);
         } else {
             $this->savedFileName = strtolower($this->mediaName);
         }

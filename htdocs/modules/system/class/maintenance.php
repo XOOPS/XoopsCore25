@@ -221,7 +221,7 @@ class SystemMaintenance
         $ret    = array();
         $ret[0] = "# \n";
         $ret[0] .= "# Dump SQL, Generate by Xoops \n";
-        $ret[0] .= "# Date : " . date('d-m-Y � H:i') . " \n";
+        $ret[0] .= "# Date : " . date('d-m-Y - H:i') . " \n";
         $ret[1]      = '<table class="outer"><tr><th width="30%">' . _AM_SYSTEM_MAINTENANCE_DUMP_TABLES . '</th><th width="35%">' . _AM_SYSTEM_MAINTENANCE_DUMP_STRUCTURES . '</th><th  width="35%">' . _AM_SYSTEM_MAINTENANCE_DUMP_NB_RECORDS . '</th></tr>';
         $class       = 'odd';
         $tablesCount = count($tables);
@@ -250,7 +250,7 @@ class SystemMaintenance
         $ret    = array();
         $ret[0] = "# \n";
         $ret[0] .= "# Dump SQL, Generate by Xoops \n";
-        $ret[0] .= "# Date : " . date('d-m-Y � H:i') . " \n";
+        $ret[0] .= "# Date : " . date('d-m-Y - H:i') . " \n";
         $ret[0] .= "# \n\n";
         $ret[1]       = '<table class="outer"><tr><th width="30%">' . _AM_SYSTEM_MAINTENANCE_DUMP_TABLES . '</th><th width="35%">' . _AM_SYSTEM_MAINTENANCE_DUMP_STRUCTURES . '</th><th  width="35%">' . _AM_SYSTEM_MAINTENANCE_DUMP_NB_RECORDS . '</th></tr>';
         $class        = 'odd';
