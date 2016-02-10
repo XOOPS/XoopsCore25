@@ -26,7 +26,7 @@ if (!is_object($xoopsUser)) {
     $errormessage = _PM_SORRY . "<br />" . _PM_PLZREG . "";
     redirect_header("user.php", 2, $errormessage);
 } else {
-    $pm_handler =& xoops_getHandler('privmessage');
+    $pm_handler = xoops_getHandler('privmessage');
     if (isset($_POST['delete_messages']) && (isset($_POST['msg_id']) || isset($_POST['msg_ids']))) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             echo implode('<br />', $GLOBALS['xoopsSecurity']->getErrors());

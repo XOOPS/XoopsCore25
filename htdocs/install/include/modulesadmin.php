@@ -25,7 +25,7 @@ function xoops_module_install($dirname)
     $dirname = trim($dirname);
     $db =& $GLOBALS["xoopsDB"];
     $reservedTables = array('avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config', 'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset', 'imgset_tplset_link', 'imgsetimg', 'groups','groups_users_link','group_permission', 'online', 'bannerclient', 'banner', 'bannerfinish', 'priv_msgs', 'ranks', 'session', 'smiles', 'users', 'newblocks', 'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications', 'banner', 'bannerclient', 'bannerfinish');
-    $module_handler =& xoops_getHandler('module');
+    $module_handler = xoops_getHandler('module');
     if ($module_handler->getCount(new Criteria('dirname', $dirname)) == 0) {
         $module =& $module_handler->create();
         $module->loadInfoAsVar($dirname);
@@ -141,7 +141,7 @@ function xoops_module_install($dirname)
                 $newmid = $module->getVar('mid');
                 unset($created_tables);
                 $msgs[] = "<p>"._MD_AM_INSERT_DATA_DONE. sprintf(_MD_AM_MODULEID, "<strong>".$newmid."</strong>");
-                $tplfile_handler =& xoops_getHandler('tplfile');
+                $tplfile_handler = xoops_getHandler('tplfile');
                 $templates = $module->getInfo('templates');
                 if ($templates != false) {
                     $msgs[] = _MD_AM_TEMPLATES_ADD;
@@ -291,7 +291,7 @@ function xoops_module_install($dirname)
 
                 if ($configs != false) {
                     $msgs[] = _MD_AM_MODULE_DATA_ADD;
-                    $config_handler =& xoops_getHandler('config');
+                    $config_handler = xoops_getHandler('config');
                     $order = 0;
                     foreach ($configs as $config) {
                         $confobj =& $config_handler->createConfig();
@@ -335,7 +335,7 @@ function xoops_module_install($dirname)
             // retrieve all block ids for this module
             $blocks = XoopsBlock::getByModule($newmid, false);
             $msgs[] = _MD_AM_GROUP_SETTINGS_ADD;
-            $gperm_handler =& xoops_getHandler('groupperm');
+            $gperm_handler = xoops_getHandler('groupperm');
             foreach ($groups as $mygroup) {
                 if ($gperm_handler->checkRight('module_admin', 0, $mygroup)) {
                     $mperm =& $gperm_handler->create();

@@ -48,7 +48,7 @@ class XoopsGuiThadmin extends /* implements */
      */
     public function validate()
     {
-        $module_handler =& xoops_getHandler("module");
+        $module_handler = xoops_getHandler("module");
         if ($admin_module = $module_handler->getByDirname("thadmin")) {
             if ($admin_module->getVar("isactive")) {
                 return true;

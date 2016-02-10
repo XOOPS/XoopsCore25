@@ -24,7 +24,7 @@ $indexAdmin = new ModuleAdmin();
 echo $indexAdmin->addNavigation('prune.php');
 
 $op         = isset($_REQUEST['op']) ? $_REQUEST['op'] : "form";
-$pm_handler =& xoops_getModuleHandler('message');
+$pm_handler = xoops_getModuleHandler('message');
 
 switch ($op) {
     default:

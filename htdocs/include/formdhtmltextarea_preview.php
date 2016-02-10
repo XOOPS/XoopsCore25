@@ -20,7 +20,7 @@
 include_once dirname(__DIR__) . '/mainfile.php';
 
 $xoopsLogger->activated = false;
-$myts                   =& MyTextSanitizer::getInstance();
+$myts                   = MyTextSanitizer::getInstance();
 
 $content = $myts->stripSlashesGPC($_POST['text']);
 

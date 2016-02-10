@@ -25,7 +25,7 @@ xoops_loadLanguage('pmsg');
 if (!is_object($xoopsUser)) {
     redirect_header("user.php", 0);
 } else {
-    $pm_handler =& xoops_getHandler('privmessage');
+    $pm_handler = xoops_getHandler('privmessage');
     if (!empty($_POST['delete'])) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             echo implode('<br />', $GLOBALS['xoopsSecurity']->getErrors());

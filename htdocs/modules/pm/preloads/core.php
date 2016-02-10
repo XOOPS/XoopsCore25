@@ -60,6 +60,6 @@ class PmCorePreload extends XoopsPreloadItem
      */
     public function eventCoreClassSmartyXoops_pluginsXoinboxcount($args)
     {
-        $args[0] =& xoops_getModuleHandler('message', 'pm');
+        $args[0] = xoops_getModuleHandler('message', 'pm');
     }
 }

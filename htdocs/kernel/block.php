@@ -61,7 +61,7 @@ class XoopsBlock extends XoopsObject
             if (is_array($id)) {
                 $this->assignVars($id);
             } else {
-                $blkhandler =& xoops_getHandler('block');
+                $blkhandler = xoops_getHandler('block');
                 $obj        =& $blkhandler->get($id);
                 foreach (array_keys($obj->getVars()) as $i) {
                     $this->assignVar($i, $obj->getVar($i, 'n'));
@@ -308,12 +308,12 @@ class XoopsBlock extends XoopsObject
 
                     return str_replace('{X_SITEURL}', XOOPS_URL . '/', $content);
                 } elseif ($c_type === 'S') {
-                    $myts    =& MyTextSanitizer::getInstance();
+                    $myts    = MyTextSanitizer::getInstance();
                     $content = str_replace('{X_SITEURL}', XOOPS_URL . '/', $this->getVar('content', 'n'));
 
                     return $myts->displayTarea($content, 0, 1);
                 } else {
-                    $myts    =& MyTextSanitizer::getInstance();
+                    $myts    = MyTextSanitizer::getInstance();
                     $content = str_replace('{X_SITEURL}', XOOPS_URL . '/', $this->getVar('content', 'n'));
 
                     return $myts->displayTarea($content, 0, 0);

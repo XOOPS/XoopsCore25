@@ -70,7 +70,7 @@ include_once $GLOBALS['xoops']->path('/class/xoopsform/grouppermform.php');
 $form = new XoopsGroupPermForm($title_of_form, $module_id, $perm_name, $perm_desc, 'admin/permissions.php', $anonymous);
 
 if ($op === 'access') {
-    $member_handler =& xoops_getHandler('member');
+    $member_handler = xoops_getHandler('member');
     $glist          = $member_handler->getGroupList();
     foreach (array_keys($glist) as $i) {
         if ($i != XOOPS_GROUP_ANONYMOUS) {
@@ -78,7 +78,7 @@ if ($op === 'access') {
         }
     }
 } else {
-    $profile_handler =& xoops_getModuleHandler('profile');
+    $profile_handler = xoops_getModuleHandler('profile');
     $fields          = $profile_handler->loadFields();
 
     if ($op !== 'search') {

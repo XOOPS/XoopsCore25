@@ -144,7 +144,7 @@ class XoopsModelRead extends XoopsModelAbstract
             return $ret;
         }
 
-        $myts =& MyTextSanitizer::getInstance();
+        $myts = MyTextSanitizer::getInstance();
         while ($myrow = $this->handler->db->fetchArray($result)) {
             // identifiers should be textboxes, so sanitize them like that
             $ret[$myrow[$this->handler->keyName]] = empty($this->handler->identifierName) ? 1 : $myts->htmlSpecialChars($myrow[$this->handler->identifierName]);

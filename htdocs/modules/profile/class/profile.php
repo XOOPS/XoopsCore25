@@ -72,7 +72,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
     public function __construct(XoopsDatabase $db)
     {
         parent::__construct($db, "profile_profile", 'profileprofile', "profile_id");
-        $this->_fHandler =& xoops_getModuleHandler('field', 'profile');
+        $this->_fHandler = xoops_getModuleHandler('field', 'profile');
     }
 
     /**
@@ -320,7 +320,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
         if (!$result) {
             return array(array(), array(), 0);
         }
-        $user_handler =& xoops_getHandler('user');
+        $user_handler = xoops_getHandler('user');
         $uservars     = $this->getUserVars();
         $users        = array();
         $profiles     = array();

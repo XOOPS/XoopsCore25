@@ -63,7 +63,7 @@ class SystemBanner extends XoopsObject
 
         $form = new XoopsThemeForm($title, 'form', $action, 'post', true);
 
-        $banner_client_Handler =& xoops_getModuleHandler('bannerclient', 'system');
+        $banner_client_Handler = xoops_getModuleHandler('bannerclient', 'system');
         $client_select         = new XoopsFormSelect(_AM_SYSTEM_BANNERS_CLINAMET, 'cid', $this->getVar('cid'));
         $client_select->addOptionArray($banner_client_Handler->getList());
         $form->addElement($client_select, true);

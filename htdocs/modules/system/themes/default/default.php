@@ -142,7 +142,7 @@ class XoopsGuiDefault extends XoopsSystemGui
         $tpl->assign('moddir', $moddir);
 
         // add MODULES  Menu items
-        $module_handler =& xoops_getHandler('module');
+        $module_handler = xoops_getHandler('module');
         $criteria       = new CriteriaCompo();
         $criteria->add(new Criteria('hasadmin', 1));
         $criteria->add(new Criteria('isactive', 1));
@@ -150,7 +150,7 @@ class XoopsGuiDefault extends XoopsSystemGui
         $mods = $module_handler->getObjects($criteria);
 
         $menu               = array();
-        $moduleperm_handler =& xoops_getHandler('groupperm');
+        $moduleperm_handler = xoops_getHandler('groupperm');
         foreach ($mods as $mod) {
             $rtn        = array();
             $modOptions = array();                                                         //add for sub menus

@@ -28,7 +28,7 @@ include __DIR__ . '/mainfile.php';
 
 xoops_loadLanguage('search');
 
-$config_handler    =& xoops_getHandler('config');
+$config_handler    = xoops_getHandler('config');
 $xoopsConfigSearch = $config_handler->getConfigsByCat(XOOPS_CONF_SEARCH);
 
 if ($xoopsConfigSearch['enable_search'] != 1) {
@@ -87,7 +87,7 @@ if ($action === "results") {
 }
 
 $groups            = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
-$gperm_handler     =& xoops_getHandler('groupperm');
+$gperm_handler     = xoops_getHandler('groupperm');
 $available_modules = $gperm_handler->getItemIds('module_read', $groups);
 if ($action === 'search') {
     include $GLOBALS['xoops']->path('header.php');
@@ -100,7 +100,7 @@ if ($andor !== "OR" && $andor !== "exact" && $andor !== "AND") {
     $andor = "AND";
 }
 
-$myts =& MyTextSanitizer::getInstance();
+$myts = MyTextSanitizer::getInstance();
 if ($action !== 'showallbyuser') {
     if ($andor !== "exact") {
         $ignored_queries = array(); // holds kewords that are shorter than allowed minmum length
@@ -126,7 +126,7 @@ if ($action !== 'showallbyuser') {
 }
 switch ($action) {
     case "results":
-        $module_handler =& xoops_getHandler('module');
+        $module_handler = xoops_getHandler('module');
         $criteria       = new CriteriaCompo(new Criteria('hassearch', 1));
         $criteria->add(new Criteria('isactive', 1));
         $criteria->add(new Criteria('mid', "(" . implode(',', $available_modules) . ")", 'IN'));
@@ -203,7 +203,7 @@ switch ($action) {
     case "showall":
     case 'showallbyuser':
         include $GLOBALS['xoops']->path('header.php');
-        $module_handler =& xoops_getHandler('module');
+        $module_handler = xoops_getHandler('module');
         $module         =& $module_handler->get($mid);
         $results        = $module->search($queries, $andor, 20, $start, $uid);
         $count          = count($results);

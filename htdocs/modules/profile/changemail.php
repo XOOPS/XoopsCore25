@@ -19,7 +19,7 @@
 
 $xoopsOption['pagetype'] = "user";
 include __DIR__ . '/header.php';
-$config_handler             =& xoops_getHandler('config');
+$config_handler             = xoops_getHandler('config');
 $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
 if (!$GLOBALS['xoopsUser'] || $GLOBALS['xoopsConfigUser']['allow_chgmail'] != 1) {
@@ -38,7 +38,7 @@ if (!isset($_POST['submit']) || !isset($_POST['passwd'])) {
     $form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
     $form->assign($GLOBALS['xoopsTpl']);
 } else {
-    $myts   =& MyTextSanitizer::getInstance();
+    $myts   = MyTextSanitizer::getInstance();
     $pass   = @$myts->stripSlashesGPC(trim($_POST['passwd']));
     $email  = @$myts->stripSlashesGPC(trim($_POST['newmail']));
     $errors = array();
@@ -55,7 +55,7 @@ if (!isset($_POST['submit']) || !isset($_POST['passwd'])) {
         //update password
         $GLOBALS['xoopsUser']->setVar('email', trim($_POST['newmail']));
 
-        $member_handler =& xoops_getHandler('member');
+        $member_handler = xoops_getHandler('member');
         if ($member_handler->insertUser($GLOBALS['xoopsUser'])) {
             $msg = _PROFILE_MA_EMAILCHANGED;
 

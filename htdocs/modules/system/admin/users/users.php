@@ -91,7 +91,7 @@ function form_user($add_or_edit, $user = '')
         $groups              = array(XOOPS_GROUP_USERS);
     } else {
         //Edit user
-        $member_handler =& xoops_getHandler('member');
+        $member_handler = xoops_getHandler('member');
         $user           =& $member_handler->getUser($uid);
         if (is_object($user)) {
             $uid_value        = $uid;
@@ -193,7 +193,7 @@ function form_user($add_or_edit, $user = '')
     $form->addElement(new XoopsFormRadioYN(_AM_SYSTEM_USERS_ACCEPT_EMAIL, 'user_mailok', $mailok_value));
 
     //Groups administration addition XOOPS 2.0.9: Mith
-    $gperm_handler =& xoops_getHandler('groupperm');
+    $gperm_handler = xoops_getHandler('groupperm');
     //If user has admin rights on groups
     if ($gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_GROUP, $xoopsUser->getGroups(), 1)) {
         //add group selection

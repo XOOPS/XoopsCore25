@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @subpackage          auth
  * @since               2.0
@@ -38,7 +38,7 @@ class XoopsAuthFactory
      *
      * @static
      *
-     * @param $uname
+     * @param $uname used to lookup in LDAP bypass config
      *
      * @return object Reference to the only instance of authentication class
      */
@@ -46,7 +46,7 @@ class XoopsAuthFactory
     {
         static $auth_instance;
         if (!isset($auth_instance)) {
-            $config_handler =& xoops_getHandler('config');
+            $config_handler = xoops_getHandler('config');
             $authConfig     = $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
 
             include_once $GLOBALS['xoops']->path('class/auth/auth.php');

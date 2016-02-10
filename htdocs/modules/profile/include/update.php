@@ -51,9 +51,9 @@ function xoops_module_update_profile(&$module, $oldversion = null)
 
         include_once __DIR__ . "/install.php";
         xoops_module_install_profile($module);
-        $goupperm_handler =& xoops_getHandler("groupperm");
+        $goupperm_handler = xoops_getHandler("groupperm");
 
-        $field_handler =& xoops_getModuleHandler('field', $module->getVar('dirname', 'n'));
+        $field_handler = xoops_getModuleHandler('field', $module->getVar('dirname', 'n'));
         $skip_fields   = $field_handler->getUserVars();
         $skip_fields[] = 'newemail';
         $skip_fields[] = 'pm_link';
@@ -137,9 +137,9 @@ function xoops_module_update_profile(&$module, $oldversion = null)
         $GLOBALS['xoopsDB']->queryF($sql);
     }
 
-    $profile_handler =& xoops_getModuleHandler("profile", $module->getVar('dirname', 'n'));
+    $profile_handler = xoops_getModuleHandler("profile", $module->getVar('dirname', 'n'));
     $profile_handler->cleanOrphan($GLOBALS['xoopsDB']->prefix("users"), "uid", "profile_id");
-    $field_handler =& xoops_getModuleHandler('field', $module->getVar('dirname', 'n'));
+    $field_handler = xoops_getModuleHandler('field', $module->getVar('dirname', 'n'));
     $user_fields   = $field_handler->getUserVars();
     $criteria      = new Criteria("field_name", "('" . implode("', '", $user_fields) . "')", "IN");
     $field_handler->updateAll("field_config", 0, $criteria);

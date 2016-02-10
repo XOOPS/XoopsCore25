@@ -144,7 +144,7 @@ class XoopsRankHandler extends XoopsObjectHandler
         if (!$result) {
             return $ret;
         }
-        $myts =& MyTextSanitizer::getInstance();
+        $myts = MyTextSanitizer::getInstance();
         while ($myrow = $this->db->fetchArray($result)) {
             $ret[$myrow['rank_id']] = $myts->htmlSpecialChars($myrow['rank_title']);
         }
@@ -368,7 +368,7 @@ if (empty($_POST["user_submit"])) {
                 3 => _MA_USER_LEVEL_DISABLED);
             $level_radio->addOptionArray($levels);
 
-            $member_handler =& xoops_getHandler('member');
+            $member_handler = xoops_getHandler('member');
             $groups         = $member_handler->getGroupList();
             $groups[0]      = _ALL;
             $group_select   = new XoopsFormSelect(_MA_USER_GROUP, 'groups', @$_POST['groups'], 3, true);
@@ -438,7 +438,7 @@ if (empty($_POST["user_submit"])) {
     echo "(" . sprintf(_MA_USER_ACTUS, "<span style='color:#ff0000;'>$acttotal</span>") . " " . sprintf(_MA_USER_INACTUS, "<span style='color:#ff0000;'>$inacttotal</span>") . ")";
     $form->display();
 } else {
-    $myts  =& MyTextSanitizer::getInstance();
+    $myts  = MyTextSanitizer::getInstance();
     $limit = empty($_POST['limit']) ? 50 : (int)($_POST['limit']);
     $start = (int)(@$_POST['start']);
     if (!isset($_POST["query"])) {

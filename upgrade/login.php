@@ -21,11 +21,11 @@ if (empty($_POST['uname']) || empty($_POST['pass'])) {
     </form>
     <?php
 } else {
-    $myts  =& MyTextSanitizer::getInstance();
+    $myts  = MyTextSanitizer::getInstance();
     $uname = !isset($_POST['uname']) ? '' : $myts->addSlashes(trim($_POST['uname']));
     $pass  = !isset($_POST['pass']) ? '' : $myts->addSlashes(trim($_POST['pass']));
 
-    $member_handler =& xoops_getHandler('member');
+    $member_handler = xoops_getHandler('member');
 
     include_once XOOPS_ROOT_PATH . '/class/auth/authfactory.php';
     if (!@include_once XOOPS_ROOT_PATH . '/language/' . $upgrade_language . '/auth.php') {

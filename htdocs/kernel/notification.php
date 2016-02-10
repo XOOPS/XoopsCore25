@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
  * @author              Michael van Dam <mvandam@caltech.edu>
@@ -149,7 +149,7 @@ class XoopsNotification extends XoopsObject
     public function notifyUser($template_dir, $template, $subject, $tags)
     {
         // Check the user's notification preference.
-        $member_handler =& xoops_getHandler('member');
+        $member_handler = xoops_getHandler('member');
         $user           =& $member_handler->getUser($this->getVar('not_uid'));
         if (!is_object($user)) {
             return true;
@@ -161,7 +161,7 @@ class XoopsNotification extends XoopsObject
         switch ($method) {
             case XOOPS_NOTIFICATION_METHOD_PM:
                 $xoopsMailer->usePM();
-                $config_handler    =& xoops_getHandler('config');
+                $config_handler    = xoops_getHandler('config');
                 $xoopsMailerConfig = $config_handler->getConfigsByCat(XOOPS_CONF_MAILER);
                 $xoopsMailer->setFromUser($member_handler->getUser($xoopsMailerConfig['fromuid']));
                 foreach ($tags as $k => $v) {
@@ -192,7 +192,7 @@ class XoopsNotification extends XoopsObject
         // If send-once-then-delete, delete notification
         // If send-once-then-wait, disable notification
         include_once $GLOBALS['xoops']->path('include/notification_constants.php');
-        $notification_handler =& xoops_getHandler('notification');
+        $notification_handler = xoops_getHandler('notification');
 
         if ($this->getVar('not_mode') == XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE) {
             $notification_handler->delete($this);
@@ -645,12 +645,12 @@ class XoopsNotificationHandler extends XoopsObjectHandler
             $module    =& $xoopsModule;
             $module_id = !empty($xoopsModule) ? $xoopsModule->getVar('mid') : 0;
         } else {
-            $module_handler =& xoops_getHandler('module');
+            $module_handler = xoops_getHandler('module');
             $module         =& $module_handler->get($module_id);
         }
 
         // Check if event is enabled
-        $config_handler =& xoops_getHandler('config');
+        $config_handler = xoops_getHandler('config');
         $mod_config     = $config_handler->getConfigsByCat(0, $module->getVar('mid'));
         if (empty($mod_config['notification_enabled'])) {
             return false;
@@ -831,7 +831,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
     {
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('not_modid', (int)($module_id)));
-        $criteria->add(new Criteria('not_category', $this->db->escapes($category)));
+        $criteria->add(new Criteria('not_category', $this->db->escape($category)));
         $criteria->add(new Criteria('not_itemid', (int)($item_id)));
 
         return $this->deleteAll($criteria);

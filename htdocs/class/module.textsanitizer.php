@@ -51,7 +51,7 @@ class MyTextSanitizerExtension
      */
     public static function loadConfig($path = null)
     {
-        $ts   =& MyTextSanitizer::getInstance();
+        $ts   = MyTextSanitizer::getInstance();
         $path = str_replace(DIRECTORY_SEPARATOR, '/', $path);
         if (false === strpos($path, '/')) {
             if (is_dir($ts->path_basic . '/' . $path)) {
@@ -379,7 +379,7 @@ class MyTextSanitizer
      */
     public function truncate($text)
     {
-        $instance =& MyTextSanitizer::getInstance();
+        $instance = MyTextSanitizer::getInstance();
         if (empty($text) || empty($instance->config['truncate_length']) || strlen($text) < $instance->config['truncate_length']) {
             return $text;
         }

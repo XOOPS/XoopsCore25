@@ -39,7 +39,7 @@ class XoopsUserUtility
         global $xoopsConfigUser, $xoopsConfig;
 
         if (empty($xoopsConfigUser)) {
-            $config_handler  =& xoops_getHandler('config');
+            $config_handler  = xoops_getHandler('config');
             $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
         }
         if (empty($xoopsConfigUser['welcome_type'])) {
@@ -47,7 +47,7 @@ class XoopsUserUtility
         }
 
         if (!empty($user) && !is_object($user)) {
-            $member_handler =& xoops_getHandler('member');
+            $member_handler = xoops_getHandler('member');
             $user           =& $member_handler->getUser($user);
         }
         if (!is_object($user)) {
@@ -115,11 +115,11 @@ class XoopsUserUtility
             $email = $user->getVar('email', 'n');
         }
 
-        $config_handler  =& xoops_getHandler('config');
+        $config_handler  = xoops_getHandler('config');
         $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
         xoops_loadLanguage('user');
-        $myts =& MyTextSanitizer::getInstance();
+        $myts = MyTextSanitizer::getInstance();
 
         $xoopsUser_isAdmin = is_object($xoopsUser) && $xoopsUser->isAdmin();
         $stop              = '';
@@ -262,7 +262,7 @@ class XoopsUserUtility
         }
         $userid = array_map('intval', array_filter($uid));
 
-        $myts  =& MyTextSanitizer::getInstance();
+        $myts  = MyTextSanitizer::getInstance();
         $users = array();
         if (count($userid) > 0) {
             $xoopsDB =& XoopsDatabaseFactory::getDatabaseConnection();
@@ -299,11 +299,11 @@ class XoopsUserUtility
      */
     public static function getUnameFromId($userid, $usereal = false, $linked = false)
     {
-        $myts     =& MyTextSanitizer::getInstance();
+        $myts     = MyTextSanitizer::getInstance();
         $userid   = (int)($userid);
         $username = '';
         if ($userid > 0) {
-            $member_handler = &xoops_getHandler('member');
+            $member_handler = xoops_getHandler('member');
             $user           =& $member_handler->getUser($userid);
             if (is_object($user)) {
                 if ($usereal && $user->getVar('name')) {

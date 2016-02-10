@@ -36,9 +36,9 @@ if (!xoops_getModuleOption('active_banners', 'system')) {
 // Parameters
 $nb_aff = xoops_getModuleOption('banners_pager', 'system');
 // Classes
-$banner_Handler        =& xoops_getModuleHandler('banner', 'system');
-$banner_finish_Handler =& xoops_getModuleHandler('bannerfinish', 'system');
-$banner_client_Handler =& xoops_getModuleHandler('bannerclient', 'system');
+$banner_Handler        = xoops_getModuleHandler('banner', 'system');
+$banner_finish_Handler = xoops_getModuleHandler('bannerfinish', 'system');
+$banner_client_Handler = xoops_getModuleHandler('bannerclient', 'system');
 // Get Action type
 $op = system_CleanVars($_REQUEST, 'op', 'default', 'string');
 // Define template

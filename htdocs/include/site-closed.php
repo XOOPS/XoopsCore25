@@ -61,7 +61,7 @@ if (!$allowed) {
                           'lang_username'     => _USERNAME,
                           'lang_password'     => _PASSWORD,
                           'lang_siteclosemsg' => $xoopsConfig['closesite_text']));
-    $config_handler =& xoops_getHandler('config');
+    $config_handler = xoops_getHandler('config');
     $criteria       = new CriteriaCompo(new Criteria('conf_modid', 0));
     $criteria->add(new Criteria('conf_catid', XOOPS_CONF_METAFOOTER));
     $config = $config_handler->getConfigs($criteria, true);

@@ -120,7 +120,7 @@ function profile_install_addField($name, $title, $description, $category, $type,
 {
     global $module_id;
 
-    $profilefield_handler =& xoops_getModuleHandler('field', 'profile');
+    $profilefield_handler = xoops_getModuleHandler('field', 'profile');
     $obj                  = $profilefield_handler->create();
     $obj->setVar('field_name', $name, true);
     $obj->setVar('field_moduleid', $module_id, true);

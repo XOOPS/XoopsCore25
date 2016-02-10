@@ -59,7 +59,7 @@ if (!function_exists('protector_onuninstall_base')) {
         }
 
         // TEMPLATES (Not necessary because modulesadmin removes all templates)
-        /* $tplfile_handler =& xoops_getHandler( 'tplfile' ) ;
+        /* $tplfile_handler = xoops_getHandler( 'tplfile' ) ;
         $templates =& $tplfile_handler->find( null , 'module' , $mid ) ;
         $tcount = count( $templates ) ;
         if ($tcount > 0) {

@@ -49,7 +49,7 @@ if ($action === "showpopups") {
             <table width="100%" class="outer">
             <tr><th colspan="3">' . _MSC_SMILIES . '</th></tr>
             <tr class="head"><td>' . _MSC_CODE . '</td><td>' . _MSC_EMOTION . '</td><td>' . _IMAGE . '</td></tr>';
-                $myts =& MyTextSanitizer::getInstance();
+                $myts = MyTextSanitizer::getInstance();
                 if ($smiles = $myts->getSmileys()) {
                     $rcolor = 'even';
                     foreach ($smiles as $key => $smile) {
@@ -90,7 +90,7 @@ if ($action === "showpopups") {
 <table width='100%'>
     <tr>
         <?php
-            $avatar_handler =& xoops_getHandler('avatar');
+            $avatar_handler = xoops_getHandler('avatar');
             $avatarslist = $avatar_handler->getList('S');
             $cntavs = 0;
             $counter = isset($_GET['start']) ? (int)($_GET['start']) : 0;
@@ -135,7 +135,7 @@ if ($action === "showpopups") {
                 </table></form>\n";
                 $closebutton = 0;
             } elseif ($_POST['op'] === "sendsite") {
-                $myts =& MyTextSanitizer::getInstance();
+                $myts = MyTextSanitizer::getInstance();
                 if ($xoopsUser) {
                     $ymail = $xoopsUser->getVar("email");
                 } else {
@@ -176,7 +176,7 @@ if ($action === "showpopups") {
             echo '</head><body>';
             echo '<table style="width:100%;" cellspacing="1" class="outer"><tr><th colspan="3">' . _WHOSONLINE . '</th></tr>';
             $start = isset($_GET['start']) ? (int)($_GET['start']) : 0;
-            $online_handler =& xoops_getHandler('online');
+            $online_handler = xoops_getHandler('online');
             $online_total = $online_handler->getCount();
             $limit = ($online_total > 20) ? 20 : $online_total;
             $criteria = new CriteriaCompo();
@@ -184,7 +184,7 @@ if ($action === "showpopups") {
             $criteria->setStart($start);
             $onlines = $online_handler->getAll($criteria);
             $count = count($onlines);
-            $module_handler =& xoops_getHandler('module');
+            $module_handler = xoops_getHandler('module');
             $modules = $module_handler->getList(new Criteria('isactive', 1));
             for ($i = 0; $i < $count; ++$i) {
                 if ($onlines[$i]['online_uid'] == 0) {

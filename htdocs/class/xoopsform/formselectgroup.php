@@ -43,7 +43,7 @@ class XoopsFormSelectGroup extends XoopsFormSelect
     public function __construct($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false)
     {
         parent::__construct($caption, $name, $value, $size, $multiple);
-        $member_handler = &xoops_getHandler('member');
+        $member_handler = xoops_getHandler('member');
         if (!$include_anon) {
             $this->addOptionArray($member_handler->getGroupList(new Criteria('groupid', XOOPS_GROUP_ANONYMOUS, '!=')));
         } else {

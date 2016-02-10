@@ -330,7 +330,7 @@ function clickbanner($bid)
 }
 
 XoopsLoad::load('XoopsFilterInput');
-$myts =& MyTextSanitizer::getInstance();
+$myts = MyTextSanitizer::getInstance();
 
 $op = '';
 if (!empty($_POST['op'])) {
@@ -376,7 +376,7 @@ if (!empty($_POST['op'])) {
     }
 }
 
-$myts =& MyTextSanitizer::getInstance();
+$myts = MyTextSanitizer::getInstance();
 switch ($op) {
     case "click":
         $bid = $clean_bid;

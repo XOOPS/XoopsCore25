@@ -39,7 +39,7 @@ if (defined("_MD_AM_AUTHENTICATION")) {
  */
 function createConfigform($config)
 {
-    $config_handler         =& xoops_getHandler('config');
+    $config_handler         = xoops_getHandler('config');
     $GLOBALS['xoopsConfig'] = $xoopsConfig =& $config_handler->getConfigsByCat(XOOPS_CONF);
 
     $ret       = array();
@@ -56,7 +56,7 @@ function createConfigform($config)
 
         switch ($config[$i]->getVar('conf_formtype')) {
             case 'textarea':
-                $myts =& MyTextSanitizer::getInstance();
+                $myts = MyTextSanitizer::getInstance();
                 if ($config[$i]->getVar('conf_valuetype') === 'array') {
                     // this is exceptional.. only when value type is arrayneed a smarter way for this
                     $ele = ($config[$i]->getVar('conf_value') != '') ? new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), $myts->htmlspecialchars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50) : new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), '', 5, 50);
@@ -100,7 +100,7 @@ function createConfigform($config)
                     asort($dirlist);
                     $ele->addOptionArray($dirlist);
                 }
-                //$themeset_handler =& xoops_getHandler('themeset');
+                //$themeset_handler = xoops_getHandler('themeset');
                 //$themesetlist =& $themeset_handler->getList();
                 //asort($themesetlist);
                 //foreach ($themesetlist as $key => $name) {
@@ -112,7 +112,7 @@ function createConfigform($config)
 
             case 'tplset':
                 $ele            = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
-                $tplset_handler =& xoops_getHandler('tplset');
+                $tplset_handler = xoops_getHandler('tplset');
                 $tplsetlist     =& $tplset_handler->getList();
                 asort($tplsetlist);
                 foreach ($tplsetlist as $key => $name) {
@@ -132,7 +132,7 @@ function createConfigform($config)
 
             case 'startpage':
                 $ele            = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
-                $module_handler =& xoops_getHandler('module');
+                $module_handler = xoops_getHandler('module');
                 $criteria       = new CriteriaCompo(new Criteria('hasmain', 1));
                 $criteria->add(new Criteria('isactive', 1));
                 $moduleslist       =& $module_handler->getList($criteria, true);
@@ -158,7 +158,7 @@ function createConfigform($config)
                 break;
 
             case 'module_cache':
-                $module_handler =& xoops_getHandler('module');
+                $module_handler = xoops_getHandler('module');
                 $modules        =& $module_handler->getObjects(new Criteria('hasmain', 1), true);
                 $currrent_val   = $config[$i]->getConfValueForOutput();
                 $cache_options  = array(
@@ -202,23 +202,23 @@ function createConfigform($config)
                 break;
 
             case 'password':
-                $myts =& MyTextSanitizer::getInstance();
+                $myts = MyTextSanitizer::getInstance();
                 $ele  = new XoopsFormPassword($title, $config[$i]->getVar('conf_name'), 50, 255, $myts->htmlspecialchars($config[$i]->getConfValueForOutput()));
                 break;
 
             case 'color':
-                $myts =& MyTextSanitizer::getInstance();
+                $myts = MyTextSanitizer::getInstance();
                 $ele  = new XoopsFormColorPicker($title, $config[$i]->getVar('conf_name'), $myts->htmlspecialchars($config[$i]->getConfValueForOutput()));
                 break;
 
             case 'hidden':
-                $myts =& MyTextSanitizer::getInstance();
+                $myts = MyTextSanitizer::getInstance();
                 $ele  = new XoopsFormHidden($config[$i]->getVar('conf_name'), $myts->htmlspecialchars($config[$i]->getConfValueForOutput()));
                 break;
 
             case 'textbox':
             default:
-                $myts =& MyTextSanitizer::getInstance();
+                $myts = MyTextSanitizer::getInstance();
                 $ele  = new XoopsFormText($title, $config[$i]->getVar('conf_name'), 50, 255, $myts->htmlspecialchars($config[$i]->getConfValueForOutput()));
                 break;
         }

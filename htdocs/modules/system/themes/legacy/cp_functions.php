@@ -30,7 +30,7 @@ function xoops_legacy_cp_header($tpl)
     $xoTheme->addStylesheet(XOOPS_URL . '/xoops.css');
     $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/themes/legacy/css/style.css');
     include XOOPS_CACHE_PATH . '/adminmenu.php';
-    $moduleperm_handler =& xoops_getHandler('groupperm');
+    $moduleperm_handler = xoops_getHandler('groupperm');
     $admin_mids         = $moduleperm_handler->getItemIds('module_admin', $xoopsUser->getGroups());
     $xoTheme->addScript(XOOPS_URL . '/include/layersmenu.js');
     $xoTheme->addScript('', '', '
@@ -84,7 +84,7 @@ function xoops_legacy_module_get_admin_menu()
     $firstleveltable = "";
     $menu_layers     = "";
 
-    $module_handler =& xoops_getHandler('module');
+    $module_handler = xoops_getHandler('module');
     $criteria       = new CriteriaCompo();
     $criteria->add(new Criteria('hasadmin', 1));
     $criteria->add(new Criteria('isactive', 1));

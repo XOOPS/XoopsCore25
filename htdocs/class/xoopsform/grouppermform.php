@@ -138,8 +138,8 @@ class XoopsGroupPermForm extends XoopsForm
             $this->_itemTree[$item_id]['allchild'] = array();
             $this->_loadAllChildItemIds($item_id, $this->_itemTree[$item_id]['allchild']);
         }
-        $gperm_handler  = &xoops_getHandler('groupperm');
-        $member_handler = &xoops_getHandler('member');
+        $gperm_handler  = xoops_getHandler('groupperm');
+        $member_handler = xoops_getHandler('member');
         $glist          = $member_handler->getGroupList();
         foreach (array_keys($glist) as $i) {
             if ($i == XOOPS_GROUP_ANONYMOUS && !$this->_showAnonymous) {

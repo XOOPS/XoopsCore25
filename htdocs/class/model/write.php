@@ -43,7 +43,7 @@ class XoopsModelWrite extends XoopsModelAbstract
      */
     public function cleanVars(&$object)
     {
-        $ts     =& MyTextSanitizer::getInstance();
+        $ts     = MyTextSanitizer::getInstance();
         $errors = array();
 
         $vars              = $object->getVars();

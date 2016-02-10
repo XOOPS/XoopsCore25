@@ -21,7 +21,7 @@ require_once './include/common.inc.php';
 defined('XOOPS_INSTALL') or die('XOOPS Installation wizard die');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $config_handler =& xoops_getHandler('config');
+    $config_handler = xoops_getHandler('config');
     if (array_key_exists('conf_ids', $_REQUEST)) {
         foreach ($_REQUEST['conf_ids'] as $key => $conf_id) {
             $config    =& $config_handler->getConfig($conf_id);
@@ -44,7 +44,7 @@ if (!@include_once "../modules/system/language/{$wizard->language}/admin/prefere
     include_once '../modules/system/language/english/admin/preferences.php';
 }
 
-$config_handler =& xoops_getHandler('config');
+$config_handler = xoops_getHandler('config');
 $criteria       = new CriteriaCompo();
 $criteria->add(new Criteria('conf_modid', 0));
 

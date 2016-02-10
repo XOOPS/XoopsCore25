@@ -32,9 +32,9 @@ if (!empty($_GET['op']) && in_array($_GET['op'], array('actv', 'activate'))) {
 }
 
 xoops_load('XoopsUserUtility');
-$myts =& MyTextSanitizer::getInstance();
+$myts = MyTextSanitizer::getInstance();
 
-$config_handler             =& xoops_getHandler('config');
+$config_handler             = xoops_getHandler('config');
 $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 if (empty($GLOBALS['xoopsConfigUser']['allow_register'])) {
     redirect_header('index.php', 6, _US_NOREGISTER);
@@ -68,7 +68,7 @@ if ($current_step > 0 && !$GLOBALS['xoopsSecurity']->check()) {
 
 $criteria = new CriteriaCompo();
 $criteria->setSort("step_order");
-$regstep_handler =& xoops_getModuleHandler('regstep');
+$regstep_handler = xoops_getModuleHandler('regstep');
 
 if (!$steps = $regstep_handler->getAll($criteria, null, false, false)) {
     redirect_header(XOOPS_URL . '/', 6, _PROFILE_MA_NOSTEPSAVAILABLE);
@@ -91,8 +91,8 @@ if (isset($steps[$current_step])) {
     $xoBreadcrumbs[] = array('title' => $steps[$current_step]['step_name']);
 }
 
-$member_handler  =& xoops_getHandler('member');
-$profile_handler =& xoops_getModuleHandler('profile');
+$member_handler  = xoops_getHandler('member');
+$profile_handler = xoops_getModuleHandler('profile');
 
 $fields     = $profile_handler->loadFields();
 $userfields = $profile_handler->getUserVars();

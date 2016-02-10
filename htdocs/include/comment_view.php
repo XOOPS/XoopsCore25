@@ -25,7 +25,7 @@ include_once $GLOBALS['xoops']->path('include/comment_constants.php');
 
 if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
     include_once $GLOBALS['xoops']->path('modules/system/constants.php');
-    $gperm_handler =& xoops_getHandler('groupperm');
+    $gperm_handler = xoops_getHandler('groupperm');
     $groups        = ($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
     $xoopsTpl->assign('xoops_iscommentadmin', $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $groups));
 
@@ -70,7 +70,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
 
         $com_id          = isset($_GET['com_id']) ? (int)($_GET['com_id']) : 0;
         $com_rootid      = isset($_GET['com_rootid']) ? (int)($_GET['com_rootid']) : 0;
-        $comment_handler = &xoops_getHandler('comment');
+        $comment_handler = xoops_getHandler('comment');
         if ($com_mode === 'flat') {
             $comments = $comment_handler->getByItemId($xoopsModule->getVar('mid'), $com_itemid, $com_dborder);
             include_once $GLOBALS['xoops']->path('class/commentrenderer.php');
@@ -208,7 +208,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
                 include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/comment_fast.php');
             }
             if (isset($com_replytitle)) {
-                $myts      =& MyTextSanitizer::getInstance();
+                $myts      = MyTextSanitizer::getInstance();
                 $com_title = $myts->htmlSpecialChars($com_replytitle);
                 if (!preg_match("/^" . _RE . "/i", $com_title)) {
                     $com_title = _RE . " " . xoops_substr($com_title, 0, 56);
@@ -262,7 +262,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
             if ('system' !== $xoopsModule->getVar('dirname')) {
                 $comment_config = $xoopsModule->getInfo('comments');
                 if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
-                    $myts =& MyTextSanitizer::getInstance();
+                    $myts = MyTextSanitizer::getInstance();
                     foreach ($comment_config['extraParams'] as $extra_param) {
                         // This routine is included from forms accessed via both GET and POST
                         $hidden_value = '';

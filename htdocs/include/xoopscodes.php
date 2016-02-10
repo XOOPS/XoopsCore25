@@ -49,7 +49,7 @@ function xoopsCodeTarea($textarea_id, $cols = 60, $rows = 15, $suffix = null)
  */
 function xoopsSmilies($textarea_id)
 {
-    $myts   =& MyTextSanitizer::getInstance();
+    $myts   = MyTextSanitizer::getInstance();
     $smiles = $myts->getSmileys(false);
     $count  = count($smiles);
     for ($i = 0; $i < $count; ++$i) {

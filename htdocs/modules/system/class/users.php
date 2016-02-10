@@ -45,7 +45,7 @@ class SystemUsers extends XoopsUser
             $blank_img = $this->getVar('avatar_file', 'e');
         }
         // Get User Config
-        $config_handler  =& xoops_getHandler('config');
+        $config_handler  = xoops_getHandler('config');
         $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
         $form = new XoopsThemeForm(_AM_SYSTEM_AVATAR_ADD, 'avatar_form', 'admin.php', "post", true);

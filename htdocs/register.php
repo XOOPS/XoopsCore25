@@ -13,10 +13,10 @@
  * XOOPS Register
  *
  * See the enclosed file license.txt for licensing information.
- * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
+ * If you did not receive this file, get it at http://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @license             GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             core
  * @since               2.0.0
  * @author              Kazumi Ono <webmaster@myweb.ne.jp>
@@ -29,9 +29,9 @@ $xoopsPreload->triggerEvent('core.register.start');
 xoops_loadLanguage('user');
 xoops_load('XoopsUserUtility');
 
-$myts =& MyTextSanitizer::getInstance();
+$myts = MyTextSanitizer::getInstance();
 
-$config_handler  =& xoops_getHandler('config');
+$config_handler  = xoops_getHandler('config');
 $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
 if (empty($xoopsConfigUser['allow_register'])) {
@@ -175,7 +175,7 @@ switch ($op) {
             $stop .= $xoopsCaptcha->getMessage() . "<br />";
         }
         if (empty($stop)) {
-            $member_handler =& xoops_getHandler('member');
+            $member_handler = xoops_getHandler('member');
             $newuser        =& $member_handler->createUser();
             $newuser->setVar('user_viewemail', $user_viewemail, true);
             $newuser->setVar('uname', $uname, true);
@@ -186,7 +186,7 @@ switch ($op) {
             $newuser->setVar('user_avatar', 'avatars/blank.gif', true);
             $actkey = substr(md5(uniqid(mt_rand(), 1)), 0, 8);
             $newuser->setVar('actkey', $actkey, true);
-            $newuser->setVar('pass', md5($pass), true);
+            $newuser->setVar('pass', password_hash($pass, PASSWORD_DEFAULT), true);
             $newuser->setVar('timezone_offset', $timezone_offset, true);
             $newuser->setVar('user_regdate', time(), true);
             $newuser->setVar('uorder', $GLOBALS['xoopsConfig']['com_order'], true);
@@ -241,7 +241,7 @@ switch ($op) {
                 $xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
                 $xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
                 $xoopsMailer->assign('SITEURL', XOOPS_URL . "/");
-                $member_handler =& xoops_getHandler('member');
+                $member_handler = xoops_getHandler('member');
                 $xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['activation_group']));
                 $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
                 $xoopsMailer->setFromName($xoopsConfig['sitename']);
@@ -256,7 +256,7 @@ switch ($op) {
                 $xoopsMailer =& xoops_getMailer();
                 $xoopsMailer->reset();
                 $xoopsMailer->useMail();
-                $member_handler =& xoops_getHandler('member');
+                $member_handler = xoops_getHandler('member');
                 $xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['new_user_notify_group']));
                 $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
                 $xoopsMailer->setFromName($xoopsConfig['sitename']);
@@ -279,7 +279,7 @@ switch ($op) {
         if (empty($id)) {
             redirect_header('index.php', 1, '');
         }
-        $member_handler =& xoops_getHandler('member');
+        $member_handler = xoops_getHandler('member');
         $thisuser       =& $member_handler->getUser($id);
         if (!is_object($thisuser)) {
             exit();
@@ -291,10 +291,10 @@ switch ($op) {
                 redirect_header('user.php', 5, _US_ACONTACT, false);
             } else {
                 if (false != $member_handler->activateUser($thisuser)) {
-                    $config_handler  =& xoops_getHandler('config');
+                    $config_handler  = xoops_getHandler('config');
                     $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
                     if ($xoopsConfigUser['activation_type'] == 2) {
-                        $myts        =& MyTextSanitizer::getInstance();
+                        $myts        = MyTextSanitizer::getInstance();
                         $xoopsMailer =& xoops_getMailer();
                         $xoopsMailer->useMail();
                         $xoopsMailer->setTemplate('activated.tpl');

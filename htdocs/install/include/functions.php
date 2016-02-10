@@ -25,7 +25,7 @@ function install_acceptUser($hash = '')
     if (empty($uname) || empty($hash_login)) {
         return false;
     }
-    $memebr_handler =& xoops_getHandler('member');
+    $memebr_handler = xoops_getHandler('member');
     $user           = array_pop($memebr_handler->getUsers(new Criteria('uname', $uname)));
     if ($hash_login != md5($user->getVar('pass') . XOOPS_DB_NAME . XOOPS_DB_PASS . XOOPS_DB_PREFIX)) {
         return false;

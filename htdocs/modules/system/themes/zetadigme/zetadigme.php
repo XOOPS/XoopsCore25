@@ -194,14 +194,14 @@ window.onload= function(){
         $tpl->assign('modid', $modid);
         $tpl->assign('moddir', $moddir);
         // add MODULES  Menu items
-        $module_handler =& xoops_getHandler('module');
+        $module_handler = xoops_getHandler('module');
         $criteria       = new CriteriaCompo();
         $criteria->add(new Criteria('hasadmin', 1));
         $criteria->add(new Criteria('isactive', 1));
         $criteria->setSort('mid');
         $mods               = $module_handler->getObjects($criteria);
         $menu               = array();
-        $moduleperm_handler =& xoops_getHandler('groupperm');
+        $moduleperm_handler = xoops_getHandler('groupperm');
         foreach ($mods as $mod) {
             $rtn        = array();
             $modOptions = array();                                                         //add for sub menus
@@ -331,7 +331,7 @@ window.onload= function(){
         }
         foreach ($mods as $mod) {
             $rtn                = array();
-            $moduleperm_handler =& xoops_getHandler('groupperm');
+            $moduleperm_handler = xoops_getHandler('groupperm');
             $sadmin             = $moduleperm_handler->checkRight('module_admin', $mod->getVar('mid'), $xoopsUser->getGroups());
             if ($sadmin) {
                 $info = $mod->getInfo();

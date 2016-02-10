@@ -216,7 +216,7 @@ class PublisherItem extends XoopsObject
                 $content      = substr($content, $body_start_pos + strlen('<body>'), $body_end_pos - strlen('<body>') - $body_start_pos);
             }
             // Check if ML Hack is installed, and if yes, parse the $content in formatForML
-            $myts =& MyTextSanitizer::getInstance();
+            $myts = MyTextSanitizer::getInstance();
             if (method_exists($myts, 'formatForML')) {
                 $content = $myts->formatForML($content);
             }
@@ -316,7 +316,7 @@ class PublisherItem extends XoopsObject
     public function posterAvatar()
     {
         $ret            = 'blank.gif';
-        $member_handler =& xoops_getHandler('member');
+        $member_handler = xoops_getHandler('member');
         $thisUser       = $member_handler->getUser($this->uid());
         if (is_object($thisUser)) {
             $ret = $thisUser->getVar('user_avatar');
@@ -360,8 +360,8 @@ class PublisherItem extends XoopsObject
         }
         if ($isNew && $this->status() == _PUBLISHER_STATUS_PUBLISHED) {
             // Increment user posts
-            $user_handler   =& xoops_getHandler('user');
-            $member_handler =& xoops_getHandler('member');
+            $user_handler   = xoops_getHandler('user');
+            $member_handler = xoops_getHandler('member');
             $poster         = $user_handler->get($this->uid());
             if (is_object($poster) && !$poster->isNew()) {
                 $poster->setVar('posts', $poster->getVar('posts') + 1);
@@ -475,7 +475,7 @@ class PublisherItem extends XoopsObject
      */
     public function sendNotifications($notifications = array())
     {
-        $notification_handler  =& xoops_getHandler('notification');
+        $notification_handler  = xoops_getHandler('notification');
         $tags                  = array();
         $tags['MODULE_NAME']   = $this->publisher->getModule()->getVar('name');
         $tags['ITEM_NAME']     = $this->title();
@@ -512,7 +512,7 @@ class PublisherItem extends XoopsObject
      */
     public function setDefaultPermissions()
     {
-        $member_handler =& xoops_getHandler('member');
+        $member_handler = xoops_getHandler('member');
         $groups         = $member_handler->getGroupList();
         $j              = 0;
         $group_ids      = array();
@@ -531,7 +531,7 @@ class PublisherItem extends XoopsObject
     public function setPermissions($group_ids)
     {
         if (!isset($group_ids)) {
-            $member_handler =& xoops_getHandler('member');
+            $member_handler = xoops_getHandler('member');
             $groups         = $member_handler->getGroupList();
             $j              = 0;
             $group_ids      = array();
@@ -671,7 +671,7 @@ class PublisherItem extends XoopsObject
             }
             $imageObjs = array();
             if (count($images_ids) > 0) {
-                $image_handler =& xoops_getHandler('image');
+                $image_handler = xoops_getHandler('image');
                 $criteria      = new CriteriaCompo(new Criteria('image_id', '(' . implode(',', $images_ids) . ')', 'IN'));
                 $imageObjs     = $image_handler->getObjects($criteria, true);
                 unset($criteria);
@@ -738,7 +738,7 @@ class PublisherItem extends XoopsObject
         // Highlighting searched words
         $highlight = true;
         if ($highlight && isset($_GET['keywords'])) {
-            $myts     =& MyTextSanitizer::getInstance();
+            $myts     = MyTextSanitizer::getInstance();
             $keywords = $myts->htmlSpecialChars(trim(urldecode($_GET['keywords'])));
             $fields   = array('title', 'maintext', 'summary');
             foreach ($fields as $field) {
@@ -1152,7 +1152,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
         }
         if (xoops_isActiveModule('tag')) {
             // Storing tags information
-            $tag_handler =& xoops_getModuleHandler('tag', 'tag');
+            $tag_handler = xoops_getModuleHandler('tag', 'tag');
             $tag_handler->updateByItem($item->getVar('item_tag'), $item->getVar('itemid'), PUBLISHER_DIRNAME, 0);
         }
 
@@ -1180,7 +1180,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
         }
         // Removing tags information
         if (xoops_isActiveModule('tag')) {
-            $tag_handler =& xoops_getModuleHandler('tag', 'tag');
+            $tag_handler = xoops_getModuleHandler('tag', 'tag');
             $tag_handler->updateByItem('', $item->getVar('itemid'), PUBLISHER_DIRNAME, 0);
         }
 
@@ -1591,7 +1591,7 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
     {
         global $xoopsUser, $publisher_isAdmin;
         $ret           = array();
-        $gperm_handler = &xoops_getHandler('groupperm');
+        $gperm_handler = xoops_getHandler('groupperm');
         $groups        = is_object($xoopsUser) ? ($xoopsUser->getGroups()) : XOOPS_GROUP_ANONYMOUS;
         $searchin      = empty($searchin) ? array("title", "body", "summary") : (is_array($searchin) ? $searchin : array($searchin));
         if (in_array("all", $searchin) || count($searchin) == 0) {

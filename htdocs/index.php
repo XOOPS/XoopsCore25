@@ -38,7 +38,7 @@ if (isset($xoopsConfig['startpage']) && $xoopsConfig['startpage'] != "" && $xoop
     define("XOOPS_STARTPAGE_REDIRECTED", 1);
 
     global $xoopsModuleConfig;
-    $module_handler =& xoops_getHandler('module');
+    $module_handler = xoops_getHandler('module');
     $xoopsModule    =& $module_handler->getByDirname($xoopsConfig['startpage']);
     if (!$xoopsModule || !$xoopsModule->getVar('isactive')) {
         include_once $GLOBALS['xoops']->path('header.php');
@@ -46,7 +46,7 @@ if (isset($xoopsConfig['startpage']) && $xoopsConfig['startpage'] != "" && $xoop
         include_once $GLOBALS['xoops']->path('footer.php');
         exit();
     }
-    $moduleperm_handler =& xoops_getHandler('groupperm');
+    $moduleperm_handler = xoops_getHandler('groupperm');
     if ($xoopsUser) {
         if (!$moduleperm_handler->checkRight('module_read', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
             redirect_header(XOOPS_URL, 1, _NOPERM, false);

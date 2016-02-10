@@ -27,8 +27,8 @@ xoops_cp_header();
 
 $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : "visibility";
 
-$visibility_handler =& xoops_getModuleHandler('visibility');
-$field_handler      =& xoops_getModuleHandler('field');
+$visibility_handler = xoops_getModuleHandler('visibility');
+$field_handler      = xoops_getModuleHandler('field');
 $fields             = $field_handler->getList();
 
 if (isset($_REQUEST['submit'])) {
@@ -64,7 +64,7 @@ $criteria->setSort('field_id');
 $criteria->setOrder('DESC');
 $visibilities = $visibility_handler->getAll($criteria, false, false, true);
 
-$member_handler =& xoops_getHandler('member');
+$member_handler = xoops_getHandler('member');
 $groups         = $member_handler->getGroupList();
 $groups[0]      = _PROFILE_AM_FIELDVISIBLETOALL;
 asort($groups);

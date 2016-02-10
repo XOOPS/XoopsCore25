@@ -33,6 +33,6 @@ class PmSystemPreload extends XoopsPreloadItem
      */
     public function eventSystemBlocksSystem_blocksUsershow($args)
     {
-        $args[0] =& xoops_getModuleHandler('message', 'pm');
+        $args[0] = xoops_getModuleHandler('message', 'pm');
     }
 }

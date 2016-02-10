@@ -63,7 +63,7 @@ if (!in_array($method, $safeMethods)) {
 }
 
 if (is_object($xoopsUser)) {
-    $myts =& MyTextSanitizer::getInstance();
+    $myts = MyTextSanitizer::getInstance();
     if ($op === 'submit') {
         $res = $xoopsDB->query("SELECT COUNT(*) FROM " . $xoopsDB->prefix("users") . " WHERE uid=" . XoopsRequest::getInt('to_userid', 0, 'POST') . "");
         list($count) = $xoopsDB->fetchRow($res);
@@ -72,7 +72,7 @@ if (is_object($xoopsUser)) {
             echo _PM_PLZTRYAGAIN . "</h4><br />";
             echo "[ <a href='javascript:history.go(-1)' title=''>" . _PM_GOBACK . "</a> ]</div>";
         } else {
-            $pm_handler =& xoops_getHandler('privmessage');
+            $pm_handler = xoops_getHandler('privmessage');
             $pm         =& $pm_handler->create();
             $msg_image  = XoopsRequest::getCmd('icon', null, 'POST');
             if (in_array($msg_image, $subject_icons)) {
@@ -92,7 +92,7 @@ if (is_object($xoopsUser)) {
     } elseif ($reply == 1 || $send == 1 || $send2 == 1) {
         include_once $GLOBALS['xoops']->path('include/xoopscodes.php');
         if ($reply == 1) {
-            $pm_handler =& xoops_getHandler('privmessage');
+            $pm_handler = xoops_getHandler('privmessage');
             $pm         =& $pm_handler->get($msg_id);
             if ($pm->getVar("to_userid") == $xoopsUser->getVar('uid')) {
                 $pm_uname = XoopsUser::getUnameFromId($pm->getVar("from_userid"));

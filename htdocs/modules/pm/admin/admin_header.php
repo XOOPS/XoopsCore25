@@ -41,7 +41,7 @@ $pathModuleAdmin = $xoopsModule->getInfo('dirmoduleadmin');
 include_once $GLOBALS['xoops']->path($pathModuleAdmin . '/moduleadmin.php');
 
 if ($xoopsUser) {
-    $moduleperm_handler =& xoops_getHandler('groupperm');
+    $moduleperm_handler = xoops_getHandler('groupperm');
     if (!$moduleperm_handler->checkRight('module_admin', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
         redirect_header(XOOPS_URL, 1, _NOPERM);
     }

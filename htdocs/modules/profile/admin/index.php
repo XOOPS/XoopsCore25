@@ -33,7 +33,7 @@ xoops_cp_header();
 
 $indexAdmin = new ModuleAdmin();
 //-----------------------
-// $xpPartnerHandler =& xoops_getModuleHandler('partners', $xoopsModule->getVar('dirname'));
+// $xpPartnerHandler = xoops_getModuleHandler('partners', $xoopsModule->getVar('dirname'));
 
 // $totalPartners = $xpPartnerHandler->getCount();
 // $totalNonActivePartners = $xpPartnerHandler->getCount(new Criteria('status', 0, '='));
