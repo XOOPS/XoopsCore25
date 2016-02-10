@@ -75,12 +75,12 @@ class XoopsGroupPermForm extends XoopsForm
     public function __construct($title, $modid, $permname, $permdesc, $url = '', $anonymous = true)
     {
         parent::__construct($title, 'groupperm_form', XOOPS_URL . '/modules/system/admin/groupperm.php', 'post');
-        $this->_modid    = (int)($modid);
+        $this->_modid    = (int)$modid;
         $this->_permName = $permname;
         $this->_permDesc = $permdesc;
         $this->addElement(new XoopsFormHidden('modid', $this->_modid));
         $this->addElement(new XoopsFormHiddenToken($permname));
-        if ($url != "") {
+        if ($url != '') {
             $this->addElement(new XoopsFormHidden('redirect_url', $url));
         }
         $this->_showAnonymous = $anonymous;

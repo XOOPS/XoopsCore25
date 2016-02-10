@@ -36,14 +36,14 @@ include_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
  * @author    Haruki Setoyama  <haruki@planewave.org>
  * @version   $Id: dbmanager.php 13082 2015-06-06 21:59:41Z beckmi $
  **/
-class db_manager
+class Db_manager
 {
     public $s_tables = array();
     public $f_tables = array();
     public $db;
 
     /**
-     * db_manager constructor.
+     * Db_manager constructor.
      */
     public function __construct()
     {

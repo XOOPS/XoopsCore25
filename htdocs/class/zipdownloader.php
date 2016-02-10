@@ -44,7 +44,7 @@ class XoopsZipDownloader extends XoopsDownloader
 
     public function __construct($ext = '.zip', $mimyType = 'application/x-zip')
     {
-        $this->archiver = new zipfile();
+        $this->archiver = new Zipfile();
         $this->ext      = trim($ext);
         $this->mimeType = trim($mimyType);
     }

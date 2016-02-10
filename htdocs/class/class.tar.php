@@ -89,7 +89,7 @@
  * @package    kernel
  * @subpackage core
  */
-class tar
+class Tar
 {
     /**
      * *#@+

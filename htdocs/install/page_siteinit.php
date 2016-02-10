@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 } else {
     include_once './class/dbmanager.php';
-    $dbm = new db_manager();
+    $dbm = new Db_manager();
 
     if (!$dbm->isConnectable()) {
         $wizard->redirectToPage('dbsettings');

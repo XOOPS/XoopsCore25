@@ -57,7 +57,7 @@ function make_groups(&$dbm)
 function make_data(&$dbm, $adminname, $adminpass, $adminmail, $language, $gruops)
 {
     // $xoopsDB =& Database::getInstance();
-    // $dbm = new db_manager;
+    // $dbm = new Db_manager;
     $tables = array();
     // data for table 'groups_users_link'
     $dbm->insert('groups_users_link', " VALUES (0, " . $gruops['XOOPS_GROUP_ADMIN'] . ", 1)");

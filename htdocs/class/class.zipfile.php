@@ -28,7 +28,7 @@
  * @package          kernel
  * @subpackage       core
  */
-class zipfile
+class Zipfile
 {
     /**
      * Array to store compressed data

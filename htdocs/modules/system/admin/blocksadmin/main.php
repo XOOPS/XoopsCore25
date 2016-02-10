@@ -49,7 +49,7 @@ $sel = array(
     'selgrp' => XOOPS_GROUP_USERS,
     'selvis' => -1);
 foreach ($sel as $key => $value) {
-    $_{$key} = isset($_COOKIE[$key]) ? (int)($_COOKIE[$key]) : $value;
+    $_{$key} = isset($_COOKIE[$key]) ? (int)$_COOKIE[$key] : $value;
     ${$key}  = system_CleanVars($method, $key, $_{$key}, 'int');
     setcookie($key, ${$key});
 }

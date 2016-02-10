@@ -56,7 +56,7 @@ class SystemBlock extends XoopsBlock
             foreach ($blocklinkmodule as $link) {
                 $modules[] = $link->getVar('module_id');
             }
-            // Saerch perms
+            // Search perms
             $groupperm_handler = xoops_getHandler('groupperm');
             $groups            =& $groupperm_handler->getGroupIds('block_read', $this->getVar('bid'));
             switch ($mode) {
@@ -327,8 +327,8 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
      * retrieve array of {@link XoopsBlock}s meeting certain conditions
      *
      * @param  CriteriaElement $criteria  {@link CriteriaElement} with conditions for the blocks
-     * @param  bool   $id_as_key should the blocks' bid be the key for the returned array?
-     * @return array  {@link XoopsBlock}s matching the conditions
+     * @param  bool            $id_as_key should the blocks' bid be the key for the returned array?
+     * @return array           {@link XoopsBlock}s matching the conditions
      **/
     public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {

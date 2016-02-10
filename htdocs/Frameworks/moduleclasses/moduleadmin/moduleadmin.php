@@ -15,7 +15,7 @@
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author          Grégory Mage (Aka Mage)
  */
-class moduleadmin
+class ModuleAdmin
 {
     private $_itemButton        = array();
     private $_itemInfoBox       = array();

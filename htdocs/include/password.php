@@ -296,7 +296,7 @@ namespace PasswordCompat\binary {
          * @return boolean the check result
          */
         function check() {
-            static $pass = NULL;
+            static $pass = null;
 
             if (is_null($pass)) {
                 if (function_exists('crypt')) {
