@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             profile
  * @since               2.3.0
  * @author              Jan Pedersen
@@ -26,7 +26,7 @@ $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list';
 if ($op === "editordelete") {
     $op = isset($_REQUEST['delete']) ? "delete" : "edit";
 }
-$handler =& xoops_getHandler('member');
+$handler = xoops_getHandler('member');
 
 switch ($op) {
     default:
@@ -70,12 +70,12 @@ switch ($op) {
         }
 
         // Dynamic fields
-        $profile_handler =& xoops_getModuleHandler('profile');
+        $profile_handler = xoops_getModuleHandler('profile');
         // Get fields
         $fields     = $profile_handler->loadFields();
         $userfields = $profile_handler->getUserVars();
         // Get ids of fields that can be edited
-        $gperm_handler   =& xoops_getHandler('groupperm');
+        $gperm_handler   = xoops_getHandler('groupperm');
         $editable_fields = $gperm_handler->getItemIds('profile_edit', $GLOBALS['xoopsUser']->getGroups(), $GLOBALS['xoopsModule']->getVar('mid'));
 
         $uid = empty($_POST['uid']) ? 0 : (int)($_POST['uid']);
@@ -104,7 +104,7 @@ switch ($op) {
             $user->setVar('user_regdate', time());
             $user->setVar('level', 1);
         }
-        $myts =& MyTextSanitizer::getInstance();
+        $myts = MyTextSanitizer::getInstance();
         $user->setVar('uname', $_POST['uname']);
         $user->setVar('email', trim($_POST['email']));
         if (isset($_POST['level']) && $user->getVar('level') != (int)($_POST['level'])) {
@@ -196,7 +196,7 @@ switch ($op) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header('user.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()), false);
             }
-            $profile_handler =& xoops_getModuleHandler('profile');
+            $profile_handler = xoops_getModuleHandler('profile');
             $profile         = $profile_handler->get($obj->getVar('uid'));
             if (!$profile || $profile->isNew() || $profile_handler->delete($profile)) {
                 if ($handler->deleteUser($obj)) {

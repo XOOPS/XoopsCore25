@@ -11,7 +11,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             upgrader
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
@@ -50,7 +50,7 @@ class Upgrade_220 extends XoopsUpgrade
      */
     public function check_profile()
     {
-        $module_handler =& xoops_getHandler('module');
+        $module_handler = xoops_getHandler('module');
         if (!$profile_module = $module_handler->getByDirname('profile')) {
             return true;
         }
@@ -153,8 +153,8 @@ class Upgrade_220 extends XoopsUpgrade
         $profile_config_arr['reg_disclaimer']        = "";
         $profile_config_arr['allow_register']        = 1;
 
-        $module_handler =& xoops_getHandler('module');
-        $config_handler =& xoops_getHandler('config');
+        $module_handler = xoops_getHandler('module');
+        $config_handler = xoops_getHandler('config');
         $profile_module = $module_handler->getByDirname('profile');
         if (is_object($profile_module)) {
             $profile_config = $config_handler->getConfigs(new Criteria('conf_modid', $profile_module->getVar('mid')));

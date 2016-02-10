@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             xoopsform
  * @since               2.3.0
  * @author              Vinod <smartvinu@gmail.com>
@@ -20,7 +20,7 @@
 include_once dirname(__DIR__) . '/mainfile.php';
 
 $xoopsLogger->activated = false;
-$myts                   =& MyTextSanitizer::getInstance();
+$myts                   = MyTextSanitizer::getInstance();
 
 $content = $myts->stripSlashesGPC($_POST['text']);
 

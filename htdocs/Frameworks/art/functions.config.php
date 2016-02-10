@@ -3,7 +3,7 @@
  * Functions handling module configs
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @since               1.00
  * @version             $Id: functions.config.php 13082 2015-06-06 21:59:41Z beckmi $
@@ -71,14 +71,14 @@ if (!defined("FRAMEWORKS_ART_FUNCTIONS_CONFIG")):
             return null;
         }
 
-        $module_handler =& xoops_getHandler('module');
+        $module_handler = xoops_getHandler('module');
         if (!$module = $module_handler->getByDirname($dirname)) {
             trigger_error("Module '{$dirname}' does not exist", E_USER_WARNING);
 
             return null;
         }
 
-        $config_handler =& xoops_getHandler('config');
+        $config_handler = xoops_getHandler('config');
         $criteria       = new CriteriaCompo(new Criteria('conf_modid', $module->getVar('mid')));
         $configs        = $config_handler->getConfigs($criteria);
         foreach (array_keys($configs) as $i) {

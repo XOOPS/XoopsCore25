@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright           The XOOPS Project (http://xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @subpackage          auth
  * @since               2.0
@@ -180,7 +180,7 @@ class XoopsAuthLdap extends XoopsAuth
     {
         $this->_dao = $dao;
         // The config handler object allows us to look at the configuration options that are stored in the database
-        $config_handler =& xoops_getHandler('config');
+        $config_handler = xoops_getHandler('config');
         $config         = $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
         $confcount      = count($config);
         foreach ($config as $key => $val) {

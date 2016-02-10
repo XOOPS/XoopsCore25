@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             class
  * @since               2.0.0
  * @author              Kazumi Ono (http://www.myweb.ne.jp/, http://jp.xoops.org/)
@@ -51,7 +51,7 @@ class MyTextSanitizerExtension
      */
     public static function loadConfig($path = null)
     {
-        $ts   =& MyTextSanitizer::getInstance();
+        $ts   = MyTextSanitizer::getInstance();
         $path = str_replace(DIRECTORY_SEPARATOR, '/', $path);
         if (false === strpos($path, '/')) {
             if (is_dir($ts->path_basic . '/' . $path)) {
@@ -379,7 +379,7 @@ class MyTextSanitizer
      */
     public function truncate($text)
     {
-        $instance =& MyTextSanitizer::getInstance();
+        $instance = MyTextSanitizer::getInstance();
         if (empty($text) || empty($instance->config['truncate_length']) || strlen($text) < $instance->config['truncate_length']) {
             return $text;
         }

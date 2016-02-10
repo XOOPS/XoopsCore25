@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @subpackage          Xoop Notifications Select
  * @since               2.0.0
@@ -29,7 +29,7 @@ if ($xoops_notification['show']) {
     $categories  =& notificationSubscribableCategoryInfo();
     $event_count = 0;
     if (!empty($categories)) {
-        $notification_handler =& xoops_getHandler('notification');
+        $notification_handler = xoops_getHandler('notification');
         foreach ($categories as $category) {
             $section['name']        = $category['name'];
             $section['title']       = $category['title'];

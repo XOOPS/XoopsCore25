@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version             $Id: admin.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 $xoopsOption['pagetype'] = 'admin';
@@ -71,7 +71,7 @@ if (!isset($xoopsConfig['admin_warnings_enable']) || $xoopsConfig['admin_warning
 
 if (!empty($_GET['xoopsorgnews'])) {
     // Multiple feeds
-    $myts     =& MyTextSanitizer::getInstance();
+    $myts     = MyTextSanitizer::getInstance();
     $rssurl   = array();
     $rssurl[] = 'http://sourceforge.net/export/rss2_projnews.php?group_id=41586&rss_fulltext=1';
     $rssurl[] = 'http://www.xoops.org/backend.php';

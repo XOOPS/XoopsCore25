@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             profile
  * @since               2.3.0
  * @author              Jan Pedersen
@@ -45,7 +45,7 @@ function profile_getFieldForm(ProfileField $field, $action = false)
     if (!$field->isNew()) {
         $fieldcat_id = $field->getVar('cat_id');
     }
-    $category_handler =& xoops_getModuleHandler('category');
+    $category_handler = xoops_getModuleHandler('category');
     $cat_select       = new XoopsFormSelect(_PROFILE_AM_CATEGORY, 'field_category', $fieldcat_id);
     $cat_select->addOption(0, _PROFILE_AM_DEFAULT);
     $cat_select->addOptionArray($category_handler->getList());
@@ -235,7 +235,7 @@ function profile_getFieldForm(ProfileField $field, $action = false)
         }
     }
 
-    $groupperm_handler =& xoops_getHandler('groupperm');
+    $groupperm_handler = xoops_getHandler('groupperm');
     $searchable_types  = array(
         'textbox',
         'select',
@@ -259,7 +259,7 @@ function profile_getFieldForm(ProfileField $field, $action = false)
         $form->addElement(new XoopsFormRadioYN(_PROFILE_AM_REQUIRED, 'field_required', $field->getVar('field_required', 'e')));
         $regstep_select = new XoopsFormSelect(_PROFILE_AM_PROF_REGISTER, 'step_id', $field->getVar('step_id', 'e'));
         $regstep_select->addOption(0, _NO);
-        $regstep_handler =& xoops_getModuleHandler('regstep');
+        $regstep_handler = xoops_getModuleHandler('regstep');
         $regstep_select->addOptionArray($regstep_handler->getList());
         $form->addElement($regstep_select);
     }
@@ -291,7 +291,7 @@ function profile_getRegisterForm(XoopsUser $user, $profile, $step = null)
 
     include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
     if (empty($GLOBALS['xoopsConfigUser'])) {
-        $config_handler             =& xoops_getHandler('config');
+        $config_handler             = xoops_getHandler('config');
         $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
     }
     $action    = $_SERVER['REQUEST_URI'];
@@ -322,7 +322,7 @@ function profile_getRegisterForm(XoopsUser $user, $profile, $step = null)
     }
 
     // Dynamic fields
-    $profile_handler              =& xoops_getModuleHandler('profile');
+    $profile_handler              = xoops_getModuleHandler('profile');
     $fields                       = $profile_handler->loadFields();
     $_SESSION['profile_required'] = array();
     foreach (array_keys($fields) as $i) {
@@ -341,7 +341,7 @@ function profile_getRegisterForm(XoopsUser $user, $profile, $step = null)
     ksort($elements);
 
     // Get categories
-    $cat_handler =& xoops_getModuleHandler('category');
+    $cat_handler = xoops_getModuleHandler('category');
     $categories  = $cat_handler->getObjects(null, true, false);
 
     foreach (array_keys($elements) as $k) {
@@ -395,7 +395,7 @@ function profile_getUserForm(XoopsUser $user, ProfileProfile $profile = null, $a
         $action = $_SERVER['REQUEST_URI'];
     }
     if (empty($GLOBALS['xoopsConfigUser'])) {
-        $config_handler             =& xoops_getHandler('config');
+        $config_handler             = xoops_getHandler('config');
         $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
     }
 
@@ -405,16 +405,16 @@ function profile_getUserForm(XoopsUser $user, ProfileProfile $profile = null, $a
 
     $form = new XoopsThemeForm($title, 'userinfo', $action, 'post', true);
 
-    $profile_handler =& xoops_getModuleHandler('profile');
+    $profile_handler = xoops_getModuleHandler('profile');
     // Dynamic fields
     if (!$profile) {
-        $profile_handler =& xoops_getModuleHandler('profile', 'profile');
+        $profile_handler = xoops_getModuleHandler('profile', 'profile');
         $profile         = $profile_handler->get($user->getVar('uid'));
     }
     // Get fields
     $fields = $profile_handler->loadFields();
     // Get ids of fields that can be edited
-    $gperm_handler   =& xoops_getHandler('groupperm');
+    $gperm_handler   = xoops_getHandler('groupperm');
     $editable_fields = $gperm_handler->getItemIds('profile_edit', $GLOBALS['xoopsUser']->getGroups(), $GLOBALS['xoopsModule']->getVar('mid'));
 
     if ($user->isNew() || $GLOBALS['xoopsUser']->isAdmin()) {
@@ -455,7 +455,7 @@ function profile_getUserForm(XoopsUser $user, ProfileProfile $profile = null, $a
     $elements[0][] = array('element' => new XoopsFormHidden('op', 'save'), 'required' => 0);
     $weights[0][]  = 0;
 
-    $cat_handler    =& xoops_getModuleHandler('category');
+    $cat_handler    = xoops_getModuleHandler('category');
     $categories     = array();
     $all_categories = $cat_handler->getObjects(null, true, false);
     $count_fields   = count($fields);
@@ -487,7 +487,7 @@ function profile_getUserForm(XoopsUser $user, ProfileProfile $profile = null, $a
 
     if ($GLOBALS['xoopsUser'] && $GLOBALS['xoopsUser']->isAdmin()) {
         xoops_loadLanguage('admin', 'profile');
-        $gperm_handler =& xoops_getHandler('groupperm');
+        $gperm_handler = xoops_getHandler('groupperm');
         //If user has admin rights on groups
         include_once $GLOBALS['xoops']->path('modules/system/constants.php');
         if ($gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_GROUP, $GLOBALS['xoopsUser']->getGroups(), 1)) {
@@ -530,7 +530,7 @@ function profile_getStepForm(ProfileRegstep $step = null, $action = false)
         $action = $_SERVER['REQUEST_URI'];
     }
     if (empty($GLOBALS['xoopsConfigUser'])) {
-        $config_handler             =& xoops_getHandler('config');
+        $config_handler             = xoops_getHandler('config');
         $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
     }
     include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');

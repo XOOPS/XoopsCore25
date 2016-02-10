@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Kazumi Ono <onokazu@xoops.org>
  * @author              Skalpa Keo <skalpa@xoops.org>
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
@@ -282,7 +282,7 @@ class XoopsTpl extends Smarty
  */
 function xoops_template_touch($tpl_id, $clear_old = true)
 {
-    $tplfile_handler = &xoops_getHandler('tplfile');
+    $tplfile_handler = xoops_getHandler('tplfile');
     $tplfile         =& $tplfile_handler->get($tpl_id);
 
     if (is_object($tplfile)) {

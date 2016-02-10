@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
@@ -135,7 +135,7 @@ $cform->addElement(new XoopsFormHidden('com_mode', $com_mode));
 if ('system' !== $xoopsModule->getVar('dirname')) {
     $comment_config = $xoopsModule->getInfo('comments');
     if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
-        $myts =& MyTextSanitizer::getInstance();
+        $myts = MyTextSanitizer::getInstance();
         foreach ($comment_config['extraParams'] as $extra_param) {
             // This routine is included from forms accessed via both GET and POST
             $hidden_value = '';

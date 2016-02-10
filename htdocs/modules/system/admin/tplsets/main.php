@@ -68,7 +68,7 @@ switch ($op) {
         $form = new XoopsThemeForm(_AM_SYSTEM_TEMPLATES_GENERATE, "form", 'admin.php?fct=tplsets', "post", true);
 
         $ele            = new XoopsFormSelect(_AM_SYSTEM_TEMPLATES_SET, 'tplset', $GLOBALS['xoopsConfig']['template_set']);
-        $tplset_handler =& xoops_getHandler('tplset');
+        $tplset_handler = xoops_getHandler('tplset');
         $tplsetlist     = $tplset_handler->getList();
         asort($tplsetlist);
         foreach ($tplsetlist as $key => $name) {
@@ -79,7 +79,7 @@ switch ($op) {
         $form->addElement(new XoopsFormRadioYN(_AM_SYSTEM_TEMPLATES_FORCE_GENERATED, 'force_generated', 0, _YES, _NO), true);
 
         $modules        = new XoopsFormSelect(_AM_SYSTEM_TEMPLATES_SELECT_MODULES, 'select_modules');
-        $module_handler =& xoops_getHandler('module');
+        $module_handler = xoops_getHandler('module');
         $criteria       = new CriteriaCompo(new Criteria('isactive', 1));
         $moduleslist    = $module_handler->getList($criteria, true);
         $modules->addOption(0, _AM_SYSTEM_TEMPLATES_ALL_MODULES);
@@ -124,17 +124,17 @@ switch ($op) {
 
                 $tplset = system_CleanVars($POST, 'tplset', 'default', 'string');
 
-                //on cr�e uniquement les templates qui n'existent pas
-                $module_handler =& xoops_getHandler('module');
-                $tplset_handler =& xoops_getHandler('tplset');
-                $tpltpl_handler =& xoops_getHandler('tplfile');
+                //on crée uniquement les templates qui n'existent pas
+                $module_handler = xoops_getHandler('module');
+                $tplset_handler = xoops_getHandler('tplset');
+                $tpltpl_handler = xoops_getHandler('tplfile');
 
                 $criteria = new CriteriaCompo();
                 $criteria->add(new Criteria('tplset_name', $tplset));
                 $tplsets_arr = $tplset_handler->getObjects();
                 $tcount      = $tplset_handler->getCount();
 
-                $tpltpl_handler =& xoops_getHandler('tplfile');
+                $tpltpl_handler = xoops_getHandler('tplfile');
                 $installed_mods = $tpltpl_handler->getModuleTplCount($tplset);
 
                 //all templates or only one template
@@ -338,7 +338,7 @@ switch ($op) {
 
             $form = new XoopsThemeForm(_AM_SYSTEM_TEMPLATES_SELECT_TEMPLATES, "form", 'admin.php?fct=tplsets', "post", true);
 
-            $tpltpl_handler =& xoops_getHandler('tplfile');
+            $tpltpl_handler = xoops_getHandler('tplfile');
             $templates_arr  =& $tpltpl_handler->find($tplset, '', null, $_REQUEST['select_modules']);
 
             $modules = new XoopsFormSelect(_AM_SYSTEM_TEMPLATES_SELECT_TEMPLATES, 'select_templates_modules', null, 10, true);

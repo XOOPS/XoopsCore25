@@ -9,7 +9,7 @@ if (isset($_GET['num'])) {
     $_SERVER['REQUEST_URI'] = 'admin/center.php?page=center';
 }
 
-$myts =& MyTextSanitizer::getInstance();
+$myts = MyTextSanitizer::getInstance();
 $db   =& XoopsDatabaseFactory::getDatabaseConnection();
 
 // GET vars

@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
@@ -410,7 +410,7 @@ class XoopsObject
             return $ret;
         }
         $ret = $this->vars[$key]['value'];
-        $ts  =& MyTextSanitizer::getInstance();
+        $ts  = MyTextSanitizer::getInstance();
         switch ($this->vars[$key]['data_type']) {
             case XOBJ_DTYPE_UNICODE_TXTBOX:
             case XOBJ_DTYPE_TXTBOX:
@@ -689,7 +689,7 @@ class XoopsObject
      */
     public function cleanVars()
     {
-        $ts              =& MyTextSanitizer::getInstance();
+        $ts              = MyTextSanitizer::getInstance();
         $existing_errors = $this->getErrors();
         $this->_errors   = array();
         foreach ($this->vars as $k => $v) {
@@ -921,7 +921,7 @@ class XoopsObject
         xoops_load('XoopsCache');
         $class = get_class($this);
         if (!$modules_active = XoopsCache::read('system_modules_active')) {
-            $module_handler =& xoops_getHandler('module');
+            $module_handler = xoops_getHandler('module');
             $modules_obj    = $module_handler->getObjects(new Criteria('isactive', 1));
             $modules_active = array();
             foreach (array_keys($modules_obj) as $key) {

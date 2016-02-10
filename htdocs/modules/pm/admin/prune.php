@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             pm
  * @since               2.3.0
  * @author              Jan Pedersen
@@ -24,7 +24,7 @@ $indexAdmin = new ModuleAdmin();
 echo $indexAdmin->addNavigation('prune.php');
 
 $op         = isset($_REQUEST['op']) ? $_REQUEST['op'] : "form";
-$pm_handler =& xoops_getModuleHandler('message');
+$pm_handler = xoops_getModuleHandler('message');
 
 switch ($op) {
     default:

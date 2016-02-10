@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             system
  * @version             $Id: block.php 13090 2015-06-16 20:44:29Z beckmi $
  */
@@ -50,14 +50,14 @@ class SystemBlock extends XoopsBlock
             $op = 'save';
         } else {
             // Search modules
-            $blocklinkmodule_handler =& xoops_getModuleHandler('blocklinkmodule');
+            $blocklinkmodule_handler = xoops_getModuleHandler('blocklinkmodule');
             $criteria                = new CriteriaCompo(new Criteria('block_id', $this->getVar('bid')));
             $blocklinkmodule         = $blocklinkmodule_handler->getObjects($criteria);
             foreach ($blocklinkmodule as $link) {
                 $modules[] = $link->getVar('module_id');
             }
             // Saerch perms
-            $groupperm_handler =& xoops_getHandler('groupperm');
+            $groupperm_handler = xoops_getHandler('groupperm');
             $groups            =& $groupperm_handler->getGroupIds('block_read', $this->getVar('bid'));
             switch ($mode) {
                 case 'edit':
@@ -101,7 +101,7 @@ class SystemBlock extends XoopsBlock
         $form->addElement(new XoopsFormRadioYN(_AM_SYSTEM_BLOCKS_VISIBLE, 'visible', $this->getVar('visible')));
         // Visible In
         $mod_select     = new XoopsFormSelect(_AM_SYSTEM_BLOCKS_VISIBLEIN, 'modules', $modules, 5, true);
-        $module_handler =& xoops_getHandler('module');
+        $module_handler = xoops_getHandler('module');
         $criteria       = new CriteriaCompo(new Criteria('hasmain', 1));
         $criteria->add(new Criteria('isactive', 1));
         $module_list     = $module_handler->getList($criteria);
@@ -135,7 +135,7 @@ class SystemBlock extends XoopsBlock
             }
         } else {
             if ($this->getVar('template') !== '') {
-                $tplfile_handler =& xoops_getHandler('tplfile');
+                $tplfile_handler = xoops_getHandler('tplfile');
                 $btemplate       = $tplfile_handler->find($GLOBALS['xoopsConfig']['template_set'], 'block', $this->getVar('bid'));
                 if (count($btemplate) > 0) {
                     $form->addElement(new XoopsFormLabel(_AM_SYSTEM_BLOCKS_CONTENT, '<a href="' . XOOPS_URL . '/modules/system/admin.php?fct=tplsets&amp;op=edittpl&amp;id=' . $btemplate[0]->getVar('tpl_id') . '">' . _AM_SYSTEM_BLOCKS_EDITTPL . '</a>'));
@@ -270,12 +270,12 @@ class SystemBlock extends XoopsBlock
 
                     return str_replace('{X_SITEURL}', XOOPS_URL . '/', $content);
                 } elseif ($c_type === 'S') {
-                    $myts    =& MyTextSanitizer::getInstance();
+                    $myts    = MyTextSanitizer::getInstance();
                     $content = str_replace('{X_SITEURL}', XOOPS_URL . '/', $this->getVar('content', 'n'));
 
                     return $myts->displayTarea($content, 1, 1);
                 } else {
-                    $myts    =& MyTextSanitizer::getInstance();
+                    $myts    = MyTextSanitizer::getInstance();
                     $content = str_replace('{X_SITEURL}', XOOPS_URL . '/', $this->getVar('content', 'n'));
 
                     return $myts->displayTarea($content, 1, 0);

@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @subpackage          form
  * @since               2.0.0
@@ -184,7 +184,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea
     {
         $textarea_id = $this->getName();
         $code        = "<a name='moresmiley'></a>" . "<img src='" . XOOPS_URL . "/images/url.gif' alt='" . _XOOPS_FORM_ALT_URL . "' title='" . _XOOPS_FORM_ALT_URL . "' onclick='xoopsCodeUrl(\"{$textarea_id}\", \"" . htmlspecialchars(_ENTERURL, ENT_QUOTES) . "\", \"" . htmlspecialchars(_ENTERWEBTITLE, ENT_QUOTES) . "\");' onmouseover='style.cursor=\"hand\"'/>&nbsp;" . "<img src='" . XOOPS_URL . "/images/email.gif' alt='" . _XOOPS_FORM_ALT_EMAIL . "' title='" . _XOOPS_FORM_ALT_EMAIL . "' onclick='xoopsCodeEmail(\"{$textarea_id}\", \"" . htmlspecialchars(_ENTEREMAIL, ENT_QUOTES) . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;" . "<img src='" . XOOPS_URL . "/images/imgsrc.gif' alt='" . _XOOPS_FORM_ALT_IMG . "' title='" . _XOOPS_FORM_ALT_IMG . "' onclick='xoopsCodeImg(\"{$textarea_id}\", \"" . htmlspecialchars(_ENTERIMGURL, ENT_QUOTES) . "\", \"" . htmlspecialchars(_ENTERIMGPOS, ENT_QUOTES) . "\", \"" . htmlspecialchars(_IMGPOSRORL, ENT_QUOTES) . "\", \"" . htmlspecialchars(_ERRORIMGPOS, ENT_QUOTES) . "\", \"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES) . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;" . "<img src='" . XOOPS_URL . "/images/image.gif' alt='" . _XOOPS_FORM_ALT_IMAGE . "' title='" . _XOOPS_FORM_ALT_IMAGE . "' onclick='openWithSelfMain(\"" . XOOPS_URL . "/imagemanager.php?target={$textarea_id}\",\"imgmanager\",400,430);'  onmouseover='style.cursor=\"hand\"'/>&nbsp;" . "<img src='" . XOOPS_URL . "/images/smiley.gif' alt='" . _XOOPS_FORM_ALT_SMILEY . "' title='" . _XOOPS_FORM_ALT_SMILEY . "' onclick='openWithSelfMain(\"" . XOOPS_URL . "/misc.php?action=showpopups&amp;type=smilies&amp;target={$textarea_id}\",\"smilies\",300,475);'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
-        $myts        = &MyTextSanitizer::getInstance();
+        $myts        = MyTextSanitizer::getInstance();
 
         $extensions = array_filter($myts->config['extensions']);
         foreach (array_keys($extensions) as $key) {

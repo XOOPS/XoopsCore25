@@ -11,9 +11,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license             GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Andricq Nicolas (AKA MusS)
  * @package             system
  * @version             $Id: cookie.php 13082 2015-06-06 21:59:41Z beckmi $

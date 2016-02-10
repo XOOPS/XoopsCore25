@@ -14,8 +14,8 @@ xoops_load('gui', 'system');
 /*
  * Xoops Cpanel default GUI class
  *
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @copyright   (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package     system
  * @usbpackage  GUI
  * @since       2.4
@@ -142,7 +142,7 @@ class XoopsGuiDefault extends XoopsSystemGui
         $tpl->assign('moddir', $moddir);
 
         // add MODULES  Menu items
-        $module_handler =& xoops_getHandler('module');
+        $module_handler = xoops_getHandler('module');
         $criteria       = new CriteriaCompo();
         $criteria->add(new Criteria('hasadmin', 1));
         $criteria->add(new Criteria('isactive', 1));
@@ -150,7 +150,7 @@ class XoopsGuiDefault extends XoopsSystemGui
         $mods = $module_handler->getObjects($criteria);
 
         $menu               = array();
-        $moduleperm_handler =& xoops_getHandler('groupperm');
+        $moduleperm_handler = xoops_getHandler('groupperm');
         foreach ($mods as $mod) {
             $rtn        = array();
             $modOptions = array();                                                         //add for sub menus

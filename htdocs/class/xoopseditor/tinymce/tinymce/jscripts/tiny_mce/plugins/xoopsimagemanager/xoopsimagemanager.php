@@ -3,7 +3,7 @@
  *  Xoopsemotions plugin for tinymce
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license             GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             class / xoopseditor
  * @subpackage          tinymce / xoops plugins
  * @since               2.3.0
@@ -28,12 +28,12 @@ include_once XOOPS_ROOT_PATH . "/modules/system/constants.php";
 // check user/group
 $admin = false;
 
-$gperm_handler =& xoops_getHandler('groupperm');
+$gperm_handler = xoops_getHandler('groupperm');
 $groups        = is_object($GLOBALS["xoopsUser"]) ? $GLOBALS["xoopsUser"]->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 $admin         = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_IMAGE, $groups);
 
 // check categories readability/writability by group
-$imgcat_handler =& xoops_getHandler('imagecategory');
+$imgcat_handler = xoops_getHandler('imagecategory');
 $catreadlist    =& $imgcat_handler->getList($groups, 'imgcat_read', 1);    // get readable categories
 $catwritelist   =& $imgcat_handler->getList($groups, 'imgcat_write', 1);  // get writable categories
 

@@ -38,8 +38,8 @@ $nb_group = xoops_getModuleOption('groups_pager', 'system');
 // Get Action type
 $op = system_CleanVars($_REQUEST, 'op', 'list', 'string');
 // Get groups handler
-$groups_Handler =& xoops_getModuleHandler("group", "system");
-$member_handler = &xoops_getHandler('member');
+$groups_Handler = xoops_getModuleHandler("group", "system");
+$member_handler = xoops_getHandler('member');
 // Define main template
 $xoopsOption['template_main'] = 'system_groups.tpl';
 // Call Header
@@ -78,7 +78,7 @@ switch ($op) {
                 $groups['groups_id']   = $groups_id;
                 $groups['name']        = $groups_arr[$i]->getVar("name");
                 $groups['description'] = $groups_arr[$i]->getVar("description");
-                $member_handler        =& xoops_getHandler('member', 'system');
+                $member_handler        = xoops_getHandler('member', 'system');
                 if ($groups_id != 3) {
                     $group_id_arr[0]              = $groups_id;
                     $nb_users_by_groups           = $member_handler->getUserCountByGroupLink($group_id_arr);
@@ -152,7 +152,7 @@ switch ($op) {
         $read_mids     = system_CleanVars($_POST, 'read_mids', array(), 'array');
         $read_bids     = system_CleanVars($_POST, 'read_bids', array(), 'array');
 
-        $member_handler = &xoops_getHandler('member');
+        $member_handler = xoops_getHandler('member');
         $group          = &$member_handler->createGroup();
         $group->setVar('name', $_POST["name"]);
         $group->setVar('description', $_POST["desc"]);
@@ -165,7 +165,7 @@ switch ($op) {
             xoops_cp_footer();
         } else {
             $groupid       = $group->getVar('groupid');
-            $gperm_handler = &xoops_getHandler('groupperm');
+            $gperm_handler = xoops_getHandler('groupperm');
             if (count($system_catids) > 0) {
                 $admin_mids[] = 1;
                 foreach ($system_catids as $s_cid) {
@@ -216,7 +216,7 @@ switch ($op) {
         $read_mids     = system_CleanVars($_POST, 'read_mids', array(), 'array');
         $read_bids     = system_CleanVars($_POST, 'read_bids', array(), 'array');
 
-        $member_handler = &xoops_getHandler('member');
+        $member_handler = xoops_getHandler('member');
         $gid            = system_CleanVars($_POST, 'g_id', 0, 'int');
         if ($gid > 0) {
             $group = $member_handler->getGroup($gid);
@@ -236,7 +236,7 @@ switch ($op) {
                 xoops_cp_footer();
             } else {
                 $groupid       = $group->getVar('groupid');
-                $gperm_handler = &xoops_getHandler('groupperm');
+                $gperm_handler = xoops_getHandler('groupperm');
                 $criteria      = new CriteriaCompo(new Criteria('gperm_groupid', $groupid));
                 $criteria->add(new Criteria('gperm_modid', 1));
                 $criteria2 = new CriteriaCompo(new Criteria('gperm_name', 'system_admin'));
@@ -298,10 +298,10 @@ switch ($op) {
                     redirect_header("admin.php?fct=groups", 3, implode(",", $GLOBALS["xoopsSecurity"]->getErrors()));
                 }
                 if ($groups_id > 0 && !in_array($groups_id, array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS))) {
-                    $member_handler = &xoops_getHandler('member');
+                    $member_handler = xoops_getHandler('member');
                     $group          = $member_handler->getGroup($groups_id);
                     $member_handler->deleteGroup($group);
-                    $gperm_handler = &xoops_getHandler('groupperm');
+                    $gperm_handler = xoops_getHandler('groupperm');
                     $gperm_handler->deleteByGroup($groups_id);
                     redirect_header('admin.php?fct=groups', 1, _AM_SYSTEM_GROUPS_DBUPDATED);
                 } else {

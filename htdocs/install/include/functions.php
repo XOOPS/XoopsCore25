@@ -1,10 +1,10 @@
 <?php
 /**
  * See the enclosed file license.txt for licensing information.
- * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
+ * If you did not receive this file, get it at http://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright    (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license          http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @license          GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package          installer
  * @since            2.3.0
  * @author           Haruki Setoyama  <haruki@planewave.org>
@@ -25,7 +25,7 @@ function install_acceptUser($hash = '')
     if (empty($uname) || empty($hash_login)) {
         return false;
     }
-    $memebr_handler =& xoops_getHandler('member');
+    $memebr_handler = xoops_getHandler('member');
     $user           = array_pop($memebr_handler->getUsers(new Criteria('uname', $uname)));
     if ($hash_login != md5($user->getVar('pass') . XOOPS_DB_NAME . XOOPS_DB_PASS . XOOPS_DB_PREFIX)) {
         return false;

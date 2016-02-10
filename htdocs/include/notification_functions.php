@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @subpackage          Xoop Notifications Functions
  * @since               2.0.0
@@ -39,10 +39,10 @@ function notificationEnabled($style, $module_id = null)
         if (!isset($module_id)) {
             return false;
         }
-        $module_handler =& xoops_getHandler('module');
+        $module_handler = xoops_getHandler('module');
         $module         =& $module_handler->get($module_id);
         if (!empty($module) && $module->getVar('hasnotification') == 1) {
-            $config_handler =& xoops_getHandler('config');
+            $config_handler = xoops_getHandler('config');
             $config         = $config_handler->getConfigsByCat(0, $module_id);
             $status         = $config['notification_enabled'];
         } else {
@@ -80,7 +80,7 @@ function &notificationCategoryInfo($category_name = '', $module_id = null)
         $module_id = !empty($xoopsModule) ? $xoopsModule->getVar('mid') : 0;
         $module    =& $xoopsModule;
     } else {
-        $module_handler =& xoops_getHandler('module');
+        $module_handler = xoops_getHandler('module');
         $module         = &$module_handler->get($module_id);
     }
     $not_config = &$module->getInfo('notification');
@@ -150,11 +150,11 @@ function &notificationEvents($category_name, $enabled_only, $module_id = null)
         $module_id = !empty($xoopsModule) ? $xoopsModule->getVar('mid') : 0;
         $module    =& $xoopsModule;
     } else {
-        $module_handler =& xoops_getHandler('module');
+        $module_handler = xoops_getHandler('module');
         $module         = $module_handler->get($module_id);
     }
     $not_config     = $module->getInfo('notification');
-    $config_handler = &xoops_getHandler('config');
+    $config_handler = xoops_getHandler('config');
     $mod_config     = $config_handler->getConfigsByCat(0, $module_id);
 
     $category =& notificationCategoryInfo($category_name, $module_id);
@@ -199,7 +199,7 @@ function &notificationEvents($category_name, $enabled_only, $module_id = null)
             $mail_template_dir = $dir;
 
             include_once $GLOBALS['xoops']->path('include/comment_constants.php');
-            $config_handler =& xoops_getHandler('config');
+            $config_handler = xoops_getHandler('config');
             $com_config     = $config_handler->getConfigsByCat(0, $module_id);
             if (!$enabled_only) {
                 $insert_comment = true;
@@ -294,7 +294,7 @@ function &notificationEvents($category_name, $enabled_only, $module_id = null)
  **/
 function notificationEventEnabled(&$category, &$event, &$module)
 {
-    $config_handler =& xoops_getHandler('config');
+    $config_handler = xoops_getHandler('config');
     $mod_config     = $config_handler->getConfigsByCat(0, $module->getVar('mid'));
 
     if (is_array($mod_config['notification_events']) && $mod_config['notification_events'] != array()) {
@@ -302,7 +302,7 @@ function notificationEventEnabled(&$category, &$event, &$module)
         if (in_array($option_name, $mod_config['notification_events'])) {
             return true;
         }
-        $notification_handler = &xoops_getHandler('notification');
+        $notification_handler = xoops_getHandler('notification');
     }
 
     return false;

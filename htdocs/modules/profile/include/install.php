@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             profile
  * @since               2.3.0
  * @author              Jan Pedersen
@@ -120,7 +120,7 @@ function profile_install_addField($name, $title, $description, $category, $type,
 {
     global $module_id;
 
-    $profilefield_handler =& xoops_getModuleHandler('field', 'profile');
+    $profilefield_handler = xoops_getModuleHandler('field', 'profile');
     $obj                  = $profilefield_handler->create();
     $obj->setVar('field_name', $name, true);
     $obj->setVar('field_moduleid', $module_id, true);

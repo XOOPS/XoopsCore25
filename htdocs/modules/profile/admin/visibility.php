@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             profile
  * @since               2.3.0
  * @author              Jan Pedersen
@@ -27,8 +27,8 @@ xoops_cp_header();
 
 $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : "visibility";
 
-$visibility_handler =& xoops_getModuleHandler('visibility');
-$field_handler      =& xoops_getModuleHandler('field');
+$visibility_handler = xoops_getModuleHandler('visibility');
+$field_handler      = xoops_getModuleHandler('field');
 $fields             = $field_handler->getList();
 
 if (isset($_REQUEST['submit'])) {
@@ -64,7 +64,7 @@ $criteria->setSort('field_id');
 $criteria->setOrder('DESC');
 $visibilities = $visibility_handler->getAll($criteria, false, false, true);
 
-$member_handler =& xoops_getHandler('member');
+$member_handler = xoops_getHandler('member');
 $groups         = $member_handler->getGroupList();
 $groups[0]      = _PROFILE_AM_FIELDVISIBLETOALL;
 asort($groups);

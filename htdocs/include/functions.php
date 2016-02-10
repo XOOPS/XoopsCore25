@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
  * @version             $Id: functions.php 13091 2015-06-16 21:08:34Z beckmi $
@@ -26,7 +26,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  *
  * @return bool
  */
-function &xoops_getHandler($name, $optional = false)
+function xoops_getHandler($name, $optional = false)
 {
     static $handlers;
     $name = strtolower(trim($name));
@@ -59,7 +59,7 @@ function &xoops_getHandler($name, $optional = false)
  * @param mixed $optional
  * @return bool
  */
-function &xoops_getModuleHandler($name = null, $module_dir = null, $optional = false)
+function xoops_getModuleHandler($name = null, $module_dir = null, $optional = false)
 {
     static $handlers;
     // if $module_dir is not specified
@@ -191,7 +191,7 @@ function xoops_getActiveModules()
 function xoops_setActiveModules()
 {
     xoops_load('XoopsCache');
-    $module_handler =& xoops_getHandler('module');
+    $module_handler = xoops_getHandler('module');
     $modules_obj    = $module_handler->getObjects(new Criteria('isactive', 1));
     $modules_active = array();
     foreach (array_keys($modules_obj) as $key) {
@@ -233,7 +233,7 @@ function xoops_header($closehead = true)
 {
     global $xoopsConfig, $xoopsTheme, $xoopsConfigMetaFooter;
 
-    $myts =& MyTextSanitizer::getInstance();
+    $myts = MyTextSanitizer::getInstance();
     if (!headers_sent()) {
         header('Content-Type:text/html; charset=' . _CHARSET);
         header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
@@ -823,7 +823,7 @@ function &xoops_getMailer()
 function xoops_getrank($rank_id = 0, $posts = 0)
 {
     $db      =& XoopsDatabaseFactory::getDatabaseConnection();
-    $myts    =& MyTextSanitizer::getInstance();
+    $myts    = MyTextSanitizer::getInstance();
     $rank_id = (int)($rank_id);
     $posts   = (int)($posts);
     if ($rank_id != 0) {
@@ -865,7 +865,7 @@ function xoops_substr($str, $start, $length, $trimmarker = '...')
  */
 function xoops_notification_deletebymodule($module_id)
 {
-    $notification_handler =& xoops_getHandler('notification');
+    $notification_handler = xoops_getHandler('notification');
 
     return $notification_handler->unsubscribeByModule($module_id);
 }
@@ -878,7 +878,7 @@ function xoops_notification_deletebymodule($module_id)
  */
 function xoops_notification_deletebyuser($user_id)
 {
-    $notification_handler =& xoops_getHandler('notification');
+    $notification_handler = xoops_getHandler('notification');
 
     return $notification_handler->unsubscribeByUser($user_id);
 }
@@ -893,7 +893,7 @@ function xoops_notification_deletebyuser($user_id)
  */
 function xoops_notification_deletebyitem($module_id, $category, $item_id)
 {
-    $notification_handler =& xoops_getHandler('notification');
+    $notification_handler = xoops_getHandler('notification');
 
     return $notification_handler->unsubscribeByItem($module_id, $category, $item_id);
 }
@@ -907,7 +907,7 @@ function xoops_notification_deletebyitem($module_id, $category, $item_id)
  */
 function xoops_comment_count($module_id, $item_id = null)
 {
-    $comment_handler =& xoops_getHandler('comment');
+    $comment_handler = xoops_getHandler('comment');
     $criteria        = new CriteriaCompo(new Criteria('com_modid', (int)($module_id)));
     if (isset($item_id)) {
         $criteria->add(new Criteria('com_itemid', (int)($item_id)));
@@ -926,7 +926,7 @@ function xoops_comment_count($module_id, $item_id = null)
 function xoops_comment_delete($module_id, $item_id)
 {
     if ((int)($module_id) > 0 && (int)($item_id) > 0) {
-        $comment_handler =& xoops_getHandler('comment');
+        $comment_handler = xoops_getHandler('comment');
         $comments        =& $comment_handler->getByItemId($module_id, $item_id);
         if (is_array($comments)) {
             $count       = count($comments);
@@ -940,7 +940,7 @@ function xoops_comment_delete($module_id, $item_id)
                     }
                 }
             }
-            $member_handler =& xoops_getHandler('member');
+            $member_handler = xoops_getHandler('member');
             foreach ($deleted_num as $user_id => $post_num) {
                 // update user posts
                 $com_poster = $member_handler->getUser($user_id);
@@ -972,7 +972,7 @@ function xoops_groupperm_deletebymoditem($module_id, $perm_name, $item_id = null
     if ((int)($module_id) <= 1) {
         return false;
     }
-    $gperm_handler =& xoops_getHandler('groupperm');
+    $gperm_handler = xoops_getHandler('groupperm');
 
     return $gperm_handler->deleteByModule($module_id, $perm_name, $item_id);
 }
@@ -1055,7 +1055,7 @@ function xoops_getConfigOption($option, $type = 'XOOPS_CONF')
         return $coreOptions[$option];
     }
     $ret            = false;
-    $config_handler =& xoops_getHandler('config');
+    $config_handler = xoops_getHandler('config');
     $configs        = $config_handler->getConfigsByCat((is_array($type)) ? $type : constant($type));
     if ($configs) {
         if (isset($configs[$option])) {
@@ -1106,9 +1106,9 @@ function xoops_getModuleOption($option, $dirname = '')
     }
 
     $ret            = false;
-    $module_handler =& xoops_getHandler('module');
+    $module_handler = xoops_getHandler('module');
     $module         =& $module_handler->getByDirname($dirname);
-    $config_handler =& xoops_getHandler('config');
+    $config_handler = xoops_getHandler('config');
     if (is_object($module)) {
         $moduleConfig =& $config_handler->getConfigsByCat(0, $module->getVar('mid'));
         if (isset($moduleConfig[$option])) {

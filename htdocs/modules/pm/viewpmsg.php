@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             pm
  * @since               2.3.0
  * @author              Jan Pedersen
@@ -31,7 +31,7 @@ $valid_op_requests = array('out', 'save', 'in');
 $_REQUEST['op']    = !empty($_REQUEST['op']) && in_array($_REQUEST['op'], $valid_op_requests) ? $_REQUEST['op'] : 'in';
 
 $start      = empty($_REQUEST["start"]) ? 0 : (int)($_REQUEST["start"]);
-$pm_handler =& xoops_getModuleHandler('message');
+$pm_handler = xoops_getModuleHandler('message');
 
 if (isset($_POST['delete_messages']) && (isset($_POST['msg_id']) || isset($_POST['msg_ids']))) {
     if (!$GLOBALS['xoopsSecurity']->check()) {
@@ -202,7 +202,7 @@ if (count($pm_arr) > 0) {
             $uids[] = $pm_arr[$i]['from_userid'];
         }
     }
-    $member_handler =& xoops_getHandler('member');
+    $member_handler = xoops_getHandler('member');
     $senders        = $member_handler->getUserList(new Criteria('uid', "(" . implode(", ", array_unique($uids)) . ")", "IN"));
     foreach (array_keys($pm_arr) as $i) {
         $message              = $pm_arr[$i];

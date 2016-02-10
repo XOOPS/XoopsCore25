@@ -5,7 +5,7 @@ xoops_cp_header();
 if (!isset($_REQUEST['uid'])) {
     redirect_header("index.php", 2, _PROFILE_AM_NOSELECTION);
 }
-$member_handler =& xoops_getHandler('member');
+$member_handler = xoops_getHandler('member');
 $user           = $member_handler->getUser($_REQUEST['uid']);
 if (!$user || $user->isNew()) {
     redirect_header("index.php", 2, _PROFILE_AM_USERDONEXIT);

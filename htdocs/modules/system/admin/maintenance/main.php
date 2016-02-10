@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Cointin Maxime (AKA Kraven30)
  * @package             system
  * @version             $Id: main.php 13082 2015-06-06 21:59:41Z beckmi $
@@ -95,7 +95,7 @@ switch ($op) {
 
         $dump_tray->addElement(new xoopsFormLabel('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . _AM_SYSTEM_MAINTENANCE_DUMP_OR . '&nbsp;'));
         $ele            = new XoopsFormSelect('&nbsp;&nbsp;', 'dump_modules', '', 7, true);
-        $module_handler =& xoops_getHandler('module');
+        $module_handler = xoops_getHandler('module');
         $criteria       = new CriteriaCompo(new Criteria('hasmain', 1));
         $criteria->add(new Criteria('isactive', 1));
         $moduleslist = $module_handler->getList($criteria, true);

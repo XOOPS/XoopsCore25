@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             core
  * @since               2.0.0
  * @version             $Id: notifications.php 13082 2015-06-06 21:59:41Z beckmi $
@@ -57,11 +57,11 @@ switch ($op) {
         // Get an array of all notifications for the selected user
         $criteria = new Criteria('not_uid', $uid);
         $criteria->setSort('not_modid,not_category,not_itemid');
-        $notification_handler =& xoops_getHandler('notification');
+        $notification_handler = xoops_getHandler('notification');
         $notifications        = $notification_handler->getObjects($criteria);
 
         // Generate the info for the template
-        $module_handler =& xoops_getHandler('module');
+        $module_handler = xoops_getHandler('module');
         include_once $GLOBALS['xoops']->path('include/notification_functions.php');
         $modules       = array();
         $prev_modid    = -1;
@@ -192,7 +192,7 @@ switch ($op) {
         if (empty($_POST['del_not'])) {
             redirect_header('notifications.php', 2, _NOT_NOTHINGTODELETE);
         }
-        $notification_handler =& xoops_getHandler('notification');
+        $notification_handler = xoops_getHandler('notification');
         foreach ($_POST['del_not'] as $n_array) {
             foreach ($n_array as $n) {
                 $notification =& $notification_handler->get($n);

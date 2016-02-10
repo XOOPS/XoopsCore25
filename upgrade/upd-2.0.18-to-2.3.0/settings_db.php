@@ -13,10 +13,10 @@
  * Database character set configuration page
  *
  * See the enclosed file license.txt for licensing information.
- * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
+ * If you did not receive this file, get it at http://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright    (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license          http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @license          GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package          upgrader
  * @since            2.3.0
  * @author           Skalpa Keo <skalpa@xoops.org>
@@ -83,7 +83,7 @@ function xoFormFieldCollation($name, $value, $label, $help = '')
 {
     $collations = getDbCollations();
 
-    $myts  =& MyTextSanitizer::getInstance();
+    $myts  = MyTextSanitizer::getInstance();
     $label = $myts->htmlspecialchars($label, ENT_QUOTES, _UPGRADE_CHARSET, false);
     $name  = $myts->htmlspecialchars($name, ENT_QUOTES, _UPGRADE_CHARSET, false);
     $value = $myts->htmlspecialchars($value, ENT_QUOTES);

@@ -14,7 +14,7 @@
  *  Xoops Form Class Elements
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @subpackage          form
  * @since               2.3.0
@@ -48,7 +48,7 @@ class XoopsFormSelectCheckGroup extends XoopsFormCheckBox
      */
     public function __construct($caption, $name, $value = null, $size = 1, $multiple = false)
     {
-        $member_handler   = &xoops_getHandler('member');
+        $member_handler   = xoops_getHandler('member');
         $this->userGroups = $member_handler->getGroupList();
         parent::__construct($caption, $name, $value, '', true);
         $this->columns = 3;

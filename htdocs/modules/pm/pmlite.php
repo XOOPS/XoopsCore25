@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             pm
  * @since               2.3.0
  * @author              Jan Pedersen
@@ -57,16 +57,16 @@ if (!is_object($GLOBALS['xoopsUser'])) {
 }
 xoops_header();
 
-$myts =& MyTextSanitizer::getInstance();
+$myts = MyTextSanitizer::getInstance();
 if ($op === "submit") {
-    $member_handler =& xoops_getHandler('member');
+    $member_handler = xoops_getHandler('member');
     $count          = $member_handler->getUserCount(new Criteria('uid', XoopsRequest::getInt('to_userid', 0, 'POST')));
     if ($count != 1) {
         echo "<br /><br /><div><h4>" . _PM_USERNOEXIST . "<br />";
         echo _PM_PLZTRYAGAIN . "</h4><br />";
         echo "[ <a href='javascript:history.go(-1)'>" . _PM_GOBACK . "</a> ]</div>";
     } elseif ($GLOBALS['xoopsSecurity']->check()) {
-        $pm_handler =& xoops_getModuleHandler('message', 'pm');
+        $pm_handler = xoops_getModuleHandler('message', 'pm');
         $pm         =& $pm_handler->create();
         $pm->setVar("msg_time", time());
         $msg_image = XoopsRequest::getCmd('icon', null, 'POST');
@@ -95,7 +95,7 @@ if ($op === "submit") {
     }
 } elseif ($reply == 1 || $send == 1 || $send2 == 1 || $sendmod == 1) {
     if ($reply == 1) {
-        $pm_handler =& xoops_getModuleHandler('message', 'pm');
+        $pm_handler = xoops_getModuleHandler('message', 'pm');
         $pm         =& $pm_handler->get($msg_id);
         if ($pm->getVar("to_userid") == $GLOBALS['xoopsUser']->getVar('uid')) {
             $pm_uname = XoopsUser::getUnameFromId($pm->getVar("from_userid"));

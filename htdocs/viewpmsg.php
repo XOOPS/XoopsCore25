@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             core
  * @since               2.0.0
  * @version             $Id: viewpmsg.php 13090 2015-06-16 20:44:29Z beckmi $
@@ -26,7 +26,7 @@ if (!is_object($xoopsUser)) {
     $errormessage = _PM_SORRY . "<br />" . _PM_PLZREG . "";
     redirect_header("user.php", 2, $errormessage);
 } else {
-    $pm_handler =& xoops_getHandler('privmessage');
+    $pm_handler = xoops_getHandler('privmessage');
     if (isset($_POST['delete_messages']) && (isset($_POST['msg_id']) || isset($_POST['msg_ids']))) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             echo implode('<br />', $GLOBALS['xoopsSecurity']->getErrors());

@@ -11,7 +11,7 @@
 /**
  * @copyright           The XUUPS Project http://sourceforge.net/projects/xuups/
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license             GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             Publisher
  * @since               1.0
  * @author              trabis <lusopoemas@gmail.com>
@@ -279,7 +279,7 @@ class PublisherCategory extends XoopsObject
         $tags['MODULE_NAME']   = $this->publisher->getModule()->getVar('name');
         $tags['CATEGORY_NAME'] = $this->name();
         $tags['CATEGORY_URL']  = $this->getCategoryUrl();
-        $notification_handler  =& xoops_getHandler('notification');
+        $notification_handler  = xoops_getHandler('notification');
         $notification_handler->triggerEvent('global_item', 0, 'category_created', $tags);
     }
 

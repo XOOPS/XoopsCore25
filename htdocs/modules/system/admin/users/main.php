@@ -38,13 +38,13 @@ include_once XOOPS_ROOT_PATH . "/modules/system/admin/users/users.php";
 // Get Action type
 $op = system_CleanVars($_REQUEST, 'op', 'default', 'string');
 
-$member_handler =& xoops_getHandler('member', 'system');
+$member_handler = xoops_getHandler('member', 'system');
 // Define main template
 $xoopsOption['template_main'] = 'system_users.tpl';
 // Call Header
 xoops_cp_header();
 
-$myts =& MyTextSanitizer::getInstance();
+$myts = MyTextSanitizer::getInstance();
 // Define Stylesheet
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . xoops_getModuleOption('jquery_theme', 'system') . '/ui.all.css');
@@ -89,7 +89,7 @@ switch ($op) {
             } elseif (!$member_handler->deleteUser($user)) {
                 xoops_error(sprintf(_AM_SYSTEM_USERS_NO_SUPP, $user->getVar("uname")));
             } else {
-                $online_handler =& xoops_getHandler('online');
+                $online_handler = xoops_getHandler('online');
                 $online_handler->destroy($uid);
                 // RMV-NOTIFY
                 xoops_notification_deletebyuser($uid);
@@ -125,7 +125,7 @@ switch ($op) {
                 } elseif (!$member_handler->deleteUser($user)) {
                     $error .= sprintf(_AM_SYSTEM_USERS_NO_SUPP, $user->getVar("uname"));
                 } else {
-                    $online_handler =& xoops_getHandler('online');
+                    $online_handler = xoops_getHandler('online');
                     $online_handler->destroy($del);
                     // RMV-NOTIFY
                     xoops_notification_deletebyuser($del);
@@ -216,7 +216,7 @@ switch ($op) {
                             //Add the webmaster's group to the groups array to prevent accidentally removing oneself from the webmaster's group
                             $_REQUEST['groups'][] = XOOPS_GROUP_ADMIN;
                         }
-                        $member_handler =& xoops_getHandler('member');
+                        $member_handler = xoops_getHandler('member');
                         foreach ($oldgroups as $groupid) {
                             $member_handler->removeUsersFromGroup($groupid, array($edituser->getVar('uid')));
                         }
@@ -236,7 +236,7 @@ switch ($op) {
             if (!$_REQUEST['username'] || !$_REQUEST['email'] || !$_REQUEST['password']) {
                 $adduser_errormsg = _AM_SYSTEM_USERS_YMCACF;
             } else {
-                $member_handler =& xoops_getHandler('member');
+                $member_handler = xoops_getHandler('member');
                 // make sure the username doesnt exist yet
                 if ($member_handler->getUserCount(new Criteria('uname', $myts->addSlashes($_REQUEST['username']))) > 0) {
                     $adduser_errormsg = 'User name ' . htmlspecialchars($_REQUEST['username']) . ' already exists';
@@ -353,7 +353,7 @@ switch ($op) {
             //$group_select = new XoopsFormSelectGroup(_AM_SYSTEM_USERS_GROUPS, "selgroups", null, false, 1, false);
             $group_select = new XoopsFormSelect(_AM_SYSTEM_USERS_GROUPS, "selgroups");
 
-            $group_handler =& xoops_getHandler('group');
+            $group_handler = xoops_getHandler('group');
             $group_arr     = $group_handler->getObjects();
             $group_select->addOption("", "--------------");
             foreach (array_keys($group_arr) as $i) {
@@ -763,7 +763,7 @@ switch ($op) {
                 $groups = array();
             }
             //print_r($groups);
-            $member_handler =& xoops_getHandler('member');
+            $member_handler = xoops_getHandler('member');
 
             if (empty($groups)) {
                 $users_count = $member_handler->getUserCount();
@@ -796,7 +796,7 @@ switch ($op) {
                     ' . _AM_SYSTEM_USERS_SEARCH_USER . '<input type="text" name="user_uname" value="' . $myts->htmlSpecialChars($user_uname) . '" size="15">
                     <select name="selgroups">
                         <option value="" selected="selected">' . _AM_SYSTEM_USERS_ALLGROUP . '</option>';
-            $group_handler =& xoops_getHandler('group');
+            $group_handler = xoops_getHandler('group');
             $group_arr     = $group_handler->getObjects();
             foreach (array_keys($group_arr) as $i) {
                 if ($group_arr[$i]->getVar("groupid") != 3) {
@@ -822,7 +822,7 @@ switch ($op) {
             //select groupe
             $form_select_groups = '<select  name="selgroups" id="selgroups"   style="display:none;"><option value="">---------</option>';
             //$module_array[0] = _AM_SYSTEM_USERS_COMMENTS_FORM_ALL_MODS;
-            $group_handler =& xoops_getHandler('group');
+            $group_handler = xoops_getHandler('group');
             $group_arr     = $group_handler->getObjects();
             foreach (array_keys($group_arr) as $i) {
                 if ($group_arr[$i]->getVar("groupid") != 3) {

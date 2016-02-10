@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @subpackage          comment
  * @since               2.0.0
@@ -56,7 +56,7 @@ class XoopsCommentRenderer
         $this->_tpl           = $tpl;
         $this->_useIcons      = $use_icons;
         $this->_doIconCheck   = $do_iconcheck;
-        $this->_memberHandler =& xoops_getHandler('member');
+        $this->_memberHandler = xoops_getHandler('member');
         $this->_statusText    = array(
             XOOPS_COMMENT_PENDING => '<span style="text-decoration: none; font-weight: bold; color: #00ff00;">' . _CM_PENDING . '</span>',
             XOOPS_COMMENT_ACTIVE  => '<span style="text-decoration: none; font-weight: bold; color: #ff0000;">' . _CM_ACTIVE . '</span>',

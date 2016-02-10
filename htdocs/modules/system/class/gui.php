@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             system
  * @subpackage          class
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
@@ -103,7 +103,7 @@ class XoopsSystemGui
 
                 $xoopsModule->loadAdminMenu();
                 // Get menu tab handler
-                $menu_handler =& xoops_getModuleHandler('menu', 'system');
+                $menu_handler = xoops_getModuleHandler('menu', 'system');
                 // Define top navigation
                 $menu_handler->addMenuTop(XOOPS_URL . "/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=" . $xoopsModule->getVar('mid', 'e'), _AM_SYSTEM_PREF);
                 $menu_handler->addMenuTop(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=" . $xoopsModule->getVar('dirname', 'e'), _AM_SYSTEM_UPDATE);

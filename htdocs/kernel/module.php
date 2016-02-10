@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
  * @version             $Id: module.php 13090 2015-06-16 20:44:29Z beckmi $
@@ -437,7 +437,7 @@ class XoopsModule extends XoopsObject
      */
     public static function &getByDirname($dirname)
     {
-        $modhandler =& xoops_getHandler('module');
+        $modhandler = xoops_getHandler('module');
         $inst       =& $modhandler->getByDirname($dirname);
 
         return $inst;

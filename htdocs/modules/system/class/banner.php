@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license     GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license     GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author      Gregory Mage (AKA Mage)
  * @package     system
  * @version     $Id: banner.php 13082 2015-06-06 21:59:41Z beckmi $
@@ -63,7 +63,7 @@ class SystemBanner extends XoopsObject
 
         $form = new XoopsThemeForm($title, 'form', $action, 'post', true);
 
-        $banner_client_Handler =& xoops_getModuleHandler('bannerclient', 'system');
+        $banner_client_Handler = xoops_getModuleHandler('bannerclient', 'system');
         $client_select         = new XoopsFormSelect(_AM_SYSTEM_BANNERS_CLINAMET, 'cid', $this->getVar('cid'));
         $client_select->addOptionArray($banner_client_Handler->getList());
         $form->addElement($client_select, true);

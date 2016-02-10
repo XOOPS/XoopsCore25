@@ -223,7 +223,7 @@ switch ($op) {
                     $crit->prefix = "u";
                     $criteria_object->add($crit, 'AND');
                 }
-                $member_handler =& xoops_getHandler('member');
+                $member_handler = xoops_getHandler('member');
                 $groups         = empty($_POST['mail_to_group']) ? array() : array_map("intval", $_POST['mail_to_group']);
                 $getusers       = $member_handler->getUsersByGroupLink($groups, $criteria_object, true);
                 $count_criteria = $member_handler->getUserCountByGroupLink($groups, $criteria_object);
@@ -246,7 +246,7 @@ switch ($op) {
 
             //OpenTable();
             if ($added_count > 0) {
-                $myts        =& MyTextSanitizer::getInstance();
+                $myts        = MyTextSanitizer::getInstance();
                 $xoopsMailer =& xoops_getMailer();
                 for ($i = 0; $i < $added_count; ++$i) {
                     $xoopsMailer->setToUsers($added[$i]);

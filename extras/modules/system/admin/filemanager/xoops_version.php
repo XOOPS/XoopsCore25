@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Maxime Cointin (AKA Kraven30)
  * @package             system
  * @version     $Id$
@@ -22,7 +22,7 @@ $modversion['description'] = _AM_SYSTEM_FILEMANAGER_DESC;
 $modversion['author']      = 'Maxime Cointin (AKA Kraven30)';
 $modversion['credits']     = 'The XOOPS Project';
 $modversion['help']        = 'page=filemanager';
-$modversion['license']     = 'http://www.fsf.org/copyleft/gpl.html';
+$modversion['license']     = 'http://www.gnu.org/licenses/gpl-2.0.html';
 $modversion['official']    = 1;
 $modversion['image']       = 'filemanager.png';
 

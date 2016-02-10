@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @subpackage          auth
  * @since               2.0
@@ -49,7 +49,7 @@ class XoopsAuthXoops extends XoopsAuth
      */
     public function authenticate($uname, $pwd = null)
     {
-        $member_handler =& xoops_getHandler('member');
+        $member_handler = xoops_getHandler('member');
         $user           = $member_handler->loginUser($uname, $pwd);
         if ($user == false) {
             $this->setErrors(1, _US_INCORRECTLOGIN);

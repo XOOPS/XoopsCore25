@@ -13,10 +13,10 @@
  * XOOPS User
  *
  * See the enclosed file license.txt for licensing information.
- * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
+ * If you did not receive this file, get it at http://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @license             GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             core
  * @since               2.0.0
  * @author              Kazumi Ono <webmaster@myweb.ne.jp>
@@ -109,7 +109,7 @@ if ($op === 'logout') {
     setcookie($xoopsConfig['usercookie'], 0, -1, '/');
     // clear entry from online users table
     if (is_object($xoopsUser)) {
-        $online_handler =& xoops_getHandler('online');
+        $online_handler = xoops_getHandler('online');
         $online_handler->destroy($xoopsUser->getVar('uid'));
     }
     $message = _US_LOGGEDOUT . '<br />' . _US_THANKYOUFORVISIT;
@@ -124,7 +124,7 @@ if ($op === 'actv') {
 }
 
 if ($op === 'delete') {
-    $config_handler  =& xoops_getHandler('config');
+    $config_handler  = xoops_getHandler('config');
     $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
     if (!$xoopsUser || $xoopsConfigUser['self_delete'] != 1) {
         redirect_header('index.php', 5, _US_NOPERMISS);
@@ -140,9 +140,9 @@ if ($op === 'delete') {
             include $GLOBALS['xoops']->path('footer.php');
         } else {
             $del_uid        = $xoopsUser->getVar("uid");
-            $member_handler =& xoops_getHandler('member');
+            $member_handler = xoops_getHandler('member');
             if (false != $member_handler->deleteUser($xoopsUser)) {
-                $online_handler =& xoops_getHandler('online');
+                $online_handler = xoops_getHandler('online');
                 $online_handler->destroy($del_uid);
                 xoops_notification_deletebyuser($del_uid);
                 redirect_header('index.php', 5, _US_BEENDELED);

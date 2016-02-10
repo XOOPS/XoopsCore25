@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             profile
  * @since               2.3.0
  * @author              Jan Pedersen
@@ -28,17 +28,17 @@ echo $indexAdmin->renderButton('right', '');
 
 $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : (isset($_REQUEST['id']) ? "edit" : 'list');
 
-$profilefield_handler =& xoops_getModuleHandler('field');
+$profilefield_handler = xoops_getModuleHandler('field');
 
 switch ($op) {
     default:
     case "list":
         $fields = $profilefield_handler->getObjects(null, true, false);
 
-        $module_handler =& xoops_getHandler('module');
+        $module_handler = xoops_getHandler('module');
         $modules        = $module_handler->getObjects(null, true);
 
-        $cat_handler =& xoops_getModuleHandler('category');
+        $cat_handler = xoops_getModuleHandler('category');
         $criteria    = new CriteriaCompo();
         $criteria->setSort('cat_weight');
         $cats = $cat_handler->getObjects($criteria, true);
@@ -136,7 +136,7 @@ switch ($op) {
             if (count($ids) > 0) {
                 $errors = array();
                 //if there are changed fields, fetch the fieldcategory objects
-                $field_handler =& xoops_getModuleHandler('field');
+                $field_handler = xoops_getModuleHandler('field');
                 $fields        = $field_handler->getObjects(new Criteria('field_id', "(" . implode(',', $ids) . ")", "IN"), true);
                 foreach ($ids as $i) {
                     $fields[$i]->setVar('field_weight', (int)($weight[$i]));
@@ -228,7 +228,7 @@ switch ($op) {
             $obj->setVar('step_id', $_REQUEST['step_id']);
         }
         if ($profilefield_handler->insert($obj)) {
-            $groupperm_handler =& xoops_getHandler('groupperm');
+            $groupperm_handler = xoops_getHandler('groupperm');
 
             $perm_arr = array();
             if ($obj->getVar('field_show')) {
@@ -332,7 +332,7 @@ if (isset($template_main)) {
 function profile_visible_toggle($field_id, $field_required)
 {
     $field_required = ($field_required == 1) ? 0 : 1;
-    $this_handler   =& xoops_getModuleHandler('field', 'profile');
+    $this_handler   = xoops_getModuleHandler('field', 'profile');
     $obj            = $this_handler->get($field_id);
     $obj->setVar('field_required', $field_required);
     if ($this_handler->insert($obj, true)) {

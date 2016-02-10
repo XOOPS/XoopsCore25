@@ -12,7 +12,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version             $Id: resource.db.php 13082 2015-06-06 21:59:41Z beckmi $
  * @param $tpl_name
  * @param $tpl_source
@@ -93,7 +93,7 @@ function smarty_resource_db_tplinfo($tpl_name)
     }
     $tplset          = $xoopsConfig['template_set'];
     $theme           = isset($xoopsConfig['theme_set']) ? $xoopsConfig['theme_set'] : 'default';
-    $tplfile_handler =& xoops_getHandler('tplfile');
+    $tplfile_handler = xoops_getHandler('tplfile');
     // If we're not using the "default" template set, then get the templates from the DB
     if ($tplset !== "default") {
         $tplobj = $tplfile_handler->find($tplset, null, null, null, $tpl_name, true);

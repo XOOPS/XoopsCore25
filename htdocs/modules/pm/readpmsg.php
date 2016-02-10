@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             pm
  * @since               2.3.0
  * @author              Jan Pedersen
@@ -26,7 +26,7 @@ if (!is_object($GLOBALS['xoopsUser'])) {
 $valid_op_requests = array('out', 'save', 'in');
 $_REQUEST['op']    = !empty($_REQUEST['op']) && in_array($_REQUEST['op'], $valid_op_requests) ? $_REQUEST['op'] : 'in';
 $msg_id            = empty($_REQUEST['msg_id']) ? 0 : (int)($_REQUEST['msg_id']);
-$pm_handler        =& xoops_getModuleHandler('message');
+$pm_handler        = xoops_getModuleHandler('message');
 $pm                = null;
 if ($msg_id > 0) {
     $pm =& $pm_handler->get($msg_id);

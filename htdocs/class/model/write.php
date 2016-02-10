@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @subpackage          model
  * @since               2.3.0
@@ -43,7 +43,7 @@ class XoopsModelWrite extends XoopsModelAbstract
      */
     public function cleanVars(&$object)
     {
-        $ts     =& MyTextSanitizer::getInstance();
+        $ts     = MyTextSanitizer::getInstance();
         $errors = array();
 
         $vars              = $object->getVars();

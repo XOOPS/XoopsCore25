@@ -58,9 +58,9 @@ switch ($op) {
         $xoBreadCrumb->addTips(_AM_SYSTEM_AVATAR_TIPS);
         $xoBreadCrumb->render();
         // Get avatar handler
-        $avt_handler =& xoops_getModuleHandler('avatar');
+        $avt_handler = xoops_getModuleHandler('avatar');
         // Get User Config
-        $config_handler  =& xoops_getHandler('config');
+        $config_handler  = xoops_getHandler('config');
         $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
         // User language
         xoops_loadLanguage('user');
@@ -100,7 +100,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(_AM_SYSTEM_AVATAR_TIPS);
         $xoBreadCrumb->render();
         // Get avatar handler
-        $avt_handler =& xoops_getHandler('avatar');
+        $avt_handler = xoops_getHandler('avatar');
         // Count avatars
         $savatar_count = $avt_handler->getCount(new Criteria('avatar_type', 'S'));
         $cavatar_count = $avt_handler->getCount(new Criteria('avatar_type', 'C'));
@@ -155,7 +155,7 @@ switch ($op) {
         // User language
         xoops_loadLanguage('user');
         // Get avatar handler
-        $avt_handler =& xoops_getModuleHandler('avatar');
+        $avt_handler = xoops_getModuleHandler('avatar');
         $avatar_id   = system_CleanVars($_REQUEST, 'avatar_id', 0, 'int');
         if ($avatar_id > 0) {
             $avatar = $avt_handler->get($avatar_id);
@@ -175,7 +175,7 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=avatars', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        $config_handler  =& xoops_getHandler('config');
+        $config_handler  = xoops_getHandler('config');
         $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
         // Upload class
         include_once $GLOBALS['xoops']->path('/class/uploader.php');
@@ -187,7 +187,7 @@ switch ($op) {
             'image/x-png',
             'image/png'), $xoopsConfigUser['avatar_maxsize'], $xoopsConfigUser['avatar_width'], $xoopsConfigUser['avatar_height']);
         // Get avatar handler
-        $avt_handler =& xoops_getHandler('avatar');
+        $avt_handler = xoops_getHandler('avatar');
         // Get avatar id
         $avatar_id = system_CleanVars($_POST, 'avatar_id', 0, 'int');
         if ($avatar_id > 0) {
@@ -239,7 +239,7 @@ switch ($op) {
 
     case 'display':
         // Get avatar handler
-        $avt_handler =& xoops_getHandler('avatar');
+        $avt_handler = xoops_getHandler('avatar');
         // Get avatar id
         $avatar_id = system_CleanVars($_POST, 'avatar_id', 0, 'int');
         if ($avatar_id > 0) {
@@ -270,7 +270,7 @@ switch ($op) {
         $user_id   = system_CleanVars($_REQUEST, 'user_id', 0, 'int');
         $avatar_id = system_CleanVars($_REQUEST, 'avatar_id', 0, 'int');
         // Get avatar handler
-        $avt_handler =& xoops_getHandler('avatar');
+        $avt_handler = xoops_getHandler('avatar');
         if ($avatar_id > 0) {
             $avatar = $avt_handler->get($avatar_id);
             $msg    = '<div class="spacer"><img src="' . XOOPS_UPLOAD_URL . '/' . $avatar->getVar('avatar_file', 's') . '" alt="" /></div><div class="txtcenter bold">' . $avatar->getVar('avatar_name', 's') . '</div>' . _AM_SYSTEM_AVATAR_SUREDEL;
@@ -291,7 +291,7 @@ switch ($op) {
         if ($avatar_id <= 0) {
             redirect_header('admin.php?fct=avatars', 1, _AM_SYSTEM_DBERROR);
         }
-        $avt_handler =& xoops_getHandler('avatar');
+        $avt_handler = xoops_getHandler('avatar');
         $avatar      =& $avt_handler->get($avatar_id);
         if (!is_object($avatar)) {
             redirect_header('admin.php?fct=avatars', 1, _AM_SYSTEM_DBERROR);

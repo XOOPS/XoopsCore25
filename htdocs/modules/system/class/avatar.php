@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             system
  * @version             $Id: avatar.php 13090 2015-06-16 20:44:29Z beckmi $
  */
@@ -46,7 +46,7 @@ class SystemAvatar extends XoopsAvatar
             $blank_img = str_replace('avatars/', '', $this->getVar('avatar_file', 'e'));
         }
         // Get User Config
-        $config_handler  =& xoops_getHandler('config');
+        $config_handler  = xoops_getHandler('config');
         $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
         // New and edit form
         $form = new XoopsThemeForm(_AM_SYSTEM_AVATAR_ADD, 'avatar_form', 'admin.php', "post", true);

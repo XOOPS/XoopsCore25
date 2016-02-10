@@ -10,9 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Gregory Mage (AKA Mage)
  * @package             system
  * @version             $Id: group.php 13082 2015-06-06 21:59:41Z beckmi $
@@ -55,14 +53,14 @@ class SystemGroup extends XoopsGroup
             $r_mod_value   = array();
             $r_block_value = array();
         } else {
-            $sysperm_handler    = &xoops_getHandler('groupperm');
+            $sysperm_handler    = xoops_getHandler('groupperm');
             $s_cat_value        = $sysperm_handler->getItemIds('system_admin', $this->getVar('groupid'));
-            $member_handler     = &xoops_getHandler('member');
+            $member_handler     = xoops_getHandler('member');
             $thisgroup          = $member_handler->getGroup($this->getVar('groupid'));
-            $moduleperm_handler = &xoops_getHandler('groupperm');
+            $moduleperm_handler = xoops_getHandler('groupperm');
             $a_mod_value        = $moduleperm_handler->getItemIds('module_admin', $thisgroup->getVar('groupid'));
             $r_mod_value        = $moduleperm_handler->getItemIds('module_read', $thisgroup->getVar('groupid'));
-            $gperm_handler      = &xoops_getHandler('groupperm');
+            $gperm_handler      = xoops_getHandler('groupperm');
             $r_block_value      = $gperm_handler->getItemIds('block_read', $this->getVar('groupid'));
         }
         xoops_load('XoopsFormLoader');
@@ -110,7 +108,7 @@ class SystemGroup extends XoopsGroup
 
         $a_mod_checkbox          = new XoopsFormCheckBox('', "admin_mids[]", $a_mod_value);
         $a_mod_checkbox->columns = 5;
-        $module_handler          =& xoops_getHandler('module');
+        $module_handler          = xoops_getHandler('module');
         $criteria                = new CriteriaCompo(new Criteria('hasadmin', 1));
         $criteria->add(new Criteria('isactive', 1));
         $criteria->add(new Criteria('dirname', 'system', '<>'));
@@ -138,7 +136,7 @@ class SystemGroup extends XoopsGroup
         $module_list    = $module_handler->getList($criteria);
         $module_list[0] = _AM_SYSTEM_GROUPS_CUSTOMBLOCK;
 
-        $block_handler =& xoops_getHandler("block");
+        $block_handler = xoops_getHandler("block");
         $blocks_obj    = $block_handler->getObjects(new Criteria("mid", "('" . implode("', '", array_keys($module_list)) . "')", "IN"), true);
 
         $blocks_module = array();

@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @subpackage          form
  * @since               2.0.0
@@ -43,7 +43,7 @@ class XoopsFormSelectGroup extends XoopsFormSelect
     public function __construct($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false)
     {
         parent::__construct($caption, $name, $value, $size, $multiple);
-        $member_handler = &xoops_getHandler('member');
+        $member_handler = xoops_getHandler('member');
         if (!$include_anon) {
             $this->addOptionArray($member_handler->getGroupList(new Criteria('groupid', XOOPS_GROUP_ANONYMOUS, '!=')));
         } else {

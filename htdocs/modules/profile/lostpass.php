@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             profile
  * @since               2.3.0
  * @author              Jan Pedersen
@@ -28,8 +28,8 @@ if ($email == '') {
     redirect_header("user.php", 2, _US_SORRYNOTFOUND, false);
 }
 
-$myts           =& MyTextSanitizer::getInstance();
-$member_handler =& xoops_getHandler('member');
+$myts           = MyTextSanitizer::getInstance();
+$member_handler = xoops_getHandler('member');
 list($user) = $member_handler->getUsers(new Criteria('email', $myts->addSlashes($email)));
 
 if (empty($user)) {

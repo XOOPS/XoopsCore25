@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Andricq Nicolas (AKA MusS)
  * @version             $Id: help.php 13082 2015-06-06 21:59:41Z beckmi $
  */
@@ -32,7 +32,7 @@ $xoBreadCrumb->addLink(_AM_SYSTEM_HELP, 'help.php');
 
 // If $mid > 0, we're in a module's help section.
 if ($mid > 0) {
-    $module_handler =& xoops_getHandler('module');
+    $module_handler = xoops_getHandler('module');
     $module         = $module_handler->get($mid);
 
     $xoBreadCrumb->addLink($module->getVar('name'), 'help.php?mid=' . $module->getVar('mid', 's'));
@@ -115,7 +115,7 @@ if ($mid > 0) {
     $xoBreadCrumb->render();
 
     // Get Module Handler
-    $module_handler =& xoops_getHandler('module');
+    $module_handler = xoops_getHandler('module');
     $criteria       = new CriteriaCompo();
     $criteria->setOrder('weight');
 

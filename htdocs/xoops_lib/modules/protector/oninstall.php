@@ -81,7 +81,7 @@ if (!function_exists('protector_oninstall_base')) {
         }
 
         // TEMPLATES
-        $tplfile_handler =& xoops_getHandler('tplfile');
+        $tplfile_handler = xoops_getHandler('tplfile');
         $tpl_path        = __DIR__ . '/templates';
         if ($handler = @opendir($tpl_path . '/')) {
             while (($file = readdir($handler)) !== false) {

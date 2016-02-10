@@ -13,10 +13,10 @@
  * Installer path configuration page
  *
  * See the enclosed file license.txt for licensing information.
- * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
+ * If you did not receive this file, get it at http://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright    (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license          http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @license          GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package          upgrader
  * @since            2.3.0
  * @author           Skalpa Keo <skalpa@xoops.org>
@@ -36,7 +36,7 @@ if (!defined('XOOPS_ROOT_PATH')) {
  */
 function genPathCheckHtml($path, $valid)
 {
-    $myts =& MyTextSanitizer::getInstance();
+    $myts = MyTextSanitizer::getInstance();
     if ($valid) {
         switch ($path) {
             case 'lib':
@@ -68,7 +68,7 @@ if ($res = $ctrl->execute()) {
     return $res;
 }
 
-$myts =& MyTextSanitizer::getInstance();
+$myts = MyTextSanitizer::getInstance();
 
 ?>
 

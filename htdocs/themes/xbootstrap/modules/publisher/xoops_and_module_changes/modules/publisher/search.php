@@ -12,7 +12,7 @@
 /**
  * @copyright           The XUUPS Project http://sourceforge.net/projects/xuups/
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license             GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             Publisher
  * @subpackage          Action
  * @since               1.0
@@ -25,14 +25,14 @@ include_once __DIR__ . '/header.php';
 xoops_loadLanguage('search');
 
 //Checking general permissions
-$config_handler    =& xoops_getHandler("config");
+$config_handler    = xoops_getHandler("config");
 $xoopsConfigSearch = $config_handler->getConfigsByCat(XOOPS_CONF_SEARCH);
 if (empty($xoopsConfigSearch["enable_search"])) {
     redirect_header(PUBLISHER_URL . "/index.php", 2, _NOPERM);
 }
 
 $groups        = $xoopsUser ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
-$gperm_handler =& xoops_getModuleHandler('groupperm', PUBLISHER_DIRNAME);
+$gperm_handler = xoops_getModuleHandler('groupperm', PUBLISHER_DIRNAME);
 $module_id     = $publisher->getModule()->mid();
 
 //Checking permissions

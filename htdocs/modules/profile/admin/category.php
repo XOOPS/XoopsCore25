@@ -39,7 +39,7 @@ echo $indexAdmin->renderButton('right', '');
 
 $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : (isset($_REQUEST['id']) ? "edit" : 'list');
 
-$handler =& xoops_getModuleHandler('category');
+$handler = xoops_getModuleHandler('category');
 switch ($op) {
     default:
     case "list":

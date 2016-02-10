@@ -1,10 +1,10 @@
 <?php
 /**
  * See the enclosed file license.txt for licensing information.
- * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
+ * If you did not receive this file, get it at http://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright    (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license          http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @license          GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package          installer
  * @since            2.3.0
  * @author           Haruki Setoyama  <haruki@planewave.org>
@@ -21,7 +21,7 @@ require_once './include/common.inc.php';
 defined('XOOPS_INSTALL') or die('XOOPS Installation wizard die');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $config_handler =& xoops_getHandler('config');
+    $config_handler = xoops_getHandler('config');
     if (array_key_exists('conf_ids', $_REQUEST)) {
         foreach ($_REQUEST['conf_ids'] as $key => $conf_id) {
             $config    =& $config_handler->getConfig($conf_id);
@@ -44,7 +44,7 @@ if (!@include_once "../modules/system/language/{$wizard->language}/admin/prefere
     include_once '../modules/system/language/english/admin/preferences.php';
 }
 
-$config_handler =& xoops_getHandler('config');
+$config_handler = xoops_getHandler('config');
 $criteria       = new CriteriaCompo();
 $criteria->add(new Criteria('conf_modid', 0));
 

@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
@@ -174,7 +174,7 @@ class XoopsTree
             return $path;
         }
         list($parentid, $name) = $this->db->fetchRow($result);
-        $myts =& MyTextSanitizer::getInstance();
+        $myts = MyTextSanitizer::getInstance();
         $name = $myts->htmlspecialchars($name);
         $path = "/" . $name . $path . "";
         if ($parentid == 0) {
@@ -201,7 +201,7 @@ class XoopsTree
         if ($sel_name == "") {
             $sel_name = $this->id;
         }
-        $myts =& MyTextSanitizer::getInstance();
+        $myts = MyTextSanitizer::getInstance();
         echo "<select name='" . $sel_name . "'";
         if ($onchange != "") {
             echo " onchange='" . $onchange . "'";
@@ -255,7 +255,7 @@ class XoopsTree
             return $path;
         }
         list($parentid, $name) = $this->db->fetchRow($result);
-        $myts =& MyTextSanitizer::getInstance();
+        $myts = MyTextSanitizer::getInstance();
         $name = $myts->htmlspecialchars($name);
         $path = "<a href='" . $funcURL . "&amp;" . $this->id . "=" . $sel_id . "'>" . $name . "</a>" . $path . "";
         if ($parentid == 0) {

@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             pm
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
@@ -41,7 +41,7 @@ $pathModuleAdmin = $xoopsModule->getInfo('dirmoduleadmin');
 include_once $GLOBALS['xoops']->path($pathModuleAdmin . '/moduleadmin.php');
 
 if ($xoopsUser) {
-    $moduleperm_handler =& xoops_getHandler('groupperm');
+    $moduleperm_handler = xoops_getHandler('groupperm');
     if (!$moduleperm_handler->checkRight('module_admin', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
         redirect_header(XOOPS_URL, 1, _NOPERM);
     }

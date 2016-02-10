@@ -3,7 +3,7 @@
  *  Xoopsemotions plugin for tinymce
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license             GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             class / xoopseditor
  * @subpackage          tinymce / xoops plugins
  * @since               2.3.0
@@ -36,7 +36,7 @@ include_once XOOPS_ROOT_PATH . "/modules/system/constants.php";
 
 // check user/group
 $groups        = is_object($GLOBALS["xoopsUser"]) ? $GLOBALS["xoopsUser"]->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
-$gperm_handler =& xoops_getHandler('groupperm');
+$gperm_handler = xoops_getHandler('groupperm');
 $admin         = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_SMILE, $groups);
 
 $op = '';
@@ -46,7 +46,7 @@ if (!empty($_GET['op'])) {
     $op = trim($_POST['op']);
 }
 
-$myts =& MyTextSanitizer::getInstance();
+$myts = MyTextSanitizer::getInstance();
 
 if ($admin && $op === 'SmilesAdd') {
     if (!$GLOBALS['xoopsSecurity']->check()) {

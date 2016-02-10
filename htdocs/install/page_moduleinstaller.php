@@ -1,10 +1,10 @@
 <?php
 /**
  * See the enclosed file license.txt for licensing information.
- * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
+ * If you did not receive this file, get it at http://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright    (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license          http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @license          GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package          installer
  * @since            2.3.0
  * @author           Haruki Setoyama  <haruki@planewave.org>
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     include_once '../include/version.php';
     include_once './include/modulesadmin.php';
 
-    $config_handler =& xoops_getHandler('config');
+    $config_handler = xoops_getHandler('config');
     $xoopsConfig    =& $config_handler->getConfigsByCat(XOOPS_CONF);
 
     $msgs = array();
@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Get installed modules
-    $module_handler =& xoops_getHandler('module');
+    $module_handler = xoops_getHandler('module');
     $installed_mods =& $module_handler->getObjects();
     $listed_mods    = array();
     foreach ($installed_mods as $module) {

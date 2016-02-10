@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             profile
  * @since               2.3.0
  * @author              Jan Pedersen
@@ -38,9 +38,9 @@ if (!isset($_POST['submit'])) {
 
     $xoBreadcrumbs[] = array('title' => _PROFILE_MA_CHANGEPASSWORD);
 } else {
-    $config_handler             =& xoops_getHandler('config');
+    $config_handler             = xoops_getHandler('config');
     $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-    $myts                       =& MyTextSanitizer::getInstance();
+    $myts                       = MyTextSanitizer::getInstance();
     $oldpass                    = @$myts->stripSlashesGPC(trim($_POST['oldpass']));
     $password                   = @$myts->stripSlashesGPC(trim($_POST['newpass']));
     $vpass                      = @$myts->stripSlashesGPC(trim($_POST['vpass']));
@@ -61,7 +61,7 @@ if (!isset($_POST['submit'])) {
         //update password
         $GLOBALS['xoopsUser']->setVar('pass', md5($password));
 
-        $member_handler =& xoops_getHandler('member');
+        $member_handler = xoops_getHandler('member');
         $msg = _PROFILE_MA_ERRORDURINGSAVE;
         if ($member_handler->insertUser($GLOBALS['xoopsUser'])) {
             $msg = _PROFILE_MA_PASSWORDCHANGED;

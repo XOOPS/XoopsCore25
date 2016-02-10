@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
@@ -61,7 +61,7 @@ class XoopsBlock extends XoopsObject
             if (is_array($id)) {
                 $this->assignVars($id);
             } else {
-                $blkhandler =& xoops_getHandler('block');
+                $blkhandler = xoops_getHandler('block');
                 $obj        =& $blkhandler->get($id);
                 foreach (array_keys($obj->getVars()) as $i) {
                     $this->assignVar($i, $obj->getVar($i, 'n'));
@@ -308,12 +308,12 @@ class XoopsBlock extends XoopsObject
 
                     return str_replace('{X_SITEURL}', XOOPS_URL . '/', $content);
                 } elseif ($c_type === 'S') {
-                    $myts    =& MyTextSanitizer::getInstance();
+                    $myts    = MyTextSanitizer::getInstance();
                     $content = str_replace('{X_SITEURL}', XOOPS_URL . '/', $this->getVar('content', 'n'));
 
                     return $myts->displayTarea($content, 0, 1);
                 } else {
-                    $myts    =& MyTextSanitizer::getInstance();
+                    $myts    = MyTextSanitizer::getInstance();
                     $content = str_replace('{X_SITEURL}', XOOPS_URL . '/', $this->getVar('content', 'n'));
 
                     return $myts->displayTarea($content, 0, 0);

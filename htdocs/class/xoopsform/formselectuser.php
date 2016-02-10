@@ -12,7 +12,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       The XOOPS Project (http://xoops.org)
- * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license         GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package         kernel
  * @subpackage      form
  * @since           2.0.0
@@ -72,7 +72,7 @@ class XoopsFormSelectUser extends XoopsFormElementTray
         if ($includeAnonymous) {
             $select_element->addOption(0, $GLOBALS['xoopsConfig']['anonymous']);
         }
-        $member_handler =& xoops_getHandler('member');
+        $member_handler = xoops_getHandler('member');
         $value          = is_array($value) ? $value : (empty($value) ? array() : array($value));
         $selectedUsers = array();
         if (count($value) > 0) {

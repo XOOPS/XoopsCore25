@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
  * @version             $Id: cp_functions.php 13082 2015-06-06 21:59:41Z beckmi $
@@ -126,7 +126,7 @@ function xoops_module_get_admin_menu()
     $firstleveltable = "";
     $menu_layers     = "";
 
-    $module_handler =& xoops_getHandler('module');
+    $module_handler = xoops_getHandler('module');
     $criteria       = new CriteriaCompo();
     $criteria->add(new Criteria('hasadmin', 1));
     $criteria->add(new Criteria('isactive', 1));

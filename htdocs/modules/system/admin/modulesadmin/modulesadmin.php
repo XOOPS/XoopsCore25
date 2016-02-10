@@ -80,7 +80,7 @@ function xoops_module_install($dirname)
         'banner',
         'bannerclient',
         'bannerfinish');
-    $module_handler =& xoops_getHandler('module');
+    $module_handler = xoops_getHandler('module');
     if ($module_handler->getCount(new Criteria('dirname', $dirname)) == 0) {
         $module =& $module_handler->create();
         $module->loadInfoAsVar($dirname);
@@ -193,7 +193,7 @@ function xoops_module_install($dirname)
                 $newmid = $module->getVar('mid');
                 unset($created_tables);
                 $msgs[]          = "<p>" . _AM_SYSTEM_MODULES_INSERT_DATA_DONE . sprintf(_AM_SYSTEM_MODULES_MODULEID, "<strong>" . $newmid . "</strong>");
-                $tplfile_handler =& xoops_getHandler('tplfile');
+                $tplfile_handler = xoops_getHandler('tplfile');
                 $templates       = $module->getInfo('templates');
                 if ($templates != false) {
                     $msgs[] = _AM_SYSTEM_MODULES_TEMPLATES_ADD;
@@ -394,7 +394,7 @@ function xoops_module_install($dirname)
 
                 if ($configs != false) {
                     $msgs[]         = _AM_SYSTEM_MODULES_MODULE_DATA_ADD;
-                    $config_handler =& xoops_getHandler('config');
+                    $config_handler = xoops_getHandler('config');
                     $order          = 0;
                     foreach ($configs as $config) {
                         $confobj =& $config_handler->createConfig();
@@ -436,7 +436,7 @@ function xoops_module_install($dirname)
             // retrieve all block ids for this module
             $blocks        = XoopsBlock::getByModule($newmid, false);
             $msgs[]        = _AM_SYSTEM_MODULES_GROUP_SETTINGS_ADD;
-            $gperm_handler =& xoops_getHandler('groupperm');
+            $gperm_handler = xoops_getHandler('groupperm');
             foreach ($groups as $mygroup) {
                 if ($gperm_handler->checkRight('module_admin', 0, $mygroup)) {
                     $mperm =& $gperm_handler->create();
@@ -607,7 +607,7 @@ function xoops_module_uninstall($dirname)
         'bannerclient',
         'bannerfinish');
     $db             =& XoopsDatabaseFactory::getDatabaseConnection();
-    $module_handler =& xoops_getHandler('module');
+    $module_handler = xoops_getHandler('module');
     $module         = $module_handler->getByDirname($dirname);
     include_once XOOPS_ROOT_PATH . '/class/template.php';
     xoops_template_clear_module_cache($module->getVar('mid'));
@@ -652,7 +652,7 @@ function xoops_module_uninstall($dirname)
         } else {
 
             // delete template files
-            $tplfile_handler =& xoops_getHandler('tplfile');
+            $tplfile_handler = xoops_getHandler('tplfile');
             $templates       = $tplfile_handler->find(null, 'module', $module->getVar('mid'));
             $tcount          = count($templates);
             if ($tcount > 0) {
@@ -717,7 +717,7 @@ function xoops_module_uninstall($dirname)
             // delete comments if any
             if ($module->getVar('hascomments') != 0) {
                 $msgs[]          = _AM_SYSTEM_MODULES_COMMENTS_DELETE;
-                $comment_handler =& xoops_getHandler('comment');
+                $comment_handler = xoops_getHandler('comment');
                 if (false === $comment_handler->deleteByModule($module->getVar('mid'))) {
                     $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . _AM_SYSTEM_MODULES_COMMENTS_DELETE_ERROR . '</span>';
                 } else {
@@ -737,7 +737,7 @@ function xoops_module_uninstall($dirname)
             }
 
             // delete permissions if any
-            $gperm_handler =& xoops_getHandler('groupperm');
+            $gperm_handler = xoops_getHandler('groupperm');
             if (false === $gperm_handler->deleteByModule($module->getVar('mid'))) {
                 $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . _AM_SYSTEM_MODULES_GROUP_PERMS_DELETE_ERROR . '</span>';
             } else {
@@ -746,7 +746,7 @@ function xoops_module_uninstall($dirname)
 
             // delete module config options if any
             if ($module->getVar('hasconfig') != 0 || $module->getVar('hascomments') != 0) {
-                $config_handler =& xoops_getHandler('config');
+                $config_handler = xoops_getHandler('config');
                 $configs        = $config_handler->getConfigs(new Criteria('conf_modid', $module->getVar('mid')));
                 $confcount      = count($configs);
                 if ($confcount > 0) {
@@ -790,10 +790,10 @@ function xoops_module_update($dirname)
     $dirname = trim($dirname);
     $xoopsDB =& $GLOBALS["xoopsDB"];
 
-    $myts =& MyTextSanitizer::getInstance();
+    $myts = MyTextSanitizer::getInstance();
 
     $dirname        = $myts->htmlspecialchars(trim($dirname));
-    $module_handler =& xoops_getHandler('module');
+    $module_handler = xoops_getHandler('module');
     $module         =& $module_handler->getByDirname($dirname);
     // Save current version for use in the update function
     $prev_version = $module->getVar('version');
@@ -818,7 +818,7 @@ function xoops_module_update($dirname)
         $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_UPDATE);
         $xoBreadCrumb->addHelp(system_adminVersion('modulesadmin', 'help') . '#update');https://www.facebook.com/photo.php?v=10154358806675333
         $xoBreadCrumb->render();
-    
+
         */
     if (!$module_handler->insert($module)) {
         echo '<p>Could not update ' . $module->getVar('name') . '</p>';
@@ -837,7 +837,7 @@ function xoops_module_update($dirname)
         }
         $msgs[]          = '</div><div class="logger">';
         $msgs[]          = _AM_SYSTEM_MODULES_MODULE_DATA_UPDATE;
-        $tplfile_handler =& xoops_getHandler('tplfile');
+        $tplfile_handler = xoops_getHandler('tplfile');
         // irmtfan bug fix: remove codes for delete templates
         /*
         $deltpl          = $tplfile_handler->find('default', 'module', $module->getVar('mid'));
@@ -991,7 +991,7 @@ function xoops_module_update($dirname)
                             } else {
                                 $groups = array(XOOPS_GROUP_ADMIN);
                             }
-                            $gperm_handler =& xoops_getHandler('groupperm');
+                            $gperm_handler = xoops_getHandler('groupperm');
                             foreach ($groups as $mygroup) {
                                 $bperm =& $gperm_handler->create();
                                 $bperm->setVar('gperm_groupid', $mygroup);
@@ -1075,7 +1075,7 @@ function xoops_module_update($dirname)
         //        $xoopsTpl->setCompileId();
 
         // first delete all config entries
-        $config_handler =& xoops_getHandler('config');
+        $config_handler = xoops_getHandler('config');
         $configs        = $config_handler->getConfigs(new Criteria('conf_modid', $module->getVar('mid')));
         $confcount      = count($configs);
         $config_delng   = array();
@@ -1197,7 +1197,7 @@ function xoops_module_update($dirname)
 
         if ($configs != false) {
             $msgs[]         = 'Adding module config data...';
-            $config_handler =& xoops_getHandler('config');
+            $config_handler = xoops_getHandler('config');
             $order          = 0;
             foreach ($configs as $config) {
                 // only insert ones that have been deleted previously with success
@@ -1296,7 +1296,7 @@ function xoops_module_update($dirname)
 function xoops_module_activate($mid)
 {
     // Get module handler
-    $module_handler =& xoops_getHandler('module');
+    $module_handler = xoops_getHandler('module');
     $module         = $module_handler->get($mid);
     include_once XOOPS_ROOT_PATH . '/class/template.php';
     xoops_template_clear_module_cache($module->getVar('mid'));
@@ -1332,7 +1332,7 @@ function xoops_module_deactivate($mid)
 {
     global $xoopsConfig;
     // Get module handler
-    $module_handler =& xoops_getHandler('module');
+    $module_handler = xoops_getHandler('module');
     $module         = $module_handler->get($mid);
     include_once XOOPS_ROOT_PATH . '/class/template.php';
     xoops_template_clear_module_cache($mid);
@@ -1372,10 +1372,10 @@ function xoops_module_deactivate($mid)
  */
 function xoops_module_change($mid, $name)
 {
-    $module_handler =& xoops_getHandler('module');
+    $module_handler = xoops_getHandler('module');
     $module         = $module_handler->get($mid);
     $module->setVar('name', $name);
-    $myts =& MyTextSanitizer::getInstance();
+    $myts = MyTextSanitizer::getInstance();
     if (!$module_handler->insert($module)) {
         $ret = "<p>" . sprintf(_AM_SYSTEM_MODULES_FAILORDER, "<strong>" . $myts->stripSlashesGPC($name) . "</strong>") . "&nbsp;" . _AM_SYSTEM_MODULES_ERRORSC . "<br />";
         $ret .= $module->getHtmlErrors() . "</p>";

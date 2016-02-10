@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             profile
  * @since               2.3.0
  * @author              Jan Pedersen
@@ -19,7 +19,7 @@
  */
 
 include __DIR__ . '/header.php';
-$myts =& MyTextSanitizer::getInstance();
+$myts = MyTextSanitizer::getInstance();
 
 $limit_default    = 20;
 $op               = isset($_REQUEST['op']) ? $_REQUEST['op'] : "search";
@@ -44,11 +44,11 @@ switch ($op) {
         $sortby_arr      = array();
 
         // Dynamic fields
-        $profile_handler =& xoops_getModuleHandler('profile');
+        $profile_handler = xoops_getModuleHandler('profile');
         // Get fields
         $fields = $profile_handler->loadFields();
         // Get ids of fields that can be searched
-        $gperm_handler     =& xoops_getHandler('groupperm');
+        $gperm_handler     = xoops_getHandler('groupperm');
         $searchable_fields = $gperm_handler->getItemIds('profile_search', $groups, $GLOBALS['xoopsModule']->getVar('mid'));
 
         include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
@@ -150,7 +150,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('page_title', _PROFILE_MA_SEARCH);
 
         //added count user
-        $member_handler =& xoops_getHandler('member');
+        $member_handler = xoops_getHandler('member');
         $acttotal       = $member_handler->getUserCount(new Criteria('level', 0, '>'));
         $total          = sprintf(_PROFILE_MA_ACTUS, "<span style='color:#ff0000;'>{$acttotal}</span>");
         $GLOBALS['xoopsTpl']->assign('total_users', $total);
@@ -165,13 +165,13 @@ switch ($op) {
             'title' => _SEARCH);
         $xoBreadcrumbs[] = array('title' => _PROFILE_MA_RESULTS);
 
-        $member_handler =& xoops_getHandler('member');
+        $member_handler = xoops_getHandler('member');
         // Dynamic fields
-        $profile_handler =& xoops_getModuleHandler('profile');
+        $profile_handler = xoops_getModuleHandler('profile');
         // Get fields
         $fields = $profile_handler->loadFields();
         // Get ids of fields that can be searched
-        $gperm_handler     =& xoops_getHandler('groupperm');
+        $gperm_handler     = xoops_getHandler('groupperm');
         $searchable_fields = $gperm_handler->getItemIds('profile_search', $groups, $GLOBALS['xoopsModule']->getVar('mid'));
         $searchvars        = array();
         $search_url        = array();

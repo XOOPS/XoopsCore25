@@ -8,7 +8,7 @@ $modid = isset($_POST['modid']) ? (int)($_POST['modid']) : 0;
 if ($modid <= 1 || !is_object($xoopsUser) || !$xoopsUser->isAdmin($modid)) {
     redirect_header(XOOPS_URL . '/index.php', 1, _NOPERM);
 }
-$module_handler =& xoops_getHandler('module');
+$module_handler = xoops_getHandler('module');
 $module         =& $module_handler->get($modid);
 if (!is_object($module) || !$module->getVar('isactive')) {
     redirect_header(XOOPS_URL . '/admin.php', 1, _MODULENOEXIST);
@@ -16,11 +16,11 @@ if (!is_object($module) || !$module->getVar('isactive')) {
 
 $msg = array();
 
-$member_handler =& xoops_getHandler('member');
+$member_handler = xoops_getHandler('member');
 $group_list     = $member_handler->getGroupList();
 
 if (is_array($_POST['perms']) && !empty($_POST['perms'])) {
-    $gperm_handler =& xoops_getHandler('groupperm');
+    $gperm_handler = xoops_getHandler('groupperm');
     foreach ($_POST['perms'] as $perm_name => $perm_data) {
         if ($GLOBALS['xoopsSecurity']->check(true, false, $perm_name) && false !== $gperm_handler->deleteByModule($modid, $perm_name)) {
             foreach ($perm_data['groups'] as $group_id => $item_ids) {

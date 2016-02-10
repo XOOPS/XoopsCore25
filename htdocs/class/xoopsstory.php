@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
@@ -220,7 +220,7 @@ class XoopsStory
     public function store($approved = false)
     {
         //$newpost = 0;
-        $myts     =& MyTextSanitizer::getInstance();
+        $myts     = MyTextSanitizer::getInstance();
         $title    = $myts->censorString($this->title);
         $hometext = $myts->censorString($this->hometext);
         $bodytext = $myts->censorString($this->bodytext);
@@ -361,7 +361,7 @@ class XoopsStory
      */
     public function title($format = "Show")
     {
-        $myts   =& MyTextSanitizer::getInstance();
+        $myts   = MyTextSanitizer::getInstance();
         $smiley = 1;
         if ($this->nosmiley()) {
             $smiley = 0;
@@ -387,7 +387,7 @@ class XoopsStory
      */
     public function hometext($format = "Show")
     {
-        $myts   =& MyTextSanitizer::getInstance();
+        $myts   = MyTextSanitizer::getInstance();
         $html   = 1;
         $smiley = 1;
         $xcodes = 1;
@@ -422,7 +422,7 @@ class XoopsStory
      */
     public function bodytext($format = "Show")
     {
-        $myts   =& MyTextSanitizer::getInstance();
+        $myts   = MyTextSanitizer::getInstance();
         $html   = 1;
         $smiley = 1;
         $xcodes = 1;

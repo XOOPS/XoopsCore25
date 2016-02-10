@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             profile
  * @since               2.3.0
  * @author              Jan Pedersen
@@ -72,7 +72,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
     public function __construct(XoopsDatabase $db)
     {
         parent::__construct($db, "profile_profile", 'profileprofile', "profile_id");
-        $this->_fHandler =& xoops_getModuleHandler('field', 'profile');
+        $this->_fHandler = xoops_getModuleHandler('field', 'profile');
     }
 
     /**
@@ -320,7 +320,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
         if (!$result) {
             return array(array(), array(), 0);
         }
-        $user_handler =& xoops_getHandler('user');
+        $user_handler = xoops_getHandler('user');
         $uservars     = $this->getUserVars();
         $users        = array();
         $profiles     = array();

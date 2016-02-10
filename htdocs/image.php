@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             core
  * @since               2.5.7
  * @author              luciorota <lucio.rota@gmail.com>, Joe Lencioni <joe@shiftingpixel.com>
@@ -166,7 +166,7 @@ $image_id  = isset($_GET['id']) ? (int)$_GET['id'] : false;
 $image_url = isset($_GET['url']) ? (string)$_GET['url'] : isset($_GET['src']) ? (string)$_GET['src'] : false;
 if (!empty($image_id)) {
     // If image is a Xoops image
-    $image_handler =& xoops_getHandler('image');
+    $image_handler = xoops_getHandler('image');
     $criteria      = new CriteriaCompo(new Criteria('i.image_display', true));
     $criteria->add(new Criteria('i.image_id', $image_id));
     $images = $image_handler->getObjects($criteria, false, true);
@@ -179,7 +179,7 @@ if (!empty($image_id)) {
     $image = $images[0];
     // Get image category
     $imgcat_id      = $image->getVar('imgcat_id');
-    $imgcat_handler =& xoops_getHandler('imagecategory');
+    $imgcat_handler = xoops_getHandler('imagecategory');
     if (!$imgcat = $imgcat_handler->get($imgcat_id)) {
         // No Image category
         header('Content-type: image/gif');

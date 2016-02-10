@@ -53,7 +53,7 @@ if (in_array($op, array('confirm', 'submit', 'install_ok', 'update_ok', 'uninsta
         $op = 'list';
     }
 }
-$myts =& MyTextSanitizer::getInstance();
+$myts = MyTextSanitizer::getInstance();
 
 switch ($op) {
     case 'list':
@@ -75,7 +75,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(_AM_SYSTEM_MODULES_TIPS);
         $xoBreadCrumb->render();
         // Get Module Handler
-        $module_handler =& xoops_getHandler('module');
+        $module_handler = xoops_getHandler('module');
         $criteria       = new CriteriaCompo();
         $criteria->setSort('weight');
         $criteria->setOrder('ASC');
@@ -146,7 +146,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(_AM_SYSTEM_MODULES_TIPS);
         $xoBreadCrumb->render();
         // Get Module Handler
-        $module_handler =& xoops_getHandler('module');
+        $module_handler = xoops_getHandler('module');
         // Get all installed modules
         $installed_mods = $module_handler->getObjects();
         foreach ($installed_mods as $module) {
@@ -187,7 +187,7 @@ switch ($op) {
 
     case 'order':
         // Get Module Handler
-        $module_handler =& xoops_getHandler('module');
+        $module_handler = xoops_getHandler('module');
         if (isset($_POST['mod'])) {
             $i = 1;
             foreach ($_POST['mod'] as $order) {
@@ -254,7 +254,7 @@ switch ($op) {
 
     case 'display':
         // Get module handler
-        $module_handler =& xoops_getHandler('module');
+        $module_handler = xoops_getHandler('module');
         $module_id      = system_CleanVars($_POST, 'mid', 0, 'int');
         if ($module_id > 0) {
             $module =& $module_handler->get($module_id);
@@ -277,7 +277,7 @@ switch ($op) {
 
     case 'display_in_menu':
         // Get module handler
-        $module_handler =& xoops_getHandler('module');
+        $module_handler = xoops_getHandler('module');
         $module_id      = system_CleanVars($_POST, 'mid', 0, 'int');
         if ($module_id > 0) {
             $module =& $module_handler->get($module_id);
@@ -339,7 +339,7 @@ switch ($op) {
     case 'install':
         $module = $myts->htmlspecialchars($module);
         // Get module handler
-        $module_handler =& xoops_getHandler('module');
+        $module_handler = xoops_getHandler('module');
         $mod            =& $module_handler->create();
         $mod->loadInfoAsVar($module);
         // Construct message
@@ -395,7 +395,7 @@ switch ($op) {
     case 'uninstall':
         $module = $myts->htmlspecialchars($module);
         // Get module handler
-        $module_handler =& xoops_getHandler('module');
+        $module_handler = xoops_getHandler('module');
         $mod            =& $module_handler->getByDirname($module);
         // Construct message
         if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
@@ -450,7 +450,7 @@ switch ($op) {
     case 'update':
         $module = $myts->htmlspecialchars($module);
         // Get module handler
-        $module_handler =& xoops_getHandler('module');
+        $module_handler = xoops_getHandler('module');
         $mod            =& $module_handler->getByDirname($module);
         // Construct message
         if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {

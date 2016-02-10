@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Cointin Maxime (AKA Kraven30)
  * @package             system
  * @version             $Id: maintenance.php 13082 2015-06-06 21:59:41Z beckmi $
@@ -221,7 +221,7 @@ class SystemMaintenance
         $ret    = array();
         $ret[0] = "# \n";
         $ret[0] .= "# Dump SQL, Generate by Xoops \n";
-        $ret[0] .= "# Date : " . date('d-m-Y � H:i') . " \n";
+        $ret[0] .= "# Date : " . date('d-m-Y - H:i') . " \n";
         $ret[1]      = '<table class="outer"><tr><th width="30%">' . _AM_SYSTEM_MAINTENANCE_DUMP_TABLES . '</th><th width="35%">' . _AM_SYSTEM_MAINTENANCE_DUMP_STRUCTURES . '</th><th  width="35%">' . _AM_SYSTEM_MAINTENANCE_DUMP_NB_RECORDS . '</th></tr>';
         $class       = 'odd';
         $tablesCount = count($tables);
@@ -250,13 +250,13 @@ class SystemMaintenance
         $ret    = array();
         $ret[0] = "# \n";
         $ret[0] .= "# Dump SQL, Generate by Xoops \n";
-        $ret[0] .= "# Date : " . date('d-m-Y � H:i') . " \n";
+        $ret[0] .= "# Date : " . date('d-m-Y - H:i') . " \n";
         $ret[0] .= "# \n\n";
         $ret[1]       = '<table class="outer"><tr><th width="30%">' . _AM_SYSTEM_MAINTENANCE_DUMP_TABLES . '</th><th width="35%">' . _AM_SYSTEM_MAINTENANCE_DUMP_STRUCTURES . '</th><th  width="35%">' . _AM_SYSTEM_MAINTENANCE_DUMP_NB_RECORDS . '</th></tr>';
         $class        = 'odd';
         $modulesCount = count($modules);
         for ($i = 0; $i < $modulesCount; ++$i) {
-            $module_handler =& xoops_getHandler('module');
+            $module_handler = xoops_getHandler('module');
             $module         = $module_handler->getByDirname($modules[$i]);
             $ret[1] .= '<tr><th colspan="3" align="left">' . ucfirst($modules[$i]) . '</th></tr>';
             $modtables = $module->getInfo('tables');

@@ -3,7 +3,7 @@
  *  Xoopsmlcontent plugin for tinymce
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license             GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             class / xoopseditor
  * @subpackage          tinymce / xoops plugins
  * @since               2.3.0
@@ -34,7 +34,7 @@ function langDropdown()
         if (is_object($xlanguage) && $xlanguage->getVar('isactive')) {
             include_once(XOOPS_ROOT_PATH . '/modules/xlanguage/include/vars.php');
             include_once(XOOPS_ROOT_PATH . '/modules/xlanguage/include/functions.php');
-            $xlanguage_handler =& xoops_getModuleHandler('language', 'xlanguage');
+            $xlanguage_handler = xoops_getModuleHandler('language', 'xlanguage');
             $xlanguage_handler->loadConfig();
             $lang_list =& $xlanguage_handler->getAllList();
 

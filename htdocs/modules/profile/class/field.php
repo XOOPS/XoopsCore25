@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             profile
  * @since               2.3.0
  * @author              Jan Pedersen
@@ -295,7 +295,7 @@ class ProfileField extends XoopsObject
                 break;
 
             case "group":
-                $member_handler = &xoops_getHandler('member');
+                $member_handler = xoops_getHandler('member');
                 $options        = $member_handler->getGroupList();
                 $ret            = isset($options[$value]) ? $options[$value] : '';
 
@@ -303,7 +303,7 @@ class ProfileField extends XoopsObject
                 break;
 
             case "group_multi":
-                $member_handler = &xoops_getHandler('member');
+                $member_handler = xoops_getHandler('member');
                 $options        = $member_handler->getGroupList();
                 $ret            = array();
                 foreach (array_keys($options) as $key) {
@@ -420,7 +420,7 @@ class ProfileField extends XoopsObject
      */
     public function getUserVars()
     {
-        $profile_handler =& xoops_getModuleHandler('profile', 'profile');
+        $profile_handler = xoops_getModuleHandler('profile', 'profile');
 
         return $profile_handler->getUserVars();
     }
@@ -474,7 +474,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
      */
     public function insert(ProfileField $obj, $force = false)
     {
-        $profile_handler =& xoops_getModuleHandler('profile', 'profile');
+        $profile_handler = xoops_getModuleHandler('profile', 'profile');
         $obj->setVar('field_name', str_replace(' ', '_', $obj->getVar('field_name')));
         $obj->cleanVars();
         $defaultstring = "";
@@ -609,7 +609,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
      **/
     public function delete(ProfileField $obj, $force = false)
     {
-        $profile_handler =& xoops_getModuleHandler('profile', 'profile');
+        $profile_handler = xoops_getModuleHandler('profile', 'profile');
         // remove column from table
         $sql = "ALTER TABLE " . $profile_handler->table . " DROP `" . $obj->getVar('field_name', 'n') . "`";
         if ($this->db->query($sql)) {
@@ -619,11 +619,11 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
             }
 
             if ($obj->getVar('field_show') || $obj->getVar('field_edit')) {
-                $module_handler =& xoops_getHandler('module');
+                $module_handler = xoops_getHandler('module');
                 $profile_module = $module_handler->getByDirname('profile');
                 if (is_object($profile_module)) {
                     // Remove group permissions
-                    $groupperm_handler =& xoops_getHandler('groupperm');
+                    $groupperm_handler = xoops_getHandler('groupperm');
                     $criteria          = new CriteriaCompo(new Criteria('gperm_modid', $profile_module->getVar('mid')));
                     $criteria->add(new Criteria('gperm_itemid', $obj->getVar('field_id')));
 

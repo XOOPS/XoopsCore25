@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
@@ -376,7 +376,7 @@ class XoopsMailer
     public function sendPM($uid, $subject, $body)
     {
         global $xoopsUser;
-        $pm_handler = &xoops_getHandler('privmessage');
+        $pm_handler = xoops_getHandler('privmessage');
         $pm         = &$pm_handler->create();
         $pm->setVar("subject", $subject);
         // RMV-NOTIFY
@@ -552,7 +552,7 @@ class XoopsMailer
     {
         if (!is_array($group)) {
             if (strtolower(get_class($group)) === "xoopsgroup") {
-                $member_handler = &xoops_getHandler('member');
+                $member_handler = xoops_getHandler('member');
                 $this->setToUsers($member_handler->getUsersByGroup($group->getVar('groupid'), true));
             }
         } else {
