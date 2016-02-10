@@ -9,12 +9,12 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license::   http://www.fsf.org/copyleft/gpl.html GNU public license
- * @package::   Xoops Partner
- * @since::     2.5.0
- * @author::    XOOPS Development Team
- * @version:   $Id $
+ * @copyright (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @package   Xoops Partner
+ * @since     2.5.0
+ * @author    XOOPS Development Team
+ * @version   $Id$
  **/
 
 global $moduleInfo;

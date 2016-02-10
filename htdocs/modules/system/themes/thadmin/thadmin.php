@@ -15,7 +15,7 @@ xoops_load("gui", "system");
  * Xoops Cpanel ThAdmin GUI class
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @license             GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             system
  * @usbpackage          GUI
  * @since               2.3.0
