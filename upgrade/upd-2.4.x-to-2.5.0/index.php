@@ -60,7 +60,7 @@ class Upgrade_250 extends XoopsUpgrade
      */
     public function apply_config()
     {
-        $dbm = new db_manager();
+        $dbm = new Db_manager();
 
         $sql = "SELECT conf_id FROM `" . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` IN ('cpanel')";
         if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
@@ -146,7 +146,7 @@ class Upgrade_250 extends XoopsUpgrade
     {
         include_once '../modules/system/xoops_version.php';
 
-        $dbm  = new db_manager();
+        $dbm  = new Db_manager();
         $time = time();
         foreach ($modversion['templates'] as $tplfile) {
             // Admin templates
