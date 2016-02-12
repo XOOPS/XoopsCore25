@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
@@ -33,27 +33,26 @@ require_once $GLOBALS['xoops']->path('kernel/group.php');
  */
 class XoopsMemberHandler
 {
-    /**#@+
+    /**
      * holds reference to group handler(DAO) class
      * @access private
      */
-    public $_gHandler;
+    protected $groupHandler;
 
     /**
      * holds reference to user handler(DAO) class
      */
-    public $_uHandler;
+    protected $userHandler;
 
     /**
      * holds reference to membership handler(DAO) class
      */
-    public $_mHandler;
+    protected $membershipHandler;
 
     /**
      * holds temporary user objects
      */
-    public $_members = array();
-    /**#@-*/
+    protected $membersWorkingList = array();
 
     /**
      * constructor
@@ -61,9 +60,9 @@ class XoopsMemberHandler
      */
     public function __construct(XoopsDatabase $db)
     {
-        $this->_gHandler = new XoopsGroupHandler($db);
-        $this->_uHandler = new XoopsUserHandler($db);
-        $this->_mHandler = new XoopsMembershipHandler($db);
+        $this->groupHandler = new XoopsGroupHandler($db);
+        $this->userHandler = new XoopsUserHandler($db);
+        $this->membershipHandler = new XoopsMembershipHandler($db);
     }
 
     /**
@@ -73,7 +72,7 @@ class XoopsMemberHandler
      */
     public function &createGroup()
     {
-        $inst =& $this->_gHandler->create();
+        $inst =& $this->groupHandler->create();
 
         return $inst;
     }
@@ -85,7 +84,7 @@ class XoopsMemberHandler
      */
     public function &createUser()
     {
-        $inst =& $this->_uHandler->create();
+        $inst =& $this->userHandler->create();
 
         return $inst;
     }
@@ -98,7 +97,7 @@ class XoopsMemberHandler
      */
     public function getGroup($id)
     {
-        return $this->_gHandler->get($id);
+        return $this->groupHandler->get($id);
     }
 
     /**
@@ -109,11 +108,11 @@ class XoopsMemberHandler
      */
     public function &getUser($id)
     {
-        if (!isset($this->_members[$id])) {
-            $this->_members[$id] = &$this->_uHandler->get($id);
+        if (!isset($this->membersWorkingList[$id])) {
+            $this->membersWorkingList[$id] = &$this->userHandler->get($id);
         }
 
-        return $this->_members[$id];
+        return $this->membersWorkingList[$id];
     }
 
     /**
@@ -124,8 +123,8 @@ class XoopsMemberHandler
      */
     public function deleteGroup(&$group)
     {
-        $s1 = $this->_mHandler->deleteAll(new Criteria('groupid', $group->getVar('groupid')));
-        $s2 = $this->_gHandler->delete($group);
+        $s1 = $this->membershipHandler->deleteAll(new Criteria('groupid', $group->getVar('groupid')));
+        $s2 = $this->groupHandler->delete($group);
 
         return ($s1 && $s2);// ? true : false;
     }
@@ -138,8 +137,8 @@ class XoopsMemberHandler
      */
     public function deleteUser(&$user)
     {
-        $s1 = $this->_mHandler->deleteAll(new Criteria('uid', $user->getVar('uid')));
-        $s2 = $this->_uHandler->delete($user);
+        $s1 = $this->membershipHandler->deleteAll(new Criteria('uid', $user->getVar('uid')));
+        $s2 = $this->userHandler->delete($user);
 
         return ($s1 && $s2);// ? true : false;
     }
@@ -153,7 +152,7 @@ class XoopsMemberHandler
      */
     public function insertGroup(XoopsGroup $group)
     {
-        return $this->_gHandler->insert($group);
+        return $this->groupHandler->insert($group);
     }
 
     /**
@@ -167,7 +166,7 @@ class XoopsMemberHandler
      */
     public function insertUser(XoopsUser $user, $force = false)
     {
-        return $this->_uHandler->insert($user, $force);
+        return $this->userHandler->insert($user, $force);
     }
 
     /**
@@ -179,7 +178,7 @@ class XoopsMemberHandler
      */
     public function getGroups(CriteriaElement $criteria = null, $id_as_key = false)
     {
-        return $this->_gHandler->getObjects($criteria, $id_as_key);
+        return $this->groupHandler->getObjects($criteria, $id_as_key);
     }
 
     /**
@@ -191,7 +190,7 @@ class XoopsMemberHandler
      */
     public function getUsers(CriteriaElement $criteria = null, $id_as_key = false)
     {
-        return $this->_uHandler->getObjects($criteria, $id_as_key);
+        return $this->userHandler->getObjects($criteria, $id_as_key);
     }
 
     /**
@@ -202,7 +201,7 @@ class XoopsMemberHandler
      */
     public function getGroupList(CriteriaElement $criteria = null)
     {
-        $groups = $this->_gHandler->getObjects($criteria, true);
+        $groups = $this->groupHandler->getObjects($criteria, true);
         $ret    = array();
         foreach (array_keys($groups) as $i) {
             $ret[$i] = $groups[$i]->getVar('name');
@@ -219,7 +218,7 @@ class XoopsMemberHandler
      */
     public function getUserList(CriteriaElement $criteria = null)
     {
-        $users =& $this->_uHandler->getObjects($criteria, true);
+        $users =& $this->userHandler->getObjects($criteria, true);
         $ret   = array();
         foreach (array_keys($users) as $i) {
             $ret[$i] = $users[$i]->getVar('uname');
@@ -237,11 +236,11 @@ class XoopsMemberHandler
      */
     public function addUserToGroup($group_id, $user_id)
     {
-        $mship =& $this->_mHandler->create();
+        $mship =& $this->membershipHandler->create();
         $mship->setVar('groupid', $group_id);
         $mship->setVar('uid', $user_id);
 
-        return $this->_mHandler->insert($mship);
+        return $this->membershipHandler->insert($mship);
     }
 
     /**
@@ -261,7 +260,7 @@ class XoopsMemberHandler
         }
         $criteria->add($criteria2);
 
-        return $this->_mHandler->deleteAll($criteria);
+        return $this->membershipHandler->deleteAll($criteria);
     }
 
     /**
@@ -276,7 +275,7 @@ class XoopsMemberHandler
      */
     public function getUsersByGroup($group_id, $asobject = false, $limit = 0, $start = 0)
     {
-        $user_ids = $this->_mHandler->getUsersByGroup($group_id, $limit, $start);
+        $user_ids = $this->membershipHandler->getUsersByGroup($group_id, $limit, $start);
         if (!$asobject) {
             return $user_ids;
         } else {
@@ -302,7 +301,7 @@ class XoopsMemberHandler
      */
     public function getGroupsByUser($user_id, $asobject = false)
     {
-        $group_ids = $this->_mHandler->getGroupsByUser($user_id);
+        $group_ids = $this->membershipHandler->getGroupsByUser($user_id);
         if (!$asobject) {
             return $group_ids;
         } else {
@@ -317,43 +316,83 @@ class XoopsMemberHandler
     /**
      * log in a user
      *
-     * @param  string|XoopsUser $uname username as entered in the login form
-     * @param  string           $pwd   password entered in the login form
-     * @return XoopsUser        XoopsUser reference to the logged in user. FALSE if failed to log in
+     * @param  string    $uname username as entered in the login form
+     * @param  string    $pwd   password entered in the login form
+     *
+     * @return XoopsUser|false logged in XoopsUser, FALSE if failed to log in
      */
-    public function &loginUser(XoopsUser $uname, $pwd)
+    public function loginUser($uname, $pwd)
     {
-        $criteria = new CriteriaCompo(new Criteria('uname', $uname));
-        $criteria->add(new Criteria('pass', md5($pwd)));
-        $user =& $this->_uHandler->getObjects($criteria, false);
+        $db = XoopsDatabaseFactory::getDatabaseConnection();
+        $uname = $db->escape($uname);
+        $pwd = $db->escape($pwd);
+        $criteria = new Criteria('uname', $uname);
+        $user =& $this->userHandler->getObjects($criteria, false);
         if (!$user || count($user) != 1) {
-            $user = false;
-
-            return $user;
+            return false;
         }
 
+        $hash = $user[0]->pass();
+        $type = substr($user[0]->pass(), 0, 1);
+        // see if we have a crypt like signature, old md5 hash is just hex digits
+        if ($type==='$') {
+            if (!password_verify($pwd, $hash)) {
+                return false;
+            }
+            // check if hash uses the best algorithm (i.e. after a PHP upgrade)
+            $rehash = password_needs_rehash($hash, PASSWORD_DEFAULT);
+        } else {
+            if ($hash!=md5($pwd)) {
+                return false;
+            }
+            $rehash = true; // automatically update old style
+        }
+        // hash used an old algorithm, so make it stronger
+        if ($rehash) {
+            if ($this->getColumnCharacterLength('users', 'pass') < 255) {
+                error_log('Upgrade required on users table!');
+            } else {
+                $user[0]->setVar('pass', password_hash($pwd, PASSWORD_DEFAULT));
+                $this->userHandler->insert($user[0]);
+            }
+        }
         return $user[0];
     }
 
     /**
-     * logs in a user with an nd5 encrypted password
+     * Get maximum character length for a table column
      *
-     * @param  string|XoopsUser $uname  username
-     * @param  string           $md5pwd password encrypted with md5
-     * @return XoopsUser        XoopsUser reference to the logged in user. FALSE if failed to log in
+     * @param string $table  database table
+     * @param string $column table column
+     *
+     * @return int|null max length or null on error
      */
-    public function &loginUserMd5(XoopsUser $uname, $md5pwd)
+    function getColumnCharacterLength($table, $column)
     {
-        $criteria = new CriteriaCompo(new Criteria('uname', $uname));
-        $criteria->add(new Criteria('pass', $md5pwd));
-        $user =& $this->_uHandler->getObjects($criteria, false);
-        if (!$user || count($user) != 1) {
-            $user = false;
+        /** @var XoopsMySQLDatabase $db */
+        $db = XoopsDatabaseFactory::getDatabaseConnection();
 
-            return $user;
+        $dbname = constant('XOOPS_DB_NAME');
+        $table = $db->prefix($table);
+
+        $sql = sprintf(
+            "SELECT `CHARACTER_MAXIMUM_LENGTH` FROM `information_schema`.`COLUMNS` "
+            . "WHERE TABLE_SCHEMA = '%s'AND TABLE_NAME = '%s' AND COLUMN_NAME = '%s'",
+            $db->escape($dbname),
+            $db->escape($table),
+            $db->escape($column)
+        );
+
+        /** @var mysqli_result $result */
+        $result = $db->query($sql);
+        if ($result) {
+            $row = $db->fetchRow($result);
+            if ($row) {
+                $columnLength = $row[0];
+                return (int) $columnLength;
+            }
         }
-
-        return $user[0];
+        return null;
     }
 
     /**
@@ -364,7 +403,7 @@ class XoopsMemberHandler
      */
     public function getUserCount(CriteriaElement $criteria = null)
     {
-        return $this->_uHandler->getCount($criteria);
+        return $this->userHandler->getCount($criteria);
     }
 
     /**
@@ -375,7 +414,7 @@ class XoopsMemberHandler
      */
     public function getUserCountByGroup($group_id)
     {
-        return $this->_mHandler->getCount(new Criteria('groupid', $group_id));
+        return $this->membershipHandler->getCount(new Criteria('groupid', $group_id));
     }
 
     /**
@@ -403,7 +442,7 @@ class XoopsMemberHandler
      */
     public function updateUsersByField($fieldName, $fieldValue, CriteriaElement $criteria = null)
     {
-        return $this->_uHandler->updateAll($fieldName, $fieldValue, $criteria);
+        return $this->userHandler->updateAll($fieldName, $fieldValue, $criteria);
     }
 
     /**
@@ -419,7 +458,7 @@ class XoopsMemberHandler
         }
         $user->setVar('level', 1);
 
-        return $this->_uHandler->insert($user, true);
+        return $this->userHandler->insert($user, true);
     }
 
     /**
@@ -438,7 +477,7 @@ class XoopsMemberHandler
         $ret           = array();
         $criteriaCompo = new CriteriaCompo();
         $select        = $asobject ? "u.*" : "u.uid";
-        $sql           = "SELECT DISTINCT {$select} " . " FROM " . $this->_uHandler->db->prefix("users") . " AS u" . " LEFT JOIN " . $this->_mHandler->db->prefix("groups_users_link") . " AS m ON m.uid = u.uid WHERE ";
+        $sql           = "SELECT DISTINCT {$select} " . " FROM " . $this->userHandler->db->prefix("users") . " AS u" . " LEFT JOIN " . $this->membershipHandler->db->prefix("groups_users_link") . " AS m ON m.uid = u.uid WHERE ";
         if (!empty($groups)) {
             $criteriaCompo->add(new Criteria('m.groupid', "(" . implode(", ", $groups) . ")", 'IN'));
         }
@@ -462,10 +501,10 @@ class XoopsMemberHandler
             $sql .= "1 = 1";
         }
 
-        if (!$result = $this->_uHandler->db->query($sql, $limit, $start)) {
+        if (!$result = $this->userHandler->db->query($sql, $limit, $start)) {
             return $ret;
         }
-        while ($myrow = $this->_uHandler->db->fetchArray($result)) {
+        while ($myrow = $this->userHandler->db->fetchArray($result)) {
             if ($asobject) {
                 $user = new XoopsUser();
                 $user->assignVars($myrow);
@@ -495,7 +534,7 @@ class XoopsMemberHandler
     {
         $ret           = 0;
         $criteriaCompo = new CriteriaCompo();
-        $sql           = "SELECT DISTINCT COUNT(u.uid) " . " FROM " . $this->_uHandler->db->prefix("users") . " AS u" . " LEFT JOIN " . $this->_mHandler->db->prefix("groups_users_link") . " AS m ON m.uid = u.uid" . " WHERE ";
+        $sql           = "SELECT DISTINCT COUNT(u.uid) " . " FROM " . $this->userHandler->db->prefix("users") . " AS u" . " LEFT JOIN " . $this->membershipHandler->db->prefix("groups_users_link") . " AS m ON m.uid = u.uid" . " WHERE ";
         if (!empty($groups)) {
             $criteriaCompo->add(new Criteria('m.groupid', "(" . implode(", ", $groups) . ")", 'IN'));
         }
@@ -510,10 +549,10 @@ class XoopsMemberHandler
             $sql .= "1 = 1";
         }
 
-        if (!$result = $this->_uHandler->db->query($sql)) {
+        if (!$result = $this->userHandler->db->query($sql)) {
             return $ret;
         }
-        list($ret) = $this->_uHandler->db->fetchRow($result);
+        list($ret) = $this->userHandler->db->fetchRow($result);
 
         return $ret;
     }

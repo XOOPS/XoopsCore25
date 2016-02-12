@@ -181,9 +181,9 @@ namespace {
             $return = array(
                 'algo' => 0,
                 'algoName' => 'unknown',
-                'options' => array()
+                'options' => array(),
             );
-            if (PasswordCompat\binary\_substr($hash, 0, 4) === '$2y$' && PasswordCompat\binary\_strlen($hash) == 60) {
+            if (PasswordCompat\binary\_substr($hash, 0, 4) == '$2y$' && PasswordCompat\binary\_strlen($hash) == 60) {
                 $return['algo'] = PASSWORD_BCRYPT;
                 $return['algoName'] = 'bcrypt';
                 list($cost) = sscanf($hash, "$2y$%d$");
@@ -296,7 +296,7 @@ namespace PasswordCompat\binary {
          * @return boolean the check result
          */
         function check() {
-            static $pass = null;
+            static $pass = NULL;
 
             if (is_null($pass)) {
                 if (function_exists('crypt')) {

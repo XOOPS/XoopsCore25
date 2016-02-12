@@ -13,10 +13,10 @@
  * Upgrader from 2.0.18 to 2.3.0
  *
  * See the enclosed file license.txt for licensing information.
- * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
+ * If you did not receive this file, get it at http://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright    (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license          http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @license          GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package          upgrader
  * @since            2.3.0
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
@@ -212,13 +212,18 @@ class Upgrade_230 extends XoopsUpgrade
      */
     public function check_db()
     {
+        // mainfile was included to get here, just check for definition
+        if (defined('XOOPS_DB_CHARSET')) {
+            return true;
+        }
+        /*
         $lines = file(XOOPS_ROOT_PATH . '/mainfile.php');
         foreach ($lines as $line) {
             if (preg_match("/(define\(\s*)([\"'])(XOOPS_DB_CHARSET)\\2,\s*([\"'])([^\"']*?)\\4\s*\);/", $line)) {
                 return true;
             }
         }
-
+        */
         return false;
     }
 

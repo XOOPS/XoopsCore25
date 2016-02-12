@@ -79,8 +79,8 @@ if ($op === 'logout') {
     $message  = '';
     $_SESSION = array();
     session_destroy();
-    setcookie($GLOBALS['xoopsConfig']['usercookie'], 0, -1, '/');
-    setcookie($GLOBALS['xoopsConfig']['usercookie'], 0, -1, '/', XOOPS_COOKIE_DOMAIN, 0);
+    setcookie($GLOBALS['xoopsConfig']['usercookie'], null, -1, '/');
+    setcookie($GLOBALS['xoopsConfig']['usercookie'], null, -1, '/', XOOPS_COOKIE_DOMAIN, 0);
     // clear entry from online users table
     if (is_object($GLOBALS['xoopsUser'])) {
         $online_handler = xoops_getHandler('online');

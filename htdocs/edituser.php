@@ -10,13 +10,15 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
  * @version             $Id: edituser.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 include __DIR__ . '/mainfile.php';
+
+XoopsLoad::load('XoopsRequest');
 
 $xoopsPreload =& XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.edituser.start');
@@ -30,52 +32,35 @@ if (!is_object($xoopsUser)) {
 }
 
 // initialize $op variable
-$op = 'editprofile';
-if (!empty($_POST['op'])) {
-    $op = $_POST['op'];
-}
-if (!empty($_GET['op'])) {
-    $op = $_GET['op'];
-}
+$op = XoopsRequest::getCmd('op', 'editprofile');
 
-$config_handler  =& xoops_getHandler('config');
+$config_handler  = xoops_getHandler('config');
 $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-$myts            =& MyTextSanitizer::getInstance();
+$myts            = MyTextSanitizer::getInstance();
 if ($op === 'saveuser') {
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header('index.php', 3, _US_NOEDITRIGHT . "<br />" . implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
     }
-    $uid = 0;
-    if (!empty($_POST['uid'])) {
-        $uid = (int)($_POST['uid']);
-    }
+    $uid = XoopsRequest::getInt('uid', 0);
     if (empty($uid) || $xoopsUser->getVar('uid') != $uid) {
         redirect_header('index.php', 3, _US_NOEDITRIGHT);
     }
     $errors = array();
     if ($xoopsConfigUser['allow_chgmail'] == 1) {
-        $email = '';
-        if (!empty($_POST['email'])) {
-            $email = $myts->stripSlashesGPC(trim($_POST['email']));
-        }
-        if ($email == '' || !checkEmail($email)) {
+        $email = XoopsRequest::getEmail('email', '');
+        if (empty($email)) {
             $errors[] = _US_INVALIDMAIL;
         }
     }
-    $password = '';
-    if (!empty($_POST['password'])) {
-        $password = $myts->stripSlashesGPC(trim($_POST['password']));
-    }
-    if ($password != '') {
+    $password = XoopsRequest::getString('password', '');
+    if (!empty($password)) {
         if (strlen($password) < $xoopsConfigUser['minpass']) {
             $errors[] = sprintf(_US_PWDTOOSHORT, $xoopsConfigUser['minpass']);
-        }
-        $vpass = '';
-        if (!empty($_POST['vpass'])) {
-            $vpass = $myts->stripSlashesGPC(trim($_POST['vpass']));
-        }
-        if ($password != $vpass) {
-            $errors[] = _US_PASSNOTSAME;
+        } else {
+            $vpass = XoopsRequest::getString('vpass', '');
+            if ($password != $vpass) {
+                $errors[] = _US_PASSNOTSAME;
+            }
         }
     }
     if (count($errors) > 0) {
@@ -87,36 +72,35 @@ if ($op === 'saveuser') {
         echo '</div><br />';
         $op = 'editprofile';
     } else {
-        $member_handler =& xoops_getHandler('member');
-        $edituser       =& $member_handler->getUser($uid);
-        $edituser->setVar('name', $_POST['name']);
+        $member_handler = xoops_getHandler('member');
+        $edituser       = $member_handler->getUser($uid);
+        $edituser->setVar('name', XoopsRequest::getString('name', ''));
         if ($xoopsConfigUser['allow_chgmail'] == 1) {
             $edituser->setVar('email', $email, true);
         }
-        $edituser->setVar('url', formatURL($_POST['url']));
-        $edituser->setVar('user_icq', $_POST['user_icq']);
-        $edituser->setVar('user_from', $_POST['user_from']);
-        $edituser->setVar('user_sig', xoops_substr($_POST['user_sig'], 0, 255));
-        $user_viewemail = (!empty($_POST['user_viewemail'])) ? 1 : 0;
-        $edituser->setVar('user_viewemail', $user_viewemail);
-        $edituser->setVar('user_aim', $_POST['user_aim']);
-        $edituser->setVar('user_yim', $_POST['user_yim']);
-        $edituser->setVar('user_msnm', $_POST['user_msnm']);
         if ($password != '') {
-            $edituser->setVar('pass', md5($password), true);
+            $edituser->setVar('pass', password_hash($password, PASSWORD_DEFAULT));
+            //$edituser->setVar('last_pass_change', time());
         }
-        $attachsig = (!empty($_POST['attachsig'])) ? 1 : 0;
-        $edituser->setVar('attachsig', $attachsig);
-        $edituser->setVar('timezone_offset', $_POST['timezone_offset']);
-        $edituser->setVar('uorder', $_POST['uorder']);
-        $edituser->setVar('umode', $_POST['umode']);
-        $edituser->setVar('notify_method', $_POST['notify_method']);
-        $edituser->setVar('notify_mode', $_POST['notify_mode']);
-        $edituser->setVar('bio', xoops_substr($_POST['bio'], 0, 255));
-        $edituser->setVar('user_occ', $_POST['user_occ']);
-        $edituser->setVar('user_intrest', $_POST['user_intrest']);
-        $edituser->setVar('user_mailok', $_POST['user_mailok']);
-        if (!empty($_POST['usecookie'])) {
+        $edituser->setVar('url', XoopsRequest::getUrl('url', ''));
+        $edituser->setVar('user_icq', XoopsRequest::getString('user_icq', ''));
+        $edituser->setVar('user_from', XoopsRequest::getString('user_from', ''));
+        $edituser->setVar('user_sig', xoops_substr(XoopsRequest::getString('user_sig', ''), 0, 255));
+        $edituser->setVar('user_viewemail', XoopsRequest::getBool('user_viewemail', 0));
+        $edituser->setVar('user_aim', XoopsRequest::getString('user_aim', ''));
+        $edituser->setVar('user_yim', XoopsRequest::getString('user_yim', ''));
+        $edituser->setVar('user_msnm', XoopsRequest::getString('user_msnm', ''));
+        $edituser->setVar('attachsig', XoopsRequest::getBool('attachsig', 0));
+        $edituser->setVar('timezone_offset', XoopsRequest::getFloat('timezone_offset', 0.0));
+        $edituser->setVar('uorder', XoopsRequest::getInt('uorder', 0));
+        $edituser->setVar('umode', XoopsRequest::getString('umode', 'flat'));
+        $edituser->setVar('notify_method', XoopsRequest::getInt('notify_method', 1));
+        $edituser->setVar('notify_mode', XoopsRequest::getInt('notify_mode', 1));
+        $edituser->setVar('bio', substr(XoopsRequest::getString('bio', ''), 0, 255));
+        $edituser->setVar('user_occ', XoopsRequest::getString('user_occ', ''));
+        $edituser->setVar('user_intrest', XoopsRequest::getString('user_intrest', ''));
+        $edituser->setVar('user_mailok', XoopsRequest::getBool('user_mailok', 0));
+        if (XoopsRequest::getBool('usecookie')) {
             setcookie($xoopsConfig['usercookie'], $xoopsUser->getVar('uname'), time() + 31536000, '/', XOOPS_COOKIE_DOMAIN);
         } else {
             setcookie($xoopsConfig['usercookie']);
@@ -256,7 +240,7 @@ if ($op === 'avatarform') {
         $form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
         $form->display();
     }
-    $avatar_handler  =& xoops_getHandler('avatar');
+    $avatar_handler  = xoops_getHandler('avatar');
     $form2           = new XoopsThemeForm(_US_CHOOSEAVT, 'uploadavatar', 'edituser.php', 'post', true);
     $avatar_select   = new XoopsFormSelect('', 'user_avatar', $xoopsUser->getVar('user_avatar'));
     $avatar_list     = $avatar_handler->getList('S', true);
@@ -303,7 +287,7 @@ if ($op === 'avatarupload') {
         if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
             $uploader->setPrefix('cavt');
             if ($uploader->upload()) {
-                $avt_handler = &xoops_getHandler('avatar');
+                $avt_handler = xoops_getHandler('avatar');
                 $avatar      = &$avt_handler->create();
                 $avatar->setVar('avatar_file', 'avatars/' . $uploader->getSavedFileName());
                 $avatar->setVar('avatar_name', $xoopsUser->getVar('uname'));
@@ -347,7 +331,7 @@ if ($op === 'avatarchoose') {
         redirect_header('index.php', 3, _US_NOEDITRIGHT);
     }
     $user_avatar = '';
-    $avt_handler =& xoops_getHandler('avatar');
+    $avt_handler = xoops_getHandler('avatar');
     if (!empty($_POST['user_avatar'])) {
         $user_avatar     = $myts->addSlashes(trim($_POST['user_avatar']));
         $criteria_avatar = new CriteriaCompo(new Criteria('avatar_file', $user_avatar));
@@ -362,7 +346,7 @@ if ($op === 'avatarchoose') {
     if (0 === strpos($user_avatarpath, realpath(XOOPS_UPLOAD_PATH)) && is_file($user_avatarpath)) {
         $oldavatar = $xoopsUser->getVar('user_avatar');
         $xoopsUser->setVar('user_avatar', $user_avatar);
-        $member_handler =& xoops_getHandler('member');
+        $member_handler = xoops_getHandler('member');
         if (!$member_handler->insertUser($xoopsUser)) {
             include $GLOBALS['xoops']->path('header.php');
             echo $xoopsUser->getHtmlErrors();

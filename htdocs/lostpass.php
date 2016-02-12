@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             core
  * @since               2.0.0
  * @version             $Id: lostpass.php 13082 2015-06-06 21:59:41Z beckmi $
@@ -30,8 +30,8 @@ if ($email == '') {
     redirect_header("user.php", 2, _US_SORRYNOTFOUND);
 }
 
-$myts           =& MyTextSanitizer::getInstance();
-$member_handler =& xoops_getHandler('member');
+$myts           = MyTextSanitizer::getInstance();
+$member_handler = xoops_getHandler('member');
 $getuser        =& $member_handler->getUsers(new Criteria('email', $myts->addSlashes($email)));
 
 if (empty($getuser)) {
@@ -58,7 +58,12 @@ if (empty($getuser)) {
             echo $xoopsMailer->getErrors();
         }
         // Next step: add the new password to the database
-        $sql = sprintf("UPDATE %s SET pass = '%s' WHERE uid = %u", $xoopsDB->prefix("users"), md5($newpass), $getuser[0]->getVar('uid'));
+        $sql = sprintf(
+            "UPDATE %s SET pass = '%s' WHERE uid = %u",
+            $xoopsDB->prefix("users"),
+            password_hash($newpass, PASSWORD_DEFAULT),
+            $getuser[0]->getVar('uid')
+        );
         if (!$xoopsDB->queryF($sql)) {
             include $GLOBALS['xoops']->path('header.php');
             echo _US_MAILPWDNG;

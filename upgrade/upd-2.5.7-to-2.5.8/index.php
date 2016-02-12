@@ -1,12 +1,14 @@
 <?php
 
 use Xmf\Database\Tables;
+use Xmf\Key\Basic;
+use Xmf\Key\FileStorage;
 
 /**
  * Upgrade from 2.5.7 to 2.5.8
  *
  * See the enclosed file license.txt for licensing information.
- * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
+ * If you did not receive this file, get it at http://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license          GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -17,11 +19,13 @@ use Xmf\Database\Tables;
  */
 class Upgrade_258 extends XoopsUpgrade
 {
+    private $keyFileName = XOOPS_VAR_PATH . '/data/syskey.php';
+
     public $tasks = array(
         'users_pass',
         'com_ip',
         'sess_ip',
-        'online_ip'
+        'online_ip',
     );
 
     /**
@@ -32,7 +36,6 @@ class Upgrade_258 extends XoopsUpgrade
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
-        include XOOPS_ROOT_PATH . '/modules/xmf/include/bootstrap.php';
     }
 
     /**
@@ -41,26 +44,34 @@ class Upgrade_258 extends XoopsUpgrade
      * @param string $table  table name
      * @param string $column column name
      *
-     * @return int|null column length or null on error
+     * @return int column length or zero on error
      */
     private function getColumnLength($table, $column)
     {
-        $migrate = new Tables();
-        $migrate->useTable($table);
-        $attributes = $migrate->getColumnAttributes($table, $column);
-        if (false === $attributes) {
-            return null;
-        }
+        /** @var XoopsMySQLDatabase $db */
+        $db = XoopsDatabaseFactory::getDatabaseConnection();
 
-        $open = strpos($attributes, '(');
-        $close = strpos($attributes, ')');
-        if ((false === $open) || (false === $close)) {
-            return null;
-        }
-        ++$open;
-        $value = substr($attributes, $open, $close-$open);
+        $dbname = constant('XOOPS_DB_NAME');
+        $table = $db->prefix($table);
 
-        return (int) $value;
+        $sql = sprintf(
+            "SELECT `CHARACTER_MAXIMUM_LENGTH` FROM `information_schema`.`COLUMNS` "
+            . "WHERE TABLE_SCHEMA = '%s'AND TABLE_NAME = '%s' AND COLUMN_NAME = '%s'",
+            $db->escape($dbname),
+            $db->escape($table),
+            $db->escape($column)
+        );
+
+        /** @var mysqli_result $result */
+        $result = $db->query($sql);
+        if ($result) {
+            $row = $db->fetchRow($result);
+            if ($row) {
+                $columnLength = $row[0];
+                return (int) $columnLength;
+            }
+        }
+        return 0;
     }
 
     /**
@@ -80,6 +91,14 @@ class Upgrade_258 extends XoopsUpgrade
     {
         $migrate = new Tables();
         $migrate->useTable('users');
+        // kill any indexes based on pass column
+        $indexes = $migrate->getTableIndexes('users');
+        foreach ($indexes as $name => $def) {
+            if (preg_match('/\b(pass)\b/', $def['columns'])) {
+                $migrate->dropIndex($name, 'users');
+            }
+        }
+
         $migrate->alterColumn('users', 'pass', "varchar(255) NOT NULL DEFAULT ''");
         return $migrate->queueExecute(true);
     }

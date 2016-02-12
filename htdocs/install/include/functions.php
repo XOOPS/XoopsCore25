@@ -20,22 +20,23 @@
 function install_acceptUser($hash = '')
 {
     $GLOBALS['xoopsUser'] = null;
-    $hash_data            = @explode("-", $_COOKIE['xo_install_user'], 2);
-    list($uname, $hash_login) = array($hash_data[0], (string)(@$hash_data[1]));
-    if (empty($uname) || empty($hash_login)) {
+    $assertClaims = array(
+        'sub' => 'xoopsinstall',
+    );
+    $claims = \Xmf\Jwt\TokenReader::fromCookie('install', 'xo_install_user', $assertClaims);
+    if (false === $claims || empty($claims->uname)) {
         return false;
     }
-    $memebr_handler = xoops_getHandler('member');
-    $user           = array_pop($memebr_handler->getUsers(new Criteria('uname', $uname)));
-    if ($hash_login != md5($user->getVar('pass') . XOOPS_DB_NAME . XOOPS_DB_PASS . XOOPS_DB_PREFIX)) {
-        return false;
-    }
-    $myts = MyTextSanitizer::getInstance();
+    $uname = $claims->uname;
+    $memberHandler = xoops_getHandler('member');
+    $user = array_pop($memberHandler->getUsers(new Criteria('uname', $uname)));
+
     if (is_object($GLOBALS['xoops']) && method_exists($GLOBALS['xoops'], 'acceptUser')) {
         $res = $GLOBALS['xoops']->acceptUser($uname, true, $msg);
 
         return $res;
     }
+
     $GLOBALS['xoopsUser']        = $user;
     $_SESSION['xoopsUserId']     = $GLOBALS['xoopsUser']->getVar('uid');
     $_SESSION['xoopsUserGroups'] = $GLOBALS['xoopsUser']->getGroups();

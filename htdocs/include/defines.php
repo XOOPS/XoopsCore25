@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
  * @version             $Id: defines.php 13082 2015-06-06 21:59:41Z beckmi $
@@ -76,6 +76,7 @@ if (!defined('XOOPS_XMLRPC')) {
 /*
  * Some language definitions that cannot be translated
  */
+$xoops_url = XOOPS_URL;
 define('_XOOPS_FATAL_MESSAGE', "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
 <html xmlns='http://www.w3.org/1999/xhtml'>
 <head>
@@ -91,7 +92,7 @@ body {font-size: 12px; background-color: #f0f0f0; text-align: center;}
     margin: 150px auto;
     text-align: center;
     background-color: #fff;
-    background-image: url(/images/img_errors.png);
+    background-image: url({$xoops_url}/images/img_errors.png);
     background-repeat: no-repeat;
     background-position: 30px 50px;
     padding-left: 300px;

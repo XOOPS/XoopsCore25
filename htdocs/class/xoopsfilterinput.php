@@ -26,7 +26,7 @@
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2005 Daniel Morris
  * @copyright 2005 - 2013 Open Source Matters, Inc. All rights reserved.
- * @copyright 2011-2015 XOOPS Project (http://xoops.org)
+ * @copyright 2011-2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version   Release: 1.0
  * @link      http://xoops.org
@@ -63,21 +63,27 @@ class XoopsFilterInput
         'script',
         'style',
         'title',
-        'xml');
+        'xml'
+    );
     // also will strip ALL event handlers
     protected $attrBlacklist = array('action', 'background', 'codebase', 'dynsrc', 'lowsrc');
 
     /**
      * Constructor
      *
-     * @param Array $tagsArray  - list of user-defined tags
-     * @param Array $attrArray  - list of user-defined attributes
+     * @param array $tagsArray  - list of user-defined tags
+     * @param array $attrArray  - list of user-defined attributes
      * @param int   $tagsMethod - 0 = allow just user-defined, 1 = allow all but user-defined
      * @param int   $attrMethod - 0 = allow just user-defined, 1 = allow all but user-defined
      * @param int   $xssAuto    - 0 = only auto clean essentials, 1 = allow clean blacklisted tags/attr
      */
-    public function __construct($tagsArray = array(), $attrArray = array(), $tagsMethod = 0, $attrMethod = 0, $xssAuto = 1)
-    {
+    protected function __construct(
+        $tagsArray = array(),
+        $attrArray = array(),
+        $tagsMethod = 0,
+        $attrMethod = 0,
+        $xssAuto = 1
+    ) {
         // make sure user defined arrays are in lowercase
         $tagsArrayCount = count($tagsArray);
         for ($i = 0; $i < $tagsArrayCount; ++$i) {
@@ -99,7 +105,7 @@ class XoopsFilterInput
      * Returns a reference to an input filter object, only creating it if it doesn't already exist.
      *
      * This method must be invoked as:
-     *   $filter = & XoopsFilterInput::getInstance();
+     *   $filter = XoopsFilterInput::getInstance();
      *
      * @param array $tagsArray  list of user-defined tags
      * @param array $attrArray  list of user-defined attributes
@@ -109,11 +115,14 @@ class XoopsFilterInput
      *                          Allow clean blacklisted tags/attr = 1
      *
      * @return XoopsFilterInput object.
-     * @since   1.5
-     * @static
      */
-    public static function getInstance($tagsArray = array(), $attrArray = array(), $tagsMethod = 0, $attrMethod = 0, $xssAuto = 1)
-    {
+    public static function getInstance(
+        $tagsArray = array(),
+        $attrArray = array(),
+        $tagsMethod = 0,
+        $attrMethod = 0,
+        $xssAuto = 1
+    ) {
         static $instances;
 
         $sig = md5(serialize(array($tagsArray, $attrArray, $tagsMethod, $attrMethod, $xssAuto)));
@@ -134,9 +143,9 @@ class XoopsFilterInput
      * Method to be called by another php script. Processes for XSS and
      * any specified bad code.
      *
-     * @param Mixed $source - input string/array-of-string to be 'cleaned'
+     * @param mixed $source - input string/array-of-string to be 'cleaned'
      *
-     * @return String $source - 'cleaned' version of input parameter
+     * @return string $source - 'cleaned' version of input parameter
      */
     public function process($source)
     {
@@ -148,7 +157,6 @@ class XoopsFilterInput
                     $source[$key] = $this->remove($this->decode($value));
                 }
             }
-
             return $source;
         } elseif (is_string($source)) {
             // clean this string
@@ -164,9 +172,9 @@ class XoopsFilterInput
      * specified bad code.
      *
      * @param mixed  $source Input string/array-of-string to be 'cleaned'
-     * @param string $type   Return type for the variable (INT, FLOAT,
-     *                       BOOLEAN, WORD, ALNUM, CMD, BASE64, STRING,
-     *                       ARRAY, PATH, NONE)
+     * @param string $type   Return/cleaning type for the variable, one of
+     *                       (INTEGER, FLOAT, BOOLEAN, WORD, ALNUM, CMD, BASE64,
+     *                        STRING, ARRAY, PATH, USERNAME, WEBURL, EMAIL, IP)
      *
      * @return mixed 'Cleaned' version of input parameter
      * @static
@@ -178,12 +186,8 @@ class XoopsFilterInput
         // need an instance for methods, since this is supposed to be static
         // we must instantiate the class - this will take defaults
         if (!is_object($filter)) {
-            if (isset($this) && is_a($this, __CLASS__)) {
-                $filter =& $this;
-            } else {
-                $classname = __CLASS__;
-                $filter    = $classname::getInstance();
-            }
+            $classname = get_called_class() ;
+            $filter = $classname::getInstance();
         }
 
         // Handle the type constraint
@@ -191,66 +195,85 @@ class XoopsFilterInput
             case 'INT':
             case 'INTEGER':
                 // Only use the first integer value
-                preg_match('/-?\d+/', (string)$source, $matches);
+                preg_match('/-?\d+/', (string) $source, $matches);
                 $result = @ (int)$matches[0];
                 break;
 
             case 'FLOAT':
             case 'DOUBLE':
                 // Only use the first floating point value
-                preg_match('/-?\d+(\.\d+)?/', (string)$source, $matches);
-                $result = @ (float)$matches[0];
+                preg_match('/-?\d+(\.\d+)?/', (string) $source, $matches);
+                $result = @ (float) $matches[0];
                 break;
 
             case 'BOOL':
             case 'BOOLEAN':
-                $result = (bool)$source;
+                $result = (bool) $source;
                 break;
 
             case 'WORD':
-                $result = (string)preg_replace('/[^A-Z_]/i', '', $source);
+                $result = (string) preg_replace('/[^A-Z_]/i', '', $source);
                 break;
 
             case 'ALNUM':
-                $result = (string)preg_replace('/[^A-Z0-9]/i', '', $source);
+                $result = (string) preg_replace('/[^A-Z0-9]/i', '', $source);
                 break;
 
             case 'CMD':
-                $result = (string)preg_replace('/[^A-Z0-9_\.-]/i', '', $source);
-                $result = ltrim($result, '.');
+                $result = (string) preg_replace('/[^A-Z0-9_\.-]/i', '', $source);
+                $result = strtolower($result);
                 break;
 
             case 'BASE64':
-                $result = (string)preg_replace('/[^A-Z0-9\/+=]/i', '', $source);
+                $result = (string) preg_replace('/[^A-Z0-9\/+=]/i', '', $source);
                 break;
 
             case 'STRING':
-                $result = (string)$filter->process($source);
+                $result = (string) $filter->process($source);
                 break;
 
             case 'ARRAY':
-                $result = (array)$filter->process($source);
+                $result = (array) $filter->process($source);
                 break;
 
             case 'PATH':
-                $pattern = '/^[A-Za-z0-9_-]+[A-Za-z0-9_\.-]*([\\\\\/][A-Za-z0-9_-]+[A-Za-z0-9_\.-]*)*$/';
-                preg_match($pattern, (string)$source, $matches);
-                $result = @ (string)$matches[0];
+                $source = trim((string) $source);
+                $pattern = '/^([-_\.\/A-Z0-9=&%?~]+)(.*)$/i';
+                preg_match($pattern, $source, $matches);
+                $result = @ (string) $matches[1];
                 break;
 
             case 'USERNAME':
-                $result = (string)preg_replace('/[\x00-\x1F\x7F<>"\'%&]/', '', $source);
+                $result = (string) preg_replace('/[\x00-\x1F\x7F<>"\'%&]/', '', $source);
                 break;
 
             case 'WEBURL':
-                $result = (string)$filter->process($source);
+                $result = (string) $filter->process($source);
                 // allow only relative, http or https
-                $urlparts = parse_url($result);
-                if (!empty($urlparts['scheme']) && !($urlparts['scheme'] === 'http' || $urlparts['scheme'] === 'https')) {
-                    $result = '';
+                $urlparts=parse_url($result);
+                if (!empty($urlparts['scheme'])
+                    && !($urlparts['scheme']==='http' || $urlparts['scheme']==='https')
+                ) {
+                    $result='';
                 }
                 // do not allow quotes, tag brackets or controls
                 if (!preg_match('#^[^"<>\x00-\x1F]+$#', $result)) {
+                    $result='';
+                }
+                break;
+
+            case 'EMAIL':
+                $result = (string) $source;
+                if (!filter_var((string) $source, FILTER_VALIDATE_EMAIL)) {
+                    $result = '';
+                }
+                break;
+
+            case 'IP':
+                $result = (string) $source;
+                // this may be too restrictive.
+                // Should the FILTER_FLAG_NO_PRIV_RANGE flag be excluded?
+                if (!filter_var((string) $source, FILTER_VALIDATE_IP)) {
                     $result = '';
                 }
                 break;
@@ -292,7 +315,7 @@ class XoopsFilterInput
     protected function filterTags($source)
     {
         // filter pass setup
-        $preTag  = null;
+        $preTag = null;
         $postTag = $source;
         // find initial tag's position
         $tagOpen_start = strpos($source, '<');
@@ -300,7 +323,7 @@ class XoopsFilterInput
         while ($tagOpen_start !== false) {
             // process tag interatively
             $preTag .= substr($postTag, 0, $tagOpen_start);
-            $postTag     = substr($postTag, $tagOpen_start);
+            $postTag = substr($postTag, $tagOpen_start);
             $fromTagOpen = substr($postTag, 1);
             // end of tag
             $tagOpen_end = strpos($fromTagOpen, '>');
@@ -311,20 +334,20 @@ class XoopsFilterInput
             $tagOpen_nested = strpos($fromTagOpen, '<');
             if (($tagOpen_nested !== false) && ($tagOpen_nested < $tagOpen_end)) {
                 $preTag .= substr($postTag, 0, ($tagOpen_nested + 1));
-                $postTag       = substr($postTag, ($tagOpen_nested + 1));
+                $postTag = substr($postTag, ($tagOpen_nested + 1));
                 $tagOpen_start = strpos($postTag, '<');
                 continue;
             }
             $tagOpen_nested = (strpos($fromTagOpen, '<') + $tagOpen_start + 1);
-            $currentTag     = substr($fromTagOpen, 0, $tagOpen_end);
-            $tagLength      = strlen($currentTag);
+            $currentTag = substr($fromTagOpen, 0, $tagOpen_end);
+            $tagLength = strlen($currentTag);
             if (!$tagOpen_end) {
                 $preTag .= $postTag;
                 $tagOpen_start = strpos($postTag, '<');
             }
             // iterate through tag finding attribute pairs - setup
-            $tagLeft      = $currentTag;
-            $attrSet      = array();
+            $tagLeft = $currentTag;
+            $attrSet = array();
             $currentSpace = strpos($tagLeft, ' ');
             if (substr($currentTag, 0, 1) === "/") {
                 // is end tag
@@ -337,22 +360,28 @@ class XoopsFilterInput
                 list($tagName) = explode(' ', $currentTag);
             }
             // excludes all "non-regular" tagnames OR no tagname OR remove if xssauto is on and tag is blacklisted
-            if ((!preg_match("/^[a-z][a-z0-9]*$/i", $tagName)) || (!$tagName) || ((in_array(strtolower($tagName), $this->tagBlacklist)) && ($this->xssAuto))) {
-                $postTag       = substr($postTag, ($tagLength + 2));
+            if ((!preg_match("/^[a-z][a-z0-9]*$/i", $tagName))
+                || (!$tagName)
+                || ((in_array(strtolower($tagName), $this->tagBlacklist))
+                && ($this->xssAuto))
+            ) {
+                $postTag = substr($postTag, ($tagLength + 2));
                 $tagOpen_start = strpos($postTag, '<');
                 // don't append this tag
                 continue;
             }
             // this while is needed to support attribute values with spaces in!
             while ($currentSpace !== false) {
-                $fromSpace   = substr($tagLeft, ($currentSpace + 1));
-                $nextSpace   = strpos($fromSpace, ' ');
-                $openQuotes  = strpos($fromSpace, '"');
-                $closeQuotes = strpos(substr($fromSpace, ($openQuotes + 1)), '"') + $openQuotes + 1;
+                $fromSpace = substr($tagLeft, ($currentSpace + 1));
+                $nextSpace = strpos($fromSpace, ' ');
+                $openQuotes = strpos($fromSpace, '"');
+                $closeQuotes = strpos(substr($fromSpace, ($openQuotes+1)), '"') + $openQuotes + 1;
                 // another equals exists
                 if (strpos($fromSpace, '=') !== false) {
                     // opening and closing quotes exists
-                    if (($openQuotes !== false) && (strpos(substr($fromSpace, ($openQuotes + 1)), '"') !== false)) {
+                    if (($openQuotes !== false)
+                        && (strpos(substr($fromSpace, ($openQuotes + 1)), '"') !== false)
+                    ) {
                         $attr = substr($fromSpace, 0, ($closeQuotes + 1));
                     } else {
                         $attr = substr($fromSpace, 0, $nextSpace);
@@ -369,7 +398,7 @@ class XoopsFilterInput
                 // add to attribute pairs array
                 $attrSet[] = $attr;
                 // next inc
-                $tagLeft      = substr($fromSpace, strlen($attr));
+                $tagLeft = substr($fromSpace, strlen($attr));
                 $currentSpace = strpos($tagLeft, ' ');
             }
             // appears in array specified by user
@@ -396,7 +425,7 @@ class XoopsFilterInput
                 }
             }
             // find next tag's start
-            $postTag       = substr($postTag, ($tagLength + 2));
+            $postTag = substr($postTag, ($tagLength + 2));
             $tagOpen_start = strpos($postTag, '<');
         }
         // append any code after end of tags
@@ -410,7 +439,7 @@ class XoopsFilterInput
      *
      * @param array $attrSet attributes
      *
-     * @return Array $newSet stripped attributes
+     * @return array $newSet stripped attributes
      */
     protected function filterAttr($attrSet)
     {
@@ -426,7 +455,11 @@ class XoopsFilterInput
             $attrSubSet = explode('=', trim($attrSet[$i]));
             list($attrSubSet[0]) = explode(' ', $attrSubSet[0]);
             // removes all "non-regular" attr names AND also attr blacklisted
-            if ((!preg_match('/[a-z]*$/i', $attrSubSet[0])) || (($this->xssAuto) && ((in_array(strtolower($attrSubSet[0]), $this->attrBlacklist)) || (substr($attrSubSet[0], 0, 2) === 'on')))) {
+            if ((!preg_match('/[a-z]*$/i', $attrSubSet[0]))
+                || (($this->xssAuto)
+                && ((in_array(strtolower($attrSubSet[0]), $this->attrBlacklist))
+                || (substr($attrSubSet[0], 0, 2) === 'on')))
+            ) {
                 continue;
             }
             // xss attr value filtering
@@ -439,14 +472,23 @@ class XoopsFilterInput
                 $attrSubSet[1] = str_replace('"', '', $attrSubSet[1]);
                 // [requested feature] convert single quotes from either side to doubles
                 // (Single quotes shouldn't be used to pad attr value)
-                if ((substr($attrSubSet[1], 0, 1) === "'") && (substr($attrSubSet[1], (strlen($attrSubSet[1]) - 1), 1) === "'")) {
+                if ((substr($attrSubSet[1], 0, 1) === "'")
+                    && (substr($attrSubSet[1], (strlen($attrSubSet[1]) - 1), 1) === "'")
+                ) {
                     $attrSubSet[1] = substr($attrSubSet[1], 1, (strlen($attrSubSet[1]) - 2));
                 }
                 // strip slashes
                 $attrSubSet[1] = stripslashes($attrSubSet[1]);
             }
             // auto strip attr's with "javascript:
-            if (((strpos(strtolower($attrSubSet[1]), 'expression') !== false) && (strtolower($attrSubSet[0]) === 'style')) || (strpos(strtolower($attrSubSet[1]), 'javascript:') !== false) || (strpos(strtolower($attrSubSet[1]), 'behaviour:') !== false) || (strpos(strtolower($attrSubSet[1]), 'vbscript:') !== false) || (strpos(strtolower($attrSubSet[1]), 'mocha:') !== false) || (strpos(strtolower($attrSubSet[1]), 'livescript:') !== false)) {
+            if (((strpos(strtolower($attrSubSet[1]), 'expression') !== false)
+                    && (strtolower($attrSubSet[0]) === 'style')) ||
+                (strpos(strtolower($attrSubSet[1]), 'javascript:') !== false) ||
+                (strpos(strtolower($attrSubSet[1]), 'behaviour:') !== false) ||
+                (strpos(strtolower($attrSubSet[1]), 'vbscript:') !== false) ||
+                (strpos(strtolower($attrSubSet[1]), 'mocha:') !== false) ||
+                (strpos(strtolower($attrSubSet[1]), 'livescript:') !== false)
+            ) {
                 continue;
             }
 
@@ -481,11 +523,23 @@ class XoopsFilterInput
     {
         // url decode
         $charset = defined('_CHARSET') ? constant('_CHARSET') : 'utf-8';
-        $source  = html_entity_decode($source, ENT_QUOTES, $charset);
+        $source = html_entity_decode($source, ENT_QUOTES, $charset);
         // convert decimal
-        $source = preg_replace_callback('/&#(\d+);/m', create_function('$matches', "return  chr(\$matches[1]);"), $source);
+        $source = preg_replace_callback(
+            '/&#(\d+);/m',
+            function ($matches) {
+                return chr($matches[1]);
+            },
+            $source
+        );
         // convert hex
-        $source = preg_replace_callback('/&#x([a-f0-9]+);/mi', create_function('$matches', "return  chr('0x'.\$matches[1]);"), $source);   // hex notation
+        $source = preg_replace_callback(
+            '/&#x([a-f0-9]+);/mi',
+            function ($matches) {
+                return chr('0x'.$matches[1]);
+            },
+            $source
+        );   // hex notation
 
         return $source;
     }
