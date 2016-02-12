@@ -117,7 +117,8 @@ function xoops_analyzeLanguage($str = '', $envType = '')
         if (strpos($expr, '[-_]') === false) {
             $expr = str_replace('|', '([-_][[:alpha:]]{2,3})?|', $expr);
         }
-        if (($envType == 1 && eregi('^(' . $expr . ')(;q=[0-9]\\.[0-9])?$', $str)) || ($envType == 2 && eregi('(\(|\[|;[[:space:]])(' . $expr . ')(;|\]|\))', $str))) {
+        if (($envType == 1 && preg_match('/^(' . $expr . ')(;q=[0-9]\\.[0-9])?$/i', $str))
+            || ($envType == 2 && preg_match('/(\(|\[|;[[:space:]])(' . $expr . ')(;|\]|\))/', $str))) {
             $lang = $key;
             break;
         }
