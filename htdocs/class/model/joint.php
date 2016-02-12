@@ -108,7 +108,7 @@ class XoopsModelJoint extends XoopsModelAbstract
         $ret    = array();
         if ($asObject) {
             while ($myrow = $this->handler->db->fetchArray($result)) {
-                $object =& $this->handler->create(false);
+                $object = $this->handler->create(false);
                 $object->assignVars($myrow);
                 $ret[$myrow[$this->handler->keyName]] = $object;
                 unset($object);

@@ -101,9 +101,9 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      *
      * @return object {@link ProfileProfile}
      */
-    public function &get($uid, $createOnFailure = true)
+    public function get($uid, $createOnFailure = true)
     {
-        $obj =& parent::get($uid);
+        $obj = parent::get($uid);
         if (!is_object($obj) && $createOnFailure) {
             $obj =& $this->create();
         }
@@ -118,9 +118,9 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      *
      * @return ProfileField
      */
-    public function &createField($isNew = true)
+    public function createField($isNew = true)
     {
-        $return =& $this->_fHandler->create($isNew);
+        $return = $this->_fHandler->create($isNew);
 
         return $return;
     }
@@ -192,7 +192,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      */
     public function saveField($vars, $weight = 0)
     {
-        $field =& $this->createField();
+        $field = $this->createField();
         $field->setVar('field_name', $vars['name']);
         $field->setVar('field_valuetype', $vars['valuetype']);
         $field->setVar('field_type', $vars['type']);

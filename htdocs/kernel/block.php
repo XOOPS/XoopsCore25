@@ -62,7 +62,7 @@ class XoopsBlock extends XoopsObject
                 $this->assignVars($id);
             } else {
                 $blkhandler = xoops_getHandler('block');
-                $obj        =& $blkhandler->get($id);
+                $obj        = $blkhandler->get($id);
                 foreach (array_keys($obj->getVars()) as $i) {
                     $this->assignVar($i, $obj->getVar($i, 'n'));
                 }
@@ -393,7 +393,7 @@ class XoopsBlockHandler extends XoopsObjectHandler
      * @param  bool $isNew is the new block new??
      * @return XoopsBlock XoopsBlock reference to the new block
      **/
-    public function &create($isNew = true)
+    public function create($isNew = true)
     {
         $block = new XoopsBlock();
         if ($isNew) {
@@ -410,7 +410,7 @@ class XoopsBlockHandler extends XoopsObjectHandler
      * @param  int $id bid of the block to retrieve
      * @return XoopsBlock reference to the block
      **/
-    public function &get($id)
+    public function get($id)
     {
         $block = false;
         $id    = (int)($id);
@@ -436,12 +436,10 @@ class XoopsBlockHandler extends XoopsObjectHandler
      * @internal param \XoopsBlock $object $block reference to the block to insert
      * @return bool TRUE if successful
      */
-    public function insert(XoopsBlock $block)
+    public function insert(XoopsObject $block)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($block, 'xoopsblock')) {
+        if (!(class_exists($this->className) && $block instanceof $this->className)) {
+        //if (!is_a($block, 'xoopsblock')) {
             return false;
         }
         if (!$block->isDirty()) {
@@ -477,12 +475,10 @@ class XoopsBlockHandler extends XoopsObjectHandler
      * @internal param \XoopsBlock $object $block reference to the block to delete
      * @return bool TRUE if successful
      */
-    public function delete(XoopsBlock $block)
+    public function delete(XoopsObject $block)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($block, 'xoopsblock')) {
+        if (!(class_exists($this->className) && $block instanceof $this->className)) {
+        //if (!is_a($block, 'xoopsblock')) {
             return false;
         }
         $id  = $block->getVar('bid');

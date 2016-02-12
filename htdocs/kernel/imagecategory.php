@@ -189,7 +189,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
      * @param  boolean $isNew Flag the object as "new"
      * @return XoopsImagecategory
      **/
-    public function &create($isNew = true)
+    public function create($isNew = true)
     {
         $imgcat = new XoopsImagecategory();
         if ($isNew) {
@@ -207,7 +207,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
      * @internal param bool $getbinary
      * @return XoopsImageCategory {@link XoopsImageCategory}, FALSE on fail
      */
-    public function &get($id)
+    public function get($id)
     {
         $id     = (int)($id);
         $imgcat = false;
@@ -232,12 +232,10 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
      * @param  XoopsImageCategory &$imgcat {@link XoopsImageCategory}
      * @return bool
      **/
-    public function insert(&$imgcat)
+    public function insert(XoopsObject $imgcat)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($imgcat, 'xoopsimagecategory')) {
+        if (!(class_exists($this->className) && $imgcat instanceof $this->className)) {
+        //if (!is_a($imgcat, 'xoopsimagecategory')) {
             return false;
         }
 
@@ -273,12 +271,10 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
      * @param  XoopsImageCategory &$imgcat {@link XoopsImageCategory}
      * @return bool
      **/
-    public function delete(&$imgcat)
+    public function delete(XoopsObject $imgcat)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($imgcat, 'xoopsimagecategory')) {
+        if (!(class_exists($this->className) && $imgcat instanceof $this->className)) {
+        //if (!is_a($imgcat, 'xoopsimagecategory')) {
             return false;
         }
 

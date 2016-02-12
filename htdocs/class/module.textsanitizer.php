@@ -37,7 +37,7 @@ class MyTextSanitizerExtension
      *
      * @param unknown_type $ts
      */
-    public function __construct(&$ts)
+    public function __construct(MyTextSanitizer $ts)
     {
         $this->ts         = $ts;
         $this->image_path = XOOPS_URL . '/images/form';
@@ -81,12 +81,12 @@ class MyTextSanitizerExtension
      * @param  array $config_custom
      * @return array
      */
-    public function mergeConfig($config_default, $config_custom)
+    public static function mergeConfig($config_default, $config_custom)
     {
         if (is_array($config_custom)) {
             foreach ($config_custom as $key => $val) {
                 if (is_array($config_default[$key])) {
-                    $config_default[$key] = $this->mergeConfig($config_default[$key], $config_custom[$key]);
+                    $config_default[$key] = self::mergeConfig($config_default[$key], $config_custom[$key]);
                 } else {
                     $config_default[$key] = $val;
                 }
@@ -99,9 +99,11 @@ class MyTextSanitizerExtension
     /**
      * encode
      *
+     * @param string $textarea_id id attribute of text area
+     *
      * @return array
      */
-    public function encode()
+    public function encode($textarea_id)
     {
         return array();
     }
@@ -111,7 +113,7 @@ class MyTextSanitizerExtension
      *
      * @return Null
      */
-    public static function decode()
+    public static function decode($url, $width, $height)
     {
         return null;
     }

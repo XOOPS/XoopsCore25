@@ -75,9 +75,9 @@ class XoopsConfigHandler
      * @see     XoopsConfigItem
      * @return XoopsConfigItem reference to the new {@link XoopsConfigItem}
      */
-    public function &createConfig()
+    public function createConfig()
     {
-        $instance =& $this->_cHandler->create();
+        $instance = $this->_cHandler->create();
 
         return $instance;
     }
@@ -89,7 +89,7 @@ class XoopsConfigHandler
      * @param  bool $withoptions load the config's options now?
      * @return object reference to the {@link XoopsConfig}
      */
-    public function &getConfig($id, $withoptions = false)
+    public function getConfig($id, $withoptions = false)
     {
         $config =& $this->_cHandler->get($id);
         if ($withoptions == true) {
@@ -221,9 +221,9 @@ class XoopsConfigHandler
      *
      * @return XoopsConfigOption {@link XoopsConfigOption}
      */
-    public function &createConfigOption()
+    public function createConfigOption()
     {
-        $inst =& $this->_oHandler->create();
+        $inst = $this->_oHandler->create();
 
         return $inst;
     }
@@ -235,9 +235,9 @@ class XoopsConfigHandler
      *
      * @return XoopsConfigOption {@link XoopsConfigOption}
      */
-    public function &getConfigOption($id)
+    public function getConfigOption($id)
     {
-        $inst =& $this->_oHandler->get($id);
+        $inst = $this->_oHandler->get($id);
 
         return $inst;
     }

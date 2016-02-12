@@ -46,7 +46,7 @@ class XoopsHandlerRegistry
      * @staticvar   object  The only instance of this class
      * @return XoopsHandlerRegistry Reference to the only instance of this class
      */
-    public function &instance()
+    public function instance()
     {
         static $instance;
         if (!isset($instance)) {
@@ -74,7 +74,7 @@ class XoopsHandlerRegistry
      *
      * @return XoopsObjectHandler {@link XoopsObjectHandler}, FALSE if not registered
      */
-    public function &getHandler($name)
+    public function getHandler($name)
     {
         if (!isset($this->_handlers['kernel'][$name])) {
             return false;
@@ -113,7 +113,7 @@ class XoopsHandlerRegistry
      *
      * @return XoopsObjectHandler {@link XoopsObjectHandler}, FALSE if not registered
      */
-    public function &getModuleHandler($module, $name)
+    public function getModuleHandler($module, $name)
     {
         if (!isset($this->_handlers['module'][$module][$name])) {
             return false;

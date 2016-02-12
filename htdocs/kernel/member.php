@@ -82,9 +82,9 @@ class XoopsMemberHandler
      *
      * @return XoopsUser reference to the new user
      */
-    public function &createUser()
+    public function createUser()
     {
-        $inst =& $this->userHandler->create();
+        $inst = $this->userHandler->create();
 
         return $inst;
     }
@@ -106,10 +106,10 @@ class XoopsMemberHandler
      * @param  int $id ID for the user
      * @return XoopsUser reference to the user
      */
-    public function &getUser($id)
+    public function getUser($id)
     {
         if (!isset($this->membersWorkingList[$id])) {
-            $this->membersWorkingList[$id] = &$this->userHandler->get($id);
+            $this->membersWorkingList[$id] = $this->userHandler->get($id);
         }
 
         return $this->membersWorkingList[$id];
@@ -121,7 +121,7 @@ class XoopsMemberHandler
      * @param  object $group reference to the group to delete
      * @return bool   FALSE if failed
      */
-    public function deleteGroup(&$group)
+    public function deleteGroup(XoopsGroup $group)
     {
         $s1 = $this->membershipHandler->deleteAll(new Criteria('groupid', $group->getVar('groupid')));
         $s2 = $this->groupHandler->delete($group);
@@ -135,7 +135,7 @@ class XoopsMemberHandler
      * @param  object $user reference to the user to delete
      * @return bool   FALSE if failed
      */
-    public function deleteUser(&$user)
+    public function deleteUser(XoopsUser $user)
     {
         $s1 = $this->membershipHandler->deleteAll(new Criteria('uid', $user->getVar('uid')));
         $s2 = $this->userHandler->delete($user);
@@ -236,7 +236,7 @@ class XoopsMemberHandler
      */
     public function addUserToGroup($group_id, $user_id)
     {
-        $mship =& $this->membershipHandler->create();
+        $mship = $this->membershipHandler->create();
         $mship->setVar('groupid', $group_id);
         $mship->setVar('uid', $user_id);
 

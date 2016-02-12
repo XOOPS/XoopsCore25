@@ -176,7 +176,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
      * @param  bool $isNew
      * @return XoopsAvatar
      */
-    public function &create($isNew = true)
+    public function create($isNew = true)
     {
         $avatar = new XoopsAvatar();
         if ($isNew) {
@@ -192,7 +192,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
      * @param  int $id
      * @return XoopsAvatar
      */
-    public function &get($id)
+    public function get($id)
     {
         $avatar = false;
         $id     = (int)($id);
@@ -219,12 +219,10 @@ class XoopsAvatarHandler extends XoopsObjectHandler
      * @param  unknown_type $avatar
      * @return unknown
      */
-    public function insert(&$avatar)
+    public function insert(XoopsObject $avatar)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($avatar, 'xoopsavatar')) {
+        if (!(class_exists($this->className) && $avatar instanceof $this->className)) {
+        //if (!is_a($avatar, 'xoopsavatar')) {
             return false;
         }
         if (!$avatar->isDirty()) {
@@ -259,12 +257,10 @@ class XoopsAvatarHandler extends XoopsObjectHandler
      * @param  unknown_type $avatar
      * @return unknown
      */
-    public function delete(&$avatar)
+    public function delete(XoopsObject $avatar)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($avatar, 'xoopsavatar')) {
+        if (!(class_exists($this->className) && $avatar instanceof $this->className)) {
+        //if (!is_a($avatar, 'xoopsavatar')) {
             return false;
         }
 

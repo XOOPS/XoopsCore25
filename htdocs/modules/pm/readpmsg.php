@@ -29,7 +29,7 @@ $msg_id            = empty($_REQUEST['msg_id']) ? 0 : (int)($_REQUEST['msg_id'])
 $pm_handler        = xoops_getModuleHandler('message');
 $pm                = null;
 if ($msg_id > 0) {
-    $pm =& $pm_handler->get($msg_id);
+    $pm = $pm_handler->get($msg_id);
 }
 
 if (is_object($pm) && ($pm->getVar('from_userid') != $GLOBALS['xoopsUser']->getVar('uid')) && ($pm->getVar('to_userid') != $GLOBALS['xoopsUser']->getVar('uid'))) {

@@ -26,7 +26,7 @@ class SystemCorePreload extends XoopsPreloadItem
     /**
      * @param $args
      */
-    public function eventCoreIncludeFunctionsRedirectheader($args)
+    public static function eventCoreIncludeFunctionsRedirectheader($args)
     {
         global $xoopsConfig;
         $url = $args[0];
@@ -45,7 +45,7 @@ class SystemCorePreload extends XoopsPreloadItem
     /**
      * @param $args
      */
-    public function eventCoreHeaderCheckcache($args)
+    public static function eventCoreHeaderCheckcache($args)
     {
         if (!empty($_SESSION['redirect_message'])) {
             $GLOBALS['xoTheme']->contentCacheLifetime = 0;
@@ -56,7 +56,7 @@ class SystemCorePreload extends XoopsPreloadItem
     /**
      * @param $args
      */
-    public function eventCoreHeaderAddmeta($args)
+    public static function eventCoreHeaderAddmeta($args)
     {
         if (defined("XOOPS_STARTPAGE_REDIRECTED") || (isset($GLOBALS['xoopsOption']['template_main']) && $GLOBALS['xoopsOption']['template_main'] === 'db:system_homepage.tpl')) {
             if (is_object($GLOBALS['xoopsTpl'])) {
@@ -81,7 +81,7 @@ class SystemCorePreload extends XoopsPreloadItem
     /**
      * @param $args
      */
-    public function eventSystemClassGuiHeader($args)
+    public static function eventSystemClassGuiHeader($args)
     {
         if (!empty($_SESSION['redirect_message'])) {
             $GLOBALS['xoTheme']->addStylesheet('xoops.css');

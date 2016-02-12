@@ -93,7 +93,7 @@ class XoopsUser extends XoopsObject
                 $this->assignVars($id);
             } else {
                 $member_handler = xoops_getHandler('member');
-                $user           =& $member_handler->getUser($id);
+                $user           = $member_handler->getUser($id);
                 foreach ($user->vars as $k => $v) {
                     $this->assignVar($k, $v['value']);
                 }
@@ -126,7 +126,7 @@ class XoopsUser extends XoopsObject
         $usereal = (int)($usereal);
         if ($userid > 0) {
             $member_handler = xoops_getHandler('member');
-            $user           =& $member_handler->getUser($userid);
+            $user           = $member_handler->getUser($userid);
             if (is_object($user)) {
                 $ts = MyTextSanitizer::getInstance();
                 if ($usereal) {

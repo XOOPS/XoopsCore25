@@ -64,7 +64,7 @@ class XoopsPreload
      *
      * @return object
      */
-    public static function &getInstance()
+    public static function getInstance()
     {
         static $instance = false;
         if (!$instance) {

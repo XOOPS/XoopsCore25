@@ -69,7 +69,7 @@ class XoopsModelRead extends XoopsModelAbstract
         $ret    = array();
         if ($asObject) {
             while ($myrow = $this->handler->db->fetchArray($result)) {
-                $object =& $this->handler->create(false);
+                $object = $this->handler->create(false);
                 $object->assignVars($myrow);
                 if ($id_as_key) {
                     $ret[$myrow[$this->handler->keyName]] = $object;
@@ -79,7 +79,7 @@ class XoopsModelRead extends XoopsModelAbstract
                 unset($object);
             }
         } else {
-            $object =& $this->handler->create(false);
+            $object = $this->handler->create(false);
             while ($myrow = $this->handler->db->fetchArray($result)) {
                 $object->assignVars($myrow);
                 if ($id_as_key) {
@@ -220,11 +220,11 @@ class XoopsModelRead extends XoopsModelAbstract
         $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . '() is deprecated.');
         $ret = array();
         while ($myrow = $this->handler->db->fetchArray($result)) {
-            $obj =& $this->handler->create(false);
+            $obj = $this->handler->create(false);
             $obj->assignVars($myrow);
             if (!$id_as_key) {
                 if ($as_object) {
-                    $ret[] =& $obj;
+                    $ret[] = $obj;
                 } else {
                     $row  = array();
                     $vars = $obj->getVars();

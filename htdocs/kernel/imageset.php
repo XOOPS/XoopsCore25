@@ -100,7 +100,7 @@ class XoopsImagesetHandler extends XoopsObjectHandler
      * @param  boolean $isNew Flag the object as "new"
      * @return XoopsImageSet
      **/
-    public function &create($isNew = true)
+    public function create($isNew = true)
     {
         $imgset = new XoopsImageSet();
         if ($isNew) {
@@ -118,7 +118,7 @@ class XoopsImagesetHandler extends XoopsObjectHandler
      * @internal param bool $getbinary
      * @return XoopsImageSet {@link XoopsImageSet}, FALSE on fail
      */
-    public function &get($id)
+    public function get($id)
     {
         $id     = (int)($id);
         $imgset = false;
@@ -144,12 +144,10 @@ class XoopsImagesetHandler extends XoopsObjectHandler
      * @internal param object $image {@link XoopsImageSet}
      * @return bool
      */
-    public function insert(XoopsImageSet $imgset)
+    public function insert(XoopsObject $imgset)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($imgset, 'XoopsImageSet')) {
+        if (!(class_exists($this->className) && $imgset instanceof $this->className)) {
+        // if (!is_a($imgset, 'XoopsImageSet')) {
             return false;
         }
 
@@ -186,12 +184,10 @@ class XoopsImagesetHandler extends XoopsObjectHandler
      * @internal param object $image {@link XoopsImageSet}
      * @return bool
      */
-    public function delete(XoopsImageSet $imgset)
+    public function delete(XoopsObject $imgset)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($imgset, 'XoopsImageSet')) {
+        if (!(class_exists($this->className) && $imgset instanceof $this->className)) {
+        //if (!is_a($imgset, 'XoopsImageSet')) {
             return false;
         }
         $sql = sprintf("DELETE FROM %s WHERE imgset_id = %u", $this->db->prefix('imgset'), $imgset->getVar('imgset_id'));

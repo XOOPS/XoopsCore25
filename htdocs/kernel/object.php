@@ -181,9 +181,7 @@ class XoopsObject
      * @param string $options
      * @param string $enumerations
      *
-     * @internal param mixed $
-     * @internal param string $option does this data have any select options?
-     * @internal param string $enumeration array for XOBJ_DTYPE_ENUM type only
+     * @return void
      */
     public function initVar($key, $data_type, $value = null, $required = false, $maxlength = null, $options = '', $enumerations = '')
     {
@@ -680,7 +678,7 @@ class XoopsObject
 
     /**
      * clean values of all variables of the object for storage.
-     * also add slashes whereever needed
+     * also add slashes wherever needed
      *
      * YOU SHOULD NOT USE ANY OF THE UNICODE TYPES, THEY WILL BE REMOVED
      *
@@ -1036,8 +1034,6 @@ class XoopsObjectHandler
      * XoopsDatabase holds referenced to {@link XoopsDatabase} class object
      *
      * @var XoopsDatabase
-     * @see    XoopsDatabase
-     * @access protected
      */
     public $db;
 
@@ -1057,7 +1053,7 @@ class XoopsObjectHandler
      *
      * @abstract
      */
-    public function &create()
+    public function create()
     {
     }
 
@@ -1067,7 +1063,7 @@ class XoopsObjectHandler
      * @param int $int_id
      * @abstract
      */
-    public function &get($int_id)
+    public function get($int_id)
     {
     }
 
@@ -1160,7 +1156,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      */
     public function __construct(XoopsDatabase $db = null, $table = '', $className = '', $keyName = '', $identifierName = '')
     {
-        $db    =& XoopsDatabaseFactory::getDatabaseConnection();
+        $db    = XoopsDatabaseFactory::getDatabaseConnection();
         $table = $db->prefix($table);
         parent::__construct($db);
         $this->table     = $table;
@@ -1261,11 +1257,10 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * create a new object
      *
-     * @access protected
      * @param  bool $isNew Flag the new objects as new
      * @return XoopsObject {@link XoopsObject}
      */
-    public function &create($isNew = true)
+    public function create($isNew = true)
     {
         $obj = new $this->className();
         if ($isNew === true) {
@@ -1283,11 +1278,11 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param  array $fields fields to fetch
      * @return XoopsObject {@link XoopsObject}
      */
-    public function &get($id = null, $fields = null)
+    public function get($id = null, $fields = null)
     {
         $object = null;
         if (empty($id)) {
-            $object =& $this->create();
+            $object = $this->create();
 
             return $object;
         }
@@ -1307,7 +1302,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
         if (!$this->db->getRowsNum($result)) {
             return $object;
         }
-        $object =& $this->create(false);
+        $object = $this->create(false);
         $object->assignVars($this->db->fetchArray($result));
 
         return $object;
@@ -1556,7 +1551,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
     }
 
     /**
-     * upate objects matching a condition against linked objects
+     * update objects matching a condition against linked objects
      *
      * @param  array           $data     array of key => value
      * @param  CriteriaElement $criteria {@link CriteriaElement} to match

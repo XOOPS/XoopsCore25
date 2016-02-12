@@ -150,7 +150,7 @@ class XoopsNotification extends XoopsObject
     {
         // Check the user's notification preference.
         $member_handler = xoops_getHandler('member');
-        $user           =& $member_handler->getUser($this->getVar('not_uid'));
+        $user           = $member_handler->getUser($this->getVar('not_uid'));
         if (!is_object($user)) {
             return true;
         }
@@ -231,7 +231,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      *
      * @return XoopsNotification
      */
-    public function &create($isNew = true)
+    public function create($isNew = true)
     {
         $notification = new XoopsNotification();
         if ($isNew) {
@@ -248,7 +248,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      *
      * @return XoopsNotification {@link XoopsNotification}, FALSE on fail
      **/
-    public function &get($id)
+    public function get($id)
     {
         $notification = false;
         $id           = (int)($id);
@@ -274,12 +274,10 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      *
      * @return bool
      **/
-    public function insert(XoopsNotification $notification)
+    public function insert(XoopsObject $notification)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($notification, 'xoopsnotification')) {
+        if (!(class_exists($this->className) && $notification instanceof $this->className)) {
+        //if (!is_a($notification, 'xoopsnotification')) {
             return false;
         }
         if (!$notification->isDirty()) {
@@ -315,11 +313,9 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      *
      * @return bool
      **/
-    public function delete(XoopsNotification $notification)
+    public function delete(XoopsObject $notification)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
+        if (!(class_exists($this->className) && $notification instanceof $this->className)) {
         if (!is_a($notification, 'xoopsnotification')) {
             return false;
         }
