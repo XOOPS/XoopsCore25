@@ -746,7 +746,7 @@ class Protector
             if (is_array($_GET[$key])) {
                 continue;
             }
-            if (substr(trim($val), 0, 3) === '../' || false !== strpos($val, '../../')) {
+            if (substr(trim($val), 0, 3) === '../' || false !== strpos($val, '/../')) {
                 $this->last_error_type = 'DirTraversal';
                 $this->message .= "Directory Traversal '$val' found.\n";
                 $this->output_log($this->last_error_type, 0, false, 64);
