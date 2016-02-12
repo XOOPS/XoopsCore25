@@ -9,51 +9,36 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             core
  * @since               2.0.0
  * @version             $Id: checklogin.php 13082 2015-06-06 21:59:41Z beckmi $
- * @todo                Will be refactored
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 xoops_loadLanguage('user');
 
 // from $_POST we use keys: uname, pass, rememberme, xoops_redirect
-XoopsLoad::load('XoopsFilterInput');
-$clean_uname = '';
-if (isset($_POST['uname'])) {
-    $clean_uname = trim(XoopsFilterInput::clean($_POST['uname'], 'STRING'));
-}
-$clean_pass = '';
-if (isset($_POST['pass'])) {
-    $clean_pass = trim(XoopsFilterInput::clean($_POST['pass'], 'STRING'));
-}
-$clean_rememberme = '';
-if (isset($_POST['rememberme'])) {
-    $clean_rememberme = trim(XoopsFilterInput::clean($_POST['rememberme'], 'STRING'));
-}
-$clean_redirect = '';
-if (isset($_POST['xoops_redirect'])) {
-    $clean_redirect = trim(XoopsFilterInput::clean($_POST['xoops_redirect'], 'WEBURL'));
-}
+XoopsLoad::load('XoopsRequest');
+$uname = XoopsRequest::getString('uname', '', 'POST');
+$pass = XoopsRequest::getString('pass', '', 'POST');
+$rememberme = XoopsRequest::getString('rememberme', '', 'POST');
+$redirect = XoopsRequest::getUrl('xoops_redirect', '', 'POST');
 
-$uname = $clean_uname;
-$pass  = $clean_pass;
 if ($uname == '' || $pass == '') {
     redirect_header(XOOPS_URL . '/user.php', 1, _US_INCORRECTLOGIN);
 }
 
-$member_handler =& xoops_getHandler('member');
-$myts           =& MyTextSanitizer::getInstance();
+$member_handler = xoops_getHandler('member');
+$myts           = MyTextsanitizer::getInstance();
 
 include_once $GLOBALS['xoops']->path('class/auth/authfactory.php');
 
 xoops_loadLanguage('auth');
 
-$xoopsAuth =& XoopsAuthFactory::getAuthConnection($myts->addSlashes($uname));
-$user      = $xoopsAuth->authenticate($myts->addSlashes($uname), $myts->addSlashes($pass));
+$xoopsAuth = XoopsAuthFactory::getAuthConnection($myts->addSlashes($uname));
+$user      = $xoopsAuth->authenticate($uname, $pass);
 
 if (false != $user) {
     if (0 == $user->getVar('level')) {
@@ -86,15 +71,27 @@ if (false != $user) {
 
     // Set cookie for rememberme
     if (!empty($xoopsConfig['usercookie'])) {
-        if (!empty($clean_rememberme)) {
-            setcookie($xoopsConfig['usercookie'], $_SESSION['xoopsUserId'] . '{-}' . md5($user->getVar('pass') . XOOPS_DB_NAME . XOOPS_DB_PASS . XOOPS_DB_PREFIX), time() + 31536000, '/', XOOPS_COOKIE_DOMAIN, 0);
+        if (!empty($rememberme)) {
+            $claims = array(
+                'uid' => $_SESSION['xoopsUserId'],
+            );
+            $rememberTime = 60*60*24*30;
+            $token = \Xmf\Jwt\TokenFactory::build('rememberme', $claims, $rememberTime);
+            setcookie($xoopsConfig['usercookie'],
+                $token,
+                time() + $rememberTime,
+                '/',
+                XOOPS_COOKIE_DOMAIN,
+                (XOOPS_PROT == 'https://'),
+                true
+            );
         } else {
-            setcookie($xoopsConfig['usercookie'], 0, -1, '/', XOOPS_COOKIE_DOMAIN, 0);
+            setcookie($xoopsConfig['usercookie'], null, time() - 3600, '/', XOOPS_COOKIE_DOMAIN, 0, true);
         }
     }
 
-    if (!empty($clean_redirect) && !strpos($clean_redirect, 'register')) {
-        $xoops_redirect = rawurldecode($clean_redirect);
+    if (!empty($redirect) && !strpos($redirect, 'register')) {
+        $xoops_redirect = rawurldecode($redirect);
         $parsed         = parse_url(XOOPS_URL);
         $url            = isset($parsed['scheme']) ? $parsed['scheme'] . '://' : 'http://';
         if (isset($parsed['host'])) {
@@ -117,13 +114,13 @@ if (false != $user) {
 
     // RMV-NOTIFY
     // Perform some maintenance of notification records
-    $notification_handler =& xoops_getHandler('notification');
+    $notification_handler = xoops_getHandler('notification');
     $notification_handler->doLoginMaintenance($user->getVar('uid'));
 
     redirect_header($url, 1, sprintf(_US_LOGGINGU, $user->getVar('uname')), false);
-} elseif (empty($clean_redirect)) {
+} elseif (empty($redirect)) {
     redirect_header(XOOPS_URL . '/user.php', 5, $xoopsAuth->getHtmlErrors());
 } else {
-    redirect_header(XOOPS_URL . '/user.php?xoops_redirect=' . urlencode($clean_redirect), 5, $xoopsAuth->getHtmlErrors(), false);
+    redirect_header(XOOPS_URL . '/user.php?xoops_redirect=' . urlencode($redirect), 5, $xoopsAuth->getHtmlErrors(), false);
 }
 exit();

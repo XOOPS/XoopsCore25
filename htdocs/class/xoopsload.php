@@ -263,3 +263,7 @@ class XoopsLoad
 // To be enabled in XOOPS 3.0
 // spl_autoload_register(array('XoopsLoad', 'load'));
 
+/**
+ * XMF libraries
+ */
+include_once XOOPS_ROOT_PATH . '/class/libraries/vendor/autoload.php';

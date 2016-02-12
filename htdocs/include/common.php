@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @version             $Id: common.php 13090 2015-06-16 20:44:29Z beckmi $
  */
@@ -27,19 +27,14 @@ defined('NWLINE') or define('NWLINE', "\n");
 /**
  * Include files with definitions
  */
-include_once XOOPS_ROOT_PATH . DS . 'include' . DS . 'defines.php';
-include_once XOOPS_ROOT_PATH . DS . 'include' . DS . 'version.php';
-include_once XOOPS_ROOT_PATH . DS . 'include' . DS . 'license.php';
-
-/**
- * PHP password_hash for pre 5.5
- */
-include_once XOOPS_ROOT_PATH . DS . 'include' . DS . 'password.php';
+include_once XOOPS_ROOT_PATH . '/include/defines.php';
+include_once XOOPS_ROOT_PATH . '/include/version.php';
+include_once XOOPS_ROOT_PATH . '/include/license.php';
 
 /**
  * Include XoopsLoad
  */
-require_once XOOPS_ROOT_PATH . DS . 'class' . DS . 'xoopsload.php';
+require_once XOOPS_ROOT_PATH . '/class/xoopsload.php';
 
 /**
  * YOU SHOULD BE CAREFUL WITH THE PRELOAD METHODS IN 2.4*, THEY WILL BE DEPRECATED AND IMPLEMENTED IN A DIFFERENT WAY
@@ -117,7 +112,7 @@ $xoopsDB =& XoopsDatabaseFactory::getDatabaseConnection();
  * Get xoops configs
  * Requires functions and database loaded
  */
-$config_handler =& xoops_getHandler('config');
+$config_handler = xoops_getHandler('config');
 $xoopsConfig    = $config_handler->getConfigsByCat(XOOPS_CONF);
 
 /**
@@ -187,8 +182,8 @@ xoops_loadLanguage('pagetype');
  */
 $xoopsUser        = '';
 $xoopsUserIsAdmin = false;
-$member_handler   =& xoops_getHandler('member');
-$sess_handler     =& xoops_getHandler('session');
+$member_handler   = xoops_getHandler('member');
+$sess_handler     = xoops_getHandler('session');
 if ($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && $_POST[$xoopsConfig['sslpost_name']] != '') {
     session_id($_POST[$xoopsConfig['sslpost_name']]);
 } elseif ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && $xoopsConfig['session_expire'] > 0) {
@@ -196,13 +191,14 @@ if ($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && $_
     session_cache_expire($xoopsConfig['session_expire']);
     @ini_set('session.gc_maxlifetime', $xoopsConfig['session_expire'] * 60);
 }
-session_set_save_handler(array(&$sess_handler, 'open'), array(&$sess_handler, 'close'), array(&$sess_handler, 'read'), array(
-    &$sess_handler,
-    'write'), array(
-                             &$sess_handler,
-                             'destroy'), array(
-                             &$sess_handler,
-                             'gc'));
+session_set_save_handler(
+    array($sess_handler, 'open'),
+    array($sess_handler, 'close'),
+    array($sess_handler, 'read'),
+    array($sess_handler, 'write'),
+    array($sess_handler, 'destroy'),
+    array($sess_handler, 'gc')
+);
 
 if (function_exists('session_status')) {
     if (session_status() !== PHP_SESSION_ACTIVE) {
@@ -216,32 +212,43 @@ if (function_exists('session_status')) {
 /**
  * Remove expired session for xoopsUserId
  */
-if ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && !isset($_COOKIE[$xoopsConfig['session_name']]) && !empty($_SESSION['xoopsUserId'])) {
+if ($xoopsConfig['use_mysession']
+    && $xoopsConfig['session_name'] != ''
+    && !isset($_COOKIE[$xoopsConfig['session_name']])
+    && !empty($_SESSION['xoopsUserId'])
+) {
     unset($_SESSION['xoopsUserId']);
 }
 
 /**
  * Load xoopsUserId from cookie if "Remember me" is enabled.
  */
-if (empty($_SESSION['xoopsUserId']) && !empty($xoopsConfig['usercookie']) && !empty($_COOKIE[$xoopsConfig['usercookie']])) {
-    $hash_data = @explode("{-}", $_COOKIE[$xoopsConfig['usercookie']], 2);
-    list($_SESSION['xoopsUserId'], $hash_login) = array($hash_data[0], (string)(@$hash_data[1]));
-    unset($hash_data);
+$rememberClaims = false;
+if (empty($_SESSION['xoopsUserId'])
+    && !empty($xoopsConfig['usercookie'])
+) {
+    $rememberClaims = \Xmf\Jwt\TokenReader::fromCookie('rememberme', $xoopsConfig['usercookie']);
+    if (false !== $rememberClaims && !empty($rememberClaims->uid)) {
+        $_SESSION['xoopsUserId'] = $rememberClaims->uid;
+    } else {
+        setcookie($xoopsConfig['usercookie'], null, time() - 3600, '/', XOOPS_COOKIE_DOMAIN, 0, true);
+    }
 }
 
 /**
- * Log user is and deal with Sessions and Cookies
+ * Log user in and deal with Sessions and Cookies
  */
 if (!empty($_SESSION['xoopsUserId'])) {
-    $xoopsUser =& $member_handler->getUser($_SESSION['xoopsUserId']);
-    if (!is_object($xoopsUser) || (isset($hash_login) && md5($xoopsUser->getVar('pass') . XOOPS_DB_NAME . XOOPS_DB_PASS . XOOPS_DB_PREFIX) != $hash_login)) {
+    $xoopsUser = $member_handler->getUser($_SESSION['xoopsUserId']);
+    if (!is_object($xoopsUser)) {
         $xoopsUser = '';
         $_SESSION  = array();
         session_destroy();
-        setcookie($xoopsConfig['usercookie'], 0, -1, '/');
+        setcookie($xoopsConfig['usercookie'], null, time() - 3600, '/', XOOPS_COOKIE_DOMAIN, 0, true);
     } else {
         if (((int)($xoopsUser->getVar('last_login')) + 60 * 5) < time()) {
-            $sql = "UPDATE " . $xoopsDB->prefix('users') . " SET last_login = '" . time() . "' WHERE uid = " . $_SESSION['xoopsUserId'];
+            $sql = "UPDATE " . $xoopsDB->prefix('users') . " SET last_login = '" . time()
+                . "' WHERE uid = " . $_SESSION['xoopsUserId'];
             @$xoopsDB->queryF($sql);
         }
         $sess_handler->update_cookie();
@@ -250,11 +257,25 @@ if (!empty($_SESSION['xoopsUserId'])) {
         } else {
             $_SESSION['xoopsUserGroups'] = $xoopsUser->getGroups();
         }
-        if (isset($hash_login)) {   // only do during a 'remember me' login
+        if (is_object($rememberClaims)) {   // only do during a 'remember me' login
             $user_theme = $xoopsUser->getVar('theme');
             if ($user_theme != $xoopsConfig['theme_set'] && in_array($user_theme, $xoopsConfig['theme_set_allowed'])) {
                 $_SESSION['xoopsUserTheme'] = $user_theme;
             }
+            // update our remember me cookie
+            $claims = array(
+                'uid' => $_SESSION['xoopsUserId'],
+            );
+            $rememberTime = 60*60*24*30;
+            $token = \Xmf\Jwt\TokenFactory::build('rememberme', $claims, $rememberTime);
+            setcookie($xoopsConfig['usercookie'],
+                $token,
+                time() + $rememberTime,
+                '/',
+                XOOPS_COOKIE_DOMAIN,
+                (XOOPS_PROT == 'https://'),
+                true
+            );
         }
         $xoopsUserIsAdmin = $xoopsUser->isAdmin();
     }
@@ -296,7 +317,7 @@ if ($xoopsConfig['closesite'] == 1) {
  */
 if (file_exists('./xoops_version.php')) {
     $url_arr        = explode('/', strstr($_SERVER['PHP_SELF'], '/modules/'));
-    $module_handler =& xoops_getHandler('module');
+    $module_handler = xoops_getHandler('module');
     $xoopsModule    =& $module_handler->getByDirname($url_arr[2]);
     unset($url_arr);
 
@@ -307,7 +328,7 @@ if (file_exists('./xoops_version.php')) {
         exit();
     }
 
-    $moduleperm_handler =& xoops_getHandler('groupperm');
+    $moduleperm_handler = xoops_getHandler('groupperm');
     if ($xoopsUser) {
         if (!$moduleperm_handler->checkRight('module_read', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
             redirect_header(XOOPS_URL, 1, _NOPERM, false);

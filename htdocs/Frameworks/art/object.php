@@ -5,7 +5,7 @@
  * For backward compatibility
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @since               1.00
  * @version             $Id: object.php 13082 2015-06-06 21:59:41Z beckmi $
@@ -61,14 +61,14 @@ class ArtObjectHandler extends XoopsPersistableObjectHandler
     /**
      * Constructor
      *
-     * @param XoopsDatabase $db reference to the {@link XoopsDatabase} object
+     * @param XoopsMySQLDatabase $db reference to the {@link XoopsDatabase} object
      * @param string $table
      * @param string $className
      * @param string $keyName
      * @param string $identifierName
      */
 
-    public function __construct(XoopsDatabase $db, $table = "", $className = "", $keyName = "", $identifierName = false)
+    public function __construct(XoopsMySQLDatabase $db, $table = "", $className = "", $keyName = "", $identifierName = '')
     {
         $this->db = $db;
         parent::__construct($db, $table, $className, $keyName, $identifierName);
@@ -124,4 +124,3 @@ class ArtObjectHandler extends XoopsPersistableObjectHandler
     }
 }
 //endif;
-

@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @subpackage          auth
  * @since               2.0
@@ -56,7 +56,7 @@ class XoopsAuthProvisionning
     public function __construct(XoopsAuth $auth_instance = null)
     {
         $this->_auth_instance = $auth_instance;
-        $config_handler       =& xoops_getHandler('config');
+        $config_handler       = xoops_getHandler('config');
         $config               = $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
         foreach ($config as $key => $val) {
             $this->$key = $val;
@@ -76,7 +76,7 @@ class XoopsAuthProvisionning
      */
     public function getXoopsUser($uname)
     {
-        $member_handler =& xoops_getHandler('member');
+        $member_handler = xoops_getHandler('member');
         $criteria       = new Criteria('uname', $uname);
         $getuser        = $member_handler->getUsers($criteria);
         if (count($getuser) == 1) {
@@ -123,11 +123,11 @@ class XoopsAuthProvisionning
     public function add($datas, $uname, $pwd = null)
     {
         $ret            = false;
-        $member_handler =& xoops_getHandler('member');
+        $member_handler = xoops_getHandler('member');
         // Create XOOPS Database User
         $newuser = $member_handler->createUser();
         $newuser->setVar('uname', $uname);
-        $newuser->setVar('pass', md5(stripslashes($pwd)));
+        $newuser->setVar('pass', password_hash(stripslashes($pwd), PASSWORD_DEFAULT));
         $newuser->setVar('rank', 0);
         $newuser->setVar('level', 1);
         $newuser->setVar('timezone_offset', $this->default_TZ);
@@ -167,8 +167,8 @@ class XoopsAuthProvisionning
     public function change(&$xoopsUser, $datas, $uname, $pwd = null)
     {
         $ret            = false;
-        $member_handler =& xoops_getHandler('member');
-        $xoopsUser->setVar('pass', md5(stripslashes($pwd)));
+        $member_handler = xoops_getHandler('member');
+        $xoopsUser->setVar('pass', password_hash(stripcslashes($pwd), PASSWORD_DEFAULT));
         $tab_mapping = explode('|', $this->ldap_field_mapping);
         foreach ($tab_mapping as $mapping) {
             $fields = explode('=', trim($mapping));

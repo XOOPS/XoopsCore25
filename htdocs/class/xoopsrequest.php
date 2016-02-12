@@ -22,7 +22,7 @@
  * @author              trabis <lusopoemas@gmail.com>
  * @author              Joomla!
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 or later (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @version             Release: 1.0
  * @link                http://xoops.org
  * @since               1.0
@@ -69,8 +69,10 @@ class XoopsRequest
      *
      * @param string $name    Variable name
      * @param mixed  $default Default value if the variable does not exist
-     * @param string $hash    Where the var should come from (POST, GET, FILES, COOKIE, METHOD)
-     * @param string $type    Return type for the variable, for valid values see {@link XoopsFilterInput::clean()}.
+     * @param string $hash    Source of variable value (POST, GET, FILES, COOKIE, METHOD)
+     * @param string $type    Return type for the variable (INT, FLOAT, BOOLEAN, WORD,
+     *                        ALNUM, CMD, BASE64, STRING, ARRAY, PATH, NONE) For more
+     *                        information see XoopsFilterInput::clean().
      * @param int    $mask    Filter mask for the variable
      *
      * @return mixed Requested variable
@@ -80,10 +82,9 @@ class XoopsRequest
         // Ensure hash and type are uppercase
         $hash = strtoupper($hash);
         if ($hash === 'METHOD') {
-            $hash = strtoupper($_SERVER['REQUEST_METHOD']);
+            $hash = self::getMethod();
         }
         $type = strtoupper($type);
-        $sig  = $hash . $type . $mask;
 
         // Get the input hash
         switch ($hash) {
@@ -107,22 +108,21 @@ class XoopsRequest
                 break;
             default:
                 $input = &$_REQUEST;
-                $hash  = 'REQUEST';
                 break;
         }
 
         if (isset($input[$name]) && $input[$name] !== null) {
             // Get the variable from the input hash and clean it
-            $var = XoopsRequest::cleanVar($input[$name], $mask, $type);
+            $var = self::cleanVar($input[$name], $mask, $type);
 
             // Handle magic quotes compatability
             if (get_magic_quotes_gpc() && ($var != $default) && ($hash !== 'FILES')) {
-                $var = XoopsRequest::stripSlashesRecursive($var);
+                $var = self::stripSlashesRecursive($var);
             }
         } else {
             if ($default !== null) {
                 // Clean the default value
-                $var = XoopsRequest::cleanVar($default, $mask, $type);
+                $var = self::cleanVar($default, $mask, $type);
             } else {
                 $var = $default;
             }
@@ -146,7 +146,7 @@ class XoopsRequest
      */
     public static function getInt($name, $default = 0, $hash = 'default')
     {
-        return XoopsRequest::getVar($name, $default, $hash, 'int');
+        return self::getVar($name, $default, $hash, 'int');
     }
 
     /**
@@ -164,7 +164,7 @@ class XoopsRequest
      */
     public static function getFloat($name, $default = 0.0, $hash = 'default')
     {
-        return XoopsRequest::getVar($name, $default, $hash, 'float');
+        return self::getVar($name, $default, $hash, 'float');
     }
 
     /**
@@ -182,7 +182,7 @@ class XoopsRequest
      */
     public static function getBool($name, $default = false, $hash = 'default')
     {
-        return XoopsRequest::getVar($name, $default, $hash, 'bool');
+        return self::getVar($name, $default, $hash, 'bool');
     }
 
     /**
@@ -200,13 +200,12 @@ class XoopsRequest
      */
     public static function getWord($name, $default = '', $hash = 'default')
     {
-        return XoopsRequest::getVar($name, $default, $hash, 'word');
+        return self::getVar($name, $default, $hash, 'word');
     }
 
     /**
-     * Fetches and returns a given filtered variable. The cmd
-     * filter only allows the characters [A-Za-z0-9.-_]. This is
-     * currently only a proxy function for getVar().
+     * Fetches and returns a given filtered variable. The cmd filter only allows the characters
+     * [A-Za-z0-9.-_] and returns in lower case. This is currently a proxy function for getVar().
      *
      * See getVar() for more in-depth documentation on the parameters.
      *
@@ -218,7 +217,7 @@ class XoopsRequest
      */
     public static function getCmd($name, $default = '', $hash = 'default')
     {
-        return XoopsRequest::getVar($name, $default, $hash, 'cmd');
+        return self::getVar($name, $default, $hash, 'cmd');
     }
 
     /**
@@ -237,21 +236,22 @@ class XoopsRequest
      */
     public static function getString($name, $default = '', $hash = 'default', $mask = 0)
     {
-        // Cast to string, in case XoopsRequest::ALLOWRAW was specified for mask
-        return (string)XoopsRequest::getVar($name, $default, $hash, 'string', $mask);
+        // Cast to string, in case self::ALLOWRAW was specified for mask
+        return (string) self::getVar($name, $default, $hash, 'string', $mask);
     }
 
     /**
      * Fetches and returns an array
      *
-     * @param string       $name    Variable name
-     * @param array|string $default Default value if the variable does not exist
-     * @param string       $hash    Where the var should come from (POST, GET, FILES, COOKIE, METHOD)
+     * @param string $name    Variable name
+     * @param mixed  $default Default value if the variable does not exist
+     * @param string $hash    Where the var should come from (POST, GET, FILES, COOKIE, METHOD)
+     *
      * @return array
      */
     public static function getArray($name, $default = array(), $hash = 'default')
     {
-        return XoopsRequest::getVar($name, $default, $hash, 'array');
+        return self::getVar($name, $default, $hash, 'array');
     }
 
     /**
@@ -265,7 +265,65 @@ class XoopsRequest
      */
     public static function getText($name, $default = '', $hash = 'default')
     {
-        return (string)XoopsRequest::getVar($name, $default, $hash, 'string', XoopsRequest::ALLOWRAW);
+        return (string) self::getVar($name, $default, $hash, 'string', self::ALLOWRAW);
+    }
+
+    /**
+     * Fetches and returns a web url
+     *
+     * @param string $name    Variable name
+     * @param string $default Default value if the variable does not exist
+     * @param string $hash    Where the var should come from (POST, GET, FILES, COOKIE, METHOD)
+     *
+     * @return string Requested variable
+     */
+    public static function getUrl($name, $default = '', $hash = 'default')
+    {
+        return (string) self::getVar($name, $default, $hash, 'weburl');
+    }
+
+    /**
+     * Fetches and returns a file (or web) path
+     *
+     * @param string $name    Variable name
+     * @param string $default Default value if the variable does not exist
+     * @param string $hash    Where the var should come from (POST, GET, FILES, COOKIE, METHOD)
+     *
+     * @return string Requested variable
+     */
+    public static function getPath($name, $default = '', $hash = 'default')
+    {
+        return (string) self::getVar($name, $default, $hash, 'path');
+    }
+
+    /**
+     * Fetches and returns an email address
+     *
+     * @param string $name    Variable name
+     * @param string $default Default value if the variable does not exist
+     * @param string $hash    Where the var should come from (POST, GET, FILES, COOKIE, METHOD)
+     *
+     * @return string email address or default if invalid
+     */
+    public static function getEmail($name, $default = '', $hash = 'default')
+    {
+        $ret = (string) self::getVar($name, $default, $hash, 'email');
+        return empty($ret) ? $default : $ret;
+    }
+
+    /**
+     * Fetches and returns an IP address
+     *
+     * @param string $name    Variable name
+     * @param string $default Default value if the variable does not exist
+     * @param string $hash    Where the var should come from (POST, GET, FILES, COOKIE, METHOD)
+     *
+     * @return string IP address or default if invalid
+     */
+    public static function getIP($name, $default = '', $hash = 'default')
+    {
+        $ret = (string) self::getVar($name, $default, $hash, 'ip');
+        return empty($ret) ? $default : $ret;
     }
 
     /**
@@ -280,30 +338,38 @@ class XoopsRequest
      */
     public static function setVar($name, $value = null, $hash = 'method', $overwrite = true)
     {
-        //If overwrite is true, makes sure the variable hasn't been set yet
-        if (!$overwrite && array_key_exists($name, $_REQUEST)) {
-            return $_REQUEST[$name];
-        }
-
-        // Get the request hash value
         $hash = strtoupper($hash);
         if ($hash === 'METHOD') {
             $hash = strtoupper($_SERVER['REQUEST_METHOD']);
         }
 
-        $previous = array_key_exists($name, $_REQUEST) ? $_REQUEST[$name] : null;
+        // Get the requested hash and determine existing value
+        $original = self::get($hash, self::ALLOWRAW);
+        if (isset($original[$name])) {
+            $previous = $original[$name];
+            // don't overwrite value unless asked
+            if (!$overwrite) {
+                return $previous;
+            }
+        } else {
+            $previous = null;
+        }
 
+        // set the value
         switch ($hash) {
             case 'GET':
-                $_GET[$name]     = $value;
+                $_GET[$name] = $value;
                 $_REQUEST[$name] = $value;
                 break;
             case 'POST':
-                $_POST[$name]    = $value;
+                $_POST[$name] = $value;
+                $_REQUEST[$name] = $value;
+                break;
+            case 'REQUEST':
                 $_REQUEST[$name] = $value;
                 break;
             case 'COOKIE':
-                $_COOKIE[$name]  = $value;
+                $_COOKIE[$name] = $value;
                 $_REQUEST[$name] = $value;
                 break;
             case 'FILES':
@@ -380,7 +446,7 @@ class XoopsRequest
             $input = XoopsRequest::stripSlashesRecursive($input);
         }
 
-        $result = XoopsRequest::cleanVars($input, $mask);
+        $result = self::cleanVars($input, $mask);
 
         return $result;
     }
@@ -397,7 +463,7 @@ class XoopsRequest
     public static function set($array, $hash = 'default', $overwrite = true)
     {
         foreach ($array as $key => $value) {
-            XoopsRequest::setVar($key, $value, $hash, $overwrite);
+            self::setVar($key, $value, $hash, $overwrite);
         }
     }
 
@@ -406,12 +472,12 @@ class XoopsRequest
      *
      * @param mixed  $var  The input variable.
      * @param int    $mask Filter bit mask.
-     *                     - 1=no trim: If this flag is cleared and the input is a string,
-     *                     the string will have leading and trailing whitespace trimmed.
-     *                     - 2=allow_raw: If set, no more filtering is performed, higher bits are ignored.
-     *                     - 4=allow_html: HTML is allowed, but passed through a safe HTML filter first.
-     *                     If set, no more filtering is performed.
-     *                     - If no bits other than the 1 bit is set, a strict filter is applied.
+     *                      - 1=no trim: If this flag is cleared and the input is a string,
+     *                        the string will have leading and trailing whitespace trimmed.
+     *                      - 2=allow_raw: If set, no more filtering is performed, higher bits are ignored.
+     *                      - 4=allow_html: HTML is allowed, but passed through a safe HTML filter first.
+     *                        If set, no more filtering is performed.
+     *                      - If no bits other than the 1 bit is set, a strict filter is applied.
      * @param string $type The variable type. See {@link XoopsFilterInput::clean()}.
      *
      * @return string
@@ -422,14 +488,14 @@ class XoopsRequest
         static $noHtmlFilter = null;
         static $safeHtmlFilter = null;
 
+        // convert $var in array if $type is ARRAY
+        if (strtolower($type) === 'array' && !is_array($var)) {
+            $var = array($var);
+        }
+
         // If the no trim flag is not set, trim the variable
         if (!($mask & 1) && is_string($var)) {
             $var = trim($var);
-        }
-
-        // convert $var in array if $type is ARRAY
-        if (strtoupper($type) === 'ARRAY' && !is_array($var)) {
-            $var = array($var);
         }
 
         // Now we handle input filtering
@@ -439,13 +505,13 @@ class XoopsRequest
             XoopsLoad::load('xoopsfilterinput');
             if ($mask & 4) {
                 // If the allow html flag is set, apply a safe html filter to the variable
-                if (null === ($safeHtmlFilter)) {
+                if (null === $safeHtmlFilter) {
                     $safeHtmlFilter = XoopsFilterInput::getInstance(null, null, 1, 1);
                 }
                 $var = $safeHtmlFilter->clean($var, $type);
             } else {
                 // Since no allow flags were set, we will apply the most strict filter to the variable
-                if (null === ($noHtmlFilter)) {
+                if (null === $noHtmlFilter) {
                     $noHtmlFilter = XoopsFilterInput::getInstance();
                 }
                 $var = $noHtmlFilter->clean($var, $type);
@@ -467,10 +533,10 @@ class XoopsRequest
     private static function cleanVars($var, $mask = 0, $type = null)
     {
         if (is_string($var)) {
-            $var = XoopsRequest::cleanVar($var, $mask, $type);
+            $var = self::cleanVar($var, $mask, $type);
         } else {
             foreach ($var as $key => &$value) {
-                $value = XoopsRequest::cleanVars($value, $mask, $type);
+                $value = self::cleanVars($value, $mask, $type);
             }
         }
 

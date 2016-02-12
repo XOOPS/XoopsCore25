@@ -566,7 +566,6 @@ CREATE TABLE users (
   KEY uname (uname),
   KEY email (email),
   KEY uiduname (uid,uname),
-  KEY unamepass (uname,pass),
   KEY level (level)
 ) ENGINE=MyISAM;
 # --------------------------------------------------------

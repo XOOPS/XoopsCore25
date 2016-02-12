@@ -12,10 +12,10 @@
  * Installer data generation file
  *
  * See the enclosed file license.txt for licensing information.
- * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
+ * If you did not receive this file, get it at http://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @license             GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             installer
  * @since               2.3.0
  * @author              Haruki Setoyama <haruki@planewave.org>
@@ -47,44 +47,44 @@ function make_groups(&$dbm)
 /**
  * @param $dbm
  * @param $adminname
- * @param $adminpass
+ * @param $hashedAdminPass
  * @param $adminmail
  * @param $language
- * @param $gruops
+ * @param $groups
  *
  * @return mixed
  */
-function make_data(&$dbm, $adminname, $adminpass, $adminmail, $language, $gruops)
+function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $groups)
 {
     // $xoopsDB =& Database::getInstance();
     // $dbm = new Db_manager;
     $tables = array();
     // data for table 'groups_users_link'
-    $dbm->insert('groups_users_link', " VALUES (0, " . $gruops['XOOPS_GROUP_ADMIN'] . ", 1)");
-    $dbm->insert('groups_users_link', " VALUES (0, " . $gruops['XOOPS_GROUP_USERS'] . ", 1)");
+    $dbm->insert('groups_users_link', " VALUES (0, " . $groups['XOOPS_GROUP_ADMIN'] . ", 1)");
+    $dbm->insert('groups_users_link', " VALUES (0, " . $groups['XOOPS_GROUP_USERS'] . ", 1)");
     // data for table 'group_permission'
-    $dbm->insert("group_permission", " VALUES (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",1,1,'module_admin')");
-    $dbm->insert("group_permission", " VALUES (0," . $gruops['XOOPS_GROUP_ADMIN'] . ",1,1, 'module_read')");
-    $dbm->insert("group_permission", " VALUES (0," . $gruops['XOOPS_GROUP_USERS'] . ",1,1,'module_read')");
-    $dbm->insert("group_permission", " VALUES (0," . $gruops['XOOPS_GROUP_ANONYMOUS'] . ",1,1,'module_read')");
+    $dbm->insert("group_permission", " VALUES (0," . $groups['XOOPS_GROUP_ADMIN'] . ",1,1,'module_admin')");
+    $dbm->insert("group_permission", " VALUES (0," . $groups['XOOPS_GROUP_ADMIN'] . ",1,1, 'module_read')");
+    $dbm->insert("group_permission", " VALUES (0," . $groups['XOOPS_GROUP_USERS'] . ",1,1,'module_read')");
+    $dbm->insert("group_permission", " VALUES (0," . $groups['XOOPS_GROUP_ANONYMOUS'] . ",1,1,'module_read')");
 
-    $dbm->insert("group_permission", " VALUES(0," . $gruops['XOOPS_GROUP_ADMIN'] . ",1,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $gruops['XOOPS_GROUP_ADMIN'] . ",2,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $gruops['XOOPS_GROUP_ADMIN'] . ",3,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $gruops['XOOPS_GROUP_ADMIN'] . ",4,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $gruops['XOOPS_GROUP_ADMIN'] . ",5,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $gruops['XOOPS_GROUP_ADMIN'] . ",6,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $gruops['XOOPS_GROUP_ADMIN'] . ",7,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $gruops['XOOPS_GROUP_ADMIN'] . ",8,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $gruops['XOOPS_GROUP_ADMIN'] . ",9,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $gruops['XOOPS_GROUP_ADMIN'] . ",10,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $gruops['XOOPS_GROUP_ADMIN'] . ",11,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $gruops['XOOPS_GROUP_ADMIN'] . ",12,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $gruops['XOOPS_GROUP_ADMIN'] . ",13,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $gruops['XOOPS_GROUP_ADMIN'] . ",14,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $gruops['XOOPS_GROUP_ADMIN'] . ",15,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $gruops['XOOPS_GROUP_ADMIN'] . ",16,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $gruops['XOOPS_GROUP_ADMIN'] . ",17,1,'system_admin')");
+    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",1,1,'system_admin')");
+    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",2,1,'system_admin')");
+    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",3,1,'system_admin')");
+    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",4,1,'system_admin')");
+    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",5,1,'system_admin')");
+    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",6,1,'system_admin')");
+    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",7,1,'system_admin')");
+    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",8,1,'system_admin')");
+    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",9,1,'system_admin')");
+    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",10,1,'system_admin')");
+    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",11,1,'system_admin')");
+    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",12,1,'system_admin')");
+    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",13,1,'system_admin')");
+    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",14,1,'system_admin')");
+    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",15,1,'system_admin')");
+    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",16,1,'system_admin')");
+    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",17,1,'system_admin')");
     // data for table 'banner'
     $dbm->insert("banner", " (bid, cid, imptotal, impmade, clicks, imageurl, clickurl, date, htmlcode) VALUES (1, 1, 0, 1, 0, '" . XOOPS_URL . "/images/banners/xoops_flashbanner2.swf', 'http://www.xoops.org/', 1008813250, '')");
     $dbm->insert("banner", " (bid, cid, imptotal, impmade, clicks, imageurl, clickurl, date, htmlcode) VALUES (2, 1, 0, 1, 0, '" . XOOPS_URL . "/images/banners/xoops_banner_2.gif', 'http://www.xoops.org/', 1008813250, '')");
@@ -140,14 +140,14 @@ function make_data(&$dbm, $adminname, $adminpass, $adminmail, $language, $gruops
             $tplsource = fread($fp, filesize('../modules/system/templates/blocks/' . $newblock['template']));
             fclose($fp);
             $dbm->insert('tplsource', " (tpl_id, tpl_source) VALUES (" . $newtplid . ", '" . addslashes($tplsource) . "')");
-            $dbm->insert("group_permission", " VALUES (0, " . $gruops['XOOPS_GROUP_ADMIN'] . ", " . $newbid . ", 1, 'block_read')");
-            // $dbm->insert("group_permission", " VALUES (0, ".$gruops['XOOPS_GROUP_ADMIN'].", ".$newbid.", 'xoops_blockadmiin')");
-            $dbm->insert("group_permission", " VALUES (0, " . $gruops['XOOPS_GROUP_USERS'] . ", " . $newbid . ", 1, 'block_read')");
-            $dbm->insert("group_permission", " VALUES (0, " . $gruops['XOOPS_GROUP_ANONYMOUS'] . ", " . $newbid . ", 1, 'block_read')");
+            $dbm->insert("group_permission", " VALUES (0, " . $groups['XOOPS_GROUP_ADMIN'] . ", " . $newbid . ", 1, 'block_read')");
+            // $dbm->insert("group_permission", " VALUES (0, ".$groups['XOOPS_GROUP_ADMIN'].", ".$newbid.", 'xoops_blockadmiin')");
+            $dbm->insert("group_permission", " VALUES (0, " . $groups['XOOPS_GROUP_USERS'] . ", " . $newbid . ", 1, 'block_read')");
+            $dbm->insert("group_permission", " VALUES (0, " . $groups['XOOPS_GROUP_ANONYMOUS'] . ", " . $newbid . ", 1, 'block_read')");
         }
     }
     // data for table 'users'
-    $temp    = md5($adminpass);
+    $temp    = $hashedAdminPass;
     $regdate = time();
     // $dbadminname= addslashes($adminname);
     // RMV-NOTIFY (updated for extra columns in user table)
@@ -183,9 +183,9 @@ function make_data(&$dbm, $adminname, $adminpass, $adminmail, $language, $gruops
     $dbm->insert('config', " VALUES (17, 0, 2, 'minpass', '_MD_AM_MINPASS', '5', '_MD_AM_MINPASSDSC', 'textbox', 'int', 1)");
     $dbm->insert('config', " VALUES (18, 0, 2, 'minuname', '_MD_AM_MINUNAME', '3', '_MD_AM_MINUNAMEDSC', 'textbox', 'int', 2)");
     $dbm->insert('config', " VALUES (19, 0, 2, 'new_user_notify', '_MD_AM_NEWUNOTIFY', '1', '_MD_AM_NEWUNOTIFYDSC', 'yesno', 'int', 4)");
-    $dbm->insert('config', " VALUES (20, 0, 2, 'new_user_notify_group', '_MD_AM_NOTIFYTO', " . $gruops['XOOPS_GROUP_ADMIN'] . ", '_MD_AM_NOTIFYTODSC', 'group', 'int', 6)");
+    $dbm->insert('config', " VALUES (20, 0, 2, 'new_user_notify_group', '_MD_AM_NOTIFYTO', " . $groups['XOOPS_GROUP_ADMIN'] . ", '_MD_AM_NOTIFYTODSC', 'group', 'int', 6)");
     $dbm->insert('config', " VALUES (21, 0, 2, 'activation_type', '_MD_AM_ACTVTYPE', '0', '_MD_AM_ACTVTYPEDSC', 'select', 'int', 8)");
-    $dbm->insert('config', " VALUES (22, 0, 2, 'activation_group', '_MD_AM_ACTVGROUP', " . $gruops['XOOPS_GROUP_ADMIN'] . ", '_MD_AM_ACTVGROUPDSC', 'group', 'int', 10)");
+    $dbm->insert('config', " VALUES (22, 0, 2, 'activation_group', '_MD_AM_ACTVGROUP', " . $groups['XOOPS_GROUP_ADMIN'] . ", '_MD_AM_ACTVGROUPDSC', 'group', 'int', 10)");
     $dbm->insert('config', " VALUES (23, 0, 2, 'uname_test_level', '_MD_AM_UNAMELVL', '0', '_MD_AM_UNAMELVLDSC', 'select', 'int', 12)");
     $dbm->insert('config', " VALUES (24, 0, 2, 'avatar_allow_upload', '_MD_AM_AVATARALLOW', '0', '_MD_AM_AVATARALWDSC', 'yesno', 'int', 14)");
     $dbm->insert('config', " VALUES (27, 0, 2, 'avatar_width', '_MD_AM_AVATARW', '120', '_MD_AM_AVATARWDSC', 'textbox', 'int', 16)");
@@ -339,7 +339,7 @@ function make_data(&$dbm, $adminname, $adminpass, $adminmail, $language, $gruops
         ++$conf;
     }
 
-    return $gruops;
+    return $groups;
 }
 
 /**

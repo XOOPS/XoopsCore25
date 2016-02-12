@@ -27,8 +27,11 @@
  **/
 
 require_once './include/common.inc.php';
+
 $_SESSION = array();
 setcookie('xo_install_user', '', null, null, null);
+$key = \Xmf\Jwt\KeyFactory::build('install');
+$key->kill();
 defined('XOOPS_INSTALL') or die('XOOPS Installation wizard die');
 
 $install_rename_suffix = uniqid(substr(md5($x = mt_rand()) . $x, -10), true);

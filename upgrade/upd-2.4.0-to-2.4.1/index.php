@@ -13,10 +13,10 @@
  * Upgrader from 2.4.0 to 2.4.1
  *
  * See the enclosed file license.txt for licensing information.
- * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
+ * If you did not receive this file, get it at http://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright    (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license          http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @license          GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package          upgrader
  * @since            2.4.0
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
@@ -32,6 +32,9 @@ class Upgrade_241 extends XoopsUpgrade
      */
     public function check_license()
     {
+        if (defined('XOOPS_LICENSE_KEY')) {
+            return true; // skip setup if license.php was included
+        }
         if (defined('XOOPS_LICENSE_KEY') == false) {
             if (substr(XOOPS_LICENSE_KEY, 0, 13) != $this->xoops_getPublicLicenceKey()) {
                 return false;

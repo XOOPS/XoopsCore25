@@ -57,6 +57,7 @@ include './class/installwizard.php';
 include_once '../include/version.php';
 include_once './include/functions.php';
 include_once '../class/module.textsanitizer.php';
+include_once '../class/libraries/vendor/autoload.php';
 
 $pageHasHelp = false;
 $pageHasForm = false;

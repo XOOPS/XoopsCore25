@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             class
  * @subpackage          database
  * @since               1.0.0
@@ -36,7 +36,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
     /**
      * Database connection
      *
-     * @var resource
+     * @var mysqli
      */
     public $conn;
 
@@ -99,7 +99,8 @@ class XoopsMySQLDatabase extends XoopsDatabase
     /**
      * Get a result row as an enumerated array
      *
-     * @param resource $result
+     * @param mysqli_result $result
+     *
      * @return array
      */
     public function fetchRow($result)
@@ -110,7 +111,8 @@ class XoopsMySQLDatabase extends XoopsDatabase
     /**
      * Fetch a result row as an associative array
      *
-     * @param resource $result
+     * @param mysqli_result $result
+     *
      * @return array
      */
     public function fetchArray($result)
@@ -121,7 +123,8 @@ class XoopsMySQLDatabase extends XoopsDatabase
     /**
      * Fetch a result row as an associative array
      *
-     * @param resource $result
+     * @param mysqli_result $result
+     *
      * @return array
      */
     public function fetchBoth($result)
@@ -133,7 +136,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
      * XoopsMySQLiDatabase::fetchObjected()
      *
      * @param mixed $result
-     * @return
+     * @return object|null
      */
     public function fetchObject($result)
     {
@@ -153,7 +156,8 @@ class XoopsMySQLDatabase extends XoopsDatabase
     /**
      * Get number of rows in result
      *
-     * @param resource $result
+     * @param mysqli_result $result
+     *
      * @return int
      */
     public function getRowsNum($result)
@@ -184,12 +188,14 @@ class XoopsMySQLDatabase extends XoopsDatabase
     /**
      * will free all memory associated with the result identifier result.
      *
-     * @param resource $ query result
+     * @param mysqli_result $result result
+     *
      * @return bool TRUE on success or FALSE on failure.
      */
     public function freeRecordSet($result)
     {
-        return ((mysqli_free_result($result) || (is_object($result) && (get_class($result) === 'mysqli_result'))) ? true : false);
+        return ((mysqli_free_result($result) || (is_object($result)
+                && (get_class($result) === 'mysqli_result'))) ? true : false);
     }
 
     /**
@@ -225,10 +231,15 @@ class XoopsMySQLDatabase extends XoopsDatabase
 
     /**
      * Quotes a string for use in a query.
+     *
+     * @param string $string string to quote/escape for use in query
+     *
+     * @return string
      */
     public function quote($string)
     {
-        return "'" . str_replace("\\\"", '"', str_replace("\\&quot;", '&quot;', mysqli_real_escape_string($this->conn, $string))) . "'";
+        $quoted = $this->escape($string);
+        return "'{$quoted}'";
     }
 
     /**
@@ -320,8 +331,9 @@ class XoopsMySQLDatabase extends XoopsDatabase
     /**
      * Get field name
      *
-     * @param resource $result query result
-     * @param          int     $ numerical field index
+     * @param mysqli_result $result query result
+     * @param int           $offset numerical field index
+     *
      * @return string
      */
     public function getFieldName($result, $offset)
@@ -332,8 +344,9 @@ class XoopsMySQLDatabase extends XoopsDatabase
     /**
      * Get field type
      *
-     * @param resource $result query result
-     * @param int      $offset numerical field index
+     * @param mysqli_result $result query result
+     * @param int           $offset numerical field index
+     *
      * @return string
      */
     public function getFieldType($result, $offset)
@@ -429,7 +442,8 @@ class XoopsMySQLDatabase extends XoopsDatabase
     /**
      * Get number of fields in result
      *
-     * @param resource $result query result
+     * @param mysqli_result $result query result
+     *
      * @return int
      */
     public function getFieldsNum($result)
