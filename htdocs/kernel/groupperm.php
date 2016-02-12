@@ -125,7 +125,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
      *
      * @return bool $isNew  Flag the object as "new"?
      */
-    public function &create($isNew = true)
+    public function create($isNew = true)
     {
         $perm = new XoopsGroupPerm();
         if ($isNew) {
@@ -142,7 +142,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
      *
      * @return XoopsGroupPerm {@link XoopsGroupPerm}, FALSE on fail
      */
-    public function &get($id)
+    public function get($id)
     {
         $id   = (int)($id);
         $perm = false;
@@ -168,12 +168,10 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
      *
      * @return bool TRUE on success
      */
-    public function insert(XoopsGroupPerm $perm)
+    public function insert(XoopsObject $perm)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($perm, 'xoopsgroupperm')) {
+        if (!(class_exists($this->className) && $perm instanceof $this->className)) {
+        //if (!is_a($perm, 'xoopsgroupperm')) {
             return false;
         }
         if (!$perm->isDirty()) {
@@ -209,12 +207,10 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
      *
      * @return bool TRUE on success
      */
-    public function delete(XoopsGroupPerm $perm)
+    public function delete(XoopsObject $perm)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($perm, 'xoopsgroupperm')) {
+        if (!(class_exists($this->className) && $perm instanceof $this->className)) {
+        //if (!is_a($perm, 'xoopsgroupperm')) {
             return false;
         }
         $sql = sprintf("DELETE FROM %s WHERE gperm_id = %u", $this->db->prefix('group_permission'), $perm->getVar('gperm_id'));

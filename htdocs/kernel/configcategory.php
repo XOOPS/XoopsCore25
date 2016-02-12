@@ -102,7 +102,7 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
      *
      * @return XoopsConfigCategory New {@link XoopsConfigCategory}
      */
-    public function &create($isNew = true)
+    public function create($isNew = true)
     {
         $confcat = new XoopsConfigCategory();
         if ($isNew) {
@@ -119,7 +119,7 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
      *
      * @return XoopsConfigCategory {@link XoopsConfigCategory}, FALSE on fail
      */
-    public function &get($id)
+    public function get($id)
     {
         $confcat = false;
         $id      = (int)($id);
@@ -145,12 +145,10 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
      *
      * @return bool TRUE on success
      */
-    public function insert(XoopsConfigCategory $confcat)
+    public function insert(XoopsObject $confcat)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($confcat, 'xoopsconfigcategory')) {
+        if (!(class_exists($this->className) && $confcat instanceof $this->className)) {
+        //if (!is_a($confcat, 'xoopsconfigcategory')) {
             return false;
         }
         if (!$confcat->isDirty()) {
@@ -186,12 +184,10 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
      *
      * @return bool TRUE on success
      */
-    public function delete(XoopsConfigCategory $confcat)
+    public function delete(XoopsObject $confcat)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($confcat, 'xoopsconfigcategory')) {
+        if (!(class_exists($this->className) && $confcat instanceof $this->className)) {
+        //if (!is_a($confcat, 'xoopsconfigcategory')) {
             return false;
         }
 

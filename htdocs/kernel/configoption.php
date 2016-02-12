@@ -111,7 +111,7 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
      *
      * @return XoopsConfigOption {@link XoopsConfigOption}
      */
-    public function &create($isNew = true)
+    public function create($isNew = true)
     {
         $confoption = new XoopsConfigOption();
         if ($isNew) {
@@ -128,7 +128,7 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
      *
      * @return XoopsConfigOption reference to the {@link XoopsConfigOption}, FALSE on fail
      */
-    public function &get($id)
+    public function get($id)
     {
         $confoption = false;
         $id         = (int)($id);
@@ -150,15 +150,13 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
     /**
      * Insert a new option in the database
      *
-     * @param  XoopsConfigOption &$confoption reference to a {@link XoopsConfigOption}
+     * @param  XoopsConfigOption $confoption reference to a {@link XoopsConfigOption}
      * @return bool              TRUE if successfull.
      */
-    public function insert(&$confoption)
+    public function insert(XoopsObject $confoption)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($confoption, 'xoopsconfigoption')) {
+        if (!(class_exists($this->className) && $confoption instanceof $this->className)) {
+        //if (!is_a($confoption, 'xoopsconfigoption')) {
             return false;
         }
         if (!$confoption->isDirty()) {
@@ -167,14 +165,30 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
         if (!$confoption->cleanVars()) {
             return false;
         }
-        foreach ($confoption->cleanVars as $k => $v) {
-            ${$k} = $v;
-        }
+
+        $confop_id = $confoption->getVar('confop_id');
+        $confop_name = $confoption->getVar('confop_name');
+        $confop_value = $confoption->getVar('confop_value');
+        $conf_id = $confoption->getVar('conf_id');
+
         if ($confoption->isNew()) {
             $confop_id = $this->db->genId('configoption_confop_id_seq');
-            $sql       = sprintf("INSERT INTO %s (confop_id, confop_name, confop_value, conf_id) VALUES (%u, %s, %s, %u)", $this->db->prefix('configoption'), $confop_id, $this->db->quoteString($confop_name), $this->db->quoteString($confop_value), $conf_id);
+            $sql       = sprintf(
+                "INSERT INTO %s (confop_id, confop_name, confop_value, conf_id) VALUES (%u, %s, %s, %u)",
+                $this->db->prefix('configoption'),
+                $confop_id,
+                $this->db->quote($confop_name),
+                $this->db->quote($confop_value),
+                $conf_id
+            );
         } else {
-            $sql = sprintf("UPDATE %s SET confop_name = %s, confop_value = %s WHERE confop_id = %u", $this->db->prefix('configoption'), $this->db->quoteString($confop_name), $this->db->quoteString($confop_value), $confop_id);
+            $sql = sprintf(
+                "UPDATE %s SET confop_name = %s, confop_value = %s WHERE confop_id = %u",
+                $this->db->prefix('configoption'),
+                $this->db->quote($confop_name),
+                $this->db->quote($confop_value),
+                $confop_id
+            );
         }
         if (!$result = $this->db->query($sql)) {
             return false;
@@ -193,12 +207,10 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
      * @param  XoopsConfigOption &$confoption reference to a {@link XoopsConfigOption}
      * @return bool              TRUE if successful
      */
-    public function delete(&$confoption)
+    public function delete(XoopsObject $confoption)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($confoption, 'xoopsconfigoption')) {
+        if (!(class_exists($this->className) && $confoption instanceof $this->className)) {
+        // if (!is_a($confoption, 'xoopsconfigoption')) {
             return false;
         }
         $sql = sprintf("DELETE FROM %s WHERE confop_id = %u", $this->db->prefix('configoption'), $confoption->getVar('confop_id'));

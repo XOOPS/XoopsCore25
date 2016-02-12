@@ -435,10 +435,10 @@ class XoopsModule extends XoopsObject
      *
      * @return mixed
      */
-    public static function &getByDirname($dirname)
+    public static function getByDirname($dirname)
     {
         $modhandler = xoops_getHandler('module');
-        $inst       =& $modhandler->getByDirname($dirname);
+        $inst       = $modhandler->getByDirname($dirname);
 
         return $inst;
     }
@@ -655,7 +655,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
      * @param  boolean $isNew Flag the new object as "new"
      * @return XoopsModule
      */
-    public function &create($isNew = true)
+    public function create($isNew = true)
     {
         $module = new XoopsModule();
         if ($isNew) {
@@ -671,7 +671,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
      * @param  int $id ID of the module
      * @return object FALSE on fail
      */
-    public function &get($id)
+    public function get($id)
     {
         static $_cachedModule_dirname;
         static $_cachedModule_mid;
@@ -740,18 +740,14 @@ class XoopsModuleHandler extends XoopsObjectHandler
     /**
      * Write a module to the database
      *
-     * @param XoopsModule $module
+     * @param XoopsModule $module module to insert
      *
-     * @internal param $object $ &$module reference to a {@link XoopsModule}
      * @return bool
      */
-    public function insert(XoopsModule $module)
+    public function insert(XoopsObject $module)
     {
-        /**
-         *
-         * @TODO : Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($module, 'xoopsmodule')) {
+        if (!(class_exists($this->className) && $module instanceof $this->className)) {
+        //if (!is_a($module, 'xoopsmodule')) {
             return false;
         }
         if (!$module->isDirty()) {
@@ -790,16 +786,12 @@ class XoopsModuleHandler extends XoopsObjectHandler
      * Delete a module from the database
      *
      * @param XoopsModule $module
-     * @internal param $object $ &$module
      * @return bool
      */
-    public function delete(XoopsModule $module)
+    public function delete(XoopsObject $module)
     {
-        /**
-         *
-         * @TODO : Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($module, 'xoopsmodule')) {
+        if (!(class_exists($this->className) && $module instanceof $this->className)) {
+        // if (!is_a($module, 'xoopsmodule')) {
             return false;
         }
         $sql = sprintf("DELETE FROM %s WHERE mid = %u", $this->db->prefix('modules'), $module->getVar('mid'));

@@ -283,7 +283,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
      * @param  bool $isNew Flag the config as "new"?
      * @return XoopsConfigItem reference to the new config
      */
-    public function &create($isNew = true)
+    public function create($isNew = true)
     {
         $config = new XoopsConfigItem();
         if ($isNew) {
@@ -299,7 +299,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
      * @param  int $id ID of the config
      * @return XoopsConfigItem reference to the config, FALSE on fail
      */
-    public function &get($id)
+    public function get($id)
     {
         $config = false;
         $id     = (int)($id);
@@ -322,15 +322,13 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
     /**
      * Write a config to the database
      *
-     * @param  XoopsConfigItem &$config {@link XoopsConfigItem} object
+     * @param  XoopsConfigItem $config {@link XoopsConfigItem} object
      * @return mixed           FALSE on fail.
      */
-    public function insert(&$config)
+    public function insert(XoopsObject $config)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($config, 'xoopsconfigitem')) {
+        if (!(class_exists($this->className) && $config instanceof $this->className)) {
+        //if (!is_a($config, 'xoopsconfigitem')) {
             return false;
         }
         if (!$config->isDirty()) {
@@ -362,15 +360,13 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
     /**
      * Delete a config from the database
      *
-     * @param  XoopsConfigItem &$config Config to delete
+     * @param  XoopsConfigItem $config Config to delete
      * @return bool            Successful?
      */
-    public function delete(&$config)
+    public function delete(XoopsObject $config)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($config, 'xoopsconfigitem')) {
+        if (!(class_exists($this->className) && $config instanceof $this->className)) {
+        //if (!is_a($config, 'xoopsconfigitem')) {
             return false;
         }
         $sql = sprintf("DELETE FROM %s WHERE conf_id = %u", $this->db->prefix('config'), $config->getVar('conf_id'));

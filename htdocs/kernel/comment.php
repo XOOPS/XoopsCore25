@@ -336,7 +336,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
      *
      * @return XoopsComment
      */
-    public function &create($isNew = true)
+    public function create($isNew = true)
     {
         $comment = new XoopsComment();
         if ($isNew) {
@@ -353,7 +353,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
      *
      * @return XoopsComment {@link XoopsComment}, FALSE on fail
      **/
-    public function &get($id)
+    public function get($id)
     {
         $comment = false;
         $id      = (int)($id);
@@ -379,14 +379,14 @@ class XoopsCommentHandler extends XoopsObjectHandler
      *
      * @return bool
      **/
-    public function insert(XoopsComment $comment)
+    public function insert(XoopsObject $comment)
     {
         /**
          * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
          * @TODO: change XoopsCommentHandler extends XoopsObjectHandler to: XoopsCommentHandler extends XoopsPersistableObjectHandler or $this->className won't work
          */
         //        if (!(class_exists($this->className) && $obj instanceof $this->className)) {
-        if (!is_a($comment, 'xoopscomment')) {
+        if (!is_a($comment, 'XoopsComment')) {
             return false;
         }
         if (!$comment->isDirty()) {
@@ -424,12 +424,12 @@ class XoopsCommentHandler extends XoopsObjectHandler
      *
      * @return bool
      **/
-    public function delete(XoopsComment $comment)
+    public function delete(XoopsObject $comment)
     {
         /**
          * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
          */
-        if (!is_a($comment, 'xoopscomment')) {
+        if (!is_a($comment, 'XoopsComment')) {
             return false;
         }
         $sql = sprintf("DELETE FROM %s WHERE com_id = %u", $this->db->prefix('xoopscomments'), $comment->getVar('com_id'));

@@ -147,6 +147,8 @@ class XoopsPrivmessage extends XoopsObject
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  *
  * @version             $Revision: 13090 $ - $Date: 2015-06-16 16:44:29 -0400 (Tue, 16 Jun 2015) $
+ *
+ * @todo Why is this not a XoopsPersistableObjectHandler?
  */
 class XoopsPrivmessageHandler extends XoopsObjectHandler
 {
@@ -155,7 +157,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
      * @param  bool $isNew Flag as "new"?
      * @return XoopsPrivmessage
      **/
-    public function &create($isNew = true)
+    public function create($isNew = true)
     {
         $pm = new XoopsPrivmessage();
         if ($isNew) {
@@ -170,7 +172,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
      * @param  int $id ID of the message
      * @return XoopsPrivmessage
      **/
-    public function &get($id)
+    public function get($id)
     {
         $pm = false;
         $id = (int)($id);
@@ -196,7 +198,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
      * @param  bool   $force flag to force the query execution skip request method check, which might be required in some situations
      * @return bool
      **/
-    public function insert(XoopsPrivmessage $pm, $force = false)
+    public function insert(XoopsObject $pm, $force = false)
     {
         /**
          * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
@@ -237,7 +239,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
      * @param  XoopsPrivmessage $pm {@link XoopsPrivmessage} object
      * @return bool
      **/
-    public function delete(XoopsPrivmessage $pm)
+    public function delete(XoopsObject $pm)
     {
         /**
          * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5

@@ -109,7 +109,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
      * @return XoopsGroup XoopsGroup reference to the new object
      *
      */
-    public function &create($isNew = true)
+    public function create($isNew = true)
     {
         $group = new XoopsGroup();
         if ($isNew) {
@@ -125,7 +125,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
      * @param  int $id ID of the group to get
      * @return XoopsGroup XoopsGroup reference to the group object, FALSE if failed
      */
-    public function &get($id)
+    public function get($id)
     {
         $id    = (int)($id);
         $group = false;
@@ -150,12 +150,10 @@ class XoopsGroupHandler extends XoopsObjectHandler
      * @param XoopsGroup reference to the group object
      * @return mixed ID of the group if inserted, FALSE if failed, TRUE if already present and unchanged.
      */
-    public function insert(XoopsGroup $group)
+    public function insert(XoopsObject $group)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($group, 'xoopsgroup')) {
+        if (!(class_exists($this->className) && $group instanceof $this->className)) {
+        //if (!is_a($group, 'xoopsgroup')) {
             return false;
         }
         if (!$group->isDirty()) {
@@ -190,12 +188,10 @@ class XoopsGroupHandler extends XoopsObjectHandler
      * @param  XoopsGroup $group reference to the group to be removed
      * @return bool       FALSE if failed
      */
-    public function delete(&$group)
+    public function delete(XoopsObject $group)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($group, 'xoopsgroup')) {
+        if (!(class_exists($this->className) && $group instanceof $this->className)) {
+        // if (!is_a($group, 'xoopsgroup')) {
             return false;
         }
         $sql = sprintf("DELETE FROM %s WHERE groupid = %u", $this->db->prefix('groups'), $group->getVar('groupid'));
@@ -281,7 +277,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
      * @param  bool $isNew should the new object be set to "new"?
      * @return XoopsMembership XoopsMembership
      */
-    public function &create($isNew = true)
+    public function create($isNew = true)
     {
         $mship = new XoopsMembership();
         if ($isNew) {
@@ -297,7 +293,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
      * @param  int $id ID of the membership to get
      * @return mixed reference to the object if successful, else FALSE
      */
-    public function &get($id)
+    public function get($id)
     {
         $id    = (int)($id);
         $mship = false;
@@ -322,12 +318,10 @@ class XoopsMembershipHandler extends XoopsObjectHandler
      * @param  XoopsMembership $mship reference to the membership object
      * @return bool            TRUE if already in DB or successful, FALSE if failed
      */
-    public function insert(&$mship)
+    public function insert(XoopsObject $mship)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($mship, 'xoopsmembership')) {
+        if (!(class_exists($this->className) && $mship instanceof $this->className)) {
+        //if (!is_a($mship, 'xoopsmembership')) {
             return false;
         }
         if (!$mship->isDirty()) {
@@ -362,12 +356,10 @@ class XoopsMembershipHandler extends XoopsObjectHandler
      * @param  XoopsMembership $mship reference to the membership object
      * @return bool            FALSE if failed
      */
-    public function delete(&$mship)
+    public function delete(XoopsObject $mship)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($mship, 'xoopsmembership')) {
+        if (!(class_exists($this->className) && $mship instanceof $this->className)) {
+        //if (!is_a($mship, 'xoopsmembership')) {
             return false;
         }
 

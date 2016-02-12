@@ -31,7 +31,7 @@ class ProfileCorePreload extends XoopsPreloadItem
     /**
      * @param $args
      */
-    public function eventCoreUserStart($args)
+    public static function eventCoreUserStart($args)
     {
         $op = 'main';
         if (isset($_POST['op'])) {
@@ -48,7 +48,7 @@ class ProfileCorePreload extends XoopsPreloadItem
     /**
      * @param $args
      */
-    public function eventCoreEdituserStart($args)
+    public static function eventCoreEdituserStart($args)
     {
         header("location: ./modules/profile/edituser.php" . (empty($_SERVER['QUERY_STRING']) ? "" : "?" . $_SERVER['QUERY_STRING']));
         exit();
@@ -57,7 +57,7 @@ class ProfileCorePreload extends XoopsPreloadItem
     /**
      * @param $args
      */
-    public function eventCoreLostpassStart($args)
+    public static function eventCoreLostpassStart($args)
     {
         $email = isset($_GET['email']) ? trim($_GET['email']) : '';
         $email = isset($_POST['email']) ? trim($_POST['email']) : $email;
@@ -68,7 +68,7 @@ class ProfileCorePreload extends XoopsPreloadItem
     /**
      * @param $args
      */
-    public function eventCoreRegisterStart($args)
+    public static function eventCoreRegisterStart($args)
     {
         header("location: ./modules/profile/register.php" . (empty($_SERVER['QUERY_STRING']) ? "" : "?" . $_SERVER['QUERY_STRING']));
         exit();
@@ -77,7 +77,7 @@ class ProfileCorePreload extends XoopsPreloadItem
     /**
      * @param $args
      */
-    public function eventCoreUserinfoStart($args)
+    public static function eventCoreUserinfoStart($args)
     {
         header("location: ./modules/profile/userinfo.php" . (empty($_SERVER['QUERY_STRING']) ? "" : "?" . $_SERVER['QUERY_STRING']));
         exit();

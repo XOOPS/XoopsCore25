@@ -109,6 +109,8 @@ class XoopsTplset extends XoopsObject
  * of XOOPS tplset class objects.
  *
  * @author  Kazumi Ono <onokazu@xoops.org>
+ *
+ * @todo This is not a XoopsPersistableObjectHandler?
  */
 class XoopsTplsetHandler extends XoopsObjectHandler
 {
@@ -119,7 +121,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
      * @param  bool $isNew is the new tplsets new??
      * @return object XoopsTplset reference to the new tplsets
      **/
-    public function &create($isNew = true)
+    public function create($isNew = true)
     {
         $tplset = new XoopsTplset();
         if ($isNew) {
@@ -136,7 +138,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
      * @param  int $id tplset_id of the tplsets to retrieve
      * @return object XoopsTplset reference to the tplsets
      **/
-    public function &get($id)
+    public function get($id)
     {
         $tplset = false;
         $id     = (int)($id);
@@ -165,7 +167,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
      * @internal param int $id tplset_id of the block to retrieve
      * @return object XoopsTplset reference to the tplsets
      */
-    public function &getByName($tplset_name)
+    public function getByName($tplset_name)
     {
         $tplset      = false;
         $tplset_name = trim($tplset_name);
@@ -191,7 +193,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
      * @internal param \XoopsTplset $object $block reference to the tplsets to insert
      * @return bool TRUE if successful
      */
-    public function insert(XoopsTplset $tplset)
+    public function insert(XoopsObject $tplset)
     {
         /**
          * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
@@ -231,7 +233,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
      * @param XoopsTplset XoopsTplset tplset reference to the tplsets to delete
      * @return bool TRUE if successful
      **/
-    public function delete(XoopsTplset $tplset)
+    public function delete(XoopsObject $tplset)
     {
         /**
          * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5

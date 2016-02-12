@@ -106,7 +106,7 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
      * @param  boolean $isNew Flag the object as "new"
      * @return XoopsImagesetimg
      **/
-    public function &create($isNew = true)
+    public function create($isNew = true)
     {
         $imgsetimg = new XoopsImagesetimg();
         if ($isNew) {
@@ -124,7 +124,7 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
      * @internal param bool $getbinary
      * @return XoopsImageSetImg {@link XoopsImageSetImg}, FALSE on fail
      */
-    public function &get($id)
+    public function get($id)
     {
         $imgsetimg = false;
         $id        = (int)($id);
@@ -146,15 +146,13 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
     /**
      * Write a {@link XoopsImageSetImg} object to the database
      *
-     * @param  XoopsImageSetImg &$imgsetimg {@link XoopsImageSetImg}
+     * @param  XoopsImageSetImg $imgsetimg {@link XoopsImageSetImg}
      * @return bool
      **/
-    public function insert(&$imgsetimg)
+    public function insert(XoopsObject $imgsetimg)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($imgsetimg, 'xoopsimagesetimg')) {
+        if (!(class_exists($this->className) && $imgsetimg instanceof $this->className)) {
+        //if (!is_a($imgsetimg, 'xoopsimagesetimg')) {
             return false;
         }
 
@@ -187,15 +185,13 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
     /**
      * Delete an image from the database
      *
-     * @param  XoopsImageSetImg &$imgsetimg {@link XoopsImageSetImg}
+     * @param  XoopsImageSetImg $imgsetimg {@link XoopsImageSetImg}
      * @return bool
      **/
-    public function delete(&$imgsetimg)
+    public function delete(XoopsObject $imgsetimg)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($imgsetimg, 'xoopsimagesetimg')) {
+        if (!(class_exists($this->className) && $imgsetimg instanceof $this->className)) {
+        //if (!is_a($imgsetimg, 'xoopsimagesetimg')) {
             return false;
         }
 

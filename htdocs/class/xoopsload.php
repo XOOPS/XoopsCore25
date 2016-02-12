@@ -129,7 +129,7 @@ class XoopsLoad
      * @param $name
      * @return bool|string
      */
-    public function loadFramework($name)
+    public static function loadFramework($name)
     {
         if (!file_exists($file = XOOPS_ROOT_PATH . '/Frameworks/' . $name . '/xoops' . $name . '.php')) {
             trigger_error('File ' . str_replace(XOOPS_ROOT_PATH, '', $file) . ' not found in file ' . __FILE__ . ' at line ' . __LINE__, E_USER_WARNING);
@@ -152,7 +152,7 @@ class XoopsLoad
      * @param  null $dirname
      * @return bool
      */
-    public function loadModule($name, $dirname = null)
+    public static function loadModule($name, $dirname = null)
     {
         if (empty($dirname)) {
             return false;

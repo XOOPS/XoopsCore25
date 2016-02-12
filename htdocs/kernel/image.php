@@ -164,7 +164,7 @@ class XoopsImageHandler extends XoopsObjectHandler
      * @param  boolean $isNew Flag the object as "new"
      * @return XoopsImage
      **/
-    public function &create($isNew = true)
+    public function create($isNew = true)
     {
         $image = new XoopsImage();
         if ($isNew) {
@@ -181,7 +181,7 @@ class XoopsImageHandler extends XoopsObjectHandler
      * @param  boolean $getbinary
      * @return XoopsImage {@link XoopsImage}, FALSE on fail
      **/
-    public function &get($id, $getbinary = true)
+    public function get($id, $getbinary = true)
     {
         $image = false;
         $id    = (int)($id);
@@ -206,12 +206,10 @@ class XoopsImageHandler extends XoopsObjectHandler
      * @param  XoopsImage &$image {@link XoopsImage}
      * @return bool
      **/
-    public function insert(&$image)
+    public function insert(XoopsObject $image)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($image, 'xoopsimage')) {
+        if (!(class_exists($this->className) && $image instanceof $this->className)) {
+        //if (!is_a($image, 'xoopsimage')) {
             return false;
         }
 
@@ -267,12 +265,10 @@ class XoopsImageHandler extends XoopsObjectHandler
      * @param  XoopsImage &$image {@link XoopsImage}
      * @return bool
      **/
-    public function delete(&$image)
+    public function delete(XoopsObject $image)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($image, 'xoopsimage')) {
+        if (!(class_exists($this->className) && $image instanceof $this->className)) {
+        //if (!is_a($image, 'xoopsimage')) {
             return false;
         }
 
