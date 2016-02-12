@@ -1,0 +1,18 @@
+{
+    "name": "geekwright/xmf",
+    "license": "GPL-2.0+",
+    "type": "project",
+    "description": "XMF - XOOPS Module Framework",
+    "autoload": {
+        "psr-4": {
+            "Xmf\\": "src/Xmf"
+        }
+    },
+    "require": {
+        "php": ">=5.3.7",
+        "oodle/krumo": "0.5.0",
+        "symfony/yaml": "2.4.*",
+        "ircmaxell/random-lib": "^1.1.0",
+        "firebase/php-jwt": "^3.0.0"
+    }
+}

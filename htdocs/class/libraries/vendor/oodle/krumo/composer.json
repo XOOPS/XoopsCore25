@@ -1,0 +1,28 @@
+{
+    "name": "oodle/krumo",
+    "type": "library",
+    "description": "KRUMO - version 2.0 of print_r(); and var_dump(); (with new updates)",
+    "license": "LGPL",
+    "keywords": ["debug", "debugging", "pretty", "print", "print_r", "var_dump", "krumo"],
+    "authors": [
+        {
+	    "name": "Kaloyan K. Tsvetkov",
+	    "email": "kaloyan@kaloyan.info"
+	},
+	{
+	    "name": "Matthew J. Mucklo",
+	    "email": "mmucklo@corp.oodle.com"
+	},
+	{
+	    "name": "Stefan Thomas",
+	    "email": "moon@justmoon.de"
+        }
+    ],
+    "require": {
+        "php": ">=5.2.17"
+    },
+    "autoload": {
+        "files": ["class.krumo.php"]
+    }
+}
+
