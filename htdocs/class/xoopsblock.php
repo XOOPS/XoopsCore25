@@ -35,7 +35,7 @@ class XoopsBlock extends XoopsObject
      */
     public function XoopsBlock($id = null)
     {
-        $this->db =& XoopsDatabaseFactory::getDatabaseConnection();
+        $this->db = XoopsDatabaseFactory::getDatabaseConnection();
         $this->initVar('bid', XOBJ_DTYPE_INT, null, false);
         $this->initVar('mid', XOBJ_DTYPE_INT, 0, false);
         $this->initVar('func_num', XOBJ_DTYPE_INT, 0, false);
@@ -341,7 +341,7 @@ class XoopsBlock extends XoopsObject
      */
     public static function getAllBlocksByGroup($groupid, $asobject = true, $side = null, $visible = null, $orderby = "b.weight,b.bid", $isactive = 1)
     {
-        $db  =& XoopsDatabaseFactory::getDatabaseConnection();
+        $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $ret = array();
         $sql = 'SELECT b.* ';
         if (!$asobject) {
@@ -406,7 +406,7 @@ class XoopsBlock extends XoopsObject
      */
     public function getAllBlocks($rettype = "object", $side = null, $visible = null, $orderby = "side,weight,bid", $isactive = 1)
     {
-        $db          =& XoopsDatabaseFactory::getDatabaseConnection();
+        $db          = XoopsDatabaseFactory::getDatabaseConnection();
         $ret         = array();
         $where_query = " WHERE isactive=" . $isactive;
         if (isset($side)) {
@@ -467,7 +467,7 @@ class XoopsBlock extends XoopsObject
     public static function getByModule($moduleid, $asobject = true)
     {
         $moduleid = (int)($moduleid);
-        $db       =& XoopsDatabaseFactory::getDatabaseConnection();
+        $db       = XoopsDatabaseFactory::getDatabaseConnection();
         if ($asobject == true) {
             $sql = $sql = "SELECT * FROM " . $db->prefix("newblocks") . " WHERE mid=" . $moduleid;
         } else {
@@ -500,7 +500,7 @@ class XoopsBlock extends XoopsObject
     public function getAllByGroupModule($groupid, $module_id = 0, $toponlyblock = false, $visible = null, $orderby = 'b.weight, m.block_id', $isactive = 1)
     {
         $isactive = (int)($isactive);
-        $db       =& XoopsDatabaseFactory::getDatabaseConnection();
+        $db       = XoopsDatabaseFactory::getDatabaseConnection();
         $ret      = array();
         if (isset($groupid)) {
             $sql = "SELECT DISTINCT gperm_itemid FROM " . $db->prefix('group_permission') . " WHERE gperm_name = 'block_read' AND gperm_modid = 1";
@@ -565,7 +565,7 @@ class XoopsBlock extends XoopsObject
      */
     public function getNonGroupedBlocks($module_id = 0, $toponlyblock = false, $visible = null, $orderby = 'b.weight, m.block_id', $isactive = 1)
     {
-        $db   =& XoopsDatabaseFactory::getDatabaseConnection();
+        $db   = XoopsDatabaseFactory::getDatabaseConnection();
         $ret  = array();
         $bids = array();
         $sql  = "SELECT DISTINCT(bid) from " . $db->prefix('newblocks');
@@ -631,7 +631,7 @@ class XoopsBlock extends XoopsObject
             // invalid query
             return 0;
         }
-        $db =& XoopsDatabaseFactory::getDatabaseConnection();
+        $db = XoopsDatabaseFactory::getDatabaseConnection();
         if (isset($showFunc)) {
             // showFunc is set for more strict comparison
             $sql = sprintf("SELECT COUNT(*) FROM %s WHERE mid = %d AND func_num = %d AND show_func = %s", $db->prefix('newblocks'), $moduleId, $funcNum, $db->quoteString(trim($showFunc)));

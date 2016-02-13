@@ -17,7 +17,7 @@
  */
 
 include __DIR__ . '/mainfile.php';
-$xoopsPreload =& XoopsPreload::getInstance();
+$xoopsPreload = XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.pmlite.start');
 
 xoops_loadLanguage('pmsg');
@@ -73,7 +73,7 @@ if (is_object($xoopsUser)) {
             echo "[ <a href='javascript:history.go(-1)' title=''>" . _PM_GOBACK . "</a> ]</div>";
         } else {
             $pm_handler = xoops_getHandler('privmessage');
-            $pm         =& $pm_handler->create();
+            $pm         = $pm_handler->create();
             $msg_image  = XoopsRequest::getCmd('icon', null, 'POST');
             if (in_array($msg_image, $subject_icons)) {
                 $pm->setVar("msg_image", $msg_image);
@@ -93,7 +93,7 @@ if (is_object($xoopsUser)) {
         include_once $GLOBALS['xoops']->path('include/xoopscodes.php');
         if ($reply == 1) {
             $pm_handler = xoops_getHandler('privmessage');
-            $pm         =& $pm_handler->get($msg_id);
+            $pm         = $pm_handler->get($msg_id);
             if ($pm->getVar("to_userid") == $xoopsUser->getVar('uid')) {
                 $pm_uname = XoopsUser::getUnameFromId($pm->getVar("from_userid"));
                 $message  = "[quote]\n";

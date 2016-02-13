@@ -44,7 +44,7 @@ class XoopsTopic
      */
     public function XoopsTopic($table, $topicid = 0)
     {
-        $this->db    = &XoopsDatabaseFactory::getDatabaseConnection();
+        $this->db    = XoopsDatabaseFactory::getDatabaseConnection();
         $this->table = $table;
         if (is_array($topicid)) {
             $this->makeTopic($topicid);

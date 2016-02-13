@@ -21,12 +21,12 @@
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-$xoopsPreload =& XoopsPreload::getInstance();
+$xoopsPreload = XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.header.start');
 
 include_once $GLOBALS['xoops']->path('class/xoopsblock.php');
 
-$xoopsLogger =& XoopsLogger::getInstance();
+$xoopsLogger = XoopsLogger::getInstance();
 $xoopsLogger->stopTime('Module init');
 $xoopsLogger->startTime('XOOPS output init');
 

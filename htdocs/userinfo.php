@@ -23,7 +23,7 @@
  * @version             $Id: userinfo.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 include __DIR__ . '/mainfile.php';
-$xoopsPreload =& XoopsPreload::getInstance();
+$xoopsPreload = XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.userinfo.start');
 
 xoops_loadLanguage('user');

@@ -192,7 +192,7 @@ if ($current_step == 1) {
     $stop .= XoopsUserUtility::validate($newuser, $pass, $vpass);
 
     xoops_load('XoopsCaptcha');
-    $xoopsCaptcha =& XoopsCaptcha::getInstance();
+    $xoopsCaptcha = XoopsCaptcha::getInstance();
     if (!$xoopsCaptcha->verify()) {
         $stop .= $xoopsCaptcha->getMessage();
     }
@@ -202,7 +202,7 @@ if ($current_step == 1) {
 if ($current_step > 0 && empty($stop) && (!empty($steps[$current_step - 1]['step_save']) || !isset($steps[$current_step]))) {
     if ($GLOBALS['xoopsModuleConfig']['profileCaptchaAfterStep1'] == 1 && $current_step > 1) {
         xoops_load('XoopsCaptcha');
-        $xoopsCaptcha2 =& XoopsCaptcha::getInstance();
+        $xoopsCaptcha2 = XoopsCaptcha::getInstance();
         if (!$xoopsCaptcha2->verify()) {
             $stop .= $xoopsCaptcha2->getMessage();
         }

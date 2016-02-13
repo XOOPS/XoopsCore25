@@ -109,7 +109,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea
 
             if (count($this->htmlEditor) == 1) {
                 xoops_load('XoopsEditorHandler');
-                $editor_handler   = &XoopsEditorHandler::getInstance();
+                $editor_handler   = XoopsEditorHandler::getInstance();
                 $this->htmlEditor = $editor_handler->get($this->htmlEditor[0], $options);
                 if ($inLoop > 1) {
                     $this->htmlEditor = null;
@@ -200,7 +200,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea
         }
         $code .= "<img src='" . XOOPS_URL . "/images/code.gif' alt='" . _XOOPS_FORM_ALT_CODE . "' title='" . _XOOPS_FORM_ALT_CODE . "' onclick='xoopsCodeCode(\"{$textarea_id}\", \"" . htmlspecialchars(_ENTERCODE, ENT_QUOTES) . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;" . "<img src='" . XOOPS_URL . "/images/quote.gif' alt='" . _XOOPS_FORM_ALT_QUOTE . "' title='" . _XOOPS_FORM_ALT_QUOTE . "' onclick='xoopsCodeQuote(\"{$textarea_id}\", \"" . htmlspecialchars(_ENTERQUOTE, ENT_QUOTES) . "\");' onmouseover='style.cursor=\"hand\"'/>";
 
-        $xoopsPreload =& XoopsPreload::getInstance();
+        $xoopsPreload = XoopsPreload::getInstance();
         $xoopsPreload->triggerEvent('core.class.xoopsform.formdhtmltextarea.codeicon', array(&$code));
 
         return $code;

@@ -4,7 +4,7 @@ if (!class_exists('ProtectorRegistry')) {
     exit('Registry not found');
 }
 
-$registry  =& ProtectorRegistry::getInstance();
+$registry  = ProtectorRegistry::getInstance();
 $mydirname = $registry->getEntry('mydirname');
 $mydirpath = $registry->getEntry('mydirpath');
 $language  = $registry->getEntry('language');
@@ -37,7 +37,7 @@ if (!function_exists('protector_oninstall_base')) {
             }
         }
 
-        $db  =& XoopsDatabaseFactory::getDatabaseConnection();
+        $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $mid = $module->getVar('mid');
 
         // TABLES (loading mysql.sql)

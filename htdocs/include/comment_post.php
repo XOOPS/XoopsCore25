@@ -79,7 +79,7 @@ if (!empty($_POST)) {
     }
     if ($op === 'post' && !is_object($xoopsUser)) {
         xoops_load('XoopsCaptcha');
-        $xoopsCaptcha =& XoopsCaptcha::getInstance();
+        $xoopsCaptcha = XoopsCaptcha::getInstance();
         if (!$xoopsCaptcha->verify()) {
             $error_message .= $xoopsCaptcha->getMessage() . '<br />';
         }

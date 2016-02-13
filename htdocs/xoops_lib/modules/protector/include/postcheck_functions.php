@@ -23,8 +23,8 @@ function protector_postcommon()
 
     // Protector object
     require_once dirname(__DIR__) . '/class/protector.php';
-    $db        =& XoopsDatabaseFactory::getDatabaseConnection();
-    $protector =& Protector::getInstance();
+    $db        = XoopsDatabaseFactory::getDatabaseConnection();
+    $protector = Protector::getInstance();
     $protector->setConn($db->conn);
     $protector->updateConfFromDb();
     $conf = $protector->getConf();

@@ -85,7 +85,7 @@ function smarty_function_block($params, &$smarty)
         return $blockObj->getVar('title');
     }
 
-    $xoopsLogger =& XoopsLogger::getInstance();
+    $xoopsLogger = XoopsLogger::getInstance();
     $template    =& $GLOBALS['xoopsTpl'];
 
     $bcachetime = (int)($blockObj->getVar('bcachetime'));

@@ -90,7 +90,7 @@ include_once XOOPS_ROOT_PATH . DS . 'class' . DS . 'module.textsanitizer.php';
 include_once XOOPS_ROOT_PATH . DS . 'class' . DS . 'database' . DS . 'databasefactory.php';
 require_once XOOPS_ROOT_PATH . DS . 'class' . DS . 'criteria.php';
 XoopsLoad::load('xoopslogger');
-$xoopsLogger =& XoopsLogger::getInstance();
+$xoopsLogger = XoopsLogger::getInstance();
 $xoopsLogger->startTime();
 
 /**

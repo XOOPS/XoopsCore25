@@ -43,7 +43,7 @@ class XoopsDatabaseFactory
      * @staticvar object  The only instance of database class
      * @return object Reference to the only instance of database class
      */
-    public static function &getDatabaseConnection()
+    public static function getDatabaseConnection()
     {
         static $instance;
         if (!isset($instance)) {
@@ -56,7 +56,7 @@ class XoopsDatabaseFactory
                     $class = 'Xoops' . ucfirst(XOOPS_DB_TYPE) . 'DatabaseProxy';
                 }
 
-                $xoopsPreload =& XoopsPreload::getInstance();
+                $xoopsPreload = XoopsPreload::getInstance();
                 $xoopsPreload->triggerEvent('core.class.database.databasefactory.connection', array(&$class));
 
                 $instance = new $class();

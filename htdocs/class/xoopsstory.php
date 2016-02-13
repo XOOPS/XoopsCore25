@@ -58,7 +58,7 @@ class XoopsStory
      */
     public function Story($storyid = -1)
     {
-        $this->db =& XoopsDatabaseFactory::getDatabaseConnection();
+        $this->db = XoopsDatabaseFactory::getDatabaseConnection();
         $this->table       = "";
         $this->topicstable = "";
         if (is_array($storyid)) {

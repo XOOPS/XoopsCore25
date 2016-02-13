@@ -74,7 +74,7 @@ class XoopsAuthFactory
             }
             switch ($xoops_auth_method) {
                 case 'xoops':
-                    $dao =& XoopsDatabaseFactory::getDatabaseConnection();
+                    $dao = XoopsDatabaseFactory::getDatabaseConnection();
                     break;
                 case 'ldap':
                     $dao = null;

@@ -23,7 +23,7 @@
  * @version             $Id: register.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 include __DIR__ . '/mainfile.php';
-$xoopsPreload =& XoopsPreload::getInstance();
+$xoopsPreload = XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.register.start');
 
 xoops_loadLanguage('user');
@@ -170,7 +170,7 @@ switch ($op) {
             $stop .= implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()) . "<br />";
         }
         xoops_load('XoopsCaptcha');
-        $xoopsCaptcha =& XoopsCaptcha::getInstance();
+        $xoopsCaptcha = XoopsCaptcha::getInstance();
         if (!$xoopsCaptcha->verify()) {
             $stop .= $xoopsCaptcha->getMessage() . "<br />";
         }

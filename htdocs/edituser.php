@@ -20,7 +20,7 @@ include __DIR__ . '/mainfile.php';
 
 XoopsLoad::load('XoopsRequest');
 
-$xoopsPreload =& XoopsPreload::getInstance();
+$xoopsPreload = XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.edituser.start');
 
 xoops_loadLanguage('user');

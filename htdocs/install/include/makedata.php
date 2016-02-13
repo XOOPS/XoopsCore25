@@ -56,7 +56,7 @@ function make_groups(&$dbm)
  */
 function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $groups)
 {
-    // $xoopsDB =& Database::getInstance();
+    // $xoopsDB = Database::getInstance();
     // $dbm = new Db_manager;
     $tables = array();
     // data for table 'groups_users_link'

@@ -13,7 +13,7 @@ class ProtectorFilterAbstract
      */
     public function __construct()
     {
-        $this->protector =& Protector::getInstance();
+        $this->protector = Protector::getInstance();
         $lang            = empty($GLOBALS['xoopsConfig']['language']) ? @$this->protector->_conf['default_lang'] : $GLOBALS['xoopsConfig']['language'];
         @include_once dirname(__DIR__) . '/language/' . $lang . '/main.php';
         if (!defined('_MD_PROTECTOR_YOUAREBADIP')) {
@@ -54,14 +54,14 @@ class ProtectorFilterHandler
      */
     protected function __construct()
     {
-        $this->protector    =& Protector::getInstance();
+        $this->protector    = Protector::getInstance();
         $this->filters_base = dirname(__DIR__) . '/filters_enabled';
     }
 
     /**
      * @return ProtectorFilterHandler
      */
-    public static function &getInstance()
+    public static function getInstance()
     {
         static $instance;
         if (!isset($instance)) {

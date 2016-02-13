@@ -109,7 +109,7 @@ class XoopsEditorHandler
      * @static
      * @staticvar object
      */
-    public static function &getInstance()
+    public static function getInstance()
     {
         static $instance;
         if (!isset($instance)) {

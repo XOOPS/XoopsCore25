@@ -14,7 +14,7 @@ function protector_prepare()
     require_once dirname(__DIR__) . '/class/protector.php';
 
     // Protector object
-    $protector =& Protector::getInstance();
+    $protector = Protector::getInstance();
     $conf      = $protector->getConf();
 
     // bandwidth limitation

@@ -25,7 +25,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * @author Taiwen Jiang <phppp@users.sourceforge.net>
  * @author Simon Roberts <simon@xoops.org>
  *
- * {@link XoopsObjectAbstract}
+ * {@link XoopsModelAbstract}
  */
 class XoopsModelWrite extends XoopsModelAbstract
 {

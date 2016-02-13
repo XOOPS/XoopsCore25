@@ -84,7 +84,7 @@ class XoopsLogger
      *
      * @return object XoopsLogger  reference to the only instance
      */
-    public static function &getInstance()
+    public static function getInstance()
     {
         static $instance;
         if (!isset($instance)) {
@@ -414,7 +414,7 @@ function XoopsErrorHandler_HandleError($errNo, $errStr, $errFile, $errLine, $err
         return true;
     }
     // XOOPS should always be STRICT compliant thus the above lines makes no sense and will be removed! -- Added by Taiwen Jiang
-    $logger =& XoopsLogger::getInstance();
+    $logger = XoopsLogger::getInstance();
     $logger->handleError($errNo, $errStr, $errFile, $errLine, $errContext);
     return null;
 }

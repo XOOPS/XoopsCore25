@@ -29,7 +29,7 @@ if (!defined('XOOPS_MAINFILE_INCLUDED')) {
     }
 }
 
-$xoopsPreload =& XoopsPreload::getInstance();
+$xoopsPreload = XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.index.start');
 
 //check if start page is defined

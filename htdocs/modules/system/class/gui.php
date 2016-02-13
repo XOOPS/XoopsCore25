@@ -47,7 +47,7 @@ class XoopsSystemGui
         xoops_loadLanguage('cpanel', 'system');
         xoops_loadLanguage('modinfo', 'system');
 
-        $xoopsLogger =& XoopsLogger::getInstance();
+        $xoopsLogger = XoopsLogger::getInstance();
         $xoopsLogger->stopTime('Module init');
         $xoopsLogger->startTime('XOOPS output init');
 
@@ -84,7 +84,7 @@ class XoopsSystemGui
         $xoopsLogger->stopTime('XOOPS output init');
         $xoopsLogger->startTime('Module display');
 
-        $xoopsPreload =& XoopsPreload::getInstance();
+        $xoopsPreload = XoopsPreload::getInstance();
         $xoopsPreload->triggerEvent('system.class.gui.header');
 
         if (isset($xoopsModule) && $xoopsModule->getVar('dirname') === 'system') {
@@ -140,7 +140,7 @@ class XoopsSystemGui
     {
         global $xoopsConfig, $xoopsOption, $xoopsTpl, $xoTheme;
 
-        $xoopsLogger =& XoopsLogger::getInstance();
+        $xoopsLogger = XoopsLogger::getInstance();
         $xoopsLogger->stopTime('Module display');
 
         if (!headers_sent()) {
@@ -177,7 +177,7 @@ class XoopsSystemGui
     {
     }
 
-    public function &getInstance()
+    public function getInstance()
     {
         static $instance;
         if (!isset($instance)) {

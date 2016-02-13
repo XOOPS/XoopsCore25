@@ -18,7 +18,7 @@
 
 include __DIR__ . '/mainfile.php';
 
-$xoopsPreload =& XoopsPreload::getInstance();
+$xoopsPreload = XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.lostpass.start');
 
 xoops_loadLanguage('user');

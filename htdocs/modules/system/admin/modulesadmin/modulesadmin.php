@@ -606,7 +606,7 @@ function xoops_module_uninstall($dirname)
         'banner',
         'bannerclient',
         'bannerfinish');
-    $db             =& XoopsDatabaseFactory::getDatabaseConnection();
+    $db             = XoopsDatabaseFactory::getDatabaseConnection();
     $module_handler = xoops_getHandler('module');
     $module         = $module_handler->getByDirname($dirname);
     include_once XOOPS_ROOT_PATH . '/class/template.php';

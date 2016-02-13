@@ -1,7 +1,7 @@
 <?php
 include '../../../include/cp_header.php';
 include 'admin_header.php';
-$db =& XoopsDatabaseFactory::getDatabaseConnection();
+$db = XoopsDatabaseFactory::getDatabaseConnection();
 
 // beggining of Output
 xoops_cp_header();
@@ -90,7 +90,7 @@ echo "</b><br /><br /></dl>\n";
 
 // patch to databasefactory.php
 echo "<dl><dt>'databasefactory.php' : ";
-$db =& XoopsDatabaseFactory::getDatabaseConnection();
+$db = XoopsDatabaseFactory::getDatabaseConnection();
 if (substr(@XOOPS_VERSION, 6, 3) < 2.4 && strtolower(get_class($db)) !== 'protectormysqldatabase') {
     echo "<span style='color:red;font-weight:bold;'>" . _AM_ADV_DBFACTORYUNPATCHED . "</span></dt>\n";
 } else {
