@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -23,7 +23,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  *
  * @package         kernel
  * @author          Kazumi Ono  <onokazu@xoops.org>
- * @copyright   (c) 2000-2015 XOOPS Project - www.xoops.org
+ * @copyright   (c) 2000-2016 XOOPS Project - www.xoops.org
  */
 class XoopsImagesetimg extends XoopsObject
 {
@@ -146,13 +146,14 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
     /**
      * Write a {@link XoopsImageSetImg} object to the database
      *
-     * @param  XoopsImageSetImg $imgsetimg {@link XoopsImageSetImg}
-     * @return bool
+     * @param  XoopsObject|XoopsImageSetImg $imgsetimg a XoopsImageSet object
+     *
+     * @return bool true on success, otherwise false
      **/
     public function insert(XoopsObject $imgsetimg)
     {
-        if (!(class_exists($this->className) && $imgsetimg instanceof $this->className)) {
-        //if (!is_a($imgsetimg, 'xoopsimagesetimg')) {
+        $className = 'XoopsImageSetImg';
+        if (!($imgsetimg instanceof $className)) {
             return false;
         }
 
@@ -185,13 +186,14 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
     /**
      * Delete an image from the database
      *
-     * @param  XoopsImageSetImg $imgsetimg {@link XoopsImageSetImg}
-     * @return bool
+     * @param  XoopsObject|XoopsImageSetImg $imgsetimg a XoopsImageSet object
+     *
+     * @return bool true on success, otherwise false
      **/
     public function delete(XoopsObject $imgsetimg)
     {
-        if (!(class_exists($this->className) && $imgsetimg instanceof $this->className)) {
-        //if (!is_a($imgsetimg, 'xoopsimagesetimg')) {
+        $className = 'XoopsImageSetImg';
+        if (!($imgsetimg instanceof $className)) {
             return false;
         }
 
@@ -262,9 +264,9 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
 
     /**
      * Function-Documentation
-     * @param  type       $imgset_id documentation
-     * @param  bool|\type $id_as_key = false documentation
-     * @return type       documentation
+     * @param  int   $imgset_id id of image set
+     * @param  bool  $id_as_key Use the ID as key into the array
+     * @return array Array of {@link XoopsImageSetImg} objects
      * @author Kazumi Ono <onokazu@xoops.org>
      */
     public function getByImageset($imgset_id, $id_as_key = false)
@@ -274,9 +276,9 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
 
     /**
      * Function-Documentation
-     * @param  type $filename  documentation
-     * @param  type $imgset_id documentation
-     * @return type documentation
+     * @param  string $filename
+     * @param  int    $imgset_id
+     * @return bool true if image exists
      * @author Kazumi Ono <onokazu@xoops.org>
      **/
     public function imageExists($filename, $imgset_id)

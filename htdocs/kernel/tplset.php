@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -23,7 +23,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * A Template Set File
  *
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  *
  * @package             kernel
  **/
@@ -189,16 +189,14 @@ class XoopsTplsetHandler extends XoopsObjectHandler
     /**
      * write a new block into the database
      *
-     * @param XoopsTplset $tplset
-     * @internal param \XoopsTplset $object $block reference to the tplsets to insert
-     * @return bool TRUE if successful
+     * @param  XoopsObject|XoopsTplset $tplset a XoopsTplset object
+     *
+     * @return bool true on success, otherwise false
      */
     public function insert(XoopsObject $tplset)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($tplset, 'xoopstplset')) {
+        $className = 'XoopsTplset';
+        if (!($tplfile instanceof $className)) {
             return false;
         }
         if (!$tplset->isDirty()) {
@@ -230,15 +228,14 @@ class XoopsTplsetHandler extends XoopsObjectHandler
     /**
      * delete a tplset from the database
      *
-     * @param XoopsTplset XoopsTplset tplset reference to the tplsets to delete
-     * @return bool TRUE if successful
+     * @param  XoopsObject|XoopsTplset $tplset a XoopsTplset object
+     *
+     * @return bool true on success, otherwise false
      **/
     public function delete(XoopsObject $tplset)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($tplset, 'xoopstplset')) {
+        $className = 'XoopsTplset';
+        if (!($tplfile instanceof $className)) {
             return false;
         }
         $sql = sprintf("DELETE FROM %s WHERE tplset_id = %u", $this->db->prefix('tplset'), $tplset->getVar('tplset_id'));

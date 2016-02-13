@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -20,7 +20,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  **/
 
 /**
@@ -29,7 +29,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * @package             kernel
  *
  * @author              Kazumi Ono    <onokazu@xoops.org>
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  */
 class XoopsImagecategory extends XoopsObject
 {
@@ -155,7 +155,7 @@ class XoopsImagecategory extends XoopsObject
     /**
      * Enter description here...
      *
-     * @param unknown_type $value
+     * @param int $value
      */
     public function setImageCount($value)
     {
@@ -165,7 +165,7 @@ class XoopsImagecategory extends XoopsObject
     /**
      * Enter description here...
      *
-     * @return unknown
+     * @return int
      */
     public function getImageCount()
     {
@@ -229,13 +229,14 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
     /**
      * Write a {@link XoopsImageCategory} object to the database
      *
-     * @param  XoopsImageCategory &$imgcat {@link XoopsImageCategory}
-     * @return bool
+     * @param  XoopsObject|XoopsImageCategory $imgcat a XoopsImageCategory object
+     *
+     * @return bool true on success, otherwise false
      **/
     public function insert(XoopsObject $imgcat)
     {
-        if (!(class_exists($this->className) && $imgcat instanceof $this->className)) {
-        //if (!is_a($imgcat, 'xoopsimagecategory')) {
+        $className = 'XoopsImageCategory';
+        if (!($imgcat instanceof $className)) {
             return false;
         }
 
@@ -268,13 +269,14 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
     /**
      * Delete an image from the database
      *
-     * @param  XoopsImageCategory &$imgcat {@link XoopsImageCategory}
-     * @return bool
+     * @param  XoopsObject|XoopsImageCategory $imgcat a XoopsImageCategory object
+     *
+     * @return bool true on success, otherwise false
      **/
     public function delete(XoopsObject $imgcat)
     {
-        if (!(class_exists($this->className) && $imgcat instanceof $this->className)) {
-        //if (!is_a($imgcat, 'xoopsimagecategory')) {
+        $className = 'XoopsImageCategory';
+        if (!($imgcat instanceof $className)) {
             return false;
         }
 
@@ -289,9 +291,9 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
     /**
      * Enter description here...
      *
-     * @param  CriteriaElement    $criteria
-     * @param  bool|\unknown_type $id_as_key
-     * @return unknown
+     * @param  CriteriaElement $criteria
+     * @param  bool            $id_as_key if true, use id as array key
+     * @return array of XoopsImagecategory objects
      */
     public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
@@ -313,9 +315,9 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
             $imgcat = new XoopsImagecategory();
             $imgcat->assignVars($myrow);
             if (!$id_as_key) {
-                $ret[] =& $imgcat;
+                $ret[] = $imgcat;
             } else {
-                $ret[$myrow['imgcat_id']] =& $imgcat;
+                $ret[$myrow['imgcat_id']] = $imgcat;
             }
             unset($imgcat);
         }
@@ -345,7 +347,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
     }
 
     /**
-     * Get a list of imagesCaegories
+     * Get a list of image categories
      *
      * @param array  $groups
      * @param string $perm

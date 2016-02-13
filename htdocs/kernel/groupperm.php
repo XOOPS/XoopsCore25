@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -26,7 +26,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * @package             kernel
  *
  * @author              Kazumi Ono  <onokazu@xoops.org>
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  */
 class XoopsGroupPerm extends XoopsObject
 {
@@ -114,7 +114,7 @@ class XoopsGroupPerm extends XoopsObject
  *
  * @see                 XoopsGroupPerm
  * @author              Kazumi Ono  <onokazu@xoops.org>
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  */
 class XoopsGroupPermHandler extends XoopsObjectHandler
 {
@@ -164,14 +164,14 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
     /**
      * Store a {@link XoopsGroupPerm}
      *
-     * @param XoopsGroupPerm &$perm {@link XoopsGroupPerm} object
+     * @param XoopsObject|XoopsGroupPerm $perm a XoopsGroupPerm object
      *
-     * @return bool TRUE on success
+     * @return bool true on success, otherwise false
      */
     public function insert(XoopsObject $perm)
     {
-        if (!(class_exists($this->className) && $perm instanceof $this->className)) {
-        //if (!is_a($perm, 'xoopsgroupperm')) {
+        $className = 'XoopsGroupPerm';
+        if (!($perm instanceof $className)) {
             return false;
         }
         if (!$perm->isDirty()) {
@@ -203,14 +203,14 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
     /**
      * Delete a {@link XoopsGroupPerm}
      *
-     * @param XoopsGroupPerm &$perm
+     * @param XoopsObject|XoopsGroupPerm $perm a XoopsGroupPerm object
      *
-     * @return bool TRUE on success
+     * @return bool true on success, otherwise false
      */
     public function delete(XoopsObject $perm)
     {
-        if (!(class_exists($this->className) && $perm instanceof $this->className)) {
-        //if (!is_a($perm, 'xoopsgroupperm')) {
+        $className = 'XoopsGroupPerm';
+        if (!($perm instanceof $className)) {
             return false;
         }
         $sql = sprintf("DELETE FROM %s WHERE gperm_id = %u", $this->db->prefix('group_permission'), $perm->getVar('gperm_id'));

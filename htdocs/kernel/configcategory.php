@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -22,7 +22,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * A category of configs
  *
  * @author              Kazumi Ono    <onokazu@xoops.org>
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  *
  * @package             kernel
  */
@@ -88,7 +88,7 @@ class XoopsConfigCategory extends XoopsObject
  * of XOOPS configuration category class objects.
  *
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  *
  * @package             kernel
  * @subpackage          config
@@ -131,7 +131,7 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
             $numrows = $this->db->getRowsNum($result);
             if ($numrows == 1) {
                 $confcat = new XoopsConfigCategory();
-                $confcat->assignVars($this->db->fetchArray($result), false);
+                $confcat->assignVars($this->db->fetchArray($result));
             }
         }
 
@@ -141,14 +141,14 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
     /**
      * Store a {@link XoopsConfigCategory}
      *
-     * @param XoopsConfigCategory &$confcat {@link XoopsConfigCategory}
+     * @param XoopsObject|XoopsConfigCategory $confcat a XoopsConfigCategory object
      *
-     * @return bool TRUE on success
+     * @return bool true on success, otherwise false
      */
     public function insert(XoopsObject $confcat)
     {
-        if (!(class_exists($this->className) && $confcat instanceof $this->className)) {
-        //if (!is_a($confcat, 'xoopsconfigcategory')) {
+        $className = 'XoopsConfigCategory';
+        if (!($confcat instanceof $className)) {
             return false;
         }
         if (!$confcat->isDirty()) {
@@ -178,16 +178,16 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
     }
 
     /**
-     * Delelete a {@link XoopsConfigCategory}
+     * Delete a {@link XoopsConfigCategory}
      *
-     * @param XoopsConfigCategory $confcat {@link XoopsConfigCategory}
+     * @param XoopsObject|XoopsConfigCategory $confcat a XoopsConfigCategory object
      *
-     * @return bool TRUE on success
+     * @return bool true on success, otherwise false
      */
     public function delete(XoopsObject $confcat)
     {
-        if (!(class_exists($this->className) && $confcat instanceof $this->className)) {
-        //if (!is_a($confcat, 'xoopsconfigcategory')) {
+        $className = 'XoopsConfigCategory';
+        if (!($confcat instanceof $className)) {
             return false;
         }
 
@@ -228,7 +228,7 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
         }
         while ($myrow = $this->db->fetchArray($result)) {
             $confcat = new XoopsConfigCategory();
-            $confcat->assignVars($myrow, false);
+            $confcat->assignVars($myrow);
             if (!$id_as_key) {
                 $ret[] =& $confcat;
             } else {

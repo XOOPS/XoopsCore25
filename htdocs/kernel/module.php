@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -120,7 +120,7 @@ class XoopsModule extends XoopsObject
      * Set module info
      *
      * @param  string $name
-     * @param  mix    $value
+     * @param  mixed  $value
      * @return bool
      **/
     public function setInfo($name, $value)
@@ -629,7 +629,9 @@ class XoopsModule extends XoopsObject
  *
  * @package       kernel
  * @author        Kazumi Ono <onokazu@xoops.org>
- * @copyright (c) 2000-2015 XOOPS Project - www.xoops.org
+ * @copyright (c) 2000-2016 XOOPS Project - www.xoops.org
+ *
+ * @todo Why is this not a XoopsPersistableObjectHandler?
  */
 class XoopsModuleHandler extends XoopsObjectHandler
 {
@@ -740,14 +742,14 @@ class XoopsModuleHandler extends XoopsObjectHandler
     /**
      * Write a module to the database
      *
-     * @param XoopsModule $module module to insert
+     * @param  XoopsObject|XoopsModule $module a XoopsModule object
      *
-     * @return bool
+     * @return bool true on success, otherwise false
      */
     public function insert(XoopsObject $module)
     {
-        if (!(class_exists($this->className) && $module instanceof $this->className)) {
-        //if (!is_a($module, 'xoopsmodule')) {
+        $className = 'XoopsModule';
+        if (!($module instanceof $className)) {
             return false;
         }
         if (!$module->isDirty()) {
@@ -785,13 +787,14 @@ class XoopsModuleHandler extends XoopsObjectHandler
     /**
      * Delete a module from the database
      *
-     * @param XoopsModule $module
-     * @return bool
+     * @param  XoopsObject|XoopsModule $module a XoopsModule object
+     *
+     * @return bool true on success, otherwise false
      */
     public function delete(XoopsObject $module)
     {
-        if (!(class_exists($this->className) && $module instanceof $this->className)) {
-        // if (!is_a($module, 'xoopsmodule')) {
+        $className = 'XoopsModule';
+        if (!($module instanceof $className)) {
             return false;
         }
         $sql = sprintf("DELETE FROM %s WHERE mid = %u", $this->db->prefix('modules'), $module->getVar('mid'));

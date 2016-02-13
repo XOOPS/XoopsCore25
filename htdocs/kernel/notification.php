@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -30,7 +30,7 @@ include_once $GLOBALS['xoops']->path('include/notification_functions.php');
  * @subpackage          notification
  *
  * @author              Michael van Dam    <mvandam@caltech.edu>
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  */
 class XoopsNotification extends XoopsObject
 {
@@ -220,7 +220,7 @@ class XoopsNotification extends XoopsObject
  * @subpackage          notification
  *
  * @author              Michael van Dam <mvandam@caltech.edu>
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  */
 class XoopsNotificationHandler extends XoopsObjectHandler
 {
@@ -270,14 +270,14 @@ class XoopsNotificationHandler extends XoopsObjectHandler
     /**
      * Write a notification(subscription) to database
      *
-     * @param XoopsNotification &$notification
+     * @param  XoopsObject|XoopsNotification $notification a XoopsNotification object
      *
-     * @return bool
+     * @return bool true on success, otherwise false
      **/
     public function insert(XoopsObject $notification)
     {
-        if (!(class_exists($this->className) && $notification instanceof $this->className)) {
-        //if (!is_a($notification, 'xoopsnotification')) {
+        $className = 'XoopsNotification';
+        if (!($notification instanceof $className)) {
             return false;
         }
         if (!$notification->isDirty()) {
@@ -309,14 +309,14 @@ class XoopsNotificationHandler extends XoopsObjectHandler
     /**
      * Delete a {@link XoopsNotification} from the database
      *
-     * @param XoopsNotification $notification
+     * @param  XoopsObject|XoopsNotification $notification a XoopsNotification object
      *
-     * @return bool
+     * @return bool true on success, otherwise false
      **/
     public function delete(XoopsObject $notification)
     {
-        if (!(class_exists($this->className) && $notification instanceof $this->className)) {
-        if (!is_a($notification, 'xoopsnotification')) {
+        $className = 'XoopsNotification';
+        if (!($notification instanceof $className)) {
             return false;
         }
 
@@ -598,9 +598,9 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      *
      * @param string $category     notification category
      * @param int    $item_id      ID of the item
-     * @param        $events       trigger events
+     * @param array  $events       trigger events
      * @param array  $extra_tags   array of substitutions for template to be
-     *                             merged with the one from function..
+     *                              merged with the one from function..
      * @param array  $user_list    only notify the selected users
      * @param int    $module_id    ID of the module
      * @param int    $omit_user_id ID of the user to omit from notifications. (default to current user).  set to 0 for all users to receive notification.
@@ -632,7 +632,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      * @param  array $user_list
      * @param  int   $module_id
      * @param  int   $omit_user_id
-     * @return unknown
+     * @return mixed
      */
     public function triggerEvent($category, $item_id, $event, $extra_tags = array(), $user_list = array(), $module_id = null, $omit_user_id = null)
     {
