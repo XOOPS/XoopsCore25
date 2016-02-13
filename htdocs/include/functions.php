@@ -927,7 +927,7 @@ function xoops_comment_delete($module_id, $item_id)
 {
     if ((int)($module_id) > 0 && (int)($item_id) > 0) {
         $comment_handler = xoops_getHandler('comment');
-        $comments        =& $comment_handler->getByItemId($module_id, $item_id);
+        $comments        = $comment_handler->getByItemId($module_id, $item_id);
         if (is_array($comments)) {
             $count       = count($comments);
             $deleted_num = array();
@@ -1107,7 +1107,7 @@ function xoops_getModuleOption($option, $dirname = '')
 
     $ret            = false;
     $module_handler = xoops_getHandler('module');
-    $module         =& $module_handler->getByDirname($dirname);
+    $module         = $module_handler->getByDirname($dirname);
     $config_handler = xoops_getHandler('config');
     if (is_object($module)) {
         $moduleConfig =& $config_handler->getConfigsByCat(0, $module->getVar('mid'));

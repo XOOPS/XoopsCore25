@@ -32,7 +32,7 @@ class XoopsGuiZetadigme extends XoopsSystemGui
     /**
      * @return bool
      */
-    public function validate()
+    public static function validate()
     {
         return true;
     }

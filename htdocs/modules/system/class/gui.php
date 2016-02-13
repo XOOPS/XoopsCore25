@@ -169,7 +169,7 @@ class XoopsSystemGui
         ob_end_flush();
     }
 
-    public function validate()
+    public static function validate()
     {
     }
 

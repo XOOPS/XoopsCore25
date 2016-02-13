@@ -63,7 +63,7 @@ switch ($op) {
             $confcat_id = 1;
         }
         $confcat_handler = xoops_getHandler('configcategory');
-        $confcat         =& $confcat_handler->get($confcat_id);
+        $confcat         = $confcat_handler->get($confcat_id);
         if (!is_object($confcat)) {
             redirect_header('admin.php?fct=preferences', 1);
         }
@@ -281,7 +281,7 @@ switch ($op) {
         include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
         $form           = new XoopsThemeForm(_MD_AM_MODCONFIG, 'pref_form', 'admin.php?fct=preferences', 'post', true);
         $module_handler = xoops_getHandler('module');
-        $module         =& $module_handler->get($mod);
+        $module         = $module_handler->get($mod);
 
         xoops_loadLanguage('modinfo', $module->getVar('dirname'));
 

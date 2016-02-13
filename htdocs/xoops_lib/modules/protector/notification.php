@@ -33,7 +33,7 @@ if (!function_exists('protector_notify_base')) {
         $db = XoopsDatabaseFactory::getDatabaseConnection();
 
         $module_handler = xoops_getHandler('module');
-        $module         =& $module_handler->getByDirname($mydirname);
+        $module         = $module_handler->getByDirname($mydirname);
 
         if ($category === 'global') {
             $item['name'] = '';

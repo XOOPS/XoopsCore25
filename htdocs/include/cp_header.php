@@ -28,7 +28,7 @@ $moduleperm_handler = xoops_getHandler('groupperm');
 if ($xoopsUser) {
     $url_arr        = explode('/', strstr($_SERVER['REQUEST_URI'], '/modules/'));
     $module_handler = xoops_getHandler('module');
-    $xoopsModule    =& $module_handler->getByDirname($url_arr[2]);
+    $xoopsModule    = $module_handler->getByDirname($url_arr[2]);
     unset($url_arr);
     if (!$moduleperm_handler->checkRight('module_admin', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
         redirect_header(XOOPS_URL, 1, _NOPERM);

@@ -508,7 +508,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
                     $this->updateByField($notification, 'not_mode', $mode);
                 }
             } else {
-                $notification =& $this->create();
+                $notification = $this->create();
                 $notification->setVar('not_modid', $module_id);
                 $notification->setVar('not_category', $category);
                 $notification->setVar('not_itemid', $item_id);
@@ -642,7 +642,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
             $module_id = !empty($xoopsModule) ? $xoopsModule->getVar('mid') : 0;
         } else {
             $module_handler = xoops_getHandler('module');
-            $module         =& $module_handler->get($module_id);
+            $module         = $module_handler->get($module_id);
         }
 
         // Check if event is enabled

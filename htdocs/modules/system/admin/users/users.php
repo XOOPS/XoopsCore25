@@ -92,7 +92,7 @@ function form_user($add_or_edit, $user = '')
     } else {
         //Edit user
         $member_handler = xoops_getHandler('member');
-        $user           =& $member_handler->getUser($uid);
+        $user           = $member_handler->getUser($uid);
         if (is_object($user)) {
             $uid_value        = $uid;
             $uname_value      = $user->getVar('uname', 'E');

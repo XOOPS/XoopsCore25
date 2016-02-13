@@ -48,7 +48,7 @@ class XoopsUserUtility
 
         if (!empty($user) && !is_object($user)) {
             $member_handler = xoops_getHandler('member');
-            $user           =& $member_handler->getUser($user);
+            $user           = $member_handler->getUser($user);
         }
         if (!is_object($user)) {
             return false;
@@ -304,7 +304,7 @@ class XoopsUserUtility
         $username = '';
         if ($userid > 0) {
             $member_handler = xoops_getHandler('member');
-            $user           =& $member_handler->getUser($userid);
+            $user           = $member_handler->getUser($userid);
             if (is_object($user)) {
                 if ($usereal && $user->getVar('name')) {
                     $username = $user->getVar('name');

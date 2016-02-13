@@ -394,7 +394,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
      */
     public function addRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid = 1)
     {
-        $perm =& $this->create();
+        $perm = $this->create();
         $perm->setVar('gperm_name', $gperm_name);
         $perm->setVar('gperm_groupid', $gperm_groupid);
         $perm->setVar('gperm_itemid', $gperm_itemid);

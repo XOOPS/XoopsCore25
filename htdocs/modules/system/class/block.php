@@ -58,7 +58,7 @@ class SystemBlock extends XoopsBlock
             }
             // Search perms
             $groupperm_handler = xoops_getHandler('groupperm');
-            $groups            =& $groupperm_handler->getGroupIds('block_read', $this->getVar('bid'));
+            $groups            = $groupperm_handler->getGroupIds('block_read', $this->getVar('bid'));
             switch ($mode) {
                 case 'edit':
                     $title = _AM_SYSTEM_BLOCKS_EDITBLOCK;

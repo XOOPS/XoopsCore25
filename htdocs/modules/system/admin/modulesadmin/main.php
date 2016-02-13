@@ -161,7 +161,7 @@ switch ($op) {
                 clearstatcache();
                 $file = trim($file);
                 if (!in_array($file, $install_mods)) {
-                    $module =& $module_handler->create();
+                    $module = $module_handler->create();
                     $module->loadInfo($file);
                     $toinstall_mods[$i]['name']          = htmlspecialchars($module->getInfo('name'), ENT_QUOTES);
                     $toinstall_mods[$i]['dirname']       = $module->getInfo('dirname');
@@ -257,7 +257,7 @@ switch ($op) {
         $module_handler = xoops_getHandler('module');
         $module_id      = system_CleanVars($_POST, 'mid', 0, 'int');
         if ($module_id > 0) {
-            $module =& $module_handler->get($module_id);
+            $module = $module_handler->get($module_id);
             $old    = $module->getVar('isactive');
             // Set value
             $module->setVar('isactive', !$old);
@@ -280,7 +280,7 @@ switch ($op) {
         $module_handler = xoops_getHandler('module');
         $module_id      = system_CleanVars($_POST, 'mid', 0, 'int');
         if ($module_id > 0) {
-            $module =& $module_handler->get($module_id);
+            $module = $module_handler->get($module_id);
             $old    = $module->getVar('weight');
             // Set value
             $module->setVar('weight', !$old);
@@ -340,7 +340,7 @@ switch ($op) {
         $module = $myts->htmlspecialchars($module);
         // Get module handler
         $module_handler = xoops_getHandler('module');
-        $mod            =& $module_handler->create();
+        $mod            = $module_handler->create();
         $mod->loadInfoAsVar($module);
         // Construct message
         if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
@@ -396,7 +396,7 @@ switch ($op) {
         $module = $myts->htmlspecialchars($module);
         // Get module handler
         $module_handler = xoops_getHandler('module');
-        $mod            =& $module_handler->getByDirname($module);
+        $mod            = $module_handler->getByDirname($module);
         // Construct message
         if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
             $msgs = '<img src="' . XOOPS_URL . '/modules/' . $mod->getVar('dirname', 'n') . '/' . trim($mod->getInfo('image')) . '" alt="" />';
@@ -451,7 +451,7 @@ switch ($op) {
         $module = $myts->htmlspecialchars($module);
         // Get module handler
         $module_handler = xoops_getHandler('module');
-        $mod            =& $module_handler->getByDirname($module);
+        $mod            = $module_handler->getByDirname($module);
         // Construct message
         if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
             $msgs = '<img src="' . XOOPS_URL . '/modules/' . $mod->getVar('dirname', 'n') . '/' . trim($mod->getInfo('image')) . '" alt="" />';

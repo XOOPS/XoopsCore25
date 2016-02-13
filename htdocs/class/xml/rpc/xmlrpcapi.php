@@ -87,7 +87,7 @@ class XoopsXmlRpcApi
             return true;
         }
         $member_handler = xoops_getHandler('member');
-        $this->user     =& $member_handler->loginUser(addslashes($username), addslashes($password));
+        $this->user     = $member_handler->loginUser(addslashes($username), addslashes($password));
         if (!is_object($this->user)) {
             unset($this->user);
 

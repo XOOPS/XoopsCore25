@@ -191,9 +191,9 @@ switch ($op) {
         // Get avatar id
         $avatar_id = system_CleanVars($_POST, 'avatar_id', 0, 'int');
         if ($avatar_id > 0) {
-            $avatar =& $avt_handler->get($avatar_id);
+            $avatar = $avt_handler->get($avatar_id);
         } else {
-            $avatar =& $avt_handler->create();
+            $avatar = $avt_handler->create();
         }
         $err = array();
         if ($uploader->fetchMedia('avatar_file')) {
@@ -244,7 +244,7 @@ switch ($op) {
         $avatar_id = system_CleanVars($_POST, 'avatar_id', 0, 'int');
         if ($avatar_id > 0) {
             // Get avatar
-            $avatar =& $avt_handler->get($avatar_id);
+            $avatar = $avt_handler->get($avatar_id);
             $old    = $avatar->getVar('avatar_display');
             // Set value
             $avatar->setVar('avatar_display', !$old);
@@ -292,7 +292,7 @@ switch ($op) {
             redirect_header('admin.php?fct=avatars', 1, _AM_SYSTEM_DBERROR);
         }
         $avt_handler = xoops_getHandler('avatar');
-        $avatar      =& $avt_handler->get($avatar_id);
+        $avatar      = $avt_handler->get($avatar_id);
         if (!is_object($avatar)) {
             redirect_header('admin.php?fct=avatars', 1, _AM_SYSTEM_DBERROR);
         }

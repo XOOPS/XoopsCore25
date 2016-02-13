@@ -67,7 +67,7 @@ if ($op === "submit") {
         echo "[ <a href='javascript:history.go(-1)'>" . _PM_GOBACK . "</a> ]</div>";
     } elseif ($GLOBALS['xoopsSecurity']->check()) {
         $pm_handler = xoops_getModuleHandler('message', 'pm');
-        $pm         =& $pm_handler->create();
+        $pm         = $pm_handler->create();
         $pm->setVar("msg_time", time());
         $msg_image = XoopsRequest::getCmd('icon', null, 'POST');
         if (in_array($msg_image, $subject_icons)) {
@@ -96,7 +96,7 @@ if ($op === "submit") {
 } elseif ($reply == 1 || $send == 1 || $send2 == 1 || $sendmod == 1) {
     if ($reply == 1) {
         $pm_handler = xoops_getModuleHandler('message', 'pm');
-        $pm         =& $pm_handler->get($msg_id);
+        $pm         = $pm_handler->get($msg_id);
         if ($pm->getVar("to_userid") == $GLOBALS['xoopsUser']->getVar('uid')) {
             $pm_uname = XoopsUser::getUnameFromId($pm->getVar("from_userid"));
             $message  = "[quote]\n";

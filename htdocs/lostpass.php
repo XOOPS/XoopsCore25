@@ -32,7 +32,7 @@ if ($email == '') {
 
 $myts           = MyTextSanitizer::getInstance();
 $member_handler = xoops_getHandler('member');
-$getuser        =& $member_handler->getUsers(new Criteria('email', $myts->addSlashes($email)));
+$getuser        = $member_handler->getUsers(new Criteria('email', $myts->addSlashes($email)));
 
 if (empty($getuser)) {
     $msg = _US_SORRYNOTFOUND;

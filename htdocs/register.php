@@ -176,7 +176,7 @@ switch ($op) {
         }
         if (empty($stop)) {
             $member_handler = xoops_getHandler('member');
-            $newuser        =& $member_handler->createUser();
+            $newuser        = $member_handler->createUser();
             $newuser->setVar('user_viewemail', $user_viewemail, true);
             $newuser->setVar('uname', $uname, true);
             $newuser->setVar('email', $email, true);
@@ -280,7 +280,7 @@ switch ($op) {
             redirect_header('index.php', 1, '');
         }
         $member_handler = xoops_getHandler('member');
-        $thisuser       =& $member_handler->getUser($id);
+        $thisuser       = $member_handler->getUser($id);
         if (!is_object($thisuser)) {
             exit();
         }

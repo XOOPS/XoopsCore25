@@ -432,8 +432,6 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
      */
     public function getCount(CriteriaElement $criteria = null)
     {
-        $ret   = array();
-        $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('config');
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();

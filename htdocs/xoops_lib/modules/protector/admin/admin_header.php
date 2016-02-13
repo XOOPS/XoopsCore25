@@ -34,7 +34,7 @@ if (file_exists($GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/m
 
 $myts = MyTextSanitizer::getInstance();
 
-$moduleInfo =& $module_handler->get($xoopsModule->getVar('mid'));
+$moduleInfo = $module_handler->get($xoopsModule->getVar('mid'));
 $pathIcon16 = XOOPS_URL . '/' . $moduleInfo->getInfo('icons16');
 $pathIcon32 = XOOPS_URL . '/' . $moduleInfo->getInfo('icons32');
 

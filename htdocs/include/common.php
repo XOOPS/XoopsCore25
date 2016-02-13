@@ -318,7 +318,7 @@ if ($xoopsConfig['closesite'] == 1) {
 if (file_exists('./xoops_version.php')) {
     $url_arr        = explode('/', strstr($_SERVER['PHP_SELF'], '/modules/'));
     $module_handler = xoops_getHandler('module');
-    $xoopsModule    =& $module_handler->getByDirname($url_arr[2]);
+    $xoopsModule    = $module_handler->getByDirname($url_arr[2]);
     unset($url_arr);
 
     if (!$xoopsModule || !$xoopsModule->getVar('isactive')) {

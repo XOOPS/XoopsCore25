@@ -63,9 +63,9 @@ switch ($op) {
         }
         $bid = system_CleanVars($_POST, 'bid', 0, 'int');
         if ($bid > 0) {
-            $obj =& $banner_Handler->get($bid);
+            $obj = $banner_Handler->get($bid);
         } else {
-            $obj =& $banner_Handler->create();
+            $obj = $banner_Handler->create();
             $obj->setVar("date", time());
         }
         $obj->setVars($_POST);
@@ -76,7 +76,7 @@ switch ($op) {
             redirect_header("admin.php?fct=banners", 2, _AM_SYSTEM_BANNERS_DBUPDATED);
         }
         xoops_error($obj->getHtmlErrors());
-        $form =& $obj->getForm(false);
+        $form = $obj->getForm(false);
         $form->display();
         break;
 
@@ -103,7 +103,7 @@ switch ($op) {
 
         $bid = system_CleanVars($_REQUEST, 'bid', 0, 'int');
         if ($bid > 0) {
-            $obj =& $banner_Handler->get($bid);
+            $obj = $banner_Handler->get($bid);
             if (isset($_POST["ok"]) && $_POST["ok"] == 1) {
                 if (!$GLOBALS["xoopsSecurity"]->check()) {
                     redirect_header("admin.php?fct=banners", 3, implode(",", $GLOBALS["xoopsSecurity"]->getErrors()));
@@ -131,7 +131,7 @@ switch ($op) {
 
         $bid = system_CleanVars($_REQUEST, 'bid', 0, 'int');
         if ($bid > 0) {
-            $obj =& $banner_finish_Handler->get($bid);
+            $obj = $banner_finish_Handler->get($bid);
             if (isset($_POST["ok"]) && $_POST["ok"] == 1) {
                 if (!$GLOBALS["xoopsSecurity"]->check()) {
                     redirect_header("admin.php?fct=banners", 3, implode(",", $GLOBALS["xoopsSecurity"]->getErrors()));
@@ -159,9 +159,9 @@ switch ($op) {
         }
         $cid = system_CleanVars($_REQUEST, 'cid', 0, 'int');
         if ($cid > 0) {
-            $obj =& $banner_client_Handler->get($cid);
+            $obj = $banner_client_Handler->get($cid);
         } else {
-            $obj =& $banner_client_Handler->create();
+            $obj = $banner_client_Handler->create();
         }
         $obj->setVars($_POST);
 
@@ -197,7 +197,7 @@ switch ($op) {
 
         $cid = system_CleanVars($_REQUEST, 'cid', 0, 'int');
         if ($cid > 0) {
-            $obj =& $banner_client_Handler->get($cid);
+            $obj = $banner_client_Handler->get($cid);
             if (isset($_POST["ok"]) && $_POST["ok"] == 1) {
                 if (!$GLOBALS["xoopsSecurity"]->check()) {
                     redirect_header("admin.php?fct=banners", 3, implode(",", $GLOBALS["xoopsSecurity"]->getErrors()));
@@ -227,7 +227,7 @@ switch ($op) {
         $xoBreadCrumb->addHelp(system_adminVersion('banners', 'help') . '#new_banner');
         $xoBreadCrumb->addTips(_AM_SYSTEM_BANNERS_NAV_TIPS);
         $xoBreadCrumb->render();
-        $obj  =& $banner_Handler->create();
+        $obj  = $banner_Handler->create();
         $form = $obj->getForm();
         $xoopsTpl->assign('form', $form->render());
         break;
@@ -237,7 +237,7 @@ switch ($op) {
         $xoBreadCrumb->addHelp(system_adminVersion('banners', 'help') . '#new_client');
         $xoBreadCrumb->addTips(_AM_SYSTEM_BANNERS_NAV_TIPS);
         $xoBreadCrumb->render();
-        $obj  =& $banner_client_Handler->create();
+        $obj  = $banner_client_Handler->create();
         $form = $obj->getForm();
         $xoopsTpl->assign('form', $form->render());
         break;

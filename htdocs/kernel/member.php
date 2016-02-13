@@ -72,7 +72,7 @@ class XoopsMemberHandler
      */
     public function &createGroup()
     {
-        $inst =& $this->groupHandler->create();
+        $inst = $this->groupHandler->create();
 
         return $inst;
     }

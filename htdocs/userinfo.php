@@ -59,7 +59,7 @@ if (is_object($xoopsUser)) {
         $thisUser =& $xoopsUser;
     } else {
         $member_handler = xoops_getHandler('member');
-        $thisUser       =& $member_handler->getUser($uid);
+        $thisUser       = $member_handler->getUser($uid);
         if (!is_object($thisUser) || !$thisUser->isActive()) {
             redirect_header("index.php", 3, _US_SELECTNG);
         }
@@ -69,7 +69,7 @@ if (is_object($xoopsUser)) {
     }
 } else {
     $member_handler = xoops_getHandler('member');
-    $thisUser       =& $member_handler->getUser($uid);
+    $thisUser       = $member_handler->getUser($uid);
     if (!is_object($thisUser) || !$thisUser->isActive()) {
         redirect_header("index.php", 3, _US_SELECTNG);
     }

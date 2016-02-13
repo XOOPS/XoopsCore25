@@ -83,10 +83,10 @@ switch ($op) {
     case 'comments_jump':
         $com_id = system_CleanVars($_GET, 'com_id', 0, 'int');
         if ($com_id > 0) {
-            $comment =& $comment_handler->get($com_id);
+            $comment = $comment_handler->get($com_id);
             if (is_object($comment)) {
                 $module_handler = xoops_getHandler('module');
-                $module         =& $module_handler->get($comment->getVar('com_modid'));
+                $module         = $module_handler->get($comment->getVar('com_modid'));
                 $comment_config = $module->getInfo('comments');
                 header('Location: ' . XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . $comment_config['pageName'] . '?' . $comment_config['itemName'] . '=' . $comment->getVar('com_itemid') . '&com_id=' . $comment->getVar('com_id') . '&com_rootid=' . $comment->getVar('com_rootid') . '&com_mode=thread&' . str_replace('&amp;', '&', $comment->getVar('com_exparams')) . '#comment' . $comment->getVar('com_id'));
                 exit();
@@ -169,7 +169,7 @@ switch ($op) {
         if ($comments_groupe != '') {
             foreach ($_POST['comments_groupe'] as $del => $u_name) {
                 $member_handler = xoops_getHandler('member');
-                $members        =& $member_handler->getUsersByGroup($u_name, true);
+                $members        = $member_handler->getUsersByGroup($u_name, true);
                 $mcount         = count($members);
                 if ($mcount > 4000) {
                     redirect_header('admin.php?fct=comments', 2, _MP_DELETECOUNT);

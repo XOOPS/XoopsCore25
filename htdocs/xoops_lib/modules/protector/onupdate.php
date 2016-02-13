@@ -72,7 +72,7 @@ if (!function_exists('protector_onupdate_base')) {
                 $file_path = $tpl_path . '/' . $file;
                 if (is_file($file_path) && in_array(strrchr($file, '.'), array('.html', '.css', '.js'))) {
                     $mtime   = (int)(@filemtime($file_path));
-                    $tplfile =& $tplfile_handler->create();
+                    $tplfile = $tplfile_handler->create();
                     $tplfile->setVar('tpl_source', file_get_contents($file_path), true);
                     $tplfile->setVar('tpl_refid', $mid);
                     $tplfile->setVar('tpl_tplset', 'default');
