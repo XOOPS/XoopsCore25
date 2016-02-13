@@ -74,7 +74,7 @@ class XoopsLogger
     /**
      * Deprecated, use getInstance() instead
      */
-    public function &instance()
+    public function instance()
     {
         return XoopsLogger::getInstance();
     }
@@ -91,6 +91,8 @@ class XoopsLogger
             $instance = new XoopsLogger();
             // Always catch errors, for security reasons
             set_error_handler('XoopsErrorHandler_HandleError');
+            // grab any uncaught exception
+            set_exception_handler(array($instance, 'handleException'));
         }
 
         return $instance;
@@ -238,6 +240,19 @@ class XoopsLogger
             }
             exit();
         }
+    }
+
+    /**
+     * Exception handling callback.
+     *
+     * @param \Exception|\Throwable $e uncaught Exception or Error
+     *
+     * @return void
+     */
+    public function handleException($e)
+    {
+        $msg = "Exception: " . $e->getMessage();
+        $this->handleError(E_USER_ERROR, $msg, $e->getFile(), $e->getLine());
     }
 
     /**
@@ -409,11 +424,13 @@ class XoopsLogger
  */
 function XoopsErrorHandler_HandleError($errNo, $errStr, $errFile, $errLine, $errContext = null)
 {
+    /*
     // We don't want every error to come through this will help speed things up'
     if ($errNo == '2048') {
         return true;
     }
     // XOOPS should always be STRICT compliant thus the above lines makes no sense and will be removed! -- Added by Taiwen Jiang
+    */
     $logger = XoopsLogger::getInstance();
     $logger->handleError($errNo, $errStr, $errFile, $errLine, $errContext);
     return null;
