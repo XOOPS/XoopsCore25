@@ -436,7 +436,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-        $result = &$this->db->query($sql);
+        $result = $this->db->query($sql);
         if (!$result) {
             return false;
         }

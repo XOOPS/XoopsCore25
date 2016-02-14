@@ -410,7 +410,7 @@ function xoops_module_install($dirname)
                         $confop_msgs = '';
                         if (isset($config['options']) && is_array($config['options'])) {
                             foreach ($config['options'] as $key => $value) {
-                                $confop =& $config_handler->createConfigOption();
+                                $confop = $config_handler->createConfigOption();
                                 $confop->setVar('confop_name', $key, true);
                                 $confop->setVar('confop_value', $value, true);
                                 $confobj->setConfOptions($confop);
@@ -1202,7 +1202,7 @@ function xoops_module_update($dirname)
             foreach ($configs as $config) {
                 // only insert ones that have been deleted previously with success
                 if (!in_array($config['name'], $config_delng)) {
-                    $confobj =& $config_handler->createConfig();
+                    $confobj = $config_handler->createConfig();
                     $confobj->setVar('conf_modid', $newmid);
                     $confobj->setVar('conf_catid', 0);
                     $confobj->setVar('conf_name', $config['name']);
@@ -1225,7 +1225,7 @@ function xoops_module_update($dirname)
                     $confop_msgs = '';
                     if (isset($config['options']) && is_array($config['options'])) {
                         foreach ($config['options'] as $key => $value) {
-                            $confop =& $config_handler->createConfigOption();
+                            $confop = $config_handler->createConfigOption();
                             $confop->setVar('confop_name', $key, true);
                             $confop->setVar('confop_value', $value, true);
                             $confobj->setConfOptions($confop);

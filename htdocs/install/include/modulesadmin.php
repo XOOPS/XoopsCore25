@@ -294,7 +294,7 @@ function xoops_module_install($dirname)
                     $config_handler = xoops_getHandler('config');
                     $order = 0;
                     foreach ($configs as $config) {
-                        $confobj =& $config_handler->createConfig();
+                        $confobj = $config_handler->createConfig();
                         $confobj->setVar('conf_modid', $newmid);
                         $confobj->setVar('conf_catid', 0);
                         $confobj->setVar('conf_name', $config['name']);
@@ -307,7 +307,7 @@ function xoops_module_install($dirname)
                         $confop_msgs = '';
                         if (isset($config['options']) && is_array($config['options'])) {
                             foreach ($config['options'] as $key => $value) {
-                                $confop =& $config_handler->createConfigOption();
+                                $confop = $config_handler->createConfigOption();
                                 $confop->setVar('confop_name', $key, true);
                                 $confop->setVar('confop_value', $value, true);
                                 $confobj->setConfOptions($confop);

@@ -173,7 +173,7 @@ class XoopsSystemGui
     {
     }
 
-    public function flush()
+    public static function flush()
     {
     }
 

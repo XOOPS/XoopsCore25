@@ -429,7 +429,7 @@ switch ($op) {
         $lang_updated     = false;
         if ($count > 0) {
             for ($i = 0; $i < $count; ++$i) {
-                $config    =& $config_handler->getConfig($conf_ids[$i]);
+                $config    = $config_handler->getConfig($conf_ids[$i]);
                 $new_value =& ${$config->getVar('conf_name')};
                 if (is_array($new_value) || $new_value != $config->getVar('conf_value')) {
                     // if language has been changed

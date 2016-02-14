@@ -438,7 +438,7 @@ class XoopsTplfileHandler extends XoopsObjectHandler
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-        if (!$result =& $this->db->query($sql)) {
+        if (!$result = $this->db->query($sql)) {
             return 0;
         }
         list($count) = $this->db->fetchRow($result);

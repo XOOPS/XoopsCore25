@@ -1106,7 +1106,7 @@ function xoops_getModuleOption($option, $dirname = '')
     $module         = $module_handler->getByDirname($dirname);
     $config_handler = xoops_getHandler('config');
     if (is_object($module)) {
-        $moduleConfig =& $config_handler->getConfigsByCat(0, $module->getVar('mid'));
+        $moduleConfig = $config_handler->getConfigsByCat(0, $module->getVar('mid'));
         if (isset($moduleConfig[$option])) {
             $ret = $moduleConfig[$option];
         }

@@ -53,7 +53,7 @@ class XoopsGuiLegacy extends /* implements */
         return true;
     }
 
-    public function flush()
+    public static function flush()
     {
         @unlink(XOOPS_CACHE_PATH . '/adminmenu.php');
     }
