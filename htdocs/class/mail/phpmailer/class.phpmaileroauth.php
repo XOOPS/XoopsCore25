@@ -27,38 +27,38 @@ class PHPMailerOAuth extends PHPMailer
 {
     /**
      * The OAuth user's email address
-     * @type string
+     * @var string
      */
     public $oauthUserEmail = '';
 
     /**
      * The OAuth refresh token
-     * @type string
+     * @var string
      */
     public $oauthRefreshToken = '';
 
     /**
      * The OAuth client ID
-     * @type string
+     * @var string
      */
     public $oauthClientId = '';
 
     /**
      * The OAuth client secret
-     * @type string
+     * @var string
      */
     public $oauthClientSecret = '';
 
     /**
-     * An instance of the OAuth class.
-     * @type OAuth
+     * An instance of the PHPMailerOAuthGoogle class.
+     * @var PHPMailerOAuthGoogle
      * @access protected
      */
     protected $oauth = null;
 
     /**
-     * Get an OAuth instance to use.
-     * @return OAuth
+     * Get a PHPMailerOAuthGoogle instance to use.
+     * @return PHPMailerOAuthGoogle
      */
     public function getOAUTHInstance()
     {
@@ -79,8 +79,7 @@ class PHPMailerOAuth extends PHPMailer
      * @param array $options An array of options compatible with stream_context_create()
      * @uses SMTP
      * @access public
-     * @throws phpmailerException
-     * @return boolean
+     * @return bool
      */
     public function smtpConnect($options = array())
     {
@@ -117,12 +116,12 @@ class PHPMailerOAuth extends PHPMailer
             // If it's not specified, the default value is used
             $prefix = '';
             $secure = $this->SMTPSecure;
-            $tls = ($this->SMTPSecure === 'tls');
-            if ('ssl' === $hostinfo[2] or ('' == $hostinfo[2] and 'ssl' === $this->SMTPSecure)) {
+            $tls = ($this->SMTPSecure == 'tls');
+            if ('ssl' == $hostinfo[2] or ('' == $hostinfo[2] and 'ssl' == $this->SMTPSecure)) {
                 $prefix = 'ssl://';
                 $tls = false; // Can't have SSL and TLS at the same time
                 $secure = 'ssl';
-            } elseif ($hostinfo[2] === 'tls') {
+            } elseif ($hostinfo[2] == 'tls') {
                 $tls = true;
                 // tls doesn't use a prefix
                 $secure = 'tls';
@@ -154,7 +153,7 @@ class PHPMailerOAuth extends PHPMailer
                     // * we have openssl extension
                     // * we are not already using SSL
                     // * the server offers STARTTLS
-                    if ($this->SMTPAutoTLS and $sslext and $secure !== 'ssl' and $this->smtp->getServerExt('STARTTLS')) {
+                    if ($this->SMTPAutoTLS and $sslext and $secure != 'ssl' and $this->smtp->getServerExt('STARTTLS')) {
                         $tls = true;
                     }
                     if ($tls) {
