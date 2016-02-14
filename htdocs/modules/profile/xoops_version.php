@@ -40,11 +40,11 @@ $modversion['icons32']        = '../../Frameworks/moduleclasses/icons/32';
 
 //about
 $modversion["module_status"]       = "Final";
-$modversion['release_date']        = '2014/06/14';
+$modversion['release_date']        = '2016/02/14';
 $modversion["module_website_url"]  = "http://www.xoops.org/";
 $modversion["module_website_name"] = "XOOPS";
-$modversion['min_php']             = '5.3.7';
-$modversion['min_xoops']           = "2.5.7";
+$modversion['min_php']             = '5.5';
+$modversion['min_xoops']           = "2.5.8";
 $modversion['min_admin']           = '1.1';
 $modversion['min_db']              = array(
     'mysql'  => '5.0.7',

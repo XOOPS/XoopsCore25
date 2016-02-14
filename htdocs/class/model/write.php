@@ -49,11 +49,11 @@ class XoopsModelWrite extends XoopsModelAbstract
         $vars              = $object->getVars();
         $object->cleanVars = array();
         foreach ($vars as $k => $v) {
-            if (!$v["changed"]) {
+            if (!$v['changed']) {
                 continue;
             }
             $cleanv = $v['value'];
-            switch ($v["data_type"]) {
+            switch ($v['data_type']) {
                 case XOBJ_DTYPE_TIMESTAMP:
                     $cleanv = !is_string($cleanv) && is_numeric($cleanv) ? date(_DBTIMESTAMPSTRING, $cleanv) : date(_DBTIMESTAMPSTRING, strtotime($cleanv));
                     $cleanv = str_replace('\\"', '"', $this->handler->db->quote($cleanv));
@@ -72,8 +72,8 @@ class XoopsModelWrite extends XoopsModelAbstract
                         continue 2;
                     }
                     $cleanv = xoops_convert_encode($cleanv);
-                    if (isset($v['maxlength']) && strlen($cleanv) > (int)($v['maxlength'])) {
-                        $errors[] = sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int)($v['maxlength']));
+                    if (isset($v['maxlength']) && strlen($cleanv) > (int)$v['maxlength']) {
+                        $errors[] = sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int)$v['maxlength']);
                         continue 2;
                     }
                     if (!$v['not_gpc']) {
@@ -106,8 +106,8 @@ class XoopsModelWrite extends XoopsModelAbstract
                         $errors[] = sprintf(_XOBJ_ERR_REQUIRED, $k);
                         continue 2;
                     }
-                    if (isset($v['maxlength']) && strlen($cleanv) > (int)($v['maxlength'])) {
-                        $errors[] = sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int)($v['maxlength']));
+                    if (isset($v['maxlength']) && strlen($cleanv) > (int)$v['maxlength']) {
+                        $errors[] = sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int)$v['maxlength']);
                         continue 2;
                     }
                     if (!$v['not_gpc']) {
@@ -163,7 +163,7 @@ class XoopsModelWrite extends XoopsModelAbstract
                         continue 2;
                     }
                     if ($cleanv != '' && !preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $cleanv)) {
-                        $errors[] = "Invalid Email";
+                        $errors[] = 'Invalid Email';
                         continue 2;
                     }
                     if (!$v['not_gpc']) {
@@ -212,21 +212,21 @@ class XoopsModelWrite extends XoopsModelAbstract
                     break;
 
                 case XOBJ_DTYPE_INT:
-                    $cleanv = (int)($cleanv);
+                    $cleanv = (int)$cleanv;
                     break;
 
                 case XOBJ_DTYPE_FLOAT:
-                    $cleanv = (float)($cleanv);
+                    $cleanv = (float)$cleanv;
                     break;
 
                 case XOBJ_DTYPE_DECIMAL:
-                    $cleanv = (float)($cleanv);
+                    $cleanv = (float)$cleanv;
                     break;
 
                 // Should not be used!
                 case XOBJ_DTYPE_UNICODE_ARRAY:
                     if (!$v['not_gpc']) {
-                        $cleanv = array_map(array(&$ts, "stripSlashesGPC"), $cleanv);
+                        $cleanv = array_map(array(&$ts, 'stripSlashesGPC'), $cleanv);
                     }
                     foreach (array_keys($cleanv) as $key) {
                         $cleanv[$key] = str_replace('\\"', '"', addslashes($cleanv[$key]));
@@ -238,7 +238,7 @@ class XoopsModelWrite extends XoopsModelAbstract
                 case XOBJ_DTYPE_ARRAY:
                     $cleanv = (array)$cleanv;
                     if (!$v['not_gpc']) {
-                        $cleanv = array_map(array(&$ts, "stripSlashesGPC"), $cleanv);
+                        $cleanv = array_map(array(&$ts, 'stripSlashesGPC'), $cleanv);
                     }
                     foreach (array_keys($cleanv) as $key) {
                         $cleanv[$key] = str_replace('\\"', '"', addslashes($cleanv[$key]));
@@ -250,7 +250,7 @@ class XoopsModelWrite extends XoopsModelAbstract
                 case XOBJ_DTYPE_STIME:
                 case XOBJ_DTYPE_MTIME:
                 case XOBJ_DTYPE_LTIME:
-                    $cleanv = !is_string($cleanv) ? (int)($cleanv) : strtotime($cleanv);
+                    $cleanv = !is_string($cleanv) ? (int)$cleanv : strtotime($cleanv);
                     break;
 
                 default:
@@ -289,11 +289,11 @@ class XoopsModelWrite extends XoopsModelAbstract
         $queryFunc = empty($force) ? "query" : "queryF";
 
         if ($object->isNew()) {
-            $sql = "INSERT INTO `" . $this->handler->table . "`";
+            $sql = 'INSERT INTO `' . $this->handler->table . '`';
             if (!empty($object->cleanVars)) {
                 $keys = array_keys($object->cleanVars);
                 $vals = array_values($object->cleanVars);
-                $sql .= " (`" . implode("`, `", $keys) . "`) VALUES (" . implode(",", $vals) . ")";
+                $sql .= ' (`' . implode('`, `', $keys) . '`) VALUES (' . implode(',', $vals) . ')';
             } else {
                 trigger_error("Data entry is not inserted - no variable is changed in object of '" . get_class($object) . "'", E_USER_NOTICE);
 
@@ -310,7 +310,7 @@ class XoopsModelWrite extends XoopsModelAbstract
             foreach ($object->cleanVars as $k => $v) {
                 $keys[] = " `{$k}` = {$v}";
             }
-            $sql = "UPDATE `" . $this->handler->table . "` SET " . implode(",", $keys) . " WHERE `" . $this->handler->keyName . "` = " . $this->handler->db->quote($object->getVar($this->handler->keyName));
+            $sql = 'UPDATE `' . $this->handler->table . '` SET ' . implode(',', $keys) . ' WHERE `' . $this->handler->keyName . '` = ' . $this->handler->db->quote($object->getVar($this->handler->keyName));
             if (!$result = $this->handler->db->{$queryFunc}($sql)) {
                 return false;
             }
@@ -332,13 +332,13 @@ class XoopsModelWrite extends XoopsModelAbstract
             $clause = array();
             $thishandlerkeyNameCount = count($this->handler->keyName);
             for ($i = 0; $i < $thishandlerkeyNameCount; ++$i) {
-                $clause[] = "`" . $this->handler->keyName[$i] . "` = " . $this->handler->db->quote($object->getVar($this->handler->keyName[$i]));
+                $clause[] = '`' . $this->handler->keyName[$i] . '` = ' . $this->handler->db->quote($object->getVar($this->handler->keyName[$i]));
             }
-            $whereclause = implode(" AND ", $clause);
+            $whereclause = implode(' AND ', $clause);
         } else {
-            $whereclause = "`" . $this->handler->keyName . "` = " . $this->handler->db->quote($object->getVar($this->handler->keyName));
+            $whereclause = '`' . $this->handler->keyName . '` = ' . $this->handler->db->quote($object->getVar($this->handler->keyName));
         }
-        $sql       = "DELETE FROM `" . $this->handler->table . "` WHERE " . $whereclause;
+        $sql       = 'DELETE FROM `' . $this->handler->table . '` WHERE ' . $whereclause;
         $queryFunc = empty($force) ? "query" : "queryF";
         $result    = $this->handler->db->{$queryFunc}($sql);
 

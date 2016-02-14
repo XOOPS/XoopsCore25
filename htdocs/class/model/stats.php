@@ -41,7 +41,7 @@ class XoopsModelStats extends XoopsModelAbstract
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             if ($criteria->groupby != '') {
                 $groupby = true;
-                $field   = $criteria->groupby . ", ";
+                $field   = $criteria->groupby . ', ';
             }
         }
         $sql = "SELECT {$field} COUNT(*) FROM `{$this->handler->table}`";
@@ -80,7 +80,7 @@ class XoopsModelStats extends XoopsModelAbstract
         $limit       = null;
         $start       = null;
         $groupby_key = $this->handler->keyName;
-        if (isset($criteria) && is_subclass_of($criteria, "criteriaelement")) {
+        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql_where = $criteria->renderWhere();
             $limit     = $criteria->getLimit();
             $start     = $criteria->getStart();

@@ -149,7 +149,7 @@ class SaxParser
             //}
         } else {
             while ($data = fread($this->input, 4096)) {
-                if (!xml_parse($this->parser, str_replace("'", "&apos;", $data), feof($this->input))) {
+                if (!xml_parse($this->parser, str_replace("'", '&apos;', $data), feof($this->input))) {
                     $this->setErrors($this->getXmlError());
                     fclose($this->input);
 
@@ -182,7 +182,7 @@ class SaxParser
      ****************************************************************************/
     public function getXmlError()
     {
-        return sprintf("XmlParse error: %s at line %d", xml_error_string(xml_get_error_code($this->parser)), xml_get_current_line_number($this->parser));
+        return sprintf('XmlParse error: %s at line %d', xml_error_string(xml_get_error_code($this->parser)), xml_get_current_line_number($this->parser));
     }
 
     /*---------------------------------------------------------------------------

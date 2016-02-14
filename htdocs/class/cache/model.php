@@ -157,7 +157,7 @@ class XoopsCacheModel extends XoopsCacheEngine
     public function read($key)
     {
         $criteria = new CriteriaCompo(new Criteria($this->model->keyname, $key));
-        $criteria->add(new Criteria($this->fields[1], time(), ">"));
+        $criteria->add(new Criteria($this->fields[1], time(), '>'));
         $criteria->setLimit(1);
         $data = $this->model->getAll($criteria);
         if (!$data) {

@@ -176,7 +176,7 @@ class XoopsNotification extends XoopsObject
                 break;
             default:
                 return true; // report error in user's profile??
-                break;
+//                break;
         }
 
         // Set up the mailer

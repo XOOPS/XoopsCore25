@@ -176,13 +176,13 @@ switch ($op) {
             copy($copy_file, $_REQUEST['path'] . $_REQUEST['file'] . '.back');
             //Save modif
             if (isset($_REQUEST['filemanager'])) {
-                $open = fopen("" . $_REQUEST['path_file'] . "", "w+");
+                $open = fopen('' . $_REQUEST['path_file'] . '', 'w+');
                 if (!fwrite($open, utf8_encode(stripslashes($_REQUEST['filemanager'])))) {
-                    redirect_header("admin.php?fct=filemanager", 2, _AM_SYSTEM_FILEMANAGER_ERROR);
+                    redirect_header('admin.php?fct=filemanager', 2, _AM_SYSTEM_FILEMANAGER_ERROR);
                 }
                 fclose($open);
             }
-            redirect_header("admin.php?fct=filemanager", 2, _AM_SYSTEM_DBUPDATED);
+            redirect_header('admin.php?fct=filemanager', 2, _AM_SYSTEM_DBUPDATED);
         } else {
             //restore
             $old_file = $_REQUEST['path_file'] . '.back';
@@ -192,15 +192,15 @@ switch ($op) {
             if (file_exists($old_file)) {
                 if (unlink($new_file)) {
                     if (rename($old_file, $new_file)) {
-                        redirect_header("admin.php?fct=filemanager", 2, _AM_SYSTEM_DBUPDATED);
+                        redirect_header('admin.php?fct=filemanager', 2, _AM_SYSTEM_DBUPDATED);
                     } else {
-                        redirect_header("admin.php?fct=filemanager", 2, _AM_SYSTEM_FILEMANAGER_RESTORE_ERROR_FILE_RENAME);
+                        redirect_header('admin.php?fct=filemanager', 2, _AM_SYSTEM_FILEMANAGER_RESTORE_ERROR_FILE_RENAME);
                     }
                 } else {
-                    redirect_header("admin.php?fct=filemanager", 2, _AM_SYSTEM_FILEMANAGER_RESTORE_ERROR_FILE_DELETE);
+                    redirect_header('admin.php?fct=filemanager', 2, _AM_SYSTEM_FILEMANAGER_RESTORE_ERROR_FILE_DELETE);
                 }
             } else {
-                redirect_header("admin.php?fct=filemanager", 2, _AM_SYSTEM_FILEMANAGER_RESTORE_ERROR_FILE_EXISTS);
+                redirect_header('admin.php?fct=filemanager', 2, _AM_SYSTEM_FILEMANAGER_RESTORE_ERROR_FILE_EXISTS);
             }
         }
 
@@ -225,7 +225,7 @@ switch ($op) {
                 echo $line;
             }
         }
-        redirect_header("admin.php?fct=filemanager", 2, _AM_SYSTEM_FILEMANAGER_UPLOAD_FILE);
+        redirect_header('admin.php?fct=filemanager', 2, _AM_SYSTEM_FILEMANAGER_UPLOAD_FILE);
         break;
 
     case 'filemanager_add_dir_save':
@@ -235,8 +235,8 @@ switch ($op) {
         XoopsFile::load('folder');
         $folder = XoopsFile::getHandler('folder');
         if ($folder->create($path . $_REQUEST['dir_name'], 0777)) {
-            $indexFile = XOOPS_ROOT_PATH . "/modules/system/index.html";
-            copy($indexFile, $path . $_REQUEST['dir_name'] . "/index.html");
+            $indexFile = XOOPS_ROOT_PATH . '/modules/system/index.html';
+            copy($indexFile, $path . $_REQUEST['dir_name'] . '/index.html');
             redirect_header('admin.php?fct=filemanager', 2, _AM_SYSTEM_FILEMANAGER_DIR_SUCCESS);
         } else {
             redirect_header('admin.php?fct=filemanager', 2, _AM_SYSTEM_FILEMANAGER_DIR_ERROR);
@@ -248,7 +248,7 @@ switch ($op) {
         if ($path == '') {
             $path = XOOPS_ROOT_PATH . '/';
         }
-        $open = fopen($path . $_REQUEST['file_name'], "w+");
+        $open = fopen($path . $_REQUEST['file_name'], 'w+');
         fclose($open);
         redirect_header('admin.php?fct=filemanager', 2, _AM_SYSTEM_FILEMANAGER_FILE_SUCCESS);
         //if ($file->create ($path . $_REQUEST['file_name'])) {

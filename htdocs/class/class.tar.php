@@ -413,7 +413,7 @@ class Tar
      * Retrieves information about a file in the current tar archive
      *
      * @param  string $filename
-     * @return string FALSE on fail
+     * @return string|false FALSE on fail
      */
     public function getFile($filename)
     {
@@ -432,7 +432,7 @@ class Tar
      * Retrieves information about a directory in the current tar archive
      *
      * @param  string $dirname
-     * @return string FALSE on fail
+     * @return string|false FALSE on fail
      */
     public function getDirectory($dirname)
     {

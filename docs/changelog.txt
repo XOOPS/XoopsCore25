@@ -217,7 +217,7 @@ Updates upon community:
 - Fixed bug: Undefined 'OS' in logger/render.php (trabis)
 - Fixed bug: Inclusion of custom config file for text sanitizer (trabis)
 - Fixed bug: XoopsList.php (Timezone return is not true must be array) (wishcraft)
-- Fixed bug: Xoops Captcha Class This class would call third party Framewok Files. If the file was not found, this would either report no error or cause a WSOD. (Catzwolf)
+- Fixed bug: Xoops Captcha Class This class would call third party Framework Files. If the file was not found, this would either report no error or cause a WSOD. (Catzwolf)
 - Fixed bug: class/captcha/xoopscaptcha: Fixed many suppression errors that would lead to either WSOD or report no error. (Catzwolf)
 - Fixed bug: Can not delete notifications. Cache was being used and Token validation was failing. (trabis)
 - Fixed bug: Cookie Domain Dope now has constant set in common.php - XOOPS_COOKIE_DOMAIN (wishcraft)
@@ -236,7 +236,7 @@ Updates upon community:
 - Changed: XoopsGroupPermForm: Added Check to see if form have been loaded ppreviously nad changed includes to use xoops_load function (Catzwolf)
 - Changed: XoopsLists: Cleaned and Formatted Code. (Catzwolf)
 - Changed: Xoops ThemeForm and TableForm: Fixed the tables td to a fixed width 40%. (catzwolf)
-- Changed: XoopsForm: ThemeForm and TableForm: Replaced htmlspecialchar to a preg_replace to remove any malious code rather than just changing it to a readable form. (Catzwolf)
+- Changed: XoopsForm: ThemeForm and TableForm: Replaced htmlspecialchar to a preg_replace to remove any malicious code rather than just changing it to a readable form. (Catzwolf)
 - Changed: Auth Classes: Cleaned and Formatted code for consistency. (Catzwolf)
 - Changed: Xoops Model Classes: Cleaned and Formatted code for consistency. (Catzwolf)
 - Changed: Xoops Cache Classes: Cleaned and Formatted code for consistency. (Catzwolf)
@@ -254,12 +254,12 @@ Updates upon community:
 - Changed: Changed global calls to the database ($GLOBALS['xoopsDB'] To &XoopsDatabaseFactory::getDatabaseConnection(); which is the correct method of calling the database.
 - Changed: Changed initVar calls to the XoopsObject class to support enumeration array for XOBJ_DTYPE_ENUM (wishcraft)
 - Changed: Default Control Panel Theme set to oxygen by voltan (tnx Iran) [wishcraft]
-- Changed: Profile Module (Support for new Object Types and Refactorised Authentication Library)
+- Changed: Profile Module (Support for new Object Types and Refactored Authentication Library)
 
-+ Added: SOAP Authenication Installation Variables - see: makedata.php (wishcraft)
++ Added: SOAP Authentication Installation Variables - see: makedata.php (wishcraft)
 + Added: XOOPS System Key (XOOPS Server Key for Unique Identified Systems) - see: makedata.php (wishcraft)
 + Added: SOAP Factory - Simple Object Access Protocol [Notice: Php Soap is crashing apache] (wishcraft)
-+ Added: SOAP Authentication and Provisionning - User Network Management (wishcraft)
++ Added: SOAP Authentication and Provisioning - User Network Management (wishcraft)
 + Added: Database Factory - mSQL Supporting Class - see /class/database/msqldatabase.php (wishcraft)
 + Added: Database Factory - Microsoft SQL Server Supporting Class - see /class/database/mssqldatabase.php (wishcraft)
 + Added: Database Factory - MaxDB Supporting Class - see /class/database/maxdbdatabase.php (wishcraft)

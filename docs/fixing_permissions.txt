@@ -4,7 +4,7 @@ However, before you do it, we recommend to check first the XOOPS Website for an 
 
 1) as stated in Changelog, XOOPS 2.5.6 addresses some security issues.
 
-2) These issues have been addressed in the Core, and as a result we've made minor changses in the file grouppermform.php. These changes should have no impact on standard modules
+2) These issues have been addressed in the Core, and as a result we've made minor changes in the file grouppermform.php. These changes should have no impact on standard modules
 
 3) Unfortunately, some module developers copied and use the file grouppermform.php locally. If there were no custom changes to that file, then you can find the location where the local file is called, and change it so the module calls the Core grouppermform.php.
 

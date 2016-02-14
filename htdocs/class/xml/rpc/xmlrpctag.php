@@ -133,12 +133,12 @@ class XoopsXmlRpcTag
     {
         $text = preg_replace(array("/\&([a-z\d\#]+)\;/i", "/\&/", "/\#\|\|([a-z\d\#]+)\|\|\#/i"), array(
             "#||\\1||#",
-            "&amp;",
+            '&amp;',
             "&\\1;"), str_replace(array(
-                                      "<",
-                                      ">"), array(
-                                      "&lt;",
-                                      "&gt;"), $text));
+                                      '<',
+                                      '>'), array(
+                                      '&lt;',
+                                      '&gt;'), $text));
 
         return $text;
     }
@@ -148,7 +148,7 @@ class XoopsXmlRpcTag
      */
     public function setFault($fault = true)
     {
-        $this->_fault = ((int)($fault) > 0);// ? true : false;
+        $this->_fault = ((int)$fault > 0);// ? true : false;
     }
 
     /**
@@ -179,7 +179,7 @@ class XoopsXmlRpcFault extends XoopsXmlRpcTag
     public function __construct($code, $extra = null)
     {
         $this->setFault(true);
-        $this->_code  = (int)($code);
+        $this->_code  = (int)$code;
         $this->_extra = isset($extra) ? trim($extra) : '';
     }
 
@@ -244,7 +244,7 @@ class XoopsXmlRpcInt extends XoopsXmlRpcTag
      */
     public function __construct($value)
     {
-        $this->_value = (int)($value);
+        $this->_value = (int)$value;
     }
 
     /**
@@ -316,7 +316,7 @@ class XoopsXmlRpcString extends XoopsXmlRpcTag
      */
     public function __construct($value)
     {
-        $this->_value = (string)($value);
+        $this->_value = (string)$value;
     }
 
     /**
@@ -343,7 +343,7 @@ class XoopsXmlRpcDatetime extends XoopsXmlRpcTag
         if (!is_numeric($value)) {
             $this->_value = strtotime($value);
         } else {
-            $this->_value = (int)($value);
+            $this->_value = (int)$value;
         }
     }
 
@@ -352,7 +352,7 @@ class XoopsXmlRpcDatetime extends XoopsXmlRpcTag
      */
     public function render()
     {
-        return '<value><dateTime.iso8601>' . gmstrftime("%Y%m%dT%H:%M:%S", $this->_value) . '</dateTime.iso8601></value>';
+        return '<value><dateTime.iso8601>' . gmstrftime('%Y%m%dT%H:%M:%S', $this->_value) . '</dateTime.iso8601></value>';
     }
 }
 

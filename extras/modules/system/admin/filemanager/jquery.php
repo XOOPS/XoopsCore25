@@ -21,7 +21,7 @@
 // Require mainfile
 require '../../../../mainfile.php';
 // Check Xoops define
-defined('XOOPS_ROOT_PATH') || exit("XOOPS root path not defined");
+defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 error_reporting(0);
 $GLOBALS['xoopsLogger']->activated = false;
 // Include module functions
@@ -57,11 +57,11 @@ switch ($op) {
                         $file_no_valid = array('.svn', 'conf', 'db', 'locks', 'hooks', 'cache', 'templates_c');
 
                         if (!in_array($file, $file_no_valid)) {
-                            echo "<li class=\"directory collapsed\"><a href='" . $_REQUEST['dir'] . $file . "' rel=\"" . htmlentities($_REQUEST['dir'] . $file) . "/\">" . htmlentities($file) . "</a></li>";
+                            echo "<li class=\"directory collapsed\"><a href='" . $_REQUEST['dir'] . $file . "' rel=\"" . htmlentities($_REQUEST['dir'] . $file) . "/\">" . htmlentities($file) . '</a></li>';
                         }
                     }
                 }
-                echo "</ul>";
+                echo '</ul>';
             }
         }
         break;
@@ -75,11 +75,11 @@ switch ($op) {
         if ($_REQUEST['status'] == 1) {
             $path_file = $_REQUEST['file'];
         } else {
-            $file_arr  = explode("/", $_REQUEST['file']);
+            $file_arr  = explode('/', $_REQUEST['file']);
             $path_file = XOOPS_ROOT_PATH . '/';
             $url_file  = XOOPS_URL . '/';
-
-            for ($i = 3; $i < count($file_arr); $i++) {
+            $fileArrayCount = count($file_arr);
+            for ($i = 3; $i < $fileArrayCount; ++$i) {
                 $path_file .= $file_arr[$i] . '/';
                 $url_file .= $file_arr[$i] . '/';
             }
@@ -106,7 +106,7 @@ switch ($op) {
                 foreach ($protected as $folder) {
                     $root_path = XOOPS_ROOT_PATH . '/' . $folder . '/';
                     if (false !== stripos($path_file, $root_path)) {
-                        if (($root_path == $path_file)) {
+                        if ($root_path == $path_file) {
                             $verif = false;
                         }
                     }
@@ -362,7 +362,7 @@ switch ($op) {
 
         xoops_load('xoopsformloader');
 
-        $form = new XoopsThemeForm('', 'upload_form', 'admin.php?fct=filemanager', "post", true);
+        $form = new XoopsThemeForm('', 'upload_form', 'admin.php?fct=filemanager', 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
         $form->addElement(new XoopsFormFile(_AM_SYSTEM_FILEMANAGER_UPLOAD_CHOOSE, 'upload_file', 500000), false);
         $form->addElement(new XoopsFormHidden('op', 'filemanager_upload_save'));
@@ -378,7 +378,7 @@ switch ($op) {
             $path = XOOPS_ROOT_PATH . '/';
         }
 
-        $form = new XoopsThemeForm('', 'newdir_form', 'admin.php?fct=filemanager', "post", true);
+        $form = new XoopsThemeForm('', 'newdir_form', 'admin.php?fct=filemanager', 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
         $form->addElement(new XoopsFormText(_AM_SYSTEM_FILEMANAGER_ADDDIR_NAME, 'dir_name', 50, 255), true);
         $form->addElement(new XoopsFormHidden('op', 'filemanager_add_dir_save'));
@@ -439,7 +439,7 @@ switch ($op) {
             $path = XOOPS_ROOT_PATH . '/';
         }
 
-        $form = new XoopsThemeForm('', 'newdir_form', 'admin.php?fct=filemanager', "post", true);
+        $form = new XoopsThemeForm('', 'newdir_form', 'admin.php?fct=filemanager', 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
         $form->addElement(new XoopsFormText(_AM_SYSTEM_FILEMANAGER_ADDFILE, 'file_name', 50, 255), true);
         $form->addElement(new XoopsFormHidden('op', 'filemanager_add_file_save'));

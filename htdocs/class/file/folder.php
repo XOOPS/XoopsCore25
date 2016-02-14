@@ -528,9 +528,9 @@ class XoopsFolderHandler
                 }
                 if ($found !== false) {
                     if (is_dir($found)) {
-                        ($this->directories[] =  $found);
+                        $this->directories[] =  $found;
                     } else {
-                        ($this->files[] =  $found);
+                        $this->files[] =  $found;
                     }
                 }
             }

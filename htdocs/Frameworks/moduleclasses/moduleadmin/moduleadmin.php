@@ -204,6 +204,7 @@ class ModuleAdmin
      */
     public function addItemButton($title, $link, $icon = 'add', $extra = '')
     {
+        $ret = array();
         $ret['title']        = $title;
         $ret['link']         = $link;
         $ret['icon']         = $icon . '.png';
@@ -397,6 +398,7 @@ class ModuleAdmin
      */
     public function addInfoBox($title)
     {
+        $ret = array();
         $ret['title']         = $title;
         $this->_itemInfoBox[] = $ret;
 
@@ -423,6 +425,7 @@ class ModuleAdmin
      */
     public function addInfoBoxLine($label, $text, $value = '', $color = 'inherit', $type = 'default')
     {
+        $ret = array();
         $ret['label'] = $label;
         $line         = "";
         switch ($type) {

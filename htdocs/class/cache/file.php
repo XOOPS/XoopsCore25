@@ -160,7 +160,7 @@ class XoopsCacheFile extends XoopsCacheEngine
         $windows   = false;
         $lineBreak = "\n";
 
-        if (substr(PHP_OS, 0, 3) === "WIN") {
+        if (substr(PHP_OS, 0, 3) === 'WIN') {
             $lineBreak = "\r\n";
             $windows   = true;
         }
@@ -173,7 +173,7 @@ class XoopsCacheFile extends XoopsCacheEngine
             }
             $contents = $expires . $lineBreak . $data . $lineBreak;
         } else {
-            $contents = $expires . $lineBreak . "return " . var_export($data, true) . ";" . $lineBreak;
+            $contents = $expires . $lineBreak . 'return ' . var_export($data, true) . ';' . $lineBreak;
         }
 
         if ($this->settings['lock']) {
@@ -202,7 +202,7 @@ class XoopsCacheFile extends XoopsCacheEngine
         }
         $cachetime = $this->file->read(11);
 
-        if ($cachetime !== false && (int)($cachetime) < time()) {
+        if ($cachetime !== false && (int)$cachetime < time()) {
             $this->file->close();
             $this->file->delete();
 
