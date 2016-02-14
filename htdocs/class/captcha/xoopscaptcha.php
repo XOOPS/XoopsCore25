@@ -53,7 +53,7 @@ class XoopsCaptcha
      *
      * @return Instance
      */
-    public static function &getInstance()
+    public static function getInstance()
     {
         static $instance;
         if (!isset($instance)) {

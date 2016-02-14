@@ -10,7 +10,7 @@ function protector_postcommon()
     // patch for 2.2.x from xoops.org (I know this is not so beautiful...)
     if (substr(@XOOPS_VERSION, 6, 3) > 2.0 && false !== stripos(@$_SERVER['REQUEST_URI'], 'modules/system/admin.php?fct=preferences')) {
         $module_handler = xoops_getHandler('module');
-        $module         =& $module_handler->get((int)(@$_GET['mod']));
+        $module         = $module_handler->get((int)(@$_GET['mod']));
         if (is_object($module)) {
             $module->getInfo();
         }
@@ -23,8 +23,8 @@ function protector_postcommon()
 
     // Protector object
     require_once dirname(__DIR__) . '/class/protector.php';
-    $db        =& XoopsDatabaseFactory::getDatabaseConnection();
-    $protector =& Protector::getInstance();
+    $db        = XoopsDatabaseFactory::getDatabaseConnection();
+    $protector = Protector::getInstance();
     $protector->setConn($db->conn);
     $protector->updateConfFromDb();
     $conf = $protector->getConf();

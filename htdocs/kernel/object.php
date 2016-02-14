@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -567,6 +567,7 @@ class XoopsObject
                     default:
                         break 1;
                 }
+                break;
             case XOBJ_DTYPE_TIME:
                 switch (strtolower($format)) {
                     case 's':
@@ -606,6 +607,7 @@ class XoopsObject
                     default:
                         break 1;
                 }
+                break;
             case XOBJ_DTYPE_TIMESTAMP:
                 switch (strtolower($format)) {
                     case 's':
@@ -645,6 +647,7 @@ class XoopsObject
                     default:
                         break 1;
                 }
+                break;
             default:
                 if ($this->vars[$key]['options'] != '' && $ret != '') {
                     switch (strtolower($format)) {
@@ -734,8 +737,6 @@ class XoopsObject
                     case XOBJ_DTYPE_SOURCE:
                         if (!$v['not_gpc']) {
                             $cleanv = $ts->stripSlashesGPC($cleanv);
-                        } else {
-                            $cleanv = $cleanv;
                         }
                         break;
                     case XOBJ_DTYPE_INT:
@@ -1026,7 +1027,7 @@ class XoopsObject
  * @package             kernel
  * @abstract
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  */
 class XoopsObjectHandler
 {
@@ -1093,7 +1094,7 @@ class XoopsObjectHandler
  *
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @author              Jan Keller Pedersen <mithrandir@xoops.org>
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @package             Kernel
  */
 class XoopsPersistableObjectHandler extends XoopsObjectHandler
@@ -1185,7 +1186,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
             $this->handler = $handler;
         } elseif (is_string($handler)) {
             xoops_load('XoopsModelFactory');
-            $this->handler = XoopsModelFactory::loadHandler($this, $handler, $args, $path);
+            $this->handler = XoopsModelFactory::loadHandler($this, $handler, $args);
         }
 
         return $this->handler;
@@ -1197,7 +1198,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @access protected
      * @param  string $name handler name
      * @param  mixed  $args args
-     * @return XoopsObjectAbstract of handler {@link XoopsObjectAbstract}
+     * @return XoopsModelAbstract of handler {@link XoopsModelAbstract}
      */
     public function loadHandler($name, $args = null)
     {

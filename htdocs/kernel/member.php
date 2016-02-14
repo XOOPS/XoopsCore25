@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -28,7 +28,7 @@ require_once $GLOBALS['xoops']->path('kernel/group.php');
  *
  *
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @package             kernel
  */
 class XoopsMemberHandler
@@ -72,7 +72,7 @@ class XoopsMemberHandler
      */
     public function &createGroup()
     {
-        $inst =& $this->groupHandler->create();
+        $inst = $this->groupHandler->create();
 
         return $inst;
     }
@@ -118,7 +118,7 @@ class XoopsMemberHandler
     /**
      * delete a group
      *
-     * @param  object $group reference to the group to delete
+     * @param  XoopsGroup $group reference to the group to delete
      * @return bool   FALSE if failed
      */
     public function deleteGroup(XoopsGroup $group)
@@ -132,7 +132,7 @@ class XoopsMemberHandler
     /**
      * delete a user
      *
-     * @param  object $user reference to the user to delete
+     * @param  XoopsUser $user reference to the user to delete
      * @return bool   FALSE if failed
      */
     public function deleteUser(XoopsUser $user)

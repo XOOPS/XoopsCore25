@@ -34,7 +34,7 @@ class SystemMaintenance
      */
     public function __construct()
     {
-        $db           =& XoopsDatabaseFactory::getDatabaseConnection();
+        $db           = XoopsDatabaseFactory::getDatabaseConnection();
         $this->db     = $db;
         $this->prefix = $this->db->prefix . '_';
     }

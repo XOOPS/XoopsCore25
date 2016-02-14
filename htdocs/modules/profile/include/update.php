@@ -62,7 +62,7 @@ function xoops_module_update_profile(&$module, $oldversion = null)
         $fields        = array();
         while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
             $fields[] = $myrow['field_name'];
-            $object   =& $field_handler->create();
+            $object   = $field_handler->create();
             $object->setVars($myrow, true);
             $object->setVar('cat_id', 1);
             if (!empty($myrow['field_register'])) {

@@ -45,7 +45,7 @@ if ($op === 'list') {
     $target = htmlspecialchars($target, ENT_QUOTES);
     $xoopsTpl->assign('target', $target);
     $imgcat_handler = xoops_getHandler('imagecategory');
-    $catlist        =& $imgcat_handler->getList($group, 'imgcat_read', 1);
+    $catlist        = $imgcat_handler->getList($group, 'imgcat_read', 1);
     $catcount       = count($catlist);
     $xoopsTpl->assign('lang_align', _ALIGN);
     $xoopsTpl->assign('lang_add', _ADD);
@@ -76,7 +76,7 @@ if ($op === 'list') {
             $total = $image_handler->getCount($criteria);
             if ($total > 0) {
                 $imgcat_handler = xoops_getHandler('imagecategory');
-                $imgcat         =& $imgcat_handler->get($catshow);
+                $imgcat         = $imgcat_handler->get($catshow);
                 $xoopsTpl->assign('image_total', $total);
                 $xoopsTpl->assign('lang_image', _IMAGE);
                 $xoopsTpl->assign('lang_imagename', _IMAGENAME);
@@ -140,7 +140,7 @@ if ($op === 'list') {
 if ($op === 'upload') {
     $imgcat_handler = xoops_getHandler('imagecategory');
     $imgcat_id      = (int)($_GET['imgcat_id']);
-    $imgcat         =& $imgcat_handler->get($imgcat_id);
+    $imgcat         = $imgcat_handler->get($imgcat_id);
     $error          = false;
     if (!is_object($imgcat)) {
         $error = true;
@@ -194,7 +194,7 @@ if ($op === 'doupload') {
         $imgcat_id         = isset($_POST['imgcat_id']) ? (int)($_POST['imgcat_id']) : 0;
         include_once $GLOBALS['xoops']->path('class/uploader.php');
         $imgcat_handler = xoops_getHandler('imagecategory');
-        $imgcat         =& $imgcat_handler->get($imgcat_id);
+        $imgcat         = $imgcat_handler->get($imgcat_id);
         $error          = false;
         if (!is_object($imgcat)) {
             $error = true;
@@ -231,7 +231,7 @@ if ($op === 'doupload') {
             $err =& $uploader->getErrors();
         } else {
             $image_handler = xoops_getHandler('image');
-            $image         =& $image_handler->create();
+            $image         = $image_handler->create();
             $image->setVar('image_name', 'images/' . $uploader->getSavedFileName());
             $image->setVar('image_nicename', $image_nicename);
             $image->setVar('image_mimetype', $uploader->getMediaType());

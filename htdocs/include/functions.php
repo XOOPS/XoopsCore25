@@ -36,7 +36,7 @@ function xoops_getHandler($name, $optional = false)
         }
         $class = 'Xoops' . ucfirst($name) . 'Handler';
         if (class_exists($class)) {
-            $xoopsDB         =& XoopsDatabaseFactory::getDatabaseConnection();
+            $xoopsDB         = XoopsDatabaseFactory::getDatabaseConnection();
             $handlers[$name] = new $class($xoopsDB);
         }
     }
@@ -80,7 +80,7 @@ function xoops_getModuleHandler($name = null, $module_dir = null, $optional = fa
         }
         $class = ucfirst(strtolower($module_dir)) . ucfirst($name) . 'Handler';
         if (class_exists($class)) {
-            $xoopsDB                      =& XoopsDatabaseFactory::getDatabaseConnection();
+            $xoopsDB                      = XoopsDatabaseFactory::getDatabaseConnection();
             $handlers[$module_dir][$name] = new $class($xoopsDB);
         }
     }
@@ -595,7 +595,7 @@ function xoops_getbanner()
 {
     global $xoopsConfig;
 
-    $db      =& XoopsDatabaseFactory::getDatabaseConnection();
+    $db      = XoopsDatabaseFactory::getDatabaseConnection();
     $bresult = $db->query('SELECT COUNT(*) FROM ' . $db->prefix('banner'));
     list($numrows) = $db->fetchRow($bresult);
     if ($numrows > 1) {
@@ -656,7 +656,7 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 {
     global $xoopsConfig, $xoopsLogger, $xoopsUserIsAdmin;
 
-    $xoopsPreload =& XoopsPreload::getInstance();
+    $xoopsPreload = XoopsPreload::getInstance();
     $xoopsPreload->triggerEvent('core.include.functions.redirectheader.start', array($url, $time, $message, $addredirect, $allowExternalLink));
     // under normal circumstance this event will exit, so listen for the .start above
     $xoopsPreload->triggerEvent('core.include.functions.redirectheader', array($url, $time, $message, $addredirect, $allowExternalLink));
@@ -822,7 +822,7 @@ function &xoops_getMailer()
  */
 function xoops_getrank($rank_id = 0, $posts = 0)
 {
-    $db      =& XoopsDatabaseFactory::getDatabaseConnection();
+    $db      = XoopsDatabaseFactory::getDatabaseConnection();
     $myts    = MyTextSanitizer::getInstance();
     $rank_id = (int)($rank_id);
     $posts   = (int)($posts);
@@ -927,7 +927,7 @@ function xoops_comment_delete($module_id, $item_id)
 {
     if ((int)($module_id) > 0 && (int)($item_id) > 0) {
         $comment_handler = xoops_getHandler('comment');
-        $comments        =& $comment_handler->getByItemId($module_id, $item_id);
+        $comments        = $comment_handler->getByItemId($module_id, $item_id);
         if (is_array($comments)) {
             $count       = count($comments);
             $deleted_num = array();
@@ -1107,7 +1107,7 @@ function xoops_getModuleOption($option, $dirname = '')
 
     $ret            = false;
     $module_handler = xoops_getHandler('module');
-    $module         =& $module_handler->getByDirname($dirname);
+    $module         = $module_handler->getByDirname($dirname);
     $config_handler = xoops_getHandler('config');
     if (is_object($module)) {
         $moduleConfig =& $config_handler->getConfigsByCat(0, $module->getVar('mid'));

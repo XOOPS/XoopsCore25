@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -23,7 +23,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * A Template File
  *
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  *
  * @package             kernel
  **/
@@ -162,7 +162,7 @@ class XoopsTplfile extends XoopsObject
     /**
      * getSource
      *
-     * @return unknown
+     * @return string
      */
     public function getSource()
     {
@@ -172,7 +172,7 @@ class XoopsTplfile extends XoopsObject
     /**
      * getLastModified
      *
-     * @return unknown
+     * @return int unixtimestamp
      */
     public function getLastModified()
     {
@@ -243,16 +243,16 @@ class XoopsTplfileHandler extends XoopsObjectHandler
     }
 
     /**
-     * Enter description here...
+     * Load template source
      *
-     * @param  unknown_type $tplfile
-     * @return unknown
+     * @param XoopsObject|XoopsTplfile $tplfile a XoopsTplfile object
+     *
+     * @return bool true on success, otherwise false
      */
     public function loadSource(XoopsObject $tplfile)
     {
-        // this is not a persitable object handler?
-        //if (!(class_exists($this->className) && $tplfile instanceof $this->className)) {
-        if (!is_a($tplfile, 'xoopstplfile')) {
+        $className = 'XoopsTplfile';
+        if (!($tplfile instanceof $className)) {
             return false;
         }
 
@@ -271,14 +271,14 @@ class XoopsTplfileHandler extends XoopsObjectHandler
     /**
      * write a new Tplfile into the database
      *
-     * @param XoopsTplfile $tplfile
-     * @internal param \XoopsTplfile $object $block reference to the Tplfile to insert
-     * @return bool TRUE if successful
+     * @param  XoopsObject|XoopsTplfile $tplfile a XoopsTplfile object
+     *
+     * @return bool true on success, otherwise false
      */
     public function insert(XoopsObject $tplfile)
     {
-        //if (!(class_exists($this->className) && $tplfile instanceof $this->className)) {
-        if (!is_a($tplfile, 'xoopstplfile')) {
+        $className = 'XoopsTplfile';
+        if (!($tplfile instanceof $className)) {
             return false;
         }
         if (!$tplfile->isDirty()) {
@@ -325,17 +325,15 @@ class XoopsTplfileHandler extends XoopsObjectHandler
     }
 
     /**
-     * Enter description here...
+     * Update Tplfile, even if a safe transaction (i.e. http get)
      *
-     * @param  unknown_type $tplfile
-     * @return unknown
+     * @param  XoopsTplfile $tplfile
+     * @return bool true on success, otherwise false
      */
-    public function forceUpdate(XoopsObject $tplfile)
+    public function forceUpdate(XoopsTplfile $tplfile)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($tplfile, 'xoopstplfile')) {
+        $className = 'XoopsTplfile';
+        if (!($tplfile instanceof $className)) {
             return false;
         }
         if (!$tplfile->isDirty()) {
@@ -368,16 +366,14 @@ class XoopsTplfileHandler extends XoopsObjectHandler
     /**
      * delete a block from the database
      *
-     * @param XoopsTplfile $tplfile
-     * @internal param \XoopsBlock $object $block reference to the block to delete
-     * @return bool TRUE if successful
+     * @param  XoopsObject|XoopsTplfile $tplfile a XoopsTplfile object
+     *
+     * @return bool true on success, otherwise false
      */
     public function delete(XoopsObject $tplfile)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($tplfile, 'xoopstplfile')) {
+        $className = 'XoopsTplfile';
+        if (!($tplfile instanceof $className)) {
             return false;
         }
         $id  = $tplfile->getVar('tpl_id');
@@ -519,7 +515,7 @@ class XoopsTplfileHandler extends XoopsObjectHandler
      *
      * @param  string $tplname
      * @param  string $tplset_name
-     * @return unknown
+     * @return bool true if template exists, otherwise false
      */
     public function templateExists($tplname, $tplset_name)
     {

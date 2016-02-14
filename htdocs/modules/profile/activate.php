@@ -29,7 +29,7 @@ if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
         redirect_header(XOOPS_URL, 1, '');
     }
     $member_handler = xoops_getHandler('member');
-    $thisuser       =& $member_handler->getUser($id);
+    $thisuser       = $member_handler->getUser($id);
     if (!is_object($thisuser)) {
         redirect_header(XOOPS_URL, 1, '');
     }
@@ -73,7 +73,7 @@ if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
 } elseif (!empty($_REQUEST['email']) && $xoopsConfigUser['activation_type'] != 0) {
     $myts           = MyTextSanitizer::getInstance();
     $member_handler = xoops_getHandler('member');
-    $getuser        =& $member_handler->getUsers(new Criteria('email', $myts->addSlashes(trim($_REQUEST['email']))));
+    $getuser        = $member_handler->getUsers(new Criteria('email', $myts->addSlashes(trim($_REQUEST['email']))));
     if (count($getuser) == 0) {
         redirect_header(XOOPS_URL, 2, _US_SORRYNOTFOUND);
     }

@@ -115,7 +115,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(sprintf(_AM_SYSTEM_USERRANK_TIPS_FORM1, implode(', ', $mimetypes)) . sprintf(_AM_SYSTEM_USERRANK_TIPS_FORM2, $upload_size / 1000));
         $xoBreadCrumb->render();
         // Create form
-        $obj  =& $userrank_Handler->create();
+        $obj  = $userrank_Handler->create();
         $form = $obj->getForm();
         // Assign form
         $xoopsTpl->assign('form', $form->render());
@@ -144,9 +144,9 @@ switch ($op) {
             redirect_header("admin.php?fct=userrank", 3, implode(",", $GLOBALS["xoopsSecurity"]->getErrors()));
         }
         if (isset($_POST["rank_id"])) {
-            $obj =& $userrank_Handler->get($_POST["rank_id"]);
+            $obj = $userrank_Handler->get($_POST["rank_id"]);
         } else {
-            $obj =& $userrank_Handler->create();
+            $obj = $userrank_Handler->create();
         }
 
         $obj->setVar("rank_title", $_POST["rank_title"]);
@@ -179,7 +179,7 @@ switch ($op) {
     // Delete userrank
     case 'userrank_delete':
         $rank_id = system_CleanVars($_REQUEST, 'rank_id', 0, 'int');
-        $obj     =& $userrank_Handler->get($rank_id);
+        $obj     = $userrank_Handler->get($rank_id);
         if (isset($_POST["ok"]) && $_POST["ok"] == 1) {
             if (!$GLOBALS["xoopsSecurity"]->check()) {
                 redirect_header("admin.php?fct=userrank", 3, implode(",", $GLOBALS["xoopsSecurity"]->getErrors()));
@@ -215,7 +215,7 @@ switch ($op) {
         // Get rank id
         $rank_id = system_CleanVars($_POST, 'rank_id', 0, 'int');
         if ($rank_id > 0) {
-            $obj =& $userrank_Handler->get($rank_id);
+            $obj = $userrank_Handler->get($rank_id);
             $old = $obj->getVar('rank_special');
             $obj->setVar('rank_special', !$old);
             if ($userrank_Handler->insert($obj)) {

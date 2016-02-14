@@ -37,9 +37,9 @@ class XoopsSystemCpanel
     /**
      * Get an instance of the class
      *
-     * @return unknown
+     * @return XoopsSystemCpanel
      */
-    public static function &getInstance()
+    public static function getInstance()
     {
         static $instance;
         if (!isset($instance)) {

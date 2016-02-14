@@ -23,7 +23,7 @@
  * @version             $Id: register.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 include __DIR__ . '/mainfile.php';
-$xoopsPreload =& XoopsPreload::getInstance();
+$xoopsPreload = XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.register.start');
 
 xoops_loadLanguage('user');
@@ -170,13 +170,13 @@ switch ($op) {
             $stop .= implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()) . "<br />";
         }
         xoops_load('XoopsCaptcha');
-        $xoopsCaptcha =& XoopsCaptcha::getInstance();
+        $xoopsCaptcha = XoopsCaptcha::getInstance();
         if (!$xoopsCaptcha->verify()) {
             $stop .= $xoopsCaptcha->getMessage() . "<br />";
         }
         if (empty($stop)) {
             $member_handler = xoops_getHandler('member');
-            $newuser        =& $member_handler->createUser();
+            $newuser        = $member_handler->createUser();
             $newuser->setVar('user_viewemail', $user_viewemail, true);
             $newuser->setVar('uname', $uname, true);
             $newuser->setVar('email', $email, true);
@@ -280,7 +280,7 @@ switch ($op) {
             redirect_header('index.php', 1, '');
         }
         $member_handler = xoops_getHandler('member');
-        $thisuser       =& $member_handler->getUser($id);
+        $thisuser       = $member_handler->getUser($id);
         if (!is_object($thisuser)) {
             exit();
         }

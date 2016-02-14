@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -22,7 +22,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * A Config-Option
  *
  * @author              Kazumi Ono    <onokazu@xoops.org>
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  *
  * @package             kernel
  */
@@ -96,7 +96,7 @@ class XoopsConfigOption extends XoopsObject
  * This class is responsible for providing data access mechanisms to the data source
  * of XOOPS configuration option class objects.
  *
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @author              Kazumi Ono <onokazu@xoops.org>
  *
  * @package             kernel
@@ -148,15 +148,16 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
     }
 
     /**
-     * Insert a new option in the database
+     * Insert a new {@link XoopsConfigOption}
      *
-     * @param  XoopsConfigOption $confoption reference to a {@link XoopsConfigOption}
-     * @return bool              TRUE if successfull.
+     * @param XoopsObject|XoopsConfigOption $confoption a XoopsConfigOption object
+     *
+     * @return bool true on success, otherwise false
      */
     public function insert(XoopsObject $confoption)
     {
-        if (!(class_exists($this->className) && $confoption instanceof $this->className)) {
-        //if (!is_a($confoption, 'xoopsconfigoption')) {
+        $className = 'XoopsConfigOption';
+        if (!($confoption instanceof $className)) {
             return false;
         }
         if (!$confoption->isDirty()) {
@@ -202,15 +203,16 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
     }
 
     /**
-     * Delete an option
+     * Delete a {@link XoopsConfigOption}
      *
-     * @param  XoopsConfigOption &$confoption reference to a {@link XoopsConfigOption}
-     * @return bool              TRUE if successful
+     * @param XoopsObject|XoopsConfigOption $confoption a XoopsConfigOption object
+     *
+     * @return bool true on success, otherwise false
      */
     public function delete(XoopsObject $confoption)
     {
-        if (!(class_exists($this->className) && $confoption instanceof $this->className)) {
-        // if (!is_a($confoption, 'xoopsconfigoption')) {
+        $className = 'XoopsConfigOption';
+        if (!($confoption instanceof $className)) {
             return false;
         }
         $sql = sprintf("DELETE FROM %s WHERE confop_id = %u", $this->db->prefix('configoption'), $confoption->getVar('confop_id'));

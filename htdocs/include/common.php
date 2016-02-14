@@ -43,7 +43,7 @@ require_once XOOPS_ROOT_PATH . '/class/xoopsload.php';
  *  Create Instance of Preload Object
  */
 XoopsLoad::load('preload');
-$xoopsPreload =& XoopsPreload::getInstance();
+$xoopsPreload = XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.include.common.start');
 
 /**
@@ -69,8 +69,8 @@ $xoopsSecurity->checkSuperglobals();
  * Create Instantance XoopsLogger Object
  */
 XoopsLoad::load('xoopslogger');
-$xoopsLogger       =& XoopsLogger::getInstance();
-$xoopsErrorHandler =& XoopsLogger::getInstance();
+$xoopsLogger       = XoopsLogger::getInstance();
+$xoopsErrorHandler = XoopsLogger::getInstance();
 $xoopsLogger->startTime();
 $xoopsLogger->startTime('XOOPS Boot');
 
@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !$xoopsSecurity->checkReferer(XOOPS
  * Requires XoopsLogger, XOOPS_DB_PROXY;
  */
 include_once $xoops->path('class/database/databasefactory.php');
-$xoopsDB =& XoopsDatabaseFactory::getDatabaseConnection();
+$xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
 
 /**
  * Get xoops configs
@@ -318,7 +318,7 @@ if ($xoopsConfig['closesite'] == 1) {
 if (file_exists('./xoops_version.php')) {
     $url_arr        = explode('/', strstr($_SERVER['PHP_SELF'], '/modules/'));
     $module_handler = xoops_getHandler('module');
-    $xoopsModule    =& $module_handler->getByDirname($url_arr[2]);
+    $xoopsModule    = $module_handler->getByDirname($url_arr[2]);
     unset($url_arr);
 
     if (!$xoopsModule || !$xoopsModule->getVar('isactive')) {

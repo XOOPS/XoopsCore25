@@ -21,7 +21,7 @@ include_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
-$module_info =& $module_handler->get($xoopsModule->getVar("mid"));
+$module_info = $module_handler->get($xoopsModule->getVar("mid"));
 
 $aboutAdmin = new ModuleAdmin();
 

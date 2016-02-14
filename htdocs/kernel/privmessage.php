@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -22,7 +22,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * Private Messages
  *
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  *
  * @package             kernel
  **/
@@ -144,7 +144,7 @@ class XoopsPrivmessage extends XoopsObject
  * @package             kernel
  *
  * @author              Kazumi Ono    <onokazu@xoops.org>
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  *
  * @version             $Revision: 13090 $ - $Date: 2015-06-16 16:44:29 -0400 (Tue, 16 Jun 2015) $
  *
@@ -196,14 +196,14 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
      *
      * @param  XoopsPrivmessage $pm    {@link XoopsPrivmessage} object
      * @param  bool   $force flag to force the query execution skip request method check, which might be required in some situations
-     * @return bool
+     * @param  XoopsObject|XoopsPrivmessage $pm a XoopsMembership object
+     *
+     * @return bool true on success, otherwise false
      **/
     public function insert(XoopsObject $pm, $force = false)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($pm, 'xoopsprivmessage')) {
+        $className = 'XoopsPrivmessage';
+        if (!($pm instanceof $className)) {
             return false;
         }
 
@@ -241,10 +241,8 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
      **/
     public function delete(XoopsObject $pm)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($pm, 'xoopsprivmessage')) {
+        $className = 'XoopsPrivmessage';
+        if (!($pm instanceof $className)) {
             return false;
         }
 

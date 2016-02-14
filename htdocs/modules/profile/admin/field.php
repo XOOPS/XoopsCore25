@@ -102,13 +102,13 @@ switch ($op) {
 
     case "new":
         include_once dirname(__DIR__) . '/include/forms.php';
-        $obj  =& $profilefield_handler->create();
+        $obj  = $profilefield_handler->create();
         $form = profile_getFieldForm($obj);
         $form->display();
         break;
 
     case "edit":
-        $obj =& $profilefield_handler->get($_REQUEST['id']);
+        $obj = $profilefield_handler->get($_REQUEST['id']);
         if (!$obj->getVar('field_config') && !$obj->getVar('field_show') && !$obj->getVar('field_edit')) { //If no configs exist
             redirect_header('field.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
         }
@@ -161,12 +161,12 @@ switch ($op) {
         }
         $redirect_to_edit = false;
         if (isset($_REQUEST['id'])) {
-            $obj =& $profilefield_handler->get($_REQUEST['id']);
+            $obj = $profilefield_handler->get($_REQUEST['id']);
             if (!$obj->getVar('field_config') && !$obj->getVar('field_show') && !$obj->getVar('field_edit')) { //If no configs exist
                 redirect_header('admin.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
             }
         } else {
-            $obj =& $profilefield_handler->create();
+            $obj = $profilefield_handler->create();
             $obj->setVar('field_name', $_REQUEST['field_name']);
             $obj->setVar('field_moduleid', $GLOBALS['xoopsModule']->getVar('mid'));
             $obj->setVar('field_show', 1);
@@ -258,7 +258,7 @@ switch ($op) {
                         foreach ($_REQUEST[$perm] as $groupid) {
                             $groupid = (int)($groupid);
                             if (!isset($groups[$groupid])) {
-                                $perm_obj =& $groupperm_handler->create();
+                                $perm_obj = $groupperm_handler->create();
                                 $perm_obj->setVar('gperm_name', $perm);
                                 $perm_obj->setVar('gperm_itemid', (int)($obj->getVar('field_id')));
                                 $perm_obj->setVar('gperm_modid', $GLOBALS['xoopsModule']->getVar('mid'));
@@ -289,7 +289,7 @@ switch ($op) {
         break;
 
     case "delete":
-        $obj =& $profilefield_handler->get($_REQUEST['id']);
+        $obj = $profilefield_handler->get($_REQUEST['id']);
         if (!$obj->getVar('field_config')) {
             redirect_header('index.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
         }

@@ -101,7 +101,7 @@ class XoopsCacheModel extends XoopsCacheEngine
      */
     public function init($settings)
     {
-        $xoopsDB =& XoopsDatabaseFactory::getDatabaseConnection();
+        $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
 
         parent::init($settings);
         $defaults       = array('fields' => array('data', 'expires'));

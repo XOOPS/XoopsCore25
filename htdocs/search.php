@@ -204,7 +204,7 @@ switch ($action) {
     case 'showallbyuser':
         include $GLOBALS['xoops']->path('header.php');
         $module_handler = xoops_getHandler('module');
-        $module         =& $module_handler->get($mid);
+        $module         = $module_handler->get($mid);
         $results        = $module->search($queries, $andor, 20, $start, $uid);
         $count          = count($results);
         if (is_array($results) && $count > 0) {

@@ -43,7 +43,7 @@ class XoopsGuiDefault extends XoopsSystemGui
     /**
      * @return bool
      */
-    public function validate()
+    public static function validate()
     {
         return true;
     }

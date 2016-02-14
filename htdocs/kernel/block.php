@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -24,6 +24,10 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * @author  Kazumi Ono <onokazu@xoops.org>
  *
  * @package kernel
+ *
+ * @todo reconcile the two XoopsBlock classes.
+ * @internal This handler appears to only be loaded by system/class/group.php
+ * @internal The other, in class/xoopsblock.php is loaded all over
  */
 class XoopsBlock extends XoopsObject
 {
@@ -380,9 +384,11 @@ class XoopsBlock extends XoopsObject
  * of XOOPS block class objects.
  *
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @package             kernel
  * @subpackage          block
+ *
+ * @todo Why is this not a XoopsPersistableObjectHandler?
  */
 class XoopsBlockHandler extends XoopsObjectHandler
 {
@@ -431,15 +437,14 @@ class XoopsBlockHandler extends XoopsObjectHandler
     /**
      * write a new block into the database
      *
-     * @param XoopsBlock $block
+     * @param XoopsObject|XoopsBlock $block a XoopsBlock object
      *
-     * @internal param \XoopsBlock $object $block reference to the block to insert
-     * @return bool TRUE if successful
+     * @return bool true on success, otherwise false
      */
     public function insert(XoopsObject $block)
     {
-        if (!(class_exists($this->className) && $block instanceof $this->className)) {
-        //if (!is_a($block, 'xoopsblock')) {
+        $className = 'XoopsBlock';
+        if (!($block instanceof $className)) {
             return false;
         }
         if (!$block->isDirty()) {
@@ -448,14 +453,80 @@ class XoopsBlockHandler extends XoopsObjectHandler
         if (!$block->cleanVars()) {
             return false;
         }
-        foreach ($block->cleanVars as $k => $v) {
-            ${$k} = $v;
-        }
+
+        $bid = $block->getVar('bid', 'n');
+        $mid = $block->getVar('mid', 'n');
+        $func_num = $block->getVar('func_num', 'n');
+        $options = $block->getVar('options', 'n');
+        $name = $block->getVar('name', 'n');
+        $title = $block->getVar('title', 'n');
+        $content = $block->getVar('content', 'n');
+        $side = $block->getVar('side', 'n');
+        $weight = $block->getVar('weight', 'n');
+        $visible = $block->getVar('visible', 'n');
+        $c_type = $block->getVar('c_type', 'n');
+        $isactive = $block->getVar('isactive', 'n');
+        $func_file = $block->getVar('func_file', 'n');
+        $show_func = $block->getVar('show_func', 'n');
+        $edit_func = $block->getVar('edit_func', 'n');
+        $template = $block->getVar('template', 'n');
+        $bcachetime = $block->getVar('bcachetime', 'n');
+        $block_type = $block->getVar('block_type', 'n');
+        $dirname = $block->getVar('dirname', 'n');
+
         if ($block->isNew()) {
             $bid = $this->db->genId('newblocks_bid_seq');
-            $sql = sprintf("INSERT INTO %s (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES (%u, %u, %u, '%s', '%s', '%s', '%s', %u, %u, %u, '%s', '%s', %u, '%s', '%s', '%s', '%s', '%s', %u, %u)", $this->db->prefix('newblocks'), $bid, $mid, $func_num, $options, $name, $title, $content, $side, $weight, $visible, $block_type, $c_type, 1, $dirname, $func_file, $show_func, $edit_func, $template, $bcachetime, time());
+            $sql = sprintf(
+                "INSERT INTO %s (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type,"
+                . " c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified)"
+                . " VALUES (%u, %u, %u, '%s', '%s', '%s', '%s', %u, %u, %u, '%s', '%s', %u, '%s', '%s', '%s', '%s',"
+                . " '%s', %u, %u)",
+                $this->db->prefix('newblocks'),
+                $bid,
+                $mid,
+                $func_num,
+                $options,
+                $name,
+                $title,
+                $content,
+                $side,
+                $weight,
+                $visible,
+                $block_type,
+                $c_type,
+                1,
+                $dirname,
+                $func_file,
+                $show_func,
+                $edit_func,
+                $template,
+                $bcachetime,
+                time()
+            );
         } else {
-            $sql = sprintf("UPDATE %s SET func_num = %u, options = '%s', name = '%s', title = '%s', content = '%s', side = %u, weight = %u, visible = %u, c_type = '%s', isactive = %u, func_file = '%s', show_func = '%s', edit_func = '%s', template = '%s', bcachetime = %u, last_modified = %u WHERE bid = %u", $this->db->prefix('newblocks'), $func_num, $options, $name, $title, $content, $side, $weight, $visible, $c_type, $isactive, $func_file, $show_func, $edit_func, $template, $bcachetime, time(), $bid);
+            $sql = sprintf(
+                "UPDATE %s SET func_num = %u, options = '%s', name = '%s', title = '%s', content = '%s', side = %u,"
+                . " weight = %u, visible = %u, c_type = '%s', isactive = %u, func_file = '%s', show_func = '%s',"
+                . " edit_func = '%s', template = '%s', bcachetime = %u, last_modified = %u WHERE bid = %u",
+                $this->db->prefix('newblocks'),
+                $func_num,
+                $options,
+                $name,
+                $title,
+                $content,
+                $side,
+                $weight,
+                $visible,
+                $c_type,
+                $isactive,
+                $func_file,
+                $show_func,
+                $edit_func,
+                $template,
+                $bcachetime,
+                time(),
+                $bid
+            );
         }
         if (!$result = $this->db->query($sql)) {
             return false;
@@ -471,14 +542,14 @@ class XoopsBlockHandler extends XoopsObjectHandler
     /**
      * delete a block from the database
      *
-     * @param XoopsBlock $block
-     * @internal param \XoopsBlock $object $block reference to the block to delete
-     * @return bool TRUE if successful
+     * @param XoopsObject|XoopsBlock $block a XoopsBlock object
+     *
+     * @return bool true on success, otherwise false
      */
     public function delete(XoopsObject $block)
     {
-        if (!(class_exists($this->className) && $block instanceof $this->className)) {
-        //if (!is_a($block, 'xoopsblock')) {
+        $className = 'XoopsBlock';
+        if (!($block instanceof $className)) {
             return false;
         }
         $id  = $block->getVar('bid');
@@ -502,7 +573,8 @@ class XoopsBlockHandler extends XoopsObjectHandler
     {
         $ret   = array();
         $limit = $start = 0;
-        $sql   = 'SELECT DISTINCT(b.bid), b.* FROM ' . $this->db->prefix('newblocks') . ' b LEFT JOIN ' . $this->db->prefix('block_module_link') . ' l ON b.bid=l.block_id';
+        $sql   = 'SELECT DISTINCT(b.bid), b.* FROM ' . $this->db->prefix('newblocks') . ' b LEFT JOIN '
+            . $this->db->prefix('block_module_link') . ' l ON b.bid=l.block_id';
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
             $limit = $criteria->getLimit();

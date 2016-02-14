@@ -72,6 +72,7 @@ class CriteriaElement
 
     /**
      * Render the criteria element
+     * @return string
      */
     public function render()
     {

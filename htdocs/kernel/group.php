@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -21,7 +21,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 /**
  * a group of users
  *
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @author              Kazumi Ono <onokazu@xoops.org>
  * @package             kernel
  */
@@ -96,7 +96,7 @@ class XoopsGroup extends XoopsObject
  * of XOOPS group class objects.
  *
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @package             kernel
  * @subpackage          member
  */
@@ -147,13 +147,14 @@ class XoopsGroupHandler extends XoopsObjectHandler
     /**
      * insert a group into the database
      *
-     * @param XoopsGroup reference to the group object
-     * @return mixed ID of the group if inserted, FALSE if failed, TRUE if already present and unchanged.
+     * @param XoopsObject|XoopsGroup $group a group object
+     *
+     * @return bool true on success, otherwise false
      */
     public function insert(XoopsObject $group)
     {
-        if (!(class_exists($this->className) && $group instanceof $this->className)) {
-        //if (!is_a($group, 'xoopsgroup')) {
+        $className = 'XoopsGroup';
+        if (!($group instanceof $className)) {
             return false;
         }
         if (!$group->isDirty()) {
@@ -185,13 +186,14 @@ class XoopsGroupHandler extends XoopsObjectHandler
     /**
      * remove a group from the database
      *
-     * @param  XoopsGroup $group reference to the group to be removed
-     * @return bool       FALSE if failed
+     * @param XoopsObject|XoopsGroup $group a group object
+     *
+     * @return bool true on success, otherwise false
      */
     public function delete(XoopsObject $group)
     {
-        if (!(class_exists($this->className) && $group instanceof $this->className)) {
-        // if (!is_a($group, 'xoopsgroup')) {
+        $className = 'XoopsGroup';
+        if (!($group instanceof $className)) {
             return false;
         }
         $sql = sprintf("DELETE FROM %s WHERE groupid = %u", $this->db->prefix('groups'), $group->getVar('groupid'));
@@ -242,7 +244,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
  * membership of a user in a group
  *
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @package             kernel
  */
 class XoopsMembership extends XoopsObject
@@ -266,7 +268,7 @@ class XoopsMembership extends XoopsObject
  * of XOOPS group membership class objects.
  *
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @package             kernel
  */
 class XoopsMembershipHandler extends XoopsObjectHandler
@@ -315,13 +317,14 @@ class XoopsMembershipHandler extends XoopsObjectHandler
     /**
      * inserts a membership in the database
      *
-     * @param  XoopsMembership $mship reference to the membership object
-     * @return bool            TRUE if already in DB or successful, FALSE if failed
+     * @param  XoopsObject|XoopsMembership $mship a XoopsMembership object
+     *
+     * @return bool true on success, otherwise false
      */
     public function insert(XoopsObject $mship)
     {
-        if (!(class_exists($this->className) && $mship instanceof $this->className)) {
-        //if (!is_a($mship, 'xoopsmembership')) {
+        $className = 'XoopsMembership';
+        if (!($mship instanceof $className)) {
             return false;
         }
         if (!$mship->isDirty()) {
@@ -353,13 +356,14 @@ class XoopsMembershipHandler extends XoopsObjectHandler
     /**
      * delete a membership from the database
      *
-     * @param  XoopsMembership $mship reference to the membership object
-     * @return bool            FALSE if failed
+     * @param  XoopsObject|XoopsMembership $mship a XoopsMembership object
+     *
+     * @return bool true on success, otherwise false
      */
     public function delete(XoopsObject $mship)
     {
-        if (!(class_exists($this->className) && $mship instanceof $this->className)) {
-        //if (!is_a($mship, 'xoopsmembership')) {
+        $className = 'XoopsMembership';
+        if (!($mship instanceof $className)) {
             return false;
         }
 

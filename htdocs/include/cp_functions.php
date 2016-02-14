@@ -25,7 +25,7 @@ define('XOOPS_CPFUNC_LOADED', 1);
 function xoops_cp_header()
 {
     xoops_load('cpanel', 'system');
-    $cpanel =& XoopsSystemCpanel::getInstance();
+    $cpanel = XoopsSystemCpanel::getInstance();
     $cpanel->gui->header();
 }
 
@@ -36,7 +36,7 @@ function xoops_cp_header()
 function xoops_cp_footer()
 {
     xoops_load('cpanel', 'system');
-    $cpanel =& XoopsSystemCpanel::getInstance();
+    $cpanel = XoopsSystemCpanel::getInstance();
     $cpanel->gui->footer();
 }
 

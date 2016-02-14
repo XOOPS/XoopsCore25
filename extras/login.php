@@ -40,7 +40,7 @@ echo '
 if ($op === 'dologin') {
     $member_handler = xoops_getHandler('member');
     $myts           = MyTextSanitizer::getInstance();
-    $user           =& $member_handler->loginUser(addslashes($myts->stripSlashesGPC($username)), addslashes($myts->stripSlashesGPC($password)));
+    $user           = $member_handler->loginUser(addslashes($myts->stripSlashesGPC($username)), addslashes($myts->stripSlashesGPC($password)));
     if (is_object($user)) {
         if (0 == $user->getVar('level')) {
             redirect_header(XOOPS_URL . '/index.php', 5, _US_NOACTTPADM);

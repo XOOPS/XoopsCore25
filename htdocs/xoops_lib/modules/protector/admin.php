@@ -4,7 +4,7 @@ if (!class_exists('ProtectorRegistry')) {
     exit('Registry not found');
 }
 
-$registry  =& ProtectorRegistry::getInstance();
+$registry  = ProtectorRegistry::getInstance();
 $mydirname = $registry->getEntry('mydirname');
 $mydirpath = $registry->getEntry('mydirpath');
 $language  = $registry->getEntry('language');
@@ -16,9 +16,9 @@ $mytrustdirpath = __DIR__;
 // environment
 require_once XOOPS_ROOT_PATH . '/class/template.php';
 $module_handler    = xoops_getHandler('module');
-$xoopsModule       =& $module_handler->getByDirname($mydirname);
+$xoopsModule       = $module_handler->getByDirname($mydirname);
 $config_handler    = xoops_getHandler('config');
-$xoopsModuleConfig =& $config_handler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
+$xoopsModuleConfig = $config_handler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
 
 // check permission of 'module_admin' of this module
 $moduleperm_handler = xoops_getHandler('groupperm');

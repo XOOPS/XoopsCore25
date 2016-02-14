@@ -20,7 +20,7 @@ include __DIR__ . '/mainfile.php';
 
 XoopsLoad::load('XoopsRequest');
 
-$xoopsPreload =& XoopsPreload::getInstance();
+$xoopsPreload = XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.edituser.start');
 
 xoops_loadLanguage('user');
@@ -288,7 +288,7 @@ if ($op === 'avatarupload') {
             $uploader->setPrefix('cavt');
             if ($uploader->upload()) {
                 $avt_handler = xoops_getHandler('avatar');
-                $avatar      = &$avt_handler->create();
+                $avatar      = $avt_handler->create();
                 $avatar->setVar('avatar_file', 'avatars/' . $uploader->getSavedFileName());
                 $avatar->setVar('avatar_name', $xoopsUser->getVar('uname'));
                 $avatar->setVar('avatar_mimetype', $uploader->getMediaType());

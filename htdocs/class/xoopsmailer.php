@@ -207,7 +207,7 @@ class XoopsMailer
     /**
      * @param $user
      */
-    public function setFromUser(&$user)
+    public function setFromUser($user)
     {
         if (strtolower(get_class($user)) === "xoopsuser") {
             $this->fromUser = &$user;
@@ -377,7 +377,7 @@ class XoopsMailer
     {
         global $xoopsUser;
         $pm_handler = xoops_getHandler('privmessage');
-        $pm         = &$pm_handler->create();
+        $pm         = $pm_handler->create();
         $pm->setVar("subject", $subject);
         // RMV-NOTIFY
         $pm->setVar('from_userid', !empty($this->fromUser) ? $this->fromUser->getVar('uid') : (empty($xoopsUser) ? 1 : $xoopsUser->getVar('uid')));

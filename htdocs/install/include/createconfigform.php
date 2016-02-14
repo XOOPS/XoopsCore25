@@ -40,7 +40,7 @@ if (defined("_MD_AM_AUTHENTICATION")) {
 function createConfigform($config)
 {
     $config_handler         = xoops_getHandler('config');
-    $GLOBALS['xoopsConfig'] = $xoopsConfig =& $config_handler->getConfigsByCat(XOOPS_CONF);
+    $GLOBALS['xoopsConfig'] = $xoopsConfig = $config_handler->getConfigsByCat(XOOPS_CONF);
 
     $ret       = array();
     $confcount = count($config);
@@ -113,7 +113,7 @@ function createConfigform($config)
             case 'tplset':
                 $ele            = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
                 $tplset_handler = xoops_getHandler('tplset');
-                $tplsetlist     =& $tplset_handler->getList();
+                $tplsetlist     = $tplset_handler->getList();
                 asort($tplsetlist);
                 foreach ($tplsetlist as $key => $name) {
                     $ele->addOption($key, $name);
@@ -135,7 +135,7 @@ function createConfigform($config)
                 $module_handler = xoops_getHandler('module');
                 $criteria       = new CriteriaCompo(new Criteria('hasmain', 1));
                 $criteria->add(new Criteria('isactive', 1));
-                $moduleslist       =& $module_handler->getList($criteria, true);
+                $moduleslist       = $module_handler->getList($criteria, true);
                 $moduleslist['--'] = _MD_AM_NONE;
                 $ele->addOptionArray($moduleslist);
                 break;
@@ -159,7 +159,7 @@ function createConfigform($config)
 
             case 'module_cache':
                 $module_handler = xoops_getHandler('module');
-                $modules        =& $module_handler->getObjects(new Criteria('hasmain', 1), true);
+                $modules        = $module_handler->getObjects(new Criteria('hasmain', 1), true);
                 $currrent_val   = $config[$i]->getConfValueForOutput();
                 $cache_options  = array(
                     '0'      => _NOCACHE,

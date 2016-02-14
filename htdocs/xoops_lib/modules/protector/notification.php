@@ -4,7 +4,7 @@ if (!class_exists('ProtectorRegistry')) {
     exit('Registry not found');
 }
 
-$registry  =& ProtectorRegistry::getInstance();
+$registry  = ProtectorRegistry::getInstance();
 $mydirname = $registry->getEntry('mydirname');
 $mydirpath = $registry->getEntry('mydirpath');
 $language  = $registry->getEntry('language');
@@ -30,10 +30,10 @@ if (!function_exists('protector_notify_base')) {
     {
         include_once __DIR__ . '/include/common_functions.php';
 
-        $db =& XoopsDatabaseFactory::getDatabaseConnection();
+        $db = XoopsDatabaseFactory::getDatabaseConnection();
 
         $module_handler = xoops_getHandler('module');
-        $module         =& $module_handler->getByDirname($mydirname);
+        $module         = $module_handler->getByDirname($mydirname);
 
         if ($category === 'global') {
             $item['name'] = '';

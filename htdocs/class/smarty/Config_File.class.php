@@ -158,7 +158,7 @@ class Config_File
     public function &get_key($config_key)
     {
         list($file_name, $section_name, $var_name) = explode('/', $config_key, 3);
-        $result = &$this->get($file_name, $section_name, $var_name);
+        $result = $this->get($file_name, $section_name, $var_name);
 
         return $result;
     }

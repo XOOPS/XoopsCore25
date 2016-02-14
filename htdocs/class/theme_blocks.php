@@ -79,7 +79,7 @@ class xos_logos_PageBuilder
     public function retrieveBlocks()
     {
         global $xoopsConfig;
-        $xoopsPreload =& XoopsPreload::getInstance();
+        $xoopsPreload = XoopsPreload::getInstance();
 
         $startMod = ($xoopsConfig['startpage'] == '--') ? 'system' : $xoopsConfig['startpage'];
         if (isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule'])) {
@@ -183,7 +183,7 @@ class xos_logos_PageBuilder
         $tplName = ($tplName = $xobject->getVar('template')) ? "db:$tplName" : 'db:system_block_dummy.tpl';
         $cacheid = $this->generateCacheId('blk_' . $xobject->getVar('bid'));
 
-        $xoopsLogger =& XoopsLogger::getInstance();
+        $xoopsLogger = XoopsLogger::getInstance();
         if (!$bcachetime || !$template->is_cached($tplName, $cacheid)) {
 
             //Get theme metas
@@ -213,7 +213,7 @@ class xos_logos_PageBuilder
                 }
                 if (count($metas)) {
                     xoops_load('xoopscache');
-                    $cache =& XoopsCache::getInstance();
+                    $cache = XoopsCache::getInstance();
                     $cache->write($cacheid, $metas);
                 }
             }
@@ -225,7 +225,7 @@ class xos_logos_PageBuilder
         //add block cached metas
         if ($this->theme && $bcachetime) {
             xoops_load('xoopscache');
-            $cache =& XoopsCache::getInstance();
+            $cache = XoopsCache::getInstance();
             if ($metas = $cache->read($cacheid)) {
                 foreach ($metas as $type => $value) {
                     $this->theme->metas[$type] = array_merge($this->theme->metas[$type], $metas[$type]);

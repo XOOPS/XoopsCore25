@@ -29,7 +29,7 @@ if (!defined('XOOPS_MAINFILE_INCLUDED')) {
     }
 }
 
-$xoopsPreload =& XoopsPreload::getInstance();
+$xoopsPreload = XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.index.start');
 
 //check if start page is defined
@@ -39,7 +39,7 @@ if (isset($xoopsConfig['startpage']) && $xoopsConfig['startpage'] != "" && $xoop
 
     global $xoopsModuleConfig;
     $module_handler = xoops_getHandler('module');
-    $xoopsModule    =& $module_handler->getByDirname($xoopsConfig['startpage']);
+    $xoopsModule    = $module_handler->getByDirname($xoopsConfig['startpage']);
     if (!$xoopsModule || !$xoopsModule->getVar('isactive')) {
         include_once $GLOBALS['xoops']->path('header.php');
         echo "<h4>" . _MODULENOEXIST . "</h4>";

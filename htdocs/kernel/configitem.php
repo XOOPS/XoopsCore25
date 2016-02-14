@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -34,7 +34,7 @@ define('XOOPS_CONF_AUTH', 7);
  *
  *
  * @author              Kazumi Ono    <onokazu@xoops.org>
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  */
 class XoopsConfigItem extends XoopsObject
 {
@@ -272,7 +272,7 @@ class XoopsConfigItem extends XoopsObject
  * of XOOPS configuration class objects.
  *
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  */
 class XoopsConfigItemHandler extends XoopsObjectHandler
 {
@@ -322,13 +322,14 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
     /**
      * Write a config to the database
      *
-     * @param  XoopsConfigItem $config {@link XoopsConfigItem} object
-     * @return mixed           FALSE on fail.
+     * @param XoopsObject|XoopsConfigItem $config a XoopsConfigCategory object
+     *
+     * @return bool true on success, otherwise false
      */
     public function insert(XoopsObject $config)
     {
-        if (!(class_exists($this->className) && $config instanceof $this->className)) {
-        //if (!is_a($config, 'xoopsconfigitem')) {
+        $className = 'XoopsConfigItem';
+        if (!($config instanceof $className)) {
             return false;
         }
         if (!$config->isDirty()) {
@@ -337,9 +338,18 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
         if (!$config->cleanVars()) {
             return false;
         }
-        foreach ($config->cleanVars as $k => $v) {
-            ${$k} = $v;
-        }
+
+        $conf_id = $config->getVar('conf_id', 'n');
+        $conf_modid = $config->getVar('conf_modid', 'n');
+        $conf_catid = $config->getVar('conf_catid', 'n');
+        $conf_name = $config->getVar('conf_name', 'n');
+        $conf_title = $config->getVar('conf_title', 'n');
+        $conf_value = $config->getVar('conf_value', 'n');
+        $conf_desc = $config->getVar('conf_desc', 'n');
+        $conf_formtype = $config->getVar('conf_formtype', 'n');
+        $conf_valuetype = $config->getVar('conf_valuetype', 'n');
+        $conf_order = $config->getVar('conf_order', 'n');
+
         if ($config->isNew()) {
             $conf_id = $this->db->genId('config_conf_id_seq');
             $sql     = sprintf("INSERT INTO %s (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) VALUES (%u, %u, %u, %s, %s, %s, %s, %s, %s, %u)", $this->db->prefix('config'), $conf_id, $conf_modid, $conf_catid, $this->db->quoteString($conf_name), $this->db->quoteString($conf_title), $this->db->quoteString($conf_value), $this->db->quoteString($conf_desc), $this->db->quoteString($conf_formtype), $this->db->quoteString($conf_valuetype), $conf_order);
@@ -360,13 +370,14 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
     /**
      * Delete a config from the database
      *
-     * @param  XoopsConfigItem $config Config to delete
-     * @return bool            Successful?
+     * @param XoopsObject|XoopsConfigItem $config a XoopsConfigCategory object
+     *
+     * @return bool true on success, otherwise false
      */
     public function delete(XoopsObject $config)
     {
-        if (!(class_exists($this->className) && $config instanceof $this->className)) {
-        //if (!is_a($config, 'xoopsconfigitem')) {
+        $className = 'XoopsConfigItem';
+        if (!($config instanceof $className)) {
             return false;
         }
         $sql = sprintf("DELETE FROM %s WHERE conf_id = %u", $this->db->prefix('config'), $config->getVar('conf_id'));
@@ -421,8 +432,6 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
      */
     public function getCount(CriteriaElement $criteria = null)
     {
-        $ret   = array();
-        $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('config');
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();

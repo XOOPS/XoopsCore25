@@ -115,7 +115,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(_AM_SYSTEM_GROUPS_NAV_TIPS_2);
         $xoBreadCrumb->render();
         // Create form
-        $obj  =& $groups_Handler->create();
+        $obj  = $groups_Handler->create();
         $form = $obj->getForm();
         // Assign form
         $xoopsTpl->assign('form', $form->render());
@@ -153,7 +153,7 @@ switch ($op) {
         $read_bids     = system_CleanVars($_POST, 'read_bids', array(), 'array');
 
         $member_handler = xoops_getHandler('member');
-        $group          = &$member_handler->createGroup();
+        $group          = $member_handler->createGroup();
         $group->setVar('name', $_POST["name"]);
         $group->setVar('description', $_POST["desc"]);
         if (count($system_catids) > 0) {
@@ -169,7 +169,7 @@ switch ($op) {
             if (count($system_catids) > 0) {
                 $admin_mids[] = 1;
                 foreach ($system_catids as $s_cid) {
-                    $sysperm = &$gperm_handler->create();
+                    $sysperm = $gperm_handler->create();
                     $sysperm->setVar('gperm_groupid', $groupid);
                     $sysperm->setVar('gperm_itemid', $s_cid);
                     $sysperm->setVar('gperm_name', 'system_admin');
@@ -178,7 +178,7 @@ switch ($op) {
                 }
             }
             foreach ($admin_mids as $a_mid) {
-                $modperm = &$gperm_handler->create();
+                $modperm = $gperm_handler->create();
                 $modperm->setVar('gperm_groupid', $groupid);
                 $modperm->setVar('gperm_itemid', $a_mid);
                 $modperm->setVar('gperm_name', 'module_admin');
@@ -187,7 +187,7 @@ switch ($op) {
             }
             $read_mids[] = 1;
             foreach ($read_mids as $r_mid) {
-                $modperm = &$gperm_handler->create();
+                $modperm = $gperm_handler->create();
                 $modperm->setVar('gperm_groupid', $groupid);
                 $modperm->setVar('gperm_itemid', $r_mid);
                 $modperm->setVar('gperm_name', 'module_read');
@@ -195,7 +195,7 @@ switch ($op) {
                 $gperm_handler->insert($modperm);
             }
             foreach ($read_bids as $r_bid) {
-                $blockperm = &$gperm_handler->create();
+                $blockperm = $gperm_handler->create();
                 $blockperm->setVar('gperm_groupid', $groupid);
                 $blockperm->setVar('gperm_itemid', $r_bid);
                 $blockperm->setVar('gperm_name', 'block_read');
@@ -248,7 +248,7 @@ switch ($op) {
                 if (count($system_catids) > 0) {
                     $admin_mids[] = 1;
                     foreach ($system_catids as $s_cid) {
-                        $sysperm = &$gperm_handler->create();
+                        $sysperm = $gperm_handler->create();
                         $sysperm->setVar('gperm_groupid', $groupid);
                         $sysperm->setVar('gperm_itemid', $s_cid);
                         $sysperm->setVar('gperm_name', 'system_admin');
@@ -257,7 +257,7 @@ switch ($op) {
                     }
                 }
                 foreach ($admin_mids as $a_mid) {
-                    $modperm = &$gperm_handler->create();
+                    $modperm = $gperm_handler->create();
                     $modperm->setVar('gperm_groupid', $groupid);
                     $modperm->setVar('gperm_itemid', $a_mid);
                     $modperm->setVar('gperm_name', 'module_admin');
@@ -266,7 +266,7 @@ switch ($op) {
                 }
                 $read_mids[] = 1;
                 foreach ($read_mids as $r_mid) {
-                    $modperm = &$gperm_handler->create();
+                    $modperm = $gperm_handler->create();
                     $modperm->setVar('gperm_groupid', $groupid);
                     $modperm->setVar('gperm_itemid', $r_mid);
                     $modperm->setVar('gperm_name', 'module_read');
@@ -274,7 +274,7 @@ switch ($op) {
                     $gperm_handler->insert($modperm);
                 }
                 foreach ($read_bids as $r_bid) {
-                    $blockperm = &$gperm_handler->create();
+                    $blockperm = $gperm_handler->create();
                     $blockperm->setVar('gperm_groupid', $groupid);
                     $blockperm->setVar('gperm_itemid', $r_bid);
                     $blockperm->setVar('gperm_name', 'block_read');
@@ -292,7 +292,7 @@ switch ($op) {
     case 'groups_delete':
         $groups_id = system_CleanVars($_REQUEST, 'groups_id', 0, 'int');
         if ($groups_id > 0) {
-            $obj =& $groups_Handler->get($groups_id);
+            $obj = $groups_Handler->get($groups_id);
             if (isset($_POST["ok"]) && $_POST["ok"] == 1) {
                 if (!$GLOBALS["xoopsSecurity"]->check()) {
                     redirect_header("admin.php?fct=groups", 3, implode(",", $GLOBALS["xoopsSecurity"]->getErrors()));

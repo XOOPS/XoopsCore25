@@ -30,7 +30,7 @@ xoops_load('XoopsFormElement');
  * For verification:
  * <code>
  *               xoops_load("captcha");
- *               $xoopsCaptcha =& XoopsCaptcha::getInstance();
+ *               $xoopsCaptcha = XoopsCaptcha::getInstance();
  *               if (! $xoopsCaptcha->verify() ) {
  *                   echo $xoopsCaptcha->getMessage();
  *                   ...
@@ -59,7 +59,7 @@ class XoopsFormCaptcha extends XoopsFormElement
     public function __construct($caption = '', $name = 'xoopscaptcha', $skipmember = true, $configs = array())
     {
         xoops_load('XoopsCaptcha');
-        $this->captchaHandler  = &XoopsCaptcha::getInstance();
+        $this->captchaHandler  = XoopsCaptcha::getInstance();
         $configs['name']       = $name;
         $configs['skipmember'] = $skipmember;
         $this->captchaHandler->setConfigs($configs);

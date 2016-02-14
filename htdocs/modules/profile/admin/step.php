@@ -35,14 +35,14 @@ switch ($op) {
         break;
 
     case "new":
-        $obj =& $handler->create();
+        $obj = $handler->create();
         include_once dirname(__DIR__) . '/include/forms.php';
         $form = profile_getStepForm($obj);
         $form->display();
         break;
 
     case "edit":
-        $obj =& $handler->get($_REQUEST['id']);
+        $obj = $handler->get($_REQUEST['id']);
         include_once dirname(__DIR__) . '/include/forms.php';
         $form = profile_getStepForm($obj);
         $form->display();
@@ -50,9 +50,9 @@ switch ($op) {
 
     case "save":
         if (isset($_REQUEST['id'])) {
-            $obj =& $handler->get($_REQUEST['id']);
+            $obj = $handler->get($_REQUEST['id']);
         } else {
-            $obj =& $handler->create();
+            $obj = $handler->create();
         }
         $obj->setVar('step_name', $_REQUEST['step_name']);
         $obj->setVar('step_order', $_REQUEST['step_order']);
@@ -67,7 +67,7 @@ switch ($op) {
         break;
 
     case "delete":
-        $obj =& $handler->get($_REQUEST['id']);
+        $obj = $handler->get($_REQUEST['id']);
         if (isset($_REQUEST['ok']) && $_REQUEST['ok'] == 1) {
             if ($handler->delete($obj)) {
                 redirect_header('step.php', 3, sprintf(_PROFILE_AM_DELETEDSUCCESS, _PROFILE_AM_STEP));
@@ -105,7 +105,7 @@ function profile_stepsave_toggle($step_d, $step_save)
 {
     $step_save = ($step_save == 1) ? 0 : 1;
     $handler   = xoops_getModuleHandler('regstep');
-    $obj       =& $handler->get($_REQUEST['step_id']);
+    $obj       = $handler->get($_REQUEST['step_id']);
     $obj->setVar('step_save', $step_save);
     if ($handler->insert($obj, true)) {
         redirect_header('step.php', 1, _PROFILE_AM_SAVESTEP_TOGGLE_SUCCESS);

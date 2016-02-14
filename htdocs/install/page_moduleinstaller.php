@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     include_once './include/modulesadmin.php';
 
     $config_handler = xoops_getHandler('config');
-    $xoopsConfig    =& $config_handler->getConfigsByCat(XOOPS_CONF);
+    $xoopsConfig    = $config_handler->getConfigsByCat(XOOPS_CONF);
 
     $msgs = array();
     foreach ($_REQUEST['modules'] as $dirname => $installmod) {
@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Get installed modules
     $module_handler = xoops_getHandler('module');
-    $installed_mods =& $module_handler->getObjects();
+    $installed_mods = $module_handler->getObjects();
     $listed_mods    = array();
     foreach ($installed_mods as $module) {
         $listed_mods[] = $module->getVar('dirname');
@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             $file   = trim($file);
-            $module =& $module_handler->create();
+            $module = $module_handler->create();
             if (!$module->loadInfo($file, false)) {
                 continue;
             }

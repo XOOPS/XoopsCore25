@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -20,7 +20,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  **/
 
 /**
@@ -28,7 +28,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  *
  * @package         kernel
  * @author          Kazumi Ono  <onokazu@xoops.org>
- * @copyright   (c) 2000-2015 XOOPS Project - www.xoops.org
+ * @copyright   (c) 2000-2016 XOOPS Project - www.xoops.org
  */
 class XoopsImageSet extends XoopsObject
 {
@@ -140,14 +140,14 @@ class XoopsImagesetHandler extends XoopsObjectHandler
     /**
      * Write a {@link XoopsImageSet} object to the database
      *
-     * @param XoopsImageSet $imgset
-     * @internal param object $image {@link XoopsImageSet}
-     * @return bool
+     * @param  XoopsObject|XoopsImageSet $imgset a XoopsImageSet object
+     *
+     * @return bool true on success, otherwise false
      */
     public function insert(XoopsObject $imgset)
     {
-        if (!(class_exists($this->className) && $imgset instanceof $this->className)) {
-        // if (!is_a($imgset, 'XoopsImageSet')) {
+        $className = 'XoopsComment';
+        if (!($imgset instanceof $className)) {
             return false;
         }
 
@@ -180,14 +180,14 @@ class XoopsImagesetHandler extends XoopsObjectHandler
     /**
      * Delete an XoopsImageSet from the database
      *
-     * @param XoopsImageSet $imgset
-     * @internal param object $image {@link XoopsImageSet}
-     * @return bool
+     * @param  XoopsObject|XoopsImageSet $imgset a XoopsImageSet object
+     *
+     * @return bool true on success, otherwise false
      */
     public function delete(XoopsObject $imgset)
     {
-        if (!(class_exists($this->className) && $imgset instanceof $this->className)) {
-        //if (!is_a($imgset, 'XoopsImageSet')) {
+        $className = 'XoopsComment';
+        if (!($imgset instanceof $className)) {
             return false;
         }
         $sql = sprintf("DELETE FROM %s WHERE imgset_id = %u", $this->db->prefix('imgset'), $imgset->getVar('imgset_id'));

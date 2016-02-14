@@ -48,7 +48,7 @@ class XoopsGuiLegacy extends /* implements */
     /**
      * @return bool
      */
-    public function validate()
+    public static function validate()
     {
         return true;
     }

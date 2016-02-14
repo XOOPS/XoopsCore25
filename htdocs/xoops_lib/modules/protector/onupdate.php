@@ -4,7 +4,7 @@ if (!class_exists('ProtectorRegistry')) {
     exit('Registry not found');
 }
 
-$registry  =& ProtectorRegistry::getInstance();
+$registry  = ProtectorRegistry::getInstance();
 $mydirname = $registry->getEntry('mydirname');
 $mydirpath = $registry->getEntry('mydirpath');
 $language  = $registry->getEntry('language');
@@ -37,7 +37,7 @@ if (!function_exists('protector_onupdate_base')) {
             }
         }
 
-        $db  =& XoopsDatabaseFactory::getDatabaseConnection();
+        $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $mid = $module->getVar('mid');
 
         // TABLES (write here ALTER TABLE etc. if necessary)
@@ -72,7 +72,7 @@ if (!function_exists('protector_onupdate_base')) {
                 $file_path = $tpl_path . '/' . $file;
                 if (is_file($file_path) && in_array(strrchr($file, '.'), array('.html', '.css', '.js'))) {
                     $mtime   = (int)(@filemtime($file_path));
-                    $tplfile =& $tplfile_handler->create();
+                    $tplfile = $tplfile_handler->create();
                     $tplfile->setVar('tpl_source', file_get_contents($file_path), true);
                     $tplfile->setVar('tpl_refid', $mid);
                     $tplfile->setVar('tpl_tplset', 'default');

@@ -247,7 +247,7 @@ class MyTextSanitizer
     public function getSmileys($isAll = true)
     {
         if (count($this->smileys) == 0) {
-            $xoopsDB =& XoopsDatabaseFactory::getDatabaseConnection();
+            $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
             if ($getsmiles = $xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('smiles'))) {
                 while ($smiles = $xoopsDB->fetchArray($getsmiles)) {
                     $this->smileys[] = $smiles;

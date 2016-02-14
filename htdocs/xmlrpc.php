@@ -33,7 +33,7 @@ if (!$parser->parse()) {
     $response->add(new XoopsXmlRpcFault(102));
 } else {
     $module_handler = xoops_getHandler('module');
-    $module         =& $module_handler->getByDirname('news');
+    $module         = $module_handler->getByDirname('news');
     if (!is_object($module)) {
         $response->add(new XoopsXmlRpcFault(110));
     } else {

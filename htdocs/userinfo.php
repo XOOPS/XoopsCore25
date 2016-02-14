@@ -23,7 +23,7 @@
  * @version             $Id: userinfo.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 include __DIR__ . '/mainfile.php';
-$xoopsPreload =& XoopsPreload::getInstance();
+$xoopsPreload = XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.userinfo.start');
 
 xoops_loadLanguage('user');
@@ -59,7 +59,7 @@ if (is_object($xoopsUser)) {
         $thisUser =& $xoopsUser;
     } else {
         $member_handler = xoops_getHandler('member');
-        $thisUser       =& $member_handler->getUser($uid);
+        $thisUser       = $member_handler->getUser($uid);
         if (!is_object($thisUser) || !$thisUser->isActive()) {
             redirect_header("index.php", 3, _US_SELECTNG);
         }
@@ -69,7 +69,7 @@ if (is_object($xoopsUser)) {
     }
 } else {
     $member_handler = xoops_getHandler('member');
-    $thisUser       =& $member_handler->getUser($uid);
+    $thisUser       = $member_handler->getUser($uid);
     if (!is_object($thisUser) || !$thisUser->isActive()) {
         redirect_header("index.php", 3, _US_SELECTNG);
     }

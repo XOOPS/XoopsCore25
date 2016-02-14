@@ -18,13 +18,13 @@
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-$xoopsPreload =& XoopsPreload::getInstance();
+$xoopsPreload = XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.footer.start');
 
 if (!defined("XOOPS_FOOTER_INCLUDED")) {
     define("XOOPS_FOOTER_INCLUDED", 1);
 
-    $xoopsLogger =& XoopsLogger::getInstance();
+    $xoopsLogger = XoopsLogger::getInstance();
     $xoopsLogger->stopTime('Module display');
 
     if ($xoopsOption['theme_use_smarty'] == 0) {

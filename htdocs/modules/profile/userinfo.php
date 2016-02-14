@@ -59,7 +59,7 @@ if (is_object($GLOBALS['xoopsUser']) && $uid == $GLOBALS['xoopsUser']->getVar('u
     $thisUser =& $GLOBALS['xoopsUser'];
 } else {
     $member_handler = xoops_getHandler('member');
-    $thisUser       =& $member_handler->getUser($uid);
+    $thisUser       = $member_handler->getUser($uid);
 
     // Redirect if not a user or not active and the current user is not admin
     if (!is_object($thisUser) || (!$thisUser->isActive() && (!$GLOBALS['xoopsUser'] || !$GLOBALS['xoopsUser']->isAdmin()))) {

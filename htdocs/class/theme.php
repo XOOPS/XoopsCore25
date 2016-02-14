@@ -393,7 +393,7 @@ class xos_opal_Theme
             }
             $this->contentCacheId = $this->generateCacheId('page_' . substr(md5($uri), 0, 8));
             if ($this->template->is_cached($template, $this->contentCacheId)) {
-                $xoopsLogger =& XoopsLogger::getInstance();
+                $xoopsLogger = XoopsLogger::getInstance();
                 $xoopsLogger->addExtra($template, sprintf('Cached (regenerates every %d seconds)', $this->contentCacheLifetime));
                 $this->render(null, null, $template);
 
@@ -425,11 +425,11 @@ class xos_opal_Theme
         if ($this->renderCount) {
             return false;
         }
-        $xoopsLogger =& XoopsLogger::getInstance();
+        $xoopsLogger = XoopsLogger::getInstance();
         $xoopsLogger->startTime('Page rendering');
 
         xoops_load('xoopscache');
-        $cache =& XoopsCache::getInstance();
+        $cache = XoopsCache::getInstance();
 
         //Get meta information for cached pages
         if ($this->contentCacheLifetime && $this->contentCacheId && $content = $cache->read($this->contentCacheId)) {

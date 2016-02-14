@@ -73,7 +73,7 @@ switch ($op) {
                 $prev_modid      = $modid;
                 $prev_category   = -1;
                 $prev_item       = -1;
-                $module          =& $module_handler->get($modid);
+                $module          = $module_handler->get($modid);
                 $modules[$modid] = array(
                     'id'         => $modid,
                     'name'       => $module->getVar('name'),
@@ -195,7 +195,7 @@ switch ($op) {
         $notification_handler = xoops_getHandler('notification');
         foreach ($_POST['del_not'] as $n_array) {
             foreach ($n_array as $n) {
-                $notification =& $notification_handler->get($n);
+                $notification = $notification_handler->get($n);
                 if ($notification->getVar('not_uid') == $uid) {
                     $notification_handler->delete($notification);
                 }

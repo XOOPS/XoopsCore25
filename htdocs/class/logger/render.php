@@ -122,7 +122,7 @@ if (empty($mode) || $mode === 'deprecated') {
 if (empty($mode) || $mode === 'queries') {
     $class = 'even';
     $ret .= '<table id="xo-logger-queries" class="outer"><tr><th>' . _LOGGER_QUERIES . '</th></tr>';
-    $xoopsDB =& XoopsDatabaseFactory::getDatabaseConnection();
+    $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
     $pattern = '/\b' . preg_quote($xoopsDB->prefix()) . '\_/i';
 
     foreach ($this->queries as $q) {

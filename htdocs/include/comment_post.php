@@ -29,9 +29,9 @@ if ('system' === $xoopsModule->getVar('dirname')) {
         exit();
     }
     $comment_handler = xoops_getHandler('comment');
-    $comment         =& $comment_handler->get($com_id);
+    $comment         = $comment_handler->get($com_id);
     $module_handler  = xoops_getHandler('module');
-    $module          =& $module_handler->get($comment->getVar('com_modid'));
+    $module          = $module_handler->get($comment->getVar('com_modid'));
     $comment_config  = $module->getInfo('comments');
     $com_modid       = $module->getVar('mid');
     $redirect_page   = XOOPS_URL . '/modules/system/admin.php?fct=comments&com_modid=' . $com_modid . '&com_itemid';
@@ -79,7 +79,7 @@ if (!empty($_POST)) {
     }
     if ($op === 'post' && !is_object($xoopsUser)) {
         xoops_load('XoopsCaptcha');
-        $xoopsCaptcha =& XoopsCaptcha::getInstance();
+        $xoopsCaptcha = XoopsCaptcha::getInstance();
         if (!$xoopsCaptcha->verify()) {
             $error_message .= $xoopsCaptcha->getMessage() . '<br />';
         }
@@ -280,7 +280,7 @@ switch ($op) {
         // RMV-NOTIFY - this can be set to 'comment' or 'comment_submit'
         $notify_event = false;
         if (!empty($com_id)) {
-            $comment     =& $comment_handler->get($com_id);
+            $comment     = $comment_handler->get($com_id);
             $accesserror = false;
 
             if (is_object($xoopsUser)) {
@@ -473,7 +473,7 @@ switch ($op) {
             $uid = $comment->getVar('com_uid');
             if ($uid > 0 && false != $add_userpost) {
                 $member_handler = xoops_getHandler('member');
-                $poster         =& $member_handler->getUser($uid);
+                $poster         = $member_handler->getUser($uid);
                 if (is_object($poster)) {
                     $member_handler->updateUserByField($poster, 'posts', $poster->getVar('posts') + 1);
                 }
@@ -494,7 +494,7 @@ switch ($op) {
                 $comment_tags = array();
                 if ('system' === $xoopsModule->getVar('dirname')) {
                     $module_handler = xoops_getHandler('module');
-                    $not_module     =& $module_handler->get($not_modid);
+                    $not_module     = $module_handler->get($not_modid);
                 } else {
                     $not_module =& $xoopsModule;
                 }

@@ -188,7 +188,7 @@ function b_system_user_show()
 
     $pm_handler = xoops_getHandler('privmessage');
 
-    $xoopsPreload =& XoopsPreload::getInstance();
+    $xoopsPreload = XoopsPreload::getInstance();
     $xoopsPreload->triggerEvent('system.blocks.system_blocks.usershow', array(&$pm_handler));
 
     $block['new_messages']   = $pm_handler->getCount($criteria);
@@ -205,7 +205,7 @@ function b_system_user_show()
 function b_system_waiting_show()
 {
     global $xoopsUser;
-    $xoopsDB        =& XoopsDatabaseFactory::getDatabaseConnection();
+    $xoopsDB        = XoopsDatabaseFactory::getDatabaseConnection();
     $module_handler = xoops_getHandler('module');
     $block          = array();
 
@@ -312,7 +312,7 @@ function b_system_waiting_show()
 function b_system_info_show($options)
 {
     global $xoopsConfig, $xoopsUser;
-    $xoopsDB =& XoopsDatabaseFactory::getDatabaseConnection();
+    $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
     $myts    = MyTextSanitizer::getInstance();
     $block   = array();
     if (!empty($options[3])) {

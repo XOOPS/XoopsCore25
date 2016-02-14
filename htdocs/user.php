@@ -23,7 +23,7 @@
  * @version             $Id: user.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 include __DIR__ . '/mainfile.php';
-$xoopsPreload =& XoopsPreload::getInstance();
+$xoopsPreload = XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.user.start');
 
 xoops_loadLanguage('user');

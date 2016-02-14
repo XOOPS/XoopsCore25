@@ -24,7 +24,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  *
  * @author Taiwen Jiang <phppp@users.sourceforge.net>
  *
- * {@link XoopsObjectAbstract}
+ * {@link XoopsModelAbstract}
  */
 
 /**
@@ -114,7 +114,7 @@ class XoopsModelJoint extends XoopsModelAbstract
                 unset($object);
             }
         } else {
-            $object =& $this->handler->create(false);
+            $object = $this->handler->create(false);
             while ($myrow = $this->handler->db->fetchArray($result)) {
                 $object->assignVars($myrow);
                 $ret[$myrow[$this->handler->keyName]] = $object->getValues(array_keys($myrow));

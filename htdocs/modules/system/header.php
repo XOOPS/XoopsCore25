@@ -19,7 +19,7 @@ include_once dirname(dirname(__DIR__)) . '/include/cp_header.php';
 // Check user rights
 if (is_object($xoopsUser)) {
     $admintest   = 0;
-    $xoopsModule =& XoopsModule::getByDirname('system');
+    $xoopsModule = XoopsModule::getByDirname('system');
     if (!$xoopsUser->isAdmin($xoopsModule->mid())) {
         redirect_header(XOOPS_URL, 3, _NOPERM);
     }

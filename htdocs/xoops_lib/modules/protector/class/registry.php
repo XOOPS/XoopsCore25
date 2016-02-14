@@ -25,7 +25,7 @@ class ProtectorRegistry
     /**
      * @return ProtectorRegistry
      */
-    public static function &getInstance()
+    public static function getInstance()
     {
         static $instance = false;
         if (!$instance) {

@@ -18,7 +18,7 @@ function smarty_function_xoInboxCount($params, &$smarty)
     } else {
         $pm_handler = xoops_getHandler('privmessage');
 
-        $xoopsPreload =& XoopsPreload::getInstance();
+        $xoopsPreload = XoopsPreload::getInstance();
         $xoopsPreload->triggerEvent('core.class.smarty.xoops_plugins.xoinboxcount', array($pm_handler));
 
         $criteria = new CriteriaCompo(new Criteria('read_msg', 0));

@@ -82,7 +82,7 @@ function xoops_module_install($dirname)
         'bannerfinish');
     $module_handler = xoops_getHandler('module');
     if ($module_handler->getCount(new Criteria('dirname', $dirname)) == 0) {
-        $module =& $module_handler->create();
+        $module = $module_handler->create();
         $module->loadInfoAsVar($dirname);
         $module->setVar('weight', 1);
         $module->setVar('isactive', 1);
@@ -198,9 +198,9 @@ function xoops_module_install($dirname)
                 if ($templates != false) {
                     $msgs[] = _AM_SYSTEM_MODULES_TEMPLATES_ADD;
                     foreach ($templates as $tpl) {
-                        $tplfile =& $tplfile_handler->create();
+                        $tplfile = $tplfile_handler->create();
                         $type    = (isset($tpl['type']) ? $tpl['type'] : 'module');
-                        $tpldata =& xoops_module_gettemplate($dirname, $tpl['file'], $type);
+                        $tpldata =  xoops_module_gettemplate($dirname, $tpl['file'], $type);
                         $tplfile->setVar('tpl_source', $tpldata, true);
                         $tplfile->setVar('tpl_refid', $newmid);
 
@@ -264,7 +264,7 @@ function xoops_module_install($dirname)
                             $sql    = 'INSERT INTO ' . $db->prefix('block_module_link') . ' (block_id, module_id) VALUES (' . $newbid . ', -1)';
                             $db->query($sql);
                             if ($template != '') {
-                                $tplfile =& $tplfile_handler->create();
+                                $tplfile = $tplfile_handler->create();
                                 $tplfile->setVar('tpl_refid', $newbid);
                                 $tplfile->setVar('tpl_source', $content, true);
                                 $tplfile->setVar('tpl_tplset', 'default');
@@ -397,7 +397,7 @@ function xoops_module_install($dirname)
                     $config_handler = xoops_getHandler('config');
                     $order          = 0;
                     foreach ($configs as $config) {
-                        $confobj =& $config_handler->createConfig();
+                        $confobj = $config_handler->createConfig();
                         $confobj->setVar('conf_modid', $newmid);
                         $confobj->setVar('conf_catid', 0);
                         $confobj->setVar('conf_name', $config['name']);
@@ -439,7 +439,7 @@ function xoops_module_install($dirname)
             $gperm_handler = xoops_getHandler('groupperm');
             foreach ($groups as $mygroup) {
                 if ($gperm_handler->checkRight('module_admin', 0, $mygroup)) {
-                    $mperm =& $gperm_handler->create();
+                    $mperm = $gperm_handler->create();
                     $mperm->setVar('gperm_groupid', $mygroup);
                     $mperm->setVar('gperm_itemid', $newmid);
                     $mperm->setVar('gperm_name', 'module_admin');
@@ -451,7 +451,7 @@ function xoops_module_install($dirname)
                     }
                     unset($mperm);
                 }
-                $mperm =& $gperm_handler->create();
+                $mperm = $gperm_handler->create();
                 $mperm->setVar('gperm_groupid', $mygroup);
                 $mperm->setVar('gperm_itemid', $newmid);
                 $mperm->setVar('gperm_name', 'module_read');
@@ -463,7 +463,7 @@ function xoops_module_install($dirname)
                 }
                 unset($mperm);
                 foreach ($blocks as $blc) {
-                    $bperm =& $gperm_handler->create();
+                    $bperm = $gperm_handler->create();
                     $bperm->setVar('gperm_groupid', $mygroup);
                     $bperm->setVar('gperm_itemid', $blc);
                     $bperm->setVar('gperm_name', 'block_read');
@@ -606,7 +606,7 @@ function xoops_module_uninstall($dirname)
         'banner',
         'bannerclient',
         'bannerfinish');
-    $db             =& XoopsDatabaseFactory::getDatabaseConnection();
+    $db             = XoopsDatabaseFactory::getDatabaseConnection();
     $module_handler = xoops_getHandler('module');
     $module         = $module_handler->getByDirname($dirname);
     include_once XOOPS_ROOT_PATH . '/class/template.php';
@@ -794,7 +794,7 @@ function xoops_module_update($dirname)
 
     $dirname        = $myts->htmlspecialchars(trim($dirname));
     $module_handler = xoops_getHandler('module');
-    $module         =& $module_handler->getByDirname($dirname);
+    $module         = $module_handler->getByDirname($dirname);
     // Save current version for use in the update function
     $prev_version = $module->getVar('version');
     $clearTpl     = new XoopsTpl();
@@ -993,7 +993,7 @@ function xoops_module_update($dirname)
                             }
                             $gperm_handler = xoops_getHandler('groupperm');
                             foreach ($groups as $mygroup) {
-                                $bperm =& $gperm_handler->create();
+                                $bperm = $gperm_handler->create();
                                 $bperm->setVar('gperm_groupid', $mygroup);
                                 $bperm->setVar('gperm_itemid', $newbid);
                                 $bperm->setVar('gperm_name', 'block_read');
@@ -1006,7 +1006,7 @@ function xoops_module_update($dirname)
                             }
 
                             if ($template != '') {
-                                $tplfile =& $tplfile_handler->create();
+                                $tplfile = $tplfile_handler->create();
                                 $tplfile->setVar('tpl_module', $dirname);
                                 $tplfile->setVar('tpl_refid', $newbid);
                                 $tplfile->setVar('tpl_source', $content, true);

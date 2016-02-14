@@ -8,7 +8,7 @@ class protector_precommon_badip_errorlog extends ProtectorFilterAbstract
     public function execute()
     {
         echo _MD_PROTECTOR_YOUAREBADIP;
-        $protector =& Protector::getInstance();
+        $protector = Protector::getInstance();
         if ($protector->ip_matched_info) {
             printf(_MD_PROTECTOR_FMT_JAILINFO, date(_MD_PROTECTOR_FMT_JAILTIME, $protector->ip_matched_info));
         }

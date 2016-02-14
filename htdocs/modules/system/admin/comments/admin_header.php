@@ -29,7 +29,7 @@ include dirname(dirname(dirname(dirname(__DIR__)))) . '/mainfile.php';
 include $GLOBALS['xoops']->path('/include/cp_functions.php');
 if (is_object($xoopsUser)) {
     $module_handler = xoops_getHandler('module');
-    $xoopsModule    =& $module_handler->getByDirname('system');
+    $xoopsModule    = $module_handler->getByDirname('system');
     if (!in_array(XOOPS_GROUP_ADMIN, $xoopsUser->getGroups())) {
         include_once $GLOBALS['xoops']->path('modules/system/constants.php');
         $sysperm_handler = xoops_getHandler('groupperm');

@@ -46,7 +46,7 @@ if (!isset($_GET['com_order'])) {
     $com_order = (int)($_GET['com_order']);
 }
 $comment_handler = xoops_getHandler('comment');
-$comment         =& $comment_handler->get($com_id);
+$comment         = $comment_handler->get($com_id);
 
 // Start edit by voltan
 if ($comment->getVar('com_uid') == 0 && $comment->getVar('com_user') != '') {

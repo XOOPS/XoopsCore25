@@ -88,7 +88,7 @@ switch ($op) {
 
         // Initialize module handler
         $module_handler = xoops_getHandler('module');
-        $modules        =& $module_handler->getObjects(null, true);
+        $modules        = $module_handler->getObjects(null, true);
         $criteria       = new CriteriaCompo(new Criteria('hasmain', 1));
 
         $criteria->add(new Criteria('isactive', 1));
@@ -99,7 +99,7 @@ switch ($op) {
         $block_handler = xoops_getModuleHandler('block');
         // Initialize module handler
         $module_handler = xoops_getHandler('module');
-        $modules        =& $module_handler->getObjects(null, true);
+        $modules        = $module_handler->getObjects(null, true);
 
         $filterform = new XoopsThemeForm('', 'filterform', 'admin.php', 'get');
         $filterform->addElement(new XoopsFormHidden('fct', 'blocksadmin'));
@@ -262,7 +262,7 @@ switch ($op) {
         }
         // Initialize blocks handler
         $block_handler = xoops_getModuleHandler('block');
-        $block         =& $block_handler->create();
+        $block         = $block_handler->create();
         $block->setVars($_POST);
         $content = isset($_POST['content_block']) ? $_POST['content_block'] : '';
         $block->setVar('content', $content);
@@ -279,9 +279,9 @@ switch ($op) {
         // Get avatar id
         $block_id = system_CleanVars($_POST, 'bid', 0, 'int');
         if ($block_id > 0) {
-            $block =& $block_handler->get($block_id);
+            $block = $block_handler->get($block_id);
         } else {
-            $block =& $block_handler->create();
+            $block = $block_handler->create();
         }
         $block_type = system_CleanVars($_POST, 'block_type', '', 'string');
         $block->setVar('block_type', $block_type);
@@ -355,7 +355,7 @@ switch ($op) {
         }
         $groupperm_handler  = xoops_getHandler('groupperm');
         $groups             = $_POST['groups'];
-        $groups_with_access =& $groupperm_handler->getGroupIds("block_read", $newid);
+        $groups_with_access = $groupperm_handler->getGroupIds("block_read", $newid);
         $removed_groups     = array_diff($groups_with_access, $groups);
         if (count($removed_groups) > 0) {
             foreach ($removed_groups as $groupid) {

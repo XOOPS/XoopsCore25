@@ -40,7 +40,7 @@ function notificationEnabled($style, $module_id = null)
             return false;
         }
         $module_handler = xoops_getHandler('module');
-        $module         =& $module_handler->get($module_id);
+        $module         = $module_handler->get($module_id);
         if (!empty($module) && $module->getVar('hasnotification') == 1) {
             $config_handler = xoops_getHandler('config');
             $config         = $config_handler->getConfigsByCat(0, $module_id);
@@ -81,7 +81,7 @@ function &notificationCategoryInfo($category_name = '', $module_id = null)
         $module    =& $xoopsModule;
     } else {
         $module_handler = xoops_getHandler('module');
-        $module         = &$module_handler->get($module_id);
+        $module         = $module_handler->get($module_id);
     }
     $not_config = &$module->getInfo('notification');
     if (empty($category_name)) {

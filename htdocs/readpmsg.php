@@ -17,7 +17,7 @@
  */
 
 include __DIR__ . '/mainfile.php';
-$xoopsPreload =& XoopsPreload::getInstance();
+$xoopsPreload = XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.readpmsg.start');
 
 xoops_loadLanguage('pmsg');
@@ -36,7 +36,7 @@ if (!is_object($xoopsUser)) {
             include $GLOBALS['xoops']->path('footer.php');
             exit();
         }
-        $pm =& $pm_handler->get((int)($_POST['msg_id']));
+        $pm = $pm_handler->get((int)($_POST['msg_id']));
         if (!is_object($pm) || $pm->getVar('to_userid') != $xoopsUser->getVar('uid') || !$pm_handler->delete($pm)) {
             exit();
         } else {

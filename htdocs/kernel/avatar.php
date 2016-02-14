@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -22,7 +22,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * A Avatar
  *
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  *
  * @package             kernel
  */
@@ -139,7 +139,7 @@ class XoopsAvatar extends XoopsObject
     /**
      * Set User Count
      *
-     * @param unknown_type $value
+     * @param int $value
      */
     public function setUserCount($value)
     {
@@ -149,7 +149,7 @@ class XoopsAvatar extends XoopsObject
     /**
      * Get User Count
      *
-     * @return unknown
+     * @return int
      */
     public function getUserCount()
     {
@@ -164,7 +164,7 @@ class XoopsAvatar extends XoopsObject
  * of XOOPS block class objects.
  *
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @package             kernel
  * @subpackage          block
  */
@@ -216,13 +216,14 @@ class XoopsAvatarHandler extends XoopsObjectHandler
     /**
      * Insert and Object into the database
      *
-     * @param  unknown_type $avatar
-     * @return unknown
+     * @param  XoopsObject|XoopsAvatar $avatar a XoopsAvatar object
+     *
+     * @return bool true on success, otherwise false
      */
     public function insert(XoopsObject $avatar)
     {
-        if (!(class_exists($this->className) && $avatar instanceof $this->className)) {
-        //if (!is_a($avatar, 'xoopsavatar')) {
+        $className = 'XoopsAvatar';
+        if (!($avatar instanceof $className)) {
             return false;
         }
         if (!$avatar->isDirty()) {
@@ -252,15 +253,16 @@ class XoopsAvatarHandler extends XoopsObjectHandler
     }
 
     /**
-     * Delete an object from thr database
+     * Delete an object from the database
      *
-     * @param  unknown_type $avatar
-     * @return unknown
+     * @param  XoopsObject|XoopsAvatar $avatar a XoopsAvatar object
+     *
+     * @return bool true on success, otherwise false
      */
     public function delete(XoopsObject $avatar)
     {
-        if (!(class_exists($this->className) && $avatar instanceof $this->className)) {
-        //if (!is_a($avatar, 'xoopsavatar')) {
+        $className = 'XoopsAvatar';
+        if (!($avatar instanceof $className)) {
             return false;
         }
 
