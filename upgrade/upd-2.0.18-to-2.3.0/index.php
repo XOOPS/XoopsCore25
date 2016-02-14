@@ -50,7 +50,7 @@ class Upgrade_230 extends XoopsUpgrade
         }
         list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
 
-        return ($count == 2) ? true : false;
+        return ($count == 2);
     }
 
     /**
@@ -64,11 +64,8 @@ class Upgrade_230 extends XoopsUpgrade
         if (!$result) {
             return false;
         }
-        if ($GLOBALS['xoopsDB']->getRowsNum($result) > 0) {
-            return true;
-        }
 
-        return false;
+        return $GLOBALS['xoopsDB']->getRowsNum($result) > 0;
 
         /*
         $sql = "SELECT COUNT(*) FROM `" . $GLOBALS['xoopsDB']->prefix('cache_model') . "`";
@@ -313,8 +310,8 @@ class Upgrade_230 extends XoopsUpgrade
                         if (preg_match('/(enum)|(set)/', $result['Type'])) {
                             $binary_querys[] = "ALTER TABLE `$table` MODIFY `" . $result['Field'] . '` ' . $result['Type'] . ' CHARACTER SET binary ' . (((!empty($result['Default'])) || ($result['Default'] === '0') || ($result['Default'] === 0)) ? "DEFAULT '" . $result['Default'] . "' " : '') . ('YES' === $result['Null'] ? '' : 'NOT ') . 'NULL';
                         } else {
-                            $result['Type']  = preg_replace('/char/', 'binary', $result['Type']);
-                            $result['Type']  = preg_replace('/text/', 'blob', $result['Type']);
+                            $result['Type']  = str_replace("char", 'binary', $result['Type']);
+                            $result['Type']  = str_replace("text", 'blob', $result['Type']);
                             $binary_querys[] = "ALTER TABLE `$table` MODIFY `" . $result['Field'] . '` ' . $result['Type'] . ' ' . (((!empty($result['Default'])) || ($result['Default'] === '0') || ($result['Default'] === 0)) ? "DEFAULT '" . $result['Default'] . "' " : '') . ('YES' === $result['Null'] ? '' : 'NOT ') . 'NULL';
                         }
                     }

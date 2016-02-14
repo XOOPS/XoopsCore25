@@ -408,10 +408,6 @@ if (!function_exists('admin_refcheck')) {
         if ($chkref != "") {
             $cr .= $chkref;
         }
-        if (strpos($ref, $cr) !== 0) {
-            return false;
-        }
-
-        return true;
+        return !(strpos($ref, $cr) !== 0);
     }
 }

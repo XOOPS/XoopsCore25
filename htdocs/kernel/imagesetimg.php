@@ -285,10 +285,6 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
     {
         $criteria = new CriteriaCompo(new Criteria('imgsetimg_file', $filename));
         $criteria->add(new Criteria('imgsetimg_imgset', (int)($imgset_id)));
-        if ($this->getCount($criteria) > 0) {
-            return true;
-        }
-
-        return false;
+        return $this->getCount($criteria) > 0;
     }
 }

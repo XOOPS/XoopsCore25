@@ -46,7 +46,7 @@ class Db_manager
      */
     public function isConnectable()
     {
-        return ($this->db->connect(false) != false) ? true : false;
+        return ($this->db->connect(false) != false);
     }
 
     /**
@@ -54,7 +54,7 @@ class Db_manager
      */
     public function dbExists()
     {
-        return ($this->db->connect() != false) ? true : false;
+        return ($this->db->connect() != false);
     }
 
     /**
@@ -66,7 +66,7 @@ class Db_manager
 
         $result = $this->db->query("CREATE DATABASE " . XOOPS_DB_NAME);
 
-        return ($result != false) ? true : false;
+        return ($result != false);
     }
 
     /**
@@ -287,7 +287,7 @@ class Db_manager
         if ($table != '') {
             $this->db->connect();
             $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix($table);
-            $ret = (false != $this->db->query($sql)) ? true : false;
+            $ret = (false != $this->db->query($sql));
         }
 
         return $ret;

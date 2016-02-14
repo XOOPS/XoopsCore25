@@ -41,9 +41,9 @@ class MovableTypeApi extends XoopsXmlRpcApi
      * @param $response
      * @param $module
      */
-    public function MovableTypeApi(&$params, &$response, &$module)
+    public function __construct(&$params, &$response, &$module)
     {
-        $this->XoopsXmlRpcApi($params, $response, $module);
+        parent::__construct($params, $response, $module);
     }
 
     public function getCategoryList()

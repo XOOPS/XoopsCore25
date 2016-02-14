@@ -44,7 +44,7 @@ class XoopsComments extends XoopsObject
      * @param      $ctable
      * @param null $id
      */
-    public function XoopsComments($ctable, $id = null)
+    public function __construct($ctable, $id = null)
     {
         $this->ctable = $ctable;
         $this->db     = XoopsDatabaseFactory::getDatabaseConnection();

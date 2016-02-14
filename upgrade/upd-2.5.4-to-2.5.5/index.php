@@ -89,7 +89,7 @@ class Upgrade_255 extends XoopsUpgrade
             $fieldInfo = mysqli_fetch_field_direct($result, 0);
             $length = $fieldInfo->length;
 
-            return ($length == 8) ? false : true;
+            return ($length == 8);
         }
         return null;
     }

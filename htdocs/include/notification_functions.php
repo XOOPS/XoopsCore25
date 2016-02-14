@@ -53,13 +53,8 @@ function notificationEnabled($style, $module_id = null)
     if (($style === 'block') && ($status === XOOPS_NOTIFICATION_ENABLEBLOCK || $status === XOOPS_NOTIFICATION_ENABLEBOTH)) {
         return true;
     }
-    if (($style === 'inline') && ($status === XOOPS_NOTIFICATION_ENABLEINLINE || $status === XOOPS_NOTIFICATION_ENABLEBOTH)) {
-        return true;
-    }
-    // if ($status != XOOPS_NOTIFICATION_DISABLE) {
-    //         return true;
-    // }
-    return false;
+
+    return ($style === 'inline') && ($status === XOOPS_NOTIFICATION_ENABLEINLINE || $status === XOOPS_NOTIFICATION_ENABLEBOTH);
 }
 
 /**

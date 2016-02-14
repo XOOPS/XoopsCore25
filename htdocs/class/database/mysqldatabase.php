@@ -194,8 +194,8 @@ class XoopsMySQLDatabase extends XoopsDatabase
      */
     public function freeRecordSet($result)
     {
-        return ((mysqli_free_result($result) || (is_object($result)
-                && (get_class($result) === 'mysqli_result'))) ? true : false);
+        return (mysqli_free_result($result) || (is_object($result)
+                && (get_class($result) === 'mysqli_result')));
     }
 
     /**

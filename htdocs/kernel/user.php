@@ -238,11 +238,7 @@ class XoopsUser extends XoopsObject
      */
     public function isActive()
     {
-        if ($this->getVar('level') == 0) {
-            return false;
-        }
-
-        return true;
+        return !($this->getVar('level') == 0);
     }
 
     /**

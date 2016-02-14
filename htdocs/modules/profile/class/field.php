@@ -454,7 +454,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
             $this->table_link = $this->db->prefix('profile_category');
             $criteria         = new Criteria('o.field_id', 0, "!=");
             $criteria->setSort('l.cat_weight ASC, o.field_weight');
-            $field_objs = $this->getByLink($criteria, array('o.*'), true, 'cat_id', 'cat_id');
+            $field_objs =& $this->getByLink($criteria, array('o.*'), true, 'cat_id', 'cat_id');
             foreach (array_keys($field_objs) as $i) {
                 $fields[$field_objs[$i]->getVar('field_name')] = $field_objs[$i];
             }

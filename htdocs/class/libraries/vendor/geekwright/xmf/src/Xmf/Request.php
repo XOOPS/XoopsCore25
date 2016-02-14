@@ -482,8 +482,8 @@ class Request
 
         // Handle magic quotes compatability
         if (get_magic_quotes_gpc() && ($hash !== 'FILES')) {
-            $input = XoopsRequest::stripSlashesRecursive($input);
-        }
+        $input = XoopsRequest::stripSlashesRecursive($input);
+    }
 
         $result = self::cleanVars($input, $mask);
 

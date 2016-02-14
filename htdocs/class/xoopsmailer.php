@@ -358,11 +358,7 @@ class XoopsMailer
             }
             flush();
         }
-        if (count($this->errors) > 0) {
-            return false;
-        }
-
-        return true;
+        return !(count($this->errors) > 0);
     }
 
     // private

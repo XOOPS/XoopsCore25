@@ -621,7 +621,7 @@ class Tables
                     $ddl=$this->renderTableCreate($ddl['createtable']);
                 }
             }
-            $result = $this->execSql($ddl, $force);
+            $result =& $this->execSql($ddl, $force);
             if (!$result) {
                 $this->lastError = $this->db->error();
                 $this->lastErrNo = $this->db->errno();
@@ -857,7 +857,7 @@ class Tables
         $sql .= ' AND t.TABLE_NAME = \'' . $this->name($table) . '\' ';
         $sql .= ' AND t.TABLE_COLLATION  = c.COLLATION_NAME ';
 
-        $result = $this->execSql($sql);
+        $result =& $this->execSql($sql);
         if (!$result) {
             return false;
         }
@@ -875,7 +875,7 @@ class Tables
         $sql .= ' AND TABLE_NAME = \'' . $this->name($table) . '\' ';
         $sql .= ' ORDER BY `ORDINAL_POSITION` ';
 
-        $result = $this->execSql($sql);
+        $result =& $this->execSql($sql);
 
         while ($column=$this->fetch($result)) {
             $attributes = ' ' . $column['COLUMN_TYPE'] . ' '
@@ -900,7 +900,7 @@ class Tables
         $sql .= ' AND TABLE_NAME = \'' . $this->name($table) . '\' ';
         $sql .= ' ORDER BY `INDEX_NAME`, `SEQ_IN_INDEX` ';
 
-        $result = $this->execSql($sql);
+        $result =& $this->execSql($sql);
 
         $lastKey = '';
         $keyCols='';

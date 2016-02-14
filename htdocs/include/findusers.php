@@ -102,7 +102,7 @@ class XoopsRankHandler extends XoopsObjectHandler
      */
     public function get($id = 0)
     {
-        $object = $this->create(false);
+        $object =& $this->create(false);
         $sql    = "SELECT * FROM " . $this->db->prefix('ranks') . " WHERE rank_id = " . $this->db->quoteString($id);
         if (!$result = $this->db->query($sql)) {
             $ret = null;
@@ -280,7 +280,7 @@ class XoUserHandler extends XoopsObjectHandler
         $result = $this->db->query($sql, $limit, $start);
         $ret    = array();
         while ($myrow = $this->db->fetchArray($result)) {
-            $object = $this->create(false);
+            $object =& $this->create(false);
             $object->assignVars($myrow);
             $ret[$myrow["uid"]] = $object;
             unset($object);
@@ -573,7 +573,7 @@ if (empty($_POST["user_submit"])) {
         $result     = $xoopsDB->query($query, $limit, $start);
         $foundusers = array();
         while ($myrow = $xoopsDB->fetchArray($result)) {
-            $object = $user_handler->create(false);
+            $object =& $user_handler->create(false);
             $object->assignVars($myrow);
             $foundusers[$myrow["uid"]] = $object;
             unset($object);

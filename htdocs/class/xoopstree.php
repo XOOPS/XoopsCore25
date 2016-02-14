@@ -45,7 +45,7 @@ class XoopsTree
      * @param $id_name
      * @param $pid_name
      */
-    public function XoopsTree($table_name, $id_name, $pid_name)
+    public function __construct($table_name, $id_name, $pid_name)
     {
         $GLOBALS['xoopsLogger']->addDeprecated("Class '" . __CLASS__ . "' is deprecated, check 'XoopsObjectTree' in tree.php");
         $this->db = XoopsDatabaseFactory::getDatabaseConnection();

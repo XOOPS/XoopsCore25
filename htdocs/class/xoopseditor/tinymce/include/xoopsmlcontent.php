@@ -19,8 +19,4 @@ if ($GLOBALS["module_handler"]->getByDirname("xlanguage") && defined("XLANGUAGE_
 }
 
 // Easiest Multi-Language Hack (EMLH)
-if (defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES')) {
-    return true;
-}
-
-return false;
+return defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES');

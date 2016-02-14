@@ -41,9 +41,9 @@ class MetaWeblogApi extends XoopsXmlRpcApi
      * @param $response
      * @param $module
      */
-    public function MetaWeblogApi(&$params, &$response, &$module)
+    public function __construct(&$params, &$response, &$module)
     {
-        $this->XoopsXmlRpcApi($params, $response, $module);
+        parent::__construct($params, $response, $module);
         $this->_setXoopsTagMap('storyid', 'postid');
         $this->_setXoopsTagMap('published', 'dateCreated');
         $this->_setXoopsTagMap('uid', 'userid');

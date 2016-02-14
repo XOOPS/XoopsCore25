@@ -171,10 +171,7 @@ class XoopsSecurity
         if ($ref == '') {
             return false;
         }
-        if (strpos($ref, XOOPS_URL) !== 0) {
-            return false;
-        }
-        return true;
+        return !(strpos($ref, XOOPS_URL) !== 0);
     }
 
     /**

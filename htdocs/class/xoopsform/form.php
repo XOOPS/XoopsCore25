@@ -93,7 +93,7 @@ class XoopsForm
     public $_required = array();
 
     /**
-     * additional seralised object checksum (ERM Analysis - Requirement)
+     * additional serialised object checksum (ERM Analysis - Requirement)
      * @deprecated
      * @access private
      */

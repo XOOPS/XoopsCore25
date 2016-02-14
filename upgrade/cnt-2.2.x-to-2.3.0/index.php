@@ -37,11 +37,7 @@ class Upgrade_220 extends XoopsUpgrade
         if (!$result) {
             return true;
         }
-        if ($GLOBALS['xoopsDB']->getRowsNum($result) > 0) {
-            return false;
-        }
-
-        return true;
+        return !($GLOBALS['xoopsDB']->getRowsNum($result) > 0);
     }
 
     /**
@@ -59,11 +55,8 @@ class Upgrade_220 extends XoopsUpgrade
         if (!$result) {
             return false;
         }
-        if ($GLOBALS['xoopsDB']->getRowsNum($result) == 0) {
-            return false;
-        }
 
-        return true;
+        return !($GLOBALS['xoopsDB']->getRowsNum($result) == 0);
     }
 
     /**
@@ -77,11 +70,8 @@ class Upgrade_220 extends XoopsUpgrade
         if (!$result) {
             return true;
         }
-        if ($GLOBALS['xoopsDB']->getRowsNum($result) > 0) {
-            return false;
-        }
 
-        return true;
+        return !($GLOBALS['xoopsDB']->getRowsNum($result) > 0);
     }
 
     /**

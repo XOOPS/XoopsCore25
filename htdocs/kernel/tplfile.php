@@ -521,10 +521,6 @@ class XoopsTplfileHandler extends XoopsObjectHandler
     {
         $criteria = new CriteriaCompo(new Criteria('tpl_file', trim($tplname)));
         $criteria->add(new Criteria('tpl_tplset', trim($tplset_name)));
-        if ($this->getCount($criteria) > 0) {
-            return true;
-        }
-
-        return false;
+        return $this->getCount($criteria) > 0;
     }
 }

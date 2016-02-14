@@ -234,11 +234,7 @@ class SystemBlock extends XoopsBlock
      */
     public function isCustom()
     {
-        if ($this->getVar('block_type') === 'C') {
-            return true;
-        }
-
-        return false;
+        return $this->getVar('block_type') === 'C';
     }
 
     /**

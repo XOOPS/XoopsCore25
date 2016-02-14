@@ -216,11 +216,7 @@ function xoops_setActiveModules()
  */
 function xoops_isActiveModule($dirname)
 {
-    if (isset($dirname) && in_array($dirname, xoops_getActiveModules())) {
-        return true;
-    }
-
-    return false;
+    return isset($dirname) && in_array($dirname, xoops_getActiveModules());
 }
 
 /**

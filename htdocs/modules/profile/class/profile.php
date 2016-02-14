@@ -105,7 +105,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
     {
         $obj = parent::get($uid);
         if (!is_object($obj) && $createOnFailure) {
-            $obj = $this->create();
+            $obj =& $this->create();
         }
 
         return $obj;
@@ -325,7 +325,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
         $users        = array();
         $profiles     = array();
         while ($myrow = $this->db->fetchArray($result)) {
-            $profile = $this->create(false);
+            $profile =& $this->create(false);
             $user    = $user_handler->create(false);
 
             foreach ($myrow as $name => $value) {

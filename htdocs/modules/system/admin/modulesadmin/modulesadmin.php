@@ -200,7 +200,7 @@ function xoops_module_install($dirname)
                     foreach ($templates as $tpl) {
                         $tplfile = $tplfile_handler->create();
                         $type    = (isset($tpl['type']) ? $tpl['type'] : 'module');
-                        $tpldata =  xoops_module_gettemplate($dirname, $tpl['file'], $type);
+                        $tpldata =&  xoops_module_gettemplate($dirname, $tpl['file'], $type);
                         $tplfile->setVar('tpl_source', $tpldata, true);
                         $tplfile->setVar('tpl_refid', $newmid);
 
@@ -919,7 +919,7 @@ function xoops_module_update($dirname)
                     $funcfiles[] = $block['file'];
                     $template    = '';
                     if ((isset($block['template']) && trim($block['template']) != '')) {
-                        $content = xoops_module_gettemplate($dirname, $block['template'], 'blocks');
+                        $content =& xoops_module_gettemplate($dirname, $block['template'], 'blocks');
                     }
                     if (!$content) {
                         $content = '';

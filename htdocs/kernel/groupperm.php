@@ -375,11 +375,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
         if ($gperm_itemid > 0) {
             $criteria->add(new Criteria('gperm_itemid', $gperm_itemid));
         }
-        if ($this->getCount($criteria) > 0) {
-            return true;
-        }
-
-        return false;
+        return $this->getCount($criteria) > 0;
     }
 
     /**

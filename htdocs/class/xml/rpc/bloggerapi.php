@@ -41,9 +41,9 @@ class BloggerApi extends XoopsXmlRpcApi
      * @param $response
      * @param $module
      */
-    public function BloggerApi(&$params, &$response, &$module)
+    public function __construct(&$params, &$response, &$module)
     {
-        $this->XoopsXmlRpcApi($params, $response, $module);
+        parent::__construct($params, $response, $module);
         $this->_setXoopsTagMap('storyid', 'postid');
         $this->_setXoopsTagMap('published', 'dateCreated');
         $this->_setXoopsTagMap('uid', 'userid');
