@@ -207,7 +207,7 @@ class XoopsMailer
     /**
      * @param $user
      */
-    public function setFromUser(&$user)
+    public function setFromUser($user)
     {
         if (strtolower(get_class($user)) === "xoopsuser") {
             $this->fromUser = &$user;

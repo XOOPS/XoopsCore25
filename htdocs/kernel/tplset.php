@@ -196,7 +196,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
     public function insert(XoopsObject $tplset)
     {
         $className = 'XoopsTplset';
-        if (!($tplfile instanceof $className)) {
+        if (!($tplset instanceof $className)) {
             return false;
         }
         if (!$tplset->isDirty()) {
@@ -235,7 +235,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
     public function delete(XoopsObject $tplset)
     {
         $className = 'XoopsTplset';
-        if (!($tplfile instanceof $className)) {
+        if (!($tplset instanceof $className)) {
             return false;
         }
         $sql = sprintf("DELETE FROM %s WHERE tplset_id = %u", $this->db->prefix('tplset'), $tplset->getVar('tplset_id'));

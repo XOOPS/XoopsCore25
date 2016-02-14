@@ -203,7 +203,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
     public function insert(XoopsObject $pm, $force = false)
     {
         $className = 'XoopsPrivmessage';
-        if (!($comment instanceof $className)) {
+        if (!($pm instanceof $className)) {
             return false;
         }
 
@@ -241,10 +241,8 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
      **/
     public function delete(XoopsObject $pm)
     {
-        /**
-         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-         */
-        if (!is_a($pm, 'xoopsprivmessage')) {
+        $className = 'XoopsPrivmessage';
+        if (!($pm instanceof $className)) {
             return false;
         }
 
