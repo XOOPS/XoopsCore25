@@ -466,14 +466,17 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
     /**
      * save a profile field in the database
      *
-     * @param ProfileField $obj   reference to the object
-     * @param bool   $force whether to force the query execution despite security settings
+     * @param XoopsObject|ProfileField $obj   reference to the object
+     * @param bool                     $force whether to force the query execution despite security settings
      *
      * @internal param bool $checkObject check if the object is dirty and clean the attributes
      * @return bool FALSE if failed, TRUE if already present and unchanged or successful
      */
-    public function insert(ProfileField $obj, $force = false)
+    public function insert(XoopsObject $obj, $force = false)
     {
+        if (!($obj instanceof $this->className)) {
+            return false;
+        }
         $profile_handler = xoops_getModuleHandler('profile', 'profile');
         $obj->setVar('field_name', str_replace(' ', '_', $obj->getVar('field_name')));
         $obj->cleanVars();
@@ -603,12 +606,15 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
     /**
      * delete a profile field from the database
      *
-     * @param ProfileField $obj reference to the object to delete
+     * @param XoopsObject|ProfileField $obj reference to the object to delete
      * @param bool   $force
      * @return bool FALSE if failed.
      **/
-    public function delete(ProfileField $obj, $force = false)
+    public function delete(XoopsObject $obj, $force = false)
     {
+        if (!($obj instanceof $this->className)) {
+            return false;
+        }
         $profile_handler = xoops_getModuleHandler('profile', 'profile');
         // remove column from table
         $sql = "ALTER TABLE " . $profile_handler->table . " DROP `" . $obj->getVar('field_name', 'n') . "`";

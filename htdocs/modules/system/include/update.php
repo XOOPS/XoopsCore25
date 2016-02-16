@@ -35,7 +35,7 @@
  *
  * @return bool|null
  */
-function xoops_module_update_system(&$module, $prev_version = null)
+function xoops_module_update_system(XoopsModule $module, $prev_version = null)
 {
     // irmtfan bug fix: solve templates duplicate issue
     $ret = null;
@@ -45,6 +45,8 @@ function xoops_module_update_system(&$module, $prev_version = null)
     $errors = $module->getErrors();
     if (!empty($errors)) {
         print_r($errors);
+    } else {
+        $ret = true;
     }
 
     return $ret;
@@ -57,7 +59,7 @@ function xoops_module_update_system(&$module, $prev_version = null)
  *
  * @return bool
  */
-function update_system_v211(&$module)
+function update_system_v211($module)
 {
     global $xoopsDB;
     $result = $xoopsDB->query("SELECT t1.tpl_id FROM " . $xoopsDB->prefix('tplfile') . " t1, " . $xoopsDB->prefix('tplfile') . " t2 WHERE t1.tpl_refid = t2.tpl_refid AND t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_type = t2.tpl_type AND t1.tpl_id > t2.tpl_id");

@@ -248,42 +248,6 @@
         "homepage": "https://github.com/firebase/php-jwt"
     },
     {
-        "name": "geekwright/xmf",
-        "version": "v0.1.0",
-        "version_normalized": "0.1.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/geekwright/xmf.git",
-            "reference": "ffb9672485dcc8b0c748a2c0cf89208f3aea1f57"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/geekwright/xmf/zipball/ffb9672485dcc8b0c748a2c0cf89208f3aea1f57",
-            "reference": "ffb9672485dcc8b0c748a2c0cf89208f3aea1f57",
-            "shasum": ""
-        },
-        "require": {
-            "firebase/php-jwt": "^3.0.0",
-            "ircmaxell/random-lib": "^1.1.0",
-            "oodle/krumo": "0.5.0",
-            "php": ">=5.3.7",
-            "symfony/yaml": "2.4.*"
-        },
-        "time": "2016-02-11 22:30:20",
-        "type": "project",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Xmf\\": "src/Xmf"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "description": "XMF - XOOPS Module Framework"
-    },
-    {
         "name": "ircmaxell/password-compat",
         "version": "v1.0.4",
         "version_normalized": "1.0.4.0",
@@ -326,5 +290,41 @@
             "hashing",
             "password"
         ]
+    },
+    {
+        "name": "geekwright/xmf",
+        "version": "v0.2.0",
+        "version_normalized": "0.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/geekwright/xmf.git",
+            "reference": "5a518ca43e27285fad9ee51b787145e65df499a3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/geekwright/xmf/zipball/5a518ca43e27285fad9ee51b787145e65df499a3",
+            "reference": "5a518ca43e27285fad9ee51b787145e65df499a3",
+            "shasum": ""
+        },
+        "require": {
+            "firebase/php-jwt": "^3.0.0",
+            "ircmaxell/random-lib": "^1.1.0",
+            "oodle/krumo": "0.5.0",
+            "php": ">=5.3.7",
+            "symfony/yaml": "2.4.*"
+        },
+        "time": "2016-02-16 18:06:17",
+        "type": "project",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Xmf\\": "src/Xmf"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "XMF - XOOPS Module Framework"
     }
 ]

@@ -240,8 +240,8 @@ class SystemBlock extends XoopsBlock
     /**
      * do stripslashes/htmlspecialchars according to the needed output
      *
-     * @param \output|string $format output use: S for Show and E for Edit
-     * @param string|\type   $c_type type of block content
+     * @param string $format output use: S for Show and E for Edit
+     * @param string $c_type type of block content
      *
      * @returns string
      */
@@ -288,14 +288,14 @@ class SystemBlock extends XoopsBlock
 }
 
 /**
- * System block handler class. (Singelton)
+ * System block handler class.
  *
  * This class is responsible for providing data access mechanisms to the data source
  * of XOOPS block class objects.
  *
  * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
  * @package             system
- * @subpackage          avatar
+ * @subpackage          blocks
  */
 class SystemBlockHandler extends XoopsPersistableObjectHandler
 {
@@ -308,15 +308,18 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * @param SystemBlock $obj
+     * @param XoopsObject|SystemBlock $obj
      *
-     * @return mixed
+     * @return int|bool object id on success, otherwise false
      */
-    public function insert(SystemBlock $obj)
+    public function insert(XoopsObject $obj, $force = true)
     {
+        if (!($obj instanceof $this->className)) {
+            return false;
+        }
         $obj->setVar('last_modified', time());
 
-        return parent::insert($obj);
+        return parent::insert($obj, $force);
     }
 
     /**
@@ -324,9 +327,11 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
      *
      * @param  CriteriaElement $criteria  {@link CriteriaElement} with conditions for the blocks
      * @param  bool            $id_as_key should the blocks' bid be the key for the returned array?
+     * @param  bool            $as_object return an array of objects
+     *
      * @return array           {@link XoopsBlock}s matching the conditions
      **/
-    public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
+    public function &getObjects(CriteriaElement $criteria = null, $id_as_key = false, $as_object = true)
     {
         $ret   = array();
         $limit = $start = 0;
@@ -341,37 +346,50 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
             return $ret;
         }
 
-        while ($myrow = $this->db->fetchArray($result)) {
-            $block = new SystemBlock();
-            $block->assignVars($myrow);
-            if (!$id_as_key) {
-                $ret[] =& $block;
-            } else {
-                $ret[$myrow['bid']] = &$block;
+        if ($as_object) {
+            while ($myrow = $this->db->fetchArray($result)) {
+                $object = $this->create(false);
+                $object->assignVars($myrow);
+                if ($id_as_key) {
+                    $ret[$myrow[$this->keyName]] = $object;
+                } else {
+                    $ret[] = $object;
+                }
+                unset($object);
             }
-            unset($block);
+        } else {
+            $object = $this->create(false);
+            while ($myrow = $this->db->fetchArray($result)) {
+                $object->assignVars($myrow);
+                if ($id_as_key) {
+                    $ret[$myrow[$this->keyName]] = $object->getValues(array_keys($myrow));
+                } else {
+                    $ret[] = $object->getValues(array_keys($myrow));
+                }
+            }
+            unset($object);
         }
-
         return $ret;
     }
 
     /**
      * get all the blocks that match the supplied parameters
      *
-     * @param               $groupid  groupid (can be an array)
-     * @param bool          $asobject
-     * @param               $side
-     *                                0: sideblock - left
-     *                                1: sideblock - right
-     *                                2: sideblock - left and right
-     *                                3: centerblock - left
-     *                                4: centerblock - right
-     *                                5: centerblock - center
-     *                                6: centerblock - left, right, center
-     * @param               $visible  0: not visible 1: visible
-     * @param \order|string $orderby  order of the blocks
-     * @param int           $isactive
-     * @returns             array of block objects
+     * @param int|int[] $groupid  groupid (can be an array)
+     * @param bool      $asobject
+     * @param int       $side
+     *                            0: sideblock - left
+     *                            1: sideblock - right
+     *                            2: sideblock - left and right
+     *                            3: centerblock - left
+     *                            4: centerblock - right
+     *                            5: centerblock - center
+     *                            6: centerblock - left, right, center
+     * @param           $visible  0: not visible 1: visible
+     * @param string    $orderby  order of the blocks
+     * @param int       $isactive
+     *
+     * @return array of block objects
      */
     public function getAllBlocksByGroup($groupid, $asobject = true, $side = null, $visible = null, $orderby = "b.weight,b.bid", $isactive = 1)
     {
@@ -435,7 +453,6 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
      */
     public function getBlockByPerm($groupid)
     {
-        $ret = array();
         if (isset($groupid)) {
             $sql = "SELECT DISTINCT gperm_itemid FROM " . $this->db->prefix('group_permission') . " WHERE gperm_name = 'block_read' AND gperm_modid = 1";
             if (is_array($groupid)) {

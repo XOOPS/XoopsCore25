@@ -39,7 +39,6 @@ class Admin
      * @var object
      */
     private static $ModuleAdmin = null;
-    private $version26 = null;
     private $lastInfoBoxTitle = null;
     private static $paypal = '';
 
@@ -48,7 +47,6 @@ class Admin
      */
     private function __construct()
     {
-        $this->version26 = self::is26();
     }
 
     /**
@@ -93,13 +91,9 @@ class Admin
     /**
      * Are we in a 2.6 environment?
      *
-     * just to help with other admin things than ModuleAdmin
-     *
-     * not part of 2.6 module admin
-     *
      * @return bool true if we are in a 2.6 environment
      */
-    public static function is26()
+    private static function is26()
     {
         return class_exists('\Xoops', false);
     }
@@ -324,7 +318,7 @@ class Admin
         $path = XOOPS_URL . '/Frameworks/moduleclasses/icons/16/';
         $line = "";
         $line .= "<span style='color : red; font-weight : bold;'>";
-        $line .= "<img src='" . $path . "off.png' >";
+        $line .= "<img src='" . $path . "0.png' >";
         $line .= $value;
         $line .= "</span>";
         $value = $line;
@@ -349,7 +343,7 @@ class Admin
         $path = XOOPS_URL . '/Frameworks/moduleclasses/icons/16/';
         $line = "";
         $line .= "<span style='color : green;'>";
-        $line .= "<img src='" . $path . "on.png' >";
+        $line .= "<img src='" . $path . "1.png' >";
         $line .= $value;
         $line .= "</span>";
         $value = $line;

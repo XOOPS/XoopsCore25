@@ -19,7 +19,7 @@
  * @return bool
  */
 
-function xoops_module_install_pm($module)
+function xoops_module_install_pm(XoopsModule $module)
 {
     global $xoopsDB;
 

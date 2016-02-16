@@ -276,7 +276,7 @@ class Protector
             }
         }
 
-        $ip    = @$_SERVER['REMOTE_ADDR'];
+        $ip    = \Xmf\IPAddress::fromRequest()->asReadable();
         $agent = @$_SERVER['HTTP_USER_AGENT'];
 
         if ($unique_check) {
@@ -375,7 +375,7 @@ class Protector
     public function register_bad_ips($jailed_time = 0, $ip = null)
     {
         if (empty($ip)) {
-            $ip = @$_SERVER['REMOTE_ADDR'];
+            $ip = \Xmf\IPAddress::fromRequest()->asReadable();
         }
         if (empty($ip)) {
             return false;
@@ -468,14 +468,19 @@ class Protector
      */
     public function ip_match($ips)
     {
+        $requestIp = \Xmf\IPAddress::fromRequest()->asReadable();
+        if (false === $requestIp) { // nothing to match
+            $this->ip_matched_info = null;
+            return false;
+        }
         foreach ($ips as $ip => $info) {
             if ($ip) {
-                switch (substr($ip, -1)) {
+                switch (strtolower(substr($ip, -1))) {
                     case '.' :
+                    case ':' :
                         // foward match
-                        if (substr(@$_SERVER['REMOTE_ADDR'], 0, strlen($ip)) == $ip) {
+                        if (substr($requestIp, 0, strlen($ip)) == $ip) {
                             $this->ip_matched_info = $info;
-
                             return true;
                         }
                         break;
@@ -489,18 +494,22 @@ class Protector
                     case '7' :
                     case '8' :
                     case '9' :
+                    case 'a' :
+                    case 'b' :
+                    case 'c' :
+                    case 'd' :
+                    case 'e' :
+                    case 'f' :
                         // full match
-                        if (@$_SERVER['REMOTE_ADDR'] == $ip) {
+                        if ($requestIp == $ip) {
                             $this->ip_matched_info = $info;
-
                             return true;
                         }
                         break;
                     default :
                         // perl regex
-                        if (@preg_match($ip, @$_SERVER['REMOTE_ADDR'])) {
+                        if (@preg_match($ip, $requestIp)) {
                             $this->ip_matched_info = $info;
-
                             return true;
                         }
                         break;
@@ -508,7 +517,6 @@ class Protector
             }
         }
         $this->ip_matched_info = null;
-
         return false;
     }
 
@@ -520,7 +528,7 @@ class Protector
     public function deny_by_htaccess($ip = null)
     {
         if (empty($ip)) {
-            $ip = @$_SERVER['REMOTE_ADDR'];
+            $ip = \Xmf\IPAddress::fromRequest()->asReadable();
         }
         if (empty($ip)) {
             return false;
@@ -1096,16 +1104,19 @@ class Protector
             return true;
         }
 
-        $ip      = @$_SERVER['REMOTE_ADDR'];
-        $uri     = @$_SERVER['REQUEST_URI'];
-        $ip4sql  = addslashes($ip);
-        $uri4sql = addslashes($uri);
-        if (empty($ip) || $ip == '') {
+        $ip      = \Xmf\IPAddress::fromRequest();
+        if (false === $ip->asReadable()) {
             return true;
         }
+        $uri     = @$_SERVER['REQUEST_URI'];
+        $ip4sql  = $xoopsDB->quote($ip->asReadable());
+        $uri4sql = $xoopsDB->quote($uri);
 
         // gargage collection
-        $result = $xoopsDB->queryF("DELETE FROM " . $xoopsDB->prefix($this->mydirname . "_access") . " WHERE expire < UNIX_TIMESTAMP()");
+        $result = $xoopsDB->queryF(
+            "DELETE FROM " . $xoopsDB->prefix($this->mydirname . '_access')
+            . " WHERE expire < UNIX_TIMESTAMP()"
+        );
 
         // for older versions before updating this module
         if ($result === false) {
@@ -1115,11 +1126,13 @@ class Protector
         }
 
         // sql for recording access log (INSERT should be placed after SELECT)
-        $sql4insertlog = "INSERT INTO " . $xoopsDB->prefix($this->mydirname . "_access") . " SET ip='$ip4sql',request_uri='$uri4sql',expire=UNIX_TIMESTAMP()+'" . (int)($this->_conf['dos_expire']) . "'";
+        $sql4insertlog = "INSERT INTO " . $xoopsDB->prefix($this->mydirname . '_access')
+            . " SET ip={$ip4sql}, request_uri={$uri4sql},"
+            . " expire=UNIX_TIMESTAMP()+'" . (int)($this->_conf['dos_expire']) . "'";
 
         // bandwidth limitation
         if (@$this->_conf['bwlimit_count'] >= 10) {
-            $result = $xoopsDB->query("SELECT COUNT(*) FROM " . $xoopsDB->prefix($this->mydirname . "_access"));
+            $result = $xoopsDB->query("SELECT COUNT(*) FROM " . $xoopsDB->prefix($this->mydirname . '_access'));
             list($bw_count) = $xoopsDB->fetchRow($result);
             if ($bw_count > $this->_conf['bwlimit_count']) {
                 $this->write_file_bwlimit(time() + $this->_conf['dos_expire']);
@@ -1127,7 +1140,9 @@ class Protector
         }
 
         // F5 attack check (High load & same URI)
-        $result = $xoopsDB->query("SELECT COUNT(*) FROM " . $xoopsDB->prefix($this->mydirname . "_access") . " WHERE ip='$ip4sql' AND request_uri='$uri4sql'");
+        $result = $xoopsDB->query(
+            "SELECT COUNT(*) FROM " . $xoopsDB->prefix($this->mydirname . '_access')
+            . " WHERE ip={$ip4sql} AND request_uri={$uri4sql}");
         list($f5_count) = $xoopsDB->fetchRow($result);
         if ($f5_count > $this->_conf['dos_f5count']) {
 
@@ -1135,7 +1150,7 @@ class Protector
             $xoopsDB->queryF($sql4insertlog);
 
             // extends the expires of the IP with 5 minutes at least (pending)
-            // $result = $xoopsDB->queryF( "UPDATE ".$xoopsDB->prefix($this->mydirname."_access")." SET expire=UNIX_TIMESTAMP()+300 WHERE ip='$ip4sql' AND expire<UNIX_TIMESTAMP()+300" ) ;
+            // $result = $xoopsDB->queryF( "UPDATE ".$xoopsDB->prefix($this->mydirname.'_access')." SET expire=UNIX_TIMESTAMP()+300 WHERE ip='$ip4sql' AND expire<UNIX_TIMESTAMP()+300" ) ;
 
             // call the filter first
             $ret = $this->call_filter('f5attack_overrun');
@@ -1184,7 +1199,9 @@ class Protector
         }
 
         // Crawler check (High load & different URI)
-        $result = $xoopsDB->query("SELECT COUNT(*) FROM " . $xoopsDB->prefix($this->mydirname . "_access") . " WHERE ip='$ip4sql'");
+        $result = $xoopsDB->query(
+            "SELECT COUNT(*) FROM " . $xoopsDB->prefix($this->mydirname . '_access') . " WHERE ip={$ip4sql}"
+        );
         list($crawler_count) = $xoopsDB->fetchRow($result);
 
         // delayed insert
@@ -1241,29 +1258,35 @@ class Protector
     {
         global $xoopsDB;
 
-        $ip      = @$_SERVER['REMOTE_ADDR'];
-        $uri     = @$_SERVER['REQUEST_URI'];
-        $ip4sql  = addslashes($ip);
-        $uri4sql = addslashes($uri);
-        if (empty($ip) || $ip == '') {
+        $ip      = \Xmf\IPAddress::fromRequest();
+        if (false === $ip->asReadable()) {
             return true;
         }
+        $uri     = @$_SERVER['REQUEST_URI'];
+        $ip4sql  = $xoopsDB->quote($ip->asReadable());
+        $uri4sql = $xoopsDB->quote($uri);
 
         $victim_uname = empty($_COOKIE['autologin_uname']) ? $_POST['uname'] : $_COOKIE['autologin_uname'];
         // some UA send 'deleted' as a value of the deleted cookie.
         if ($victim_uname === 'deleted') {
             return null;
         }
-        $mal4sql = addslashes("BRUTE FORCE: $victim_uname");
+        $mal4sql = $xoopsDB->quote("BRUTE FORCE: $victim_uname");
 
         // gargage collection
-        $result = $xoopsDB->queryF("DELETE FROM " . $xoopsDB->prefix($this->mydirname . "_access") . " WHERE expire < UNIX_TIMESTAMP()");
+        $result = $xoopsDB->queryF(
+            "DELETE FROM " . $xoopsDB->prefix($this->mydirname . '_access') . " WHERE expire < UNIX_TIMESTAMP()"
+        );
 
         // sql for recording access log (INSERT should be placed after SELECT)
-        $sql4insertlog = "INSERT INTO " . $xoopsDB->prefix($this->mydirname . "_access") . " SET ip='$ip4sql',request_uri='$uri4sql',malicious_actions='$mal4sql',expire=UNIX_TIMESTAMP()+600";
+        $sql4insertlog = "INSERT INTO " . $xoopsDB->prefix($this->mydirname . '_access')
+            . " SET ip={$ip4sql}, request_uri={$uri4sql}, malicious_actions={$mal4sql}, expire=UNIX_TIMESTAMP()+600";
 
         // count check
-        $result = $xoopsDB->query("SELECT COUNT(*) FROM " . $xoopsDB->prefix($this->mydirname . "_access") . " WHERE ip='$ip4sql' AND malicious_actions like 'BRUTE FORCE:%'");
+        $result = $xoopsDB->query(
+            "SELECT COUNT(*) FROM " . $xoopsDB->prefix($this->mydirname . '_access')
+            . " WHERE ip={$ip4sql} AND malicious_actions like 'BRUTE FORCE:%'"
+        );
         list($bf_count) = $xoopsDB->fetchRow($result);
         if ($bf_count > $this->_conf['bf_count']) {
             $this->register_bad_ips(time() + $this->_conf['banip_time0']);

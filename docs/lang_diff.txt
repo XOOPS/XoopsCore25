@@ -18,6 +18,10 @@ define('_AM_SYSTEM_USERS_ACTIVATE', 'Activate User');
 /modules/system/language/english/blocks.php
 define('_MB_SYSTEM_BLOCK_HEIGHT',"Block Height (lines)");
 
+CHANGED DEFINES
+xoops_lib/modules/protector/language/english/modinfo.php
+define($constpref . '_HIJACK_TOPBITDSC', ...
+
 NEW FILES:
 /language/english/stopwords.php
 /language/english/xmf.php

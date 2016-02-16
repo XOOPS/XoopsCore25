@@ -20,7 +20,7 @@
  * @return bool
  */
 
-function xoops_module_install_profile($module)
+function xoops_module_install_profile(XoopsModule $module)
 {
     global $module_id;
     $module_id = $module->getVar('mid');

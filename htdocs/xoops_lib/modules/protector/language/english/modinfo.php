@@ -41,7 +41,7 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . '_LOADED')) {
     define($constpref . '_LOGLEVEL255', 'full');
 
     define($constpref . '_HIJACK_TOPBIT', 'Protected IP bits for the session');
-    define($constpref . '_HIJACK_TOPBITDSC', 'Anti Session Hi-Jacking:<br />Default 32(bit). (All bits are protected)<br />When your IP is not stable, set the IP range by number of the bits.<br />(eg) If your IP can move in the range of 192.168.0.0-192.168.0.255, set 24(bit) here');
+    define($constpref . '_HIJACK_TOPBITDSC', 'Anti Session Hi-Jacking:<br />Default 24/56 (netmask for IPV4/IPV6). (All bits are protected)<br />When your IP is not stable, set the IP range by number of the bits.<br />(eg) If your IP can move in the range of 192.168.0.0-192.168.0.255, set 24(bit) here');
     define($constpref . '_HIJACK_DENYGP', 'Groups disallowed IP moving in a session');
     define($constpref . '_HIJACK_DENYGPDSC', 'Anti Session Hi-Jacking:<br />Select groups which is disallowed to move their IP in a session.<br />(I recommend to turn Administrator on.)');
     define($constpref . '_SAN_NULLBYTE', 'Sanitizing null-bytes');

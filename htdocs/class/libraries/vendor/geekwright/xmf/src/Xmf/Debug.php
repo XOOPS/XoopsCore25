@@ -18,7 +18,7 @@ if (!defined('XMF_KRUMO_URL')) {
 /**
  * Debugging tools for developers
  *
- * @category  Xmf\Module\Debug
+ * @category  Xmf\Debug
  * @package   Xmf
  * @author    trabis <lusopoemas@gmail.com>
  * @author    Richard Griffith <richard@geekwright.com>
