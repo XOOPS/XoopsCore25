@@ -308,12 +308,15 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * @param SystemBlock $obj
+     * @param XoopsObject|SystemBlock $obj
      *
-     * @return mixed
+     * @return int|bool object id on success, otherwise false
      */
-    public function insert(SystemBlock $obj, $force = true)
+    public function insert(XoopsObject $obj, $force = true)
     {
+        if (!($obj instanceof $this->className)) {
+            return false;
+        }
         $obj->setVar('last_modified', time());
 
         return parent::insert($obj, $force);
