@@ -45,6 +45,8 @@ function xoops_module_update_system(&$module, $prev_version = null)
     $errors = $module->getErrors();
     if (!empty($errors)) {
         print_r($errors);
+    } else {
+        $ret = true;
     }
 
     return $ret;
