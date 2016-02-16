@@ -122,17 +122,21 @@ function protector_postcommon()
     }
 
     // check session hi-jacking
-    $ips                  = explode('.', @$_SESSION['protector_last_ip']);
-    $protector_last_numip = @$ips[0] * 0x1000000 + @$ips[1] * 0x10000 + @$ips[2] * 0x100 + @$ips[3];
-    $ips                  = explode('.', $_SERVER['REMOTE_ADDR']);
-    $remote_numip         = @$ips[0] * 0x1000000 + @$ips[1] * 0x10000 + @$ips[2] * 0x100 + @$ips[3];
-    $shift                = 32 - @$conf['session_fixed_topbit'];
-    if ($shift < 32 && $shift >= 0 && !empty($_SESSION['protector_last_ip']) && $protector_last_numip >> $shift != $remote_numip >> $shift) {
+    $masks = @$conf['session_fixed_topbit'];
+    $maskArray = explode('/', $masks);
+    $ipv4Mask = (empty($maskArray[0])) ? 24 : $maskArray[0];
+    $ipv6Mask = (!isset($maskArray[1])) ? 56 : $maskArray[1];
+    $ip = \Xmf\IPAddress::fromRequest();
+    $maskCheck = true;
+    if (isset($_SESSION['protector_last_ip'])) {
+        $maskCheck = $ip->sameSubnet($_SESSION['protector_last_ip'], $ipv4Mask, $ipv6Mask);
+    }
+    if (!$maskCheck) {
         if (is_object($xoopsUser) && count(array_intersect($xoopsUser->getGroups(), unserialize($conf['groups_denyipmove'])))) {
             $protector->purge(true);
         }
     }
-    $_SESSION['protector_last_ip'] = $_SERVER['REMOTE_ADDR'];
+    $_SESSION['protector_last_ip'] = $ip->asReadable();
 
     // SQL Injection "Isolated /*"
     if (!$protector->check_sql_isolatedcommentin(@$conf['isocom_action'] & 1)) {

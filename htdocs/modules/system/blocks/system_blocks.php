@@ -48,10 +48,12 @@ function b_system_online_show()
         $uid   = 0;
         $uname = '';
     }
+    $requestIp = \Xmf\IPAddress::fromRequest()->asReadable();
+    $requestIp = (false === $requestIp) ? '0.0.0.0' : $requestIp;
     if (is_object($xoopsModule)) {
-        $online_handler->write($uid, $uname, time(), $xoopsModule->getVar('mid'), $_SERVER['REMOTE_ADDR']);
+        $online_handler->write($uid, $uname, time(), $xoopsModule->getVar('mid'), $requestIp);
     } else {
-        $online_handler->write($uid, $uname, time(), 0, $_SERVER['REMOTE_ADDR']);
+        $online_handler->write($uid, $uname, time(), 0, $requestIp);
     }
     $onlines = $online_handler->getAll();
     if (false != $onlines) {
