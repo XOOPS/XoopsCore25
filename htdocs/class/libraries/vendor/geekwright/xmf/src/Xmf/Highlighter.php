@@ -14,7 +14,7 @@ namespace Xmf;
 /**
  * Highlighter
  *
- * @category  Xmf\Module\Highlighter
+ * @category  Xmf\Highlighter
  * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2011-2016 XOOPS Project (http://xoops.org)

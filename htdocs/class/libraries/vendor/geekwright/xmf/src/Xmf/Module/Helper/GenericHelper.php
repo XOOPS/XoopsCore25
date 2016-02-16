@@ -290,7 +290,11 @@ class GenericHelper
      */
     public function isCurrentModule()
     {
-        return $GLOBALS['xoopsModule']->getVar('dirname') == $this->dirname;
+        if ($GLOBALS['xoopsModule']->getVar('dirname') == $this->dirname) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

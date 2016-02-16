@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "efac625c4116274e6a1e3225cd397c01",
-    "content-hash": "26fd8bc87e6ecce0f829349935813531",
+    "hash": "d92f3ff695a6c16e5ef64771b890499e",
+    "content-hash": "81ab351f91a22e93f6ed33b6690f0b5f",
     "packages": [
         {
             "name": "firebase/php-jwt",
@@ -52,16 +52,16 @@
         },
         {
             "name": "geekwright/xmf",
-            "version": "v0.1.0",
+            "version": "v0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/geekwright/xmf.git",
-                "reference": "ffb9672485dcc8b0c748a2c0cf89208f3aea1f57"
+                "reference": "5a518ca43e27285fad9ee51b787145e65df499a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/geekwright/xmf/zipball/ffb9672485dcc8b0c748a2c0cf89208f3aea1f57",
-                "reference": "ffb9672485dcc8b0c748a2c0cf89208f3aea1f57",
+                "url": "https://api.github.com/repos/geekwright/xmf/zipball/5a518ca43e27285fad9ee51b787145e65df499a3",
+                "reference": "5a518ca43e27285fad9ee51b787145e65df499a3",
                 "shasum": ""
             },
             "require": {
@@ -82,7 +82,7 @@
                 "GPL-2.0+"
             ],
             "description": "XMF - XOOPS Module Framework",
-            "time": "2016-02-11 22:30:20"
+            "time": "2016-02-16 18:06:17"
         },
         {
             "name": "ircmaxell/password-compat",

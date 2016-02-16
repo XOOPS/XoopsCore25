@@ -14,7 +14,7 @@ namespace Xmf;
 /**
  * Metagen facilitates generating and assigning page meta tags
  *
- * @category  Xmf\Module\Metagen
+ * @category  Xmf\Metagen
  * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
  * @author    trabis <lusopoemas@gmail.com>

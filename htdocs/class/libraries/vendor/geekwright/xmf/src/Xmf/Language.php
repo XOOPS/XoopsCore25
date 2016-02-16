@@ -14,7 +14,7 @@ namespace Xmf;
 /**
  * Language
  *
- * @category  Xmf\Module\Language
+ * @category  Xmf\Language
  * @package   Xmf
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2011-2016 XOOPS Project (http://xoops.org)

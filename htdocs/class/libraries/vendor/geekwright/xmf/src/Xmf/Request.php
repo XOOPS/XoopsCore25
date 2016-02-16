@@ -18,7 +18,7 @@ namespace Xmf;
  * request variables.  This includes $_POST, $_GET, and naturally $_REQUEST.  Variables
  * can be passed through an input filter to avoid injection or returned raw.
  *
- * @category  Xmf\Module\Request
+ * @category  Xmf\Request
  * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
  * @author    trabis <lusopoemas@gmail.com>
@@ -482,8 +482,8 @@ class Request
 
         // Handle magic quotes compatability
         if (get_magic_quotes_gpc() && ($hash !== 'FILES')) {
-        $input = XoopsRequest::stripSlashesRecursive($input);
-    }
+            $input = XoopsRequest::stripSlashesRecursive($input);
+        }
 
         $result = self::cleanVars($input, $mask);
 

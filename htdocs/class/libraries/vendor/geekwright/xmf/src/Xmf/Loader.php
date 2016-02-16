@@ -14,7 +14,7 @@ namespace Xmf;
 /**
  * Loader
  *
- * @category  Xmf\Module\Loader
+ * @category  Xmf\Loader
  * @package   Xmf
  * @author    trabis <lusopoemas@gmail.com>
  * @copyright 2011-2016 XOOPS Project (http://xoops.org)

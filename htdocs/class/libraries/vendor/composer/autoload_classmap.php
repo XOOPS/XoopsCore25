@@ -55,6 +55,7 @@ return array(
     'Xmf\\Debug' => $vendorDir . '/geekwright/xmf/src/Xmf/Debug.php',
     'Xmf\\FilterInput' => $vendorDir . '/geekwright/xmf/src/Xmf/FilterInput.php',
     'Xmf\\Highlighter' => $vendorDir . '/geekwright/xmf/src/Xmf/Highlighter.php',
+    'Xmf\\IPAddress' => $vendorDir . '/geekwright/xmf/src/Xmf/IPAddress.php',
     'Xmf\\Jwt\\JsonWebToken' => $vendorDir . '/geekwright/xmf/src/Xmf/Jwt/JsonWebToken.php',
     'Xmf\\Jwt\\KeyFactory' => $vendorDir . '/geekwright/xmf/src/Xmf/Jwt/KeyFactory.php',
     'Xmf\\Jwt\\TokenFactory' => $vendorDir . '/geekwright/xmf/src/Xmf/Jwt/TokenFactory.php',
