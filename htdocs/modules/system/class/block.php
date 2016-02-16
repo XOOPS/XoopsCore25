@@ -312,11 +312,11 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
      *
      * @return mixed
      */
-    public function insert(SystemBlock $obj)
+    public function insert(SystemBlock $obj, $force = true)
     {
         $obj->setVar('last_modified', time());
 
-        return parent::insert($obj);
+        return parent::insert($obj, $force);
     }
 
     /**
@@ -328,7 +328,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
      *
      * @return array           {@link XoopsBlock}s matching the conditions
      **/
-    public function getObjects(CriteriaElement $criteria = null, $id_as_key = false, $as_object = true)
+    public function &getObjects(CriteriaElement $criteria = null, $id_as_key = false, $as_object = true)
     {
         $ret   = array();
         $limit = $start = 0;
