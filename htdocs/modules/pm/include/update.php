@@ -30,7 +30,7 @@ require_once $path . '/include' . '/cp_header.php';
  * @param null $oldversion
  * @return bool
  */
-function xoops_module_update_pm(&$module, $oldversion = null)
+function xoops_module_update_pm(XoopsModule $module, $oldversion = null)
 {
     if ($oldversion <= 100) {
         global $xoopsDB;

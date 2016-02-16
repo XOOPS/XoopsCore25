@@ -30,7 +30,7 @@ require_once $path . '/include' . '/cp_header.php';
  * @param null $oldversion
  * @return bool
  */
-function xoops_module_update_profile(&$module, $oldversion = null)
+function xoops_module_update_profile(XoopsModule $module, $oldversion = null)
 {
     if ($oldversion < 162) {
         $GLOBALS['xoopsDB']->queryF("UPDATE `" . $GLOBALS['xoopsDB']->prefix("profile_field") . " SET field_valuetype=2 WHERE field_name=umode");

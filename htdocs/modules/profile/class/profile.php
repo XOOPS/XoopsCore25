@@ -82,10 +82,10 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      *
      * @return object {@link ProfileProfile}
      */
-    public function &create($isNew = true)
+    public function create($isNew = true)
     {
         $obj          = new $this->className($this->loadFields());
-        $obj->handler =& $this;
+        $obj->handler = $this;
         if ($isNew === true) {
             $obj->setNew();
         }
@@ -100,8 +100,11 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      * @param boolean    $createOnFailure create a new {@link ProfileProfile} if none is feteched
      *
      * @return object {@link ProfileProfile}
+     *
+     * @internal This was get(). No callers found using the extra parameter. The parent class will
+     * @internal handle get(). Leaving this here for now, should delete if no issues found.
      */
-    public function get($uid, $createOnFailure = true)
+    public function getCreate($uid, $createOnFailure = true)
     {
         $obj = parent::get($uid);
         if (!is_object($obj) && $createOnFailure) {
@@ -242,15 +245,16 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
     /**
      * insert a new object in the database
      *
-     * @param ProfileProfile $obj         reference to the object
-     * @param bool           $force       whether to force the query execution despite security settings
-     * @param bool           $checkObject check if the object is dirty and clean the attributes
+     * @param XoopsObject|ProfileProfile $obj   reference to the object
+     * @param bool                       $force whether to force the query execution despite security settings
      *
      * @return bool FALSE if failed, TRUE if already present and unchanged or successful
      */
-
-    public function insert(ProfileProfile $obj, $force = false, $checkObject = true)
+    public function insert(XoopsObject $obj, $force = false)
     {
+        if (!($obj instanceof $this->className)) {
+            return false;
+        }
         $uservars = $this->getUserVars();
         foreach ($uservars as $var) {
             unset($obj->vars[$var]);
@@ -259,7 +263,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
             return true;
         }
 
-        return parent::insert($obj, $force, $checkObject);
+        return parent::insert($obj, $force);
     }
 
     /**
