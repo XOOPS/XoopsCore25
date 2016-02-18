@@ -45,7 +45,7 @@ if (!isset($_POST['submit'])) {
     $password                   = @$myts->stripSlashesGPC(trim($_POST['newpass']));
     $vpass                      = @$myts->stripSlashesGPC(trim($_POST['vpass']));
     $errors                     = array();
-    if (password_verify($oldpass, $GLOBALS['xoopsUser']->getVar('pass', 'n'))) {
+    if (!password_verify($oldpass, $GLOBALS['xoopsUser']->getVar('pass', 'n'))) {
         $errors[] = _PROFILE_MA_WRONGPASSWORD;
     }
     if (strlen($password) < $GLOBALS['xoopsConfigUser']['minpass']) {
