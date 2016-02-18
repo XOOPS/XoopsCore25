@@ -236,13 +236,18 @@ class XoopsUserUtility
         } elseif (!empty($_SERVER['HTTP_COMING_FROM'])) {
             $proxy_ip = $_SERVER['HTTP_COMING_FROM'];
         }
-        if (!empty($proxy_ip) && $is_ip = preg_match('/^(\d{1,3}.){3,3}\d{1,3}/', $proxy_ip, $regs) && count($regs) > 0) {
-            $the_IP = $regs[0];
+        if (!empty($proxy_ip) {
+            $ip = new \Xmf\IPAddress($proxy_ip);
+            if (false === $ip->asReadable()) {
+                $ip = \Xmf\IPAddress::fromRequest();
+            }
         } else {
-            $the_IP = $_SERVER['REMOTE_ADDR'];
+            $ip = \Xmf\IPAddress::fromRequest();
         }
 
-        $the_IP = ($asString) ? $the_IP : ip2long($the_IP);
+        // this really should return $ip->asBinary() instead of ip2long, but for IPv6, this will
+        // return false when the ip2long() fails. Callers are not expecting binary strings.
+        $the_IP = ($asString) ? $ip->asReadable() : ip2long($ip->asReadable());
 
         return $the_IP;
     }
