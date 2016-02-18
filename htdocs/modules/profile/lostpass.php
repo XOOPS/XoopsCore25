@@ -57,7 +57,12 @@ if (empty($user)) {
         }
 
         // Next step: add the new password to the database
-        $sql = sprintf("UPDATE %s SET pass = '%s' WHERE uid = %u", $GLOBALS['xoopsDB']->prefix("users"), md5($newpass), $user->getVar('uid'));
+        $sql = sprintf(
+            "UPDATE %s SET pass = '%s' WHERE uid = %u",
+            $GLOBALS['xoopsDB']->prefix("users"),
+            password_hash($newpass, PASSWORD_DEFAULT),
+            $user->getVar('uid')
+        );
         if (!$GLOBALS['xoopsDB']->queryF($sql)) {
             include $GLOBALS['xoops']->path('header.php');
             echo _US_MAILPWDNG;

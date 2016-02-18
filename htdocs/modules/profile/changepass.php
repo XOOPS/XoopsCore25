@@ -45,7 +45,7 @@ if (!isset($_POST['submit'])) {
     $password                   = @$myts->stripSlashesGPC(trim($_POST['newpass']));
     $vpass                      = @$myts->stripSlashesGPC(trim($_POST['vpass']));
     $errors                     = array();
-    if (md5($oldpass) != $GLOBALS['xoopsUser']->getVar('pass', 'n')) {
+    if (password_verify($oldpass, $GLOBALS['xoopsUser']->getVar('pass', 'n'))) {
         $errors[] = _PROFILE_MA_WRONGPASSWORD;
     }
     if (strlen($password) < $GLOBALS['xoopsConfigUser']['minpass']) {
@@ -59,7 +59,7 @@ if (!isset($_POST['submit'])) {
         $msg = implode('<br />', $errors);
     } else {
         //update password
-        $GLOBALS['xoopsUser']->setVar('pass', md5($password));
+        $GLOBALS['xoopsUser']->setVar('pass', password_hash($password, PASSWORD_DEFAULT));
 
         $member_handler = xoops_getHandler('member');
         $msg = _PROFILE_MA_ERRORDURINGSAVE;
