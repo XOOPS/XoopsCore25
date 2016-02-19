@@ -326,7 +326,7 @@ switch ($op) {
             $comment->setVar('com_pid', $com_pid);
             $comment->setVar('com_itemid', $com_itemid);
             $comment->setVar('com_rootid', $com_rootid);
-            $comment->setVar('com_ip', xoops_getenv('REMOTE_ADDR'));
+            $comment->setVar('com_ip', \Xmf\IPAddress::fromRequest()->asReadable());
             if (is_object($xoopsUser)) {
                 include_once $GLOBALS['xoops']->path('modules/system/constants.php');
                 $sysperm_handler = xoops_getHandler('groupperm');
