@@ -236,7 +236,7 @@ class XoopsUserUtility
         } elseif (!empty($_SERVER['HTTP_COMING_FROM'])) {
             $proxy_ip = $_SERVER['HTTP_COMING_FROM'];
         }
-        if (!empty($proxy_ip) {
+        if (!empty($proxy_ip)) {
             $ip = new \Xmf\IPAddress($proxy_ip);
             if (false === $ip->asReadable()) {
                 $ip = \Xmf\IPAddress::fromRequest();
