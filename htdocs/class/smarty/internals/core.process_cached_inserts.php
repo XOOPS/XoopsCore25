@@ -1,24 +1,23 @@
 <?php
 /**
  * Smarty plugin
- * @package    Smarty
+ * @package Smarty
  * @subpackage plugins
  */
 
 /**
  * Replace cached inserts with the actual results
  *
- * @param $params
- * @param $smarty
+ * @param string $results
  * @return string
- * @internal param string $results
  */
 function smarty_core_process_cached_inserts($params, &$smarty)
 {
-    preg_match_all('!' . $smarty->_smarty_md5 . '{insert_cache (.*)}' . $smarty->_smarty_md5 . '!Uis', $params['results'], $match);
+    preg_match_all('!'.$smarty->_smarty_md5.'{insert_cache (.*)}'.$smarty->_smarty_md5.'!Uis',
+                   $params['results'], $match);
     list($cached_inserts, $insert_args) = $match;
 
-    for ($i = 0, $for_max = count($cached_inserts); $i < $for_max; ++$i) {
+    for ($i = 0, $for_max = count($cached_inserts); $i < $for_max; $i++) {
         if ($smarty->debugging) {
             $_params = array();
             require_once(SMARTY_CORE_DIR . 'core.get_microtime.php');
@@ -31,13 +30,14 @@ function smarty_core_process_cached_inserts($params, &$smarty)
         if (isset($args['script'])) {
             $_params = array('resource_name' => $smarty->_dequote($args['script']));
             require_once(SMARTY_CORE_DIR . 'core.get_php_resource.php');
-            if (!smarty_core_get_php_resource($_params, $smarty)) {
+            if(!smarty_core_get_php_resource($_params, $smarty)) {
                 return false;
             }
             $resource_type = $_params['resource_type'];
-            $php_resource  = $_params['php_resource'];
+            $php_resource = $_params['php_resource'];
 
-            if ($resource_type === 'file') {
+
+            if ($resource_type == 'file') {
                 $smarty->_include($php_resource, true);
             } else {
                 $smarty->_eval($php_resource);
@@ -56,11 +56,10 @@ function smarty_core_process_cached_inserts($params, &$smarty)
         if ($smarty->debugging) {
             $_params = array();
             require_once(SMARTY_CORE_DIR . 'core.get_microtime.php');
-            $smarty->_smarty_debug_info[] = array(
-                'type'      => 'insert',
-                'filename'  => 'insert_' . $name,
-                'depth'     => $smarty->_inclusion_depth,
-                'exec_time' => smarty_core_get_microtime($_params, $smarty) - $debug_start_time);
+            $smarty->_smarty_debug_info[] = array('type'      => 'insert',
+                                                'filename'  => 'insert_'.$name,
+                                                'depth'     => $smarty->_inclusion_depth,
+                                                'exec_time' => smarty_core_get_microtime($_params, $smarty) - $debug_start_time);
         }
     }
 
@@ -68,3 +67,5 @@ function smarty_core_process_cached_inserts($params, &$smarty)
 }
 
 /* vim: set expandtab: */
+
+?>
