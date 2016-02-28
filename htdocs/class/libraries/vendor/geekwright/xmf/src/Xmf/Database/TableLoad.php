@@ -88,7 +88,7 @@ class TableLoad
 
         $data = Yaml::loadWrapped($yamlFile); // work with phpmyadmin YAML dumps
         if (false !== $data) {
-            $count = self::loadTableFromArray($table, $data);
+            $count = static::loadTableFromArray($table, $data);
         }
 
         return $count;

@@ -62,10 +62,10 @@ class ArtObjectHandler extends XoopsPersistableObjectHandler
      * Constructor
      *
      * @param XoopsMySQLDatabase $db reference to the {@link XoopsDatabase} object
-     * @param string $table
-     * @param string $className
-     * @param string $keyName
-     * @param string $identifierName
+     * @param string             $table
+     * @param string             $className
+     * @param string             $keyName
+     * @param string             $identifierName
      */
 
     public function __construct(XoopsMySQLDatabase $db, $table = "", $className = "", $keyName = "", $identifierName = '')
@@ -109,13 +109,16 @@ class ArtObjectHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * @param ArtObject $object
-     * @param bool   $force
+     * @param XoopsObject|ArtObject $object
+     * @param bool                  $force
      *
      * @return mixed
      */
-    public function insert(ArtObject $object, $force = true)
+    public function insert(XoopsObject $object, $force = true)
     {
+        if (!($object instanceof $this->className)) {
+            return false;
+        }
         if ($ret = parent::insert($object, $force)) {
             $object->unsetNew();
         }

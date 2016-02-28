@@ -31,6 +31,11 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - changed minimum image sizes in Image Manager to: 800x600, 1MB (mamba)
 - added image sort order in TinyMCE image-manager plugin (elpaksu/Peekay)
 - added Youtube handling enhancements (xd9527/geekwright)
+- fixed multiple issues (CSRF, weak password hash, and directory traversal) reported by hyp3rlinx (geekwright)
+- fix privileged information disclosure issue reported by Cédric MONTUY (geekwright)
+- Move to supported PHP mysqli extension for database access (redheadedrod/geekwright)
+- IPv6 safe in comments, protector, sessions and online
+
 
 Updated:
  - TinyMCE to 3.5.11 (mamba)

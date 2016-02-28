@@ -33,7 +33,7 @@ class XoopsBlock extends XoopsObject
     /**
      * @param null $id
      */
-    public function XoopsBlock($id = null)
+    public function __construct($id = null)
     {
         $this->db = XoopsDatabaseFactory::getDatabaseConnection();
         $this->initVar('bid', XOBJ_DTYPE_INT, null, false);

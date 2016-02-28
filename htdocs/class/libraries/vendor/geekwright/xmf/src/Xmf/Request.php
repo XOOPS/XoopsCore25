@@ -34,9 +34,9 @@ class Request
     /**
      * Available masks for cleaning variables
      */
-    const NOTRIM    = 1;
-    const ALLOWRAW  = 2;
-    const ALLOWHTML = 4;
+    const MASK_NO_TRIM    = 1;
+    const MASK_ALLOW_RAW  = 2;
+    const MASK_ALLOW_HTML = 4;
 
     /**
      * Gets the request method
@@ -73,8 +73,8 @@ class Request
      * @param mixed  $default Default value if the variable does not exist
      * @param string $hash    Source of variable value (POST, GET, FILES, COOKIE, METHOD)
      * @param string $type    Return type for the variable (INT, FLOAT, BOOLEAN, WORD,
-     *                        ALNUM, CMD, BASE64, STRING, ARRAY, PATH, NONE) For more
-     *                        information see FilterInput::clean().
+     *                         ALPHANUM, CMD, BASE64, STRING, ARRAY, PATH, NONE) For more
+     *                         information see FilterInput::clean().
      * @param int    $mask    Filter mask for the variable
      *
      * @return mixed Requested variable
@@ -84,7 +84,7 @@ class Request
         // Ensure hash and type are uppercase
         $hash = strtoupper($hash);
         if ($hash === 'METHOD') {
-            $hash = self::getMethod();
+            $hash = static::getMethod();
         }
         $type = strtoupper($type);
 
@@ -115,16 +115,16 @@ class Request
 
         if (isset($input[$name]) && $input[$name] !== null) {
             // Get the variable from the input hash and clean it
-            $var = self::cleanVar($input[$name], $mask, $type);
+            $var = static::cleanVar($input[$name], $mask, $type);
 
-            // Handle magic quotes compatability
+            // Handle magic quotes compatibility
             if (get_magic_quotes_gpc() && ($var != $default) && ($hash !== 'FILES')) {
-                $var = self::stripSlashesRecursive($var);
+                $var = static::stripSlashesRecursive($var);
             }
         } else {
             if ($default !== null) {
                 // Clean the default value
-                $var = self::cleanVar($default, $mask, $type);
+                $var = static::cleanVar($default, $mask, $type);
             } else {
                 $var = $default;
             }
@@ -148,7 +148,7 @@ class Request
      */
     public static function getInt($name, $default = 0, $hash = 'default')
     {
-        return self::getVar($name, $default, $hash, 'int');
+        return static::getVar($name, $default, $hash, 'int');
     }
 
     /**
@@ -166,7 +166,7 @@ class Request
      */
     public static function getFloat($name, $default = 0.0, $hash = 'default')
     {
-        return self::getVar($name, $default, $hash, 'float');
+        return static::getVar($name, $default, $hash, 'float');
     }
 
     /**
@@ -184,7 +184,7 @@ class Request
      */
     public static function getBool($name, $default = false, $hash = 'default')
     {
-        return self::getVar($name, $default, $hash, 'bool');
+        return static::getVar($name, $default, $hash, 'bool');
     }
 
     /**
@@ -202,7 +202,7 @@ class Request
      */
     public static function getWord($name, $default = '', $hash = 'default')
     {
-        return self::getVar($name, $default, $hash, 'word');
+        return static::getVar($name, $default, $hash, 'word');
     }
 
     /**
@@ -219,7 +219,7 @@ class Request
      */
     public static function getCmd($name, $default = '', $hash = 'default')
     {
-        return self::getVar($name, $default, $hash, 'cmd');
+        return static::getVar($name, $default, $hash, 'cmd');
     }
 
     /**
@@ -238,8 +238,8 @@ class Request
      */
     public static function getString($name, $default = '', $hash = 'default', $mask = 0)
     {
-        // Cast to string, in case self::ALLOWRAW was specified for mask
-        return (string) self::getVar($name, $default, $hash, 'string', $mask);
+        // Cast to string, in case static::MASK_ALLOW_RAW was specified for mask
+        return (string) static::getVar($name, $default, $hash, 'string', $mask);
     }
 
     /**
@@ -253,7 +253,7 @@ class Request
      */
     public static function getArray($name, $default = array(), $hash = 'default')
     {
-        return self::getVar($name, $default, $hash, 'array');
+        return static::getVar($name, $default, $hash, 'array');
     }
 
     /**
@@ -267,7 +267,7 @@ class Request
      */
     public static function getText($name, $default = '', $hash = 'default')
     {
-        return (string) self::getVar($name, $default, $hash, 'string', self::ALLOWRAW);
+        return (string) static::getVar($name, $default, $hash, 'string', static::MASK_ALLOW_RAW);
     }
 
     /**
@@ -281,7 +281,7 @@ class Request
      */
     public static function getUrl($name, $default = '', $hash = 'default')
     {
-        return (string) self::getVar($name, $default, $hash, 'weburl');
+        return (string) static::getVar($name, $default, $hash, 'weburl');
     }
 
     /**
@@ -295,7 +295,7 @@ class Request
      */
     public static function getPath($name, $default = '', $hash = 'default')
     {
-        return (string) self::getVar($name, $default, $hash, 'path');
+        return (string) static::getVar($name, $default, $hash, 'path');
     }
 
     /**
@@ -309,7 +309,7 @@ class Request
      */
     public static function getEmail($name, $default = '', $hash = 'default')
     {
-        $ret = (string) self::getVar($name, $default, $hash, 'email');
+        $ret = (string) static::getVar($name, $default, $hash, 'email');
         return empty($ret) ? $default : $ret;
     }
 
@@ -324,7 +324,7 @@ class Request
      */
     public static function getIP($name, $default = '', $hash = 'default')
     {
-        $ret = (string) self::getVar($name, $default, $hash, 'ip');
+        $ret = (string) static::getVar($name, $default, $hash, 'ip');
         return empty($ret) ? $default : $ret;
     }
 
@@ -334,9 +334,9 @@ class Request
      * @param string      $headerName name of header to retrieve, case insensitive
      * @param string|null $default    default to return if named header is not found
      *
-     * @return string|null header value or default if header was not found
+     * @return string header value or default if header was not found
      */
-    public static function getHeader($headerName, $default = null)
+    public static function getHeader($headerName, $default = '')
     {
         static $headers = null;
 
@@ -360,7 +360,7 @@ class Request
 
         $name = strtolower($headerName);
         if (isset($headers[$name])) {
-            return self::cleanVar($headers[$name]);
+            return static::cleanVar($headers[$name]);
         }
         return $default;
     }
@@ -383,7 +383,7 @@ class Request
         }
 
         // Get the requested hash and determine existing value
-        $original = self::get($hash, self::ALLOWRAW);
+        $original = static::get($hash, static::MASK_ALLOW_RAW);
         if (isset($original[$name])) {
             $previous = $original[$name];
             // don't overwrite value unless asked
@@ -480,12 +480,12 @@ class Request
                 break;
         }
 
-        // Handle magic quotes compatability
+        // Handle magic quotes compatibility
         if (get_magic_quotes_gpc() && ($hash !== 'FILES')) {
-            $input = XoopsRequest::stripSlashesRecursive($input);
+            $input = static::stripSlashesRecursive($input);
         }
 
-        $result = self::cleanVars($input, $mask);
+        $result = static::cleanVars($input, $mask);
 
         return $result;
     }
@@ -495,14 +495,15 @@ class Request
      *
      * @param array   $array     An associative array of key-value pairs
      * @param string  $hash      The request variable to set (POST, GET, FILES, METHOD)
-     * @param boolean $overwrite If true and an existing key is found, the value is overwritten, otherwise it is ingored
+     * @param boolean $overwrite If true and an existing key is found, the value is overwritten,
+     *                            otherwise it is ignored
      *
      * @return void
      */
-    public static function set($array, $hash = 'default', $overwrite = true)
+    public static function set($array, $hash = 'method', $overwrite = true)
     {
         foreach ($array as $key => $value) {
-            self::setVar($key, $value, $hash, $overwrite);
+            static::setVar($key, $value, $hash, $overwrite);
         }
     }
 
@@ -521,7 +522,7 @@ class Request
      *
      * @return string
      */
-    private static function cleanVar($var, $mask = 0, $type = null)
+    protected static function cleanVar($var, $mask = 0, $type = null)
     {
         // Static input filters for specific settings
         static $noHtmlFilter = null;
@@ -533,18 +534,17 @@ class Request
         }
 
         // If the no trim flag is not set, trim the variable
-        if (!($mask & 1) && is_string($var)) {
+        if (!($mask & static::MASK_NO_TRIM) && is_string($var)) {
             $var = trim($var);
         }
 
         // Now we handle input filtering
-        if ($mask & 2) {
-            // If the allow raw flag is set, do not modify the variable
-        } else {
-            if ($mask & 4) {
+        // If the allow raw flag is set, do not modify the variable
+        if (!($mask & static::MASK_ALLOW_RAW)) {
+            if ($mask & static::MASK_ALLOW_HTML) {
                 // If the allow html flag is set, apply a safe html filter to the variable
                 if (null === $safeHtmlFilter) {
-                    $safeHtmlFilter = FilterInput::getInstance(null, null, 1, 1);
+                    $safeHtmlFilter = FilterInput::getInstance(array(), array(), 1, 1);
                 }
                 $var = $safeHtmlFilter->clean($var, $type);
             } else {
@@ -568,14 +568,14 @@ class Request
      *
      * @return string
      */
-    private static function cleanVars($var, $mask = 0, $type = null)
+    protected static function cleanVars($var, $mask = 0, $type = null)
     {
-        if (is_string($var)) {
-            $var = self::cleanVar($var, $mask, $type);
-        } else {
+        if (is_array($var)) {
             foreach ($var as $key => &$value) {
-                $value = self::cleanVars($value, $mask, $type);
+                $value = static::cleanVars($value, $mask, $type);
             }
+        } else {
+            $var = static::cleanVar($var, $mask, $type);
         }
 
         return $var;
@@ -584,11 +584,11 @@ class Request
     /**
      * Strips slashes recursively on an array
      *
-     * @param array $value Array of (nested arrays of) strings
+     * @param string|array $value string of Array of (nested arrays of) strings
      *
-     * @return array The input array with stripshlashes applied to it
+     * @return array The input array with stripslashes applied to it
      */
-    private static function stripSlashesRecursive($value)
+    protected static function stripSlashesRecursive($value)
     {
         $value = is_array($value)
             ? array_map(array('XoopsRequest', 'stripSlashesRecursive'), $value)

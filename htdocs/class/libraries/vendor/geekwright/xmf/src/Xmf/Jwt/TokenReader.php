@@ -81,12 +81,12 @@ class TokenReader
      * Validate and decode a JSON Web Token string from a header
      *
      * @param string             $keyName      name of the key to used to sign the token
-     * @param string             $headerName   name of header that sources the token
      * @param array|\Traversable $assertClaims traversable set of claims, claim => value, to assert
+     * @param string             $headerName   name of header that sources the token
      *
      * @return object|false payload as stdClass, or false if token was invalid
      */
-    public static function fromHeader($keyName, $headerName = 'Authorization', $assertClaims = array())
+    public static function fromHeader($keyName, $assertClaims = array(), $headerName = 'Authorization')
     {
         $header = Request::getHeader($headerName, '');
         if (empty($header)) {
