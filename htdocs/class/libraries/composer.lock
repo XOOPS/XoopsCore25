@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d92f3ff695a6c16e5ef64771b890499e",
-    "content-hash": "81ab351f91a22e93f6ed33b6690f0b5f",
+    "hash": "30a98dd953dd94762578680326c55588",
+    "content-hash": "33af97d6192eff4373a0d9280434843f",
     "packages": [
         {
             "name": "firebase/php-jwt",
@@ -52,23 +52,23 @@
         },
         {
             "name": "geekwright/xmf",
-            "version": "v0.2.0",
+            "version": "v0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/geekwright/xmf.git",
-                "reference": "5a518ca43e27285fad9ee51b787145e65df499a3"
+                "reference": "18b931dec16841918759f01a2b42b629b9b1cd0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/geekwright/xmf/zipball/5a518ca43e27285fad9ee51b787145e65df499a3",
-                "reference": "5a518ca43e27285fad9ee51b787145e65df499a3",
+                "url": "https://api.github.com/repos/geekwright/xmf/zipball/18b931dec16841918759f01a2b42b629b9b1cd0f",
+                "reference": "18b931dec16841918759f01a2b42b629b9b1cd0f",
                 "shasum": ""
             },
             "require": {
                 "firebase/php-jwt": "^3.0.0",
                 "ircmaxell/random-lib": "^1.1.0",
-                "oodle/krumo": "0.5.0",
                 "php": ">=5.3.7",
+                "raveren/kint": "1.0.10",
                 "symfony/yaml": "2.4.*"
             },
             "type": "project",
@@ -82,7 +82,7 @@
                 "GPL-2.0+"
             ],
             "description": "XMF - XOOPS Module Framework",
-            "time": "2016-02-16 18:06:17"
+            "time": "2016-02-27 17:19:11"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -222,57 +222,55 @@
             "time": "2013-04-30 18:00:34"
         },
         {
-            "name": "oodle/krumo",
-            "version": "v0.5.0",
+            "name": "raveren/kint",
+            "version": "1.0.10",
             "source": {
                 "type": "git",
-                "url": "https://github.com/oodle/krumo.git",
-                "reference": "48239769290e267fd7d6ddd1c37e08f96b87221e"
+                "url": "https://github.com/raveren/kint.git",
+                "reference": "c8423b9928bd35bf6ad14c688ab9c6d17d97d0eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/oodle/krumo/zipball/48239769290e267fd7d6ddd1c37e08f96b87221e",
-                "reference": "48239769290e267fd7d6ddd1c37e08f96b87221e",
+                "url": "https://api.github.com/repos/raveren/kint/zipball/c8423b9928bd35bf6ad14c688ab9c6d17d97d0eb",
+                "reference": "c8423b9928bd35bf6ad14c688ab9c6d17d97d0eb",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.2.17"
+                "php": ">=5.1.0"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
             "autoload": {
                 "files": [
-                    "class.krumo.php"
+                    "Kint.class.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "LGPL"
+                "MIT"
             ],
             "authors": [
                 {
-                    "name": "Kaloyan K. Tsvetkov",
-                    "email": "kaloyan@kaloyan.info"
+                    "name": "Rokas Šleinius",
+                    "homepage": "https://github.com/raveren"
                 },
                 {
-                    "name": "Matthew J. Mucklo",
-                    "email": "mmucklo@corp.oodle.com"
-                },
-                {
-                    "name": "Stefan Thomas",
-                    "email": "moon@justmoon.de"
+                    "name": "Contributors",
+                    "homepage": "https://github.com/raveren/kint/contributors"
                 }
             ],
-            "description": "KRUMO - version 2.0 of print_r(); and var_dump(); (with new updates)",
+            "description": "Kint - debugging helper for PHP developers",
+            "homepage": "https://github.com/raveren/kint",
             "keywords": [
                 "debug",
-                "debugging",
-                "krumo",
-                "pretty",
-                "print",
-                "print_r",
-                "var_dump"
+                "kint",
+                "php"
             ],
-            "time": "2014-02-26 21:10:16"
+            "time": "2015-09-16 14:09:00"
         },
         {
             "name": "symfony/yaml",

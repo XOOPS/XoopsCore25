@@ -36,13 +36,13 @@ namespace Xmf;
  */
 class FilterInput
 {
-    protected $tagsArray;         // default = empty array
-    protected $attrArray;         // default = empty array
+    protected $tagsArray;         // default is empty array
+    protected $attrArray;         // default is empty array
 
-    protected $tagsMethod;        // default = 0
-    protected $attrMethod;        // default = 0
+    protected $tagsMethod;        // default is 0
+    protected $attrMethod;        // default is 0
 
-    protected $xssAuto;           // default = 1
+    protected $xssAuto;           // default is 1
     protected $tagBlacklist = array(
         'applet',
         'body',
@@ -96,15 +96,15 @@ class FilterInput
             $attrArray[$i] = strtolower($attrArray[$i]);
         }
         // assign to member vars
-        $this->tagsArray  = (array)$tagsArray;
-        $this->attrArray  = (array)$attrArray;
+        $this->tagsArray  = (array) $tagsArray;
+        $this->attrArray  = (array) $attrArray;
         $this->tagsMethod = $tagsMethod;
         $this->attrMethod = $attrMethod;
         $this->xssAuto    = $xssAuto;
     }
 
     /**
-     * Returns a reference to an input filter object, only creating it if it doesn't already exist.
+     * Returns an input filter object, only creating it if it does not already exist.
      *
      * This method must be invoked as:
      *   $filter = FilterInput::getInstance();
@@ -134,8 +134,7 @@ class FilterInput
         }
 
         if (empty($instances[$sig])) {
-            $classname       = __CLASS__;
-            $instances[$sig] = new $classname ($tagsArray, $attrArray, $tagsMethod, $attrMethod, $xssAuto);
+            $instances[$sig] = new static($tagsArray, $attrArray, $tagsMethod, $attrMethod, $xssAuto);
         }
 
         return $instances[$sig];
@@ -175,7 +174,7 @@ class FilterInput
      *
      * @param mixed  $source Input string/array-of-string to be 'cleaned'
      * @param string $type   Return/cleaning type for the variable, one of
-     *                       (INTEGER, FLOAT, BOOLEAN, WORD, ALNUM, CMD, BASE64,
+     *                       (INTEGER, FLOAT, BOOLEAN, WORD, ALPHANUM, CMD, BASE64,
      *                        STRING, ARRAY, PATH, USERNAME, WEBURL, EMAIL, IP)
      *
      * @return mixed 'Cleaned' version of input parameter
@@ -188,8 +187,7 @@ class FilterInput
         // need an instance for methods, since this is supposed to be static
         // we must instantiate the class - this will take defaults
         if (!is_object($filter)) {
-            $classname = get_called_class() ;
-            $filter = $classname::getInstance();
+            $filter = static::getInstance();
         }
 
         // Handle the type constraint
@@ -198,7 +196,7 @@ class FilterInput
             case 'INTEGER':
                 // Only use the first integer value
                 preg_match('/-?\d+/', (string) $source, $matches);
-                $result = @ (int)$matches[0];
+                $result = @ (int) $matches[0];
                 break;
 
             case 'FLOAT':
@@ -217,7 +215,8 @@ class FilterInput
                 $result = (string) preg_replace('/[^A-Z_]/i', '', $source);
                 break;
 
-            case 'ALNUM':
+            case 'ALPHANUM':
+            case 'ALNUM': // for BC only
                 $result = (string) preg_replace('/[^A-Z0-9]/i', '', $source);
                 break;
 
@@ -252,15 +251,15 @@ class FilterInput
             case 'WEBURL':
                 $result = (string) $filter->process($source);
                 // allow only relative, http or https
-                $urlparts=parse_url($result);
+                $urlparts = parse_url($result);
                 if (!empty($urlparts['scheme'])
-                    && !($urlparts['scheme']==='http' || $urlparts['scheme']==='https')
+                    && !($urlparts['scheme'] === 'http' || $urlparts['scheme'] === 'https')
                 ) {
-                    $result='';
+                    $result = '';
                 }
                 // do not allow quotes, tag brackets or controls
                 if (!preg_match('#^[^"<>\x00-\x1F]+$#', $result)) {
-                    $result='';
+                    $result = '';
                 }
                 break;
 
@@ -340,12 +339,10 @@ class FilterInput
                 $tagOpen_start = strpos($postTag, '<');
                 continue;
             }
-            $tagOpen_nested = (strpos($fromTagOpen, '<') + $tagOpen_start + 1);
             $currentTag = substr($fromTagOpen, 0, $tagOpen_end);
             $tagLength = strlen($currentTag);
             if (!$tagOpen_end) {
                 $preTag .= $postTag;
-                $tagOpen_start = strpos($postTag, '<');
             }
             // iterate through tag finding attribute pairs - setup
             $tagLeft = $currentTag;
@@ -377,7 +374,7 @@ class FilterInput
                 $fromSpace = substr($tagLeft, ($currentSpace + 1));
                 $nextSpace = strpos($fromSpace, ' ');
                 $openQuotes = strpos($fromSpace, '"');
-                $closeQuotes = strpos(substr($fromSpace, ($openQuotes+1)), '"') + $openQuotes + 1;
+                $closeQuotes = strpos(substr($fromSpace, ($openQuotes + 1)), '"') + $openQuotes + 1;
                 // another equals exists
                 if (strpos($fromSpace, '=') !== false) {
                     // opening and closing quotes exists
@@ -534,14 +531,14 @@ class FilterInput
             },
             $source
         );
-        // convert hex
+        // convert hex notation
         $source = preg_replace_callback(
             '/&#x([a-f0-9]+);/mi',
             function ($matches) {
-                return chr('0x'.$matches[1]);
+                return chr('0x' . $matches[1]);
             },
             $source
-        );   // hex notation
+        );
 
         return $source;
     }

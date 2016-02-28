@@ -119,7 +119,6 @@ class Tar
      */
     public function __construct()
     {
-        return true;
     }
 
     /**

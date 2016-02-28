@@ -11,8 +11,6 @@
 
 namespace Xmf\Module\Helper;
 
-use Xmf\Module\Helper;
-
 /**
  * Xmf\Module\Helper\AbstractHelper defines the basis for various
  * helpers that simplify routine module tasks.
@@ -43,37 +41,29 @@ abstract class AbstractHelper
      * Instantiate a XoopsModule object for the helper to use.
      * This occurs in one of three ways
      * - if null is passed, use the current module
-     * - if a string is passed, use as dirname for a module
-     * - if an object is passed, use it as the module object
+     * - if a string is passed, use as dirname to load
      *
-     * @param mixed $module string dirname | object XoopsModule
+     * @param string|null $dirname dirname
      */
-    public function __construct($module = null)
+    public function __construct($dirname = null)
     {
         $this->module = null;
 
-        if (empty($module)) {
+        if (empty($dirname)) {
             // nothing specified, use current module
             // check if we are running in 2.6
             if (class_exists('Xoops', false)) {
-                $xoops=\Xoops::getInstance();
+                $xoops = \Xoops::getInstance();
                 if ($xoops->isModule()) {
                     $this->module = $xoops->module;
                 }
             } else {
                 $this->module = $GLOBALS['xoopsModule'];
             }
-        } elseif (is_scalar($module)) {
-            // dirname specified, get a module object
-            $helper = Helper::getHelper($module);
-            if ($helper) {
-                $this->module = $helper->getModule();
-            }
         } else {
-            // assume a passed object is appropriate
-            if (is_object($module)) {
-                $this->module = $module;
-            }
+            // assume dirname specified, try to get a module object
+            $moduleHandler = xoops_getHandler('module');
+            $this->module = $moduleHandler->getByDirname($dirname);
         }
         if (is_object($this->module)) {
             $this->init();

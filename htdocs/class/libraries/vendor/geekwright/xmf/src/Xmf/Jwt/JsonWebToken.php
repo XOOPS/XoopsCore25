@@ -74,8 +74,8 @@ class JsonWebToken
      * Decode a JWT string, validating signature and well defined registered claims,
      * and optionally validate against a list of supplied claims
      *
-     * @param string $jwtString    string containing the JWT to decode
-     * @param array  $assertClaims associative array, claim => value, of claims to assert
+     * @param string             $jwtString    string containing the JWT to decode
+     * @param array|\Traversable $assertClaims associative array, claim => value, of claims to assert
      *
      * @return object|false
      */
@@ -101,9 +101,9 @@ class JsonWebToken
     /**
      * Create a signed token string for a payload
      *
-     * @param array|Traversable $payload          traversable set of claims, claim => value
-     * @param int               $expirationOffset seconds from now that token will expire. If not specified,
-     *                                             an "exp" claim will not be added or updated
+     * @param array|\ArrayObject $payload          traversable set of claims, claim => value
+     * @param int                $expirationOffset seconds from now that token will expire. If not specified,
+     *                                              an "exp" claim will not be added or updated
      *
      * @return string encoded and signed jwt string
      *

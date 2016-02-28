@@ -260,7 +260,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
      * @param string $sql   a valid MySQL query
      * @param int    $limit number of records to return
      * @param int    $start offset of first record to return
-     * @return resource query result or FALSE if successful
+     * @return mysqli_result|bool query result or FALSE if successful
      *                      or TRUE if successful and no result
      */
     public function queryF($sql, $limit = 0, $start = 0)

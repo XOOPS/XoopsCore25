@@ -53,7 +53,7 @@ class Yaml
         try {
             $ret = VendorYaml::dump($var, $inline, $indent);
         } catch (\Exception $e) {
-            trigger_error($e->getMessage(), E_USER_ERROR);
+            static::logError($e);
             $ret = false;
         }
         return $ret;
@@ -71,7 +71,7 @@ class Yaml
         try {
             $ret = VendorYaml::parse($yamlString);
         } catch (\Exception $e) {
-            trigger_error($e->getMessage(), E_USER_ERROR);
+            static::logError($e);
             $ret = false;
         }
         return $ret;
@@ -90,7 +90,7 @@ class Yaml
             $yamlString = file_get_contents($yamlFile);
             $ret = VendorYaml::parse($yamlString);
         } catch (\Exception $e) {
-            trigger_error($e->getMessage(), E_USER_ERROR);
+            static::logError($e);
             $ret = false;
         }
         return $ret;
@@ -112,7 +112,7 @@ class Yaml
             $yamlString = VendorYaml::dump($var, $inline, $indent);
             $ret = file_put_contents($yamlFile, $yamlString);
         } catch (\Exception $e) {
-            trigger_error($e->getMessage(), E_USER_ERROR);
+            static::logError($e);
             $ret = false;
         }
         return $ret;
@@ -138,7 +138,7 @@ class Yaml
             $yamlString = VendorYaml::dump($var, $inline, $indent);
             $ret = empty($yamlString) ? false : "<?php\n/*\n---\n" . $yamlString . "\n...\n*/\n";
         } catch (\Exception $e) {
-            trigger_error($e->getMessage(), E_USER_ERROR);
+            static::logError($e);
             $ret = false;
         }
         return $ret;
@@ -164,7 +164,7 @@ class Yaml
             $unwrapped = $matched ? $match[1] : $yamlString;
             $ret = VendorYaml::parse($unwrapped);
         } catch (\Exception $e) {
-            trigger_error($e->getMessage(), E_USER_ERROR);
+            static::logError($e);
             $ret = false;
         }
         return $ret;
@@ -186,9 +186,9 @@ class Yaml
     {
         try {
             $yamlString = file_get_contents($yamlFile);
-            $ret = self::loadWrapped($yamlString);
+            $ret = static::loadWrapped($yamlString);
         } catch (\Exception $e) {
-            trigger_error($e->getMessage(), E_USER_ERROR);
+            static::logError($e);
             $ret = false;
         }
         return $ret;
@@ -212,12 +212,24 @@ class Yaml
     public static function saveWrapped($var, $yamlFile, $inline = 4, $indent = 4)
     {
         try {
-            $yamlString = self::dumpWrapped($var, $inline, $indent);
+            $yamlString = static::dumpWrapped($var, $inline, $indent);
             $ret = file_put_contents($yamlFile, $yamlString);
         } catch (\Exception $e) {
-            trigger_error($e->getMessage(), E_USER_ERROR);
+            static::logError($e);
             $ret = false;
         }
         return $ret;
+    }
+
+    /**
+     * @param \Exception $e throwable to log
+     */
+    protected static function logError($e)
+    {
+        if (class_exists('Xoops')) {
+            \Xoops::getInstance()->events()->triggerEvent('core.exception', $e);
+        } else {
+            trigger_error($e->getMessage(), E_USER_ERROR);
+        }
     }
 }

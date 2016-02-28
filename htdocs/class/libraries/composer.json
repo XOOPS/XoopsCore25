@@ -10,7 +10,7 @@
     },
     "require": {
         "php": ">=5.3.7",
-        "geekwright/xmf": "0.2.*",
+        "geekwright/xmf": "0.4.*",
         "ircmaxell/password-compat": "^1.0.4"
     }
 }

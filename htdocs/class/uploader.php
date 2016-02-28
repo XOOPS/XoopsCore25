@@ -1,4 +1,4 @@
-    <?php
+<?php
 /**
  * XOOPS file uploader
  *
