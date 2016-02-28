@@ -1,9 +1,10 @@
 <?php
 /**
  * Smarty plugin
- * @package    Smarty
+ * @package Smarty
  * @subpackage plugins
  */
+
 
 /**
  * Smarty {html_checkboxes} function plugin
@@ -27,32 +28,32 @@
  * {html_checkboxes values=$ids name='box' separator='<br>' output=$names}
  * {html_checkboxes values=$ids checked=$checked separator='<br>' output=$names}
  * </pre>
- * @link       http://smarty.php.net/manual/en/language.function.html.checkboxes.php {html_checkboxes}
+ * @link http://smarty.php.net/manual/en/language.function.html.checkboxes.php {html_checkboxes}
  *      (Smarty online manual)
  * @author     Christopher Kvarme <christopher.kvarme@flashjab.com>
- * @author     credits to Monte Ohrt <monte at ohrt dot com>
+ * @author credits to Monte Ohrt <monte at ohrt dot com>
  * @version    1.0
  * @param array
  * @param Smarty
  * @return string
- * @uses       smarty_function_escape_special_chars()
+ * @uses smarty_function_escape_special_chars()
  */
 function smarty_function_html_checkboxes($params, &$smarty)
 {
-    require_once $smarty->_get_plugin_filepath('shared', 'escape_special_chars');
+    require_once $smarty->_get_plugin_filepath('shared','escape_special_chars');
 
-    $name      = 'checkbox';
-    $values    = null;
-    $options   = null;
-    $selected  = null;
+    $name = 'checkbox';
+    $values = null;
+    $options = null;
+    $selected = null;
     $separator = '';
-    $labels    = true;
-    $output    = null;
+    $labels = true;
+    $output = null;
 
     $extra = '';
 
-    foreach ($params as $_key => $_val) {
-        switch ($_key) {
+    foreach($params as $_key => $_val) {
+        switch($_key) {
             case 'name':
             case 'separator':
                 $$_key = $_val;
@@ -85,8 +86,8 @@ function smarty_function_html_checkboxes($params, &$smarty)
                 break;
 
             default:
-                if (!is_array($_val)) {
-                    $extra .= ' ' . $_key . '="' . smarty_function_escape_special_chars($_val) . '"';
+                if(!is_array($_val)) {
+                    $extra .= ' '.$_key.'="'.smarty_function_escape_special_chars($_val).'"';
                 } else {
                     $smarty->trigger_error("html_checkboxes: extra attribute '$_key' cannot be an array", E_USER_NOTICE);
                 }
@@ -94,59 +95,49 @@ function smarty_function_html_checkboxes($params, &$smarty)
         }
     }
 
-    if (!isset($options) && !isset($values)) {
-        return '';
-    } /* raise error here? */
+    if (!isset($options) && !isset($values))
+        return ''; /* raise error here? */
 
     settype($selected, 'array');
     $_html_result = array();
 
     if (isset($options)) {
-        foreach ($options as $_key => $_val) {
+
+        foreach ($options as $_key=>$_val)
             $_html_result[] = smarty_function_html_checkboxes_output($name, $_key, $_val, $selected, $extra, $separator, $labels);
-        }
+
+
     } else {
-        foreach ($values as $_i => $_key) {
-            $_val           = isset($output[$_i]) ? $output[$_i] : '';
+        foreach ($values as $_i=>$_key) {
+            $_val = isset($output[$_i]) ? $output[$_i] : '';
             $_html_result[] = smarty_function_html_checkboxes_output($name, $_key, $_val, $selected, $extra, $separator, $labels);
         }
+
     }
 
-    if (!empty($params['assign'])) {
+    if(!empty($params['assign'])) {
         $smarty->assign($params['assign'], $_html_result);
     } else {
-        return implode("\n", $_html_result);
+        return implode("\n",$_html_result);
     }
 
-    return null;
 }
 
-/**
- * @param $name
- * @param $value
- * @param $output
- * @param $selected
- * @param $extra
- * @param $separator
- * @param $labels
- * @return string
- */
-function smarty_function_html_checkboxes_output($name, $value, $output, $selected, $extra, $separator, $labels)
-{
+function smarty_function_html_checkboxes_output($name, $value, $output, $selected, $extra, $separator, $labels) {
     $_output = '';
-    if ($labels) {
-        $_output .= '<label>';
-    }
-    $_output .= '<input type="checkbox" name="' . smarty_function_escape_special_chars($name) . '[]" value="' . smarty_function_escape_special_chars($value) . '"';
+    if ($labels) $_output .= '<label>';
+    $_output .= '<input type="checkbox" name="'
+        . smarty_function_escape_special_chars($name) . '[]" value="'
+        . smarty_function_escape_special_chars($value) . '"';
 
     if (in_array((string)$value, $selected)) {
         $_output .= ' checked="checked"';
     }
     $_output .= $extra . ' />' . $output;
-    if ($labels) {
-        $_output .= '</label>';
-    }
-    $_output .= $separator;
+    if ($labels) $_output .= '</label>';
+    $_output .=  $separator;
 
     return $_output;
 }
+
+?>

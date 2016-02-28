@@ -1,7 +1,7 @@
 <?php
 /**
  * Smarty plugin
- * @package    Smarty
+ * @package Smarty
  * @subpackage plugins
  */
 
@@ -19,14 +19,14 @@ require_once $smarty->_get_plugin_filepath('shared', 'make_timestamp');
  *         - string: input date string
  *         - format: strftime format for output
  *         - default_date: default date if $string is empty
- * @link     http://smarty.php.net/manual/en/language.modifier.date.format.php
+ * @link http://smarty.php.net/manual/en/language.modifier.date.format.php
  *          date_format (Smarty online manual)
  * @author   Monte Ohrt <monte at ohrt dot com>
  * @param string
  * @param string
  * @param string
  * @return string|void
- * @uses     smarty_make_timestamp()
+ * @uses smarty_make_timestamp()
  */
 function smarty_modifier_date_format($string, $format = '%b %e, %Y', $default_date = '')
 {
@@ -35,10 +35,10 @@ function smarty_modifier_date_format($string, $format = '%b %e, %Y', $default_da
     } elseif ($default_date != '') {
         $timestamp = smarty_make_timestamp($default_date);
     } else {
-        return null;
+        return;
     }
-    if (DIRECTORY_SEPARATOR === '\\') {
-        $_win_from = array('%D', '%h', '%n', '%r', '%R', '%t', '%T');
+    if (DIRECTORY_SEPARATOR == '\\') {
+        $_win_from = array('%D',       '%h', '%n', '%r',          '%R',    '%t', '%T');
         $_win_to   = array('%m/%d/%y', '%b', "\n", '%I:%M:%S %p', '%H:%M', "\t", '%H:%M:%S');
         if (strpos($format, '%e') !== false) {
             $_win_from[] = '%e';
@@ -50,8 +50,9 @@ function smarty_modifier_date_format($string, $format = '%b %e, %Y', $default_da
         }
         $format = str_replace($_win_from, $_win_to, $format);
     }
-
     return strftime($format, $timestamp);
 }
 
 /* vim: set expandtab: */
+
+?>
