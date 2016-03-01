@@ -27,6 +27,10 @@
  **/
 
 require_once './include/common.inc.php';
+include_once '../class/xoopsload.php';
+include_once '../class/preload.php';
+include_once '../class/database/databasefactory.php';
+include_once '../class/logger/xoopslogger.php';
 
 $_SESSION = array();
 setcookie('xo_install_user', '', null, null, null);

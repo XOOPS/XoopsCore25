@@ -24,6 +24,8 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 include_once XOOPS_ROOT_PATH . '/class/logger/xoopslogger.php';
+include_once XOOPS_ROOT_PATH . '/class/xoopsload.php';
+include_once XOOPS_ROOT_PATH . '/class/preload.php';
 include_once XOOPS_ROOT_PATH . '/class/database/databasefactory.php';
 include_once XOOPS_ROOT_PATH . '/class/database/' . XOOPS_DB_TYPE . 'database.php';
 include_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
