@@ -49,6 +49,139 @@
         "homepage": "http://symfony.com"
     },
     {
+        "name": "raveren/kint",
+        "version": "1.0.10",
+        "version_normalized": "1.0.10.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/raveren/kint.git",
+            "reference": "c8423b9928bd35bf6ad14c688ab9c6d17d97d0eb"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/raveren/kint/zipball/c8423b9928bd35bf6ad14c688ab9c6d17d97d0eb",
+            "reference": "c8423b9928bd35bf6ad14c688ab9c6d17d97d0eb",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.1.0"
+        },
+        "time": "2015-09-16 14:09:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "Kint.class.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Rokas Šleinius",
+                "homepage": "https://github.com/raveren"
+            },
+            {
+                "name": "Contributors",
+                "homepage": "https://github.com/raveren/kint/contributors"
+            }
+        ],
+        "description": "Kint - debugging helper for PHP developers",
+        "homepage": "https://github.com/raveren/kint",
+        "keywords": [
+            "debug",
+            "kint",
+            "php"
+        ]
+    },
+    {
+        "name": "xoops/xmf",
+        "version": "v1.0.0-RC",
+        "version_normalized": "1.0.0.0-RC",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/XOOPS/xmf.git",
+            "reference": "6385801c3740a9f14954e50c7bb427717728646e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/XOOPS/xmf/zipball/6385801c3740a9f14954e50c7bb427717728646e",
+            "reference": "6385801c3740a9f14954e50c7bb427717728646e",
+            "shasum": ""
+        },
+        "require": {
+            "firebase/php-jwt": "^3.0.0",
+            "ircmaxell/random-lib": "^1.1.0",
+            "php": ">=5.3.7",
+            "raveren/kint": "1.0.10",
+            "symfony/yaml": "2.4.*"
+        },
+        "time": "2016-02-29 22:26:31",
+        "type": "project",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Xmf\\": "src/Xmf"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "XMF - XOOPS Module Framework"
+    },
+    {
+        "name": "ircmaxell/password-compat",
+        "version": "v1.0.4",
+        "version_normalized": "1.0.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/ircmaxell/password_compat.git",
+            "reference": "5c5cde8822a69545767f7c7f3058cb15ff84614c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/ircmaxell/password_compat/zipball/5c5cde8822a69545767f7c7f3058cb15ff84614c",
+            "reference": "5c5cde8822a69545767f7c7f3058cb15ff84614c",
+            "shasum": ""
+        },
+        "require-dev": {
+            "phpunit/phpunit": "4.*"
+        },
+        "time": "2014-11-20 16:49:30",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "lib/password.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Anthony Ferrara",
+                "email": "ircmaxell@php.net",
+                "homepage": "http://blog.ircmaxell.com"
+            }
+        ],
+        "description": "A compatibility library for the proposed simplified password hashing algorithm: https://wiki.php.net/rfc/password_hash",
+        "homepage": "https://github.com/ircmaxell/password_compat",
+        "keywords": [
+            "hashing",
+            "password"
+        ]
+    },
+    {
         "name": "ircmaxell/security-lib",
         "version": "1.0.0",
         "version_normalized": "1.0.0.0",
@@ -191,138 +324,5 @@
         ],
         "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
         "homepage": "https://github.com/firebase/php-jwt"
-    },
-    {
-        "name": "ircmaxell/password-compat",
-        "version": "v1.0.4",
-        "version_normalized": "1.0.4.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/ircmaxell/password_compat.git",
-            "reference": "5c5cde8822a69545767f7c7f3058cb15ff84614c"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/ircmaxell/password_compat/zipball/5c5cde8822a69545767f7c7f3058cb15ff84614c",
-            "reference": "5c5cde8822a69545767f7c7f3058cb15ff84614c",
-            "shasum": ""
-        },
-        "require-dev": {
-            "phpunit/phpunit": "4.*"
-        },
-        "time": "2014-11-20 16:49:30",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "files": [
-                "lib/password.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Anthony Ferrara",
-                "email": "ircmaxell@php.net",
-                "homepage": "http://blog.ircmaxell.com"
-            }
-        ],
-        "description": "A compatibility library for the proposed simplified password hashing algorithm: https://wiki.php.net/rfc/password_hash",
-        "homepage": "https://github.com/ircmaxell/password_compat",
-        "keywords": [
-            "hashing",
-            "password"
-        ]
-    },
-    {
-        "name": "raveren/kint",
-        "version": "1.0.10",
-        "version_normalized": "1.0.10.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/raveren/kint.git",
-            "reference": "c8423b9928bd35bf6ad14c688ab9c6d17d97d0eb"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/raveren/kint/zipball/c8423b9928bd35bf6ad14c688ab9c6d17d97d0eb",
-            "reference": "c8423b9928bd35bf6ad14c688ab9c6d17d97d0eb",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.1.0"
-        },
-        "time": "2015-09-16 14:09:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.0.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "files": [
-                "Kint.class.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Rokas Šleinius",
-                "homepage": "https://github.com/raveren"
-            },
-            {
-                "name": "Contributors",
-                "homepage": "https://github.com/raveren/kint/contributors"
-            }
-        ],
-        "description": "Kint - debugging helper for PHP developers",
-        "homepage": "https://github.com/raveren/kint",
-        "keywords": [
-            "debug",
-            "kint",
-            "php"
-        ]
-    },
-    {
-        "name": "geekwright/xmf",
-        "version": "v0.4.0",
-        "version_normalized": "0.4.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/geekwright/xmf.git",
-            "reference": "18b931dec16841918759f01a2b42b629b9b1cd0f"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/geekwright/xmf/zipball/18b931dec16841918759f01a2b42b629b9b1cd0f",
-            "reference": "18b931dec16841918759f01a2b42b629b9b1cd0f",
-            "shasum": ""
-        },
-        "require": {
-            "firebase/php-jwt": "^3.0.0",
-            "ircmaxell/random-lib": "^1.1.0",
-            "php": ">=5.3.7",
-            "raveren/kint": "1.0.10",
-            "symfony/yaml": "2.4.*"
-        },
-        "time": "2016-02-27 17:19:11",
-        "type": "project",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Xmf\\": "src/Xmf"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "description": "XMF - XOOPS Module Framework"
     }
 ]

@@ -39,7 +39,7 @@ abstract class AbstractHelper
 
     /**
      * Instantiate a XoopsModule object for the helper to use.
-     * This occurs in one of three ways
+     * The module is determined as follows:
      * - if null is passed, use the current module
      * - if a string is passed, use as dirname to load
      *

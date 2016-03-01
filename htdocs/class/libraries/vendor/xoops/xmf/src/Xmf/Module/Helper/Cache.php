@@ -80,13 +80,15 @@ class Cache extends AbstractHelper
     /**
      * Read value for a key from the cache
      *
-     * @param string $key Identifier for the data
+     * @param string $key     Identifier for the data
+     * @param mixed  $default default value to return if config $key is not set
      *
      * @return mixed value if key was set, false not set or expired
      */
-    public function read($key)
+    public function read($key, $default = false)
     {
-        return $this->cache->read($this->prefix($key));
+        $value = $this->cache->read($this->prefix($key));
+        return (false !== $value) ? $value : $default;
     }
 
     /**

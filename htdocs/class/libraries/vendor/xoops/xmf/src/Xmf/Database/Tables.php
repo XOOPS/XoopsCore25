@@ -120,7 +120,7 @@ class Tables
             // Is this on a table we are adding?
             if (isset($tableDef['create']) && $tableDef['create']) {
                 switch ($position) {
-                    case Tables::POSITION_FIRST:
+                    case static::POSITION_FIRST:
                         array_unshift($tableDef['columns'], $columnDef);
                         break;
                     case '':
@@ -149,7 +149,7 @@ class Tables
                     }
                 }
                 switch ($position) {
-                    case Tables::POSITION_FIRST:
+                    case static::POSITION_FIRST:
                         $pos = 'FIRST';
                         break;
                     case '':
@@ -175,7 +175,7 @@ class Tables
      *
      * @param string $table  table
      * @param string $column column or comma separated list of columns
-     *                        to use as primary key
+     *                       to use as primary key
      *
      * @return bool true if no errors, false if errors encountered
      */
@@ -323,7 +323,7 @@ class Tables
                 return true;
             } else {
                 switch ($position) {
-                    case Tables::POSITION_FIRST:
+                    case static::POSITION_FIRST:
                         $pos = 'FIRST';
                         break;
                     case '':

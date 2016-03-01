@@ -30,7 +30,7 @@ use Xmf\Language;
  * @link      http://xoops.org
  * @since     1.0
  */
-class GenericHelper
+abstract class GenericHelper
 {
     /**
      * @var string module directory name
@@ -87,12 +87,13 @@ class GenericHelper
     /**
      * get a module config item
      *
-     * @param string $name name of config item, or blank for all items
+     * @param string $name    name of config item, or blank for all items
+     * @param mixed  $default default value to return if config $name is not set
      *
      * @return mixed string config item, array of config items,
      *                or null if config not found
      */
-    public function getConfig($name = null)
+    public function getConfig($name = null, $default = null)
     {
         if ($this->configs == null) {
             $this->initConfig();
@@ -105,9 +106,7 @@ class GenericHelper
 
         if (!isset($this->configs[$name])) {
             $this->addLog("ERROR :: Config '{$name}' does not exist");
-            $ret = null;
-
-            return $ret;
+            return $default;
         }
 
         $this->addLog("Getting config '{$name}' : " . $this->configs[$name]);

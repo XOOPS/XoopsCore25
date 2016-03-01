@@ -75,17 +75,18 @@ class Session extends AbstractHelper
     /**
      * Fetch a named session variable respecting our module prefix
      *
-     * @param string $name name of variable
+     * @param string $name    name of variable
+     * @param mixed  $default default value to return if config $name is not set
      *
      * @return mixed  $value value of session variable or false if not set
      */
-    public function get($name)
+    public function get($name, $default = false)
     {
         $prefixedName = $this->prefix($name);
         if (isset($_SESSION[$prefixedName])) {
             return unserialize($_SESSION[$prefixedName]);
         } else {
-            return false;
+            return $default;
         }
     }
 
