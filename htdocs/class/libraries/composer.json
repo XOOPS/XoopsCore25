@@ -3,14 +3,9 @@
     "license": "GPL-2.0+",
     "type": "project",
     "description": "Libraries for XOOPS 2.5.8",
-    "autoload": {
-        "psr-4": {
-            "Xmf\\": "src/Xmf"
-        }
-    },
     "require": {
         "php": ">=5.3.7",
-        "geekwright/xmf": "0.4.*",
+        "xoops/xmf": "1.0.0-RC",
         "ircmaxell/password-compat": "^1.0.4"
     }
 }

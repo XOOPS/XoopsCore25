@@ -32,8 +32,8 @@ require_once $path . '/include' . '/cp_header.php';
  */
 function xoops_module_update_pm(XoopsModule $module, $oldversion = null)
 {
+    global $xoopsDB;
     if ($oldversion <= 100) {
-        global $xoopsDB;
         // Check pm table version
         $sql = "SHOW COLUMNS FROM " . $xoopsDB->prefix("priv_msgs");
         if (!$result = $xoopsDB->queryF($sql)) {

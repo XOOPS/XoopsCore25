@@ -6,6 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Xmf\\' => array($baseDir . '/src/Xmf', $vendorDir . '/geekwright/xmf/src/Xmf'),
+    'Xmf\\' => array($vendorDir . '/xoops/xmf/src/Xmf'),
     'Firebase\\JWT\\' => array($vendorDir . '/firebase/php-jwt/src'),
 );

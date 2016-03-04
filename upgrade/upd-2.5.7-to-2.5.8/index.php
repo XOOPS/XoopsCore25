@@ -19,8 +19,6 @@ use Xmf\Key\FileStorage;
  */
 class Upgrade_258 extends XoopsUpgrade
 {
-    private $keyFileName = XOOPS_VAR_PATH . '/data/syskey.php';
-
     public $tasks = array(
         'users_pass',
         'com_ip',

@@ -420,10 +420,10 @@ class Admin
      * not part of next generation Xoops\Module\Admin
      *
      * @param string $name the image name to provide URL for, or blank
-     *                      to just get the URL path.
+     *                     to just get the URL path.
      * @param string $size the icon size (directory). Valid values are
-     *                      16, 32 or /. A '/' slash will simply set the
-     *                      path to the icon directory and append $image.
+     *                     16, 32 or /. A '/' slash will simply set the
+     *                     path to the icon directory and append $image.
      *
      * @return string path to icons
      */
