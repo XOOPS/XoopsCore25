@@ -1,6 +1,10 @@
 xmf ChangeLog
 =============
 
+04-Mar-2016 V1.0.0 RC1
+-------------------------
+- Preparation for release in XOOPS 2.5.8
+
 09-Feb-2016
 -----------
 - Convert to library instead of module

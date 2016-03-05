@@ -102,42 +102,6 @@
         ]
     },
     {
-        "name": "xoops/xmf",
-        "version": "v1.0.0-RC",
-        "version_normalized": "1.0.0.0-RC",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/XOOPS/xmf.git",
-            "reference": "6385801c3740a9f14954e50c7bb427717728646e"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/XOOPS/xmf/zipball/6385801c3740a9f14954e50c7bb427717728646e",
-            "reference": "6385801c3740a9f14954e50c7bb427717728646e",
-            "shasum": ""
-        },
-        "require": {
-            "firebase/php-jwt": "^3.0.0",
-            "ircmaxell/random-lib": "^1.1.0",
-            "php": ">=5.3.7",
-            "raveren/kint": "1.0.10",
-            "symfony/yaml": "2.4.*"
-        },
-        "time": "2016-02-29 22:26:31",
-        "type": "project",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Xmf\\": "src/Xmf"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "description": "XMF - XOOPS Module Framework"
-    },
-    {
         "name": "ircmaxell/password-compat",
         "version": "v1.0.4",
         "version_normalized": "1.0.4.0",
@@ -324,5 +288,41 @@
         ],
         "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
         "homepage": "https://github.com/firebase/php-jwt"
+    },
+    {
+        "name": "xoops/xmf",
+        "version": "v1.0.0-RC1",
+        "version_normalized": "1.0.0.0-RC1",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/XOOPS/xmf.git",
+            "reference": "3856727277b138e764e4133e1f77b3f0ad07dff9"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/XOOPS/xmf/zipball/3856727277b138e764e4133e1f77b3f0ad07dff9",
+            "reference": "3856727277b138e764e4133e1f77b3f0ad07dff9",
+            "shasum": ""
+        },
+        "require": {
+            "firebase/php-jwt": "^3.0.0",
+            "ircmaxell/random-lib": "^1.1.0",
+            "php": ">=5.3.7",
+            "raveren/kint": "1.0.10",
+            "symfony/yaml": "2.4.*"
+        },
+        "time": "2016-03-04 21:06:57",
+        "type": "project",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Xmf\\": "src/Xmf"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "XMF - XOOPS Module Framework"
     }
 ]

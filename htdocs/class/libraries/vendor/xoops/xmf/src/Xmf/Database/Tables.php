@@ -21,7 +21,7 @@ use Xmf\Language;
  * Build a work queue of database changes needed to implement new and
  * changed tables. Define table(s) you are dealing with and any desired
  * change(s). If the changes are already in place (i.e. the new column
- * already exists) no work is added. Then queueExecute() to process the
+ * already exists) no work is added. Then executeQueue() to process the
  * whole set.
  *
  * @category  Xmf\Database\Tables
@@ -35,11 +35,6 @@ use Xmf\Language;
  */
 class Tables
 {
-    /**
-     * for add/alter column position
-     */
-    const POSITION_FIRST = 1;
-
     /**
      * @var \XoopsDatabase
      */
@@ -80,7 +75,7 @@ class Tables
 
         $this->db = \XoopsDatabaseFactory::getDatabaseConnection();
         $this->databaseName = XOOPS_DB_NAME;
-        $this->queueReset();
+        $this->resetQueue();
     }
 
     /**
@@ -101,16 +96,13 @@ class Tables
      * @param string $table      table to contain the column
      * @param string $column     name of column to add
      * @param string $attributes column_definition
-     * @param mixed  $position   FIRST, string of column name to add new
-     *                           column after, or null for natural append
      *
      * @return bool true if no errors, false if errors encountered
      */
-    public function addColumn($table, $column, $attributes, $position = null)
+    public function addColumn($table, $column, $attributes)
     {
         $columnDef = array(
             'name' => $column,
-            'position' => $position,
             'attributes' => $attributes
         );
 
@@ -119,49 +111,15 @@ class Tables
             $tableDef = &$this->tables[$table];
             // Is this on a table we are adding?
             if (isset($tableDef['create']) && $tableDef['create']) {
-                switch ($position) {
-                    case static::POSITION_FIRST:
-                        array_unshift($tableDef['columns'], $columnDef);
-                        break;
-                    case '':
-                    case null:
-                    case false:
-                        array_push($tableDef['columns'], $columnDef);
-                        break;
-                    default:
-                        // should be a column name to add after
-                        // loop thru and find that column
-                        $i = 0;
-                        foreach ($tableDef['columns'] as $col) {
-                            ++$i;
-                            if (strcasecmp($col['name'], $position) == 0) {
-                                array_splice($tableDef['columns'], $i, 0, array($columnDef));
-                                break;
-                            }
-                        }
-                }
-
-                return true;
+                array_push($tableDef['columns'], $columnDef);
             } else {
                 foreach ($tableDef['columns'] as $col) {
                     if (strcasecmp($col['name'], $column) == 0) {
                         return true;
                     }
                 }
-                switch ($position) {
-                    case static::POSITION_FIRST:
-                        $pos = 'FIRST';
-                        break;
-                    case '':
-                    case null:
-                    case false:
-                        $pos = '';
-                        break;
-                    default:
-                        $pos = "AFTER `{$position}`";
-                }
                 $this->queue[] = "ALTER TABLE `{$tableDef['name']}`"
-                    . " ADD COLUMN {$column} {$columnDef['attributes']} {$pos} ";
+                    . " ADD COLUMN `{$column}` {$columnDef['attributes']}";
             }
         } else {
             return $this->tableNotEstablished();
@@ -181,8 +139,54 @@ class Tables
      */
     public function addPrimaryKey($table, $column)
     {
+        $columns = str_getcsv(str_replace(' ', '', $column));
+        $columnList = '';
+        $firstComma = '';
+        foreach ($columns as $col) {
+            $columnList .= "{$firstComma}`{$col}`";
+            $firstComma = ', ';
+        }
         if (isset($this->tables[$table])) {
-            $this->queue[] = "ALTER TABLE `{$table}` ADD PRIMARY KEY({$column})";
+            if (isset($this->tables[$table]['create']) && $this->tables[$table]['create']) {
+                $this->tables[$table]['keys']['PRIMARY']['columns'] = $columnList;
+            } else {
+                $this->queue[] = "ALTER TABLE `{$this->tables[$table]['name']}` ADD PRIMARY KEY({$columnList})";
+            }
+        } else {
+            return $this->tableNotEstablished();
+        }
+
+        return true;
+    }
+
+    /**
+     * Add new index definition for index to work queue
+     *
+     * @param string $name   name of index to add
+     * @param string $table  table indexed
+     * @param string $column column or a comma separated list of columns
+     *                        to use as the key
+     * @param bool   $unique true if index is to be unique
+     *
+     * @return bool true if no errors, false if errors encountered
+     */
+    public function addIndex($name, $table, $column, $unique = false)
+    {
+        $columns = str_getcsv(str_replace(' ', '', $column));
+        $columnList = '';
+        $firstComma = '';
+        foreach ($columns as $col) {
+            $columnList .= "{$firstComma}`{$col}`";
+            $firstComma = ', ';
+        }
+        if (isset($this->tables[$table])) {
+            if (isset($this->tables[$table]['create']) && $this->tables[$table]['create']) {
+                $this->tables[$table]['keys'][$name]['columns'] = $columnList;
+                $this->tables[$table]['keys'][$name]['unique'] = (bool) $unique;
+            } else {
+                $add = ($unique ? 'ADD UNIQUE INDEX' : 'ADD INDEX');
+                $this->queue[] = "ALTER TABLE `{$this->tables[$table]['name']}` {$add} `{$name}` ({$columnList})";
+            }
         } else {
             return $this->tableNotEstablished();
         }
@@ -211,10 +215,12 @@ class Tables
         } else {
             if ($tableDef === true) {
                 $tableDef = array(
-                    'name' => $this->db->prefix($table),
-                    'options' => 'ENGINE=InnoDB'
+                    'name' => $this->name($table),
+                    'options' => 'ENGINE=InnoDB',
+                    'columns' => array(),
+                    'keys' => array(),
+                    'create' => true,
                 );
-                $tableDef['create'] = true;
                 $this->tables[$table] = $tableDef;
 
                 $this->queue[] = array('createtable' => $table);
@@ -294,12 +300,10 @@ class Tables
      * @param string $column     column to alter
      * @param string $attributes new column_definition
      * @param string $newName    new name for column, blank to keep same
-     * @param mixed  $position   FIRST, string of column name to add new
-     *                           column after, or null for no change
      *
      * @return bool true if no errors, false if errors encountered
      */
-    public function alterColumn($table, $column, $attributes, $newName = '', $position = null)
+    public function alterColumn($table, $column, $attributes, $newName = '')
     {
         if (empty($newName)) {
             $newName = $column;
@@ -308,9 +312,7 @@ class Tables
         if (isset($this->tables[$table])) {
             $tableDef = &$this->tables[$table];
             // Is this on a table we are adding?
-            if (isset($tableDef['create']) && $tableDef['create']
-                && empty($position)
-            ) {
+            if (isset($tableDef['create']) && $tableDef['create']) {
                 // loop thru and find the column
                 foreach ($tableDef['columns'] as &$col) {
                     if (strcasecmp($col['name'], $column) == 0) {
@@ -322,20 +324,8 @@ class Tables
 
                 return true;
             } else {
-                switch ($position) {
-                    case static::POSITION_FIRST:
-                        $pos = 'FIRST';
-                        break;
-                    case '':
-                    case null:
-                    case false:
-                        $pos = '';
-                        break;
-                    default:
-                        $pos = "AFTER `{$position}`";
-                }
                 $this->queue[] = "ALTER TABLE `{$tableDef['name']}` " .
-                    "CHANGE COLUMN `{$column}` `{$newName}` {$attributes} {$pos} ";
+                    "CHANGE COLUMN `{$column}` `{$newName}` {$attributes} ";
             }
         } else {
             return $this->tableNotEstablished();
@@ -381,29 +371,6 @@ class Tables
     }
 
     /**
-     * Add new index definition for index to work queue
-     *
-     * @param string $name   name of index to add
-     * @param string $table  table indexed
-     * @param string $column column or a comma separated list of columns
-     *                        to use as the key
-     * @param bool   $unique true if index is to be unique
-     *
-     * @return bool true if no errors, false if errors encountered
-     */
-    public function createIndex($name, $table, $column, $unique = false)
-    {
-        if (isset($this->tables[$table])) {
-            $add = ($unique ? 'ADD UNIQUE INDEX' : 'ADD INDEX');
-            $this->queue[] = "ALTER TABLE `{$table}` {$add} {$name} ({$column})";
-        } else {
-            return $this->tableNotEstablished();
-        }
-
-        return true;
-    }
-
-    /**
      * Add drop column operation to the work queue
      *
      * @param string $table  table containing the column
@@ -415,7 +382,7 @@ class Tables
     {
         // Find table def.
         if (isset($this->tables[$table])) {
-            $tableDef = &$this->tables[$table];
+            $tableDef = $this->tables[$table];
             $this->queue[] = "ALTER TABLE `{$tableDef['name']}` DROP COLUMN `{$column}`";
         } else {
             return $this->tableNotEstablished();
@@ -435,7 +402,7 @@ class Tables
     public function dropIndex($name, $table)
     {
         if (isset($this->tables[$table])) {
-            $tableDef = &$this->tables[$table];
+            $tableDef = $this->tables[$table];
             $this->queue[] = "ALTER TABLE `{$tableDef['name']}` DROP INDEX `{$name}`";
         } else {
             return $this->tableNotEstablished();
@@ -490,7 +457,7 @@ class Tables
     public function dropPrimaryKey($table)
     {
         if (isset($this->tables[$table])) {
-            $tableDef = &$this->tables[$table];
+            $tableDef = $this->tables[$table];
             $this->queue[] = "ALTER TABLE `{$tableDef['name']}` DROP PRIMARY KEY ";
         } else {
             return $this->tableNotEstablished();
@@ -509,7 +476,7 @@ class Tables
     public function dropTable($table)
     {
         if (isset($this->tables[$table])) {
-            $tableDef = &$this->tables[$table];
+            $tableDef = $this->tables[$table];
             $this->queue[] = "DROP TABLE `{$tableDef['name']}` ";
             unset($this->tables[$table]);
         }
@@ -529,10 +496,12 @@ class Tables
     public function renameTable($table, $newName)
     {
         if (isset($this->tables[$table])) {
-            $tableDef = &$this->tables[$table];
+            $tableDef = $this->tables[$table];
             $newTable = $this->name($newName);
             $this->queue[] = "ALTER TABLE `{$tableDef['name']}` RENAME TO `{$newTable}`";
             $tableDef['name'] = $newTable;
+            $this->tables[$newName] = $tableDef;
+            unset($this->tables[$table]);
         } else {
             return $this->tableNotEstablished();
         }
@@ -551,16 +520,20 @@ class Tables
      */
     public function setTableOptions($table, $options)
     {
-        // ENGINE=MEMORY DEFAULT CHARSET=utf8;
         if (isset($this->tables[$table])) {
             $tableDef = &$this->tables[$table];
-            $this->queue[] = "ALTER TABLE `{$tableDef['name']}` {$options} ";
-            $tableDef['options'] = $options;
+            // Is this on a table we are adding?
+            if (isset($tableDef['create']) && $tableDef['create']) {
+                $tableDef['options'] = $options;
+                return true;
+            } else {
+                $this->queue[] = "ALTER TABLE `{$tableDef['name']}` {$options} ";
+                $tableDef['options'] = $options;
+                return true;
+            }
         } else {
             return $this->tableNotEstablished();
         }
-
-        return true;
     }
 
 
@@ -569,7 +542,7 @@ class Tables
      *
      * @return void
      */
-    public function queueReset()
+    public function resetQueue()
     {
         $this->tables = array();
         $this->queue  = array();
@@ -582,7 +555,7 @@ class Tables
      *
      * @return bool true if no errors, false if errors encountered
      */
-    public function queueExecute($force = false)
+    public function executeQueue($force = false)
     {
         $this->expandQueue();
         foreach ($this->queue as &$ddl) {
@@ -615,10 +588,10 @@ class Tables
     public function delete($table, $criteria)
     {
         if (isset($this->tables[$table])) {
-            $tableDef = &$this->tables[$table];
+            $tableDef = $this->tables[$table];
             $where = '';
             if (is_scalar($criteria)) {
-                $where = 'WHERE ' . $criteria;
+                $where = $criteria;
             } elseif (is_object($criteria)) {
                 $where = $criteria->renderWhere();
             }
@@ -640,7 +613,7 @@ class Tables
     public function insert($table, $columns)
     {
         if (isset($this->tables[$table])) {
-            $tableDef = &$this->tables[$table];
+            $tableDef = $this->tables[$table];
             $colSql = '';
             $valSql = '';
             foreach ($tableDef['columns'] as $col) {
@@ -671,10 +644,10 @@ class Tables
     public function update($table, $columns, $criteria)
     {
         if (isset($this->tables[$table])) {
-            $tableDef = &$this->tables[$table];
+            $tableDef = $this->tables[$table];
             $where = '';
             if (is_scalar($criteria)) {
-                $where = 'WHERE ' . $criteria;
+                $where = $criteria;
             } elseif (is_object($criteria)) {
                 $where = $criteria->renderWhere();
             }
@@ -705,7 +678,7 @@ class Tables
     public function truncate($table)
     {
         if (isset($this->tables[$table])) {
-            $tableDef = &$this->tables[$table];
+            $tableDef = $this->tables[$table];
             $this->queue[] = "TRUNCATE TABLE `{$tableDef['name']}`";
         } else {
             return $this->tableNotEstablished();
@@ -729,25 +702,25 @@ class Tables
     protected function renderTableCreate($table, $prefixed = false)
     {
         if (isset($this->tables[$table])) {
-            $tableDef = &$this->tables[$table];
+            $tableDef = $this->tables[$table];
             $tableName = ($prefixed ? $tableDef['name'] : $table);
-            $sql = "CREATE TABLE `{$tableName}` (\n";
+            $sql = "CREATE TABLE `{$tableName}` (";
+            $firstComma = '';
             foreach ($tableDef['columns'] as $col) {
-                $sql .= "    {$col['name']}  {$col['attributes']},\n";
+                $sql .= "{$firstComma}\n    `{$col['name']}`  {$col['attributes']}";
+                $firstComma = ',';
             }
             $keySql = '';
             foreach ($tableDef['keys'] as $keyName => $key) {
-                $comma = empty($keySql) ? '  ' : ', ';
                 if ($keyName === 'PRIMARY') {
-                    $keySql .= "  {$comma}PRIMARY KEY ({$key['columns']})\n";
+                    $keySql .= ",\n  PRIMARY KEY ({$key['columns']})";
                 } else {
                     $unique = $key['unique'] ? 'UNIQUE ' : '';
-                    $keySql .= "  {$comma}{$unique}KEY {$keyName} "
-                        . " ({$key['columns']})\n";
+                    $keySql .= ",\n  {$unique}KEY {$keyName} ({$key['columns']})";
                 }
             }
             $sql .= $keySql;
-            $sql .= ") {$tableDef['options']};\n";
+            $sql .= "\n) {$tableDef['options']};\n";
 
             return $sql;
         } else {
@@ -787,8 +760,7 @@ class Tables
      *
      * @param resource $result as returned by query
      *
-     * @return bool true if no errors and table is loaded, false if
-     *               error presented. Error message in $this->lastError;
+     * @return mixed false on error
      */
     protected function fetch($result)
     {
@@ -800,8 +772,8 @@ class Tables
      *
      * @param string $table table
      *
-     * @return bool true if no errors and table is loaded, false if
-     *               error presented. Error message in $this->lastError;
+     * @return array|bool table definition array if table exists, true if table not defined, or
+     *                    false on error. Error message in $this->lastError;
      */
     protected function getTable($table)
     {
@@ -842,7 +814,6 @@ class Tables
 
             $columnDef = array(
                 'name' => $column['COLUMN_NAME'],
-                'position' => $column['ORDINAL_POSITION'],
                 'attributes' => $attributes
             );
 

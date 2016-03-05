@@ -98,7 +98,7 @@ class Upgrade_258 extends XoopsUpgrade
         }
 
         $migrate->alterColumn('users', 'pass', "varchar(255) NOT NULL DEFAULT ''");
-        return $migrate->queueExecute(true);
+        return $migrate->executeQueue(true);
     }
 
     /**
@@ -119,7 +119,7 @@ class Upgrade_258 extends XoopsUpgrade
         $migrate = new Tables();
         $migrate->useTable('xoopscomments');
         $migrate->alterColumn('xoopscomments', 'com_ip', "varchar(45) NOT NULL DEFAULT ''");
-        return $migrate->queueExecute(true);
+        return $migrate->executeQueue(true);
     }
 
     /**
@@ -140,7 +140,7 @@ class Upgrade_258 extends XoopsUpgrade
         $migrate = new Tables();
         $migrate->useTable('session');
         $migrate->alterColumn('session', 'sess_ip', "varchar(45) NOT NULL DEFAULT ''");
-        return $migrate->queueExecute(true);
+        return $migrate->executeQueue(true);
     }
 
     /**
@@ -161,7 +161,7 @@ class Upgrade_258 extends XoopsUpgrade
         $migrate = new Tables();
         $migrate->useTable('online');
         $migrate->alterColumn('online', 'online_ip', "varchar(45) NOT NULL DEFAULT ''");
-        return $migrate->queueExecute(true);
+        return $migrate->executeQueue(true);
     }
 }
 
