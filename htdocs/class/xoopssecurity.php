@@ -12,7 +12,7 @@
  * @author    Kazumi Ono <onokazu@xoops.org>
  * @author    Jan Pedersen <mithrandir@xoops.org>
  * @author    John Neill <catzwolf@xoops.org>
- * @copyright (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license   GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package   kernel
  * @since     2.0.0

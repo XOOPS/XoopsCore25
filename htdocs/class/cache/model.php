@@ -19,7 +19,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             class
  * @subpackage          cache
@@ -196,7 +196,7 @@ class XoopsCacheModel extends XoopsCacheEngine
  *
  * @package
  * @author              John
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @version             $Id: model.php 13082 2015-06-06 21:59:41Z beckmi $
  * @access              public
  */
@@ -219,7 +219,7 @@ class XoopsCacheModelObject extends XoopsObject
  *
  * @package
  * @author              John
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @version             $Id: model.php 13082 2015-06-06 21:59:41Z beckmi $
  * @access              public
  */
