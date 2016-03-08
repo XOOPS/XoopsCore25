@@ -1,7 +1,7 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
-2.5.8 Beta 1        NOT RELEASED
+2.5.8 RC1            2016-03-08
 ===================================
 - replaced "dirname(__FILE__)" with "__DIR__" since the min. PHP is now 5.3.7, and __DIR__ is faster  (mamba)
 - updating some copyright notices (mamba)
@@ -18,7 +18,7 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - remove addrFormat override in XoopsMultiMailer (rgriffith)
 - patch from Xoops 2.5.6 XoopsFormSelectUser is not compatible with some old modules like xNews (luciorota)
 - fix "setExtra" in moduleadmin.php, Admin buttons can now use "onClick" assignments (mamba)
-- updated XOOPS copyright to 2015, changed links to http://xoops.org (mamba)
+- updated XOOPS copyright to 2016, changed links to http://xoops.org (mamba)
 - replaced intval() with (int) (mamba)
 - added possibility to include full icon URL in module's menu.php (mamba)
 - added strong { font-weight: bold; } to reset.css (mamba)
@@ -31,11 +31,12 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - changed minimum image sizes in Image Manager to: 800x600, 1MB (mamba)
 - added image sort order in TinyMCE image-manager plugin (elpaksu/Peekay)
 - added Youtube handling enhancements (xd9527/geekwright)
+- fix system module update issue (zyspec)
 - fixed multiple issues (CSRF, weak password hash, and directory traversal) reported by hyp3rlinx (geekwright)
 - fix privileged information disclosure issue reported by Cédric MONTUY (geekwright)
 - Move to supported PHP mysqli extension for database access (redheadedrod/geekwright)
 - IPv6 safe in comments, protector, sessions and online
-
+- Include XMF library (geekwright)
 
 Updated:
  - TinyMCE to 3.5.11 (mamba)
