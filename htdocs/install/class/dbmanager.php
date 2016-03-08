@@ -1,7 +1,7 @@
 <?php
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//          Copyright (c) 2000-2015 XOOPS Project (www.xoops.org)            //
+//          Copyright (c) 2000-2016 XOOPS Project (www.xoops.org)            //
 //                       <http://www.xoops.org/>                             //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //

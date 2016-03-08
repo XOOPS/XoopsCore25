@@ -4,7 +4,7 @@
  *
  * For backward compatibility
  *
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @since               1.00
@@ -22,7 +22,7 @@ if (class_exists("ArtObject")) {
  * Art Object
  *
  * @author              D.J. (phppp)
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @package             module::article
  *
  * {@link XoopsObject}
@@ -49,7 +49,7 @@ class ArtObject extends XoopsObject
  * @package             module::article
  *
  * @author              D.J. (phppp)
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  *
  * {@link XoopsPersistableObjectHandler}
  *
