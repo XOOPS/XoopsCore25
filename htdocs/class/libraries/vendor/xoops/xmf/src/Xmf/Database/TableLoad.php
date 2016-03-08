@@ -116,14 +116,14 @@ class TableLoad
     }
 
     /**
-     * rowCount - get count of rows in a table
+     * countRows - get count of rows in a table
      *
      * @param string           $table    name of table to count
      * @param \CriteriaElement $criteria optional criteria
      *
      * @return int number of rows
      */
-    public static function rowCount($table, $criteria = null)
+    public static function countRows($table, $criteria = null)
     {
         /** @var \XoopsDatabase */
         $db = \XoopsDatabaseFactory::getDatabaseConnection();
@@ -137,6 +137,65 @@ class TableLoad
         $row = $db->fetchArray($result);
         $count = $row['count'];
         $db->freeRecordSet($result);
-        return $count;
+        return (int)$count;
+    }
+
+    /**
+     * extractRows - get rows, all or a subset, from a table as an array
+     *
+     * @param string           $table       name of table to count
+     * @param \CriteriaElement $criteria    optional criteria
+     * @param string[]         $skipColumns do not include columns in this list
+     *
+     * @return array of table rows
+     */
+    public static function extractRows($table, $criteria = null, $skipColumns = array())
+    {
+        /** @var \XoopsDatabase */
+        $db = \XoopsDatabaseFactory::getDatabaseConnection();
+
+        $prefixedTable = $db->prefix($table);
+        $sql = 'SELECT * FROM ' . $prefixedTable . ' ';
+        if (isset($criteria) && is_subclass_of($criteria, '\CriteriaElement')) {
+            $sql .= $criteria->renderWhere();
+        }
+        $rows = array();
+        $result = $db->query($sql);
+        if ($result) {
+            while ($row = $db->fetchArray($result)) {
+                $rows[] = $row;
+            }
+        }
+
+        $db->freeRecordSet($result);
+
+        if (!empty($skipColumns)) {
+            foreach ($rows as $index => $row) {
+                foreach ($skipColumns as $column) {
+                    unset($rows[$index][$column]);
+                }
+            }
+        }
+
+        return $rows;
+    }
+
+    /**
+     * Save table data to a YAML file
+     *
+     * @param string           $table name of table to load without prefix
+     * @param string           $yamlFile name of file containing data dump in YAML format
+     * @param \CriteriaElement $criteria optional criteria
+     * @param string[]         $skipColumns do not include columns in this list
+     *
+     * @return bool true on success, false on error
+     */
+    public static function saveTableToYamlFile($table, $yamlFile, $criteria = null, $skipColumns = array())
+    {
+        $rows = static::extractRows($table, $criteria, $skipColumns);
+
+        $count = Yaml::save($rows, $yamlFile);
+
+        return (false !== $count);
     }
 }
