@@ -101,23 +101,25 @@ class XoopsMySQLDatabase extends XoopsDatabase
      *
      * @param mysqli_result $result
      *
-     * @return array
+     * @return array|false false on end of data
      */
     public function fetchRow($result)
     {
-        return @mysqli_fetch_row($result);
-    }
+        $row = @mysqli_fetch_row($result);
+        return (null === $row) ? false : $row;    }
 
     /**
      * Fetch a result row as an associative array
      *
      * @param mysqli_result $result
      *
-     * @return array
+     * @return array|false false on end of data
      */
     public function fetchArray($result)
     {
-        return @mysqli_fetch_assoc($result);
+        $row = @mysqli_fetch_assoc($result);
+        return (null === $row) ? false : $row;
+
     }
 
     /**
@@ -125,22 +127,24 @@ class XoopsMySQLDatabase extends XoopsDatabase
      *
      * @param mysqli_result $result
      *
-     * @return array
+     * @return array|false false on end of data
      */
     public function fetchBoth($result)
     {
-        return @mysqli_fetch_array($result, MYSQLI_BOTH);
+        $row = @mysqli_fetch_array($result, MYSQLI_BOTH);
+        return (null === $row) ? false : $row;
     }
 
     /**
      * XoopsMySQLiDatabase::fetchObjected()
      *
      * @param mixed $result
-     * @return object|null
+     * @return stdClass|false false on end of data
      */
     public function fetchObject($result)
     {
-        return @mysqli_fetch_object($result);
+        $row = @mysqli_fetch_object($result);
+        return (null === $row) ? false : $row;
     }
 
     /**
