@@ -106,7 +106,8 @@ class XoopsMySQLDatabase extends XoopsDatabase
     public function fetchRow($result)
     {
         $row = @mysqli_fetch_row($result);
-        return (null === $row) ? false : $row;    }
+        return (null === $row) ? false : $row;
+    }
 
     /**
      * Fetch a result row as an associative array
@@ -194,12 +195,11 @@ class XoopsMySQLDatabase extends XoopsDatabase
      *
      * @param mysqli_result $result result
      *
-     * @return bool TRUE on success or FALSE on failure.
+     * @return void
      */
     public function freeRecordSet($result)
     {
-        return (mysqli_free_result($result) || (is_object($result)
-                && (get_class($result) === 'mysqli_result')));
+        mysqli_free_result($result);
     }
 
     /**
