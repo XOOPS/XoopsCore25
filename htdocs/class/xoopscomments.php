@@ -48,7 +48,7 @@ class XoopsComments extends XoopsObject
     {
         $this->ctable = $ctable;
         $this->db     = XoopsDatabaseFactory::getDatabaseConnection();
-        $this->XoopsObject();
+        parent::construct();
         $this->initVar('comment_id', XOBJ_DTYPE_INT, null, false);
         $this->initVar('item_id', XOBJ_DTYPE_INT, null, false);
         $this->initVar('order', XOBJ_DTYPE_INT, null, false);
