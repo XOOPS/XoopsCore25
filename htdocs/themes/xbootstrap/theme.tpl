@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="<{$xoops_langcode}>">
 <head>
-    <{assign var=theme_name value=$xoTheme->folderName}>
+<{assign var=theme_name value=$xoTheme->folderName}>
     <meta charset="<{$xoops_charset}>">
     <meta name="keywords" content="<{$xoops_meta_keywords}>">
     <meta name="description" content="<{$xoops_meta_description}>">
@@ -9,8 +9,7 @@
     <meta name="rating" content="<{$xoops_meta_rating}>">
     <meta name="author" content="<{$xoops_meta_author}>">
     <meta name="generator" content="XOOPS">
-    <!--[if IE]>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+    <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Owl Carousel Assets -->
@@ -24,20 +23,21 @@
     <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_themecss}>">
     <script src="<{xoImgUrl}>js/jquery-1.10.2.js"></script>
     <script src="<{xoImgUrl}>js/bootstrap.min.js"></script>
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <script src="<{xoImgUrl}>js/masonry.pkgd.min.js"></script>
+    <script src="<{xoImgUrl}>js/imagesloaded.pkgd.min.js"></script>
+<!--[if lt IE 9]>
+    <script src="http://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="http://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <script src="<{xoImgUrl}>js/selectivizr-min.js"></script>
-    <![endif]-->
+<![endif]-->
     <script src="<{xoImgUrl}>js/js.js"></script>
     <link rel="alternate" type="application/rss+xml" title="" href="<{xoAppUrl backend.php}>">
 
-    <title><{if $xoops_dirname == "system"}><{$xoops_sitename}><{if $xoops_pagetitle !=''}> - <{$xoops_pagetitle}><{/if}><{else}><{if $xoops_pagetitle
-        !=''}><{$xoops_pagetitle}> - <{$xoops_sitename}><{/if}><{/if}></title>
+    <title><{if $xoops_dirname == "system"}><{$xoops_sitename}><{if $xoops_pagetitle !=''}> - <{$xoops_pagetitle}><{/if}><{else}><{if $xoops_pagetitle !=''}><{$xoops_pagetitle}> - <{$xoops_sitename}><{/if}><{/if}></title>
 
-    <{includeq file="$theme_name/tpl/shareaholic-script.tpl"}>
+<{includeq file="$theme_name/tpl/shareaholic-script.html"}>
 
-    <{$xoops_module_header}>
+<{$xoops_module_header}>
 
 </head>
 
@@ -49,9 +49,9 @@
 
 <div class="container maincontainer">
 
-    <{if $xoops_dirname == "system"}>
+<{if $xoops_dirname == "system"}>
     <div class="aligncenter home-message row">
-        <div class="<{if $xoops_banner != ""}>col-md-6<{else}>col-md-12<{/if}>">
+    <div class="<{if $xoops_banner != ""}>col-md-6<{else}>col-md-12<{/if}>">
         <h2><{$smarty.const.THEME_ABOUTUS}></h2>
 
         <p class="lead"><{$xoops_meta_description}></p>
@@ -59,13 +59,9 @@
         <p><a href="javascript:;" class="btn btn-md btn-success"><{$smarty.const.THEME_LEARNINGMORE}></a></p>
     </div>
 
-    <{if $xoops_banner != ""}>
-    <div class="col-md-6">
-        <div class="xoops-banner pull-right"><{$xoops_banner}></div>
-    </div>
-    <{/if}>
+        <{if $xoops_banner != ""}><div class="col-md-6"><div class="xoops-banner pull-right"><{$xoops_banner}></div></div><{/if}>
 
-</div><!-- .home-message -->
+    </div><!-- .home-message -->
 <{/if}>
 
 <div class="row">
@@ -79,17 +75,17 @@
 </div><!-- .maincontainer -->
 
 <{if $xoBlocks.page_bottomcenter || $xoBlocks.page_bottomright || $xoBlocks.page_bottomleft}>
-<div class="bottom-blocks">
-    <div class="container">
-        <div class="row">
-            <{includeq file="$theme_name/tpl/leftBottom.tpl"}>
+    <div class="bottom-blocks">
+        <div class="container">
+            <div class="row">
+                <{includeq file="$theme_name/tpl/leftBottom.tpl"}>
 
-            <{includeq file="$theme_name/tpl/centerBottom.tpl"}>
+                <{includeq file="$theme_name/tpl/centerBottom.tpl"}>
 
-            <{includeq file="$theme_name/tpl/rightBottom.tpl"}>
+                <{includeq file="$theme_name/tpl/rightBottom.tpl"}>
+            </div>
         </div>
-    </div>
-</div><!-- .bottom-blocks -->
+    </div><!-- .bottom-blocks -->
 <{/if}>
 
 <footer class="footer">
