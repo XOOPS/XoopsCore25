@@ -117,6 +117,17 @@ class XoopsObject
     }
 
     /**
+     * PHP 4 style constructor compatibility shim
+     * @deprecated all callers should be using parent::__construct()
+     */
+    public function XoopsObject()
+    {
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error("Should call parent::__construct in {$trace[0]['file']} line {$trace[0]['line']},");
+        self::__construct();
+    }
+
+    /**
      * *#@+
      * used for new/clone objects
      *
@@ -1050,6 +1061,19 @@ class XoopsObjectHandler
     }
 
     /**
+     * PHP 4 style constructor compatibility shim
+     *
+     * @param XoopsDatabase $db database object
+     * @deprecated all callers should be using parent::__construct()
+     */
+    public function XoopsObjectHandler($db)
+    {
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error("Should call parent::__construct in {$trace[0]['file']} line {$trace[0]['line']},");
+        self::__construct($db);
+    }
+
+    /**
      * creates a new object
      *
      * @abstract
@@ -1144,16 +1168,12 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * Constructor
      *
-     * @access   protected
-     * @param XoopsDatabase $db {@link XoopsDatabase} object
-     * @param string        $table
-     * @param string        $className
-     * @param string        $keyName
-     * @param string        $identifierName
-     * @internal param string                 $table Name of database table
-     * @internal param string                 $className Name of Class, this handler is managing
-     * @internal param string                 $keyname Name of the property, holding the key
-     * @return \XoopsPersistableObjectHandler
+     * @param null|XoopsDatabase $db             database connection
+     * @param string             $table          Name of database table
+     * @param string             $className      Name of the XoopsObject class this handler manages
+     * @param string             $keyName        Name of the property holding the key
+     * @param string             $identifierName Name of the property holding an identifier
+     *                                            name (title, name ...), used on getList()
      */
     public function __construct(XoopsDatabase $db = null, $table = '', $className = '', $keyName = '', $identifierName = '')
     {
@@ -1166,6 +1186,25 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
         if ($identifierName) {
             $this->identifierName = $identifierName;
         }
+    }
+
+    /**
+     * PHP 4 style constructor compatibility shim
+     *
+     * @param null|XoopsDatabase $db             database connection
+     * @param string             $table          Name of database table
+     * @param string             $className      Name of the XoopsObject class this handler manages
+     * @param string             $keyName        Name of the property holding the key
+     * @param string             $identifierName Name of the property holding an identifier
+     *                                            name (title, name ...), used on getList()
+     *
+     * @deprecated all callers should be using parent::__construct()
+     */
+    public function XoopsPersistableObjectHandler(XoopsDatabase $db = null, $table = '', $className = '', $keyName = '', $identifierName = '')
+    {
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error("Should call parent::__construct in {$trace[0]['file']} line {$trace[0]['line']},");
+        self::__construct($db, $table, $className, $keyName, $identifierName);
     }
 
     /**
