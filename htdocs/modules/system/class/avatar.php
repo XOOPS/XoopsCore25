@@ -117,7 +117,7 @@ class SystemAvatarHandler extends XoopsAvatarHandler
      * @param  bool $isNew
      * @return object
      */
-    public function &create($isNew = true)
+    public function create($isNew = true)
     {
         $avatar = new SystemAvatar();
         if ($isNew) {
@@ -133,7 +133,7 @@ class SystemAvatarHandler extends XoopsAvatarHandler
      * @param  int $id
      * @return object
      */
-    public function &get($id)
+    public function get($id)
     {
         $avatar = false;
         $id     = (int)($id);
