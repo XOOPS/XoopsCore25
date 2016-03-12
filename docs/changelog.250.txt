@@ -1,6 +1,11 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
+2.5.8 RC2            2016-03-11
+===================================
+- fix several issues discovered in RC1
+
+===================================
 2.5.8 RC1            2016-03-08
 ===================================
 - replaced "dirname(__FILE__)" with "__DIR__" since the min. PHP is now 5.3.7, and __DIR__ is faster  (mamba)

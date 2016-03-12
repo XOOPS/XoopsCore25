@@ -18,7 +18,7 @@ $content .= '
 </p>
 <h3>Requirements</h3>
 <ul>
-    <li>WWW Server (<a href="http://www.apache.org/" rel="external">Apache</a>, <a href="https://www.nginx.com/">NGINX</a>, IIS, etc)</li>
+    <li>WWW Server (<a href="http://www.apache.org/" rel="external">Apache</a>, <a href="https://www.nginx.com/" rel="external"s>NGINX</a>, IIS, etc)</li>
     <li><a href="http://www.php.net/" rel="external">PHP</a> 5.3.7 or higher </li>
     <li><a href="http://www.mysql.com/" rel="external">MySQL</a> 5.1 or higher </li>
 </ul>
