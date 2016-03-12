@@ -59,7 +59,7 @@ if (@empty($vars['DB_HOST'])) {
     $vars = array_merge($vars, array(
                                  'DB_TYPE'     => 'mysql',
                                  'DB_HOST'     => 'localhost',
-                                 'DB_USER'     => 'root',
+                                 'DB_USER'     => '',
                                  'DB_PASS'     => '',
                                  'DB_PCONNECT' => 0));
 }
