@@ -1096,9 +1096,9 @@ class PublisherItemHandler extends XoopsPersistableObjectHandler
      *
      * @return object
      */
-    public function &create($isNew = true)
+    public function create($isNew = true)
     {
-        $obj =& parent::create($isNew);
+        $obj = parent::create($isNew);
         if ($isNew) {
             $obj->setDefaultPermissions();
         }
