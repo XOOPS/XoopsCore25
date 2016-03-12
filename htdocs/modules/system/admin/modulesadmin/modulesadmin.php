@@ -944,7 +944,7 @@ function xoops_module_update($dirname)
                             if ($template != '') {
                                 $tplfile = $tplfile_handler->find('default', 'block', $fblock['bid']);
                                 if (count($tplfile) == 0) {
-                                    $tplfile_new =& $tplfile_handler->create();
+                                    $tplfile_new = $tplfile_handler->create();
                                     $tplfile_new->setVar('tpl_module', $dirname);
                                     $tplfile_new->setVar('tpl_refid', $fblock['bid']);
                                     $tplfile_new->setVar('tpl_tplset', 'default');
