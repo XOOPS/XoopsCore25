@@ -35,7 +35,7 @@ class MyTextSanitizerExtension
     /**
      * Constructor
      *
-     * @param unknown_type $ts
+     * @param MyTextSanitizer $ts
      */
     public function __construct(MyTextSanitizer $ts)
     {
