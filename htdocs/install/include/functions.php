@@ -306,9 +306,6 @@ function validateDbCharset($link, &$charset, &$collation)
     if (empty($charset)) {
         $collation = "";
     }
-    if (version_compare(mysqli_get_server_info($link), "4.1.0", "lt")) {
-        $charset = $collation = "";
-    }
     if (empty($charset) && empty($collation)) {
         return $error;
     }
@@ -338,9 +335,6 @@ function validateDbCharset($link, &$charset, &$collation)
  */
 function xoFormFieldCollation($name, $value, $label, $help, $link, $charset)
 {
-    if (version_compare(mysqli_get_server_info($link), "4.1.0", "lt")) {
-        return "";
-    }
     if (empty($charset) || !$collations = getDbCollations($link, $charset)) {
         return "";
     }
@@ -404,9 +398,6 @@ function xoFormBlockCollation($name, $value, $label, $help, $link, $charset)
  */
 function xoFormFieldCharset($name, $value, $label, $help = '', $link)
 {
-    if (version_compare(mysqli_get_server_info($link), "4.1.0", "lt")) {
-        return "";
-    }
     if (!$chars = getDbCharsets($link)) {
         return "";
     }
