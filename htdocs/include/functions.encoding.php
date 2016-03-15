@@ -38,7 +38,7 @@ function xoops_hex2bin($hex)
     $r   = '';
     $len = strlen($hex);
     for ($a = 0; $a < $len; $a += 2) {
-        $r .= chr(hexdec($hex{$a} . $hex{($a + 1)}));
+        $r .= chr(hexdec($hex{$a} . $hex{$a + 1}));
     }
 
     return $r;
@@ -87,18 +87,18 @@ function xoops_ishexstr($hex, $checklen = 32)
  *
  * @return boolean
  */
-function xoops_convert_encode($data, $store_method = "urlcode")
+function xoops_convert_encode($data, $store_method = 'urlcode')
 {
     switch ($store_method) {
         default:
             return urlencode($data);
-        case "base64":
+        case 'base64':
             return base64_encode($data);
-        case "uucode":
+        case 'uucode':
             return convert_uuencode($data);
-        case "open":
+        case 'open':
             return $data;
-        case "hex":
+        case 'hex':
             return bin2hex($data);
     }
 }
@@ -110,18 +110,18 @@ function xoops_convert_encode($data, $store_method = "urlcode")
  * @param string $store_method
  * @return boolean
  */
-function xoops_convert_decode($data, $store_method = "urlcode")
+function xoops_convert_decode($data, $store_method = 'urlcode')
 {
     switch ($store_method) {
         default:
             return urldecode($data);
-        case "base64":
+        case 'base64':
             return base64_decode($data);
-        case "uucode":
+        case 'uucode':
             return convert_uudecode($data);
-        case "open":
+        case 'open':
             return $data;
-        case "hex":
+        case 'hex':
             return xoops_hex2bin($data);
     }
 }
@@ -134,7 +134,7 @@ function xoops_convert_decode($data, $store_method = "urlcode")
  * @param string $store_method
  * @return boolean
  */
-function xoops_aw_encode($value, $key, $store_method = "urlcode")
+function xoops_aw_encode($value, $key, $store_method = 'urlcode')
 {
     $value = xoops_convert_encode($value, $store_method);
 }
@@ -147,7 +147,7 @@ function xoops_aw_encode($value, $key, $store_method = "urlcode")
  * @param string $store_method
  * @return boolean
  */
-function xoops_aw_decode($value, $key, $store_method = "urlcode")
+function xoops_aw_decode($value, $key, $store_method = 'urlcode')
 {
     $value = xoops_convert_decode($value, $store_method);
 }

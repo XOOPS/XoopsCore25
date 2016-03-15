@@ -185,7 +185,7 @@ class XoopsFormRadio extends XoopsFormElement
             if (isset($ele_value) && $value == $ele_value) {
                 $ret .= ' checked="checked"';
             }
-            $ret .= $ele_extra . ' />' . "<label name='xolb_{$ele_name}' for='" . $ele_name . $id_ele . "'>" . $name . "</label>" . $ele_delimeter;
+            $ret .= $ele_extra . ' />' . "<label name='xolb_{$ele_name}' for='" . $ele_name . $id_ele . "'>" . $name . '</label>' . $ele_delimeter;
             if (!empty($this->columns)) {
                 $ret .= '</td>';
                 if (++$i % $this->columns == 0) {

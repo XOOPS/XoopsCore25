@@ -47,7 +47,7 @@ class Upgrade_2016 extends XoopsUpgrade
         $db    = $GLOBALS['xoopsDB'];
         $value = getDbValue($db, 'config', 'conf_id', "`conf_name` = 'ldap_use_TLS' AND `conf_catid` = " . XOOPS_CONF_AUTH);
 
-        return (bool)($value);
+        return (bool)$value;
     }
 
     /**

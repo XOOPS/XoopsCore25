@@ -15,27 +15,27 @@
 
 // load mainfile.php - start
 $current_path = __DIR__;
-if (DIRECTORY_SEPARATOR !== "/") {
-    $current_path = str_replace(DIRECTORY_SEPARATOR, "/", $current_path);
+if (DIRECTORY_SEPARATOR !== '/') {
+    $current_path = str_replace(DIRECTORY_SEPARATOR, '/', $current_path);
 }
-$xoops_root_path = substr($current_path, 0, strpos(strtolower($current_path), "/class/xoopseditor/tinymce/"));
-include_once $xoops_root_path . "/mainfile.php";
-defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
+$xoops_root_path = substr($current_path, 0, strpos(strtolower($current_path), '/class/xoopseditor/tinymce/'));
+include_once $xoops_root_path . '/mainfile.php';
+defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 // load mainfile.php - end
 
 // get current filename
 $current_file = basename(__FILE__);
 
 // load language definitions
-xoops_loadLanguage("admin", "system");
-xoops_loadLanguage("admin/smilies", "system");
-xoops_loadLanguage("misc");
+xoops_loadLanguage('admin', 'system');
+xoops_loadLanguage('admin/smilies', 'system');
+xoops_loadLanguage('misc');
 
 // include system category definitions - start
-include_once XOOPS_ROOT_PATH . "/modules/system/constants.php";
+include_once XOOPS_ROOT_PATH . '/modules/system/constants.php';
 
 // check user/group
-$groups        = is_object($GLOBALS["xoopsUser"]) ? $GLOBALS["xoopsUser"]->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+$groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 $gperm_handler = xoops_getHandler('groupperm');
 $admin         = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_SMILE, $groups);
 
@@ -68,9 +68,9 @@ if ($admin && $op === 'SmilesAdd') {
             $smile_url     = $uploader->getSavedFileName();
             $smile_code    = $myts->stripSlashesGPC($_POST['smile_code']);
             $smile_desc    = $myts->stripSlashesGPC($_POST['smile_desc']);
-            $smile_display = (int)($_POST['smile_display']) > 0 ? 1 : 0;
-            $newid         = $db->genId($db->prefix('smilies') . "_id_seq");
-            $sql           = sprintf("INSERT INTO %s (id, code, smile_url, emotion, display) VALUES (%d, %s, %s, %s, %d)", $db->prefix('smiles'), $newid, $db->quoteString($smile_code), $db->quoteString($smile_url), $db->quoteString($smile_desc), $smile_display);
+            $smile_display = (int)$_POST['smile_display'] > 0 ? 1 : 0;
+            $newid         = $db->genId($db->prefix('smilies') . '_id_seq');
+            $sql           = sprintf('INSERT INTO %s (id, code, smile_url, emotion, display) VALUES (%d, %s, %s, %s, %d)', $db->prefix('smiles'), $newid, $db->quoteString($smile_code), $db->quoteString($smile_url), $db->quoteString($smile_desc), $smile_display);
             if (!$db->query($sql)) {
                 $err = 'Failed storing smiley data into the database';
             }
@@ -116,11 +116,11 @@ echo '<meta http-equiv="content-language" content="' . _LANGCODE . '" />';
 <?php
 if (!$_SESSION['XoopsEmotions'] && !$admin) {
     echo "<div class='xoopsEmotions'>";
-    echo "<div>{#xoopsemotions_dlg.error_noemotions}</div>";
-    echo "</div>";
+    echo '<div>{#xoopsemotions_dlg.error_noemotions}</div>';
+    echo '</div>';
     echo "<div class='mceActionPanel floatright'>";
     echo "<input type='button' id='cancel' name='cancel' value='{#cancel}' onclick='tinyMCEPopup.close();' />";
-    echo "</div>";
+    echo '</div>';
     xoops_footer();
     exit();
 }
@@ -142,7 +142,7 @@ if (!$_SESSION['XoopsEmotions'] && !$admin) {
     <div id="emotionsbrowser_panel" class="panel current" style="overflow:auto;">
         <?php
         if ($smiles = $_SESSION['XoopsEmotions']) {
-            echo "<div><strong>" . _MSC_CLICKASMILIE . "</strong></div>";
+            echo '<div><strong>' . _MSC_CLICKASMILIE . '</strong></div>';
             echo "<div class='xoopsEmotions'>";
             $count = count($smiles);
 
@@ -160,9 +160,9 @@ if (!$_SESSION['XoopsEmotions'] && !$admin) {
                 echo '<a class="xoopsEmotions" href="' . $current_file . '?op=' . _MORE . '">' . _MORE . '</a>';
                 echo '</div>';
             }
-            echo "</div>";
+            echo '</div>';
         } else {
-            echo "<div>{#xoopsemotions_dlg.error_noemotions}</div>";
+            echo '<div>{#xoopsemotions_dlg.error_noemotions}</div>';
         }
         ?>
         <div class="mceActionPanel floatright">

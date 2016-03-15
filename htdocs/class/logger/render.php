@@ -99,7 +99,7 @@ if (empty($mode) || $mode === 'errors') {
     foreach ($this->errors as $error) {
         $ret .= "\n<tr><td class='$class'>";
         $ret .= isset($types[$error['errno']]) ? $types[$error['errno']] : _LOGGER_UNKNOWN;
-        $ret .= ": ";
+        $ret .= ': ';
         $ret .= sprintf(_LOGGER_FILELINE, $this->sanitizePath($error['errstr']), $this->sanitizePath($error['errfile']), $error['errline']);
         $ret .= "<br />\n</td></tr>";
         $class = ($class === 'odd') ? 'even' : 'odd';
@@ -144,7 +144,7 @@ if (empty($mode) || $mode === 'blocks') {
     $ret .= '<table id="xo-logger-blocks" class="outer"><tr><th colspan="2">' . _LOGGER_BLOCKS . '</th></tr>';
     foreach ($this->blocks as $b) {
         if ($b['cached']) {
-            $ret .= '<tr><td class="' . $class . '"><strong>' . $b['name'] . ':</strong> ' . sprintf(_LOGGER_CACHED, (int)($b['cachetime'])) . '</td></tr>';
+            $ret .= '<tr><td class="' . $class . '"><strong>' . $b['name'] . ':</strong> ' . sprintf(_LOGGER_CACHED, (int)$b['cachetime']) . '</td></tr>';
         } else {
             $ret .= '<tr><td class="' . $class . '"><strong>' . $b['name'] . ':</strong> ' . _LOGGER_NOT_CACHED . '</td></tr>';
         }
@@ -168,7 +168,7 @@ if (empty($mode) || $mode === 'timers') {
     $ret .= '<table id="xo-logger-timers" class="outer"><tr><th colspan="2">' . _LOGGER_TIMERS . '</th></tr>';
     foreach ($this->logstart as $k => $v) {
         $ret .= '<tr><td class="' . $class . '"><strong>';
-        $ret .= sprintf(_LOGGER_TIMETOLOAD, htmlspecialchars($k) . '</strong>', '<span style="color:#ff0000;">' . sprintf("%.03f", $this->dumpTime($k)) . '</span>');
+        $ret .= sprintf(_LOGGER_TIMETOLOAD, htmlspecialchars($k) . '</strong>', '<span style="color:#ff0000;">' . sprintf('%.03f', $this->dumpTime($k)) . '</span>');
         $ret .= '</td></tr>';
         $class = ($class === 'odd') ? 'even' : 'odd';
     }

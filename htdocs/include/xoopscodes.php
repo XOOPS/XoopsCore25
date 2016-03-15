@@ -53,8 +53,8 @@ function xoopsSmilies($textarea_id)
     $smiles = $myts->getSmileys(false);
     $count  = count($smiles);
     for ($i = 0; $i < $count; ++$i) {
-        echo "<img src='" . XOOPS_UPLOAD_URL . "/" . htmlspecialchars($smiles[$i]['smile_url'], ENT_QUOTES) . "' border='0' alt='' onclick='xoopsCodeSmilie(\"{$textarea_id}\", \" " . $smiles[$i]['code'] . " \");' onmouseover='style.cursor=\"hand\"' />";
+        echo "<img src='" . XOOPS_UPLOAD_URL . '/' . htmlspecialchars($smiles[$i]['smile_url'], ENT_QUOTES) . "' border='0' alt='' onclick='xoopsCodeSmilie(\"{$textarea_id}\", \" " . $smiles[$i]['code'] . " \");' onmouseover='style.cursor=\"hand\"' />";
     }
-    echo "&nbsp;[<a href='#moresmiley' onmouseover='style.cursor=\"hand\"' alt='' onclick='openWithSelfMain(\"" . XOOPS_URL . "/misc.php?action=showpopups&amp;type=smilies&amp;target={$textarea_id}\",\"smilies\",300,475);'>" . _MORE . "</a>]";
+    echo "&nbsp;[<a href='#moresmiley' onmouseover='style.cursor=\"hand\"' alt='' onclick='openWithSelfMain(\"" . XOOPS_URL . "/misc.php?action=showpopups&amp;type=smilies&amp;target={$textarea_id}\",\"smilies\",300,475);'>" . _MORE . '</a>]';
 }
 /**#@-*/

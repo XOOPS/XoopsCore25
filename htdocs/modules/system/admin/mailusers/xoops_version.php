@@ -35,7 +35,7 @@ $modversion['description'] = _AM_SYSTEM_MLUS_DESC;
 $modversion['author']      = '';
 $modversion['credits']     = 'The XOOPS Project; Kazumi Ono; Gregory Mage (AKA Mage)';
 $modversion['help']        = 'page=mailusers';
-$modversion['license']     = "GPL see LICENSE";
+$modversion['license']     = 'GPL see LICENSE';
 $modversion['official']    = 1;
 $modversion['image']       = 'mailuser.png';
 

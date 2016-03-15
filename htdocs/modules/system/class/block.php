@@ -114,15 +114,15 @@ class SystemBlock extends XoopsBlock
         $form->addElement(new XoopsFormText(_AM_SYSTEM_BLOCKS_TITLE, 'title', 50, 255, $this->getVar('title')), false);
         if ($this->isNew() || $this->isCustom()) {
             $editor_configs           = array();
-            $editor_configs["name"]   = "content_block";
-            $editor_configs["value"]  = $this->getVar('content', 'e');
-            $editor_configs["rows"]   = 20;
-            $editor_configs["cols"]   = 100;
-            $editor_configs["width"]  = "100%";
-            $editor_configs["height"] = "400px";
-            $editor_configs["editor"] = xoops_getModuleOption('blocks_editor', 'system');
-            $form->addElement(new XoopsFormEditor(_AM_SYSTEM_BLOCKS_CONTENT, "content_block", $editor_configs), true);
-            if (in_array($editor_configs["editor"], array('dhtmltextarea', 'textarea'))) {
+            $editor_configs['name']   = 'content_block';
+            $editor_configs['value']  = $this->getVar('content', 'e');
+            $editor_configs['rows']   = 20;
+            $editor_configs['cols']   = 100;
+            $editor_configs['width']  = '100%';
+            $editor_configs['height'] = '400px';
+            $editor_configs['editor'] = xoops_getModuleOption('blocks_editor', 'system');
+            $form->addElement(new XoopsFormEditor(_AM_SYSTEM_BLOCKS_CONTENT, 'content_block', $editor_configs), true);
+            if (in_array($editor_configs['editor'], array('dhtmltextarea', 'textarea'))) {
                 $ctype_select = new XoopsFormSelect(_AM_SYSTEM_BLOCKS_CTYPE, 'c_type', $this->getVar('c_type'));
                 $ctype_select->addOptionArray(array(
                                                   'H' => _AM_SYSTEM_BLOCKS_HTML,
@@ -214,7 +214,7 @@ class SystemBlock extends XoopsBlock
                     include_once $file;
                 }
                 include_once $GLOBALS['xoops']->path('modules/' . $this->getVar('dirname') . '/blocks/' . $this->getVar('func_file'));
-                $options   = explode("|", $this->getVar("options"));
+                $options   = explode('|', $this->getVar('options'));
                 $edit_form = $edit_func($options);
                 if (!$edit_form) {
                     return false;
@@ -391,7 +391,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
      *
      * @return array of block objects
      */
-    public function getAllBlocksByGroup($groupid, $asobject = true, $side = null, $visible = null, $orderby = "b.weight,b.bid", $isactive = 1)
+    public function getAllBlocksByGroup($groupid, $asobject = true, $side = null, $visible = null, $orderby = 'b.weight,b.bid', $isactive = 1)
     {
         $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $ret = array();
@@ -399,32 +399,32 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
         if (!$asobject) {
             $sql = 'SELECT b.bid ';
         }
-        $sql .= "FROM " . $db->prefix("newblocks") . " b LEFT JOIN " . $db->prefix("group_permission") . " l ON l.gperm_itemid=b.bid WHERE gperm_name = 'block_read' AND gperm_modid = 1";
+        $sql .= 'FROM ' . $db->prefix('newblocks') . ' b LEFT JOIN ' . $db->prefix('group_permission') . " l ON l.gperm_itemid=b.bid WHERE gperm_name = 'block_read' AND gperm_modid = 1";
         if (is_array($groupid)) {
-            $sql .= " AND (l.gperm_groupid=" . $groupid[0] . "";
+            $sql .= ' AND (l.gperm_groupid=' . $groupid[0] . '';
             $size = count($groupid);
             if ($size > 1) {
                 for ($i = 1; $i < $size; ++$i) {
-                    $sql .= " OR l.gperm_groupid=" . $groupid[$i] . "";
+                    $sql .= ' OR l.gperm_groupid=' . $groupid[$i] . '';
                 }
             }
-            $sql .= ")";
+            $sql .= ')';
         } else {
-            $sql .= " AND l.gperm_groupid=" . $groupid . "";
+            $sql .= ' AND l.gperm_groupid=' . $groupid . '';
         }
-        $sql .= " AND b.isactive=" . $isactive;
+        $sql .= ' AND b.isactive=' . $isactive;
         if (isset($side)) {
             // get both sides in sidebox? (some themes need this)
             if ($side === XOOPS_SIDEBLOCK_BOTH) {
-                $side = "(b.side=0 OR b.side=1)";
+                $side = '(b.side=0 OR b.side=1)';
             } elseif ($side === XOOPS_CENTERBLOCK_ALL) {
-                $side = "(b.side=3 OR b.side=4 OR b.side=5 OR b.side=7 OR b.side=8 OR b.side=9 )";
+                $side = '(b.side=3 OR b.side=4 OR b.side=5 OR b.side=7 OR b.side=8 OR b.side=9 )';
             } elseif ($side === XOOPS_FOOTERBLOCK_ALL) {
-                $side = "(b.side=10 OR b.side=11 OR b.side=12 )";
+                $side = '(b.side=10 OR b.side=11 OR b.side=12 )';
             } else {
-                $side = "b.side=" . $side;
+                $side = 'b.side=' . $side;
             }
-            $sql .= " AND " . $side;
+            $sql .= ' AND ' . $side;
         }
         if (isset($visible)) {
             $sql .= " AND b.visible=$visible";
@@ -454,12 +454,12 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
     public function getBlockByPerm($groupid)
     {
         if (isset($groupid)) {
-            $sql = "SELECT DISTINCT gperm_itemid FROM " . $this->db->prefix('group_permission') . " WHERE gperm_name = 'block_read' AND gperm_modid = 1";
+            $sql = 'SELECT DISTINCT gperm_itemid FROM ' . $this->db->prefix('group_permission') . " WHERE gperm_name = 'block_read' AND gperm_modid = 1";
             if (is_array($groupid)) {
                 $sql .= ' AND gperm_groupid IN (' . implode(',', $groupid) . ')';
             } else {
-                if ((int)($groupid) > 0) {
-                    $sql .= ' AND gperm_groupid=' . (int)($groupid);
+                if ((int)$groupid > 0) {
+                    $sql .= ' AND gperm_groupid=' . (int)$groupid;
                 }
             }
             $result   = $this->db->query($sql);
@@ -489,16 +489,16 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
      */
     public function getAllByGroupModule($groupid, $module_id = 0, $toponlyblock = false, $visible = null, $orderby = 'b.weight, m.block_id', $isactive = 1)
     {
-        $isactive = (int)($isactive);
+        $isactive = (int)$isactive;
         $db       = $GLOBALS['xoopsDB'];
         $ret      = array();
         if (isset($groupid)) {
-            $sql = "SELECT DISTINCT gperm_itemid FROM " . $db->prefix('group_permission') . " WHERE gperm_name = 'block_read' AND gperm_modid = 1";
+            $sql = 'SELECT DISTINCT gperm_itemid FROM ' . $db->prefix('group_permission') . " WHERE gperm_name = 'block_read' AND gperm_modid = 1";
             if (is_array($groupid)) {
                 $sql .= ' AND gperm_groupid IN (' . implode(',', $groupid) . ')';
             } else {
-                if ((int)($groupid) > 0) {
-                    $sql .= ' AND gperm_groupid=' . (int)($groupid);
+                if ((int)$groupid > 0) {
+                    $sql .= ' AND gperm_groupid=' . (int)$groupid;
                 }
             }
             $result   = $db->query($sql);
@@ -513,11 +513,11 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
         $sql = 'SELECT b.* FROM ' . $db->prefix('newblocks') . ' b, ' . $db->prefix('block_module_link') . ' m WHERE m.block_id=b.bid';
         $sql .= ' AND b.isactive=' . $isactive;
         if (isset($visible)) {
-            $sql .= ' AND b.visible=' . (int)($visible);
+            $sql .= ' AND b.visible=' . (int)$visible;
         }
         if (!isset($module_id)) {
         } elseif (!empty($module_id)) {
-            $sql .= ' AND m.module_id IN (0,' . (int)($module_id);
+            $sql .= ' AND m.module_id IN (0,' . (int)$module_id;
             if ($toponlyblock) {
                 $sql .= ',-1';
             }
@@ -557,13 +557,13 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
         $db   = $GLOBALS['xoopsDB'];
         $ret  = array();
         $bids = array();
-        $sql  = "SELECT DISTINCT(bid) from " . $db->prefix('newblocks');
+        $sql  = 'SELECT DISTINCT(bid) from ' . $db->prefix('newblocks');
         if ($result = $db->query($sql)) {
             while ($myrow = $db->fetchArray($result)) {
                 $bids[] = $myrow['bid'];
             }
         }
-        $sql     = "SELECT DISTINCT(p.gperm_itemid) from " . $db->prefix('group_permission') . " p, " . $db->prefix('groups') . " g WHERE g.groupid=p.gperm_groupid AND p.gperm_name='block_read'";
+        $sql     = 'SELECT DISTINCT(p.gperm_itemid) from ' . $db->prefix('group_permission') . ' p, ' . $db->prefix('groups') . " g WHERE g.groupid=p.gperm_groupid AND p.gperm_name='block_read'";
         $grouped = array();
         if ($result = $db->query($sql)) {
             while ($myrow = $db->fetchArray($result)) {
@@ -573,13 +573,13 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
         $non_grouped = array_diff($bids, $grouped);
         if (!empty($non_grouped)) {
             $sql = 'SELECT b.* FROM ' . $db->prefix('newblocks') . ' b, ' . $db->prefix('block_module_link') . ' m WHERE m.block_id=b.bid';
-            $sql .= ' AND b.isactive=' . (int)($isactive);
+            $sql .= ' AND b.isactive=' . (int)$isactive;
             if (isset($visible)) {
-                $sql .= ' AND b.visible=' . (int)($visible);
+                $sql .= ' AND b.visible=' . (int)$visible;
             }
             if (!isset($module_id)) {
             } elseif (!empty($module_id)) {
-                $sql .= ' AND m.module_id IN (0,' . (int)($module_id);
+                $sql .= ' AND m.module_id IN (0,' . (int)$module_id;
                 if ($toponlyblock) {
                     $sql .= ',-1';
                 }
@@ -614,8 +614,8 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
      */
     public function countSimilarBlocks($moduleId, $funcNum, $showFunc = null)
     {
-        $funcNum  = (int)($funcNum);
-        $moduleId = (int)($moduleId);
+        $funcNum  = (int)$funcNum;
+        $moduleId = (int)$moduleId;
         if ($funcNum < 1 || $moduleId < 1) {
             // invalid query
             return 0;
@@ -623,9 +623,9 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
         $db = XoopsDatabaseFactory::getDatabaseConnection();
         if (isset($showFunc)) {
             // showFunc is set for more strict comparison
-            $sql = sprintf("SELECT COUNT(*) FROM %s WHERE mid = %d AND func_num = %d AND show_func = %s", $db->prefix('newblocks'), $moduleId, $funcNum, $db->quoteString(trim($showFunc)));
+            $sql = sprintf('SELECT COUNT(*) FROM %s WHERE mid = %d AND func_num = %d AND show_func = %s', $db->prefix('newblocks'), $moduleId, $funcNum, $db->quoteString(trim($showFunc)));
         } else {
-            $sql = sprintf("SELECT COUNT(*) FROM %s WHERE mid = %d AND func_num = %d", $db->prefix('newblocks'), $moduleId, $funcNum);
+            $sql = sprintf('SELECT COUNT(*) FROM %s WHERE mid = %d AND func_num = %d', $db->prefix('newblocks'), $moduleId, $funcNum);
         }
         if (!$result = $db->query($sql)) {
             return 0;

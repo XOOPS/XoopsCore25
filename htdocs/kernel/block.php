@@ -371,7 +371,7 @@ class XoopsBlock extends XoopsObject
      */
     public function isCustom()
     {
-        return in_array($this->getVar("block_type"), array(
+        return in_array($this->getVar('block_type'), array(
             'C',
             'E'));
     }
@@ -419,7 +419,7 @@ class XoopsBlockHandler extends XoopsObjectHandler
     public function get($id)
     {
         $block = false;
-        $id    = (int)($id);
+        $id    = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('newblocks') . ' WHERE bid=' . $id;
             if ($result = $this->db->query($sql)) {
@@ -477,8 +477,8 @@ class XoopsBlockHandler extends XoopsObjectHandler
         if ($block->isNew()) {
             $bid = $this->db->genId('newblocks_bid_seq');
             $sql = sprintf(
-                "INSERT INTO %s (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type,"
-                . " c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified)"
+                'INSERT INTO %s (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type,'
+                . ' c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified)'
                 . " VALUES (%u, %u, %u, '%s', '%s', '%s', '%s', %u, %u, %u, '%s', '%s', %u, '%s', '%s', '%s', '%s',"
                 . " '%s', %u, %u)",
                 $this->db->prefix('newblocks'),
@@ -553,11 +553,11 @@ class XoopsBlockHandler extends XoopsObjectHandler
             return false;
         }
         $id  = $block->getVar('bid');
-        $sql = sprintf("DELETE FROM %s WHERE bid = %u", $this->db->prefix('newblocks'), $id);
+        $sql = sprintf('DELETE FROM %s WHERE bid = %u', $this->db->prefix('newblocks'), $id);
         if (!$result = $this->db->query($sql)) {
             return false;
         }
-        $sql = sprintf("DELETE FROM %s WHERE block_id = %u", $this->db->prefix('block_module_link'), $id);
+        $sql = sprintf('DELETE FROM %s WHERE block_id = %u', $this->db->prefix('block_module_link'), $id);
         $this->db->query($sql);
 
         return true;
@@ -627,7 +627,7 @@ class XoopsBlockHandler extends XoopsObjectHandler
      */
     public function getByModule($moduleid, $asobject = true, $id_as_key = false)
     {
-        trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 
         return false;
     }
@@ -644,7 +644,7 @@ class XoopsBlockHandler extends XoopsObjectHandler
      */
     public function getAllByGroupModule($groupid, $module_id = 0, $toponlyblock = false, $visible = null, $orderby = 'i.weight,i.instanceid', $isactive = 1)
     {
-        trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 
         return false;
     }
@@ -657,7 +657,7 @@ class XoopsBlockHandler extends XoopsObjectHandler
      */
     public function getAdminBlocks($groupid, $orderby = 'i.weight,i.instanceid')
     {
-        trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 
         return false;
     }
@@ -667,7 +667,7 @@ class XoopsBlockHandler extends XoopsObjectHandler
      */
     public function assignBlocks()
     {
-        trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 
         return false;
     }

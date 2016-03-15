@@ -39,11 +39,11 @@ $key->kill();
 defined('XOOPS_INSTALL') or die('XOOPS Installation wizard die');
 
 $install_rename_suffix = uniqid(substr(md5($x = mt_rand()) . $x, -10));
-$installer_modified = "install_remove_" . $install_rename_suffix;
+$installer_modified = 'install_remove_' . $install_rename_suffix;
 
 $pageHasForm = false;
 
-$content = "";
+$content = '';
 include "./language/{$wizard->language}/finish.php";
 
 include './include/install_tpl.php';

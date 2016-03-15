@@ -35,7 +35,7 @@ $modversion['description'] = _AM_SYSTEM_USER_DESC;
 $modversion['author']      = '';
 $modversion['credits']     = 'The XOOPS Project; Francisco Burzi<br>( http://phpnuke.org/ ); Kazumi Ono; Maxime Cointin (AKA Kraven30)';
 $modversion['help']        = 'page=users';
-$modversion['license']     = "GPL see LICENSE";
+$modversion['license']     = 'GPL see LICENSE';
 $modversion['official']    = 1;
 $modversion['image']       = 'edituser.png';
 

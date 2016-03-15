@@ -130,7 +130,7 @@ function form_user($add_or_edit, $user = '')
 
     $form->addElement(new XoopsFormText(_AM_SYSTEM_USERS_NICKNAME, 'username', 25, 25, $uname_value), true);
     $form->addElement(new XoopsFormText(_AM_SYSTEM_USERS_NAME, 'name', 30, 60, $name_value));
-    $email_tray = new XoopsFormElementTray(_AM_SYSTEM_USERS_EMAIL, "<br />");
+    $email_tray = new XoopsFormElementTray(_AM_SYSTEM_USERS_EMAIL, '<br />');
     $email_text = new XoopsFormText('', 'email', 30, 60, $email_value);
     $email_tray->addElement($email_text, true);
     $email_cbox = new XoopsFormCheckBox('', 'user_viewemail', $email_cbox_value);
@@ -251,14 +251,14 @@ function synchronize($uid, $type)
                 if (!empty($table['criteria'])) {
                     $criteria->add($table['criteria']);
                 }
-                $sql = "SELECT COUNT(*) AS total FROM " . $xoopsDB->prefix($table['table_name']) . ' ' . $criteria->renderWhere();
+                $sql = 'SELECT COUNT(*) AS total FROM ' . $xoopsDB->prefix($table['table_name']) . ' ' . $criteria->renderWhere();
                 if ($result = $xoopsDB->query($sql)) {
                     if ($row = $xoopsDB->fetchArray($result)) {
                         $total_posts += $row['total'];
                     }
                 }
             }
-            $sql = "UPDATE " . $xoopsDB->prefix("users") . " SET posts = '" . $total_posts . "' WHERE uid = '" . $uid . "'";
+            $sql = 'UPDATE ' . $xoopsDB->prefix('users') . " SET posts = '" . $total_posts . "' WHERE uid = '" . $uid . "'";
             if (!$result = $xoopsDB->queryF($sql)) {
                 redirect_header('admin.php?fct=users', 1, _AM_SYSTEM_USERS_CNUUSER);
             }

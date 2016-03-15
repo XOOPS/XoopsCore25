@@ -122,8 +122,8 @@ class XoopsUser extends XoopsObject
      */
     public static function getUnameFromId($userid, $usereal = 0)
     {
-        $userid  = (int)($userid);
-        $usereal = (int)($usereal);
+        $userid  = (int)$userid;
+        $usereal = (int)$usereal;
         if ($userid > 0) {
             $member_handler = xoops_getHandler('member');
             $user           = $member_handler->getUser($userid);
@@ -209,9 +209,9 @@ class XoopsUser extends XoopsObject
      */
     public function isAdmin($module_id = null)
     {
-        if (null === ($module_id)) {
+        if (null === $module_id) {
             $module_id = isset($GLOBALS['xoopsModule']) ? $GLOBALS['xoopsModule']->getVar('mid', 'n') : 1;
-        } elseif ((int)($module_id) < 1) {
+        } elseif ((int)$module_id < 1) {
             $module_id = 0;
         }
         $moduleperm_handler = xoops_getHandler('groupperm');
@@ -553,7 +553,7 @@ class XoopsUser extends XoopsObject
      */
     public function getProfile()
     {
-        trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 
         return false;
     }
@@ -608,7 +608,7 @@ class XoopsUserHandler extends XoopsPersistableObjectHandler
      */
     public function &loginUser($uname, $pwd, $md5 = false)
     {
-        trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 
         return false;
     }
@@ -622,7 +622,7 @@ class XoopsUserHandler extends XoopsPersistableObjectHandler
      */
     public function updateUserByField($fieldName, $fieldValue, $uid)
     {
-        trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 
         return false;
     }

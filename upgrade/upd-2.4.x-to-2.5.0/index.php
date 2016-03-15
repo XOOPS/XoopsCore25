@@ -32,7 +32,7 @@ class Upgrade_250 extends XoopsUpgrade
      */
     public function check_config()
     {
-        $sql = "SELECT COUNT(*) FROM `" . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` IN ('break1', 'usetips')";
+        $sql = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` IN ('break1', 'usetips')";
         if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
             return false;
         }
@@ -46,7 +46,7 @@ class Upgrade_250 extends XoopsUpgrade
      */
     public function check_templates()
     {
-        $sql = "SELECT COUNT(*) FROM `" . $GLOBALS['xoopsDB']->prefix('tplfile') . "` WHERE `tpl_file` IN ('system_header.html', 'system_header.tpl') AND `tpl_type` = 'admin'";
+        $sql = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('tplfile') . "` WHERE `tpl_file` IN ('system_header.html', 'system_header.tpl') AND `tpl_type` = 'admin'";
         if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
             return false;
         }
@@ -62,13 +62,13 @@ class Upgrade_250 extends XoopsUpgrade
     {
         $dbm = new Db_manager();
 
-        $sql = "SELECT conf_id FROM `" . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` IN ('cpanel')";
+        $sql = 'SELECT conf_id FROM `' . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` IN ('cpanel')";
         if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
             return false;
         }
         $count = $GLOBALS['xoopsDB']->fetchRow($result);
 
-        $sql = "UPDATE `" . $GLOBALS['xoopsDB']->prefix('config') . "` SET `conf_value` = 'default' WHERE `conf_id` = " . $count[0];
+        $sql = 'UPDATE `' . $GLOBALS['xoopsDB']->prefix('config') . "` SET `conf_value` = 'default' WHERE `conf_id` = " . $count[0];
         if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
             return false;
         }
@@ -151,10 +151,10 @@ class Upgrade_250 extends XoopsUpgrade
         foreach ($modversion['templates'] as $tplfile) {
             // Admin templates
             if (isset($tplfile['type']) && $tplfile['type'] === 'admin' && $fp = fopen('../modules/system/templates/admin/' . $tplfile['file'], 'r')) {
-                $newtplid  = $dbm->insert('tplfile', " VALUES (0, 1, 'system', 'default', '" . addslashes($tplfile['file']) . "', '" . addslashes($tplfile['description']) . "', " . $time . ", " . $time . ", 'admin')");
+                $newtplid  = $dbm->insert('tplfile', " VALUES (0, 1, 'system', 'default', '" . addslashes($tplfile['file']) . "', '" . addslashes($tplfile['description']) . "', " . $time . ', ' . $time . ", 'admin')");
                 $tplsource = fread($fp, filesize('../modules/system/templates/admin/' . $tplfile['file']));
                 fclose($fp);
-                $dbm->insert('tplsource', " (tpl_id, tpl_source) VALUES (" . $newtplid . ", '" . addslashes($tplsource) . "')");
+                $dbm->insert('tplsource', ' (tpl_id, tpl_source) VALUES (' . $newtplid . ", '" . addslashes($tplsource) . "')");
             }
         }
 

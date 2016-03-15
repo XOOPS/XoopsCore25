@@ -109,7 +109,7 @@ function xoopsfwrite()
  */
 function xoops_module_get_admin_menu()
 {
-    $GLOBALS['xoopsLogger']->addDeprecated(__FUNCTION__ . " is deprecated, should not be used any longer");
+    $GLOBALS['xoopsLogger']->addDeprecated(__FUNCTION__ . ' is deprecated, should not be used any longer');
     /************************************************************
      * Based on:
      * - PHP Layers Menu 1.0.7(c)2001,2002 Marco Pratesi <pratesi@telug.it>
@@ -120,11 +120,11 @@ function xoops_module_get_admin_menu()
 
     $left            = 105;
     $top             = 135;
-    $js              = "";
-    $moveLayers      = "";
-    $shutdown        = "";
-    $firstleveltable = "";
-    $menu_layers     = "";
+    $js              = '';
+    $moveLayers      = '';
+    $shutdown        = '';
+    $firstleveltable = '';
+    $menu_layers     = '';
 
     $module_handler = xoops_getHandler('module');
     $criteria       = new CriteriaCompo();
@@ -136,15 +136,15 @@ function xoops_module_get_admin_menu()
     foreach ($mods as $mod) {
         $mid         = $mod->getVar('mid');
         $module_name = $mod->getVar('name');
-        $module_url  = "\".XOOPS_URL.\"/modules/" . $mod->getVar('dirname') . "/" . trim($mod->getInfo('adminindex'));
-        $module_img  = "<img class='admin_layer_img' src='\".XOOPS_URL.\"/modules/" . $mod->getVar('dirname') . "/" . $mod->getInfo('image') . "' alt='' />";
+        $module_url  = "\".XOOPS_URL.\"/modules/" . $mod->getVar('dirname') . '/' . trim($mod->getInfo('adminindex'));
+        $module_img  = "<img class='admin_layer_img' src='\".XOOPS_URL.\"/modules/" . $mod->getVar('dirname') . '/' . $mod->getInfo('image') . "' alt='' />";
         $module_desc = "<strong>\"._VERSION.\":</strong> " . round($mod->getVar('version') / 100, 2) . "<br /><strong>\"._DESCRIPTION.\":</strong> " . $mod->getInfo('description');
 
         $top += 15;
         $js .= "\nfunction popUpL" . $mid . "() {\n    shutdown();\n    popUp('L" . $mid . "',true);}";
-        $moveLayers .= "\n    setleft('L" . $mid . "'," . $left . ");\n    settop('L" . $mid . "'," . $top . ");";
+        $moveLayers .= "\n    setleft('L" . $mid . "'," . $left . ");\n    settop('L" . $mid . "'," . $top . ');';
         $shutdown .= "\n    popUp('L" . $mid . "',false);";
-        $firstleveltable .= "$" . "xoops_admin_menu_ft[" . $mid . "] = \"<a href='" . $module_url . "' title='" . $module_name . "' onmouseover='moveLayerY(\\\"L" . $mid . "\\\", currentY, event) ; popUpL" . $mid . "(); ' >" . $module_img . "</a><br />\";\n";
+        $firstleveltable .= "$" . 'xoops_admin_menu_ft[' . $mid . "] = \"<a href='" . $module_url . "' title='" . $module_name . "' onmouseover='moveLayerY(\\\"L" . $mid . "\\\", currentY, event) ; popUpL" . $mid . "(); ' >" . $module_img . "</a><br />\";\n";
         $menu_layers .= "\n<div id='L" . $mid . "' style='position: absolute; visibility: hidden; z-index:1000;' >\n<table class='admin_layer' cellpadding='0' cellspacing='0'>\n<tr><th nowrap='nowrap'>" . $module_name . "</th></tr>\n<tr><td class='even' nowrap='nowrap'>";
 
         $adminmenu = $mod->getAdminMenu();
@@ -156,31 +156,31 @@ function xoops_module_get_admin_menu()
                 'absolute' => true);
         }
         if (count($adminmenu) != 0) {
-            $currenttarget = "";
+            $currenttarget = '';
             foreach ($adminmenu as $menuitem) {
                 $menu_link   = trim($menuitem['link']);
                 $menu_title  = trim($menuitem['title']);
                 $menu_target = isset($menuitem['target']) ? " target='" . trim($menuitem['target']) . "'" : '';
                 if (isset($menuitem['absolute']) && $menuitem['absolute']) {
-                    $menu_link = (empty($menu_link)) ? "#" : $menu_link;
+                    $menu_link = empty($menu_link) ? '#' : $menu_link;
                 } else {
-                    $menu_link = (empty($menu_link)) ? "#" : "\".XOOPS_URL.\"/modules/" . $mod->getVar('dirname') . "/" . $menu_link;
+                    $menu_link = empty($menu_link) ? '#' : "\".XOOPS_URL.\"/modules/" . $mod->getVar('dirname') . '/' . $menu_link;
                 }
 
                 $menu_layers .= "\n<img src='\".XOOPS_URL.\"/images/pointer.gif' width='8' height='8' alt='' />&nbsp;<a href='" . $menu_link . "'" . $menu_target . " onmouseover='popUpL" . $mid . "' >" . $menu_title . "</a><br />\n";
             }
         }
 
-        $menu_layers .= "\n<div style='margin-top: 5px; font-size: smaller; text-align: right;'><a href='#' onmouseover='shutdown();'>[" . _CLOSE . "]</a></div></td></tr><tr><th style='font-size: smaller; text-align: left;'>" . $module_img . "<br />" . $module_desc . "</th></tr></table></div>\n";
+        $menu_layers .= "\n<div style='margin-top: 5px; font-size: smaller; text-align: right;'><a href='#' onmouseover='shutdown();'>[" . _CLOSE . "]</a></div></td></tr><tr><th style='font-size: smaller; text-align: left;'>" . $module_img . '<br />' . $module_desc . "</th></tr></table></div>\n";
     }
     $menu_layers .= "\n<script language='JavaScript' type='text/javascript'>\n<!--\nmoveLayers();\nloaded = 1;\n// -->\n</script>\n";
-    $content = "<" . "?php\n";
+    $content = '<' . "?php\n";
     $content .= "\$xoops_admin_menu_js = \"" . $js . "\n\";\n\n";
     $content .= "\$xoops_admin_menu_ml = \"" . $moveLayers . "\n\";\n\n";
     $content .= "\$xoops_admin_menu_sd = \"" . $shutdown . "\n\";\n\n";
     $content .= $firstleveltable . "\n";
     $content .= "\$xoops_admin_menu_dv = \"" . $menu_layers . "\";\n";
-    $content .= "\n?" . ">";
+    $content .= "\n?" . '>';
 
     return $content;
 }
@@ -193,7 +193,7 @@ function xoops_module_get_admin_menu()
  */
 function xoops_module_write_admin_menu($content)
 {
-    $GLOBALS['xoopsLogger']->addDeprecated(__FUNCTION__ . " is deprecated, should not be used any longer");
+    $GLOBALS['xoopsLogger']->addDeprecated(__FUNCTION__ . ' is deprecated, should not be used any longer');
     if (!xoopsfwrite()) {
         return false;
     }

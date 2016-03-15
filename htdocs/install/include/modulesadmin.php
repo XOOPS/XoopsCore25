@@ -16,4 +16,4 @@
  */
 
 defined('XOOPS_INSTALL') or die('XOOPS Installation wizard die');
-require_once XOOPS_ROOT_PATH . "/modules/system/admin/modulesadmin/modulesadmin.php";
+require_once XOOPS_ROOT_PATH . '/modules/system/admin/modulesadmin/modulesadmin.php';

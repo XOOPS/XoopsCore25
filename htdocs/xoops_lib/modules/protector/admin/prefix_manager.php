@@ -21,7 +21,7 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
     $srs = $db->queryF('SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`');
 
     if (!$db->getRowsNum($srs)) {
-        die("You are not allowed to copy tables");
+        die('You are not allowed to copy tables');
     }
 
     $count = 0;
@@ -76,7 +76,7 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
     // get table list
     $srs = $db->queryF('SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`');
     if (!$db->getRowsNum($srs)) {
-        die("You are not allowed to delete tables");
+        die('You are not allowed to delete tables');
     }
 
     $export_string = '';
@@ -141,7 +141,7 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
                                 break;
                         }
                     }
-                    $insertValues .= (($firstField) ? '' : ', ') . $value;
+                    $insertValues .= ($firstField ? '' : ', ') . $value;
                     $firstField = false;
                 }
             }
@@ -180,13 +180,13 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
     // check if prefix_xoopscomments exists
     $check_rs = $db->queryF("SELECT * FROM {$prefix}_xoopscomments LIMIT 1");
     if (!$check_rs) {
-        die("This is not a prefix for XOOPS");
+        die('This is not a prefix for XOOPS');
     }
 
     // get table list
     $srs = $db->queryF('SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`');
     if (!$db->getRowsNum($srs)) {
-        die("You are not allowed to delete tables");
+        die('You are not allowed to delete tables');
     }
 
     while ($row_table = $db->fetchArray($srs)) {
@@ -208,9 +208,9 @@ xoops_cp_header();
 include __DIR__ . '/mymenu.php';
 
 // query
-$srs = $db->queryF("SHOW TABLE STATUS FROM `" . XOOPS_DB_NAME . '`');
+$srs = $db->queryF('SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`');
 if (!$db->getRowsNum($srs)) {
-    die("You are not allowed to copy tables");
+    die('You are not allowed to copy tables');
     xoops_cp_footer();
     exit;
 }
@@ -219,26 +219,26 @@ if (!$db->getRowsNum($srs)) {
 $tables   = array();
 $prefixes = array();
 while ($row_table = $db->fetchArray($srs)) {
-    if (substr($row_table["Name"], -6) === '_users') {
+    if (substr($row_table['Name'], -6) === '_users') {
         $prefixes[] = array(
-            'name'    => substr($row_table["Name"], 0, -6),
-            'updated' => $row_table["Update_time"]);
+            'name'    => substr($row_table['Name'], 0, -6),
+            'updated' => $row_table['Update_time']);
     }
-    $tables[] = $row_table["Name"];
+    $tables[] = $row_table['Name'];
 }
 
 // table
-echo "
-<h3>" . _AM_H3_PREFIXMAN . "</h3>
+echo '
+<h3>' . _AM_H3_PREFIXMAN . "</h3>
 <table class='outer' width='95%'>
     <tr>
-        <th>" . _AM_PROTECTOR_PREFIX . "</th>
-        <th>" . _AM_PROTECTOR_TABLES . "</th>
-        <th>" . _AM_PROTECTOR_UPDATED . "</th>
-        <th>" . _AM_PROTECTOR_COPY . "</th>
-        <th>" . _AM_PROTECTOR_ACTIONS . "</th>
+        <th>" . _AM_PROTECTOR_PREFIX . '</th>
+        <th>' . _AM_PROTECTOR_TABLES . '</th>
+        <th>' . _AM_PROTECTOR_UPDATED . '</th>
+        <th>' . _AM_PROTECTOR_COPY . '</th>
+        <th>' . _AM_PROTECTOR_ACTIONS . '</th>
     </tr>
-";
+';
 
 foreach ($prefixes as $prefix) {
 
@@ -294,11 +294,11 @@ foreach ($prefixes as $prefix) {
     </tr>\n";
 }
 
-echo "
+echo '
 </table>
-<p>" . sprintf(_AM_TXT_HOWTOCHANGEDB, XOOPS_ROOT_PATH, XOOPS_DB_PREFIX) . "</p>
+<p>' . sprintf(_AM_TXT_HOWTOCHANGEDB, XOOPS_ROOT_PATH, XOOPS_DB_PREFIX) . '</p>
 
-";
+';
 
 // Display Log if exists
 if (!empty($_SESSION['protector_logger'])) {

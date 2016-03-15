@@ -26,10 +26,10 @@ include_once $GLOBALS['xoops']->path('include/comment_constants.php');
 $op = 'delete';
 
 $filters = array(
-    "com_mode"  => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-    "op"        => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-    "com_order" => FILTER_VALIDATE_INT,
-    "com_id"    => FILTER_VALIDATE_INT);
+    'com_mode' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+    'op' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+    'com_order' => FILTER_VALIDATE_INT,
+    'com_id' => FILTER_VALIDATE_INT);
 
 if (!empty($_POST)) {
     $result = filter_input_array(INPUT_POST, $filters);
@@ -100,7 +100,7 @@ if (false != $accesserror) {
     if ($ref != '') {
         redirect_header($ref, 2, _NOPERM);
     } else {
-        redirect_header($redirect_page . '?' . $comment_config['itemName'] . '=' . (int)($com_itemid), 2, _NOPERM);
+        redirect_header($redirect_page . '?' . $comment_config['itemName'] . '=' . (int)$com_itemid, 2, _NOPERM);
     }
     exit();
 }

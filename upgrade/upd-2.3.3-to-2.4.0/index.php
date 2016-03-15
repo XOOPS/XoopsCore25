@@ -80,7 +80,7 @@ class Upgrade_240 extends XoopsUpgrade
         fclose($fver);
         chmod($licensefile, 0444);
 
-        return "Written License Key: " . $system_key;
+        return 'Written License Key: ' . $system_key;
     }
 
     /**
@@ -90,8 +90,8 @@ class Upgrade_240 extends XoopsUpgrade
     public function xoops_buildLicenceKey()
     {
         $xoops_serdat = array();
-        mt_srand((((float)('0' . substr(microtime(), strpos(microtime(), ' ') + 1, strlen(microtime()) - strpos(microtime(), ' ') + 1))) * mt_rand(30, 99999)));
-        mt_srand((((float)('0' . substr(microtime(), strpos(microtime(), ' ') + 1, strlen(microtime()) - strpos(microtime(), ' ') + 1))) * mt_rand(30, 99999)));
+        mt_srand(((float)('0' . substr(microtime(), strpos(microtime(), ' ') + 1, strlen(microtime()) - strpos(microtime(), ' ') + 1))) * mt_rand(30, 99999));
+        mt_srand(((float)('0' . substr(microtime(), strpos(microtime(), ' ') + 1, strlen(microtime()) - strpos(microtime(), ' ') + 1))) * mt_rand(30, 99999));
         $checksums = array(1 => 'md5', 2 => 'sha1');
         $type      = mt_rand(1, 2);
         $func      = $checksums[$type];
@@ -182,7 +182,7 @@ class Upgrade_240 extends XoopsUpgrade
         $tables['xoopscomments'] = array('com_status');
 
         foreach ($tables as $table => $keys) {
-            $sql = "SHOW KEYS FROM `" . $GLOBALS['xoopsDB']->prefix($table) . "`";
+            $sql = 'SHOW KEYS FROM `' . $GLOBALS['xoopsDB']->prefix($table) . '`';
             if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
                 continue;
             }
@@ -213,7 +213,7 @@ class Upgrade_240 extends XoopsUpgrade
         $tables['xoopscomments'] = array('com_status');
 
         foreach ($tables as $table => $keys) {
-            $sql = "SHOW KEYS FROM `" . $GLOBALS['xoopsDB']->prefix($table) . "`";
+            $sql = 'SHOW KEYS FROM `' . $GLOBALS['xoopsDB']->prefix($table) . '`';
             if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
                 continue;
             }
@@ -223,7 +223,7 @@ class Upgrade_240 extends XoopsUpgrade
             }
             foreach ($keys as $key) {
                 if (!in_array($key, $existing_keys)) {
-                    $sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix($table) . "` ADD INDEX `{$key}` (`{$key}`)";
+                    $sql = 'ALTER TABLE `' . $GLOBALS['xoopsDB']->prefix($table) . "` ADD INDEX `{$key}` (`{$key}`)";
                     if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
                         return false;
                     }

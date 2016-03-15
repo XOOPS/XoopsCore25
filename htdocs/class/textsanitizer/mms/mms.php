@@ -93,7 +93,7 @@ EOH;
         $rp .= "<PARAM NAME=\"enableErrorDialogs\" VALUE=\"0\">";
         $rp .= "<PARAM NAME=\"_cx\" VALUE=\"12700\">";
         $rp .= "<PARAM NAME=\"_cy\" VALUE=\"8731\">";
-        $rp .= "</OBJECT>";
+        $rp .= '</OBJECT>';
         $ts->replacements[] = $rp;
 
         return true;

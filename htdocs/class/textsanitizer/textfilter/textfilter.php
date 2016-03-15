@@ -46,7 +46,7 @@ class MytsTextfilter extends MyTextSanitizerExtension
         // To be improved
         $text = $ts->filterXss($text);
 
-        if (xoops_load("purifier", "framework")) {
+        if (xoops_load('purifier', 'framework')) {
             $text = XoopsPurifier::purify($text);
 
             return $text;
@@ -56,8 +56,8 @@ class MytsTextfilter extends MyTextSanitizerExtension
         $search  = array();
         $replace = array();
         $config  = parent::loadConfig(__DIR__);
-        if (!empty($config["patterns"])) {
-            foreach ($config["patterns"] as $pattern) {
+        if (!empty($config['patterns'])) {
+            foreach ($config['patterns'] as $pattern) {
                 if (empty($pattern['search'])) {
                     continue;
                 }
@@ -65,21 +65,21 @@ class MytsTextfilter extends MyTextSanitizerExtension
                 $replace[] = $pattern['replace'];
             }
         }
-        if (!empty($config["tags"])) {
-            $tags = array_map("trim", $config["tags"]);
+        if (!empty($config['tags'])) {
+            $tags = array_map('trim', $config['tags']);
         }
 
         // Set embedded tags
-        $tags[] = "SCRIPT";
-        $tags[] = "VBSCRIPT";
-        $tags[] = "JAVASCRIPT";
+        $tags[] = 'SCRIPT';
+        $tags[] = 'VBSCRIPT';
+        $tags[] = 'JAVASCRIPT';
         foreach ($tags as $tag) {
-            $search[]  = "/<" . $tag . "[^>]*?>.*?<\/" . $tag . ">/si";
-            $replace[] = " [!" . strtoupper($tag) . " FILTERED!] ";
+            $search[]  = '/<' . $tag . "[^>]*?>.*?<\/" . $tag . '>/si';
+            $replace[] = ' [!' . strtoupper($tag) . ' FILTERED!] ';
         }
         // Set meta refresh tag
         $search[]  = "/<META[^>\/]*HTTP-EQUIV=(['\"])?REFRESH(\\1)[^>\/]*?\/>/si";
-        $replace[] = "";
+        $replace[] = '';
         // Sanitizing scripts in IMG tag
         //$search[]= "/(<IMG[\s]+[^>\/]*SOURCE=)(['\"])?(.*)(\\2)([^>\/]*?\/>)/si";
         //$replace[]="";

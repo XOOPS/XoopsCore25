@@ -286,7 +286,7 @@ class XoopsModelWrite extends XoopsModelAbstract
 
             return $object->getVar($this->handler->keyName);
         }
-        $queryFunc = empty($force) ? "query" : "queryF";
+        $queryFunc = empty($force) ? 'query' : 'queryF';
 
         if ($object->isNew()) {
             $sql = 'INSERT INTO `' . $this->handler->table . '`';
@@ -339,7 +339,7 @@ class XoopsModelWrite extends XoopsModelAbstract
             $whereclause = '`' . $this->handler->keyName . '` = ' . $this->handler->db->quote($object->getVar($this->handler->keyName));
         }
         $sql       = 'DELETE FROM `' . $this->handler->table . '` WHERE ' . $whereclause;
-        $queryFunc = empty($force) ? "query" : "queryF";
+        $queryFunc = empty($force) ? 'query' : 'queryF';
         $result    = $this->handler->db->{$queryFunc}($sql);
 
         return empty($result) ? false : true;

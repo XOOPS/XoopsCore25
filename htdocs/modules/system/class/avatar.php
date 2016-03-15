@@ -49,7 +49,7 @@ class SystemAvatar extends XoopsAvatar
         $config_handler  = xoops_getHandler('config');
         $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
         // New and edit form
-        $form = new XoopsThemeForm(_AM_SYSTEM_AVATAR_ADD, 'avatar_form', 'admin.php', "post", true);
+        $form = new XoopsThemeForm(_AM_SYSTEM_AVATAR_ADD, 'avatar_form', 'admin.php', 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
         // Name
         $form->addElement(new XoopsFormText(_IMAGENAME, 'avatar_name', 50, 255, $this->getVar('avatar_name', 'e')), true);
@@ -67,7 +67,7 @@ class SystemAvatar extends XoopsAvatar
         }
         $imageselect_img->setExtra("onchange='showImgSelected(\"xo-avatar-img\", \"avatar_file\", \"avatars\", \"\", \"" . XOOPS_UPLOAD_URL . "\")'");
         $imgtray_img->addElement($imageselect_img, false);
-        $imgtray_img->addElement(new XoopsFormLabel('', "<br /><img src='" . XOOPS_UPLOAD_URL . "/avatars/" . $blank_img . "' name='image_img' id='xo-avatar-img' alt='' />"));
+        $imgtray_img->addElement(new XoopsFormLabel('', "<br /><img src='" . XOOPS_UPLOAD_URL . '/avatars/' . $blank_img . "' name='image_img' id='xo-avatar-img' alt='' />"));
         $fileseltray_img = new XoopsFormElementTray('<br />', '<br /><br />');
         $fileseltray_img->addElement(new XoopsFormFile(_AM_SYSTEM_AVATAR_UPLOAD, 'avatar_file', 500000), false);
         $imgtray_img->addElement($fileseltray_img);
@@ -136,7 +136,7 @@ class SystemAvatarHandler extends XoopsAvatarHandler
     public function get($id)
     {
         $avatar = false;
-        $id     = (int)($id);
+        $id     = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('avatar') . ' WHERE avatar_id=' . $id;
             if (!$result = $this->db->query($sql)) {

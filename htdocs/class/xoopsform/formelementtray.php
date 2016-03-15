@@ -56,7 +56,7 @@ class XoopsFormElementTray extends XoopsFormElement
      * @param string $name
      *
      */
-    public function __construct($caption, $delimeter = "&nbsp;", $name = "")
+    public function __construct($caption, $delimeter = '&nbsp;', $name = '')
     {
         $this->setName($name);
         $this->setCaption($caption);
@@ -166,13 +166,13 @@ class XoopsFormElementTray extends XoopsFormElement
     public function render()
     {
         $count = 0;
-        $ret   = "";
+        $ret   = '';
         foreach ($this->getElements() as $ele) {
             if ($count > 0) {
                 $ret .= $this->getDelimeter();
             }
             if ($ele->getCaption() != '') {
-                $ret .= $ele->getCaption() . "&nbsp;";
+                $ret .= $ele->getCaption() . '&nbsp;';
             }
             $ret .= $ele->render() . NWLINE;
             if (!$ele->isHidden()) {

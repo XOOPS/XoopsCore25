@@ -50,11 +50,11 @@ function install_acceptUser($hash = '')
 function install_finalize($installer_modified)
 {
     // Set mainfile.php readonly
-    @chmod(XOOPS_ROOT_PATH . "/mainfile.php", 0444);
+    @chmod(XOOPS_ROOT_PATH . '/mainfile.php', 0444);
     // Set Secure file readonly
-    @chmod(XOOPS_VAR_PATH . "/data/secure.php", 0444);
+    @chmod(XOOPS_VAR_PATH . '/data/secure.php', 0444);
     // Rename installer folder
-    @rename(XOOPS_ROOT_PATH . "/install", XOOPS_ROOT_PATH . "/" . $installer_modified);
+    @rename(XOOPS_ROOT_PATH . '/install', XOOPS_ROOT_PATH . '/' . $installer_modified);
 }
 
 /**
@@ -73,7 +73,7 @@ function xoFormField($name, $value, $label, $help = '')
     if ($help) {
         echo '<div class="xoform-help">' . $help . "</div>\n";
     }
-    if ($name === "adminname") {
+    if ($name === 'adminname') {
         echo "<input type='text' name='$name' id='$name' value='$value' maxlength='25' />";
     } else {
         echo "<input type='text' name='$name' id='$name' value='$value' />";
@@ -97,7 +97,7 @@ function xoPassField($name, $value, $label, $help = '')
         echo '<div class="xoform-help">' . $help . "</div>\n";
     }
 
-    if ($name === "adminpass") {
+    if ($name === 'adminpass') {
         echo "<input type='password' name='{$name}' id='{$name}' value='{$value}' onkeyup='passwordStrength(this.value)' />";
     } else {
         echo "<input type='password' name='{$name}' id='{$name}' value='{$value}' />";
@@ -173,7 +173,7 @@ function xoDiagBoolSetting($name, $wanted = false, $severe = false)
  */
 function xoDiagIfWritable($path)
 {
-    $path  = "../" . $path;
+    $path  = '../' . $path;
     $error = true;
     if (!is_dir($path)) {
         if (file_exists($path)) {
@@ -253,18 +253,18 @@ function getDbCharsets($link)
         return $charsets;
     }
 
-    $charsets["utf8"] = "UTF-8 Unicode";
+    $charsets['utf8'] = 'UTF-8 Unicode';
     $ut8_available    = false;
-    if ($result = mysqli_query($link, "SHOW CHARSET")) {
+    if ($result = mysqli_query($link, 'SHOW CHARSET')) {
         while ($row = mysqli_fetch_assoc($result)) {
-            $charsets[$row["Charset"]] = $row["Description"];
-            if ($row["Charset"] === "utf8") {
+            $charsets[$row['Charset']] = $row['Description'];
+            if ($row['Charset'] === 'utf8') {
                 $ut8_available = true;
             }
         }
     }
     if (!$ut8_available) {
-        unset($charsets["utf8"]);
+        unset($charsets['utf8']);
     }
 
     return $charsets;
@@ -285,7 +285,7 @@ function getDbCollations($link, $charset)
 
     if ($result = mysqli_query($link, "SHOW COLLATION WHERE CHARSET = '" . mysqli_real_escape_string($link, $charset) . "'")) {
         while ($row = mysqli_fetch_assoc($result)) {
-            $collations[$charset][$row["Collation"]] = $row["Default"] ? 1 : 0;
+            $collations[$charset][$row['Collation']] = $row['Default'] ? 1 : 0;
         }
     }
 
@@ -304,7 +304,7 @@ function validateDbCharset($link, &$charset, &$collation)
     $error = null;
 
     if (empty($charset)) {
-        $collation = "";
+        $collation = '';
     }
     if (empty($charset) && empty($collation)) {
         return $error;
@@ -336,7 +336,7 @@ function validateDbCharset($link, &$charset, &$collation)
 function xoFormFieldCollation($name, $value, $label, $help, $link, $charset)
 {
     if (empty($charset) || !$collations = getDbCollations($link, $charset)) {
-        return "";
+        return '';
     }
 
     $myts  = MyTextSanitizer::getInstance();
@@ -350,20 +350,20 @@ function xoFormFieldCollation($name, $value, $label, $help, $link, $charset)
     }
     $field .= "<select name='{$name}' id='{$name}'\">";
 
-    $collation_default = "";
-    $options           = "";
+    $collation_default = '';
+    $options           = '';
     foreach ($collations as $key => $isDefault) {
         if ($isDefault) {
             $collation_default = $key;
             continue;
         }
-        $options .= "<option value='{$key}'" . (($value == $key) ? " selected='selected'" : "") . ">{$key}</option>";
+        $options .= "<option value='{$key}'" . (($value == $key) ? " selected='selected'" : '') . ">{$key}</option>";
     }
     if ($collation_default) {
-        $field .= "<option value='{$collation_default}'" . (($value == $collation_default || empty($value)) ? " 'selected'" : "") . ">{$collation_default} (Default)</option>";
+        $field .= "<option value='{$collation_default}'" . (($value == $collation_default || empty($value)) ? " 'selected'" : '') . ">{$collation_default} (Default)</option>";
     }
     $field .= $options;
-    $field .= "</select>";
+    $field .= '</select>';
 
     return $field;
 }
@@ -399,13 +399,13 @@ function xoFormBlockCollation($name, $value, $label, $help, $link, $charset)
 function xoFormFieldCharset($name, $value, $label, $help = '', $link)
 {
     if (!$chars = getDbCharsets($link)) {
-        return "";
+        return '';
     }
 
     $charsets = array();
-    if (isset($chars["utf8"])) {
-        $charsets["utf8"] = $chars["utf8"];
-        unset($chars["utf8"]);
+    if (isset($chars['utf8'])) {
+        $charsets['utf8'] = $chars['utf8'];
+        unset($chars['utf8']);
     }
     ksort($chars);
     $charsets = array_merge($charsets, $chars);
@@ -422,9 +422,9 @@ function xoFormFieldCharset($name, $value, $label, $help = '', $link)
     $field .= "<select name='{$name}' id='{$name}' onchange=\"setFormFieldCollation('DB_COLLATION_div', this.value)\">";
     $field .= "<option value=''>None</option>";
     foreach ($charsets as $key => $desc) {
-        $field .= "<option value='{$key}'" . (($value == $key) ? " selected='selected'" : "") . ">{$key} - {$desc}</option>";
+        $field .= "<option value='{$key}'" . (($value == $key) ? " selected='selected'" : '') . ">{$key} - {$desc}</option>";
     }
-    $field .= "</select>";
+    $field .= '</select>';
 
     return $field;
 }
@@ -462,8 +462,8 @@ function xoPutLicenseKey($system_key, $licensefile, $license_file_dist = 'licens
 function xoBuildLicenceKey()
 {
     $xoops_serdat = array();
-    mt_srand((((float)('0' . substr(microtime(), strpos(microtime(), ' ') + 1, strlen(microtime()) - strpos(microtime(), ' ') + 1))) * mt_rand(30, 99999)));
-    mt_srand((((float)('0' . substr(microtime(), strpos(microtime(), ' ') + 1, strlen(microtime()) - strpos(microtime(), ' ') + 1))) * mt_rand(30, 99999)));
+    mt_srand(((float)('0' . substr(microtime(), strpos(microtime(), ' ') + 1, strlen(microtime()) - strpos(microtime(), ' ') + 1))) * mt_rand(30, 99999));
+    mt_srand(((float)('0' . substr(microtime(), strpos(microtime(), ' ') + 1, strlen(microtime()) - strpos(microtime(), ' ') + 1))) * mt_rand(30, 99999));
     $checksums = array(1 => 'md5', 2 => 'sha1');
     $type      = mt_rand(1, 2);
     $func      = $checksums[$type];

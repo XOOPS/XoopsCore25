@@ -310,9 +310,9 @@ switch ($op) {
         @unlink(XOOPS_UPLOAD_PATH . '/' . $file);
         // Update member profil
         if (isset($user_id) && $avatar->getVar('avatar_type') === 'C') {
-            $xoopsDB->query("UPDATE " . $xoopsDB->prefix('users') . " SET user_avatar='blank.gif' WHERE uid=" . (int)($user_id));
+            $xoopsDB->query('UPDATE ' . $xoopsDB->prefix('users') . " SET user_avatar='blank.gif' WHERE uid=" . (int)$user_id);
         } else {
-            $xoopsDB->query("UPDATE " . $xoopsDB->prefix('users') . " SET user_avatar='blank.gif' WHERE user_avatar='" . $file . "'");
+            $xoopsDB->query('UPDATE ' . $xoopsDB->prefix('users') . " SET user_avatar='blank.gif' WHERE user_avatar='" . $file . "'");
         }
         redirect_header('admin.php?fct=avatars', 2, _AM_SYSTEM_DBUPDATED);
         break;

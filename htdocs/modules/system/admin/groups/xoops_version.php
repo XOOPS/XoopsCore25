@@ -35,7 +35,7 @@ $modversion['description'] = _AM_SYSTEM_ADGS_DESC;
 $modversion['author']      = '';
 $modversion['credits']     = 'The XOOPS Project; Cointin Maxime (AKA Kraven30)';
 $modversion['help']        = 'page=groups';
-$modversion['license']     = "GPL see LICENSE";
+$modversion['license']     = 'GPL see LICENSE';
 $modversion['official']    = 1;
 $modversion['image']       = 'groups.png';
 

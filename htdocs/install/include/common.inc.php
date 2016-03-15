@@ -40,8 +40,8 @@ if (empty($xoopsOption['hascommon'])) {
     session_start();
 }
 @include '../mainfile.php';
-if (!defined("XOOPS_ROOT_PATH")) {
-    define("XOOPS_ROOT_PATH", str_replace("\\", "/", realpath('../')));
+if (!defined('XOOPS_ROOT_PATH')) {
+    define('XOOPS_ROOT_PATH', str_replace("\\", '/', realpath('../')));
 }
 /*
 error_reporting( 0 );

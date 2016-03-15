@@ -27,24 +27,24 @@ $modversion                   = array();
 $modversion['name']           = _PROFILE_MI_NAME;
 $modversion['version']        = 1.87;
 $modversion['description']    = _PROFILE_MI_DESC;
-$modversion['author']         = "Jan Pedersen, Taiwen Jiang, alfred, Wishcraft";
-$modversion['credits']        = "Ackbarr, mboyden, marco, mamba, trabis, etc.";
+$modversion['author']         = 'Jan Pedersen, Taiwen Jiang, alfred, Wishcraft';
+$modversion['credits']        = 'Ackbarr, mboyden, marco, mamba, trabis, etc.';
 $modversion['help']           = 'page=help';
 $modversion['license']        = 'GNU GPL 2.0 or later';
-$modversion['license_url']    = "www.gnu.org/licenses/gpl-2.0.html/";
-$modversion['image']          = "assets/images/logo.png";
-$modversion['dirname']        = "profile";
+$modversion['license_url']    = 'www.gnu.org/licenses/gpl-2.0.html/';
+$modversion['image']          = 'assets/images/logo.png';
+$modversion['dirname']        = 'profile';
 $modversion['dirmoduleadmin'] = '/Frameworks/moduleclasses/moduleadmin';
 $modversion['icons16']        = '../../Frameworks/moduleclasses/icons/16';
 $modversion['icons32']        = '../../Frameworks/moduleclasses/icons/32';
 
 //about
-$modversion["module_status"]       = "Final";
+$modversion['module_status']       = 'Final';
 $modversion['release_date']        = '2016/02/14';
-$modversion["module_website_url"]  = "http://www.xoops.org/";
-$modversion["module_website_name"] = "XOOPS";
+$modversion['module_website_url']  = 'http://www.xoops.org/';
+$modversion['module_website_name'] = 'XOOPS';
 $modversion['min_php']             = '5.3.7';
-$modversion['min_xoops']           = "2.5.8";
+$modversion['min_xoops']           = '2.5.8';
 $modversion['min_admin']           = '1.1';
 $modversion['min_db']              = array(
     'mysql'  => '5.0.7',
@@ -56,33 +56,33 @@ $modversion['system_menu'] = 1;
 
 // Admin things
 $modversion['hasAdmin']   = 1;
-$modversion['adminindex'] = "admin/index.php";
-$modversion['adminmenu']  = "admin/menu.php";
+$modversion['adminindex'] = 'admin/index.php';
+$modversion['adminmenu']  = 'admin/menu.php';
 
 // Scripts to run upon installation or update
-$modversion['onInstall'] = "include/install.php";
-$modversion['onUpdate']  = "include/update.php";
+$modversion['onInstall'] = 'include/install.php';
+$modversion['onUpdate']  = 'include/update.php';
 
 // Menu
 $modversion['hasMain'] = 1;
 if ($GLOBALS['xoopsUser']) {
     $modversion['sub'][1]['name'] = _PROFILE_MI_EDITACCOUNT;
-    $modversion['sub'][1]['url']  = "edituser.php";
+    $modversion['sub'][1]['url']  = 'edituser.php';
     $modversion['sub'][2]['name'] = _PROFILE_MI_PAGE_SEARCH;
-    $modversion['sub'][2]['url']  = "search.php";
+    $modversion['sub'][2]['url']  = 'search.php';
     $modversion['sub'][3]['name'] = _PROFILE_MI_CHANGEPASS;
-    $modversion['sub'][3]['url']  = "changepass.php";
+    $modversion['sub'][3]['url']  = 'changepass.php';
 }
 
 // Mysql file
-$modversion['sqlfile']['mysql'] = "sql/mysql.sql";
+$modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
 
 // Tables created by sql file (without prefix!)
-$modversion['tables'][1] = "profile_category";
-$modversion['tables'][2] = "profile_profile";
-$modversion['tables'][3] = "profile_field";
-$modversion['tables'][4] = "profile_visibility";
-$modversion['tables'][5] = "profile_regstep";
+$modversion['tables'][1] = 'profile_category';
+$modversion['tables'][2] = 'profile_profile';
+$modversion['tables'][3] = 'profile_field';
+$modversion['tables'][4] = 'profile_visibility';
+$modversion['tables'][5] = 'profile_regstep';
 
 // Config items
 $modversion['config'][] = array(
@@ -103,18 +103,18 @@ $modversion['config'][] = array(
 
 // Templates
 
-$modversion['templates'][] = array('file' => "profile_breadcrumbs.tpl", 'description' => "");
-$modversion['templates'][] = array('file' => "profile_form.tpl", 'description' => "");
-$modversion['templates'][] = array('file' => "profile_admin_fieldlist.tpl", 'description' => "");
-$modversion['templates'][] = array('file' => "profile_userinfo.tpl", 'description' => "");
-$modversion['templates'][] = array('file' => "profile_admin_categorylist.tpl", 'description' => "");
-$modversion['templates'][] = array('file' => "profile_search.tpl", 'description' => "");
-$modversion['templates'][] = array('file' => "profile_results.tpl", 'description' => "");
-$modversion['templates'][] = array('file' => "profile_admin_visibility.tpl", 'description' => "");
-$modversion['templates'][] = array('file' => "profile_admin_steplist.tpl", 'description' => "");
-$modversion['templates'][] = array('file' => "profile_register.tpl", 'description' => "");
-$modversion['templates'][] = array('file' => "profile_changepass.tpl", 'description' => "");
-$modversion['templates'][] = array('file' => "profile_editprofile.tpl", 'description' => "");
-$modversion['templates'][] = array('file' => "profile_userform.tpl", 'description' => "");
-$modversion['templates'][] = array('file' => "profile_avatar.tpl", 'description' => "");
-$modversion['templates'][] = array('file' => "profile_email.tpl", 'description' => "");
+$modversion['templates'][] = array('file' => 'profile_breadcrumbs.tpl', 'description' => '');
+$modversion['templates'][] = array('file' => 'profile_form.tpl', 'description' => '');
+$modversion['templates'][] = array('file' => 'profile_admin_fieldlist.tpl', 'description' => '');
+$modversion['templates'][] = array('file' => 'profile_userinfo.tpl', 'description' => '');
+$modversion['templates'][] = array('file' => 'profile_admin_categorylist.tpl', 'description' => '');
+$modversion['templates'][] = array('file' => 'profile_search.tpl', 'description' => '');
+$modversion['templates'][] = array('file' => 'profile_results.tpl', 'description' => '');
+$modversion['templates'][] = array('file' => 'profile_admin_visibility.tpl', 'description' => '');
+$modversion['templates'][] = array('file' => 'profile_admin_steplist.tpl', 'description' => '');
+$modversion['templates'][] = array('file' => 'profile_register.tpl', 'description' => '');
+$modversion['templates'][] = array('file' => 'profile_changepass.tpl', 'description' => '');
+$modversion['templates'][] = array('file' => 'profile_editprofile.tpl', 'description' => '');
+$modversion['templates'][] = array('file' => 'profile_userform.tpl', 'description' => '');
+$modversion['templates'][] = array('file' => 'profile_avatar.tpl', 'description' => '');
+$modversion['templates'][] = array('file' => 'profile_email.tpl', 'description' => '');

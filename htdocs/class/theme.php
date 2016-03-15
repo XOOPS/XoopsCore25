@@ -115,7 +115,7 @@ class xos_opal_AdminThemeFactory extends xos_opal_ThemeFactory
      */
     public function &createInstance($options = array(), $initArgs = array())
     {
-        $options["plugins"]      = array();
+        $options['plugins']      = array();
         $options['renderBanner'] = false;
         $inst                    =& parent::createInstance($options, $initArgs);
         $inst->path              = XOOPS_ADMINTHEME_PATH . '/' . $inst->folderName;
@@ -286,7 +286,7 @@ class xos_opal_Theme
         if (isset($GLOBALS['xoopsUser']) && is_object($GLOBALS['xoopsUser'])) {
             $this->template->assign(array(
                                         'xoops_isuser'     => true,
-                                        'xoops_avatar'     => XOOPS_UPLOAD_URL . "/" . $GLOBALS['xoopsUser']->getVar('user_avatar'),
+                                        'xoops_avatar'     => XOOPS_UPLOAD_URL . '/' . $GLOBALS['xoopsUser']->getVar('user_avatar'),
                                         'xoops_userid'     => $GLOBALS['xoopsUser']->getVar('uid'),
                                         'xoops_uname'      => $GLOBALS['xoopsUser']->getVar('uname'),
                                         'xoops_name'       => $GLOBALS['xoopsUser']->getVar('name'),
@@ -389,7 +389,7 @@ class xos_opal_Theme
             $uri                            = str_replace(XOOPS_URL, '', $_SERVER['REQUEST_URI']);
             // Clean uri by removing session id
             if (defined('SID') && SID && strpos($uri, SID)) {
-                $uri = preg_replace("/([\?&])(" . SID . "$|" . SID . "&)/", "\\1", $uri);
+                $uri = preg_replace("/([\?&])(" . SID . "$|" . SID . '&)/', "\\1", $uri);
             }
             $this->contentCacheId = $this->generateCacheId('page_' . substr(md5($uri), 0, 8));
             if ($this->template->is_cached($template, $this->contentCacheId)) {
@@ -521,7 +521,7 @@ class xos_opal_Theme
      * @param  string $type
      * @return bool
      */
-    public function loadLocalization($type = "main")
+    public function loadLocalization($type = 'main')
     {
         $language = $GLOBALS['xoopsConfig']['language'];
         // Load global localization stylesheet if available
@@ -548,9 +548,9 @@ class xos_opal_Theme
      *
      * @return bool|mixed
      */
-    public function addLanguage($type = "main", $language = null)
+    public function addLanguage($type = 'main', $language = null)
     {
-        $language = (null === ($language)) ? $GLOBALS["xoopsConfig"]["language"] : $language;
+        $language = (null === $language) ? $GLOBALS['xoopsConfig']['language'] : $language;
         if (!file_exists($fileinc = $this->path . "/language/{$language}/{$type}.php")) {
             if (!file_exists($fileinc = $this->path . "/language/english/{$type}.php")) {
                 return false;
@@ -739,7 +739,7 @@ class xos_opal_Theme
             switch ($type) {
                 case 'script':
                     foreach ($this->metas[$type] as $attrs) {
-                        $str .= "<script" . $this->renderAttributes($attrs) . ">";
+                        $str .= '<script' . $this->renderAttributes($attrs) . '>';
                         if (@$attrs['_']) {
                             $str .= "\n//<![CDATA[\n" . $attrs['_'] . "\n//]]>";
                         }

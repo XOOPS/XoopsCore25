@@ -37,7 +37,7 @@ class SystemCorePreload extends XoopsPreloadItem
         }
         if (!headers_sent() && isset($xoopsConfig['redirect_message_ajax']) && $xoopsConfig['redirect_message_ajax']) {
             $_SESSION['redirect_message'] = $args[2];
-            header("Location: " . preg_replace("/[&]amp;/i", '&', $url));
+            header('Location: ' . preg_replace('/[&]amp;/i', '&', $url));
             exit();
         }
     }
@@ -58,7 +58,7 @@ class SystemCorePreload extends XoopsPreloadItem
      */
     public static function eventCoreHeaderAddmeta($args)
     {
-        if (defined("XOOPS_STARTPAGE_REDIRECTED") || (isset($GLOBALS['xoopsOption']['template_main']) && $GLOBALS['xoopsOption']['template_main'] === 'db:system_homepage.tpl')) {
+        if (defined('XOOPS_STARTPAGE_REDIRECTED') || (isset($GLOBALS['xoopsOption']['template_main']) && $GLOBALS['xoopsOption']['template_main'] === 'db:system_homepage.tpl')) {
             if (is_object($GLOBALS['xoopsTpl'])) {
                 $GLOBALS['xoopsTpl']->assign('homepage', true);
             }

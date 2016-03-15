@@ -15,12 +15,12 @@
 
 // load mainfile.php - start
 $current_path = __DIR__;
-if (DIRECTORY_SEPARATOR !== "/") {
-    $current_path = str_replace(DIRECTORY_SEPARATOR, "/", $current_path);
+if (DIRECTORY_SEPARATOR !== '/') {
+    $current_path = str_replace(DIRECTORY_SEPARATOR, '/', $current_path);
 }
-$xoops_root_path = substr($current_path, 0, strpos(strtolower($current_path), "/class/xoopseditor/tinymce/"));
-include_once $xoops_root_path . "/mainfile.php";
-defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
+$xoops_root_path = substr($current_path, 0, strpos(strtolower($current_path), '/class/xoopseditor/tinymce/'));
+include_once $xoops_root_path . '/mainfile.php';
+defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 // load mainfile.php - end
 
 function langDropdown()
@@ -29,8 +29,8 @@ function langDropdown()
 
     $time = time();
     if (!isset($_SESSION['XoopsMLcontent']) && @$_SESSION['XoopsMLcontent_expire'] < $time) {
-        include_once XOOPS_ROOT_PATH . "/kernel/module.php";
-        $xlanguage = XoopsModule::getByDirname("xlanguage");
+        include_once XOOPS_ROOT_PATH . '/kernel/module.php';
+        $xlanguage = XoopsModule::getByDirname('xlanguage');
         if (is_object($xlanguage) && $xlanguage->getVar('isactive')) {
             include_once(XOOPS_ROOT_PATH . '/modules/xlanguage/include/vars.php');
             include_once(XOOPS_ROOT_PATH . '/modules/xlanguage/include/functions.php');

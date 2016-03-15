@@ -73,8 +73,8 @@ class XoopsFormPassword extends XoopsFormElement
     {
         $this->setCaption($caption);
         $this->setName($name);
-        $this->_size      = (int)($size);
-        $this->_maxlength = (int)($maxlength);
+        $this->_size      = (int)$size;
+        $this->_maxlength = (int)$maxlength;
         $this->setValue($value);
         $this->autoComplete = !empty($autoComplete);
     }

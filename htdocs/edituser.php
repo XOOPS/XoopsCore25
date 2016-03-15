@@ -39,7 +39,7 @@ $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 $myts            = MyTextSanitizer::getInstance();
 if ($op === 'saveuser') {
     if (!$GLOBALS['xoopsSecurity']->check()) {
-        redirect_header('index.php', 3, _US_NOEDITRIGHT . "<br />" . implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+        redirect_header('index.php', 3, _US_NOEDITRIGHT . '<br />' . implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
     }
     $uid = XoopsRequest::getInt('uid', 0);
     if (empty($uid) || $xoopsUser->getVar('uid') != $uid) {
@@ -244,15 +244,15 @@ if ($op === 'avatarform') {
     $form2           = new XoopsThemeForm(_US_CHOOSEAVT, 'uploadavatar', 'edituser.php', 'post', true);
     $avatar_select   = new XoopsFormSelect('', 'user_avatar', $xoopsUser->getVar('user_avatar'));
     $avatar_list     = $avatar_handler->getList('S', true);
-    $avatar_selected = $xoopsUser->getVar("user_avatar", "E");
+    $avatar_selected = $xoopsUser->getVar('user_avatar', 'E');
 //    $avatar_selected = in_array($avatar_selected, array_keys($avatar_list)) ? $avatar_selected : "blank.gif";
-    $avatar_selected = array_key_exists($avatar_selected, $avatar_list) ? $avatar_selected : "blank.gif";
+    $avatar_selected = array_key_exists($avatar_selected, $avatar_list) ? $avatar_selected : 'blank.gif';
     $avatar_select->addOptionArray($avatar_list);
     $avatar_select->setExtra("onchange='showImgSelected(\"avatar\", \"user_avatar\", \"uploads\", \"\", \"" . XOOPS_URL . "\")'");
     $avatar_tray = new XoopsFormElementTray(_US_AVATAR, '&nbsp;');
     $avatar_tray->addElement($avatar_select);
-    $avatar_tray->addElement(new XoopsFormLabel('', "<a href=\"javascript:openWithSelfMain('" . XOOPS_URL . "/misc.php?action=showpopups&amp;type=avatars','avatars',600,400);\">" . _LIST . "</a><br />"));
-    $avatar_tray->addElement(new XoopsFormLabel('', "<br /><img src='" . XOOPS_UPLOAD_URL . "/" . $avatar_selected . "' name='avatar' id='avatar' alt='' />"));
+    $avatar_tray->addElement(new XoopsFormLabel('', "<a href=\"javascript:openWithSelfMain('" . XOOPS_URL . "/misc.php?action=showpopups&amp;type=avatars','avatars',600,400);\">" . _LIST . '</a><br />'));
+    $avatar_tray->addElement(new XoopsFormLabel('', "<br /><img src='" . XOOPS_UPLOAD_URL . '/' . $avatar_selected . "' name='avatar' id='avatar' alt='' />"));
     $form2->addElement($avatar_tray);
     $form2->addElement(new XoopsFormHidden('uid', $xoopsUser->getVar('uid')));
     $form2->addElement(new XoopsFormHidden('op', 'avatarchoose'));
@@ -263,7 +263,7 @@ if ($op === 'avatarform') {
 
 if ($op === 'avatarupload') {
     if (!$GLOBALS['xoopsSecurity']->check()) {
-        redirect_header('index.php', 3, _US_NOEDITRIGHT . "<br />" . implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+        redirect_header('index.php', 3, _US_NOEDITRIGHT . '<br />' . implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
     }
     $xoops_upload_file = array();
     $uid               = 0;
@@ -271,7 +271,7 @@ if ($op === 'avatarupload') {
         $xoops_upload_file = $_POST['xoops_upload_file'];
     }
     if (!empty($_POST['uid'])) {
-        $uid = (int)($_POST['uid']);
+        $uid = (int)$_POST['uid'];
     }
     if (empty($uid) || $xoopsUser->getVar('uid') != $uid) {
         redirect_header('index.php', 3, _US_NOEDITRIGHT);
@@ -298,7 +298,7 @@ if ($op === 'avatarupload') {
                     @unlink($uploader->getSavedDestination());
                 } else {
                     $oldavatar = $xoopsUser->getVar('user_avatar');
-                    if (!empty($oldavatar) && false !== strpos(strtolower($oldavatar), "cavt")) {
+                    if (!empty($oldavatar) && false !== strpos(strtolower($oldavatar), 'cavt')) {
                         $avatars = $avt_handler->getObjects(new Criteria('avatar_file', $oldavatar));
                         if (!empty($avatars) && count($avatars) == 1 && is_object($avatars[0])) {
                             $avt_handler->delete($avatars[0]);
@@ -308,24 +308,24 @@ if ($op === 'avatarupload') {
                             }
                         }
                     }
-                    $sql = sprintf("UPDATE %s SET user_avatar = %s WHERE uid = %u", $xoopsDB->prefix('users'), $xoopsDB->quoteString('avatars/' . $uploader->getSavedFileName()), $xoopsUser->getVar('uid'));
+                    $sql = sprintf('UPDATE %s SET user_avatar = %s WHERE uid = %u', $xoopsDB->prefix('users'), $xoopsDB->quoteString('avatars/' . $uploader->getSavedFileName()), $xoopsUser->getVar('uid'));
                     $xoopsDB->query($sql);
                     $avt_handler->addUser($avatar->getVar('avatar_id'), $xoopsUser->getVar('uid'));
                     redirect_header('userinfo.php?t=' . time() . '&amp;uid=' . $xoopsUser->getVar('uid'), 3, _US_PROFUPDATED);
                 }
             }
         }
-        redirect_header("edituser.php?op=avatarform", 3, $uploader->getErrors());
+        redirect_header('edituser.php?op=avatarform', 3, $uploader->getErrors());
     }
 }
 
 if ($op === 'avatarchoose') {
     if (!$GLOBALS['xoopsSecurity']->check()) {
-        redirect_header('index.php', 3, _US_NOEDITRIGHT . "<br />" . implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+        redirect_header('index.php', 3, _US_NOEDITRIGHT . '<br />' . implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
     }
     $uid = 0;
     if (!empty($_POST['uid'])) {
-        $uid = (int)($_POST['uid']);
+        $uid = (int)$_POST['uid'];
     }
     if (empty($uid) || $xoopsUser->getVar('uid') != $uid) {
         redirect_header('index.php', 3, _US_NOEDITRIGHT);
@@ -335,7 +335,7 @@ if ($op === 'avatarchoose') {
     if (!empty($_POST['user_avatar'])) {
         $user_avatar     = $myts->addSlashes(trim($_POST['user_avatar']));
         $criteria_avatar = new CriteriaCompo(new Criteria('avatar_file', $user_avatar));
-        $criteria_avatar->add(new Criteria('avatar_type', "S"));
+        $criteria_avatar->add(new Criteria('avatar_type', 'S'));
         $avatars = $avt_handler->getObjects($criteria_avatar);
         if (!is_array($avatars) || !count($avatars)) {
             $user_avatar = 'avatars/blank.gif';

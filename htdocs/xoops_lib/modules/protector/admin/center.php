@@ -13,11 +13,11 @@ $myts = MyTextSanitizer::getInstance();
 $db   = XoopsDatabaseFactory::getDatabaseConnection();
 
 // GET vars
-$pos = empty($_GET['pos']) ? 0 : (int)($_GET['pos']);
-$num = empty($_GET['num']) ? 20 : (int)($_GET['num']);
+$pos = empty($_GET['pos']) ? 0 : (int)$_GET['pos'];
+$num = empty($_GET['num']) ? 20 : (int)$_GET['num'];
 
 // Table Name
-$log_table = $db->prefix($mydirname . "_log");
+$log_table = $db->prefix($mydirname . '_log');
 
 // Protector object
 require_once dirname(__DIR__) . '/class/protector.php';
@@ -43,7 +43,7 @@ if (!empty($_POST['action'])) {
         $bad_ips = array();
         foreach ($lines as $line) {
             @list($bad_ip, $jailed_time) = explode(':', $line, 2);
-            $bad_ips[trim($bad_ip)] = empty($jailed_time) ? 0x7fffffff : (int)($jailed_time);
+            $bad_ips[trim($bad_ip)] = empty($jailed_time) ? 0x7fffffff : (int)$jailed_time;
         }
         if (!$protector->write_file_badips($bad_ips)) {
             $error_msg .= _AM_MSG_BADIPSCANTOPEN;
@@ -64,20 +64,20 @@ if (!empty($_POST['action'])) {
         }
 
         $redirect_msg = $error_msg ? : _AM_MSG_IPFILESUPDATED;
-        redirect_header("center.php?page=center", 2, $redirect_msg);
+        redirect_header('center.php?page=center', 2, $redirect_msg);
         exit;
     } elseif ($_POST['action'] === 'delete' && isset($_POST['ids']) && is_array($_POST['ids'])) {
         // remove selected records
         foreach ($_POST['ids'] as $lid) {
-            $lid = (int)($lid);
+            $lid = (int)$lid;
             $db->query("DELETE FROM $log_table WHERE lid='$lid'");
         }
-        redirect_header("center.php?page=center", 2, _AM_MSG_REMOVED);
+        redirect_header('center.php?page=center', 2, _AM_MSG_REMOVED);
         exit;
     } elseif ($_POST['action'] === 'deleteall') {
         // remove all records
         $db->query("DELETE FROM $log_table");
-        redirect_header("center.php?page=center", 2, _AM_MSG_REMOVED);
+        redirect_header('center.php?page=center', 2, _AM_MSG_REMOVED);
         exit;
     } elseif ($_POST['action'] === 'compactlog') {
         // compactize records (removing duplicated records (ip,type)
@@ -91,8 +91,8 @@ if (!empty($_POST['action'])) {
                 $buf[$ip . $type] = true;
             }
         }
-        $db->query("DELETE FROM $log_table WHERE lid IN (" . implode(',', $ids) . ")");
-        redirect_header("center.php?page=center", 2, _AM_MSG_REMOVED);
+        $db->query("DELETE FROM $log_table WHERE lid IN (" . implode(',', $ids) . ')');
+        redirect_header('center.php?page=center', 2, _AM_MSG_REMOVED);
         exit;
     }
 }
@@ -104,7 +104,7 @@ if (!empty($_POST['action'])) {
 // query for listing
 $rs = $db->query("SELECT count(lid) FROM $log_table");
 list($numrows) = $db->fetchRow($rs);
-$prs = $db->query("SELECT l.lid, l.uid, l.ip, l.agent, l.type, l.description, UNIX_TIMESTAMP(l.timestamp), u.uname FROM $log_table l LEFT JOIN " . $db->prefix("users") . " u ON l.uid=u.uid ORDER BY timestamp DESC LIMIT $pos,$num");
+$prs = $db->query("SELECT l.lid, l.uid, l.ip, l.agent, l.type, l.description, UNIX_TIMESTAMP(l.timestamp), u.uname FROM $log_table l LEFT JOIN " . $db->prefix('users') . " u ON l.uid=u.uid ORDER BY timestamp DESC LIMIT $pos,$num");
 
 // Page Navigation
 $nav      = new XoopsPageNav($numrows, $num, $pos, 'pos', "page=center&num=$num");
@@ -207,13 +207,13 @@ echo "
 <table width='95%' class='outer' cellpadding='4' cellspacing='1'>
   <tr valign='middle'>
     <th width='5'><input type='checkbox' name='dummy' onclick=\"with(document.MainForm){for (i=0;i<length;i++) {if (elements[i].type=='checkbox') {elements[i].checked=this.checked;}}}\" /></th>
-    <th>" . _AM_TH_DATETIME . "</th>
-    <th>" . _AM_TH_USER . "</th>
-    <th>" . _AM_TH_IP . "<br />" . _AM_TH_AGENT . "</th>
-    <th>" . _AM_TH_TYPE . "</th>
-    <th>" . _AM_TH_DESCRIPTION . "</th>
+    <th>" . _AM_TH_DATETIME . '</th>
+    <th>' . _AM_TH_USER . '</th>
+    <th>' . _AM_TH_IP . '<br />' . _AM_TH_AGENT . '</th>
+    <th>' . _AM_TH_TYPE . '</th>
+    <th>' . _AM_TH_DESCRIPTION . '</th>
   </tr>
-";
+';
 
 // body of log listing
 $oddeven = 'odd';

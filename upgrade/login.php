@@ -1,5 +1,5 @@
 <?php
-defined("XOOPS_ROOT_PATH") or exit();
+defined('XOOPS_ROOT_PATH') or exit();
 
 if (empty($_POST['uname']) || empty($_POST['pass'])) {
     ?>
@@ -58,7 +58,7 @@ if (empty($_POST['uname']) || empty($_POST['pass'])) {
         if (!$member_handler->insertUser($user)) {
         }
         // Regenrate a new session id and destroy old session
-        $GLOBALS["sess_handler"]->regenerate_id(true);
+        $GLOBALS['sess_handler']->regenerate_id(true);
         $_SESSION                    = array();
         $_SESSION['xoopsUserId']     = $user->getVar('uid');
         $_SESSION['xoopsUserGroups'] = $user->getGroups();
@@ -69,7 +69,7 @@ if (empty($_POST['uname']) || empty($_POST['pass'])) {
 
         // Set cookie for rememberme
         if (!empty($xoopsConfig['usercookie'])) {
-            if (!empty($_POST["rememberme"])) {
+            if (!empty($_POST['rememberme'])) {
                 setcookie($xoopsConfig['usercookie'], $_SESSION['xoopsUserId'], time() + 31536000, '/', '', 0);
             } else {
                 setcookie($xoopsConfig['usercookie'], 0, -1, '/', '', 0);
@@ -77,7 +77,7 @@ if (empty($_POST['uname']) || empty($_POST['pass'])) {
         }
     }
 
-    header("location: " . XOOPS_URL . "/upgrade/index.php");
+    header('location: ' . XOOPS_URL . '/upgrade/index.php');
     exit();
 }
 ?>

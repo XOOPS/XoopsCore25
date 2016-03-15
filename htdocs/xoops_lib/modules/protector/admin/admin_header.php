@@ -28,7 +28,7 @@ if (file_exists($GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/m
     include_once $GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/moduleadmin.php');
     //return true;
 } else {
-    redirect_header("../../../admin.php", 5, _AM_MODULEADMIN_MISSING, false);
+    redirect_header('../../../admin.php', 5, _AM_MODULEADMIN_MISSING, false);
     //return false;
 }
 
@@ -44,23 +44,23 @@ if ($xoopsUser) {
         redirect_header(XOOPS_URL, 1, _NOPERM);
     }
 } else {
-    redirect_header(XOOPS_URL . "/user.php", 1, _NOPERM);
+    redirect_header(XOOPS_URL . '/user.php', 1, _NOPERM);
 }
 
 if (!isset($xoopsTpl) || !is_object($xoopsTpl)) {
-    include_once(XOOPS_ROOT_PATH . "/class/template.php");
+    include_once(XOOPS_ROOT_PATH . '/class/template.php');
     $xoopsTpl = new XoopsTpl();
 }
 
 $xoopsTpl->assign('pathIcon16', $pathIcon16);
 
 // Load language files
-if (!@include_once(XOOPS_TRUST_PATH . "/modules/" . $xoopsModule->getVar("dirname") . "/language/" . $xoopsConfig['language'] . "/admin.php")) {
-    include_once(XOOPS_TRUST_PATH . "/modules/" . $xoopsModule->getVar("dirname") . "/language/english/admin.php");
+if (!@include_once(XOOPS_TRUST_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/admin.php')) {
+    include_once(XOOPS_TRUST_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/english/admin.php');
 }
-if (!@include_once(XOOPS_TRUST_PATH . "/modules/" . $xoopsModule->getVar("dirname") . "/language/" . $xoopsConfig['language'] . "/modinfo.php")) {
-    include_once(XOOPS_TRUST_PATH . "/modules/" . $xoopsModule->getVar("dirname") . "/language/english/modinfo.php");
+if (!@include_once(XOOPS_TRUST_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/modinfo.php')) {
+    include_once(XOOPS_TRUST_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/english/modinfo.php');
 }
-if (!@include_once(XOOPS_TRUST_PATH . "/modules/" . $xoopsModule->getVar("dirname") . "/language/" . $xoopsConfig['language'] . "/main.php")) {
-    include_once(XOOPS_TRUST_PATH . "/modules/" . $xoopsModule->getVar("dirname") . "/language/english/main.php");
+if (!@include_once(XOOPS_TRUST_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/main.php')) {
+    include_once(XOOPS_TRUST_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/english/main.php');
 }

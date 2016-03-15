@@ -63,7 +63,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
             $dbname = '';
         }
         if (XOOPS_DB_PCONNECT == 1) {
-            $this->conn = new mysqli("p:" . XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS, $dbname);
+            $this->conn = new mysqli('p:' . XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS, $dbname);
         } else {
             $this->conn = new mysqli(XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS, $dbname);
         }
@@ -77,7 +77,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
             $this->queryF("SET NAMES '" . XOOPS_DB_CHARSET . "'");
         }
         $db_charset_set = 1;
-        $this->queryF("SET SQL_BIG_SELECTS = 1");
+        $this->queryF('SET SQL_BIG_SELECTS = 1');
 
         return true;
     }

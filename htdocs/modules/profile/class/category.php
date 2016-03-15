@@ -80,6 +80,6 @@ class ProfileCategoryHandler extends XoopsPersistableObjectHandler
      */
     public function __construct(XoopsDatabase $db)
     {
-        parent::__construct($db, "profile_category", "profilecategory", "cat_id", 'cat_title');
+        parent::__construct($db, 'profile_category', 'profilecategory', 'cat_id', 'cat_title');
     }
 }

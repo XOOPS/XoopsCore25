@@ -42,7 +42,7 @@ EOH;
     public function load(&$ts)
     {
         $ts->callbackPatterns[] = "/\[soundcloud\](http[s]?:\/\/[^\"'<>]*)(.*)\[\/soundcloud\]/sU";
-        $ts->callbacks[]        = __CLASS__ . "::myCallback";
+        $ts->callbacks[]        = __CLASS__ . '::myCallback';
     }
 
     /**
@@ -57,7 +57,7 @@ EOH;
         if (!preg_match("/^http[s]?:\/\/(www\.)?soundcloud\.com\/(.*)/i", $url, $matches)) {
             trigger_error("Not matched: {$url}", E_USER_WARNING);
 
-            return "";
+            return '';
         }
 
         $code = '<object height="81" width="100%"><param name="movie" ' . 'value="http://player.soundcloud.com/player.swf?url=' . $url . '&amp;g=bb">' . '</param><param name="allowscriptaccess" value="always"></param>' . '<embed allowscriptaccess="always" height="81" ' . 'src="http://player.soundcloud.com/player.swf?url=' . $url . '&amp;g=bb" type="application/x-shockwave-flash" width="100%"></embed></object>' . '<a href="' . $url . '">' . $url . '</a>';

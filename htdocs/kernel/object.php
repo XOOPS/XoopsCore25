@@ -219,7 +219,7 @@ class XoopsObject
             switch ($this->vars[$key]['data_type']) {
                 case XOBJ_DTYPE_UNICODE_ARRAY:
                     if (is_array($value)) {
-                        $this->vars[$key]['value'] =& array_walk($value, "xoops_aw_decode");
+                        $this->vars[$key]['value'] =& array_walk($value, 'xoops_aw_decode');
                     } else {
                         $this->vars[$key]['value'] =& xoops_convert_decode($value);
                     }
@@ -493,7 +493,7 @@ class XoopsObject
                             }
                             $ret = is_array($ret) ? $ret : array();
                             if (is_array($ret)) {
-                                $ret = array_walk($ret, "xoops_aw_decode");
+                                $ret = array_walk($ret, 'xoops_aw_decode');
                             }
                         }
 
@@ -726,8 +726,8 @@ class XoopsObject
                             $this->setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
                             continue 2;
                         }
-                        if (isset($v['maxlength']) && strlen($cleanv) > (int)($v['maxlength'])) {
-                            $this->setErrors(sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int)($v['maxlength'])));
+                        if (isset($v['maxlength']) && strlen($cleanv) > (int)$v['maxlength']) {
+                            $this->setErrors(sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int)$v['maxlength']));
                             continue 2;
                         }
                         if (!$v['not_gpc']) {
@@ -753,7 +753,7 @@ class XoopsObject
                         }
                         break;
                     case XOBJ_DTYPE_INT:
-                        $cleanv = (int)($cleanv);
+                        $cleanv = (int)$cleanv;
                         break;
 
                     case XOBJ_DTYPE_EMAIL:
@@ -762,7 +762,7 @@ class XoopsObject
                             continue 2;
                         }
                         if ($cleanv != '' && !preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $cleanv)) {
-                            $this->setErrors("Invalid Email"); //_XOBJ_ERR_INVALID_EMAIL
+                            $this->setErrors('Invalid Email'); //_XOBJ_ERR_INVALID_EMAIL
                             continue 2;
                         }
                         if (!$v['not_gpc']) {
@@ -788,17 +788,17 @@ class XoopsObject
                     case XOBJ_DTYPE_STIME:
                     case XOBJ_DTYPE_MTIME:
                     case XOBJ_DTYPE_LTIME:
-                        $cleanv = !is_string($cleanv) ? (int)($cleanv) : strtotime($cleanv);
+                        $cleanv = !is_string($cleanv) ? (int)$cleanv : strtotime($cleanv);
                         break;
                     case XOBJ_DTYPE_FLOAT:
-                        $cleanv = (float)($cleanv);
+                        $cleanv = (float)$cleanv;
                         break;
                     case XOBJ_DTYPE_DECIMAL:
-                        $cleanv = (float)($cleanv);
+                        $cleanv = (float)$cleanv;
                         break;
                     case XOBJ_DTYPE_ENUM:
                         if (!in_array($cleanv, $v['enumeration'])) {
-                            $this->setErrors("Invalid Enumeration");//_XOBJ_ERR_INVALID_ENUMERATION
+                            $this->setErrors('Invalid Enumeration');//_XOBJ_ERR_INVALID_ENUMERATION
                             continue 2;
                         }
                         break;
@@ -808,8 +808,8 @@ class XoopsObject
                             continue 2;
                         }
                         $cleanv = xoops_convert_encode($cleanv);
-                        if (isset($v['maxlength']) && strlen($cleanv) > (int)($v['maxlength'])) {
-                            $this->setErrors(sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int)($v['maxlength'])));
+                        if (isset($v['maxlength']) && strlen($cleanv) > (int)$v['maxlength']) {
+                            $this->setErrors(sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int)$v['maxlength']));
                             continue 2;
                         }
                         if (!$v['not_gpc']) {
@@ -836,7 +836,7 @@ class XoopsObject
                             continue 2;
                         }
                         if ($cleanv != '' && !preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $cleanv)) {
-                            $this->setErrors("Invalid Email");
+                            $this->setErrors('Invalid Email');
                             continue 2;
                         }
                         $cleanv = xoops_convert_encode($cleanv);
@@ -1684,7 +1684,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      */
     public function convertResultSet($result, $id_as_key = false, $as_object = true)
     {
-        trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 
         return false;
     }

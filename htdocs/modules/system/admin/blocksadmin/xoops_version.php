@@ -35,7 +35,7 @@ $modversion['description'] = _AM_SYSTEM_BLOCKS_DESC;
 $modversion['author']      = '';
 $modversion['credits']     = 'The XOOPS Project; The MPN SE Project; Andricq Nicolas (AKA MusS)';
 $modversion['help']        = 'page=blocksadmin';
-$modversion['license']     = "GPL see LICENSE";
+$modversion['license']     = 'GPL see LICENSE';
 $modversion['official']    = 1;
 $modversion['image']       = 'blocks.png';
 

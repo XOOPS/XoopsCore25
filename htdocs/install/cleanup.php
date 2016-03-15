@@ -29,10 +29,10 @@ defined('XOOPS_INSTALL') or die('XOOPS Installation wizard die');
 
 $install_rename_suffix = $_POST['instsuffix'];
 if (preg_match('/^[a-f0-9]{23}$/', $install_rename_suffix)) {
-    $installer_modified = "install_remove_" . $install_rename_suffix;
+    $installer_modified = 'install_remove_' . $install_rename_suffix;
     install_finalize($installer_modified);
-    echo "OK";
+    echo 'OK';
 } else {
-    echo "FAILED";
+    echo 'FAILED';
 }
 exit;

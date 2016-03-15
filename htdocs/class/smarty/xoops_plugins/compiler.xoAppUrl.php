@@ -86,7 +86,7 @@ function smarty_compiler_xoAppUrl($argStr, &$compiler)
         foreach ($params as $k => $v) {
             $str .= var_export($k, true) . " => $v,\n";
         }
-        $str .= "))";
+        $str .= '))';
     }
 
     return "echo htmlspecialchars($str);";

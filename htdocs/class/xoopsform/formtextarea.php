@@ -60,12 +60,12 @@ class XoopsFormTextArea extends XoopsFormElement
      * @param int    $rows    number of rows
      * @param int    $cols    number of columns
      */
-    public function __construct($caption, $name, $value = "", $rows = 5, $cols = 50)
+    public function __construct($caption, $name, $value = '', $rows = 5, $cols = 50)
     {
         $this->setCaption($caption);
         $this->setName($name);
-        $this->_rows = (int)($rows);
-        $this->_cols = (int)($cols);
+        $this->_rows = (int)$rows;
+        $this->_cols = (int)$cols;
         $this->setValue($value);
     }
 
@@ -117,6 +117,6 @@ class XoopsFormTextArea extends XoopsFormElement
      */
     public function render()
     {
-        return "<textarea name='" . $this->getName() . "' id='" . $this->getName() . "'  title='" . $this->getTitle() . "' rows='" . $this->getRows() . "' cols='" . $this->getCols() . "'" . $this->getExtra() . ">" . $this->getValue() . "</textarea>";
+        return "<textarea name='" . $this->getName() . "' id='" . $this->getName() . "'  title='" . $this->getTitle() . "' rows='" . $this->getRows() . "' cols='" . $this->getCols() . "'" . $this->getExtra() . '>' . $this->getValue() . '</textarea>';
     }
 }

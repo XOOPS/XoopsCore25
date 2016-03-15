@@ -20,9 +20,9 @@
  * @package             Frameworks
  * @subpackage          art
  */
-if (!defined("FRAMEWORKS_ART_FUNCTIONS_LOCALE")):
-    define("FRAMEWORKS_ART_FUNCTIONS_LOCALE", true);
+if (!defined('FRAMEWORKS_ART_FUNCTIONS_LOCALE')):
+    define('FRAMEWORKS_ART_FUNCTIONS_LOCALE', true);
 
-    xoops_load("XoopsLocal");
+    xoops_load('XoopsLocal');
 
 endif;
