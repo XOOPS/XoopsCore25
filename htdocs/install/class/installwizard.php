@@ -125,7 +125,7 @@ class XoopsInstallWizard
         }
 
         if (empty($GLOBALS['xoopsUser']) && !empty($_COOKIE["xo_install_user"])) {
-            install_acceptUser($_COOKIE["xo_install_user"]);
+            return install_acceptUser($_COOKIE["xo_install_user"]);
         }
         if (empty($GLOBALS['xoopsUser'])) {
             redirect_header("../user.php");

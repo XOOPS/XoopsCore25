@@ -16,7 +16,7 @@
 
     <{if $tagbar}>
         <div class="newbb-tagbar">
-            <{includeq file="db:tag_bar.html"}>
+            <{includeq file="db:tag_bar.tpl"}>
         </div><!-- .newbb-tagbar -->
     <{/if}>
 
@@ -76,9 +76,9 @@
     <{if $mode lte 1}>
         <{if $topic_poll}>
             <{if $topic_pollresult}>
-                <{includeq file="db:newbb_poll_results.html" poll=$poll}>
+                <{includeq file="db:newbb_poll_results.tpl" poll=$poll}>
             <{else}>
-                <{includeq file="db:newbb_poll_view.html" poll=$poll}>
+                <{includeq file="db:newbb_poll_view.tpl" poll=$poll}>
             <{/if}>
         <{/if}>
     <{/if}>
@@ -181,7 +181,7 @@
     <{/if}>
 
     <{foreachq item=topic_post from=$topic_posts}>
-        <{includeq file="db:newbb_thread.html" topic_post=$topic_post mode=$mode}>
+        <{includeq file="db:newbb_thread.tpl" topic_post=$topic_post mode=$mode}>
     <{foreachelse}>
         <{$smarty.const._MD_ERRORPOST}>
     <{/foreach}>
@@ -231,7 +231,7 @@
     <{/if}>
     </div><!-- .newbb-viewtopic-footer -->
 
-<{includeq file='db:newbb_notification_select.html'}>
+<{includeq file='db:newbb_notification_select.tpl'}>
 
 <!--
     <script type="text/javascript">

@@ -185,7 +185,7 @@ class XoopsObject
      * @access   public
      *
      * @param string $key
-     * @param int    $data_type set to one of XOBJ_DTYPE_XXX constants (set to XOBJ_DTYPE_OTHER if no data type ckecking nor text sanitizing is required)
+     * @param int    $data_type set to one of XOBJ_DTYPE_XXX constants (set to XOBJ_DTYPE_OTHER if no data type checking nor text sanitizing is required)
      * @param null   $value
      * @param bool   $required  require html form input?
      * @param int    $maxlength for XOBJ_DTYPE_TXTBOX type only
@@ -331,19 +331,21 @@ class XoopsObject
     }
 
     /**
-     * @deprecated use destroyVars() instead
      * @param $var
      * @return bool
+     * @deprecated use destroyVars() instead,  destoryVars() will be removed in the next major release
      */
     public function destoryVars($var)
     {
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error("XoopsObject::destoryVars() is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']},");
         return $this->destroyVars($var);
     }
 
     /**
      * Assign values to multiple variables in a batch
      *
-     * Meant for a CGI contenxt:
+     * Meant for a CGI context:
      * - prefixed CGI args are considered save
      * - avoids polluting of namespace with CGI args
      *
@@ -881,10 +883,13 @@ class XoopsObject
      * dynamically register additional filter for the object
      *
      * @param string $filtername name of the filter
-     * @access public
+     *
+     * @deprecated \XoopsObject::registerFilter is deprecated since XOOPS 2.5.8 and will be removed in the next major release
      */
     public function registerFilter($filtername)
     {
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error("XoopsObject::registerFilter() is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']},");
         $this->_filters[] = $filtername;
     }
 
@@ -922,10 +927,14 @@ class XoopsObject
      * parameter: the target object
      *
      * @param string $method function or action name
-     * @access public
+     *
+     * @deprecated \XoopsObject::loadFilters is deprecated since XOOPS 2.5.8 and will be removed in the next major release
      */
     public function loadFilters($method)
     {
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error("XoopsObject::loadFilters() is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']},");
+
         $this->_loadFilters();
 
         xoops_load('XoopsCache');
@@ -956,7 +965,7 @@ class XoopsObject
      * @access public
      * @return object clone
      */
-    public function &xoopsClone()
+    public function xoopsClone()
     {
         $class = get_class($this);
         $clone = null;
@@ -968,6 +977,15 @@ class XoopsObject
         $clone->setNew();
 
         return $clone;
+    }
+
+    /**
+     * Adjust a newly cloned object
+     */
+    public function __clone()
+    {
+        // need this to notify the handler class that this is a newly created object
+        $this->setNew();
     }
 
     /**
@@ -1033,7 +1051,7 @@ class XoopsObject
 /**
  * XOOPS object handler class.
  * This class is an abstract class of handler classes that are responsible for providing
- * data access mechanisms to the data source of its corresponsing data objects
+ * data access mechanisms to the data source of its corresponding data objects
  *
  * @package             kernel
  * @abstract
@@ -1139,7 +1157,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * holds reference to predefined extended object handlers: read, stats, joint, write, sync
      *
      * The handlers hold methods for different purposes, which could be all put together inside of current class.
-     * However, load codes only if they are necessary, thus they are now splitted out.
+     * However, load codes only if they are necessary, thus they are now split out.
      *
      * var array of objects
      *
@@ -1528,7 +1546,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * Get counts of objects matching a condition
      *
      * @param  CriteriaElement $criteria {@link CriteriaElement} to match
-     * @return array           of conunts
+     * @return array           of counts
      */
     public function getCounts(CriteriaElement $criteria = null)
     {
