@@ -35,7 +35,7 @@ function xoops_module_update_pm(XoopsModule $module, $oldversion = null)
     global $xoopsDB;
     if ($oldversion <= 100) {
         // Check pm table version
-        $sql = "SHOW COLUMNS FROM " . $xoopsDB->prefix("priv_msgs");
+        $sql = 'SHOW COLUMNS FROM ' . $xoopsDB->prefix('priv_msgs');
         if (!$result = $xoopsDB->queryF($sql)) {
             return false;
         }
@@ -43,7 +43,7 @@ function xoops_module_update_pm(XoopsModule $module, $oldversion = null)
         if (($rows = $xoopsDB->getRowsNum($result)) == 12) {
             return true;
         } elseif ($rows == 8) {
-            return $xoopsDB->queryFromFile(XOOPS_ROOT_PATH . "/modules/" . $module->getVar('dirname', 'n') . "/sql/mysql.upgrade.sql");
+            return $xoopsDB->queryFromFile(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'n') . '/sql/mysql.upgrade.sql');
         } else {
             return false;
         }
@@ -51,7 +51,7 @@ function xoops_module_update_pm(XoopsModule $module, $oldversion = null)
 
     if ($oldversion < 110) {
         // remove old html template files
-        $templateDirectory = XOOPS_ROOT_PATH . "/modules/" . $module->getVar('dirname', 'n') . "/templates/";
+        $templateDirectory = XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'n') . '/templates/';
         $template_list     = array_diff(scandir($templateDirectory), array('..', '.'));
         foreach ($template_list as $k => $v) {
             $fileinfo = new SplFileInfo($templateDirectory . $v);
@@ -62,11 +62,11 @@ function xoops_module_update_pm(XoopsModule $module, $oldversion = null)
 
         xoops_load('xoopsfile');
         //remove /images directory
-        $imagesDirectory = XOOPS_ROOT_PATH . "/modules/" . $module->getVar('dirname', 'n') . "/images/";
-        $folderHandler   = XoopsFile::getHandler("folder", $imagesDirectory);
+        $imagesDirectory = XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'n') . '/images/';
+        $folderHandler   = XoopsFile::getHandler('folder', $imagesDirectory);
         $folderHandler->delete($imagesDirectory);
         //delete .html entries from the tpl table
-        $sql = "DELETE FROM " . $xoopsDB->prefix("tplfile") . " WHERE `tpl_module` = '" . $module->getVar('dirname', 'n') . "' AND `tpl_file` LIKE '%.html%'";
+        $sql = 'DELETE FROM ' . $xoopsDB->prefix('tplfile') . " WHERE `tpl_module` = '" . $module->getVar('dirname', 'n') . "' AND `tpl_file` LIKE '%.html%'";
         $xoopsDB->queryF($sql);
     }
 

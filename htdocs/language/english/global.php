@@ -98,18 +98,18 @@ define('_NOTITLE', 'No title');
 /**
  * Image manager
  */
-define("_MD_ADDIMGCAT", "Add Category");
-define("_MD_IMGCATNAME", "Category name");
-define("_MD_IMGCATRGRP", "Select groups for image manager use");
-define("_MD_IMGCATWGRP", "Select groups allowed to upload images");
-define("_MD_IMGCATWEIGHT", "Display order in image manager");
-define("_MD_IMGCATDISPLAY", "Display");
-define("_MD_IMGCATSTRTYPE", "Images are uploaded to:");
-define("_MD_STRTYOPENG", "This can not be changed afterwards!");
-define("_MD_ASFILE", "Store as files (in uploads directory)");
-define("_MD_INDB", "Store in the database (as binary \"blob\" data)");
-define("_MD_IMGMAIN", "Category");
-define("_MD_EDITIMGCAT", "Images Settings");
+define('_MD_ADDIMGCAT', 'Add Category');
+define('_MD_IMGCATNAME', 'Category name');
+define('_MD_IMGCATRGRP', 'Select groups for image manager use');
+define('_MD_IMGCATWGRP', 'Select groups allowed to upload images');
+define('_MD_IMGCATWEIGHT', 'Display order in image manager');
+define('_MD_IMGCATDISPLAY', 'Display');
+define('_MD_IMGCATSTRTYPE', 'Images are uploaded to:');
+define('_MD_STRTYOPENG', 'This can not be changed afterwards!');
+define('_MD_ASFILE', 'Store as files (in uploads directory)');
+define('_MD_INDB', "Store in the database (as binary \"blob\" data)");
+define('_MD_IMGMAIN', 'Category');
+define('_MD_EDITIMGCAT', 'Images Settings');
 define('_IMGMANAGER', 'Image Manager');
 define('_NUMIMAGES', '%s images');
 define('_ADDIMAGE', 'Add Image File');

@@ -23,28 +23,28 @@ xoops_cp_header();
 $indexAdmin = new ModuleAdmin();
 echo $indexAdmin->addNavigation('prune.php');
 
-$op         = isset($_REQUEST['op']) ? $_REQUEST['op'] : "form";
+$op         = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'form';
 $pm_handler = xoops_getModuleHandler('message');
 
 switch ($op) {
     default:
-    case "form":
+    case 'form':
         $form = $pm_handler->getPruneForm();
         $form->display();
         break;
 
-    case "prune":
+    case 'prune':
         $criteria = new CriteriaCompo();
-        if ($_REQUEST['after']['date'] && $_REQUEST['after']['date'] !== "YYYY/MM/DD") {
-            $criteria->add(new Criteria('msg_time', strtotime($_REQUEST['after']['date']) + (int)($_REQUEST['after']['time']), ">"));
+        if ($_REQUEST['after']['date'] && $_REQUEST['after']['date'] !== 'YYYY/MM/DD') {
+            $criteria->add(new Criteria('msg_time', strtotime($_REQUEST['after']['date']) + (int)$_REQUEST['after']['time'], '>'));
         }
-        if ($_REQUEST['before']['date'] && $_REQUEST['before']['date'] !== "YYYY/MM/DD") {
-            $criteria->add(new Criteria('msg_time', strtotime($_REQUEST['before']['date']) + (int)($_REQUEST['before']['time']), "<"));
+        if ($_REQUEST['before']['date'] && $_REQUEST['before']['date'] !== 'YYYY/MM/DD') {
+            $criteria->add(new Criteria('msg_time', strtotime($_REQUEST['before']['date']) + (int)$_REQUEST['before']['time'], '<'));
         }
         if (isset($_REQUEST['onlyread']) && $_REQUEST['onlyread'] == 1) {
             $criteria->add(new Criteria('read_msg', 1));
         }
-        if ((!isset($_REQUEST['includesave']) || $_REQUEST['includesave'] == 0)) {
+        if (!isset($_REQUEST['includesave']) || $_REQUEST['includesave'] == 0) {
             $savecriteria = new CriteriaCompo(new Criteria('to_save', 0));
             $savecriteria->add(new Criteria('from_save', 0));
             $criteria->add($savecriteria);
@@ -64,11 +64,11 @@ switch ($op) {
             $errors = false;
             foreach ($uids as $uid => $messagecount) {
                 $pm = $pm_handler->create();
-                $pm->setVar("subject", $GLOBALS['xoopsModuleConfig']['prunesubject']);
-                $pm->setVar("msg_text", str_replace('{PM_COUNT}', $messagecount, $GLOBALS['xoopsModuleConfig']['prunemessage']));
-                $pm->setVar("to_userid", $uid);
-                $pm->setVar("from_userid", $GLOBALS['xoopsUser']->getVar("uid"));
-                $pm->setVar("msg_time", time());
+                $pm->setVar('subject', $GLOBALS['xoopsModuleConfig']['prunesubject']);
+                $pm->setVar('msg_text', str_replace('{PM_COUNT}', $messagecount, $GLOBALS['xoopsModuleConfig']['prunemessage']));
+                $pm->setVar('to_userid', $uid);
+                $pm->setVar('from_userid', $GLOBALS['xoopsUser']->getVar('uid'));
+                $pm->setVar('msg_time', time());
                 if (!$pm_handler->insert($pm)) {
                     $errors     = true;
                     $errormsg[] = $pm->getHtmlErrors();

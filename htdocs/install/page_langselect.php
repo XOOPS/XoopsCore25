@@ -46,11 +46,11 @@ $pageHasForm = true;
 $title       = LANGUAGE_SELECTION;
 $content     = '<select name="lang" size="10" style="min-width: 10em;">';
 
-$languages = getDirList("./language/");
+$languages = getDirList('./language/');
 foreach ($languages as $lang) {
     $sel = ($lang == $wizard->language) ? ' selected="selected"' : '';
     $content .= "<option value=\"{$lang}\"{$sel}>{$lang}</option>\n";
 }
-$content .= "</select>";
+$content .= '</select>';
 
 include './include/install_tpl.php';

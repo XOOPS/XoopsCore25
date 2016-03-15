@@ -42,7 +42,7 @@ if (!$dbm->isConnectable()) {
     $wizard->redirectToPage('dbsettings');
     exit();
 }
-$res = $dbm->query("SELECT COUNT(*) FROM " . $dbm->db->prefix("users"));
+$res = $dbm->query('SELECT COUNT(*) FROM ' . $dbm->db->prefix('users'));
 if (!$res) {
     $wizard->redirectToPage('dbsettings');
     exit();
@@ -69,10 +69,10 @@ if ($process && is_writable('../include/license.php')) {
     $result  = $dbm->queryFromFile('./language/' . $language . '/' . XOOPS_DB_TYPE . '.lang.data.sql');
     $group   = make_groups($dbm);
     $result  = make_data($dbm, $adminname, $hashedAdminPass, $adminmail, $language, $group);
-    $content = '<div class="x2-note successMsg">' . DATA_INSERTED . "</div><br />" . $dbm->report();
+    $content = '<div class="x2-note successMsg">' . DATA_INSERTED . '</div><br />' . $dbm->report();
     // Writes License Key
-    $content .= '<div class="x2-note successMsg">' . sprintf(LICENSE_IS_WRITEABLE, $state) . "</div>";
-    $content .= '<div class="x2-note successMsg">' . write_key() . "</div><br />";
+    $content .= '<div class="x2-note successMsg">' . sprintf(LICENSE_IS_WRITEABLE, $state) . '</div>';
+    $content .= '<div class="x2-note successMsg">' . write_key() . '</div><br />';
 } elseif ($update) {
     $sql = "UPDATE " . $dbm->db->prefix("users")
         . " SET `uname` = " . $dbm->db->quote($adminname)
@@ -88,9 +88,9 @@ if ($process && is_writable('../include/license.php')) {
     //$cm = 'dummy';
     $wizard->loadLangFile('install2');
 
-    $content .= '<div class="x2-note errorMsg">' . sprintf(LICENSE_NOT_WRITEABLE, $state) . "</div>";
+    $content .= '<div class="x2-note errorMsg">' . sprintf(LICENSE_NOT_WRITEABLE, $state) . '</div>';
 } else {
-    $content = "<div class='x2-note confirmMsg'>" . DATA_ALREADY_INSERTED . "</div>";
+    $content = "<div class='x2-note confirmMsg'>" . DATA_ALREADY_INSERTED . '</div>';
 }
 
 setcookie('xo_install_user', '', null, null, null);

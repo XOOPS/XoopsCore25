@@ -148,7 +148,7 @@ switch ($op) {
 
                 case 'cpanel':
                     $ele = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
-                    xoops_load("cpanel", "system");
+                    xoops_load('cpanel', 'system');
                     $list = XoopsSystemCpanel::getGuis();
                     $ele->addOptionArray($list);
                     break;
@@ -206,7 +206,7 @@ switch ($op) {
                     if (count($modules) > 0) {
                         $ele = new XoopsFormElementTray($title, '<br />');
                         foreach (array_keys($modules) as $mid) {
-                            $c_val   = isset($currrent_val[$mid]) ? (int)($currrent_val[$mid]) : null;
+                            $c_val   = isset($currrent_val[$mid]) ? (int)$currrent_val[$mid] : null;
                             $selform = new XoopsFormSelect($modules[$mid]->getVar('name'), $config[$i]->getVar('conf_name') . "[$mid]", $c_val);
                             $selform->addOptionArray($cache_options);
                             $ele->addElement($selform);
@@ -268,7 +268,7 @@ switch ($op) {
     case 'showmod':
 
         $config_handler = xoops_getHandler('config');
-        $mod            = isset($_REQUEST['mod']) ? (int)($_REQUEST['mod']) : 0;
+        $mod            = isset($_REQUEST['mod']) ? (int)$_REQUEST['mod'] : 0;
         if ($mod <= 0) {
             header('Location: admin.php?fct=preferences');
             exit();
@@ -296,15 +296,15 @@ switch ($op) {
         }
 
         $modname = $module->getVar('name');
-        if (!empty($_REQUEST["redirect"])) {
+        if (!empty($_REQUEST['redirect'])) {
             $myts = MyTextSanitizer::getInstance();
-            $form->addElement(new XoopsFormHidden('redirect', $myts->htmlspecialchars($_REQUEST["redirect"])));
+            $form->addElement(new XoopsFormHidden('redirect', $myts->htmlspecialchars($_REQUEST['redirect'])));
         } elseif ($module->getInfo('adminindex')) {
             $form->addElement(new XoopsFormHidden('redirect', XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . $module->getInfo('adminindex')));
         }
         for ($i = 0; $i < $count; ++$i) {
             $title       = constant($config[$i]->getVar('conf_title'));
-            $description = (defined($config[$i]->getVar('conf_desc'))) ? constant($config[$i]->getVar('conf_desc')) : '';
+            $description = defined($config[$i]->getVar('conf_desc')) ? constant($config[$i]->getVar('conf_desc')) : '';
             switch ($config[$i]->getVar('conf_formtype')) {
 
                 case 'textarea':
@@ -418,7 +418,7 @@ switch ($op) {
 
     case 'save':
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header("admin.php?fct=preferences", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header('admin.php?fct=preferences', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         require_once XOOPS_ROOT_PATH . '/class/template.php';
         $xoopsTpl         = new XoopsTpl();
@@ -511,7 +511,7 @@ switch ($op) {
         }
 
         if (!empty($use_mysession) && $xoopsConfig['use_mysession'] == 0 && $session_name != '') {
-            setcookie($session_name, session_id(), time() + (60 * (int)($session_expire)), '/', XOOPS_COOKIE_DOMAIN, 0);
+            setcookie($session_name, session_id(), time() + (60 * (int)$session_expire), '/', XOOPS_COOKIE_DOMAIN, 0);
         }
 
         // Clean cached files, may take long time
@@ -525,14 +525,14 @@ switch ($op) {
 
         if ($lang_updated) {
             // Flush cache files for cpanel GUIs
-            xoops_load("cpanel", "system");
+            xoops_load('cpanel', 'system');
             XoopsSystemCpanel::flush();
         }
 
         if (isset($redirect) && $redirect != '') {
             redirect_header($redirect, 2, _AM_SYSTEM_DBUPDATED);
         } else {
-            redirect_header("admin.php?fct=preferences", 2, _AM_SYSTEM_DBUPDATED);
+            redirect_header('admin.php?fct=preferences', 2, _AM_SYSTEM_DBUPDATED);
         }
         break;
 

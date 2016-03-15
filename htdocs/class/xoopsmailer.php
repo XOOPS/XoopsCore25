@@ -117,22 +117,22 @@ class XoopsMailer
     // reset all properties to default
     public function reset()
     {
-        $this->fromEmail    = "";
-        $this->fromName     = "";
+        $this->fromEmail    = '';
+        $this->fromName     = '';
         $this->fromUser     = null; // RMV-NOTIFY
         $this->priority     = '';
         $this->toUsers      = array();
         $this->toEmails     = array();
         $this->headers      = array();
-        $this->subject      = "";
-        $this->body         = "";
+        $this->subject      = '';
+        $this->body         = '';
         $this->errors       = array();
         $this->success      = array();
         $this->isMail       = false;
         $this->isPM         = false;
         $this->assignedTags = array();
-        $this->template     = "";
-        $this->templatedir  = "";
+        $this->template     = '';
+        $this->templatedir  = '';
         // Change below to \r\n if you have problem sending mail
         $this->LE = "\n";
     }
@@ -146,7 +146,7 @@ class XoopsMailer
         if ($value === null && is_object($GLOBALS['xoopsModule'])) {
             $value = $GLOBALS['xoopsModule']->getVar('dirname', 'n');
         } else {
-            $value = str_replace(DIRECTORY_SEPARATOR, "/", $value);
+            $value = str_replace(DIRECTORY_SEPARATOR, '/', $value);
         }
         $this->templatedir = $value;
     }
@@ -158,16 +158,16 @@ class XoopsMailer
     public function getTemplatePath()
     {
         if (!$path = $this->templatedir) {
-            $path = XOOPS_ROOT_PATH . "/language/";
+            $path = XOOPS_ROOT_PATH . '/language/';
         } elseif (false === strpos($path, '/')) {
-            $path = XOOPS_ROOT_PATH . "/modules/" . $path . "/language/";
-        } elseif (substr($path, -1, 1) !== "/") {
-            $path .= "/";
+            $path = XOOPS_ROOT_PATH . '/modules/' . $path . '/language/';
+        } elseif (substr($path, -1, 1) !== '/') {
+            $path .= '/';
         }
-        if (file_exists($path . $GLOBALS['xoopsConfig']['language'] . "/mail_template/" . $this->template)) {
-            return $path . $GLOBALS['xoopsConfig']['language'] . "/mail_template/" . $this->template;
-        } elseif (file_exists($path . "english/mail_template/" . $this->template)) {
-            return $path . "english/mail_template/" . $this->template;
+        if (file_exists($path . $GLOBALS['xoopsConfig']['language'] . '/mail_template/' . $this->template)) {
+            return $path . $GLOBALS['xoopsConfig']['language'] . '/mail_template/' . $this->template;
+        } elseif (file_exists($path . 'english/mail_template/' . $this->template)) {
+            return $path . 'english/mail_template/' . $this->template;
         } elseif (file_exists($path . $this->template)) {
             return $path . $this->template;
         } else {
@@ -209,7 +209,7 @@ class XoopsMailer
      */
     public function setFromUser($user)
     {
-        if (strtolower(get_class($user)) === "xoopsuser") {
+        if (strtolower(get_class($user)) === 'xoopsuser') {
             $this->fromUser = &$user;
         }
     }
@@ -262,13 +262,13 @@ class XoopsMailer
     public function send($debug = false)
     {
         global $xoopsConfig;
-        if ($this->body == "" && $this->template == "") {
+        if ($this->body == '' && $this->template == '') {
             if ($debug) {
                 $this->errors[] = _MAIL_MSGBODY;
             }
 
             return false;
-        } elseif ($this->template != "") {
+        } elseif ($this->template != '') {
             $path = $this->getTemplatePath();
             if (!($fd = @fopen($path, 'r'))) {
                 if ($debug) {
@@ -282,7 +282,7 @@ class XoopsMailer
         // for sending mail only
         if ($this->isMail || !empty($this->toEmails)) {
             if (!empty($this->priority)) {
-                $this->headers[] = "X-Priority: " . $this->priority;
+                $this->headers[] = 'X-Priority: ' . $this->priority;
             }
             // $this->headers[] = "X-Mailer: PHP/".phpversion();
             // $this->headers[] = "Return-Path: ".$this->fromEmail;
@@ -297,14 +297,14 @@ class XoopsMailer
 
         $this->assign('X_ADMINMAIL', $xoopsConfig['adminmail']);
         $this->assign('X_SITENAME', $xoopsConfig['sitename']);
-        $this->assign('X_SITEURL', XOOPS_URL . "/");
+        $this->assign('X_SITEURL', XOOPS_URL . '/');
         // TODO: also X_ADMINNAME??
         // TODO: X_SIGNATURE, X_DISCLAIMER ?? - these are probably best
         // done as includes if mail templates ever get this sophisticated
         // replace tags with actual values
         foreach ($this->assignedTags as $k => $v) {
-            $this->body    = str_replace("{" . $k . "}", $v, $this->body);
-            $this->subject = str_replace("{" . $k . "}", $v, $this->subject);
+            $this->body    = str_replace('{' . $k . '}', $v, $this->body);
+            $this->subject = str_replace('{' . $k . '}', $v, $this->subject);
         }
         $this->body = str_replace("\r\n", "\n", $this->body);
         $this->body = str_replace("\r", "\n", $this->body);
@@ -327,32 +327,32 @@ class XoopsMailer
         // receives (potentially) a different message
         foreach ($this->toUsers as $user) {
             // set some user specific variables
-            $subject = str_replace("{X_UNAME}", $user->getVar("uname"), $this->subject);
-            $text    = str_replace("{X_UID}", $user->getVar("uid"), $this->body);
-            $text    = str_replace("{X_UEMAIL}", $user->getVar("email"), $text);
-            $text    = str_replace("{X_UNAME}", $user->getVar("uname"), $text);
-            $text    = str_replace("{X_UACTLINK}", XOOPS_URL . "/register.php?op=actv&id=" . $user->getVar("uid") . "&actkey=" . $user->getVar('actkey'), $text);
+            $subject = str_replace('{X_UNAME}', $user->getVar('uname'), $this->subject);
+            $text    = str_replace('{X_UID}', $user->getVar('uid'), $this->body);
+            $text    = str_replace('{X_UEMAIL}', $user->getVar('email'), $text);
+            $text    = str_replace('{X_UNAME}', $user->getVar('uname'), $text);
+            $text    = str_replace('{X_UACTLINK}', XOOPS_URL . '/register.php?op=actv&id=' . $user->getVar('uid') . '&actkey=' . $user->getVar('actkey'), $text);
             // send mail
             if ($this->isMail) {
-                if (!$this->sendMail($user->getVar("email"), $subject, $text, $headers)) {
+                if (!$this->sendMail($user->getVar('email'), $subject, $text, $headers)) {
                     if ($debug) {
-                        $this->errors[] = sprintf(_MAIL_SENDMAILNG, $user->getVar("uname"));
+                        $this->errors[] = sprintf(_MAIL_SENDMAILNG, $user->getVar('uname'));
                     }
                 } else {
                     if ($debug) {
-                        $this->success[] = sprintf(_MAIL_MAILGOOD, $user->getVar("uname"));
+                        $this->success[] = sprintf(_MAIL_MAILGOOD, $user->getVar('uname'));
                     }
                 }
             }
             // send private message
             if ($this->isPM) {
-                if (!$this->sendPM($user->getVar("uid"), $subject, $text)) {
+                if (!$this->sendPM($user->getVar('uid'), $subject, $text)) {
                     if ($debug) {
-                        $this->errors[] = sprintf(_MAIL_SENDPMNG, $user->getVar("uname"));
+                        $this->errors[] = sprintf(_MAIL_SENDPMNG, $user->getVar('uname'));
                     }
                 } else {
                     if ($debug) {
-                        $this->success[] = sprintf(_MAIL_PMGOOD, $user->getVar("uname"));
+                        $this->success[] = sprintf(_MAIL_PMGOOD, $user->getVar('uname'));
                     }
                 }
             }
@@ -374,11 +374,11 @@ class XoopsMailer
         global $xoopsUser;
         $pm_handler = xoops_getHandler('privmessage');
         $pm         = $pm_handler->create();
-        $pm->setVar("subject", $subject);
+        $pm->setVar('subject', $subject);
         // RMV-NOTIFY
         $pm->setVar('from_userid', !empty($this->fromUser) ? $this->fromUser->getVar('uid') : (empty($xoopsUser) ? 1 : $xoopsUser->getVar('uid')));
-        $pm->setVar("msg_text", $body);
-        $pm->setVar("to_userid", $uid);
+        $pm->setVar('msg_text', $body);
+        $pm->setVar('to_userid', $uid);
         if (!$pm_handler->insert($pm)) {
             return false;
         }
@@ -440,12 +440,12 @@ class XoopsMailer
             return $this->errors;
         } else {
             if (!empty($this->errors)) {
-                $ret = "<h4>" . _ERRORS . "</h4>";
+                $ret = '<h4>' . _ERRORS . '</h4>';
                 foreach ($this->errors as $error) {
-                    $ret .= $error . "<br />";
+                    $ret .= $error . '<br />';
                 }
             } else {
-                $ret = "";
+                $ret = '';
             }
 
             return $ret;
@@ -463,10 +463,10 @@ class XoopsMailer
         if (!$ashtml) {
             return $this->success;
         } else {
-            $ret = "";
+            $ret = '';
             if (!empty($this->success)) {
                 foreach ($this->success as $suc) {
-                    $ret .= $suc . "<br />";
+                    $ret .= $suc . '<br />';
                 }
             }
 
@@ -530,7 +530,7 @@ class XoopsMailer
     public function setToUsers(&$user)
     {
         if (!is_array($user)) {
-            if (strtolower(get_class($user)) === "xoopsuser") {
+            if (strtolower(get_class($user)) === 'xoopsuser') {
                 $this->toUsers[] = $user;
             }
         } else {
@@ -547,7 +547,7 @@ class XoopsMailer
     public function setToGroups($group)
     {
         if (!is_array($group)) {
-            if (strtolower(get_class($group)) === "xoopsgroup") {
+            if (strtolower(get_class($group)) === 'xoopsgroup') {
                 $member_handler = xoops_getHandler('member');
                 $this->setToUsers($member_handler->getUsersByGroup($group->getVar('groupid'), true));
             }

@@ -65,7 +65,7 @@ class PathStuffController
                 $this->xoopsPath[$req] = $_SESSION['settings'][$sess];
             }
         } else {
-            $path = str_replace("\\", "/", realpath('../'));
+            $path = str_replace("\\", '/', realpath('../'));
             if (substr($path, -1) === '/') {
                 $path = substr($path, 0, -1);
             }
@@ -73,16 +73,16 @@ class PathStuffController
                 $this->xoopsPath['root'] = $path;
             }
             // Firstly, locate XOOPS lib folder out of XOOPS root folder
-            $this->xoopsPath['lib'] = dirname($path) . "/" . ($this->xoopsPathDefault['lib']);
+            $this->xoopsPath['lib'] = dirname($path) . '/' . $this->xoopsPathDefault['lib'];
             // If the folder is not created, re-locate XOOPS lib folder inside XOOPS root folder
-            if (!is_dir($this->xoopsPath['lib'] . "/")) {
-                $this->xoopsPath['lib'] = $path . "/" . ($this->xoopsPathDefault['lib']);
+            if (!is_dir($this->xoopsPath['lib'] . '/')) {
+                $this->xoopsPath['lib'] = $path . '/' . $this->xoopsPathDefault['lib'];
             }
             // Firstly, locate XOOPS data folder out of XOOPS root folder
-            $this->xoopsPath['data'] = dirname($path) . "/" . ($this->xoopsPathDefault['data']);
+            $this->xoopsPath['data'] = dirname($path) . '/' . $this->xoopsPathDefault['data'];
             // If the folder is not created, re-locate XOOPS data folder inside XOOPS root folder
-            if (!is_dir($this->xoopsPath['data'] . "/")) {
-                $this->xoopsPath['data'] = $path . "/" . ($this->xoopsPathDefault['data']);
+            if (!is_dir($this->xoopsPath['data'] . '/')) {
+                $this->xoopsPath['data'] = $path . '/' . $this->xoopsPathDefault['data'];
             }
         }
         if (isset($_SESSION['settings']['URL'])) {
@@ -116,7 +116,7 @@ class PathStuffController
             $request = $_POST;
             foreach ($this->path_lookup as $req => $sess) {
                 if (isset($request[$req])) {
-                    $request[$req] = str_replace("\\", "/", trim($request[$req]));
+                    $request[$req] = str_replace("\\", '/', trim($request[$req]));
                     if (substr($request[$req], -1) === '/') {
                         $request[$req] = substr($request[$req], 0, -1);
                     }
@@ -208,19 +208,19 @@ class PathStuffController
         if (is_array($path)) {
             foreach (array_keys($path) as $item) {
                 if (is_string($item)) {
-                    $error[$parent . "/" . $item] = $this->makeWritable($parent . "/" . $item);
+                    $error[$parent . '/' . $item] = $this->makeWritable($parent . '/' . $item);
                     if (empty($path[$item])) {
                         continue;
                     }
                     foreach ($path[$item] as $child) {
-                        $this->setPermission($parent . "/" . $item, $child, $error);
+                        $this->setPermission($parent . '/' . $item, $child, $error);
                     }
                 } else {
-                    $error[$parent . "/" . $path[$item]] = $this->makeWritable($parent . "/" . $path[$item]);
+                    $error[$parent . '/' . $path[$item]] = $this->makeWritable($parent . '/' . $path[$item]);
                 }
             }
         } else {
-            $error[$parent . "/" . $path] = $this->makeWritable($parent . "/" . $path);
+            $error[$parent . '/' . $path] = $this->makeWritable($parent . '/' . $path);
         }
 
         return null;

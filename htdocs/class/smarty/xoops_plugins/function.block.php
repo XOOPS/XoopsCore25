@@ -35,11 +35,11 @@ function smarty_function_block($params, &$smarty)
 
     $display_title = (isset($params['display']) && $params['display'] === 'title');
     $display_none  = (isset($params['display']) && $params['display'] === 'none');
-    $options       = (isset($params['options'])) ? $params['options'] : false;
-    $groups        = (isset($params['groups'])) ? explode('|', $params['groups']) : false;
-    $cache         = (isset($params['cache'])) ? (int)($params['cache']) : false;
+    $options       = isset($params['options']) ? $params['options'] : false;
+    $groups        = isset($params['groups']) ? explode('|', $params['groups']) : false;
+    $cache         = isset($params['cache']) ? (int)$params['cache'] : false;
 
-    $block_id = (int)($params['id']);
+    $block_id = (int)$params['id'];
 
     static $block_objs;
     if (!isset($block_objs[$block_id])) {
@@ -88,7 +88,7 @@ function smarty_function_block($params, &$smarty)
     $xoopsLogger = XoopsLogger::getInstance();
     $template    =& $GLOBALS['xoopsTpl'];
 
-    $bcachetime = (int)($blockObj->getVar('bcachetime'));
+    $bcachetime = (int)$blockObj->getVar('bcachetime');
     if (empty($bcachetime)) {
         $template->caching = 0;
     } else {
@@ -97,7 +97,7 @@ function smarty_function_block($params, &$smarty)
     }
 
     $template->setCompileId($blockObj->getVar('dirname', 'n'));
-    $tplName = ($tplName = $blockObj->getVar('template')) ? "db:{$tplName}" : "db:system_block_dummy.tpl";
+    $tplName = ($tplName = $blockObj->getVar('template')) ? "db:{$tplName}" : 'db:system_block_dummy.tpl';
     $cacheid = 'blk_' . $block_id;
 
     if (!$bcachetime || !$template->is_cached($tplName, $cacheid)) {

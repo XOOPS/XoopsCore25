@@ -27,7 +27,7 @@ $email = isset($_GET['email']) ? trim($_GET['email']) : '';
 $email = isset($_POST['email']) ? trim($_POST['email']) : $email;
 
 if ($email == '') {
-    redirect_header("user.php", 2, _US_SORRYNOTFOUND);
+    redirect_header('user.php', 2, _US_SORRYNOTFOUND);
 }
 
 $myts           = MyTextSanitizer::getInstance();
@@ -36,20 +36,20 @@ $getuser        = $member_handler->getUsers(new Criteria('email', $myts->addSlas
 
 if (empty($getuser)) {
     $msg = _US_SORRYNOTFOUND;
-    redirect_header("user.php", 2, $msg);
+    redirect_header('user.php', 2, $msg);
 } else {
     $code   = isset($_GET['code']) ? trim($_GET['code']) : '';
-    $areyou = substr($getuser[0]->getVar("pass"), 0, 5);
+    $areyou = substr($getuser[0]->getVar('pass'), 0, 5);
     if ($code != '' && $areyou == $code) {
         $newpass     = xoops_makepass();
         $xoopsMailer =& xoops_getMailer();
         $xoopsMailer->useMail();
-        $xoopsMailer->setTemplate("lostpass2.tpl");
-        $xoopsMailer->assign("SITENAME", $xoopsConfig['sitename']);
-        $xoopsMailer->assign("ADMINMAIL", $xoopsConfig['adminmail']);
-        $xoopsMailer->assign("SITEURL", XOOPS_URL . "/");
-        $xoopsMailer->assign("IP", $_SERVER['REMOTE_ADDR']);
-        $xoopsMailer->assign("NEWPWD", $newpass);
+        $xoopsMailer->setTemplate('lostpass2.tpl');
+        $xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
+        $xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
+        $xoopsMailer->assign('SITEURL', XOOPS_URL . '/');
+        $xoopsMailer->assign('IP', $_SERVER['REMOTE_ADDR']);
+        $xoopsMailer->assign('NEWPWD', $newpass);
         $xoopsMailer->setToUsers($getuser[0]);
         $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
         $xoopsMailer->setFromName($xoopsConfig['sitename']);
@@ -60,7 +60,7 @@ if (empty($getuser)) {
         // Next step: add the new password to the database
         $sql = sprintf(
             "UPDATE %s SET pass = '%s' WHERE uid = %u",
-            $xoopsDB->prefix("users"),
+            $xoopsDB->prefix('users'),
             password_hash($newpass, PASSWORD_DEFAULT),
             $getuser[0]->getVar('uid')
         );
@@ -70,17 +70,17 @@ if (empty($getuser)) {
             include $GLOBALS['xoops']->path('footer.php');
             exit();
         }
-        redirect_header("user.php", 3, sprintf(_US_PWDMAILED, $getuser[0]->getVar("uname")), false);
+        redirect_header('user.php', 3, sprintf(_US_PWDMAILED, $getuser[0]->getVar('uname')), false);
         // If no Code, send it
     } else {
         $xoopsMailer =& xoops_getMailer();
         $xoopsMailer->useMail();
-        $xoopsMailer->setTemplate("lostpass1.tpl");
-        $xoopsMailer->assign("SITENAME", $xoopsConfig['sitename']);
-        $xoopsMailer->assign("ADMINMAIL", $xoopsConfig['adminmail']);
-        $xoopsMailer->assign("SITEURL", XOOPS_URL . "/");
-        $xoopsMailer->assign("IP", $_SERVER['REMOTE_ADDR']);
-        $xoopsMailer->assign("NEWPWD_LINK", XOOPS_URL . "/lostpass.php?email=" . $email . "&code=" . $areyou);
+        $xoopsMailer->setTemplate('lostpass1.tpl');
+        $xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
+        $xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
+        $xoopsMailer->assign('SITEURL', XOOPS_URL . '/');
+        $xoopsMailer->assign('IP', $_SERVER['REMOTE_ADDR']);
+        $xoopsMailer->assign('NEWPWD_LINK', XOOPS_URL . '/lostpass.php?email=' . $email . '&code=' . $areyou);
         $xoopsMailer->setToUsers($getuser[0]);
         $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
         $xoopsMailer->setFromName($xoopsConfig['sitename']);
@@ -89,9 +89,9 @@ if (empty($getuser)) {
         if (!$xoopsMailer->send()) {
             echo $xoopsMailer->getErrors();
         }
-        echo "<h4>";
-        printf(_US_CONFMAIL, $getuser[0]->getVar("uname"));
-        echo "</h4>";
+        echo '<h4>';
+        printf(_US_CONFMAIL, $getuser[0]->getVar('uname'));
+        echo '</h4>';
         include $GLOBALS['xoops']->path('footer.php');
     }
 }

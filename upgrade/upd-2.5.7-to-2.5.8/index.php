@@ -53,7 +53,7 @@ class Upgrade_258 extends XoopsUpgrade
         $table = $db->prefix($table);
 
         $sql = sprintf(
-            "SELECT `CHARACTER_MAXIMUM_LENGTH` FROM `information_schema`.`COLUMNS` "
+            'SELECT `CHARACTER_MAXIMUM_LENGTH` FROM `information_schema`.`COLUMNS` '
             . "WHERE TABLE_SCHEMA = '%s'AND TABLE_NAME = '%s' AND COLUMN_NAME = '%s'",
             $db->escape($dbname),
             $db->escape($table),

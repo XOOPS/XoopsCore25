@@ -33,7 +33,7 @@ class XoopsLoad
      *
      * @return bool
      */
-    public static function load($name, $type = "core")
+    public static function load($name, $type = 'core')
     {
         static $loaded;
         static $deprecated;

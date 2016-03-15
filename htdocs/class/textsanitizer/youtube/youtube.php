@@ -72,7 +72,7 @@ EOH;
 
         //mb------------------------------
         $ts->callbackPatterns[] = "/\[youtube=(['\"]?)([^\"']*),([^\"']*)\\1]([^\"]*)\[\/youtube\]/sU";
-        $ts->callbacks[]        = __CLASS__ . "::myCallback";
+        $ts->callbacks[]        = __CLASS__ . '::myCallback';
         //mb------------------------------
     }
 
@@ -99,7 +99,7 @@ EOH;
             $videoId = $url; // have a bare video id
         } else {
             trigger_error("Not matched: {$url} {$width} {$height}", E_USER_WARNING);
-            return "";
+            return '';
         }
 
         $width = empty($width) ? 426 : (int) $width;

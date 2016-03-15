@@ -58,7 +58,7 @@ include_once '../language/' . $wizard->language . '/global.php';
 
         <div id="xo-version">
             <?php
-            $version = './img/' . str_replace(" ", "_", strtolower(XOOPS_VERSION)) . '.png';
+            $version = './img/' . str_replace(' ', '_', strtolower(XOOPS_VERSION)) . '.png';
             if (file_exists($version)) {
                 echo '<img src="' . $version . '" alt="' . XOOPS_VERSION . '" />';
             } else {
@@ -77,7 +77,7 @@ include_once '../language/' . $wizard->language . '/global.php';
                     if (file_exists('./language/' . $lang . '/support.png')) {
                         echo " class='option' style='background-image:url(./language/" . $lang . "/support.png); background-repeat: no-repeat;'";
                     }
-                    echo ">" . $support['title'] . "</option>";
+                    echo '>' . $support['title'] . '</option>';
                 }
                 ?>
             </select>

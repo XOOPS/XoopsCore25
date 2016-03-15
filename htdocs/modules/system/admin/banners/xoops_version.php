@@ -35,7 +35,7 @@ $modversion['description'] = _AM_SYSTEM_BANS_DESC;
 $modversion['author']      = '';
 $modversion['credits']     = 'The XOOPS Project; The MPN SE Project; Francisco Burzi <br>( http://phpnuke.org/ ); Kraven30 (Cointin Maxime); ';
 $modversion['help']        = 'page=banners';
-$modversion['license']     = "GPL see LICENSE";
+$modversion['license']     = 'GPL see LICENSE';
 $modversion['official']    = 1;
 $modversion['image']       = 'banners.png';
 

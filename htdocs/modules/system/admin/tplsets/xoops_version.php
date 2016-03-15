@@ -35,7 +35,7 @@ $modversion['description'] = _AM_SYSTEM_TPLSETS_DESC;
 $modversion['author']      = '';
 $modversion['credits']     = 'The XOOPS Project; Maxime Cointin (AKA Kraven30)';
 $modversion['help']        = 'page=tplsets';
-$modversion['license']     = "GPL see LICENSE";
+$modversion['license']     = 'GPL see LICENSE';
 $modversion['official']    = 1;
 $modversion['image']       = 'tpls.png';
 

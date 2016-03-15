@@ -34,7 +34,7 @@ class Upgrade_256 extends XoopsUpgrade
      */
     public function check_com_user()
     {
-        $result = $GLOBALS['xoopsDB']->queryF("SHOW COLUMNS FROM " . $GLOBALS['xoopsDB']->prefix('xoopscomments') . " LIKE 'com_user'");
+        $result = $GLOBALS['xoopsDB']->queryF('SHOW COLUMNS FROM ' . $GLOBALS['xoopsDB']->prefix('xoopscomments') . " LIKE 'com_user'");
 
         return ($GLOBALS['xoopsDB']->getRowsNum($result) > 0);
 
@@ -46,7 +46,7 @@ class Upgrade_256 extends XoopsUpgrade
      */
     public function check_com_email()
     {
-        $result = $GLOBALS['xoopsDB']->queryF("SHOW COLUMNS FROM " . $GLOBALS['xoopsDB']->prefix('xoopscomments') . " LIKE 'com_email'");
+        $result = $GLOBALS['xoopsDB']->queryF('SHOW COLUMNS FROM ' . $GLOBALS['xoopsDB']->prefix('xoopscomments') . " LIKE 'com_email'");
 
         return ($GLOBALS['xoopsDB']->getRowsNum($result) > 0);
 
@@ -58,7 +58,7 @@ class Upgrade_256 extends XoopsUpgrade
      */
     public function check_com_url()
     {
-        $result = $GLOBALS['xoopsDB']->queryF("SHOW COLUMNS FROM " . $GLOBALS['xoopsDB']->prefix('xoopscomments') . " LIKE 'com_url'");
+        $result = $GLOBALS['xoopsDB']->queryF('SHOW COLUMNS FROM ' . $GLOBALS['xoopsDB']->prefix('xoopscomments') . " LIKE 'com_url'");
 
         return ($GLOBALS['xoopsDB']->getRowsNum($result) > 0);
 
@@ -70,7 +70,7 @@ class Upgrade_256 extends XoopsUpgrade
      */
     public function apply_com_user()
     {
-        $sql = "ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('xoopscomments') . " ADD `com_user` VARCHAR( 60 ) NOT NULL AFTER `com_uid`, ADD INDEX ( `com_user` )";
+        $sql = 'ALTER TABLE ' . $GLOBALS['xoopsDB']->prefix('xoopscomments') . ' ADD `com_user` VARCHAR( 60 ) NOT NULL AFTER `com_uid`, ADD INDEX ( `com_user` )';
         if (!$GLOBALS['xoopsDB']->queryF($sql)) {
             return false;
         }
@@ -83,7 +83,7 @@ class Upgrade_256 extends XoopsUpgrade
      */
     public function apply_com_email()
     {
-        $sql = "ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('xoopscomments') . " ADD `com_email` VARCHAR( 60 ) NOT NULL AFTER `com_user`, ADD INDEX ( `com_email` )";
+        $sql = 'ALTER TABLE ' . $GLOBALS['xoopsDB']->prefix('xoopscomments') . ' ADD `com_email` VARCHAR( 60 ) NOT NULL AFTER `com_user`, ADD INDEX ( `com_email` )';
         if (!$GLOBALS['xoopsDB']->queryF($sql)) {
             return false;
         }
@@ -99,7 +99,7 @@ class Upgrade_256 extends XoopsUpgrade
 
         //$this->query( "ALTER TABLE `xoopscomments` ADD `com_user` VARCHAR( 60 ) NOT NULL AFTER `com_uid`, ADD INDEX ( `com_url` )" );
 
-        $sql = "ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('xoopscomments') . " ADD `com_url` VARCHAR( 60 ) NOT NULL AFTER `com_email` ";
+        $sql = 'ALTER TABLE ' . $GLOBALS['xoopsDB']->prefix('xoopscomments') . ' ADD `com_url` VARCHAR( 60 ) NOT NULL AFTER `com_email` ';
         if (!$GLOBALS['xoopsDB']->queryF($sql)) {
             return false;
         }

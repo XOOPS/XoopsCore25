@@ -98,11 +98,11 @@ class Admin
     public function addConfigBoxLine($value = '', $type = 'default')
     {
         if ($type === 'module') {
-            $mod = (is_array($value)) ? $value[0] : $value;
+            $mod = is_array($value) ? $value[0] : $value;
             if (xoops_isActiveModule($mod)) {
                 return $this->addConfigAccept(sprintf(_AM_XMF_MODULE_INSTALLED, $mod));
             } else {
-                $nomod = (is_array($value)) ? $value[1] : 'error';
+                $nomod = is_array($value) ? $value[1] : 'error';
                 $line = sprintf(_AM_XMF_MODULE_NOT_INSTALLED, $mod);
                 if ($nomod === 'warning') {
                     return $this->addConfigWarning($line);
@@ -173,7 +173,7 @@ class Admin
      *
      * @return string
      */
-    public function renderButton($position = null, $delimiter = "&nbsp;")
+    public function renderButton($position = null, $delimiter = '&nbsp;')
     {
         if (null === $position) {
             $position = 'right';
@@ -190,7 +190,7 @@ class Admin
      *
      * @return void
      */
-    public function displayButton($position = null, $delimiter = "&nbsp;")
+    public function displayButton($position = null, $delimiter = '&nbsp;')
     {
         echo $this->renderButton($position, $delimiter);
     }
@@ -281,11 +281,11 @@ class Admin
     public function addConfigError($value = '')
     {
         $path = XOOPS_URL . '/Frameworks/moduleclasses/icons/16/';
-        $line = "";
+        $line = '';
         $line .= "<span style='color : red; font-weight : bold;'>";
         $line .= "<img src='" . $path . "0.png' >";
         $line .= $value;
-        $line .= "</span>";
+        $line .= '</span>';
         $value = $line;
         $type = 'default';
 
@@ -302,11 +302,11 @@ class Admin
     public function addConfigAccept($value = '')
     {
         $path = XOOPS_URL . '/Frameworks/moduleclasses/icons/16/';
-        $line = "";
+        $line = '';
         $line .= "<span style='color : green;'>";
         $line .= "<img src='" . $path . "1.png' >";
         $line .= $value;
-        $line .= "</span>";
+        $line .= '</span>';
         $value = $line;
         $type = 'default';
 
@@ -323,11 +323,11 @@ class Admin
     public function addConfigWarning($value = '')
     {
         $path = XOOPS_URL . '/Frameworks/moduleclasses/icons/16/';
-        $line = "";
+        $line = '';
         $line .= "<span style='color : orange; font-weight : bold;'>";
         $line .= "<img src='" . $path . "warning.png' >";
         $line .= $value;
-        $line .= "</span>";
+        $line .= '</span>';
         $value = $line;
         $type = 'default';
 
@@ -403,7 +403,7 @@ class Admin
     public static function menuIconPath($image)
     {
         if (static::isXng()) {
-            return($image);
+            return $image;
         } else {
             $path = '../../Frameworks/moduleclasses/icons/32/';
 

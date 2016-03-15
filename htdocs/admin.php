@@ -98,7 +98,7 @@ if (!empty($_GET['xoopsorgnews'])) {
                     for ($i = 0; $i < $count; ++$i) {
                         $_items[$i]['title']                                                         = XoopsLocal::convert_encoding($_items[$i]['title'], _CHARSET, 'UTF-8');
                         $_items[$i]['description']                                                   = XoopsLocal::convert_encoding($_items[$i]['description'], _CHARSET, 'UTF-8');
-                        $items[(string)(strtotime($_items[$i]['pubdate'])) . "-" . (string)($cnt++)] = $_items[$i];
+                        $items[(string)strtotime($_items[$i]['pubdate']) . '-' . (string)($cnt++)] = $_items[$i];
                     }
                 } else {
                     echo $rss2parser->getErrors();
@@ -113,13 +113,13 @@ if (!empty($_GET['xoopsorgnews'])) {
         foreach (array_keys($items) as $i) {
             $ret .= '<tr class="head"><td><a href="' . htmlspecialchars($items[$i]['link']) . '" rel="external">';
             $ret .= htmlspecialchars($items[$i]['title']) . '</a> (' . htmlspecialchars($items[$i]['pubdate']) . ')</td></tr>';
-            if ($items[$i]['description'] != "") {
+            if ($items[$i]['description'] != '') {
                 $ret .= '<tr><td class="odd">' . $items[$i]['description'];
                 if (!empty($items[$i]['guid'])) {
                     $ret .= '&nbsp;&nbsp;<a href="' . htmlspecialchars($items[$i]['guid']) . '" rel="external" title="">' . _MORE . '</a>';
                 }
                 $ret .= '</td></tr>';
-            } elseif ($items[$i]['guid'] != "") {
+            } elseif ($items[$i]['guid'] != '') {
                 $ret .= '<tr><td class="even aligntop"></td><td colspan="2" class="odd"><a href="' . htmlspecialchars($items[$i]['guid']) . '" rel="external">' . _MORE . '</a></td></tr>';
             }
         }

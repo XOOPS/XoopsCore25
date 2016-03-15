@@ -40,7 +40,7 @@ if (!empty($editor)) {
     // required configs
     $options['editor'] = $editor;
     $options['name']   = 'required_element';
-    $options['value']  = empty($_REQUEST['message']) ? "" : $_REQUEST['message'];
+    $options['value']  = empty($_REQUEST['message']) ? '' : $_REQUEST['message'];
     // optional configs
     $options['rows']   = 25; // default value = 5
     $options['cols']   = 60; // default value = 50

@@ -28,24 +28,24 @@ $modversion                   = array();
 $modversion['name']           = _PM_MI_NAME;
 $modversion['version']        = 1.11;
 $modversion['description']    = _PM_MI_DESC;
-$modversion['author']         = "Jan Pedersen, Taiwen Jiang";
-$modversion['credits']        = "The XOOPS Project, Wanikoo";
+$modversion['author']         = 'Jan Pedersen, Taiwen Jiang';
+$modversion['credits']        = 'The XOOPS Project, Wanikoo';
 $modversion['help']           = 'page=help';
 $modversion['license']        = 'GNU GPL 2.0 or later';
-$modversion['license_url']    = "www.gnu.org/licenses/gpl-2.0.html/";
-$modversion['image']          = "assets/images/logo.png";
-$modversion['dirname']        = "pm";
+$modversion['license_url']    = 'www.gnu.org/licenses/gpl-2.0.html/';
+$modversion['image']          = 'assets/images/logo.png';
+$modversion['dirname']        = 'pm';
 $modversion['dirmoduleadmin'] = '/Frameworks/moduleclasses/moduleadmin';
 $modversion['icons16']        = '../../Frameworks/moduleclasses/icons/16';
 $modversion['icons32']        = '../../Frameworks/moduleclasses/icons/32';
 
 //about
-$modversion["module_status"]       = "Final";
+$modversion['module_status']       = 'Final';
 $modversion['release_date']        = '2016/02/14';
-$modversion["module_website_url"]  = "http://www.xoops.org/";
-$modversion["module_website_name"] = "XOOPS";
+$modversion['module_website_url']  = 'http://www.xoops.org/';
+$modversion['module_website_name'] = 'XOOPS';
 $modversion['min_php']             = '5.3.7';
-$modversion['min_xoops']           = "2.5.8";
+$modversion['min_xoops']           = '2.5.8';
 $modversion['min_admin']           = '1.1';
 $modversion['min_db']              = array(
     'mysql'  => '5.0.7',
@@ -57,8 +57,8 @@ $modversion['system_menu'] = 1;
 
 // Admin things
 $modversion['hasAdmin']   = 1;
-$modversion['adminindex'] = "admin/admin.php";
-$modversion['adminmenu']  = "admin/menu.php";
+$modversion['adminindex'] = 'admin/admin.php';
+$modversion['adminmenu']  = 'admin/menu.php';
 
 // Mysql file
 //$modversion['sqlfile']['mysql'] = "sql/mysql.sql";
@@ -67,8 +67,8 @@ $modversion['adminmenu']  = "admin/menu.php";
 //$modversion['tables'][0] = "pm_messages";
 
 // Scripts to run upon installation or update
-$modversion['onInstall'] = "include/install.php";
-$modversion['onUpdate']  = "include/update.php";
+$modversion['onInstall'] = 'include/install.php';
+$modversion['onUpdate']  = 'include/update.php';
 
 // Templates
 $modversion['templates']                   = array();

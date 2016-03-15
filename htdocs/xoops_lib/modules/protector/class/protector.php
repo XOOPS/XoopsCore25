@@ -169,7 +169,7 @@ class Protector
             return false;
         }
 
-        $result = @mysqli_query($this->_conn, "SELECT conf_name,conf_value FROM " . XOOPS_DB_PREFIX . "_config WHERE conf_title like '" . $constpref . "%'");
+        $result = @mysqli_query($this->_conn, 'SELECT conf_name,conf_value FROM ' . XOOPS_DB_PREFIX . "_config WHERE conf_title like '" . $constpref . "%'");
         if (!$result || mysqli_num_rows($result) < 5) {
             return false;
         }
@@ -291,12 +291,12 @@ class Protector
 
         mysqli_query(
             $this->_conn,
-            "INSERT INTO " . XOOPS_DB_PREFIX . "_" . $this->mydirname . "_log SET ip='"
+            'INSERT INTO ' . XOOPS_DB_PREFIX . '_' . $this->mydirname . "_log SET ip='"
             . mysqli_real_escape_string($this->_conn, $ip) . "',agent='"
             . mysqli_real_escape_string($this->_conn, $agent) . "',type='"
             . mysqli_real_escape_string($this->_conn, $type) . "',description='"
             . mysqli_real_escape_string($this->_conn, $this->message) . "',uid='"
-            . (int)($uid) . "',timestamp=NOW()"
+            . (int)$uid . "',timestamp=NOW()"
         );
         $this->_logged = true;
 
@@ -310,7 +310,7 @@ class Protector
      */
     public function write_file_bwlimit($expire)
     {
-        $expire = min((int)($expire), time() + 300);
+        $expire = min((int)$expire, time() + 300);
 
         $fp = @fopen($this->get_filepath4bwlimit(), 'w');
         if ($fp) {
@@ -331,7 +331,7 @@ class Protector
     public function get_bwlimit()
     {
         list($expire) = @file(Protector::get_filepath4bwlimit());
-        $expire = min((int)($expire), time() + 300);
+        $expire = min((int)$expire, time() + 300);
 
         return $expire;
     }
@@ -544,7 +544,7 @@ class Protector
 
         // make backup as uploads/.htaccess.bak automatically
         if ($ht_body && !file_exists($backup_htaccess)) {
-            $fw = fopen($backup_htaccess, "w");
+            $fw = fopen($backup_htaccess, 'w');
             fwrite($fw, $ht_body);
             fclose($fw);
         }
@@ -570,7 +570,7 @@ class Protector
 
         // error_log( "$new_ht_body\n" , 3 , "/tmp/error_log" ) ;
 
-        $fw = fopen($target_htaccess, "w");
+        $fw = fopen($target_htaccess, 'w');
         @flock($fw, LOCK_EX);
         fwrite($fw, $new_ht_body);
         @flock($fw, LOCK_UN);
@@ -681,12 +681,12 @@ class Protector
         }
 
         if (!is_array($this->_bigumbrella_doubtfuls)) {
-            return "bigumbrella injection found.";
+            return 'bigumbrella injection found.';
         }
 
         foreach ($this->_bigumbrella_doubtfuls as $doubtful) {
             if (false !== strpos($s, $doubtful)) {
-                return "XSS found by Protector.";
+                return 'XSS found by Protector.';
             }
         }
 
@@ -928,7 +928,7 @@ class Protector
                         @unlink($temp_file);
                     }
 
-                    if ($image_attributes === false || $image_extensions[(int)($image_attributes[2])] != $ext) {
+                    if ($image_attributes === false || $image_extensions[(int)$image_attributes[2]] != $ext) {
                         $this->message .= "Attempt to upload camouflaged image file {$_file['name']}.\n";
                         $this->_safe_badext    = false;
                         $this->last_error_type = 'UPLOAD';
@@ -1034,10 +1034,10 @@ class Protector
             return false;
         }
 
-        $query = "f=serial&ip=" . $_SERVER['REMOTE_ADDR'];
-        $query .= isset($_POST['email']) ? "&email=" . $_POST['email'] : '';
-        $query .= isset($_POST['uname']) ? "&username=" . $_POST['uname'] : '';
-        $url = "http://www.stopforumspam.com/api?" . $query;
+        $query = 'f=serial&ip=' . $_SERVER['REMOTE_ADDR'];
+        $query .= isset($_POST['email']) ? '&email=' . $_POST['email'] : '';
+        $query .= isset($_POST['uname']) ? '&username=' . $_POST['uname'] : '';
+        $url = 'http://www.stopforumspam.com/api?' . $query;
         $ch  = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -1071,16 +1071,16 @@ class Protector
                 break;
             case 'san' :
                 $_POST = array();
-                $this->message .= "POST deleted for IP:" . $_SERVER['REMOTE_ADDR'];
+                $this->message .= 'POST deleted for IP:' . $_SERVER['REMOTE_ADDR'];
                 break;
             case 'biptime0' :
                 $_POST = array();
-                $this->message .= "BAN and POST deleted for IP:" . $_SERVER['REMOTE_ADDR'];
+                $this->message .= 'BAN and POST deleted for IP:' . $_SERVER['REMOTE_ADDR'];
                 $this->_should_be_banned_time0 = true;
                 break;
             case 'bip' :
                 $_POST = array();
-                $this->message .= "Ban and POST deleted for IP:" . $_SERVER['REMOTE_ADDR'];
+                $this->message .= 'Ban and POST deleted for IP:' . $_SERVER['REMOTE_ADDR'];
                 $this->_should_be_banned = true;
                 break;
         }
@@ -1114,8 +1114,8 @@ class Protector
 
         // gargage collection
         $result = $xoopsDB->queryF(
-            "DELETE FROM " . $xoopsDB->prefix($this->mydirname . '_access')
-            . " WHERE expire < UNIX_TIMESTAMP()"
+            'DELETE FROM ' . $xoopsDB->prefix($this->mydirname . '_access')
+            . ' WHERE expire < UNIX_TIMESTAMP()'
         );
 
         // for older versions before updating this module
@@ -1126,13 +1126,13 @@ class Protector
         }
 
         // sql for recording access log (INSERT should be placed after SELECT)
-        $sql4insertlog = "INSERT INTO " . $xoopsDB->prefix($this->mydirname . '_access')
-            . " SET ip={$ip4sql}, request_uri={$uri4sql},"
-            . " expire=UNIX_TIMESTAMP()+'" . (int)($this->_conf['dos_expire']) . "'";
+        $sql4insertlog = 'INSERT INTO ' . $xoopsDB->prefix($this->mydirname . '_access')
+                         . " SET ip={$ip4sql}, request_uri={$uri4sql},"
+                         . " expire=UNIX_TIMESTAMP()+'" . (int)$this->_conf['dos_expire'] . "'";
 
         // bandwidth limitation
         if (@$this->_conf['bwlimit_count'] >= 10) {
-            $result = $xoopsDB->query("SELECT COUNT(*) FROM " . $xoopsDB->prefix($this->mydirname . '_access'));
+            $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix($this->mydirname . '_access'));
             list($bw_count) = $xoopsDB->fetchRow($result);
             if ($bw_count > $this->_conf['bwlimit_count']) {
                 $this->write_file_bwlimit(time() + $this->_conf['dos_expire']);
@@ -1141,7 +1141,7 @@ class Protector
 
         // F5 attack check (High load & same URI)
         $result = $xoopsDB->query(
-            "SELECT COUNT(*) FROM " . $xoopsDB->prefix($this->mydirname . '_access')
+            'SELECT COUNT(*) FROM ' . $xoopsDB->prefix($this->mydirname . '_access')
             . " WHERE ip={$ip4sql} AND request_uri={$uri4sql}");
         list($f5_count) = $xoopsDB->fetchRow($result);
         if ($f5_count > $this->_conf['dos_f5count']) {
@@ -1200,7 +1200,7 @@ class Protector
 
         // Crawler check (High load & different URI)
         $result = $xoopsDB->query(
-            "SELECT COUNT(*) FROM " . $xoopsDB->prefix($this->mydirname . '_access') . " WHERE ip={$ip4sql}"
+            'SELECT COUNT(*) FROM ' . $xoopsDB->prefix($this->mydirname . '_access') . " WHERE ip={$ip4sql}"
         );
         list($crawler_count) = $xoopsDB->fetchRow($result);
 
@@ -1275,16 +1275,16 @@ class Protector
 
         // gargage collection
         $result = $xoopsDB->queryF(
-            "DELETE FROM " . $xoopsDB->prefix($this->mydirname . '_access') . " WHERE expire < UNIX_TIMESTAMP()"
+            'DELETE FROM ' . $xoopsDB->prefix($this->mydirname . '_access') . ' WHERE expire < UNIX_TIMESTAMP()'
         );
 
         // sql for recording access log (INSERT should be placed after SELECT)
-        $sql4insertlog = "INSERT INTO " . $xoopsDB->prefix($this->mydirname . '_access')
-            . " SET ip={$ip4sql}, request_uri={$uri4sql}, malicious_actions={$mal4sql}, expire=UNIX_TIMESTAMP()+600";
+        $sql4insertlog = 'INSERT INTO ' . $xoopsDB->prefix($this->mydirname . '_access')
+                         . " SET ip={$ip4sql}, request_uri={$uri4sql}, malicious_actions={$mal4sql}, expire=UNIX_TIMESTAMP()+600";
 
         // count check
         $result = $xoopsDB->query(
-            "SELECT COUNT(*) FROM " . $xoopsDB->prefix($this->mydirname . '_access')
+            'SELECT COUNT(*) FROM ' . $xoopsDB->prefix($this->mydirname . '_access')
             . " WHERE ip={$ip4sql} AND malicious_actions like 'BRUTE FORCE:%'"
         );
         list($bf_count) = $xoopsDB->fetchRow($result);

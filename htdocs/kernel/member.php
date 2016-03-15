@@ -376,7 +376,7 @@ class XoopsMemberHandler
         $table = $db->prefix($table);
 
         $sql = sprintf(
-            "SELECT `CHARACTER_MAXIMUM_LENGTH` FROM `information_schema`.`COLUMNS` "
+            'SELECT `CHARACTER_MAXIMUM_LENGTH` FROM `information_schema`.`COLUMNS` '
             . "WHERE TABLE_SCHEMA = '%s'AND TABLE_NAME = '%s' AND COLUMN_NAME = '%s'",
             $db->escape($dbname),
             $db->escape($table),
@@ -476,10 +476,10 @@ class XoopsMemberHandler
     {
         $ret           = array();
         $criteriaCompo = new CriteriaCompo();
-        $select        = $asobject ? "u.*" : "u.uid";
-        $sql           = "SELECT DISTINCT {$select} " . " FROM " . $this->userHandler->db->prefix("users") . " AS u" . " LEFT JOIN " . $this->membershipHandler->db->prefix("groups_users_link") . " AS m ON m.uid = u.uid WHERE ";
+        $select        = $asobject ? 'u.*' : 'u.uid';
+        $sql           = "SELECT DISTINCT {$select} " . ' FROM ' . $this->userHandler->db->prefix('users') . ' AS u' . ' LEFT JOIN ' . $this->membershipHandler->db->prefix('groups_users_link') . ' AS m ON m.uid = u.uid WHERE ';
         if (!empty($groups)) {
-            $criteriaCompo->add(new Criteria('m.groupid', "(" . implode(", ", $groups) . ")", 'IN'));
+            $criteriaCompo->add(new Criteria('m.groupid', '(' . implode(', ', $groups) . ')', 'IN'));
         }
 
         $limit = $start = 0;
@@ -498,7 +498,7 @@ class XoopsMemberHandler
         if ($sql_criteria) {
             $sql .= $sql_criteria;
         } else {
-            $sql .= "1 = 1";
+            $sql .= '1 = 1';
         }
 
         if (!$result = $this->userHandler->db->query($sql, $limit, $start)) {
@@ -534,9 +534,9 @@ class XoopsMemberHandler
     {
         $ret           = 0;
         $criteriaCompo = new CriteriaCompo();
-        $sql           = "SELECT DISTINCT COUNT(u.uid) " . " FROM " . $this->userHandler->db->prefix("users") . " AS u" . " LEFT JOIN " . $this->membershipHandler->db->prefix("groups_users_link") . " AS m ON m.uid = u.uid" . " WHERE ";
+        $sql           = 'SELECT DISTINCT COUNT(u.uid) ' . ' FROM ' . $this->userHandler->db->prefix('users') . ' AS u' . ' LEFT JOIN ' . $this->membershipHandler->db->prefix('groups_users_link') . ' AS m ON m.uid = u.uid' . ' WHERE ';
         if (!empty($groups)) {
-            $criteriaCompo->add(new Criteria('m.groupid', "(" . implode(", ", $groups) . ")", 'IN'));
+            $criteriaCompo->add(new Criteria('m.groupid', '(' . implode(', ', $groups) . ')', 'IN'));
         }
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $criteriaCompo->add($criteria);
@@ -546,7 +546,7 @@ class XoopsMemberHandler
         if ($sql_criteria) {
             $sql .= $sql_criteria;
         } else {
-            $sql .= "1 = 1";
+            $sql .= '1 = 1';
         }
 
         if (!$result = $this->userHandler->db->query($sql)) {

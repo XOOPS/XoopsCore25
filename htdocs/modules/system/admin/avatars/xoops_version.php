@@ -35,7 +35,7 @@ $modversion['description'] = _AM_SYSTEM_AVATARS_DESC;
 $modversion['author']      = '';
 $modversion['credits']     = 'The XOOPS Project; Andricq Nicolas (AKA MusS)';
 $modversion['help']        = 'page=avatars';
-$modversion['license']     = "GPL see LICENSE";
+$modversion['license']     = 'GPL see LICENSE';
 $modversion['official']    = 1;
 $modversion['image']       = 'avatar.png';
 

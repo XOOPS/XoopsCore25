@@ -124,7 +124,7 @@ class XoopsTpl extends Smarty
     public function _get_auto_id($cache_id = null, $compile_id = null)
     {
         if (isset($cache_id)) {
-            return (isset($compile_id)) ? $compile_id . '-' . $cache_id : $cache_id;
+            return isset($compile_id) ? $compile_id . '-' . $cache_id : $cache_id;
         } elseif (isset($compile_id)) {
             return $compile_id;
         } else {

@@ -44,4 +44,4 @@ if (!headers_sent()) {
     header('Cache-Control: private, no-cache');
     header('Pragma: no-cache');
 }
-echo "<div>" . $content . "</div>";
+echo '<div>' . $content . '</div>';

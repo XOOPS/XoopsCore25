@@ -46,11 +46,11 @@ if ($xoopsUser) {
         redirect_header(XOOPS_URL, 1, _NOPERM);
     }
 } else {
-    redirect_header(XOOPS_URL . "/user.php", 1, _NOPERM);
+    redirect_header(XOOPS_URL . '/user.php', 1, _NOPERM);
 }
 
 if (!isset($xoopsTpl) || !is_object($xoopsTpl)) {
-    include_once(XOOPS_ROOT_PATH . "/class/template.php");
+    include_once(XOOPS_ROOT_PATH . '/class/template.php');
     $xoopsTpl = new XoopsTpl();
 }
 

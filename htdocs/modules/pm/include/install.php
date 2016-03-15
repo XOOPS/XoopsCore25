@@ -24,7 +24,7 @@ function xoops_module_install_pm(XoopsModule $module)
     global $xoopsDB;
 
     // Check pm table version
-    $sql = "SHOW COLUMNS FROM " . $xoopsDB->prefix("priv_msgs");
+    $sql = 'SHOW COLUMNS FROM ' . $xoopsDB->prefix('priv_msgs');
     if (!$result = $xoopsDB->queryF($sql)) {
         return false;
     }
@@ -32,7 +32,7 @@ function xoops_module_install_pm(XoopsModule $module)
     if (($rows = $xoopsDB->getRowsNum($result)) == 12) {
         return true;
     } elseif ($rows == 8) {
-        return $xoopsDB->queryFromFile(XOOPS_ROOT_PATH . "/modules/" . $module->getVar('dirname', 'n') . "/sql/mysql.upgrade.sql");
+        return $xoopsDB->queryFromFile(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'n') . '/sql/mysql.upgrade.sql');
     } else {
         return false;
     }

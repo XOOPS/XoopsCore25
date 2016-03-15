@@ -10,8 +10,8 @@
  * @package             Frameworks
  * @subpackage          art
  */
-if (!defined("FRAMEWORKS_ART_FUNCTIONS_USER")):
-    define("FRAMEWORKS_ART_FUNCTIONS_USER", true);
+if (!defined('FRAMEWORKS_ART_FUNCTIONS_USER')):
+    define('FRAMEWORKS_ART_FUNCTIONS_USER', true);
 
     xoops_load('XoopsUserUtility');
 

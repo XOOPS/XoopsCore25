@@ -24,7 +24,7 @@ include_once $GLOBALS['xoops']->path('include/comment_constants.php');
 xoops_loadLanguage('comment');
 
 if ('system' === $xoopsModule->getVar('dirname')) {
-    $com_id = isset($_POST['com_id']) ? (int)($_POST['com_id']) : 0;
+    $com_id = isset($_POST['com_id']) ? (int)$_POST['com_id'] : 0;
     if (empty($com_id)) {
         exit();
     }
@@ -38,7 +38,7 @@ if ('system' === $xoopsModule->getVar('dirname')) {
     $moddir          = $module->getVar('dirname');
     unset($comment);
 } else {
-    $com_id = isset($_POST['com_id']) ? (int)($_POST['com_id']) : 0;
+    $com_id = isset($_POST['com_id']) ? (int)$_POST['com_id'] : 0;
     if (XOOPS_COMMENT_APPROVENONE == $xoopsModuleConfig['com_rule']) {
         exit();
     }
@@ -91,18 +91,18 @@ if (!empty($_POST)) {
 
         // Check user name
         $search_arr  = array(
-            "&nbsp;",
+            '&nbsp;',
             "\t",
             "\r\n",
             "\r",
             "\n",
-            ",",
-            ".",
+            ',',
+            '.',
             "'",
-            ";",
-            ":",
-            ")",
-            "(",
+            ';',
+            ':',
+            ')',
+            '(',
             '"',
             '?',
             '!',
@@ -205,27 +205,27 @@ if (!empty($_POST)) {
     }
 
     $com_mode   = isset($_POST['com_mode']) ? htmlspecialchars(trim($_POST['com_mode']), ENT_QUOTES) : 'flat';
-    $com_order  = isset($_POST['com_order']) ? (int)($_POST['com_order']) : XOOPS_COMMENT_OLD1ST;
-    $com_itemid = isset($_POST['com_itemid']) ? (int)($_POST['com_itemid']) : 0;
-    $com_pid    = isset($_POST['com_pid']) ? (int)($_POST['com_pid']) : 0;
-    $com_rootid = isset($_POST['com_rootid']) ? (int)($_POST['com_rootid']) : 0;
-    $com_status = isset($_POST['com_status']) ? (int)($_POST['com_status']) : 0;
-    $dosmiley   = (isset($_POST['dosmiley']) && (int)($_POST['dosmiley']) > 0) ? 1 : 0;
-    $doxcode    = (isset($_POST['doxcode']) && (int)($_POST['doxcode']) > 0) ? 1 : 0;
-    $dobr       = (isset($_POST['dobr']) && (int)($_POST['dobr']) > 0) ? 1 : 0;
-    $dohtml     = (isset($_POST['dohtml']) && (int)($_POST['dohtml']) > 0) ? 1 : 0;
-    $doimage    = (isset($_POST['doimage']) && (int)($_POST['doimage']) > 0) ? 1 : 0;
+    $com_order  = isset($_POST['com_order']) ? (int)$_POST['com_order'] : XOOPS_COMMENT_OLD1ST;
+    $com_itemid = isset($_POST['com_itemid']) ? (int)$_POST['com_itemid'] : 0;
+    $com_pid    = isset($_POST['com_pid']) ? (int)$_POST['com_pid'] : 0;
+    $com_rootid = isset($_POST['com_rootid']) ? (int)$_POST['com_rootid'] : 0;
+    $com_status = isset($_POST['com_status']) ? (int)$_POST['com_status'] : 0;
+    $dosmiley   = (isset($_POST['dosmiley']) && (int)$_POST['dosmiley'] > 0) ? 1 : 0;
+    $doxcode    = (isset($_POST['doxcode']) && (int)$_POST['doxcode'] > 0) ? 1 : 0;
+    $dobr       = (isset($_POST['dobr']) && (int)$_POST['dobr'] > 0) ? 1 : 0;
+    $dohtml     = (isset($_POST['dohtml']) && (int)$_POST['dohtml'] > 0) ? 1 : 0;
+    $doimage    = (isset($_POST['doimage']) && (int)$_POST['doimage'] > 0) ? 1 : 0;
     $com_icon   = isset($_POST['com_icon']) ? trim($_POST['com_icon']) : '';
 } else {
     exit();
 }
 
 switch ($op) {
-    case "delete":
+    case 'delete':
         include_once $GLOBALS['xoops']->path('include/comment_delete.php');
         break;
 
-    case "preview":
+    case 'preview':
         $myts      = MyTextSanitizer::getInstance();
         $doimage   = 1;
         $com_title = $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['com_title']));
@@ -243,7 +243,7 @@ switch ($op) {
             }
         }
         $p_comment =& $myts->previewTarea($_POST['com_text'], $dohtml, $dosmiley, $doxcode, $doimage, $dobr);
-        $noname    = isset($noname) ? (int)($noname) : 0;
+        $noname    = isset($noname) ? (int)$noname : 0;
         $com_text  = $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['com_text']));
         if ($xoopsModule->getVar('dirname') !== 'system') {
             include_once $GLOBALS['xoops']->path('header.php');
@@ -267,7 +267,7 @@ switch ($op) {
         }
         break;
 
-    case "post":
+    case 'post':
         XoopsLoad::load('XoopsRequest');
         $doimage         = 1;
         $comment_handler = xoops_getHandler('comment');

@@ -44,7 +44,7 @@ if (!function_exists('protector_onuninstall_base')) {
         $sql_file_path = __DIR__ . '/sql/mysql.sql';
         $prefix_mod    = $db->prefix() . '_' . $mydirname;
         if (file_exists($sql_file_path)) {
-            $ret[]     = "SQL file found at <b>" . htmlspecialchars($sql_file_path) . "</b>.<br  /> Deleting tables...<br />";
+            $ret[]     = 'SQL file found at <b>' . htmlspecialchars($sql_file_path) . '</b>.<br  /> Deleting tables...<br />';
             $sql_lines = file($sql_file_path);
             foreach ($sql_lines as $sql_line) {
                 if (preg_match('/^CREATE TABLE \`?([a-zA-Z0-9_-]+)\`? /i', $sql_line, $regs)) {

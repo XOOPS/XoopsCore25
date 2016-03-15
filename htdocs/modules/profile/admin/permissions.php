@@ -22,41 +22,41 @@ xoops_cp_header();
 $indexAdmin = new ModuleAdmin();
 echo $indexAdmin->addNavigation('permissions.php');
 
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : "edit";
+$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'edit';
 
-$perm_desc = "";
+$perm_desc = '';
 switch ($op) {
-    case "visibility":
+    case 'visibility':
         //redirect_header("visibility.php", 0, _PROFILE_AM_PROF_VISIBLE);
-        header("Location: visibility.php");
+        header('Location: visibility.php');
         break;
 
-    case "edit":
+    case 'edit':
         $title_of_form = _PROFILE_AM_PROF_EDITABLE;
-        $perm_name     = "profile_edit";
-        $restriction   = "field_edit";
+        $perm_name     = 'profile_edit';
+        $restriction   = 'field_edit';
         $anonymous     = false;
         break;
 
-    case "search":
+    case 'search':
         $title_of_form = _PROFILE_AM_PROF_SEARCH;
-        $perm_name     = "profile_search";
-        $restriction   = "";
+        $perm_name     = 'profile_search';
+        $restriction   = '';
         $anonymous     = true;
         break;
 
-    case "access":
+    case 'access':
         $title_of_form = _PROFILE_AM_PROF_ACCESS;
-        $perm_name     = "profile_access";
+        $perm_name     = 'profile_access';
         $perm_desc     = _PROFILE_AM_PROF_ACCESS_DESC;
-        $restriction   = "";
+        $restriction   = '';
         $anonymous     = true;
         break;
 }
 
-include_once $GLOBALS['xoops']->path("/class/xoopsformloader.php");
-$opform    = new XoopsSimpleForm('', 'opform', 'permissions.php', "get");
-$op_select = new XoopsFormSelect("", 'op', $op);
+include_once $GLOBALS['xoops']->path('/class/xoopsformloader.php');
+$opform    = new XoopsSimpleForm('', 'opform', 'permissions.php', 'get');
+$op_select = new XoopsFormSelect('', 'op', $op);
 $op_select->setExtra('onchange="document.forms.opform.submit()"');
 $op_select->addOption('visibility', _PROFILE_AM_PROF_VISIBLE);
 $op_select->addOption('edit', _PROFILE_AM_PROF_EDITABLE);

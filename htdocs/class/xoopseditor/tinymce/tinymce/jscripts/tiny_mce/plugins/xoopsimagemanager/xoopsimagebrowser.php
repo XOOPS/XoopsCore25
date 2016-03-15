@@ -15,17 +15,17 @@
 
 // load mainfile.php
 $current_path = __DIR__;
-if (DIRECTORY_SEPARATOR !== "/") {
-    $current_path = str_replace(DIRECTORY_SEPARATOR, "/", $current_path);
+if (DIRECTORY_SEPARATOR !== '/') {
+    $current_path = str_replace(DIRECTORY_SEPARATOR, '/', $current_path);
 }
-$xoops_root_path = substr($current_path, 0, strpos(strtolower($current_path), "/class/xoopseditor/tinymce/"));
-include_once $xoops_root_path . "/mainfile.php";
-defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
+$xoops_root_path = substr($current_path, 0, strpos(strtolower($current_path), '/class/xoopseditor/tinymce/'));
+include_once $xoops_root_path . '/mainfile.php';
+defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 /**
  * This code was moved to the top to avoid overriding variables that do not come from post
  */
-$op = "list"; // default
+$op = 'list'; // default
 if (isset($_POST)) {
     foreach ($_POST as $k => $v) {
         ${$k} = $v;
@@ -36,14 +36,14 @@ if (isset($_POST)) {
 $current_file = basename(__FILE__);
 
 // load language definitions
-xoops_loadLanguage("admin", "system");
-xoops_loadLanguage("/admin/images", "system");
+xoops_loadLanguage('admin', 'system');
+xoops_loadLanguage('/admin/images', 'system');
 
 // include
-xoops_load("xoopsformloader");
+xoops_load('xoopsformloader');
 //xoops_load("xoopsmodule");
-include_once XOOPS_ROOT_PATH . "/include/cp_functions.php";
-include_once XOOPS_ROOT_PATH . "/modules/system/constants.php";
+include_once XOOPS_ROOT_PATH . '/include/cp_functions.php';
+include_once XOOPS_ROOT_PATH . '/modules/system/constants.php';
 
 global $xoopsConfig;
 
@@ -51,7 +51,7 @@ global $xoopsConfig;
 $isadmin = false;
 
 $gperm_handler = xoops_getHandler('groupperm');
-$groups        = is_object($GLOBALS["xoopsUser"]) ? $GLOBALS["xoopsUser"]->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+$groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 $isadmin       = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_IMAGE, $groups);
 
 // check categories readability/writability
@@ -63,43 +63,43 @@ $catreadcount  = count($catreadlist);        // count readable categories
 $catwritecount = count($catwritelist);      // count writable categories
 
 // check/set parameters - start
-if (!isset($_REQUEST["target"])) {
+if (!isset($_REQUEST['target'])) {
     exit();
 } else {
-    $target = $_REQUEST["target"];
+    $target = $_REQUEST['target'];
 }
 
-if (isset($_GET["op"])) {
-    $op = trim($_GET["op"]);
+if (isset($_GET['op'])) {
+    $op = trim($_GET['op']);
 }
 
-if (isset($_GET["target"])) {
-    $target = trim($_GET["target"]);
+if (isset($_GET['target'])) {
+    $target = trim($_GET['target']);
 }
 
-if (isset($_GET["image_id"])) {
-    $image_id = (int)($_GET["image_id"]);
+if (isset($_GET['image_id'])) {
+    $image_id = (int)$_GET['image_id'];
 }
 
-if (isset($_GET["imgcat_id"])) {
-    $imgcat_id = (int)($_GET["imgcat_id"]);
+if (isset($_GET['imgcat_id'])) {
+    $imgcat_id = (int)$_GET['imgcat_id'];
 }
 
 if (isset($imgcat_id)) {
-    $imgcat_id = (int)($imgcat_id);
+    $imgcat_id = (int)$imgcat_id;
 }
 $target = htmlspecialchars($target);
 
-if (($isadmin) || ($catreadcount > 0) || ($catwritecount > 0)) {
+if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
 
     // Save Image modification - start
-    if (!empty($_POST["op"]) && $op === "save") {
-        if (!$GLOBALS["xoopsSecurity"]->check()) {
-            redirect_header($current_file . "?target=" . $target, 3, implode("<br />", $GLOBALS["xoopsSecurity"]->getErrors()));
+    if (!empty($_POST['op']) && $op === 'save') {
+        if (!$GLOBALS['xoopsSecurity']->check()) {
+            redirect_header($current_file . '?target=' . $target, 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         $count = count($image_id);
         if ($count > 0) {
-            $image_handler = xoops_getHandler("image");
+            $image_handler = xoops_getHandler('image');
             $error         = array();
             for ($i = 0; $i < $count; ++$i) {
                 $image = $image_handler->get($image_id[$i]);
@@ -108,67 +108,67 @@ if (($isadmin) || ($catreadcount > 0) || ($catwritecount > 0)) {
                     continue;
                 }
                 $image_display[$i] = empty($image_display[$i]) ? 0 : 1;
-                $image->setVar("image_display", $image_display[$i]);
-                $image->setVar("image_weight", $image_weight[$i]);
-                $image->setVar("image_nicename", $image_nicename[$i]);
-                $image->setVar("imgcat_id", $imgcat_id[$i]);
+                $image->setVar('image_display', $image_display[$i]);
+                $image->setVar('image_weight', $image_weight[$i]);
+                $image->setVar('image_nicename', $image_nicename[$i]);
+                $image->setVar('imgcat_id', $imgcat_id[$i]);
                 if (!$image_handler->insert($image)) {
                     $error[] = sprintf(_FAILSAVEIMG, $image_id[$i]);
                 }
             }
             if (count($error) > 0) {
-                redirect_header($current_file . "?target=" . $target, 3, xoops_error(implode("<br />", $error)));
+                redirect_header($current_file . '?target=' . $target, 3, xoops_error(implode('<br />', $error)));
             }
         }
-        redirect_header($current_file . "?target=" . $target, 3, _MD_AM_DBUPDATED);
+        redirect_header($current_file . '?target=' . $target, 3, _MD_AM_DBUPDATED);
     }
     // Save Image modification - end
 
     // Add new image - start
-    if (!empty($_POST["op"]) && $op === "addfile") {
-        if (!$GLOBALS["xoopsSecurity"]->check()) {
-            redirect_header($current_file . "?target=" . $target, 3, implode("<br />", $GLOBALS["xoopsSecurity"]->getErrors()));
+    if (!empty($_POST['op']) && $op === 'addfile') {
+        if (!$GLOBALS['xoopsSecurity']->check()) {
+            redirect_header($current_file . '?target=' . $target, 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        $imgcat = $imgcat_handler->get((int)($imgcat_id));
+        $imgcat = $imgcat_handler->get((int)$imgcat_id);
         if (!is_object($imgcat)) {
-            redirect_header($current_file . "?target=" . $target, 3);
+            redirect_header($current_file . '?target=' . $target, 3);
         }
-        include_once XOOPS_ROOT_PATH . "/class/uploader.php";
+        include_once XOOPS_ROOT_PATH . '/class/uploader.php';
 
         $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, array(
-            "image/gif",
-            "image/jpeg",
-            "image/pjpeg",
-            "image/x-png",
-            "image/png",
-            "image/bmp"), $imgcat->getVar("imgcat_maxsize"), $imgcat->getVar("imgcat_maxwidth"), $imgcat->getVar("imgcat_maxheight"));
-        $uploader->setPrefix("img");
+            'image/gif',
+            'image/jpeg',
+            'image/pjpeg',
+            'image/x-png',
+            'image/png',
+            'image/bmp'), $imgcat->getVar('imgcat_maxsize'), $imgcat->getVar('imgcat_maxwidth'), $imgcat->getVar('imgcat_maxheight'));
+        $uploader->setPrefix('img');
         $err    = array();
-        $ucount = count($_POST["xoops_upload_file"]);
+        $ucount = count($_POST['xoops_upload_file']);
         for ($i = 0; $i < $ucount; ++$i) {
-            if ($uploader->fetchMedia($_POST["xoops_upload_file"][$i])) {
+            if ($uploader->fetchMedia($_POST['xoops_upload_file'][$i])) {
                 if (!$uploader->upload()) {
                     $err[] = $uploader->getErrors();
                 } else {
-                    $image_handler = xoops_getHandler("image");
+                    $image_handler = xoops_getHandler('image');
                     $image         = $image_handler->create();
-                    $image->setVar("image_name", $uploader->getSavedFileName());
-                    $image->setVar("image_nicename", $image_nicename);
-                    $image->setVar("image_mimetype", $uploader->getMediaType());
-                    $image->setVar("image_created", time());
+                    $image->setVar('image_name', $uploader->getSavedFileName());
+                    $image->setVar('image_nicename', $image_nicename);
+                    $image->setVar('image_mimetype', $uploader->getMediaType());
+                    $image->setVar('image_created', time());
                     $image_display = empty($image_display) ? 0 : 1;
-                    $image->setVar("image_display", $image_display);
-                    $image->setVar("image_weight", $image_weight);
-                    $image->setVar("imgcat_id", $imgcat_id);
-                    if ($imgcat->getVar("imgcat_storetype") === "db") {
-                        $fp      = @fopen($uploader->getSavedDestination(), "rb");
+                    $image->setVar('image_display', $image_display);
+                    $image->setVar('image_weight', $image_weight);
+                    $image->setVar('imgcat_id', $imgcat_id);
+                    if ($imgcat->getVar('imgcat_storetype') === 'db') {
+                        $fp      = @fopen($uploader->getSavedDestination(), 'rb');
                         $fbinary = @fread($fp, filesize($uploader->getSavedDestination()));
                         @fclose($fp);
-                        $image->setVar("image_body", $fbinary, true);
+                        $image->setVar('image_body', $fbinary, true);
                         @unlink($uploader->getSavedDestination());
                     }
                     if (!$image_handler->insert($image)) {
-                        $err[] = sprintf(_FAILSAVEIMG, $image->getVar("image_nicename"));
+                        $err[] = sprintf(_FAILSAVEIMG, $image->getVar('image_nicename'));
                     }
                 }
             } else {
@@ -177,33 +177,33 @@ if (($isadmin) || ($catreadcount > 0) || ($catwritecount > 0)) {
             }
         }
         if (count($err) > 0) {
-            redirect_header($current_file . "?target=" . $target, 3, xoops_error(implode("<br />", $err)));
+            redirect_header($current_file . '?target=' . $target, 3, xoops_error(implode('<br />', $err)));
         }
-        redirect_header($current_file . "?target=" . $target, 3, _MD_AM_DBUPDATED);
+        redirect_header($current_file . '?target=' . $target, 3, _MD_AM_DBUPDATED);
     }
     // Add new image - end
 
     // Add new category - start
-    if (!empty($_POST["op"]) && $op === "addcat") {
-        if (!$GLOBALS["xoopsSecurity"]->check()) {
-            redirect_header($current_file . "?target=" . $target, 3, implode("<br />", $GLOBALS["xoopsSecurity"]->getErrors()));
+    if (!empty($_POST['op']) && $op === 'addcat') {
+        if (!$GLOBALS['xoopsSecurity']->check()) {
+            redirect_header($current_file . '?target=' . $target, 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        $imgcat_handler = xoops_getHandler("imagecategory");
+        $imgcat_handler = xoops_getHandler('imagecategory');
         $imagecategory  = $imgcat_handler->create();
-        $imagecategory->setVar("imgcat_name", $imgcat_name);
-        $imagecategory->setVar("imgcat_maxsize", $imgcat_maxsize);
-        $imagecategory->setVar("imgcat_maxwidth", $imgcat_maxwidth);
-        $imagecategory->setVar("imgcat_maxheight", $imgcat_maxheight);
+        $imagecategory->setVar('imgcat_name', $imgcat_name);
+        $imagecategory->setVar('imgcat_maxsize', $imgcat_maxsize);
+        $imagecategory->setVar('imgcat_maxwidth', $imgcat_maxwidth);
+        $imagecategory->setVar('imgcat_maxheight', $imgcat_maxheight);
         $imgcat_display = empty($imgcat_display) ? 0 : 1;
-        $imagecategory->setVar("imgcat_display", $imgcat_display);
-        $imagecategory->setVar("imgcat_weight", $imgcat_weight);
-        $imagecategory->setVar("imgcat_storetype", $imgcat_storetype);
-        $imagecategory->setVar("imgcat_type", "C");
+        $imagecategory->setVar('imgcat_display', $imgcat_display);
+        $imagecategory->setVar('imgcat_weight', $imgcat_weight);
+        $imagecategory->setVar('imgcat_storetype', $imgcat_storetype);
+        $imagecategory->setVar('imgcat_type', 'C');
         if (!$imgcat_handler->insert($imagecategory)) {
-            redirect_header($current_file . "?target=" . $target, 3);
+            redirect_header($current_file . '?target=' . $target, 3);
         }
-        $newid                     = $imagecategory->getVar("imgcat_id");
-        $imagecategoryperm_handler = xoops_getHandler("groupperm");
+        $newid                     = $imagecategory->getVar('imgcat_id');
+        $imagecategoryperm_handler = xoops_getHandler('groupperm');
         if (!isset($readgroup)) {
             $readgroup = array();
         }
@@ -212,10 +212,10 @@ if (($isadmin) || ($catreadcount > 0) || ($catwritecount > 0)) {
         }
         foreach ($readgroup as $rgroup) {
             $imagecategoryperm = $imagecategoryperm_handler->create();
-            $imagecategoryperm->setVar("gperm_groupid", $rgroup);
-            $imagecategoryperm->setVar("gperm_itemid", $newid);
-            $imagecategoryperm->setVar("gperm_name", 'imgcat_read');
-            $imagecategoryperm->setVar("gperm_modid", 1);
+            $imagecategoryperm->setVar('gperm_groupid', $rgroup);
+            $imagecategoryperm->setVar('gperm_itemid', $newid);
+            $imagecategoryperm->setVar('gperm_name', 'imgcat_read');
+            $imagecategoryperm->setVar('gperm_modid', 1);
             $imagecategoryperm_handler->insert($imagecategoryperm);
             unset($imagecategoryperm);
         }
@@ -227,42 +227,42 @@ if (($isadmin) || ($catreadcount > 0) || ($catwritecount > 0)) {
         }
         foreach ($writegroup as $wgroup) {
             $imagecategoryperm = $imagecategoryperm_handler->create();
-            $imagecategoryperm->setVar("gperm_groupid", $wgroup);
-            $imagecategoryperm->setVar("gperm_itemid", $newid);
-            $imagecategoryperm->setVar("gperm_name", 'imgcat_write');
-            $imagecategoryperm->setVar("gperm_modid", 1);
+            $imagecategoryperm->setVar('gperm_groupid', $wgroup);
+            $imagecategoryperm->setVar('gperm_itemid', $newid);
+            $imagecategoryperm->setVar('gperm_name', 'imgcat_write');
+            $imagecategoryperm->setVar('gperm_modid', 1);
             $imagecategoryperm_handler->insert($imagecategoryperm);
             unset($imagecategoryperm);
         }
-        redirect_header($current_file . "?target=" . $target, 3, _MD_AM_DBUPDATED);
+        redirect_header($current_file . '?target=' . $target, 3, _MD_AM_DBUPDATED);
     }
     // Add new category - end
 
     // Update categorie - start
-    if (!empty($_POST["op"]) && $op === "updatecat") {
-        if (!$GLOBALS["xoopsSecurity"]->check() || $imgcat_id <= 0) {
-            redirect_header($current_file . "?target=" . $target, 3, implode("<br />", $GLOBALS["xoopsSecurity"]->getErrors()));
+    if (!empty($_POST['op']) && $op === 'updatecat') {
+        if (!$GLOBALS['xoopsSecurity']->check() || $imgcat_id <= 0) {
+            redirect_header($current_file . '?target=' . $target, 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        $imgcat_handler = xoops_getHandler("imagecategory");
+        $imgcat_handler = xoops_getHandler('imagecategory');
         $imagecategory  = $imgcat_handler->get($imgcat_id);
         if (!is_object($imagecategory)) {
-            redirect_header($current_file . "?target=" . $target, 3);
+            redirect_header($current_file . '?target=' . $target, 3);
         }
-        $imagecategory->setVar("imgcat_name", $imgcat_name);
+        $imagecategory->setVar('imgcat_name', $imgcat_name);
         $imgcat_display = empty($imgcat_display) ? 0 : 1;
-        $imagecategory->setVar("imgcat_display", $imgcat_display);
-        $imagecategory->setVar("imgcat_maxsize", $imgcat_maxsize);
-        $imagecategory->setVar("imgcat_maxwidth", $imgcat_maxwidth);
-        $imagecategory->setVar("imgcat_maxheight", $imgcat_maxheight);
-        $imagecategory->setVar("imgcat_weight", $imgcat_weight);
+        $imagecategory->setVar('imgcat_display', $imgcat_display);
+        $imagecategory->setVar('imgcat_maxsize', $imgcat_maxsize);
+        $imagecategory->setVar('imgcat_maxwidth', $imgcat_maxwidth);
+        $imagecategory->setVar('imgcat_maxheight', $imgcat_maxheight);
+        $imagecategory->setVar('imgcat_weight', $imgcat_weight);
         if (!$imgcat_handler->insert($imagecategory)) {
-            redirect_header($current_file . "?target=" . $target, 3);
+            redirect_header($current_file . '?target=' . $target, 3);
         }
-        $imagecategoryperm_handler = xoops_getHandler("groupperm");
-        $criteria                  = new CriteriaCompo(new Criteria("gperm_itemid", $imgcat_id));
-        $criteria->add(new Criteria("gperm_modid", 1));
-        $criteria2 = new CriteriaCompo(new Criteria("gperm_name", 'imgcat_write'));
-        $criteria2->add(new Criteria("gperm_name", 'imgcat_read'), "OR");
+        $imagecategoryperm_handler = xoops_getHandler('groupperm');
+        $criteria                  = new CriteriaCompo(new Criteria('gperm_itemid', $imgcat_id));
+        $criteria->add(new Criteria('gperm_modid', 1));
+        $criteria2 = new CriteriaCompo(new Criteria('gperm_name', 'imgcat_write'));
+        $criteria2->add(new Criteria('gperm_name', 'imgcat_read'), 'OR');
         $criteria->add($criteria2);
         $imagecategoryperm_handler->deleteAll($criteria);
         if (!isset($readgroup)) {
@@ -273,10 +273,10 @@ if (($isadmin) || ($catreadcount > 0) || ($catwritecount > 0)) {
         }
         foreach ($readgroup as $rgroup) {
             $imagecategoryperm = $imagecategoryperm_handler->create();
-            $imagecategoryperm->setVar("gperm_groupid", $rgroup);
-            $imagecategoryperm->setVar("gperm_itemid", $imgcat_id);
-            $imagecategoryperm->setVar("gperm_name", 'imgcat_read');
-            $imagecategoryperm->setVar("gperm_modid", 1);
+            $imagecategoryperm->setVar('gperm_groupid', $rgroup);
+            $imagecategoryperm->setVar('gperm_itemid', $imgcat_id);
+            $imagecategoryperm->setVar('gperm_name', 'imgcat_read');
+            $imagecategoryperm->setVar('gperm_modid', 1);
             $imagecategoryperm_handler->insert($imagecategoryperm);
             unset($imagecategoryperm);
         }
@@ -288,96 +288,96 @@ if (($isadmin) || ($catreadcount > 0) || ($catwritecount > 0)) {
         }
         foreach ($writegroup as $wgroup) {
             $imagecategoryperm = $imagecategoryperm_handler->create();
-            $imagecategoryperm->setVar("gperm_groupid", $wgroup);
-            $imagecategoryperm->setVar("gperm_itemid", $imgcat_id);
-            $imagecategoryperm->setVar("gperm_name", 'imgcat_write');
-            $imagecategoryperm->setVar("gperm_modid", 1);
+            $imagecategoryperm->setVar('gperm_groupid', $wgroup);
+            $imagecategoryperm->setVar('gperm_itemid', $imgcat_id);
+            $imagecategoryperm->setVar('gperm_name', 'imgcat_write');
+            $imagecategoryperm->setVar('gperm_modid', 1);
             $imagecategoryperm_handler->insert($imagecategoryperm);
             unset($imagecategoryperm);
         }
-        redirect_header($current_file . "?target=" . $target, 3, _MD_AM_DBUPDATED);
+        redirect_header($current_file . '?target=' . $target, 3, _MD_AM_DBUPDATED);
     }
     // Update categorie - end
 
     // Confirm delete categorie - start
-    if (!empty($_GET["op"]) && $op === "delcat") {
+    if (!empty($_GET['op']) && $op === 'delcat') {
         xoops_header();
         echo "<link href='css/xoopsimagebrowser.css' rel='stylesheet' type='text/css' />";
-        xoops_confirm(array("op" => "delcatok", "imgcat_id" => $imgcat_id, "target" => $target), "xoopsimagebrowser.php", _MD_RUDELIMGCAT);
+        xoops_confirm(array('op' => 'delcatok', 'imgcat_id' => $imgcat_id, 'target' => $target), 'xoopsimagebrowser.php', _MD_RUDELIMGCAT);
         xoops_footer();
         exit();
     }
     // Confirm delete categorie - end
 
     // Delete categorie - start
-    if (!empty($_POST["op"]) && $op === "delcatok") {
-        if (!$GLOBALS["xoopsSecurity"]->check()) {
-            redirect_header($current_file . "?target=" . $target, 3, implode("<br />", $GLOBALS["xoopsSecurity"]->getErrors()));
+    if (!empty($_POST['op']) && $op === 'delcatok') {
+        if (!$GLOBALS['xoopsSecurity']->check()) {
+            redirect_header($current_file . '?target=' . $target, 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        $imgcat_id = (int)($imgcat_id);
+        $imgcat_id = (int)$imgcat_id;
         if ($imgcat_id <= 0) {
-            redirect_header($current_file . "?target=" . $target, 3);
+            redirect_header($current_file . '?target=' . $target, 3);
         }
-        $imgcat_handler = xoops_getHandler("imagecategory");
+        $imgcat_handler = xoops_getHandler('imagecategory');
         $imagecategory  = $imgcat_handler->get($imgcat_id);
         if (!is_object($imagecategory)) {
-            redirect_header($current_file . "?target=" . $target, 3);
+            redirect_header($current_file . '?target=' . $target, 3);
         }
-        if ($imagecategory->getVar("imgcat_type") !== "C") {
-            redirect_header($current_file . "?target=" . $target, 3, _MD_SCATDELNG);
+        if ($imagecategory->getVar('imgcat_type') !== 'C') {
+            redirect_header($current_file . '?target=' . $target, 3, _MD_SCATDELNG);
         }
-        $image_handler = xoops_getHandler("image");
-        $images        = $image_handler->getObjects(new Criteria("imgcat_id", $imgcat_id), true, false);
+        $image_handler = xoops_getHandler('image');
+        $images        = $image_handler->getObjects(new Criteria('imgcat_id', $imgcat_id), true, false);
         $errors        = array();
         foreach (array_keys($images) as $i) {
             if (!$image_handler->delete($images[$i])) {
                 $errors[] = sprintf(_MD_FAILDEL, $i);
             } else {
-                if (file_exists(XOOPS_UPLOAD_PATH . "/" . $images[$i]->getVar("image_name")) && !unlink(XOOPS_UPLOAD_PATH . "/" . $images[$i]->getVar("image_name"))) {
+                if (file_exists(XOOPS_UPLOAD_PATH . '/' . $images[$i]->getVar('image_name')) && !unlink(XOOPS_UPLOAD_PATH . '/' . $images[$i]->getVar('image_name'))) {
                     $errors[] = sprintf(_MD_FAILUNLINK, $i);
                 }
             }
         }
         if (!$imgcat_handler->delete($imagecategory)) {
-            $errors[] = sprintf(_MD_FAILDELCAT, $imagecategory->getVar("imgcat_name"));
+            $errors[] = sprintf(_MD_FAILDELCAT, $imagecategory->getVar('imgcat_name'));
         }
         if (count($errors) > 0) {
-            redirect_header($current_file . "?target=" . $target, 3, xoops_error(implode("<br />", $error)));
+            redirect_header($current_file . '?target=' . $target, 3, xoops_error(implode('<br />', $error)));
         }
-        redirect_header($current_file . "?target=" . $target, 3, _MD_AM_DBUPDATED);
+        redirect_header($current_file . '?target=' . $target, 3, _MD_AM_DBUPDATED);
     }
     // Delete categorie - end
 
     // ************************* NOT USED ************************************
     // Confirm delete file - start
-    if (!empty($_GET["op"]) && $op === "delfile") {
+    if (!empty($_GET['op']) && $op === 'delfile') {
         xoops_header();
         echo "<link href='css/xoopsimagebrowser.css' rel='stylesheet' type='text/css' />";
-        xoops_confirm(array("op" => "delfileok", "image_id" => $image_id, "target" => $target), "xoopsimagebrowser.php", _MD_RUDELIMG);
+        xoops_confirm(array('op' => 'delfileok', 'image_id' => $image_id, 'target' => $target), 'xoopsimagebrowser.php', _MD_RUDELIMG);
         xoops_footer();
         exit();
     }
     // Confirm delete file - end
 
     // Delete file - start
-    if ($op === "delfileok") {
-        if (!$GLOBALS["xoopsSecurity"]->check()) {
-            redirect_header($current_file . "?target=" . $target, 3, implode("<br />", $GLOBALS["xoopsSecurity"]->getErrors()));
+    if ($op === 'delfileok') {
+        if (!$GLOBALS['xoopsSecurity']->check()) {
+            redirect_header($current_file . '?target=' . $target, 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        $image_id = (int)($image_id);
+        $image_id = (int)$image_id;
         if ($image_id <= 0) {
-            redirect_header($current_file . "?target=" . $target, 3);
+            redirect_header($current_file . '?target=' . $target, 3);
         }
-        $image_handler = xoops_getHandler("image");
+        $image_handler = xoops_getHandler('image');
         $image         = $image_handler->get($image_id);
         if (!is_object($image)) {
-            redirect_header($current_file . "?target=" . $target, 3);
+            redirect_header($current_file . '?target=' . $target, 3);
         }
         if (!$image_handler->delete($image)) {
-            redirect_header($current_file . "?target=" . $target, 3, xoops_error(sprintf(_MD_FAILDEL, $image->getVar("image_id"))));
+            redirect_header($current_file . '?target=' . $target, 3, xoops_error(sprintf(_MD_FAILDEL, $image->getVar('image_id'))));
         }
-        @unlink(XOOPS_UPLOAD_PATH . "/" . $image->getVar("image_name"));
-        redirect_header($current_file . "?target=" . $target, 3, _MD_AM_DBUPDATED);
+        @unlink(XOOPS_UPLOAD_PATH . '/' . $image->getVar('image_name'));
+        redirect_header($current_file . '?target=' . $target, 3, _MD_AM_DBUPDATED);
     }
     // Delete file - end
     // ************************* NOT USED ************************************
@@ -454,7 +454,7 @@ if ($op === 'list') {
 
 //list images - start
 if ($op === 'listimg') {
-    $imgcat_id = (int)($imgcat_id);
+    $imgcat_id = (int)$imgcat_id;
     if ($imgcat_id <= 0) {
         redirect_header($current_file . '?target=' . $target, 1);
     }
@@ -467,7 +467,7 @@ if ($op === 'listimg') {
 
     $criteria = new Criteria('imgcat_id', $imgcat_id);
     $imgcount = $image_handler->getCount($criteria);
-    $start    = isset($_GET['start']) ? (int)($_GET['start']) : 0;
+    $start    = isset($_GET['start']) ? (int)$_GET['start'] : 0;
     $criteria->setStart($start);
     $criteria->setSort('image_id');
     $criteria->setOrder('DESC');
@@ -477,9 +477,9 @@ if ($op === 'listimg') {
     echo '<a href="' . $current_file . '?target=' . $target . '">' . _MD_IMGMAIN . '</a>&nbsp;<span style="font-weight:bold;">&gt;</span>&nbsp;' . $imagecategory->getVar('imgcat_name');
     echo '<br /><br /><strong>{#xoopsimagebrowser_dlg.select_image}</strong>';
     echo '<form action="' . $current_file . '?target=' . $target . '" method="post">';
-    $rowspan = ($catwritelist) ? 5 : 2;
+    $rowspan = $catwritelist ? 5 : 2;
     foreach (array_keys($images) as $i) {
-        $image_src = "";
+        $image_src = '';
         // check if image stored in db/as file - start
         if ($imagecategory->getVar('imgcat_storetype') === 'db') {
             $image_src = '' . XOOPS_URL . '/image.php?id=' . $i . '';

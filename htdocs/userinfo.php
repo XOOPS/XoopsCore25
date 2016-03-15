@@ -30,7 +30,7 @@ xoops_loadLanguage('user');
 include_once $GLOBALS['xoops']->path('class/module.textsanitizer.php');
 include_once $GLOBALS['xoops']->path('modules/system/constants.php');
 
-$uid = (int)($_GET['uid']);
+$uid = (int)$_GET['uid'];
 if ($uid <= 0) {
     redirect_header('index.php', 3, _US_SELECTNG);
 }
@@ -61,7 +61,7 @@ if (is_object($xoopsUser)) {
         $member_handler = xoops_getHandler('member');
         $thisUser       = $member_handler->getUser($uid);
         if (!is_object($thisUser) || !$thisUser->isActive()) {
-            redirect_header("index.php", 3, _US_SELECTNG);
+            redirect_header('index.php', 3, _US_SELECTNG);
         }
         $xoopsOption['template_main'] = 'system_userinfo.html';
         include $GLOBALS['xoops']->path('header.php');
@@ -71,7 +71,7 @@ if (is_object($xoopsUser)) {
     $member_handler = xoops_getHandler('member');
     $thisUser       = $member_handler->getUser($uid);
     if (!is_object($thisUser) || !$thisUser->isActive()) {
-        redirect_header("index.php", 3, _US_SELECTNG);
+        redirect_header('index.php', 3, _US_SELECTNG);
     }
     $xoopsOption['template_main'] = 'system_userinfo.html';
     include $GLOBALS['xoops']->path('header.php');
@@ -87,9 +87,9 @@ $xoopsOption['xoops_pagetitle'] = sprintf(_US_ALLABOUT, $thisUser->getVar('uname
 $xoopsTpl->assign('lang_allaboutuser', sprintf(_US_ALLABOUT, $thisUser->getVar('uname')));
 $xoopsTpl->assign('lang_avatar', _US_AVATAR);
 
-$avatar = "";
-if ($thisUser->getVar('user_avatar') && "blank.gif" !== $thisUser->getVar('user_avatar')) {
-    $avatar = XOOPS_UPLOAD_URL . "/" . $thisUser->getVar('user_avatar');
+$avatar = '';
+if ($thisUser->getVar('user_avatar') && 'blank.gif' !== $thisUser->getVar('user_avatar')) {
+    $avatar = XOOPS_UPLOAD_URL . '/' . $thisUser->getVar('user_avatar');
 }
 $xoopsTpl->assign('user_avatarurl', $avatar);
 $xoopsTpl->assign('lang_realname', _US_REALNAME);
@@ -139,7 +139,7 @@ if ($thisUser->getVar('user_viewemail') == 1) {
 } else {
     if (is_object($xoopsUser)) {
         // All admins will be allowed to see emails, even those that are not allowed to edit users (I think it's ok like this)
-        if ($xoopsUserIsAdmin || ($xoopsUser->getVar("uid") == $thisUser->getVar("uid"))) {
+        if ($xoopsUserIsAdmin || ($xoopsUser->getVar('uid') == $thisUser->getVar('uid'))) {
             $xoopsTpl->assign('user_email', $thisUser->getVar('email', 'E'));
         } else {
             $xoopsTpl->assign('user_email', '&nbsp;');
@@ -147,7 +147,7 @@ if ($thisUser->getVar('user_viewemail') == 1) {
     }
 }
 if (is_object($xoopsUser)) {
-    $xoopsTpl->assign('user_pmlink', "<a href=\"javascript:openWithSelfMain('" . XOOPS_URL . "/pmlite.php?send2=1&amp;to_userid=" . $thisUser->getVar('uid') . "', 'pmlite', 450, 380);\"><img src=\"" . XOOPS_URL . "/images/icons/pm.gif\" alt=\"" . sprintf(_SENDPMTO, $thisUser->getVar('uname')) . "\" /></a>");
+    $xoopsTpl->assign('user_pmlink', "<a href=\"javascript:openWithSelfMain('" . XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . $thisUser->getVar('uid') . "', 'pmlite', 450, 380);\"><img src=\"" . XOOPS_URL . "/images/icons/pm.gif\" alt=\"" . sprintf(_SENDPMTO, $thisUser->getVar('uname')) . "\" /></a>");
 } else {
     $xoopsTpl->assign('user_pmlink', '');
 }
@@ -156,9 +156,9 @@ if (isset($userrank['image']) && $userrank['image']) {
     $xoopsTpl->assign('user_rankimage', '<img src="' . XOOPS_UPLOAD_URL . '/' . $userrank['image'] . '" alt="" />');
 }
 $xoopsTpl->assign('user_ranktitle', $userrank['title']);
-$date = $thisUser->getVar("last_login");
+$date = $thisUser->getVar('last_login');
 if (!empty($date)) {
-    $xoopsTpl->assign('user_lastlogin', formatTimestamp($date, "m"));
+    $xoopsTpl->assign('user_lastlogin', formatTimestamp($date, 'm'));
 }
 $module_handler = xoops_getHandler('module');
 $criteria       = new CriteriaCompo(new Criteria('hassearch', 1));
@@ -178,7 +178,7 @@ foreach ($mids as $mid) {
                 }
 
                 if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
-                    $results[$i]['link'] = "modules/" . $module->getVar('dirname') . "/" . $results[$i]['link'];
+                    $results[$i]['link'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['link'];
                 }
 
                 $results[$i]['title'] = $myts->htmlspecialchars($results[$i]['title']);

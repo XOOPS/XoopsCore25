@@ -79,7 +79,7 @@ EOH;
         $rp .= "<param NAME=\"BACKGROUNDCOLOR\" VALUE=\"#000000\">";
         $rp .= "<param NAME=\"SRC\" VALUE=\"\\4\">";
         $rp .= "<embed autostart=\"0\" src=\"\\4\" type=\"audio/x-pn-realaudio-plugin\" HEIGHT='\\3' WIDTH='\\2' controls=\"ImageWindow\" console=\"cons\"> </embed>";
-        $rp .= "</object>";
+        $rp .= '</object>';
         $rp .= "<br /><object CLASSID=clsid:CFCDAA03-8BE4-11cf-B84B-0020AFBBCCFA HEIGHT=32 ID=Player WIDTH='\\2' VIEWASTEXT>";
         $rp .= "<param NAME=\"_ExtentX\" VALUE=\"18256\">";
         $rp .= "<param NAME=\"_ExtentY\" VALUE=\"794\">";
@@ -96,7 +96,7 @@ EOH;
         $rp .= "<param NAME=\"BACKGROUNDCOLOR\" VALUE=\"#000000\">";
         $rp .= "<param NAME=\"SRC\" VALUE=\"\\4\">";
         $rp .= "<embed autostart=\"0\" src=\"\\4\" type=\"audio/x-pn-realaudio-plugin\" HEIGHT='30' WIDTH='\\2' controls=\"ControlPanel\" console=\"cons\"> </embed>";
-        $rp .= "</object>";
+        $rp .= '</object>';
 
         $ts->replacements[] = $rp;
     }

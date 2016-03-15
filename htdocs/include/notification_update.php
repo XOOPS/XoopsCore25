@@ -93,10 +93,10 @@ $argstring = '';
 $first_arg = 1;
 foreach (array_keys($redirect_args) as $arg) {
     if ($first_arg) {
-        $argstring .= "?" . $arg . "=" . $redirect_args[$arg];
+        $argstring .= '?' . $arg . '=' . $redirect_args[$arg];
         $first_arg = 0;
     } else {
-        $argstring .= "&" . $arg . "=" . $redirect_args[$arg];
+        $argstring .= '&' . $arg . '=' . $redirect_args[$arg];
     }
 }
 

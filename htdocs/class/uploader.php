@@ -129,7 +129,7 @@ class XoopsMediaUploader
         $maxUploadInBytes   = $this->return_bytes(ini_get('upload_max_filesize'));
         $maxPostInBytes     = $this->return_bytes(ini_get('post_max_size'));
         $memoryLimitInBytes = $this->return_bytes(ini_get('memory_limit'));
-        if ((int)($maxFileSize) > 0) {
+        if ((int)$maxFileSize > 0) {
             $maxFileSizeInBytes = $this->return_bytes($maxFileSize);
             $newMaxFileSize     = min($maxFileSizeInBytes, $maxUploadInBytes, $maxPostInBytes, $memoryLimitInBytes);
         } else {
@@ -138,10 +138,10 @@ class XoopsMediaUploader
         $this->maxFileSize = $newMaxFileSize;
 
         if (isset($maxWidth)) {
-            $this->maxWidth = (int)($maxWidth);
+            $this->maxWidth = (int)$maxWidth;
         }
         if (isset($maxHeight)) {
-            $this->maxHeight = (int)($maxHeight);
+            $this->maxHeight = (int)$maxHeight;
         }
         if (isset($randomFilename)) {
             $this->randomFilename = $randomFilename;
@@ -194,8 +194,8 @@ class XoopsMediaUploader
 
             return false;
         } elseif (is_array($_FILES[$media_name]['name']) && isset($index)) {
-            $index           = (int)($index);
-            $this->mediaName = (get_magic_quotes_gpc()) ? stripslashes($_FILES[$media_name]['name'][$index]) : $_FILES[$media_name]['name'][$index];
+            $index           = (int)$index;
+            $this->mediaName = get_magic_quotes_gpc() ? stripslashes($_FILES[$media_name]['name'][$index]) : $_FILES[$media_name]['name'][$index];
             if ($this->randomFilename) {
                 $unique          = uniqid();
                 $this->mediaName = '' . $unique . '--' . $this->mediaName;
@@ -206,7 +206,7 @@ class XoopsMediaUploader
             $this->mediaError   = !empty($_FILES[$media_name]['error'][$index]) ? $_FILES[$media_name]['error'][$index] : 0;
         } else {
             $media_name      =& $_FILES[$media_name];
-            $this->mediaName = (get_magic_quotes_gpc()) ? stripslashes($media_name['name']) : $media_name['name'];
+            $this->mediaName = get_magic_quotes_gpc() ? stripslashes($media_name['name']) : $media_name['name'];
             if ($this->randomFilename) {
                 $unique          = uniqid();
                 $this->mediaName = '' . $unique . '--' . $this->mediaName;
@@ -224,7 +224,7 @@ class XoopsMediaUploader
             }
         }
         $this->errors = array();
-        if ((int)($this->mediaSize) < 0) {
+        if ((int)$this->mediaSize < 0) {
             $this->setErrors(_ER_UP_INVALIDFILESIZE);
 
             return false;
@@ -255,7 +255,7 @@ class XoopsMediaUploader
      */
     public function setTargetFileName($value)
     {
-        $this->targetFileName = (string)(trim($value));
+        $this->targetFileName = (string)trim($value);
     }
 
     /**
@@ -265,7 +265,7 @@ class XoopsMediaUploader
      */
     public function setPrefix($value)
     {
-        $this->prefix = (string)(trim($value));
+        $this->prefix = (string)trim($value);
     }
 
     /**
@@ -397,9 +397,9 @@ class XoopsMediaUploader
             $this->savedFileName = strtolower($this->mediaName);
         }
 
-        $this->savedFileName = iconv("UTF-8", "ASCII//TRANSLIT", $this->savedFileName);
+        $this->savedFileName = iconv('UTF-8', 'ASCII//TRANSLIT', $this->savedFileName);
         $this->savedFileName = preg_replace('!\s+!', '_', $this->savedFileName);
-        $this->savedFileName = preg_replace("/[^a-zA-Z0-9\._-]/", "", $this->savedFileName);
+        $this->savedFileName = preg_replace("/[^a-zA-Z0-9\._-]/", '', $this->savedFileName);
 
         $this->savedDestination = $this->uploadDir . '/' . $this->savedFileName;
         if (!move_uploaded_file($this->mediaTmpName, $this->savedDestination)) {
@@ -545,7 +545,7 @@ class XoopsMediaUploader
         $replaces = array();
         foreach ($this->extensionsToBeSanitized as $ext) {
             $patterns[] = "/\." . preg_quote($ext) . "\./i";
-            $replaces[] = "_" . $ext . ".";
+            $replaces[] = '_' . $ext . '.';
         }
         $this->mediaName = preg_replace($patterns, $replaces, $this->mediaName);
     }

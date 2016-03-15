@@ -83,7 +83,7 @@ function profile_getFieldForm(ProfileField $field, $action = false)
         $form->addElement($element_select);
 
         switch ($field->getVar('field_type')) {
-            case "textbox":
+            case 'textbox':
                 $valuetypes = array(
                     XOBJ_DTYPE_ARRAY           => _PROFILE_AM_ARRAY,
                     XOBJ_DTYPE_EMAIL           => _PROFILE_AM_EMAIL,
@@ -105,8 +105,8 @@ function profile_getFieldForm(ProfileField $field, $action = false)
                 $form->addElement($type_select);
                 break;
 
-            case "select":
-            case "radio":
+            case 'select':
+            case 'radio':
                 $valuetypes = array(
                     XOBJ_DTYPE_ARRAY           => _PROFILE_AM_ARRAY,
                     XOBJ_DTYPE_EMAIL           => _PROFILE_AM_EMAIL,
@@ -131,7 +131,7 @@ function profile_getFieldForm(ProfileField $field, $action = false)
 
         //$form->addElement(new XoopsFormRadioYN(_PROFILE_AM_NOTNULL, 'field_notnull', $field->getVar('field_notnull', 'e') ));
 
-        if ($field->getVar('field_type') === "select" || $field->getVar('field_type') === "select_multi" || $field->getVar('field_type') === "radio" || $field->getVar('field_type') === "checkbox") {
+        if ($field->getVar('field_type') === 'select' || $field->getVar('field_type') === 'select_multi' || $field->getVar('field_type') === 'radio' || $field->getVar('field_type') === 'checkbox') {
             $options = $field->getVar('field_options');
             if (count($options) > 0) {
                 $remove_options          = new XoopsFormCheckBox(_PROFILE_AM_REMOVEOPTIONS, 'removeOptions');
@@ -144,27 +144,27 @@ function profile_getFieldForm(ProfileField $field, $action = false)
                 $form->addElement($remove_options);
             }
 
-            $option_text = "<table  cellspacing='1'><tr><td class='width20'>" . _PROFILE_AM_KEY . "</td><td>" . _PROFILE_AM_VALUE . "</td></tr>";
+            $option_text = "<table  cellspacing='1'><tr><td class='width20'>" . _PROFILE_AM_KEY . '</td><td>' . _PROFILE_AM_VALUE . '</td></tr>';
             for ($i = 0; $i < 3; ++$i) {
                 $option_text .= "<tr><td><input type='text' name='addOption[{$i}][key]' id='addOption[{$i}][key]' size='15' /></td><td><input type='text' name='addOption[{$i}][value]' id='addOption[{$i}][value]' size='35' /></td></tr>";
                 $option_text .= "<tr height='3px'><td colspan='2'> </td></tr>";
             }
-            $option_text .= "</table>";
+            $option_text .= '</table>';
             $form->addElement(new XoopsFormLabel(_PROFILE_AM_ADDOPTION, $option_text));
         }
     }
 
     if ($field->getVar('field_edit')) {
         switch ($field->getVar('field_type')) {
-            case "textbox":
-            case "textarea":
-            case "dhtml":
+            case 'textbox':
+            case 'textarea':
+            case 'dhtml':
                 $form->addElement(new XoopsFormText(_PROFILE_AM_MAXLENGTH, 'field_maxlength', 35, 35, $field->getVar('field_maxlength', 'e')));
                 $form->addElement(new XoopsFormTextArea(_PROFILE_AM_DEFAULT, 'field_default', $field->getVar('field_default', 'e')));
                 break;
 
-            case "checkbox":
-            case "select_multi":
+            case 'checkbox':
+            case 'select_multi':
                 $def_value = $field->getVar('field_default', 'e') != null ? unserialize($field->getVar('field_default', 'n')) : null;
                 $element   = new XoopsFormSelect(_PROFILE_AM_DEFAULT, 'field_default', $def_value, 8, true);
                 $options   = $field->getVar('field_options');
@@ -178,8 +178,8 @@ function profile_getFieldForm(ProfileField $field, $action = false)
                 $form->addElement($element);
                 break;
 
-            case "select":
-            case "radio":
+            case 'select':
+            case 'radio':
                 $def_value = $field->getVar('field_default', 'e') != null ? $field->getVar('field_default') : null;
                 $element   = new XoopsFormSelect(_PROFILE_AM_DEFAULT, 'field_default', $def_value);
                 $options   = $field->getVar('field_options');
@@ -193,43 +193,43 @@ function profile_getFieldForm(ProfileField $field, $action = false)
                 $form->addElement($element);
                 break;
 
-            case "date":
+            case 'date':
                 $form->addElement(new XoopsFormTextDateSelect(_PROFILE_AM_DEFAULT, 'field_default', 15, $field->getVar('field_default', 'e')));
                 break;
 
-            case "longdate":
+            case 'longdate':
                 $form->addElement(new XoopsFormTextDateSelect(_PROFILE_AM_DEFAULT, 'field_default', 15, strtotime($field->getVar('field_default', 'e'))));
                 break;
 
-            case "datetime":
+            case 'datetime':
                 $form->addElement(new XoopsFormDateTime(_PROFILE_AM_DEFAULT, 'field_default', 15, $field->getVar('field_default', 'e')));
                 break;
 
-            case "yesno":
+            case 'yesno':
                 $form->addElement(new XoopsFormRadioYN(_PROFILE_AM_DEFAULT, 'field_default', $field->getVar('field_default', 'e')));
                 break;
 
-            case "timezone":
+            case 'timezone':
                 $form->addElement(new XoopsFormSelectTimezone(_PROFILE_AM_DEFAULT, 'field_default', $field->getVar('field_default', 'e')));
                 break;
 
-            case "language":
+            case 'language':
                 $form->addElement(new XoopsFormSelectLang(_PROFILE_AM_DEFAULT, 'field_default', $field->getVar('field_default', 'e')));
                 break;
 
-            case "group":
+            case 'group':
                 $form->addElement(new XoopsFormSelectGroup(_PROFILE_AM_DEFAULT, 'field_default', true, $field->getVar('field_default', 'e')));
                 break;
 
-            case "group_multi":
+            case 'group_multi':
                 $form->addElement(new XoopsFormSelectGroup(_PROFILE_AM_DEFAULT, 'field_default', true, unserialize($field->getVar('field_default', 'n')), 5, true));
                 break;
 
-            case "theme":
+            case 'theme':
                 $form->addElement(new XoopsFormSelectTheme(_PROFILE_AM_DEFAULT, 'field_default', $field->getVar('field_default', 'e')));
                 break;
 
-            case "autotext":
+            case 'autotext':
                 $form->addElement(new XoopsFormTextArea(_PROFILE_AM_DEFAULT, 'field_default', $field->getVar('field_default', 'e')));
                 break;
         }
@@ -358,7 +358,7 @@ function profile_getRegisterForm(XoopsUser $user, $profile, $step = null)
 
     if ($step_no == 1 && $GLOBALS['xoopsConfigUser']['reg_dispdsclmr'] != 0 && $GLOBALS['xoopsConfigUser']['reg_disclaimer'] != '') {
         $disc_tray = new XoopsFormElementTray(_US_DISCLAIMER, '<br />');
-        $disc_text = new XoopsFormLabel("", "<div class=\"pad5\">" . $GLOBALS["myts"]->displayTarea($GLOBALS['xoopsConfigUser']['reg_disclaimer'], 1) . "</div>");
+        $disc_text = new XoopsFormLabel('', "<div class=\"pad5\">" . $GLOBALS['myts']->displayTarea($GLOBALS['xoopsConfigUser']['reg_disclaimer'], 1) . '</div>');
         $disc_tray->addElement($disc_text);
         $agree_chk = new XoopsFormCheckBox('', 'agree_disc');
         $agree_chk->addOption(1, _US_IAGREE);
@@ -503,7 +503,7 @@ function profile_getUserForm(XoopsUser $user, ProfileProfile $profile = null, $a
     foreach (array_keys($elements) as $k) {
         array_multisort($weights[$k], SORT_ASC, array_keys($elements[$k]), SORT_ASC, $elements[$k]);
         $title = isset($categories[$k]) ? $categories[$k]['cat_title'] : _PROFILE_MA_DEFAULT;
-        $desc  = isset($categories[$k]) ? $categories[$k]['cat_description'] : "";
+        $desc  = isset($categories[$k]) ? $categories[$k]['cat_description'] : '';
         $form->addElement(new XoopsFormLabel("<h3>{$title}</h3>", $desc), false);
         foreach (array_keys($elements[$k]) as $i) {
             $form->addElement($elements[$k][$i]['element'], $elements[$k][$i]['required']);
