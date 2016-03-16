@@ -49,7 +49,7 @@ class IPAddress
      */
     public static function fromRequest()
     {
-        $ip = array_key_exists('REMOTE_ADDR', $_SERVER) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0';
+        $ip = (array_key_exists('REMOTE_ADDR', $_SERVER)) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0';
         $class = get_called_class();
         $instance = new $class($ip);
         return $instance;
@@ -156,7 +156,7 @@ class IPAddress
         $bits = '';
         for ($i = 0; $i < $length; $i++) {
             $byte = decbin(ord($binaryIp[$i]));
-            $bits .= substr('00000000' . $byte, -8);
+            $bits .= substr("00000000" . $byte, -8);
         }
         return $bits;
     }

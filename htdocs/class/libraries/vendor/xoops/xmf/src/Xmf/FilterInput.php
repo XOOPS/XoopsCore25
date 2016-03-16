@@ -336,8 +336,8 @@ class FilterInput
             // next start of tag (for nested tag assessment)
             $tagOpen_nested = strpos($fromTagOpen, '<');
             if (($tagOpen_nested !== false) && ($tagOpen_nested < $tagOpen_end)) {
-                $preTag .= substr($postTag, 0, $tagOpen_nested + 1);
-                $postTag = substr($postTag, $tagOpen_nested + 1);
+                $preTag .= substr($postTag, 0, ($tagOpen_nested + 1));
+                $postTag = substr($postTag, ($tagOpen_nested + 1));
                 $tagOpen_start = strpos($postTag, '<');
                 continue;
             }
@@ -350,7 +350,7 @@ class FilterInput
             $tagLeft = $currentTag;
             $attrSet = array();
             $currentSpace = strpos($tagLeft, ' ');
-            if (substr($currentTag, 0, 1) === '/') {
+            if (substr($currentTag, 0, 1) === "/") {
                 // is end tag
                 $isCloseTag = true;
                 list($tagName) = explode(' ', $currentTag);
@@ -363,27 +363,27 @@ class FilterInput
             // excludes all "non-regular" tagnames OR no tagname OR remove if xssauto is on and tag is blacklisted
             if ((!preg_match("/^[a-z][a-z0-9]*$/i", $tagName))
                 || (!$tagName)
-                || (in_array(strtolower($tagName), $this->tagBlacklist)
-                    && $this->xssAuto)
+                || ((in_array(strtolower($tagName), $this->tagBlacklist))
+                    && ($this->xssAuto))
             ) {
-                $postTag = substr($postTag, $tagLength + 2);
+                $postTag = substr($postTag, ($tagLength + 2));
                 $tagOpen_start = strpos($postTag, '<');
                 // don't append this tag
                 continue;
             }
             // this while is needed to support attribute values with spaces in!
             while ($currentSpace !== false) {
-                $fromSpace = substr($tagLeft, $currentSpace + 1);
+                $fromSpace = substr($tagLeft, ($currentSpace + 1));
                 $nextSpace = strpos($fromSpace, ' ');
                 $openQuotes = strpos($fromSpace, '"');
-                $closeQuotes = strpos(substr($fromSpace, $openQuotes + 1), '"') + $openQuotes + 1;
+                $closeQuotes = strpos(substr($fromSpace, ($openQuotes + 1)), '"') + $openQuotes + 1;
                 // another equals exists
                 if (strpos($fromSpace, '=') !== false) {
                     // opening and closing quotes exists
                     if (($openQuotes !== false)
-                        && (strpos(substr($fromSpace, $openQuotes + 1), '"') !== false)
+                        && (strpos(substr($fromSpace, ($openQuotes + 1)), '"') !== false)
                     ) {
-                        $attr = substr($fromSpace, 0, $closeQuotes + 1);
+                        $attr = substr($fromSpace, 0, ($closeQuotes + 1));
                     } else {
                         $attr = substr($fromSpace, 0, $nextSpace);
                     }
@@ -415,7 +415,7 @@ class FilterInput
                         $preTag .= ' ' . $attrSet[$i];
                     }
                     // reformat single tags to XHTML
-                    if (strpos($fromTagOpen, '</' . $tagName)) {
+                    if (strpos($fromTagOpen, "</" . $tagName)) {
                         $preTag .= '>';
                     } else {
                         $preTag .= ' />';
@@ -426,7 +426,7 @@ class FilterInput
                 }
             }
             // find next tag's start
-            $postTag = substr($postTag, $tagLength + 2);
+            $postTag = substr($postTag, ($tagLength + 2));
             $tagOpen_start = strpos($postTag, '<');
         }
         // append any code after end of tags
@@ -457,8 +457,8 @@ class FilterInput
             list($attrSubSet[0]) = explode(' ', $attrSubSet[0]);
             // removes all "non-regular" attr names AND also attr blacklisted
             if ((!preg_match('/[a-z]*$/i', $attrSubSet[0]))
-                || ($this->xssAuto
-                    && (in_array(strtolower($attrSubSet[0]), $this->attrBlacklist)
+                || (($this->xssAuto)
+                    && ((in_array(strtolower($attrSubSet[0]), $this->attrBlacklist))
                         || (substr($attrSubSet[0], 0, 2) === 'on')))
             ) {
                 continue;
@@ -474,9 +474,9 @@ class FilterInput
                 // [requested feature] convert single quotes from either side to doubles
                 // (Single quotes shouldn't be used to pad attr value)
                 if ((substr($attrSubSet[1], 0, 1) === "'")
-                    && (substr($attrSubSet[1], strlen($attrSubSet[1]) - 1, 1) === "'")
+                    && (substr($attrSubSet[1], (strlen($attrSubSet[1]) - 1), 1) === "'")
                 ) {
-                    $attrSubSet[1] = substr($attrSubSet[1], 1, strlen($attrSubSet[1]) - 2);
+                    $attrSubSet[1] = substr($attrSubSet[1], 1, (strlen($attrSubSet[1]) - 2));
                 }
                 // strip slashes
                 $attrSubSet[1] = stripslashes($attrSubSet[1]);
@@ -500,7 +500,7 @@ class FilterInput
                 if ($attrSubSet[1]) {
                     // attr has value
                     $newSet[] = $attrSubSet[0] . '="' . $attrSubSet[1] . '"';
-                } elseif ($attrSubSet[1] == '0') {
+                } elseif ($attrSubSet[1] == "0") {
                     // attr has decimal zero as value
                     $newSet[] = $attrSubSet[0] . '="0"';
                 } else {
