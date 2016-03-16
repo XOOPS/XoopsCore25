@@ -11,10 +11,10 @@
  * @subpackage          art
  */
 
-if (!defined("FRAMEWORKS_ART_FUNCTIONS_ADMIN")):
-    define("FRAMEWORKS_ART_FUNCTIONS_ADMIN", true);
+if (!defined('FRAMEWORKS_ART_FUNCTIONS_ADMIN')):
+    define('FRAMEWORKS_ART_FUNCTIONS_ADMIN', true);
 
-    defined("FRAMEWORKS_ART_FUNCTIONS_INI") || include_once __DIR__ . "/functions.ini.php";
+    defined('FRAMEWORKS_ART_FUNCTIONS_INI') || include_once __DIR__ . '/functions.ini.php';
 
     /**
      * @param        $currentoption
@@ -22,15 +22,15 @@ if (!defined("FRAMEWORKS_ART_FUNCTIONS_ADMIN")):
      *
      * @return bool
      */
-    function loadModuleAdminMenu($currentoption = -1, $breadcrumb = "")
+    function loadModuleAdminMenu($currentoption = -1, $breadcrumb = '')
     {
-        if (!$adminmenu = $GLOBALS["xoopsModule"]->getAdminMenu()) {
+        if (!$adminmenu = $GLOBALS['xoopsModule']->getAdminMenu()) {
             return false;
         }
 
-        $breadcrumb  = empty($breadcrumb) ? $adminmenu[$currentoption]["title"] : $breadcrumb;
-        $module_link = XOOPS_URL . "/modules/" . $GLOBALS["xoopsModule"]->getVar("dirname") . "/";
-        $image_link  = XOOPS_URL . "/Frameworks/compat/include";
+        $breadcrumb  = empty($breadcrumb) ? $adminmenu[$currentoption]['title'] : $breadcrumb;
+        $module_link = XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname') . '/';
+        $image_link  = XOOPS_URL . '/Frameworks/compat/include';
 
         $adminmenu_text = '
     <style type="text/css">
@@ -55,10 +55,10 @@ if (!defined("FRAMEWORKS_ART_FUNCTIONS_ADMIN")):
      <table style="width: 100%; padding: 0; " cellspacing="0">
          <tr>
              <td style="width: 70%; font-size: 10px; text-align: left; color: #2F5376; padding: 0 6px; line-height: 18px;">
-                 <a href="../index.php">' . $GLOBALS["xoopsModule"]->getVar("name") . '</a>
+                 <a href="../index.php">' . $GLOBALS['xoopsModule']->getVar('name') . '</a>
              </td>
              <td style="width: 30%; font-size: 10px; text-align: right; color: #2F5376; padding: 0 6px; line-height: 18px;">
-                 <strong>' . $GLOBALS["xoopsModule"]->getVar("name") . '</strong>&nbsp;' . $breadcrumb . '
+                 <strong>' . $GLOBALS['xoopsModule']->getVar('name') . '</strong>&nbsp;' . $breadcrumb . '
              </td>
          </tr>
      </table>
@@ -67,10 +67,10 @@ if (!defined("FRAMEWORKS_ART_FUNCTIONS_ADMIN")):
      <ul>
     ';
         foreach (array_keys($adminmenu) as $key) {
-            $adminmenu_text .= (($currentoption == $key) ? '<li class="current">' : '<li>') . '<a href="' . $module_link . $adminmenu[$key]["link"] . '"><span>' . $adminmenu[$key]["title"] . '</span></a></li>';
+            $adminmenu_text .= (($currentoption == $key) ? '<li class="current">' : '<li>') . '<a href="' . $module_link . $adminmenu[$key]['link'] . '"><span>' . $adminmenu[$key]['title'] . '</span></a></li>';
         }
-        if ($GLOBALS["xoopsModule"]->getVar("hasconfig") || $GLOBALS["xoopsModule"]->getVar("hascomments") || $GLOBALS["xoopsModule"]->getVar("hasnotification")) {
-            $adminmenu_text .= '<li><a href="' . XOOPS_URL . '/modules/system/admin.php?fct=preferences&op=showmod&mod=' . $GLOBALS["xoopsModule"]->getVar("mid") . '"><span>' . _PREFERENCES . '</span></a></li>';
+        if ($GLOBALS['xoopsModule']->getVar('hasconfig') || $GLOBALS['xoopsModule']->getVar('hascomments') || $GLOBALS['xoopsModule']->getVar('hasnotification')) {
+            $adminmenu_text .= '<li><a href="' . XOOPS_URL . '/modules/system/admin.php?fct=preferences&op=showmod&mod=' . $GLOBALS['xoopsModule']->getVar('mid') . '"><span>' . _PREFERENCES . '</span></a></li>';
         }
         $adminmenu_text .= '
      </ul>

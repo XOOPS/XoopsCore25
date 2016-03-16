@@ -60,9 +60,9 @@ if ($type === 'preview') {
 }
 
 if (isset($_GET['op'])) {
-    if ($_GET['op'] === "edit" || $_GET['op'] === "delete" || $_GET['op'] === "delete_ok" || $_GET['op'] === "clone") {
+    if ($_GET['op'] === 'edit' || $_GET['op'] === 'delete' || $_GET['op'] === 'delete_ok' || $_GET['op'] === 'clone') {
         $op  = $_GET['op'];
-        $bid = isset($_GET['bid']) ? (int)($_GET['bid']) : 0;
+        $bid = isset($_GET['bid']) ? (int)$_GET['bid'] : 0;
     }
 }
 
@@ -151,7 +151,7 @@ switch ($op) {
         /* Get blocks */
         $selvis      = ($selvis == -1) ? null : $selvis;
         $selmod      = ($selmod == -2) ? null : $selmod;
-        $order_block = (isset($selvis) ? "" : "b.visible DESC, ") . "b.side,b.weight,b.bid";
+        $order_block = (isset($selvis) ? '' : 'b.visible DESC, ') . 'b.side,b.weight,b.bid';
 
         if ($selgrp == 0) {
             // get blocks that are not assigned to any groups
@@ -162,7 +162,7 @@ switch ($op) {
 
         if ($selgen >= 0) {
             foreach (array_keys($blocks_arr) as $bid) {
-                if ($blocks_arr[$bid]->getVar("mid") != $selgen) {
+                if ($blocks_arr[$bid]->getVar('mid') != $selgen) {
                     unset($blocks_arr[$bid]);
                 }
             }
@@ -355,7 +355,7 @@ switch ($op) {
         }
         $groupperm_handler  = xoops_getHandler('groupperm');
         $groups             = $_POST['groups'];
-        $groups_with_access = $groupperm_handler->getGroupIds("block_read", $newid);
+        $groups_with_access = $groupperm_handler->getGroupIds('block_read', $newid);
         $removed_groups     = array_diff($groups_with_access, $groups);
         if (count($removed_groups) > 0) {
             foreach ($removed_groups as $groupid) {
@@ -372,7 +372,7 @@ switch ($op) {
         $new_groups = array_diff($groups, $groups_with_access);
         if (count($new_groups) > 0) {
             foreach ($new_groups as $groupid) {
-                $groupperm_handler->addRight("block_read", $newid, $groupid);
+                $groupperm_handler->addRight('block_read', $newid, $groupid);
             }
         }
         redirect_header('admin.php?fct=blocksadmin', 1, _AM_SYSTEM_BLOCKS_DBUPDATED);

@@ -27,7 +27,7 @@ if ($GLOBALS['xoopsUser']) {
 }
 
 if (!empty($_GET['op']) && in_array($_GET['op'], array('actv', 'activate'))) {
-    header("location: ./activate.php" . (empty($_SERVER['QUERY_STRING']) ? "" : "?" . $_SERVER['QUERY_STRING']));
+    header('location: ./activate.php' . (empty($_SERVER['QUERY_STRING']) ? '' : '?' . $_SERVER['QUERY_STRING']));
     exit();
 }
 
@@ -56,10 +56,10 @@ if (isset($_SESSION[$opkey])) {
 }
 
 $op           = !isset($_POST[$current_opname]) ? 'register' : $_POST[$current_opname];
-$current_step = isset($_POST['step']) ? (int)($_POST['step']) : 0;
+$current_step = isset($_POST['step']) ? (int)$_POST['step'] : 0;
 
 // The newly introduced variable $_SESSION['profile_post'] is contaminated by $_POST, thus we use an old vaiable to hold uid parameter
-$uid = !empty($_SESSION['profile_register_uid']) ? (int)($_SESSION['profile_register_uid']) : 0;
+$uid = !empty($_SESSION['profile_register_uid']) ? (int)$_SESSION['profile_register_uid'] : 0;
 
 // First step is already secured by with the captcha Token so lets check the others
 if ($current_step > 0 && !$GLOBALS['xoopsSecurity']->check()) {
@@ -67,7 +67,7 @@ if ($current_step > 0 && !$GLOBALS['xoopsSecurity']->check()) {
 }
 
 $criteria = new CriteriaCompo();
-$criteria->setSort("step_order");
+$criteria->setSort('step_order');
 $regstep_handler = xoops_getModuleHandler('regstep');
 
 if (!$steps = $regstep_handler->getAll($criteria, null, false, false)) {
@@ -85,7 +85,7 @@ $GLOBALS['xoopsTpl']->assign('steps', $steps);
 $GLOBALS['xoopsTpl']->assign('lang_register_steps', _PROFILE_MA_REGISTER_STEPS);
 
 $xoBreadcrumbs[] = array(
-    'link'  => XOOPS_URL . "/modules/" . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/register.php',
+    'link'  => XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/register.php',
     'title' => _PROFILE_MA_REGISTER);
 if (isset($steps[$current_step])) {
     $xoBreadcrumbs[] = array('title' => $steps[$current_step]['step_name']);
@@ -178,7 +178,7 @@ if ($current_step == 1) {
     $url        = isset($_POST['url']) ? $myts->stripSlashesGPC(trim($_POST['url'])) : '';
     $pass       = isset($_POST['pass']) ? $myts->stripSlashesGPC(trim($_POST['pass'])) : '';
     $vpass      = isset($_POST['vpass']) ? $myts->stripSlashesGPC(trim($_POST['vpass'])) : '';
-    $agree_disc = (isset($_POST['agree_disc']) && (int)($_POST['agree_disc'])) ? 1 : 0;
+    $agree_disc = (isset($_POST['agree_disc']) && (int)$_POST['agree_disc']) ? 1 : 0;
 
     if ($GLOBALS['xoopsConfigUser']['reg_dispdsclmr'] != 0 && $GLOBALS['xoopsConfigUser']['reg_disclaimer'] !== '') {
         if (empty($agree_disc)) {
@@ -236,7 +236,7 @@ if ($current_step > 0 && empty($stop) && (!empty($steps[$current_step - 1]['step
 
         // Insert/update user and check if we have succeded
         if (!$member_handler->insertUser($newuser)) {
-            $stop .= _US_REGISTERNG . "<br />";
+            $stop .= _US_REGISTERNG . '<br />';
             $stop .= implode('<br />', $newuser->getErrors());
         } else {
             // User inserted! Now insert custom profile fields
@@ -257,9 +257,9 @@ if ($current_step > 0 && empty($stop) && (!empty($steps[$current_step - 1]['step
                     $xoopsMailer->send(true);
                 }
 
-                $message = "";
+                $message = '';
                 if (!$member_handler->addUserToGroup(XOOPS_GROUP_USERS, $newuser->getVar('uid'))) {
-                    $message = _PROFILE_MA_REGISTER_NOTGROUP . "<br />";
+                    $message = _PROFILE_MA_REGISTER_NOTGROUP . '<br />';
                 } else {
                     if ($GLOBALS['xoopsConfigUser']['activation_type'] == 1) {
                         XoopsUserUtility::sendWelcome($newuser);
@@ -271,7 +271,7 @@ if ($current_step > 0 && empty($stop) && (!empty($steps[$current_step - 1]['step
                             $xoopsMailer->setTemplate('register.tpl');
                             $xoopsMailer->assign('SITENAME', $GLOBALS['xoopsConfig']['sitename']);
                             $xoopsMailer->assign('ADMINMAIL', $GLOBALS['xoopsConfig']['adminmail']);
-                            $xoopsMailer->assign('SITEURL', XOOPS_URL . "/");
+                            $xoopsMailer->assign('SITEURL', XOOPS_URL . '/');
                             $xoopsMailer->assign('X_UPASS', $_POST['vpass']);
                             $xoopsMailer->setToUsers($newuser);
                             $xoopsMailer->setFromEmail($GLOBALS['xoopsConfig']['adminmail']);
@@ -290,10 +290,10 @@ if ($current_step > 0 && empty($stop) && (!empty($steps[$current_step - 1]['step
                                 $xoopsMailer->setTemplate('adminactivate.tpl');
                                 $xoopsMailer->assign('USERNAME', $newuser->getVar('uname'));
                                 $xoopsMailer->assign('USEREMAIL', $newuser->getVar('email'));
-                                $xoopsMailer->assign('USERACTLINK', XOOPS_URL . "/modules/" . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/activate.php?id=' . $newuser->getVar('uid') . '&actkey=' . $newuser->getVar('actkey', 'n'));
+                                $xoopsMailer->assign('USERACTLINK', XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/activate.php?id=' . $newuser->getVar('uid') . '&actkey=' . $newuser->getVar('actkey', 'n'));
                                 $xoopsMailer->assign('SITENAME', $GLOBALS['xoopsConfig']['sitename']);
                                 $xoopsMailer->assign('ADMINMAIL', $GLOBALS['xoopsConfig']['adminmail']);
-                                $xoopsMailer->assign('SITEURL', XOOPS_URL . "/");
+                                $xoopsMailer->assign('SITEURL', XOOPS_URL . '/');
                                 $xoopsMailer->setToGroups($member_handler->getGroup($GLOBALS['xoopsConfigUser']['activation_group']));
                                 $xoopsMailer->setFromEmail($GLOBALS['xoopsConfig']['adminmail']);
                                 $xoopsMailer->setFromName($GLOBALS['xoopsConfig']['sitename']);

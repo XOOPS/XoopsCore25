@@ -60,7 +60,7 @@ class Upgrade_2014 extends XoopsUpgrade
         }
     }
 ";
-        $manual    = "<h2>" . _MANUAL_INSTRUCTIONS . "</h2>\n<p>" . sprintf(_COPY_RED_LINES, "mainfile.php") . "</p>
+        $manual    = '<h2>' . _MANUAL_INSTRUCTIONS . "</h2>\n<p>" . sprintf(_COPY_RED_LINES, 'mainfile.php') . "</p>
 <pre style='border:1px solid black;width:650px;overflow:auto;'><span style='color:#ff0000;font-weight:bold;'>$patchCode</span>
     if (!isset(\$xoopsOption['nocommon']) && XOOPS_ROOT_PATH != '') {
         include XOOPS_ROOT_PATH.\"/include/common.php\";
@@ -84,7 +84,7 @@ class Upgrade_2014 extends XoopsUpgrade
             }
         }
         if ($insert == -1) {
-            printf(_FAILED_PATCH . "<br />", "mainfile.php");
+            printf(_FAILED_PATCH . '<br />', 'mainfile.php');
             echo $manual;
 
             return false;
@@ -111,7 +111,7 @@ class Upgrade_2014 extends XoopsUpgrade
 
                     fwrite($fp, $content);
                     fclose($fp);
-                    echo "Patch successfully applied";
+                    echo 'Patch successfully applied';
                 }
             }
         }
@@ -151,13 +151,13 @@ class Upgrade_2014 extends XoopsUpgrade
         $cat = getDbValue($db, 'configcategory', 'confcat_id', "`confcat_name` ='_MD_AM_AUTHENTICATION'");
         if ($cat !== false && $cat != XOOPS_CONF_AUTH) {
             // 2.2 downgrade bug: LDAP cat is here but has a catid of 0
-            $db->queryF("DELETE FROM " . $db->prefix('configcategory') . " WHERE `confcat_name` ='_MD_AM_AUTHENTICATION' ");
-            $db->queryF("DELETE FROM " . $db->prefix('config') . " WHERE `conf_modid`=0 AND `conf_catid` = $cat");
+            $db->queryF('DELETE FROM ' . $db->prefix('configcategory') . " WHERE `confcat_name` ='_MD_AM_AUTHENTICATION' ");
+            $db->queryF('DELETE FROM ' . $db->prefix('config') . " WHERE `conf_modid`=0 AND `conf_catid` = $cat");
             $cat = false;
         }
         if (empty($cat)) {
             // Insert config category ( always XOOPS_CONF_AUTH = 7 )
-            $db->queryF(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES (7,'_MD_AM_AUTHENTICATION')");
+            $db->queryF(' INSERT INTO ' . $db->prefix('configcategory') . " (confcat_id,confcat_name) VALUES (7,'_MD_AM_AUTHENTICATION')");
         }
         // Insert config values
         $table = $db->prefix('config');

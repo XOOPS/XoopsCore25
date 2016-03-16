@@ -60,38 +60,38 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
     // $dbm = new Db_manager;
     $tables = array();
     // data for table 'groups_users_link'
-    $dbm->insert('groups_users_link', " VALUES (0, " . $groups['XOOPS_GROUP_ADMIN'] . ", 1)");
-    $dbm->insert('groups_users_link', " VALUES (0, " . $groups['XOOPS_GROUP_USERS'] . ", 1)");
+    $dbm->insert('groups_users_link', ' VALUES (0, ' . $groups['XOOPS_GROUP_ADMIN'] . ', 1)');
+    $dbm->insert('groups_users_link', ' VALUES (0, ' . $groups['XOOPS_GROUP_USERS'] . ', 1)');
     // data for table 'group_permission'
-    $dbm->insert("group_permission", " VALUES (0," . $groups['XOOPS_GROUP_ADMIN'] . ",1,1,'module_admin')");
-    $dbm->insert("group_permission", " VALUES (0," . $groups['XOOPS_GROUP_ADMIN'] . ",1,1, 'module_read')");
-    $dbm->insert("group_permission", " VALUES (0," . $groups['XOOPS_GROUP_USERS'] . ",1,1,'module_read')");
-    $dbm->insert("group_permission", " VALUES (0," . $groups['XOOPS_GROUP_ANONYMOUS'] . ",1,1,'module_read')");
+    $dbm->insert('group_permission', ' VALUES (0,' . $groups['XOOPS_GROUP_ADMIN'] . ",1,1,'module_admin')");
+    $dbm->insert('group_permission', ' VALUES (0,' . $groups['XOOPS_GROUP_ADMIN'] . ",1,1, 'module_read')");
+    $dbm->insert('group_permission', ' VALUES (0,' . $groups['XOOPS_GROUP_USERS'] . ",1,1,'module_read')");
+    $dbm->insert('group_permission', ' VALUES (0,' . $groups['XOOPS_GROUP_ANONYMOUS'] . ",1,1,'module_read')");
 
-    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",1,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",2,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",3,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",4,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",5,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",6,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",7,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",8,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",9,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",10,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",11,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",12,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",13,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",14,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",15,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",16,1,'system_admin')");
-    $dbm->insert("group_permission", " VALUES(0," . $groups['XOOPS_GROUP_ADMIN'] . ",17,1,'system_admin')");
+    $dbm->insert('group_permission', ' VALUES(0,' . $groups['XOOPS_GROUP_ADMIN'] . ",1,1,'system_admin')");
+    $dbm->insert('group_permission', ' VALUES(0,' . $groups['XOOPS_GROUP_ADMIN'] . ",2,1,'system_admin')");
+    $dbm->insert('group_permission', ' VALUES(0,' . $groups['XOOPS_GROUP_ADMIN'] . ",3,1,'system_admin')");
+    $dbm->insert('group_permission', ' VALUES(0,' . $groups['XOOPS_GROUP_ADMIN'] . ",4,1,'system_admin')");
+    $dbm->insert('group_permission', ' VALUES(0,' . $groups['XOOPS_GROUP_ADMIN'] . ",5,1,'system_admin')");
+    $dbm->insert('group_permission', ' VALUES(0,' . $groups['XOOPS_GROUP_ADMIN'] . ",6,1,'system_admin')");
+    $dbm->insert('group_permission', ' VALUES(0,' . $groups['XOOPS_GROUP_ADMIN'] . ",7,1,'system_admin')");
+    $dbm->insert('group_permission', ' VALUES(0,' . $groups['XOOPS_GROUP_ADMIN'] . ",8,1,'system_admin')");
+    $dbm->insert('group_permission', ' VALUES(0,' . $groups['XOOPS_GROUP_ADMIN'] . ",9,1,'system_admin')");
+    $dbm->insert('group_permission', ' VALUES(0,' . $groups['XOOPS_GROUP_ADMIN'] . ",10,1,'system_admin')");
+    $dbm->insert('group_permission', ' VALUES(0,' . $groups['XOOPS_GROUP_ADMIN'] . ",11,1,'system_admin')");
+    $dbm->insert('group_permission', ' VALUES(0,' . $groups['XOOPS_GROUP_ADMIN'] . ",12,1,'system_admin')");
+    $dbm->insert('group_permission', ' VALUES(0,' . $groups['XOOPS_GROUP_ADMIN'] . ",13,1,'system_admin')");
+    $dbm->insert('group_permission', ' VALUES(0,' . $groups['XOOPS_GROUP_ADMIN'] . ",14,1,'system_admin')");
+    $dbm->insert('group_permission', ' VALUES(0,' . $groups['XOOPS_GROUP_ADMIN'] . ",15,1,'system_admin')");
+    $dbm->insert('group_permission', ' VALUES(0,' . $groups['XOOPS_GROUP_ADMIN'] . ",16,1,'system_admin')");
+    $dbm->insert('group_permission', ' VALUES(0,' . $groups['XOOPS_GROUP_ADMIN'] . ",17,1,'system_admin')");
     // data for table 'banner'
-    $dbm->insert("banner", " (bid, cid, imptotal, impmade, clicks, imageurl, clickurl, date, htmlcode) VALUES (1, 1, 0, 1, 0, '" . XOOPS_URL . "/images/banners/xoops_flashbanner2.swf', 'http://www.xoops.org/', 1008813250, '')");
-    $dbm->insert("banner", " (bid, cid, imptotal, impmade, clicks, imageurl, clickurl, date, htmlcode) VALUES (2, 1, 0, 1, 0, '" . XOOPS_URL . "/images/banners/xoops_banner_2.gif', 'http://www.xoops.org/', 1008813250, '')");
-    $dbm->insert("banner", " (bid, cid, imptotal, impmade, clicks, imageurl, clickurl, date, htmlcode) VALUES (3, 1, 0, 1, 0, '" . XOOPS_URL . "/images/banners/banner.swf', 'http://www.xoops.org/', 1008813250, '')");
+    $dbm->insert('banner', " (bid, cid, imptotal, impmade, clicks, imageurl, clickurl, date, htmlcode) VALUES (1, 1, 0, 1, 0, '" . XOOPS_URL . "/images/banners/xoops_flashbanner2.swf', 'http://www.xoops.org/', 1008813250, '')");
+    $dbm->insert('banner', " (bid, cid, imptotal, impmade, clicks, imageurl, clickurl, date, htmlcode) VALUES (2, 1, 0, 1, 0, '" . XOOPS_URL . "/images/banners/xoops_banner_2.gif', 'http://www.xoops.org/', 1008813250, '')");
+    $dbm->insert('banner', " (bid, cid, imptotal, impmade, clicks, imageurl, clickurl, date, htmlcode) VALUES (3, 1, 0, 1, 0, '" . XOOPS_URL . "/images/banners/banner.swf', 'http://www.xoops.org/', 1008813250, '')");
     // default theme
     $time = time();
-    $dbm->insert('tplset', " VALUES (1, 'default', 'XOOPS Default Template Set', '', " . $time . ")");
+    $dbm->insert('tplset', " VALUES (1, 'default', 'XOOPS Default Template Set', '', " . $time . ')');
     // system modules
     if (file_exists('../modules/system/language/' . $language . '/modinfo.php')) {
         include '../modules/system/language/' . $language . '/modinfo.php';
@@ -104,24 +104,24 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
     include_once '../modules/system/xoops_version.php';
     $time = time();
     // RMV-NOTIFY (updated for extra column in table)
-    $dbm->insert("modules", " VALUES (1, '" . _MI_SYSTEM_NAME . "', " . ($modversion['version'] * 100) . ", " . $time . ", 0, 1, 'system', 0, 1, 0, 0, 0, 0)");
+    $dbm->insert('modules', " VALUES (1, '" . _MI_SYSTEM_NAME . "', " . ($modversion['version'] * 100) . ', ' . $time . ", 0, 1, 'system', 0, 1, 0, 0, 0, 0)");
 
     foreach ($modversion['templates'] as $tplfile) {
         // Main templates
         if ($fp = fopen('../modules/system/templates/' . $tplfile['file'], 'r')) {
-            $newtplid = $dbm->insert('tplfile', " VALUES (0, 1, 'system', 'default', '" . addslashes($tplfile['file']) . "', '" . addslashes($tplfile['description']) . "', " . $time . ", " . $time . ", 'module')");
+            $newtplid = $dbm->insert('tplfile', " VALUES (0, 1, 'system', 'default', '" . addslashes($tplfile['file']) . "', '" . addslashes($tplfile['description']) . "', " . $time . ', ' . $time . ", 'module')");
             // $newtplid = $xoopsDB->getInsertId();
             $tplsource = fread($fp, filesize('../modules/system/templates/' . $tplfile['file']));
             fclose($fp);
-            $dbm->insert('tplsource', " (tpl_id, tpl_source) VALUES (" . $newtplid . ", '" . addslashes($tplsource) . "')");
+            $dbm->insert('tplsource', ' (tpl_id, tpl_source) VALUES (' . $newtplid . ", '" . addslashes($tplsource) . "')");
         }
         // Admin templates
         if ($fp = fopen('../modules/system/templates/admin/' . $tplfile['file'], 'r')) {
-            $newtplid = $dbm->insert('tplfile', " VALUES (0, 1, 'system', 'default', '" . addslashes($tplfile['file']) . "', '" . addslashes($tplfile['description']) . "', " . $time . ", " . $time . ", 'admin')");
+            $newtplid = $dbm->insert('tplfile', " VALUES (0, 1, 'system', 'default', '" . addslashes($tplfile['file']) . "', '" . addslashes($tplfile['description']) . "', " . $time . ', ' . $time . ", 'admin')");
             // $newtplid = $xoopsDB->getInsertId();
             $tplsource = fread($fp, filesize('../modules/system/templates/admin/' . $tplfile['file']));
             fclose($fp);
-            $dbm->insert('tplsource', " (tpl_id, tpl_source) VALUES (" . $newtplid . ", '" . addslashes($tplsource) . "')");
+            $dbm->insert('tplsource', ' (tpl_id, tpl_source) VALUES (' . $newtplid . ", '" . addslashes($tplsource) . "')");
         }
     }
 
@@ -133,17 +133,17 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
             }
             $options   = !isset($newblock['options']) ? '' : trim($newblock['options']);
             $edit_func = !isset($newblock['edit_func']) ? '' : trim($newblock['edit_func']);
-            $newbid    = $dbm->insert('newblocks', " VALUES (0, 1, " . $func_num . ", '" . addslashes($options) . "', '" . addslashes($newblock['name']) . "', '" . addslashes($newblock['name']) . "', '', 0, 0, " . $visible . ", 'S', 'H', 1, 'system', '" . addslashes($newblock['file']) . "', '" . addslashes($newblock['show_func']) . "', '" . addslashes($edit_func) . "', '" . addslashes($newblock['template']) . "', 0, " . $time . ")");
+            $newbid    = $dbm->insert('newblocks', ' VALUES (0, 1, ' . $func_num . ", '" . addslashes($options) . "', '" . addslashes($newblock['name']) . "', '" . addslashes($newblock['name']) . "', '', 0, 0, " . $visible . ", 'S', 'H', 1, 'system', '" . addslashes($newblock['file']) . "', '" . addslashes($newblock['show_func']) . "', '" . addslashes($edit_func) . "', '" . addslashes($newblock['template']) . "', 0, " . $time . ')');
             // $newbid = $xoopsDB->getInsertId();
-            $newtplid = $dbm->insert('tplfile', " VALUES (0, " . $newbid . ", 'system', 'default', '" . addslashes($newblock['template']) . "', '" . addslashes($newblock['description']) . "', " . $time . ", " . $time . ", 'block')");
+            $newtplid = $dbm->insert('tplfile', ' VALUES (0, ' . $newbid . ", 'system', 'default', '" . addslashes($newblock['template']) . "', '" . addslashes($newblock['description']) . "', " . $time . ', ' . $time . ", 'block')");
             // $newtplid = $xoopsDB->getInsertId();
             $tplsource = fread($fp, filesize('../modules/system/templates/blocks/' . $newblock['template']));
             fclose($fp);
-            $dbm->insert('tplsource', " (tpl_id, tpl_source) VALUES (" . $newtplid . ", '" . addslashes($tplsource) . "')");
-            $dbm->insert("group_permission", " VALUES (0, " . $groups['XOOPS_GROUP_ADMIN'] . ", " . $newbid . ", 1, 'block_read')");
+            $dbm->insert('tplsource', ' (tpl_id, tpl_source) VALUES (' . $newtplid . ", '" . addslashes($tplsource) . "')");
+            $dbm->insert('group_permission', ' VALUES (0, ' . $groups['XOOPS_GROUP_ADMIN'] . ', ' . $newbid . ", 1, 'block_read')");
             // $dbm->insert("group_permission", " VALUES (0, ".$groups['XOOPS_GROUP_ADMIN'].", ".$newbid.", 'xoops_blockadmiin')");
-            $dbm->insert("group_permission", " VALUES (0, " . $groups['XOOPS_GROUP_USERS'] . ", " . $newbid . ", 1, 'block_read')");
-            $dbm->insert("group_permission", " VALUES (0, " . $groups['XOOPS_GROUP_ANONYMOUS'] . ", " . $newbid . ", 1, 'block_read')");
+            $dbm->insert('group_permission', ' VALUES (0, ' . $groups['XOOPS_GROUP_USERS'] . ', ' . $newbid . ", 1, 'block_read')");
+            $dbm->insert('group_permission', ' VALUES (0, ' . $groups['XOOPS_GROUP_ANONYMOUS'] . ', ' . $newbid . ", 1, 'block_read')");
         }
     }
     // data for table 'users'
@@ -158,9 +158,9 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
 
     while ($myrow = $dbm->fetchArray($result)) {
         if ($myrow['side'] == 0) {
-            $dbm->insert("block_module_link", " VALUES (" . $myrow['bid'] . ", 0)");
+            $dbm->insert('block_module_link', ' VALUES (' . $myrow['bid'] . ', 0)');
         } else {
-            $dbm->insert("block_module_link", " VALUES (" . $myrow['bid'] . ", -1)");
+            $dbm->insert('block_module_link', ' VALUES (' . $myrow['bid'] . ', -1)');
         }
     }
     // data for table 'config'
@@ -312,30 +312,30 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
     $editors = XoopsLists::getDirListAsArray('../class/xoopseditor');
     $conf    = 35;
     foreach ($editors as $dir) {
-        $dbm->insert('configoption', " VALUES (" . $conf . ", '" . $dir . "', '" . $dir . "', 126)");
+        $dbm->insert('configoption', ' VALUES (' . $conf . ", '" . $dir . "', '" . $dir . "', 126)");
         ++$conf;
     }
     foreach ($editors as $dir) {
-        $dbm->insert('configoption', " VALUES (" . $conf . ", '" . $dir . "', '" . $dir . "', 127)");
+        $dbm->insert('configoption', ' VALUES (' . $conf . ", '" . $dir . "', '" . $dir . "', 127)");
         ++$conf;
     }
     foreach ($editors as $dir) {
-        $dbm->insert('configoption', " VALUES (" . $conf . ", '" . $dir . "', '" . $dir . "', 128)");
+        $dbm->insert('configoption', ' VALUES (' . $conf . ", '" . $dir . "', '" . $dir . "', 128)");
         ++$conf;
     }
     $icons = XoopsLists::getDirListAsArray('../modules/system/images/icons');
     foreach ($icons as $dir) {
-        $dbm->insert('configoption', " VALUES (" . $conf . ", '" . $dir . "', '" . $dir . "', 98)");
+        $dbm->insert('configoption', ' VALUES (' . $conf . ", '" . $dir . "', '" . $dir . "', 98)");
         ++$conf;
     }
     $breadcrumb = XoopsLists::getDirListAsArray('../modules/system/images/breadcrumb');
     foreach ($breadcrumb as $dir) {
-        $dbm->insert('configoption', " VALUES (" . $conf . ", '" . $dir . "', '" . $dir . "', 99)");
+        $dbm->insert('configoption', ' VALUES (' . $conf . ", '" . $dir . "', '" . $dir . "', 99)");
         ++$conf;
     }
     $jqueryui = XoopsLists::getDirListAsArray('../modules/system/css/ui');
     foreach ($jqueryui as $dir) {
-        $dbm->insert('configoption', " VALUES (" . $conf . ", '" . $dir . "', '" . $dir . "', 133)");
+        $dbm->insert('configoption', ' VALUES (' . $conf . ", '" . $dir . "', '" . $dir . "', 133)");
         ++$conf;
     }
 

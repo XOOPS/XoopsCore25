@@ -86,7 +86,7 @@ function getDbValue(XoopsDatabase $db, $table, $field, $condition = '')
 $upgrade_language = @$xoopsConfig['language'];
 // $xoopsConfig might not be able fetched
 if (empty($upgrade_language)) {
-    include_once "./language.php";
+    include_once './language.php';
     $upgrade_language = xoops_detectLanguage();
 }
 
@@ -94,9 +94,9 @@ if (file_exists("./language/{$upgrade_language}/upgrade.php")) {
     include_once "./language/{$upgrade_language}/upgrade.php";
 } elseif (file_exists("./language/{$upgrade_language}_utf8/upgrade.php")) {
     include_once "./language/{$upgrade_language}_utf8/upgrade.php";
-    $upgrade_language .= "_utf8";
-} elseif (file_exists("./language/english/upgrade.php")) {
-    include_once "./language/english/upgrade.php";
+    $upgrade_language .= '_utf8';
+} elseif (file_exists('./language/english/upgrade.php')) {
+    include_once './language/english/upgrade.php';
     $upgrade_language = 'english';
 } else {
     echo 'no language file.';
@@ -106,7 +106,7 @@ if (file_exists("./language/{$upgrade_language}/upgrade.php")) {
 ob_start();
 global $xoopsUser;
 if (!$xoopsUser || !$xoopsUser->isAdmin()) {
-    include_once "login.php";
+    include_once 'login.php';
 } else {
     $op = @$_REQUEST['action'];
     if (empty($_SESSION['xoops_upgrade']['steps'])) {
@@ -120,7 +120,7 @@ if (!$xoopsUser || !$xoopsUser->isAdmin()) {
         $upgrader = include_once "{$next}/index.php";
         $res      = $upgrader->apply();
         if ($message = $upgrader->message()) {
-            echo "<p>" . $message . "</p>";
+            echo '<p>' . $message . '</p>';
         }
 
         if (!$res) {

@@ -81,7 +81,7 @@ EOH;
         //        $ts->replacements[] = __CLASS__ . "::decode( '\\1' )";
         //mb------------------------------
         $ts->callbackPatterns[] = "/\[\[([^\]]*)\]\]/sU";
-        $ts->callbacks[]        = __CLASS__ . "::myCallback";
+        $ts->callbacks[]        = __CLASS__ . '::myCallback';
         //mb------------------------------
     }
 
@@ -96,7 +96,7 @@ EOH;
         if (empty($text) || empty($config['link'])) {
             return $text;
         }
-        $charset = !empty($config['charset']) ? $config['charset'] : "UTF-8";
+        $charset = !empty($config['charset']) ? $config['charset'] : 'UTF-8';
         xoops_load('XoopsLocal');
         $ret = "<a href='" . sprintf($config['link'], urlencode(XoopsLocal::convert_encoding($text, $charset))) . "' rel='external' title=''>{$text}</a>";
 

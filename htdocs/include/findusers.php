@@ -58,7 +58,7 @@ class XoopsRank extends XoopsObject
         $this->initVar('rank_min', XOBJ_DTYPE_INT, 0);
         $this->initVar('rank_max', XOBJ_DTYPE_INT, 0);
         $this->initVar('rank_special', XOBJ_DTYPE_INT, 0);
-        $this->initVar('rank_image', XOBJ_DTYPE_TXTBOX, "");
+        $this->initVar('rank_image', XOBJ_DTYPE_TXTBOX, '');
     }
 }
 
@@ -103,7 +103,7 @@ class XoopsRankHandler extends XoopsObjectHandler
     public function get($id = 0)
     {
         $object = $this->create(false);
-        $sql    = "SELECT * FROM " . $this->db->prefix('ranks') . " WHERE rank_id = " . $this->db->quoteString($id);
+        $sql    = 'SELECT * FROM ' . $this->db->prefix('ranks') . ' WHERE rank_id = ' . $this->db->quoteString($id);
         if (!$result = $this->db->query($sql)) {
             $ret = null;
 
@@ -167,12 +167,12 @@ class XoUser extends XoopsUser
     {
         parent::__construct();
         $unsets = array(
-            "actkey",
-            "pass",
-            "theme",
-            "umode",
-            "uorder",
-            "notify_mode");
+            'actkey',
+            'pass',
+            'theme',
+            'umode',
+            'uorder',
+            'notify_mode');
         foreach ($unsets as $var) {
             unset($this->vars[$var]);
         }
@@ -263,26 +263,26 @@ class XoUserHandler extends XoopsObjectHandler
         } else {
             $sql = '    SELECT u.* FROM ' . $this->db->prefix('users') . ' AS u' . '    LEFT JOIN ' . $this->db->prefix('groups_users_link') . ' AS g ON g.uid = u.uid' . '    WHERE g.groupid IN (' . implode(', ', array_map('intval', $groups)) . ')';
         }
-        if (isset($criteria) && is_subclass_of($criteria, "criteriaelement")) {
+        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             if ($render = $criteria->render()) {
                 $sql .= ' AND ' . $render;
             }
             if ($sort = $criteria->getSort()) {
-                $sql .= " ORDER BY " . $sort . " " . $criteria->getOrder();
+                $sql .= ' ORDER BY ' . $sort . ' ' . $criteria->getOrder();
                 $orderSet = true;
             }
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
         }
         if (empty($orderSet)) {
-            $sql .= " ORDER BY u.uid ASC";
+            $sql .= ' ORDER BY u.uid ASC';
         }
         $result = $this->db->query($sql, $limit, $start);
         $ret    = array();
         while ($myrow = $this->db->fetchArray($result)) {
             $object = $this->create(false);
             $object->assignVars($myrow);
-            $ret[$myrow["uid"]] = $object;
+            $ret[$myrow['uid']] = $object;
             unset($object);
         }
 
@@ -316,51 +316,51 @@ $modes = array(
     FINDUSERS_MODE_ADVANCED => _MA_USER_MODE_ADVANCED,
     FINDUSERS_MODE_QUERY    => _MA_USER_MODE_QUERY);
 
-if (empty($_POST["user_submit"])) {
+if (empty($_POST['user_submit'])) {
     include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
-    $form = new XoopsThemeForm(_MA_USER_FINDUS, "uesr_findform", "findusers.php", 'post', true);
-    $mode = (int)(@$_REQUEST["mode"]);
+    $form = new XoopsThemeForm(_MA_USER_FINDUS, 'uesr_findform', 'findusers.php', 'post', true);
+    $mode = (int)(@$_REQUEST['mode']);
     if (FINDUSERS_MODE_QUERY == $mode) {
-        $form->addElement(new XoopsFormTextArea(_MA_USER_QUERY, "query", @$_POST["query"]));
+        $form->addElement(new XoopsFormTextArea(_MA_USER_QUERY, 'query', @$_POST['query']));
     } else {
         if (FINDUSERS_MODE_ADVANCED == $mode) {
             foreach ($items_match as $var => $title) {
-                $text       = new XoopsFormText("", $var, 30, 100, @$_POST[$var]);
-                $match      = new XoopsFormSelectMatchOption("", "{$var}_match", @$_POST["{$var}_match"]);
-                $match_tray = new XoopsFormElementTray($title, "&nbsp;");
+                $text       = new XoopsFormText('', $var, 30, 100, @$_POST[$var]);
+                $match      = new XoopsFormSelectMatchOption('', "{$var}_match", @$_POST["{$var}_match"]);
+                $match_tray = new XoopsFormElementTray($title, '&nbsp;');
                 $match_tray->addElement($match);
                 $match_tray->addElement($text);
                 $form->addElement($match_tray);
                 unset($text, $match, $match_tray);
             }
 
-            $url_text        = new XoopsFormText(_MA_USER_URLC, "url", 30, 100, @$_POST["url"]);
-            $location_text   = new XoopsFormText(_MA_USER_LOCATION, "user_from", 30, 100, @$_POST["user_from"]);
-            $occupation_text = new XoopsFormText(_MA_USER_OCCUPATION, "user_occ", 30, 100, @$_POST["user_occ"]);
-            $interest_text   = new XoopsFormText(_MA_USER_INTEREST, "user_intrest", 30, 100, @$_POST["user_intrest"]);
+            $url_text        = new XoopsFormText(_MA_USER_URLC, 'url', 30, 100, @$_POST['url']);
+            $location_text   = new XoopsFormText(_MA_USER_LOCATION, 'user_from', 30, 100, @$_POST['user_from']);
+            $occupation_text = new XoopsFormText(_MA_USER_OCCUPATION, 'user_occ', 30, 100, @$_POST['user_occ']);
+            $interest_text   = new XoopsFormText(_MA_USER_INTEREST, 'user_intrest', 30, 100, @$_POST['user_intrest']);
             foreach ($items_range as $var => $title) {
-                $more       = new XoopsFormText("", "{$var}_more", 10, 5, @$_POST["{$var}_more"]);
-                $less       = new XoopsFormText("", "{$var}_less", 10, 5, @$_POST["{$var}_less"]);
-                $range_tray = new XoopsFormElementTray($title, "&nbsp;-&nbsp;&nbsp;");
+                $more       = new XoopsFormText('', "{$var}_more", 10, 5, @$_POST["{$var}_more"]);
+                $less       = new XoopsFormText('', "{$var}_less", 10, 5, @$_POST["{$var}_less"]);
+                $range_tray = new XoopsFormElementTray($title, '&nbsp;-&nbsp;&nbsp;');
                 $range_tray->addElement($less);
                 $range_tray->addElement($more);
                 $form->addElement($range_tray);
                 unset($more, $less, $range_tray);
             }
 
-            $mailok_radio = new XoopsFormRadio(_MA_USER_SHOWMAILOK, "user_mailok", empty($_POST["user_mailok"]) ? "both" : $_POST["user_mailok"]);
+            $mailok_radio = new XoopsFormRadio(_MA_USER_SHOWMAILOK, 'user_mailok', empty($_POST['user_mailok']) ? 'both' : $_POST['user_mailok']);
             $mailok_radio->addOptionArray(array(
-                                              "mailok" => _MA_USER_MAILOK,
-                                              "mailng" => _MA_USER_MAILNG,
-                                              "both"   => _MA_USER_BOTH));
-            $avatar_radio = new XoopsFormRadio(_MA_USER_HASAVATAR, "user_avatar", empty($_POST["user_avatar"]) ? "both" : $_POST["user_avatar"]);
+                                              'mailok' => _MA_USER_MAILOK,
+                                              'mailng' => _MA_USER_MAILNG,
+                                              'both' => _MA_USER_BOTH));
+            $avatar_radio = new XoopsFormRadio(_MA_USER_HASAVATAR, 'user_avatar', empty($_POST['user_avatar']) ? 'both' : $_POST['user_avatar']);
             $avatar_radio->addOptionArray(array(
-                                              "y"    => _YES,
-                                              "n"    => _NO,
-                                              "both" => _MA_USER_BOTH));
+                                              'y' => _YES,
+                                              'n' => _NO,
+                                              'both' => _MA_USER_BOTH));
 
-            $level_radio = new XoopsFormRadio(_MA_USER_LEVEL, "level", @$_POST["level"]);
+            $level_radio = new XoopsFormRadio(_MA_USER_LEVEL, 'level', @$_POST['level']);
             $levels      = array(
                 0 => _ALL,
                 1 => _MA_USER_LEVEL_ACTIVE,
@@ -389,12 +389,12 @@ if (empty($_POST["user_submit"])) {
             $form->addElement($rank_select);
         } else {
             foreach (array(
-                         "uname",
-                         "email") as $var) {
+                         'uname',
+                         'email') as $var) {
                 $title      = $items_match[$var];
-                $text       = new XoopsFormText("", $var, 30, 100, @$_POST[$var]);
-                $match      = new XoopsFormSelectMatchOption("", "{$var}_match", @$_POST["{$var}_match"]);
-                $match_tray = new XoopsFormElementTray($title, "&nbsp;");
+                $text       = new XoopsFormText('', $var, 30, 100, @$_POST[$var]);
+                $match      = new XoopsFormSelectMatchOption('', "{$var}_match", @$_POST["{$var}_match"]);
+                $match_tray = new XoopsFormElementTray($title, '&nbsp;');
                 $match_tray->addElement($match);
                 $match_tray->addElement($text);
                 $form->addElement($match_tray);
@@ -402,51 +402,51 @@ if (empty($_POST["user_submit"])) {
             }
         }
 
-        $sort_select = new XoopsFormSelect(_MA_USER_SORT, "user_sort", @$_POST["user_sort"]);
+        $sort_select = new XoopsFormSelect(_MA_USER_SORT, 'user_sort', @$_POST['user_sort']);
         $sort_select->addOptionArray(array(
-                                         "uname"        => _MA_USER_UNAME,
-                                         "last_login"   => _MA_USER_LASTLOGIN,
-                                         "user_regdate" => _MA_USER_REGDATE,
-                                         "posts"        => _MA_USER_POSTS));
-        $order_select = new XoopsFormSelect(_MA_USER_ORDER, "user_order", @$_POST["user_order"]);
+                                         'uname' => _MA_USER_UNAME,
+                                         'last_login' => _MA_USER_LASTLOGIN,
+                                         'user_regdate' => _MA_USER_REGDATE,
+                                         'posts' => _MA_USER_POSTS));
+        $order_select = new XoopsFormSelect(_MA_USER_ORDER, 'user_order', @$_POST['user_order']);
         $order_select->addOptionArray(array(
-                                          "ASC"  => _MA_USER_ASC,
-                                          "DESC" => _MA_USER_DESC));
+                                          'ASC' => _MA_USER_ASC,
+                                          'DESC' => _MA_USER_DESC));
 
         $form->addElement($sort_select);
         $form->addElement($order_select);
     }
-    $form->addElement(new XoopsFormText(_MA_USER_LIMIT, "limit", 6, 6, empty($_REQUEST["limit"]) ? 50 : (int)($_REQUEST["limit"])));
-    $form->addElement(new XoopsFormHidden("mode", $mode));
-    $form->addElement(new XoopsFormHidden("target", @$_REQUEST["target"]));
-    $form->addElement(new XoopsFormHidden("multiple", @$_REQUEST["multiple"]));
-    $form->addElement(new XoopsFormHidden("token", $token));
-    $form->addElement(new XoopsFormButton("", "user_submit", _SUBMIT, "submit"));
+    $form->addElement(new XoopsFormText(_MA_USER_LIMIT, 'limit', 6, 6, empty($_REQUEST['limit']) ? 50 : (int)$_REQUEST['limit']));
+    $form->addElement(new XoopsFormHidden('mode', $mode));
+    $form->addElement(new XoopsFormHidden('target', @$_REQUEST['target']));
+    $form->addElement(new XoopsFormHidden('multiple', @$_REQUEST['multiple']));
+    $form->addElement(new XoopsFormHidden('token', $token));
+    $form->addElement(new XoopsFormButton('', 'user_submit', _SUBMIT, 'submit'));
 
     $acttotal   = $user_handler->getCount(new Criteria('level', 0, '>'));
     $inacttotal = $user_handler->getCount(new Criteria('level', 0, '<='));
-    echo "</html><body>";
-    echo "<h2 style='text-align:left;'>" . _MA_USER_FINDUS . " - " . $modes[$mode] . "</h2>";
+    echo '</html><body>';
+    echo "<h2 style='text-align:left;'>" . _MA_USER_FINDUS . ' - ' . $modes[$mode] . '</h2>';
     $modes_switch = array();
     foreach ($modes as $_mode => $title) {
         if ($mode == $_mode) {
             continue;
         }
-        $modes_switch[] = "<a href='findusers.php?target=" . htmlspecialchars(@$_REQUEST["target"], ENT_QUOTES) . "&amp;multiple=" . htmlspecialchars(@$_REQUEST["multiple"], ENT_QUOTES) . "&amp;token=" . htmlspecialchars($token, ENT_QUOTES) . "&amp;mode={$_mode}'>{$title}</a>";
+        $modes_switch[] = "<a href='findusers.php?target=" . htmlspecialchars(@$_REQUEST['target'], ENT_QUOTES) . '&amp;multiple=' . htmlspecialchars(@$_REQUEST['multiple'], ENT_QUOTES) . '&amp;token=' . htmlspecialchars($token, ENT_QUOTES) . "&amp;mode={$_mode}'>{$title}</a>";
     }
-    echo "<h4>" . implode(" | ", $modes_switch) . "</h4>";
-    echo "(" . sprintf(_MA_USER_ACTUS, "<span style='color:#ff0000;'>$acttotal</span>") . " " . sprintf(_MA_USER_INACTUS, "<span style='color:#ff0000;'>$inacttotal</span>") . ")";
+    echo '<h4>' . implode(' | ', $modes_switch) . '</h4>';
+    echo '(' . sprintf(_MA_USER_ACTUS, "<span style='color:#ff0000;'>$acttotal</span>") . ' ' . sprintf(_MA_USER_INACTUS, "<span style='color:#ff0000;'>$inacttotal</span>") . ')';
     $form->display();
 } else {
     $myts  = MyTextSanitizer::getInstance();
-    $limit = empty($_POST['limit']) ? 50 : (int)($_POST['limit']);
+    $limit = empty($_POST['limit']) ? 50 : (int)$_POST['limit'];
     $start = (int)(@$_POST['start']);
-    if (!isset($_POST["query"])) {
+    if (!isset($_POST['query'])) {
         $criteria = new CriteriaCompo();
         foreach (array_keys($items_match) as $var) {
             if (!empty($_POST[$var])) {
-                $match = (!empty($_POST["{$var}_match"])) ? (int)($_POST["{$var}_match"]) : XOOPS_MATCH_START;
-                $value = str_replace("_", "\\\_", $myts->addSlashes(trim($_POST[$var])));
+                $match = (!empty($_POST["{$var}_match"])) ? (int)$_POST["{$var}_match"] : XOOPS_MATCH_START;
+                $value = str_replace('_', "\\\_", $myts->addSlashes(trim($_POST[$var])));
                 switch ($match) {
                     case XOOPS_MATCH_START:
                         $criteria->add(new Criteria($var, $value . '%', 'LIKE'));
@@ -477,38 +477,38 @@ if (empty($_POST["user_submit"])) {
             $criteria->add(new Criteria('user_occ', '%' . $myts->addSlashes(trim($_POST['user_occ'])) . '%', 'LIKE'));
         }
         foreach (array(
-                     "last_login",
-                     "user_regdate") as $var) {
+                     'last_login',
+                     'user_regdate') as $var) {
             if (!empty($_POST["{$var}_more"]) && is_numeric($_POST["{$var}_more"])) {
-                $time = time() - (60 * 60 * 24 * (int)(trim($_POST["{$var}_more"])));
+                $time = time() - (60 * 60 * 24 * (int)trim($_POST["{$var}_more"]));
                 if ($time > 0) {
                     $criteria->add(new Criteria($var, $time, '<='));
                 }
             }
             if (!empty($_POST["{$var}_less"]) && is_numeric($_POST["{$var}_less"])) {
-                $time = time() - (60 * 60 * 24 * (int)(trim($_POST["{$var}_less"])));
+                $time = time() - (60 * 60 * 24 * (int)trim($_POST["{$var}_less"]));
                 if ($time > 0) {
                     $criteria->add(new Criteria($var, $time, '>='));
                 }
             }
         }
         if (!empty($_POST['posts_more']) && is_numeric($_POST['posts_more'])) {
-            $criteria->add(new Criteria('posts', (int)($_POST['posts_more']), '<='));
+            $criteria->add(new Criteria('posts', (int)$_POST['posts_more'], '<='));
         }
         if (!empty($_POST['posts_less']) && is_numeric($_POST['posts_less'])) {
-            $criteria->add(new Criteria('posts', (int)($_POST['posts_less']), '>='));
+            $criteria->add(new Criteria('posts', (int)$_POST['posts_less'], '>='));
         }
         if (!empty($_POST['user_mailok'])) {
-            if ($_POST['user_mailok'] === "mailng") {
+            if ($_POST['user_mailok'] === 'mailng') {
                 $criteria->add(new Criteria('user_mailok', 0));
-            } elseif ($_POST['user_mailok'] === "mailok") {
+            } elseif ($_POST['user_mailok'] === 'mailok') {
                 $criteria->add(new Criteria('user_mailok', 1));
             }
         }
         if (!empty($_POST['user_avatar'])) {
-            if ($_POST['user_avatar'] === "y") {
+            if ($_POST['user_avatar'] === 'y') {
                 $criteria->add(new Criteria('user_avatar', "('', 'blank.gif')", 'NOT IN'));
-            } elseif ($_POST['user_avatar'] === "n") {
+            } elseif ($_POST['user_avatar'] === 'n') {
                 $criteria->add(new Criteria('user_avatar', "('', 'blank.gif')", 'IN'));
             }
         }
@@ -517,57 +517,57 @@ if (empty($_POST["user_submit"])) {
                 1 => 1,
                 2 => 0,
                 3 => -1);
-            $level       = isset($level_value[(int)($_POST["level"])]) ? $level_value[(int)($_POST["level"])] : 1;
-            $criteria->add(new Criteria("level", $level));
+            $level       = isset($level_value[(int)$_POST['level']]) ? $level_value[(int)$_POST['level']] : 1;
+            $criteria->add(new Criteria('level', $level));
         }
         if (!empty($_POST['rank'])) {
             $rank_obj = $rank_handler->get($_POST['rank']);
-            if ($rank_obj->getVar("rank_special")) {
-                $criteria->add(new Criteria("rank", (int)($_POST['rank'])));
+            if ($rank_obj->getVar('rank_special')) {
+                $criteria->add(new Criteria('rank', (int)$_POST['rank']));
             } else {
-                if ($rank_obj->getVar("rank_min")) {
-                    $criteria->add(new Criteria('posts', $rank_obj->getVar("rank_min"), '>='));
+                if ($rank_obj->getVar('rank_min')) {
+                    $criteria->add(new Criteria('posts', $rank_obj->getVar('rank_min'), '>='));
                 }
-                if ($rank_obj->getVar("rank_max")) {
-                    $criteria->add(new Criteria('posts', $rank_obj->getVar("rank_max"), '<='));
+                if ($rank_obj->getVar('rank_max')) {
+                    $criteria->add(new Criteria('posts', $rank_obj->getVar('rank_max'), '<='));
                 }
             }
         }
-        $total     = $user_handler->getCount($criteria, @$_POST["groups"]);
+        $total     = $user_handler->getCount($criteria, @$_POST['groups']);
         $validsort = array(
-            "uname",
-            "email",
-            "last_login",
-            "user_regdate",
-            "posts");
-        $sort      = (!in_array($_POST['user_sort'], $validsort)) ? "uname" : $_POST['user_sort'];
-        $order     = "ASC";
-        if (isset($_POST['user_order']) && $_POST['user_order'] === "DESC") {
-            $order = "DESC";
+            'uname',
+            'email',
+            'last_login',
+            'user_regdate',
+            'posts');
+        $sort      = (!in_array($_POST['user_sort'], $validsort)) ? 'uname' : $_POST['user_sort'];
+        $order     = 'ASC';
+        if (isset($_POST['user_order']) && $_POST['user_order'] === 'DESC') {
+            $order = 'DESC';
         }
         $criteria->setSort($sort);
         $criteria->setOrder($order);
         $criteria->setLimit($limit);
         $criteria->setStart($start);
-        $foundusers = $user_handler->getAll($criteria, @$_POST["groups"]);
+        $foundusers = $user_handler->getAll($criteria, @$_POST['groups']);
     } else {
-        $query = trim($_POST["query"]);
+        $query = trim($_POST['query']);
         // Query with alias
-        if (preg_match("/select[\s]+.*[\s]+from[\s]+(" . $xoopsDB->prefix("users") . "[\s]+as[\s]+(\S+).*)/i", $query, $matches)) {
+        if (preg_match("/select[\s]+.*[\s]+from[\s]+(" . $xoopsDB->prefix('users') . "[\s]+as[\s]+(\S+).*)/i", $query, $matches)) {
             $alias    = $matches[2];
             $subquery = $matches[1];
 
             // Query without alias
-        } elseif (preg_match("/select[\s]+.*[\s]+from[\s]+(" . $xoopsDB->prefix("users") . "\b.*)/i", $query, $matches)) {
-            $alias    = "";
+        } elseif (preg_match("/select[\s]+.*[\s]+from[\s]+(" . $xoopsDB->prefix('users') . "\b.*)/i", $query, $matches)) {
+            $alias    = '';
             $subquery = $matches[1];
 
             // Invalid query
         } else {
-            $query    = "SELECT * FROM " . $xoopsDB->prefix("users");
-            $subquery = $xoopsDB->prefix("users");
+            $query    = 'SELECT * FROM ' . $xoopsDB->prefix('users');
+            $subquery = $xoopsDB->prefix('users');
         }
-        $sql_count = "SELECT COUNT(DISTINCT " . (empty($alias) ? "" : $alias . ".") . "uid) FROM " . $subquery;
+        $sql_count = 'SELECT COUNT(DISTINCT ' . (empty($alias) ? '' : $alias . '.') . 'uid) FROM ' . $subquery;
         $result    = $xoopsDB->query($sql_count);
         list($total) = $xoopsDB->FetchRow($result);
         $result     = $xoopsDB->query($query, $limit, $start);
@@ -575,14 +575,14 @@ if (empty($_POST["user_submit"])) {
         while ($myrow = $xoopsDB->fetchArray($result)) {
             $object = $user_handler->create(false);
             $object->assignVars($myrow);
-            $foundusers[$myrow["uid"]] = $object;
+            $foundusers[$myrow['uid']] = $object;
             unset($object);
         }
     }
 
     echo $js_adduser = '
         <script type="text/javascript">
-        var multiple=' . (int)($_REQUEST['multiple']) . ';
+        var multiple=' . (int)$_REQUEST['multiple'] . ';
         function addusers()
         {
             var sel_str = "";
@@ -613,10 +613,10 @@ if (empty($_POST["user_submit"])) {
         </script>
     ';
 
-    echo "</html><body>";
-    echo "<a href='findusers.php?target=" . htmlspecialchars(@$_POST["target"], ENT_QUOTES) . "&amp;multiple=" . (int)(@$_POST["multiple"]) . "&amp;token=" . htmlspecialchars($token, ENT_QUOTES) . "'>" . _MA_USER_FINDUS . "</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;" . _MA_USER_RESULTS . "<br /><br />";
+    echo '</html><body>';
+    echo "<a href='findusers.php?target=" . htmlspecialchars(@$_POST['target'], ENT_QUOTES) . '&amp;multiple=' . (int)(@$_POST['multiple']) . '&amp;token=' . htmlspecialchars($token, ENT_QUOTES) . "'>" . _MA_USER_FINDUS . "</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;" . _MA_USER_RESULTS . '<br /><br />';
     if (empty($start) && empty($foundusers)) {
-        echo "<h4>" . _MA_USER_NOFOUND, "</h4>";
+        echo '<h4>' . _MA_USER_NOFOUND, '</h4>';
         $hiddenform = "<form name='findnext' action='findusers.php' method='post'>";
         foreach ($_POST as $k => $v) {
             if ($k === 'XOOPS_TOKEN_REQUEST') {
@@ -633,21 +633,21 @@ if (empty($_POST["user_submit"])) {
             $hiddenform .= "<input type='hidden' name='start' value='{$start}' />\n";
         }
         $hiddenform .= "<input type='hidden' name='token' value='" . htmlspecialchars($token, ENT_QUOTES) . "' />\n";
-        $hiddenform .= "</form>";
+        $hiddenform .= '</form>';
 
-        echo "<div>" . $hiddenform;
+        echo '<div>' . $hiddenform;
         echo "<a href='#' onclick='document.findnext.start.value=0;document.findnext.user_submit.value=0;document.findnext.submit();'>" . _MA_USER_SEARCHAGAIN . "</a>\n";
-        echo "</div>";
+        echo '</div>';
     } elseif ($start < $total) {
         if (!empty($total)) {
-            echo sprintf(_MA_USER_USERSFOUND, $total) . "<br />";
+            echo sprintf(_MA_USER_USERSFOUND, $total) . '<br />';
         }
         if (!empty($foundusers)) {
             echo "<form action='findusers.php' method='post' name='{$name_form}' id='{$name_form}'>
             <table width='100%' border='0' cellspacing='1' cellpadding='4' class='outer'>
             <tr>
             <th align='center' width='5px'>";
-            if (!empty($_POST["multiple"])) {
+            if (!empty($_POST['multiple'])) {
                 echo "<input type='checkbox' name='memberslist_checkall' id='memberslist_checkall' onclick='xoopsCheckAll(\"{$name_form}\", \"memberslist_checkall\");' />";
             }
             echo "</th>
@@ -655,8 +655,8 @@ if (empty($_POST["user_submit"])) {
             <th align='center'>" . _MA_USER_REALNAME . "</th>
             <th align='center'>" . _MA_USER_REGDATE . "</th>
             <th align='center'>" . _MA_USER_LASTLOGIN . "</th>
-            <th align='center'>" . _MA_USER_POSTS . "</th>
-            </tr>";
+            <th align='center'>" . _MA_USER_POSTS . '</th>
+            </tr>';
             $ucount = 0;
             foreach (array_keys($foundusers) as $j) {
                 $class = 'odd';
@@ -664,30 +664,30 @@ if (empty($_POST["user_submit"])) {
                     $class = 'even';
                 }
                 ++$ucount;
-                $fuser_name = $foundusers[$j]->getVar("name") ?: "&nbsp;";
+                $fuser_name = $foundusers[$j]->getVar('name') ?: '&nbsp;';
                 echo "<tr class='$class'>
                     <td align='center'>";
-                if (!empty($_POST["multiple"])) {
-                    echo "<input type='checkbox' name='{$name_userid}' id='{$name_userid}' value='" . $foundusers[$j]->getVar("uid") . "' />";
-                    echo "<input type='hidden' name='{$name_username}' id='{$name_username}' value='" . $foundusers[$j]->getVar("uname") . "' />";
+                if (!empty($_POST['multiple'])) {
+                    echo "<input type='checkbox' name='{$name_userid}' id='{$name_userid}' value='" . $foundusers[$j]->getVar('uid') . "' />";
+                    echo "<input type='hidden' name='{$name_username}' id='{$name_username}' value='" . $foundusers[$j]->getVar('uname') . "' />";
                 } else {
-                    echo "<input type='radio' name='{$name_userid}' id='{$name_userid}' value='" . $foundusers[$j]->getVar("uid") . "' />";
-                    echo "<input type='hidden' name='{$name_username}' id='{$name_username}' value='" . $foundusers[$j]->getVar("uname") . "' />";
+                    echo "<input type='radio' name='{$name_userid}' id='{$name_userid}' value='" . $foundusers[$j]->getVar('uid') . "' />";
+                    echo "<input type='hidden' name='{$name_username}' id='{$name_username}' value='" . $foundusers[$j]->getVar('uname') . "' />";
                 }
                 echo "</td>
-                    <td><a href='" . XOOPS_URL . "/userinfo.php?uid=" . $foundusers[$j]->getVar("uid") . "' target='_blank'>" . $foundusers[$j]->getVar("uname") . "</a></td>
-                    <td>" . $fuser_name . "</td>
-                    <td align='center'>" . ($foundusers[$j]->getVar("user_regdate") ? date("Y-m-d", $foundusers[$j]->getVar("user_regdate")) : "") . "</td>
-                    <td align='center'>" . ($foundusers[$j]->getVar("last_login") ? date("Y-m-d H:i", $foundusers[$j]->getVar("last_login")) : "") . "</td>
-                    <td align='center'>" . $foundusers[$j]->getVar("posts") . "</td>";
+                    <td><a href='" . XOOPS_URL . '/userinfo.php?uid=' . $foundusers[$j]->getVar('uid') . "' target='_blank'>" . $foundusers[$j]->getVar('uname') . '</a></td>
+                    <td>' . $fuser_name . "</td>
+                    <td align='center'>" . ($foundusers[$j]->getVar('user_regdate') ? date('Y-m-d', $foundusers[$j]->getVar('user_regdate')) : '') . "</td>
+                    <td align='center'>" . ($foundusers[$j]->getVar('last_login') ? date('Y-m-d H:i', $foundusers[$j]->getVar('last_login')) : '') . "</td>
+                    <td align='center'>" . $foundusers[$j]->getVar('posts') . '</td>';
                 echo "</tr>\n";
             }
             echo "<tr class='foot'><td colspan='6'>";
 
             // placeholder for external applications
-            if (empty($_POST["target"])) {
-                echo "<select name='fct'><option value='users'>" . _DELETE . "</option><option value='mailusers'>" . _MA_USER_SENDMAIL . "</option>";
-                echo "</select>&nbsp;";
+            if (empty($_POST['target'])) {
+                echo "<select name='fct'><option value='users'>" . _DELETE . "</option><option value='mailusers'>" . _MA_USER_SENDMAIL . '</option>';
+                echo '</select>&nbsp;';
                 echo $GLOBALS['xoopsSecurity']->getTokenHTML() . "<input type='submit' value='" . _SUBMIT . "' />";
 
                 // Add selected users
@@ -724,11 +724,11 @@ if (empty($_POST["user_submit"])) {
             if (!isset($total)) {
                 while ($counter <= $currentpage) {
                     if ($counter == $currentpage) {
-                        $hiddenform .= "<strong>" . $counter . "</strong> ";
+                        $hiddenform .= '<strong>' . $counter . '</strong> ';
                     } elseif (($counter > $currentpage - 4 && $counter < $currentpage + 4) || $counter == 1) {
-                        $hiddenform .= "<a href='#" . $counter . "' onclick='javascript:document.findnext.start.value=" . ($counter - 1) * $limit . ";document.findnext.submit();'>" . $counter . "</a> ";
+                        $hiddenform .= "<a href='#" . $counter . "' onclick='javascript:document.findnext.start.value=" . ($counter - 1) * $limit . ";document.findnext.submit();'>" . $counter . '</a> ';
                         if ($counter == 1 && $currentpage > 5) {
-                            $hiddenform .= "... ";
+                            $hiddenform .= '... ';
                         }
                     }
                     ++$counter;
@@ -736,14 +736,14 @@ if (empty($_POST["user_submit"])) {
             } else {
                 while ($counter <= $totalpages) {
                     if ($counter == $currentpage) {
-                        $hiddenform .= "<strong>" . $counter . "</strong> ";
+                        $hiddenform .= '<strong>' . $counter . '</strong> ';
                     } elseif (($counter > $currentpage - 4 && $counter < $currentpage + 4) || $counter == 1 || $counter == $totalpages) {
                         if ($counter == $totalpages && $currentpage < $totalpages - 4) {
-                            $hiddenform .= "... ";
+                            $hiddenform .= '... ';
                         }
-                        $hiddenform .= "<a href='#" . $counter . "' onclick='javascript:document.findnext.start.value=" . ($counter - 1) * $limit . ";document.findnext.submit();'>" . $counter . "</a> ";
+                        $hiddenform .= "<a href='#" . $counter . "' onclick='javascript:document.findnext.start.value=" . ($counter - 1) * $limit . ";document.findnext.submit();'>" . $counter . '</a> ';
                         if ($counter == 1 && $currentpage > 5) {
-                            $hiddenform .= "... ";
+                            $hiddenform .= '... ';
                         }
                     }
                     ++$counter;
@@ -755,14 +755,14 @@ if (empty($_POST["user_submit"])) {
                 $hiddenform .= "&nbsp;<a href='#" . $total . "' onclick='javascript:document.findnext.start.value=" . $next . ";document.findnext.submit();'>" . _MA_USER_NEXT . "</a>\n";
             }
         }
-        $hiddenform .= "</form>";
+        $hiddenform .= '</form>';
 
-        echo "<div>" . $hiddenform;
+        echo '<div>' . $hiddenform;
         if (isset($total)) {
-            echo "<br />" . sprintf(_MA_USER_USERSFOUND, $total) . "&nbsp;";
+            echo '<br />' . sprintf(_MA_USER_USERSFOUND, $total) . '&nbsp;';
         }
         echo "<a href='#' onclick='document.findnext.start.value=0;document.findnext.user_submit.value=0;document.findnext.submit();'>" . _MA_USER_SEARCHAGAIN . "</a>\n";
-        echo "</div>";
+        echo '</div>';
     }
 }
 

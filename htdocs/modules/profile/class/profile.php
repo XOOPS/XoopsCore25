@@ -71,7 +71,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      */
     public function __construct(XoopsDatabase $db)
     {
-        parent::__construct($db, "profile_profile", 'profileprofile', "profile_id");
+        parent::__construct($db, 'profile_profile', 'profileprofile', 'profile_id');
         $this->_fHandler = xoops_getModuleHandler('field', 'profile');
     }
 
@@ -293,20 +293,20 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
         $searchvars_profile = array_diff($searchvars, $uservars);
         $sv                 = array('u.uid, u.uname, u.email, u.user_viewemail');
         if (!empty($searchvars_user)) {
-            $sv[0] .= ",u." . implode(", u.", $searchvars_user);
+            $sv[0] .= ',u.' . implode(', u.', $searchvars_user);
         }
         if (!empty($searchvars_profile)) {
-            $sv[] = "p." . implode(", p.", $searchvars_profile);
+            $sv[] = 'p.' . implode(', p.', $searchvars_profile);
         }
 
-        $sql_select = "SELECT " . (empty($searchvars) ? "u.*, p.*" : implode(", ", $sv));
-        $sql_from   = " FROM " . $this->db->prefix("users") . " AS u LEFT JOIN " . $this->table . " AS p ON u.uid=p.profile_id" . (empty($groups) ? "" : " LEFT JOIN " . $this->db->prefix("groups_users_link") . " AS g ON u.uid=g.uid");
-        $sql_clause = " WHERE 1=1";
-        $sql_order  = "";
+        $sql_select = 'SELECT ' . (empty($searchvars) ? 'u.*, p.*' : implode(', ', $sv));
+        $sql_from   = ' FROM ' . $this->db->prefix('users') . ' AS u LEFT JOIN ' . $this->table . ' AS p ON u.uid=p.profile_id' . (empty($groups) ? '' : ' LEFT JOIN ' . $this->db->prefix('groups_users_link') . ' AS g ON u.uid=g.uid');
+        $sql_clause = ' WHERE 1=1';
+        $sql_order  = '';
 
         $limit = $start = 0;
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-            $sql_clause .= " AND " . $criteria->render();
+            $sql_clause .= ' AND ' . $criteria->render();
             if ($criteria->getSort() !== '') {
                 $sql_order = ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
             }
@@ -315,7 +315,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
         }
 
         if (!empty($groups)) {
-            $sql_clause .= " AND g.groupid IN (" . implode(", ", $groups) . ")";
+            $sql_clause .= ' AND g.groupid IN (' . implode(', ', $groups) . ')';
         }
 
         $sql_users = $sql_select . $sql_from . $sql_clause . $sql_order;
@@ -345,11 +345,11 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
 
         $count = count($users);
         if ((!empty($limit) && $count >= $limit) || !empty($start)) {
-            $sql_count = "SELECT COUNT(*)" . $sql_from . $sql_clause;
+            $sql_count = 'SELECT COUNT(*)' . $sql_from . $sql_clause;
             $result    = $this->db->query($sql_count);
             list($count) = $this->db->fetchRow($result);
         }
 
-        return array($users, $profiles, (int)($count));
+        return array($users, $profiles, (int)$count);
     }
 }

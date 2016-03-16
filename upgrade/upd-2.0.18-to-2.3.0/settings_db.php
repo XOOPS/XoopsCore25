@@ -37,18 +37,18 @@ function getDbCharsets()
 {
     $charsets = array();
 
-    $charsets["utf8"] = array();
+    $charsets['utf8'] = array();
     $ut8_available    = false;
-    if ($result = $GLOBALS["xoopsDB"]->queryF("SHOW CHARSET")) {
-        while ($row = $GLOBALS["xoopsDB"]->fetchArray($result)) {
-            $charsets[$row["Charset"]]["desc"] = $row["Description"];
-            if ($row["Charset"] === "utf8") {
+    if ($result = $GLOBALS['xoopsDB']->queryF('SHOW CHARSET')) {
+        while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+            $charsets[$row['Charset']]['desc'] = $row['Description'];
+            if ($row['Charset'] === 'utf8') {
                 $ut8_available = true;
             }
         }
     }
     if (!$ut8_available) {
-        unset($charsets["utf8"]);
+        unset($charsets['utf8']);
     }
 
     return $charsets;
@@ -62,9 +62,9 @@ function getDbCollations()
     $collations = array();
     $charsets   = getDbCharsets();
 
-    if ($result = $GLOBALS["xoopsDB"]->queryF("SHOW COLLATION")) {
-        while ($row = $GLOBALS["xoopsDB"]->fetchArray($result)) {
-            $charsets[$row["Charset"]]["collation"][] = $row["Collation"];
+    if ($result = $GLOBALS['xoopsDB']->queryF('SHOW COLLATION')) {
+        while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+            $charsets[$row['Charset']]['collation'][] = $row['Collation'];
         }
     }
 
@@ -93,18 +93,18 @@ function xoFormFieldCollation($name, $value, $label, $help = '')
         $field .= '<div class="xoform-help">' . $help . "</div>\n";
     }
     $field .= "<select name='$name' id='$name'\">";
-    $field .= "<option value=''>" . DB_COLLATION_NOCHANGE . "</option>";
+    $field .= "<option value=''>" . DB_COLLATION_NOCHANGE . '</option>';
 
-    $collation_default = "";
-    $options           = "";
+    $collation_default = '';
+    $options           = '';
     foreach ($collations as $key => $charset) {
         $field .= "<optgroup label='{$key} - ({$charset['desc']})'>";
         foreach ($charset['collation'] as $collation) {
-            $field .= "<option value='{$collation}'" . (($value == $collation) ? " selected='selected'" : "") . ">{$collation}</option>";
+            $field .= "<option value='{$collation}'" . (($value == $collation) ? " selected='selected'" : '') . ">{$collation}</option>";
         }
-        $field .= "</optgroup>";
+        $field .= '</optgroup>';
     }
-    $field .= "</select>";
+    $field .= '</select>';
 
     return $field;
 }
@@ -112,7 +112,7 @@ function xoFormFieldCollation($name, $value, $label, $help = '')
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && @$_POST['task'] === 'db') {
     $params = array('DB_COLLATION');
     foreach ($params as $name) {
-        $vars[$name] = isset($_POST[$name]) ? $_POST[$name] : "";
+        $vars[$name] = isset($_POST[$name]) ? $_POST[$name] : '';
     }
 
     return $vars;

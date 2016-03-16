@@ -63,7 +63,7 @@ function smarty_function_xoMemberInfo($params, &$smarty)
         if (@empty($params['infos'])) {
             $params['infos'] = 'uname|name|email|user_avatar|url|user_icq|user_aim|user_yim|user_msnm|posts|user_from|user_occ|user_intrest|bio|user_sig';
         }
-        $infos = explode("|", $params['infos']);
+        $infos = explode('|', $params['infos']);
 
         if (!is_array($member_info)) {
             $member_info = array();

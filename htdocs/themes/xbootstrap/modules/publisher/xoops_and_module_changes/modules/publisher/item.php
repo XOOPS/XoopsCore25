@@ -27,7 +27,7 @@ $itemid       = PublisherRequest::getInt('itemid');
 $item_page_id = PublisherRequest::getInt('page', -1);
 
 if ($itemid == 0) {
-    redirect_header("javascript:history.go(-1)", 1, _MD_PUBLISHER_NOITEMSELECTED);
+    redirect_header('javascript:history.go(-1)', 1, _MD_PUBLISHER_NOITEMSELECTED);
 }
 
 // Creating the item object for the selected item
@@ -35,7 +35,7 @@ $itemObj = $publisher->getHandler('item')->get($itemid);
 
 // if the selected item was not found, exit
 if (!$itemObj) {
-    redirect_header("javascript:history.go(-1)", 1, _MD_PUBLISHER_NOITEMSELECTED);
+    redirect_header('javascript:history.go(-1)', 1, _MD_PUBLISHER_NOITEMSELECTED);
 }
 
 $xoopsOption['template_main'] = 'publisher_item.tpl';
@@ -51,7 +51,7 @@ $categoryObj = $publisher->getHandler('category')->get($itemObj->categoryid());
 
 // Check user permissions to access that category of the selected item
 if (!$itemObj->accessGranted()) {
-    redirect_header("javascript:history.go(-1)", 1, _NOPERM);
+    redirect_header('javascript:history.go(-1)', 1, _NOPERM);
     exit;
 }
 
@@ -78,7 +78,7 @@ switch ($publisher->getConfig('format_order_by')) {
         break;
 }
 
-if ($publisher->getConfig('item_other_items_type') === "previous_next") {
+if ($publisher->getConfig('item_other_items_type') === 'previous_next') {
     // Retrieving the next and previous object
     $previous_item_link = '';
     $previous_item_url  = '';
@@ -104,7 +104,7 @@ if ($publisher->getConfig('item_other_items_type') === "previous_next") {
 }
 
 //CAREFUL!! with many items this will exhaust memory
-if ($publisher->getConfig('item_other_items_type') === "all") {
+if ($publisher->getConfig('item_other_items_type') === 'all') {
     $itemsObj = $publisher->getHandler('item')->getAllPublished(0, 0, $categoryObj->categoryid(), $sort, $order, '', true, true);
     $items    = array();
     foreach ($itemsObj as $theitemObj) {
@@ -182,7 +182,7 @@ $xoopsTpl->assign('itemid', $itemObj->itemid());
 $xoopsTpl->assign('sectionname', $publisher->getModule()->getVar('name'));
 $xoopsTpl->assign('modulename', $publisher->getModule()->getVar('dirname'));
 $xoopsTpl->assign('module_home', publisher_moduleHome($publisher->getConfig('format_linked_path')));
-$xoopsTpl->assign('categoryPath', $item['categoryPath'] . "<li class=\"active\">" . $item['title'] . "</li>");
+$xoopsTpl->assign('categoryPath', $item['categoryPath'] . "<li class=\"active\">" . $item['title'] . '</li>');
 $xoopsTpl->assign('commentatarticlelevel', $publisher->getConfig('perm_com_art_level'));
 $xoopsTpl->assign('com_rule', $publisher->getConfig('com_rule'));
 $xoopsTpl->assign('other_items', $publisher->getConfig('item_other_items_type'));
@@ -203,7 +203,7 @@ $publisher_metagen->createMetaTags();
 
 // Include the comments if the selected ITEM supports comments
 if ((($itemObj->cancomment() == 1) || !$publisher->getConfig('perm_com_art_level')) && ($publisher->getConfig('com_rule') <> 0)) {
-    include_once XOOPS_ROOT_PATH . "/include/comment_view.php";
+    include_once XOOPS_ROOT_PATH . '/include/comment_view.php';
     // Problem with url_rewrite and posting comments :
     $xoopsTpl->assign(array(
                           'editcomment_link'   => PUBLISHER_URL . '/comment_edit.php?com_itemid=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode . $link_extra,

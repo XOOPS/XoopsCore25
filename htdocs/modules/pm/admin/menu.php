@@ -39,11 +39,11 @@ $adminmenu = array();
 
 $i                      = 1;
 $adminmenu[$i]['title'] = _PM_MI_INDEX;
-$adminmenu[$i]['link']  = "admin/admin.php";
+$adminmenu[$i]['link']  = 'admin/admin.php';
 $adminmenu[$i]['icon']  = $pathIcon32 . '/home.png';
 ++$i;
 $adminmenu[$i]['title'] = _PM_MI_PRUNE;
-$adminmenu[$i]['link']  = "admin/prune.php";
+$adminmenu[$i]['link']  = 'admin/prune.php';
 $adminmenu[$i]['icon']  = $pathIcon32 . '/prune.png';
 ++$i;
 $adminmenu[$i]['title'] = _PM_MI_ABOUT;

@@ -35,7 +35,7 @@ $modversion['description'] = _AM_SYSTEM_RANK_DESC;
 $modversion['author']      = '';
 $modversion['credits']     = 'The XOOPS Project; phpBB Group; Maxime Cointin (AKA Kraven30), Gregory Mage (AKA Mage)';
 $modversion['help']        = 'page=userrank';
-$modversion['license']     = "GPL see LICENSE";
+$modversion['license']     = 'GPL see LICENSE';
 $modversion['official']    = 1;
 $modversion['image']       = 'userrank.png';
 

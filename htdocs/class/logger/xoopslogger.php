@@ -227,7 +227,7 @@ class XoopsLogger
             }
             echo sprintf(_XOOPS_FATAL_MESSAGE, $errstr);
             if ($trace && function_exists('debug_backtrace')) {
-                echo "<div style='color:#f0f0f0;background-color:#f0f0f0;'>" . _XOOPS_FATAL_BACKTRACE . ":<br />";
+                echo "<div style='color:#f0f0f0;background-color:#f0f0f0;'>" . _XOOPS_FATAL_BACKTRACE . ':<br />';
                 $trace = debug_backtrace();
                 array_shift($trace);
                 foreach ($trace as $step) {
@@ -251,7 +251,7 @@ class XoopsLogger
      */
     public function handleException($e)
     {
-        $msg = "Exception: " . $e->getMessage();
+        $msg = 'Exception: ' . $e->getMessage();
         $this->handleError(E_USER_ERROR, $msg, $e->getFile(), $e->getLine());
     }
 

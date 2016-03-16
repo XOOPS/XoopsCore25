@@ -48,7 +48,7 @@ class SystemUsers extends XoopsUser
         $config_handler  = xoops_getHandler('config');
         $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
-        $form = new XoopsThemeForm(_AM_SYSTEM_AVATAR_ADD, 'avatar_form', 'admin.php', "post", true);
+        $form = new XoopsThemeForm(_AM_SYSTEM_AVATAR_ADD, 'avatar_form', 'admin.php', 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
         $form->addElement(new XoopsFormText(_IMAGENAME, 'avatar_name', 50, 255, $this->getVar('avatar_name', 'e')), true);
 
@@ -68,7 +68,7 @@ class SystemUsers extends XoopsUser
         }
         $imageselect_img->setExtra("onchange='showImgSelected(\"image_img\", \"avatar_file\", \"" . $uploadirectory_img . "\", \"\", \"" . XOOPS_UPLOAD_URL . "\")'");
         $imgtray_img->addElement($imageselect_img, false);
-        $imgtray_img->addElement(new XoopsFormLabel('', "<br /><img src='" . XOOPS_UPLOAD_URL . "/" . $blank_img . "' name='image_img' id='image_img' alt='' />"));
+        $imgtray_img->addElement(new XoopsFormLabel('', "<br /><img src='" . XOOPS_UPLOAD_URL . '/' . $blank_img . "' name='image_img' id='image_img' alt='' />"));
         $fileseltray_img = new XoopsFormElementTray('<br />', '<br /><br />');
         $fileseltray_img->addElement(new XoopsFormFile(_AM_SYSTEM_AVATAR_UPLOAD, 'avatar_file', 500000), false);
         $imgtray_img->addElement($fileseltray_img);

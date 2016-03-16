@@ -55,7 +55,7 @@ if (!@copy($vars['ROOT_PATH'] . '/mainfile.dist.php', $vars['ROOT_PATH'] . '/mai
         'GROUP_ANONYMOUS' => 3);
 
     $rewrite = array_merge($rewrite, $vars);
-    if (!$file = fopen($vars['ROOT_PATH'] . '/mainfile.php', "r")) {
+    if (!$file = fopen($vars['ROOT_PATH'] . '/mainfile.php', 'r')) {
         $error = ERR_READ_MAINFILE;
     } else {
         $content = fread($file, filesize($vars['ROOT_PATH'] . '/mainfile.php'));
@@ -75,7 +75,7 @@ if (!@copy($vars['ROOT_PATH'] . '/mainfile.dist.php', $vars['ROOT_PATH'] . '/mai
                 //$this->report .= _NGIMG.sprintf( ERR_WRITING_CONSTANT, "<strong>$val</strong>")."<br />\n";
             }
         }
-        if (!$file = fopen($vars['ROOT_PATH'] . '/mainfile.php', "w")) {
+        if (!$file = fopen($vars['ROOT_PATH'] . '/mainfile.php', 'w')) {
             $error = ERR_WRITE_MAINFILE;
         } else {
             if (fwrite($file, $content) == -1) {
@@ -100,7 +100,7 @@ if (!@copy($vars['VAR_PATH'] . '/data/secure.dist.php', $vars['VAR_PATH'] . '/da
     $rewrite = array_merge($rewrite, $vars);
 
     $rewrite = array_merge($rewrite, $vars);
-    if (!$file = fopen($rewrite['VAR_PATH'] . '/data/secure.php', "r")) {
+    if (!$file = fopen($rewrite['VAR_PATH'] . '/data/secure.php', 'r')) {
         $error = ERR_READ_MAINFILE;
     } else {
         $content = fread($file, filesize($rewrite['VAR_PATH'] . '/data/secure.php'));
@@ -117,7 +117,7 @@ if (!@copy($vars['VAR_PATH'] . '/data/secure.dist.php', $vars['VAR_PATH'] . '/da
                 $content = preg_replace("/(define\()([\"'])(XOOPS_{$key})\\2,\s*([\"'])(.*?)\\4\s*\)/", "define('XOOPS_{$key}', '{$val}')", $content);
             }
         }
-        if (!$file = fopen($rewrite['VAR_PATH'] . '/data/secure.php', "w")) {
+        if (!$file = fopen($rewrite['VAR_PATH'] . '/data/secure.php', 'w')) {
             $error = ERR_WRITE_MAINFILE;
         } else {
             if (fwrite($file, $content) == -1) {

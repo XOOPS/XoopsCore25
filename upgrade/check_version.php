@@ -26,7 +26,7 @@
 
 defined('XOOPS_ROOT_PATH') or die();
 
-$dirs = getDirList(".");
+$dirs = getDirList('.');
 
 $results     = array();
 $files       = array();
@@ -35,7 +35,7 @@ $needUpgrade = false;
 $_SESSION['xoops_upgrade'] = array();
 
 foreach ($dirs as $dir) {
-    if (strpos($dir, "-to-")) {
+    if (strpos($dir, '-to-')) {
         $upgrader = include_once "{$dir}/index.php";
         if (is_object($upgrader)) {
             if (!($results[$dir] = $upgrader->isApplied())) {
@@ -70,16 +70,16 @@ if ($needUpgrade && !empty($files)) {
 <?php
 if (!$needUpgrade) {
     $update_link = '<a href="' . XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=system">' . _UPDATE_SYSTEM_MODULE . '</a>';
-    echo '<div class="x2-note">' . sprintf(_NO_NEED_UPGRADE, $update_link) . "</div>";
+    echo '<div class="x2-note">' . sprintf(_NO_NEED_UPGRADE, $update_link) . '</div>';
 
     return null;
 } else {
     if (!empty($files)) {
-        echo '<div class="x2-note"><p>' . _NEED_UPGRADE . "<br />" . _SET_FILES_WRITABLE . "</p><ul>";
+        echo '<div class="x2-note"><p>' . _NEED_UPGRADE . '<br />' . _SET_FILES_WRITABLE . '</p><ul>';
         foreach ($files as $file) {
             echo "<li>{$file}</li>\n";
         }
-        echo "</ul></div>";
+        echo '</ul></div>';
         echo '<a id="link-next" href="index.php">' . _RELOAD . '</a>';
     } else {
         echo '<a id="link-next" href="index.php?action=next">' . _PROCEED_UPGRADE . '</a>';

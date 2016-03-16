@@ -76,7 +76,7 @@ EOF;
         //        $ts->replacements[] = __CLASS__ . "::decode( '\\1' )";
         //mb------------------------------
         $ts->callbackPatterns[] = "/\[mp3\](.*?)\[\/mp3\]/s";
-        $ts->callbacks[]        = __CLASS__ . "::myCallback";
+        $ts->callbacks[]        = __CLASS__ . '::myCallback';
 
         //mb------------------------------
         return true;

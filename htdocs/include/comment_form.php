@@ -26,7 +26,7 @@ $com_modid = $xoopsModule->getVar('mid');
 xoops_load('XoopsLists');
 xoops_load('XoopsFormLoader');
 
-$cform = new XoopsThemeForm(_CM_POSTCOMMENT, "commentform", 'comment_post.php', 'post', true);
+$cform = new XoopsThemeForm(_CM_POSTCOMMENT, 'commentform', 'comment_post.php', 'post', true);
 if (isset($xoopsModuleConfig['com_rule'])) {
     include_once $GLOBALS['xoops']->path('include/comment_constants.php');
     switch ($xoopsModuleConfig['com_rule']) {
@@ -124,8 +124,8 @@ $cform->addElement($option_tray);
 if (!$xoopsUser) {
     $cform->addElement(new XoopsFormCaptcha());
 }
-$cform->addElement(new XoopsFormHidden('com_pid', (int)($com_pid)));
-$cform->addElement(new XoopsFormHidden('com_rootid', (int)($com_rootid)));
+$cform->addElement(new XoopsFormHidden('com_pid', (int)$com_pid));
+$cform->addElement(new XoopsFormHidden('com_rootid', (int)$com_rootid));
 $cform->addElement(new XoopsFormHidden('com_id', $com_id));
 $cform->addElement(new XoopsFormHidden('com_itemid', $com_itemid));
 $cform->addElement(new XoopsFormHidden('com_order', $com_order));

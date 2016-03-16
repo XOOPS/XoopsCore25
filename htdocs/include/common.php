@@ -91,7 +91,7 @@ include_once $xoops->path('include/functions.php');
  */
 //define('XOOPS_COOKIE_DOMAIN', ($domain = xoops_getBaseDomain(XOOPS_URL)) == 'localhost' ? '' : '.' . $domain);
 //When you don't use Localhost but your "computer name" as domain you can't use session cookies
-define('XOOPS_COOKIE_DOMAIN', (strpos($domain = xoops_getBaseDomain(XOOPS_URL), '.')) === false ? '' : '.' . $domain); //by arion92fr
+define('XOOPS_COOKIE_DOMAIN', strpos($domain = xoops_getBaseDomain(XOOPS_URL), '.') === false ? '' : '.' . $domain); //by arion92fr
 
 /**
  * Check Proxy;
@@ -246,9 +246,9 @@ if (!empty($_SESSION['xoopsUserId'])) {
         session_destroy();
         setcookie($xoopsConfig['usercookie'], null, time() - 3600, '/', XOOPS_COOKIE_DOMAIN, 0, true);
     } else {
-        if (((int)($xoopsUser->getVar('last_login')) + 60 * 5) < time()) {
-            $sql = "UPDATE " . $xoopsDB->prefix('users') . " SET last_login = '" . time()
-                . "' WHERE uid = " . $_SESSION['xoopsUserId'];
+        if (((int)$xoopsUser->getVar('last_login') + 60 * 5) < time()) {
+            $sql = 'UPDATE ' . $xoopsDB->prefix('users') . " SET last_login = '" . time()
+                   . "' WHERE uid = " . $_SESSION['xoopsUserId'];
             @$xoopsDB->queryF($sql);
         }
         $sess_handler->update_cookie();
@@ -268,7 +268,8 @@ if (!empty($_SESSION['xoopsUserId'])) {
             );
             $rememberTime = 60*60*24*30;
             $token = \Xmf\Jwt\TokenFactory::build('rememberme', $claims, $rememberTime);
-            setcookie($xoopsConfig['usercookie'],
+            setcookie(
+                $xoopsConfig['usercookie'],
                 $token,
                 time() + $rememberTime,
                 '/',
@@ -289,7 +290,7 @@ if (!empty($_SESSION['xoopsUserId'])) {
  * Note: temporary solution only. Will be re-designed in XOOPS 3.0
  */
 if ($xoopsLogger->activated) {
-    $level = isset($xoopsConfig['debugLevel']) ? (int)($xoopsConfig['debugLevel']) : 0;
+    $level = isset($xoopsConfig['debugLevel']) ? (int)$xoopsConfig['debugLevel'] : 0;
     if (($level == 2 && empty($xoopsUserIsAdmin)) || ($level == 1 && !$xoopsUser)) {
         error_reporting(0);
         $xoopsLogger->activated = false;

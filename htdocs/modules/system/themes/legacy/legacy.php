@@ -9,7 +9,7 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-xoops_load("gui", "system");
+xoops_load('gui', 'system');
 
 /**
  * Xoops Cpanel legacy GUI class
@@ -42,7 +42,7 @@ class XoopsGuiLegacy extends /* implements */
      */
     public function __construct()
     {
-        include_once __DIR__ . "/cp_functions.php";
+        include_once __DIR__ . '/cp_functions.php';
     }
 
     /**

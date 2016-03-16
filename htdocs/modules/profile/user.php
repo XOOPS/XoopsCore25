@@ -77,7 +77,7 @@ if ($op === 'login') {
 if ($op === 'logout') {
     $message = '';
     // Regenerate a new session id and destroy old session
-    $GLOBALS["sess_handler"]->regenerate_id(true);
+    $GLOBALS['sess_handler']->regenerate_id(true);
     $_SESSION = array();
     setcookie($GLOBALS['xoopsConfig']['usercookie'], 0, -1, '/', XOOPS_COOKIE_DOMAIN, 0);
     setcookie($GLOBALS['xoopsConfig']['usercookie'], 0, -1, '/');
@@ -91,7 +91,7 @@ if ($op === 'logout') {
 }
 
 if ($op === 'actv') {
-    $id     = (int)($_GET['id']);
+    $id     = (int)$_GET['id'];
     $actkey = trim($_GET['actkey']);
     redirect_header("activate.php?op=actv&amp;id={$id}&amp;actkey={$actkey}", 1, '');
 }
@@ -107,13 +107,13 @@ if ($op === 'delete') {
             // users in the webmasters group may not be deleted
             redirect_header(XOOPS_URL . '/', 5, _US_ADMINNO);
         }
-        $ok = !isset($_POST['ok']) ? 0 : (int)($_POST['ok']);
+        $ok = !isset($_POST['ok']) ? 0 : (int)$_POST['ok'];
         if ($ok != 1) {
             include __DIR__ . '/header.php';
             xoops_confirm(array('op' => 'delete', 'ok' => 1), 'user.php', _US_SURETODEL . '<br/>' . _US_REMOVEINFO);
             include __DIR__ . '/footer.php';
         } else {
-            $del_uid        = $GLOBALS['xoopsUser']->getVar("uid");
+            $del_uid        = $GLOBALS['xoopsUser']->getVar('uid');
             $member_handler = xoops_getHandler('member');
             if (false != $member_handler->deleteUser($GLOBALS['xoopsUser'])) {
                 $online_handler = xoops_getHandler('online');

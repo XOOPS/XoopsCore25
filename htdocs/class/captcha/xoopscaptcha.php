@@ -402,7 +402,7 @@ class XoopsCaptchaMethod
      */
     public function getCode()
     {
-        return (string)($this->code);
+        return (string)$this->code;
     }
 
     /**

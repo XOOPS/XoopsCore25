@@ -35,7 +35,7 @@ $modversion['description'] = _AM_SYSTEM_SMLS_DESC;
 $modversion['author']      = '';
 $modversion['credits']     = 'The XOOPS Project; The MPN SE Project; Gregory Mage (AKA Mage)';
 $modversion['help']        = 'page=smilies';
-$modversion['license']     = "GPL see LICENSE";
+$modversion['license']     = 'GPL see LICENSE';
 $modversion['official']    = 1;
 $modversion['image']       = 'smilies.png';
 

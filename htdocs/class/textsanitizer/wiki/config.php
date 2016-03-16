@@ -20,6 +20,6 @@
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 return $config = array(
-    'link'    => XOOPS_URL . "/modules/mediawiki/?title=%s",// The link to wiki module
-    'charset' => "UTF-8");// Charset of wiki module
+    'link'    => XOOPS_URL . '/modules/mediawiki/?title=%s',// The link to wiki module
+    'charset' => 'UTF-8');// Charset of wiki module
 

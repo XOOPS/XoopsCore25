@@ -224,7 +224,7 @@ switch ($op) {
         if (!is_writable(XOOPS_CACHE_PATH . '/')) {
             // attempt to chmod 666
             if (!chmod(XOOPS_CACHE_PATH . '/', 0777)) {
-                $error[] = sprintf(_MUSTWABLE, "<strong>" . XOOPS_CACHE_PATH . '/</strong>');
+                $error[] = sprintf(_MUSTWABLE, '<strong>' . XOOPS_CACHE_PATH . '/</strong>');
             }
         }
         if (count($error) > 0) {
@@ -421,7 +421,7 @@ switch ($op) {
         $ret   = array();
         $ret[] = xoops_module_uninstall($module);
         // Flush cache files for cpanel GUIs
-        xoops_load("cpanel", "system");
+        xoops_load('cpanel', 'system');
         XoopsSystemCpanel::flush();
         //Set active modules in cache folder
         xoops_setActiveModules();
@@ -477,7 +477,7 @@ switch ($op) {
         $ret   = array();
         $ret[] = xoops_module_update($module);
         // Flush cache files for cpanel GUIs
-        xoops_load("cpanel", "system");
+        xoops_load('cpanel', 'system');
         XoopsSystemCpanel::flush();
         //Set active modules in cache folder
         xoops_setActiveModules();

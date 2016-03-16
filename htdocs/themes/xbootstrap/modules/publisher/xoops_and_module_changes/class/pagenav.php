@@ -17,7 +17,7 @@
  * @version             $Id: pagenav.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
-defined("XOOPS_ROOT_PATH") || exit('Restricted access');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Class XoopsPageNav
@@ -46,11 +46,11 @@ class XoopsPageNav
      * @param string $start_name    Name for "start" or "offset"
      * @param string $extra_arg     Additional arguments to pass in the URL
      */
-    public function __construct($total_items, $items_perpage, $current_start, $start_name = "start", $extra_arg = "")
+    public function __construct($total_items, $items_perpage, $current_start, $start_name = 'start', $extra_arg = '')
     {
-        $this->total   = (int)($total_items);
-        $this->perpage = (int)($items_perpage);
-        $this->current = (int)($current_start);
+        $this->total   = (int)$total_items;
+        $this->perpage = (int)$items_perpage;
+        $this->current = (int)$current_start;
         $this->extra   = $extra_arg;
         if ($extra_arg != '' && (substr($extra_arg, -5) !== '&amp;' || substr($extra_arg, -1) !== '&')) {
             $this->extra = '&amp;' . $extra_arg;
@@ -79,7 +79,7 @@ class XoopsPageNav
                     $ret .= '<a href="' . $this->url . $prev . $this->extra . '" class="page gradient">&laquo;</a>';
                 }
                 $counter      = 1;
-                $current_page = (int)(floor(($this->current + $this->perpage) / $this->perpage));
+                $current_page = (int)floor(($this->current + $this->perpage) / $this->perpage);
                 while ($counter <= $total_pages) {
                     if ($counter == $current_page) {
                         $ret .= '<strong class="page gradient" >(' . $counter . ')</strong> ';
@@ -122,7 +122,7 @@ class XoopsPageNav
             $ret = '<form name="pagenavform">';
             $ret .= '<select name="pagenavselect" onchange="location=this.options[this.options.selectedIndex].value;">';
             $counter      = 1;
-            $current_page = (int)(floor(($this->current + $this->perpage) / $this->perpage));
+            $current_page = (int)floor(($this->current + $this->perpage) / $this->perpage);
             while ($counter <= $total_pages) {
                 if ($counter == $current_page) {
                     $ret .= '<option value="' . $this->url . (($counter - 1) * $this->perpage) . $this->extra . '" selected="selected">' . $counter . '</option>';
@@ -163,7 +163,7 @@ class XoopsPageNav
                 $ret .= '<td class="pagno"></a></td><td><img src="' . XOOPS_URL . '/images/blank.gif" width="6" alt="" /></td>';
             }
             $counter      = 1;
-            $current_page = (int)(floor(($this->current + $this->perpage) / $this->perpage));
+            $current_page = (int)floor(($this->current + $this->perpage) / $this->perpage);
             while ($counter <= $total_pages) {
                 if ($counter == $current_page) {
                     $ret .= '<td class="pagact"><strong>' . $counter . '</strong></td>';

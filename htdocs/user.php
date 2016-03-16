@@ -62,8 +62,8 @@ if ($op === 'main') {
         $xoopsOption['template_main'] = 'system_userform.html';
         include $GLOBALS['xoops']->path('header.php');
         $xoopsTpl->assign('xoops_pagetitle', _LOGIN);
-        $xoTheme->addMeta('meta', 'keywords', _USERNAME . ", " . _US_PASSWORD . ", " . _US_LOSTPASSWORD);
-        $xoTheme->addMeta('meta', 'description', _US_LOSTPASSWORD . " " . _US_NOPROBLEM);
+        $xoTheme->addMeta('meta', 'keywords', _USERNAME . ', ' . _US_PASSWORD . ', ' . _US_LOSTPASSWORD);
+        $xoTheme->addMeta('meta', 'description', _US_LOSTPASSWORD . ' ' . _US_NOPROBLEM);
         $xoopsTpl->assign('lang_login', _LOGIN);
         $xoopsTpl->assign('lang_username', _USERNAME);
         if (!empty($clean_redirect)) {
@@ -103,7 +103,7 @@ if ($op === 'main') {
 if ($op === 'logout') {
     $message = '';
     // Regenerate a new session id and destroy old session
-    $GLOBALS["sess_handler"]->regenerate_id(true);
+    $GLOBALS['sess_handler']->regenerate_id(true);
     $_SESSION = array();
     setcookie($xoopsConfig['usercookie'], null, -1, '/', XOOPS_COOKIE_DOMAIN, 0);
     setcookie($xoopsConfig['usercookie'], null, -1);
@@ -117,7 +117,7 @@ if ($op === 'logout') {
 }
 
 if ($op === 'actv') {
-    $GLOBALS['xoopsLogger']->addDeprecated("Deprecated code. The activation is now handled by register.php");
+    $GLOBALS['xoopsLogger']->addDeprecated('Deprecated code. The activation is now handled by register.php');
     $id     = isset($clean_id) ? $clean_id : 0;
     $actkey = isset($clean_actkey) ? $clean_actkey : '';
     redirect_header("register.php?id={$id}&amp;actkey={$actkey}", 1, '');
@@ -139,7 +139,7 @@ if ($op === 'delete') {
             xoops_confirm(array('op' => 'delete', 'ok' => 1), 'user.php', _US_SURETODEL . '<br/>' . _US_REMOVEINFO);
             include $GLOBALS['xoops']->path('footer.php');
         } else {
-            $del_uid        = $xoopsUser->getVar("uid");
+            $del_uid        = $xoopsUser->getVar('uid');
             $member_handler = xoops_getHandler('member');
             if (false != $member_handler->deleteUser($xoopsUser)) {
                 $online_handler = xoops_getHandler('online');

@@ -218,30 +218,30 @@ class Tar
                 // Create us a new file in our array
                 $activeFile =& $this->files[];
                 // Asign Values
-                $activeFile["name"]       = $file_name;
-                $activeFile["mode"]       = $file_mode;
-                $activeFile["size"]       = $file_size;
-                $activeFile["time"]       = $file_time;
-                $activeFile["user_id"]    = $file_uid;
-                $activeFile["group_id"]   = $file_gid;
-                $activeFile["user_name"]  = $file_uname;
-                $activeFile["group_name"] = $file_gname;
-                $activeFile["checksum"]   = $file_chksum;
-                $activeFile["file"]       = $file_contents;
+                $activeFile['name']       = $file_name;
+                $activeFile['mode']       = $file_mode;
+                $activeFile['size']       = $file_size;
+                $activeFile['time']       = $file_time;
+                $activeFile['user_id']    = $file_uid;
+                $activeFile['group_id']   = $file_gid;
+                $activeFile['user_name']  = $file_uname;
+                $activeFile['group_name'] = $file_gname;
+                $activeFile['checksum']   = $file_chksum;
+                $activeFile['file']       = $file_contents;
             } else {
                 // Increment number of directories
                 $this->numDirectories++;
                 // Create a new directory in our array
                 $activeDir =& $this->directories[];
                 // Assign values
-                $activeDir["name"]       = $file_name;
-                $activeDir["mode"]       = $file_mode;
-                $activeDir["time"]       = $file_time;
-                $activeDir["user_id"]    = $file_uid;
-                $activeDir["group_id"]   = $file_gid;
-                $activeDir["user_name"]  = $file_uname;
-                $activeDir["group_name"] = $file_gname;
-                $activeDir["checksum"]   = $file_chksum;
+                $activeDir['name']       = $file_name;
+                $activeDir['mode']       = $file_mode;
+                $activeDir['time']       = $file_time;
+                $activeDir['user_id']    = $file_uid;
+                $activeDir['group_id']   = $file_gid;
+                $activeDir['user_name']  = $file_uname;
+                $activeDir['group_name'] = $file_gname;
+                $activeDir['checksum']   = $file_chksum;
             }
             // Move our offset the number of blocks we have processed
             $main_offset += 512 + (ceil($file_size / 512) * 512);
@@ -297,27 +297,27 @@ class Tar
                 unset($header);
                 // Generate tar header for this directory
                 // Filename, Permissions, UID, GID, size, Time, checksum, typeflag, linkname, magic, version, user name, group name, devmajor, devminor, prefix, end
-                $header .= str_pad($information["name"], 100, chr(0));
-                $header .= str_pad(decoct($information["mode"]), 7, "0", STR_PAD_LEFT) . chr(0);
-                $header .= str_pad(decoct($information["user_id"]), 7, "0", STR_PAD_LEFT) . chr(0);
-                $header .= str_pad(decoct($information["group_id"]), 7, "0", STR_PAD_LEFT) . chr(0);
-                $header .= str_pad(decoct(0), 11, "0", STR_PAD_LEFT) . chr(0);
-                $header .= str_pad(decoct($information["time"]), 11, "0", STR_PAD_LEFT) . chr(0);
-                $header .= str_repeat(" ", 8);
-                $header .= "5";
+                $header .= str_pad($information['name'], 100, chr(0));
+                $header .= str_pad(decoct($information['mode']), 7, '0', STR_PAD_LEFT) . chr(0);
+                $header .= str_pad(decoct($information['user_id']), 7, '0', STR_PAD_LEFT) . chr(0);
+                $header .= str_pad(decoct($information['group_id']), 7, '0', STR_PAD_LEFT) . chr(0);
+                $header .= str_pad(decoct(0), 11, '0', STR_PAD_LEFT) . chr(0);
+                $header .= str_pad(decoct($information['time']), 11, '0', STR_PAD_LEFT) . chr(0);
+                $header .= str_repeat(' ', 8);
+                $header .= '5';
                 $header .= str_repeat(chr(0), 100);
-                $header .= str_pad("ustar", 6, chr(32));
+                $header .= str_pad('ustar', 6, chr(32));
                 $header .= chr(32) . chr(0);
-                $header .= str_pad("", 32, chr(0));
-                $header .= str_pad("", 32, chr(0));
+                $header .= str_pad('', 32, chr(0));
+                $header .= str_pad('', 32, chr(0));
                 $header .= str_repeat(chr(0), 8);
                 $header .= str_repeat(chr(0), 8);
                 $header .= str_repeat(chr(0), 155);
                 $header .= str_repeat(chr(0), 12);
                 // Compute header checksum
-                $checksum = str_pad(decoct($this->__computeUnsignedChecksum($header)), 6, "0", STR_PAD_LEFT);
+                $checksum = str_pad(decoct($this->__computeUnsignedChecksum($header)), 6, '0', STR_PAD_LEFT);
                 for ($i = 0; $i < 6; ++$i) {
-                    $header[(148 + $i)] = substr($checksum, $i, 1);
+                    $header[148 + $i] = substr($checksum, $i, 1);
                 }
                 $header[154] = chr(0);
                 $header[155] = chr(32);
@@ -332,32 +332,32 @@ class Tar
                 unset($header);
                 // Generate the TAR header for this file
                 // Filename, Permissions, UID, GID, size, Time, checksum, typeflag, linkname, magic, version, user name, group name, devmajor, devminor, prefix, end
-                $header = str_pad($information["name"], 100, chr(0));
-                $header .= str_pad(decoct($information["mode"]), 7, "0", STR_PAD_LEFT) . chr(0);
-                $header .= str_pad(decoct($information["user_id"]), 7, "0", STR_PAD_LEFT) . chr(0);
-                $header .= str_pad(decoct($information["group_id"]), 7, "0", STR_PAD_LEFT) . chr(0);
-                $header .= str_pad(decoct($information["size"]), 11, "0", STR_PAD_LEFT) . chr(0);
-                $header .= str_pad(decoct($information["time"]), 11, "0", STR_PAD_LEFT) . chr(0);
-                $header .= str_repeat(" ", 8);
-                $header .= "0";
+                $header = str_pad($information['name'], 100, chr(0));
+                $header .= str_pad(decoct($information['mode']), 7, '0', STR_PAD_LEFT) . chr(0);
+                $header .= str_pad(decoct($information['user_id']), 7, '0', STR_PAD_LEFT) . chr(0);
+                $header .= str_pad(decoct($information['group_id']), 7, '0', STR_PAD_LEFT) . chr(0);
+                $header .= str_pad(decoct($information['size']), 11, '0', STR_PAD_LEFT) . chr(0);
+                $header .= str_pad(decoct($information['time']), 11, '0', STR_PAD_LEFT) . chr(0);
+                $header .= str_repeat(' ', 8);
+                $header .= '0';
                 $header .= str_repeat(chr(0), 100);
-                $header .= str_pad("ustar", 6, chr(32));
+                $header .= str_pad('ustar', 6, chr(32));
                 $header .= chr(32) . chr(0);
-                $header .= str_pad($information["user_name"], 32, chr(0)); // How do I get a file's user name from PHP?
-                $header .= str_pad($information["group_name"], 32, chr(0)); // How do I get a file's group name from PHP?
+                $header .= str_pad($information['user_name'], 32, chr(0)); // How do I get a file's user name from PHP?
+                $header .= str_pad($information['group_name'], 32, chr(0)); // How do I get a file's group name from PHP?
                 $header .= str_repeat(chr(0), 8);
                 $header .= str_repeat(chr(0), 8);
                 $header .= str_repeat(chr(0), 155);
                 $header .= str_repeat(chr(0), 12);
                 // Compute header checksum
-                $checksum = str_pad(decoct($this->__computeUnsignedChecksum($header)), 6, "0", STR_PAD_LEFT);
+                $checksum = str_pad(decoct($this->__computeUnsignedChecksum($header)), 6, '0', STR_PAD_LEFT);
                 for ($i = 0; $i < 6; ++$i) {
-                    $header[(148 + $i)] = substr($checksum, $i, 1);
+                    $header[148 + $i] = substr($checksum, $i, 1);
                 }
                 $header[154] = chr(0);
                 $header[155] = chr(32);
                 // Pad file contents to byte count divisible by 512
-                $file_contents = str_pad($information["file"], (ceil($information["size"] / 512) * 512), chr(0));
+                $file_contents = str_pad($information['file'], ceil($information['size'] / 512) * 512, chr(0));
                 // Add new tar formatted data to tar file contents
                 $this->tar_file .= $header . $file_contents;
             }

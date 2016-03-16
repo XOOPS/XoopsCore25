@@ -60,7 +60,7 @@ if (false != $user) {
     if (!$member_handler->insertUser($user)) {
     }
     // Regenrate a new session id and destroy old session
-    $GLOBALS["sess_handler"]->regenerate_id(true);
+    $GLOBALS['sess_handler']->regenerate_id(true);
     $_SESSION                    = array();
     $_SESSION['xoopsUserId']     = $user->getVar('uid');
     $_SESSION['xoopsUserGroups'] = $user->getGroups();
@@ -81,8 +81,7 @@ if (false != $user) {
                 $token,
                 time() + $rememberTime,
                 '/',
-                XOOPS_COOKIE_DOMAIN,
-                (XOOPS_PROT == 'https://'),
+                XOOPS_COOKIE_DOMAIN, XOOPS_PROT == 'https://',
                 true
             );
         } else {

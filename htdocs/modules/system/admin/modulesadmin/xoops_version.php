@@ -35,7 +35,7 @@ $modversion['description'] = _AM_SYSTEM_MODULES_DESC;
 $modversion['author']      = '';
 $modversion['credits']     = 'The XOOPS Project; Kazumi Ono; Andricq Nicolas (AKA MusS)';
 $modversion['help']        = 'page=modulesadmin';
-$modversion['license']     = "GPL see LICENSE";
+$modversion['license']     = 'GPL see LICENSE';
 $modversion['official']    = 1;
 $modversion['image']       = 'modules.png';
 

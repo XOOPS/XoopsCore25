@@ -273,7 +273,7 @@ $edited_image_filename = 'editedimage_' . md5($_SERVER['REQUEST_URI']) . '_' . $
 $cached_image          = XoopsCache::read($edited_image_filename);
 if (!isset($_GET['nocache']) && !isset($_GET['noservercache']) && !empty($cached_image) && ($cached_image['cached_time'] >= $image_created_time)) {
     header("Content-type: {$image_mimetype}");
-    header("Content-Length: " . strlen($cached_image['image_data']));
+    header('Content-Length: ' . strlen($cached_image['image_data']));
     echo $cached_image['image_data'];
     exit();
 }
@@ -282,8 +282,8 @@ if (!isset($_GET['nocache']) && !isset($_GET['noservercache']) && !empty($cached
  * Get/check editing parameters
  */
 // width, height
-$max_width  = (isset($_GET['width'])) ? (int)$_GET['width'] : false;
-$max_height = (isset($_GET['height'])) ? (int)$_GET['height'] : false;
+$max_width  = isset($_GET['width']) ? (int)$_GET['width'] : false;
+$max_height = isset($_GET['height']) ? (int)$_GET['height'] : false;
 // If either a max width or max height are not specified, we default to something large so the unspecified dimension isn't a constraint on our resized image.
 // If neither are specified but the color is, we aren't going to be resizing at all, just coloring.
 if (!$max_width && $max_height) {
@@ -296,12 +296,12 @@ if (!$max_width && $max_height) {
 }
 
 // color
-$color = (isset($_GET['color'])) ? preg_replace('/[^0-9a-fA-F]/', '', (string)$_GET['color']) : false;
+$color = isset($_GET['color']) ? preg_replace('/[^0-9a-fA-F]/', '', (string)$_GET['color']) : false;
 
 // filter, radius, angle
-$filter = (isset($_GET['filter'])) ? $_GET['filter'] : false;
-$radius = (isset($_GET['radius'])) ? (string)$_GET['radius'] : false;
-$angle  = (isset($_GET['angle'])) ? (float)$_GET['angle'] : false;
+$filter = isset($_GET['filter']) ? $_GET['filter'] : false;
+$radius = isset($_GET['radius']) ? (string)$_GET['radius'] : false;
+$angle  = isset($_GET['angle']) ? (float)$_GET['angle'] : false;
 
 // If we don't have a width or height or color or filter or radius or rotate we simply output the original image and exit
 if (empty($_GET['width']) && empty($_GET['height']) && empty($_GET['color']) && empty($_GET['filter']) && empty($_GET['radius']) && empty($_GET['angle'])) {
@@ -349,7 +349,7 @@ if ($xRatio * $image_height < $max_height) {
 }
 
 // quality
-$quality = (isset($_GET['quality'])) ? (int)$_GET['quality'] : DEFAULT_IMAGE_QUALITY;
+$quality = isset($_GET['quality']) ? (int)$_GET['quality'] : DEFAULT_IMAGE_QUALITY;
 
 /*
  * Start image editing
@@ -523,21 +523,21 @@ $last_modified_string = gmdate('D, d M Y H:i:s', $image_created_time) . ' GMT';
 $etag                 = md5($image_data);
 doConditionalGet($etag, $last_modified_string);
 
-header("HTTP/1.1 200 OK");
+header('HTTP/1.1 200 OK');
 // if image is cacheable
 if (!isset($_GET['nocache']) && !isset($_GET['nobrowsercache'])) {
-    header('Last-Modified: ' . gmdate("D, d M Y H:i:s", $image_created_time) . 'GMT');
+    header('Last-Modified: ' . gmdate('D, d M Y H:i:s', $image_created_time) . 'GMT');
     header('Cache-control: max-age=31536000');
-    header('Expires: ' . gmdate("D, d M Y H:i:s", time() + 31536000) . 'GMT');
+    header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 31536000) . 'GMT');
 } else {
     // "Kill" the browser cache
-    header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); // past date
-    header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT"); // always modified
-    header("Cache-Control: no-store, no-cache, must-revalidate"); // HTTP/1.1
-    header("Cache-Control: post-check=0, pre-check=0", false);
-    header("Pragma: no-cache"); // HTTP/1.0
+    header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // past date
+    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+    header('Cache-Control: no-store, no-cache, must-revalidate'); // HTTP/1.1
+    header('Cache-Control: post-check=0, pre-check=0', false);
+    header('Pragma: no-cache'); // HTTP/1.0
 }
 header("Content-type: {$image_mimetype}");
 header("Content-disposition: filename={$image_name}");
-header("Content-Length: " . strlen($image_data));
+header('Content-Length: ' . strlen($image_data));
 echo $image_data;

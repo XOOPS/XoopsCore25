@@ -135,7 +135,7 @@ class SystemMenuHandler
      *
      * @return string
      */
-    public function breadcrumb_nav($basename = "Home")
+    public function breadcrumb_nav($basename = 'Home')
     {
         global $bc_site, $bc_label;
         $site       = $bc_site;
@@ -186,13 +186,13 @@ class SystemMenuHandler
         }
         $menu = substr($menu, 0, -1);
 
-        $menu .= "</td>";
-        $menu .= "<td style='text-align: right;'><strong>" . $this->_obj->getVar('name') . "</strong> : " . $breadcrumb . "</td>";
+        $menu .= '</td>';
+        $menu .= "<td style='text-align: right;'><strong>" . $this->_obj->getVar('name') . '</strong> : ' . $breadcrumb . '</td>';
         $menu .= "</tr>\n</table>\n";
         $menu .= "</div>\n";
         $menu .= "<div id='buttonbar_mod'><ul>";
         foreach ($this->_menutabs as $k => $v) {
-            $menu .= "<li id='" . $menuItems[$i] . "'><a href='" . XOOPS_URL . "/modules/" . $this->_obj->getVar('dirname') . "/" . $k . "'><span>$v</span></a></li>\n";
+            $menu .= "<li id='" . $menuItems[$i] . "'><a href='" . XOOPS_URL . '/modules/' . $this->_obj->getVar('dirname') . '/' . $k . "'><span>$v</span></a></li>\n";
             ++$i;
         }
         $menu .= "</ul>\n</div>\n";
@@ -205,9 +205,9 @@ class SystemMenuHandler
                     $system_image = XOOPS_URL . '/modules/' . $_dirname . '/images/' . $modversion['image'];
                 }
                 $menu .= "<img src='$system_image' align='middle' height='32' width='32' alt='' />";
-                $menu .= " " . $modversion['name'] . "</h4>\n";
+                $menu .= ' ' . $modversion['name'] . "</h4>\n";
             } else {
-                $menu .= " " . $this->_header . "</h4>\n";
+                $menu .= ' ' . $this->_header . "</h4>\n";
             }
         }
         if ($this->_subheader) {

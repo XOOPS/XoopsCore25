@@ -62,8 +62,8 @@ class XoopsFormText extends XoopsFormElement
     {
         $this->setCaption($caption);
         $this->setName($name);
-        $this->_size      = (int)($size);
-        $this->_maxlength = (int)($maxlength);
+        $this->_size      = (int)$size;
+        $this->_maxlength = (int)$maxlength;
         $this->setValue($value);
     }
 
@@ -115,6 +115,6 @@ class XoopsFormText extends XoopsFormElement
      */
     public function render()
     {
-        return "<input type='text' name='" . $this->getName() . "' title='" . $this->getTitle() . "' id='" . $this->getName() . "' size='" . $this->getSize() . "' maxlength='" . $this->getMaxlength() . "' value='" . $this->getValue() . "'" . $this->getExtra() . " />";
+        return "<input type='text' name='" . $this->getName() . "' title='" . $this->getTitle() . "' id='" . $this->getName() . "' size='" . $this->getSize() . "' maxlength='" . $this->getMaxlength() . "' value='" . $this->getValue() . "'" . $this->getExtra() . ' />';
     }
 }

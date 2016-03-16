@@ -24,4 +24,4 @@
 return array(
     'copyright' => '(c) 2000-2016 XOOPS Project (www.xoops.org)',
     // Types of language constants
-    "languages" => array("main", "admin"));
+    'languages' => array('main', 'admin'));

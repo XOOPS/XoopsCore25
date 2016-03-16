@@ -62,7 +62,7 @@ if ($xoopsConfig['theme_set'] !== 'default' && file_exists(XOOPS_THEME_PATH . '/
     $xoopsPreload->triggerEvent('core.header.addmeta');
 
     // Temporary solution for start page redirection
-    if (defined("XOOPS_STARTPAGE_REDIRECTED")) {
+    if (defined('XOOPS_STARTPAGE_REDIRECTED')) {
         $params = $content = $tpl = $repeat = null;
         $xoTheme->headContent($params, "<base href='" . XOOPS_URL . '/modules/' . $xoopsConfig['startpage'] . "/' />", $tpl, $repeat);
     }
