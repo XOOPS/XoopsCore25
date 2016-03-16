@@ -268,11 +268,13 @@ if (!empty($_SESSION['xoopsUserId'])) {
             );
             $rememberTime = 60*60*24*30;
             $token = \Xmf\Jwt\TokenFactory::build('rememberme', $claims, $rememberTime);
-            setcookie($xoopsConfig['usercookie'],
+            setcookie(
+                $xoopsConfig['usercookie'],
                 $token,
                 time() + $rememberTime,
                 '/',
-                XOOPS_COOKIE_DOMAIN, XOOPS_PROT == 'https://',
+                XOOPS_COOKIE_DOMAIN,
+                (XOOPS_PROT == 'https://'),
                 true
             );
         }
