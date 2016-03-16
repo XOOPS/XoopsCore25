@@ -1199,7 +1199,7 @@ class Smarty
                         $_smarty_results .= smarty_core_display_debug_console($_params, $this);
                     }
                     if ($this->cache_modified_check) {
-                        $_server_vars = $this->request_use_auto_globals ? $_SERVER : $GLOBALS['HTTP_SERVER_VARS'];
+                        $_server_vars = ($this->request_use_auto_globals) ? $_SERVER : $GLOBALS['HTTP_SERVER_VARS'];
                         $_last_modified_date = @substr($_server_vars['HTTP_IF_MODIFIED_SINCE'], 0, strpos($_server_vars['HTTP_IF_MODIFIED_SINCE'], 'GMT') + 3);
                         $_gmt_mtime = gmdate('D, d M Y H:i:s', $this->_cache_info['timestamp']).' GMT';
                         if (@count($this->_cache_info['insert_tags']) == 0
@@ -1742,7 +1742,7 @@ class Smarty
 
         if(isset($auto_id)) {
             // make auto_id safe for directory names
-            $auto_id = str_replace('%7C', $_compile_dir_sep, urlencode($auto_id));
+            $auto_id = str_replace('%7C',$_compile_dir_sep,(urlencode($auto_id)));
             // split into separate directories
             $_return .= $auto_id . $_compile_dir_sep;
         }
@@ -1787,7 +1787,7 @@ class Smarty
      */
     function _get_auto_id($cache_id=null, $compile_id=null) {
     if (isset($cache_id))
-        return isset($compile_id) ? $cache_id . '|' . $compile_id  : $cache_id;
+        return (isset($compile_id)) ? $cache_id . '|' . $compile_id  : $cache_id;
     elseif(isset($compile_id))
         return $compile_id;
     else
