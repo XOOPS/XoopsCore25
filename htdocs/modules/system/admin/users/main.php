@@ -430,7 +430,7 @@ switch ($op) {
             $limit_text    = new XoopsFormText(_AM_SYSTEM_USERS_LIMIT, 'user_limit', 6, 2, 20);
             $submit_button = new XoopsFormButton('', 'user_submit', _SUBMIT, 'submit');
 
-            $form = new XoopsThemeForm(_AM_SYSTEM_USERS_FINDUS, 'uesr_findform', 'admin.php?fct=users', 'post', true);
+            $form = new XoopsThemeForm(_AM_SYSTEM_USERS_FINDUS, 'user_findform', 'admin.php?fct=users', 'post', true);
             $form->addElement($uname_tray);
             $form->addElement($name_tray);
             $form->addElement($email_tray);

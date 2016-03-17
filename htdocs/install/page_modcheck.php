@@ -84,6 +84,11 @@ ob_start();
         </tr>
 
         <tr>
+            <th><?php printf(PHP_EXTENSION, 'filter'); ?></th>
+            <td><?php echo xoDiag(extension_loaded('filter') ? 1 : -1); ?></td>
+        </tr>
+
+        <tr>
             <th scope="row">file_uploads</th>
             <td><?php echo xoDiagBoolSetting('file_uploads', true); ?></td>
         </tr>

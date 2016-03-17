@@ -222,10 +222,7 @@ switch ($op) {
         $xoBreadCrumb->render();
         $error = array();
         if (!is_writable(XOOPS_CACHE_PATH . '/')) {
-            // attempt to chmod 666
-            if (!chmod(XOOPS_CACHE_PATH . '/', 0777)) {
-                $error[] = sprintf(_MUSTWABLE, '<strong>' . XOOPS_CACHE_PATH . '/</strong>');
-            }
+            $error[] = sprintf(_MUSTWABLE, '<strong>' . XOOPS_CACHE_PATH . '/</strong>');
         }
         if (count($error) > 0) {
             // Display Error

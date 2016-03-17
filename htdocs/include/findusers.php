@@ -319,7 +319,7 @@ $modes = array(
 if (empty($_POST['user_submit'])) {
     include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
-    $form = new XoopsThemeForm(_MA_USER_FINDUS, 'uesr_findform', 'findusers.php', 'post', true);
+    $form = new XoopsThemeForm(_MA_USER_FINDUS, 'user_findform', 'findusers.php', 'post', true);
     $mode = (int)(@$_REQUEST['mode']);
     if (FINDUSERS_MODE_QUERY == $mode) {
         $form->addElement(new XoopsFormTextArea(_MA_USER_QUERY, 'query', @$_POST['query']));
