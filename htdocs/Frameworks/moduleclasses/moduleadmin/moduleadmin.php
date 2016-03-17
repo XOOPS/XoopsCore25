@@ -21,7 +21,11 @@ class ModuleAdmin
     private $_itemInfoBox       = array();
     private $_itemInfoBoxLine   = array();
     private $_itemConfigBoxLine = array();
-    private $_obj               = array();
+
+    /**
+     * @var XoopsModule
+     */
+    private $_obj;
 
     /**
      * Constructor
