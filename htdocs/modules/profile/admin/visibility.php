@@ -59,10 +59,11 @@ $opform->addElement($op_select);
 $opform->display();
 
 $criteria = new CriteriaCompo();
-$criteria->setGroupBy('field_id, user_group, profile_group');
-$criteria->setSort('field_id');
+//$criteria->setGroupBy('field_id, user_group, profile_group');
+$criteria->setSort('field_id, user_group, profile_group');
 $criteria->setOrder('DESC');
-$visibilities = $visibility_handler->getAll($criteria, false, false, true);
+
+$visibilities = $visibility_handler->getAllByFieldId($criteria);
 
 $member_handler = xoops_getHandler('member');
 $groups         = $member_handler->getGroupList();
@@ -96,4 +97,3 @@ $GLOBALS['xoopsTpl']->display('db:profile_admin_visibility.tpl');
 
 include_once __DIR__ . '/admin_footer.php';
 //xoops_cp_footer();
-
