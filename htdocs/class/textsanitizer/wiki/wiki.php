@@ -90,7 +90,7 @@ EOH;
      *
      * @return string
      */
-    public static function decode($text)
+    public static function decode($text, $width, $height)
     {
         $config = parent::loadConfig(__DIR__);
         if (empty($text) || empty($config['link'])) {
