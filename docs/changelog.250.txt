@@ -46,7 +46,7 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 Updated:
  - TinyMCE to 3.5.11 (mamba)
  - PHPMailer to 5.2.14 (mamba)
- - jQuery to 1.11.3 (mamba)
+ - jQuery to 1.12.1 (mamba)
  - jQuery UI 1.11.4 (mamba)
  - jGrowl to 1.4.3 (mamba)
  - phpThumb to 1.7.14-201601231457  (mamba)
