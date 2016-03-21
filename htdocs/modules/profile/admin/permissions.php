@@ -22,7 +22,7 @@ xoops_cp_header();
 $indexAdmin = new ModuleAdmin();
 echo $indexAdmin->addNavigation('permissions.php');
 
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'edit';
+$op = \Xmf\Request::getCmd('op', 'edit');
 
 $perm_desc = '';
 switch ($op) {
@@ -67,8 +67,7 @@ $opform->display();
 
 $module_id = $GLOBALS['xoopsModule']->getVar('mid');
 include_once $GLOBALS['xoops']->path('/class/xoopsform/grouppermform.php');
-$form = new XoopsGroupPermForm($title_of_form, $module_id, $perm_name, $perm_desc, 'admin/permissions.php', $anonymous);
-
+$form = new XoopsGroupPermForm($title_of_form, $module_id, $perm_name, $perm_desc, 'admin/permissions.php?op=' . $op, $anonymous);
 if ($op === 'access') {
     $member_handler = xoops_getHandler('member');
     $glist          = $member_handler->getGroupList();
