@@ -84,7 +84,9 @@ define('_XOOPS_FATAL_MESSAGE', "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Str
 <title>Internal server error</title>
 <style type='text/css'>
 * { margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif;}
-body {font-size: 12px; background-color: #f0f0f0; text-align: center;}
+body {font-size: 12px; background-color: #f0f0f0; 
+<!--text-align: center;-->
+}
 #xo-siteblocked {
     border: 1px solid #c0c4c0;
     width: 375px;

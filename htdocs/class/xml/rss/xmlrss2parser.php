@@ -838,7 +838,7 @@ class RssItemHandler extends XmlTagHandler
      */
     public function handleEndElement(&$parser)
     {
-        $items =& $parser->getTempArr();
+        $items = $parser->getTempArr();
         $parser->setItems($items);
     }
 }

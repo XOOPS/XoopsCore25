@@ -377,7 +377,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
         if (isset($storetype)) {
             $criteria->add(new Criteria('imgcat_storetype', $storetype));
         }
-        $categories =& $this->getObjects($criteria, true);
+        $categories = $this->getObjects($criteria, true);
         $ret        = array();
         foreach (array_keys($categories) as $i) {
             $ret[$i] = $categories[$i]->getVar('imgcat_name');
