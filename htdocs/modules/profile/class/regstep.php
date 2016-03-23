@@ -55,12 +55,12 @@ class ProfileRegstepHandler extends XoopsPersistableObjectHandler
      * Delete an object from the database
      * @see XoopsPersistableObjectHandler
      *
-     * @param profileRegstep $obj
+     * @param XoopsObject $obj
      * @param bool           $force
      *
      * @return bool
      */
-    public function delete($obj, $force = false)
+    public function delete(XoopsObject $obj, $force = false)
     {
         if (parent::delete($obj, $force)) {
             $field_handler = xoops_getModuleHandler('field');

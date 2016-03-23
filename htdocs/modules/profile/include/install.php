@@ -27,7 +27,7 @@ function xoops_module_install_profile(XoopsModule $module)
     xoops_loadLanguage('user');
 
     // Create registration steps
-    profile_install_addStep(_PROFILE_MI_STEP_BASIC, '', 1, 1);
+    profile_install_addStep(_PROFILE_MI_STEP_BASIC, '', 1, 0);
     profile_install_addStep(_PROFILE_MI_STEP_COMPLEMENTARY, '', 2, 1);
 
     // Create categories
