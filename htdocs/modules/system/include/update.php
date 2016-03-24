@@ -103,4 +103,3 @@ function update_system_v211($module)
     return true;
 }
 // irmtfan bug fix: solve templates duplicate issue
-
