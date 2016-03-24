@@ -328,7 +328,7 @@ class SystemMaintenance
                 $field_type = array();
                 $i          = 0;
                 while ($i < $num_fields) {
-                    $meta = mysqli_fetch_field($result, $i);
+                    $meta = mysqli_fetch_field($result);
                     $field_type[] = $meta->type;
                     ++$i;
                 }
