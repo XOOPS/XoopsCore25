@@ -34,7 +34,7 @@ $indexAdmin = new ModuleAdmin();
 
 $indexAdmin->addItemButton(_ADD . ' ' . _PROFILE_AM_CATEGORY, 'category.php?op=new', 'add', '');
 
-echo $indexAdmin->addNavigation('category.php');
+echo $indexAdmin->addNavigation(basename(__FILE__));
 echo $indexAdmin->renderButton('right', '');
 
 $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : (isset($_REQUEST['id']) ? 'edit' : 'list');

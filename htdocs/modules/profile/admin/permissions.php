@@ -20,7 +20,7 @@
 include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 $indexAdmin = new ModuleAdmin();
-echo $indexAdmin->addNavigation('permissions.php');
+echo $indexAdmin->addNavigation(basename(__FILE__));
 
 $op = \Xmf\Request::getCmd('op', 'edit');
 
@@ -106,4 +106,3 @@ if ($op === 'access') {
 $form->display();
 include_once __DIR__ . '/admin_footer.php';
 //xoops_cp_footer();
-

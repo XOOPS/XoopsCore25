@@ -33,7 +33,7 @@ xoops_cp_header();
 
 $indexAdmin = new ModuleAdmin();
 
-echo $indexAdmin->addNavigation('index.php');
+echo $indexAdmin->addNavigation(basename(__FILE__));
 echo $indexAdmin->renderIndex();
 
 include 'admin_footer.php';

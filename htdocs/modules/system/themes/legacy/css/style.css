@@ -97,7 +97,9 @@ tr.foot td {background-color: #c2cdd6; padding: 5px; color:inherit; font-weight:
 .admin_layer { width: 200px; margin: 5px; background-color: #c0c0c0; padding: 1px; color:#666; border: 1px solid #c0c0c0;}
 .admin_layer_img { border: 0; padding :5px;}
 /* ===== debug messages ===== */
-#xo-logger-output { font-size: .8em; }
+#xo-logger-output { font-size: .8em;
+    text-align: left;
+}
 
 .bg_menu { background-image:url(../img/bg_menu.gif); }
 .bg_content { background-image:url(../img/bg_content.gif); }

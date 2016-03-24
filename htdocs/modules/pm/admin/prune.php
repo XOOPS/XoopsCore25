@@ -21,7 +21,7 @@ include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
 $indexAdmin = new ModuleAdmin();
-echo $indexAdmin->addNavigation('prune.php');
+echo $indexAdmin->addNavigation(basename(__FILE__));
 
 $op         = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'form';
 $pm_handler = xoops_getModuleHandler('message');
@@ -86,4 +86,3 @@ switch ($op) {
 }
 include_once __DIR__ . '/admin_footer.php';
 //xoops_cp_footer();
-

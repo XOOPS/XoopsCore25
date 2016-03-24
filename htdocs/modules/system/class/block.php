@@ -325,11 +325,11 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
     /**
      * retrieve array of {@link XoopsBlock}s meeting certain conditions
      *
-     * @param  CriteriaElement $criteria  {@link CriteriaElement} with conditions for the blocks
-     * @param  bool            $id_as_key should the blocks' bid be the key for the returned array?
-     * @param  bool            $as_object return an array of objects
+     * @param CriteriaElement $criteria {@link CriteriaElement} with conditions for the blocks
+     * @param bool $id_as_key           should the blocks' bid be the key for the returned array?
+     * @param bool $as_object           return an array of objects
      *
-     * @return array           {@link XoopsBlock}s matching the conditions
+     * @return array {@link XoopsBlock}s matching the conditions
      **/
     public function &getObjects(CriteriaElement $criteria = null, $id_as_key = false, $as_object = true)
     {
@@ -369,6 +369,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
             }
             unset($object);
         }
+
         return $ret;
     }
 
@@ -376,8 +377,8 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
      * get all the blocks that match the supplied parameters
      *
      * @param int|int[] $groupid  groupid (can be an array)
-     * @param bool      $asobject
-     * @param int       $side
+     * @param bool $asobject
+     * @param int $side
      *                            0: sideblock - left
      *                            1: sideblock - right
      *                            2: sideblock - left and right
@@ -386,8 +387,8 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
      *                            5: centerblock - center
      *                            6: centerblock - left, right, center
      * @param           $visible  0: not visible 1: visible
-     * @param string    $orderby  order of the blocks
-     * @param int       $isactive
+     * @param string $orderby     order of the blocks
+     * @param int $isactive
      *
      * @return array of block objects
      */
@@ -479,11 +480,11 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
 
     /**
      * @param        $groupid
-     * @param int    $module_id
-     * @param bool   $toponlyblock
-     * @param null   $visible
+     * @param int $module_id
+     * @param bool $toponlyblock
+     * @param null $visible
      * @param string $orderby
-     * @param int    $isactive
+     * @param int $isactive
      *
      * @return array
      */
@@ -544,11 +545,11 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * @param int    $module_id
-     * @param bool   $toponlyblock
-     * @param null   $visible
+     * @param int $module_id
+     * @param bool $toponlyblock
+     * @param null $visible
      * @param string $orderby
-     * @param int    $isactive
+     * @param int $isactive
      *
      * @return array
      */

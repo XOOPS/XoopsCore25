@@ -22,7 +22,7 @@ xoops_cp_header();
 $indexAdmin = new ModuleAdmin();
 
 $indexAdmin->addItemButton(_ADD . ' ' . _PROFILE_AM_STEP, 'step.php?op=new', 'add', '');
-echo $indexAdmin->addNavigation('step.php');
+echo $indexAdmin->addNavigation(basename(__FILE__));
 echo $indexAdmin->renderButton('right', '');
 
 $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : (isset($_REQUEST['id']) ? 'edit' : 'list');
