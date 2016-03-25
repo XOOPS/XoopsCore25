@@ -73,7 +73,7 @@ class Config_File {
      *
      * @param string $config_path (optional) path to the config files
      */
-    function __construct($config_path = NULL)
+    function __construct($config_path = NULL) // renamed for XOOPS
     {
         if (isset($config_path))
             $this->set_path($config_path);
