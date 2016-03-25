@@ -28,7 +28,8 @@ include_once $GLOBALS['xoops']->path('class/xml/rpc/xmlrpcparser.php');
 $GLOBALS['xoopsLogger']->activated = false;
 
 $response = new XoopsXmlRpcResponse();
-$parser   = new XoopsXmlRpcParser(rawurlencode($GLOBALS['HTTP_RAW_POST_DATA']));
+$http_raw_post_data = file_get_contents('php://input');
+$parser   = new XoopsXmlRpcParser(rawurlencode($http_raw_post_data));
 if (!$parser->parse()) {
     $response->add(new XoopsXmlRpcFault(102));
 } else {
