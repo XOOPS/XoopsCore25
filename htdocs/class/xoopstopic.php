@@ -42,7 +42,7 @@ class XoopsTopic
      * @param     $table
      * @param int $topicid
      */
-    public function XoopsTopic($table, $topicid = 0)
+    public function __construct($table, $topicid = 0)
     {
         $this->db    = XoopsDatabaseFactory::getDatabaseConnection();
         $this->table = $table;
