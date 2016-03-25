@@ -212,7 +212,8 @@ class XoopsCacheFile extends XoopsCacheEngine
         $data = $this->file->read(true);
         if (!empty($data) && !empty($this->settings['serialize'])) {
             $data = stripslashes($data);
-            $data = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $data);
+            // $data = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $data);
+            $data = preg_replace_callback('!s:(\d+):"(.*?)";!s', function ($m) { return 's:' . strlen($m[2]) . ':"' . $m[2] . '";'; }, $data);
             $data = unserialize($data);
             if (is_array($data)) {
                 XoopsLoad::load('XoopsUtility');

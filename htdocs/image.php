@@ -70,9 +70,9 @@ define('ENABLE_ROUNDCORNER', true); // Set to false to avoid excessive server lo
 define('ENABLE_IMAGEROTATE', true); // Set to false to avoid excessive server load
 
 error_reporting(false);
-if (version_compare(PHP_VERSION, '5.3.0', '<')) {
-    set_magic_quotes_runtime(0);
-}
+//if (version_compare(PHP_VERSION, '5.3.0', '<')) {
+//    set_magic_quotes_runtime(0);
+//}
 if (function_exists('mb_http_output')) {
     mb_http_output('pass');
 }
