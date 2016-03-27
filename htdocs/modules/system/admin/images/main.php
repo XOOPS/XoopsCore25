@@ -241,8 +241,8 @@ switch ($op) {
             $xoopsTpl->assign('db_store', 1);
         }
 
-        foreach (array_keys($images) as $i) {
-            $xoopsTpl->append_by_ref('images', $images[$i]->toArray());
+        foreach ($images as $listImage) {
+            $xoopsTpl->append('images', $listImage->toArray());
         }
         if ($imgcount > 0) {
             if ($imgcount > xoops_getModuleOption('images_pager', 'system')) {
