@@ -22,6 +22,10 @@ CHANGED DEFINES
 xoops_lib/modules/protector/language/english/modinfo.php
 define($constpref . '_HIJACK_TOPBITDSC', ...
 
+/modules/system/themes/default/language/english/admin.php
+define('_OXYGEN_CODESVN', 'Code Repository');
+
+
 NEW FILES:
 /language/english/stopwords.php
 /language/english/xmf.php

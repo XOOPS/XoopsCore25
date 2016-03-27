@@ -25,7 +25,7 @@ define('_OXYGEN_XOOPSWIKI', 'XOOPS Wiki');
 define('_OXYGEN_XOOPSBOOKS', 'XOOPS Books');
 define('_OXYGEN_NEWMODULE', 'New Modules');
 define('_OXYGEN_XOOPSFAQ', 'XOOPS FAQ');
-define('_OXYGEN_CODESVN', 'Code SVN');
+define('_OXYGEN_CODESVN', 'Code Repository');
 define('_OXYGEN_REPORTBUG', 'Report Bug');
 define('_OXYGEN_SITEPREF', 'Preferences');
 define('_OXYGEN_GENERAL', 'General Settings');
