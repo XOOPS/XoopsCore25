@@ -291,17 +291,17 @@
     },
     {
         "name": "xoops/xmf",
-        "version": "v1.0.0-RC2",
-        "version_normalized": "1.0.0.0-RC2",
+        "version": "v1.0.0",
+        "version_normalized": "1.0.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/XOOPS/xmf.git",
-            "reference": "197a1b51b9f39f97a7e1c316756d0af329696ee1"
+            "reference": "ef081c3d355114ee7cc59192467afe035db36734"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/XOOPS/xmf/zipball/197a1b51b9f39f97a7e1c316756d0af329696ee1",
-            "reference": "197a1b51b9f39f97a7e1c316756d0af329696ee1",
+            "url": "https://api.github.com/repos/XOOPS/xmf/zipball/ef081c3d355114ee7cc59192467afe035db36734",
+            "reference": "ef081c3d355114ee7cc59192467afe035db36734",
             "shasum": ""
         },
         "require": {
@@ -311,7 +311,7 @@
             "raveren/kint": "1.0.10",
             "symfony/yaml": "2.4.*"
         },
-        "time": "2016-03-07 22:41:14",
+        "time": "2016-03-26 00:53:01",
         "type": "project",
         "installation-source": "dist",
         "autoload": {

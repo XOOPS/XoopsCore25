@@ -35,7 +35,7 @@ class Session extends AbstractHelper
     protected $prefix;
 
     /**
-     * Initialize parent::__constuct calls this after verifying module object.
+     * Initialize parent::__construct calls this after verifying module object.
      *
      * @return void
      */
