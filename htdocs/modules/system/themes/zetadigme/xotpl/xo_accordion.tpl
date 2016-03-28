@@ -158,12 +158,12 @@
                         <a class="tooltip" rel="external" href="http://www.xoops.org/modules/mediawiki/index.php/Main_Page" title="<{$lang_xoops_xoopswiki}>"><{$lang_xoops_xoopswiki}></a>
                     </td>
                     <td>
-                        <a class="tooltip" rel="external" href="http://xoops.svn.sourceforge.net/viewvc/xoops" title="<{$lang_xoops_codesvn}>"><{$lang_xoops_codesvn}></a>
+                        <a class="tooltip" rel="external" href="https://github.com/XOOPS/XoopsCore25" title="<{$lang_xoops_codesvn}>"><{$lang_xoops_codesvn}></a>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <a class="tooltip" rel="external" href="http://sourceforge.net/tracker/?func=add&amp;group_id=41586&amp;atid=430840" title="<{$lang_xoops_reportbug}>"><{$lang_xoops_reportbug}></a>
+                        <a class="tooltip" rel="external" href="https://github.com/XOOPS/XoopsCore25/issues" title="<{$lang_xoops_reportbug}>"><{$lang_xoops_reportbug}></a>
                     </td>
                 </tr>
             </table>
