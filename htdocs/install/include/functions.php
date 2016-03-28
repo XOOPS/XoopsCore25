@@ -32,7 +32,7 @@ function install_acceptUser($hash = '')
     $user = array_pop($memberHandler->getUsers(new Criteria('uname', $uname)));
 
     if (is_object($GLOBALS['xoops']) && method_exists($GLOBALS['xoops'], 'acceptUser')) {
-        $res = $GLOBALS['xoops']->acceptUser($uname, true, $msg);
+        $res = $GLOBALS['xoops']->acceptUser($uname, true, '');
 
         return $res;
     }
@@ -167,7 +167,8 @@ function xoDiagBoolSetting($name, $wanted = false, $severe = false)
 }
 
 /**
- * @param $path
+ * seems to only be used for license file?
+ * @param string $path dir or file path
  *
  * @return string
  */
@@ -176,13 +177,15 @@ function xoDiagIfWritable($path)
     $path  = '../' . $path;
     $error = true;
     if (!is_dir($path)) {
-        if (file_exists($path)) {
-            @chmod($path, 0666);
+        if (file_exists($path) && !is_writable($path)) {
+            @chmod($path, 0664);
             $error = !is_writable($path);
         }
     } else {
-        @chmod($path, 0777);
-        $error = !is_writable($path);
+        if (!is_writable($path)) {
+            @chmod($path, 0775);
+            $error = !is_writable($path);
+        }
     }
 
     return xoDiag($error ? -1 : 1, $error ? ' ' : ' ');
@@ -195,8 +198,8 @@ function xoPhpVersion()
 {
     if (version_compare(phpversion(), '5.3.7', '>=')) {
         return xoDiag(1, phpversion());
-    } elseif (version_compare(phpversion(), '5.3.0', '>=')) {
-        return xoDiag(0, phpversion());
+    //} elseif (version_compare(phpversion(), '5.3.7', '>=')) {
+    //    return xoDiag(0, phpversion());
     } else {
         return xoDiag(-1, phpversion());
     }
@@ -494,6 +497,7 @@ function xoBuildLicenceKey()
         $xoops_serdat[$key] = substr($func(serialize($data)), 0, 4);
     }
 
+    $xoops_key = '';
     foreach ($xoops_serdat as $key => $data) {
         $xoops_key .= $data;
     }
@@ -518,6 +522,7 @@ function xoStripeKey($xoops_key)
     $length = 30;
     $strip  = floor(strlen($xoops_key) / 6);
     $strlen = strlen($xoops_key);
+    $ret = '';
     for ($i = 0; $i < $strlen; ++$i) {
         if ($i < $length) {
             ++$uu;

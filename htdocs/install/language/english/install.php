@@ -111,7 +111,7 @@ define('XOOPS_TABLES_FOUND', 'The XOOPS system tables already exists in your dat
 define('XOOPS_TABLES_CREATED', 'XOOPS system tables have been created.<br />Press <em>next</em> to go to the next step.');
 define('READY_INSERT_DATA', 'The installer is now ready to insert initial data into your database.');
 define('READY_SAVE_MAINFILE', 'The installer is now ready to save the specified settings to <em>mainfile.php</em>.<br />Press <em>next</em> to proceed.');
-define('SAVED_MAINFILE', 'Settings saved in mainfile.php');
+define('SAVED_MAINFILE', 'Settings saved');
 define('SAVED_MAINFILE_MSG', 'The installer has saved the specified settings to <em>mainfile.php</em> and <em>secure.php</em>. Press <em>next</em> to go to the next step.');
 define('DATA_ALREADY_INSERTED', 'XOOPS data found in database.<br />Press <em>next</em> to go to the next step.');
 define('DATA_INSERTED', 'Initial data has been inserted into database.<br />Press <em>next</em> to go to the next step.');
@@ -132,13 +132,13 @@ define('ERR_NO_XOOPS_FOUND', 'No XOOPS installation could be found in the specif
 define('ERR_INVALID_EMAIL', 'Invalid Email'); // L73
 define('ERR_REQUIRED', 'Information is required.'); // L41
 define('ERR_PASSWORD_MATCH', 'The two passwords do not match');
-define('ERR_NEED_WRITE_ACCESS', 'The server must be given write access to the following files and folders<br />(i.e. <em>chmod 777 directory_name</em> on a UNIX/LINUX server)<br />If they are not available or not created correctly, please create manually and set proper permissions.');
+define('ERR_NEED_WRITE_ACCESS', 'The server must be given write access to the following files and folders<br />(i.e. <em>chmod 775 directory_name</em> on a UNIX/LINUX server)<br />If they are not available or not created correctly, please create manually and set proper permissions.');
 define('ERR_NO_DATABASE', 'Could not create database. Contact the server administrator for details.'); // L31
 define('ERR_NO_DBCONNECTION', 'Could not connect to the database server.'); // L106
 define('ERR_WRITING_CONSTANT', 'Failed writing constant %s.'); // L122
-define('ERR_COPY_MAINFILE', 'Could not copy the distribution file to mainfile.php');
-define('ERR_WRITE_MAINFILE', 'Could not write into mainfile.php. Please check the file permission and try again.');
-define('ERR_READ_MAINFILE', 'Could not open mainfile.php for reading');
+define('ERR_COPY_MAINFILE', 'Could not copy the distribution file to %s');
+define('ERR_WRITE_MAINFILE', 'Could not write into %s. Please check the file permission and try again.');
+define('ERR_READ_MAINFILE', 'Could not open %s for reading');
 define('ERR_INVALID_DBCHARSET', "The charset '%s' is not supported.");
 define('ERR_INVALID_DBCOLLATION', "The collation '%s' is not supported.");
 define('ERR_CHARSET_NOT_SET', 'Default character set is not set for XOOPS database.');
@@ -180,3 +180,7 @@ define('PASSWORD_STRONG', 'Strong');
 define('PASSWORD_STRONGEST', 'Strongest');
 //2.5.7
 define('WRITTEN_LICENSE', 'Written XOOPS %s License Key: <strong>%s</strong>');
+//2.5.8
+define('CHMOD_CHGRP_REPEAT', 'Retry');
+define('CHMOD_CHGRP_IGNORE', 'Use Anyway');
+define('CHMOD_CHGRP_ERROR', 'Installer may not be able to write the configuration file %1$s.<p>PHP is writing files under user %2$s and group %3$s.<p>The directory %4$s/ has user %5$s and group %6$s');
