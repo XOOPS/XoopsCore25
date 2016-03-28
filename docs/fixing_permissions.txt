@@ -18,7 +18,7 @@ include_once XOOPS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
 
 4) Otherwise, if there are custom changes to the file grouppermform.php and you want to keep using it, then change that file as follow:
 
-a) aronud Line 28, after the line
+a) around Line 28, after the line
 
 xoops_load('XoopsFormHidden');
 

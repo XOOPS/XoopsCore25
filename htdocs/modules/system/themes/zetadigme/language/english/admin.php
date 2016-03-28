@@ -50,7 +50,7 @@ define('_MD_LOCALSUPPORT', 'XOOPS Local supports');
 define('_MD_XOOPSCORE', 'XOOPS Core');
 define('_MD_XOOPSTHEME', 'XOOPS Themes');
 define('_MD_XOOPSWIKI', 'XOOPS Wiki');
-define('_MD_CODESVN', 'Code SVN');
+define('_MD_CODESVN', 'Code Repository');
 define('_MD_REPORTBUG', 'Report Bug');
 define('_MD_MOVETOBLUE', 'Install the official modules');
 define('_MD_MOVETOBLUE_LINK', 'http://www.xoops.org/modules/repository/');

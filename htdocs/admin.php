@@ -73,7 +73,7 @@ if (!empty($_GET['xoopsorgnews'])) {
     // Multiple feeds
     $myts     = MyTextSanitizer::getInstance();
     $rssurl   = array();
-    $rssurl[] = 'http://sourceforge.net/export/rss2_projnews.php?group_id=41586&rss_fulltext=1';
+    //$rssurl[] = 'http://sourceforge.net/export/rss2_projnews.php?group_id=41586&rss_fulltext=1';
     $rssurl[] = 'http://www.xoops.org/backend.php';
     if ($URLs = include $GLOBALS['xoops']->path('language/' . xoops_getConfigOption('language') . '/backend.php')) {
         $rssurl = array_unique(array_merge($rssurl, $URLs));
