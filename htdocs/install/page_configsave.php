@@ -243,6 +243,10 @@ function checkFileWriteablity($files)
                 || (false !== stripos(PHP_OS, 'WIN'))
             )
             ) {
+                $uidStr = (string) $uid;
+                $dUidStr = (string) $dirStat['uid'];
+                $gidStr = (string) $gid;
+                $dGidStr = (string) $dirStat['gid'];
                 if (function_exists('posix_getpwuid')) {
                     $tempUsr = posix_getpwuid($uid);
                     $uidStr = isset($tempUsr['name']) ? $tempUsr['name'] : (string) $uid;
