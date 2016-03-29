@@ -15,7 +15,6 @@
  * @subpackage          auth
  * @since               2.0
  * @author              Pierre-Eric MENUET <pemphp@free.fr>
- * @version         $Id$
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');

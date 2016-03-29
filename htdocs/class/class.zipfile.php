@@ -1,5 +1,5 @@
 <?php
-// $Id: class.zipfile.php 12360 2014-03-08 09:46:59Z beckmi $
+// 
 /**
  * package::i.tools
  *

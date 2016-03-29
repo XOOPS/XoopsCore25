@@ -14,7 +14,6 @@
  * @package             kernel
  * @subpackage          form
  * @since               2.0.0
- * @version             $Id: grouppermform.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');

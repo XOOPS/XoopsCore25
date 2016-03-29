@@ -23,7 +23,6 @@
  * @author              Joomla!
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @version             Release: 1.0
  * @link                http://xoops.org
  * @since               2.5.7
  */

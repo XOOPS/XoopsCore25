@@ -1,5 +1,5 @@
 <?php
-// $Id: install2.php 12041 2013-09-14 14:06:17Z beckmi $
+// 
 // _LANGCODE: en
 // _CHARSET : UTF-8
 // Translator: XOOPS Translation Team

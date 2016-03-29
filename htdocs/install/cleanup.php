@@ -21,7 +21,6 @@
  * @package     installer
  * @since       2.5.7
  * @author      Richard Griffith <richard@geekwright.com>
- * @version     $Id: page_end.php 12051 2013-09-15 01:45:10Z beckmi $
  */
 
 require_once './include/common.inc.php';

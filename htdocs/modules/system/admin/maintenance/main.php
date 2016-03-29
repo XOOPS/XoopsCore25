@@ -13,7 +13,6 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Cointin Maxime (AKA Kraven30)
  * @package             system
- * @version             $Id: main.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 require_once XOOPS_ROOT_PATH . '/modules/system/class/maintenance.php';

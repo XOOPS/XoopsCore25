@@ -1,5 +1,5 @@
 <?php
-// $Id: modinfo.php 12549 2014-05-25 10:52:42Z beckmi $
+// 
 // _LANGCODE: en
 // _CHARSET : UTF-8
 // Translator: XOOPS Translation Team

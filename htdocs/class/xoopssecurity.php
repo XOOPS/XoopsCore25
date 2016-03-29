@@ -16,7 +16,6 @@
  * @license   GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package   kernel
  * @since     2.0.0
- * @version   $Id: xoopssecurity.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');

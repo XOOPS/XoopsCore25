@@ -1,5 +1,5 @@
 <?php
-// $Id: admin.php 12033 2013-09-14 03:16:44Z beckmi $
+// 
 define('_AD_SYSOPTIONS', 'System Options');
 define('_AD_INSTALLEDMODULES', 'Installed Modules');
 define('_AD_XOOPSTHEMES', 'XOOPS Themes');

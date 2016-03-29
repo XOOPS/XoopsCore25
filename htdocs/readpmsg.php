@@ -13,7 +13,6 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             core
  * @since               2.0.0
- * @version             $Id: readpmsg.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 include __DIR__ . '/mainfile.php';

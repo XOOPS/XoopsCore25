@@ -16,7 +16,6 @@
  * @since            2.0
  * @author           Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
- * @version          $Id: formradio.php 13082 2015-06-06 21:59:41Z beckmi $
  * @package          kernel
  * @subpackage       form
  * @todo             template

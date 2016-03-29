@@ -11,7 +11,6 @@
  * @author           Skalpa Keo <skalpa@xoops.org>
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
  * @author           dugris <dugris@frxoops.org>
- * @version          $Id: install.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 // _LANGCODE: en
 // _CHARSET : UTF-8

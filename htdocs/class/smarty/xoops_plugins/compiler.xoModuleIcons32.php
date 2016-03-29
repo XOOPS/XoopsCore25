@@ -15,7 +15,6 @@
  * @license             GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Andricq Nicolas (AKA MusS)
  * @since               2.5.2
- * @version             $Id: compiler.xoModuleIcons32.php 13082 2015-06-06 21:59:41Z beckmi $
  * @param $argStr
  * @param $smarty
  * @return string

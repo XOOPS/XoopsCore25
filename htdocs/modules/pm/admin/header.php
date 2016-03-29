@@ -14,7 +14,6 @@
  * @package             pm
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: header.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';

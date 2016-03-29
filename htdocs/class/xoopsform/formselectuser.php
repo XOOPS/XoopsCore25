@@ -17,7 +17,6 @@
  * @subpackage      form
  * @since           2.0.0
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @version         $Id: formselectuser.php 13081 2015-06-06 21:50:17Z beckmi $
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 

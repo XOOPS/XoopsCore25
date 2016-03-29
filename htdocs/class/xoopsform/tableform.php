@@ -14,7 +14,6 @@
  * @package             kernel
  * @subpackage          form
  * @since               2.0.0
- * @version             $Id: tableform.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');

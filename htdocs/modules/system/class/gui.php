@@ -14,7 +14,6 @@
  * @package             system
  * @subpackage          class
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: gui.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 class XoopsSystemGui
 {

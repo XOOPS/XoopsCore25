@@ -16,7 +16,6 @@
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @author              Jan Pedersen
  * @author              trabis <lusopoemas@gmail.com>
- * @version             $Id: register.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 include __DIR__ . '/header.php';

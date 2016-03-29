@@ -18,7 +18,6 @@
  * @since               1.0
  * @author              trabis <lusopoemas@gmail.com>
  * @author              The SmartFactory <www.smartfactory.ca>
- * @version             $Id: item.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 include_once __DIR__ . '/header.php';

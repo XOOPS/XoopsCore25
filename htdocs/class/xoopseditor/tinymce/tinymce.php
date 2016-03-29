@@ -20,7 +20,6 @@
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @author              Lucio Rota <lucio.rota@gmail.com>
  * @author              Laurent JEN <dugris@frxoops.org>
- * @version             $Id $
  */
 class TinyMCE
 {

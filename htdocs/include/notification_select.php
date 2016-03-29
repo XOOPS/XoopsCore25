@@ -15,7 +15,6 @@
  * @subpackage          Xoop Notifications Select
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version             notification_select.php 694 2006-09-04 11:33:22Z skalpa $
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 

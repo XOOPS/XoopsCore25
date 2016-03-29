@@ -14,7 +14,6 @@
  * @package             core
  * @since               2.5.7
  * @author              luciorota <lucio.rota@gmail.com>, Joe Lencioni <joe@shiftingpixel.com>
- * @version             $Id: image.php 13082 2015-06-06 21:59:41Z beckmi $
  *
  * Enhanced image access/edit
  * This enhanced version is very useful in many cases, for example when you need a

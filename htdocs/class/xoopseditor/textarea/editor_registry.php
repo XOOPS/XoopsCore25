@@ -13,7 +13,6 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since               2.3.0
- * @version             $Id: editor_registry.php 13082 2015-06-06 21:59:41Z beckmi $
  * @package             xoopseditor
  */
 return $config = array(

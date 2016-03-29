@@ -5,7 +5,6 @@
  * @author          ralf57
  * @author          luciorota (lucio.rota@gmail.com)
  * @author          dugris (dugris@frxoops.fr)
- * @version         $Id: xoopsimagemanager.js 11937 2013-08-18 02:25:16Z beckmi $
  */
 
 tinyMCEPopup.requireLangPack();

@@ -1,5 +1,5 @@
 <?php
-// $Id: class.tar.php 12795 2014-09-21 05:41:46Z beckmi $
+// 
 
 /**
  * package::i.tools
