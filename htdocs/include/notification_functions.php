@@ -15,7 +15,7 @@
  * @subpackage          Xoop Notifications Functions
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version             $Id: notification_functions.php 13090 2015-06-16 20:44:29Z beckmi $
+ * @version             
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 

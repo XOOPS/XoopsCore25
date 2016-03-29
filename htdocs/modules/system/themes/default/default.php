@@ -25,7 +25,7 @@ xoops_load('gui', 'system');
  * @author      BitC3R0     <BitC3R0@gmail.com>
  * @author      trabis      <lusopoemas@gmail.com>
  * @version     1.2
- * @version     $Id: default.php 13092 2015-06-20 20:30:30Z beckmi $
+ * @version     
  */
 
 /**

@@ -19,7 +19,7 @@
  * @subpackage          form
  * @since               2.3.0
  * @author              John Neill <catzwolf@xoops.org>
- * @version             $Id: formselectcheckgroup.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @version             
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 

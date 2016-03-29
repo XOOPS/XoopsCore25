@@ -14,7 +14,7 @@
  * @package             profile
  * @since               2.4.0
  * @author              trabis <lusopoemas@gmail.com>
- * @version             $Id: core.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @version             
  */
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');

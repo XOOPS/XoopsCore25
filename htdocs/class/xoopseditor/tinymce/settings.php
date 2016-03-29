@@ -20,7 +20,7 @@
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @author              Lucio Rota <lucio.rota@gmail.com>
  * @author              Laurent JEN <dugris@frxoops.org>
- * @version             $Id: settings.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @version             
  */
 
 return array(

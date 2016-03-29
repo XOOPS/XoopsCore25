@@ -14,7 +14,7 @@
  * @author              Skalpa Keo <skalpa@xoops.org>
  * @since               2.3.0
  * @package             kernel
- * @version             $Id: theme_blocks.php 13090 2015-06-16 20:44:29Z beckmi $
+ * @version             
  */
 
 /**

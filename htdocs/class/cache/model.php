@@ -197,7 +197,7 @@ class XoopsCacheModel extends XoopsCacheEngine
  * @package
  * @author              John
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @version             $Id: model.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @version             
  * @access              public
  */
 class XoopsCacheModelObject extends XoopsObject
@@ -220,7 +220,7 @@ class XoopsCacheModelObject extends XoopsObject
  * @package
  * @author              John
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @version             $Id: model.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @version             
  * @access              public
  */
 class XoopsCacheModelHandler extends XoopsPersistableObjectHandler

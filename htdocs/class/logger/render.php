@@ -16,7 +16,7 @@
  * @since               2.3.0
  * @author              Skalpa Keo <skalpa@xoops.org>
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: render.php 13090 2015-06-16 20:44:29Z beckmi $
+ * @version             
  *
  * @todo                Not well written, just keep as it is. Refactored in 3.0
  */

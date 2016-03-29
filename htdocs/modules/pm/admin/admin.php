@@ -14,7 +14,7 @@
  * @package             pm
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: admin.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @version             
  */
 
 include_once __DIR__ . '/admin_header.php';

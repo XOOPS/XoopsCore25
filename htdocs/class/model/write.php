@@ -15,7 +15,7 @@
  * @subpackage          model
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: write.php 13091 2015-06-16 21:08:34Z beckmi $
+ * @version             
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 

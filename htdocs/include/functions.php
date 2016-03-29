@@ -13,7 +13,7 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
- * @version             $Id: functions.php 13091 2015-06-16 21:08:34Z beckmi $
+ * @version             
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');

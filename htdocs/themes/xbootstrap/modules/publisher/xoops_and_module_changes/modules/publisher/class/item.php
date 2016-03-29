@@ -16,7 +16,7 @@
  * @since               1.0
  * @author              trabis <lusopoemas@gmail.com>
  * @author              The SmartFactory <www.smartfactory.ca>
- * @version             $Id: item.php 13090 2015-06-16 20:44:29Z beckmi $
+ * @version             
  */
 defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 include_once dirname(__DIR__) . '/include/common.php';

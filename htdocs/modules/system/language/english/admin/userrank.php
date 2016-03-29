@@ -4,7 +4,7 @@
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * _LANGCODE    en
  * _CHARSET     UTF-8
- * @version             $Id: userrank.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @version             
  */
 //Nav
 define('_AM_SYSTEM_USERRANK_NAV_MANAGER', 'Ranks Manager');

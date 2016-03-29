@@ -16,7 +16,7 @@
  * @author              Kazumi Ono <webmaster@myweb.ne.jp>
  * @author              Skalpa Keo <skalpa@xoops.org>
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: index.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @version             
  */
 
 if (file_exists(__DIR__ . '/mainfile.php')) {

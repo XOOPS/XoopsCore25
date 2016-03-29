@@ -14,7 +14,7 @@
  * @package             kernel
  * @since               2.0.0
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @version             $Id: downloader.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @version             
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');

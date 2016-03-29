@@ -13,7 +13,7 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              John Neill (AKA Catzwolf)
  * @author              Andricq Nicolas (AKA MusS)
- * @version             $Id: menu.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @version             
  */
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');

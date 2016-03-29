@@ -20,7 +20,7 @@ xoops_load('gui', 'system');
  * @usbpackage          GUI
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: thadmin.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @version             
  */
 class XoopsGuiThadmin extends /* implements */
     XoopsSystemGui

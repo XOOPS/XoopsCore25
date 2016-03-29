@@ -14,7 +14,7 @@
  * @package             kernel
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: xoopslocal.php 13090 2015-06-16 20:44:29Z beckmi $
+ * @version             
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');

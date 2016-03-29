@@ -14,7 +14,7 @@
  * @license             GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Gregory Mage (AKA Mage)
  * @package             system
- * @version             $Id: bannerfinish.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @version             
  */
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');

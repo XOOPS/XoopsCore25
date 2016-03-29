@@ -6,7 +6,7 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @since               1.00
- * @version             $Id: functions.cache.php 13090 2015-06-16 20:44:29Z beckmi $
+ * @version             
  * @package             Frameworks
  * @subpackage          art
  */

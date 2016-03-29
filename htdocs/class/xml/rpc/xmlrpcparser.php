@@ -1,9 +1,9 @@
 <?php
-// $Id: xmlrpcparser.php 13090 2015-06-16 20:44:29Z beckmi $
+// 
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2016 XOOPS Project (www.xoops.org)            //
-//                       <http://www.xoops.org/>                             //
+//                         <http://xoops.org/>                               //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -41,7 +41,7 @@ require_once XOOPS_ROOT_PATH . '/class/xml/xmltaghandler.php';
  * @package       class
  * @copyright (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @author        Kazumi Ono <onokazu@xoops.org>
- * @version       $Id: xmlrpcparser.php 13090 2015-06-16 20:44:29Z beckmi $
+ * @version       
  * @access        public
  */
 class XoopsXmlRpcParser extends SaxParser

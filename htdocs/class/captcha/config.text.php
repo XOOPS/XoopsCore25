@@ -15,7 +15,7 @@
  * @subpackage          CAPTCHA
  * @since               2.5.2
  * @author              trabis <lusopoemas@gmail.com>
- * @version             $Id: config.text.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @version             
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');

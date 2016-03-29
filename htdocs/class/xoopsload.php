@@ -14,7 +14,7 @@
  * @package             class
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: xoopsload.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @version             
  * @todo                For PHP 5 compliant
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');

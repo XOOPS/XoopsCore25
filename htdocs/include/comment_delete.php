@@ -14,7 +14,7 @@
  * @package             kernel
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version             $Id: comment_delete.php 13090 2015-06-16 20:44:29Z beckmi $
+ * @version             
  */
 
 if (!defined('XOOPS_ROOT_PATH') || !is_object($xoopsModule)) {

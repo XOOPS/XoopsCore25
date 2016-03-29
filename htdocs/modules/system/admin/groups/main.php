@@ -1,5 +1,5 @@
 <?php
-// $Id: main.php 13082 2015-06-06 21:59:41Z beckmi $
+// 
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
 // copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)                           //

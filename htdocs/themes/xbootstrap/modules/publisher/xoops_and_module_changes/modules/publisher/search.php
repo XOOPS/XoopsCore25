@@ -18,7 +18,7 @@
  * @since               1.0
  * @author              trabis <lusopoemas@gmail.com>
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: search.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @version             
  */
 
 include_once __DIR__ . '/header.php';

@@ -12,7 +12,7 @@
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
- * @version             $Id: common.php 13090 2015-06-16 20:44:29Z beckmi $
+ * @version             
  */
 defined('XOOPS_MAINFILE_INCLUDED') or die('Restricted access');
 

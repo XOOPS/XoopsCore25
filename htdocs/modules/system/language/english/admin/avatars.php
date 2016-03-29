@@ -4,7 +4,7 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * _LANGCODE    en
  * _CHARSET     UTF-8
- * @version             $Id: avatars.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @version             
  */
 // Navigation
 define('_AM_SYSTEM_AVATAR_MANAGER', 'Avatars Management');

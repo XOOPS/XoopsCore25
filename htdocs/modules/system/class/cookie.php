@@ -14,7 +14,7 @@
  * @license             GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Andricq Nicolas (AKA MusS)
  * @package             system
- * @version             $Id: cookie.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @version             
  */
 class cookie
 {

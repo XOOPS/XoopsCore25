@@ -15,7 +15,7 @@
  * @subpackage          utility
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: xoopsutility.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @version             
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -25,7 +25,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * @package
  * @author              John
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @version             $Id: xoopsutility.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @version             
  * @access              public
  */
 class XoopsUtility

@@ -15,7 +15,7 @@
  * @since               2.3.0
  * @author              Jan Pedersen
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: changepass.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @version             
  */
 
 $xoopsOption['pagetype'] = 'user';

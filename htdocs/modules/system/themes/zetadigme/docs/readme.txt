@@ -1,4 +1,4 @@
-/* $Id: readme.txt 3860 2009-11-09 21:35:53Z kris_fr $ */
+/* 
 
 /****** english ******/
 To view the blocks in the cpanel:

@@ -20,7 +20,7 @@
  * @package             core
  * @since               2.0.0
  * @author              Kazumi Ono <webmaster@myweb.ne.jp>
- * @version             $Id: userinfo.php 13090 2015-06-16 20:44:29Z beckmi $
+ * @version             
  */
 include __DIR__ . '/mainfile.php';
 $xoopsPreload = XoopsPreload::getInstance();

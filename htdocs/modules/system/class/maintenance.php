@@ -13,7 +13,7 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Cointin Maxime (AKA Kraven30)
  * @package             system
- * @version             $Id: maintenance.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @version             
  */
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');

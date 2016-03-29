@@ -17,7 +17,7 @@
  * @author              Kazumi Ono  <onokazu@xoops.org>
  * @author              Skalpa Keo <skalpa@xoops.org>
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: xoopslogger.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @version             
  *
  * @todo                Not well written, just keep as it is. Refactored in 3.0
  */

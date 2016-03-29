@@ -13,7 +13,7 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
- * @version             $Id: defines.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @version             
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
@@ -84,7 +84,7 @@ define('_XOOPS_FATAL_MESSAGE', "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Str
 <title>Internal server error</title>
 <style type='text/css'>
 * { margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif;}
-body {font-size: 12px; background-color: #f0f0f0; 
+body {font-size: 12px; background-color: #f0f0f0;
 <!--text-align: center;-->
 }
 #xo-siteblocked {

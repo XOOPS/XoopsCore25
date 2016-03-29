@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: video.php
+ * 
  * Module: XoopsTube
  * @param $returnsource
  * @return

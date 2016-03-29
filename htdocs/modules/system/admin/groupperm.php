@@ -1,5 +1,5 @@
 <?php
-// $Id: groupperm.php 13090 2015-06-16 20:44:29Z beckmi $
+// 
 
 include_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 $modid = isset($_POST['modid']) ? (int)$_POST['modid'] : 0;

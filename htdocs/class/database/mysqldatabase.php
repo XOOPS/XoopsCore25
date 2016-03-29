@@ -16,7 +16,7 @@
  * @since               1.0.0
  * @author              Kazumi Ono <onokazu@xoops.org>
  * @author              Rodney Fulk <redheadedrod@hotmail.com>
- * @version             $Id: mysqldatabase.php 8066 2011-11-06 05:09:33Z beckmi $
+ * @version             
  */
 defined('XOOPS_ROOT_PATH') or die('Restricted access');
 

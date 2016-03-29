@@ -14,7 +14,7 @@
  * @author              Kazumi Ono (AKA onokazu)
  * @author              Gregory Mage (AKA Mage)
  * @package             system
- * @version             $Id: smilies.php 13082 2015-06-06 21:59:41Z beckmi $
+ * @version             
  */
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
