@@ -14,7 +14,7 @@
  * @package             XoopsPartners
  * @since               2.5.0
  * @author              Mage, Mamba
- * @version             $Id $
+ * @version            
  **/
 
 include_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
