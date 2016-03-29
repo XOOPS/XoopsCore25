@@ -14,7 +14,6 @@
  * @package             kernel
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version             
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -146,7 +145,6 @@ class XoopsPrivmessage extends XoopsObject
  * @author              Kazumi Ono    <onokazu@xoops.org>
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  *
- * @version             $Revision: 13090 $ - $Date: 2015-06-16 16:44:29 -0400 (Tue, 16 Jun 2015) $
  *
  * @todo Why is this not a XoopsPersistableObjectHandler?
  */

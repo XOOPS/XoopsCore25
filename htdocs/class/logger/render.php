@@ -16,7 +16,6 @@
  * @since               2.3.0
  * @author              Skalpa Keo <skalpa@xoops.org>
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             
  *
  * @todo                Not well written, just keep as it is. Refactored in 3.0
  */

@@ -15,7 +15,6 @@
  * @subpackage          CAPTCHA
  * @since               2.5.2
  * @author              trabis <lusopoemas@gmail.com>
- * @version             
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');

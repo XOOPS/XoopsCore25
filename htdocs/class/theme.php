@@ -16,7 +16,6 @@
  * @since               2.3.0
  * @package             kernel
  * @subpackage          xos_opal_Theme
- * @version             
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');

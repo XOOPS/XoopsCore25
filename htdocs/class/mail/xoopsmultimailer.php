@@ -15,7 +15,6 @@
  * @subpackage          mail
  * @since               2.0.0
  * @author              Author: Jochen Büînagel (job@buennagel.com)
- * @version             
  */
 
 /**

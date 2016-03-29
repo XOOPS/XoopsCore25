@@ -15,7 +15,6 @@
  * @subpackage          utility
  * @since               1.0.0
  * @author              Author: Kazumi Ono (AKA onokazu)
- * @version             
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 

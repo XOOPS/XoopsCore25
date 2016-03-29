@@ -14,7 +14,6 @@
  * @package             core
  * @since               2.5.7
  * @author              luciorota <lucio.rota@gmail.com>, Joe Lencioni <joe@shiftingpixel.com>
- * @version             
  *
  * Enhanced image access/edit
  * This enhanced version is very useful in many cases, for example when you need a

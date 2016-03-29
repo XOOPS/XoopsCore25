@@ -4,7 +4,6 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * _LANGCODE    en
  * _CHARSET     UTF-8
- * @version             
  */
 // Main
 define('_AM_SYSTEM_CONFIG', 'System Configuration');

@@ -13,7 +13,6 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             core
  * @since               2.0.0
- * @version             
  */
 
 $xoopsOption['pagetype'] = 'notification';

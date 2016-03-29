@@ -14,7 +14,6 @@
  * @package             pm
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             
  */
 
 //include_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';

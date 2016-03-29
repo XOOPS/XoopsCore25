@@ -14,7 +14,6 @@
  * @package             kernel
  * @subpackage          form
  * @since               2.0.0
- * @version             
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');

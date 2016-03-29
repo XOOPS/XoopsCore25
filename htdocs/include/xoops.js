@@ -1,4 +1,3 @@
-/* 
 function xoops$() {
     var elements = new Array();
 

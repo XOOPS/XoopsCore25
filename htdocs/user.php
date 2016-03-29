@@ -20,7 +20,6 @@
  * @package             core
  * @since               2.0.0
  * @author              Kazumi Ono <webmaster@myweb.ne.jp>
- * @version             
  */
 include __DIR__ . '/mainfile.php';
 $xoopsPreload = XoopsPreload::getInstance();

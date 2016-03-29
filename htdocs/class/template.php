@@ -16,7 +16,6 @@
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @package             kernel
  * @subpackage          core
- * @version             
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');

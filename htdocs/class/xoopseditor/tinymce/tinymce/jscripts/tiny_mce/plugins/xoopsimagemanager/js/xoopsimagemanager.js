@@ -5,7 +5,6 @@
  * @author          ralf57
  * @author          luciorota (lucio.rota@gmail.com)
  * @author          dugris (dugris@frxoops.fr)
- * @version         
  */
 
 tinyMCEPopup.requireLangPack();

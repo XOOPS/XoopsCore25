@@ -18,7 +18,6 @@
  * @since               1.0
  * @author              trabis <lusopoemas@gmail.com>
  * @author              The SmartFactory <www.smartfactory.ca>
- * @version             
  */
 
 include_once __DIR__ . '/header.php';

@@ -10,7 +10,6 @@
  * @author              ralf57
  * @author              luciorota <lucio.rota@gmail.com>
  * @author              Laurent JEN <dugris@frxoops.org>
- * @version             
  */
 
 // load mainfile.php - start

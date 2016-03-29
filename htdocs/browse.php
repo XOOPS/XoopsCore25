@@ -14,7 +14,6 @@
  * @package             core
  * @since               2.4.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             
  */
 
 defined('DS') or define('DS', DIRECTORY_SEPARATOR);

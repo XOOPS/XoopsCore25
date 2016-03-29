@@ -14,7 +14,6 @@
  * @package             kernel
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version             
  */
 
 // These are needed when viewing old modules (that don't use Smarty template files) when a theme that use Smarty templates are selected.

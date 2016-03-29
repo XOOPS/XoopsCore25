@@ -15,7 +15,6 @@
  * @subpackage          textsanitizer
  * @since               2.3.0
  * @author              Wishcraft <simon@xoops.org>
- * @version             
  * @deprecated
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');

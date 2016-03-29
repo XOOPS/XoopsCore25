@@ -14,7 +14,6 @@
  * @package             kernel
  * @subpackage          database
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @version             
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');

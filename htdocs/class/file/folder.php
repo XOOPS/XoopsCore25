@@ -15,7 +15,6 @@
  * @subpackage          file
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             
  */
 
 /**
@@ -37,7 +36,6 @@
  * @package    cake
  * @subpackage cake.cake.libs
  * @since      CakePHP(tm) v 0.2.9
- * @version    $Revision: 13082 $
  * @modifiedby $LastChangedBy: beckmi $
  * @lastmodified $Date: 2015-06-06 17:59:41 -0400 (Sat, 06 Jun 2015) $
  * @license    http://www.opensource.org/licenses/mit-license.php The MIT License

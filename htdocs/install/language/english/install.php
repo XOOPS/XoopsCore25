@@ -11,7 +11,6 @@
  * @author           Skalpa Keo <skalpa@xoops.org>
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
  * @author           dugris <dugris@frxoops.org>
- * @version          
  */
 // _LANGCODE: en
 // _CHARSET : UTF-8

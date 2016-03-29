@@ -12,7 +12,6 @@
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
- * @version             
  */
 defined('XOOPS_MAINFILE_INCLUDED') or die('Restricted access');
 

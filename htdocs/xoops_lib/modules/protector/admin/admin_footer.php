@@ -14,7 +14,6 @@
  * @package   Xoops Partner
  * @since     2.5.0
  * @author    XOOPS Development Team
- * @version   $Id$
  **/
 
 global $moduleInfo;

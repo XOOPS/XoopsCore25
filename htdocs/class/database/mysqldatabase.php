@@ -16,7 +16,6 @@
  * @since               1.0.0
  * @author              Kazumi Ono <onokazu@xoops.org>
  * @author              Rodney Fulk <redheadedrod@hotmail.com>
- * @version             
  */
 defined('XOOPS_ROOT_PATH') or die('Restricted access');
 

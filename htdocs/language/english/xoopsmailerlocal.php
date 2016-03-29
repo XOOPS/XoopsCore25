@@ -17,7 +17,6 @@
  * @subpackage          Xoops Mailer Local Language
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 /**

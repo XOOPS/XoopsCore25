@@ -15,7 +15,6 @@
  * @subpackage          class
  * @since               2.4.0
  * @author              trabis <lusopoemas@gmail.com>
- * @version             
  * @deprecated          To be deprecated in XOOPS 3
  */
 

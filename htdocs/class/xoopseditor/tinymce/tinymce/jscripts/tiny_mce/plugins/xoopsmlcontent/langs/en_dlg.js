@@ -1,5 +1,4 @@
 /**
- * @version     
  */
 
 tinyMCE.addI18n('en.xoopsmlcontent_dlg',{

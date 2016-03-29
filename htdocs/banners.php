@@ -16,7 +16,6 @@
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @author              DuGris aka L. Jen <http://www.dugris.info>
  * @author              Kris <kris@frxoops.org>
- * @version             
  */
 
 $xoopsOption['pagetype'] = 'banners';

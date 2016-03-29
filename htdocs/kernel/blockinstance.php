@@ -13,7 +13,6 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.3.0
- * @version             
  */
 /**
  * XOOPS Block legacy Instance handler

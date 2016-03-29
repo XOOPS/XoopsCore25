@@ -16,7 +16,6 @@
  * @author              Kazumi Ono <webmaster@myweb.ne.jp>
  * @author              Skalpa Keo <skalpa@xoops.org>
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');

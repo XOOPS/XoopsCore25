@@ -36,7 +36,6 @@ include_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
  * @copyright (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author    Haruki Setoyama  <haruki@planewave.org>
- * @version   
  **/
 class Db_manager
 {

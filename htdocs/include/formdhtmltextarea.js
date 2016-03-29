@@ -1,5 +1,3 @@
-/* 
-
 function xoopsCodeUrl(id, enterUrlPhrase, enterWebsitePhrase) {
     if (enterUrlPhrase == null) {
         enterUrlPhrase = "Enter the URL of the link you want to add:";

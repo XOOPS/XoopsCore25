@@ -14,7 +14,6 @@
  * @author              Skalpa Keo <skalpa@xoops.org>
  * @since               2.3.0
  * @package             kernel
- * @version             
  */
 
 /**

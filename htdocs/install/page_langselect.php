@@ -24,7 +24,6 @@
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
  * @author           DuGris <dugris@frxoops.org>
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
- * @version          
  **/
 
 require_once './include/common.inc.php';

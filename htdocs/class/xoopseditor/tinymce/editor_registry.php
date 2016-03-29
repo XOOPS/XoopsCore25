@@ -8,7 +8,6 @@
  * @subpackage          editor
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             
  */
 
 return $config = array(

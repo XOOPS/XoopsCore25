@@ -16,7 +16,6 @@
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @author              Jan Pedersen
  * @author              trabis <lusopoemas@gmail.com>
- * @version             
  */
 
 include __DIR__ . '/header.php';

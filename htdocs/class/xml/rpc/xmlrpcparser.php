@@ -41,7 +41,6 @@ require_once XOOPS_ROOT_PATH . '/class/xml/xmltaghandler.php';
  * @package       class
  * @copyright (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @author        Kazumi Ono <onokazu@xoops.org>
- * @version       
  * @access        public
  */
 class XoopsXmlRpcParser extends SaxParser

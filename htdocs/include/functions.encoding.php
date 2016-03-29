@@ -20,7 +20,6 @@
  * @package             kernel
  * @since               2.4.0
  * @author              Simon
- * @version             
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 

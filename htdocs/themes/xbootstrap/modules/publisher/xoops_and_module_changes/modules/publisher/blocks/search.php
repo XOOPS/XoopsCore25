@@ -18,7 +18,6 @@
  * @since               1.0
  * @author              trabis <lusopoemas@gmail.com>
  * @author              phppp
- * @version             
  */
 
 defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');

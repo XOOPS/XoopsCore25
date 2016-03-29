@@ -4,7 +4,6 @@
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * _LANGCODE    en
  * _CHARSET     UTF-8
- * @version             
  */
 //%%%%%%        Admin Module Name  Banners         %%%%%
 define('_AM_SYSTEM_BANNERS_DBUPDATED', _AM_SYSTEM_DBUPDATED);

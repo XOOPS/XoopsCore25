@@ -24,7 +24,6 @@
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
  * @author           Kris <kris@frxoops.org>
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
- * @version          
  **/
 
 defined('XOOPS_INSTALL') or die('XOOPS Installation wizard die');

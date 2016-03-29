@@ -8,7 +8,6 @@
  * @subpackage          tinymce
  * @since               2.3.0
  * @author              Laurent JEN <dugris@frxoops.org>
- * @version             
  */
 
 defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');

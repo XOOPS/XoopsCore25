@@ -14,7 +14,6 @@
  * @package             kernel
  * @subpackage          logger
  * @since               2.0.0
- * @version             
  * @deprecated
  */
 

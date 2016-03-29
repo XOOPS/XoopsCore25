@@ -14,7 +14,6 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Maxime Cointin (AKA Kraven30)
  * @package             system
- * @version             
  */
 
 require dirname(dirname(dirname(dirname(__DIR__)))) . '/mainfile.php';

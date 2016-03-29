@@ -14,7 +14,6 @@
  * @package             kernel
  * @since               1.0.0
  * @author              Goghs (http://www.eqiao.com/)
- * @version             
  * @deprecated
  */
 

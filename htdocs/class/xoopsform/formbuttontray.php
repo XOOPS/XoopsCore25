@@ -8,7 +8,6 @@
  * @subpackage          form
  * @since               2.4.0
  * @author              John Neill <catzwolf@xoops.org>
- * @version             
  *
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');

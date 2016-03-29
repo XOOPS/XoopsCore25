@@ -14,7 +14,6 @@
  * @package             protector
  * @since               2.4.0
  * @author              trabis <lusopoemas@gmail.com>
- * @version             
  */
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');

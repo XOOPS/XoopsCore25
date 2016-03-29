@@ -14,7 +14,6 @@
  * @author              Kazumi Ono (AKA onokazu)
  * @author              Gregory Mage (AKA Mage)
  * @package             system
- * @version             
  */
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');

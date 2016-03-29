@@ -15,7 +15,6 @@
  * @package             system
  * @subpackage          class
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             
  */
 class XoopsSystemCpanel
 {

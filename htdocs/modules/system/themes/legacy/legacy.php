@@ -20,7 +20,6 @@ xoops_load('gui', 'system');
  * @usbpackage          GUI
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             
  */
 class XoopsGuiLegacy extends /* implements */
     XoopsSystemGui

@@ -15,7 +15,6 @@
  * @since               2.3.0
  * @author              Vinod <smartvinu@gmail.com>
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             
  */
 include_once dirname(__DIR__) . '/mainfile.php';
 

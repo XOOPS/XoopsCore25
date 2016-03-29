@@ -21,7 +21,6 @@
  * @package     installer
  * @since       2.5.7
  * @author      Richard Griffith <richard@geekwright.com>
- * @version     
  */
 
 require_once './include/common.inc.php';
