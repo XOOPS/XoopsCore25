@@ -1,6 +1,10 @@
 xmf ChangeLog
 =============
 
+30-Mar-2015 V1.0.1
+------------------
+- remove @version from docblock, consistent with XoopsCore25
+
 25-Mar-2015 V1.0.0
 ------------------
 - fix minor typos
