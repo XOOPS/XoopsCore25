@@ -1,4 +1,4 @@
-// $Id: layersmenu.js 1473 2008-04-20 14:56:53Z phppp $
+// 
 // Deprecated, for legacy GUI only
 // PHP Layers Menu 1.0.7 (c) 2001, 2002 Marco Pratesi <pratesi@telug.it>
 // several "var"s inserted by CPKS to silence errors

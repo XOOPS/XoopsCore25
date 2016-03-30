@@ -15,7 +15,6 @@
  * @since               2.0.0
  * @author              Michael van Dam <mvandam@caltech.edu>
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version             $Id: notification.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 

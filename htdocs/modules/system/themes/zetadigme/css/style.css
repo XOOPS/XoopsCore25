@@ -1,4 +1,4 @@
-/* $Id: style.css 3963 2009-11-30 01:08:59Z kris_fr $ */
+/* 
 /* IMPORTANT, PLEASE RESPECT THIS SEMANTIC ORDER !!! : position box; width; heigth; margin; background-color; background-image; padding; content (color, style font, ...); border ... */
 @import url(reset.css);
 @import url(tooltip.css);

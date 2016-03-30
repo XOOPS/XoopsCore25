@@ -13,7 +13,6 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: image.php 13090 2015-06-16 20:44:29Z beckmi $
  * @package             class
  * @subpackage          CAPTCHA
  */

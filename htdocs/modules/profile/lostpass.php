@@ -15,7 +15,6 @@
  * @since               2.3.0
  * @author              Jan Pedersen
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: lostpass.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 include __DIR__ . '/header.php';

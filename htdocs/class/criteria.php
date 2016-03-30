@@ -17,7 +17,6 @@
  * @author              Kazumi Ono <onokazu@xoops.org>
  * @author              Nathan Dial
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: criteria.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 

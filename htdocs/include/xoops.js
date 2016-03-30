@@ -1,4 +1,3 @@
-/* $Id: xoops.js 8289 2011-11-15 01:19:44Z beckmi $ */
 function xoops$() {
     var elements = new Array();
 

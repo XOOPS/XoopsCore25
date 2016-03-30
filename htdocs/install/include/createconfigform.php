@@ -12,7 +12,6 @@
  * @author           Skalpa Keo <skalpa@xoops.org>
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
- * @version          $Id: createconfigform.php 13090 2015-06-16 20:44:29Z beckmi $
  **/
 
 if (!defined('XOOPS_INSTALL')) {

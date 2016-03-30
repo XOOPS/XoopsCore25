@@ -14,7 +14,6 @@
  * @package             XoopsPartners
  * @since               2.5.0
  * @author              Mage, Mamba
- * @version             $Id $
  **/
 
 include '../../../include/cp_header.php';

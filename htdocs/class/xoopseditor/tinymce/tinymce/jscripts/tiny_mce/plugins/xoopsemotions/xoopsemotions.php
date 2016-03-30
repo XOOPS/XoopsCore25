@@ -10,7 +10,6 @@
  * @author              ralf57
  * @author              luciorota <lucio.rota@gmail.com>
  * @author              Laurent JEN <dugris@frxoops.org>
- * @version             $Id: xoopsemotions.php 11937 2013-08-18 02:25:16Z beckmi $
  */
 
 // load mainfile.php - start

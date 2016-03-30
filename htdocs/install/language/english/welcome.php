@@ -1,5 +1,5 @@
 <?php
-// $Id: welcome.php 12528 2014-05-12 14:20:13Z rgriffith $
+// 
 // _LANGCODE: en
 // _CHARSET : UTF-8
 // Translator: XOOPS Translation Team

@@ -18,7 +18,6 @@ xoops_load('gui', 'system');
  * @usbpackage          GUI
  * @since               2.4.1
  * @author              Kris <kris@xoofoo.org>
- * @version             $Id
  */
 class XoopsGuiZetadigme extends XoopsSystemGui
 {

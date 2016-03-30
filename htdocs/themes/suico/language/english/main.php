@@ -9,7 +9,6 @@
  * @author          Kris <http://www.xoofoo.org/>
  * @maintained      The XOOPS Project (http://xoops.org)
  *
- * @version         $Id
 */
 // system_notification_select.tpl
 define('THEME_SHOWHIDE_NOTIFICATION', 'Show / Hide');

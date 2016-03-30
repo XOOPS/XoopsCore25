@@ -14,7 +14,6 @@
  * @package             xoopsPoll
  * @since               2.5.0
  * @author              Mage, Mamba
- * @version             $Id $
  **/
 
 include_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';

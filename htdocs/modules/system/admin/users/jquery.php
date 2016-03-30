@@ -14,7 +14,6 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Maxime Cointin (AKA Kraven30)
  * @package             system
- * @version             $Id: jquery.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 require dirname(dirname(dirname(dirname(__DIR__)))) . '/mainfile.php';

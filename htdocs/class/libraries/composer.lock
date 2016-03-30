@@ -287,16 +287,16 @@
         },
         {
             "name": "xoops/xmf",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/XOOPS/xmf.git",
-                "reference": "ef081c3d355114ee7cc59192467afe035db36734"
+                "reference": "cbad09bfb597a22586be1957c7f09a43e35f6490"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/XOOPS/xmf/zipball/ef081c3d355114ee7cc59192467afe035db36734",
-                "reference": "ef081c3d355114ee7cc59192467afe035db36734",
+                "url": "https://api.github.com/repos/XOOPS/xmf/zipball/cbad09bfb597a22586be1957c7f09a43e35f6490",
+                "reference": "cbad09bfb597a22586be1957c7f09a43e35f6490",
                 "shasum": ""
             },
             "require": {
@@ -317,7 +317,7 @@
                 "GPL-2.0+"
             ],
             "description": "XMF - XOOPS Module Framework",
-            "time": "2016-03-26 00:53:01"
+            "time": "2016-03-30 16:13:01"
         }
     ],
     "packages-dev": [],
