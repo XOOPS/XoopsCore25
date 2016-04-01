@@ -1,9 +1,21 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
+2.5.8 RC3            NOT RELEASED
+===================================
+- fix issues discovered in RC2
+
+Updated:
+ - jQuery to 1.12.2 (mamba)
+ - jGrowl to 1.4.4 (mamba)
+ - phpThumb to 1.7.14-201603240806  (mamba)
+
+
+===================================
 2.5.8 RC2            2016-03-11
 ===================================
 - fix several issues discovered in RC1
+
 
 ===================================
 2.5.8 RC1            2016-03-08
