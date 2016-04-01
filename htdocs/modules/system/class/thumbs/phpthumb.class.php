@@ -213,7 +213,7 @@ class phpthumb {
 	var $issafemode       = null;
 	var $php_memory_limit = null;
 
-	var $phpthumb_version = '1.7.14-201601231457';
+	var $phpthumb_version = '1.7.14-201603240806';
 
 	//////////////////////////////////////////////////////////////////////
 
@@ -1484,7 +1484,7 @@ class phpthumb {
 					$this->DebugMessage('ImageMagick version checked with "'.$commandline.'"', __FILE__, __LINE__);
 					$versionstring[1] = trim(phpthumb_functions::SafeExec($commandline));
 					if (preg_match('#^Version: [^0-9]*([ 0-9\\.\\:Q/\\-]+)#i', $versionstring[1], $matches)) {
-						$versionstring[0] = $matches[1];
+						$versionstring[0] = trim($matches[1]);
 					} else {
 						$versionstring[0] = false;
 						$this->DebugMessage('ImageMagick did not return recognized version string ('.$versionstring[1].')', __FILE__, __LINE__);
@@ -2800,13 +2800,13 @@ if (false) {
 						}
 						break;
 
-					case 'elip': // Elipse cropping
+					case 'elip': // Ellipse cropping
 						if (phpthumb_functions::gd_version() < 2) {
-							$this->DebugMessage('Skipping Elipse() because gd_version is "'.phpthumb_functions::gd_version().'"', __FILE__, __LINE__);
+							$this->DebugMessage('Skipping Ellipse() because gd_version is "'.phpthumb_functions::gd_version().'"', __FILE__, __LINE__);
 							return false;
 						}
 						$this->is_alpha = true;
-						$phpthumbFilters->Elipse($this->gdimg_output);
+						$phpthumbFilters->Ellipse($this->gdimg_output);
 						break;
 
 					case 'ric': // RoundedImageCorners
