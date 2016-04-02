@@ -13,9 +13,10 @@ class phpthumb_filters {
 
     var $phpThumbObject = null;
 
-	function phpthumb_filters() {
-		return true;
-	}
+    // removed for XOOPS
+	//function phpthumb_filters() {
+	//	return true;
+	//}
 
     function DebugMessage($message, $file='', $line='') {
         if (is_object($this->phpThumbObject)) {

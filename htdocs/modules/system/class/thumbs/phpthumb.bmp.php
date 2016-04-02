@@ -20,9 +20,10 @@
 
 class phpthumb_bmp {
 
-	function phpthumb_bmp() {
-		return true;
-	}
+    // removed for XOOPS
+	//function phpthumb_bmp() {
+	//	return true;
+	//}
 
     function phpthumb_bmp2gd(&$BMPdata, $truecolor=true) {
         $ThisFileInfo = array();
