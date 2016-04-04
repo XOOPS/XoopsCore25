@@ -586,7 +586,9 @@ class MyTextSanitizer
     public function &displayTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1)
     {
         $charset = (defined('_CHARSET') ? _CHARSET : 'UTF-8');
-        $text    = mb_convert_encoding($text, $charset, mb_detect_encoding($text, $charset . ', ISO-8859-1', true));
+        if (function_exists('mb_convert_encoding')) {
+            $text = mb_convert_encoding($text, $charset, mb_detect_encoding($text, mb_detect_order(), true));
+        }
         if ($html != 1) {
             // html not allowed
             $text = $this->htmlSpecialChars($text, ENT_COMPAT, $charset);
