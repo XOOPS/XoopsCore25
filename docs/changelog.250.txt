@@ -9,6 +9,7 @@ Updated:
  - jQuery to 1.12.2 (mamba)
  - jGrowl to 1.4.4 (mamba)
  - phpThumb to 1.7.14-201603240806  (mamba)
+ - Snoopy to 1.2.5 (zyspec)
 
 
 ===================================
