@@ -1010,7 +1010,7 @@ function xoops_trim($text)
 }
 
 /**
- * YOU SHOULD NOT THIS METHOD, IT WILL BE REMOVED
+ * YOU SHOULD NOT USE THIS METHOD, IT WILL BE REMOVED
  */
 /**
  * xoops_getOption()
@@ -1031,7 +1031,7 @@ function xoops_getOption($option)
 }
 
 /**
- * YOU SHOULD NOT THIS METHOD, IT WILL BE REMOVED
+ * YOU SHOULD NOT USE THIS METHOD, IT WILL BE REMOVED
  */
 /**
  * xoops_getConfigOption()
@@ -1063,7 +1063,7 @@ function xoops_getConfigOption($option, $type = 'XOOPS_CONF')
 }
 
 /**
- * YOU SHOULD NOT THIS METHOD, IT WILL BE REMOVED
+ * YOU SHOULD NOT USE THIS METHOD, IT WILL BE REMOVED
  */
 /**
  * xoops_setConfigOption()
@@ -1081,7 +1081,7 @@ function xoops_setConfigOption($option, $new = null)
 }
 
 /**
- * YOU SHOULD NOT THIS METHOD, IT WILL BE REMOVED
+ * YOU SHOULD NOT USE THIS METHOD, IT WILL BE REMOVED
  */
 /**
  * xoops_getModuleOption
@@ -1116,7 +1116,7 @@ function xoops_getModuleOption($option, $dirname = '')
 }
 
 /**
- * YOU SHOULD NOT THIS METHOD, IT WILL BE REMOVED
+ * YOU SHOULD NOT USE THIS METHOD, IT WILL BE REMOVED
  */
 /**
  * Function to get the base domain name from a URL.
@@ -1483,7 +1483,7 @@ function xoops_getBaseDomain($url, $debug = 0)
 }
 
 /**
- * YOU SHOULD NOT THIS METHOD, IT WILL BE REMOVED
+ * YOU SHOULD NOT USE THIS METHOD, IT WILL BE REMOVED
  */
 /**
  * Function to get the domain from a URL.
