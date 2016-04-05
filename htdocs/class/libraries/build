@@ -1,1 +1,4 @@
 composer update --prefer-dist --no-dev -a
+# remove unneeded fluff from wideimage
+rm -r vendor/smottt/wideimage/demo
+rm -r vendor/smottt/wideimage/test

@@ -6,6 +6,7 @@
     "require": {
         "php": ">=5.3.7",
         "xoops/xmf": "^1.0.0",
-        "ircmaxell/password-compat": "^1.0.4"
+        "ircmaxell/password-compat": "^1.0.4",
+        "smottt/wideimage": "1.1.1"
     }
 }
