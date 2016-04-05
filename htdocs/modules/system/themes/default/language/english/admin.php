@@ -1,5 +1,5 @@
 <?php
-// 
+//
 define('_OXYGEN_SYSOPTIONS', 'System Options');
 define('_OXYGEN_INSTALLEDMODULES', 'Installed Modules');
 define('_OXYGEN_XOOPSTHEMES', 'XOOPS Themes');
@@ -47,7 +47,7 @@ define('_OXYGEN_ADMINISTRATION', 'XOOPS Administration');
 define('_OXYGEN_UPTOP', 'Up Top');
 //Add help
 define('_OXYGEN_HELP_1', 'How can I create content with XOOPS?');
-define('_OXYGEN_HELP_DESC_1', 'To create content, you must first install a content module, like the <a href="https://sourceforge.net/p/xoops/svn/HEAD/tree/XoopsModules/publisher/trunk/" rel="external">Publisher</a> or the <a href="https://sourceforge.net/p/xoops/svn/HEAD/tree/XoopsModules/news/trunk/" rel="external">News</a> module. To learn more about XOOPS modules <a href="modules/system/help.php?mid=1&page=modulesadmin">click here</a>');
+define('_OXYGEN_HELP_DESC_1', 'To create content, you must first install a content module, like the <a href="https://github.com/XoopsModules25x/publisher" rel="external">Publisher</a> or the <a href="https://github.com/XoopsModules25x/news" rel="external">News</a> module. To learn more about XOOPS modules <a href="modules/system/help.php?mid=1&page=modulesadmin">click here</a>');
 define('_OXYGEN_HELP_2', 'What is the Block?');
 define('_OXYGEN_HELP_DESC_2', 'Blocks can provide additional/specific content from the installed modules. There can be and custom blocks which can contain text, JS Code, HTML formatted text, pictures, etc. The content in these blocks may be formatted individually or can inherit formatting from the Website. (<a href="modules/system/help.php?mid=1&page=blocksadmin">more ...</a>)');
 define('_OXYGEN_HELP_3', 'How I can find more help?');
