@@ -1,7 +1,7 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
-2.5.8 RC3            NOT RELEASED
+2.5.8 RC3            2016-04-05
 ===================================
 - fix issues discovered in RC2
 
@@ -10,6 +10,7 @@ Updated:
  - jGrowl to 1.4.4 (mamba)
  - phpThumb to 1.7.14-201603240806  (mamba)
  - Snoopy to 1.2.5 (zyspec)
+ - xmf to 1.0.0 (geekwright)
 
 
 ===================================
