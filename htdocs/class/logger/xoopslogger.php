@@ -250,8 +250,23 @@ class XoopsLogger
      */
     public function handleException($e)
     {
-        $msg = 'Exception: ' . $e->getMessage();
-        $this->handleError(E_USER_ERROR, $msg, $e->getFile(), $e->getLine());
+        if ($this->isThrowable($e)) {
+            $msg = get_class($e) . ': ' . $e->getMessage();
+            $this->handleError(E_USER_ERROR, $msg, $e->getFile(), $e->getLine());
+        }
+    }
+
+    /**
+     * Determine if an object implements Throwable (or is an Exception that would under PHP 7.)
+     *
+     * @param mixed $e Expected to be an object related to Exception or Throwable
+     *
+     * @return bool true if related to Throwable or Exception, otherwise false
+     */
+    protected function isThrowable($e)
+    {
+        $type = interface_exists('\Throwable', false) ? '\Throwable' : '\Exception';
+        return $e instanceof $type;
     }
 
     /**

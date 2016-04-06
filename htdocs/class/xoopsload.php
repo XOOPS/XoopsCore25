@@ -135,7 +135,7 @@ class XoopsLoad
 
             return false;
         }
-        include $file;
+        include_once $file;
         $class = 'Xoops' . ucfirst($name);
         if (class_exists($class)) {
             return $class;
@@ -147,8 +147,8 @@ class XoopsLoad
      * Load module class
      *
      * @access private
-     * @param       $name
-     * @param  null $dirname
+     * @param  string      $name    class file name
+     * @param  string|null $dirname module directory name
      * @return bool
      */
     public static function loadModule($name, $dirname = null)
@@ -157,7 +157,7 @@ class XoopsLoad
             return false;
         }
         if (file_exists($file = XOOPS_ROOT_PATH . '/modules/' . $dirname . '/class/' . $name . '.php')) {
-            include $file;
+            include_once $file;
             if (class_exists(ucfirst($dirname) . ucfirst($name))) {
                 return true;
             }
