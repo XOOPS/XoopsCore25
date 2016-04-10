@@ -48,6 +48,14 @@ class XoopsCaptcha
     }
 
     /**
+     * Deprecated, use getInstance() instead
+     */
+    public static function instance()
+    {
+        return self::getInstance();
+    }
+
+    /**
      * Get Instance
      *
      * @return Instance

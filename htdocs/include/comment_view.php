@@ -30,7 +30,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
 
     xoops_loadLanguage('comment');
 
-    $comment_config = $xoopsModule->getInfo('comments');
+    $comment_config =& $xoopsModule->getInfo('comments');
     $com_itemid     = (trim($comment_config['itemName']) != '' && isset($_GET[$comment_config['itemName']])) ? (int)$_GET[$comment_config['itemName']] : 0;
     if ($com_itemid > 0) {
         $com_mode = isset($_GET['com_mode']) ? htmlspecialchars(trim($_GET['com_mode']), ENT_QUOTES) : '';
@@ -73,7 +73,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
         if ($com_mode === 'flat') {
             $comments = $comment_handler->getByItemId($xoopsModule->getVar('mid'), $com_itemid, $com_dborder);
             include_once $GLOBALS['xoops']->path('class/commentrenderer.php');
-            $renderer =& XoopsCommentRenderer::instance($xoopsTpl);
+            $renderer = XoopsCommentRenderer::getInstance($xoopsTpl);
             $renderer->setComments($comments);
             $renderer->renderFlatView($admin_view);
         } elseif ($com_mode === 'thread') {
@@ -102,7 +102,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
                 $comments = $comment_handler->getThread($com_rootid, $com_id);
                 if (false != $comments) {
                     include_once $GLOBALS['xoops']->path('class/commentrenderer.php');
-                    $renderer = &XoopsCommentRenderer::instance($xoopsTpl);
+                    $renderer = XoopsCommentRenderer::getInstance($xoopsTpl);
                     $renderer->setComments($comments);
                     $renderer->renderThreadView($com_id, $admin_view);
                 }
@@ -115,7 +115,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
                         $comments = $comment_handler->getThread($top_comments[$i]->getVar('com_rootid'), $top_comments[$i]->getVar('com_id'));
                         if (false != $comments) {
                             include_once $GLOBALS['xoops']->path('class/commentrenderer.php');
-                            $renderer =& XoopsCommentRenderer::instance($xoopsTpl);
+                            $renderer = XoopsCommentRenderer::getInstance($xoopsTpl);
                             $renderer->setComments($comments);
                             $renderer->renderThreadView($top_comments[$i]->getVar('com_id'), $admin_view);
                         }
@@ -131,7 +131,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
                 for ($i = 0; $i < $c_count; ++$i) {
                     $comments = $comment_handler->getThread($top_comments[$i]->getVar('com_rootid'), $top_comments[$i]->getVar('com_id'));
                     include_once $GLOBALS['xoops']->path('class/commentrenderer.php');
-                    $renderer =& XoopsCommentRenderer::instance($xoopsTpl);
+                    $renderer = XoopsCommentRenderer::getInstance($xoopsTpl);
                     $renderer->setComments($comments);
                     $renderer->renderNestView($top_comments[$i]->getVar('com_id'), $admin_view);
                 }
@@ -259,7 +259,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
 
             // add module specific extra params
             if ('system' !== $xoopsModule->getVar('dirname')) {
-                $comment_config = $xoopsModule->getInfo('comments');
+                $comment_config =& $xoopsModule->getInfo('comments');
                 if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
                     $myts = MyTextSanitizer::getInstance();
                     foreach ($comment_config['extraParams'] as $extra_param) {
