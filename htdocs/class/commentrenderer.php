@@ -62,6 +62,10 @@ class XoopsCommentRenderer
             XOOPS_COMMENT_HIDDEN  => '<span style="text-decoration: none; font-weight: bold; color: #0000ff;">' . _CM_HIDDEN . '</span>');
     }
 
+    public static function instance(XoopsTpl $tpl, $use_icons = true, $do_iconcheck = false) {
+        return self::getInstance($tpl, $use_icons, $do_iconcheck);
+    }
+    
     /**
      * Access the only instance of this class
      *
@@ -70,13 +74,12 @@ class XoopsCommentRenderer
      * @param  boolean  $do_iconcheck
      * @return \XoopsCommentRenderer
      */
-    public static function &instance(XoopsTpl $tpl, $use_icons = true, $do_iconcheck = false)
+    public static function getInstance(XoopsTpl $tpl, $use_icons = true, $do_iconcheck = false)
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new XoopsCommentRenderer($tpl, $use_icons, $do_iconcheck);
+            $instance = new static($tpl, $use_icons, $do_iconcheck);
         }
-
         return $instance;
     }
 

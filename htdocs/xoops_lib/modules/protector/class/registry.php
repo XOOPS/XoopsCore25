@@ -27,9 +27,9 @@ class ProtectorRegistry
      */
     public static function getInstance()
     {
-        static $instance = false;
-        if (!$instance) {
-            $instance = new ProtectorRegistry();
+        static $instance;
+        if (!isset($instance)) {
+            $instance = new static();
         }
 
         return $instance;

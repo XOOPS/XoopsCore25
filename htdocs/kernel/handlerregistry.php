@@ -36,6 +36,15 @@ class XoopsHandlerRegistry
     public $_handlers = array();
 
     /**
+     * Deprecated, use getInstance() instead
+     */
+    public function instance()
+    {
+        return XoopsHandlerRegistry::getInstance();
+    }
+    
+    
+    /**
      * get a reference to the only instance of this class
      *
      * if the class has not been instantiated yet, this will also take
@@ -45,13 +54,12 @@ class XoopsHandlerRegistry
      * @staticvar   object  The only instance of this class
      * @return XoopsHandlerRegistry Reference to the only instance of this class
      */
-    public function instance()
+    public static function getInstance()
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new XoopsHandlerRegistry();
+            $instance = new static();
         }
-
         return $instance;
     }
 

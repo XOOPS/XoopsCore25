@@ -43,11 +43,19 @@ class TinyMCE
     }
 
     /**
+     * Deprecated, use getInstance() instead
+     */
+    public function instance($config)
+    {
+        return TinyMCE::getInstance($config);
+    }    
+    
+    /**
      * @param $config
      *
      * @return TinyMCE
      */
-    public function &instance($config)
+    public static function getInstance($config)
     {
         static $instance;
         if (!isset($instance)) {
@@ -55,7 +63,6 @@ class TinyMCE
         } else {
             $instance->setConfig($config);
         }
-
         return $instance;
     }
 
@@ -109,13 +116,16 @@ class TinyMCE
             if (empty($this->config['buttons'])) {
                 $this->config['buttons'][] = array(
                     'before' => '',
-                    'add' => '');
+                    'add'    => ''
+                );
                 $this->config['buttons'][] = array(
                     'before' => '',
-                    'add' => '');
+                    'add'    => ''
+                );
                 $this->config['buttons'][] = array(
                     'before' => '',
-                    'add' => '');
+                    'add'    => ''
+                );
             }
             $i = 0;
             foreach ($this->config['buttons'] as $button) {

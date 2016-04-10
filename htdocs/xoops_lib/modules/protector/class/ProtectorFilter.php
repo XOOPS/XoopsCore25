@@ -65,9 +65,8 @@ class ProtectorFilterHandler
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new ProtectorFilterHandler();
+            $instance = new static();
         }
-
         return $instance;
     }
 

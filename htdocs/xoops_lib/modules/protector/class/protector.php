@@ -152,7 +152,7 @@ class Protector
     {
         static $instance;
         if (!isset($instance)) {
-            $instance = new Protector();
+            $instance = new static();
         }
 
         return $instance;
@@ -471,6 +471,7 @@ class Protector
         $requestIp = \Xmf\IPAddress::fromRequest()->asReadable();
         if (false === $requestIp) { // nothing to match
             $this->ip_matched_info = null;
+
             return false;
         }
         foreach ($ips as $ip => $info) {
@@ -481,6 +482,7 @@ class Protector
                         // foward match
                         if (substr($requestIp, 0, strlen($ip)) == $ip) {
                             $this->ip_matched_info = $info;
+
                             return true;
                         }
                         break;
@@ -503,6 +505,7 @@ class Protector
                         // full match
                         if ($requestIp == $ip) {
                             $this->ip_matched_info = $info;
+
                             return true;
                         }
                         break;
@@ -510,6 +513,7 @@ class Protector
                         // perl regex
                         if (@preg_match($ip, $requestIp)) {
                             $this->ip_matched_info = $info;
+
                             return true;
                         }
                         break;
@@ -517,6 +521,7 @@ class Protector
             }
         }
         $this->ip_matched_info = null;
+
         return false;
     }
 
@@ -1300,6 +1305,7 @@ class Protector
         }
         // delayed insert
         $xoopsDB->queryF($sql4insertlog);
+
         return null;
     }
 
