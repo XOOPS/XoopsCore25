@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2016 XOOPS Project (www.xoops.org)            //
@@ -486,8 +486,8 @@ switch ($op) {
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         // Define Breadcrumb and tips
         $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_ADMIN, system_adminVersion('modulesadmin', 'adminpath'));
-        $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_UNINSTALL);
-        $xoBreadCrumb->addHelp(system_adminVersion('modulesadmin', 'help') . '#delete');
+        $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_UPDATE);
+        $xoBreadCrumb->addHelp(system_adminVersion('modulesadmin', 'help') . '#update');
         $xoBreadCrumb->render();
         if (count($ret) > 0) {
             foreach ($ret as $msg) {
