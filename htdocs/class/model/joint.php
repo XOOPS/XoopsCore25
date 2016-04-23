@@ -136,7 +136,7 @@ class XoopsModelJoint extends XoopsModelAbstract
             return null;
         }
 
-        $sql = " SELECT COUNT(DISTINCT {$this->handler->keyName}) AS count" . " FROM {$this->handler->table} AS o" . " LEFT JOIN {$this->handler->table_link} AS l ON o.{$this->handler->field_object} = l.{$this->handler->field_link}";
+        $sql = " SELECT COUNT(DISTINCT o.{$this->handler->keyName}) AS count" . " FROM {$this->handler->table} AS o" . " LEFT JOIN {$this->handler->table_link} AS l ON o.{$this->handler->field_object} = l.{$this->handler->field_link}";
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
