@@ -11,6 +11,8 @@ Updated:
  - phpThumb to 1.7.14-201603240806  (mamba)
  - Snoopy to 1.2.5 (zyspec)
  - xmf to 1.0.0 (geekwright)
+ - SWF banners to HTML5 (mamba)
+ - extra banners (mamba)
 
 
 ===================================
