@@ -1168,19 +1168,36 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
     public $handlers = array('read' => null, 'stats' => null, 'joint' => null, 'write' => null, 'sync' => null);
 
     /**
-     * *#@+
      * Information about the class, the handler is managing
      *
      * @var string
-     * @access public
      */
     public $table;
-    public $keyName;
-    public $className;
-    public $identifierName;
+
     /**
-     * *#@-
+     * @var string
      */
+    public $keyName;
+
+    /**
+     * @var string
+     */
+    public $className;
+
+    /**
+     * @var string
+     */
+    public $identifierName;
+
+    /**
+     * @var string
+     */
+    public $field_link;
+
+    /**
+     * @var string
+     */
+    public $field_object;
 
     /**
      * Constructor
