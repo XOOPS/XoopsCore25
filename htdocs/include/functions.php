@@ -538,8 +538,8 @@ function checkEmail($email, $antispam = false)
     if (!$email || !preg_match('/^[^@]{1,64}@[^@]{1,255}$/', $email)) {
         return false;
     }
-    $email_array = explode('@', $email);
-    $local_array = explode('.', $email_array[0]);
+    $email_array      = explode('@', $email);
+    $local_array      = explode('.', $email_array[0]);
     $local_arrayCount = count($local_array);
     for ($i = 0; $i < $local_arrayCount; ++$i) {
         if (!preg_match("/^(([A-Za-z0-9!#$%&'*+\/\=?^_`{|}~-][A-Za-z0-9!#$%&'*+\/\=?^_`{|}~\.-]{0,63})|(\"[^(\\|\")]{0,62}\"))$/", $local_array[$i])) {
@@ -621,8 +621,17 @@ function xoops_getbanner()
         /**
          * Print the banner
          */
+        $bannerobject = '';
         if ($htmlbanner) {
-            $bannerobject = $htmlcode;
+            if ($htmlcode) {
+                $bannerobject = $htmlcode;
+            } else {
+                $bannerobject = $bannerobject . '<div id="xo-bannerfix">';
+                // $bannerobject = $bannerobject . '<div id="xo-fixbanner">';
+                $bannerobject = $bannerobject . ' <iframe src=' . $imageurl . ' border="0" scrolling="no" allowtransparency="true" width="100%" height="100%" style="border:0" alt="' . $clickurl . ';"> </iframe>';
+                $bannerobject .= '</div>';
+                // $bannerobject .= '</div>';
+            }
         } else {
             $bannerobject = '<div id="xo-bannerfix">';
             if (false !== stripos($imageurl, '.swf')) {
@@ -680,7 +689,7 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
     $xoopsThemeFactory->allowedThemes = $xoopsConfig['theme_set_allowed'];
     $xoopsThemeFactory->defaultTheme  = $theme;
     $xoTheme                          =& $xoopsThemeFactory->createInstance(array(
-                                                                                'plugins' => array(),
+                                                                                'plugins'      => array(),
                                                                                 'renderBanner' => false));
     $xoopsTpl                         =& $xoTheme->template;
     $xoopsTpl->assign(array(
@@ -755,7 +764,7 @@ function xoops_getcss($theme = '')
     if ($theme == '') {
         $theme = $GLOBALS['xoopsConfig']['theme_set'];
     }
-    $uagent = xoops_getenv('HTTP_USER_AGENT');
+    $uagent  = xoops_getenv('HTTP_USER_AGENT');
     $str_css = 'styleNN.css';
     if (false !== stripos($uagent, 'mac')) {
         $str_css = 'styleMAC.css';
