@@ -15,7 +15,6 @@
  * @subpackage          form
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version             $Id: formdatetime.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -41,7 +40,7 @@ class XoopsFormDateTime extends XoopsFormElementTray
     public function __construct($caption, $name, $size = 15, $value = 0, $showtime = true)
     {
         parent::__construct($caption, '&nbsp;');
-        $value    = (int)($value);
+        $value    = (int)$value;
         $value    = ($value > 0) ? $value : time();
         $datetime = getdate($value);
         $this->addElement(new XoopsFormTextDateSelect('', $name . '[date]', $size, $value, $showtime));

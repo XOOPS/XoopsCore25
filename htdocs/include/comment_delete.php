@@ -14,7 +14,6 @@
  * @package             kernel
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version             $Id: comment_delete.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 if (!defined('XOOPS_ROOT_PATH') || !is_object($xoopsModule)) {
@@ -26,10 +25,10 @@ include_once $GLOBALS['xoops']->path('include/comment_constants.php');
 $op = 'delete';
 
 $filters = array(
-    "com_mode"  => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-    "op"        => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-    "com_order" => FILTER_VALIDATE_INT,
-    "com_id"    => FILTER_VALIDATE_INT);
+    'com_mode' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+    'op' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+    'com_order' => FILTER_VALIDATE_INT,
+    'com_id' => FILTER_VALIDATE_INT);
 
 if (!empty($_POST)) {
     $result = filter_input_array(INPUT_POST, $filters);
@@ -100,7 +99,7 @@ if (false != $accesserror) {
     if ($ref != '') {
         redirect_header($ref, 2, _NOPERM);
     } else {
-        redirect_header($redirect_page . '?' . $comment_config['itemName'] . '=' . (int)($com_itemid), 2, _NOPERM);
+        redirect_header($redirect_page . '?' . $comment_config['itemName'] . '=' . (int)$com_itemid, 2, _NOPERM);
     }
     exit();
 }

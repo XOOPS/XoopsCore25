@@ -15,7 +15,6 @@
  * @subpackage          textsanitizer
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: syntaxhighlight.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -41,7 +40,7 @@ class MytsSyntaxhighlight extends MyTextSanitizerExtension
         $source = stripslashes($source);
         if ($config['highlight'] === 'geshi') {
             $language = str_replace('=', '', $language);
-            $language = ($language) ? : $config['language'];
+            $language = $language ? : $config['language'];
             $language = strtolower($language);
             if ($source2 = MytsSyntaxhighlight::geshi($source, $language)) {
                 return $source2;
@@ -61,25 +60,25 @@ class MytsSyntaxhighlight extends MyTextSanitizerExtension
     {
         $text          = trim($text);
         $addedtag_open = 0;
-        if (!strpos($text, "<?php") && (substr($text, 0, 5) !== "<?php")) {
-            $text          = "<?php " . $text;
+        if (!strpos($text, '<?php') && (substr($text, 0, 5) !== '<?php')) {
+            $text          = '<?php ' . $text;
             $addedtag_open = 1;
         }
         $addedtag_close = 0;
-        if (!strpos($text, "?>")) {
-            $text .= "?>";
+        if (!strpos($text, '?>')) {
+            $text .= '?>';
             $addedtag_close = 1;
         }
         $oldlevel = error_reporting(0);
 
         //There is a bug in the highlight function(php < 5.3) that it doesn't render
         //backslashes properly like in \s. So here we replace any backslashes
-        $text = str_replace("\\", "XxxX", $text);
+        $text = str_replace("\\", 'XxxX', $text);
 
         $buffer = highlight_string($text, true); // Require PHP 4.20+
 
         //Placing backspaces back again
-        $buffer = str_replace("XxxX", "\\", $buffer);
+        $buffer = str_replace('XxxX', "\\", $buffer);
 
         error_reporting($oldlevel);
         $pos_open = $pos_close = 0;
@@ -90,12 +89,12 @@ class MytsSyntaxhighlight extends MyTextSanitizerExtension
             $pos_close = strrpos($buffer, '?&gt;');
         }
 
-        $str_open  = ($addedtag_open) ? substr($buffer, 0, $pos_open) : "";
-        $str_close = ($pos_close) ? substr($buffer, $pos_close + 5) : "";
+        $str_open  = $addedtag_open ? substr($buffer, 0, $pos_open) : '';
+        $str_close = $pos_close ? substr($buffer, $pos_close + 5) : '';
 
-        $length_open  = ($addedtag_open) ? $pos_open + 14 : 0;
-        $length_text  = ($pos_close) ? $pos_close - $length_open : 0;
-        $str_internal = ($length_text) ? substr($buffer, $length_open, $length_text) : substr($buffer, $length_open);
+        $length_open  = $addedtag_open ? $pos_open + 14 : 0;
+        $length_text  = $pos_close ? $pos_close - $length_open : 0;
+        $str_internal = $length_text ? substr($buffer, $length_open, $length_text) : substr($buffer, $length_open);
 
         $buffer = $str_open . $str_internal . $str_close;
 
@@ -110,7 +109,7 @@ class MytsSyntaxhighlight extends MyTextSanitizerExtension
      */
     public function geshi($source, $language)
     {
-        if (!@xoops_load("geshi", "framework")) {
+        if (!@xoops_load('geshi', 'framework')) {
             return false;
         }
 
@@ -124,7 +123,7 @@ class MytsSyntaxhighlight extends MyTextSanitizerExtension
         // Sets the proper encoding charset other than "ISO-8859-1"
         $geshi->set_encoding(_CHARSET);
 
-        $geshi->set_link_target("_blank");
+        $geshi->set_link_target('_blank');
 
         // Parse the code
         $code = $geshi->parse_code();

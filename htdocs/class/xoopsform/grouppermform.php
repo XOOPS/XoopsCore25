@@ -14,7 +14,6 @@
  * @package             kernel
  * @subpackage          form
  * @since               2.0.0
- * @version             $Id: grouppermform.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
@@ -169,8 +168,8 @@ class XoopsGroupPermForm extends XoopsForm
                 $ret .= $elements[$i];
             } elseif (!$elements[$i]->isHidden()) {
                 $ret .= '<tr valign="top" align="left"><td class="head">' . $elements[$i]->getCaption();
-                if ($elements[$i]->getDescription() != "") {
-                    $ret .= "<br /><br /><span style='font-weight: normal;'>" . $elements[$i]->getDescription() . "</span>";
+                if ($elements[$i]->getDescription() != '') {
+                    $ret .= "<br /><br /><span style='font-weight: normal;'>" . $elements[$i]->getDescription() . '</span>';
                 }
                 $ret .= '</td>' . '<td class="even">' . $elements[$i]->render() . '</td></tr>' . '';
             } else {
@@ -302,7 +301,7 @@ class XoopsGroupFormCheckBox extends XoopsFormElement
     public function _renderOptionTree(&$tree, $option, $prefix, $parentIds = array())
     {
         $ele_name = $this->getName();
-        $tree .= $prefix . "<input type=\"checkbox\" name=\"" . $ele_name . "[groups][" . $this->_groupId . "][" . $option['id'] . "]\" id=\"" . $ele_name . "[groups][" . $this->_groupId . "][" . $option['id'] . "]\" onclick=\"";
+        $tree .= $prefix . "<input type=\"checkbox\" name=\"" . $ele_name . '[groups][' . $this->_groupId . '][' . $option['id'] . "]\" id=\"" . $ele_name . '[groups][' . $this->_groupId . '][' . $option['id'] . "]\" onclick=\"";
         // If there are parent elements, add javascript that will
         // make them selecteded when this element is checked to make
         // sure permissions to parent items are added as well.
@@ -322,7 +321,7 @@ class XoopsGroupFormCheckBox extends XoopsFormElement
         if (in_array($option['id'], $this->_value)) {
             $tree .= ' checked="checked"';
         }
-        $tree .= " />" . $option['name'] . "<input type=\"hidden\" name=\"" . $ele_name . "[parents][" . $option['id'] . "]\" value=\"" . implode(':', $parentIds) . "\" /><input type=\"hidden\" name=\"" . $ele_name . "[itemname][" . $option['id'] . "]\" value=\"" . htmlspecialchars($option['name']) . "\" /><br />\n";
+        $tree .= ' />' . $option['name'] . "<input type=\"hidden\" name=\"" . $ele_name . '[parents][' . $option['id'] . "]\" value=\"" . implode(':', $parentIds) . "\" /><input type=\"hidden\" name=\"" . $ele_name . '[itemname][' . $option['id'] . "]\" value=\"" . htmlspecialchars($option['name']) . "\" /><br />\n";
         if (isset($option['children'])) {
             foreach ($option['children'] as $child) {
                 $parentIds[] = $option['id'];

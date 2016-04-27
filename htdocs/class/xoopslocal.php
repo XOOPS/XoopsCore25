@@ -14,7 +14,6 @@
  * @package             kernel
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: xoopslocal.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
@@ -88,7 +87,7 @@ class XoopsLocalAbstract
         if (XOOPS_USE_MULTIBYTES && function_exists('mb_convert_encoding')) {
             $converted_text = @mb_convert_encoding($text, $to, $from);
         } elseif (function_exists('iconv')) {
-            $converted_text = @iconv($from, $to . "//TRANSLIT", $text);
+            $converted_text = @iconv($from, $to . '//TRANSLIT', $text);
         } elseif ('utf-8' === $to) {
             $converted_text = utf8_encode($text);
         }
@@ -141,7 +140,7 @@ class XoopsLocalAbstract
                 $prefix    = ($GLOBALS['xoopsConfig']['server_TZ'] < 0) ? ' -' : ' +';
                 $TIME_ZONE = $prefix . date('Hi', $server_TZ);
             }
-            $date = gmdate('D, d M Y H:i:s', (int)($time)) . $TIME_ZONE;
+            $date = gmdate('D, d M Y H:i:s', (int)$time) . $TIME_ZONE;
 
             return $date;
         }

@@ -15,7 +15,6 @@
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: session.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
@@ -206,7 +205,7 @@ class XoopsSessionHandler
             return true;
         }
 
-        $mintime = time() - (int)($expire);
+        $mintime = time() - (int)$expire;
         $sql     = sprintf('DELETE FROM %s WHERE sess_updated < %u', $this->db->prefix('session'), $mintime);
 
         return $this->db->queryF($sql);
@@ -264,11 +263,11 @@ class XoopsSessionHandler
         $session_name = ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '')
             ? $xoopsConfig['session_name']
             : session_name();
-        $session_expire = null !== ($expire)
-            ? (int)($expire)
+        $session_expire = null !== $expire
+            ? (int)$expire
             : (($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '')
                 ? $xoopsConfig['session_expire'] * 60
-                : ini_get("session.cookie_lifetime")
+                : ini_get('session.cookie_lifetime')
             );
         $session_id     = empty($sess_id) ? session_id() : $sess_id;
         setcookie(

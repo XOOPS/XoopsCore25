@@ -1,9 +1,9 @@
 <?php
-// $Id: main.php 13082 2015-06-06 21:59:41Z beckmi $
+// 
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2016 XOOPS Project (www.xoops.org)            //
-//                       <http://www.xoops.org/>                             //
+//                         <http://xoops.org/>                               //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -50,7 +50,7 @@ $upload_size = 500000;
 // Get Action type
 $op = system_CleanVars($_REQUEST, 'op', 'list', 'string');
 // Get userrank handler
-$userrank_Handler = xoops_getModuleHandler("userrank", "system");
+$userrank_Handler = xoops_getModuleHandler('userrank', 'system');
 // Define main template
 $xoopsOption['template_main'] = 'system_userrank.tpl';
 // Call Header
@@ -74,8 +74,8 @@ switch ($op) {
         $start = system_CleanVars($_REQUEST, 'start', 0, 'int');
         // Criteria
         $criteria = new CriteriaCompo();
-        $criteria->setSort("rank_id");
-        $criteria->setOrder("ASC");
+        $criteria->setSort('rank_id');
+        $criteria->setOrder('ASC');
         $criteria->setStart($start);
         $criteria->setLimit($nb_rank);
         // Count rank
@@ -85,13 +85,13 @@ switch ($op) {
         $xoopsTpl->assign('userrank_count', $userrank_count);
         if ($userrank_count > 0) {
             foreach (array_keys($userrank_arr) as $i) {
-                $rank_id                  = $userrank_arr[$i]->getVar("rank_id");
+                $rank_id                  = $userrank_arr[$i]->getVar('rank_id');
                 $userrank['rank_id']      = $rank_id;
-                $userrank['rank_title']   = $userrank_arr[$i]->getVar("rank_title");
-                $userrank['rank_min']     = $userrank_arr[$i]->getVar("rank_min");
-                $userrank['rank_max']     = $userrank_arr[$i]->getVar("rank_max");
-                $userrank['rank_special'] = $userrank_arr[$i]->getVar("rank_special");
-                $rank_img                 = ($userrank_arr[$i]->getVar("rank_image")) ?: 'blank.gif';
+                $userrank['rank_title']   = $userrank_arr[$i]->getVar('rank_title');
+                $userrank['rank_min']     = $userrank_arr[$i]->getVar('rank_min');
+                $userrank['rank_max']     = $userrank_arr[$i]->getVar('rank_max');
+                $userrank['rank_special'] = $userrank_arr[$i]->getVar('rank_special');
+                $rank_img                 = $userrank_arr[$i]->getVar('rank_image') ?: 'blank.gif';
                 $userrank['rank_image']   = '<img src="' . XOOPS_UPLOAD_URL . '/' . $rank_img . '" alt="" />';
                 $xoopsTpl->append_by_ref('userrank', $userrank);
                 unset($userrank);
@@ -140,39 +140,39 @@ switch ($op) {
 
     // Save rank
     case 'userrank_save':
-        if (!$GLOBALS["xoopsSecurity"]->check()) {
-            redirect_header("admin.php?fct=userrank", 3, implode(",", $GLOBALS["xoopsSecurity"]->getErrors()));
+        if (!$GLOBALS['xoopsSecurity']->check()) {
+            redirect_header('admin.php?fct=userrank', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        if (isset($_POST["rank_id"])) {
-            $obj = $userrank_Handler->get($_POST["rank_id"]);
+        if (isset($_POST['rank_id'])) {
+            $obj = $userrank_Handler->get($_POST['rank_id']);
         } else {
             $obj = $userrank_Handler->create();
         }
 
-        $obj->setVar("rank_title", $_POST["rank_title"]);
-        $obj->setVar("rank_min", $_POST["rank_min"]);
-        $obj->setVar("rank_max", $_POST["rank_max"]);
-        $verif_rank_special = ($_POST["rank_special"] == 1) ? "1" : "0";
-        $obj->setVar("rank_special", $verif_rank_special);
+        $obj->setVar('rank_title', $_POST['rank_title']);
+        $obj->setVar('rank_min', $_POST['rank_min']);
+        $obj->setVar('rank_max', $_POST['rank_max']);
+        $verif_rank_special = ($_POST['rank_special'] == 1) ? '1' : '0';
+        $obj->setVar('rank_special', $verif_rank_special);
 
         include_once XOOPS_ROOT_PATH . '/class/uploader.php';
         $uploader_rank_img = new XoopsMediaUploader(XOOPS_UPLOAD_PATH . '/ranks', $mimetypes, $upload_size, null, null);
 
-        if ($uploader_rank_img->fetchMedia("rank_image")) {
-            $uploader_rank_img->setPrefix("rank");
-            $uploader_rank_img->fetchMedia("rank_image");
+        if ($uploader_rank_img->fetchMedia('rank_image')) {
+            $uploader_rank_img->setPrefix('rank');
+            $uploader_rank_img->fetchMedia('rank_image');
             if (!$uploader_rank_img->upload()) {
                 $errors =& $uploader_rank_img->getErrors();
-                redirect_header("javascript:history.go(-1)", 3, $errors);
+                redirect_header('javascript:history.go(-1)', 3, $errors);
             } else {
-                $obj->setVar("rank_image", 'ranks/' . $uploader_rank_img->getSavedFileName());
+                $obj->setVar('rank_image', 'ranks/' . $uploader_rank_img->getSavedFileName());
             }
         } else {
-            $obj->setVar("rank_image", 'ranks/' . $_POST["rank_image"]);
+            $obj->setVar('rank_image', 'ranks/' . $_POST['rank_image']);
         }
 
         if ($userrank_Handler->insert($obj)) {
-            redirect_header("admin.php?fct=userrank", 2, _AM_SYSTEM_USERRANK_SAVE);
+            redirect_header('admin.php?fct=userrank', 2, _AM_SYSTEM_USERRANK_SAVE);
         }
         break;
 
@@ -180,17 +180,17 @@ switch ($op) {
     case 'userrank_delete':
         $rank_id = system_CleanVars($_REQUEST, 'rank_id', 0, 'int');
         $obj     = $userrank_Handler->get($rank_id);
-        if (isset($_POST["ok"]) && $_POST["ok"] == 1) {
-            if (!$GLOBALS["xoopsSecurity"]->check()) {
-                redirect_header("admin.php?fct=userrank", 3, implode(",", $GLOBALS["xoopsSecurity"]->getErrors()));
+        if (isset($_POST['ok']) && $_POST['ok'] == 1) {
+            if (!$GLOBALS['xoopsSecurity']->check()) {
+                redirect_header('admin.php?fct=userrank', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }
             if ($userrank_Handler->delete($obj)) {
-                $urlfile = XOOPS_UPLOAD_PATH . '/' . $obj->getVar("rank_image");
+                $urlfile = XOOPS_UPLOAD_PATH . '/' . $obj->getVar('rank_image');
                 if (is_file($urlfile)) {
                     chmod($urlfile, 0777);
                     unlink($urlfile);
                 }
-                redirect_header("admin.php?fct=userrank", 2, _AM_SYSTEM_USERRANK_SAVE);
+                redirect_header('admin.php?fct=userrank', 2, _AM_SYSTEM_USERRANK_SAVE);
             } else {
                 xoops_error($obj->getHtmlErrors());
             }
@@ -202,11 +202,11 @@ switch ($op) {
             $xoBreadCrumb->addLink(_AM_SYSTEM_USERRANK_NAV_DELETE);
             $xoBreadCrumb->addHelp(system_adminVersion('userrank', 'help') . '#delete');
             $xoBreadCrumb->render();
-            $rank_img = ($obj->getVar("rank_image")) ?: 'blank.gif';
+            $rank_img = $obj->getVar('rank_image') ?: 'blank.gif';
             xoops_confirm(array(
-                              "ok"      => 1,
-                              "rank_id" => $_REQUEST["rank_id"],
-                              "op"      => "userrank_delete"), $_SERVER["REQUEST_URI"], sprintf(_AM_SYSTEM_USERRANK_SUREDEL) . '<br \><img src="' . XOOPS_UPLOAD_URL . '/' . $rank_img . '" alt="" /><br \>');
+                              'ok' => 1,
+                              'rank_id' => $_REQUEST['rank_id'],
+                              'op' => 'userrank_delete'), $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_USERRANK_SUREDEL) . '<br \><img src="' . XOOPS_UPLOAD_URL . '/' . $rank_img . '" alt="" /><br \>');
         }
         break;
 

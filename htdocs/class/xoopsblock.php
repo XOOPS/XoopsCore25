@@ -16,7 +16,6 @@
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/
  * @author              Skalpa Keo <skalpa@xoops.org>
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: xoopsblock.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
@@ -70,7 +69,7 @@ class XoopsBlock extends XoopsObject
             if (is_array($id)) {
                 $this->assignVars($id);
             } else {
-                $this->load((int)($id));
+                $this->load((int)$id);
             }
         }
     }
@@ -82,7 +81,7 @@ class XoopsBlock extends XoopsObject
      */
     public function load($id)
     {
-        $id  = (int)($id);
+        $id  = (int)$id;
         $sql = 'SELECT * FROM ' . $this->db->prefix('newblocks') . ' WHERE bid = ' . $id;
         $arr = $this->db->fetchArray($this->db->query($sql));
         $this->assignVars($arr);
@@ -102,18 +101,18 @@ class XoopsBlock extends XoopsObject
             ${$k} = $v;
         }
         if (empty($bid)) {
-            $bid = $this->db->genId($this->db->prefix("newblocks") . "_bid_seq");
-            $sql = sprintf("INSERT INTO %s (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES (%u, %u, %u, %s, %s, %s, %s, %u, %u, %u, %s, %s, %u, %s, %s, %s, %s, %s, %u, %u)", $this->db->prefix('newblocks'), $bid, $mid, $func_num, $this->db->quoteString($options), $this->db->quoteString($name), $this->db->quoteString($title), $this->db->quoteString($content), $side, $weight, $visible, $this->db->quoteString($block_type), $this->db->quoteString($c_type), 1, $this->db->quoteString($dirname), $this->db->quoteString($func_file), $this->db->quoteString($show_func), $this->db->quoteString($edit_func), $this->db->quoteString($template), $bcachetime, time());
+            $bid = $this->db->genId($this->db->prefix('newblocks') . '_bid_seq');
+            $sql = sprintf('INSERT INTO %s (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES (%u, %u, %u, %s, %s, %s, %s, %u, %u, %u, %s, %s, %u, %s, %s, %s, %s, %s, %u, %u)', $this->db->prefix('newblocks'), $bid, $mid, $func_num, $this->db->quoteString($options), $this->db->quoteString($name), $this->db->quoteString($title), $this->db->quoteString($content), $side, $weight, $visible, $this->db->quoteString($block_type), $this->db->quoteString($c_type), 1, $this->db->quoteString($dirname), $this->db->quoteString($func_file), $this->db->quoteString($show_func), $this->db->quoteString($edit_func), $this->db->quoteString($template), $bcachetime, time());
         } else {
-            $sql = "UPDATE " . $this->db->prefix("newblocks") . " SET options=" . $this->db->quoteString($options);
+            $sql = 'UPDATE ' . $this->db->prefix('newblocks') . ' SET options=' . $this->db->quoteString($options);
             // a custom block needs its own name
             if ($this->isCustom() /* in_array( $block_type , array( 'C' , 'E' ) ) */) {
-                $sql .= ", name=" . $this->db->quoteString($name);
+                $sql .= ', name=' . $this->db->quoteString($name);
             }
-            $sql .= ", isactive=" . $isactive . ", title=" . $this->db->quoteString($title) . ", content=" . $this->db->quoteString($content) . ", side=" . $side . ", weight=" . $weight . ", visible=" . $visible . ", c_type=" . $this->db->quoteString($c_type) . ", template=" . $this->db->quoteString($template) . ", bcachetime=" . $bcachetime . ", last_modified=" . time() . " WHERE bid=" . $bid;
+            $sql .= ', isactive=' . $isactive . ', title=' . $this->db->quoteString($title) . ', content=' . $this->db->quoteString($content) . ', side=' . $side . ', weight=' . $weight . ', visible=' . $visible . ', c_type=' . $this->db->quoteString($c_type) . ', template=' . $this->db->quoteString($template) . ', bcachetime=' . $bcachetime . ', last_modified=' . time() . ' WHERE bid=' . $bid;
         }
         if (!$this->db->query($sql)) {
-            $this->setErrors("Could not save block data into database");
+            $this->setErrors('Could not save block data into database');
 
             return false;
         }
@@ -131,13 +130,13 @@ class XoopsBlock extends XoopsObject
      */
     public function delete()
     {
-        $sql = sprintf("DELETE FROM %s WHERE bid = %u", $this->db->prefix('newblocks'), $this->getVar('bid'));
+        $sql = sprintf('DELETE FROM %s WHERE bid = %u', $this->db->prefix('newblocks'), $this->getVar('bid'));
         if (!$this->db->query($sql)) {
             return false;
         }
         $sql = sprintf("DELETE FROM %s WHERE gperm_name = 'block_read' AND gperm_itemid = %u AND gperm_modid = 1", $this->db->prefix('group_permission'), $this->getVar('bid'));
         $this->db->query($sql);
-        $sql = sprintf("DELETE FROM %s WHERE block_id = %u", $this->db->prefix('block_module_link'), $this->getVar('bid'));
+        $sql = sprintf('DELETE FROM %s WHERE block_id = %u', $this->db->prefix('block_module_link'), $this->getVar('bid'));
         $this->db->query($sql);
 
         return true;
@@ -248,7 +247,7 @@ class XoopsBlock extends XoopsObject
      *
      * @return string
      */
-    public function buildContent($position, $content = "", $contentdb = "")
+    public function buildContent($position, $content = '', $contentdb = '')
     {
         if ($position == 0) {
             $ret = $contentdb . $content;
@@ -308,7 +307,7 @@ class XoopsBlock extends XoopsObject
                     include_once $file;
                 }
                 include_once $GLOBALS['xoops']->path('modules/' . $this->getVar('dirname') . '/blocks/' . $this->getVar('func_file'));
-                $options   = explode("|", $this->getVar("options"));
+                $options   = explode('|', $this->getVar('options'));
                 $edit_form = $edit_func($options);
                 if (!$edit_form) {
                     return false;
@@ -339,7 +338,7 @@ class XoopsBlock extends XoopsObject
      * @param int    $isactive
      * @returns array of block objects
      */
-    public static function getAllBlocksByGroup($groupid, $asobject = true, $side = null, $visible = null, $orderby = "b.weight,b.bid", $isactive = 1)
+    public static function getAllBlocksByGroup($groupid, $asobject = true, $side = null, $visible = null, $orderby = 'b.weight,b.bid', $isactive = 1)
     {
         $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $ret = array();
@@ -347,32 +346,32 @@ class XoopsBlock extends XoopsObject
         if (!$asobject) {
             $sql = 'SELECT b.bid ';
         }
-        $sql .= "FROM " . $db->prefix("newblocks") . " b LEFT JOIN " . $db->prefix("group_permission") . " l ON l.gperm_itemid=b.bid WHERE gperm_name = 'block_read' AND gperm_modid = 1";
+        $sql .= 'FROM ' . $db->prefix('newblocks') . ' b LEFT JOIN ' . $db->prefix('group_permission') . " l ON l.gperm_itemid=b.bid WHERE gperm_name = 'block_read' AND gperm_modid = 1";
         if (is_array($groupid)) {
-            $sql .= " AND (l.gperm_groupid=" . $groupid[0] . "";
+            $sql .= ' AND (l.gperm_groupid=' . $groupid[0] . '';
             $size = count($groupid);
             if ($size > 1) {
                 for ($i = 1; $i < $size; ++$i) {
-                    $sql .= " OR l.gperm_groupid=" . $groupid[$i] . "";
+                    $sql .= ' OR l.gperm_groupid=' . $groupid[$i] . '';
                 }
             }
-            $sql .= ")";
+            $sql .= ')';
         } else {
-            $sql .= " AND l.gperm_groupid=" . $groupid . "";
+            $sql .= ' AND l.gperm_groupid=' . $groupid . '';
         }
-        $sql .= " AND b.isactive=" . $isactive;
+        $sql .= ' AND b.isactive=' . $isactive;
         if (isset($side)) {
             // get both sides in sidebox? (some themes need this)
             if ($side == XOOPS_SIDEBLOCK_BOTH) {
-                $side = "(b.side=0 OR b.side=1)";
+                $side = '(b.side=0 OR b.side=1)';
             } elseif ($side == XOOPS_CENTERBLOCK_ALL) {
-                $side = "(b.side=3 OR b.side=4 OR b.side=5 OR b.side=7 OR b.side=8 OR b.side=9 )";
+                $side = '(b.side=3 OR b.side=4 OR b.side=5 OR b.side=7 OR b.side=8 OR b.side=9 )';
             } elseif ($side == XOOPS_FOOTERBLOCK_ALL) {
-                $side = "(b.side=10 OR b.side=11 OR b.side=12 )";
+                $side = '(b.side=10 OR b.side=11 OR b.side=12 )';
             } else {
-                $side = "b.side=" . $side;
+                $side = 'b.side=' . $side;
             }
-            $sql .= " AND " . $side;
+            $sql .= ' AND ' . $side;
         }
         if (isset($visible)) {
             $sql .= " AND b.visible=$visible";
@@ -404,48 +403,48 @@ class XoopsBlock extends XoopsObject
      * @param  integer $isactive
      * @return array
      */
-    public function getAllBlocks($rettype = "object", $side = null, $visible = null, $orderby = "side,weight,bid", $isactive = 1)
+    public function getAllBlocks($rettype = 'object', $side = null, $visible = null, $orderby = 'side,weight,bid', $isactive = 1)
     {
         $db          = XoopsDatabaseFactory::getDatabaseConnection();
         $ret         = array();
-        $where_query = " WHERE isactive=" . $isactive;
+        $where_query = ' WHERE isactive=' . $isactive;
         if (isset($side)) {
             // get both sides in sidebox? (some themes need this)
             if ($side == XOOPS_SIDEBLOCK_BOTH) {
-                $side = "(side=0 OR side=1)";
+                $side = '(side=0 OR side=1)';
             } elseif ($side == XOOPS_CENTERBLOCK_ALL) {
-                $side = "(side=3 OR side=4 OR side=5 OR side=7 OR side=8 OR side=9)";
+                $side = '(side=3 OR side=4 OR side=5 OR side=7 OR side=8 OR side=9)';
             } elseif ($side == XOOPS_FOOTERBLOCK_ALL) {
-                $side = "(side=10 OR side=11 OR side=12)";
+                $side = '(side=10 OR side=11 OR side=12)';
             } else {
-                $side = "side=" . $side;
+                $side = 'side=' . $side;
             }
-            $where_query .= " AND " . $side;
+            $where_query .= ' AND ' . $side;
         }
         if (isset($visible)) {
-            $where_query .= " AND visible=." . $visible;
+            $where_query .= ' AND visible=.' . $visible;
         }
-        $where_query .= " ORDER BY " . $orderby;
+        $where_query .= ' ORDER BY ' . $orderby;
         switch ($rettype) {
-            case "object":
-                $sql    = "SELECT * FROM " . $db->prefix("newblocks") . "" . $where_query;
+            case 'object':
+                $sql    = 'SELECT * FROM ' . $db->prefix('newblocks') . '' . $where_query;
                 $result = $db->query($sql);
                 while ($myrow = $db->fetchArray($result)) {
                     $ret[] = new XoopsBlock($myrow);
                 }
                 break;
-            case "list":
-                $sql    = "SELECT * FROM " . $db->prefix("newblocks") . "" . $where_query;
+            case 'list':
+                $sql    = 'SELECT * FROM ' . $db->prefix('newblocks') . '' . $where_query;
                 $result = $db->query($sql);
                 while ($myrow = $db->fetchArray($result)) {
                     $block                      = new XoopsBlock($myrow);
-                    $title                      = $block->getVar("title");
-                    $title                      = empty($title) ? $block->getVar("name") : $title;
-                    $ret[$block->getVar("bid")] = $title;
+                    $title                      = $block->getVar('title');
+                    $title                      = empty($title) ? $block->getVar('name') : $title;
+                    $ret[$block->getVar('bid')] = $title;
                 }
                 break;
-            case "id":
-                $sql    = "SELECT bid FROM " . $db->prefix("newblocks") . "" . $where_query;
+            case 'id':
+                $sql    = 'SELECT bid FROM ' . $db->prefix('newblocks') . '' . $where_query;
                 $result = $db->query($sql);
                 while ($myrow = $db->fetchArray($result)) {
                     $ret[] = $myrow['bid'];
@@ -466,12 +465,12 @@ class XoopsBlock extends XoopsObject
      */
     public static function getByModule($moduleid, $asobject = true)
     {
-        $moduleid = (int)($moduleid);
+        $moduleid = (int)$moduleid;
         $db       = XoopsDatabaseFactory::getDatabaseConnection();
         if ($asobject == true) {
-            $sql = $sql = "SELECT * FROM " . $db->prefix("newblocks") . " WHERE mid=" . $moduleid;
+            $sql = $sql = 'SELECT * FROM ' . $db->prefix('newblocks') . ' WHERE mid=' . $moduleid;
         } else {
-            $sql = "SELECT bid FROM " . $db->prefix("newblocks") . " WHERE mid=" . $moduleid;
+            $sql = 'SELECT bid FROM ' . $db->prefix('newblocks') . ' WHERE mid=' . $moduleid;
         }
         $result = $db->query($sql);
         $ret    = array();
@@ -499,16 +498,16 @@ class XoopsBlock extends XoopsObject
      */
     public function getAllByGroupModule($groupid, $module_id = 0, $toponlyblock = false, $visible = null, $orderby = 'b.weight, m.block_id', $isactive = 1)
     {
-        $isactive = (int)($isactive);
+        $isactive = (int)$isactive;
         $db       = XoopsDatabaseFactory::getDatabaseConnection();
         $ret      = array();
         if (isset($groupid)) {
-            $sql = "SELECT DISTINCT gperm_itemid FROM " . $db->prefix('group_permission') . " WHERE gperm_name = 'block_read' AND gperm_modid = 1";
+            $sql = 'SELECT DISTINCT gperm_itemid FROM ' . $db->prefix('group_permission') . " WHERE gperm_name = 'block_read' AND gperm_modid = 1";
             if (is_array($groupid)) {
                 $sql .= ' AND gperm_groupid IN (' . implode(',', $groupid) . ')';
             } else {
-                if ((int)($groupid) > 0) {
-                    $sql .= ' AND gperm_groupid=' . (int)($groupid);
+                if ((int)$groupid > 0) {
+                    $sql .= ' AND gperm_groupid=' . (int)$groupid;
                 }
             }
             $result   = $db->query($sql);
@@ -523,11 +522,11 @@ class XoopsBlock extends XoopsObject
         $sql = 'SELECT b.* FROM ' . $db->prefix('newblocks') . ' b, ' . $db->prefix('block_module_link') . ' m WHERE m.block_id=b.bid';
         $sql .= ' AND b.isactive=' . $isactive;
         if (isset($visible)) {
-            $sql .= ' AND b.visible=' . (int)($visible);
+            $sql .= ' AND b.visible=' . (int)$visible;
         }
         if (!isset($module_id)) {
         } elseif (!empty($module_id)) {
-            $sql .= ' AND m.module_id IN (0,' . (int)($module_id);
+            $sql .= ' AND m.module_id IN (0,' . (int)$module_id;
             if ($toponlyblock) {
                 $sql .= ',-1';
             }
@@ -568,13 +567,13 @@ class XoopsBlock extends XoopsObject
         $db   = XoopsDatabaseFactory::getDatabaseConnection();
         $ret  = array();
         $bids = array();
-        $sql  = "SELECT DISTINCT(bid) from " . $db->prefix('newblocks');
+        $sql  = 'SELECT DISTINCT(bid) from ' . $db->prefix('newblocks');
         if ($result = $db->query($sql)) {
             while ($myrow = $db->fetchArray($result)) {
                 $bids[] = $myrow['bid'];
             }
         }
-        $sql     = "SELECT DISTINCT(p.gperm_itemid) from " . $db->prefix('group_permission') . " p, " . $db->prefix('groups') . " g WHERE g.groupid=p.gperm_groupid AND p.gperm_name='block_read'";
+        $sql     = 'SELECT DISTINCT(p.gperm_itemid) from ' . $db->prefix('group_permission') . ' p, ' . $db->prefix('groups') . " g WHERE g.groupid=p.gperm_groupid AND p.gperm_name='block_read'";
         $grouped = array();
         if ($result = $db->query($sql)) {
             while ($myrow = $db->fetchArray($result)) {
@@ -584,13 +583,13 @@ class XoopsBlock extends XoopsObject
         $non_grouped = array_diff($bids, $grouped);
         if (!empty($non_grouped)) {
             $sql = 'SELECT b.* FROM ' . $db->prefix('newblocks') . ' b, ' . $db->prefix('block_module_link') . ' m WHERE m.block_id=b.bid';
-            $sql .= ' AND b.isactive=' . (int)($isactive);
+            $sql .= ' AND b.isactive=' . (int)$isactive;
             if (isset($visible)) {
-                $sql .= ' AND b.visible=' . (int)($visible);
+                $sql .= ' AND b.visible=' . (int)$visible;
             }
             if (!isset($module_id)) {
             } elseif (!empty($module_id)) {
-                $sql .= ' AND m.module_id IN (0,' . (int)($module_id);
+                $sql .= ' AND m.module_id IN (0,' . (int)$module_id;
                 if ($toponlyblock) {
                     $sql .= ',-1';
                 }
@@ -625,8 +624,8 @@ class XoopsBlock extends XoopsObject
      */
     public function countSimilarBlocks($moduleId, $funcNum, $showFunc = null)
     {
-        $funcNum  = (int)($funcNum);
-        $moduleId = (int)($moduleId);
+        $funcNum  = (int)$funcNum;
+        $moduleId = (int)$moduleId;
         if ($funcNum < 1 || $moduleId < 1) {
             // invalid query
             return 0;
@@ -634,9 +633,9 @@ class XoopsBlock extends XoopsObject
         $db = XoopsDatabaseFactory::getDatabaseConnection();
         if (isset($showFunc)) {
             // showFunc is set for more strict comparison
-            $sql = sprintf("SELECT COUNT(*) FROM %s WHERE mid = %d AND func_num = %d AND show_func = %s", $db->prefix('newblocks'), $moduleId, $funcNum, $db->quoteString(trim($showFunc)));
+            $sql = sprintf('SELECT COUNT(*) FROM %s WHERE mid = %d AND func_num = %d AND show_func = %s', $db->prefix('newblocks'), $moduleId, $funcNum, $db->quoteString(trim($showFunc)));
         } else {
-            $sql = sprintf("SELECT COUNT(*) FROM %s WHERE mid = %d AND func_num = %d", $db->prefix('newblocks'), $moduleId, $funcNum);
+            $sql = sprintf('SELECT COUNT(*) FROM %s WHERE mid = %d AND func_num = %d', $db->prefix('newblocks'), $moduleId, $funcNum);
         }
         if (!$result = $db->query($sql)) {
             return 0;

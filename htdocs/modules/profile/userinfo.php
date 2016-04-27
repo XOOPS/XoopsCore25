@@ -15,13 +15,12 @@
  * @since               2.3.0
  * @author              Jan Pedersen
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: userinfo.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 include __DIR__ . '/header.php';
 include_once $GLOBALS['xoops']->path('modules/system/constants.php');
 
-$uid = isset($_GET['uid']) ? (int)($_GET['uid']) : 0;
+$uid = isset($_GET['uid']) ? (int)$_GET['uid'] : 0;
 if ($uid <= 0) {
     if (is_object($GLOBALS['xoopsUser'])) {
         $uid = $GLOBALS['xoopsUser']->getVar('uid');
@@ -63,7 +62,7 @@ if (is_object($GLOBALS['xoopsUser']) && $uid == $GLOBALS['xoopsUser']->getVar('u
 
     // Redirect if not a user or not active and the current user is not admin
     if (!is_object($thisUser) || (!$thisUser->isActive() && (!$GLOBALS['xoopsUser'] || !$GLOBALS['xoopsUser']->isAdmin()))) {
-        redirect_header(XOOPS_URL . "/modules/" . $GLOBALS['xoopsModule']->getVar('dirname', 'n'), 3, _US_SELECTNG);
+        redirect_header(XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n'), 3, _US_SELECTNG);
     }
 
     /**
@@ -97,7 +96,7 @@ if (is_object($GLOBALS['xoopsUser']) && $uid == $GLOBALS['xoopsUser']->getVar('u
     }
 
     if ($rejected) {
-        redirect_header(XOOPS_URL . "/modules/" . $GLOBALS['xoopsModule']->getVar('dirname', 'n'), 3, _NOPERM);
+        redirect_header(XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n'), 3, _NOPERM);
     }
 
     if (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->isAdmin()) {
@@ -128,21 +127,21 @@ $profile_handler = xoops_getModuleHandler('profile');
 $fields          = $profile_handler->loadFields();
 $cat_handler     = xoops_getModuleHandler('category');
 $cat_crit        = new CriteriaCompo();
-$cat_crit->setSort("cat_weight");
+$cat_crit->setSort('cat_weight');
 $cats = $cat_handler->getObjects($cat_crit, true, false);
 unset($cat_crit);
 
-$avatar = "";
-if ($thisUser->getVar('user_avatar') && "blank.gif" !== $thisUser->getVar('user_avatar')) {
-    $avatar = XOOPS_UPLOAD_URL . "/" . $thisUser->getVar('user_avatar');
+$avatar = '';
+if ($thisUser->getVar('user_avatar') && 'blank.gif' !== $thisUser->getVar('user_avatar')) {
+    $avatar = XOOPS_UPLOAD_URL . '/' . $thisUser->getVar('user_avatar');
 }
 
-$email = "";
+$email = '';
 if ($thisUser->getVar('user_viewemail') == 1) {
     $email = $thisUser->getVar('email', 'E');
 } elseif (is_object($GLOBALS['xoopsUser'])) {
     // Module admins will be allowed to see emails
-    if ($GLOBALS['xoopsUser']->isAdmin() || ($GLOBALS['xoopsUser']->getVar("uid") == $thisUser->getVar("uid"))) {
+    if ($GLOBALS['xoopsUser']->isAdmin() || ($GLOBALS['xoopsUser']->getVar('uid') == $thisUser->getVar('uid'))) {
         $email = $thisUser->getVar('email', 'E');
     }
 }
@@ -195,7 +194,7 @@ if ($GLOBALS['xoopsModuleConfig']['profile_search']) {
                             $results[$i]['image'] = XOOPS_URL . '/images/icons/posticon2.gif';
                         }
                         if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
-                            $results[$i]['link'] = XOOPS_URL . "/modules/" . $modules[$mid]->getVar('dirname', 'n') . "/" . $results[$i]['link'];
+                            $results[$i]['link'] = XOOPS_URL . '/modules/' . $modules[$mid]->getVar('dirname', 'n') . '/' . $results[$i]['link'];
                         }
                         $results[$i]['title'] = $myts->htmlspecialchars($results[$i]['title']);
                         $results[$i]['time']  = isset($results[$i]['time']) ? formatTimestamp($results[$i]['time']) : '';

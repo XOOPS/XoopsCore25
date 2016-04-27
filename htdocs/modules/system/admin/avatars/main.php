@@ -1,9 +1,9 @@
 <?php
-// $Id: main.php 13090 2015-06-16 20:44:29Z beckmi $
+// 
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2016 XOOPS Project (www.xoops.org)            //
-//                       <http://www.xoops.org/>                             //
+//                         <http://xoops.org/>                               //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -310,9 +310,9 @@ switch ($op) {
         @unlink(XOOPS_UPLOAD_PATH . '/' . $file);
         // Update member profil
         if (isset($user_id) && $avatar->getVar('avatar_type') === 'C') {
-            $xoopsDB->query("UPDATE " . $xoopsDB->prefix('users') . " SET user_avatar='blank.gif' WHERE uid=" . (int)($user_id));
+            $xoopsDB->query('UPDATE ' . $xoopsDB->prefix('users') . " SET user_avatar='blank.gif' WHERE uid=" . (int)$user_id);
         } else {
-            $xoopsDB->query("UPDATE " . $xoopsDB->prefix('users') . " SET user_avatar='blank.gif' WHERE user_avatar='" . $file . "'");
+            $xoopsDB->query('UPDATE ' . $xoopsDB->prefix('users') . " SET user_avatar='blank.gif' WHERE user_avatar='" . $file . "'");
         }
         redirect_header('admin.php?fct=avatars', 2, _AM_SYSTEM_DBUPDATED);
         break;

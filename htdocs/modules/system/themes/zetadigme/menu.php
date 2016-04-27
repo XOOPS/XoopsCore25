@@ -1,9 +1,9 @@
 <?php
-// $Id: menu.php 13090 2015-06-16 20:44:29Z beckmi $
+// 
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2016 XOOPS Project (www.xoops.org)            //
-//                       <http://www.xoops.org/>                             //
+//                         <http://xoops.org/>                               //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -48,7 +48,7 @@ foreach ($dirlist as $file) {
         include $admin_dir . '/' . $file . '/xoops_version.php';
         if ($modversion['hasAdmin']) {
             if (xoops_getModuleOption('active_' . $file, 'system')) {
-                $category = isset($modversion['category']) ? (int)($modversion['category']) : 0;
+                $category = isset($modversion['category']) ? (int)$modversion['category'] : 0;
                 if (false != $all_ok || in_array($modversion['category'], $ok_syscats)) {
                     $adminmenu[$index]['title'] = trim($modversion['name']);
                     $adminmenu[$index]['desc']  = trim($modversion['description']);

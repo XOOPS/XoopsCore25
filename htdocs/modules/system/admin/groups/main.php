@@ -1,5 +1,5 @@
 <?php
-// $Id: main.php 13082 2015-06-06 21:59:41Z beckmi $
+// 
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
 // copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)                           //
@@ -38,7 +38,7 @@ $nb_group = xoops_getModuleOption('groups_pager', 'system');
 // Get Action type
 $op = system_CleanVars($_REQUEST, 'op', 'list', 'string');
 // Get groups handler
-$groups_Handler = xoops_getModuleHandler("group", "system");
+$groups_Handler = xoops_getModuleHandler('group', 'system');
 $member_handler = xoops_getHandler('member');
 // Define main template
 $xoopsOption['template_main'] = 'system_groups.tpl';
@@ -63,8 +63,8 @@ switch ($op) {
         $start = system_CleanVars($_REQUEST, 'start', 0, 'int');
         // Criteria
         $criteria = new CriteriaCompo();
-        $criteria->setSort("groupid");
-        $criteria->setOrder("ASC");
+        $criteria->setSort('groupid');
+        $criteria->setOrder('ASC');
         $criteria->setStart($start);
         $criteria->setLimit($nb_group);
         // Count group
@@ -74,10 +74,10 @@ switch ($op) {
         $xoopsTpl->assign('groups_count', $groups_count);
         if ($groups_count > 0) {
             foreach (array_keys($groups_arr) as $i) {
-                $groups_id             = $groups_arr[$i]->getVar("groupid");
+                $groups_id             = $groups_arr[$i]->getVar('groupid');
                 $groups['groups_id']   = $groups_id;
-                $groups['name']        = $groups_arr[$i]->getVar("name");
-                $groups['description'] = $groups_arr[$i]->getVar("description");
+                $groups['name']        = $groups_arr[$i]->getVar('name');
+                $groups['description'] = $groups_arr[$i]->getVar('description');
                 $member_handler        = xoops_getHandler('member', 'system');
                 if ($groups_id != 3) {
                     $group_id_arr[0]              = $groups_id;
@@ -88,7 +88,7 @@ switch ($op) {
                 }
                 $edit_delete = '<a href="admin.php?fct=groups&amp;op=groups_edit&amp;groups_id=' . $groups_id . '">
                                            <img src="./images/icons/edit.png" border="0" alt="' . _AM_SYSTEM_GROUPS_EDIT . '" title="' . _AM_SYSTEM_GROUPS_EDIT . '"></a>';
-                if (!in_array($groups_arr[$i]->getVar("groupid"), array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS))) {
+                if (!in_array($groups_arr[$i]->getVar('groupid'), array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS))) {
                     $groups['delete'] = 1;
                     $edit_delete .= '<a href="admin.php?fct=groups&amp;op=groups_delete&amp;groups_id=' . $groups_id . '">
                                      <img src="./images/icons/delete.png" border="0" alt="' . _AM_SYSTEM_GROUPS_DELETE . '" title="' . _AM_SYSTEM_GROUPS_DELETE . '"></a>';
@@ -154,8 +154,8 @@ switch ($op) {
 
         $member_handler = xoops_getHandler('member');
         $group          = $member_handler->createGroup();
-        $group->setVar('name', $_POST["name"]);
-        $group->setVar('description', $_POST["desc"]);
+        $group->setVar('name', $_POST['name']);
+        $group->setVar('description', $_POST['desc']);
         if (count($system_catids) > 0) {
             $group->setVar('group_type', 'Admin');
         }
@@ -220,8 +220,8 @@ switch ($op) {
         $gid            = system_CleanVars($_POST, 'g_id', 0, 'int');
         if ($gid > 0) {
             $group = $member_handler->getGroup($gid);
-            $group->setVar('name', $_POST["name"]);
-            $group->setVar('description', $_POST["desc"]);
+            $group->setVar('name', $_POST['name']);
+            $group->setVar('description', $_POST['desc']);
             // if this group is not one of the default groups
             if (!in_array($group->getVar('groupid'), array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS))) {
                 if (count($system_catids) > 0) {
@@ -281,7 +281,7 @@ switch ($op) {
                     $blockperm->setVar('gperm_modid', 1);
                     $gperm_handler->insert($blockperm);
                 }
-                redirect_header("admin.php?fct=groups", 1, _AM_SYSTEM_GROUPS_DBUPDATED);
+                redirect_header('admin.php?fct=groups', 1, _AM_SYSTEM_GROUPS_DBUPDATED);
             }
         } else {
             redirect_header('admin.php?fct=groups', 1, _AM_SYSTEM_DBERROR);
@@ -293,9 +293,9 @@ switch ($op) {
         $groups_id = system_CleanVars($_REQUEST, 'groups_id', 0, 'int');
         if ($groups_id > 0) {
             $obj = $groups_Handler->get($groups_id);
-            if (isset($_POST["ok"]) && $_POST["ok"] == 1) {
-                if (!$GLOBALS["xoopsSecurity"]->check()) {
-                    redirect_header("admin.php?fct=groups", 3, implode(",", $GLOBALS["xoopsSecurity"]->getErrors()));
+            if (isset($_POST['ok']) && $_POST['ok'] == 1) {
+                if (!$GLOBALS['xoopsSecurity']->check()) {
+                    redirect_header('admin.php?fct=groups', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
                 }
                 if ($groups_id > 0 && !in_array($groups_id, array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS))) {
                     $member_handler = xoops_getHandler('member');
@@ -316,9 +316,9 @@ switch ($op) {
                 $xoBreadCrumb->render();
                 // Display message
                 xoops_confirm(array(
-                                  "ok"        => 1,
-                                  "groups_id" => $_REQUEST["groups_id"],
-                                  "op"        => "groups_delete"), 'admin.php?fct=groups', sprintf(_AM_SYSTEM_GROUPS_SUREDEL) . '<br \>' . $obj->getVar("name") . '<br \>');
+                                  'ok' => 1,
+                                  'groups_id' => $_REQUEST['groups_id'],
+                                  'op' => 'groups_delete'), 'admin.php?fct=groups', sprintf(_AM_SYSTEM_GROUPS_SUREDEL) . '<br \>' . $obj->getVar('name') . '<br \>');
             }
         } else {
             redirect_header('admin.php?fct=groups', 1, _AM_SYSTEM_DBERROR);
@@ -339,7 +339,7 @@ switch ($op) {
                 $error = false;
             }
             //if ($error == true)
-            redirect_header("admin.php?fct=users", 1, _AM_SYSTEM_GROUPS_DBUPDATED);
+            redirect_header('admin.php?fct=users', 1, _AM_SYSTEM_GROUPS_DBUPDATED);
         }
         break;
 }

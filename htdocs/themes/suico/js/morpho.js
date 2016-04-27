@@ -5,7 +5,6 @@
  * @since           2.4.x
  * @maintained      Afux <http://www.afux.org>
  *
- * @version         $Id
  */
 
 /* text sizer */

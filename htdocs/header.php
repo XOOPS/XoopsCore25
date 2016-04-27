@@ -16,7 +16,6 @@
  * @author              Kazumi Ono <webmaster@myweb.ne.jp>
  * @author              Skalpa Keo <skalpa@xoops.org>
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: header.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
@@ -62,7 +61,7 @@ if ($xoopsConfig['theme_set'] !== 'default' && file_exists(XOOPS_THEME_PATH . '/
     $xoopsPreload->triggerEvent('core.header.addmeta');
 
     // Temporary solution for start page redirection
-    if (defined("XOOPS_STARTPAGE_REDIRECTED")) {
+    if (defined('XOOPS_STARTPAGE_REDIRECTED')) {
         $params = $content = $tpl = $repeat = null;
         $xoTheme->headContent($params, "<base href='" . XOOPS_URL . '/modules/' . $xoopsConfig['startpage'] . "/' />", $tpl, $repeat);
     }

@@ -44,7 +44,7 @@ if (!function_exists('protector_oninstall_base')) {
         $sql_file_path = __DIR__ . '/sql/mysql.sql';
         $prefix_mod    = $db->prefix() . '_' . $mydirname;
         if (file_exists($sql_file_path)) {
-            $ret[] = "SQL file found at <b>" . htmlspecialchars($sql_file_path) . "</b>.<br /> Creating tables...";
+            $ret[] = 'SQL file found at <b>' . htmlspecialchars($sql_file_path) . '</b>.<br /> Creating tables...';
 
             if (file_exists(XOOPS_ROOT_PATH . '/class/database/oldsqlutility.php')) {
                 include_once XOOPS_ROOT_PATH . '/class/database/oldsqlutility.php';
@@ -60,7 +60,7 @@ if (!function_exists('protector_oninstall_base')) {
             foreach ($pieces as $piece) {
                 $prefixed_query = $sqlutil->prefixQuery($piece, $prefix_mod);
                 if (!$prefixed_query) {
-                    $ret[] = "Invalid SQL <b>" . htmlspecialchars($piece) . "</b><br />";
+                    $ret[] = 'Invalid SQL <b>' . htmlspecialchars($piece) . '</b><br />';
 
                     return false;
                 }

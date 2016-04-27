@@ -14,7 +14,6 @@
  * @package             kernel
  * @subpackage          database
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @version             $Id: sqlutility.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
@@ -117,7 +116,7 @@ class SqlUtility
                 $start_of_comment = (($sql[$i] === '#') ? $i : $i - 2);
                 // if no "\n" exits in the remaining string, checks for "\r"
                 // (Mac eol style)
-                $end_of_comment = (strpos(' ' . $sql, "\012", $i + 2)) ?: strpos(' ' . $sql, "\015", $i + 2);
+                $end_of_comment = strpos(' ' . $sql, "\012", $i + 2) ?: strpos(' ' . $sql, "\015", $i + 2);
                 if (!$end_of_comment) {
                     // no eol found after '#', add the parsed part to the returned
                     // array and exit

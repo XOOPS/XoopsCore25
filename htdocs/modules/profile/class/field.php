@@ -15,7 +15,6 @@
  * @since               2.3.0
  * @author              Jan Pedersen
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: field.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 // defined('XOOPS_ROOT_PATH') || exit("XOOPS root path not defined");
@@ -41,7 +40,7 @@ class ProfileField extends XoopsObject
         $this->initVar('field_required', XOBJ_DTYPE_INT, 0); //0 = no, 1 = yes
         $this->initVar('field_maxlength', XOBJ_DTYPE_INT, 0);
         $this->initVar('field_weight', XOBJ_DTYPE_INT, 0);
-        $this->initVar('field_default', XOBJ_DTYPE_TXTAREA, "");
+        $this->initVar('field_default', XOBJ_DTYPE_TXTAREA, '');
         $this->initVar('field_notnull', XOBJ_DTYPE_INT, 1);
         $this->initVar('field_edit', XOBJ_DTYPE_INT, 0);
         $this->initVar('field_show', XOBJ_DTYPE_INT, 0);
@@ -114,24 +113,24 @@ class ProfileField extends XoopsObject
         include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
         switch ($this->getVar('field_type')) {
             default:
-            case "autotext":
+            case 'autotext':
                 //autotext is not for editing
                 $element = new XoopsFormLabel($caption, $this->getOutputValue($user, $profile));
                 break;
 
-            case "textbox":
+            case 'textbox':
                 $element = new XoopsFormText($caption, $name, 35, $this->getVar('field_maxlength'), $value);
                 break;
 
-            case "textarea":
+            case 'textarea':
                 $element = new XoopsFormTextArea($caption, $name, $value, 4, 30);
                 break;
 
-            case "dhtml":
+            case 'dhtml':
                 $element = new XoopsFormDhtmlTextArea($caption, $name, $value, 10, 30);
                 break;
 
-            case "select":
+            case 'select':
                 $element = new XoopsFormSelect($caption, $name, $value);
                 // If options do not include an empty element, then add a blank option to prevent any default selection
 //                if (!in_array('', array_keys($options))) {
@@ -145,75 +144,75 @@ class ProfileField extends XoopsObject
                 $element->addOptionArray($options);
                 break;
 
-            case "select_multi":
+            case 'select_multi':
                 $element = new XoopsFormSelect($caption, $name, $value, 5, true);
                 $element->addOptionArray($options);
                 break;
 
-            case "radio":
+            case 'radio':
                 $element = new XoopsFormRadio($caption, $name, $value);
                 $element->addOptionArray($options);
                 break;
 
-            case "checkbox":
+            case 'checkbox':
                 $element = new XoopsFormCheckBox($caption, $name, $value);
                 $element->addOptionArray($options);
                 break;
 
-            case "yesno":
+            case 'yesno':
                 $element = new XoopsFormRadioYN($caption, $name, $value);
                 break;
 
-            case "group":
+            case 'group':
                 $element = new XoopsFormSelectGroup($caption, $name, true, $value);
                 break;
 
-            case "group_multi":
+            case 'group_multi':
                 $element = new XoopsFormSelectGroup($caption, $name, true, $value, 5, true);
                 break;
 
-            case "language":
+            case 'language':
                 $element = new XoopsFormSelectLang($caption, $name, $value);
                 break;
 
-            case "date":
+            case 'date':
                 $element = new XoopsFormTextDateSelect($caption, $name, 15, $value);
                 break;
 
-            case "longdate":
-                $element = new XoopsFormTextDateSelect($caption, $name, 15, str_replace("-", "/", $value));
+            case 'longdate':
+                $element = new XoopsFormTextDateSelect($caption, $name, 15, str_replace('-', '/', $value));
                 break;
 
-            case "datetime":
+            case 'datetime':
                 $element = new XoopsFormDatetime($caption, $name, 15, $value);
                 break;
 
-            case "list":
+            case 'list':
                 $element = new XoopsFormSelectList($caption, $name, $value, 1, $options[0]);
                 break;
 
-            case "timezone":
+            case 'timezone':
                 $element = new XoopsFormSelectTimezone($caption, $name, $value);
                 $element->setExtra("style='width: 280px;'");
                 break;
 
-            case "rank":
+            case 'rank':
                 $element = new XoopsFormSelect($caption, $name, $value);
 
                 include_once $GLOBALS['xoops']->path('class/xoopslists.php');
                 $ranks = XoopsLists::getUserRankList();
-                $element->addOption(0, "--------------");
+                $element->addOption(0, '--------------');
                 $element->addOptionArray($ranks);
                 break;
 
             case 'theme':
                 $element = new XoopsFormSelect($caption, $name, $value);
-                $element->addOption("0", _PROFILE_MA_SITEDEFAULT);
+                $element->addOption('0', _PROFILE_MA_SITEDEFAULT);
                 $handle  = opendir(XOOPS_THEME_PATH . '/');
                 $dirlist = array();
                 while (false !== ($file = readdir($handle))) {
                     if (is_dir(XOOPS_THEME_PATH . '/' . $file) && !preg_match("/^[.]{1,2}$/", $file) && strtolower($file) !== 'cvs') {
-                        if (file_exists(XOOPS_THEME_PATH . "/" . $file . "/theme.html") && in_array($file, $GLOBALS['xoopsConfig']['theme_set_allowed'])) {
+                        if (file_exists(XOOPS_THEME_PATH . '/' . $file . '/theme.html') && in_array($file, $GLOBALS['xoopsConfig']['theme_set_allowed'])) {
                             $dirlist[$file] = $file;
                         }
                     }
@@ -225,7 +224,7 @@ class ProfileField extends XoopsObject
                 }
                 break;
         }
-        if ($this->getVar('field_description') != "") {
+        if ($this->getVar('field_description') != '') {
             $element->setDescription($this->getVar('field_description'));
         }
 
@@ -252,35 +251,35 @@ class ProfileField extends XoopsObject
 
         switch ($this->getVar('field_type')) {
             default:
-            case "textbox":
+            case 'textbox':
                 if ($this->getVar('field_name') === 'url' && $value !== '') {
                     return '<a href="' . formatURL($value) . '" rel="external">' . $value . '</a>';
                 } else {
                     return $value;
                 }
                 break;
-            case "textarea":
-            case "dhtml":
+            case 'textarea':
+            case 'dhtml':
             case 'theme':
-            case "language":
-            case "list":
+            case 'language':
+            case 'list':
                 return $value;
                 break;
 
-            case "select":
-            case "radio":
+            case 'select':
+            case 'radio':
                 $options = $this->getVar('field_options');
                 if (isset($options[$value])) {
                     $value = htmlspecialchars(defined($options[$value]) ? constant($options[$value]) : $options[$value]);
                 } else {
-                    $value = "";
+                    $value = '';
                 }
 
                 return $value;
                 break;
 
-            case "select_multi":
-            case "checkbox":
+            case 'select_multi':
+            case 'checkbox':
                 $options = $this->getVar('field_options');
                 $ret     = array();
                 if (count($options) > 0) {
@@ -294,7 +293,7 @@ class ProfileField extends XoopsObject
                 return $ret;
                 break;
 
-            case "group":
+            case 'group':
                 $member_handler = xoops_getHandler('member');
                 $options        = $member_handler->getGroupList();
                 $ret            = isset($options[$value]) ? $options[$value] : '';
@@ -302,7 +301,7 @@ class ProfileField extends XoopsObject
                 return $ret;
                 break;
 
-            case "group_multi":
+            case 'group_multi':
                 $member_handler = xoops_getHandler('member');
                 $options        = $member_handler->getGroupList();
                 $ret            = array();
@@ -315,16 +314,16 @@ class ProfileField extends XoopsObject
                 return $ret;
                 break;
 
-            case "longdate":
+            case 'longdate':
                 //return YYYY/MM/DD format - not optimal as it is not using local date format, but how do we do that
                 //when we cannot convert it to a UNIX timestamp?
-                return str_replace("-", "/", $value);
+                return str_replace('-', '/', $value);
 
-            case "date":
+            case 'date':
                 return formatTimestamp($value, 's');
                 break;
 
-            case "datetime":
+            case 'datetime':
                 if (!empty($value)) {
                     return formatTimestamp($value, 'm');
                 } else {
@@ -332,33 +331,33 @@ class ProfileField extends XoopsObject
                 }
                 break;
 
-            case "autotext":
+            case 'autotext':
                 $value = $user->getVar($this->getVar('field_name'), 'n'); //autotext can have HTML in it
-                $value = str_replace("{X_UID}", $user->getVar("uid"), $value);
-                $value = str_replace("{X_URL}", XOOPS_URL, $value);
-                $value = str_replace("{X_UNAME}", $user->getVar("uname"), $value);
+                $value = str_replace('{X_UID}', $user->getVar('uid'), $value);
+                $value = str_replace('{X_URL}', XOOPS_URL, $value);
+                $value = str_replace('{X_UNAME}', $user->getVar('uname'), $value);
 
                 return $value;
                 break;
 
-            case "rank":
+            case 'rank':
                 $userrank       = $user->rank();
-                $user_rankimage = "";
-                if (isset($userrank['image']) && $userrank['image'] !== "") {
+                $user_rankimage = '';
+                if (isset($userrank['image']) && $userrank['image'] !== '') {
                     $user_rankimage = '<img src="' . XOOPS_UPLOAD_URL . '/' . $userrank['image'] . '" alt="' . $userrank['title'] . '" /><br />';
                 }
 
                 return $user_rankimage . $userrank['title'];
                 break;
 
-            case "yesno":
+            case 'yesno':
                 return $value ? _YES : _NO;
                 break;
 
-            case "timezone":
+            case 'timezone':
                 include_once $GLOBALS['xoops']->path('class/xoopslists.php');
                 $timezones = XoopsLists::getTimeZoneList();
-                $value     = empty($value) ? "0" : (string)($value);
+                $value     = empty($value) ? '0' : (string)$value;
 
                 return $timezones[str_replace('.0', '', $value)];
                 break;
@@ -376,36 +375,36 @@ class ProfileField extends XoopsObject
     {
         switch ($this->getVar('field_type')) {
             default:
-            case "textbox":
-            case "textarea":
-            case "dhtml":
-            case "yesno":
-            case "timezone":
+            case 'textbox':
+            case 'textarea':
+            case 'dhtml':
+            case 'yesno':
+            case 'timezone':
             case 'theme':
-            case "language":
-            case "list":
-            case "select":
-            case "radio":
-            case "select_multi":
-            case "group":
-            case "group_multi":
-            case "longdate":
+            case 'language':
+            case 'list':
+            case 'select':
+            case 'radio':
+            case 'select_multi':
+            case 'group':
+            case 'group_multi':
+            case 'longdate':
                 return $value;
 
-            case "checkbox":
+            case 'checkbox':
                 return (array)$value;
 
-            case "date":
-                if ($value !== "") {
+            case 'date':
+                if ($value !== '') {
                     return strtotime($value);
                 }
 
                 return $value;
                 break;
 
-            case "datetime":
+            case 'datetime':
                 if (!empty($value)) {
-                    return strtotime($value['date']) + (int)($value['time']);
+                    return strtotime($value['date']) + (int)$value['time'];
                 }
 
                 return $value;
@@ -437,7 +436,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
      */
     public function __construct(XoopsDatabase $db)
     {
-        parent::__construct($db, 'profile_field', "profilefield", "field_id", 'field_title');
+        parent::__construct($db, 'profile_field', 'profilefield', 'field_id', 'field_title');
     }
 
     /**
@@ -452,7 +451,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
         static $fields = array();
         if (!empty($force_update) || count($fields) == 0) {
             $this->table_link = $this->db->prefix('profile_category');
-            $criteria         = new Criteria('o.field_id', 0, "!=");
+            $criteria         = new Criteria('o.field_id', 0, '!=');
             $criteria->setSort('l.cat_weight ASC, o.field_weight');
             $field_objs =& $this->getByLink($criteria, array('o.*'), true, 'cat_id', 'cat_id');
             foreach (array_keys($field_objs) as $i) {
@@ -480,73 +479,73 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
         $profile_handler = xoops_getModuleHandler('profile', 'profile');
         $obj->setVar('field_name', str_replace(' ', '_', $obj->getVar('field_name')));
         $obj->cleanVars();
-        $defaultstring = "";
+        $defaultstring = '';
         switch ($obj->getVar('field_type')) {
-            case "datetime":
-            case "date":
+            case 'datetime':
+            case 'date':
                 $obj->setVar('field_valuetype', XOBJ_DTYPE_INT);
                 $obj->setVar('field_maxlength', 10);
                 break;
 
-            case "longdate":
+            case 'longdate':
                 $obj->setVar('field_valuetype', XOBJ_DTYPE_MTIME);
                 break;
 
-            case "yesno":
+            case 'yesno':
                 $obj->setVar('field_valuetype', XOBJ_DTYPE_INT);
                 $obj->setVar('field_maxlength', 1);
                 break;
 
-            case "textbox":
+            case 'textbox':
                 if ($obj->getVar('field_valuetype') != XOBJ_DTYPE_INT) {
                     $obj->setVar('field_valuetype', XOBJ_DTYPE_TXTBOX);
                 }
                 break;
 
-            case "autotext":
+            case 'autotext':
                 if ($obj->getVar('field_valuetype') != XOBJ_DTYPE_INT) {
                     $obj->setVar('field_valuetype', XOBJ_DTYPE_TXTAREA);
                 }
                 break;
 
-            case "group_multi":
-            case "select_multi":
-            case "checkbox":
+            case 'group_multi':
+            case 'select_multi':
+            case 'checkbox':
                 $obj->setVar('field_valuetype', XOBJ_DTYPE_ARRAY);
                 break;
 
-            case "language":
-            case "timezone":
-            case "theme":
+            case 'language':
+            case 'timezone':
+            case 'theme':
                 $obj->setVar('field_valuetype', XOBJ_DTYPE_TXTBOX);
                 break;
 
-            case "dhtml":
-            case "textarea":
+            case 'dhtml':
+            case 'textarea':
                 $obj->setVar('field_valuetype', XOBJ_DTYPE_TXTAREA);
                 break;
         }
 
-        if ($obj->getVar('field_valuetype') === "") {
+        if ($obj->getVar('field_valuetype') === '') {
             $obj->setVar('field_valuetype', XOBJ_DTYPE_TXTBOX);
         }
 
-        if ((!in_array($obj->getVar('field_name'), $this->getUserVars())) && (isset($_REQUEST['field_required']))) {
+        if ((!in_array($obj->getVar('field_name'), $this->getUserVars())) && isset($_REQUEST['field_required'])) {
             if ($obj->isNew()) {
                 //add column to table
-                $changetype = "ADD";
+                $changetype = 'ADD';
             } else {
                 //update column information
-                $changetype = "CHANGE `" . $obj->getVar('field_name', 'n') . "`";
+                $changetype = 'CHANGE `' . $obj->getVar('field_name', 'n') . '`';
             }
-            $maxlengthstring = $obj->getVar('field_maxlength') > 0 ? "(" . $obj->getVar('field_maxlength') . ")" : "";
+            $maxlengthstring = $obj->getVar('field_maxlength') > 0 ? '(' . $obj->getVar('field_maxlength') . ')' : '';
 
             //set type
             switch ($obj->getVar('field_valuetype')) {
                 default:
                 case XOBJ_DTYPE_ARRAY:
                 case XOBJ_DTYPE_UNICODE_ARRAY:
-                    $type = "mediumtext";
+                    $type = 'mediumtext';
                     break;
                 case XOBJ_DTYPE_UNICODE_EMAIL:
                 case XOBJ_DTYPE_UNICODE_TXTBOX:
@@ -554,42 +553,43 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
                 case XOBJ_DTYPE_EMAIL:
                 case XOBJ_DTYPE_TXTBOX:
                 case XOBJ_DTYPE_URL:
-                    $type = "varchar";
+                    $type = 'varchar';
                     // varchars must have a maxlength
                     if (!$maxlengthstring) {
                         //so set it to max if maxlength is not set - or should it fail?
-                        $maxlengthstring = "(255)";
+                        $maxlengthstring = '(255)';
                         $obj->setVar('field_maxlength', 255);
                     }
                     break;
 
                 case XOBJ_DTYPE_INT:
-                    $type = "int";
+                    $type = 'int';
                     break;
 
                 case XOBJ_DTYPE_DECIMAL:
-                    $type = "decimal(14,6)";
+                    $type = 'decimal(14,6)';
                     break;
 
                 case XOBJ_DTYPE_FLOAT:
-                    $type = "float(15,9)";
+                    $type = 'float(15,9)';
                     break;
 
                 case XOBJ_DTYPE_OTHER:
                 case XOBJ_DTYPE_UNICODE_TXTAREA:
                 case XOBJ_DTYPE_TXTAREA:
-                    $type            = "text";
-                    $maxlengthstring = "";
+                    $type            = 'text';
+                    $maxlengthstring = '';
                     break;
 
                 case XOBJ_DTYPE_MTIME:
-                    $type            = "date";
-                    $maxlengthstring = "";
+                    $type            = 'date';
+                    $maxlengthstring = '';
                     break;
             }
 
-            $sql = "ALTER TABLE `" . $profile_handler->table . "` " . $changetype . " `" . $obj->cleanVars['field_name'] . "` " . $type . $maxlengthstring . ' NULL';
-            if (!$this->db->query($sql)) {
+            $sql = 'ALTER TABLE `' . $profile_handler->table . '` ' . $changetype . ' `' . $obj->cleanVars['field_name'] . '` ' . $type . $maxlengthstring . ' NULL';
+            $result = $force ? $this->db->queryF($sql) : $this->db->query($sql);
+            if (!$result) {
                 return false;
             }
         }
@@ -617,7 +617,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
         }
         $profile_handler = xoops_getModuleHandler('profile', 'profile');
         // remove column from table
-        $sql = "ALTER TABLE " . $profile_handler->table . " DROP `" . $obj->getVar('field_name', 'n') . "`";
+        $sql = 'ALTER TABLE ' . $profile_handler->table . ' DROP `' . $obj->getVar('field_name', 'n') . '`';
         if ($this->db->query($sql)) {
             //change this to update the cached field information storage
             if (!parent::delete($obj, $force)) {

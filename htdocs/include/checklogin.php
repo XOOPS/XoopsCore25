@@ -13,7 +13,6 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             core
  * @since               2.0.0
- * @version             $Id: checklogin.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -60,7 +59,7 @@ if (false != $user) {
     if (!$member_handler->insertUser($user)) {
     }
     // Regenrate a new session id and destroy old session
-    $GLOBALS["sess_handler"]->regenerate_id(true);
+    $GLOBALS['sess_handler']->regenerate_id(true);
     $_SESSION                    = array();
     $_SESSION['xoopsUserId']     = $user->getVar('uid');
     $_SESSION['xoopsUserGroups'] = $user->getGroups();
@@ -81,8 +80,7 @@ if (false != $user) {
                 $token,
                 time() + $rememberTime,
                 '/',
-                XOOPS_COOKIE_DOMAIN,
-                (XOOPS_PROT == 'https://'),
+                XOOPS_COOKIE_DOMAIN, XOOPS_PROT == 'https://',
                 true
             );
         } else {

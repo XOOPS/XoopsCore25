@@ -15,7 +15,6 @@
  * @subpackage          form
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version             $Id: formelementtray.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
@@ -56,7 +55,7 @@ class XoopsFormElementTray extends XoopsFormElement
      * @param string $name
      *
      */
-    public function __construct($caption, $delimeter = "&nbsp;", $name = "")
+    public function __construct($caption, $delimeter = '&nbsp;', $name = '')
     {
         $this->setName($name);
         $this->setCaption($caption);
@@ -166,13 +165,13 @@ class XoopsFormElementTray extends XoopsFormElement
     public function render()
     {
         $count = 0;
-        $ret   = "";
+        $ret   = '';
         foreach ($this->getElements() as $ele) {
             if ($count > 0) {
                 $ret .= $this->getDelimeter();
             }
             if ($ele->getCaption() != '') {
-                $ret .= $ele->getCaption() . "&nbsp;";
+                $ret .= $ele->getCaption() . '&nbsp;';
             }
             $ret .= $ele->render() . NWLINE;
             if (!$ele->isHidden()) {

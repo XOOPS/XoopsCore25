@@ -1,9 +1,9 @@
 <?php
-// $Id: main.php 13082 2015-06-06 21:59:41Z beckmi $
+// 
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2016 XOOPS Project (www.xoops.org)            //
-//                       <http://www.xoops.org/>                             //
+//                         <http://xoops.org/>                               //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -45,7 +45,7 @@ $upload_size = 500000;
 // Get Action type
 $op = system_CleanVars($_REQUEST, 'op', 'list', 'string');
 // Get smilies handler
-$smilies_Handler = xoops_getModuleHandler("smilies", "system");
+$smilies_Handler = xoops_getModuleHandler('smilies', 'system');
 // Define main template
 $xoopsOption['template_main'] = 'system_smilies.tpl';
 // Call Header
@@ -70,8 +70,8 @@ switch ($op) {
         $start = system_CleanVars($_REQUEST, 'start', 0, 'int');
         // Criteria
         $criteria = new CriteriaCompo();
-        $criteria->setSort("id");
-        $criteria->setOrder("ASC");
+        $criteria->setSort('id');
+        $criteria->setOrder('ASC');
         $criteria->setStart($start);
         $criteria->setLimit($nb_smilies);
         // Count smilies
@@ -81,12 +81,12 @@ switch ($op) {
         $xoopsTpl->assign('smilies_count', $smilies_count);
         if ($smilies_count > 0) {
             foreach (array_keys($smilies_arr) as $i) {
-                $smilies_id             = $smilies_arr[$i]->getVar("id");
+                $smilies_id             = $smilies_arr[$i]->getVar('id');
                 $smilies['smilies_id']  = $smilies_id;
-                $smilies['code']        = $smilies_arr[$i]->getVar("code");
-                $smilies['emotion']     = $smilies_arr[$i]->getVar("emotion");
-                $smilies['display']     = $smilies_arr[$i]->getVar("display");
-                $smilies_img            = ($smilies_arr[$i]->getVar("smile_url")) ?: 'blank.gif';
+                $smilies['code']        = $smilies_arr[$i]->getVar('code');
+                $smilies['emotion']     = $smilies_arr[$i]->getVar('emotion');
+                $smilies['display']     = $smilies_arr[$i]->getVar('display');
+                $smilies_img            = $smilies_arr[$i]->getVar('smile_url') ?: 'blank.gif';
                 $smilies['image']       = '<img src="' . XOOPS_UPLOAD_URL . '/' . $smilies_img . '" alt="" />';
                 $smilies['edit_delete'] = '<a href="admin.php?fct=smilies&amp;op=edit_smilie&amp;smilies_id=' . $smilies_id . '">
                                            <img src="./images/icons/edit.png" border="0" alt="' . _AM_SYSTEM_SMILIES_EDIT . '" title="' . _AM_SYSTEM_SMILIES_EDIT . '"></a>
@@ -104,7 +104,7 @@ switch ($op) {
         break;
 
     // New smilie
-    case "new_smilie":
+    case 'new_smilie':
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         // Define Breadcrumb and tips
@@ -120,7 +120,7 @@ switch ($op) {
         break;
 
     // Edit smilie
-    case "edit_smilie":
+    case 'edit_smilie':
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         // Define Breadcrumb and tips
@@ -136,7 +136,7 @@ switch ($op) {
         break;
 
     // Save smilie
-    case "save_smilie":
+    case 'save_smilie':
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=smilies', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
         }
@@ -145,34 +145,34 @@ switch ($op) {
         $xoBreadCrumb->addTips(sprintf(_AM_SYSTEM_SMILIES_NAV_TIPS_FORM1, implode(', ', $mimetypes)) . sprintf(_AM_SYSTEM_SMILIES_NAV_TIPS_FORM2, $upload_size / 1000));
         $xoBreadCrumb->render();
 
-        if (isset($_POST["smilies_id"])) {
+        if (isset($_POST['smilies_id'])) {
             $obj = $smilies_Handler->get(system_CleanVars($_POST, 'smilies_id', 0, 'int'));
         } else {
             $obj = $smilies_Handler->create();
         }
         // erreur
-        $obj->setVar("code", $_POST["code"]);
-        $obj->setVar("emotion", $_POST["emotion"]);
-        $display = ($_POST["display"] == 1) ? "1" : "0";
-        $obj->setVar("display", $display);
+        $obj->setVar('code', $_POST['code']);
+        $obj->setVar('emotion', $_POST['emotion']);
+        $display = ($_POST['display'] == 1) ? '1' : '0';
+        $obj->setVar('display', $display);
 
         include_once XOOPS_ROOT_PATH . '/class/uploader.php';
         $uploader_smilies_img = new XoopsMediaUploader(XOOPS_UPLOAD_PATH . '/smilies', $mimetypes, $upload_size, null, null);
 
-        if ($uploader_smilies_img->fetchMedia("smile_url")) {
-            $uploader_smilies_img->setPrefix("smil");
-            $uploader_smilies_img->fetchMedia("smile_url");
+        if ($uploader_smilies_img->fetchMedia('smile_url')) {
+            $uploader_smilies_img->setPrefix('smil');
+            $uploader_smilies_img->fetchMedia('smile_url');
             if (!$uploader_smilies_img->upload()) {
                 $errors =& $uploader_smilies_img->getErrors();
-                redirect_header("javascript:history.go(-1)", 3, $errors);
+                redirect_header('javascript:history.go(-1)', 3, $errors);
             } else {
-                $obj->setVar("smile_url", 'smilies/' . $uploader_smilies_img->getSavedFileName());
+                $obj->setVar('smile_url', 'smilies/' . $uploader_smilies_img->getSavedFileName());
             }
         } else {
-            $obj->setVar("smile_url", 'smilies/' . $_POST["smile_url"]);
+            $obj->setVar('smile_url', 'smilies/' . $_POST['smile_url']);
         }
         if ($smilies_Handler->insert($obj)) {
-            redirect_header("admin.php?fct=smilies", 2, _AM_SYSTEM_SMILIES_SAVE);
+            redirect_header('admin.php?fct=smilies', 2, _AM_SYSTEM_SMILIES_SAVE);
         }
         echo $obj->getHtmlErrors();
         // Create form
@@ -183,20 +183,20 @@ switch ($op) {
         break;
 
     //Del a smilie
-    case "smilies_delete":
+    case 'smilies_delete':
         $smilies_id = system_CleanVars($_REQUEST, 'smilies_id', 0, 'int');
         $obj        = $smilies_Handler->get($smilies_id);
-        if (isset($_POST["ok"]) && $_POST["ok"] == 1) {
-            if (!$GLOBALS["xoopsSecurity"]->check()) {
-                redirect_header("admin.php?fct=smilies", 3, implode(",", $GLOBALS["xoopsSecurity"]->getErrors()));
+        if (isset($_POST['ok']) && $_POST['ok'] == 1) {
+            if (!$GLOBALS['xoopsSecurity']->check()) {
+                redirect_header('admin.php?fct=smilies', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }
             if ($smilies_Handler->delete($obj)) {
-                $urlfile = XOOPS_UPLOAD_PATH . '/' . $obj->getVar("smile_url");
+                $urlfile = XOOPS_UPLOAD_PATH . '/' . $obj->getVar('smile_url');
                 if (is_file($urlfile)) {
                     chmod($urlfile, 0777);
                     unlink($urlfile);
                 }
-                redirect_header("admin.php?fct=smilies", 2, _AM_SYSTEM_SMILIES_SAVE);
+                redirect_header('admin.php?fct=smilies', 2, _AM_SYSTEM_SMILIES_SAVE);
             } else {
                 xoops_error($obj->getHtmlErrors());
             }
@@ -207,15 +207,15 @@ switch ($op) {
             $xoBreadCrumb->addLink(_AM_SYSTEM_SMILIES_NAV_DELETE);
             $xoBreadCrumb->addHelp(system_adminVersion('smilies', 'help') . '#delete');
             $xoBreadCrumb->render();
-            $smilies_img = ($obj->getVar("smile_url")) ?: 'blank.gif';
+            $smilies_img = $obj->getVar('smile_url') ?: 'blank.gif';
             xoops_confirm(array(
-                              "ok"         => 1,
-                              "smilies_id" => $_REQUEST["smilies_id"],
-                              "op"         => "smilies_delete"), $_SERVER["REQUEST_URI"], sprintf(_AM_SYSTEM_SMILIES_SUREDEL) . '<br \><img src="' . XOOPS_UPLOAD_URL . '/' . $smilies_img . '" alt="" /><br \>');
+                              'ok' => 1,
+                              'smilies_id' => $_REQUEST['smilies_id'],
+                              'op' => 'smilies_delete'), $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_SMILIES_SUREDEL) . '<br \><img src="' . XOOPS_UPLOAD_URL . '/' . $smilies_img . '" alt="" /><br \>');
         }
         break;
 
-    case "smilies_update_display":
+    case 'smilies_update_display':
         // Get smilies id
         $smilies_id = system_CleanVars($_POST, 'smilies_id', 0, 'int');
         if ($smilies_id > 0) {

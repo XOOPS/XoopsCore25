@@ -1,8 +1,8 @@
 <?php
-// $Id: groupperm.php 13090 2015-06-16 20:44:29Z beckmi $
+// 
 
 include_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-$modid = isset($_POST['modid']) ? (int)($_POST['modid']) : 0;
+$modid = isset($_POST['modid']) ? (int)$_POST['modid'] : 0;
 
 // we don't want system module permissions to be changed here
 if ($modid <= 1 || !is_object($xoopsUser) || !$xoopsUser->isAdmin($modid)) {
@@ -58,13 +58,13 @@ if (is_array($_POST['perms']) && !empty($_POST['perms'])) {
     }
 }
 
-$backlink = xoops_getenv("HTTP_REFERER");
+$backlink = xoops_getenv('HTTP_REFERER');
 if ($module->getVar('hasadmin')) {
     $adminindex = isset($_POST['redirect_url']) ? $_POST['redirect_url'] : $module->getInfo('adminindex');
     if ($adminindex) {
         $backlink = XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . $adminindex;
     }
 }
-$backlink = ($backlink) ?: XOOPS_URL . '/admin.php';
+$backlink = $backlink ?: XOOPS_URL . '/admin.php';
 
-redirect_header($backlink, 2, implode("<br />", $msg));
+redirect_header($backlink, 2, implode('<br />', $msg));

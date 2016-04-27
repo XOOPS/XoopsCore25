@@ -14,7 +14,6 @@
  * @package             kernel
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version             $Id: tplset.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
@@ -141,7 +140,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
     public function get($id)
     {
         $tplset = false;
-        $id     = (int)($id);
+        $id     = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('tplset') . ' WHERE tplset_id=' . $id;
             if (!$result = $this->db->query($sql)) {
@@ -210,9 +209,9 @@ class XoopsTplsetHandler extends XoopsObjectHandler
         }
         if ($tplset->isNew()) {
             $tplset_id = $this->db->genId('tplset_tplset_id_seq');
-            $sql       = sprintf("INSERT INTO %s (tplset_id, tplset_name, tplset_desc, tplset_credits, tplset_created) VALUES (%u, %s, %s, %s, %u)", $this->db->prefix('tplset'), $tplset_id, $this->db->quoteString($tplset_name), $this->db->quoteString($tplset_desc), $this->db->quoteString($tplset_credits), $tplset_created);
+            $sql       = sprintf('INSERT INTO %s (tplset_id, tplset_name, tplset_desc, tplset_credits, tplset_created) VALUES (%u, %s, %s, %s, %u)', $this->db->prefix('tplset'), $tplset_id, $this->db->quoteString($tplset_name), $this->db->quoteString($tplset_desc), $this->db->quoteString($tplset_credits), $tplset_created);
         } else {
-            $sql = sprintf("UPDATE %s SET tplset_name = %s, tplset_desc = %s, tplset_credits = %s, tplset_created = %u WHERE tplset_id = %u", $this->db->prefix('tplset'), $this->db->quoteString($tplset_name), $this->db->quoteString($tplset_desc), $this->db->quoteString($tplset_credits), $tplset_created, $tplset_id);
+            $sql = sprintf('UPDATE %s SET tplset_name = %s, tplset_desc = %s, tplset_credits = %s, tplset_created = %u WHERE tplset_id = %u', $this->db->prefix('tplset'), $this->db->quoteString($tplset_name), $this->db->quoteString($tplset_desc), $this->db->quoteString($tplset_credits), $tplset_created, $tplset_id);
         }
         if (!$result = $this->db->query($sql)) {
             return false;
@@ -238,11 +237,11 @@ class XoopsTplsetHandler extends XoopsObjectHandler
         if (!($tplset instanceof $className)) {
             return false;
         }
-        $sql = sprintf("DELETE FROM %s WHERE tplset_id = %u", $this->db->prefix('tplset'), $tplset->getVar('tplset_id'));
+        $sql = sprintf('DELETE FROM %s WHERE tplset_id = %u', $this->db->prefix('tplset'), $tplset->getVar('tplset_id'));
         if (!$result = $this->db->query($sql)) {
             return false;
         }
-        $sql = sprintf("DELETE FROM %s WHERE tplset_name = %s", $this->db->prefix('imgset_tplset_link'), $this->db->quoteString($tplset->getVar('tplset_name')));
+        $sql = sprintf('DELETE FROM %s WHERE tplset_name = %s', $this->db->prefix('imgset_tplset_link'), $this->db->quoteString($tplset->getVar('tplset_name')));
         $this->db->query($sql);
 
         return true;

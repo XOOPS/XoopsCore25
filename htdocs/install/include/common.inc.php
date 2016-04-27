@@ -23,7 +23,6 @@
  * @author           Skalpa Keo <skalpa@xoops.org>
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
- * @version          $Id: common.inc.php 13082 2015-06-06 21:59:41Z beckmi $
  **/
 
 /**
@@ -40,8 +39,8 @@ if (empty($xoopsOption['hascommon'])) {
     session_start();
 }
 @include '../mainfile.php';
-if (!defined("XOOPS_ROOT_PATH")) {
-    define("XOOPS_ROOT_PATH", str_replace("\\", "/", realpath('../')));
+if (!defined('XOOPS_ROOT_PATH')) {
+    define('XOOPS_ROOT_PATH', str_replace("\\", '/', realpath('../')));
 }
 /*
 error_reporting( 0 );

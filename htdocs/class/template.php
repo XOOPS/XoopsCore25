@@ -16,7 +16,6 @@
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @package             kernel
  * @subpackage          core
- * @version             $Id: template.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
@@ -124,7 +123,7 @@ class XoopsTpl extends Smarty
     public function _get_auto_id($cache_id = null, $compile_id = null)
     {
         if (isset($cache_id)) {
-            return (isset($compile_id)) ? $compile_id . '-' . $cache_id : $cache_id;
+            return isset($compile_id) ? $compile_id . '-' . $cache_id : $cache_id;
         } elseif (isset($compile_id)) {
             return $compile_id;
         } else {

@@ -15,7 +15,6 @@
  * @subpackage          comment
  * @since               2.0.0
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @version             $Id: commentrenderer.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
@@ -388,7 +387,7 @@ class XoopsCommentRenderer
     // Start edit by voltan
     public function _getPosterName($poster_id, $poster_user, $poster_website)
     {
-        $poster['id'] = (int)($poster_id);
+        $poster['id'] = (int)$poster_id;
         if ($poster['id'] > 0) {
             $com_poster =& $this->_memberHandler->getUser($poster_id);
             if (is_object($com_poster)) {
@@ -422,7 +421,7 @@ class XoopsCommentRenderer
     // Start edit by voltan
     public function _getPosterArray($poster_id, $poster_user, $poster_website)
     {
-        $poster['id'] = (int)($poster_id);
+        $poster['id'] = (int)$poster_id;
         if ($poster['id'] > 0) {
             $com_poster =& $this->_memberHandler->getUser($poster['id']);
             if (is_object($com_poster)) {

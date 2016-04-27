@@ -17,7 +17,6 @@
  * @author              Kazumi Ono  <onokazu@xoops.org>
  * @author              Skalpa Keo <skalpa@xoops.org>
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: xoopslogger.php 13082 2015-06-06 21:59:41Z beckmi $
  *
  * @todo                Not well written, just keep as it is. Refactored in 3.0
  */
@@ -227,7 +226,7 @@ class XoopsLogger
             }
             echo sprintf(_XOOPS_FATAL_MESSAGE, $errstr);
             if ($trace && function_exists('debug_backtrace')) {
-                echo "<div style='color:#f0f0f0;background-color:#f0f0f0;'>" . _XOOPS_FATAL_BACKTRACE . ":<br />";
+                echo "<div style='color:#f0f0f0;background-color:#f0f0f0;'>" . _XOOPS_FATAL_BACKTRACE . ':<br />';
                 $trace = debug_backtrace();
                 array_shift($trace);
                 foreach ($trace as $step) {
@@ -251,8 +250,23 @@ class XoopsLogger
      */
     public function handleException($e)
     {
-        $msg = "Exception: " . $e->getMessage();
-        $this->handleError(E_USER_ERROR, $msg, $e->getFile(), $e->getLine());
+        if ($this->isThrowable($e)) {
+            $msg = get_class($e) . ': ' . $e->getMessage();
+            $this->handleError(E_USER_ERROR, $msg, $e->getFile(), $e->getLine());
+        }
+    }
+
+    /**
+     * Determine if an object implements Throwable (or is an Exception that would under PHP 7.)
+     *
+     * @param mixed $e Expected to be an object related to Exception or Throwable
+     *
+     * @return bool true if related to Throwable or Exception, otherwise false
+     */
+    protected function isThrowable($e)
+    {
+        $type = interface_exists('\Throwable', false) ? '\Throwable' : '\Exception';
+        return $e instanceof $type;
     }
 
     /**

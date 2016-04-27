@@ -16,7 +16,6 @@
  * @since            2.0
  * @author           Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
- * @version          $Id: formradio.php 13082 2015-06-06 21:59:41Z beckmi $
  * @package          kernel
  * @subpackage       form
  * @todo             template
@@ -185,7 +184,7 @@ class XoopsFormRadio extends XoopsFormElement
             if (isset($ele_value) && $value == $ele_value) {
                 $ret .= ' checked="checked"';
             }
-            $ret .= $ele_extra . ' />' . "<label name='xolb_{$ele_name}' for='" . $ele_name . $id_ele . "'>" . $name . "</label>" . $ele_delimeter;
+            $ret .= $ele_extra . ' />' . "<label name='xolb_{$ele_name}' for='" . $ele_name . $id_ele . "'>" . $name . '</label>' . $ele_delimeter;
             if (!empty($this->columns)) {
                 $ret .= '</td>';
                 if (++$i % $this->columns == 0) {

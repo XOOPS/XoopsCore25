@@ -13,7 +13,6 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
- * @version             $Id: footer.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
@@ -21,8 +20,8 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 $xoopsPreload = XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.footer.start');
 
-if (!defined("XOOPS_FOOTER_INCLUDED")) {
-    define("XOOPS_FOOTER_INCLUDED", 1);
+if (!defined('XOOPS_FOOTER_INCLUDED')) {
+    define('XOOPS_FOOTER_INCLUDED', 1);
 
     $xoopsLogger = XoopsLogger::getInstance();
     $xoopsLogger->stopTime('Module display');
@@ -56,7 +55,7 @@ if (!defined("XOOPS_FOOTER_INCLUDED")) {
         }
 
         if (isset($xoopsOption['template_main']) && $xoopsOption['template_main'] != $xoTheme->contentTemplate) {
-            trigger_error("xoopsOption[template_main] should be defined before including header.php", E_USER_WARNING);
+            trigger_error('xoopsOption[template_main] should be defined before including header.php', E_USER_WARNING);
             if (false === strpos($xoopsOption['template_main'], ':')) {
                 $xoTheme->contentTemplate = 'db:' . $xoopsOption['template_main'];
             } else {

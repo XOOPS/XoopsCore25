@@ -18,7 +18,6 @@
  * @subpackage          textsanitizer
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: wiki.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -81,7 +80,7 @@ EOH;
         //        $ts->replacements[] = __CLASS__ . "::decode( '\\1' )";
         //mb------------------------------
         $ts->callbackPatterns[] = "/\[\[([^\]]*)\]\]/sU";
-        $ts->callbacks[]        = __CLASS__ . "::myCallback";
+        $ts->callbacks[]        = __CLASS__ . '::myCallback';
         //mb------------------------------
     }
 
@@ -90,13 +89,13 @@ EOH;
      *
      * @return string
      */
-    public static function decode($text)
+    public static function decode($text, $width, $height)
     {
         $config = parent::loadConfig(__DIR__);
         if (empty($text) || empty($config['link'])) {
             return $text;
         }
-        $charset = !empty($config['charset']) ? $config['charset'] : "UTF-8";
+        $charset = !empty($config['charset']) ? $config['charset'] : 'UTF-8';
         xoops_load('XoopsLocal');
         $ret = "<a href='" . sprintf($config['link'], urlencode(XoopsLocal::convert_encoding($text, $charset))) . "' rel='external' title=''>{$text}</a>";
 

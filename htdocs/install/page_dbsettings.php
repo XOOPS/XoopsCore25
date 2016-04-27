@@ -23,7 +23,6 @@
  * @author           Skalpa Keo <skalpa@xoops.org>
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
- * @version          $Id: page_dbsettings.php 13082 2015-06-06 21:59:41Z beckmi $
  **/
 
 require_once './include/common.inc.php';
@@ -49,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['charset']) && @$_GET['a
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $params = array('DB_NAME', 'DB_CHARSET', 'DB_COLLATION', 'DB_PREFIX');
     foreach ($params as $name) {
-        $vars[$name] = isset($_POST[$name]) ? $_POST[$name] : "";
+        $vars[$name] = isset($_POST[$name]) ? $_POST[$name] : '';
     }
 }
 
@@ -60,16 +59,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($vars['DB_NAME'])) {
     if (empty($error)) {
         if (!@mysqli_select_db($link, $vars['DB_NAME'])) {
             // Database not here: try to create it
-            $result = mysqli_query($link, "CREATE DATABASE `" . $vars['DB_NAME'] . '`');
+            $result = mysqli_query($link, 'CREATE DATABASE `' . $vars['DB_NAME'] . '`');
             if (!$result) {
                 $error    = ERR_NO_DATABASE;
                 $db_exist = false;
             }
         }
         if ($db_exist && $vars['DB_CHARSET']) {
-            $sql = "ALTER DATABASE `" . $vars['DB_NAME'] . "` DEFAULT CHARACTER SET "
-                . mysqli_real_escape_string($link, $vars['DB_CHARSET'])
-                . ($vars['DB_COLLATION'] ? " COLLATE " . mysqli_real_escape_string($link, $vars['DB_COLLATION']) : "");
+            $sql = 'ALTER DATABASE `' . $vars['DB_NAME'] . '` DEFAULT CHARACTER SET '
+                   . mysqli_real_escape_string($link, $vars['DB_CHARSET'])
+                   . ($vars['DB_COLLATION'] ? ' COLLATE ' . mysqli_real_escape_string($link, $vars['DB_COLLATION']) : '');
             if (!mysqli_query($link, $sql)) {
                 $error = ERR_CHARSET_NOT_SET . $sql;
             }
@@ -84,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($vars['DB_NAME'])) {
 if (@empty($vars['DB_NAME'])) {
     // Fill with default values
     $vars = array_merge($vars, array(
-                                 'DB_NAME'      => 'xoops',
+                                 'DB_NAME'      => '',
                                  'DB_CHARSET'   => 'utf8',
                                  'DB_COLLATION' => '',
                                  'DB_PREFIX'    => 'x' . substr(md5(time()), 0, 3)));

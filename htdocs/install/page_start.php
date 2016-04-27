@@ -23,7 +23,6 @@
  * @author           Skalpa Keo <skalpa@xoops.org>
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
- * @version          $Id: page_start.php 13082 2015-06-06 21:59:41Z beckmi $
  **/
 
 require_once './include/common.inc.php';
@@ -31,7 +30,7 @@ defined('XOOPS_INSTALL') or die('XOOPS Installation wizard die');
 
 $pageHasForm = false;
 
-$content = "";
+$content = '';
 include "./language/{$wizard->language}/welcome.php";
 
 $writable = "<ul class='confirmMsg'>";
@@ -42,24 +41,24 @@ foreach ($wizard->configs['writable'] as $key => $value) {
         $writable .= "<li class='files'>$value</li>";
     }
 }
-$writable .= "</ul>";
+$writable .= '</ul>';
 
 $xoops_trust = "<ul class='confirmMsg'>";
 foreach ($wizard->configs['xoopsPathDefault'] as $key => $value) {
     $xoops_trust .= "<li class='directory'>$value</li>";
 }
-$xoops_trust .= "</ul>";
+$xoops_trust .= '</ul>';
 
 $writable_trust = "<ul class='confirmMsg'>";
 foreach ($wizard->configs['dataPath'] as $key => $value) {
-    $writable_trust .= "<li class='directory'>" . $wizard->configs['xoopsPathDefault']['data'] . '/' . $key . "</li>";
+    $writable_trust .= "<li class='directory'>" . $wizard->configs['xoopsPathDefault']['data'] . '/' . $key . '</li>';
     if (is_array($value)) {
         foreach ($value as $key2 => $value2) {
-            $writable_trust .= "<li class='directory'>" . $wizard->configs['xoopsPathDefault']['data'] . '/' . $key . '/' . $value2 . "</li>";
+            $writable_trust .= "<li class='directory'>" . $wizard->configs['xoopsPathDefault']['data'] . '/' . $key . '/' . $value2 . '</li>';
         }
     }
 }
-$writable_trust .= "</ul>";
+$writable_trust .= '</ul>';
 
 $content = sprintf($content, $writable, $xoops_trust, $writable_trust);
 

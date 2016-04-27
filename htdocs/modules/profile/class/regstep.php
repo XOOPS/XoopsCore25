@@ -15,7 +15,6 @@
  * @since               2.3.0
  * @author              Jan Pedersen
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: regstep.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 // defined('XOOPS_ROOT_PATH') || exit("XOOPS root path not defined");
@@ -55,17 +54,17 @@ class ProfileRegstepHandler extends XoopsPersistableObjectHandler
      * Delete an object from the database
      * @see XoopsPersistableObjectHandler
      *
-     * @param profileRegstep $obj
+     * @param XoopsObject $obj
      * @param bool           $force
      *
      * @return bool
      */
-    public function delete($obj, $force = false)
+    public function delete(XoopsObject $obj, $force = false)
     {
         if (parent::delete($obj, $force)) {
             $field_handler = xoops_getModuleHandler('field');
 
-            return $field_handler->updateAll('step_id', 0, new Criteria('step_id', $obj->getVar('step_id')));
+            return $field_handler->updateAll('step_id', 0, new Criteria('step_id', $obj->getVar('step_id')), $force);
         }
 
         return false;

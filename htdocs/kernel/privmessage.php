@@ -14,7 +14,6 @@
  * @package             kernel
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version             $Id: privmessage.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -146,7 +145,6 @@ class XoopsPrivmessage extends XoopsObject
  * @author              Kazumi Ono    <onokazu@xoops.org>
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  *
- * @version             $Revision: 13090 $ - $Date: 2015-06-16 16:44:29 -0400 (Tue, 16 Jun 2015) $
  *
  * @todo Why is this not a XoopsPersistableObjectHandler?
  */
@@ -175,7 +173,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
     public function get($id)
     {
         $pm = false;
-        $id = (int)($id);
+        $id = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('priv_msgs') . ' WHERE msg_id=' . $id;
             if (!$result = $this->db->query($sql)) {
@@ -218,11 +216,11 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
         }
         if ($pm->isNew()) {
             $msg_id = $this->db->genId('priv_msgs_msg_id_seq');
-            $sql    = sprintf("INSERT INTO %s (msg_id, msg_image, subject, from_userid, to_userid, msg_time, msg_text, read_msg) VALUES (%u, %s, %s, %u, %u, %u, %s, %u)", $this->db->prefix('priv_msgs'), $msg_id, $this->db->quoteString($msg_image), $this->db->quoteString($subject), $from_userid, $to_userid, time(), $this->db->quoteString($msg_text), 0);
+            $sql    = sprintf('INSERT INTO %s (msg_id, msg_image, subject, from_userid, to_userid, msg_time, msg_text, read_msg) VALUES (%u, %s, %s, %u, %u, %u, %s, %u)', $this->db->prefix('priv_msgs'), $msg_id, $this->db->quoteString($msg_image), $this->db->quoteString($subject), $from_userid, $to_userid, time(), $this->db->quoteString($msg_text), 0);
         } else {
-            $sql = sprintf("UPDATE %s SET msg_image = %s, subject = %s, from_userid = %u, to_userid = %u, msg_text = %s, read_msg = %u WHERE msg_id = %u", $this->db->prefix('priv_msgs'), $this->db->quoteString($msg_image), $this->db->quoteString($subject), $from_userid, $to_userid, $this->db->quoteString($msg_text), $read_msg, $msg_id);
+            $sql = sprintf('UPDATE %s SET msg_image = %s, subject = %s, from_userid = %u, to_userid = %u, msg_text = %s, read_msg = %u WHERE msg_id = %u', $this->db->prefix('priv_msgs'), $this->db->quoteString($msg_image), $this->db->quoteString($subject), $from_userid, $to_userid, $this->db->quoteString($msg_text), $read_msg, $msg_id);
         }
-        $queryFunc = empty($force) ? "query" : "queryF";
+        $queryFunc = empty($force) ? 'query' : 'queryF';
         if (!$result = $this->db->{$queryFunc}($sql)) {
             return false;
         }
@@ -246,7 +244,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
             return false;
         }
 
-        if (!$result = $this->db->query(sprintf("DELETE FROM %s WHERE msg_id = %u", $this->db->prefix('priv_msgs'), $pm->getVar('msg_id')))) {
+        if (!$result = $this->db->query(sprintf('DELETE FROM %s WHERE msg_id = %u', $this->db->prefix('priv_msgs'), $pm->getVar('msg_id')))) {
             return false;
         }
 
@@ -325,7 +323,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
             return false;
         }
 
-        $sql = sprintf("UPDATE %s SET read_msg = 1 WHERE msg_id = %u", $this->db->prefix('priv_msgs'), $pm->getVar('msg_id'));
+        $sql = sprintf('UPDATE %s SET read_msg = 1 WHERE msg_id = %u', $this->db->prefix('priv_msgs'), $pm->getVar('msg_id'));
         if (!$this->db->queryF($sql)) {
             return false;
         }

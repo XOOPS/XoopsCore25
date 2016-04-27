@@ -13,7 +13,6 @@
  *
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
- * @version             $Id: resource.db.php 13082 2015-06-06 21:59:41Z beckmi $
  * @param $tpl_name
  * @param $tpl_source
  * @param $smarty
@@ -95,14 +94,14 @@ function smarty_resource_db_tplinfo($tpl_name)
     $theme           = isset($xoopsConfig['theme_set']) ? $xoopsConfig['theme_set'] : 'default';
     $tplfile_handler = xoops_getHandler('tplfile');
     // If we're not using the "default" template set, then get the templates from the DB
-    if ($tplset !== "default") {
+    if ($tplset !== 'default') {
         $tplobj = $tplfile_handler->find($tplset, null, null, null, $tpl_name, true);
         if (count($tplobj)) {
             return $cache[$tpl_name] = $tplobj[0];
         }
     }
     // If we'using the default tplset, get the template from the filesystem
-    $tplobj = $tplfile_handler->find("default", null, null, null, $tpl_name, true);
+    $tplobj = $tplfile_handler->find('default', null, null, null, $tpl_name, true);
 
     if (!count($tplobj)) {
         return $cache[$tpl_name] = false;

@@ -14,7 +14,6 @@
  * @package             kernel
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version             $Id: imagesetimg.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -127,7 +126,7 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
     public function get($id)
     {
         $imgsetimg = false;
-        $id        = (int)($id);
+        $id        = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('imgsetimg') . ' WHERE imgsetimg_id=' . $id;
             if (!$result = $this->db->query($sql)) {
@@ -168,9 +167,9 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
         }
         if ($imgsetimg->isNew()) {
             $imgsetimg_id = $this->db->genId('imgsetimg_imgsetimg_id_seq');
-            $sql          = sprintf("INSERT INTO %s (imgsetimg_id, imgsetimg_file, imgsetimg_body, imgsetimg_imgset) VALUES (%u, %s, %s, %s)", $this->db->prefix('imgsetimg'), $imgsetimg_id, $this->db->quoteString($imgsetimg_file), $this->db->quoteString($imgsetimg_body), $this->db->quoteString($imgsetimg_imgset));
+            $sql          = sprintf('INSERT INTO %s (imgsetimg_id, imgsetimg_file, imgsetimg_body, imgsetimg_imgset) VALUES (%u, %s, %s, %s)', $this->db->prefix('imgsetimg'), $imgsetimg_id, $this->db->quoteString($imgsetimg_file), $this->db->quoteString($imgsetimg_body), $this->db->quoteString($imgsetimg_imgset));
         } else {
-            $sql = sprintf("UPDATE %s SET imgsetimg_file = %s, imgsetimg_body = %s, imgsetimg_imgset = %s WHERE imgsetimg_id = %u", $this->db->prefix('imgsetimg'), $this->db->quoteString($imgsetimg_file), $this->db->quoteString($imgsetimg_body), $this->db->quoteString($imgsetimg_imgset), $imgsetimg_id);
+            $sql = sprintf('UPDATE %s SET imgsetimg_file = %s, imgsetimg_body = %s, imgsetimg_imgset = %s WHERE imgsetimg_id = %u', $this->db->prefix('imgsetimg'), $this->db->quoteString($imgsetimg_file), $this->db->quoteString($imgsetimg_body), $this->db->quoteString($imgsetimg_imgset), $imgsetimg_id);
         }
         if (!$result = $this->db->query($sql)) {
             return false;
@@ -197,7 +196,7 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
             return false;
         }
 
-        $sql = sprintf("DELETE FROM %s WHERE imgsetimg_id = %u", $this->db->prefix('imgsetimg'), $imgsetimg->getVar('imgsetimg_id'));
+        $sql = sprintf('DELETE FROM %s WHERE imgsetimg_id = %u', $this->db->prefix('imgsetimg'), $imgsetimg->getVar('imgsetimg_id'));
         if (!$result = $this->db->query($sql)) {
             return false;
         }
@@ -271,7 +270,7 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
      */
     public function getByImageset($imgset_id, $id_as_key = false)
     {
-        return $this->getObjects(new Criteria('imgsetimg_imgset', (int)($imgset_id)), $id_as_key);
+        return $this->getObjects(new Criteria('imgsetimg_imgset', (int)$imgset_id), $id_as_key);
     }
 
     /**
@@ -284,7 +283,7 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
     public function imageExists($filename, $imgset_id)
     {
         $criteria = new CriteriaCompo(new Criteria('imgsetimg_file', $filename));
-        $criteria->add(new Criteria('imgsetimg_imgset', (int)($imgset_id)));
+        $criteria->add(new Criteria('imgsetimg_imgset', (int)$imgset_id));
         return $this->getCount($criteria) > 0;
     }
 }

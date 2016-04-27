@@ -13,7 +13,6 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
- * @version             $Id: module.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -450,7 +449,7 @@ class XoopsModule extends XoopsObject
      */
     public function checkAccess()
     {
-        trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 
         return false;
     }
@@ -460,9 +459,9 @@ class XoopsModule extends XoopsObject
      *
      * @return bool
      */
-    public function loadLanguage($type = "main")
+    public function loadLanguage($type = 'main')
     {
-        trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 
         return false;
     }
@@ -472,7 +471,7 @@ class XoopsModule extends XoopsObject
      */
     public function loadErrorMessages()
     {
-        trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 
         return false;
     }
@@ -482,7 +481,7 @@ class XoopsModule extends XoopsObject
      */
     public function getCurrentPage()
     {
-        trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 
         return false;
     }
@@ -495,7 +494,7 @@ class XoopsModule extends XoopsObject
      */
     public function install($admingroups = array(), $accessgroups = array())
     {
-        trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 
         return false;
     }
@@ -505,7 +504,7 @@ class XoopsModule extends XoopsObject
      */
     public function update()
     {
-        trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 
         return false;
     }
@@ -515,7 +514,7 @@ class XoopsModule extends XoopsObject
      */
     public function insert()
     {
-        trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 
         return false;
     }
@@ -525,7 +524,7 @@ class XoopsModule extends XoopsObject
      */
     public function executeSQL()
     {
-        trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 
         return false;
     }
@@ -535,7 +534,7 @@ class XoopsModule extends XoopsObject
      */
     public function insertTemplates()
     {
-        trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 
         return false;
     }
@@ -548,7 +547,7 @@ class XoopsModule extends XoopsObject
      */
     public function gettemplate($template, $block = false)
     {
-        trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 
         return false;
     }
@@ -558,7 +557,7 @@ class XoopsModule extends XoopsObject
      */
     public function insertBlocks()
     {
-        trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 
         return false;
     }
@@ -568,7 +567,7 @@ class XoopsModule extends XoopsObject
      */
     public function insertConfigCategories()
     {
-        trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 
         return false;
     }
@@ -578,7 +577,7 @@ class XoopsModule extends XoopsObject
      */
     public function insertConfig()
     {
-        trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 
         return false;
     }
@@ -588,7 +587,7 @@ class XoopsModule extends XoopsObject
      */
     public function insertProfileFields()
     {
-        trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 
         return false;
     }
@@ -601,7 +600,7 @@ class XoopsModule extends XoopsObject
      */
     public function executeScript($type, $state = 2)
     {
-        trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 
         return false;
     }
@@ -614,7 +613,7 @@ class XoopsModule extends XoopsObject
      */
     public function insertGroupPermissions($groups, $type)
     {
-        trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 
         return false;
     }
@@ -677,7 +676,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
     {
         static $_cachedModule_dirname;
         static $_cachedModule_mid;
-        $id     = (int)($id);
+        $id     = (int)$id;
         $module = false;
         if ($id > 0) {
             if (!empty($_cachedModule_mid[$id])) {
@@ -722,7 +721,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
             return $_cachedModule_dirname[$dirname];
         } else {
             $module = false;
-            $sql    = "SELECT * FROM " . $this->db->prefix('modules') . " WHERE dirname = '" . trim($dirname) . "'";
+            $sql    = 'SELECT * FROM ' . $this->db->prefix('modules') . " WHERE dirname = '" . trim($dirname) . "'";
             if (!$result = $this->db->query($sql)) {
                 return $module;
             }
@@ -763,9 +762,9 @@ class XoopsModuleHandler extends XoopsObjectHandler
         }
         if ($module->isNew()) {
             $mid = $this->db->genId('modules_mid_seq');
-            $sql = sprintf("INSERT INTO %s (mid, name, version, last_update, weight, isactive, dirname, hasmain, hasadmin, hassearch, hasconfig, hascomments, hasnotification) VALUES (%u, %s, %u, %u, %u, %u, %s, %u, %u, %u, %u, %u, %u)", $this->db->prefix('modules'), $mid, $this->db->quoteString($name), $version, time(), $weight, 1, $this->db->quoteString($dirname), $hasmain, $hasadmin, $hassearch, $hasconfig, $hascomments, $hasnotification);
+            $sql = sprintf('INSERT INTO %s (mid, name, version, last_update, weight, isactive, dirname, hasmain, hasadmin, hassearch, hasconfig, hascomments, hasnotification) VALUES (%u, %s, %u, %u, %u, %u, %s, %u, %u, %u, %u, %u, %u)', $this->db->prefix('modules'), $mid, $this->db->quoteString($name), $version, time(), $weight, 1, $this->db->quoteString($dirname), $hasmain, $hasadmin, $hassearch, $hasconfig, $hascomments, $hasnotification);
         } else {
-            $sql = sprintf("UPDATE %s SET name = %s, dirname = %s, version = %u, last_update = %u, weight = %u, isactive = %u, hasmain = %u, hasadmin = %u, hassearch = %u, hasconfig = %u, hascomments = %u, hasnotification = %u WHERE mid = %u", $this->db->prefix('modules'), $this->db->quoteString($name), $this->db->quoteString($dirname), $version, time(), $weight, $isactive, $hasmain, $hasadmin, $hassearch, $hasconfig, $hascomments, $hasnotification, $mid);
+            $sql = sprintf('UPDATE %s SET name = %s, dirname = %s, version = %u, last_update = %u, weight = %u, isactive = %u, hasmain = %u, hasadmin = %u, hassearch = %u, hasconfig = %u, hascomments = %u, hasnotification = %u WHERE mid = %u', $this->db->prefix('modules'), $this->db->quoteString($name), $this->db->quoteString($dirname), $version, time(), $weight, $isactive, $hasmain, $hasadmin, $hassearch, $hasconfig, $hascomments, $hasnotification, $mid);
         }
         if (!$result = $this->db->query($sql)) {
             return false;
@@ -797,7 +796,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
         if (!($module instanceof $className)) {
             return false;
         }
-        $sql = sprintf("DELETE FROM %s WHERE mid = %u", $this->db->prefix('modules'), $module->getVar('mid'));
+        $sql = sprintf('DELETE FROM %s WHERE mid = %u', $this->db->prefix('modules'), $module->getVar('mid'));
         if (!$result = $this->db->query($sql)) {
             return false;
         }
@@ -808,7 +807,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
         $sql = sprintf("DELETE FROM %s WHERE gperm_name = 'module_read' AND gperm_itemid = %u", $this->db->prefix('group_permission'), $module->getVar('mid'));
         $this->db->query($sql);
 
-        $sql = sprintf("SELECT block_id FROM %s WHERE module_id = %u", $this->db->prefix('block_module_link'), $module->getVar('mid'));
+        $sql = sprintf('SELECT block_id FROM %s WHERE module_id = %u', $this->db->prefix('block_module_link'), $module->getVar('mid'));
         if ($result = $this->db->query($sql)) {
             $block_id_arr = array();
             while ($myrow = $this->db->fetchArray($result)) {
@@ -818,17 +817,17 @@ class XoopsModuleHandler extends XoopsObjectHandler
         // loop through block_id_arr
         if (isset($block_id_arr)) {
             foreach ($block_id_arr as $i) {
-                $sql = sprintf("SELECT block_id FROM %s WHERE module_id != %u AND block_id = %u", $this->db->prefix('block_module_link'), $module->getVar('mid'), $i);
+                $sql = sprintf('SELECT block_id FROM %s WHERE module_id != %u AND block_id = %u', $this->db->prefix('block_module_link'), $module->getVar('mid'), $i);
                 if ($result2 = $this->db->query($sql)) {
                     if (0 < $this->db->getRowsNum($result2)) {
                         // this block has other entries, so delete the entry for this module
-                        $sql = sprintf("DELETE FROM %s WHERE (module_id = %u) AND (block_id = %u)", $this->db->prefix('block_module_link'), $module->getVar('mid'), $i);
+                        $sql = sprintf('DELETE FROM %s WHERE (module_id = %u) AND (block_id = %u)', $this->db->prefix('block_module_link'), $module->getVar('mid'), $i);
                         $this->db->query($sql);
                     } else {
                         // this block doesnt have other entries, so disable the block and let it show on top page only. otherwise, this block will not display anymore on block admin page!
-                        $sql = sprintf("UPDATE %s SET visible = 0 WHERE bid = %u", $this->db->prefix('newblocks'), $i);
+                        $sql = sprintf('UPDATE %s SET visible = 0 WHERE bid = %u', $this->db->prefix('newblocks'), $i);
                         $this->db->query($sql);
-                        $sql = sprintf("UPDATE %s SET module_id = -1 WHERE module_id = %u", $this->db->prefix('block_module_link'), $module->getVar('mid'));
+                        $sql = sprintf('UPDATE %s SET module_id = -1 WHERE module_id = %u', $this->db->prefix('block_module_link'), $module->getVar('mid'));
                         $this->db->query($sql);
                     }
                 }

@@ -12,7 +12,6 @@
  * @author           Skalpa Keo <skalpa@xoops.org>
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
- * @version          $Id: createconfigform.php 13090 2015-06-16 20:44:29Z beckmi $
  **/
 
 if (!defined('XOOPS_INSTALL')) {
@@ -22,14 +21,14 @@ if (!defined('XOOPS_INSTALL')) {
 include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 include_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
 
-define("PREF_1", _MD_AM_GENERAL);
-define("PREF_2", _MD_AM_USERSETTINGS);
-define("PREF_3", _MD_AM_METAFOOTER);
-define("PREF_4", _MD_AM_CENSOR);
-define("PREF_5", _MD_AM_SEARCH);
-define("PREF_6", _MD_AM_MAILER);
-if (defined("_MD_AM_AUTHENTICATION")) {
-    define("PREF_7", _MD_AM_AUTHENTICATION);
+define('PREF_1', _MD_AM_GENERAL);
+define('PREF_2', _MD_AM_USERSETTINGS);
+define('PREF_3', _MD_AM_METAFOOTER);
+define('PREF_4', _MD_AM_CENSOR);
+define('PREF_5', _MD_AM_SEARCH);
+define('PREF_6', _MD_AM_MAILER);
+if (defined('_MD_AM_AUTHENTICATION')) {
+    define('PREF_7', _MD_AM_AUTHENTICATION);
 }
 
 /**
@@ -48,7 +47,7 @@ function createConfigform($config)
     for ($i = 0; $i < $confcount; ++$i) {
         $conf_catid = $config[$i]->getVar('conf_catid');
         if (!isset($ret[$conf_catid])) {
-            $form_title       = constant("PREF_" . $conf_catid);
+            $form_title       = constant('PREF_' . $conf_catid);
             $ret[$conf_catid] = new XoopsThemeForm($form_title, 'configs', 'index.php', 'post');
         }
 
@@ -94,7 +93,7 @@ function createConfigform($config)
             case 'theme':
             case 'theme_multi':
                 $ele = ($config[$i]->getVar('conf_formtype') !== 'theme_multi') ? new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput()) : new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput(), 5, true);
-                require_once XOOPS_ROOT_PATH . "/class/xoopslists.php";
+                require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
                 $dirlist = XoopsLists::getThemesList();
                 if (!empty($dirlist)) {
                     asort($dirlist);
@@ -175,7 +174,7 @@ function createConfigform($config)
                 if (count($modules) > 0) {
                     $ele = new XoopsFormElementTray($title, '<br />');
                     foreach (array_keys($modules) as $mid) {
-                        $c_val   = isset($currrent_val[$mid]) ? (int)($currrent_val[$mid]) : null;
+                        $c_val   = isset($currrent_val[$mid]) ? (int)$currrent_val[$mid] : null;
                         $selform = new XoopsFormSelect($modules[$mid]->getVar('name'), $config[$i]->getVar('conf_name') . "[$mid]", $c_val);
                         $selform->addOptionArray($cache_options);
                         $ele->addElement($selform);
@@ -252,7 +251,7 @@ function createThemeform($config)
         $form_theme_set->addOptionArray($dirlist);
     }
 
-    $label_content = "";
+    $label_content = '';
 
     // read ini file for each theme
     foreach ($dirlist as $theme) {
@@ -285,13 +284,13 @@ function createThemeform($config)
         }
 
         if ($theme_ini['screenshot'] !== '' && file_exists(XOOPS_ROOT_PATH . "/themes/$theme/" . $theme_ini['screenshot'])) {
-            $label_content .= "<img src='" . XOOPS_URL . "/themes/" . $theme . "/" . $theme_ini['screenshot'] . "' alt='Screenshot' />";
+            $label_content .= "<img src='" . XOOPS_URL . '/themes/' . $theme . '/' . $theme_ini['screenshot'] . "' alt='Screenshot' />";
         } elseif ($theme_ini['thumbnail'] !== '' && file_exists(XOOPS_ROOT_PATH . "/themes/$theme/" . $theme_ini['thumbnail'])) {
-            $label_content .= "<img src='" . XOOPS_URL . "/themes/" . $theme . "/" . $theme_ini['thumbnail'] . "' alt='$theme' />";
+            $label_content .= "<img src='" . XOOPS_URL . '/themes/' . $theme . '/' . $theme_ini['thumbnail'] . "' alt='$theme' />";
         } else {
             $label_content .= THEME_NO_SCREENSHOT;
         }
-        $label_content .= "</div>";
+        $label_content .= '</div>';
     }
     // read ini file for each theme
 
@@ -299,7 +298,7 @@ function createThemeform($config)
 
     $form = new XoopsThemeForm($title, 'themes', 'index.php', 'post');
     $form->addElement($form_theme_set);
-    $form->addElement(new XoopsFormLabel('', "<div id='screenshot'>" . $label_content . "</div>"));
+    $form->addElement(new XoopsFormLabel('', "<div id='screenshot'>" . $label_content . '</div>'));
 
     $form->addElement(new XoopsFormHidden('conf_ids[]', $config->getVar('conf_id')));
 

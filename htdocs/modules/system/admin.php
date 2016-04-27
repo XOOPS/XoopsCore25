@@ -1,9 +1,9 @@
 <?php
-// $Id: admin.php 13090 2015-06-16 20:44:29Z beckmi $
+// 
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2016 XOOPS Project (www.xoops.org)            //
-//                       <http://www.xoops.org/>                             //
+//                         <http://xoops.org/>                               //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -39,7 +39,7 @@ if (isset($fct) && $fct === 'users') {
 $error = false;
 if ($admintest != 0) {
     if (isset($fct) && $fct !== '') {
-        $fct = preg_replace("/[^a-z0-9_\-]/i", "", $fct);
+        $fct = preg_replace("/[^a-z0-9_\-]/i", '', $fct);
         if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/admin/' . $fct . '/xoops_version.php')) {
             // Load language file
             system_loadLanguage($fct, $xoopsModule->getVar('dirname', 'n'));
@@ -48,7 +48,7 @@ if ($admintest != 0) {
             // Get System permission handler
             $sysperm_handler = xoops_getHandler('groupperm');
 
-            $category = !empty($modversion['category']) ? (int)($modversion['category']) : 0;
+            $category = !empty($modversion['category']) ? (int)$modversion['category'] : 0;
             unset($modversion);
 
             if ($category > 0) {
@@ -127,7 +127,7 @@ if (false != $error) {
 
             if ($modversion['hasAdmin']) {
                 if (xoops_getModuleOption('active_' . $directory, 'system')) {
-                    $category = isset($modversion['category']) ? (int)($modversion['category']) : 0;
+                    $category = isset($modversion['category']) ? (int)$modversion['category'] : 0;
                     if (false != $all_ok || in_array($modversion['category'], $ok_syscats)) {
                         $menu['file']   = $directory;
                         $menu['title']  = trim($modversion['name']);
@@ -136,7 +136,7 @@ if (false != $error) {
                         $menu['status'] = true;
                     }
                 } else {
-                    $category = isset($modversion['category']) ? (int)($modversion['category']) : 0;
+                    $category = isset($modversion['category']) ? (int)$modversion['category'] : 0;
                     if (false != $all_ok || in_array($modversion['category'], $ok_syscats)) {
                         $menu['file']   = $directory;
                         $menu['title']  = trim($modversion['name']);

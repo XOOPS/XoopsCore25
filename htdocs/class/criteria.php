@@ -17,7 +17,6 @@
  * @author              Kazumi Ono <onokazu@xoops.org>
  * @author              Nathan Dial
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: criteria.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -122,7 +121,7 @@ class CriteriaElement
      */
     public function setLimit($limit = 0)
     {
-        $this->limit = (int)($limit);
+        $this->limit = (int)$limit;
     }
 
     /**
@@ -140,7 +139,7 @@ class CriteriaElement
      */
     public function setStart($start = 0)
     {
-        $this->start = (int)($start);
+        $this->start = (int)$start;
     }
 
     /**
@@ -167,7 +166,7 @@ class CriteriaElement
      */
     public function getGroupby()
     {
-        return $this->groupby ? " GROUP BY {$this->groupby}" : "";
+        return $this->groupby ? " GROUP BY {$this->groupby}" : '';
     }
     /**
      * *#@-
@@ -239,7 +238,7 @@ class CriteriaCompo extends CriteriaElement
                 if (!$render = $this->criteriaElements[$i]->render()) {
                     continue;
                 }
-                $render_string .= (empty($render_string) ? "" : ' ' . $this->conditions[$i] . ' ') . $render;
+                $render_string .= (empty($render_string) ? '' : ' ' . $this->conditions[$i] . ' ') . $render;
             }
             $ret = empty($render_string) ? '' : "({$render_string})";
         }
@@ -274,8 +273,8 @@ class CriteriaCompo extends CriteriaElement
             $retval = $this->criteriaElements[0]->renderLdap();
             for ($i = 1; $i < $count; ++$i) {
                 $cond   = strtoupper($this->conditions[$i]);
-                $op     = ($cond === "OR") ? "|" : "&";
-                $retval = "({$op}{$retval}" . $this->criteriaElements[$i]->renderLdap() . ")";
+                $op     = ($cond === 'OR') ? '|' : '&';
+                $retval = "({$op}{$retval}" . $this->criteriaElements[$i]->renderLdap() . ')';
             }
         }
 
@@ -324,7 +323,7 @@ class Criteria extends CriteriaElement
      */
     public function render()
     {
-        $clause = (!empty($this->prefix) ? "{$this->prefix}." : "") . $this->column;
+        $clause = (!empty($this->prefix) ? "{$this->prefix}." : '') . $this->column;
         if (!empty($this->function)) {
             $clause = sprintf($this->function, $clause);
         }
@@ -364,7 +363,7 @@ class Criteria extends CriteriaElement
 
         if ($this->operator === '!=' || $this->operator === '<>') {
             $operator = '=';
-            $clause   = "(!(" . $this->column . $operator . $this->value . "))";
+            $clause   = '(!(' . $this->column . $operator . $this->value . '))';
         } else {
             if ($this->operator === 'IN') {
                 $newvalue = str_replace(array('(', ')'), '', $this->value);
@@ -374,7 +373,7 @@ class Criteria extends CriteriaElement
                 }
                 $clause = '(|' . $clause . ')';
             } else {
-                $clause = "(" . $this->column . $this->operator . $this->value . ")";
+                $clause = '(' . $this->column . $this->operator . $this->value . ')';
             }
         }
 

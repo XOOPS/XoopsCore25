@@ -15,7 +15,6 @@
  * @subpackage          form
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version             $Id: simpleform.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
@@ -40,7 +39,7 @@ class XoopsSimpleForm extends XoopsForm
         $ret = $this->getTitle() . "\n<form name='" . $this->getName() . "' id='" . $this->getName() . "' action='" . $this->getAction() . "' method='" . $this->getMethod() . "'" . $this->getExtra() . ">\n";
         foreach ($this->getElements() as $ele) {
             if (!$ele->isHidden()) {
-                $ret .= "<strong>" . $ele->getCaption() . "</strong><br />" . $ele->render() . "<br />\n";
+                $ret .= '<strong>' . $ele->getCaption() . '</strong><br />' . $ele->render() . "<br />\n";
             } else {
                 $ret .= $ele->render() . "\n";
             }

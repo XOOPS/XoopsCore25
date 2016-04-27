@@ -15,7 +15,6 @@
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: xoopscodes.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -53,8 +52,8 @@ function xoopsSmilies($textarea_id)
     $smiles = $myts->getSmileys(false);
     $count  = count($smiles);
     for ($i = 0; $i < $count; ++$i) {
-        echo "<img src='" . XOOPS_UPLOAD_URL . "/" . htmlspecialchars($smiles[$i]['smile_url'], ENT_QUOTES) . "' border='0' alt='' onclick='xoopsCodeSmilie(\"{$textarea_id}\", \" " . $smiles[$i]['code'] . " \");' onmouseover='style.cursor=\"hand\"' />";
+        echo "<img src='" . XOOPS_UPLOAD_URL . '/' . htmlspecialchars($smiles[$i]['smile_url'], ENT_QUOTES) . "' border='0' alt='' onclick='xoopsCodeSmilie(\"{$textarea_id}\", \" " . $smiles[$i]['code'] . " \");' onmouseover='style.cursor=\"hand\"' />";
     }
-    echo "&nbsp;[<a href='#moresmiley' onmouseover='style.cursor=\"hand\"' alt='' onclick='openWithSelfMain(\"" . XOOPS_URL . "/misc.php?action=showpopups&amp;type=smilies&amp;target={$textarea_id}\",\"smilies\",300,475);'>" . _MORE . "</a>]";
+    echo "&nbsp;[<a href='#moresmiley' onmouseover='style.cursor=\"hand\"' alt='' onclick='openWithSelfMain(\"" . XOOPS_URL . "/misc.php?action=showpopups&amp;type=smilies&amp;target={$textarea_id}\",\"smilies\",300,475);'>" . _MORE . '</a>]';
 }
 /**#@-*/

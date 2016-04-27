@@ -15,11 +15,10 @@
  * @subpackage          textsanitizer
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: config.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 return $config = array(
-    'link'    => XOOPS_URL . "/modules/mediawiki/?title=%s",// The link to wiki module
-    'charset' => "UTF-8");// Charset of wiki module
+    'link'    => XOOPS_URL . '/modules/mediawiki/?title=%s',// The link to wiki module
+    'charset' => 'UTF-8');// Charset of wiki module
 

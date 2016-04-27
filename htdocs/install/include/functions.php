@@ -12,7 +12,6 @@
  * @author           Skalpa Keo <skalpa@xoops.org>
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
- * @version          $Id: functions.php 13090 2015-06-16 20:44:29Z beckmi $
  * @param string $hash
  * @return bool
  */
@@ -32,7 +31,7 @@ function install_acceptUser($hash = '')
     $user = array_pop($memberHandler->getUsers(new Criteria('uname', $uname)));
 
     if (is_object($GLOBALS['xoops']) && method_exists($GLOBALS['xoops'], 'acceptUser')) {
-        $res = $GLOBALS['xoops']->acceptUser($uname, true, $msg);
+        $res = $GLOBALS['xoops']->acceptUser($uname, true, '');
 
         return $res;
     }
@@ -50,11 +49,11 @@ function install_acceptUser($hash = '')
 function install_finalize($installer_modified)
 {
     // Set mainfile.php readonly
-    @chmod(XOOPS_ROOT_PATH . "/mainfile.php", 0444);
+    @chmod(XOOPS_ROOT_PATH . '/mainfile.php', 0444);
     // Set Secure file readonly
-    @chmod(XOOPS_VAR_PATH . "/data/secure.php", 0444);
+    @chmod(XOOPS_VAR_PATH . '/data/secure.php', 0444);
     // Rename installer folder
-    @rename(XOOPS_ROOT_PATH . "/install", XOOPS_ROOT_PATH . "/" . $installer_modified);
+    @rename(XOOPS_ROOT_PATH . '/install', XOOPS_ROOT_PATH . '/' . $installer_modified);
 }
 
 /**
@@ -73,7 +72,7 @@ function xoFormField($name, $value, $label, $help = '')
     if ($help) {
         echo '<div class="xoform-help">' . $help . "</div>\n";
     }
-    if ($name === "adminname") {
+    if ($name === 'adminname') {
         echo "<input type='text' name='$name' id='$name' value='$value' maxlength='25' />";
     } else {
         echo "<input type='text' name='$name' id='$name' value='$value' />";
@@ -97,7 +96,7 @@ function xoPassField($name, $value, $label, $help = '')
         echo '<div class="xoform-help">' . $help . "</div>\n";
     }
 
-    if ($name === "adminpass") {
+    if ($name === 'adminpass') {
         echo "<input type='password' name='{$name}' id='{$name}' value='{$value}' onkeyup='passwordStrength(this.value)' />";
     } else {
         echo "<input type='password' name='{$name}' id='{$name}' value='{$value}' />";
@@ -167,22 +166,25 @@ function xoDiagBoolSetting($name, $wanted = false, $severe = false)
 }
 
 /**
- * @param $path
+ * seems to only be used for license file?
+ * @param string $path dir or file path
  *
  * @return string
  */
 function xoDiagIfWritable($path)
 {
-    $path  = "../" . $path;
+    $path  = '../' . $path;
     $error = true;
     if (!is_dir($path)) {
-        if (file_exists($path)) {
-            @chmod($path, 0666);
+        if (file_exists($path) && !is_writable($path)) {
+            @chmod($path, 0664);
             $error = !is_writable($path);
         }
     } else {
-        @chmod($path, 0777);
-        $error = !is_writable($path);
+        if (!is_writable($path)) {
+            @chmod($path, 0775);
+            $error = !is_writable($path);
+        }
     }
 
     return xoDiag($error ? -1 : 1, $error ? ' ' : ' ');
@@ -195,8 +197,8 @@ function xoPhpVersion()
 {
     if (version_compare(phpversion(), '5.3.7', '>=')) {
         return xoDiag(1, phpversion());
-    } elseif (version_compare(phpversion(), '5.3.0', '>=')) {
-        return xoDiag(0, phpversion());
+    //} elseif (version_compare(phpversion(), '5.3.7', '>=')) {
+    //    return xoDiag(0, phpversion());
     } else {
         return xoDiag(-1, phpversion());
     }
@@ -253,18 +255,18 @@ function getDbCharsets($link)
         return $charsets;
     }
 
-    $charsets["utf8"] = "UTF-8 Unicode";
+    $charsets['utf8'] = 'UTF-8 Unicode';
     $ut8_available    = false;
-    if ($result = mysqli_query($link, "SHOW CHARSET")) {
+    if ($result = mysqli_query($link, 'SHOW CHARSET')) {
         while ($row = mysqli_fetch_assoc($result)) {
-            $charsets[$row["Charset"]] = $row["Description"];
-            if ($row["Charset"] === "utf8") {
+            $charsets[$row['Charset']] = $row['Description'];
+            if ($row['Charset'] === 'utf8') {
                 $ut8_available = true;
             }
         }
     }
     if (!$ut8_available) {
-        unset($charsets["utf8"]);
+        unset($charsets['utf8']);
     }
 
     return $charsets;
@@ -285,7 +287,7 @@ function getDbCollations($link, $charset)
 
     if ($result = mysqli_query($link, "SHOW COLLATION WHERE CHARSET = '" . mysqli_real_escape_string($link, $charset) . "'")) {
         while ($row = mysqli_fetch_assoc($result)) {
-            $collations[$charset][$row["Collation"]] = $row["Default"] ? 1 : 0;
+            $collations[$charset][$row['Collation']] = $row['Default'] ? 1 : 0;
         }
     }
 
@@ -304,10 +306,7 @@ function validateDbCharset($link, &$charset, &$collation)
     $error = null;
 
     if (empty($charset)) {
-        $collation = "";
-    }
-    if (version_compare(mysqli_get_server_info($link), "4.1.0", "lt")) {
-        $charset = $collation = "";
+        $collation = '';
     }
     if (empty($charset) && empty($collation)) {
         return $error;
@@ -338,11 +337,8 @@ function validateDbCharset($link, &$charset, &$collation)
  */
 function xoFormFieldCollation($name, $value, $label, $help, $link, $charset)
 {
-    if (version_compare(mysqli_get_server_info($link), "4.1.0", "lt")) {
-        return "";
-    }
     if (empty($charset) || !$collations = getDbCollations($link, $charset)) {
-        return "";
+        return '';
     }
 
     $myts  = MyTextSanitizer::getInstance();
@@ -356,20 +352,20 @@ function xoFormFieldCollation($name, $value, $label, $help, $link, $charset)
     }
     $field .= "<select name='{$name}' id='{$name}'\">";
 
-    $collation_default = "";
-    $options           = "";
+    $collation_default = '';
+    $options           = '';
     foreach ($collations as $key => $isDefault) {
         if ($isDefault) {
             $collation_default = $key;
             continue;
         }
-        $options .= "<option value='{$key}'" . (($value == $key) ? " selected='selected'" : "") . ">{$key}</option>";
+        $options .= "<option value='{$key}'" . (($value == $key) ? " selected='selected'" : '') . ">{$key}</option>";
     }
     if ($collation_default) {
-        $field .= "<option value='{$collation_default}'" . (($value == $collation_default || empty($value)) ? " 'selected'" : "") . ">{$collation_default} (Default)</option>";
+        $field .= "<option value='{$collation_default}'" . (($value == $collation_default || empty($value)) ? " 'selected'" : '') . ">{$collation_default} (Default)</option>";
     }
     $field .= $options;
-    $field .= "</select>";
+    $field .= '</select>';
 
     return $field;
 }
@@ -404,17 +400,14 @@ function xoFormBlockCollation($name, $value, $label, $help, $link, $charset)
  */
 function xoFormFieldCharset($name, $value, $label, $help = '', $link)
 {
-    if (version_compare(mysqli_get_server_info($link), "4.1.0", "lt")) {
-        return "";
-    }
     if (!$chars = getDbCharsets($link)) {
-        return "";
+        return '';
     }
 
     $charsets = array();
-    if (isset($chars["utf8"])) {
-        $charsets["utf8"] = $chars["utf8"];
-        unset($chars["utf8"]);
+    if (isset($chars['utf8'])) {
+        $charsets['utf8'] = $chars['utf8'];
+        unset($chars['utf8']);
     }
     ksort($chars);
     $charsets = array_merge($charsets, $chars);
@@ -431,9 +424,9 @@ function xoFormFieldCharset($name, $value, $label, $help = '', $link)
     $field .= "<select name='{$name}' id='{$name}' onchange=\"setFormFieldCollation('DB_COLLATION_div', this.value)\">";
     $field .= "<option value=''>None</option>";
     foreach ($charsets as $key => $desc) {
-        $field .= "<option value='{$key}'" . (($value == $key) ? " selected='selected'" : "") . ">{$key} - {$desc}</option>";
+        $field .= "<option value='{$key}'" . (($value == $key) ? " selected='selected'" : '') . ">{$key} - {$desc}</option>";
     }
-    $field .= "</select>";
+    $field .= '</select>';
 
     return $field;
 }
@@ -471,8 +464,8 @@ function xoPutLicenseKey($system_key, $licensefile, $license_file_dist = 'licens
 function xoBuildLicenceKey()
 {
     $xoops_serdat = array();
-    mt_srand((((float)('0' . substr(microtime(), strpos(microtime(), ' ') + 1, strlen(microtime()) - strpos(microtime(), ' ') + 1))) * mt_rand(30, 99999)));
-    mt_srand((((float)('0' . substr(microtime(), strpos(microtime(), ' ') + 1, strlen(microtime()) - strpos(microtime(), ' ') + 1))) * mt_rand(30, 99999)));
+    mt_srand(((float)('0' . substr(microtime(), strpos(microtime(), ' ') + 1, strlen(microtime()) - strpos(microtime(), ' ') + 1))) * mt_rand(30, 99999));
+    mt_srand(((float)('0' . substr(microtime(), strpos(microtime(), ' ') + 1, strlen(microtime()) - strpos(microtime(), ' ') + 1))) * mt_rand(30, 99999));
     $checksums = array(1 => 'md5', 2 => 'sha1');
     $type      = mt_rand(1, 2);
     $func      = $checksums[$type];
@@ -503,6 +496,7 @@ function xoBuildLicenceKey()
         $xoops_serdat[$key] = substr($func(serialize($data)), 0, 4);
     }
 
+    $xoops_key = '';
     foreach ($xoops_serdat as $key => $data) {
         $xoops_key .= $data;
     }
@@ -527,6 +521,7 @@ function xoStripeKey($xoops_key)
     $length = 30;
     $strip  = floor(strlen($xoops_key) / 6);
     $strlen = strlen($xoops_key);
+    $ret = '';
     for ($i = 0; $i < $strlen; ++$i) {
         if ($i < $length) {
             ++$uu;

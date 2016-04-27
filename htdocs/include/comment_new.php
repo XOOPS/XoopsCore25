@@ -14,7 +14,6 @@
  * @package             kernel
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version             $Id: comment_new.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
@@ -27,7 +26,7 @@ if (('system' !== $xoopsModule->getVar('dirname') && XOOPS_COMMENT_APPROVENONE =
 
 xoops_loadLanguage('comment');
 
-$com_itemid = isset($_GET['com_itemid']) ? (int)($_GET['com_itemid']) : 0;
+$com_itemid = isset($_GET['com_itemid']) ? (int)$_GET['com_itemid'] : 0;
 if ($com_itemid > 0) {
     include_once $GLOBALS['xoops']->path('header.php');
     if (isset($com_replytitle)) {
@@ -39,8 +38,8 @@ if ($com_itemid > 0) {
         }
         $myts      = MyTextSanitizer::getInstance();
         $com_title = $myts->htmlSpecialChars($com_replytitle);
-        if (!preg_match("/^" . _RE . "/i", $com_title)) {
-            $com_title = _RE . " " . xoops_substr($com_title, 0, 56);
+        if (!preg_match('/^' . _RE . '/i', $com_title)) {
+            $com_title = _RE . ' ' . xoops_substr($com_title, 0, 56);
         }
     } else {
         $com_title = '';
@@ -60,7 +59,7 @@ if ($com_itemid > 0) {
             $com_order = $xoopsConfig['com_order'];
         }
     } else {
-        $com_order = (int)($_GET['com_order']);
+        $com_order = (int)$_GET['com_order'];
     }
     $com_id     = 0;
     $noname     = 0;

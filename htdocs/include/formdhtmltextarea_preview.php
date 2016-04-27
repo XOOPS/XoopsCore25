@@ -15,7 +15,6 @@
  * @since               2.3.0
  * @author              Vinod <smartvinu@gmail.com>
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: formdhtmltextarea_preview.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 include_once dirname(__DIR__) . '/mainfile.php';
 
@@ -44,4 +43,4 @@ if (!headers_sent()) {
     header('Cache-Control: private, no-cache');
     header('Pragma: no-cache');
 }
-echo "<div>" . $content . "</div>";
+echo '<div>' . $content . '</div>';

@@ -14,7 +14,6 @@
  * @package             kernel
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version             $Id: zipdownloader.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
@@ -58,7 +57,7 @@ class XoopsZipDownloader extends XoopsDownloader
     public function addFile($filepath, $newfilename = null)
     {
         // Read in the file's contents
-        $fp   = fopen($filepath, "r");
+        $fp   = fopen($filepath, 'r');
         $data = fread($fp, filesize($filepath));
         fclose($fp);
         $filename = (isset($newfilename) && trim($newfilename) != '') ? trim($newfilename) : $filepath;
@@ -74,7 +73,7 @@ class XoopsZipDownloader extends XoopsDownloader
     public function addBinaryFile($filepath, $newfilename = null)
     {
         // Read in the file's contents
-        $fp   = fopen($filepath, "rb");
+        $fp   = fopen($filepath, 'rb');
         $data = fread($fp, filesize($filepath));
         fclose($fp);
         $filename = (isset($newfilename) && trim($newfilename) != '') ? trim($newfilename) : $filepath;

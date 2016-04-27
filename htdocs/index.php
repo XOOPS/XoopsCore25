@@ -16,7 +16,6 @@
  * @author              Kazumi Ono <webmaster@myweb.ne.jp>
  * @author              Skalpa Keo <skalpa@xoops.org>
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: index.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 if (file_exists(__DIR__ . '/mainfile.php')) {
@@ -33,16 +32,16 @@ $xoopsPreload = XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.index.start');
 
 //check if start page is defined
-if (isset($xoopsConfig['startpage']) && $xoopsConfig['startpage'] != "" && $xoopsConfig['startpage'] != "--" && xoops_isActiveModule($xoopsConfig['startpage'])) {
+if (isset($xoopsConfig['startpage']) && $xoopsConfig['startpage'] != '' && $xoopsConfig['startpage'] != '--' && xoops_isActiveModule($xoopsConfig['startpage'])) {
     // Temporary solution for start page redirection
-    define("XOOPS_STARTPAGE_REDIRECTED", 1);
+    define('XOOPS_STARTPAGE_REDIRECTED', 1);
 
     global $xoopsModuleConfig;
     $module_handler = xoops_getHandler('module');
     $xoopsModule    = $module_handler->getByDirname($xoopsConfig['startpage']);
     if (!$xoopsModule || !$xoopsModule->getVar('isactive')) {
         include_once $GLOBALS['xoops']->path('header.php');
-        echo "<h4>" . _MODULENOEXIST . "</h4>";
+        echo '<h4>' . _MODULENOEXIST . '</h4>';
         include_once $GLOBALS['xoops']->path('footer.php');
         exit();
     }
@@ -54,7 +53,7 @@ if (isset($xoopsConfig['startpage']) && $xoopsConfig['startpage'] != "" && $xoop
         $xoopsUserIsAdmin = $xoopsUser->isAdmin($xoopsModule->getVar('mid'));
     } else {
         if (!$moduleperm_handler->checkRight('module_read', $xoopsModule->getVar('mid'), XOOPS_GROUP_ANONYMOUS)) {
-            redirect_header(XOOPS_URL . "/user.php", 1, _NOPERM);
+            redirect_header(XOOPS_URL . '/user.php', 1, _NOPERM);
         }
     }
     if ($xoopsModule->getVar('hasconfig') == 1 || $xoopsModule->getVar('hascomments') == 1 || $xoopsModule->getVar('hasnotification') == 1) {
@@ -79,7 +78,7 @@ if (isset($xoopsConfig['startpage']) && $xoopsConfig['startpage'] != "" && $xoop
     exit();
 } else {
     $xoopsOption['show_cblock']   = 1;
-    $xoopsOption['template_main'] = "db:system_homepage.tpl";
+    $xoopsOption['template_main'] = 'db:system_homepage.tpl';
     include $GLOBALS['xoops']->path('header.php');
     include $GLOBALS['xoops']->path('footer.php');
 }

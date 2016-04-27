@@ -23,7 +23,6 @@
  * @author           Skalpa Keo <skalpa@xoops.org>
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
- * @version          $Id: page_siteinit.php 13082 2015-06-06 21:59:41Z beckmi $
  **/
 
 require_once './include/common.inc.php';
@@ -76,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    $res = $dbm->query("SELECT COUNT(*) FROM " . $dbm->db->prefix("users"));
+    $res = $dbm->query('SELECT COUNT(*) FROM ' . $dbm->db->prefix('users'));
     list($isadmin) = $dbm->db->fetchRow($res);
 }
 
@@ -105,18 +104,18 @@ if ($isadmin) {
         </script>';
 
         echo xoFormField('adminname', $vars['adminname'], ADMIN_LOGIN_LABEL);
-        if (!empty($error["name"])) {
+        if (!empty($error['name'])) {
             echo '<ul class="diags1">';
-            foreach ($error["name"] as $errmsg) {
+            foreach ($error['name'] as $errmsg) {
                 echo '<li class="failure">' . $errmsg . '</li>';
             }
             echo '</ul>';
         }
 
         echo xoFormField('adminmail', $vars['adminmail'], ADMIN_EMAIL_LABEL);
-        if (!empty($error["email"])) {
+        if (!empty($error['email'])) {
             echo '<ul class="diags1">';
-            foreach ($error["email"] as $errmsg) {
+            foreach ($error['email'] as $errmsg) {
                 echo '<li class="failure">' . $errmsg . '</li>';
             }
             echo '</ul>';
@@ -128,9 +127,9 @@ if ($isadmin) {
                 <?php
                 echo xoPassField('adminpass', '', ADMIN_PASS_LABEL);
                 echo xoPassField('adminpass2', '', ADMIN_CONFIRMPASS_LABEL);
-                if (!empty($error["pass"])) {
+                if (!empty($error['pass'])) {
                     echo '<ul class="diags1">';
-                    foreach ($error["pass"] as $errmsg) {
+                    foreach ($error['pass'] as $errmsg) {
                         echo '<li class="failure">' . $errmsg . '</li>';
                     }
                     echo '</ul>';

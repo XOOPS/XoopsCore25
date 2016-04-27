@@ -1,9 +1,9 @@
 <?php
-// $Id: main.php 13082 2015-06-06 21:59:41Z beckmi $
+// 
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2016 XOOPS Project (www.xoops.org)            //
-//                       <http://www.xoops.org/>                             //
+//                         <http://xoops.org/>                               //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -65,7 +65,7 @@ switch ($op) {
 
         $GLOBALS['xoopsTpl']->assign('index', true);
 
-        $form = new XoopsThemeForm(_AM_SYSTEM_TEMPLATES_GENERATE, "form", 'admin.php?fct=tplsets', "post", true);
+        $form = new XoopsThemeForm(_AM_SYSTEM_TEMPLATES_GENERATE, 'form', 'admin.php?fct=tplsets', 'post', true);
 
         $ele            = new XoopsFormSelect(_AM_SYSTEM_TEMPLATES_SET, 'tplset', $GLOBALS['xoopsConfig']['template_set']);
         $tplset_handler = xoops_getHandler('tplset');
@@ -86,10 +86,10 @@ switch ($op) {
         $modules->addOptionArray($moduleslist);
         $form->addElement($modules, true);
 
-        $form->addElement(new XoopsFormHidden("active_templates", "0"));
-        $form->addElement(new XoopsFormHidden("active_modules", "0"));
-        $form->addElement(new XoopsFormHidden("op", "tpls_generate_surcharge"));
-        $form->addElement(new XoopsFormButton("", "submit", _SUBMIT, "submit"));
+        $form->addElement(new XoopsFormHidden('active_templates', '0'));
+        $form->addElement(new XoopsFormHidden('active_modules', '0'));
+        $form->addElement(new XoopsFormHidden('op', 'tpls_generate_surcharge'));
+        $form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
         $xoopsTpl->assign('form', $form->render());
         break;
 
@@ -108,7 +108,7 @@ switch ($op) {
             if (isset($_REQUEST['select_theme']) && isset($_REQUEST['force_generated'])) {
                 //on verifie si le dossier module existe
                 $theme_surcharge = XOOPS_THEME_PATH . '/' . $_REQUEST['select_theme'] . '/modules';
-                $indexFile       = XOOPS_ROOT_PATH . "/modules/system/include/index.html";
+                $indexFile       = XOOPS_ROOT_PATH . '/modules/system/include/index.html';
                 $verif_write     = false;
                 $text            = '';
 
@@ -119,7 +119,7 @@ switch ($op) {
                         mkdir($theme_surcharge, 0777);
                     }
                     chmod($theme_surcharge, 0777);
-                    copy($indexFile, $theme_surcharge . "/index.html");
+                    copy($indexFile, $theme_surcharge . '/index.html');
                 }
 
                 $tplset = system_CleanVars($POST, 'tplset', 'default', 'string');
@@ -163,7 +163,7 @@ switch ($op) {
                                         copy($indexFile, $theme_surcharge . '/' . $module->getVar('dirname') . '/blocks' . '/index.html');
                                     }
 
-                                    $class = "odd";
+                                    $class = 'odd';
                                     $text .= '<table cellspacing="1" class="outer"><tr><th colspan="3" align="center">' . _AM_SYSTEM_TEMPLATES_MODULES . ucfirst($module->getVar('dirname')) . '</th></tr><tr><th align="center">' . _AM_SYSTEM_TEMPLATES_TYPES . '</th><th  align="center">' . _AM_SYSTEM_TEMPLATES_FILES . '</th><th>' . _AM_SYSTEM_TEMPLATES_STATUS . '</th></tr>';
 
                                     // create template
@@ -178,8 +178,8 @@ switch ($op) {
 
                                             if (is_object($tplfile)) {
                                                 if (!file_exists($physical_file) || $_REQUEST['force_generated'] == 1) {
-                                                    $open = fopen("" . $physical_file . "", "w+");
-                                                    if (fwrite($open, "" . $tplfile->getVar('tpl_source', 'n'))) {
+                                                    $open = fopen('' . $physical_file . '', 'w+');
+                                                    if (fwrite($open, '' . $tplfile->getVar('tpl_source', 'n'))) {
                                                         $text .= '<tr class="' . $class . '"><td align="center">' . _AM_SYSTEM_TEMPLATES_TEMPLATES . '</td><td>' . $physical_file . '</td><td align="center">';
                                                         if (file_exists($physical_file)) {
                                                             $text .= '<img width="16" src="' . system_AdminIcons('success.png') . '" /></td></tr>';
@@ -189,7 +189,7 @@ switch ($op) {
                                                         $verif_write = true;
                                                     }
                                                     fclose($open);
-                                                    $class = ($class === "even") ? "odd" : "even";
+                                                    $class = ($class === 'even') ? 'odd' : 'even';
                                                 }
                                             }
                                         }
@@ -206,7 +206,7 @@ switch ($op) {
 
                                             if (is_object($btplfile)) {
                                                 if (!file_exists($physical_file) || $_REQUEST['force_generated'] == 1) {
-                                                    $open = fopen($physical_file, "w+");
+                                                    $open = fopen($physical_file, 'w+');
                                                     if (fwrite($open, $btplfile->getVar('tpl_source', 'n'))) {
                                                         $text .= '<tr class="' . $class . '"><td align="center">' . _AM_SYSTEM_TEMPLATES_BLOCKS . '</td><td>' . $physical_file . '</td><td align="center">';
                                                         if (file_exists($physical_file)) {
@@ -217,7 +217,7 @@ switch ($op) {
                                                         $verif_write = true;
                                                     }
                                                     fclose($open);
-                                                    $class = ($class === "even") ? "odd" : "even";
+                                                    $class = ($class === 'even') ? 'odd' : 'even';
                                                 }
                                             }
                                         }
@@ -253,7 +253,7 @@ switch ($op) {
                                     copy($indexFile, $theme_surcharge . '/' . $module->getVar('dirname') . '/blocks' . '/index.html');
                                 }
 
-                                $class = "odd";
+                                $class = 'odd';
                                 $text .= '<table cellspacing="1" class="outer"><tr><th colspan="3" align="center">' . _AM_SYSTEM_TEMPLATES_MODULES . ucfirst($module->getVar('dirname')) . '</th></tr><tr><th align="center">' . _AM_SYSTEM_TEMPLATES_TYPES . '</th><th  align="center">' . _AM_SYSTEM_TEMPLATES_FILES . '</th><th>' . _AM_SYSTEM_TEMPLATES_STATUS . '</th></tr>';
                                 $select_templates_modules = $_REQUEST['select_templates_modules'];
                                 $tempCount                = count($_REQUEST['select_templates_modules']);
@@ -271,8 +271,8 @@ switch ($op) {
                                             if (is_object($tplfile)) {
                                                 if (!file_exists($physical_file) || $_REQUEST['force_generated'] == 1) {
                                                     if ($select_templates_modules[$l] == $filename) {
-                                                        $open = fopen("" . $physical_file . "", "w+");
-                                                        if (fwrite($open, "" . $tplfile->getVar('tpl_source', 'n'))) {
+                                                        $open = fopen('' . $physical_file . '', 'w+');
+                                                        if (fwrite($open, '' . $tplfile->getVar('tpl_source', 'n'))) {
                                                             $text .= '<tr class="' . $class . '"><td align="center">' . _AM_SYSTEM_TEMPLATES_TEMPLATES . '</td><td>' . $physical_file . '</td><td align="center">';
                                                             if (file_exists($physical_file)) {
                                                                 $text .= '<img width="16" src="' . system_AdminIcons('success.png') . '" /></td></tr>';
@@ -283,7 +283,7 @@ switch ($op) {
                                                         }
                                                         fclose($open);
                                                     }
-                                                    $class = ($class === "even") ? "odd" : "even";
+                                                    $class = ($class === 'even') ? 'odd' : 'even';
                                                 }
                                             }
                                         }
@@ -301,8 +301,8 @@ switch ($op) {
                                             if (is_object($btplfile)) {
                                                 if (!file_exists($physical_file) || $_REQUEST['force_generated'] == 1) {
                                                     if ($select_templates_modules[$l] == $filename) {
-                                                        $open = fopen("" . $physical_file . "", "w+");
-                                                        if (fwrite($open, "" . $btplfile->getVar('tpl_source', 'n') . "")) {
+                                                        $open = fopen('' . $physical_file . '', 'w+');
+                                                        if (fwrite($open, '' . $btplfile->getVar('tpl_source', 'n') . '')) {
                                                             $text .= '<tr class="' . $class . '"><td align="center">' . _AM_SYSTEM_TEMPLATES_BLOCKS . '</td><td>' . $physical_file . '</td><td align="center">';
                                                             if (file_exists($physical_file)) {
                                                                 $text .= '<img width="16" src="' . system_AdminIcons('success.png') . '" /></td></tr>';
@@ -313,7 +313,7 @@ switch ($op) {
                                                         }
                                                         fclose($open);
                                                     }
-                                                    $class = ($class === "even") ? "odd" : "even";
+                                                    $class = ($class === 'even') ? 'odd' : 'even';
                                                 }
                                             }
                                         }
@@ -328,7 +328,7 @@ switch ($op) {
                 $xoopsTpl->assign('infos', $text);
                 $xoopsTpl->assign('verif', $verif_write);
             } else {
-                redirect_header("admin.php?fct=tplsets", 2, _AM_SYSTEM_TEMPLATES_SAVE);
+                redirect_header('admin.php?fct=tplsets', 2, _AM_SYSTEM_TEMPLATES_SAVE);
             }
         } else {
             // Generate one module
@@ -336,7 +336,7 @@ switch ($op) {
 
             $tplset = system_CleanVars($POST, 'tplset', 'default', 'string');
 
-            $form = new XoopsThemeForm(_AM_SYSTEM_TEMPLATES_SELECT_TEMPLATES, "form", 'admin.php?fct=tplsets', "post", true);
+            $form = new XoopsThemeForm(_AM_SYSTEM_TEMPLATES_SELECT_TEMPLATES, 'form', 'admin.php?fct=tplsets', 'post', true);
 
             $tpltpl_handler = xoops_getHandler('tplfile');
             $templates_arr  = $tpltpl_handler->find($tplset, '', null, $_REQUEST['select_modules']);
@@ -347,13 +347,13 @@ switch ($op) {
             }
             $form->addElement($modules);
 
-            $form->addElement(new XoopsFormHidden("active_templates", "1"));
-            $form->addElement(new XoopsFormHidden("force_generated", $_REQUEST['force_generated']));
-            $form->addElement(new XoopsFormHidden("select_modules", $_REQUEST['select_modules']));
-            $form->addElement(new XoopsFormHidden("active_modules", "1"));
-            $form->addElement(new XoopsFormHidden("select_theme", $_REQUEST['select_theme']));
-            $form->addElement(new XoopsFormHidden("op", "tpls_generate_surcharge"));
-            $form->addElement(new XoopsFormButton("", "submit", _SUBMIT, "submit"));
+            $form->addElement(new XoopsFormHidden('active_templates', '1'));
+            $form->addElement(new XoopsFormHidden('force_generated', $_REQUEST['force_generated']));
+            $form->addElement(new XoopsFormHidden('select_modules', $_REQUEST['select_modules']));
+            $form->addElement(new XoopsFormHidden('active_modules', '1'));
+            $form->addElement(new XoopsFormHidden('select_theme', $_REQUEST['select_theme']));
+            $form->addElement(new XoopsFormHidden('op', 'tpls_generate_surcharge'));
+            $form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
             $xoopsTpl->assign('form', $form->render());
         }
         break;
@@ -370,7 +370,7 @@ switch ($op) {
             $path_file = str_replace('\\','/',$path_file);
             $pathInfo = pathinfo($path_file);
             if (!in_array($pathInfo['extension'], array('css', 'html', 'tpl'))) {
-                redirect_header("admin.php?fct=tplsets", 2, _AM_SYSTEM_TEMPLATES_ERROR);
+                redirect_header('admin.php?fct=tplsets', 2, _AM_SYSTEM_TEMPLATES_ERROR);
                 exit;
             }
             // copy file
@@ -378,14 +378,14 @@ switch ($op) {
             copy($path_file, $copy_file);
             // Save modif
             if (isset($_REQUEST['templates'])) {
-                $open = fopen("" . $path_file . "", "w+");
+                $open = fopen('' . $path_file . '', 'w+');
                 if (!fwrite($open, utf8_encode(stripslashes($_REQUEST['templates'])))) {
-                    redirect_header("admin.php?fct=tplsets", 2, _AM_SYSTEM_TEMPLATES_ERROR);
+                    redirect_header('admin.php?fct=tplsets', 2, _AM_SYSTEM_TEMPLATES_ERROR);
                 }
                 fclose($open);
             }
         }
-        redirect_header("admin.php?fct=tplsets", 2, _AM_SYSTEM_TEMPLATES_SAVE);
+        redirect_header('admin.php?fct=tplsets', 2, _AM_SYSTEM_TEMPLATES_SAVE);
         break;
 }
 // Call Footer

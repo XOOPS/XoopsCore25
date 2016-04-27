@@ -14,7 +14,6 @@
  * @package             kernel
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: userutility.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
@@ -200,7 +199,7 @@ class XoopsUserUtility
         if (!isset($pass) || $pass == '' || !isset($vpass) || $vpass == '') {
             $stop .= _US_ENTERPWD . '<br />';
         }
-        if ((isset($pass)) && ($pass != $vpass)) {
+        if (isset($pass) && ($pass != $vpass)) {
             $stop .= _US_PASSNOTSAME . '<br />';
         } elseif (($pass != '') && (strlen($pass) < $xoopsConfigUser['minpass'])) {
             $stop .= sprintf(_US_PWDTOOSHORT, $xoopsConfigUser['minpass']) . '<br />';
@@ -247,7 +246,7 @@ class XoopsUserUtility
 
         // this really should return $ip->asBinary() instead of ip2long, but for IPv6, this will
         // return false when the ip2long() fails. Callers are not expecting binary strings.
-        $the_IP = ($asString) ? $ip->asReadable() : ip2long($ip->asReadable());
+        $the_IP = $asString ? $ip->asReadable() : ip2long($ip->asReadable());
 
         return $the_IP;
     }
@@ -305,7 +304,7 @@ class XoopsUserUtility
     public static function getUnameFromId($userid, $usereal = false, $linked = false)
     {
         $myts     = MyTextSanitizer::getInstance();
-        $userid   = (int)($userid);
+        $userid   = (int)$userid;
         $username = '';
         if ($userid > 0) {
             $member_handler = xoops_getHandler('member');

@@ -15,7 +15,6 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
- * @version             $Id: xoopskernel.php 13082 2015-06-06 21:59:41Z beckmi $
  * @deprecated
  */
 

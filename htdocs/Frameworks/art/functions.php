@@ -6,7 +6,6 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @since               1.00
- * @version             $Id: functions.php 13082 2015-06-06 21:59:41Z beckmi $
  * @package             Frameworks
  * @subpackage          art
  */
@@ -16,15 +15,15 @@ if (defined('XOOPS_ART_FUNCTIONS')) {
 }
 define('XOOPS_ART_FUNCTIONS', true);
 
-include_once __DIR__ . "/functions.ini.php";
+include_once __DIR__ . '/functions.ini.php';
 
-load_functions("cache");
-load_functions("user");
-load_functions("locale");
-load_functions("admin");
+load_functions('cache');
+load_functions('user');
+load_functions('locale');
+load_functions('admin');
 
 if (!class_exists('ArtObject')) {
-    include_once __DIR__ . "/object.php";
+    include_once __DIR__ . '/object.php';
 }
 
 /**

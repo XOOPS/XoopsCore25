@@ -8,13 +8,12 @@
  * @subpackage          editor
  * @since               2.3.0
  * @author              Laurent JEN <dugris@frxoops.org>
- * @version             $Id: xoopsimagemanager.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 // check categories readability by group
-$groups         = is_object($GLOBALS["xoopsUser"]) ? $GLOBALS["xoopsUser"]->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+$groups         = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 $imgcat_handler = xoops_getHandler('imagecategory');
 
 return !(count($imgcat_handler->getList($groups, 'imgcat_read', 1)) == 0);

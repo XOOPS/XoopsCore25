@@ -16,7 +16,6 @@
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: form.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -145,7 +144,7 @@ class XoopsForm
         }
 
         switch ($hashinfo) {
-            case "md5":
+            case 'md5':
 
                 @$var['name'] = md5(get_class($object));
 
@@ -159,7 +158,7 @@ class XoopsForm
                     @$var['func'] = $this->getArrayID($value, $key, $var['func'], $hashinfo);
                 }
 
-                @$this->_objid = md5($var['name'] . ":" . $var['func'] . ":" . $var['value']);
+                @$this->_objid = md5($var['name'] . ':' . $var['func'] . ':' . $var['value']);
 
                 return $this->_objid;
                 break;
@@ -178,7 +177,7 @@ class XoopsForm
                     @$var['func'] = $this->getArrayID($value, $key, $var['func'], $hashinfo);
                 }
 
-                @$this->_objid = sha1($var['name'] . ":" . $var['func'] . ":" . $var['value']);
+                @$this->_objid = sha1($var['name'] . ':' . $var['func'] . ':' . $var['value']);
 
                 return $this->_objid;
 
@@ -196,13 +195,13 @@ class XoopsForm
     public function getArrayID($value, $key, $ret, $hashinfo = 'sha1')
     {
         switch ($hashinfo) {
-            case "md5":
+            case 'md5':
                 if (is_array($value)) {
                     foreach ($value as $keyb => $valueb) {
-                        @$ret = md5($ret . ":" . $this->getArrayID($valueb, $keyb, $ret, $hashinfo));
+                        @$ret = md5($ret . ':' . $this->getArrayID($valueb, $keyb, $ret, $hashinfo));
                     }
                 } else {
-                    @$ret = md5($ret . ":" . $key . ":" . $value);
+                    @$ret = md5($ret . ':' . $key . ':' . $value);
                 }
 
                 return $ret;
@@ -210,10 +209,10 @@ class XoopsForm
             default:
                 if (is_array($value)) {
                     foreach ($value as $keyb => $valueb) {
-                        @$ret = sha1($ret . ":" . $this->getArrayID($valueb, $keyb, $ret, $hashinfo));
+                        @$ret = sha1($ret . ':' . $this->getArrayID($valueb, $keyb, $ret, $hashinfo));
                     }
                 } else {
-                    @$ret = sha1($ret . ":" . $key . ":" . $value);
+                    @$ret = sha1($ret . ':' . $key . ':' . $value);
                 }
 
                 return $ret;
@@ -593,7 +592,7 @@ class XoopsForm
         $i        = -1;
         $elements = array();
         if (count($this->getRequired()) > 0) {
-            $this->_elements[] = "<tr class='foot'><td colspan='2'>* = " . _REQUIRED . "</td></tr>";
+            $this->_elements[] = "<tr class='foot'><td colspan='2'>* = " . _REQUIRED . '</td></tr>';
         }
         foreach ($this->getElements() as $ele) {
             ++$i;

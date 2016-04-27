@@ -14,16 +14,15 @@
  * @package             profile
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: changemail.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-$xoopsOption['pagetype'] = "user";
+$xoopsOption['pagetype'] = 'user';
 include __DIR__ . '/header.php';
 $config_handler             = xoops_getHandler('config');
 $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
 if (!$GLOBALS['xoopsUser'] || $GLOBALS['xoopsConfigUser']['allow_chgmail'] != 1) {
-    redirect_header(XOOPS_URL . "/modules/" . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . "/", 2, _NOPERM);
+    redirect_header(XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/', 2, _NOPERM);
 }
 
 $xoopsOption['template_main'] = 'profile_email.tpl';
@@ -64,10 +63,10 @@ if (!isset($_POST['submit']) || !isset($_POST['passwd'])) {
             $xoopsMailer->useMail();
             $xoopsMailer->setTemplateDir($GLOBALS['xoopsModule']->getVar('dirname', 'n'));
             $xoopsMailer->setTemplate('emailchanged.tpl');
-            $xoopsMailer->assign("SITENAME", $GLOBALS['xoopsConfig']['sitename']);
-            $xoopsMailer->assign("ADMINMAIL", $GLOBALS['xoopsConfig']['adminmail']);
-            $xoopsMailer->assign("SITEURL", XOOPS_URL . "/");
-            $xoopsMailer->assign("NEWEMAIL", $email);
+            $xoopsMailer->assign('SITENAME', $GLOBALS['xoopsConfig']['sitename']);
+            $xoopsMailer->assign('ADMINMAIL', $GLOBALS['xoopsConfig']['adminmail']);
+            $xoopsMailer->assign('SITEURL', XOOPS_URL . '/');
+            $xoopsMailer->assign('NEWEMAIL', $email);
             $xoopsMailer->setToEmails($email);
             $xoopsMailer->setFromEmail($GLOBALS['xoopsConfig']['adminmail']);
             $xoopsMailer->setFromName($GLOBALS['xoopsConfig']['sitename']);

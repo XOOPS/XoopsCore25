@@ -13,7 +13,6 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Cointin Maxime (AKA Kraven30)
  * @author              Andricq Nicolas (AKA MusS)
- * @version             $Id: core.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
@@ -37,7 +36,7 @@ class SystemCorePreload extends XoopsPreloadItem
         }
         if (!headers_sent() && isset($xoopsConfig['redirect_message_ajax']) && $xoopsConfig['redirect_message_ajax']) {
             $_SESSION['redirect_message'] = $args[2];
-            header("Location: " . preg_replace("/[&]amp;/i", '&', $url));
+            header('Location: ' . preg_replace('/[&]amp;/i', '&', $url));
             exit();
         }
     }
@@ -58,7 +57,7 @@ class SystemCorePreload extends XoopsPreloadItem
      */
     public static function eventCoreHeaderAddmeta($args)
     {
-        if (defined("XOOPS_STARTPAGE_REDIRECTED") || (isset($GLOBALS['xoopsOption']['template_main']) && $GLOBALS['xoopsOption']['template_main'] === 'db:system_homepage.tpl')) {
+        if (defined('XOOPS_STARTPAGE_REDIRECTED') || (isset($GLOBALS['xoopsOption']['template_main']) && $GLOBALS['xoopsOption']['template_main'] === 'db:system_homepage.tpl')) {
             if (is_object($GLOBALS['xoopsTpl'])) {
                 $GLOBALS['xoopsTpl']->assign('homepage', true);
             }

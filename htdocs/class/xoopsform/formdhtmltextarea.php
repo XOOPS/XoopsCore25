@@ -17,7 +17,6 @@
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @author              Vinod <smartvinu@gmail.com>
- * @version             $Id: formdhtmltextarea.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -77,7 +76,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea
      * @param string $hiddentext Identifier for hidden Text
      * @param array  $options    Extra options
      */
-    public function __construct($caption, $name, $value = "", $rows = 5, $cols = 50, $hiddentext = "xoopsHiddenText", $options = array())
+    public function __construct($caption, $name, $value = '', $rows = 5, $cols = 50, $hiddentext = 'xoopsHiddenText', $options = array())
     {
         global $xoopsConfig;
         static $inLoop = 0;
@@ -144,7 +143,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea
         static $js_loaded;
 
         xoops_loadLanguage('formdhtmltextarea');
-        $ret = "";
+        $ret = '';
         // actions
         $ret .= $this->codeIcon() . "<br />\n";
         // fonts
@@ -153,21 +152,21 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea
         $ret .= "<input type='button' onclick=\"XoopsCheckLength('" . $this->getName() . "', '" . @$this->configs['maxlength'] . "', '" . _XOOPS_FORM_ALT_LENGTH . "', '" . _XOOPS_FORM_ALT_LENGTH_MAX . "');\" value=' ? ' title='" . _XOOPS_FORM_ALT_CHECKLENGTH . "' />";
         $ret .= "<br />\n";
         // the textarea box
-        $ret .= "<textarea id='" . $this->getName() . "' name='" . $this->getName() . "' title='" . $this->getTitle() . "' onselect=\"xoopsSavePosition('" . $this->getName() . "');\" onclick=\"xoopsSavePosition('" . $this->getName() . "');\" onkeyup=\"xoopsSavePosition('" . $this->getName() . "');\" cols='" . $this->getCols() . "' rows='" . $this->getRows() . "'" . $this->getExtra() . ">" . $this->getValue() . "</textarea><br />\n";
+        $ret .= "<textarea id='" . $this->getName() . "' name='" . $this->getName() . "' title='" . $this->getTitle() . "' onselect=\"xoopsSavePosition('" . $this->getName() . "');\" onclick=\"xoopsSavePosition('" . $this->getName() . "');\" onkeyup=\"xoopsSavePosition('" . $this->getName() . "');\" cols='" . $this->getCols() . "' rows='" . $this->getRows() . "'" . $this->getExtra() . '>' . $this->getValue() . "</textarea><br />\n";
 
         if (empty($this->skipPreview)) {
             if (empty($GLOBALS['xoTheme'])) {
-                $this->js .= implode("", file(XOOPS_ROOT_PATH . "/class/textsanitizer/image/image.js"));
+                $this->js .= implode('', file(XOOPS_ROOT_PATH . '/class/textsanitizer/image/image.js'));
             } else {
                 $GLOBALS['xoTheme']->addScript('/class/textsanitizer/image/image.js', array('type' => 'text/javascript'));
             }
             $button = // "<br />" .
-                "<input " . "   id='" . $this->getName() . "_preview_button'" . "   type='button' " . "   value='" . _PREVIEW . "' " . "   onclick=\"form_instantPreview('" . XOOPS_URL . "', '" . $this->getName() . "','" . XOOPS_URL . "/images', " . (int)($this->doHtml) . ", '" . $GLOBALS['xoopsSecurity']->createToken() . "')\"" . " />";
-            $ret .= "<br />" . "<div id='" . $this->getName() . "_hidden' style='display: block;'> " . "   <fieldset>" . "       <legend>" . $button . "</legend>" . "       <div id='" . $this->getName() . "_hidden_data'>" . _XOOPS_FORM_PREVIEW_CONTENT . "</div>" . "   </fieldset>" . "</div>";
+                '<input ' . "   id='" . $this->getName() . "_preview_button'" . "   type='button' " . "   value='" . _PREVIEW . "' " . "   onclick=\"form_instantPreview('" . XOOPS_URL . "', '" . $this->getName() . "','" . XOOPS_URL . "/images', " . (int)$this->doHtml . ", '" . $GLOBALS['xoopsSecurity']->createToken() . "')\"" . ' />';
+            $ret .= '<br />' . "<div id='" . $this->getName() . "_hidden' style='display: block;'> " . '   <fieldset>' . '       <legend>' . $button . '</legend>' . "       <div id='" . $this->getName() . "_hidden_data'>" . _XOOPS_FORM_PREVIEW_CONTENT . '</div>' . '   </fieldset>' . '</div>';
         }
         // Load javascript
         if (empty($js_loaded)) {
-            $javascript = (($this->js) ? '<script type="text/javascript">' . $this->js . '</script>' : '') . '<script type="text/javascript" src="' . XOOPS_URL . '/include/formdhtmltextarea.js"></script>';
+            $javascript = ($this->js ? '<script type="text/javascript">' . $this->js . '</script>' : '') . '<script type="text/javascript" src="' . XOOPS_URL . '/include/formdhtmltextarea.js"></script>';
             $ret        = $javascript . $ret;
             $js_loaded  = true;
         }
@@ -217,19 +216,19 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea
         $hiddentext  = $this->_hiddenText;
 
         $fontStr = "<script type=\"text/javascript\">" . "var _editor_dialog = ''" . "+ '<select id=\'{$textarea_id}Size\' onchange=\'xoopsSetElementAttribute(\"size\", this.options[this.selectedIndex].value, \"{$textarea_id}\", \"{$hiddentext}\");\'>'" . "+ '<option value=\'SIZE\'>" . _SIZE . "</option>'";
-        foreach ($GLOBALS["formtextdhtml_sizes"] as $_val => $_name) {
+        foreach ($GLOBALS['formtextdhtml_sizes'] as $_val => $_name) {
             $fontStr .= " + '<option value=\'{$_val}\'>{$_name}</option>'";
         }
         $fontStr .= " + '</select> '";
         $fontStr .= "+ '<select id=\'{$textarea_id}Font\' onchange=\'xoopsSetElementAttribute(\"font\", this.options[this.selectedIndex].value, \"{$textarea_id}\", \"{$hiddentext}\");\'>'" . "+ '<option value=\'FONT\'>" . _FONT . "</option>'";
-        $fontarray = !empty($GLOBALS["formtextdhtml_fonts"]) ? $GLOBALS["formtextdhtml_fonts"] : array(
-            "Arial",
-            "Courier",
-            "Georgia",
-            "Helvetica",
-            "Impact",
-            "Verdana",
-            "Haettenschweiler");
+        $fontarray = !empty($GLOBALS['formtextdhtml_fonts']) ? $GLOBALS['formtextdhtml_fonts'] : array(
+            'Arial',
+            'Courier',
+            'Georgia',
+            'Helvetica',
+            'Impact',
+            'Verdana',
+            'Haettenschweiler');
         foreach ($fontarray as $font) {
             $fontStr .= " + '<option value=\'{$font}\'>{$font}</option>'";
         }
@@ -245,7 +244,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea
             }
             _editor_dialog += '</select>';";
 
-        $fontStr .= "document.write(_editor_dialog); </script>";
+        $fontStr .= 'document.write(_editor_dialog); </script>';
 
         $styleStr = "<img src='" . XOOPS_URL . "/images/bold.gif' alt='" . _XOOPS_FORM_ALT_BOLD . "' title='" . _XOOPS_FORM_ALT_BOLD . "' onmouseover='style.cursor=\"hand\"' onclick='xoopsMakeBold(\"{$hiddentext}\", \"{$textarea_id}\");' />&nbsp;";
         $styleStr .= "<img src='" . XOOPS_URL . "/images/italic.gif' alt='" . _XOOPS_FORM_ALT_ITALIC . "' title='" . _XOOPS_FORM_ALT_ITALIC . "' onmouseover='style.cursor=\"hand\"' onclick='xoopsMakeItalic(\"{$hiddentext}\", \"{$textarea_id}\");' />&nbsp;";

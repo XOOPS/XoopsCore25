@@ -14,7 +14,6 @@
  * @package             pm
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: admin.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 include_once __DIR__ . '/admin_header.php';
@@ -22,9 +21,8 @@ xoops_cp_header();
 
 $indexAdmin = new ModuleAdmin();
 
-echo $indexAdmin->addNavigation('admin.php');
+echo $indexAdmin->addNavigation(basename(__FILE__));
 echo $indexAdmin->renderIndex();
 
 include_once __DIR__ . '/admin_footer.php';
 //xoops_cp_footer();
-

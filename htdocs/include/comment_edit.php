@@ -14,7 +14,6 @@
  * @package             kernel
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version             $Id: comment_edit.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 if (!defined('XOOPS_ROOT_PATH') || !is_object($xoopsModule)) {
@@ -29,7 +28,7 @@ if (('system' !== $xoopsModule->getVar('dirname') && XOOPS_COMMENT_APPROVENONE =
 
 xoops_loadLanguage('comment');
 
-$com_id   = isset($_GET['com_id']) ? (int)($_GET['com_id']) : 0;
+$com_id   = isset($_GET['com_id']) ? (int)$_GET['com_id'] : 0;
 $com_mode = isset($_GET['com_mode']) ? htmlspecialchars(trim($_GET['com_mode']), ENT_QUOTES) : '';
 
 if ($com_mode == '') {
@@ -47,7 +46,7 @@ if (!isset($_GET['com_order'])) {
         $com_order = $xoopsConfig['com_order'];
     }
 } else {
-    $com_order = (int)($_GET['com_order']);
+    $com_order = (int)$_GET['com_order'];
 }
 
 /**

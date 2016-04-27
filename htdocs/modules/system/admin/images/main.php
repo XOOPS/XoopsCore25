@@ -1,9 +1,9 @@
 <?php
-// $Id: main.php 13090 2015-06-16 20:44:29Z beckmi $
+// 
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2016 XOOPS Project (www.xoops.org)            //
-//                       <http://www.xoops.org/>                             //
+//                         <http://xoops.org/>                               //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -51,10 +51,10 @@ if (isset($_GET['op'])) {
     $op = trim($_GET['op']);
 }
 if (isset($_GET['image_id'])) {
-    $image_id = (int)($_GET['image_id']);
+    $image_id = (int)$_GET['image_id'];
 }
 if (isset($_GET['imgcat_id'])) {
-    $imgcat_id = (int)($_GET['imgcat_id']);
+    $imgcat_id = (int)$_GET['imgcat_id'];
 }
 
 $gperm_handler = xoops_getHandler('groupperm');
@@ -232,7 +232,7 @@ switch ($op) {
         $criteria->setSort('image_weight ASC, image_id');
         $criteria->setOrder('DESC');
         $imgcount = $image_handler->getCount($criteria);
-        $start    = isset($_GET['start']) ? (int)($_GET['start']) : 0;
+        $start    = isset($_GET['start']) ? (int)$_GET['start'] : 0;
         $criteria->setStart($start);
         $criteria->setLimit(xoops_getModuleOption('images_pager', 'system'));
         $images = $image_handler->getObjects($criteria, true, false);
@@ -241,8 +241,8 @@ switch ($op) {
             $xoopsTpl->assign('db_store', 1);
         }
 
-        foreach (array_keys($images) as $i) {
-            $xoopsTpl->append_by_ref('images', $images[$i]->toArray());
+        foreach ($images as $listImage) {
+            $xoopsTpl->append('images', $listImage->toArray());
         }
         if ($imgcount > 0) {
             if ($imgcount > xoops_getModuleOption('images_pager', 'system')) {
@@ -437,7 +437,7 @@ switch ($op) {
             redirect_header('admin.php?fct=images', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         $imgcat_handler = xoops_getHandler('imagecategory');
-        $imagecategory  = $imgcat_handler->get((int)($imgcat_id));
+        $imagecategory  = $imgcat_handler->get((int)$imgcat_id);
         if (!is_object($imagecategory)) {
             redirect_header('admin.php?fct=images', 1);
         }
@@ -516,7 +516,7 @@ switch ($op) {
             $readgroup = array();
         }
         if (!in_array(XOOPS_GROUP_ADMIN, $readgroup)) {
-            ($readgroup[] = XOOPS_GROUP_ADMIN);
+            $readgroup[] = XOOPS_GROUP_ADMIN;
         }
         foreach ($readgroup as $rgroup) {
             $imagecategoryperm = $imagecategoryperm_handler->create();
@@ -531,7 +531,7 @@ switch ($op) {
             $writegroup = array();
         }
         if (!in_array(XOOPS_GROUP_ADMIN, $writegroup)) {
-            ($writegroup[] = XOOPS_GROUP_ADMIN);
+            $writegroup[] = XOOPS_GROUP_ADMIN;
         }
         foreach ($writegroup as $wgroup) {
             $imagecategoryperm = $imagecategoryperm_handler->create();
@@ -590,7 +590,7 @@ switch ($op) {
         $xoBreadCrumb->addLink(_AM_SYSTEM_IMAGES_MANAGER, system_adminVersion('images', 'adminpath'));
         $xoBreadCrumb->addLink($imagecategory->getVar('imgcat_name'), '');
         $xoBreadCrumb->render();
-        echo "<br />";
+        echo '<br />';
         $form->display();
         // Call Footer
         xoops_cp_footer();
@@ -626,7 +626,7 @@ switch ($op) {
             $readgroup = array();
         }
         if (!in_array(XOOPS_GROUP_ADMIN, $readgroup)) {
-            ($readgroup[] = XOOPS_GROUP_ADMIN);
+            $readgroup[] = XOOPS_GROUP_ADMIN;
         }
         foreach ($readgroup as $rgroup) {
             $imagecategoryperm = $imagecategoryperm_handler->create();
@@ -641,7 +641,7 @@ switch ($op) {
             $writegroup = array();
         }
         if (!in_array(XOOPS_GROUP_ADMIN, $writegroup)) {
-            ($writegroup[] = XOOPS_GROUP_ADMIN);
+            $writegroup[] = XOOPS_GROUP_ADMIN;
         }
         foreach ($writegroup as $wgroup) {
             $imagecategoryperm = $imagecategoryperm_handler->create();
@@ -668,7 +668,7 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=images', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        $imgcat_id = (int)($imgcat_id);
+        $imgcat_id = (int)$imgcat_id;
         if ($imgcat_id <= 0) {
             redirect_header('admin.php?fct=images', 1);
         }

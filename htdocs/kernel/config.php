@@ -14,7 +14,6 @@
  * @package             kernel
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version             $Id: config.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -200,9 +199,9 @@ class XoopsConfigHandler
             return $_cachedConfigs[$module][$category];
         } else {
             $ret      = array();
-            $criteria = new CriteriaCompo(new Criteria('conf_modid', (int)($module)));
+            $criteria = new CriteriaCompo(new Criteria('conf_modid', (int)$module));
             if (!empty($category)) {
-                $criteria->add(new Criteria('conf_catid', (int)($category)));
+                $criteria->add(new Criteria('conf_catid', (int)$category));
             }
             $configs = $this->getConfigs($criteria, true);
             if (is_array($configs)) {
@@ -303,7 +302,7 @@ class XoopsConfigHandler
      */
     public function deleteConfigOption(&$criteria)
     {
-        trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 
         return false;
     }

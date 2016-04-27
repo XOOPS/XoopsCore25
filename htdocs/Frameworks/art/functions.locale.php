@@ -16,13 +16,12 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @since               1.00
- * @version             $Id: functions.locale.php 13082 2015-06-06 21:59:41Z beckmi $
  * @package             Frameworks
  * @subpackage          art
  */
-if (!defined("FRAMEWORKS_ART_FUNCTIONS_LOCALE")):
-    define("FRAMEWORKS_ART_FUNCTIONS_LOCALE", true);
+if (!defined('FRAMEWORKS_ART_FUNCTIONS_LOCALE')):
+    define('FRAMEWORKS_ART_FUNCTIONS_LOCALE', true);
 
-    xoops_load("XoopsLocal");
+    xoops_load('XoopsLocal');
 
 endif;

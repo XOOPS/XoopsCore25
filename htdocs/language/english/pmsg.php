@@ -1,5 +1,5 @@
 <?php
-// $Id: pmsg.php 12363 2014-03-08 10:39:06Z beckmi $
+// 
 // _LANGCODE: en
 // _CHARSET : UTF-8
 // Translator: XOOPS Translation Team
@@ -41,6 +41,6 @@ define('_PM_REPLY', 'Reply');
 define('_PM_PLZREG', 'Please register first to send private messages!');
 define('_PM_ONLINE', 'Online');
 //XOOPS 2.5.2
-define('_PM_SURE_TO_DELETE', "Are you sure you want to delete these message(s)?");
+define('_PM_SURE_TO_DELETE', 'Are you sure you want to delete these message(s)?');
 //XOOPS 2.5.5
 define('_PM_READ', 'Already Read');

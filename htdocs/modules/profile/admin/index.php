@@ -1,9 +1,9 @@
 <?php
-// $Id: index.php 13082 2015-06-06 21:59:41Z beckmi $
+// 
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2016 XOOPS Project (www.xoops.org)            //
-//                       <http://www.xoops.org/>                             //
+//                         <http://xoops.org/>                               //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -46,9 +46,8 @@ $indexAdmin = new ModuleAdmin();
 // $indexAdmin->addInfoBoxLine(_MD_XPARTNERS_DASHBOARD,  "<infolabel>" ._MD_XPARTNERS_TOTALPARTNERS. "</infolabel><infotext>", $totalPartners."</infotext>");
 //----------------------------
 
-echo $indexAdmin->addNavigation('index.php');
+echo $indexAdmin->addNavigation(basename(__FILE__));
 echo $indexAdmin->renderIndex();
 
 include_once __DIR__ . '/admin_footer.php';
 //xoops_cp_footer();
-

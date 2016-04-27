@@ -14,7 +14,6 @@
  * @package             kernel
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version             $Id: groupperm.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -144,10 +143,10 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
      */
     public function get($id)
     {
-        $id   = (int)($id);
+        $id   = (int)$id;
         $perm = false;
         if ($id > 0) {
-            $sql = sprintf("SELECT * FROM %s WHERE gperm_id = %u", $this->db->prefix('group_permission'), $id);
+            $sql = sprintf('SELECT * FROM %s WHERE gperm_id = %u', $this->db->prefix('group_permission'), $id);
             if (!$result = $this->db->query($sql)) {
                 return $perm;
             }
@@ -185,9 +184,9 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
         }
         if ($perm->isNew()) {
             $gperm_id = $this->db->genId('group_permission_gperm_id_seq');
-            $sql      = sprintf("INSERT INTO %s (gperm_id, gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES (%u, %u, %u, %u, %s)", $this->db->prefix('group_permission'), $gperm_id, $gperm_groupid, $gperm_itemid, $gperm_modid, $this->db->quoteString($gperm_name));
+            $sql      = sprintf('INSERT INTO %s (gperm_id, gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES (%u, %u, %u, %u, %s)', $this->db->prefix('group_permission'), $gperm_id, $gperm_groupid, $gperm_itemid, $gperm_modid, $this->db->quoteString($gperm_name));
         } else {
-            $sql = sprintf("UPDATE %s SET gperm_groupid = %u, gperm_itemid = %u, gperm_modid = %u WHERE gperm_id = %u", $this->db->prefix('group_permission'), $gperm_groupid, $gperm_itemid, $gperm_modid, $gperm_id);
+            $sql = sprintf('UPDATE %s SET gperm_groupid = %u, gperm_itemid = %u, gperm_modid = %u WHERE gperm_id = %u', $this->db->prefix('group_permission'), $gperm_groupid, $gperm_itemid, $gperm_modid, $gperm_id);
         }
         if (!$result = $this->db->query($sql)) {
             return false;
@@ -213,7 +212,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
         if (!($perm instanceof $className)) {
             return false;
         }
-        $sql = sprintf("DELETE FROM %s WHERE gperm_id = %u", $this->db->prefix('group_permission'), $perm->getVar('gperm_id'));
+        $sql = sprintf('DELETE FROM %s WHERE gperm_id = %u', $this->db->prefix('group_permission'), $perm->getVar('gperm_id'));
         if (!$result = $this->db->query($sql)) {
             return false;
         }
@@ -288,7 +287,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
      */
     public function deleteAll(CriteriaElement $criteria = null)
     {
-        $sql = sprintf("DELETE FROM %s", $this->db->prefix('group_permission'));
+        $sql = sprintf('DELETE FROM %s', $this->db->prefix('group_permission'));
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
@@ -309,9 +308,9 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
      */
     public function deleteByGroup($gperm_groupid, $gperm_modid = null)
     {
-        $criteria = new CriteriaCompo(new Criteria('gperm_groupid', (int)($gperm_groupid)));
+        $criteria = new CriteriaCompo(new Criteria('gperm_groupid', (int)$gperm_groupid));
         if (isset($gperm_modid)) {
-            $criteria->add(new Criteria('gperm_modid', (int)($gperm_modid)));
+            $criteria->add(new Criteria('gperm_modid', (int)$gperm_modid));
         }
 
         return $this->deleteAll($criteria);
@@ -328,11 +327,11 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
      */
     public function deleteByModule($gperm_modid, $gperm_name = null, $gperm_itemid = null)
     {
-        $criteria = new CriteriaCompo(new Criteria('gperm_modid', (int)($gperm_modid)));
+        $criteria = new CriteriaCompo(new Criteria('gperm_modid', (int)$gperm_modid));
         if (isset($gperm_name)) {
             $criteria->add(new Criteria('gperm_name', $gperm_name));
             if (isset($gperm_itemid)) {
-                $criteria->add(new Criteria('gperm_itemid', (int)($gperm_itemid)));
+                $criteria->add(new Criteria('gperm_itemid', (int)$gperm_itemid));
             }
         }
 
@@ -371,7 +370,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
         $criteria = new CriteriaCompo(new Criteria('gperm_modid', $gperm_modid));
         $criteria->add($criteria_group);
         $criteria->add(new Criteria('gperm_name', $gperm_name));
-        $gperm_itemid = (int)($gperm_itemid);
+        $gperm_itemid = (int)$gperm_itemid;
         if ($gperm_itemid > 0) {
             $criteria->add(new Criteria('gperm_itemid', $gperm_itemid));
         }
@@ -412,7 +411,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
     {
         $ret      = array();
         $criteria = new CriteriaCompo(new Criteria('gperm_name', $gperm_name));
-        $criteria->add(new Criteria('gperm_modid', (int)($gperm_modid)));
+        $criteria->add(new Criteria('gperm_modid', (int)$gperm_modid));
         if (is_array($gperm_groupid)) {
             $criteria2 = new CriteriaCompo();
             foreach ($gperm_groupid as $gid) {
@@ -420,7 +419,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
             }
             $criteria->add($criteria2);
         } else {
-            $criteria->add(new Criteria('gperm_groupid', (int)($gperm_groupid)));
+            $criteria->add(new Criteria('gperm_groupid', (int)$gperm_groupid));
         }
         $perms = $this->getObjects($criteria, true);
         foreach (array_keys($perms) as $i) {
@@ -443,8 +442,8 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
     {
         $ret      = array();
         $criteria = new CriteriaCompo(new Criteria('gperm_name', $gperm_name));
-        $criteria->add(new Criteria('gperm_itemid', (int)($gperm_itemid)));
-        $criteria->add(new Criteria('gperm_modid', (int)($gperm_modid)));
+        $criteria->add(new Criteria('gperm_itemid', (int)$gperm_itemid));
+        $criteria->add(new Criteria('gperm_modid', (int)$gperm_modid));
         $perms = $this->getObjects($criteria, true);
         foreach (array_keys($perms) as $i) {
             $ret[] = $perms[$i]->getVar('gperm_groupid');

@@ -6,13 +6,12 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @since               1.00
- * @version             $Id: functions.cache.php 13090 2015-06-16 20:44:29Z beckmi $
  * @package             Frameworks
  * @subpackage          art
  */
 
-if (!defined("FRAMEWORKS_ART_FUNCTIONS_CACHE")):
-    define("FRAMEWORKS_ART_FUNCTIONS_CACHE", true);
+if (!defined('FRAMEWORKS_ART_FUNCTIONS_CACHE')):
+    define('FRAMEWORKS_ART_FUNCTIONS_CACHE', true);
 
     /**
      * @param null $groups
@@ -29,7 +28,7 @@ if (!defined("FRAMEWORKS_ART_FUNCTIONS_CACHE")):
         }
         if (!empty($groups) && is_array($groups)) {
             sort($groups);
-            $contentCacheId = substr(md5(implode(",", $groups) . XOOPS_DB_PASS . XOOPS_DB_NAME), 0, strlen(XOOPS_DB_USER) * 2);
+            $contentCacheId = substr(md5(implode(',', $groups) . XOOPS_DB_PASS . XOOPS_DB_NAME), 0, strlen(XOOPS_DB_USER) * 2);
         } else {
             $contentCacheId = XOOPS_GROUP_ANONYMOUS;
         }
@@ -59,8 +58,8 @@ if (!defined("FRAMEWORKS_ART_FUNCTIONS_CACHE")):
     {
         global $xoopsModule;
 
-        $name    = ($name) ? : (string)(time());
-        $dirname = ($dirname) ? : (is_object($xoopsModule) ? $xoopsModule->getVar("dirname", "n") : "system");
+        $name    = $name ? : (string)time();
+        $dirname = $dirname ? : (is_object($xoopsModule) ? $xoopsModule->getVar('dirname', 'n') : 'system');
 
         xoops_load('XoopsCache');
         $key = "{$dirname}_{$name}";
@@ -111,7 +110,7 @@ if (!defined("FRAMEWORKS_ART_FUNCTIONS_CACHE")):
         if (empty($name)) {
             return $data;
         }
-        $dirname = ($dirname) ? : (is_object($xoopsModule) ? $xoopsModule->getVar("dirname", "n") : "system");
+        $dirname = $dirname ? : (is_object($xoopsModule) ? $xoopsModule->getVar('dirname', 'n') : 'system');
         xoops_load('XoopsCache');
         $key = "{$dirname}_{$name}";
 
@@ -155,10 +154,10 @@ if (!defined("FRAMEWORKS_ART_FUNCTIONS_CACHE")):
      *
      * @return bool
      */
-    function mod_clearFile($name = "", $dirname = null, $root_path = XOOPS_CACHE_PATH)
+    function mod_clearFile($name = '', $dirname = null, $root_path = XOOPS_CACHE_PATH)
     {
         if (empty($dirname)) {
-            $pattern = ($dirname) ? "{$dirname}_{$name}.*\.php" : "[^_]+_{$name}.*\.php";
+            $pattern = $dirname ? "{$dirname}_{$name}.*\.php" : "[^_]+_{$name}.*\.php";
             if ($handle = opendir($root_path)) {
                 while (false !== ($file = readdir($handle))) {
                     if (is_file($root_path . '/' . $file) && preg_match("/{$pattern}$/", $file)) {
@@ -183,7 +182,7 @@ if (!defined("FRAMEWORKS_ART_FUNCTIONS_CACHE")):
      *
      * @return bool
      */
-    function mod_clearCacheFile($name = "", $dirname = null)
+    function mod_clearCacheFile($name = '', $dirname = null)
     {
         return mod_clearFile($name, $dirname);
     }
@@ -193,12 +192,12 @@ if (!defined("FRAMEWORKS_ART_FUNCTIONS_CACHE")):
      *
      * @return bool
      */
-    function mod_clearSmartyCache($pattern = "")
+    function mod_clearSmartyCache($pattern = '')
     {
         global $xoopsModule;
 
         if (empty($pattern)) {
-            $dirname = (is_object($xoopsModule) ? $xoopsModule->getVar("dirname", "n") : "system");
+            $dirname = (is_object($xoopsModule) ? $xoopsModule->getVar('dirname', 'n') : 'system');
             $pattern = "/(^{$dirname}\^.*\.html$|blk_{$dirname}_.*[^\.]*\.html$)/";
         }
         if ($handle = opendir(XOOPS_CACHE_PATH)) {

@@ -20,7 +20,6 @@ namespace Xmf;
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2011-2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @version   Release: 1.0
  * @link      http://xoops.org
  * @since     1.0
  */
@@ -33,10 +32,11 @@ class Debug extends \Kint
      *
      * @return void
      */
-    public static function dump($data = NULL)
+    public static function dump($data = null)
     {
         $args = func_get_args();
-        parent::$theme = 'aante-light'; // options: 'original' (default), 'solarized', 'solarized-dark' and 'aante-light'
+        // options: 'original' (default), 'solarized', 'solarized-dark' and 'aante-light'
+        parent::$theme = 'aante-light';
         call_user_func_array('parent::dump', $args);
     }
 

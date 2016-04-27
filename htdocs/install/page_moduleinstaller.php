@@ -12,7 +12,6 @@
  * @author           Skalpa Keo <skalpa@xoops.org>
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
- * @version          $Id: page_moduleinstaller.php 13082 2015-06-06 21:59:41Z beckmi $
  **/
 
 $xoopsOption['checkadmin'] = true;
@@ -56,13 +55,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         foreach ($msgs as $msg) {
             $content .= "<dt>{$msg}</dt>";
         }
-        $content .= "</ul>";
+        $content .= '</ul>';
     } else {
-        $content = "<div class='x2-note confirmMsg'>" . NO_INSTALLED_MODULES . "</div>";
+        $content = "<div class='x2-note confirmMsg'>" . NO_INSTALLED_MODULES . '</div>';
     }
 
     // Flush cache files for cpanel GUIs
-    xoops_load("cpanel", "system");
+    xoops_load('cpanel', 'system');
     XoopsSystemCpanel::flush();
 
     //Set active modules in cache folder
@@ -84,14 +83,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dirlist  = XoopsLists::getModulesList();
     $toinstal = 0;
 
-    $javascript = "";
+    $javascript = '';
     $content    = "<ul class='log'><li>";
     $content .= "<table class='module'>\n";
     foreach ($dirlist as $file) {
         clearstatcache();
         if (!in_array($file, $listed_mods)) {
             $value = 0;
-            $style = "";
+            $style = '';
             if (in_array($file, $wizard->configs['modules'])) {
                 $value = 1;
                 $style = " style='background-color:#E6EFC2;'";
@@ -109,10 +108,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $form->addElement($moduleYN);
 
             $content .= "<tr id='" . $file . "'" . $style . ">\n";
-            $content .= "    <td class='img' ><img src='" . XOOPS_URL . "/modules/" . $module->getInfo('dirname') . "/" . $module->getInfo('image') . "' alt='" . $module->getInfo('name') . "'/></td>\n";
-            $content .= "    <td>";
-            $content .= "        " . $module->getInfo('name') . "&nbsp;" . number_format(round($module->getInfo('version'), 2), 2) . "&nbsp;(" . $module->getInfo('dirname') . ")";
-            $content .= "        <br />" . $module->getInfo('description');
+            $content .= "    <td class='img' ><img src='" . XOOPS_URL . '/modules/' . $module->getInfo('dirname') . '/' . $module->getInfo('image') . "' alt='" . $module->getInfo('name') . "'/></td>\n";
+            $content .= '    <td>';
+            $content .= '        ' . $module->getInfo('name') . '&nbsp;' . number_format(round($module->getInfo('version'), 2), 2) . '&nbsp;(' . $module->getInfo('dirname') . ')';
+            $content .= '        <br />' . $module->getInfo('description');
             $content .= "    </td>\n";
             $content .= "    <td class='yesno'>";
             $content .= $moduleYN->render();
@@ -120,11 +119,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ++$toinstal;
         }
     }
-    $content .= "</table>";
-    $content .= "</li></ul><script type='text/javascript'>" . $javascript . "</script>";
+    $content .= '</table>';
+    $content .= "</li></ul><script type='text/javascript'>" . $javascript . '</script>';
     if ($toinstal == 0) {
         $pageHasForm = false;
-        $content     = "<div class='x2-note confirmMsg'>" . NO_MODULES_FOUND . "</div>";
+        $content     = "<div class='x2-note confirmMsg'>" . NO_MODULES_FOUND . '</div>';
     }
 }
 

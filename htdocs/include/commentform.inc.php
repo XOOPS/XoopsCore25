@@ -14,7 +14,6 @@
  * @package             kernel
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version             $Id: commentform.inc.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
@@ -22,9 +21,9 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 include_once $GLOBALS['xoops']->path('class/xoopslists.php');
 include $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
-$cform = new XoopsThemeForm(_CM_POSTCOMMENT, "commentform", "postcomment.php", "post", true);
-if (!preg_match("/^" . _RE . "/i", $subject)) {
-    $subject = _RE . " " . xoops_substr($subject, 0, 56);
+$cform = new XoopsThemeForm(_CM_POSTCOMMENT, 'commentform', 'postcomment.php', 'post', true);
+if (!preg_match('/^' . _RE . '/i', $subject)) {
+    $subject = _RE . ' ' . xoops_substr($subject, 0, 56);
 }
 
 $cform->addElement(new XoopsFormText(_CM_TITLE, 'subject', 50, 255, $subject), true);
@@ -58,10 +57,10 @@ if (!$xoopsUser) {
     $cform->addElement(new XoopsFormCaptcha());
 }
 
-$cform->addElement(new XoopsFormHidden('pid', (int)($pid)));
-$cform->addElement(new XoopsFormHidden('comment_id', (int)($comment_id)));
-$cform->addElement(new XoopsFormHidden('item_id', (int)($item_id)));
-$cform->addElement(new XoopsFormHidden('order', (int)($order)));
+$cform->addElement(new XoopsFormHidden('pid', (int)$pid));
+$cform->addElement(new XoopsFormHidden('comment_id', (int)$comment_id));
+$cform->addElement(new XoopsFormHidden('item_id', (int)$item_id));
+$cform->addElement(new XoopsFormHidden('order', (int)$order));
 $button_tray = new XoopsFormElementTray('', '&nbsp;');
 $button_tray->addElement(new XoopsFormButton('', 'preview', _PREVIEW, 'submit'));
 $button_tray->addElement(new XoopsFormButton('', 'post', _CM_POSTCOMMENT, 'submit'));

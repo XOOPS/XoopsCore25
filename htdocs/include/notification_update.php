@@ -15,7 +15,6 @@
  * @subpackage          Xoop Notifications Select
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version             $Id: notification_update.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 if (!defined('XOOPS_ROOT_PATH') || !is_object($xoopsModule)) {
     die('Restricted access');
@@ -93,10 +92,10 @@ $argstring = '';
 $first_arg = 1;
 foreach (array_keys($redirect_args) as $arg) {
     if ($first_arg) {
-        $argstring .= "?" . $arg . "=" . $redirect_args[$arg];
+        $argstring .= '?' . $arg . '=' . $redirect_args[$arg];
         $first_arg = 0;
     } else {
-        $argstring .= "&" . $arg . "=" . $redirect_args[$arg];
+        $argstring .= '&' . $arg . '=' . $redirect_args[$arg];
     }
 }
 

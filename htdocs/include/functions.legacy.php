@@ -14,7 +14,6 @@
  * @package             kernel
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: functions.legacy.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -29,7 +28,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 // Backward compatibility for 2.2*
 function xoops_load_lang_file($name, $module = '', $default = 'english')
 {
-    $GLOBALS['xoopsLogger']->addDeprecated("Function " . __FUNCTION__ . "() is deprecated, use xoops_loadLanguage() instead");
+    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . '() is deprecated, use xoops_loadLanguage() instead');
 
     return xoops_loadLanguage($name, $module);
 }
@@ -41,7 +40,7 @@ function xoops_load_lang_file($name, $module = '', $default = 'english')
  */
 function xoops_refcheck($docheck = 1)
 {
-    $GLOBALS['xoopsLogger']->addDeprecated("Function " . __FUNCTION__ . "() is deprecated, use xoopsSecurity::checkReferer instead");
+    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . '() is deprecated, use xoopsSecurity::checkReferer instead');
 
     return $GLOBALS['xoopsSecurity']->checkReferer($docheck);
 }
@@ -53,8 +52,8 @@ function xoops_refcheck($docheck = 1)
  */
 function xoops_getLinkedUnameFromId($userid)
 {
-    $GLOBALS['xoopsLogger']->addDeprecated("Function " . __FUNCTION__ . "() is deprecated, use XoopsUserUtility::getUnameFromId() instead");
-    xoops_load("XoopsUserUtility");
+    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . '() is deprecated, use XoopsUserUtility::getUnameFromId() instead');
+    xoops_load('XoopsUserUtility');
 
     return XoopsUserUtility::getUnameFromId($userid, false, true);
 }
@@ -64,7 +63,7 @@ function xoops_getLinkedUnameFromId($userid)
  */
 function showbanner()
 {
-    $GLOBALS['xoopsLogger']->addDeprecated("Function " . __FUNCTION__ . "() is deprecated, use xoops_getbanner instead");
+    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . '() is deprecated, use xoops_getbanner instead');
     echo xoops_getbanner();
 }
 
@@ -73,7 +72,7 @@ function showbanner()
  */
 function getTheme()
 {
-    $GLOBALS['xoopsLogger']->addDeprecated("Function " . __FUNCTION__ . "() is deprecated, use \$xoopsConfig['theme_set'] directly");
+    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . "() is deprecated, use \$xoopsConfig['theme_set'] directly");
 
     return $GLOBALS['xoopsConfig']['theme_set'];
 }
@@ -89,7 +88,7 @@ function getTheme()
  */
 function getcss($theme = '')
 {
-    $GLOBALS['xoopsLogger']->addDeprecated("Function " . __FUNCTION__ . "() is deprecated, use xoops_getcss instead");
+    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . '() is deprecated, use xoops_getcss instead');
 
     return xoops_getcss($theme);
 }
@@ -99,7 +98,7 @@ function getcss($theme = '')
  */
 function &getMailer()
 {
-    $GLOBALS['xoopsLogger']->addDeprecated("Function " . __FUNCTION__ . "() is deprecated, use xoops_getMailer instead");
+    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . '() is deprecated, use xoops_getMailer instead');
     $mailer =& xoops_getMailer();
 
     return $mailer;
@@ -110,7 +109,7 @@ function &getMailer()
  */
 function OpenWaitBox()
 {
-    $GLOBALS['xoopsLogger']->addDeprecated("Function " . __FUNCTION__ . "() is deprecated");
+    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . '() is deprecated');
     echo "<div id='waitDiv' style='position:absolute;left:40%;top:50%;visibility:hidden;text-align: center;'>
     <table cellpadding='6' border='2' class='bg2'>
       <tr>
@@ -155,7 +154,7 @@ function OpenWaitBox()
 
 function CloseWaitBox()
 {
-    $GLOBALS['xoopsLogger']->addDeprecated("Function " . __FUNCTION__ . "() is deprecated");
+    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . '() is deprecated');
     echo "<script type='text/javascript'>
     <!--//
     ap_showWaitMessage('waitDiv', 0);

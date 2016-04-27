@@ -1,9 +1,9 @@
 <?php
-// $Id: update.php 13082 2015-06-06 21:59:41Z beckmi $
+// 
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2016 XOOPS Project (www.xoops.org)            //
-//                       <http://www.xoops.org/>                             //
+//                         <http://xoops.org/>                               //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -62,14 +62,14 @@ function xoops_module_update_system(XoopsModule $module, $prev_version = null)
 function update_system_v211($module)
 {
     global $xoopsDB;
-    $result = $xoopsDB->query("SELECT t1.tpl_id FROM " . $xoopsDB->prefix('tplfile') . " t1, " . $xoopsDB->prefix('tplfile') . " t2 WHERE t1.tpl_refid = t2.tpl_refid AND t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_type = t2.tpl_type AND t1.tpl_id > t2.tpl_id");
+    $result = $xoopsDB->query('SELECT t1.tpl_id FROM ' . $xoopsDB->prefix('tplfile') . ' t1, ' . $xoopsDB->prefix('tplfile') . ' t2 WHERE t1.tpl_refid = t2.tpl_refid AND t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_type = t2.tpl_type AND t1.tpl_id > t2.tpl_id');
     $tplids = array();
     while (list($tplid) = $xoopsDB->fetchRow($result)) {
         $tplids[] = $tplid;
     }
     if (count($tplids) > 0) {
         $tplfile_handler = xoops_getHandler('tplfile');
-        $duplicate_files = $tplfile_handler->getObjects(new Criteria('tpl_id', "(" . implode(',', $tplids) . ")", "IN"));
+        $duplicate_files = $tplfile_handler->getObjects(new Criteria('tpl_id', '(' . implode(',', $tplids) . ')', 'IN'));
 
         if (count($duplicate_files) > 0) {
             foreach (array_keys($duplicate_files) as $i) {
@@ -77,7 +77,7 @@ function update_system_v211($module)
             }
         }
     }
-    $sql = "SHOW INDEX FROM " . $xoopsDB->prefix('tplfile') . " WHERE KEY_NAME = 'tpl_refid_module_set_file_type'";
+    $sql = 'SHOW INDEX FROM ' . $xoopsDB->prefix('tplfile') . " WHERE KEY_NAME = 'tpl_refid_module_set_file_type'";
     if (!$result = $xoopsDB->queryF($sql)) {
         xoops_error($this->db->error() . '<br />' . $sql);
 
@@ -92,7 +92,7 @@ function update_system_v211($module)
 
         return true;
     }
-    $sql = "ALTER TABLE " . $xoopsDB->prefix('tplfile') . " ADD UNIQUE tpl_refid_module_set_file_type ( tpl_refid, tpl_module, tpl_tplset, tpl_file, tpl_type )";
+    $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tplfile') . ' ADD UNIQUE tpl_refid_module_set_file_type ( tpl_refid, tpl_module, tpl_tplset, tpl_file, tpl_type )';
     if (!$result = $xoopsDB->queryF($sql)) {
         xoops_error($xoopsDB->error() . '<br />' . $sql);
         $module->setErrors("'tpl_refid_module_set_file_type' unique index is not added to 'tplfile' table. Warning: do not use XOOPS until you add this unique index.");
@@ -103,4 +103,3 @@ function update_system_v211($module)
     return true;
 }
 // irmtfan bug fix: solve templates duplicate issue
-

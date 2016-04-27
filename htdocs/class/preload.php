@@ -15,7 +15,6 @@
  * @subpackage          class
  * @since               2.4.0
  * @author              trabis <lusopoemas@gmail.com>
- * @version             $Id: preload.php 13082 2015-06-06 21:59:41Z beckmi $
  * @deprecated          To be deprecated in XOOPS 3
  */
 

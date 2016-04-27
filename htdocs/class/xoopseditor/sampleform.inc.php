@@ -15,7 +15,6 @@
  * @subpackage          editor
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: sampleform.inc.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -40,7 +39,7 @@ if (!empty($editor)) {
     // required configs
     $options['editor'] = $editor;
     $options['name']   = 'required_element';
-    $options['value']  = empty($_REQUEST['message']) ? "" : $_REQUEST['message'];
+    $options['value']  = empty($_REQUEST['message']) ? '' : $_REQUEST['message'];
     // optional configs
     $options['rows']   = 25; // default value = 5
     $options['cols']   = 60; // default value = 50

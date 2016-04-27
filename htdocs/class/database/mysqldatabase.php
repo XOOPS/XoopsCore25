@@ -16,7 +16,6 @@
  * @since               1.0.0
  * @author              Kazumi Ono <onokazu@xoops.org>
  * @author              Rodney Fulk <redheadedrod@hotmail.com>
- * @version             $Id: mysqldatabase.php 8066 2011-11-06 05:09:33Z beckmi $
  */
 defined('XOOPS_ROOT_PATH') or die('Restricted access');
 
@@ -63,7 +62,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
             $dbname = '';
         }
         if (XOOPS_DB_PCONNECT == 1) {
-            $this->conn = new mysqli("p:" . XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS, $dbname);
+            $this->conn = new mysqli('p:' . XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS, $dbname);
         } else {
             $this->conn = new mysqli(XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS, $dbname);
         }
@@ -77,7 +76,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
             $this->queryF("SET NAMES '" . XOOPS_DB_CHARSET . "'");
         }
         $db_charset_set = 1;
-        $this->queryF("SET SQL_BIG_SELECTS = 1");
+        $this->queryF('SET SQL_BIG_SELECTS = 1');
 
         return true;
     }
@@ -101,11 +100,12 @@ class XoopsMySQLDatabase extends XoopsDatabase
      *
      * @param mysqli_result $result
      *
-     * @return array
+     * @return array|false false on end of data
      */
     public function fetchRow($result)
     {
-        return @mysqli_fetch_row($result);
+        $row = @mysqli_fetch_row($result);
+        return (null === $row) ? false : $row;
     }
 
     /**
@@ -113,11 +113,13 @@ class XoopsMySQLDatabase extends XoopsDatabase
      *
      * @param mysqli_result $result
      *
-     * @return array
+     * @return array|false false on end of data
      */
     public function fetchArray($result)
     {
-        return @mysqli_fetch_assoc($result);
+        $row = @mysqli_fetch_assoc($result);
+        return (null === $row) ? false : $row;
+
     }
 
     /**
@@ -125,22 +127,24 @@ class XoopsMySQLDatabase extends XoopsDatabase
      *
      * @param mysqli_result $result
      *
-     * @return array
+     * @return array|false false on end of data
      */
     public function fetchBoth($result)
     {
-        return @mysqli_fetch_array($result, MYSQLI_BOTH);
+        $row = @mysqli_fetch_array($result, MYSQLI_BOTH);
+        return (null === $row) ? false : $row;
     }
 
     /**
      * XoopsMySQLiDatabase::fetchObjected()
      *
      * @param mixed $result
-     * @return object|null
+     * @return stdClass|false false on end of data
      */
     public function fetchObject($result)
     {
-        return @mysqli_fetch_object($result);
+        $row = @mysqli_fetch_object($result);
+        return (null === $row) ? false : $row;
     }
 
     /**
@@ -190,12 +194,11 @@ class XoopsMySQLDatabase extends XoopsDatabase
      *
      * @param mysqli_result $result result
      *
-     * @return bool TRUE on success or FALSE on failure.
+     * @return void
      */
     public function freeRecordSet($result)
     {
-        return (mysqli_free_result($result) || (is_object($result)
-                && (get_class($result) === 'mysqli_result')));
+        mysqli_free_result($result);
     }
 
     /**

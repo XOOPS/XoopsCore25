@@ -14,7 +14,6 @@
  * @author              Kazumi Ono (AKA onokazu)
  * @author              Gregory Mage (AKA Mage)
  * @package             system
- * @version             $Id: smilies.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
@@ -73,7 +72,7 @@ class SystemSmilies extends XoopsObject
         }
         $imageselect_img->setExtra('onchange="showImgSelected(\'xo-smilies-img\', \'smile_url\', \'smilies\', \'\', \'' . XOOPS_UPLOAD_URL . '\' )"');
         $imgtray_img->addElement($imageselect_img, false);
-        $imgtray_img->addElement(new XoopsFormLabel('', "<br /><img src='" . XOOPS_UPLOAD_URL . "/smilies/" . $blank_img . "' name='image_img' id='xo-smilies-img' alt='' />"));
+        $imgtray_img->addElement(new XoopsFormLabel('', "<br /><img src='" . XOOPS_UPLOAD_URL . '/smilies/' . $blank_img . "' name='image_img' id='xo-smilies-img' alt='' />"));
 
         $fileseltray_img = new XoopsFormElementTray('<br />', '<br /><br />');
         $fileseltray_img->addElement(new XoopsFormFile(_AM_SYSTEM_SMILIES_UPLOADS, 'smile_url', 500000), false);

@@ -15,40 +15,39 @@
  * @since               2.3.0
  * @author              Jan Pedersen
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: step.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 $indexAdmin = new ModuleAdmin();
 
 $indexAdmin->addItemButton(_ADD . ' ' . _PROFILE_AM_STEP, 'step.php?op=new', 'add', '');
-echo $indexAdmin->addNavigation('step.php');
+echo $indexAdmin->addNavigation(basename(__FILE__));
 echo $indexAdmin->renderButton('right', '');
 
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : (isset($_REQUEST['id']) ? "edit" : 'list');
+$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : (isset($_REQUEST['id']) ? 'edit' : 'list');
 
 $handler = xoops_getModuleHandler('regstep');
 switch ($op) {
-    case "list":
+    case 'list':
         $GLOBALS['xoopsTpl']->assign('steps', $handler->getObjects(null, true, false));
-        $template_main = "profile_admin_steplist.tpl";
+        $template_main = 'profile_admin_steplist.tpl';
         break;
 
-    case "new":
+    case 'new':
         $obj = $handler->create();
         include_once dirname(__DIR__) . '/include/forms.php';
         $form = profile_getStepForm($obj);
         $form->display();
         break;
 
-    case "edit":
+    case 'edit':
         $obj = $handler->get($_REQUEST['id']);
         include_once dirname(__DIR__) . '/include/forms.php';
         $form = profile_getStepForm($obj);
         $form->display();
         break;
 
-    case "save":
+    case 'save':
         if (isset($_REQUEST['id'])) {
             $obj = $handler->get($_REQUEST['id']);
         } else {
@@ -66,7 +65,7 @@ switch ($op) {
         $form->display();
         break;
 
-    case "delete":
+    case 'delete':
         $obj = $handler->get($_REQUEST['id']);
         if (isset($_REQUEST['ok']) && $_REQUEST['ok'] == 1) {
             if ($handler->delete($obj)) {
@@ -84,9 +83,9 @@ switch ($op) {
 
     case 'toggle':
         if (isset($_GET['step_id'])) {
-            $field_id = (int)($_GET['step_id']);
+            $field_id = (int)$_GET['step_id'];
             if (isset($_GET['step_save'])) {
-                $step_save = (int)($_GET['step_save']);
+                $step_save = (int)$_GET['step_save'];
                 profile_stepsave_toggle($step_id, $step_save);
             }
         }

@@ -14,7 +14,6 @@
  * @package             class
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: xoopsload.php 13082 2015-06-06 21:59:41Z beckmi $
  * @todo                For PHP 5 compliant
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
@@ -33,7 +32,7 @@ class XoopsLoad
      *
      * @return bool
      */
-    public static function load($name, $type = "core")
+    public static function load($name, $type = 'core')
     {
         static $loaded;
         static $deprecated;
@@ -136,7 +135,7 @@ class XoopsLoad
 
             return false;
         }
-        include $file;
+        include_once $file;
         $class = 'Xoops' . ucfirst($name);
         if (class_exists($class)) {
             return $class;
@@ -148,8 +147,8 @@ class XoopsLoad
      * Load module class
      *
      * @access private
-     * @param       $name
-     * @param  null $dirname
+     * @param  string      $name    class file name
+     * @param  string|null $dirname module directory name
      * @return bool
      */
     public static function loadModule($name, $dirname = null)
@@ -158,7 +157,7 @@ class XoopsLoad
             return false;
         }
         if (file_exists($file = XOOPS_ROOT_PATH . '/modules/' . $dirname . '/class/' . $name . '.php')) {
-            include $file;
+            include_once $file;
             if (class_exists(ucfirst($dirname) . ucfirst($name))) {
                 return true;
             }

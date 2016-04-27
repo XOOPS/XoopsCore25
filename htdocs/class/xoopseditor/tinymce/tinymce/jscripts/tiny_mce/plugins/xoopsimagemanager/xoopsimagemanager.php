@@ -10,26 +10,25 @@
  * @author              ralf57
  * @author              luciorota <lucio.rota@gmail.com>
  * @author              Laurent JEN <dugris@frxoops.org>
- * @version             $Id: xoopsimagemanager.php 11937 2013-08-18 02:25:16Z beckmi $
  */
 
 // load mainfile.php
 $current_path = __DIR__;
-if (DIRECTORY_SEPARATOR !== "/") {
-    $current_path = str_replace(DIRECTORY_SEPARATOR, "/", $current_path);
+if (DIRECTORY_SEPARATOR !== '/') {
+    $current_path = str_replace(DIRECTORY_SEPARATOR, '/', $current_path);
 }
-$xoops_root_path = substr($current_path, 0, strpos(strtolower($current_path), "/class/xoopseditor/tinymce/"));
-include_once $xoops_root_path . "/mainfile.php";
-defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
+$xoops_root_path = substr($current_path, 0, strpos(strtolower($current_path), '/class/xoopseditor/tinymce/'));
+include_once $xoops_root_path . '/mainfile.php';
+defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 // include
-include_once XOOPS_ROOT_PATH . "/modules/system/constants.php";
+include_once XOOPS_ROOT_PATH . '/modules/system/constants.php';
 
 // check user/group
 $admin = false;
 
 $gperm_handler = xoops_getHandler('groupperm');
-$groups        = is_object($GLOBALS["xoopsUser"]) ? $GLOBALS["xoopsUser"]->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+$groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 $admin         = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_IMAGE, $groups);
 
 // check categories readability/writability by group
@@ -53,7 +52,7 @@ echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . _LANGCODE . '" la
     <base target="_self"/>
 </head>
 
-<body id="xoopsimagemanager" style="display: none">
+<body id="xoopsimagemanager" style="display: none;">
 <form onsubmit="XoopsimagemanagerDialog.insert();return false;" action="#">
     <div class="tabs">
         <ul>
@@ -81,7 +80,7 @@ echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . _LANGCODE . '" la
                                     <td>
                                         <input name="src" type="text" id="src" value=""
                                                onchange="XoopsimagemanagerDialog.showPreviewImage(this.value);"/>
-                                        <?php echo imageBrowser("src", $canbrowse); ?>
+                                        <?php echo imageBrowser('src', $canbrowse); ?>
                                     </td>
                                     <td id="srcbrowsercontainer">&nbsp;</td>
                                 </tr>
@@ -222,7 +221,7 @@ echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . _LANGCODE . '" la
                                 <tr>
                                     <td>
                                         <input id="onmouseoversrc" name="onmouseoversrc" type="text" value=""/>
-                                        <?php echo imageBrowser("onmouseoversrc", $canbrowse); ?>
+                                        <?php echo imageBrowser('onmouseoversrc', $canbrowse); ?>
                                     </td>
                                     <td id="onmouseoversrccontainer">&nbsp;</td>
                                 </tr>
@@ -241,7 +240,7 @@ echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . _LANGCODE . '" la
                                 <tr>
                                     <td>
                                         <input id="onmouseoutsrc" name="onmouseoutsrc" type="text" value=""/>
-                                        <?php echo imageBrowser("onmouseoutsrc", $canbrowse); ?>
+                                        <?php echo imageBrowser('onmouseoutsrc', $canbrowse); ?>
                                     </td>
                                     <td id="onmouseoutsrccontainer">&nbsp;</td>
                                 </tr>
@@ -307,11 +306,11 @@ echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . _LANGCODE . '" la
     </div>
 
     <div class="mceActionPanel">
-        <div style="float: left">
+        <div style="float: left;">
             <input type="button" id="insert" name="insert" value="{#insert}" onclick="XoopsimagemanagerDialog.insert();"/>
         </div>
 
-        <div style="float: right">
+        <div style="float: right;">
             <input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();"/>
         </div>
     </div>
@@ -326,9 +325,9 @@ echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . _LANGCODE . '" la
  *
  * @return string
  */
-function imageBrowser($inputname = "src", $canbrowse = false)
+function imageBrowser($inputname = 'src', $canbrowse = false)
 {
-    $html = "";
+    $html = '';
     if ($canbrowse) {
         $html = "<img title=\"{#xoopsimagebrowser.desc}\" class=\"xoopsimagebrowser\" src=\"img/xoopsimagemanager.png\"
                 onclick=\"javascript:XoopsImageBrowser('" . $inputname . "');\" />\n";

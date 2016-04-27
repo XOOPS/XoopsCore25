@@ -15,7 +15,6 @@
  * @subpackage          textsanitizer
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: mms.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -93,7 +92,7 @@ EOH;
         $rp .= "<PARAM NAME=\"enableErrorDialogs\" VALUE=\"0\">";
         $rp .= "<PARAM NAME=\"_cx\" VALUE=\"12700\">";
         $rp .= "<PARAM NAME=\"_cy\" VALUE=\"8731\">";
-        $rp .= "</OBJECT>";
+        $rp .= '</OBJECT>';
         $ts->replacements[] = $rp;
 
         return true;

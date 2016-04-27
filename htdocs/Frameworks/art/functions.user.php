@@ -6,12 +6,11 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @since               1.00
- * @version             $Id: functions.user.php 13082 2015-06-06 21:59:41Z beckmi $
  * @package             Frameworks
  * @subpackage          art
  */
-if (!defined("FRAMEWORKS_ART_FUNCTIONS_USER")):
-    define("FRAMEWORKS_ART_FUNCTIONS_USER", true);
+if (!defined('FRAMEWORKS_ART_FUNCTIONS_USER')):
+    define('FRAMEWORKS_ART_FUNCTIONS_USER', true);
 
     xoops_load('XoopsUserUtility');
 

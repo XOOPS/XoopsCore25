@@ -11,7 +11,6 @@
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             system
- * @version             $Id: functions.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 /**
@@ -31,14 +30,14 @@ function system_CleanVars(&$global, $key, $default = '', $type = 'int')
             $ret = (isset($global[$key]) && is_array($global[$key])) ? $global[$key] : $default;
             break;
         case 'date':
-            $ret = (isset($global[$key])) ? strtotime($global[$key]) : $default;
+            $ret = isset($global[$key]) ? strtotime($global[$key]) : $default;
             break;
         case 'string':
-            $ret = (isset($global[$key])) ? filter_var($global[$key], FILTER_SANITIZE_MAGIC_QUOTES) : $default;
+            $ret = isset($global[$key]) ? filter_var($global[$key], FILTER_SANITIZE_MAGIC_QUOTES) : $default;
             break;
         case 'int':
         default:
-            $ret = (isset($global[$key])) ? filter_var($global[$key], FILTER_SANITIZE_NUMBER_INT) : $default;
+            $ret = isset($global[$key]) ? filter_var($global[$key], FILTER_SANITIZE_NUMBER_INT) : $default;
             break;
     }
     if ($ret === false) {
@@ -128,7 +127,7 @@ function system_loadTemplate($name)
     if (file_exists($path)) {
         echo $sysTpl->fetch($path);
     } else {
-        echo "Unable to read " . $name;
+        echo 'Unable to read ' . $name;
     }
 }
 

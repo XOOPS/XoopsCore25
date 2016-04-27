@@ -15,10 +15,9 @@
  * @since               2.3.0
  * @author              Jan Pedersen
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: changepass.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-$xoopsOption['pagetype'] = "user";
+$xoopsOption['pagetype'] = 'user';
 include __DIR__ . '/header.php';
 if (!$GLOBALS['xoopsUser']) {
     redirect_header(XOOPS_URL, 2, _NOPERM);

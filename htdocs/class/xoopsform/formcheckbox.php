@@ -16,7 +16,6 @@
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  * @author              Skalpa Keo <skalpa@xoops.org>
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: formcheckbox.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -212,7 +211,7 @@ class XoopsFormCheckBox extends XoopsFormElement
             if (count($ele_value) > 0 && in_array($value, $ele_value)) {
                 $ret .= ' checked="checked"';
             }
-            $ret .= $ele_extra . ' />' . "<label name='xolb_{$ele_name}' for='{$ele_id}{$id_ele}'>" . $name . "</label>" . $ele_delimeter;
+            $ret .= $ele_extra . ' />' . "<label name='xolb_{$ele_name}' for='{$ele_id}{$id_ele}'>" . $name . '</label>' . $ele_delimeter;
             if (!empty($this->columns)) {
                 $ret .= '</td>';
                 if (++$i % $this->columns == 0) {

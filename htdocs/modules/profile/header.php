@@ -15,7 +15,6 @@
  * @since               2.3.0
  * @author              Jan Pedersen
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: header.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 $xoopsOption['pagetype'] = 'user';
@@ -24,8 +23,8 @@ $xoopsOption['xoops_module_header'] = '<link rel="stylesheet" type="text/css" hr
 
 $xoBreadcrumbs   = array();
 $xoBreadcrumbs[] = array(
-    "title" => $GLOBALS['xoopsModule']->getVar('name'),
-    "link"  => XOOPS_URL . "/modules/" . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/');
+    'title' => $GLOBALS['xoopsModule']->getVar('name'),
+    'link' => XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/');
 
 //disable cache
 $GLOBALS['xoopsConfig']['module_cache'][$GLOBALS['xoopsModule']->getVar('mid')] = 0;

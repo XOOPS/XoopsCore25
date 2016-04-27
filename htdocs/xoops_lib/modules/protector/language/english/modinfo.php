@@ -9,15 +9,15 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . '_LOADED')) {
     define($constpref . '_LOADED', 1);
 
     // The name of this module
-    define($constpref . "_NAME", "Protector");
+    define($constpref . '_NAME', 'Protector');
 
     // A brief description of this module
-    define($constpref . "_DESC", "This module protects your XOOPS site from various attacks like DoS, SQL Injection, and Variables contamination.");
+    define($constpref . '_DESC', 'This module protects your XOOPS site from various attacks like DoS, SQL Injection, and Variables contamination.');
 
     // Menu
-    define($constpref . "_ADMININDEX", "Protector Center");
-    define($constpref . "_ADVISORY", "Security Advisory");
-    define($constpref . "_PREFIXMANAGER", "Prefix Manager");
+    define($constpref . '_ADMININDEX', 'Protector Center');
+    define($constpref . '_ADVISORY', 'Security Advisory');
+    define($constpref . '_PREFIXMANAGER', 'Prefix Manager');
     define($constpref . '_ADMENU_MYBLOCKSADMIN', 'Permissions');
 
     // Configs
@@ -116,8 +116,8 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . '_LOADED')) {
     define($constpref . '_SPAMURI4GDSC', 'If this number of URLs are found in POST data from guests, the POST is considered as SPAM. 0 means disabling this feature.');
 
     //3.40b
-    define($constpref . "_ADMINHOME", "Home");
-    define($constpref . "_ADMINABOUT", "About");
+    define($constpref . '_ADMINHOME', 'Home');
+    define($constpref . '_ADMINABOUT', 'About');
     //3.50
     define($constpref . '_STOPFORUMSPAM_ACTION', 'Stop Forum Spam');
     define($constpref . '_STOPFORUMSPAM_ACTIONDSC', 'Checks POST data against spammers registered on www.stopforumspam.com database. Requires php CURL lib.');

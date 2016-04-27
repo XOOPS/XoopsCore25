@@ -24,7 +24,6 @@
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
  * @author           Kris <kris@frxoops.org>
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
- * @version          $Id: index.php 13082 2015-06-06 21:59:41Z beckmi $
  **/
 
 require_once 'page_langselect.php';

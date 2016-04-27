@@ -24,7 +24,6 @@
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
  * @author           DuGris <dugris@frxoops.org>
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
- * @version          $Id: page_langselect.php 13082 2015-06-06 21:59:41Z beckmi $
  **/
 
 require_once './include/common.inc.php';
@@ -46,11 +45,11 @@ $pageHasForm = true;
 $title       = LANGUAGE_SELECTION;
 $content     = '<select name="lang" size="10" style="min-width: 10em;">';
 
-$languages = getDirList("./language/");
+$languages = getDirList('./language/');
 foreach ($languages as $lang) {
     $sel = ($lang == $wizard->language) ? ' selected="selected"' : '';
     $content .= "<option value=\"{$lang}\"{$sel}>{$lang}</option>\n";
 }
-$content .= "</select>";
+$content .= '</select>';
 
 include './include/install_tpl.php';

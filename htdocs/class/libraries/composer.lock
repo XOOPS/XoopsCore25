@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ba60218844160ff388a2bbd4ac8028b2",
-    "content-hash": "7a91e39fbee8beaef4ca9ee3a6ab0bdb",
+    "hash": "d9b519927f66120de90916354516a5d1",
+    "content-hash": "c494eb34e7eb68440be459c483dbd792",
     "packages": [
         {
             "name": "firebase/php-jwt",
@@ -239,6 +239,38 @@
             "time": "2015-09-16 14:09:00"
         },
         {
+            "name": "smottt/wideimage",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/smottt/WideImage.git",
+                "reference": "6cbdaa6eb186c4a618b2ef5a7f38fcb50f0f2b1b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/smottt/WideImage/zipball/6cbdaa6eb186c4a618b2ef5a7f38fcb50f0f2b1b",
+                "reference": "6cbdaa6eb186c4a618b2ef5a7f38fcb50f0f2b1b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "WideImage": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0",
+                "LGPL-2.1"
+            ],
+            "description": "An open-source PHP library for image manipulation. (With namespaces, PHP 5.3+)",
+            "homepage": "http://wideimage.sourceforge.net",
+            "time": "2015-10-05 20:32:34"
+        },
+        {
             "name": "symfony/yaml",
             "version": "v2.4.10",
             "target-dir": "Symfony/Component/Yaml",
@@ -287,16 +319,16 @@
         },
         {
             "name": "xoops/xmf",
-            "version": "v1.0.0-RC2",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/XOOPS/xmf.git",
-                "reference": "197a1b51b9f39f97a7e1c316756d0af329696ee1"
+                "reference": "cbad09bfb597a22586be1957c7f09a43e35f6490"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/XOOPS/xmf/zipball/197a1b51b9f39f97a7e1c316756d0af329696ee1",
-                "reference": "197a1b51b9f39f97a7e1c316756d0af329696ee1",
+                "url": "https://api.github.com/repos/XOOPS/xmf/zipball/cbad09bfb597a22586be1957c7f09a43e35f6490",
+                "reference": "cbad09bfb597a22586be1957c7f09a43e35f6490",
                 "shasum": ""
             },
             "require": {
@@ -317,15 +349,13 @@
                 "GPL-2.0+"
             ],
             "description": "XMF - XOOPS Module Framework",
-            "time": "2016-03-07 22:41:14"
+            "time": "2016-03-30 16:13:01"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "xoops/xmf": 5
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

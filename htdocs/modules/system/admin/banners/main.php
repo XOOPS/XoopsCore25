@@ -1,9 +1,9 @@
 <?php
-// $Id: main.php 13082 2015-06-06 21:59:41Z beckmi $
+// 
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2016 XOOPS Project (www.xoops.org)            //
-//                       <http://www.xoops.org/>                             //
+//                         <http://xoops.org/>                               //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -58,22 +58,22 @@ $xoBreadCrumb->addLink(_AM_SYSTEM_BANNERS_NAV_MANAGER, system_adminVersion('bann
 switch ($op) {
     // Banners
     case 'banner_save': // Save banner
-        if (!$GLOBALS["xoopsSecurity"]->check()) {
-            redirect_header("admin.php?fct=banners", 3, implode(",", $GLOBALS["xoopsSecurity"]->getErrors()));
+        if (!$GLOBALS['xoopsSecurity']->check()) {
+            redirect_header('admin.php?fct=banners', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         $bid = system_CleanVars($_POST, 'bid', 0, 'int');
         if ($bid > 0) {
             $obj = $banner_Handler->get($bid);
         } else {
             $obj = $banner_Handler->create();
-            $obj->setVar("date", time());
+            $obj->setVar('date', time());
         }
         $obj->setVars($_POST);
         $verif_htmlbanner = system_CleanVars($_POST, 'htmlbanner', 0, 'int');
-        $obj->setVar("htmlbanner", $verif_htmlbanner);
+        $obj->setVar('htmlbanner', $verif_htmlbanner);
 
         if ($banner_Handler->insert($obj)) {
-            redirect_header("admin.php?fct=banners", 2, _AM_SYSTEM_BANNERS_DBUPDATED);
+            redirect_header('admin.php?fct=banners', 2, _AM_SYSTEM_BANNERS_DBUPDATED);
         }
         xoops_error($obj->getHtmlErrors());
         $form = $obj->getForm(false);
@@ -104,20 +104,20 @@ switch ($op) {
         $bid = system_CleanVars($_REQUEST, 'bid', 0, 'int');
         if ($bid > 0) {
             $obj = $banner_Handler->get($bid);
-            if (isset($_POST["ok"]) && $_POST["ok"] == 1) {
-                if (!$GLOBALS["xoopsSecurity"]->check()) {
-                    redirect_header("admin.php?fct=banners", 3, implode(",", $GLOBALS["xoopsSecurity"]->getErrors()));
+            if (isset($_POST['ok']) && $_POST['ok'] == 1) {
+                if (!$GLOBALS['xoopsSecurity']->check()) {
+                    redirect_header('admin.php?fct=banners', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
                 }
                 if ($banner_Handler->delete($obj)) {
-                    redirect_header("admin.php?fct=banners", 3, _AM_SYSTEM_BANNERS_DELEBNR);
+                    redirect_header('admin.php?fct=banners', 3, _AM_SYSTEM_BANNERS_DELEBNR);
                 } else {
                     xoops_error($obj->getHtmlErrors());
                 }
             } else {
                 xoops_confirm(array(
-                                  "ok"  => 1,
-                                  "bid" => $bid,
-                                  "op"  => "banner_delete"), 'admin.php?fct=banners', sprintf(_AM_SYSTEM_BANNERS_SUREDELE));
+                                  'ok' => 1,
+                                  'bid' => $bid,
+                                  'op' => 'banner_delete'), 'admin.php?fct=banners', sprintf(_AM_SYSTEM_BANNERS_SUREDELE));
             }
         } else {
             redirect_header('admin.php?fct=banners', 1, _AM_SYSTEM_DBERROR);
@@ -132,20 +132,20 @@ switch ($op) {
         $bid = system_CleanVars($_REQUEST, 'bid', 0, 'int');
         if ($bid > 0) {
             $obj = $banner_finish_Handler->get($bid);
-            if (isset($_POST["ok"]) && $_POST["ok"] == 1) {
-                if (!$GLOBALS["xoopsSecurity"]->check()) {
-                    redirect_header("admin.php?fct=banners", 3, implode(",", $GLOBALS["xoopsSecurity"]->getErrors()));
+            if (isset($_POST['ok']) && $_POST['ok'] == 1) {
+                if (!$GLOBALS['xoopsSecurity']->check()) {
+                    redirect_header('admin.php?fct=banners', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
                 }
                 if ($banner_finish_Handler->delete($obj)) {
-                    redirect_header("admin.php?fct=banners", 3, _AM_SYSTEM_BANNERS_DBUPDATED);
+                    redirect_header('admin.php?fct=banners', 3, _AM_SYSTEM_BANNERS_DBUPDATED);
                 } else {
                     xoops_error($obj->getHtmlErrors());
                 }
             } else {
                 xoops_confirm(array(
-                                  "ok"  => 1,
-                                  "bid" => $bid,
-                                  "op"  => "banner_finish_delete"), 'admin.php?fct=banners', sprintf(_AM_SYSTEM_BANNERS_SUREDELE));
+                                  'ok' => 1,
+                                  'bid' => $bid,
+                                  'op' => 'banner_finish_delete'), 'admin.php?fct=banners', sprintf(_AM_SYSTEM_BANNERS_SUREDELE));
             }
         } else {
             redirect_header('admin.php?fct=banners', 1, _AM_SYSTEM_DBERROR);
@@ -154,8 +154,8 @@ switch ($op) {
 
     // Clients
     case 'banner_client_save': // Save client
-        if (!$GLOBALS["xoopsSecurity"]->check()) {
-            redirect_header("admin.php?fct=banners", 3, implode(",", $GLOBALS["xoopsSecurity"]->getErrors()));
+        if (!$GLOBALS['xoopsSecurity']->check()) {
+            redirect_header('admin.php?fct=banners', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         $cid = system_CleanVars($_REQUEST, 'cid', 0, 'int');
         if ($cid > 0) {
@@ -166,7 +166,7 @@ switch ($op) {
         $obj->setVars($_POST);
 
         if ($banner_client_Handler->insert($obj)) {
-            redirect_header("admin.php?fct=banners", 2, _AM_SYSTEM_BANNERS_DBUPDATED);
+            redirect_header('admin.php?fct=banners', 2, _AM_SYSTEM_BANNERS_DBUPDATED);
         }
 
         xoops_error($obj->getHtmlErrors());
@@ -198,24 +198,24 @@ switch ($op) {
         $cid = system_CleanVars($_REQUEST, 'cid', 0, 'int');
         if ($cid > 0) {
             $obj = $banner_client_Handler->get($cid);
-            if (isset($_POST["ok"]) && $_POST["ok"] == 1) {
-                if (!$GLOBALS["xoopsSecurity"]->check()) {
-                    redirect_header("admin.php?fct=banners", 3, implode(",", $GLOBALS["xoopsSecurity"]->getErrors()));
+            if (isset($_POST['ok']) && $_POST['ok'] == 1) {
+                if (!$GLOBALS['xoopsSecurity']->check()) {
+                    redirect_header('admin.php?fct=banners', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
                 }
                 if ($banner_client_Handler->delete($obj)) {
                     // Delete client banners
                     $banner_Handler->deleteAll(new Criteria('cid', $cid));
                     $banner_finish_Handler->deleteAll(new Criteria('cid', $cid));
 
-                    redirect_header("admin.php?fct=banners", 3, _AM_SYSTEM_BANNERS_DBUPDATED);
+                    redirect_header('admin.php?fct=banners', 3, _AM_SYSTEM_BANNERS_DBUPDATED);
                 } else {
                     xoops_error($obj->getHtmlErrors());
                 }
             } else {
                 xoops_confirm(array(
-                                  "ok"  => 1,
-                                  "cid" => $cid,
-                                  "op"  => "banner_client_delete"), 'admin.php?fct=banners', _AM_SYSTEM_BANNERS_SUREDELBNR);
+                                  'ok' => 1,
+                                  'cid' => $cid,
+                                  'op' => 'banner_client_delete'), 'admin.php?fct=banners', _AM_SYSTEM_BANNERS_SUREDELBNR);
             }
         } else {
             redirect_header('admin.php?fct=banners', 1, _AM_SYSTEM_DBERROR);
@@ -254,8 +254,8 @@ switch ($op) {
         // Display Banners
         // Criteria
         $criteria = new CriteriaCompo();
-        $criteria->setSort("date");
-        $criteria->setOrder("DESC");
+        $criteria->setSort('date');
+        $criteria->setOrder('DESC');
         $criteria->setStart($start);
         $criteria->setLimit($nb_aff);
 
@@ -266,16 +266,16 @@ switch ($op) {
 
         if ($banner_count > 0) {
             foreach (array_keys($banner_arr) as $i) {
-                $bid         = $banner_arr[$i]->getVar("bid");
-                $imptotal    = $banner_arr[$i]->getVar("imptotal");
-                $impmade     = $banner_arr[$i]->getVar("impmade");
-                $imageurl    = $banner_arr[$i]->getVar("imageurl");
-                $clicks      = $banner_arr[$i]->getVar("clicks");
-                $htmlbanner  = $banner_arr[$i]->getVar("htmlbanner");
-                $htmlcode    = $banner_arr[$i]->getVar("htmlcode");
-                $name_client = $banner_client_Handler->get($banner_arr[$i]->getVar("cid"));
+                $bid         = $banner_arr[$i]->getVar('bid');
+                $imptotal    = $banner_arr[$i]->getVar('imptotal');
+                $impmade     = $banner_arr[$i]->getVar('impmade');
+                $imageurl    = $banner_arr[$i]->getVar('imageurl');
+                $clicks      = $banner_arr[$i]->getVar('clicks');
+                $htmlbanner  = $banner_arr[$i]->getVar('htmlbanner');
+                $htmlcode    = $banner_arr[$i]->getVar('htmlcode');
+                $name_client = $banner_client_Handler->get($banner_arr[$i]->getVar('cid'));
                 if (is_object($name_client)) {
-                    $name = $name_client->getVar("name");
+                    $name = $name_client->getVar('name');
                 }
 
                 if ($impmade == 0) {
@@ -284,7 +284,7 @@ switch ($op) {
                     $percent = substr(100 * $clicks / $impmade, 0, 5);
                 }
                 if ($imptotal == 0) {
-                    $left = "" . _AM_SYSTEM_BANNERS_UNLIMIT . "";
+                    $left = '' . _AM_SYSTEM_BANNERS_UNLIMIT . '';
                 } else {
                     $left = $imptotal - $impmade;
                 }
@@ -294,13 +294,13 @@ switch ($op) {
                 if ($htmlbanner) {
                     $img .= html_entity_decode($htmlcode);
                 } else {
-                    if (strtolower(substr($imageurl, strrpos($imageurl, "."))) === ".swf") {
+                    if (strtolower(substr($imageurl, strrpos($imageurl, '.'))) === '.swf') {
                         $img .= "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/ swflash.cab#version=6,0,40,0\" width=\"468\" height=\"60\">";
                         $img .= "<param name=movie value=\"$imageurl\">";
-                        $img .= "<param name=quality value=high>";
+                        $img .= '<param name=quality value=high>';
                         $img .= "<embed src=\"$imageurl\" quality=high pluginspage=\"http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash\"  type=\"application/x-shockwave-flash\" width=\"468\" height=\"60\">";
-                        $img .= "</embed>";
-                        $img .= "</object>";
+                        $img .= '</embed>';
+                        $img .= '</object>';
                     } else {
                         $img .= "<img src='" . $imageurl . "' alt='' />";
                     }
@@ -328,8 +328,8 @@ switch ($op) {
         // Display Finished Banners
         // Criteria
         $criteria = new CriteriaCompo();
-        $criteria->setSort("bid");
-        $criteria->setOrder("DESC");
+        $criteria->setSort('bid');
+        $criteria->setOrder('DESC');
         $criteria->setStart($startF);
         $criteria->setLimit($nb_aff);
 
@@ -340,10 +340,10 @@ switch ($op) {
 
         if ($banner_finish_count > 0) {
             foreach (array_keys($banner_finish_arr) as $i) {
-                $bid = $banner_finish_arr[$i]->getVar("bid");
+                $bid = $banner_finish_arr[$i]->getVar('bid');
                 //$imageurl = $banner_arr[$i]->getVar("imageurl");
-                $impressions = $banner_finish_arr[$i]->getVar("impressions");
-                $clicks      = $banner_finish_arr[$i]->getVar("clicks");
+                $impressions = $banner_finish_arr[$i]->getVar('impressions');
+                $clicks      = $banner_finish_arr[$i]->getVar('clicks');
                 if ($impressions != 0) {
                     $percent = substr(100 * $clicks / $impressions, 0, 5);
                 }
@@ -353,10 +353,10 @@ switch ($op) {
                 $banner_finish['clicks']      = $clicks;
                 $banner_finish['left']        = $left;
                 $banner_finish['percent']     = $percent;
-                $banner_finish['datestart']   = formatTimestamp($banner_finish_arr[$i]->getVar("datestart"), "m");
-                $banner_finish['dateend']     = formatTimestamp($banner_finish_arr[$i]->getVar("dateend"), "m");
-                $name_client                  = $banner_client_Handler->get($banner_finish_arr[$i]->getVar("cid"));
-                $banner_finish['name']        = $name_client->getVar("name");
+                $banner_finish['datestart']   = formatTimestamp($banner_finish_arr[$i]->getVar('datestart'), 'm');
+                $banner_finish['dateend']     = formatTimestamp($banner_finish_arr[$i]->getVar('dateend'), 'm');
+                $name_client                  = $banner_client_Handler->get($banner_finish_arr[$i]->getVar('cid'));
+                $banner_finish['name']        = $name_client->getVar('name');
                 $banner_finish['edit_delete'] = '<img class="cursorpointer" onclick="display_dialog(' . $bid . '000, true, true, \'slide\', \'slide\', 200, 520);" src="images/icons/view.png" alt="' . _AM_SYSTEM_BANNERS_VIEW . '" title="' . _AM_SYSTEM_BANNERS_VIEW . '" /><a href="admin.php?fct=banners&amp;op=banner_finish_delete&amp;bid=' . $bid . '"><img src="./images/icons/delete.png" border="0" alt="' . _AM_SYSTEM_BANNERS_DELETE . '" title="' . _AM_SYSTEM_BANNERS_DELETE . '"></a>';
 
                 $xoopsTpl->append_by_ref('banner_finish', $banner_finish);
@@ -370,8 +370,8 @@ switch ($op) {
         }
         // Display client
         $criteria = new CriteriaCompo();
-        $criteria->setSort("cid");
-        $criteria->setOrder("DESC");
+        $criteria->setSort('cid');
+        $criteria->setOrder('DESC');
         $criteria->setStart($startC);
         $criteria->setLimit($nb_aff);
 
@@ -382,16 +382,16 @@ switch ($op) {
 
         if ($banner_client_count > 0) {
             foreach (array_keys($banner_client_arr) as $i) {
-                $cid = $banner_client_arr[$i]->getVar("cid");
+                $cid = $banner_client_arr[$i]->getVar('cid');
 
                 $criteria = new CriteriaCompo();
                 $criteria->add(new Criteria('cid', $cid, '='));
                 $banner_active                  = $banner_Handler->getCount($criteria);
                 $banner_client['cid']           = $cid;
                 $banner_client['banner_active'] = $banner_active;
-                $banner_client['name']          = $banner_client_arr[$i]->getVar("name");
-                $banner_client['contact']       = $banner_client_arr[$i]->getVar("contact");
-                $banner_client['email']         = $banner_client_arr[$i]->getVar("email");
+                $banner_client['name']          = $banner_client_arr[$i]->getVar('name');
+                $banner_client['contact']       = $banner_client_arr[$i]->getVar('contact');
+                $banner_client['email']         = $banner_client_arr[$i]->getVar('email');
                 $banner_client['edit_delete']   = '<a href="admin.php?fct=banners&amp;op=banner_client_edit&amp;cid=' . $cid . '"><img src="./images/icons/edit.png" border="0" alt="' . _AM_SYSTEM_BANNERS_EDIT . '" title="' . _AM_SYSTEM_BANNERS_EDIT . '"></a><a href="admin.php?fct=banners&amp;op=banner_client_delete&amp;cid=' . $cid . '"><img src="./images/icons/delete.png" border="0" alt="' . _AM_SYSTEM_BANNERS_DELETE . '" title="' . _AM_SYSTEM_BANNERS_DELETE . '"></a>';
 
                 $xoopsTpl->append_by_ref('banner_client', $banner_client);

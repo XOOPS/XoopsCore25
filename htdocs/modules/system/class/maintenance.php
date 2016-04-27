@@ -13,7 +13,6 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Cointin Maxime (AKA Kraven30)
  * @package             system
- * @version             $Id: maintenance.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
@@ -221,7 +220,7 @@ class SystemMaintenance
         $ret    = array();
         $ret[0] = "# \n";
         $ret[0] .= "# Dump SQL, Generate by Xoops \n";
-        $ret[0] .= "# Date : " . date('d-m-Y - H:i') . " \n";
+        $ret[0] .= '# Date : ' . date('d-m-Y - H:i') . " \n";
         $ret[1]      = '<table class="outer"><tr><th width="30%">' . _AM_SYSTEM_MAINTENANCE_DUMP_TABLES . '</th><th width="35%">' . _AM_SYSTEM_MAINTENANCE_DUMP_STRUCTURES . '</th><th  width="35%">' . _AM_SYSTEM_MAINTENANCE_DUMP_NB_RECORDS . '</th></tr>';
         $class       = 'odd';
         $tablesCount = count($tables);
@@ -250,7 +249,7 @@ class SystemMaintenance
         $ret    = array();
         $ret[0] = "# \n";
         $ret[0] .= "# Dump SQL, Generate by Xoops \n";
-        $ret[0] .= "# Date : " . date('d-m-Y - H:i') . " \n";
+        $ret[0] .= '# Date : ' . date('d-m-Y - H:i') . " \n";
         $ret[0] .= "# \n\n";
         $ret[1]       = '<table class="outer"><tr><th width="30%">' . _AM_SYSTEM_MAINTENANCE_DUMP_TABLES . '</th><th width="35%">' . _AM_SYSTEM_MAINTENANCE_DUMP_STRUCTURES . '</th><th  width="35%">' . _AM_SYSTEM_MAINTENANCE_DUMP_NB_RECORDS . '</th></tr>';
         $class        = 'odd';
@@ -293,9 +292,9 @@ class SystemMaintenance
         $result = $this->db->queryF('SHOW create table `' . $table . '`;');
         if ($result) {
             if ($row = $this->db->fetchArray($result)) {
-                $ret[0] .= "# Table structure for table `" . $table . "` \n\n";
+                $ret[0] .= '# Table structure for table `' . $table . "` \n\n";
                 if ($drop == 1) {
-                    $ret[0] .= "DROP TABLE IF EXISTS `" . $table . "`;\n\n";
+                    $ret[0] .= 'DROP TABLE IF EXISTS `' . $table . "`;\n\n";
                 }
                 $verif = true;
                 $ret[0] .= $row['Create Table'] . ";\n\n";
@@ -328,19 +327,19 @@ class SystemMaintenance
                 $field_type = array();
                 $i          = 0;
                 while ($i < $num_fields) {
-                    $meta = mysqli_fetch_field($result, $i);
-                    ($field_type[] = $meta->type);
+                    $meta = mysqli_fetch_field($result);
+                    $field_type[] = $meta->type;
                     ++$i;
                 }
 
-                $ret[0] .= "INSERT INTO `" . $table . "` values\n";
+                $ret[0] .= 'INSERT INTO `' . $table . "` values\n";
                 $index = 0;
                 while ($row = $this->db->fetchRow($result)) {
                     ++$count;
-                    $ret[0] .= "(";
+                    $ret[0] .= '(';
                     for ($i = 0; $i < $num_fields; ++$i) {
-                        if (null === ($row[$i])) {
-                            $ret[0] .= "null";
+                        if (null === $row[$i]) {
+                            $ret[0] .= 'null';
                         } else {
                             switch ($field_type[$i]) {
                                 case 'int':
@@ -351,15 +350,15 @@ class SystemMaintenance
                             }
                         }
                         if ($i < $num_fields - 1) {
-                            $ret[0] .= ",";
+                            $ret[0] .= ',';
                         }
                     }
-                    $ret[0] .= ")";
+                    $ret[0] .= ')';
 
                     if ($index < $num_rows - 1) {
-                        $ret[0] .= ",";
+                        $ret[0] .= ',';
                     } else {
-                        $ret[0] .= ";";
+                        $ret[0] .= ';';
                     }
                     $ret[0] .= "\n";
                     ++$index;
@@ -383,8 +382,8 @@ class SystemMaintenance
      */
     public function dump_write($ret)
     {
-        $file_name = "dump_" . date("Y.m.d") . "_" . date("H.i.s") . ".sql";
-        $path_file = "./admin/maintenance/dump/" . $file_name;
+        $file_name = 'dump_' . date('Y.m.d') . '_' . date('H.i.s') . '.sql';
+        $path_file = './admin/maintenance/dump/' . $file_name;
         if (file_put_contents($path_file, $ret[0])) {
             $ret[1] .= '<table class="outer"><tr><th colspan="2" align="center">' . _AM_SYSTEM_MAINTENANCE_DUMP_FILE_CREATED . '</th><th>' . _AM_SYSTEM_MAINTENANCE_DUMP_RESULT . '</th></tr><tr><td colspan="2" align="center"><a href="' . XOOPS_URL . '/modules/system/admin/maintenance/dump/' . $file_name . '">' . $file_name . '</a></td><td  class="xo-actions txtcenter"><img src="' . system_AdminIcons('success.png') . '" /></td><tr></table>';
         } else {

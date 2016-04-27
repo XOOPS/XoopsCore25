@@ -1,9 +1,9 @@
 <?php
-// $Id: main.php 13082 2015-06-06 21:59:41Z beckmi $
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2016 XOOPS Project (www.xoops.org)            //
-//                       <http://www.xoops.org/>                             //
+//                         <http://xoops.org/>                               //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -222,10 +222,7 @@ switch ($op) {
         $xoBreadCrumb->render();
         $error = array();
         if (!is_writable(XOOPS_CACHE_PATH . '/')) {
-            // attempt to chmod 666
-            if (!chmod(XOOPS_CACHE_PATH . '/', 0777)) {
-                $error[] = sprintf(_MUSTWABLE, "<strong>" . XOOPS_CACHE_PATH . '/</strong>');
-            }
+            $error[] = sprintf(_MUSTWABLE, '<strong>' . XOOPS_CACHE_PATH . '/</strong>');
         }
         if (count($error) > 0) {
             // Display Error
@@ -421,7 +418,7 @@ switch ($op) {
         $ret   = array();
         $ret[] = xoops_module_uninstall($module);
         // Flush cache files for cpanel GUIs
-        xoops_load("cpanel", "system");
+        xoops_load('cpanel', 'system');
         XoopsSystemCpanel::flush();
         //Set active modules in cache folder
         xoops_setActiveModules();
@@ -477,7 +474,7 @@ switch ($op) {
         $ret   = array();
         $ret[] = xoops_module_update($module);
         // Flush cache files for cpanel GUIs
-        xoops_load("cpanel", "system");
+        xoops_load('cpanel', 'system');
         XoopsSystemCpanel::flush();
         //Set active modules in cache folder
         xoops_setActiveModules();
@@ -489,8 +486,8 @@ switch ($op) {
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         // Define Breadcrumb and tips
         $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_ADMIN, system_adminVersion('modulesadmin', 'adminpath'));
-        $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_UNINSTALL);
-        $xoBreadCrumb->addHelp(system_adminVersion('modulesadmin', 'help') . '#delete');
+        $xoBreadCrumb->addLink(_AM_SYSTEM_MODULES_UPDATE);
+        $xoBreadCrumb->addHelp(system_adminVersion('modulesadmin', 'help') . '#update');
         $xoBreadCrumb->render();
         if (count($ret) > 0) {
             foreach ($ret as $msg) {

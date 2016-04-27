@@ -21,7 +21,6 @@
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu)
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: search.php 13090 2015-06-16 20:44:29Z beckmi $
  * @todo                Modularize; Both search algorithms and interface will be redesigned
  */
 include __DIR__ . '/mainfile.php';
@@ -35,19 +34,19 @@ if ($xoopsConfigSearch['enable_search'] != 1) {
     header('Location: ' . XOOPS_URL . '/index.php');
     exit();
 }
-$action = "search";
+$action = 'search';
 if (!empty($_GET['action'])) {
     $action = trim(strip_tags($_GET['action']));
 } elseif (!empty($_POST['action'])) {
     $action = trim(strip_tags($_POST['action']));
 }
-$query = "";
+$query = '';
 if (!empty($_GET['query'])) {
     $query = trim(strip_tags($_GET['query']));
 } elseif (!empty($_POST['query'])) {
     $query = trim(strip_tags($_POST['query']));
 }
-$andor = "AND";
+$andor = 'AND';
 if (!empty($_GET['andor'])) {
     $andor = trim(strip_tags($_GET['andor']));
 } elseif (!empty($_POST['andor'])) {
@@ -55,34 +54,34 @@ if (!empty($_GET['andor'])) {
 }
 $mid = $uid = $start = 0;
 if (!empty($_GET['mid'])) {
-    $mid = (int)($_GET['mid']);
+    $mid = (int)$_GET['mid'];
 } elseif (!empty($_POST['mid'])) {
-    $mid = (int)($_POST['mid']);
+    $mid = (int)$_POST['mid'];
 }
 if (!empty($_GET['uid'])) {
-    $uid = (int)($_GET['uid']);
+    $uid = (int)$_GET['uid'];
 } elseif (!empty($_POST['uid'])) {
-    $uid = (int)($_POST['uid']);
+    $uid = (int)$_POST['uid'];
 }
 if (!empty($_GET['start'])) {
-    $start = (int)($_GET['start']);
+    $start = (int)$_GET['start'];
 } elseif (!empty($_POST['start'])) {
-    $start = (int)($_POST['start']);
+    $start = (int)$_POST['start'];
 }
 
 $queries = array();
 
-if ($action === "results") {
-    if ($query == "") {
-        redirect_header("search.php", 1, _SR_PLZENTER);
+if ($action === 'results') {
+    if ($query == '') {
+        redirect_header('search.php', 1, _SR_PLZENTER);
     }
-} elseif ($action === "showall") {
-    if ($query == "" || empty($mid)) {
-        redirect_header("search.php", 1, _SR_PLZENTER);
+} elseif ($action === 'showall') {
+    if ($query == '' || empty($mid)) {
+        redirect_header('search.php', 1, _SR_PLZENTER);
     }
-} elseif ($action === "showallbyuser") {
+} elseif ($action === 'showallbyuser') {
     if (empty($mid) || empty($uid)) {
-        redirect_header("search.php", 1, _SR_PLZENTER);
+        redirect_header('search.php', 1, _SR_PLZENTER);
     }
 }
 
@@ -96,13 +95,13 @@ if ($action === 'search') {
     include $GLOBALS['xoops']->path('footer.php');
     exit();
 }
-if ($andor !== "OR" && $andor !== "exact" && $andor !== "AND") {
-    $andor = "AND";
+if ($andor !== 'OR' && $andor !== 'exact' && $andor !== 'AND') {
+    $andor = 'AND';
 }
 
 $myts = MyTextSanitizer::getInstance();
 if ($action !== 'showallbyuser') {
-    if ($andor !== "exact") {
+    if ($andor !== 'exact') {
         $ignored_queries = array(); // holds kewords that are shorter than allowed minmum length
         $temp_queries    = preg_split('/[\s,]+/', $query);
         foreach ($temp_queries as $q) {
@@ -125,11 +124,11 @@ if ($action !== 'showallbyuser') {
     }
 }
 switch ($action) {
-    case "results":
+    case 'results':
         $module_handler = xoops_getHandler('module');
         $criteria       = new CriteriaCompo(new Criteria('hassearch', 1));
         $criteria->add(new Criteria('isactive', 1));
-        $criteria->add(new Criteria('mid', "(" . implode(',', $available_modules) . ")", 'IN'));
+        $criteria->add(new Criteria('mid', '(' . implode(',', $available_modules) . ')', 'IN'));
         $modules = $module_handler->getObjects($criteria, true);
         $mids    = isset($_REQUEST['mids']) ? $_REQUEST['mids'] : array();
         if (empty($mids) || !is_array($mids)) {
@@ -139,7 +138,7 @@ switch ($action) {
         $xoopsOption['xoops_pagetitle'] = _SR_SEARCHRESULTS . ': ' . implode(' ', $queries);
         include $GLOBALS['xoops']->path('header.php');
         $nomatch = true;
-        echo "<h3>" . _SR_SEARCHRESULTS . "</h3>\n";
+        echo '<h3>' . _SR_SEARCHRESULTS . "</h3>\n";
         echo _SR_KEYWORDS . ':';
         if ($andor !== 'exact') {
             foreach ($queries as $q) {
@@ -157,31 +156,31 @@ switch ($action) {
         }
         echo '<br />';
         foreach ($mids as $mid) {
-            $mid = (int)($mid);
+            $mid = (int)$mid;
             if (in_array($mid, $available_modules)) {
                 $module  = $modules[$mid];
                 $results = $module->search($queries, $andor, 5, 0);
                 $count   = count($results);
                 if (is_array($results) && $count > 0) {
                     $nomatch = false;
-                    echo "<h4>" . $module->getVar('name') . "</h4>";
+                    echo '<h4>' . $module->getVar('name') . '</h4>';
                     for ($i = 0; $i < $count; ++$i) {
-                        if (isset($results[$i]['image']) && $results[$i]['image'] != "") {
-                            echo "<img src='modules/" . $module->getVar('dirname') . "/" . $results[$i]['image'] . "' alt='" . $module->getVar('name') . "' />&nbsp;";
+                        if (isset($results[$i]['image']) && $results[$i]['image'] != '') {
+                            echo "<img src='modules/" . $module->getVar('dirname') . '/' . $results[$i]['image'] . "' alt='" . $module->getVar('name') . "' />&nbsp;";
                         } else {
                             echo "<img style='width:26px; height:26px;' src='images/icons/posticon2.gif' alt='" . $module->getVar('name') . "' />&nbsp;";
                         }
                         if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
-                            $results[$i]['link'] = "modules/" . $module->getVar('dirname') . "/" . $results[$i]['link'];
+                            $results[$i]['link'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['link'];
                         }
                         echo "<strong><a href='" . $results[$i]['link'] . "' title=''>" . $myts->htmlspecialchars($results[$i]['title']) . "</a></strong><br />\n";
                         echo "<span class='x-small'>";
-                        $results[$i]['uid'] = @(int)($results[$i]['uid']);
+                        $results[$i]['uid'] = @(int)$results[$i]['uid'];
                         if (!empty($results[$i]['uid'])) {
                             $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
-                            echo "&nbsp;&nbsp;<a href='" . XOOPS_URL . "/userinfo.php?uid=" . $results[$i]['uid'] . "' title=''>" . $uname . "</a>\n";
+                            echo "&nbsp;&nbsp;<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $results[$i]['uid'] . "' title=''>" . $uname . "</a>\n";
                         }
-                        echo !empty($results[$i]['time']) ? " (" . formatTimestamp((int)($results[$i]['time'])) . ")" : "";
+                        echo !empty($results[$i]['time']) ? ' (' . formatTimestamp((int)$results[$i]['time']) . ')' : '';
                         echo "</span><br />\n";
                     }
                     if ($count >= 5) {
@@ -194,13 +193,13 @@ switch ($action) {
             unset($results, $module);
         }
         if ($nomatch) {
-            echo "<p>" . _SR_NOMATCH . "</p>";
+            echo '<p>' . _SR_NOMATCH . '</p>';
         }
         include $GLOBALS['xoops']->path('include/searchform.php');
         $search_form->display();
         break;
 
-    case "showall":
+    case 'showall':
     case 'showallbyuser':
         include $GLOBALS['xoops']->path('header.php');
         $module_handler = xoops_getHandler('module');
@@ -214,7 +213,7 @@ switch ($action) {
             if (is_array($next_results) && $next_count == 1) {
                 $has_next = true;
             }
-            echo "<h4>" . _SR_SEARCHRESULTS . "</h4>\n";
+            echo '<h4>' . _SR_SEARCHRESULTS . "</h4>\n";
             if ($action === 'showall') {
                 echo _SR_KEYWORDS . ':';
                 if ($andor !== 'exact') {
@@ -227,24 +226,24 @@ switch ($action) {
                 echo '<br />';
             }
             printf(_SR_SHOWING, $start + 1, $start + $count);
-            echo "<h5>" . $module->getVar('name') . "</h5>";
+            echo '<h5>' . $module->getVar('name') . '</h5>';
             for ($i = 0; $i < $count; ++$i) {
                 if (isset($results[$i]['image']) && $results[$i]['image'] != '') {
-                    echo "<img src='modules/" . $module->getVar('dirname', "n") . "/" . $results[$i]['image'] . "' alt='" . $module->getVar('name') . "' />&nbsp;";
+                    echo "<img src='modules/" . $module->getVar('dirname', 'n') . '/' . $results[$i]['image'] . "' alt='" . $module->getVar('name') . "' />&nbsp;";
                 } else {
-                    echo "<img style='width:26px; height:26px;' src='images/icons/posticon2.gif' alt='" . $module->getVar("name") . "' />&nbsp;";
+                    echo "<img style='width:26px; height:26px;' src='images/icons/posticon2.gif' alt='" . $module->getVar('name') . "' />&nbsp;";
                 }
                 if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
-                    $results[$i]['link'] = "modules/" . $module->getVar('dirname') . "/" . $results[$i]['link'];
+                    $results[$i]['link'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['link'];
                 }
                 echo "<strong><a href='" . $results[$i]['link'] . "'>" . $myts->htmlspecialchars($results[$i]['title']) . "</a></strong><br />\n";
                 echo "<span class='x-small'>";
-                $results[$i]['uid'] = @(int)($results[$i]['uid']);
+                $results[$i]['uid'] = @(int)$results[$i]['uid'];
                 if (!empty($results[$i]['uid'])) {
                     $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
-                    echo "&nbsp;&nbsp;<a href='" . XOOPS_URL . "/userinfo.php?uid=" . $results[$i]['uid'] . "'>" . $uname . "</a>\n";
+                    echo "&nbsp;&nbsp;<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $results[$i]['uid'] . "'>" . $uname . "</a>\n";
                 }
-                echo !empty($results[$i]['time']) ? " (" . formatTimestamp((int)($results[$i]['time'])) . ")" : "";
+                echo !empty($results[$i]['time']) ? ' (' . formatTimestamp((int)$results[$i]['time']) . ')' : '';
                 echo "</span><br />\n";
             }
             echo '<table><tr>';

@@ -15,9 +15,8 @@
  * @subpackage          form
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version             $Id: formbutton.php 13082 2015-06-06 21:59:41Z beckmi $
  */
-defined('XOOPS_ROOT_PATH') || exit("XOOPS root path not defined");
+defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 xoops_load('XoopsFormElement');
 
@@ -64,7 +63,7 @@ class XoopsFormButton extends XoopsFormElement
      * @param string $value
      * @param string $type    Type of the button. Potential values: "button", "submit", or "reset"
      */
-    public function __construct($caption, $name, $value = "", $type = "button")
+    public function __construct($caption, $name, $value = '', $type = 'button')
     {
         $this->setCaption($caption);
         $this->setName($name);
@@ -102,7 +101,7 @@ class XoopsFormButton extends XoopsFormElement
      */
     public function getType()
     {
-        return in_array(strtolower($this->_type), array("button", "submit", "reset")) ? $this->_type : "button";
+        return in_array(strtolower($this->_type), array('button', 'submit', 'reset')) ? $this->_type : 'button';
     }
 
     /**
@@ -112,6 +111,6 @@ class XoopsFormButton extends XoopsFormElement
      */
     public function render()
     {
-        return "<input type='" . $this->getType() . "' class='formButton' name='" . $this->getName() . "'  id='" . $this->getName() . "' value='" . $this->getValue() . "' title='" . $this->getValue() . "'" . $this->getExtra() . " />";
+        return "<input type='" . $this->getType() . "' class='formButton' name='" . $this->getName() . "'  id='" . $this->getName() . "' value='" . $this->getValue() . "' title='" . $this->getValue() . "'" . $this->getExtra() . ' />';
     }
 }

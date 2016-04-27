@@ -23,7 +23,6 @@
  * @author           Skalpa Keo <skalpa@xoops.org>
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
- * @version          $Id: page_tablescreate.php 13082 2015-06-06 21:59:41Z beckmi $
  **/
 
 require_once './include/common.inc.php';
@@ -47,6 +46,6 @@ if ($dbm->tableExists('users')) {
     $content = '<div class="x2-note confirmMsg">' . XOOPS_TABLES_FOUND . '</div>';
 } else {
     $result  = $dbm->queryFromFile('./sql/' . XOOPS_DB_TYPE . '.structure.sql');
-    $content = '<div class="x2-note successMsg">' . XOOPS_TABLES_CREATED . "</div><br />" . $dbm->report();
+    $content = '<div class="x2-note successMsg">' . XOOPS_TABLES_CREATED . '</div><br />' . $dbm->report();
 }
 include './include/install_tpl.php';

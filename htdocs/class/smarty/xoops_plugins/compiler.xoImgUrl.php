@@ -11,7 +11,6 @@
  * @package          xos_opal
  * @subpackage       xos_opal_Smarty
  * @since            2.0.14
- * @version          $Id: compiler.xoImgUrl.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 /**

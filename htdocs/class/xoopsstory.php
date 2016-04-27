@@ -14,15 +14,14 @@
  * @package             kernel
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version             $Id: xoopsstory.php 13090 2015-06-16 20:44:29Z beckmi $
  * @deprecated
  */
 
 defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 $GLOBALS['xoopsLogger']->addDeprecated("'/class/xoopstory.php' is deprecated since XOOPS 2.5.4, please create your own class instead.");
-include_once XOOPS_ROOT_PATH . "/class/xoopstopic.php";
-include_once XOOPS_ROOT_PATH . "/kernel/user.php";
+include_once XOOPS_ROOT_PATH . '/class/xoopstopic.php';
+include_once XOOPS_ROOT_PATH . '/kernel/user.php';
 
 /**
  * Class XoopsStory
@@ -35,7 +34,7 @@ class XoopsStory
     public $uid;
     public $title;
     public $hometext;
-    public $bodytext  = "";
+    public $bodytext  = '';
     public $counter;
     public $created;
     public $published;
@@ -59,12 +58,12 @@ class XoopsStory
     public function Story($storyid = -1)
     {
         $this->db = XoopsDatabaseFactory::getDatabaseConnection();
-        $this->table       = "";
-        $this->topicstable = "";
+        $this->table       = '';
+        $this->topicstable = '';
         if (is_array($storyid)) {
             $this->makeStory($storyid);
         } elseif ($storyid != -1) {
-            $this->getStory((int)($storyid));
+            $this->getStory((int)$storyid);
         }
     }
 
@@ -73,7 +72,7 @@ class XoopsStory
      */
     public function setStoryId($value)
     {
-        $this->storyid = (int)($value);
+        $this->storyid = (int)$value;
     }
 
     /**
@@ -81,7 +80,7 @@ class XoopsStory
      */
     public function setTopicId($value)
     {
-        $this->topicid = (int)($value);
+        $this->topicid = (int)$value;
     }
 
     /**
@@ -89,7 +88,7 @@ class XoopsStory
      */
     public function setUid($value)
     {
-        $this->uid = (int)($value);
+        $this->uid = (int)$value;
     }
 
     /**
@@ -121,7 +120,7 @@ class XoopsStory
      */
     public function setPublished($value)
     {
-        $this->published = (int)($value);
+        $this->published = (int)$value;
     }
 
     /**
@@ -129,7 +128,7 @@ class XoopsStory
      */
     public function setExpired($value)
     {
-        $this->expired = (int)($value);
+        $this->expired = (int)$value;
     }
 
     /**
@@ -185,7 +184,7 @@ class XoopsStory
      */
     public function setApproved($value)
     {
-        $this->approved = (int)($value);
+        $this->approved = (int)$value;
     }
 
     /**
@@ -209,7 +208,7 @@ class XoopsStory
      */
     public function setComments($value)
     {
-        $this->comments = (int)($value);
+        $this->comments = (int)$value;
     }
 
     /**
@@ -242,9 +241,9 @@ class XoopsStory
         $expired = !empty($this->expired) ? $this->expired : 0;
         if (!isset($this->storyid)) {
             //$newpost = 1;
-            $newstoryid = $this->db->genId($this->table . "_storyid_seq");
+            $newstoryid = $this->db->genId($this->table . '_storyid_seq');
             $created    = time();
-            $published  = ($this->approved) ? $this->published : 0;
+            $published  = $this->approved ? $this->published : 0;
 
             $sql = sprintf("INSERT INTO %s (storyid, uid, title, created, published, expired, hostname, nohtml, nosmiley, hometext, bodytext, counter, topicid, ihome, notifypub, story_type, topicdisplay, topicalign, comments) VALUES (%u, %u, '%s', %u, %u, %u, '%s', %u, %u, '%s', '%s', %u, %u, %u, %u, '%s', %u, '%s', %u)", $this->table, $newstoryid, $this->uid, $title, $created, $published, $expired, $this->hostname, $this->nohtml, $this->nosmiley, $hometext, $bodytext, 0, $this->topicid, $this->ihome, $this->notifypub, $this->type, $this->topicdisplay, $this->topicalign, $this->comments);
         } else {
@@ -271,8 +270,8 @@ class XoopsStory
      */
     public function getStory($storyid)
     {
-        $storyid = (int)($storyid);
-        $sql     = "SELECT * FROM " . $this->table . " WHERE storyid=" . $storyid . "";
+        $storyid = (int)$storyid;
+        $sql     = 'SELECT * FROM ' . $this->table . ' WHERE storyid=' . $storyid . '';
         $array   = $this->db->fetchArray($this->db->query($sql));
         $this->makeStory($array);
     }
@@ -292,7 +291,7 @@ class XoopsStory
      */
     public function delete()
     {
-        $sql = sprintf("DELETE FROM %s WHERE storyid = %u", $this->table, $this->storyid);
+        $sql = sprintf('DELETE FROM %s WHERE storyid = %u', $this->table, $this->storyid);
         if (!$result = $this->db->query($sql)) {
             return false;
         }
@@ -305,7 +304,7 @@ class XoopsStory
      */
     public function updateCounter()
     {
-        $sql = sprintf("UPDATE %s SET counter = counter+1 WHERE storyid = %u", $this->table, $this->storyid);
+        $sql = sprintf('UPDATE %s SET counter = counter+1 WHERE storyid = %u', $this->table, $this->storyid);
         if (!$result = $this->db->queryF($sql)) {
             return false;
         }
@@ -320,7 +319,7 @@ class XoopsStory
      */
     public function updateComments($total)
     {
-        $sql = sprintf("UPDATE %s SET comments = %u WHERE storyid = %u", $this->table, $total, $this->storyid);
+        $sql = sprintf('UPDATE %s SET comments = %u WHERE storyid = %u', $this->table, $total, $this->storyid);
         if (!$result = $this->db->queryF($sql)) {
             return false;
         }
@@ -359,7 +358,7 @@ class XoopsStory
      *
      * @return mixed
      */
-    public function title($format = "Show")
+    public function title($format = 'Show')
     {
         $myts   = MyTextSanitizer::getInstance();
         $smiley = 1;
@@ -367,12 +366,12 @@ class XoopsStory
             $smiley = 0;
         }
         switch ($format) {
-            case "Show":
-            case "Edit":
+            case 'Show':
+            case 'Edit':
                 $title = $myts->htmlSpecialChars($this->title);
                 break;
-            case "Preview":
-            case "InForm":
+            case 'Preview':
+            case 'InForm':
                 $title = $myts->htmlSpecialChars($myts->stripSlashesGPC($this->title));
                 break;
         }
@@ -385,7 +384,7 @@ class XoopsStory
      *
      * @return string
      */
-    public function hometext($format = "Show")
+    public function hometext($format = 'Show')
     {
         $myts   = MyTextSanitizer::getInstance();
         $html   = 1;
@@ -398,16 +397,16 @@ class XoopsStory
             $smiley = 0;
         }
         switch ($format) {
-            case "Show":
+            case 'Show':
                 $hometext = $myts->displayTarea($this->hometext, $html, $smiley, $xcodes);
                 break;
-            case "Edit":
+            case 'Edit':
                 $hometext = htmlspecialchars($this->hometext, ENT_QUOTES);
                 break;
-            case "Preview":
+            case 'Preview':
                 $hometext = $myts->previewTarea($this->hometext, $html, $smiley, $xcodes);
                 break;
-            case "InForm":
+            case 'InForm':
                 $hometext = htmlspecialchars($myts->stripSlashesGPC($this->hometext), ENT_QUOTES);
                 break;
         }
@@ -420,7 +419,7 @@ class XoopsStory
      *
      * @return string
      */
-    public function bodytext($format = "Show")
+    public function bodytext($format = 'Show')
     {
         $myts   = MyTextSanitizer::getInstance();
         $html   = 1;
@@ -433,16 +432,16 @@ class XoopsStory
             $smiley = 0;
         }
         switch ($format) {
-            case "Show":
+            case 'Show':
                 $bodytext = $myts->displayTarea($this->bodytext, $html, $smiley, $xcodes);
                 break;
-            case "Edit":
+            case 'Edit':
                 $bodytext = htmlspecialchars($this->bodytext, ENT_QUOTES);
                 break;
-            case "Preview":
+            case 'Preview':
                 $bodytext = $myts->previewTarea($this->bodytext, $html, $smiley, $xcodes);
                 break;
-            case "InForm":
+            case 'InForm':
                 $bodytext = htmlspecialchars($myts->stripSlashesGPC($this->bodytext), ENT_QUOTES);
                 break;
         }
@@ -529,10 +528,10 @@ class XoopsStory
      */
     public function topicalign($astext = true)
     {
-        $ret = "left";
+        $ret = 'left';
         if ($astext) {
-            if ($this->topicalign === "R") {
-                $ret = "right";
+            if ($this->topicalign === 'R') {
+                $ret = 'right';
             }
 
             return $ret;

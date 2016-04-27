@@ -23,7 +23,6 @@
  * @author           Skalpa Keo <skalpa@xoops.org>
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
- * @version          $Id: page_dbconnection.php 13082 2015-06-06 21:59:41Z beckmi $
  **/
 
 require_once './include/common.inc.php';
@@ -59,7 +58,7 @@ if (@empty($vars['DB_HOST'])) {
     $vars = array_merge($vars, array(
                                  'DB_TYPE'     => 'mysql',
                                  'DB_HOST'     => 'localhost',
-                                 'DB_USER'     => 'root',
+                                 'DB_USER'     => '',
                                  'DB_PASS'     => '',
                                  'DB_PCONNECT' => 0));
 }
@@ -87,7 +86,7 @@ ob_start();
 
         <label class="xolabel" for="DB_PCONNECT" class="center">
             <?php echo DB_PCONNECT_LABEL; ?>
-            <input class="checkbox" type="checkbox" name="DB_PCONNECT" value="1" <?php echo $vars['DB_PCONNECT'] ? "'checked'" : ""; ?>/>
+            <input class="checkbox" type="checkbox" name="DB_PCONNECT" value="1" <?php echo $vars['DB_PCONNECT'] ? "'checked'" : ''; ?>/>
 
             <div class="xoform-help"><?php echo DB_PCONNECT_HELP; ?></div>
         </label>

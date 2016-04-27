@@ -1,4 +1,4 @@
-/* $Id: xoops.css 11807 2013-07-03 20:01:14Z beckmi $ */
+/*
 
 /*=== FORMAT BASIC ELEMENTS, can be overwritten in theme styles ===*/
 table {
@@ -215,7 +215,7 @@ div.jGrowl div.jGrowl-notification div.jGrowl-header {
 }
 
 /* jGrowl Close button */
-div.jGrowl div.jGrowl-notification div.jGrowl-close {
+div.jGrowl div.jGrowl-notification button.jGrowl-close {
     float: right;
     font-weight: bold;
     font-size: 12px;

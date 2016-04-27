@@ -15,7 +15,6 @@
  * @subpackage          auth
  * @since               2.0
  * @author              Pierre-Eric MENUET <pemphp@free.fr>
- * @version             $Id$
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -43,7 +42,6 @@ if (!class_exists('XoopsAuthProvisionning')) {
  * @package
  * @author              John
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @version $Id$
  * @access              public
  */
 class XoopsAuthLdap extends XoopsAuth

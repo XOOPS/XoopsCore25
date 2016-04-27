@@ -9,7 +9,7 @@
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-xoops_load("gui", "system");
+xoops_load('gui', 'system');
 
 /**
  * Xoops Cpanel ThAdmin GUI class
@@ -20,7 +20,6 @@ xoops_load("gui", "system");
  * @usbpackage          GUI
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: thadmin.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 class XoopsGuiThadmin extends /* implements */
     XoopsSystemGui
@@ -40,7 +39,7 @@ class XoopsGuiThadmin extends /* implements */
      */
     public function __construct()
     {
-        include_once XOOPS_ROOT_PATH . "/modules/thadmin/include/cp_functions.php";
+        include_once XOOPS_ROOT_PATH . '/modules/thadmin/include/cp_functions.php';
     }
 
     /**
@@ -48,9 +47,9 @@ class XoopsGuiThadmin extends /* implements */
      */
     public static function validate()
     {
-        $module_handler = xoops_getHandler("module");
-        if ($admin_module = $module_handler->getByDirname("thadmin")) {
-            if ($admin_module->getVar("isactive")) {
+        $module_handler = xoops_getHandler('module');
+        if ($admin_module = $module_handler->getByDirname('thadmin')) {
+            if ($admin_module->getVar('isactive')) {
                 return true;
             }
         }

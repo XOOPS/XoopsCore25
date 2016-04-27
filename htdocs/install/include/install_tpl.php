@@ -24,7 +24,6 @@
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
  * @author           Kris <kris@frxoops.org>
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
- * @version          $Id: install_tpl.php 13082 2015-06-06 21:59:41Z beckmi $
  **/
 
 defined('XOOPS_INSTALL') or die('XOOPS Installation wizard die');
@@ -58,7 +57,7 @@ include_once '../language/' . $wizard->language . '/global.php';
 
         <div id="xo-version">
             <?php
-            $version = './img/' . str_replace(" ", "_", strtolower(XOOPS_VERSION)) . '.png';
+            $version = './img/' . str_replace(' ', '_', strtolower(XOOPS_VERSION)) . '.png';
             if (file_exists($version)) {
                 echo '<img src="' . $version . '" alt="' . XOOPS_VERSION . '" />';
             } else {
@@ -77,7 +76,7 @@ include_once '../language/' . $wizard->language . '/global.php';
                     if (file_exists('./language/' . $lang . '/support.png')) {
                         echo " class='option' style='background-image:url(./language/" . $lang . "/support.png); background-repeat: no-repeat;'";
                     }
-                    echo ">" . $support['title'] . "</option>";
+                    echo '>' . $support['title'] . '</option>';
                 }
                 ?>
             </select>

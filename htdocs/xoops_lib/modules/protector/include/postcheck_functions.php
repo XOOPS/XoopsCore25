@@ -124,7 +124,7 @@ function protector_postcommon()
     // check session hi-jacking
     $masks = @$conf['session_fixed_topbit'];
     $maskArray = explode('/', $masks);
-    $ipv4Mask = (empty($maskArray[0])) ? 24 : $maskArray[0];
+    $ipv4Mask = empty($maskArray[0]) ? 24 : $maskArray[0];
     $ipv6Mask = (!isset($maskArray[1])) ? 56 : $maskArray[1];
     $ip = \Xmf\IPAddress::fromRequest();
     $maskCheck = true;
@@ -168,10 +168,10 @@ function protector_postcommon()
         // SPAM Check
         if (is_object($xoopsUser)) {
             if (!$xoopsUser->isAdmin() && $conf['spamcount_uri4user']) {
-                $protector->spam_check((int)($conf['spamcount_uri4user']), $xoopsUser->getVar('uid'));
+                $protector->spam_check((int)$conf['spamcount_uri4user'], $xoopsUser->getVar('uid'));
             }
         } elseif ($conf['spamcount_uri4guest']) {
-            $protector->spam_check((int)($conf['spamcount_uri4guest']), 0);
+            $protector->spam_check((int)$conf['spamcount_uri4guest'], 0);
         }
 
         // filter plugins for POST on postcommon stage

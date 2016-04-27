@@ -13,7 +13,6 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
- * @version             $Id: functions.php 13091 2015-06-16 21:08:34Z beckmi $
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
@@ -233,9 +232,9 @@ function xoops_header($closehead = true)
     if (!headers_sent()) {
         header('Content-Type:text/html; charset=' . _CHARSET);
         header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-        header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
         header('Cache-Control: no-store, no-cache, max-age=1, s-maxage=1, must-revalidate, post-check=0, pre-check=0');
-        header("Pragma: no-cache");
+        header('Pragma: no-cache');
     }
 
     echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>\n";
@@ -386,7 +385,7 @@ function xoops_getUserTimestamp($time, $timeoffset = '')
             $timeoffset = $xoopsConfig['default_TZ'];
         }
     }
-    $usertimestamp = (int)($time) + ((float)($timeoffset) - $xoopsConfig['server_TZ']) * 3600;
+    $usertimestamp = (int)$time + ((float)$timeoffset - $xoopsConfig['server_TZ']) * 3600;
 
     return $usertimestamp;
 }
@@ -539,8 +538,8 @@ function checkEmail($email, $antispam = false)
     if (!$email || !preg_match('/^[^@]{1,64}@[^@]{1,255}$/', $email)) {
         return false;
     }
-    $email_array = explode("@", $email);
-    $local_array = explode(".", $email_array[0]);
+    $email_array = explode('@', $email);
+    $local_array = explode('.', $email_array[0]);
     $local_arrayCount = count($local_array);
     for ($i = 0; $i < $local_arrayCount; ++$i) {
         if (!preg_match("/^(([A-Za-z0-9!#$%&'*+\/\=?^_`{|}~-][A-Za-z0-9!#$%&'*+\/\=?^_`{|}~\.-]{0,63})|(\"[^(\\|\")]{0,62}\"))$/", $local_array[$i])) {
@@ -548,7 +547,7 @@ function checkEmail($email, $antispam = false)
         }
     }
     if (!preg_match("/^\[?[0-9\.]+\]?$/", $email_array[1])) {
-        $domain_array = explode(".", $email_array[1]);
+        $domain_array = explode('.', $email_array[1]);
         if (count($domain_array) < 2) {
             return false; // Not enough parts to domain
         }
@@ -559,8 +558,8 @@ function checkEmail($email, $antispam = false)
         }
     }
     if ($antispam) {
-        $email = str_replace("@", " at ", $email);
-        $email = str_replace(".", " dot ", $email);
+        $email = str_replace('@', ' at ', $email);
+        $email = str_replace('.', ' dot ', $email);
     }
 
     return $email;
@@ -681,8 +680,8 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
     $xoopsThemeFactory->allowedThemes = $xoopsConfig['theme_set_allowed'];
     $xoopsThemeFactory->defaultTheme  = $theme;
     $xoTheme                          =& $xoopsThemeFactory->createInstance(array(
-                                                                                "plugins"      => array(),
-                                                                                "renderBanner" => false));
+                                                                                'plugins' => array(),
+                                                                                'renderBanner' => false));
     $xoopsTpl                         =& $xoTheme->template;
     $xoopsTpl->assign(array(
                           'xoops_theme'      => $theme,
@@ -697,7 +696,7 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
         $xoopsTpl->assign('time', 300);
         $xoopsTpl->assign('xoops_logdump', $xoopsLogger->dump());
     } else {
-        $xoopsTpl->assign('time', (int)($time));
+        $xoopsTpl->assign('time', (int)$time);
     }
     if (!empty($_SERVER['REQUEST_URI']) && $addredirect && false !== strpos($url, 'user.php')) {
         if (false === strpos($url, '?')) {
@@ -713,7 +712,7 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
             $url .= '&amp;' . SID;
         }
     }
-    $url = preg_replace("/&amp;/i", '&', htmlspecialchars($url, ENT_QUOTES));
+    $url = preg_replace('/&amp;/i', '&', htmlspecialchars($url, ENT_QUOTES));
     $xoopsTpl->assign('url', $url);
     $message = trim($message) != '' ? $message : _TAKINGBACK;
     $xoopsTpl->assign('message', $message);
@@ -820,12 +819,12 @@ function xoops_getrank($rank_id = 0, $posts = 0)
 {
     $db      = XoopsDatabaseFactory::getDatabaseConnection();
     $myts    = MyTextSanitizer::getInstance();
-    $rank_id = (int)($rank_id);
-    $posts   = (int)($posts);
+    $rank_id = (int)$rank_id;
+    $posts   = (int)$posts;
     if ($rank_id != 0) {
-        $sql = "SELECT rank_title AS title, rank_image AS image FROM " . $db->prefix('ranks') . " WHERE rank_id = " . $rank_id;
+        $sql = 'SELECT rank_title AS title, rank_image AS image FROM ' . $db->prefix('ranks') . ' WHERE rank_id = ' . $rank_id;
     } else {
-        $sql = "SELECT rank_title AS title, rank_image AS image FROM " . $db->prefix('ranks') . " WHERE rank_min <= " . $posts . " AND rank_max >= " . $posts . " AND rank_special = 0";
+        $sql = 'SELECT rank_title AS title, rank_image AS image FROM ' . $db->prefix('ranks') . ' WHERE rank_min <= ' . $posts . ' AND rank_max >= ' . $posts . ' AND rank_special = 0';
     }
     $rank          = $db->fetchArray($db->query($sql));
     $rank['title'] = $myts->htmlspecialchars($rank['title']);
@@ -904,9 +903,9 @@ function xoops_notification_deletebyitem($module_id, $category, $item_id)
 function xoops_comment_count($module_id, $item_id = null)
 {
     $comment_handler = xoops_getHandler('comment');
-    $criteria        = new CriteriaCompo(new Criteria('com_modid', (int)($module_id)));
+    $criteria        = new CriteriaCompo(new Criteria('com_modid', (int)$module_id));
     if (isset($item_id)) {
-        $criteria->add(new Criteria('com_itemid', (int)($item_id)));
+        $criteria->add(new Criteria('com_itemid', (int)$item_id));
     }
 
     return $comment_handler->getCount($criteria);
@@ -921,7 +920,7 @@ function xoops_comment_count($module_id, $item_id = null)
  */
 function xoops_comment_delete($module_id, $item_id)
 {
-    if ((int)($module_id) > 0 && (int)($item_id) > 0) {
+    if ((int)$module_id > 0 && (int)$item_id > 0) {
         $comment_handler = xoops_getHandler('comment');
         $comments        = $comment_handler->getByItemId($module_id, $item_id);
         if (is_array($comments)) {
@@ -965,7 +964,7 @@ function xoops_comment_delete($module_id, $item_id)
 function xoops_groupperm_deletebymoditem($module_id, $perm_name, $item_id = null)
 {
     // do not allow system permissions to be deleted
-    if ((int)($module_id) <= 1) {
+    if ((int)$module_id <= 1) {
         return false;
     }
     $gperm_handler = xoops_getHandler('groupperm');
@@ -1011,7 +1010,7 @@ function xoops_trim($text)
 }
 
 /**
- * YOU SHOULD NOT THIS METHOD, IT WILL BE REMOVED
+ * YOU SHOULD NOT USE THIS METHOD, IT WILL BE REMOVED
  */
 /**
  * xoops_getOption()
@@ -1032,7 +1031,7 @@ function xoops_getOption($option)
 }
 
 /**
- * YOU SHOULD NOT THIS METHOD, IT WILL BE REMOVED
+ * YOU SHOULD NOT USE THIS METHOD, IT WILL BE REMOVED
  */
 /**
  * xoops_getConfigOption()
@@ -1052,7 +1051,7 @@ function xoops_getConfigOption($option, $type = 'XOOPS_CONF')
     }
     $ret            = false;
     $config_handler = xoops_getHandler('config');
-    $configs        = $config_handler->getConfigsByCat((is_array($type)) ? $type : constant($type));
+    $configs        = $config_handler->getConfigsByCat(is_array($type) ? $type : constant($type));
     if ($configs) {
         if (isset($configs[$option])) {
             $ret = $configs[$option];
@@ -1064,7 +1063,7 @@ function xoops_getConfigOption($option, $type = 'XOOPS_CONF')
 }
 
 /**
- * YOU SHOULD NOT THIS METHOD, IT WILL BE REMOVED
+ * YOU SHOULD NOT USE THIS METHOD, IT WILL BE REMOVED
  */
 /**
  * xoops_setConfigOption()
@@ -1076,13 +1075,13 @@ function xoops_getConfigOption($option, $type = 'XOOPS_CONF')
  */
 function xoops_setConfigOption($option, $new = null)
 {
-    if (isset($GLOBALS['xoopsConfig'][$option]) && null !== ($new)) {
+    if (isset($GLOBALS['xoopsConfig'][$option]) && null !== $new) {
         $GLOBALS['xoopsConfig'][$option] = $new;
     }
 }
 
 /**
- * YOU SHOULD NOT THIS METHOD, IT WILL BE REMOVED
+ * YOU SHOULD NOT USE THIS METHOD, IT WILL BE REMOVED
  */
 /**
  * xoops_getModuleOption
@@ -1117,7 +1116,7 @@ function xoops_getModuleOption($option, $dirname = '')
 }
 
 /**
- * YOU SHOULD NOT THIS METHOD, IT WILL BE REMOVED
+ * YOU SHOULD NOT USE THIS METHOD, IT WILL BE REMOVED
  */
 /**
  * Function to get the base domain name from a URL.
@@ -1484,7 +1483,7 @@ function xoops_getBaseDomain($url, $debug = 0)
 }
 
 /**
- * YOU SHOULD NOT THIS METHOD, IT WILL BE REMOVED
+ * YOU SHOULD NOT USE THIS METHOD, IT WILL BE REMOVED
  */
 /**
  * Function to get the domain from a URL.

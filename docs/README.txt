@@ -1,16 +1,16 @@
-XOOPS 2.5.7 Final
+XOOPS 2.5.8
 
-The XOOPS Development Team is pleased to announce the release of XOOPS 2.5.7 Final. This version has been made compatible with PHP 5.5.x, in addition to security enhancement.
+The XOOPS Development Team is pleased to announce the release of XOOPS 2.5.8. This version includes fixes and enhancements, security updates, PHP 7 compatibility and introduces XMF, the XOOPS Module Framework library.
 
-Download XOOPS 2.5.7 from [url=https://sourceforge.net/projects/xoops/files/XOOPS%20Core%20%28stable%20releases%29/XOOPS%202.5.7/]Sourceforge repository[/url].
+Download XOOPS 2.5.8 from GitHub: https://github.com/XOOPS/XoopsCore25/releases
 
 
 How to contribute
 -----------------------------------
-Bug report: http://sourceforge.net/tracker/?group_id=41586&atid=430840
-Patch and enhancement: http://sourceforge.net/tracker/?group_id=41586&atid=430842
-Feature design: http://sourceforge.net/tracker/?group_id=41586&atid=430843
-Release announcement: https://lists.sourceforge.net/lists/listinfo/xoops-announcement
+Bug reports and feature requests: https://github.com/XOOPS/XoopsCore25/issues
+Patch and enhancement: https://github.com/XOOPS/XoopsCore25/blob/master/CONTRIBUTING.md
+Documentation: https://www.gitbook.com/book/xoops/xoops-documentation-process/details
+Support Forums: http://xoops.org/modules/newbb/
 
 XOOPS Development Team
-June 14, 2014
+2016

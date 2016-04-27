@@ -13,7 +13,6 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Gregory Mage (AKA Mage)
  * @package             system
- * @version             $Id: userrank.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
@@ -75,7 +74,7 @@ class SystemUserrank extends XoopsObject
         }
         $imageselect_img->setExtra("onchange='showImgSelected(\"xo-ranks-img\", \"rank_image\", \"ranks\", \"\", \"" . XOOPS_UPLOAD_URL . "\")'");
         $imgtray_img->addElement($imageselect_img, false);
-        $imgtray_img->addElement(new XoopsFormLabel('', "<br /><img src='" . XOOPS_UPLOAD_URL . "/ranks/" . $blank_img . "' name='image_img' id='xo-ranks-img' alt='' />"));
+        $imgtray_img->addElement(new XoopsFormLabel('', "<br /><img src='" . XOOPS_UPLOAD_URL . '/ranks/' . $blank_img . "' name='image_img' id='xo-ranks-img' alt='' />"));
 
         $fileseltray_img = new XoopsFormElementTray('<br />', '<br /><br />');
         $fileseltray_img->addElement(new XoopsFormFile(_AM_SYSTEM_USERRANK_UPLOAD, 'rank_image', 500000), false);

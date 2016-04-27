@@ -22,8 +22,6 @@
  * @author      Voltan      <djvoltan@gmail.com>
  * @author      BitC3R0     <BitC3R0@gmail.com>
  * @author      trabis      <lusopoemas@gmail.com>
- * @version     1.2
- * @version     $Id: menu.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 $groups = $GLOBALS['xoopsUser']->getGroups();
@@ -46,7 +44,7 @@ foreach ($dirlist as $file) {
         include $admin_dir . '/' . $file . '/xoops_version.php';
         if ($modversion['hasAdmin']) {
             if (xoops_getModuleOption('active_' . $file, 'system')) {
-                $category = isset($modversion['category']) ? (int)($modversion['category']) : 0;
+                $category = isset($modversion['category']) ? (int)$modversion['category'] : 0;
                 if (false != $all_ok || in_array($modversion['category'], $ok_syscats)) {
                     $adminmenu[$index]['title'] = trim($modversion['name']);
                     $adminmenu[$index]['desc']  = trim($modversion['description']);

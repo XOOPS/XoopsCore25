@@ -14,7 +14,6 @@
  * @package             core
  * @since               2.4.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: browse.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 defined('DS') or define('DS', DIRECTORY_SEPARATOR);
@@ -39,14 +38,14 @@ if (!isset($path) && !empty($_SERVER['QUERY_STRING'])) {
     $path      = (substr($path, 0, 1) === '/') ? substr($path, 1) : $path;
     $path_type = substr($path, 0, strpos($path, '/'));
     if (!isset($xoops->paths[$path_type])) {
-        $path      = "XOOPS/" . $path;
-        $path_type = "XOOPS";
+        $path      = 'XOOPS/' . $path;
+        $path_type = 'XOOPS';
     }
 }
 
 //We are not allowing output of xoops_data
 if ($path_type === 'var') {
-    header("HTTP/1.0 404 Not Found");
+    header('HTTP/1.0 404 Not Found');
     exit();
 }
 
@@ -55,20 +54,20 @@ $dir  = realpath($xoops->paths[$path_type][0]);
 
 //We are not allowing directory travessal either
 if (false === strpos($file, $dir)) {
-    header("HTTP/1.0 404 Not Found");
+    header('HTTP/1.0 404 Not Found');
     exit();
 }
 
 //We can't output empty files and php files do not output
 if (empty($file) || strpos($file, '.php') !== false) {
-    header("HTTP/1.0 404 Not Found");
+    header('HTTP/1.0 404 Not Found');
     exit();
 }
 
 $file = $xoops->path($path);
 // Is there really a file to output?
 if (!file_exists($file)) {
-    header("HTTP/1.0 404 Not Found");
+    header('HTTP/1.0 404 Not Found');
     exit();
 }
 
@@ -77,18 +76,18 @@ $types = include $xoops->path('include/mimetypes.inc.php');
 //$content_type = isset($types[$ext]) ? $types[$ext] : 'text/plain';
 //Do not output garbage
 if (!isset($types[$ext])) {
-    header("HTTP/1.0 404 Not Found");
+    header('HTTP/1.0 404 Not Found');
     exit();
 }
 
 //Output now
 // seconds, minutes, hours, days
 $expires = 60 * 60 * 24 * 15;
-header("Pragma: public");
-header("Cache-Control: maxage=" . $expires);
+header('Pragma: public');
+header('Cache-Control: maxage=' . $expires);
 header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $expires) . ' GMT');
 header('Content-type: ' . $types[$ext]);
-$handle = fopen($file, "rb");
+$handle = fopen($file, 'rb');
 while (!feof($handle)) {
     $buffer = fread($handle, 4096);
     echo $buffer;

@@ -46,22 +46,22 @@ class PathStuffController
             }
         } else {
             $path = XOOPS_ROOT_PATH;
-            if (defined("XOOPS_PATH")) {
+            if (defined('XOOPS_PATH')) {
                 $this->xoopsPath['lib'] = XOOPS_PATH;
-            } elseif (defined("XOOPS_TRUST_PATH")) {
+            } elseif (defined('XOOPS_TRUST_PATH')) {
                 $this->xoopsPath['lib'] = XOOPS_TRUST_PATH;
             } else {
-                $this->xoopsPath['lib'] = dirname($path) . "/xoops_lib";
-                if (!is_dir($this->xoopsPath['lib'] . "/")) {
-                    $this->xoopsPath['lib'] = $path . "/xoops_lib";
+                $this->xoopsPath['lib'] = dirname($path) . '/xoops_lib';
+                if (!is_dir($this->xoopsPath['lib'] . '/')) {
+                    $this->xoopsPath['lib'] = $path . '/xoops_lib';
                 }
             }
-            if (defined("XOOPS_VAR_PATH")) {
+            if (defined('XOOPS_VAR_PATH')) {
                 $this->xoopsPath['data'] = XOOPS_VAR_PATH;
             } else {
-                $this->xoopsPath['data'] = dirname($path) . "/xoops_data";
-                if (!is_dir($this->xoopsPath['data'] . "/")) {
-                    $this->xoopsPath['data'] = $path . "/xoops_data";
+                $this->xoopsPath['data'] = dirname($path) . '/xoops_data';
+                if (!is_dir($this->xoopsPath['data'] . '/')) {
+                    $this->xoopsPath['data'] = $path . '/xoops_data';
                 }
             }
         }
@@ -93,7 +93,7 @@ class PathStuffController
             $request = $_POST;
             foreach ($this->path_lookup as $req => $sess) {
                 if (isset($request[$req])) {
-                    $request[$req] = str_replace("\\", "/", trim($request[$req]));
+                    $request[$req] = str_replace("\\", '/', trim($request[$req]));
                     if (substr($request[$req], -1) === '/') {
                         $request[$req] = substr($request[$req], 0, -1);
                     }
@@ -167,19 +167,19 @@ class PathStuffController
         if (is_array($path)) {
             foreach (array_keys($path) as $item) {
                 if (is_string($item)) {
-                    $error[$parent . "/" . $item] = $this->makeWritable($parent . "/" . $item);
+                    $error[$parent . '/' . $item] = $this->makeWritable($parent . '/' . $item);
                     if (empty($path[$item])) {
                         continue;
                     }
                     foreach ($path[$item] as $child) {
-                        $this->setPermission($parent . "/" . $item, $child, $error);
+                        $this->setPermission($parent . '/' . $item, $child, $error);
                     }
                 } else {
-                    $error[$parent . "/" . $path[$item]] = $this->makeWritable($parent . "/" . $path[$item]);
+                    $error[$parent . '/' . $path[$item]] = $this->makeWritable($parent . '/' . $path[$item]);
                 }
             }
         } else {
-            $error[$parent . "/" . $path] = $this->makeWritable($parent . "/" . $path);
+            $error[$parent . '/' . $path] = $this->makeWritable($parent . '/' . $path);
         }
 
         return null;
@@ -190,7 +190,7 @@ class PathStuffController
      *
      * @return bool
      */
-    public function checkPermissions($path = "data")
+    public function checkPermissions($path = 'data')
     {
         $paths  = array(
             'data' => array(

@@ -15,7 +15,6 @@
  * @since               2.3.0
  * @author              Jan Pedersen
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: install.php 13082 2015-06-06 21:59:41Z beckmi $
  * @param $module
  * @return bool
  */
@@ -27,7 +26,7 @@ function xoops_module_install_profile(XoopsModule $module)
     xoops_loadLanguage('user');
 
     // Create registration steps
-    profile_install_addStep(_PROFILE_MI_STEP_BASIC, '', 1, 1);
+    profile_install_addStep(_PROFILE_MI_STEP_BASIC, '', 1, 0);
     profile_install_addStep(_PROFILE_MI_STEP_COMPLEMENTARY, '', 2, 1);
 
     // Create categories
@@ -93,9 +92,9 @@ function profile_install_initializeProfiles()
 {
     global $module_id;
 
-    $GLOBALS['xoopsDB']->queryF("   INSERT INTO " . $GLOBALS['xoopsDB']->prefix("profile_profile") . " (profile_id) " . "   SELECT uid " . "   FROM " . $GLOBALS['xoopsDB']->prefix("users"));
+    $GLOBALS['xoopsDB']->queryF('   INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('profile_profile') . ' (profile_id) ' . '   SELECT uid ' . '   FROM ' . $GLOBALS['xoopsDB']->prefix('users'));
 
-    $sql = "INSERT INTO " . $GLOBALS['xoopsDB']->prefix("group_permission") . " (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) " . " VALUES " . " (" . XOOPS_GROUP_ADMIN . ", " . XOOPS_GROUP_ADMIN . ", {$module_id}, 'profile_access'), " . " (" . XOOPS_GROUP_ADMIN . ", " . XOOPS_GROUP_USERS . ", {$module_id}, 'profile_access'), " . " (" . XOOPS_GROUP_USERS . ", " . XOOPS_GROUP_USERS . ", {$module_id}, 'profile_access'), " . " (" . XOOPS_GROUP_ANONYMOUS . ", " . XOOPS_GROUP_USERS . ", {$module_id}, 'profile_access') " . " ";
+    $sql = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('group_permission') . ' (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) ' . ' VALUES ' . ' (' . XOOPS_GROUP_ADMIN . ', ' . XOOPS_GROUP_ADMIN . ", {$module_id}, 'profile_access'), " . ' (' . XOOPS_GROUP_ADMIN . ', ' . XOOPS_GROUP_USERS . ", {$module_id}, 'profile_access'), " . ' (' . XOOPS_GROUP_USERS . ', ' . XOOPS_GROUP_USERS . ", {$module_id}, 'profile_access'), " . ' (' . XOOPS_GROUP_ANONYMOUS . ', ' . XOOPS_GROUP_USERS . ", {$module_id}, 'profile_access') " . ' ';
     $GLOBALS['xoopsDB']->queryF($sql);
 }
 
@@ -189,11 +188,11 @@ function profile_install_setPermissions($field_id, $module_id, $canedit, $visibl
 {
     $gperm_itemid = $field_id;
     $gperm_modid  = $module_id;
-    $sql          = "INSERT INTO " . $GLOBALS['xoopsDB']->prefix("group_permission") . " (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) " . " VALUES " . ($canedit ? " (" . XOOPS_GROUP_ADMIN . ", {$gperm_itemid}, {$gperm_modid}, 'profile_edit'), " : "") . ($canedit == 1 ? " (" . XOOPS_GROUP_USERS . ", {$gperm_itemid}, {$gperm_modid}, 'profile_edit'), " : "") . " (" . XOOPS_GROUP_ADMIN . ", {$gperm_itemid}, {$gperm_modid}, 'profile_search'), " . " (" . XOOPS_GROUP_USERS . ", {$gperm_itemid}, {$gperm_modid}, 'profile_search') " . " ";
+    $sql          = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('group_permission') . ' (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) ' . ' VALUES ' . ($canedit ? ' (' . XOOPS_GROUP_ADMIN . ", {$gperm_itemid}, {$gperm_modid}, 'profile_edit'), " : '') . ($canedit == 1 ? ' (' . XOOPS_GROUP_USERS . ", {$gperm_itemid}, {$gperm_modid}, 'profile_edit'), " : '') . ' (' . XOOPS_GROUP_ADMIN . ", {$gperm_itemid}, {$gperm_modid}, 'profile_search'), " . ' (' . XOOPS_GROUP_USERS . ", {$gperm_itemid}, {$gperm_modid}, 'profile_search') " . ' ';
     $GLOBALS['xoopsDB']->queryF($sql);
 
     if ($visible) {
-        $sql = "INSERT INTO " . $GLOBALS['xoopsDB']->prefix("profile_visibility") . " (field_id, user_group, profile_group) " . " VALUES " . " ({$gperm_itemid}, " . XOOPS_GROUP_ADMIN . ", " . XOOPS_GROUP_ADMIN . "), " . " ({$gperm_itemid}, " . XOOPS_GROUP_ADMIN . ", " . XOOPS_GROUP_USERS . "), " . " ({$gperm_itemid}, " . XOOPS_GROUP_USERS . ", " . XOOPS_GROUP_ADMIN . "), " . " ({$gperm_itemid}, " . XOOPS_GROUP_USERS . ", " . XOOPS_GROUP_USERS . "), " . " ({$gperm_itemid}, " . XOOPS_GROUP_ANONYMOUS . ", " . XOOPS_GROUP_ADMIN . "), " . " ({$gperm_itemid}, " . XOOPS_GROUP_ANONYMOUS . ", " . XOOPS_GROUP_USERS . ")" . " ";
+        $sql = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('profile_visibility') . ' (field_id, user_group, profile_group) ' . ' VALUES ' . " ({$gperm_itemid}, " . XOOPS_GROUP_ADMIN . ', ' . XOOPS_GROUP_ADMIN . '), ' . " ({$gperm_itemid}, " . XOOPS_GROUP_ADMIN . ', ' . XOOPS_GROUP_USERS . '), ' . " ({$gperm_itemid}, " . XOOPS_GROUP_USERS . ', ' . XOOPS_GROUP_ADMIN . '), ' . " ({$gperm_itemid}, " . XOOPS_GROUP_USERS . ', ' . XOOPS_GROUP_USERS . '), ' . " ({$gperm_itemid}, " . XOOPS_GROUP_ANONYMOUS . ', ' . XOOPS_GROUP_ADMIN . '), ' . " ({$gperm_itemid}, " . XOOPS_GROUP_ANONYMOUS . ', ' . XOOPS_GROUP_USERS . ')' . ' ';
         $GLOBALS['xoopsDB']->queryF($sql);
     }
 }
@@ -204,7 +203,7 @@ function profile_install_setPermissions($field_id, $module_id, $canedit, $visibl
  */
 function profile_install_addCategory($name, $weight)
 {
-    $GLOBALS['xoopsDB']->query("INSERT INTO " . $GLOBALS['xoopsDB']->prefix("profile_category") . " VALUES (0, " . $GLOBALS['xoopsDB']->quote($name) . ", '', {$weight})");
+    $GLOBALS['xoopsDB']->query('INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('profile_category') . ' VALUES (0, ' . $GLOBALS['xoopsDB']->quote($name) . ", '', {$weight})");
 }
 
 /**
@@ -215,5 +214,5 @@ function profile_install_addCategory($name, $weight)
  */
 function profile_install_addStep($name, $desc, $order, $save)
 {
-    $GLOBALS['xoopsDB']->query("INSERT INTO " . $GLOBALS['xoopsDB']->prefix("profile_regstep") . " VALUES (0, " . $GLOBALS['xoopsDB']->quote($name) . ", " . $GLOBALS['xoopsDB']->quote($desc) . ", {$order}, {$save})");
+    $GLOBALS['xoopsDB']->query('INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('profile_regstep') . ' VALUES (0, ' . $GLOBALS['xoopsDB']->quote($name) . ', ' . $GLOBALS['xoopsDB']->quote($desc) . ", {$order}, {$save})");
 }

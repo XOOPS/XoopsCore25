@@ -15,7 +15,6 @@
  * @subpackage          textsanitizer
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: flash.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -80,7 +79,7 @@ EOF;
 
         //mb------------------------------
         $ts->callbackPatterns[] = "/\[(swf|flash)=(['\"]?)([^\"']*),([^\"']*)\\2]([^\"]*)\[\/\\1\]/sU";
-        $ts->callbacks[]        = __CLASS__ . "::myCallback";
+        $ts->callbacks[]        = __CLASS__ . '::myCallback';
 
         //mb------------------------------
         return true;
@@ -118,7 +117,7 @@ EOF;
         $rp .= "<PARAM NAME='bgcolor' VALUE='#FFFFFF'>";
         $rp .= "<param name='wmode' value='transparent'>";
         $rp .= "<embed src='{$url}' width='{$width}' height='{$height}' quality='high' bgcolor='#FFFFFF' wmode='transparent'  pluginspage='http://www.macromedia.com/go/getflashplayer' type='application/x-shockwave-flash'></embed>";
-        $rp .= "</object>";
+        $rp .= '</object>';
 
         return $rp;
     }

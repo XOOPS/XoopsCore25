@@ -14,7 +14,6 @@
  * @author              Skalpa Keo <skalpa@xoops.org>
  * @since               2.3.0
  * @package             kernel
- * @version             $Id: theme_blocks.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 /**
@@ -130,7 +129,7 @@ class xos_logos_PageBuilder
         foreach ($block_arr as $block) {
             $side = $oldzones[$block->getVar('side')];
             if ($var = $this->buildBlock($block, $template)) {
-                $this->blocks[$side][$var["id"]] = $var;
+                $this->blocks[$side][$var['id']] = $var;
             }
         }
         if ($this->theme) {
@@ -172,7 +171,7 @@ class xos_logos_PageBuilder
             'weight'  => $xobject->getVar('weight'),
             'lastmod' => $xobject->getVar('last_modified'));
 
-        $bcachetime = (int)($xobject->getVar('bcachetime'));
+        $bcachetime = (int)$xobject->getVar('bcachetime');
         if (empty($bcachetime)) {
             $template->caching = 0;
         } else {

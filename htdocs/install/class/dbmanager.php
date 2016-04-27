@@ -2,7 +2,7 @@
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2016 XOOPS Project (www.xoops.org)            //
-//                       <http://www.xoops.org/>                             //
+//                         <http://xoops.org/>                               //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -36,7 +36,6 @@ include_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
  * @copyright (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author    Haruki Setoyama  <haruki@planewave.org>
- * @version   $Id: dbmanager.php 13082 2015-06-06 21:59:41Z beckmi $
  **/
 class Db_manager
 {
@@ -77,7 +76,7 @@ class Db_manager
     {
         $this->db->connect(false);
 
-        $result = $this->db->query("CREATE DATABASE " . XOOPS_DB_NAME);
+        $result = $this->db->query('CREATE DATABASE ' . XOOPS_DB_NAME);
 
         return ($result != false);// ? true : false;
     }
@@ -267,7 +266,7 @@ class Db_manager
      */
     public function isError()
     {
-        return (isset($this->f_tables)) ? true : false;
+        return isset($this->f_tables) ? true : false;
     }
 
     /**
@@ -280,7 +279,7 @@ class Db_manager
         $deleted = array();
         $this->db->connect();
         foreach ($tables as $key => $val) {
-            if (!$this->db->query("DROP TABLE " . $this->db->prefix($key))) {
+            if (!$this->db->query('DROP TABLE ' . $this->db->prefix($key))) {
                 $deleted[] = $ct;
             }
         }

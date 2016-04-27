@@ -6,13 +6,12 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @since               1.00
- * @version             $Id: functions.config.php 13082 2015-06-06 21:59:41Z beckmi $
  * @package             Frameworks
  * @subpackage          art
  */
 
-if (!defined("FRAMEWORKS_ART_FUNCTIONS_CONFIG")):
-    define("FRAMEWORKS_ART_FUNCTIONS_CONFIG", true);
+if (!defined('FRAMEWORKS_ART_FUNCTIONS_CONFIG')):
+    define('FRAMEWORKS_ART_FUNCTIONS_CONFIG', true);
 
     /**
      * Load configs of a module
@@ -21,16 +20,16 @@ if (!defined("FRAMEWORKS_ART_FUNCTIONS_CONFIG")):
      * @param    string $dirname module dirname
      * @return    array
      */
-    function mod_loadConfig($dirname = "")
+    function mod_loadConfig($dirname = '')
     {
-        if (empty($dirname) && empty($GLOBALS["xoopsModule"])) {
+        if (empty($dirname) && empty($GLOBALS['xoopsModule'])) {
             return null;
         }
-        $dirname = !empty($dirname) ? $dirname : $GLOBALS["xoopsModule"]->getVar("dirname");
+        $dirname = !empty($dirname) ? $dirname : $GLOBALS['xoopsModule']->getVar('dirname');
 
-        if (isset($GLOBALS["xoopsModule"]) && is_object($GLOBALS["xoopsModule"]) && $GLOBALS["xoopsModule"]->getVar("dirname", "n") == $dirname) {
-            if (isset($GLOBALS["xoopsModuleConfig"])) {
-                $moduleConfig =& $GLOBALS["xoopsModuleConfig"];
+        if (isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule']) && $GLOBALS['xoopsModule']->getVar('dirname', 'n') == $dirname) {
+            if (isset($GLOBALS['xoopsModuleConfig'])) {
+                $moduleConfig =& $GLOBALS['xoopsModuleConfig'];
             } else {
                 return null;
             }
@@ -53,7 +52,7 @@ if (!defined("FRAMEWORKS_ART_FUNCTIONS_CONFIG")):
      *
      * @return array
      */
-    function mod_loadConfg($dirname = "")
+    function mod_loadConfg($dirname = '')
     {
         return mod_loadConfig($dirname);
     }
@@ -65,7 +64,7 @@ if (!defined("FRAMEWORKS_ART_FUNCTIONS_CONFIG")):
      * @param    string $dirname module dirname
      * @return    array
      */
-    function mod_fetchConfig($dirname = "")
+    function mod_fetchConfig($dirname = '')
     {
         if (empty($dirname)) {
             return null;
@@ -94,7 +93,7 @@ if (!defined("FRAMEWORKS_ART_FUNCTIONS_CONFIG")):
      *
      * @return array
      */
-    function mod_fetchConfg($dirname = "")
+    function mod_fetchConfg($dirname = '')
     {
         return mod_fetchConfig($dirname);
     }
@@ -106,7 +105,7 @@ if (!defined("FRAMEWORKS_ART_FUNCTIONS_CONFIG")):
      * @param    string $dirname module dirname
      * @return    bool
      */
-    function mod_clearConfig($dirname = "")
+    function mod_clearConfig($dirname = '')
     {
         if (empty($dirname)) {
             return false;
@@ -122,7 +121,7 @@ if (!defined("FRAMEWORKS_ART_FUNCTIONS_CONFIG")):
      *
      * @return bool
      */
-    function mod_clearConfg($dirname = "")
+    function mod_clearConfg($dirname = '')
     {
         return mod_clearConfig($dirname);
     }

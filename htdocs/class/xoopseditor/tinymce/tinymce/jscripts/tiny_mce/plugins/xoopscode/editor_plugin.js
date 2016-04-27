@@ -1,5 +1,5 @@
 /**
- * $Id: editor_plugin.js 11937 2013-08-18 02:25:16Z beckmi $
+ * 
  *
  * @author Moxiecode
  * @copyright Copyright © 2004-2008, Moxiecode Systems AB, All rights reserved.

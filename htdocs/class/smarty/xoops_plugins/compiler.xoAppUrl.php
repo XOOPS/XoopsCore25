@@ -11,7 +11,6 @@
  * @package          xos_opal
  * @subpackage       xos_opal_Smarty
  * @since            2.0.14
- * @version          $Id: compiler.xoAppUrl.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 /**
@@ -86,7 +85,7 @@ function smarty_compiler_xoAppUrl($argStr, &$compiler)
         foreach ($params as $k => $v) {
             $str .= var_export($k, true) . " => $v,\n";
         }
-        $str .= "))";
+        $str .= '))';
     }
 
     return "echo htmlspecialchars($str);";

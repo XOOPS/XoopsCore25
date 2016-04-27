@@ -14,7 +14,6 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Maxime Cointin (AKA Kraven30)
  * @package             system
- * @version             $Id: jquery.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 require dirname(dirname(dirname(dirname(__DIR__)))) . '/mainfile.php';
@@ -26,10 +25,10 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
     exit(_NOPERM);
 }
 
-if (isset($_REQUEST["op"])) {
-    $op = $_REQUEST["op"];
+if (isset($_REQUEST['op'])) {
+    $op = $_REQUEST['op'];
 } else {
-    @$op = "default";
+    @$op = 'default';
 }
 
 switch ($op) {
@@ -48,7 +47,7 @@ switch ($op) {
         // Count comments (approved only: com_status == XOOPS_COMMENT_ACTIVE)
         $tables[] = array('table_name' => 'xoopscomments', 'uid_column' => 'com_uid', 'criteria' => new Criteria('com_status', XOOPS_COMMENT_ACTIVE));
         // Count forum posts
-        if (XoopsModule::getByDirname("newbb")) {
+        if (XoopsModule::getByDirname('newbb')) {
             $tables[] = array('table_name' => 'bb_posts', 'uid_column' => 'uid');
         }
         $uid         = system_CleanVars($_REQUEST, 'uid', int);
@@ -59,7 +58,7 @@ switch ($op) {
             if (!empty($table['criteria'])) {
                 $criteria->add($table['criteria']);
             }
-            $sql = "SELECT COUNT(*) AS total FROM " . $xoopsDB->prefix($table['table_name']) . ' ' . $criteria->renderWhere();
+            $sql = 'SELECT COUNT(*) AS total FROM ' . $xoopsDB->prefix($table['table_name']) . ' ' . $criteria->renderWhere();
             if ($result = $xoopsDB->query($sql)) {
                 if ($row = $xoopsDB->fetchArray($result)) {
                     $total_posts += $row['total'];
@@ -67,9 +66,9 @@ switch ($op) {
             }
         }
 
-        $sql = "UPDATE " . $xoopsDB->prefix("users") . " SET posts = '" . $total_posts . "' WHERE uid = '" . $uid . "'";
+        $sql = 'UPDATE ' . $xoopsDB->prefix('users') . " SET posts = '" . $total_posts . "' WHERE uid = '" . $uid . "'";
         if (!$result = $xoopsDB->queryF($sql)) {
-            redirect_header("admin.php?fct=users", 1, _AM_SYSTEM_USERS_CNUUSER);
+            redirect_header('admin.php?fct=users', 1, _AM_SYSTEM_USERS_CNUUSER);
         } else {
             echo $total_posts;
         }

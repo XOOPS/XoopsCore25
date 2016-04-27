@@ -22,7 +22,6 @@
  * @author           Skalpa Keo <skalpa@xoops.org>
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
- * @version          $Id: installwizard.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 class XoopsInstallWizard
 {
@@ -83,12 +82,12 @@ class XoopsInstallWizard
             return false;
         }
 
-        $pagename = preg_replace('~(page_)(.*)~', '$2', basename($_SERVER['PHP_SELF'], ".php"));
+        $pagename = preg_replace('~(page_)(.*)~', '$2', basename($_SERVER['PHP_SELF'], '.php'));
         $this->setPage($pagename);
 
         // Prevent client caching
-        header("Cache-Control: no-store, no-cache, must-revalidate", false);
-        header("Pragma: no-cache");
+        header('Cache-Control: no-store, no-cache, must-revalidate', false);
+        header('Pragma: no-cache');
 
         return true;
     }
@@ -124,11 +123,11 @@ class XoopsInstallWizard
             return true;
         }
 
-        if (empty($GLOBALS['xoopsUser']) && !empty($_COOKIE["xo_install_user"])) {
-            install_acceptUser($_COOKIE["xo_install_user"]);
+        if (empty($GLOBALS['xoopsUser']) && !empty($_COOKIE['xo_install_user'])) {
+           return install_acceptUser($_COOKIE['xo_install_user']);
         }
         if (empty($GLOBALS['xoopsUser'])) {
-            redirect_header("../user.php");
+            redirect_header('../user.php');
         }
         if (!$GLOBALS['xoopsUser']->isAdmin()) {
             return false;
@@ -154,7 +153,7 @@ class XoopsInstallWizard
      */
     public function initLanguage($language)
     {
-        $language = preg_replace("/[^a-z0-9_\-]/i", "", $language);
+        $language = preg_replace("/[^a-z0-9_\-]/i", '', $language);
         if (!file_exists("./language/{$language}/install.php")) {
             $language = 'english';
         }
@@ -218,7 +217,7 @@ class XoopsInstallWizard
             }
         }
         if (!isset($pages[$pageIndex])) {
-            if (defined("XOOPS_URL")) {
+            if (defined('XOOPS_URL')) {
                 return XOOPS_URL;
             } else {
                 return $this->baseLocation();
@@ -252,18 +251,18 @@ class XoopsInstallWizard
         $ret    = '';
 
         foreach ($this->form as $form) {
-            $ret .= "<fieldset><legend>" . $form->getTitle() . "</legend>\n";
+            $ret .= '<fieldset><legend>' . $form->getTitle() . "</legend>\n";
 
             foreach ($form->getElements() as $ele) {
                 if (is_object($ele)) {
                     if (!$ele->isHidden()) {
                         if (($caption = $ele->getCaption()) != '') {
                             $name = $ele->getName();
-                            $ret .= "<label class='xolabel' for='" . $ele->getName() . "'>" . $caption . "</label>";
+                            $ret .= "<label class='xolabel' for='" . $ele->getName() . "'>" . $caption . '</label>';
                             if (($desc = $ele->getDescription()) != '') {
                                 $ret .= "<div class='xoform-help'>";
                                 $ret .= $desc;
-                                $ret .= "</div>";
+                                $ret .= '</div>';
                             }
                         }
                         $ret .= $ele->render() . "\n";

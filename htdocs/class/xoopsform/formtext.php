@@ -15,7 +15,6 @@
  * @subpackage          form
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version             $Id: formtext.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
@@ -62,8 +61,8 @@ class XoopsFormText extends XoopsFormElement
     {
         $this->setCaption($caption);
         $this->setName($name);
-        $this->_size      = (int)($size);
-        $this->_maxlength = (int)($maxlength);
+        $this->_size      = (int)$size;
+        $this->_maxlength = (int)$maxlength;
         $this->setValue($value);
     }
 
@@ -115,6 +114,6 @@ class XoopsFormText extends XoopsFormElement
      */
     public function render()
     {
-        return "<input type='text' name='" . $this->getName() . "' title='" . $this->getTitle() . "' id='" . $this->getName() . "' size='" . $this->getSize() . "' maxlength='" . $this->getMaxlength() . "' value='" . $this->getValue() . "'" . $this->getExtra() . " />";
+        return "<input type='text' name='" . $this->getName() . "' title='" . $this->getTitle() . "' id='" . $this->getName() . "' size='" . $this->getSize() . "' maxlength='" . $this->getMaxlength() . "' value='" . $this->getValue() . "'" . $this->getExtra() . ' />';
     }
 }

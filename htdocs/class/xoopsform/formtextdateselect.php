@@ -15,10 +15,9 @@
  * @subpackage          form
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version             $Id: formtextdateselect.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
-defined('XOOPS_ROOT_PATH') || exit("XOOPS root path not defined");
+defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 /**
  * A text field with calendar popup
@@ -33,7 +32,7 @@ class XoopsFormTextDateSelect extends XoopsFormText
      */
     public function __construct($caption, $name, $size = 15, $value = 0)
     {
-        $value = !is_numeric($value) ? time() : (int)($value);
+        $value = !is_numeric($value) ? time() : (int)$value;
         $value = ($value == 0) ? time() : $value;
         parent::__construct($caption, $name, $size, 25, $value);
     }

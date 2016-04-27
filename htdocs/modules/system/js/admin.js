@@ -10,7 +10,6 @@
  * @copyright   (c) 2000-2015 XOOPS Project (www.xoops.org)
  * @license     GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package     system
- * @version     $Id:$
  */
 
 /**
@@ -173,7 +172,7 @@ function blocks_preview() {
     $.post('admin.php?type=preview', queryString,
         function (reponse, textStatus) {
             if (textStatus == 'success') {
-                $("#xo-preview-block").tpl(reponse);
+                $("#xo-preview-block").html(reponse);
                 $("#xo-preview-dialog").dialog({modal: true});
                 if (!$("#xo-preview-dialog").dialog('isOpen')) {
                     $("#xo-preview-dialog").dialog({
@@ -201,7 +200,7 @@ function display_post(uid) {
         url: "./admin/users/jquery.php",
         data: "op=display_post&uid=" + uid,
         success: function (msg) {
-            $('#display_post_' + uid).tpl(msg);
+            $('#display_post_' + uid).html(msg);
             $('#loading_' + uid).hide();
             $("#display_post_" + uid).fadeIn('fast');
         }

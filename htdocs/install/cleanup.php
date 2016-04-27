@@ -21,7 +21,6 @@
  * @package     installer
  * @since       2.5.7
  * @author      Richard Griffith <richard@geekwright.com>
- * @version     $Id: page_end.php 12051 2013-09-15 01:45:10Z beckmi $
  */
 
 require_once './include/common.inc.php';
@@ -29,10 +28,10 @@ defined('XOOPS_INSTALL') or die('XOOPS Installation wizard die');
 
 $install_rename_suffix = $_POST['instsuffix'];
 if (preg_match('/^[a-f0-9]{23}$/', $install_rename_suffix)) {
-    $installer_modified = "install_remove_" . $install_rename_suffix;
+    $installer_modified = 'install_remove_' . $install_rename_suffix;
     install_finalize($installer_modified);
-    echo "OK";
+    echo 'OK';
 } else {
-    echo "FAILED";
+    echo 'FAILED';
 }
 exit;

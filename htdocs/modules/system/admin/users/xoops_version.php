@@ -1,9 +1,9 @@
 <?php
-// $Id: xoops_version.php 13082 2015-06-06 21:59:41Z beckmi $
+// 
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2016 XOOPS Project (www.xoops.org)            //
-//                       <http://www.xoops.org/>                             //
+//                         <http://xoops.org/>                               //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -35,7 +35,7 @@ $modversion['description'] = _AM_SYSTEM_USER_DESC;
 $modversion['author']      = '';
 $modversion['credits']     = 'The XOOPS Project; Francisco Burzi<br>( http://phpnuke.org/ ); Kazumi Ono; Maxime Cointin (AKA Kraven30)';
 $modversion['help']        = 'page=users';
-$modversion['license']     = "GPL see LICENSE";
+$modversion['license']     = 'GPL see LICENSE';
 $modversion['official']    = 1;
 $modversion['image']       = 'edituser.png';
 

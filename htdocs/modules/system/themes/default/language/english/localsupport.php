@@ -1,5 +1,5 @@
 <?php
-// $Id: localsupport.php 12033 2013-09-14 03:16:44Z beckmi $
+// 
 
 $menu = array();
 

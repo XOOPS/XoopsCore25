@@ -14,7 +14,6 @@
  * @package             kernel
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
- * @version             $Id: configcategory.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -122,7 +121,7 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
     public function get($id)
     {
         $confcat = false;
-        $id      = (int)($id);
+        $id      = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('configcategory') . ' WHERE confcat_id=' . $id;
             if (!$result = $this->db->query($sql)) {
@@ -162,9 +161,9 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
         }
         if ($confcat->isNew()) {
             $confcat_id = $this->db->genId('configcategory_confcat_id_seq');
-            $sql        = sprintf("INSERT INTO %s (confcat_id, confcat_name, confcat_order) VALUES (%u, %s, %u)", $this->db->prefix('configcategory'), $confcat_id, $this->db->quoteString($confcat_name), $confcat_order);
+            $sql        = sprintf('INSERT INTO %s (confcat_id, confcat_name, confcat_order) VALUES (%u, %s, %u)', $this->db->prefix('configcategory'), $confcat_id, $this->db->quoteString($confcat_name), $confcat_order);
         } else {
-            $sql = sprintf("UPDATE %s SET confcat_name = %s, confcat_order = %u WHERE confcat_id = %u", $this->db->prefix('configcategory'), $this->db->quoteString($confcat_name), $confcat_order, $confcat_id);
+            $sql = sprintf('UPDATE %s SET confcat_name = %s, confcat_order = %u WHERE confcat_id = %u', $this->db->prefix('configcategory'), $this->db->quoteString($confcat_name), $confcat_order, $confcat_id);
         }
         if (!$result = $this->db->query($sql)) {
             return false;
@@ -191,7 +190,7 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
             return false;
         }
 
-        $sql = sprintf("DELETE FROM %s WHERE confcat_id = %u", $this->db->prefix('configcategory'), $configcategory->getVar('confcat_id'));
+        $sql = sprintf('DELETE FROM %s WHERE confcat_id = %u', $this->db->prefix('configcategory'), $configcategory->getVar('confcat_id'));
         if (!$result = $this->db->query($sql)) {
             return false;
         }
@@ -247,7 +246,7 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
      */
     public function getCatByModule($modid = 0)
     {
-        trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 
         return false;
     }

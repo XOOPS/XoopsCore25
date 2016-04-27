@@ -14,7 +14,6 @@
  * @package             pm
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: install.php 13082 2015-06-06 21:59:41Z beckmi $
  * @param $module
  * @return bool
  */
@@ -24,7 +23,7 @@ function xoops_module_install_pm(XoopsModule $module)
     global $xoopsDB;
 
     // Check pm table version
-    $sql = "SHOW COLUMNS FROM " . $xoopsDB->prefix("priv_msgs");
+    $sql = 'SHOW COLUMNS FROM ' . $xoopsDB->prefix('priv_msgs');
     if (!$result = $xoopsDB->queryF($sql)) {
         return false;
     }
@@ -32,7 +31,7 @@ function xoops_module_install_pm(XoopsModule $module)
     if (($rows = $xoopsDB->getRowsNum($result)) == 12) {
         return true;
     } elseif ($rows == 8) {
-        return $xoopsDB->queryFromFile(XOOPS_ROOT_PATH . "/modules/" . $module->getVar('dirname', 'n') . "/sql/mysql.upgrade.sql");
+        return $xoopsDB->queryFromFile(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'n') . '/sql/mysql.upgrade.sql');
     } else {
         return false;
     }

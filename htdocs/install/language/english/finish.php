@@ -1,5 +1,5 @@
 <?php
-// $Id: finish.php 13081 2015-06-06 21:50:17Z beckmi $
+// 
 // _LANGCODE: en
 // _CHARSET : UTF-8
 // Translator: XOOPS Translation Team

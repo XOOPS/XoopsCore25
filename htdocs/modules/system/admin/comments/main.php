@@ -1,9 +1,9 @@
 <?php
- // $Id: main.php 13090 2015-06-16 20:44:29Z beckmi $
+ // 
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2016 XOOPS Project (www.xoops.org)            //
-//                       <http://www.xoops.org/>                             //
+//                         <http://xoops.org/>                               //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -69,9 +69,9 @@ $status_array[0] = _AM_SYSTEM_COMMENTS_FORM_ALL_STATUS;
 
 $comments = array();
 //$status   = (!isset($_REQUEST['status']) || !in_array((int)($_REQUEST['status']), array_keys($status_array))) ? 0 : (int)($_REQUEST['status']);
-$status = (!isset($_REQUEST['status']) || !array_key_exists((int)($_REQUEST['status']), $status_array)) ? 0 : (int)($_REQUEST['status']);
+$status = (!isset($_REQUEST['status']) || !array_key_exists((int)$_REQUEST['status'], $status_array)) ? 0 : (int)$_REQUEST['status'];
 
-$module          = !isset($_REQUEST['module']) ? 0 : (int)($_REQUEST['module']);
+$module          = !isset($_REQUEST['module']) ? 0 : (int)$_REQUEST['module'];
 $modules_Handler = xoops_getHandler('module');
 $module_array    = $modules_Handler->getList(new Criteria('hascomments', 1));
 $module_array[0] = _AM_SYSTEM_COMMENTS_FORM_ALL_MODS;
@@ -109,26 +109,26 @@ switch ($op) {
         $form_purge->addElement(new XoopsFormTextDateSelect(_AM_SYSTEM_COMMENTS_FORM_PURGE_DATE_BEFORE, 'comments_before', '15'));
 
         //user
-        $form_purge->addElement(new XoopsFormSelectUser(_AM_SYSTEM_COMMENTS_FORM_PURGE_USER, "comments_userid", false, @$_REQUEST['comments_userid'], 5, true));
+        $form_purge->addElement(new XoopsFormSelectUser(_AM_SYSTEM_COMMENTS_FORM_PURGE_USER, 'comments_userid', false, @$_REQUEST['comments_userid'], 5, true));
 
         //groups
-        $groupe_select = new XoopsFormSelectGroup(_AM_SYSTEM_COMMENTS_FORM_PURGE_GROUPS, "comments_groupe", false, '', 5, true);
+        $groupe_select = new XoopsFormSelectGroup(_AM_SYSTEM_COMMENTS_FORM_PURGE_GROUPS, 'comments_groupe', false, '', 5, true);
         $groupe_select->setExtra("style=\"width:170px;\" ");
         $form_purge->addElement($groupe_select);
 
         //Status
-        $status  = new XoopsFormSelect(_AM_SYSTEM_COMMENTS_FORM_PURGE_STATUS, "comments_status", '');
+        $status  = new XoopsFormSelect(_AM_SYSTEM_COMMENTS_FORM_PURGE_STATUS, 'comments_status', '');
         $options = $status_array;
         $status->addOptionArray($options);
         $form_purge->addElement($status, true);
 
         //Modules
-        $modules = new XoopsFormSelect(_AM_SYSTEM_COMMENTS_FORM_PURGE_MODULES, "comments_modules", '');
+        $modules = new XoopsFormSelect(_AM_SYSTEM_COMMENTS_FORM_PURGE_MODULES, 'comments_modules', '');
         $options = $module_array;
         $modules->addOptionArray($options);
         $form_purge->addElement($modules, true);
-        $form_purge->addElement(new XoopsFormHidden("op", "comments_purge"));
-        $form_purge->addElement(new XoopsFormButton("", "submit", _SUBMIT, "submit"));
+        $form_purge->addElement(new XoopsFormHidden('op', 'comments_purge'));
+        $form_purge->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
         $xoopsTpl->assign('form', $form_purge->render());
         break;
 
@@ -140,10 +140,10 @@ switch ($op) {
                 $com_after  = system_CleanVars($_POST, 'comments_after', time(), 'date');
                 $com_before = system_CleanVars($_POST, 'comments_before', time(), 'date');
                 if ($com_after) {
-                    $criteria->add(new Criteria('com_created', $com_after, ">"));
+                    $criteria->add(new Criteria('com_created', $com_after, '>'));
                 }
                 if ($com_before) {
-                    $criteria->add(new Criteria('com_created', $com_before, "<"));
+                    $criteria->add(new Criteria('com_created', $com_before, '<'));
                 }
                 $verif = true;
             }
@@ -191,10 +191,10 @@ switch ($op) {
         }
         if ($verif == true) {
             if ($comment_handler->deleteAll($criteria)) {
-                redirect_header("admin.php?fct=comments", 3, _AM_SYSTEM_DBUPDATED);
+                redirect_header('admin.php?fct=comments', 3, _AM_SYSTEM_DBUPDATED);
             }
         } else {
-            redirect_header("admin.php?fct=comments", 3, _AM_SYSTEM_DBUPDATED);
+            redirect_header('admin.php?fct=comments', 3, _AM_SYSTEM_DBUPDATED);
         }
         break;
 
@@ -298,7 +298,7 @@ switch ($op) {
                 $comments['comments_id']           = $com_id;
                 $comments['comments_poster']       = $comments_poster_uname;
                 $comments['comments_icon']         = $comments_icon;
-                $comments['comments_title'] = $myts->htmlSpecialChars($comments_arr[$i]->getVar("com_title"));
+                $comments['comments_title'] = $myts->htmlSpecialChars($comments_arr[$i]->getVar('com_title'));
                 $comments['comments_ip']           = $comments_arr[$i]->getVar('com_ip');
                 $comments['comments_date']         = formatTimestamp($comments_arr[$i]->getVar('com_created'));
                 $comments['comments_text'] = $myts->htmlSpecialChars($comments_arr[$i]->getVar('com_text'));

@@ -15,7 +15,6 @@
  * @subpackage          model
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: write.php 13091 2015-06-16 21:08:34Z beckmi $
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -286,7 +285,7 @@ class XoopsModelWrite extends XoopsModelAbstract
 
             return $object->getVar($this->handler->keyName);
         }
-        $queryFunc = empty($force) ? "query" : "queryF";
+        $queryFunc = empty($force) ? 'query' : 'queryF';
 
         if ($object->isNew()) {
             $sql = 'INSERT INTO `' . $this->handler->table . '`';
@@ -339,7 +338,7 @@ class XoopsModelWrite extends XoopsModelAbstract
             $whereclause = '`' . $this->handler->keyName . '` = ' . $this->handler->db->quote($object->getVar($this->handler->keyName));
         }
         $sql       = 'DELETE FROM `' . $this->handler->table . '` WHERE ' . $whereclause;
-        $queryFunc = empty($force) ? "query" : "queryF";
+        $queryFunc = empty($force) ? 'query' : 'queryF';
         $result    = $this->handler->db->{$queryFunc}($sql);
 
         return empty($result) ? false : true;

@@ -15,7 +15,6 @@
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: object.php 13091 2015-06-16 21:08:34Z beckmi $
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
@@ -117,6 +116,17 @@ class XoopsObject
     }
 
     /**
+     * PHP 4 style constructor compatibility shim
+     * @deprecated all callers should be using parent::__construct()
+     */
+    public function XoopsObject()
+    {
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error("Should call parent::__construct in {$trace[0]['file']} line {$trace[0]['line']},");
+        self::__construct();
+    }
+
+    /**
      * *#@+
      * used for new/clone objects
      *
@@ -174,7 +184,7 @@ class XoopsObject
      * @access   public
      *
      * @param string $key
-     * @param int    $data_type set to one of XOBJ_DTYPE_XXX constants (set to XOBJ_DTYPE_OTHER if no data type ckecking nor text sanitizing is required)
+     * @param int    $data_type set to one of XOBJ_DTYPE_XXX constants (set to XOBJ_DTYPE_OTHER if no data type checking nor text sanitizing is required)
      * @param null   $value
      * @param bool   $required  require html form input?
      * @param int    $maxlength for XOBJ_DTYPE_TXTBOX type only
@@ -208,7 +218,7 @@ class XoopsObject
             switch ($this->vars[$key]['data_type']) {
                 case XOBJ_DTYPE_UNICODE_ARRAY:
                     if (is_array($value)) {
-                        $this->vars[$key]['value'] =& array_walk($value, "xoops_aw_decode");
+                        $this->vars[$key]['value'] =& array_walk($value, 'xoops_aw_decode');
                     } else {
                         $this->vars[$key]['value'] =& xoops_convert_decode($value);
                     }
@@ -320,19 +330,21 @@ class XoopsObject
     }
 
     /**
-     * @deprecated use destroyVars() instead
      * @param $var
      * @return bool
+     * @deprecated use destroyVars() instead,  destoryVars() will be removed in the next major release
      */
     public function destoryVars($var)
     {
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error("XoopsObject::destoryVars() is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']},");
         return $this->destroyVars($var);
     }
 
     /**
      * Assign values to multiple variables in a batch
      *
-     * Meant for a CGI contenxt:
+     * Meant for a CGI context:
      * - prefixed CGI args are considered save
      * - avoids polluting of namespace with CGI args
      *
@@ -480,7 +492,7 @@ class XoopsObject
                             }
                             $ret = is_array($ret) ? $ret : array();
                             if (is_array($ret)) {
-                                $ret = array_walk($ret, "xoops_aw_decode");
+                                $ret = array_walk($ret, 'xoops_aw_decode');
                             }
                         }
 
@@ -713,8 +725,8 @@ class XoopsObject
                             $this->setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
                             continue 2;
                         }
-                        if (isset($v['maxlength']) && strlen($cleanv) > (int)($v['maxlength'])) {
-                            $this->setErrors(sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int)($v['maxlength'])));
+                        if (isset($v['maxlength']) && strlen($cleanv) > (int)$v['maxlength']) {
+                            $this->setErrors(sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int)$v['maxlength']));
                             continue 2;
                         }
                         if (!$v['not_gpc']) {
@@ -740,7 +752,7 @@ class XoopsObject
                         }
                         break;
                     case XOBJ_DTYPE_INT:
-                        $cleanv = (int)($cleanv);
+                        $cleanv = (int)$cleanv;
                         break;
 
                     case XOBJ_DTYPE_EMAIL:
@@ -749,7 +761,7 @@ class XoopsObject
                             continue 2;
                         }
                         if ($cleanv != '' && !preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $cleanv)) {
-                            $this->setErrors("Invalid Email"); //_XOBJ_ERR_INVALID_EMAIL
+                            $this->setErrors('Invalid Email'); //_XOBJ_ERR_INVALID_EMAIL
                             continue 2;
                         }
                         if (!$v['not_gpc']) {
@@ -775,17 +787,17 @@ class XoopsObject
                     case XOBJ_DTYPE_STIME:
                     case XOBJ_DTYPE_MTIME:
                     case XOBJ_DTYPE_LTIME:
-                        $cleanv = !is_string($cleanv) ? (int)($cleanv) : strtotime($cleanv);
+                        $cleanv = !is_string($cleanv) ? (int)$cleanv : strtotime($cleanv);
                         break;
                     case XOBJ_DTYPE_FLOAT:
-                        $cleanv = (float)($cleanv);
+                        $cleanv = (float)$cleanv;
                         break;
                     case XOBJ_DTYPE_DECIMAL:
-                        $cleanv = (float)($cleanv);
+                        $cleanv = (float)$cleanv;
                         break;
                     case XOBJ_DTYPE_ENUM:
                         if (!in_array($cleanv, $v['enumeration'])) {
-                            $this->setErrors("Invalid Enumeration");//_XOBJ_ERR_INVALID_ENUMERATION
+                            $this->setErrors('Invalid Enumeration');//_XOBJ_ERR_INVALID_ENUMERATION
                             continue 2;
                         }
                         break;
@@ -795,8 +807,8 @@ class XoopsObject
                             continue 2;
                         }
                         $cleanv = xoops_convert_encode($cleanv);
-                        if (isset($v['maxlength']) && strlen($cleanv) > (int)($v['maxlength'])) {
-                            $this->setErrors(sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int)($v['maxlength'])));
+                        if (isset($v['maxlength']) && strlen($cleanv) > (int)$v['maxlength']) {
+                            $this->setErrors(sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int)$v['maxlength']));
                             continue 2;
                         }
                         if (!$v['not_gpc']) {
@@ -823,7 +835,7 @@ class XoopsObject
                             continue 2;
                         }
                         if ($cleanv != '' && !preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $cleanv)) {
-                            $this->setErrors("Invalid Email");
+                            $this->setErrors('Invalid Email');
                             continue 2;
                         }
                         $cleanv = xoops_convert_encode($cleanv);
@@ -870,10 +882,13 @@ class XoopsObject
      * dynamically register additional filter for the object
      *
      * @param string $filtername name of the filter
-     * @access public
+     *
+     * @deprecated \XoopsObject::registerFilter is deprecated since XOOPS 2.5.8 and will be removed in the next major release
      */
     public function registerFilter($filtername)
     {
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error("XoopsObject::registerFilter() is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']},");
         $this->_filters[] = $filtername;
     }
 
@@ -911,10 +926,14 @@ class XoopsObject
      * parameter: the target object
      *
      * @param string $method function or action name
-     * @access public
+     *
+     * @deprecated \XoopsObject::loadFilters is deprecated since XOOPS 2.5.8 and will be removed in the next major release
      */
     public function loadFilters($method)
     {
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error("XoopsObject::loadFilters() is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']},");
+
         $this->_loadFilters();
 
         xoops_load('XoopsCache');
@@ -945,7 +964,7 @@ class XoopsObject
      * @access public
      * @return object clone
      */
-    public function &xoopsClone()
+    public function xoopsClone()
     {
         $class = get_class($this);
         $clone = null;
@@ -957,6 +976,15 @@ class XoopsObject
         $clone->setNew();
 
         return $clone;
+    }
+
+    /**
+     * Adjust a newly cloned object
+     */
+    public function __clone()
+    {
+        // need this to notify the handler class that this is a newly created object
+        $this->setNew();
     }
 
     /**
@@ -1022,7 +1050,7 @@ class XoopsObject
 /**
  * XOOPS object handler class.
  * This class is an abstract class of handler classes that are responsible for providing
- * data access mechanisms to the data source of its corresponsing data objects
+ * data access mechanisms to the data source of its corresponding data objects
  *
  * @package             kernel
  * @abstract
@@ -1047,6 +1075,19 @@ class XoopsObjectHandler
     public function __construct(XoopsDatabase $db)
     {
         $this->db = $db;
+    }
+
+    /**
+     * PHP 4 style constructor compatibility shim
+     *
+     * @param XoopsDatabase $db database object
+     * @deprecated all callers should be using parent::__construct()
+     */
+    public function XoopsObjectHandler($db)
+    {
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error("Should call parent::__construct in {$trace[0]['file']} line {$trace[0]['line']},");
+        self::__construct($db);
     }
 
     /**
@@ -1115,7 +1156,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * holds reference to predefined extended object handlers: read, stats, joint, write, sync
      *
      * The handlers hold methods for different purposes, which could be all put together inside of current class.
-     * However, load codes only if they are necessary, thus they are now splitted out.
+     * However, load codes only if they are necessary, thus they are now split out.
      *
      * var array of objects
      *
@@ -1144,16 +1185,12 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * Constructor
      *
-     * @access   protected
-     * @param XoopsDatabase $db {@link XoopsDatabase} object
-     * @param string        $table
-     * @param string        $className
-     * @param string        $keyName
-     * @param string        $identifierName
-     * @internal param string                 $table Name of database table
-     * @internal param string                 $className Name of Class, this handler is managing
-     * @internal param string                 $keyname Name of the property, holding the key
-     * @return \XoopsPersistableObjectHandler
+     * @param null|XoopsDatabase $db             database connection
+     * @param string             $table          Name of database table
+     * @param string             $className      Name of the XoopsObject class this handler manages
+     * @param string             $keyName        Name of the property holding the key
+     * @param string             $identifierName Name of the property holding an identifier
+     *                                            name (title, name ...), used on getList()
      */
     public function __construct(XoopsDatabase $db = null, $table = '', $className = '', $keyName = '', $identifierName = '')
     {
@@ -1166,6 +1203,25 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
         if ($identifierName) {
             $this->identifierName = $identifierName;
         }
+    }
+
+    /**
+     * PHP 4 style constructor compatibility shim
+     *
+     * @param null|XoopsDatabase $db             database connection
+     * @param string             $table          Name of database table
+     * @param string             $className      Name of the XoopsObject class this handler manages
+     * @param string             $keyName        Name of the property holding the key
+     * @param string             $identifierName Name of the property holding an identifier
+     *                                            name (title, name ...), used on getList()
+     *
+     * @deprecated all callers should be using parent::__construct()
+     */
+    public function XoopsPersistableObjectHandler(XoopsDatabase $db = null, $table = '', $className = '', $keyName = '', $identifierName = '')
+    {
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error("Should call parent::__construct in {$trace[0]['file']} line {$trace[0]['line']},");
+        self::__construct($db, $table, $className, $keyName, $identifierName);
     }
 
     /**
@@ -1489,7 +1545,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * Get counts of objects matching a condition
      *
      * @param  CriteriaElement $criteria {@link CriteriaElement} to match
-     * @return array           of conunts
+     * @return array           of counts
      */
     public function getCounts(CriteriaElement $criteria = null)
     {
@@ -1627,7 +1683,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      */
     public function convertResultSet($result, $id_as_key = false, $as_object = true)
     {
-        trigger_error(__CLASS__ . "::" . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 
         return false;
     }

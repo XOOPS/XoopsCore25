@@ -14,7 +14,6 @@
  * @package             pm
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: menu.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
@@ -39,11 +38,11 @@ $adminmenu = array();
 
 $i                      = 1;
 $adminmenu[$i]['title'] = _PM_MI_INDEX;
-$adminmenu[$i]['link']  = "admin/admin.php";
+$adminmenu[$i]['link']  = 'admin/admin.php';
 $adminmenu[$i]['icon']  = $pathIcon32 . '/home.png';
 ++$i;
 $adminmenu[$i]['title'] = _PM_MI_PRUNE;
-$adminmenu[$i]['link']  = "admin/prune.php";
+$adminmenu[$i]['link']  = 'admin/prune.php';
 $adminmenu[$i]['icon']  = $pathIcon32 . '/prune.png';
 ++$i;
 $adminmenu[$i]['title'] = _PM_MI_ABOUT;

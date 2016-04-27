@@ -1,9 +1,9 @@
 <?php
-// $Id: category.php 13082 2015-06-06 21:59:41Z beckmi $
+// 
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2016 XOOPS Project (www.xoops.org)            //
-//                       <http://www.xoops.org/>                             //
+//                         <http://xoops.org/>                               //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -34,37 +34,37 @@ $indexAdmin = new ModuleAdmin();
 
 $indexAdmin->addItemButton(_ADD . ' ' . _PROFILE_AM_CATEGORY, 'category.php?op=new', 'add', '');
 
-echo $indexAdmin->addNavigation('category.php');
+echo $indexAdmin->addNavigation(basename(__FILE__));
 echo $indexAdmin->renderButton('right', '');
 
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : (isset($_REQUEST['id']) ? "edit" : 'list');
+$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : (isset($_REQUEST['id']) ? 'edit' : 'list');
 
 $handler = xoops_getModuleHandler('category');
 switch ($op) {
     default:
-    case "list":
+    case 'list':
         $criteria = new CriteriaCompo();
         $criteria->setSort('cat_weight');
         $criteria->setOrder('ASC');
         $GLOBALS['xoopsTpl']->assign('categories', $handler->getObjects($criteria, true, false));
-        $template_main = "profile_admin_categorylist.tpl";
+        $template_main = 'profile_admin_categorylist.tpl';
         break;
 
-    case "new":
+    case 'new':
         include_once dirname(__DIR__) . '/include/forms.php';
         $obj  = $handler->create();
         $form = $obj->getForm();
         $form->display();
         break;
 
-    case "edit":
+    case 'edit':
         include_once dirname(__DIR__) . '/include/forms.php';
         $obj  = $handler->get($_REQUEST['id']);
         $form = $obj->getForm();
         $form->display();
         break;
 
-    case "save":
+    case 'save':
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('category.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
@@ -85,7 +85,7 @@ switch ($op) {
         $form->display();
         break;
 
-    case "delete":
+    case 'delete':
         $obj = $handler->get($_REQUEST['id']);
         if (isset($_REQUEST['ok']) && $_REQUEST['ok'] == 1) {
             if (!$GLOBALS['xoopsSecurity']->check()) {

@@ -8,13 +8,12 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @since               1.00
- * @version             $Id: object.php 13082 2015-06-06 21:59:41Z beckmi $
  * @package             Frameworks
  * @subpackage          art
  */
 
 //if (!class_exists("ArtObject")):
-if (class_exists("ArtObject")) {
+if (class_exists('ArtObject')) {
     return null;
 }
 
@@ -25,8 +24,8 @@ if (class_exists("ArtObject")) {
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @package             module::article
  *
- * {@link XoopsObject}
- **/
+ * @deprecated ArtObject is deprecated since XOOPS 2.5.8 and will be removed in the next major release
+ */
 class ArtObject extends XoopsObject
 {
     /**
@@ -41,6 +40,8 @@ class ArtObject extends XoopsObject
 
     public function __construct()
     {
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error("ArtObject is deprecated, instantiated from {$trace[0]['file']} line {$trace[0]['line']},");
     }
 }
 
@@ -51,8 +52,7 @@ class ArtObject extends XoopsObject
  * @author              D.J. (phppp)
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  *
- * {@link XoopsPersistableObjectHandler}
- *
+ * @deprecated ArtObjectHandler is deprecated since XOOPS 2.5.8 and will be removed in the next major release
  */
 class ArtObjectHandler extends XoopsPersistableObjectHandler
 {
@@ -68,8 +68,10 @@ class ArtObjectHandler extends XoopsPersistableObjectHandler
      * @param string             $identifierName
      */
 
-    public function __construct(XoopsMySQLDatabase $db, $table = "", $className = "", $keyName = "", $identifierName = '')
+    public function __construct(XoopsMySQLDatabase $db, $table = '', $className = '', $keyName = '', $identifierName = '')
     {
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error("ArtObjectHandler is deprecated, instantiated from {$trace[0]['file']} line {$trace[0]['line']},");
         $this->db = $db;
         parent::__construct($db, $table, $className, $keyName, $identifierName);
     }
@@ -83,7 +85,7 @@ class ArtObjectHandler extends XoopsPersistableObjectHandler
      */
     public function mysql_server_version($conn = null)
     {
-        if (null === ($conn)) {
+        if (null === $conn) {
             $conn = $this->db->conn;
         }
         return mysqli_get_server_info($conn);
@@ -97,9 +99,9 @@ class ArtObjectHandler extends XoopsPersistableObjectHandler
     public function mysql_major_version()
     {
         $version = $this->mysql_server_version($this->db->conn);
-        if (version_compare($version, "5.0.0", "ge")) {
+        if (version_compare($version, '5.0.0', 'ge')) {
             $mysql_version = 5;
-        } elseif (version_compare($version, "4.1.0", "ge")) {
+        } elseif (version_compare($version, '4.1.0', 'ge')) {
             $mysql_version = 4;
         } else {
             $mysql_version = 3;

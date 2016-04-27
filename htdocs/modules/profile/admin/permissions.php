@@ -15,48 +15,47 @@
  * @since               2.3.0
  * @author              Jan Pedersen
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: permissions.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 $indexAdmin = new ModuleAdmin();
-echo $indexAdmin->addNavigation('permissions.php');
+echo $indexAdmin->addNavigation(basename(__FILE__));
 
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : "edit";
+$op = \Xmf\Request::getCmd('op', 'edit');
 
-$perm_desc = "";
+$perm_desc = '';
 switch ($op) {
-    case "visibility":
+    case 'visibility':
         //redirect_header("visibility.php", 0, _PROFILE_AM_PROF_VISIBLE);
-        header("Location: visibility.php");
+        header('Location: visibility.php');
         break;
 
-    case "edit":
+    case 'edit':
         $title_of_form = _PROFILE_AM_PROF_EDITABLE;
-        $perm_name     = "profile_edit";
-        $restriction   = "field_edit";
+        $perm_name     = 'profile_edit';
+        $restriction   = 'field_edit';
         $anonymous     = false;
         break;
 
-    case "search":
+    case 'search':
         $title_of_form = _PROFILE_AM_PROF_SEARCH;
-        $perm_name     = "profile_search";
-        $restriction   = "";
+        $perm_name     = 'profile_search';
+        $restriction   = '';
         $anonymous     = true;
         break;
 
-    case "access":
+    case 'access':
         $title_of_form = _PROFILE_AM_PROF_ACCESS;
-        $perm_name     = "profile_access";
+        $perm_name     = 'profile_access';
         $perm_desc     = _PROFILE_AM_PROF_ACCESS_DESC;
-        $restriction   = "";
+        $restriction   = '';
         $anonymous     = true;
         break;
 }
 
-include_once $GLOBALS['xoops']->path("/class/xoopsformloader.php");
-$opform    = new XoopsSimpleForm('', 'opform', 'permissions.php', "get");
-$op_select = new XoopsFormSelect("", 'op', $op);
+include_once $GLOBALS['xoops']->path('/class/xoopsformloader.php');
+$opform    = new XoopsSimpleForm('', 'opform', 'permissions.php', 'get');
+$op_select = new XoopsFormSelect('', 'op', $op);
 $op_select->setExtra('onchange="document.forms.opform.submit()"');
 $op_select->addOption('visibility', _PROFILE_AM_PROF_VISIBLE);
 $op_select->addOption('edit', _PROFILE_AM_PROF_EDITABLE);
@@ -67,8 +66,7 @@ $opform->display();
 
 $module_id = $GLOBALS['xoopsModule']->getVar('mid');
 include_once $GLOBALS['xoops']->path('/class/xoopsform/grouppermform.php');
-$form = new XoopsGroupPermForm($title_of_form, $module_id, $perm_name, $perm_desc, 'admin/permissions.php', $anonymous);
-
+$form = new XoopsGroupPermForm($title_of_form, $module_id, $perm_name, $perm_desc, 'admin/permissions.php?op=' . $op, $anonymous);
 if ($op === 'access') {
     $member_handler = xoops_getHandler('member');
     $glist          = $member_handler->getGroupList();
@@ -107,4 +105,3 @@ if ($op === 'access') {
 $form->display();
 include_once __DIR__ . '/admin_footer.php';
 //xoops_cp_footer();
-

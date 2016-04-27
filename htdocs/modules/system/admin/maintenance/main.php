@@ -13,7 +13,6 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Cointin Maxime (AKA Kraven30)
  * @package             system
- * @version             $Id: main.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 require_once XOOPS_ROOT_PATH . '/modules/system/class/maintenance.php';
@@ -51,10 +50,10 @@ switch ($op) {
         $maintenance = new SystemMaintenance();
 
         //Form Maintenance
-        $form_maintenance = new XoopsThemeForm(_AM_SYSTEM_MAINTENANCE, "maintenance_save", "admin.php?fct=maintenance", 'post', true);
+        $form_maintenance = new XoopsThemeForm(_AM_SYSTEM_MAINTENANCE, 'maintenance_save', 'admin.php?fct=maintenance', 'post', true);
 
-        $cache = new XoopsFormSelect(_AM_SYSTEM_MAINTENANCE_CACHE, "cache", '', 3, true);
-        $cache->setDescription(XOOPS_VAR_PATH . "/cache/smarty_cache/<br />" . XOOPS_VAR_PATH . "/cache/smarty_compile/<br />" . XOOPS_VAR_PATH . "/cache/xoops_cache/");
+        $cache = new XoopsFormSelect(_AM_SYSTEM_MAINTENANCE_CACHE, 'cache', '', 3, true);
+        $cache->setDescription(XOOPS_VAR_PATH . '/cache/smarty_cache/<br />' . XOOPS_VAR_PATH . '/cache/smarty_compile/<br />' . XOOPS_VAR_PATH . '/cache/xoops_cache/');
         $cache_arr = array(
             1 => 'smarty_cache',
             2 => 'smarty_compile',
@@ -66,11 +65,11 @@ switch ($op) {
 
         $tables_tray = new XoopsFormElementTray(_AM_SYSTEM_MAINTENANCE_TABLES, '');
         $tables_tray->setDescription(_AM_SYSTEM_MAINTENANCE_TABLES_DESC);
-        $select_tables = new XoopsFormSelect('', "tables", '', 7, true);
+        $select_tables = new XoopsFormSelect('', 'tables', '', 7, true);
         $select_tables->addOptionArray($maintenance->displayTables(true));
         $tables_tray->addElement($select_tables, false);
         $tables_tray->addElement(new xoopsFormLabel('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . _AM_SYSTEM_MAINTENANCE_DUMP_AND . '&nbsp;'));
-        $choice  = new XoopsFormSelect('&nbsp;&nbsp;', "maintenance", '', 4, true);
+        $choice  = new XoopsFormSelect('&nbsp;&nbsp;', 'maintenance', '', 4, true);
         $options = array(
             '1' => _AM_SYSTEM_MAINTENANCE_CHOICE1,
             '2' => _AM_SYSTEM_MAINTENANCE_CHOICE2,
@@ -82,14 +81,14 @@ switch ($op) {
 
         $form_maintenance->addElement(new XoopsFormRadioYN(_AM_SYSTEM_MAINTENANCE_AVATAR, 'avatar', '', _YES, _NO));
 
-        $form_maintenance->addElement(new XoopsFormHidden("op", "maintenance_save"));
-        $form_maintenance->addElement(new XoopsFormButton("", "maintenance_save", _SEND, "submit"));
+        $form_maintenance->addElement(new XoopsFormHidden('op', 'maintenance_save'));
+        $form_maintenance->addElement(new XoopsFormButton('', 'maintenance_save', _SEND, 'submit'));
 
         //Form Dump
-        $form_dump = new XoopsThemeForm(_AM_SYSTEM_MAINTENANCE_DUMP, "dump_save", "admin.php?fct=maintenance", 'post', true);
+        $form_dump = new XoopsThemeForm(_AM_SYSTEM_MAINTENANCE_DUMP, 'dump_save', 'admin.php?fct=maintenance', 'post', true);
 
         $dump_tray      = new XoopsFormElementTray(_AM_SYSTEM_MAINTENANCE_DUMP_TABLES_OR_MODULES, '');
-        $select_tables1 = new XoopsFormSelect('', "dump_tables", '', 7, true);
+        $select_tables1 = new XoopsFormSelect('', 'dump_tables', '', 7, true);
         $select_tables1->addOptionArray($maintenance->displayTables(true));
         $dump_tray->addElement($select_tables1, false);
 
@@ -105,8 +104,8 @@ switch ($op) {
 
         $form_dump->addElement(new XoopsFormRadioYN(_AM_SYSTEM_MAINTENANCE_DUMP_DROP, 'drop', 1, _YES, _NO));
 
-        $form_dump->addElement(new XoopsFormHidden("op", "dump_save"));
-        $form_dump->addElement(new XoopsFormButton("", "dump_save", _SEND, "submit"));
+        $form_dump->addElement(new XoopsFormHidden('op', 'dump_save'));
+        $form_dump->addElement(new XoopsFormButton('', 'dump_save', _SEND, 'submit'));
 
         // Assign form
         $xoopsTpl->assign('form_maintenance', $form_maintenance->render());
@@ -171,7 +170,7 @@ switch ($op) {
         }
 
         if ($result_cache === false && $result_session === false && $result_maintenance === false && $result_avatar === false) {
-            redirect_header("admin.php?fct=maintenance", 2, _AM_SYSTEM_MAINTENANCE_ERROR_MAINTENANCE);
+            redirect_header('admin.php?fct=maintenance', 2, _AM_SYSTEM_MAINTENANCE_ERROR_MAINTENANCE);
         }
 
         $xoopsTpl->assign('verif_cache', $verif_cache);
@@ -201,7 +200,7 @@ switch ($op) {
         $drop         = system_CleanVars($_REQUEST, 'drop', 1, 'int');
 
         if (($dump_tables === true && $dump_modules === true) || ($dump_tables === false && $dump_modules === false)) {
-            redirect_header("admin.php?fct=maintenance", 2, _AM_SYSTEM_MAINTENANCE_DUMP_ERROR_TABLES_OR_MODULES);
+            redirect_header('admin.php?fct=maintenance', 2, _AM_SYSTEM_MAINTENANCE_DUMP_ERROR_TABLES_OR_MODULES);
         }
 
         if ($dump_tables !== false) {

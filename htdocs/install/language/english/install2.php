@@ -1,5 +1,5 @@
 <?php
-// $Id: install2.php 12041 2013-09-14 14:06:17Z beckmi $
+// 
 // _LANGCODE: en
 // _CHARSET : UTF-8
 // Translator: XOOPS Translation Team
@@ -23,9 +23,9 @@ define('_INSTALL_SUBMITTERUSERS', 'Submitters');
 define('_INSTALL_SUBMITTERUSERSD', 'This group can submit articles to your website');
 define('_INSTALL_DEVELOPEUSERS', 'Developer');
 define('_INSTALL_DEVELOPEUSERSD', 'This user has developer privileges and can see developer debugging messages.');
-define('_INSTALL_L165', "The site is currently closed for maintenance. Please come back later.");
-define('_INSTALL_ANON', "Anonymous");
-define('_INSTALL_DISCLMR', "While the administrators and moderators of this site will attempt to remove
+define('_INSTALL_L165', 'The site is currently closed for maintenance. Please come back later.');
+define('_INSTALL_ANON', 'Anonymous');
+define('_INSTALL_DISCLMR', 'While the administrators and moderators of this site will attempt to remove
 or edit any generally objectionable material as quickly as possible, it is
 impossible to review every message. Therefore you acknowledge that all posts
 made to this site express the views and opinions of the author and not the
@@ -52,4 +52,4 @@ they serve only to improve your viewing pleasure. The email address is used
 only for confirming your registration details and password (and for sending
 new passwords should you forget your current one).
 
-By clicking Register below you agree to be bound by these conditions.");
+By clicking Register below you agree to be bound by these conditions.');

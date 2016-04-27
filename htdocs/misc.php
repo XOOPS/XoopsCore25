@@ -13,7 +13,6 @@
  * @license         GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package         core
  * @since           2.0.0
- * @version         $Id: misc.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
 include __DIR__ . '/mainfile.php';
@@ -24,12 +23,12 @@ $action = isset($_GET['action']) ? strip_tags(trim($_GET['action'])) : '';
 $action = isset($_POST['action']) ? strip_tags(trim($_POST['action'])) : $action;
 $type = isset($_GET['type']) ? strip_tags(trim($_GET['type'])) : '';
 $type = isset($_POST['type']) ? strip_tags(trim($_POST['type'])) : $type;
-if ($action === "showpopups") {
+if ($action === 'showpopups') {
     xoops_header(false);
     // show javascript close button?
     $closebutton = 1;
     switch ($type) {
-        case "smilies":
+        case 'smilies':
             $target = isset($_GET['target']) ? trim($_GET['target']) : '';
             if ($target == '' || !preg_match('/^[0-9a-z_]*$/i', $target)) {
             } else {
@@ -53,16 +52,16 @@ if ($action === "showpopups") {
                 if ($smiles = $myts->getSmileys()) {
                     $rcolor = 'even';
                     foreach ($smiles as $key => $smile) {
-                        echo "<tr class='$rcolor'><td>" . $smile['code'] . "</td><td>" . $smile['emotion'] . "</td><td><img onmouseover='style.cursor=\"hand\"' onclick='doSmilie(\" " . $smile['code'] . " \");' src='" . XOOPS_UPLOAD_URL . "/" . $smile['smile_url'] . "' alt='' /></td></tr>";
+                        echo "<tr class='$rcolor'><td>" . $smile['code'] . '</td><td>' . $smile['emotion'] . "</td><td><img onmouseover='style.cursor=\"hand\"' onclick='doSmilie(\" " . $smile['code'] . " \");' src='" . XOOPS_UPLOAD_URL . '/' . $smile['smile_url'] . "' alt='' /></td></tr>";
                         $rcolor = ($rcolor === 'even') ? 'odd' : 'even';
                     }
                 } else {
-                    echo "Could not retrieve data from the database.";
+                    echo 'Could not retrieve data from the database.';
                 }
                 echo '</table>' . _MSC_CLICKASMILIE;
             }
             break;
-        case "avatars":
+        case 'avatars':
             ?>
 <script language='javascript'>
         <!--//
@@ -93,7 +92,7 @@ if ($action === "showpopups") {
             $avatar_handler = xoops_getHandler('avatar');
             $avatarslist = $avatar_handler->getList('S');
             $cntavs = 0;
-            $counter = isset($_GET['start']) ? (int)($_GET['start']) : 0;
+            $counter = isset($_GET['start']) ? (int)$_GET['start'] : 0;
             foreach ($avatarslist as $file => $name) {
                 echo '<td><img src="uploads/' . $file . '" alt="' . $name . '" style="padding:10px; vertical-align:top;"  /><br />' . $name . '<br /><input name="myimage" type="button" value="' . _SELECT . '" onclick="myimage_onclick(' . $counter . ')" /></td>';
                 ++$counter;
@@ -105,22 +104,22 @@ if ($action === "showpopups") {
             }
             echo '</tr></table></form></div>';
             break;
-        case "friend":
-            if (!$GLOBALS['xoopsSecurity']->check() || ! isset($_POST['op']) || $_POST['op'] === "sendform") {
+        case 'friend':
+            if (!$GLOBALS['xoopsSecurity']->check() || ! isset($_POST['op']) || $_POST['op'] === 'sendform') {
                 if ($xoopsUser) {
-                    $yname = $xoopsUser->getVar("uname", 'e');
-                    $ymail = $xoopsUser->getVar("email", 'e');
-                    $fname = "";
-                    $fmail = "";
+                    $yname = $xoopsUser->getVar('uname', 'e');
+                    $ymail = $xoopsUser->getVar('email', 'e');
+                    $fname = '';
+                    $fmail = '';
                 } else {
-                    $yname = "";
-                    $ymail = "";
-                    $fname = "";
-                    $fmail = "";
+                    $yname = '';
+                    $ymail = '';
+                    $fname = '';
+                    $fmail = '';
                 }
                 printCheckForm();
                 echo '</head><body>';
-                echo "<div class='errorMsg'>" . implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()) . "</div>";
+                echo "<div class='errorMsg'>" . implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()) . '</div>';
                 echo '
             <form action="' . XOOPS_URL . '/misc.php" method="post" onsubmit="return checkForm();"><table  width="100%" class="outer" cellspacing="1"><tr><th colspan="2">' . _MSC_RECOMMENDSITE . '</th></tr>';
                 echo "<tr><td class='head'>
@@ -134,30 +133,30 @@ if ($action === "showpopups") {
                 <tr><td class='head'>&nbsp;</td><td class='even'><input type='submit' value='" . _SEND . "' />&nbsp;<input value='" . _CLOSE . "' type='button' onclick='javascript:window.close();' />" . $GLOBALS['xoopsSecurity']->getTokenHTML() . "</td></tr>
                 </table></form>\n";
                 $closebutton = 0;
-            } elseif ($_POST['op'] === "sendsite") {
+            } elseif ($_POST['op'] === 'sendsite') {
                 $myts = MyTextSanitizer::getInstance();
                 if ($xoopsUser) {
-                    $ymail = $xoopsUser->getVar("email");
+                    $ymail = $xoopsUser->getVar('email');
                 } else {
                     $ymail = isset($_POST['ymail']) ? $myts->stripSlashesGPC(trim($_POST['ymail'])) : '';
                 }
-                if (!isset($_POST['yname']) || trim($_POST['yname']) == "" || $ymail == '' || !isset($_POST['fname']) || trim($_POST['fname']) == "" || !isset($_POST['fmail']) || trim($_POST['fmail']) == '') {
-                    redirect_header(XOOPS_URL . "/misc.php?action=showpopups&amp;type=friend&amp;op=sendform", 2, _MSC_NEEDINFO);
+                if (!isset($_POST['yname']) || trim($_POST['yname']) == '' || $ymail == '' || !isset($_POST['fname']) || trim($_POST['fname']) == '' || !isset($_POST['fmail']) || trim($_POST['fmail']) == '') {
+                    redirect_header(XOOPS_URL . '/misc.php?action=showpopups&amp;type=friend&amp;op=sendform', 2, _MSC_NEEDINFO);
                 }
                 $yname = $myts->stripSlashesGPC(trim($_POST['yname']));
                 $fname = $myts->stripSlashesGPC(trim($_POST['fname']));
                 $fmail = $myts->stripSlashesGPC(trim($_POST['fmail']));
                 if (!checkEmail($fmail) || !checkEmail($ymail) || preg_match("/[\\0-\\31]/", $yname)) {
-                    $errormessage = _MSC_INVALIDEMAIL1 . "<br />" . _MSC_INVALIDEMAIL2 . "";
-                    redirect_header(XOOPS_URL . "/misc.php?action=showpopups&amp;type=friend&amp;op=sendform", 2, $errormessage);
+                    $errormessage = _MSC_INVALIDEMAIL1 . '<br />' . _MSC_INVALIDEMAIL2 . '';
+                    redirect_header(XOOPS_URL . '/misc.php?action=showpopups&amp;type=friend&amp;op=sendform', 2, $errormessage);
                 }
                 $xoopsMailer =& xoops_getMailer();
-                $xoopsMailer->setTemplate("tellfriend.tpl");
-                $xoopsMailer->assign("SITENAME", $xoopsConfig['sitename']);
-                $xoopsMailer->assign("ADMINMAIL", $xoopsConfig['adminmail']);
-                $xoopsMailer->assign("SITEURL", XOOPS_URL . "/");
-                $xoopsMailer->assign("YOUR_NAME", $yname);
-                $xoopsMailer->assign("FRIEND_NAME", $fname);
+                $xoopsMailer->setTemplate('tellfriend.tpl');
+                $xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
+                $xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
+                $xoopsMailer->assign('SITEURL', XOOPS_URL . '/');
+                $xoopsMailer->assign('YOUR_NAME', $yname);
+                $xoopsMailer->assign('FRIEND_NAME', $fname);
                 $xoopsMailer->setToEmails($fmail);
                 $xoopsMailer->setFromEmail($ymail);
                 $xoopsMailer->setFromName($yname);
@@ -166,7 +165,7 @@ if ($action === "showpopups") {
                 if (!$xoopsMailer->send()) {
                     echo $xoopsMailer->getErrors();
                 } else {
-                    echo "<div><h4>" . _MSC_REFERENCESENT . "</h4></div>";
+                    echo '<div><h4>' . _MSC_REFERENCESENT . '</h4></div>';
                 }
                 //CloseTable();
             }
@@ -175,7 +174,7 @@ if ($action === "showpopups") {
             $isadmin = $xoopsUserIsAdmin;
             echo '</head><body>';
             echo '<table style="width:100%;" cellspacing="1" class="outer"><tr><th colspan="3">' . _WHOSONLINE . '</th></tr>';
-            $start = isset($_GET['start']) ? (int)($_GET['start']) : 0;
+            $start = isset($_GET['start']) ? (int)$_GET['start'] : 0;
             $online_handler = xoops_getHandler('online');
             $online_total = $online_handler->getCount();
             $limit = ($online_total > 20) ? 20 : $online_total;
@@ -202,7 +201,7 @@ if ($action === "showpopups") {
                 echo '<tr style="vertical-align:middle; text-align: center;" class="' . $class . '">';
                 if (is_object($onlineUsers[$i]['user'])) {
                     $avatar = $onlineUsers[$i]['user']->getVar('user_avatar') ? '<img src="' . XOOPS_UPLOAD_URL . '/' . $onlineUsers[$i]['user']->getVar('user_avatar') . '" alt="" />' : '&nbsp;';
-                    echo '<td>' . $avatar . "</td><td><a href=\"javascript:window.opener.location='" . XOOPS_URL . "/userinfo.php?uid=" . $onlineUsers[$i]['user']->getVar('uid') . "';window.close();\">" . $onlineUsers[$i]['user']->getVar('uname') . "</a>";
+                    echo '<td>' . $avatar . "</td><td><a href=\"javascript:window.opener.location='" . XOOPS_URL . '/userinfo.php?uid=' . $onlineUsers[$i]['user']->getVar('uid') . "';window.close();\">" . $onlineUsers[$i]['user']->getVar('uname') . '</a>';
                 } else {
                     echo '<td>&nbsp;</td><td>' . $xoopsConfig['anonymous'];
                 }

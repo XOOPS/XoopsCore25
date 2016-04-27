@@ -15,15 +15,14 @@
  * @since               2.3.0
  * @author              Jan Pedersen
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: activate.php 13090 2015-06-16 20:44:29Z beckmi $
  */
 
-$xoopsOption['pagetype'] = "user";
+$xoopsOption['pagetype'] = 'user';
 include __DIR__ . '/header.php';
 
 include $GLOBALS['xoops']->path('header.php');
 if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
-    $id     = (int)($_GET['id']);
+    $id     = (int)$_GET['id'];
     $actkey = trim($_GET['actkey']);
     if (empty($id)) {
         redirect_header(XOOPS_URL, 1, '');
@@ -49,7 +48,7 @@ if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
                     $xoopsMailer->setTemplate('activated.tpl');
                     $xoopsMailer->assign('SITENAME', $GLOBALS['xoopsConfig']['sitename']);
                     $xoopsMailer->assign('ADMINMAIL', $GLOBALS['xoopsConfig']['adminmail']);
-                    $xoopsMailer->assign('SITEURL', XOOPS_URL . "/");
+                    $xoopsMailer->assign('SITEURL', XOOPS_URL . '/');
                     $xoopsMailer->setToUsers($thisuser);
                     $xoopsMailer->setFromEmail($GLOBALS['xoopsConfig']['adminmail']);
                     $xoopsMailer->setFromName($GLOBALS['xoopsConfig']['sitename']);
@@ -85,7 +84,7 @@ if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
     $xoopsMailer->setTemplate('register.tpl');
     $xoopsMailer->assign('SITENAME', $GLOBALS['xoopsConfig']['sitename']);
     $xoopsMailer->assign('ADMINMAIL', $GLOBALS['xoopsConfig']['adminmail']);
-    $xoopsMailer->assign('SITEURL', XOOPS_URL . "/");
+    $xoopsMailer->assign('SITEURL', XOOPS_URL . '/');
     $xoopsMailer->setToUsers($getuser[0]);
     $xoopsMailer->setFromEmail($GLOBALS['xoopsConfig']['adminmail']);
     $xoopsMailer->setFromName($GLOBALS['xoopsConfig']['sitename']);

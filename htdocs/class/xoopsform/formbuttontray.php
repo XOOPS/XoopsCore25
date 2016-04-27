@@ -8,7 +8,6 @@
  * @subpackage          form
  * @since               2.4.0
  * @author              John Neill <catzwolf@xoops.org>
- * @version             $Id: formbuttontray.php 13082 2015-06-06 21:59:41Z beckmi $
  *
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');

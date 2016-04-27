@@ -14,7 +14,6 @@
  * @package             pm
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: admin_header.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 $path = dirname(dirname(dirname(__DIR__)));
@@ -46,11 +45,11 @@ if ($xoopsUser) {
         redirect_header(XOOPS_URL, 1, _NOPERM);
     }
 } else {
-    redirect_header(XOOPS_URL . "/user.php", 1, _NOPERM);
+    redirect_header(XOOPS_URL . '/user.php', 1, _NOPERM);
 }
 
 if (!isset($xoopsTpl) || !is_object($xoopsTpl)) {
-    include_once(XOOPS_ROOT_PATH . "/class/template.php");
+    include_once(XOOPS_ROOT_PATH . '/class/template.php');
     $xoopsTpl = new XoopsTpl();
 }
 

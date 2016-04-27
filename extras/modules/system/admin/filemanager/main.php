@@ -28,7 +28,7 @@ if (!xoops_getModuleOption('active_filemanager', 'system')) {
 // Get Action type
 $op = system_CleanVars($_REQUEST, 'op', 'default', 'string');
 // Define main template
-$xoopsOption['template_main'] = 'system_filemanager.html';
+$xoopsOption['template_main'] = 'system_filemanager.tpl';
 // Call Header
 xoops_cp_header();
 

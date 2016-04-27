@@ -17,7 +17,6 @@
  * @subpackage          CAPTCHA
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: image.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -71,7 +70,7 @@ class XoopsCaptchaImage extends XoopsCaptchaMethod
                 }
                 </script>";
         $image = $this->loadImage();
-        $image .= "<br /><a href=\"javascript: xoops_captcha_refresh('" . ($this->config['name']) . "')\">" . _CAPTCHA_REFRESH . "</a>";
+        $image .= "<br /><a href=\"javascript: xoops_captcha_refresh('" . $this->config['name'] . "')\">" . _CAPTCHA_REFRESH . '</a>';
         $input = '<input type="text" name="' . $this->config['name'] . '" id="' . $this->config['name'] . '" size="' . $this->config['num_chars'] . '" maxlength="' . $this->config['num_chars'] . '" value="" />';
         $rule  = _CAPTCHA_RULE_IMAGE;
         $rule .= '<br />' . (empty($this->config['casesensitive']) ? _CAPTCHA_RULE_CASEINSENSITIVE : _CAPTCHA_RULE_CASESENSITIVE);
@@ -89,6 +88,6 @@ class XoopsCaptchaImage extends XoopsCaptchaMethod
      */
     public function loadImage()
     {
-        return '<img id="' . ($this->config["name"]) . '" src="' . XOOPS_URL . '/class/captcha/image/scripts/image.php" onclick=\'this.src="' . XOOPS_URL . '/class/captcha/image/scripts/image.php?refresh="+Math.random()' . '\' style="cursor: pointer; vertical-align: middle;" alt="" />';
+        return '<img id="' . $this->config['name'] . '" src="' . XOOPS_URL . '/class/captcha/image/scripts/image.php" onclick=\'this.src="' . XOOPS_URL . '/class/captcha/image/scripts/image.php?refresh="+Math.random()' . '\' style="cursor: pointer; vertical-align: middle;" alt="" />';
     }
 }

@@ -100,10 +100,10 @@
             </tr>
             <tr>
                 <td><a rel="external" href="http://www.xoops.org/modules/xoopspartners"><{$smarty.const._OXYGEN_LOCALSUPPORT}></a></td>
-                <td><a rel="external" href="http://xoops.svn.sourceforge.net/viewvc/xoops"><{$smarty.const._OXYGEN_CODESVN}></a></td>
+                <td><a rel="external" href="https://github.com/XOOPS/XoopsCore25"><{$smarty.const._OXYGEN_CODESVN}></a></td>
             </tr>
             <tr>
-                <td><a rel="external" href="http://sourceforge.net/tracker/?group_id=41586&atid=430840"><{$smarty.const._OXYGEN_REPORTBUG}></a></td>
+                <td><a rel="external" href="https://github.com/XOOPS/XoopsCore25/issues"><{$smarty.const._OXYGEN_REPORTBUG}></a></td>
             </tr>
         </table>
     </div>

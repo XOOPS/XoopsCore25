@@ -18,7 +18,6 @@
  * @license          GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
  * @since            2.3
- * @version          $Id: xo-info.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 return array(
@@ -32,4 +31,4 @@ return array(
     //'pageTemplate' => './xotpl/xo_page.html',
 
     // Types of language constants
-    "languages" => array("main", "admin"));
+    'languages' => array('main', 'admin'));
