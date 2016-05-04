@@ -38,7 +38,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 class XoopsModelJoint extends XoopsModelAbstract
 {
     /**
-     * Validate information for the linkship
+     * Validate information for the link
      *
      * @access private
      */
@@ -159,11 +159,11 @@ class XoopsModelJoint extends XoopsModelAbstract
         if (!$this->validateLinks()) {
             return null;
         }
-        $sql = " SELECT l.{$this->handler->keyName_link}, COUNT(*)" . " FROM {$this->handler->table} AS o" . " LEFT JOIN {$this->handler->table_link} AS l ON o.{$this->handler->field_object} = l.{$this->handler->field_link}";
+        $sql = " SELECT l.{$this->handler->field_link}, COUNT(*)" . " FROM {$this->handler->table} AS o" . " LEFT JOIN {$this->handler->table_link} AS l ON o.{$this->handler->field_object} = l.{$this->handler->field_link}";
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-        $sql .= " GROUP BY l.{$this->handler->keyName_link}";
+        $sql .= " GROUP BY l.{$this->handler->field_link}";
         if (!$result = $this->handler->db->query($sql)) {
             return false;
         }
