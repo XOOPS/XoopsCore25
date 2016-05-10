@@ -65,7 +65,7 @@ class XoopsMailer
     // custom headers
     // private
     public $headers;
-    // subjet of mail
+    // subject of mail
     // private
     public $subject;
     // body of mail
@@ -403,15 +403,15 @@ class XoopsMailer
         $this->encodeBody($body);
         $this->multimailer->clearAllRecipients();
         $this->multimailer->addAddress($email);
-        $this->multimailer->subject  = $subject;
-        $this->multimailer->body     = $body;
-        $this->multimailer->charSet  = $this->charSet;
-        $this->multimailer->encoding = $this->encoding;
+        $this->multimailer->Subject  = $subject;
+        $this->multimailer->Body     = $body;
+        $this->multimailer->CharSet  = $this->charSet;
+        $this->multimailer->Encoding = $this->encoding;
         if (!empty($this->fromName)) {
-            $this->multimailer->fromName = $this->encodeFromName($this->fromName);
+            $this->multimailer->FromName = $this->encodeFromName($this->fromName);
         }
         if (!empty($this->fromEmail)) {
-            $this->multimailer->sender = $this->multimailer->From = $this->fromEmail;
+            $this->multimailer->Sender = $this->multimailer->From = $this->fromEmail;
         }
 
         $this->multimailer->clearCustomHeaders();
@@ -441,7 +441,7 @@ class XoopsMailer
             if (!empty($this->errors)) {
                 $ret = '<h4>' . _ERRORS . '</h4>';
                 foreach ($this->errors as $error) {
-                    $ret .= $error . '<br />';
+                    $ret .= $error . '<br>';
                 }
             } else {
                 $ret = '';
@@ -465,7 +465,7 @@ class XoopsMailer
             $ret = '';
             if (!empty($this->success)) {
                 foreach ($this->success as $suc) {
-                    $ret .= $suc . '<br />';
+                    $ret .= $suc . '<br>';
                 }
             }
 
@@ -513,7 +513,7 @@ class XoopsMailer
     {
         if (!is_array($email)) {
             if (preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $email)) {
-                $this->toEmails[] = $email;
+                array_push($this->toEmails, $email);
             }
         } else {
             foreach ($email as $e) {
@@ -530,7 +530,7 @@ class XoopsMailer
     {
         if (!is_array($user)) {
             if (strtolower(get_class($user)) === 'xoopsuser') {
-                $this->toUsers[] = $user;
+                array_push($this->toUsers, $user);
             }
         } else {
             foreach ($user as $u) {
