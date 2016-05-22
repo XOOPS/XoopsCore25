@@ -628,7 +628,7 @@ function xoops_getbanner()
             } else {
                 $bannerobject = $bannerobject . '<div id="xo-bannerfix">';
                 // $bannerobject = $bannerobject . '<div id="xo-fixbanner">';
-                $bannerobject = $bannerobject . ' <iframe src=' . $imageurl . ' border="0" scrolling="no" allowtransparency="true" width="468px" height="60px" style="border:0" alt="' . $clickurl . ';"> </iframe>';
+                $bannerobject = $bannerobject . ' <iframe src=' . $imageurl . ' border="0" scrolling="no" allowtransparency="true" width="480px" height="60px" style="border:0" alt="' . $clickurl . ';"> </iframe>';
                 $bannerobject .= '</div>';
                 // $bannerobject .= '</div>';
             }
