@@ -204,7 +204,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
     /**
      * Returns the text of the error message from previous MySQL operation
      *
-     * @return bool Returns the error text from the last MySQL function, or '' (the empty string) if no error occurred.
+     * @return string Returns the error text from the last MySQL function, or '' (the empty string) if no error occurred.
      */
     public function error()
     {
