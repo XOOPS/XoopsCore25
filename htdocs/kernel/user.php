@@ -209,7 +209,7 @@ class XoopsUser extends XoopsObject
     public function isAdmin($module_id = null)
     {
         if (null === $module_id) {
-            $module_id = isset($GLOBALS['xoopsModule']) ? $GLOBALS['xoopsModule']->getVar('mid', 'n') : 1;
+            $module_id = (isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule'])) ? $GLOBALS['xoopsModule']->getVar('mid', 'n') : 1;
         } elseif ((int)$module_id < 1) {
             $module_id = 0;
         }
