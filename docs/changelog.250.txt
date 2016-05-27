@@ -1,28 +1,7 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
-2.5.8 RC3            2016-04-05
-===================================
-- fix issues discovered in RC2
-
-Updated:
- - jQuery to 1.12.4 (mamba)
- - jGrowl to 1.4.4 (mamba)
- - phpThumb to 1.7.14-201603240806  (mamba)
- - Snoopy to 1.2.5 (zyspec)
- - xmf to 1.0.0 (geekwright)
- - SWF banners to HTML5 (mamba)
- - extra banners (mamba)
-
-
-===================================
-2.5.8 RC2            2016-03-11
-===================================
-- fix several issues discovered in RC1
-
-
-===================================
-2.5.8 RC1            2016-03-08
+2.5.8 Final            2016-05-27
 ===================================
 - replaced "dirname(__FILE__)" with "__DIR__" since the min. PHP is now 5.3.7, and __DIR__ is faster  (mamba)
 - updating some copyright notices (mamba)
@@ -62,12 +41,15 @@ Updated:
 Updated:
  - TinyMCE to 3.5.11 (mamba)
  - PHPMailer to 5.2.14 (mamba)
- - jQuery to 1.12.1 (mamba)
+ - jQuery to 1.12.4 (mamba)
  - jQuery UI 1.11.4 (mamba)
- - jGrowl to 1.4.3 (mamba)
- - phpThumb to 1.7.14-201601231457  (mamba)
+ - jGrowl to 1.4.4 (mamba)
+ - phpThumb to 1.7.14-201603240806  (mamba)
  - HTML Purifier to 4.7.0 (mamba)
  - Bootstrap to 3.3.6 (mamba)
+ - Snoopy to 1.2.5 (zyspec)
+ - SWF banners to HTML5 (mamba)
+ - extra banners (mamba)
 
 ===================================
 2.5.7.2 Final   2016-01-02
