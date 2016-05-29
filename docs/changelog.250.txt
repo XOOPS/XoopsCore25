@@ -1,6 +1,13 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
+2.5.8.1 Beta 1         NOT RELEASED
+===================================
+
+Updated:
+ - Tabs jQuery Tools to 1.2.7 (mamba)
+
+===================================
 2.5.8 Final            2016-05-27
 ===================================
 - replaced "dirname(__FILE__)" with "__DIR__" since the min. PHP is now 5.3.7, and __DIR__ is faster  (mamba)
