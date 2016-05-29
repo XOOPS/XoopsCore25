@@ -103,7 +103,18 @@ class XoopsMailer
         $this->reset();
     }
 
-    // public     // reset all properties to default
+    /**
+     * PHP 4 style constructor compatibility shim
+     *
+     * @deprecated all callers should be using parent::__construct()
+     */
+    public function XoopsMailer()
+    {
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error("Should call parent::__construct in {$trace[0]['file']} line {$trace[0]['line']},");
+        self::__construct();
+    }
+
     /**
      * @param bool $value
      */
