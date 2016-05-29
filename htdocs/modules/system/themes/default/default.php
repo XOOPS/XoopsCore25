@@ -58,7 +58,9 @@ class XoopsGuiDefault extends XoopsSystemGui
         $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/default/js/formenu.js');
         $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/default/js/menu.js');
         $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/default/js/tooltip.js');
-        $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/default/js/tabs.jquery.tools.min.js');
+//        $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/default/js/tabs.jquery.tools.min.js');
+        $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/default/js/tabs.js');
+        $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/default/js/tabs.slideshow.js');
 
         $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/default/css/style.css');
         $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/default/css/dark.css', array('title' => 'dark', 'media' => 'screen'));
