@@ -25,12 +25,10 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * The English localization is solely for demonstration
  */
 // Do not change the class name
-class xoopsmailerlocal extends XoopsMailer
+class XoopsMailerLocal extends XoopsMailer
 {
     /**
-     * Constructer
-     *
-     * @return XoopsMailerLocal
+     * Constructor
      */
     public function __construct()
     {
@@ -40,8 +38,10 @@ class xoopsmailerlocal extends XoopsMailer
         // You MUST specify the language code value so that the file exists: XOOPS_ROOT_PAT/class/mail/phpmailer/language/lang-["your-language-code"].php
         $this->multimailer->setLanguage('en');
     }
-    // Multibyte languages are encouraged to make their proper method for encoding FromName
+
     /**
+     * Multibyte languages are encouraged to make their proper method for encoding FromName
+     *
      * @param $text
      *
      * @return mixed
@@ -52,8 +52,11 @@ class xoopsmailerlocal extends XoopsMailer
         // $text = "=?{$this->charSet}?B?".base64_encode($text)."?=";
         return $text;
     }
-    // Multibyte languages are encouraged to make their proper method for encoding Subject
+
+
     /**
+     * Multibyte languages are encouraged to make their proper method for encoding Subject
+     *
      * @param $text
      *
      * @return mixed
