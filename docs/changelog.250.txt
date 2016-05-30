@@ -1,9 +1,10 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
-2.5.8.1 Beta 1         NOT RELEASED
+2.5.8.1               NOT RELEASED
 ===================================
-
+- Add PHP4 same name constructor shim in XoopsMailer (geekwright)
+- Some cleanup in xBootstrap to reduce setup for users, especially with publisher
 Updated:
  - Tabs jQuery Tools to 1.2.7 (mamba)
 
