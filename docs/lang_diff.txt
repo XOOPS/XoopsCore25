@@ -4,7 +4,7 @@ LANGUAGE DIFFERENCES
 Below are language differences from a version to next version.
 
 ===============================
-NOT RELEASED: Version 2.5.8
+2016/05/27: Version 2.5.8
 ===============================
 ADDED/DELETED DEFINES
 
@@ -43,6 +43,9 @@ define('_MD_CODESVN', 'Code Repository');
 NEW FILES:
 /language/english/stopwords.php
 /language/english/xmf.php
+
+UPDATED XoopsMailerLocal class example:
+htdocs/language/english/xoopsmailerlocal.php
 
 ===============================
 2014/06/14: Version 2.5.7 Final
