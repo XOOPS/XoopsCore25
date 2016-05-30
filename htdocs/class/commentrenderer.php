@@ -70,7 +70,7 @@ class XoopsCommentRenderer
      * @param  boolean  $do_iconcheck
      * @return \XoopsCommentRenderer
      */
-    public static function &instance(XoopsTpl $tpl, $use_icons = true, $do_iconcheck = false)
+    public static function instance(XoopsTpl $tpl, $use_icons = true, $do_iconcheck = false)
     {
         static $instance;
         if (!isset($instance)) {
@@ -389,7 +389,7 @@ class XoopsCommentRenderer
     {
         $poster['id'] = (int)$poster_id;
         if ($poster['id'] > 0) {
-            $com_poster =& $this->_memberHandler->getUser($poster_id);
+            $com_poster = $this->_memberHandler->getUser($poster_id);
             if (is_object($com_poster)) {
                 $poster['uname'] = '<a href="' . XOOPS_URL . '/userinfo.php?uid=' . $poster['id'] . '">' . $com_poster->getVar('uname') . '</a>';
             }
@@ -423,7 +423,7 @@ class XoopsCommentRenderer
     {
         $poster['id'] = (int)$poster_id;
         if ($poster['id'] > 0) {
-            $com_poster =& $this->_memberHandler->getUser($poster['id']);
+            $com_poster = $this->_memberHandler->getUser($poster['id']);
             if (is_object($com_poster)) {
                 $poster['uname']      = '<a href="' . XOOPS_URL . '/userinfo.php?uid=' . $poster['id'] . '">' . $com_poster->getVar('uname') . '</a>';
                 $poster_rank          = $com_poster->rank();
