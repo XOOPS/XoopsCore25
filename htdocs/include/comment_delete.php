@@ -257,7 +257,7 @@ switch ($op) {
         }
         include_once $GLOBALS['xoops']->path('header.php');
         xoops_result($msgs);
-        echo '<br /><a href="' . $redirect_page . '=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode . '">' . _BACK . '</a>';
+        echo '<br><a href="' . $redirect_page . '=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode . '">' . _BACK . '</a>';
         include_once $GLOBALS['xoops']->path('footer.php');
         break;
 

@@ -166,7 +166,7 @@
     <!--Pop-pup-->
     <div class='txtright'><{$nav}></div>
 <{/if}>
-<br/>
+<br>
 <!-- Display Avatar form (add,edit) -->
 <{if $form}>
     <div class="spacer"><{$form}></div>

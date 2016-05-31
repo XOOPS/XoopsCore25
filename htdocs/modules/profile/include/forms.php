@@ -356,7 +356,7 @@ function profile_getRegisterForm(XoopsUser $user, $profile, $step = null)
     //end of Dynamic User fields
 
     if ($step_no == 1 && $GLOBALS['xoopsConfigUser']['reg_dispdsclmr'] != 0 && $GLOBALS['xoopsConfigUser']['reg_disclaimer'] != '') {
-        $disc_tray = new XoopsFormElementTray(_US_DISCLAIMER, '<br />');
+        $disc_tray = new XoopsFormElementTray(_US_DISCLAIMER, '<br>');
         $disc_text = new XoopsFormLabel('', "<div class=\"pad5\">" . $GLOBALS['myts']->displayTarea($GLOBALS['xoopsConfigUser']['reg_disclaimer'], 1) . '</div>');
         $disc_tray->addElement($disc_text);
         $agree_chk = new XoopsFormCheckBox('', 'agree_disc');
@@ -425,7 +425,7 @@ function profile_getUserForm(XoopsUser $user, ProfileProfile $profile = null, $a
         $elements[0][] = array('element' => new XoopsFormLabel(_US_NICKNAME, $user->getVar('uname')), 'required' => 0);
         $email_text    = new XoopsFormLabel('', $user->getVar('email'));
     }
-    $email_tray = new XoopsFormElementTray(_US_EMAIL, '<br />');
+    $email_tray = new XoopsFormElementTray(_US_EMAIL, '<br>');
     $email_tray->addElement($email_text, ($user->isNew() || $GLOBALS['xoopsUser']->isAdmin()) ? 1 : 0);
     $weights[0][]  = 0;
     $elements[0][] = array('element' => $email_tray, 'required' => 0);
@@ -435,7 +435,7 @@ function profile_getUserForm(XoopsUser $user, ProfileProfile $profile = null, $a
         //If the user is an admin and is editing someone else
         $pwd_text  = new XoopsFormPassword('', 'password', 10, 32);
         $pwd_text2 = new XoopsFormPassword('', 'vpass', 10, 32);
-        $pwd_tray  = new XoopsFormElementTray(_US_PASSWORD . '<br />' . _US_TYPEPASSTWICE);
+        $pwd_tray  = new XoopsFormElementTray(_US_PASSWORD . '<br>' . _US_TYPEPASSTWICE);
         $pwd_tray->addElement($pwd_text);
         $pwd_tray->addElement($pwd_text2);
         $elements[0][] = array('element' => $pwd_tray, 'required' => 0); //cannot set an element tray required

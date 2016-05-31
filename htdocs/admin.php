@@ -35,36 +35,36 @@ xoops_cp_header();
 if (!isset($xoopsConfig['admin_warnings_enable']) || $xoopsConfig['admin_warnings_enable']) {
     if (is_dir(XOOPS_ROOT_PATH . '/install/')) {
         xoops_error(sprintf(_AD_WARNINGINSTALL, XOOPS_ROOT_PATH . '/install/'));
-        echo '<br />';
+        echo '<br>';
     }
 
     if (is_writable(XOOPS_ROOT_PATH . '/mainfile.php')) {
         xoops_error(sprintf(_AD_WARNINGWRITEABLE, XOOPS_ROOT_PATH . '/mainfile.php'));
-        echo '<br />';
+        echo '<br>';
     }
     // ###### Output warn messages for correct functionality  ######
     if (!is_writable(XOOPS_CACHE_PATH)) {
         xoops_error(sprintf(_AD_WARNINGNOTWRITEABLE, XOOPS_CACHE_PATH));
-        echo '<br />';
+        echo '<br>';
     }
     if (!is_writable(XOOPS_UPLOAD_PATH)) {
         xoops_error(sprintf(_AD_WARNINGNOTWRITEABLE, XOOPS_UPLOAD_PATH));
-        echo '<br />';
+        echo '<br>';
     }
     if (!is_writable(XOOPS_COMPILE_PATH)) {
         xoops_error(sprintf(_AD_WARNINGNOTWRITEABLE, XOOPS_COMPILE_PATH));
-        echo '<br />';
+        echo '<br>';
     }
 
     //www fits inside www_private, lets add a trailing slash to make sure it doesn't
     if (strpos(XOOPS_PATH . '/', XOOPS_ROOT_PATH . '/') !== false || strpos(XOOPS_PATH . '/', $_SERVER['DOCUMENT_ROOT'] . '/') !== false) {
         xoops_error(sprintf(_AD_WARNINGXOOPSLIBINSIDE, XOOPS_PATH));
-        echo '<br />';
+        echo '<br>';
     }
 
     if (strpos(XOOPS_VAR_PATH . '/', XOOPS_ROOT_PATH . '/') !== false || strpos(XOOPS_VAR_PATH . '/', $_SERVER['DOCUMENT_ROOT'] . '/') !== false) {
         xoops_error(sprintf(_AD_WARNINGXOOPSLIBINSIDE, XOOPS_VAR_PATH));
-        echo '<br />';
+        echo '<br>';
     }
 }
 

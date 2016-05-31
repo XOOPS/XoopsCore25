@@ -45,6 +45,6 @@ if (!function_exists('themecenterposts')) {
     function themecenterposts($title, $content)
     {
         $GLOBALS['xoopsLogger']->addDeprecated("Function '" . __FUNCTION__ . "' in '" . __FILE__ . "' is deprecated, should not be used any more");
-        echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer"><tr><td class="head">' . $title . '</td></tr><tr><td><br />' . $content . '<br /></td></tr></table>';
+        echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer"><tr><td class="head">' . $title . '</td></tr><tr><td><br>' . $content . '<br></td></tr></table>';
     }
 }

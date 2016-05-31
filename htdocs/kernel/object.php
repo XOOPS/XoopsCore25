@@ -1025,10 +1025,10 @@ class XoopsObject
         $ret = '<h4>Errors</h4>';
         if (!empty($this->_errors)) {
             foreach ($this->_errors as $error) {
-                $ret .= $error . '<br />';
+                $ret .= $error . '<br>';
             }
         } else {
-            $ret .= 'None<br />';
+            $ret .= 'None<br>';
         }
 
         return $ret;

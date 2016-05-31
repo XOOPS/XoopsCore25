@@ -59,7 +59,7 @@
     <tr>
         <td width="1%" valign="top" class="bg5 bg_menu" align="center"></td>
         <td width="15%" valign="top" class="bg5" align="center">
-            <img src="<{xoImgUrl img/menu.gif}>" alt=""/><br/>
+            <img src="<{xoImgUrl img/menu.gif}>" alt=""/><br>
             <table border="0" cellpadding="4" cellspacing="0" width="100%">
                 <{foreach item=list from=$admin_menu}>
                     <tr>
@@ -67,15 +67,15 @@
                     </tr>
                 <{/foreach}>
             </table>
-            <br/>
+            <br>
         </td>
         <td align="left" valign="top" width="82%">
             <div class="content">
-                <{if $xo_system_menu}><br/><{$xo_system_menu}><{/if}>
-                <br/>
+                <{if $xo_system_menu}><br><{$xo_system_menu}><{/if}>
+                <br>
                 <{$xoops_contents}>
             </div>
-            <br/>
+            <br>
         </td>
         <td width="1%" class="bg_content"></td>
     </tr>

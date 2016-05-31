@@ -1,6 +1,6 @@
 <h4 class="txtcenter"><{$smarty.const._PM_PRIVATEMESSAGE}></h4>
 <{if $op}>
-    <br/>
+    <br>
     <div class="floatright txtright" style="width: 18%;">
         <{if $op == "out"}>
             <a href='viewpmsg.php?op=in' title='<{$smarty.const._PM_INBOX}>'><{$smarty.const._PM_INBOX}></a>
@@ -21,8 +21,8 @@
         <{elseif $op == "save"}><{$smarty.const._PM_SAVEBOX}>
         <{else}><{$smarty.const._PM_INBOX}><{/if}>
     </div>
-    <br/>
-    <br/>
+    <br>
+    <br>
     <{if $msg}>
         <div class="confirmMsg"><{$msg}></div>
     <{/if}>

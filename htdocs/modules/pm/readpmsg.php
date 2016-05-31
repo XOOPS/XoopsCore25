@@ -37,7 +37,7 @@ if (is_object($pm) && ($pm->getVar('from_userid') != $GLOBALS['xoopsUser']->getV
 
 if (is_object($pm) && !empty($_POST['action'])) {
     if (!$GLOBALS['xoopsSecurity']->check()) {
-        echo implode('<br />', $GLOBALS['xoopsSecurity']->getErrors());
+        echo implode('<br>', $GLOBALS['xoopsSecurity']->getErrors());
         exit();
     }
     $res = false;

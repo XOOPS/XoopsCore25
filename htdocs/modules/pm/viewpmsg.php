@@ -34,7 +34,7 @@ $pm_handler = xoops_getModuleHandler('message');
 
 if (isset($_POST['delete_messages']) && (isset($_POST['msg_id']) || isset($_POST['msg_ids']))) {
     if (!$GLOBALS['xoopsSecurity']->check()) {
-        $GLOBALS['xoopsTpl']->assign('errormsg', implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+        $GLOBALS['xoopsTpl']->assign('errormsg', implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
     } elseif (empty($_REQUEST['ok'])) {
         xoops_confirm(array(
                           'ok'              => 1,
@@ -64,7 +64,7 @@ if (isset($_POST['delete_messages']) && (isset($_POST['msg_id']) || isset($_POST
 }
 if (isset($_POST['move_messages']) && isset($_POST['msg_id'])) {
     if (!$GLOBALS['xoopsSecurity']->check()) {
-        $GLOBALS['xoopsTpl']->assign('errormsg', implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+        $GLOBALS['xoopsTpl']->assign('errormsg', implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
     } else {
         $size = count($_POST['msg_id']);
         $msg  = $_POST['msg_id'];
@@ -104,7 +104,7 @@ if (isset($_POST['move_messages']) && isset($_POST['msg_id'])) {
 }
 if (isset($_REQUEST['empty_messages'])) {
     if (!$GLOBALS['xoopsSecurity']->check()) {
-        $GLOBALS['xoopsTpl']->assign('errormsg', implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+        $GLOBALS['xoopsTpl']->assign('errormsg', implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
     } elseif (empty($_REQUEST['ok'])) {
         xoops_confirm(array('ok' => 1, 'empty_messages' => 1, 'op' => $_REQUEST['op']), $_SERVER['REQUEST_URI'], _PM_RUSUREEMPTY);
         include $GLOBALS['xoops']->path('footer.php');

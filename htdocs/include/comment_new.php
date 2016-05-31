@@ -33,7 +33,7 @@ if ($com_itemid > 0) {
         if (isset($com_replytext)) {
             echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer">
                   <tr><td class="head">' . $com_replytitle . '</td></tr>
-                  <tr><td><br />' . $com_replytext . '<br /></td></tr>
+                  <tr><td><br>' . $com_replytext . '<br></td></tr>
                   </table>';
         }
         $myts      = MyTextSanitizer::getInstance();

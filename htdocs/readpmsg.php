@@ -27,7 +27,7 @@ if (!is_object($xoopsUser)) {
     $pm_handler = xoops_getHandler('privmessage');
     if (!empty($_POST['delete'])) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            echo implode('<br />', $GLOBALS['xoopsSecurity']->getErrors());
+            echo implode('<br>', $GLOBALS['xoopsSecurity']->getErrors());
             exit();
         } elseif (empty($_REQUEST['ok'])) {
             include $GLOBALS['xoops']->path('header.php');
@@ -50,29 +50,29 @@ if (!is_object($xoopsUser)) {
     $criteria->setStart($start);
     $criteria->setSort('msg_time');
     $pm_arr = $pm_handler->getObjects($criteria);
-    echo '<div><h4>' . _PM_PRIVATEMESSAGE . "</h4></div><br /><a href='userinfo.php?uid=" . $xoopsUser->getVar('uid') . "' title=''>" . _PM_PROFILE . "</a>&nbsp;<span class='bold'>&raquo;&raquo;</span>&nbsp;<a href='viewpmsg.php' title=''>" . _PM_INBOX . "</a>&nbsp;<span class='bold'>&raquo;&raquo;</span>&nbsp;\n";
+    echo '<div><h4>' . _PM_PRIVATEMESSAGE . "</h4></div><br><a href='userinfo.php?uid=" . $xoopsUser->getVar('uid') . "' title=''>" . _PM_PROFILE . "</a>&nbsp;<span class='bold'>&raquo;&raquo;</span>&nbsp;<a href='viewpmsg.php' title=''>" . _PM_INBOX . "</a>&nbsp;<span class='bold'>&raquo;&raquo;</span>&nbsp;\n";
     if (empty($pm_arr)) {
-        echo '<br /><br />' . _PM_YOUDONTHAVE;
+        echo '<br><br>' . _PM_YOUDONTHAVE;
     } else {
         if (!$pm_handler->setRead($pm_arr[0])) {
             //echo "failed";
         }
-        echo $pm_arr[0]->getVar('subject') . "<br /><form action='readpmsg.php' method='post' name='delete" . $pm_arr[0]->getVar('msg_id') . "'><table cellpadding='4' cellspacing='1' class='outer width100 bnone'><tr><th colspan='2'>" . _PM_FROM . "</th></tr><tr class='even'>\n";
+        echo $pm_arr[0]->getVar('subject') . "<br><form action='readpmsg.php' method='post' name='delete" . $pm_arr[0]->getVar('msg_id') . "'><table cellpadding='4' cellspacing='1' class='outer width100 bnone'><tr><th colspan='2'>" . _PM_FROM . "</th></tr><tr class='even'>\n";
         $poster = new XoopsUser($pm_arr[0]->getVar('from_userid'));
         if (!$poster->isActive()) {
             $poster = false;
         }
         echo "<td valign='top'>";
         if ($poster != false) { // we need to do this for deleted users
-            echo "<a href='userinfo.php?uid=" . $poster->getVar('uid') . "' title=''>" . $poster->getVar('uname') . "</a><br />\n";
+            echo "<a href='userinfo.php?uid=" . $poster->getVar('uid') . "' title=''>" . $poster->getVar('uname') . "</a><br>\n";
             if ($poster->getVar('user_avatar') != '') {
-                echo "<img src='uploads/" . $poster->getVar('user_avatar') . "' alt='' /><br />\n";
+                echo "<img src='uploads/" . $poster->getVar('user_avatar') . "' alt='' /><br>\n";
             }
             if ($poster->getVar('user_from') != '') {
-                echo _PM_FROMC . '' . $poster->getVar('user_from') . "<br /><br />\n";
+                echo _PM_FROMC . '' . $poster->getVar('user_from') . "<br><br>\n";
             }
             if ($poster->isOnline()) {
-                echo "<span class='red bold'>" . _PM_ONLINE . "</span><br /><br />\n";
+                echo "<span class='red bold'>" . _PM_ONLINE . "</span><br><br>\n";
             }
         } else {
             echo $xoopsConfig['anonymous']; // we need to do this for deleted users
@@ -84,8 +84,8 @@ if (!is_object($xoopsUser)) {
             echo '</td><td>' . _PM_SENTC . '' . formatTimestamp($pm_arr[0]->getVar('msg_time'));
         }
 
-        echo '<hr /><br /><strong>' . $pm_arr[0]->getVar('subject') . "</strong><br /><br />\n";
-        echo $pm_arr[0]->getVar('msg_text') . "<br /><br /></td></tr><tr class='foot'><td class='width20 txtleft' colspan='2'>";
+        echo '<hr /><br><strong>' . $pm_arr[0]->getVar('subject') . "</strong><br><br>\n";
+        echo $pm_arr[0]->getVar('msg_text') . "<br><br></td></tr><tr class='foot'><td class='width20 txtleft' colspan='2'>";
         // we don't want to reply to a deleted user!
         if ($poster != false) {
             echo "<a href='#' onclick='javascript:openWithSelfMain(\"" . XOOPS_URL . '/pmlite.php?reply=1&amp;msg_id=' . $pm_arr[0]->getVar('msg_id') . "\",\"pmlite\",565,500);'><img src='" . XOOPS_URL . "/images/icons/reply.gif' alt='" . _PM_REPLY . "' /></a>\n";

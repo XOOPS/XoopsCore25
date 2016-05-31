@@ -68,10 +68,10 @@ if ($process && is_writable('../include/license.php')) {
     $result  = $dbm->queryFromFile('./language/' . $language . '/' . XOOPS_DB_TYPE . '.lang.data.sql');
     $group   = make_groups($dbm);
     $result  = make_data($dbm, $adminname, $hashedAdminPass, $adminmail, $language, $group);
-    $content = '<div class="x2-note successMsg">' . DATA_INSERTED . '</div><br />' . $dbm->report();
+    $content = '<div class="x2-note successMsg">' . DATA_INSERTED . '</div><br>' . $dbm->report();
     // Writes License Key
     $content .= '<div class="x2-note successMsg">' . sprintf(LICENSE_IS_WRITEABLE, $state) . '</div>';
-    $content .= '<div class="x2-note successMsg">' . write_key() . '</div><br />';
+    $content .= '<div class="x2-note successMsg">' . write_key() . '</div><br>';
 } elseif ($update) {
     $sql = "UPDATE " . $dbm->db->prefix("users")
         . " SET `uname` = " . $dbm->db->quote($adminname)

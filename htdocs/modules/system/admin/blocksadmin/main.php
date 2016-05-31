@@ -258,7 +258,7 @@ switch ($op) {
 
     case 'preview':
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header('admin.php?fct=blocksadmin', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header('admin.php?fct=blocksadmin', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         // Initialize blocks handler
         $block_handler = xoops_getModuleHandler('block');
@@ -272,7 +272,7 @@ switch ($op) {
 
     case 'save':
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header('admin.php?fct=blocksadmin', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header('admin.php?fct=blocksadmin', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         // Initialize blocks handler
         $block_handler = xoops_getModuleHandler('block');
@@ -445,7 +445,7 @@ switch ($op) {
 
     case 'delete_ok':
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header('admin.php?fct=blocksadmin', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header('admin.php?fct=blocksadmin', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         // Initialize blocks handler
         $block_handler = xoops_getModuleHandler('block');

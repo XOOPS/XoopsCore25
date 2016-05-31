@@ -29,7 +29,7 @@
 <{/foreach}>
 <!-- end question and answer loop -->
 
-<br/><br/>
+<br><br>
 <div style="text-align:center;"><b>[ <a href="index.php"><{$smarty.const._XO_LA_BACKTOINDEX}></a> ]</b></div>
 
 <div style="text-align:center; padding: 3px; margin:3px;">

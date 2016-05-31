@@ -148,7 +148,7 @@ switch ($op) {
                     //no errors
                     redirect_header('field.php', 2, sprintf(_PROFILE_AM_SAVEDSUCCESS, _PROFILE_AM_FIELDS));
                 } else {
-                    redirect_header('field.php', 3, implode('<br />', $errors));
+                    redirect_header('field.php', 3, implode('<br>', $errors));
                 }
             }
         }

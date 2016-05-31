@@ -145,7 +145,7 @@ switch ($op) {
     //Save a new group
     case 'groups_save_add':
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header('admin.php?fct=groups', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header('admin.php?fct=groups', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         $system_catids = system_CleanVars($_POST, 'system_catids', array(), 'array');
         $admin_mids    = system_CleanVars($_POST, 'admin_mids', array(), 'array');
@@ -209,7 +209,7 @@ switch ($op) {
     //Save a edit group
     case 'groups_save_update':
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header('admin.php?fct=groups', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header('admin.php?fct=groups', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         $system_catids = system_CleanVars($_POST, 'system_catids', array(), 'array');
         $admin_mids    = system_CleanVars($_POST, 'admin_mids', array(), 'array');

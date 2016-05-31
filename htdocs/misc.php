@@ -94,7 +94,7 @@ if ($action === 'showpopups') {
             $cntavs = 0;
             $counter = isset($_GET['start']) ? (int)$_GET['start'] : 0;
             foreach ($avatarslist as $file => $name) {
-                echo '<td><img src="uploads/' . $file . '" alt="' . $name . '" style="padding:10px; vertical-align:top;"  /><br />' . $name . '<br /><input name="myimage" type="button" value="' . _SELECT . '" onclick="myimage_onclick(' . $counter . ')" /></td>';
+                echo '<td><img src="uploads/' . $file . '" alt="' . $name . '" style="padding:10px; vertical-align:top;"  /><br>' . $name . '<br><input name="myimage" type="button" value="' . _SELECT . '" onclick="myimage_onclick(' . $counter . ')" /></td>';
                 ++$counter;
                 ++$cntavs;
                 if ($cntavs > 8) {
@@ -119,7 +119,7 @@ if ($action === 'showpopups') {
                 }
                 printCheckForm();
                 echo '</head><body>';
-                echo "<div class='errorMsg'>" . implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()) . '</div>';
+                echo "<div class='errorMsg'>" . implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()) . '</div>';
                 echo '
             <form action="' . XOOPS_URL . '/misc.php" method="post" onsubmit="return checkForm();"><table  width="100%" class="outer" cellspacing="1"><tr><th colspan="2">' . _MSC_RECOMMENDSITE . '</th></tr>';
                 echo "<tr><td class='head'>
@@ -147,7 +147,7 @@ if ($action === 'showpopups') {
                 $fname = $myts->stripSlashesGPC(trim($_POST['fname']));
                 $fmail = $myts->stripSlashesGPC(trim($_POST['fmail']));
                 if (!checkEmail($fmail) || !checkEmail($ymail) || preg_match("/[\\0-\\31]/", $yname)) {
-                    $errormessage = _MSC_INVALIDEMAIL1 . '<br />' . _MSC_INVALIDEMAIL2 . '';
+                    $errormessage = _MSC_INVALIDEMAIL1 . '<br>' . _MSC_INVALIDEMAIL2 . '';
                     redirect_header(XOOPS_URL . '/misc.php?action=showpopups&amp;type=friend&amp;op=sendform', 2, $errormessage);
                 }
                 $xoopsMailer =& xoops_getMailer();
@@ -206,11 +206,11 @@ if ($action === 'showpopups') {
                     echo '<td>&nbsp;</td><td>' . $xoopsConfig['anonymous'];
                 }
                 if ($isadmin == 1) {
-                    echo '<br />(' . $onlineUsers[$i]['ip'] . ')';
+                    echo '<br>(' . $onlineUsers[$i]['ip'] . ')';
                 }
                 echo '</td><td>' . $onlineUsers[$i]['module'] . '</td></tr>';
             }
-            echo '</table><br />';
+            echo '</table><br>';
             if ($online_total > 20) {
                 include_once $GLOBALS['xoops']->path('class/pagenav.php');
                 $nav = new XoopsPageNav($online_total, 20, $start, 'start', 'action=showpopups&amp;type=online');

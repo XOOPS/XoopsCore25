@@ -22,7 +22,7 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . '_LOADED')) {
 
     // Configs
     define($constpref . '_GLOBAL_DISBL', 'Temporary disabled');
-    define($constpref . '_GLOBAL_DISBLDSC', 'All protections are disabled in temporary.<br />Don\'t forget turn this off after shooting the trouble');
+    define($constpref . '_GLOBAL_DISBLDSC', 'All protections are disabled in temporary.<br>Don\'t forget turn this off after shooting the trouble');
 
     define($constpref . '_DEFAULT_LANG', 'Default language');
     define($constpref . '_DEFAULT_LANGDSC', 'Specify the language set to display messages before processing common.php');
@@ -41,23 +41,23 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . '_LOADED')) {
     define($constpref . '_LOGLEVEL255', 'full');
 
     define($constpref . '_HIJACK_TOPBIT', 'Protected IP bits for the session');
-    define($constpref . '_HIJACK_TOPBITDSC', 'Anti Session Hi-Jacking:<br />Default 24/56 (netmask for IPV4/IPV6). (All bits are protected)<br />When your IP is not stable, set the IP range by number of the bits.<br />(eg) If your IP can move in the range of 192.168.0.0-192.168.0.255, set 24(bit) here');
+    define($constpref . '_HIJACK_TOPBITDSC', 'Anti Session Hi-Jacking:<br>Default 24/56 (netmask for IPV4/IPV6). (All bits are protected)<br>When your IP is not stable, set the IP range by number of the bits.<br>(eg) If your IP can move in the range of 192.168.0.0-192.168.0.255, set 24(bit) here');
     define($constpref . '_HIJACK_DENYGP', 'Groups disallowed IP moving in a session');
-    define($constpref . '_HIJACK_DENYGPDSC', 'Anti Session Hi-Jacking:<br />Select groups which is disallowed to move their IP in a session.<br />(I recommend to turn Administrator on.)');
+    define($constpref . '_HIJACK_DENYGPDSC', 'Anti Session Hi-Jacking:<br>Select groups which is disallowed to move their IP in a session.<br>(I recommend to turn Administrator on.)');
     define($constpref . '_SAN_NULLBYTE', 'Sanitizing null-bytes');
-    define($constpref . '_SAN_NULLBYTEDSC', 'The terminating character "\\0" is often used in malicious attacks.<br />a null-byte will be changed to a space.<br />(highly recommended as On)');
+    define($constpref . '_SAN_NULLBYTEDSC', 'The terminating character "\\0" is often used in malicious attacks.<br>a null-byte will be changed to a space.<br>(highly recommended as On)');
     define($constpref . '_DIE_NULLBYTE', 'Exit if null bytes are found');
-    define($constpref . '_DIE_NULLBYTEDSC', 'The terminating character "\\0" is often used in malicious attacks.<br />(highly recommended as On)');
+    define($constpref . '_DIE_NULLBYTEDSC', 'The terminating character "\\0" is often used in malicious attacks.<br>(highly recommended as On)');
     define($constpref . '_DIE_BADEXT', 'Exit if bad files are uploaded');
-    define($constpref . '_DIE_BADEXTDSC', 'If someone tries to upload files which have bad extensions like .php , this module exits your XOOPS.<br />If you often attach php files into B-Wiki or PukiWikiMod, turn this off.');
+    define($constpref . '_DIE_BADEXTDSC', 'If someone tries to upload files which have bad extensions like .php , this module exits your XOOPS.<br>If you often attach php files into B-Wiki or PukiWikiMod, turn this off.');
     define($constpref . '_CONTAMI_ACTION', 'Action if a contamination is found');
-    define($constpref . '_CONTAMI_ACTIONDS', 'Select the action when someone tries to contaminate system global variables into your XOOPS.<br />(recommended option is blank screen)');
+    define($constpref . '_CONTAMI_ACTIONDS', 'Select the action when someone tries to contaminate system global variables into your XOOPS.<br>(recommended option is blank screen)');
     define($constpref . '_ISOCOM_ACTION', 'Action if an isolated comment-in is found');
-    define($constpref . '_ISOCOM_ACTIONDSC', 'Anti SQL Injection:<br />Select the action when an isolated "/*" is found.<br />"Sanitizing" means adding another "*/" in tail.<br />(recommended option is Sanitizing)');
+    define($constpref . '_ISOCOM_ACTIONDSC', 'Anti SQL Injection:<br>Select the action when an isolated "/*" is found.<br>"Sanitizing" means adding another "*/" in tail.<br>(recommended option is Sanitizing)');
     define($constpref . '_UNION_ACTION', 'Action if a UNION is found');
-    define($constpref . '_UNION_ACTIONDSC', 'Anti SQL Injection:<br />Select the action when some syntax like UNION of SQL.<br />"Sanitizing" means changing "union" to "uni-on".<br />(recommended option is Sanitizing)');
+    define($constpref . '_UNION_ACTIONDSC', 'Anti SQL Injection:<br>Select the action when some syntax like UNION of SQL.<br>"Sanitizing" means changing "union" to "uni-on".<br>(recommended option is Sanitizing)');
     define($constpref . '_ID_INTVAL', 'Force intval to variables like id');
-    define($constpref . '_ID_INTVALDSC', 'All requests named "*id" will be treated as integer.<br />This option protects you from some kind of XSS and SQL Injections.<br />Though I recommend to turn this option on, it can cause problems with some modules.');
+    define($constpref . '_ID_INTVALDSC', 'All requests named "*id" will be treated as integer.<br>This option protects you from some kind of XSS and SQL Injections.<br>Though I recommend to turn this option on, it can cause problems with some modules.');
     define($constpref . '_FILE_DOTDOT', 'Protection from Directory Traversals');
     define($constpref . '_FILE_DOTDOTDSC', 'It eliminates ".." from all requests looks like Directory Traversals');
 
@@ -74,15 +74,15 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . '_LOADED')) {
     define($constpref . '_DOS_EXPIREDSC', 'This value specifies the watch time for high-frequent reloading (F5 attack) and high loading crawlers.');
 
     define($constpref . '_DOS_F5COUNT', 'Bad counts for F5 Attack');
-    define($constpref . '_DOS_F5COUNTDSC', 'Preventing from DoS attacks.<br />This value specifies the reloading counts to be considered as a malicious attack.');
+    define($constpref . '_DOS_F5COUNTDSC', 'Preventing from DoS attacks.<br>This value specifies the reloading counts to be considered as a malicious attack.');
     define($constpref . '_DOS_F5ACTION', 'Action against F5 Attack');
 
     define($constpref . '_DOS_CRCOUNT', 'Bad counts for Crawlers');
-    define($constpref . '_DOS_CRCOUNTDSC', 'Preventing from high loading crawlers.<br />This value specifies the access counts to be considered as a bad-manner crawler.');
+    define($constpref . '_DOS_CRCOUNTDSC', 'Preventing from high loading crawlers.<br>This value specifies the access counts to be considered as a bad-manner crawler.');
     define($constpref . '_DOS_CRACTION', 'Action against high loading Crawlers');
 
     define($constpref . '_DOS_CRSAFE', 'Welcomed User-Agent');
-    define($constpref . '_DOS_CRSAFEDSC', 'A perl regex pattern for User-Agent.<br />If it matches, the crawler is never considered as a high loading crawler.<br />eg) /(bingbot|Googlebot|Yahoo! Slurp)/i');
+    define($constpref . '_DOS_CRSAFEDSC', 'A perl regex pattern for User-Agent.<br>If it matches, the crawler is never considered as a high loading crawler.<br>eg) /(bingbot|Googlebot|Yahoo! Slurp)/i');
 
     define($constpref . '_OPT_NONE', 'None (only logging)');
     define($constpref . '_OPT_SAN', 'Sanitizing');
@@ -98,7 +98,7 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . '_LOADED')) {
     define($constpref . '_DOSOPT_HTA', 'DENY by .htaccess(Experimental)');
 
     define($constpref . '_BIP_EXCEPT', 'Groups never registered as Bad IP');
-    define($constpref . '_BIP_EXCEPTDSC', 'A user who belongs to the group specified here will never be banned.<br />(I recommend to turn Administrator on.)');
+    define($constpref . '_BIP_EXCEPTDSC', 'A user who belongs to the group specified here will never be banned.<br>(I recommend to turn Administrator on.)');
 
     define($constpref . '_DISABLES', 'Disable dangerous features in XOOPS');
 

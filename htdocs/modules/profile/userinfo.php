@@ -161,7 +161,7 @@ foreach (array_keys($fields) as $i) {
     $cat_id = $fields[$i]->getVar('cat_id');
     $value  = $fields[$i]->getOutputValue($thisUser, $profile);
     if (is_array($value)) {
-        $value = implode('<br />', array_values($value));
+        $value = implode('<br>', array_values($value));
     }
     if ($value) {
         $categories[$cat_id]['fields'][] = array('title' => $fields[$i]->getVar('field_title'), 'value' => $value);

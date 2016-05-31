@@ -65,9 +65,9 @@
 
                     <{if $item.subitem}>
                         <div style="float:left; width:40%;">
-                            <br/>
+                            <br>
                             <strong class="publisher-more"><{$smarty.const._MB_PUBLISHER_MORE}></strong>
-                            <br/>
+                            <br>
                             <ul class="publisher-links">
                                 <{foreach item=subitem from=$item.subitem}>
                                     <li>

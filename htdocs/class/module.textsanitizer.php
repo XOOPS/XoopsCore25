@@ -501,14 +501,14 @@ class MyTextSanitizer
     }
 
     /**
-     * Convert linebreaks to <br /> tags
+     * Convert linebreaks to <br> tags
      *
      * @param  string $text
      * @return string
      */
     public function nl2Br($text)
     {
-        return preg_replace('/(\015\012)|(\015)|(\012)/', '<br />', $text);
+        return preg_replace('/(\015\012)|(\015)|(\012)/', '<br>', $text);
     }
 
     /**

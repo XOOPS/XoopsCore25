@@ -26,9 +26,9 @@ define('_AM_SYSTEM_MAINTENANCE_CHOICE1', 'Optimize table(s)');
 define('_AM_SYSTEM_MAINTENANCE_CHOICE2', 'Check table(s)');
 define('_AM_SYSTEM_MAINTENANCE_CHOICE3', 'Repair table(s)');
 define('_AM_SYSTEM_MAINTENANCE_CHOICE4', 'Analyze table(s)');
-define('_AM_SYSTEM_MAINTENANCE_TABLES_DESC', 'ANALYZE TABLE analyzes and stores the key distribution for a table. During the analysis, the table is locked with a read lock.<br />
-CHECK TABLE checks a table or tables for errors.<br />
-OPTIMIZE TABLE to reclaim the unused space and to defragment the data file.<br />
+define('_AM_SYSTEM_MAINTENANCE_TABLES_DESC', 'ANALYZE TABLE analyzes and stores the key distribution for a table. During the analysis, the table is locked with a read lock.<br>
+CHECK TABLE checks a table or tables for errors.<br>
+OPTIMIZE TABLE to reclaim the unused space and to defragment the data file.<br>
 REPAIR TABLE repairs a possibly corrupted table.');
 define('_AM_SYSTEM_MAINTENANCE_RESULT', 'Result');
 define('_AM_SYSTEM_MAINTENANCE_RESULT_NO_RESULT', 'Not Result');

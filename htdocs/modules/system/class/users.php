@@ -55,7 +55,7 @@ class SystemUsers extends XoopsUser
         $maxsize  = '<div class="small basic italic">' . _US_MAXIMGSZ . '&nbsp;:&nbsp;' . $xoopsConfigUser['avatar_maxsize'] . '</div>';
 
         $uploadirectory_img = '';
-        $imgtray_img        = new XoopsFormElementTray(_IMAGEFILE . '<br /><br />' . $maxpixel . $maxsize, '<br />');
+        $imgtray_img        = new XoopsFormElementTray(_IMAGEFILE . '<br><br>' . $maxpixel . $maxsize, '<br>');
         $imageselect_img    = new XoopsFormSelect(sprintf(_AM_SYSTEM_AVATAR_USE_FILE, XOOPS_UPLOAD_PATH), 'avatar_file', $blank_img);
         $image_array_img    = XoopsLists::getImgListAsArray(XOOPS_UPLOAD_PATH);
         $imageselect_img->addOption("$blank_img", $blank_img);
@@ -67,8 +67,8 @@ class SystemUsers extends XoopsUser
         }
         $imageselect_img->setExtra("onchange='showImgSelected(\"image_img\", \"avatar_file\", \"" . $uploadirectory_img . "\", \"\", \"" . XOOPS_UPLOAD_URL . "\")'");
         $imgtray_img->addElement($imageselect_img, false);
-        $imgtray_img->addElement(new XoopsFormLabel('', "<br /><img src='" . XOOPS_UPLOAD_URL . '/' . $blank_img . "' name='image_img' id='image_img' alt='' />"));
-        $fileseltray_img = new XoopsFormElementTray('<br />', '<br /><br />');
+        $imgtray_img->addElement(new XoopsFormLabel('', "<br><img src='" . XOOPS_UPLOAD_URL . '/' . $blank_img . "' name='image_img' id='image_img' alt='' />"));
+        $fileseltray_img = new XoopsFormElementTray('<br>', '<br><br>');
         $fileseltray_img->addElement(new XoopsFormFile(_AM_SYSTEM_AVATAR_UPLOAD, 'avatar_file', 500000), false);
         $imgtray_img->addElement($fileseltray_img);
         $form->addElement($imgtray_img);

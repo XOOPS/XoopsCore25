@@ -84,7 +84,7 @@ $myts = MyTextSanitizer::getInstance();
         <div><?php echo genPathCheckHtml('data', $ctrl->validPath['data']); ?></div>
         <?php if ($ctrl->validPath['data'] && !empty($ctrl->permErrors['data'])) { ?>
         <div id="dataperms" class="x2-note">
-            <?php echo CHECKING_PERMISSIONS . '<br /><p>' . ERR_NEED_WRITE_ACCESS . '</p>'; ?>
+            <?php echo CHECKING_PERMISSIONS . '<br><p>' . ERR_NEED_WRITE_ACCESS . '</p>'; ?>
             <ul class="diags">
                 <?php foreach ($ctrl->permErrors['data'] as $path => $result) {
     if ($result) {

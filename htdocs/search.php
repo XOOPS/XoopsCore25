@@ -145,7 +145,7 @@ switch ($action) {
                 echo ' <strong>' . htmlspecialchars(stripslashes($q)) . '</strong>';
             }
             if (!empty($ignored_queries)) {
-                echo '<br />';
+                echo '<br>';
                 printf(_SR_IGNOREDWORDS, $xoopsConfigSearch['keyword_min']);
                 foreach ($ignored_queries as $q) {
                     echo ' <strong>' . htmlspecialchars(stripslashes($q)) . '</strong>';
@@ -154,7 +154,7 @@ switch ($action) {
         } else {
             echo ' "<strong>' . htmlspecialchars(stripslashes($queries[0])) . '</strong>"';
         }
-        echo '<br />';
+        echo '<br>';
         foreach ($mids as $mid) {
             $mid = (int)$mid;
             if (in_array($mid, $available_modules)) {
@@ -173,7 +173,7 @@ switch ($action) {
                         if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                             $results[$i]['link'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['link'];
                         }
-                        echo "<strong><a href='" . $results[$i]['link'] . "' title=''>" . $myts->htmlspecialchars($results[$i]['title']) . "</a></strong><br />\n";
+                        echo "<strong><a href='" . $results[$i]['link'] . "' title=''>" . $myts->htmlspecialchars($results[$i]['title']) . "</a></strong><br>\n";
                         echo "<span class='x-small'>";
                         $results[$i]['uid'] = @(int)$results[$i]['uid'];
                         if (!empty($results[$i]['uid'])) {
@@ -181,7 +181,7 @@ switch ($action) {
                             echo "&nbsp;&nbsp;<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $results[$i]['uid'] . "' title=''>" . $uname . "</a>\n";
                         }
                         echo !empty($results[$i]['time']) ? ' (' . formatTimestamp((int)$results[$i]['time']) . ')' : '';
-                        echo "</span><br />\n";
+                        echo "</span><br>\n";
                     }
                     if ($count >= 5) {
                         $search_url = XOOPS_URL . '/search.php?query=' . urlencode(stripslashes(implode(' ', $queries)));
@@ -223,7 +223,7 @@ switch ($action) {
                 } else {
                     echo ' "<strong>' . htmlspecialchars(stripslashes($queries[0])) . '</strong>"';
                 }
-                echo '<br />';
+                echo '<br>';
             }
             printf(_SR_SHOWING, $start + 1, $start + $count);
             echo '<h5>' . $module->getVar('name') . '</h5>';
@@ -236,7 +236,7 @@ switch ($action) {
                 if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                     $results[$i]['link'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['link'];
                 }
-                echo "<strong><a href='" . $results[$i]['link'] . "'>" . $myts->htmlspecialchars($results[$i]['title']) . "</a></strong><br />\n";
+                echo "<strong><a href='" . $results[$i]['link'] . "'>" . $myts->htmlspecialchars($results[$i]['title']) . "</a></strong><br>\n";
                 echo "<span class='x-small'>";
                 $results[$i]['uid'] = @(int)$results[$i]['uid'];
                 if (!empty($results[$i]['uid'])) {
@@ -244,7 +244,7 @@ switch ($action) {
                     echo "&nbsp;&nbsp;<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $results[$i]['uid'] . "'>" . $uname . "</a>\n";
                 }
                 echo !empty($results[$i]['time']) ? ' (' . formatTimestamp((int)$results[$i]['time']) . ')' : '';
-                echo "</span><br />\n";
+                echo "</span><br>\n";
             }
             echo '<table><tr>';
             $search_url = XOOPS_URL . '/search.php?query=' . urlencode(stripslashes(implode(' ', $queries)));

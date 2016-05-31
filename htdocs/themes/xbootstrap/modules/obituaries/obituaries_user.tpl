@@ -26,30 +26,30 @@
 
             </div>
         <{/if}>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
         <b><span class="glyphicon glyphicon-user"></span>&nbsp;<{$obituaries_user.obituaries_fullname}></b>
         </br>
 
         <b><span class="glyphicon glyphicon-calendar"></span>&nbsp;<{$smarty.const._AM_OBITUARIES_DATE}></b> :
         <{$obituaries_user.obituaries_formated_date}>
 
-        <br/>
+        <br>
 
         <b><span class="glyphicon glyphicon-check"></span>&nbsp;<{$smarty.const._AM_OBITUARIES_FIRSTNAME}></b> : <{$obituaries_user.obituaries_firstname}>
 
-        <br/>
+        <br>
 
         <b><span class="glyphicon glyphicon-info-sign"></span>&nbsp;<{$smarty.const._AM_OBITUARIES_LASTNAME}></b> :
         <{$obituaries_user.obituaries_lastname}>
 
-        <br/><br/>
+        <br><br>
 
         <div class="alert alert-success"><b><{$smarty.const._AM_OBITUARIES_DESCRIPTION}></b> :</div>
         <div class="well well-lg"><{$obituaries_user.obituaries_description}></div>
@@ -68,11 +68,11 @@
         <{/if}>
     </div>
     <{if $obituaries_user.obituaries_uid > 0}>
-        <br/>
-        <br/>
+        <br>
+        <br>
         <div align="center"><b><a href="<{$xoops_url}>/userinfo.php?uid=<{$obituaries_user.obituaries_uid}>"><span class="label label-danger"><{$smarty.const._AM_OBITUARIES_XOOPS_PROFILE}></span></a></b>
         </div>
-        <br/>
+        <br>
     <{/if}>
 
 <{/if}>

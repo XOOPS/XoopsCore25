@@ -10,7 +10,7 @@
         <strong><{$uname}></strong>
         <{if $email}>
             <{$email}>
-            <br/>
+            <br>
         <{/if}>
         <{if !$user_ownpage && $xoops_isuser == true}>
             <form name="usernav" action="user.php" method="post">
@@ -94,9 +94,9 @@
                 <img src="<{$result.image}>" alt="<{$module.name}>"/>
                 &nbsp;
                 <strong><a href="<{$result.link}>"><{$result.title}></a></strong>
-                <br/>
+                <br>
                 <span class="x-small">(<{$result.time}>)</span>
-                <br/>
+                <br>
             <{/foreach}>
             <!-- end results item loop -->
 

@@ -49,7 +49,7 @@ if (!isset($_POST['submit']) || !isset($_POST['passwd'])) {
     }
 
     if ($errors) {
-        $msg = implode('<br />', $errros);
+        $msg = implode('<br>', $errros);
     } else {
         //update password
         $GLOBALS['xoopsUser']->setVar('email', trim($_POST['newmail']));
@@ -73,7 +73,7 @@ if (!isset($_POST['submit']) || !isset($_POST['passwd'])) {
             $xoopsMailer->setSubject(sprintf(_PROFILE_MA_NEWEMAIL, $GLOBALS['xoopsConfig']['sitename']));
             $xoopsMailer->send();
         } else {
-            $msg = implode('<br />', $GLOBALS['xoopsUser']->getErrors());
+            $msg = implode('<br>', $GLOBALS['xoopsUser']->getErrors());
         }
     }
     redirect_header(XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/userinfo.php?uid=' . $GLOBALS['xoopsUser']->getVar('uid'), 2, $msg);

@@ -1,6 +1,6 @@
 <div>
     <h4><{$smarty.const._PM_PRIVATEMESSAGE}></h4>
-</div><br/>
+</div><br>
 <{if $op==out}>
     <a href='viewpmsg.php?op=out' title='<{$smarty.const._PM_OUTBOX}>'><{$smarty.const._PM_OUTBOX}></a>
     &nbsp;
@@ -15,7 +15,7 @@
 <{if $message}>
     <span class='bold'>&raquo;&raquo;</span>
     &nbsp;<{$message.subject}>
-    <br/>
+    <br>
     <form name="<{$pmform.name}>" id="<{$pmform.name}>" action="<{$pmform.action}>" method="<{$pmform.method}>" <{$pmform.extra}> >
         <table cellpadding='4' cellspacing='1' class='outer bnone width100'>
             <tr>
@@ -25,20 +25,20 @@
                 <td class='aligntop'>
                     <{if ( $poster != false ) }>
                         <a href='<{$xoops_url}>/userinfo.php?uid=<{$poster->getVar("uid")}>'><{$poster->getVar("uname")}></a>
-                        <br/>
+                        <br>
                         <{if ( $poster->getVar("user_avatar") != "" ) }>
                             <img src='<{$xoops_url}>/uploads/<{$poster->getVar("user_avatar")}>' alt=''/>
-                            <br/>
+                            <br>
                         <{/if}>
                         <{if ( $poster->getVar("user_from") != "" ) }>
                             <{$smarty.const._PM_FROMC}><{$poster->getVar("user_from")}>
-                            <br/>
-                            <br/>
+                            <br>
+                            <br>
                         <{/if}>
                         <{if ( $poster->isOnline() ) }>
                             <span class='bold red'><{$smarty.const._PM_ONLINE}></span>
-                            <br/>
-                            <br/>
+                            <br>
+                            <br>
                         <{/if}>
                     <{else}>
                         <{$anonymous}>
@@ -48,12 +48,12 @@
                     <{if $message.msg_image != ""}>
                         <img src='<{$xoops_url}>/images/subject/<{$message.msg_image}>' alt=''/>
                     <{/if}>
-                    <{$smarty.const._PM_SENTC}><{$message.msg_time}><br/>
+                    <{$smarty.const._PM_SENTC}><{$message.msg_time}><br>
                     <hr/>
-                    <strong><{$message.subject}></strong><br/>
-                    <br/>
-                    <{$message.msg_text}><br/>
-                    <br/>
+                    <strong><{$message.subject}></strong><br>
+                    <br>
+                    <{$message.msg_text}><br>
+                    <br>
                 </td>
             </tr>
             <tr class='foot'>
@@ -87,7 +87,7 @@
         </table>
     </form>
 <{else}>
-    <br/>
-    <br/>
+    <br>
+    <br>
     <{$smarty.const._PM_YOUDONTHAVE}>
 <{/if}>

@@ -613,7 +613,7 @@ if (empty($_POST['user_submit'])) {
     ';
 
     echo '</html><body>';
-    echo "<a href='findusers.php?target=" . htmlspecialchars(@$_POST['target'], ENT_QUOTES) . '&amp;multiple=' . (int)(@$_POST['multiple']) . '&amp;token=' . htmlspecialchars($token, ENT_QUOTES) . "'>" . _MA_USER_FINDUS . "</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;" . _MA_USER_RESULTS . '<br /><br />';
+    echo "<a href='findusers.php?target=" . htmlspecialchars(@$_POST['target'], ENT_QUOTES) . '&amp;multiple=' . (int)(@$_POST['multiple']) . '&amp;token=' . htmlspecialchars($token, ENT_QUOTES) . "'>" . _MA_USER_FINDUS . "</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;" . _MA_USER_RESULTS . '<br><br>';
     if (empty($start) && empty($foundusers)) {
         echo '<h4>' . _MA_USER_NOFOUND, '</h4>';
         $hiddenform = "<form name='findnext' action='findusers.php' method='post'>";
@@ -639,7 +639,7 @@ if (empty($_POST['user_submit'])) {
         echo '</div>';
     } elseif ($start < $total) {
         if (!empty($total)) {
-            echo sprintf(_MA_USER_USERSFOUND, $total) . '<br />';
+            echo sprintf(_MA_USER_USERSFOUND, $total) . '<br>';
         }
         if (!empty($foundusers)) {
             echo "<form action='findusers.php' method='post' name='{$name_form}' id='{$name_form}'>
@@ -758,7 +758,7 @@ if (empty($_POST['user_submit'])) {
 
         echo '<div>' . $hiddenform;
         if (isset($total)) {
-            echo '<br />' . sprintf(_MA_USER_USERSFOUND, $total) . '&nbsp;';
+            echo '<br>' . sprintf(_MA_USER_USERSFOUND, $total) . '&nbsp;';
         }
         echo "<a href='#' onclick='document.findnext.start.value=0;document.findnext.user_submit.value=0;document.findnext.submit();'>" . _MA_USER_SEARCHAGAIN . "</a>\n";
         echo '</div>';

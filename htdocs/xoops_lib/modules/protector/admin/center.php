@@ -160,7 +160,7 @@ echo "
     </td>
     <td class='even'>
       <textarea name='bad_ips' id='bad_ips' style='width:200px;height:60px;'>$bad_ips4disp</textarea>
-      <br />
+      <br>
       " . htmlspecialchars($protector->get_filepath4badips()) . "
     </td>
   </tr>
@@ -170,7 +170,7 @@ echo "
     </td>
     <td class='even'>
       <textarea name='group1_ips' id='group1_ips' style='width:200px;height:60px;'>$group1_ips4disp</textarea>
-      <br />
+      <br>
       " . htmlspecialchars($protector->get_filepath4group1ips()) . "
     </td>
   </tr>
@@ -209,7 +209,7 @@ echo "
     <th width='5'><input type='checkbox' name='dummy' onclick=\"with(document.MainForm){for (i=0;i<length;i++) {if (elements[i].type=='checkbox') {elements[i].checked=this.checked;}}}\" /></th>
     <th>" . _AM_TH_DATETIME . '</th>
     <th>' . _AM_TH_USER . '</th>
-    <th>' . _AM_TH_IP . '<br />' . _AM_TH_AGENT . '</th>
+    <th>' . _AM_TH_IP . '<br>' . _AM_TH_AGENT . '</th>
     <th>' . _AM_TH_TYPE . '</th>
     <th>' . _AM_TH_DESCRIPTION . '</th>
   </tr>
@@ -241,7 +241,7 @@ while (list($lid, $uid, $ip, $agent, $type, $description, $timestamp, $uname) = 
     <td class='$oddeven'><input type='checkbox' name='ids[]' value='$lid' /></td>
     <td class='$oddeven'>" . formatTimestamp($timestamp) . "</td>
     <td class='$oddeven'>$uname</td>
-    <td class='$oddeven'>$ip<br />$agent_desc</td>
+    <td class='$oddeven'>$ip<br>$agent_desc</td>
     <td class='$oddeven'>$type</td>
     <td class='$oddeven' width='100%'>$description</td>
   </tr>\n";
@@ -256,7 +256,7 @@ echo "
 <div align='right'>
   $nav_html
 </div>
-<div style='clear:both;'><br /><br /></div>
+<div style='clear:both;'><br><br></div>
 <div align='right'>
 " . _AM_LABEL_COMPACTLOG . "<input type='button' value='" . _AM_BUTTON_COMPACTLOG . "' onclick='if (confirm(\"" . _AM_JS_COMPACTLOGCONFIRM . "\")) {document.MainForm.action.value=\"compactlog\"; submit();}' />
 &nbsp;

@@ -308,7 +308,7 @@ class XoopsComments extends XoopsObject
         if ($poster) {
             $text = $this->getVar('comment');
             if ($poster->getVar('attachsig')) {
-                $text .= '<p><br />_________________<br />' . $poster->user_sig() . '</p>';
+                $text .= '<p><br>_________________<br>' . $poster->user_sig() . '</p>';
             }
             $reg_date = _CM_JOINED;
             $reg_date .= formatTimestamp($poster->getVar('user_regdate'), 's');
@@ -408,6 +408,6 @@ class XoopsComments extends XoopsObject
      */
     public function showTreeFoot()
     {
-        echo '</table><br />';
+        echo '</table><br>';
     }
 }

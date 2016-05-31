@@ -4,7 +4,7 @@
 // _CHARSET : UTF-8
 // Translator: XOOPS Translation Team
 // License
-define('LICENSE_NOT_WRITEABLE', 'License is %s . <br/><span style="color:#ff0000;">Make ../include/license.php Writable</span>');
+define('LICENSE_NOT_WRITEABLE', 'License is %s . <br><span style="color:#ff0000;">Make ../include/license.php Writable</span>');
 define('LICENSE_IS_WRITEABLE', 'License is %s');
 define('_INSTALL_WEBMASTER', 'Webmasters');
 define('_INSTALL_WEBMASTERD', 'Webmasters of this site');

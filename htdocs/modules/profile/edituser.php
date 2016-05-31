@@ -33,7 +33,7 @@ $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
 if ($op === 'save') {
     if (!$GLOBALS['xoopsSecurity']->check()) {
-        redirect_header(XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/', 3, _US_NOEDITRIGHT . '<br />' . implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+        redirect_header(XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/', 3, _US_NOEDITRIGHT . '<br>' . implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         exit();
     }
     $uid      = $GLOBALS['xoopsUser']->getVar('uid');
@@ -131,8 +131,8 @@ if ($op === 'avatarform') {
     $avatar_select->setExtra("onchange='showImgSelected(\"avatar\", \"user_avatar\", \"uploads\", \"\", \"" . XOOPS_URL . "\")'");
     $avatar_tray = new XoopsFormElementTray(_US_AVATAR, '&nbsp;');
     $avatar_tray->addElement($avatar_select);
-    $avatar_tray->addElement(new XoopsFormLabel('', "<a href=\"javascript:openWithSelfMain('" . XOOPS_URL . "/misc.php?action=showpopups&amp;type=avatars','avatars',600,400);\">" . _LIST . '</a><br />'));
-    $avatar_tray->addElement(new XoopsFormLabel('', "<br /><img src='" . XOOPS_UPLOAD_URL . '/' . $avatar_selected . "' name='avatar' id='avatar' alt='' />"));
+    $avatar_tray->addElement(new XoopsFormLabel('', "<a href=\"javascript:openWithSelfMain('" . XOOPS_URL . "/misc.php?action=showpopups&amp;type=avatars','avatars',600,400);\">" . _LIST . '</a><br>'));
+    $avatar_tray->addElement(new XoopsFormLabel('', "<br><img src='" . XOOPS_UPLOAD_URL . '/' . $avatar_selected . "' name='avatar' id='avatar' alt='' />"));
     $form2->addElement($avatar_tray);
     $form2->addElement(new XoopsFormHidden('uid', $GLOBALS['xoopsUser']->getVar('uid')));
     $form2->addElement(new XoopsFormHidden('op', 'avatarchoose'));
@@ -142,7 +142,7 @@ if ($op === 'avatarform') {
 
 if ($op === 'avatarupload') {
     if (!$GLOBALS['xoopsSecurity']->check()) {
-        redirect_header('index.php', 3, _US_NOEDITRIGHT . '<br />' . implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+        redirect_header('index.php', 3, _US_NOEDITRIGHT . '<br>' . implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         exit;
     }
     $xoops_upload_file = array();
@@ -201,7 +201,7 @@ if ($op === 'avatarupload') {
 
 if ($op === 'avatarchoose') {
     if (!$GLOBALS['xoopsSecurity']->check()) {
-        redirect_header('index.php', 3, _US_NOEDITRIGHT . '<br />' . implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+        redirect_header('index.php', 3, _US_NOEDITRIGHT . '<br>' . implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         exit;
     }
     $uid = 0;

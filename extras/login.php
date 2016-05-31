@@ -72,7 +72,7 @@ if ($op === 'dologin') {
             echo '<div style="text-align:center;"><input value="' . _CLOSE . '" type="button" onclick="document.window.opener.location.reload();document.window.close();" /></div>';
         }
     } else {
-        xoops_error(_US_INCORRECTLOGIN . '<br /><a href="login.php">' . _BACK . '</a>');
+        xoops_error(_US_INCORRECTLOGIN . '<br><a href="login.php">' . _BACK . '</a>');
     }
 }
 

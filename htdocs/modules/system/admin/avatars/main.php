@@ -173,7 +173,7 @@ switch ($op) {
     case 'save':
         // Check security
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header('admin.php?fct=avatars', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header('admin.php?fct=avatars', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         $config_handler  = xoops_getHandler('config');
         $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
@@ -285,7 +285,7 @@ switch ($op) {
 
     case 'delfileok':
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header('admin.php?fct=avatars', 1, 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header('admin.php?fct=avatars', 1, 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         $avatar_id = system_CleanVars($_POST, 'avatar_id', 0, 'int');
         if ($avatar_id <= 0) {

@@ -17,7 +17,7 @@
 // Translator: XOOPS Translation Team
 define('SHOW_HIDE_HELP', 'Show/hide help text');
 // License
-define('LICENSE_NOT_WRITEABLE', '%s License is NOT writable! <br/><span style="colour:#ff0000;">Make ../include/license.php Writable</span>');
+define('LICENSE_NOT_WRITEABLE', '%s License is NOT writable! <br><span style="colour:#ff0000;">Make ../include/license.php Writable</span>');
 define('LICENSE_IS_WRITEABLE', '%s License is writable.');
 // Configuration check page
 define('SERVER_API', 'Server API');
@@ -105,15 +105,15 @@ define('CHECKING_PERMISSIONS', 'Checking file and directory permissions...'); //
 define('IS_NOT_WRITABLE', '%s is NOT writable.'); // L83
 define('IS_WRITABLE', '%s is writable.'); // L84
 define('XOOPS_PATH_FOUND', 'Path found.');
-define('READY_CREATE_TABLES', 'No XOOPS tables were detected.<br />The installer is now ready to create the XOOPS system tables.<br />Press <em>next</em> to proceed.');
-define('XOOPS_TABLES_FOUND', 'The XOOPS system tables already exists in your database.<br />Press <em>next</em> to go to the next step.'); // L131
-define('XOOPS_TABLES_CREATED', 'XOOPS system tables have been created.<br />Press <em>next</em> to go to the next step.');
+define('READY_CREATE_TABLES', 'No XOOPS tables were detected.<br>The installer is now ready to create the XOOPS system tables.<br>Press <em>next</em> to proceed.');
+define('XOOPS_TABLES_FOUND', 'The XOOPS system tables already exists in your database.<br>Press <em>next</em> to go to the next step.'); // L131
+define('XOOPS_TABLES_CREATED', 'XOOPS system tables have been created.<br>Press <em>next</em> to go to the next step.');
 define('READY_INSERT_DATA', 'The installer is now ready to insert initial data into your database.');
-define('READY_SAVE_MAINFILE', 'The installer is now ready to save the specified settings to <em>mainfile.php</em>.<br />Press <em>next</em> to proceed.');
+define('READY_SAVE_MAINFILE', 'The installer is now ready to save the specified settings to <em>mainfile.php</em>.<br>Press <em>next</em> to proceed.');
 define('SAVED_MAINFILE', 'Settings saved');
 define('SAVED_MAINFILE_MSG', 'The installer has saved the specified settings to <em>mainfile.php</em> and <em>secure.php</em>. Press <em>next</em> to go to the next step.');
-define('DATA_ALREADY_INSERTED', 'XOOPS data found in database.<br />Press <em>next</em> to go to the next step.');
-define('DATA_INSERTED', 'Initial data has been inserted into database.<br />Press <em>next</em> to go to the next step.');
+define('DATA_ALREADY_INSERTED', 'XOOPS data found in database.<br>Press <em>next</em> to go to the next step.');
+define('DATA_INSERTED', 'Initial data has been inserted into database.<br>Press <em>next</em> to go to the next step.');
 // %s is database name
 define('DATABASE_CREATED', 'Database %s created!'); // L43
 // %s is table name
@@ -131,7 +131,7 @@ define('ERR_NO_XOOPS_FOUND', 'No XOOPS installation could be found in the specif
 define('ERR_INVALID_EMAIL', 'Invalid Email'); // L73
 define('ERR_REQUIRED', 'Information is required.'); // L41
 define('ERR_PASSWORD_MATCH', 'The two passwords do not match');
-define('ERR_NEED_WRITE_ACCESS', 'The server must be given write access to the following files and folders<br />(i.e. <em>chmod 775 directory_name</em> on a UNIX/LINUX server)<br />If they are not available or not created correctly, please create manually and set proper permissions.');
+define('ERR_NEED_WRITE_ACCESS', 'The server must be given write access to the following files and folders<br>(i.e. <em>chmod 775 directory_name</em> on a UNIX/LINUX server)<br>If they are not available or not created correctly, please create manually and set proper permissions.');
 define('ERR_NO_DATABASE', 'Could not create database. Contact the server administrator for details.'); // L31
 define('ERR_NO_DBCONNECTION', 'Could not connect to the database server.'); // L106
 define('ERR_WRITING_CONSTANT', 'Failed writing constant %s.'); // L122
@@ -153,16 +153,16 @@ define('ZLIB_COMPRESSION', 'Zlib Compression');
 define('IMAGE_FUNCTIONS', 'Image functions');
 define('IMAGE_METAS', 'Image meta data (exif)');
 define('FILTER_FUNCTIONS', 'Filter functions');
-define('ADMIN_EXIST', 'The administrator account already exists.<br />Press <strong>next</strong> to go to the next step.');
+define('ADMIN_EXIST', 'The administrator account already exists.<br>Press <strong>next</strong> to go to the next step.');
 define('CONFIG_SITE', 'Site configuration');
 define('CONFIG_SITE_TITLE', 'Site configuration');
 define('MODULES', 'Modules installation');
 define('MODULES_TITLE', 'Modules installation');
 define('THEME', 'Select theme');
 define('THEME_TITLE', 'Select the default theme');
-define('INSTALLED_MODULES', 'The following modules have been installed.<br />Press <strong>next</strong> to go to the next step.');
-define('NO_MODULES_FOUND', 'No modules found.<br />Press <strong>next</strong> to go to the next step.');
-define('NO_INSTALLED_MODULES', 'No module installed.<br />Press <strong>next</strong> to go to the next step.');
+define('INSTALLED_MODULES', 'The following modules have been installed.<br>Press <strong>next</strong> to go to the next step.');
+define('NO_MODULES_FOUND', 'No modules found.<br>Press <strong>next</strong> to go to the next step.');
+define('NO_INSTALLED_MODULES', 'No module installed.<br>Press <strong>next</strong> to go to the next step.');
 define('THEME_NO_SCREENSHOT', 'No screenshot found');
 define('IS_VALOR', ' => ');
 // password message

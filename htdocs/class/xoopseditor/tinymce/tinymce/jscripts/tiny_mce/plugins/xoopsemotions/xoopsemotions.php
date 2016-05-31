@@ -49,7 +49,7 @@ $myts = MyTextSanitizer::getInstance();
 
 if ($admin && $op === 'SmilesAdd') {
     if (!$GLOBALS['xoopsSecurity']->check()) {
-        redirect_header($current_file, 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+        redirect_header($current_file, 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
     }
     $db = XoopsDatabaseFactory::getDatabaseConnection();
     include_once XOOPS_ROOT_PATH . '/class/uploader.php';

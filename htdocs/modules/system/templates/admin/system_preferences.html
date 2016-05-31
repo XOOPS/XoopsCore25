@@ -17,6 +17,6 @@
     </div>
 <{/if}>
 <div class="clear">&nbsp;</div>
-<br/>
+<br>
 
 

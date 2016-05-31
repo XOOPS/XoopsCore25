@@ -100,7 +100,7 @@ if (empty($mode) || $mode === 'errors') {
         $ret .= isset($types[$error['errno']]) ? $types[$error['errno']] : _LOGGER_UNKNOWN;
         $ret .= ': ';
         $ret .= sprintf(_LOGGER_FILELINE, $this->sanitizePath($error['errstr']), $this->sanitizePath($error['errfile']), $error['errline']);
-        $ret .= "<br />\n</td></tr>";
+        $ret .= "<br>\n</td></tr>";
         $class = ($class === 'odd') ? 'even' : 'odd';
     }
     $ret .= "\n</table>\n";
@@ -112,7 +112,7 @@ if (empty($mode) || $mode === 'deprecated') {
     foreach ($this->deprecated as $message) {
         $ret .= "\n<tr><td class='$class'>";
         $ret .= $message;
-        $ret .= "<br />\n</td></tr>";
+        $ret .= "<br>\n</td></tr>";
         $class = ($class === 'odd') ? 'even' : 'odd';
     }
     $ret .= "\n</table>\n";
@@ -129,7 +129,7 @@ if (empty($mode) || $mode === 'queries') {
         $query_time = isset($q['query_time']) ? sprintf('%0.6f - ', $q['query_time']) : '';
 
         if (isset($q['error'])) {
-            $ret .= '<tr class="' . $class . '"><td><span style="color:#ff0000;">' . $query_time . htmlentities($sql) . '<br /><strong>Error number:</strong> ' . $q['errno'] . '<br /><strong>Error message:</strong> ' . $q['error'] . '</span></td></tr>';
+            $ret .= '<tr class="' . $class . '"><td><span style="color:#ff0000;">' . $query_time . htmlentities($sql) . '<br><strong>Error number:</strong> ' . $q['errno'] . '<br><strong>Error message:</strong> ' . $q['error'] . '</span></td></tr>';
         } else {
             $ret .= '<tr class="' . $class . '"><td>' . $query_time . htmlentities($sql) . '</td></tr>';
         }

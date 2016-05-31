@@ -4,7 +4,7 @@
             <td class="txtcenter">
                 <{if $user.avatar != ""}>
                     <img style="width:32px;" src="<{$user.avatar}>" alt="<{$user.name}>"/>
-                    <br/>
+                    <br>
                 <{/if}>
                 <a href="<{$xoops_url}>/userinfo.php?uid=<{$user.id}>" title="<{$user.name}>"><{$user.name}></a>
             </td>

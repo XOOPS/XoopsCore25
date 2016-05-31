@@ -54,7 +54,7 @@ $method      = XoopsRequest::getMethod();
 $safeMethods = array('GET', 'HEAD');
 if (!in_array($method, $safeMethods)) {
     if (!$GLOBALS['xoopsSecurity']->check()) {
-        echo '<br /><br /><div><h4>' . _ERRORS . '</h4><br />';
+        echo '<br><br><div><h4>' . _ERRORS . '</h4><br>';
         echo "[ <a href='javascript:history.go(-1)' title=''>" . _PM_GOBACK . '</a> ]</div>';
         xoops_footer();
         exit;
@@ -67,8 +67,8 @@ if (is_object($xoopsUser)) {
         $res = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('users') . ' WHERE uid=' . XoopsRequest::getInt('to_userid', 0, 'POST') . '');
         list($count) = $xoopsDB->fetchRow($res);
         if ($count != 1) {
-            echo '<br /><br /><div><h4>' . _PM_USERNOEXIST . '<br />';
-            echo _PM_PLZTRYAGAIN . '</h4><br />';
+            echo '<br><br><div><h4>' . _PM_USERNOEXIST . '<br>';
+            echo _PM_PLZTRYAGAIN . '</h4><br>';
             echo "[ <a href='javascript:history.go(-1)' title=''>" . _PM_GOBACK . '</a> ]</div>';
         } else {
             $pm_handler = xoops_getHandler('privmessage');
@@ -83,9 +83,9 @@ if (is_object($xoopsUser)) {
             $pm->setVar('from_userid', $xoopsUser->getVar('uid'));
             if (!$pm_handler->insert($pm)) {
                 echo $pm->getHtmlErrors();
-                echo "<br /><a href='javascript:history.go(-1)' title=''>" . _PM_GOBACK . '</a>';
+                echo "<br><a href='javascript:history.go(-1)' title=''>" . _PM_GOBACK . '</a>';
             } else {
-                echo "<br /><br /><div style='text-align:center;'><h4>" . _PM_MESSAGEPOSTED . "</h4><br /><a href=\"javascript:window.opener.location='" . XOOPS_URL . "/viewpmsg.php';window.close();\" title=\"\">" . _PM_CLICKHERE . "</a><br /><br /><a href=\"javascript:window.close();\" title=\"\">" . _PM_ORCLOSEWINDOW . '</a></div>';
+                echo "<br><br><div style='text-align:center;'><h4>" . _PM_MESSAGEPOSTED . "</h4><br><a href=\"javascript:window.opener.location='" . XOOPS_URL . "/viewpmsg.php';window.close();\" title=\"\">" . _PM_CLICKHERE . "</a><br><br><a href=\"javascript:window.close();\" title=\"\">" . _PM_ORCLOSEWINDOW . '</a></div>';
             }
         }
     } elseif ($reply == 1 || $send == 1 || $send2 == 1) {
@@ -158,7 +158,7 @@ if (is_object($xoopsUser)) {
         echo "</form>\n";
     }
 } else {
-    echo _PM_SORRY . "<br /><br /><a href='" . XOOPS_URL . "/register.php' title=''>" . _PM_REGISTERNOW . '</a>.';
+    echo _PM_SORRY . "<br><br><a href='" . XOOPS_URL . "/register.php' title=''>" . _PM_REGISTERNOW . '</a>.';
 }
 
 xoops_footer();

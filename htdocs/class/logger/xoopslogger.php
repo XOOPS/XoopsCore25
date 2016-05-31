@@ -226,13 +226,13 @@ class XoopsLogger
             }
             echo sprintf(_XOOPS_FATAL_MESSAGE, $errstr);
             if ($trace && function_exists('debug_backtrace')) {
-                echo "<div style='color:#f0f0f0;background-color:#f0f0f0;'>" . _XOOPS_FATAL_BACKTRACE . ':<br />';
+                echo "<div style='color:#f0f0f0;background-color:#f0f0f0;'>" . _XOOPS_FATAL_BACKTRACE . ':<br>';
                 $trace = debug_backtrace();
                 array_shift($trace);
                 foreach ($trace as $step) {
                     if (isset($step['file'])) {
                         echo $this->sanitizePath($step['file']);
-                        echo ' (' . $step['line'] . ")\n<br />";
+                        echo ' (' . $step['line'] . ")\n<br>";
                     }
                 }
                 echo '</div>';

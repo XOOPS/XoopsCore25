@@ -18,7 +18,7 @@
     <p align="center">
         <a href="<{$xoops_url}>/modules/obituaries/index.php"><img src="<{$xoops_url}>/modules/obituaries/images/logo.png" alt="" class="img-thumbnail"/></a>
     </p>
-    <br/>
+    <br>
     <ul class="heyula">
         <{foreach item=obituaries_user from=$obituaries_users}>
             <div class="col-sm-6 col-md-4">

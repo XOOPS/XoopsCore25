@@ -8,7 +8,7 @@
             <h4 style="margin-bottom: 1px; padding-bottom: 0;"><a href="<{$result.link}>"><{$result.title}></a></h4>
             <{$result.author}> <{$result.datesub}>
             <{if $result.text}>
-                <br/>
+                <br>
                 <{$result.text}>
             <{/if}>
         </div>

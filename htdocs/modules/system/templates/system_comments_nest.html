@@ -1,5 +1,5 @@
 <{section name=i loop=$comments}>
-    <br/>
+    <br>
     <table cellspacing="1" class="outer">
         <tr>
             <th class="width20"><{$lang_poster}></th>
@@ -9,7 +9,7 @@
     </table>
     <!-- start comment replies -->
     <{foreach item=reply from=$comments[i].replies}>
-        <br/>
+        <br>
         <table class="bnone collapse">
             <tr>
                 <td width="<{$reply.prefix}>"></td>

@@ -130,7 +130,7 @@ function form_user($add_or_edit, $user = '')
 
     $form->addElement(new XoopsFormText(_AM_SYSTEM_USERS_NICKNAME, 'username', 25, 25, $uname_value), true);
     $form->addElement(new XoopsFormText(_AM_SYSTEM_USERS_NAME, 'name', 30, 60, $name_value));
-    $email_tray = new XoopsFormElementTray(_AM_SYSTEM_USERS_EMAIL, '<br />');
+    $email_tray = new XoopsFormElementTray(_AM_SYSTEM_USERS_EMAIL, '<br>');
     $email_text = new XoopsFormText('', 'email', 30, 60, $email_value);
     $email_tray->addElement($email_text, true);
     $email_cbox = new XoopsFormCheckBox('', 'user_viewemail', $email_cbox_value);
@@ -146,7 +146,7 @@ function form_user($add_or_edit, $user = '')
     $form->addElement(new XoopsFormText(_AM_SYSTEM_USERS_LOCATION, 'user_from', 30, 100, $location_value));
     $form->addElement(new XoopsFormText(_AM_SYSTEM_USERS_OCCUPATION, 'user_occ', 30, 100, $occ_value));
     $form->addElement(new XoopsFormText(_AM_SYSTEM_USERS_INTEREST, 'user_intrest', 30, 150, $interest_value));
-    $sig_tray  = new XoopsFormElementTray(_AM_SYSTEM_USERS_SIGNATURE, '<br />');
+    $sig_tray  = new XoopsFormElementTray(_AM_SYSTEM_USERS_SIGNATURE, '<br>');
     $sig_tarea = new XoopsFormTextArea('', 'user_sig', $sig_value);
     $sig_tray->addElement($sig_tarea);
     $sig_cbox = new XoopsFormCheckBox('', 'attachsig', $sig_cbox_value);

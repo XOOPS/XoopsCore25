@@ -124,16 +124,16 @@ class XoopsUserUtility
         $stop              = '';
         // Invalid email address
         if (!checkEmail($email)) {
-            $stop .= _US_INVALIDMAIL . '<br />';
+            $stop .= _US_INVALIDMAIL . '<br>';
         }
         if (strrpos($email, ' ') > 0) {
-            $stop .= _US_EMAILNOSPACES . '<br />';
+            $stop .= _US_EMAILNOSPACES . '<br>';
         }
         // Check forbidden email address if current operator is not an administrator
         if (!$xoopsUser_isAdmin) {
             foreach ($xoopsConfigUser['bad_emails'] as $be) {
                 if (!empty($be) && preg_match('/' . $be . '/i', $email)) {
-                    $stop .= _US_INVALIDMAIL . '<br />';
+                    $stop .= _US_INVALIDMAIL . '<br>';
                     break;
                 }
             }
@@ -154,25 +154,25 @@ class XoopsUserUtility
                 break;
         }
         if (empty($uname) || preg_match($restriction, $uname)) {
-            $stop .= _US_INVALIDNICKNAME . '<br />';
+            $stop .= _US_INVALIDNICKNAME . '<br>';
         }
         // Check uname settings if current operator is not an administrator
         if (!$xoopsUser_isAdmin) {
             if (strlen($uname) > $xoopsConfigUser['maxuname']) {
-                $stop .= sprintf(_US_NICKNAMETOOLONG, $xoopsConfigUser['maxuname']) . '<br />';
+                $stop .= sprintf(_US_NICKNAMETOOLONG, $xoopsConfigUser['maxuname']) . '<br>';
             }
             if (strlen($uname) < $xoopsConfigUser['minuname']) {
-                $stop .= sprintf(_US_NICKNAMETOOSHORT, $xoopsConfigUser['minuname']) . '<br />';
+                $stop .= sprintf(_US_NICKNAMETOOSHORT, $xoopsConfigUser['minuname']) . '<br>';
             }
             foreach ($xoopsConfigUser['bad_unames'] as $bu) {
                 if (!empty($bu) && preg_match('/' . $bu . '/i', $uname)) {
-                    $stop .= _US_NAMERESERVED . '<br />';
+                    $stop .= _US_NAMERESERVED . '<br>';
                     break;
                 }
             }
             /**
              * if (strrpos($uname, ' ') > 0) {
-             * $stop .= _US_NICKNAMENOSPACES . '<br />';
+             * $stop .= _US_NICKNAMENOSPACES . '<br>';
              * }
              */
         }
@@ -183,13 +183,13 @@ class XoopsUserUtility
         $result = $xoopsDB->query($sql);
         list($count) = $xoopsDB->fetchRow($result);
         if ($count > 0) {
-            $stop .= _US_NICKNAMETAKEN . '<br />';
+            $stop .= _US_NICKNAMETAKEN . '<br>';
         }
         $sql    = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix('users') . '` WHERE `email` = ' . $xoopsDB->quote(addslashes($email)) . (($uid > 0) ? " AND `uid` <> {$uid}" : '');
         $result = $xoopsDB->query($sql);
         list($count) = $xoopsDB->fetchRow($result);
         if ($count > 0) {
-            $stop .= _US_EMAILTAKEN . '<br />';
+            $stop .= _US_EMAILTAKEN . '<br>';
         }
         // If password is not set, skip password validation
         if ($pass === null && $vpass === null) {
@@ -197,12 +197,12 @@ class XoopsUserUtility
         }
 
         if (!isset($pass) || $pass == '' || !isset($vpass) || $vpass == '') {
-            $stop .= _US_ENTERPWD . '<br />';
+            $stop .= _US_ENTERPWD . '<br>';
         }
         if (isset($pass) && ($pass != $vpass)) {
-            $stop .= _US_PASSNOTSAME . '<br />';
+            $stop .= _US_PASSNOTSAME . '<br>';
         } elseif (($pass != '') && (strlen($pass) < $xoopsConfigUser['minpass'])) {
-            $stop .= sprintf(_US_PWDTOOSHORT, $xoopsConfigUser['minpass']) . '<br />';
+            $stop .= sprintf(_US_PWDTOOSHORT, $xoopsConfigUser['minpass']) . '<br>';
         }
 
         return $stop;

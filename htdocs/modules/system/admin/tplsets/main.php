@@ -96,7 +96,7 @@ switch ($op) {
     //generate surcharge
     case 'tpls_generate_surcharge':
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header('admin.php?fct=tplsets', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header('admin.php?fct=tplsets', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         // Assign Breadcrumb menu
         $xoBreadCrumb->addHelp(system_adminVersion('tplsets', 'help') . '#override');
@@ -361,7 +361,7 @@ switch ($op) {
     // save
     case 'tpls_save':
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header('admin.php?fct=tplsets', 2, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header('admin.php?fct=tplsets', 2, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         XoopsLoad::load('XoopsRequest');
         $clean_path_file = XoopsRequest::getString('path_file', '');

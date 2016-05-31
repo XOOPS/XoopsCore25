@@ -28,7 +28,7 @@ if (!defined('XOOPS_FOOTER_INCLUDED')) {
 
     if ($xoopsOption['theme_use_smarty'] == 0) {
         // the old way
-        $footer = htmlspecialchars($xoopsConfigMetaFooter['footer']) . '<br /><div class="txtcenter small">Powered by XOOPS &copy; <a href="http://xoops.org" rel="external" title="The XOOPS Project">The XOOPS Project</a></div>';
+        $footer = htmlspecialchars($xoopsConfigMetaFooter['footer']) . '<br><div class="txtcenter small">Powered by XOOPS &copy; <a href="http://xoops.org" rel="external" title="The XOOPS Project">The XOOPS Project</a></div>';
         if (isset($xoopsOption['template_main'])) {
             $xoopsTpl->caching = 0;
             $xoopsTpl->display('db:' . $xoopsOption['template_main']);

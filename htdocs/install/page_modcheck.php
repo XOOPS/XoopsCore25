@@ -59,7 +59,7 @@ ob_start();
         <tbody>
         <tr>
             <th><?php echo SERVER_API; ?></th>
-            <td><?php echo php_sapi_name(); ?><br/> <?php echo $_SERVER['SERVER_SOFTWARE']; ?></td>
+            <td><?php echo php_sapi_name(); ?><br> <?php echo $_SERVER['SERVER_SOFTWARE']; ?></td>
         </tr>
 
         <tr>

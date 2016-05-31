@@ -85,7 +85,7 @@ if ($op === 'logout') {
         $online_handler = xoops_getHandler('online');
         $online_handler->destroy($GLOBALS['xoopsUser']->getVar('uid'));
     }
-    $message = _US_LOGGEDOUT . '<br />' . _US_THANKYOUFORVISIT;
+    $message = _US_LOGGEDOUT . '<br>' . _US_THANKYOUFORVISIT;
     redirect_header(XOOPS_URL . '/', 1, $message);
 }
 
@@ -109,7 +109,7 @@ if ($op === 'delete') {
         $ok = !isset($_POST['ok']) ? 0 : (int)$_POST['ok'];
         if ($ok != 1) {
             include __DIR__ . '/header.php';
-            xoops_confirm(array('op' => 'delete', 'ok' => 1), 'user.php', _US_SURETODEL . '<br/>' . _US_REMOVEINFO);
+            xoops_confirm(array('op' => 'delete', 'ok' => 1), 'user.php', _US_SURETODEL . '<br>' . _US_REMOVEINFO);
             include __DIR__ . '/footer.php';
         } else {
             $del_uid        = $GLOBALS['xoopsUser']->getVar('uid');

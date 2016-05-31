@@ -75,7 +75,7 @@ if (!$needUpgrade) {
     return null;
 } else {
     if (!empty($files)) {
-        echo '<div class="x2-note"><p>' . _NEED_UPGRADE . '<br />' . _SET_FILES_WRITABLE . '</p><ul>';
+        echo '<div class="x2-note"><p>' . _NEED_UPGRADE . '<br>' . _SET_FILES_WRITABLE . '</p><ul>';
         foreach ($files as $file) {
             echo "<li>{$file}</li>\n";
         }

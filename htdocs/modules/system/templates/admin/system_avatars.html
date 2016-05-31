@@ -32,7 +32,7 @@
         </tr>
         </tbody>
     </table>
-    <br/>
+    <br>
 <{/if}>
 <!-- Display Avatar list for each category -->
 <{if $avatars_list}>

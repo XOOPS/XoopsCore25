@@ -25,5 +25,5 @@ define('_AM_SYSTEM_AVATAR_SUREDEL', 'Are you sure to delete this avatar image?')
 define('_AM_SYSTEM_AVATAR_TIPS', "
 <ul id='newsticker' class='newsticker'>
 <li>Manage all System or Custom avatars</li>
-<li>Site members can optionally create their own online personality called avatars.<br />This option can be turned off from System User preferences.</li>
+<li>Site members can optionally create their own online personality called avatars.<br>This option can be turned off from System User preferences.</li>
 </ul>");

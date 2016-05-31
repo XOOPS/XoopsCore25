@@ -26,7 +26,7 @@
 <{$smarty.const._MD_XTUBE_TIMEB}> <{$video.time}>
 
 <{if $video.showrating}>
-<br/>
+<br>
 
 <div class="xoopstube_infoblock">
     <span style="font-weight: bold;"><{$smarty.const._MD_XTUBE_RATINGC}></span>&nbsp;<img
@@ -43,7 +43,7 @@
 </div>
 
 <div>
-    <span style="font-weight: bold;"><{$smarty.const._MD_XTUBE_DESCRIPTIONC}></span><br/>
+    <span style="font-weight: bold;"><{$smarty.const._MD_XTUBE_DESCRIPTIONC}></span><br>
     <{$video.description|truncate:$video.total_chars}>
 </div>
 
