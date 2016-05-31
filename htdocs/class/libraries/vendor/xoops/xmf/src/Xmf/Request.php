@@ -365,6 +365,29 @@ class Request
     }
 
     /**
+     * See if a variable exists in one of the request hashes
+     *
+     * @param string $name variable to look for
+     * @param string $hash hash to check
+     *
+     * @return boolean True if hash has an element 'name', otherwise false
+     */
+    public static function hasVar($name, $hash = 'method')
+    {
+        $hash = strtoupper($hash);
+        if ($hash === 'METHOD') {
+            $hash = strtoupper($_SERVER['REQUEST_METHOD']);
+        }
+
+        // Get the requested hash and determine existing value
+        $original = static::get($hash, static::MASK_ALLOW_RAW);
+        if (isset($original[$name])) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Set a variable in one of the request variables
      *
      * @param string  $name      Name

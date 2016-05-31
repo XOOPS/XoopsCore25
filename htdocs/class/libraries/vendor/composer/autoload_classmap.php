@@ -103,8 +103,6 @@ return array(
     'WideImage\\PaletteImage' => $vendorDir . '/smottt/wideimage/lib/WideImage/PaletteImage.php',
     'WideImage\\TrueColorImage' => $vendorDir . '/smottt/wideimage/lib/WideImage/TrueColorImage.php',
     'WideImage\\WideImage' => $vendorDir . '/smottt/wideimage/lib/WideImage/WideImage.php',
-    'WideImage\\vendor\\de77\\BMP' => $vendorDir . '/smottt/wideimage/lib/WideImage/vendor/de77/BMP.php',
-    'WideImage\\vendor\\de77\\TGA' => $vendorDir . '/smottt/wideimage/lib/WideImage/vendor/de77/TGA.php',
     'Xmf\\Database\\TableLoad' => $vendorDir . '/xoops/xmf/src/Xmf/Database/TableLoad.php',
     'Xmf\\Database\\Tables' => $vendorDir . '/xoops/xmf/src/Xmf/Database/Tables.php',
     'Xmf\\Debug' => $vendorDir . '/xoops/xmf/src/Xmf/Debug.php',
