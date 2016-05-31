@@ -47,7 +47,6 @@ class XoopsMySQLDatabase extends XoopsDatabase
      */
     public function connect($selectdb = true)
     {
-        static $db_charset_set;
         if (!extension_loaded('mysqli')) {
             trigger_error('notrace:mysqli extension not loaded', E_USER_ERROR);
 
@@ -72,10 +71,10 @@ class XoopsMySQLDatabase extends XoopsDatabase
 
             return false;
         }
-        if (!isset($db_charset_set) && defined('XOOPS_DB_CHARSET') && XOOPS_DB_CHARSET) {
-            $this->queryF("SET NAMES '" . XOOPS_DB_CHARSET . "'");
+        if (defined('XOOPS_DB_CHARSET') && !empty(XOOPS_DB_CHARSET)) {
+            // $this->queryF("SET NAMES '" . XOOPS_DB_CHARSET . "'");
+            $this->conn->set_charset(XOOPS_DB_CHARSET);
         }
-        $db_charset_set = 1;
         $this->queryF('SET SQL_BIG_SELECTS = 1');
 
         return true;
