@@ -275,7 +275,7 @@ class XoopsSecurity
             $ret = '';
             if (count($this->errors) > 0) {
                 foreach ($this->errors as $error) {
-                    $ret .= $error . '<br />';
+                    $ret .= $error . '<br>';
                 }
             }
 

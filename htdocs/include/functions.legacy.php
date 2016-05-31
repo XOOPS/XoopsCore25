@@ -113,7 +113,7 @@ function OpenWaitBox()
     echo "<div id='waitDiv' style='position:absolute;left:40%;top:50%;visibility:hidden;text-align: center;'>
     <table cellpadding='6' border='2' class='bg2'>
       <tr>
-        <td align='center'><strong><big>" . _FETCHING . "</big></strong><br /><img src='" . XOOPS_URL . "/images/await.gif' alt='' /><br />" . _PLEASEWAIT . "</td>
+        <td align='center'><strong><big>" . _FETCHING . "</big></strong><br><img src='" . XOOPS_URL . "/images/await.gif' alt='' /><br>" . _PLEASEWAIT . "</td>
       </tr>
     </table>
     </div>

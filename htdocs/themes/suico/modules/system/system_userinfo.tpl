@@ -18,7 +18,7 @@
             </form>
         </fieldset>
     <{elseif $xoops_isadmin != false}>
-        <br/>
+        <br>
         <table class="center width70">
             <tr class="center">
                 <td>
@@ -29,7 +29,7 @@
                 </td>
             </tr>
         </table>
-        <br/>
+        <br>
     <{/if}>
 
     <table class=" width100" cellspacing="5">
@@ -130,7 +130,7 @@
                     </tr>
                     <tr class="top">
                         <td class="head"><{$lang_rank}></td>
-                        <td class="center odd"><{$user_rankimage}><br/><{$user_ranktitle}></td>
+                        <td class="center odd"><{$user_rankimage}><br><{$user_ranktitle}></td>
                     </tr>
                     <tr class="top">
                         <td class="head"><{$lang_posts}></td>
@@ -142,7 +142,7 @@
                     </tr>
                 </table>
                 <{if $user_signature}>
-                    <br/>
+                    <br>
                     <table class="outer width100" cellpadding="4" cellspacing="1">
                         <tr class="top">
                             <th colspan="2" class="center"><{$lang_signature}></th>

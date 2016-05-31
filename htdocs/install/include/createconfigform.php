@@ -172,7 +172,7 @@ function createConfigform($config)
                     '259200' => sprintf(_DAYS, 3),
                     '604800' => _WEEK);
                 if (count($modules) > 0) {
-                    $ele = new XoopsFormElementTray($title, '<br />');
+                    $ele = new XoopsFormElementTray($title, '<br>');
                     foreach (array_keys($modules) as $mid) {
                         $c_val   = isset($currrent_val[$mid]) ? (int)$currrent_val[$mid] : null;
                         $selform = new XoopsFormSelect($modules[$mid]->getVar('name'), $config[$i]->getVar('conf_name') . "[$mid]", $c_val);
@@ -243,7 +243,7 @@ function createConfigform($config)
  */
 function createThemeform($config)
 {
-    $title          = (!defined($config->getVar('conf_desc')) || constant($config->getVar('conf_desc')) === '') ? constant($config->getVar('conf_title')) : constant($config->getVar('conf_title')) . '<br /><br /><span>' . constant($config->getVar('conf_desc')) . '</span>';
+    $title          = (!defined($config->getVar('conf_desc')) || constant($config->getVar('conf_desc')) === '') ? constant($config->getVar('conf_title')) : constant($config->getVar('conf_title')) . '<br><br><span>' . constant($config->getVar('conf_desc')) . '</span>';
     $form_theme_set = new XoopsFormSelect('', $config->getVar('conf_name'), $config->getConfValueForOutput(), 1, false);
     $dirlist        = XoopsLists::getThemesList();
     if (!empty($dirlist)) {

@@ -80,9 +80,9 @@ function clientlogin()
           <form method='post' action='banners.php' class='login_form'>
           <div class='credentials'>
           <label for='login_form-login'>" . _BANNERS_LOGIN_LOGIN . "</label>
-          <input type='text' name='login' id='login_form-login' value='' /><br />
+          <input type='text' name='login' id='login_form-login' value='' /><br>
           <label for='login_form-password'>" . _BANNERS_LOGIN_PASS . "</label>
-          <input type='password' name='pass' id='login_form-password' value='' /><br />
+          <input type='password' name='pass' id='login_form-password' value='' /><br>
           </div>
           <div class='actions'><input type='hidden' name='op' value='Ok' /><button type='submit'>" . _BANNERS_LOGIN_OK . "</button></div>
           <div class='login_info'>" . _BANNERS_LOGIN_INFO . '</div>' . $GLOBALS['xoopsSecurity']->getTokenHTML('BANNER_LOGIN') . '
@@ -150,14 +150,14 @@ function bannerstats()
             ++$i;
         }
         echo "</table>
-              <br /><br />
+              <br><br>
               <h4 class='content_title'>" . _BANNERS_FOW_IN . htmlspecialchars($xoopsConfig['sitename']) . '</h4><hr />';
 
         $result = $xoopsDB->query('SELECT bid, imageurl, clickurl, htmlbanner, htmlcode FROM ' . $xoopsDB->prefix('banner') . " WHERE cid={$cid}");
         while (list($bid, $imageurl, $clickurl, $htmlbanner, $htmlcode) = $xoopsDB->fetchRow($result)) {
             $numrows = $xoopsDB->getRowsNum($result);
             if ($numrows > 1) {
-                echo '<br />';
+                echo '<br>';
             }
             if (!empty($htmlbanner) && !empty($htmlcode)) {
                 echo $myts->displayTarea($htmlcode);
@@ -171,10 +171,10 @@ function bannerstats()
                     echo "<img src='{$imageurl}' alt='' />";
                 }
             }
-            echo '<br /><strong>' . _BANNERS_ID . $bid . '</strong><br />' . sprintf(_BANNERS_SEND_STATS, 'banners.php?op=EmailStats&amp;cid=' . $cid . '&amp;bid=' . $bid) . '<br />';
+            echo '<br><strong>' . _BANNERS_ID . $bid . '</strong><br>' . sprintf(_BANNERS_SEND_STATS, 'banners.php?op=EmailStats&amp;cid=' . $cid . '&amp;bid=' . $bid) . '<br>';
             if (!$htmlbanner) {
                 $clickurl = htmlspecialchars($clickurl, ENT_QUOTES);
-                echo sprintf(_BANNERS_POINTS, $clickurl) . "<br />
+                echo sprintf(_BANNERS_POINTS, $clickurl) . "<br>
                 <form action='banners.php' method='post'>" . _BANNERS_URL . "
                 <input type='text' name='url' size='50' maxlength='200' value='{$clickurl}' />
                 <input type='hidden' name='bid' value='{$bid}' />
@@ -184,7 +184,7 @@ function bannerstats()
         }
 
         /* Finnished Banners */
-        echo '<br />';
+        echo '<br>';
         if ($result = $xoopsDB->query('SELECT bid, impressions, clicks, datestart, dateend FROM ' . $xoopsDB->prefix('bannerfinish') . " WHERE cid={$cid}")) {
             echo "<h4 class='content_title'>" . sprintf(_BANNERS_FINISHED, $name) . "</h4><hr />
                   <table summary=''>
@@ -384,7 +384,7 @@ switch ($op) {
     case 'Ok':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!$GLOBALS['xoopsSecurity']->check(true, false, 'BANNER_LOGIN')) {
-                redirect_header('banners.php', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+                redirect_header('banners.php', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
             }
 
             $_SESSION['banner_login'] = $clean_login;
@@ -394,7 +394,7 @@ switch ($op) {
         break;
     case _BANNERS_CHANGE:
         if (!$GLOBALS['xoopsSecurity']->check(true, false, 'BANNER_EDIT')) {
-            redirect_header('banners.php', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header('banners.php', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         $url = $clean_url;
         $bid = $clean_bid;

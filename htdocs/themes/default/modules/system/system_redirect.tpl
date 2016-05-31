@@ -41,7 +41,7 @@
     <div id="xo-redirect">
         <div class="message">
             <{$message}>
-            <br/>
+            <br>
             <img src="<{xoImgUrl icons/ajax_indicator_01.gif}>" alt="<{$message}>"/>
         </div>
         <div class="notreload">

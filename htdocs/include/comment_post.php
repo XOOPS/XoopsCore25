@@ -80,7 +80,7 @@ if (!empty($_POST)) {
         xoops_load('XoopsCaptcha');
         $xoopsCaptcha = XoopsCaptcha::getInstance();
         if (!$xoopsCaptcha->verify()) {
-            $error_message .= $xoopsCaptcha->getMessage() . '<br />';
+            $error_message .= $xoopsCaptcha->getMessage() . '<br>';
         }
 
         // Start add by voltan
@@ -183,16 +183,16 @@ if (!empty($_POST)) {
         $com_email = filter_var($com_email, FILTER_VALIDATE_EMAIL);
         // Invalid email address
         if (!checkEmail($com_email)) {
-            $error_message .= _US_INVALIDMAIL . '<br />';
+            $error_message .= _US_INVALIDMAIL . '<br>';
         }
         if (strrpos($com_email, ' ') > 0) {
-            $error_message .= _US_EMAILNOSPACES . '<br />';
+            $error_message .= _US_EMAILNOSPACES . '<br>';
         }
         // Check forbidden email address if current operator is not an administrator
         if (!$xoopsUser_isAdmin) {
             foreach ($xoopsConfigUser['bad_emails'] as $be) {
                 if (!empty($be) && preg_match('/' . $be . '/i', $com_email)) {
-                    $error_message .= _US_INVALIDMAIL . '<br />';
+                    $error_message .= _US_INVALIDMAIL . '<br>';
                     break;
                 }
             }
@@ -251,7 +251,7 @@ switch ($op) {
             }
             echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer">
                   <tr><td class="head">' . $com_title . '</td></tr>
-                  <tr><td><br />' . $p_comment . '<br /></td></tr>
+                  <tr><td><br>' . $p_comment . '<br></td></tr>
                   </table>';
             include_once $GLOBALS['xoops']->path('include/comment_form.php');
             include_once $GLOBALS['xoops']->path('footer.php');
@@ -259,7 +259,7 @@ switch ($op) {
             xoops_cp_header();
             echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer">
                   <tr><td class="head">' . $com_title . '</td></tr>
-                  <tr><td><br />' . $p_comment . '<br /></td></tr>
+                  <tr><td><br>' . $p_comment . '<br></td></tr>
                   </table>';
             include_once $GLOBALS['xoops']->path('include/comment_form.php');
             xoops_cp_footer();
@@ -533,6 +533,6 @@ switch ($op) {
         }
         break;
     default:
-        redirect_header(XOOPS_URL . '/', 1, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+        redirect_header(XOOPS_URL . '/', 1, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         break;
 }

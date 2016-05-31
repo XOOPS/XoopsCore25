@@ -113,10 +113,10 @@ class XoopsCommentRenderer
                 $com_email = $this->_comments[$i]->getVar('com_email');
                 $text      = $this->_comments[$i]->getVar('com_text');
                 $text .= '<div style="text-align:right; margin-top: 2px; margin-bottom: 0; margin-right: 2px;">';
-                $text .= _CM_STATUS . ': ' . $this->_statusText[$this->_comments[$i]->getVar('com_status')] . '<br />';
+                $text .= _CM_STATUS . ': ' . $this->_statusText[$this->_comments[$i]->getVar('com_status')] . '<br>';
                 $text .= 'IP: <span style="font-weight: bold;">' . $this->_comments[$i]->getVar('com_ip') . '</span>';
                 if (!empty($com_email)) {
-                    $text .= '<br />' . _CM_EMAIL . ' :<span style="font-weight: bold;"><a href="mailto:' . $com_email . '" title="' . $com_email . '">' . $com_email . '</a></span>';
+                    $text .= '<br>' . _CM_EMAIL . ' :<span style="font-weight: bold;"><a href="mailto:' . $com_email . '" title="' . $com_email . '">' . $com_email . '</a></span>';
                 }
                 $text .= '</div>';
             } else {
@@ -172,10 +172,10 @@ class XoopsCommentRenderer
             $com_email = $tree[$comment_id]['obj']->getVar('com_email');
             $text      = $tree[$comment_id]['obj']->getVar('com_text');
             $text .= '<div style="text-align:right; margin-top: 2px; margin-bottom: 0; margin-right: 2px;">';
-            $text .= _CM_STATUS . ': ' . $this->_statusText[$tree[$comment_id]['obj']->getVar('com_status')] . '<br />';
+            $text .= _CM_STATUS . ': ' . $this->_statusText[$tree[$comment_id]['obj']->getVar('com_status')] . '<br>';
             $text .= 'IP: <span style="font-weight: bold;">' . $tree[$comment_id]['obj']->getVar('com_ip') . '</span>';
             if (!empty($com_email)) {
-                $text .= '<br />' . _CM_EMAIL . ' :<span style="font-weight: bold;"><a href="mailto:' . $com_email . '" title="' . $com_email . '">' . $com_email . '</a></span>';
+                $text .= '<br>' . _CM_EMAIL . ' :<span style="font-weight: bold;"><a href="mailto:' . $com_email . '" title="' . $com_email . '">' . $com_email . '</a></span>';
             }
             $text .= '</div>';
         } else {
@@ -285,10 +285,10 @@ class XoopsCommentRenderer
             $com_email = $tree[$comment_id]['obj']->getVar('com_email');
             $text      = $tree[$comment_id]['obj']->getVar('com_text');
             $text .= '<div style="text-align:right; margin-top: 2px; margin-bottom: 0; margin-right: 2px;">';
-            $text .= _CM_STATUS . ': ' . $this->_statusText[$tree[$comment_id]['obj']->getVar('com_status')] . '<br />';
+            $text .= _CM_STATUS . ': ' . $this->_statusText[$tree[$comment_id]['obj']->getVar('com_status')] . '<br>';
             $text .= 'IP: <span style="font-weight: bold;">' . $tree[$comment_id]['obj']->getVar('com_ip') . '</span>';
             if (!empty($com_email)) {
-                $text .= '<br />' . _CM_EMAIL . ' :<span style="font-weight: bold;"><a href="mailto:' . $com_email . '" title="' . $com_email . '">' . $com_email . '</a></span>';
+                $text .= '<br>' . _CM_EMAIL . ' :<span style="font-weight: bold;"><a href="mailto:' . $com_email . '" title="' . $com_email . '">' . $com_email . '</a></span>';
             }
             $text .= '</div>';
         } else {
@@ -342,7 +342,7 @@ class XoopsCommentRenderer
             } else {
                 $title = $thread[$key]['obj']->getVar('com_title');
             }
-            $text = (false != $admin_view) ? $thread[$key]['obj']->getVar('com_text') . '<div style="text-align:right; margin-top: 2px; margin-right: 2px;">' . _CM_STATUS . ': ' . $this->_statusText[$thread[$key]['obj']->getVar('com_status')] . '<br />IP: <span style="font-weight: bold;">' . $thread[$key]['obj']->getVar('com_ip') . '</span><br />' . _CM_EMAIL . ' :<span style="font-weight: bold;">' . $thread[$key]['obj']->getVar('com_email') . '</span></div>' : $thread[$key]['obj']->getVar('com_text');
+            $text = (false != $admin_view) ? $thread[$key]['obj']->getVar('com_text') . '<div style="text-align:right; margin-top: 2px; margin-right: 2px;">' . _CM_STATUS . ': ' . $this->_statusText[$thread[$key]['obj']->getVar('com_status')] . '<br>IP: <span style="font-weight: bold;">' . $thread[$key]['obj']->getVar('com_ip') . '</span><br>' . _CM_EMAIL . ' :<span style="font-weight: bold;">' . $thread[$key]['obj']->getVar('com_email') . '</span></div>' : $thread[$key]['obj']->getVar('com_text');
             // Start edit by voltan
             $replies[] = array(
                 'id'            => $key,

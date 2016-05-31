@@ -16,7 +16,7 @@
                     <div id="display_form"><{$form}></div>
                     <div id="display_contenu"></div>
                     <div id='display_message' class="txtcenter" style="display:none;"></div>
-                    <div id='loading' class="txtcenter" style="display:none;"><br/><br/><img src="images/loading.gif" title="Loading" alt="Loading"/>
+                    <div id='loading' class="txtcenter" style="display:none;"><br><br><img src="images/loading.gif" title="Loading" alt="Loading"/>
                     </div>
                 </td>
             </tr>
@@ -25,7 +25,7 @@
         <br class="clear"/>
     </div>
 <{else}>
-    <br/>
+    <br>
     <{if $verif}>
         <{$infos}>
     <{else}>

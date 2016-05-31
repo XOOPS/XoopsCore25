@@ -64,7 +64,7 @@ switch ($op) {
     case 'save':
         xoops_loadLanguage('main', $GLOBALS['xoopsModule']->getVar('dirname', 'n'));
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header('user.php', 3, _US_NOEDITRIGHT . '<br />' . implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header('user.php', 3, _US_NOEDITRIGHT . '<br>' . implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
             exit;
         }
 

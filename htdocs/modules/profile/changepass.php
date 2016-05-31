@@ -55,7 +55,7 @@ if (!isset($_POST['submit'])) {
     }
 
     if ($errors) {
-        $msg = implode('<br />', $errors);
+        $msg = implode('<br>', $errors);
     } else {
         //update password
         $GLOBALS['xoopsUser']->setVar('pass', password_hash($password, PASSWORD_DEFAULT));

@@ -1,5 +1,5 @@
 <div class="CPbigTitle"><{$lang_cp}></div>
-<br/>
+<br>
 <div class="cpicon">
     <{foreach item=op from=$mod_options}>
         <a class="tooltip" href="<{$op.link}>" title="<{$op.desc}>">

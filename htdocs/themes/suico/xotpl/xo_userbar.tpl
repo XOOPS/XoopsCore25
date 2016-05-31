@@ -37,7 +37,7 @@
                 <form action="<{xoAppUrl /user.php op=login}>" method="post" class="login_form">
                     <div class="credentials">
                         <label for="login_form-login"><{$smarty.const.THEME_PSEUDO}> :</label><input type="text" name="uname"
-                                                                                                     title="<{$smarty.const.THEME_DESC_PSEUDO}>"/><br/>
+                                                                                                     title="<{$smarty.const.THEME_DESC_PSEUDO}>"/><br>
                         <label for="login_form-password"><{$smarty.const.THEME_PASSWORD}> :</label><input type="password" name="pass"
                                                                                                           title="<{$smarty.const.THEME_DESC_PASSWORD}>"/>
 
@@ -51,7 +51,7 @@
             </fieldset>
             <div class="center">
                 <a href="<{xoAppUrl user.php#lost}>" title="<{$smarty.const.THEME_LOSTACCOUNT}>"><{$smarty.const.THEME_LOSTACCOUNT}></a>
-                <br/>
+                <br>
                 <a href="<{xoAppUrl register.php}>" title="<{$smarty.const.THEME_REGISTER}>"><{$smarty.const.THEME_REGISTER}></a>
             </div>
         </div>
@@ -79,33 +79,33 @@
                             <{/if}>
                         <{/if}>
                     </td>
-                    <td class=" width66 middle"><span class="bold maxi shadow"><{$xoops_uname}></span><br/><span class="italic"><{$xoops_name}></span>
+                    <td class=" width66 middle"><span class="bold maxi shadow"><{$xoops_uname}></span><br><span class="italic"><{$xoops_name}></span>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
                         <span class="xo-ulabel"><img class="xo-icons" src="<{xoImgUrl icons/users/web.png}>" alt=""/></span>: <span
                                 class="xo-uleft"><a rel="external" href="<{$member_info.url}>"
-                                                    title="<{$member_info.url}>"><{$member_info.url}></a></span><br/>
+                                                    title="<{$member_info.url}>"><{$member_info.url}></a></span><br>
                         <span class="xo-ulabel"><img class="xo-icons" src="<{xoImgUrl icons/users/email.png}>" alt=""/></span>: <span
-                                class="xo-uleft"><{$member_info.email}></span><br/>
-                        <span class="xo-ulabel"><img class="xo-icons" src="<{xoImgUrl icons/users/msn.png}>" alt=""/></span>: <span class="xo-uleft"><{$member_info.user_msnm}></span><br/>
+                                class="xo-uleft"><{$member_info.email}></span><br>
+                        <span class="xo-ulabel"><img class="xo-icons" src="<{xoImgUrl icons/users/msn.png}>" alt=""/></span>: <span class="xo-uleft"><{$member_info.user_msnm}></span><br>
                         <span class="xo-ulabel"><img class="xo-icons" src="<{xoImgUrl icons/users/Ym.png}>" alt=""/></span>: <span class="xo-uleft"><{$member_info.user_yim}></span>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <span class="xo-ulabel"><{$smarty.const.THEME_UFROM}></span>: <span class="xo-uleft"><{$member_info.user_from}></span><br/>
-                        <span class="xo-ulabel"><{$smarty.const.THEME_UOCCUPAT}></span>: <span class="xo-uleft"><{$member_info.user_occ}></span><br/>
+                        <span class="xo-ulabel"><{$smarty.const.THEME_UFROM}></span>: <span class="xo-uleft"><{$member_info.user_from}></span><br>
+                        <span class="xo-ulabel"><{$smarty.const.THEME_UOCCUPAT}></span>: <span class="xo-uleft"><{$member_info.user_occ}></span><br>
                         <span class="xo-ulabel"><{$smarty.const.THEME_UINTEREST}></span>: <span
-                                class="xo-uleft"><{$member_info.user_intrest}></span><br/>
+                                class="xo-uleft"><{$member_info.user_intrest}></span><br>
                         <span class="xo-ulabel"><{$smarty.const.THEME_UINFOS}></span>: <span class="xo-uleft small italic"><{$member_info.bio}></span>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <!-- <span class="xo-ulabel"><{$smarty.const.THEME_UREGDATE}></span>: <span class="xo-uleft">grrrrrrrr !!!</span><br /> -->
-                        <!-- <span class="xo-ulabel"><{$smarty.const.THEME_ULASTLOGIN}></span>: <span class="xo-uleft">grrrrrrrr !!!</span><br /> -->
+                        <!-- <span class="xo-ulabel"><{$smarty.const.THEME_UREGDATE}></span>: <span class="xo-uleft">grrrrrrrr !!!</span><br> -->
+                        <!-- <span class="xo-ulabel"><{$smarty.const.THEME_ULASTLOGIN}></span>: <span class="xo-uleft">grrrrrrrr !!!</span><br> -->
                         <span class="xo-ulabel"><{$smarty.const.THEME_UPOSTS}></span>: <span class="xo-uleft"><{$member_info.posts}></span>
                     </td>
                 </tr>
@@ -117,7 +117,7 @@
                             <img class="xo-uicons" src="<{xoImgUrl icons/users/organizer.png}>" alt="<{$smarty.const.THEME_UEDITAVATAR}>"/></a>
                         <a href="<{xoAppUrl modules/profile/changepass.php}>" title="<{$smarty.const.THEME_UEDITPASSWORD}>">
                             <img class="xo-uicons" src="<{xoImgUrl icons/users/password.png}>" alt="<{$smarty.const.THEME_UEDITPASSWORD}>"/></a>
-                        <br/>
+                        <br>
                         <a href="<{xoAppUrl user.php}>" title="<{$smarty.const.THEME_PROFILE}>">
                             <img class="xo-uicons" src="<{xoImgUrl icons/users/edit_user.png}>" alt="<{$smarty.const.THEME_PROFILE}>"/></a>
                         <{xoInboxCount assign=pmcount}>

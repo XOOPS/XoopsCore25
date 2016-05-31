@@ -62,7 +62,7 @@ class SystemSmilies extends XoopsObject
         $form->addElement(new XoopsFormText(_AM_SYSTEM_SMILIES_CODE, 'code', 26, 25, $this->getVar('code')), true);
         $form->addElement(new XoopsFormText(_AM_SYSTEM_SMILIES_DESCRIPTION, 'emotion', 50, 50, $this->getVar('emotion')), true);
 
-        $imgtray_img     = new XoopsFormElementTray(_AM_SYSTEM_SMILIES_FILE, '<br />');
+        $imgtray_img     = new XoopsFormElementTray(_AM_SYSTEM_SMILIES_FILE, '<br>');
         $imgpath_img     = sprintf(_AM_SYSTEM_SMILIES_IMAGE_PATH, XOOPS_UPLOAD_PATH . '/smilies/');
         $imageselect_img = new XoopsFormSelect($imgpath_img, 'smile_url', $blank_img);
         $image_array_img = XoopsLists::getImgListAsArray(XOOPS_UPLOAD_PATH . '/smilies');
@@ -72,9 +72,9 @@ class SystemSmilies extends XoopsObject
         }
         $imageselect_img->setExtra('onchange="showImgSelected(\'xo-smilies-img\', \'smile_url\', \'smilies\', \'\', \'' . XOOPS_UPLOAD_URL . '\' )"');
         $imgtray_img->addElement($imageselect_img, false);
-        $imgtray_img->addElement(new XoopsFormLabel('', "<br /><img src='" . XOOPS_UPLOAD_URL . '/smilies/' . $blank_img . "' name='image_img' id='xo-smilies-img' alt='' />"));
+        $imgtray_img->addElement(new XoopsFormLabel('', "<br><img src='" . XOOPS_UPLOAD_URL . '/smilies/' . $blank_img . "' name='image_img' id='xo-smilies-img' alt='' />"));
 
-        $fileseltray_img = new XoopsFormElementTray('<br />', '<br /><br />');
+        $fileseltray_img = new XoopsFormElementTray('<br>', '<br><br>');
         $fileseltray_img->addElement(new XoopsFormFile(_AM_SYSTEM_SMILIES_UPLOADS, 'smile_url', 500000), false);
         $fileseltray_img->addElement(new XoopsFormLabel(''), false);
         $imgtray_img->addElement($fileseltray_img);

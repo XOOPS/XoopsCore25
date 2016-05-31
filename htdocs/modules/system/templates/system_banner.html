@@ -35,7 +35,7 @@
     <tr>
         <td class="head" colspan="7">&nbsp;</td>
     </tr>
-</table><br/><br/>
+</table><br><br>
 
 <h4 class="content_title"><{$smarty.const._BANNERS_FINISHED}></h4>
 
@@ -67,4 +67,4 @@
     <tr>
         <td class="head" colspan="7">&nbsp;</td>
     </tr>
-</table><br/>
+</table><br>

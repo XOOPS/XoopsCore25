@@ -343,7 +343,7 @@ switch ($op) {
         if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
             $msgs = '<img src="' . XOOPS_URL . '/modules/' . $mod->getVar('dirname', 'n') . '/' . trim($mod->getInfo('image')) . '" alt="" />';
         }
-        $msgs .= '<br /><span style="font-size:smaller;">' . $mod->getVar('name', 's') . '</span><br /><br />' . _AM_SYSTEM_MODULES_RUSUREINS;
+        $msgs .= '<br><span style="font-size:smaller;">' . $mod->getVar('name', 's') . '</span><br><br>' . _AM_SYSTEM_MODULES_RUSUREINS;
         // Call Header
         xoops_cp_header();
         // Define Stylesheet
@@ -398,7 +398,7 @@ switch ($op) {
         if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
             $msgs = '<img src="' . XOOPS_URL . '/modules/' . $mod->getVar('dirname', 'n') . '/' . trim($mod->getInfo('image')) . '" alt="" />';
         }
-        $msgs .= '<br /><span style="font-size:smaller;">' . $mod->getVar('name') . '</span><br /><br />' . _AM_SYSTEM_MODULES_RUSUREUNINS;
+        $msgs .= '<br><span style="font-size:smaller;">' . $mod->getVar('name') . '</span><br><br>' . _AM_SYSTEM_MODULES_RUSUREUNINS;
         // Call Header
         xoops_cp_header();
         // Define Stylesheet
@@ -453,7 +453,7 @@ switch ($op) {
         if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
             $msgs = '<img src="' . XOOPS_URL . '/modules/' . $mod->getVar('dirname', 'n') . '/' . trim($mod->getInfo('image')) . '" alt="" />';
         }
-        $msgs .= '<br /><span style="font-size:smaller;">' . $mod->getVar('name', 's') . '</span><br /><br />' . _AM_SYSTEM_MODULES_RUSUREUPD;
+        $msgs .= '<br><span style="font-size:smaller;">' . $mod->getVar('name', 's') . '</span><br><br>' . _AM_SYSTEM_MODULES_RUSUREUPD;
         // Call Header
         xoops_cp_header();
         // Define Stylesheet

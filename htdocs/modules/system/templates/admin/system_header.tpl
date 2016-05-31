@@ -36,5 +36,5 @@
         <div class="clear">&nbsp;</div>
     </div>
 <{else}>
-    <br/>
+    <br>
 <{/if}>

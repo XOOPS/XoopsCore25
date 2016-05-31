@@ -77,7 +77,7 @@ ob_start();
         <?php
         if ($ctrl->validPath['root'] && !empty($ctrl->permErrors['root'])) {
             echo '<div id="rootperms" class="x2-note">';
-            echo CHECKING_PERMISSIONS . '<br /><p>' . ERR_NEED_WRITE_ACCESS . '</p>';
+            echo CHECKING_PERMISSIONS . '<br><p>' . ERR_NEED_WRITE_ACCESS . '</p>';
             echo '<ul class="diags">';
             foreach ($ctrl->permErrors['root'] as $path => $result) {
                 if ($result) {
@@ -101,7 +101,7 @@ ob_start();
         <?php
         if ($ctrl->validPath['data'] && !empty($ctrl->permErrors['data'])) {
             echo '<div id="dataperms" class="x2-note">';
-            echo CHECKING_PERMISSIONS . '<br /><p>' . ERR_NEED_WRITE_ACCESS . '</p>';
+            echo CHECKING_PERMISSIONS . '<br><p>' . ERR_NEED_WRITE_ACCESS . '</p>';
             echo '<ul class="diags">';
             foreach ($ctrl->permErrors['data'] as $path => $result) {
                 if ($result) {

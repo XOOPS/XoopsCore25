@@ -64,7 +64,7 @@ class SystemUserrank extends XoopsObject
         $form->addElement(new XoopsFormText(_AM_SYSTEM_USERRANK_MINPOST, 'rank_min', 10, 10, $this->getVar('rank_min')));
         $form->addElement(new XoopsFormText(_AM_SYSTEM_USERRANK_MAXPOST, 'rank_max', 10, 10, $this->getVar('rank_max')));
 
-        $imgtray_img     = new XoopsFormElementTray(_AM_SYSTEM_USERRANK_IMAGE, '<br />');
+        $imgtray_img     = new XoopsFormElementTray(_AM_SYSTEM_USERRANK_IMAGE, '<br>');
         $imgpath_img     = sprintf(_AM_SYSTEM_USERRANK_IMAGE_PATH, XOOPS_UPLOAD_PATH . '/ranks/');
         $imageselect_img = new XoopsFormSelect($imgpath_img, 'rank_image', $blank_img);
         $image_array_img = XoopsLists::getImgListAsArray(XOOPS_UPLOAD_PATH . '/ranks');
@@ -74,9 +74,9 @@ class SystemUserrank extends XoopsObject
         }
         $imageselect_img->setExtra("onchange='showImgSelected(\"xo-ranks-img\", \"rank_image\", \"ranks\", \"\", \"" . XOOPS_UPLOAD_URL . "\")'");
         $imgtray_img->addElement($imageselect_img, false);
-        $imgtray_img->addElement(new XoopsFormLabel('', "<br /><img src='" . XOOPS_UPLOAD_URL . '/ranks/' . $blank_img . "' name='image_img' id='xo-ranks-img' alt='' />"));
+        $imgtray_img->addElement(new XoopsFormLabel('', "<br><img src='" . XOOPS_UPLOAD_URL . '/ranks/' . $blank_img . "' name='image_img' id='xo-ranks-img' alt='' />"));
 
-        $fileseltray_img = new XoopsFormElementTray('<br />', '<br /><br />');
+        $fileseltray_img = new XoopsFormElementTray('<br>', '<br><br>');
         $fileseltray_img->addElement(new XoopsFormFile(_AM_SYSTEM_USERRANK_UPLOAD, 'rank_image', 500000), false);
         $fileseltray_img->addElement(new XoopsFormLabel(''), false);
         $imgtray_img->addElement($fileseltray_img);
@@ -87,7 +87,7 @@ class SystemUserrank extends XoopsObject
             $rank_special = $this->getVar('rank_special');
         }
 
-        $special_tray = new XoopsFormElementTray(_AM_SYSTEM_USERRANK_SPECIAL, '<br />');
+        $special_tray = new XoopsFormElementTray(_AM_SYSTEM_USERRANK_SPECIAL, '<br>');
         $special_tray->setDescription(_AM_SYSTEM_USERRANK_SPECIAL_CAN);
         $special_tray->addElement(new XoopsFormRadioYN('', 'rank_special', $rank_special));
         $form->addElement($special_tray);

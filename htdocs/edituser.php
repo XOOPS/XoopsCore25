@@ -38,7 +38,7 @@ $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 $myts            = MyTextSanitizer::getInstance();
 if ($op === 'saveuser') {
     if (!$GLOBALS['xoopsSecurity']->check()) {
-        redirect_header('index.php', 3, _US_NOEDITRIGHT . '<br />' . implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+        redirect_header('index.php', 3, _US_NOEDITRIGHT . '<br>' . implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
     }
     $uid = XoopsRequest::getInt('uid', 0);
     if (empty($uid) || $xoopsUser->getVar('uid') != $uid) {
@@ -66,9 +66,9 @@ if ($op === 'saveuser') {
         include $GLOBALS['xoops']->path('header.php');
         echo '<div>';
         foreach ($errors as $er) {
-            echo '<span class="red bold">' . $er . '</span><br />';
+            echo '<span class="red bold">' . $er . '</span><br>';
         }
-        echo '</div><br />';
+        echo '</div><br>';
         $op = 'editprofile';
     } else {
         $member_handler = xoops_getHandler('member');
@@ -119,13 +119,13 @@ if ($op === 'editprofile') {
     include_once $GLOBALS['xoops']->path('header.php');
     include_once $GLOBALS['xoops']->path('include/comment_constants.php');
     include_once $GLOBALS['xoops']->path('include/xoopscodes.php');
-    echo '<a href="userinfo.php?uid=' . $xoopsUser->getVar('uid') . '" title="">' . _US_PROFILE . '</a>&nbsp;<span class="bold">&raquo;&raquo;</span>&nbsp;' . _US_EDITPROFILE . '<br /><br />';
+    echo '<a href="userinfo.php?uid=' . $xoopsUser->getVar('uid') . '" title="">' . _US_PROFILE . '</a>&nbsp;<span class="bold">&raquo;&raquo;</span>&nbsp;' . _US_EDITPROFILE . '<br><br>';
     $form        = new XoopsThemeForm(_US_EDITPROFILE, 'userinfo', 'edituser.php', 'post', true);
     $uname_label = new XoopsFormLabel(_US_NICKNAME, $xoopsUser->getVar('uname'));
     $form->addElement($uname_label);
     $name_text = new XoopsFormText(_US_REALNAME, 'name', 30, 60, $xoopsUser->getVar('name', 'E'));
     $form->addElement($name_text);
-    $email_tray = new XoopsFormElementTray(_US_EMAIL, '<br />');
+    $email_tray = new XoopsFormElementTray(_US_EMAIL, '<br>');
     if ($xoopsConfigUser['allow_chgmail'] == 1) {
         $email_text = new XoopsFormText('', 'email', 30, 60, $xoopsUser->getVar('email'));
     } else {
@@ -148,7 +148,7 @@ if ($op === 'editprofile') {
     $location_text   = new XoopsFormText(_US_LOCATION, 'user_from', 30, 100, $xoopsUser->getVar('user_from', 'E'));
     $occupation_text = new XoopsFormText(_US_OCCUPATION, 'user_occ', 30, 100, $xoopsUser->getVar('user_occ', 'E'));
     $interest_text   = new XoopsFormText(_US_INTEREST, 'user_intrest', 30, 150, $xoopsUser->getVar('user_intrest', 'E'));
-    $sig_tray        = new XoopsFormElementTray(_US_SIGNATURE, '<br />');
+    $sig_tray        = new XoopsFormElementTray(_US_SIGNATURE, '<br>');
     $sig_tarea       = new XoopsFormDhtmlTextArea('', 'user_sig', $xoopsUser->getVar('user_sig', 'E'));
     $sig_tray->addElement($sig_tarea);
     $sig_cbox_value = $xoopsUser->getVar('attachsig') ? 1 : 0;
@@ -183,7 +183,7 @@ if ($op === 'editprofile') {
     $cookie_radio       = new XoopsFormRadioYN(_US_USECOOKIE, 'usecookie', $cookie_radio_value, _YES, _NO);
     $pwd_text           = new XoopsFormPassword('', 'password', 10, 32);
     $pwd_text2          = new XoopsFormPassword('', 'vpass', 10, 32);
-    $pwd_tray           = new XoopsFormElementTray(_US_PASSWORD . '<br />' . _US_TYPEPASSTWICE);
+    $pwd_tray           = new XoopsFormElementTray(_US_PASSWORD . '<br>' . _US_TYPEPASSTWICE);
     $pwd_tray->addElement($pwd_text);
     $pwd_tray->addElement($pwd_text2);
     $mailok_radio  = new XoopsFormRadioYN(_US_MAILOK, 'user_mailok', $xoopsUser->getVar('user_mailok'));
@@ -221,7 +221,7 @@ if ($op === 'editprofile') {
 
 if ($op === 'avatarform') {
     include $GLOBALS['xoops']->path('header.php');
-    echo '<a href="userinfo.php?uid=' . $xoopsUser->getVar('uid') . '">' . _US_PROFILE . '</a>&nbsp;<span class="bold">&raquo;&raquo;</span>&nbsp;' . _US_UPLOADMYAVATAR . '<br /><br />';
+    echo '<a href="userinfo.php?uid=' . $xoopsUser->getVar('uid') . '">' . _US_PROFILE . '</a>&nbsp;<span class="bold">&raquo;&raquo;</span>&nbsp;' . _US_UPLOADMYAVATAR . '<br><br>';
     $oldavatar = $xoopsUser->getVar('user_avatar');
     if (!empty($oldavatar) && $oldavatar !== 'blank.gif') {
         echo '<div class="pad10 txtcenter floatcenter0"><h4 class="red bold">' . _US_OLDDELETED . '</h4>';
@@ -250,8 +250,8 @@ if ($op === 'avatarform') {
     $avatar_select->setExtra("onchange='showImgSelected(\"avatar\", \"user_avatar\", \"uploads\", \"\", \"" . XOOPS_URL . "\")'");
     $avatar_tray = new XoopsFormElementTray(_US_AVATAR, '&nbsp;');
     $avatar_tray->addElement($avatar_select);
-    $avatar_tray->addElement(new XoopsFormLabel('', "<a href=\"javascript:openWithSelfMain('" . XOOPS_URL . "/misc.php?action=showpopups&amp;type=avatars','avatars',600,400);\">" . _LIST . '</a><br />'));
-    $avatar_tray->addElement(new XoopsFormLabel('', "<br /><img src='" . XOOPS_UPLOAD_URL . '/' . $avatar_selected . "' name='avatar' id='avatar' alt='' />"));
+    $avatar_tray->addElement(new XoopsFormLabel('', "<a href=\"javascript:openWithSelfMain('" . XOOPS_URL . "/misc.php?action=showpopups&amp;type=avatars','avatars',600,400);\">" . _LIST . '</a><br>'));
+    $avatar_tray->addElement(new XoopsFormLabel('', "<br><img src='" . XOOPS_UPLOAD_URL . '/' . $avatar_selected . "' name='avatar' id='avatar' alt='' />"));
     $form2->addElement($avatar_tray);
     $form2->addElement(new XoopsFormHidden('uid', $xoopsUser->getVar('uid')));
     $form2->addElement(new XoopsFormHidden('op', 'avatarchoose'));
@@ -262,7 +262,7 @@ if ($op === 'avatarform') {
 
 if ($op === 'avatarupload') {
     if (!$GLOBALS['xoopsSecurity']->check()) {
-        redirect_header('index.php', 3, _US_NOEDITRIGHT . '<br />' . implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+        redirect_header('index.php', 3, _US_NOEDITRIGHT . '<br>' . implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
     }
     $xoops_upload_file = array();
     $uid               = 0;
@@ -320,7 +320,7 @@ if ($op === 'avatarupload') {
 
 if ($op === 'avatarchoose') {
     if (!$GLOBALS['xoopsSecurity']->check()) {
-        redirect_header('index.php', 3, _US_NOEDITRIGHT . '<br />' . implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+        redirect_header('index.php', 3, _US_NOEDITRIGHT . '<br>' . implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
     }
     $uid = 0;
     if (!empty($_POST['uid'])) {

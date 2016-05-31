@@ -38,7 +38,7 @@
                     <form action="<{$xoops_url}>/user.php" method="post" class="login_form">
                         <div class="credentials">
                             <label for="login_form-login"><{$lang_login}></label><input type="text" name="uname" id="login_form-login" size="12"
-                                                                                        value=""/><br/>
+                                                                                        value=""/><br>
                             <label for="login_form-password"><{$lang_password}></label><input type="password" name="pass" id="login_form-password"
                                                                                               size="12"/>
                             <input type="hidden" name="xoops_redirect" value="<{$xoops_requesturi}>"/>

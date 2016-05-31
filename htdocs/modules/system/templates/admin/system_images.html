@@ -140,7 +140,7 @@
 
 <!-- Add Image form -->
 <div id="xo-images-add" class="hide">
-    <br/>
+    <br>
     <{$image_form.javascript}>
     <form name="<{$image_form.name}>" id="<{$image_form.name}>" action="<{$image_form.action}>" method="<{$image_form.method}>"
             <{$image_form.extra}> >
@@ -166,7 +166,7 @@
 </div>
 <!-- Add Category form -->
 <div id="xo-category-add" class="hide">
-    <br/>
+    <br>
     <{$imagecat_form.javascript}>
     <form name="<{$imagecat_form.name}>" id="<{$imagecat_form.name}>" action="<{$imagecat_form.action}>" method="<{$imagecat_form.method}>"
             <{$imagecat_form.extra}> >
@@ -194,7 +194,7 @@
 <{if $edit_form}>
     <div id="xo-images-add" class="">
         <{$edit_thumbs}>
-        <br/>
+        <br>
         <{$edit_form.javascript}>
         <form name="<{$edit_form.name}>" id="<{$edit_form.name}>" action="<{$edit_form.action}>" method="<{$edit_form.method}>"
                 <{$edit_form.extra}> >

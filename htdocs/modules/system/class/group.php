@@ -145,7 +145,7 @@ class SystemGroup extends XoopsGroup
         }
         ksort($blocks_module);
 
-        $r_block_tray   = new XoopsFormElementTray(_AM_SYSTEM_GROUPS_BLOCKRIGHTS, '<br /><br />');
+        $r_block_tray   = new XoopsFormElementTray(_AM_SYSTEM_GROUPS_BLOCKRIGHTS, '<br><br>');
         $s_checkbox_all = new XoopsFormCheckBox('', 'blocksbox', 1);
         $s_checkbox_all->addOption('allbox', _AM_SYSTEM_ALL);
         $s_checkbox_all->setExtra(" onclick='xoopsCheckGroup(\"groupform\", \"blocksbox\" , \"read_bids[]\");' ");
@@ -156,7 +156,7 @@ class SystemGroup extends XoopsGroup
             foreach ($blocks_module[$mid] as $key => $value) {
                 $new_blocks_array[$key] = "<a href='" . XOOPS_URL . "/modules/system/admin.php?fct=blocksadmin&amp;op=edit&amp;bid={$key}' title='ID: {$key}' rel='external'>{$value}</a>";
             }
-            $r_block_checkbox          = new XoopsFormCheckBox('<strong>' . $module_list[$mid] . '</strong><br />', 'read_bids[]', $r_block_value);
+            $r_block_checkbox          = new XoopsFormCheckBox('<strong>' . $module_list[$mid] . '</strong><br>', 'read_bids[]', $r_block_value);
             $r_block_checkbox->columns = 5;
             $r_block_checkbox->addOptionArray($new_blocks_array);
             $r_block_tray->addElement($r_block_checkbox);

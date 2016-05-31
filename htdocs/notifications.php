@@ -186,7 +186,7 @@ switch ($op) {
 
     case 'delete':
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header('notifications.php', 2, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header('notifications.php', 2, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         if (empty($_POST['del_not'])) {
             redirect_header('notifications.php', 2, _NOT_NOTHINGTODELETE);

@@ -181,9 +181,9 @@ function xoops_module_install($dirname)
                 foreach ($created_tables as $ct) {
                     $db->query('DROP TABLE ' . $db->prefix($ct));
                 }
-                $ret = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILINS, '<strong>' . $module->name() . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br />';
+                $ret = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILINS, '<strong>' . $module->name() . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br>';
                 foreach ($errs as $err) {
-                    $ret .= ' - ' . $err . '<br />';
+                    $ret .= ' - ' . $err . '<br>';
                 }
                 $ret .= '</p>';
                 unset($module, $created_tables, $errs, $msgs);
@@ -414,7 +414,7 @@ function xoops_module_install($dirname)
                                 $confop->setVar('confop_name', $key, true);
                                 $confop->setVar('confop_value', $value, true);
                                 $confobj->setConfOptions($confop);
-                                $confop_msgs .= '<br />&nbsp;&nbsp;&nbsp;&nbsp; ' . _AM_SYSTEM_MODULES_CONFIG_ADD . _AM_SYSTEM_MODULES_NAME . ' <strong>' . (defined($key) ? constant($key) : $key) . '</strong> ' . _AM_SYSTEM_MODULES_VALUE . ' <strong>' . $value . '</strong> ';
+                                $confop_msgs .= '<br>&nbsp;&nbsp;&nbsp;&nbsp; ' . _AM_SYSTEM_MODULES_CONFIG_ADD . _AM_SYSTEM_MODULES_NAME . ' <strong>' . (defined($key) ? constant($key) : $key) . '</strong> ' . _AM_SYSTEM_MODULES_VALUE . ' <strong>' . $value . '</strong> ';
                                 unset($confop);
                             }
                         }
@@ -498,7 +498,7 @@ function xoops_module_install($dirname)
             $redDevider = '<span class="red bold">  |  </span>';
             $msgs[] = '<div class="noininstall center"><a href="admin.php?fct=modulesadmin">' . _AM_SYSTEM_MODULES_BTOMADMIN . '</a> |
                         <a href="admin.php?fct=modulesadmin&op=installlist">' . _AM_SYSTEM_MODULES_TOINSTALL . '</a> | ';
-            $msgs[] = '<br /><span class="red bold">' . _AM_SYSTEM_MODULES_MODULE . ' ' . $module->getInfo('name') . ': </span></div>';
+            $msgs[] = '<br><span class="red bold">' . _AM_SYSTEM_MODULES_MODULE . ' ' . $module->getInfo('name') . ': </span></div>';
             if ($blocks != false) {
                 $msgs[] = '<div class="center"><a href="admin.php?fct=blocksadmin&op=list&filter=1&selgen=' . $newmid . '&selmod=-2&selgrp=-1&selvis=-1&filsave=1">' . _AM_SYSTEM_BLOCKS . '</a></div>';
             }
@@ -512,18 +512,18 @@ function xoops_module_install($dirname)
                 $msgs[] = '</div>';
             }
 
-            $ret = implode('<br />', $msgs);
+            $ret = implode('<br>', $msgs);
             unset($blocks, $msgs, $errs, $module);
 
             return $ret;
         } else {
-            $ret = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILINS, '<strong>' . $dirname . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br />' . implode('<br />', $errs) . '</p>';
+            $ret = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILINS, '<strong>' . $dirname . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br>' . implode('<br>', $errs) . '</p>';
             unset($msgs, $errs);
 
             return $ret;
         }
     } else {
-        return '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILINS, '<strong>' . $dirname . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br />&nbsp;&nbsp;' . sprintf(_AM_SYSTEM_MODULES_ALEXISTS, $dirname) . '</p>';
+        return '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILINS, '<strong>' . $dirname . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br>&nbsp;&nbsp;' . sprintf(_AM_SYSTEM_MODULES_ALEXISTS, $dirname) . '</p>';
     }
 }
 
@@ -612,9 +612,9 @@ function xoops_module_uninstall($dirname)
     include_once XOOPS_ROOT_PATH . '/class/template.php';
     xoops_template_clear_module_cache($module->getVar('mid'));
     if ($module->getVar('dirname') === 'system') {
-        return '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILUNINS, '<strong>' . $module->getVar('name') . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br /> - ' . _AM_SYSTEM_MODULES_SYSNO . '</p>';
+        return '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILUNINS, '<strong>' . $module->getVar('name') . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br> - ' . _AM_SYSTEM_MODULES_SYSNO . '</p>';
     } elseif ($module->getVar('dirname') == $xoopsConfig['startpage']) {
-        return '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILUNINS, '<strong>' . $module->getVar('name') . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br /> - ' . _AM_SYSTEM_MODULES_STRTNO . '</p>';
+        return '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILUNINS, '<strong>' . $module->getVar('name') . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br> - ' . _AM_SYSTEM_MODULES_STRTNO . '</p>';
     } else {
         $msgs   = array();
         $msgs[] = '<div id="xo-module-log"><div class="header">';
@@ -640,7 +640,7 @@ function xoops_module_uninstall($dirname)
                 $errs   = $module->getErrors();
                 $errs[] = sprintf(_AM_SYSTEM_MODULES_FAILED_EXECUTE, $func);
 
-                return '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILUNINS, '<strong>' . $module->getVar('name') . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br />' . implode('<br />', $errs) . '</p>';
+                return '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILUNINS, '<strong>' . $module->getVar('name') . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br>' . implode('<br>', $errs) . '</p>';
             } else {
                 $msgs = $module->getErrors();
                 array_unshift($msgs, '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILED_SUCESS, "<strong>{$func}</strong>") . '</p>');
@@ -774,7 +774,7 @@ function xoops_module_uninstall($dirname)
         }
         $msgs[] = '</div></div>';
         $msgs[] = '<div class="center"><a href="admin.php?fct=modulesadmin">' . _AM_SYSTEM_MODULES_BTOMADMIN . '</a></div>';
-        $ret    = implode('<br />', $msgs);
+        $ret    = implode('<br>', $msgs);
 
         return $ret;
     }
@@ -822,7 +822,7 @@ function xoops_module_update($dirname)
         */
     if (!$module_handler->insert($module)) {
         echo '<p>Could not update ' . $module->getVar('name') . '</p>';
-        echo "<br /><div class='center'><a href='admin.php?fct=modulesadmin'>" . _AM_SYSTEM_MODULES_BTOMADMIN . '</a></div>';
+        echo "<br><div class='center'><a href='admin.php?fct=modulesadmin'>" . _AM_SYSTEM_MODULES_BTOMADMIN . '</a></div>';
     } else {
         $newmid = $module->getVar('mid');
         $msgs   = array();
@@ -1229,7 +1229,7 @@ function xoops_module_update($dirname)
                             $confop->setVar('confop_name', $key, true);
                             $confop->setVar('confop_value', $value, true);
                             $confobj->setConfOptions($confop);
-                            $confop_msgs .= '<br />&nbsp;&nbsp;&nbsp;&nbsp; ' . _AM_SYSTEM_MODULES_CONFIG_ADD . _AM_SYSTEM_MODULES_NAME . ' <strong>' . (defined($key) ? constant($key) : $key) . '</strong> ' . _AM_SYSTEM_MODULES_VALUE . ' <strong>' . $value . '</strong> ';
+                            $confop_msgs .= '<br>&nbsp;&nbsp;&nbsp;&nbsp; ' . _AM_SYSTEM_MODULES_CONFIG_ADD . _AM_SYSTEM_MODULES_NAME . ' <strong>' . (defined($key) ? constant($key) : $key) . '</strong> ' . _AM_SYSTEM_MODULES_VALUE . ' <strong>' . $value . '</strong> ';
                             unset($confop);
                         }
                     }
@@ -1265,7 +1265,7 @@ function xoops_module_update($dirname)
         $msgs[] = '</div></div>';
         $msgs[] = '<div class="center"><a href="admin.php?fct=modulesadmin">' . _AM_SYSTEM_MODULES_BTOMADMIN . '</a>  | <a href="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname', 'e') . '/' . $module->getInfo('adminindex') . '">' . _AM_SYSTEM_MODULES_ADMIN . '</a></div>';
         //        foreach ($msgs as $msg) {
-        //            echo $msg . '<br />';
+        //            echo $msg . '<br>';
         //        }
     }
     // Call Footer
@@ -1283,7 +1283,7 @@ function xoops_module_update($dirname)
     //    break;
     //-----------------------------------------------
 
-    $ret = implode('<br />', $msgs);
+    $ret = implode('<br>', $msgs);
 
     return $ret;
 }
@@ -1306,7 +1306,7 @@ function xoops_module_activate($mid)
     // Change value
     $module->setVar('isactive', 1);
     if (!$module_handler->insert($module)) {
-        $msgs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILACT, '<strong>' . $module->getVar('name', 's') . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br />' . $module->getHtmlErrors() . '</p>';
+        $msgs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILACT, '<strong>' . $module->getVar('name', 's') . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br>' . $module->getHtmlErrors() . '</p>';
     } else {
         $blocks = XoopsBlock::getByModule($module->getVar('mid'));
         $bcount = count($blocks);
@@ -1318,7 +1318,7 @@ function xoops_module_activate($mid)
     }
     //$msgs[] = '</div>';
     $msgs[] = '<div class="center"><a href="admin.php?fct=modulesadmin">' . _AM_SYSTEM_MODULES_BTOMADMIN . '</a></div>';
-    $ret    = implode('<br />', $msgs);
+    $ret    = implode('<br>', $msgs);
 
     return $ret;
 }
@@ -1342,12 +1342,12 @@ function xoops_module_deactivate($mid)
     // Change value
     $module->setVar('isactive', 0);
     if ($module->getVar('dirname') === 'system') {
-        $msgs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILDEACT, '<strong>' . $module->getVar('name') . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br /> - ' . _AM_SYSTEM_MODULES_SYSNO . '</p>';
+        $msgs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILDEACT, '<strong>' . $module->getVar('name') . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br> - ' . _AM_SYSTEM_MODULES_SYSNO . '</p>';
     } elseif ($module->getVar('dirname') == $xoopsConfig['startpage']) {
-        $msgs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILDEACT, '<strong>' . $module->getVar('name') . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br /> - ' . _AM_SYSTEM_MODULES_STRTNO . '</p>';
+        $msgs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILDEACT, '<strong>' . $module->getVar('name') . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br> - ' . _AM_SYSTEM_MODULES_STRTNO . '</p>';
     } else {
         if (!$module_handler->insert($module)) {
-            $msgs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILDEACT, '<strong>' . $module->getVar('name') . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br />' . $module->getHtmlErrors() . '</p>';
+            $msgs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILDEACT, '<strong>' . $module->getVar('name') . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br>' . $module->getHtmlErrors() . '</p>';
         } else {
             $blocks = XoopsBlock::getByModule($module->getVar('mid'));
             $bcount = count($blocks);
@@ -1359,7 +1359,7 @@ function xoops_module_deactivate($mid)
         }
     }
     $msgs[] = '<div class="center"><a href="admin.php?fct=modulesadmin">' . _AM_SYSTEM_MODULES_BTOMADMIN . '</a></div>';
-    $ret    = implode('<br />', $msgs);
+    $ret    = implode('<br>', $msgs);
 
     return $ret;
 }
@@ -1377,7 +1377,7 @@ function xoops_module_change($mid, $name)
     $module->setVar('name', $name);
     $myts = MyTextSanitizer::getInstance();
     if (!$module_handler->insert($module)) {
-        $ret = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILORDER, '<strong>' . $myts->stripSlashesGPC($name) . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br />';
+        $ret = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILORDER, '<strong>' . $myts->stripSlashesGPC($name) . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br>';
         $ret .= $module->getHtmlErrors() . '</p>';
 
         return $ret;

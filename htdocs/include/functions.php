@@ -40,7 +40,7 @@ function xoops_getHandler($name, $optional = false)
         }
     }
     if (!isset($handlers[$name])) {
-        trigger_error('Class <strong>' . $class . '</strong> does not exist<br />Handler Name: ' . $name, $optional ? E_USER_WARNING : E_USER_ERROR);
+        trigger_error('Class <strong>' . $class . '</strong> does not exist<br>Handler Name: ' . $name, $optional ? E_USER_WARNING : E_USER_ERROR);
     }
     if (isset($handlers[$name])) {
         return $handlers[$name];
@@ -84,7 +84,7 @@ function xoops_getModuleHandler($name = null, $module_dir = null, $optional = fa
         }
     }
     if (!isset($handlers[$module_dir][$name])) {
-        trigger_error('Handler does not exist<br />Module: ' . $module_dir . '<br />Name: ' . $name, $optional ? E_USER_WARNING : E_USER_ERROR);
+        trigger_error('Handler does not exist<br>Module: ' . $module_dir . '<br>Name: ' . $name, $optional ? E_USER_WARNING : E_USER_ERROR);
     }
     if (isset($handlers[$module_dir][$name])) {
         return $handlers[$module_dir][$name];
@@ -287,7 +287,7 @@ function xoops_error($msg, $title = '')
 {
     echo '<div class="errorMsg">';
     if ($title != '') {
-        echo '<strong>' . $title . '</strong><br /><br />';
+        echo '<strong>' . $title . '</strong><br><br>';
     }
     if (is_object($msg)) {
         $msg = (array)$msg;
@@ -316,7 +316,7 @@ function xoops_result($msg, $title = '')
 {
     echo '<div class="resultMsg">';
     if ($title != '') {
-        echo '<strong>' . $title . '</strong><br /><br />';
+        echo '<strong>' . $title . '</strong><br><br>';
     }
     if (is_object($msg)) {
         $msg = (array)$msg;
@@ -347,14 +347,14 @@ function xoops_result($msg, $title = '')
 function xoops_confirm($hiddens, $action, $msg, $submit = '', $addtoken = true)
 {
     $submit = ($submit != '') ? trim($submit) : _SUBMIT;
-    echo '<div class="confirmMsg">' . $msg . '<br />
+    echo '<div class="confirmMsg">' . $msg . '<br>
           <form method="post" action="' . $action . '">';
     foreach ($hiddens as $name => $value) {
         if (is_array($value)) {
             foreach ($value as $caption => $newvalue) {
                 echo '<input type="radio" name="' . $name . '" value="' . htmlspecialchars($newvalue) . '" /> ' . $caption;
             }
-            echo '<br />';
+            echo '<br>';
         } else {
             echo '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($value) . '" />';
         }

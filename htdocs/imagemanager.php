@@ -214,7 +214,7 @@ if ($op === 'doupload') {
     }
     if ($error != false) {
         xoops_header(false);
-        echo '</head><body><div style="text-align:center;">' . implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()) . '<br /><input value="' . _BACK . '" type="button" onclick="history.go(-1);" /></div>';
+        echo '</head><body><div style="text-align:center;">' . implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()) . '<br><input value="' . _BACK . '" type="button" onclick="history.go(-1);" /></div>';
         xoops_footer();
         exit();
     }
@@ -251,7 +251,7 @@ if ($op === 'doupload') {
         }
     } else {
         $err = sprintf(_FAILFETCHIMG, 0);
-        $err .= '<br />' . implode('<br />', $uploader->getErrors(false));
+        $err .= '<br>' . implode('<br>', $uploader->getErrors(false));
     }
     if (isset($err)) {
         xoops_header(false);

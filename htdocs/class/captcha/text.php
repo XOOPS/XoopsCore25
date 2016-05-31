@@ -31,9 +31,9 @@ class XoopsCaptchaText extends XoopsCaptchaMethod
     public function render()
     {
         $form = $this->loadText() . '&nbsp;&nbsp; <input type="text" name="' . $this->config['name'] . '" id="' . $this->config['name'] . '" size="' . $this->config['num_chars'] . '" maxlength="' . $this->config['num_chars'] . '" value="" />';
-        $form .= '<br />' . _CAPTCHA_RULE_TEXT;
+        $form .= '<br>' . _CAPTCHA_RULE_TEXT;
         if (!empty($this->config['maxattempts'])) {
-            $form .= '<br />' . sprintf(_CAPTCHA_MAXATTEMPTS, $this->config['maxattempts']);
+            $form .= '<br>' . sprintf(_CAPTCHA_MAXATTEMPTS, $this->config['maxattempts']);
         }
 
         return $form;

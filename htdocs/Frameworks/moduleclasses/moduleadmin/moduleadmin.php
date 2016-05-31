@@ -193,7 +193,7 @@ class ModuleAdmin
             $ret .= $delimeter;
         }
         $ret .= "</div>\n</div>\n";
-        $ret .= '<br />&nbsp;<br /><br />';
+        $ret .= '<br>&nbsp;<br><br>';
 
         return $ret;
     }
@@ -310,7 +310,7 @@ class ModuleAdmin
                 } else {
                     $ret .= "<span style='color : green;'><img src='" . $path . "1.png' >" . sprintf(_AM_MODULEADMIN_CONFIG_PHP, $this->_obj->getInfo('min_php'), phpversion()) . "</span>\n";
                 }
-                $ret .= '<br />';
+                $ret .= '<br>';
             }
 
             // Database version
@@ -351,9 +351,9 @@ class ModuleAdmin
                     }
                 }
                 if ($reqVer > $curVer) {
-                    $ret .= "<span style='color : red; font-weight : bold;'><img src='" . $path . "0.png' >" . sprintf(XOOPS_DB_TYPE . ' ' . _AM_MODULEADMIN_CONFIG_DB, $dbRequiredVersion, $dbCurrentVersion) . "</span><br />\n";
+                    $ret .= "<span style='color : red; font-weight : bold;'><img src='" . $path . "0.png' >" . sprintf(XOOPS_DB_TYPE . ' ' . _AM_MODULEADMIN_CONFIG_DB, $dbRequiredVersion, $dbCurrentVersion) . "</span><br>\n";
                 } else {
-                    $ret .= "<span style='color : green;'><img src='" . $path . "1.png' >" . sprintf(strtoupper(XOOPS_DB_TYPE) . ' ' . _AM_MODULEADMIN_CONFIG_DB, $dbRequiredVersion, $dbCurrentVersion) . "</span><br />\n";
+                    $ret .= "<span style='color : green;'><img src='" . $path . "1.png' >" . sprintf(strtoupper(XOOPS_DB_TYPE) . ' ' . _AM_MODULEADMIN_CONFIG_DB, $dbRequiredVersion, $dbCurrentVersion) . "</span><br>\n";
                 }
             }
 
@@ -364,7 +364,7 @@ class ModuleAdmin
                 } else {
                     $ret .= "<span style='color : green;'><img src='" . $path . "1.png' >" . sprintf(_AM_MODULEADMIN_CONFIG_XOOPS, $this->_obj->getInfo('min_xoops'), substr(XOOPS_VERSION, 6, strlen(XOOPS_VERSION) - 6)) . "</span>\n";
                 }
-                $ret .= '<br />';
+                $ret .= '<br>';
             }
 
             // ModuleAdmin version
@@ -374,12 +374,12 @@ class ModuleAdmin
                 } else {
                     $ret .= "<span style='color : green;'><img src='" . $path . "1.png' >" . sprintf(_AM_MODULEADMIN_CONFIG_ADMIN, $this->_obj->getInfo('min_admin'), $this->getVersion()) . "</span>\n";
                 }
-                $ret .= '<br />';
+                $ret .= '<br>';
             }
             if (!empty($this->_itemConfigBoxLine)) {
                 foreach (array_keys($this->_itemConfigBoxLine) as $i) {
                     $ret .= $this->_itemConfigBoxLine[$i];
-                    $ret .= '<br />';
+                    $ret .= '<br>';
                 }
             }
             $ret .= "</fieldset>\n";
@@ -461,11 +461,11 @@ class ModuleAdmin
             foreach (array_keys($this->_itemInfoBoxLine) as $k) {
                 if ($this->_itemInfoBoxLine[$k]['label'] == $this->_itemInfoBox[$i]['title']) {
                     $ret .= $this->_itemInfoBoxLine[$k]['line'];
-                    $ret .= '<br />';
+                    $ret .= '<br>';
                 }
             }
             $ret .= "</fieldset>\n";
-            $ret .= "<br/>\n";
+            $ret .= "<br>\n";
         }
 
         return $ret;
@@ -487,9 +487,9 @@ class ModuleAdmin
         $author       = explode(',', $this->_obj->getInfo('author'));
         $nickname     = explode(',', $this->_obj->getInfo('nickname'));
         $release_date = formatTimestamp(mktime(0, 0, 0, $date[1], $date[2], $date[0]), 's');
-        $module_info  = '<div id="about"><label>' . _AM_MODULEADMIN_ABOUT_DESCRIPTION . '</label><text>' . $this->_obj->getInfo('description') . '</text><br />
-        <label>' . _AM_MODULEADMIN_ABOUT_UPDATEDATE . '</label><text class="bold">' . formatTimestamp($this->_obj->getVar('last_update'), 'm') . '</text><br />
-        <label>' . _AM_MODULEADMIN_ABOUT_MODULESTATUS . '</label><text>' . $this->_obj->getInfo('module_status') . '</text><br />
+        $module_info  = '<div id="about"><label>' . _AM_MODULEADMIN_ABOUT_DESCRIPTION . '</label><text>' . $this->_obj->getInfo('description') . '</text><br>
+        <label>' . _AM_MODULEADMIN_ABOUT_UPDATEDATE . '</label><text class="bold">' . formatTimestamp($this->_obj->getVar('last_update'), 'm') . '</text><br>
+        <label>' . _AM_MODULEADMIN_ABOUT_MODULESTATUS . '</label><text>' . $this->_obj->getInfo('module_status') . '</text><br>
         <label>' . _AM_MODULEADMIN_ABOUT_WEBSITE . '</label><text><a class="tooltip" href="http://' . $this->_obj->getInfo('module_website_url') . '" rel="external" title="' . $this->_obj->getInfo('module_website_name') . ' - ' . $this->_obj->getInfo('module_website_url') . '">
                         ' . $this->_obj->getInfo('module_website_name') . '</a></text></div>';
         $ret .= "<table>\n<tr>\n<td width=\"100px\">\n";
@@ -497,7 +497,7 @@ class ModuleAdmin
         $ret .= "</td><td>\n";
         $ret .= "<div style='margin-top: 1px; margin-bottom: 4px; font-size: 18px; line-height: 18px; color: #2F5376; font-weight: bold;'>\n";
         $ret .= $this->_obj->getInfo('name') . ' ' . $this->_obj->getInfo('version') . ' ' . $this->_obj->getInfo('module_status') . ' (' . $release_date . ")\n";
-        $ret .= "<br />\n";
+        $ret .= "<br>\n";
         $ret .= "</div>\n";
         $ret .= "<div style='line-height: 16px; font-weight: bold;'>\n";
         $ret .= 'by ';
@@ -513,10 +513,10 @@ class ModuleAdmin
         $ret .= "</div>\n";
         $ret .= "<div style='line-height: 16px;'>\n";
         $ret .= "<a href=\"http://" . $this->_obj->getInfo('license_url') . "\" target=\"_blank\" >" . $this->_obj->getInfo('license') . "</a>\n";
-        $ret .= "<br />\n";
+        $ret .= "<br>\n";
         $ret .= "<a href=\"http://" . $this->_obj->getInfo('website') . "\" target=\"_blank\" >" . $this->_obj->getInfo('website') . "</a>\n";
-        $ret .= "<br />\n";
-        $ret .= "<br />\n";
+        $ret .= "<br>\n";
+        $ret .= "<br>\n";
         if ($paypal != '') {
             $ret .= '<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
                      <input type="hidden" name="cmd" value="_s-xclick">
@@ -534,7 +534,7 @@ class ModuleAdmin
         $ret .= "<td width=\"50%\">\n";
         $ret .= "<fieldset><legend class=\"label\">\n";
         $ret .= _AM_MODULEADMIN_ABOUT_CHANGELOG;
-        $ret .= "</legend><br/>\n";
+        $ret .= "</legend><br>\n";
         $ret .= "<div class=\"txtchangelog\">\n";
         $language = $GLOBALS['xoopsConfig']['language'];
         if (!is_file(XOOPS_ROOT_PATH . '/modules/' . $this->_obj->getVar('dirname') . '/language/' . $language . '/changelog.txt')) {
@@ -543,11 +543,11 @@ class ModuleAdmin
         $language = empty($language) ? $GLOBALS['xoopsConfig']['language'] : $language;
         $file     = XOOPS_ROOT_PATH . '/modules/' . $this->_obj->getVar('dirname') . '/language/' . $language . '/changelog.txt';
         if (is_readable($file)) {
-            $ret .= utf8_encode(implode('<br />', file($file))) . "\n";
+            $ret .= utf8_encode(implode('<br>', file($file))) . "\n";
         } else {
             $file = XOOPS_ROOT_PATH . '/modules/' . $this->_obj->getVar('dirname') . '/docs/changelog.txt';
             if (is_readable($file)) {
-                $ret .= utf8_encode(implode('<br />', file($file))) . "\n";
+                $ret .= utf8_encode(implode('<br>', file($file))) . "\n";
             }
         }
         $ret .= "</div>\n";
@@ -579,14 +579,14 @@ class ModuleAdmin
             if ($this->_obj->adminmenu[$i]['link'] == 'admin/' . $menu) {
                 $navigation .= $this->_obj->adminmenu[$i]['title'] . ' | ';
                 $ret = "<div class=\"CPbigTitle\" style=\"background-image: url(" . $path . $this->_obj->adminmenu[$i]['icon'] . "); background-repeat: no-repeat; background-position: left; padding-left: 50px;\">
-        <strong>" . $this->_obj->adminmenu[$i]['title'] . '</strong></div><br />';
+        <strong>" . $this->_obj->adminmenu[$i]['title'] . '</strong></div><br>';
             } else {
                 $navigation .= "<a href = '../" . $this->_obj->adminmenu[$i]['link'] . "'>" . $this->_obj->adminmenu[$i]['title'] . '</a> | ';
             }
         }
         if (substr(XOOPS_VERSION, 0, 9) < 'XOOPS 2.5') {
             $navigation .= "<a href = '../../system/admin.php?fct=preferences&op=showmod&mod=" . $this->_obj->getVar('mid') . "'>" . _MI_SYSTEM_ADMENU6 . '</a>';
-            $ret = $navigation . '<br /><br />' . $ret;
+            $ret = $navigation . '<br><br>' . $ret;
         }
 
         return $ret;

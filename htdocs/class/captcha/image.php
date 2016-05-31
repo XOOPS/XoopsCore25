@@ -70,15 +70,15 @@ class XoopsCaptchaImage extends XoopsCaptchaMethod
                 }
                 </script>";
         $image = $this->loadImage();
-        $image .= "<br /><a href=\"javascript: xoops_captcha_refresh('" . $this->config['name'] . "')\">" . _CAPTCHA_REFRESH . '</a>';
+        $image .= "<br><a href=\"javascript: xoops_captcha_refresh('" . $this->config['name'] . "')\">" . _CAPTCHA_REFRESH . '</a>';
         $input = '<input type="text" name="' . $this->config['name'] . '" id="' . $this->config['name'] . '" size="' . $this->config['num_chars'] . '" maxlength="' . $this->config['num_chars'] . '" value="" />';
         $rule  = _CAPTCHA_RULE_IMAGE;
-        $rule .= '<br />' . (empty($this->config['casesensitive']) ? _CAPTCHA_RULE_CASEINSENSITIVE : _CAPTCHA_RULE_CASESENSITIVE);
+        $rule .= '<br>' . (empty($this->config['casesensitive']) ? _CAPTCHA_RULE_CASEINSENSITIVE : _CAPTCHA_RULE_CASESENSITIVE);
         if (!empty($this->config['maxattempts'])) {
-            $rule .= '<br />' . sprintf(_CAPTCHA_MAXATTEMPTS, $this->config['maxattempts']);
+            $rule .= '<br>' . sprintf(_CAPTCHA_MAXATTEMPTS, $this->config['maxattempts']);
         }
 
-        return $js . $image . '<br /><br />' . $input . '<br />' . $rule;
+        return $js . $image . '<br><br>' . $input . '<br>' . $rule;
     }
 
     /**

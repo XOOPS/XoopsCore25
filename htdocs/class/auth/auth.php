@@ -89,10 +89,10 @@ class XoopsAuth
         if ($xoopsConfig['debug_mode'] == 1 || $xoopsConfig['debug_mode'] == 2) {
             if (!empty($this->_errors)) {
                 foreach ($this->_errors as $errstr) {
-                    $ret .= $errstr . '<br/>';
+                    $ret .= $errstr . '<br>';
                 }
             } else {
-                $ret .= _NONE . '<br />';
+                $ret .= _NONE . '<br>';
             }
             $ret .= sprintf(_AUTH_MSG_AUTH_METHOD, $this->auth_method);
         } else {

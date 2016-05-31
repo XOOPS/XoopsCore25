@@ -150,7 +150,7 @@ if ($isadmin) {
                         ?></strong></label>
 
                 <div id="passwordgenerator">
-                    <input type='text' name='generated_pw' id='generated_pw' value=''/><br/>
+                    <input type='text' name='generated_pw' id='generated_pw' value=''/><br>
                     <button type='button' onclick='suggestPassword(14);'/>
                     <?php echo PASSWORD_GENERATE;
                     ?></button>

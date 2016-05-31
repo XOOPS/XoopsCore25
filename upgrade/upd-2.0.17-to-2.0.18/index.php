@@ -43,7 +43,7 @@ class Upgrade_2018 extends XoopsUpgrade
      */
     public function query($sql)
     {
-        //echo $sql . "<br />";
+        //echo $sql . "<br>";
         $db = $GLOBALS['xoopsDB'];
         if (!($ret = $db->queryF($sql))) {
             echo $db->error();

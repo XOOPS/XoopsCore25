@@ -156,7 +156,7 @@
         <div class="clear spacer"></div>
     <{/if}>
 <{/if}>
-<br/>
+<br>
 <!-- Display Avatar form (add,edit) -->
 <{if $form}>
     <div class="spacer"><{$form}></div>

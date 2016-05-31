@@ -178,9 +178,9 @@ function make_cblock()
             switch ($block_arr[$i]->getVar('side')) {
                 case XOOPS_CENTERBLOCK_CENTER:
                     if ($title != '') {
-                        $cc_block .= '<tr valign="top"><td colspan="2"><strong>' . $title . '</strong><hr />' . $bcontent . '<br /><br /></td></tr>' . "\n";
+                        $cc_block .= '<tr valign="top"><td colspan="2"><strong>' . $title . '</strong><hr />' . $bcontent . '<br><br></td></tr>' . "\n";
                     } else {
-                        $cc_block .= '<tr><td colspan="2">' . $bcontent . '<br /><br /></td></tr>' . "\n";
+                        $cc_block .= '<tr><td colspan="2">' . $bcontent . '<br><br></td></tr>' . "\n";
                     }
                     break;
                 case XOOPS_CENTERBLOCK_LEFT:
@@ -251,7 +251,7 @@ function showThread($color_number, $subject_image, $subject, $text, $post_date, 
     if ($color_number == 1) {
         $bg = 'bg1';
     }
-    echo "<tr align='left'><td valign='top' class='$bg' nowrap='nowrap'><strong>$username</strong><br />$rank_title<br />$rank_image<br />$avatar_image<br /><br />$reg_date<br />$posts<br />$user_from<br /><br />$online_image</td>";
+    echo "<tr align='left'><td valign='top' class='$bg' nowrap='nowrap'><strong>$username</strong><br>$rank_title<br>$rank_image<br>$avatar_image<br><br>$reg_date<br>$posts<br>$user_from<br><br>$online_image</td>";
     echo "<td valign='top' class='$bg'><table width='100%' border='0'><tr><td valign='top'>$subject_image&nbsp;<strong>$subject</strong></td><td align='right'>" . $ip_image . '' . $reply_image . '' . $edit_image . '' . $delete_image . '</td></tr>';
     echo "<tr><td colspan='2'><p>$text</p></td></tr></table></td></tr>";
     echo "<tr align='left'><td class='$bg' valign='middle'>$post_date</td><td class='$bg' valign='middle'>" . $profile_image . '' . $pm_image . '' . $email_image . '' . $www_image . '' . $icq_image . '' . $aim_image . '' . $yim_image . '' . $msnm_image . '</td></tr>';

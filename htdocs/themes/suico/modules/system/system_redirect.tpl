@@ -18,7 +18,7 @@
     <div id="xo-redirect">
         <div class="message">
             <{$message}>
-            <br/>
+            <br>
             <img src="<{xoImgUrl img/await.gif}>" alt="<{$message}>"/>
         </div>
         <div class="notreload">

@@ -161,7 +161,7 @@ switch ($op) {
             $form->addElement(new XoopsFormText(_AM_SYSTEM_IMAGES_IMGCATWEIGHT, 'imgcat_weight', 3, 4, 0));
             $form->addElement(new XoopsFormRadioYN(_AM_SYSTEM_IMAGES_IMGCATDISPLAY, 'imgcat_display', 1, _YES, _NO));
 
-            $storetype = new XoopsFormRadio(_MD_IMGCATSTRTYPE . '<br /><span style="color:#ff0000;">' . _MD_STRTYOPENG . '</span>', 'imgcat_storetype', 'file');
+            $storetype = new XoopsFormRadio(_MD_IMGCATSTRTYPE . '<br><span style="color:#ff0000;">' . _MD_STRTYOPENG . '</span>', 'imgcat_storetype', 'file');
             $storetype->addOptionArray(array('file' => _MD_ASFILE, 'db' => _MD_INDB));
             $form->addElement($storetype);
 
@@ -383,7 +383,7 @@ switch ($op) {
 
     case 'delfileok':
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header('admin.php?fct=images', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header('admin.php?fct=images', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         // Get image id
         $image_id = system_CleanVars($_POST, 'image_id', 0, 'int');
@@ -407,7 +407,7 @@ switch ($op) {
 
     case 'save':
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header('admin.php?fct=images', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header('admin.php?fct=images', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         // Get image handler
         $image_handler = xoops_getHandler('image');
@@ -434,7 +434,7 @@ switch ($op) {
 
     case 'addfile':
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header('admin.php?fct=images', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header('admin.php?fct=images', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         $imgcat_handler = xoops_getHandler('imagecategory');
         $imagecategory  = $imgcat_handler->get((int)$imgcat_id);
@@ -494,7 +494,7 @@ switch ($op) {
 
     case 'addcat':
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header('admin.php?fct=images', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header('admin.php?fct=images', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         $imgcat_handler = xoops_getHandler('imagecategory');
         $imagecategory  = $imgcat_handler->create();
@@ -590,7 +590,7 @@ switch ($op) {
         $xoBreadCrumb->addLink(_AM_SYSTEM_IMAGES_MANAGER, system_adminVersion('images', 'adminpath'));
         $xoBreadCrumb->addLink($imagecategory->getVar('imgcat_name'), '');
         $xoBreadCrumb->render();
-        echo '<br />';
+        echo '<br>';
         $form->display();
         // Call Footer
         xoops_cp_footer();
@@ -598,7 +598,7 @@ switch ($op) {
 
     case 'updatecat':
         if (!$GLOBALS['xoopsSecurity']->check() || $imgcat_id <= 0) {
-            redirect_header('admin.php?fct=images', 1, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header('admin.php?fct=images', 1, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         $imgcat_handler = xoops_getHandler('imagecategory');
         $imagecategory  = $imgcat_handler->get($imgcat_id);
@@ -666,7 +666,7 @@ switch ($op) {
 
     case 'delcatok':
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header('admin.php?fct=images', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header('admin.php?fct=images', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         $imgcat_id = (int)$imgcat_id;
         if ($imgcat_id <= 0) {

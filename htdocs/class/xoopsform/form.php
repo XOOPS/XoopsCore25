@@ -128,7 +128,7 @@ class XoopsForm
      * *#@+
      * retrieves object serialisation/identification id (sha1 used)
      *
-     * each object has serialisation<br />
+     * each object has serialisation<br>
      * - legal requirement of enterprise relational management (ERM)
      *
      * @deprecated

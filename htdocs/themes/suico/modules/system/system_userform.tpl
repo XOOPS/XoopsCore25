@@ -4,7 +4,7 @@
         <form action="<{xoAppUrl /user.php op=login}>" method="post" class="login_form">
             <div class="credentials">
                 <label for="login_form-login"><{$lang_username}></label><input type="text" name="uname" id="login_form-login" size="26" maxlength="25"
-                                                                               value="<{$usercookie}>"/><br/>
+                                                                               value="<{$usercookie}>"/><br>
                 <label for="login_form-password"><{$lang_password}></label><input type="password" name="pass" id="login_form-password" size="21"
                                                                                   maxlength="32"/>
                 <{if isset($lang_rememberme)}>

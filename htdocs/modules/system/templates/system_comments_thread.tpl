@@ -1,5 +1,5 @@
 <{section name=i loop=$comments}>
-    <br/>
+    <br>
     <table cellspacing="1" class="outer">
         <tr>
             <th class="width20"><{$lang_poster}></th>
@@ -16,7 +16,7 @@
 
     <{if $comments[i].show_replies == true}>
         <!-- start comment tree -->
-        <br/>
+        <br>
         <table cellspacing="1" class="outer">
             <tr>
                 <th class="width50"><{$lang_subject}></th>

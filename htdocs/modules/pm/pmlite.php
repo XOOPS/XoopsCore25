@@ -61,8 +61,8 @@ if ($op === 'submit') {
     $member_handler = xoops_getHandler('member');
     $count          = $member_handler->getUserCount(new Criteria('uid', XoopsRequest::getInt('to_userid', 0, 'POST')));
     if ($count != 1) {
-        echo '<br /><br /><div><h4>' . _PM_USERNOEXIST . '<br />';
-        echo _PM_PLZTRYAGAIN . '</h4><br />';
+        echo '<br><br><div><h4>' . _PM_USERNOEXIST . '<br>';
+        echo _PM_PLZTRYAGAIN . '</h4><br>';
         echo "[ <a href='javascript:history.go(-1)'>" . _PM_GOBACK . '</a> ]</div>';
     } elseif ($GLOBALS['xoopsSecurity']->check()) {
         $pm_handler = xoops_getModuleHandler('message', 'pm');
@@ -82,15 +82,15 @@ if ($op === 'submit') {
         }
         if (!$pm_handler->insert($pm)) {
             echo $pm->getHtmlErrors();
-            echo "<br /><a href='javascript:history.go(-1)'>" . _PM_GOBACK . '</a>';
+            echo "<br><a href='javascript:history.go(-1)'>" . _PM_GOBACK . '</a>';
         } else {
             // @todo: Send notification email if user has selected this in the profile
 
-            echo "<br /><br /><div style='text-align:center;'><h4>" . _PM_MESSAGEPOSTED . "</h4><br /><a href=\"javascript:window.opener.location='" . XOOPS_URL . "/viewpmsg.php';window.close();\">" . _PM_CLICKHERE . "</a><br /><br /><a href=\"javascript:window.close();\">" . _PM_ORCLOSEWINDOW . '</a></div>';
+            echo "<br><br><div style='text-align:center;'><h4>" . _PM_MESSAGEPOSTED . "</h4><br><a href=\"javascript:window.opener.location='" . XOOPS_URL . "/viewpmsg.php';window.close();\">" . _PM_CLICKHERE . "</a><br><br><a href=\"javascript:window.close();\">" . _PM_ORCLOSEWINDOW . '</a></div>';
         }
     } else {
-        echo implode('<br />', $GLOBALS['xoopsSecurity']->getErrors());
-        echo "<br /><a href=\"javascript:window.close();\">" . _PM_ORCLOSEWINDOW . '</a>';
+        echo implode('<br>', $GLOBALS['xoopsSecurity']->getErrors());
+        echo "<br><a href=\"javascript:window.close();\">" . _PM_ORCLOSEWINDOW . '</a>';
     }
 } elseif ($reply == 1 || $send == 1 || $send2 == 1 || $sendmod == 1) {
     if ($reply == 1) {

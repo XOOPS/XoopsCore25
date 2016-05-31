@@ -46,7 +46,7 @@ Clicks Percent: %f \n\n\n
 Report Generated on: %s');
 define('_BANNERS_MAIL_NOT_OK', 'We have encountered an error sending your email. Please contact the webmaster regarding this issue.');
 define('_BANNERS_MAIL_OK', 'Available Banner statistics for the selected banner have been sent to your account email address.');
-define('_BANNERS_MAIL_ERROR', 'There is no email associated with client %s.<br />Please contact the Administrator');
+define('_BANNERS_MAIL_ERROR', 'There is no email associated with client %s.<br>Please contact the Administrator');
 define('_BANNERS_DBUPDATED', 'Item modified and database updated');
 define('_BANNERS_DBERROR', 'Database was not updated due to an error!');
 define('_BANNERS_CHANGE', 'Change');

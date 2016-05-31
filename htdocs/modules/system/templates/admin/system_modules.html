@@ -110,7 +110,7 @@
                                 <a class="tooltip maxi" style="color:red;"
                                    href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=<{$row.dirname}>"
                                    title="<{$smarty.const._AM_SYSTEM_MODULES_UPDATE}>"><{$row.version}></a>
-                                <br/>
+                                <br>
                                 <{$smarty.const._AM_SYSTEM_MODULES_UPDATE}>
                             <{else}>
                                 <{$row.version}> <{$row.module_status}>
@@ -182,7 +182,7 @@
                                 <a class="tooltip maxi" style="color:red;"
                                    href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=<{$row.dirname}>"
                                    title="<{$smarty.const._AM_SYSTEM_MODULES_UPDATE}>"><{$row.version}></a>
-                                <br/>
+                                <br>
                                 <{$smarty.const._AM_SYSTEM_MODULES_UPDATE}>
                             <{else}>
                                 <{$row.version}> <{$row.module_status}>

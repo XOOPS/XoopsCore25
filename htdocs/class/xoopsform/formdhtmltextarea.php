@@ -145,14 +145,14 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea
         xoops_loadLanguage('formdhtmltextarea');
         $ret = '';
         // actions
-        $ret .= $this->codeIcon() . "<br />\n";
+        $ret .= $this->codeIcon() . "<br>\n";
         // fonts
         $ret .= $this->fontArray();
         // length checker
         $ret .= "<input type='button' onclick=\"XoopsCheckLength('" . $this->getName() . "', '" . @$this->configs['maxlength'] . "', '" . _XOOPS_FORM_ALT_LENGTH . "', '" . _XOOPS_FORM_ALT_LENGTH_MAX . "');\" value=' ? ' title='" . _XOOPS_FORM_ALT_CHECKLENGTH . "' />";
-        $ret .= "<br />\n";
+        $ret .= "<br>\n";
         // the textarea box
-        $ret .= "<textarea id='" . $this->getName() . "' name='" . $this->getName() . "' title='" . $this->getTitle() . "' onselect=\"xoopsSavePosition('" . $this->getName() . "');\" onclick=\"xoopsSavePosition('" . $this->getName() . "');\" onkeyup=\"xoopsSavePosition('" . $this->getName() . "');\" cols='" . $this->getCols() . "' rows='" . $this->getRows() . "'" . $this->getExtra() . '>' . $this->getValue() . "</textarea><br />\n";
+        $ret .= "<textarea id='" . $this->getName() . "' name='" . $this->getName() . "' title='" . $this->getTitle() . "' onselect=\"xoopsSavePosition('" . $this->getName() . "');\" onclick=\"xoopsSavePosition('" . $this->getName() . "');\" onkeyup=\"xoopsSavePosition('" . $this->getName() . "');\" cols='" . $this->getCols() . "' rows='" . $this->getRows() . "'" . $this->getExtra() . '>' . $this->getValue() . "</textarea><br>\n";
 
         if (empty($this->skipPreview)) {
             if (empty($GLOBALS['xoTheme'])) {
@@ -160,9 +160,9 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea
             } else {
                 $GLOBALS['xoTheme']->addScript('/class/textsanitizer/image/image.js', array('type' => 'text/javascript'));
             }
-            $button = // "<br />" .
+            $button = // "<br>" .
                 '<input ' . "   id='" . $this->getName() . "_preview_button'" . "   type='button' " . "   value='" . _PREVIEW . "' " . "   onclick=\"form_instantPreview('" . XOOPS_URL . "', '" . $this->getName() . "','" . XOOPS_URL . "/images', " . (int)$this->doHtml . ", '" . $GLOBALS['xoopsSecurity']->createToken() . "')\"" . ' />';
-            $ret .= '<br />' . "<div id='" . $this->getName() . "_hidden' style='display: block;'> " . '   <fieldset>' . '       <legend>' . $button . '</legend>' . "       <div id='" . $this->getName() . "_hidden_data'>" . _XOOPS_FORM_PREVIEW_CONTENT . '</div>' . '   </fieldset>' . '</div>';
+            $ret .= '<br>' . "<div id='" . $this->getName() . "_hidden' style='display: block;'> " . '   <fieldset>' . '       <legend>' . $button . '</legend>' . "       <div id='" . $this->getName() . "_hidden_data'>" . _XOOPS_FORM_PREVIEW_CONTENT . '</div>' . '   </fieldset>' . '</div>';
         }
         // Load javascript
         if (empty($js_loaded)) {
@@ -254,7 +254,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea
         $alignStr = "<img src='" . XOOPS_URL . "/images/alignleft.gif' alt='" . _XOOPS_FORM_ALT_LEFT . "' title='" . _XOOPS_FORM_ALT_LEFT . "' onmouseover='style.cursor=\"hand\"' onclick='xoopsMakeLeft(\"{$hiddentext}\", \"{$textarea_id}\");' />&nbsp;";
         $alignStr .= "<img src='" . XOOPS_URL . "/images/aligncenter.gif' alt='" . _XOOPS_FORM_ALT_CENTER . "' title='" . _XOOPS_FORM_ALT_CENTER . "' onmouseover='style.cursor=\"hand\"' onclick='xoopsMakeCenter(\"{$hiddentext}\", \"{$textarea_id}\");' />&nbsp;";
         $alignStr .= "<img src='" . XOOPS_URL . "/images/alignright.gif' alt='" . _XOOPS_FORM_ALT_RIGHT . "' title='" . _XOOPS_FORM_ALT_RIGHT . "' onmouseover='style.cursor=\"hand\"' onclick='xoopsMakeRight(\"{$hiddentext}\", \"{$textarea_id}\");' />&nbsp;";
-        $fontStr .= "<br />\n{$styleStr}&nbsp;{$alignStr}&nbsp;\n";
+        $fontStr .= "<br>\n{$styleStr}&nbsp;{$alignStr}&nbsp;\n";
 
         return $fontStr;
     }

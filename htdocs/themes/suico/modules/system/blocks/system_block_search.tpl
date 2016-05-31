@@ -2,7 +2,7 @@
     <form style="margin-top: 0;" action="<{xoAppUrl search.php}>" method="get">
         <input type="text" name="query" size="14" title="<{$smarty.const.THEME_KEYWORDS}>"/>
         <input type="hidden" name="action" value="results"/>
-        <br/>
+        <br>
         <input class="xo-formbuttons" type="submit" value="<{$block.lang_search}>" title="<{$smarty.const.THEME_DESC_SEARCH}>"/>
     </form>
     <a href="<{xoAppUrl search.php}>" title="<{$block.lang_advsearch}>"><{$block.lang_advsearch}></a>

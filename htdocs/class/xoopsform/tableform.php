@@ -49,7 +49,7 @@ class XoopsTableForm extends XoopsForm
                 if (!$ele->getNocolspan()) {
                     $ret .= '<tr valign="top" align="left"><td>' . $ele->getCaption();
                     if ($ele_desc = $ele->getDescription()) {
-                        $ret .= '<br /><br /><span style="font-weight: normal;">' . $ele_desc . '</span>';
+                        $ret .= '<br><br><span style="font-weight: normal;">' . $ele_desc . '</span>';
                     }
                     $ret .= '</td><td>' . $ele->render() . '</td></tr>';
                 } else {

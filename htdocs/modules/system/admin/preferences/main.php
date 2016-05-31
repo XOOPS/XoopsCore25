@@ -204,7 +204,7 @@ switch ($op) {
                         '259200' => sprintf(_DAYS, 3),
                         '604800' => _WEEK);
                     if (count($modules) > 0) {
-                        $ele = new XoopsFormElementTray($title, '<br />');
+                        $ele = new XoopsFormElementTray($title, '<br>');
                         foreach (array_keys($modules) as $mid) {
                             $c_val   = isset($currrent_val[$mid]) ? (int)$currrent_val[$mid] : null;
                             $selform = new XoopsFormSelect($modules[$mid]->getVar('name'), $config[$i]->getVar('conf_name') . "[$mid]", $c_val);
@@ -408,9 +408,9 @@ switch ($op) {
             $xoopsTpl->assign('breadcrumb', 1);
         } else {
             if ($module->getInfo('adminindex')) {
-                echo '<a href="' . XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . $module->getInfo('adminindex') . '">' . $module->getVar('name') . '</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _PREFERENCES . '<br /><br />';
+                echo '<a href="' . XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . $module->getInfo('adminindex') . '">' . $module->getVar('name') . '</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _PREFERENCES . '<br><br>';
             } else {
-                echo $module->getVar('name') . '&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _PREFERENCES . '<br /><br />';
+                echo $module->getVar('name') . '&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _PREFERENCES . '<br><br>';
             }
         }
         $form->display();
@@ -418,7 +418,7 @@ switch ($op) {
 
     case 'save':
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header('admin.php?fct=preferences', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header('admin.php?fct=preferences', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         require_once XOOPS_ROOT_PATH . '/class/template.php';
         $xoopsTpl         = new XoopsTpl();

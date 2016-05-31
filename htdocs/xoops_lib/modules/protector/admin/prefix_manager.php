@@ -36,7 +36,7 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
 
         $crs = $db->queryF('SHOW CREATE TABLE ' . $old_table);
         if (!$db->getRowsNum($crs)) {
-            echo "error: SHOW CREATE TABLE ($old_table)<br />\n";
+            echo "error: SHOW CREATE TABLE ($old_table)<br>\n";
             continue;
         }
         $row_create = $db->fetchArray($crs);
@@ -44,13 +44,13 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
 
         $crs = $db->queryF($create_sql);
         if (!$crs) {
-            echo "error: CREATE TABLE ($new_table)<br />\n";
+            echo "error: CREATE TABLE ($new_table)<br>\n";
             continue;
         }
 
         $irs = $db->queryF("INSERT INTO `$new_table` SELECT * FROM `$old_table`");
         if (!$irs) {
-            echo "error: INSERT INTO ($new_table)<br />\n";
+            echo "error: INSERT INTO ($new_table)<br>\n";
             continue;
         }
     }

@@ -19,7 +19,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 include_once $GLOBALS['xoops']->path('class/xoopslists.php');
 include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
-$email_tray   = new XoopsFormElementTray(_US_EMAIL, '<br />');
+$email_tray   = new XoopsFormElementTray(_US_EMAIL, '<br>');
 $email_text   = new XoopsFormText('', 'email', 25, 60, $myts->htmlSpecialChars($email));
 $email_option = new XoopsFormCheckBox('', 'user_viewemail', $user_viewemail);
 $email_option->addOption(1, _US_ALLOWVIEWEMAIL);
@@ -38,7 +38,7 @@ $reg_form->addElement(new XoopsFormSelectTimezone(_US_TIMEZONE, 'timezone_offset
 //$reg_form->addElement($avatar_tray);
 $reg_form->addElement(new XoopsFormRadioYN(_US_MAILOK, 'user_mailok', $user_mailok));
 if ($xoopsConfigUser['reg_dispdsclmr'] != 0 && $xoopsConfigUser['reg_disclaimer'] != '') {
-    $disc_tray = new XoopsFormElementTray(_US_DISCLAIMER, '<br />');
+    $disc_tray = new XoopsFormElementTray(_US_DISCLAIMER, '<br>');
     $disc_text = new XoopsFormTextarea('', 'disclaimer', $xoopsConfigUser['reg_disclaimer'], 15, 80);
     $disc_text->setExtra('readonly="readonly"');
     $disc_tray->addElement($disc_text);

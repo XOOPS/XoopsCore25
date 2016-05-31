@@ -124,27 +124,27 @@ switch ($op) {
         include $GLOBALS['xoops']->path('header.php');
         $stop = '';
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            $stop .= implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()) . '<br />';
+            $stop .= implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()) . '<br>';
         }
         if ($xoopsConfigUser['reg_dispdsclmr'] != 0 && $xoopsConfigUser['reg_disclaimer'] != '') {
             if (empty($agree_disc)) {
-                $stop .= _US_UNEEDAGREE . '<br />';
+                $stop .= _US_UNEEDAGREE . '<br>';
             }
         }
         $stop .= XoopsUserUtility::validate($uname, $email, $pass, $vpass);
         if (empty($stop)) {
-            echo _US_USERNAME . ': ' . $myts->htmlSpecialChars($uname) . '<br />';
-            echo _US_EMAIL . ': ' . $myts->htmlSpecialChars($email) . '<br />';
+            echo _US_USERNAME . ': ' . $myts->htmlSpecialChars($uname) . '<br>';
+            echo _US_EMAIL . ': ' . $myts->htmlSpecialChars($email) . '<br>';
             if ($url != '') {
                 $url = formatURL($url);
-                echo _US_WEBSITE . ': ' . $myts->htmlSpecialChars($url) . '<br />';
+                echo _US_WEBSITE . ': ' . $myts->htmlSpecialChars($url) . '<br>';
             }
             $f_timezone = ($timezone_offset < 0) ? 'GMT ' . $timezone_offset : 'GMT +' . $timezone_offset;
-            echo _US_TIMEZONE . ": $f_timezone<br />";
+            echo _US_TIMEZONE . ": $f_timezone<br>";
             echo "<form action='register.php' method='post'>";
             xoops_load('XoopsFormCaptcha');
             $cpatcha = new XoopsFormCaptcha();
-            echo '<br />' . $cpatcha->getCaption() . ': ' . $cpatcha->render();
+            echo '<br>' . $cpatcha->getCaption() . ': ' . $cpatcha->render();
             echo "<input type='hidden' name='uname' value='" . $myts->htmlSpecialChars($uname) . "' />
                   <input type='hidden' name='email' value='" . $myts->htmlSpecialChars($email) . "' />
                   <input type='hidden' name='user_viewemail' value='" . $user_viewemail . "' />
@@ -153,7 +153,7 @@ switch ($op) {
                   <input type='hidden' name='pass' value='" . $myts->htmlSpecialChars($pass) . "' />
                   <input type='hidden' name='vpass' value='" . $myts->htmlSpecialChars($vpass) . "' />
                   <input type='hidden' name='user_mailok' value='" . $user_mailok . "' />
-                  <br /><br /><input type='hidden' name='op' value='finish' />" . $GLOBALS['xoopsSecurity']->getTokenHTML() . "<input type='submit' value='" . _US_FINISH . "' /></form>";
+                  <br><br><input type='hidden' name='op' value='finish' />" . $GLOBALS['xoopsSecurity']->getTokenHTML() . "<input type='submit' value='" . _US_FINISH . "' /></form>";
         } else {
             echo "<span class='red'>$stop</span>";
             include $GLOBALS['xoops']->path('include/registerform.php');
@@ -166,12 +166,12 @@ switch ($op) {
         include $GLOBALS['xoops']->path('header.php');
         $stop = XoopsUserUtility::validate($uname, $email, $pass, $vpass);
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            $stop .= implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()) . '<br />';
+            $stop .= implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()) . '<br>';
         }
         xoops_load('XoopsCaptcha');
         $xoopsCaptcha = XoopsCaptcha::getInstance();
         if (!$xoopsCaptcha->verify()) {
-            $stop .= $xoopsCaptcha->getMessage() . '<br />';
+            $stop .= $xoopsCaptcha->getMessage() . '<br>';
         }
         if (empty($stop)) {
             $member_handler = xoops_getHandler('member');

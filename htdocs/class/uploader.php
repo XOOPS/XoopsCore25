@@ -35,7 +35,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  *           echo $uploader->getErrors();
  *        } else {
  *           echo '<h4>File uploaded successfully!</h4>'
- *           echo 'Saved as: ' . $uploader->getSavedFileName() . '<br />';
+ *           echo 'Saved as: ' . $uploader->getSavedFileName() . '<br>';
  *           echo 'Full path: ' . $uploader->getSavedDestination();
  *        }
  * } else {
@@ -574,7 +574,7 @@ class XoopsMediaUploader
             if (count($this->errors) > 0) {
                 $ret = '<h4>' . sprintf(_ER_UP_ERRORSRETURNED, htmlspecialchars($this->mediaName, ENT_QUOTES)) . '</h4>';
                 foreach ($this->errors as $error) {
-                    $ret .= $error . '<br />';
+                    $ret .= $error . '<br>';
                 }
             }
 

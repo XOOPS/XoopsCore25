@@ -1,10 +1,10 @@
 <!--maintenance-->
 <{includeq file="db:system_header.tpl"}>
 <!-- Display mailusers form  -->
-<br/>
+<br>
 <{if $form_maintenance}>
     <div class="spacer"><{$form_maintenance}></div>
-    <br/>
+    <br>
     <div class="spacer"><{$form_dump}></div>
 <{elseif $maintenance}>
     <{if $verif_cache || $verif_session || $verif_avatar}>
@@ -43,7 +43,7 @@
                 </tr>
             <{/if}>
         </table>
-        <br/>
+        <br>
     <{/if}>
     <{if $verif_maintenance}>
         <{$result_maintenance}>

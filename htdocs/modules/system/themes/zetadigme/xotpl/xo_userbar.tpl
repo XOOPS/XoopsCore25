@@ -1,6 +1,6 @@
 <div id="xo-userbar">
     <{$smarty.const.THEME_WELCOME}>&nbsp;<a class="tooltip" id="xo-uname" href="<{xoAppUrl /user.php}>" title="<{$smarty.const.THEME_PROFILE}>"><{$xoops_uname}></a>
-    <br/>
+    <br>
     <!-- for my message box  -->
     <{xoInboxCount assign=pmcount}>
     <a href="<{xoAppUrl viewpmsg.php}>">

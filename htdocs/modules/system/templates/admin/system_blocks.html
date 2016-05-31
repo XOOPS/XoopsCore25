@@ -102,7 +102,7 @@
     </div>
 <{/if}>
 <div id="xo-block-add" <{if $filterform}>class="hide"<{/if}>>
-    <{if !$filterform}><br/><{/if}>
+    <{if !$filterform}><br><{/if}>
     <{$blockform}>
 </div>
 <!-- Preview block -->

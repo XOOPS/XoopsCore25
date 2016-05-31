@@ -36,7 +36,7 @@ if (!class_exists('XoopsGTicket')) {
                     'err_nopair'        => 'No valid ticket-stub pair found',
                     'err_timeout'       => 'Time out',
                     'err_areaorref'     => 'Invalid area or referer',
-                    'fmt_prompt4repost' => 'error(s) found:<br /><span style="background-color:red;font-weight:bold;color:white;">%s</span><br />Confirm it.<br />And do you want to post again?',
+                    'fmt_prompt4repost' => 'error(s) found:<br><span style="background-color:red;font-weight:bold;color:white;">%s</span><br>Confirm it.<br>And do you want to post again?',
                     'btn_repost'        => 'repost');
             }
         }
@@ -356,7 +356,7 @@ if (!class_exists('XoopsGTicket')) {
             if ($ashtml) {
                 $ret = '';
                 foreach ($this->_errors as $msg) {
-                    $ret .= "$msg<br />\n";
+                    $ret .= "$msg<br>\n";
                 }
             } else {
                 $ret = $this->_errors;

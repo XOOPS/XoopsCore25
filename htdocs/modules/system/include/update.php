@@ -79,7 +79,7 @@ function update_system_v211($module)
     }
     $sql = 'SHOW INDEX FROM ' . $xoopsDB->prefix('tplfile') . " WHERE KEY_NAME = 'tpl_refid_module_set_file_type'";
     if (!$result = $xoopsDB->queryF($sql)) {
-        xoops_error($this->db->error() . '<br />' . $sql);
+        xoops_error($this->db->error() . '<br>' . $sql);
 
         return false;
     }
@@ -94,7 +94,7 @@ function update_system_v211($module)
     }
     $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tplfile') . ' ADD UNIQUE tpl_refid_module_set_file_type ( tpl_refid, tpl_module, tpl_tplset, tpl_file, tpl_type )';
     if (!$result = $xoopsDB->queryF($sql)) {
-        xoops_error($xoopsDB->error() . '<br />' . $sql);
+        xoops_error($xoopsDB->error() . '<br>' . $sql);
         $module->setErrors("'tpl_refid_module_set_file_type' unique index is not added to 'tplfile' table. Warning: do not use XOOPS until you add this unique index.");
 
         return false;

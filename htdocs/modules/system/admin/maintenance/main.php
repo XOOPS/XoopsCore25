@@ -53,7 +53,7 @@ switch ($op) {
         $form_maintenance = new XoopsThemeForm(_AM_SYSTEM_MAINTENANCE, 'maintenance_save', 'admin.php?fct=maintenance', 'post', true);
 
         $cache = new XoopsFormSelect(_AM_SYSTEM_MAINTENANCE_CACHE, 'cache', '', 3, true);
-        $cache->setDescription(XOOPS_VAR_PATH . '/cache/smarty_cache/<br />' . XOOPS_VAR_PATH . '/cache/smarty_compile/<br />' . XOOPS_VAR_PATH . '/cache/xoops_cache/');
+        $cache->setDescription(XOOPS_VAR_PATH . '/cache/smarty_cache/<br>' . XOOPS_VAR_PATH . '/cache/smarty_compile/<br>' . XOOPS_VAR_PATH . '/cache/xoops_cache/');
         $cache_arr = array(
             1 => 'smarty_cache',
             2 => 'smarty_compile',
@@ -115,7 +115,7 @@ switch ($op) {
     case 'maintenance_save':
         // Check security
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header('admin.php?fct=maintenance', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header('admin.php?fct=maintenance', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         //Define Breadcrumb and tips
         $xoBreadCrumb->addLink(_AM_SYSTEM_MAINTENANCE_NAV_MANAGER, system_adminVersion('maintenance', 'adminpath'));
@@ -187,7 +187,7 @@ switch ($op) {
     case 'dump_save':
         // Check security
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header('admin.php?fct=maintenance', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header('admin.php?fct=maintenance', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         //Define Breadcrumb and tips
         $xoBreadCrumb->addLink(_AM_SYSTEM_MAINTENANCE_NAV_MANAGER, system_adminVersion('maintenance', 'adminpath'));

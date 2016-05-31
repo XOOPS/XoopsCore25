@@ -32,10 +32,10 @@
     <!-- end of form elements loop -->
   </table>
 </form>
-<br />
+<br>
 <{/if}>
 
-<br />
+<br>
 <{$chooseavatar.javascript}>
 <form name="<{$chooseavatar.name}>" action="<{$chooseavatar.action}>" method="<{$chooseavatar.method}>" <{$chooseavatar.extra}>>
   <table class="outer" cellspacing="1">

@@ -1,7 +1,7 @@
 <{if $user_ownpage == true}>
     <form name="usernav" action="user.php" method="post">
 
-        <br/><br/>
+        <br><br>
 
         <table class="width70 aligncenter bnone">
             <tr class="txtcenter">
@@ -17,11 +17,11 @@
             </tr>
         </table>
     </form>
-    <br/>
-    <br/>
+    <br>
+    <br>
 <{elseif $xoops_isadmin != false}>
-    <br/>
-    <br/>
+    <br>
+    <br>
     <table class="width70 aligncenter bnone">
         <tr class="txtcenter">
             <td><input type="button" value="<{$lang_editprofile}>"
@@ -30,8 +30,8 @@
                        onclick="location='<{$xoops_url}>/modules/system/admin.php?fct=users&amp;op=delUser&amp;uid=<{$user_uid}>'"/>
         </tr>
     </table>
-    <br/>
-    <br/>
+    <br>
+    <br>
 <{/if}>
 
 <table class="width100 bnone" cellspacing="5">
@@ -132,7 +132,7 @@
                 </tr>
                 <tr class="aligntop">
                     <td class="head"><{$lang_rank}></td>
-                    <td class="odd txtcenter"><{$user_rankimage}><br/><{$user_ranktitle}></td>
+                    <td class="odd txtcenter"><{$user_rankimage}><br><{$user_ranktitle}></td>
                 </tr>
                 <tr class="aligntop">
                     <td class="head"><{$lang_posts}></td>
@@ -144,7 +144,7 @@
                 </tr>
             </table>
             <{if $user_signature}>
-                <br/>
+                <br>
                 <table class="outer width100" cellpadding="4" cellspacing="1">
                     <tr class="aligntop">
                         <th colspan="2" class="txtcenter"><{$lang_signature}></th>
@@ -166,9 +166,9 @@
     <{foreach item=result from=$module.results}>
         <img src="<{$result.image}>" alt="<{$module.name}>"/>
         <strong><a href="<{$result.link}>" title="<{$result.title}>"><{$result.title}></a></strong>
-        <br/>
+        <br>
         <span class="x-small">(<{$result.time}>)</span>
-        <br/>
+        <br>
     <{/foreach}>
     <!-- end results item loop -->
 

@@ -72,7 +72,7 @@ if (class_exists('XoopsFormEditor')) {
 } else {
     $cform->addElement(new XoopsFormDhtmlTextArea(_CM_MESSAGE, 'com_text', $com_text, 10, 50), true);
 }
-$option_tray = new XoopsFormElementTray(_OPTIONS, '<br />');
+$option_tray = new XoopsFormElementTray(_OPTIONS, '<br>');
 $button_tray = new XoopsFormElementTray('', '&nbsp;');
 
 if (is_object($xoopsUser)) {

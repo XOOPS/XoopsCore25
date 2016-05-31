@@ -55,7 +55,7 @@ if ($comment->getVar('com_uid') == 0 && $comment->getVar('com_user') != '') {
 }
 // End edit by voltan
 
-$r_text    = _CM_POSTER . ': <strong>' . $r_name . '</strong>&nbsp;&nbsp;' . _CM_POSTED . ': <strong>' . formatTimestamp($comment->getVar('com_created')) . '</strong><br /><br />' . $comment->getVar('com_text');
+$r_text    = _CM_POSTER . ': <strong>' . $r_name . '</strong>&nbsp;&nbsp;' . _CM_POSTED . ': <strong>' . formatTimestamp($comment->getVar('com_created')) . '</strong><br><br>' . $comment->getVar('com_text');
 $com_title = $comment->getVar('com_title', 'E');
 if (!preg_match('/^' . _RE . '/i', $com_title)) {
     $com_title = _RE . ' ' . xoops_substr($com_title, 0, 56);
@@ -80,7 +80,7 @@ $com_url   = '';
 include_once $GLOBALS['xoops']->path('header.php');
 echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer">
       <tr><td class="head">' . $comment->getVar('com_title') . '</td></tr>
-      <tr><td><br />' . $r_text . '<br /></td></tr>
+      <tr><td><br>' . $r_text . '<br></td></tr>
       </table>';
 include_once $GLOBALS['xoops']->path('include/comment_form.php');
 include_once $GLOBALS['xoops']->path('footer.php');

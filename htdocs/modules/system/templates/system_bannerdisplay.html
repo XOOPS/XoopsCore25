@@ -2,7 +2,7 @@
 <h5><{$welcomeuser}></h5>
 <div class="txtcenter"><a href="banners.php?op=logout" title="<{$smarty.const._BANNERS_LOGOUT}>"><{$smarty.const._BANNERS_LOGOUT}></a></div>
 <div class="txtcenter"><a href="banners.php?op=list" title="<{$smarty.const._BANNERS_BACK}>"><{$smarty.const._BANNERS_BACK}></a></div>
-<div><{$banneractive}></div><br/>
+<div><{$banneractive}></div><br>
 <{if $count}>
     <{foreach item=banner from=$banners}>
         <form action="banners.php" method="post">
@@ -29,7 +29,7 @@
                     <td class="head" colspan="2">&nbsp;</td>
                 </tr>
             </table>
-            <br/>
+            <br>
         </form>
     <{/foreach}>
 <{/if}>
