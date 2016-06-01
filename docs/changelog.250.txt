@@ -3,6 +3,8 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 ===================================
 2.5.8.1               NOT RELEASED
 ===================================
+- update xmf v1.0.2
+- fix issue with establishing database character set under mysqli
 - Add PHP4 same name constructor shim in XoopsMailer (geekwright)
 - Some cleanup in xBootstrap to reduce setup for users, especially with publisher
 Updated:

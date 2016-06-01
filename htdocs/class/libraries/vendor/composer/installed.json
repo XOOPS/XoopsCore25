@@ -290,42 +290,6 @@
         "homepage": "https://github.com/firebase/php-jwt"
     },
     {
-        "name": "xoops/xmf",
-        "version": "v1.0.1",
-        "version_normalized": "1.0.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/XOOPS/xmf.git",
-            "reference": "cbad09bfb597a22586be1957c7f09a43e35f6490"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/XOOPS/xmf/zipball/cbad09bfb597a22586be1957c7f09a43e35f6490",
-            "reference": "cbad09bfb597a22586be1957c7f09a43e35f6490",
-            "shasum": ""
-        },
-        "require": {
-            "firebase/php-jwt": "^3.0.0",
-            "ircmaxell/random-lib": "^1.1.0",
-            "php": ">=5.3.7",
-            "raveren/kint": "1.0.10",
-            "symfony/yaml": "2.4.*"
-        },
-        "time": "2016-03-30 16:13:01",
-        "type": "project",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Xmf\\": "src/Xmf"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "description": "XMF - XOOPS Module Framework"
-    },
-    {
         "name": "smottt/wideimage",
         "version": "1.1.1",
         "version_normalized": "1.1.1.0",
@@ -358,5 +322,41 @@
         ],
         "description": "An open-source PHP library for image manipulation. (With namespaces, PHP 5.3+)",
         "homepage": "http://wideimage.sourceforge.net"
+    },
+    {
+        "name": "xoops/xmf",
+        "version": "v1.0.2",
+        "version_normalized": "1.0.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/XOOPS/xmf.git",
+            "reference": "a0ade623e57e81bf4b20ad3c7e2900b4e6548ce0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/XOOPS/xmf/zipball/a0ade623e57e81bf4b20ad3c7e2900b4e6548ce0",
+            "reference": "a0ade623e57e81bf4b20ad3c7e2900b4e6548ce0",
+            "shasum": ""
+        },
+        "require": {
+            "firebase/php-jwt": "^3.0.0",
+            "ircmaxell/random-lib": "^1.1.0",
+            "php": ">=5.3.7",
+            "raveren/kint": "1.0.10",
+            "symfony/yaml": "2.4.*"
+        },
+        "time": "2016-05-31 19:41:13",
+        "type": "project",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Xmf\\": "src/Xmf"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "description": "XMF - XOOPS Module Framework"
     }
 ]

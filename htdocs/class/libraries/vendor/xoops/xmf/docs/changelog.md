@@ -1,11 +1,16 @@
 xmf ChangeLog
 =============
 
-30-Mar-2015 V1.0.1
+01-Jun-2016 V1.0.2
+------------------
+- fix issues with file name validation in Xmf\Language::loadFile()
+- add method Request::hasVar($name, $hash) to determine if a variable name exists in hash
+
+30-Mar-2016 V1.0.1
 ------------------
 - remove @version from docblock, consistent with XoopsCore25
 
-25-Mar-2015 V1.0.0
+25-Mar-2016 V1.0.0
 ------------------
 - fix minor typos
 - add version to changelog

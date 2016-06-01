@@ -77,7 +77,7 @@ class Language
      */
     protected static function loadFile($filename)
     {
-        if (preg_match('/[^a-z0-9\\/\\\\_.:-]/i', $filename)) {
+        if (preg_match('/[[:cntrl:]]/i', $filename)) {
             throw new \InvalidArgumentException('Security check: Illegal character in filename');
         }
         if (file_exists($filename)) {
