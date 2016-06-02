@@ -71,7 +71,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
 
             return false;
         }
-        if (defined('XOOPS_DB_CHARSET') && !empty(XOOPS_DB_CHARSET)) {
+        if (defined('XOOPS_DB_CHARSET') && ('' !== XOOPS_DB_CHARSET)) {
             // $this->queryF("SET NAMES '" . XOOPS_DB_CHARSET . "'");
             $this->conn->set_charset(XOOPS_DB_CHARSET);
         }
