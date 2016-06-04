@@ -7,6 +7,7 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - fix issue with establishing database character set under mysqli
 - Add PHP4 same name constructor shim in XoopsMailer (geekwright)
 - Some cleanup in xBootstrap to reduce setup for users, especially with publisher
+- fix with pre-install reporting (zyspec)
 Updated:
  - Tabs jQuery Tools to 1.2.7 (mamba)
 

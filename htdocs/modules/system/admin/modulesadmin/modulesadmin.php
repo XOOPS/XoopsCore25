@@ -642,8 +642,9 @@ function xoops_module_uninstall($dirname)
 
                 return '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILUNINS, '<strong>' . $module->getVar('name') . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br>' . implode('<br>', $errs) . '</p>';
             } else {
-                $msgs = $module->getErrors();
-                array_unshift($msgs, '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILED_SUCESS, "<strong>{$func}</strong>") . '</p>');
+                $prevErrs = $module->getErrors();
+                array_unshift($prevErrs, '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILED_SUCESS, "<strong>{$func}</strong>") . '</p>');
+                $msgs = array_merge($msgs, $prevErrs);
             }
         }
 
