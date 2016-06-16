@@ -32,6 +32,10 @@ define('_YEARMONTHDAY', 'Y/n/j G:i');
 define('_ELAPSE', '%s ago');
 define('_TIMEFORMAT_DESC', "Valid formats: \"s\" - " . _SHORTDATESTRING . "; \"m\" - " . _MEDIUMDATESTRING . "; \"l\" - " . _DATESTRING . ';<br>' . "\"c\" or \"custom\" - format determined according to interval to present; \"e\" - Elapsed; \"mysql\" - Y-m-d H:i:s;<br>" . "specified string - Refer to <a href=\"http://php.net/manual/en/function.date.php\" rel=\"external\">PHP manual</a>.");
 
+if (!class_exists('XoopsLocalAbstract')) {
+    include_once XOOPS_ROOT_PATH . '/class/xoopslocal.php';
+}
+
 /**
  * A Xoops Local
  *
