@@ -36,6 +36,14 @@ class XoopsOnlineHandler
     public $db;
 
     /**
+     * This should be here, since this really should be a XoopsPersistableObjectHandler
+     * Here, we fake it for future compatibility
+     *
+     * @var string table name
+     */
+    public $table;
+
+    /**
      * Constructor
      *
      * @param XoopsDatabase $db {@link XoopsHandlerFactory}
@@ -43,6 +51,7 @@ class XoopsOnlineHandler
     public function __construct(XoopsDatabase $db)
     {
         $this->db = $db;
+        $this->table = $this->db->prefix('online');
     }
 
     /**

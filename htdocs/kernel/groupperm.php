@@ -118,6 +118,20 @@ class XoopsGroupPerm extends XoopsObject
 class XoopsGroupPermHandler extends XoopsObjectHandler
 {
     /**
+     * This should be here, since this really should be a XoopsPersistableObjectHandler
+     * Here, we fake it for future compatibility
+     *
+     * @var string table name
+     */
+    public $table;
+
+    public function __construct(XoopsDatabase $db)
+    {
+        parent::__construct($db);
+        $this->table = $this->db->prefix('group_permission');
+    }
+
+    /**
      * Create a new {@link XoopsGroupPerm}
      *
      * @param bool $isNew
