@@ -203,15 +203,15 @@ class SaxParser
     /**
      * @param $tagHandler
      */
-    public function addTagHandler(&$tagHandler)
+    public function addTagHandler($tagHandler)
     {
         $name = $tagHandler->getName();
         if (is_array($name)) {
             foreach ($name as $n) {
-                $this->tagHandlers[$n] =& $tagHandler;
+                $this->tagHandlers[$n] = $tagHandler;
             }
         } else {
-            $this->tagHandlers[$name] =& $tagHandler;
+            $this->tagHandlers[$name] = $tagHandler;
         }
     }
 
