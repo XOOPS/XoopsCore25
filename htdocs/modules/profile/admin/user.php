@@ -43,7 +43,7 @@ switch ($op) {
     case 'new':
         xoops_loadLanguage('main', $GLOBALS['xoopsModule']->getVar('dirname', 'n'));
         include_once dirname(__DIR__) . '/include/forms.php';
-        $obj = $handler->createUser();
+        $obj =& $handler->createUser();
         $obj->setGroups(array(XOOPS_GROUP_USERS));
         $form = profile_getUserForm($obj);
         $form->display();
@@ -51,7 +51,7 @@ switch ($op) {
 
     case 'edit':
         xoops_loadLanguage('main', $GLOBALS['xoopsModule']->getVar('dirname', 'n'));
-        $obj = $handler->getUser($_REQUEST['id']);
+        $obj =& $handler->getUser($_REQUEST['id']);
         if (in_array(XOOPS_GROUP_ADMIN, $obj->getGroups()) && !in_array(XOOPS_GROUP_ADMIN, $GLOBALS['xoopsUser']->getGroups())) {
             // If not webmaster trying to edit a webmaster - disallow
             redirect_header('user.php', 3, _US_NOEDITRIGHT);
@@ -79,14 +79,14 @@ switch ($op) {
 
         $uid = empty($_POST['uid']) ? 0 : (int)$_POST['uid'];
         if (!empty($uid)) {
-            $user    = $handler->getUser($uid);
+            $user    =& $handler->getUser($uid);
             $profile = $profile_handler->get($uid);
             if (!is_object($profile)) {
                 $profile = $profile_handler->create();
                 $profile->setVar('profile_id', $uid);
             }
         } else {
-            $user    = $handler->createUser();
+            $user    =& $handler->createUser();
             $profile = $profile_handler->create();
             if (count($fields) > 0) {
                 foreach (array_keys($fields) as $i) {
@@ -185,7 +185,7 @@ switch ($op) {
         if ($_REQUEST['id'] == $GLOBALS['xoopsUser']->getVar('uid')) {
             redirect_header('user.php', 2, _PROFILE_AM_CANNOTDELETESELF);
         }
-        $obj    = $handler->getUser($_REQUEST['id']);
+        $obj    =& $handler->getUser($_REQUEST['id']);
         $groups = $obj->getGroups();
         if (in_array(XOOPS_GROUP_ADMIN, $groups)) {
             redirect_header('user.php', 3, _PROFILE_AM_CANNOTDELETEADMIN, false);
