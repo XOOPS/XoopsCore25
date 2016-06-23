@@ -241,7 +241,7 @@ switch ($op) {
                 if ($member_handler->getUserCount(new Criteria('uname', $myts->addSlashes($_REQUEST['username']))) > 0) {
                     $adduser_errormsg = 'User name ' . htmlspecialchars($_REQUEST['username']) . ' already exists';
                 } else {
-                    $newuser =& $member_handler->createUser();
+                    $newuser = $member_handler->createUser();
                     if (isset($user_viewemail)) {
                         $newuser->setVar('user_viewemail', $_REQUEST['user_viewemail']);
                     }
