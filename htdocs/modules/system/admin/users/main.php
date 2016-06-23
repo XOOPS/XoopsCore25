@@ -157,7 +157,7 @@ switch ($op) {
                 $user_viewemail = null;
             }
 
-            $edituser =& $member_handler->getUser($uid);
+            $edituser = $member_handler->getUser($uid);
             if ($edituser->getVar('uname', 'n') != $_REQUEST['username'] && $member_handler->getUserCount(new Criteria('uname', $myts->addSlashes($_REQUEST['username']))) > 0) {
                 xoops_cp_header();
                 xoops_error(sprintf(_AM_SYSTEM_USERS_PSEUDO_ERROR, htmlspecialchars($_REQUEST['username'])));
@@ -241,7 +241,7 @@ switch ($op) {
                 if ($member_handler->getUserCount(new Criteria('uname', $myts->addSlashes($_REQUEST['username']))) > 0) {
                     $adduser_errormsg = 'User name ' . htmlspecialchars($_REQUEST['username']) . ' already exists';
                 } else {
-                    $newuser =& $member_handler->createUser();
+                    $newuser = $member_handler->createUser();
                     if (isset($user_viewemail)) {
                         $newuser->setVar('user_viewemail', $_REQUEST['user_viewemail']);
                     }
