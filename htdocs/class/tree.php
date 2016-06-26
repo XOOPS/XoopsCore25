@@ -129,7 +129,7 @@ class XoopsObjectTree
                 $ret[$childkey] = &$this->_tree[$childkey]['obj'];
                 $children       = &$this->getAllChild($childkey, $ret);
                 foreach (array_keys($children) as $newkey) {
-                    $ret[$newkey] = &$children[$newkey];
+                    $ret[$newkey] = $children[$newkey];
                 }
             }
         }

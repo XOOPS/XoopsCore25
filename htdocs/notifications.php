@@ -135,7 +135,7 @@ switch ($op) {
                 'event_title'    => $event_info['title'],
                 'user_id'        => $n->getVar('not_uid'));
         }
-        $xoopsOption['template_main'] = 'system_notification_list.html';
+        $xoopsOption['template_main'] = 'system_notification_list.tpl';
         include $GLOBALS['xoops']->path('header.php');
         $xoopsTpl->assign('modules', $modules);
         $user_info = array('uid' => $xoopsUser->getVar('uid'));

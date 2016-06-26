@@ -58,7 +58,7 @@ if ($op === 'login') {
 
 if ($op === 'main') {
     if (!$xoopsUser) {
-        $xoopsOption['template_main'] = 'system_userform.html';
+        $xoopsOption['template_main'] = 'system_userform.tpl';
         include $GLOBALS['xoops']->path('header.php');
         $xoopsTpl->assign('xoops_pagetitle', _LOGIN);
         $xoTheme->addMeta('meta', 'keywords', _USERNAME . ', ' . _US_PASSWORD . ', ' . _US_LOSTPASSWORD);

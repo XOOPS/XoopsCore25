@@ -64,7 +64,7 @@ switch ($op) {
                     if (file_exists($root . $_REQUEST['dir'] . $file) && $file !== '.' && $file !== '..' && !is_dir($root . $_REQUEST['dir'] . $file) && $file !== 'index.html') {
                         $ext = preg_replace('/^.*\./', '', $file);
 
-                        $extensions      = array('.html', '.htm', '.css');
+                        $extensions      = array('.html', '.htm', '.css', '.tpl');
                         $extension_verif = strrchr($file, '.');
 
                         if (in_array($extension_verif, $extensions)) {
@@ -132,7 +132,7 @@ switch ($op) {
 
     // Restore backup file
     case 'tpls_restore':
-        $extensions = array('.html', '.htm', '.css');
+        $extensions = array('.html', '.htm', '.css', '.tpl');
 
         //check if the file is inside themes directory
         $valid_dir = stristr(realpath($_REQUEST['path_file']), realpath(XOOPS_ROOT_PATH . '/themes'));
