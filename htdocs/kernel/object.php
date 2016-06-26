@@ -232,23 +232,23 @@ class XoopsObject
                     break;
                 case XOBJ_DTYPE_DATE:
                     if (!is_string($value) && is_numeric($value)) {
-                        $this->vars[$key]['value'] =& date(_DBDATESTRING, $value);
+                        $this->vars[$key]['value'] = date(_DBDATESTRING, $value);
                     } else {
-                        $this->vars[$key]['value'] =& date(_DBDATESTRING, strtotime($value));
+                        $this->vars[$key]['value'] = date(_DBDATESTRING, strtotime($value));
                     }
                     break;
                 case XOBJ_DTYPE_TIME:
                     if (!is_string($value) && is_numeric($value)) {
-                        $this->vars[$key]['value'] =& date(_DBTIMESTRING, $value);
+                        $this->vars[$key]['value'] = date(_DBTIMESTRING, $value);
                     } else {
-                        $this->vars[$key]['value'] =& date(_DBTIMESTRING, strtotime($value));
+                        $this->vars[$key]['value'] = date(_DBTIMESTRING, strtotime($value));
                     }
                     break;
                 case XOBJ_DTYPE_TIMESTAMP:
                     if (!is_string($value) && is_numeric($value)) {
-                        $this->vars[$key]['value'] =& date(_DBTIMESTAMPSTRING, $value);
+                        $this->vars[$key]['value'] = date(_DBTIMESTAMPSTRING, $value);
                     } else {
-                        $this->vars[$key]['value'] =& date(_DBTIMESTAMPSTRING, strtotime($value));
+                        $this->vars[$key]['value'] = date(_DBTIMESTAMPSTRING, strtotime($value));
                     }
                     break;
                 // YOU SHOULD NOT USE THE ABOVE TYPES, THEY WILL BE REMOVED

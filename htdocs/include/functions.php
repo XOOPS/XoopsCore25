@@ -727,7 +727,7 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
     $xoopsTpl->assign('message', $message);
     $xoopsTpl->assign('lang_ifnotreload', sprintf(_IFNOTRELOAD, $url));
 
-    $xoopsTpl->display('db:system_redirect.html');
+    $xoopsTpl->display('db:system_redirect.tpl');
     exit();
 }
 

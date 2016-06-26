@@ -103,7 +103,7 @@ function xoopsfwrite()
 
 /**
  * Xoops Module Menu
- *
+ * @deprecated
  * @return unknown
  */
 function xoops_module_get_admin_menu()

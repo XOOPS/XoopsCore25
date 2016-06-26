@@ -13,7 +13,7 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  */
-defined('XOOPS_MAINFILE_INCLUDED') or die('Restricted access');
+defined('XOOPS_MAINFILE_INCLUDED') || die('Restricted access');
 
 global $xoops, $xoopsPreload, $xoopsLogger, $xoopsErrorHandler, $xoopsSecurity, $sess_handler;
 

@@ -77,7 +77,7 @@ switch ($op) {
     // Delete user
     case 'users_delete':
         $xoBreadCrumb->render();
-        $user =& $member_handler->getUser($uid);
+        $user = $member_handler->getUser($uid);
         if (isset($_REQUEST['ok']) && $_REQUEST['ok'] == 1) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header('admin.php?fct=users', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -118,7 +118,7 @@ switch ($op) {
             $error = '';
             foreach ($_REQUEST['memberslist_id'] as $del) {
                 $del    = (int)$del;
-                $user   =& $member_handler->getUser($del);
+                $user   = $member_handler->getUser($del);
                 $groups = $user->getGroups();
                 if (in_array(XOOPS_GROUP_ADMIN, $groups)) {
                     $error .= sprintf(_AM_SYSTEM_USERS_NO_ADMINSUPP, $user->getVar('uname'));
@@ -309,7 +309,7 @@ switch ($op) {
     // Activ member
     case 'users_active':
         if (isset($_REQUEST['uid'])) {
-            $obj =& $member_handler->getUser($uid);
+            $obj = $member_handler->getUser($uid);
             //echo $_REQUEST["uid"];
             //print_r($obj);
         }
