@@ -102,6 +102,20 @@ class XoopsGroup extends XoopsObject
 class XoopsGroupHandler extends XoopsObjectHandler
 {
     /**
+     * This should be here, since this really should be a XoopsPersistableObjectHandler
+     * Here, we fake it for future compatibility
+     *
+     * @var string table name
+     */
+    public $table;
+
+    public function __construct(XoopsDatabase $db)
+    {
+        parent::__construct($db);
+        $this->table = $this->db->prefix('groups');
+    }
+
+    /**
      * create a new {@link XoopsGroup} object
      *
      * @param  bool $isNew mark the new object as "new"?
@@ -272,6 +286,20 @@ class XoopsMembership extends XoopsObject
  */
 class XoopsMembershipHandler extends XoopsObjectHandler
 {
+    /**
+     * This should be here, since this really should be a XoopsPersistableObjectHandler
+     * Here, we fake it for future compatibility
+     *
+     * @var string table name
+     */
+    public $table;
+
+    public function __construct(XoopsDatabase $db)
+    {
+        parent::__construct($db);
+        $this->table = $this->db->prefix('groups_users_link');
+    }
+
     /**
      * create a new membership
      *
