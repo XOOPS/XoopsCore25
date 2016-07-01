@@ -23,7 +23,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * @param mixed $name
  * @param mixed $optional
  *
- * @return bool
+ * @return XoopsObjectHandler|false
  */
 function xoops_getHandler($name, $optional = false)
 {
@@ -56,7 +56,7 @@ function xoops_getHandler($name, $optional = false)
  * @param mixed $name
  * @param mixed $module_dir
  * @param mixed $optional
- * @return bool
+ * @return XoopsObjectHandler|false
  */
 function xoops_getModuleHandler($name = null, $module_dir = null, $optional = false)
 {

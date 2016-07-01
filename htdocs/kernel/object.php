@@ -1094,6 +1094,7 @@ class XoopsObjectHandler
      * creates a new object
      *
      * @abstract
+     * @return XoopsObject
      */
     public function create()
     {
@@ -1104,6 +1105,7 @@ class XoopsObjectHandler
      *
      * @param int $int_id
      * @abstract
+     * @return XoopsObject
      */
     public function get($int_id)
     {
