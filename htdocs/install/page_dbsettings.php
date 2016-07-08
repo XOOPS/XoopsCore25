@@ -34,8 +34,9 @@ $pageHasHelp = true;
 $vars =& $_SESSION['settings'];
 
 $hostConnectPrefix = empty($vars['DB_PCONNECT']) ? '' : 'p:';
-if (!($link = @mysqli_connect($hostConnectPrefix.$vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS']))) {
-    $error = ERR_NO_DBCONNECTION;
+$link = mysqli_connect($hostConnectPrefix.$vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS']);
+if (0 !== $link->connect_errno) {
+    $error = '(' . $link->connect_errno . ') ' . $link->connect_error;;
     $wizard->redirectToPage('-1', $error);
     exit();
 }

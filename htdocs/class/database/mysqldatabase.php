@@ -66,11 +66,11 @@ class XoopsMySQLDatabase extends XoopsDatabase
             $this->conn = new mysqli(XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS, $dbname);
         }
 
-        if (!$this->conn) {
-            $this->logger->addQuery('', $this->error(), $this->errno());
-
+        // errno is 0 if connect was successful
+        if (0 !== $this->conn->connect_errno) {
             return false;
         }
+
         if (defined('XOOPS_DB_CHARSET') && ('' !== XOOPS_DB_CHARSET)) {
             // $this->queryF("SET NAMES '" . XOOPS_DB_CHARSET . "'");
             $this->conn->set_charset(XOOPS_DB_CHARSET);
