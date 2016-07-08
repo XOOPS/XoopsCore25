@@ -51,15 +51,15 @@ $upload_size = 500000;
 $op = system_CleanVars($_REQUEST, 'op', 'list', 'string');
 // Get userrank handler
 $userrank_Handler = xoops_getModuleHandler('userrank', 'system');
-// Define main template
-$xoopsOption['template_main'] = 'system_userrank.tpl';
-// Call Header
-xoops_cp_header();
 
 switch ($op) {
 
     case 'list':
     default:
+        // Define main template
+        $xoopsOption['template_main'] = 'system_userrank.tpl';
+        // Call Header
+        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
@@ -102,10 +102,16 @@ switch ($op) {
             $nav = new XoopsPageNav($userrank_count, $nb_rank, $start, 'start', 'fct=userrank&amp;op=list');
             $xoopsTpl->assign('nav_menu', $nav->renderNav(4));
         }
+        // Call Footer
+        xoops_cp_footer();
         break;
 
     // New userrank
     case 'userrank_new':
+        // Define main template
+        $xoopsOption['template_main'] = 'system_userrank.tpl';
+        // Call Header
+        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         // Define Breadcrumb and tips
@@ -119,10 +125,16 @@ switch ($op) {
         $form = $obj->getForm();
         // Assign form
         $xoopsTpl->assign('form', $form->render());
+        // Call Footer
+        xoops_cp_footer();
         break;
 
     // Edit userrank
     case 'userrank_edit':
+        // Define main template
+        $xoopsOption['template_main'] = 'system_userrank.tpl';
+        // Call Header
+        xoops_cp_header();
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         // Define Breadcrumb and tips
@@ -136,6 +148,8 @@ switch ($op) {
         $form = $obj->getForm();
         // Assign form
         $xoopsTpl->assign('form', $form->render());
+        // Call Footer
+        xoops_cp_footer();
         break;
 
     // Save rank
@@ -148,32 +162,54 @@ switch ($op) {
         } else {
             $obj = $userrank_Handler->create();
         }
-
         $obj->setVar('rank_title', $_POST['rank_title']);
         $obj->setVar('rank_min', $_POST['rank_min']);
         $obj->setVar('rank_max', $_POST['rank_max']);
         $verif_rank_special = ($_POST['rank_special'] == 1) ? '1' : '0';
         $obj->setVar('rank_special', $verif_rank_special);
-
+        $err = array();
         include_once XOOPS_ROOT_PATH . '/class/uploader.php';
         $uploader_rank_img = new XoopsMediaUploader(XOOPS_UPLOAD_PATH . '/ranks', $mimetypes, $upload_size, null, null);
-
-        if ($uploader_rank_img->fetchMedia('rank_image')) {
-            $uploader_rank_img->setPrefix('rank');
-            $uploader_rank_img->fetchMedia('rank_image');
-            if (!$uploader_rank_img->upload()) {
-                $errors =& $uploader_rank_img->getErrors();
-                redirect_header('javascript:history.go(-1)', 3, $errors);
-            } else {
-                $obj->setVar('rank_image', 'ranks/' . $uploader_rank_img->getSavedFileName());
+        if ($_FILES['rank_image']['error'] != UPLOAD_ERR_NO_FILE) {
+            if ($uploader_rank_img->fetchMedia('rank_image')) {
+                $uploader_rank_img->setPrefix('rank');
+                $uploader_rank_img->fetchMedia('rank_image');
+                if (!$uploader_rank_img->upload()) {
+                    $err[] =& $uploader_rank_img->getErrors();
+                } else {
+                    $obj->setVar('rank_image', 'ranks/' . $uploader_rank_img->getSavedFileName());
+                    if (!$userrank_Handler->insert($obj)) {
+                        $err[] = sprintf(_FAILSAVEIMG, $obj->getVar('rank_title'));
+                    }
+                }
+            }else{
+                 $err[] = $uploader_rank_img->getErrors();
             }
         } else {
             $obj->setVar('rank_image', 'ranks/' . $_POST['rank_image']);
+            if (!$userrank_Handler->insert($obj)) {
+                $err[] = sprintf(_FAILSAVEIMG, $obj->getVar('rank_title'));
+            }
         }
-
-        if ($userrank_Handler->insert($obj)) {
-            redirect_header('admin.php?fct=userrank', 2, _AM_SYSTEM_USERRANK_SAVE);
+        if (count($err) > 0) {
+            // Define main template
+            $xoopsOption['template_main'] = 'system_header.tpl';
+            // Call header
+            xoops_cp_header();
+            //echo 'dfsf';
+            // Define Stylesheet
+            $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
+            // Define Breadcrumb and tips
+            $xoBreadCrumb->addLink(_AM_SYSTEM_USERRANK_NAV_MANAGER, system_adminVersion('userrank', 'adminpath'));
+            $xoBreadCrumb->addLink(_AM_SYSTEM_USERRANK_ERROR);
+            $xoBreadCrumb->render();
+            // Display errors
+            xoops_error($err);
+            // Call Footer
+            xoops_cp_footer();
+            exit();
         }
+        redirect_header('admin.php?fct=userrank', 2, _AM_SYSTEM_USERRANK_SAVE);
         break;
 
     // Delete userrank
@@ -195,6 +231,10 @@ switch ($op) {
                 xoops_error($obj->getHtmlErrors());
             }
         } else {
+            // Define main template
+            $xoopsOption['template_main'] = 'system_userrank.tpl';
+            // Call Header
+            xoops_cp_header();
             // Define Stylesheet
             $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
             // Define Breadcrumb and tips
@@ -207,6 +247,8 @@ switch ($op) {
                               'ok' => 1,
                               'rank_id' => $_REQUEST['rank_id'],
                               'op' => 'userrank_delete'), $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_USERRANK_SUREDEL) . '<br \><img src="' . XOOPS_UPLOAD_URL . '/' . $rank_img . '" alt="" /><br \>');
+            // Call Footer
+            xoops_cp_footer();
         }
         break;
 
@@ -226,5 +268,3 @@ switch ($op) {
         break;
 
 }
-// Call Footer
-xoops_cp_footer();

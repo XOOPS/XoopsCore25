@@ -31,3 +31,5 @@ define('_AM_SYSTEM_USERRANK_UPLOAD', 'Upload');
 define('_AM_SYSTEM_USERRANK_TIPS', '<ul><li>Add, update or delete user rank</li></ul>');
 define('_AM_SYSTEM_USERRANK_TIPS_FORM1', '<ul><li>Authorized mime types: %s</li>');
 define('_AM_SYSTEM_USERRANK_TIPS_FORM2', '<li>Max uploaded files size: %s KB</li></ul>');
+// Errors
+define('_AM_SYSTEM_USERRANK_ERROR', 'Errors');

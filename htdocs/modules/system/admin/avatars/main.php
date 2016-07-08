@@ -196,18 +196,22 @@ switch ($op) {
             $avatar = $avt_handler->create();
         }
         $err = array();
-        if ($uploader->fetchMedia('avatar_file')) {
-            $uploader->setPrefix('savt');
-            if (!$uploader->upload()) {
-                $err[] =& $uploader->getErrors();
-            } else {
-                $avatar->setVars($_POST);
-                $avatar->setVar('avatar_file', 'avatars/' . $uploader->getSavedFileName());
-                $avatar->setVar('avatar_mimetype', $uploader->getMediaType());
-                $avatar->setVar('avatar_type', 's');
-                if (!$avt_handler->insert($avatar)) {
-                    $err[] = sprintf(_FAILSAVEIMG, $avatar->getVar('avatar_name'));
+        if ($_FILES['avatar_file']['error'] != UPLOAD_ERR_NO_FILE) {
+            if ($uploader->fetchMedia('avatar_file')) {
+                $uploader->setPrefix('savt');
+                if (!$uploader->upload()) {
+                    $err[] =& $uploader->getErrors();
+                } else {
+                    $avatar->setVars($_POST);
+                    $avatar->setVar('avatar_file', 'avatars/' . $uploader->getSavedFileName());
+                    $avatar->setVar('avatar_mimetype', $uploader->getMediaType());
+                    $avatar->setVar('avatar_type', 's');
+                    if (!$avt_handler->insert($avatar)) {
+                        $err[] = sprintf(_FAILSAVEIMG, $avatar->getVar('avatar_name'));
+                    }
                 }
+            }else{
+                $err[] = $uploader->getErrors();
             }
         } else {
             $file = system_CleanVars($_REQUEST, 'avatar_file', 'blank.gif', 'string');

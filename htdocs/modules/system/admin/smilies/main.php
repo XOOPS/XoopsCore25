@@ -158,28 +158,37 @@ switch ($op) {
 
         include_once XOOPS_ROOT_PATH . '/class/uploader.php';
         $uploader_smilies_img = new XoopsMediaUploader(XOOPS_UPLOAD_PATH . '/smilies', $mimetypes, $upload_size, null, null);
-
-        if ($uploader_smilies_img->fetchMedia('smile_url')) {
-            $uploader_smilies_img->setPrefix('smil');
-            $uploader_smilies_img->fetchMedia('smile_url');
-            if (!$uploader_smilies_img->upload()) {
-                $errors =& $uploader_smilies_img->getErrors();
-                redirect_header('javascript:history.go(-1)', 3, $errors);
+        if ($_FILES['smile_url']['error'] != UPLOAD_ERR_NO_FILE) {
+            if ($uploader_smilies_img->fetchMedia('smile_url')) {
+                $uploader_smilies_img->setPrefix('smil');
+                $uploader_smilies_img->fetchMedia('smile_url');
+                if (!$uploader_smilies_img->upload()) {
+                    $err[] =& $uploader_smilies_img->getErrors();
+                } else {
+                    $obj->setVar('smile_url', 'smilies/' . $uploader_smilies_img->getSavedFileName());
+                    if (!$smilies_Handler->insert($obj)) {
+                        $err[] = sprintf(_FAILSAVEIMG, $obj->getVar('code'));
+                    }
+                }
             } else {
-                $obj->setVar('smile_url', 'smilies/' . $uploader_smilies_img->getSavedFileName());
+                $err[] = $uploader_smilies_img->getErrors();
             }
         } else {
             $obj->setVar('smile_url', 'smilies/' . $_POST['smile_url']);
+            if (!$smilies_Handler->insert($obj)) {
+                $err[] = sprintf(_FAILSAVEIMG, $obj->getVar('code'));
+            }
         }
-        if ($smilies_Handler->insert($obj)) {
-            redirect_header('admin.php?fct=smilies', 2, _AM_SYSTEM_SMILIES_SAVE);
+        if (count($err) > 0) {
+            // Define Stylesheet
+            $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
+            // Display errors
+            xoops_error($err);
+            // Call Footer
+            xoops_cp_footer();
+            exit();
         }
-        echo $obj->getHtmlErrors();
-        // Create form
-        $obj  = $smilies_Handler->create();
-        $form = $obj->getForm();
-        // Assign form
-        $xoopsTpl->assign('form', $form->render());
+        redirect_header('admin.php?fct=smilies', 2, _AM_SYSTEM_SMILIES_SAVE);
         break;
 
     //Del a smilie
