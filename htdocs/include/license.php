@@ -16,7 +16,7 @@
  *  Xoops Version
  *
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license             GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @deprecated
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
