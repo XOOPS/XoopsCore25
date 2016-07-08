@@ -223,6 +223,43 @@ class XoopsMediaUploader
             }
         }
         $this->errors = array();
+        if ($this->mediaError > 0) {
+            switch($this->mediaError){
+                case UPLOAD_ERR_INI_SIZE:
+                    $this->setErrors(_ER_UP_INISIZE);
+                    return false;
+                    break;
+                case UPLOAD_ERR_FORM_SIZE:
+                    $this->setErrors(_ER_UP_FORMSIZE);
+                    return false;
+                    break;
+                case UPLOAD_ERR_PARTIAL:
+                    $this->setErrors(_ER_UP_PARTIAL);
+                    return false;
+                    break;
+                case UPLOAD_ERR_NO_FILE:
+                    $this->setErrors(_ER_UP_NOFILE);
+                    return false;
+                    break;
+                case UPLOAD_ERR_NO_TMP_DIR:
+                    $this->setErrors(_ER_UP_NOTMPDIR);
+                    return false;
+                    break;
+                case UPLOAD_ERR_CANT_WRITE:
+                    $this->setErrors(_ER_UP_CANTWRITE);
+                    return false;
+                    break;
+                case UPLOAD_ERR_EXTENSION:
+                    $this->setErrors(_ER_UP_EXTENSION);
+                    return false;
+                    break;
+                default:
+                    $this->setErrors(_ER_UP_UNKNOWN);
+                    return false;
+                    break;
+            }
+        }
+        
         if ((int)$this->mediaSize < 0) {
             $this->setErrors(_ER_UP_INVALIDFILESIZE);
 
@@ -238,11 +275,11 @@ class XoopsMediaUploader
 
             return false;
         }
-        if ($this->mediaError > 0) {
+        /*if ($this->mediaError > 0) {
             $this->setErrors(sprintf(_ER_UP_ERROROCCURRED, $this->mediaError));
 
             return false;
-        }
+        }*/
 
         return true;
     }
