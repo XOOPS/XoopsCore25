@@ -275,11 +275,6 @@ class XoopsMediaUploader
 
             return false;
         }
-        /*if ($this->mediaError > 0) {
-            $this->setErrors(sprintf(_ER_UP_ERROROCCURRED, $this->mediaError));
-
-            return false;
-        }*/
 
         return true;
     }
