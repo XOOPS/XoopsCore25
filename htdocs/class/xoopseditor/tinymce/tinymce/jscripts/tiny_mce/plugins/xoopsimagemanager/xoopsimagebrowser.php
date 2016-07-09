@@ -119,7 +119,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
                 redirect_header($current_file . '?target=' . $target, 3, xoops_error(implode('<br>', $error)));
             }
         }
-        redirect_header($current_file . '?target=' . $target, 3, _MD_AM_DBUPDATED);
+        redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_DBUPDATED);
     }
     // Save Image modification - end
 
@@ -178,7 +178,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
         if (count($err) > 0) {
             redirect_header($current_file . '?target=' . $target, 3, xoops_error(implode('<br>', $err)));
         }
-        redirect_header($current_file . '?target=' . $target, 3, _MD_AM_DBUPDATED);
+        redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_DBUPDATED);
     }
     // Add new image - end
 
@@ -233,7 +233,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
             $imagecategoryperm_handler->insert($imagecategoryperm);
             unset($imagecategoryperm);
         }
-        redirect_header($current_file . '?target=' . $target, 3, _MD_AM_DBUPDATED);
+        redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_DBUPDATED);
     }
     // Add new category - end
 
@@ -294,7 +294,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
             $imagecategoryperm_handler->insert($imagecategoryperm);
             unset($imagecategoryperm);
         }
-        redirect_header($current_file . '?target=' . $target, 3, _MD_AM_DBUPDATED);
+        redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_DBUPDATED);
     }
     // Update categorie - end
 
@@ -343,7 +343,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
         if (count($errors) > 0) {
             redirect_header($current_file . '?target=' . $target, 3, xoops_error(implode('<br>', $error)));
         }
-        redirect_header($current_file . '?target=' . $target, 3, _MD_AM_DBUPDATED);
+        redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_DBUPDATED);
     }
     // Delete categorie - end
 
@@ -376,7 +376,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
             redirect_header($current_file . '?target=' . $target, 3, xoops_error(sprintf(_MD_FAILDEL, $image->getVar('image_id'))));
         }
         @unlink(XOOPS_UPLOAD_PATH . '/' . $image->getVar('image_name'));
-        redirect_header($current_file . '?target=' . $target, 3, _MD_AM_DBUPDATED);
+        redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_DBUPDATED);
     }
     // Delete file - end
     // ************************* NOT USED ************************************
