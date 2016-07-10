@@ -267,8 +267,8 @@ class Protector
         }
 
         if (empty($this->_conn)) {
-            $this->_conn = @mysqli_connect(XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS);
-            if (!$this->_conn) {
+            $this->_conn = new mysqli(XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS);
+            if (0 !== $this->_conn->connect_errno) {
                 die('db connection failed.');
             }
             if (!mysqli_select_db($this->_conn, XOOPS_DB_NAME)) {
