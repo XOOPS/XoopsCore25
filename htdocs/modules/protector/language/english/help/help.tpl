@@ -72,7 +72,7 @@
 
     <p class="even">- precommon_bwlimit_errorlog.php
         <br>
-        When band width limitaion works unfortunately, this plugin logs it into Apache's error_log.
+        When band width limitation works unfortunately, this plugin logs it into Apache's error_log.
     </p>
 
     <p>All plugins named *_errorlog.php log some informations into Apaches error_log.</p>
