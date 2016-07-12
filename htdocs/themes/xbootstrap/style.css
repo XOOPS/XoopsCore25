@@ -182,6 +182,7 @@ a.navbar-brand.xlogo {
 
 .xoops-blocks {
     margin-bottom: 20px;
+    text-align:justify;
 }
 
 .xoops-blocks > h4 {
