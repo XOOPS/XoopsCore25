@@ -99,10 +99,16 @@ a.navbar-brand.xlogo {
 }
 
 .bottom-blocks {
-    background: url(images/cover.jpg) 50% 50% no-repeat fixed;
-    background-size: cover;
     margin-top: 20px;
     padding: 20px 0 20px 0;
+}
+
+.footer-blocks {
+    background: url(images/cover.jpg) 50% 50% no-repeat fixed;
+    background-size: cover;
+    margin-top: 0px;
+    padding: 20px 0 20px 0;
+   
 }
 
 .footer {
@@ -206,6 +212,26 @@ a.navbar-brand.xlogo {
 }
 
 .xoops-bottom-blocks:hover {
+    top: -10px;
+    box-shadow: 0 10px 10px #222;
+}
+
+.xoops-footer-blocks {
+    background: #FFF;
+    padding: 10px;
+    text-align: justify;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    position: relative;
+    transition: all linear 300ms;
+    -moz-transition: all linear 300ms;
+    -webkit-transition: all linear 300ms;
+    top: 0;
+}
+
+.xoops-footer-blocks:hover {
     top: -10px;
     box-shadow: 0 10px 10px #222;
 }
