@@ -58,7 +58,11 @@ class Db_manager
      */
     public function isConnectable()
     {
-        return ($this->db->connect(false) != false);// ? true : false;
+        $isConnected = ($this->db->connect(false) !== false);
+        if (!$isConnected) {
+            $_SESSION['error'] = '(' . $this->db->conn->connect_errno . ') ' . $this->db->conn->connect_error;
+        }
+        return $isConnected;
     }
 
     /**
