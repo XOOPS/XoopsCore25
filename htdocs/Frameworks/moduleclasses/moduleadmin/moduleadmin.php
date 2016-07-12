@@ -547,7 +547,7 @@ class ModuleAdmin
         } else {
             $file = XOOPS_ROOT_PATH . '/modules/' . $this->_obj->getVar('dirname') . '/docs/changelog.txt';
             if (is_readable($file)) {
-                $ret .= utf8_encode(implode('<br>', file($file))) . "\n";
+                $ret .= implode('<br>', file($file)) . "\n";
             }
         }
         $ret .= "</div>\n";
