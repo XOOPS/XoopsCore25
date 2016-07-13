@@ -71,4 +71,52 @@ class XoopsLocal extends XoopsLocalAbstract
 
         return money_format($format, $number);
     }
+    
+    /**
+     * Get local Alphabet
+     * @return array
+     */
+        public function getAlphabet()
+    {
+        $alphabet = array(
+            '0',
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
+            '7',
+            '8',
+            '9',
+            'A',
+            'B',
+            'C',
+            'D',
+            'E',
+            'F',
+            'G',
+            'H',
+            'I',
+            'J',
+            'K',
+            'L',
+            'M',
+            'N',
+            'O',
+            'P',
+            'Q',
+            'R',
+            'S',
+            'T',
+            'U',
+            'V',
+            'W',
+            'X',
+            'Y',
+            'Z'
+        );
+
+        return $alphabet;
+    }
 }
