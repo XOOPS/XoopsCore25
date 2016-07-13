@@ -44,7 +44,7 @@
                     <label class="control-label"><{$lang_username}></label>
 
                     <div class="input-container">
-                        <input type="text" name="uname" class="form-control" placeholder="Your Name">
+                        <input type="text" name="uname" class="form-control" placeholder="<{$smarty.const.THEME_LOGIN}>">
                         <span class="glyphicon glyphicon-user"></span>
                     </div>
 
@@ -52,7 +52,7 @@
                     <label class="control-label"><{$lang_password}></label>
 
                     <div class="input-container">
-                        <input type="password" name="pass" class="form-control" placeholder="Your Password">
+                        <input type="password" name="pass" class="form-control" placeholder="<{$smarty.const.THEME_PASS}>">
                         <span class="glyphicon glyphicon-lock"></span>
                     </div>
 
