@@ -18,7 +18,8 @@
     <link rel="stylesheet" type="text/css" href="<{$xoops_imageurl}>css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<{$xoops_imageurl}>css/reset.css">
     <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_themecss}>">
-    <script src="<{$xoops_imageurl}>js/jquery-1.10.2.js"></script>
+    <{*<script src="<{$xoops_imageurl}>js/jquery-1.10.2.js"></script>*}>
+    <script src="<{$xoops_url}>/browse.php?Frameworks/jquery/jquery.js"></script>
     <script src="<{$xoops_imageurl}>js/bootstrap.min.js"></script>
     <script src="<{$xoops_imageurl}>js/modernizr.custom.95845.js"></script>
     <script src="<{$xoops_imageurl}>js/js.js"></script>

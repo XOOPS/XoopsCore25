@@ -21,7 +21,8 @@
     <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/xoops.css">
     <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/reset.css">
     <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_themecss}>">
-    <script src="<{xoImgUrl}>js/jquery-1.10.2.js"></script>
+    <{*<script src="<{xoImgUrl}>js/jquery-1.10.2.js"></script>*}>
+    <script src="<{$xoops_url}>/browse.php?Frameworks/jquery/jquery.js"></script>
     <script src="<{xoImgUrl}>js/bootstrap.min.js"></script>
     <script src="<{xoImgUrl}>js/masonry.pkgd.min.js"></script>
     <script src="<{xoImgUrl}>js/imagesloaded.pkgd.min.js"></script>
