@@ -10,6 +10,7 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - fix with pre-install reporting (zyspec)
 Updated:
  - Tabs jQuery Tools to 1.2.7 (mamba)
+ - jGrowl to 1.4.5 (mamba)
 
 ===================================
 2.5.8 Final            2016-05-27
