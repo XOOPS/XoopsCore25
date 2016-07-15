@@ -26,7 +26,6 @@ use Xmf\Language;
  * @copyright 2011-2016 XOOPS Project (http://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @link      http://xoops.org
- * @since     1.0
  */
 class Admin
 {
@@ -55,8 +54,6 @@ class Admin
      * provides compatible methods built from the old Frameworks version.
      *
      * @return object a ModuleAdmin or Xoops\Module\Admin instance.
-     *
-     * @since  1.0
      */
     public static function getInstance()
     {

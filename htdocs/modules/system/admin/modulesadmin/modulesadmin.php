@@ -837,6 +837,22 @@ function xoops_module_update($dirname)
             $msgs[] = '<strong>' . _AUTHOR . ':</strong> ' . $myts->htmlspecialchars(trim($module->getInfo('author')));
         }
         $msgs[]          = '</div><div class="logger">';
+
+        $update_script = $module->getInfo('onUpdate');
+        if (false != $update_script && trim($update_script) != '') {
+            include_once XOOPS_ROOT_PATH . '/modules/' . $dirname . '/' . trim($update_script);
+        }
+        // execute module specific update script if any
+        if (function_exists('xoops_module_pre_update_' . $dirname)) {
+            $func = 'xoops_module_pre_update_' . $dirname;
+            if (!$func($module, $prev_version)) {
+                $msgs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILED_EXECUTE, $func) . '</p>';
+                $msgs = array_merge($msgs, $module->getErrors());
+            } else {
+                $msgs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILED_SUCESS, '<strong>' . $func . '</strong>') . '</p>';
+                $msgs += $module->getErrors();
+            }
+        }
         $msgs[]          = _AM_SYSTEM_MODULES_MODULE_DATA_UPDATE;
         $tplfile_handler = xoops_getHandler('tplfile');
         // irmtfan bug fix: remove codes for delete templates
@@ -1248,18 +1264,14 @@ function xoops_module_update($dirname)
         }
 
         // execute module specific update script if any
-        $update_script = $module->getInfo('onUpdate');
-        if (false != $update_script && trim($update_script) != '') {
-            include_once XOOPS_ROOT_PATH . '/modules/' . $dirname . '/' . trim($update_script);
-            if (function_exists('xoops_module_update_' . $dirname)) {
-                $func = 'xoops_module_update_' . $dirname;
-                if (!$func($module, $prev_version)) {
-                    $msgs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILED_EXECUTE, $func) . '</p>';
-                    $msgs   = array_merge($msgs, $module->getErrors());
-                } else {
-                    $msgs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILED_SUCESS, '<strong>' . $func . '</strong>') . '</p>';
-                    $msgs += $module->getErrors();
-                }
+        if (function_exists('xoops_module_update_' . $dirname)) {
+            $func = 'xoops_module_update_' . $dirname;
+            if (!$func($module, $prev_version)) {
+                $msgs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILED_EXECUTE, $func) . '</p>';
+                $msgs = array_merge($msgs, $module->getErrors());
+            } else {
+                $msgs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILED_SUCESS, '<strong>' . $func . '</strong>') . '</p>';
+                $msgs += $module->getErrors();
             }
         }
         $msgs[] = sprintf(_AM_SYSTEM_MODULES_OKUPD, '<strong>' . $module->getVar('name', 's') . '</strong>');
