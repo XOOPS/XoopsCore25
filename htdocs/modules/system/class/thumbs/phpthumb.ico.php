@@ -12,19 +12,20 @@
 
 class phpthumb_ico {
 
-    // removed for XOOPS
-	//function phpthumb_ico() {
-	//	return true;
-	//}
-
-
     function GD2ICOstring(&$gd_image_array) {
+		$ImageWidths  = array();
+		$ImageHeights = array();
+		$bpp          = array();
+		$totalcolors  = array();
+		$icXOR        = array();
+		$icAND        = array();
+		$icANDmask    = array();
         foreach ($gd_image_array as $key => $gd_image) {
 
-            $ImageWidths[$key]  = ImageSX($gd_image);
-            $ImageHeights[$key] = ImageSY($gd_image);
-            $bpp[$key]          = ImageIsTrueColor($gd_image) ? 32 : 24;
-            $totalcolors[$key]  = ImageColorsTotal($gd_image);
+            $ImageWidths[$key]  = imagesx($gd_image);
+            $ImageHeights[$key] = imagesy($gd_image);
+            $bpp[$key]          = imageistruecolor($gd_image) ? 32 : 24;
+            $totalcolors[$key]  = imagecolorstotal($gd_image);
 
             $icXOR[$key] = '';
             for ($y = $ImageHeights[$key] - 1; $y >= 0; $y--) {
