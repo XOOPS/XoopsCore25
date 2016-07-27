@@ -764,8 +764,9 @@ class MyTextSanitizer
     {
         $extension = $this->loadExtension($name);
         $args      = array_slice(func_get_args(), 1);
+        array_unshift($args, $this);
 
-        return call_user_func_array(array($extension, 'load'), array_merge(array(&$this), $args));
+        return call_user_func_array(array($extension, 'load'), $args);
     }
 
     /**

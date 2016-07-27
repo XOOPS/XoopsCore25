@@ -29,7 +29,7 @@ class MytsLi extends MyTextSanitizerExtension
      *
      * @return bool
      */
-    public function load(&$ts)
+    public function load($ts)
     {
         $ts->patterns[]     = "/\[li](.*)\[\/li\]/sU";
         $ts->replacements[] = '<li>\\1</li>';

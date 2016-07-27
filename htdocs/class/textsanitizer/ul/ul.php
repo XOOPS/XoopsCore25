@@ -29,7 +29,7 @@ class MytsUl extends MyTextSanitizerExtension
      *
      * @return bool
      */
-    public function load(&$ts)
+    public function load($ts)
     {
         $ts->patterns[]     = "/\[ul](.*)\[\/ul\]/sU";
         $ts->replacements[] = '<ul>\\1</ul>';

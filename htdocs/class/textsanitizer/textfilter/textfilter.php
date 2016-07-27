@@ -35,7 +35,7 @@ class MytsTextfilter extends MyTextSanitizerExtension
      *
      * @return mixed
      */
-    public function load(&$ts, $text, $force = false)
+    public function load($ts, $text, $force = false)
     {
         global $xoopsUser, $xoopsConfig, $xoopsUserIsAdmin;
         if (empty($force) && $xoopsUserIsAdmin) {

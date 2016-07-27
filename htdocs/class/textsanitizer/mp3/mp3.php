@@ -69,7 +69,7 @@ EOF;
      *
      * @return bool
      */
-    public function load(&$ts)
+    public function load($ts)
     {
         //        $ts->patterns[] = "/\[mp3\](.*?)\[\/mp3\]/es";
         //        $ts->replacements[] = __CLASS__ . "::decode( '\\1' )";

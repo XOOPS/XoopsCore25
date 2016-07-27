@@ -30,7 +30,7 @@ class MytsImage extends MyTextSanitizerExtension
      *
      * @return bool
      */
-    public function load(&$ts)
+    public function load($ts)
     {
         static $jsLoaded;
 

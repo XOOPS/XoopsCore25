@@ -93,3 +93,4 @@ while (!feof($handle)) {
     echo $buffer;
 }
 fclose($handle);
+exit();

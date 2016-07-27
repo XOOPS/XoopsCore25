@@ -28,7 +28,7 @@ class MytsIframe extends MyTextSanitizerExtension
      *
      * @return bool
      */
-    public function load(&$ts)
+    public function load($ts)
     {
         $ts->patterns[]     = "/\[iframe=(['\"]?)([^\"']*)\\1]([^\"]*)\[\/iframe\]/sU";
         $ts->replacements[] = "<iframe src='\\3' width='100%' height='\\2' scrolling='auto' frameborder='yes' marginwidth='0' marginheight='0' noresize></iframe>";

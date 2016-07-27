@@ -64,7 +64,7 @@ EOH;
     /**
      * @param $ts
      */
-    public function load(&$ts)
+    public function load($ts)
     {
         //        $ts->patterns[] = "/\[youtube=(['\"]?)([^\"']*),([^\"']*)\\1]([^\"]*)\[\/youtube\]/esU";
         //        $ts->replacements[] = __CLASS__ . "::decode( '\\4', '\\2', '\\3' )";

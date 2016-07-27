@@ -74,7 +74,7 @@ EOH;
     /**
      * @param $ts
      */
-    public function load(&$ts)
+    public function load($ts)
     {
         //        $ts->patterns[] = "/\[\[([^\]]*)\]\]/esU";
         //        $ts->replacements[] = __CLASS__ . "::decode( '\\1' )";

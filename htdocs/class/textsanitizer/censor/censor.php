@@ -33,7 +33,7 @@ class MytsCensor extends MyTextSanitizerExtension
      *
      * @return mixed|string
      */
-    public function load(&$ts, $text)
+    public function load($ts, $text)
     {
         static $censorConf;
         if (!isset($censorConf)) {

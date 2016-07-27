@@ -39,7 +39,7 @@ EOH;
     /**
      * @param $ts
      */
-    public function load(&$ts)
+    public function load($ts)
     {
         $ts->callbackPatterns[] = "/\[soundcloud\](http[s]?:\/\/[^\"'<>]*)(.*)\[\/soundcloud\]/sU";
         $ts->callbacks[]        = __CLASS__ . '::myCallback';
