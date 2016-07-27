@@ -63,7 +63,7 @@ EOH;
      *
      * @return bool
      */
-    public function load(&$ts)
+    public function load($ts)
     {
         $ts->patterns[] = "/\[mms=(['\"]?)([^\"']*),([^\"']*)\\1]([^\"]*)\[\/mms\]/sU";
         $rp             = "<OBJECT id=videowindow1 height='\\3' width='\\2' classid='CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6'>";

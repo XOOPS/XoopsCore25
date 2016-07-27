@@ -72,7 +72,7 @@ EOF;
      *
      * @return bool
      */
-    public function load(&$ts)
+    public function load($ts)
     {
         //        $ts->patterns[] = "/\[(swf|flash)=(['\"]?)([^\"']*),([^\"']*)\\2]([^\"]*)\[\/\\1\]/esU";
         //        $ts->replacements[] = __CLASS__ . "::decode( '\\5', '\\3', '\\4' )";

@@ -41,7 +41,7 @@ EOH;
     }
 
     // The code parser
-    function load(&$ts)
+    function load($ts)
     {
         $ts->patterns[] = "/\[mycode\]([^\]]*)\[\/mycode\]/esU";
         $ts->replacements[] = __CLASS__."::decode( '\\1' )";

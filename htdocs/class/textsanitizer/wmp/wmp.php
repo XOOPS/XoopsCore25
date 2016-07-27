@@ -60,7 +60,7 @@ EOH;
     /**
      * @param $ts
      */
-    public function load(&$ts)
+    public function load($ts)
     {
         $ts->patterns[] = "/\[wmp=(['\"]?)([^\"']*),([^\"']*)\\1]([^\"]*)\[\/wmp\]/sU";
         $rp             = "<object classid=\"clsid:6BF52A52-394A-11D3-B153-00C04F79FAA6\" id=\"WindowsMediaPlayer\" width=\"\\2\" height=\"\\3\">\n";
