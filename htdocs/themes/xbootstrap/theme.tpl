@@ -89,6 +89,20 @@
     </div><!-- .bottom-blocks -->
 <{/if}>
 
+<{if $xoBlocks.footer_center || $xoBlocks.footer_right || $xoBlocks.footer_left}>
+    <div class="footer-blocks">
+        <div class="container">
+            <div class="row">
+                <{includeq file="$theme_name/tpl/leftFooter.tpl"}>
+
+                <{includeq file="$theme_name/tpl/centerFooter.tpl"}>
+
+                <{includeq file="$theme_name/tpl/rightFooter.tpl"}>
+            </div>
+        </div>
+    </div><!-- .footer-blocks -->
+<{/if}>
+
 <footer class="footer">
     <h3>
         <{$xoops_footer}>

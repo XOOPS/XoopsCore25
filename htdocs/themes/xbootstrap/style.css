@@ -105,6 +105,11 @@ a.navbar-brand.xlogo {
     padding: 20px 0 20px 0;
 }
 
+.footer-blocks {
+    background: #111;
+    color: #EAEAEA;
+}
+
 .footer {
     background: #111;
     color: #EAEAEA;
