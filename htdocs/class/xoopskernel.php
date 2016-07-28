@@ -154,9 +154,9 @@ class xos_kernel_Xoops2
          * Host abstraction layer
          */
         if (!isset($_SERVER['PATH_TRANSLATED']) && isset($_SERVER['SCRIPT_FILENAME'])) {
-            $_SERVER['PATH_TRANSLATED'] =& $_SERVER['SCRIPT_FILENAME']; // For Apache CGI
+            $_SERVER['PATH_TRANSLATED'] = $_SERVER['SCRIPT_FILENAME']; // For Apache CGI
         } elseif (isset($_SERVER['PATH_TRANSLATED']) && !isset($_SERVER['SCRIPT_FILENAME'])) {
-            $_SERVER['SCRIPT_FILENAME'] =& $_SERVER['PATH_TRANSLATED']; // For IIS/2K now I think :-(
+            $_SERVER['SCRIPT_FILENAME'] = $_SERVER['PATH_TRANSLATED']; // For IIS/2K now I think :-(
         }
         /**
          * User Mulitbytes
