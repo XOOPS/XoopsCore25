@@ -93,20 +93,23 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * Get a {@link ProfileProfile}
+     * Get a ProfileProfile object for a user id.
      *
-     * @param mixed|null $uid
-     * @param boolean    $createOnFailure create a new {@link ProfileProfile} if none is feteched
+     * We will create an empty profile if none exists. This behavior allows user objects
+     * created outside of profile to be edited correctly in the profile module.
+     *
+     * @param integer|null  $uid
+     * @param string[]|null $fields array of field names to fetch, null for all
      *
      * @return object {@link ProfileProfile}
      *
-     * @internal This was get(). No callers found using the extra parameter. The parent class will
-     * @internal handle get(). Leaving this here for now, should delete if no issues found.
+     * @internal This was get($uid, $createOnFailure = true). No callers found using the extra parameter.
+     * @internal Modified to match parent signature.
      */
-    public function getCreate($uid, $createOnFailure = true)
+    public function get($uid = null, $fields = null)
     {
-        $obj = parent::get($uid);
-        if (!is_object($obj) && $createOnFailure) {
+        $obj = parent::get($uid, $fields);
+        if (!is_object($obj)) {
             $obj = $this->create();
         }
 
