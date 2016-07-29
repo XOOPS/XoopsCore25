@@ -182,7 +182,7 @@ class XoopsFormRadio extends XoopsFormElement
             }
             $ret .= '<input type="radio" name="' . $ele_name . '" id="' . $ele_name . $id_ele . '" title = "' . htmlspecialchars($ele_title, ENT_QUOTES) . '" value="' . htmlspecialchars($value, ENT_QUOTES) . '"';
             if (isset($ele_value) && $value == $ele_value) {
-                $ret .= ' checked="checked"';
+                $ret .= ' checked';
             }
             $ret .= $ele_extra . ' />' . "<label name='xolb_{$ele_name}' for='" . $ele_name . $id_ele . "'>" . $name . '</label>' . $ele_delimeter;
             if (!empty($this->columns)) {

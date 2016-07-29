@@ -212,7 +212,7 @@ class XoopsFormSelect extends XoopsFormElement
         foreach ($ele_options as $value => $name) {
             $ret .= '<option value="' . htmlspecialchars($value, ENT_QUOTES) . '"';
             if (count($ele_value) > 0 && in_array($value, $ele_value)) {
-                $ret .= ' selected="selected"';
+                $ret .= ' selected';
             }
             $ret .= '>' . $name . '</option>';
         }

@@ -177,7 +177,7 @@ class XoopsObjectTree
             $value = $this->tree[$key]['obj']->getVar($this->myId);
             $ret .= '<option value="' . $value . '"';
             if ($value == $selected) {
-                $ret .= ' selected="selected"';
+                $ret .= ' selected';
             }
             $ret .= '>' . $prefix_curr . $this->tree[$key]['obj']->getVar($fieldName) . '</option>';
             $prefix_curr .= $prefix_orig;
