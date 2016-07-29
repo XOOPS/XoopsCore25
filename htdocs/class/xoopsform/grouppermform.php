@@ -319,7 +319,7 @@ class XoopsGroupFormCheckBox extends XoopsFormElement
         }
         $tree .= '" value="1"';
         if (in_array($option['id'], $this->_value)) {
-            $tree .= ' checked="checked"';
+            $tree .= ' checked';
         }
         $tree .= ' />' . $option['name'] . "<input type=\"hidden\" name=\"" . $ele_name . '[parents][' . $option['id'] . "]\" value=\"" . implode(':', $parentIds) . "\" /><input type=\"hidden\" name=\"" . $ele_name . '[itemname][' . $option['id'] . "]\" value=\"" . htmlspecialchars($option['name']) . "\" /><br>\n";
         if (isset($option['children'])) {

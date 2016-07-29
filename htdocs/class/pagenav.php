@@ -124,7 +124,7 @@ class XoopsPageNav
             $current_page = (int)floor(($this->current + $this->perpage) / $this->perpage);
             while ($counter <= $total_pages) {
                 if ($counter == $current_page) {
-                    $ret .= '<option value="' . $this->url . (($counter - 1) * $this->perpage) . $this->extra . '" selected="selected">' . $counter . '</option>';
+                    $ret .= '<option value="' . $this->url . (($counter - 1) * $this->perpage) . $this->extra . '" selected>' . $counter . '</option>';
                 } else {
                     $ret .= '<option value="' . $this->url . (($counter - 1) * $this->perpage) . $this->extra . '">' . $counter . '</option>';
                 }
