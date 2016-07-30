@@ -209,7 +209,7 @@ class XoopsFormCheckBox extends XoopsFormElement
             // $name may be a link, should we use $name in the title tag?
             $ret .= "<input type='checkbox' name='{$ele_name}' id='{$ele_id}{$id_ele}' title='" . $ele_title . "' value='" . htmlspecialchars($value, ENT_QUOTES) . "'";
             if (count($ele_value) > 0 && in_array($value, $ele_value)) {
-                $ret .= ' checked"';
+                $ret .= ' checked';
             }
             $ret .= $ele_extra . ' />' . "<label name='xolb_{$ele_name}' for='{$ele_id}{$id_ele}'>" . $name . '</label>' . $ele_delimeter;
             if (!empty($this->columns)) {
