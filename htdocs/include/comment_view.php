@@ -145,23 +145,23 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
   <tr>
     <td class="even" align="center"><select name="com_mode"><option value="flat"';
         if ($com_mode === 'flat') {
-            $navbar .= ' selected="selected"';
+            $navbar .= ' selected';
         }
         $navbar .= '>' . _FLAT . '</option><option value="thread"';
         if ($com_mode === 'thread' || $com_mode === '') {
-            $navbar .= ' selected="selected"';
+            $navbar .= ' selected';
         }
         $navbar .= '>' . _THREADED . '</option><option value="nest"';
         if ($com_mode === 'nest') {
-            $navbar .= ' selected="selected"';
+            $navbar .= ' selected';
         }
         $navbar .= '>' . _NESTED . '</option></select> <select name="com_order"><option value="' . XOOPS_COMMENT_OLD1ST . '"';
         if ($com_order == XOOPS_COMMENT_OLD1ST) {
-            $navbar .= ' selected="selected"';
+            $navbar .= ' selected';
         }
         $navbar .= '>' . _OLDESTFIRST . '</option><option value="' . XOOPS_COMMENT_NEW1ST . '"';
         if ($com_order == XOOPS_COMMENT_NEW1ST) {
-            $navbar .= ' selected="selected"';
+            $navbar .= ' selected';
         }
         unset($postcomment_link);
         $navbar .= '>' . _NEWESTFIRST . '</option></select><input type="hidden" name="' . $comment_config['itemName'] . '" value="' . $com_itemid . '" /> <input type="submit" value="' . _CM_REFRESH . '" class="formButton" />';

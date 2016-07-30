@@ -63,7 +63,7 @@ if ($op === 'list') {
         foreach ($catlist as $c_id => $c_name) {
             $sel = '';
             if ($c_id == $catshow) {
-                $sel = ' selected="selected"';
+                $sel = ' selected';
             }
             $cat_options .= '<option value="' . $c_id . '"' . $sel . '>' . $c_name . '</option>';
         }

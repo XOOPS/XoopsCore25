@@ -570,11 +570,11 @@ function b_system_topposters_edit($options)
     $form     = sprintf(_MB_SYSTEM_DISPLAY, $inputtag);
     $form .= '<br>' . _MB_SYSTEM_DISPLAYA . "&nbsp;<input type='radio' id='options[]' name='options[]' value='1'";
     if ($options[1] == 1) {
-        $form .= " checked='checked'";
+        $form .= " checked";
     }
     $form .= ' />&nbsp;' . _YES . "<input type='radio' id='options[]' name='options[]' value='0'";
     if ($options[1] == 0) {
-        $form .= " checked='checked'";
+        $form .= " checked";
     }
     $form .= ' />&nbsp;' . _NO . '';
     $form .= '<br>' . _MB_SYSTEM_NODISPGR . "<br><select id='options[]' name='options[]' multiple='multiple'>";
@@ -584,7 +584,7 @@ function b_system_topposters_edit($options)
         $sel = '';
         for ($i = 2; $i < $size; ++$i) {
             if ($k == $options[$i]) {
-                $sel = " selected='selected'";
+                $sel = " selected";
             }
         }
         $form .= "<option value='$k'$sel>$v</option>";
@@ -605,11 +605,11 @@ function b_system_newmembers_edit($options)
     $form     = sprintf(_MB_SYSTEM_DISPLAY, $inputtag);
     $form .= '<br>' . _MB_SYSTEM_DISPLAYA . "&nbsp;<input type='radio' id='options[]' name='options[]' value='1'";
     if ($options[1] == 1) {
-        $form .= " checked='checked'";
+        $form .= " checked";
     }
     $form .= ' />&nbsp;' . _YES . "<input type='radio' id='options[]' name='options[]' value='0'";
     if ($options[1] == 0) {
-        $form .= " checked='checked'";
+        $form .= " checked";
     }
     $form .= ' />&nbsp;' . _NO . '';
 
@@ -632,7 +632,7 @@ function b_system_info_edit($options)
     $chk = '';
     $form .= '<br>' . _MB_SYSTEM_SADMIN . '&nbsp;';
     if ($options[3] == 1) {
-        $chk = " checked='checked'";
+        $chk = " checked";
     }
     $form .= "<input type='radio' name='options[3]' value='1'" . $chk . ' />&nbsp;' . _YES . '';
     $chk = '';
@@ -656,7 +656,7 @@ function b_system_themes_show($options)
     foreach ($xoopsConfig['theme_set_allowed'] as $theme) {
         $theme_options .= '<option value="' . $theme . '"';
         if ($theme == $xoopsConfig['theme_set']) {
-            $theme_options .= ' selected="selected"';
+            $theme_options .= ' selected';
         }
         $theme_options .= '>' . $theme . '</option>';
     }
@@ -682,12 +682,12 @@ function b_system_themes_edit($options)
     $chk  = '';
     $form = _MB_SYSTEM_THSHOW . '&nbsp;';
     if ($options[0] == 1) {
-        $chk = " checked='checked'";
+        $chk = " checked";
     }
     $form .= "<input type='radio' name='options[0]' value='1'" . $chk . ' />&nbsp;' . _YES;
     $chk = '';
     if ($options[0] == 0) {
-        $chk = ' checked="checked"';
+        $chk = ' checked';
     }
     $form .= '&nbsp;<input type="radio" name="options[0]" value="0"' . $chk . ' />' . _NO;
     $form .= '<br>' . _MB_SYSTEM_THWIDTH . '&nbsp;';

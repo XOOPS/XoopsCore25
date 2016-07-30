@@ -26,7 +26,7 @@
                     <{counter assign=index}>
                     <input type="hidden" name="not_list[<{$index}>][params]" value="<{$category.name}>,<{$category.itemid}>,<{$event.name}>"/>
                     <div class="col-xs-10 col-md-10 pull-right">
-                        <input type="checkbox" id="not_list[]" name="not_list[<{$index}>][status]" value="1" <{if $event.subscribed}>checked="checked"<{/if}>>
+                        <input type="checkbox" id="not_list[]" name="not_list[<{$index}>][status]" value="1" <{if $event.subscribed}>checked<{/if}>>
 
                         <{$event.caption}>
                     </div>

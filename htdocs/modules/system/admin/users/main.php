@@ -795,24 +795,24 @@ switch ($op) {
             $form          = '<form action="admin.php?fct=users" method="post">
                     ' . _AM_SYSTEM_USERS_SEARCH_USER . '<input type="text" name="user_uname" value="' . $myts->htmlSpecialChars($user_uname) . '" size="15">
                     <select name="selgroups">
-                        <option value="" selected="selected">' . _AM_SYSTEM_USERS_ALLGROUP . '</option>';
+                        <option value="" selected>' . _AM_SYSTEM_USERS_ALLGROUP . '</option>';
             $group_handler = xoops_getHandler('group');
             $group_arr     = $group_handler->getObjects();
             foreach (array_keys($group_arr) as $i) {
                 if ($group_arr[$i]->getVar('groupid') != 3) {
-                    $form .= '<option value="' . $group_arr[$i]->getVar('groupid') . '"  ' . ($selgroups == $group_arr[$i]->getVar('groupid') ? ' selected="selected"' : '') . '>' . $group_arr[$i]->getVar('name') . '</option>';
+                    $form .= '<option value="' . $group_arr[$i]->getVar('groupid') . '"  ' . ($selgroups == $group_arr[$i]->getVar('groupid') ? ' selected' : '') . '>' . $group_arr[$i]->getVar('name') . '</option>';
                 }
             }
             $form .= '</select>&nbsp;
                 <select name="user_type">
-                    <option value="" ' . ($user_type === '' ? ' selected="selected"' : '') . '>' . _AM_SYSTEM_USERS_ALLUSER . '</option>
-                    <option value="actv" ' . ($user_type === 'actv' ? ' selected="selected"' : '') . '>' . _AM_SYSTEM_USERS_ACTIVEUSER . '</option>
-                    <option value="inactv" ' . ($user_type === 'inactv' ? ' selected="selected"' : '') . '>' . _AM_SYSTEM_USERS_INACTIVEUSER . '</option>
+                    <option value="" ' . ($user_type === '' ? ' selected' : '') . '>' . _AM_SYSTEM_USERS_ALLUSER . '</option>
+                    <option value="actv" ' . ($user_type === 'actv' ? ' selected' : '') . '>' . _AM_SYSTEM_USERS_ACTIVEUSER . '</option>
+                    <option value="inactv" ' . ($user_type === 'inactv' ? ' selected' : '') . '>' . _AM_SYSTEM_USERS_INACTIVEUSER . '</option>
                 </select>&nbsp;
                 <select name="user_limit">
-                    <option value="20" ' . ($user_limit == 20 ? ' selected="selected"' : '') . '>20</option>
-                    <option value="50" ' . ($user_limit == 50 ? ' selected="selected"' : '') . '>50</option>
-                    <option value="100" ' . ($user_limit == 100 ? ' selected="selected"' : '') . '>100</option>
+                    <option value="20" ' . ($user_limit == 20 ? ' selected' : '') . '>20</option>
+                    <option value="50" ' . ($user_limit == 50 ? ' selected' : '') . '>50</option>
+                    <option value="100" ' . ($user_limit == 100 ? ' selected' : '') . '>100</option>
                 </select>&nbsp;
                 <input type="hidden" name="user_uname_match" value="XOOPS_MATCH_START" />
                 <input type="submit" value="' . _AM_SYSTEM_USERS_SEARCH . '" name="speed_search">&nbsp;
@@ -826,7 +826,7 @@ switch ($op) {
             $group_arr     = $group_handler->getObjects();
             foreach (array_keys($group_arr) as $i) {
                 if ($group_arr[$i]->getVar('groupid') != 3) {
-                    $form_select_groups .= '<option value="' . $group_arr[$i]->getVar('groupid') . '"  ' . ($selgroups == $group_arr[$i]->getVar('groupid') ? ' selected="selected"' : '') . '>' . $group_arr[$i]->getVar('name') . '</option>';
+                    $form_select_groups .= '<option value="' . $group_arr[$i]->getVar('groupid') . '"  ' . ($selgroups == $group_arr[$i]->getVar('groupid') ? ' selected' : '') . '>' . $group_arr[$i]->getVar('name') . '</option>';
                 }
             }
             $form_select_groups .= '</select><input type="hidden" name="op" value="users_add_delete_group">';
