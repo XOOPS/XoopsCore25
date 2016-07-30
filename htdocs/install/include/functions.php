@@ -359,7 +359,7 @@ function xoFormFieldCollation($name, $value, $label, $help, $link, $charset)
             $collation_default = $key;
             continue;
         }
-        $options .= "<option value='{$key}'" . (($value == $key) ? " selected='selected'" : '') . ">{$key}</option>";
+        $options .= "<option value='{$key}'" . (($value == $key) ? " selected" : '') . ">{$key}</option>";
     }
     if ($collation_default) {
         $field .= "<option value='{$collation_default}'" . (($value == $collation_default || empty($value)) ? " 'selected'" : '') . ">{$collation_default} (Default)</option>";
@@ -424,7 +424,7 @@ function xoFormFieldCharset($name, $value, $label, $help = '', $link)
     $field .= "<select name='{$name}' id='{$name}' onchange=\"setFormFieldCollation('DB_COLLATION_div', this.value)\">";
     $field .= "<option value=''>None</option>";
     foreach ($charsets as $key => $desc) {
-        $field .= "<option value='{$key}'" . (($value == $key) ? " selected='selected'" : '') . ">{$key} - {$desc}</option>";
+        $field .= "<option value='{$key}'" . (($value == $key) ? " selected" : '') . ">{$key} - {$desc}</option>";
     }
     $field .= '</select>';
 

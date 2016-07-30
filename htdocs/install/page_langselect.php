@@ -47,7 +47,7 @@ $content     = '<select name="lang" size="10" style="min-width: 10em;">';
 
 $languages = getDirList('./language/');
 foreach ($languages as $lang) {
-    $sel = ($lang == $wizard->language) ? ' selected="selected"' : '';
+    $sel = ($lang == $wizard->language) ? ' selected' : '';
     $content .= "<option value=\"{$lang}\"{$sel}>{$lang}</option>\n";
 }
 $content .= '</select>';

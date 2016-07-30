@@ -115,7 +115,7 @@ $num_options = '';
 $num_array   = array(20, 100, 500, 2000);
 foreach ($num_array as $n) {
     if ($n == $num) {
-        $num_options .= "<option value='$n' selected='selected'>$n</option>\n";
+        $num_options .= "<option value='$n' selected>$n</option>\n";
     } else {
         $num_options .= "<option value='$n'>$n</option>\n";
     }

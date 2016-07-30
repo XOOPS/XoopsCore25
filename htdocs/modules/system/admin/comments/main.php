@@ -247,7 +247,7 @@ switch ($op) {
         foreach ($module_array as $k => $v) {
             $sel = '';
             if ($k == $module) {
-                $sel = ' selected="selected"';
+                $sel = ' selected';
             }
             $form .= '<option value="' . $k . '"' . $sel . '>' . $v . '</option>';
         }
@@ -256,7 +256,7 @@ switch ($op) {
         foreach ($status_array as $k => $v) {
             $sel = '';
             if (isset($status) && $k == $status) {
-                $sel = ' selected="selected"';
+                $sel = ' selected';
             }
             $form .= '<option value="' . $k . '"' . $sel . '>' . $v . '</option>';
         }
@@ -265,7 +265,7 @@ switch ($op) {
         foreach ($limit_array as $k) {
             $sel = '';
             if (isset($limit) && $k == $limit) {
-                $sel = ' selected="selected"';
+                $sel = ' selected';
             }
             $form .= '<option value="' . $k . '"' . $sel . '>' . $k . '</option>';
         }
