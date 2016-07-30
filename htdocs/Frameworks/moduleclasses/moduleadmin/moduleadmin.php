@@ -543,7 +543,7 @@ class ModuleAdmin
         $language = empty($language) ? $GLOBALS['xoopsConfig']['language'] : $language;
         $file     = XOOPS_ROOT_PATH . '/modules/' . $this->_obj->getVar('dirname') . '/language/' . $language . '/changelog.txt';
         if (is_readable($file)) {
-            $ret .= utf8_encode(implode('<br>', file($file))) . "\n";
+            $ret .= (implode('<br>', file($file))) . "\n";
         } else {
             $file = XOOPS_ROOT_PATH . '/modules/' . $this->_obj->getVar('dirname') . '/docs/changelog.txt';
             if (is_readable($file)) {
