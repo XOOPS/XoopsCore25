@@ -52,7 +52,7 @@
                                                                           alt="<{$smarty.const._IMGDISPLAY}>" title="<{$smarty.const._IMGDISPLAY}>"/>
                     <{if $avatar.type == 'c'}>
                         <a href="<{$xoops_url}>/modules/profile/userinfo.php?uid=<{$avatar.user}>" title="<{$smarty.const._AM_SYSTEM_AVATAR_USERS}>">
-                            <img src="<{xoAdminIcons user_edit.png}>" alt="<{$smarty.const._AM_SYSTEM_AVATAR_USERS}>"/>
+                            <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._AM_SYSTEM_AVATAR_USERS}>"/>
                         </a>
                     <{else}>
                         <img class="cursorhelp tooltip" src="<{xoAdminIcons forum.png}>" alt="<{$avatar.count}> <{$smarty.const._AM_SYSTEM_AVATAR_USERS}>"

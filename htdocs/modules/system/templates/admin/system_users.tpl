@@ -35,7 +35,7 @@
         </thead>
         <!--Display data-->
         <{if $users_count == true}>
-        <form name='memberslist' id='memberslist' action='<{xoAppUrl modules/system/admin.php?fct=users}>' method='POST'>
+            <form name='memberslist' id='memberslist' action='<{xoAppUrl modules/system/admin.php?fct=users}>' method='POST'>
                 <tbody>
                 <{foreach item=users from=$users}>
                     <tr class="<{cycle values='even,odd'}> alignmiddle">
@@ -61,11 +61,11 @@
                                      title="<{$smarty.const._AM_SYSTEM_USERS_VIEW}>"/>
                                 <a class="tooltip" href="admin.php?fct=users&amp;op=users_edit&amp;uid=<{$users.uid}>"
                                    title="<{$smarty.const._AM_SYSTEM_USERS_EDIT}>">
-                                    <img src="<{xoAdminIcons user_edit.png}>" alt="<{$smarty.const._AM_SYSTEM_USERS_EDIT}>"/>
+                                    <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._AM_SYSTEM_USERS_EDIT}>"/>
                                 </a>
                                 <a class="tooltip" href="admin.php?fct=users&amp;op=users_delete&amp;uid=<{$users.uid}>"
                                    title="<{$smarty.const._AM_SYSTEM_USERS_DEL}>">
-                                    <img src="<{xoAdminIcons user_delete.png}>" alt="<{$smarty.const._AM_SYSTEM_USERS_DEL}>"/>
+                                    <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._AM_SYSTEM_USERS_DEL}>"/>
                                 </a>
                             <{else}>
                                 <a class="tooltip" href="admin.php?fct=users&amp;op=users_active&amp;uid=<{$users.uid}>"
@@ -77,11 +77,11 @@
                                      title="<{$smarty.const._AM_SYSTEM_USERS_VIEW}>"/>
                                 <a class="tooltip" href="admin.php?fct=users&amp;op=users_edit&amp;uid=<{$users.uid}>"
                                    title="<{$smarty.const._AM_SYSTEM_USERS_EDIT}>">
-                                    <img src="<{xoAdminIcons user_edit.png}>" alt="<{$smarty.const._AM_SYSTEM_USERS_EDIT}>"/>
+                                    <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._AM_SYSTEM_USERS_EDIT}>"/>
                                 </a>
                                 <a class="tooltip" href="admin.php?fct=users&amp;op=users_delete&amp;uid=<{$users.uid}>"
                                    title="<{$smarty.const._AM_SYSTEM_USERS_DEL}>">
-                                    <img src="<{xoAdminIcons user_delete.png}>" alt="<{$smarty.const._AM_SYSTEM_USERS_DEL}>"/>
+                                    <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._AM_SYSTEM_USERS_DEL}>"/>
                                 </a>
                             <{/if}>
                         </td>
