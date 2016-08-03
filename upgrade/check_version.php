@@ -69,7 +69,10 @@ if ($needUpgrade && !empty($files)) {
 </table>
 <?php
 if (!$needUpgrade) {
-    $update_link = '<a href="' . XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=system">' . _UPDATE_SYSTEM_MODULE . '</a>';
+    $update_link = '<form style="display: inline;" method="POST" action="'
+    . XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=system">'
+    . '<button type="submit" style="color:red;">' . _UPDATE_SYSTEM_MODULE . '</button></form>';
+    //$update_link = '<a href="' . XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=system">' . _UPDATE_SYSTEM_MODULE . '</a>';
     echo '<div class="x2-note">' . sprintf(_NO_NEED_UPGRADE, $update_link) . '</div>';
 
     return null;
