@@ -42,17 +42,20 @@
                 </div>
             <{/if}>
             <div class="article_wf_summary">
+                <span style="font-weight: normal;">
                 <{$item.summary}>
+                    </span>
             </div>
             <div class="pull-right" style="margin-top: 15px;">
-                <a href="<{$item.itemurl}>" class="btn btn-primary btn-xs"> <{$smarty.const._MD_PUBLISHER_VIEW_MORE}></a>
+                <a href="<{$item.itemurl}>"
+                   class="btn btn-primary btn-xs"> <{$smarty.const._MD_PUBLISHER_VIEW_MORE}></a>
             </div>
             <div class="clearfix"></div>
         </div>
     <{/foreach}>
 </div>
 
-    <div align="right"><{$category.navbar}></div>
+    <div align="right"><{$navbar}></div>
 
 <{$press_room_footer}>
 
