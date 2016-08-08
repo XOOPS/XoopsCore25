@@ -16,6 +16,10 @@ class ComposerStaticInitfb111d443af336ae9955b26ed60e9c14
         array (
             'Xmf\\' => 4,
         ),
+        'S' => 
+        array (
+            'Symfony\\Component\\Yaml\\' => 23,
+        ),
         'F' => 
         array (
             'Firebase\\JWT\\' => 13,
@@ -26,6 +30,10 @@ class ComposerStaticInitfb111d443af336ae9955b26ed60e9c14
         'Xmf\\' => 
         array (
             0 => __DIR__ . '/..' . '/xoops/xmf/src/Xmf',
+        ),
+        'Symfony\\Component\\Yaml\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/yaml',
         ),
         'Firebase\\JWT\\' => 
         array (
@@ -43,10 +51,6 @@ class ComposerStaticInitfb111d443af336ae9955b26ed60e9c14
         ),
         'S' => 
         array (
-            'Symfony\\Component\\Yaml\\' => 
-            array (
-                0 => __DIR__ . '/..' . '/symfony/yaml',
-            ),
             'SecurityLib' => 
             array (
                 0 => __DIR__ . '/..' . '/ircmaxell/security-lib/lib',
@@ -89,23 +93,16 @@ class ComposerStaticInitfb111d443af336ae9955b26ed60e9c14
         'SecurityLib\\Enum' => __DIR__ . '/..' . '/ircmaxell/security-lib/lib/SecurityLib/Enum.php',
         'SecurityLib\\Hash' => __DIR__ . '/..' . '/ircmaxell/security-lib/lib/SecurityLib/Hash.php',
         'SecurityLib\\Strength' => __DIR__ . '/..' . '/ircmaxell/security-lib/lib/SecurityLib/Strength.php',
-        'Symfony\\Component\\Yaml\\Dumper' => __DIR__ . '/..' . '/symfony/yaml/Symfony/Component/Yaml/Dumper.php',
-        'Symfony\\Component\\Yaml\\Escaper' => __DIR__ . '/..' . '/symfony/yaml/Symfony/Component/Yaml/Escaper.php',
-        'Symfony\\Component\\Yaml\\Exception\\DumpException' => __DIR__ . '/..' . '/symfony/yaml/Symfony/Component/Yaml/Exception/DumpException.php',
-        'Symfony\\Component\\Yaml\\Exception\\ExceptionInterface' => __DIR__ . '/..' . '/symfony/yaml/Symfony/Component/Yaml/Exception/ExceptionInterface.php',
-        'Symfony\\Component\\Yaml\\Exception\\ParseException' => __DIR__ . '/..' . '/symfony/yaml/Symfony/Component/Yaml/Exception/ParseException.php',
-        'Symfony\\Component\\Yaml\\Exception\\RuntimeException' => __DIR__ . '/..' . '/symfony/yaml/Symfony/Component/Yaml/Exception/RuntimeException.php',
-        'Symfony\\Component\\Yaml\\Inline' => __DIR__ . '/..' . '/symfony/yaml/Symfony/Component/Yaml/Inline.php',
-        'Symfony\\Component\\Yaml\\Parser' => __DIR__ . '/..' . '/symfony/yaml/Symfony/Component/Yaml/Parser.php',
-        'Symfony\\Component\\Yaml\\Tests\\A' => __DIR__ . '/..' . '/symfony/yaml/Symfony/Component/Yaml/Tests/DumperTest.php',
-        'Symfony\\Component\\Yaml\\Tests\\B' => __DIR__ . '/..' . '/symfony/yaml/Symfony/Component/Yaml/Tests/ParserTest.php',
-        'Symfony\\Component\\Yaml\\Tests\\DumperTest' => __DIR__ . '/..' . '/symfony/yaml/Symfony/Component/Yaml/Tests/DumperTest.php',
-        'Symfony\\Component\\Yaml\\Tests\\InlineTest' => __DIR__ . '/..' . '/symfony/yaml/Symfony/Component/Yaml/Tests/InlineTest.php',
-        'Symfony\\Component\\Yaml\\Tests\\ParseExceptionTest' => __DIR__ . '/..' . '/symfony/yaml/Symfony/Component/Yaml/Tests/ParseExceptionTest.php',
-        'Symfony\\Component\\Yaml\\Tests\\ParserTest' => __DIR__ . '/..' . '/symfony/yaml/Symfony/Component/Yaml/Tests/ParserTest.php',
-        'Symfony\\Component\\Yaml\\Tests\\YamlTest' => __DIR__ . '/..' . '/symfony/yaml/Symfony/Component/Yaml/Tests/YamlTest.php',
-        'Symfony\\Component\\Yaml\\Unescaper' => __DIR__ . '/..' . '/symfony/yaml/Symfony/Component/Yaml/Unescaper.php',
-        'Symfony\\Component\\Yaml\\Yaml' => __DIR__ . '/..' . '/symfony/yaml/Symfony/Component/Yaml/Yaml.php',
+        'Symfony\\Component\\Yaml\\Dumper' => __DIR__ . '/..' . '/symfony/yaml/Dumper.php',
+        'Symfony\\Component\\Yaml\\Escaper' => __DIR__ . '/..' . '/symfony/yaml/Escaper.php',
+        'Symfony\\Component\\Yaml\\Exception\\DumpException' => __DIR__ . '/..' . '/symfony/yaml/Exception/DumpException.php',
+        'Symfony\\Component\\Yaml\\Exception\\ExceptionInterface' => __DIR__ . '/..' . '/symfony/yaml/Exception/ExceptionInterface.php',
+        'Symfony\\Component\\Yaml\\Exception\\ParseException' => __DIR__ . '/..' . '/symfony/yaml/Exception/ParseException.php',
+        'Symfony\\Component\\Yaml\\Exception\\RuntimeException' => __DIR__ . '/..' . '/symfony/yaml/Exception/RuntimeException.php',
+        'Symfony\\Component\\Yaml\\Inline' => __DIR__ . '/..' . '/symfony/yaml/Inline.php',
+        'Symfony\\Component\\Yaml\\Parser' => __DIR__ . '/..' . '/symfony/yaml/Parser.php',
+        'Symfony\\Component\\Yaml\\Unescaper' => __DIR__ . '/..' . '/symfony/yaml/Unescaper.php',
+        'Symfony\\Component\\Yaml\\Yaml' => __DIR__ . '/..' . '/symfony/yaml/Yaml.php',
         'WideImage\\Canvas' => __DIR__ . '/..' . '/smottt/wideimage/lib/WideImage/Canvas.php',
         'WideImage\\Coordinate' => __DIR__ . '/..' . '/smottt/wideimage/lib/WideImage/Coordinate.php',
         'WideImage\\Exception\\Exception' => __DIR__ . '/..' . '/smottt/wideimage/lib/WideImage/Exception/Exception.php',
@@ -159,8 +156,6 @@ class ComposerStaticInitfb111d443af336ae9955b26ed60e9c14
         'WideImage\\PaletteImage' => __DIR__ . '/..' . '/smottt/wideimage/lib/WideImage/PaletteImage.php',
         'WideImage\\TrueColorImage' => __DIR__ . '/..' . '/smottt/wideimage/lib/WideImage/TrueColorImage.php',
         'WideImage\\WideImage' => __DIR__ . '/..' . '/smottt/wideimage/lib/WideImage/WideImage.php',
-        'WideImage\\vendor\\de77\\BMP' => __DIR__ . '/..' . '/smottt/wideimage/lib/WideImage/vendor/de77/BMP.php',
-        'WideImage\\vendor\\de77\\TGA' => __DIR__ . '/..' . '/smottt/wideimage/lib/WideImage/vendor/de77/TGA.php',
         'Xmf\\Database\\Migrate' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Database/Migrate.php',
         'Xmf\\Database\\TableLoad' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Database/TableLoad.php',
         'Xmf\\Database\\Tables' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Database/Tables.php',

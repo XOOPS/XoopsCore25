@@ -7,5 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Xmf\\' => array($vendorDir . '/xoops/xmf/src/Xmf'),
+    'Symfony\\Component\\Yaml\\' => array($vendorDir . '/symfony/yaml'),
     'Firebase\\JWT\\' => array($vendorDir . '/firebase/php-jwt/src'),
 );
