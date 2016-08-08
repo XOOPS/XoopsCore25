@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d9b519927f66120de90916354516a5d1",
-    "content-hash": "c494eb34e7eb68440be459c483dbd792",
+    "hash": "37507d5a9b1af6e5ac8f00e39f6cd5fb",
+    "content-hash": "177c3a349657654a407e50396e04a510",
     "packages": [
         {
             "name": "firebase/php-jwt",
-            "version": "v3.0.0",
+            "version": "v4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/firebase/php-jwt.git",
-                "reference": "fa8a06e96526eb7c0eeaa47e4f39be59d21f16e1"
+                "reference": "dccf163dc8ed7ed6a00afc06c51ee5186a428d35"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/fa8a06e96526eb7c0eeaa47e4f39be59d21f16e1",
-                "reference": "fa8a06e96526eb7c0eeaa47e4f39be59d21f16e1",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/dccf163dc8ed7ed6a00afc06c51ee5186a428d35",
+                "reference": "dccf163dc8ed7ed6a00afc06c51ee5186a428d35",
                 "shasum": ""
             },
             "require": {
@@ -48,7 +48,7 @@
             ],
             "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
             "homepage": "https://github.com/firebase/php-jwt",
-            "time": "2015-07-22 18:31:08"
+            "time": "2016-07-18 04:51:16"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -272,32 +272,34 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.4.10",
-            "target-dir": "Symfony/Component/Yaml",
+            "version": "v2.8.9",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Yaml.git",
-                "reference": "297fd84aa9377e54268e9ff74cb81377350e230f"
+                "url": "https://github.com/symfony/yaml.git",
+                "reference": "0ceab136f43ed9d3e97b3eea32a7855dc50c121d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/297fd84aa9377e54268e9ff74cb81377350e230f",
-                "reference": "297fd84aa9377e54268e9ff74cb81377350e230f",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/0ceab136f43ed9d3e97b3eea32a7855dc50c121d",
+                "reference": "0ceab136f43ed9d3e97b3eea32a7855dc50c121d",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "php": ">=5.3.9"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.4-dev"
+                    "dev-master": "2.8-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
+                "psr-4": {
                     "Symfony\\Component\\Yaml\\": ""
-                }
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -305,38 +307,38 @@
             ],
             "authors": [
                 {
-                    "name": "Symfony Community",
-                    "homepage": "http://symfony.com/contributors"
-                },
-                {
                     "name": "Fabien Potencier",
                     "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
                 }
             ],
             "description": "Symfony Yaml Component",
-            "homepage": "http://symfony.com",
-            "time": "2014-09-22 08:51:05"
+            "homepage": "https://symfony.com",
+            "time": "2016-07-17 09:06:15"
         },
         {
             "name": "xoops/xmf",
-            "version": "v1.1.0",
+            "version": "v1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/XOOPS/xmf.git",
-                "reference": "587318fb7f12ee849907a969f2cbefccf213d01f"
+                "reference": "ada7a7c3024d8537f604eb96e4e8418331b7af3d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/XOOPS/xmf/zipball/587318fb7f12ee849907a969f2cbefccf213d01f",
-                "reference": "587318fb7f12ee849907a969f2cbefccf213d01f",
+                "url": "https://api.github.com/repos/XOOPS/xmf/zipball/ada7a7c3024d8537f604eb96e4e8418331b7af3d",
+                "reference": "ada7a7c3024d8537f604eb96e4e8418331b7af3d",
                 "shasum": ""
             },
             "require": {
-                "firebase/php-jwt": "^3.0.0",
+                "firebase/php-jwt": "^4.0.0",
                 "ircmaxell/random-lib": "^1.1.0",
-                "php": ">=5.3.7",
+                "php": ">=5.3.9",
                 "raveren/kint": "1.0.10",
-                "symfony/yaml": "2.4.*"
+                "symfony/yaml": "2.8.*"
             },
             "type": "project",
             "autoload": {
@@ -349,7 +351,7 @@
                 "GPL-2.0+"
             ],
             "description": "XMF - XOOPS Module Framework",
-            "time": "2016-07-10 18:30:19"
+            "time": "2016-08-07 02:57:26"
         }
     ],
     "packages-dev": [],

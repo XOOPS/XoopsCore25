@@ -1,11 +1,11 @@
 {
-    "name": "xoops-258/libraries",
+    "name": "xoops-259/libraries",
     "license": "GPL-2.0+",
     "type": "project",
-    "description": "Libraries for XOOPS 2.5.8",
+    "description": "Libraries for XOOPS 2.5.9",
     "require": {
         "php": ">=5.3.7",
-        "xoops/xmf": "^1.0.0",
+        "xoops/xmf": "^1.1.0",
         "ircmaxell/password-compat": "^1.0.4",
         "smottt/wideimage": "1.1.1"
     }
