@@ -4,7 +4,7 @@
     "type": "project",
     "description": "Libraries for XOOPS 2.5.9",
     "require": {
-        "php": ">=5.3.7",
+        "php": ">=5.3.9",
         "xoops/xmf": "^1.1.0",
         "ircmaxell/password-compat": "^1.0.4",
         "smottt/wideimage": "1.1.1"
