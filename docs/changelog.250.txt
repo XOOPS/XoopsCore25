@@ -1,16 +1,57 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
-2.5.8.1               NOT RELEASED
+2.5.9                  NOT RELEASED
 ===================================
-- update xmf v1.0.2
+- update xmf v1.0.2, incl. Helper fix (geekwright)
 - fix issue with establishing database character set under mysqli
 - Add PHP4 same name constructor shim in XoopsMailer (geekwright)
 - Some cleanup in xBootstrap to reduce setup for users, especially with publisher
 - fix with pre-install reporting (zyspec)
+- Streamline setup for publisher with xBootstrap (geekwright)
+- various "Assign by reference" issues in PHP 7 (geekwright/mamba/ggoffy)
+- Icons for Edit, Delete, Download (bleekk)
+- replace <br /> with <br> (mamba)
+- Publisher templates cleanup in xBootstrap (geekwright)
+- Change set charset behavior for mysqli
+- bug in mysqldatabase.php in XOOPS_DB_CHARSET for PHP < 5.5 (mamba)
+- Update makedata.php (luciorota)
+- Backport Smarty securityToken plugin (geekwright)
+- Add a table property to handlers  (geekwright)
+- Fix occasional issues using xoops_loadLanguage('locale') (geekwright) 
+- Docblock fix for getHandler functions (geekwright)
+- Correct help/module_index in system (geekwright)
+- fixed missing language constants (mamba)
+- Fix Bug #141 for avatar, userrank, smilies(mage)
+- improved upload class (mage)
+- fix Report error on database connection (geekwright)
+- fix Correct protector connection  (geekwright)
+- Update help.tpl (cesagonchu)
+- Module Changelog in UTF-8 (mamba)
+- update system_siteclosed for xbootstrap (liomj)
+- make clean exit after delivering file in browse.php (geekwright)
+- fix XoopsObjectTree issues  (geekwright)
+- various CSS and template tweaks  (geekwright)
+- xos_kernel_Xoops2 reference issues (geekwright)
+- Implement Footer Blocks in xbootstrap theme (liamj/geekwright)
+- Bug in ProfileProfileHandler::get() (geekwright)
+- XoopsFormDateTime - time only option(geekwright)
+- Move to HTML5 syntax (geekwright)
+- changing icons in User Admin for consistency (mamba)
+- fixes for Publisher templates in xBootstrap (mamba)
+- Highlight Update System Module in upgrade(geekwright)
+
+
 Updated:
- - Tabs jQuery Tools to 1.2.7 (mamba)
+ - jQuery 3.1 (mamba)
+ - jQuery UI 1.12 (mamba)
  - jGrowl to 1.4.5 (mamba)
+ - Tabs jQuery Tools to 1.2.7 (mamba)
+ - jQuery Lightbox to 1.2.3 (mamba)
+ - jQuery Form to 3.5.1 (mamba)
+ - jQuery Tablesorter to 2.26.6 (mamba)
+ - phpThumb to 1.7.14-201607141354 (mamba)
+ - Bootstrap 3.7 in xBootstrap theme (geekwright/mamba)
 
 ===================================
 2.5.8 Final            2016-05-27
