@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2016 XOOPS Project (www.xoops.org)            //
@@ -839,7 +839,7 @@ function xoops_module_update($dirname)
         $msgs[]          = '</div><div class="logger">';
 
         $update_script = $module->getInfo('onUpdate');
-        if (false != $update_script && trim($update_script) != '') {
+        if (!empty($update_script) && trim($update_script) != '') {
             include_once XOOPS_ROOT_PATH . '/modules/' . $dirname . '/' . trim($update_script);
         }
         // execute module specific update script if any
@@ -1251,7 +1251,7 @@ function xoops_module_update($dirname)
                         }
                     }
                     $order++;
-                    if (false != $config_handler->insertConfig($confobj)) {
+                    if (false !== $config_handler->insertConfig($confobj)) {
                         //$msgs[] = '&nbsp;&nbsp;Config <strong>'.$config['name'].'</strong> added to the database.'.$confop_msgs;
                         $msgs[] = '&nbsp;&nbsp;' . sprintf(_AM_SYSTEM_MODULES_CONFIG_DATA_ADD, '<strong>' . $config['name'] . '</strong>') . $confop_msgs;
                     } else {

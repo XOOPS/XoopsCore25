@@ -84,7 +84,7 @@ if (is_object($xoopsUser)) {
             $option_tray->addElement($noname_checkbox);
         }
     }
-    if (false != $xoopsUser->isAdmin($com_modid)) {
+    if (false !== $xoopsUser->isAdmin($com_modid)) {
         // show status change box when editing (comment id is not empty)
         if (!empty($com_id)) {
             include_once $GLOBALS['xoops']->path('include/comment_constants.php');

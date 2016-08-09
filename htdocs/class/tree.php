@@ -212,7 +212,7 @@ class XoopsObjectTree
         $extra = ''
     ) {
         $ret = '<select name="' . $name . '" id="' . $name . '" ' . $extra . '>';
-        if (false != $addEmptyOption) {
+        if (false !== (bool)$addEmptyOption) {
             $ret .= '<option value="0"></option>';
         }
         $this->makeSelBoxOptions($fieldName, $selected, $key, $ret, $prefix);

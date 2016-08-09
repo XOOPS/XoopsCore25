@@ -100,7 +100,8 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
             if (!empty($com_id) && !empty($com_rootid) && ($com_id != $com_rootid)) {
                 // Show specific thread tree
                 $comments = $comment_handler->getThread($com_rootid, $com_id);
-                if (false != $comments) {
+//                if (false != $comments) {
+                if (!empty($comments)) {  // getThread always returns array - changed in 2.5.9
                     include_once $GLOBALS['xoops']->path('class/commentrenderer.php');
                     $renderer = XoopsCommentRenderer::instance($xoopsTpl);
                     $renderer->setComments($comments);
@@ -113,7 +114,8 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
                 if ($c_count > 0) {
                     for ($i = 0; $i < $c_count; ++$i) {
                         $comments = $comment_handler->getThread($top_comments[$i]->getVar('com_rootid'), $top_comments[$i]->getVar('com_id'));
-                        if (false != $comments) {
+//                        if (false != $comments) {
+                        if (!empty($comments)) {  // $getThread always returns array - changed in 2.5.9
                             include_once $GLOBALS['xoops']->path('class/commentrenderer.php');
                             $renderer = XoopsCommentRenderer::instance($xoopsTpl);
                             $renderer->setComments($comments);

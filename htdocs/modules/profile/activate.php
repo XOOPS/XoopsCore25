@@ -38,7 +38,7 @@ if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
         if ($thisuser->getVar('level') > 0) {
             redirect_header(XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/index.php', 5, _US_ACONTACT, false);
         } else {
-            if (false != $member_handler->activateUser($thisuser)) {
+            if (false !== $member_handler->activateUser($thisuser)) {
                 $config_handler             = xoops_getHandler('config');
                 $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
                 if ($GLOBALS['xoopsConfigUser']['activation_type'] == 2) {

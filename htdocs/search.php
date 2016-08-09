@@ -259,7 +259,7 @@ switch ($action) {
                 echo '<a href="' . htmlspecialchars($search_url_prev) . '">' . _SR_PREVIOUS . '</a></td>';
             }
             echo '<td>&nbsp;&nbsp;</td>';
-            if (false != $has_next) {
+            if (false !== $has_next) {
                 $next            = $start + 20;
                 $search_url_next = $search_url . "&start={$next}";
                 echo '<td align="right"><a href="' . htmlspecialchars($search_url_next) . '">' . _SR_NEXT . '</a></td>';

@@ -91,7 +91,7 @@ if (!empty($_GET['xoopsorgnews'])) {
             if ($snoopy->fetch($url)) {
                 $rssdata    = $snoopy->results;
                 $rss2parser = new XoopsXmlRss2Parser($rssdata);
-                if (false != $rss2parser->parse()) {
+                if (false !== $rss2parser->parse()) {
                     $_items =& $rss2parser->getItems();
                     $count  = count($_items);
                     for ($i = 0; $i < $count; ++$i) {

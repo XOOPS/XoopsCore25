@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2016 XOOPS Project (www.xoops.org)            //
@@ -56,7 +56,7 @@ function b_system_online_show()
         $online_handler->write($uid, $uname, time(), 0, $requestIp);
     }
     $onlines = $online_handler->getAll();
-    if (false != $onlines) {
+    if (!empty($onlines)) {
         $total   = count($onlines);
         $block   = array();
         $guests  = 0;
