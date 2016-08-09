@@ -53,8 +53,8 @@ class XoopsCommentRenderer
     public function __construct(XoopsTpl $tpl, $use_icons = true, $do_iconcheck = false)
     {
         $this->_tpl           = $tpl;
-        $this->_useIcons      = $use_icons;
-        $this->_doIconCheck   = $do_iconcheck;
+        $this->_useIcons      = (bool)$use_icons;
+        $this->_doIconCheck   = (bool)$do_iconcheck;
         $this->_memberHandler = xoops_getHandler('member');
         $this->_statusText    = array(
             XOOPS_COMMENT_PENDING => '<span style="text-decoration: none; font-weight: bold; color: #00ff00;">' . _CM_PENDING . '</span>',
@@ -83,7 +83,7 @@ class XoopsCommentRenderer
     /**
      * Accessor
      *
-     * @param object $comments_arr array of {@link XoopsComment} objects
+     * @param array $comments_arr array of {@link XoopsComment} objects
      */
     public function setComments(&$comments_arr)
     {
@@ -102,14 +102,14 @@ class XoopsCommentRenderer
     {
         $count = count($this->_comments);
         for ($i = 0; $i < $count; ++$i) {
-            if (false != $this->_useIcons) {
+            if (false !== $this->_useIcons) {
                 $title = $this->_getTitleIcon($this->_comments[$i]->getVar('com_icon')) . '&nbsp;' . $this->_comments[$i]->getVar('com_title');
             } else {
                 $title = $this->_comments[$i]->getVar('com_title');
             }
             // Start edit by voltan
             $poster = $this->_getPosterArray($this->_comments[$i]->getVar('com_uid'), $this->_comments[$i]->getVar('com_user'), $this->_comments[$i]->getVar('com_url'));
-            if (false != $admin_view) {
+            if (false !== (bool)$admin_view) {
                 $com_email = $this->_comments[$i]->getVar('com_email');
                 $text      = $this->_comments[$i]->getVar('com_text');
                 $text .= '<div style="text-align:right; margin-top: 2px; margin-bottom: 0; margin-right: 2px;">';
@@ -146,7 +146,7 @@ class XoopsCommentRenderer
      * @param  integer $comment_id Should be "0" when called by client
      * @param  boolean $admin_view
      * @param  boolean $show_nav
-     * @return null
+     * @return void
      */
     public function renderThreadView($comment_id = 0, $admin_view = false, $show_nav = true)
     {
@@ -155,19 +155,20 @@ class XoopsCommentRenderer
         $xot  = new XoopsObjectTree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
         $tree =& $xot->getTree();
 
-        if (false != $this->_useIcons) {
+        if (false !== $this->_useIcons) {
             $title = $this->_getTitleIcon($tree[$comment_id]['obj']->getVar('com_icon')) . '&nbsp;' . $tree[$comment_id]['obj']->getVar('com_title');
         } else {
             $title = $tree[$comment_id]['obj']->getVar('com_title');
         }
-        if (false != $show_nav && $tree[$comment_id]['obj']->getVar('com_pid') != 0) {
+        if (false !== (bool)$show_nav && $tree[$comment_id]['obj']->getVar('com_pid') != 0) {
             $this->_tpl->assign('lang_top', _CM_TOP);
             $this->_tpl->assign('lang_parent', _CM_PARENT);
             $this->_tpl->assign('show_threadnav', true);
         } else {
             $this->_tpl->assign('show_threadnav', false);
         }
-        if (false != $admin_view) {
+        $admin_view = (bool)$admin_view;
+        if (false !== $admin_view) {
             // admins can see all
             $com_email = $tree[$comment_id]['obj']->getVar('com_email');
             $text      = $tree[$comment_id]['obj']->getVar('com_text');
@@ -226,13 +227,14 @@ class XoopsCommentRenderer
      */
     public function _renderThreadReplies(&$thread, $key, &$replies, $prefix, $admin_view, $depth = 0, $current_prefix = '')
     {
+        $admin_view = (bool)$admin_view;
         if ($depth > 0) {
-            if (false != $this->_useIcons) {
+            if (false !== $this->_useIcons) {
                 $title = $this->_getTitleIcon($thread[$key]['obj']->getVar('com_icon')) . '&nbsp;' . $thread[$key]['obj']->getVar('com_title');
             } else {
                 $title = $thread[$key]['obj']->getVar('com_title');
             }
-            $title = (false != $admin_view) ? $title . ' ' . $this->_statusText[$thread[$key]['obj']->getVar('com_status')] : $title;
+            $title = (false !== $admin_view) ? $title . ' ' . $this->_statusText[$thread[$key]['obj']->getVar('com_status')] : $title;
             // Start edit by voltan
             $replies[] = array(
                 'id'          => $key,
@@ -269,19 +271,20 @@ class XoopsCommentRenderer
      *
      * @param  integer $comment_id Always "0" when called by client.
      * @param  boolean $admin_view
-     * @return null
+     * @return void
      */
     public function renderNestView($comment_id = 0, $admin_view = false)
     {
         include_once $GLOBALS['xoops']->path('class/tree.php');
         $xot  = new XoopsObjectTree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
         $tree =& $xot->getTree();
-        if (false != $this->_useIcons) {
+        if (false !== $this->_useIcons) {
             $title = $this->_getTitleIcon($tree[$comment_id]['obj']->getVar('com_icon')) . '&nbsp;' . $tree[$comment_id]['obj']->getVar('com_title');
         } else {
             $title = $tree[$comment_id]['obj']->getVar('com_title');
         }
-        if (false != $admin_view) {
+        $admin_view = (bool)$admin_view;
+        if (false !== $admin_view) {
             $com_email = $tree[$comment_id]['obj']->getVar('com_email');
             $text      = $tree[$comment_id]['obj']->getVar('com_text');
             $text .= '<div style="text-align:right; margin-top: 2px; margin-bottom: 0; margin-right: 2px;">';
@@ -337,12 +340,13 @@ class XoopsCommentRenderer
     public function _renderNestReplies(&$thread, $key, &$replies, $prefix, $admin_view, $depth = 0)
     {
         if ($depth > 0) {
-            if (false != $this->_useIcons) {
+            if (false !== $this->_useIcons) {
                 $title = $this->_getTitleIcon($thread[$key]['obj']->getVar('com_icon')) . '&nbsp;' . $thread[$key]['obj']->getVar('com_title');
             } else {
                 $title = $thread[$key]['obj']->getVar('com_title');
             }
-            $text = (false != $admin_view) ? $thread[$key]['obj']->getVar('com_text') . '<div style="text-align:right; margin-top: 2px; margin-right: 2px;">' . _CM_STATUS . ': ' . $this->_statusText[$thread[$key]['obj']->getVar('com_status')] . '<br>IP: <span style="font-weight: bold;">' . $thread[$key]['obj']->getVar('com_ip') . '</span><br>' . _CM_EMAIL . ' :<span style="font-weight: bold;">' . $thread[$key]['obj']->getVar('com_email') . '</span></div>' : $thread[$key]['obj']->getVar('com_text');
+            $admin_view = (bool)$admin_view;
+            $text = (false !== $admin_view) ? $thread[$key]['obj']->getVar('com_text') . '<div style="text-align:right; margin-top: 2px; margin-right: 2px;">' . _CM_STATUS . ': ' . $this->_statusText[$thread[$key]['obj']->getVar('com_status')] . '<br>IP: <span style="font-weight: bold;">' . $thread[$key]['obj']->getVar('com_ip') . '</span><br>' . _CM_EMAIL . ' :<span style="font-weight: bold;">' . $thread[$key]['obj']->getVar('com_email') . '</span></div>' : $thread[$key]['obj']->getVar('com_text');
             // Start edit by voltan
             $replies[] = array(
                 'id'            => $key,
@@ -474,7 +478,7 @@ class XoopsCommentRenderer
     {
         $icon_image = htmlspecialchars(trim($icon_image));
         if ($icon_image != '') {
-            if (false != $this->_doIconCheck) {
+            if (false !== $this->_doIconCheck) {
                 if (!file_exists($GLOBALS['xoops']->path('images/subject/' . $icon_image))) {
                     return '<img src="' . XOOPS_URL . '/images/icons/no_posticon.gif" alt="" />';
                 } else {

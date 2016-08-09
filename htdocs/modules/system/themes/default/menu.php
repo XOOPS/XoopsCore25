@@ -45,7 +45,7 @@ foreach ($dirlist as $file) {
         if ($modversion['hasAdmin']) {
             if (xoops_getModuleOption('active_' . $file, 'system')) {
                 $category = isset($modversion['category']) ? (int)$modversion['category'] : 0;
-                if (false != $all_ok || in_array($modversion['category'], $ok_syscats)) {
+                if (false !== $all_ok || in_array($modversion['category'], $ok_syscats)) {
                     $adminmenu[$index]['title'] = trim($modversion['name']);
                     $adminmenu[$index]['desc']  = trim($modversion['description']);
                     $adminmenu[$index]['link']  = 'admin.php?fct=' . $file;

@@ -94,7 +94,7 @@ if (!is_object($xoopsUser)) {
     }
 }
 
-if (false != $accesserror) {
+if (false !== $accesserror) {
     $ref = xoops_getenv('HTTP_REFERER');
     if ($ref != '') {
         redirect_header($ref, 2, _NOPERM);
@@ -162,7 +162,7 @@ switch ($op) {
         foreach (array_keys($child_comments) as $i) {
             $child_comments[$i]->setVar('com_pid', $new_pid);
             // if the deleted comment is a root comment, need to change root id to own id
-            if (false != $comment->isRoot()) {
+            if (false !== $comment->isRoot()) {
                 $new_rootid = $child_comments[$i]->getVar('com_id');
                 $child_comments[$i]->setVar('com_rootid', $child_comments[$i]->getVar('com_id'));
                 if (!$comment_handler->insert($child_comments[$i])) {

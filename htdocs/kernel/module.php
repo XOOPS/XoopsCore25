@@ -243,7 +243,7 @@ class XoopsModule extends XoopsObject
         }
 
         if (!file_exists($file = $GLOBALS['xoops']->path('modules/' . $dirname . '/xoops_version.php'))) {
-            if (false != $verbose) {
+            if (false !== (bool)$verbose) {
                 echo "Module File for $dirname Not Found!";
             }
 

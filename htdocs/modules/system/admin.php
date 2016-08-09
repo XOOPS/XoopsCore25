@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2016 XOOPS Project (www.xoops.org)            //
@@ -53,7 +53,7 @@ if ($admintest != 0) {
 
             if ($category > 0) {
                 $group = $xoopsUser->getGroups();
-                if (in_array(XOOPS_GROUP_ADMIN, $group) || false != $sysperm_handler->checkRight('system_admin', $category, $group, $xoopsModule->getVar('mid'))) {
+                if (in_array(XOOPS_GROUP_ADMIN, $group) || false !== $sysperm_handler->checkRight('system_admin', $category, $group, $xoopsModule->getVar('mid'))) {
                     if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/admin/' . $fct . '/main.php')) {
                         include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/admin/' . $fct . '/main.php';
                     } else {
@@ -79,7 +79,7 @@ if ($admintest != 0) {
     }
 }
 
-if (false != $error) {
+if (false !== $error) {
     $op = system_CleanVars($_REQUEST, 'op', '', 'string');
     if ($op === 'system_activate') {
         $part           = system_CleanVars($_REQUEST, 'type', '', 'string');
@@ -128,7 +128,7 @@ if (false != $error) {
             if ($modversion['hasAdmin']) {
                 if (xoops_getModuleOption('active_' . $directory, 'system')) {
                     $category = isset($modversion['category']) ? (int)$modversion['category'] : 0;
-                    if (false != $all_ok || in_array($modversion['category'], $ok_syscats)) {
+                    if (false !== $all_ok || in_array($modversion['category'], $ok_syscats)) {
                         $menu['file']   = $directory;
                         $menu['title']  = trim($modversion['name']);
                         $menu['desc']   = str_replace('<br>', ' ', $modversion['description']);
@@ -137,7 +137,7 @@ if (false != $error) {
                     }
                 } else {
                     $category = isset($modversion['category']) ? (int)$modversion['category'] : 0;
-                    if (false != $all_ok || in_array($modversion['category'], $ok_syscats)) {
+                    if (false !== $all_ok || in_array($modversion['category'], $ok_syscats)) {
                         $menu['file']   = $directory;
                         $menu['title']  = trim($modversion['name']);
                         $menu['desc']   = str_replace('<br>', ' ', $modversion['description']);
@@ -148,7 +148,7 @@ if (false != $error) {
                 if (!in_array($directory, $inactive_section)) {
                     $menu['used'] = true;
                 }
-                if (false != $all_ok || in_array($modversion['category'], $ok_syscats)) {
+                if (false !== $all_ok || in_array($modversion['category'], $ok_syscats)) {
                     switch ($directory) {
                         case 'avatars':
                             $avatar_handler = xoops_getHandler('avatar');

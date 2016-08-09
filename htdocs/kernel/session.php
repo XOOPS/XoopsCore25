@@ -117,7 +117,9 @@ class XoopsSessionHandler
             $this->db->prefix('session'),
             $this->db->quoteString($sess_id)
         );
-        if (false != $result = $this->db->query($sql)) {
+//        if (false != $result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!empty($result)) {
             if (list($sess_data, $sess_ip) = $this->db->fetchRow($result)) {
                 if ($this->securityLevel > 1) {
                     if (false === $ip->sameSubnet(

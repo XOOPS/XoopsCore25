@@ -114,7 +114,7 @@ if ($op === 'delete') {
         } else {
             $del_uid        = $GLOBALS['xoopsUser']->getVar('uid');
             $member_handler = xoops_getHandler('member');
-            if (false != $member_handler->deleteUser($GLOBALS['xoopsUser'])) {
+            if (false !== $member_handler->deleteUser($GLOBALS['xoopsUser'])) {
                 $online_handler = xoops_getHandler('online');
                 $online_handler->destroy($del_uid);
                 xoops_notification_deletebyuser($del_uid);

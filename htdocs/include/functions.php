@@ -936,7 +936,7 @@ function xoops_comment_delete($module_id, $item_id)
             $count       = count($comments);
             $deleted_num = array();
             for ($i = 0; $i < $count; ++$i) {
-                if (false != $comment_handler->delete($comments[$i])) {
+                if (false !== $comment_handler->delete($comments[$i])) {
                     // store poster ID and deleted post number into array for later use
                     $poster_id = $comments[$i]->getVar('com_uid');
                     if ($poster_id != 0) {
