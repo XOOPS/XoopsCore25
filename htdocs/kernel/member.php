@@ -448,7 +448,7 @@ class XoopsMemberHandler
      * activate a user
      *
      * @param  XoopsUser $user reference to the {@link XoopsUser} object
-     * @return bool      successful?
+     * @return mixed      successful? false on failure
      */
     public function activateUser(XoopsUser $user)
     {

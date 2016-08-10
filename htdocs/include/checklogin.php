@@ -39,7 +39,7 @@ xoops_loadLanguage('auth');
 $xoopsAuth = XoopsAuthFactory::getAuthConnection($myts->addSlashes($uname));
 $user      = $xoopsAuth->authenticate($uname, $pass);
 
-if (false != $user) {
+if (false !== $user) {
     if (0 == $user->getVar('level')) {
         redirect_header(XOOPS_URL . '/index.php', 5, _US_NOACTTPADM);
     }

@@ -289,7 +289,7 @@ switch ($op) {
             if ($thisuser->getVar('level') > 0) {
                 redirect_header('user.php', 5, _US_ACONTACT, false);
             } else {
-                if (false != $member_handler->activateUser($thisuser)) {
+                if (false !== $member_handler->activateUser($thisuser)) {
                     $config_handler  = xoops_getHandler('config');
                     $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
                     if ($xoopsConfigUser['activation_type'] == 2) {

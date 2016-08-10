@@ -316,7 +316,7 @@ switch ($op) {
                 $dohtml      = 0;
                 $accesserror = true;
             }
-            if (false != $accesserror) {
+            if (false !== $accesserror) {
                 redirect_header($redirect_page . '=' . $com_itemid . '&amp;com_id=' . $com_id . '&amp;com_mode=' . $com_mode . '&amp;com_order=' . $com_order, 1, _NOPERM);
             }
         } else {
@@ -406,7 +406,7 @@ switch ($op) {
         if (isset($extra_params)) {
             $comment->setVar('com_exparams', $extra_params);
         }
-        if (false != $comment_handler->insert($comment)) {
+        if (false !== $comment_handler->insert($comment)) {
             $newcid = $comment->getVar('com_id');
             // set own id as root id if this is a top comment
             if ($com_rootid == 0) {
@@ -419,7 +419,7 @@ switch ($op) {
                 }
             }
             // call custom approve function if any
-            if (false != $call_approvefunc && isset($comment_config['callback']['approve']) && trim($comment_config['callback']['approve']) != '') {
+            if (false !== $call_approvefunc && isset($comment_config['callback']['approve']) && trim($comment_config['callback']['approve']) != '') {
                 $skip = false;
                 if (!function_exists($comment_config['callback']['approve'])) {
                     if (isset($comment_config['callbackFile'])) {
@@ -440,7 +440,7 @@ switch ($op) {
             }
 
             // call custom update function if any
-            if (false != $call_updatefunc && isset($comment_config['callback']['update']) && trim($comment_config['callback']['update']) != '') {
+            if (false !== $call_updatefunc && isset($comment_config['callback']['update']) && trim($comment_config['callback']['update']) != '') {
                 $skip = false;
                 if (!function_exists($comment_config['callback']['update'])) {
                     if (isset($comment_config['callbackFile'])) {
@@ -470,7 +470,7 @@ switch ($op) {
 
             // increment user post if needed
             $uid = $comment->getVar('com_uid');
-            if ($uid > 0 && false != $add_userpost) {
+            if ($uid > 0 && false !== $add_userpost) {
                 $member_handler = xoops_getHandler('member');
                 $poster         = $member_handler->getUser($uid);
                 if (is_object($poster)) {

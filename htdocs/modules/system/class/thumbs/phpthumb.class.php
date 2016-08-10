@@ -3804,8 +3804,8 @@ if (false) {
 					break;
 				case 2:
 					$imageHeader = 'Content-Type: image/jpeg';
-					$GDreadSupport = (bool) @$gd_info['JPG Support'];
-					break;
+                    $GDreadSupport = (bool) @$gd_info['JPEG Support'] || (bool) @$gd_info['JPG Support'];
+                    break;
 				case 3:
 					$imageHeader = 'Content-Type: image/png';
 					$GDreadSupport = (bool) @$gd_info['PNG Support'];
