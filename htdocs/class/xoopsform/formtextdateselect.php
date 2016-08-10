@@ -25,8 +25,8 @@ defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 class XoopsFormTextDateSelect extends XoopsFormText
 {
     /**
-     * @param     $caption
-     * @param     $name
+     * @param string $caption
+     * @param string $name
      * @param int $size
      * @param int $value
      */
@@ -38,12 +38,17 @@ class XoopsFormTextDateSelect extends XoopsFormText
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
+     * @see XoopsFormText::render()
      */
     public function render()
     {
         static $included = false;
-        include_once XOOPS_ROOT_PATH . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/calendar.php';
+        if (file_exists(XOOPS_ROOT_PATH . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/calendar.php')) {
+            include_once XOOPS_ROOT_PATH . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/calendar.php';
+        } else {
+            include_once XOOPS_ROOT_PATH . '/language/english/calendar.php';
+        }
 
         $ele_name  = $this->getName();
         $ele_value = $this->getValue(false);
@@ -55,7 +60,7 @@ class XoopsFormTextDateSelect extends XoopsFormText
         }
 
         $jstime = formatTimestamp($ele_value, _SHORTDATESTRING);
-        if (is_object($GLOBALS['xoTheme'])) {
+        if (isset($GLOBALS['xoTheme']) && is_object($GLOBALS['xoTheme'])) {
             $GLOBALS['xoTheme']->addScript('include/calendar.js');
             $GLOBALS['xoTheme']->addStylesheet('include/calendar-blue.css');
             if (!$included) {
