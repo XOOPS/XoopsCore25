@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "37507d5a9b1af6e5ac8f00e39f6cd5fb",
-    "content-hash": "177c3a349657654a407e50396e04a510",
+    "hash": "c59d334b64f1c095cc16117a2744c5a2",
+    "content-hash": "e1d2bbab14d961a60ff88b5d84eda1fc",
     "packages": [
         {
             "name": "firebase/php-jwt",
@@ -321,16 +321,16 @@
         },
         {
             "name": "xoops/xmf",
-            "version": "v1.1.2",
+            "version": "v1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/XOOPS/xmf.git",
-                "reference": "ada7a7c3024d8537f604eb96e4e8418331b7af3d"
+                "reference": "ddfbe9ad36a203052bbbea3a1a8462f01cb7afd8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/XOOPS/xmf/zipball/ada7a7c3024d8537f604eb96e4e8418331b7af3d",
-                "reference": "ada7a7c3024d8537f604eb96e4e8418331b7af3d",
+                "url": "https://api.github.com/repos/XOOPS/xmf/zipball/ddfbe9ad36a203052bbbea3a1a8462f01cb7afd8",
+                "reference": "ddfbe9ad36a203052bbbea3a1a8462f01cb7afd8",
                 "shasum": ""
             },
             "require": {
@@ -351,7 +351,7 @@
                 "GPL-2.0+"
             ],
             "description": "XMF - XOOPS Module Framework",
-            "time": "2016-08-07 02:57:26"
+            "time": "2016-08-13 23:45:38"
         }
     ],
     "packages-dev": [],
@@ -361,7 +361,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.3.7"
+        "php": ">=5.3.9"
     },
     "platform-dev": []
 }
