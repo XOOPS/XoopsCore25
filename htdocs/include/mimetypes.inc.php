@@ -107,6 +107,7 @@ return array(
     'css'   => 'text/css',
     'html'  => 'text/html',
     'htm'   => 'text/html',
+    'tpl'   => 'text/html',
     'asc'   => 'text/plain',
     'txt'   => 'text/plain',
     'rtf'   => 'text/rtf',
