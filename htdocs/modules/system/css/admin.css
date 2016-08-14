@@ -96,6 +96,8 @@ form {
 
 .xo-thumb img {
     border: 0;
+    max-height: 120px;
+    max-width: 120px;
 }
 
 .xo-thumbimg {

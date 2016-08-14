@@ -125,3 +125,8 @@
     float: right;
     padding-bottom: 0.7em;
 }
+
+#lightbox-image {
+    max-width: 100%;
+    max-height: 100%;
+}

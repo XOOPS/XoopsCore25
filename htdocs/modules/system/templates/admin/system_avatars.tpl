@@ -40,7 +40,7 @@
         <div class="floatleft">
             <div class="ui-corner-all xo-thumb txtcenter">
                 <div class="xo-thumbimg">
-                    <img class="tooltip" src="<{$xoops_url}>/image.php?src=<{$xoops_url}>/uploads/<{$avatar.avatar_file}>&amp;height=120&amp;width=120"
+                    <img class="tooltip" src="<{$xoops_url}>/uploads/<{$avatar.avatar_file}>"
                          alt="<{$avatar.avatar_name}>" title="<{$avatar.avatar_name}>"/>
                 </div>
                 <div class="xo-actions txtcenter">
