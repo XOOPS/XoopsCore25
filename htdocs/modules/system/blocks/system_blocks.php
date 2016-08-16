@@ -147,7 +147,8 @@ function b_system_main_show()
                 foreach ($sublinks as $sublink) {
                     $block['modules'][$i]['sublinks'][] = array(
                         'name' => $sublink['name'],
-                        'url'  => XOOPS_URL . '/modules/' . $modules[$i]->getVar('dirname') . '/' . $sublink['url']);
+                        'url'  => XOOPS_URL . '/modules/' . $modules[$i]->getVar('dirname') . '/' . $sublink['url']
+                    );
                 }
             } else {
                 $block['modules'][$i]['sublinks'] = array();
@@ -319,7 +320,8 @@ function b_system_info_show($options)
     $block   = array();
     if (!empty($options[3])) {
         $block['showgroups'] = true;
-        $result              = $xoopsDB->query('SELECT u.uid, u.uname, u.email, u.user_viewemail, u.user_avatar, g.name AS groupname FROM ' . $xoopsDB->prefix('groups_users_link') . ' l LEFT JOIN ' . $xoopsDB->prefix('users') . ' u ON l.uid=u.uid LEFT JOIN ' . $xoopsDB->prefix('groups') . " g ON l.groupid=g.groupid WHERE g.group_type='Admin' ORDER BY l.groupid, u.uid");
+        $result              = $xoopsDB->query('SELECT u.uid, u.uname, u.email, u.user_viewemail, u.user_avatar, g.name AS groupname FROM ' . $xoopsDB->prefix('groups_users_link') . ' l LEFT JOIN ' . $xoopsDB->prefix('users')
+                                               . ' u ON l.uid=u.uid LEFT JOIN ' . $xoopsDB->prefix('groups') . " g ON l.groupid=g.groupid WHERE g.group_type='Admin' ORDER BY l.groupid, u.uid");
         if ($xoopsDB->getRowsNum($result) > 0) {
             $prev_caption = '';
             $i            = 0;
@@ -332,21 +334,25 @@ function b_system_info_show($options)
                     $block['groups'][$i]['users'][] = array(
                         'id'      => $userinfo['uid'],
                         'name'    => $myts->htmlspecialchars($userinfo['uname']),
-                        'msglink' => "<a href=\"javascript:openWithSelfMain('" . XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . $userinfo['uid'] . "','pmlite',450,370);\"><img src=\"" . XOOPS_URL . "/images/icons/pm_small.gif\" border=\"0\" width=\"27\" height=\"17\" alt=\"\" /></a>",
-                        'avatar'  => XOOPS_UPLOAD_URL . '/' . $userinfo['user_avatar']);
+                        'msglink' => "<a href=\"javascript:openWithSelfMain('" . XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . $userinfo['uid'] . "','pmlite',450,370);\"><img src=\"" . XOOPS_URL
+                                     . "/images/icons/pm_small.gif\" border=\"0\" width=\"27\" height=\"17\" alt=\"\" /></a>",
+                        'avatar'  => XOOPS_UPLOAD_URL . '/' . $userinfo['user_avatar']
+                    );
                 } else {
                     if ($userinfo['user_viewemail']) {
                         $block['groups'][$i]['users'][] = array(
                             'id'      => $userinfo['uid'],
                             'name'    => $myts->htmlspecialchars($userinfo['uname']),
                             'msglink' => '<a href="mailto:' . $userinfo['email'] . '"><img src="' . XOOPS_URL . '/images/icons/em_small.gif" border="0" width="16" height="14" alt="" /></a>',
-                            'avatar'  => XOOPS_UPLOAD_URL . '/' . $userinfo['user_avatar']);
+                            'avatar'  => XOOPS_UPLOAD_URL . '/' . $userinfo['user_avatar']
+                        );
                     } else {
                         $block['groups'][$i]['users'][] = array(
                             'id'      => $userinfo['uid'],
                             'name'    => $myts->htmlspecialchars($userinfo['uname']),
                             'msglink' => '&nbsp;',
-                            'avatar'  => XOOPS_UPLOAD_URL . '/' . $userinfo['user_avatar']);
+                            'avatar'  => XOOPS_UPLOAD_URL . '/' . $userinfo['user_avatar']
+                        );
                     }
                 }
                 ++$i;
@@ -470,7 +476,8 @@ function b_system_comments_show($options)
             $comment_config[$mid] = $modules[$mid]->getInfo('comments');
         }
         $com['id']    = $i;
-        $com['title'] = '<a href="' . XOOPS_URL . '/modules/' . $modules[$mid]->getVar('dirname') . '/' . $comment_config[$mid]['pageName'] . '?' . $comment_config[$mid]['itemName'] . '=' . $comments[$i]->getVar('com_itemid') . '&amp;com_id=' . $i . '&amp;com_rootid=' . $comments[$i]->getVar('com_rootid') . '&amp;' . htmlspecialchars($comments[$i]->getVar('com_exparams')) . '#comment' . $i . '">' . $comments[$i]->getVar('com_title') . '</a>';
+        $com['title'] = '<a href="' . XOOPS_URL . '/modules/' . $modules[$mid]->getVar('dirname') . '/' . $comment_config[$mid]['pageName'] . '?' . $comment_config[$mid]['itemName'] . '=' . $comments[$i]->getVar('com_itemid') . '&amp;com_id=' . $i
+                        . '&amp;com_rootid=' . $comments[$i]->getVar('com_rootid') . '&amp;' . htmlspecialchars($comments[$i]->getVar('com_exparams')) . '#comment' . $i . '">' . $comments[$i]->getVar('com_title') . '</a>';
         $com['icon']  = htmlspecialchars($comments[$i]->getVar('com_icon'), ENT_QUOTES);
         $com['icon']  = ($com['icon'] != '') ? $com['icon'] : 'icon1.gif';
         $com['time']  = formatTimestamp($comments[$i]->getVar('com_created'), 'm');
@@ -529,7 +536,8 @@ function b_system_notification_show()
                 'title'       => $event['title'],
                 'caption'     => $event['caption'],
                 'description' => $event['description'],
-                'subscribed'  => $subscribed);
+                'subscribed'  => $subscribed
+            );
         }
         $block['categories'][$category['name']] = $section;
     }
@@ -662,7 +670,9 @@ function b_system_themes_show($options)
     }
     $block = array();
     if ($options[0] == 1) {
-        $block['theme_select'] = "<img vspace=\"2\" id=\"xoops_theme_img\" src=\"" . XOOPS_THEME_URL . '/' . $xoopsConfig['theme_set'] . "/shot.gif\" alt=\"screenshot\" width=\"" . (int)$options[1] . "\" /><br><select id=\"xoops_theme_select\" name=\"xoops_theme_select\" onchange=\"showImgSelected('xoops_theme_img', 'xoops_theme_select', 'themes', '/shot.gif', '" . XOOPS_URL . "');\">" . $theme_options . "</select><input type=\"submit\" value=\"" . _GO . "\" />";
+        $block['theme_select'] = "<img vspace=\"2\" id=\"xoops_theme_img\" src=\"" . XOOPS_THEME_URL . '/' . $xoopsConfig['theme_set'] . "/shot.gif\" alt=\"screenshot\" width=\"" . (int)$options[1]
+                                 . "\" /><br><select id=\"xoops_theme_select\" name=\"xoops_theme_select\" onchange=\"showImgSelected('xoops_theme_img', 'xoops_theme_select', 'themes', '/shot.gif', '" . XOOPS_URL . "');\">" . $theme_options
+                                 . "</select><input type=\"submit\" value=\"" . _GO . "\" />";
     } else {
         $block['theme_select'] = '<select name="xoops_theme_select" onchange="submit();" size="' . $options[2] . '">' . $theme_options . '</select>';
     }

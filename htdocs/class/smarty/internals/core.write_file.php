@@ -1,15 +1,15 @@
 <?php
 /**
  * Smarty plugin
- * @package Smarty
+ * @package    Smarty
  * @subpackage plugins
  */
 
 /**
  * write out a file to disk
  *
- * @param string $filename
- * @param string $contents
+ * @param string  $filename
+ * @param string  $contents
  * @param boolean $create_dirs
  * @return boolean
  */
@@ -30,6 +30,7 @@ function smarty_core_write_file($params, &$smarty)
         $_tmp_file = $_dirname . DIRECTORY_SEPARATOR . uniqid('wrt');
         if (!($fd = @fopen($_tmp_file, 'wb'))) {
             $smarty->trigger_error("problem writing temporary file '$_tmp_file'");
+
             return false;
         }
     }

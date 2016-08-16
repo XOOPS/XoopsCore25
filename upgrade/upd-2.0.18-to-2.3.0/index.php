@@ -137,7 +137,8 @@ class Upgrade_230 extends XoopsUpgrade
     {
         $result = true;
         if (!isset($GLOBALS['xoopsConfig']['cpanel'])) {
-            $sql = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('config') . ' (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) ' . ' VALUES ' . " (NULL, 0, 1, 'cpanel', '_MD_AM_CPANEL', 'default', '_MD_AM_CPANELDSC', 'cpanel', 'other', 11)";
+            $sql = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('config') . ' (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) ' . ' VALUES '
+                   . " (NULL, 0, 1, 'cpanel', '_MD_AM_CPANEL', 'default', '_MD_AM_CPANELDSC', 'cpanel', 'other', 11)";
 
             $result *= $GLOBALS['xoopsDB']->queryF($sql);
         }
@@ -151,14 +152,16 @@ class Upgrade_230 extends XoopsUpgrade
             }
         }
         if (!$welcometype_installed) {
-            $sql = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('config') . ' (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) ' . ' VALUES ' . " (NULL, 0, 2, 'welcome_type', '_MD_AM_WELCOMETYPE', '1', '_MD_AM_WELCOMETYPE_DESC', 'select', 'int', 3)";
+            $sql = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('config') . ' (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) ' . ' VALUES '
+                   . " (NULL, 0, 2, 'welcome_type', '_MD_AM_WELCOMETYPE', '1', '_MD_AM_WELCOMETYPE_DESC', 'select', 'int', 3)";
 
             if (!$GLOBALS['xoopsDB']->queryF($sql)) {
                 return false;
             }
             $config_id = $GLOBALS['xoopsDB']->getInsertId();
 
-            $sql = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('configoption') . ' (confop_id, confop_name, confop_value, conf_id)' . ' VALUES' . " (NULL, '_NO', '0', {$config_id})," . " (NULL, '_MD_AM_WELCOMETYPE_EMAIL', '1', {$config_id})," . " (NULL, '_MD_AM_WELCOMETYPE_PM', '2', {$config_id})," . " (NULL, '_MD_AM_WELCOMETYPE_BOTH', '3', {$config_id})";
+            $sql = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('configoption') . ' (confop_id, confop_name, confop_value, conf_id)' . ' VALUES' . " (NULL, '_NO', '0', {$config_id})," . " (NULL, '_MD_AM_WELCOMETYPE_EMAIL', '1', {$config_id}),"
+                   . " (NULL, '_MD_AM_WELCOMETYPE_PM', '2', {$config_id})," . " (NULL, '_MD_AM_WELCOMETYPE_BOTH', '3', {$config_id})";
             if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
                 return false;
             }
@@ -213,6 +216,7 @@ class Upgrade_230 extends XoopsUpgrade
         if (defined('XOOPS_DB_CHARSET')) {
             return true;
         }
+
         /*
         $lines = file(XOOPS_ROOT_PATH . '/mainfile.php');
         foreach ($lines as $line) {
@@ -221,6 +225,7 @@ class Upgrade_230 extends XoopsUpgrade
             }
         }
         */
+
         return false;
     }
 
@@ -274,6 +279,7 @@ class Upgrade_230 extends XoopsUpgrade
             //$GLOBALS["xoopsDB"]->queryF( "ALTER TABLE `{$table}` CONVERT TO CHARACTER SET " . $GLOBALS["xoopsDB"]->quote($charset) . " COLLATE " . $GLOBALS["xoopsDB"]->quote($collation) );
         }
         $this->convert_table($tables, $charset, $collation);
+
         return null;
     }
 
@@ -304,15 +310,26 @@ class Upgrade_230 extends XoopsUpgrade
                 while ($result = $GLOBALS['xoopsDB']->fetchArray($resource)) {
                     if (preg_match('/(char)|(text)|(enum)|(set)/', $result['Type'])) {
                         // String Type SQL Sentence.
-                        $string_querys[] = "ALTER TABLE `$table` MODIFY `" . $result['Field'] . '` ' . $result['Type'] . " CHARACTER SET $charset COLLATE $collation " . (((!empty($result['Default'])) || ($result['Default'] === '0') || ($result['Default'] === 0)) ? "DEFAULT '" . $result['Default'] . "' " : '') . ('YES' === $result['Null'] ? '' : 'NOT ') . 'NULL';
+                        $string_querys[] = "ALTER TABLE `$table` MODIFY `" . $result['Field'] . '` ' . $result['Type'] . " CHARACTER SET $charset COLLATE $collation " . (((!empty($result['Default']))
+                                                                                                                                                                           || ($result['Default'] === '0')
+                                                                                                                                                                           || ($result['Default'] === 0)) ? "DEFAULT '" . $result['Default'] . "' " : '')
+                                           . ('YES' === $result['Null'] ? '' : 'NOT ') . 'NULL';
 
                         // Binary String Type SQL Sentence.
                         if (preg_match('/(enum)|(set)/', $result['Type'])) {
-                            $binary_querys[] = "ALTER TABLE `$table` MODIFY `" . $result['Field'] . '` ' . $result['Type'] . ' CHARACTER SET binary ' . (((!empty($result['Default'])) || ($result['Default'] === '0') || ($result['Default'] === 0)) ? "DEFAULT '" . $result['Default'] . "' " : '') . ('YES' === $result['Null'] ? '' : 'NOT ') . 'NULL';
+                            $binary_querys[] = "ALTER TABLE `$table` MODIFY `" . $result['Field'] . '` ' . $result['Type'] . ' CHARACTER SET binary ' . (((!empty($result['Default']))
+                                                                                                                                                          || ($result['Default'] === '0')
+                                                                                                                                                          || ($result['Default'] === 0)) ? "DEFAULT '" . $result['Default'] . "' " : '') . ('YES'
+                                                                                                                                                                                                                                            === $result['Null'] ? '' : 'NOT ')
+                                               . 'NULL';
                         } else {
                             $result['Type']  = str_replace('char', 'binary', $result['Type']);
                             $result['Type']  = str_replace('text', 'blob', $result['Type']);
-                            $binary_querys[] = "ALTER TABLE `$table` MODIFY `" . $result['Field'] . '` ' . $result['Type'] . ' ' . (((!empty($result['Default'])) || ($result['Default'] === '0') || ($result['Default'] === 0)) ? "DEFAULT '" . $result['Default'] . "' " : '') . ('YES' === $result['Null'] ? '' : 'NOT ') . 'NULL';
+                            $binary_querys[] = "ALTER TABLE `$table` MODIFY `" . $result['Field'] . '` ' . $result['Type'] . ' ' . (((!empty($result['Default']))
+                                                                                                                                     || ($result['Default'] === '0')
+                                                                                                                                     || ($result['Default'] === 0)) ? "DEFAULT '" . $result['Default'] . "' " : '') . ('YES'
+                                                                                                                                                                                                                       === $result['Null'] ? '' : 'NOT ')
+                                               . 'NULL';
                         }
                     }
                 }

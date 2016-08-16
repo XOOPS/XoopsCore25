@@ -381,7 +381,9 @@ class MyTextSanitizer
     public function truncate($text)
     {
         $instance = MyTextSanitizer::getInstance();
-        if (empty($text) || empty($instance->config['truncate_length']) || strlen($text) < $instance->config['truncate_length']) {
+        if (empty($text) || empty($instance->config['truncate_length'])
+            || strlen($text) < $instance->config['truncate_length']
+        ) {
             return $text;
         }
         $len = floor($instance->config['truncate_length'] / 2);
@@ -670,13 +672,9 @@ class MyTextSanitizer
             //            $replacements = "'[code\\1]'.base64_encode('\\2').'[/code]'";
 
             $patterns = "/\[code([^\]]*?)\](.*)\[\/code\]/sU";
-            $text = preg_replace_callback(
-                $patterns,
-                function ($matches) {
-                    return '[code'. $matches[1] . ']' . base64_encode($matches[2]) . '[/code]';
-                },
-                $text
-            );
+            $text     = preg_replace_callback($patterns, function ($matches) {
+                return '[code' . $matches[1] . ']' . base64_encode($matches[2]) . '[/code]';
+            }, $text);
         }
 
         return $text;
@@ -724,6 +722,7 @@ class MyTextSanitizer
         foreach (array_keys($extensions) as $extension) {
             $this->executeExtension($extension);
         }
+
         return null;
     }
 

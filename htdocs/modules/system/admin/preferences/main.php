@@ -89,7 +89,8 @@ switch ($op) {
                     $myts = MyTextSanitizer::getInstance();
                     if ($config[$i]->getVar('conf_valuetype') === 'array') {
                         // this is exceptional.. only when value type is arrayneed a smarter way for this
-                        $ele = ($config[$i]->getVar('conf_value') != '') ? new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), $myts->htmlspecialchars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50) : new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), '', 5, 50);
+                        $ele = ($config[$i]->getVar('conf_value') != '') ? new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), $myts->htmlspecialchars(implode('|', $config[$i]->getConfValueForOutput())), 5,
+                                                                                                 50) : new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), '', 5, 50);
                     } else {
                         $ele = new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), $myts->htmlspecialchars($config[$i]->getConfValueForOutput()), 5, 50);
                     }
@@ -123,7 +124,9 @@ switch ($op) {
 
                 case 'theme':
                 case 'theme_multi':
-                    $ele = ($config[$i]->getVar('conf_formtype') !== 'theme_multi') ? new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput()) : new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput(), 5, true);
+                    $ele = ($config[$i]->getVar('conf_formtype') !== 'theme_multi') ? new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput()) : new XoopsFormSelect($title, $config[$i]->getVar('conf_name'),
+                                                                                                                                                                                                                $config[$i]->getConfValueForOutput(), 5,
+                                                                                                                                                                                                                true);
                     require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
                     $dirlist = XoopsLists::getThemesList();
                     if (!empty($dirlist)) {
@@ -202,7 +205,8 @@ switch ($op) {
                         '18000'  => sprintf(_HOURS, 5),
                         '86400'  => _DAY,
                         '259200' => sprintf(_DAYS, 3),
-                        '604800' => _WEEK);
+                        '604800' => _WEEK
+                    );
                     if (count($modules) > 0) {
                         $ele = new XoopsFormElementTray($title, '<br>');
                         foreach (array_keys($modules) as $mid) {
@@ -229,7 +233,8 @@ switch ($op) {
                                              '18000'  => sprintf(_HOURS, 5),
                                              '86400'  => _DAY,
                                              '259200' => sprintf(_DAYS, 3),
-                                             '604800' => _WEEK));
+                                             '604800' => _WEEK
+                                         ));
                     break;
 
                 case 'password':
@@ -311,7 +316,8 @@ switch ($op) {
                     $myts = MyTextSanitizer::getInstance();
                     if ($config[$i]->getVar('conf_valuetype') === 'array') {
                         // this is exceptional.. only when value type is arrayneed a smarter way for this
-                        $ele = ($config[$i]->getVar('conf_value') != '') ? new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), $myts->htmlspecialchars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50) : new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), '', 5, 50);
+                        $ele = ($config[$i]->getVar('conf_value') != '') ? new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), $myts->htmlspecialchars(implode('|', $config[$i]->getConfValueForOutput())), 5,
+                                                                                                 50) : new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), '', 5, 50);
                     } else {
                         $ele = new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), $myts->htmlspecialchars($config[$i]->getConfValueForOutput()), 5, 50);
                     }
@@ -408,7 +414,8 @@ switch ($op) {
             $xoopsTpl->assign('breadcrumb', 1);
         } else {
             if ($module->getInfo('adminindex')) {
-                echo '<a href="' . XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . $module->getInfo('adminindex') . '">' . $module->getVar('name') . '</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _PREFERENCES . '<br><br>';
+                echo '<a href="' . XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . $module->getInfo('adminindex') . '">' . $module->getVar('name') . '</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _PREFERENCES
+                     . '<br><br>';
             } else {
                 echo $module->getVar('name') . '&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _PREFERENCES . '<br><br>';
             }

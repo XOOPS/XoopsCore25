@@ -60,7 +60,8 @@ class XoopsMediaUploader
     public $uploadDir               = '';
     public $allowedMimeTypes        = array();
     public $deniedMimeTypes         = array(
-        'application/x-httpd-php');
+        'application/x-httpd-php'
+    );
     public $maxFileSize             = 0;
     public $maxWidth;
     public $maxHeight;
@@ -80,7 +81,8 @@ class XoopsMediaUploader
         'cgi',
         'pl',
         'asp',
-        'php5');
+        'php5'
+    );
     // extensions needed image check (anti-IE Content-Type XSS)
     public $imageExtensions = array(
         1  => 'gif',
@@ -98,7 +100,8 @@ class XoopsMediaUploader
         13 => 'swc',
         14 => 'iff',
         15 => 'wbmp',
-        16 => 'xbm');
+        16 => 'xbm'
+    );
     public $randomFilename  = false;
 
     /**
@@ -112,8 +115,14 @@ class XoopsMediaUploader
      * @param bool   $randomFilename
      */
 
-    public function __construct($uploadDir, $allowedMimeTypes, $maxFileSize = 0, $maxWidth = null, $maxHeight = null, $randomFilename = false)
-    {
+    public function __construct(
+        $uploadDir,
+        $allowedMimeTypes,
+        $maxFileSize = 0,
+        $maxWidth = null,
+        $maxHeight = null,
+        $randomFilename = false
+    ) {
         $this->extensionToMime = include $GLOBALS['xoops']->path('include/mimetypes.inc.php');
         if (!is_array($this->extensionToMime)) {
             $this->extensionToMime = array();
@@ -224,42 +233,50 @@ class XoopsMediaUploader
         }
         $this->errors = array();
         if ($this->mediaError > 0) {
-            switch($this->mediaError){
+            switch ($this->mediaError) {
                 case UPLOAD_ERR_INI_SIZE:
                     $this->setErrors(_ER_UP_INISIZE);
+
                     return false;
                     break;
                 case UPLOAD_ERR_FORM_SIZE:
                     $this->setErrors(_ER_UP_FORMSIZE);
+
                     return false;
                     break;
                 case UPLOAD_ERR_PARTIAL:
                     $this->setErrors(_ER_UP_PARTIAL);
+
                     return false;
                     break;
                 case UPLOAD_ERR_NO_FILE:
                     $this->setErrors(_ER_UP_NOFILE);
+
                     return false;
                     break;
                 case UPLOAD_ERR_NO_TMP_DIR:
                     $this->setErrors(_ER_UP_NOTMPDIR);
+
                     return false;
                     break;
                 case UPLOAD_ERR_CANT_WRITE:
                     $this->setErrors(_ER_UP_CANTWRITE);
+
                     return false;
                     break;
                 case UPLOAD_ERR_EXTENSION:
                     $this->setErrors(_ER_UP_EXTENSION);
+
                     return false;
                     break;
                 default:
                     $this->setErrors(_ER_UP_UNKNOWN);
+
                     return false;
                     break;
             }
         }
-        
+
         if ((int)$this->mediaSize < 0) {
             $this->setErrors(_ER_UP_INVALIDFILESIZE);
 
@@ -532,7 +549,10 @@ class XoopsMediaUploader
             return false;
         }
 
-        if ((!empty($this->allowedMimeTypes) && !in_array($this->mediaRealType, $this->allowedMimeTypes)) || (!empty($this->deniedMimeTypes) && in_array($this->mediaRealType, $this->deniedMimeTypes))) {
+        if ((!empty($this->allowedMimeTypes) && !in_array($this->mediaRealType, $this->allowedMimeTypes))
+            || (!empty($this->deniedMimeTypes)
+                && in_array($this->mediaRealType, $this->deniedMimeTypes))
+        ) {
             $this->setErrors(sprintf(_ER_UP_MIMETYPENOTALLOWED, $this->mediaType));
 
             return false;
@@ -552,7 +572,10 @@ class XoopsMediaUploader
             return true;
         }
 
-        if (('image' === substr($this->mediaType, 0, strpos($this->mediaType, '/'))) || (!empty($this->mediaRealType) && 'image' === substr($this->mediaRealType, 0, strpos($this->mediaRealType, '/')))) {
+        if (('image' === substr($this->mediaType, 0, strpos($this->mediaType, '/')))
+            || (!empty($this->mediaRealType)
+                && 'image' === substr($this->mediaRealType, 0, strpos($this->mediaRealType, '/')))
+        ) {
             if (!($info = @getimagesize($this->mediaTmpName))) {
                 $this->setErrors(_ER_UP_INVALIDIMAGEFILE);
 

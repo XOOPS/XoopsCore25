@@ -22,7 +22,8 @@ class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
         'union',
         '/*', /**/
         '--',
-        '#');
+        '#'
+    );
 
     /**
      * ProtectorMySQLDatabase constructor.

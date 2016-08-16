@@ -72,7 +72,8 @@ ob_start();
         <label class="xolabel" for="root"><?php echo XOOPS_ROOT_PATH_LABEL; ?></label>
 
         <div class="xoform-help"><?php echo XOOPS_ROOT_PATH_HELP; ?></div>
-        <input type="text" name="root" id="root" value="<?php echo $ctrl->xoopsPath['root']; ?>" onchange="updPath('root', this.value)"/>
+        <input type="text" name="root" id="root" value="<?php echo $ctrl->xoopsPath['root']; ?>"
+               onchange="updPath('root', this.value)"/>
         <span id="rootpathimg"><?php echo genPathCheckHtml('root', $ctrl->validPath['root']); ?></span>
         <?php
         if ($ctrl->validPath['root'] && !empty($ctrl->permErrors['root'])) {
@@ -96,7 +97,8 @@ ob_start();
         <label class="xolabel" for="data"><?php echo XOOPS_DATA_PATH_LABEL; ?></label>
 
         <div class="xoform-help"><?php echo XOOPS_DATA_PATH_HELP; ?></div>
-        <input type="text" name="data" id="data" value="<?php echo $ctrl->xoopsPath['data']; ?>" onchange="updPath('data', this.value)"/>
+        <input type="text" name="data" id="data" value="<?php echo $ctrl->xoopsPath['data']; ?>"
+               onchange="updPath('data', this.value)"/>
         <span id="datapathimg"><?php echo genPathCheckHtml('data', $ctrl->validPath['data']); ?></span>
         <?php
         if ($ctrl->validPath['data'] && !empty($ctrl->permErrors['data'])) {
@@ -120,7 +122,8 @@ ob_start();
         <label class="xolabel" for="lib"><?php echo XOOPS_LIB_PATH_LABEL; ?></label>
 
         <div class="xoform-help"><?php echo XOOPS_LIB_PATH_HELP; ?></div>
-        <input type="text" name="lib" id="lib" value="<?php echo $ctrl->xoopsPath['lib']; ?>" onchange="updPath('lib', this.value)"/>
+        <input type="text" name="lib" id="lib" value="<?php echo $ctrl->xoopsPath['lib']; ?>"
+               onchange="updPath('lib', this.value)"/>
         <span id="libpathimg"><?php echo genPathCheckHtml('lib', $ctrl->validPath['lib']); ?></span>
 
         <div id="libperms" class="x2-note" style="display: none;"/>
@@ -131,7 +134,8 @@ ob_start();
         <label class="xolabel" for="url"><?php echo XOOPS_URL_LABEL; ?></label>
 
         <div class="xoform-help"><?php echo XOOPS_URL_HELP; ?></div>
-        <input type="text" name="URL" id="url" value="<?php echo $ctrl->xoopsUrl; ?>" onchange="removeTrailing('url', this.value)"/>
+        <input type="text" name="URL" id="url" value="<?php echo $ctrl->xoopsUrl; ?>"
+               onchange="removeTrailing('url', this.value)"/>
     </fieldset>
 
 <?php

@@ -22,7 +22,10 @@ if (!defined('XOOPS_ROOT_PATH') || !is_object($xoopsModule)) {
 
 include_once $GLOBALS['xoops']->path('include/comment_constants.php');
 
-if (('system' !== $xoopsModule->getVar('dirname') && XOOPS_COMMENT_APPROVENONE == $xoopsModuleConfig['com_rule']) || (!is_object($xoopsUser) && !$xoopsModuleConfig['com_anonpost']) || !is_object($xoopsModule)) {
+if (('system' !== $xoopsModule->getVar('dirname') && XOOPS_COMMENT_APPROVENONE == $xoopsModuleConfig['com_rule'])
+    || (!is_object($xoopsUser) && !$xoopsModuleConfig['com_anonpost'])
+    || !is_object($xoopsModule)
+) {
     redirect_header(XOOPS_URL . '/user.php', 1, _NOPERM);
 }
 

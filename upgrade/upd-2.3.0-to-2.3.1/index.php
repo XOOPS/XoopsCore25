@@ -38,20 +38,21 @@ class Upgrade_231 extends XoopsUpgrade
     public function check_field()
     {
         $fields = array(
-            'cache_data' => 'cache_model',
-            'htmlcode' => 'banner',
-            'extrainfo' => 'bannerclient',
-            'com_text' => 'xoopscomments',
-            'conf_value' => 'config',
-            'description' => 'groups',
+            'cache_data'     => 'cache_model',
+            'htmlcode'       => 'banner',
+            'extrainfo'      => 'bannerclient',
+            'com_text'       => 'xoopscomments',
+            'conf_value'     => 'config',
+            'description'    => 'groups',
             'imgsetimg_body' => 'imgsetimg',
-            'content' => 'newblocks',
-            'msg_text' => 'priv_msgs',
-            'sess_data' => 'session',
+            'content'        => 'newblocks',
+            'msg_text'       => 'priv_msgs',
+            'sess_data'      => 'session',
             'tplset_credits' => 'tplset',
-            'tpl_source' => 'tplsource',
-            'user_sig' => 'users',
-            'bio' => 'users');
+            'tpl_source'     => 'tplsource',
+            'user_sig'       => 'users',
+            'bio'            => 'users'
+        );
         foreach ($fields as $field => $table) {
             $sql = 'SHOW COLUMNS FROM `' . $GLOBALS['xoopsDB']->prefix($table) . "` LIKE '{$field}'";
             if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {

@@ -57,7 +57,10 @@ class XoopsModelSync extends XoopsModelAbstract
             $this->handler->field_object = $field_object;
         }
 
-        if (empty($this->handler->field_object) || empty($this->handler->table_link) || empty($this->handler->field_link)) {
+        if (empty($this->handler->field_object) 
+            || empty($this->handler->table_link)
+            || empty($this->handler->field_link)
+        ) {
             trigger_error("The link information is not set for '" . get_class($this->handler) . "' yet.", E_USER_WARNING);
 
             return null;
@@ -70,7 +73,8 @@ class XoopsModelSync extends XoopsModelAbstract
             $sql = "DELETE FROM `{$this->handler->table}`" . " WHERE (`{$this->handler->field_object}` NOT IN ( SELECT DISTINCT `{$this->handler->field_link}` FROM `{$this->handler->table_link}`) )";
         } else {
             // for 4.0+
-            $sql = "DELETE `{$this->handler->table}` FROM `{$this->handler->table}`" . " LEFT JOIN `{$this->handler->table_link}` AS aa ON `{$this->handler->table}`.`{$this->handler->field_object}` = aa.`{$this->handler->field_link}`" . " WHERE (aa.`{$this->handler->field_link}` IS NULL)";
+            $sql = "DELETE `{$this->handler->table}` FROM `{$this->handler->table}`" . " LEFT JOIN `{$this->handler->table_link}` AS aa ON `{$this->handler->table}`.`{$this->handler->field_object}` = aa.`{$this->handler->field_link}`"
+                   . " WHERE (aa.`{$this->handler->field_link}` IS NULL)";
         }
         if (!$result = $this->handler->db->queryF($sql)) {
             return false;

@@ -56,7 +56,8 @@ class MytsImage extends MyTextSanitizerExtension
                 if (!$jsLoaded) {
                     $jsLoaded = true;
                     $GLOBALS['xoTheme']->addScript('/class/textsanitizer/image/image.js', array(
-                        'type' => 'text/javascript'));
+                        'type' => 'text/javascript'
+                    ));
                 }
                 $ts->replacements[] = "<img src='\\5' class='\\2' alt='" . _MSC_RESIZED_IMAGE . "' border='0' onload=\"JavaScript:if(this.width>\\4)this.width=\\4\" />";
                 $ts->replacements[] = "<img src='\\3' class='\\2' alt='" . _MSC_RESIZED_IMAGE . "' border='0'" . ($config['resize'] ? "onload=\"javascript:resizeImage(this, " . $config['max_width'] . ")\"" : '') . '/>';
@@ -66,12 +67,15 @@ class MytsImage extends MyTextSanitizerExtension
                 if (!$jsLoaded) {
                     $jsLoaded = true;
                     $GLOBALS['xoTheme']->addScript('/class/textsanitizer/image/image.js', array(
-                        'type' => 'text/javascript'));
+                        'type' => 'text/javascript'
+                    ));
                 }
                 $ts->replacements[] = "<a href='javascript:loadImage(\"\\5\");'><img src='\\5' class='\\2' alt='" . _MSC_CLICK_TO_OPEN_IMAGE . "' border='0' onload=\"if(this.width>\\4)this.width=\\4\" /></a>";
-                $ts->replacements[] = "<a href='javascript:loadImage(\"\\3\");'><img src='\\3' class='\\2' alt='" . _MSC_CLICK_TO_OPEN_IMAGE . "' border='0' " . ($config['resize'] ? "onload=\"javascript:resizeImage(this, " . $config['max_width'] . ")\"" : '') . '/></a>';
+                $ts->replacements[] = "<a href='javascript:loadImage(\"\\3\");'><img src='\\3' class='\\2' alt='" . _MSC_CLICK_TO_OPEN_IMAGE . "' border='0' " . ($config['resize'] ? "onload=\"javascript:resizeImage(this, " . $config['max_width']
+                                                                                                                                                                                      . ")\"" : '') . '/></a>';
                 $ts->replacements[] = "<a href='javascript:loadImage(\"\\3\");'><img src='\\3' alt='" . _MSC_CLICK_TO_OPEN_IMAGE . "' border='0' onload=\"if(this.width>\\2)this.width=\\2\" /></a><br>";
-                $ts->replacements[] = "<a href='javascript:loadImage(\"\\1\");'><img src='\\1' alt='" . _MSC_CLICK_TO_OPEN_IMAGE . "' border='0' title='" . _MSC_CLICK_TO_OPEN_IMAGE . "'" . ($config['resize'] ? " onload=\"javascript:resizeImage(this, " . $config['max_width'] . ")\"" : '') . '/></a>';
+                $ts->replacements[] = "<a href='javascript:loadImage(\"\\1\");'><img src='\\1' alt='" . _MSC_CLICK_TO_OPEN_IMAGE . "' border='0' title='" . _MSC_CLICK_TO_OPEN_IMAGE . "'"
+                                      . ($config['resize'] ? " onload=\"javascript:resizeImage(this, " . $config['max_width'] . ")\"" : '') . '/></a>';
             } else {
                 $ts->replacements[] = "<img src='\\5' class='\\2' border='0' alt='" . _MSC_ORIGINAL_IMAGE . "' onload=\"JavaScript:if(this.width>\\4) this.width=\\4\" />";
                 $ts->replacements[] = "<img src='\\3' class='\\2' border='0' alt='" . _MSC_ORIGINAL_IMAGE . "' " . ($config['resize'] ? "onload=\"javascript:resizeImage(this, " . $config['max_width'] . ")\"" : '') . '/>';

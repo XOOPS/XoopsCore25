@@ -146,7 +146,7 @@ class XoopsPrivmessage extends XoopsObject
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  *
  *
- * @todo Why is this not a XoopsPersistableObjectHandler?
+ * @todo                Why is this not a XoopsPersistableObjectHandler?
  */
 class XoopsPrivmessageHandler extends XoopsObjectHandler
 {
@@ -192,9 +192,9 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
     /**
      * Insert a message in the database
      *
-     * @param  XoopsPrivmessage $pm    {@link XoopsPrivmessage} object
-     * @param  bool   $force flag to force the query execution skip request method check, which might be required in some situations
-     * @param  XoopsObject|XoopsPrivmessage $pm a XoopsMembership object
+     * @param  XoopsPrivmessage             $pm    {@link XoopsPrivmessage} object
+     * @param  bool                         $force flag to force the query execution skip request method check, which might be required in some situations
+     * @param  XoopsObject|XoopsPrivmessage $pm    a XoopsMembership object
      *
      * @return bool true on success, otherwise false
      **/
@@ -216,9 +216,11 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
         }
         if ($pm->isNew()) {
             $msg_id = $this->db->genId('priv_msgs_msg_id_seq');
-            $sql    = sprintf('INSERT INTO %s (msg_id, msg_image, subject, from_userid, to_userid, msg_time, msg_text, read_msg) VALUES (%u, %s, %s, %u, %u, %u, %s, %u)', $this->db->prefix('priv_msgs'), $msg_id, $this->db->quoteString($msg_image), $this->db->quoteString($subject), $from_userid, $to_userid, time(), $this->db->quoteString($msg_text), 0);
+            $sql    = sprintf('INSERT INTO %s (msg_id, msg_image, subject, from_userid, to_userid, msg_time, msg_text, read_msg) VALUES (%u, %s, %s, %u, %u, %u, %s, %u)', $this->db->prefix('priv_msgs'), $msg_id, $this->db->quoteString($msg_image),
+                              $this->db->quoteString($subject), $from_userid, $to_userid, time(), $this->db->quoteString($msg_text), 0);
         } else {
-            $sql = sprintf('UPDATE %s SET msg_image = %s, subject = %s, from_userid = %u, to_userid = %u, msg_text = %s, read_msg = %u WHERE msg_id = %u', $this->db->prefix('priv_msgs'), $this->db->quoteString($msg_image), $this->db->quoteString($subject), $from_userid, $to_userid, $this->db->quoteString($msg_text), $read_msg, $msg_id);
+            $sql = sprintf('UPDATE %s SET msg_image = %s, subject = %s, from_userid = %u, to_userid = %u, msg_text = %s, read_msg = %u WHERE msg_id = %u', $this->db->prefix('priv_msgs'), $this->db->quoteString($msg_image),
+                           $this->db->quoteString($subject), $from_userid, $to_userid, $this->db->quoteString($msg_text), $read_msg, $msg_id);
         }
         $queryFunc = empty($force) ? 'query' : 'queryF';
         if (!$result = $this->db->{$queryFunc}($sql)) {
@@ -254,7 +256,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
     /**
      * Load messages from the database
      * @param  CriteriaElement $criteria  {@link CriteriaElement} object
-     * @param  bool   $id_as_key use ID as key into the array?
+     * @param  bool            $id_as_key use ID as key into the array?
      * @return array  Array of {@link XoopsPrivmessage} objects
      **/
     public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
@@ -267,7 +269,8 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
             $sort = !in_array($criteria->getSort(), array(
                 'msg_id',
                 'msg_time',
-                'from_userid')) ? 'msg_id' : $criteria->getSort();
+                'from_userid'
+            )) ? 'msg_id' : $criteria->getSort();
             $sql .= ' ORDER BY ' . $sort . ' ' . $criteria->getOrder();
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();

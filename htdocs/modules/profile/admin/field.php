@@ -59,7 +59,8 @@ switch ($op) {
             XOBJ_DTYPE_TXTBOX  => _PROFILE_AM_TXTBOX,
             XOBJ_DTYPE_URL     => _PROFILE_AM_URL,
             XOBJ_DTYPE_OTHER   => _PROFILE_AM_OTHER,
-            XOBJ_DTYPE_MTIME   => _PROFILE_AM_DATE);
+            XOBJ_DTYPE_MTIME   => _PROFILE_AM_DATE
+        );
 
         $fieldtypes = array(
             'checkbox'     => _PROFILE_AM_CHECKBOX,
@@ -79,7 +80,8 @@ switch ($op) {
             'longdate'     => _PROFILE_AM_LONGDATE,
             'theme'        => _PROFILE_AM_THEME,
             'autotext'     => _PROFILE_AM_AUTOTEXT,
-            'rank'         => _PROFILE_AM_RANK);
+            'rank'         => _PROFILE_AM_RANK
+        );
 
         foreach (array_keys($fields) as $i) {
             $fields[$i]['canEdit']               = $fields[$i]['field_config'] || $fields[$i]['field_show'] || $fields[$i]['field_edit'];
@@ -305,7 +307,8 @@ switch ($op) {
             xoops_confirm(array(
                               'ok' => 1,
                               'id' => $_REQUEST['id'],
-                              'op' => 'delete'), $_SERVER['REQUEST_URI'], sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('field_title')));
+                              'op' => 'delete'
+                          ), $_SERVER['REQUEST_URI'], sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('field_title')));
         }
         break;
 

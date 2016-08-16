@@ -133,13 +133,15 @@ class ProfileField extends XoopsObject
             case 'select':
                 $element = new XoopsFormSelect($caption, $name, $value);
                 // If options do not include an empty element, then add a blank option to prevent any default selection
-//                if (!in_array('', array_keys($options))) {
+                //                if (!in_array('', array_keys($options))) {
                 if (!array_key_exists('', $options)) {
                     $element->addOption('', _NONE);
 
                     $eltmsg                          = empty($caption) ? sprintf(_FORM_ENTER, $name) : sprintf(_FORM_ENTER, $caption);
                     $eltmsg                          = str_replace('"', '\"', stripslashes($eltmsg));
-                    $element->customValidationCode[] = "\nvar hasSelected = false; var selectBox = myform.{$name};" . "for (i = 0; i < selectBox.options.length; i++) { if (selectBox.options[i].selected == true && selectBox.options[i].value != '') { hasSelected = true; break; } }" . "if (!hasSelected) { window.alert(\"{$eltmsg}\"); selectBox.focus(); return false; }";
+                    $element->customValidationCode[] = "\nvar hasSelected = false; var selectBox = myform.{$name};"
+                                                       . "for (i = 0; i < selectBox.options.length; i++) { if (selectBox.options[i].selected == true && selectBox.options[i].value != '') { hasSelected = true; break; } }"
+                                                       . "if (!hasSelected) { window.alert(\"{$eltmsg}\"); selectBox.focus(); return false; }";
                 }
                 $element->addOptionArray($options);
                 break;
@@ -587,7 +589,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
                     break;
             }
 
-            $sql = 'ALTER TABLE `' . $profile_handler->table . '` ' . $changetype . ' `' . $obj->cleanVars['field_name'] . '` ' . $type . $maxlengthstring . ' NULL';
+            $sql    = 'ALTER TABLE `' . $profile_handler->table . '` ' . $changetype . ' `' . $obj->cleanVars['field_name'] . '` ' . $type . $maxlengthstring . ' NULL';
             $result = $force ? $this->db->queryF($sql) : $this->db->query($sql);
             if (!$result) {
                 return false;
@@ -607,7 +609,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
      * delete a profile field from the database
      *
      * @param XoopsObject|ProfileField $obj reference to the object to delete
-     * @param bool   $force
+     * @param bool                     $force
      * @return bool FALSE if failed.
      **/
     public function delete(XoopsObject $obj, $force = false)
@@ -679,6 +681,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
             'user_occ',
             'bio',
             'user_intrest',
-            'user_mailok');
+            'user_mailok'
+        );
     }
 }

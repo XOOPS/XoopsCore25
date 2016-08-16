@@ -36,7 +36,7 @@ return array(
      *  <li> 2 - To admins only</li>
      * </ul>
      */
-    'debugLevel' => 2,
+    'debugLevel'            => 2,
     /**#@-*/
 
     /** XOOPS admin security warnings
@@ -46,4 +46,5 @@ return array(
      *  <li> 1 - Enabled</li>
      * </ul>
      */
-    'admin_warnings_enable' => 1);
+    'admin_warnings_enable' => 1
+);

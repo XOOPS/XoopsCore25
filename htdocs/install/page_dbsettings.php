@@ -34,9 +34,9 @@ $pageHasHelp = true;
 $vars =& $_SESSION['settings'];
 
 $hostConnectPrefix = empty($vars['DB_PCONNECT']) ? '' : 'p:';
-$link = mysqli_connect($hostConnectPrefix.$vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS']);
+$link              = mysqli_connect($hostConnectPrefix . $vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS']);
 if (0 !== $link->connect_errno) {
-    $error = ERR_NO_DBCONNECTION .' (' . $link->connect_errno . ') ' . $link->connect_error;;
+    $error = ERR_NO_DBCONNECTION . ' (' . $link->connect_errno . ') ' . $link->connect_error;;
     $wizard->redirectToPage('-1', $error);
     exit();
 }
@@ -67,9 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($vars['DB_NAME'])) {
             }
         }
         if ($db_exist && $vars['DB_CHARSET']) {
-            $sql = 'ALTER DATABASE `' . $vars['DB_NAME'] . '` DEFAULT CHARACTER SET '
-                   . mysqli_real_escape_string($link, $vars['DB_CHARSET'])
-                   . ($vars['DB_COLLATION'] ? ' COLLATE ' . mysqli_real_escape_string($link, $vars['DB_COLLATION']) : '');
+            $sql = 'ALTER DATABASE `' . $vars['DB_NAME'] . '` DEFAULT CHARACTER SET ' . mysqli_real_escape_string($link, $vars['DB_CHARSET']) . ($vars['DB_COLLATION'] ? ' COLLATE ' . mysqli_real_escape_string($link, $vars['DB_COLLATION']) : '');
             if (!mysqli_query($link, $sql)) {
                 $error = ERR_CHARSET_NOT_SET . $sql;
             }
@@ -84,10 +82,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($vars['DB_NAME'])) {
 if (@empty($vars['DB_NAME'])) {
     // Fill with default values
     $vars = array_merge($vars, array(
-                                 'DB_NAME'      => '',
-                                 'DB_CHARSET'   => 'utf8',
-                                 'DB_COLLATION' => '',
-                                 'DB_PREFIX'    => 'x' . substr(md5(time()), 0, 3)));
+        'DB_NAME'      => '',
+        'DB_CHARSET'   => 'utf8',
+        'DB_COLLATION' => '',
+        'DB_PREFIX'    => 'x' . substr(md5(time()), 0, 3)
+    ));
 }
 
 ob_start();

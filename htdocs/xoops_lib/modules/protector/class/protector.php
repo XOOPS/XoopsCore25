@@ -24,7 +24,8 @@ class Protector
         'information_schema',
         'select',
         "'",
-        '"');
+        '"'
+    );
 
     public $_logged = false;
 
@@ -105,7 +106,8 @@ class Protector
             'xoopsConfig',
             'xoopsOption',
             'xoopsModule',
-            'xoopsModuleConfig');
+            'xoopsModuleConfig'
+        );
 
         $this->_initial_recursive($_GET, 'G');
         $this->_initial_recursive($_POST, 'P');
@@ -471,6 +473,7 @@ class Protector
         $requestIp = \Xmf\IPAddress::fromRequest()->asReadable();
         if (false === $requestIp) { // nothing to match
             $this->ip_matched_info = null;
+
             return false;
         }
         foreach ($ips as $ip => $info) {
@@ -481,6 +484,7 @@ class Protector
                         // foward match
                         if (substr($requestIp, 0, strlen($ip)) == $ip) {
                             $this->ip_matched_info = $info;
+
                             return true;
                         }
                         break;
@@ -503,6 +507,7 @@ class Protector
                         // full match
                         if ($requestIp == $ip) {
                             $this->ip_matched_info = $info;
+
                             return true;
                         }
                         break;
@@ -510,6 +515,7 @@ class Protector
                         // perl regex
                         if (@preg_match($ip, $requestIp)) {
                             $this->ip_matched_info = $info;
+
                             return true;
                         }
                         break;
@@ -517,6 +523,7 @@ class Protector
             }
         }
         $this->ip_matched_info = null;
+
         return false;
     }
 
@@ -889,7 +896,8 @@ class Protector
             13 => 'swc',
             14 => 'iff',
             15 => 'wbmp',
-            16 => 'xbm');
+            16 => 'xbm'
+        );
 
         foreach ($_FILES as $_file) {
             if (!empty($_file['error'])) {
@@ -1104,7 +1112,7 @@ class Protector
             return true;
         }
 
-        $ip      = \Xmf\IPAddress::fromRequest();
+        $ip = \Xmf\IPAddress::fromRequest();
         if (false === $ip->asReadable()) {
             return true;
         }
@@ -1113,10 +1121,7 @@ class Protector
         $uri4sql = $xoopsDB->quote($uri);
 
         // gargage collection
-        $result = $xoopsDB->queryF(
-            'DELETE FROM ' . $xoopsDB->prefix($this->mydirname . '_access')
-            . ' WHERE expire < UNIX_TIMESTAMP()'
-        );
+        $result = $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix($this->mydirname . '_access') . ' WHERE expire < UNIX_TIMESTAMP()');
 
         // for older versions before updating this module
         if ($result === false) {
@@ -1126,9 +1131,7 @@ class Protector
         }
 
         // sql for recording access log (INSERT should be placed after SELECT)
-        $sql4insertlog = 'INSERT INTO ' . $xoopsDB->prefix($this->mydirname . '_access')
-                         . " SET ip={$ip4sql}, request_uri={$uri4sql},"
-                         . " expire=UNIX_TIMESTAMP()+'" . (int)$this->_conf['dos_expire'] . "'";
+        $sql4insertlog = 'INSERT INTO ' . $xoopsDB->prefix($this->mydirname . '_access') . " SET ip={$ip4sql}, request_uri={$uri4sql}," . " expire=UNIX_TIMESTAMP()+'" . (int)$this->_conf['dos_expire'] . "'";
 
         // bandwidth limitation
         if (@$this->_conf['bwlimit_count'] >= 10) {
@@ -1140,9 +1143,7 @@ class Protector
         }
 
         // F5 attack check (High load & same URI)
-        $result = $xoopsDB->query(
-            'SELECT COUNT(*) FROM ' . $xoopsDB->prefix($this->mydirname . '_access')
-            . " WHERE ip={$ip4sql} AND request_uri={$uri4sql}");
+        $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix($this->mydirname . '_access') . " WHERE ip={$ip4sql} AND request_uri={$uri4sql}");
         list($f5_count) = $xoopsDB->fetchRow($result);
         if ($f5_count > $this->_conf['dos_f5count']) {
 
@@ -1199,9 +1200,7 @@ class Protector
         }
 
         // Crawler check (High load & different URI)
-        $result = $xoopsDB->query(
-            'SELECT COUNT(*) FROM ' . $xoopsDB->prefix($this->mydirname . '_access') . " WHERE ip={$ip4sql}"
-        );
+        $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix($this->mydirname . '_access') . " WHERE ip={$ip4sql}");
         list($crawler_count) = $xoopsDB->fetchRow($result);
 
         // delayed insert
@@ -1258,7 +1257,7 @@ class Protector
     {
         global $xoopsDB;
 
-        $ip      = \Xmf\IPAddress::fromRequest();
+        $ip = \Xmf\IPAddress::fromRequest();
         if (false === $ip->asReadable()) {
             return true;
         }
@@ -1274,19 +1273,13 @@ class Protector
         $mal4sql = $xoopsDB->quote("BRUTE FORCE: $victim_uname");
 
         // gargage collection
-        $result = $xoopsDB->queryF(
-            'DELETE FROM ' . $xoopsDB->prefix($this->mydirname . '_access') . ' WHERE expire < UNIX_TIMESTAMP()'
-        );
+        $result = $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix($this->mydirname . '_access') . ' WHERE expire < UNIX_TIMESTAMP()');
 
         // sql for recording access log (INSERT should be placed after SELECT)
-        $sql4insertlog = 'INSERT INTO ' . $xoopsDB->prefix($this->mydirname . '_access')
-                         . " SET ip={$ip4sql}, request_uri={$uri4sql}, malicious_actions={$mal4sql}, expire=UNIX_TIMESTAMP()+600";
+        $sql4insertlog = 'INSERT INTO ' . $xoopsDB->prefix($this->mydirname . '_access') . " SET ip={$ip4sql}, request_uri={$uri4sql}, malicious_actions={$mal4sql}, expire=UNIX_TIMESTAMP()+600";
 
         // count check
-        $result = $xoopsDB->query(
-            'SELECT COUNT(*) FROM ' . $xoopsDB->prefix($this->mydirname . '_access')
-            . " WHERE ip={$ip4sql} AND malicious_actions like 'BRUTE FORCE:%'"
-        );
+        $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix($this->mydirname . '_access') . " WHERE ip={$ip4sql} AND malicious_actions like 'BRUTE FORCE:%'");
         list($bf_count) = $xoopsDB->fetchRow($result);
         if ($bf_count > $this->_conf['bf_count']) {
             $this->register_bad_ips(time() + $this->_conf['banip_time0']);
@@ -1300,6 +1293,7 @@ class Protector
         }
         // delayed insert
         $xoopsDB->queryF($sql4insertlog);
+
         return null;
     }
 
@@ -1421,7 +1415,9 @@ class Protector
                 $HTTP_POST_VARS['nohtml'] = $_POST['nohtml'] = 1;
             }
             // news admin/index.php
-            if (substr(@$_SERVER['SCRIPT_NAME'], -28) === 'modules/news/admin/index.php' && ($_POST['op'] === 'preview' || $_GET['op'] === 'preview') && strpos(@$_SERVER['HTTP_REFERER'], XOOPS_URL . '/modules/news/admin/index.php') !== 0) {
+            if (substr(@$_SERVER['SCRIPT_NAME'], -28) === 'modules/news/admin/index.php' && ($_POST['op'] === 'preview' || $_GET['op'] === 'preview')
+                && strpos(@$_SERVER['HTTP_REFERER'], XOOPS_URL . '/modules/news/admin/index.php') !== 0
+            ) {
                 $HTTP_POST_VARS['nohtml'] = $_POST['nohtml'] = 1;
             }
             // comment comment_post.php
@@ -1429,7 +1425,9 @@ class Protector
                 $HTTP_POST_VARS['dohtml'] = $_POST['dohtml'] = 0;
             }
             // disable preview of system's blocksadmin
-            if (substr(@$_SERVER['SCRIPT_NAME'], -24) === 'modules/system/admin.php' && ($_GET['fct'] === 'blocksadmin' || $_POST['fct'] === 'blocksadmin') && isset($_POST['previewblock']) /* && strpos( $_SERVER['HTTP_REFERER'] , XOOPS_URL.'/modules/system/admin.php' ) !== 0 */) {
+            if (substr(@$_SERVER['SCRIPT_NAME'], -24) === 'modules/system/admin.php' && ($_GET['fct'] === 'blocksadmin' || $_POST['fct'] === 'blocksadmin')
+                && isset($_POST['previewblock']) /* && strpos( $_SERVER['HTTP_REFERER'] , XOOPS_URL.'/modules/system/admin.php' ) !== 0 */
+            ) {
                 die("Danger! don't use this preview. Use 'altsys module' instead.(by Protector)");
             }
             // tpl preview

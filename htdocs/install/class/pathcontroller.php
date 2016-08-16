@@ -19,36 +19,43 @@ class PathStuffController
     public $xoopsPath = array(
         'root' => '',
         'lib'  => '',
-        'data' => '');
+        'data' => ''
+    );
 
     public $xoopsPathDefault = array(
         'lib'  => 'xoops_lib',
-        'data' => 'xoops_data');
+        'data' => 'xoops_data'
+    );
 
     public $dataPath = array(
         'caches' => array(
             'xoops_cache',
             'smarty_cache',
-            'smarty_compile'),
-        'configs');
+            'smarty_compile'
+        ),
+        'configs'
+    );
 
     public $path_lookup = array(
         'root' => 'ROOT_PATH',
         'data' => 'VAR_PATH',
-        'lib'  => 'PATH');
+        'lib'  => 'PATH'
+    );
 
     public $xoopsUrl = '';
 
     public $validPath = array(
         'root' => 0,
         'data' => 0,
-        'lib'  => 0);
+        'lib'  => 0
+    );
 
     public $validUrl = false;
 
     public $permErrors = array(
         'root' => null,
-        'data' => null);
+        'data' => null
+    );
 
     /**
      * @param $xoopsPathDefault
@@ -234,10 +241,12 @@ class PathStuffController
     {
         $paths  = array(
             'root' => array('mainfile.php', 'uploads', /*'templates_c', 'cache'*/),
-            'data' => $this->dataPath);
+            'data' => $this->dataPath
+        );
         $errors = array(
             'root' => null,
-            'data' => null);
+            'data' => null
+        );
 
         if (!isset($this->xoopsPath[$path])) {
             return false;

@@ -86,7 +86,8 @@ if ($op === 'submit') {
         } else {
             // @todo: Send notification email if user has selected this in the profile
 
-            echo "<br><br><div style='text-align:center;'><h4>" . _PM_MESSAGEPOSTED . "</h4><br><a href=\"javascript:window.opener.location='" . XOOPS_URL . "/viewpmsg.php';window.close();\">" . _PM_CLICKHERE . "</a><br><br><a href=\"javascript:window.close();\">" . _PM_ORCLOSEWINDOW . '</a></div>';
+            echo "<br><br><div style='text-align:center;'><h4>" . _PM_MESSAGEPOSTED . "</h4><br><a href=\"javascript:window.opener.location='" . XOOPS_URL . "/viewpmsg.php';window.close();\">" . _PM_CLICKHERE
+                 . "</a><br><br><a href=\"javascript:window.close();\">" . _PM_ORCLOSEWINDOW . '</a></div>';
         }
     } else {
         echo implode('<br>', $GLOBALS['xoopsSecurity']->getErrors());

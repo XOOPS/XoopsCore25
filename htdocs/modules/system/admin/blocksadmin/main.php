@@ -47,7 +47,8 @@ $sel = array(
     'selmod' => -2,
     'selgen' => -1,
     'selgrp' => XOOPS_GROUP_USERS,
-    'selvis' => -1);
+    'selvis' => -1
+);
 foreach ($sel as $key => $value) {
     $_{$key} = isset($_COOKIE[$key]) ? (int)$_COOKIE[$key] : $value;
     ${$key}  = system_CleanVars($method, $key, $_{$key}, 'int');
@@ -437,7 +438,8 @@ switch ($op) {
             xoops_confirm(array(
                               'op'  => 'delete_ok',
                               'fct' => 'blocksadmin',
-                              'bid' => $block->getVar('bid')), 'admin.php', sprintf(_AM_SYSTEM_BLOCKS_RUSUREDEL, $block->getVar('title')));
+                              'bid' => $block->getVar('bid')
+                          ), 'admin.php', sprintf(_AM_SYSTEM_BLOCKS_RUSUREDEL, $block->getVar('title')));
             // Call Footer
             xoops_cp_footer();
         }

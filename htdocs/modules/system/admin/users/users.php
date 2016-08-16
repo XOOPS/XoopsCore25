@@ -164,13 +164,15 @@ function form_user($add_or_edit, $user = '')
     $notify_method_select->addOptionArray(array(
                                               XOOPS_NOTIFICATION_METHOD_DISABLE => _NOT_METHOD_DISABLE,
                                               XOOPS_NOTIFICATION_METHOD_PM      => _NOT_METHOD_PM,
-                                              XOOPS_NOTIFICATION_METHOD_EMAIL   => _NOT_METHOD_EMAIL));
+                                              XOOPS_NOTIFICATION_METHOD_EMAIL   => _NOT_METHOD_EMAIL
+                                          ));
     $form->addElement($notify_method_select);
     $notify_mode_select = new XoopsFormSelect(_NOT_NOTIFYMODE, 'notify_mode', $notify_mode_value);
     $notify_mode_select->addOptionArray(array(
                                             XOOPS_NOTIFICATION_MODE_SENDALWAYS         => _NOT_MODE_SENDALWAYS,
                                             XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE => _NOT_MODE_SENDONCE,
-                                            XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT   => _NOT_MODE_SENDONCEPERLOGIN));
+                                            XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT   => _NOT_MODE_SENDONCEPERLOGIN
+                                        ));
     $form->addElement($notify_mode_select);
     $form->addElement(new XoopsFormTextArea(_AM_SYSTEM_USERS_EXTRAINFO, 'bio', $bio_value));
     $rank_select = new XoopsFormSelect(_AM_SYSTEM_USERS_RANK, 'rank', $rank_value);

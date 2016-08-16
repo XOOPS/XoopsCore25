@@ -85,7 +85,8 @@ if (is_object($xoopsUser)) {
                 echo $pm->getHtmlErrors();
                 echo "<br><a href='javascript:history.go(-1)' title=''>" . _PM_GOBACK . '</a>';
             } else {
-                echo "<br><br><div style='text-align:center;'><h4>" . _PM_MESSAGEPOSTED . "</h4><br><a href=\"javascript:window.opener.location='" . XOOPS_URL . "/viewpmsg.php';window.close();\" title=\"\">" . _PM_CLICKHERE . "</a><br><br><a href=\"javascript:window.close();\" title=\"\">" . _PM_ORCLOSEWINDOW . '</a></div>';
+                echo "<br><br><div style='text-align:center;'><h4>" . _PM_MESSAGEPOSTED . "</h4><br><a href=\"javascript:window.opener.location='" . XOOPS_URL . "/viewpmsg.php';window.close();\" title=\"\">" . _PM_CLICKHERE
+                     . "</a><br><br><a href=\"javascript:window.close();\" title=\"\">" . _PM_ORCLOSEWINDOW . '</a></div>';
             }
         }
     } elseif ($reply == 1 || $send == 1 || $send2 == 1) {

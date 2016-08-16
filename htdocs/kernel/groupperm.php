@@ -198,7 +198,8 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
         }
         if ($perm->isNew()) {
             $gperm_id = $this->db->genId('group_permission_gperm_id_seq');
-            $sql      = sprintf('INSERT INTO %s (gperm_id, gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES (%u, %u, %u, %u, %s)', $this->db->prefix('group_permission'), $gperm_id, $gperm_groupid, $gperm_itemid, $gperm_modid, $this->db->quoteString($gperm_name));
+            $sql      = sprintf('INSERT INTO %s (gperm_id, gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES (%u, %u, %u, %u, %s)', $this->db->prefix('group_permission'), $gperm_id, $gperm_groupid, $gperm_itemid, $gperm_modid,
+                                $this->db->quoteString($gperm_name));
         } else {
             $sql = sprintf('UPDATE %s SET gperm_groupid = %u, gperm_itemid = %u, gperm_modid = %u WHERE gperm_id = %u', $this->db->prefix('group_permission'), $gperm_groupid, $gperm_itemid, $gperm_modid, $gperm_id);
         }
@@ -238,7 +239,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
      * Retrieve multiple {@link XoopsGroupPerm}s
      *
      * @param CriteriaElement $criteria  {@link CriteriaElement}
-     * @param bool   $id_as_key Use IDs as array keys?
+     * @param bool            $id_as_key Use IDs as array keys?
      *
      * @return array Array of {@link XoopsGroupPerm}s
      */
@@ -388,6 +389,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
         if ($gperm_itemid > 0) {
             $criteria->add(new Criteria('gperm_itemid', $gperm_itemid));
         }
+
         return $this->getCount($criteria) > 0;
     }
 

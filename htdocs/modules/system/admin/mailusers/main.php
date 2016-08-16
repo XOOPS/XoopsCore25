@@ -128,9 +128,11 @@ switch ($op) {
         $fname_text      = new XoopsFormText(_AM_SYSTEM_MAILUSERS_MAILFNAME, 'mail_fromname', 30, 255, htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES));
         $fromemail       = !empty($xoopsConfig['adminmail']) ? $xoopsConfig['adminmail'] : $xoopsUser->getVar('email', 'E');
         $femail_text     = new XoopsFormText(_AM_SYSTEM_MAILUSERS_MAILFMAIL, 'mail_fromemail', 30, 255, $fromemail);
-        $subject_caption = _AM_SYSTEM_MAILUSERS_MAILSUBJECT . "<br><br><span style='font-size:x-small;font-weight:bold;'>" . _AM_SYSTEM_MAILUSERS_MAILTAGS . "</span><br><span style='font-size:x-small;font-weight:normal;'>" . _AM_SYSTEM_MAILUSERS_MAILTAGS2 . '</span>';
+        $subject_caption = _AM_SYSTEM_MAILUSERS_MAILSUBJECT . "<br><br><span style='font-size:x-small;font-weight:bold;'>" . _AM_SYSTEM_MAILUSERS_MAILTAGS . "</span><br><span style='font-size:x-small;font-weight:normal;'>"
+                           . _AM_SYSTEM_MAILUSERS_MAILTAGS2 . '</span>';
         $subject_text    = new XoopsFormText($subject_caption, 'mail_subject', 50, 255);
-        $body_caption    = _AM_SYSTEM_MAILUSERS_MAILBODY . "<br><br><span style='font-size:x-small;font-weight:bold;'>" . _AM_SYSTEM_MAILUSERS_MAILTAGS . "</span><br><span style='font-size:x-small;font-weight:normal;'>" . _AM_SYSTEM_MAILUSERS_MAILTAGS1 . '<br>' . _AM_SYSTEM_MAILUSERS_MAILTAGS2 . '<br>' . _AM_SYSTEM_MAILUSERS_MAILTAGS3 . '<br>' . _AM_SYSTEM_MAILUSERS_MAILTAGS4 . '</span>';
+        $body_caption    = _AM_SYSTEM_MAILUSERS_MAILBODY . "<br><br><span style='font-size:x-small;font-weight:bold;'>" . _AM_SYSTEM_MAILUSERS_MAILTAGS . "</span><br><span style='font-size:x-small;font-weight:normal;'>"
+                           . _AM_SYSTEM_MAILUSERS_MAILTAGS1 . '<br>' . _AM_SYSTEM_MAILUSERS_MAILTAGS2 . '<br>' . _AM_SYSTEM_MAILUSERS_MAILTAGS3 . '<br>' . _AM_SYSTEM_MAILUSERS_MAILTAGS4 . '</span>';
         $body_text       = new XoopsFormTextArea($body_caption, 'mail_body', '', 10);
         $to_checkbox     = new XoopsFormCheckBox(_AM_SYSTEM_MAILUSERS_SENDTO, 'mail_send_to', 'mail');
         $to_checkbox->addOption('mail', _AM_SYSTEM_MAILUSERS_EMAIL);

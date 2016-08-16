@@ -114,6 +114,7 @@ class XoopsFileHandler
                 return false;
             }
         }
+
         return null;
     }
 
@@ -248,7 +249,8 @@ class XoopsFileHandler
         return strtr($data, array(
             "\r\n" => $lineBreak,
             "\n"   => $lineBreak,
-            "\r"   => $lineBreak));
+            "\r"   => $lineBreak
+        ));
     }
 
     /**

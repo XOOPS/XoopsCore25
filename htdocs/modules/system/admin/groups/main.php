@@ -316,9 +316,10 @@ switch ($op) {
                 $xoBreadCrumb->render();
                 // Display message
                 xoops_confirm(array(
-                                  'ok' => 1,
+                                  'ok'        => 1,
                                   'groups_id' => $_REQUEST['groups_id'],
-                                  'op' => 'groups_delete'), 'admin.php?fct=groups', sprintf(_AM_SYSTEM_GROUPS_SUREDEL) . '<br \>' . $obj->getVar('name') . '<br \>');
+                                  'op'        => 'groups_delete'
+                              ), 'admin.php?fct=groups', sprintf(_AM_SYSTEM_GROUPS_SUREDEL) . '<br \>' . $obj->getVar('name') . '<br \>');
             }
         } else {
             redirect_header('admin.php?fct=groups', 1, _AM_SYSTEM_DBERROR);

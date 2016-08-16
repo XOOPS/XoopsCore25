@@ -1,5 +1,5 @@
 <?php
- // 
+// 
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2016 XOOPS Project (www.xoops.org)            //
@@ -63,7 +63,8 @@ $status_array    = array(XOOPS_COMMENT_PENDING => _CM_PENDING, XOOPS_COMMENT_ACT
 $status_array2   = array(
     XOOPS_COMMENT_PENDING => '<span style="text-decoration: none; font-weight: bold; color: #008000;">' . _CM_PENDING . '</span>',
     XOOPS_COMMENT_ACTIVE  => '<span style="text-decoration: none; font-weight: bold; color: #ff0000;">' . _CM_ACTIVE . '</span>',
-    XOOPS_COMMENT_HIDDEN  => '<span style="text-decoration: none; font-weight: bold; color: #0000ff;">' . _CM_HIDDEN . '</span>');
+    XOOPS_COMMENT_HIDDEN  => '<span style="text-decoration: none; font-weight: bold; color: #0000ff;">' . _CM_HIDDEN . '</span>'
+);
 $start           = 0;
 $status_array[0] = _AM_SYSTEM_COMMENTS_FORM_ALL_STATUS;
 
@@ -88,7 +89,8 @@ switch ($op) {
                 $module_handler = xoops_getHandler('module');
                 $module         = $module_handler->get($comment->getVar('com_modid'));
                 $comment_config = $module->getInfo('comments');
-                header('Location: ' . XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . $comment_config['pageName'] . '?' . $comment_config['itemName'] . '=' . $comment->getVar('com_itemid') . '&com_id=' . $comment->getVar('com_id') . '&com_rootid=' . $comment->getVar('com_rootid') . '&com_mode=thread&' . str_replace('&amp;', '&', $comment->getVar('com_exparams')) . '#comment' . $comment->getVar('com_id'));
+                header('Location: ' . XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . $comment_config['pageName'] . '?' . $comment_config['itemName'] . '=' . $comment->getVar('com_itemid') . '&com_id=' . $comment->getVar('com_id')
+                       . '&com_rootid=' . $comment->getVar('com_rootid') . '&com_mode=thread&' . str_replace('&amp;', '&', $comment->getVar('com_exparams')) . '#comment' . $comment->getVar('com_id'));
                 exit();
             }
         }
@@ -286,9 +288,11 @@ switch ($op) {
                     }
                 } elseif ($comments_arr[$i]->getVar('com_uid') == 0 && $comments_arr[$i]->getVar('com_user') != '') {
                     if ($comments_arr[$i]->getVar('com_url') != '') {
-                        $comments_poster_uname = '<div class="pad2 marg2"><a href="' . $comments_arr[$i]->getVar('com_url') . '">' . $comments_arr[$i]->getVar('com_user') . '</a> ( <a href="mailto:' . $comments_arr[$i]->getVar('com_email') . '">' . $comments_arr[$i]->getVar('com_email') . '</a> ) ' . '</div>';
+                        $comments_poster_uname = '<div class="pad2 marg2"><a href="' . $comments_arr[$i]->getVar('com_url') . '">' . $comments_arr[$i]->getVar('com_user') . '</a> ( <a href="mailto:' . $comments_arr[$i]->getVar('com_email') . '">'
+                                                 . $comments_arr[$i]->getVar('com_email') . '</a> ) ' . '</div>';
                     } else {
-                        $comments_poster_uname = '<div class="pad2 marg2">' . $comments_arr[$i]->getVar('com_user') . ' ( <a href="mailto:' . $comments_arr[$i]->getVar('com_email') . '">' . $comments_arr[$i]->getVar('com_email') . '</a> ) ' . '</div>';
+                        $comments_poster_uname = '<div class="pad2 marg2">' . $comments_arr[$i]->getVar('com_user') . ' ( <a href="mailto:' . $comments_arr[$i]->getVar('com_email') . '">' . $comments_arr[$i]->getVar('com_email') . '</a> ) '
+                                                 . '</div>';
                     }
                 }
                 // End edit by voltan
@@ -298,10 +302,10 @@ switch ($op) {
                 $comments['comments_id']           = $com_id;
                 $comments['comments_poster']       = $comments_poster_uname;
                 $comments['comments_icon']         = $comments_icon;
-                $comments['comments_title'] = $myts->htmlSpecialChars($comments_arr[$i]->getVar('com_title'));
+                $comments['comments_title']        = $myts->htmlSpecialChars($comments_arr[$i]->getVar('com_title'));
                 $comments['comments_ip']           = $comments_arr[$i]->getVar('com_ip');
                 $comments['comments_date']         = formatTimestamp($comments_arr[$i]->getVar('com_created'));
-                $comments['comments_text'] = $myts->htmlSpecialChars($comments_arr[$i]->getVar('com_text'));
+                $comments['comments_text']         = $myts->htmlSpecialChars($comments_arr[$i]->getVar('com_text'));
                 $comments['comments_status']       = @$status_array2[$comments_arr[$i]->getVar('com_status')];
                 $comments['comments_date_created'] = formatTimestamp($comments_arr[$i]->getVar('com_created'), 'm');
                 $comments['comments_modid']        = @$module_array[$comments_arr[$i]->getVar('com_modid')];

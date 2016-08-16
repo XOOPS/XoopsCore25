@@ -91,7 +91,8 @@ class SystemBlock extends XoopsBlock
                                          9  => _AM_SYSTEM_BLOCKS_CBBOTTOM,
                                          10 => _AM_SYSTEM_BLOCKS_CBFOOTERLEFT,
                                          11 => _AM_SYSTEM_BLOCKS_CBFOOTERRIGHT,
-                                         12 => _AM_SYSTEM_BLOCKS_CBFOOTERCENTER));
+                                         12 => _AM_SYSTEM_BLOCKS_CBFOOTERCENTER
+                                     ));
 
         $form->addElement($side_select);
         // Order
@@ -127,7 +128,8 @@ class SystemBlock extends XoopsBlock
                                                   'H' => _AM_SYSTEM_BLOCKS_HTML,
                                                   'P' => _AM_SYSTEM_BLOCKS_PHP,
                                                   'S' => _AM_SYSTEM_BLOCKS_AFWSMILE,
-                                                  'T' => _AM_SYSTEM_BLOCKS_AFNOSMILE));
+                                                  'T' => _AM_SYSTEM_BLOCKS_AFNOSMILE
+                                              ));
                 $form->addElement($ctype_select);
             } else {
                 $form->addElement(new XoopsFormHidden('c_type', 'H'));
@@ -137,11 +139,13 @@ class SystemBlock extends XoopsBlock
                 $tplfile_handler = xoops_getHandler('tplfile');
                 $btemplate       = $tplfile_handler->find($GLOBALS['xoopsConfig']['template_set'], 'block', $this->getVar('bid'));
                 if (count($btemplate) > 0) {
-                    $form->addElement(new XoopsFormLabel(_AM_SYSTEM_BLOCKS_CONTENT, '<a href="' . XOOPS_URL . '/modules/system/admin.php?fct=tplsets&amp;op=edittpl&amp;id=' . $btemplate[0]->getVar('tpl_id') . '">' . _AM_SYSTEM_BLOCKS_EDITTPL . '</a>'));
+                    $form->addElement(new XoopsFormLabel(_AM_SYSTEM_BLOCKS_CONTENT,
+                                                         '<a href="' . XOOPS_URL . '/modules/system/admin.php?fct=tplsets&amp;op=edittpl&amp;id=' . $btemplate[0]->getVar('tpl_id') . '">' . _AM_SYSTEM_BLOCKS_EDITTPL . '</a>'));
                 } else {
                     $btemplate2 = $tplfile_handler->find('default', 'block', $this->getVar('bid'));
                     if (count($btemplate2) > 0) {
-                        $form->addElement(new XoopsFormLabel(_AM_SYSTEM_BLOCKS_CONTENT, '<a href="' . XOOPS_URL . '/modules/system/admin.php?fct=tplsets&amp;op=edittpl&amp;id=' . $btemplate2[0]->getVar('tpl_id') . '" rel="external">' . _AM_SYSTEM_BLOCKS_EDITTPL . '</a>'));
+                        $form->addElement(new XoopsFormLabel(_AM_SYSTEM_BLOCKS_CONTENT,
+                                                             '<a href="' . XOOPS_URL . '/modules/system/admin.php?fct=tplsets&amp;op=edittpl&amp;id=' . $btemplate2[0]->getVar('tpl_id') . '" rel="external">' . _AM_SYSTEM_BLOCKS_EDITTPL . '</a>'));
                     }
                 }
             }
@@ -164,7 +168,8 @@ class SystemBlock extends XoopsBlock
                                           '86400'   => _DAY,
                                           '259200'  => sprintf(_DAYS, 3),
                                           '604800'  => _WEEK,
-                                          '2592000' => _MONTH));
+                                          '2592000' => _MONTH
+                                      ));
         $form->addElement($cache_select);
         // Groups
         $form->addElement(new XoopsFormSelectGroup(_AM_SYSTEM_BLOCKS_GROUP, 'groups', true, $groups, 5, true));
@@ -324,9 +329,9 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
     /**
      * retrieve array of {@link XoopsBlock}s meeting certain conditions
      *
-     * @param CriteriaElement $criteria {@link CriteriaElement} with conditions for the blocks
-     * @param bool $id_as_key           should the blocks' bid be the key for the returned array?
-     * @param bool $as_object           return an array of objects
+     * @param CriteriaElement $criteria  {@link CriteriaElement} with conditions for the blocks
+     * @param bool            $id_as_key should the blocks' bid be the key for the returned array?
+     * @param bool            $as_object return an array of objects
      *
      * @return array {@link XoopsBlock}s matching the conditions
      **/
@@ -376,8 +381,8 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
      * get all the blocks that match the supplied parameters
      *
      * @param int|int[] $groupid  groupid (can be an array)
-     * @param bool $asobject
-     * @param int $side
+     * @param bool      $asobject
+     * @param int       $side
      *                            0: sideblock - left
      *                            1: sideblock - right
      *                            2: sideblock - left and right
@@ -386,8 +391,8 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
      *                            5: centerblock - center
      *                            6: centerblock - left, right, center
      * @param           $visible  0: not visible 1: visible
-     * @param string $orderby     order of the blocks
-     * @param int $isactive
+     * @param string    $orderby  order of the blocks
+     * @param int       $isactive
      *
      * @return array of block objects
      */
@@ -479,11 +484,11 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
 
     /**
      * @param        $groupid
-     * @param int $module_id
-     * @param bool $toponlyblock
-     * @param null $visible
+     * @param int    $module_id
+     * @param bool   $toponlyblock
+     * @param null   $visible
      * @param string $orderby
-     * @param int $isactive
+     * @param int    $isactive
      *
      * @return array
      */
@@ -544,11 +549,11 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * @param int $module_id
-     * @param bool $toponlyblock
-     * @param null $visible
+     * @param int    $module_id
+     * @param bool   $toponlyblock
+     * @param null   $visible
      * @param string $orderby
-     * @param int $isactive
+     * @param int    $isactive
      *
      * @return array
      */

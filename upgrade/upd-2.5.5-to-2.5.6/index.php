@@ -18,7 +18,8 @@ class Upgrade_256 extends XoopsUpgrade
     public $tasks = array(
         'com_user',
         'com_email',
-        'com_url');
+        'com_url'
+    );
 
     /**
      *

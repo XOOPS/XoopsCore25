@@ -193,8 +193,15 @@ class XoopsObject
      *
      * @return void
      */
-    public function initVar($key, $data_type, $value = null, $required = false, $maxlength = null, $options = '', $enumerations = '')
-    {
+    public function initVar(
+        $key,
+        $data_type,
+        $value = null,
+        $required = false,
+        $maxlength = null,
+        $options = '',
+        $enumerations = ''
+    ) {
         $this->vars[$key] = array(
             'value'       => $value,
             'required'    => $required,
@@ -202,7 +209,8 @@ class XoopsObject
             'maxlength'   => $maxlength,
             'changed'     => false,
             'options'     => $options,
-            'enumeration' => $enumerations);
+            'enumeration' => $enumerations
+        );
     }
 
     /**
@@ -338,6 +346,7 @@ class XoopsObject
     {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
         trigger_error("XoopsObject::destoryVars() is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']},");
+
         return $this->destroyVars($var);
     }
 
@@ -449,9 +458,12 @@ class XoopsObject
                     case 's':
                     case 'show':
                         $html   = !empty($this->vars['dohtml']['value']) ? 1 : 0;
-                        $xcode  = (!isset($this->vars['doxcode']['value']) || $this->vars['doxcode']['value'] == 1) ? 1 : 0;
-                        $smiley = (!isset($this->vars['dosmiley']['value']) || $this->vars['dosmiley']['value'] == 1) ? 1 : 0;
-                        $image  = (!isset($this->vars['doimage']['value']) || $this->vars['doimage']['value'] == 1) ? 1 : 0;
+                        $xcode  = (!isset($this->vars['doxcode']['value'])
+                                   || $this->vars['doxcode']['value'] == 1) ? 1 : 0;
+                        $smiley = (!isset($this->vars['dosmiley']['value'])
+                                   || $this->vars['dosmiley']['value'] == 1) ? 1 : 0;
+                        $image  = (!isset($this->vars['doimage']['value'])
+                                   || $this->vars['doimage']['value'] == 1) ? 1 : 0;
                         $br     = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
 
                         return $ts->displayTarea($ret, $html, $smiley, $xcode, $image, $br);
@@ -463,9 +475,12 @@ class XoopsObject
                     case 'p':
                     case 'preview':
                         $html   = !empty($this->vars['dohtml']['value']) ? 1 : 0;
-                        $xcode  = (!isset($this->vars['doxcode']['value']) || $this->vars['doxcode']['value'] == 1) ? 1 : 0;
-                        $smiley = (!isset($this->vars['dosmiley']['value']) || $this->vars['dosmiley']['value'] == 1) ? 1 : 0;
-                        $image  = (!isset($this->vars['doimage']['value']) || $this->vars['doimage']['value'] == 1) ? 1 : 0;
+                        $xcode  = (!isset($this->vars['doxcode']['value'])
+                                   || $this->vars['doxcode']['value'] == 1) ? 1 : 0;
+                        $smiley = (!isset($this->vars['dosmiley']['value'])
+                                   || $this->vars['dosmiley']['value'] == 1) ? 1 : 0;
+                        $image  = (!isset($this->vars['doimage']['value'])
+                                   || $this->vars['doimage']['value'] == 1) ? 1 : 0;
                         $br     = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
 
                         return $ts->previewTarea($ret, $html, $smiley, $xcode, $image, $br);
@@ -760,7 +775,9 @@ class XoopsObject
                             $this->setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
                             continue 2;
                         }
-                        if ($cleanv != '' && !preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $cleanv)) {
+                        if ($cleanv != ''
+                            && !preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $cleanv)
+                        ) {
                             $this->setErrors('Invalid Email'); //_XOBJ_ERR_INVALID_EMAIL
                             continue 2;
                         }
@@ -834,7 +851,9 @@ class XoopsObject
                             $this->setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
                             continue 2;
                         }
-                        if ($cleanv != '' && !preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $cleanv)) {
+                        if ($cleanv != ''
+                            && !preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $cleanv)
+                        ) {
                             $this->setErrors('Invalid Email');
                             continue 2;
                         }
@@ -1204,15 +1223,20 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * Constructor
      *
-     * @param null|XoopsDatabase $db             database connection
-     * @param string             $table          Name of database table
-     * @param string             $className      Name of the XoopsObject class this handler manages
-     * @param string             $keyName        Name of the property holding the key
-     * @param string             $identifierName Name of the property holding an identifier
+     * @param null|XoopsDatabase $db              database connection
+     * @param string             $table           Name of database table
+     * @param string             $className       Name of the XoopsObject class this handler manages
+     * @param string             $keyName         Name of the property holding the key
+     * @param string             $identifierName  Name of the property holding an identifier
      *                                            name (title, name ...), used on getList()
      */
-    public function __construct(XoopsDatabase $db = null, $table = '', $className = '', $keyName = '', $identifierName = '')
-    {
+    public function __construct(
+        XoopsDatabase $db = null,
+        $table = '',
+        $className = '',
+        $keyName = '',
+        $identifierName = ''
+    ) {
         $db    = XoopsDatabaseFactory::getDatabaseConnection();
         $table = $db->prefix($table);
         parent::__construct($db);
@@ -1227,17 +1251,22 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * PHP 4 style constructor compatibility shim
      *
-     * @param null|XoopsDatabase $db             database connection
-     * @param string             $table          Name of database table
-     * @param string             $className      Name of the XoopsObject class this handler manages
-     * @param string             $keyName        Name of the property holding the key
-     * @param string             $identifierName Name of the property holding an identifier
+     * @param null|XoopsDatabase $db              database connection
+     * @param string             $table           Name of database table
+     * @param string             $className       Name of the XoopsObject class this handler manages
+     * @param string             $keyName         Name of the property holding the key
+     * @param string             $identifierName  Name of the property holding an identifier
      *                                            name (title, name ...), used on getList()
      *
      * @deprecated all callers should be using parent::__construct()
      */
-    public function XoopsPersistableObjectHandler(XoopsDatabase $db = null, $table = '', $className = '', $keyName = '', $identifierName = '')
-    {
+    public function XoopsPersistableObjectHandler(
+        XoopsDatabase $db = null,
+        $table = '',
+        $className = '',
+        $keyName = '',
+        $identifierName = ''
+    ) {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
         trigger_error("Should call parent::__construct in {$trace[0]['file']} line {$trace[0]['line']},");
         self::__construct($db, $table, $className, $keyName, $identifierName);
@@ -1532,8 +1561,13 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param  bool            $asObject flag indicating as object, otherwise as array
      * @return array           of objects     {@link XoopsObject}
      */
-    public function &getByLimit($limit = 0, $start = 0, CriteriaElement $criteria = null, $fields = null, $asObject = true)
-    {
+    public function &getByLimit(
+        $limit = 0,
+        $start = 0,
+        CriteriaElement $criteria = null,
+        $fields = null,
+        $asObject = true
+    ) {
         $handler = $this->loadHandler('read');
         $ret     = $handler->getByLimit($limit, $start, $criteria, $fields, $asObject);
 
@@ -1590,8 +1624,13 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param  string          $field_object field of current object for JOIN
      * @return array           of objects {@link XoopsObject}
      */
-    public function &getByLink(CriteriaElement $criteria = null, $fields = null, $asObject = true, $field_link = null, $field_object = null)
-    {
+    public function &getByLink(
+        CriteriaElement $criteria = null,
+        $fields = null,
+        $asObject = true,
+        $field_link = null,
+        $field_object = null
+    ) {
         $handler = $this->loadHandler('joint');
         $ret     = $handler->getByLink($criteria, $fields, $asObject, $field_link, $field_object);
 

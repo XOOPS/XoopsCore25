@@ -1,10 +1,9 @@
 <?php
 /**
  * Smarty plugin
- * @package Smarty
+ * @package    Smarty
  * @subpackage plugins
  */
-
 
 /**
  * Smarty cat modifier plugin
@@ -15,10 +14,10 @@
  * Purpose:  catenate a value to a variable
  * Input:    string to catenate
  * Example:  {$var|cat:"foo"}
- * @link http://smarty.php.net/manual/en/language.modifier.cat.php cat
+ * @link     http://smarty.php.net/manual/en/language.modifier.cat.php cat
  *          (Smarty online manual)
  * @author   Monte Ohrt <monte at ohrt dot com>
- * @version 1.0
+ * @version  1.0
  * @param string
  * @param string
  * @return string

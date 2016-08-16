@@ -85,7 +85,8 @@ class SystemMaintenance
      */
     public function CleanAvatar()
     {
-        $result = $this->db->queryF('SELECT avatar_id, avatar_file FROM ' . $this->db->prefix('avatar') . " WHERE avatar_type='C' AND avatar_id IN (" . 'SELECT t1.avatar_id FROM ' . $this->db->prefix('avatar_user_link') . ' AS t1 ' . 'LEFT JOIN ' . $this->db->prefix('users') . ' AS t2 ON t2.uid=t1.user_id ' . 'WHERE t2.uid IS NULL)');
+        $result = $this->db->queryF('SELECT avatar_id, avatar_file FROM ' . $this->db->prefix('avatar') . " WHERE avatar_type='C' AND avatar_id IN (" . 'SELECT t1.avatar_id FROM ' . $this->db->prefix('avatar_user_link') . ' AS t1 ' . 'LEFT JOIN '
+                                    . $this->db->prefix('users') . ' AS t2 ON t2.uid=t1.user_id ' . 'WHERE t2.uid IS NULL)');
 
         while ($myrow = $this->db->fetchArray($result)) {
             //delete file
@@ -145,7 +146,8 @@ class SystemMaintenance
      */
     public function CheckRepairAnalyzeOptimizeQueries($tables, $maintenance)
     {
-        $ret = '<table class="outer"><th>' . _AM_SYSTEM_MAINTENANCE_TABLES1 . '</th><th>' . _AM_SYSTEM_MAINTENANCE_TABLES_OPTIMIZE . '</th><th>' . _AM_SYSTEM_MAINTENANCE_TABLES_CHECK . '</th><th>' . _AM_SYSTEM_MAINTENANCE_TABLES_REPAIR . '</th><th>' . _AM_SYSTEM_MAINTENANCE_TABLES_ANALYZE . '</th>';
+        $ret = '<table class="outer"><th>' . _AM_SYSTEM_MAINTENANCE_TABLES1 . '</th><th>' . _AM_SYSTEM_MAINTENANCE_TABLES_OPTIMIZE . '</th><th>' . _AM_SYSTEM_MAINTENANCE_TABLES_CHECK . '</th><th>' . _AM_SYSTEM_MAINTENANCE_TABLES_REPAIR . '</th><th>'
+               . _AM_SYSTEM_MAINTENANCE_TABLES_ANALYZE . '</th>';
         $tab = array();
         for ($i = 0; $i < 4; ++$i) {
             $tab[$i] = $i + 1;
@@ -221,7 +223,8 @@ class SystemMaintenance
         $ret[0] = "# \n";
         $ret[0] .= "# Dump SQL, Generate by Xoops \n";
         $ret[0] .= '# Date : ' . date('d-m-Y - H:i') . " \n";
-        $ret[1]      = '<table class="outer"><tr><th width="30%">' . _AM_SYSTEM_MAINTENANCE_DUMP_TABLES . '</th><th width="35%">' . _AM_SYSTEM_MAINTENANCE_DUMP_STRUCTURES . '</th><th  width="35%">' . _AM_SYSTEM_MAINTENANCE_DUMP_NB_RECORDS . '</th></tr>';
+        $ret[1]      = '<table class="outer"><tr><th width="30%">' . _AM_SYSTEM_MAINTENANCE_DUMP_TABLES . '</th><th width="35%">' . _AM_SYSTEM_MAINTENANCE_DUMP_STRUCTURES . '</th><th  width="35%">' . _AM_SYSTEM_MAINTENANCE_DUMP_NB_RECORDS
+                       . '</th></tr>';
         $class       = 'odd';
         $tablesCount = count($tables);
         for ($i = 0; $i < $tablesCount; ++$i) {
@@ -251,7 +254,8 @@ class SystemMaintenance
         $ret[0] .= "# Dump SQL, Generate by Xoops \n";
         $ret[0] .= '# Date : ' . date('d-m-Y - H:i') . " \n";
         $ret[0] .= "# \n\n";
-        $ret[1]       = '<table class="outer"><tr><th width="30%">' . _AM_SYSTEM_MAINTENANCE_DUMP_TABLES . '</th><th width="35%">' . _AM_SYSTEM_MAINTENANCE_DUMP_STRUCTURES . '</th><th  width="35%">' . _AM_SYSTEM_MAINTENANCE_DUMP_NB_RECORDS . '</th></tr>';
+        $ret[1]       = '<table class="outer"><tr><th width="30%">' . _AM_SYSTEM_MAINTENANCE_DUMP_TABLES . '</th><th width="35%">' . _AM_SYSTEM_MAINTENANCE_DUMP_STRUCTURES . '</th><th  width="35%">' . _AM_SYSTEM_MAINTENANCE_DUMP_NB_RECORDS
+                        . '</th></tr>';
         $class        = 'odd';
         $modulesCount = count($modules);
         for ($i = 0; $i < $modulesCount; ++$i) {
@@ -327,7 +331,7 @@ class SystemMaintenance
                 $field_type = array();
                 $i          = 0;
                 while ($i < $num_fields) {
-                    $meta = mysqli_fetch_field($result);
+                    $meta         = mysqli_fetch_field($result);
                     $field_type[] = $meta->type;
                     ++$i;
                 }
@@ -385,9 +389,11 @@ class SystemMaintenance
         $file_name = 'dump_' . date('Y.m.d') . '_' . date('H.i.s') . '.sql';
         $path_file = './admin/maintenance/dump/' . $file_name;
         if (file_put_contents($path_file, $ret[0])) {
-            $ret[1] .= '<table class="outer"><tr><th colspan="2" align="center">' . _AM_SYSTEM_MAINTENANCE_DUMP_FILE_CREATED . '</th><th>' . _AM_SYSTEM_MAINTENANCE_DUMP_RESULT . '</th></tr><tr><td colspan="2" align="center"><a href="' . XOOPS_URL . '/modules/system/admin/maintenance/dump/' . $file_name . '">' . $file_name . '</a></td><td  class="xo-actions txtcenter"><img src="' . system_AdminIcons('success.png') . '" /></td><tr></table>';
+            $ret[1] .= '<table class="outer"><tr><th colspan="2" align="center">' . _AM_SYSTEM_MAINTENANCE_DUMP_FILE_CREATED . '</th><th>' . _AM_SYSTEM_MAINTENANCE_DUMP_RESULT . '</th></tr><tr><td colspan="2" align="center"><a href="' . XOOPS_URL
+                       . '/modules/system/admin/maintenance/dump/' . $file_name . '">' . $file_name . '</a></td><td  class="xo-actions txtcenter"><img src="' . system_AdminIcons('success.png') . '" /></td><tr></table>';
         } else {
-            $ret[1] .= '<table class="outer"><tr><th colspan="2" align="center">' . _AM_SYSTEM_MAINTENANCE_DUMP_FILE_CREATED . '</th><th>' . _AM_SYSTEM_MAINTENANCE_DUMP_RESULT . '</th></tr><tr><td colspan="2" class="xo-actions txtcenter">' . $file_name . '</td><td  class="xo-actions txtcenter"><img src="' . system_AdminIcons('cancel.png') . '" /></td><tr></table>';
+            $ret[1] .= '<table class="outer"><tr><th colspan="2" align="center">' . _AM_SYSTEM_MAINTENANCE_DUMP_FILE_CREATED . '</th><th>' . _AM_SYSTEM_MAINTENANCE_DUMP_RESULT . '</th></tr><tr><td colspan="2" class="xo-actions txtcenter">'
+                       . $file_name . '</td><td  class="xo-actions txtcenter"><img src="' . system_AdminIcons('cancel.png') . '" /></td><tr></table>';
         }
 
         return $ret;

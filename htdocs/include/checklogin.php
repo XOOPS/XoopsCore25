@@ -20,10 +20,10 @@ xoops_loadLanguage('user');
 
 // from $_POST we use keys: uname, pass, rememberme, xoops_redirect
 XoopsLoad::load('XoopsRequest');
-$uname = XoopsRequest::getString('uname', '', 'POST');
-$pass = XoopsRequest::getString('pass', '', 'POST');
+$uname      = XoopsRequest::getString('uname', '', 'POST');
+$pass       = XoopsRequest::getString('pass', '', 'POST');
 $rememberme = XoopsRequest::getString('rememberme', '', 'POST');
-$redirect = XoopsRequest::getUrl('xoops_redirect', '', 'POST');
+$redirect   = XoopsRequest::getUrl('xoops_redirect', '', 'POST');
 
 if ($uname == '' || $pass == '') {
     redirect_header(XOOPS_URL . '/user.php', 1, _US_INCORRECTLOGIN);
@@ -71,18 +71,12 @@ if (false !== $user) {
     // Set cookie for rememberme
     if (!empty($xoopsConfig['usercookie'])) {
         if (!empty($rememberme)) {
-            $claims = array(
+            $claims       = array(
                 'uid' => $_SESSION['xoopsUserId'],
             );
-            $rememberTime = 60*60*24*30;
-            $token = \Xmf\Jwt\TokenFactory::build('rememberme', $claims, $rememberTime);
-            setcookie($xoopsConfig['usercookie'],
-                $token,
-                time() + $rememberTime,
-                '/',
-                XOOPS_COOKIE_DOMAIN, XOOPS_PROT == 'https://',
-                true
-            );
+            $rememberTime = 60 * 60 * 24 * 30;
+            $token        = \Xmf\Jwt\TokenFactory::build('rememberme', $claims, $rememberTime);
+            setcookie($xoopsConfig['usercookie'], $token, time() + $rememberTime, '/', XOOPS_COOKIE_DOMAIN, XOOPS_PROT == 'https://', true);
         } else {
             setcookie($xoopsConfig['usercookie'], null, time() - 3600, '/', XOOPS_COOKIE_DOMAIN, 0, true);
         }

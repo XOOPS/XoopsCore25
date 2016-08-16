@@ -338,22 +338,26 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
             return false;
         }
 
-        $conf_id = $config->getVar('conf_id', 'n');
-        $conf_modid = $config->getVar('conf_modid', 'n');
-        $conf_catid = $config->getVar('conf_catid', 'n');
-        $conf_name = $config->getVar('conf_name', 'n');
-        $conf_title = $config->getVar('conf_title', 'n');
-        $conf_value = $config->getVar('conf_value', 'n');
-        $conf_desc = $config->getVar('conf_desc', 'n');
-        $conf_formtype = $config->getVar('conf_formtype', 'n');
+        $conf_id        = $config->getVar('conf_id', 'n');
+        $conf_modid     = $config->getVar('conf_modid', 'n');
+        $conf_catid     = $config->getVar('conf_catid', 'n');
+        $conf_name      = $config->getVar('conf_name', 'n');
+        $conf_title     = $config->getVar('conf_title', 'n');
+        $conf_value     = $config->getVar('conf_value', 'n');
+        $conf_desc      = $config->getVar('conf_desc', 'n');
+        $conf_formtype  = $config->getVar('conf_formtype', 'n');
         $conf_valuetype = $config->getVar('conf_valuetype', 'n');
-        $conf_order = $config->getVar('conf_order', 'n');
+        $conf_order     = $config->getVar('conf_order', 'n');
 
         if ($config->isNew()) {
             $conf_id = $this->db->genId('config_conf_id_seq');
-            $sql     = sprintf('INSERT INTO %s (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) VALUES (%u, %u, %u, %s, %s, %s, %s, %s, %s, %u)', $this->db->prefix('config'), $conf_id, $conf_modid, $conf_catid, $this->db->quoteString($conf_name), $this->db->quoteString($conf_title), $this->db->quoteString($conf_value), $this->db->quoteString($conf_desc), $this->db->quoteString($conf_formtype), $this->db->quoteString($conf_valuetype), $conf_order);
+            $sql     = sprintf('INSERT INTO %s (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) VALUES (%u, %u, %u, %s, %s, %s, %s, %s, %s, %u)', $this->db->prefix('config'),
+                               $conf_id, $conf_modid, $conf_catid, $this->db->quoteString($conf_name), $this->db->quoteString($conf_title), $this->db->quoteString($conf_value), $this->db->quoteString($conf_desc),
+                               $this->db->quoteString($conf_formtype), $this->db->quoteString($conf_valuetype), $conf_order);
         } else {
-            $sql = sprintf('UPDATE %s SET conf_modid = %u, conf_catid = %u, conf_name = %s, conf_title = %s, conf_value = %s, conf_desc = %s, conf_formtype = %s, conf_valuetype = %s, conf_order = %u WHERE conf_id = %u', $this->db->prefix('config'), $conf_modid, $conf_catid, $this->db->quoteString($conf_name), $this->db->quoteString($conf_title), $this->db->quoteString($conf_value), $this->db->quoteString($conf_desc), $this->db->quoteString($conf_formtype), $this->db->quoteString($conf_valuetype), $conf_order, $conf_id);
+            $sql = sprintf('UPDATE %s SET conf_modid = %u, conf_catid = %u, conf_name = %s, conf_title = %s, conf_value = %s, conf_desc = %s, conf_formtype = %s, conf_valuetype = %s, conf_order = %u WHERE conf_id = %u', $this->db->prefix('config'),
+                           $conf_modid, $conf_catid, $this->db->quoteString($conf_name), $this->db->quoteString($conf_title), $this->db->quoteString($conf_value), $this->db->quoteString($conf_desc), $this->db->quoteString($conf_formtype),
+                           $this->db->quoteString($conf_valuetype), $conf_order, $conf_id);
         }
         if (!$result = $this->db->query($sql)) {
             return false;
@@ -431,7 +435,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
      */
     public function getCount(CriteriaElement $criteria = null)
     {
-        $sql   = 'SELECT * FROM ' . $this->db->prefix('config');
+        $sql = 'SELECT * FROM ' . $this->db->prefix('config');
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }

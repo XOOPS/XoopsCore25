@@ -42,9 +42,11 @@ if (!$allowed) {
     $xoopsThemeFactory->allowedThemes = $xoopsConfig['theme_set_allowed'];
     $xoopsThemeFactory->defaultTheme  = $xoopsConfig['theme_set'];
     $xoTheme                          =& $xoopsThemeFactory->createInstance(array(
-                                                                                'plugins' => array()));
+                                                                                'plugins' => array()
+                                                                            ));
     $xoTheme->addScript('/include/xoops.js', array(
-        'type' => 'text/javascript'));
+        'type' => 'text/javascript'
+    ));
     $xoopsTpl =& $xoTheme->template;
     $xoopsTpl->assign(array(
                           'xoops_theme'       => $xoopsConfig['theme_set'],
@@ -55,11 +57,13 @@ if (!$allowed) {
                           'xoops_slogan'      => htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES),
                           'xoops_dirname'     => @$xoopsModule ? $xoopsModule->getVar('dirname') : 'system',
                           'xoops_banner'      => $xoopsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
-                          'xoops_pagetitle'   => isset($xoopsModule) && is_object($xoopsModule) ? $xoopsModule->getVar('name') : htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES),
+                          'xoops_pagetitle'   => isset($xoopsModule)
+                                                 && is_object($xoopsModule) ? $xoopsModule->getVar('name') : htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES),
                           'lang_login'        => _LOGIN,
                           'lang_username'     => _USERNAME,
                           'lang_password'     => _PASSWORD,
-                          'lang_siteclosemsg' => $xoopsConfig['closesite_text']));
+                          'lang_siteclosemsg' => $xoopsConfig['closesite_text']
+                      ));
     $config_handler = xoops_getHandler('config');
     $criteria       = new CriteriaCompo(new Criteria('conf_modid', 0));
     $criteria->add(new Criteria('conf_catid', XOOPS_CONF_METAFOOTER));

@@ -57,12 +57,16 @@ if (!isset($xoopsConfig['admin_warnings_enable']) || $xoopsConfig['admin_warning
     }
 
     //www fits inside www_private, lets add a trailing slash to make sure it doesn't
-    if (strpos(XOOPS_PATH . '/', XOOPS_ROOT_PATH . '/') !== false || strpos(XOOPS_PATH . '/', $_SERVER['DOCUMENT_ROOT'] . '/') !== false) {
+    if (strpos(XOOPS_PATH . '/', XOOPS_ROOT_PATH . '/') !== false
+        || strpos(XOOPS_PATH . '/', $_SERVER['DOCUMENT_ROOT'] . '/') !== false
+    ) {
         xoops_error(sprintf(_AD_WARNINGXOOPSLIBINSIDE, XOOPS_PATH));
         echo '<br>';
     }
 
-    if (strpos(XOOPS_VAR_PATH . '/', XOOPS_ROOT_PATH . '/') !== false || strpos(XOOPS_VAR_PATH . '/', $_SERVER['DOCUMENT_ROOT'] . '/') !== false) {
+    if (strpos(XOOPS_VAR_PATH . '/', XOOPS_ROOT_PATH . '/') !== false
+        || strpos(XOOPS_VAR_PATH . '/', $_SERVER['DOCUMENT_ROOT'] . '/') !== false
+    ) {
         xoops_error(sprintf(_AD_WARNINGXOOPSLIBINSIDE, XOOPS_VAR_PATH));
         echo '<br>';
     }
@@ -70,8 +74,8 @@ if (!isset($xoopsConfig['admin_warnings_enable']) || $xoopsConfig['admin_warning
 
 if (!empty($_GET['xoopsorgnews'])) {
     // Multiple feeds
-    $myts     = MyTextSanitizer::getInstance();
-    $rssurl   = array();
+    $myts   = MyTextSanitizer::getInstance();
+    $rssurl = array();
     //$rssurl[] = 'http://sourceforge.net/export/rss2_projnews.php?group_id=41586&rss_fulltext=1';
     $rssurl[] = 'http://www.xoops.org/backend.php';
     if ($URLs = include $GLOBALS['xoops']->path('language/' . xoops_getConfigOption('language') . '/backend.php')) {
@@ -95,8 +99,8 @@ if (!empty($_GET['xoopsorgnews'])) {
                     $_items =& $rss2parser->getItems();
                     $count  = count($_items);
                     for ($i = 0; $i < $count; ++$i) {
-                        $_items[$i]['title']                                                         = XoopsLocal::convert_encoding($_items[$i]['title'], _CHARSET, 'UTF-8');
-                        $_items[$i]['description']                                                   = XoopsLocal::convert_encoding($_items[$i]['description'], _CHARSET, 'UTF-8');
+                        $_items[$i]['title']                                                       = XoopsLocal::convert_encoding($_items[$i]['title'], _CHARSET, 'UTF-8');
+                        $_items[$i]['description']                                                 = XoopsLocal::convert_encoding($_items[$i]['description'], _CHARSET, 'UTF-8');
                         $items[(string)strtotime($_items[$i]['pubdate']) . '-' . (string)($cnt++)] = $_items[$i];
                     }
                 } else {

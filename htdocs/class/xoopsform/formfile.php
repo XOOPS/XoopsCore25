@@ -63,6 +63,7 @@ class XoopsFormFile extends XoopsFormElement
      */
     public function render()
     {
-        return '<input type="hidden" name="MAX_FILE_SIZE" value="' . $this->getMaxFileSize() . '" /><input type="file" name="' . $this->getName() . '" id="' . $this->getName() . '" title="' . $this->getTitle() . '" ' . $this->getExtra() . ' /><input type="hidden" name="xoops_upload_file[]" id="xoops_upload_file[]" value="' . $this->getName() . '" />';
+        return '<input type="hidden" name="MAX_FILE_SIZE" value="' . $this->getMaxFileSize() . '" /><input type="file" name="' . $this->getName() . '" id="' . $this->getName() . '" title="' . $this->getTitle() . '" ' . $this->getExtra()
+               . ' /><input type="hidden" name="xoops_upload_file[]" id="xoops_upload_file[]" value="' . $this->getName() . '" />';
     }
 }

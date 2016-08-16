@@ -237,7 +237,8 @@ class XoopsApi extends XoopsXmlRpcApi
                 'storyid'   => $story->storyId(),
                 'title'     => $story->title('Edit'),
                 'hometext'  => $story->hometext('Edit'),
-                'moretext'  => $story->bodytext('Edit'));
+                'moretext'  => $story->bodytext('Edit')
+            );
             if (!$respond) {
                 return $ret;
             } else {
@@ -272,6 +273,7 @@ class XoopsApi extends XoopsXmlRpcApi
                 }
             }
         }
+
         return null;
     }
 
@@ -300,7 +302,8 @@ class XoopsApi extends XoopsXmlRpcApi
                     'storyid'   => $stories[$i]->storyId(),
                     'title'     => $stories[$i]->title('Edit'),
                     'hometext'  => $stories[$i]->hometext('Edit'),
-                    'moretext'  => $stories[$i]->bodytext('Edit'));
+                    'moretext'  => $stories[$i]->bodytext('Edit')
+                );
             }
             if (!$respond) {
                 return $ret;
@@ -342,6 +345,7 @@ class XoopsApi extends XoopsXmlRpcApi
                 }
             }
         }
+
         return null;
     }
 
@@ -378,6 +382,7 @@ class XoopsApi extends XoopsXmlRpcApi
                 }
             }
         }
+
         return null;
     }
 }

@@ -43,7 +43,8 @@ class XoopsCaptchaImage extends XoopsCaptchaMethod
                 'imagefilledrectangle',
                 'imagejpeg',
                 'imagedestroy',
-                'imageftbbox');
+                'imageftbbox'
+            );
             foreach ($required_functions as $func) {
                 if (!function_exists($func)) {
                     trigger_error('Function ' . $func . ' is not defined', E_USER_WARNING);
@@ -88,6 +89,7 @@ class XoopsCaptchaImage extends XoopsCaptchaMethod
      */
     public function loadImage()
     {
-        return '<img id="' . $this->config['name'] . '" src="' . XOOPS_URL . '/class/captcha/image/scripts/image.php" onclick=\'this.src="' . XOOPS_URL . '/class/captcha/image/scripts/image.php?refresh="+Math.random()' . '\' style="cursor: pointer; vertical-align: middle;" alt="" />';
+        return '<img id="' . $this->config['name'] . '" src="' . XOOPS_URL . '/class/captcha/image/scripts/image.php" onclick=\'this.src="' . XOOPS_URL . '/class/captcha/image/scripts/image.php?refresh="+Math.random()'
+               . '\' style="cursor: pointer; vertical-align: middle;" alt="" />';
     }
 }

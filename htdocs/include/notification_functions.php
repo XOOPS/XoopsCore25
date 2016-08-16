@@ -49,11 +49,16 @@ function notificationEnabled($style, $module_id = null)
         }
     }
     include_once $GLOBALS['xoops']->path('include/notification_constants.php');
-    if (($style === 'block') && ($status === XOOPS_NOTIFICATION_ENABLEBLOCK || $status === XOOPS_NOTIFICATION_ENABLEBOTH)) {
+    if (($style === 'block')
+        && ($status === XOOPS_NOTIFICATION_ENABLEBLOCK
+            || $status === XOOPS_NOTIFICATION_ENABLEBOTH)
+    ) {
         return true;
     }
 
-    return ($style === 'inline') && ($status === XOOPS_NOTIFICATION_ENABLEINLINE || $status === XOOPS_NOTIFICATION_ENABLEBOTH);
+    return ($style === 'inline')
+           && ($status === XOOPS_NOTIFICATION_ENABLEINLINE
+               || $status === XOOPS_NOTIFICATION_ENABLEBOTH);
 }
 
 /**
@@ -232,7 +237,8 @@ function &notificationEvents($category_name, $enabled_only, $module_id = null)
                     'description'       => _NOT_COMMENT_NOTIFYDSC,
                     'mail_template_dir' => $mail_template_dir,
                     'mail_template'     => 'comment_notify',
-                    'mail_subject'      => _NOT_COMMENT_NOTIFYSBJ);
+                    'mail_subject'      => _NOT_COMMENT_NOTIFYSBJ
+                );
                 if (!$enabled_only || notificationEventEnabled($category, $event, $module)) {
                     $event_array[] = $event;
                 }
@@ -247,7 +253,8 @@ function &notificationEvents($category_name, $enabled_only, $module_id = null)
                     'mail_template_dir' => $mail_template_dir,
                     'mail_template'     => 'commentsubmit_notify',
                     'mail_subject'      => _NOT_COMMENTSUBMIT_NOTIFYSBJ,
-                    'admin_only'        => 1);
+                    'admin_only'        => 1
+                );
                 if (!$enabled_only || notificationEventEnabled($category, $event, $module)) {
                     $event_array[] = $event;
                 }
@@ -264,7 +271,8 @@ function &notificationEvents($category_name, $enabled_only, $module_id = null)
                 'category'    => $category['name'],
                 'title'       => _NOT_BOOKMARK_NOTIFY,
                 'caption'     => _NOT_BOOKMARK_NOTIFYCAP,
-                'description' => _NOT_BOOKMARK_NOTIFYDSC);
+                'description' => _NOT_BOOKMARK_NOTIFYDSC
+            );
             if (!$enabled_only || notificationEventEnabled($category, $event, $module)) {
                 $event_array[] = $event;
             }
@@ -342,38 +350,41 @@ function &notificationSubscribableCategoryInfo($module_id = null)
 
     $sub_categories = array();
     if (null != $all_categories) {
-    foreach ($all_categories as $category) {
-        // Check the script name
-        $subscribe_from = $category['subscribe_from'];
-        if (!is_array($subscribe_from)) {
-            if ($subscribe_from === '*') {
-                $subscribe_from = array(
-                    $script_name);
-                // FIXME: this is just a hack: force a match
+        foreach ($all_categories as $category) {
+            // Check the script name
+            $subscribe_from = $category['subscribe_from'];
+            if (!is_array($subscribe_from)) {
+                if ($subscribe_from === '*') {
+                    $subscribe_from = array(
+                        $script_name
+                    );
+                    // FIXME: this is just a hack: force a match
+                } else {
+                    $subscribe_from = array(
+                        $subscribe_from
+                    );
+                }
+            }
+            if (!in_array($script_name, $subscribe_from)) {
+                continue;
+            }
+            // If 'item_name' is missing, automatic match.  Otherwise
+            // check if that argument exists...
+            if (empty($category['item_name'])) {
+                $category['item_name'] = '';
+                $category['item_id']   = 0;
+                $sub_categories[]      = $category;
             } else {
-                $subscribe_from = array(
-                    $subscribe_from);
-            }
-        }
-        if (!in_array($script_name, $subscribe_from)) {
-            continue;
-        }
-        // If 'item_name' is missing, automatic match.  Otherwise
-        // check if that argument exists...
-        if (empty($category['item_name'])) {
-            $category['item_name'] = '';
-            $category['item_id']   = 0;
-            $sub_categories[]      = $category;
-        } else {
-            $item_name = $category['item_name'];
-            $id        = ($item_name != '' && isset($_GET[$item_name])) ? (int)$_GET[$item_name] : 0;
-            if ($id > 0) {
-                $category['item_id'] = $id;
-                $sub_categories[]    = $category;
+                $item_name = $category['item_name'];
+                $id        = ($item_name != '' && isset($_GET[$item_name])) ? (int)$_GET[$item_name] : 0;
+                if ($id > 0) {
+                    $category['item_id'] = $id;
+                    $sub_categories[]    = $category;
+                }
             }
         }
     }
-    }
+
     return $sub_categories;
 }
 

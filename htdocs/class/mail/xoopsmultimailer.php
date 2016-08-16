@@ -173,5 +173,4 @@ class XoopsMultiMailer extends PHPMailer
         //$this->pluginDir = XOOPS_ROOT_PATH . '/class/mail/phpmailer/';
     }
 
-
 }

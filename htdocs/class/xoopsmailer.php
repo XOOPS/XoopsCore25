@@ -368,6 +368,7 @@ class XoopsMailer
             }
             flush();
         }
+
         return !(count($this->errors) > 0);
     }
 

@@ -185,7 +185,8 @@ switch ($op) {
             'image/jpeg',
             'image/pjpeg',
             'image/x-png',
-            'image/png'), $xoopsConfigUser['avatar_maxsize'], $xoopsConfigUser['avatar_width'], $xoopsConfigUser['avatar_height']);
+            'image/png'
+        ), $xoopsConfigUser['avatar_maxsize'], $xoopsConfigUser['avatar_width'], $xoopsConfigUser['avatar_height']);
         // Get avatar handler
         $avt_handler = xoops_getHandler('avatar');
         // Get avatar id
@@ -210,7 +211,7 @@ switch ($op) {
                         $err[] = sprintf(_FAILSAVEIMG, $avatar->getVar('avatar_name'));
                     }
                 }
-            }else{
+            } else {
                 $err[] = $uploader->getErrors();
             }
         } else {

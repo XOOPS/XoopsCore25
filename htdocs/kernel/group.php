@@ -181,9 +181,11 @@ class XoopsGroupHandler extends XoopsObjectHandler
         }
         if ($group->isNew()) {
             $groupid = $this->db->genId('group_groupid_seq');
-            $sql     = sprintf('INSERT INTO %s (groupid, name, description, group_type) VALUES (%u, %s, %s, %s)', $this->db->prefix('groups'), $groupid, $this->db->quoteString($name), $this->db->quoteString($description), $this->db->quoteString($group_type));
+            $sql     = sprintf('INSERT INTO %s (groupid, name, description, group_type) VALUES (%u, %s, %s, %s)', $this->db->prefix('groups'), $groupid, $this->db->quoteString($name), $this->db->quoteString($description),
+                               $this->db->quoteString($group_type));
         } else {
-            $sql = sprintf('UPDATE %s SET name = %s, description = %s, group_type = %s WHERE groupid = %u', $this->db->prefix('groups'), $this->db->quoteString($name), $this->db->quoteString($description), $this->db->quoteString($group_type), $groupid);
+            $sql = sprintf('UPDATE %s SET name = %s, description = %s, group_type = %s WHERE groupid = %u', $this->db->prefix('groups'), $this->db->quoteString($name), $this->db->quoteString($description), $this->db->quoteString($group_type),
+                           $groupid);
         }
         if (!$result = $this->db->query($sql)) {
             return false;

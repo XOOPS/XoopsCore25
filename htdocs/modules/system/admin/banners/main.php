@@ -115,9 +115,10 @@ switch ($op) {
                 }
             } else {
                 xoops_confirm(array(
-                                  'ok' => 1,
+                                  'ok'  => 1,
                                   'bid' => $bid,
-                                  'op' => 'banner_delete'), 'admin.php?fct=banners', sprintf(_AM_SYSTEM_BANNERS_SUREDELE));
+                                  'op'  => 'banner_delete'
+                              ), 'admin.php?fct=banners', sprintf(_AM_SYSTEM_BANNERS_SUREDELE));
             }
         } else {
             redirect_header('admin.php?fct=banners', 1, _AM_SYSTEM_DBERROR);
@@ -143,9 +144,10 @@ switch ($op) {
                 }
             } else {
                 xoops_confirm(array(
-                                  'ok' => 1,
+                                  'ok'  => 1,
                                   'bid' => $bid,
-                                  'op' => 'banner_finish_delete'), 'admin.php?fct=banners', sprintf(_AM_SYSTEM_BANNERS_SUREDELE));
+                                  'op'  => 'banner_finish_delete'
+                              ), 'admin.php?fct=banners', sprintf(_AM_SYSTEM_BANNERS_SUREDELE));
             }
         } else {
             redirect_header('admin.php?fct=banners', 1, _AM_SYSTEM_DBERROR);
@@ -213,9 +215,10 @@ switch ($op) {
                 }
             } else {
                 xoops_confirm(array(
-                                  'ok' => 1,
+                                  'ok'  => 1,
                                   'cid' => $cid,
-                                  'op' => 'banner_client_delete'), 'admin.php?fct=banners', _AM_SYSTEM_BANNERS_SUREDELBNR);
+                                  'op'  => 'banner_client_delete'
+                              ), 'admin.php?fct=banners', _AM_SYSTEM_BANNERS_SUREDELBNR);
             }
         } else {
             redirect_header('admin.php?fct=banners', 1, _AM_SYSTEM_DBERROR);
@@ -313,7 +316,10 @@ switch ($op) {
                 $banner['percent']     = $percent;
                 $banner['imageurl']    = $img;
                 $banner['name']        = $name;
-                $banner['edit_delete'] = '<img class="cursorpointer" onclick="display_dialog(' . $bid . ', true, false, \'slide\', \'slide\', 200, 520);" src="images/icons/view.png" alt="' . _AM_SYSTEM_BANNERS_VIEW . '" title="' . _AM_SYSTEM_BANNERS_VIEW . '" /><a href="admin.php?fct=banners&amp;op=banner_edit&amp;bid=' . $bid . '"><img src="./images/icons/edit.png" border="0" alt="' . _AM_SYSTEM_BANNERS_EDIT . '" title="' . _AM_SYSTEM_BANNERS_EDIT . '"></a><a href="admin.php?fct=banners&amp;op=banner_delete&amp;bid=' . $bid . '"><img src="./images/icons/delete.png" border="0" alt="' . _AM_SYSTEM_BANNERS_DELETE . '" title="' . _AM_SYSTEM_BANNERS_DELETE . '"></a>';
+                $banner['edit_delete'] = '<img class="cursorpointer" onclick="display_dialog(' . $bid . ', true, false, \'slide\', \'slide\', 200, 520);" src="images/icons/view.png" alt="' . _AM_SYSTEM_BANNERS_VIEW . '" title="'
+                                         . _AM_SYSTEM_BANNERS_VIEW . '" /><a href="admin.php?fct=banners&amp;op=banner_edit&amp;bid=' . $bid . '"><img src="./images/icons/edit.png" border="0" alt="' . _AM_SYSTEM_BANNERS_EDIT . '" title="'
+                                         . _AM_SYSTEM_BANNERS_EDIT . '"></a><a href="admin.php?fct=banners&amp;op=banner_delete&amp;bid=' . $bid . '"><img src="./images/icons/delete.png" border="0" alt="' . _AM_SYSTEM_BANNERS_DELETE . '" title="'
+                                         . _AM_SYSTEM_BANNERS_DELETE . '"></a>';
 
                 $xoopsTpl->append_by_ref('banner', $banner);
                 $xoopsTpl->append_by_ref('popup_banner', $banner);
@@ -357,7 +363,9 @@ switch ($op) {
                 $banner_finish['dateend']     = formatTimestamp($banner_finish_arr[$i]->getVar('dateend'), 'm');
                 $name_client                  = $banner_client_Handler->get($banner_finish_arr[$i]->getVar('cid'));
                 $banner_finish['name']        = $name_client->getVar('name');
-                $banner_finish['edit_delete'] = '<img class="cursorpointer" onclick="display_dialog(' . $bid . '000, true, true, \'slide\', \'slide\', 200, 520);" src="images/icons/view.png" alt="' . _AM_SYSTEM_BANNERS_VIEW . '" title="' . _AM_SYSTEM_BANNERS_VIEW . '" /><a href="admin.php?fct=banners&amp;op=banner_finish_delete&amp;bid=' . $bid . '"><img src="./images/icons/delete.png" border="0" alt="' . _AM_SYSTEM_BANNERS_DELETE . '" title="' . _AM_SYSTEM_BANNERS_DELETE . '"></a>';
+                $banner_finish['edit_delete'] = '<img class="cursorpointer" onclick="display_dialog(' . $bid . '000, true, true, \'slide\', \'slide\', 200, 520);" src="images/icons/view.png" alt="' . _AM_SYSTEM_BANNERS_VIEW . '" title="'
+                                                . _AM_SYSTEM_BANNERS_VIEW . '" /><a href="admin.php?fct=banners&amp;op=banner_finish_delete&amp;bid=' . $bid . '"><img src="./images/icons/delete.png" border="0" alt="' . _AM_SYSTEM_BANNERS_DELETE
+                                                . '" title="' . _AM_SYSTEM_BANNERS_DELETE . '"></a>';
 
                 $xoopsTpl->append_by_ref('banner_finish', $banner_finish);
                 unset($banner_finish);
@@ -392,7 +400,9 @@ switch ($op) {
                 $banner_client['name']          = $banner_client_arr[$i]->getVar('name');
                 $banner_client['contact']       = $banner_client_arr[$i]->getVar('contact');
                 $banner_client['email']         = $banner_client_arr[$i]->getVar('email');
-                $banner_client['edit_delete']   = '<a href="admin.php?fct=banners&amp;op=banner_client_edit&amp;cid=' . $cid . '"><img src="./images/icons/edit.png" border="0" alt="' . _AM_SYSTEM_BANNERS_EDIT . '" title="' . _AM_SYSTEM_BANNERS_EDIT . '"></a><a href="admin.php?fct=banners&amp;op=banner_client_delete&amp;cid=' . $cid . '"><img src="./images/icons/delete.png" border="0" alt="' . _AM_SYSTEM_BANNERS_DELETE . '" title="' . _AM_SYSTEM_BANNERS_DELETE . '"></a>';
+                $banner_client['edit_delete']   = '<a href="admin.php?fct=banners&amp;op=banner_client_edit&amp;cid=' . $cid . '"><img src="./images/icons/edit.png" border="0" alt="' . _AM_SYSTEM_BANNERS_EDIT . '" title="' . _AM_SYSTEM_BANNERS_EDIT
+                                                  . '"></a><a href="admin.php?fct=banners&amp;op=banner_client_delete&amp;cid=' . $cid . '"><img src="./images/icons/delete.png" border="0" alt="' . _AM_SYSTEM_BANNERS_DELETE . '" title="'
+                                                  . _AM_SYSTEM_BANNERS_DELETE . '"></a>';
 
                 $xoopsTpl->append_by_ref('banner_client', $banner_client);
                 unset($banner_client);

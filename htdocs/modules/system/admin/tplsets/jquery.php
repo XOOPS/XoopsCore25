@@ -68,7 +68,8 @@ switch ($op) {
                         $extension_verif = strrchr($file, '.');
 
                         if (in_array($extension_verif, $extensions)) {
-                            echo "<li class=\"file ext_$ext\"><a href=\"#\" onclick=\"tpls_edit_file('" . htmlentities($_REQUEST['dir'] . $file) . "', '" . htmlentities($_REQUEST['dir']) . "', '" . htmlentities($file) . "', '" . $ext . "');\" rel=\"tpls_edit_file('" . htmlentities($_REQUEST['dir'] . $file) . "', '" . htmlentities($_REQUEST['dir']) . "', '" . htmlentities($file) . "', '" . $ext . "');\">" . htmlentities($file) . '</a></li>';
+                            echo "<li class=\"file ext_$ext\"><a href=\"#\" onclick=\"tpls_edit_file('" . htmlentities($_REQUEST['dir'] . $file) . "', '" . htmlentities($_REQUEST['dir']) . "', '" . htmlentities($file) . "', '" . $ext
+                                 . "');\" rel=\"tpls_edit_file('" . htmlentities($_REQUEST['dir'] . $file) . "', '" . htmlentities($_REQUEST['dir']) . "', '" . htmlentities($file) . "', '" . $ext . "');\">" . htmlentities($file) . '</a></li>';
                         } else {
                             //echo "<li class=\"file ext_$ext\">" . htmlentities($file) . "</li>";
                         }
@@ -80,10 +81,10 @@ switch ($op) {
         break;
     // Edit File
     case 'tpls_edit_file':
-        $clean_file = XoopsRequest::getString('file', '');
+        $clean_file      = XoopsRequest::getString('file', '');
         $clean_path_file = XoopsRequest::getString('path_file', '');
-        $path_file = realpath(XOOPS_ROOT_PATH.'/themes'.trim($clean_path_file));
-        $path_file = str_replace('\\', '/', $path_file);
+        $path_file       = realpath(XOOPS_ROOT_PATH . '/themes' . trim($clean_path_file));
+        $path_file       = str_replace('\\', '/', $path_file);
 
         //Button restore
         $restore = '';
@@ -127,7 +128,7 @@ switch ($op) {
         XoopsLoad::load('XoopsFormHiddenToken');
         $xoopsToken = new XoopsFormHiddenToken();
         echo $xoopsToken->render();
-        echo '<input type="hidden" name="path_file" value="'.$clean_path_file.'"><input type="hidden" name="file" value="'.trim($clean_file).'"><input type="hidden" name="ext" value="'.$ext.'"></form>';
+        echo '<input type="hidden" name="path_file" value="' . $clean_path_file . '"><input type="hidden" name="file" value="' . trim($clean_file) . '"><input type="hidden" name="ext" value="' . $ext . '"></form>';
         break;
 
     // Restore backup file

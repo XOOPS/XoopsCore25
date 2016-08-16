@@ -77,7 +77,8 @@ class protector_postcommon_register_insert_js_check extends ProtectorFilterAbstr
 
         return array(
             'html_in_form' => '<input type="hidden" name="antispam_md5" id="antispam_md5" value="" />',
-            'js_global'    => '<script type="text/javascript"><!--//' . "\n" . $js_in_validate_function . "\n" . '//--></script><noscript><div class="errorMsg">' . _MD_PROTECTOR_TURNJAVASCRIPTON . '</div></noscript>');
+            'js_global'    => '<script type="text/javascript"><!--//' . "\n" . $js_in_validate_function . "\n" . '//--></script><noscript><div class="errorMsg">' . _MD_PROTECTOR_TURNJAVASCRIPTON . '</div></noscript>'
+        );
     }
 
     /**

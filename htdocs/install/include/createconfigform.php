@@ -58,7 +58,10 @@ function createConfigform($config)
                 $myts = MyTextSanitizer::getInstance();
                 if ($config[$i]->getVar('conf_valuetype') === 'array') {
                     // this is exceptional.. only when value type is arrayneed a smarter way for this
-                    $ele = ($config[$i]->getVar('conf_value') != '') ? new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), $myts->htmlspecialchars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50) : new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), '', 5, 50);
+                    $ele = ($config[$i]->getVar('conf_value') != '') ? new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), $myts->htmlspecialchars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50) : new XoopsFormTextArea($title,
+                                                                                                                                                                                                                                                   $config[$i]->getVar('conf_name'),
+                                                                                                                                                                                                                                                   '', 5,
+                                                                                                                                                                                                                                                   50);
                 } else {
                     $ele = new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), $myts->htmlspecialchars($config[$i]->getConfValueForOutput()), 5, 100);
                 }
@@ -92,7 +95,9 @@ function createConfigform($config)
 
             case 'theme':
             case 'theme_multi':
-                $ele = ($config[$i]->getVar('conf_formtype') !== 'theme_multi') ? new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput()) : new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput(), 5, true);
+                $ele = ($config[$i]->getVar('conf_formtype') !== 'theme_multi') ? new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput()) : new XoopsFormSelect($title, $config[$i]->getVar('conf_name'),
+                                                                                                                                                                                                            $config[$i]->getConfValueForOutput(), 5,
+                                                                                                                                                                                                            true);
                 require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
                 $dirlist = XoopsLists::getThemesList();
                 if (!empty($dirlist)) {
@@ -170,7 +175,8 @@ function createConfigform($config)
                     '18000'  => sprintf(_HOURS, 5),
                     '86400'  => _DAY,
                     '259200' => sprintf(_DAYS, 3),
-                    '604800' => _WEEK);
+                    '604800' => _WEEK
+                );
                 if (count($modules) > 0) {
                     $ele = new XoopsFormElementTray($title, '<br>');
                     foreach (array_keys($modules) as $mid) {
@@ -197,7 +203,8 @@ function createConfigform($config)
                                          '18000'  => sprintf(_HOURS, 5),
                                          '86400'  => _DAY,
                                          '259200' => sprintf(_DAYS, 3),
-                                         '604800' => _WEEK));
+                                         '604800' => _WEEK
+                                     ));
                 break;
 
             case 'password':
@@ -243,7 +250,8 @@ function createConfigform($config)
  */
 function createThemeform($config)
 {
-    $title          = (!defined($config->getVar('conf_desc')) || constant($config->getVar('conf_desc')) === '') ? constant($config->getVar('conf_title')) : constant($config->getVar('conf_title')) . '<br><br><span>' . constant($config->getVar('conf_desc')) . '</span>';
+    $title          = (!defined($config->getVar('conf_desc')) || constant($config->getVar('conf_desc')) === '') ? constant($config->getVar('conf_title')) : constant($config->getVar('conf_title')) . '<br><br><span>'
+                                                                                                                                                            . constant($config->getVar('conf_desc')) . '</span>';
     $form_theme_set = new XoopsFormSelect('', $config->getVar('conf_name'), $config->getConfValueForOutput(), 1, false);
     $dirlist        = XoopsLists::getThemesList();
     if (!empty($dirlist)) {
@@ -268,7 +276,8 @@ function createThemeform($config)
             'W3C'         => '',
             'Licence'     => '',
             'thumbnail'   => 'screenshot.gif',
-            'screenshot'  => 'screenshot.png');
+            'screenshot'  => 'screenshot.png'
+        );
 
         if ($theme == $config->getConfValueForOutput()) {
             $label_content .= "<div id='$theme' rel='theme' style='display:block;'>";

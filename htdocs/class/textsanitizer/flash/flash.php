@@ -31,7 +31,9 @@ class MytsFlash extends MyTextSanitizerExtension
     public function encode($textarea_id)
     {
         $config     = parent::loadConfig(__DIR__);
-        $code       = "<img src='{$this->image_path}/swf.gif' alt='" . _XOOPS_FORM_ALTFLASH . "' title='" . _XOOPS_FORM_ALTFLASH . "' '" . "' onclick='xoopsCodeFlash(\"{$textarea_id}\",\"" . htmlspecialchars(_XOOPS_FORM_ENTERFLASHURL, ENT_QUOTES) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES) . "\", \"" . $config['detect_dimension'] . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
+        $code       = "<img src='{$this->image_path}/swf.gif' alt='" . _XOOPS_FORM_ALTFLASH . "' title='" . _XOOPS_FORM_ALTFLASH . "' '" . "' onclick='xoopsCodeFlash(\"{$textarea_id}\",\"" . htmlspecialchars(_XOOPS_FORM_ENTERFLASHURL, ENT_QUOTES)
+                      . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES) . "\", \"" . $config['detect_dimension']
+                      . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
         $javascript = <<<EOF
             function xoopsCodeFlash(id, enterFlashPhrase, enterFlashHeightPhrase, enterFlashWidthPhrase, enableDimensionDetect)
             {
@@ -54,7 +56,8 @@ EOF;
 
         return array(
             $code,
-            $javascript);
+            $javascript
+        );
     }
 
     /**
@@ -107,7 +110,8 @@ EOF;
             } else {
                 list($width, $height) = array(
                     $dimension[0],
-                    $dimension[1]);
+                    $dimension[1]
+                );
             }
         }
 

@@ -177,7 +177,8 @@ class Upgrade_2014 extends XoopsUpgrade
             'ldap_provisionning_group' => "'_MD_AM_LDAP_PROVIS_GROUP', 'a:1:{i:0;s:1:\"2\";}', '_MD_AM_LDAP_PROVIS_GROUP_DSC', 'group_multi', 'array', 14",
             'ldap_mail_attr'           => "'_MD_AM_LDAP_MAIL_ATTR', 'mail', '_MD_AM_LDAP_MAIL_ATTR_DESC', 'textbox', 'text', 15",
             'ldap_givenname_attr'      => "'_MD_AM_LDAP_GIVENNAME_ATTR', 'givenname', '_MD_AM_LDAP_GIVENNAME_ATTR_DSC', 'textbox', 'text', 16",
-            'ldap_surname_attr'        => "'_MD_AM_LDAP_SURNAME_ATTR', 'sn', '_MD_AM_LDAP_SURNAME_ATTR_DESC', 'textbox', 'text', 17");
+            'ldap_surname_attr'        => "'_MD_AM_LDAP_SURNAME_ATTR', 'sn', '_MD_AM_LDAP_SURNAME_ATTR_DESC', 'textbox', 'text', 17"
+        );
         foreach ($data as $name => $values) {
             if (!getDbValue($db, 'config', 'conf_id', "`conf_modid`=0 AND `conf_catid`=7 AND `conf_name`='$name'")) {
                 $this->query("INSERT INTO `$table` (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) " . "VALUES ( 0,7,'$name',$values)");
@@ -189,7 +190,8 @@ class Upgrade_2014 extends XoopsUpgrade
         $data  = array(
             '_MD_AM_AUTH_CONFOPTION_XOOPS' => 'xoops',
             '_MD_AM_AUTH_CONFOPTION_LDAP'  => 'ldap',
-            '_MD_AM_AUTH_CONFOPTION_AD'    => 'ad');
+            '_MD_AM_AUTH_CONFOPTION_AD'    => 'ad'
+        );
         $this->query("DELETE FROM `$table` WHERE `conf_id`=$id");
         foreach ($data as $name => $value) {
             $this->query("INSERT INTO `$table` (confop_name, confop_value, conf_id) VALUES ('$name', '$value', $id)");

@@ -80,7 +80,8 @@ class XoopsModule extends XoopsObject
         $hasmain     = (isset($this->modinfo['hasMain']) && $this->modinfo['hasMain'] == 1) ? 1 : 0;
         $hasadmin    = (isset($this->modinfo['hasAdmin']) && $this->modinfo['hasAdmin'] == 1) ? 1 : 0;
         $hassearch   = (isset($this->modinfo['hasSearch']) && $this->modinfo['hasSearch'] == 1) ? 1 : 0;
-        $hasconfig   = ((isset($this->modinfo['config']) && is_array($this->modinfo['config'])) || !empty($this->modinfo['hasComments'])) ? 1 : 0;
+        $hasconfig   = ((isset($this->modinfo['config']) && is_array($this->modinfo['config']))
+                        || !empty($this->modinfo['hasComments'])) ? 1 : 0;
         $hascomments = (isset($this->modinfo['hasComments']) && $this->modinfo['hasComments'] == 1) ? 1 : 0;
         // RMV-NOTIFY
         $hasnotification = (isset($this->modinfo['hasNotification']) && $this->modinfo['hasNotification'] == 1) ? 1 : 0;
@@ -185,7 +186,8 @@ class XoopsModule extends XoopsObject
             foreach ($this->getInfo('sub') as $submenu) {
                 $ret[] = array(
                     'name' => $submenu['name'],
-                    'url'  => $submenu['url']);
+                    'url'  => $submenu['url']
+                );
             }
         }
 
@@ -197,7 +199,9 @@ class XoopsModule extends XoopsObject
      */
     public function loadAdminMenu()
     {
-        if ($this->getInfo('adminmenu') && $this->getInfo('adminmenu') != '' && file_exists(XOOPS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu'))) {
+        if ($this->getInfo('adminmenu') && $this->getInfo('adminmenu') != ''
+            && file_exists(XOOPS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu'))
+        ) {
             $adminmenu = array();
             include XOOPS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu');
             $this->adminmenu =& $adminmenu;
@@ -272,7 +276,10 @@ class XoopsModule extends XoopsObject
             return false;
         }
         $search =& $this->getInfo('search');
-        if ($this->getVar('hassearch') != 1 || !isset($search['file']) || !isset($search['func']) || $search['func'] == '' || $search['file'] == '') {
+        if ($this->getVar('hassearch') != 1 || !isset($search['file']) || !isset($search['func'])
+            || $search['func'] == ''
+            || $search['file'] == ''
+        ) {
             return false;
         }
         if (file_exists($file = $GLOBALS['xoops']->path('modules/' . $this->getVar('dirname') . '/' . $search['file']))) {
@@ -630,7 +637,7 @@ class XoopsModule extends XoopsObject
  * @author        Kazumi Ono <onokazu@xoops.org>
  * @copyright (c) 2000-2016 XOOPS Project - www.xoops.org
  *
- * @todo Why is this not a XoopsPersistableObjectHandler?
+ * @todo          Why is this not a XoopsPersistableObjectHandler?
  */
 class XoopsModuleHandler extends XoopsObjectHandler
 {
@@ -762,9 +769,11 @@ class XoopsModuleHandler extends XoopsObjectHandler
         }
         if ($module->isNew()) {
             $mid = $this->db->genId('modules_mid_seq');
-            $sql = sprintf('INSERT INTO %s (mid, name, version, last_update, weight, isactive, dirname, hasmain, hasadmin, hassearch, hasconfig, hascomments, hasnotification) VALUES (%u, %s, %u, %u, %u, %u, %s, %u, %u, %u, %u, %u, %u)', $this->db->prefix('modules'), $mid, $this->db->quoteString($name), $version, time(), $weight, 1, $this->db->quoteString($dirname), $hasmain, $hasadmin, $hassearch, $hasconfig, $hascomments, $hasnotification);
+            $sql = sprintf('INSERT INTO %s (mid, name, version, last_update, weight, isactive, dirname, hasmain, hasadmin, hassearch, hasconfig, hascomments, hasnotification) VALUES (%u, %s, %u, %u, %u, %u, %s, %u, %u, %u, %u, %u, %u)',
+                           $this->db->prefix('modules'), $mid, $this->db->quoteString($name), $version, time(), $weight, 1, $this->db->quoteString($dirname), $hasmain, $hasadmin, $hassearch, $hasconfig, $hascomments, $hasnotification);
         } else {
-            $sql = sprintf('UPDATE %s SET name = %s, dirname = %s, version = %u, last_update = %u, weight = %u, isactive = %u, hasmain = %u, hasadmin = %u, hassearch = %u, hasconfig = %u, hascomments = %u, hasnotification = %u WHERE mid = %u', $this->db->prefix('modules'), $this->db->quoteString($name), $this->db->quoteString($dirname), $version, time(), $weight, $isactive, $hasmain, $hasadmin, $hassearch, $hasconfig, $hascomments, $hasnotification, $mid);
+            $sql = sprintf('UPDATE %s SET name = %s, dirname = %s, version = %u, last_update = %u, weight = %u, isactive = %u, hasmain = %u, hasadmin = %u, hassearch = %u, hasconfig = %u, hascomments = %u, hasnotification = %u WHERE mid = %u',
+                           $this->db->prefix('modules'), $this->db->quoteString($name), $this->db->quoteString($dirname), $version, time(), $weight, $isactive, $hasmain, $hasadmin, $hassearch, $hasconfig, $hascomments, $hasnotification, $mid);
         }
         if (!$result = $this->db->query($sql)) {
             return false;

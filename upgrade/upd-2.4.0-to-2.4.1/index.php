@@ -130,7 +130,9 @@ class Upgrade_241 extends XoopsUpgrade
         error_reporting(E_ALL);
         foreach ($checksums as $funcid => $func) {
             foreach ($versions as $versionid => $version) {
-                if ($xoops_serdat['version'] = $func($version) && substr(XOOPS_LICENSE_KEY, 0, 6) === substr($func($version), 0, 6)) {
+                if ($xoops_serdat['version'] = $func($version)
+                                               && substr(XOOPS_LICENSE_KEY, 0, 6) === substr($func($version), 0, 6)
+                ) {
                     $xoops_serdat['version'] = substr($xoops_serdat['version'], 0, 6);
                     $checkbit                = $func;
                 }

@@ -15,7 +15,7 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Maxime Cointin (AKA Kraven30)
  * @package             system
- * @version     $Id$
+ * @version             $Id$
  */
 
 // Require mainfile
@@ -75,9 +75,9 @@ switch ($op) {
         if ($_REQUEST['status'] == 1) {
             $path_file = $_REQUEST['file'];
         } else {
-            $file_arr  = explode('/', $_REQUEST['file']);
-            $path_file = XOOPS_ROOT_PATH . '/';
-            $url_file  = XOOPS_URL . '/';
+            $file_arr       = explode('/', $_REQUEST['file']);
+            $path_file      = XOOPS_ROOT_PATH . '/';
+            $url_file       = XOOPS_URL . '/';
             $fileArrayCount = count($file_arr);
             for ($i = 3; $i < $fileArrayCount; ++$i) {
                 $path_file .= $file_arr[$i] . '/';
@@ -161,7 +161,8 @@ switch ($op) {
                                 case 'gz':
                                     $extension_verif = 'rar';
                                     $edit            = true;
-                                    $unzip           = '<img class="cursorpointer" src="./images/icons/untar.png" onclick=\'filemanager_unzip_file("' . $path_file . $file . '", "' . $path_file . '", "' . $file . '");\' width="16" alt="edit" />&nbsp;';
+                                    $unzip           = '<img class="cursorpointer" src="./images/icons/untar.png" onclick=\'filemanager_unzip_file("' . $path_file . $file . '", "' . $path_file . '", "' . $file
+                                                       . '");\' width="16" alt="edit" />&nbsp;';
                                     break;
                                 case 'css':
                                     $extension_verif = 'css';
@@ -196,7 +197,8 @@ switch ($op) {
                                     break;
                             }
                             if ($edit == true) {
-                                $edit = '<img class="cursorpointer" src="' . system_AdminIcons('edit.png') . '" onclick=\'filemanager_edit_file("' . $path_file . $file . '", "' . $path_file . '", "' . $file . '", "' . $extension_verif . '");\' width="16" alt="edit" />';
+                                $edit = '<img class="cursorpointer" src="' . system_AdminIcons('edit.png') . '" onclick=\'filemanager_edit_file("' . $path_file . $file . '", "' . $path_file . '", "' . $file . '", "' . $extension_verif
+                                        . '");\' width="16" alt="edit" />';
                             } else {
                                 $edit = '';
                             }
@@ -220,7 +222,8 @@ switch ($op) {
                                             <table cellpadding="0" cellspacing="0">
                                                 <tr class="odd">
                                                     <td align="left">' . $chmod . '</td>
-                                                    <td align="right">' . $unzip . $edit . '&nbsp;<img class="cursorpointer" src="' . system_AdminIcons('delete.png') . '" onclick=\'filemanager_confirm_delete_file("' . $path_file . $file . '", "' . $path_file . '");\' width="16" alt="delete" /></td>
+                                                    <td align="right">' . $unzip . $edit . '&nbsp;<img class="cursorpointer" src="' . system_AdminIcons('delete.png') . '" onclick=\'filemanager_confirm_delete_file("' . $path_file . $file . '", "'
+                                 . $path_file . '");\' width="16" alt="delete" /></td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="2" align="center" height="60px"><br>' . $img . '</td>
@@ -299,7 +302,8 @@ switch ($op) {
                 <textarea id="code_mirror" name="filemanager" rows=24 cols=110>' . $content . '</textarea>
                 </td></tr>
               </table>';
-        echo '<input type="hidden" name="path_file" value="' . $path_file . '"><input type="hidden" name="path" value="' . $path . '"><input type="hidden" name="file" value="' . trim($_REQUEST['file']) . '"><input type="hidden" name="ext" value="' . $ext . '"></form>';
+        echo '<input type="hidden" name="path_file" value="' . $path_file . '"><input type="hidden" name="path" value="' . $path . '"><input type="hidden" name="file" value="' . trim($_REQUEST['file']) . '"><input type="hidden" name="ext" value="'
+             . $ext . '"></form>';
         break;
 
     case 'filemanager_unzip_file':
@@ -337,7 +341,9 @@ switch ($op) {
 
     //Confirm delete file
     case 'filemanager_confirm_delete_file':
-        echo '<div class="confirmMsg">' . sprintf(_AM_SYSTEM_FILEMANAGER_SUREDEL, $_REQUEST['file']) . '<br><br><div class="buttons"><a href="#" class="ui-corner-all" onclick="filemanager_delete_file(\'' . $_REQUEST['path_file'] . '\', \'' . $_REQUEST['path'] . '\');">' . _AM_SYSTEM_FILEMANAGER_DELETE . '</a>&nbsp;&nbsp;<a href="#" class="ui-corner-all" onclick="$(\'#confirm_delete\').hide();filemanager_load_tree(); filemanager_display_file(\'\', 0)">' . _AM_SYSTEM_FILEMANAGER_CANCEL . '</a></div></div>';
+        echo '<div class="confirmMsg">' . sprintf(_AM_SYSTEM_FILEMANAGER_SUREDEL, $_REQUEST['file']) . '<br><br><div class="buttons"><a href="#" class="ui-corner-all" onclick="filemanager_delete_file(\'' . $_REQUEST['path_file'] . '\', \''
+             . $_REQUEST['path'] . '\');">' . _AM_SYSTEM_FILEMANAGER_DELETE . '</a>&nbsp;&nbsp;<a href="#" class="ui-corner-all" onclick="$(\'#confirm_delete\').hide();filemanager_load_tree(); filemanager_display_file(\'\', 0)">'
+             . _AM_SYSTEM_FILEMANAGER_CANCEL . '</a></div></div>';
         break;
 
     //Delete one file
@@ -390,7 +396,9 @@ switch ($op) {
     //Confirm delete directory
     case 'filemanager_confirm_delete_directory':
         $path = system_CleanVars($_REQUEST, 'path', '', 'string');
-        echo '<div class="confirmMsg">' . sprintf(_AM_SYSTEM_FILEMANAGER_DIR_SUREDEL, $path) . '<br><br><div class="buttons"><a href="#" class="ui-corner-all" onclick="filemanager_delete_directory(\'' . $path . '\');">' . _AM_SYSTEM_FILEMANAGER_DELETE . '</a>&nbsp;&nbsp;<a href="#" class="ui-corner-all" onclick="$(\'#confirm_delete\').hide();filemanager_load_tree(); filemanager_display_file(\'\', 0)">' . _AM_SYSTEM_FILEMANAGER_CANCEL . '</a></div></div>';
+        echo '<div class="confirmMsg">' . sprintf(_AM_SYSTEM_FILEMANAGER_DIR_SUREDEL, $path) . '<br><br><div class="buttons"><a href="#" class="ui-corner-all" onclick="filemanager_delete_directory(\'' . $path . '\');">'
+             . _AM_SYSTEM_FILEMANAGER_DELETE . '</a>&nbsp;&nbsp;<a href="#" class="ui-corner-all" onclick="$(\'#confirm_delete\').hide();filemanager_load_tree(); filemanager_display_file(\'\', 0)">' . _AM_SYSTEM_FILEMANAGER_CANCEL
+             . '</a></div></div>';
         break;
 
     // Delete one directory

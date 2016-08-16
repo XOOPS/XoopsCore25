@@ -171,7 +171,8 @@ class XoUser extends XoopsUser
             'theme',
             'umode',
             'uorder',
-            'notify_mode');
+            'notify_mode'
+        );
         foreach ($unsets as $var) {
             unset($this->vars[$var]);
         }
@@ -221,13 +222,16 @@ class XoUserHandler extends XoopsObjectHandler
     {
         if (!is_array($groups)) {
             $groups = array(
-                $groups);
+                $groups
+            );
         }
         $groups = array_filter($groups);
         if (empty($groups)) {
             $sql = '    SELECT COUNT(DISTINCT u.uid) FROM ' . $this->db->prefix('users') . ' AS u' . '    WHERE 1=1';
         } else {
-            $sql = '    SELECT COUNT(DISTINCT u.uid) FROM ' . $this->db->prefix('users') . ' AS u' . '    LEFT JOIN ' . $this->db->prefix('groups_users_link') . ' AS g ON g.uid = u.uid' . '    WHERE g.groupid IN (' . implode(', ', array_map('intval', $groups)) . ')';
+            $sql = '    SELECT COUNT(DISTINCT u.uid) FROM ' . $this->db->prefix('users') . ' AS u' . '    LEFT JOIN ' . $this->db->prefix('groups_users_link') . ' AS g ON g.uid = u.uid' . '    WHERE g.groupid IN (' . implode(', ', array_map('intval',
+                                                                                                                                                                                                                                                 $groups))
+                   . ')';
         }
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             // Use the direct renderer, assuming no `uid` in criteria
@@ -252,7 +256,8 @@ class XoUserHandler extends XoopsObjectHandler
     {
         if (!is_array($groups)) {
             $groups = array(
-                $groups);
+                $groups
+            );
         }
         $groups = array_filter($groups);
         $limit  = null;
@@ -299,12 +304,14 @@ $items_match = array(
     'user_icq'  => _MA_USER_ICQ,
     'user_aim'  => _MA_USER_AIM,
     'user_yim'  => _MA_USER_YIM,
-    'user_msnm' => _MA_USER_MSNM);
+    'user_msnm' => _MA_USER_MSNM
+);
 
 $items_range = array(
     'user_regdate' => _MA_USER_RANGE_USER_REGDATE,
     'last_login'   => _MA_USER_RANGE_LAST_LOGIN,
-    'posts'        => _MA_USER_RANGE_POSTS);
+    'posts'        => _MA_USER_RANGE_POSTS
+);
 
 define('FINDUSERS_MODE_SIMPLE', 0);
 define('FINDUSERS_MODE_ADVANCED', 1);
@@ -313,7 +320,8 @@ define('FINDUSERS_MODE_QUERY', 2);
 $modes = array(
     FINDUSERS_MODE_SIMPLE   => _MA_USER_MODE_SIMPLE,
     FINDUSERS_MODE_ADVANCED => _MA_USER_MODE_ADVANCED,
-    FINDUSERS_MODE_QUERY    => _MA_USER_MODE_QUERY);
+    FINDUSERS_MODE_QUERY    => _MA_USER_MODE_QUERY
+);
 
 if (empty($_POST['user_submit'])) {
     include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
@@ -352,19 +360,22 @@ if (empty($_POST['user_submit'])) {
             $mailok_radio->addOptionArray(array(
                                               'mailok' => _MA_USER_MAILOK,
                                               'mailng' => _MA_USER_MAILNG,
-                                              'both' => _MA_USER_BOTH));
+                                              'both'   => _MA_USER_BOTH
+                                          ));
             $avatar_radio = new XoopsFormRadio(_MA_USER_HASAVATAR, 'user_avatar', empty($_POST['user_avatar']) ? 'both' : $_POST['user_avatar']);
             $avatar_radio->addOptionArray(array(
-                                              'y' => _YES,
-                                              'n' => _NO,
-                                              'both' => _MA_USER_BOTH));
+                                              'y'    => _YES,
+                                              'n'    => _NO,
+                                              'both' => _MA_USER_BOTH
+                                          ));
 
             $level_radio = new XoopsFormRadio(_MA_USER_LEVEL, 'level', @$_POST['level']);
             $levels      = array(
                 0 => _ALL,
                 1 => _MA_USER_LEVEL_ACTIVE,
                 2 => _MA_USER_LEVEL_INACTIVE,
-                3 => _MA_USER_LEVEL_DISABLED);
+                3 => _MA_USER_LEVEL_DISABLED
+            );
             $level_radio->addOptionArray($levels);
 
             $member_handler = xoops_getHandler('member');
@@ -389,7 +400,8 @@ if (empty($_POST['user_submit'])) {
         } else {
             foreach (array(
                          'uname',
-                         'email') as $var) {
+                         'email'
+                     ) as $var) {
                 $title      = $items_match[$var];
                 $text       = new XoopsFormText('', $var, 30, 100, @$_POST[$var]);
                 $match      = new XoopsFormSelectMatchOption('', "{$var}_match", @$_POST["{$var}_match"]);
@@ -403,14 +415,16 @@ if (empty($_POST['user_submit'])) {
 
         $sort_select = new XoopsFormSelect(_MA_USER_SORT, 'user_sort', @$_POST['user_sort']);
         $sort_select->addOptionArray(array(
-                                         'uname' => _MA_USER_UNAME,
-                                         'last_login' => _MA_USER_LASTLOGIN,
+                                         'uname'        => _MA_USER_UNAME,
+                                         'last_login'   => _MA_USER_LASTLOGIN,
                                          'user_regdate' => _MA_USER_REGDATE,
-                                         'posts' => _MA_USER_POSTS));
+                                         'posts'        => _MA_USER_POSTS
+                                     ));
         $order_select = new XoopsFormSelect(_MA_USER_ORDER, 'user_order', @$_POST['user_order']);
         $order_select->addOptionArray(array(
-                                          'ASC' => _MA_USER_ASC,
-                                          'DESC' => _MA_USER_DESC));
+                                          'ASC'  => _MA_USER_ASC,
+                                          'DESC' => _MA_USER_DESC
+                                      ));
 
         $form->addElement($sort_select);
         $form->addElement($order_select);
@@ -431,7 +445,8 @@ if (empty($_POST['user_submit'])) {
         if ($mode == $_mode) {
             continue;
         }
-        $modes_switch[] = "<a href='findusers.php?target=" . htmlspecialchars(@$_REQUEST['target'], ENT_QUOTES) . '&amp;multiple=' . htmlspecialchars(@$_REQUEST['multiple'], ENT_QUOTES) . '&amp;token=' . htmlspecialchars($token, ENT_QUOTES) . "&amp;mode={$_mode}'>{$title}</a>";
+        $modes_switch[] = "<a href='findusers.php?target=" . htmlspecialchars(@$_REQUEST['target'], ENT_QUOTES) . '&amp;multiple=' . htmlspecialchars(@$_REQUEST['multiple'], ENT_QUOTES) . '&amp;token=' . htmlspecialchars($token, ENT_QUOTES)
+                          . "&amp;mode={$_mode}'>{$title}</a>";
     }
     echo '<h4>' . implode(' | ', $modes_switch) . '</h4>';
     echo '(' . sprintf(_MA_USER_ACTUS, "<span style='color:#ff0000;'>$acttotal</span>") . ' ' . sprintf(_MA_USER_INACTUS, "<span style='color:#ff0000;'>$inacttotal</span>") . ')';
@@ -477,7 +492,8 @@ if (empty($_POST['user_submit'])) {
         }
         foreach (array(
                      'last_login',
-                     'user_regdate') as $var) {
+                     'user_regdate'
+                 ) as $var) {
             if (!empty($_POST["{$var}_more"]) && is_numeric($_POST["{$var}_more"])) {
                 $time = time() - (60 * 60 * 24 * (int)trim($_POST["{$var}_more"]));
                 if ($time > 0) {
@@ -515,7 +531,8 @@ if (empty($_POST['user_submit'])) {
             $level_value = array(
                 1 => 1,
                 2 => 0,
-                3 => -1);
+                3 => -1
+            );
             $level       = isset($level_value[(int)$_POST['level']]) ? $level_value[(int)$_POST['level']] : 1;
             $criteria->add(new Criteria('level', $level));
         }
@@ -538,7 +555,8 @@ if (empty($_POST['user_submit'])) {
             'email',
             'last_login',
             'user_regdate',
-            'posts');
+            'posts'
+        );
         $sort      = (!in_array($_POST['user_sort'], $validsort)) ? 'uname' : $_POST['user_sort'];
         $order     = 'ASC';
         if (isset($_POST['user_order']) && $_POST['user_order'] === 'DESC') {
@@ -613,7 +631,8 @@ if (empty($_POST['user_submit'])) {
     ';
 
     echo '</html><body>';
-    echo "<a href='findusers.php?target=" . htmlspecialchars(@$_POST['target'], ENT_QUOTES) . '&amp;multiple=' . (int)(@$_POST['multiple']) . '&amp;token=' . htmlspecialchars($token, ENT_QUOTES) . "'>" . _MA_USER_FINDUS . "</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;" . _MA_USER_RESULTS . '<br><br>';
+    echo "<a href='findusers.php?target=" . htmlspecialchars(@$_POST['target'], ENT_QUOTES) . '&amp;multiple=' . (int)(@$_POST['multiple']) . '&amp;token=' . htmlspecialchars($token, ENT_QUOTES) . "'>" . _MA_USER_FINDUS
+         . "</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;" . _MA_USER_RESULTS . '<br><br>';
     if (empty($start) && empty($foundusers)) {
         echo '<h4>' . _MA_USER_NOFOUND, '</h4>';
         $hiddenform = "<form name='findnext' action='findusers.php' method='post'>";
@@ -736,7 +755,9 @@ if (empty($_POST['user_submit'])) {
                 while ($counter <= $totalpages) {
                     if ($counter == $currentpage) {
                         $hiddenform .= '<strong>' . $counter . '</strong> ';
-                    } elseif (($counter > $currentpage - 4 && $counter < $currentpage + 4) || $counter == 1 || $counter == $totalpages) {
+                    } elseif (($counter > $currentpage - 4 && $counter < $currentpage + 4) || $counter == 1
+                              || $counter == $totalpages
+                    ) {
                         if ($counter == $totalpages && $currentpage < $totalpages - 4) {
                             $hiddenform .= '... ';
                         }

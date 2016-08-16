@@ -31,7 +31,8 @@ $searchable_types = array(
     'date',
     'datetime',
     'timezone',
-    'language');
+    'language'
+);
 
 switch ($op) {
     default:
@@ -161,7 +162,8 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('page_title', _PROFILE_MA_RESULTS);
         $xoBreadcrumbs[] = array(
             'link'  => XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/search.php',
-            'title' => _SEARCH);
+            'title' => _SEARCH
+        );
         $xoBreadcrumbs[] = array('title' => _PROFILE_MA_RESULTS);
 
         $member_handler = xoops_getHandler('member');
@@ -401,7 +403,9 @@ switch ($op) {
             $userarray['output'][] = ($users[$k]->getVar('user_viewemail') == 1 || (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->isAdmin())) ? $users[$k]->getVar('email') : '';
 
             foreach (array_keys($fields) as $i) {
-                if (in_array($fields[$i]->getVar('field_id'), $searchable_fields) && in_array($fields[$i]->getVar('field_type'), $searchable_types) && in_array($fields[$i]->getVar('field_name'), $searchvars)) {
+                if (in_array($fields[$i]->getVar('field_id'), $searchable_fields) && in_array($fields[$i]->getVar('field_type'), $searchable_types)
+                    && in_array($fields[$i]->getVar('field_name'), $searchvars)
+                ) {
                     $userarray['output'][] = $fields[$i]->getOutputValue($users[$k], $profiles[$k]);
                 }
             }
@@ -413,7 +417,9 @@ switch ($op) {
         $captions[] = _US_NICKNAME;
         $captions[] = _US_EMAIL;
         foreach (array_keys($fields) as $i) {
-            if (in_array($fields[$i]->getVar('field_id'), $searchable_fields) && in_array($fields[$i]->getVar('field_type'), $searchable_types) && in_array($fields[$i]->getVar('field_name'), $searchvars)) {
+            if (in_array($fields[$i]->getVar('field_id'), $searchable_fields) && in_array($fields[$i]->getVar('field_type'), $searchable_types)
+                && in_array($fields[$i]->getVar('field_name'), $searchvars)
+            ) {
                 $captions[] = $fields[$i]->getVar('field_title');
             }
         }

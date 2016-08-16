@@ -513,7 +513,8 @@ function xoops_makepass()
         'kay',
         'en',
         'be',
-        'se');
+        'se'
+    );
     mt_srand((double)microtime() * 1000000);
     for ($count = 1; $count <= 4; ++$count) {
         if (mt_rand() % 10 == 1) {
@@ -575,7 +576,9 @@ function formatURL($url)
 {
     $url = trim($url);
     if ($url != '') {
-        if ((!preg_match('/^http[s]*:\/\//i', $url)) && (!preg_match('/^ftp*:\/\//i', $url)) && (!preg_match('/^ed2k*:\/\//i', $url))) {
+        if ((!preg_match('/^http[s]*:\/\//i', $url)) && (!preg_match('/^ftp*:\/\//i', $url))
+            && (!preg_match('/^ed2k*:\/\//i', $url))
+        ) {
             $url = 'http://' . $url;
         }
     }
@@ -635,7 +638,9 @@ function xoops_getbanner()
         } else {
             $bannerobject = '<div id="xo-bannerfix">';
             if (false !== stripos($imageurl, '.swf')) {
-                $bannerobject = $bannerobject . '<div id ="xo-fixbanner">' . '<a href="' . XOOPS_URL . '/banners.php?op=click&amp;bid=' . $bid . '" rel="external" title="' . $clickurl . '"></a></div>' . '<object type="application/x-shockwave-flash" width="468" height="60" data="' . $imageurl . '" style="z-index:100;">' . '<param name="movie" value="' . $imageurl . '" />' . '<param name="wmode" value="opaque" />' . '</object>';
+                $bannerobject = $bannerobject . '<div id ="xo-fixbanner">' . '<a href="' . XOOPS_URL . '/banners.php?op=click&amp;bid=' . $bid . '" rel="external" title="' . $clickurl . '"></a></div>'
+                                . '<object type="application/x-shockwave-flash" width="468" height="60" data="' . $imageurl . '" style="z-index:100;">' . '<param name="movie" value="' . $imageurl . '" />' . '<param name="wmode" value="opaque" />'
+                                . '</object>';
             } else {
                 $bannerobject = $bannerobject . '<a href="' . XOOPS_URL . '/banners.php?op=click&amp;bid=' . $bid . '" rel="external" title="' . $clickurl . '"><img src="' . $imageurl . '" alt="' . $clickurl . '" /></a>';
             }
@@ -645,6 +650,7 @@ function xoops_getbanner()
 
         return $bannerobject;
     }
+
     return null;
 }
 
@@ -690,7 +696,8 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
     $xoopsThemeFactory->defaultTheme  = $theme;
     $xoTheme                          =& $xoopsThemeFactory->createInstance(array(
                                                                                 'plugins'      => array(),
-                                                                                'renderBanner' => false));
+                                                                                'renderBanner' => false
+                                                                            ));
     $xoopsTpl                         =& $xoTheme->template;
     $xoopsTpl->assign(array(
                           'xoops_theme'      => $theme,
@@ -699,8 +706,11 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
                           'xoops_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES),
                           'xoops_sitename'   => htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES),
                           'xoops_slogan'     => htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES),
-                          'xoops_dirname'    => isset($xoopsModule) && is_object($xoopsModule) ? $xoopsModule->getVar('dirname') : 'system',
-                          'xoops_pagetitle'  => isset($xoopsModule) && is_object($xoopsModule) ? $xoopsModule->getVar('name') : htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES)));
+                          'xoops_dirname'    => isset($xoopsModule)
+                                                && is_object($xoopsModule) ? $xoopsModule->getVar('dirname') : 'system',
+                          'xoops_pagetitle'  => isset($xoopsModule)
+                                                && is_object($xoopsModule) ? $xoopsModule->getVar('name') : htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES)
+                      ));
     if ($xoopsConfig['debug_mode'] == 2 && $xoopsUserIsAdmin) {
         $xoopsTpl->assign('time', 300);
         $xoopsTpl->assign('xoops_logdump', $xoopsLogger->dump());
@@ -714,7 +724,12 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
             $url .= '&amp;xoops_redirect=' . urlencode($_SERVER['REQUEST_URI']);
         }
     }
-    if (defined('SID') && SID && (!isset($_COOKIE[session_name()]) || ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && !isset($_COOKIE[$xoopsConfig['session_name']])))) {
+    if (defined('SID') && SID
+        && (!isset($_COOKIE[session_name()])
+            || ($xoopsConfig['use_mysession']
+                && $xoopsConfig['session_name'] != ''
+                && !isset($_COOKIE[$xoopsConfig['session_name']])))
+    ) {
         if (false === strpos($url, '?')) {
             $url .= '?' . SID;
         } else {
@@ -1190,7 +1205,8 @@ function xoops_getBaseDomain($url, $debug = 0)
         'local',
         'onion',
         'uucp',
-        'co');
+        'co'
+    );
 
     // country tlds (source: http://en.wikipedia.org/wiki/Country_code_top-level_domain)
     $C_TLD = array(
@@ -1449,7 +1465,8 @@ function xoops_getBaseDomain($url, $debug = 0)
         'bu',
         'cs',
         'dd',
-        'zr');
+        'zr'
+    );
 
     // get domain
     if (!$full_domain = xoops_getUrlDomain($url)) {

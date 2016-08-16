@@ -85,7 +85,8 @@ $GLOBALS['xoopsTpl']->assign('lang_register_steps', _PROFILE_MA_REGISTER_STEPS);
 
 $xoBreadcrumbs[] = array(
     'link'  => XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/register.php',
-    'title' => _PROFILE_MA_REGISTER);
+    'title' => _PROFILE_MA_REGISTER
+);
 if (isset($steps[$current_step])) {
     $xoBreadcrumbs[] = array('title' => $steps[$current_step]['step_name']);
 }

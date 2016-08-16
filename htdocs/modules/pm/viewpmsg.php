@@ -40,7 +40,8 @@ if (isset($_POST['delete_messages']) && (isset($_POST['msg_id']) || isset($_POST
                           'ok'              => 1,
                           'delete_messages' => 1,
                           'op'              => $_REQUEST['op'],
-                          'msg_ids'         => json_encode(array_map('intval', $_POST['msg_id']))), $_SERVER['REQUEST_URI'], _PM_SURE_TO_DELETE);
+                          'msg_ids'         => json_encode(array_map('intval', $_POST['msg_id']))
+                      ), $_SERVER['REQUEST_URI'], _PM_SURE_TO_DELETE);
         include $GLOBALS['xoops']->path('footer.php');
         exit();
     } else {

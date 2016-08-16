@@ -40,5 +40,7 @@ return $config = array(
         '0',
         'i',
         'l',
-        '1')); // characters that should not be used
+        '1'
+    )
+); // characters that should not be used
 

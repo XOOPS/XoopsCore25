@@ -123,7 +123,8 @@ if (!empty($_POST)) {
             '$',
             '%',
             '^',
-            '&');
+            '&'
+        );
         $replace_arr = array(
             ' ',
             ' ',
@@ -158,7 +159,8 @@ if (!empty($_POST)) {
             ' ',
             ' ',
             ' ',
-            '');
+            ''
+        );
         $com_user    = trim($_POST['com_user']);
         $com_user    = $myts->stripSlashesGPC($com_user);
         $com_user    = $myts->xoopsCodeDecode($com_user);
@@ -285,7 +287,9 @@ switch ($op) {
             if (is_object($xoopsUser)) {
                 include_once $GLOBALS['xoops']->path('modules/system/constants.php');
                 $sysperm_handler = xoops_getHandler('groupperm');
-                if ($xoopsUser->isAdmin($com_modid) || $sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $xoopsUser->getGroups())) {
+                if ($xoopsUser->isAdmin($com_modid)
+                    || $sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $xoopsUser->getGroups())
+                ) {
                     if (!empty($com_status) && $com_status != XOOPS_COMMENT_PENDING) {
                         $old_com_status = $comment->getVar('com_status');
                         $comment->setVar('com_status', $com_status);
@@ -329,7 +333,9 @@ switch ($op) {
             if (is_object($xoopsUser)) {
                 include_once $GLOBALS['xoops']->path('modules/system/constants.php');
                 $sysperm_handler = xoops_getHandler('groupperm');
-                if ($xoopsUser->isAdmin($com_modid) || $sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $xoopsUser->getGroups())) {
+                if ($xoopsUser->isAdmin($com_modid)
+                    || $sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $xoopsUser->getGroups())
+                ) {
                     $comment->setVar('com_status', XOOPS_COMMENT_ACTIVE);
                     $add_userpost     = true;
                     $call_approvefunc = true;
@@ -419,12 +425,16 @@ switch ($op) {
                 }
             }
             // call custom approve function if any
-            if (false !== $call_approvefunc && isset($comment_config['callback']['approve']) && trim($comment_config['callback']['approve']) != '') {
+            if (false !== $call_approvefunc && isset($comment_config['callback']['approve'])
+                && trim($comment_config['callback']['approve']) != ''
+            ) {
                 $skip = false;
                 if (!function_exists($comment_config['callback']['approve'])) {
                     if (isset($comment_config['callbackFile'])) {
                         $callbackfile = trim($comment_config['callbackFile']);
-                        if ($callbackfile != '' && file_exists($GLOBALS['xoops']->path('modules/' . $moddir . '/' . $callbackfile))) {
+                        if ($callbackfile != ''
+                            && file_exists($GLOBALS['xoops']->path('modules/' . $moddir . '/' . $callbackfile))
+                        ) {
                             include_once $GLOBALS['xoops']->path('modules/' . $moddir . '/' . $callbackfile);
                         }
                         if (!function_exists($comment_config['callback']['approve'])) {
@@ -440,12 +450,16 @@ switch ($op) {
             }
 
             // call custom update function if any
-            if (false !== $call_updatefunc && isset($comment_config['callback']['update']) && trim($comment_config['callback']['update']) != '') {
+            if (false !== $call_updatefunc && isset($comment_config['callback']['update'])
+                && trim($comment_config['callback']['update']) != ''
+            ) {
                 $skip = false;
                 if (!function_exists($comment_config['callback']['update'])) {
                     if (isset($comment_config['callbackFile'])) {
                         $callbackfile = trim($comment_config['callbackFile']);
-                        if ($callbackfile != '' && file_exists($GLOBALS['xoops']->path('modules/' . $moddir . '/' . $callbackfile))) {
+                        if ($callbackfile != ''
+                            && file_exists($GLOBALS['xoops']->path('modules/' . $moddir . '/' . $callbackfile))
+                        ) {
                             include_once $GLOBALS['xoops']->path('modules/' . $moddir . '/' . $callbackfile);
                         }
                         if (!function_exists($comment_config['callback']['update'])) {
@@ -464,7 +478,8 @@ switch ($op) {
                     call_user_func_array($func, array(
                         $com_itemid,
                         $comment_count,
-                        $comment->getVar('com_id')));
+                        $comment->getVar('com_id')
+                    ));
                 }
             }
 
@@ -509,7 +524,8 @@ switch ($op) {
                     }
                     $comment_url .= $com_config['itemName'];
                 }
-                $comment_tags['X_COMMENT_URL'] = XOOPS_URL . '/modules/' . $not_module->getVar('dirname') . '/' . $comment_url . '=' . $com_itemid . '&amp;com_id=' . $newcid . '&amp;com_rootid=' . $com_rootid . '&amp;com_mode=' . $com_mode . '&amp;com_order=' . $com_order . '#comment' . $newcid;
+                $comment_tags['X_COMMENT_URL'] = XOOPS_URL . '/modules/' . $not_module->getVar('dirname') . '/' . $comment_url . '=' . $com_itemid . '&amp;com_id=' . $newcid . '&amp;com_rootid=' . $com_rootid . '&amp;com_mode=' . $com_mode
+                                                 . '&amp;com_order=' . $com_order . '#comment' . $newcid;
                 $notification_handler          = xoops_getHandler('notification');
                 $notification_handler->triggerEvent($not_category, $not_itemid, $not_event, $comment_tags, false, $not_modid);
             }

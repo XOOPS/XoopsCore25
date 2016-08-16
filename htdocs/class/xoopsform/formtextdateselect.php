@@ -27,8 +27,8 @@ class XoopsFormTextDateSelect extends XoopsFormText
     /**
      * @param string $caption
      * @param string $name
-     * @param int $size
-     * @param int $value
+     * @param int    $size
+     * @param int    $value
      */
     public function __construct($caption, $name, $size = 15, $value = 0)
     {
@@ -154,6 +154,7 @@ class XoopsFormTextDateSelect extends XoopsFormText
             }
         }
 
-        return "<input type='text' name='" . $ele_name . "' id='" . $ele_name . "' size='" . $this->getSize() . "' maxlength='" . $this->getMaxlength() . "' value='" . $display_value . "'" . $this->getExtra() . " /><input type='reset' value=' ... ' onclick='return showCalendar(\"" . $ele_name . "\");'>";
+        return "<input type='text' name='" . $ele_name . "' id='" . $ele_name . "' size='" . $this->getSize() . "' maxlength='" . $this->getMaxlength() . "' value='" . $display_value . "'" . $this->getExtra()
+               . " /><input type='reset' value=' ... ' onclick='return showCalendar(\"" . $ele_name . "\");'>";
     }
 }

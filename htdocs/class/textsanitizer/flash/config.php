@@ -19,4 +19,5 @@
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 return $config = array(
-    'detect_dimension' => 1);
+    'detect_dimension' => 1
+);

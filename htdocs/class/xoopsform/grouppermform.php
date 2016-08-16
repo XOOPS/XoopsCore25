@@ -160,7 +160,8 @@ class XoopsGroupPermForm extends XoopsForm
         if ($this->_permDesc) {
             $ret .= $this->_permDesc . '<br><br>';
         }
-        $ret .= '<form title="' . str_replace('"', '', $this->getTitle()) . '" name="' . $this->getName() . '" id="' . $this->getName() . '" action="' . $this->getAction() . '" method="' . $this->getMethod() . '"' . $this->getExtra() . '>' . '<table width="100%" class="outer" cellspacing="1" valign="top">';
+        $ret .= '<form title="' . str_replace('"', '', $this->getTitle()) . '" name="' . $this->getName() . '" id="' . $this->getName() . '" action="' . $this->getAction() . '" method="' . $this->getMethod() . '"' . $this->getExtra() . '>'
+                . '<table width="100%" class="outer" cellspacing="1" valign="top">';
         $elements =& $this->getElements();
         $hidden   = '';
         foreach (array_keys($elements) as $i) {
@@ -321,7 +322,8 @@ class XoopsGroupFormCheckBox extends XoopsFormElement
         if (in_array($option['id'], $this->_value)) {
             $tree .= ' checked';
         }
-        $tree .= ' />' . $option['name'] . "<input type=\"hidden\" name=\"" . $ele_name . '[parents][' . $option['id'] . "]\" value=\"" . implode(':', $parentIds) . "\" /><input type=\"hidden\" name=\"" . $ele_name . '[itemname][' . $option['id'] . "]\" value=\"" . htmlspecialchars($option['name']) . "\" /><br>\n";
+        $tree .= ' />' . $option['name'] . "<input type=\"hidden\" name=\"" . $ele_name . '[parents][' . $option['id'] . "]\" value=\"" . implode(':', $parentIds) . "\" /><input type=\"hidden\" name=\"" . $ele_name . '[itemname][' . $option['id']
+                 . "]\" value=\"" . htmlspecialchars($option['name']) . "\" /><br>\n";
         if (isset($option['children'])) {
             foreach ($option['children'] as $child) {
                 $parentIds[] = $option['id'];

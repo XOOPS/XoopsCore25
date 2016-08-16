@@ -53,7 +53,6 @@ class XoopsMailerLocal extends XoopsMailer
         return $text;
     }
 
-
     /**
      * Multibyte languages are encouraged to make their proper method for encoding Subject
      *

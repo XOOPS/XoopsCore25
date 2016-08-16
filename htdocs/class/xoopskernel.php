@@ -25,7 +25,14 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class xos_kernel_Xoops2
 {
-    public $paths = array('XOOPS' => array(), 'www' => array(), 'var' => array(), 'lib' => array(), 'modules' => array(), 'themes' => array());
+    public $paths = array(
+        'XOOPS'   => array(),
+        'www'     => array(),
+        'var'     => array(),
+        'lib'     => array(),
+        'modules' => array(),
+        'themes'  => array()
+    );
 
     /**
      * Actual Xoops OS
@@ -134,7 +141,9 @@ class xos_kernel_Xoops2
             xoops_setConfigOption('gzip_compression', 0);
         }
 
-        if (xoops_getConfigOption('gzip_compression') == 1 && extension_loaded('zlib') && !ini_get('zlib.output_compression')) {
+        if (xoops_getConfigOption('gzip_compression') == 1 && extension_loaded('zlib')
+            && !ini_get('zlib.output_compression')
+        ) {
             if (@ini_get('zlib.output_compression_level') < 0) {
                 ini_set('zlib.output_compression_level', 6);
             }
@@ -179,10 +188,14 @@ class xos_kernel_Xoops2
      */
     public function themeSelect()
     {
-        if (!empty($_POST['xoops_theme_select']) && in_array($_POST['xoops_theme_select'], xoops_getConfigOption('theme_set_allowed'))) {
+        if (!empty($_POST['xoops_theme_select'])
+            && in_array($_POST['xoops_theme_select'], xoops_getConfigOption('theme_set_allowed'))
+        ) {
             xoops_setConfigOption('theme_set', $_POST['xoops_theme_select']);
             $_SESSION['xoopsUserTheme'] = $_POST['xoops_theme_select'];
-        } elseif (!empty($_SESSION['xoopsUserTheme']) && in_array($_SESSION['xoopsUserTheme'], xoops_getConfigOption('theme_set_allowed'))) {
+        } elseif (!empty($_SESSION['xoopsUserTheme'])
+                  && in_array($_SESSION['xoopsUserTheme'], xoops_getConfigOption('theme_set_allowed'))
+        ) {
             xoops_setConfigOption('theme_set', $_SESSION['xoopsUserTheme']);
         }
     }

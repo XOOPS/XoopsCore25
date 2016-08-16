@@ -13,7 +13,7 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Maxime Cointin (AKA Kraven30)
  * @package             system
- * @version     $Id$
+ * @version             $Id$
  */
 
 // Check users rights
@@ -98,7 +98,8 @@ switch ($op) {
                                 case 'gz':
                                     $extension_verif = 'rar';
                                     $edit            = true;
-                                    $unzip           = '<img class="cursorpointer" src="./images/icons/untar.png" onclick=\'filemanager_unzip_file("' . $path_file . $file . '", "' . $path_file . '", "' . $file . '");\' width="16" alt="edit" />&nbsp;';
+                                    $unzip           = '<img class="cursorpointer" src="./images/icons/untar.png" onclick=\'filemanager_unzip_file("' . $path_file . $file . '", "' . $path_file . '", "' . $file
+                                                       . '");\' width="16" alt="edit" />&nbsp;';
                                     break;
                                 case 'css':
                                     $extension_verif = 'css';

@@ -146,7 +146,10 @@ if ($thisUser->getVar('user_viewemail') == 1) {
     }
 }
 if (is_object($xoopsUser)) {
-    $xoopsTpl->assign('user_pmlink', "<a href=\"javascript:openWithSelfMain('" . XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . $thisUser->getVar('uid') . "', 'pmlite', 450, 380);\"><img src=\"" . XOOPS_URL . "/images/icons/pm.gif\" alt=\"" . sprintf(_SENDPMTO, $thisUser->getVar('uname')) . "\" /></a>");
+    $xoopsTpl->assign('user_pmlink',
+                      "<a href=\"javascript:openWithSelfMain('" . XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . $thisUser->getVar('uid') . "', 'pmlite', 450, 380);\"><img src=\"" . XOOPS_URL . "/images/icons/pm.gif\" alt=\"" . sprintf(_SENDPMTO,
+                                                                                                                                                                                                                                                $thisUser->getVar('uname'))
+                      . "\" /></a>");
 } else {
     $xoopsTpl->assign('user_pmlink', '');
 }
@@ -190,7 +193,8 @@ foreach ($mids as $mid) {
             $xoopsTpl->append('modules', array(
                 'name'         => $module->getVar('name'),
                 'results'      => $results,
-                'showall_link' => $showall_link));
+                'showall_link' => $showall_link
+            ));
         }
         unset($module);
     }

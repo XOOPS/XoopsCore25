@@ -102,14 +102,18 @@ class XoopsBlock extends XoopsObject
         }
         if (empty($bid)) {
             $bid = $this->db->genId($this->db->prefix('newblocks') . '_bid_seq');
-            $sql = sprintf('INSERT INTO %s (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES (%u, %u, %u, %s, %s, %s, %s, %u, %u, %u, %s, %s, %u, %s, %s, %s, %s, %s, %u, %u)', $this->db->prefix('newblocks'), $bid, $mid, $func_num, $this->db->quoteString($options), $this->db->quoteString($name), $this->db->quoteString($title), $this->db->quoteString($content), $side, $weight, $visible, $this->db->quoteString($block_type), $this->db->quoteString($c_type), 1, $this->db->quoteString($dirname), $this->db->quoteString($func_file), $this->db->quoteString($show_func), $this->db->quoteString($edit_func), $this->db->quoteString($template), $bcachetime, time());
+            $sql = sprintf('INSERT INTO %s (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES (%u, %u, %u, %s, %s, %s, %s, %u, %u, %u, %s, %s, %u, %s, %s, %s, %s, %s, %u, %u)',
+                           $this->db->prefix('newblocks'), $bid, $mid, $func_num, $this->db->quoteString($options), $this->db->quoteString($name), $this->db->quoteString($title), $this->db->quoteString($content), $side, $weight, $visible,
+                           $this->db->quoteString($block_type), $this->db->quoteString($c_type), 1, $this->db->quoteString($dirname), $this->db->quoteString($func_file), $this->db->quoteString($show_func), $this->db->quoteString($edit_func),
+                           $this->db->quoteString($template), $bcachetime, time());
         } else {
             $sql = 'UPDATE ' . $this->db->prefix('newblocks') . ' SET options=' . $this->db->quoteString($options);
             // a custom block needs its own name
             if ($this->isCustom() /* in_array( $block_type , array( 'C' , 'E' ) ) */) {
                 $sql .= ', name=' . $this->db->quoteString($name);
             }
-            $sql .= ', isactive=' . $isactive . ', title=' . $this->db->quoteString($title) . ', content=' . $this->db->quoteString($content) . ', side=' . $side . ', weight=' . $weight . ', visible=' . $visible . ', c_type=' . $this->db->quoteString($c_type) . ', template=' . $this->db->quoteString($template) . ', bcachetime=' . $bcachetime . ', last_modified=' . time() . ' WHERE bid=' . $bid;
+            $sql .= ', isactive=' . $isactive . ', title=' . $this->db->quoteString($title) . ', content=' . $this->db->quoteString($content) . ', side=' . $side . ', weight=' . $weight . ', visible=' . $visible . ', c_type='
+                    . $this->db->quoteString($c_type) . ', template=' . $this->db->quoteString($template) . ', bcachetime=' . $bcachetime . ', last_modified=' . time() . ' WHERE bid=' . $bid;
         }
         if (!$this->db->query($sql)) {
             $this->setErrors('Could not save block data into database');
@@ -284,7 +288,8 @@ class XoopsBlock extends XoopsObject
     {
         return in_array($this->getVar('block_type'), array(
             'C',
-            'E'));
+            'E'
+        ));
     }
 
     /**
@@ -338,8 +343,14 @@ class XoopsBlock extends XoopsObject
      * @param int    $isactive
      * @returns array of block objects
      */
-    public static function getAllBlocksByGroup($groupid, $asobject = true, $side = null, $visible = null, $orderby = 'b.weight,b.bid', $isactive = 1)
-    {
+    public static function getAllBlocksByGroup(
+        $groupid,
+        $asobject = true,
+        $side = null,
+        $visible = null,
+        $orderby = 'b.weight,b.bid',
+        $isactive = 1
+    ) {
         $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $ret = array();
         $sql = 'SELECT b.* ';
@@ -403,8 +414,13 @@ class XoopsBlock extends XoopsObject
      * @param  integer $isactive
      * @return array
      */
-    public function getAllBlocks($rettype = 'object', $side = null, $visible = null, $orderby = 'side,weight,bid', $isactive = 1)
-    {
+    public function getAllBlocks(
+        $rettype = 'object',
+        $side = null,
+        $visible = null,
+        $orderby = 'side,weight,bid',
+        $isactive = 1
+    ) {
         $db          = XoopsDatabaseFactory::getDatabaseConnection();
         $ret         = array();
         $where_query = ' WHERE isactive=' . $isactive;
@@ -496,8 +512,14 @@ class XoopsBlock extends XoopsObject
      * @param  integer $isactive
      * @return array
      */
-    public function getAllByGroupModule($groupid, $module_id = 0, $toponlyblock = false, $visible = null, $orderby = 'b.weight, m.block_id', $isactive = 1)
-    {
+    public function getAllByGroupModule(
+        $groupid,
+        $module_id = 0,
+        $toponlyblock = false,
+        $visible = null,
+        $orderby = 'b.weight, m.block_id',
+        $isactive = 1
+    ) {
         $isactive = (int)$isactive;
         $db       = XoopsDatabaseFactory::getDatabaseConnection();
         $ret      = array();
@@ -562,8 +584,13 @@ class XoopsBlock extends XoopsObject
      * @param  integer $isactive
      * @return array
      */
-    public function getNonGroupedBlocks($module_id = 0, $toponlyblock = false, $visible = null, $orderby = 'b.weight, m.block_id', $isactive = 1)
-    {
+    public function getNonGroupedBlocks(
+        $module_id = 0,
+        $toponlyblock = false,
+        $visible = null,
+        $orderby = 'b.weight, m.block_id',
+        $isactive = 1
+    ) {
         $db   = XoopsDatabaseFactory::getDatabaseConnection();
         $ret  = array();
         $bids = array();

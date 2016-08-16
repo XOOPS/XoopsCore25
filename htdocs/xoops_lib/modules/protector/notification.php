@@ -41,6 +41,7 @@ if (!function_exists('protector_notify_base')) {
 
             return $item;
         }
+
         return null;
     }
 }

@@ -67,7 +67,8 @@ if (class_exists('XoopsFormEditor')) {
         'cols'   => 90,
         'width'  => '100%',
         'height' => '400px',
-        'editor' => $editor);
+        'editor' => $editor
+    );
     $cform->addElement(new XoopsFormEditor(_CM_MESSAGE, 'com_text', $configs, false, $onfailure = 'textarea'));
 } else {
     $cform->addElement(new XoopsFormDhtmlTextArea(_CM_MESSAGE, 'com_text', $com_text, 10, 50), true);
@@ -92,7 +93,8 @@ if (is_object($xoopsUser)) {
             $status_select->addOptionArray(array(
                                                XOOPS_COMMENT_PENDING => _CM_PENDING,
                                                XOOPS_COMMENT_ACTIVE  => _CM_ACTIVE,
-                                               XOOPS_COMMENT_HIDDEN  => _CM_HIDDEN));
+                                               XOOPS_COMMENT_HIDDEN  => _CM_HIDDEN
+                                           ));
             $cform->addElement($status_select);
             $button_tray->addElement(new XoopsFormButton('', 'com_dodelete', _DELETE, 'submit'));
         }

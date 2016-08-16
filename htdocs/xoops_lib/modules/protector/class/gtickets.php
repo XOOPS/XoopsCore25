@@ -37,7 +37,8 @@ if (!class_exists('XoopsGTicket')) {
                     'err_timeout'       => 'Time out',
                     'err_areaorref'     => 'Invalid area or referer',
                     'fmt_prompt4repost' => 'error(s) found:<br><span style="background-color:red;font-weight:bold;color:white;">%s</span><br>Confirm it.<br>And do you want to post again?',
-                    'btn_repost'        => 'repost');
+                    'btn_repost'        => 'repost'
+                );
             }
         }
 
@@ -150,7 +151,8 @@ if (!class_exists('XoopsGTicket')) {
                 'expire'  => time() + $timeout,
                 'referer' => $referer,
                 'area'    => $area,
-                'token'   => $token);
+                'token'   => $token
+            );
 
             // paid md5ed token as a ticket
             return md5($token . XOOPS_DB_PREFIX);
@@ -293,7 +295,8 @@ if (!class_exists('XoopsGTicket')) {
             $table .= '</table>';
             $form .= $this->getTicketHtml(__LINE__, 300, $area) . '<input type="submit" value="' . $this->messages['btn_repost'] . '" /></form>';
 
-            echo '<html><head><title>' . $this->messages['err_general'] . '</title><style>table,td,th {border:solid black 1px; border-collapse:collapse;}</style></head><body>' . sprintf($this->messages['fmt_prompt4repost'], $this->getErrors()) . $table . $form . '</body></html>';
+            echo '<html><head><title>' . $this->messages['err_general'] . '</title><style>table,td,th {border:solid black 1px; border-collapse:collapse;}</style></head><body>' . sprintf($this->messages['fmt_prompt4repost'], $this->getErrors())
+                 . $table . $form . '</body></html>';
         }
 
         /**
@@ -408,6 +411,7 @@ if (!function_exists('admin_refcheck')) {
         if ($chkref != '') {
             $cr .= $chkref;
         }
+
         return !(strpos($ref, $cr) !== 0);
     }
 }

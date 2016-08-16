@@ -82,7 +82,10 @@ class XoopsPageNav
                 while ($counter <= $total_pages) {
                     if ($counter == $current_page) {
                         $ret .= '<strong class="xo-pagact" >(' . $counter . ')</strong> ';
-                    } elseif (($counter > $current_page - $offset && $counter < $current_page + $offset) || $counter == 1 || $counter == $total_pages) {
+                    } elseif (($counter > $current_page - $offset && $counter < $current_page + $offset)
+                              || $counter == 1
+                              || $counter == $total_pages
+                    ) {
                         if ($counter == $total_pages && $current_page < $total_pages - $offset) {
                             $ret .= '... ';
                         }
@@ -166,7 +169,9 @@ class XoopsPageNav
             while ($counter <= $total_pages) {
                 if ($counter == $current_page) {
                     $ret .= '<td class="pagact"><strong>' . $counter . '</strong></td>';
-                } elseif (($counter > $current_page - $offset && $counter < $current_page + $offset) || $counter == 1 || $counter == $total_pages) {
+                } elseif (($counter > $current_page - $offset && $counter < $current_page + $offset) || $counter == 1
+                          || $counter == $total_pages
+                ) {
                     if ($counter == $total_pages && $current_page < $total_pages - $offset) {
                         $ret .= '<td class="paginact">...</td>';
                     }

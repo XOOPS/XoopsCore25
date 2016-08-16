@@ -79,7 +79,8 @@ function xoops_module_install($dirname)
         'xoopsnotifications',
         'banner',
         'bannerclient',
-        'bannerfinish');
+        'bannerfinish'
+    );
     $module_handler = xoops_getHandler('module');
     if ($module_handler->getCount(new Criteria('dirname', $dirname)) == 0) {
         $module = $module_handler->create();
@@ -200,7 +201,7 @@ function xoops_module_install($dirname)
                     foreach ($templates as $tpl) {
                         $tplfile = $tplfile_handler->create();
                         $type    = (isset($tpl['type']) ? $tpl['type'] : 'module');
-                        $tpldata =&  xoops_module_gettemplate($dirname, $tpl['file'], $type);
+                        $tpldata =& xoops_module_gettemplate($dirname, $tpl['file'], $type);
                         $tplfile->setVar('tpl_source', $tpldata, true);
                         $tplfile->setVar('tpl_refid', $newmid);
 
@@ -253,9 +254,13 @@ function xoops_module_install($dirname)
                             $template = trim($block['template']);
                         }
                         $block_name = addslashes(trim($block['name']));
-                        $sql        = 'INSERT INTO ' . $db->prefix('newblocks') . " (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES ($newbid, $newmid, " . (int)$blockkey . ", '$options', '" . $block_name . "','" . $block_name . "', '', 0, 0, 0, 'M', 'H', 1, '" . addslashes($dirname) . "', '" . addslashes(trim($block['file'])) . "', '" . addslashes(trim($block['show_func'])) . "', '" . addslashes($edit_func) . "', '" . $template . "', 0, " . time() . ')';
+                        $sql        = 'INSERT INTO ' . $db->prefix('newblocks')
+                                      . " (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES ($newbid, $newmid, "
+                                      . (int)$blockkey . ", '$options', '" . $block_name . "','" . $block_name . "', '', 0, 0, 0, 'M', 'H', 1, '" . addslashes($dirname) . "', '" . addslashes(trim($block['file'])) . "', '"
+                                      . addslashes(trim($block['show_func'])) . "', '" . addslashes($edit_func) . "', '" . $template . "', 0, " . time() . ')';
                         if (!$db->query($sql)) {
-                            $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_BLOCK_ADD_ERROR, '<strong>' . $block['name'] . '</strong>') . sprintf(_AM_SYSTEM_MODULES_BLOCK_ADD_ERROR_DATABASE, '<strong>' . $db->error() . '</strong>') . '</span>';
+                            $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_BLOCK_ADD_ERROR, '<strong>' . $block['name'] . '</strong>') . sprintf(_AM_SYSTEM_MODULES_BLOCK_ADD_ERROR_DATABASE,
+                                                                                                                                                                                     '<strong>' . $db->error() . '</strong>') . '</span>';
                         } else {
                             if (empty($newbid)) {
                                 $newbid = $db->getInsertId();
@@ -309,14 +314,17 @@ function xoops_module_install($dirname)
                                 '_CM_COMNOCOM'        => XOOPS_COMMENT_APPROVENONE,
                                 '_CM_COMAPPROVEALL'   => XOOPS_COMMENT_APPROVEALL,
                                 '_CM_COMAPPROVEUSER'  => XOOPS_COMMENT_APPROVEUSER,
-                                '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN));
+                                '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN
+                            )
+                        );
                         $configs[] = array(
                             'name'        => 'com_anonpost',
                             'title'       => '_CM_COMANONPOST',
                             'description' => '',
                             'formtype'    => 'yesno',
                             'valuetype'   => 'int',
-                            'default'     => 0);
+                            'default'     => 0
+                        );
                     }
                 } else {
                     if ($module->getVar('hascomments') != 0) {
@@ -333,14 +341,17 @@ function xoops_module_install($dirname)
                                 '_CM_COMNOCOM'        => XOOPS_COMMENT_APPROVENONE,
                                 '_CM_COMAPPROVEALL'   => XOOPS_COMMENT_APPROVEALL,
                                 '_CM_COMAPPROVEUSER'  => XOOPS_COMMENT_APPROVEUSER,
-                                '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN));
+                                '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN
+                            )
+                        );
                         $configs[] = array(
                             'name'        => 'com_anonpost',
                             'title'       => '_CM_COMANONPOST',
                             'description' => '',
                             'formtype'    => 'yesno',
                             'valuetype'   => 'int',
-                            'default'     => 0);
+                            'default'     => 0
+                        );
                     }
                 }
                 // RMV-NOTIFY
@@ -364,7 +375,8 @@ function xoops_module_install($dirname)
                         'formtype'    => 'select',
                         'valuetype'   => 'int',
                         'default'     => XOOPS_NOTIFICATION_ENABLEBOTH,
-                        'options'     => $options);
+                        'options'     => $options
+                    );
                     // Event-specific notification options
                     // FIXME: doesn't work when update module... can't read back the array of options properly...  " changing to &quot;
                     $options    = array();
@@ -389,7 +401,8 @@ function xoops_module_install($dirname)
                         'formtype'    => 'select_multi',
                         'valuetype'   => 'array',
                         'default'     => array_values($options),
-                        'options'     => $options);
+                        'options'     => $options
+                    );
                 }
 
                 if ($configs != false) {
@@ -414,7 +427,8 @@ function xoops_module_install($dirname)
                                 $confop->setVar('confop_name', $key, true);
                                 $confop->setVar('confop_value', $value, true);
                                 $confobj->setConfOptions($confop);
-                                $confop_msgs .= '<br>&nbsp;&nbsp;&nbsp;&nbsp; ' . _AM_SYSTEM_MODULES_CONFIG_ADD . _AM_SYSTEM_MODULES_NAME . ' <strong>' . (defined($key) ? constant($key) : $key) . '</strong> ' . _AM_SYSTEM_MODULES_VALUE . ' <strong>' . $value . '</strong> ';
+                                $confop_msgs .= '<br>&nbsp;&nbsp;&nbsp;&nbsp; ' . _AM_SYSTEM_MODULES_CONFIG_ADD . _AM_SYSTEM_MODULES_NAME . ' <strong>' . (defined($key) ? constant($key) : $key) . '</strong> ' . _AM_SYSTEM_MODULES_VALUE . ' <strong>'
+                                                . $value . '</strong> ';
                                 unset($confop);
                             }
                         }
@@ -494,11 +508,11 @@ function xoops_module_install($dirname)
             $msgs[] = sprintf(_AM_SYSTEM_MODULES_OKINS, '<strong>' . $module->getVar('name', 's') . '</strong>');
             $msgs[] = '</div></div>';
 
-            $blocks = $module->getInfo('blocks');
+            $blocks     = $module->getInfo('blocks');
             $redDevider = '<span class="red bold">  |  </span>';
-            $msgs[] = '<div class="noininstall center"><a href="admin.php?fct=modulesadmin">' . _AM_SYSTEM_MODULES_BTOMADMIN . '</a> |
+            $msgs[]     = '<div class="noininstall center"><a href="admin.php?fct=modulesadmin">' . _AM_SYSTEM_MODULES_BTOMADMIN . '</a> |
                         <a href="admin.php?fct=modulesadmin&op=installlist">' . _AM_SYSTEM_MODULES_TOINSTALL . '</a> | ';
-            $msgs[] = '<br><span class="red bold">' . _AM_SYSTEM_MODULES_MODULE . ' ' . $module->getInfo('name') . ': </span></div>';
+            $msgs[]     = '<br><span class="red bold">' . _AM_SYSTEM_MODULES_MODULE . ' ' . $module->getInfo('name') . ': </span></div>';
             if ($blocks != false) {
                 $msgs[] = '<div class="center"><a href="admin.php?fct=blocksadmin&op=list&filter=1&selgen=' . $newmid . '&selmod=-2&selgrp=-1&selvis=-1&filsave=1">' . _AM_SYSTEM_BLOCKS . '</a></div>';
             }
@@ -605,7 +619,8 @@ function xoops_module_uninstall($dirname)
         'xoopsnotifications',
         'banner',
         'bannerclient',
-        'bannerfinish');
+        'bannerfinish'
+    );
     $db             = XoopsDatabaseFactory::getDatabaseConnection();
     $module_handler = xoops_getHandler('module');
     $module         = $module_handler->getByDirname($dirname);
@@ -660,9 +675,12 @@ function xoops_module_uninstall($dirname)
                 $msgs[] = _AM_SYSTEM_MODULES_TEMPLATES_DELETE;
                 for ($i = 0; $i < $tcount; ++$i) {
                     if (false === $tplfile_handler->delete($templates[$i])) {
-                        $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_TEMPLATE_DELETE_DATA_FAILD, $templates[$i]->getVar('tpl_file')) . sprintf(_AM_SYSTEM_MODULES_TEMPLATE_ID, '<strong>' . $templates[$i]->getVar('tpl_id') . '</strong>') . '</span>';
+                        $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_TEMPLATE_DELETE_DATA_FAILD, $templates[$i]->getVar('tpl_file')) . sprintf(_AM_SYSTEM_MODULES_TEMPLATE_ID,
+                                                                                                                                                                                     '<strong>' . $templates[$i]->getVar('tpl_id') . '</strong>')
+                                  . '</span>';
                     } else {
-                        $msgs[] = '&nbsp;&nbsp;' . sprintf(_AM_SYSTEM_MODULES_TEMPLATE_DELETE_DATA, '<strong>' . $templates[$i]->getVar('tpl_file') . '</strong>') . sprintf(_AM_SYSTEM_MODULES_TEMPLATE_ID, '<strong>' . $templates[$i]->getVar('tpl_id') . '</strong>');
+                        $msgs[] = '&nbsp;&nbsp;' . sprintf(_AM_SYSTEM_MODULES_TEMPLATE_DELETE_DATA, '<strong>' . $templates[$i]->getVar('tpl_file') . '</strong>') . sprintf(_AM_SYSTEM_MODULES_TEMPLATE_ID,
+                                                                                                                                                                             '<strong>' . $templates[$i]->getVar('tpl_id') . '</strong>');
                     }
                 }
             }
@@ -675,7 +693,9 @@ function xoops_module_uninstall($dirname)
                 $msgs[] = _AM_SYSTEM_MODULES_BLOCKS_DELETE;
                 for ($i = 0; $i < $bcount; ++$i) {
                     if (false === $block_arr[$i]->delete()) {
-                        $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_BLOCK_DELETE_ERROR, '<strong>' . $block_arr[$i]->getVar('name') . '</strong>') . sprintf(_AM_SYSTEM_MODULES_BLOCK_ID, '<strong>' . $block_arr[$i]->getVar('bid') . '</strong>') . '</span>';
+                        $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_BLOCK_DELETE_ERROR, '<strong>' . $block_arr[$i]->getVar('name') . '</strong>') . sprintf(_AM_SYSTEM_MODULES_BLOCK_ID,
+                                                                                                                                                                                                    '<strong>' . $block_arr[$i]->getVar('bid')
+                                                                                                                                                                                                    . '</strong>') . '</span>';
                     } else {
                         $msgs[] = '&nbsp;&nbsp;' . sprintf(_AM_SYSTEM_MODULES_BLOCK_DELETE, '<strong>' . $block_arr[$i]->getVar('name') . '</strong>') . sprintf(_AM_SYSTEM_MODULES_BLOCK_ID, '<strong>' . $block_arr[$i]->getVar('bid') . '</strong>');
                     }
@@ -685,9 +705,12 @@ function xoops_module_uninstall($dirname)
                         if ($btcount > 0) {
                             for ($j = 0; $j < $btcount; ++$j) {
                                 if (!$tplfile_handler->delete($templates[$j])) {
-                                    $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_BLOCK_DELETE_TEMPLATE_ERROR, $templates[$j]->getVar('tpl_file')) . sprintf(_AM_SYSTEM_MODULES_TEMPLATE_ID, '<strong>' . $templates[$j]->getVar('tpl_id') . '</strong>') . '</span>';
+                                    $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_BLOCK_DELETE_TEMPLATE_ERROR, $templates[$j]->getVar('tpl_file')) . sprintf(_AM_SYSTEM_MODULES_TEMPLATE_ID,
+                                                                                                                                                                                                  '<strong>' . $templates[$j]->getVar('tpl_id')
+                                                                                                                                                                                                  . '</strong>') . '</span>';
                                 } else {
-                                    $msgs[] = '&nbsp;&nbsp;' . sprintf(_AM_SYSTEM_MODULES_BLOCK_DELETE_DATA, '<strong>' . $templates[$j]->getVar('tpl_file') . '</strong>') . sprintf(_AM_SYSTEM_MODULES_TEMPLATE_ID, '<strong>' . $templates[$j]->getVar('tpl_id') . '</strong>');
+                                    $msgs[] = '&nbsp;&nbsp;' . sprintf(_AM_SYSTEM_MODULES_BLOCK_DELETE_DATA, '<strong>' . $templates[$j]->getVar('tpl_file') . '</strong>') . sprintf(_AM_SYSTEM_MODULES_TEMPLATE_ID,
+                                                                                                                                                                                      '<strong>' . $templates[$j]->getVar('tpl_id') . '</strong>');
                                 }
                             }
                         }
@@ -836,7 +859,7 @@ function xoops_module_update($dirname)
         if ($module->getInfo('author') != false && trim($module->getInfo('author')) != '') {
             $msgs[] = '<strong>' . _AUTHOR . ':</strong> ' . $myts->htmlspecialchars(trim($module->getInfo('author')));
         }
-        $msgs[]          = '</div><div class="logger">';
+        $msgs[] = '</div><div class="logger">';
 
         $update_script = $module->getInfo('onUpdate');
         if (!empty($update_script) && trim($update_script) != '') {
@@ -847,7 +870,7 @@ function xoops_module_update($dirname)
             $func = 'xoops_module_pre_update_' . $dirname;
             if (!$func($module, $prev_version)) {
                 $msgs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILED_EXECUTE, $func) . '</p>';
-                $msgs = array_merge($msgs, $module->getErrors());
+                $msgs   = array_merge($msgs, $module->getErrors());
             } else {
                 $msgs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILED_SUCESS, '<strong>' . $func . '</strong>') . '</p>';
                 $msgs += $module->getErrors();
@@ -947,12 +970,14 @@ function xoops_module_update($dirname)
                     if (!empty($block['options'])) {
                         $options = $block['options'];
                     }
-                    $sql     = 'SELECT bid, name FROM ' . $xoopsDB->prefix('newblocks') . ' WHERE mid=' . $module->getVar('mid') . ' AND func_num=' . $i . " AND show_func='" . addslashes($block['show_func']) . "' AND func_file='" . addslashes($block['file']) . "'";
+                    $sql     = 'SELECT bid, name FROM ' . $xoopsDB->prefix('newblocks') . ' WHERE mid=' . $module->getVar('mid') . ' AND func_num=' . $i . " AND show_func='" . addslashes($block['show_func']) . "' AND func_file='"
+                               . addslashes($block['file']) . "'";
                     $fresult = $xoopsDB->query($sql);
                     $fcount  = 0;
                     while ($fblock = $xoopsDB->fetchArray($fresult)) {
                         ++$fcount;
-                        $sql    = 'UPDATE ' . $xoopsDB->prefix('newblocks') . " SET name='" . addslashes($block['name']) . "', edit_func='" . addslashes($editfunc) . "', content='', template='" . $template . "', last_modified=" . time() . ' WHERE bid=' . $fblock['bid'];
+                        $sql    = 'UPDATE ' . $xoopsDB->prefix('newblocks') . " SET name='" . addslashes($block['name']) . "', edit_func='" . addslashes($editfunc) . "', content='', template='" . $template . "', last_modified=" . time()
+                                  . ' WHERE bid=' . $fblock['bid'];
                         $result = $xoopsDB->query($sql);
                         if (!$result) {
                             $msgs[] = '&nbsp;&nbsp;' . sprintf(_AM_SYSTEM_MODULES_UPDATE_ERROR, $fblock['name']);
@@ -994,7 +1019,10 @@ function xoops_module_update($dirname)
                         $newbid     = $xoopsDB->genId($xoopsDB->prefix('newblocks') . '_bid_seq');
                         $block_name = addslashes($block['name']);
                         $block_type = ($module->getVar('dirname') === 'system') ? 'S' : 'M';
-                        $sql        = 'INSERT INTO ' . $xoopsDB->prefix('newblocks') . ' (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, isactive, dirname, func_file, show_func, edit_func, template, last_modified) VALUES (' . $newbid . ', ' . $module->getVar('mid') . ', ' . $i . ",'" . addslashes($options) . "','" . $block_name . "', '" . $block_name . "', '', 0, 0, 0, '{$block_type}', 1, '" . addslashes($dirname) . "', '" . addslashes($block['file']) . "', '" . addslashes($block['show_func']) . "', '" . addslashes($editfunc) . "', '" . $template . "', " . time() . ')';
+                        $sql        = 'INSERT INTO ' . $xoopsDB->prefix('newblocks')
+                                      . ' (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, isactive, dirname, func_file, show_func, edit_func, template, last_modified) VALUES (' . $newbid . ', '
+                                      . $module->getVar('mid') . ', ' . $i . ",'" . addslashes($options) . "','" . $block_name . "', '" . $block_name . "', '', 0, 0, 0, '{$block_type}', 1, '" . addslashes($dirname) . "', '"
+                                      . addslashes($block['file']) . "', '" . addslashes($block['show_func']) . "', '" . addslashes($editfunc) . "', '" . $template . "', " . time() . ')';
                         $result     = $xoopsDB->query($sql);
                         if (!$result) {
                             $msgs[] = '&nbsp;&nbsp;' . sprintf(_AM_SYSTEM_MODULES_SQL_NOT_CREATE, $block['name']);
@@ -1016,7 +1044,9 @@ function xoops_module_update($dirname)
                                 $bperm->setVar('gperm_name', 'block_read');
                                 $bperm->setVar('gperm_modid', 1);
                                 if (!$gperm_handler->insert($bperm)) {
-                                    $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . _AM_SYSTEM_MODULES_BLOCK_ACCESS_ERROR . sprintf(_AM_SYSTEM_MODULES_BLOCK_ID, '<strong>' . $newbid . '</strong>') . sprintf(_AM_SYSTEM_MODULES_GROUP_ID, '<strong>' . $mygroup . '</strong>') . '</span>';
+                                    $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . _AM_SYSTEM_MODULES_BLOCK_ACCESS_ERROR . sprintf(_AM_SYSTEM_MODULES_BLOCK_ID, '<strong>' . $newbid . '</strong>') . sprintf(_AM_SYSTEM_MODULES_GROUP_ID,
+                                                                                                                                                                                                                       '<strong>' . $mygroup
+                                                                                                                                                                                                                       . '</strong>') . '</span>';
                                 } else {
                                     $msgs[] = '&nbsp;&nbsp;' . _AM_SYSTEM_MODULES_BLOCK_ACCESS . sprintf(_AM_SYSTEM_MODULES_BLOCK_ID, '<strong>' . $newbid . '</strong>') . sprintf(_AM_SYSTEM_MODULES_GROUP_ID, '<strong>' . $mygroup . '</strong>');
                                 }
@@ -1059,7 +1089,8 @@ function xoops_module_update($dirname)
                 if (!in_array($block->getVar('show_func'), $showfuncs) || !in_array($block->getVar('func_file'), $funcfiles)) {
                     $sql = sprintf('DELETE FROM %s WHERE bid = %u', $xoopsDB->prefix('newblocks'), $block->getVar('bid'));
                     if (!$xoopsDB->query($sql)) {
-                        $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_BLOCK_DELETE_ERROR, '<strong>' . $block->getVar('name') . '</strong>') . sprintf(_AM_SYSTEM_MODULES_BLOCK_ID, '<strong>' . $block->getVar('bid') . '</strong>') . '</span>';
+                        $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_BLOCK_DELETE_ERROR, '<strong>' . $block->getVar('name') . '</strong>') . sprintf(_AM_SYSTEM_MODULES_BLOCK_ID,
+                                                                                                                                                                                            '<strong>' . $block->getVar('bid') . '</strong>') . '</span>';
                     } else {
                         $msgs[] = '&nbsp;&nbsp;Block <strong>' . $block->getVar('name') . ' deleted. Block ID: <strong>' . $block->getVar('bid') . '</strong>';
                         if ($block->getVar('template') != '') {
@@ -1128,14 +1159,17 @@ function xoops_module_update($dirname)
                         '_CM_COMNOCOM'        => XOOPS_COMMENT_APPROVENONE,
                         '_CM_COMAPPROVEALL'   => XOOPS_COMMENT_APPROVEALL,
                         '_CM_COMAPPROVEUSER'  => XOOPS_COMMENT_APPROVEUSER,
-                        '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN)));
+                        '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN
+                    )
+                ));
                 array_push($configs, array(
                     'name'        => 'com_anonpost',
                     'title'       => '_CM_COMANONPOST',
                     'description' => '',
                     'formtype'    => 'yesno',
                     'valuetype'   => 'int',
-                    'default'     => 0));
+                    'default'     => 0
+                ));
             }
         } else {
             if ($module->getVar('hascomments') != 0) {
@@ -1152,14 +1186,17 @@ function xoops_module_update($dirname)
                         '_CM_COMNOCOM'        => XOOPS_COMMENT_APPROVENONE,
                         '_CM_COMAPPROVEALL'   => XOOPS_COMMENT_APPROVEALL,
                         '_CM_COMAPPROVEUSER'  => XOOPS_COMMENT_APPROVEUSER,
-                        '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN));
+                        '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN
+                    )
+                );
                 $configs[] = array(
                     'name'        => 'com_anonpost',
                     'title'       => '_CM_COMANONPOST',
                     'description' => '',
                     'formtype'    => 'yesno',
                     'valuetype'   => 'int',
-                    'default'     => 0);
+                    'default'     => 0
+                );
             }
         }
         // RMV-NOTIFY
@@ -1184,7 +1221,8 @@ function xoops_module_update($dirname)
                 'formtype'    => 'select',
                 'valuetype'   => 'int',
                 'default'     => XOOPS_NOTIFICATION_ENABLEBOTH,
-                'options'     => $options);
+                'options'     => $options
+            );
             // Event specific notification options
             // FIXME: for some reason the default doesn't come up properly
             //  initially is ok, but not when 'update' module..
@@ -1209,7 +1247,8 @@ function xoops_module_update($dirname)
                 'formtype'    => 'select_multi',
                 'valuetype'   => 'array',
                 'default'     => array_values($options),
-                'options'     => $options);
+                'options'     => $options
+            );
         }
 
         if ($configs != false) {
@@ -1229,7 +1268,9 @@ function xoops_module_update($dirname)
                     if (isset($config['valuetype'])) {
                         $confobj->setVar('conf_valuetype', $config['valuetype']);
                     }
-                    if (isset($config_old[$config['name']]['value']) && $config_old[$config['name']]['formtype'] == $config['formtype'] && $config_old[$config['name']]['valuetype'] == $config['valuetype']) {
+                    if (isset($config_old[$config['name']]['value']) && $config_old[$config['name']]['formtype'] == $config['formtype']
+                        && $config_old[$config['name']]['valuetype'] == $config['valuetype']
+                    ) {
                         // preserver the old value if any
                         // form type and value type must be the same
                         $confobj->setVar('conf_value', $config_old[$config['name']]['value'], true);
@@ -1246,7 +1287,8 @@ function xoops_module_update($dirname)
                             $confop->setVar('confop_name', $key, true);
                             $confop->setVar('confop_value', $value, true);
                             $confobj->setConfOptions($confop);
-                            $confop_msgs .= '<br>&nbsp;&nbsp;&nbsp;&nbsp; ' . _AM_SYSTEM_MODULES_CONFIG_ADD . _AM_SYSTEM_MODULES_NAME . ' <strong>' . (defined($key) ? constant($key) : $key) . '</strong> ' . _AM_SYSTEM_MODULES_VALUE . ' <strong>' . $value . '</strong> ';
+                            $confop_msgs .= '<br>&nbsp;&nbsp;&nbsp;&nbsp; ' . _AM_SYSTEM_MODULES_CONFIG_ADD . _AM_SYSTEM_MODULES_NAME . ' <strong>' . (defined($key) ? constant($key) : $key) . '</strong> ' . _AM_SYSTEM_MODULES_VALUE . ' <strong>'
+                                            . $value . '</strong> ';
                             unset($confop);
                         }
                     }
@@ -1268,7 +1310,7 @@ function xoops_module_update($dirname)
             $func = 'xoops_module_update_' . $dirname;
             if (!$func($module, $prev_version)) {
                 $msgs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILED_EXECUTE, $func) . '</p>';
-                $msgs = array_merge($msgs, $module->getErrors());
+                $msgs   = array_merge($msgs, $module->getErrors());
             } else {
                 $msgs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILED_SUCESS, '<strong>' . $func . '</strong>') . '</p>';
                 $msgs += $module->getErrors();
@@ -1276,7 +1318,8 @@ function xoops_module_update($dirname)
         }
         $msgs[] = sprintf(_AM_SYSTEM_MODULES_OKUPD, '<strong>' . $module->getVar('name', 's') . '</strong>');
         $msgs[] = '</div></div>';
-        $msgs[] = '<div class="center"><a href="admin.php?fct=modulesadmin">' . _AM_SYSTEM_MODULES_BTOMADMIN . '</a>  | <a href="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname', 'e') . '/' . $module->getInfo('adminindex') . '">' . _AM_SYSTEM_MODULES_ADMIN . '</a></div>';
+        $msgs[] = '<div class="center"><a href="admin.php?fct=modulesadmin">' . _AM_SYSTEM_MODULES_BTOMADMIN . '</a>  | <a href="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname', 'e') . '/' . $module->getInfo('adminindex') . '">'
+                  . _AM_SYSTEM_MODULES_ADMIN . '</a></div>';
         //        foreach ($msgs as $msg) {
         //            echo $msg . '<br>';
         //        }

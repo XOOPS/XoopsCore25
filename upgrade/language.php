@@ -93,7 +93,8 @@ $available_languages = array(
     'uk'    => array('uk|ukrainian', 'ukrainian'),
     'ur'    => array('ur|urdu', 'urdu'),
     'zh-tw' => array('zh[-_]tw|chinese traditional', 'tchinese'),
-    'zh-cn' => array('zh[-_]cn|chinese simplified', 'schinese'));
+    'zh-cn' => array('zh[-_]cn|chinese simplified', 'schinese')
+);
 
 /**
  * Analyzes some PHP environment variables to find the most probable language
@@ -118,7 +119,8 @@ function xoops_analyzeLanguage($str = '', $envType = '')
             $expr = str_replace('|', '([-_][[:alpha:]]{2,3})?|', $expr);
         }
         if (($envType == 1 && preg_match('/^(' . $expr . ')(;q=[0-9]\\.[0-9])?$/i', $str))
-            || ($envType == 2 && preg_match('/(\(|\[|;[[:space:]])(' . $expr . ')(;|\]|\))/', $str))) {
+            || ($envType == 2 && preg_match('/(\(|\[|;[[:space:]])(' . $expr . ')(;|\]|\))/', $str))
+        ) {
             $lang = $key;
             break;
         }

@@ -1,10 +1,9 @@
 <?php
 /**
  * Smarty plugin
- * @package Smarty
+ * @package    Smarty
  * @subpackage plugins
  */
-
 
 /**
  * Smarty {debug} function plugin
@@ -13,7 +12,7 @@
  * Name:     debug<br>
  * Date:     July 1, 2002<br>
  * Purpose:  popup debug window
- * @link http://smarty.php.net/manual/en/language.function.debug.php {debug}
+ * @link     http://smarty.php.net/manual/en/language.function.debug.php {debug}
  *       (Smarty online manual)
  * @author   Monte Ohrt <monte at ohrt dot com>
  * @version  1.0
@@ -27,6 +26,7 @@ function smarty_function_debug($params, &$smarty)
         $smarty->assign('_smarty_debug_output', $params['output']);
     }
     require_once(SMARTY_CORE_DIR . 'core.display_debug_console.php');
+
     return smarty_core_display_debug_console(null, $smarty);
 }
 

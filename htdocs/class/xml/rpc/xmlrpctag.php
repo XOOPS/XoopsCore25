@@ -134,11 +134,14 @@ class XoopsXmlRpcTag
         $text = preg_replace(array("/\&([a-z\d\#]+)\;/i", "/\&/", "/\#\|\|([a-z\d\#]+)\|\|\#/i"), array(
             "#||\\1||#",
             '&amp;',
-            "&\\1;"), str_replace(array(
-                                      '<',
-                                      '>'), array(
-                                      '&lt;',
-                                      '&gt;'), $text));
+            "&\\1;"
+        ), str_replace(array(
+                           '<',
+                           '>'
+                       ), array(
+                           '&lt;',
+                           '&gt;'
+                       ), $text));
 
         return $text;
     }

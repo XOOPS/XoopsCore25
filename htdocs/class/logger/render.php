@@ -92,7 +92,8 @@ if (empty($mode) || $mode === 'errors') {
         E_USER_WARNING => _LOGGER_E_USER_WARNING,
         E_USER_ERROR   => _LOGGER_E_USER_ERROR,
         E_NOTICE       => _LOGGER_E_NOTICE,
-        E_WARNING      => _LOGGER_E_WARNING,/*E_STRICT       => _LOGGER_E_STRICT*/);
+        E_WARNING      => _LOGGER_E_WARNING,/*E_STRICT       => _LOGGER_E_STRICT*/
+    );
     $class = 'even';
     $ret .= '<table id="xo-logger-errors" class="outer"><tr><th>' . _LOGGER_ERRORS . '</th></tr>';
     foreach ($this->errors as $error) {
