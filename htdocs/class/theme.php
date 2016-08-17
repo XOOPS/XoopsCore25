@@ -271,19 +271,19 @@ class xos_opal_Theme
         $this->template               = new XoopsTpl();
         $this->template->currentTheme =& $this;
         $this->template->assign_by_ref('xoTheme', $this);
-		$xoops_page = str_replace(XOOPS_ROOT_PATH . '/', '', $_SERVER['SCRIPT_FILENAME']);
-		if (strpos($xoops_page, 'modules') !== false){
+        $xoops_page = str_replace(realpath(XOOPS_ROOT_PATH) . '/', '', realpath($_SERVER['SCRIPT_FILENAME']));
+        if (strpos($xoops_page, 'modules') !== false) {
             $xoops_page = str_replace('modules/', '', $xoops_page);
         }
-		$xoops_page = str_replace('.php', '', $xoops_page);
-		if (isset($GLOBALS['xoopsConfig']['startpage'])){
-			$xoops_startpage = $GLOBALS['xoopsConfig']['startpage'];
-			if ($xoops_startpage == '--') {
-				$xoops_startpage = 'system';
-			}
-		} else {
-			$xoops_startpage = 'system';
-		}
+        $xoops_page = str_replace('.php', '', $xoops_page);
+        if (isset($GLOBALS['xoopsConfig']['startpage'])) {
+            $xoops_startpage = $GLOBALS['xoopsConfig']['startpage'];
+            if ($xoops_startpage == '--') {
+                $xoops_startpage = 'system';
+            }
+        } else {
+            $xoops_startpage = 'system';
+        }
         $this->template->assign(array(
                                     'xoops_theme'      => $GLOBALS['xoopsConfig']['theme_set'],
                                     'xoops_imageurl'   => XOOPS_THEME_URL . '/' . $GLOBALS['xoopsConfig']['theme_set'] . '/',
@@ -292,8 +292,8 @@ class xos_opal_Theme
                                     'xoops_sitename'   => htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES),
                                     'xoops_slogan'     => htmlspecialchars($GLOBALS['xoopsConfig']['slogan'], ENT_QUOTES),
                                     'xoops_dirname'    => isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule']) ? $GLOBALS['xoopsModule']->getVar('dirname') : 'system',
-									'xoops_page'       => $xoops_page,
-									'xoops_startpage'  => $xoops_startpage,
+                                    'xoops_page'       => $xoops_page,
+                                    'xoops_startpage'  => $xoops_startpage,
                                     'xoops_banner'     => ($GLOBALS['xoopsConfig']['banners'] && $this->renderBanner) ? xoops_getbanner() : '&nbsp;',
                                     'xoops_pagetitle'  => isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule']) ? $GLOBALS['xoopsModule']->getVar('name') : htmlspecialchars($GLOBALS['xoopsConfig']['slogan'], ENT_QUOTES)));
         if (isset($GLOBALS['xoopsUser']) && is_object($GLOBALS['xoopsUser'])) {
