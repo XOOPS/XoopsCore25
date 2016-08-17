@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2016 XOOPS Project (www.xoops.org)            //
@@ -127,7 +127,7 @@ class MetaWeblogApi extends XoopsXmlRpcApi
                             $post[$tag] = $data;
                         }
                     } else {
-                        $post[$tag] =& $this->params[3][$maptag];
+                        $post[$tag] = $this->params[3][$maptag];
                     }
                 }
                 if (count($missing) > 0) {

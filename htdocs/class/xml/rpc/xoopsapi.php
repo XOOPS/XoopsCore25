@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2016 XOOPS Project (www.xoops.org)            //
@@ -66,7 +66,7 @@ class XoopsApi extends XoopsXmlRpcApi
                             $post[$tag] =& $data;
                         }
                     } else {
-                        $post[$tag] =& $this->params[3][$tag];
+                        $post[$tag] = $this->params[3][$tag];
                     }
                 }
                 if (count($missing) > 0) {
@@ -234,10 +234,11 @@ class XoopsApi extends XoopsXmlRpcApi
             $ret   = array(
                 'uid'       => $story->uid(),
                 'published' => $story->published(),
-                'storyid'   => $story->storyId(),
+                'storyid'   => $story->storyid(),
                 'title'     => $story->title('Edit'),
                 'hometext'  => $story->hometext('Edit'),
-                'moretext'  => $story->bodytext('Edit'));
+                'moretext'  => $story->bodytext('Edit')
+            );
             if (!$respond) {
                 return $ret;
             } else {
@@ -272,6 +273,7 @@ class XoopsApi extends XoopsXmlRpcApi
                 }
             }
         }
+
         return null;
     }
 
@@ -300,7 +302,8 @@ class XoopsApi extends XoopsXmlRpcApi
                     'storyid'   => $stories[$i]->storyId(),
                     'title'     => $stories[$i]->title('Edit'),
                     'hometext'  => $stories[$i]->hometext('Edit'),
-                    'moretext'  => $stories[$i]->bodytext('Edit'));
+                    'moretext'  => $stories[$i]->bodytext('Edit')
+                );
             }
             if (!$respond) {
                 return $ret;
@@ -342,6 +345,7 @@ class XoopsApi extends XoopsXmlRpcApi
                 }
             }
         }
+
         return null;
     }
 
@@ -378,6 +382,7 @@ class XoopsApi extends XoopsXmlRpcApi
                 }
             }
         }
+
         return null;
     }
 }
