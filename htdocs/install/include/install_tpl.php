@@ -67,7 +67,7 @@ include_once '../language/' . $wizard->language . '/global.php';
         </div>
 
         <div id="xo-support">
-            <select id="support" onchange=":window.open(this.value);">
+            <select id="support" onchange="window.open(this.value);">
                 <option value='#'><?php echo SUPPORT; ?></option>
                 <?php
                 @include_once './language/' . $wizard->language . '/support.php';
