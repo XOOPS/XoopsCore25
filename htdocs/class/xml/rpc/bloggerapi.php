@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2016 XOOPS Project (www.xoops.org)            //
@@ -86,7 +86,7 @@ class BloggerApi extends XoopsXmlRpcApi
                         $newparams[3][$key] =& $value;
                         unset($value);
                     }
-                    $newparams[3]['xoops_text'] =& $this->params[4];
+                    $newparams[3]['xoops_text'] = $this->params[4];
                     $newparams[4]               = $this->params[5];
                     $xoopsapi                   =& $this->_getXoopsApi($newparams);
                     $xoopsapi->_setUser($this->user, $this->isadmin);
@@ -131,7 +131,7 @@ class BloggerApi extends XoopsXmlRpcApi
                         $newparams[3][$key] =& $value;
                         unset($value);
                     }
-                    $newparams[3]['xoops_text'] =& $this->params[4];
+                    $newparams[3]['xoops_text'] = $this->params[4];
                     $newparams[4]               = $this->params[5];
                     $xoopsapi                   =& $this->_getXoopsApi($newparams);
                     $xoopsapi->_setUser($this->user, $this->isadmin);

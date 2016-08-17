@@ -1,5 +1,5 @@
 <?php
-// 
+//
 /*******************************************************************************
  * Location: <strong>xml/SaxParser.class</strong><br>
  * <br>
@@ -39,12 +39,12 @@ class SaxParser
      ***************************************************************************
      * @param $input
      */
-    public function __construct(&$input)
+    public function __construct($input)
     {
         $this->level  = 0;
         $this->parser = xml_parser_create('UTF-8');
         xml_set_object($this->parser, $this);
-        $this->input =& $input;
+        $this->input = $input;
         $this->setCaseFolding(false);
         $this->useUtfEncoding();
         xml_set_element_handler($this->parser, 'handleBeginElement', 'handleEndElement');
@@ -133,7 +133,6 @@ class SaxParser
     ---------------------------------------------------------------------------*/
 
     /****************************************************************************
-
      ****************************************************************************/
     public function parse()
     {
@@ -222,13 +221,12 @@ class SaxParser
     /****************************************************************************
      * Callback function that executes whenever a the start of a tag
      * occurs when being parsed.
-     * @param $parser          int.  The handle to the parser.
-     * @param $tagName         string.  The name of the tag currently being parsed.
-     * @param $attributesArray attay.  The list of attributes associated with
-     *                         the tag.
+     * @param int    $parser          The handle to the parser.
+     * @param string $tagName         The name of the tag currently being parsed.
+     * @param array  $attributesArray The list of attributes associated with the tag.
      * @private
      * @returns void
-     *                         ***************************************************************************/
+     */
     public function handleBeginElement($parser, $tagName, $attributesArray)
     {
         $this->tags[] = $tagName;
@@ -243,11 +241,11 @@ class SaxParser
     /****************************************************************************
      * Callback function that executes whenever the end of a tag
      * occurs when being parsed.
-     * @param $parser  int.  The handle to the parser.
-     * @param $tagName string.  The name of the tag currently being parsed.
+     * @param int    $parser  The handle to the parser.
+     * @param string $tagName The name of the tag currently being parsed.
      * @private
      * @returns void
-     *                 ***************************************************************************/
+     */
     public function handleEndElement($parser, $tagName)
     {
         array_pop($this->tags);
@@ -262,10 +260,10 @@ class SaxParser
     /****************************************************************************
      * Callback function that executes whenever character data is encountered
      * while being parsed.
-     * @param $parser int.  The handle to the parser.
-     * @param $data   string.  Character data inside the tag
+     * @param int    $parser The handle to the parser.
+     * @param string $data   Character data inside the tag
      * @returns void
-     *                ***************************************************************************/
+     */
     public function handleCharacterData($parser, $data)
     {
         $tagHandler =& $this->tagHandlers[$this->getCurrentTag()];
@@ -277,11 +275,10 @@ class SaxParser
     }
 
     /****************************************************************************
-     * @param $parser int.  The handle to the parser.
-     * @param $target
-     * @param $data
+     * @param int $parser The handle to the parser.
+     * @param     $target
+     * @param     $data
      * @returns void
-     *                *************************************************************************
      */
     public function handleProcessingInstruction($parser, &$target, &$data)
     {
@@ -294,19 +291,18 @@ class SaxParser
      * @param $parser int.  The handle to the parser.
      * @param $data
      * @returns void
-     *                *************************************************************************
      */
     public function handleDefault($parser, $data)
     {
     }
 
     /****************************************************************************
-     * @param $parser int.  The handle to the parser.
-     * @param $entityName
-     * @param $base
-     * @param $systemId
-     * @param $publicId
-     * @param $notationName
+     * @param int $parser The handle to the parser.
+     * @param     $entityName
+     * @param     $base
+     * @param     $systemId
+     * @param     $publicId
+     * @param     $notationName
      * @returns void
      *
      */
@@ -315,26 +311,24 @@ class SaxParser
     }
 
     /****************************************************************************
-     * @param $parser int.  The handle to the parser.
-     * @param $notationName
-     * @param $base
-     * @param $systemId
-     * @param $publicId
+     * @param int $parser The handle to the parser.
+     * @param     $notationName
+     * @param     $base
+     * @param     $systemId
+     * @param     $publicId
      * @returns void
-     *                *************************************************************************
      */
     public function handleNotationDecl($parser, $notationName, $base, $systemId, $publicId)
     {
     }
 
     /****************************************************************************
-     * @param $parser int.  The handle to the parser.
-     * @param $openEntityNames
-     * @param $base
-     * @param $systemId
-     * @param $publicId
+     * @param int $parser The handle to the parser.
+     * @param     $openEntityNames
+     * @param     $base
+     * @param     $systemId
+     * @param     $publicId
      * @returns void
-     *                *************************************************************************
      */
     public function handleExternalEntityRef($parser, $openEntityNames, $base, $systemId, $publicId)
     {
@@ -387,7 +381,7 @@ class SaxParser
     /**
      * Gets all the error messages
      *
-     * @param        $ashtml bool    return as html?
+     * @param  bool $ashtml return as html?
      * @return mixed
      */
     public function &getErrors($ashtml = true)
