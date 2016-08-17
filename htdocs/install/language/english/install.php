@@ -183,3 +183,5 @@ define('WRITTEN_LICENSE', 'Written XOOPS %s License Key: <strong>%s</strong>');
 define('CHMOD_CHGRP_REPEAT', 'Retry');
 define('CHMOD_CHGRP_IGNORE', 'Use Anyway');
 define('CHMOD_CHGRP_ERROR', 'Installer may not be able to write the configuration file %1$s.<p>PHP is writing files under user %2$s and group %3$s.<p>The directory %4$s/ has user %5$s and group %6$s');
+//2.5.9
+define("CURL_HTTP", "Client URL Library (cURL)");
