@@ -49,7 +49,8 @@ if (count($config_handler->getConfigs(new Criteria('conf_modid', $xoopsModule->m
         // system->preferences
         $adminmenu[] = array(
             'title' => _PREFERENCES,
-            'link'  => XOOPS_URL . '/modules/system/admin.php?fct=preferences&op=showmod&mod=' . $xoopsModule->mid());
+            'link'  => XOOPS_URL . '/modules/system/admin.php?fct=preferences&op=showmod&mod=' . $xoopsModule->mid()
+        );
     }
 }
 

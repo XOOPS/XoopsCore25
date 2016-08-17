@@ -34,8 +34,8 @@ include_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
  * database manager for XOOPS installer
  *
  * @copyright (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @author    Haruki Setoyama  <haruki@planewave.org>
+ * @license       GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @author        Haruki Setoyama  <haruki@planewave.org>
  **/
 class Db_manager
 {
@@ -62,6 +62,7 @@ class Db_manager
         if (!$isConnected) {
             $_SESSION['error'] = '(' . $this->db->conn->connect_errno . ') ' . $this->db->conn->connect_error;
         }
+
         return $isConnected;
     }
 
@@ -162,12 +163,14 @@ class Db_manager
         'create' => TABLE_CREATED,
         'insert' => ROWS_INSERTED,
         'alter'  => TABLE_ALTERED,
-        'drop'   => TABLE_DROPPED);
+        'drop'   => TABLE_DROPPED
+    );
     public $failureStrings = array(
         'create' => TABLE_NOT_CREATED,
         'insert' => ROWS_FAILED,
         'alter'  => TABLE_NOT_ALTERED,
-        'drop'   => TABLE_NOT_DROPPED);
+        'drop'   => TABLE_NOT_DROPPED
+    );
 
     /**
      * @return string
@@ -303,7 +306,7 @@ class Db_manager
         if ($table != '') {
             $this->db->connect();
             $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix($table);
-//            $ret = (false != $this->db->query($sql));// ? true : false;
+            //            $ret = (false != $this->db->query($sql));// ? true : false;
             $ret = !empty($this->db->query($sql));  //return false on error or $table not found
         }
 

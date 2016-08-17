@@ -59,7 +59,8 @@ class XoopsCommentRenderer
         $this->_statusText    = array(
             XOOPS_COMMENT_PENDING => '<span style="text-decoration: none; font-weight: bold; color: #00ff00;">' . _CM_PENDING . '</span>',
             XOOPS_COMMENT_ACTIVE  => '<span style="text-decoration: none; font-weight: bold; color: #ff0000;">' . _CM_ACTIVE . '</span>',
-            XOOPS_COMMENT_HIDDEN  => '<span style="text-decoration: none; font-weight: bold; color: #0000ff;">' . _CM_HIDDEN . '</span>');
+            XOOPS_COMMENT_HIDDEN  => '<span style="text-decoration: none; font-weight: bold; color: #0000ff;">' . _CM_HIDDEN . '</span>'
+        );
     }
 
     /**
@@ -134,7 +135,8 @@ class XoopsCommentRenderer
                 'text'          => $text,
                 'date_posted'   => formatTimestamp($this->_comments[$i]->getVar('com_created'), 'm'),
                 'date_modified' => formatTimestamp($this->_comments[$i]->getVar('com_modified'), 'm'),
-                'poster'        => $poster));
+                'poster'        => $poster
+            ));
         }
     }
 
@@ -209,7 +211,8 @@ class XoopsCommentRenderer
             'date_modified' => formatTimestamp($tree[$comment_id]['obj']->getVar('com_modified'), 'm'),
             'poster'        => $this->_getPosterArray($tree[$comment_id]['obj']->getVar('com_uid'), $tree[$comment_id]['obj']->getVar('com_user'), $tree[$comment_id]['obj']->getVar('com_url')),
             'replies'       => $replies,
-            'show_replies'  => $show_replies));
+            'show_replies'  => $show_replies
+        ));
         // End edit by voltan
     }
 
@@ -225,8 +228,15 @@ class XoopsCommentRenderer
      * @param string  $current_prefix
      * @access   private
      */
-    public function _renderThreadReplies(&$thread, $key, &$replies, $prefix, $admin_view, $depth = 0, $current_prefix = '')
-    {
+    public function _renderThreadReplies(
+        &$thread,
+        $key,
+        &$replies,
+        $prefix,
+        $admin_view,
+        $depth = 0,
+        $current_prefix = ''
+    ) {
         $admin_view = (bool)$admin_view;
         if ($depth > 0) {
             if (false !== $this->_useIcons) {
@@ -243,7 +253,8 @@ class XoopsCommentRenderer
                 'title'       => $title,
                 'root_id'     => $thread[$key]['obj']->getVar('com_rootid'),
                 'status'      => $this->_statusText[$thread[$key]['obj']->getVar('com_status')],
-                'poster'      => $this->_getPosterName($thread[$key]['obj']->getVar('com_uid'), $thread[$key]['obj']->getVar('com_user'), $thread[$key]['obj']->getVar('com_url')));
+                'poster'      => $this->_getPosterName($thread[$key]['obj']->getVar('com_uid'), $thread[$key]['obj']->getVar('com_user'), $thread[$key]['obj']->getVar('com_url'))
+            );
             // End edit by voltan
             $current_prefix .= $prefix;
         }
@@ -322,7 +333,8 @@ class XoopsCommentRenderer
             'date_posted'   => formatTimestamp($tree[$comment_id]['obj']->getVar('com_created'), 'm'),
             'date_modified' => formatTimestamp($tree[$comment_id]['obj']->getVar('com_modified'), 'm'),
             'poster'        => $this->_getPosterArray($tree[$comment_id]['obj']->getVar('com_uid'), $tree[$comment_id]['obj']->getVar('com_user'), $tree[$comment_id]['obj']->getVar('com_url')),
-            'replies'       => $replies));
+            'replies'       => $replies
+        ));
         // End edit by voltan
     }
 
@@ -346,7 +358,9 @@ class XoopsCommentRenderer
                 $title = $thread[$key]['obj']->getVar('com_title');
             }
             $admin_view = (bool)$admin_view;
-            $text = (false !== $admin_view) ? $thread[$key]['obj']->getVar('com_text') . '<div style="text-align:right; margin-top: 2px; margin-right: 2px;">' . _CM_STATUS . ': ' . $this->_statusText[$thread[$key]['obj']->getVar('com_status')] . '<br>IP: <span style="font-weight: bold;">' . $thread[$key]['obj']->getVar('com_ip') . '</span><br>' . _CM_EMAIL . ' :<span style="font-weight: bold;">' . $thread[$key]['obj']->getVar('com_email') . '</span></div>' : $thread[$key]['obj']->getVar('com_text');
+            $text       = (false !== $admin_view) ? $thread[$key]['obj']->getVar('com_text') . '<div style="text-align:right; margin-top: 2px; margin-right: 2px;">' . _CM_STATUS . ': ' . $this->_statusText[$thread[$key]['obj']->getVar('com_status')]
+                                                    . '<br>IP: <span style="font-weight: bold;">' . $thread[$key]['obj']->getVar('com_ip') . '</span><br>' . _CM_EMAIL . ' :<span style="font-weight: bold;">' . $thread[$key]['obj']->getVar('com_email')
+                                                    . '</span></div>' : $thread[$key]['obj']->getVar('com_text');
             // Start edit by voltan
             $replies[] = array(
                 'id'            => $key,
@@ -358,7 +372,8 @@ class XoopsCommentRenderer
                 'text'          => $text,
                 'date_posted'   => formatTimestamp($thread[$key]['obj']->getVar('com_created'), 'm'),
                 'date_modified' => formatTimestamp($thread[$key]['obj']->getVar('com_modified'), 'm'),
-                'poster'        => $this->_getPosterArray($thread[$key]['obj']->getVar('com_uid'), $thread[$key]['obj']->getVar('com_user'), $thread[$key]['obj']->getVar('com_url')));
+                'poster'        => $this->_getPosterArray($thread[$key]['obj']->getVar('com_uid'), $thread[$key]['obj']->getVar('com_user'), $thread[$key]['obj']->getVar('com_url'))
+            );
             // End edit by voltan
             $prefix += 25;
         }

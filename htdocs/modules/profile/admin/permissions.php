@@ -94,7 +94,8 @@ if ($op === 'access') {
             'date',
             'datetime',
             'timezone',
-            'language');
+            'language'
+        );
         foreach (array_keys($fields) as $i) {
             if (in_array($fields[$i]->getVar('field_type'), $searchable_types)) {
                 $form->addItem($fields[$i]->getVar('field_id'), xoops_substr($fields[$i]->getVar('field_title'), 0, 25));

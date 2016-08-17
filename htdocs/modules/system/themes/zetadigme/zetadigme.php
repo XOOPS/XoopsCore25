@@ -115,12 +115,12 @@ window.onload= function(){
         $tpl->assign('lang_mysql_version', mysqli_get_server_info($xoopsDB->conn));
         $tpl->assign('lang_server_api', PHP_SAPI);
         $tpl->assign('lang_os_name', PHP_OS);
-//        $tpl->assign('safe_mode', ini_get('safe_mode') ? 'On' : 'Off');
-//        $tpl->assign('register_globals', ini_get('register_globals') ? 'On' : 'Off');
-//        $tpl->assign('magic_quotes_gpc', ini_get('magic_quotes_gpc') ? 'On' : 'Off');
+        //        $tpl->assign('safe_mode', ini_get('safe_mode') ? 'On' : 'Off');
+        //        $tpl->assign('register_globals', ini_get('register_globals') ? 'On' : 'Off');
+        //        $tpl->assign('magic_quotes_gpc', ini_get('magic_quotes_gpc') ? 'On' : 'Off');
         $tpl->assign('allow_url_fopen', ini_get('allow_url_fopen') ? 'On' : 'Off');
         $tpl->assign('fsockopen', function_exists('fsockopen') ? 'On' : 'Off');
-//        $tpl->assign('allow_call_time_pass_reference', ini_get('allow_call_time_pass_reference') ? 'On' : 'Off');
+        //        $tpl->assign('allow_call_time_pass_reference', ini_get('allow_call_time_pass_reference') ? 'On' : 'Off');
         $tpl->assign('post_max_size', ini_get('post_max_size'));
         $tpl->assign('max_input_time', ini_get('max_input_time'));
         $tpl->assign('output_buffering', ini_get('output_buffering'));
@@ -228,7 +228,8 @@ window.onload= function(){
             'link' => XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin',
             'text' => _AM_SYSTEM_MODULES,
             'dir'  => $mod->getVar('dirname', 'n'),
-            'menu' => $menu));
+            'menu' => $menu
+        ));
 
         // add preferences menu
         $menu   = array();
@@ -237,48 +238,57 @@ window.onload= function(){
             'link'     => 'admin.php?fct=preferences&amp;op=show&amp;confcat_id=1',
             'title'    => _THEME_GENERAL,
             'absolute' => 1,
-            'icon'     => XOOPS_ADMINTHEME_URL . '/zetadigme/icons/prefs_small.png');
+            'icon'     => XOOPS_ADMINTHEME_URL . '/zetadigme/icons/prefs_small.png'
+        );
         $OPT[]  = array(
             'link'     => 'admin.php?fct=preferences&amp;op=show&amp;confcat_id=2',
             'title'    => _THEME_USERSETTINGS,
             'absolute' => 1,
-            'icon'     => XOOPS_ADMINTHEME_URL . '/zetadigme/icons/prefs_small.png');
+            'icon'     => XOOPS_ADMINTHEME_URL . '/zetadigme/icons/prefs_small.png'
+        );
         $OPT[]  = array(
             'link'     => 'admin.php?fct=preferences&amp;op=show&amp;confcat_id=3',
             'title'    => _THEME_METAFOOTER,
             'absolute' => 1,
-            'icon'     => XOOPS_ADMINTHEME_URL . '/zetadigme/icons/prefs_small.png');
+            'icon'     => XOOPS_ADMINTHEME_URL . '/zetadigme/icons/prefs_small.png'
+        );
         $OPT[]  = array(
             'link'     => 'admin.php?fct=preferences&amp;op=show&amp;confcat_id=4',
             'title'    => _THEME_CENSOR,
             'absolute' => 1,
-            'icon'     => XOOPS_ADMINTHEME_URL . '/zetadigme/icons/prefs_small.png');
+            'icon'     => XOOPS_ADMINTHEME_URL . '/zetadigme/icons/prefs_small.png'
+        );
         $OPT[]  = array(
             'link'     => 'admin.php?fct=preferences&amp;op=show&amp;confcat_id=5',
             'title'    => _THEME_SEARCH,
             'absolute' => 1,
-            'icon'     => XOOPS_ADMINTHEME_URL . '/zetadigme/icons/prefs_small.png');
+            'icon'     => XOOPS_ADMINTHEME_URL . '/zetadigme/icons/prefs_small.png'
+        );
         $OPT[]  = array(
             'link'     => 'admin.php?fct=preferences&amp;op=show&amp;confcat_id=6',
             'title'    => _THEME_MAILER,
             'absolute' => 1,
-            'icon'     => XOOPS_ADMINTHEME_URL . '/zetadigme/icons/prefs_small.png');
+            'icon'     => XOOPS_ADMINTHEME_URL . '/zetadigme/icons/prefs_small.png'
+        );
         $OPT[]  = array(
             'link'     => 'admin.php?fct=preferences&amp;op=show&amp;confcat_id=7',
             'title'    => _THEME_AUTHENTICATION,
             'absolute' => 1,
-            'icon'     => XOOPS_ADMINTHEME_URL . '/zetadigme/icons/prefs_small.png');
+            'icon'     => XOOPS_ADMINTHEME_URL . '/zetadigme/icons/prefs_small.png'
+        );
         $OPT[]  = array(
             'link'     => 'admin.php?fct=preferences&amp;op=showmod&amp;mod=1',
             'title'    => _THEME_MODULESETTINGS,
             'absolute' => 1,
-            'icon'     => XOOPS_ADMINTHEME_URL . '/zetadigme/icons/prefs_small.png');
+            'icon'     => XOOPS_ADMINTHEME_URL . '/zetadigme/icons/prefs_small.png'
+        );
         $menu[] = array(
             'link'     => XOOPS_URL . '/modules/system/admin.php?fct=preferences',
             'title'    => _AD_SYSOPTIONS,
             'absolute' => 1,
             'url'      => XOOPS_URL . '/modules/system/',
-            'options'  => $OPT);
+            'options'  => $OPT
+        );
 
         foreach ($mods as $mod) {
             $rtn    = array();
@@ -295,28 +305,33 @@ window.onload= function(){
             'link' => XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin',
             'text' => _THEME_SITEPREF,
             'dir'  => $mod->getVar('dirname', 'n'),
-            'menu' => $menu));
+            'menu' => $menu
+        ));
         //add OPTIONS/Links Menu Items
         $menu   = array();
         $menu[] = array(
             'link'     => 'http://www.xoops.org',
             'title'    => 'XOOPS',
             'absolute' => 1,
-            'icon'     => XOOPS_ADMINTHEME_URL . '/zetadigme/icons/xoops.png');
+            'icon'     => XOOPS_ADMINTHEME_URL . '/zetadigme/icons/xoops.png'
+        );
         $menu[] = array(
             'link'     => 'http://www.xoops.org/modules/library/',
             'title'    => _AD_XOOPSTHEMES,
             'absolute' => 1,
-            'icon'     => XOOPS_ADMINTHEME_URL . '/zetadigme/icons/tweb.png');
+            'icon'     => XOOPS_ADMINTHEME_URL . '/zetadigme/icons/tweb.png'
+        );
         $menu[] = array(
             'link'     => 'http://www.xoops.org/modules/repository/',
             'title'    => _AD_XOOPSMODULES,
             'absolute' => 1,
-            'icon'     => XOOPS_ADMINTHEME_URL . '/zetadigme/icons/xoops.png');
+            'icon'     => XOOPS_ADMINTHEME_URL . '/zetadigme/icons/xoops.png'
+        );
         $menu[] = array(
             'link'     => 'http://xoops.org',
             'title'    => 'XOOPS',
-            'absolute' => 1);
+            'absolute' => 1
+        );
         $tpl->append('navitems', array('link' => XOOPS_URL . '/admin.php', 'text' => _AD_INTERESTSITES, 'menu' => $menu));
         //add OPTIONS/links for local support
         if (file_exists($file = XOOPS_ADMINTHEME_PATH . '/zetadigme/language/' . $xoopsConfig['language'] . '/localsupport.php')) {

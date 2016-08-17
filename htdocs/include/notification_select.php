@@ -49,7 +49,8 @@ if ($xoops_notification['show']) {
                     'title'       => $event['title'],
                     'caption'     => $event['caption'],
                     'description' => $event['description'],
-                    'subscribed'  => $subscribed);
+                    'subscribed'  => $subscribed
+                );
                 ++$event_count;
             }
             $xoops_notification['categories'][$category['name']] = $section;
@@ -67,7 +68,8 @@ if ($xoops_notification['show']) {
                               'lang_checkall'             => _NOT_CHECKALL,
                               'lang_notificationmethodis' => _NOT_NOTIFICATIONMETHODIS,
                               'lang_change'               => _NOT_CHANGE,
-                              'editprofile_url'           => XOOPS_URL . '/edituser.php?uid=' . $xoopsUser->getVar('uid')));
+                              'editprofile_url'           => XOOPS_URL . '/edituser.php?uid=' . $xoopsUser->getVar('uid')
+                          ));
         switch ($xoopsUser->getVar('notify_method')) {
             case XOOPS_NOTIFICATION_METHOD_DISABLE:
                 $xoopsTpl->assign('user_method', _NOT_DISABLE);

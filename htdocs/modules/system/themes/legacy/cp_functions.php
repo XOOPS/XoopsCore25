@@ -102,8 +102,10 @@ function xoops_legacy_module_get_admin_menu()
         $js .= "\nfunction popUpL" . $mid . "() {\n    shutdown();\n    popUp('L" . $mid . "',true);}";
         $moveLayers .= "\n    setleft('L" . $mid . "'," . $left . ");\n    settop('L" . $mid . "'," . $top . ');';
         $shutdown .= "\n    popUp('L" . $mid . "',false);";
-        $firstleveltable .= "$" . 'xoops_admin_menu_ft[' . $mid . "] = \"<a href='" . $module_url . "' title='" . $module_name . "' onmouseover='moveLayerY(\\\"L" . $mid . "\\\", currentY, event) ; popUpL" . $mid . "(); ' >" . $module_img . "</a><br>\";\n";
-        $menu_layers .= "\n<div id='L" . $mid . "' style='position: absolute; visibility: hidden; z-index:1000;' >\n<table class='admin_layer' cellpadding='0' cellspacing='0'>\n<tr><th nowrap='nowrap'>" . $module_name . "</th></tr>\n<tr><td class='even' nowrap='nowrap'>";
+        $firstleveltable .= "$" . 'xoops_admin_menu_ft[' . $mid . "] = \"<a href='" . $module_url . "' title='" . $module_name . "' onmouseover='moveLayerY(\\\"L" . $mid . "\\\", currentY, event) ; popUpL" . $mid . "(); ' >" . $module_img
+                            . "</a><br>\";\n";
+        $menu_layers .= "\n<div id='L" . $mid . "' style='position: absolute; visibility: hidden; z-index:1000;' >\n<table class='admin_layer' cellpadding='0' cellspacing='0'>\n<tr><th nowrap='nowrap'>" . $module_name
+                        . "</th></tr>\n<tr><td class='even' nowrap='nowrap'>";
 
         $adminmenu = $mod->getAdminMenu();
 
@@ -111,7 +113,8 @@ function xoops_legacy_module_get_admin_menu()
             $adminmenu[] = array(
                 'link'     => '".XOOPS_URL."/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $mid,
                 'title'    => _PREFERENCES,
-                'absolute' => true);
+                'absolute' => true
+            );
         }
         if (count($adminmenu) != 0) {
             $currenttarget = '';
@@ -129,7 +132,8 @@ function xoops_legacy_module_get_admin_menu()
             }
         }
 
-        $menu_layers .= "\n<div style='margin-top: 5px; font-size: smaller; text-align: right;'><a href='#' onmouseover='shutdown();'>[" . _CLOSE . "]</a></div></td></tr><tr><th style='font-size: smaller; text-align: left;'>" . $module_img . '<br>' . $module_desc . "</th></tr></table></div>\n";
+        $menu_layers .= "\n<div style='margin-top: 5px; font-size: smaller; text-align: right;'><a href='#' onmouseover='shutdown();'>[" . _CLOSE . "]</a></div></td></tr><tr><th style='font-size: smaller; text-align: left;'>" . $module_img . '<br>'
+                        . $module_desc . "</th></tr></table></div>\n";
     }
 
     $menu_layers .= "\n<script language='JavaScript' type='text/javascript'>\n<!--\nmoveLayers();\nloaded = 1;\n// -->\n</script>\n";

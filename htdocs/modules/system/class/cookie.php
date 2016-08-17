@@ -160,12 +160,16 @@ class cookie
      * @param bool   $secure
      * @param bool   $httponly
      */
-    public static function set($key, $value, $expire = 0,            /* Default expire time (session, 1 week = 604800) */
-                               $path = '',             /* Default path */
-                               $domain = '',           /* Default domain */
-                               $secure = false,        /* Does this cookie need a secure HTTPS connection? */
-                               $httponly = true        /* Can non-HTTP services access this cookie (IE: javascript)? */
-    ) {
+    public static function set(
+        $key,
+        $value,
+        $expire = 0,            /* Default expire time (session, 1 week = 604800) */
+        $path = '',             /* Default path */
+        $domain = '',           /* Default domain */
+        $secure = false,        /* Does this cookie need a secure HTTPS connection? */
+        $httponly = true        /* Can non-HTTP services access this cookie (IE: javascript)? */
+    )
+    {
         // Make sure they aren't trying to set a reserved word
         if (!in_array($key, self::$_reserved)) {
             // If $key is in array format, change it to string representation

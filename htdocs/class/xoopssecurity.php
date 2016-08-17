@@ -9,13 +9,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @author    Kazumi Ono <onokazu@xoops.org>
- * @author    Jan Pedersen <mithrandir@xoops.org>
- * @author    John Neill <catzwolf@xoops.org>
+ * @author        Kazumi Ono <onokazu@xoops.org>
+ * @author        Jan Pedersen <mithrandir@xoops.org>
+ * @author        John Neill <catzwolf@xoops.org>
  * @copyright (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license   GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package   kernel
- * @since     2.0.0
+ * @license       GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @package       kernel
+ * @since         2.0.0
  */
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
@@ -61,9 +61,10 @@ class XoopsSecurity
         if (!isset($_SESSION[$name . '_SESSION'])) {
             $_SESSION[$name . '_SESSION'] = array();
         }
-        $token_data = array(
+        $token_data                     = array(
             'id'     => $token_id,
-            'expire' => time() + (int)$timeout);
+            'expire' => time() + (int)$timeout
+        );
         $_SESSION[$name . '_SESSION'][] = $token_data;
 
         return md5($token_id . $_SERVER['HTTP_USER_AGENT'] . XOOPS_DB_PREFIX);
@@ -170,6 +171,7 @@ class XoopsSecurity
         if ($ref == '') {
             return false;
         }
+
         return !(strpos($ref, XOOPS_URL) !== 0);
     }
 
@@ -206,7 +208,8 @@ class XoopsSecurity
                      'xoopsOption',
                      'xoopsModule',
                      'xoopsModuleConfig',
-                     'xoopsRequestUri') as $bad_global) {
+                     'xoopsRequestUri'
+                 ) as $bad_global) {
             if (isset($_REQUEST[$bad_global])) {
                 header('Location: ' . XOOPS_URL . '/');
                 exit();

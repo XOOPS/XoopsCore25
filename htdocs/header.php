@@ -29,7 +29,9 @@ $xoopsLogger = XoopsLogger::getInstance();
 $xoopsLogger->stopTime('Module init');
 $xoopsLogger->startTime('XOOPS output init');
 
-if ($xoopsConfig['theme_set'] !== 'default' && file_exists(XOOPS_THEME_PATH . '/' . $xoopsConfig['theme_set'] . '/theme.php')) {
+if ($xoopsConfig['theme_set'] !== 'default'
+    && file_exists(XOOPS_THEME_PATH . '/' . $xoopsConfig['theme_set'] . '/theme.php')
+) {
     require_once $GLOBALS['xoops']->path('include/xoops13_header.php');
 } else {
     global $xoopsOption, $xoopsConfig, $xoopsModule;
@@ -76,7 +78,8 @@ if ($xoopsConfig['theme_set'] !== 'default' && file_exists(XOOPS_THEME_PATH . '/
         $xoopsTpl->assign_by_ref('xoops_crblocks', $aggreg->blocks['page_topright']);
         $xoopsTpl->assign('xoops_showlblock', !empty($aggreg->blocks['canvas_left']));
         $xoopsTpl->assign('xoops_showrblock', !empty($aggreg->blocks['canvas_right']));
-        $xoopsTpl->assign('xoops_showcblock', !empty($aggreg->blocks['page_topcenter']) || !empty($aggreg->blocks['page_topleft']) || !empty($aggreg->blocks['page_topright']));
+        $xoopsTpl->assign('xoops_showcblock', !empty($aggreg->blocks['page_topcenter']) || !empty($aggreg->blocks['page_topleft'])
+                                              || !empty($aggreg->blocks['page_topright']));
     }
 
     // Sets cache time

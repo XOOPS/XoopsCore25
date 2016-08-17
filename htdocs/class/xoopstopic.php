@@ -274,6 +274,7 @@ class XoopsTopic
         if (isset($this->prefix)) {
             return $this->prefix;
         }
+
         return null;
     }
 
@@ -380,7 +381,10 @@ class XoopsTopic
         $ret    = array();
         $myts   = MyTextSanitizer::getInstance();
         while ($myrow = $this->db->fetchArray($result)) {
-            $ret[$myrow['topic_id']] = array('title' => $myts->htmlspecialchars($myrow['topic_title']), 'pid' => $myrow['topic_pid']);
+            $ret[$myrow['topic_id']] = array(
+                'title' => $myts->htmlspecialchars($myrow['topic_title']),
+                'pid'   => $myrow['topic_pid']
+            );
         }
 
         return $ret;

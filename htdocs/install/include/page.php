@@ -25,43 +25,58 @@
 $pages = array(
     'langselect'      => array(
         'name'  => LANGUAGE_SELECTION,
-        'title' => LANGUAGE_SELECTION_TITLE),
+        'title' => LANGUAGE_SELECTION_TITLE
+    ),
     'start'           => array(
         'name'  => INTRODUCTION,
-        'title' => INTRODUCTION_TITLE),
+        'title' => INTRODUCTION_TITLE
+    ),
     'modcheck'        => array(
         'name'  => CONFIGURATION_CHECK,
-        'title' => CONFIGURATION_CHECK_TITLE),
+        'title' => CONFIGURATION_CHECK_TITLE
+    ),
     'pathsettings'    => array(
         'name'  => PATHS_SETTINGS,
-        'title' => PATHS_SETTINGS_TITLE),
+        'title' => PATHS_SETTINGS_TITLE
+    ),
     'dbconnection'    => array(
         'name'  => DATABASE_CONNECTION,
-        'title' => DATABASE_CONNECTION_TITLE),
+        'title' => DATABASE_CONNECTION_TITLE
+    ),
     'dbsettings'      => array(
         'name'  => DATABASE_CONFIG,
-        'title' => DATABASE_CONFIG_TITLE),
+        'title' => DATABASE_CONFIG_TITLE
+    ),
     'configsave'      => array(
         'name'  => CONFIG_SAVE,
-        'title' => CONFIG_SAVE_TITLE),
+        'title' => CONFIG_SAVE_TITLE
+    ),
     'tablescreate'    => array(
         'name'  => TABLES_CREATION,
-        'title' => TABLES_CREATION_TITLE),
+        'title' => TABLES_CREATION_TITLE
+    ),
     'siteinit'        => array(
         'name'  => INITIAL_SETTINGS,
-        'title' => INITIAL_SETTINGS_TITLE),
+        'title' => INITIAL_SETTINGS_TITLE
+    ),
     'tablesfill'      => array(
         'name'  => DATA_INSERTION,
-        'title' => DATA_INSERTION_TITLE),
+        'title' => DATA_INSERTION_TITLE
+    ),
     'configsite'      => array(
         'name'  => CONFIG_SITE,
-        'title' => CONFIG_SITE_TITLE),
+        'title' => CONFIG_SITE_TITLE
+    ),
     'theme'           => array(
         'name'  => THEME,
-        'title' => THEME_TITLE),
+        'title' => THEME_TITLE
+    ),
     'moduleinstaller' => array(
         'name'  => MODULES,
-        'title' => MODULES_TITLE),
+        'title' => MODULES_TITLE
+    ),
     'end'             => array(
         'name'  => WELCOME,
-        'title' => WELCOME_TITLE));
+        'title' => WELCOME_TITLE
+    )
+);

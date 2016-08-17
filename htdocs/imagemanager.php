@@ -115,7 +115,8 @@ if ($op === 'list') {
                         'src'      => $src,
                         'lxcode'   => $lcode,
                         'xcode'    => $code,
-                        'rxcode'   => $rcode));
+                        'rxcode'   => $rcode
+                    ));
                 }
                 if ($total > 10) {
                     include_once $GLOBALS['xoops']->path('class/pagenav.php');
@@ -223,7 +224,8 @@ if ($op === 'doupload') {
         'image/jpeg',
         'image/pjpeg',
         'image/x-png',
-        'image/png'), $imgcat->getVar('imgcat_maxsize'), $imgcat->getVar('imgcat_maxwidth'), $imgcat->getVar('imgcat_maxheight'));
+        'image/png'
+    ), $imgcat->getVar('imgcat_maxsize'), $imgcat->getVar('imgcat_maxwidth'), $imgcat->getVar('imgcat_maxheight'));
     $uploader->setPrefix('img');
     if ($uploader->fetchMedia($xoops_upload_file[0])) {
         if (!$uploader->upload()) {

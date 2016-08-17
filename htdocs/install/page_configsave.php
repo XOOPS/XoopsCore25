@@ -50,9 +50,10 @@ $writeFiles = array(
 $writeCheck = checkFileWriteablity($writeFiles);
 if (true === $writeCheck) {
     $rewrite = array(
-        'GROUP_ADMIN' => 1,
-        'GROUP_USERS' => 2,
-        'GROUP_ANONYMOUS' => 3);
+        'GROUP_ADMIN'     => 1,
+        'GROUP_USERS'     => 2,
+        'GROUP_ANONYMOUS' => 3
+    );
     $rewrite = array_merge($rewrite, $vars);
 
     $result = writeConfigurationFile($rewrite, $vars['VAR_PATH'] . '/data', 'secure.dist.php', 'secure.php');
@@ -63,7 +64,7 @@ if (true === $writeCheck) {
     $_SESSION['settings']['authorized'] = false;
 
     if ($result === true) {
-        $_SESSION['UserLogin'] = true;
+        $_SESSION['UserLogin']              = true;
         $_SESSION['settings']['authorized'] = true;
         ob_start();
         ?>
@@ -93,7 +94,7 @@ if (true === $writeCheck) {
     foreach ($writeCheck as $error) {
         $content .= '<div class="errorMsg">' . $error . '</div>' . "\n";
     }
-    $form  = '<form action="" method="post">';
+    $form = '<form action="" method="post">';
     $form .= '<button type="submit" name="op" value="retry">' . CHMOD_CHGRP_REPEAT . '</button>';
     $form .= '<button type="submit" name="op" value="proceed">' . CHMOD_CHGRP_IGNORE . '</button>';
     $form .= '</form>';
@@ -143,9 +144,9 @@ function writeConfigurationFile($vars, $path, $sourceName, $fileName)
             }
         }
     }
+
     return true;
 }
-
 
 /**
  * Get file stats
@@ -160,6 +161,7 @@ function getStats($filename)
     if (false === $stat) {
         return false;
     }
+
     return prepStats($stat);
 }
 
@@ -179,6 +181,7 @@ function getTmpStats()
     if (false === $stat) {
         return false;
     }
+
     return prepStats($stat);
 }
 
@@ -191,21 +194,21 @@ function getTmpStats()
  */
 function prepStats($stat)
 {
-    $subSet = array();
-    $mode = $stat['mode'];
+    $subSet         = array();
+    $mode           = $stat['mode'];
     $subSet['mode'] = $mode;
-    $subSet['uid'] = $stat['uid'];
-    $subSet['gid'] = $stat['gid'];
+    $subSet['uid']  = $stat['uid'];
+    $subSet['gid']  = $stat['gid'];
 
-    $subSet['user']['read']   = (bool) ($mode & 0400);
-    $subSet['user']['write']  = (bool) ($mode & 0200);
-    $subSet['user']['exec']   = (bool) ($mode & 0100);
-    $subSet['group']['read']  = (bool) ($mode & 040);
-    $subSet['group']['write'] = (bool) ($mode & 020);
-    $subSet['group']['exec']  = (bool) ($mode & 010);
-    $subSet['other']['read']  = (bool) ($mode & 04);
-    $subSet['other']['write'] = (bool) ($mode & 02);
-    $subSet['other']['exec']  = (bool) ($mode & 01);
+    $subSet['user']['read']   = (bool)($mode & 0400);
+    $subSet['user']['write']  = (bool)($mode & 0200);
+    $subSet['user']['exec']   = (bool)($mode & 0100);
+    $subSet['group']['read']  = (bool)($mode & 040);
+    $subSet['group']['write'] = (bool)($mode & 020);
+    $subSet['group']['exec']  = (bool)($mode & 010);
+    $subSet['other']['read']  = (bool)($mode & 04);
+    $subSet['other']['write'] = (bool)($mode & 02);
+    $subSet['other']['exec']  = (bool)($mode & 01);
 
     return $subSet;
 }
@@ -230,45 +233,37 @@ function checkFileWriteablity($files)
     $message = array();
 
     foreach ($files as $file) {
-        $dirName = dirname($file);
+        $dirName  = dirname($file);
         $fileName = basename($file);
-        $dirStat = getStats($dirName);
+        $dirStat  = getStats($dirName);
         if (false !== $dirStat) {
             $uid = $tmpStats['uid'];
             $gid = $tmpStats['gid'];
             if (!(($uid === $dirStat['uid'] && $dirStat['user']['write'])
-                || ($gid === $dirStat['gid'] && $dirStat['group']['write'])
-                || (file_exists($file) && is_writable($file))
-                || (false !== stripos(PHP_OS, 'WIN'))
-            )
+                  || ($gid === $dirStat['gid'] && $dirStat['group']['write'])
+                  || (file_exists($file) && is_writable($file))
+                  || (false !== stripos(PHP_OS, 'WIN')))
             ) {
-                $uidStr = (string) $uid;
-                $dUidStr = (string) $dirStat['uid'];
-                $gidStr = (string) $gid;
-                $dGidStr = (string) $dirStat['gid'];
+                $uidStr  = (string)$uid;
+                $dUidStr = (string)$dirStat['uid'];
+                $gidStr  = (string)$gid;
+                $dGidStr = (string)$dirStat['gid'];
                 if (function_exists('posix_getpwuid')) {
                     $tempUsr = posix_getpwuid($uid);
-                    $uidStr = isset($tempUsr['name']) ? $tempUsr['name'] : (string) $uid;
+                    $uidStr  = isset($tempUsr['name']) ? $tempUsr['name'] : (string)$uid;
                     $tempUsr = posix_getpwuid($dirStat['uid']);
-                    $dUidStr = isset($tempUsr['name']) ? $tempUsr['name'] : (string) $dirStat['uid'];
+                    $dUidStr = isset($tempUsr['name']) ? $tempUsr['name'] : (string)$dirStat['uid'];
                 }
                 if (function_exists('posix_getgrgid')) {
                     $tempGrp = posix_getgrgid($gid);
-                    $gidStr = isset($tempGrp['name']) ? $tempGrp['name'] : (string) $gid;
+                    $gidStr  = isset($tempGrp['name']) ? $tempGrp['name'] : (string)$gid;
                     $tempGrp = posix_getgrgid($dirStat['gid']);
-                    $dGidStr = isset($tempGrp['name']) ? $tempGrp['name'] : (string) $dirStat['gid'];
+                    $dGidStr = isset($tempGrp['name']) ? $tempGrp['name'] : (string)$dirStat['gid'];
                 }
-                $message[] = sprintf(
-                    CHMOD_CHGRP_ERROR,
-                    $fileName,
-                    $uidStr,
-                    $gidStr,
-                    basename($dirName),
-                    $dUidStr,
-                    $dGidStr
-                );
+                $message[] = sprintf(CHMOD_CHGRP_ERROR, $fileName, $uidStr, $gidStr, basename($dirName), $dUidStr, $dGidStr);
             }
         }
     }
+
     return empty($message) ? true : $message;
 }

@@ -73,7 +73,8 @@ function xoops_module_update_profile(XoopsModule $module, $oldversion = null)
             $field_handler->insert($object, true);
 
             $gperm_itemid = $object->getVar('field_id');
-            $sql          = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('group_permission') . ' SET gperm_itemid = ' . $gperm_itemid . '   WHERE gperm_itemid = ' . $myrow['fieldid'] . '       AND gperm_modid = ' . $module->getVar('mid') . "       AND gperm_name IN ('profile_edit', 'profile_search')";
+            $sql          = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('group_permission') . ' SET gperm_itemid = ' . $gperm_itemid . '   WHERE gperm_itemid = ' . $myrow['fieldid'] . '       AND gperm_modid = ' . $module->getVar('mid')
+                            . "       AND gperm_name IN ('profile_edit', 'profile_search')";
             $GLOBALS['xoopsDB']->queryF($sql);
 
             $groups_visible = $goupperm_handler->getGroupIds('profile_visible', $myrow['fieldid'], $module->getVar('mid'));

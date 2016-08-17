@@ -236,9 +236,11 @@ class XoopsAvatarHandler extends XoopsObjectHandler
         }
         if ($avatar->isNew()) {
             $avatar_id = $this->db->genId('avatar_avatar_id_seq');
-            $sql       = sprintf('INSERT INTO %s (avatar_id, avatar_file, avatar_name, avatar_created, avatar_mimetype, avatar_display, avatar_weight, avatar_type) VALUES (%u, %s, %s, %u, %s, %u, %u, %s)', $this->db->prefix('avatar'), $avatar_id, $this->db->quoteString($avatar_file), $this->db->quoteString($avatar_name), time(), $this->db->quoteString($avatar_mimetype), $avatar_display, $avatar_weight, $this->db->quoteString($avatar_type));
+            $sql       = sprintf('INSERT INTO %s (avatar_id, avatar_file, avatar_name, avatar_created, avatar_mimetype, avatar_display, avatar_weight, avatar_type) VALUES (%u, %s, %s, %u, %s, %u, %u, %s)', $this->db->prefix('avatar'), $avatar_id,
+                                 $this->db->quoteString($avatar_file), $this->db->quoteString($avatar_name), time(), $this->db->quoteString($avatar_mimetype), $avatar_display, $avatar_weight, $this->db->quoteString($avatar_type));
         } else {
-            $sql = sprintf('UPDATE %s SET avatar_file = %s, avatar_name = %s, avatar_created = %u, avatar_mimetype= %s, avatar_display = %u, avatar_weight = %u, avatar_type = %s WHERE avatar_id = %u', $this->db->prefix('avatar'), $this->db->quoteString($avatar_file), $this->db->quoteString($avatar_name), $avatar_created, $this->db->quoteString($avatar_mimetype), $avatar_display, $avatar_weight, $this->db->quoteString($avatar_type), $avatar_id);
+            $sql = sprintf('UPDATE %s SET avatar_file = %s, avatar_name = %s, avatar_created = %u, avatar_mimetype= %s, avatar_display = %u, avatar_weight = %u, avatar_type = %s WHERE avatar_id = %u', $this->db->prefix('avatar'),
+                           $this->db->quoteString($avatar_file), $this->db->quoteString($avatar_name), $avatar_created, $this->db->quoteString($avatar_mimetype), $avatar_display, $avatar_weight, $this->db->quoteString($avatar_type), $avatar_id);
         }
         if (!$result = $this->db->query($sql)) {
             return false;
@@ -280,7 +282,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
      * Fetch a row of objects from the database
      *
      * @param  CriteriaElement $criteria
-     * @param  bool  $id_as_key
+     * @param  bool            $id_as_key
      * @return object
      */
     public function &getObjects(CriteriaElement $criteria = null, $id_as_key = false)
@@ -402,7 +404,8 @@ class XoopsAvatarHandler extends XoopsObjectHandler
         }
         $avatars = &$this->getObjects($criteria, true);
         $ret     = array(
-            'blank.gif' => _NONE);
+            'blank.gif' => _NONE
+        );
         foreach (array_keys($avatars) as $i) {
             $ret[$avatars[$i]->getVar('avatar_file')] = $avatars[$i]->getVar('avatar_name');
         }

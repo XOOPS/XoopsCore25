@@ -59,8 +59,8 @@ class XoopsMemberHandler
      */
     public function __construct(XoopsDatabase $db)
     {
-        $this->groupHandler = new XoopsGroupHandler($db);
-        $this->userHandler = new XoopsUserHandler($db);
+        $this->groupHandler      = new XoopsGroupHandler($db);
+        $this->userHandler       = new XoopsUserHandler($db);
         $this->membershipHandler = new XoopsMembershipHandler($db);
     }
 
@@ -315,18 +315,18 @@ class XoopsMemberHandler
     /**
      * log in a user
      *
-     * @param  string    $uname username as entered in the login form
-     * @param  string    $pwd   password entered in the login form
+     * @param  string $uname username as entered in the login form
+     * @param  string $pwd   password entered in the login form
      *
      * @return XoopsUser|false logged in XoopsUser, FALSE if failed to log in
      */
     public function loginUser($uname, $pwd)
     {
-        $db = XoopsDatabaseFactory::getDatabaseConnection();
-        $uname = $db->escape($uname);
-        $pwd = $db->escape($pwd);
+        $db       = XoopsDatabaseFactory::getDatabaseConnection();
+        $uname    = $db->escape($uname);
+        $pwd      = $db->escape($pwd);
         $criteria = new Criteria('uname', $uname);
-        $user =& $this->userHandler->getObjects($criteria, false);
+        $user     =& $this->userHandler->getObjects($criteria, false);
         if (!$user || count($user) != 1) {
             return false;
         }
@@ -334,14 +334,14 @@ class XoopsMemberHandler
         $hash = $user[0]->pass();
         $type = substr($user[0]->pass(), 0, 1);
         // see if we have a crypt like signature, old md5 hash is just hex digits
-        if ($type==='$') {
+        if ($type === '$') {
             if (!password_verify($pwd, $hash)) {
                 return false;
             }
             // check if hash uses the best algorithm (i.e. after a PHP upgrade)
             $rehash = password_needs_rehash($hash, PASSWORD_DEFAULT);
         } else {
-            if ($hash!=md5($pwd)) {
+            if ($hash != md5($pwd)) {
                 return false;
             }
             $rehash = true; // automatically update old style
@@ -355,6 +355,7 @@ class XoopsMemberHandler
                 $this->userHandler->insert($user[0]);
             }
         }
+
         return $user[0];
     }
 
@@ -372,15 +373,9 @@ class XoopsMemberHandler
         $db = XoopsDatabaseFactory::getDatabaseConnection();
 
         $dbname = constant('XOOPS_DB_NAME');
-        $table = $db->prefix($table);
+        $table  = $db->prefix($table);
 
-        $sql = sprintf(
-            'SELECT `CHARACTER_MAXIMUM_LENGTH` FROM `information_schema`.`COLUMNS` '
-            . "WHERE TABLE_SCHEMA = '%s'AND TABLE_NAME = '%s' AND COLUMN_NAME = '%s'",
-            $db->escape($dbname),
-            $db->escape($table),
-            $db->escape($column)
-        );
+        $sql = sprintf('SELECT `CHARACTER_MAXIMUM_LENGTH` FROM `information_schema`.`COLUMNS` ' . "WHERE TABLE_SCHEMA = '%s'AND TABLE_NAME = '%s' AND COLUMN_NAME = '%s'", $db->escape($dbname), $db->escape($table), $db->escape($column));
 
         /** @var mysqli_result $result */
         $result = $db->query($sql);
@@ -388,9 +383,11 @@ class XoopsMemberHandler
             $row = $db->fetchRow($result);
             if ($row) {
                 $columnLength = $row[0];
-                return (int) $columnLength;
+
+                return (int)$columnLength;
             }
         }
+
         return null;
     }
 
@@ -471,8 +468,12 @@ class XoopsMemberHandler
      * @return array           Array of {@link XoopsUser} objects (if $asobject is TRUE)
      *                                    or of associative arrays matching the record structure in the database.
      */
-    public function getUsersByGroupLink($groups, CriteriaElement $criteria = null, $asobject = false, $id_as_key = false)
-    {
+    public function getUsersByGroupLink(
+        $groups,
+        CriteriaElement $criteria = null,
+        $asobject = false,
+        $id_as_key = false
+    ) {
         $ret           = array();
         $criteriaCompo = new CriteriaCompo();
         $select        = $asobject ? 'u.*' : 'u.uid';

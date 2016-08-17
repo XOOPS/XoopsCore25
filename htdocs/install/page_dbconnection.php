@@ -44,9 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($vars['DB_HOST']) && !empty($vars['DB_USER'])) {
     $hostConnectPrefix = empty($vars['DB_PCONNECT']) ? '' : 'p:';
-    $link = new mysqli($hostConnectPrefix.$vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS']);
+    $link              = new mysqli($hostConnectPrefix . $vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS']);
     if (0 !== $link->connect_errno) {
-        $error = ERR_NO_DBCONNECTION .' (' . $link->connect_errno . ') ' . $link->connect_error;;
+        $error = ERR_NO_DBCONNECTION . ' (' . $link->connect_errno . ') ' . $link->connect_error;;
     }
     if (empty($error)) {
         $wizard->redirectToPage('+1');
@@ -57,11 +57,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($vars['DB_HOST']) && !empty(
 if (@empty($vars['DB_HOST'])) {
     // Fill with default values
     $vars = array_merge($vars, array(
-                                 'DB_TYPE'     => 'mysql',
-                                 'DB_HOST'     => 'localhost',
-                                 'DB_USER'     => '',
-                                 'DB_PASS'     => '',
-                                 'DB_PCONNECT' => 0));
+        'DB_TYPE'     => 'mysql',
+        'DB_HOST'     => 'localhost',
+        'DB_USER'     => '',
+        'DB_PASS'     => '',
+        'DB_PCONNECT' => 0
+    ));
 }
 ob_start();
 ?>
@@ -87,7 +88,8 @@ ob_start();
 
         <label class="xolabel" for="DB_PCONNECT" class="center">
             <?php echo DB_PCONNECT_LABEL; ?>
-            <input class="checkbox" type="checkbox" name="DB_PCONNECT" value="1" <?php echo $vars['DB_PCONNECT'] ? "'checked'" : ''; ?>/>
+            <input class="checkbox" type="checkbox" name="DB_PCONNECT"
+                   value="1" <?php echo $vars['DB_PCONNECT'] ? "'checked'" : ''; ?>/>
 
             <div class="xoform-help"><?php echo DB_PCONNECT_HELP; ?></div>
         </label>

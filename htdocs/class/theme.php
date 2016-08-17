@@ -127,7 +127,8 @@ class xos_opal_AdminThemeFactory extends xos_opal_ThemeFactory
                                     'theme_icons' => $inst->url . '/icons',
                                     'theme_css'   => $inst->url . '/css',
                                     'theme_js'    => $inst->url . '/js',
-                                    'theme_lang'  => $inst->url . '/language'));
+                                    'theme_lang'  => $inst->url . '/language'
+                                ));
 
         return $inst;
     }
@@ -201,7 +202,8 @@ class xos_opal_Theme
      * @access public
      */
     public $plugins     = array(
-        'xos_logos_PageBuilder');
+        'xos_logos_PageBuilder'
+    );
     public $renderCount = 0;
     /**
      * Pointer to the theme template engine
@@ -221,7 +223,8 @@ class xos_opal_Theme
         //    'Content-Style-Type' => 'text/css') ,
         'meta'   => array(),
         'link'   => array(),
-        'script' => array());
+        'script' => array()
+    );
 
     /**
      * Array of strings to be inserted in the head tag of HTML documents
@@ -278,9 +281,13 @@ class xos_opal_Theme
                                     'xoops_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES),
                                     'xoops_sitename'   => htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES),
                                     'xoops_slogan'     => htmlspecialchars($GLOBALS['xoopsConfig']['slogan'], ENT_QUOTES),
-                                    'xoops_dirname'    => isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule']) ? $GLOBALS['xoopsModule']->getVar('dirname') : 'system',
-                                    'xoops_banner'     => ($GLOBALS['xoopsConfig']['banners'] && $this->renderBanner) ? xoops_getbanner() : '&nbsp;',
-                                    'xoops_pagetitle'  => isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule']) ? $GLOBALS['xoopsModule']->getVar('name') : htmlspecialchars($GLOBALS['xoopsConfig']['slogan'], ENT_QUOTES)));
+                                    'xoops_dirname'    => isset($GLOBALS['xoopsModule'])
+                                                          && is_object($GLOBALS['xoopsModule']) ? $GLOBALS['xoopsModule']->getVar('dirname') : 'system',
+                                    'xoops_banner'     => ($GLOBALS['xoopsConfig']['banners']
+                                                           && $this->renderBanner) ? xoops_getbanner() : '&nbsp;',
+                                    'xoops_pagetitle'  => isset($GLOBALS['xoopsModule'])
+                                                          && is_object($GLOBALS['xoopsModule']) ? $GLOBALS['xoopsModule']->getVar('name') : htmlspecialchars($GLOBALS['xoopsConfig']['slogan'], ENT_QUOTES)
+                                ));
 
         if (isset($GLOBALS['xoopsUser']) && is_object($GLOBALS['xoopsUser'])) {
             $this->template->assign(array(
@@ -290,12 +297,14 @@ class xos_opal_Theme
                                         'xoops_uname'      => $GLOBALS['xoopsUser']->getVar('uname'),
                                         'xoops_name'       => $GLOBALS['xoopsUser']->getVar('name'),
                                         'xoops_isadmin'    => $GLOBALS['xoopsUserIsAdmin'],
-                                        'xoops_usergroups' => $GLOBALS['xoopsUser']->getGroups()));
+                                        'xoops_usergroups' => $GLOBALS['xoopsUser']->getGroups()
+                                    ));
         } else {
             $this->template->assign(array(
                                         'xoops_isuser'     => false,
                                         'xoops_isadmin'    => false,
-                                        'xoops_usergroups' => array(XOOPS_GROUP_ANONYMOUS)));
+                                        'xoops_usergroups' => array(XOOPS_GROUP_ANONYMOUS)
+                                    ));
         }
 
         // Meta tags
@@ -462,7 +471,8 @@ class xos_opal_Theme
             'description',
             'rating',
             'author',
-            'copyright');
+            'copyright'
+        );
         foreach ($this->metas['meta'] as $name => $value) {
             if (in_array($name, $old)) {
                 $this->template->assign("xoops_meta_$name", htmlspecialchars($value, ENT_QUOTES));
@@ -495,7 +505,7 @@ class xos_opal_Theme
         // Do not cache the main (theme.html) template output
         $this->template->caching = 0;
         //mb -------------------------
-//        $this->template->display($this->path . '/' . $this->canvasTemplate);
+        //        $this->template->display($this->path . '/' . $this->canvasTemplate);
         if (file_exists($this->path . '/' . $this->canvasTemplate)) {
             $this->template->display($this->path . '/' . $this->canvasTemplate);
         } else {
@@ -678,6 +688,7 @@ class xos_opal_Theme
             return $this->addMeta('http', $name, $value);
         }
         unset($this->metas['http'][$name]);
+
         return null;
     }
 

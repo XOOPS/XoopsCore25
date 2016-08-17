@@ -57,10 +57,12 @@ class Upgrade_2018 extends XoopsUpgrade
     {
         $db           = $GLOBALS['xoopsDB'];
         $this->fields = array(
-            'config' => array(
+            'config'         => array(
                 'conf_title' => "varchar(255) NOT NULL default ''",
-                'conf_desc' => "varchar(255) NOT NULL default ''"),
-            'configcategory' => array('confcat_name' => "varchar(255) NOT NULL default ''"));
+                'conf_desc'  => "varchar(255) NOT NULL default ''"
+            ),
+            'configcategory' => array('confcat_name' => "varchar(255) NOT NULL default ''")
+        );
 
         foreach ($this->fields as $table => $data) {
             foreach ($data as $field => $property) {

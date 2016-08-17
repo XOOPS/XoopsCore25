@@ -111,22 +111,14 @@ class XoopsSessionHandler
      */
     public function read($sess_id)
     {
-        $ip = \Xmf\IPAddress::fromRequest();
-        $sql = sprintf(
-            'SELECT sess_data, sess_ip FROM %s WHERE sess_id = %s',
-            $this->db->prefix('session'),
-            $this->db->quoteString($sess_id)
-        );
-//        if (false != $result = $this->db->query($sql)) {
+        $ip  = \Xmf\IPAddress::fromRequest();
+        $sql = sprintf('SELECT sess_data, sess_ip FROM %s WHERE sess_id = %s', $this->db->prefix('session'), $this->db->quoteString($sess_id));
+        //        if (false != $result = $this->db->query($sql)) {
         $result = $this->db->query($sql);
         if (!empty($result)) {
             if (list($sess_data, $sess_ip) = $this->db->fetchRow($result)) {
                 if ($this->securityLevel > 1) {
-                    if (false === $ip->sameSubnet(
-                        $sess_ip,
-                        $this->bitMasks[$this->securityLevel]['v4'],
-                        $this->bitMasks[$this->securityLevel]['v6']
-                    )) {
+                    if (false === $ip->sameSubnet($sess_ip, $this->bitMasks[$this->securityLevel]['v4'], $this->bitMasks[$this->securityLevel]['v6'])) {
                         $sess_data = '';
                     }
                 }
@@ -149,24 +141,11 @@ class XoopsSessionHandler
     public function write($sess_id, $sess_data)
     {
         $remoteAddress = \Xmf\IPAddress::fromRequest()->asReadable();
-        $sess_id = $this->db->quoteString($sess_id);
-        $sql = sprintf(
-            'UPDATE %s SET sess_updated = %u, sess_data = %s WHERE sess_id = %s',
-            $this->db->prefix('session'),
-            time(),
-            $this->db->quoteString($sess_data),
-            $sess_id
-        );
+        $sess_id       = $this->db->quoteString($sess_id);
+        $sql           = sprintf('UPDATE %s SET sess_updated = %u, sess_data = %s WHERE sess_id = %s', $this->db->prefix('session'), time(), $this->db->quoteString($sess_data), $sess_id);
         $this->db->queryF($sql);
         if (!$this->db->getAffectedRows()) {
-            $sql = sprintf(
-                'INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data) VALUES (%s, %u, %s, %s)',
-                $this->db->prefix('session'),
-                $sess_id,
-                time(),
-                $this->db->quote($remoteAddress),
-                $this->db->quote($sess_data)
-            );
+            $sql = sprintf('INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data) VALUES (%s, %u, %s, %s)', $this->db->prefix('session'), $sess_id, time(), $this->db->quote($remoteAddress), $this->db->quote($sess_data));
 
             return $this->db->queryF($sql);
         }
@@ -183,11 +162,7 @@ class XoopsSessionHandler
      **/
     public function destroy($sess_id)
     {
-        $sql = sprintf(
-            'DELETE FROM %s WHERE sess_id = %s',
-            $this->db->prefix('session'),
-            $this->db->quoteString($sess_id)
-        );
+        $sql = sprintf('DELETE FROM %s WHERE sess_id = %s', $this->db->prefix('session'), $this->db->quoteString($sess_id));
         if (!$result = $this->db->queryF($sql)) {
             return false;
         }
@@ -262,24 +237,11 @@ class XoopsSessionHandler
     public function update_cookie($sess_id = null, $expire = null)
     {
         global $xoopsConfig;
-        $session_name = ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '')
-            ? $xoopsConfig['session_name']
-            : session_name();
-        $session_expire = null !== $expire
-            ? (int)$expire
-            : (($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '')
-                ? $xoopsConfig['session_expire'] * 60
-                : ini_get('session.cookie_lifetime')
-            );
+        $session_name   = ($xoopsConfig['use_mysession']
+                           && $xoopsConfig['session_name'] != '') ? $xoopsConfig['session_name'] : session_name();
+        $session_expire = null !== $expire ? (int)$expire : (($xoopsConfig['use_mysession']
+                                                              && $xoopsConfig['session_name'] != '') ? $xoopsConfig['session_expire'] * 60 : ini_get('session.cookie_lifetime'));
         $session_id     = empty($sess_id) ? session_id() : $sess_id;
-        setcookie(
-            $session_name,
-            $session_id,
-            $session_expire ? time() + $session_expire : 0,
-            '/',
-            XOOPS_COOKIE_DOMAIN,
-            false,
-            true
-        );
+        setcookie($session_name, $session_id, $session_expire ? time() + $session_expire : 0, '/', XOOPS_COOKIE_DOMAIN, false, true);
     }
 }

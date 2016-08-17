@@ -67,8 +67,13 @@ class XoopsModelJoint extends XoopsModelAbstract
      * @return array of objects <a href='psi_element://XoopsObject'>XoopsObject</a>
      * @internal param CriteriaElement $object <a href='psi_element://CriteriaElement'>CriteriaElement</a> to match to match
      */
-    public function &getByLink(CriteriaElement $criteria = null, $fields = null, $asObject = true, $field_link = null, $field_object = null)
-    {
+    public function &getByLink(
+        CriteriaElement $criteria = null,
+        $fields = null,
+        $asObject = true,
+        $field_link = null,
+        $field_object = null
+    ) {
         if (!empty($field_link)) {
             $this->handler->field_link = $field_link;
         }
@@ -178,7 +183,7 @@ class XoopsModelJoint extends XoopsModelAbstract
     /**
      * upate objects matching a condition against linked objects
      *
-     * @param  array  $data     array of key => value
+     * @param  array           $data     array of key => value
      * @param  CriteriaElement $criteria {@link CriteriaElement} to match
      * @return int    count of objects
      */

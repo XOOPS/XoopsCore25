@@ -125,7 +125,8 @@ class XoopsCache
                 $settings = $_this->configs['default'];
             } else {
                 $settings = array(
-                    'engine' => 'file');
+                    'engine' => 'file'
+                );
             }
         }
         $engine = 'file';
@@ -427,7 +428,8 @@ class XoopsCacheEngine
     {
         $this->settings = array_merge(array(
                                           'duration'    => 31556926,
-                                          'probability' => 100), $settings);
+                                          'probability' => 100
+                                      ), $settings);
 
         return true;
     }

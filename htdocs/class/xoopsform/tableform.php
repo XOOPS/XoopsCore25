@@ -42,7 +42,8 @@ class XoopsTableForm extends XoopsForm
      */
     public function render()
     {
-        $ret    = $this->getTitle() . NWLINE . '<form name="' . $this->getName() . '" id="' . $this->getName() . '" action="' . $this->getAction() . '" method="' . $this->getMethod() . '"' . $this->getExtra() . '>' . NWLINE . '<table border="0" width="100%">' . NWLINE;
+        $ret    = $this->getTitle() . NWLINE . '<form name="' . $this->getName() . '" id="' . $this->getName() . '" action="' . $this->getAction() . '" method="' . $this->getMethod() . '"' . $this->getExtra() . '>' . NWLINE
+                  . '<table border="0" width="100%">' . NWLINE;
         $hidden = '';
         foreach ($this->getElements() as $ele) {
             if (!$ele->isHidden()) {

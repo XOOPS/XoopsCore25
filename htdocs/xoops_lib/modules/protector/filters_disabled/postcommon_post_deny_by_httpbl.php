@@ -15,7 +15,8 @@ class protector_postcommon_post_deny_by_httpbl extends ProtectorFilterAbstract
     {
         // http:bl servers (don't enable too many servers)
         $rbls = array(
-            'http:BL' => PROTECTOR_HTTPBL_KEY . '.%s.dnsbl.httpbl.org');
+            'http:BL' => PROTECTOR_HTTPBL_KEY . '.%s.dnsbl.httpbl.org'
+        );
 
         global $xoopsUser;
 

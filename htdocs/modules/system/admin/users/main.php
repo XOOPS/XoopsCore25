@@ -103,7 +103,8 @@ switch ($op) {
             xoops_confirm(array(
                               'ok'  => 1,
                               'uid' => $uid,
-                              'op'  => 'users_delete'), $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_USERS_FORM_SURE_DEL, $user->getVar('uname')));
+                              'op'  => 'users_delete'
+                          ), $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_USERS_FORM_SURE_DEL, $user->getVar('uname')));
         }
         break;
 
@@ -412,19 +413,22 @@ switch ($op) {
             $mailok_radio->addOptionArray(array(
                                               'mailok' => _AM_SYSTEM_USERS_MAILOK,
                                               'mailng' => _AM_SYSTEM_USERS_MAILNG,
-                                              'both' => _AM_SYSTEM_USERS_BOTH));
+                                              'both'   => _AM_SYSTEM_USERS_BOTH
+                                          ));
             $type_radio = new XoopsFormRadio(_AM_SYSTEM_USERS_SHOWTYPE, 'user_type', 'actv');
             $type_radio->addOptionArray(array(
-                                            'actv' => _AM_SYSTEM_USERS_ACTIVE,
+                                            'actv'   => _AM_SYSTEM_USERS_ACTIVE,
                                             'inactv' => _AM_SYSTEM_USERS_INACTIVE,
-                                            'both' => _AM_SYSTEM_USERS_BOTH));
+                                            'both'   => _AM_SYSTEM_USERS_BOTH
+                                        ));
             $sort_select = new XoopsFormSelect(_AM_SYSTEM_USERS_SORT, 'user_sort');
             $sort_select->addOptionArray(array(
-                                             'uname' => _AM_SYSTEM_USERS_UNAME,
-                                             'email' => _AM_SYSTEM_USERS_EMAIL,
-                                             'last_login' => _AM_SYSTEM_USERS_LASTLOGIN,
+                                             'uname'        => _AM_SYSTEM_USERS_UNAME,
+                                             'email'        => _AM_SYSTEM_USERS_EMAIL,
+                                             'last_login'   => _AM_SYSTEM_USERS_LASTLOGIN,
                                              'user_regdate' => _AM_SYSTEM_USERS_REGDATE,
-                                             'posts' => _AM_SYSTEM_USERS_POSTS));
+                                             'posts'        => _AM_SYSTEM_USERS_POSTS
+                                         ));
             $order_select = new XoopsFormSelect(_AM_SYSTEM_USERS_ORDER, 'user_order');
             $order_select->addOptionArray(array('ASC' => _AM_SYSTEM_USERS_ASC, 'DESC' => _AM_SYSTEM_USERS_DESC));
             $limit_text    = new XoopsFormText(_AM_SYSTEM_USERS_LIMIT, 'user_limit', 6, 2, 20);
@@ -751,7 +755,7 @@ switch ($op) {
             if (isset($_REQUEST['selgroups'])) {
                 if ($_REQUEST['selgroups'] != 0) {
                     if (count($_REQUEST['selgroups']) == 1) {
-                        $groups = array( 0 => (int) $_REQUEST['selgroups']);
+                        $groups = array(0 => (int)$_REQUEST['selgroups']);
                     } else {
                         $groups = array_map('intval', $_REQUEST['selgroups']);
                     }
@@ -836,7 +840,7 @@ switch ($op) {
 
             // add token to render in template
             $tokenElement = new XoopsFormHiddenToken();
-            $token = $tokenElement->render();
+            $token        = $tokenElement->render();
             $xoopsTpl->assign('form_token', $token);
 
             //echo $requete_search;

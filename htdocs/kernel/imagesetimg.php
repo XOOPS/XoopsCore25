@@ -167,9 +167,11 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
         }
         if ($imgsetimg->isNew()) {
             $imgsetimg_id = $this->db->genId('imgsetimg_imgsetimg_id_seq');
-            $sql          = sprintf('INSERT INTO %s (imgsetimg_id, imgsetimg_file, imgsetimg_body, imgsetimg_imgset) VALUES (%u, %s, %s, %s)', $this->db->prefix('imgsetimg'), $imgsetimg_id, $this->db->quoteString($imgsetimg_file), $this->db->quoteString($imgsetimg_body), $this->db->quoteString($imgsetimg_imgset));
+            $sql          = sprintf('INSERT INTO %s (imgsetimg_id, imgsetimg_file, imgsetimg_body, imgsetimg_imgset) VALUES (%u, %s, %s, %s)', $this->db->prefix('imgsetimg'), $imgsetimg_id, $this->db->quoteString($imgsetimg_file),
+                                    $this->db->quoteString($imgsetimg_body), $this->db->quoteString($imgsetimg_imgset));
         } else {
-            $sql = sprintf('UPDATE %s SET imgsetimg_file = %s, imgsetimg_body = %s, imgsetimg_imgset = %s WHERE imgsetimg_id = %u', $this->db->prefix('imgsetimg'), $this->db->quoteString($imgsetimg_file), $this->db->quoteString($imgsetimg_body), $this->db->quoteString($imgsetimg_imgset), $imgsetimg_id);
+            $sql = sprintf('UPDATE %s SET imgsetimg_file = %s, imgsetimg_body = %s, imgsetimg_imgset = %s WHERE imgsetimg_id = %u', $this->db->prefix('imgsetimg'), $this->db->quoteString($imgsetimg_file), $this->db->quoteString($imgsetimg_body),
+                           $this->db->quoteString($imgsetimg_imgset), $imgsetimg_id);
         }
         if (!$result = $this->db->query($sql)) {
             return false;
@@ -216,7 +218,8 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
     {
         $ret   = array();
         $limit = $start = 0;
-        $sql   = 'SELECT DISTINCT i.* FROM ' . $this->db->prefix('imgsetimg') . ' i LEFT JOIN ' . $this->db->prefix('imgset_tplset_link') . ' l ON l.imgset_id=i.imgsetimg_imgset LEFT JOIN ' . $this->db->prefix('imgset') . ' s ON s.imgset_id=l.imgset_id';
+        $sql   = 'SELECT DISTINCT i.* FROM ' . $this->db->prefix('imgsetimg') . ' i LEFT JOIN ' . $this->db->prefix('imgset_tplset_link') . ' l ON l.imgset_id=i.imgsetimg_imgset LEFT JOIN ' . $this->db->prefix('imgset')
+                 . ' s ON s.imgset_id=l.imgset_id';
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
             $sql .= ' ORDER BY imgsetimg_id ' . $criteria->getOrder();
@@ -263,8 +266,8 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
 
     /**
      * Function-Documentation
-     * @param  int   $imgset_id id of image set
-     * @param  bool  $id_as_key Use the ID as key into the array
+     * @param  int  $imgset_id id of image set
+     * @param  bool $id_as_key Use the ID as key into the array
      * @return array Array of {@link XoopsImageSetImg} objects
      * @author Kazumi Ono <onokazu@xoops.org>
      */
@@ -284,6 +287,7 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
     {
         $criteria = new CriteriaCompo(new Criteria('imgsetimg_file', $filename));
         $criteria->add(new Criteria('imgsetimg_imgset', (int)$imgset_id));
+
         return $this->getCount($criteria) > 0;
     }
 }

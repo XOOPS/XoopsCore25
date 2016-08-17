@@ -281,7 +281,7 @@ class XoopsForm
      * Add an element to the form
      *
      * @param string|XoopsFormElement $formElement reference to a {@link XoopsFormElement}
-     * @param bool             $required    is this a "required" element?
+     * @param bool                    $required    is this a "required" element?
      *
      */
     public function addElement($formElement, $required = false)
@@ -620,6 +620,7 @@ class XoopsForm
             'method'     => $this->getMethod(),
             'extra'      => 'onsubmit="return xoopsFormValidate_' . $this->getName() . '();"' . $this->getExtra(),
             'javascript' => $js,
-            'elements'   => $elements));
+            'elements'   => $elements
+        ));
     }
 }

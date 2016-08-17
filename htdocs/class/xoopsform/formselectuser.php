@@ -73,7 +73,7 @@ class XoopsFormSelectUser extends XoopsFormElementTray
         }
         $member_handler = xoops_getHandler('member');
         $value          = is_array($value) ? $value : (empty($value) ? array() : array($value));
-        $selectedUsers = array();
+        $selectedUsers  = array();
         if (count($value) > 0) {
             // fetch the set of uids in $value
             $criteria = new Criteria('uid', '(' . implode(',', $value) . ')', 'IN');
@@ -148,8 +148,10 @@ class XoopsFormSelectUser extends XoopsFormElementTray
             </script>";
         $token       = $GLOBALS['xoopsSecurity']->createToken();
         $action_tray = new XoopsFormElementTray('', ' | ');
-        $action_tray->addElement(new XoopsFormLabel('', '<a href="#" onclick="var sel = xoopsGetElementById(\'' . $name . '\');for (var i = sel.options.length-1; i >= 0; i--) {if (!sel.options[i].selected) {sel.options[i] = null;}}; return false;">' . _MA_USER_REMOVE . '</a>'));
-        $action_tray->addElement(new XoopsFormLabel('', '<a href="#" onclick="openWithSelfMain(\'' . XOOPS_URL . '/include/findusers.php?target=' . $name . '&amp;multiple=' . $multiple . '&amp;token=' . $token . '\', \'userselect\', 800, 600, null); return false;" >' . _MA_USER_MORE . '</a>' . $js_addusers));
+        $action_tray->addElement(new XoopsFormLabel('', '<a href="#" onclick="var sel = xoopsGetElementById(\'' . $name . '\');for (var i = sel.options.length-1; i >= 0; i--) {if (!sel.options[i].selected) {sel.options[i] = null;}}; return false;">'
+                                                        . _MA_USER_REMOVE . '</a>'));
+        $action_tray->addElement(new XoopsFormLabel('', '<a href="#" onclick="openWithSelfMain(\'' . XOOPS_URL . '/include/findusers.php?target=' . $name . '&amp;multiple=' . $multiple . '&amp;token=' . $token
+                                                        . '\', \'userselect\', 800, 600, null); return false;" >' . _MA_USER_MORE . '</a>' . $js_addusers));
         parent::__construct($caption, '<br><br>', $name);
         $this->addElement($select_element);
         $this->addElement($action_tray);

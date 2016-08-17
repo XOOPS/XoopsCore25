@@ -54,7 +54,7 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_INI')):
     /**
      * Load a collective functions of Frameworks
      *
-     * @param  string $group   name of  the collective functions, empty for functions.php
+     * @param  string $group name of  the collective functions, empty for functions.php
      * @param  string $dirname
      * @return bool
      */
@@ -247,11 +247,11 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_INI')):
      */
     function mod_isModuleAction($dirname = 'system')
     {
-        $ret = @(// action module "system"
-            !empty($GLOBALS['xoopsModule']) && 'system' === $GLOBALS['xoopsModule']->getVar('dirname', 'n') && // current dirname
-            ($dirname == $_POST['dirname'] || $dirname == $_POST['module']) && // current op
-            ('update_ok' === $_POST['op'] || 'install_ok' === $_POST['op'] || 'uninstall_ok' === $_POST['op']) && // current action
-            'modulesadmin' === $_POST['fct']);
+        $ret = @(!empty($GLOBALS['xoopsModule']) && 'system' === $GLOBALS['xoopsModule']->getVar('dirname', 'n') // action module "system"
+                 && ($dirname == $_POST['dirname'] || $dirname == $_POST['module']) // current dirname
+                 && ('update_ok' === $_POST['op'] || 'install_ok' === $_POST['op'] || 'uninstall_ok' === $_POST['op']) // current op
+                 && 'modulesadmin' === $_POST['fct'] // current action
+        );
 
         return $ret;
     }

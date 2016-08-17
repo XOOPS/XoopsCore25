@@ -206,7 +206,8 @@ if ($GLOBALS['xoopsModuleConfig']['profile_search']) {
                     $GLOBALS['xoopsTpl']->append('modules', array(
                         'name'         => $modules[$mid]->getVar('name'),
                         'results'      => $results,
-                        'showall_link' => $showall_link));
+                        'showall_link' => $showall_link
+                    ));
                 }
                 unset($modules[$mid]);
             }

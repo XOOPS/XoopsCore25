@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Xoops Cpanel GUI abstract class
  *
@@ -72,7 +73,8 @@ class XoopsSystemGui
         $this->xoTheme     =& $adminThemeFactory->createInstance(array(
                                                                      'folderName'      => $this->foldername,
                                                                      'themesPath'      => 'modules/system/themes',
-                                                                     'contentTemplate' => @$xoopsOption['template_main']));
+                                                                     'contentTemplate' => @$xoopsOption['template_main']
+                                                                 ));
 
         $this->xoTheme->loadLocalization('admin');
         $this->template =& $this->xoTheme->template;

@@ -73,13 +73,8 @@ if ($process && is_writable('../include/license.php')) {
     $content .= '<div class="x2-note successMsg">' . sprintf(LICENSE_IS_WRITEABLE, $state) . '</div>';
     $content .= '<div class="x2-note successMsg">' . write_key() . '</div><br>';
 } elseif ($update) {
-    $sql = "UPDATE " . $dbm->db->prefix("users")
-        . " SET `uname` = " . $dbm->db->quote($adminname)
-        . ", `email` = " . $dbm->db->quote($adminmail)
-        . ", `user_regdate` = '" . time() . "'"
-        . ", `pass` = " . $dbm->db->quote($hashedAdminPass)
-        . ", `last_login` = '" . time() . "' "
-        . "WHERE uid = 1";
+    $sql = "UPDATE " . $dbm->db->prefix("users") . " SET `uname` = " . $dbm->db->quote($adminname) . ", `email` = " . $dbm->db->quote($adminmail) . ", `user_regdate` = '" . time() . "'" . ", `pass` = " . $dbm->db->quote($hashedAdminPass)
+           . ", `last_login` = '" . time() . "' " . "WHERE uid = 1";
     $dbm->db->queryF($sql);
     $content = '';
 } elseif (!is_writable('../include/license.php')) {
@@ -96,9 +91,9 @@ setcookie('xo_install_user', '', null, null, null);
 if (!empty($_SESSION['settings']['authorized']) && !empty($adminname) && !empty($adminpass)) {
     $claims = array(
         'uname' => $adminname,
-        'sub' => 'xoopsinstall',
+        'sub'   => 'xoopsinstall',
     );
-    $token = \Xmf\Jwt\TokenFactory::build('install', $claims, 60*15);
+    $token  = \Xmf\Jwt\TokenFactory::build('install', $claims, 60 * 15);
 
     setcookie('xo_install_user', $token, 0, null, null, null, true);
 }

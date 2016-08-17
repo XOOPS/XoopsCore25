@@ -1,2 +1,2 @@
 /* 
-/* Localization script */
+ /* Localization script */

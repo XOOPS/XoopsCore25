@@ -37,6 +37,7 @@ class Upgrade_220 extends XoopsUpgrade
         if (!$result) {
             return true;
         }
+
         return !($GLOBALS['xoopsDB']->getRowsNum($result) > 0);
     }
 
@@ -153,7 +154,22 @@ class Upgrade_220 extends XoopsUpgrade
             }
         }
 
-        $xoopsDB->queryF('INSERT INTO `' . $xoopsDB->prefix('config') . '` (conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) VALUES ' . " (0, 2, 'minpass', '_MD_AM_MINPASS', " . $xoopsDB->quote($profile_config_arr['minpass']) . ", '_MD_AM_MINPASSDSC', 'textbox', 'int', 1)," . " (0, 2, 'minuname', '_MD_AM_MINUNAME', " . $xoopsDB->quote($profile_config_arr['minuname']) . ", '_MD_AM_MINUNAMEDSC', 'textbox', 'int', 2)," . " (0, 2, 'new_user_notify', '_MD_AM_NEWUNOTIFY', " . $xoopsDB->quote($profile_config_arr['new_user_notify']) . ", '_MD_AM_NEWUNOTIFYDSC', 'yesno', 'int', 4)," . " (0, 2, 'new_user_notify_group', '_MD_AM_NOTIFYTO', " . $xoopsDB->quote($profile_config_arr['new_user_notify_group']) . ", '_MD_AM_NOTIFYTODSC', 'group', 'int', 6)," . " (0, 2, 'activation_type', '_MD_AM_ACTVTYPE', " . $xoopsDB->quote($profile_config_arr['activation_type']) . ", '_MD_AM_ACTVTYPEDSC', 'select', 'int', 8)," . " (0, 2, 'activation_group', '_MD_AM_ACTVGROUP', " . $xoopsDB->quote($profile_config_arr['activation_group']) . ", '_MD_AM_ACTVGROUPDSC', 'group', 'int', 10)," . " (0, 2, 'uname_test_level', '_MD_AM_UNAMELVL', " . $xoopsDB->quote($profile_config_arr['uname_test_level']) . ", '_MD_AM_UNAMELVLDSC', 'select', 'int', 12)," . " (0, 2, 'avatar_allow_upload', '_MD_AM_AVATARALLOW', " . $xoopsDB->quote($profile_config_arr['avatar_allow_upload']) . ", '_MD_AM_AVATARALWDSC', 'yesno', 'int', 14)," . " (0, 2, 'avatar_width', '_MD_AM_AVATARW', " . $xoopsDB->quote($profile_config_arr['avatar_width']) . ", '_MD_AM_AVATARWDSC', 'textbox', 'int', 16)," . " (0, 2, 'avatar_height', '_MD_AM_AVATARH', " . $xoopsDB->quote($profile_config_arr['avatar_height']) . ", '_MD_AM_AVATARHDSC', 'textbox', 'int', 18)," . " (0, 2, 'avatar_maxsize', '_MD_AM_AVATARMAX', " . $xoopsDB->quote($profile_config_arr['avatar_maxsize']) . ", '_MD_AM_AVATARMAXDSC', 'textbox', 'int', 20)," . " (0, 2, 'self_delete', '_MD_AM_SELFDELETE', " . $xoopsDB->quote($profile_config_arr['self_delete']) . ", '_MD_AM_SELFDELETEDSC', 'yesno', 'int', 22)," . " (0, 2, 'bad_unames', '_MD_AM_BADUNAMES', " . $xoopsDB->quote($profile_config_arr['bad_unames']) . ", '_MD_AM_BADUNAMESDSC', 'textarea', 'array', 24)," . " (0, 2, 'bad_emails', '_MD_AM_BADEMAILS', " . $xoopsDB->quote($profile_config_arr['bad_emails']) . ", '_MD_AM_BADEMAILSDSC', 'textarea', 'array', 26)," . " (0, 2, 'maxuname', '_MD_AM_MAXUNAME', " . $xoopsDB->quote($profile_config_arr['maxuname']) . ", '_MD_AM_MAXUNAMEDSC', 'textbox', 'int', 3)," . " (0, 2, 'avatar_minposts', '_MD_AM_AVATARMP', " . $xoopsDB->quote($profile_config_arr['avatar_minposts']) . ", '_MD_AM_AVATARMPDSC', 'textbox', 'int', 15)," . " (0, 2, 'allow_chgmail', '_MD_AM_ALLWCHGMAIL', " . $xoopsDB->quote($profile_config_arr['allow_chgmail']) . ", '_MD_AM_ALLWCHGMAILDSC', 'yesno', 'int', 3)," . " (0, 2, 'reg_dispdsclmr', '_MD_AM_DSPDSCLMR', " . $xoopsDB->quote($profile_config_arr['reg_dispdsclmr']) . ", '_MD_AM_DSPDSCLMRDSC', 'yesno', 'int', 30)," . " (0, 2, 'reg_disclaimer', '_MD_AM_REGDSCLMR', " . $xoopsDB->quote($profile_config_arr['reg_disclaimer']) . ", '_MD_AM_REGDSCLMRDSC', 'textarea', 'text', 32)," . " (0, 2, 'allow_register', '_MD_AM_ALLOWREG', " . $xoopsDB->quote($profile_config_arr['allow_register']) . ", '_MD_AM_ALLOWREGDSC', 'yesno', 'int', 0)");
+        $xoopsDB->queryF('INSERT INTO `' . $xoopsDB->prefix('config') . '` (conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) VALUES ' . " (0, 2, 'minpass', '_MD_AM_MINPASS', "
+                         . $xoopsDB->quote($profile_config_arr['minpass']) . ", '_MD_AM_MINPASSDSC', 'textbox', 'int', 1)," . " (0, 2, 'minuname', '_MD_AM_MINUNAME', " . $xoopsDB->quote($profile_config_arr['minuname'])
+                         . ", '_MD_AM_MINUNAMEDSC', 'textbox', 'int', 2)," . " (0, 2, 'new_user_notify', '_MD_AM_NEWUNOTIFY', " . $xoopsDB->quote($profile_config_arr['new_user_notify']) . ", '_MD_AM_NEWUNOTIFYDSC', 'yesno', 'int', 4),"
+                         . " (0, 2, 'new_user_notify_group', '_MD_AM_NOTIFYTO', " . $xoopsDB->quote($profile_config_arr['new_user_notify_group']) . ", '_MD_AM_NOTIFYTODSC', 'group', 'int', 6)," . " (0, 2, 'activation_type', '_MD_AM_ACTVTYPE', "
+                         . $xoopsDB->quote($profile_config_arr['activation_type']) . ", '_MD_AM_ACTVTYPEDSC', 'select', 'int', 8)," . " (0, 2, 'activation_group', '_MD_AM_ACTVGROUP', " . $xoopsDB->quote($profile_config_arr['activation_group'])
+                         . ", '_MD_AM_ACTVGROUPDSC', 'group', 'int', 10)," . " (0, 2, 'uname_test_level', '_MD_AM_UNAMELVL', " . $xoopsDB->quote($profile_config_arr['uname_test_level']) . ", '_MD_AM_UNAMELVLDSC', 'select', 'int', 12),"
+                         . " (0, 2, 'avatar_allow_upload', '_MD_AM_AVATARALLOW', " . $xoopsDB->quote($profile_config_arr['avatar_allow_upload']) . ", '_MD_AM_AVATARALWDSC', 'yesno', 'int', 14)," . " (0, 2, 'avatar_width', '_MD_AM_AVATARW', "
+                         . $xoopsDB->quote($profile_config_arr['avatar_width']) . ", '_MD_AM_AVATARWDSC', 'textbox', 'int', 16)," . " (0, 2, 'avatar_height', '_MD_AM_AVATARH', " . $xoopsDB->quote($profile_config_arr['avatar_height'])
+                         . ", '_MD_AM_AVATARHDSC', 'textbox', 'int', 18)," . " (0, 2, 'avatar_maxsize', '_MD_AM_AVATARMAX', " . $xoopsDB->quote($profile_config_arr['avatar_maxsize']) . ", '_MD_AM_AVATARMAXDSC', 'textbox', 'int', 20),"
+                         . " (0, 2, 'self_delete', '_MD_AM_SELFDELETE', " . $xoopsDB->quote($profile_config_arr['self_delete']) . ", '_MD_AM_SELFDELETEDSC', 'yesno', 'int', 22)," . " (0, 2, 'bad_unames', '_MD_AM_BADUNAMES', "
+                         . $xoopsDB->quote($profile_config_arr['bad_unames']) . ", '_MD_AM_BADUNAMESDSC', 'textarea', 'array', 24)," . " (0, 2, 'bad_emails', '_MD_AM_BADEMAILS', " . $xoopsDB->quote($profile_config_arr['bad_emails'])
+                         . ", '_MD_AM_BADEMAILSDSC', 'textarea', 'array', 26)," . " (0, 2, 'maxuname', '_MD_AM_MAXUNAME', " . $xoopsDB->quote($profile_config_arr['maxuname']) . ", '_MD_AM_MAXUNAMEDSC', 'textbox', 'int', 3),"
+                         . " (0, 2, 'avatar_minposts', '_MD_AM_AVATARMP', " . $xoopsDB->quote($profile_config_arr['avatar_minposts']) . ", '_MD_AM_AVATARMPDSC', 'textbox', 'int', 15)," . " (0, 2, 'allow_chgmail', '_MD_AM_ALLWCHGMAIL', "
+                         . $xoopsDB->quote($profile_config_arr['allow_chgmail']) . ", '_MD_AM_ALLWCHGMAILDSC', 'yesno', 'int', 3)," . " (0, 2, 'reg_dispdsclmr', '_MD_AM_DSPDSCLMR', " . $xoopsDB->quote($profile_config_arr['reg_dispdsclmr'])
+                         . ", '_MD_AM_DSPDSCLMRDSC', 'yesno', 'int', 30)," . " (0, 2, 'reg_disclaimer', '_MD_AM_REGDSCLMR', " . $xoopsDB->quote($profile_config_arr['reg_disclaimer']) . ", '_MD_AM_REGDSCLMRDSC', 'textarea', 'text', 32),"
+                         . " (0, 2, 'allow_register', '_MD_AM_ALLOWREG', " . $xoopsDB->quote($profile_config_arr['allow_register']) . ", '_MD_AM_ALLOWREGDSC', 'yesno', 'int', 0)");
 
         //Rebuild user configuration options
         $criteria = new CriteriaCompo(new Criteria('conf_name', "('activation_type', 'uname_test_level')", 'IN'));
@@ -163,7 +179,8 @@ class Upgrade_220 extends XoopsUpgrade
         $configs             = $config_handler->getConfigs($criteria);
         $id_activation_type  = $configs[0]->getVar('conf_id');
         $id_uname_test_level = $configs[1]->getVar('conf_id');
-        $xoopsDB->queryF('INSERT INTO `' . $xoopsDB->prefix('configoption') . '` (confop_name, confop_value, conf_id) VALUES ' . " ('_MD_AM_USERACTV', '0', {$id_activation_type})," . " ('_MD_AM_AUTOACTV', '1', {$id_activation_type})," . " ('_MD_AM_ADMINACTV', '2', {$id_activation_type})," . " ('_MD_AM_STRICT', '0', {$id_uname_test_level})," . " ('_MD_AM_MEDIUM', '1', {$id_uname_test_level})," . " ('_MD_AM_LIGHT', '2', {$id_uname_test_level})");
+        $xoopsDB->queryF('INSERT INTO `' . $xoopsDB->prefix('configoption') . '` (confop_name, confop_value, conf_id) VALUES ' . " ('_MD_AM_USERACTV', '0', {$id_activation_type})," . " ('_MD_AM_AUTOACTV', '1', {$id_activation_type}),"
+                         . " ('_MD_AM_ADMINACTV', '2', {$id_activation_type})," . " ('_MD_AM_STRICT', '0', {$id_uname_test_level})," . " ('_MD_AM_MEDIUM', '1', {$id_uname_test_level})," . " ('_MD_AM_LIGHT', '2', {$id_uname_test_level})");
 
         return $result;
     }
@@ -225,7 +242,8 @@ class Upgrade_220 extends XoopsUpgrade
             'user_occ',
             'bio',
             'user_intrest',
-            'user_mailok');
+            'user_mailok'
+        );
         foreach ($profile_fields as $field) {
             $xoopsDB->queryF('UPDATE `' . $xoopsDB->prefix('users') . '` u, `' . $xoopsDB->prefix('user_profile') . "` p SET u.{$field} = p.{$field} WHERE u.uid=p.profileid");
         }
@@ -253,7 +271,9 @@ class Upgrade_220 extends XoopsUpgrade
         }
 
         foreach ($blocks as $key => $bk) {
-            if ($block['show_func'] == $bk['show_func'] && $block['edit_func'] == $bk['edit_func'] && $block['template'] == $bk['template']) {
+            if ($block['show_func'] == $bk['show_func'] && $block['edit_func'] == $bk['edit_func']
+                && $block['template'] == $bk['template']
+            ) {
                 return $key;
             }
         }
@@ -350,7 +370,11 @@ class Upgrade_220 extends XoopsUpgrade
             }
 
             // Copy data from block instance table and blocks table
-            $sql = '    INSERT INTO ' . $xoopsDB->prefix('newblocks') . '        (bid, mid, options, name, title, side, weight, visible, ' . '            func_num, ' . '            block_type, ' . '           c_type, ' . '            isactive, dirname, func_file,' . '            show_func, edit_func, template, bcachetime, last_modified)' . '    SELECT ' . '        i.instanceid, c.mid, i.options, c.name, i.title, i.side, i.weight, i.visible, ' . "        {$block_key}, " . ($isClone ? " CASE WHEN c.show_func='b_system_custom_show' THEN 'C' ELSE 'D' END," : " CASE WHEN c.show_func='b_system_custom_show' THEN 'C' WHEN c.mid = 1 THEN 'S' ELSE 'M' END,") . "        CASE WHEN c.c_type='' THEN 'H' ELSE c.c_type END," . '        c.isactive, c.dirname, c.func_file,' . '        c.show_func, c.edit_func, c.template, i.bcachetime, c.last_modified' . '    FROM ' . $xoopsDB->prefix('block_instance') . ' AS i,' . '        ' . $xoopsDB->prefix('newblocks_bak') . ' AS c' . '    WHERE i.bid = c.bid' . '        AND i.instanceid = ' . $row['instanceid'];
+            $sql = '    INSERT INTO ' . $xoopsDB->prefix('newblocks') . '        (bid, mid, options, name, title, side, weight, visible, ' . '            func_num, ' . '            block_type, ' . '           c_type, '
+                   . '            isactive, dirname, func_file,' . '            show_func, edit_func, template, bcachetime, last_modified)' . '    SELECT ' . '        i.instanceid, c.mid, i.options, c.name, i.title, i.side, i.weight, i.visible, '
+                   . "        {$block_key}, " . ($isClone ? " CASE WHEN c.show_func='b_system_custom_show' THEN 'C' ELSE 'D' END," : " CASE WHEN c.show_func='b_system_custom_show' THEN 'C' WHEN c.mid = 1 THEN 'S' ELSE 'M' END,")
+                   . "        CASE WHEN c.c_type='' THEN 'H' ELSE c.c_type END," . '        c.isactive, c.dirname, c.func_file,' . '        c.show_func, c.edit_func, c.template, i.bcachetime, c.last_modified' . '    FROM '
+                   . $xoopsDB->prefix('block_instance') . ' AS i,' . '        ' . $xoopsDB->prefix('newblocks_bak') . ' AS c' . '    WHERE i.bid = c.bid' . '        AND i.instanceid = ' . $row['instanceid'];
             $xoopsDB->queryF($sql);
         }
 
@@ -382,11 +406,15 @@ class Upgrade_220 extends XoopsUpgrade
             }
 
             // Copy data from blocks table
-            $sql = '    INSERT INTO ' . $xoopsDB->prefix('newblocks') . '        (bid, mid, options, name, title, side, weight, visible, ' . '            func_num, ' . '            block_type, ' . '           c_type, ' . '            isactive, dirname, func_file,' . '            show_func, edit_func, template, bcachetime, last_modified)' . '    SELECT ' . "        bid + {$MaxInstanceId}, mid, options, name, name, 0, 0, 0, " . "        {$block_key}, " . "        CASE WHEN show_func='b_system_custom_show' THEN 'C' WHEN mid = 1 THEN 'S' ELSE 'M' END," . "        CASE WHEN c_type='' THEN 'H' ELSE c_type END," . '        isactive, dirname, func_file,' . '        show_func, edit_func, template, 0, last_modified' . '    FROM ' . $xoopsDB->prefix('newblocks_bak') . '    WHERE bid = ' . $row['bid'];
+            $sql = '    INSERT INTO ' . $xoopsDB->prefix('newblocks') . '        (bid, mid, options, name, title, side, weight, visible, ' . '            func_num, ' . '            block_type, ' . '           c_type, '
+                   . '            isactive, dirname, func_file,' . '            show_func, edit_func, template, bcachetime, last_modified)' . '    SELECT ' . "        bid + {$MaxInstanceId}, mid, options, name, name, 0, 0, 0, "
+                   . "        {$block_key}, " . "        CASE WHEN show_func='b_system_custom_show' THEN 'C' WHEN mid = 1 THEN 'S' ELSE 'M' END," . "        CASE WHEN c_type='' THEN 'H' ELSE c_type END," . '        isactive, dirname, func_file,'
+                   . '        show_func, edit_func, template, 0, last_modified' . '    FROM ' . $xoopsDB->prefix('newblocks_bak') . '    WHERE bid = ' . $row['bid'];
             $xoopsDB->queryF($sql);
 
             // Build block-module link
-            $sql = '    INSERT INTO ' . $xoopsDB->prefix('block_module_link') . '        (block_id, module_id)' . '    SELECT ' . "        bid + {$MaxInstanceId}, -1" . '    FROM ' . $xoopsDB->prefix('newblocks_bak') . '    WHERE bid = ' . $row['bid'];
+            $sql = '    INSERT INTO ' . $xoopsDB->prefix('block_module_link') . '        (block_id, module_id)' . '    SELECT ' . "        bid + {$MaxInstanceId}, -1" . '    FROM ' . $xoopsDB->prefix('newblocks_bak') . '    WHERE bid = '
+                   . $row['bid'];
             $xoopsDB->queryF($sql);
         }
 

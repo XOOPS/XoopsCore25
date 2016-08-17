@@ -34,7 +34,8 @@ class MytsWiki extends MyTextSanitizerExtension
     public function encode($textarea_id)
     {
         $config     = parent::loadConfig(__DIR__);
-        $code       = "<img src='{$this->image_path}/wiki.gif' alt='" . _XOOPS_FORM_ALTWIKI . "' title='" . _XOOPS_FORM_ALTWIKI . "' '" . "' onclick='xoopsCodeWiki(\"{$textarea_id}\",\"" . htmlspecialchars(_XOOPS_FORM_ENTERWIKITERM, ENT_QUOTES) . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
+        $code       = "<img src='{$this->image_path}/wiki.gif' alt='" . _XOOPS_FORM_ALTWIKI . "' title='" . _XOOPS_FORM_ALTWIKI . "' '" . "' onclick='xoopsCodeWiki(\"{$textarea_id}\",\"" . htmlspecialchars(_XOOPS_FORM_ENTERWIKITERM, ENT_QUOTES)
+                      . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
         $javascript = <<<EOH
             function xoopsCodeWiki(id, enterWikiPhrase)
             {
@@ -58,7 +59,8 @@ EOH;
 
         return array(
             $code,
-            $javascript);
+            $javascript
+        );
     }
 
     /**

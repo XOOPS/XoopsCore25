@@ -326,7 +326,7 @@ class XoopsComment extends XoopsObject
  * @author              Kazumi Ono    <onokazu@xoops.org>
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  *
- * @todo Why is this not a XoopsPersistableObjectHandler?
+ * @todo                Why is this not a XoopsPersistableObjectHandler?
  */
 class XoopsCommentHandler extends XoopsObjectHandler
 {
@@ -398,9 +398,15 @@ class XoopsCommentHandler extends XoopsObjectHandler
         // Start edit by voltan
         if ($comment->isNew()) {
             $com_id = $this->db->genId('xoopscomments_com_id_seq');
-            $sql    = sprintf('INSERT INTO %s (com_id, com_pid, com_modid, com_icon, com_title, com_text, com_created, com_modified, com_uid, com_user, com_email, com_url, com_ip, com_sig, com_itemid, com_rootid, com_status, com_exparams, dohtml, dosmiley, doxcode, doimage, dobr) VALUES (%u, %u, %u, %s, %s, %s, %u, %u, %u, %s, %s, %s, %s, %u, %u, %u, %u, %s, %u, %u, %u, %u, %u)', $this->db->prefix('xoopscomments'), $com_id, $com_pid, $com_modid, $this->db->quoteString($com_icon), $this->db->quoteString($com_title), $this->db->quoteString($com_text), $com_created, $com_modified, $com_uid, $this->db->quoteString($com_user), $this->db->quoteString($com_email), $this->db->quoteString($com_url), $this->db->quoteString($com_ip), $com_sig, $com_itemid, $com_rootid, $com_status, $this->db->quoteString($com_exparams), $dohtml, $dosmiley, $doxcode, $doimage, $dobr);
+            $sql    = sprintf('INSERT INTO %s (com_id, com_pid, com_modid, com_icon, com_title, com_text, com_created, com_modified, com_uid, com_user, com_email, com_url, com_ip, com_sig, com_itemid, com_rootid, com_status, com_exparams, dohtml, dosmiley, doxcode, doimage, dobr) VALUES (%u, %u, %u, %s, %s, %s, %u, %u, %u, %s, %s, %s, %s, %u, %u, %u, %u, %s, %u, %u, %u, %u, %u)',
+                              $this->db->prefix('xoopscomments'), $com_id, $com_pid, $com_modid, $this->db->quoteString($com_icon), $this->db->quoteString($com_title), $this->db->quoteString($com_text), $com_created, $com_modified, $com_uid,
+                              $this->db->quoteString($com_user), $this->db->quoteString($com_email), $this->db->quoteString($com_url), $this->db->quoteString($com_ip), $com_sig, $com_itemid, $com_rootid, $com_status,
+                              $this->db->quoteString($com_exparams), $dohtml, $dosmiley, $doxcode, $doimage, $dobr);
         } else {
-            $sql = sprintf('UPDATE %s SET com_pid = %u, com_icon = %s, com_title = %s, com_text = %s, com_created = %u, com_modified = %u, com_uid = %u, com_user = %s, com_email = %s, com_url = %s, com_ip = %s, com_sig = %u, com_itemid = %u, com_rootid = %u, com_status = %u, com_exparams = %s, dohtml = %u, dosmiley = %u, doxcode = %u, doimage = %u, dobr = %u WHERE com_id = %u', $this->db->prefix('xoopscomments'), $com_pid, $this->db->quoteString($com_icon), $this->db->quoteString($com_title), $this->db->quoteString($com_text), $com_created, $com_modified, $com_uid, $this->db->quoteString($com_user), $this->db->quoteString($com_email), $this->db->quoteString($com_url), $this->db->quoteString($com_ip), $com_sig, $com_itemid, $com_rootid, $com_status, $this->db->quoteString($com_exparams), $dohtml, $dosmiley, $doxcode, $doimage, $dobr, $com_id);
+            $sql = sprintf('UPDATE %s SET com_pid = %u, com_icon = %s, com_title = %s, com_text = %s, com_created = %u, com_modified = %u, com_uid = %u, com_user = %s, com_email = %s, com_url = %s, com_ip = %s, com_sig = %u, com_itemid = %u, com_rootid = %u, com_status = %u, com_exparams = %s, dohtml = %u, dosmiley = %u, doxcode = %u, doimage = %u, dobr = %u WHERE com_id = %u',
+                           $this->db->prefix('xoopscomments'), $com_pid, $this->db->quoteString($com_icon), $this->db->quoteString($com_title), $this->db->quoteString($com_text), $com_created, $com_modified, $com_uid,
+                           $this->db->quoteString($com_user), $this->db->quoteString($com_email), $this->db->quoteString($com_url), $this->db->quoteString($com_ip), $com_sig, $com_itemid, $com_rootid, $com_status,
+                           $this->db->quoteString($com_exparams), $dohtml, $dosmiley, $doxcode, $doimage, $dobr, $com_id);
         }
         // End edit by voltan
         if (!$result = $this->db->query($sql)) {
@@ -439,7 +445,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
      * Get some {@link XoopsComment}s
      *
      * @param CriteriaElement $criteria
-     * @param bool   $id_as_key Use IDs as keys into the array?
+     * @param bool            $id_as_key Use IDs as keys into the array?
      *
      * @return array Array of {@link XoopsComment} objects
      **/
@@ -628,9 +634,9 @@ class XoopsCommentHandler extends XoopsObjectHandler
     /**
      * Update
      *
-     * @param XoopsComment $comment    {@link XoopsComment} object
-     * @param string $field_name  Name of the field
-     * @param mixed  $field_value Value to write
+     * @param XoopsComment $comment     {@link XoopsComment} object
+     * @param string       $field_name  Name of the field
+     * @param mixed        $field_value Value to write
      *
      * @return bool
      **/

@@ -266,6 +266,7 @@ class XoopsLogger
     protected function isThrowable($e)
     {
         $type = interface_exists('\Throwable', false) ? '\Throwable' : '\Exception';
+
         return $e instanceof $type;
     }
 
@@ -447,5 +448,6 @@ function XoopsErrorHandler_HandleError($errNo, $errStr, $errFile, $errLine, $err
     */
     $logger = XoopsLogger::getInstance();
     $logger->handleError($errNo, $errStr, $errFile, $errLine, $errContext);
+
     return null;
 }

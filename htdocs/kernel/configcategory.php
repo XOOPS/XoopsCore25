@@ -216,7 +216,8 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
             $sort = !in_array($criteria->getSort(), array(
                 'confcat_id',
                 'confcat_name',
-                'confcat_order')) ? 'confcat_order' : $criteria->getSort();
+                'confcat_order'
+            )) ? 'confcat_order' : $criteria->getSort();
             $sql .= ' ORDER BY ' . $sort . ' ' . $criteria->getOrder();
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();

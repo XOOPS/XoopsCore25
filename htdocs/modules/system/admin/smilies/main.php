@@ -218,9 +218,10 @@ switch ($op) {
             $xoBreadCrumb->render();
             $smilies_img = $obj->getVar('smile_url') ?: 'blank.gif';
             xoops_confirm(array(
-                              'ok' => 1,
+                              'ok'         => 1,
                               'smilies_id' => $_REQUEST['smilies_id'],
-                              'op' => 'smilies_delete'), $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_SMILIES_SUREDEL) . '<br \><img src="' . XOOPS_UPLOAD_URL . '/' . $smilies_img . '" alt="" /><br \>');
+                              'op'         => 'smilies_delete'
+                          ), $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_SMILIES_SUREDEL) . '<br \><img src="' . XOOPS_UPLOAD_URL . '/' . $smilies_img . '" alt="" /><br \>');
         }
         break;
 

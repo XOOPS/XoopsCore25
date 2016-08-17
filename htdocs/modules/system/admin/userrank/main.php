@@ -182,8 +182,8 @@ switch ($op) {
                         $err[] = sprintf(_FAILSAVEIMG, $obj->getVar('rank_title'));
                     }
                 }
-            }else{
-                 $err[] = $uploader_rank_img->getErrors();
+            } else {
+                $err[] = $uploader_rank_img->getErrors();
             }
         } else {
             $obj->setVar('rank_image', 'ranks/' . $_POST['rank_image']);
@@ -244,9 +244,10 @@ switch ($op) {
             $xoBreadCrumb->render();
             $rank_img = $obj->getVar('rank_image') ?: 'blank.gif';
             xoops_confirm(array(
-                              'ok' => 1,
+                              'ok'      => 1,
                               'rank_id' => $_REQUEST['rank_id'],
-                              'op' => 'userrank_delete'), $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_USERRANK_SUREDEL) . '<br \><img src="' . XOOPS_UPLOAD_URL . '/' . $rank_img . '" alt="" /><br \>');
+                              'op'      => 'userrank_delete'
+                          ), $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_USERRANK_SUREDEL) . '<br \><img src="' . XOOPS_UPLOAD_URL . '/' . $rank_img . '" alt="" /><br \>');
             // Call Footer
             xoops_cp_footer();
         }

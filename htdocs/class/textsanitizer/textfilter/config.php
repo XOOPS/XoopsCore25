@@ -23,4 +23,7 @@ return $config = array(
     'patterns' => array( // patterns to be used for filtering
                          array(
                              'search'  => '',
-                             'replace' => '')));
+                             'replace' => ''
+                         )
+    )
+);

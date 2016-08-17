@@ -137,7 +137,8 @@ class ModuleAdmin
                 $ret .= "<a href=\"../" . $this->_obj->adminmenu[$i]['link'] . "\" title=\"" . (isset($this->_obj->adminmenu[$i]['desc']) ? $this->_obj->adminmenu[$i]['desc'] : '') . "\">";
                 //$ret .= "<img src=\"" . $path . $this->_obj->adminmenu[$i]['icon']. "\" alt=\"" . $this->_obj->adminmenu[$i]['title'] . "\" />";
                 //mb for direct URL access to icons in modules Admin
-                $ret .= "<img src=\"" . (filter_var($this->_obj->adminmenu[$i]['icon'], FILTER_VALIDATE_URL) ? $this->_obj->adminmenu[$i]['icon'] : $path . $this->_obj->adminmenu[$i]['icon']) . "\" alt=\"" . $this->_obj->adminmenu[$i]['title'] . "\" />";
+                $ret .= "<img src=\"" . (filter_var($this->_obj->adminmenu[$i]['icon'], FILTER_VALIDATE_URL) ? $this->_obj->adminmenu[$i]['icon'] : $path . $this->_obj->adminmenu[$i]['icon']) . "\" alt=\"" . $this->_obj->adminmenu[$i]['title']
+                        . "\" />";
 
                 $ret .= '<span>' . $this->_obj->adminmenu[$i]['title'] . '</span>';
                 $ret .= '</a>';
@@ -188,7 +189,8 @@ class ModuleAdmin
             $ret .= "<img src='"
                     //. $path . $this -> _itemButton[$i]['icon']
                     //mb for direct URL access to icons in modules Admin
-                    . (filter_var($this->_itemButton[$i]['icon'], FILTER_VALIDATE_URL) ? $this->_itemButton[$i]['icon'] : $path . $this->_itemButton[$i]['icon']) . "' title='" . $this->_itemButton[$i]['title'] . "' alt='" . $this->_itemButton[$i]['title'] . "' />" . $this->_itemButton[$i]['title'];
+                    . (filter_var($this->_itemButton[$i]['icon'], FILTER_VALIDATE_URL) ? $this->_itemButton[$i]['icon'] : $path . $this->_itemButton[$i]['icon']) . "' title='" . $this->_itemButton[$i]['title'] . "' alt='"
+                    . $this->_itemButton[$i]['title'] . "' />" . $this->_itemButton[$i]['title'];
             $ret .= "</a>\n";
             $ret .= $delimeter;
         }
@@ -208,7 +210,7 @@ class ModuleAdmin
      */
     public function addItemButton($title, $link, $icon = 'add', $extra = '')
     {
-        $ret = array();
+        $ret                 = array();
         $ret['title']        = $title;
         $ret['link']         = $link;
         $ret['icon']         = $icon . '.png';
@@ -360,7 +362,8 @@ class ModuleAdmin
             // xoops version
             if ($this->_obj->getInfo('min_xoops')) {
                 if (substr(XOOPS_VERSION, 6, strlen(XOOPS_VERSION) - 6) < $this->_obj->getInfo('min_xoops')) {
-                    $ret .= "<span style='color : red; font-weight : bold;'><img src='" . $path . "0.png' >" . sprintf(_AM_MODULEADMIN_CONFIG_XOOPS, $this->_obj->getInfo('min_xoops'), substr(XOOPS_VERSION, 6, strlen(XOOPS_VERSION) - 6)) . "</span>\n";
+                    $ret .= "<span style='color : red; font-weight : bold;'><img src='" . $path . "0.png' >" . sprintf(_AM_MODULEADMIN_CONFIG_XOOPS, $this->_obj->getInfo('min_xoops'), substr(XOOPS_VERSION, 6, strlen(XOOPS_VERSION) - 6))
+                            . "</span>\n";
                 } else {
                     $ret .= "<span style='color : green;'><img src='" . $path . "1.png' >" . sprintf(_AM_MODULEADMIN_CONFIG_XOOPS, $this->_obj->getInfo('min_xoops'), substr(XOOPS_VERSION, 6, strlen(XOOPS_VERSION) - 6)) . "</span>\n";
                 }
@@ -402,7 +405,7 @@ class ModuleAdmin
      */
     public function addInfoBox($title)
     {
-        $ret = array();
+        $ret                  = array();
         $ret['title']         = $title;
         $this->_itemInfoBox[] = $ret;
 
@@ -429,7 +432,7 @@ class ModuleAdmin
      */
     public function addInfoBoxLine($label, $text, $value = '', $color = 'inherit', $type = 'default')
     {
-        $ret = array();
+        $ret          = array();
         $ret['label'] = $label;
         $line         = '';
         switch ($type) {
@@ -490,7 +493,8 @@ class ModuleAdmin
         $module_info  = '<div id="about"><label>' . _AM_MODULEADMIN_ABOUT_DESCRIPTION . '</label><text>' . $this->_obj->getInfo('description') . '</text><br>
         <label>' . _AM_MODULEADMIN_ABOUT_UPDATEDATE . '</label><text class="bold">' . formatTimestamp($this->_obj->getVar('last_update'), 'm') . '</text><br>
         <label>' . _AM_MODULEADMIN_ABOUT_MODULESTATUS . '</label><text>' . $this->_obj->getInfo('module_status') . '</text><br>
-        <label>' . _AM_MODULEADMIN_ABOUT_WEBSITE . '</label><text><a class="tooltip" href="http://' . $this->_obj->getInfo('module_website_url') . '" rel="external" title="' . $this->_obj->getInfo('module_website_name') . ' - ' . $this->_obj->getInfo('module_website_url') . '">
+        <label>' . _AM_MODULEADMIN_ABOUT_WEBSITE . '</label><text><a class="tooltip" href="http://' . $this->_obj->getInfo('module_website_url') . '" rel="external" title="' . $this->_obj->getInfo('module_website_name') . ' - '
+                        . $this->_obj->getInfo('module_website_url') . '">
                         ' . $this->_obj->getInfo('module_website_name') . '</a></text></div>';
         $ret .= "<table>\n<tr>\n<td width=\"100px\">\n";
         $ret .= "<img src='" . XOOPS_URL . '/modules/' . $this->_obj->getVar('dirname') . '/' . $this->_obj->getInfo('image') . "' alt='" . $this->_obj->getVar('name') . "' style='float: left; margin-right: 10px;' />\n";

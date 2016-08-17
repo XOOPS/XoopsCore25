@@ -182,7 +182,10 @@ class XoopsFolderHandler
                         $item = $n;
                     }
                 } else {
-                    if ((!preg_match('/^\\.+$/', $n) && $exceptions == false) || ($exceptions == true && !preg_match('/^\\.(.*)$/', $n))) {
+                    if ((!preg_match('/^\\.+$/', $n) && $exceptions == false)
+                        || ($exceptions == true
+                            && !preg_match('/^\\.(.*)$/', $n))
+                    ) {
                         $item = $n;
                     }
                 }
@@ -203,7 +206,8 @@ class XoopsFolderHandler
 
         return array(
             $dirs,
-            $files);
+            $files
+        );
     }
 
     /**
@@ -487,17 +491,19 @@ class XoopsFolderHandler
         $path              = rtrim($path, '/');
         $this->files       = array();
         $this->directories = array(
-            $path);
+            $path
+        );
         $directories       = array();
         while (count($this->directories)) {
             $dir = array_pop($this->directories);
             $this->_tree($dir, $hidden);
-            $directories[] =  $dir;
+            $directories[] = $dir;
         }
         if ($type === null) {
             return array(
                 $directories,
-                $this->files);
+                $this->files
+            );
         }
         if ($type === 'dir') {
             return $directories;
@@ -521,14 +527,17 @@ class XoopsFolderHandler
             $dirHandle = opendir($path);
             while (false !== ($item = readdir($dirHandle))) {
                 $found = false;
-                if (($hidden === true && $item !== '.' && $item !== '..') || ($hidden === false && !preg_match('/^\\.(.*)$/', $item))) {
+                if (($hidden === true && $item !== '.' && $item !== '..')
+                    || ($hidden === false
+                        && !preg_match('/^\\.(.*)$/', $item))
+                ) {
                     $found = $path . '/' . $item;
                 }
                 if ($found !== false) {
                     if (is_dir($found)) {
-                        $this->directories[] =  $found;
+                        $this->directories[] = $found;
                     } else {
-                        $this->files[] =  $found;
+                        $this->files[] = $found;
                     }
                 }
             }
@@ -683,7 +692,8 @@ class XoopsFolderHandler
                                    'to'   => $to,
                                    'from' => $this->path,
                                    'mode' => $this->mode,
-                                   'skip' => array()), $options);
+                                   'skip' => array()
+                               ), $options);
 
         $fromDir = $options['from'];
         $toDir   = $options['to'];
@@ -704,7 +714,8 @@ class XoopsFolderHandler
         $exceptions = array_merge(array(
                                       '.',
                                       '..',
-                                      '.svn'), $options['skip']);
+                                      '.svn'
+                                  ), $options['skip']);
         $handle     = opendir($fromDir);
         if ($handle) {
             while (false !== ($item = readdir($handle))) {
@@ -725,8 +736,9 @@ class XoopsFolderHandler
                             chmod($to, intval($mode, 8));
                             $this->messages[] = sprintf('%s created', $to);
                             $options          = array_merge($options, array(
-                                                                        'to'   => $to,
-                                                                        'from' => $from));
+                                'to'   => $to,
+                                'from' => $from
+                            ));
                             $this->copy($options);
                         } else {
                             $this->errors[] = sprintf('%s not created', $to);
@@ -764,7 +776,8 @@ class XoopsFolderHandler
                                    'to'   => $to,
                                    'from' => $this->path,
                                    'mode' => $this->mode,
-                                   'skip' => array()), $options);
+                                   'skip' => array()
+                               ), $options);
         if ($this->copy($options)) {
             if ($this->delete($options['from'])) {
                 return $this->cd($options['to']);

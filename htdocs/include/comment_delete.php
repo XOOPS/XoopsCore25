@@ -25,10 +25,11 @@ include_once $GLOBALS['xoops']->path('include/comment_constants.php');
 $op = 'delete';
 
 $filters = array(
-    'com_mode' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-    'op' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+    'com_mode'  => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+    'op'        => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
     'com_order' => FILTER_VALIDATE_INT,
-    'com_id' => FILTER_VALIDATE_INT);
+    'com_id'    => FILTER_VALIDATE_INT
+);
 
 if (!empty($_POST)) {
     $result = filter_input_array(INPUT_POST, $filters);
@@ -123,7 +124,9 @@ switch ($op) {
             if (!function_exists($comment_config['callback']['update'])) {
                 if (isset($comment_config['callbackFile'])) {
                     $callbackfile = trim($comment_config['callbackFile']);
-                    if ($callbackfile != '' && file_exists($file = $GLOBALS['xoops']->path('modules/' . $moddir . '/' . $callbackfile))) {
+                    if ($callbackfile != ''
+                        && file_exists($file = $GLOBALS['xoops']->path('modules/' . $moddir . '/' . $callbackfile))
+                    ) {
                         include_once $file;
                     }
                     if (!function_exists($comment_config['callback']['update'])) {
@@ -237,7 +240,9 @@ switch ($op) {
             if (!function_exists($comment_config['callback']['update'])) {
                 if (isset($comment_config['callbackFile'])) {
                     $callbackfile = trim($comment_config['callbackFile']);
-                    if ($callbackfile != '' && file_exists($file = $GLOBALS['xoops']->path('modules/' . $moddir . '/' . $callbackfile))) {
+                    if ($callbackfile != ''
+                        && file_exists($file = $GLOBALS['xoops']->path('modules/' . $moddir . '/' . $callbackfile))
+                    ) {
                         include_once $file;
                     }
                     if (!function_exists($comment_config['callback']['update'])) {
@@ -270,7 +275,9 @@ switch ($op) {
             'com_order' => $com_order,
             'op'        => array(
                 _CM_DELETEONE => 'delete_one',
-                _CM_DELETEALL => 'delete_all'));
+                _CM_DELETEALL => 'delete_all'
+            )
+        );
         if (!empty($comment_confirm_extra) && is_array($comment_confirm_extra)) {
             $comment_confirm += $comment_confirm_extra;
         }

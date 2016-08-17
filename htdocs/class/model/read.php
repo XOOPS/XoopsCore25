@@ -190,8 +190,13 @@ class XoopsModelRead extends XoopsModelAbstract
      * @param  bool            $asObject flag indicating as object, otherwise as array
      * @return array           of objects    {@link XoopsObject}
      */
-    public function &getByLimit($limit = 0, $start = 0, CriteriaElement $criteria = null, $fields = null, $asObject = true)
-    {
+    public function &getByLimit(
+        $limit = 0,
+        $start = 0,
+        CriteriaElement $criteria = null,
+        $fields = null,
+        $asObject = true
+    ) {
         $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . '() is deprecated, please use getAll instead.');
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $criteria->setLimit($limit);

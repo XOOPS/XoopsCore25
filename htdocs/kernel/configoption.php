@@ -166,29 +166,16 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
             return false;
         }
 
-        $confop_id = $confoption->getVar('confop_id');
-        $confop_name = $confoption->getVar('confop_name');
+        $confop_id    = $confoption->getVar('confop_id');
+        $confop_name  = $confoption->getVar('confop_name');
         $confop_value = $confoption->getVar('confop_value');
-        $conf_id = $confoption->getVar('conf_id');
+        $conf_id      = $confoption->getVar('conf_id');
 
         if ($confoption->isNew()) {
             $confop_id = $this->db->genId('configoption_confop_id_seq');
-            $sql       = sprintf(
-                'INSERT INTO %s (confop_id, confop_name, confop_value, conf_id) VALUES (%u, %s, %s, %u)',
-                $this->db->prefix('configoption'),
-                $confop_id,
-                $this->db->quote($confop_name),
-                $this->db->quote($confop_value),
-                $conf_id
-            );
+            $sql       = sprintf('INSERT INTO %s (confop_id, confop_name, confop_value, conf_id) VALUES (%u, %s, %s, %u)', $this->db->prefix('configoption'), $confop_id, $this->db->quote($confop_name), $this->db->quote($confop_value), $conf_id);
         } else {
-            $sql = sprintf(
-                'UPDATE %s SET confop_name = %s, confop_value = %s WHERE confop_id = %u',
-                $this->db->prefix('configoption'),
-                $this->db->quote($confop_name),
-                $this->db->quote($confop_value),
-                $confop_id
-            );
+            $sql = sprintf('UPDATE %s SET confop_name = %s, confop_value = %s WHERE confop_id = %u', $this->db->prefix('configoption'), $this->db->quote($confop_name), $this->db->quote($confop_value), $confop_id);
         }
         if (!$result = $this->db->query($sql)) {
             return false;

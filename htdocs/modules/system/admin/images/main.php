@@ -320,7 +320,8 @@ switch ($op) {
             $xoBreadCrumb->addLink($image_cat->getVar('imgcat_name'), system_adminVersion('images', 'adminpath') . '&amp;op=listimg&amp;imgcat_id=' . $image->getVar('imgcat_id'));
             $xoBreadCrumb->addLink(_AM_SYSTEM_IMAGES_EDITIMG);
             $xoBreadCrumb->render();
-            $msg = '<div class="txtcenter"><img class="tooltip" src="' . XOOPS_URL . '/image.php?id=' . $image->getVar('image_id') . '&amp;width=120&amp;height=120" alt="' . $image->getVar('image_nicename') . '" title="' . $image->getVar('image_nicename') . '" style="max-width:120px; max-height:120px;"/></div>';
+            $msg = '<div class="txtcenter"><img class="tooltip" src="' . XOOPS_URL . '/image.php?id=' . $image->getVar('image_id') . '&amp;width=120&amp;height=120" alt="' . $image->getVar('image_nicename') . '" title="'
+                   . $image->getVar('image_nicename') . '" style="max-width:120px; max-height:120px;"/></div>';
 
             $xoopsTpl->assign('edit_thumbs', $msg);
 
@@ -448,7 +449,8 @@ switch ($op) {
             'image/pjpeg',
             'image/x-png',
             'image/png',
-            'image/bmp'), $imagecategory->getVar('imgcat_maxsize'), $imagecategory->getVar('imgcat_maxwidth'), $imagecategory->getVar('imgcat_maxheight'));
+            'image/bmp'
+        ), $imagecategory->getVar('imgcat_maxsize'), $imagecategory->getVar('imgcat_maxwidth'), $imagecategory->getVar('imgcat_maxheight'));
         $uploader->setPrefix('img');
         $err    = array();
         $ucount = count($_POST['xoops_upload_file']);

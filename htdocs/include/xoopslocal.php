@@ -55,7 +55,8 @@ function xoops_local()
     // local method defined
     return call_user_func_array(array(
                                     'XoopsLocal',
-                                    $func), $func_args);
+                                    $func
+                                ), $func_args);
 }
 
 XoopsLocalWrapper::load();

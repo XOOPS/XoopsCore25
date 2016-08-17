@@ -23,4 +23,5 @@ return $config = array(
     'private_key' => 'YourPrivateApiKey',
     'public_key'  => 'YourPublicApiKey',
     'theme'       => 'white', // 'red' | 'white' | 'blackglass' | 'clean' | 'custom'
-    'lang'        => _LANGCODE);
+    'lang'        => _LANGCODE
+);

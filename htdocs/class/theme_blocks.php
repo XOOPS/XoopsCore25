@@ -84,17 +84,22 @@ class xos_logos_PageBuilder
         if (isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule'])) {
             list($mid, $dirname) = array(
                 $GLOBALS['xoopsModule']->getVar('mid'),
-                $GLOBALS['xoopsModule']->getVar('dirname'));
-            $isStart = (substr($_SERVER['PHP_SELF'], -9) === 'index.php' && $xoopsConfig['startpage'] == $dirname && empty($_SERVER['QUERY_STRING']));
+                $GLOBALS['xoopsModule']->getVar('dirname')
+            );
+            $isStart = (substr($_SERVER['PHP_SELF'], -9) === 'index.php' && $xoopsConfig['startpage'] == $dirname
+                        && empty($_SERVER['QUERY_STRING']));
         } else {
             list($mid, $dirname) = array(
                 0,
-                'system');
+                'system'
+            );
             $isStart = !empty($GLOBALS['xoopsOption']['show_cblock']);
         }
 
-        $groups = (isset($GLOBALS['xoopsUser']) && is_object($GLOBALS['xoopsUser'])) ? $GLOBALS['xoopsUser']->getGroups() : array(
-            XOOPS_GROUP_ANONYMOUS);
+        $groups = (isset($GLOBALS['xoopsUser'])
+                   && is_object($GLOBALS['xoopsUser'])) ? $GLOBALS['xoopsUser']->getGroups() : array(
+            XOOPS_GROUP_ANONYMOUS
+        );
 
         $oldzones = array(
             XOOPS_SIDEBLOCK_LEFT          => 'canvas_left',
@@ -108,7 +113,8 @@ class xos_logos_PageBuilder
             XOOPS_FOOTERBLOCK_LEFT        => 'footer_left',
             XOOPS_FOOTERBLOCK_RIGHT       => 'footer_right',
             XOOPS_FOOTERBLOCK_CENTER      => 'footer_center',
-            XOOPS_FOOTERBLOCK_ALL         => 'footer_all');
+            XOOPS_FOOTERBLOCK_ALL         => 'footer_all'
+        );
 
         foreach ($oldzones as $zone) {
             $this->blocks[$zone] = array();
@@ -117,7 +123,8 @@ class xos_logos_PageBuilder
             $template =& $this->theme->template;
             $backup   = array(
                 $template->caching,
-                $template->cache_lifetime);
+                $template->cache_lifetime
+            );
         } else {
             $template = null;
             $template = new XoopsTpl();
@@ -169,7 +176,8 @@ class xos_logos_PageBuilder
             'title'   => $xobject->getVar('title'),
             // 'name'        => strtolower( preg_replace( '/[^0-9a-zA-Z_]/', '', str_replace( ' ', '_', $xobject->getVar( 'name' ) ) ) ),
             'weight'  => $xobject->getVar('weight'),
-            'lastmod' => $xobject->getVar('last_modified'));
+            'lastmod' => $xobject->getVar('last_modified')
+        );
 
         $bcachetime = (int)$xobject->getVar('bcachetime');
         if (empty($bcachetime)) {

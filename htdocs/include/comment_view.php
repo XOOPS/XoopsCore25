@@ -31,7 +31,8 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
     xoops_loadLanguage('comment');
 
     $comment_config = $xoopsModule->getInfo('comments');
-    $com_itemid     = (trim($comment_config['itemName']) != '' && isset($_GET[$comment_config['itemName']])) ? (int)$_GET[$comment_config['itemName']] : 0;
+    $com_itemid     = (trim($comment_config['itemName']) != ''
+                       && isset($_GET[$comment_config['itemName']])) ? (int)$_GET[$comment_config['itemName']] : 0;
     if ($com_itemid > 0) {
         $com_mode = isset($_GET['com_mode']) ? htmlspecialchars(trim($_GET['com_mode']), ENT_QUOTES) : '';
         if ($com_mode == '') {
@@ -53,12 +54,14 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
         if ($com_order != XOOPS_COMMENT_OLD1ST) {
             $xoopsTpl->assign(array(
                                   'comment_order' => XOOPS_COMMENT_NEW1ST,
-                                  'order_other'   => XOOPS_COMMENT_OLD1ST));
+                                  'order_other'   => XOOPS_COMMENT_OLD1ST
+                              ));
             $com_dborder = 'DESC';
         } else {
             $xoopsTpl->assign(array(
                                   'comment_order' => XOOPS_COMMENT_OLD1ST,
-                                  'order_other'   => XOOPS_COMMENT_NEW1ST));
+                                  'order_other'   => XOOPS_COMMENT_NEW1ST
+                              ));
             $com_dborder = 'ASC';
         }
         // admins can view all comments and IPs, others can only view approved(active) comments
@@ -100,7 +103,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
             if (!empty($com_id) && !empty($com_rootid) && ($com_id != $com_rootid)) {
                 // Show specific thread tree
                 $comments = $comment_handler->getThread($com_rootid, $com_id);
-//                if (false != $comments) {
+                //                if (false != $comments) {
                 if (!empty($comments)) {  // getThread always returns array - changed in 2.5.9
                     include_once $GLOBALS['xoops']->path('class/commentrenderer.php');
                     $renderer = XoopsCommentRenderer::instance($xoopsTpl);
@@ -114,7 +117,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
                 if ($c_count > 0) {
                     for ($i = 0; $i < $c_count; ++$i) {
                         $comments = $comment_handler->getThread($top_comments[$i]->getVar('com_rootid'), $top_comments[$i]->getVar('com_id'));
-//                        if (false != $comments) {
+                        //                        if (false != $comments) {
                         if (!empty($comments)) {  // $getThread always returns array - changed in 2.5.9
                             include_once $GLOBALS['xoops']->path('class/commentrenderer.php');
                             $renderer = XoopsCommentRenderer::instance($xoopsTpl);
@@ -290,7 +293,8 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
                               'commentsnav'        => $navbar,
                               'editcomment_link'   => 'comment_edit.php?com_itemid=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode . '' . $link_extra,
                               'deletecomment_link' => 'comment_delete.php?com_itemid=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode . '' . $link_extra,
-                              'replycomment_link'  => 'comment_reply.php?com_itemid=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode . '' . $link_extra));
+                              'replycomment_link'  => 'comment_reply.php?com_itemid=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode . '' . $link_extra
+                          ));
 
         // assign some lang variables
         $xoopsTpl->assign(array(
@@ -305,6 +309,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
                               'lang_subject' => _CM_REPLIES,
                               'lang_posted'  => _CM_POSTED,
                               'lang_updated' => _CM_UPDATED,
-                              'lang_notice'  => _CM_NOTICE));
+                              'lang_notice'  => _CM_NOTICE
+                          ));
     }
 }

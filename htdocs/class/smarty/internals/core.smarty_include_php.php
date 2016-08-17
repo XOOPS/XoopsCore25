@@ -1,19 +1,19 @@
 <?php
 /**
  * Smarty plugin
- * @package Smarty
+ * @package    Smarty
  * @subpackage plugins
  */
 
 /**
  * called for included php files within templates
  *
- * @param string $smarty_file
- * @param string $smarty_assign variable to assign the included template's
- *               output into
- * @param boolean $smarty_once uses include_once if this is true
- * @param array $smarty_include_vars associative array of vars from
- *              {include file="blah" var=$var}
+ * @param string  $smarty_file
+ * @param string  $smarty_assign       variable to assign the included template's
+ *                                     output into
+ * @param boolean $smarty_once         uses include_once if this is true
+ * @param array   $smarty_include_vars associative array of vars from
+ *                                     {include file="blah" var=$var}
  */
 
 //  $file, $assign, $once, $_smarty_include_vars
@@ -24,7 +24,7 @@ function smarty_core_smarty_include_php($params, &$smarty)
     require_once(SMARTY_CORE_DIR . 'core.get_php_resource.php');
     smarty_core_get_php_resource($_params, $smarty);
     $_smarty_resource_type = $_params['resource_type'];
-    $_smarty_php_resource = $_params['php_resource'];
+    $_smarty_php_resource  = $_params['php_resource'];
 
     if (!empty($params['smarty_assign'])) {
         ob_start();
@@ -43,7 +43,6 @@ function smarty_core_smarty_include_php($params, &$smarty)
         }
     }
 }
-
 
 /* vim: set expandtab: */
 

@@ -32,7 +32,9 @@ $xoopsPreload = XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.index.start');
 
 //check if start page is defined
-if (isset($xoopsConfig['startpage']) && $xoopsConfig['startpage'] != '' && $xoopsConfig['startpage'] != '--' && xoops_isActiveModule($xoopsConfig['startpage'])) {
+if (isset($xoopsConfig['startpage']) && $xoopsConfig['startpage'] != '' && $xoopsConfig['startpage'] != '--'
+    && xoops_isActiveModule($xoopsConfig['startpage'])
+) {
     // Temporary solution for start page redirection
     define('XOOPS_STARTPAGE_REDIRECTED', 1);
 
@@ -56,7 +58,9 @@ if (isset($xoopsConfig['startpage']) && $xoopsConfig['startpage'] != '' && $xoop
             redirect_header(XOOPS_URL . '/user.php', 1, _NOPERM);
         }
     }
-    if ($xoopsModule->getVar('hasconfig') == 1 || $xoopsModule->getVar('hascomments') == 1 || $xoopsModule->getVar('hasnotification') == 1) {
+    if ($xoopsModule->getVar('hasconfig') == 1 || $xoopsModule->getVar('hascomments') == 1
+        || $xoopsModule->getVar('hasnotification') == 1
+    ) {
         $xoopsModuleConfig = $config_handler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
     }
 

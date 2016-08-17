@@ -175,7 +175,7 @@ class XoopsNotification extends XoopsObject
                 break;
             default:
                 return true; // report error in user's profile??
-//                break;
+            //                break;
         }
 
         // Set up the mailer
@@ -290,9 +290,11 @@ class XoopsNotificationHandler extends XoopsObjectHandler
         }
         if ($notification->isNew()) {
             $not_id = $this->db->genId('xoopsnotifications_not_id_seq');
-            $sql    = sprintf('INSERT INTO %s (not_id, not_modid, not_itemid, not_category, not_uid, not_event, not_mode) VALUES (%u, %u, %u, %s, %u, %s, %u)', $this->db->prefix('xoopsnotifications'), $not_id, $not_modid, $not_itemid, $this->db->quoteString($not_category), $not_uid, $this->db->quoteString($not_event), $not_mode);
+            $sql    = sprintf('INSERT INTO %s (not_id, not_modid, not_itemid, not_category, not_uid, not_event, not_mode) VALUES (%u, %u, %u, %s, %u, %s, %u)', $this->db->prefix('xoopsnotifications'), $not_id, $not_modid, $not_itemid,
+                              $this->db->quoteString($not_category), $not_uid, $this->db->quoteString($not_event), $not_mode);
         } else {
-            $sql = sprintf('UPDATE %s SET not_modid = %u, not_itemid = %u, not_category = %s, not_uid = %u, not_event = %s, not_mode = %u WHERE not_id = %u', $this->db->prefix('xoopsnotifications'), $not_modid, $not_itemid, $this->db->quoteString($not_category), $not_uid, $this->db->quoteString($not_event), $not_mode, $not_id);
+            $sql = sprintf('UPDATE %s SET not_modid = %u, not_itemid = %u, not_category = %s, not_uid = %u, not_event = %s, not_mode = %u WHERE not_id = %u', $this->db->prefix('xoopsnotifications'), $not_modid, $not_itemid,
+                           $this->db->quoteString($not_category), $not_uid, $this->db->quoteString($not_event), $not_mode, $not_id);
         }
         if (!$result = $this->db->query($sql)) {
             return false;
@@ -517,6 +519,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
                 $this->insert($notification);
             }
         }
+
         return null;
     }
 
@@ -595,14 +598,14 @@ class XoopsNotificationHandler extends XoopsObjectHandler
     /**
      * Send notifications to users
      *
-     * @param string $category     notification category
-     * @param int    $item_id      ID of the item
-     * @param array  $events       trigger events
-     * @param array  $extra_tags   array of substitutions for template to be
+     * @param string $category      notification category
+     * @param int    $item_id       ID of the item
+     * @param array  $events        trigger events
+     * @param array  $extra_tags    array of substitutions for template to be
      *                              merged with the one from function..
-     * @param array  $user_list    only notify the selected users
-     * @param int    $module_id    ID of the module
-     * @param int    $omit_user_id ID of the user to omit from notifications. (default to current user).  set to 0 for all users to receive notification.
+     * @param array  $user_list     only notify the selected users
+     * @param int    $module_id     ID of the module
+     * @param int    $omit_user_id  ID of the user to omit from notifications. (default to current user).  set to 0 for all users to receive notification.
      * @internal param string $event notification event
      */
     // TODO:(?) - pass in an event LIST.  This will help to avoid
@@ -611,8 +614,15 @@ class XoopsNotificationHandler extends XoopsObjectHandler
     // mail templates can include logic in the future, then we can
     // tailor the mail so it makes sense for any of the possible
     // (or combination of) events.
-    public function triggerEvents($category, $item_id, $events, $extra_tags = array(), $user_list = array(), $module_id = null, $omit_user_id = null)
-    {
+    public function triggerEvents(
+        $category,
+        $item_id,
+        $events,
+        $extra_tags = array(),
+        $user_list = array(),
+        $module_id = null,
+        $omit_user_id = null
+    ) {
         if (!is_array($events)) {
             $events = array($events);
         }
@@ -633,8 +643,15 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      * @param  int   $omit_user_id
      * @return mixed
      */
-    public function triggerEvent($category, $item_id, $event, $extra_tags = array(), $user_list = array(), $module_id = null, $omit_user_id = null)
-    {
+    public function triggerEvent(
+        $category,
+        $item_id,
+        $event,
+        $extra_tags = array(),
+        $user_list = array(),
+        $module_id = null,
+        $omit_user_id = null
+    ) {
         if (!isset($module_id)) {
             global $xoopsModule;
             $module    =& $xoopsModule;
@@ -652,7 +669,9 @@ class XoopsNotificationHandler extends XoopsObjectHandler
         }
         $category_info =& notificationCategoryInfo($category, $module_id);
         $event_info    =& notificationEventInfo($category, $event, $module_id);
-        if (!in_array(notificationGenerateConfig($category_info, $event_info, 'option_name'), $mod_config['notification_events']) && empty($event_info['invisible'])) {
+        if (!in_array(notificationGenerateConfig($category_info, $event_info, 'option_name'), $mod_config['notification_events'])
+            && empty($event_info['invisible'])
+        ) {
             return false;
         }
 
@@ -738,6 +757,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
                 $notification->notifyUser($template_dir, $template, $subject, $tags);
             }
         }
+
         return null;
     }
 

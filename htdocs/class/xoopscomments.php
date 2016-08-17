@@ -102,7 +102,8 @@ class XoopsComments extends XoopsObject
         if (empty($comment_id)) {
             $isnew      = true;
             $comment_id = $this->db->genId($this->ctable . '_comment_id_seq');
-            $sql        = sprintf("INSERT INTO %s (comment_id, pid, item_id, date, user_id, ip, subject, comment, nohtml, nosmiley, noxcode, icon) VALUES (%u, %u, %u, %u, %u, '%s', '%s', '%s', %u, %u, %u, '%s')", $this->ctable, $comment_id, $pid, $item_id, time(), $user_id, $ip, $subject, $comment, $nohtml, $nosmiley, $noxcode, $icon);
+            $sql        = sprintf("INSERT INTO %s (comment_id, pid, item_id, date, user_id, ip, subject, comment, nohtml, nosmiley, noxcode, icon) VALUES (%u, %u, %u, %u, %u, '%s', '%s', '%s', %u, %u, %u, '%s')", $this->ctable, $comment_id, $pid,
+                                  $item_id, time(), $user_id, $ip, $subject, $comment, $nohtml, $nosmiley, $noxcode, $icon);
         } else {
             $sql = sprintf("UPDATE %s SET subject = '%s', comment = '%s', nohtml = %u, nosmiley = %u, noxcode = %u, icon = '%s'  WHERE comment_id = %u", $this->ctable, $subject, $comment, $nohtml, $nosmiley, $noxcode, $icon, $comment_id);
         }
@@ -184,8 +185,13 @@ class XoopsComments extends XoopsObject
      * @param  int    $start
      * @return array
      */
-    public function getAllComments($criteria = array(), $asobject = true, $orderby = 'comment_id ASC', $limit = 0, $start = 0)
-    {
+    public function getAllComments(
+        $criteria = array(),
+        $asobject = true,
+        $orderby = 'comment_id ASC',
+        $limit = 0,
+        $start = 0
+    ) {
         $ret         = array();
         $where_query = '';
         if (is_array($criteria) && count($criteria) > 0) {
@@ -328,7 +334,10 @@ class XoopsComments extends XoopsObject
             $profile_image = "<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $poster->getVar('uid') . "'><img src='" . XOOPS_URL . "/images/icons/profile.gif' alt='" . _PROFILE . "' /></a>";
             $pm_image      = '';
             if ($xoopsUser) {
-                $pm_image = "<a href='javascript:openWithSelfMain(\"" . XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . $poster->getVar('uid') . "\",\"pmlite\",450,370);'><img src='" . XOOPS_URL . "/images/icons/pm.gif' alt='" . sprintf(_SENDPMTO, $poster->getVar('uname', 'E')) . "' /></a>";
+                $pm_image = "<a href='javascript:openWithSelfMain(\"" . XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . $poster->getVar('uid') . "\",\"pmlite\",450,370);'><img src='" . XOOPS_URL . "/images/icons/pm.gif' alt='" . sprintf(_SENDPMTO,
+                                                                                                                                                                                                                                                $poster->getVar('uname',
+                                                                                                                                                                                                                                                                'E'))
+                            . "' /></a>";
             }
             $email_image = '';
             if ($poster->getVar('user_viewemail')) {
@@ -355,7 +364,8 @@ class XoopsComments extends XoopsObject
             if ($poster->getVar('user_msnm') != '') {
                 $msnm_image = "<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $poster->getVar('uid') . "'><img src='" . XOOPS_URL . "/images/icons/msnm.gif' alt='msnm' /></a>";
             }
-            showThread($color_num, $subject_image, $this->getVar('subject'), $text, $post_date, $ip_image, $reply_image, $edit_image, $delete_image, $poster->getVar('uname'), $rank['title'], $rank['image'], $avatar_image, $reg_date, $posts, $user_from, $online_image, $profile_image, $pm_image, $email_image, $www_image, $icq_image, $aim_image, $yim_image, $msnm_image);
+            showThread($color_num, $subject_image, $this->getVar('subject'), $text, $post_date, $ip_image, $reply_image, $edit_image, $delete_image, $poster->getVar('uname'), $rank['title'], $rank['image'], $avatar_image, $reg_date, $posts,
+                       $user_from, $online_image, $profile_image, $pm_image, $email_image, $www_image, $icq_image, $aim_image, $yim_image, $msnm_image);
         } else {
             showThread($color_num, $subject_image, $this->getVar('subject'), $this->getVar('comment'), $post_date, $ip_image, $reply_image, $edit_image, $delete_image, $xoopsConfig['anonymous']);
         }
@@ -377,7 +387,8 @@ class XoopsComments extends XoopsObject
      */
     public function showTreeHead($width = '100%')
     {
-        echo "<table border='0' class='outer' cellpadding='0' cellspacing='0' align='center' width='$width'><tr class='bg3' align='center'><td colspan='3'>" . _CM_REPLIES . "</td></tr><tr class='bg3' align='left'><td width='60%' class='fg2'>" . _CM_TITLE . "</td><td width='20%' class='fg2'>" . _CM_POSTER . "</td><td class='fg2'>" . _CM_POSTED . '</td></tr>';
+        echo "<table border='0' class='outer' cellpadding='0' cellspacing='0' align='center' width='$width'><tr class='bg3' align='center'><td colspan='3'>" . _CM_REPLIES . "</td></tr><tr class='bg3' align='left'><td width='60%' class='fg2'>"
+             . _CM_TITLE . "</td><td width='20%' class='fg2'>" . _CM_POSTER . "</td><td class='fg2'>" . _CM_POSTED . '</td></tr>';
     }
 
     /**
@@ -399,7 +410,9 @@ class XoopsComments extends XoopsObject
         if ($this->getVar('icon') != '') {
             $icon = 'subject/' . $this->getVar('icon', 'E');
         }
-        echo "<tr class='$bg' align='left'><td>" . $prefix . "<img src='" . XOOPS_URL . '/images/' . $icon . "'>&nbsp;<a href='" . $_SERVER['PHP_SELF'] . '?item_id=' . $this->getVar('item_id') . '&amp;comment_id=' . $this->getVar('comment_id') . '&amp;mode=' . $mode . '&amp;order=' . $order . '#' . $this->getVar('comment_id') . "'>" . $this->getVar('subject') . "</a></td><td><a href='" . XOOPS_URL . '/userinfo.php?uid=' . $this->getVar('user_id') . "'>" . XoopsUser::getUnameFromId($this->getVar('user_id')) . '</a></td><td>' . $date . '</td></tr>';
+        echo "<tr class='$bg' align='left'><td>" . $prefix . "<img src='" . XOOPS_URL . '/images/' . $icon . "'>&nbsp;<a href='" . $_SERVER['PHP_SELF'] . '?item_id=' . $this->getVar('item_id') . '&amp;comment_id=' . $this->getVar('comment_id')
+             . '&amp;mode=' . $mode . '&amp;order=' . $order . '#' . $this->getVar('comment_id') . "'>" . $this->getVar('subject') . "</a></td><td><a href='" . XOOPS_URL . '/userinfo.php?uid=' . $this->getVar('user_id') . "'>"
+             . XoopsUser::getUnameFromId($this->getVar('user_id')) . '</a></td><td>' . $date . '</td></tr>';
     }
 
     /**

@@ -80,7 +80,7 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
     }
 
     $export_string = '';
-    $rowLimit = 100;
+    $rowLimit      = 100;
 
     while ($row_table = $db->fetchArray($srs)) {
         $table = $row_table['Name'];
@@ -88,26 +88,26 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
             continue;
         }
         $drawCreate = $db->queryF("SHOW CREATE TABLE `$table`");
-        $create = $db->fetchRow($drawCreate);
+        $create     = $db->fetchRow($drawCreate);
         $db->freeRecordSet($drawCreate);
 
         $exportString .= "\nDROP TABLE IF EXISTS `$table`;\n{$create[1]};\n\n";
-        $result      = $db->query("SELECT * FROM `$table`");
-        $fieldCount  = $db->getFieldsNum($result);
+        $result     = $db->query("SELECT * FROM `$table`");
+        $fieldCount = $db->getFieldsNum($result);
 
         $insertValues = '';
 
-        if ($db->getRowsNum($result)>0) {
-            $fieldInfo = array();
+        if ($db->getRowsNum($result) > 0) {
+            $fieldInfo   = array();
             $insertNames = "INSERT INTO `$table` (";
             for ($j = 0; $j < $fieldCount; ++$j) {
-                $field = $result->fetch_field_direct($j);
+                $field                   = $result->fetch_field_direct($j);
                 $fieldInfo[$field->name] = $field;
                 $insertNames .= ((0 === $j) ? '' : ', ') . $field->name;
             }
             $insertNames .= ")\nVALUES\n";
 
-            $rowCount = 0;
+            $rowCount     = 0;
             $insertValues = $insertNames;
             while ($row = $db->fetchArray($result)) {
                 if ($rowCount >= $rowLimit) {
@@ -222,7 +222,8 @@ while ($row_table = $db->fetchArray($srs)) {
     if (substr($row_table['Name'], -6) === '_users') {
         $prefixes[] = array(
             'name'    => substr($row_table['Name'], 0, -6),
-            'updated' => $row_table['Update_time']);
+            'updated' => $row_table['Update_time']
+        );
     }
     $tables[] = $row_table['Name'];
 }

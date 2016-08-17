@@ -21,22 +21,22 @@
  *
  *
  * Parameters need to be passed in through the URL's query string:
- * @param int      id             Xoops image id;
- * @param string   url            relative to XOOPS_ROOT_PATH, path of local image starting with "/"
+ * @param int                      id             Xoops image id;
+ * @param string                   url            relative to XOOPS_ROOT_PATH, path of local image starting with "/"
  *                                 (e.g. /images/toast.jpg);
- * @param string   src            relative to XOOPS_ROOT_PATH, path of local image starting with "/"
- * @param int      width          (optional) maximum width of final image in pixels (e.g. 700);
- * @param int      height         (optional) maximum height of final image in pixels (e.g. 700);
- * @param string   color          (optional) background hex color for filling transparent PNGs (e.g. 900 or 16a942);
- * @param string   cropratio      (optional) ratio of width to height to crop final image (e.g. 1:1 or 3:2);
- * @param boolean  nocache        (optional) don't read image from the cache;
- * @param boolean  noservercache  (optional) don't read image from the server cache;
- * @param boolean  nobrowsercache (optional) don't read image from the browser cache;
- * @param int      quality        (optional, 0-100, default: 90) quality of output image;
- * @param mixed    filter         (optional, imagefilter 2nd, 3rd, 4th, 5th arguments, more info on php.net
+ * @param string                   src            relative to XOOPS_ROOT_PATH, path of local image starting with "/"
+ * @param int                      width          (optional) maximum width of final image in pixels (e.g. 700);
+ * @param int                      height         (optional) maximum height of final image in pixels (e.g. 700);
+ * @param string                   color          (optional) background hex color for filling transparent PNGs (e.g. 900 or 16a942);
+ * @param string                   cropratio      (optional) ratio of width to height to crop final image (e.g. 1:1 or 3:2);
+ * @param boolean                  nocache        (optional) don't read image from the cache;
+ * @param boolean                  noservercache  (optional) don't read image from the server cache;
+ * @param boolean                  nobrowsercache (optional) don't read image from the browser cache;
+ * @param int                      quality        (optional, 0-100, default: 90) quality of output image;
+ * @param mixed                    filter         (optional, imagefilter 2nd, 3rd, 4th, 5th arguments, more info on php.net
  *                                 manual) a filter or an array of filters;
- * @param int      radius         (optional, 1, 2, 3 or 4 integer values, CW) round corner radius
- * @param float    angle          (optional), rotation angle)
+ * @param int                      radius         (optional, 1, 2, 3 or 4 integer values, CW) round corner radius
+ * @param float                    angle          (optional), rotation angle)
  *
  */
 
@@ -101,9 +101,8 @@ function doConditionalGet($etag, $lastModified)
 {
     header("Last-Modified: $lastModified");
     header("ETag: \"{$etag}\"");
-    $ifNoneMatch = isset($_SERVER['HTTP_IF_NONE_MATCH']) ? stripslashes($_SERVER['HTTP_IF_NONE_MATCH']) : false;
-    $ifModifiedSince = isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])
-        ? stripslashes($_SERVER['HTTP_IF_MODIFIED_SINCE']) : false;
+    $ifNoneMatch     = isset($_SERVER['HTTP_IF_NONE_MATCH']) ? stripslashes($_SERVER['HTTP_IF_NONE_MATCH']) : false;
+    $ifModifiedSince = isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) ? stripslashes($_SERVER['HTTP_IF_MODIFIED_SINCE']) : false;
     if (!$ifModifiedSince && !$ifNoneMatch) {
         return null;
     }
@@ -121,8 +120,8 @@ function doConditionalGet($etag, $lastModified)
 /**
  * ref: http://www.tricksofit.com/2014/08/round-corners-on-image-using-php-and-gd-library
  *
- * @param resource $sourceImage GD Image resource
- * @param int[]    $radii       array(top left, top right, bottom left, bottom right) of pixel radius
+ * @param resource $sourceImage  GD Image resource
+ * @param int[]    $radii        array(top left, top right, bottom left, bottom right) of pixel radius
  *                               for each corner. A 0 disables rounding on a corner.
  *
  * @return resource
@@ -145,14 +144,14 @@ function imageCreateCorners($sourceImage, $radii)
         $b = rand(0, 255);
     } while (imagecolorexact($sourceImage, $r, $g, $b) < 0);
 
-    $imageWidth = imagesx($sourceImage);
+    $imageWidth  = imagesx($sourceImage);
     $imageHeight = imagesy($sourceImage);
 
-    $workingWidth = $imageWidth * $q;
+    $workingWidth  = $imageWidth * $q;
     $workingHeight = $imageHeight * $q;
 
-    $workingImage= imagecreatetruecolor($workingWidth, $workingHeight);
-    $alphaColor = imagecolorallocatealpha($workingImage, $r, $g, $b, 127);
+    $workingImage = imagecreatetruecolor($workingWidth, $workingHeight);
+    $alphaColor   = imagecolorallocatealpha($workingImage, $r, $g, $b, 127);
     imagealphablending($workingImage, false);
     imagesavealpha($workingImage, true);
     imagefilledrectangle($workingImage, 0, 0, $workingWidth, $workingHeight, $alphaColor);
@@ -201,9 +200,9 @@ function findSharp($orig, $final)
 {
     // Function from Ryan Rud (http://adryrun.com)
     $final *= (750.0 / $orig);
-    $a = 52;
-    $b = -0.27810650887573124;
-    $c = .00047337278106508946;
+    $a      = 52;
+    $b      = -0.27810650887573124;
+    $c      = .00047337278106508946;
     $result = $a + $b * $final + $c * $final * $final;
 
     return max(round($result), 0);
@@ -256,12 +255,12 @@ function imageFilenameCheck($imageUrl)
  * Get image
  */
 // Get id (Xoops image) or url or src (standard image)
-$imageId = isset($_GET['id']) ? (int)$_GET['id'] : false;
+$imageId  = isset($_GET['id']) ? (int)$_GET['id'] : false;
 $imageUrl = isset($_GET['url']) ? (string)$_GET['url'] : (isset($_GET['src']) ? (string)$_GET['src'] : false);
 if (!empty($imageId)) {
     // If image is a Xoops image
     $imageHandler = xoops_getHandler('image');
-    $criteria = new CriteriaCompo(new Criteria('i.image_display', true));
+    $criteria     = new CriteriaCompo(new Criteria('i.image_display', true));
     $criteria->add(new Criteria('i.image_id', $imageId));
     $images = $imageHandler->getObjects($criteria, false, true);
     if (count($images) != 1) {
@@ -272,7 +271,7 @@ if (!empty($imageId)) {
     }
     $image = $images[0];
     // Get image category
-    $imgcatId = $image->getVar('imgcat_id');
+    $imgcatId      = $image->getVar('imgcat_id');
     $imgcatHandler = xoops_getHandler('imagecategory');
     if (!$imgcat = $imgcatHandler->get($imgcatId)) {
         // No Image category
@@ -281,8 +280,8 @@ if (!empty($imageId)) {
         exit();
     }
     // Get image data
-    $imageFilename = $image->getVar('image_name'); // image filename
-    $imageMimetype = $image->getVar('image_mimetype');
+    $imageFilename    = $image->getVar('image_name'); // image filename
+    $imageMimetype    = $image->getVar('image_mimetype');
     $imageCreatedTime = $image->getVar('image_created'); // image creation date
     if ($imgcat->getVar('imgcat_storetype') === 'db') {
         $imagePath = null;
@@ -292,7 +291,7 @@ if (!empty($imageId)) {
         $imageData = file_get_contents($imagePath);
     }
     $sourceImage = imagecreatefromstring($imageData);
-    $imageWidth = imagesx($sourceImage);
+    $imageWidth  = imagesx($sourceImage);
     $imageHeight = imagesy($sourceImage);
 } elseif (!empty($imageUrl)) {
     // If image is a standard image
@@ -314,13 +313,13 @@ if (!empty($imageId)) {
         $imagePath = $imageUrl;
     }
     // Get the size and MIME type of the requested image
-    $imageFilename = basename($imagePath);  // image filename
-    $imagesize = getimagesize($imagePath);
-    $imageWidth = $imagesize[0];
-    $imageHeight = $imagesize[1];
-    $imageMimetype = $imagesize['mime'];
+    $imageFilename    = basename($imagePath);  // image filename
+    $imagesize        = getimagesize($imagePath);
+    $imageWidth       = $imagesize[0];
+    $imageHeight      = $imagesize[1];
+    $imageMimetype    = $imagesize['mime'];
     $imageCreatedTime = filemtime($imagePath); // image creation date
-    $imageData = file_get_contents($imagePath);
+    $imageData        = file_get_contents($imagePath);
     switch ($imageMimetype) {
         case 'image/gif':
             $sourceImage = imagecreatefromgif($imagePath);
@@ -349,9 +348,10 @@ if (!empty($imageId)) {
 // of the original image
 xoops_load('XoopsCache');
 $edited_image_filename = 'editedimage_' . md5($_SERVER['REQUEST_URI']) . '_' . $imageFilename;
-$cached_image = XoopsCache::read($edited_image_filename);
+$cached_image          = XoopsCache::read($edited_image_filename);
 if (!isset($_GET['nocache']) && !isset($_GET['noservercache']) && !empty($cached_image)
-    && ($cached_image['cached_time'] >= $imageCreatedTime)) {
+    && ($cached_image['cached_time'] >= $imageCreatedTime)
+) {
     header("Content-type: {$imageMimetype}");
     header('Content-Length: ' . strlen($cached_image['image_data']));
     echo $cached_image['image_data'];
@@ -362,7 +362,7 @@ if (!isset($_GET['nocache']) && !isset($_GET['noservercache']) && !empty($cached
  * Get/check editing parameters
  */
 // width, height
-$max_width = isset($_GET['width']) ? (int)$_GET['width'] : false;
+$max_width  = isset($_GET['width']) ? (int)$_GET['width'] : false;
 $max_height = isset($_GET['height']) ? (int)$_GET['height'] : false;
 // If either a max width or max height are not specified, we default to something large so the unspecified
 // dimension isn't a constraint on our resized image.
@@ -372,7 +372,7 @@ if (!$max_width && $max_height) {
 } elseif ($max_width && !$max_height) {
     $max_height = PHP_INT_MAX;
 } elseif (!$max_width && !$max_height) {
-    $max_width = $imageWidth;
+    $max_width  = $imageWidth;
     $max_height = $imageHeight;
 }
 
@@ -382,14 +382,16 @@ $color = isset($_GET['color']) ? preg_replace('/[^0-9a-fA-F]/', '', (string)$_GE
 // filter, radius, angle
 $filter = isset($_GET['filter']) ? $_GET['filter'] : false;
 $radius = isset($_GET['radius']) ? (string)$_GET['radius'] : false;
-$angle = isset($_GET['angle']) ? (float)$_GET['angle'] : false;
+$angle  = isset($_GET['angle']) ? (float)$_GET['angle'] : false;
 
 // If we don't have a width or height or color or filter or radius or rotate we simply output the original
 // image and exit
 if (empty($_GET['width']) && empty($_GET['height']) && empty($_GET['color']) && empty($_GET['filter'])
-    && empty($_GET['radius']) && empty($_GET['angle'])) {
+    && empty($_GET['radius'])
+    && empty($_GET['angle'])
+) {
     $last_modified_string = gmdate('D, d M Y H:i:s', $imageCreatedTime) . ' GMT';
-    $etag = md5($imageData);
+    $etag                 = md5($imageData);
     doConditionalGet($etag, $last_modified_string);
     header("Content-type: {$imageMimetype}");
     header('Content-Length: ' . strlen($imageData));
@@ -403,18 +405,18 @@ $offset_y = 0;
 if (isset($_GET['cropratio'])) {
     $crop_ratio = explode(':', (string)$_GET['cropratio']);
     if (count($crop_ratio) == 2) {
-        $ratio_computed = $imageWidth / $imageHeight;
+        $ratio_computed      = $imageWidth / $imageHeight;
         $crop_radio_computed = (float)$crop_ratio[0] / (float)$crop_ratio[1];
         if ($ratio_computed < $crop_radio_computed) {
             // Image is too tall so we will crop the top and bottom
             $orig_height = $imageHeight;
             $imageHeight = $imageWidth / $crop_radio_computed;
-            $offset_y = ($orig_height - $imageHeight) / 2;
+            $offset_y    = ($orig_height - $imageHeight) / 2;
         } elseif ($ratio_computed > $crop_radio_computed) {
             // Image is too wide so we will crop off the left and right sides
             $orig_width = $imageWidth;
             $imageWidth = $imageHeight * $crop_radio_computed;
-            $offset_x = ($orig_width - $imageWidth) / 2;
+            $offset_x   = ($orig_width - $imageWidth) / 2;
         }
     }
 }
@@ -425,10 +427,10 @@ $yRatio = $max_height / $imageHeight;
 if ($xRatio * $imageHeight < $max_height) {
     // Resize the image based on width
     $tn_height = ceil($xRatio * $imageHeight);
-    $tn_width = $max_width;
+    $tn_width  = $max_width;
 } else {
     // Resize the image based on height
-    $tn_width = ceil($yRatio * $imageWidth);
+    $tn_width  = ceil($yRatio * $imageWidth);
     $tn_height = $max_height;
 }
 
@@ -450,19 +452,19 @@ switch ($imageMimetype) {
         // We will be converting GIFs to PNGs to avoid transparency issues when resizing GIFs
         // This is maybe not the ideal solution, but IE6 can suck it
         $output_function = 'imagepng';
-        $imageMimetype = 'image/png'; // We need to convert GIFs to PNGs
-        $do_sharpen = false;
-        $quality = round(10 - ($quality / 10)); // We are converting the GIF to a PNG and PNG needs a compression
-                                                // level of 0 (no compression) through 9 (max)
+        $imageMimetype   = 'image/png'; // We need to convert GIFs to PNGs
+        $do_sharpen      = false;
+        $quality         = round(10 - ($quality / 10)); // We are converting the GIF to a PNG and PNG needs a compression
+        // level of 0 (no compression) through 9 (max)
         break;
     case 'image/png':
         $output_function = 'imagepng';
-        $do_sharpen = false;
-        $quality = round(10 - ($quality / 10)); // PNG needs a compression level of 0 (no compression) through 9
+        $do_sharpen      = false;
+        $quality         = round(10 - ($quality / 10)); // PNG needs a compression level of 0 (no compression) through 9
         break;
     case 'image/jpeg':
         $output_function = 'imagejpeg';
-        $do_sharpen = true;
+        $do_sharpen      = true;
         break;
     default:
         exit400BadReq();
@@ -536,12 +538,12 @@ if (in_array($imageMimetype, array('image/gif', 'image/png'))) {
 
 // Imagefilter
 if (ENABLE_IMAGEFILTER && !empty($filter)) {
-    $filterSet = (array) $filter;
+    $filterSet = (array)$filter;
     foreach ($filterSet as $currentFilter) {
         $rawFilterArgs = explode(',', $currentFilter);
-        $filterConst = constant(array_shift($rawFilterArgs));
+        $filterConst   = constant(array_shift($rawFilterArgs));
         if (null !== $filterConst) { // skip if unknown constant
-            $filterArgs = array();
+            $filterArgs   = array();
             $filterArgs[] = $destination_image;
             $filterArgs[] = $filterConst;
             foreach ($rawFilterArgs as $tempValue) {
@@ -575,9 +577,9 @@ if (ENABLE_ROUNDCORNER && !empty($radius)) {
     // we need png to support the alpha corners correctly
     if ($imageMimetype === 'image/jpeg') {
         $output_function = 'imagepng';
-        $imageMimetype = 'image/png';
-        $do_sharpen = false;
-        $quality = round(10 - ($quality / 10));
+        $imageMimetype   = 'image/png';
+        $do_sharpen      = false;
+        $quality         = round(10 - ($quality / 10));
     }
 }
 
@@ -590,13 +592,14 @@ if ($do_sharpen) {
     // Sharpen the image based on two things:
     // (1) the difference between the original size and the final size
     // (2) the final size
-    $sharpness = findSharp($imageWidth, $tn_width);
+    $sharpness      = findSharp($imageWidth, $tn_width);
     $sharpen_matrix = array(
         array(-1, -2, -1),
         array(-2, $sharpness + 12, -2),
-        array(-1, -2, -1));
-    $divisor = $sharpness;
-    $offset = 0;
+        array(-1, -2, -1)
+    );
+    $divisor        = $sharpness;
+    $offset         = 0;
     imageconvolution($destination_image, $sharpen_matrix, $divisor, $offset);
 }
 
@@ -616,8 +619,8 @@ imagedestroy($destination_image);
  * Write the just edited image into the Xoops cache
  */
 $cached_image['edited_image_filename'] = $edited_image_filename;
-$cached_image['image_data'] = $imageData;
-$cached_image['cached_time'] = $imageCreatedTime;
+$cached_image['image_data']            = $imageData;
+$cached_image['cached_time']           = $imageCreatedTime;
 XoopsCache::write($edited_image_filename, $cached_image);
 
 /*
@@ -625,7 +628,7 @@ XoopsCache::write($edited_image_filename, $cached_image);
  */
 // See if the browser already has the image
 $last_modified_string = gmdate('D, d M Y H:i:s', $imageCreatedTime) . ' GMT';
-$etag = md5($imageData);
+$etag                 = md5($imageData);
 doConditionalGet($etag, $last_modified_string);
 
 header('HTTP/1.1 200 OK');

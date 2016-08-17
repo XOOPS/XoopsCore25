@@ -31,4 +31,5 @@ return array(
     //'pageTemplate' => './xotpl/xo_page.html',
 
     // Types of language constants
-    'languages' => array('main', 'admin'));
+    'languages' => array('main', 'admin')
+);

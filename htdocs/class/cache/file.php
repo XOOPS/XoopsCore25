@@ -108,7 +108,8 @@ class XoopsCacheFile extends XoopsCacheEngine
             'prefix'    => 'xoops_',
             'lock'      => false,
             'serialize' => false,
-            'duration'  => 31556926);
+            'duration'  => 31556926
+        );
         $this->settings = array_merge($defaults, $this->settings);
         if (!isset($this->file)) {
             XoopsLoad::load('XoopsFile');
@@ -299,6 +300,7 @@ class XoopsCacheFile extends XoopsCacheEngine
         if (!$this->file->folder->inPath($this->file->pwd(), true)) {
             return false;
         }
+
         return null;
     }
 

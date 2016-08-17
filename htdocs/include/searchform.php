@@ -27,7 +27,8 @@ $type_select = new XoopsFormSelect(_SR_TYPE, 'andor', $andor);
 $type_select->addOptionArray(array(
                                  'AND'   => _SR_ALL,
                                  'OR'    => _SR_ANY,
-                                 'exact' => _SR_EXACT));
+                                 'exact' => _SR_EXACT
+                             ));
 $search_form->addElement($type_select);
 if (!empty($mids)) {
     $mods_checkbox = new XoopsFormCheckBox(_SR_SEARCHIN, 'mids[]', $mids);

@@ -213,7 +213,8 @@ function make_cblock()
  */
 function openThread($width = '100%')
 {
-    echo "<table border='0' cellpadding='0' cellspacing='0' align='center' width='$width'><tr><td class='bg2'><table border='0' cellpadding='4' cellspacing='1' width='100%'><tr class='bg3' align='left'><td class='bg3' width='20%'>" . _CM_POSTER . "</td><td class='bg3'>" . _CM_THREAD . '</td></tr>';
+    echo "<table border='0' cellpadding='0' cellspacing='0' align='center' width='$width'><tr><td class='bg2'><table border='0' cellpadding='4' cellspacing='1' width='100%'><tr class='bg3' align='left'><td class='bg3' width='20%'>" . _CM_POSTER
+         . "</td><td class='bg3'>" . _CM_THREAD . '</td></tr>';
 }
 
 /**
@@ -245,8 +246,33 @@ function openThread($width = '100%')
  * @param string|\unknown_type $yim_image
  * @param string|\unknown_type $msnm_image
  */
-function showThread($color_number, $subject_image, $subject, $text, $post_date, $ip_image, $reply_image, $edit_image, $delete_image, $username = '', $rank_title = '', $rank_image = '', $avatar_image = '', $reg_date = '', $posts = '', $user_from = '', $online_image = '', $profile_image = '', $pm_image = '', $email_image = '', $www_image = '', $icq_image = '', $aim_image = '', $yim_image = '', $msnm_image = '')
-{
+function showThread(
+    $color_number,
+    $subject_image,
+    $subject,
+    $text,
+    $post_date,
+    $ip_image,
+    $reply_image,
+    $edit_image,
+    $delete_image,
+    $username = '',
+    $rank_title = '',
+    $rank_image = '',
+    $avatar_image = '',
+    $reg_date = '',
+    $posts = '',
+    $user_from = '',
+    $online_image = '',
+    $profile_image = '',
+    $pm_image = '',
+    $email_image = '',
+    $www_image = '',
+    $icq_image = '',
+    $aim_image = '',
+    $yim_image = '',
+    $msnm_image = ''
+) {
     $bg = 'bg3';
     if ($color_number == 1) {
         $bg = 'bg1';
@@ -254,7 +280,8 @@ function showThread($color_number, $subject_image, $subject, $text, $post_date, 
     echo "<tr align='left'><td valign='top' class='$bg' nowrap='nowrap'><strong>$username</strong><br>$rank_title<br>$rank_image<br>$avatar_image<br><br>$reg_date<br>$posts<br>$user_from<br><br>$online_image</td>";
     echo "<td valign='top' class='$bg'><table width='100%' border='0'><tr><td valign='top'>$subject_image&nbsp;<strong>$subject</strong></td><td align='right'>" . $ip_image . '' . $reply_image . '' . $edit_image . '' . $delete_image . '</td></tr>';
     echo "<tr><td colspan='2'><p>$text</p></td></tr></table></td></tr>";
-    echo "<tr align='left'><td class='$bg' valign='middle'>$post_date</td><td class='$bg' valign='middle'>" . $profile_image . '' . $pm_image . '' . $email_image . '' . $www_image . '' . $icq_image . '' . $aim_image . '' . $yim_image . '' . $msnm_image . '</td></tr>';
+    echo "<tr align='left'><td class='$bg' valign='middle'>$post_date</td><td class='$bg' valign='middle'>" . $profile_image . '' . $pm_image . '' . $email_image . '' . $www_image . '' . $icq_image . '' . $aim_image . '' . $yim_image . ''
+         . $msnm_image . '</td></tr>';
 }
 
 /**

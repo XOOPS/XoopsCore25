@@ -35,7 +35,8 @@ if (!is_object($xoopsUser)) {
             xoops_confirm(array(
                               'ok'              => 1,
                               'delete_messages' => 1,
-                              'msg_ids'         => json_encode(array_map('intval', $_POST['msg_id']))), $_SERVER['REQUEST_URI'], _PM_SURE_TO_DELETE);
+                              'msg_ids'         => json_encode(array_map('intval', $_POST['msg_id']))
+                          ), $_SERVER['REQUEST_URI'], _PM_SURE_TO_DELETE);
             include $GLOBALS['xoops']->path('footer.php');
             exit();
         }
@@ -61,7 +62,8 @@ if (!is_object($xoopsUser)) {
     echo "<h4 class='txtcenter'>" . _PM_PRIVATEMESSAGE . "</h4><br><a href='userinfo.php?uid=" . $xoopsUser->getVar('uid') . "'>" . _PM_PROFILE . "</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;" . _PM_INBOX . '<br><br>';
     echo "<form name='prvmsg' method='post' action='viewpmsg.php'>";
     echo "<table cellspacing='1' cellpadding='4' class='outer width100 bnone'>\n";
-    echo "<tr align='center' valign='middle'><th><input name='allbox' id='allbox' onclick='xoopsCheckAll(\"prvmsg\", \"allbox\");' type='checkbox' value='Check All' /></th><th><img class'bnone' src='images/download.gif' alt=''/></th><th>&nbsp;</th><th>" . _PM_FROM . '</th><th>' . _PM_SUBJECT . "</th><th class='txtcenter'>" . _PM_DATE . "</th></tr>\n";
+    echo "<tr align='center' valign='middle'><th><input name='allbox' id='allbox' onclick='xoopsCheckAll(\"prvmsg\", \"allbox\");' type='checkbox' value='Check All' /></th><th><img class'bnone' src='images/download.gif' alt=''/></th><th>&nbsp;</th><th>"
+         . _PM_FROM . '</th><th>' . _PM_SUBJECT . "</th><th class='txtcenter'>" . _PM_DATE . "</th></tr>\n";
     $total_messages = count($pm_arr);
     if ($total_messages == 0) {
         echo "<tr><td class='even txcenter' colspan='6'>" . _PM_YOUDONTHAVE . '</td></tr> ';
@@ -96,9 +98,11 @@ if (!is_object($xoopsUser)) {
         echo "<td class='alignmiddle txtcenter width20'>" . formatTimestamp($pm_arr[$i]->getVar('msg_time')) . '</td></tr>';
     }
     if ($display == 1) {
-        echo "<tr class='foot txtleft'><td colspan='6' align='left'><input type='button' class='formButton' onclick='openWithSelfMain(\"" . XOOPS_URL . "/pmlite.php?send=1\",\"pmlite\",565,500);' value='" . _PM_SEND . "' />&nbsp;<input type='submit' class='formButton' name='delete_messages' value='" . _PM_DELETE . "' />" . $GLOBALS['xoopsSecurity']->getTokenHTML() . '</td></tr></table></form>';
+        echo "<tr class='foot txtleft'><td colspan='6' align='left'><input type='button' class='formButton' onclick='openWithSelfMain(\"" . XOOPS_URL . "/pmlite.php?send=1\",\"pmlite\",565,500);' value='" . _PM_SEND
+             . "' />&nbsp;<input type='submit' class='formButton' name='delete_messages' value='" . _PM_DELETE . "' />" . $GLOBALS['xoopsSecurity']->getTokenHTML() . '</td></tr></table></form>';
     } else {
-        echo "<tr class='bg2 txtleft'><td class='txtleft' colspan='6'><input type='button' class='formButton' onclick='openWithSelfMain(\"" . XOOPS_URL . "/pmlite.php?send=1\",\"pmlite\",565,500);' value='" . _PM_SEND . "' /></td></tr></table></form>";
+        echo "<tr class='bg2 txtleft'><td class='txtleft' colspan='6'><input type='button' class='formButton' onclick='openWithSelfMain(\"" . XOOPS_URL . "/pmlite.php?send=1\",\"pmlite\",565,500);' value='" . _PM_SEND
+             . "' /></td></tr></table></form>";
     }
     include $GLOBALS['xoops']->path('footer.php');
 }

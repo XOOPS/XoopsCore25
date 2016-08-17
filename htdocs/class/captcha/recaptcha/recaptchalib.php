@@ -156,7 +156,7 @@ function recaptcha_check_answer($privkey, $remoteip, $challenge, $response, $ext
     }
 
     //discard spam submissions
-    if ($challenge == null || ('' === $challenge)  || $response == null || ('' === $response)) {
+    if ($challenge == null || ('' === $challenge) || $response == null || ('' === $response)) {
         $recaptcha_response           = new ReCaptchaResponse();
         $recaptcha_response->is_valid = false;
         $recaptcha_response->error    = 'incorrect-captcha-sol';
@@ -168,7 +168,8 @@ function recaptcha_check_answer($privkey, $remoteip, $challenge, $response, $ext
                                                                                            'privatekey' => $privkey,
                                                                                            'remoteip'   => $remoteip,
                                                                                            'challenge'  => $challenge,
-                                                                                           'response'   => $response) + $extra_params);
+                                                                                           'response'   => $response
+                                                                                       ) + $extra_params);
 
     $answers            = explode("\n", $response [1]);
     $recaptcha_response = new ReCaptchaResponse();
@@ -298,5 +299,6 @@ function recaptcha_mailhide_html($pubkey, $privkey, $email)
     $emailparts = _recaptcha_mailhide_email_parts($email);
     $url        = recaptcha_mailhide_url($pubkey, $privkey, $email);
 
-    return htmlentities($emailparts[0]) . "<a href='" . htmlentities($url) . "' onclick=\"window.open('" . htmlentities($url) . "', '', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=300'); return false;\" title=\"Reveal this e-mail address\">...</a>@" . htmlentities($emailparts [1]);
+    return htmlentities($emailparts[0]) . "<a href='" . htmlentities($url) . "' onclick=\"window.open('" . htmlentities($url)
+           . "', '', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=300'); return false;\" title=\"Reveal this e-mail address\">...</a>@" . htmlentities($emailparts [1]);
 }

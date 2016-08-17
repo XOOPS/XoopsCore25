@@ -50,7 +50,8 @@ class XoopsTpl extends Smarty
         $this->compile_check   = ($xoopsConfig['theme_fromfile'] == 1);
         $this->plugins_dir     = array(
             XOOPS_ROOT_PATH . '/class/smarty/xoops_plugins',
-            XOOPS_ROOT_PATH . '/class/smarty/plugins');
+            XOOPS_ROOT_PATH . '/class/smarty/plugins'
+        );
         if ($xoopsConfig['debug_mode']) {
             $this->debugging_ctrl = 'URL';
             if ($xoopsConfig['debug_mode'] == 3) {
@@ -65,7 +66,8 @@ class XoopsTpl extends Smarty
                           'xoops_langcode'   => _LANGCODE,
                           'xoops_charset'    => _CHARSET,
                           'xoops_version'    => XOOPS_VERSION,
-                          'xoops_upload_url' => XOOPS_UPLOAD_URL));
+                          'xoops_upload_url' => XOOPS_UPLOAD_URL
+                      ));
     }
 
     /**
@@ -86,14 +88,16 @@ class XoopsTpl extends Smarty
             $oldVars = $this->_tpl_vars;
             $this->assign($vars);
             $out             = smarty_function_eval(array(
-                                                        'var' => $tplSource), $this);
+                                                        'var' => $tplSource
+                                                    ), $this);
             $this->_tpl_vars = $oldVars;
 
             return $out;
         }
 
         return smarty_function_eval(array(
-                                        'var' => $tplSource), $this);
+                                        'var' => $tplSource
+                                    ), $this);
     }
 
     /**
@@ -166,7 +170,8 @@ class XoopsTpl extends Smarty
             'auto_base'   => $this->cache_dir,
             'auto_source' => null,
             'auto_id'     => $this->compile_id,
-            'exp_time'    => null);
+            'exp_time'    => null
+        );
         $this->_compile_id = $this->compile_id = $compile_id;
         require_once SMARTY_CORE_DIR . 'core.rm_auto.php';
 

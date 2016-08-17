@@ -210,7 +210,8 @@ switch ($op) {
             xoops_confirm(array(
                               'ok' => 1,
                               'id' => $_REQUEST['id'],
-                              'op' => 'delete'), $_SERVER['REQUEST_URI'], sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('uname') . ' (' . $obj->getVar('email') . ')'));
+                              'op' => 'delete'
+                          ), $_SERVER['REQUEST_URI'], sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('uname') . ' (' . $obj->getVar('email') . ')'));
         }
         break;
 }

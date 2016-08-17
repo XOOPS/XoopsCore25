@@ -161,7 +161,9 @@ class XoopsModelWrite extends XoopsModelAbstract
                         $errors[] = sprintf(_XOBJ_ERR_REQUIRED, $k);
                         continue 2;
                     }
-                    if ($cleanv != '' && !preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $cleanv)) {
+                    if ($cleanv != ''
+                        && !preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $cleanv)
+                    ) {
                         $errors[] = 'Invalid Email';
                         continue 2;
                     }
@@ -328,7 +330,7 @@ class XoopsModelWrite extends XoopsModelAbstract
     public function delete(&$object, $force = false)
     {
         if (is_array($this->handler->keyName)) {
-            $clause = array();
+            $clause                  = array();
             $thishandlerkeyNameCount = count($this->handler->keyName);
             for ($i = 0; $i < $thishandlerkeyNameCount; ++$i) {
                 $clause[] = '`' . $this->handler->keyName[$i] . '` = ' . $this->handler->db->quote($object->getVar($this->handler->keyName[$i]));
@@ -348,8 +350,8 @@ class XoopsModelWrite extends XoopsModelAbstract
      * delete all objects matching the conditions
      *
      * @param  CriteriaElement $criteria {@link CriteriaElement} with conditions to meet
-     * @param  bool   $force    force to delete
-     * @param  bool   $asObject delete in object way: instantiate all objects and delete one by one
+     * @param  bool            $force    force to delete
+     * @param  bool            $asObject delete in object way: instantiate all objects and delete one by one
      * @return bool
      */
     public function deleteAll(CriteriaElement $criteria = null, $force = true, $asObject = false)
@@ -383,10 +385,10 @@ class XoopsModelWrite extends XoopsModelAbstract
     /**
      * Change a field for objects with a certain criteria
      *
-     * @param  string $fieldname  Name of the field
-     * @param  mixed  $fieldvalue Value to write
-     * @param  CriteriaElement  $criteria   {@link CriteriaElement}
-     * @param  bool   $force      force to query
+     * @param  string          $fieldname  Name of the field
+     * @param  mixed           $fieldvalue Value to write
+     * @param  CriteriaElement $criteria   {@link CriteriaElement}
+     * @param  bool            $force      force to query
      * @return bool
      */
     public function updateAll($fieldname, $fieldvalue, CriteriaElement $criteria = null, $force = false)

@@ -46,7 +46,8 @@ class XoopsLoad
                 'file'        => 'xoopsfile',
                 'model'       => 'xoopsmodelfactory',
                 'calendar'    => 'xoopscalendar',
-                'userutility' => 'xoopsuserutility');
+                'userutility' => 'xoopsuserutility'
+            );
         }
         $name = strtolower($name);
         if (in_array($type, array('core', 'class')) && array_key_exists($name, $deprecated)) {
@@ -140,6 +141,7 @@ class XoopsLoad
         if (class_exists($class)) {
             return $class;
         }
+
         return null;
     }
 
@@ -227,7 +229,8 @@ class XoopsLoad
             'xoopsformselecteditor'      => XOOPS_ROOT_PATH . '/class/xoopsform/formselecteditor.php',
             'xoopsformcalendar'          => XOOPS_ROOT_PATH . '/class/xoopsform/formcalendar.php',
             'xoopsfilterinput'           => XOOPS_ROOT_PATH . '/class/xoopsfilterinput.php',
-            'xoopsrequest'               => XOOPS_ROOT_PATH . '/class/xoopsrequest.php');
+            'xoopsrequest'               => XOOPS_ROOT_PATH . '/class/xoopsrequest.php'
+        );
     }
 
     /**
@@ -259,6 +262,7 @@ class XoopsLoad
         return $configs = array_merge(XoopsLoad::loadCoreConfig(), $configs);
     }
 }
+
 // To be enabled in XOOPS 3.0
 // spl_autoload_register(array('XoopsLoad', 'load'));
 

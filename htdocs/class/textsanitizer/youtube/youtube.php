@@ -27,7 +27,9 @@ class MytsYoutube extends MyTextSanitizerExtension
     public function encode($textarea_id)
     {
         $config     = parent::loadConfig(__DIR__);
-        $code       = "<img src='{$this->image_path}/youtube.gif' alt='" . _XOOPS_FORM_ALTYOUTUBE . "' title='" . _XOOPS_FORM_ALTYOUTUBE . "' '" . "' onclick='xoopsCodeYoutube(\"{$textarea_id}\",\"" . htmlspecialchars(_XOOPS_FORM_ENTERYOUTUBEURL, ENT_QUOTES) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES) . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
+        $code       = "<img src='{$this->image_path}/youtube.gif' alt='" . _XOOPS_FORM_ALTYOUTUBE . "' title='" . _XOOPS_FORM_ALTYOUTUBE . "' '" . "' onclick='xoopsCodeYoutube(\"{$textarea_id}\",\"" . htmlspecialchars(_XOOPS_FORM_ENTERYOUTUBEURL,
+                                                                                                                                                                                                                          ENT_QUOTES) . "\",\""
+                      . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES) . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
         $javascript = <<<EOH
             function xoopsCodeYoutube(id, enterFlashPhrase, enterFlashHeightPhrase, enterFlashWidthPhrase)
             {
@@ -89,8 +91,7 @@ EOH;
 
         // match known youtube urls
         // from: http://stackoverflow.com/questions/2936467/parse-youtube-video-id-using-preg-match/6382259#6382259
-        $youtubeRegex = '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)'
-            .'([^"&?/ ]{11})%i';
+        $youtubeRegex = '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)' . '([^"&?/ ]{11})%i';
 
         if (preg_match($youtubeRegex, $url, $match)) {
             $videoId = $match[1]; // extract just the video id from a url
@@ -98,10 +99,11 @@ EOH;
             $videoId = $url; // have a bare video id
         } else {
             trigger_error("Not matched: {$url} {$width} {$height}", E_USER_WARNING);
+
             return '';
         }
 
-        $width = empty($width) ? 426 : (int) $width;
+        $width = empty($width) ? 426 : (int)$width;
         switch ($width) {
             case 4:
                 $height = 3;
@@ -110,15 +112,15 @@ EOH;
                 $height = 9;
                 break;
             default:
-                $height = empty($height) ? 240 : (int) $height;
+                $height = empty($height) ? 240 : (int)$height;
                 break;
         }
 
-        $aspectRatio = $width/$height; // 16x9 = 1.777777778, 4x3 = 1.333333333
+        $aspectRatio      = $width / $height; // 16x9 = 1.777777778, 4x3 = 1.333333333
         $responsiveAspect = ($aspectRatio < 1.4) ? 'embed-responsive-4by3' : 'embed-responsive-16by9';
         if ($width < 17 && $height < 10) {
-            $scale = (int) 450 / $width;
-            $width = $width * $scale;
+            $scale  = (int)450 / $width;
+            $width  = $width * $scale;
             $height = $height * $scale;
         }
 
@@ -129,6 +131,7 @@ EOH;
 EOD;
 
         $code = sprintf($template, $videoId, $width, $height, $responsiveAspect);
+
         return $code;
     }
 }

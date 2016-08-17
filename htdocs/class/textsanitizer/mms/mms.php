@@ -31,7 +31,8 @@ class MytsMms extends MyTextSanitizerExtension
     public function encode($textarea_id)
     {
         $config     = parent::loadConfig(__DIR__);
-        $code       = "<img src='{$this->image_path}/mmssrc.gif' alt='" . _XOOPS_FORM_ALTMMS . "' title='" . _XOOPS_FORM_ALTMMS . "' '" . "' onclick='xoopsCodeMms(\"{$textarea_id}\",\"" . htmlspecialchars(_XOOPS_FORM_ENTERMMSURL, ENT_QUOTES) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES) . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
+        $code       = "<img src='{$this->image_path}/mmssrc.gif' alt='" . _XOOPS_FORM_ALTMMS . "' title='" . _XOOPS_FORM_ALTMMS . "' '" . "' onclick='xoopsCodeMms(\"{$textarea_id}\",\"" . htmlspecialchars(_XOOPS_FORM_ENTERMMSURL, ENT_QUOTES)
+                      . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES) . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
         $javascript = <<<EOH
             function xoopsCodeMms(id,enterMmsPhrase, enterMmsHeightPhrase, enterMmsWidthPhrase)
             {
@@ -55,7 +56,8 @@ EOH;
 
         return array(
             $code,
-            $javascript);
+            $javascript
+        );
     }
 
     /**

@@ -164,7 +164,8 @@ switch ($op) {
                                     }
 
                                     $class = 'odd';
-                                    $text .= '<table cellspacing="1" class="outer"><tr><th colspan="3" align="center">' . _AM_SYSTEM_TEMPLATES_MODULES . ucfirst($module->getVar('dirname')) . '</th></tr><tr><th align="center">' . _AM_SYSTEM_TEMPLATES_TYPES . '</th><th  align="center">' . _AM_SYSTEM_TEMPLATES_FILES . '</th><th>' . _AM_SYSTEM_TEMPLATES_STATUS . '</th></tr>';
+                                    $text .= '<table cellspacing="1" class="outer"><tr><th colspan="3" align="center">' . _AM_SYSTEM_TEMPLATES_MODULES . ucfirst($module->getVar('dirname')) . '</th></tr><tr><th align="center">'
+                                             . _AM_SYSTEM_TEMPLATES_TYPES . '</th><th  align="center">' . _AM_SYSTEM_TEMPLATES_FILES . '</th><th>' . _AM_SYSTEM_TEMPLATES_STATUS . '</th></tr>';
 
                                     // create template
                                     $templates      =& $tpltpl_handler->find($tplsetname, 'module', null, $moddir);
@@ -254,7 +255,8 @@ switch ($op) {
                                 }
 
                                 $class = 'odd';
-                                $text .= '<table cellspacing="1" class="outer"><tr><th colspan="3" align="center">' . _AM_SYSTEM_TEMPLATES_MODULES . ucfirst($module->getVar('dirname')) . '</th></tr><tr><th align="center">' . _AM_SYSTEM_TEMPLATES_TYPES . '</th><th  align="center">' . _AM_SYSTEM_TEMPLATES_FILES . '</th><th>' . _AM_SYSTEM_TEMPLATES_STATUS . '</th></tr>';
+                                $text .= '<table cellspacing="1" class="outer"><tr><th colspan="3" align="center">' . _AM_SYSTEM_TEMPLATES_MODULES . ucfirst($module->getVar('dirname')) . '</th></tr><tr><th align="center">'
+                                         . _AM_SYSTEM_TEMPLATES_TYPES . '</th><th  align="center">' . _AM_SYSTEM_TEMPLATES_FILES . '</th><th>' . _AM_SYSTEM_TEMPLATES_STATUS . '</th></tr>';
                                 $select_templates_modules = $_REQUEST['select_templates_modules'];
                                 $tempCount                = count($_REQUEST['select_templates_modules']);
                                 for ($l = 0; $l < $tempCount; ++$l) {
@@ -366,9 +368,9 @@ switch ($op) {
         XoopsLoad::load('XoopsRequest');
         $clean_path_file = XoopsRequest::getString('path_file', '');
         if (!empty($clean_path_file)) {
-            $path_file = realpath(XOOPS_ROOT_PATH.'/themes'.trim($clean_path_file));
-            $path_file = str_replace('\\','/',$path_file);
-            $pathInfo = pathinfo($path_file);
+            $path_file = realpath(XOOPS_ROOT_PATH . '/themes' . trim($clean_path_file));
+            $path_file = str_replace('\\', '/', $path_file);
+            $pathInfo  = pathinfo($path_file);
             if (!in_array($pathInfo['extension'], array('css', 'html', 'tpl'))) {
                 redirect_header('admin.php?fct=tplsets', 2, _AM_SYSTEM_TEMPLATES_ERROR);
                 exit;
