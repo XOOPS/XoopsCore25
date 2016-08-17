@@ -1,4 +1,4 @@
-<{if $xoops_dirname == "system"}>
+<{if $xoops_page == "index"}>
 <div id="myCarousel" class="carousel slide slideshow" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
