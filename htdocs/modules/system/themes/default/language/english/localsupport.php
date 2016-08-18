@@ -1,5 +1,5 @@
 <?php
-// 
+//
 
 $menu = array();
 
@@ -27,7 +27,7 @@ $menu[] = array(
 );
 
 $menu[] = array(
-    'link'      => 'http://www.xoops.org/modules/modules-search/',
+    'link'      => 'https://github.com/XoopsModules25x',
     'title'     => _AD_XOOPSMODULES,
     'absolute'  => 1,
     'icon'      => XOOPS_ADMINTHEME_URL . '/default/images/xoops.png'
