@@ -47,6 +47,7 @@ $configs['extensions'] = array(
         (function_exists('gd_info') && $gdlib = @gd_info()) ? 'GD ' . $gdlib['GD Version'] : '',
         sprintf(PHP_EXTENSION, IMAGE_FUNCTIONS)),
     'exif'     => array('Exif', sprintf(PHP_EXTENSION, IMAGE_METAS)),
+    'curl'     => array('Curl', sprintf(PHP_EXTENSION, CURL_HTTP)),
 );
 
 // Writable files and directories
