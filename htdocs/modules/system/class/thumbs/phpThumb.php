@@ -16,10 +16,14 @@ ini_set('magic_quotes_runtime', '0');
 if (ini_get('magic_quotes_runtime')) {
 	die('"magic_quotes_runtime" is set in php.ini, cannot run phpThumb with this enabled');
 }
+// Set a default timezone if web server has not done already in php.ini
+if (!ini_get('date.timezone') && function_exists('date_default_timezone_set')) { // PHP >= 5.1.0
+    date_default_timezone_set('UTC');
+}
 $starttime = array_sum(explode(' ', microtime())); // could be called as microtime(true) for PHP 5.0.0+
 
 // this script relies on the superglobal arrays, fake it here for old PHP versions
-if (phpversion() < '4.1.0') {
+if (PHP_VERSION < '4.1.0') {
 	$_SERVER = $HTTP_SERVER_VARS;
 	$_GET    = $HTTP_GET_VARS;
 }
@@ -73,7 +77,6 @@ function RedirectToCachedFile() {
 		}
 		SendSaveAsFileHeaderIfNeeded();
 
-		header('Cache-Control: private');
 		header('Pragma: private');
 		header('Cache-Control: max-age='.$phpThumb->getParameter('config_cache_maxage'));
 		header('Expires: '.date(DATE_RFC1123,  time() + $phpThumb->getParameter('config_cache_maxage')));
@@ -692,4 +695,3 @@ if (isset($_GET['phpThumbDebug']) && ($_GET['phpThumbDebug'] == '10')) {
 	$phpThumb->phpThumbDebug();
 }
 ////////////////////////////////////////////////////////////////
-

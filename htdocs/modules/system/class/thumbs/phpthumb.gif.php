@@ -115,7 +115,7 @@ function gif_outputAsJpeg($gif, $lpszFileName, $bgColor = -1)
 
 		if (gif_outputAsBmp($gif, $lpszFileName.'.bmp', $bgColor)) {
 			exec('cjpeg '.$lpszFileName.'.bmp >'.$lpszFileName.' 2>/dev/null');
-			@unlink($lpszFileName . '.bmp');
+			@unlink($lpszFileName.'.bmp');
 
 			if (@file_exists($lpszFileName)) {
 				if (@filesize($lpszFileName) > 0) {
@@ -170,7 +170,7 @@ class CGIFLZW
 	///////////////////////////////////////////////////////////////////////////
 
 	// CONSTRUCTOR
-	public function __construct()
+	function __construct()
 	{
 		$this->MAX_LZW_BITS = 12;
 		unSet($this->Next);
@@ -384,7 +384,7 @@ class CGIFCOLORTABLE
 	///////////////////////////////////////////////////////////////////////////
 
 	// CONSTRUCTOR
-	public function __construct()
+	function __construct()
 	{
 		unSet($this->m_nColors);
 		unSet($this->m_arColors);
@@ -447,11 +447,11 @@ class CGIFCOLORTABLE
 
 	function colorIndex($rgb)
 	{
-		$rgb  = intval($rgb) & 0xFFFFFF;
-		$r1   = ($rgb & 0x0000FF);
-		$g1   = ($rgb & 0x00FF00) >>  8;
-		$b1   = ($rgb & 0xFF0000) >> 16;
-		$idx  = -1;
+		$rgb = intval($rgb) & 0xFFFFFF;
+		$r1  = ($rgb & 0x0000FF);
+		$g1  = ($rgb & 0x00FF00) >>  8;
+		$b1  = ($rgb & 0xFF0000) >> 16;
+		$idx = -1;
 		$dif = 0;
 
 		for ($i = 0; $i < $this->m_nColors; $i++) {
@@ -488,7 +488,7 @@ class CGIFFILEHEADER
 	///////////////////////////////////////////////////////////////////////////
 
 	// CONSTRUCTOR
-	public function __construct()
+	function __construct()
 	{
 		unSet($this->m_lpVer);
 		unSet($this->m_nWidth);
@@ -564,7 +564,7 @@ class CGIFIMAGEHEADER
 	///////////////////////////////////////////////////////////////////////////
 
 	// CONSTRUCTOR
-	public function __construct()
+	function __construct()
 	{
 		unSet($this->m_nLeft);
 		unSet($this->m_nTop);
@@ -634,7 +634,7 @@ class CGIFIMAGE
 
 	///////////////////////////////////////////////////////////////////////////
 
-	public function __construct()
+	function __construct()
 	{
 		unSet($this->m_disp);
 		unSet($this->m_bUser);
@@ -804,7 +804,7 @@ class CGIF
 	///////////////////////////////////////////////////////////////////////////
 
 	// CONSTRUCTOR
-	public function __construct()
+	function __construct()
 	{
 		$this->m_gfh     = new CGIFFILEHEADER();
 		$this->m_img     = new CGIFIMAGE();
