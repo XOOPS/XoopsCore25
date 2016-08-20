@@ -82,12 +82,12 @@ class phpUnsharpMask {
 			// Move copies of the image around one pixel at the time and merge them with weight
 			// according to the matrix. The same matrix is simply repeated for higher radii.
 			for ($i = 0; $i < $radius; $i++)    {
-				imagecopy($imgBlur, $img, 0, 0, 1, 0, $w - 1, $h);               // left
-				imagecopymerge($imgBlur, $img, 1, 0, 0, 0, $w    , $h, 50);       // right
-				imagecopymerge($imgBlur, $img, 0, 0, 0, 0, $w    , $h, 50);       // center
-				imagecopy($imgCanvas, $imgBlur, 0, 0, 0, 0, $w    , $h);
-				imagecopymerge($imgBlur, $imgCanvas, 0, 0, 0, 1, $w    , $h - 1, 33.33333); // up
-				imagecopymerge($imgBlur, $imgCanvas, 0, 1, 0, 0, $w    , $h, 25);       // down
+				imagecopy(     $imgBlur,   $img,       0, 0, 1, 0, $w - 1, $h);               // left
+				imagecopymerge($imgBlur,   $img,       1, 0, 0, 0, $w    , $h,     50);       // right
+				imagecopymerge($imgBlur,   $img,       0, 0, 0, 0, $w    , $h,     50);       // center
+				imagecopy(     $imgCanvas, $imgBlur,   0, 0, 0, 0, $w    , $h);
+				imagecopymerge($imgBlur,   $imgCanvas, 0, 0, 0, 1, $w    , $h - 1, 33.33333); // up
+				imagecopymerge($imgBlur,   $imgCanvas, 0, 1, 0, 0, $w    , $h,     25);       // down
 			}
 		}
 

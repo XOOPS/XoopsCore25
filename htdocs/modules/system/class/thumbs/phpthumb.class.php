@@ -146,6 +146,8 @@ class phpthumb {
 	var $config_allow_src_above_phpthumb             = true;
 	var $config_auto_allow_symlinks                  = true;    // allow symlink target directories without explicitly whitelisting them
 	var $config_additional_allowed_dirs              = array(); // additional directories to allow source images to be read from
+	var $config_file_create_mask                     = 0755;
+	var $config_dir_create_mask                      = 0755;
 
 	// * HTTP fopen
 	var $config_http_fopen_timeout                   = 10;
@@ -213,7 +215,7 @@ class phpthumb {
 	var $issafemode       = null;
 	var $php_memory_limit = null;
 
-	var $phpthumb_version = '1.7.14-201607141354';
+	var $phpthumb_version = '1.7.14-201608101311';
 
 	//////////////////////////////////////////////////////////////////////
 
@@ -594,6 +596,7 @@ class phpthumb {
 
 		if ($this->RenderOutput()) {
 			if (file_put_contents($renderfilename, $this->outputImageData)) {
+				@chmod($renderfilename, $this->getParameter('config_file_create_mask'));
 				$this->DebugMessage('RenderToFile('.$renderfilename.') succeeded', __FILE__, __LINE__);
 				return true;
 			}
@@ -1160,7 +1163,7 @@ class phpthumb {
 			// http://support.silisoftware.com/phpBB3/viewtopic.php?t=964
 			$segments = explode(DIRECTORY_SEPARATOR, $path);
 			for ($i = 0; $i < count($segments); $i++) {
-	            $this->applyPathSegment($parts, $segments[$i]);
+				$this->applyPathSegment($parts, $segments[$i]);
 				$thispart = implode(DIRECTORY_SEPARATOR, $parts);
 				if ($this->isInOpenBasedir($thispart)) {
 					if (is_link($thispart)) {
@@ -1382,6 +1385,7 @@ class phpthumb {
 				} else {
 					$WhichConvert = trim(phpthumb_functions::SafeExec('which convert'));
 					@file_put_contents($IMwhichConvertCacheFilename, $WhichConvert);
+					@chmod($IMwhichConvertCacheFilename, $this->getParameter('config_file_create_mask'));
 				}
 			}
 		}
@@ -1454,6 +1458,7 @@ class phpthumb {
 			}
 
 			@file_put_contents($IMcommandlineBaseCacheFilename, $commandline);
+			@chmod($IMcommandlineBaseCacheFilename, $this->getParameter('config_file_create_mask'));
 		}
 		return $commandline;
 	}
@@ -1489,6 +1494,7 @@ class phpthumb {
 				}
 
 				@file_put_contents($IMversionCacheFilename, $versionstring[0]."\n".$versionstring[1]);
+				@chmod($IMversionCacheFilename, $this->getParameter('config_file_create_mask'));
 
 			}
 		}
@@ -1553,6 +1559,7 @@ class phpthumb {
 			if ($fp_tempfile) {
 				fwrite($fp_tempfile, $this->rawImageData);
 				fclose($fp_tempfile);
+				@chmod($IMtempSourceFilename, $this->getParameter('config_file_create_mask'));
 				$this->sourceFilename = $IMtempSourceFilename;
 				$this->DebugMessage('ImageMagickThumbnailToGD() setting $this->sourceFilename to "'.$IMtempSourceFilename.'" from $this->rawImageData ('.strlen($this->rawImageData).' bytes)', __FILE__, __LINE__);
 			} else {
@@ -1665,13 +1672,15 @@ class phpthumb {
 					if ($fp_im_temp = @fopen($IMtempfilename, 'wb')) {
 						// erase temp image so ImageMagick logo doesn't get output if other processing fails
 						fclose($fp_im_temp);
+						@chmod($IMtempfilename, $this->getParameter('config_file_create_mask'));
 					}
 				}
 
 
 				if (!is_null($this->dpi) && $this->ImageMagickSwitchAvailable('density')) {
 					// for vector source formats only (WMF, PDF, etc)
-					$commandline .= ' -flatten -density '.phpthumb_functions::escapeshellarg_replacement($this->dpi);
+					$commandline .= ' -flatten';
+					$commandline .= ' -density '.phpthumb_functions::escapeshellarg_replacement($this->dpi);
 				}
 				ob_start();
 				$getimagesize = getimagesize($this->sourceFilename);
@@ -2442,7 +2451,7 @@ if (false) {
 
 	function AntiOffsiteLinking() {
 		// Optional anti-offsite hijacking of the thumbnail script
-		$allow = true;
+		$allow   = true;
 		if ($allow && $this->config_nooffsitelink_enabled && (@$_SERVER['HTTP_REFERER'] || $this->config_nooffsitelink_require_refer)) {
 			$this->DebugMessage('AntiOffsiteLinking() checking $_SERVER[HTTP_REFERER] "'.@$_SERVER['HTTP_REFERER'].'"', __FILE__, __LINE__);
 			foreach ($this->config_nooffsitelink_valid_domains as $key => $valid_domain) {
@@ -2452,7 +2461,7 @@ if (false) {
 			}
 			$parsed_url = phpthumb_functions::ParseURLbetter(@$_SERVER['HTTP_REFERER']);
 			if (!$this->OffsiteDomainIsAllowed(@$parsed_url['host'], $this->config_nooffsitelink_valid_domains)) {
-				$allow = false;
+				$allow   = false;
 				//$this->DebugMessage('AntiOffsiteLinking() - "'.@$parsed_url['host'].'" is NOT in $this->config_nooffsitelink_valid_domains ('.implode(';', $this->config_nooffsitelink_valid_domains).')', __FILE__, __LINE__);
 				$this->ErrorImage('AntiOffsiteLinking() - "'.@$parsed_url['host'].'" is NOT in $this->config_nooffsitelink_valid_domains ('.implode(';', $this->config_nooffsitelink_valid_domains).')');
 			} else {
@@ -2872,7 +2881,7 @@ if (false) {
 										}
 										imagedestroy($img_watermark_resized);
 									} else {
-										$this->DebugMessage('phpthumb_functions::ImageCreateFunction(' . imagesx($this->gdimg_output) . ', ' . imagesy($this->gdimg_output) . ')', __FILE__, __LINE__);
+										$this->DebugMessage('phpthumb_functions::ImageCreateFunction('.imagesx($this->gdimg_output).', '.imagesy($this->gdimg_output).')', __FILE__, __LINE__);
 									}
 
 								} else { // overlay
@@ -2934,7 +2943,7 @@ if (false) {
 											$this->ImageResizeFunction($img_watermark2, $img_watermark, 0, 0, 0, 0, imagesx($img_watermark2), imagesy($img_watermark2), imagesx($img_watermark), imagesy($img_watermark));
 											$img_watermark = $img_watermark2;
 										} else {
-											$this->DebugMessage('ImageCreateFunction('.($scale * imagesx($img_watermark)) . ', ' . ($scale * imagesx($img_watermark)) . ') failed', __FILE__, __LINE__);
+											$this->DebugMessage('ImageCreateFunction('.($scale * imagesx($img_watermark)).', '.($scale * imagesx($img_watermark)).') failed', __FILE__, __LINE__);
 										}
 									}
 									$watermark_dest_x = round($matches[1] - (imagesx($img_watermark) / 2));
@@ -3028,11 +3037,11 @@ if (false) {
 
 					case 'size': // Resize
 						@list($newwidth, $newheight, $stretch) = explode('|', $parameter);
-						$newwidth  = (!$newwidth  ? imagesx($this->gdimg_output) : ((($newwidth > 0) && ($newwidth < 1)) ? round($newwidth * imagesx($this->gdimg_output)) : round($newwidth)));
+						$newwidth  = (!$newwidth  ? imagesx($this->gdimg_output) : ((($newwidth  > 0) && ($newwidth  < 1)) ? round($newwidth  * imagesx($this->gdimg_output)) : round($newwidth)));
 						$newheight = (!$newheight ? imagesy($this->gdimg_output) : ((($newheight > 0) && ($newheight < 1)) ? round($newheight * imagesy($this->gdimg_output)) : round($newheight)));
 						$stretch   = ($stretch ? true : false);
 						if ($stretch) {
-							$scale_x = phpthumb_functions::ScaleToFitInBox(imagesx($this->gdimg_output), imagesx($this->gdimg_output), $newwidth, $newwidth, true, true);
+							$scale_x = phpthumb_functions::ScaleToFitInBox(imagesx($this->gdimg_output), imagesx($this->gdimg_output), $newwidth,  $newwidth,  true, true);
 							$scale_y = phpthumb_functions::ScaleToFitInBox(imagesy($this->gdimg_output), imagesy($this->gdimg_output), $newheight, $newheight, true, true);
 						} else {
 							$scale_x = phpthumb_functions::ScaleToFitInBox(imagesx($this->gdimg_output), imagesy($this->gdimg_output), $newwidth, $newheight, true, true);
@@ -3047,11 +3056,11 @@ if (false) {
 									imagesavealpha($this->gdimg_output, true);
 									$this->ImageResizeFunction($this->gdimg_output, $img_temp, 0, 0, 0, 0, imagesx($this->gdimg_output), imagesy($this->gdimg_output), imagesx($img_temp), imagesy($img_temp));
 								} else {
-									$this->DebugMessage('ImageCreateFunction('.($scale_x * imagesx($img_temp)) . ', ' . ($scale_y * imagesy($img_temp)) . ') failed', __FILE__, __LINE__);
+									$this->DebugMessage('ImageCreateFunction('.($scale_x * imagesx($img_temp)).', '.($scale_y * imagesy($img_temp)).') failed', __FILE__, __LINE__);
 								}
 								imagedestroy($img_temp);
 							} else {
-								$this->DebugMessage('ImageCreateFunction(' . imagesx($this->gdimg_output) . ', ' . imagesy($this->gdimg_output) . ') failed', __FILE__, __LINE__);
+								$this->DebugMessage('ImageCreateFunction('.imagesx($this->gdimg_output).', '.imagesy($this->gdimg_output).') failed', __FILE__, __LINE__);
 							}
 						}
 						break;
@@ -3681,6 +3690,7 @@ if (false) {
 						} else {
 							$this->DebugMessage('ImageMagickThumbnailToGD() failed', __FILE__, __LINE__);
 						}
+						@chmod($tempnam, $this->getParameter('config_file_create_mask'));
 					} else {
 						$this->DebugMessage('failed to put $this->rawImageData into temp file "'.$tempnam.'"', __FILE__, __LINE__);
 					}
@@ -3804,8 +3814,8 @@ if (false) {
 					break;
 				case 2:
 					$imageHeader = 'Content-Type: image/jpeg';
-                    $GDreadSupport = (bool) @$gd_info['JPEG Support'] || (bool) @$gd_info['JPG Support'];
-                    break;
+					$GDreadSupport = (bool) @$gd_info['JPEG Support'] || (bool) @$gd_info['JPG Support']; // changed for XOOPS
+					break;
 				case 3:
 					$imageHeader = 'Content-Type: image/png';
 					$GDreadSupport = (bool) @$gd_info['PNG Support'];
@@ -4249,6 +4259,7 @@ if (false) {
 			if ($fp_tempnam = @fopen($tempnam, 'wb')) {
 				fwrite($fp_tempnam, $RawImageData);
 				fclose($fp_tempnam);
+				@chmod($tempnam, $this->getParameter('config_file_create_mask'));
 				if (($ICFSreplacementFunctionName == 'imagecreatefromgif') && !function_exists($ICFSreplacementFunctionName)) {
 
 					// Need to create from GIF file, but imagecreatefromgif does not exist
