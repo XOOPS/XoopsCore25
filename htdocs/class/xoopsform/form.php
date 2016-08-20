@@ -123,7 +123,16 @@ class XoopsForm
             $this->addElement(new XoopsFormHiddenToken());
         }
     }
-
+    /**
+     * PHP 4 style constructor compatibility shim
+     * @deprecated all callers should be using parent::__construct()
+     */
+    public function XoopsForm()
+    {
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error("Should call parent::__construct in {$trace[0]['file']} line {$trace[0]['line']},");
+        self::__construct();
+    }    
     /**
      * *#@+
      * retrieves object serialisation/identification id (sha1 used)
