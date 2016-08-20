@@ -4,7 +4,7 @@
         <{$lang_username}> <input type="text" name="uname" size="26" maxlength="25" value="<{$usercookie}>"/><br><br>
         <{$lang_password}> <input type="password" name="pass" size="21" maxlength="32"/><br><br>
         <{if isset($lang_rememberme)}>
-            <input type="checkbox" name="rememberme" value="On" checked/>
+            <input type="checkbox" name="rememberme" value="On" />
             <{$lang_rememberme}>
             <br>
             <br>
