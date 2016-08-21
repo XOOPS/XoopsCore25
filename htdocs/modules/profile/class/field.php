@@ -206,22 +206,7 @@ class ProfileField extends XoopsObject
                 break;
 
             case 'theme':
-                $element = new XoopsFormSelect($caption, $name, $value);
-                $element->addOption('0', _PROFILE_MA_SITEDEFAULT);
-                $handle  = opendir(XOOPS_THEME_PATH . '/');
-                $dirlist = array();
-                while (false !== ($file = readdir($handle))) {
-                    if (is_dir(XOOPS_THEME_PATH . '/' . $file) && !preg_match("/^[.]{1,2}$/", $file) && strtolower($file) !== 'cvs') {
-                        if (file_exists(XOOPS_THEME_PATH . '/' . $file . '/theme.html') && in_array($file, $GLOBALS['xoopsConfig']['theme_set_allowed'])) {
-                            $dirlist[$file] = $file;
-                        }
-                    }
-                }
-                closedir($handle);
-                if (!empty($dirlist)) {
-                    asort($dirlist);
-                    $element->addOptionArray($dirlist);
-                }
+                $element = new XoopsFormSelectTheme($caption, $name, $value, 1, true);
                 break;
         }
         if ($this->getVar('field_description') != '') {
