@@ -31,7 +31,10 @@ $configs['conf_names'] = array(
     'meta_keywords',
     'meta_description',
     'meta_author',
-    'meta_copyright');
+    'meta_copyright',
+    'closesite',
+    'debug_mode',
+);
 
 // languages config files
 $configs['language_files'] = array(
