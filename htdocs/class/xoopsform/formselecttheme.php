@@ -34,10 +34,18 @@ class XoopsFormSelectTheme extends XoopsFormSelect
      * @param string $name
      * @param mixed  $value Pre-selected value (or array of them).
      * @param int    $size  Number or rows. "1" makes a drop-down-list
+     * @param bool   $theme_set_allowed Flag to use only selectable theme
      */
-    public function __construct($caption, $name, $value = null, $size = 1)
+    public function __construct($caption, $name, $value = null, $size = 1, $theme_set_allowed = false)
     {
         parent::__construct($caption, $name, $value, $size);
-        $this->addOptionArray(XoopsLists::getThemesList());
+        if ($theme_set_allowed == false){
+            $this->addOptionArray(XoopsLists::getThemesList());
+        } else{
+            $theme_arr = $GLOBALS['xoopsConfig']['theme_set_allowed'];
+            foreach (array_keys($theme_arr) as $i) {
+                $this->addOption($theme_arr[$i], $theme_arr[$i]);
+            }
+        }
     }
 }
