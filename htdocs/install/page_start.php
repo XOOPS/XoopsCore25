@@ -26,7 +26,7 @@
  **/
 
 require_once './include/common.inc.php';
-defined('XOOPS_INSTALL') or die('XOOPS Installation wizard die');
+defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 $pageHasForm = false;
 

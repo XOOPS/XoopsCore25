@@ -91,7 +91,7 @@ class XoopsConfigHandler
     public function getConfig($id, $withoptions = false)
     {
         $config = $this->_cHandler->get($id);
-        if ($withoptions == true) {
+        if ($withoptions === true) {
             $config->setConfOptions($this->getConfigOptions(new Criteria('conf_id', $id)));
         }
 

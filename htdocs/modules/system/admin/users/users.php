@@ -228,7 +228,7 @@ function synchronize($uid, $type)
     global $xoopsDB;
 
     include_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
-    include_once(XOOPS_ROOT_PATH . '/kernel/module.php');
+    include_once XOOPS_ROOT_PATH . '/kernel/module.php';
 
     $tables = array();
     // Count comments (approved only: com_status == XOOPS_COMMENT_ACTIVE)
