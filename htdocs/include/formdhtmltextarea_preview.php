@@ -21,7 +21,8 @@ include_once dirname(__DIR__) . '/mainfile.php';
 $xoopsLogger->activated = false;
 $myts                   = MyTextSanitizer::getInstance();
 
-$content = $myts->stripSlashesGPC($_POST['text']);
+XoopsLoad::load('XoopsRequest');
+$content = utf8_encode(XoopsRequest::getText('text', '', 'POST'));
 
 if (!$GLOBALS['xoopsSecurity']->validateToken(@$_POST['token'], false)) {
     $content = 'Direct access is not allowed!!!';
