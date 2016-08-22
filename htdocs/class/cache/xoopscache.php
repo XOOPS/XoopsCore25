@@ -100,7 +100,7 @@ class XoopsCache
     /**
      * Set the cache configuration to use
      *
-     * @param  string $name     Name of the configuration
+     * @param  string|array $name     Name of the configuration
      * @param  array  $settings Optional associative array of settings passed to the engine
      * @return array  (engine, settings) on success, false on failure
      * @access public
@@ -261,7 +261,7 @@ class XoopsCache
      * Read a key from the cache
      *
      * @param  string $key    Identifier for the data
-     * @param  string $config name of the configuration to use
+     * @param  string|array $config name of the configuration to use
      * @return mixed  The cached data, or false if the data doesn't exist, has expired, or if there was an error fetching it
      * @access public
      */

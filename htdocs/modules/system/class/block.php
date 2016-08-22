@@ -377,7 +377,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
      *
      * @param int|int[] $groupid  groupid (can be an array)
      * @param bool $asobject
-     * @param int $side
+     * @param int|string $side
      *                            0: sideblock - left
      *                            1: sideblock - right
      *                            2: sideblock - left and right

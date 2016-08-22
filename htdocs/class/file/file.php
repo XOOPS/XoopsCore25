@@ -174,7 +174,7 @@ class XoopsFileHandler
     /**
      * Return the contents of this File as a string.
      *
-     * @param bool|string $bytes where to start
+     * @param bool|string|int $bytes where to start
      * @param string      $mode
      * @param boolean     $force If true then the file will be re-opened even if its already opened, otherwise it won't
      *
@@ -383,7 +383,7 @@ class XoopsFileHandler
      * makes filename safe for saving
      *
      * @param  string $name the name of the file to make safe if different from $this->name
-     * @param  null   $ext
+     * @param  null|string   $ext
      * @return string $ext the extension of the file
      * @access public
      */

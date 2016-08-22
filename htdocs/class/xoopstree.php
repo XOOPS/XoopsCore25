@@ -293,11 +293,11 @@ class XoopsTree
     /**
      * Enter description here...
      *
-     * @param int|\unknown_type    $sel_id
-     * @param string|\unknown_type $order
-     * @param array|\unknown_type  $parray
+     * @param int|mixed    $sel_id
+     * @param string|mixed $order
+     * @param array|mixed  $parray
      *
-     * @return unknown
+     * @return mixed
      */
     public function getAllChild($sel_id = 0, $order = '', $parray = array())
     {
@@ -322,11 +322,11 @@ class XoopsTree
     /**
      * Enter description here...
      *
-     * @param  int|\unknown_type    $sel_id
-     * @param  string|\unknown_type $order
-     * @param  array|\unknown_type  $parray
-     * @param  string|\unknown_type $r_prefix
-     * @return unknown
+     * @param  int|mixed    $sel_id
+     * @param  string|mixed $order
+     * @param  array|mixed  $parray
+     * @param  string|mixed $r_prefix
+     * @return mixed
      */
     public function getChildTreeArray($sel_id = 0, $order = '', $parray = array(), $r_prefix = '')
     {

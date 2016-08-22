@@ -1247,7 +1247,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * Set custom handler
      *
      * @access   protected
-     * @param null   $handler
+     * @param null|string   $handler
      * @param null   $args
      * @param string $path path to class
      * @internal param object $handler

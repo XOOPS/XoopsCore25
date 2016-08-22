@@ -332,7 +332,7 @@ class XoopsCommentRenderer
      * @param array   $thread
      * @param int     $key
      * @param array   $replies
-     * @param string  $prefix
+     * @param string|int  $prefix
      * @param bool    $admin_view
      * @param integer $depth
      * @access private

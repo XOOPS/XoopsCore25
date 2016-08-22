@@ -383,7 +383,7 @@ function profile_getRegisterForm(XoopsUser $user, $profile, $step = null)
  * Get {@link XoopsThemeForm} for editing a user
  *
  * @param XoopsUser           $user {@link XoopsUser} to edit
- * @param ProfileProfile|null $profile
+ * @param ProfileProfile|XoopsObject|null $profile
  * @param bool                $action
  *
  * @return object

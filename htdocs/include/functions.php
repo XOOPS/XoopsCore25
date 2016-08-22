@@ -1046,7 +1046,7 @@ function xoops_getOption($option)
  * xoops_getConfigOption()
  *
  * @param mixed  $option
- * @param string $type
+ * @param array|string $type
  * @internal param string $dirname
  * @deprecated
  * @return bool

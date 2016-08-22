@@ -141,7 +141,7 @@ class ReCaptchaResponse
  * @param string $privkey
  * @param string $remoteip
  * @param string $challenge
- * @param string $response
+ * @param string|array $response
  * @param array  $extra_params an array of extra variables to post to the server
  * @return ReCaptchaResponse
  */
