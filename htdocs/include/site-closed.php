@@ -41,11 +41,11 @@ if (!$allowed) {
     $xoopsThemeFactory                = new xos_opal_ThemeFactory();
     $xoopsThemeFactory->allowedThemes = $xoopsConfig['theme_set_allowed'];
     $xoopsThemeFactory->defaultTheme  = $xoopsConfig['theme_set'];
-    $xoTheme                          =& $xoopsThemeFactory->createInstance(array(
+    $xoTheme                          = $xoopsThemeFactory->createInstance(array(
                                                                                 'plugins' => array()));
     $xoTheme->addScript('/include/xoops.js', array(
         'type' => 'text/javascript'));
-    $xoopsTpl =& $xoTheme->template;
+    $xoopsTpl = $xoTheme->template;
     $xoopsTpl->assign(array(
                           'xoops_theme'       => $xoopsConfig['theme_set'],
                           'xoops_imageurl'    => XOOPS_THEME_URL . '/' . $xoopsConfig['theme_set'] . '/',

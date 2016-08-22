@@ -688,10 +688,10 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
     $xoopsThemeFactory                = new xos_opal_ThemeFactory();
     $xoopsThemeFactory->allowedThemes = $xoopsConfig['theme_set_allowed'];
     $xoopsThemeFactory->defaultTheme  = $theme;
-    $xoTheme                          =& $xoopsThemeFactory->createInstance(array(
+    $xoTheme                          = $xoopsThemeFactory->createInstance(array(
                                                                                 'plugins'      => array(),
                                                                                 'renderBanner' => false));
-    $xoopsTpl                         =& $xoTheme->template;
+    $xoopsTpl                         = $xoTheme->template;
     $xoopsTpl->assign(array(
                           'xoops_theme'      => $theme,
                           'xoops_imageurl'   => XOOPS_THEME_URL . '/' . $theme . '/',
@@ -1046,7 +1046,7 @@ function xoops_getOption($option)
  * xoops_getConfigOption()
  *
  * @param mixed  $option
- * @param string $type
+ * @param array|string $type
  * @internal param string $dirname
  * @deprecated
  * @return bool

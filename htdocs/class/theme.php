@@ -56,7 +56,7 @@ class xos_opal_ThemeFactory
      * @param  array $initArgs
      * @return null|xos_opal_Theme
      */
-    public function &createInstance($options = array(), $initArgs = array())
+    public function createInstance($options = array(), $initArgs = array())
     {
         // Grab the theme folder from request vars if present
         if (empty($options['folderName'])) {

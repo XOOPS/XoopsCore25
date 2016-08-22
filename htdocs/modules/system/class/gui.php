@@ -151,7 +151,7 @@ class XoopsSystemGui
 
         //@internal: using global $xoTheme dereferences the variable in old versions, this does not
         if (!isset($xoTheme)) {
-            $xoTheme =& $GLOBALS['xoTheme'];
+            $xoTheme = $GLOBALS['xoTheme'];
         }
 
         if (isset($xoopsOption['template_main']) && $xoopsOption['template_main'] != $xoTheme->contentTemplate) {
