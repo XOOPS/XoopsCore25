@@ -44,7 +44,7 @@ $op = system_CleanVars($_REQUEST, 'op', 'default', 'string');
 // Setting type
 $confcat_id = system_CleanVars($_REQUEST, 'confcat_id', 0, 'int');
 // Define main template
-$xoopsOption['template_main'] = 'system_preferences.tpl';
+$GLOBALS['xoopsOption']['template_main'] = 'system_preferences.tpl';
 // Call Header
 xoops_cp_header();
 // Define Stylesheet

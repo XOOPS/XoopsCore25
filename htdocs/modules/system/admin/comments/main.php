@@ -42,7 +42,7 @@ if (!xoops_getModuleOption('active_comments', 'system')) {
 // Get Action type
 $op = system_CleanVars($_REQUEST, 'op', 'default', 'string');
 // Define main template
-$xoopsOption['template_main'] = 'system_comments.tpl';
+$GLOBALS['xoopsOption']['template_main'] = 'system_comments.tpl';
 xoops_cp_header();
 // Define Stylesheet
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');

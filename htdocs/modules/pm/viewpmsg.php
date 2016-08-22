@@ -23,7 +23,7 @@ if (!is_object($GLOBALS['xoopsUser'])) {
     redirect_header(XOOPS_URL, 3, _NOPERM);
 }
 $xoopsConfig['module_cache']  = 0; //disable caching since the URL will be the same, but content different from one user to another
-$xoopsOption['template_main'] = 'pm_viewpmsg.tpl';
+$GLOBALS['xoopsOption']['template_main'] = 'pm_viewpmsg.tpl';
 include $GLOBALS['xoops']->path('header.php');
 
 $valid_op_requests = array('out', 'save', 'in');

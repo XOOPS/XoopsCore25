@@ -36,7 +36,7 @@ $groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGr
 if (is_object($GLOBALS['xoopsUser']) && $uid == $GLOBALS['xoopsUser']->getVar('uid')) {
     //disable cache
     $GLOBALS['xoopsConfig']['module_cache'][$GLOBALS['xoopsModule']->getVar('mid')] = 0;
-    $xoopsOption['template_main']                                                   = 'profile_userinfo.tpl';
+    $GLOBALS['xoopsOption']['template_main']                                                   = 'profile_userinfo.tpl';
     include $GLOBALS['xoops']->path('header.php');
 
     $config_handler             = xoops_getHandler('config');
@@ -103,7 +103,7 @@ if (is_object($GLOBALS['xoopsUser']) && $uid == $GLOBALS['xoopsUser']->getVar('u
         //disable cache
         $GLOBALS['xoopsConfig']['module_cache'][$GLOBALS['xoopsModule']->getVar('mid')] = 0;
     }
-    $xoopsOption['template_main'] = 'profile_userinfo.tpl';
+    $GLOBALS['xoopsOption']['template_main'] = 'profile_userinfo.tpl';
     include $GLOBALS['xoops']->path('header.php');
     $GLOBALS['xoopsTpl']->assign('user_ownpage', false);
 }

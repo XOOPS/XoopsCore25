@@ -809,7 +809,7 @@ function xoops_module_update($dirname)
     /*
         // Call Header
         // Define main template
-        $xoopsOption['template_main'] = 'system_header.html';
+        $GLOBALS['xoopsOption']['template_main'] = 'system_header.html';
         // Call Header
         xoops_cp_header();
         // Define Stylesheet
@@ -1082,7 +1082,7 @@ function xoops_module_update($dirname)
 
         // reset compile_id
 
-        //        $xoTheme  =& $xoopsThemeFactory->createInstance(array('contentTemplate' => @$xoopsOption['template_main']));
+        //        $xoTheme  =& $xoopsThemeFactory->createInstance(array('contentTemplate' => @$GLOBALS['xoopsOption']['template_main']));
         //        $xoopsTpl =& $xoTheme->template;
         //        $xoopsTpl->setCompileId();
 
