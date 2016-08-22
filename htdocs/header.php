@@ -55,8 +55,8 @@ if ($xoopsConfig['theme_set'] !== 'default' && file_exists(XOOPS_THEME_PATH . '/
     /**
      * @var xos_opal_Theme
      */
-    $xoTheme  =& $xoopsThemeFactory->createInstance(array('contentTemplate' => @$xoopsOption['template_main']));
-    $xoopsTpl =& $xoTheme->template;
+    $xoTheme  = $xoopsThemeFactory->createInstance(array('contentTemplate' => @$xoopsOption['template_main']));
+    $xoopsTpl = $xoTheme->template;
 
     $xoopsPreload->triggerEvent('core.header.addmeta');
 
