@@ -77,7 +77,7 @@ foreach (array_keys($steps) as $key) {
     $steps[$key]['step_no'] = $key + 1;
 }
 
-$xoopsOption['template_main'] = 'profile_register.tpl';
+$GLOBALS['xoopsOption']['template_main'] = 'profile_register.tpl';
 include $GLOBALS['xoops']->path('header.php');
 
 $GLOBALS['xoopsTpl']->assign('steps', $steps);

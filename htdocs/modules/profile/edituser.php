@@ -87,7 +87,7 @@ if ($op === 'save') {
 }
 
 if ($op === 'editprofile') {
-    $xoopsOption['template_main'] = 'profile_editprofile.tpl';
+    $GLOBALS['xoopsOption']['template_main'] = 'profile_editprofile.tpl';
     include_once $GLOBALS['xoops']->path('header.php');
     include_once __DIR__ . '/include/forms.php';
     $form = profile_getUserForm($GLOBALS['xoopsUser']);
@@ -100,7 +100,7 @@ if ($op === 'editprofile') {
 }
 
 if ($op === 'avatarform') {
-    $xoopsOption['template_main'] = 'profile_avatar.tpl';
+    $GLOBALS['xoopsOption']['template_main'] = 'profile_avatar.tpl';
     include $GLOBALS['xoops']->path('header.php');
     $xoBreadcrumbs[] = array('title' => _US_MYAVATAR);
 

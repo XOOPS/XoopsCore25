@@ -41,9 +41,9 @@ if ($xoopsConfig['theme_set'] !== 'default' && file_exists(XOOPS_THEME_PATH . '/
     require_once $GLOBALS['xoops']->path('class/theme.php');
     require_once $GLOBALS['xoops']->path('class/theme_blocks.php');
 
-    if (@$xoopsOption['template_main']) {
-        if (false === strpos($xoopsOption['template_main'], ':')) {
-            $xoopsOption['template_main'] = 'db:' . $xoopsOption['template_main'];
+    if (@$GLOBALS['xoopsOption']['template_main']) {
+        if (false === strpos($GLOBALS['xoopsOption']['template_main'], ':')) {
+            $GLOBALS['xoopsOption']['template_main'] = 'db:' . $GLOBALS['xoopsOption']['template_main'];
         }
     }
 
@@ -55,7 +55,7 @@ if ($xoopsConfig['theme_set'] !== 'default' && file_exists(XOOPS_THEME_PATH . '/
     /**
      * @var xos_opal_Theme
      */
-    $xoTheme  =& $xoopsThemeFactory->createInstance(array('contentTemplate' => @$xoopsOption['template_main']));
+    $xoTheme  =& $xoopsThemeFactory->createInstance(array('contentTemplate' => @$GLOBALS['xoopsOption']['template_main']));
     $xoopsTpl =& $xoTheme->template;
 
     $xoopsPreload->triggerEvent('core.header.addmeta');
@@ -83,7 +83,7 @@ if ($xoopsConfig['theme_set'] !== 'default' && file_exists(XOOPS_THEME_PATH . '/
     if (!empty($xoopsModule)) {
         $xoTheme->contentCacheLifetime = @$xoopsConfig['module_cache'][$xoopsModule->getVar('mid', 'n')];
         // Tricky solution for setting cache time for homepage
-    } elseif (!empty($xoopsOption['template_main']) && $xoopsOption['template_main'] === 'db:system_homepage.tpl') {
+    } elseif (!empty($GLOBALS['xoopsOption']['template_main']) && $GLOBALS['xoopsOption']['template_main'] === 'db:system_homepage.tpl') {
         $xoTheme->contentCacheLifetime = 604800;
     }
 
@@ -93,7 +93,7 @@ if ($xoopsConfig['theme_set'] !== 'default' && file_exists(XOOPS_THEME_PATH . '/
         //exit(); // see https://sourceforge.net/p/xoops/bugs/1261/
     }
 
-    if (!isset($xoopsOption['template_main']) && $xoopsModule) {
+    if (!isset($GLOBALS['xoopsOption']['template_main']) && $xoopsModule) {
         // new themes using Smarty does not have old functions that are required in old modules, so include them now
         include $GLOBALS['xoops']->path('include/old_theme_functions.php');
         // need this also

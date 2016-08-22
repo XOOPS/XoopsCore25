@@ -58,7 +58,7 @@ $myts = MyTextSanitizer::getInstance();
 switch ($op) {
     case 'list':
         // Define main template
-        $xoopsOption['template_main'] = 'system_modules.tpl';
+        $GLOBALS['xoopsOption']['template_main'] = 'system_modules.tpl';
         // Call Header
         xoops_cp_header();
         // Define Stylesheet
@@ -129,7 +129,7 @@ switch ($op) {
 
     case 'installlist':
         // Define main template
-        $xoopsOption['template_main'] = 'system_modules.tpl';
+        $GLOBALS['xoopsOption']['template_main'] = 'system_modules.tpl';
         // Call Header
         xoops_cp_header();
         // Define Stylesheet
@@ -209,7 +209,7 @@ switch ($op) {
 
     case 'confirm':
         // Define main template
-        $xoopsOption['template_main'] = 'system_modules_confirm.tpl';
+        $GLOBALS['xoopsOption']['template_main'] = 'system_modules_confirm.tpl';
         // Call Header
         xoops_cp_header();
         // Define Stylesheet
@@ -316,7 +316,7 @@ switch ($op) {
         //Set active modules in cache folder
         xoops_setActiveModules();
         // Define main template
-        $xoopsOption['template_main'] = 'system_modules_confirm.tpl';
+        $GLOBALS['xoopsOption']['template_main'] = 'system_modules_confirm.tpl';
         // Call Header
         xoops_cp_header();
         // Define Stylesheet
@@ -368,7 +368,7 @@ switch ($op) {
         //Set active modules in cache folder
         xoops_setActiveModules();
         // Define main template
-        $xoopsOption['template_main'] = 'system_header.tpl';
+        $GLOBALS['xoopsOption']['template_main'] = 'system_header.tpl';
         // Call Header
         xoops_cp_header();
         // Define Stylesheet
@@ -423,7 +423,7 @@ switch ($op) {
         //Set active modules in cache folder
         xoops_setActiveModules();
         // Define main template
-        $xoopsOption['template_main'] = 'system_header.tpl';
+        $GLOBALS['xoopsOption']['template_main'] = 'system_header.tpl';
         // Call Header
         xoops_cp_header();
         // Define Stylesheet
@@ -479,7 +479,7 @@ switch ($op) {
         //Set active modules in cache folder
         xoops_setActiveModules();
         // Define main template
-        $xoopsOption['template_main'] = 'system_header.tpl';
+        $GLOBALS['xoopsOption']['template_main'] = 'system_header.tpl';
         // Call Header
         xoops_cp_header();
         // Define Stylesheet

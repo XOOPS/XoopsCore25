@@ -40,7 +40,7 @@ $op = system_CleanVars($_REQUEST, 'op', 'default', 'string');
 
 $member_handler = xoops_getHandler('member', 'system');
 // Define main template
-$xoopsOption['template_main'] = 'system_users.tpl';
+$GLOBALS['xoopsOption']['template_main'] = 'system_users.tpl';
 // Call Header
 xoops_cp_header();
 

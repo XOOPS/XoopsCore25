@@ -57,7 +57,7 @@ switch ($op) {
     case 'list':
     default:
         // Define main template
-        $xoopsOption['template_main'] = 'system_userrank.tpl';
+        $GLOBALS['xoopsOption']['template_main'] = 'system_userrank.tpl';
         // Call Header
         xoops_cp_header();
         // Define Stylesheet
@@ -109,7 +109,7 @@ switch ($op) {
     // New userrank
     case 'userrank_new':
         // Define main template
-        $xoopsOption['template_main'] = 'system_userrank.tpl';
+        $GLOBALS['xoopsOption']['template_main'] = 'system_userrank.tpl';
         // Call Header
         xoops_cp_header();
         // Define Stylesheet
@@ -132,7 +132,7 @@ switch ($op) {
     // Edit userrank
     case 'userrank_edit':
         // Define main template
-        $xoopsOption['template_main'] = 'system_userrank.tpl';
+        $GLOBALS['xoopsOption']['template_main'] = 'system_userrank.tpl';
         // Call Header
         xoops_cp_header();
         // Define Stylesheet
@@ -193,7 +193,7 @@ switch ($op) {
         }
         if (count($err) > 0) {
             // Define main template
-            $xoopsOption['template_main'] = 'system_header.tpl';
+            $GLOBALS['xoopsOption']['template_main'] = 'system_header.tpl';
             // Call header
             xoops_cp_header();
             //echo 'dfsf';
@@ -232,7 +232,7 @@ switch ($op) {
             }
         } else {
             // Define main template
-            $xoopsOption['template_main'] = 'system_userrank.tpl';
+            $GLOBALS['xoopsOption']['template_main'] = 'system_userrank.tpl';
             // Call Header
             xoops_cp_header();
             // Define Stylesheet

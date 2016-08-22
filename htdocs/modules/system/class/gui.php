@@ -62,9 +62,9 @@ class XoopsSystemGui
         require_once XOOPS_ROOT_PATH . '/class/template.php';
         require_once XOOPS_ROOT_PATH . '/class/theme.php';
 
-        if (@$xoopsOption['template_main']) {
-            if (false === strpos($xoopsOption['template_main'], ':')) {
-                $xoopsOption['template_main'] = 'db:' . $xoopsOption['template_main'];
+        if (@$GLOBALS['xoopsOption']['template_main']) {
+            if (false === strpos($GLOBALS['xoopsOption']['template_main'], ':')) {
+                $GLOBALS['xoopsOption']['template_main'] = 'db:' . $GLOBALS['xoopsOption']['template_main'];
             }
         }
 
@@ -72,7 +72,7 @@ class XoopsSystemGui
         $this->xoTheme     =& $adminThemeFactory->createInstance(array(
                                                                      'folderName'      => $this->foldername,
                                                                      'themesPath'      => 'modules/system/themes',
-                                                                     'contentTemplate' => @$xoopsOption['template_main']));
+                                                                     'contentTemplate' => @$GLOBALS['xoopsOption']['template_main']));
 
         $this->xoTheme->loadLocalization('admin');
         $this->template =& $this->xoTheme->template;
@@ -154,12 +154,12 @@ class XoopsSystemGui
             $xoTheme =& $GLOBALS['xoTheme'];
         }
 
-        if (isset($xoopsOption['template_main']) && $xoopsOption['template_main'] != $xoTheme->contentTemplate) {
+        if (isset($GLOBALS['xoopsOption']['template_main']) && $GLOBALS['xoopsOption']['template_main'] != $xoTheme->contentTemplate) {
             trigger_error('xoopsOption[template_main] should be defined before call xoops_cp_header function', E_USER_WARNING);
-            if (false === strpos($xoopsOption['template_main'], ':')) {
-                $xoTheme->contentTemplate = 'db:' . $xoopsOption['template_main'];
+            if (false === strpos($GLOBALS['xoopsOption']['template_main'], ':')) {
+                $xoTheme->contentTemplate = 'db:' . $GLOBALS['xoopsOption']['template_main'];
             } else {
-                $xoTheme->contentTemplate = $xoopsOption['template_main'];
+                $xoTheme->contentTemplate = $GLOBALS['xoopsOption']['template_main'];
             }
         }
 
