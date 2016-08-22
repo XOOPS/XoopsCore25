@@ -123,7 +123,7 @@ class XoopsLocalAbstract
      * Setting $timeoffset to null (by default) will skip timezone calculation for user, using default timezone instead, which is a MUST for cached contents
      * @param        $time
      * @param string $format
-     * @param null   $timeoffset
+     * @param null|string   $timeoffset
      * @return string
      */
     public static function formatTimestamp($time, $format = 'l', $timeoffset = null)

@@ -78,7 +78,7 @@ class Admin
     /**
      * Add config line
      *
-     * @param string $value message to include in config box
+     * @param array|string $value message to include in config box
      * @param string $type  type of line to add
      *                       minimal set of acceptable types and value expectation
      *                       'default' - value is message displayed directly (also used for unknown types)

@@ -30,7 +30,7 @@ class XoopsBlock extends XoopsObject
     public $db;
 
     /**
-     * @param null $id
+     * @param null|array $id
      */
     public function __construct($id = null)
     {
@@ -324,9 +324,9 @@ class XoopsBlock extends XoopsObject
 
     /**
      * get all the blocks that match the supplied parameters
-     * @param        $groupid  groupid (can be an array)
+     * @param int|array $groupid  groupid (can be an array)
      * @param bool   $asobject
-     * @param        $side     0: sideblock - left
+     * @param null|string $side     0: sideblock - left
      *                         1: sideblock - right
      *                         2: sideblock - left and right
      *                         3: centerblock - left

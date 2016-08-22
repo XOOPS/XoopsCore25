@@ -44,7 +44,7 @@ class XoopsSecurity
     /**
      * Create a token in the user's session
      *
-     * @param int    $timeout time in seconds the token should be valid
+     * @param int|string    $timeout time in seconds the token should be valid
      * @param string $name    name of session variable
      *
      * @return string token value

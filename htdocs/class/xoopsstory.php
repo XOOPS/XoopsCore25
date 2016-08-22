@@ -53,7 +53,7 @@ class XoopsStory
     public $comments;
 
     /**
-     * @param $storyid
+     * @param int|array $storyid
      */
     public function Story($storyid = -1)
     {

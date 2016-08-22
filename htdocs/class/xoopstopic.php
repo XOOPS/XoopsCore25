@@ -39,7 +39,7 @@ class XoopsTopic
 
     /**
      * @param     $table
-     * @param int $topicid
+     * @param int|array $topicid
      */
     public function __construct($table, $topicid = 0)
     {

@@ -128,7 +128,7 @@ function xoops_convert_decode($data, $store_method = 'urlcode')
 /**
  * xoops_aw_encode()
  *
- * @param        value of array $value
+ * @param  mixed $value value of array
  * @param        key   of array   $key
  * @param string $store_method
  * @return boolean
@@ -141,7 +141,7 @@ function xoops_aw_encode($value, $key, $store_method = 'urlcode')
 /**
  * xoops_aw_decode()
  *
- * @param        value of array $value
+ * @param mixed $value value of array
  * @param        key   of array $key
  * @param string $store_method
  * @return boolean

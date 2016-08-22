@@ -667,7 +667,7 @@ class XoopsFolderHandler
     /**
      * Recursive directory copy.
      *
-     * @param array $options (to, from, chmod, skip)
+     * @param array|string $options (to, from, chmod, skip)
      *
      * @return bool
      * @access public
@@ -748,7 +748,7 @@ class XoopsFolderHandler
     /**
      * Recursive directory move.
      *
-     * @param array $options (to, from, chmod, skip)
+     * @param array|string $options (to, from, chmod, skip)
      *
      * @return boolean Success
      * @access public

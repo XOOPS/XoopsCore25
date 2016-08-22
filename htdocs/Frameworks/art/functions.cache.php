@@ -14,7 +14,7 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_CACHE')):
     define('FRAMEWORKS_ART_FUNCTIONS_CACHE', true);
 
     /**
-     * @param null $groups
+     * @param null|array $groups
      *
      * @return string
      */
@@ -48,8 +48,8 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_CACHE')):
 
     /**
      * @param        $data
-     * @param null   $name
-     * @param null   $dirname
+     * @param null|string   $name
+     * @param null|string   $dirname
      * @param string $root_path
      *
      * @return bool
@@ -81,7 +81,7 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_CACHE')):
 
     /**
      * @param      $data
-     * @param null $name
+     * @param null|string $name
      * @param null $dirname
      * @param null $groups
      *
@@ -96,7 +96,7 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_CACHE')):
 
     /**
      * @param        $name
-     * @param null   $dirname
+     * @param null|string   $dirname
      * @param string $root_path
      *
      * @return mixed|null

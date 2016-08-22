@@ -471,12 +471,12 @@ class XoopsTplfileHandler extends XoopsObjectHandler
     /**
      * Find Template File
      *
-     * @param  string      $tplset
-     * @param  string      $type
-     * @param  string      $refid
-     * @param  string      $module
-     * @param  string      $file
-     * @param  bool|string $getsource
+     * @param  string       $tplset
+     * @param  string|array $type
+     * @param  string       $refid
+     * @param  string       $module
+     * @param  string       $file
+     * @param  bool|string  $getsource
      * @return object
      */
     public function find($tplset = null, $type = null, $refid = null, $module = null, $file = null, $getsource = false)
