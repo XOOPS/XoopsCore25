@@ -37,7 +37,7 @@ switch ($op) {
     default:
     case 'search':
         $xoopsOption['cache_group']   = implode('', $groups);
-        $xoopsOption['template_main'] = 'profile_search.tpl';
+        $GLOBALS['xoopsOption']['template_main'] = 'profile_search.tpl';
         include $GLOBALS['xoops']->path('header.php');
         $xoBreadcrumbs[] = array('title' => _SEARCH);
         $sortby_arr      = array();
@@ -156,7 +156,7 @@ switch ($op) {
         break;
 
     case 'results':
-        $xoopsOption['template_main'] = 'profile_results.tpl';
+        $GLOBALS['xoopsOption']['template_main'] = 'profile_results.tpl';
         include_once $GLOBALS['xoops']->path('header.php');
         $GLOBALS['xoopsTpl']->assign('page_title', _PROFILE_MA_RESULTS);
         $xoBreadcrumbs[] = array(

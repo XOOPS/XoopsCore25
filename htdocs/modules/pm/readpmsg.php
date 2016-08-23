@@ -95,7 +95,7 @@ if (is_object($pm) && !empty($_POST['action'])) {
 }
 $start                        = !empty($_GET['start']) ? (int)$_GET['start'] : 0;
 $total_messages               = !empty($_GET['total_messages']) ? (int)$_GET['total_messages'] : 0;
-$xoopsOption['template_main'] = 'pm_readpmsg.tpl';
+$GLOBALS['xoopsOption']['template_main'] = 'pm_readpmsg.tpl';
 include $GLOBALS['xoops']->path('header.php');
 
 if (!is_object($pm)) {

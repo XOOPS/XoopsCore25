@@ -96,7 +96,7 @@ if (false !== $error) {
         exit;
     }
     // Define main template
-    $xoopsOption['template_main'] = 'system_index.tpl';
+    $GLOBALS['xoopsOption']['template_main'] = 'system_index.tpl';
     xoops_cp_header();
     // Define Stylesheet
     $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
