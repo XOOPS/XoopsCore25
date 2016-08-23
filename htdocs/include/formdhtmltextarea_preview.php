@@ -22,7 +22,7 @@ $xoopsLogger->activated = false;
 $myts                   = MyTextSanitizer::getInstance();
 
 XoopsLoad::load('XoopsRequest');
-$content = utf8_encode(XoopsRequest::getText('text', '', 'POST'));
+$content = rawurldecode(XoopsRequest::getText('text', '', 'POST'));
 
 if (!$GLOBALS['xoopsSecurity']->validateToken(@$_POST['token'], false)) {
     $content = 'Direct access is not allowed!!!';
