@@ -17,7 +17,7 @@
  */
 
 require dirname(dirname(dirname(dirname(__DIR__)))) . '/mainfile.php';
-require(XOOPS_ROOT_PATH . '/header.php');
+require XOOPS_ROOT_PATH . '/header.php';
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 

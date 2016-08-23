@@ -182,7 +182,7 @@ class XoopsFolderHandler
                         $item = $n;
                     }
                 } else {
-                    if ((!preg_match('/^\\.+$/', $n) && $exceptions == false) || ($exceptions == true && !preg_match('/^\\.(.*)$/', $n))) {
+                    if ((!preg_match('/^\\.+$/', $n) && $exceptions === false) || ($exceptions === true && !preg_match('/^\\.(.*)$/', $n))) {
                         $item = $n;
                     }
                 }

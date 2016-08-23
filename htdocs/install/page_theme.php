@@ -17,7 +17,7 @@
 $xoopsOption['checkadmin'] = true;
 $xoopsOption['hascommon']  = true;
 require_once './include/common.inc.php';
-defined('XOOPS_INSTALL') or die('XOOPS Installation wizard die');
+defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $config_handler = xoops_getHandler('config');

@@ -17,7 +17,7 @@
 $xoopsOption['checkadmin'] = true;
 $xoopsOption['hascommon']  = true;
 require_once './include/common.inc.php';
-defined('XOOPS_INSTALL') or die('XOOPS Installation wizard die');
+defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 if (!@include_once "../language/{$wizard->language}/global.php") {
     include_once '../language/english/global.php';

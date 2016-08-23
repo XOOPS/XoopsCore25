@@ -27,7 +27,7 @@
  **/
 
 require_once './include/common.inc.php';
-defined('XOOPS_INSTALL') or die('XOOPS Installation wizard die');
+defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 setcookie('xo_install_lang', 'english', null, null, null);
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_REQUEST['lang'])) {

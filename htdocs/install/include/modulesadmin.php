@@ -14,5 +14,5 @@
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  */
 
-defined('XOOPS_INSTALL') or die('XOOPS Installation wizard die');
+defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 require_once XOOPS_ROOT_PATH . '/modules/system/admin/modulesadmin/modulesadmin.php';

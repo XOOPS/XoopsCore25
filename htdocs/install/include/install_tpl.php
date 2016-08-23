@@ -26,7 +26,7 @@
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  **/
 
-defined('XOOPS_INSTALL') or die('XOOPS Installation wizard die');
+defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 include_once '../language/' . $wizard->language . '/global.php';
 ?>
 <!doctype html>
@@ -97,7 +97,7 @@ include_once '../language/' . $wizard->language . '/global.php';
                                 <span id="step">
                                     <?php echo ($wizard->pageIndex + 1) . '/' . count($wizard->pages); ?>
                                 </span>
-                                <span id="step2">
+                            <span id="step2">
                                     <?php echo XOOPS_INSTALL_WIZARD; ?>
                                 </span>
                         </div>
@@ -169,9 +169,9 @@ include_once '../language/' . $wizard->language . '/global.php';
 </html>
 <script type="text/javascript">
     function ajaxCleanup() {
-        new Ajax.Request(<?php echo "'".@constant('XOOPS_URL')."/install/cleanup.php'"; ?>, {
+        new Ajax.Request(<?php echo "'" . @constant('XOOPS_URL') . "/install/cleanup.php'"; ?>, {
             method: 'post',
-            parameters: {instsuffix: <?php echo isset($install_rename_suffix)?"'".$install_rename_suffix."'":"''"; ?>}
+            parameters: {instsuffix: <?php echo isset($install_rename_suffix) ? "'" . $install_rename_suffix . "'" : "''"; ?>}
         });
     }
 

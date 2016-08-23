@@ -1116,7 +1116,7 @@ function xoops_module_update($dirname)
         $configs = $module->getInfo('config');
         if ($configs != false) {
             if ($module->getVar('hascomments') != 0) {
-                include_once(XOOPS_ROOT_PATH . '/include/comment_constants.php');
+                include_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
                 array_push($configs, array(
                     'name'        => 'com_rule',
                     'title'       => '_CM_COMRULES',
@@ -1140,7 +1140,7 @@ function xoops_module_update($dirname)
         } else {
             if ($module->getVar('hascomments') != 0) {
                 $configs = array();
-                include_once(XOOPS_ROOT_PATH . '/include/comment_constants.php');
+                include_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
                 $configs[] = array(
                     'name'        => 'com_rule',
                     'title'       => '_CM_COMRULES',
