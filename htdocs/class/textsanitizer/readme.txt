@@ -48,7 +48,7 @@ EOH;
     }
 
     // Processing the text
-    static function decode($text)
+    static function decode($text, $width, $height)
     {
         // Load config data if any
         $config = parent::loadConfig(__DIR__);
