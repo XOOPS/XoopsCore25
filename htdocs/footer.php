@@ -29,9 +29,9 @@ if (!defined('XOOPS_FOOTER_INCLUDED')) {
     if ($xoopsOption['theme_use_smarty'] == 0) {
         // the old way
         $footer = htmlspecialchars($xoopsConfigMetaFooter['footer']) . '<br><div class="txtcenter small">Powered by XOOPS &copy; <a href="http://xoops.org" rel="external" title="The XOOPS Project">The XOOPS Project</a></div>';
-        if (isset($xoopsOption['template_main'])) {
+        if (isset($GLOBALS['xoopsOption']['template_main'])) {
             $xoopsTpl->caching = 0;
-            $xoopsTpl->display('db:' . $xoopsOption['template_main']);
+            $xoopsTpl->display('db:' . $GLOBALS['xoopsOption']['template_main']);
         }
         if (!isset($xoopsOption['show_rblock'])) {
             $xoopsOption['show_rblock'] = 0;
@@ -54,12 +54,12 @@ if (!defined('XOOPS_FOOTER_INCLUDED')) {
             $xoTheme = $GLOBALS['xoTheme'];
         }
 
-        if (isset($xoopsOption['template_main']) && $xoopsOption['template_main'] != $xoTheme->contentTemplate) {
+        if (isset($GLOBALS['xoopsOption']['template_main']) && $GLOBALS['xoopsOption']['template_main'] != $xoTheme->contentTemplate) {
             trigger_error('xoopsOption[template_main] should be defined before including header.php', E_USER_WARNING);
-            if (false === strpos($xoopsOption['template_main'], ':')) {
-                $xoTheme->contentTemplate = 'db:' . $xoopsOption['template_main'];
+            if (false === strpos($GLOBALS['xoopsOption']['template_main'], ':')) {
+                $xoTheme->contentTemplate = 'db:' . $GLOBALS['xoopsOption']['template_main'];
             } else {
-                $xoTheme->contentTemplate = $xoopsOption['template_main'];
+                $xoTheme->contentTemplate = $GLOBALS['xoopsOption']['template_main'];
             }
         }
 

@@ -22,7 +22,7 @@ include __DIR__ . '/header.php';
 if (!$GLOBALS['xoopsUser']) {
     redirect_header(XOOPS_URL, 2, _NOPERM);
 }
-$xoopsOption['template_main'] = 'profile_changepass.tpl';
+$GLOBALS['xoopsOption']['template_main'] = 'profile_changepass.tpl';
 include $GLOBALS['xoops']->path('header.php');
 
 if (!isset($_POST['submit'])) {

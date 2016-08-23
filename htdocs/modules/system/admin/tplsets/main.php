@@ -38,7 +38,7 @@ if (!is_object($GLOBALS['xoopsUser']) || !is_object($GLOBALS['xoopsModule']) || 
 $op = system_CleanVars($_REQUEST, 'op', 'default', 'string');
 
 // Define main template
-$xoopsOption['template_main'] = 'system_templates.tpl';
+$GLOBALS['xoopsOption']['template_main'] = 'system_templates.tpl';
 // Call Header
 xoops_cp_header();
 // Define scripts

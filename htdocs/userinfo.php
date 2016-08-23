@@ -42,7 +42,7 @@ if (is_object($xoopsUser)) {
     if ($uid == $xoopsUser->getVar('uid')) {
         $config_handler               = xoops_getHandler('config');
         $xoopsConfigUser              = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-        $xoopsOption['template_main'] = 'system_userinfo.tpl';
+        $GLOBALS['xoopsOption']['template_main'] = 'system_userinfo.tpl';
         include $GLOBALS['xoops']->path('header.php');
         $xoopsTpl->assign('user_ownpage', true);
         $xoopsTpl->assign('lang_editprofile', _US_EDITPROFILE);
@@ -62,7 +62,7 @@ if (is_object($xoopsUser)) {
         if (!is_object($thisUser) || !$thisUser->isActive()) {
             redirect_header('index.php', 3, _US_SELECTNG);
         }
-        $xoopsOption['template_main'] = 'system_userinfo.tpl';
+        $GLOBALS['xoopsOption']['template_main'] = 'system_userinfo.tpl';
         include $GLOBALS['xoops']->path('header.php');
         $xoopsTpl->assign('user_ownpage', false);
     }
@@ -72,7 +72,7 @@ if (is_object($xoopsUser)) {
     if (!is_object($thisUser) || !$thisUser->isActive()) {
         redirect_header('index.php', 3, _US_SELECTNG);
     }
-    $xoopsOption['template_main'] = 'system_userinfo.tpl';
+    $GLOBALS['xoopsOption']['template_main'] = 'system_userinfo.tpl';
     include $GLOBALS['xoops']->path('header.php');
     $xoopsTpl->assign('user_ownpage', false);
 }

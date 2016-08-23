@@ -70,7 +70,7 @@ switch ($op) {
 
     case 'list':
         // Define main template
-        $xoopsOption['template_main'] = 'system_blocks.tpl';
+        $GLOBALS['xoopsOption']['template_main'] = 'system_blocks.tpl';
         // Call Header
         xoops_cp_header();
         // Define Stylesheet
@@ -182,7 +182,7 @@ switch ($op) {
 
     case 'add':
         // Define main template
-        $xoopsOption['template_main'] = 'system_blocks.tpl';
+        $GLOBALS['xoopsOption']['template_main'] = 'system_blocks.tpl';
         // Call Header
         xoops_cp_header();
         // Define Stylesheet
@@ -385,7 +385,7 @@ switch ($op) {
         $block_id = system_CleanVars($_REQUEST, 'bid', 0, 'int');
         if ($block_id > 0) {
             // Define main template
-            $xoopsOption['template_main'] = 'system_blocks.tpl';
+            $GLOBALS['xoopsOption']['template_main'] = 'system_blocks.tpl';
             // Call Header
             xoops_cp_header();
             // Define Stylesheet
@@ -430,7 +430,7 @@ switch ($op) {
                 }
             }
             // Define main template
-            $xoopsOption['template_main'] = 'system_header.tpl';
+            $GLOBALS['xoopsOption']['template_main'] = 'system_header.tpl';
             // Call Header
             xoops_cp_header();
             // Display Question
@@ -490,7 +490,7 @@ switch ($op) {
         $block_id = system_CleanVars($_REQUEST, 'bid', 0, 'int');
         if ($block_id > 0) {
             // Define main template
-            $xoopsOption['template_main'] = 'system_blocks.tpl';
+            $GLOBALS['xoopsOption']['template_main'] = 'system_blocks.tpl';
             // Call Header
             xoops_cp_header();
             // Define Stylesheet

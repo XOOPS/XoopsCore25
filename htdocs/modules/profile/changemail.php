@@ -25,7 +25,7 @@ if (!$GLOBALS['xoopsUser'] || $GLOBALS['xoopsConfigUser']['allow_chgmail'] != 1)
     redirect_header(XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/', 2, _NOPERM);
 }
 
-$xoopsOption['template_main'] = 'profile_email.tpl';
+$GLOBALS['xoopsOption']['template_main'] = 'profile_email.tpl';
 include $GLOBALS['xoops']->path('header.php');
 
 if (!isset($_POST['submit']) || !isset($_POST['passwd'])) {
