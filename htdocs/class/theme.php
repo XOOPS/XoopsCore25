@@ -255,7 +255,7 @@ class xos_opal_Theme
     /**
      * Initializes this theme
      *
-     * Upon initialization, the theme creates its template engine and instanciates the
+     * Upon initialization, the theme creates its template engine and instantiates the
      * plug-ins from the specified {@link $plugins} list. If the theme is a 2.0 theme, that does not
      * display redirection messages, the HTTP redirections system is disabled to ensure users will
      * see the redirection screen.
