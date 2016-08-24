@@ -116,7 +116,7 @@ class xos_opal_AdminThemeFactory extends xos_opal_ThemeFactory
     {
         $options['plugins']      = array();
         $options['renderBanner'] = false;
-        $inst                    =& parent::createInstance($options, $initArgs);
+        $inst                    = parent::createInstance($options, $initArgs);
         $inst->path              = XOOPS_ADMINTHEME_PATH . '/' . $inst->folderName;
         $inst->url               = XOOPS_ADMINTHEME_URL . '/' . $inst->folderName;
         $inst->template->assign(array(
