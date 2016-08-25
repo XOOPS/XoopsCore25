@@ -255,7 +255,7 @@ class xos_opal_Theme
     /**
      * Initializes this theme
      *
-     * Upon initialization, the theme creates its template engine and instanciates the
+     * Upon initialization, the theme creates its template engine and instantiates the
      * plug-ins from the specified {@link $plugins} list. If the theme is a 2.0 theme, that does not
      * display redirection messages, the HTTP redirections system is disabled to ensure users will
      * see the redirection screen.
@@ -265,11 +265,14 @@ class xos_opal_Theme
      */
     public function xoInit($options = array())
     {
+        /** @var XoopsConfigHandler $configHandler */
+        $configHandler = xoops_getHandler('config');
+
         $this->path                   = XOOPS_THEME_PATH . '/' . $this->folderName;
         $this->url                    = XOOPS_THEME_URL . '/' . $this->folderName;
         $this->template               = null;
         $this->template               = new XoopsTpl();
-        $this->template->currentTheme =& $this;
+        $this->template->currentTheme = $this;
         $this->template->assign_by_ref('xoTheme', $this);
         $xoops_page = str_replace(realpath(XOOPS_ROOT_PATH) . '/', '', realpath($_SERVER['SCRIPT_FILENAME']));
         if (strpos($xoops_page, 'modules') !== false) {
@@ -284,39 +287,49 @@ class xos_opal_Theme
         } else {
             $xoops_startpage = 'system';
         }
+
+        $searchConfig = $configHandler->getConfigsByCat(XOOPS_CONF_SEARCH);
+        $xoops_search = (bool) (isset($searchConfig['enable_search']) && $searchConfig['enable_search'] === 1);
         $this->template->assign(array(
-                                    'xoops_theme'      => $GLOBALS['xoopsConfig']['theme_set'],
-                                    'xoops_imageurl'   => XOOPS_THEME_URL . '/' . $GLOBALS['xoopsConfig']['theme_set'] . '/',
-                                    'xoops_themecss'   => xoops_getcss($GLOBALS['xoopsConfig']['theme_set']),
-                                    'xoops_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES),
-                                    'xoops_sitename'   => htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES),
-                                    'xoops_slogan'     => htmlspecialchars($GLOBALS['xoopsConfig']['slogan'], ENT_QUOTES),
-                                    'xoops_dirname'    => isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule']) ? $GLOBALS['xoopsModule']->getVar('dirname') : 'system',
-                                    'xoops_page'       => $xoops_page,
-                                    'xoops_startpage'  => $xoops_startpage,
-                                    'xoops_banner'     => ($GLOBALS['xoopsConfig']['banners'] && $this->renderBanner) ? xoops_getbanner() : '&nbsp;',
-                                    'xoops_pagetitle'  => isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule']) ? $GLOBALS['xoopsModule']->getVar('name') : htmlspecialchars($GLOBALS['xoopsConfig']['slogan'], ENT_QUOTES)));
+            'xoops_theme'      => $GLOBALS['xoopsConfig']['theme_set'],
+            'xoops_imageurl'   => XOOPS_THEME_URL . '/' . $GLOBALS['xoopsConfig']['theme_set'] . '/',
+            'xoops_themecss'   => xoops_getcss($GLOBALS['xoopsConfig']['theme_set']),
+            'xoops_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES),
+            'xoops_sitename'   => htmlspecialchars($GLOBALS['xoopsConfig']['sitename'], ENT_QUOTES),
+            'xoops_slogan'     => htmlspecialchars($GLOBALS['xoopsConfig']['slogan'], ENT_QUOTES),
+            'xoops_dirname'    => isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule'])
+                ? $GLOBALS['xoopsModule']->getVar('dirname') : 'system',
+            'xoops_page'       => $xoops_page,
+            'xoops_startpage'  => $xoops_startpage,
+            'xoops_banner'     => ($GLOBALS['xoopsConfig']['banners'] && $this->renderBanner)
+                ? xoops_getbanner() : '&nbsp;',
+            'xoops_pagetitle'  => isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule'])
+                ? $GLOBALS['xoopsModule']->getVar('name')
+                : htmlspecialchars($GLOBALS['xoopsConfig']['slogan'], ENT_QUOTES),
+            'xoops_search'     => $xoops_search,
+        ));
         if (isset($GLOBALS['xoopsUser']) && is_object($GLOBALS['xoopsUser'])) {
             $this->template->assign(array(
-                                        'xoops_isuser'     => true,
-                                        'xoops_avatar'     => XOOPS_UPLOAD_URL . '/' . $GLOBALS['xoopsUser']->getVar('user_avatar'),
-                                        'xoops_userid'     => $GLOBALS['xoopsUser']->getVar('uid'),
-                                        'xoops_uname'      => $GLOBALS['xoopsUser']->getVar('uname'),
-                                        'xoops_name'       => $GLOBALS['xoopsUser']->getVar('name'),
-                                        'xoops_isadmin'    => $GLOBALS['xoopsUserIsAdmin'],
-                                        'xoops_usergroups' => $GLOBALS['xoopsUser']->getGroups()));
+                'xoops_isuser'     => true,
+                'xoops_avatar'     => XOOPS_UPLOAD_URL . '/' . $GLOBALS['xoopsUser']->getVar('user_avatar'),
+                'xoops_userid'     => $GLOBALS['xoopsUser']->getVar('uid'),
+                'xoops_uname'      => $GLOBALS['xoopsUser']->getVar('uname'),
+                'xoops_name'       => $GLOBALS['xoopsUser']->getVar('name'),
+                'xoops_isadmin'    => $GLOBALS['xoopsUserIsAdmin'],
+                'xoops_usergroups' => $GLOBALS['xoopsUser']->getGroups(),
+            ));
         } else {
             $this->template->assign(array(
-                                        'xoops_isuser'     => false,
-                                        'xoops_isadmin'    => false,
-                                        'xoops_usergroups' => array(XOOPS_GROUP_ANONYMOUS)));
+                'xoops_isuser'     => false,
+                'xoops_isadmin'    => false,
+                'xoops_usergroups' => array(XOOPS_GROUP_ANONYMOUS),
+            ));
         }
 
         // Meta tags
-        $config_handler = xoops_getHandler('config');
         $criteria       = new CriteriaCompo(new Criteria('conf_modid', 0));
         $criteria->add(new Criteria('conf_catid', XOOPS_CONF_METAFOOTER));
-        $config = $config_handler->getConfigs($criteria, true);
+        $config = $configHandler->getConfigs($criteria, true);
         foreach (array_keys($config) as $i) {
             $name  = $config[$i]->getVar('conf_name', 'n');
             $value = $config[$i]->getVar('conf_value', 'n');
