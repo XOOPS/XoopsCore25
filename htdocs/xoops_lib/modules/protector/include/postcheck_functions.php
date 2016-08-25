@@ -178,8 +178,9 @@ function protector_postcommon()
         $protector->call_filter('postcommon_post');
     }
 
-    // register.php Protection
-    if ($_SERVER['SCRIPT_FILENAME'] == XOOPS_ROOT_PATH . '/register.php') {
+    // register.php Protection - both core and profile module have a register.php
+    // There should be an event to trigger this check instead of filename sniffing.
+    if (basename($_SERVER['SCRIPT_FILENAME']) == 'register.php') {
         $protector->call_filter('postcommon_register');
     }
     return null;
