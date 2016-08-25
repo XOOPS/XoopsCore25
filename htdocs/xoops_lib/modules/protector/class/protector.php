@@ -211,31 +211,7 @@ class Protector
      */
     public function purge($redirect_to_top = false)
     {
-        // clear all session values
-        if (isset($_SESSION)) {
-            foreach ($_SESSION as $key => $val) {
-                $_SESSION[$key] = '';
-                if (isset($GLOBALS[$key])) {
-                    $GLOBALS[$key] = '';
-                }
-            }
-        }
-
-        if (!headers_sent()) {
-            // clear typical session id of PHP
-            setcookie('PHPSESSID', '', time() - 3600, '/', '', 0);
-            if (isset($_COOKIE[session_name()])) {
-                setcookie(session_name(), '', time() - 3600, '/', '', 0);
-            }
-
-            // clear autologin cookie
-            $xoops_cookie_path = defined('XOOPS_COOKIE_PATH') ? XOOPS_COOKIE_PATH : preg_replace('?http://[^/]+(/.*)$?', "$1", XOOPS_URL);
-            if ($xoops_cookie_path == XOOPS_URL) {
-                $xoops_cookie_path = '/';
-            }
-            setcookie('autologin_uname', '', time() - 3600, $xoops_cookie_path, '', 0);
-            setcookie('autologin_pass', '', time() - 3600, $xoops_cookie_path, '', 0);
-        }
+        $this->purgeNoExit();
 
         if ($redirect_to_top) {
             header('Location: ' . XOOPS_URL . '/');
@@ -246,6 +222,63 @@ class Protector
                 die('Protector detects attacking actions');
             }
         }
+    }
+
+    public function purgeSession()
+    {
+        // clear all session values
+        if (isset($_SESSION)) {
+            foreach ($_SESSION as $key => $val) {
+                $_SESSION[$key] = '';
+                if (isset($GLOBALS[$key])) {
+                    $GLOBALS[$key] = '';
+                }
+            }
+        }
+    }
+
+    public function purgeCookies()
+    {
+        if (!headers_sent()) {
+            // clear typical session id of PHP
+            setcookie('PHPSESSID', '', time() - 3600, '/', '', 0);
+            if (isset($_COOKIE[session_name()])) {
+                setcookie(session_name(), '', time() - 3600, '/', '', 0);
+            }
+
+            // clear autologin cookies
+            $xoops_cookie_path = defined('XOOPS_COOKIE_PATH') ? XOOPS_COOKIE_PATH : preg_replace('?http://[^/]+(/.*)$?', "$1", XOOPS_URL);
+            if ($xoops_cookie_path == XOOPS_URL) {
+                $xoops_cookie_path = '/';
+            }
+            setcookie($GLOBALS['xoopsConfig']['usercookie'], 0, -1, '/', XOOPS_COOKIE_DOMAIN, 0);
+            setcookie($GLOBALS['xoopsConfig']['usercookie'], 0, -1, '/');
+
+            setcookie('autologin_uname', '', time() - 3600, $xoops_cookie_path, '', 0);
+            setcookie('autologin_pass', '', time() - 3600, $xoops_cookie_path, '', 0);
+        }
+    }
+
+    public function purgeNoExit()
+    {
+        $this->purgeSession();
+        $this->purgeCookies();
+    }
+
+    public function deactivateCurrentUser()
+    {
+        /** @var XoopsUser $xoopsUser */
+        global $xoopsUser;
+
+        if (is_object($xoopsUser)) {
+            /** @var XoopsMemberHandler */
+            $userHandler = xoops_getHandler('user');
+            $xoopsUser->setVar('level', 0);
+            $actkey = substr(md5(uniqid(mt_rand(), 1)), 0, 8);
+            $xoopsUser->setVar('actkey', $actkey);
+            $userHandler->insert($xoopsUser);
+        }
+        $this->purgeNoExit();
     }
 
     /**
@@ -1026,24 +1059,19 @@ class Protector
      */
     public function stopforumspam($uid)
     {
-        if (!function_exists('curl_init')) {
-            return false;
-        }
-
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             return false;
         }
 
-        $query = 'f=serial&ip=' . $_SERVER['REMOTE_ADDR'];
-        $query .= isset($_POST['email']) ? '&email=' . $_POST['email'] : '';
-        $query .= isset($_POST['uname']) ? '&username=' . $_POST['uname'] : '';
-        $url = 'http://www.stopforumspam.com/api?' . $query;
-        $ch  = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-        $result = unserialize(curl_exec($ch));
-        curl_close($ch);
+        $result = $this->stopForumSpamLookup(
+            isset($_POST['email']) ? $_POST['email'] : null,
+            $_SERVER['REMOTE_ADDR'],
+            isset($_POST['uname']) ? $_POST['uname'] : null
+        );
+
+        if (false === $result) {
+            return false;
+        }
 
         $spammer = false;
         if (isset($result['email']) && isset($result['email']['lastseen'])) {
@@ -1088,6 +1116,32 @@ class Protector
         $this->output_log($this->last_error_type, $uid, false, 16);
 
         return true;
+    }
+
+    public function stopForumSpamLookup($email, $ip, $username)
+    {
+        if (!function_exists('curl_init')) {
+            return false;
+        }
+
+        $query = '';
+        $query .= (empty($ip)) ? '' : '&ip=' . $ip;
+        $query .= (empty($email)) ? '' : '&email=' . $email;
+        $query .= (empty($username)) ? '' : '&username=' . $username;
+
+        if (empty($query)) {
+            return false;
+        }
+
+        $url = 'http://www.stopforumspam.com/api?f=json' . $query;
+        $ch  = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+        $result = json_decode(curl_exec($ch), true);
+        curl_close($ch);
+
+        return $result;
     }
 
     /**

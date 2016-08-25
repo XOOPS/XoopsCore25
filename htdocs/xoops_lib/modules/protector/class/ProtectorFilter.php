@@ -23,6 +23,7 @@ class ProtectorFilterAbstract
 
     /**
      * @return bool
+     * @deprecated unused in core, will be removed
      */
     public function isMobile()
     {
