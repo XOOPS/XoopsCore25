@@ -72,21 +72,21 @@ $comments = array();
 $status = (!isset($_REQUEST['status']) || !array_key_exists((int)$_REQUEST['status'], $status_array)) ? 0 : (int)$_REQUEST['status'];
 
 $module          = !isset($_REQUEST['module']) ? 0 : (int)$_REQUEST['module'];
-$modules_Handler = xoops_getHandler('module');
-$module_array    = $modules_Handler->getList(new Criteria('hascomments', 1));
+$modulesHandler = xoops_getHandler('module');
+$module_array    = $modulesHandler->getList(new Criteria('hascomments', 1));
 $module_array[0] = _AM_SYSTEM_COMMENTS_FORM_ALL_MODS;
 
-$comment_handler = xoops_getHandler('comment');
+$commentHandler = xoops_getHandler('comment');
 
 switch ($op) {
 
     case 'comments_jump':
         $com_id = system_CleanVars($_GET, 'com_id', 0, 'int');
         if ($com_id > 0) {
-            $comment = $comment_handler->get($com_id);
+            $comment = $commentHandler->get($com_id);
             if (is_object($comment)) {
-                $module_handler = xoops_getHandler('module');
-                $module         = $module_handler->get($comment->getVar('com_modid'));
+                $moduleHandler = xoops_getHandler('module');
+                $module         = $moduleHandler->get($comment->getVar('com_modid'));
                 $comment_config = $module->getInfo('comments');
                 header('Location: ' . XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . $comment_config['pageName'] . '?' . $comment_config['itemName'] . '=' . $comment->getVar('com_itemid') . '&com_id=' . $comment->getVar('com_id') . '&com_rootid=' . $comment->getVar('com_rootid') . '&com_mode=thread&' . str_replace('&amp;', '&', $comment->getVar('com_exparams')) . '#comment' . $comment->getVar('com_id'));
                 exit();
@@ -168,8 +168,8 @@ switch ($op) {
         $comments_groupe = system_CleanVars($_POST, 'comments_groupe', '', 'string');
         if ($comments_groupe != '') {
             foreach ($_POST['comments_groupe'] as $del => $u_name) {
-                $member_handler = xoops_getHandler('member');
-                $members        = $member_handler->getUsersByGroup($u_name, true);
+                $memberHandler = xoops_getHandler('member');
+                $members        = $memberHandler->getUsersByGroup($u_name, true);
                 $mcount         = count($members);
                 if ($mcount > 4000) {
                     redirect_header('admin.php?fct=comments', 2, _MP_DELETECOUNT);
@@ -190,7 +190,7 @@ switch ($op) {
             $verif = true;
         }
         if ($verif == true) {
-            if ($comment_handler->deleteAll($criteria)) {
+            if ($commentHandler->deleteAll($criteria)) {
                 redirect_header('admin.php?fct=comments', 3, _AM_SYSTEM_DBUPDATED);
             }
         } else {
@@ -206,7 +206,7 @@ switch ($op) {
         $xoBreadCrumb->render();
 
         $myts             = MyTextSanitizer::getInstance();
-        $comments_Handler = xoops_getHandler('comment');
+        $commentsHandler = xoops_getHandler('comment');
         $comments_module  = '';
         $comments_status  = '';
 
@@ -225,7 +225,7 @@ switch ($op) {
         $criteria->setSort('com_created');
         $criteria->setOrder('DESC');
 
-        $comments_count = $comments_Handler->getCount($criteria);
+        $comments_count = $commentsHandler->getCount($criteria);
 
         $xoopsTpl->assign('comments_count', $comments_count);
 
@@ -238,7 +238,7 @@ switch ($op) {
             $criteria->setLimit($comments_limit);
             $criteria->setStart($comments_start);
 
-            $comments_arr = $comments_Handler->getObjects($criteria, true);
+            $comments_arr = $commentsHandler->getObjects($criteria, true);
         }
 
         $form = '<form action="admin.php?fct=comments" method="post">
@@ -280,7 +280,7 @@ switch ($op) {
                 $comments_poster_uname = $xoopsConfig['anonymous'];
                 // Start edit by voltan
                 if ($comments_arr[$i]->getVar('com_uid') > 0) {
-                    $poster =& $member_handler->getUser($comments_arr[$i]->getVar('com_uid'));
+                    $poster = $memberHandler->getUser($comments_arr[$i]->getVar('com_uid'));
                     if (is_object($poster)) {
                         $comments_poster_uname = '<a href="' . XOOPS_URL . '/userinfo.php?uid=' . $comments_arr[$i]->getVar('com_uid') . '">' . $poster->getVar('uname') . '</a>';
                     }

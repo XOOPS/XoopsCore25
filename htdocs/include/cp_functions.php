@@ -125,12 +125,12 @@ function xoops_module_get_admin_menu()
     $firstleveltable = '';
     $menu_layers     = '';
 
-    $module_handler = xoops_getHandler('module');
+    $moduleHandler = xoops_getHandler('module');
     $criteria       = new CriteriaCompo();
     $criteria->add(new Criteria('hasadmin', 1));
     $criteria->add(new Criteria('isactive', 1));
     $criteria->setSort('mid');
-    $mods = $module_handler->getObjects($criteria);
+    $mods = $moduleHandler->getObjects($criteria);
 
     foreach ($mods as $mod) {
         $mid         = $mod->getVar('mid');

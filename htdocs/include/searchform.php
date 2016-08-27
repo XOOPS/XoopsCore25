@@ -41,8 +41,8 @@ if (empty($modules)) {
     if (!empty($available_modules)) {
         $criteria->add(new Criteria('mid', '(' . implode(',', $available_modules) . ')', 'IN'));
     }
-    $module_handler = xoops_getHandler('module');
-    $mods_checkbox->addOptionArray($module_handler->getList($criteria));
+    $moduleHandler = xoops_getHandler('module');
+    $mods_checkbox->addOptionArray($moduleHandler->getList($criteria));
 } else {
     foreach ($modules as $mid => $module) {
         $module_array[$mid] = $module->getVar('name');

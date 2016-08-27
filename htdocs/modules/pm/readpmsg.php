@@ -25,10 +25,10 @@ if (!is_object($GLOBALS['xoopsUser'])) {
 $valid_op_requests = array('out', 'save', 'in');
 $_REQUEST['op']    = !empty($_REQUEST['op']) && in_array($_REQUEST['op'], $valid_op_requests) ? $_REQUEST['op'] : 'in';
 $msg_id            = empty($_REQUEST['msg_id']) ? 0 : (int)$_REQUEST['msg_id'];
-$pm_handler        = xoops_getModuleHandler('message');
+$pmHandler        = xoops_getModuleHandler('message');
 $pm                = null;
 if ($msg_id > 0) {
-    $pm = $pm_handler->get($msg_id);
+    $pm = $pmHandler->get($msg_id);
 }
 
 if (is_object($pm) && ($pm->getVar('from_userid') != $GLOBALS['xoopsUser']->getVar('uid')) && ($pm->getVar('to_userid') != $GLOBALS['xoopsUser']->getVar('uid'))) {
@@ -42,8 +42,8 @@ if (is_object($pm) && !empty($_POST['action'])) {
     }
     $res = false;
     if (!empty($_REQUEST['email_message'])) {
-        $res = $pm_handler->sendEmail($pm, $GLOBALS['xoopsUser']);
-    } elseif (!empty($_REQUEST['move_message']) && $_REQUEST['op'] !== 'save' && !$GLOBALS['xoopsUser']->isAdmin() && $pm_handler->getSavecount() >= $GLOBALS['xoopsModuleConfig']['max_save']) {
+        $res = $pmHandler->sendEmail($pm, $GLOBALS['xoopsUser']);
+    } elseif (!empty($_REQUEST['move_message']) && $_REQUEST['op'] !== 'save' && !$GLOBALS['xoopsUser']->isAdmin() && $pmHandler->getSavecount() >= $GLOBALS['xoopsModuleConfig']['max_save']) {
         $res_message = sprintf(_PM_SAVED_PART, $GLOBALS['xoopsModuleConfig']['max_save'], 0);
     } else {
         switch ($_REQUEST['op']) {
@@ -52,26 +52,26 @@ if (is_object($pm) && !empty($_POST['action'])) {
                     break;
                 }
                 if (!empty($_REQUEST['delete_message'])) {
-                    $res = $pm_handler->setFromdelete($pm);
+                    $res = $pmHandler->setFromdelete($pm);
                 } elseif (!empty($_REQUEST['move_message'])) {
-                    $res = $pm_handler->setFromsave($pm);
+                    $res = $pmHandler->setFromsave($pm);
                 }
                 break;
             case 'save':
                 if ($pm->getVar('to_userid') == $GLOBALS['xoopsUser']->getVar('uid')) {
                     if (!empty($_REQUEST['delete_message'])) {
-                        $res1 = $pm_handler->setTodelete($pm);
-                        $res1 = $res1 ? $pm_handler->setTosave($pm, 0) : false;
+                        $res1 = $pmHandler->setTodelete($pm);
+                        $res1 = $res1 ? $pmHandler->setTosave($pm, 0) : false;
                     } elseif (!empty($_REQUEST['move_message'])) {
-                        $res1 = $pm_handler->setTosave($pm, 0);
+                        $res1 = $pmHandler->setTosave($pm, 0);
                     }
                 }
                 if ($pm->getVar('from_userid') == $GLOBALS['xoopsUser']->getVar('uid')) {
                     if (!empty($_REQUEST['delete_message'])) {
-                        $res2 = $pm_handler->setFromDelete($pm);
-                        $res2 = $res2 ? $pm_handler->setFromsave($pm, 0) : false;
+                        $res2 = $pmHandler->setFromDelete($pm);
+                        $res2 = $res2 ? $pmHandler->setFromsave($pm, 0) : false;
                     } elseif (!empty($_REQUEST['move_message'])) {
-                        $res2 = $pm_handler->setFromsave($pm, 0);
+                        $res2 = $pmHandler->setFromsave($pm, 0);
                     }
                 }
                 $res = $res1 && $res2;
@@ -83,9 +83,9 @@ if (is_object($pm) && !empty($_POST['action'])) {
                     break;
                 }
                 if (!empty($_REQUEST['delete_message'])) {
-                    $res = $pm_handler->setTodelete($pm);
+                    $res = $pmHandler->setTodelete($pm);
                 } elseif (!empty($_REQUEST['move_message'])) {
-                    $res = $pm_handler->setTosave($pm);
+                    $res = $pmHandler->setTosave($pm);
                 }
                 break;
         }
@@ -122,7 +122,7 @@ if (!is_object($pm)) {
     $criteria->setStart($start);
     $criteria->setSort('msg_time');
     $criteria->setOrder('DESC');
-    list($pm) = $pm_handler->getObjects($criteria);
+    list($pm) = $pmHandler->getObjects($criteria);
 }
 
 include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
@@ -155,7 +155,7 @@ if (is_object($pm) && !empty($pm)) {
     }
 
     if ($pm->getVar('to_userid') == $GLOBALS['xoopsUser']->getVar('uid') && $pm->getVar('read_msg') == 0) {
-        $pm_handler->setRead($pm);
+        $pmHandler->setRead($pm);
     }
 
     $message              = $pm->getValues();

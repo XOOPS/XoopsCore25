@@ -142,19 +142,19 @@ class XoopsGuiDefault extends XoopsSystemGui
         $tpl->assign('moddir', $moddir);
 
         // add MODULES  Menu items
-        $module_handler = xoops_getHandler('module');
+        $moduleHandler = xoops_getHandler('module');
         $criteria       = new CriteriaCompo();
         $criteria->add(new Criteria('hasadmin', 1));
         $criteria->add(new Criteria('isactive', 1));
         $criteria->setSort('mid');
-        $mods = $module_handler->getObjects($criteria);
+        $mods = $moduleHandler->getObjects($criteria);
 
         $menu               = array();
-        $moduleperm_handler = xoops_getHandler('groupperm');
+        $modulepermHandler = xoops_getHandler('groupperm');
         foreach ($mods as $mod) {
             $rtn        = array();
             $modOptions = array();                                                         //add for sub menus
-            $sadmin     = $moduleperm_handler->checkRight('module_admin', $mod->getVar('mid'), $xoopsUser->getGroups());
+            $sadmin     = $modulepermHandler->checkRight('module_admin', $mod->getVar('mid'), $xoopsUser->getGroups());
             if ($sadmin) {
                 $info = $mod->getInfo();
                 if (!empty($info['adminindex'])) {
@@ -234,7 +234,7 @@ class XoopsGuiDefault extends XoopsSystemGui
 
         foreach ($mods as $mod) {
             $rtn    = array();
-            $sadmin = $moduleperm_handler->checkRight('module_admin', $mod->getVar('mid'), $xoopsUser->getGroups());
+            $sadmin = $modulepermHandler->checkRight('module_admin', $mod->getVar('mid'), $xoopsUser->getGroups());
             if ($sadmin && ($mod->getVar('hasnotification') || is_array($mod->getInfo('config')) || is_array($mod->getInfo('comments')))) {
                 $rtn['link']     = XOOPS_URL . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $mod->getVar('mid');
                 $rtn['title']    = htmlspecialchars($mod->name(), ENT_QUOTES);
@@ -290,7 +290,7 @@ class XoopsGuiDefault extends XoopsSystemGui
         }
 
         foreach ($mods as $mod) {
-            $sadmin = $moduleperm_handler->checkRight('module_admin', $mod->getVar('mid'), $xoopsUser->getGroups());
+            $sadmin = $modulepermHandler->checkRight('module_admin', $mod->getVar('mid'), $xoopsUser->getGroups());
             if ($sadmin) {
                 $rtn  = array();
                 $info = $mod->getInfo();

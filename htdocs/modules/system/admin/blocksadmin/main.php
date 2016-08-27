@@ -87,19 +87,19 @@ switch ($op) {
         $xoBreadCrumb->render();
 
         // Initialize module handler
-        $module_handler = xoops_getHandler('module');
-        $modules        = $module_handler->getObjects(null, true);
+        $moduleHandler = xoops_getHandler('module');
+        $modules        = $moduleHandler->getObjects(null, true);
         $criteria       = new CriteriaCompo(new Criteria('hasmain', 1));
 
         $criteria->add(new Criteria('isactive', 1));
         // Modules for blocks to be visible in
-        $display_list = $module_handler->getList($criteria);
+        $display_list = $moduleHandler->getList($criteria);
         unset($criteria);
         // Initialize blocks handler
-        $block_handler = xoops_getModuleHandler('block');
+        $blockHandler = xoops_getModuleHandler('block');
         // Initialize module handler
-        $module_handler = xoops_getHandler('module');
-        $modules        = $module_handler->getObjects(null, true);
+        $moduleHandler = xoops_getHandler('module');
+        $modules        = $moduleHandler->getObjects(null, true);
 
         $filterform = new XoopsThemeForm('', 'filterform', 'admin.php', 'get');
         $filterform->addElement(new XoopsFormHidden('fct', 'blocksadmin'));
@@ -129,8 +129,8 @@ switch ($op) {
         // For selection of group access
         $sel_grp = new XoopsFormSelect(_AM_SYSTEM_BLOCKS_GROUP, 'selgrp', $selgrp);
         $sel_grp->setExtra("onchange='submit()'");
-        $member_handler = xoops_getHandler('member');
-        $group_list     = $member_handler->getGroupList();
+        $memberHandler = xoops_getHandler('member');
+        $group_list     = $memberHandler->getGroupList();
         $sel_grp->addOption(-1, _AM_SYSTEM_BLOCKS_TYPES);
         $sel_grp->addOption(0, _AM_SYSTEM_BLOCKS_UNASSIGNED);
         foreach ($group_list as $k => $v) {
@@ -155,9 +155,9 @@ switch ($op) {
 
         if ($selgrp == 0) {
             // get blocks that are not assigned to any groups
-            $blocks_arr = $block_handler->getNonGroupedBlocks($selmod, $toponlyblock = false, $selvis, $order_block);
+            $blocks_arr = $blockHandler->getNonGroupedBlocks($selmod, $toponlyblock = false, $selvis, $order_block);
         } else {
-            $blocks_arr = $block_handler->getAllByGroupModule($selgrp, $selmod, $toponlyblock = false, $selvis, $order_block);
+            $blocks_arr = $blockHandler->getAllByGroupModule($selgrp, $selmod, $toponlyblock = false, $selvis, $order_block);
         }
 
         if ($selgen >= 0) {
@@ -173,7 +173,7 @@ switch ($op) {
             $arr[$i] = $blocks_arr[$i]->toArray();
             $xoopsTpl->append_by_ref('blocks', $arr[$i]);
         }
-        $block     = $block_handler->create();
+        $block     = $blockHandler->create();
         $blockform = $block->getForm();
         $xoopsTpl->assign('blockform', $blockform->render());
         // Call Footer
@@ -199,8 +199,8 @@ switch ($op) {
         $xoBreadCrumb->addLink(_AM_SYSTEM_BLOCKS_ADDBLOCK);
         $xoBreadCrumb->render();
         // Initialize blocks handler
-        $block_handler = xoops_getModuleHandler('block');
-        $block         = $block_handler->create();
+        $blockHandler = xoops_getModuleHandler('block');
+        $block         = $blockHandler->create();
         $blockform     = $block->getForm();
         $xoopsTpl->assign('blockform', $blockform->render());
         // Call Footer
@@ -209,14 +209,14 @@ switch ($op) {
 
     case 'display':
         // Initialize blocks handler
-        $block_handler = xoops_getModuleHandler('block');
+        $blockHandler = xoops_getModuleHandler('block');
         // Get variable
         $block_id = system_CleanVars($_POST, 'bid', 0, 'int');
         $visible  = system_CleanVars($_POST, 'visible', 0, 'int');
         if ($block_id > 0) {
-            $block = $block_handler->get($block_id);
+            $block = $blockHandler->get($block_id);
             $block->setVar('visible', $visible);
-            if (!$block_handler->insert($block)) {
+            if (!$blockHandler->insert($block)) {
                 $error = true;
             }
         }
@@ -224,14 +224,14 @@ switch ($op) {
 
     case 'drag':
         // Initialize blocks handler
-        $block_handler = xoops_getModuleHandler('block');
+        $blockHandler = xoops_getModuleHandler('block');
         // Get variable
         $block_id = system_CleanVars($_POST, 'bid', 0, 'int');
         $side     = system_CleanVars($_POST, 'side', 0, 'int');
         if ($block_id > 0) {
-            $block = $block_handler->get($block_id);
+            $block = $blockHandler->get($block_id);
             $block->setVar('side', $side);
-            if (!$block_handler->insert($block)) {
+            if (!$blockHandler->insert($block)) {
                 $error = true;
             }
         }
@@ -239,14 +239,14 @@ switch ($op) {
 
     case 'order':
         // Initialize blocks handler
-        $block_handler = xoops_getModuleHandler('block');
+        $blockHandler = xoops_getModuleHandler('block');
         if (isset($_POST['blk'])) {
             $i = 0;
             foreach ($_POST['blk'] as $order) {
                 if ($order > 0) {
-                    $block = $block_handler->get($order);
+                    $block = $blockHandler->get($order);
                     $block->setVar('weight', $i);
-                    if (!$block_handler->insert($block)) {
+                    if (!$blockHandler->insert($block)) {
                         $error = true;
                     }
                     ++$i;
@@ -261,8 +261,8 @@ switch ($op) {
             redirect_header('admin.php?fct=blocksadmin', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         // Initialize blocks handler
-        $block_handler = xoops_getModuleHandler('block');
-        $block         = $block_handler->create();
+        $blockHandler = xoops_getModuleHandler('block');
+        $block         = $blockHandler->create();
         $block->setVars($_POST);
         $content = isset($_POST['content_block']) ? $_POST['content_block'] : '';
         $block->setVar('content', $content);
@@ -275,13 +275,13 @@ switch ($op) {
             redirect_header('admin.php?fct=blocksadmin', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         // Initialize blocks handler
-        $block_handler = xoops_getModuleHandler('block');
+        $blockHandler = xoops_getModuleHandler('block');
         // Get avatar id
         $block_id = system_CleanVars($_POST, 'bid', 0, 'int');
         if ($block_id > 0) {
-            $block = $block_handler->get($block_id);
+            $block = $blockHandler->get($block_id);
         } else {
-            $block = $block_handler->create();
+            $block = $blockHandler->create();
         }
         $block_type = system_CleanVars($_POST, 'block_type', '', 'string');
         $block->setVar('block_type', $block_type);
@@ -328,24 +328,24 @@ switch ($op) {
         $content = isset($_POST['content_block']) ? $_POST['content_block'] : '';
         $block->setVar('content', $content);
 
-        if (!$newid = $block_handler->insert($block)) {
+        if (!$newid = $blockHandler->insert($block)) {
             xoops_cp_header();
             xoops_error($block->getHtmlErrors());
             xoops_cp_footer();
             exit();
         }
         if ($newid != 0) {
-            $blocklinkmodule_handler = xoops_getModuleHandler('blocklinkmodule');
+            $blocklinkmoduleHandler = xoops_getModuleHandler('blocklinkmodule');
             // Delete old link
             $criteria = new CriteriaCompo(new Criteria('block_id', $newid));
-            $blocklinkmodule_handler->deleteAll($criteria);
+            $blocklinkmoduleHandler->deleteAll($criteria);
             // Assign link
             $modules = $_POST['modules'];
             foreach ($modules as $mid) {
-                $blocklinkmodule = $blocklinkmodule_handler->create();
+                $blocklinkmodule = $blocklinkmoduleHandler->create();
                 $blocklinkmodule->setVar('block_id', $newid);
                 $blocklinkmodule->setVar('module_id', $mid);
-                if (!$blocklinkmodule_handler->insert($blocklinkmodule)) {
+                if (!$blocklinkmoduleHandler->insert($blocklinkmodule)) {
                     xoops_cp_header();
                     xoops_error($blocklinkmodule->getHtmlErrors());
                     xoops_cp_footer();
@@ -353,9 +353,9 @@ switch ($op) {
                 }
             }
         }
-        $groupperm_handler  = xoops_getHandler('groupperm');
+        $grouppermHandler  = xoops_getHandler('groupperm');
         $groups             = $_POST['groups'];
-        $groups_with_access = $groupperm_handler->getGroupIds('block_read', $newid);
+        $groups_with_access = $grouppermHandler->getGroupIds('block_read', $newid);
         $removed_groups     = array_diff($groups_with_access, $groups);
         if (count($removed_groups) > 0) {
             foreach ($removed_groups as $groupid) {
@@ -363,16 +363,16 @@ switch ($op) {
                 $criteria->add(new Criteria('gperm_groupid', $groupid));
                 $criteria->add(new Criteria('gperm_itemid', $newid));
                 $criteria->add(new Criteria('gperm_modid', 1));
-                $perm = $groupperm_handler->getObjects($criteria);
+                $perm = $grouppermHandler->getObjects($criteria);
                 if (isset($perm[0]) && is_object($perm[0])) {
-                    $groupperm_handler->delete($perm[0]);
+                    $grouppermHandler->delete($perm[0]);
                 }
             }
         }
         $new_groups = array_diff($groups, $groups_with_access);
         if (count($new_groups) > 0) {
             foreach ($new_groups as $groupid) {
-                $groupperm_handler->addRight('block_read', $newid, $groupid);
+                $grouppermHandler->addRight('block_read', $newid, $groupid);
             }
         }
         redirect_header('admin.php?fct=blocksadmin', 1, _AM_SYSTEM_BLOCKS_DBUPDATED);
@@ -380,7 +380,7 @@ switch ($op) {
 
     case 'edit':
         // Initialize blocks handler
-        $block_handler = xoops_getModuleHandler('block');
+        $blockHandler = xoops_getModuleHandler('block');
         // Get avatar id
         $block_id = system_CleanVars($_REQUEST, 'bid', 0, 'int');
         if ($block_id > 0) {
@@ -401,7 +401,7 @@ switch ($op) {
             $xoBreadCrumb->addLink(_AM_SYSTEM_BLOCKS_EDITBLOCK);
             $xoBreadCrumb->render();
 
-            $block     = $block_handler->get($block_id);
+            $block     = $blockHandler->get($block_id);
             $blockform = $block->getForm();
             $xoopsTpl->assign('blockform', $blockform->render());
             // Call Footer
@@ -413,11 +413,11 @@ switch ($op) {
 
     case 'delete':
         // Initialize blocks handler
-        $block_handler = xoops_getModuleHandler('block');
+        $blockHandler = xoops_getModuleHandler('block');
         // Get avatar id
         $block_id = system_CleanVars($_REQUEST, 'bid', 0, 'int');
         if ($block_id > 0) {
-            $block = $block_handler->get($block_id);
+            $block = $blockHandler->get($block_id);
             if ($block->getVar('block_type') === 'S') {
                 redirect_header('admin.php?fct=blocksadmin', 4, _AM_SYSTEM_BLOCKS_SYSTEMCANT);
             } elseif ($block->getVar('block_type') === 'M') {
@@ -425,7 +425,7 @@ switch ($op) {
                 // A module block can be deleted if there is more than 1 that
                 // has the same func_num/show_func which is mostly likely
                 // be the one that was duplicated in 2.0.9
-                if (1 >= $count = $block_handler->countSimilarBlocks($block->getVar('mid'), $block->getVar('func_num'), $block->getVar('show_func'))) {
+                if (1 >= $count = $blockHandler->countSimilarBlocks($block->getVar('mid'), $block->getVar('func_num'), $block->getVar('show_func'))) {
                     redirect_header('admin.php?fct=blocksadmin', 4, _AM_SYSTEM_BLOCKS_MODULECANT);
                 }
             }
@@ -448,32 +448,32 @@ switch ($op) {
             redirect_header('admin.php?fct=blocksadmin', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         // Initialize blocks handler
-        $block_handler = xoops_getModuleHandler('block');
+        $blockHandler = xoops_getModuleHandler('block');
         // Get avatar id
         $block_id = system_CleanVars($_POST, 'bid', 0, 'int');
         if ($block_id > 0) {
-            $block = $block_handler->get($block_id);
-            if ($block_handler->delete($block)) {
+            $block = $blockHandler->get($block_id);
+            if ($blockHandler->delete($block)) {
                 // Delete Group link
-                $blocklinkmodule_handler = xoops_getModuleHandler('blocklinkmodule');
-                $blocklinkmodule         = $blocklinkmodule_handler->getObjects(new CriteriaCompo(new Criteria('block_id', $block_id)));
+                $blocklinkmoduleHandler = xoops_getModuleHandler('blocklinkmodule');
+                $blocklinkmodule         = $blocklinkmoduleHandler->getObjects(new CriteriaCompo(new Criteria('block_id', $block_id)));
                 foreach ($blocklinkmodule as $link) {
-                    $blocklinkmodule_handler->delete($link, true);
+                    $blocklinkmoduleHandler->delete($link, true);
                 }
                 // Delete Group permission
-                $groupperm_handler = xoops_getHandler('groupperm');
+                $grouppermHandler = xoops_getHandler('groupperm');
                 $criteria          = new CriteriaCompo(new Criteria('gperm_name', 'block_read'));
                 $criteria->add(new Criteria('gperm_itemid', $block_id));
-                $groupperm = $groupperm_handler->getObjects($criteria);
+                $groupperm = $grouppermHandler->getObjects($criteria);
                 foreach ($groupperm as $perm) {
-                    $groupperm_handler->delete($perm, true);
+                    $grouppermHandler->delete($perm, true);
                 }
                 // Delete template
                 if ($block->getVar('template') != '') {
-                    $tplfile_handler = xoops_getHandler('tplfile');
-                    $btemplate       = $tplfile_handler->find($GLOBALS['xoopsConfig']['template_set'], 'block', $block_id);
+                    $tplfileHandler = xoops_getHandler('tplfile');
+                    $btemplate       = $tplfileHandler->find($GLOBALS['xoopsConfig']['template_set'], 'block', $block_id);
                     if (count($btemplate) > 0) {
-                        $tplfile_handler->delete($btemplate[0]);
+                        $tplfileHandler->delete($btemplate[0]);
                     }
                 }
                 redirect_header('admin.php?fct=blocksadmin', 1, _AM_SYSTEM_BLOCKS_DBUPDATED);
@@ -485,7 +485,7 @@ switch ($op) {
 
     case 'clone':
         // Initialize blocks handler
-        $block_handler = xoops_getModuleHandler('block');
+        $blockHandler = xoops_getModuleHandler('block');
         // Get avatar id
         $block_id = system_CleanVars($_REQUEST, 'bid', 0, 'int');
         if ($block_id > 0) {
@@ -500,7 +500,7 @@ switch ($op) {
             $xoBreadCrumb->addLink(_AM_SYSTEM_BLOCKS_CLONEBLOCK);
             $xoBreadCrumb->render();
 
-            $block     = $block_handler->get($block_id);
+            $block     = $blockHandler->get($block_id);
             $blockform = $block->getForm('clone');
             $xoopsTpl->assign('blockform', $blockform->render());
             // Call Footer

@@ -34,14 +34,14 @@ if ($uid <= 0) {
     redirect_header('index.php', 3, _US_SELECTNG);
 }
 
-$gperm_handler = xoops_getHandler('groupperm');
+$gpermHandler = xoops_getHandler('groupperm');
 $groups        = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 
-$isAdmin = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_USER, $groups);
+$isAdmin = $gpermHandler->checkRight('system_admin', XOOPS_SYSTEM_USER, $groups);
 if (is_object($xoopsUser)) {
     if ($uid == $xoopsUser->getVar('uid')) {
-        $config_handler               = xoops_getHandler('config');
-        $xoopsConfigUser              = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+        $configHandler               = xoops_getHandler('config');
+        $xoopsConfigUser              = $configHandler->getConfigsByCat(XOOPS_CONF_USER);
         $GLOBALS['xoopsOption']['template_main'] = 'system_userinfo.tpl';
         include $GLOBALS['xoops']->path('header.php');
         $xoopsTpl->assign('user_ownpage', true);
@@ -57,8 +57,8 @@ if (is_object($xoopsUser)) {
         }
         $thisUser =& $xoopsUser;
     } else {
-        $member_handler = xoops_getHandler('member');
-        $thisUser       = $member_handler->getUser($uid);
+        $memberHandler = xoops_getHandler('member');
+        $thisUser       = $memberHandler->getUser($uid);
         if (!is_object($thisUser) || !$thisUser->isActive()) {
             redirect_header('index.php', 3, _US_SELECTNG);
         }
@@ -67,8 +67,8 @@ if (is_object($xoopsUser)) {
         $xoopsTpl->assign('user_ownpage', false);
     }
 } else {
-    $member_handler = xoops_getHandler('member');
-    $thisUser       = $member_handler->getUser($uid);
+    $memberHandler = xoops_getHandler('member');
+    $thisUser       = $memberHandler->getUser($uid);
     if (!is_object($thisUser) || !$thisUser->isActive()) {
         redirect_header('index.php', 3, _US_SELECTNG);
     }
@@ -159,13 +159,13 @@ $date = $thisUser->getVar('last_login');
 if (!empty($date)) {
     $xoopsTpl->assign('user_lastlogin', formatTimestamp($date, 'm'));
 }
-$module_handler = xoops_getHandler('module');
+$moduleHandler = xoops_getHandler('module');
 $criteria       = new CriteriaCompo(new Criteria('hassearch', 1));
 $criteria->add(new Criteria('isactive', 1));
-$mids = array_keys($module_handler->getList($criteria));
+$mids = array_keys($moduleHandler->getList($criteria));
 foreach ($mids as $mid) {
-    if ($gperm_handler->checkRight('module_read', $mid, $groups)) {
-        $module  = $module_handler->get($mid);
+    if ($gpermHandler->checkRight('module_read', $mid, $groups)) {
+        $module  = $moduleHandler->get($mid);
         $results = $module->search('', '', 5, 0, $thisUser->getVar('uid'));
         $count   = count($results);
         if (is_array($results) && $count > 0) {

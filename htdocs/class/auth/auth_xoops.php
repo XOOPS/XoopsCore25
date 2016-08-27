@@ -48,8 +48,8 @@ class XoopsAuthXoops extends XoopsAuth
      */
     public function authenticate($uname, $pwd = null)
     {
-        $member_handler = xoops_getHandler('member');
-        $user           = $member_handler->loginUser($uname, $pwd);
+        $memberHandler = xoops_getHandler('member');
+        $user           = $memberHandler->loginUser($uname, $pwd);
         if ($user == false) {
             $this->setErrors(1, _US_INCORRECTLOGIN);
         }

@@ -58,15 +58,15 @@ xoops_header();
 
 $myts = MyTextSanitizer::getInstance();
 if ($op === 'submit') {
-    $member_handler = xoops_getHandler('member');
-    $count          = $member_handler->getUserCount(new Criteria('uid', XoopsRequest::getInt('to_userid', 0, 'POST')));
+    $memberHandler = xoops_getHandler('member');
+    $count          = $memberHandler->getUserCount(new Criteria('uid', XoopsRequest::getInt('to_userid', 0, 'POST')));
     if ($count != 1) {
         echo '<br><br><div><h4>' . _PM_USERNOEXIST . '<br>';
         echo _PM_PLZTRYAGAIN . '</h4><br>';
         echo "[ <a href='javascript:history.go(-1)'>" . _PM_GOBACK . '</a> ]</div>';
     } elseif ($GLOBALS['xoopsSecurity']->check()) {
-        $pm_handler = xoops_getModuleHandler('message', 'pm');
-        $pm         = $pm_handler->create();
+        $pmHandler = xoops_getModuleHandler('message', 'pm');
+        $pm         = $pmHandler->create();
         $pm->setVar('msg_time', time());
         $msg_image = XoopsRequest::getCmd('icon', null, 'POST');
         if (in_array($msg_image, $subject_icons)) {
@@ -80,7 +80,7 @@ if ($op === 'submit') {
             //PMs are by default not saved in outbox
             $pm->setVar('from_delete', 0);
         }
-        if (!$pm_handler->insert($pm)) {
+        if (!$pmHandler->insert($pm)) {
             echo $pm->getHtmlErrors();
             echo "<br><a href='javascript:history.go(-1)'>" . _PM_GOBACK . '</a>';
         } else {
@@ -94,8 +94,8 @@ if ($op === 'submit') {
     }
 } elseif ($reply == 1 || $send == 1 || $send2 == 1 || $sendmod == 1) {
     if ($reply == 1) {
-        $pm_handler = xoops_getModuleHandler('message', 'pm');
-        $pm         = $pm_handler->get($msg_id);
+        $pmHandler = xoops_getModuleHandler('message', 'pm');
+        $pm         = $pmHandler->get($msg_id);
         if ($pm->getVar('to_userid') == $GLOBALS['xoopsUser']->getVar('uid')) {
             $pm_uname = XoopsUser::getUnameFromId($pm->getVar('from_userid'));
             $message  = "[quote]\n";

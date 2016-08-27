@@ -37,27 +37,27 @@ if (isset($xoopsConfig['startpage']) && $xoopsConfig['startpage'] != '' && $xoop
     define('XOOPS_STARTPAGE_REDIRECTED', 1);
 
     global $xoopsModuleConfig;
-    $module_handler = xoops_getHandler('module');
-    $xoopsModule    = $module_handler->getByDirname($xoopsConfig['startpage']);
+    $moduleHandler = xoops_getHandler('module');
+    $xoopsModule    = $moduleHandler->getByDirname($xoopsConfig['startpage']);
     if (!$xoopsModule || !$xoopsModule->getVar('isactive')) {
         include_once $GLOBALS['xoops']->path('header.php');
         echo '<h4>' . _MODULENOEXIST . '</h4>';
         include_once $GLOBALS['xoops']->path('footer.php');
         exit();
     }
-    $moduleperm_handler = xoops_getHandler('groupperm');
+    $modulepermHandler = xoops_getHandler('groupperm');
     if ($xoopsUser) {
-        if (!$moduleperm_handler->checkRight('module_read', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
+        if (!$modulepermHandler->checkRight('module_read', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
             redirect_header(XOOPS_URL, 1, _NOPERM, false);
         }
         $xoopsUserIsAdmin = $xoopsUser->isAdmin($xoopsModule->getVar('mid'));
     } else {
-        if (!$moduleperm_handler->checkRight('module_read', $xoopsModule->getVar('mid'), XOOPS_GROUP_ANONYMOUS)) {
+        if (!$modulepermHandler->checkRight('module_read', $xoopsModule->getVar('mid'), XOOPS_GROUP_ANONYMOUS)) {
             redirect_header(XOOPS_URL . '/user.php', 1, _NOPERM);
         }
     }
     if ($xoopsModule->getVar('hasconfig') == 1 || $xoopsModule->getVar('hascomments') == 1 || $xoopsModule->getVar('hasnotification') == 1) {
-        $xoopsModuleConfig = $config_handler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
+        $xoopsModuleConfig = $configHandler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
     }
 
     chdir('modules/' . $xoopsConfig['startpage'] . '/');

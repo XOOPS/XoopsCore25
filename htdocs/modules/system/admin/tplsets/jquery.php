@@ -27,10 +27,10 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
 error_reporting(0);
 $GLOBALS['xoopsLogger']->activated = false;
 
-if (file_exists('./../../language/' . $xoopsConfig['language'] . '"/admin/tplsets.php')) {
-    include_once './../../language/' . $xoopsConfig['language'] . '/admin/tplsets.php';
+if (file_exists(__DIR__ . '/../../language/' . $xoopsConfig['language'] . '"/admin/tplsets.php')) {
+    include_once __DIR__ . '/../../language/' . $xoopsConfig['language'] . '/admin/tplsets.php';
 } else {
-    include_once './../../language/english/admin/tplsets.php';
+    include_once __DIR__ . '/../../language/english/admin/tplsets.php';
 }
 
 XoopsLoad::load('XoopsRequest');

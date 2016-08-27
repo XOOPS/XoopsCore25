@@ -255,8 +255,8 @@ class SystemMaintenance
         $class        = 'odd';
         $modulesCount = count($modules);
         for ($i = 0; $i < $modulesCount; ++$i) {
-            $module_handler = xoops_getHandler('module');
-            $module         = $module_handler->getByDirname($modules[$i]);
+            $moduleHandler = xoops_getHandler('module');
+            $module         = $moduleHandler->getByDirname($modules[$i]);
             $ret[1] .= '<tr><th colspan="3" align="left">' . ucfirst($modules[$i]) . '</th></tr>';
             $modtables = $module->getInfo('tables');
             if ($modtables != false && is_array($modtables)) {

@@ -281,8 +281,8 @@ class XoopsTpl extends Smarty
  */
 function xoops_template_touch($tpl_id, $clear_old = true)
 {
-    $tplfile_handler = xoops_getHandler('tplfile');
-    $tplfile         = $tplfile_handler->get($tpl_id);
+    $tplfileHandler = xoops_getHandler('tplfile');
+    $tplfile         = $tplfileHandler->get($tpl_id);
 
     if (is_object($tplfile)) {
         $file = $tplfile->getVar('tpl_file', 'n');

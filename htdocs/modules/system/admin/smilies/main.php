@@ -45,7 +45,7 @@ $upload_size = 500000;
 // Get Action type
 $op = system_CleanVars($_REQUEST, 'op', 'list', 'string');
 // Get smilies handler
-$smilies_Handler = xoops_getModuleHandler('smilies', 'system');
+$smiliesHandler = xoops_getModuleHandler('smilies', 'system');
 // Define main template
 $GLOBALS['xoopsOption']['template_main'] = 'system_smilies.tpl';
 // Call Header
@@ -75,8 +75,8 @@ switch ($op) {
         $criteria->setStart($start);
         $criteria->setLimit($nb_smilies);
         // Count smilies
-        $smilies_count = $smilies_Handler->getCount($criteria);
-        $smilies_arr   = $smilies_Handler->getall($criteria);
+        $smilies_count = $smiliesHandler->getCount($criteria);
+        $smilies_arr   = $smiliesHandler->getall($criteria);
         // Assign Template variables
         $xoopsTpl->assign('smilies_count', $smilies_count);
         if ($smilies_count > 0) {
@@ -113,7 +113,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(sprintf(_AM_SYSTEM_SMILIES_NAV_TIPS_FORM1, implode(', ', $mimetypes)) . sprintf(_AM_SYSTEM_SMILIES_NAV_TIPS_FORM2, $upload_size / 1000));
         $xoBreadCrumb->render();
         // Create form
-        $obj  = $smilies_Handler->create();
+        $obj  = $smiliesHandler->create();
         $form = $obj->getForm();
         // Assign form
         $xoopsTpl->assign('form', $form->render());
@@ -129,7 +129,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(sprintf(_AM_SYSTEM_SMILIES_NAV_TIPS_FORM1, implode(', ', $mimetypes)) . sprintf(_AM_SYSTEM_SMILIES_NAV_TIPS_FORM2, $upload_size / 1000));
         $xoBreadCrumb->render();
         // Create form
-        $obj  = $smilies_Handler->get(system_CleanVars($_REQUEST, 'smilies_id', 0, 'int'));
+        $obj  = $smiliesHandler->get(system_CleanVars($_REQUEST, 'smilies_id', 0, 'int'));
         $form = $obj->getForm();
         // Assign form
         $xoopsTpl->assign('form', $form->render());
@@ -146,9 +146,9 @@ switch ($op) {
         $xoBreadCrumb->render();
 
         if (isset($_POST['smilies_id'])) {
-            $obj = $smilies_Handler->get(system_CleanVars($_POST, 'smilies_id', 0, 'int'));
+            $obj = $smiliesHandler->get(system_CleanVars($_POST, 'smilies_id', 0, 'int'));
         } else {
-            $obj = $smilies_Handler->create();
+            $obj = $smiliesHandler->create();
         }
         // erreur
         $obj->setVar('code', $_POST['code']);
@@ -166,7 +166,7 @@ switch ($op) {
                     $err[] =& $uploader_smilies_img->getErrors();
                 } else {
                     $obj->setVar('smile_url', 'smilies/' . $uploader_smilies_img->getSavedFileName());
-                    if (!$smilies_Handler->insert($obj)) {
+                    if (!$smiliesHandler->insert($obj)) {
                         $err[] = sprintf(_FAILSAVEIMG, $obj->getVar('code'));
                     }
                 }
@@ -175,7 +175,7 @@ switch ($op) {
             }
         } else {
             $obj->setVar('smile_url', 'smilies/' . $_POST['smile_url']);
-            if (!$smilies_Handler->insert($obj)) {
+            if (!$smiliesHandler->insert($obj)) {
                 $err[] = sprintf(_FAILSAVEIMG, $obj->getVar('code'));
             }
         }
@@ -194,12 +194,12 @@ switch ($op) {
     //Del a smilie
     case 'smilies_delete':
         $smilies_id = system_CleanVars($_REQUEST, 'smilies_id', 0, 'int');
-        $obj        = $smilies_Handler->get($smilies_id);
+        $obj        = $smiliesHandler->get($smilies_id);
         if (isset($_POST['ok']) && $_POST['ok'] == 1) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header('admin.php?fct=smilies', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }
-            if ($smilies_Handler->delete($obj)) {
+            if ($smiliesHandler->delete($obj)) {
                 $urlfile = XOOPS_UPLOAD_PATH . '/' . $obj->getVar('smile_url');
                 if (is_file($urlfile)) {
                     chmod($urlfile, 0777);
@@ -228,10 +228,10 @@ switch ($op) {
         // Get smilies id
         $smilies_id = system_CleanVars($_POST, 'smilies_id', 0, 'int');
         if ($smilies_id > 0) {
-            $obj = $smilies_Handler->get($smilies_id);
+            $obj = $smiliesHandler->get($smilies_id);
             $old = $obj->getVar('display');
             $obj->setVar('display', !$old);
-            if ($smilies_Handler->insert($obj)) {
+            if ($smiliesHandler->insert($obj)) {
                 exit;
             }
             echo $obj->getHtmlErrors();

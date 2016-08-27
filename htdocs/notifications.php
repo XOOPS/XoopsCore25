@@ -56,11 +56,11 @@ switch ($op) {
         // Get an array of all notifications for the selected user
         $criteria = new Criteria('not_uid', $uid);
         $criteria->setSort('not_modid,not_category,not_itemid');
-        $notification_handler = xoops_getHandler('notification');
-        $notifications        = $notification_handler->getObjects($criteria);
+        $notificationHandler = xoops_getHandler('notification');
+        $notifications        = $notificationHandler->getObjects($criteria);
 
         // Generate the info for the template
-        $module_handler = xoops_getHandler('module');
+        $moduleHandler = xoops_getHandler('module');
         include_once $GLOBALS['xoops']->path('include/notification_functions.php');
         $modules       = array();
         $prev_modid    = -1;
@@ -72,7 +72,7 @@ switch ($op) {
                 $prev_modid      = $modid;
                 $prev_category   = -1;
                 $prev_item       = -1;
-                $module          = $module_handler->get($modid);
+                $module          = $moduleHandler->get($modid);
                 $modules[$modid] = array(
                     'id'         => $modid,
                     'name'       => $module->getVar('name'),
@@ -191,12 +191,12 @@ switch ($op) {
         if (empty($_POST['del_not'])) {
             redirect_header('notifications.php', 2, _NOT_NOTHINGTODELETE);
         }
-        $notification_handler = xoops_getHandler('notification');
+        $notificationHandler = xoops_getHandler('notification');
         foreach ($_POST['del_not'] as $n_array) {
             foreach ($n_array as $n) {
-                $notification = $notification_handler->get($n);
+                $notification = $notificationHandler->get($n);
                 if ($notification->getVar('not_uid') == $uid) {
-                    $notification_handler->delete($notification);
+                    $notificationHandler->delete($notification);
                 }
             }
         }

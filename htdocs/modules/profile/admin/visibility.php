@@ -26,23 +26,23 @@ xoops_cp_header();
 
 $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'visibility';
 
-$visibility_handler = xoops_getModuleHandler('visibility');
-$field_handler      = xoops_getModuleHandler('field');
-$fields             = $field_handler->getList();
+$visibilityHandler = xoops_getModuleHandler('visibility');
+$fieldHandler      = xoops_getModuleHandler('field');
+$fields             = $fieldHandler->getList();
 
 if (isset($_REQUEST['submit'])) {
-    $visibility = $visibility_handler->create();
+    $visibility = $visibilityHandler->create();
     $visibility->setVar('field_id', $_REQUEST['field_id']);
     $visibility->setVar('user_group', $_REQUEST['ug']);
     $visibility->setVar('profile_group', $_REQUEST['pg']);
-    $visibility_handler->insert($visibility, true);
+    $visibilityHandler->insert($visibility, true);
     redirect_header('visibility.php', 2, sprintf(_PROFILE_AM_SAVEDSUCCESS, _PROFILE_AM_PROF_VISIBLE));
 }
 if ($op === 'del') {
     $criteria = new CriteriaCompo(new Criteria('field_id', (int)$_REQUEST['field_id']));
     $criteria->add(new Criteria('user_group', (int)$_REQUEST['ug']));
     $criteria->add(new Criteria('profile_group', (int)$_REQUEST['pg']));
-    $visibility_handler->deleteAll($criteria, true);
+    $visibilityHandler->deleteAll($criteria, true);
     redirect_header('visibility.php', 2, sprintf(_PROFILE_AM_DELETEDSUCCESS, _PROFILE_AM_PROF_VISIBLE));
 }
 
@@ -62,10 +62,10 @@ $criteria = new CriteriaCompo();
 $criteria->setSort('field_id, user_group, profile_group');
 $criteria->setOrder('DESC');
 
-$visibilities = $visibility_handler->getAllByFieldId($criteria);
+$visibilities = $visibilityHandler->getAllByFieldId($criteria);
 
-$member_handler = xoops_getHandler('member');
-$groups         = $member_handler->getGroupList();
+$memberHandler = xoops_getHandler('member');
+$groups         = $memberHandler->getGroupList();
 $groups[0]      = _PROFILE_AM_FIELDVISIBLETOALL;
 asort($groups);
 

@@ -1507,8 +1507,8 @@ class Protector
     public function call_filter($type, $dying_message = '')
     {
         require_once __DIR__ . '/ProtectorFilter.php';
-        $filter_handler = ProtectorFilterHandler::getInstance();
-        $ret            = $filter_handler->execute($type);
+        $filterHandler = ProtectorFilterHandler::getInstance();
+        $ret            = $filterHandler->execute($type);
         if ($ret == false && $dying_message) {
             die($dying_message);
         }

@@ -52,15 +52,15 @@ class SystemGroup extends XoopsGroup
             $r_mod_value   = array();
             $r_block_value = array();
         } else {
-            $sysperm_handler    = xoops_getHandler('groupperm');
-            $s_cat_value        = $sysperm_handler->getItemIds('system_admin', $this->getVar('groupid'));
-            $member_handler     = xoops_getHandler('member');
-            $thisgroup          = $member_handler->getGroup($this->getVar('groupid'));
-            $moduleperm_handler = xoops_getHandler('groupperm');
-            $a_mod_value        = $moduleperm_handler->getItemIds('module_admin', $thisgroup->getVar('groupid'));
-            $r_mod_value        = $moduleperm_handler->getItemIds('module_read', $thisgroup->getVar('groupid'));
-            $gperm_handler      = xoops_getHandler('groupperm');
-            $r_block_value      = $gperm_handler->getItemIds('block_read', $this->getVar('groupid'));
+            $syspermHandler    = xoops_getHandler('groupperm');
+            $s_cat_value        = $syspermHandler->getItemIds('system_admin', $this->getVar('groupid'));
+            $memberHandler     = xoops_getHandler('member');
+            $thisgroup          = $memberHandler->getGroup($this->getVar('groupid'));
+            $modulepermHandler = xoops_getHandler('groupperm');
+            $a_mod_value        = $modulepermHandler->getItemIds('module_admin', $thisgroup->getVar('groupid'));
+            $r_mod_value        = $modulepermHandler->getItemIds('module_read', $thisgroup->getVar('groupid'));
+            $gpermHandler      = xoops_getHandler('groupperm');
+            $r_block_value      = $gpermHandler->getItemIds('block_read', $this->getVar('groupid'));
         }
         xoops_load('XoopsFormLoader');
         xoops_load('XoopsLists');
@@ -107,11 +107,11 @@ class SystemGroup extends XoopsGroup
 
         $a_mod_checkbox          = new XoopsFormCheckBox('', 'admin_mids[]', $a_mod_value);
         $a_mod_checkbox->columns = 5;
-        $module_handler          = xoops_getHandler('module');
+        $moduleHandler          = xoops_getHandler('module');
         $criteria                = new CriteriaCompo(new Criteria('hasadmin', 1));
         $criteria->add(new Criteria('isactive', 1));
         $criteria->add(new Criteria('dirname', 'system', '<>'));
-        $a_mod_checkbox->addOptionArray($module_handler->getList($criteria));
+        $a_mod_checkbox->addOptionArray($moduleHandler->getList($criteria));
         $admin_mids->addElement($a_mod_checkbox);
 
         $read_mids = new XoopsFormElementTray(_AM_SYSTEM_GROUPS_ACCESSRIGHTS, '');
@@ -126,17 +126,17 @@ class SystemGroup extends XoopsGroup
         $r_mod_checkbox->columns = 5;
         $criteria                = new CriteriaCompo(new Criteria('hasmain', 1));
         $criteria->add(new Criteria('isactive', 1));
-        $r_mod_checkbox->addOptionArray($module_handler->getList($criteria));
+        $r_mod_checkbox->addOptionArray($moduleHandler->getList($criteria));
         $read_mids->addElement($r_mod_checkbox);
 
         $criteria = new CriteriaCompo(new Criteria('isactive', 1));
         $criteria->setSort('mid');
         $criteria->setOrder('ASC');
-        $module_list    = $module_handler->getList($criteria);
+        $module_list    = $moduleHandler->getList($criteria);
         $module_list[0] = _AM_SYSTEM_GROUPS_CUSTOMBLOCK;
 
-        $block_handler = xoops_getHandler('block');
-        $blocks_obj    = $block_handler->getObjects(new Criteria('mid', "('" . implode("', '", array_keys($module_list)) . "')", 'IN'), true);
+        $blockHandler = xoops_getHandler('block');
+        $blocks_obj    = $blockHandler->getObjects(new Criteria('mid', "('" . implode("', '", array_keys($module_list)) . "')", 'IN'), true);
 
         $blocks_module = array();
         foreach (array_keys($blocks_obj) as $bid) {

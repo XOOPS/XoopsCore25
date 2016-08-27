@@ -92,7 +92,7 @@ class ProtectorFilterHandler
                     $ret |= call_user_func($plugin_name);
                 } elseif (class_exists($plugin_name)) {
                     // newer way
-                    $plugin_obj = new $plugin_name(); //old code is -> $plugin_obj =& new $plugin_name() ; //hack by Trabis
+                    $plugin_obj = new $plugin_name(); //old code is -> $plugin_obj = new $plugin_name() ; //hack by Trabis
                     $ret |= $plugin_obj->execute();
                 }
             }

@@ -94,10 +94,10 @@ switch ($op) {
 
         $dump_tray->addElement(new xoopsFormLabel('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . _AM_SYSTEM_MAINTENANCE_DUMP_OR . '&nbsp;'));
         $ele            = new XoopsFormSelect('&nbsp;&nbsp;', 'dump_modules', '', 7, true);
-        $module_handler = xoops_getHandler('module');
+        $moduleHandler = xoops_getHandler('module');
         $criteria       = new CriteriaCompo(new Criteria('hasmain', 1));
         $criteria->add(new Criteria('isactive', 1));
-        $moduleslist = $module_handler->getList($criteria, true);
+        $moduleslist = $moduleHandler->getList($criteria, true);
         $ele->addOptionArray($moduleslist);
         $dump_tray->addElement($ele);
         $form_dump->addElement($dump_tray);

@@ -71,7 +71,7 @@ class XoopsFormSelectUser extends XoopsFormElementTray
         if ($includeAnonymous) {
             $select_element->addOption(0, $GLOBALS['xoopsConfig']['anonymous']);
         }
-        $member_handler = xoops_getHandler('member');
+        $memberHandler = xoops_getHandler('member');
         $value          = is_array($value) ? $value : (empty($value) ? array() : array($value));
         $selectedUsers = array();
         if (count($value) > 0) {
@@ -79,7 +79,7 @@ class XoopsFormSelectUser extends XoopsFormElementTray
             $criteria = new Criteria('uid', '(' . implode(',', $value) . ')', 'IN');
             $criteria->setSort('uname');
             $criteria->setOrder('ASC');
-            $selectedUsers = $member_handler->getUserList($criteria);
+            $selectedUsers = $memberHandler->getUserList($criteria);
         }
 
         // get the full selection list
@@ -89,7 +89,7 @@ class XoopsFormSelectUser extends XoopsFormElementTray
             $queryCache = XoopsCache::read($cachekey);
             if ($queryCache === false) {
                 $criteria = new CriteriaCompo();
-                if ($limit <= $member_handler->getUserCount()) {
+                if ($limit <= $memberHandler->getUserCount()) {
                     // if we have more than $limit users, we will select who to show based on last_login
                     $criteria->setLimit($limit);
                     $criteria->setSort('last_login');
@@ -98,7 +98,7 @@ class XoopsFormSelectUser extends XoopsFormElementTray
                     $criteria->setSort('uname');
                     $criteria->setOrder('ASC');
                 }
-                $queryCache = $member_handler->getUserList($criteria);
+                $queryCache = $memberHandler->getUserList($criteria);
                 asort($queryCache);
                 XoopsCache::write($cachekey, $queryCache, $cachettl); // won't do anything different if write fails
             }
