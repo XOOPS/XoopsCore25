@@ -5,7 +5,16 @@
  */
 class Upgrade_2014 extends XoopsUpgrade
 {
-    public $usedFiles = array('mainfile.php');
+    /**
+     * __construct
+     *
+     */
+    public function __construct()
+    {
+        parent::__construct(basename(__DIR__));
+        $this->usedFiles = array('mainfile.php');
+    }
+
 
     /**
      * @return bool

@@ -11,14 +11,9 @@
  * @package          upgrader
  * @since            2.5.6
  * @author           XOOPS Team
- * @version          $Id: index.php 9043 2012-02-22 02:51:38Z beckmi $
  */
 class Upgrade_256 extends XoopsUpgrade
 {
-    public $tasks = array(
-        'com_user',
-        'com_email',
-        'com_url');
 
     /**
      *
@@ -26,6 +21,10 @@ class Upgrade_256 extends XoopsUpgrade
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
+        $this->tasks = array(
+        'com_user',
+        'com_email',
+        'com_url');
     }
 
     /**

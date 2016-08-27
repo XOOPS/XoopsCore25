@@ -15,15 +15,14 @@
  * @package             upgrader
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: index.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 class Upgrade_220 extends XoopsUpgrade
 {
-    public $tasks = array('config', 'profile', 'block'/*, 'pm', 'module'*/);
 
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
+        $this->tasks = array('config', 'profile', 'block'/*, 'pm', 'module'*/);
     }
 
     /**
@@ -46,8 +45,8 @@ class Upgrade_220 extends XoopsUpgrade
      */
     public function check_profile()
     {
-        $module_handler = xoops_getHandler('module');
-        if (!$profile_module = $module_handler->getByDirname('profile')) {
+        $moduleHandler = xoops_getHandler('module');
+        if (!$profile_module = $moduleHandler->getByDirname('profile')) {
             return true;
         }
         $sql    = 'SHOW COLUMNS FROM ' . $GLOBALS['xoopsDB']->prefix('users') . " LIKE 'posts'";
@@ -143,11 +142,11 @@ class Upgrade_220 extends XoopsUpgrade
         $profile_config_arr['reg_disclaimer']        = '';
         $profile_config_arr['allow_register']        = 1;
 
-        $module_handler = xoops_getHandler('module');
-        $config_handler = xoops_getHandler('config');
-        $profile_module = $module_handler->getByDirname('profile');
+        $moduleHandler = xoops_getHandler('module');
+        $configHandler = xoops_getHandler('config');
+        $profile_module = $moduleHandler->getByDirname('profile');
         if (is_object($profile_module)) {
-            $profile_config = $config_handler->getConfigs(new Criteria('conf_modid', $profile_module->getVar('mid')));
+            $profile_config = $configHandler->getConfigs(new Criteria('conf_modid', $profile_module->getVar('mid')));
             foreach (array_keys($profile_config) as $i) {
                 $profile_config_arr[$profile_config[$i]->getVar('conf_name')] = $profile_config[$i]->getVar('conf_value', 'n');
             }
@@ -160,7 +159,7 @@ class Upgrade_220 extends XoopsUpgrade
         $criteria->add(new Criteria('conf_modid', 0));
         $criteria->setSort('conf_name');
         $criteria->setOrder('ASC');
-        $configs             = $config_handler->getConfigs($criteria);
+        $configs             = $configHandler->getConfigs($criteria);
         $id_activation_type  = $configs[0]->getVar('conf_id');
         $id_uname_test_level = $configs[1]->getVar('conf_id');
         $xoopsDB->queryF('INSERT INTO `' . $xoopsDB->prefix('configoption') . '` (confop_name, confop_value, conf_id) VALUES ' . " ('_MD_AM_USERACTV', '0', {$id_activation_type})," . " ('_MD_AM_AUTOACTV', '1', {$id_activation_type})," . " ('_MD_AM_ADMINACTV', '2', {$id_activation_type})," . " ('_MD_AM_STRICT', '0', {$id_uname_test_level})," . " ('_MD_AM_MEDIUM', '1', {$id_uname_test_level})," . " ('_MD_AM_LIGHT', '2', {$id_uname_test_level})");
