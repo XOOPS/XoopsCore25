@@ -24,9 +24,9 @@ include_once $GLOBALS['xoops']->path('include/comment_constants.php');
 
 if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
     include_once $GLOBALS['xoops']->path('modules/system/constants.php');
-    $gperm_handler = xoops_getHandler('groupperm');
+    $gpermHandler = xoops_getHandler('groupperm');
     $groups        = $xoopsUser ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
-    $xoopsTpl->assign('xoops_iscommentadmin', $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $groups));
+    $xoopsTpl->assign('xoops_iscommentadmin', $gpermHandler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $groups));
 
     xoops_loadLanguage('comment');
 
@@ -69,9 +69,9 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
 
         $com_id          = isset($_GET['com_id']) ? (int)$_GET['com_id'] : 0;
         $com_rootid      = isset($_GET['com_rootid']) ? (int)$_GET['com_rootid'] : 0;
-        $comment_handler = xoops_getHandler('comment');
+        $commentHandler = xoops_getHandler('comment');
         if ($com_mode === 'flat') {
-            $comments = $comment_handler->getByItemId($xoopsModule->getVar('mid'), $com_itemid, $com_dborder);
+            $comments = $commentHandler->getByItemId($xoopsModule->getVar('mid'), $com_itemid, $com_dborder);
             include_once $GLOBALS['xoops']->path('class/commentrenderer.php');
             $renderer = XoopsCommentRenderer::instance($xoopsTpl);
             $renderer->setComments($comments);
@@ -99,7 +99,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
             $xoopsTpl->assign('comment_url', $comment_url . $comment_config['itemName'] . '=' . $com_itemid . '&amp;com_mode=thread&amp;com_order=' . $com_order);
             if (!empty($com_id) && !empty($com_rootid) && ($com_id != $com_rootid)) {
                 // Show specific thread tree
-                $comments = $comment_handler->getThread($com_rootid, $com_id);
+                $comments = $commentHandler->getThread($com_rootid, $com_id);
 //                if (false != $comments) {
                 if (!empty($comments)) {  // getThread always returns array - changed in 2.5.9
                     include_once $GLOBALS['xoops']->path('class/commentrenderer.php');
@@ -109,11 +109,11 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
                 }
             } else {
                 // Show all threads
-                $top_comments = $comment_handler->getTopComments($xoopsModule->getVar('mid'), $com_itemid, $com_dborder);
+                $top_comments = $commentHandler->getTopComments($xoopsModule->getVar('mid'), $com_itemid, $com_dborder);
                 $c_count      = count($top_comments);
                 if ($c_count > 0) {
                     for ($i = 0; $i < $c_count; ++$i) {
-                        $comments = $comment_handler->getThread($top_comments[$i]->getVar('com_rootid'), $top_comments[$i]->getVar('com_id'));
+                        $comments = $commentHandler->getThread($top_comments[$i]->getVar('com_rootid'), $top_comments[$i]->getVar('com_id'));
 //                        if (false != $comments) {
                         if (!empty($comments)) {  // $getThread always returns array - changed in 2.5.9
                             include_once $GLOBALS['xoops']->path('class/commentrenderer.php');
@@ -127,11 +127,11 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
             }
         } else {
             // Show all threads
-            $top_comments = $comment_handler->getTopComments($xoopsModule->getVar('mid'), $com_itemid, $com_dborder);
+            $top_comments = $commentHandler->getTopComments($xoopsModule->getVar('mid'), $com_itemid, $com_dborder);
             $c_count      = count($top_comments);
             if ($c_count > 0) {
                 for ($i = 0; $i < $c_count; ++$i) {
-                    $comments = $comment_handler->getThread($top_comments[$i]->getVar('com_rootid'), $top_comments[$i]->getVar('com_id'));
+                    $comments = $commentHandler->getThread($top_comments[$i]->getVar('com_rootid'), $top_comments[$i]->getVar('com_id'));
                     include_once $GLOBALS['xoops']->path('class/commentrenderer.php');
                     $renderer = XoopsCommentRenderer::instance($xoopsTpl);
                     $renderer->setComments($comments);

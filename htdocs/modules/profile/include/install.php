@@ -119,8 +119,8 @@ function profile_install_addField($name, $title, $description, $category, $type,
 {
     global $module_id;
 
-    $profilefield_handler = xoops_getModuleHandler('field', 'profile');
-    $obj                  = $profilefield_handler->create();
+    $profilefieldHandler = xoops_getModuleHandler('field', 'profile');
+    $obj                  = $profilefieldHandler->create();
     $obj->setVar('field_name', $name, true);
     $obj->setVar('field_moduleid', $module_id, true);
     $obj->setVar('field_show', 1);
@@ -138,7 +138,7 @@ function profile_install_addField($name, $title, $description, $category, $type,
     $obj->setVar('field_weight', $weight, true);
     $obj->setVar('cat_id', $category, true);
     $obj->setVar('step_id', $step_id, true);
-    $profilefield_handler->insert($obj);
+    $profilefieldHandler->insert($obj);
 
     profile_install_setPermissions($obj->getVar('field_id'), $module_id, $canedit, $visible);
 

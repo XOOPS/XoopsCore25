@@ -28,8 +28,8 @@ if ($email == '') {
 }
 
 $myts           = MyTextSanitizer::getInstance();
-$member_handler = xoops_getHandler('member');
-list($user) = $member_handler->getUsers(new Criteria('email', $myts->addSlashes($email)));
+$memberHandler = xoops_getHandler('member');
+list($user) = $memberHandler->getUsers(new Criteria('email', $myts->addSlashes($email)));
 
 if (empty($user)) {
     $msg = _US_SORRYNOTFOUND;

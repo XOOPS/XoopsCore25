@@ -38,7 +38,7 @@ include_once XOOPS_ROOT_PATH . '/modules/system/admin/users/users.php';
 // Get Action type
 $op = system_CleanVars($_REQUEST, 'op', 'default', 'string');
 
-$member_handler = xoops_getHandler('member', 'system');
+$memberHandler = xoops_getHandler('member', 'system');
 // Define main template
 $GLOBALS['xoopsOption']['template_main'] = 'system_users.tpl';
 // Call Header
@@ -77,7 +77,7 @@ switch ($op) {
     // Delete user
     case 'users_delete':
         $xoBreadCrumb->render();
-        $user = $member_handler->getUser($uid);
+        $user = $memberHandler->getUser($uid);
         if (isset($_REQUEST['ok']) && $_REQUEST['ok'] == 1) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header('admin.php?fct=users', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -86,11 +86,11 @@ switch ($op) {
             $groups = $user->getGroups();
             if (in_array(XOOPS_GROUP_ADMIN, $groups)) {
                 xoops_error(sprintf(_AM_SYSTEM_USERS_NO_ADMINSUPP, $user->getVar('uname')));
-            } elseif (!$member_handler->deleteUser($user)) {
+            } elseif (!$memberHandler->deleteUser($user)) {
                 xoops_error(sprintf(_AM_SYSTEM_USERS_NO_SUPP, $user->getVar('uname')));
             } else {
-                $online_handler = xoops_getHandler('online');
-                $online_handler->destroy($uid);
+                $onlineHandler = xoops_getHandler('online');
+                $onlineHandler->destroy($uid);
                 // RMV-NOTIFY
                 xoops_notification_deletebyuser($uid);
                 redirect_header('admin.php?fct=users', 1, _AM_SYSTEM_DBUPDATED);
@@ -118,15 +118,15 @@ switch ($op) {
             $error = '';
             foreach ($_REQUEST['memberslist_id'] as $del) {
                 $del    = (int)$del;
-                $user   = $member_handler->getUser($del);
+                $user   = $memberHandler->getUser($del);
                 $groups = $user->getGroups();
                 if (in_array(XOOPS_GROUP_ADMIN, $groups)) {
                     $error .= sprintf(_AM_SYSTEM_USERS_NO_ADMINSUPP, $user->getVar('uname'));
-                } elseif (!$member_handler->deleteUser($user)) {
+                } elseif (!$memberHandler->deleteUser($user)) {
                     $error .= sprintf(_AM_SYSTEM_USERS_NO_SUPP, $user->getVar('uname'));
                 } else {
-                    $online_handler = xoops_getHandler('online');
-                    $online_handler->destroy($del);
+                    $onlineHandler = xoops_getHandler('online');
+                    $onlineHandler->destroy($del);
                     // RMV-NOTIFY
                     xoops_notification_deletebyuser($del);
                 }
@@ -157,12 +157,12 @@ switch ($op) {
                 $user_viewemail = null;
             }
 
-            $edituser = $member_handler->getUser($uid);
-            if ($edituser->getVar('uname', 'n') != $_REQUEST['username'] && $member_handler->getUserCount(new Criteria('uname', $myts->addSlashes($_REQUEST['username']))) > 0) {
+            $edituser = $memberHandler->getUser($uid);
+            if ($edituser->getVar('uname', 'n') != $_REQUEST['username'] && $memberHandler->getUserCount(new Criteria('uname', $myts->addSlashes($_REQUEST['username']))) > 0) {
                 xoops_cp_header();
                 xoops_error(sprintf(_AM_SYSTEM_USERS_PSEUDO_ERROR, htmlspecialchars($_REQUEST['username'])));
                 xoops_cp_footer();
-            } elseif ($edituser->getVar('email', 'n') != $_REQUEST['email'] && $member_handler->getUserCount(new Criteria('email', $myts->addSlashes($_REQUEST['email']))) > 0) {
+            } elseif ($edituser->getVar('email', 'n') != $_REQUEST['email'] && $memberHandler->getUserCount(new Criteria('email', $myts->addSlashes($_REQUEST['email']))) > 0) {
                 xoops_cp_header();
                 xoops_error(sprintf(_AM_SYSTEM_USERS_MAIL_ERROR, htmlspecialchars($_REQUEST['email'])));
                 xoops_cp_footer();
@@ -203,7 +203,7 @@ switch ($op) {
                     }
                     $edituser->setVar('pass', password_hash($_REQUEST['password'], PASSWORD_DEFAULT));
                 }
-                if (!$member_handler->insertUser($edituser)) {
+                if (!$memberHandler->insertUser($edituser)) {
                     xoops_cp_header();
                     echo $edituser->getHtmlErrors();
                     xoops_cp_footer();
@@ -216,12 +216,12 @@ switch ($op) {
                             //Add the webmaster's group to the groups array to prevent accidentally removing oneself from the webmaster's group
                             $_REQUEST['groups'][] = XOOPS_GROUP_ADMIN;
                         }
-                        $member_handler = xoops_getHandler('member');
+                        $memberHandler = xoops_getHandler('member');
                         foreach ($oldgroups as $groupid) {
-                            $member_handler->removeUsersFromGroup($groupid, array($edituser->getVar('uid')));
+                            $memberHandler->removeUsersFromGroup($groupid, array($edituser->getVar('uid')));
                         }
                         foreach ($_REQUEST['groups'] as $groupid) {
-                            $member_handler->addUserToGroup($groupid, $edituser->getVar('uid'));
+                            $memberHandler->addUserToGroup($groupid, $edituser->getVar('uid'));
                         }
                     }
                     redirect_header('admin.php?fct=users', 1, _AM_SYSTEM_DBUPDATED);
@@ -236,12 +236,12 @@ switch ($op) {
             if (!$_REQUEST['username'] || !$_REQUEST['email'] || !$_REQUEST['password']) {
                 $adduser_errormsg = _AM_SYSTEM_USERS_YMCACF;
             } else {
-                $member_handler = xoops_getHandler('member');
+                $memberHandler = xoops_getHandler('member');
                 // make sure the username doesnt exist yet
-                if ($member_handler->getUserCount(new Criteria('uname', $myts->addSlashes($_REQUEST['username']))) > 0) {
+                if ($memberHandler->getUserCount(new Criteria('uname', $myts->addSlashes($_REQUEST['username']))) > 0) {
                     $adduser_errormsg = 'User name ' . htmlspecialchars($_REQUEST['username']) . ' already exists';
                 } else {
-                    $newuser = $member_handler->createUser();
+                    $newuser = $memberHandler->createUser();
                     if (isset($user_viewemail)) {
                         $newuser->setVar('user_viewemail', $_REQUEST['user_viewemail']);
                     }
@@ -281,18 +281,18 @@ switch ($op) {
                     $newuser->setVar('user_occ', $_REQUEST['user_occ']);
                     $newuser->setVar('user_intrest', $_REQUEST['user_intrest']);
                     $newuser->setVar('user_mailok', $_REQUEST['user_mailok']);
-                    if (!$member_handler->insertUser($newuser)) {
+                    if (!$memberHandler->insertUser($newuser)) {
                         $adduser_errormsg = _AM_SYSTEM_USERS_CNRNU;
                     } else {
                         $groups_failed = array();
                         foreach ($_REQUEST['groups'] as $group) {
                             $group = (int)$group;
-                            if (!$member_handler->addUserToGroup($group, $newuser->getVar('uid'))) {
+                            if (!$memberHandler->addUserToGroup($group, $newuser->getVar('uid'))) {
                                 $groups_failed[] = $group;
                             }
                         }
                         if (!empty($groups_failed)) {
-                            $group_names      = $member_handler->getGroupList(new Criteria('groupid', '(' . implode(', ', $groups_failed) . ')', 'IN'));
+                            $group_names      = $memberHandler->getGroupList(new Criteria('groupid', '(' . implode(', ', $groups_failed) . ')', 'IN'));
                             $adduser_errormsg = sprintf(_AM_SYSTEM_USERS_CNRNU2, implode(', ', $group_names));
                         } else {
                             xoops_load('XoopsUserUtility');
@@ -309,12 +309,12 @@ switch ($op) {
     // Activ member
     case 'users_active':
         if (isset($_REQUEST['uid'])) {
-            $obj = $member_handler->getUser($uid);
+            $obj = $memberHandler->getUser($uid);
             //echo $_REQUEST["uid"];
             //print_r($obj);
         }
         $obj->setVar('level', 1);
-        if ($member_handler->insertUser($obj, true)) {
+        if ($memberHandler->insertUser($obj, true)) {
             redirect_header('admin.php?fct=users', 1, _AM_SYSTEM_DBUPDATED);
         }
         echo $obj->getHtmlErrors();
@@ -347,14 +347,14 @@ switch ($op) {
             $xoBreadCrumb->addTips(_AM_SYSTEM_USERS_NAV_TIPS);
             $xoBreadCrumb->render();
 
-            $acttotal   = $member_handler->getUserCount(new Criteria('level', 0, '>'));
-            $inacttotal = $member_handler->getUserCount(new Criteria('level', 0));
+            $acttotal   = $memberHandler->getUserCount(new Criteria('level', 0, '>'));
+            $inacttotal = $memberHandler->getUserCount(new Criteria('level', 0));
 
             //$group_select = new XoopsFormSelectGroup(_AM_SYSTEM_USERS_GROUPS, "selgroups", null, false, 1, false);
             $group_select = new XoopsFormSelect(_AM_SYSTEM_USERS_GROUPS, 'selgroups');
 
-            $group_handler = xoops_getHandler('group');
-            $group_arr     = $group_handler->getObjects();
+            $groupHandler = xoops_getHandler('group');
+            $group_arr     = $groupHandler->getObjects();
             $group_select->addOption('', '--------------');
             foreach (array_keys($group_arr) as $i) {
                 if ($group_arr[$i]->getVar('groupid') != 3) {
@@ -763,12 +763,12 @@ switch ($op) {
                 $groups = array();
             }
             //print_r($groups);
-            $member_handler = xoops_getHandler('member');
+            $memberHandler = xoops_getHandler('member');
 
             if (empty($groups)) {
-                $users_count = $member_handler->getUserCount();
+                $users_count = $memberHandler->getUserCount();
             } else {
-                $users_count = $member_handler->getUserCountByGroupLink($groups, $criteria);
+                $users_count = $memberHandler->getUserCountByGroupLink($groups, $criteria);
             }
             if ($start < $users_count) {
                 echo sprintf(_AM_SYSTEM_USERS_USERSFOUND, $users_count) . '<br>';
@@ -776,7 +776,7 @@ switch ($op) {
                 $criteria->setOrder($order);
                 $criteria->setLimit($user_limit);
                 $criteria->setStart($start);
-                $users_arr = $member_handler->getUsersByGroupLink($groups, $criteria, true);
+                $users_arr = $memberHandler->getUsersByGroupLink($groups, $criteria, true);
                 $ucount    = 0;
             }
 
@@ -796,8 +796,8 @@ switch ($op) {
                     ' . _AM_SYSTEM_USERS_SEARCH_USER . '<input type="text" name="user_uname" value="' . $myts->htmlSpecialChars($user_uname) . '" size="15">
                     <select name="selgroups">
                         <option value="" selected>' . _AM_SYSTEM_USERS_ALLGROUP . '</option>';
-            $group_handler = xoops_getHandler('group');
-            $group_arr     = $group_handler->getObjects();
+            $groupHandler = xoops_getHandler('group');
+            $group_arr     = $groupHandler->getObjects();
             foreach (array_keys($group_arr) as $i) {
                 if ($group_arr[$i]->getVar('groupid') != 3) {
                     $form .= '<option value="' . $group_arr[$i]->getVar('groupid') . '"  ' . ($selgroups == $group_arr[$i]->getVar('groupid') ? ' selected' : '') . '>' . $group_arr[$i]->getVar('name') . '</option>';
@@ -822,8 +822,8 @@ switch ($op) {
             //select groupe
             $form_select_groups = '<select  name="selgroups" id="selgroups"   style="display:none;"><option value="">---------</option>';
             //$module_array[0] = _AM_SYSTEM_USERS_COMMENTS_FORM_ALL_MODS;
-            $group_handler = xoops_getHandler('group');
-            $group_arr     = $group_handler->getObjects();
+            $groupHandler = xoops_getHandler('group');
+            $group_arr     = $groupHandler->getObjects();
             foreach (array_keys($group_arr) as $i) {
                 if ($group_arr[$i]->getVar('groupid') != 3) {
                     $form_select_groups .= '<option value="' . $group_arr[$i]->getVar('groupid') . '"  ' . ($selgroups == $group_arr[$i]->getVar('groupid') ? ' selected' : '') . '>' . $group_arr[$i]->getVar('name') . '</option>';
@@ -845,7 +845,7 @@ switch ($op) {
                 foreach (array_keys($users_arr) as $i) {
                     $users['uid'] = $users_arr[$i]->getVar('uid');
                     //Display group
-                    $user_group = $member_handler->getGroupsByUser($users_arr[$i]->getVar('uid'));
+                    $user_group = $memberHandler->getGroupsByUser($users_arr[$i]->getVar('uid'));
                     if (in_array('1', $user_group)) {
                         $users['group'] = system_AdminIcons('xoops/group_1.png');
                         //$users['icon'] = '<img src="'.XOOPS_URL.'/modules/system/images/icons/admin.png" alt="'._AM_SYSTEM_USERS_ADMIN.'" title="'._AM_SYSTEM_USERS_ADMIN.'" />';

@@ -48,10 +48,10 @@ if (!function_exists('protector_oninstall_base')) {
 
             if (file_exists(XOOPS_ROOT_PATH . '/class/database/oldsqlutility.php')) {
                 include_once XOOPS_ROOT_PATH . '/class/database/oldsqlutility.php';
-                $sqlutil = new OldSqlUtility; //old code is -> $sqlutil =& new OldSqlUtility ; //hack by Trabis
+                $sqlutil = new OldSqlUtility; //old code is -> $sqlutil = new OldSqlUtility ; //hack by Trabis
             } else {
                 include_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
-                $sqlutil = new SqlUtility; //old code is -> $sqlutil =& new SqlUtility ; //hack by Trabis
+                $sqlutil = new SqlUtility; //old code is -> $sqlutil = new SqlUtility ; //hack by Trabis
             }
 
             $sql_query = trim(file_get_contents($sql_file_path));
@@ -81,7 +81,7 @@ if (!function_exists('protector_oninstall_base')) {
         }
 
         // TEMPLATES
-        $tplfile_handler = xoops_getHandler('tplfile');
+        $tplfileHandler = xoops_getHandler('tplfile');
         $tpl_path        = __DIR__ . '/templates';
         if ($handler = @opendir($tpl_path . '/')) {
             while (($file = readdir($handler)) !== false) {
@@ -91,7 +91,7 @@ if (!function_exists('protector_oninstall_base')) {
                 $file_path = $tpl_path . '/' . $file;
                 if (is_file($file_path) && in_array(strrchr($file, '.'), array('.html', '.css', '.js'))) {
                     $mtime   = (int)(@filemtime($file_path));
-                    $tplfile = $tplfile_handler->create();
+                    $tplfile = $tplfileHandler->create();
                     $tplfile->setVar('tpl_source', file_get_contents($file_path), true);
                     $tplfile->setVar('tpl_refid', $mid);
                     $tplfile->setVar('tpl_tplset', 'default');
@@ -101,7 +101,7 @@ if (!function_exists('protector_oninstall_base')) {
                     $tplfile->setVar('tpl_lastmodified', $mtime);
                     $tplfile->setVar('tpl_lastimported', 0);
                     $tplfile->setVar('tpl_type', 'module');
-                    if (!$tplfile_handler->insert($tplfile)) {
+                    if (!$tplfileHandler->insert($tplfile)) {
                         $ret[] = '<span style="color:#ff0000;">ERROR: Could not insert template <b>' . htmlspecialchars($mydirname . '_' . $file) . '</b> to the database.</span><br>';
                     } else {
                         $tplid = $tplfile->getVar('tpl_id');

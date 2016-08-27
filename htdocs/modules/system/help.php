@@ -31,8 +31,8 @@ $xoBreadCrumb->addLink(_AM_SYSTEM_HELP, 'help.php');
 
 // If $mid > 0, we're in a module's help section.
 if ($mid > 0) {
-    $module_handler = xoops_getHandler('module');
-    $module         = $module_handler->get($mid);
+    $moduleHandler = xoops_getHandler('module');
+    $module         = $moduleHandler->get($mid);
 
     $xoBreadCrumb->addLink($module->getVar('name'), 'help.php?mid=' . $module->getVar('mid', 's'));
     $xoBreadCrumb->addLink(system_adminVersion($page, 'name'));
@@ -114,12 +114,12 @@ if ($mid > 0) {
     $xoBreadCrumb->render();
 
     // Get Module Handler
-    $module_handler = xoops_getHandler('module');
+    $moduleHandler = xoops_getHandler('module');
     $criteria       = new CriteriaCompo();
     $criteria->setOrder('weight');
 
     // Get all installed modules
-    $installed_mods = $module_handler->getObjects($criteria);
+    $installed_mods = $moduleHandler->getObjects($criteria);
     $listed_mods    = array();
     $i              = 0;
     $j              = 0;

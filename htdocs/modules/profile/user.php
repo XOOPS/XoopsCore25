@@ -76,14 +76,14 @@ if ($op === 'login') {
 if ($op === 'logout') {
     $message = '';
     // Regenerate a new session id and destroy old session
-    $GLOBALS['sess_handler']->regenerate_id(true);
+    $GLOBALS['sessHandler']->regenerate_id(true);
     $_SESSION = array();
     setcookie($GLOBALS['xoopsConfig']['usercookie'], 0, -1, '/', XOOPS_COOKIE_DOMAIN, 0);
     setcookie($GLOBALS['xoopsConfig']['usercookie'], 0, -1, '/');
     // clear entry from online users table
     if (is_object($GLOBALS['xoopsUser'])) {
-        $online_handler = xoops_getHandler('online');
-        $online_handler->destroy($GLOBALS['xoopsUser']->getVar('uid'));
+        $onlineHandler = xoops_getHandler('online');
+        $onlineHandler->destroy($GLOBALS['xoopsUser']->getVar('uid'));
     }
     $message = _US_LOGGEDOUT . '<br>' . _US_THANKYOUFORVISIT;
     redirect_header(XOOPS_URL . '/', 1, $message);
@@ -96,8 +96,8 @@ if ($op === 'actv') {
 }
 
 if ($op === 'delete') {
-    $config_handler             = xoops_getHandler('config');
-    $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+    $configHandler             = xoops_getHandler('config');
+    $GLOBALS['xoopsConfigUser'] = $configHandler->getConfigsByCat(XOOPS_CONF_USER);
     if (!$GLOBALS['xoopsUser'] || $GLOBALS['xoopsConfigUser']['self_delete'] != 1) {
         redirect_header(XOOPS_URL . '/', 5, _US_NOPERMISS);
     } else {
@@ -113,10 +113,10 @@ if ($op === 'delete') {
             include __DIR__ . '/footer.php';
         } else {
             $del_uid        = $GLOBALS['xoopsUser']->getVar('uid');
-            $member_handler = xoops_getHandler('member');
-            if (false !== $member_handler->deleteUser($GLOBALS['xoopsUser'])) {
-                $online_handler = xoops_getHandler('online');
-                $online_handler->destroy($del_uid);
+            $memberHandler = xoops_getHandler('member');
+            if (false !== $memberHandler->deleteUser($GLOBALS['xoopsUser'])) {
+                $onlineHandler = xoops_getHandler('online');
+                $onlineHandler->destroy($del_uid);
                 xoops_notification_deletebyuser($del_uid);
                 redirect_header(XOOPS_URL . '/', 5, _US_BEENDELED);
             }

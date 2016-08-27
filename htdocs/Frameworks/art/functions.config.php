@@ -70,16 +70,16 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_CONFIG')):
             return null;
         }
 
-        $module_handler = xoops_getHandler('module');
-        if (!$module = $module_handler->getByDirname($dirname)) {
+        $moduleHandler = xoops_getHandler('module');
+        if (!$module = $moduleHandler->getByDirname($dirname)) {
             trigger_error("Module '{$dirname}' does not exist", E_USER_WARNING);
 
             return null;
         }
 
-        $config_handler = xoops_getHandler('config');
+        $configHandler = xoops_getHandler('config');
         $criteria       = new CriteriaCompo(new Criteria('conf_modid', $module->getVar('mid')));
-        $configs        = $config_handler->getConfigs($criteria);
+        $configs        = $configHandler->getConfigs($criteria);
         foreach (array_keys($configs) as $i) {
             $moduleConfig[$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
         }

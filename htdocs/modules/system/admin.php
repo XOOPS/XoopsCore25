@@ -46,14 +46,14 @@ if ($admintest != 0) {
             // Include Configuration file
             require XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/admin/' . $fct . '/xoops_version.php';
             // Get System permission handler
-            $sysperm_handler = xoops_getHandler('groupperm');
+            $syspermHandler = xoops_getHandler('groupperm');
 
             $category = !empty($modversion['category']) ? (int)$modversion['category'] : 0;
             unset($modversion);
 
             if ($category > 0) {
                 $group = $xoopsUser->getGroups();
-                if (in_array(XOOPS_GROUP_ADMIN, $group) || false !== $sysperm_handler->checkRight('system_admin', $category, $group, $xoopsModule->getVar('mid'))) {
+                if (in_array(XOOPS_GROUP_ADMIN, $group) || false !== $syspermHandler->checkRight('system_admin', $category, $group, $xoopsModule->getVar('mid'))) {
                     if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/admin/' . $fct . '/main.php')) {
                         include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/admin/' . $fct . '/main.php';
                     } else {
@@ -83,14 +83,14 @@ if (false !== $error) {
     $op = system_CleanVars($_REQUEST, 'op', '', 'string');
     if ($op === 'system_activate') {
         $part           = system_CleanVars($_REQUEST, 'type', '', 'string');
-        $config_handler = xoops_getHandler('config');
+        $configHandler = xoops_getHandler('config');
 
         $criteria = new Criteria('conf_name', 'active_' . $part);
-        $configs  = $config_handler->getConfigs($criteria);
+        $configs  = $configHandler->getConfigs($criteria);
         foreach ($configs as $conf) {
             if ($conf->getVar('conf_name') === 'active_' . $part) {
                 $conf->setVar('conf_value', !$conf->getVar('conf_value'));
-                $config_handler->insertConfig($conf);
+                $configHandler->insertConfig($conf);
             }
         }
         exit;
@@ -110,8 +110,8 @@ if (false !== $error) {
     $groups = $xoopsUser->getGroups();
     $all_ok = false;
     if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
-        $sysperm_handler = xoops_getHandler('groupperm');
-        $ok_syscats      = $sysperm_handler->getItemIds('system_admin', $groups);
+        $syspermHandler = xoops_getHandler('groupperm');
+        $ok_syscats      = $syspermHandler->getItemIds('system_admin', $groups);
     } else {
         $all_ok = true;
     }
@@ -151,43 +151,43 @@ if (false !== $error) {
                 if (false !== $all_ok || in_array($modversion['category'], $ok_syscats)) {
                     switch ($directory) {
                         case 'avatars':
-                            $avatar_handler = xoops_getHandler('avatar');
-                            $avatar         = $avatar_handler->getCount();
+                            $avatarHandler = xoops_getHandler('avatar');
+                            $avatar         = $avatarHandler->getCount();
                             $menu['infos']  = sprintf(_AM_SYSTEM_AVATAR_INFO, $avatar);
                             break;
                         case 'banners':
-                            $banner_handler = xoops_getModuleHandler('banner', 'system');
-                            $banner         = $banner_handler->getCount();
+                            $bannerHandler = xoops_getModuleHandler('banner', 'system');
+                            $banner         = $bannerHandler->getCount();
                             $menu['infos']  = sprintf(_AM_SYSTEM_BANNER_INFO, $banner);
                             break;
                         case 'comments':
-                            $comment_handler = xoops_getHandler('comment');
-                            $comment         = $comment_handler->getCount();
+                            $commentHandler = xoops_getHandler('comment');
+                            $comment         = $commentHandler->getCount();
                             $menu['infos']   = sprintf(_AM_SYSTEM_COMMENT_INFO, $comment);
                             break;
                         case 'groups':
-                            $groups_Handler = xoops_getModuleHandler('group', 'system');
-                            $groups         = $groups_Handler->getCount();
+                            $groupsHandler = xoops_getModuleHandler('group', 'system');
+                            $groups         = $groupsHandler->getCount();
                             $menu['infos']  = sprintf(_AM_SYSTEM_GROUP_INFO, $groups);
                             break;
                         case 'images':
-                            $imgcat_handler = xoops_getHandler('image');
-                            $img            = $imgcat_handler->getCount();
+                            $imgcatHandler = xoops_getHandler('image');
+                            $img            = $imgcatHandler->getCount();
                             $menu['infos']  = sprintf(_AM_SYSTEM_IMG_INFO, $img);
                             break;
                         case 'smilies':
-                            $smilies_Handler = xoops_getModuleHandler('smilies', 'system');
-                            $smilies         = $smilies_Handler->getCount();
+                            $smiliesHandler = xoops_getModuleHandler('smilies', 'system');
+                            $smilies         = $smiliesHandler->getCount();
                             $menu['infos']   = sprintf(_AM_SYSTEM_SMILIES_INFO, $smilies);
                             break;
                         case 'userrank':
-                            $userrank_Handler = xoops_getModuleHandler('userrank', 'system');
-                            $userrank         = $userrank_Handler->getCount();
+                            $userrankHandler = xoops_getModuleHandler('userrank', 'system');
+                            $userrank         = $userrankHandler->getCount();
                             $menu['infos']    = sprintf(_AM_SYSTEM_RANKS_INFO, $userrank);
                             break;
                         case 'users':
-                            $member_handler = xoops_getModuleHandler('users', 'system');
-                            $member         = $member_handler->getCount();
+                            $memberHandler = xoops_getModuleHandler('users', 'system');
+                            $member         = $memberHandler->getCount();
                             $menu['infos']  = sprintf(_AM_SYSTEM_USERS_INFO, $member);
                             break;
                     }

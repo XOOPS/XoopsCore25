@@ -29,7 +29,7 @@ if ($uname == '' || $pass == '') {
     redirect_header(XOOPS_URL . '/user.php', 1, _US_INCORRECTLOGIN);
 }
 
-$member_handler = xoops_getHandler('member');
+$memberHandler = xoops_getHandler('member');
 $myts           = MyTextSanitizer::getInstance();
 
 include_once $GLOBALS['xoops']->path('class/auth/authfactory.php');
@@ -56,7 +56,7 @@ if (false !== $user) {
         }
     }
     $user->setVar('last_login', time());
-    if (!$member_handler->insertUser($user)) {
+    if (!$memberHandler->insertUser($user)) {
     }
     // Regenrate a new session id and destroy old session
     $GLOBALS['sess_handler']->regenerate_id(true);
@@ -112,8 +112,8 @@ if (false !== $user) {
 
     // RMV-NOTIFY
     // Perform some maintenance of notification records
-    $notification_handler = xoops_getHandler('notification');
-    $notification_handler->doLoginMaintenance($user->getVar('uid'));
+    $notificationHandler = xoops_getHandler('notification');
+    $notificationHandler->doLoginMaintenance($user->getVar('uid'));
 
     redirect_header($url, 1, sprintf(_US_LOGGINGU, $user->getVar('uname')), false);
 } elseif (empty($redirect)) {

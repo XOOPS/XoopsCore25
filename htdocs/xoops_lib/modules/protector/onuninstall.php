@@ -59,13 +59,13 @@ if (!function_exists('protector_onuninstall_base')) {
         }
 
         // TEMPLATES (Not necessary because modulesadmin removes all templates)
-        /* $tplfile_handler = xoops_getHandler( 'tplfile' ) ;
-        $templates =& $tplfile_handler->find( null , 'module' , $mid ) ;
+        /* $tplfileHandler = xoops_getHandler( 'tplfile' ) ;
+        $templates =& $tplfileHandler->find( null , 'module' , $mid ) ;
         $tcount = count( $templates ) ;
         if ($tcount > 0) {
             $ret[] = 'Deleting templates...' ;
             for ($i = 0 ; $i < $tcount ; ++$i) {
-                if ( ! $tplfile_handler->delete( $templates[$i] ) ) {
+                if ( ! $tplfileHandler->delete( $templates[$i] ) ) {
                     $ret[] = '<span style="color:#ff0000;">ERROR: Could not delete template '.$templates[$i]->getVar('tpl_file','s').' from the database. Template ID: <b>'.$templates[$i]->getVar('tpl_id','s').'</b></span><br>';
                 } else {
                     $ret[] = 'Template <b>'.$templates[$i]->getVar('tpl_file','s').'</b> deleted from the database. Template ID: <b>'.$templates[$i]->getVar('tpl_id','s').'</b><br>';

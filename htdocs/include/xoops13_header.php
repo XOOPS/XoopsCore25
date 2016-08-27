@@ -25,8 +25,8 @@ if (file_exists(XOOPS_THEME_PATH . '/' . $xoopsConfig['theme_set'] . '/language/
     include XOOPS_THEME_PATH . '/' . $xoopsConfig['theme_set'] . '/language/lang-english.php';
 }
 
-$config_handler        = xoops_getHandler('config');
-$xoopsConfigMetaFooter = $config_handler->getConfigsByCat(XOOPS_CONF_METAFOOTER);
+$configHandler        = xoops_getHandler('config');
+$xoopsConfigMetaFooter = $configHandler->getConfigsByCat(XOOPS_CONF_METAFOOTER);
 
 xoops_header(false);
 include XOOPS_THEME_PATH . '/' . $xoopsConfig['theme_set'] . '/theme.php';

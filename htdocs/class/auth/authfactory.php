@@ -45,8 +45,8 @@ class XoopsAuthFactory
     {
         static $auth_instance;
         if (!isset($auth_instance)) {
-            $config_handler = xoops_getHandler('config');
-            $authConfig     = $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
+            $configHandler = xoops_getHandler('config');
+            $authConfig     = $configHandler->getConfigsByCat(XOOPS_CONF_AUTH);
 
             include_once $GLOBALS['xoops']->path('class/auth/auth.php');
 

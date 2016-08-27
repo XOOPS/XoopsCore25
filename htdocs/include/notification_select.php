@@ -28,14 +28,14 @@ if ($xoops_notification['show']) {
     $categories  =& notificationSubscribableCategoryInfo();
     $event_count = 0;
     if (!empty($categories)) {
-        $notification_handler = xoops_getHandler('notification');
+        $notificationHandler = xoops_getHandler('notification');
         foreach ($categories as $category) {
             $section['name']        = $category['name'];
             $section['title']       = $category['title'];
             $section['description'] = $category['description'];
             $section['itemid']      = $category['item_id'];
             $section['events']      = array();
-            $subscribed_events      = $notification_handler->getSubscribedEvents($category['name'], $category['item_id'], $xoopsModule->getVar('mid'), $xoopsUser->getVar('uid'));
+            $subscribed_events      = $notificationHandler->getSubscribedEvents($category['name'], $category['item_id'], $xoopsModule->getVar('mid'), $xoopsUser->getVar('uid'));
             foreach (notificationEvents($category['name'], true) as $event) {
                 if (!empty($event['admin_only']) && !$xoopsUser->isAdmin($xoopsModule->getVar('mid'))) {
                     continue;

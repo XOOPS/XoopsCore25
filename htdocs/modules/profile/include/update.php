@@ -50,10 +50,10 @@ function xoops_module_update_profile(XoopsModule $module, $oldversion = null)
 
         include_once __DIR__ . '/install.php';
         xoops_module_install_profile($module);
-        $goupperm_handler = xoops_getHandler('groupperm');
+        $grouppermHandler = xoops_getHandler('groupperm');
 
-        $field_handler = xoops_getModuleHandler('field', $module->getVar('dirname', 'n'));
-        $skip_fields   = $field_handler->getUserVars();
+        $fieldHandler = xoops_getModuleHandler('field', $module->getVar('dirname', 'n'));
+        $skip_fields   = $fieldHandler->getUserVars();
         $skip_fields[] = 'newemail';
         $skip_fields[] = 'pm_link';
         $sql           = 'SELECT * FROM `' . $GLOBALS['xoopsDB']->prefix('user_profile_field') . "` WHERE `field_name` NOT IN ('" . implode("', '", $skip_fields) . "')";
@@ -61,7 +61,7 @@ function xoops_module_update_profile(XoopsModule $module, $oldversion = null)
         $fields        = array();
         while ($myrow = $GLOBALS['xoopsDB']->fetchArray($result)) {
             $fields[] = $myrow['field_name'];
-            $object   = $field_handler->create();
+            $object   = $fieldHandler->create();
             $object->setVars($myrow, true);
             $object->setVar('cat_id', 1);
             if (!empty($myrow['field_register'])) {
@@ -70,14 +70,14 @@ function xoops_module_update_profile(XoopsModule $module, $oldversion = null)
             if (!empty($myrow['field_options'])) {
                 $object->setVar('field_options', unserialize($myrow['field_options']));
             }
-            $field_handler->insert($object, true);
+            $fieldHandler->insert($object, true);
 
             $gperm_itemid = $object->getVar('field_id');
             $sql          = 'UPDATE ' . $GLOBALS['xoopsDB']->prefix('group_permission') . ' SET gperm_itemid = ' . $gperm_itemid . '   WHERE gperm_itemid = ' . $myrow['fieldid'] . '       AND gperm_modid = ' . $module->getVar('mid') . "       AND gperm_name IN ('profile_edit', 'profile_search')";
             $GLOBALS['xoopsDB']->queryF($sql);
 
-            $groups_visible = $goupperm_handler->getGroupIds('profile_visible', $myrow['fieldid'], $module->getVar('mid'));
-            $groups_show    = $goupperm_handler->getGroupIds('profile_show', $myrow['fieldid'], $module->getVar('mid'));
+            $groups_visible = $grouppermHandler->getGroupIds('profile_visible', $myrow['fieldid'], $module->getVar('mid'));
+            $groups_show    = $grouppermHandler->getGroupIds('profile_show', $myrow['fieldid'], $module->getVar('mid'));
             foreach ($groups_visible as $ugid) {
                 foreach ($groups_show as $pgid) {
                     $sql = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('profile_visibility') . ' (field_id, user_group, profile_group) ' . ' VALUES ' . " ({$gperm_itemid}, {$ugid}, {$pgid})";
@@ -136,12 +136,12 @@ function xoops_module_update_profile(XoopsModule $module, $oldversion = null)
         $GLOBALS['xoopsDB']->queryF($sql);
     }
 
-    $profile_handler = xoops_getModuleHandler('profile', $module->getVar('dirname', 'n'));
-    $profile_handler->cleanOrphan($GLOBALS['xoopsDB']->prefix('users'), 'uid', 'profile_id');
-    $field_handler = xoops_getModuleHandler('field', $module->getVar('dirname', 'n'));
-    $user_fields   = $field_handler->getUserVars();
+    $profileHandler = xoops_getModuleHandler('profile', $module->getVar('dirname', 'n'));
+    $profileHandler->cleanOrphan($GLOBALS['xoopsDB']->prefix('users'), 'uid', 'profile_id');
+    $fieldHandler = xoops_getModuleHandler('field', $module->getVar('dirname', 'n'));
+    $user_fields   = $fieldHandler->getUserVars();
     $criteria      = new Criteria('field_name', "('" . implode("', '", $user_fields) . "')", 'IN');
-    $field_handler->updateAll('field_config', 0, $criteria);
+    $fieldHandler->updateAll('field_config', 0, $criteria);
 
     return true;
 }

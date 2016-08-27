@@ -89,8 +89,8 @@ if ($action === 'showpopups') {
 <table width='100%'>
     <tr>
         <?php
-            $avatar_handler = xoops_getHandler('avatar');
-            $avatarslist = $avatar_handler->getList('S');
+            $avatarHandler = xoops_getHandler('avatar');
+            $avatarslist = $avatarHandler->getList('S');
             $cntavs = 0;
             $counter = isset($_GET['start']) ? (int)$_GET['start'] : 0;
             foreach ($avatarslist as $file => $name) {
@@ -175,16 +175,16 @@ if ($action === 'showpopups') {
             echo '</head><body>';
             echo '<table style="width:100%;" cellspacing="1" class="outer"><tr><th colspan="3">' . _WHOSONLINE . '</th></tr>';
             $start = isset($_GET['start']) ? (int)$_GET['start'] : 0;
-            $online_handler = xoops_getHandler('online');
-            $online_total = $online_handler->getCount();
+            $onlineHandler = xoops_getHandler('online');
+            $online_total = $onlineHandler->getCount();
             $limit = ($online_total > 20) ? 20 : $online_total;
             $criteria = new CriteriaCompo();
             $criteria->setLimit($limit);
             $criteria->setStart($start);
-            $onlines = $online_handler->getAll($criteria);
+            $onlines = $onlineHandler->getAll($criteria);
             $count = count($onlines);
-            $module_handler = xoops_getHandler('module');
-            $modules = $module_handler->getList(new Criteria('isactive', 1));
+            $moduleHandler = xoops_getHandler('module');
+            $modules = $moduleHandler->getList(new Criteria('isactive', 1));
             for ($i = 0; $i < $count; ++$i) {
                 if ($onlines[$i]['online_uid'] == 0) {
                     $onlineUsers[$i]['user'] = '';

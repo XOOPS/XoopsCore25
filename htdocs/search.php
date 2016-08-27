@@ -27,8 +27,8 @@ include __DIR__ . '/mainfile.php';
 
 xoops_loadLanguage('search');
 
-$config_handler    = xoops_getHandler('config');
-$xoopsConfigSearch = $config_handler->getConfigsByCat(XOOPS_CONF_SEARCH);
+$configHandler    = xoops_getHandler('config');
+$xoopsConfigSearch = $configHandler->getConfigsByCat(XOOPS_CONF_SEARCH);
 
 if ($xoopsConfigSearch['enable_search'] != 1) {
     header('Location: ' . XOOPS_URL . '/index.php');
@@ -86,8 +86,8 @@ if ($action === 'results') {
 }
 
 $groups            = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
-$gperm_handler     = xoops_getHandler('groupperm');
-$available_modules = $gperm_handler->getItemIds('module_read', $groups);
+$gpermHandler     = xoops_getHandler('groupperm');
+$available_modules = $gpermHandler->getItemIds('module_read', $groups);
 if ($action === 'search') {
     include $GLOBALS['xoops']->path('header.php');
     include $GLOBALS['xoops']->path('include/searchform.php');
@@ -125,11 +125,11 @@ if ($action !== 'showallbyuser') {
 }
 switch ($action) {
     case 'results':
-        $module_handler = xoops_getHandler('module');
+        $moduleHandler = xoops_getHandler('module');
         $criteria       = new CriteriaCompo(new Criteria('hassearch', 1));
         $criteria->add(new Criteria('isactive', 1));
         $criteria->add(new Criteria('mid', '(' . implode(',', $available_modules) . ')', 'IN'));
-        $modules = $module_handler->getObjects($criteria, true);
+        $modules = $moduleHandler->getObjects($criteria, true);
         $mids    = isset($_REQUEST['mids']) ? $_REQUEST['mids'] : array();
         if (empty($mids) || !is_array($mids)) {
             unset($mids);
@@ -202,8 +202,8 @@ switch ($action) {
     case 'showall':
     case 'showallbyuser':
         include $GLOBALS['xoops']->path('header.php');
-        $module_handler = xoops_getHandler('module');
-        $module         = $module_handler->get($mid);
+        $moduleHandler = xoops_getHandler('module');
+        $module         = $moduleHandler->get($mid);
         $results        = $module->search($queries, $andor, 20, $start, $uid);
         $count          = count($results);
         if (is_array($results) && $count > 0) {

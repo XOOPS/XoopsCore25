@@ -43,10 +43,10 @@ if ($result['op']) {
 }
 
 if ('system' === $xoopsModule->getVar('dirname')) {
-    $comment_handler = xoops_getHandler('comment');
-    $comment         = $comment_handler->get($com_id);
-    $module_handler  = xoops_getHandler('module');
-    $module          = $module_handler->get($comment->getVar('com_modid'));
+    $commentHandler = xoops_getHandler('comment');
+    $comment         = $commentHandler->get($com_id);
+    $moduleHandler  = xoops_getHandler('module');
+    $module          = $moduleHandler->get($comment->getVar('com_modid'));
     $comment_config  = $module->getInfo('comments');
     $com_modid       = $module->getVar('mid');
     $redirect_page   = XOOPS_URL . '/modules/system/admin.php?fct=comments&com_modid=' . $com_modid . '&com_itemid';
@@ -87,8 +87,8 @@ if (!is_object($xoopsUser)) {
 } else {
     if (!$xoopsUser->isAdmin($com_modid)) {
         include_once $GLOBALS['xoops']->path('modules/system/constants.php');
-        $sysperm_handler = xoops_getHandler('groupperm');
-        if (!$sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $xoopsUser->getGroups())) {
+        $syspermHandler = xoops_getHandler('groupperm');
+        if (!$syspermHandler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $xoopsUser->getGroups())) {
             $accesserror = true;
         }
     }
@@ -107,9 +107,9 @@ if (false !== $accesserror) {
 xoops_loadLanguage('comment');
 switch ($op) {
     case 'delete_one':
-        $comment_handler = xoops_getHandler('comment');
-        $comment         = $comment_handler->get($com_id);
-        if (!$comment_handler->delete($comment)) {
+        $commentHandler = xoops_getHandler('comment');
+        $comment         = $commentHandler->get($com_id);
+        if (!$commentHandler->delete($comment)) {
             include_once $GLOBALS['xoops']->path('header.php');
             xoops_error(_CM_COMDELETENG . ' (ID: ' . $comment->getVar('com_id') . ')');
             include_once $GLOBALS['xoops']->path('footer');
@@ -137,22 +137,22 @@ switch ($op) {
                 $criteria = new CriteriaCompo(new Criteria('com_modid', $com_modid));
                 $criteria->add(new Criteria('com_itemid', $com_itemid));
                 $criteria->add(new Criteria('com_status', XOOPS_COMMENT_ACTIVE));
-                $comment_count = $comment_handler->getCount($criteria);
+                $comment_count = $commentHandler->getCount($criteria);
                 $comment_config['callback']['update']($com_itemid, $comment_count);
             }
         }
 
         // update user posts if its not an anonymous post
         if ($comment->getVar('com_uid') != 0) {
-            $member_handler = xoops_getHandler('member');
-            $com_poster     = $member_handler->getUser($comment->getVar('com_uid'));
+            $memberHandler = xoops_getHandler('member');
+            $com_poster     = $memberHandler->getUser($comment->getVar('com_uid'));
             if (is_object($com_poster)) {
-                $member_handler->updateUserByField($com_poster, 'posts', $com_poster->getVar('posts') - 1);
+                $memberHandler->updateUserByField($com_poster, 'posts', $com_poster->getVar('posts') - 1);
             }
         }
 
         // get all comments posted later within the same thread
-        $thread_comments =& $comment_handler->getThread($comment->getVar('com_rootid'), $com_id);
+        $thread_comments =& $commentHandler->getThread($comment->getVar('com_rootid'), $com_id);
         include_once $GLOBALS['xoops']->path('class/tree.php');
         $xot            = new XoopsObjectTree($thread_comments, 'com_id', 'com_pid', 'com_rootid');
         $child_comments =& $xot->getFirstChild($com_id);
@@ -165,7 +165,7 @@ switch ($op) {
             if (false !== $comment->isRoot()) {
                 $new_rootid = $child_comments[$i]->getVar('com_id');
                 $child_comments[$i]->setVar('com_rootid', $child_comments[$i]->getVar('com_id'));
-                if (!$comment_handler->insert($child_comments[$i])) {
+                if (!$commentHandler->insert($child_comments[$i])) {
                     $errs[] = 'Could not change comment parent ID from <strong>' . $com_id . '</strong> to <strong>' . $new_pid . '</strong>. (ID: ' . $new_rootid . ')';
                 } else {
                     // need to change root id for all its child comments as well
@@ -173,13 +173,13 @@ switch ($op) {
                     $cc_count         = count($c_child_comments);
                     foreach (array_keys($c_child_comments) as $j) {
                         $c_child_comments[$j]->setVar('com_rootid', $new_rootid);
-                        if (!$comment_handler->insert($c_child_comments[$j])) {
+                        if (!$commentHandler->insert($c_child_comments[$j])) {
                             $errs[] = 'Could not change comment root ID from <strong>' . $com_id . '</strong> to <strong>' . $new_rootid . '</strong>.';
                         }
                     }
                 }
             } else {
-                if (!$comment_handler->insert($child_comments[$i])) {
+                if (!$commentHandler->insert($child_comments[$i])) {
                     $errs[] = 'Could not change comment parent ID from <strong>' . $com_id . '</strong> to <strong>' . $new_pid . '</strong>.';
                 }
             }
@@ -194,12 +194,12 @@ switch ($op) {
         break;
 
     case 'delete_all':
-        $comment_handler = xoops_getHandler('comment');
-        $comment         = $comment_handler->get($com_id);
+        $commentHandler = xoops_getHandler('comment');
+        $comment         = $commentHandler->get($com_id);
         $com_rootid      = $comment->getVar('com_rootid');
 
         // get all comments posted later within the same thread
-        $thread_comments =& $comment_handler->getThread($com_rootid, $com_id);
+        $thread_comments =& $commentHandler->getThread($com_rootid, $com_id);
 
         // construct a comment tree
         include_once $GLOBALS['xoops']->path('class/tree.php');
@@ -209,9 +209,9 @@ switch ($op) {
         $child_comments[$com_id] = &$comment;
         $msgs                    = array();
         $deleted_num             = array();
-        $member_handler          = xoops_getHandler('member');
+        $memberHandler          = xoops_getHandler('member');
         foreach (array_keys($child_comments) as $i) {
-            if (!$comment_handler->delete($child_comments[$i])) {
+            if (!$commentHandler->delete($child_comments[$i])) {
                 $msgs[] = _CM_COMDELETENG . ' (ID: ' . $child_comments[$i]->getVar('com_id') . ')';
             } else {
                 $msgs[] = _CM_COMDELETED . ' (ID: ' . $child_comments[$i]->getVar('com_id') . ')';
@@ -224,9 +224,9 @@ switch ($op) {
         }
         foreach ($deleted_num as $user_id => $post_num) {
             // update user posts
-            $com_poster = $member_handler->getUser($user_id);
+            $com_poster = $memberHandler->getUser($user_id);
             if (is_object($com_poster)) {
-                $member_handler->updateUserByField($com_poster, 'posts', $com_poster->getVar('posts') - $post_num);
+                $memberHandler->updateUserByField($com_poster, 'posts', $com_poster->getVar('posts') - $post_num);
             }
         }
 
@@ -251,7 +251,7 @@ switch ($op) {
                 $criteria = new CriteriaCompo(new Criteria('com_modid', $com_modid));
                 $criteria->add(new Criteria('com_itemid', $com_itemid));
                 $criteria->add(new Criteria('com_status', XOOPS_COMMENT_ACTIVE));
-                $comment_count = $comment_handler->getCount($criteria);
+                $comment_count = $commentHandler->getCount($criteria);
                 $comment_config['callback']['update']($com_itemid, $comment_count);
             }
         }

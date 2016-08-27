@@ -26,12 +26,12 @@
  * @param $dbm
  * @return bool
  */
-// include_once './class/dbmanager.php';
+// include_once __DIR__ . '/class/dbmanager.php';
 // RMV
 // TODO: Shouldn't we insert specific field names??  That way we can use
 // the defaults specified in the database...!!!! (and don't have problem
 // of missing fields in install file, when add new fields to database)
-function make_groups(&$dbm)
+function make_groups($dbm)
 {
     $gruops['XOOPS_GROUP_ADMIN']     = $dbm->insert('groups', " VALUES (1, '" . addslashes(_INSTALL_WEBMASTER) . "', '" . addslashes(_INSTALL_WEBMASTERD) . "', 'Admin')");
     $gruops['XOOPS_GROUP_USERS']     = $dbm->insert('groups', " VALUES (2, '" . addslashes(_INSTALL_REGUSERS) . "', '" . addslashes(_INSTALL_REGUSERSD) . "', 'User')");
@@ -53,7 +53,7 @@ function make_groups(&$dbm)
  *
  * @return mixed
  */
-function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $groups)
+function make_data($dbm, $adminname, $hashedAdminPass, $adminmail, $language, $groups)
 {
     // $xoopsDB = Database::getInstance();
     // $dbm = new Db_manager;
@@ -93,15 +93,15 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
     $time = time();
     $dbm->insert('tplset', " VALUES (1, 'default', 'XOOPS Default Template Set', '', " . $time . ')');
     // system modules
-    if (file_exists('../modules/system/language/' . $language . '/modinfo.php')) {
-        include '../modules/system/language/' . $language . '/modinfo.php';
+    if (file_exists(__DIR__ . '/../modules/system/language/' . $language . '/modinfo.php')) {
+        include __DIR__ . '/../modules/system/language/' . $language . '/modinfo.php';
     } else {
-        include '../modules/system/language/english/modinfo.php';
+        include __DIR__ . '/../modules/system/language/english/modinfo.php';
         $language = 'english';
     }
 
     $modversion = array();
-    include_once '../modules/system/xoops_version.php';
+    include_once __DIR__ . '/../modules/system/xoops_version.php';
     $time = time();
     // RMV-NOTIFY (updated for extra column in table)
     $dbm->insert('modules', " VALUES (1, '" . _MI_SYSTEM_NAME . "', " . ($modversion['version'] * 100) . ', ' . $time . ", 0, 1, 'system', 0, 1, 0, 0, 0, 0)");
@@ -308,7 +308,7 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
 
     $dbm->insert('config', " VALUES (134, 0, 1, 'redirect_message_ajax', '_MD_AM_CUSTOM_REDIRECT', '1', '_MD_AM_CUSTOM_REDIRECT_DESC', 'yesno', 'int', 12)");
 
-    require_once '../class/xoopslists.php';
+    require_once __DIR__ . '/../class/xoopslists.php';
     $editors = XoopsLists::getDirListAsArray('../class/xoopseditor');
     $conf    = 35;
     foreach ($editors as $dir) {

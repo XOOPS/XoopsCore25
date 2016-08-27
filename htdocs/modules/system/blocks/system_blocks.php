@@ -35,11 +35,11 @@
 function b_system_online_show()
 {
     global $xoopsUser, $xoopsModule;
-    $online_handler = xoops_getHandler('online');
+    $onlineHandler = xoops_getHandler('online');
     mt_srand((double)microtime() * 1000000);
     // set gc probabillity to 10% for now..
     if (mt_rand(1, 100) < 11) {
-        $online_handler->gc(300);
+        $onlineHandler->gc(300);
     }
     if (is_object($xoopsUser)) {
         $uid   = $xoopsUser->getVar('uid');
@@ -51,11 +51,11 @@ function b_system_online_show()
     $requestIp = \Xmf\IPAddress::fromRequest()->asReadable();
     $requestIp = (false === $requestIp) ? '0.0.0.0' : $requestIp;
     if (is_object($xoopsModule)) {
-        $online_handler->write($uid, $uname, time(), $xoopsModule->getVar('mid'), $requestIp);
+        $onlineHandler->write($uid, $uname, time(), $xoopsModule->getVar('mid'), $requestIp);
     } else {
-        $online_handler->write($uid, $uname, time(), 0, $requestIp);
+        $onlineHandler->write($uid, $uname, time(), 0, $requestIp);
     }
-    $onlines = $online_handler->getAll();
+    $onlines = $onlineHandler->getAll();
     if (!empty($onlines)) {
         $total   = count($onlines);
         $block   = array();
@@ -70,7 +70,7 @@ function b_system_online_show()
         }
         $block['online_total'] = sprintf(_ONLINEPHRASE, $total);
         if (is_object($xoopsModule)) {
-            $mytotal = $online_handler->getCount(new Criteria('online_module', $xoopsModule->getVar('mid')));
+            $mytotal = $onlineHandler->getCount(new Criteria('online_module', $xoopsModule->getVar('mid')));
             $block['online_total'] .= ' (' . sprintf(_ONLINEPHRASEX, $mytotal, $xoopsModule->getVar('name')) . ')';
         }
         $block['lang_members']   = _MEMBERS;
@@ -122,14 +122,14 @@ function b_system_main_show()
     $block               = array();
     $block['lang_home']  = _MB_SYSTEM_HOME;
     $block['lang_close'] = _CLOSE;
-    $module_handler      = xoops_getHandler('module');
+    $moduleHandler      = xoops_getHandler('module');
     $criteria            = new CriteriaCompo(new Criteria('hasmain', 1));
     $criteria->add(new Criteria('isactive', 1));
     $criteria->add(new Criteria('weight', 0, '>'));
-    $modules            = $module_handler->getObjects($criteria, true);
-    $moduleperm_handler = xoops_getHandler('groupperm');
+    $modules            = $moduleHandler->getObjects($criteria, true);
+    $modulepermHandler = xoops_getHandler('groupperm');
     $groups             = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
-    $read_allowed       = $moduleperm_handler->getItemIds('module_read', $groups);
+    $read_allowed       = $modulepermHandler->getItemIds('module_read', $groups);
     foreach (array_keys($modules) as $i) {
         if (in_array($i, $read_allowed)) {
             $block['modules'][$i]['name']      = $modules[$i]->getVar('name');
@@ -188,12 +188,12 @@ function b_system_user_show()
     $criteria                    = new CriteriaCompo(new Criteria('read_msg', 0));
     $criteria->add(new Criteria('to_userid', $xoopsUser->getVar('uid')));
 
-    $pm_handler = xoops_getHandler('privmessage');
+    $pmHandler = xoops_getHandler('privmessage');
 
     $xoopsPreload = XoopsPreload::getInstance();
-    $xoopsPreload->triggerEvent('system.blocks.system_blocks.usershow', array(&$pm_handler));
+    $xoopsPreload->triggerEvent('system.blocks.system_blocks.usershow', array(&$pmHandler));
 
-    $block['new_messages']   = $pm_handler->getCount($criteria);
+    $block['new_messages']   = $pmHandler->getCount($criteria);
     $block['lang_inbox']     = _MB_SYSTEM_INBOX;
     $block['lang_adminmenu'] = _MB_SYSTEM_ADMENU;
 
@@ -208,11 +208,11 @@ function b_system_waiting_show()
 {
     global $xoopsUser;
     $xoopsDB        = XoopsDatabaseFactory::getDatabaseConnection();
-    $module_handler = xoops_getHandler('module');
+    $moduleHandler = xoops_getHandler('module');
     $block          = array();
 
     // waiting content for news
-    if (xoops_isActiveModule('news') && $module_handler->getCount(new Criteria('dirname', 'news'))) {
+    if (xoops_isActiveModule('news') && $moduleHandler->getCount(new Criteria('dirname', 'news'))) {
         $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('stories') . ' WHERE published=0');
         if ($result) {
             $block['modules'][0]['adminlink'] = XOOPS_URL . '/modules/news/admin/index.php?op=newarticle';
@@ -222,7 +222,7 @@ function b_system_waiting_show()
     }
 
     // waiting content for mylinks
-    if (xoops_isActiveModule('mylinks') && $module_handler->getCount(new Criteria('dirname', 'mylinks'))) {
+    if (xoops_isActiveModule('mylinks') && $moduleHandler->getCount(new Criteria('dirname', 'mylinks'))) {
         $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('mylinks_links') . ' WHERE status=0');
         if ($result) {
             $block['modules'][1]['adminlink'] = XOOPS_URL . '/modules/mylinks/admin/index.php?op=listNewLinks';
@@ -244,7 +244,7 @@ function b_system_waiting_show()
     }
 
     // waiting content for mydownloads
-    if (xoops_isActiveModule('mydownloads') && $module_handler->getCount(new Criteria('dirname', 'mydownloads'))) {
+    if (xoops_isActiveModule('mydownloads') && $moduleHandler->getCount(new Criteria('dirname', 'mydownloads'))) {
         $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('mydownloads_downloads') . ' WHERE status=0');
         if ($result) {
             $block['modules'][4]['adminlink'] = XOOPS_URL . '/modules/mydownloads/admin/index.php?op=listNewDownloads';
@@ -274,7 +274,7 @@ function b_system_waiting_show()
     }
 
     // waiting content for TDMDownloads
-    if (xoops_isActiveModule('TDMdownloads') && $module_handler->getCount(new Criteria('dirname', 'TDMDownloads'))) {
+    if (xoops_isActiveModule('TDMdownloads') && $moduleHandler->getCount(new Criteria('dirname', 'TDMDownloads'))) {
         $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('tdmdownloads_downloads') . ' WHERE status=0');
         if ($result) {
             $block['modules'][8]['adminlink'] = XOOPS_URL . '/modules/TDMDownloads/admin/downloads.php?op=list&statut_display=0';
@@ -284,7 +284,7 @@ function b_system_waiting_show()
     }
 
     // waiting content for extgallery
-    if (xoops_isActiveModule('extgallery') && $module_handler->getCount(new Criteria('dirname', 'extgallery'))) {
+    if (xoops_isActiveModule('extgallery') && $moduleHandler->getCount(new Criteria('dirname', 'extgallery'))) {
         $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('extgallery_publicphoto') . ' WHERE photo_approved=0');
         if ($result) {
             $block['modules'][9]['adminlink'] = XOOPS_URL . '/modules/extgallery/admin/photo.php#pending-photo';
@@ -294,7 +294,7 @@ function b_system_waiting_show()
     }
 
     // waiting content for smartsection
-    if (xoops_isActiveModule('smartsection') && $module_handler->getCount(new Criteria('dirname', 'smartsection'))) {
+    if (xoops_isActiveModule('smartsection') && $moduleHandler->getCount(new Criteria('dirname', 'smartsection'))) {
         $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('smartsection_items') . ' WHERE status=1');
         if ($result) {
             $block['modules'][10]['adminlink'] = XOOPS_URL . '/modules/smartsection/admin/item.php';
@@ -374,8 +374,8 @@ function b_system_newmembers_show($options)
     $criteria->setOrder('DESC');
     $criteria->setSort('user_regdate');
     $criteria->setLimit($limit);
-    $member_handler = xoops_getHandler('member');
-    $newmembers     = $member_handler->getUsers($criteria);
+    $memberHandler = xoops_getHandler('member');
+    $newmembers     = $memberHandler->getUsers($criteria);
     $count          = count($newmembers);
     for ($i = 0; $i < $count; ++$i) {
         if ($options[1] == 1) {
@@ -408,8 +408,8 @@ function b_system_topposters_show($options)
     $criteria->setOrder('DESC');
     $criteria->setSort('posts');
     $criteria->setLimit($limit);
-    $member_handler = xoops_getHandler('member');
-    $topposters     = $member_handler->getUsers($criteria);
+    $memberHandler = xoops_getHandler('member');
+    $topposters     = $memberHandler->getUsers($criteria);
     $count          = count($topposters);
     for ($i = 0; $i < $count; ++$i) {
         $block['users'][$i]['rank'] = $i + 1;
@@ -435,7 +435,7 @@ function b_system_comments_show($options)
 {
     $block = array();
     include_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
-    $comment_handler = xoops_getHandler('comment');
+    $commentHandler = xoops_getHandler('comment');
     $criteria        = new CriteriaCompo(new Criteria('com_status', XOOPS_COMMENT_ACTIVE));
     $criteria->setLimit((int)$options[0]);
     $criteria->setSort('com_created');
@@ -443,11 +443,11 @@ function b_system_comments_show($options)
 
     // Check modules permissions
     global $xoopsUser;
-    $moduleperm_handler = xoops_getHandler('groupperm');
+    $modulepermHandler = xoops_getHandler('groupperm');
     $gperm_groupid      = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
     $criteria1          = new CriteriaCompo(new Criteria('gperm_name', 'module_read', '='));
     $criteria1->add(new Criteria('gperm_groupid', '(' . implode(',', $gperm_groupid) . ')', 'IN'));
-    $perms  = $moduleperm_handler->getObjects($criteria1, true);
+    $perms  = $modulepermHandler->getObjects($criteria1, true);
     $modIds = array();
     foreach ($perms as $item) {
         $modIds[] = $item->getVar('gperm_itemid');
@@ -458,10 +458,10 @@ function b_system_comments_show($options)
     }
     // Check modules permissions
 
-    $comments       = $comment_handler->getObjects($criteria, true);
-    $member_handler = xoops_getHandler('member');
-    $module_handler = xoops_getHandler('module');
-    $modules        = $module_handler->getObjects(new Criteria('hascomments', 1), true);
+    $comments       = $commentHandler->getObjects($criteria, true);
+    $memberHandler = xoops_getHandler('member');
+    $moduleHandler = xoops_getHandler('module');
+    $modules        = $moduleHandler->getObjects(new Criteria('hascomments', 1), true);
     $comment_config = array();
     foreach (array_keys($comments) as $i) {
         $mid           = $comments[$i]->getVar('com_modid');
@@ -475,7 +475,7 @@ function b_system_comments_show($options)
         $com['icon']  = ($com['icon'] != '') ? $com['icon'] : 'icon1.gif';
         $com['time']  = formatTimestamp($comments[$i]->getVar('com_created'), 'm');
         if ($comments[$i]->getVar('com_uid') > 0) {
-            $poster = $member_handler->getUser($comments[$i]->getVar('com_uid'));
+            $poster = $memberHandler->getUser($comments[$i]->getVar('com_uid'));
             if (is_object($poster)) {
                 $com['poster'] = '<a href="' . XOOPS_URL . '/userinfo.php?uid=' . $comments[$i]->getVar('com_uid') . '">' . $poster->getVar('uname') . '</a>';
             } else {
@@ -504,7 +504,7 @@ function b_system_notification_show()
     if (empty($xoopsUser) || !notificationEnabled('block')) {
         return false; // do not display block
     }
-    $notification_handler = xoops_getHandler('notification');
+    $notificationHandler = xoops_getHandler('notification');
     // Now build the a nested associative array of info to pass
     // to the block template.
     $block      = array();
@@ -518,7 +518,7 @@ function b_system_notification_show()
         $section['description'] = $category['description'];
         $section['itemid']      = $category['item_id'];
         $section['events']      = array();
-        $subscribed_events      = $notification_handler->getSubscribedEvents($category['name'], $category['item_id'], $xoopsModule->getVar('mid'), $xoopsUser->getVar('uid'));
+        $subscribed_events      = $notificationHandler->getSubscribedEvents($category['name'], $category['item_id'], $xoopsModule->getVar('mid'), $xoopsUser->getVar('uid'));
         foreach (notificationEvents($category['name'], true) as $event) {
             if (!empty($event['admin_only']) && !$xoopsUser->isAdmin($xoopsModule->getVar('mid'))) {
                 continue;

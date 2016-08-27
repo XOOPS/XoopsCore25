@@ -25,7 +25,7 @@ if (!is_object($xoopsUser)) {
     $errormessage = _PM_SORRY . '<br>' . _PM_PLZREG . '';
     redirect_header('user.php', 2, $errormessage);
 } else {
-    $pm_handler = xoops_getHandler('privmessage');
+    $pmHandler = xoops_getHandler('privmessage');
     if (isset($_POST['delete_messages']) && (isset($_POST['msg_id']) || isset($_POST['msg_ids']))) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             echo implode('<br>', $GLOBALS['xoopsSecurity']->getErrors());
@@ -46,9 +46,9 @@ if (!is_object($xoopsUser)) {
         $size = count($clean_msg_id);
         $msg  =& $clean_msg_id;
         for ($i = 0; $i < $size; ++$i) {
-            $pm = $pm_handler->get((int)$msg[$i]);
+            $pm = $pmHandler->get((int)$msg[$i]);
             if ($pm->getVar('to_userid') == $xoopsUser->getVar('uid')) {
-                $pm_handler->delete($pm);
+                $pmHandler->delete($pm);
             }
             unset($pm);
         }
@@ -57,7 +57,7 @@ if (!is_object($xoopsUser)) {
     include $GLOBALS['xoops']->path('header.php');
     $criteria = new Criteria('to_userid', $xoopsUser->getVar('uid'));
     $criteria->setOrder('DESC');
-    $pm_arr = $pm_handler->getObjects($criteria);
+    $pm_arr = $pmHandler->getObjects($criteria);
     echo "<h4 class='txtcenter'>" . _PM_PRIVATEMESSAGE . "</h4><br><a href='userinfo.php?uid=" . $xoopsUser->getVar('uid') . "'>" . _PM_PROFILE . "</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;" . _PM_INBOX . '<br><br>';
     echo "<form name='prvmsg' method='post' action='viewpmsg.php'>";
     echo "<table cellspacing='1' cellpadding='4' class='outer width100 bnone'>\n";

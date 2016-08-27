@@ -27,20 +27,20 @@ echo $indexAdmin->renderButton('right', '');
 
 $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : (isset($_REQUEST['id']) ? 'edit' : 'list');
 
-$profilefield_handler = xoops_getModuleHandler('field');
+$profilefieldHandler = xoops_getModuleHandler('field');
 
 switch ($op) {
     default:
     case 'list':
-        $fields = $profilefield_handler->getObjects(null, true, false);
+        $fields = $profilefieldHandler->getObjects(null, true, false);
 
-        $module_handler = xoops_getHandler('module');
-        $modules        = $module_handler->getObjects(null, true);
+        $moduleHandler = xoops_getHandler('module');
+        $modules        = $moduleHandler->getObjects(null, true);
 
-        $cat_handler = xoops_getModuleHandler('category');
+        $catHandler = xoops_getModuleHandler('category');
         $criteria    = new CriteriaCompo();
         $criteria->setSort('cat_weight');
-        $cats = $cat_handler->getObjects($criteria, true);
+        $cats = $catHandler->getObjects($criteria, true);
         unset($criteria);
 
         $categories[0] = _PROFILE_AM_DEFAULT;
@@ -101,13 +101,13 @@ switch ($op) {
 
     case 'new':
         include_once dirname(__DIR__) . '/include/forms.php';
-        $obj  = $profilefield_handler->create();
+        $obj  = $profilefieldHandler->create();
         $form = profile_getFieldForm($obj);
         $form->display();
         break;
 
     case 'edit':
-        $obj = $profilefield_handler->get($_REQUEST['id']);
+        $obj = $profilefieldHandler->get($_REQUEST['id']);
         if (!$obj->getVar('field_config') && !$obj->getVar('field_show') && !$obj->getVar('field_edit')) { //If no configs exist
             redirect_header('field.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
         }
@@ -135,12 +135,12 @@ switch ($op) {
             if (count($ids) > 0) {
                 $errors = array();
                 //if there are changed fields, fetch the fieldcategory objects
-                $field_handler = xoops_getModuleHandler('field');
-                $fields        = $field_handler->getObjects(new Criteria('field_id', '(' . implode(',', $ids) . ')', 'IN'), true);
+                $fieldHandler = xoops_getModuleHandler('field');
+                $fields        = $fieldHandler->getObjects(new Criteria('field_id', '(' . implode(',', $ids) . ')', 'IN'), true);
                 foreach ($ids as $i) {
                     $fields[$i]->setVar('field_weight', (int)$weight[$i]);
                     $fields[$i]->setVar('cat_id', (int)$category[$i]);
-                    if (!$field_handler->insert($fields[$i])) {
+                    if (!$fieldHandler->insert($fields[$i])) {
                         $errors = array_merge($errors, $fields[$i]->getErrors());
                     }
                 }
@@ -160,12 +160,12 @@ switch ($op) {
         }
         $redirect_to_edit = false;
         if (isset($_REQUEST['id'])) {
-            $obj = $profilefield_handler->get($_REQUEST['id']);
+            $obj = $profilefieldHandler->get($_REQUEST['id']);
             if (!$obj->getVar('field_config') && !$obj->getVar('field_show') && !$obj->getVar('field_edit')) { //If no configs exist
                 redirect_header('admin.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
             }
         } else {
-            $obj = $profilefield_handler->create();
+            $obj = $profilefieldHandler->create();
             $obj->setVar('field_name', $_REQUEST['field_name']);
             $obj->setVar('field_moduleid', $GLOBALS['xoopsModule']->getVar('mid'));
             $obj->setVar('field_show', 1);
@@ -226,8 +226,8 @@ switch ($op) {
         ) {
             $obj->setVar('step_id', $_REQUEST['step_id']);
         }
-        if ($profilefield_handler->insert($obj)) {
-            $groupperm_handler = xoops_getHandler('groupperm');
+        if ($profilefieldHandler->insert($obj)) {
+            $grouppermHandler = xoops_getHandler('groupperm');
 
             $perm_arr = array();
             if ($obj->getVar('field_show')) {
@@ -246,7 +246,7 @@ switch ($op) {
                     $criteria->add(new Criteria('gperm_itemid', (int)$obj->getVar('field_id')));
                     $criteria->add(new Criteria('gperm_modid', (int)$GLOBALS['xoopsModule']->getVar('mid')));
                     if (isset($_REQUEST[$perm]) && is_array($_REQUEST[$perm])) {
-                        $perms = $groupperm_handler->getObjects($criteria);
+                        $perms = $grouppermHandler->getObjects($criteria);
                         if (count($perms) > 0) {
                             foreach (array_keys($perms) as $i) {
                                 $groups[$perms[$i]->getVar('gperm_groupid')] =& $perms[$i];
@@ -257,23 +257,23 @@ switch ($op) {
                         foreach ($_REQUEST[$perm] as $groupid) {
                             $groupid = (int)$groupid;
                             if (!isset($groups[$groupid])) {
-                                $perm_obj = $groupperm_handler->create();
+                                $perm_obj = $grouppermHandler->create();
                                 $perm_obj->setVar('gperm_name', $perm);
                                 $perm_obj->setVar('gperm_itemid', (int)$obj->getVar('field_id'));
                                 $perm_obj->setVar('gperm_modid', $GLOBALS['xoopsModule']->getVar('mid'));
                                 $perm_obj->setVar('gperm_groupid', $groupid);
-                                $groupperm_handler->insert($perm_obj);
+                                $grouppermHandler->insert($perm_obj);
                                 unset($perm_obj);
                             }
                         }
                         $removed_groups = array_diff(array_keys($groups), $_REQUEST[$perm]);
                         if (count($removed_groups) > 0) {
                             $criteria->add(new Criteria('gperm_groupid', '(' . implode(',', $removed_groups) . ')', 'IN'));
-                            $groupperm_handler->deleteAll($criteria);
+                            $grouppermHandler->deleteAll($criteria);
                         }
                         unset($groups);
                     } else {
-                        $groupperm_handler->deleteAll($criteria);
+                        $grouppermHandler->deleteAll($criteria);
                     }
                     unset($criteria);
                 }
@@ -288,7 +288,7 @@ switch ($op) {
         break;
 
     case 'delete':
-        $obj = $profilefield_handler->get($_REQUEST['id']);
+        $obj = $profilefieldHandler->get($_REQUEST['id']);
         if (!$obj->getVar('field_config')) {
             redirect_header('index.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
         }
@@ -296,7 +296,7 @@ switch ($op) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header('field.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }
-            if ($profilefield_handler->delete($obj)) {
+            if ($profilefieldHandler->delete($obj)) {
                 redirect_header('field.php', 3, sprintf(_PROFILE_AM_DELETEDSUCCESS, _PROFILE_AM_FIELD));
             } else {
                 echo $obj->getHtmlErrors();
@@ -331,10 +331,10 @@ if (isset($template_main)) {
 function profile_visible_toggle($field_id, $field_required)
 {
     $field_required = ($field_required == 1) ? 0 : 1;
-    $this_handler   = xoops_getModuleHandler('field', 'profile');
-    $obj            = $this_handler->get($field_id);
+    $thisHandler   = xoops_getModuleHandler('field', 'profile');
+    $obj            = $thisHandler->get($field_id);
     $obj->setVar('field_required', $field_required);
-    if ($this_handler->insert($obj, true)) {
+    if ($thisHandler->insert($obj, true)) {
         redirect_header('field.php', 1, _PROFILE_AM_REQUIRED_TOGGLE_SUCCESS);
     } else {
         redirect_header('field.php', 1, _PROFILE_AM_REQUIRED_TOGGLE_FAILED);

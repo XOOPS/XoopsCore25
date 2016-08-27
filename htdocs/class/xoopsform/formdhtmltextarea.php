@@ -108,8 +108,8 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea
 
             if (count($this->htmlEditor) == 1) {
                 xoops_load('XoopsEditorHandler');
-                $editor_handler   = XoopsEditorHandler::getInstance();
-                $this->htmlEditor = $editor_handler->get($this->htmlEditor[0], $options);
+                $editorHandler   = XoopsEditorHandler::getInstance();
+                $this->htmlEditor = $editorHandler->get($this->htmlEditor[0], $options);
                 if ($inLoop > 1) {
                     $this->htmlEditor = null;
                 }

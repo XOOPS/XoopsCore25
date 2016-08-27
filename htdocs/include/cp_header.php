@@ -23,13 +23,13 @@ $xoopsOption['pagetype'] = 'admin';
 include_once dirname(__DIR__) . '/mainfile.php';
 include_once $GLOBALS['xoops']->path('include/cp_functions.php');
 
-$moduleperm_handler = xoops_getHandler('groupperm');
+$modulepermHandler = xoops_getHandler('groupperm');
 if ($xoopsUser) {
     $url_arr        = explode('/', strstr($_SERVER['REQUEST_URI'], '/modules/'));
-    $module_handler = xoops_getHandler('module');
-    $xoopsModule    = $module_handler->getByDirname($url_arr[2]);
+    $moduleHandler = xoops_getHandler('module');
+    $xoopsModule    = $moduleHandler->getByDirname($url_arr[2]);
     unset($url_arr);
-    if (!$moduleperm_handler->checkRight('module_admin', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
+    if (!$modulepermHandler->checkRight('module_admin', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
         redirect_header(XOOPS_URL, 1, _NOPERM);
     }
 } else {
@@ -38,8 +38,8 @@ if ($xoopsUser) {
 
 // set config values for this module
 if ($xoopsModule->getVar('hasconfig') == 1 || $xoopsModule->getVar('hascomments') == 1) {
-    $config_handler    = xoops_getHandler('config');
-    $xoopsModuleConfig = $config_handler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
+    $configHandler    = xoops_getHandler('config');
+    $xoopsModuleConfig = $configHandler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
 }
 
 // include the default language file for the admin interface

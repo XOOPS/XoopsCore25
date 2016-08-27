@@ -28,12 +28,12 @@
 include dirname(dirname(dirname(dirname(__DIR__)))) . '/mainfile.php';
 include $GLOBALS['xoops']->path('/include/cp_functions.php');
 if (is_object($xoopsUser)) {
-    $module_handler = xoops_getHandler('module');
-    $xoopsModule    = $module_handler->getByDirname('system');
+    $moduleHandler = xoops_getHandler('module');
+    $xoopsModule    = $moduleHandler->getByDirname('system');
     if (!in_array(XOOPS_GROUP_ADMIN, $xoopsUser->getGroups())) {
         include_once $GLOBALS['xoops']->path('modules/system/constants.php');
-        $sysperm_handler = xoops_getHandler('groupperm');
-        if (!$sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $xoopsUser->getGroups())) {
+        $syspermHandler = xoops_getHandler('groupperm');
+        if (!$syspermHandler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $xoopsUser->getGroups())) {
             redirect_header(XOOPS_URL . '/', 3, _NOPERM);
         }
     }

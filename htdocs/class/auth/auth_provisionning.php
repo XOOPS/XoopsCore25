@@ -55,12 +55,12 @@ class XoopsAuthProvisionning
     public function __construct(XoopsAuth $auth_instance = null)
     {
         $this->_auth_instance = $auth_instance;
-        $config_handler       = xoops_getHandler('config');
-        $config               = $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
+        $configHandler       = xoops_getHandler('config');
+        $config               = $configHandler->getConfigsByCat(XOOPS_CONF_AUTH);
         foreach ($config as $key => $val) {
             $this->$key = $val;
         }
-        $config_gen       = $config_handler->getConfigsByCat(XOOPS_CONF);
+        $config_gen       = $configHandler->getConfigsByCat(XOOPS_CONF);
         $this->default_TZ = $config_gen['default_TZ'];
         $this->theme_set  = $config_gen['theme_set'];
         $this->com_mode   = $config_gen['com_mode'];
@@ -75,9 +75,9 @@ class XoopsAuthProvisionning
      */
     public function getXoopsUser($uname)
     {
-        $member_handler = xoops_getHandler('member');
+        $memberHandler = xoops_getHandler('member');
         $criteria       = new Criteria('uname', $uname);
-        $getuser        = $member_handler->getUsers($criteria);
+        $getuser        = $memberHandler->getUsers($criteria);
         if (count($getuser) == 1) {
             return $getuser[0];
         } else {
@@ -122,9 +122,9 @@ class XoopsAuthProvisionning
     public function add($datas, $uname, $pwd = null)
     {
         $ret            = false;
-        $member_handler = xoops_getHandler('member');
+        $memberHandler = xoops_getHandler('member');
         // Create XOOPS Database User
-        $newuser = $member_handler->createUser();
+        $newuser = $memberHandler->createUser();
         $newuser->setVar('uname', $uname);
         $newuser->setVar('pass', password_hash(stripslashes($pwd), PASSWORD_DEFAULT));
         $newuser->setVar('rank', 0);
@@ -140,9 +140,9 @@ class XoopsAuthProvisionning
                 $newuser->setVar(trim($fields[0]), utf8_decode($datas[trim($fields[1])][0]));
             }
         }
-        if ($member_handler->insertUser($newuser)) {
+        if ($memberHandler->insertUser($newuser)) {
             foreach ($this->ldap_provisionning_group as $groupid) {
-                $member_handler->addUserToGroup($groupid, $newuser->getVar('uid'));
+                $memberHandler->addUserToGroup($groupid, $newuser->getVar('uid'));
             }
             $newuser->unsetNew();
 
@@ -166,7 +166,7 @@ class XoopsAuthProvisionning
     public function change(&$xoopsUser, $datas, $uname, $pwd = null)
     {
         $ret            = false;
-        $member_handler = xoops_getHandler('member');
+        $memberHandler = xoops_getHandler('member');
         $xoopsUser->setVar('pass', password_hash(stripcslashes($pwd), PASSWORD_DEFAULT));
         $tab_mapping = explode('|', $this->ldap_field_mapping);
         foreach ($tab_mapping as $mapping) {
@@ -175,7 +175,7 @@ class XoopsAuthProvisionning
                 $xoopsUser->setVar(trim($fields[0]), utf8_decode($datas[trim($fields[1])][0]));
             }
         }
-        if ($member_handler->insertUser($xoopsUser)) {
+        if ($memberHandler->insertUser($xoopsUser)) {
             return $xoopsUser;
         } else {
             redirect_header(XOOPS_URL . '/user.php', 5, $xoopsUser->getHtmlErrors());

@@ -75,12 +75,12 @@ switch ($op) {
         $xoBreadCrumb->addTips(_AM_SYSTEM_MODULES_TIPS);
         $xoBreadCrumb->render();
         // Get Module Handler
-        $module_handler = xoops_getHandler('module');
+        $moduleHandler = xoops_getHandler('module');
         $criteria       = new CriteriaCompo();
         $criteria->setSort('weight');
         $criteria->setOrder('ASC');
         // Get all installed modules
-        $installed_mods = $module_handler->getObjects($criteria);
+        $installed_mods = $moduleHandler->getObjects($criteria);
         $listed_mods    = array();
         $i              = 0;
         $install_mods   = array();
@@ -146,9 +146,9 @@ switch ($op) {
         $xoBreadCrumb->addTips(_AM_SYSTEM_MODULES_TIPS);
         $xoBreadCrumb->render();
         // Get Module Handler
-        $module_handler = xoops_getHandler('module');
+        $moduleHandler = xoops_getHandler('module');
         // Get all installed modules
-        $installed_mods = $module_handler->getObjects();
+        $installed_mods = $moduleHandler->getObjects();
         foreach ($installed_mods as $module) {
             $install_mods[] = $module->getInfo('dirname');
         }
@@ -161,7 +161,7 @@ switch ($op) {
                 clearstatcache();
                 $file = trim($file);
                 if (!in_array($file, $install_mods)) {
-                    $module = $module_handler->create();
+                    $module = $moduleHandler->create();
                     $module->loadInfo($file);
                     $toinstall_mods[$i]['name']          = htmlspecialchars($module->getInfo('name'), ENT_QUOTES);
                     $toinstall_mods[$i]['dirname']       = $module->getInfo('dirname');
@@ -187,16 +187,16 @@ switch ($op) {
 
     case 'order':
         // Get Module Handler
-        $module_handler = xoops_getHandler('module');
+        $moduleHandler = xoops_getHandler('module');
         if (isset($_POST['mod'])) {
             $i = 1;
             foreach ($_POST['mod'] as $order) {
                 if ($order > 0) {
-                    $module = $module_handler->get($order);
+                    $module = $moduleHandler->get($order);
                     //Change order only for visible modules
                     if ($module->getVar('weight') != 0) {
                         $module->setVar('weight', $i);
-                        if (!$module_handler->insert($module)) {
+                        if (!$moduleHandler->insert($module)) {
                             $error = true;
                         }
                         ++$i;
@@ -251,14 +251,14 @@ switch ($op) {
 
     case 'display':
         // Get module handler
-        $module_handler = xoops_getHandler('module');
+        $moduleHandler = xoops_getHandler('module');
         $module_id      = system_CleanVars($_POST, 'mid', 0, 'int');
         if ($module_id > 0) {
-            $module = $module_handler->get($module_id);
+            $module = $moduleHandler->get($module_id);
             $old    = $module->getVar('isactive');
             // Set value
             $module->setVar('isactive', !$old);
-            if (!$module_handler->insert($module)) {
+            if (!$moduleHandler->insert($module)) {
                 $error = true;
             }
             $blocks = XoopsBlock::getByModule($module_id);
@@ -274,14 +274,14 @@ switch ($op) {
 
     case 'display_in_menu':
         // Get module handler
-        $module_handler = xoops_getHandler('module');
+        $moduleHandler = xoops_getHandler('module');
         $module_id      = system_CleanVars($_POST, 'mid', 0, 'int');
         if ($module_id > 0) {
-            $module = $module_handler->get($module_id);
+            $module = $moduleHandler->get($module_id);
             $old    = $module->getVar('weight');
             // Set value
             $module->setVar('weight', !$old);
-            if (!$module_handler->insert($module)) {
+            if (!$moduleHandler->insert($module)) {
                 $error = true;
             }
         }
@@ -336,8 +336,8 @@ switch ($op) {
     case 'install':
         $module = $myts->htmlspecialchars($module);
         // Get module handler
-        $module_handler = xoops_getHandler('module');
-        $mod            = $module_handler->create();
+        $moduleHandler = xoops_getHandler('module');
+        $mod            = $moduleHandler->create();
         $mod->loadInfoAsVar($module);
         // Construct message
         if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
@@ -392,8 +392,8 @@ switch ($op) {
     case 'uninstall':
         $module = $myts->htmlspecialchars($module);
         // Get module handler
-        $module_handler = xoops_getHandler('module');
-        $mod            = $module_handler->getByDirname($module);
+        $moduleHandler = xoops_getHandler('module');
+        $mod            = $moduleHandler->getByDirname($module);
         // Construct message
         if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
             $msgs = '<img src="' . XOOPS_URL . '/modules/' . $mod->getVar('dirname', 'n') . '/' . trim($mod->getInfo('image')) . '" alt="" />';
@@ -447,8 +447,8 @@ switch ($op) {
     case 'update':
         $module = $myts->htmlspecialchars($module);
         // Get module handler
-        $module_handler = xoops_getHandler('module');
-        $mod            = $module_handler->getByDirname($module);
+        $moduleHandler = xoops_getHandler('module');
+        $mod            = $moduleHandler->getByDirname($module);
         // Construct message
         if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
             $msgs = '<img src="' . XOOPS_URL . '/modules/' . $mod->getVar('dirname', 'n') . '/' . trim($mod->getInfo('image')) . '" alt="" />';

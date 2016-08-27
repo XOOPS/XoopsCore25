@@ -91,8 +91,8 @@ class XoopsUser extends XoopsObject
             if (is_array($id)) {
                 $this->assignVars($id);
             } else {
-                $member_handler = xoops_getHandler('member');
-                $user           = $member_handler->getUser($id);
+                $memberHandler = xoops_getHandler('member');
+                $user           = $memberHandler->getUser($id);
                 foreach ($user->vars as $k => $v) {
                     $this->assignVar($k, $v['value']);
                 }
@@ -124,8 +124,8 @@ class XoopsUser extends XoopsObject
         $userid  = (int)$userid;
         $usereal = (int)$usereal;
         if ($userid > 0) {
-            $member_handler = xoops_getHandler('member');
-            $user           = $member_handler->getUser($userid);
+            $memberHandler = xoops_getHandler('member');
+            $user           = $memberHandler->getUser($userid);
             if (is_object($user)) {
                 $ts = MyTextSanitizer::getInstance();
                 if ($usereal) {
@@ -151,9 +151,9 @@ class XoopsUser extends XoopsObject
      */
     public function incrementPost()
     {
-        $member_handler = xoops_getHandler('member');
+        $memberHandler = xoops_getHandler('member');
 
-        return $member_handler->updateUserByField($this, 'posts', $this->getVar('posts') + 1);
+        return $memberHandler->updateUserByField($this, 'posts', $this->getVar('posts') + 1);
     }
 
     /**
@@ -176,8 +176,8 @@ class XoopsUser extends XoopsObject
     public function &getGroups()
     {
         if (empty($this->_groups)) {
-            $member_handler = xoops_getHandler('member');
-            $this->_groups  = $member_handler->getGroupsByUser($this->getVar('uid'));
+            $memberHandler = xoops_getHandler('member');
+            $this->_groups  = $memberHandler->getGroupsByUser($this->getVar('uid'));
         }
 
         return $this->_groups;
@@ -213,9 +213,9 @@ class XoopsUser extends XoopsObject
         } elseif ((int)$module_id < 1) {
             $module_id = 0;
         }
-        $moduleperm_handler = xoops_getHandler('groupperm');
+        $modulepermHandler = xoops_getHandler('groupperm');
 
-        return $moduleperm_handler->checkRight('module_admin', $module_id, $this->getGroups());
+        return $modulepermHandler->checkRight('module_admin', $module_id, $this->getGroups());
     }
 
     /**

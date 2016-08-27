@@ -150,9 +150,9 @@ abstract class GenericHelper
         ) {
             $this->object = $xoopsModule;
         } else {
-            /* @var $module_handler XoopsModuleHandler */
-            $module_handler = xoops_getHandler('module');
-            $this->object = $module_handler->getByDirname($this->dirname);
+            /* @var $moduleHandler XoopsModuleHandler */
+            $moduleHandler = xoops_getHandler('module');
+            $this->object = $moduleHandler->getByDirname($this->dirname);
         }
         $this->addLog('INIT MODULE OBJECT');
     }
@@ -172,9 +172,9 @@ abstract class GenericHelper
             global $xoopsModuleConfig;
             $this->configs = $xoopsModuleConfig;
         } else {
-            /* @var $config_handler XoopsConfigHandler */
-            $config_handler = xoops_getHandler('config');
-            $this->configs = $config_handler->getConfigsByCat(0, $this->getModule()->getVar('mid'));
+            /* @var $configHandler XoopsConfigHandler */
+            $configHandler = xoops_getHandler('config');
+            $this->configs = $configHandler->getConfigsByCat(0, $this->getModule()->getVar('mid'));
         }
     }
 

@@ -28,7 +28,7 @@ include __DIR__ . '/mainfile.php';
 function clientlogin()
 {
     global $xoopsDB, $xoopsLogger, $xoopsConfig;
-    include 'header.php';
+    include __DIR__ . '/header.php';
     $GLOBALS['xoTheme']->addStylesheet(null, null, '
         #login_window  {
             max-width:                          480px;
