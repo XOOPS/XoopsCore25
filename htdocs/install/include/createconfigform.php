@@ -38,8 +38,8 @@ if (defined('_MD_AM_AUTHENTICATION')) {
  */
 function createConfigform($config)
 {
-    $config_handler         = xoops_getHandler('config');
-    $GLOBALS['xoopsConfig'] = $xoopsConfig = $config_handler->getConfigsByCat(XOOPS_CONF);
+    $configHandler         = xoops_getHandler('config');
+    $GLOBALS['xoopsConfig'] = $xoopsConfig = $configHandler->getConfigsByCat(XOOPS_CONF);
 
     $ret       = array();
     $confcount = count($config);
@@ -66,7 +66,7 @@ function createConfigform($config)
 
             case 'select':
                 $ele     = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
-                $options = $config_handler->getConfigOptions(new Criteria('conf_id', $config[$i]->getVar('conf_id')));
+                $options = $configHandler->getConfigOptions(new Criteria('conf_id', $config[$i]->getVar('conf_id')));
                 $opcount = count($options);
                 for ($j = 0; $j < $opcount; ++$j) {
                     $optval = defined($options[$j]->getVar('confop_value')) ? constant($options[$j]->getVar('confop_value')) : $options[$j]->getVar('confop_value');
@@ -77,7 +77,7 @@ function createConfigform($config)
 
             case 'select_multi':
                 $ele     = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput(), 5, true);
-                $options = $config_handler->getConfigOptions(new Criteria('conf_id', $config[$i]->getVar('conf_id')));
+                $options = $configHandler->getConfigOptions(new Criteria('conf_id', $config[$i]->getVar('conf_id')));
                 $opcount = count($options);
                 for ($j = 0; $j < $opcount; ++$j) {
                     $optval = defined($options[$j]->getVar('confop_value')) ? constant($options[$j]->getVar('confop_value')) : $options[$j]->getVar('confop_value');
@@ -99,8 +99,8 @@ function createConfigform($config)
                     asort($dirlist);
                     $ele->addOptionArray($dirlist);
                 }
-                //$themeset_handler = xoops_getHandler('themeset');
-                //$themesetlist =& $themeset_handler->getList();
+                //$themesetHandler = xoops_getHandler('themeset');
+                //$themesetlist =& $themesetHandler->getList();
                 //asort($themesetlist);
                 //foreach ($themesetlist as $key => $name) {
                 //  $ele->addOption($key, $name.' ('._MD_AM_THEMESET.')');
@@ -111,8 +111,8 @@ function createConfigform($config)
 
             case 'tplset':
                 $ele            = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
-                $tplset_handler = xoops_getHandler('tplset');
-                $tplsetlist     = $tplset_handler->getList();
+                $tplsetHandler = xoops_getHandler('tplset');
+                $tplsetlist     = $tplsetHandler->getList();
                 asort($tplsetlist);
                 foreach ($tplsetlist as $key => $name) {
                     $ele->addOption($key, $name);
@@ -131,10 +131,10 @@ function createConfigform($config)
 
             case 'startpage':
                 $ele            = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
-                $module_handler = xoops_getHandler('module');
+                $moduleHandler = xoops_getHandler('module');
                 $criteria       = new CriteriaCompo(new Criteria('hasmain', 1));
                 $criteria->add(new Criteria('isactive', 1));
-                $moduleslist       = $module_handler->getList($criteria, true);
+                $moduleslist       = $moduleHandler->getList($criteria, true);
                 $moduleslist['--'] = _MD_AM_NONE;
                 $ele->addOptionArray($moduleslist);
                 break;
@@ -157,8 +157,8 @@ function createConfigform($config)
                 break;
 
             case 'module_cache':
-                $module_handler = xoops_getHandler('module');
-                $modules        = $module_handler->getObjects(new Criteria('hasmain', 1), true);
+                $moduleHandler = xoops_getHandler('module');
+                $modules        = $moduleHandler->getObjects(new Criteria('hasmain', 1), true);
                 $currrent_val   = $config[$i]->getConfValueForOutput();
                 $cache_options  = array(
                     '0'      => _NOCACHE,

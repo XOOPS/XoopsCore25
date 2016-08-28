@@ -27,7 +27,7 @@
  **/
 
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
-include_once '../language/' . $wizard->language . '/global.php';
+include_once __DIR__ . '/../../language/' . $wizard->language . '/global.php';
 ?>
 <!doctype html>
 <html>
@@ -70,7 +70,7 @@ include_once '../language/' . $wizard->language . '/global.php';
             <select id="support" onchange="window.open(this.value);">
                 <option value='#'><?php echo SUPPORT; ?></option>
                 <?php
-                @include_once './language/' . $wizard->language . '/support.php';
+                @include_once __DIR__ . '/../language/' . $wizard->language . '/support.php';
                 foreach ($supports as $lang => $support) {
                     echo "<option value='" . $support['url'] . "'";
                     if (file_exists('./language/' . $lang . '/support.png')) {

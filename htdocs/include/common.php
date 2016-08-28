@@ -111,8 +111,8 @@ $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
  * Get xoops configs
  * Requires functions and database loaded
  */
-$config_handler = xoops_getHandler('config');
-$xoopsConfig    = $config_handler->getConfigsByCat(XOOPS_CONF);
+$configHandler = xoops_getHandler('config');
+$xoopsConfig    = $configHandler->getConfigsByCat(XOOPS_CONF);
 
 /**
  * Merge file and db configs.
@@ -181,7 +181,7 @@ xoops_loadLanguage('pagetype');
  */
 $xoopsUser        = '';
 $xoopsUserIsAdmin = false;
-$member_handler   = xoops_getHandler('member');
+$memberHandler   = xoops_getHandler('member');
 $sess_handler     = xoops_getHandler('session');
 if ($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && $_POST[$xoopsConfig['sslpost_name']] != '') {
     session_id($_POST[$xoopsConfig['sslpost_name']]);
@@ -238,7 +238,7 @@ if (empty($_SESSION['xoopsUserId'])
  * Log user in and deal with Sessions and Cookies
  */
 if (!empty($_SESSION['xoopsUserId'])) {
-    $xoopsUser = $member_handler->getUser($_SESSION['xoopsUserId']);
+    $xoopsUser = $memberHandler->getUser($_SESSION['xoopsUserId']);
     if (!is_object($xoopsUser)) {
         $xoopsUser = '';
         $_SESSION  = array();
@@ -317,8 +317,8 @@ if ($xoopsConfig['closesite'] == 1) {
  */
 if (file_exists('./xoops_version.php')) {
     $url_arr        = explode('/', strstr($_SERVER['PHP_SELF'], '/modules/'));
-    $module_handler = xoops_getHandler('module');
-    $xoopsModule    = $module_handler->getByDirname($url_arr[2]);
+    $moduleHandler = xoops_getHandler('module');
+    $xoopsModule    = $moduleHandler->getByDirname($url_arr[2]);
     unset($url_arr);
 
     if (!$xoopsModule || !$xoopsModule->getVar('isactive')) {
@@ -328,14 +328,14 @@ if (file_exists('./xoops_version.php')) {
         exit();
     }
 
-    $moduleperm_handler = xoops_getHandler('groupperm');
+    $modulepermHandler = xoops_getHandler('groupperm');
     if ($xoopsUser) {
-        if (!$moduleperm_handler->checkRight('module_read', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
+        if (!$modulepermHandler->checkRight('module_read', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
             redirect_header(XOOPS_URL, 1, _NOPERM, false);
         }
         $xoopsUserIsAdmin = $xoopsUser->isAdmin($xoopsModule->getVar('mid'));
     } else {
-        if (!$moduleperm_handler->checkRight('module_read', $xoopsModule->getVar('mid'), XOOPS_GROUP_ANONYMOUS)) {
+        if (!$modulepermHandler->checkRight('module_read', $xoopsModule->getVar('mid'), XOOPS_GROUP_ANONYMOUS)) {
             redirect_header(XOOPS_URL . '/user.php?from=' . $xoopsModule->getVar('dirname', 'n'), 1, _NOPERM);
         }
     }
@@ -350,7 +350,7 @@ if (file_exists('./xoops_version.php')) {
     }
 
     if ($xoopsModule->getVar('hasconfig') == 1 || $xoopsModule->getVar('hascomments') == 1 || $xoopsModule->getVar('hasnotification') == 1) {
-        $xoopsModuleConfig = $config_handler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
+        $xoopsModuleConfig = $configHandler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
     }
 } elseif ($xoopsUser) {
     $xoopsUserIsAdmin = $xoopsUser->isAdmin(1);

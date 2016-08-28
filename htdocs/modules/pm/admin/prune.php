@@ -23,12 +23,12 @@ $indexAdmin = new ModuleAdmin();
 echo $indexAdmin->addNavigation(basename(__FILE__));
 
 $op         = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'form';
-$pm_handler = xoops_getModuleHandler('message');
+$pmHandler = xoops_getModuleHandler('message');
 
 switch ($op) {
     default:
     case 'form':
-        $form = $pm_handler->getPruneForm();
+        $form = $pmHandler->getPruneForm();
         $form->display();
         break;
 
@@ -53,22 +53,22 @@ switch ($op) {
             $notifycriteria->add(new Criteria('to_delete', 0));
             $notifycriteria->setGroupBy('to_userid');
             // Get array of uid => number of deleted messages
-            $uids = $pm_handler->getCount($notifycriteria);
+            $uids = $pmHandler->getCount($notifycriteria);
         }
-        $deletedrows = $pm_handler->deleteAll($criteria);
+        $deletedrows = $pmHandler->deleteAll($criteria);
         if ($deletedrows === false) {
             redirect_header('prune.php', 2, _PM_AM_ERRORWHILEPRUNING);
         }
         if (isset($_REQUEST['notifyusers']) && $_REQUEST['notifyusers'] == 1) {
             $errors = false;
             foreach ($uids as $uid => $messagecount) {
-                $pm = $pm_handler->create();
+                $pm = $pmHandler->create();
                 $pm->setVar('subject', $GLOBALS['xoopsModuleConfig']['prunesubject']);
                 $pm->setVar('msg_text', str_replace('{PM_COUNT}', $messagecount, $GLOBALS['xoopsModuleConfig']['prunemessage']));
                 $pm->setVar('to_userid', $uid);
                 $pm->setVar('from_userid', $GLOBALS['xoopsUser']->getVar('uid'));
                 $pm->setVar('msg_time', time());
-                if (!$pm_handler->insert($pm)) {
+                if (!$pmHandler->insert($pm)) {
                     $errors     = true;
                     $errormsg[] = $pm->getHtmlErrors();
                 }

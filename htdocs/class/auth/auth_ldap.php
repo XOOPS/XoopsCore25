@@ -178,8 +178,8 @@ class XoopsAuthLdap extends XoopsAuth
     {
         $this->_dao = $dao;
         // The config handler object allows us to look at the configuration options that are stored in the database
-        $config_handler = xoops_getHandler('config');
-        $config         = $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
+        $configHandler = xoops_getHandler('config');
+        $config         = $configHandler->getConfigsByCat(XOOPS_CONF_AUTH);
         $confcount      = count($config);
         foreach ($config as $key => $val) {
             $this->$key = $val;

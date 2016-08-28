@@ -13,7 +13,9 @@
 defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 // Xlanguage
-if ($GLOBALS['module_handler']->getByDirname('xlanguage') && defined('XLANGUAGE_LANG_TAG')) {
+/** @var XoopsModuleHandler $moduleHandler */
+$moduleHandler = xoops_getHandler('module');
+if ($moduleHandler->getByDirname('xlanguage') && defined('XLANGUAGE_LANG_TAG')) {
     return true;
 }
 

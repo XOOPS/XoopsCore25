@@ -27,10 +27,10 @@ if ('system' === $xoopsModule->getVar('dirname')) {
     if (empty($com_id)) {
         exit();
     }
-    $comment_handler = xoops_getHandler('comment');
-    $comment         = $comment_handler->get($com_id);
-    $module_handler  = xoops_getHandler('module');
-    $module          = $module_handler->get($comment->getVar('com_modid'));
+    $commentHandler = xoops_getHandler('comment');
+    $comment         = $commentHandler->get($com_id);
+    $moduleHandler  = xoops_getHandler('module');
+    $module          = $moduleHandler->get($comment->getVar('com_modid'));
     $comment_config  = $module->getInfo('comments');
     $com_modid       = $module->getVar('mid');
     $redirect_page   = XOOPS_URL . '/modules/system/admin.php?fct=comments&com_modid=' . $com_modid . '&com_itemid';
@@ -232,8 +232,8 @@ switch ($op) {
             if (is_object($xoopsUser)) {
                 if (!$xoopsUser->isAdmin($com_modid)) {
                     include_once $GLOBALS['xoops']->path('modules/system/constants.php');
-                    $sysperm_handler = xoops_getHandler('groupperm');
-                    if (!$sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $xoopsUser->getGroups())) {
+                    $syspermHandler = xoops_getHandler('groupperm');
+                    if (!$syspermHandler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $xoopsUser->getGroups())) {
                         $dohtml = 0;
                     }
                 }
@@ -269,7 +269,7 @@ switch ($op) {
     case 'post':
         XoopsLoad::load('XoopsRequest');
         $doimage         = 1;
-        $comment_handler = xoops_getHandler('comment');
+        $commentHandler = xoops_getHandler('comment');
         // Start add by voltan
         $myts = MyTextSanitizer::getInstance();
         // Edit add by voltan
@@ -279,13 +279,13 @@ switch ($op) {
         // RMV-NOTIFY - this can be set to 'comment' or 'comment_submit'
         $notify_event = false;
         if (!empty($com_id)) {
-            $comment     = $comment_handler->get($com_id);
+            $comment     = $commentHandler->get($com_id);
             $accesserror = false;
 
             if (is_object($xoopsUser)) {
                 include_once $GLOBALS['xoops']->path('modules/system/constants.php');
-                $sysperm_handler = xoops_getHandler('groupperm');
-                if ($xoopsUser->isAdmin($com_modid) || $sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $xoopsUser->getGroups())) {
+                $syspermHandler = xoops_getHandler('groupperm');
+                if ($xoopsUser->isAdmin($com_modid) || $syspermHandler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $xoopsUser->getGroups())) {
                     if (!empty($com_status) && $com_status != XOOPS_COMMENT_PENDING) {
                         $old_com_status = $comment->getVar('com_status');
                         $comment->setVar('com_status', $com_status);
@@ -320,7 +320,7 @@ switch ($op) {
                 redirect_header($redirect_page . '=' . $com_itemid . '&amp;com_id=' . $com_id . '&amp;com_mode=' . $com_mode . '&amp;com_order=' . $com_order, 1, _NOPERM);
             }
         } else {
-            $comment = $comment_handler->create();
+            $comment = $commentHandler->create();
             $comment->setVar('com_created', time());
             $comment->setVar('com_pid', $com_pid);
             $comment->setVar('com_itemid', $com_itemid);
@@ -328,8 +328,8 @@ switch ($op) {
             $comment->setVar('com_ip', \Xmf\IPAddress::fromRequest()->asReadable());
             if (is_object($xoopsUser)) {
                 include_once $GLOBALS['xoops']->path('modules/system/constants.php');
-                $sysperm_handler = xoops_getHandler('groupperm');
-                if ($xoopsUser->isAdmin($com_modid) || $sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $xoopsUser->getGroups())) {
+                $syspermHandler = xoops_getHandler('groupperm');
+                if ($xoopsUser->isAdmin($com_modid) || $syspermHandler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $xoopsUser->getGroups())) {
                     $comment->setVar('com_status', XOOPS_COMMENT_ACTIVE);
                     $add_userpost     = true;
                     $call_approvefunc = true;
@@ -406,13 +406,13 @@ switch ($op) {
         if (isset($extra_params)) {
             $comment->setVar('com_exparams', $extra_params);
         }
-        if (false !== $comment_handler->insert($comment)) {
+        if (false !== $commentHandler->insert($comment)) {
             $newcid = $comment->getVar('com_id');
             // set own id as root id if this is a top comment
             if ($com_rootid == 0) {
                 $com_rootid = $newcid;
-                if (!$comment_handler->updateByField($comment, 'com_rootid', $com_rootid)) {
-                    $comment_handler->delete($comment);
+                if (!$commentHandler->updateByField($comment, 'com_rootid', $com_rootid)) {
+                    $commentHandler->delete($comment);
                     include $GLOBALS['xoops']->path('header.php');
                     xoops_error();
                     include $GLOBALS['xoops']->path('footer.php');
@@ -459,7 +459,7 @@ switch ($op) {
                     $criteria = new CriteriaCompo(new Criteria('com_modid', $com_modid));
                     $criteria->add(new Criteria('com_itemid', $com_itemid));
                     $criteria->add(new Criteria('com_status', XOOPS_COMMENT_ACTIVE));
-                    $comment_count = $comment_handler->getCount($criteria);
+                    $comment_count = $commentHandler->getCount($criteria);
                     $func          = $comment_config['callback']['update'];
                     call_user_func_array($func, array(
                         $com_itemid,
@@ -471,10 +471,10 @@ switch ($op) {
             // increment user post if needed
             $uid = $comment->getVar('com_uid');
             if ($uid > 0 && false !== $add_userpost) {
-                $member_handler = xoops_getHandler('member');
-                $poster         = $member_handler->getUser($uid);
+                $memberHandler = xoops_getHandler('member');
+                $poster         = $memberHandler->getUser($uid);
                 if (is_object($poster)) {
-                    $member_handler->updateUserByField($poster, 'posts', $poster->getVar('posts') + 1);
+                    $memberHandler->updateUserByField($poster, 'posts', $poster->getVar('posts') + 1);
                 }
             }
 
@@ -492,8 +492,8 @@ switch ($op) {
                 // module).
                 $comment_tags = array();
                 if ('system' === $xoopsModule->getVar('dirname')) {
-                    $module_handler = xoops_getHandler('module');
-                    $not_module     = $module_handler->get($not_modid);
+                    $moduleHandler = xoops_getHandler('module');
+                    $not_module     = $moduleHandler->get($not_modid);
                 } else {
                     $not_module =& $xoopsModule;
                 }
@@ -510,8 +510,8 @@ switch ($op) {
                     $comment_url .= $com_config['itemName'];
                 }
                 $comment_tags['X_COMMENT_URL'] = XOOPS_URL . '/modules/' . $not_module->getVar('dirname') . '/' . $comment_url . '=' . $com_itemid . '&amp;com_id=' . $newcid . '&amp;com_rootid=' . $com_rootid . '&amp;com_mode=' . $com_mode . '&amp;com_order=' . $com_order . '#comment' . $newcid;
-                $notification_handler          = xoops_getHandler('notification');
-                $notification_handler->triggerEvent($not_category, $not_itemid, $not_event, $comment_tags, false, $not_modid);
+                $notificationHandler          = xoops_getHandler('notification');
+                $notificationHandler->triggerEvent($not_category, $not_itemid, $not_event, $comment_tags, false, $not_modid);
             }
             if (!isset($comment_post_results)) {
                 // if the comment is active, redirect to posted comment

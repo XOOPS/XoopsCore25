@@ -68,12 +68,12 @@ function update_system_v211($module)
         $tplids[] = $tplid;
     }
     if (count($tplids) > 0) {
-        $tplfile_handler = xoops_getHandler('tplfile');
-        $duplicate_files = $tplfile_handler->getObjects(new Criteria('tpl_id', '(' . implode(',', $tplids) . ')', 'IN'));
+        $tplfileHandler = xoops_getHandler('tplfile');
+        $duplicate_files = $tplfileHandler->getObjects(new Criteria('tpl_id', '(' . implode(',', $tplids) . ')', 'IN'));
 
         if (count($duplicate_files) > 0) {
             foreach (array_keys($duplicate_files) as $i) {
-                $tplfile_handler->delete($duplicate_files[$i]);
+                $tplfileHandler->delete($duplicate_files[$i]);
             }
         }
     }

@@ -223,10 +223,10 @@ switch ($op) {
                     $crit->prefix = 'u';
                     $criteria_object->add($crit, 'AND');
                 }
-                $member_handler = xoops_getHandler('member');
+                $memberHandler = xoops_getHandler('member');
                 $groups         = empty($_POST['mail_to_group']) ? array() : array_map('intval', $_POST['mail_to_group']);
-                $getusers       = $member_handler->getUsersByGroupLink($groups, $criteria_object, true);
-                $count_criteria = $member_handler->getUserCountByGroupLink($groups, $criteria_object);
+                $getusers       = $memberHandler->getUsersByGroupLink($groups, $criteria_object, true);
+                $count_criteria = $memberHandler->getUserCountByGroupLink($groups, $criteria_object);
                 foreach ($getusers as $getuser) {
                     if (!in_array($getuser->getVar('uid'), $added_id)) {
                         $added[]    = $getuser;

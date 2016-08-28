@@ -69,25 +69,25 @@ switch ($op) {
         }
 
         // Dynamic fields
-        $profile_handler = xoops_getModuleHandler('profile');
+        $profileHandler = xoops_getModuleHandler('profile');
         // Get fields
-        $fields     = $profile_handler->loadFields();
-        $userfields = $profile_handler->getUserVars();
+        $fields     = $profileHandler->loadFields();
+        $userfields = $profileHandler->getUserVars();
         // Get ids of fields that can be edited
-        $gperm_handler   = xoops_getHandler('groupperm');
-        $editable_fields = $gperm_handler->getItemIds('profile_edit', $GLOBALS['xoopsUser']->getGroups(), $GLOBALS['xoopsModule']->getVar('mid'));
+        $gpermHandler   = xoops_getHandler('groupperm');
+        $editable_fields = $gpermHandler->getItemIds('profile_edit', $GLOBALS['xoopsUser']->getGroups(), $GLOBALS['xoopsModule']->getVar('mid'));
 
         $uid = empty($_POST['uid']) ? 0 : (int)$_POST['uid'];
         if (!empty($uid)) {
             $user    = $handler->getUser($uid);
-            $profile = $profile_handler->get($uid);
+            $profile = $profileHandler->get($uid);
             if (!is_object($profile)) {
-                $profile = $profile_handler->create();
+                $profile = $profileHandler->create();
                 $profile->setVar('profile_id', $uid);
             }
         } else {
             $user    = $handler->createUser();
-            $profile = $profile_handler->create();
+            $profile = $profileHandler->create();
             if (count($fields) > 0) {
                 foreach (array_keys($fields) as $i) {
                     $fieldname = $fields[$i]->getVar('field_name');
@@ -143,9 +143,9 @@ switch ($op) {
         if (count($errors) == 0) {
             if ($handler->insertUser($user)) {
                 $profile->setVar('profile_id', $user->getVar('uid'));
-                $profile_handler->insert($profile);
+                $profileHandler->insert($profile);
                 include_once $GLOBALS['xoops']->path('/modules/system/constants.php');
-                if ($gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_GROUP, $GLOBALS['xoopsUser']->getGroups(), 1)) {
+                if ($gpermHandler->checkRight('system_admin', XOOPS_SYSTEM_GROUP, $GLOBALS['xoopsUser']->getGroups(), 1)) {
                     //Update group memberships
                     $cur_groups = $user->getGroups();
 
@@ -195,9 +195,9 @@ switch ($op) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header('user.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()), false);
             }
-            $profile_handler = xoops_getModuleHandler('profile');
-            $profile         = $profile_handler->get($obj->getVar('uid'));
-            if (!$profile || $profile->isNew() || $profile_handler->delete($profile)) {
+            $profileHandler = xoops_getModuleHandler('profile');
+            $profile         = $profileHandler->get($obj->getVar('uid'));
+            if (!$profile || $profile->isNew() || $profileHandler->delete($profile)) {
                 if ($handler->deleteUser($obj)) {
                     redirect_header('user.php', 3, sprintf(_PROFILE_AM_DELETEDSUCCESS, $obj->getVar('uname') . ' (' . $obj->getVar('email') . ')'), false);
                 } else {

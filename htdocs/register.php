@@ -30,8 +30,8 @@ xoops_load('XoopsUserUtility');
 
 $myts = MyTextSanitizer::getInstance();
 
-$config_handler  = xoops_getHandler('config');
-$xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+$configHandler  = xoops_getHandler('config');
+$xoopsConfigUser = $configHandler->getConfigsByCat(XOOPS_CONF_USER);
 
 if (empty($xoopsConfigUser['allow_register'])) {
     redirect_header('index.php', 6, _US_NOREGISTER);
@@ -174,8 +174,8 @@ switch ($op) {
             $stop .= $xoopsCaptcha->getMessage() . '<br>';
         }
         if (empty($stop)) {
-            $member_handler = xoops_getHandler('member');
-            $newuser        = $member_handler->createUser();
+            $memberHandler = xoops_getHandler('member');
+            $newuser        = $memberHandler->createUser();
             $newuser->setVar('user_viewemail', $user_viewemail, true);
             $newuser->setVar('uname', $uname, true);
             $newuser->setVar('email', $email, true);
@@ -197,13 +197,13 @@ switch ($op) {
             } else {
                 $newuser->setVar('level', 0, true);
             }
-            if (!$member_handler->insertUser($newuser)) {
+            if (!$memberHandler->insertUser($newuser)) {
                 echo _US_REGISTERNG;
                 include $GLOBALS['xoops']->path('footer.php');
                 exit();
             }
             $newid = $newuser->getVar('uid');
-            if (!$member_handler->addUserToGroup(XOOPS_GROUP_USERS, $newid)) {
+            if (!$memberHandler->addUserToGroup(XOOPS_GROUP_USERS, $newid)) {
                 echo _US_REGISTERNG;
                 include $GLOBALS['xoops']->path('footer.php');
                 exit();
@@ -240,8 +240,8 @@ switch ($op) {
                 $xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
                 $xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
                 $xoopsMailer->assign('SITEURL', XOOPS_URL . '/');
-                $member_handler = xoops_getHandler('member');
-                $xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['activation_group']));
+                $memberHandler = xoops_getHandler('member');
+                $xoopsMailer->setToGroups($memberHandler->getGroup($xoopsConfigUser['activation_group']));
                 $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
                 $xoopsMailer->setFromName($xoopsConfig['sitename']);
                 $xoopsMailer->setSubject(sprintf(_US_USERKEYFOR, $uname));
@@ -255,8 +255,8 @@ switch ($op) {
                 $xoopsMailer =& xoops_getMailer();
                 $xoopsMailer->reset();
                 $xoopsMailer->useMail();
-                $member_handler = xoops_getHandler('member');
-                $xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['new_user_notify_group']));
+                $memberHandler = xoops_getHandler('member');
+                $xoopsMailer->setToGroups($memberHandler->getGroup($xoopsConfigUser['new_user_notify_group']));
                 $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
                 $xoopsMailer->setFromName($xoopsConfig['sitename']);
                 $xoopsMailer->setSubject(sprintf(_US_NEWUSERREGAT, $xoopsConfig['sitename']));
@@ -278,8 +278,8 @@ switch ($op) {
         if (empty($id)) {
             redirect_header('index.php', 1, '');
         }
-        $member_handler = xoops_getHandler('member');
-        $thisuser       = $member_handler->getUser($id);
+        $memberHandler = xoops_getHandler('member');
+        $thisuser       = $memberHandler->getUser($id);
         if (!is_object($thisuser)) {
             exit();
         }
@@ -289,9 +289,9 @@ switch ($op) {
             if ($thisuser->getVar('level') > 0) {
                 redirect_header('user.php', 5, _US_ACONTACT, false);
             } else {
-                if (false !== $member_handler->activateUser($thisuser)) {
-                    $config_handler  = xoops_getHandler('config');
-                    $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+                if (false !== $memberHandler->activateUser($thisuser)) {
+                    $configHandler  = xoops_getHandler('config');
+                    $xoopsConfigUser = $configHandler->getConfigsByCat(XOOPS_CONF_USER);
                     if ($xoopsConfigUser['activation_type'] == 2) {
                         $myts        = MyTextSanitizer::getInstance();
                         $xoopsMailer =& xoops_getMailer();

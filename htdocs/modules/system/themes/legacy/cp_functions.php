@@ -29,8 +29,8 @@ function xoops_legacy_cp_header($tpl)
     $xoTheme->addStylesheet(XOOPS_URL . '/xoops.css');
     $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/themes/legacy/css/style.css');
     include XOOPS_CACHE_PATH . '/adminmenu.php';
-    $moduleperm_handler = xoops_getHandler('groupperm');
-    $admin_mids         = $moduleperm_handler->getItemIds('module_admin', $xoopsUser->getGroups());
+    $modulepermHandler = xoops_getHandler('groupperm');
+    $admin_mids         = $modulepermHandler->getItemIds('module_admin', $xoopsUser->getGroups());
     $xoTheme->addScript(XOOPS_URL . '/include/layersmenu.js');
     $xoTheme->addScript('', '', '
         var thresholdY = 15; // in pixels; threshold for vertical repositioning of a layer
@@ -83,12 +83,12 @@ function xoops_legacy_module_get_admin_menu()
     $firstleveltable = '';
     $menu_layers     = '';
 
-    $module_handler = xoops_getHandler('module');
+    $moduleHandler = xoops_getHandler('module');
     $criteria       = new CriteriaCompo();
     $criteria->add(new Criteria('hasadmin', 1));
     $criteria->add(new Criteria('isactive', 1));
     $criteria->setSort('mid');
-    $mods = $module_handler->getObjects($criteria);
+    $mods = $moduleHandler->getObjects($criteria);
 
     foreach ($mods as $mod) {
         $mid         = $mod->getVar('mid');

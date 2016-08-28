@@ -50,8 +50,8 @@ class XoopsFormEditor extends XoopsFormTextArea
         }
         parent::__construct($caption, $name);
         xoops_load('XoopsEditorHandler');
-        $editor_handler = XoopsEditorHandler::getInstance();
-        $this->editor   = $editor_handler->get($configs['editor'], $configs, $nohtml, $OnFailure);
+        $editorHandler = XoopsEditorHandler::getInstance();
+        $this->editor   = $editorHandler->get($configs['editor'], $configs, $nohtml, $OnFailure);
     }
 
     /**

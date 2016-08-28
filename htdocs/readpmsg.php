@@ -24,7 +24,7 @@ xoops_loadLanguage('pmsg');
 if (!is_object($xoopsUser)) {
     redirect_header('user.php', 0);
 } else {
-    $pm_handler = xoops_getHandler('privmessage');
+    $pmHandler = xoops_getHandler('privmessage');
     if (!empty($_POST['delete'])) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             echo implode('<br>', $GLOBALS['xoopsSecurity']->getErrors());
@@ -35,8 +35,8 @@ if (!is_object($xoopsUser)) {
             include $GLOBALS['xoops']->path('footer.php');
             exit();
         }
-        $pm = $pm_handler->get((int)$_POST['msg_id']);
-        if (!is_object($pm) || $pm->getVar('to_userid') != $xoopsUser->getVar('uid') || !$pm_handler->delete($pm)) {
+        $pm = $pmHandler->get((int)$_POST['msg_id']);
+        if (!is_object($pm) || $pm->getVar('to_userid') != $xoopsUser->getVar('uid') || !$pmHandler->delete($pm)) {
             exit();
         } else {
             redirect_header('viewpmsg.php', 1, _PM_DELETED);
@@ -49,12 +49,12 @@ if (!is_object($xoopsUser)) {
     $criteria->setLimit(1);
     $criteria->setStart($start);
     $criteria->setSort('msg_time');
-    $pm_arr = $pm_handler->getObjects($criteria);
+    $pm_arr = $pmHandler->getObjects($criteria);
     echo '<div><h4>' . _PM_PRIVATEMESSAGE . "</h4></div><br><a href='userinfo.php?uid=" . $xoopsUser->getVar('uid') . "' title=''>" . _PM_PROFILE . "</a>&nbsp;<span class='bold'>&raquo;&raquo;</span>&nbsp;<a href='viewpmsg.php' title=''>" . _PM_INBOX . "</a>&nbsp;<span class='bold'>&raquo;&raquo;</span>&nbsp;\n";
     if (empty($pm_arr)) {
         echo '<br><br>' . _PM_YOUDONTHAVE;
     } else {
-        if (!$pm_handler->setRead($pm_arr[0])) {
+        if (!$pmHandler->setRead($pm_arr[0])) {
             //echo "failed";
         }
         echo $pm_arr[0]->getVar('subject') . "<br><form action='readpmsg.php' method='post' name='delete" . $pm_arr[0]->getVar('msg_id') . "'><table cellpadding='4' cellspacing='1' class='outer width100 bnone'><tr><th colspan='2'>" . _PM_FROM . "</th></tr><tr class='even'>\n";

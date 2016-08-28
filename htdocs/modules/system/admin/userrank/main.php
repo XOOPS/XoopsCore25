@@ -50,7 +50,7 @@ $upload_size = 500000;
 // Get Action type
 $op = system_CleanVars($_REQUEST, 'op', 'list', 'string');
 // Get userrank handler
-$userrank_Handler = xoops_getModuleHandler('userrank', 'system');
+$userrankHandler = xoops_getModuleHandler('userrank', 'system');
 
 switch ($op) {
 
@@ -79,8 +79,8 @@ switch ($op) {
         $criteria->setStart($start);
         $criteria->setLimit($nb_rank);
         // Count rank
-        $userrank_count = $userrank_Handler->getCount($criteria);
-        $userrank_arr   = $userrank_Handler->getall($criteria);
+        $userrank_count = $userrankHandler->getCount($criteria);
+        $userrank_arr   = $userrankHandler->getall($criteria);
         // Assign Template variables
         $xoopsTpl->assign('userrank_count', $userrank_count);
         if ($userrank_count > 0) {
@@ -121,7 +121,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(sprintf(_AM_SYSTEM_USERRANK_TIPS_FORM1, implode(', ', $mimetypes)) . sprintf(_AM_SYSTEM_USERRANK_TIPS_FORM2, $upload_size / 1000));
         $xoBreadCrumb->render();
         // Create form
-        $obj  = $userrank_Handler->create();
+        $obj  = $userrankHandler->create();
         $form = $obj->getForm();
         // Assign form
         $xoopsTpl->assign('form', $form->render());
@@ -144,7 +144,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(sprintf(_AM_SYSTEM_USERRANK_TIPS_FORM1, implode(', ', $mimetypes)) . sprintf(_AM_SYSTEM_USERRANK_TIPS_FORM2, $upload_size / 1000));
         $xoBreadCrumb->render();
         // Create form
-        $obj  = $userrank_Handler->get(system_CleanVars($_REQUEST, 'rank_id', 0, 'int'));
+        $obj  = $userrankHandler->get(system_CleanVars($_REQUEST, 'rank_id', 0, 'int'));
         $form = $obj->getForm();
         // Assign form
         $xoopsTpl->assign('form', $form->render());
@@ -158,9 +158,9 @@ switch ($op) {
             redirect_header('admin.php?fct=userrank', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         if (isset($_POST['rank_id'])) {
-            $obj = $userrank_Handler->get($_POST['rank_id']);
+            $obj = $userrankHandler->get($_POST['rank_id']);
         } else {
-            $obj = $userrank_Handler->create();
+            $obj = $userrankHandler->create();
         }
         $obj->setVar('rank_title', $_POST['rank_title']);
         $obj->setVar('rank_min', $_POST['rank_min']);
@@ -178,7 +178,7 @@ switch ($op) {
                     $err[] =& $uploader_rank_img->getErrors();
                 } else {
                     $obj->setVar('rank_image', 'ranks/' . $uploader_rank_img->getSavedFileName());
-                    if (!$userrank_Handler->insert($obj)) {
+                    if (!$userrankHandler->insert($obj)) {
                         $err[] = sprintf(_FAILSAVEIMG, $obj->getVar('rank_title'));
                     }
                 }
@@ -187,7 +187,7 @@ switch ($op) {
             }
         } else {
             $obj->setVar('rank_image', 'ranks/' . $_POST['rank_image']);
-            if (!$userrank_Handler->insert($obj)) {
+            if (!$userrankHandler->insert($obj)) {
                 $err[] = sprintf(_FAILSAVEIMG, $obj->getVar('rank_title'));
             }
         }
@@ -215,12 +215,12 @@ switch ($op) {
     // Delete userrank
     case 'userrank_delete':
         $rank_id = system_CleanVars($_REQUEST, 'rank_id', 0, 'int');
-        $obj     = $userrank_Handler->get($rank_id);
+        $obj     = $userrankHandler->get($rank_id);
         if (isset($_POST['ok']) && $_POST['ok'] == 1) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header('admin.php?fct=userrank', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
             }
-            if ($userrank_Handler->delete($obj)) {
+            if ($userrankHandler->delete($obj)) {
                 $urlfile = XOOPS_UPLOAD_PATH . '/' . $obj->getVar('rank_image');
                 if (is_file($urlfile)) {
                     chmod($urlfile, 0777);
@@ -257,10 +257,10 @@ switch ($op) {
         // Get rank id
         $rank_id = system_CleanVars($_POST, 'rank_id', 0, 'int');
         if ($rank_id > 0) {
-            $obj = $userrank_Handler->get($rank_id);
+            $obj = $userrankHandler->get($rank_id);
             $old = $obj->getVar('rank_special');
             $obj->setVar('rank_special', !$old);
-            if ($userrank_Handler->insert($obj)) {
+            if ($userrankHandler->insert($obj)) {
                 exit;
             }
             echo $obj->getHtmlErrors();

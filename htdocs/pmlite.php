@@ -71,8 +71,8 @@ if (is_object($xoopsUser)) {
             echo _PM_PLZTRYAGAIN . '</h4><br>';
             echo "[ <a href='javascript:history.go(-1)' title=''>" . _PM_GOBACK . '</a> ]</div>';
         } else {
-            $pm_handler = xoops_getHandler('privmessage');
-            $pm         = $pm_handler->create();
+            $pmHandler = xoops_getHandler('privmessage');
+            $pm         = $pmHandler->create();
             $msg_image  = XoopsRequest::getCmd('icon', null, 'POST');
             if (in_array($msg_image, $subject_icons)) {
                 $pm->setVar('msg_image', $msg_image);
@@ -81,7 +81,7 @@ if (is_object($xoopsUser)) {
             $pm->setVar('msg_text', XoopsRequest::getString('message', null, 'POST'));
             $pm->setVar('to_userid', XoopsRequest::getInt('to_userid', 0, 'POST'));
             $pm->setVar('from_userid', $xoopsUser->getVar('uid'));
-            if (!$pm_handler->insert($pm)) {
+            if (!$pmHandler->insert($pm)) {
                 echo $pm->getHtmlErrors();
                 echo "<br><a href='javascript:history.go(-1)' title=''>" . _PM_GOBACK . '</a>';
             } else {
@@ -91,8 +91,8 @@ if (is_object($xoopsUser)) {
     } elseif ($reply == 1 || $send == 1 || $send2 == 1) {
         include_once $GLOBALS['xoops']->path('include/xoopscodes.php');
         if ($reply == 1) {
-            $pm_handler = xoops_getHandler('privmessage');
-            $pm         = $pm_handler->get($msg_id);
+            $pmHandler = xoops_getHandler('privmessage');
+            $pm         = $pmHandler->get($msg_id);
             if ($pm->getVar('to_userid') == $xoopsUser->getVar('uid')) {
                 $pm_uname = XoopsUser::getUnameFromId($pm->getVar('from_userid'));
                 $message  = "[quote]\n";

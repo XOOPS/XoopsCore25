@@ -33,8 +33,8 @@ if (!empty($_GET['op']) && in_array($_GET['op'], array('actv', 'activate'))) {
 xoops_load('XoopsUserUtility');
 $myts = MyTextSanitizer::getInstance();
 
-$config_handler             = xoops_getHandler('config');
-$GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+$configHandler             = xoops_getHandler('config');
+$GLOBALS['xoopsConfigUser'] = $configHandler->getConfigsByCat(XOOPS_CONF_USER);
 if (empty($GLOBALS['xoopsConfigUser']['allow_register'])) {
     redirect_header('index.php', 6, _US_NOREGISTER);
 }
@@ -67,9 +67,9 @@ if ($current_step > 0 && !$GLOBALS['xoopsSecurity']->check()) {
 
 $criteria = new CriteriaCompo();
 $criteria->setSort('step_order');
-$regstep_handler = xoops_getModuleHandler('regstep');
+$regstepHandler = xoops_getModuleHandler('regstep');
 
-if (!$steps = $regstep_handler->getAll($criteria, null, false, false)) {
+if (!$steps = $regstepHandler->getAll($criteria, null, false, false)) {
     redirect_header(XOOPS_URL . '/', 6, _PROFILE_MA_NOSTEPSAVAILABLE);
 }
 
@@ -90,16 +90,16 @@ if (isset($steps[$current_step])) {
     $xoBreadcrumbs[] = array('title' => $steps[$current_step]['step_name']);
 }
 
-$member_handler  = xoops_getHandler('member');
-$profile_handler = xoops_getModuleHandler('profile');
+$memberHandler  = xoops_getHandler('member');
+$profileHandler = xoops_getModuleHandler('profile');
 
-$fields     = $profile_handler->loadFields();
-$userfields = $profile_handler->getUserVars();
+$fields     = $profileHandler->loadFields();
+$userfields = $profileHandler->getUserVars();
 
 if ($uid == 0) {
     // No user yet? Create one and set default values.
-    $newuser = $member_handler->createUser();
-    $profile = $profile_handler->create();
+    $newuser = $memberHandler->createUser();
+    $profile = $profileHandler->create();
     if (count($fields) > 0) {
         foreach (array_keys($fields) as $i) {
             $fieldname = $fields[$i]->getVar('field_name');
@@ -114,8 +114,8 @@ if ($uid == 0) {
     }
 } else {
     // We already have a user? Just load it! Security is handled by token so there is no fake uid here.
-    $newuser = $member_handler->getUser($uid);
-    $profile = $profile_handler->get($uid);
+    $newuser = $memberHandler->getUser($uid);
+    $profile = $profileHandler->get($uid);
 }
 
 // Lets merge current $_POST  with $_SESSION['profile_post'] so we can have access to info submited in previous steps
@@ -234,13 +234,13 @@ if ($current_step > 0 && empty($stop) && (!empty($steps[$current_step - 1]['step
         }
 
         // Insert/update user and check if we have succeded
-        if (!$member_handler->insertUser($newuser)) {
+        if (!$memberHandler->insertUser($newuser)) {
             $stop .= _US_REGISTERNG . '<br>';
             $stop .= implode('<br>', $newuser->getErrors());
         } else {
             // User inserted! Now insert custom profile fields
             $profile->setVar('profile_id', $newuser->getVar('uid'));
-            $profile_handler->insert($profile);
+            $profileHandler->insert($profile);
 
             // We are good! If this is 'was' a new user then we handle notification
             if ($isNew) {
@@ -248,7 +248,7 @@ if ($current_step > 0 && empty($stop) && (!empty($steps[$current_step - 1]['step
                     $xoopsMailer =& xoops_getMailer();
                     $xoopsMailer->reset();
                     $xoopsMailer->useMail();
-                    $xoopsMailer->setToGroups($member_handler->getGroup($GLOBALS['xoopsConfigUser']['new_user_notify_group']));
+                    $xoopsMailer->setToGroups($memberHandler->getGroup($GLOBALS['xoopsConfigUser']['new_user_notify_group']));
                     $xoopsMailer->setFromEmail($GLOBALS['xoopsConfig']['adminmail']);
                     $xoopsMailer->setFromName($GLOBALS['xoopsConfig']['sitename']);
                     $xoopsMailer->setSubject(sprintf(_US_NEWUSERREGAT, $GLOBALS['xoopsConfig']['sitename']));
@@ -257,7 +257,7 @@ if ($current_step > 0 && empty($stop) && (!empty($steps[$current_step - 1]['step
                 }
 
                 $message = '';
-                if (!$member_handler->addUserToGroup(XOOPS_GROUP_USERS, $newuser->getVar('uid'))) {
+                if (!$memberHandler->addUserToGroup(XOOPS_GROUP_USERS, $newuser->getVar('uid'))) {
                     $message = _PROFILE_MA_REGISTER_NOTGROUP . '<br>';
                 } else {
                     if ($GLOBALS['xoopsConfigUser']['activation_type'] == 1) {
@@ -293,7 +293,7 @@ if ($current_step > 0 && empty($stop) && (!empty($steps[$current_step - 1]['step
                                 $xoopsMailer->assign('SITENAME', $GLOBALS['xoopsConfig']['sitename']);
                                 $xoopsMailer->assign('ADMINMAIL', $GLOBALS['xoopsConfig']['adminmail']);
                                 $xoopsMailer->assign('SITEURL', XOOPS_URL . '/');
-                                $xoopsMailer->setToGroups($member_handler->getGroup($GLOBALS['xoopsConfigUser']['activation_group']));
+                                $xoopsMailer->setToGroups($memberHandler->getGroup($GLOBALS['xoopsConfigUser']['activation_group']));
                                 $xoopsMailer->setFromEmail($GLOBALS['xoopsConfig']['adminmail']);
                                 $xoopsMailer->setFromName($GLOBALS['xoopsConfig']['sitename']);
                                 $xoopsMailer->setSubject(sprintf(_US_USERKEYFOR, $newuser->getVar('uname')));

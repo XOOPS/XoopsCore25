@@ -31,8 +31,8 @@
 $groups = $GLOBALS['xoopsUser']->getGroups();
 $all_ok = false;
 if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
-    $sysperm_handler = xoops_getHandler('groupperm');
-    $ok_syscats      = $sysperm_handler->getItemIds('system_admin', $groups);
+    $syspermHandler = xoops_getHandler('groupperm');
+    $ok_syscats      = $syspermHandler->getItemIds('system_admin', $groups);
 } else {
     $all_ok = true;
 }

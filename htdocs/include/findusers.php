@@ -289,8 +289,8 @@ class XoUserHandler extends XoopsObjectHandler
     }
 }
 
-$rank_handler = new XoopsRankHandler($xoopsDB);
-$user_handler = new XoUserHandler($xoopsDB);
+$rankHandler = new XoopsRankHandler($xoopsDB);
+$userHandler = new XoUserHandler($xoopsDB);
 
 $items_match = array(
     'uname'     => _MA_USER_UNAME,
@@ -367,13 +367,13 @@ if (empty($_POST['user_submit'])) {
                 3 => _MA_USER_LEVEL_DISABLED);
             $level_radio->addOptionArray($levels);
 
-            $member_handler = xoops_getHandler('member');
-            $groups         = $member_handler->getGroupList();
+            $memberHandler = xoops_getHandler('member');
+            $groups         = $memberHandler->getGroupList();
             $groups[0]      = _ALL;
             $group_select   = new XoopsFormSelect(_MA_USER_GROUP, 'groups', @$_POST['groups'], 3, true);
             $group_select->addOptionArray($groups);
 
-            $ranks       = $rank_handler->getList();
+            $ranks       = $rankHandler->getList();
             $ranks[0]    = _ALL;
             $rank_select = new XoopsFormSelect(_MA_USER_RANK, 'rank', (int)(@$_POST['rank']));
             $rank_select->addOptionArray($ranks);
@@ -422,8 +422,8 @@ if (empty($_POST['user_submit'])) {
     $form->addElement(new XoopsFormHidden('token', $token));
     $form->addElement(new XoopsFormButton('', 'user_submit', _SUBMIT, 'submit'));
 
-    $acttotal   = $user_handler->getCount(new Criteria('level', 0, '>'));
-    $inacttotal = $user_handler->getCount(new Criteria('level', 0, '<='));
+    $acttotal   = $userHandler->getCount(new Criteria('level', 0, '>'));
+    $inacttotal = $userHandler->getCount(new Criteria('level', 0, '<='));
     echo '</html><body>';
     echo "<h2 style='text-align:left;'>" . _MA_USER_FINDUS . ' - ' . $modes[$mode] . '</h2>';
     $modes_switch = array();
@@ -520,7 +520,7 @@ if (empty($_POST['user_submit'])) {
             $criteria->add(new Criteria('level', $level));
         }
         if (!empty($_POST['rank'])) {
-            $rank_obj = $rank_handler->get($_POST['rank']);
+            $rank_obj = $rankHandler->get($_POST['rank']);
             if ($rank_obj->getVar('rank_special')) {
                 $criteria->add(new Criteria('rank', (int)$_POST['rank']));
             } else {
@@ -532,7 +532,7 @@ if (empty($_POST['user_submit'])) {
                 }
             }
         }
-        $total     = $user_handler->getCount($criteria, @$_POST['groups']);
+        $total     = $userHandler->getCount($criteria, @$_POST['groups']);
         $validsort = array(
             'uname',
             'email',
@@ -548,7 +548,7 @@ if (empty($_POST['user_submit'])) {
         $criteria->setOrder($order);
         $criteria->setLimit($limit);
         $criteria->setStart($start);
-        $foundusers = $user_handler->getAll($criteria, @$_POST['groups']);
+        $foundusers = $userHandler->getAll($criteria, @$_POST['groups']);
     } else {
         $query = trim($_POST['query']);
         // Query with alias
@@ -572,7 +572,7 @@ if (empty($_POST['user_submit'])) {
         $result     = $xoopsDB->query($query, $limit, $start);
         $foundusers = array();
         while ($myrow = $xoopsDB->fetchArray($result)) {
-            $object = $user_handler->create(false);
+            $object = $userHandler->create(false);
             $object->assignVars($myrow);
             $foundusers[$myrow['uid']] = $object;
             unset($object);

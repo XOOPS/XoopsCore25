@@ -108,8 +108,8 @@ if ($op === 'logout') {
     setcookie($xoopsConfig['usercookie'], null, -1);
     // clear entry from online users table
     if (is_object($xoopsUser)) {
-        $online_handler = xoops_getHandler('online');
-        $online_handler->destroy($xoopsUser->getVar('uid'));
+        $onlineHandler = xoops_getHandler('online');
+        $onlineHandler->destroy($xoopsUser->getVar('uid'));
     }
     $message = _US_LOGGEDOUT . '<br>' . _US_THANKYOUFORVISIT;
     redirect_header('index.php', 1, $message);
@@ -123,8 +123,8 @@ if ($op === 'actv') {
 }
 
 if ($op === 'delete') {
-    $config_handler  = xoops_getHandler('config');
-    $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+    $configHandler  = xoops_getHandler('config');
+    $xoopsConfigUser = $configHandler->getConfigsByCat(XOOPS_CONF_USER);
     if (!$xoopsUser || $xoopsConfigUser['self_delete'] != 1) {
         redirect_header('index.php', 5, _US_NOPERMISS);
     } else {
@@ -139,10 +139,10 @@ if ($op === 'delete') {
             include $GLOBALS['xoops']->path('footer.php');
         } else {
             $del_uid        = $xoopsUser->getVar('uid');
-            $member_handler = xoops_getHandler('member');
-            if (false !== $member_handler->deleteUser($xoopsUser)) {
-                $online_handler = xoops_getHandler('online');
-                $online_handler->destroy($del_uid);
+            $memberHandler = xoops_getHandler('member');
+            if (false !== $memberHandler->deleteUser($xoopsUser)) {
+                $onlineHandler = xoops_getHandler('online');
+                $onlineHandler->destroy($del_uid);
                 xoops_notification_deletebyuser($del_uid);
                 redirect_header('index.php', 5, _US_BEENDELED);
             }

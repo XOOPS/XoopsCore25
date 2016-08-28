@@ -68,8 +68,8 @@ switch ($op) {
         $form = new XoopsThemeForm(_AM_SYSTEM_TEMPLATES_GENERATE, 'form', 'admin.php?fct=tplsets', 'post', true);
 
         $ele            = new XoopsFormSelect(_AM_SYSTEM_TEMPLATES_SET, 'tplset', $GLOBALS['xoopsConfig']['template_set']);
-        $tplset_handler = xoops_getHandler('tplset');
-        $tplsetlist     = $tplset_handler->getList();
+        $tplsetHandler = xoops_getHandler('tplset');
+        $tplsetlist     = $tplsetHandler->getList();
         asort($tplsetlist);
         foreach ($tplsetlist as $key => $name) {
             $ele->addOption($key, $name);
@@ -79,9 +79,9 @@ switch ($op) {
         $form->addElement(new XoopsFormRadioYN(_AM_SYSTEM_TEMPLATES_FORCE_GENERATED, 'force_generated', 0, _YES, _NO), true);
 
         $modules        = new XoopsFormSelect(_AM_SYSTEM_TEMPLATES_SELECT_MODULES, 'select_modules');
-        $module_handler = xoops_getHandler('module');
+        $moduleHandler = xoops_getHandler('module');
         $criteria       = new CriteriaCompo(new Criteria('isactive', 1));
-        $moduleslist    = $module_handler->getList($criteria, true);
+        $moduleslist    = $moduleHandler->getList($criteria, true);
         $modules->addOption(0, _AM_SYSTEM_TEMPLATES_ALL_MODULES);
         $modules->addOptionArray($moduleslist);
         $form->addElement($modules, true);
@@ -125,27 +125,27 @@ switch ($op) {
                 $tplset = system_CleanVars($POST, 'tplset', 'default', 'string');
 
                 //on crée uniquement les templates qui n'existent pas
-                $module_handler = xoops_getHandler('module');
-                $tplset_handler = xoops_getHandler('tplset');
-                $tpltpl_handler = xoops_getHandler('tplfile');
+                $moduleHandler = xoops_getHandler('module');
+                $tplsetHandler = xoops_getHandler('tplset');
+                $tpltplHandler = xoops_getHandler('tplfile');
 
                 $criteria = new CriteriaCompo();
                 $criteria->add(new Criteria('tplset_name', $tplset));
-                $tplsets_arr = $tplset_handler->getObjects();
-                $tcount      = $tplset_handler->getCount();
+                $tplsets_arr = $tplsetHandler->getObjects();
+                $tcount      = $tplsetHandler->getCount();
 
-                $tpltpl_handler = xoops_getHandler('tplfile');
-                $installed_mods = $tpltpl_handler->getModuleTplCount($tplset);
+                $tpltplHandler = xoops_getHandler('tplfile');
+                $installed_mods = $tpltplHandler->getModuleTplCount($tplset);
 
                 //all templates or only one template
                 if ($_REQUEST['active_templates'] == 0) {
                     foreach (array_keys($tplsets_arr) as $i) {
                         $tplsetname = $tplsets_arr[$i]->getVar('tplset_name');
-                        $tplstats   = $tpltpl_handler->getModuleTplCount($tplsetname);
+                        $tplstats   = $tpltplHandler->getModuleTplCount($tplsetname);
 
                         if (count($tplstats) > 0) {
                             foreach ($tplstats as $moddir => $filecount) {
-                                $module =& $module_handler->getByDirname($moddir);
+                                $module = $moduleHandler->getByDirname($moddir);
                                 if (is_object($module)) {
                                     // create module folder
                                     if (!is_dir($theme_surcharge . '/' . $module->getVar('dirname'))) {
@@ -167,14 +167,14 @@ switch ($op) {
                                     $text .= '<table cellspacing="1" class="outer"><tr><th colspan="3" align="center">' . _AM_SYSTEM_TEMPLATES_MODULES . ucfirst($module->getVar('dirname')) . '</th></tr><tr><th align="center">' . _AM_SYSTEM_TEMPLATES_TYPES . '</th><th  align="center">' . _AM_SYSTEM_TEMPLATES_FILES . '</th><th>' . _AM_SYSTEM_TEMPLATES_STATUS . '</th></tr>';
 
                                     // create template
-                                    $templates      =& $tpltpl_handler->find($tplsetname, 'module', null, $moddir);
+                                    $templates      =& $tpltplHandler->find($tplsetname, 'module', null, $moddir);
                                     $templatesCount = count($templates);
                                     for ($j = 0; $j < $templatesCount; ++$j) {
                                         $filename = $templates[$j]->getVar('tpl_file');
                                         if ($tplsetname == $tplset) {
                                             $physical_file = XOOPS_THEME_PATH . '/' . $_REQUEST['select_theme'] . '/modules/' . $moddir . '/' . $filename;
 
-                                            $tplfile = $tpltpl_handler->get($templates[$j]->getVar('tpl_id'), true);
+                                            $tplfile = $tpltplHandler->get($templates[$j]->getVar('tpl_id'), true);
 
                                             if (is_object($tplfile)) {
                                                 if (!file_exists($physical_file) || $_REQUEST['force_generated'] == 1) {
@@ -196,13 +196,13 @@ switch ($op) {
                                     }
 
                                     // create block template
-                                    $btemplates      =& $tpltpl_handler->find($tplsetname, 'block', null, $moddir);
+                                    $btemplates      =& $tpltplHandler->find($tplsetname, 'block', null, $moddir);
                                     $btemplatesCount = count($btemplates);
                                     for ($k = 0; $k < $btemplatesCount; ++$k) {
                                         $filename = $btemplates[$k]->getVar('tpl_file');
                                         if ($tplsetname == $tplset) {
                                             $physical_file = XOOPS_THEME_PATH . '/' . $_REQUEST['select_theme'] . '/modules/' . $moddir . '/blocks/' . $filename;
-                                            $btplfile      = $tpltpl_handler->get($btemplates[$k]->getVar('tpl_id'), true);
+                                            $btplfile      = $tpltplHandler->get($btemplates[$k]->getVar('tpl_id'), true);
 
                                             if (is_object($btplfile)) {
                                                 if (!file_exists($physical_file) || $_REQUEST['force_generated'] == 1) {
@@ -231,11 +231,11 @@ switch ($op) {
                 } else {
                     foreach (array_keys($tplsets_arr) as $i) {
                         $tplsetname = $tplsets_arr[$i]->getVar('tplset_name');
-                        $tplstats   = $tpltpl_handler->getModuleTplCount($tplsetname);
+                        $tplstats   = $tpltplHandler->getModuleTplCount($tplsetname);
 
                         if (count($tplstats) > 0) {
                             $moddir = $_REQUEST['select_modules'];
-                            $module =& $module_handler->getByDirname($moddir);
+                            $module = $moduleHandler->getByDirname($moddir);
                             if (is_object($module)) {
                                 // create module folder
                                 if (!is_dir($theme_surcharge . '/' . $module->getVar('dirname'))) {
@@ -259,14 +259,14 @@ switch ($op) {
                                 $tempCount                = count($_REQUEST['select_templates_modules']);
                                 for ($l = 0; $l < $tempCount; ++$l) {
                                     // create template
-                                    $templates      =& $tpltpl_handler->find($tplsetname, 'module', null, $moddir);
+                                    $templates      =& $tpltplHandler->find($tplsetname, 'module', null, $moddir);
                                     $templatesCount = count($templates);
                                     for ($j = 0; $j < $templatesCount; ++$j) {
                                         $filename = $templates[$j]->getVar('tpl_file');
                                         if ($tplsetname == $tplset) {
                                             $physical_file = XOOPS_THEME_PATH . '/' . $_REQUEST['select_theme'] . '/modules/' . $moddir . '/' . $filename;
 
-                                            $tplfile = $tpltpl_handler->get($templates[$j]->getVar('tpl_id'), true);
+                                            $tplfile = $tpltplHandler->get($templates[$j]->getVar('tpl_id'), true);
 
                                             if (is_object($tplfile)) {
                                                 if (!file_exists($physical_file) || $_REQUEST['force_generated'] == 1) {
@@ -290,13 +290,13 @@ switch ($op) {
                                     }
 
                                     // create block template
-                                    $btemplates      =& $tpltpl_handler->find($tplsetname, 'block', null, $moddir);
+                                    $btemplates      =& $tpltplHandler->find($tplsetname, 'block', null, $moddir);
                                     $btemplatesCount = count($btemplates);
                                     for ($k = 0; $k < $btemplatesCount; ++$k) {
                                         $filename = $btemplates[$k]->getVar('tpl_file');
                                         if ($tplsetname == $tplset) {
                                             $physical_file = XOOPS_THEME_PATH . '/' . $_REQUEST['select_theme'] . '/modules/' . $moddir . '/blocks/' . $filename;
-                                            $btplfile      = $tpltpl_handler->get($btemplates[$k]->getVar('tpl_id'), true);
+                                            $btplfile      = $tpltplHandler->get($btemplates[$k]->getVar('tpl_id'), true);
 
                                             if (is_object($btplfile)) {
                                                 if (!file_exists($physical_file) || $_REQUEST['force_generated'] == 1) {
@@ -338,8 +338,8 @@ switch ($op) {
 
             $form = new XoopsThemeForm(_AM_SYSTEM_TEMPLATES_SELECT_TEMPLATES, 'form', 'admin.php?fct=tplsets', 'post', true);
 
-            $tpltpl_handler = xoops_getHandler('tplfile');
-            $templates_arr  = $tpltpl_handler->find($tplset, '', null, $_REQUEST['select_modules']);
+            $tpltplHandler = xoops_getHandler('tplfile');
+            $templates_arr  = $tpltplHandler->find($tplset, '', null, $_REQUEST['select_modules']);
 
             $modules = new XoopsFormSelect(_AM_SYSTEM_TEMPLATES_SELECT_TEMPLATES, 'select_templates_modules', null, 10, true);
             foreach (array_keys($templates_arr) as $i) {

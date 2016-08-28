@@ -17,7 +17,7 @@
  * @subpackage          CAPTCHA
  */
 
-include '../../../../mainfile.php';
+include __DIR__ . '/../../../../mainfile.php';
 
 error_reporting(0);
 $xoopsLogger->activated = false;
@@ -409,5 +409,5 @@ class XoopsCaptchaImageHandler
     }
 }
 
-$image_handler = new XoopsCaptchaImageHandler();
-$image_handler->loadImage();
+$imageHandler = new XoopsCaptchaImageHandler();
+$imageHandler->loadImage();

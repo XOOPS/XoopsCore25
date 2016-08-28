@@ -37,8 +37,8 @@ if (!isset($_POST['submit'])) {
 
     $xoBreadcrumbs[] = array('title' => _PROFILE_MA_CHANGEPASSWORD);
 } else {
-    $config_handler             = xoops_getHandler('config');
-    $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+    $configHandler             = xoops_getHandler('config');
+    $GLOBALS['xoopsConfigUser'] = $configHandler->getConfigsByCat(XOOPS_CONF_USER);
     $myts                       = MyTextSanitizer::getInstance();
     $oldpass                    = @$myts->stripSlashesGPC(trim($_POST['oldpass']));
     $password                   = @$myts->stripSlashesGPC(trim($_POST['newpass']));
@@ -60,9 +60,9 @@ if (!isset($_POST['submit'])) {
         //update password
         $GLOBALS['xoopsUser']->setVar('pass', password_hash($password, PASSWORD_DEFAULT));
 
-        $member_handler = xoops_getHandler('member');
+        $memberHandler = xoops_getHandler('member');
         $msg = _PROFILE_MA_ERRORDURINGSAVE;
-        if ($member_handler->insertUser($GLOBALS['xoopsUser'])) {
+        if ($memberHandler->insertUser($GLOBALS['xoopsUser'])) {
             $msg = _PROFILE_MA_PASSWORDCHANGED;
         }
     }

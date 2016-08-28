@@ -9,8 +9,8 @@ function protector_postcommon()
 
     // patch for 2.2.x from xoops.org (I know this is not so beautiful...)
     if (substr(@XOOPS_VERSION, 6, 3) > 2.0 && false !== stripos(@$_SERVER['REQUEST_URI'], 'modules/system/admin.php?fct=preferences')) {
-        $module_handler = xoops_getHandler('module');
-        $module         = $module_handler->get((int)(@$_GET['mod']));
+        $moduleHandler = xoops_getHandler('module');
+        $module         = $moduleHandler->get((int)(@$_GET['mod']));
         if (is_object($module)) {
             $module->getInfo();
         }
@@ -35,8 +35,8 @@ function protector_postcommon()
     // phpmailer vulnerability
     // http://larholm.com/2007/06/11/phpmailer-0day-remote-execution/
     if (in_array(substr(XOOPS_VERSION, 0, 12), array('XOOPS 2.0.16', 'XOOPS 2.0.13', 'XOOPS 2.2.4'))) {
-        $config_handler    = xoops_getHandler('config');
-        $xoopsMailerConfig = $config_handler->getConfigsByCat(XOOPS_CONF_MAILER);
+        $configHandler    = xoops_getHandler('config');
+        $xoopsMailerConfig = $configHandler->getConfigsByCat(XOOPS_CONF_MAILER);
         if ($xoopsMailerConfig['mailmethod'] === 'sendmail' && md5_file(XOOPS_ROOT_PATH . '/class/mail/phpmailer/class.phpmailer.php') === 'ee1c09a8e579631f0511972f929fe36a') {
             echo '<strong>phpmailer security hole! Change the preferences of mail from "sendmail" to another, or upgrade the core right now! (message by protector)</strong>';
         }

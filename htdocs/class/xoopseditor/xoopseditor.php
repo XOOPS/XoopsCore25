@@ -153,8 +153,8 @@ class XoopsEditorHandler
     {
         /*
             Do NOT use this method statically, please use
-            $editor_handler = XoopsEditorHandler::getInstance();
-            $result = array_flip($editor_handler->getList());
+            $editorHandler = XoopsEditorHandler::getInstance();
+            $result = array_flip($editorHandler->getList());
         */
         if (!isset($this->root_path)) {
             $this->root_path = XOOPS_ROOT_PATH . '/class/xoopseditor';

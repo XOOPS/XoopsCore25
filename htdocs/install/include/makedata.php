@@ -26,12 +26,12 @@
  * @param $dbm
  * @return bool
  */
-// include_once './class/dbmanager.php';
+// include_once __DIR__ . '/../class/dbmanager.php';
 // RMV
 // TODO: Shouldn't we insert specific field names??  That way we can use
 // the defaults specified in the database...!!!! (and don't have problem
 // of missing fields in install file, when add new fields to database)
-function make_groups(&$dbm)
+function make_groups($dbm)
 {
     $gruops['XOOPS_GROUP_ADMIN']     = $dbm->insert('groups', " VALUES (1, '" . addslashes(_INSTALL_WEBMASTER) . "', '" . addslashes(_INSTALL_WEBMASTERD) . "', 'Admin')");
     $gruops['XOOPS_GROUP_USERS']     = $dbm->insert('groups', " VALUES (2, '" . addslashes(_INSTALL_REGUSERS) . "', '" . addslashes(_INSTALL_REGUSERSD) . "', 'User')");
@@ -53,7 +53,7 @@ function make_groups(&$dbm)
  *
  * @return mixed
  */
-function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $groups)
+function make_data($dbm, $adminname, $hashedAdminPass, $adminmail, $language, $groups)
 {
     // $xoopsDB = Database::getInstance();
     // $dbm = new Db_manager;
@@ -93,40 +93,40 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
     $time = time();
     $dbm->insert('tplset', " VALUES (1, 'default', 'XOOPS Default Template Set', '', " . $time . ')');
     // system modules
-    if (file_exists('../modules/system/language/' . $language . '/modinfo.php')) {
-        include '../modules/system/language/' . $language . '/modinfo.php';
+    if (file_exists(__DIR__ . '/../../modules/system/language/' . $language . '/modinfo.php')) {
+        include __DIR__ . '/../../modules/system/language/' . $language . '/modinfo.php';
     } else {
-        include '../modules/system/language/english/modinfo.php';
+        include __DIR__ . '/../../modules/system/language/english/modinfo.php';
         $language = 'english';
     }
 
     $modversion = array();
-    include_once '../modules/system/xoops_version.php';
+    include_once __DIR__ . '/../../modules/system/xoops_version.php';
     $time = time();
     // RMV-NOTIFY (updated for extra column in table)
     $dbm->insert('modules', " VALUES (1, '" . _MI_SYSTEM_NAME . "', " . ($modversion['version'] * 100) . ', ' . $time . ", 0, 1, 'system', 0, 1, 0, 0, 0, 0)");
 
     foreach ($modversion['templates'] as $tplfile) {
         // Main templates
-        if ($fp = fopen('../modules/system/templates/' . $tplfile['file'], 'r')) {
+        if ($fp = fopen(__DIR__ . '/../../modules/system/templates/' . $tplfile['file'], 'r')) {
             $newtplid = $dbm->insert('tplfile', " VALUES (0, 1, 'system', 'default', '" . addslashes($tplfile['file']) . "', '" . addslashes($tplfile['description']) . "', " . $time . ', ' . $time . ", 'module')");
             // $newtplid = $xoopsDB->getInsertId();
-            $tplsource = fread($fp, filesize('../modules/system/templates/' . $tplfile['file']));
+            $tplsource = fread($fp, filesize(__DIR__ . '/../../modules/system/templates/' . $tplfile['file']));
             fclose($fp);
             $dbm->insert('tplsource', ' (tpl_id, tpl_source) VALUES (' . $newtplid . ", '" . addslashes($tplsource) . "')");
         }
         // Admin templates
-        if ($fp = fopen('../modules/system/templates/admin/' . $tplfile['file'], 'r')) {
+        if ($fp = fopen(__DIR__ . '/../../modules/system/templates/admin/' . $tplfile['file'], 'r')) {
             $newtplid = $dbm->insert('tplfile', " VALUES (0, 1, 'system', 'default', '" . addslashes($tplfile['file']) . "', '" . addslashes($tplfile['description']) . "', " . $time . ', ' . $time . ", 'admin')");
             // $newtplid = $xoopsDB->getInsertId();
-            $tplsource = fread($fp, filesize('../modules/system/templates/admin/' . $tplfile['file']));
+            $tplsource = fread($fp, filesize(__DIR__ . '/../../modules/system/templates/admin/' . $tplfile['file']));
             fclose($fp);
             $dbm->insert('tplsource', ' (tpl_id, tpl_source) VALUES (' . $newtplid . ", '" . addslashes($tplsource) . "')");
         }
     }
 
     foreach ($modversion['blocks'] as $func_num => $newblock) {
-        if ($fp = fopen('../modules/system/templates/blocks/' . $newblock['template'], 'r')) {
+        if ($fp = fopen(__DIR__ . '/../../modules/system/templates/blocks/' . $newblock['template'], 'r')) {
             $visible = 0;
             if (in_array($newblock['template'], array('system_block_user.tpl', 'system_block_login.tpl', 'system_block_mainmenu.tpl'))) {
                 $visible = 1;
@@ -137,7 +137,7 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
             // $newbid = $xoopsDB->getInsertId();
             $newtplid = $dbm->insert('tplfile', ' VALUES (0, ' . $newbid . ", 'system', 'default', '" . addslashes($newblock['template']) . "', '" . addslashes($newblock['description']) . "', " . $time . ', ' . $time . ", 'block')");
             // $newtplid = $xoopsDB->getInsertId();
-            $tplsource = fread($fp, filesize('../modules/system/templates/blocks/' . $newblock['template']));
+            $tplsource = fread($fp, filesize(__DIR__ . '/../../modules/system/templates/blocks/' . $newblock['template']));
             fclose($fp);
             $dbm->insert('tplsource', ' (tpl_id, tpl_source) VALUES (' . $newtplid . ", '" . addslashes($tplsource) . "')");
             $dbm->insert('group_permission', ' VALUES (0, ' . $groups['XOOPS_GROUP_ADMIN'] . ', ' . $newbid . ", 1, 'block_read')");
@@ -308,7 +308,7 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
 
     $dbm->insert('config', " VALUES (134, 0, 1, 'redirect_message_ajax', '_MD_AM_CUSTOM_REDIRECT', '1', '_MD_AM_CUSTOM_REDIRECT_DESC', 'yesno', 'int', 12)");
 
-    require_once '../class/xoopslists.php';
+    require_once __DIR__ . '/../../class/xoopslists.php';
     $editors = XoopsLists::getDirListAsArray('../class/xoopseditor');
     $conf    = 35;
     foreach ($editors as $dir) {
@@ -323,17 +323,17 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
         $dbm->insert('configoption', ' VALUES (' . $conf . ", '" . $dir . "', '" . $dir . "', 128)");
         ++$conf;
     }
-    $icons = XoopsLists::getDirListAsArray('../modules/system/images/icons');
+    $icons = XoopsLists::getDirListAsArray(__DIR__ . '/../../modules/system/images/icons');
     foreach ($icons as $dir) {
         $dbm->insert('configoption', ' VALUES (' . $conf . ", '" . $dir . "', '" . $dir . "', 98)");
         ++$conf;
     }
-    $breadcrumb = XoopsLists::getDirListAsArray('../modules/system/images/breadcrumb');
+    $breadcrumb = XoopsLists::getDirListAsArray(__DIR__ . '/../../modules/system/images/breadcrumb');
     foreach ($breadcrumb as $dir) {
         $dbm->insert('configoption', ' VALUES (' . $conf . ", '" . $dir . "', '" . $dir . "', 99)");
         ++$conf;
     }
-    $jqueryui = XoopsLists::getDirListAsArray('../modules/system/css/ui');
+    $jqueryui = XoopsLists::getDirListAsArray(__DIR__ . '/../../modules/system/css/ui');
     foreach ($jqueryui as $dir) {
         $dbm->insert('configoption', ' VALUES (' . $conf . ", '" . $dir . "', '" . $dir . "', 133)");
         ++$conf;

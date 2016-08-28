@@ -38,8 +38,8 @@ $nb_group = xoops_getModuleOption('groups_pager', 'system');
 // Get Action type
 $op = system_CleanVars($_REQUEST, 'op', 'list', 'string');
 // Get groups handler
-$groups_Handler = xoops_getModuleHandler('group', 'system');
-$member_handler = xoops_getHandler('member');
+$groupsHandler = xoops_getModuleHandler('group', 'system');
+$memberHandler = xoops_getHandler('member');
 // Define main template
 $GLOBALS['xoopsOption']['template_main'] = 'system_groups.tpl';
 // Call Header
@@ -68,8 +68,8 @@ switch ($op) {
         $criteria->setStart($start);
         $criteria->setLimit($nb_group);
         // Count group
-        $groups_count = $groups_Handler->getCount($criteria);
-        $groups_arr   = $groups_Handler->getall($criteria);
+        $groups_count = $groupsHandler->getCount($criteria);
+        $groups_arr   = $groupsHandler->getall($criteria);
         // Assign Template variables
         $xoopsTpl->assign('groups_count', $groups_count);
         if ($groups_count > 0) {
@@ -78,10 +78,10 @@ switch ($op) {
                 $groups['groups_id']   = $groups_id;
                 $groups['name']        = $groups_arr[$i]->getVar('name');
                 $groups['description'] = $groups_arr[$i]->getVar('description');
-                $member_handler        = xoops_getHandler('member', 'system');
+                $memberHandler        = xoops_getHandler('member', 'system');
                 if ($groups_id != 3) {
                     $group_id_arr[0]              = $groups_id;
-                    $nb_users_by_groups           = $member_handler->getUserCountByGroupLink($group_id_arr);
+                    $nb_users_by_groups           = $memberHandler->getUserCountByGroupLink($group_id_arr);
                     $groups['nb_users_by_groups'] = sprintf(_AM_SYSTEM_GROUPS_NB_USERS_BY_GROUPS_USERS, $nb_users_by_groups);
                 } else {
                     $groups['nb_users_by_groups'] = '';
@@ -115,7 +115,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(_AM_SYSTEM_GROUPS_NAV_TIPS_2);
         $xoBreadCrumb->render();
         // Create form
-        $obj  = $groups_Handler->create();
+        $obj  = $groupsHandler->create();
         $form = $obj->getForm();
         // Assign form
         $xoopsTpl->assign('form', $form->render());
@@ -133,7 +133,7 @@ switch ($op) {
         // Create form
         $groups_id = system_CleanVars($_REQUEST, 'groups_id', 0, 'int');
         if ($groups_id > 0) {
-            $obj  = $groups_Handler->get($groups_id);
+            $obj  = $groupsHandler->get($groups_id);
             $form = $obj->getForm();
             // Assign form
             $xoopsTpl->assign('form', $form->render());
@@ -152,55 +152,55 @@ switch ($op) {
         $read_mids     = system_CleanVars($_POST, 'read_mids', array(), 'array');
         $read_bids     = system_CleanVars($_POST, 'read_bids', array(), 'array');
 
-        $member_handler = xoops_getHandler('member');
-        $group          = $member_handler->createGroup();
+        $memberHandler = xoops_getHandler('member');
+        $group          = $memberHandler->createGroup();
         $group->setVar('name', $_POST['name']);
         $group->setVar('description', $_POST['desc']);
         if (count($system_catids) > 0) {
             $group->setVar('group_type', 'Admin');
         }
-        if (!$member_handler->insertGroup($group)) {
+        if (!$memberHandler->insertGroup($group)) {
             xoops_cp_header();
             xoops_error($group->getHtmlErrors());
             xoops_cp_footer();
         } else {
             $groupid       = $group->getVar('groupid');
-            $gperm_handler = xoops_getHandler('groupperm');
+            $gpermHandler = xoops_getHandler('groupperm');
             if (count($system_catids) > 0) {
                 $admin_mids[] = 1;
                 foreach ($system_catids as $s_cid) {
-                    $sysperm = $gperm_handler->create();
+                    $sysperm = $gpermHandler->create();
                     $sysperm->setVar('gperm_groupid', $groupid);
                     $sysperm->setVar('gperm_itemid', $s_cid);
                     $sysperm->setVar('gperm_name', 'system_admin');
                     $sysperm->setVar('gperm_modid', 1);
-                    $gperm_handler->insert($sysperm);
+                    $gpermHandler->insert($sysperm);
                 }
             }
             foreach ($admin_mids as $a_mid) {
-                $modperm = $gperm_handler->create();
+                $modperm = $gpermHandler->create();
                 $modperm->setVar('gperm_groupid', $groupid);
                 $modperm->setVar('gperm_itemid', $a_mid);
                 $modperm->setVar('gperm_name', 'module_admin');
                 $modperm->setVar('gperm_modid', 1);
-                $gperm_handler->insert($modperm);
+                $gpermHandler->insert($modperm);
             }
             $read_mids[] = 1;
             foreach ($read_mids as $r_mid) {
-                $modperm = $gperm_handler->create();
+                $modperm = $gpermHandler->create();
                 $modperm->setVar('gperm_groupid', $groupid);
                 $modperm->setVar('gperm_itemid', $r_mid);
                 $modperm->setVar('gperm_name', 'module_read');
                 $modperm->setVar('gperm_modid', 1);
-                $gperm_handler->insert($modperm);
+                $gpermHandler->insert($modperm);
             }
             foreach ($read_bids as $r_bid) {
-                $blockperm = $gperm_handler->create();
+                $blockperm = $gpermHandler->create();
                 $blockperm->setVar('gperm_groupid', $groupid);
                 $blockperm->setVar('gperm_itemid', $r_bid);
                 $blockperm->setVar('gperm_name', 'block_read');
                 $blockperm->setVar('gperm_modid', 1);
-                $gperm_handler->insert($blockperm);
+                $gpermHandler->insert($blockperm);
             }
             redirect_header('admin.php?fct=groups', 1, _AM_SYSTEM_GROUPS_DBUPDATED);
         }
@@ -216,10 +216,10 @@ switch ($op) {
         $read_mids     = system_CleanVars($_POST, 'read_mids', array(), 'array');
         $read_bids     = system_CleanVars($_POST, 'read_bids', array(), 'array');
 
-        $member_handler = xoops_getHandler('member');
+        $memberHandler = xoops_getHandler('member');
         $gid            = system_CleanVars($_POST, 'g_id', 0, 'int');
         if ($gid > 0) {
-            $group = $member_handler->getGroup($gid);
+            $group = $memberHandler->getGroup($gid);
             $group->setVar('name', $_POST['name']);
             $group->setVar('description', $_POST['desc']);
             // if this group is not one of the default groups
@@ -230,13 +230,13 @@ switch ($op) {
                     $group->setVar('group_type', '');
                 }
             }
-            if (!$member_handler->insertGroup($group)) {
+            if (!$memberHandler->insertGroup($group)) {
                 xoops_cp_header();
                 echo $group->getHtmlErrors();
                 xoops_cp_footer();
             } else {
                 $groupid       = $group->getVar('groupid');
-                $gperm_handler = xoops_getHandler('groupperm');
+                $gpermHandler = xoops_getHandler('groupperm');
                 $criteria      = new CriteriaCompo(new Criteria('gperm_groupid', $groupid));
                 $criteria->add(new Criteria('gperm_modid', 1));
                 $criteria2 = new CriteriaCompo(new Criteria('gperm_name', 'system_admin'));
@@ -244,42 +244,42 @@ switch ($op) {
                 $criteria2->add(new Criteria('gperm_name', 'module_read'), 'OR');
                 $criteria2->add(new Criteria('gperm_name', 'block_read'), 'OR');
                 $criteria->add($criteria2);
-                $gperm_handler->deleteAll($criteria);
+                $gpermHandler->deleteAll($criteria);
                 if (count($system_catids) > 0) {
                     $admin_mids[] = 1;
                     foreach ($system_catids as $s_cid) {
-                        $sysperm = $gperm_handler->create();
+                        $sysperm = $gpermHandler->create();
                         $sysperm->setVar('gperm_groupid', $groupid);
                         $sysperm->setVar('gperm_itemid', $s_cid);
                         $sysperm->setVar('gperm_name', 'system_admin');
                         $sysperm->setVar('gperm_modid', 1);
-                        $gperm_handler->insert($sysperm);
+                        $gpermHandler->insert($sysperm);
                     }
                 }
                 foreach ($admin_mids as $a_mid) {
-                    $modperm = $gperm_handler->create();
+                    $modperm = $gpermHandler->create();
                     $modperm->setVar('gperm_groupid', $groupid);
                     $modperm->setVar('gperm_itemid', $a_mid);
                     $modperm->setVar('gperm_name', 'module_admin');
                     $modperm->setVar('gperm_modid', 1);
-                    $gperm_handler->insert($modperm);
+                    $gpermHandler->insert($modperm);
                 }
                 $read_mids[] = 1;
                 foreach ($read_mids as $r_mid) {
-                    $modperm = $gperm_handler->create();
+                    $modperm = $gpermHandler->create();
                     $modperm->setVar('gperm_groupid', $groupid);
                     $modperm->setVar('gperm_itemid', $r_mid);
                     $modperm->setVar('gperm_name', 'module_read');
                     $modperm->setVar('gperm_modid', 1);
-                    $gperm_handler->insert($modperm);
+                    $gpermHandler->insert($modperm);
                 }
                 foreach ($read_bids as $r_bid) {
-                    $blockperm = $gperm_handler->create();
+                    $blockperm = $gpermHandler->create();
                     $blockperm->setVar('gperm_groupid', $groupid);
                     $blockperm->setVar('gperm_itemid', $r_bid);
                     $blockperm->setVar('gperm_name', 'block_read');
                     $blockperm->setVar('gperm_modid', 1);
-                    $gperm_handler->insert($blockperm);
+                    $gpermHandler->insert($blockperm);
                 }
                 redirect_header('admin.php?fct=groups', 1, _AM_SYSTEM_GROUPS_DBUPDATED);
             }
@@ -292,17 +292,17 @@ switch ($op) {
     case 'groups_delete':
         $groups_id = system_CleanVars($_REQUEST, 'groups_id', 0, 'int');
         if ($groups_id > 0) {
-            $obj = $groups_Handler->get($groups_id);
+            $obj = $groupsHandler->get($groups_id);
             if (isset($_POST['ok']) && $_POST['ok'] == 1) {
                 if (!$GLOBALS['xoopsSecurity']->check()) {
                     redirect_header('admin.php?fct=groups', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
                 }
                 if ($groups_id > 0 && !in_array($groups_id, array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS))) {
-                    $member_handler = xoops_getHandler('member');
-                    $group          = $member_handler->getGroup($groups_id);
-                    $member_handler->deleteGroup($group);
-                    $gperm_handler = xoops_getHandler('groupperm');
-                    $gperm_handler->deleteByGroup($groups_id);
+                    $memberHandler = xoops_getHandler('member');
+                    $group          = $memberHandler->getGroup($groups_id);
+                    $memberHandler->deleteGroup($group);
+                    $gpermHandler = xoops_getHandler('groupperm');
+                    $gpermHandler->deleteByGroup($groups_id);
                     redirect_header('admin.php?fct=groups', 1, _AM_SYSTEM_GROUPS_DBUPDATED);
                 } else {
                     redirect_header('admin.php?fct=groups', 2, _AM_SYSTEM_GROUPS_ERROR_DELETE);
@@ -331,11 +331,11 @@ switch ($op) {
         if (isset($_REQUEST['edit_group'])) {
             if (isset($_REQUEST['edit_group']) && $_REQUEST['edit_group'] === 'add_group' && isset($_REQUEST['selgroups'])) {
                 foreach ($_REQUEST['memberslist_id'] as $uid) {
-                    $member_handler->addUserToGroup($_REQUEST['selgroups'], $uid);
+                    $memberHandler->addUserToGroup($_REQUEST['selgroups'], $uid);
                     $error = false;
                 }
             } elseif (isset($_REQUEST['edit_group']) && $_REQUEST['edit_group'] === 'delete_group' && isset($_REQUEST['selgroups'])) {
-                $member_handler->removeUsersFromGroup($_REQUEST['selgroups'], $_REQUEST['memberslist_id']);
+                $memberHandler->removeUsersFromGroup($_REQUEST['selgroups'], $_REQUEST['memberslist_id']);
                 $error = false;
             }
             //if ($error == true)

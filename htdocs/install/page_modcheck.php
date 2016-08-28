@@ -25,7 +25,7 @@
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  **/
 
-require_once './include/common.inc.php';
+require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 $pageHasForm = false;
@@ -121,4 +121,4 @@ ob_start();
 $content = ob_get_contents();
 ob_end_clean();
 
-include './include/install_tpl.php';
+include __DIR__ . '/include/install_tpl.php';

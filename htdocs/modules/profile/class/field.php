@@ -279,16 +279,16 @@ class ProfileField extends XoopsObject
                 break;
 
             case 'group':
-                $member_handler = xoops_getHandler('member');
-                $options        = $member_handler->getGroupList();
+                $memberHandler = xoops_getHandler('member');
+                $options        = $memberHandler->getGroupList();
                 $ret            = isset($options[$value]) ? $options[$value] : '';
 
                 return $ret;
                 break;
 
             case 'group_multi':
-                $member_handler = xoops_getHandler('member');
-                $options        = $member_handler->getGroupList();
+                $memberHandler = xoops_getHandler('member');
+                $options        = $memberHandler->getGroupList();
                 $ret            = array();
                 foreach (array_keys($options) as $key) {
                     if (in_array($key, $value)) {
@@ -404,9 +404,9 @@ class ProfileField extends XoopsObject
      */
     public function getUserVars()
     {
-        $profile_handler = xoops_getModuleHandler('profile', 'profile');
+        $profileHandler = xoops_getModuleHandler('profile', 'profile');
 
-        return $profile_handler->getUserVars();
+        return $profileHandler->getUserVars();
     }
 }
 
@@ -461,7 +461,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
         if (!($obj instanceof $this->className)) {
             return false;
         }
-        $profile_handler = xoops_getModuleHandler('profile', 'profile');
+        $profileHandler = xoops_getModuleHandler('profile', 'profile');
         $obj->setVar('field_name', str_replace(' ', '_', $obj->getVar('field_name')));
         $obj->cleanVars();
         $defaultstring = '';
@@ -572,7 +572,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
                     break;
             }
 
-            $sql = 'ALTER TABLE `' . $profile_handler->table . '` ' . $changetype . ' `' . $obj->cleanVars['field_name'] . '` ' . $type . $maxlengthstring . ' NULL';
+            $sql = 'ALTER TABLE `' . $profileHandler->table . '` ' . $changetype . ' `' . $obj->cleanVars['field_name'] . '` ' . $type . $maxlengthstring . ' NULL';
             $result = $force ? $this->db->queryF($sql) : $this->db->query($sql);
             if (!$result) {
                 return false;
@@ -600,9 +600,9 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
         if (!($obj instanceof $this->className)) {
             return false;
         }
-        $profile_handler = xoops_getModuleHandler('profile', 'profile');
+        $profileHandler = xoops_getModuleHandler('profile', 'profile');
         // remove column from table
-        $sql = 'ALTER TABLE ' . $profile_handler->table . ' DROP `' . $obj->getVar('field_name', 'n') . '`';
+        $sql = 'ALTER TABLE ' . $profileHandler->table . ' DROP `' . $obj->getVar('field_name', 'n') . '`';
         if ($this->db->query($sql)) {
             //change this to update the cached field information storage
             if (!parent::delete($obj, $force)) {
@@ -610,15 +610,15 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
             }
 
             if ($obj->getVar('field_show') || $obj->getVar('field_edit')) {
-                $module_handler = xoops_getHandler('module');
-                $profile_module = $module_handler->getByDirname('profile');
+                $moduleHandler = xoops_getHandler('module');
+                $profile_module = $moduleHandler->getByDirname('profile');
                 if (is_object($profile_module)) {
                     // Remove group permissions
-                    $groupperm_handler = xoops_getHandler('groupperm');
+                    $grouppermHandler = xoops_getHandler('groupperm');
                     $criteria          = new CriteriaCompo(new Criteria('gperm_modid', $profile_module->getVar('mid')));
                     $criteria->add(new Criteria('gperm_itemid', $obj->getVar('field_id')));
 
-                    return $groupperm_handler->deleteAll($criteria);
+                    return $grouppermHandler->deleteAll($criteria);
                 }
             }
         }
