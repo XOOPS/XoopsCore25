@@ -38,7 +38,7 @@ if (empty($xoopsOption['hascommon'])) {
     $xoopsOption['nocommon'] = true;
     session_start();
 }
-@include __DIR__ . '/../mainfile.php';
+@include __DIR__ . '/../../mainfile.php';
 if (!defined('XOOPS_ROOT_PATH')) {
     define('XOOPS_ROOT_PATH', str_replace("\\", '/', realpath('../')));
 }
@@ -52,11 +52,11 @@ $xoopsLogger->activated = true;
 */
 
 date_default_timezone_set(@date_default_timezone_get());
-include __DIR__ . '/class/installwizard.php';
-include_once __DIR__ . '/../include/version.php';
-include_once __DIR__ . '/include/functions.php';
-include_once __DIR__ . '/../class/module.textsanitizer.php';
-include_once __DIR__ . '/../class/libraries/vendor/autoload.php';
+include __DIR__ . '/../class/installwizard.php';
+include_once __DIR__ . '/../../include/version.php';
+include_once __DIR__ . '/functions.php';
+include_once __DIR__ . '/../../class/module.textsanitizer.php';
+include_once __DIR__ . '/../../class/libraries/vendor/autoload.php';
 
 $pageHasHelp = false;
 $pageHasForm = false;

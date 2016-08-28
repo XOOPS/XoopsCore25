@@ -20,7 +20,7 @@
 include_once XOOPS_ROOT_PATH . '/mainfile.php';
 
 //include_once XOOPS_ROOT_PATH . '/include/cp_functions.php';
-include __DIR__ . '/../../../include/cp_header.php';
+include XOOPS_ROOT_PATH . '/include/cp_header.php';
 //require_once XOOPS_ROOT_PATH . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname') . '/include/functions.php';
 
 include_once $GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/moduleadmin.php');

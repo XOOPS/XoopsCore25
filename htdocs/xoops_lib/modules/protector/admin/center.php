@@ -2,7 +2,7 @@
 //require_once XOOPS_ROOT_PATH.'/include/cp_header.php' ;
 include_once __DIR__ . '/admin_header.php'; //mb problem: it shows always the same "Center" tab
 require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-require_once dirname(__DIR__) . '/class/gtickets.php';
+require_once __DIR__ . '/../class/gtickets.php';
 
 //dirty trick to get navigation working with system menus
 if (isset($_GET['num'])) {
