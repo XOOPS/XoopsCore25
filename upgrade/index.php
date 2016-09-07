@@ -21,7 +21,11 @@
 @include_once '../mainfile.php';
 
 @set_time_limit(0);
-error_reporting(0);
+$reporting = 0;
+if (isset($_GET['debug'])) {
+    $reporting = -1;
+}
+error_reporting($reporting);
 $xoopsLogger->activated = true;
 $xoopsLogger->enableRendering();
 xoops_loadLanguage('logger');
