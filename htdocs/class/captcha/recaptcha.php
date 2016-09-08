@@ -41,6 +41,7 @@ class XoopsCaptchaRecaptcha extends XoopsCaptchaMethod
      */
     public function render()
     {
+        trigger_error("recaptcha is outdated , use recaptcha_2 in \class\captcha\config.php", E_USER_WARNING);
         require_once __DIR__ . '/recaptcha/recaptchalib.php';
         $form = "<script type=\"text/javascript\">
             var RecaptchaOptions = {
@@ -60,7 +61,7 @@ class XoopsCaptchaRecaptcha extends XoopsCaptchaMethod
      *
      * @return bool
      */
-    public function verify($sessionName)
+    public function verify($sessionName = null)
     {
         $is_valid = false;
         require_once __DIR__ . '/recaptcha/recaptchalib.php';

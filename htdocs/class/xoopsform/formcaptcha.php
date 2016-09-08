@@ -28,7 +28,7 @@ xoops_load('XoopsFormElement');
  *
  * For verification:
  * <code>
- *               xoops_load("captcha");
+ *               xoops_load('xoopscaptcha');
  *               $xoopsCaptcha = XoopsCaptcha::getInstance();
  *               if (! $xoopsCaptcha->verify() ) {
  *                   echo $xoopsCaptcha->getMessage();
