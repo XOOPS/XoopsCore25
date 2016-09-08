@@ -71,8 +71,9 @@ class XoopsCaptchaRecaptcha_2 extends XoopsCaptchaMethod
             if ($recaptcha_check['success'] == true) {
                 $is_valid = true;
             } else {
-                foreach (array_keys($recaptcha_check['error-codes']) as $i) {
-                    echo $recaptcha_check['error-codes'][$i] . '<br>';
+                $captchaInstance = XoopsCaptcha::getInstance();
+                foreach ($recaptcha_check['error-codes'] as $msg) {
+                    $captchaInstance->message[] = $msg;
                 }
             }
         }
