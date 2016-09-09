@@ -37,7 +37,7 @@ class XoopsCaptcha
     /**
      * construct
      */
-    public function __construct()
+    protected function __construct()
     {
         xoops_loadLanguage('captcha');
         // Load static configurations
@@ -56,8 +56,7 @@ class XoopsCaptcha
     {
         static $instance;
         if (!isset($instance)) {
-            $class    = __CLASS__;
-            $instance = new $class();
+            $instance = new static();
         }
 
         return $instance;
