@@ -41,7 +41,7 @@ define('RECAPTCHA_VERIFY_SERVER', 'www.google.com');
 
 /**
  * Encodes the given data into a query string format
- * @param $data - array of string elements to be encoded
+ * @param array $data - array of string elements to be encoded
  * @return string - encoded request
  */
 function _recaptcha_qsencode($data)
@@ -62,7 +62,7 @@ function _recaptcha_qsencode($data)
  * @param string $host
  * @param string $path
  * @param array  $data
- * @param        int port
+ * @param int $port
  * @return array response
  */
 function _recaptcha_http_post($host, $path, $data, $port = 80)
@@ -270,7 +270,7 @@ function recaptcha_mailhide_url($pubkey, $privkey, $email)
  */
 function _recaptcha_mailhide_email_parts($email)
 {
-    $arr = preg_split('/@/', $email);
+    $arr = explode('/@/', $email);
 
     if (strlen($arr[0]) <= 4) {
         $arr[0] = substr($arr[0], 0, 1);

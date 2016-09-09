@@ -1,4 +1,7 @@
 <?php
+
+use Xmf\Request;
+
 /**
  * CAPTCHA configurations for Image mode
  *
@@ -50,12 +53,12 @@ class XoopsCaptcha
     /**
      * Get Instance
      *
-     * @return Instance
+     * @return XoopsCaptcha Instance
      */
     public static function getInstance()
     {
         static $instance;
-        if (!isset($instance)) {
+        if (null === $instance) {
             $instance = new static();
         }
 
@@ -96,7 +99,7 @@ class XoopsCaptcha
      */
     public function isActive()
     {
-        if (isset($this->active)) {
+        if (null !== $this->active) {
             return $this->active;
         }
         if (!empty($this->config['disabled'])) {
@@ -109,7 +112,7 @@ class XoopsCaptcha
 
             return $this->active;
         }
-        if (!isset($this->handler)) {
+        if (null === $this->handler) {
             $this->loadHandler();
         }
         $this->active = isset($this->handler);
@@ -206,7 +209,7 @@ class XoopsCaptcha
         if (!$this->isActive()) {
             $is_valid = true;
             // Skip CAPTCHA for member if set
-        } elseif (is_object($GLOBALS['xoopsUser']) && !empty($skipMember)) {
+        } elseif (!empty($skipMember) && is_object($GLOBALS['xoopsUser'])) {
             $is_valid = true;
             // Kill too many attempts
         } elseif (!empty($maxAttempts) && $attempt > $maxAttempts) {
@@ -431,7 +434,8 @@ class XoopsCaptchaMethod
         $is_valid = false;
         if (!empty($_SESSION["{$sessionName}_code"])) {
             $func     = !empty($this->config['casesensitive']) ? 'strcmp' : 'strcasecmp';
-            $is_valid = !$func(trim(@$_POST[$sessionName]), $_SESSION["{$sessionName}_code"]);
+//            $is_valid = !$func(trim(@$_POST[$sessionName]), $_SESSION["{$sessionName}_code"]);
+            $is_valid = !$func(trim(Request::getString($sessionName, '', 'POST')), $_SESSION["{$sessionName}_code"]);
         }
 
         return $is_valid;
