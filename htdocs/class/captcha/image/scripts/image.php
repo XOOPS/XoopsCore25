@@ -17,7 +17,7 @@
  * @subpackage          CAPTCHA
  */
 
-include '../../../../mainfile.php';
+include __DIR__  . '/../../../../mainfile.php';
 
 error_reporting(0);
 $xoopsLogger->activated = false;
@@ -38,12 +38,13 @@ class XoopsCaptchaImageHandler
     public $mode    = 'gd';
     public $invalid = false;
 
+    public $oImage;
     public $font;
     public $spacing;
     public $width;
     public $height;
 
-    public $captcha_handler;
+    public $captchaHandler;
 
     /**
      *
@@ -51,8 +52,8 @@ class XoopsCaptchaImageHandler
     public function __construct()
     {
         xoops_load('XoopsCaptcha');
-        $this->captcha_handler = XoopsCaptcha::getInstance();
-        $this->config          = $this->captcha_handler->loadConfig('image');
+        $this->captchaHandler = XoopsCaptcha::getInstance();
+        $this->config          = $this->captchaHandler->loadConfig('image');
     }
 
     public function loadImage()
@@ -85,7 +86,7 @@ class XoopsCaptchaImageHandler
                 $this->code = strtoupper($this->code);
             }
         }
-        $this->captcha_handler->setCode($this->code);
+        $this->captchaHandler->setCode($this->code);
 
         return true;
     }
@@ -409,5 +410,5 @@ class XoopsCaptchaImageHandler
     }
 }
 
-$image_handler = new XoopsCaptchaImageHandler();
-$image_handler->loadImage();
+$imageHandler = new XoopsCaptchaImageHandler();
+$imageHandler->loadImage();
