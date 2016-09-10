@@ -1,4 +1,7 @@
 <?php
+
+use Xmf\Request;
+
 /**
  * CAPTCHA for Recaptcha mode
  *
@@ -65,8 +68,8 @@ class XoopsCaptchaRecaptcha extends XoopsCaptchaMethod
     {
         $is_valid = false;
         require_once __DIR__ . '/recaptcha/recaptchalib.php';
-        if (!empty($_POST['recaptcha_response_field'])) {
-            $resp = recaptcha_check_answer($this->config['private_key'], $_SERVER['REMOTE_ADDR'], $_POST['recaptcha_challenge_field'], $_POST['recaptcha_response_field']);
+        if (!empty(Request::getString('recaptcha_response_field', '', 'POST'))) {
+            $resp = recaptcha_check_answer($this->config['private_key'], $_SERVER['REMOTE_ADDR'], Request::getString('recaptcha_challenge_field', '', 'POST'), Request::getString('recaptcha_response_field', '', 'POST'));
             if (!$resp->is_valid) {
                 $this->message[] = $resp->error;
             } else {

@@ -82,6 +82,7 @@ class XoopsCaptchaRecaptcha2 extends XoopsCaptchaMethod
         } else {
             /** @var \XoopsCaptcha $captchaInstance */
             $captchaInstance = \XoopsCaptcha::getInstance();
+            /** @var array $recaptchaCheck */
             foreach ($recaptchaCheck['error-codes'] as $msg) {
                 $captchaInstance->message[] = $msg;
             }
