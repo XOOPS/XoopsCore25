@@ -218,7 +218,7 @@ class XoopsCaptcha
         } else {
             $is_valid = $this->handler->verify($sessionName);
             $xoopsPreload = XoopsPreload::getInstance();
-            $xoopsPreload->triggerEvent('core.behavior.captcha.result', array($is_valid));
+            $xoopsPreload->triggerEvent('core.behavior.captcha.result', $is_valid);
         }
 
         if (!$is_valid) {

@@ -290,7 +290,7 @@ switch ($op) {
                 redirect_header('user.php', 5, _US_ACONTACT, false);
             } else {
                 if (false !== $member_handler->activateUser($thisuser)) {
-                    $xoopsPreload->triggerEvent('core.behavior.user.activate', array($thisuser));
+                    $xoopsPreload->triggerEvent('core.behavior.user.activate', $thisuser);
                     $config_handler  = xoops_getHandler('config');
                     $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
                     if ($xoopsConfigUser['activation_type'] == 2) {
