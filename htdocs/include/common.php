@@ -207,7 +207,7 @@ if (function_exists('session_status')) {
     // this should silently fail if session has already started (for PHP 5.3)
     @session_start();
 }
-
+$xoopsPreload->triggerEvent('core.behavior.session.start');
 /**
  * Remove expired session for xoopsUserId
  */

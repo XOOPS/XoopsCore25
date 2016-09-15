@@ -111,6 +111,7 @@ if ($op === 'logout') {
         $online_handler = xoops_getHandler('online');
         $online_handler->destroy($xoopsUser->getVar('uid'));
     }
+    $xoopsPreload->triggerEvent('core.behavior.user.logout');
     $message = _US_LOGGEDOUT . '<br>' . _US_THANKYOUFORVISIT;
     redirect_header('index.php', 1, $message);
 }

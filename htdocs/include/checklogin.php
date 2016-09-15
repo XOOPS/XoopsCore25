@@ -67,7 +67,8 @@ if (false !== $user) {
     if (in_array($user_theme, $xoopsConfig['theme_set_allowed'])) {
         $_SESSION['xoopsUserTheme'] = $user_theme;
     }
-
+    $xoopsPreload = XoopsPreload::getInstance();
+    $xoopsPreload->triggerEvent('core.behavior.user.login', $user);
     // Set cookie for rememberme
     if (!empty($xoopsConfig['usercookie'])) {
         if (!empty($rememberme)) {
