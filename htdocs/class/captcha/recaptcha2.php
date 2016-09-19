@@ -66,14 +66,22 @@ class XoopsCaptchaRecaptcha2 extends XoopsCaptchaMethod
         $recaptchaResponse = Request::getString('g-recaptcha-response', '');
         $recaptchaVerifyURL = 'https://www.google.com/recaptcha/api/siteverify?secret=' . $this->config['secret_key']
             . '&response=' .  $recaptchaResponse . '&remoteip=' . IPAddress::fromRequest()->asReadable();
-        if (function_exists('curl_init')) {
-            $curlHandle  = curl_init();
+        $usedCurl = false;
+        if (function_exists('curl_init') && false !== ($curlHandle  = curl_init())) {
             curl_setopt($curlHandle, CURLOPT_URL, $recaptchaVerifyURL);
+            curl_setopt($curlHandle, CURLOPT_FAILONERROR, true);
             curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($curlHandle, CURLOPT_CONNECTTIMEOUT, 5);
-            $recaptchaCheck = json_decode(curl_exec($curlHandle), true);
+            $curlReturn = curl_exec($curlHandle);
+            if (false === $curlReturn) {
+                trigger_error(curl_error($curlHandle));
+            } else {
+                $usedCurl = true;
+                $recaptchaCheck = json_decode($curlReturn, true);
+            }
             curl_close($curlHandle);
-        } else {
+        }
+        if (false === $usedCurl) {
             $recaptchaCheck = file_get_contents($recaptchaVerifyURL);
             $recaptchaCheck = json_decode($recaptchaCheck, true);
         }
