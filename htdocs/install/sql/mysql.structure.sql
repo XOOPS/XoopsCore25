@@ -458,7 +458,7 @@ CREATE TABLE ranks (
 #
 
 CREATE TABLE session (
-  sess_id varchar(32) NOT NULL default '',
+  sess_id varchar(256) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL default '',
   sess_updated int(10) unsigned NOT NULL default '0',
   sess_ip varchar(45) NOT NULL default '',
   sess_data text,
