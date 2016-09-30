@@ -3,7 +3,7 @@
 use Xmf\Database\Tables;
 
 /**
- * Upgrade from 2.5.7 to 2.5.8
+ * Upgrade from 2.5.8 to 2.5.9
  *
  * See the enclosed file license.txt for licensing information.
  * If you did not receive this file, get it at http://www.gnu.org/licenses/gpl-2.0.html
