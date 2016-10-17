@@ -24,5 +24,5 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
-include './admin_header.php';
+include __DIR__ . '/admin_header.php';
 include XOOPS_ROOT_PATH . '/include/comment_post.php';

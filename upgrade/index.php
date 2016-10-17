@@ -18,7 +18,7 @@
  * @version             $Id: index.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-@include_once '../mainfile.php';
+@include_once __DIR__ . '/../mainfile.php';
 
 @set_time_limit(0);
 $reporting = 0;
@@ -30,7 +30,7 @@ $xoopsLogger->activated = true;
 $xoopsLogger->enableRendering();
 xoops_loadLanguage('logger');
 
-require './abstract.php';
+require __DIR__ . '/abstract.php';
 
 defined('XOOPS_ROOT_PATH') or die('Bad installation: please add this folder to the XOOPS install you want to upgrade');
 
@@ -90,7 +90,7 @@ function getDbValue(XoopsDatabase $db, $table, $field, $condition = '')
 $upgrade_language = @$xoopsConfig['language'];
 // $xoopsConfig might not be able fetched
 if (empty($upgrade_language)) {
-    include_once './language.php';
+    include_once __DIR__ . '/language.php';
     $upgrade_language = xoops_detectLanguage();
 }
 
@@ -100,7 +100,7 @@ if (file_exists("./language/{$upgrade_language}/upgrade.php")) {
     include_once "./language/{$upgrade_language}_utf8/upgrade.php";
     $upgrade_language .= '_utf8';
 } elseif (file_exists('./language/english/upgrade.php')) {
-    include_once './language/english/upgrade.php';
+    include_once __DIR__ . '/language/english/upgrade.php';
     $upgrade_language = 'english';
 } else {
     echo 'no language file.';
@@ -110,14 +110,14 @@ if (file_exists("./language/{$upgrade_language}/upgrade.php")) {
 ob_start();
 global $xoopsUser;
 if (!$xoopsUser || !$xoopsUser->isAdmin()) {
-    include_once 'login.php';
+    include_once __DIR__ . '/login.php';
 } else {
     $op = @$_REQUEST['action'];
     if (empty($_SESSION['xoops_upgrade']['steps'])) {
         $op = '';
     }
     if (empty($op)) {
-        include_once 'check_version.php';
+        include_once __DIR__ . '/check_version.php';
     } else {
         $next = array_shift($_SESSION['xoops_upgrade']['steps']);
         printf('<h2>' . _PERFORMING_UPGRADE . '</h2>', $next);
@@ -144,4 +144,4 @@ if (!$xoopsUser || !$xoopsUser->isAdmin()) {
 $content = ob_get_contents();
 ob_end_clean();
 
-include_once 'upgrade_tpl.php';
+include_once __DIR__ . '/upgrade_tpl.php';
