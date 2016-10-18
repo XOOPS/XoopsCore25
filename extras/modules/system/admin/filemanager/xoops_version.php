@@ -13,7 +13,6 @@
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Maxime Cointin (AKA Kraven30)
  * @package             system
- * @version     $Id$
  */
 
 $modversion['name']        = _AM_SYSTEM_FILEMANAGER;

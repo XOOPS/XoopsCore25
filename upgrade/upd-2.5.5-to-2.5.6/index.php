@@ -11,7 +11,6 @@
  * @package          upgrader
  * @since            2.5.6
  * @author           XOOPS Team
- * @version          $Id: index.php 9043 2012-02-22 02:51:38Z beckmi $
  */
 class Upgrade_256 extends XoopsUpgrade
 {

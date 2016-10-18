@@ -14,7 +14,6 @@
  * @package             upgrader
  * @since               2.5.0
  * @author              Andricq Nicolas (AKA MusS)
- * @version             $Id: index.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 require_once 'dbmanager.php';
