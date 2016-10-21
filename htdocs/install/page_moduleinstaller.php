@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $msgs = array();
     foreach ($_REQUEST['modules'] as $dirname => $installmod) {
         if ($installmod) {
-            $msgs[] =& xoops_module_install($dirname);
+            $msgs[] = xoops_module_install($dirname);
         }
     }
 
