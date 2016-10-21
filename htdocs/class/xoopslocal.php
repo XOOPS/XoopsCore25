@@ -225,7 +225,7 @@ class XoopsLocalAbstract
      * @param  mixed $number
      * @return mixed
      */
-    public function number_format($number)
+    public static function number_format($number)
     {
         return $number;
     }
@@ -237,7 +237,7 @@ class XoopsLocalAbstract
      * @param  mixed $number
      * @return mixed
      */
-    public function money_format($format, $number)
+    public static function money_format($format, $number)
     {
         return $number;
     }

@@ -53,7 +53,7 @@ class XoopsLocal extends XoopsLocalAbstract
      * @param  unknown_type $number
      * @return unknown
      */
-    public function number_format($number)
+    public static function number_format($number)
     {
         return number_format($number, 2, '.', ',');
     }
@@ -65,7 +65,7 @@ class XoopsLocal extends XoopsLocalAbstract
      * @param  string $number
      * @return money  format
      */
-    public function money_format($format, $number)
+    public static function money_format($format, $number)
     {
         setlocale(LC_MONETARY, 'en_US');
 
