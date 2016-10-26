@@ -219,4 +219,29 @@ class XoopsObjectTree
 
         return $ret . '</select>';
     }
+
+    /**
+     * Magic __get method
+     *
+     * Some modules did not respect the leading underscore is private convention and broke
+     * when code was modernized. This will keep them running for now.
+     *
+     * @param string $name unknown variable name requested
+     *                      currently only '_tree' is supported
+     *
+     * @return mixed value
+     */
+    public function __get($name)
+    {
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        if ($name === '_tree') {
+            trigger_error("XoopsObjectTree::\$_tree is deprecated, accessed from {$trace[0]['file']} line {$trace[0]['line']},");
+            return $this->tree;
+        }
+        trigger_error(
+            'Undefined property: XoopsObjectTree::$' . $name .
+            " in {$trace[0]['file']} line {$trace[0]['line']}, ",
+            E_USER_NOTICE);
+        return null;
+    }
 }
