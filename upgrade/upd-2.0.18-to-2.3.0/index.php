@@ -20,7 +20,6 @@
  * @package          upgrader
  * @since            2.3.0
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
- * @version          $Id: index.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 include_once __DIR__ . '/pathcontroller.php';
@@ -30,12 +29,14 @@ include_once __DIR__ . '/pathcontroller.php';
  */
 class Upgrade_230 extends XoopsUpgrade
 {
-    public $usedFiles = array('mainfile.php');
-    public $tasks     = array('config', 'cache', 'path', 'db', 'bmlink');
+//    public $usedFiles = array('mainfile.php');
+//    public $tasks     = array('config', 'cache', 'path', 'db', 'bmlink');
 
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
+        $this->usedFiles = array('mainfile.php');
+        $this->tasks     = array('config', 'cache', 'path', 'db', 'bmlink');
     }
 
     /**

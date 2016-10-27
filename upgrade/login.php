@@ -25,7 +25,7 @@ if (empty($_POST['uname']) || empty($_POST['pass'])) {
     $uname = !isset($_POST['uname']) ? '' : $myts->addSlashes(trim($_POST['uname']));
     $pass  = !isset($_POST['pass']) ? '' : $myts->addSlashes(trim($_POST['pass']));
 
-    $member_handler = xoops_getHandler('member');
+    $memberHandler = xoops_getHandler('member');
 
     include_once XOOPS_ROOT_PATH . '/class/auth/authfactory.php';
     if (!@include_once XOOPS_ROOT_PATH . '/language/' . $upgrade_language . '/auth.php') {
@@ -38,7 +38,7 @@ if (empty($_POST['uname']) || empty($_POST['pass'])) {
     if (!is_object($user)) {
         $criteria = new CriteriaCompo(new Criteria('loginname', $uname));
         $criteria->add(new Criteria('pass', md5($pass)));
-        list($user) = $member_handler->getUsers($criteria);
+        list($user) = $memberHandler->getUsers($criteria);
     }
 
     $isAllowed = false;
@@ -55,10 +55,10 @@ if (empty($_POST['uname']) || empty($_POST['pass'])) {
     }
     if ($isAllowed) {
         $user->setVar('last_login', time());
-        if (!$member_handler->insertUser($user)) {
+        if (!$memberHandler->insertUser($user)) {
         }
         // Regenrate a new session id and destroy old session
-        $GLOBALS['sess_handler']->regenerate_id(true);
+        $GLOBALS['sessHandler']->regenerate_id(true);
         $_SESSION                    = array();
         $_SESSION['xoopsUserId']     = $user->getVar('uid');
         $_SESSION['xoopsUserGroups'] = $user->getGroups();

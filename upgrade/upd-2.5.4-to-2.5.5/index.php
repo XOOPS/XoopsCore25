@@ -12,11 +12,9 @@
  * @since            2.5.5
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
  * @author           trabis <lusopoemas@gmail.com>
- * @version          $Id: index.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 class Upgrade_255 extends XoopsUpgrade
 {
-    public $tasks = array('keys', 'imptotal');
 
     /**
      * Check if keys already exist
@@ -112,6 +110,7 @@ class Upgrade_255 extends XoopsUpgrade
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
+        $this->tasks = array('keys', 'imptotal');
     }
 }
 

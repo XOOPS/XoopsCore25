@@ -20,7 +20,6 @@
  * @package          upgrader
  * @since            2.3.0
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
- * @version          $Id: pathcontroller.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 class PathStuffController
 {
@@ -225,7 +224,7 @@ class PathStuffController
      * @param bool        $create
      *
      * @internal param bool $recurse
-     * @return false on failure, method (u-ser,g-roup,w-orld) on success
+     * @return string|false on failure, method (u-ser,g-roup,w-orld) on success
      */
     public function makeWritable($path, $group = false, $create = true)
     {

@@ -14,17 +14,15 @@
  * @package             upgrader
  * @since               2.5.0
  * @author              Andricq Nicolas (AKA MusS)
- * @version             $Id: index.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
-require_once 'dbmanager.php';
+require_once __DIR__ . '/dbmanager.php';
 
 /**
  * Class upgrade_250
  */
 class Upgrade_250 extends XoopsUpgrade
 {
-    public $tasks = array('config', 'templates');
 
     /**
      * Check if cpanel config already exists
@@ -112,7 +110,7 @@ class Upgrade_250 extends XoopsUpgrade
 
         $dbm->insert('config', " (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) VALUES (0, 1, 'redirect_message_ajax', '_MD_AM_CUSTOM_REDIRECT', '1', '_MD_AM_CUSTOM_REDIRECT_DESC', 'yesno', 'int', 12)");
 
-        require_once '../class/xoopslists.php';
+        require_once __DIR__ . '/../class/xoopslists.php';
         $editors = XoopsLists::getDirListAsArray('../class/xoopseditor');
         foreach ($editors as $dir) {
             $dbm->insert('configoption', " (confop_name,confop_value,conf_id) VALUES ('" . $dir . "', '" . $dir . "', $block_id)");
@@ -144,7 +142,7 @@ class Upgrade_250 extends XoopsUpgrade
      */
     public function apply_templates()
     {
-        include_once '../modules/system/xoops_version.php';
+        include_once __DIR__ . '/../modules/system/xoops_version.php';
 
         $dbm  = new Db_manager();
         $time = time();
@@ -164,6 +162,7 @@ class Upgrade_250 extends XoopsUpgrade
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
+        $this->tasks = array('config', 'templates');
     }
 }
 
