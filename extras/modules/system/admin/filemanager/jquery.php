@@ -19,7 +19,7 @@
  */
 
 // Require mainfile
-require '../../../../mainfile.php';
+require __DIR__ . '/../../../../mainfile.php';
 // Check Xoops define
 defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 error_reporting(0);
