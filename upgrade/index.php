@@ -18,6 +18,14 @@
  * @version             $Id: index.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
+//Before xoops 2.5.8 the table 'sess_ip' was of type varchar (15). This is a problem for IPv6 addresses because it is longer. The upgrade process would change the column to VARCHAR(45) but it requires login, which is failing. If the user has an IPv6 address, it is converted to short IP during the upgrade. At the end of the upgrade IPV6 works
+//save current IP
+$ip = $_SERVER['REMOTE_ADDR'];
+if (strlen($_SERVER['REMOTE_ADDR']) > 15){
+    //new IP for upgrade
+    $_SERVER['REMOTE_ADDR'] = '::1';
+}
+
 @include_once '../mainfile.php';
 
 @set_time_limit(0);
@@ -125,6 +133,11 @@ if (!$xoopsUser || !$xoopsUser->isAdmin()) {
     }
     if (empty($op)) {
         include_once 'check_version.php';
+        if (false === $needUpgrade) {
+            // Reset session with IP before upgrade
+            $_SERVER['REMOTE_ADDR'] = $ip;
+            $GLOBALS['sess_handler']->regenerate_id(true);
+        }
     } else {
         $next = array_shift($_SESSION['xoops_upgrade']['steps']);
         printf('<h2>' . _PERFORMING_UPGRADE . '</h2>', $next);

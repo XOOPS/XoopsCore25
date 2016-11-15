@@ -31,7 +31,7 @@ if (empty($_POST['uname']) || empty($_POST['pass'])) {
     if (!@include_once XOOPS_ROOT_PATH . '/language/' . $upgrade_language . '/auth.php') {
         include_once XOOPS_ROOT_PATH . '/language/english/auth.php';
     }
-    $xoopsAuth =& XoopsAuthFactory::getAuthConnection($uname);
+    $xoopsAuth = XoopsAuthFactory::getAuthConnection($uname);
     $user      = $xoopsAuth->authenticate($uname, $pass);
 
     // For XOOPS 2.2*
