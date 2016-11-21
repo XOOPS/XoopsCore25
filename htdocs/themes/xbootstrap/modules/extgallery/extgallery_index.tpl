@@ -75,7 +75,7 @@
     <div class="row">
         <div class="col-md-12">
             <a href="<{xoAppUrl modules/extgallery/public-rss.php}>" title="<{$smarty.const._MD_EXTGALLERY_RSS}>">
-                <img src="<{xoAppUrl modules/extgallery/images/feed.png}>" alt="<{$smarty.const._MD_EXTGALLERY_RSS}>">
+                <img src="<{xoAppUrl modules/extgallery/assets/images/feed.png}>" alt="<{$smarty.const._MD_EXTGALLERY_RSS}>">
             </a>
         </div>
     </div>
