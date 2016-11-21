@@ -52,6 +52,7 @@ Updated:
  - jQuery Tablesorter to 2.26.6 (mamba)
  - phpThumb to 1.7.14-201607141354 (mamba)
  - Bootstrap 3.7 in xBootstrap theme (geekwright/mamba)
+ - HTML Purifier to 4.8.0 (mamba)
 
 ===================================
 2.5.8 Final            2016-05-27
