@@ -110,14 +110,14 @@
                 <td>
                     <{if $file.mod}>
                         <a href="<{$publisher_url}>/file.php?op=mod&fileid=<{$file.fileid}>">
-                            <img src="<{$publisher_url}>/images/links/edit.gif" title="<{$smarty.const._CO_PUBLISHER_EDITFILE}>"
+                            <img src="<{$publisher_url}>/assets/images/links/edit.gif" title="<{$smarty.const._CO_PUBLISHER_EDITFILE}>"
                                  alt="<{$smarty.const._CO_PUBLISHER_EDITFILE}>"/></a>
                         <a href="<{$publisher_url}>/file.php?op=del&fileid=<{$file.fileid}>">
-                            <img src="<{$publisher_url}>/images/links/delete.png" title="<{$smarty.const._CO_PUBLISHER_DELETEFILE}>"
+                            <img src="<{$publisher_url}>/assets/images/links/delete.png" title="<{$smarty.const._CO_PUBLISHER_DELETEFILE}>"
                                  alt="<{$smarty.const._CO_PUBLISHER_DELETEFILE}>"/></a>
                     <{/if}>
                     <a href="<{$publisher_url}>/visit.php?fileid=<{$file.fileid}>" target="_blank">
-                        <img src="<{$publisher_url}>/images/links/file.gif" title="<{$lang_download_file}>"
+                        <img src="<{$publisher_url}>/assets/images/links/file.gif" title="<{$lang_download_file}>"
                              alt="<{$smarty.const._MD_PUBLISHER_DOWNLOAD_FILE}>"/>&nbsp;<strong><{$file.name}></strong>
                     </a>
 
