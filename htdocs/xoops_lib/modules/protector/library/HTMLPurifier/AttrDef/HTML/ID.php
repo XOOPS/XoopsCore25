@@ -72,8 +72,13 @@ class HTMLPurifier_AttrDef_HTML_ID extends HTMLPurifier_AttrDef
 
         // we purposely avoid using regex, hopefully this is faster
 
+        if ($config->get('Attr.ID.HTML5') === true) {
+            if (preg_match('/[\t\n\x0b\x0c ]/', $id)) {
+                return false;
+            }
+        } else {
         if (ctype_alpha($id)) {
-            $result = true;
+                // OK
         } else {
             if (!ctype_alpha(@$id[0])) {
                 return false;
@@ -83,7 +88,10 @@ class HTMLPurifier_AttrDef_HTML_ID extends HTMLPurifier_AttrDef
                 $id,
                 'A..Za..z0..9:-._'
             );
-            $result = ($trim === '');
+                if ($trim !== '') {
+                    return false;
+                }
+            }
         }
 
         $regexp = $config->get('Attr.IDBlacklistRegexp');
@@ -91,14 +99,14 @@ class HTMLPurifier_AttrDef_HTML_ID extends HTMLPurifier_AttrDef
             return false;
         }
 
-        if (!$this->selector && $result) {
+        if (!$this->selector) {
             $id_accumulator->add($id);
         }
 
         // if no change was made to the ID, return the result
         // else, return the new id if stripping whitespace made it
         //     valid, or return false.
-        return $result ? $id : false;
+        return $id;
     }
 }
 
