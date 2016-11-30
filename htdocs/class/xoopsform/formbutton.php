@@ -111,6 +111,10 @@ class XoopsFormButton extends XoopsFormElement
      */
     public function render()
     {
-        return "<input type='" . $this->getType() . "' class='formButton' name='" . $this->getName() . "'  id='" . $this->getName() . "' value='" . $this->getValue() . "' title='" . $this->getValue() . "'" . $this->getExtra() . ' />';
+        if ($GLOBALS['xoopsConfig']['bootstrap'] == true){
+            return "<input type='" . $this->getType() . "' class='btn btn-default' name='" . $this->getName() . "'  id='" . $this->getName() . "' value='" . $this->getValue() . "' title='" . $this->getValue() . "'" . $this->getExtra() . ' />';
+        } else {
+            return "<input type='" . $this->getType() . "' class='formButton' name='" . $this->getName() . "'  id='" . $this->getName() . "' value='" . $this->getValue() . "' title='" . $this->getValue() . "'" . $this->getExtra() . ' />';
+        }
     }
 }
