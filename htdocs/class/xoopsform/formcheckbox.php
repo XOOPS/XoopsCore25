@@ -193,6 +193,9 @@ class XoopsFormCheckBox extends XoopsFormElement
             $this->setName($ele_name);
         }
         $ret = '';
+        /*<label class="checkbox-inline">
+          <input type="checkbox" id="inlineCheckbox1" value="option1"> 1
+        </label>*/
         if (!empty($this->columns)) {
             $ret .= '<table><tr>';
         }
@@ -206,12 +209,22 @@ class XoopsFormCheckBox extends XoopsFormElement
                 }
                 $ret .= '<td>';
             }
+            if ($GLOBALS['xoopsConfig']['bootstrap'] == true){
+                $ret .= '<div class="checkbox-inline"><label>';
+            }
             // $name may be a link, should we use $name in the title tag?
             $ret .= "<input type='checkbox' name='{$ele_name}' id='{$ele_id}{$id_ele}' title='" . $ele_title . "' value='" . htmlspecialchars($value, ENT_QUOTES) . "'";
+
             if (count($ele_value) > 0 && in_array($value, $ele_value)) {
                 $ret .= ' checked';
             }
-            $ret .= $ele_extra . ' />' . "<label name='xolb_{$ele_name}' for='{$ele_id}{$id_ele}'>" . $name . '</label>' . $ele_delimeter;
+            if ($GLOBALS['xoopsConfig']['bootstrap'] == true){
+                $ret .= $ele_extra . ' />' . $name . $ele_delimeter;
+                $ret .= '<label></div>';
+            } else {
+                $ret .= $ele_extra . ' />' . "<label name='xolb_{$ele_name}' for='{$ele_id}{$id_ele}'>" . $name . '</label>' . $ele_delimeter;
+            }
+            
             if (!empty($this->columns)) {
                 $ret .= '</td>';
                 if (++$i % $this->columns == 0) {
