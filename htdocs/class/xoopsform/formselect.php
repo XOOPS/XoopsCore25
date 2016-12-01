@@ -203,7 +203,11 @@ class XoopsFormSelect extends XoopsFormElement
         $ele_title   = $this->getTitle();
         $ele_value   = $this->getValue();
         $ele_options = $this->getOptions();
-        $ret         = '<select size="' . $this->getSize() . '"' . $this->getExtra();
+        if ($GLOBALS['xoopsConfig']['bootstrap'] == true){
+            $ret = '<div class="form-group form-inline"><select class="form-control" size="' . $this->getSize() . '"' . $this->getExtra();
+        } else {
+            $ret = '<select size="' . $this->getSize() . '"' . $this->getExtra();
+        }
         if ($this->isMultiple() != false) {
             $ret .= ' name="' . $ele_name . '[]" id="' . $ele_name . '" title="' . $ele_title . '" multiple="multiple">';
         } else {
@@ -216,7 +220,12 @@ class XoopsFormSelect extends XoopsFormElement
             }
             $ret .= '>' . $name . '</option>';
         }
-        $ret .= '</select>';
+        if ($GLOBALS['xoopsConfig']['bootstrap'] == true){
+            $ret .= '</select></div>';
+        } else {
+            $ret .= '</select>';
+        }
+        
 
         return $ret;
     }
