@@ -127,6 +127,11 @@ class XoopsFormPassword extends XoopsFormElement
      */
     public function render()
     {
-        return '<input type="password" name="' . $this->getName() . '" id="' . $this->getName() . '" size="' . $this->getSize() . '" maxlength="' . $this->getMaxlength() . '" value="' . $this->getValue() . '"' . $this->getExtra() . ' ' . ($this->autoComplete ? '' : 'autocomplete="off" ') . '/>';
+        if ($GLOBALS['xoopsConfig']['bootstrap'] == true){
+            return '<div class="form-group form-inline"><input class="form-control" type="password" name="' . $this->getName() . '" id="' . $this->getName() . '" size="' . $this->getSize() . '" maxlength="' . $this->getMaxlength() . '" value="' . $this->getValue() . '"' . $this->getExtra() . ' ' . ($this->autoComplete ? '' : 'autocomplete="off" ') . '/></div>';
+        } else {
+            return '<input type="password" name="' . $this->getName() . '" id="' . $this->getName() . '" size="' . $this->getSize() . '" maxlength="' . $this->getMaxlength() . '" value="' . $this->getValue() . '"' . $this->getExtra() . ' ' . ($this->autoComplete ? '' : 'autocomplete="off" ') . '/>';
+        }
+        
     }
 }
