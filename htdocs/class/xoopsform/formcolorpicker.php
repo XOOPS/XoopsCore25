@@ -54,8 +54,11 @@ class XoopsFormColorPicker extends XoopsFormText
             echo '<script type="text/javascript" src="' . XOOPS_URL . '/include/color-picker.js"></script>';
         }
         $this->setExtra(' style="background-color:' . $this->getValue() . ';"');
-
-        return parent::render() . "<input type='reset' value=' ... ' onclick=\"return TCP.popup('" . XOOPS_URL . "/include/',document.getElementById('" . $this->getName() . "'));\">";
+        if ($GLOBALS['xoopsConfig']['bootstrap'] == true){
+            return substr(parent::render(), 0,-6) . "<input class='form-control' type='reset' value=' ... ' onclick=\"return TCP.popup('" . XOOPS_URL . "/include/',document.getElementById('" . $this->getName() . "'));\"></div>";
+        } else {
+            return parent::render() . "<input type='reset' value=' ... ' onclick=\"return TCP.popup('" . XOOPS_URL . "/include/',document.getElementById('" . $this->getName() . "'));\">";
+        }
     }
 
     /**
