@@ -31,7 +31,11 @@ class MytsFlash extends MyTextSanitizerExtension
     public function encode($textarea_id)
     {
         $config     = parent::loadConfig(__DIR__);
-        $code       = "<img src='{$this->image_path}/swf.gif' alt='" . _XOOPS_FORM_ALTFLASH . "' title='" . _XOOPS_FORM_ALTFLASH . "' '" . "' onclick='xoopsCodeFlash(\"{$textarea_id}\",\"" . htmlspecialchars(_XOOPS_FORM_ENTERFLASHURL, ENT_QUOTES) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES) . "\", \"" . $config['detect_dimension'] . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
+        if ($GLOBALS['xoopsConfig']['bootstrap'] == true){
+            $code = "<button type='button' class='btn btn-default btn-xs' onclick='xoopsCodeFlash(\"{$textarea_id}\",\"" . htmlspecialchars(_XOOPS_FORM_ENTERFLASHURL, ENT_QUOTES) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES) . "\", \"" . $config['detect_dimension'] . "\");' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALTFLASH . "'><span class='glyphicon glyphicon-flash' aria-hidden='true'></span> " . _XOOPS_FORM_ALTFLASH . "</button>&nbsp;";
+        } else {
+            $code       = "<img src='{$this->image_path}/swf.gif' alt='" . _XOOPS_FORM_ALTFLASH . "' title='" . _XOOPS_FORM_ALTFLASH . "' '" . "' onclick='xoopsCodeFlash(\"{$textarea_id}\",\"" . htmlspecialchars(_XOOPS_FORM_ENTERFLASHURL, ENT_QUOTES) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES) . "\", \"" . $config['detect_dimension'] . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
+        }
         $javascript = <<<EOF
             function xoopsCodeFlash(id, enterFlashPhrase, enterFlashHeightPhrase, enterFlashWidthPhrase, enableDimensionDetect)
             {
