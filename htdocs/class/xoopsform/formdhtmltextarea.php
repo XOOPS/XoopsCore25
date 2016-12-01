@@ -157,7 +157,13 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea
         }
         $ret .= "<br>\n";
         // the textarea box
-        $ret .= "<textarea class='form-control' id='" . $this->getName() . "' name='" . $this->getName() . "' title='" . $this->getTitle() . "' onselect=\"xoopsSavePosition('" . $this->getName() . "');\" onclick=\"xoopsSavePosition('" . $this->getName() . "');\" onkeyup=\"xoopsSavePosition('" . $this->getName() . "');\" cols='" . $this->getCols() . "' rows='" . $this->getRows() . "'" . $this->getExtra() . '>' . $this->getValue() . "</textarea><br>\n";
+        if ($GLOBALS['xoopsConfig']['bootstrap'] == true){
+            $ret .= "<div class='form-group form-inline'><textarea class='form-control' id='" . $this->getName() . "' name='" . $this->getName() . "' title='" . $this->getTitle() . "' onselect=\"xoopsSavePosition('" . $this->getName() . "');\" onclick=\"xoopsSavePosition('" . $this->getName() . "');\" onkeyup=\"xoopsSavePosition('" . $this->getName() . "');\" cols='" . $this->getCols() . "' rows='" . $this->getRows() . "'" . $this->getExtra() . '>' . $this->getValue() . "</textarea></div>\n";
+        } else {
+            $ret .= "<textarea id='" . $this->getName() . "' name='" . $this->getName() . "' title='" . $this->getTitle() . "' onselect=\"xoopsSavePosition('" . $this->getName() . "');\" onclick=\"xoopsSavePosition('" . $this->getName() . "');\" onkeyup=\"xoopsSavePosition('" . $this->getName() . "');\" cols='" . $this->getCols() . "' rows='" . $this->getRows() . "'" . $this->getExtra() . '>' . $this->getValue() . "</textarea><br>\n";
+        }
+
+        
         
         if (empty($this->skipPreview)) {
             if (empty($GLOBALS['xoTheme'])) {
