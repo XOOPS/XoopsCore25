@@ -178,7 +178,9 @@ class XoopsFormElementTray extends XoopsFormElement
                 ++$count;
             }
         }
-
+        if ($GLOBALS['xoopsConfig']['bootstrap'] == true){
+            return '<div class="form-group form-inline">' . $ret . '</div>';
+        }
         return $ret;
     }
 }
