@@ -179,6 +179,13 @@ class XoopsFormElementTray extends XoopsFormElement
             }
         }
         if ($GLOBALS['xoopsConfig']['bootstrap'] == true){
+            if (substr_count($ret, '<div class="form-group form-inline">') >0 ){
+                $ret = str_replace('<div class="form-group form-inline">', '', $ret);
+                $ret = str_replace('</div>', '', $ret);
+            }
+            if (substr_count($ret, '<div class="checkbox-inline">') >0 ){
+                $ret = str_replace('<div class="checkbox-inline">', '', $ret);
+            }
             return '<div class="form-group form-inline">' . $ret . '</div>';
         }
         return $ret;
