@@ -71,11 +71,6 @@ class xos_opal_ThemeFactory
                 $options['folderName'] = $this->defaultTheme;
             }
             $GLOBALS['xoopsConfig']['theme_set'] = $options['folderName'];
-            if (stripos($GLOBALS['xoopsConfig']['theme_set'], 'bootstrap') === false){
-                $GLOBALS['xoopsConfig']['bootstrap'] = false;
-            } else{
-                $GLOBALS['xoopsConfig']['bootstrap'] = true;
-            }
         }
         $options['path'] = XOOPS_THEME_PATH . '/' . $options['folderName'];
         $inst            = null;
@@ -291,6 +286,11 @@ class xos_opal_Theme
             }
         } else {
             $xoops_startpage = 'system';
+        }
+        if (stripos($GLOBALS['xoopsConfig']['theme_set'], 'bootstrap') === false){
+            $GLOBALS['xoopsConfig']['bootstrap'] = false;
+        } else{
+            $GLOBALS['xoopsConfig']['bootstrap'] = true;
         }
 
         $searchConfig = $configHandler->getConfigsByCat(XOOPS_CONF_SEARCH);
