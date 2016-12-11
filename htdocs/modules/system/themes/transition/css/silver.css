@@ -1,0 +1,199 @@
+/*
+ * Default Admin Theme
+ *
+ * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @package         themes
+ * @since           2.5.x
+ * @author          Xoops Design Theme <http://www.xoops.org/>
+ * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ *
+*/
+body {
+  background-color: #f5f5f5;
+}
+.outer {
+  border: 2px solid #F3F4F4;
+}
+.head {
+  background-color: #F3F4F4;
+}
+.even {
+  background-color: transparent;
+}
+.odd {
+  background-color: #F3F4F4;
+}
+#xo-logo-head {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,e5e5e5+100;White+3D */
+  background: #ffffff;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, #ffffff 0%, #e5e5e5 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e5e5e5', GradientType=0);
+  /* IE6-9 */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+#xo-headnav {
+  box-shadow: 1px 1px 0 rgba(255, 255, 255, 0.4);
+}
+#xo-headnav > li {
+  border-left: 1px solid #0f7eb9;
+}
+#xo-headnav > li > a {
+  background-color: #139EE8;
+  border-left: 1px solid #3fb2ef;
+  color: #FFF;
+}
+#xo-headnav > li > a:hover {
+  background-color: #0f7eb9;
+}
+#xo_globalnav {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,f3f3f3+50,ededed+51,ffffff+100;White+Gloss+%232 */
+  background: #ffffff;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #ffffff 0%, #f3f3f3 50%, #ededed 51%, #ffffff 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, #ffffff 0%, #f3f3f3 50%, #ededed 51%, #ffffff 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, #ffffff 0%, #f3f3f3 50%, #ededed 51%, #ffffff 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ffffff', GradientType=0);
+  /* IE6-9 */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+#xo_globalnav ul.menu ul li a {
+  background: #313131;
+  color: #DFDFDF;
+}
+#xo_globalnav ul.menu ul li a:hover {
+  background-color: #D0D0D0;
+  color: #313131 !important;
+}
+#xo_globalnav ul.menu .menulink {
+  color: #515151;
+}
+#xo_globalnav ul.menu .menulink:hover,
+ul.menu .menuhover {
+  background: #313131;
+  color: #FFF !important;
+}
+#xo_globalnav ul.menu .sub:after {
+  border-left-color: #DFDFDF;
+}
+#xo_globalnav ul.menu .sub:hover:after {
+  border-left-color: #313131 !important;
+}
+#choosestyle {
+  line-height: 32px;
+  margin-right: 3px;
+}
+#choosestyle a {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f0f0f0+0,dddddd+50,d5d5d5+51,eeeeee+100 */
+  background: #f0f0f0;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #f0f0f0 0%, #dddddd 50%, #d5d5d5 51%, #eeeeee 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, #f0f0f0 0%, #dddddd 50%, #d5d5d5 51%, #eeeeee 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, #f0f0f0 0%, #dddddd 50%, #d5d5d5 51%, #eeeeee 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f0f0f0', endColorstr='#eeeeee', GradientType=0);
+  /* IE6-9 */
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  color: #515151;
+  line-height: 28px;
+  margin-top: 3px;
+  margin-left: 2px;
+  border-radius: 3px;
+  box-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
+}
+#choosestyle a:hover {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,f1f1f1+50,e1e1e1+51,f6f6f6+100;White+Gloss+%231 */
+  background: #ffffff;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #ffffff 0%, #f1f1f1 50%, #e1e1e1 51%, #f6f6f6 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, #ffffff 0%, #f1f1f1 50%, #e1e1e1 51%, #f6f6f6 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, #ffffff 0%, #f1f1f1 50%, #e1e1e1 51%, #f6f6f6 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f6f6f6', GradientType=0);
+  /* IE6-9 */
+  color: #515151;
+}
+#xo-body {
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+#xo-nav-options {
+  background: #515151;
+  border-bottom: 1px solid #000;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+#xo-nav-options .modname {
+  color: #1d1f24;
+}
+#xo-footer {
+  background: #515151;
+  color: #cbcfcf;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 30px 0;
+}
+#xo-icon a,
+#xo-module-icons a {
+  background-color: #FFF;
+  border: 1px solid #d8dcdc;
+}
+#xo-icon a:hover,
+#xo-module-icons a:hover {
+  background: #eaf6fa;
+}
+.xo-title {
+  color: #515151;
+  border-bottom: 3px solid #515151;
+}
+#xo-logger-output > table {
+  background-color: #ffffff;
+}
+#xo-logger-output > table th {
+  color: #4E5159;
+}
+#xo-logger-tabs {
+  background-color: #f5f5f5;
+}
+#xo-logger-tabs > a {
+  background-color: #ffffff;
+}
+input[type=submit],
+input[type=reset],
+input[type=button],
+.xo-formbuttons,
+.formButton,
+button {
+  background-color: #F3F4F4;
+  color: #405A80;
+}
+input[type=submit]:hover,
+input[type=reset]:hover,
+input[type=button]:hover,
+.xo-formbuttons:hover,
+.formButton:hover,
+button:hover {
+  background-color: #d8dcdc;
+  color: #405A80;
+}
+input[type='submit'],
+button[type='submit'] {
+  background-color: #139EE8;
+  color: #FFF;
+}
+input[type='submit']:hover,
+button[type='submit']:hover {
+  background-color: #0f7eb9;
+  color: #FFF;
+}

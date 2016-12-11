@@ -265,13 +265,13 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
     $dbm->insert('config', " VALUES (92,0,7,'ldap_provisionning_upd', '_MD_AM_LDAP_PROVIS_UPD', '1', '_MD_AM_LDAP_PROVIS_UPD_DESC', 'yesno', 'int', 19)");
     $dbm->insert('config', " VALUES (93,0,7,'ldap_use_TLS','_MD_AM_LDAP_USETLS','0','_MD_AM_LDAP_USETLS_DESC','yesno','int', 20)");
 
-    $dbm->insert('config', " VALUES (94, 0, 1, 'cpanel', '_MD_AM_CPANEL', 'default', '_MD_AM_CPANELDSC', 'cpanel', 'other', 11)");
+    $dbm->insert('config', " VALUES (94, 0, 1, 'cpanel', '_MD_AM_CPANEL', 'transition', '_MD_AM_CPANELDSC', 'cpanel', 'other', 11)");
     $dbm->insert('config', " VALUES (95, 0, 2, 'welcome_type', '_MD_AM_WELCOMETYPE', '1', '_MD_AM_WELCOMETYPE_DESC', 'select', 'int', 3)");
 
     // Module System
     $dbm->insert('config', " VALUES (96, 1, 0, 'break1', '_MI_SYSTEM_PREFERENCE_BREAK_GENERAL', 'head', '', 'line_break', 'textbox', 0)");
     $dbm->insert('config', " VALUES (97, 1, 0, 'usetips', '_MI_SYSTEM_PREFERENCE_TIPS', '1', '_MI_SYSTEM_PREFERENCE_TIPS_DSC', 'yesno', 'int', 10)");
-    $dbm->insert('config', " VALUES (98, 1, 0, 'typeicons', '_MI_SYSTEM_PREFERENCE_ICONS', 'default', '', 'select', 'text', 20)");
+    $dbm->insert('config', " VALUES (98, 1, 0, 'typeicons', '_MI_SYSTEM_PREFERENCE_ICONS', 'transition', '', 'select', 'text', 20)");
     $dbm->insert('config', " VALUES (99, 1, 0, 'typebreadcrumb', '_MI_SYSTEM_PREFERENCE_BREADCRUMB', 'default', '', 'select', 'text', 30)");
     $dbm->insert('config', " VALUES (100, 1, 0, 'break2', '_MI_SYSTEM_PREFERENCE_BREAK_ACTIVE', 'head', '', 'line_break', 'textbox', 40)");
     $dbm->insert('config', " VALUES (101, 1, 0, 'active_avatars', '_MI_SYSTEM_PREFERENCE_ACTIVE_AVATARS', '1', '', 'yesno', 'int', 50)");

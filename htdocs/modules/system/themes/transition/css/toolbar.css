@@ -1,0 +1,47 @@
+/*
+ * Default Admin Theme
+ *
+ * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @package         themes
+ * @since           2.5.x
+ * @author          Xoops Design Theme <http://www.xoops.org/>
+ * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ *
+*/
+#xo-nav-options {
+    padding: 0 5px 0 5px;
+    height: 38px;
+    background: url(../img/dark/dark-navcp.png) repeat-x;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+}
+
+#xo-nav-options a {
+    border: 1px solid #00536C;
+    height: 32px;
+    display: block;
+    width: 32px;
+    float: left;
+    margin: 1px 2px 0 0;
+}
+
+#xo-nav-options a:hover {
+    background-color: #E0E6EF;
+    border-color: #ADD8E6;
+}
+
+#xo-modname {
+    float: left;
+    font-size: 18px;
+    font-weight: bold;
+    color: #f1f1f1;
+    margin-top: 8px;
+    margin-left: 2px;
+}
+
+#xo-toolbar {
+    float: right;
+    margin-left: 30px;
+    margin-right: 30px;
+}
