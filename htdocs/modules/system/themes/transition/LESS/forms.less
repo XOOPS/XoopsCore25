@@ -1,0 +1,117 @@
+/*
+ * Default Admin Theme
+ *
+ * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @package         themes
+ * @since           2.5.x
+ * @author          Xoops Design Theme <http://www.xoops.org/>
+ * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ *
+*/ /*======= forms ========*/
+
+.xoops-form-element-help{
+  font-size: 0.85em!important;
+  color: lighten(@text-color, 15%);
+  line-height: 1.5;
+}
+
+input,button,select {
+    vertical-align: middle;
+}
+
+fieldset {
+    margin: .5em;
+    padding: 1em;
+    border: 1px solid #333;
+    color: #000;
+    background-color: #f0f0f0;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+}
+
+legend {
+    padding: .5em;
+    font-size: 1.1em;
+    font-weight: bolder;
+}
+
+label,.caption-text {
+    margin-bottom: .5em;
+    padding-right: .5em;
+    font-weight: bold;
+}
+
+select[name=timezone_offset] {
+    font-size: 1em;
+}
+
+textarea {
+    width: 95%;
+    max-height: 300px;
+    overflow: auto;
+}
+
+input[type=submit],input[type=reset],input[type=button],.xo-formbuttons,.formButton,button
+    {
+    margin: 2px 5px 2px 5px;
+    background-color: #D3D2D6;
+    padding: 4px 8px;
+    color: #405A80;
+    font-size: 1em;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: pointer;
+    background-color: @gray-light;
+    padding: 6px 12px;
+  transition: ease-in-out all 250ms;
+}
+
+input[type=submit]:hover,input[type=reset]:hover,input[type=button]:hover,.xo-formbuttons:hover,.formButton:hover,button:hover
+    {
+    background-color: darken(@gray-light, 10%);
+    padding: 6px 12px;
+    color: inherit;
+    cursor: pointer;
+}
+input[type='submit'], button[type='submit']{
+  background-color: @color-blue;
+  color: #FFF;
+  border: 0;
+
+  &:hover{
+    background-color: darken(@color-blue, 10%);
+    color: #FFF;
+  }
+}
+
+input[type=text],input[type=password],input[type=checkbox],input[type=file],textarea,select
+    {
+    margin: 2px 5px 2px 0;
+    background-color: #FFF;
+    padding: 8px;
+    color: inherit;
+    border: 1px solid rgba(0,0,0,0.2);;
+    border-radius: 2px;
+  outline: none;
+  transition: ease all 250ms;
+
+}
+
+input[type=text],input[type=password],input[type=file] {
+
+}
+
+input[type=text]:focus,input[type=password]:focus,input[type=file]:focus,input[type=checkbox]:focus,textarea:focus, select:focus
+    {
+    border: darken(@blue-light, 15%) solid 1px;
+    box-shadow: inset 0 10px 20px #E0EAEE;
+  text-shadow: 1px 1px 0 rgba(255,255,255,0.8);
+}
+
+input[type=checkbox],input[type=radio] {
+    margin: 3px;
+    padding: 2px;
+}

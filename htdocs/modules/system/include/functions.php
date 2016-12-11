@@ -109,7 +109,10 @@ function system_adminVersion($version, $value = '')
  */
 function system_AdminIcons($img)
 {
-    $style = 'default';
+    $style = xoops_getModuleOption('typeicons', 'system');
+    if ($style == '') {
+        $style = 'default';
+    }
 
     $url = $GLOBALS['xoops']->url('modules/system/images/icons/' . $style . '/' . $img);
 

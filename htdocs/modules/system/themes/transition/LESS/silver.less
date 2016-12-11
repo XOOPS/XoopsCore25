@@ -1,0 +1,219 @@
+/*
+ * Default Admin Theme
+ *
+ * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @package         themes
+ * @since           2.5.x
+ * @author          Xoops Design Theme <http://www.xoops.org/>
+ * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ *
+*/
+
+@import "themes/silver";
+
+body {
+  background-color: @body-bg;
+}
+
+.outer {
+  border: 2px solid @gray-light;
+}
+
+.head {
+  background-color: @gray-light;
+}
+
+.even {
+  background-color: transparent;
+}
+
+.odd {
+  background-color: @gray-light;
+}
+
+#xo-logo-head {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,e5e5e5+100;White+3D */
+  background: #ffffff; /* Old browsers */
+  background: -moz-linear-gradient(top,  #ffffff 0%, #e5e5e5 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  #ffffff 0%,#e5e5e5 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+
+  border-bottom: 1px solid rgba(0,0,0,0.15);
+}
+
+#xo-headnav {
+  box-shadow: 1px 1px 0 rgba(255,255,255,0.4);
+
+  > li{
+    border-left: 1px solid @headnav-separator-color;
+
+    > a{
+      background-color: @head-links-bg;
+      border-left: 1px solid @headnav-separator-color-light;
+      color: @head-links-color;
+
+      &:hover{
+        background-color: darken(@head-links-bg, 10%);
+      }
+    }
+
+  }
+
+}
+
+#xo_globalnav {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,f3f3f3+50,ededed+51,ffffff+100;White+Gloss+%232 */
+  background: #ffffff; /* Old browsers */
+  background: -moz-linear-gradient(top,  #ffffff 0%, #f3f3f3 50%, #ededed 51%, #ffffff 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+#xo_globalnav ul.menu ul li a {
+  background: @nav-bg-hover;
+  color: @nav-menu-links-color;
+}
+
+#xo_globalnav ul.menu ul li a:hover {
+  background-color: @nav-menu-links-hover-bg;
+  color: @nav-menu-links-color-hover;
+}
+
+#xo_globalnav ul.menu .menulink{
+  color: @nav-links-color;
+}
+
+#xo_globalnav ul.menu .menulink:hover,ul.menu .menuhover {
+  background: @nav-bg-hover;
+  color: @nav-links-color-hover!important;
+}
+
+#xo_globalnav ul.menu .sub {
+
+  &:after{
+    border-left-color: @nav-menu-links-color;
+  }
+
+  &:hover{
+    &:after{
+      border-left-color: @nav-menu-links-color-hover;
+    }
+  }
+}
+
+#choosestyle{
+  line-height: 32px;
+  margin-right: 3px;
+
+  a {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f0f0f0+0,dddddd+50,d5d5d5+51,eeeeee+100 */
+    background: #f0f0f0; /* Old browsers */
+    background: -moz-linear-gradient(top,  #f0f0f0 0%, #dddddd 50%, #d5d5d5 51%, #eeeeee 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  #f0f0f0 0%,#dddddd 50%,#d5d5d5 51%,#eeeeee 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  #f0f0f0 0%,#dddddd 50%,#d5d5d5 51%,#eeeeee 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f0f0', endColorstr='#eeeeee',GradientType=0 ); /* IE6-9 */
+
+    border: 1px solid rgba(0,0,0,0.05);
+    color: @theme-choose-color;
+    line-height: 28px;
+    margin-top: 3px;
+    margin-left: 2px;
+    border-radius: 3px;
+    box-shadow: 1px 1px 0 rgba(255,255,255,0.3);
+
+    &:hover{
+      /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,f1f1f1+50,e1e1e1+51,f6f6f6+100;White+Gloss+%231 */
+      background: #ffffff; /* Old browsers */
+      background: -moz-linear-gradient(top,  #ffffff 0%, #f1f1f1 50%, #e1e1e1 51%, #f6f6f6 100%); /* FF3.6-15 */
+      background: -webkit-linear-gradient(top,  #ffffff 0%,#f1f1f1 50%,#e1e1e1 51%,#f6f6f6 100%); /* Chrome10-25,Safari5.1-6 */
+      background: linear-gradient(to bottom,  #ffffff 0%,#f1f1f1 50%,#e1e1e1 51%,#f6f6f6 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=0 ); /* IE6-9 */
+      color: @theme-choose-hover-color;
+    }
+  }
+
+}
+
+#xo-body {
+  background-color: #fff;
+  border: 1px solid rgba(0,0,0,0.15);
+}
+
+#xo-nav-options {
+  background: @toolbar-bg;
+  border-bottom: 1px solid #000;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+#xo-nav-options .modname {
+  color: #1d1f24;
+}
+
+#xo-footer {
+  background: @toolbar-bg;
+  color: @footer-color;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  padding: 30px 0;
+}
+
+#xo-icon a, #xo-module-icons a {
+  background-color: #FFF;
+  border: 1px solid darken(@gray-light, 10%);
+}
+
+#xo-icon a:hover,#xo-module-icons a:hover {
+  background: @blue-light;
+}
+
+.xo-title {
+  color: @toolbar-bg;
+  border-bottom: 3px solid @toolbar-bg;
+}
+
+#xo-logger-output {
+
+  > table{
+    background-color: lighten(@body-bg, 5%);
+
+
+    th{
+      color: @text-color;
+    }
+
+  }
+}
+
+#xo-logger-tabs {
+  background-color: @body-bg;
+
+  > a{
+    background-color: lighten(@body-bg, 5%);
+  }
+}
+
+input[type=submit],input[type=reset],input[type=button],.xo-formbuttons,.formButton,button
+{
+  background-color: @button-bg;
+  color: @button-color;
+}
+
+input[type=submit]:hover,input[type=reset]:hover,input[type=button]:hover,.xo-formbuttons:hover,.formButton:hover,button:hover
+{
+  background-color: @button-bg-hover;
+  color: @button-color-hover;
+}
+
+input[type='submit'], button[type='submit'] {
+  background-color: @button-primary-bg;
+  color: @button-primary-color;
+
+  &:hover {
+    background-color: @button-primary-bg-hover;
+    color: @button-primary-color-hover;
+  }
+}

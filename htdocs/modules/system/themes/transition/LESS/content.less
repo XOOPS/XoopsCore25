@@ -1,0 +1,294 @@
+/*
+ * Default Admin Theme
+ *
+ * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @package         themes
+ * @since           2.5.x
+ * @author          Xoops Design Theme <http://www.xoops.org/>
+ * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ *
+*/
+h1,h2,h3,h4,h5,h6 {
+    margin: 0;
+    line-height: 1.2;
+    font-weight: bold;
+    font-style: normal;
+}
+
+h1 {font-size: 1.7em;}
+h2 {font-size: 1.5em;}
+h3 {font-size: 1.4em;}
+h4 {font-size: 1.2em;}
+h5 {font-size: 1em;}
+h6 {font-size: .8em;}
+
+h1 {
+    clear: both;
+    background-color: transparent;
+    padding-left: .25em;
+    margin-bottom: 1em;
+}
+
+h1 a,h2 a {
+    background-color: transparent;
+    text-decoration: none;
+}
+
+h1 a:hover,h2 a:hover,h1 a:focus,h2 a:focus,h1 a:active,h2 a:active {
+    background-color: transparent;
+    text-decoration: underline;
+    outline: none;
+}
+
+h2, h3 {
+    background-color: transparent;
+    margin-bottom: .5em;
+}
+
+/* ==================== Style for images ==================== */
+img {
+    border: 0 !important;
+}
+
+img.xo-icons {
+    margin-bottom: -3px;
+}
+
+p img {
+    margin-left: .5em;
+    margin-right: .5em;
+}
+
+a img:hover,a img:focus {
+    //filter: alpha(opacity = 50);
+}
+
+a img {
+    border: none;
+}
+
+.imgsmile {
+    padding: 0 !important;
+    border: 0 !important;
+    margin-bottom: -2px !important;
+}
+
+img.xo-icons {
+    margin-bottom: -3px;
+}
+
+img.ui-datepicker-trigger {
+    margin: 3px;
+}
+
+/*================ Style for Quotes ================*/
+blockquote {
+    display: block;
+    width: 95%;
+    margin-right: 2em;
+    background-color: #FAFAFA;
+    padding: .5em;
+    color: #444;
+    line-height: 125%;
+    font-size: 11px;
+    text-align: justify;
+    border: 1px dashed #c2cdd6;
+}
+
+.xoopsQuote {
+
+}
+
+q,cite {
+    font-style: italic;
+}
+
+q cite,q q {
+    font-style: normal;
+}
+
+/* delete auto dobble quotes */
+q {
+    quotes: none;
+}
+
+q:before,q:after {
+    content: ""; /* for Safari/Chrome */
+}
+
+/*================== Style for Codes =================*/
+.xoopsCode {
+  display: block;
+  width: 95%;
+  max-height: 400px;
+  overflow: auto;
+  margin: .5em;
+  padding: .5em;
+    border: 1px solid #c2cdd6;
+    border-left-width: 3px;
+}
+
+code {
+}
+
+code,pre {
+  white-space: -pre-wrap /* for opera */;
+  white-space: pre-wrap;
+  word-wrap : break-word;
+}
+
+/* ==================== Links for Quotes ==================== */
+.xoopsQuote a:link,.xoopsQuote a:visited {
+    color: #444;
+    font-weight: bold;
+    background-color: transparent;
+}
+
+.xoopsQuote a:hover,.xoopsQuote a:active {
+    color: #1778cb;
+    background-color: transparent;
+}
+
+/* ==================== Redirect messages ==================== */
+.errorMsg {
+    background: #FBE3E4;
+    color: #D12F19;
+    text-align: center;
+    border: 1px solid #FBC2C4;
+    padding: 12px;
+    font-weight: 400;
+    border-radius: 3px;
+    line-height: 140%;
+}
+
+.confirmMsg {
+    background-color: #f3f3f3 !important;
+    color: #262F2E !important;
+    text-align: center;
+    border: 1px solid #ccc !important;
+    width: 60%;
+    min-height: 120px !important;
+    margin: 80px auto;
+    padding: 12px;
+    padding-top: 30px !important;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    line-height: 190%;
+}
+
+/* ==================== For redirect pages ====================*/
+.message,.notreload {
+    text-align: center;
+}
+
+/* ==================== General small ==================== */
+.fontSmall {
+    font-size: 10px;
+    background-color: transparent;
+}
+
+a.fontSmall {
+    color: #006699;
+}
+
+a.fontSmall:hover {
+    color: #C23030;
+    text-decoration: underline;
+}
+
+/*=============== styles for tables =================*/
+table {
+    margin: 0;
+    width: 100%;
+    border: none;
+    border-collapse: separate /*collapse*/;
+    border-spacing: 1px;
+}
+
+th {
+    background-color: #2e323b;
+    color: #fff;
+    padding: 4px;
+    vertical-align: middle;
+}
+
+.outer {
+    width: 99%;
+    border: 2px solid #ccc;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    margin: 5px;
+}
+
+.head {
+    background-color: transparent;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.even {
+    background-color: transparent;
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+}
+
+.odd {
+    background-color: @gray-light;
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+}
+
+.foot {
+    background-color: #E1E7EF;
+    padding: 5px;
+    font-weight: bold;
+}
+
+tr.head td {
+    background-color: #BDE3FB;
+    padding: 5px;
+    font-weight: bold;
+}
+
+tr.even td {
+    background-color: #fff;
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+}
+
+tr.odd td {
+    background-color: @gray-light;
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+}
+
+tr.foot td {
+    background-color: #E1E7EF;
+    padding: 5px;
+    font-weight: bold;
+}
+
+td.head {max-width: 300px !important;}
+/*============= XOOPS Editors =============*/
+body.mceContentBody {
+    background: #fff none;
+    color: #333;
+}
+
+/* Information Message */
+#trans-info{
+  background-color: #D6F1FF;
+  padding: 15px 15px 15px 70px;
+  color: darken(#139EE8, 15%);
+  margin-bottom: 30px;
+  border-radius: 3px;
+  border: 1px solid darken(#D6F1FF, 5%);
+  background-image: url("../images/info.png");
+  background-repeat: no-repeat;
+  background-position: 15px 15px;
+  background-size: 40px 40px;
+  min-height: 40px;
+}

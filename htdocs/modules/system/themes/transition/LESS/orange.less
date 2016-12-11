@@ -1,0 +1,177 @@
+/*
+ * Default Admin Theme
+ *
+ * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @package         themes
+ * @since           2.5.x
+ * @author          Xoops Design Theme <http://www.xoops.org/>
+ * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ *
+*/
+
+@import "themes/orange";
+
+body {
+  background-color: @body-bg;
+}
+
+a, a:link, a:active, a:visited{
+  color: @links-color!important;
+}
+
+a:hover{
+  color: @links-hover!important;
+}
+
+.outer {
+  border: 2px solid @gray-light;
+}
+
+.head {
+  background-color: @gray-light;
+}
+
+.even {
+  background-color: transparent;
+}
+
+.odd {
+  background-color: @gray-light;
+}
+
+#xo-logo-head {
+  background: @head-logo-bg;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+#xo-headnav {
+
+  > li{
+    border-left: 1px solid @headnav-separator-color;
+
+    > a{
+      background-color: @head-links-bg;
+      border-left: 1px solid @headnav-separator-color-light;
+      color: @head-links-color;
+
+      &:hover{
+        background-color: #FFA252;
+      }
+    }
+
+  }
+
+}
+
+#xo_globalnav {
+  background: @nav-bg;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+#xo_globalnav ul.menu ul li a {
+  background: @nav-bg-hover;
+  color: @nav-menu-links-color!important;
+}
+
+#xo_globalnav ul.menu ul li a:hover {
+  background-color: @nav-menu-links-hover-bg;
+  color: @nav-links-color-hover!important;
+}
+
+#xo_globalnav ul.menu .menulink {
+  color: @nav-links-color!important;
+}
+
+#xo_globalnav ul.menu .menulink:hover,ul.menu .menuhover {
+  background: @nav-bg-hover;
+  color: @nav-links-color-hover!important;
+}
+
+#xo_globalnav ul.menu .sub {
+
+  &:after{
+    border-left-color: @nav-menu-links-color;
+  }
+
+  &:hover{
+    &:after{
+      border-left-color: @nav-menu-links-color-hover;
+    }
+  }
+}
+
+#choosestyle{
+
+  a {
+    background: @theme-choose-bg; /* Old browsers */
+    border-left: 1px solid rgba(255,255,255,0.2);
+    box-shadow: -1px 0 0 rgba(0,0,0,0.1), inset -1px 0 0 rgba(0,0,0,0.1);
+    color: @theme-choose-color;
+
+    &:hover{
+      background-color: @theme-choose-bg-hover;
+      color: @theme-choose-hover-color;
+    }
+  }
+
+}
+
+#xo-body {
+  background-color: #fff;
+  border: 1px solid rgba(0,0,0,0.15);
+}
+
+#xo-nav-options {
+  background: @toolbar-bg;
+  border-bottom: 1px solid #000;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+#xo-nav-options .modname {
+  color: #1d1f24;
+}
+
+#xo-footer {
+  background-color: @footer-bg;
+  color: @footer-color;
+}
+#xo-footer a {  color: @footer-links; background-color: transparent;}
+
+#xo-footer a:hover {    color: @footer-links-hover;    text-decoration: none; background-color: transparent;}
+
+#xo-icon a, #xo-module-icons a {
+  background-color: #FFF;
+  border: 1px solid darken(@gray-light, 10%);
+}
+
+#xo-icon a:hover,#xo-module-icons a:hover {
+  background: @blue-light;
+}
+
+.xo-title {
+  color: @toolbar-bg;
+  border-bottom: 3px solid @toolbar-bg;
+}
+
+
+#xo-logger-output {
+
+  > table{
+    background-color: lighten(@body-bg, 5%);
+
+
+    th{
+      color: @text-color;
+    }
+
+  }
+}
+
+#xo-logger-tabs {
+  background-color: @body-bg;
+
+  > a{
+    background-color: lighten(@body-bg, 5%);
+  }
+}

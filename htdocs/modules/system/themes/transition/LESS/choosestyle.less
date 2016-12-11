@@ -1,0 +1,38 @@
+/*
+ * Default Admin Theme
+ *
+ * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @package         themes
+ * @since           2.5.x
+ * @author          Xoops Design Theme <http://www.xoops.org/>
+ * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ *
+*/
+
+#choosestyle a {
+    font-family: @font-family;
+  font-weight: 400;
+    font-size: 10px;
+    float: right;
+    background-color: rgba(0,0,0,0.2);
+    color: @nav-links-color;
+    padding: 0 12px;
+    cursor: pointer;
+  line-height: 36px;
+  text-transform: uppercase;
+  border-left: 1px solid rgba(255,255,255,0.1);
+  transition: ease all 250ms;
+
+  &:last-child{
+
+  }
+
+}
+
+#choosestyle a:hover {
+    background-color: @color-blue;
+    color: @nav-links-color-hover;
+    text-decoration: none;
+    cursor: pointer;
+}

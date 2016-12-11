@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2016 XOOPS Project (www.xoops.org)            //
@@ -515,12 +515,11 @@ switch ($op) {
         }
 
         // Clean cached files, may take long time
-        // User reigister_shutdown_function to keep running after connection closes so that cleaning cached files can be finished
+        // User register_shutdown_function to keep running after connection closes so that cleaning cached files can be finished
         // Cache management should be performed on a separate page
         require_once XOOPS_ROOT_PATH . '/modules/system/class/maintenance.php';
         $maintenance = new SystemMaintenance();
-        $options     = array(1);//1 goes for cache
-        //register_shutdown_function( array( &$xoopsTpl, 'clear_all_cache' ) );
+        $options     = array(1,2); // smarty_cache and Smarty_compile
         register_shutdown_function(array(&$maintenance, 'CleanCache'), $options);
 
         if ($lang_updated) {

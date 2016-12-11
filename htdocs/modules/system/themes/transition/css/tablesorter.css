@@ -1,0 +1,22 @@
+/*
+ * Default Admin Theme
+ *
+ * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @package         themes
+ * @since           2.5.x
+ * @author          Xoops Design Theme <http://www.xoops.org/>
+ * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ *
+*/
+table.tablesorter thead tr .header {
+    background: url(../img/unsort.gif) no-repeat center right;
+}
+
+table.tablesorter thead tr .headerSortUp {
+    background: url(../img/asc.gif) no-repeat center right;
+}
+
+table.tablesorter thead tr .headerSortDown {
+    background: url(../img/desc.gif) no-repeat center right;
+}

@@ -1,0 +1,127 @@
+/*
+ * Default Admin Theme
+ *
+ * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @package         themes
+ * @since           2.5.x
+ * @author          Xoops Design Theme <http://www.xoops.org/>
+ * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ *
+*/
+
+#xo_globalnav {
+  background: @nav-bg;
+  /*padding: 4px;*/
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+  font-weight: normal;
+  font-family: @font-family;
+  height: 36px;
+  list-style: none;
+}
+
+#xo_globalnav ul.menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#xo_globalnav ul.menu * {
+  margin: 0;
+  padding: 0;
+}
+
+#xo_globalnav ul.menu a {
+  display: block;
+  color: #1F1F1F;
+  text-decoration: none;
+}
+
+#xo_globalnav ul.menu li {
+  position: relative;
+  float: left;
+  margin-right: 2px;
+  list-style: none;
+}
+
+#xo_globalnav ul.menu ul {
+  position: absolute;
+  /*top: 26px;*/ /*deactivate test and fix */
+  left: 0;
+  background: @color-blue;
+  display: none;
+  opacity: 0;
+}
+
+#xo_globalnav ul.menu ul li {
+  position: relative;
+  border-top: none;
+  width: 168px;
+  margin: 0;
+  list-style: none;
+}
+
+#xo_globalnav ul.menu ul li a {
+  display: block;
+  padding: 0 15px 0 16px;
+  line-height: 28px;
+  background: @nav-bg-hover;
+  color: @nav-menu-links-color;
+  font-weight: 400;
+  /*background: #ddd  no-repeat left;
+      padding-left: 20px;*/
+
+  .fa{
+    width: 20px;
+    text-align: center;
+  }
+}
+
+#xo_globalnav ul.menu ul li a:hover {
+  background-color: #333;
+  color: #f7f7f7;
+}
+
+#xo_globalnav ul.menu ul ul {
+  left: 168px;
+  top: -1px;
+  list-style: none;
+}
+
+#xo_globalnav ul.menu .menulink {
+  padding: 5px 7px 4px;
+  font-weight: 700;
+  color: @nav-links-color;
+  padding: 0 16px;
+  line-height: 36px;
+  transition: ease all 250ms;
+}
+
+#xo_globalnav ul.menu .menulink:hover, ul.menu .menuhover {
+  background: @nav-bg-hover;
+}
+
+#xo_globalnav ul.menu .sub {
+  position: relative;
+
+  &:after{
+    content: '';
+    display: block;
+    border-left: 4px solid @nav-menu-links-color;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    position: absolute;
+    top: 50%; margin-top: -4px;
+    right: 15px;
+  }
+
+  &:hover{
+    &:after{
+      border-left-color: @nav-menu-links-color-hover;
+    }
+  }
+}
+
+#xo_globalnav ul.menu .topline {
+  border-top: 1px solid #aaa;
+}
