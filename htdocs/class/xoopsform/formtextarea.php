@@ -116,6 +116,9 @@ class XoopsFormTextArea extends XoopsFormElement
      */
     public function render()
     {
+        if ($GLOBALS['xoopsConfig']['bootstrap'] == true){
+            return "<div class='form-group form-inline'><textarea class='form-control' name='" . $this->getName() . "' id='" . $this->getName() . "'  title='" . $this->getTitle() . "' rows='" . $this->getRows() . "' cols='" . $this->getCols() . "'" . $this->getExtra() . '>' . $this->getValue() . '</textarea></div>';
+        }
         return "<textarea name='" . $this->getName() . "' id='" . $this->getName() . "'  title='" . $this->getTitle() . "' rows='" . $this->getRows() . "' cols='" . $this->getCols() . "'" . $this->getExtra() . '>' . $this->getValue() . '</textarea>';
     }
 }

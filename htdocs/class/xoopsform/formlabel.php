@@ -64,6 +64,9 @@ class XoopsFormLabel extends XoopsFormElement
      */
     public function render()
     {
+        if ($GLOBALS['xoopsConfig']['bootstrap'] == true){
+            return "<div class='form-group form-inline'>" . $this->getValue() . "</div>";
+        }
         return $this->getValue();
     }
 }

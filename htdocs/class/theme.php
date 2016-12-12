@@ -287,6 +287,11 @@ class xos_opal_Theme
         } else {
             $xoops_startpage = 'system';
         }
+        if (stripos($GLOBALS['xoopsConfig']['theme_set'], 'bootstrap') === false){
+            $GLOBALS['xoopsConfig']['bootstrap'] = false;
+        } else{
+            $GLOBALS['xoopsConfig']['bootstrap'] = true;
+        }
 
         $searchConfig = $configHandler->getConfigsByCat(XOOPS_CONF_SEARCH);
         $xoops_search = (bool) (isset($searchConfig['enable_search']) && $searchConfig['enable_search'] === 1);
@@ -307,6 +312,7 @@ class xos_opal_Theme
                 ? $GLOBALS['xoopsModule']->getVar('name')
                 : htmlspecialchars($GLOBALS['xoopsConfig']['slogan'], ENT_QUOTES),
             'xoops_search'     => $xoops_search,
+            'xoops_bootstrap'     => $GLOBALS['xoopsConfig']['bootstrap'],
         ));
         if (isset($GLOBALS['xoopsUser']) && is_object($GLOBALS['xoopsUser'])) {
             $this->template->assign(array(

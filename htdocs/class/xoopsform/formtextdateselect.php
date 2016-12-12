@@ -153,7 +153,9 @@ class XoopsFormTextDateSelect extends XoopsFormText
                 ');
             }
         }
-
-        return "<input type='text' name='" . $ele_name . "' id='" . $ele_name . "' size='" . $this->getSize() . "' maxlength='" . $this->getMaxlength() . "' value='" . $display_value . "'" . $this->getExtra() . " /><input type='reset' value=' ... ' onclick='return showCalendar(\"" . $ele_name . "\");'>";
+        if ($GLOBALS['xoopsConfig']['bootstrap'] == true){            
+            return "<div class='form-inline'><input class='form-control' type='text' name='" . $ele_name . "' id='" . $ele_name . "' size='" . $this->getSize() . "' maxlength='" . $this->getMaxlength() . "' value='" . $display_value . "'" . $this->getExtra() . " /><input class='form-control' type='reset' value=' ... ' onclick='return showCalendar(\"" . $ele_name . "\");'></div>";
+        }
+        return "<input type='text' name='" . $ele_name . "' id='" . $ele_name . "' size='" . $this->getSize() . "' maxlength='" . $this->getMaxlength() . "' value='" . $display_value . "'" . $this->getExtra() . " /><input type='reset' value=' ... ' onclick='return showCalendar(\"" . $ele_name . "\");'>";  
     }
 }
