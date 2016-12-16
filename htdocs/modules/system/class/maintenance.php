@@ -100,36 +100,50 @@ class SystemMaintenance
     }
 
     /**
+     * Delete all files in a directory
+     *
+     * @param string $dir directory to clear
+     *
+     * @return void
+     */
+    protected function clearDirectory($dir)
+    {
+        if (is_dir($dir)) {
+            if ($dirHandle = opendir($dir)) {
+                while (($file = readdir($dirHandle)) !== false) {
+                    if (filetype($dir . $file) === 'file' && $file !== 'index.html') {
+                        unlink($dir . $file);
+                    }
+                }
+                closedir($dirHandle);
+            }
+        }
+    }
+
+    /**
      * Clean cache 'xoops_data/caches/smarty_cache'
      *
-     * @param array cache
+     * @param array $cacheList int[] of cache "ids"
+     *                         1 = smarty cache
+     *                         2 = smarty compile
+     *                         3 = xoops cache
      * @return bool
      */
-    public function CleanCache($cache)
+    public function CleanCache($cacheList)
     {
-        $cacheCount = count($cache);
-        for ($i = 0; $i < $cacheCount; ++$i) {
-            if ($cache[$i] == 1) {
-                $files = glob(XOOPS_VAR_PATH . '/caches/smarty_cache/*.*');
-                foreach ($files as $filename) {
-                    if (basename(strtolower($filename)) !== 'index.html') {
-                        unlink($filename);
-                    }
-                }
-            } elseif ($cache[$i] == 2) {
-                $files = glob(XOOPS_VAR_PATH . '/caches/smarty_compile/*.*');
-                foreach ($files as $filename) {
-                    if (basename(strtolower($filename)) !== 'index.html') {
-                        unlink($filename);
-                    }
-                }
-            } elseif ($cache[$i] == 3) {
-                $files = glob(XOOPS_VAR_PATH . '/caches/xoops_cache/*.*');
-                foreach ($files as $filename) {
-                    if (basename(strtolower($filename)) !== 'index.html') {
-                        unlink($filename);
-                    }
-                }
+        foreach ($cacheList as $cache) {
+            switch ($cache) {
+                case 1:
+                    $this->clearDirectory(XOOPS_VAR_PATH . '/caches/smarty_cache/');
+                    break;
+                case 2:
+                    $this->clearDirectory(XOOPS_VAR_PATH . '/caches/smarty_compile/');
+                    break;
+                case 3:
+                    $this->clearDirectory(XOOPS_VAR_PATH . '/caches/xoops_cache/');
+                    break;
+                default:
+                    return false;
             }
         }
 
