@@ -67,6 +67,7 @@ $modversion['templates'][] = array('file' => 'system_homepage.tpl', 'description
 $modversion['templates'][] = array('file' => 'system_bannerlogin.tpl', 'description' => '');
 $modversion['templates'][] = array('file' => 'system_banner.tpl', 'description' => '');
 $modversion['templates'][] = array('file' => 'system_bannerdisplay.tpl', 'description' => '');
+$modversion['templates'][] = array('file' => 'system_search.tpl', 'description' => '');
 
 //as a transition to .tpl, we also use the .html extension
 
@@ -89,6 +90,7 @@ $modversion['templates'][] = array('file' => 'system_homepage.html', 'descriptio
 $modversion['templates'][] = array('file' => 'system_bannerlogin.html', 'description' => '');
 $modversion['templates'][] = array('file' => 'system_banner.html', 'description' => '');
 $modversion['templates'][] = array('file' => 'system_bannerdisplay.html', 'description' => '');
+$modversion['templates'][] = array('file' => 'system_search.html', 'description' => '');
 
 // Admin Templates
 $modversion['templates'][] = array('file' => 'system_header.tpl', 'description' => '', 'type' => 'admin');
