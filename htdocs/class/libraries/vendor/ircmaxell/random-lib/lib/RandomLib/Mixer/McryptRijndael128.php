@@ -10,53 +10,50 @@
  */
 
 /**
- * The Random Random Number Source
- *
- * This uses the *nix /dev/random device to generate high strength numbers
+ * mcrypt mixer using the Rijndael cipher with 128 bit block size
  *
  * PHP version 5.3
  *
  * @category   PHPCryptLib
  * @package    Random
- * @subpackage Source
+ * @subpackage Mixer
  *
  * @author     Anthony Ferrara <ircmaxell@ircmaxell.com>
- * @copyright  2011 The Authors
+ * @copyright  2013 The Authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  *
  * @version    Build @@version@@
  */
-namespace RandomLib\Source;
+namespace RandomLib\Mixer;
 
+use RandomLib\AbstractMcryptMixer;
 use SecurityLib\Strength;
 
 /**
- * The Random Random Number Source
- *
- * This uses the *nix /dev/random device to generate high strength numbers
+ * mcrypt mixer using the Rijndael cipher with 128 bit block size
  *
  * @category   PHPCryptLib
  * @package    Random
- * @subpackage Source
+ * @subpackage Mixer
  *
  * @author     Anthony Ferrara <ircmaxell@ircmaxell.com>
- * @codeCoverageIgnore
+ * @author     Chris Smith <chris@cs278.org>
  */
-class Random extends URandom
+class McryptRijndael128 extends AbstractMcryptMixer
 {
-
     /**
-     * @var string The file to read from
-     */
-    protected static $file = '/dev/random';
-
-    /**
-     * Return an instance of Strength indicating the strength of the source
-     *
-     * @return \SecurityLib\Strength An instance of one of the strength classes
+     * {@inheritdoc}
      */
     public static function getStrength()
     {
         return new Strength(Strength::HIGH);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getCipher()
+    {
+        return 'rijndael-128';
     }
 }

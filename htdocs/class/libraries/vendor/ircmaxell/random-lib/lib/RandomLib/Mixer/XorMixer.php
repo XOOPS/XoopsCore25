@@ -32,7 +32,6 @@
 namespace RandomLib\Mixer;
 
 use SecurityLib\Strength;
-use SecurityLib\Util;
 
 /**
  * The Hash medium strength mixer class
@@ -48,25 +47,8 @@ use SecurityLib\Util;
  *
  * @author     Anthony Ferrara <ircmaxell@ircmaxell.com>
  */
-class Hash extends \RandomLib\AbstractMixer
+class XorMixer extends \RandomLib\AbstractMixer
 {
-
-    /**
-     * @var string The hash instance to use
-     */
-    protected $hash = null;
-
-    /**
-     * Build the hash mixer
-     *
-     * @param string $hash The hash instance to use (defaults to sha512)
-     *
-     * @return void
-     */
-    public function __construct($hash = 'sha512')
-    {
-        $this->hash = $hash;
-    }
 
     /**
      * Return an instance of Strength indicating the strength of the source
@@ -75,7 +57,7 @@ class Hash extends \RandomLib\AbstractMixer
      */
     public static function getStrength()
     {
-        return new Strength(Strength::MEDIUM);
+        return new Strength(Strength::VERYLOW);
     }
 
     /**
@@ -95,7 +77,7 @@ class Hash extends \RandomLib\AbstractMixer
      */
     protected function getPartSize()
     {
-        return Util::safeStrlen(hash($this->hash, '', true));
+        return 64;
     }
 
     /**
@@ -108,7 +90,7 @@ class Hash extends \RandomLib\AbstractMixer
      */
     protected function mixParts1($part1, $part2)
     {
-        return hash_hmac($this->hash, $part1, $part2, true);
+        return $part1 ^ $part2;
     }
 
     /**
@@ -121,6 +103,7 @@ class Hash extends \RandomLib\AbstractMixer
      */
     protected function mixParts2($part1, $part2)
     {
-        return hash_hmac($this->hash, $part2, $part1, true);
+        // Both mixers are identical, this is for speed, not security
+        return $part1 ^ $part2;
     }
 }

@@ -10,35 +10,28 @@
  */
 
 /**
- * The Random Number Source interface.
- *
- * All random number sources must implement this interface
- *
  * PHP version 5.3
  *
- * @category   PHPPasswordLib
- * @package    Random
+ * @category  PHPSecurityLib
+ * @package   Random
  *
- * @author     Anthony Ferrara <ircmaxell@ircmaxell.com>
- * @copyright  2011 The Authors
+ * @author    Anthony Ferrara <ircmaxell@ircmaxell.com>
+ * @copyright 2011 The Authors
  * @license    http://www.opensource.org/licenses/mit-license.html  MIT License
  *
- * @version    Build @@version@@
+ * @version   Build @@version@@
  */
 namespace RandomLib;
 
+use SecurityLib\Strength;
+
 /**
- * The Random Number Source interface.
+ * An abstract mixer to implement a common mixing strategy
  *
- * All random number sources must implement this interface
- *
- * @category   PHPPasswordLib
- * @package    Random
- *
- * @author     Anthony Ferrara <ircmaxell@ircmaxell.com>
- * @codeCoverageIgnore
+ * @category PHPSecurityLib
+ * @package  Random
  */
-interface Source
+abstract class AbstractSource implements \RandomLib\Source
 {
 
     /**
@@ -46,7 +39,10 @@ interface Source
      *
      * @return \SecurityLib\Strength An instance of one of the strength classes
      */
-    public static function getStrength();
+    public static function getStrength()
+    {
+        return new Strength(Strength::VERYLOW);
+    }
 
     /**
      * If the source is currently available.
@@ -54,17 +50,20 @@ interface Source
      *
      * @return bool
      */
-    public static function isSupported();
+    public static function isSupported()
+    {
+        return true;
+    }
 
     /**
-     * Generate a random string of the specified size
-     *
-     * Note: If the source fails to generate enough data, the result must be
-     * padded to the requested length.
+     * Returns a string of zeroes, useful when no entropy is available.
      *
      * @param int $size The size of the requested random string
      *
      * @return string A string of the requested size
      */
-    public function generate($size);
+    protected static function emptyValue($size)
+    {
+        return str_repeat(chr(0), $size);
+    }
 }
