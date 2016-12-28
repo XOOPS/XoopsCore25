@@ -220,13 +220,13 @@ switch ($op) {
         $xoBreadCrumb->addHelp(system_adminVersion('modulesadmin', 'help') . '#confirm');
         $xoBreadCrumb->addTips(_AM_SYSTEM_MODULES_CONFIRM_TIPS);
         $xoBreadCrumb->render();
-        $error = array();
+        $errorMessage = array();
         if (!is_writable(XOOPS_CACHE_PATH . '/')) {
-            $error[] = sprintf(_MUSTWABLE, '<strong>' . XOOPS_CACHE_PATH . '/</strong>');
+            $errorMessage[] = sprintf(_MUSTWABLE, '<strong>' . XOOPS_CACHE_PATH . '/</strong>');
         }
-        if (count($error) > 0) {
+        if (count($errorMessage) > 0) {
             // Display Error
-            xoops_error($error);
+            xoops_error($errorMessage);
             // Call Footer
             xoops_cp_footer();
             exit();
