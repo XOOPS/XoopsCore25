@@ -167,7 +167,7 @@ switch ($op) {
                                     $text .= '<table cellspacing="1" class="outer"><tr><th colspan="3" align="center">' . _AM_SYSTEM_TEMPLATES_MODULES . ucfirst($module->getVar('dirname')) . '</th></tr><tr><th align="center">' . _AM_SYSTEM_TEMPLATES_TYPES . '</th><th  align="center">' . _AM_SYSTEM_TEMPLATES_FILES . '</th><th>' . _AM_SYSTEM_TEMPLATES_STATUS . '</th></tr>';
 
                                     // create template
-                                    $templates      =& $tpltpl_handler->find($tplsetname, 'module', null, $moddir);
+                                    $templates      = $tpltpl_handler->find($tplsetname, 'module', null, $moddir);
                                     $templatesCount = count($templates);
                                     for ($j = 0; $j < $templatesCount; ++$j) {
                                         $filename = $templates[$j]->getVar('tpl_file');
@@ -196,7 +196,7 @@ switch ($op) {
                                     }
 
                                     // create block template
-                                    $btemplates      =& $tpltpl_handler->find($tplsetname, 'block', null, $moddir);
+                                    $btemplates      = $tpltpl_handler->find($tplsetname, 'block', null, $moddir);
                                     $btemplatesCount = count($btemplates);
                                     for ($k = 0; $k < $btemplatesCount; ++$k) {
                                         $filename = $btemplates[$k]->getVar('tpl_file');
