@@ -259,7 +259,7 @@ switch ($op) {
                                 $tempCount                = count($_REQUEST['select_templates_modules']);
                                 for ($l = 0; $l < $tempCount; ++$l) {
                                     // create template
-                                    $templates      =& $tpltpl_handler->find($tplsetname, 'module', null, $moddir);
+                                    $templates      = $tpltpl_handler->find($tplsetname, 'module', null, $moddir);
                                     $templatesCount = count($templates);
                                     for ($j = 0; $j < $templatesCount; ++$j) {
                                         $filename = $templates[$j]->getVar('tpl_file');
@@ -290,7 +290,7 @@ switch ($op) {
                                     }
 
                                     // create block template
-                                    $btemplates      =& $tpltpl_handler->find($tplsetname, 'block', null, $moddir);
+                                    $btemplates      = $tpltpl_handler->find($tplsetname, 'block', null, $moddir);
                                     $btemplatesCount = count($btemplates);
                                     for ($k = 0; $k < $btemplatesCount; ++$k) {
                                         $filename = $btemplates[$k]->getVar('tpl_file');
