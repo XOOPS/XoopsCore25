@@ -104,6 +104,7 @@ return array(
     'xpm'   => 'image/x-xpixmap',
     'ics'   => 'text/calendar',
     'ifb'   => 'text/calendar',
+    'csv'   => 'text/csv',
     'css'   => 'text/css',
     'html'  => 'text/html',
     'htm'   => 'text/html',
