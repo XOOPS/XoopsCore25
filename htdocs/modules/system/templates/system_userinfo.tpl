@@ -167,8 +167,8 @@
         <img src="<{$result.image}>" alt="<{$module.name}>"/>
         <strong><a href="<{$result.link}>" title="<{$result.title}>"><{$result.title}></a></strong>
         <br>
-        <span class="x-small">(<{$result.time}>)</span>
-        <br>
+		<span class="x-small">(<{$result.time|default:''}>)</span>
+		<br>	
     <{/foreach}>
     <!-- end results item loop -->
 

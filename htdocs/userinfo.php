@@ -181,7 +181,7 @@ foreach ($mids as $mid) {
                 }
 
                 $results[$i]['title'] = $myts->htmlspecialchars($results[$i]['title']);
-                $results[$i]['time']  = $results[$i]['time'] ? formatTimestamp($results[$i]['time']) : '';
+				$results[$i]['time']  = isset($results[$i]['time']) ? formatTimestamp($results[$i]['time']) : '';
             }
             $showall_link = '';
             if ($count == 5) {
