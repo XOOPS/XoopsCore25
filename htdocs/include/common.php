@@ -304,6 +304,8 @@ if ($xoopsLogger->activated) {
  * Theme Selection
  */
 $xoops->themeSelect();
+xoops_load('XoopsFormRendererInterface');
+xoops_load('XoopsFormRenderer');
 
 /**
  * Closed Site

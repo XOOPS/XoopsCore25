@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2017 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @subpackage          form
@@ -64,9 +64,6 @@ class XoopsFormLabel extends XoopsFormElement
      */
     public function render()
     {
-        if ($GLOBALS['xoopsConfig']['bootstrap'] == true){
-            return "<div class='form-group form-inline'>" . $this->getValue() . "</div>";
-        }
-        return $this->getValue();
+        return XoopsFormRenderer::getInstance()->get()->renderFormLabel($this);
     }
 }

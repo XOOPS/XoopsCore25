@@ -2,7 +2,7 @@
 /**
  * XOOPS Form Class Elements
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2017 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @subpackage          form
@@ -37,6 +37,8 @@ class XoopsFormButtonTray extends XoopsFormElement
      * @access private
      */
     public $_type;
+
+    public $_showDelete;
 
     /**
      * Constructor
@@ -99,20 +101,6 @@ class XoopsFormButtonTray extends XoopsFormElement
      */
     public function render()
     {
-        // onclick="this.form.elements.op.value=\'delfile\';
-        $ret = '';
-        if ($GLOBALS['xoopsConfig']['bootstrap'] == true){
-            if ($this->_showDelete) {
-                $ret .= '<input type="submit" class="btn btn-danger" name="delete" id="delete" value="' . _DELETE . '" onclick="this.form.elements.op.value=\'delete\'">&nbsp;';
-            }
-            $ret .= '<input type="button" value="' . _CANCEL . '" onClick="history.go(-1);return true;" />&nbsp;<input type="reset" class="btn btn-default"  name="reset"  id="reset" value="' . _RESET . '" />&nbsp;<input type="' . $this->getType() . '" class="btn btn-warning"  name="' . $this->getName() . '"  id="' . $this->getName() . '" value="' . $this->getValue() . '"' . $this->getExtra() . '  />';
-        } else {        
-            if ($this->_showDelete) {
-                $ret .= '<input type="submit" class="formbutton" name="delete" id="delete" value="' . _DELETE . '" onclick="this.form.elements.op.value=\'delete\'">&nbsp;';
-            }
-            $ret .= '<input type="button" value="' . _CANCEL . '" onClick="history.go(-1);return true;" />&nbsp;<input type="reset" class="formbutton"  name="reset"  id="reset" value="' . _RESET . '" />&nbsp;<input type="' . $this->getType() . '" class="formbutton"  name="' . $this->getName() . '"  id="' . $this->getName() . '" value="' . $this->getValue() . '"' . $this->getExtra() . '  />';
-        }
-
-        return $ret;
+        return XoopsFormRenderer::getInstance()->get()->renderFormButtonTray($this);
     }
 }

@@ -10,7 +10,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright    (c) 2000-2017 XOOPS Project (www.xoops.org)
  * @license          GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package          kernel
  * @since            2.0
@@ -160,54 +160,6 @@ class XoopsFormRadio extends XoopsFormElement
      */
     public function render()
     {
-        $ret           = '';
-        $ele_name      = $this->getName();
-        $ele_title     = $this->getTitle();
-        $ele_value     = $this->getValue();
-        $ele_options   = $this->getOptions();
-        $ele_extra     = $this->getExtra();
-        $ele_delimeter = empty($this->columns) ? $this->getDelimeter() : '';
-        if (!empty($this->columns)) {
-            $ret .= '<table><tr>';
-        }
-        $i      = 0;
-        $id_ele = 0;
-        foreach ($ele_options as $value => $name) {
-            ++$id_ele;
-            if (!empty($this->columns)) {
-                if ($i % $this->columns == 0) {
-                    $ret .= '<tr>';
-                }
-                $ret .= '<td>';
-            }
-            
-            if ($GLOBALS['xoopsConfig']['bootstrap'] == true){
-                $ret .= '<div class="checkbox-inline"><label>';
-            }
-            $ret .= '<input type="radio" name="' . $ele_name . '" id="' . $ele_name . $id_ele . '" title = "' . htmlspecialchars($ele_title, ENT_QUOTES) . '" value="' . htmlspecialchars($value, ENT_QUOTES) . '"';
-            if (isset($ele_value) && $value == $ele_value) {
-                $ret .= ' checked';
-            }
-            if ($GLOBALS['xoopsConfig']['bootstrap'] == true){
-                $ret .= $ele_extra . ' /> ' . $name . $ele_delimeter;
-                $ret .= '<label></div>';
-            } else {
-                $ret .= $ele_extra . ' />' . "<label name='xolb_{$ele_name}' for='" . $ele_name . $id_ele . "'>" . $name . '</label>' . $ele_delimeter;
-            }
-            if (!empty($this->columns)) {
-                $ret .= '</td>';
-                if (++$i % $this->columns == 0) {
-                    $ret .= '</tr>';
-                }
-            }
-        }
-        if (!empty($this->columns)) {
-            if ($span = $i % $this->columns) {
-                $ret .= '<td colspan="' . ($this->columns - $span) . '"></td></tr>';
-            }
-            $ret .= '</table>';
-        }
-
-        return $ret;
+        return XoopsFormRenderer::getInstance()->get()->renderFormRadio($this);
     }
 }

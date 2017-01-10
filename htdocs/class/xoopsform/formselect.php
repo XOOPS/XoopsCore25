@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2017 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @subpackage          form
@@ -199,35 +199,7 @@ class XoopsFormSelect extends XoopsFormElement
      */
     public function render()
     {
-        $ele_name    = $this->getName();
-        $ele_title   = $this->getTitle();
-        $ele_value   = $this->getValue();
-        $ele_options = $this->getOptions();
-        if ($GLOBALS['xoopsConfig']['bootstrap'] == true){
-            $ret = '<div class="form-group form-inline"><select class="form-control" size="' . $this->getSize() . '"' . $this->getExtra();
-        } else {
-            $ret = '<select size="' . $this->getSize() . '"' . $this->getExtra();
-        }
-        if ($this->isMultiple() != false) {
-            $ret .= ' name="' . $ele_name . '[]" id="' . $ele_name . '" title="' . $ele_title . '" multiple="multiple">';
-        } else {
-            $ret .= ' name="' . $ele_name . '" id="' . $ele_name . '" title="' . $ele_title . '">';
-        }
-        foreach ($ele_options as $value => $name) {
-            $ret .= '<option value="' . htmlspecialchars($value, ENT_QUOTES) . '"';
-            if (count($ele_value) > 0 && in_array($value, $ele_value)) {
-                $ret .= ' selected';
-            }
-            $ret .= '>' . $name . '</option>';
-        }
-        if ($GLOBALS['xoopsConfig']['bootstrap'] == true){
-            $ret .= '</select></div>';
-        } else {
-            $ret .= '</select>';
-        }
-        
-
-        return $ret;
+        return XoopsFormRenderer::getInstance()->get()->renderFormSelect($this);
     }
 
     /**

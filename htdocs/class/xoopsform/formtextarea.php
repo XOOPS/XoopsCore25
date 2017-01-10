@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2017 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @subpackage          form
@@ -116,9 +116,6 @@ class XoopsFormTextArea extends XoopsFormElement
      */
     public function render()
     {
-        if ($GLOBALS['xoopsConfig']['bootstrap'] == true){
-            return "<div class='form-group form-inline'><textarea class='form-control' name='" . $this->getName() . "' id='" . $this->getName() . "'  title='" . $this->getTitle() . "' rows='" . $this->getRows() . "' cols='" . $this->getCols() . "'" . $this->getExtra() . '>' . $this->getValue() . '</textarea></div>';
-        }
-        return "<textarea name='" . $this->getName() . "' id='" . $this->getName() . "'  title='" . $this->getTitle() . "' rows='" . $this->getRows() . "' cols='" . $this->getCols() . "'" . $this->getExtra() . '>' . $this->getValue() . '</textarea>';
+        return XoopsFormRenderer::getInstance()->get()->renderFormTextArea($this);
     }
 }
