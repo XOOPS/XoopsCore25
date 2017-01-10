@@ -15,10 +15,10 @@
  * @subpackage          textsanitizer
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @deprecated          since 2.5.9
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 return $config = array(
-    'detect_dimension' => 1,
-    'enable_flash_entry' => true,  // false to disable entry button in editor, existing content will still play
+    'enable_wmp_entry' => true,  // false to disable entry button in editor, existing content will still play
 );

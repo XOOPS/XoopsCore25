@@ -8,14 +8,14 @@
                     <{foreach item=sub from=$item.menu}>
                         <li>
                             <{if $sub.options != 0}>
-                                <a class="sub" href="<{$sub.link}>" title="<{$sub.title}>"><{$sub.title}></a>
+                                <a class="sub" href="<{$sub.link}>" title="<{$sub.title|strip_tags:false}>"><{$sub.title}></a>
                                 <ul>
                                     <{foreach item=option from=$sub.options}>
                                         <li><a href="<{$sub.url}><{$option.link}>"><{$option.title}></a></li>
                                     <{/foreach}>
                                 </ul>
                             <{else}>
-                                <a href="<{$sub.link}>" title="<{$sub.title}>"><{$sub.title}></a>
+                                <a href="<{$sub.link}>" title="<{$sub.title|strip_tags:false}>"><{$sub.title}></a>
                             <{/if}>
                         </li>
                     <{/foreach}>

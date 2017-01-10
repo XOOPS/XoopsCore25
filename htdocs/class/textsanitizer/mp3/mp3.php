@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2017 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             class
  * @subpackage          textsanitizer
@@ -30,7 +30,11 @@ class MytsMp3 extends MyTextSanitizerExtension
      */
     public function encode($textarea_id)
     {
-        $code       = "<img src='{$this->image_path}/mp3.gif' alt='" . _XOOPS_FORM_ALTMP3 . "' title='" . _XOOPS_FORM_ALTMP3 . "' '" . "'  onclick='xoopsCodeMp3(\"{$textarea_id}\",\"" . htmlspecialchars(_XOOPS_FORM_ENTERMP3URL, ENT_QUOTES) . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
+        $code = "<button type='button' class='btn btn-default' onclick='xoopsCodeMp3(\"{$textarea_id}\",\""
+            . htmlspecialchars(_XOOPS_FORM_ENTERMP3URL, ENT_QUOTES)
+            . "\");' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALTMP3
+            . "'><span class='fa fa-fw fa-music' aria-hidden='true'></span></button>";
+
         $javascript = <<<EOF
             function xoopsCodeMp3(id, enterMp3Phrase)
             {
