@@ -287,10 +287,10 @@ class xos_opal_Theme
         } else {
             $xoops_startpage = 'system';
         }
-        if (stripos($GLOBALS['xoopsConfig']['theme_set'], 'bootstrap') === false){
-            $GLOBALS['xoopsConfig']['bootstrap'] = false;
-        } else{
-            $GLOBALS['xoopsConfig']['bootstrap'] = true;
+        // call the theme_autorun.php if the theme has one
+        if (file_exists($this->path . "/theme_autorun.php")) {
+            $theme = $this; // make this instance easily available for theme_autorun.php
+            include_once($this->path . "/theme_autorun.php");
         }
 
         $searchConfig = $configHandler->getConfigsByCat(XOOPS_CONF_SEARCH);
@@ -312,7 +312,6 @@ class xos_opal_Theme
                 ? $GLOBALS['xoopsModule']->getVar('name')
                 : htmlspecialchars($GLOBALS['xoopsConfig']['slogan'], ENT_QUOTES),
             'xoops_search'     => $xoops_search,
-            'xoops_bootstrap'     => $GLOBALS['xoopsConfig']['bootstrap'],
         ));
         if (isset($GLOBALS['xoopsUser']) && is_object($GLOBALS['xoopsUser'])) {
             $this->template->assign(array(
