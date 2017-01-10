@@ -137,7 +137,6 @@ class XoopsFormRendererLegacy implements XoopsFormRendererInterface
             $GLOBALS['xoTheme']->addScript("browse.php?Frameworks/jquery/jquery.js");
             $GLOBALS['xoTheme']->addScript('include/spectrum.js');
             $GLOBALS['xoTheme']->addStylesheet('include/spectrum.css');
-            $GLOBALS['xoTheme']->addScript('', '', '$.fn.spectrum.load = false;');
         } else {
             echo '<script type="text/javascript" src="' . XOOPS_URL . '/include/spectrum.js"></script>';
             echo '<link rel="stylesheet" type="text/css" href="' . XOOPS_URL . '/include/spectrum.css">';

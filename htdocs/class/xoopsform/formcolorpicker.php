@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2017 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @subpackage          form
@@ -48,16 +48,7 @@ class XoopsFormColorPicker extends XoopsFormText
      */
     public function render()
     {
-        if (isset($GLOBALS['xoTheme'])) {
-            $GLOBALS['xoTheme']->addScript('include/color-picker.js');
-        } else {
-            echo '<script type="text/javascript" src="' . XOOPS_URL . '/include/color-picker.js"></script>';
-        }
-        $this->setExtra(' style="background-color:' . $this->getValue() . ';"');
-        if ($GLOBALS['xoopsConfig']['bootstrap'] == true){
-            return substr(parent::render(), 0,-6) . "<input class='form-control' type='reset' value=' ... ' onclick=\"return TCP.popup('" . XOOPS_URL . "/include/',document.getElementById('" . $this->getName() . "'));\"></div>";
-        }
-        return parent::render() . "<input type='reset' value=' ... ' onclick=\"return TCP.popup('" . XOOPS_URL . "/include/',document.getElementById('" . $this->getName() . "'));\">";
+        return XoopsFormRenderer::getInstance()->get()->renderFormColorPicker($this);
     }
 
     /**
