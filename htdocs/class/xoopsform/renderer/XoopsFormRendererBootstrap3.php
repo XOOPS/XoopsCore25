@@ -164,8 +164,6 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
         // fonts
         $ret .= $this->renderFormDhtmlTATypography($element);
         // length checker
-        $ret .= "<button type='button' class='btn btn-default' onclick=\"XoopsCheckLength('" . $element->getName() . "', '" . @$element->configs['maxlength'] . "', '" . _XOOPS_FORM_ALT_LENGTH . "', '" . _XOOPS_FORM_ALT_LENGTH_MAX . "');\" title='" . _XOOPS_FORM_ALT_CHECKLENGTH . "'><span class='fa fa-check-square-o' aria-hidden='true'></span></button>&nbsp;";
-        $ret .= "</div></div>";
 
         $ret .= "<br>\n";
         // the textarea box
@@ -244,15 +242,7 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
     {
         $textarea_id = $element->getName();
         $hiddentext  = $element->_hiddenText;
-        $fontStr = "<script type=\"text/javascript\">" . "var _editor_dialog = ''" . "+ '<div class=\'row\'><div class=\'col-md-3\'><select class=\"input-sm form-control\" id=\'{$textarea_id}Size\' onchange=\'xoopsSetElementAttribute(\"size\", this.options[this.selectedIndex].value, \"{$textarea_id}\", \"{$hiddentext}\");\'>'" . "+ '<option value=\'SIZE\'>" . _SIZE . "</option>'";
 
-        foreach ($GLOBALS['formtextdhtml_sizes'] as $_val => $_name) {
-            $fontStr .= " + '<option value=\'{$_val}\'>{$_name}</option>'";
-        }
-        $fontStr .= " + '</select> '";
-        $fontStr .= " + '</div><div class=\'col-md-3\'> '";
-
-        $fontStr .= "+ '<select class=\"input-sm form-control\" id=\'{$textarea_id}Font\' onchange=\'xoopsSetElementAttribute(\"font\", this.options[this.selectedIndex].value, \"{$textarea_id}\", \"{$hiddentext}\");\'>'" . "+ '<option value=\'FONT\'>" . _FONT . "</option>'";
         $fontarray = !empty($GLOBALS['formtextdhtml_fonts']) ? $GLOBALS['formtextdhtml_fonts'] : array(
             'Arial',
             'Courier',
@@ -261,28 +251,62 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
             'Impact',
             'Verdana',
             'Haettenschweiler');
-        foreach ($fontarray as $font) {
-            $fontStr .= " + '<option value=\'{$font}\'>{$font}</option>'";
+
+        $colorArray = array(
+            'Black'  => '000000',
+            'Blue'   => '38AAFF',
+            'Brown'  => '987857',
+            'Green'  => '79D271',
+            'Grey'   => '888888',
+            'Orange' => 'FFA700',
+            'Paper'  => 'E0E0E0',
+            'Purple' => '363E98',
+            'Red'    => 'FF211E',
+            'White'  => 'FEFEFE',
+            'Yellow' => 'FFD628',
+        );
+
+        $fontStr = '<div class="row"><div class="col-md-12"><div class="btn-group" role="toolbar">';
+        $fontStr .= '<div class="btn-group">'
+            . '<button type="button" class="btn btn-default dropdown-toggle" title="'. _SIZE .'"'
+            . ' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
+            . '<span class = "glyphicon glyphicon-text-height"></span><span class="caret"></span></button>'
+            . '<ul class="dropdown-menu">';
+            //. _SIZE . '&nbsp;&nbsp;<span class="caret"></span></button><ul class="dropdown-menu">';
+        foreach ($GLOBALS['formtextdhtml_sizes'] as $_val => $_name) {
+            $fontStr .= '<li><a href="javascript:xoopsSetElementAttribute(\'size\', \'' . $_val . '\', \''
+                . $textarea_id . '\', \'' . $hiddentext . '\');">' . $_name . '</a></li>';
         }
-        $fontStr .= " + '</select> '";
-        $fontStr .= " + '</div><div class=\'col-md-3\'>'";
+        $fontStr .= '</ul></div>';
 
-        $fontStr .= "+ '<select class=\"input-sm form-control\" id=\'{$textarea_id}Color\' onchange=\'xoopsSetElementAttribute(\"color\", this.options[this.selectedIndex].value, \"{$textarea_id}\", \"{$hiddentext}\");\'>'" . "+ '<option value=\'COLOR\'>" . _COLOR . "</option>';" . "var _color_array = new Array('00', '33', '66', '99', 'CC', 'FF');
-                for (var i = 0; i < _color_array.length; i ++) {
-                    for (var j = 0; j < _color_array.length; j ++) {
-                        for (var k = 0; k < _color_array.length; k ++) {
-                            var _color_ele = _color_array[i] + _color_array[j] + _color_array[k];
-                            _editor_dialog += '<option value=\''+_color_ele+'\' style=\'background-color:#'+_color_ele+';color:#'+_color_ele+';\'>#'+_color_ele+'</option>';
-                        }
-                    }
-                }
-                _editor_dialog += '</select>'";
-        $fontStr .= " + '</div></div>';";
+        $fontStr .= '<div class="btn-group">'
+            . '<button type="button" class="btn btn-default dropdown-toggle" title="'. _FONT .'"'
+            . ' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
+            . '<span class = "glyphicon glyphicon-font"></span><span class="caret"></span></button>'
+            . '<ul class="dropdown-menu">';
+            //. _FONT . '&nbsp;&nbsp;<span class="caret"></span></button><ul class="dropdown-menu">';
+        foreach ($fontarray as $font) {
+            $fontStr .= '<li><a href="javascript:xoopsSetElementAttribute(\'font\', \'' . $font . '\', \''
+                . $textarea_id . '\', \'' . $hiddentext . '\');">' . $font . '</a></li>';
+        }
+        $fontStr .= '</ul></div>';
 
-        $fontStr .= 'document.write(_editor_dialog); </script>';
+        $fontStr .= '<div class="btn-group">'
+            . '<button type="button" class="btn btn-default dropdown-toggle" title="'. _COLOR .'"'
+            . ' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
+            . '<span class = "glyphicon glyphicon-text-color"></span><span class="caret"></span></button>'
+            . '<ul class="dropdown-menu">';
+            //. _COLOR . '&nbsp;&nbsp;<span class="caret"></span></button><ul class="dropdown-menu">';
+        foreach ($colorArray as $color => $hex) {
+            $fontStr .= '<li><a href="javascript:xoopsSetElementAttribute(\'color\', \'' . $hex . '\', \''
+                . $textarea_id . '\', \'' . $hiddentext . '\');">'
+                . '<span style="color:#' . $hex . ';">' . $color .'</span></a></li>';
+        }
+        $fontStr .= '</ul></div>';
+        $fontStr .= '</div>';
 
-        $styleStr = "<div class='row'><div class='col-md-12'>";
-        $styleStr .= "<div class='btn-group' role='group'>";
+        //$styleStr = "<div class='row'><div class='col-md-12'>";
+        $styleStr  = "<div class='btn-group' role='group'>";
         $styleStr .= "<button type='button' class='btn btn-default' onclick='xoopsMakeBold(\"{$hiddentext}\", \"{$textarea_id}\");' title='" . _XOOPS_FORM_ALT_BOLD . "' aria-label='Left Align'><span class='fa fa-bold' aria-hidden='true'></span></button>";
         $styleStr .= "<button type='button' class='btn btn-default' onclick='xoopsMakeItalic(\"{$hiddentext}\", \"{$textarea_id}\");' title='" . _XOOPS_FORM_ALT_ITALIC . "' aria-label='Left Align'><span class='fa fa-italic' aria-hidden='true'></span></button>";
         $styleStr .= "<button type='button' class='btn btn-default' onclick='xoopsMakeUnderline(\"{$hiddentext}\", \"{$textarea_id}\");' title='" . _XOOPS_FORM_ALT_UNDERLINE . "' aria-label='Left Align'>" . '<span class="fa fa-underline"></span></button>';
@@ -295,7 +319,14 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
         $alignStr .= "<button type='button' class='btn btn-default' onclick='xoopsMakeRight(\"{$hiddentext}\", \"{$textarea_id}\");' title='" . _XOOPS_FORM_ALT_RIGHT . "' aria-label='Left Align'><span class='fa fa-align-right' aria-hidden='true'></span></button>";
         $alignStr .= "</div>";
 
-        $fontStr .= "<br>\n{$styleStr}&nbsp;{$alignStr}&nbsp;\n";
+        $fontStr .= "&nbsp;{$styleStr}&nbsp;{$alignStr}&nbsp;\n";
+
+        $fontStr .= "<button type='button' class='btn btn-default' onclick=\"XoopsCheckLength('"
+            . $element->getName() . "', '" . @$element->configs['maxlength'] . "', '"
+            . _XOOPS_FORM_ALT_LENGTH . "', '" . _XOOPS_FORM_ALT_LENGTH_MAX . "');\" title='"
+            . _XOOPS_FORM_ALT_CHECKLENGTH . "'><span class='fa fa-check-square-o' aria-hidden='true'></span></button>";
+        $fontStr .= "</div></div>";
+
         return $fontStr;
     }
 
