@@ -35,15 +35,7 @@ class XoopsThemeForm extends XoopsForm
      */
     public function insertBreak($extra = '', $class = '')
     {
-        $class = ($class != '') ? " class='" . preg_replace('/[^A-Za-z0-9\s\s_-]/i', '', $class) . "'" : '';
-        // Fix for $extra tag not showing
-        if ($extra) {
-            $extra = '<tr><td colspan="2" ' . $class . '>' . $extra . '</td></tr>';
-            $this->addElement($extra);
-        } else {
-            $extra = '<tr><td colspan="2" ' . $class . '>&nbsp;</td></tr>';
-            $this->addElement($extra);
-        }
+        XoopsFormRenderer::getInstance()->get()->addThemeFormBreak($this, $extra, $class);
     }
 
     /**
@@ -61,46 +53,6 @@ class XoopsThemeForm extends XoopsForm
      */
     public function render()
     {
-        $ele_name = $this->getName();
-        $ret      = '<form name="' . $ele_name . '" id="' . $ele_name . '" action="' . $this->getAction() . '" method="' . $this->getMethod() . '" onsubmit="return xoopsFormValidate_' . $ele_name . '();"' . $this->getExtra() . '>
-            <table width="100%" class="outer" cellspacing="1">
-            <tr><th colspan="2">' . $this->getTitle() . '</th></tr>
-        ';
-        $hidden   = '';
-        $class    = 'even';
-        foreach ($this->getElements() as $ele) {
-            if (!is_object($ele)) {
-                $ret .= $ele;
-            } elseif (!$ele->isHidden()) {
-                if (!$ele->getNocolspan()) {
-                    $ret .= '<tr valign="top" align="left"><td class="head">';
-                    if (($caption = $ele->getCaption()) != '') {
-                        $ret .= '<div class="xoops-form-element-caption' . ($ele->isRequired() ? '-required' : '') . '">';
-                        $ret .= '<span class="caption-text">' . $caption . '</span>';
-                        $ret .= '<span class="caption-marker">*</span>';
-                        $ret .= '</div>';
-                    }
-                    if (($desc = $ele->getDescription()) != '') {
-                        $ret .= '<div class="xoops-form-element-help">' . $desc . '</div>';
-                    }
-                    $ret .= '</td><td class="' . $class . '">' . $ele->render() . '</td></tr>' . NWLINE;
-                } else {
-                    $ret .= '<tr valign="top" align="left"><td class="head" colspan="2">';
-                    if (($caption = $ele->getCaption()) != '') {
-                        $ret .= '<div class="xoops-form-element-caption' . ($ele->isRequired() ? '-required' : '') . '">';
-                        $ret .= '<span class="caption-text">' . $caption . '</span>';
-                        $ret .= '<span class="caption-marker">*</span>';
-                        $ret .= '</div>';
-                    }
-                    $ret .= '</td></tr><tr valign="top" align="left"><td class="' . $class . '" colspan="2">' . $ele->render() . '</td></tr>';
-                }
-            } else {
-                $hidden .= $ele->render();
-            }
-        }
-        $ret .= '</table>' . NWLINE . ' ' . $hidden . '</form>' . NWLINE;
-        $ret .= $this->renderValidationJS(true);
-
-        return $ret;
+        return XoopsFormRenderer::getInstance()->get()->renderThemeForm($this);
     }
 }

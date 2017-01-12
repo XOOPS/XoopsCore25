@@ -148,4 +148,24 @@ interface XoopsFormRendererInterface
      * @return string rendered form element
      */
     public function renderFormTextDateSelect(XoopsFormTextDateSelect $element);
+
+    /**
+     * Render support for XoopsThemeForm
+     *
+     * @param XoopsThemeForm $form form to render
+     *
+     * @return string rendered form
+     */
+    public function renderThemeForm(XoopsThemeForm $form);
+
+    /**
+     * Support for themed addBreak
+     *
+     * @param XoopsThemeForm $form  form
+     * @param string         $extra pre-rendered content for break row
+     * @param string         $class class for row
+     *
+     * @return void
+     */
+    public function addThemeFormBreak(XoopsThemeForm $form, $extra, $class);
 }

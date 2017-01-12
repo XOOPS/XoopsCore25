@@ -167,7 +167,12 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
 
         $ret .= "<br>\n";
         // the textarea box
-        $ret .= "<div class='form-group form-inline'><textarea class='form-control' id='" . $element->getName() . "' name='" . $element->getName() . "' title='" . $element->getTitle() . "' onselect=\"xoopsSavePosition('" . $element->getName() . "');\" onclick=\"xoopsSavePosition('" . $element->getName() . "');\" onkeyup=\"xoopsSavePosition('" . $element->getName() . "');\" cols='" . $element->getCols() . "' rows='" . $element->getRows() . "'" . $element->getExtra() . '>' . $element->getValue() . "</textarea></div>\n";
+        $ret .= "<textarea class='form-control' id='" . $element->getName() . "' name='" . $element->getName()
+            . "' title='" . $element->getTitle() . "' onselect=\"xoopsSavePosition('" . $element->getName()
+            . "');\" onclick=\"xoopsSavePosition('" . $element->getName()
+            . "');\" onkeyup=\"xoopsSavePosition('" . $element->getName() . "');\" cols='"
+            . $element->getCols() . "' rows='" . $element->getRows() . "'" . $element->getExtra()
+            . '>' . $element->getValue() . "</textarea>\n";
 
         if (empty($element->skipPreview)) {
             if (empty($GLOBALS['xoTheme'])) {
@@ -273,9 +278,9 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
             . '<span class = "glyphicon glyphicon-text-height"></span><span class="caret"></span></button>'
             . '<ul class="dropdown-menu">';
             //. _SIZE . '&nbsp;&nbsp;<span class="caret"></span></button><ul class="dropdown-menu">';
-        foreach ($GLOBALS['formtextdhtml_sizes'] as $_val => $_name) {
-            $fontStr .= '<li><a href="javascript:xoopsSetElementAttribute(\'size\', \'' . $_val . '\', \''
-                . $textarea_id . '\', \'' . $hiddentext . '\');">' . $_name . '</a></li>';
+        foreach ($GLOBALS['formtextdhtml_sizes'] as $value => $name) {
+            $fontStr .= '<li><a href="javascript:xoopsSetElementAttribute(\'size\', \'' . $value . '\', \''
+                . $textarea_id . '\', \'' . $hiddentext . '\');">' . $name . '</a></li>';
         }
         $fontStr .= '</ul></div>';
 
@@ -340,7 +345,7 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
     public function renderFormElementTray(XoopsFormElementTray $element)
     {
         $count = 0;
-        $ret = '<div class="form-group form-inline">';
+        $ret = '<div class="form-inline">';
         foreach ($element->getElements() as $ele) {
             if ($count > 0) {
                 $ret .= $element->getDelimeter();
@@ -353,6 +358,7 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
                 ++$count;
             }
         }
+        /*
         if (substr_count($ret, '<div class="form-group form-inline">') > 0) {
             $ret = str_replace('<div class="form-group form-inline">', '', $ret);
             $ret = str_replace('</div>', '', $ret);
@@ -360,6 +366,7 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
         if (substr_count($ret, '<div class="checkbox-inline">') > 0) {
             $ret = str_replace('<div class="checkbox-inline">', '', $ret);
         }
+        */
         $ret .= '</div>';
         return $ret;
     }
@@ -373,13 +380,13 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
      */
     public function renderFormFile(XoopsFormFile $element)
     {
-        return '<div class="form-group">'
-            . '<input type="hidden" name="MAX_FILE_SIZE" value="' . $element->getMaxFileSize() . '" />'
-            . '<input type="file" name="' . $element->getName() . '" id="' . $element->getName()
+        return '<input class="form-control" type="file" name="' . $element->getName()
+            . '" id="' . $element->getName()
             . '" title="' . $element->getTitle() . '" ' . $element->getExtra() . ' />'
+            . '<input type="hidden" name="MAX_FILE_SIZE" value="' . $element->getMaxFileSize() . '" />'
             . '<input type="hidden" name="xoops_upload_file[]" id="xoops_upload_file[]" value="'
-            . $element->getName() . '" />'
-            . '</div>';
+            . $element->getName() . '" />';
+
     }
 
     /**
@@ -391,8 +398,7 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
      */
     public function renderFormLabel(XoopsFormLabel $element)
     {
-        return "<div class='form-group form-inline'>" . $element->getValue() . "</div>";
-        //return $element->getValue();
+        return $element->getValue();
     }
 
     /**
@@ -404,10 +410,10 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
      */
     public function renderFormPassword(XoopsFormPassword $element)
     {
-        return '<div class="form-group form-inline"><input class="form-control" type="password" name="'
+        return '<input class="form-control" type="password" name="'
             . $element->getName() . '" id="' . $element->getName() . '" size="' . $element->getSize()
             . '" maxlength="' . $element->getMaxlength() . '" value="' . $element->getValue() . '"'
-            . $element->getExtra() . ' ' . ($element->autoComplete ? '' : 'autocomplete="off" ') . '/></div>';
+            . $element->getExtra() . ' ' . ($element->autoComplete ? '' : 'autocomplete="off" ') . '/>';
     }
 
     /**
@@ -482,7 +488,7 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
         $ele_title   = $element->getTitle();
         $ele_value   = $element->getValue();
         $ele_options = $element->getOptions();
-        $ret = '<div class="form-group form-inline"><select class="form-control" size="'
+        $ret = '<select class="form-control" size="'
             . $element->getSize() . '"' . $element->getExtra();
         if ($element->isMultiple() != false) {
             $ret .= ' name="' . $ele_name . '[]" id="' . $ele_name . '" title="' . $ele_title
@@ -497,7 +503,7 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
             }
             $ret .= '>' . $name . '</option>';
         }
-        $ret .= '</select></div>';
+        $ret .= '</select>';
 
         return $ret;
     }
@@ -510,10 +516,10 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
      */
     public function renderFormText(XoopsFormText $element)
     {
-        return "<div class='form-group form-inline'><input class='form-control' type='text' name='"
+        return "<input class='form-control' type='text' name='"
             . $element->getName() . "' title='" . $element->getTitle() . "' id='" . $element->getName()
             . "' size='" . $element->getSize() . "' maxlength='" . $element->getMaxlength()
-            . "' value='" . $element->getValue() . "'" . $element->getExtra() . ' /></div>';
+            . "' value='" . $element->getValue() . "'" . $element->getExtra() . ' />';
     }
 
     /**
@@ -525,10 +531,10 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
      */
     public function renderFormTextArea(XoopsFormTextArea $element)
     {
-        return "<div class='form-group form-inline'><textarea class='form-control' name='"
+        return "<textarea class='form-control' name='"
             . $element->getName() . "' id='" . $element->getName() . "'  title='" . $element->getTitle()
             . "' rows='" . $element->getRows() . "' cols='" . $element->getCols() . "'"
-            . $element->getExtra() . '>' . $element->getValue() . '</textarea></div>';
+            . $element->getExtra() . '>' . $element->getValue() . '</textarea>';
     }
 
     /**
@@ -655,5 +661,71 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
             . $element->getMaxlength() . '" value="' . $display_value . '"' . $element->getExtra()
             . ' /><input class="form-control" type="reset" value=" ... " onclick="return showCalendar(\''
             . $ele_name . '\');"></div>';
+    }
+
+    /**
+     * Render support for XoopsThemeForm
+     *
+     * @param XoopsThemeForm $form form to render
+     *
+     * @return string rendered form
+     */
+    public function renderThemeForm(XoopsThemeForm $form)
+    {
+        $ele_name = $form->getName();
+
+        $ret = '<div>';
+        $ret .= '<form class="form-horizontal" name="' . $ele_name . '" id="' . $ele_name . '" action="'
+            . $form->getAction() . '" method="' . $form->getMethod()
+            . '" onsubmit="return xoopsFormValidate_' . $ele_name . '();"' . $form->getExtra() . '>';
+
+        $hidden   = '';
+        $class    = 'even';
+        foreach ($form->getElements() as $ele) {
+            if (!is_object($ele)) { // see $form->addBreak()
+                $ret .= $ele;
+                continue;
+            }
+            if ($ele->isHidden()) {
+                $hidden .= $ele->render();
+                continue;
+            }
+
+            $ret .= '<div class="form-group">';
+            if (($caption = $ele->getCaption()) != '') {
+                $ret .= '<label for="' . $ele->getName() . '" class="col-sm-2 control-label">'
+                    . $ele->getCaption()
+                    . ($ele->isRequired() ? '<span class="caption-required">*</span>' : '')
+                    . '</label>';
+            } else {
+                $ret .= '<div class="col-sm-2"> </div>';
+            }
+            $ret .= '<div class="col-sm-10">';
+            $ret .= $ele->render();
+            if (($desc = $ele->getDescription()) != '') {
+                $ret .= '<p class="text-muted">' . $desc . '</p>';
+            }
+            $ret .= '</div>';
+            $ret .= '</div>';
+        }
+        $ret .= '</form></div>';
+        $ret .= $form->renderValidationJS(true);
+
+        return $ret;
+    }
+
+    /**
+     * Support for themed addBreak
+     *
+     * @param XoopsThemeForm $form
+     * @param string         $extra pre-rendered content for break row
+     * @param string         $class class for row
+     *
+     * @return void
+     */
+    public function addThemeFormBreak(XoopsThemeForm $form, $extra, $class)
+    {
+        $class = ($class != '') ? preg_replace('/[^A-Za-z0-9\s\s_-]/i', '', $class) : '';
+        $form->addElement('<div class="col-sm-12 ' . $class .'">'. $extra . '</div>');
     }
 }
