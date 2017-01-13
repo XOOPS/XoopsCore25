@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2017 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @subpackage          form
@@ -164,21 +164,6 @@ class XoopsFormElementTray extends XoopsFormElement
      */
     public function render()
     {
-        $count = 0;
-        $ret   = '';
-        foreach ($this->getElements() as $ele) {
-            if ($count > 0) {
-                $ret .= $this->getDelimeter();
-            }
-            if ($ele->getCaption() != '') {
-                $ret .= $ele->getCaption() . '&nbsp;';
-            }
-            $ret .= $ele->render() . NWLINE;
-            if (!$ele->isHidden()) {
-                ++$count;
-            }
-        }
-
-        return $ret;
+        return XoopsFormRenderer::getInstance()->get()->renderFormElementTray($this);
     }
 }

@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2017 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @subpackage          form
@@ -63,6 +63,6 @@ class XoopsFormFile extends XoopsFormElement
      */
     public function render()
     {
-        return '<input type="hidden" name="MAX_FILE_SIZE" value="' . $this->getMaxFileSize() . '" /><input type="file" name="' . $this->getName() . '" id="' . $this->getName() . '" title="' . $this->getTitle() . '" ' . $this->getExtra() . ' /><input type="hidden" name="xoops_upload_file[]" id="xoops_upload_file[]" value="' . $this->getName() . '" />';
+        return XoopsFormRenderer::getInstance()->get()->renderFormFile($this);
     }
 }

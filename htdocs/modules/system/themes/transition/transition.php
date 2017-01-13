@@ -94,7 +94,7 @@ class XoopsGuiTransition extends XoopsSystemGui
         $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/transition/js/tabs.slideshow.js');
 
         $xoTheme->addStylesheet('https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:300,300i,400,400i,700,700i');
-        $xoTheme->addStylesheet('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+//        $xoTheme->addStylesheet('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
         $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/transition/css/style.css');
         $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/transition/css/dark.css', array('title' => 'dark', 'media' => 'screen'));
         $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/transition/css/silver.css', array('title' => 'silver', 'media' => 'screen'));

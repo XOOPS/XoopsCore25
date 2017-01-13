@@ -287,6 +287,11 @@ class xos_opal_Theme
         } else {
             $xoops_startpage = 'system';
         }
+        // call the theme_autorun.php if the theme has one
+        if (file_exists($this->path . "/theme_autorun.php")) {
+            $theme = $this; // make this instance easily available for theme_autorun.php
+            include_once($this->path . "/theme_autorun.php");
+        }
 
         $searchConfig = $configHandler->getConfigsByCat(XOOPS_CONF_SEARCH);
         $xoops_search = (bool) (isset($searchConfig['enable_search']) && $searchConfig['enable_search'] === 1);
