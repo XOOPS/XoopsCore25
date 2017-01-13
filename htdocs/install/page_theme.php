@@ -47,8 +47,8 @@ $config_handler = xoops_getHandler('config');
 $criteria       = new CriteriaCompo();
 $criteria->add(new Criteria('conf_modid', 0));
 $criteria->add(new Criteria('conf_name', 'theme_set'));
-
-$config = array_pop($config_handler->getConfigs($criteria));
+$temp = $config_handler->getConfigs($criteria);
+$config = array_pop($temp);
 include './include/createconfigform.php';
 $wizard->form = createThemeform($config);
 $content      = $wizard->CreateForm();
