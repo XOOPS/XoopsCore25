@@ -7,7 +7,7 @@
             <img class="xo-imgmini" src="<{xoAdminIcons block.png}>" alt="<{$smarty.const._AM_SYSTEM_BLOCKS_DRAG}>"
                  title="<{$smarty.const._AM_SYSTEM_BLOCKS_DRAG}>"/>
         </span>
-                <{$item.title}>
+<{$item.title}><{if $item.block_type == 'D'}> (<{$item.bid}>)<{/if}>
             </div>
             <div class="xo-blockaction xo-actions"><img id="loading_img<{$item.bid}>" src="./images/mimetypes/spinner.gif" style="display:none;"
                                                         title="<{$smarty.const._AM_SYSTEM_LOADING}>" alt="<{$smarty.const._AM_SYSTEM_LOADING}>"/><img
