@@ -97,7 +97,7 @@ class XoopsFormRendererLegacy implements XoopsFormRendererInterface
                 $ret .= '<td>';
             }
             // $name may be a link, should we use $name in the title tag?
-            $ret .= '<input type="checkbox" name="' . $ele_name . ' id="' . $ele_id .$id_ele . '" '
+            $ret .= '<input type="checkbox" name="' . $ele_name . '" id="' . $ele_id .$id_ele . '" '
                 . ' title="' . $ele_title . '" value="' . htmlspecialchars($value, ENT_QUOTES) . '"';
 
             if (count($ele_value) > 0 && in_array($value, $ele_value)) {
