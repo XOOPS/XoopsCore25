@@ -25,6 +25,9 @@ if (!@include_once "../language/{$wizard->language}/global.php") {
 if (!@include_once "../modules/system/language/{$wizard->language}/admin/modulesadmin.php") {
     include_once '../modules/system/language/english/admin/modulesadmin.php';
 }
+if (!@include_once "../modules/system/language/{$wizard->language}/admin.php") {
+    include_once '../modules/system/language/english/admin.php';
+}
 require_once '../class/xoopsformloader.php';
 require_once '../class/xoopslists.php';
 
@@ -44,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $msgs = array();
     foreach ($_REQUEST['modules'] as $dirname => $installmod) {
         if ($installmod) {
-            $msgs[] =& xoops_module_install($dirname);
+            $msgs[] = xoops_module_install($dirname);
         }
     }
 

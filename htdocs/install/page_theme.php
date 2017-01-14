@@ -48,7 +48,8 @@ $criteria       = new CriteriaCompo();
 $criteria->add(new Criteria('conf_modid', 0));
 $criteria->add(new Criteria('conf_name', 'theme_set'));
 
-$config = array_pop($config_handler->getConfigs($criteria));
+$tempConfig = $config_handler->getConfigs($criteria);
+$config = array_pop($tempConfig);
 include './include/createconfigform.php';
 $wizard->form = createThemeform($config);
 $content      = $wizard->CreateForm();
