@@ -99,12 +99,6 @@ function createConfigform($config)
                     asort($dirlist);
                     $ele->addOptionArray($dirlist);
                 }
-                //$themeset_handler = xoops_getHandler('themeset');
-                //$themesetlist =& $themeset_handler->getList();
-                //asort($themesetlist);
-                //foreach ($themesetlist as $key => $name) {
-                //  $ele->addOption($key, $name.' ('._MD_AM_THEMESET.')');
-                //}
                 // old theme value is used to determine whether to update cache or not. kind of dirty way
                 $form->addElement(new XoopsFormHidden('_old_theme', $config[$i]->getConfValueForOutput()));
                 break;
