@@ -68,63 +68,96 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
      */
     public function renderFormCheckBox(XoopsFormCheckBox $element)
     {
-        $ele_name      = $element->getName();
-        $ele_title     = $element->getTitle();
-        $ele_id        = $ele_name;
-        $ele_value     = $element->getValue();
-        $ele_options   = $element->getOptions();
-        $ele_extra     = $element->getExtra();
-        $ele_delimeter= empty($element->columns) ? $element->getDelimeter() : '';
-
-        if (count($ele_options) > 1 && substr($ele_name, -2, 2) !== '[]') {
-            $ele_name .= '[]';
-            $element->setName($ele_name);
+        $elementName = $element->getName();
+        $elememtId = $elementName;
+        $elementOptions = $element->getOptions();
+        if (count($elementOptions) > 1 && substr($elementName, -2, 2) !== '[]') {
+            $elementName .= '[]';
+            $element->setName($elementName);
         }
+
+        switch ((int) ($element->columns)) {
+            case 0:
+                return $this->renderCheckedInline($element, 'checkbox', $elememtId, $elementName);
+            case 1:
+                return $this->renderCheckedOneColumn($element, 'checkbox', $elememtId, $elementName);
+            default:
+                return $this->renderCheckedColumnar($element, 'checkbox', $elememtId, $elementName);
+        }
+    }
+
+    protected function renderCheckedInline(XoopsFormElement $element, $type, $elememtId, $elementName)
+    {
+        $class = $type . '-inline';
         $ret = '';
-        /*<label class="checkbox-inline">
-          <input type="checkbox" id="inlineCheckbox1" value="option1"> 1
-        </label>*/
-        if (!empty($element->columns)) {
-            $ret .= '<table><tr>';
-        }
-        $i      = 0;
-        $id_ele = 0;
-        foreach ($ele_options as $value => $name) {
-            ++$id_ele;
-            if (!empty($element->columns)) {
-                if ($i % $element->columns == 0) {
-                    $ret .= '<tr>';
-                }
-                $ret .= '<td>';
-            }
-            $ret .= '<div class="checkbox-inline"><label>';
-            // $name may be a link, should we use $name in the title tag?
-            $ret .= "<input type='checkbox' name='{$ele_name}' id='{$ele_id}{$id_ele}' title='"
-                 . $ele_title . "' value='" . htmlspecialchars($value, ENT_QUOTES) . "'";
 
-            if (count($ele_value) > 0 && in_array($value, $ele_value)) {
+        $idSuffix = 0;
+        $elementOptions   = $element->getOptions();
+        foreach ($elementOptions as $value => $name) {
+            ++$idSuffix;
+            $ret .= '<label class="' . $class . '">';
+            $ret .= "<input type='" . $type . "' name='{$elementName}' id='{$elememtId}{$idSuffix}' title='"
+                . htmlspecialchars(strip_tags($name), ENT_QUOTES) . "' value='" . htmlspecialchars($value, ENT_QUOTES) . "'";
+
+            if (isset($elementValue) && $value == $elementValue) {
                 $ret .= ' checked';
             }
-            $ret .= $ele_extra . ' />' . $name . $ele_delimeter;
-            $ret .= '<label></div>';
-
-            if (!empty($element->columns)) {
-                $ret .= '</td>';
-                if (++$i % $element->columns == 0) {
-                    $ret .= '</tr>';
-                }
-            }
-        }
-        if (!empty($element->columns)) {
-            if ($span = $i % $element->columns) {
-                $ret .= '<td colspan="' . ($element->columns - $span) . '"></td></tr>';
-            }
-            $ret .= '</table>';
+            $ret .= $element->getExtra() . ' />' . $name . $element->getDelimeter();
+            $ret .= '</label>';
         }
 
         return $ret;
     }
 
+    protected function renderCheckedOneColumn(XoopsFormElement $element, $type, $elememtId, $elementName)
+    {
+        $class = $type;
+        $ret = '';
+
+        $idSuffix = 0;
+        $elementOptions   = $element->getOptions();
+        foreach ($elementOptions as $value => $name) {
+            ++$idSuffix;
+            $ret .= '<div class="' . $class . '">';
+            $ret .= '<label>';
+            $ret .= "<input type='" . $type . "' name='{$elementName}' id='{$elememtId}{$idSuffix}' title='"
+                . htmlspecialchars(strip_tags($name), ENT_QUOTES) . "' value='" . htmlspecialchars($value, ENT_QUOTES) . "'";
+
+            if (isset($elementValue) && $value == $elementValue) {
+                $ret .= ' checked';
+            }
+            $ret .= $element->getExtra() . ' />' . $name . $element->getDelimeter();
+            $ret .= '</label>';
+            $ret .= '</div>';
+        }
+
+        return $ret;
+    }
+
+    protected function renderCheckedColumnar(XoopsFormElement $element, $type, $elememtId, $elementName)
+    {
+        $class = $type;
+        $ret = '';
+
+        $idSuffix = 0;
+        $elementOptions   = $element->getOptions();
+        foreach ($elementOptions as $value => $name) {
+            ++$idSuffix;
+            $ret .= '<div class="' . $class . ' col-md-2">';
+            $ret .= '<label>';
+            $ret .= "<input type='" . $type . "' name='{$elementName}' id='{$elememtId}{$idSuffix}' title='"
+                . htmlspecialchars(strip_tags($name), ENT_QUOTES) . "' value='" . htmlspecialchars($value, ENT_QUOTES) . "'";
+
+            if (isset($elementValue) && $value == $elementValue) {
+                $ret .= ' checked';
+            }
+            $ret .= $element->getExtra() . ' />' . $name . $element->getDelimeter();
+            $ret .= '</label>';
+            $ret .= '</div>';
+        }
+
+        return $ret;
+    }
     /**
      * Render support for XoopsFormColorPicker
      *
@@ -209,7 +242,7 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
         $code .= "<button type='button' class='btn btn-default' onclick='xoopsCodeUrl(\"{$textarea_id}\", \"" . htmlspecialchars(_ENTERURL, ENT_QUOTES) . "\", \"" . htmlspecialchars(_ENTERWEBTITLE, ENT_QUOTES) . "\");' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALT_URL . "'><span class='fa fa-fw fa-link' aria-hidden='true'></span></button>";
         $code .= "<button type='button' class='btn btn-default' onclick='xoopsCodeEmail(\"{$textarea_id}\", \"" . htmlspecialchars(_ENTEREMAIL, ENT_QUOTES) . "\", \"" . htmlspecialchars(_ENTERWEBTITLE, ENT_QUOTES) . "\");' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALT_EMAIL . "'><span class='fa fa-fw fa-envelope-o' aria-hidden='true'></span></button>";
         $code .= "<button type='button' class='btn btn-default' onclick='xoopsCodeImg(\"{$textarea_id}\", \"" . htmlspecialchars(_ENTERIMGURL, ENT_QUOTES) . "\", \"" . htmlspecialchars(_ENTERIMGPOS, ENT_QUOTES) . "\", \"" . htmlspecialchars(_IMGPOSRORL, ENT_QUOTES) . "\", \"" . htmlspecialchars(_ERRORIMGPOS, ENT_QUOTES) . "\", \"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES) . "\");' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALT_IMG . "'><span class='fa fa-fw fa-file-image-o' aria-hidden='true'></span></button>";
-        $code .= "<button type='button' class='btn btn-default' onclick='openWithSelfMain(\"" . XOOPS_URL . "/imagemanager.php?target={$textarea_id}\",\"imgmanager\",400,430);' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALT_IMAGE . "'><span class='fa fa-file-image-o' aria-hidden='true'></span> Manager</button>";
+        $code .= "<button type='button' class='btn btn-default' onclick='openWithSelfMain(\"" . XOOPS_URL . "/imagemanager.php?target={$textarea_id}\",\"imgmanager\",400,430);' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALT_IMAGE . "'><span class='fa fa-file-image-o' aria-hidden='true'></span><small> Manager</small></button>";
         $code .= "<button type='button' class='btn btn-default' onclick='openWithSelfMain(\"" . XOOPS_URL . "/misc.php?action=showpopups&amp;type=smilies&amp;target={$textarea_id}\",\"smilies\",300,475);' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALT_SMILEY . "'><span class='fa fa-fw fa-smile-o' aria-hidden='true'></span></button>";
 
         $myts        = MyTextSanitizer::getInstance();
@@ -380,7 +413,7 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
      */
     public function renderFormFile(XoopsFormFile $element)
     {
-        return '<input class="form-control" type="file" name="' . $element->getName()
+        return '<input class="form-control-static" type="file" name="' . $element->getName()
             . '" id="' . $element->getName()
             . '" title="' . $element->getTitle() . '" ' . $element->getExtra() . ' />'
             . '<input type="hidden" name="MAX_FILE_SIZE" value="' . $element->getMaxFileSize() . '" />'
@@ -398,7 +431,7 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
      */
     public function renderFormLabel(XoopsFormLabel $element)
     {
-        return $element->getValue();
+        return '<div class="form-control-static">' . $element->getValue() . '</div>';
     }
 
     /**
@@ -425,54 +458,18 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
      */
     public function renderFormRadio(XoopsFormRadio $element)
     {
-        $ret           = '';
-        $ele_name      = $element->getName();
-        $ele_title     = $element->getTitle();
-        $ele_value     = $element->getValue();
-        $ele_options   = $element->getOptions();
-        $ele_extra     = $element->getExtra();
-        $ele_delimeter = empty($element->columns) ? $element->getDelimeter() : '';
-        if (!empty($element->columns)) {
-            $ret .= '<table><tr>';
+
+        $elementName = $element->getName();
+        $elememtId = $elementName;
+
+        switch ((int) ($element->columns)) {
+            case 0:
+                return $this->renderCheckedInline($element, 'radio', $elememtId, $elementName);
+            case 1:
+                return $this->renderCheckedOneColumn($element, 'radio', $elememtId, $elementName);
+            default:
+                return $this->renderCheckedColumnar($element, 'radio', $elememtId, $elementName);
         }
-        $i      = 0;
-        $id_ele = 0;
-        foreach ($ele_options as $value => $name) {
-            ++$id_ele;
-            if (!empty($element->columns)) {
-                if ($i % $element->columns == 0) {
-                    $ret .= '<tr>';
-                }
-                $ret .= '<td>';
-            }
-
-            $ret .= '<div class="checkbox-inline"><label>';
-
-            $ret .= '<input type="radio" name="' . $ele_name . '" id="' . $ele_name . $id_ele
-                . '" title = "' . htmlspecialchars($ele_title, ENT_QUOTES) . '" value="'
-                . htmlspecialchars($value, ENT_QUOTES) . '"';
-            if (isset($ele_value) && $value == $ele_value) {
-                $ret .= ' checked';
-            }
-
-            $ret .= $ele_extra . ' /> ' . $name . $ele_delimeter;
-            $ret .= '<label></div>';
-
-            if (!empty($element->columns)) {
-                $ret .= '</td>';
-                if (++$i % $element->columns == 0) {
-                    $ret .= '</tr>';
-                }
-            }
-        }
-        if (!empty($element->columns)) {
-            if ($span = $i % $element->columns) {
-                $ret .= '<td colspan="' . ($element->columns - $span) . '"></td></tr>';
-            }
-            $ret .= '</table>';
-        }
-
-        return $ret;
     }
 
     /**
@@ -656,11 +653,15 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
                 ');
             }
         }
-        return '<div class="form-inline"><input class="form-control" type="text" name="' . $ele_name
-            . '" id="' . $ele_name . '" size="' . $element->getSize() . '" maxlength="'
-            . $element->getMaxlength() . '" value="' . $display_value . '"' . $element->getExtra()
-            . ' /><input class="form-control" type="reset" value=" ... " onclick="return showCalendar(\''
-            . $ele_name . '\');"></div>';
+        return '<div class="input-group">'
+            . '<input class="form-control" type="text" name="' . $ele_name . '" id="' . $ele_name
+            . '" size="' . $element->getSize() . '" maxlength="' . $element->getMaxlength()
+            . '" value="' . $display_value . '"' . $element->getExtra() . ' />'
+            . '<span class="input-group-btn"><button class="btn btn-default" type="button"'
+            . ' onclick="return showCalendar(\'' . $ele_name . '\');">'
+            . '<span class="fa fa-calendar" aria-hidden="true"></span></button>'
+            . '</span>'
+            . '</div>';
     }
 
     /**
@@ -677,10 +678,10 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
         $ret = '<div>';
         $ret .= '<form class="form-horizontal" name="' . $ele_name . '" id="' . $ele_name . '" action="'
             . $form->getAction() . '" method="' . $form->getMethod()
-            . '" onsubmit="return xoopsFormValidate_' . $ele_name . '();"' . $form->getExtra() . '>';
-
+            . '" onsubmit="return xoopsFormValidate_' . $ele_name . '();"' . $form->getExtra() . '>'
+            . '<h3>' . $form->getTitle() . '</h3>';
         $hidden   = '';
-        $class    = 'even';
+
         foreach ($form->getElements() as $ele) {
             if (!is_object($ele)) { // see $form->addBreak()
                 $ret .= $ele;
@@ -693,14 +694,14 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
 
             $ret .= '<div class="form-group">';
             if (($caption = $ele->getCaption()) != '') {
-                $ret .= '<label for="' . $ele->getName() . '" class="col-sm-2 control-label">'
+                $ret .= '<label for="' . $ele->getName() . '" class="col-md-2 control-label">'
                     . $ele->getCaption()
                     . ($ele->isRequired() ? '<span class="caption-required">*</span>' : '')
                     . '</label>';
             } else {
-                $ret .= '<div class="col-sm-2"> </div>';
+                $ret .= '<div class="col-md-2"> </div>';
             }
-            $ret .= '<div class="col-sm-10">';
+            $ret .= '<div class="col-md-10">';
             $ret .= $ele->render();
             if (($desc = $ele->getDescription()) != '') {
                 $ret .= '<p class="text-muted">' . $desc . '</p>';

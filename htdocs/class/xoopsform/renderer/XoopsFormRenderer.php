@@ -85,11 +85,9 @@ class XoopsFormRenderer
     }
 
     /**
-     * set the renderer
+     * get the renderer
      *
-     * @param XoopsFormRendererInterface $renderer instance of renderer
-     *
-     * @return void
+     * @return XoopsFormRendererInterface
      */
     public function get()
     {

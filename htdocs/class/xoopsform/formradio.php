@@ -39,20 +39,23 @@ class XoopsFormRadio extends XoopsFormElement
     public $_value;
 
     /**
+     * Columns per line for rendering
+     * Leave unset (null) to put all options in one line
+     * Set to 1 to put each option on its own line
+     * Any other positive integer 'n' to put 'n' options on each line
+     *
+     * @var int
+     * @access public
+     */
+    public $columns;
+
+    /**
      * HTML to seperate the elements
      *
      * @var string
      * @access private
      */
     public $_delimeter;
-
-    /**
-     * Column number for rendering
-     *
-     * @var int
-     * @access public
-     */
-    public $columns;
 
     /**
      * Constructor
