@@ -286,7 +286,7 @@ class ModuleAdmin
      */
     public function renderIndex()
     {
-        $ret = "<table>\n<tr>\n";
+        $ret = "<table id='xo-modadmin-index'>\n<tr>\n";
         $ret .= "<td width=\"40%\">\n";
         $ret .= $this->renderMenuIndex();
         $ret .= "</td>\n";
