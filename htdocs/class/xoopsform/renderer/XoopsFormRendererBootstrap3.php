@@ -708,6 +708,7 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
             $ret .= '</div>';
             $ret .= '</div>';
         }
+        $ret .= $hidden;
         $ret .= '</form></div>';
         $ret .= $form->renderValidationJS(true);
 
