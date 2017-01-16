@@ -86,6 +86,15 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
         }
     }
 
+    /**
+     * Render a inline checkbox or radio element
+     *
+     * @param XoopsFormCheckBox|XoopsFormRadio $element element being rendered
+     * @param string                           $type    'checkbox' or 'radio;
+     * @param string                           $elememtId   input 'id' attribute of element
+     * @param string                           $elementName input 'name' attribute of element
+     * @return string
+     */
     protected function renderCheckedInline(XoopsFormElement $element, $type, $elememtId, $elementName)
     {
         $class = $type . '-inline';
@@ -109,6 +118,15 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
         return $ret;
     }
 
+    /**
+     * Render a single column checkbox or radio element
+     *
+     * @param XoopsFormCheckBox|XoopsFormRadio $element element being rendered
+     * @param string                           $type    'checkbox' or 'radio;
+     * @param string                           $elememtId   input 'id' attribute of element
+     * @param string                           $elementName input 'name' attribute of element
+     * @return string
+     */
     protected function renderCheckedOneColumn(XoopsFormElement $element, $type, $elememtId, $elementName)
     {
         $class = $type;
@@ -134,6 +152,15 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
         return $ret;
     }
 
+    /**
+     * Render a multicolumn checkbox or radio element
+     *
+     * @param XoopsFormCheckBox|XoopsFormRadio $element element being rendered
+     * @param string                           $type    'checkbox' or 'radio;
+     * @param string                           $elememtId   input 'id' attribute of element
+     * @param string                           $elementName input 'name' attribute of element
+     * @return string
+     */
     protected function renderCheckedColumnar(XoopsFormElement $element, $type, $elememtId, $elementName)
     {
         $class = $type;
@@ -378,7 +405,7 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
     public function renderFormElementTray(XoopsFormElementTray $element)
     {
         $count = 0;
-        $ret = '<div class="form-inline">';
+        $ret = '<span class="form-inline">';
         foreach ($element->getElements() as $ele) {
             if ($count > 0) {
                 $ret .= $element->getDelimeter();
@@ -400,7 +427,7 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
             $ret = str_replace('<div class="checkbox-inline">', '', $ret);
         }
         */
-        $ret .= '</div>';
+        $ret .= '</span>';
         return $ret;
     }
 
