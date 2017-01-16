@@ -132,7 +132,7 @@ class XoopsForm
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
         trigger_error("Should call parent::__construct in {$trace[0]['file']} line {$trace[0]['line']},");
         self::__construct();
-    }    
+    }
     /**
      * *#@+
      * retrieves object serialisation/identification id (sha1 used)
@@ -319,7 +319,7 @@ class XoopsForm
      *
      * @param bool $recurse get elements recursively?
      *
-     * @return array array of {@link XoopsFormElement}s
+     * @return XoopsFormElement[] array of {@link XoopsFormElement}s
      */
     public function &getElements($recurse = false)
     {
