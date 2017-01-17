@@ -120,7 +120,7 @@ class XoopsFormElementTray extends XoopsFormElement
      * Get an array of the elements in this group
      *
      * @param  bool $recurse get elements recursively?
-     * @return array Array of {@link XoopsFormElement} objects.
+     * @return XoopsFormElement[]  Array of {@link XoopsFormElement} objects.
      */
     public function &getElements($recurse = false)
     {
