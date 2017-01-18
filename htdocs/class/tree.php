@@ -169,7 +169,7 @@ class XoopsObjectTree
      * @param string $prefix_curr String to indent the current item
      *
      * @return void
-     * @access private
+     * @deprecated since 2.5.9, please use makeSelectElement() functionality
      */
     protected function makeSelBoxOptions($fieldName, $selected, $key, &$ret, $prefix_orig, $prefix_curr = '')
     {
@@ -201,6 +201,8 @@ class XoopsObjectTree
      * @param  integer $key            ID of the object to display as the root of select options
      * @param  string  $extra
      * @return string  HTML select box
+     *
+     * @deprecated since 2.5.9, please use makeSelectElement()
      */
     public function makeSelBox(
         $name,
@@ -218,6 +220,71 @@ class XoopsObjectTree
         $this->makeSelBoxOptions($fieldName, $selected, $key, $ret, $prefix);
 
         return $ret . '</select>';
+    }
+
+    /**
+     * Make a select box with options from the tree
+     *
+     * @param  string  $name           Name of the select box
+     * @param  string  $fieldName      Name of the member variable from the
+     *                                 node objects that should be used as the title for the options.
+     * @param  string  $prefix         String to indent deeper levels
+     * @param  string  $selected       Value to display as selected
+     * @param  bool    $addEmptyOption Set TRUE to add an empty option with value "0" at the top of the hierarchy
+     * @param  integer $key            ID of the object to display as the root of select options
+     * @param  string  $extra          extra content to add to the element
+     * @param  string  $caption        optional caption for form element
+     *
+     * @return XoopsFormSelect form element
+     */
+    public function makeSelectElement(
+        $name,
+        $fieldName,
+        $prefix = '-',
+        $selected = '',
+        $addEmptyOption = false,
+        $key = 0,
+        $extra = '',
+        $caption = ''
+    ) {
+        xoops_load('xoopsformselect');
+        $element = new XoopsFormSelect($caption, $name, $selected);
+        $element->setExtra($extra);
+
+        if (false !== (bool)$addEmptyOption) {
+            $element->addOption('0', ' ');
+        }
+        $this->addSelectOptions($element, $fieldName, $key, $prefix);
+
+        return $element;
+    }
+
+    /**
+     * Make options for a select box from
+     *
+     * @param XoopsFormSelect $element     form element to receive tree values as options
+     * @param string          $fieldName   Name of the member variable from the node objects that
+     *                                     should be used as the title for the options.
+     * @param int             $key         ID of the object to display as the root of select options
+     * @param string          $prefix_orig String to indent items at deeper levels
+     * @param string          $prefix_curr String to indent the current item
+     *
+     * @return void
+     * @access private
+     */
+    protected function addSelectOptions($element, $fieldName, $key, $prefix_orig, $prefix_curr = '')
+    {
+        if ($key > 0) {
+            $value = $this->tree[$key]['obj']->getVar($this->myId);
+            $name = $prefix_curr . $this->tree[$key]['obj']->getVar($fieldName);
+            $element->addOption($value, $name);
+            $prefix_curr .= $prefix_orig;
+        }
+        if (isset($this->tree[$key]['child']) && !empty($this->tree[$key]['child'])) {
+            foreach ($this->tree[$key]['child'] as $childKey) {
+                $this->addSelectOptions($element, $fieldName, $childKey, $prefix_orig, $prefix_curr);
+            }
+        }
     }
 
     /**
