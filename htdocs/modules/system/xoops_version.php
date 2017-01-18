@@ -1,5 +1,5 @@
 <?php
-// 
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2016 XOOPS Project (www.xoops.org)            //
@@ -55,6 +55,7 @@ $modversion['templates'][] = array('file' => 'system_userform.tpl', 'description
 $modversion['templates'][] = array('file' => 'system_rss.tpl', 'description' => '');
 $modversion['templates'][] = array('file' => 'system_redirect.tpl', 'description' => '');
 $modversion['templates'][] = array('file' => 'system_comment.tpl', 'description' => '');
+$modversion['templates'][] = array('file' => 'system_comments_controls.tpl', 'description' => '');
 $modversion['templates'][] = array('file' => 'system_comments_flat.tpl', 'description' => '');
 $modversion['templates'][] = array('file' => 'system_comments_thread.tpl', 'description' => '');
 $modversion['templates'][] = array('file' => 'system_comments_nest.tpl', 'description' => '');
@@ -69,7 +70,7 @@ $modversion['templates'][] = array('file' => 'system_banner.tpl', 'description' 
 $modversion['templates'][] = array('file' => 'system_bannerdisplay.tpl', 'description' => '');
 $modversion['templates'][] = array('file' => 'system_search.tpl', 'description' => '');
 
-//as a transition to .tpl, we also use the .html extension
+//in transition to .tpl, we keep the .html extension versions for previously existing templates
 
 $modversion['templates'][] = array('file' => 'system_imagemanager.html', 'description' => '');
 $modversion['templates'][] = array('file' => 'system_imagemanager2.html', 'description' => '');
@@ -90,7 +91,6 @@ $modversion['templates'][] = array('file' => 'system_homepage.html', 'descriptio
 $modversion['templates'][] = array('file' => 'system_bannerlogin.html', 'description' => '');
 $modversion['templates'][] = array('file' => 'system_banner.html', 'description' => '');
 $modversion['templates'][] = array('file' => 'system_bannerdisplay.html', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_search.html', 'description' => '');
 
 // Admin Templates
 $modversion['templates'][] = array('file' => 'system_header.tpl', 'description' => '', 'type' => 'admin');

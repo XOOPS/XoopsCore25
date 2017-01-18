@@ -23,6 +23,9 @@ if (!defined('XOOPS_ROOT_PATH') || !is_object($xoopsModule)) {
 include_once $GLOBALS['xoops']->path('include/comment_constants.php');
 
 if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
+    xoops_load('XoopsLists');
+    xoops_load('XoopsFormLoader');
+
     include_once $GLOBALS['xoops']->path('modules/system/constants.php');
     $gperm_handler = xoops_getHandler('groupperm');
     $groups        = $xoopsUser ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
@@ -140,38 +143,35 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
             }
         }
 
-        // assign comment nav bar
-        $navbar = '
-<form method="get" action="' . $comment_config['pageName'] . '">
-<table width="95%" class="outer" cellspacing="1">
-  <tr>
-    <td class="even" align="center"><select name="com_mode"><option value="flat"';
-        if ($com_mode === 'flat') {
-            $navbar .= ' selected';
-        }
-        $navbar .= '>' . _FLAT . '</option><option value="thread"';
-        if ($com_mode === 'thread' || $com_mode === '') {
-            $navbar .= ' selected';
-        }
-        $navbar .= '>' . _THREADED . '</option><option value="nest"';
-        if ($com_mode === 'nest') {
-            $navbar .= ' selected';
-        }
-        $navbar .= '>' . _NESTED . '</option></select> <select name="com_order"><option value="' . XOOPS_COMMENT_OLD1ST . '"';
-        if ($com_order == XOOPS_COMMENT_OLD1ST) {
-            $navbar .= ' selected';
-        }
-        $navbar .= '>' . _OLDESTFIRST . '</option><option value="' . XOOPS_COMMENT_NEW1ST . '"';
-        if ($com_order == XOOPS_COMMENT_NEW1ST) {
-            $navbar .= ' selected';
-        }
+        $commentTpl = new \XoopsTpl();
+        //$commentTpl->template = "db:system_comment_controls.tpl";
+        //$commentTpl->init();
+        $commentTpl->assign('pageName', $comment_config['pageName']);
+
+        $commentModeSelect = new XoopsFormSelect('', 'com_mode', $com_mode);
+        $commentModeSelect->addOption('flat', _FLAT);
+        $commentModeSelect->addOption('thread', _THREADED);
+        $commentModeSelect->addOption('nest', _NESTED);
+        $commentTpl->assign('commentModeSelect', $commentModeSelect);
+
+        $commentOrderSelect = new XoopsFormSelect('', 'com_order', $com_order);
+        $commentOrderSelect->addOption(XOOPS_COMMENT_OLD1ST, _OLDESTFIRST);
+        $commentOrderSelect->addOption(XOOPS_COMMENT_NEW1ST, _NEWESTFIRST);
+        $commentTpl->assign('commentOrderSelect', $commentOrderSelect);
+
+        $commentRefreshButton = new XoopsFormButton('', 'com_refresh', _CM_REFRESH, 'submit');
+        $commentTpl->assign('commentRefreshButton', $commentRefreshButton);
+
         unset($postcomment_link);
-        $navbar .= '>' . _NEWESTFIRST . '</option></select><input type="hidden" name="' . $comment_config['itemName'] . '" value="' . $com_itemid . '" /> <input type="submit" value="' . _CM_REFRESH . '" class="formButton" />';
         if (!empty($xoopsModuleConfig['com_anonpost']) || is_object($xoopsUser)) {
             $postcomment_link = 'comment_new.php?com_itemid=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode;
 
-            $xoopsTpl->assign('anon_canpost', true);
+            $xoopsTpl->assign('anon_canpost', true); // to main template
         }
+
+        $commentBarHidden = '';
+        $commentBarHidden .= '<input type="hidden" name="' . $comment_config['itemName']
+            . '" value="' . $com_itemid . '" />';
         $link_extra = '';
         if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
             foreach ($comment_config['extraParams'] as $extra_param) {
@@ -187,24 +187,20 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
                 if (isset($extra_param_val)) {
                     $link_extra .= '&amp;' . $extra_param . '=' . $extra_param_val;
                     $hidden_value = htmlspecialchars($extra_param_val, ENT_QUOTES);
-                    $navbar .= '<input type="hidden" name="' . $extra_param . '" value="' . $hidden_value . '" />';
+                    $commentBarHidden .= '<input type="hidden" name="' . $extra_param . '" value="' . $hidden_value . '" />';
                 }
             }
         }
-        if (isset($postcomment_link)) {
-            $navbar .= '&nbsp;<input type="button" onclick="self.location.href=\'' . $postcomment_link . '' . $link_extra . '\'" class="formButton" value="' . _CM_POSTCOMMENT . '" />';
-        }
-        $navbar .= '
-    </td>
-  </tr>
-</table>
-</form>';
 
-        // Start add by voltan
+        // <input type="button" onclick="self.location.href=\'' . $postcomment_link . '' . $link_extra . '\'" class="formButton" value="' . _CM_POSTCOMMENT . '" />';
+        $commentPostButton = new XoopsFormButton('', 'com_post', _CM_POSTCOMMENT, 'button');
+        $commentPostButton->setExtra(' onclick="self.location.href=\'' . $postcomment_link . $link_extra . '\'"');
+        $commentTpl->assign('commentPostButton', $commentPostButton);
+
+        $navbar = $commentTpl->fetch('db:system_comments_controls.tpl');
+        //\Xmf\Debug::dump($navbar);
+
         if (!empty($xoopsModuleConfig['com_anonpost']) || is_object($xoopsUser)) {
-            xoops_load('XoopsLists');
-            xoops_load('XoopsFormLoader');
-
             if (file_exists($GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/comment_fast.php'))) {
                 include_once $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/comment_fast.php');
             }
