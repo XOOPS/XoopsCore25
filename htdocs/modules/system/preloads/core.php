@@ -65,7 +65,7 @@ class SystemCorePreload extends XoopsPreloadItem
         }
 
         if (!empty($_SESSION['redirect_message'])) {
-            $GLOBALS['xoTheme']->addStylesheet('xoops.css');
+            //$GLOBALS['xoTheme']->addStylesheet('xoops.css');
             $GLOBALS['xoTheme']->addScript('browse.php?Frameworks/jquery/jquery.js');
             $GLOBALS['xoTheme']->addScript('browse.php?Frameworks/jquery/plugins/jquery.jgrowl.js');
             $GLOBALS['xoTheme']->addScript('', array('type' => 'text/javascript'), '
@@ -85,7 +85,7 @@ class SystemCorePreload extends XoopsPreloadItem
     {
         $GLOBALS['xoTheme']->addStylesheet('media/font-awesome/css/font-awesome.min.css');
         if (!empty($_SESSION['redirect_message'])) {
-            $GLOBALS['xoTheme']->addStylesheet('xoops.css');
+            //$GLOBALS['xoTheme']->addStylesheet('xoops.css');
             $GLOBALS['xoTheme']->addScript('browse.php?Frameworks/jquery/jquery.js');
             $GLOBALS['xoTheme']->addScript('browse.php?Frameworks/jquery/plugins/jquery.jgrowl.js');
             $GLOBALS['xoTheme']->addScript('', array('type' => 'text/javascript'), '

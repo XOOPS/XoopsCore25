@@ -1,4 +1,4 @@
-/* 
+/*
 /* Removed reset */
 img.center {
     text-align: center;
@@ -151,7 +151,7 @@ div.jGrowl div.jGrowl-notification div.jGrowl-header {
 }
 
 /* jGrowl Close button */
-div.jGrowl div.jGrowl-notification div.jGrowl-close {
+div.jGrowl div.jGrowl-notification button.jGrowl-close {
     float: right;
     font-weight: bold;
     font-size: 12px;
