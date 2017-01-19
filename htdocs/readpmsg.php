@@ -88,12 +88,12 @@ if (!is_object($xoopsUser)) {
         echo $pm_arr[0]->getVar('msg_text') . "<br><br></td></tr><tr class='foot'><td class='width20 txtleft' colspan='2'>";
         // we don't want to reply to a deleted user!
         if ($poster != false) {
-            echo "<a href='#' onclick='javascript:openWithSelfMain(\"" . XOOPS_URL . '/pmlite.php?reply=1&amp;msg_id=' . $pm_arr[0]->getVar('msg_id') . "\",\"pmlite\",565,500);'><img src='" . XOOPS_URL . "/images/icons/reply.gif' alt='" . _PM_REPLY . "' /></a>\n";
+            echo "<button type='button' class='btn btn-default' onclick='openWithSelfMain(\"" . XOOPS_URL . '/pmlite.php?reply=1&amp;msg_id=' . $pm_arr[0]->getVar('msg_id') . "\",\"pmlite\",565,500);' title='" . _PM_REPLY . "'><span class='fa fa-fw fa-reply'></span></button>\n";
         }
         echo "<input type='hidden' name='delete' value='1' />";
         echo $GLOBALS['xoopsSecurity']->getTokenHTML();
         echo "<input type='hidden' name='msg_id' value='" . $pm_arr[0]->getVar('msg_id') . "' />";
-        echo "<a href='#" . $pm_arr[0]->getVar('msg_id') . "' onclick='javascript:document.delete" . $pm_arr[0]->getVar('msg_id') . ".submit();'><img src='" . XOOPS_URL . "/images/icons/delete.gif' alt='" . _PM_DELETE . "' /></a>";
+        echo "<button type='button' class='btn btn-default' onclick='javascript:document.delete" . $pm_arr[0]->getVar('msg_id') . ".submit();' title='" . _PM_DELETE . "'><span class='fa fa-fw fa-remove'></span></button>";
         echo "</td></tr><tr><td class='txtright' colspan='2'>";
         $previous = $start - 1;
         $next     = $start + 1;
