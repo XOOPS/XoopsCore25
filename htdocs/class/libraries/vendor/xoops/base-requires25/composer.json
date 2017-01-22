@@ -1,0 +1,12 @@
+{
+    "name": "xoops/base-requires25",
+    "license": "GPL-2.0+",
+    "type": "project",
+    "description": "Primary dependencies for XOOPS/XoopsCore25",
+    "require": {
+        "php": ">=5.3.9",
+        "xoops/xmf": "^1.2.0",
+        "ircmaxell/password-compat": "^1.0.4",
+        "smottt/wideimage": "1.1.2"
+    }
+}

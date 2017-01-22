@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitfb111d443af336ae9955b26ed60e9c14
+class ComposerStaticInit274e5fff219a4f27a346e611b0580d6a
 {
     public static $files = array (
         '6bc45d0537e6858fd179bdbc31d62c79' => __DIR__ . '/..' . '/raveren/kint/Kint.class.php',
@@ -163,6 +163,8 @@ class ComposerStaticInitfb111d443af336ae9955b26ed60e9c14
         'WideImage\\PaletteImage' => __DIR__ . '/..' . '/smottt/wideimage/lib/WideImage/PaletteImage.php',
         'WideImage\\TrueColorImage' => __DIR__ . '/..' . '/smottt/wideimage/lib/WideImage/TrueColorImage.php',
         'WideImage\\WideImage' => __DIR__ . '/..' . '/smottt/wideimage/lib/WideImage/WideImage.php',
+        'WideImage\\vendor\\de77\\BMP' => __DIR__ . '/..' . '/smottt/wideimage/lib/WideImage/vendor/de77/BMP.php',
+        'WideImage\\vendor\\de77\\TGA' => __DIR__ . '/..' . '/smottt/wideimage/lib/WideImage/vendor/de77/TGA.php',
         'Xmf\\Database\\Migrate' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Database/Migrate.php',
         'Xmf\\Database\\TableLoad' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Database/TableLoad.php',
         'Xmf\\Database\\Tables' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Database/Tables.php',
@@ -197,10 +199,10 @@ class ComposerStaticInitfb111d443af336ae9955b26ed60e9c14
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitfb111d443af336ae9955b26ed60e9c14::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitfb111d443af336ae9955b26ed60e9c14::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitfb111d443af336ae9955b26ed60e9c14::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitfb111d443af336ae9955b26ed60e9c14::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit274e5fff219a4f27a346e611b0580d6a::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit274e5fff219a4f27a346e611b0580d6a::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit274e5fff219a4f27a346e611b0580d6a::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit274e5fff219a4f27a346e611b0580d6a::$classMap;
 
         }, null, ClassLoader::class);
     }

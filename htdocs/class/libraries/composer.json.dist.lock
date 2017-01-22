@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e1d2bbab14d961a60ff88b5d84eda1fc",
+    "content-hash": "f0c9339e1d300b782320561ffed7deab",
     "packages": [
         {
             "name": "firebase/php-jwt",
@@ -245,20 +245,23 @@
         },
         {
             "name": "smottt/wideimage",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/smottt/WideImage.git",
-                "reference": "6cbdaa6eb186c4a618b2ef5a7f38fcb50f0f2b1b"
+                "reference": "9235ee96b5cdbc83a4c3ab7b51ce2fdd82c561ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smottt/WideImage/zipball/6cbdaa6eb186c4a618b2ef5a7f38fcb50f0f2b1b",
-                "reference": "6cbdaa6eb186c4a618b2ef5a7f38fcb50f0f2b1b",
+                "url": "https://api.github.com/repos/smottt/WideImage/zipball/9235ee96b5cdbc83a4c3ab7b51ce2fdd82c561ca",
+                "reference": "9235ee96b5cdbc83a4c3ab7b51ce2fdd82c561ca",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8"
             },
             "type": "library",
             "autoload": {
@@ -273,20 +276,20 @@
             ],
             "description": "An open-source PHP library for image manipulation. (With namespaces, PHP 5.3+)",
             "homepage": "http://wideimage.sourceforge.net",
-            "time": "2015-10-05T20:32:34+00:00"
+            "time": "2016-05-16T20:00:28+00:00"
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.8.15",
+            "version": "v2.8.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "befb26a3713c97af90d25dd12e75621ef14d91ff"
+                "reference": "dbe61fed9cd4a44c5b1d14e5e7b1a8640cfb2bf2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/befb26a3713c97af90d25dd12e75621ef14d91ff",
-                "reference": "befb26a3713c97af90d25dd12e75621ef14d91ff",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/dbe61fed9cd4a44c5b1d14e5e7b1a8640cfb2bf2",
+                "reference": "dbe61fed9cd4a44c5b1d14e5e7b1a8640cfb2bf2",
                 "shasum": ""
             },
             "require": {
@@ -322,7 +325,35 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-11-14T16:15:57+00:00"
+            "time": "2017-01-03T13:49:52+00:00"
+        },
+        {
+            "name": "xoops/base-requires25",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/XOOPS/base-requires25.git",
+                "reference": "3dcf96f30d0c3c9fbcfaec198c921d867d509ee6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/XOOPS/base-requires25/zipball/3dcf96f30d0c3c9fbcfaec198c921d867d509ee6",
+                "reference": "3dcf96f30d0c3c9fbcfaec198c921d867d509ee6",
+                "shasum": ""
+            },
+            "require": {
+                "ircmaxell/password-compat": "^1.0.4",
+                "php": ">=5.3.9",
+                "smottt/wideimage": "1.1.2",
+                "xoops/xmf": "^1.2.0"
+            },
+            "type": "project",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "description": "Primary dependencies for XOOPS/XoopsCore25",
+            "time": "2017-01-22T18:23:24+00:00"
         },
         {
             "name": "xoops/xmf",
@@ -365,8 +396,6 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": {
-        "php": ">=5.3.9"
-    },
+    "platform": [],
     "platform-dev": []
 }
