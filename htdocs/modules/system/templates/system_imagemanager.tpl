@@ -24,6 +24,7 @@
     </script>
     <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl xoops.css}>"/>
     <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl modules/system/css/imagemanager.css}>"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl media/font-awesome/css/font-awesome.min.css}>"/>
 
     <{php}>
         $language = $GLOBALS['xoopsConfig']['language'];
@@ -70,10 +71,9 @@
                 <td><input type="hidden" name="image_id[]" value="<{$images[i].id}>"/><{$images[i].nicename}></td>
                 <td><img style="max-width:200px;" src="<{$images[i].src}>" alt=""/></td>
                 <td><{$images[i].mimetype}></td>
-                <td><a href="#" title="" onclick="appendCode('<{$images[i].lxcode}>');" title=""><img src="<{xoAppUrl images/alignleft.gif}>" alt="Left"/></a>
-                    <a href="#" title="" onclick="appendCode('<{$images[i].xcode}>');" title=""><img src="<{xoAppUrl images/aligncenter.gif}>" alt="Center"/></a>
-                    <a href="#" title="" onclick="appendCode('<{$images[i].rxcode}>');" title=""><img src="<{xoAppUrl images/alignright.gif}>"
-                                                                                                      alt="Right"/></a></td>
+                <td><button type="button" class="btn btn-default" onclick="appendCode('<{$images[i].lxcode}>');" title="<{$smarty.const._LEFT}>" aria-label="Left Align"><span class="fa fa-align-left" aria-hidden="true"></span></button>
+                    <button type="button" class="btn btn-default" onclick="appendCode('<{$images[i].xcode}>');" title="<{$smarty.const._CENTER}>" aria-label="Center Align"><span class="fa fa-align-center" aria-hidden="true"></span></button>
+                    <button type="button" class="btn btn-default" onclick="appendCode('<{$images[i].rxcode}>');" title="<{$smarty.const._RIGHT}>" aria-label="Right Align"><span class="fa fa-align-right" aria-hidden="true"></span></button>
             </tr>
         <{/section}>
     </table>

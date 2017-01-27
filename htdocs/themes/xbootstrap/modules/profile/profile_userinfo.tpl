@@ -18,7 +18,7 @@
         <{if !$user_ownpage && $xoops_isuser == true}>
             <form name="usernav" action="user.php" method="post">
                 <input class="btn btn-success btn-xs btn-block" type="button" value="<{$smarty.const._PROFILE_MA_SENDPM}>"
-                       onclick="openWithSelfMain('<{$xoops_url}>/pmlite.php?send2=1&amp;to_userid=<{$user_uid}>', 'pmlite', 450, 380);">
+                       onclick="openWithSelfMain('<{$xoops_url}>/pmlite.php?send2=1&amp;to_userid=<{$user_uid}>', 'pmlite', 565, 500);">
             </form>
         <{/if}>
 

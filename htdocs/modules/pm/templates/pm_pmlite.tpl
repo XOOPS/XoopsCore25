@@ -34,9 +34,7 @@
                         <{$element.body}>
                     <{/if}>
                 <{/foreach}>
-                <{$pmform.elements.submit.body}>&nbsp;
-                <{$pmform.elements.reset.body}>&nbsp;
-                <{$pmform.elements.cancel.body}>
+                <{$pmform.elements.tray.body}>&nbsp;
             </td>
         </tr>
     </table>

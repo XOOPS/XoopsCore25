@@ -35,7 +35,7 @@ class MytsRtsp extends MyTextSanitizerExtension
         if ($config['enable_rtsp_entry'] === false) {
             return array();
         }
-        $code = "<button type='button' class='btn btn-default' onclick='xoopsCodeRtsp(\"{$textarea_id}\",\""
+        $code = "<button type='button' class='btn btn-default btn-sm' onclick='xoopsCodeRtsp(\"{$textarea_id}\",\""
             . htmlspecialchars(_XOOPS_FORM_ENTERRTSPURL, ENT_QUOTES) . "\",\""
             . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\""
             . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES)

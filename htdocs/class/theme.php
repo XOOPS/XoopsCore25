@@ -289,7 +289,6 @@ class xos_opal_Theme
         }
         // call the theme_autorun.php if the theme has one
         if (file_exists($this->path . "/theme_autorun.php")) {
-            $theme = $this; // make this instance easily available for theme_autorun.php
             include_once($this->path . "/theme_autorun.php");
         }
 

@@ -107,52 +107,61 @@ if ($op === 'submit') {
         }
     }
 
-    include_once $GLOBALS['xoops']->path('class/template.php');
-    $GLOBALS['xoopsTpl'] = new XoopsTpl();
     include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
-    $pmform = new XoopsForm('', 'pmform', 'pmlite.php', 'post', true);
+    $pmform = new XoopsThemeForm('', 'pmform', 'pmlite.php', 'post', true);
 
+    $subject = '';
+    $message = '';
     if ($reply == 1) {
         $subject = $pm->getVar('subject', 'E');
         if (!preg_match('/^' . _RE . '/i', $subject)) {
             $subject = _RE . ' ' . $subject;
         }
-        $GLOBALS['xoopsTpl']->assign('to_username', $pm_uname);
+        $pmform->addElement(new XoopsFormLabel(_PM_TO, $pm_uname));
         $pmform->addElement(new XoopsFormHidden('to_userid', $pm->getVar('from_userid')));
     } elseif ($sendmod == 1) {
-        $GLOBALS['xoopsTpl']->assign('to_username', XoopsUser::getUnameFromId(XoopsRequest::getInt('to_userid', 0, 'POST')));
+        $tmpUname = XoopsUser::getUnameFromId(XoopsRequest::getInt('to_userid', 0, 'POST'));
         $pmform->addElement(new XoopsFormHidden('to_userid', XoopsRequest::getInt('to_userid', 0, 'POST')));
+        $pmform->addElement(new XoopsFormLabel(_PM_TO, $tmpUname));
         $subject = $myts->htmlSpecialChars(XoopsRequest::getString('subject', '', 'POST'));
         $message = $myts->htmlSpecialChars(XoopsRequest::getString('message', '', 'POST'));
     } else {
         if ($send2 == 1) {
-            $GLOBALS['xoopsTpl']->assign('to_username', XoopsUser::getUnameFromId($to_userid, false));
+            $tmpUname = XoopsUser::getUnameFromId($to_userid, false);
+            $pmform->addElement(new XoopsFormLabel(_PM_TO, $tmpUname));
             $pmform->addElement(new XoopsFormHidden('to_userid', $to_userid));
         } else {
-            $to_username = new XoopsFormSelectUser('', 'to_userid');
-            $GLOBALS['xoopsTpl']->assign('to_username', $to_username->render());
+            $to_username = new XoopsFormSelectUser(_PM_TO, 'to_userid');
+            $pmform->addElement($to_username);
         }
-        $subject = '';
-        $message = '';
     }
-    $pmform->addElement(new XoopsFormText('', 'subject', 30, 100, $subject), true);
+    $pmform->addElement(new XoopsFormText(_PM_SUBJECTC, 'subject', 30, 100, $subject), true);
 
     $msg_image   = '';
     $icons_radio = new XoopsFormRadio(_MESSAGEICON, 'msg_image', $msg_image);
-    //$subject_icons = XoopsLists::getSubjectsList();
-    $xoopsTpl->assign('radio_icons', $subject_icons);
+    $subjectImages = array();
+    foreach ($subject_icons as $name => $value) {
+        $subjectImages[$name] = '<img src="' . XOOPS_URL . '/images/subject/' . $value .'">';
+    }
+    $icons_radio->addOptionArray($subjectImages);
+    $pmform->addElement($icons_radio);
 
-    $pmform->addElement(new XoopsFormDhtmlTextArea('', 'message', $message, 8, 37), true);
-    $pmform->addElement(new XoopsFormRadioYN('', 'savecopy', 0));
+    $pmform->addElement(new XoopsFormDhtmlTextArea(_PM_MESSAGEC, 'message', $message, 8, 37), true);
+
+    $saveCheckbox = new XoopsFormCheckBox('', 'savecopy', 0);
+    $saveCheckbox->addOption('1', _PM_SAVEINOUTBOX);
+    $pmform->addElement($saveCheckbox);
 
     $pmform->addElement(new XoopsFormHidden('op', 'submit'));
-    $pmform->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
-    $pmform->addElement(new XoopsFormButton('', 'reset', _PM_CLEAR, 'reset'));
+    $elementTray = new XoopsFormElementTray('', '', 'tray');
+    $elementTray->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
+    $elementTray->addElement(new XoopsFormButton('', 'reset', _PM_CLEAR, 'reset'));
 
     $cancel_send = new XoopsFormButton('', 'cancel', _PM_CANCELSEND, 'button');
     $cancel_send->setExtra("onclick='javascript:window.close();'");
-    $pmform->addElement($cancel_send);
-    $pmform->assign($GLOBALS['xoopsTpl']);
-    $GLOBALS['xoopsTpl']->display('db:pm_pmlite.tpl');
+    $elementTray->addElement($cancel_send);
+    $pmform->addElement($elementTray);
+
+    $pmform->display();
 }
 xoops_footer();
