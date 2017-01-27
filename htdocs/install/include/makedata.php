@@ -188,8 +188,8 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
     $dbm->insert('config', " VALUES (22, 0, 2, 'activation_group', '_MD_AM_ACTVGROUP', " . $groups['XOOPS_GROUP_ADMIN'] . ", '_MD_AM_ACTVGROUPDSC', 'group', 'int', 10)");
     $dbm->insert('config', " VALUES (23, 0, 2, 'uname_test_level', '_MD_AM_UNAMELVL', '0', '_MD_AM_UNAMELVLDSC', 'select', 'int', 12)");
     $dbm->insert('config', " VALUES (24, 0, 2, 'avatar_allow_upload', '_MD_AM_AVATARALLOW', '0', '_MD_AM_AVATARALWDSC', 'yesno', 'int', 14)");
-    $dbm->insert('config', " VALUES (27, 0, 2, 'avatar_width', '_MD_AM_AVATARW', '120', '_MD_AM_AVATARWDSC', 'textbox', 'int', 16)");
-    $dbm->insert('config', " VALUES (28, 0, 2, 'avatar_height', '_MD_AM_AVATARH', '120', '_MD_AM_AVATARHDSC', 'textbox', 'int', 18)");
+    $dbm->insert('config', " VALUES (27, 0, 2, 'avatar_width', '_MD_AM_AVATARW', '128', '_MD_AM_AVATARWDSC', 'textbox', 'int', 16)");
+    $dbm->insert('config', " VALUES (28, 0, 2, 'avatar_height', '_MD_AM_AVATARH', '128', '_MD_AM_AVATARHDSC', 'textbox', 'int', 18)");
     $dbm->insert('config', " VALUES (29, 0, 2, 'avatar_maxsize', '_MD_AM_AVATARMAX', '35000', '_MD_AM_AVATARMAXDSC', 'textbox', 'int', 20)");
     $dbm->insert('config', " VALUES (30, 0, 1, 'adminmail', '_MD_AM_ADMINML', '" . addslashes($adminmail) . "', '_MD_AM_ADMINMLDSC', 'textbox', 'text', 3)");
     $dbm->insert('config', " VALUES (31, 0, 2, 'self_delete', '_MD_AM_SELFDELETE', '0', '_MD_AM_SELFDELETEDSC', 'yesno', 'int', 22)");

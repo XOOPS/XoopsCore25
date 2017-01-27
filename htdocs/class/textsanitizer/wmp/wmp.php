@@ -35,7 +35,7 @@ class MytsWmp extends MyTextSanitizerExtension
             return array();
         }
 
-        $code = "<button type='button' class='btn btn-default' onclick='xoopsCodeWmp(\"{$textarea_id}\",\""
+        $code = "<button type='button' class='btn btn-default btn-sm' onclick='xoopsCodeWmp(\"{$textarea_id}\",\""
             . htmlspecialchars(_XOOPS_FORM_ENTERWMPURL, ENT_QUOTES) . "\",\""
             . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\""
             . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES)

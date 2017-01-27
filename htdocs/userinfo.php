@@ -146,7 +146,7 @@ if ($thisUser->getVar('user_viewemail') == 1) {
     }
 }
 if (is_object($xoopsUser)) {
-    $xoopsTpl->assign('user_pmlink', "<a href=\"javascript:openWithSelfMain('" . XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . $thisUser->getVar('uid') . "', 'pmlite', 450, 380);\"><img src=\"" . XOOPS_URL . "/images/icons/pm.gif\" alt=\"" . sprintf(_SENDPMTO, $thisUser->getVar('uname')) . "\" /></a>");
+    $xoopsTpl->assign('user_pmlink', "<a href=\"javascript:openWithSelfMain('" . XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . $thisUser->getVar('uid') . "', 'pmlite', 565, 500);\"><img src=\"" . XOOPS_URL . "/images/icons/pm.gif\" alt=\"" . sprintf(_SENDPMTO, $thisUser->getVar('uname')) . "\" /></a>");
 } else {
     $xoopsTpl->assign('user_pmlink', '');
 }

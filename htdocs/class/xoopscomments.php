@@ -328,7 +328,7 @@ class XoopsComments extends XoopsObject
             $profile_image = "<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $poster->getVar('uid') . "'><img src='" . XOOPS_URL . "/images/icons/profile.gif' alt='" . _PROFILE . "' /></a>";
             $pm_image      = '';
             if ($xoopsUser) {
-                $pm_image = "<a href='javascript:openWithSelfMain(\"" . XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . $poster->getVar('uid') . "\",\"pmlite\",450,370);'><img src='" . XOOPS_URL . "/images/icons/pm.gif' alt='" . sprintf(_SENDPMTO, $poster->getVar('uname', 'E')) . "' /></a>";
+                $pm_image = "<a href='javascript:openWithSelfMain(\"" . XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . $poster->getVar('uid') . "\",\"pmlite\",565,500);'><img src='" . XOOPS_URL . "/images/icons/pm.gif' alt='" . sprintf(_SENDPMTO, $poster->getVar('uname', 'E')) . "' /></a>";
             }
             $email_image = '';
             if ($poster->getVar('user_viewemail')) {

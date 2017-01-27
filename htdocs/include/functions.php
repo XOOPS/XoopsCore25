@@ -226,9 +226,40 @@ function xoops_isActiveModule($dirname)
  */
 function xoops_header($closehead = true)
 {
-    global $xoopsConfig, $xoopsTheme, $xoopsConfigMetaFooter;
+    global $xoopsConfig;
 
-    $myts = MyTextSanitizer::getInstance();
+    $themeSet = $xoopsConfig['theme_set'];
+    $themePath = XOOPS_THEME_PATH . '/' . $themeSet . '/';
+    $themeUrl = XOOPS_THEME_URL . '/' . $themeSet . '/';
+    include_once XOOPS_ROOT_PATH . '/class/template.php';
+    $headTpl = new \XoopsTpl();
+    $headTpl->assign(array(
+        'closeHead'      => (bool) $closehead,
+        'themeUrl'       => $themeUrl,
+        'xoops_langcode' => _LANGCODE,
+        'xoops_charset'  => _CHARSET,
+        'xoops_sitename' => $xoopsConfig['sitename'],
+        'xoops_url'      => XOOPS_URL,
+    ));
+
+    if (file_exists($themePath . 'theme_autorun.php')) {
+        include_once($themePath . 'theme_autorun.php');
+    }
+
+    $headItems = array();
+    $headItems[] = '<script type="text/javascript" src="' . XOOPS_URL . '/include/xoops.js"></script>';
+    $headItems[] = '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/xoops.css">';
+    $headItems[] = '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/media/font-awesome/css/font-awesome.min.css">';
+    $languageFile = 'language/' . $GLOBALS['xoopsConfig']['language'] . '/style.css';
+    if (file_exists($GLOBALS['xoops']->path($languageFile))) {
+        $headItems[] = '<link rel="stylesheet" type="text/css" media="all" href="' . $GLOBALS['xoops']->url($languageFile) . '">';
+    }
+    $themecss = xoops_getcss($xoopsConfig['theme_set']);
+    if ($themecss!=='') {
+        $headItems[] = '<link rel="stylesheet" type="text/css" media="all" href="' . $themecss . '">';
+    }
+    $headTpl->assign('headItems', $headItems);
+
     if (!headers_sent()) {
         header('Content-Type:text/html; charset=' . _CHARSET);
         header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
@@ -237,33 +268,8 @@ function xoops_header($closehead = true)
         header('Pragma: no-cache');
     }
 
-    echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>\n";
-    echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . _LANGCODE . '" lang="' . _LANGCODE . '">
-          <head>
-          <meta http-equiv="content-type" content="text/html; charset=' . _CHARSET . '" />
-          <meta http-equiv="content-language" content="' . _LANGCODE . '" />
-          <meta name="robots" content="' . htmlspecialchars($xoopsConfigMetaFooter['meta_robots']) . '" />
-          <meta name="keywords" content="' . htmlspecialchars($xoopsConfigMetaFooter['meta_keywords']) . '" />
-          <meta name="description" content="' . htmlspecialchars($xoopsConfigMetaFooter['meta_desc']) . '" />
-          <meta name="rating" content="' . htmlspecialchars($xoopsConfigMetaFooter['meta_rating']) . '" />
-          <meta name="author" content="' . htmlspecialchars($xoopsConfigMetaFooter['meta_author']) . '" />
-          <meta name="copyright" content="' . htmlspecialchars($xoopsConfigMetaFooter['meta_copyright']) . '" />
-          <meta name="generator" content="XOOPS" />
-          <title>' . htmlspecialchars($xoopsConfig['sitename']) . '</title>
-          <script type="text/javascript" src="' . XOOPS_URL . '/include/xoops.js"></script>';
-    $themecss = xoops_getcss($xoopsConfig['theme_set']);
-    echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/xoops.css" />';
-    echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/media/font-awesome/css/font-awesome.min.css" />';
-    $language = $GLOBALS['xoopsConfig']['language'];
-    if (file_exists($GLOBALS['xoops']->path('language/' . $language . '/style.css'))) {
-        echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/language/' . $language . '/style.css" />';
-    }
-    if ($themecss) {
-        echo '<link rel="stylesheet" type="text/css" media="all" href="' . $themecss . '" />';
-    }
-    if ($closehead) {
-        echo '</head><body>';
-    }
+    $output = $headTpl->fetch('db:system_popup_header.tpl');
+    echo $output;
 }
 
 /**
@@ -273,7 +279,21 @@ function xoops_header($closehead = true)
  */
 function xoops_footer()
 {
-    echo '</body></html>';
+    global $xoopsConfig;
+
+    $themeSet = $xoopsConfig['theme_set'];
+    $themePath = XOOPS_THEME_URL . '/' . $themeSet . '/';
+    include_once XOOPS_ROOT_PATH . '/class/template.php';
+    $footTpl = new \XoopsTpl();
+    $footTpl->assign(array(
+        'themePath'      => $themePath,
+        'xoops_langcode' => _LANGCODE,
+        'xoops_charset'  => _CHARSET,
+        'xoops_sitename' => $xoopsConfig['sitename'],
+        'xoops_url'      => XOOPS_URL,
+    ));
+    $output = $footTpl->fetch('db:system_popup_footer.tpl');
+    echo $output;
     ob_end_flush();
 }
 

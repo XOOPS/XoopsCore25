@@ -27,7 +27,7 @@ class MytsYoutube extends MyTextSanitizerExtension
     public function encode($textarea_id)
     {
         $config = parent::loadConfig(__DIR__);
-        $code = "<button type='button' class='btn btn-default' onclick='xoopsCodeYoutube(\"{$textarea_id}\",\""
+        $code = "<button type='button' class='btn btn-default btn-sm' onclick='xoopsCodeYoutube(\"{$textarea_id}\",\""
             . htmlspecialchars(_XOOPS_FORM_ENTERYOUTUBEURL, ENT_QUOTES) . "\",\""
             . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\""
             . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES)

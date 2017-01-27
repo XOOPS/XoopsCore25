@@ -63,10 +63,10 @@
                         <input type='checkbox' id='msg_id_<{$message.msg_id}>' name='msg_id[]' value='<{$message.msg_id}>'/>
                     </td>
                     <{if $message.read_msg == 1}>
-                        <td valign='top' width='5%' align='center'><img src='images/email_read.png' alt='<{$smarty.const._PM_READ}>'
+                        <td valign='top' width='5%' align='center'><img src='assets/images/email_read.png' alt='<{$smarty.const._PM_READ}>'
                                                                         title='<{$smarty.const._PM_READ}>'/></td>
                     <{else}>
-                        <td valign='top' width='5%' align='center'><img src='images/email_notread.png' alt='<{$smarty.const._PM_NOTREAD}>'
+                        <td valign='top' width='5%' align='center'><img src='assets/images/email_notread.png' alt='<{$smarty.const._PM_NOTREAD}>'
                                                                         title='<{$smarty.const._PM_NOTREAD}>'/></td>
                     <{/if}>
                     <td valign='top' width='5%' align='center'>

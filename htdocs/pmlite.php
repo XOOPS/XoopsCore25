@@ -22,9 +22,6 @@ $xoopsPreload->triggerEvent('core.pmlite.start');
 xoops_loadLanguage('pmsg');
 XoopsLoad::load('XoopsRequest');
 
-include $GLOBALS['xoops']->path('class/xoopsformloader.php');
-$icon          = '';
-$icons_radio   = new XoopsFormRadio(_MESSAGEICON, 'icon', $icon);
 $subject_icons = XoopsLists::getSubjectsList();
 
 $op = XoopsRequest::getCmd('op', '', 'POST');
@@ -89,7 +86,11 @@ if (is_object($xoopsUser)) {
             }
         }
     } elseif ($reply == 1 || $send == 1 || $send2 == 1) {
-        include_once $GLOBALS['xoops']->path('include/xoopscodes.php');
+        include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
+
+        $subject = '';
+        $message = '';
+
         if ($reply == 1) {
             $pm_handler = xoops_getHandler('privmessage');
             $pm         = $pm_handler->get($msg_id);
@@ -103,59 +104,50 @@ if (is_object($xoopsUser)) {
                 $reply = $send2 = 0;
             }
         }
-        echo "<form action='pmlite.php' method='post' name='coolsus'>\n";
-        echo "<table style=' text-align:left;' class='outer'><tr><td class='head txtright' style='width:25%;'>" . _PM_TO . '</td>';
+        $pmform = new XoopsThemeForm('', 'coolsus', 'pmlite.php', 'post', true);
         if ($reply == 1) {
-            echo "<td class='even'><input type='hidden' name='to_userid' value='" . $pm->getVar('from_userid') . "' />" . $pm_uname . '</td>';
+            $pmform->addElement(new XoopsFormLabel(_PM_TO, $pm_uname));
+            $pmform->addElement(new XoopsFormHidden('to_userid', $pm->getVar('from_userid')));
         } elseif ($send2 == 1) {
             $to_username = XoopsUser::getUnameFromId($to_userid);
-            echo "<td class='even'><input type='hidden' name='to_userid' value='" . $to_userid . "' />" . $to_username . '</td>';
+            $pmform->addElement(new XoopsFormHidden('to_userid', $to_userid));
+            $pmform->addElement(new XoopsFormLabel(_PM_TO, $to_username));
         } else {
-            //require_once $GLOBALS['xoops']->path('class/xoopsform/formelement.php');
-            //require_once $GLOBALS['xoops']->path('class/xoopsform/formselect.php');
-            //require_once $GLOBALS['xoops']->path('class/xoopsform/formlabel.php');
-            //require_once $GLOBALS['xoops']->path('class/xoopsform/formselectuser.php');
-            $user_sel = new XoopsFormSelectUser('', 'to_userid');
-            echo "<td class='even'>" . $user_sel->render();
-            echo '</td>';
+            $pmform->addElement(new XoopsFormSelectUser(_PM_TO, 'to_userid', $to_userid));
         }
-        echo '</tr>';
-        echo "<tr><td class='head txtright' style='width:25%;'>" . _PM_SUBJECTC . '</td>';
+
         if ($reply == 1) {
             $subject = $pm->getVar('subject', 'E');
             //TODO Fix harcoded string
             if (!preg_match('/^' . _RE . '/i', $subject)) {
                 $subject = _RE . ' ' . $subject;
             }
-            echo "<td class='even'><input type='text' name='subject' value='" . $subject . "' size='30' maxlength='100' /></td>";
-        } else {
-            echo "<td class='even'><input type='text' name='subject' size='30' maxlength='100' /></td>";
         }
-        echo '</tr>';
+        $pmform->addElement(new XoopsFormText(_PM_SUBJECTC, 'subject', 30, 100, $subject), true);
 
-        echo '<tr>';
-        echo "<td class='head txtright' style='width:25%;'>" . _MESSAGEICON . '</td>';
-        foreach ($subject_icons as $iconfile) {
-            $icons_radio->addOption($iconfile, '<img src="' . XOOPS_URL . '/images/subject/' . $iconfile . '" alt="" />');
+        $msg_image   = '';
+        $icons_radio = new XoopsFormRadio(_MESSAGEICON, 'msg_image', $msg_image);
+        $subjectImages = array();
+        foreach ($subject_icons as $name => $value) {
+            $subjectImages[$name] = '<img src="' . XOOPS_URL . '/images/subject/' . $value .'">';
         }
-        echo "<td class='even'>" . $icons_radio->render();
-        echo '</td>';
-        echo '</tr>';
+        $icons_radio->addOptionArray($subjectImages);
+        $pmform->addElement($icons_radio);
 
-        echo "<tr style='vertical-align:top;'><td style='width:25%;' class='head txtright'>" . _PM_MESSAGEC . '</td>';
-        echo "<td class='even'>";
-        xoopsCodeTarea('message', 37, 8);
-        xoopsSmilies('message');
+        $pmform->addElement(new XoopsFormDhtmlTextArea(_PM_MESSAGEC, 'message', $message, 8, 37), true);
 
-        echo '</td>';
-        echo '</tr>';
-        echo "<tr><td class='head'>&nbsp;</td><td class='even'>
-        <input type='hidden' name='op' value='submit' />" . $GLOBALS['xoopsSecurity']->getTokenHTML() . "
-        <input type='submit' class='formButton' name='submit' value='" . _PM_SUBMIT . "' />&nbsp;
-        <input type='reset' class='formButton' value='" . _PM_CLEAR . "' />
-        &nbsp;<input type='button' class='formButton' name='cancel' value='" . _PM_CANCELSEND . "' onclick='window.close();' />
-        </td></tr></table>\n";
-        echo "</form>\n";
+        $pmform->addElement(new XoopsFormHidden('op', 'submit'));
+        $elementTray = new XoopsFormElementTray('', '', 'tray');
+        $elementTray->addElement(new XoopsFormButton('', 'submit', _PM_SUBMIT, 'submit'));
+        $elementTray->addElement(new XoopsFormButton('', 'reset', _PM_CLEAR, 'reset'));
+
+        $cancel_send = new XoopsFormButton('', 'cancel', _PM_CANCELSEND, 'button');
+        $cancel_send->setExtra("onclick='javascript:window.close();'");
+        $elementTray->addElement($cancel_send);
+        $pmform->addElement($elementTray);
+
+        $pmform->display();
+
     }
 } else {
     echo _PM_SORRY . "<br><br><a href='" . XOOPS_URL . "/register.php' title=''>" . _PM_REGISTERNOW . '</a>.';

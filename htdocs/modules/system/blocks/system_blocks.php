@@ -332,7 +332,7 @@ function b_system_info_show($options)
                     $block['groups'][$i]['users'][] = array(
                         'id'      => $userinfo['uid'],
                         'name'    => $myts->htmlspecialchars($userinfo['uname']),
-                        'msglink' => "<a href=\"javascript:openWithSelfMain('" . XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . $userinfo['uid'] . "','pmlite',450,370);\"><img src=\"" . XOOPS_URL . "/images/icons/pm_small.gif\" border=\"0\" width=\"27\" height=\"17\" alt=\"\" /></a>",
+                        'msglink' => "<a href=\"javascript:openWithSelfMain('" . XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . $userinfo['uid'] . "','pmlite',565,500);\"><img src=\"" . XOOPS_URL . "/images/icons/pm_small.gif\" border=\"0\" width=\"27\" height=\"17\" alt=\"\" /></a>",
                         'avatar'  => XOOPS_UPLOAD_URL . '/' . $userinfo['user_avatar']);
                 } else {
                     if ($userinfo['user_viewemail']) {

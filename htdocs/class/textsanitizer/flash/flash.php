@@ -34,7 +34,7 @@ class MytsFlash extends MyTextSanitizerExtension
         if ($config['enable_flash_entry'] === false) {
             return array();
         }
-        $code = "<button type='button' class='btn btn-default' onclick='xoopsCodeFlash(\"{$textarea_id}\",\""
+        $code = "<button type='button' class='btn btn-default btn-sm' onclick='xoopsCodeFlash(\"{$textarea_id}\",\""
             . htmlspecialchars(_XOOPS_FORM_ENTERFLASHURL, ENT_QUOTES) . "\",\""
             . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\""
             . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES) . "\", \""
