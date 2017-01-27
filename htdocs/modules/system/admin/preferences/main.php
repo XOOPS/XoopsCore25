@@ -408,9 +408,9 @@ switch ($op) {
             $xoopsTpl->assign('breadcrumb', 1);
         } else {
             if ($module->getInfo('adminindex')) {
-                echo '<a href="' . XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . $module->getInfo('adminindex') . '">' . $module->getVar('name') . '</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _PREFERENCES . '<br><br>';
+                echo '<a href="' . XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . $module->getInfo('adminindex') . '">' . $module->getVar('name') . '</a>&nbsp;<span style="font-weight:bold;">&raquo;</span>&nbsp;' . _PREFERENCES . '<br><br>';
             } else {
-                echo $module->getVar('name') . '&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _PREFERENCES . '<br><br>';
+                echo $module->getVar('name') . '&nbsp;<span style="font-weight:bold;">&raquo;</span>&nbsp;' . _PREFERENCES . '<br><br>';
             }
         }
         $form->display();

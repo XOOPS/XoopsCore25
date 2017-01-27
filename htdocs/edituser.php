@@ -119,7 +119,7 @@ if ($op === 'editprofile') {
     include_once $GLOBALS['xoops']->path('header.php');
     include_once $GLOBALS['xoops']->path('include/comment_constants.php');
     include_once $GLOBALS['xoops']->path('include/xoopscodes.php');
-    echo '<a href="userinfo.php?uid=' . $xoopsUser->getVar('uid') . '" title="">' . _US_PROFILE . '</a>&nbsp;<span class="bold">&raquo;&raquo;</span>&nbsp;' . _US_EDITPROFILE . '<br><br>';
+    echo '<a href="userinfo.php?uid=' . $xoopsUser->getVar('uid') . '" title="">' . _US_PROFILE . '</a>&nbsp;<span class="bold">&raquo;</span>&nbsp;' . _US_EDITPROFILE . '<br><br>';
     $form        = new XoopsThemeForm(_US_EDITPROFILE, 'userinfo', 'edituser.php', 'post', true);
     $uname_label = new XoopsFormLabel(_US_NICKNAME, $xoopsUser->getVar('uname'));
     $form->addElement($uname_label);
@@ -221,7 +221,7 @@ if ($op === 'editprofile') {
 
 if ($op === 'avatarform') {
     include $GLOBALS['xoops']->path('header.php');
-    echo '<a href="userinfo.php?uid=' . $xoopsUser->getVar('uid') . '">' . _US_PROFILE . '</a>&nbsp;<span class="bold">&raquo;&raquo;</span>&nbsp;' . _US_UPLOADMYAVATAR . '<br><br>';
+    echo '<a href="userinfo.php?uid=' . $xoopsUser->getVar('uid') . '">' . _US_PROFILE . '</a>&nbsp;<span class="bold">&raquo;</span>&nbsp;' . _US_UPLOADMYAVATAR . '<br><br>';
     $oldavatar = $xoopsUser->getVar('user_avatar');
     if (!empty($oldavatar) && $oldavatar !== 'blank.gif') {
         echo '<div class="pad10 txtcenter floatcenter0"><h4 class="red bold">' . _US_OLDDELETED . '</h4>';

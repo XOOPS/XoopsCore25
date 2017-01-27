@@ -520,7 +520,7 @@ textarea:focus {
 }
 
 #usermenu a.highlight {
-    background-color: #fff;
+    /* background-color: #fff; */
     color: #ff9900;
 }
 

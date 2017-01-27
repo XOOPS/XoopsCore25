@@ -13,7 +13,7 @@
 <{/if}>
 
 <{if $message}>
-    <span class='bold'>&raquo;&raquo;</span>
+    <span class='bold'>&raquo;</span>
     &nbsp;<{$message.subject}>
     <br>
     <form name="<{$pmform.name}>" id="<{$pmform.name}>" action="<{$pmform.action}>" method="<{$pmform.method}>" <{$pmform.extra}> >

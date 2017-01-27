@@ -58,7 +58,7 @@ if (!is_object($xoopsUser)) {
     $criteria = new Criteria('to_userid', $xoopsUser->getVar('uid'));
     $criteria->setOrder('DESC');
     $pm_arr = $pm_handler->getObjects($criteria);
-    echo "<h4 class='txtcenter'>" . _PM_PRIVATEMESSAGE . "</h4><br><a href='userinfo.php?uid=" . $xoopsUser->getVar('uid') . "'>" . _PM_PROFILE . "</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;" . _PM_INBOX . '<br><br>';
+    echo "<h4 class='txtcenter'>" . _PM_PRIVATEMESSAGE . "</h4><br><a href='userinfo.php?uid=" . $xoopsUser->getVar('uid') . "'>" . _PM_PROFILE . "</a>&nbsp;<span style='font-weight:bold;'>&raquo;</span>&nbsp;" . _PM_INBOX . '<br><br>';
     echo "<form name='prvmsg' method='post' action='viewpmsg.php'>";
     echo "<table cellspacing='1' cellpadding='4' class='outer width100 bnone'>\n";
     echo "<tr align='center' valign='middle'><th><input name='allbox' id='allbox' onclick='xoopsCheckAll(\"prvmsg\", \"allbox\");' type='checkbox' value='Check All' /></th><th><img class'bnone' src='images/download.gif' alt=''/></th><th>&nbsp;</th><th>" . _PM_FROM . '</th><th>' . _PM_SUBJECT . "</th><th class='txtcenter'>" . _PM_DATE . "</th></tr>\n";

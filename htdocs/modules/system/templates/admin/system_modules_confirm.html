@@ -15,7 +15,7 @@
                     <td>
                         <{$row.oldname}>
                         <{if $row.oldname != $row.newname}>
-                            <span class="bold red">&nbsp;&raquo;&raquo;&nbsp;<{$row.newname}></span>
+                            <span class="bold red">&nbsp;&raquo;&nbsp;<{$row.newname}></span>
                         <{/if}>
                     </td>
                     <td>
