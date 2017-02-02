@@ -20,7 +20,6 @@
  * @package          upgrader
  * @since            2.3.0
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
- * @version          $Id: index.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 class Upgrade_231 extends XoopsUpgrade
 {

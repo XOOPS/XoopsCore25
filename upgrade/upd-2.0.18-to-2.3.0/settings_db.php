@@ -21,7 +21,6 @@
  * @since            2.3.0
  * @author           Skalpa Keo <skalpa@xoops.org>
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
- * @version          $Id: settings_db.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 if (!defined('XOOPS_ROOT_PATH')) {

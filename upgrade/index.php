@@ -15,7 +15,6 @@
  * @since               2.3.0
  * @author              Skalpa Keo <skalpa@xoops.org>
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @version             $Id: index.php 13082 2015-06-06 21:59:41Z beckmi $
  */
 
 //Before xoops 2.5.8 the table 'sess_ip' was of type varchar (15). This is a problem for IPv6 addresses because it is longer. The upgrade process would change the column to VARCHAR(45) but it requires login, which is failing. If the user has an IPv6 address, it is converted to short IP during the upgrade. At the end of the upgrade IPV6 works

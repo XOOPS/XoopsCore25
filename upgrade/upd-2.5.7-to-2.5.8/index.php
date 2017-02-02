@@ -15,7 +15,6 @@ use Xmf\Key\FileStorage;
  * @package          upgrader
  * @since            2.5.8
  * @author           XOOPS Team
- * @version          $Id$
  */
 class Upgrade_258 extends XoopsUpgrade
 {

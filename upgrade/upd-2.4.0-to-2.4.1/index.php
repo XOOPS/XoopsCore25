@@ -21,7 +21,6 @@
  * @since            2.4.0
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
  * @author           trabis <lusopoemas@gmail.com>
- * @version          $Id: index.php 9043 2012-02-22 02:51:38Z beckmi $
  */
 class Upgrade_241 extends XoopsUpgrade
 {
