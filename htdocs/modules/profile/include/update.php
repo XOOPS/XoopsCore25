@@ -136,6 +136,15 @@ function xoops_module_update_profile(XoopsModule $module, $oldversion = null)
         $GLOBALS['xoopsDB']->queryF($sql);
     }
 
+    if ($oldversion < 188) {
+        // update user_sig field to use dhtml editor
+        $tables = new Xmf\Database\Tables();
+        $tables->useTable('profile_field');
+        $criteria = new Criteria('field_name', 'user_sig', '=');
+        $tables->update('profile_field', array('field_type' => 'dhtml'), $criteria);
+        $tables->executeQueue(true);
+    }
+
     $profile_handler = xoops_getModuleHandler('profile', $module->getVar('dirname', 'n'));
     $profile_handler->cleanOrphan($GLOBALS['xoopsDB']->prefix('users'), 'uid', 'profile_id');
     $field_handler = xoops_getModuleHandler('field', $module->getVar('dirname', 'n'));
