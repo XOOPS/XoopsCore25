@@ -48,3 +48,10 @@ checks:
         instanceof_class_exists: true
         foreach_traversable: true
         no_unnecessary_function_call_in_for_loop: true
+tools:
+    php_cs_fixer:
+        enabled: true
+        config:
+            level: all
+        filter:
+            paths: ["class/*", "Frameworks/*", "include/*", "install/*", "kernel/*", "language/*", "modules/*", "themes/*", "xoops_data/*", "xoops_lib/*"]

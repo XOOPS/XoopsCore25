@@ -123,10 +123,11 @@ class xos_opal_AdminThemeFactory extends xos_opal_ThemeFactory
                                     'theme_path'  => $inst->path,
                                     'theme_tpl'   => $inst->path . '/xotpl',
                                     'theme_url'   => $inst->url,
-                                    'theme_img'   => $inst->url . '/img',
-                                    'theme_icons' => $inst->url . '/icons',
-                                    'theme_css'   => $inst->url . '/css',
-                                    'theme_js'    => $inst->url . '/js',
+                                    'theme_img'   => $inst->url . '/assets/img',
+                                    'theme_icons' => $inst->url . '/assets/icons',
+									'theme_icons' => $inst->url . '/assets/fonts',
+                                    'theme_css'   => $inst->url . '/assets/css',
+                                    'theme_js'    => $inst->url . '/assets/js',
                                     'theme_lang'  => $inst->url . '/language'));
 
         return $inst;
