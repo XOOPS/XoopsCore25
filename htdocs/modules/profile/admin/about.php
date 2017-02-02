@@ -11,7 +11,7 @@
  *
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license             GNU GPL (http://www.gnu.org/licenses/gpl-2.0.html/)
- * @package             xoopsPoll
+ * @package             Profile
  * @since               2.5.0
  * @author              Mage, Mamba
  **/

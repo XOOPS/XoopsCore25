@@ -326,7 +326,7 @@ switch ($op) {
                 $member_handler->removeUsersFromGroup($_REQUEST['selgroups'], $_REQUEST['memberslist_id']);
                 $error = false;
             }
-            //if ($error == true)
+            //if ($error === true)
             redirect_header('admin.php?fct=users', 1, _AM_SYSTEM_GROUPS_DBUPDATED);
         }
         break;
