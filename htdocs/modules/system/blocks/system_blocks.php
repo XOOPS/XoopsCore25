@@ -17,6 +17,8 @@
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
 
+include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
+
 /**
  * @return array|bool
  */
@@ -641,22 +643,34 @@ function b_system_info_edit($options)
 function b_system_themes_show($options)
 {
     global $xoopsConfig;
-    $theme_options = '';
-    foreach ($xoopsConfig['theme_set_allowed'] as $theme) {
-        $theme_options .= '<option value="' . $theme . '"';
-        if ($theme == $xoopsConfig['theme_set']) {
-            $theme_options .= ' selected';
-        }
-        $theme_options .= '>' . $theme . '</option>';
-    }
     $block = array();
-    if ($options[0] == 1) {
-        $block['theme_select'] = "<img vspace=\"2\" id=\"xoops_theme_img\" src=\"" . XOOPS_THEME_URL . '/' . $xoopsConfig['theme_set'] . "/shot.gif\" alt=\"screenshot\" width=\"" . (int)$options[1] . "\" /><br><select id=\"xoops_theme_select\" name=\"xoops_theme_select\" onchange=\"showImgSelected('xoops_theme_img', 'xoops_theme_select', 'themes', '/shot.gif', '" . XOOPS_URL . "');\">" . $theme_options . "</select><input type=\"submit\" value=\"" . _GO . "\" />";
-    } else {
-        $block['theme_select'] = '<select name="xoops_theme_select" onchange="submit();" size="' . $options[2] . '">' . $theme_options . '</select>';
+
+    $selectSize = ($options[0] == 1) ? 1 : (int) $options[2];
+    $select = new XoopsFormSelect('', 'xoops_theme_select', $xoopsConfig['theme_set'], $selectSize);
+    foreach ($xoopsConfig['theme_set_allowed'] as $theme) {
+        $select->addOption($theme, $theme);
     }
 
-    $block['theme_select'] .= '<br>(' . sprintf(_MB_SYSTEM_NUMTHEME, '<strong>' . count($xoopsConfig['theme_set_allowed']) . '</strong>') . ')<br>';
+    if ($options[0] == 1) {
+        $themeSelect = '<img vspace="2" id="xoops_theme_img" src="'
+            . XOOPS_THEME_URL . '/' . $xoopsConfig['theme_set'] . '/shot.gif" '
+            . ' alt="screenshot" width="' . (int)$options[1] . '" />'
+            . '<br>';
+        $select->setExtra(' onchange="showImgSelected(\'xoops_theme_img\', \'xoops_theme_select\', \'themes\', \'/shot.gif\', '
+            .  '\'' . XOOPS_URL . '\');" ');
+        $selectTray = new XoopsFormElementTray('');
+        $selectTray->addElement($select);
+        $selectTray->addElement(new XoopsFormButton('', 'submit', _GO, 'submit'));
+        $themeSelect .= '<div class="form-inline">';
+        $themeSelect .= $selectTray->render();
+        $themeSelect .= '</div>';
+    } else {
+        $select->setExtra(' onchange="submit();" ');
+        $themeSelect = $select->render();
+    }
+
+    $block['theme_select'] = $themeSelect . '<br>(' . sprintf(_MB_SYSTEM_NUMTHEME, '<strong>'
+            . count($xoopsConfig['theme_set_allowed']) . '</strong>') . ')<br>';
 
     return $block;
 }
