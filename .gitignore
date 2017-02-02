@@ -2,6 +2,7 @@
 *~
 \#*
 *.bak
+.idea/
 
 htdocs/mainfile.php
 htdocs/xoops_data/caches/smarty_cache/*

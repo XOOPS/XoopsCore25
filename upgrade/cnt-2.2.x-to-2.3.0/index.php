@@ -18,11 +18,10 @@
  */
 class Upgrade_220 extends XoopsUpgrade
 {
-    public $tasks = array('config', 'profile', 'block'/*, 'pm', 'module'*/);
-
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
+        $this->tasks = array('config', 'profile', 'block'/*, 'pm', 'module'*/);
     }
 
     /**

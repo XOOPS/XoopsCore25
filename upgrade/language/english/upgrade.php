@@ -1,5 +1,4 @@
 <?php
-// $Id: upgrade.php 10054 2012-08-11 10:06:44Z beckmi $
 // _LANGCODE: en
 // _CHARSET : UTF-8
 // Translator: XOOPS Translation Team

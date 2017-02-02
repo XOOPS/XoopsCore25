@@ -23,8 +23,6 @@ require_once 'dbmanager.php';
  */
 class Upgrade_250 extends XoopsUpgrade
 {
-    public $tasks = array('config', 'templates');
-
     /**
      * Check if cpanel config already exists
      *
@@ -163,6 +161,7 @@ class Upgrade_250 extends XoopsUpgrade
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
+        $this->tasks = array('config', 'templates');
     }
 }
 
