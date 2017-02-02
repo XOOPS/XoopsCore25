@@ -23,6 +23,7 @@
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @package             system
  */
+
 class SystemBanner extends XoopsObject
 {
     /**
