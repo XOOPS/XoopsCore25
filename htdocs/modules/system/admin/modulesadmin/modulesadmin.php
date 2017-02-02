@@ -81,11 +81,11 @@ function xoops_module_install($dirname)
 
         $msgs[] = '<div id="xo-module-log"><div class="header">';
         $msgs[] = $errs[] = '<h4>' . _AM_SYSTEM_MODULES_INSTALLING . $module->getInfo('name', 's') . '</h4>';
-        if ($module->getInfo('image') != false && trim($module->getInfo('image')) != '') {
+        if ($module->getInfo('image') !== false && trim($module->getInfo('image')) != '') {
             $msgs[] = '<a href="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname', 'e') . '/' . $module->getInfo('adminindex') . '"><img src="' . XOOPS_URL . '/modules/' . $dirname . '/' . trim($module->getInfo('image')) . '" alt="" /></a>';
         }
         $msgs[] = '<strong>' . _VERSION . ':</strong> ' . $module->getInfo('version') . '&nbsp;' . $module->getInfo('module_status');
-        if ($module->getInfo('author') != false && trim($module->getInfo('author')) != '') {
+        if ($module->getInfo('author') !== false && trim($module->getInfo('author')) != '') {
             $msgs[] = '<strong>' . _AUTHOR . ':</strong> ' . htmlspecialchars(trim($module->getInfo('author')));
         }
         $msgs[] = '</div><div class="logger">';
@@ -108,7 +108,7 @@ function xoops_module_install($dirname)
             }
         }
 
-        if ($error == false) {
+        if ($error === false) {
             $sqlfile = $module->getInfo('sqlfile');
             if (is_array($sqlfile) && !empty($sqlfile[XOOPS_DB_TYPE])) {
                 $sql_file_path = XOOPS_ROOT_PATH . '/modules/' . $dirname . '/' . $sqlfile[XOOPS_DB_TYPE];
@@ -154,7 +154,7 @@ function xoops_module_install($dirname)
                         }
                     }
                     // if there was an error, delete the tables created so far, so the next installation will not fail
-                    if ($error == true) {
+                    if ($error === true) {
                         foreach ($created_tables as $ct) {
                             $db->query('DROP TABLE ' . $db->prefix($ct));
                         }
@@ -163,7 +163,7 @@ function xoops_module_install($dirname)
             }
         }
         // if no error, save the module info and blocks info associated with it
-        if ($error == false) {
+        if ($error === false) {
             if (!$module_handler->insert($module)) {
                 $errs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_INSERT_DATA_FAILD, '<strong>' . $module->getVar('name') . '</strong>');
                 foreach ($created_tables as $ct) {
@@ -183,7 +183,7 @@ function xoops_module_install($dirname)
                 $msgs[]          = '<p>' . _AM_SYSTEM_MODULES_INSERT_DATA_DONE . sprintf(_AM_SYSTEM_MODULES_MODULEID, '<strong>' . $newmid . '</strong>');
                 $tplfile_handler = xoops_getHandler('tplfile');
                 $templates       = $module->getInfo('templates');
-                if ($templates != false) {
+                if ($templates !== false) {
                     $msgs[] = _AM_SYSTEM_MODULES_TEMPLATES_ADD;
                     foreach ($templates as $tpl) {
                         $tplfile = $tplfile_handler->create();
@@ -218,7 +218,7 @@ function xoops_module_install($dirname)
                 include_once XOOPS_ROOT_PATH . '/class/template.php';
                 xoops_template_clear_module_cache($newmid);
                 $blocks = $module->getInfo('blocks');
-                if ($blocks != false) {
+                if ($blocks !== false) {
                     $msgs[] = _AM_SYSTEM_MODULES_BLOCKS_ADD;
                     foreach ($blocks as $blockkey => $block) {
                         // break the loop if missing block config
@@ -283,7 +283,7 @@ function xoops_module_install($dirname)
                     unset($blocks);
                 }
                 $configs = $module->getInfo('config');
-                if ($configs != false) {
+                if ($configs !== false) {
                     if ($module->getVar('hascomments') != 0) {
                         include_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
                         $configs[] = array(
@@ -380,7 +380,7 @@ function xoops_module_install($dirname)
                         'options'     => $options);
                 }
 
-                if ($configs != false) {
+                if ($configs !== false) {
                     $msgs[]         = _AM_SYSTEM_MODULES_MODULE_DATA_ADD;
                     $config_handler = xoops_getHandler('config');
                     $order          = 0;
@@ -487,7 +487,7 @@ function xoops_module_install($dirname)
             $msgs[] = '<div class="noininstall center"><a href="admin.php?fct=modulesadmin">' . _AM_SYSTEM_MODULES_BTOMADMIN . '</a> |
                         <a href="admin.php?fct=modulesadmin&op=installlist">' . _AM_SYSTEM_MODULES_TOINSTALL . '</a> | ';
             $msgs[] = '<br><span class="red bold">' . _AM_SYSTEM_MODULES_MODULE . ' ' . $module->getInfo('name') . ': </span></div>';
-            if ($blocks != false) {
+            if ($blocks !== false) {
                 $msgs[] = '<div class="center"><a href="admin.php?fct=blocksadmin&op=list&filter=1&selgen=' . $newmid . '&selmod=-2&selgrp=-1&selvis=-1&filsave=1">' . _AM_SYSTEM_BLOCKS . '</a></div>';
             }
             $msgs[] = '<div class="noininstall center"><a href="admin.php?fct=preferences&op=showmod&mod=' . $newmid . '">' . _AM_SYSTEM_PREF . '</a>';
@@ -607,11 +607,11 @@ function xoops_module_uninstall($dirname)
         $msgs   = array();
         $msgs[] = '<div id="xo-module-log"><div class="header">';
         $msgs[] = $errs[] = '<h4>' . _AM_SYSTEM_MODULES_UNINSTALL . $module->getInfo('name', 's') . '</h4>';
-        if ($module->getInfo('image') != false && trim($module->getInfo('image')) != '') {
+        if ($module->getInfo('image') !== false && trim($module->getInfo('image')) != '') {
             $msgs[] = '<img src="' . XOOPS_URL . '/modules/' . $dirname . '/' . trim($module->getInfo('image')) . '" alt="" />';
         }
         $msgs[] = '<strong>' . _VERSION . ':</strong> ' . $module->getInfo('version') . '&nbsp;' . $module->getInfo('module_status');
-        if ($module->getInfo('author') != false && trim($module->getInfo('author')) != '') {
+        if ($module->getInfo('author') !== false && trim($module->getInfo('author')) != '') {
             $msgs[] = '<strong>' . _AUTHOR . ':</strong> ' . htmlspecialchars(trim($module->getInfo('author')));
         }
         $msgs[] = '</div><div class="logger">';
@@ -686,7 +686,7 @@ function xoops_module_uninstall($dirname)
 
             // delete tables used by this module
             $modtables = $module->getInfo('tables');
-            if ($modtables != false && is_array($modtables)) {
+            if ($modtables !== false && is_array($modtables)) {
                 $msgs[] = _AM_SYSTEM_MODULES_DELETE_MOD_TABLES;
                 foreach ($modtables as $table) {
                     // prevent deletion of reserved core tables!
@@ -817,11 +817,11 @@ function xoops_module_update($dirname)
         $msgs   = array();
         $msgs[] = '<div id="xo-module-log"><div class="header">';
         $msgs[] = $errs[] = '<h4>' . _AM_SYSTEM_MODULES_UPDATING . $module->getInfo('name', 's') . '</h4>';
-        if ($module->getInfo('image') != false && trim($module->getInfo('image')) != '') {
+        if ($module->getInfo('image') !== false && trim($module->getInfo('image')) != '') {
             $msgs[] = '<img src="' . XOOPS_URL . '/modules/' . $dirname . '/' . trim($module->getInfo('image')) . '" alt="" />';
         }
         $msgs[] = '<strong>' . _VERSION . ':</strong> ' . $module->getInfo('version') . '&nbsp;' . $module->getInfo('module_status');
-        if ($module->getInfo('author') != false && trim($module->getInfo('author')) != '') {
+        if ($module->getInfo('author') !== false && trim($module->getInfo('author')) != '') {
             $msgs[] = '<strong>' . _AUTHOR . ':</strong> ' . $myts->htmlspecialchars(trim($module->getInfo('author')));
         }
         $msgs[]          = '</div><div class="logger">';
@@ -859,7 +859,7 @@ function xoops_module_update($dirname)
         */
         // irmtfan bug fix: remove codes for delete templates
         $templates = $module->getInfo('templates');
-        if ($templates != false) {
+        if ($templates !== false) {
             $msgs[] = _AM_SYSTEM_MODULES_TEMPLATES_UPDATE;
             foreach ($templates as $tpl) {
                 $tpl['file'] = trim($tpl['file']);
@@ -914,7 +914,7 @@ function xoops_module_update($dirname)
         }
         $blocks = $module->getInfo('blocks');
         $msgs[] = _AM_SYSTEM_MODULES_BLOCKS_REBUILD;
-        if ($blocks != false) {
+        if ($blocks !== false) {
             $showfuncs = array();
             $funcfiles = array();
             foreach ($blocks as $i => $block) {
@@ -1102,7 +1102,7 @@ function xoops_module_update($dirname)
 
         // now reinsert them with the new settings
         $configs = $module->getInfo('config');
-        if ($configs != false) {
+        if ($configs !== false) {
             if ($module->getVar('hascomments') != 0) {
                 include_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
                 array_push($configs, array(
@@ -1200,7 +1200,7 @@ function xoops_module_update($dirname)
                 'options'     => $options);
         }
 
-        if ($configs != false) {
+        if ($configs !== false) {
             $msgs[]         = 'Adding module config data...';
             $config_handler = xoops_getHandler('config');
             $order          = 0;
@@ -1397,11 +1397,11 @@ function xoops_module_log_header($module, $title)
 {
     $msgs[] = '<div class="header">';
     $msgs[] = $errs[] = '<h4>' . $title . $module->getInfo('name', 's') . '</h4>';
-    if ($module->getInfo('image') != false && trim($module->getInfo('image')) != '') {
+    if ($module->getInfo('image') !== false && trim($module->getInfo('image')) != '') {
         $msgs[] = '<img src="' . XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . trim($module->getInfo('image')) . '" alt="" />';
     }
     $msgs[] = '<strong>' . _VERSION . ':</strong> ' . $module->getInfo('version') . '&nbsp;' . $module->getInfo('module_status');
-    if ($module->getInfo('author') != false && trim($module->getInfo('author')) != '') {
+    if ($module->getInfo('author') !== false && trim($module->getInfo('author')) != '') {
         $msgs[] = '<strong>' . _AUTHOR . ':</strong> ' . htmlspecialchars(trim($module->getInfo('author')));
     }
     $msgs[] = '</div>';

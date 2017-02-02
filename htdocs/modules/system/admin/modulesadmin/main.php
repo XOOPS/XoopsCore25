@@ -328,7 +328,7 @@ switch ($op) {
         $mod            = $module_handler->create();
         $mod->loadInfoAsVar($module);
         // Construct message
-        if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
+        if ($mod->getInfo('image') !== false && trim($mod->getInfo('image')) != '') {
             $msgs = '<img src="' . XOOPS_URL . '/modules/' . $mod->getVar('dirname', 'n') . '/' . trim($mod->getInfo('image')) . '" alt="" />';
         }
         $msgs .= '<br><span style="font-size:smaller;">' . $mod->getVar('name', 's') . '</span><br><br>' . _AM_SYSTEM_MODULES_RUSUREINS;
@@ -383,7 +383,7 @@ switch ($op) {
         $module_handler = xoops_getHandler('module');
         $mod            = $module_handler->getByDirname($module);
         // Construct message
-        if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
+        if ($mod->getInfo('image') !== false && trim($mod->getInfo('image')) != '') {
             $msgs = '<img src="' . XOOPS_URL . '/modules/' . $mod->getVar('dirname', 'n') . '/' . trim($mod->getInfo('image')) . '" alt="" />';
         }
         $msgs .= '<br><span style="font-size:smaller;">' . $mod->getVar('name') . '</span><br><br>' . _AM_SYSTEM_MODULES_RUSUREUNINS;
@@ -438,7 +438,7 @@ switch ($op) {
         $module_handler = xoops_getHandler('module');
         $mod            = $module_handler->getByDirname($module);
         // Construct message
-        if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
+        if ($mod->getInfo('image') !== false && trim($mod->getInfo('image')) != '') {
             $msgs = '<img src="' . XOOPS_URL . '/modules/' . $mod->getVar('dirname', 'n') . '/' . trim($mod->getInfo('image')) . '" alt="" />';
         }
         $msgs .= '<br><span style="font-size:smaller;">' . $mod->getVar('name', 's') . '</span><br><br>' . _AM_SYSTEM_MODULES_RUSUREUPD;

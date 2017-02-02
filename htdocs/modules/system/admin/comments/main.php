@@ -177,7 +177,7 @@ switch ($op) {
             }
             $verif = true;
         }
-        if ($verif == true) {
+        if ($verif === true) {
             if ($comment_handler->deleteAll($criteria)) {
                 redirect_header('admin.php?fct=comments', 3, _AM_SYSTEM_DBUPDATED);
             }

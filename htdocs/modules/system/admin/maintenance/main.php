@@ -82,7 +82,7 @@ switch ($op) {
         $form_maintenance->addElement(new XoopsFormRadioYN(_AM_SYSTEM_MAINTENANCE_AVATAR, 'avatar', '', _YES, _NO));
 
         $form_maintenance->addElement(new XoopsFormHidden('op', 'maintenance_save'));
-        $form_maintenance->addElement(new XoopsFormButton('', 'maintenance_save', _SEND, 'submit'));
+        $form_maintenance->addElement(new XoopsFormButton('', 'maintenance_save', _SUBMIT, 'submit'));
 
         //Form Dump
         $form_dump = new XoopsThemeForm(_AM_SYSTEM_MAINTENANCE_DUMP, 'dump_save', 'admin.php?fct=maintenance', 'post', true);
@@ -105,7 +105,7 @@ switch ($op) {
         $form_dump->addElement(new XoopsFormRadioYN(_AM_SYSTEM_MAINTENANCE_DUMP_DROP, 'drop', 1, _YES, _NO));
 
         $form_dump->addElement(new XoopsFormHidden('op', 'dump_save'));
-        $form_dump->addElement(new XoopsFormButton('', 'dump_save', _SEND, 'submit'));
+        $form_dump->addElement(new XoopsFormButton('', 'dump_save', _SUBMIT, 'submit'));
 
         // Assign form
         $xoopsTpl->assign('form_maintenance', $form_maintenance->render());

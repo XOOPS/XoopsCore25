@@ -273,7 +273,7 @@ class SystemMaintenance
             $module         = $module_handler->getByDirname($modules[$i]);
             $ret[1] .= '<tr><th colspan="3" align="left">' . ucfirst($modules[$i]) . '</th></tr>';
             $modtables = $module->getInfo('tables');
-            if ($modtables != false && is_array($modtables)) {
+            if ($modtables !== false && is_array($modtables)) {
                 foreach ($modtables as $table) {
                     //structure
                     $ret = $this->dump_table_structure($ret, $this->prefix . $table, $drop, $class);
@@ -315,7 +315,7 @@ class SystemMaintenance
             }
         }
         $ret[1] .= '<tr class="' . $class . '"><td align="center">' . $table . '</td><td class="xo-actions txtcenter">';
-        $ret[1] .= ($verif == true) ? '<img src="' . system_AdminIcons('success.png') . '" />' : '<img src="' . system_AdminIcons('cancel.png') . '" />';
+        $ret[1] .= ($verif === true) ? '<img src="' . system_AdminIcons('success.png') . '" />' : '<img src="' . system_AdminIcons('cancel.png') . '" />';
         $ret[1] .= '</td>';
         $this->db->freeRecordSet($result);
 
