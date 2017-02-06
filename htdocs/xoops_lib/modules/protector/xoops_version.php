@@ -22,9 +22,9 @@ $constpref = '_MI_' . strtoupper($mydirname);
 
 $modversion['name']           = constant($constpref . '_NAME');
 $modversion['description']    = constant($constpref . '_DESC');
-$modversion['version']        = file_get_contents(__DIR__ . '/include/version.txt');
+$modversion['version']        = (float) file_get_contents(__DIR__ . '/include/version.txt');
 $modversion['credits']        = 'PEAK Corp.';
-$modversion['author']         = 'GIJ=CHECKMATE<br>PEAK Corp.(http://www.peak.ne.jp/)';
+$modversion['author']         = 'GIJ=CHECKMATE PEAK Corp.(http://www.peak.ne.jp/)';
 $modversion['help']           = 'page=help';
 $modversion['license']        = 'GNU GPL 2.0';
 $modversion['license_url']    = 'www.gnu.org/licenses/gpl-2.0.html/';
