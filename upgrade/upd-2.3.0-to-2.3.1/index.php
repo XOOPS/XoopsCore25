@@ -23,11 +23,13 @@
  */
 class Upgrade_231 extends XoopsUpgrade
 {
-    public $tasks = array('field');
-
+    /**
+     * Upgrade_231 constructor.
+     */
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
+        $this->tasks = array('field');
     }
 
     /**

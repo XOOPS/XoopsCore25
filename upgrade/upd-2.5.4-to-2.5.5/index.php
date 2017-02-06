@@ -15,8 +15,6 @@
  */
 class Upgrade_255 extends XoopsUpgrade
 {
-    public $tasks = array('keys', 'imptotal');
-
     /**
      * Check if keys already exist
      *
@@ -111,6 +109,7 @@ class Upgrade_255 extends XoopsUpgrade
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
+        $this->tasks = array('keys', 'imptotal');
     }
 }
 

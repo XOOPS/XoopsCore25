@@ -24,8 +24,6 @@
  */
 class Upgrade_240 extends XoopsUpgrade
 {
-    public $tasks = array('keys', 'version');
-
     /**
      * @return bool
      */
@@ -51,7 +49,7 @@ class Upgrade_240 extends XoopsUpgrade
         set_time_limit(120);
         chmod('../include/license.php', 0777);
         if (!is_writable('../include/license.php')) {
-            echo "<p><span style='text-colour:#ff0000;'>&nbsp;include/license.php - is not writeable</span> - Windows Read Only (Off) / UNIX chmod 0777</p>";
+            echo "<p><span style='color:#ff0000;'>&nbsp;include/license.php - is not writeable</span> - Windows Read Only (Off) / UNIX chmod 0777</p>";
 
             return false;
         }
@@ -236,6 +234,7 @@ class Upgrade_240 extends XoopsUpgrade
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
+        $this->tasks = array('keys', 'version');
     }
 }
 

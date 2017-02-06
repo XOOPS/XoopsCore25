@@ -16,10 +16,6 @@ use Xmf\Database\Tables;
  */
 class Upgrade_259 extends XoopsUpgrade
 {
-    public $tasks = array(
-        'sess_id',
-    );
-
     /**
      * __construct
      *
@@ -28,6 +24,7 @@ class Upgrade_259 extends XoopsUpgrade
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
+        $this->tasks = array('sess_id');
     }
 
     /**
