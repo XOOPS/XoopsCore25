@@ -1,0 +1,27 @@
+#!/usr/bin/env php
+<?php
+
+/*
+ * This file is part of https://github.com/geekwright/RegDom
+ *
+ * Clear all Public Suffix Data and load a fresh copy from publicsuffix.org
+ */
+
+function includeIfExists($file)
+{
+    if (file_exists($file)) {
+        return include $file;
+    }
+}
+
+if ((!$loader = includeIfExists(__DIR__.'/../vendor/autoload.php'))
+    && (!$loader = includeIfExists(__DIR__.'/../../../autoload.php')))
+{
+    die("You must set up the project dependencies, run composer install\n");
+}
+
+use Geekwright\RegDom\PublicSuffixList;
+
+$psl = new \Geekwright\RegDom\PublicSuffixList();
+$psl->clearDataDirectory();
+$psl->getTree();

@@ -81,16 +81,10 @@ include_once $xoops->path('class/criteria.php');
 include_once $xoops->path('class/module.textsanitizer.php');
 include_once $xoops->path('include/functions.php');
 
-/**
- * YOU SHOULD NEVER USE THE FOLLOWING CONSTANT, IT WILL BE REMOVED
- */
-/**
- * Set cookie dope for multiple subdomains remove the '.'. to use top level dope for session cookie;
- * Requires functions
- */
-//define('XOOPS_COOKIE_DOMAIN', ($domain = xoops_getBaseDomain(XOOPS_URL)) == 'localhost' ? '' : '.' . $domain);
-//When you don't use Localhost but your "computer name" as domain you can't use session cookies
-define('XOOPS_COOKIE_DOMAIN', strpos($domain = xoops_getBaseDomain(XOOPS_URL), '.') === false ? '' : '.' . $domain); //by arion92fr
+/* new installs should create this in mainfile */
+if (!defined('XOOPS_COOKIE_DOMAIN')) {
+    define('XOOPS_COOKIE_DOMAIN', xoops_getBaseDomain(XOOPS_URL));
+}
 
 /**
  * Check Proxy;

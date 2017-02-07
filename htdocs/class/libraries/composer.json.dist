@@ -4,6 +4,6 @@
     "type": "project",
     "description": "Libraries for XOOPS 2.5.9",
     "require": {
-        "xoops/base-requires25": "^0.1.0"
+        "xoops/base-requires25": "^0.2.0"
     }
 }

@@ -1,0 +1,29 @@
+{
+  "name": "geekwright/regdom",
+  "description": "OO adaptation of Florian Sager's regdom library for querying Mozilla Public Suffix List",
+  "keywords": [
+    "public",
+    "suffix",
+    "tld",
+    "regdom"
+  ],
+  "homepage": "https://github.com/geekwright/RegDom",
+  "type": "library",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "Richard Griffith",
+      "email": "richard@geekwright.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.9",
+    "symfony/polyfill-mbstring": "^1.3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Geekwright\\RegDom\\": "src/"
+    }
+  },
+  "bin": ["bin/reloadpsl"]
+}
