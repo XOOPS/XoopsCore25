@@ -127,6 +127,7 @@ include __DIR__ . '/mymenu.php';
 
 // title
 echo "<h3 style='text-align:left;'>" . $xoopsModule->name() . "</h3>\n";
+echo '<style>td.log_description {width: 80em; display: inline-block; word-wrap: break-word; white-space: pre-line;}</style>';
 
 // configs writable check
 if (!is_writable(dirname(__DIR__) . '/configs')) {
@@ -219,11 +220,19 @@ echo "
 $oddeven = 'odd';
 while (list($lid, $uid, $ip, $agent, $type, $description, $timestamp, $uname) = $db->fetchRow($prs)) {
     $oddeven = ($oddeven === 'odd' ? 'even' : 'odd');
+    $style = '';
 
-    $ip          = htmlspecialchars($ip, ENT_QUOTES);
-    $type        = htmlspecialchars($type, ENT_QUOTES);
+    $ip = htmlspecialchars($ip, ENT_QUOTES);
+    $type = htmlspecialchars($type, ENT_QUOTES);
+    if ('{"' == substr($description, 0, 2)) {
+        $temp = json_decode($description);
+        if (is_object($temp)) {
+            $description = json_encode($temp, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
+            $style = ' log_description';
+        }
+    }
     $description = htmlspecialchars($description, ENT_QUOTES);
-    $uname       = htmlspecialchars(($uid ? $uname : _GUESTS), ENT_QUOTES);
+    $uname = htmlspecialchars(($uid ? $uname : _GUESTS), ENT_QUOTES);
 
     // make agents shorter
     if (preg_match('/MSIE\s+([0-9.]+)/', $agent, $regs)) {
@@ -243,7 +252,7 @@ while (list($lid, $uid, $ip, $agent, $type, $description, $timestamp, $uname) = 
     <td class='$oddeven'>$uname</td>
     <td class='$oddeven'>$ip<br>$agent_desc</td>
     <td class='$oddeven'>$type</td>
-    <td class='$oddeven' width='100%'>$description</td>
+    <td class='{$oddeven}{$style}'>$description</td>
   </tr>\n";
 }
 

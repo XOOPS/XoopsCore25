@@ -59,7 +59,7 @@ class protector_postcommon_post_language_match extends ProtectorFilterAbstract
     protected $minLength = 15;
 
     /** @var string[] script names we do NOT want to process */
-    protected $skipThese = array('edituser.php', 'register.php', 'search.php');
+    protected $skipThese = array('edituser.php', 'register.php', 'search.php', 'user.php', 'lostpass.php');
 
     // map regex compatible unicode script range to a XOOPS language name
     // http://php.net/manual/en/regexp.reference.unicode.php
@@ -175,17 +175,19 @@ class protector_postcommon_post_language_match extends ProtectorFilterAbstract
         if ($percent > $this->maximumTolerance) {
             $report = array(
                 'score' => $percent,
+                'uri' => $_SERVER['REQUEST_URI'],
                 'post' => $_POST,
             );
             $this->protector->message = json_encode($report);
             $this->protector->output_log('SPAM Language Map', $uid);
             if ($uid > 0 && $percent > (2.0 * $this->maximumTolerance)) {
                 $this->protector->deactivateCurrentUser();
+                $this->protector->_should_be_banned_time0 = true;
             } else {
                 $this->protector->purgeNoExit();
             }
             // write any message as you like
-            echo 'Your post has been denied by the language filter. '
+            echo 'Your post has been denied. '
                 . 'If you feel this is in error, please contact the site administrator.';
             exit;
         }
