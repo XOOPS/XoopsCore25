@@ -708,7 +708,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
      * @param  string $dirname
      * @return XoopsModule|FALSE on fail
      */
-    public function &getByDirname($dirname)
+    public function getByDirname($dirname)
     {
         $dirname = basename($dirname);
         //could not we check for spaces instead??
