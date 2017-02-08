@@ -7,6 +7,7 @@ namespace Composer\Autoload;
 class ComposerStaticInit274e5fff219a4f27a346e611b0580d6a
 {
     public static $files = array (
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '6bc45d0537e6858fd179bdbc31d62c79' => __DIR__ . '/..' . '/raveren/kint/Kint.class.php',
         'e40631d46120a9c38ea139981f8dab26' => __DIR__ . '/..' . '/ircmaxell/password-compat/lib/password.php',
     );
@@ -18,7 +19,12 @@ class ComposerStaticInit274e5fff219a4f27a346e611b0580d6a
         ),
         'S' => 
         array (
+            'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Component\\Yaml\\' => 23,
+        ),
+        'G' => 
+        array (
+            'Geekwright\\RegDom\\' => 18,
         ),
         'F' => 
         array (
@@ -31,9 +37,17 @@ class ComposerStaticInit274e5fff219a4f27a346e611b0580d6a
         array (
             0 => __DIR__ . '/..' . '/xoops/xmf/src/Xmf',
         ),
+        'Symfony\\Polyfill\\Mbstring\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
+        ),
         'Symfony\\Component\\Yaml\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/yaml',
+        ),
+        'Geekwright\\RegDom\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/geekwright/regdom/src',
         ),
         'Firebase\\JWT\\' => 
         array (
@@ -70,6 +84,8 @@ class ComposerStaticInit274e5fff219a4f27a346e611b0580d6a
         'Firebase\\JWT\\ExpiredException' => __DIR__ . '/..' . '/firebase/php-jwt/src/ExpiredException.php',
         'Firebase\\JWT\\JWT' => __DIR__ . '/..' . '/firebase/php-jwt/src/JWT.php',
         'Firebase\\JWT\\SignatureInvalidException' => __DIR__ . '/..' . '/firebase/php-jwt/src/SignatureInvalidException.php',
+        'Geekwright\\RegDom\\PublicSuffixList' => __DIR__ . '/..' . '/geekwright/regdom/src/PublicSuffixList.php',
+        'Geekwright\\RegDom\\RegisteredDomain' => __DIR__ . '/..' . '/geekwright/regdom/src/RegisteredDomain.php',
         'RandomLib\\AbstractMcryptMixer' => __DIR__ . '/..' . '/ircmaxell/random-lib/lib/RandomLib/AbstractMcryptMixer.php',
         'RandomLib\\AbstractMixer' => __DIR__ . '/..' . '/ircmaxell/random-lib/lib/RandomLib/AbstractMixer.php',
         'RandomLib\\AbstractSource' => __DIR__ . '/..' . '/ircmaxell/random-lib/lib/RandomLib/AbstractSource.php',
@@ -110,6 +126,7 @@ class ComposerStaticInit274e5fff219a4f27a346e611b0580d6a
         'Symfony\\Component\\Yaml\\Parser' => __DIR__ . '/..' . '/symfony/yaml/Parser.php',
         'Symfony\\Component\\Yaml\\Unescaper' => __DIR__ . '/..' . '/symfony/yaml/Unescaper.php',
         'Symfony\\Component\\Yaml\\Yaml' => __DIR__ . '/..' . '/symfony/yaml/Yaml.php',
+        'Symfony\\Polyfill\\Mbstring\\Mbstring' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/Mbstring.php',
         'WideImage\\Canvas' => __DIR__ . '/..' . '/smottt/wideimage/lib/WideImage/Canvas.php',
         'WideImage\\Coordinate' => __DIR__ . '/..' . '/smottt/wideimage/lib/WideImage/Coordinate.php',
         'WideImage\\Exception\\Exception' => __DIR__ . '/..' . '/smottt/wideimage/lib/WideImage/Exception/Exception.php',
