@@ -147,10 +147,19 @@ class XoopsFormSelectUser extends XoopsFormElementTray
             }
             </script>";
         $token       = $GLOBALS['xoopsSecurity']->createToken();
-        $action_tray = new XoopsFormElementTray('', ' | ');
-        $action_tray->addElement(new XoopsFormLabel('', '<a href="#" onclick="var sel = xoopsGetElementById(\'' . $name . '\');for (var i = sel.options.length-1; i >= 0; i--) {if (!sel.options[i].selected) {sel.options[i] = null;}}; return false;">' . _MA_USER_REMOVE . '</a>'));
-        $action_tray->addElement(new XoopsFormLabel('', '<a href="#" onclick="openWithSelfMain(\'' . XOOPS_URL . '/include/findusers.php?target=' . $name . '&amp;multiple=' . $multiple . '&amp;token=' . $token . '\', \'userselect\', 800, 600, null); return false;" >' . _MA_USER_MORE . '</a>' . $js_addusers));
-        parent::__construct($caption, '<br><br>', $name);
+        $action_tray = new XoopsFormElementTray('', '');
+        $removeUsers = new XoopsFormButton('', 'rmvusr_' . $name, _MA_USER_REMOVE, 'button');
+        $removeUsers->setExtra(' onclick="var sel = xoopsGetElementById(\'' . $name . '\');for (var i = sel.options.length-1; i >= 0; i--) {if (!sel.options[i].selected) {sel.options[i] = null;}}; return false;" ');
+        $action_tray->addElement($removeUsers);
+
+        $searchUsers = new XoopsFormButton('', 'srchusr_' . $name, _MA_USER_MORE, 'button');
+        $searchUsers->setExtra(' onclick="openWithSelfMain(\'' . XOOPS_URL . '/include/findusers.php?target=' . $name . '&amp;multiple=' . $multiple . '&amp;token=' . $token . '\', \'userselect\', 800, 600, null); return false;" ');
+        $action_tray->addElement($searchUsers);
+
+         if (isset($GLOBALS['xoTheme']) && is_object($GLOBALS['xoTheme'])) {
+             $GLOBALS['xoTheme']->addScript('', array(), $js_addusers);
+         }
+        parent::__construct($caption, '', $name);
         $this->addElement($select_element);
         $this->addElement($action_tray);
     }
