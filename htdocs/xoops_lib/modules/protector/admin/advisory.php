@@ -52,6 +52,22 @@ if ($safe) {
 }
 echo "</b><br><br></dl>\n";
 
+// register_long_arrays -- enabling deprecated feature opens potential attack surface
+// This option was removed in PHP 5.4, and is no longer supported in XOOPS.
+// Any code still using the the long arrays ($HTTP_GET_VARS, $HTTP_POST_VARS, $HTTP_COOKIE_VARS)
+// should be considered "suspect."
+if (version_compare(PHP_VERSION, '5.4.0', '<')) {
+    echo "<dl><dt>'register_long_arrays' : ";
+    $safe = !ini_get('register_long_arrays');
+    if ($safe) {
+        echo "off &nbsp; <span style='color:green;font-weight:bold;'>OK</span></dt>\n";
+    } else {
+        echo "on  &nbsp; <span style='color:red;font-weight:bold;'>" . _AM_ADV_NOTSECURE . "</span></dt>\n";
+        echo '<dd>' . 'register_long_arrays deprecated/removed' . '</dd>';
+    }
+    echo "</b><br><br></dl>\n";
+}
+
 // session.use_trans_sid
 echo "<dl><dt>'session.use_trans_sid' : ";
 $safe = !ini_get('session.use_trans_sid');
