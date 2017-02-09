@@ -126,8 +126,8 @@ if ($op === 'list') {
                 $xoopsTpl->assign('image_total', 0);
             }
         }
-        $xoopsTpl->assign('xsize', 600);
-        $xoopsTpl->assign('ysize', 400);
+        $xoopsTpl->assign('xsize', 800);
+        $xoopsTpl->assign('ysize', 600);
     } else {
         $xoopsTpl->assign('xsize', 400);
         $xoopsTpl->assign('ysize', 180);
