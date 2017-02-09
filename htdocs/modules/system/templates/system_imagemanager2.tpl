@@ -140,12 +140,12 @@
         element: document.getElementById('fine-uploader-manual-trigger'),
         template: 'qq-template-manual-trigger',
         request: {
-            endpoint: 'uploads/images'
+            endpoint: '<{$xoops_url}>/Frameworks/fine-uploader/endpoint.php'
         },
         thumbnails: {
             placeholders: {
-                waitingPath: '/source/placeholders/waiting-generic.png',
-                notAvailablePath: '/source/placeholders/not_available-generic.png'
+                waitingPath: '<{$xoops_url}>/Frameworks/fine-uploader/placeholders/waiting-generic.png',
+                notAvailablePath: '<{$xoops_url}>/Frameworks/fine-uploader/source/placeholders/not_available-generic.png'
             }
         },
         validation: {
