@@ -71,7 +71,7 @@
         <{foreachq item=category from=$categories}><!-- Forum categories -->
         <div class="panel panel-default mb10">
             <div class="panel-heading">
-                <h4 class="panel-title xoops-mewbb-forum-title">
+                <h4 class="panel-title xoops-newbb-forum-title">
                     <{if $category.forums}>
                         <a data-toggle="collapse" data-parent="#accordion" href="#<{$category.cat_element_id}>"
                            title="<{$smarty.const.THEME_NEWBB_TOPIC}>">
