@@ -141,7 +141,7 @@
         element: document.getElementById('fine-uploader-manual-trigger'),
         template: 'qq-template-manual-trigger',
         request: {
-            endpoint: '<{$xoops_url}>/Frameworks/fine-uploader/endpoint.php'
+            endpoint: '<{$xoops_url}>/Frameworks/fine-uploader/endpoint.php?imgcat_id=<{$show_cat}>'
         },
         thumbnails: {
             placeholders: {
