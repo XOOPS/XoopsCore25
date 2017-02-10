@@ -366,7 +366,7 @@ class XoopsMemberHandler
      *
      * @return int|null max length or null on error
      */
-    function getColumnCharacterLength($table, $column)
+    public function getColumnCharacterLength($table, $column)
     {
         /** @var XoopsMySQLDatabase $db */
         $db = XoopsDatabaseFactory::getDatabaseConnection();
