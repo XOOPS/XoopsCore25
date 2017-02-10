@@ -28,6 +28,8 @@
  *    but is now required in all cases if you are making use of this PHP example.
  */
 
+include __DIR__ . '/../../mainfile.php';
+$xoopsLogger->activated = false;
 
 // Include the upload handler class
 require_once "handler.php";

@@ -7,6 +7,7 @@
     <{$image_form.javascript}>
     <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl xoops.css}>"/>
     <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl modules/system/css/imagemanager.css}>"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl media/font-awesome/css/font-awesome.min.css}>"/>
 
     <{php}>
         $language = $GLOBALS['xoopsConfig']['language'];
@@ -15,8 +16,8 @@
         <link rel=\"stylesheet\" type=\"text/css\" media=\"all\" href=\"language/$language/style.css\"/>
         ";
         }
-    <{/php}>    
-    <!-- fine-upload -->    
+    <{/php}>
+    <!-- fine-upload -->
     <!-- Fine Uploader New/Modern CSS file
     ====================================================================== -->
     <link href="<{xoAppUrl Frameworks/fine-uploader/fine-uploader-new.css}>" rel="stylesheet">
@@ -39,8 +40,8 @@
                 <div class="qq-upload-button-selector qq-upload-button">
                     <div>Select files</div>
                 </div>
-                <button type="button" id="trigger-upload" class="btn btn-primary">
-                    <i class="icon-upload icon-white"></i> Upload
+                <button type="button" id="trigger-upload" class="btn btn-primary" title="Upload">
+                    <span class="fa fa-upload"></span> Upload
                 </button>
             </div>
             <span class="qq-drop-processing-selector qq-drop-processing">
@@ -112,11 +113,11 @@
             width: 60%;
         }
     </style>
-    <!-- fine-upload -->   
+    <!-- fine-upload -->
 
 </head>
 
-<body onload="window.resizeTo(<{$xsize}>, <{$ysize}>);">
+<body onload="window.resizeTo(<{$xsize|default:800}>, <{$ysize|default:572}>);">
 <table cellspacing="0" id="imagenav">
     <tr>
         <td id="addimage" class="txtleft"><a href="<{$xoops_url}>/imagemanager.php?target=<{$target}>&amp;cat_id=<{$show_cat}>"
@@ -145,13 +146,15 @@
         thumbnails: {
             placeholders: {
                 waitingPath: '<{$xoops_url}>/Frameworks/fine-uploader/placeholders/waiting-generic.png',
-                notAvailablePath: '<{$xoops_url}>/Frameworks/fine-uploader/source/placeholders/not_available-generic.png'
+                notAvailablePath: '<{$xoops_url}>/Frameworks/fine-uploader/placeholders/not_available-generic.png'
             }
         },
         validation: {
             allowedExtensions: ['jpeg', 'jpg', 'png', 'gif'],
-            //image.maxHeight: <{$imgcat_maxheight}>,
-            //image.maxWidth: <{$imgcat_maxwidth}>,
+            image: {
+                maxHeight: <{$imgcat_maxheight}>,
+                maxWidth: <{$imgcat_maxwidth}>
+            },
             sizeLimit: <{$imgcat_maxsize}> // 50 kB = 50 * 1024 bytes
         },
         autoUpload: false,
