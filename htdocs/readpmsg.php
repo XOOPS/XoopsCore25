@@ -93,7 +93,7 @@ if (!is_object($xoopsUser)) {
         echo "<input type='hidden' name='delete' value='1' />";
         echo $GLOBALS['xoopsSecurity']->getTokenHTML();
         echo "<input type='hidden' name='msg_id' value='" . $pm_arr[0]->getVar('msg_id') . "' />";
-        echo "<button type='button' class='btn btn-default' onclick='javascript:document.delete" . $pm_arr[0]->getVar('msg_id') . ".submit();' title='" . _PM_DELETE . "'><span class='fa fa-fw fa-remove'></span></button>";
+        echo "<button type='button' class='btn btn-default' onclick='document.delete" . $pm_arr[0]->getVar('msg_id') . ".submit();' title='" . _PM_DELETE . "'><span class='fa fa-fw fa-remove'></span></button>";
         echo "</td></tr><tr><td class='txtright' colspan='2'>";
         $previous = $start - 1;
         $next     = $start + 1;

@@ -60,7 +60,7 @@ class MytsImage extends MyTextSanitizerExtension
                 }
                 $ts->replacements[] = "<img src='\\5' class='\\2' alt='" . _MSC_RESIZED_IMAGE . "' border='0' onload=\"JavaScript:if(this.width>\\4)this.width=\\4\" />";
                 $ts->replacements[] = "<img src='\\3' class='\\2' alt='" . _MSC_RESIZED_IMAGE . "' border='0'" . ($config['resize'] ? "onload=\"javascript:resizeImage(this, " . $config['max_width'] . ")\"" : '') . '/>';
-                $ts->replacements[] = "<img src='\\3' alt='" . _MSC_RESIZED_IMAGE . "' border='0' onload=\"JavaScript:if(this.width>\\2)this.width=\\2\" /><br>";
+                $ts->replacements[] = "<img src='\\3' alt='" . _MSC_RESIZED_IMAGE . "' border='0' onload=\"if(this.width>\\2)this.width=\\2\" /><br>";
                 $ts->replacements[] = "<img src='\\1' alt='" . _MSC_RESIZED_IMAGE . "' border='0'" . ($config['resize'] ? " onload=\"javascript:resizeImage(this, " . $config['max_width'] . ")\"" : '') . '/>';
             } elseif (!empty($config['clickable']) && !empty($config['max_width']) && !empty($GLOBALS['xoTheme'])) {
                 if (!$jsLoaded) {
