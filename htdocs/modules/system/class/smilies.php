@@ -106,7 +106,7 @@ class SystemSmilies extends XoopsObject
  * @package             system
  * @subpackage          avatar
  */
-class systemsmiliesHandler extends XoopsPersistableObjectHandler
+class SystemsmiliesHandler extends XoopsPersistableObjectHandler
 {
     /**
      * @param null|XoopsDatabase $db

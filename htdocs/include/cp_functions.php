@@ -45,7 +45,7 @@ function xoops_cp_footer()
  * We need these because theme files will not be included
  *
  */
-function OpenTable()
+function openTable()
 {
     echo "<table width='100%' border='0' cellspacing='1' cellpadding='8' style='border: 2px solid #2F5376;'><tr class='bg4'><td valign='top'>\n";
 }
@@ -54,7 +54,7 @@ function OpenTable()
  * Cloe Table : NO NOT USE
  *
  */
-function CloseTable()
+function closeTable()
 {
     echo '</td></tr></table>';
 }

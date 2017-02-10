@@ -22,7 +22,7 @@ if (!function_exists('opentable')) {
     /**
      * @param string $width
      */
-    function OpenTable($width = '100%')
+    function openTable($width = '100%')
     {
         $GLOBALS['xoopsLogger']->addDeprecated("Function '" . __FUNCTION__ . "' in '" . __FILE__ . "' is deprecated, should not be used any more");
         echo '<table width="' . $width . '" cellspacing="0" class="outer"><tr><td class="even">';
@@ -30,7 +30,7 @@ if (!function_exists('opentable')) {
 }
 
 if (!function_exists('closetable')) {
-    function CloseTable()
+    function closeTable()
     {
         $GLOBALS['xoopsLogger']->addDeprecated("Function '" . __FUNCTION__ . "' in '" . __FILE__ . "' is deprecated, should not be used any more");
         echo '</td></tr></table>';

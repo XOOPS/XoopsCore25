@@ -230,7 +230,7 @@ function bannerstats()
  * @param $cid
  * @param $bid
  */
-function EmailStats($cid, $bid)
+function emailStats($cid, $bid)
 {
     global $xoopsDB, $xoopsConfig;
     if ($_SESSION['banner_login'] != '' && $_SESSION['banner_pass'] != '') {
@@ -404,7 +404,7 @@ switch ($op) {
     case 'EmailStats':
         $bid = $clean_bid;
         $cid = $clean_cid;
-        EmailStats($cid, $bid);
+        emailStats($cid, $bid);
         break;
     case 'login':
     default:

@@ -161,13 +161,13 @@ if ($action === 'showpopups') {
                 $xoopsMailer->setFromEmail($ymail);
                 $xoopsMailer->setFromName($yname);
                 $xoopsMailer->setSubject(sprintf(_MSC_INTSITE, $xoopsConfig['sitename']));
-                //OpenTable();
+                //openTable();
                 if (!$xoopsMailer->send()) {
                     echo $xoopsMailer->getErrors();
                 } else {
                     echo '<div><h4>' . _MSC_REFERENCESENT . '</h4></div>';
                 }
-                //CloseTable();
+                //closeTable();
             }
             break;
         case 'online':

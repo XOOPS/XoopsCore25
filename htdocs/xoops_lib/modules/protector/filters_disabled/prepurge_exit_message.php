@@ -3,7 +3,7 @@
 /**
  * Class protector_prepurge_exit_message
  */
-class protector_prepurge_exit_message extends ProtectorFilterAbstract
+class Protector_prepurge_exit_message extends ProtectorFilterAbstract
 {
     public function execute()
     {

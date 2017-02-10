@@ -111,7 +111,7 @@ class SystemUserrank extends XoopsObject
  * @package             system
  * @subpackage          avatar
  */
-class systemuserrankHandler extends XoopsPersistableObjectHandler
+class SystemuserrankHandler extends XoopsPersistableObjectHandler
 {
     /**
      * @param null|XoopsDatabase $db

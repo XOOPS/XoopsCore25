@@ -3,7 +3,7 @@
 /**
  * Class protector_postcommon_post_deny_by_rbl
  */
-class protector_postcommon_post_deny_by_rbl extends ProtectorFilterAbstract
+class Protector_postcommon_post_deny_by_rbl extends ProtectorFilterAbstract
 {
     /**
      * @return bool

@@ -6,7 +6,7 @@
 /**
  * Class protector_postcommon_post_need_multibyte
  */
-class protector_postcommon_post_need_multibyte extends ProtectorFilterAbstract
+class Protector_postcommon_post_need_multibyte extends ProtectorFilterAbstract
 {
     /**
      * @return bool

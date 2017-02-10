@@ -3,7 +3,7 @@
 /**
  * Class protector_postcommon_register_insert_js_check
  */
-class protector_postcommon_register_insert_js_check extends ProtectorFilterAbstract
+class Protector_postcommon_register_insert_js_check extends ProtectorFilterAbstract
 {
     /**
      * @return bool

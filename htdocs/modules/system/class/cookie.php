@@ -15,7 +15,7 @@
  * @author              Andricq Nicolas (AKA MusS)
  * @package             system
  */
-class cookie
+class Cookie
 {
     // Reserved session keys
     private static $_reserved = array('XOLOGGERVIEW', 'xoops_user');

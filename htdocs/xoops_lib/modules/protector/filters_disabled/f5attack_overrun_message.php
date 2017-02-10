@@ -3,7 +3,7 @@
 /**
  * Class protector_f5attack_overrun_message
  */
-class protector_f5attack_overrun_message extends ProtectorFilterAbstract
+class Protector_f5attack_overrun_message extends ProtectorFilterAbstract
 {
     public function execute()
     {

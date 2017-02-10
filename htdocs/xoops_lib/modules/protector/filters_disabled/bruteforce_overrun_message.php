@@ -3,7 +3,7 @@
 /**
  * Class protector_bruteforce_overrun_message
  */
-class protector_bruteforce_overrun_message extends ProtectorFilterAbstract
+class Protector_bruteforce_overrun_message extends ProtectorFilterAbstract
 {
     public function execute()
     {
