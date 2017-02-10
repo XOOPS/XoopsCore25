@@ -34,23 +34,9 @@ $xoopsLogger->activated = false;
 // Include the upload handler class
 require_once "handler.php";
 
-$uploader = new UploadHandler();
+// Get imgcat_id
+$imgcat_id = isset($_GET['imgcat_id']) ? (int)$_GET['imgcat_id'] : 0;
 
-// Specify the list of valid extensions, ex. array("jpeg", "xml", "bmp")
-$uploader->allowedExtensions = array(); // all files types allowed by default
-
-// Specify max file size in bytes.
-$uploader->sizeLimit = null;
-
-// Specify the input name set in the javascript.
-$uploader->inputName = "qqfile"; // matches Fine Uploader's default inputName value by default
-
-// If you want to use the chunking/resume feature, specify the folder to temporarily save parts.
-$uploader->chunksFolder = dirname(dirname(__DIR__)) . '/uploads/fine-uploader/files';
-
-$method = get_request_method();
-
-$imgcat_id = isset($_POST['imgcat_id']) ? (int)$_POST['imgcat_id'] : 0;
 $imgcat_handler = xoops_getHandler('imagecategory');
 $imgcat         = $imgcat_handler->get($imgcat_id);
 $error          = false;
@@ -69,33 +55,26 @@ if (!is_object($imgcat)) {
 	}
 }
 if ($error != false) {
-	xoops_header(false);
-	echo '</head><body><div style="text-align:center;">' . implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()) . '<br><input value="' . _BACK . '" type="button" onclick="history.go(-1);" /></div>';
-	xoops_footer();
+	// erreur
 	exit();
-} else {
-	$image_handler = xoops_getHandler('image');
-	$image         = $image_handler->create();
-	$image->setVar('image_name', 'images/' . $uploader->getUploadName());
-	$image->setVar('image_nicename', $uploader->getUploadName());
-	$image->setVar('image_mimetype', '');
-	$image->setVar('image_created', time());
-	$image->setVar('image_display', 1);
-	$image->setVar('image_weight', 0);
-	$image->setVar('imgcat_id', $imgcat_id);
-	if ($imgcat->getVar('imgcat_storetype') === 'db') {
-		/*$fp      = @fopen($uploader->getSavedDestination(), 'rb');
-		$fbinary = @fread($fp, filesize($uploader->getSavedDestination()));
-		@fclose($fp);
-		$image->setVar('image_body', $fbinary, true);
-		@unlink($uploader->getSavedDestination());*/
-	}
-	if (!$image_handler->insert($image)) {
-		$err = sprintf(_FAILSAVEIMG, $image->getVar('image_nicename'));
-	}
 }
 
 
+$uploader = new UploadHandler();
+
+// Specify the list of valid extensions, ex. array("jpeg", "xml", "bmp")
+$uploader->allowedExtensions = array(); // all files types allowed by default
+
+// Specify max file size in bytes.
+$uploader->sizeLimit = null;
+
+// Specify the input name set in the javascript.
+$uploader->inputName = "qqfile"; // matches Fine Uploader's default inputName value by default
+
+// If you want to use the chunking/resume feature, specify the folder to temporarily save parts.
+$uploader->chunksFolder = dirname(dirname(__DIR__)) . '/uploads/fine-uploader/files';
+
+$method = get_request_method();
 
 // This will retrieve the "intended" request method.  Normally, this is the
 // actual method of the request.  Sometimes, though, the intended request method
@@ -131,8 +110,41 @@ if ($method == "POST") {
         // To return a name used for uploaded file you can use the following line.
         $result["uploadName"] = $uploader->getUploadName();
     }
-
     echo json_encode($result);
+	
+	//save image	
+	$nicename = substr($uploader->getUploadName(), 4);
+	$nicename = substr($nicename, 0, strrpos ($nicename, '.'));
+
+	$ext = substr($uploader->getUploadName(), strrpos ($uploader->getUploadName(), '.') + 1);
+	$mimetype = '';
+	switch ($ext) {
+		case 'gif';
+			$mimetype = 'image/gif';
+			break;
+
+		case 'jpeg';
+		case 'jpg';
+			$mimetype = 'image/jpeg';
+			break;
+
+		case 'png';
+			$mimetype = 'image/png';
+			break;
+	}	
+	
+	$image_handler = xoops_getHandler('image');
+	$image         = $image_handler->create();
+	$image->setVar('image_name', 'images/' . $uploader->getUploadName());
+	$image->setVar('image_nicename', $nicename);
+	$image->setVar('image_mimetype', $mimetype);
+	$image->setVar('image_created', time());
+	$image->setVar('image_display', 1);
+	$image->setVar('image_weight', 0);
+	$image->setVar('imgcat_id', $imgcat_id);
+	$image_handler->insert($image);
+	
+	
 }
 // for delete file requests
 else if ($method == "DELETE") {
