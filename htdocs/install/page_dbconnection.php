@@ -76,7 +76,7 @@ ob_start();
                 <?php
                 foreach ($wizard->configs['db_types'] as $db_type) {
                     $selected = ($vars['DB_TYPE'] == $db_type) ? 'selected' : '';
-                    echo "<option value='$db_type' selected='$selected'>$db_type</option>";
+                    echo "<option value='$db_type' $selected>$db_type</option>";
                 }
                 ?>
             </select>

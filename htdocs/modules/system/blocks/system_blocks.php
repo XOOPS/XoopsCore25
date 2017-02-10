@@ -628,7 +628,7 @@ function b_system_info_edit($options)
     $form .= "<input type='radio' name='options[3]' value='1'" . $chk . ' />&nbsp;' . _YES . '';
     $chk = '';
     if ($options[3] == 0) {
-        $chk = " checked=\"checked\"";
+        $chk = " checked";
     }
     $form .= "&nbsp;<input type='radio' name='options[3]' value='0'" . $chk . ' />' . _NO . '';
 
