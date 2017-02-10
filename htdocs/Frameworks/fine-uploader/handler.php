@@ -191,7 +191,11 @@ class UploadHandler {
         else {
         # non-chunked upload
 
-            $target = join(DIRECTORY_SEPARATOR, array($uploadDirectory, $uuid, $name));
+            //$target = join(DIRECTORY_SEPARATOR, array($uploadDirectory, $uuid, $name));
+			//Hack @Mage
+			$target = join(DIRECTORY_SEPARATOR, array($uploadDirectory, 'img_' . $name));
+			
+			
 
             if ($target){
                 $this->uploadName = basename($target);

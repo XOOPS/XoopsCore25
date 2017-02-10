@@ -50,6 +50,53 @@ $uploader->chunksFolder = dirname(dirname(__DIR__)) . '/uploads/fine-uploader/fi
 
 $method = get_request_method();
 
+$imgcat_id = isset($_POST['imgcat_id']) ? (int)$_POST['imgcat_id'] : 0;
+$imgcat_handler = xoops_getHandler('imagecategory');
+$imgcat         = $imgcat_handler->get($imgcat_id);
+$error          = false;
+if (!is_object($imgcat)) {
+	$error = true;
+} else {
+	$imgcatperm_handler = xoops_getHandler('groupperm');
+	if (is_object($xoopsUser)) {
+		if (!$imgcatperm_handler->checkRight('imgcat_write', $imgcat_id, $xoopsUser->getGroups())) {
+			$error = true;
+		}
+	} else {
+		if (!$imgcatperm_handler->checkRight('imgcat_write', $imgcat_id, XOOPS_GROUP_ANONYMOUS)) {
+			$error = true;
+		}
+	}
+}
+if ($error != false) {
+	xoops_header(false);
+	echo '</head><body><div style="text-align:center;">' . implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()) . '<br><input value="' . _BACK . '" type="button" onclick="history.go(-1);" /></div>';
+	xoops_footer();
+	exit();
+} else {
+	$image_handler = xoops_getHandler('image');
+	$image         = $image_handler->create();
+	$image->setVar('image_name', 'images/' . $uploader->getUploadName());
+	$image->setVar('image_nicename', $uploader->getUploadName());
+	$image->setVar('image_mimetype', '');
+	$image->setVar('image_created', time());
+	$image->setVar('image_display', 1);
+	$image->setVar('image_weight', 0);
+	$image->setVar('imgcat_id', $imgcat_id);
+	if ($imgcat->getVar('imgcat_storetype') === 'db') {
+		/*$fp      = @fopen($uploader->getSavedDestination(), 'rb');
+		$fbinary = @fread($fp, filesize($uploader->getSavedDestination()));
+		@fclose($fp);
+		$image->setVar('image_body', $fbinary, true);
+		@unlink($uploader->getSavedDestination());*/
+	}
+	if (!$image_handler->insert($image)) {
+		$err = sprintf(_FAILSAVEIMG, $image->getVar('image_nicename'));
+	}
+}
+
+
+
 // This will retrieve the "intended" request method.  Normally, this is the
 // actual method of the request.  Sometimes, though, the intended request method
 // must be hidden in the parameters of the request.  For example, when attempting to
@@ -75,12 +122,12 @@ if ($method == "POST") {
     // Assumes you have a chunking.success.endpoint set to point here with a query parameter of "done".
     // For example: /myserver/handlers/endpoint.php?done
     if (isset($_GET["done"])) {
-        $result = $uploader->combineChunks(dirname(dirname(__DIR__)) . '/uploads/fine-uploader/files');
+        $result = $uploader->combineChunks(dirname(dirname(__DIR__)) . '/uploads/images');
     }
     // Handles upload requests
     else {
         // Call handleUpload() with the name of the folder, relative to PHP's getcwd()
-        $result = $uploader->handleUpload(dirname(dirname(__DIR__)) . '/uploads/fine-uploader/files');
+        $result = $uploader->handleUpload(dirname(dirname(__DIR__)) . '/uploads/images');
         // To return a name used for uploaded file you can use the following line.
         $result["uploadName"] = $uploader->getUploadName();
     }
