@@ -11,7 +11,7 @@
  * email or IP address, exceeds the configured $minimumConfidence, the post is denied and the account
  * is deactivated.
  */
-class protector_postcommon_post_stopforumspam extends ProtectorFilterAbstract
+class Protector_postcommon_post_stopforumspam extends ProtectorFilterAbstract
 {
     /** @var int after this number of posts by the user, skip this filter */
     protected $minPosts = 5;

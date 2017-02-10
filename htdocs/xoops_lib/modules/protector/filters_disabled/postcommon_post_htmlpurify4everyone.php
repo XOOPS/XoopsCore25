@@ -3,7 +3,7 @@
 /**
  * Class protector_postcommon_post_htmlpurify4everyone
  */
-class protector_postcommon_post_htmlpurify4everyone extends ProtectorFilterAbstract
+class Protector_postcommon_post_htmlpurify4everyone extends ProtectorFilterAbstract
 {
     public $purifier;
     public $method;

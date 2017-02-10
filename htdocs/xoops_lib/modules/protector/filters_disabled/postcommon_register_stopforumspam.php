@@ -11,7 +11,7 @@
  * any of user name, email or IP address, exceeds the configured $minimumConfidence, the registration
  * is denied.
  */
-class protector_postcommon_register_stopforumspam extends ProtectorFilterAbstract
+class Protector_postcommon_register_stopforumspam extends ProtectorFilterAbstract
 {
     /** @var float $minimumConfidence
      * This is a percentage confidence as reported by stopforumspam api.

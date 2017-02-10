@@ -3,7 +3,7 @@
 /**
  * Class protector_crawler_overrun_message
  */
-class protector_crawler_overrun_message extends ProtectorFilterAbstract
+class Protector_crawler_overrun_message extends ProtectorFilterAbstract
 {
     public function execute()
     {

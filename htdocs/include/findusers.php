@@ -716,7 +716,7 @@ if (empty($_POST['user_submit'])) {
         if (!isset($total) || ($totalpages = ceil($total / $limit)) > 1) {
             $prev = $start - $limit;
             if ($start - $limit >= 0) {
-                $hiddenform .= "<a href='#0' onclick='javascript:document.findnext.start.value=" . $prev . ";document.findnext.submit();'>" . _MA_USER_PREVIOUS . "</a>&nbsp;\n";
+                $hiddenform .= "<a href='#0' onclick='document.findnext.start.value=" . $prev . ";document.findnext.submit();'>" . _MA_USER_PREVIOUS . "</a>&nbsp;\n";
             }
             $counter     = 1;
             $currentpage = ($start + $limit) / $limit;
@@ -725,7 +725,7 @@ if (empty($_POST['user_submit'])) {
                     if ($counter == $currentpage) {
                         $hiddenform .= '<strong>' . $counter . '</strong> ';
                     } elseif (($counter > $currentpage - 4 && $counter < $currentpage + 4) || $counter == 1) {
-                        $hiddenform .= "<a href='#" . $counter . "' onclick='javascript:document.findnext.start.value=" . ($counter - 1) * $limit . ";document.findnext.submit();'>" . $counter . '</a> ';
+                        $hiddenform .= "<a href='#" . $counter . "' onclick='document.findnext.start.value=" . ($counter - 1) * $limit . ";document.findnext.submit();'>" . $counter . '</a> ';
                         if ($counter == 1 && $currentpage > 5) {
                             $hiddenform .= '... ';
                         }
@@ -740,7 +740,7 @@ if (empty($_POST['user_submit'])) {
                         if ($counter == $totalpages && $currentpage < $totalpages - 4) {
                             $hiddenform .= '... ';
                         }
-                        $hiddenform .= "<a href='#" . $counter . "' onclick='javascript:document.findnext.start.value=" . ($counter - 1) * $limit . ";document.findnext.submit();'>" . $counter . '</a> ';
+                        $hiddenform .= "<a href='#" . $counter . "' onclick='document.findnext.start.value=" . ($counter - 1) * $limit . ";document.findnext.submit();'>" . $counter . '</a> ';
                         if ($counter == 1 && $currentpage > 5) {
                             $hiddenform .= '... ';
                         }
@@ -751,7 +751,7 @@ if (empty($_POST['user_submit'])) {
 
             $next = $start + $limit;
             if ((isset($total) && $total > $next) || (!isset($total) && count($foundusers) >= $limit)) {
-                $hiddenform .= "&nbsp;<a href='#" . $total . "' onclick='javascript:document.findnext.start.value=" . $next . ";document.findnext.submit();'>" . _MA_USER_NEXT . "</a>\n";
+                $hiddenform .= "&nbsp;<a href='#" . $total . "' onclick='document.findnext.start.value=" . $next . ";document.findnext.submit();'>" . _MA_USER_NEXT . "</a>\n";
             }
         }
         $hiddenform .= '</form>';

@@ -3,7 +3,7 @@
 /**
  * Class protector_precommon_bwlimit_message
  */
-class protector_precommon_bwlimit_message extends ProtectorFilterAbstract
+class Protector_precommon_bwlimit_message extends ProtectorFilterAbstract
 {
     public function execute()
     {

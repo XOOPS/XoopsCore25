@@ -130,7 +130,7 @@ if ($action === 'showpopups') {
                 <tr><td class='head'>" . _MSC_YOUREMAILC . "</td><td class='odd'><input type='text' name='ymail' value='{$ymail}' id='ymail' /></td></tr>
                 <tr><td class='head'>" . _MSC_FRIENDNAMEC . "</td><td class='even'><input type='text' name='fname' value='{$fname}' id='fname' /></td></tr>
                 <tr><td class='head'>" . _MSC_FRIENDEMAILC . "</td><td class='odd'><input type='text' name='fmail' value='{$fmail}' id='fmail' /></td></tr>
-                <tr><td class='head'>&nbsp;</td><td class='even'><input type='submit' value='" . _SEND . "' />&nbsp;<input value='" . _CLOSE . "' type='button' onclick='javascript:window.close();' />" . $GLOBALS['xoopsSecurity']->getTokenHTML() . "</td></tr>
+                <tr><td class='head'>&nbsp;</td><td class='even'><input type='submit' value='" . _SEND . "' />&nbsp;<input value='" . _CLOSE . "' type='button' onclick='window.close();' />" . $GLOBALS['xoopsSecurity']->getTokenHTML() . "</td></tr>
                 </table></form>\n";
                 $closebutton = 0;
             } elseif ($_POST['op'] === 'sendsite') {
@@ -161,13 +161,13 @@ if ($action === 'showpopups') {
                 $xoopsMailer->setFromEmail($ymail);
                 $xoopsMailer->setFromName($yname);
                 $xoopsMailer->setSubject(sprintf(_MSC_INTSITE, $xoopsConfig['sitename']));
-                //OpenTable();
+                //openTable();
                 if (!$xoopsMailer->send()) {
                     echo $xoopsMailer->getErrors();
                 } else {
                     echo '<div><h4>' . _MSC_REFERENCESENT . '</h4></div>';
                 }
-                //CloseTable();
+                //closeTable();
             }
             break;
         case 'online':

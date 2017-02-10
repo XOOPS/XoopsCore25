@@ -232,7 +232,7 @@ switch ($op) {
             }
             $added_count = count($added);
 
-            //OpenTable();
+            //openTable();
             if ($added_count > 0) {
                 $myts        = MyTextSanitizer::getInstance();
                 $xoopsMailer =& xoops_getMailer();

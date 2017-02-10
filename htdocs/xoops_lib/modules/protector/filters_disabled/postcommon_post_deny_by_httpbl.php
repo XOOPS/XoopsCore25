@@ -6,7 +6,7 @@ define('PROTECTOR_HTTPBL_KEY', '............');
 /**
  * Class protector_postcommon_post_deny_by_httpbl
  */
-class protector_postcommon_post_deny_by_httpbl extends ProtectorFilterAbstract
+class Protector_postcommon_post_deny_by_httpbl extends ProtectorFilterAbstract
 {
     /**
      * @return bool

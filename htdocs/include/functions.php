@@ -384,7 +384,7 @@ function xoops_confirm($hiddens, $action, $msg, $submit = '', $addtoken = true)
         echo $GLOBALS['xoopsSecurity']->getTokenHTML();
     }
     echo '<input type="submit" name="confirm_submit" value="' . $submit . '" title="' . $submit . '"/>
-          <input type="button" name="confirm_back" value="' . _CANCEL . '" onclick="javascript:history.go(-1);" title="' . _CANCEL . '" />
+          <input type="button" name="confirm_back" value="' . _CANCEL . '" onclick="history.go(-1);" title="' . _CANCEL . '" />
           </form>
           </div>';
 }

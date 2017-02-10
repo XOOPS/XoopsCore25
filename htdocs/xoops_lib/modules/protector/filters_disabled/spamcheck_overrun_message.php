@@ -3,7 +3,7 @@
 /**
  * Class protector_spamcheck_overrun_message
  */
-class protector_spamcheck_overrun_message extends ProtectorFilterAbstract
+class Protector_spamcheck_overrun_message extends ProtectorFilterAbstract
 {
     public function execute()
     {

@@ -43,7 +43,7 @@
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @link      http://xoops.org
  */
-class protector_postcommon_post_language_match extends ProtectorFilterAbstract
+class Protector_postcommon_post_language_match extends ProtectorFilterAbstract
 {
 
     /** @var int after this number of posts by the user, skip this filter */

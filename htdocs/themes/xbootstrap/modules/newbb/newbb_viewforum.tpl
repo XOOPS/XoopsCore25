@@ -65,7 +65,7 @@
     <div class="newbb-topic-options row mb10">
     <div class="col-sm-8 col-md-8">
     <{if $mode gt 1}>
-        <form name="form_topics_admin" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.topic.php" method="POST" onsubmit="javascript: if(window.document.form_topics_admin.op.value &lt; 1){return false;}">
+        <form name="form_topics_admin" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.topic.php" method="POST" onsubmit="if(window.document.form_topics_admin.op.value &lt; 1){return false;}">
     <{/if}>
 
     <{if $viewer_level gt 1}>

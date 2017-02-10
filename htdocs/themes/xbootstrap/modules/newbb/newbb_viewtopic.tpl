@@ -47,7 +47,7 @@
         <{if $viewer_level gt 1}>
             <div class="col-sm-8 col-md-8">
                 <{if $mode gt 1}>
-                    <form name="form_posts_admin" action="action.post.php" method="POST" onsubmit="javascript: if(window.document.form_posts_admin.op.value &lt; 1){return false;}">
+                    <form name="form_posts_admin" action="action.post.php" method="POST" onsubmit="if(window.document.form_posts_admin.op.value &lt; 1){return false;}">
                     <{$smarty.const._ALL}>: <input type="checkbox" name="post_check" id="post_check" value="1" onclick="xoopsCheckAll('form_posts_admin', 'post_check');">
                     <select name="op">
                         <option value="0"><{$smarty.const._SELECT}></option>
