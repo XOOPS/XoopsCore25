@@ -29,7 +29,7 @@ class XmlTagHandler
      * @param $parser
      * @param $attributes
      */
-    public function handleBeginElement(&$parser, &$attributes)
+    public function handleBeginElement($parser, &$attributes)
     {
     }
 
@@ -37,7 +37,7 @@ class XmlTagHandler
      ***************************************************************************
      * @param $parser
      */
-    public function handleEndElement(&$parser)
+    public function handleEndElement($parser)
     {
     }
 
@@ -46,7 +46,7 @@ class XmlTagHandler
      * @param $parser
      * @param $data
      */
-    public function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData($parser, &$data)
     {
     }
 }
