@@ -121,7 +121,7 @@ switch ($op) {
         // Display Page Navigation
         if ($avtcount > xoops_getModuleOption('avatars_pager')) {
             $nav = new XoopsPageNav($avtcount, xoops_getModuleOption('avatars_pager', 'system'), $start, 'start', 'fct=avatars&amp;type=' . $type . '&amp;op=listavt');
-            $xoopsTpl->assign('nav_menu', $nav->renderImageNav());
+            $xoopsTpl->assign('nav_menu', $nav->renderNav(4));
         }
         // Call Footer
         xoops_cp_footer();
