@@ -208,7 +208,7 @@ class XoopsAuthLdap extends XoopsAuth
      * @param  string $pwd   Password
      * @return bool
      */
-    public function authenticate($uname, $pwd = null)
+    public function authenticate($uname = null, $pwd = null)
     {
         $authenticated = false;
         if (!extension_loaded('ldap')) {
