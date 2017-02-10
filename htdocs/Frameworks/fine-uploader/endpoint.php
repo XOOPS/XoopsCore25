@@ -106,33 +106,16 @@ if ($method == "POST") {
     // Handles upload requests
     else {
         // Call handleUpload() with the name of the folder, relative to PHP's getcwd()
-        $result = $uploader->handleUpload(dirname(dirname(__DIR__)) . '/uploads/images');
+        $result = $uploader->handleUpload(dirname(dirname(__DIR__)) . '/uploads/images', null, 'img_');
         // To return a name used for uploaded file you can use the following line.
         $result["uploadName"] = $uploader->getUploadName();
     }
     echo json_encode($result);
 	
-	//save image	
-	$nicename = substr($uploader->getUploadName(), 4);
-	$nicename = substr($nicename, 0, strrpos ($nicename, '.'));
-
-	$ext = substr($uploader->getUploadName(), strrpos ($uploader->getUploadName(), '.') + 1);
-	$mimetype = '';
-	switch ($ext) {
-		case 'gif';
-			$mimetype = 'image/gif';
-			break;
-
-		case 'jpeg';
-		case 'jpg';
-			$mimetype = 'image/jpeg';
-			break;
-
-		case 'png';
-			$mimetype = 'image/png';
-			break;
-	}	
+	$nicename = substr($uploader->getName(), 0, strrpos ($uploader->getName(), '.'));
+    $mimetype = mime_content_type(dirname(dirname(__DIR__)) . '/uploads/images/' . $uploader->getUploadName());
 	
+    //save image	
 	$image_handler = xoops_getHandler('image');
 	$image         = $image_handler->create();
 	$image->setVar('image_name', 'images/' . $uploader->getUploadName());

@@ -91,7 +91,7 @@ class UploadHandler {
      * @param string $uploadDirectory Target directory.
      * @param string $name Overwrites the name of the file.
      */
-    public function handleUpload($uploadDirectory, $name = null){
+    public function handleUpload($uploadDirectory, $name = null, $prefix = ''){
 
         if (is_writable($this->chunksFolder) &&
             1 == mt_rand(1, 1/$this->chunksCleanupProbability)){
@@ -193,7 +193,7 @@ class UploadHandler {
 
             //$target = join(DIRECTORY_SEPARATOR, array($uploadDirectory, $uuid, $name));
 			//Hack @Mage
-			$target = join(DIRECTORY_SEPARATOR, array($uploadDirectory, 'img_' . $name));
+			$target = join(DIRECTORY_SEPARATOR, array($uploadDirectory, $prefix . $name));
 			
 			
 
