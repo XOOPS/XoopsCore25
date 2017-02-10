@@ -107,7 +107,7 @@ class XoopsCacheMemcache extends XoopsCacheEngine
             if (isset($parts[1])) {
                 $port = $parts[1];
             }
-            if ($this->memcache->addserver($host, $port)) {
+            if ($this->memcache->addServer($host, $port)) {
                 return true;
             }
         }
