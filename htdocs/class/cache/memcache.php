@@ -107,7 +107,7 @@ class XoopsCacheMemcache extends XoopsCacheEngine
             if (isset($parts[1])) {
                 $port = $parts[1];
             }
-            if ($this->memcache->addserver($host, $port)) {
+            if ($this->memcache->addServer($host, $port)) {
                 return true;
             }
         }
@@ -124,7 +124,7 @@ class XoopsCacheMemcache extends XoopsCacheEngine
      * @return boolean True if the data was successfully cached, false on failure
      * @access public
      */
-    public function write($key, $value, $duration)
+    public function write($key, $value = null, $duration = null)
     {
         return $this->memcache->set($key, $value, $this->settings['compress'], $duration);
     }
@@ -159,7 +159,7 @@ class XoopsCacheMemcache extends XoopsCacheEngine
      * @return boolean True if the cache was successfully cleared, false otherwise
      * @access public
      */
-    public function clear()
+    public function clear($check = null)
     {
         return $this->memcache->flush();
     }
