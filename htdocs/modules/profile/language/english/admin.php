@@ -101,3 +101,6 @@ define('_PROFILE_AM_REQUIRED_TOGGLE_FAILED', 'Changing Required Field Failed');
 define('_PROFILE_AM_SAVESTEP_TOGGLE', 'Toggle Save');
 define('_PROFILE_AM_SAVESTEP_TOGGLE_SUCCESS', 'Successfully Changed Save After Step');
 define('_PROFILE_AM_SAVESTEP_TOGGLE_FAILED', "Changing 'Save After Step' Failed");
+//XOOPS 2.5.9
+define('_PROFILE_AM_CANNOTDEACTIVATEWEBMASTERS', 'You cannot deactivate Webmaster account');
+

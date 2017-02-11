@@ -50,7 +50,7 @@ switch ($op) {
         if (XoopsModule::getByDirname('newbb')) {
             $tables[] = array('table_name' => 'bb_posts', 'uid_column' => 'uid');
         }
-        $uid         = system_CleanVars($_REQUEST, 'uid', int);
+        $uid         = system_CleanVars($_REQUEST, 'uid', 'int');
         $total_posts = 0;
         foreach ($tables as $table) {
             $criteria = new CriteriaCompo();
