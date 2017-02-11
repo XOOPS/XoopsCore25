@@ -452,7 +452,7 @@ class XoopsCacheEngine
      * @return boolean True if the data was successfully cached, false on failure
      * @access public
      */
-    public function write($key, $value = null, $duration = null)
+    public function write($key, $value, $duration = null)
     {
         trigger_error(sprintf(__('Method write() not implemented in %s', true), get_class($this)), E_USER_ERROR);
     }
