@@ -212,7 +212,9 @@ switch ($op) {
         //config
         $uploader = new UploadHandler();
         // Specify the list of valid extensions, ex. array("jpeg", "xml", "bmp")
-        $uploader->allowedExtensions = array(); // all files types allowed by default
+        $uploader->allowedExtensions = array('jpeg', 'jpg', 'png', 'gif'); // all files types allowed by default
+        // Specify the list of valid mimetypes, ex. array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png')
+        $uploader->allowedMimeTypes = array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'); // all files types allowed by default
         // Specify max file size in bytes.
         $uploader->sizeLimit = null;
         // Specify the input name set in the javascript.

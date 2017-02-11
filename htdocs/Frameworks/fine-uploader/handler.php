@@ -9,6 +9,7 @@
 class UploadHandler {
 
     public $allowedExtensions = array();
+    public $allowedMimeTypes = array();
     public $sizeLimit = null;
     public $inputName = 'qqfile';
     public $chunksFolder = 'chunks';
@@ -134,11 +135,16 @@ class UploadHandler {
             $name = $this->getName();
         }
 
+        //check mimetypes
+        if ($this->allowedMimeTypes && !in_array($file['type'], $this->allowedMimeTypes)) {
+            return array('error' => 'Upload Error #' . $file['type'] . ' bad mimetypes');
+        }
+
         // check file error
         if($file['error']) {
             return array('error' => 'Upload Error #'.$file['error']);
         }
-        	
+              	
         // Validate name
         if ($name === null || $name === ''){
             return array('error' => 'File name empty.');
