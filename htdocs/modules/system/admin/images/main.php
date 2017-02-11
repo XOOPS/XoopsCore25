@@ -236,7 +236,7 @@ switch ($op) {
             if ($imgcount > xoops_getModuleOption('images_pager', 'system')) {
                 //include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
                 $nav = new XoopsPageNav($imgcount, xoops_getModuleOption('images_pager', 'system'), $start, 'start', 'fct=images&amp;op=listimg&amp;imgcat_id=' . $imgcat_id);
-                $xoopsTpl->assign('nav_menu', $nav->renderImageNav());
+                $xoopsTpl->assign('nav_menu', $nav->renderNav(4));
             }
         }
 
