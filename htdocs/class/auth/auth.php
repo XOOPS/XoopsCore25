@@ -42,10 +42,10 @@ class XoopsAuth
     }
 
     /**
-     *
+     * @param  string $uname
      * @abstract need to be write in the dervied class
      */
-    public function authenticate()
+    public function authenticate($uname)
     {
         $authenticated = false;
 

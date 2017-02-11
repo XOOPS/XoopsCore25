@@ -72,7 +72,7 @@ class XoopsCacheXcache extends XoopsCacheEngine
      * @return boolean True if the engine has been successfully initialized, false if not
      * @access   public
      */
-    public function init($settings)
+    public function init($settings = array())
     {
         parent::init($settings);
         $defaults       = array('PHP_AUTH_USER' => 'cake', 'PHP_AUTH_PW' => 'cake');
@@ -90,7 +90,7 @@ class XoopsCacheXcache extends XoopsCacheEngine
      * @return boolean True if the data was successfully cached, false on failure
      * @access public
      */
-    public function write($key, &$value, $duration)
+    public function write($key, $value, $duration = null)
     {
         return xcache_set($key, $value, $duration);
     }
@@ -129,7 +129,7 @@ class XoopsCacheXcache extends XoopsCacheEngine
      * @return boolean True if the cache was successfully cleared, false otherwise
      * @access public
      */
-    public function clear()
+    public function clear($check = null)
     {
         $result = true;
         $this->__auth();

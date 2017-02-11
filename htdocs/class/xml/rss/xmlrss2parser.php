@@ -212,7 +212,7 @@ class RssTitleHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    public function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData($parser, &$data)
     {
         switch ($parser->getParentTag()) {
             case 'channel':
@@ -255,7 +255,7 @@ class RssLinkHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    public function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData($parser, &$data)
     {
         switch ($parser->getParentTag()) {
             case 'channel':
@@ -298,7 +298,7 @@ class RssDescriptionHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    public function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData($parser, &$data)
     {
         switch ($parser->getParentTag()) {
             case 'channel':
@@ -341,7 +341,7 @@ class RssGeneratorHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    public function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData($parser, &$data)
     {
         switch ($parser->getParentTag()) {
             case 'channel':
@@ -377,7 +377,7 @@ class RssCopyrightHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    public function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData($parser, &$data)
     {
         switch ($parser->getParentTag()) {
             case 'channel':
@@ -413,7 +413,7 @@ class RssNameHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    public function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData($parser, &$data)
     {
         switch ($parser->getParentTag()) {
             case 'textInput':
@@ -449,7 +449,7 @@ class RssManagingEditorHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    public function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData($parser, &$data)
     {
         switch ($parser->getParentTag()) {
             case 'channel':
@@ -485,7 +485,7 @@ class RssLanguageHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    public function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData($parser, &$data)
     {
         switch ($parser->getParentTag()) {
             case 'channel':
@@ -521,7 +521,7 @@ class RssWebMasterHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    public function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData($parser, &$data)
     {
         switch ($parser->getParentTag()) {
             case 'channel':
@@ -557,7 +557,7 @@ class RssDocsHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    public function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData($parser, &$data)
     {
         switch ($parser->getParentTag()) {
             case 'channel':
@@ -593,7 +593,7 @@ class RssTtlHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    public function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData($parser, &$data)
     {
         switch ($parser->getParentTag()) {
             case 'channel':
@@ -626,7 +626,7 @@ class RssTextInputHandler extends XmlTagHandler
      * @param $parser
      * @param $attributes
      */
-    public function handleBeginElement(&$parser, &$attributes)
+    public function handleBeginElement($parser, &$attributes)
     {
         $parser->resetTempArr();
     }
@@ -634,7 +634,7 @@ class RssTextInputHandler extends XmlTagHandler
     /**
      * @param $parser
      */
-    public function handleEndElement(&$parser)
+    public function handleEndElement($parser)
     {
         $parser->setChannelData('textinput', $parser->getTempArr());
     }
@@ -664,7 +664,7 @@ class RssLastBuildDateHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    public function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData($parser, &$data)
     {
         switch ($parser->getParentTag()) {
             case 'channel':
@@ -721,7 +721,7 @@ class RssUrlHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    public function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData($parser, &$data)
     {
         if ($parser->getParentTag() === 'image') {
             $parser->setImageData('url', $data);
@@ -753,7 +753,7 @@ class RssWidthHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    public function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData($parser, &$data)
     {
         if ($parser->getParentTag() === 'image') {
             $parser->setImageData('width', $data);
@@ -785,7 +785,7 @@ class RssHeightHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    public function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData($parser, &$data)
     {
         if ($parser->getParentTag() === 'image') {
             $parser->setImageData('height', $data);
@@ -817,7 +817,7 @@ class RssItemHandler extends XmlTagHandler
      * @param $parser
      * @param $attributes
      */
-    public function handleBeginElement(&$parser, &$attributes)
+    public function handleBeginElement($parser, &$attributes)
     {
         $parser->resetTempArr();
     }
@@ -825,7 +825,7 @@ class RssItemHandler extends XmlTagHandler
     /**
      * @param $parser
      */
-    public function handleEndElement(&$parser)
+    public function handleEndElement($parser)
     {
         $items = $parser->getTempArr();
         $parser->setItems($items);
@@ -856,7 +856,7 @@ class RssCategoryHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    public function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData($parser, &$data)
     {
         switch ($parser->getParentTag()) {
             case 'channel':
@@ -895,7 +895,7 @@ class RssCommentsHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    public function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData($parser, &$data)
     {
         if ($parser->getParentTag() === 'item') {
             $parser->setTempArr('comments', $data);
@@ -927,7 +927,7 @@ class RssPubDateHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    public function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData($parser, &$data)
     {
         switch ($parser->getParentTag()) {
             case 'channel':
@@ -966,7 +966,7 @@ class RssGuidHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    public function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData($parser, &$data)
     {
         if ($parser->getParentTag() === 'item') {
             $parser->setTempArr('guid', $data);
@@ -995,7 +995,7 @@ class RssAuthorHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    public function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData($parser, &$data)
     {
         if ($parser->getParentTag() === 'item') {
             $parser->setTempArr('author', $data);
@@ -1027,7 +1027,7 @@ class RssSourceHandler extends XmlTagHandler
      * @param $parser
      * @param $attributes
      */
-    public function handleBeginElement(&$parser, &$attributes)
+    public function handleBeginElement($parser, &$attributes)
     {
         if ($parser->getParentTag() === 'item') {
             $parser->setTempArr('source_url', $attributes['url']);
@@ -1038,7 +1038,7 @@ class RssSourceHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    public function handleCharacterData(&$parser, &$data)
+    public function handleCharacterData($parser, &$data)
     {
         if ($parser->getParentTag() === 'item') {
             $parser->setTempArr('source', $data);

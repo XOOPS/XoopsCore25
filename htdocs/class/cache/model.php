@@ -95,7 +95,7 @@ class XoopsCacheModel extends XoopsCacheEngine
      * @return boolean True if the engine has been successfully initialized, false if not
      * @access   public
      */
-    public function init($settings)
+    public function init($settings = array())
     {
         $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
 
@@ -122,22 +122,22 @@ class XoopsCacheModel extends XoopsCacheEngine
      * Write data for key into cache
      *
      * @param  string  $key      Identifier for the data
-     * @param  mixed   $data     Data to be cached
+     * @param  mixed   $value     Data to be cached
      * @param  integer $duration How long to cache the data, in seconds
      * @return boolean True if the data was successfully cached, false on failure
      * @access public
      */
-    public function write($key, $data, $duration)
+    public function write($key, $value, $duration = null)
     {
         // if (isset($this->settings['serialize'])) {
-        $data = serialize($data);
+        $value = serialize($value);
         // }
-        if (!$data) {
+        if (!$value) {
             return false;
         }
         $cache_obj = $this->model->create();
         $cache_obj->setVar($this->model->keyname, $key);
-        $cache_obj->setVar($this->fields[0], $data);
+        $cache_obj->setVar($this->fields[0], $value);
         $cache_obj->setVar($this->fields[1], time() + $duration);
 
         return $this->model->insert($cache_obj);
@@ -181,7 +181,7 @@ class XoopsCacheModel extends XoopsCacheEngine
      * @return boolean True if the cache was successfully cleared, false otherwise
      * @access public
      */
-    public function clear()
+    public function clear($check = null)
     {
         return $this->model->deleteAll();
     }

@@ -79,7 +79,7 @@ class XoopsCacheApc extends XoopsCacheEngine
      * @return boolean True if the data was successfully cached, false on failure
      * @access public
      */
-    public function write($key, $value, $duration)
+    public function write($key, $value, $duration = null)
     {
         return apc_store($key, $value, $duration);
     }
@@ -114,7 +114,7 @@ class XoopsCacheApc extends XoopsCacheEngine
      * @return boolean True if the cache was successfully cleared, false otherwise
      * @access public
      */
-    public function clear()
+    public function clear($check = null)
     {
         return apc_clear_cache('user');
     }
