@@ -99,12 +99,14 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !$xoopsSecurity->checkReferer(XOOPS
  * Requires XoopsLogger, XOOPS_DB_PROXY;
  */
 include_once $xoops->path('class/database/databasefactory.php');
+/* @var $xoopsDB XoopsMySQLDatabase */
 $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
 
 /**
  * Get xoops configs
  * Requires functions and database loaded
  */
+/* @var $config_handler XoopsConfigHandler  */
 $config_handler = xoops_getHandler('config');
 $xoopsConfig    = $config_handler->getConfigsByCat(XOOPS_CONF);
 
@@ -175,6 +177,7 @@ xoops_loadLanguage('pagetype');
  */
 $xoopsUser        = '';
 $xoopsUserIsAdmin = false;
+/* @var $member_handler XoopsMemberHandler */
 $member_handler   = xoops_getHandler('member');
 $sess_handler     = xoops_getHandler('session');
 if ($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && $_POST[$xoopsConfig['sslpost_name']] != '') {
@@ -313,6 +316,7 @@ if ($xoopsConfig['closesite'] == 1) {
  */
 if (file_exists('./xoops_version.php')) {
     $url_arr        = explode('/', strstr($_SERVER['PHP_SELF'], '/modules/'));
+    /* @var $module_handler XoopsModuleHandler */
     $module_handler = xoops_getHandler('module');
     $xoopsModule    = $module_handler->getByDirname($url_arr[2]);
     unset($url_arr);
@@ -323,7 +327,7 @@ if (file_exists('./xoops_version.php')) {
         include_once $xoops->path('footer.php');
         exit();
     }
-
+    /* @var $moduleperm_handler XoopsGroupPermHandler  */
     $moduleperm_handler = xoops_getHandler('groupperm');
     if ($xoopsUser) {
         if (!$moduleperm_handler->checkRight('module_read', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {

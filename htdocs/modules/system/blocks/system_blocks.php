@@ -25,6 +25,7 @@ include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 function b_system_online_show()
 {
     global $xoopsUser, $xoopsModule;
+    /* @var $online_handler XoopsOnlineHandler  */
     $online_handler = xoops_getHandler('online');
     mt_srand((double)microtime() * 1000000);
     // set gc probabillity to 10% for now..
@@ -117,6 +118,7 @@ function b_system_main_show()
     $criteria->add(new Criteria('isactive', 1));
     $criteria->add(new Criteria('weight', 0, '>'));
     $modules            = $module_handler->getObjects($criteria, true);
+    /* @var $moduleperm_handler XoopsGroupPermHandler  */
     $moduleperm_handler = xoops_getHandler('groupperm');
     $groups             = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
     $read_allowed       = $moduleperm_handler->getItemIds('module_read', $groups);
@@ -198,6 +200,7 @@ function b_system_waiting_show()
 {
     global $xoopsUser;
     $xoopsDB        = XoopsDatabaseFactory::getDatabaseConnection();
+    /* @var $module_handler XoopsModuleHandler */
     $module_handler = xoops_getHandler('module');
     $block          = array();
 
@@ -364,6 +367,7 @@ function b_system_newmembers_show($options)
     $criteria->setOrder('DESC');
     $criteria->setSort('user_regdate');
     $criteria->setLimit($limit);
+    /* @var $member_handler XoopsMemberHandler */
     $member_handler = xoops_getHandler('member');
     $newmembers     = $member_handler->getUsers($criteria);
     $count          = count($newmembers);
@@ -399,6 +403,7 @@ function b_system_topposters_show($options)
     $criteria->setOrder('DESC');
     $criteria->setSort('posts');
     $criteria->setLimit($limit);
+    /* @var $member_handler XoopsMemberHandler */
     $member_handler = xoops_getHandler('member');
     $topposters     = $member_handler->getUsers($criteria);
     $count          = count($topposters);
@@ -450,7 +455,9 @@ function b_system_comments_show($options)
     // Check modules permissions
 
     $comments       = $comment_handler->getObjects($criteria, true);
+    /* @var $member_handler XoopsMemberHandler */
     $member_handler = xoops_getHandler('member');
+    /* @var $module_handler XoopsModuleHandler */
     $module_handler = xoops_getHandler('module');
     $modules        = $module_handler->getObjects(new Criteria('hascomments', 1), true);
     $comment_config = array();

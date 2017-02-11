@@ -130,6 +130,7 @@ class TableLoad
         $prefixedTable = $db->prefix($table);
         $sql = 'SELECT COUNT(*) as count FROM ' . $prefixedTable . ' ';
         if (isset($criteria) && is_subclass_of($criteria, '\CriteriaElement')) {
+            /* @var  $criteria \CriteriaCompo */
             $sql .= $criteria->renderWhere();
         }
         $result = $db->query($sql);
@@ -156,6 +157,7 @@ class TableLoad
         $prefixedTable = $db->prefix($table);
         $sql = 'SELECT * FROM ' . $prefixedTable . ' ';
         if (isset($criteria) && is_subclass_of($criteria, '\CriteriaElement')) {
+            /* @var  $criteria \CriteriaCompo */
             $sql .= $criteria->renderWhere();
         }
         $rows = array();

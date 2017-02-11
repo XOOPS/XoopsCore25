@@ -28,8 +28,11 @@ if (!xoops_getModuleOption('active_banners', 'system')) {
 // Parameters
 $nb_aff = xoops_getModuleOption('banners_pager', 'system');
 // Classes
+/* @var  $banner_Handler SystemBannerHandler */
 $banner_Handler        = xoops_getModuleHandler('banner', 'system');
+/* @var  $banner_finish_Handler SystemBannerfinishHandler */
 $banner_finish_Handler = xoops_getModuleHandler('bannerfinish', 'system');
+/* @var  $banner_client_Handler SystemBannerclientHandler */
 $banner_client_Handler = xoops_getModuleHandler('bannerclient', 'system');
 // Get Action type
 $op = system_CleanVars($_REQUEST, 'op', 'default', 'string');
@@ -54,7 +57,8 @@ switch ($op) {
             redirect_header('admin.php?fct=banners', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         $bid = system_CleanVars($_POST, 'bid', 0, 'int');
-        if ($bid > 0) {
+        /* @var  $obj SystemBanner */
+    if ($bid > 0) {
             $obj = $banner_Handler->get($bid);
         } else {
             $obj = $banner_Handler->create();
@@ -80,7 +84,9 @@ switch ($op) {
 
         $bid = system_CleanVars($_REQUEST, 'bid', 0, 'int');
         if ($bid > 0) {
+            /* @var  $obj SystemBanner */
             $obj  = $banner_Handler->get($bid);
+            /* @var  $form XoopsThemeForm */
             $form = $obj->getForm();
             $form->display();
         } else {
@@ -150,6 +156,7 @@ switch ($op) {
             redirect_header('admin.php?fct=banners', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         $cid = system_CleanVars($_REQUEST, 'cid', 0, 'int');
+        /* @var  $obj SystemBanner */
         if ($cid > 0) {
             $obj = $banner_client_Handler->get($cid);
         } else {
@@ -162,7 +169,8 @@ switch ($op) {
         }
 
         xoops_error($obj->getHtmlErrors());
-        $form =& $obj->getForm(false);
+        /* @var  $form XoopsThemeForm */
+        $form = $obj->getForm(false);
         $form->display();
         break;
 
@@ -174,6 +182,7 @@ switch ($op) {
 
         $cid = system_CleanVars($_REQUEST, 'cid', 0, 'int');
         if ($cid > 0) {
+            /* @var  $obj SystemBanner */
             $obj  = $banner_client_Handler->get($cid);
             $form = $obj->getForm();
             $xoopsTpl->assign('form', $form->render());
@@ -219,6 +228,7 @@ switch ($op) {
         $xoBreadCrumb->addHelp(system_adminVersion('banners', 'help') . '#new_banner');
         $xoBreadCrumb->addTips(_AM_SYSTEM_BANNERS_NAV_TIPS);
         $xoBreadCrumb->render();
+        /* @var  $obj SystemBanner */
         $obj  = $banner_Handler->create();
         $form = $obj->getForm();
         $xoopsTpl->assign('form', $form->render());
@@ -229,6 +239,7 @@ switch ($op) {
         $xoBreadCrumb->addHelp(system_adminVersion('banners', 'help') . '#new_client');
         $xoBreadCrumb->addTips(_AM_SYSTEM_BANNERS_NAV_TIPS);
         $xoBreadCrumb->render();
+        /* @var  $obj SystemBanner */
         $obj  = $banner_client_Handler->create();
         $form = $obj->getForm();
         $xoopsTpl->assign('form', $form->render());

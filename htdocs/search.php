@@ -26,7 +26,7 @@
 include __DIR__ . '/mainfile.php';
 
 xoops_loadLanguage('search');
-
+/* @var $config_handler XoopsConfigHandler  */
 $config_handler    = xoops_getHandler('config');
 $xoopsConfigSearch = $config_handler->getConfigsByCat(XOOPS_CONF_SEARCH);
 
@@ -86,6 +86,7 @@ if ($action === 'results') {
 }
 $GLOBALS['xoopsOption']['template_main'] = 'system_search.tpl';
 $groups            = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+/* @var  $gperm_handler XoopsGroupPermHandler */
 $gperm_handler     = xoops_getHandler('groupperm');
 $available_modules = $gperm_handler->getItemIds('module_read', $groups);
 if ($action === 'search') {
@@ -125,6 +126,7 @@ if ($action !== 'showallbyuser') {
 }
 switch ($action) {
     case 'results':
+        /* @var $module_handler XoopsModuleHandler  */
         $module_handler = xoops_getHandler('module');
         $criteria       = new CriteriaCompo(new Criteria('hassearch', 1));
         $criteria->add(new Criteria('isactive', 1));
@@ -216,7 +218,8 @@ switch ($action) {
     case 'showallbyuser':
         include $GLOBALS['xoops']->path('header.php');
 		$xoopsTpl->assign('showallbyuser', true);
-        $module_handler = xoops_getHandler('module');
+    /* @var $module_handler XoopsModuleHandler  */
+		$module_handler = xoops_getHandler('module');
         $module         = $module_handler->get($mid);
         $results        = $module->search($queries, $andor, 20, $start, $uid);
         $count          = count($results);

@@ -207,7 +207,7 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
     /**
      * Load {@link XoopsImageSetImg}s from the database
      *
-     * @param CriteriaElement $criteria  {@link CriteriaElement}
+     * @param CriteriaElement|CriteriaCompo $criteria  {@link CriteriaElement}
      * @param boolean         $id_as_key Use the ID as key into the array
      * @internal param bool $getbinary
      * @return array Array of {@link XoopsImageSetImg} objects
@@ -244,7 +244,7 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
     /**
      * Count some imagessetsimg
      *
-     * @param  CriteriaElement $criteria {@link CriteriaElement}
+     * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement}
      * @return int
      **/
     public function getCount(CriteriaElement $criteria = null)

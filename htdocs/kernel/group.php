@@ -220,7 +220,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
     /**
      * retrieve groups from the database
      *
-     * @param  CriteriaElement $criteria  {@link CriteriaElement} with conditions for the groups
+     * @param  CriteriaElement|CriteriaCompo $criteria  {@link CriteriaElement} with conditions for the groups
      * @param  bool            $id_as_key should the groups' IDs be used as keys for the associative array?
      * @return mixed           Array of groups
      */
@@ -405,7 +405,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
     /**
      * retrieve memberships from the database
      *
-     * @param  CriteriaElement $criteria  {@link CriteriaElement} conditions to meet
+     * @param  CriteriaElement|CriteriaCompo $criteria  {@link CriteriaElement} conditions to meet
      * @param  bool            $id_as_key should the ID be used as the array's key?
      * @return array           array of references
      */
@@ -440,7 +440,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
     /**
      * count how many memberships meet the conditions
      *
-     * @param  CriteriaElement $criteria {@link CriteriaElement} conditions to meet
+     * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement} conditions to meet
      * @return int
      */
     public function getCount(CriteriaElement $criteria = null)
@@ -461,7 +461,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
     /**
      * delete all memberships meeting the conditions
      *
-     * @param  CriteriaElement $criteria {@link CriteriaElement} with conditions to meet
+     * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement} with conditions to meet
      * @return bool
      */
     public function deleteAll(CriteriaElement $criteria = null)

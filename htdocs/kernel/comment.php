@@ -438,7 +438,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
     /**
      * Get some {@link XoopsComment}s
      *
-     * @param CriteriaElement $criteria
+     * @param CriteriaElement|CriteriaCompo $criteria
      * @param bool   $id_as_key Use IDs as keys into the array?
      *
      * @return array Array of {@link XoopsComment} objects
@@ -476,7 +476,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
     /**
      * Count Comments
      *
-     * @param CriteriaElement $criteria {@link CriteriaElement}
+     * @param CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement}
      *
      * @return int Count
      **/
@@ -497,7 +497,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
     /**
      * Delete multiple comments
      *
-     * @param CriteriaElement $criteria {@link CriteriaElement}
+     * @param CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement}
      *
      * @return bool
      **/

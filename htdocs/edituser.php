@@ -32,7 +32,7 @@ if (!is_object($xoopsUser)) {
 
 // initialize $op variable
 $op = XoopsRequest::getCmd('op', 'editprofile');
-
+/* @var $config_handler XoopsConfigHandler  */
 $config_handler  = xoops_getHandler('config');
 $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 $myts            = MyTextSanitizer::getInstance();
@@ -286,6 +286,8 @@ if ($op === 'avatarupload') {
         if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
             $uploader->setPrefix('cavt');
             if ($uploader->upload()) {
+
+                /* @var $avt_handler XoopsAvatarHandler */
                 $avt_handler = xoops_getHandler('avatar');
                 $avatar      = $avt_handler->create();
                 $avatar->setVar('avatar_file', 'avatars/' . $uploader->getSavedFileName());
@@ -345,6 +347,7 @@ if ($op === 'avatarchoose') {
     if (0 === strpos($user_avatarpath, realpath(XOOPS_UPLOAD_PATH)) && is_file($user_avatarpath)) {
         $oldavatar = $xoopsUser->getVar('user_avatar');
         $xoopsUser->setVar('user_avatar', $user_avatar);
+        /* @var $member_handler XoopsMemberHandler */
         $member_handler = xoops_getHandler('member');
         if (!$member_handler->insertUser($xoopsUser)) {
             include $GLOBALS['xoops']->path('header.php');

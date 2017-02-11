@@ -225,7 +225,7 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
     /**
      * Get some {@link XoopsConfigOption}s
      *
-     * @param CriteriaElement $criteria  {@link CriteriaElement}
+     * @param CriteriaElement|CriteriaCompo $criteria  {@link CriteriaElement}
      * @param bool            $id_as_key Use the IDs as array-keys?
      *
      * @return array Array of {@link XoopsConfigOption}s

@@ -279,7 +279,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
     /**
      * Fetch a row of objects from the database
      *
-     * @param  CriteriaElement $criteria
+     * @param  CriteriaElement|CriteriaCompo $criteria
      * @param  bool  $id_as_key
      * @return object
      */
@@ -316,11 +316,13 @@ class XoopsAvatarHandler extends XoopsObjectHandler
     /**
      * Get count
      *
-     * @param  CriteriaElement $criteria
+     * @param  CriteriaElement|CriteriaCompo $criteria
      * @return int
      */
     public function getCount(CriteriaElement $criteria = null)
     {
+
+
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('avatar');
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();

@@ -17,6 +17,7 @@
  * @author              Skalpa Keo <skalpa@xoops.org>
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
+/* @var  $xoopsUser XoopsUser */
 
 if (file_exists(__DIR__ . '/mainfile.php')) {
     include __DIR__ . '/mainfile.php';
@@ -37,6 +38,7 @@ if (isset($xoopsConfig['startpage']) && $xoopsConfig['startpage'] != '' && $xoop
     define('XOOPS_STARTPAGE_REDIRECTED', 1);
 
     global $xoopsModuleConfig;
+    /* @var $module_handler XoopsModuleHandler  */
     $module_handler = xoops_getHandler('module');
     $xoopsModule    = $module_handler->getByDirname($xoopsConfig['startpage']);
     if (!$xoopsModule || !$xoopsModule->getVar('isactive')) {
@@ -45,6 +47,7 @@ if (isset($xoopsConfig['startpage']) && $xoopsConfig['startpage'] != '' && $xoop
         include_once $GLOBALS['xoops']->path('footer.php');
         exit();
     }
+    /* @var  $moduleperm_handler XoopsGroupPermHandler */
     $moduleperm_handler = xoops_getHandler('groupperm');
     if ($xoopsUser) {
         if (!$moduleperm_handler->checkRight('module_read', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {

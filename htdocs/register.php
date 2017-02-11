@@ -29,7 +29,7 @@ xoops_loadLanguage('user');
 xoops_load('XoopsUserUtility');
 
 $myts = MyTextSanitizer::getInstance();
-
+/* @var $config_handler XoopsConfigHandler  */
 $config_handler  = xoops_getHandler('config');
 $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
@@ -174,6 +174,7 @@ switch ($op) {
             $stop .= $xoopsCaptcha->getMessage() . '<br>';
         }
         if (empty($stop)) {
+            /* @var $member_handler XoopsMemberHandler */
             $member_handler = xoops_getHandler('member');
             $newuser        = $member_handler->createUser();
             $newuser->setVar('user_viewemail', $user_viewemail, true);
@@ -240,6 +241,7 @@ switch ($op) {
                 $xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
                 $xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
                 $xoopsMailer->assign('SITEURL', XOOPS_URL . '/');
+                /* @var $member_handler XoopsMemberHandler */
                 $member_handler = xoops_getHandler('member');
                 $xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['activation_group']));
                 $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
@@ -255,6 +257,7 @@ switch ($op) {
                 $xoopsMailer =& xoops_getMailer();
                 $xoopsMailer->reset();
                 $xoopsMailer->useMail();
+                /* @var $member_handler XoopsMemberHandler */
                 $member_handler = xoops_getHandler('member');
                 $xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['new_user_notify_group']));
                 $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
@@ -278,6 +281,7 @@ switch ($op) {
         if (empty($id)) {
             redirect_header('index.php', 1, '');
         }
+    /* @var $member_handler XoopsMemberHandler */
         $member_handler = xoops_getHandler('member');
         $thisuser       = $member_handler->getUser($id);
         if (!is_object($thisuser)) {

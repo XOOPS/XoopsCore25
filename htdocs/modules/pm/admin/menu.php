@@ -22,6 +22,7 @@ $path = dirname(dirname(dirname(__DIR__)));
 include_once $path . '/mainfile.php';
 
 $dirname         = basename(dirname(__DIR__));
+/* @var $module_handler XoopsModuleHandler */
 $module_handler  = xoops_getHandler('module');
 $module          = $module_handler->getByDirname($dirname);
 $pathIcon32      = $module->getInfo('icons32');

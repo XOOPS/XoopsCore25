@@ -38,7 +38,7 @@ class SystemMenuHandler
     public function __construct()
     {
         global $xoopsModule;
-        $this->_obj =& $xoopsModule;
+        $this->_obj = $xoopsModule;
     }
 
     /**

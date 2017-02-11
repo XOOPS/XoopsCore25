@@ -237,7 +237,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
     /**
      * Retrieve multiple {@link XoopsGroupPerm}s
      *
-     * @param CriteriaElement $criteria  {@link CriteriaElement}
+     * @param CriteriaElement|CriteriaCompo $criteria  {@link CriteriaElement}
      * @param bool   $id_as_key Use IDs as array keys?
      *
      * @return array Array of {@link XoopsGroupPerm}s
@@ -273,7 +273,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
     /**
      * Count some {@link XoopsGroupPerm}s
      *
-     * @param CriteriaElement $criteria {@link CriteriaElement}
+     * @param CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement}
      *
      * @return int
      */
@@ -295,7 +295,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
     /**
      * Delete all permissions by a certain criteria
      *
-     * @param CriteriaElement $criteria {@link CriteriaElement}
+     * @param CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement}
      *
      * @return bool TRUE on success
      */
@@ -403,6 +403,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
      */
     public function addRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid = 1)
     {
+        /* @var $perm XoopsGroupPerm */
         $perm = $this->create();
         $perm->setVar('gperm_name', $gperm_name);
         $perm->setVar('gperm_groupid', $gperm_groupid);

@@ -33,14 +33,14 @@
 // of missing fields in install file, when add new fields to database)
 function make_groups(&$dbm)
 {
-    $gruops['XOOPS_GROUP_ADMIN']     = $dbm->insert('groups', " VALUES (1, '" . addslashes(_INSTALL_WEBMASTER) . "', '" . addslashes(_INSTALL_WEBMASTERD) . "', 'Admin')");
-    $gruops['XOOPS_GROUP_USERS']     = $dbm->insert('groups', " VALUES (2, '" . addslashes(_INSTALL_REGUSERS) . "', '" . addslashes(_INSTALL_REGUSERSD) . "', 'User')");
-    $gruops['XOOPS_GROUP_ANONYMOUS'] = $dbm->insert('groups', " VALUES (3, '" . addslashes(_INSTALL_ANONUSERS) . "', '" . addslashes(_INSTALL_ANONUSERSD) . "', 'Anonymous')");
-    if (!$gruops['XOOPS_GROUP_ADMIN'] || !$gruops['XOOPS_GROUP_USERS'] || !$gruops['XOOPS_GROUP_ANONYMOUS']) {
+    $groups['XOOPS_GROUP_ADMIN']     = $dbm->insert('groups', " VALUES (1, '" . addslashes(_INSTALL_WEBMASTER) . "', '" . addslashes(_INSTALL_WEBMASTERD) . "', 'Admin')");
+    $groups['XOOPS_GROUP_USERS']     = $dbm->insert('groups', " VALUES (2, '" . addslashes(_INSTALL_REGUSERS) . "', '" . addslashes(_INSTALL_REGUSERSD) . "', 'User')");
+    $groups['XOOPS_GROUP_ANONYMOUS'] = $dbm->insert('groups', " VALUES (3, '" . addslashes(_INSTALL_ANONUSERS) . "', '" . addslashes(_INSTALL_ANONUSERSD) . "', 'Anonymous')");
+    if (!$groups['XOOPS_GROUP_ADMIN'] || !$groups['XOOPS_GROUP_USERS'] || !$groups['XOOPS_GROUP_ANONYMOUS']) {
         return false;
     }
 
-    return $gruops;
+    return $groups;
 }
 
 /**
@@ -59,6 +59,7 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
     // $dbm = new Db_manager;
     $tables = array();
     // data for table 'groups_users_link'
+    /* @var  $dbm Db_manager */
     $dbm->insert('groups_users_link', ' VALUES (0, ' . $groups['XOOPS_GROUP_ADMIN'] . ', 1)');
     $dbm->insert('groups_users_link', ' VALUES (0, ' . $groups['XOOPS_GROUP_USERS'] . ', 1)');
     // data for table 'group_permission'
@@ -219,7 +220,7 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
     $dbm->insert('config', " VALUES (50, 0, 3, 'meta_copyright', '_MD_AM_METACOPYR', 'Copyright &#169; 2001-" . date('Y', time()) . "', '_MD_AM_METACOPYRDSC', 'textbox', 'text', 8)");
     $dbm->insert('config', " VALUES (51, 0, 3, 'meta_description', '_MD_AM_METADESC', 'XOOPS is a dynamic Object Oriented based open source portal script written in PHP.', '_MD_AM_METADESCDSC', 'textarea', 'text', 1)");
     $dbm->insert('config', " VALUES (52, 0, 2, 'allow_chgmail', '_MD_AM_ALLWCHGMAIL', '0', '_MD_AM_ALLWCHGMAILDSC', 'yesno', 'int', 3)");
-    $dbm->insert('config', " VALUES (53, 0, 1, 'use_mysession', '_MD_AM_USEMYSESS', '0', '_MD_AM_USEMYSESSDSC', 'yesno', 'int', 19)");
+    $dbm->insert('config', " VALUES (53, 0, 1, 'use_mysession', '_MD_AM_USEMYSESS', '1', '_MD_AM_USEMYSESSDSC', 'yesno', 'int', 19)");
     $dbm->insert('config', " VALUES (54, 0, 2, 'reg_dispdsclmr', '_MD_AM_DSPDSCLMR', 1, '_MD_AM_DSPDSCLMRDSC', 'yesno', 'int', 30)");
     $dbm->insert('config', " VALUES (55, 0, 2, 'reg_disclaimer', '_MD_AM_REGDSCLMR', '" . addslashes(_INSTALL_DISCLMR) . "', '_MD_AM_REGDSCLMRDSC', 'textarea', 'text', 32)");
     $dbm->insert('config', " VALUES (56, 0, 2, 'allow_register', '_MD_AM_ALLOWREG', 1, '_MD_AM_ALLOWREGDSC', 'yesno', 'int', 0)");

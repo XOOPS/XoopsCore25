@@ -33,6 +33,7 @@ if (!empty($_GET['op']) && in_array($_GET['op'], array('actv', 'activate'))) {
 xoops_load('XoopsUserUtility');
 $myts = MyTextSanitizer::getInstance();
 
+/* @var $config_handler XoopsConfigHandler  */
 $config_handler             = xoops_getHandler('config');
 $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 if (empty($GLOBALS['xoopsConfigUser']['allow_register'])) {
@@ -90,6 +91,7 @@ if (isset($steps[$current_step])) {
     $xoBreadcrumbs[] = array('title' => $steps[$current_step]['step_name']);
 }
 
+/* @var $member_handler XoopsMemberHandler */
 $member_handler  = xoops_getHandler('member');
 $profile_handler = xoops_getModuleHandler('profile');
 

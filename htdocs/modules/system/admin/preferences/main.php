@@ -61,6 +61,7 @@ switch ($op) {
         $xoopsTpl->assign('breadcrumb', 1);
 
         $form           = new XoopsThemeForm(constant($confcat->getVar('confcat_name')), 'pref_form', 'admin.php?fct=preferences', 'post', true);
+        /* @var $config_handler XoopsConfigHandler  */
         $config_handler = xoops_getHandler('config');
         $criteria       = new CriteriaCompo();
         $criteria->add(new Criteria('conf_modid', 0));
@@ -255,6 +256,7 @@ switch ($op) {
 
     case 'showmod':
 
+        /* @var $config_handler XoopsConfigHandler  */
         $config_handler = xoops_getHandler('config');
         $mod            = isset($_REQUEST['mod']) ? (int)$_REQUEST['mod'] : 0;
         if ($mod <= 0) {
@@ -428,6 +430,7 @@ switch ($op) {
 
                     // if default theme has been changed
                     if (!$theme_updated && $config->getVar('conf_catid') == XOOPS_CONF && $config->getVar('conf_name') === 'theme_set') {
+                        /* @var $member_handler XoopsMemberHandler */
                         $member_handler = xoops_getHandler('member');
                         $member_handler->updateUsersByField('theme', ${$config->getVar('conf_name')});
                         $theme_updated = true;
@@ -478,8 +481,10 @@ switch ($op) {
 
                     // add read permission for the start module to all groups
                     if (!$startmod_updated && $new_value != '--' && $config->getVar('conf_catid') == XOOPS_CONF && $config->getVar('conf_name') === 'startpage') {
+                        /* @var $member_handler XoopsMemberHandler */
                         $member_handler     = xoops_getHandler('member');
                         $groups             = $member_handler->getGroupList();
+                        /* @var $moduleperm_handler XoopsGroupPermHandler  */
                         $moduleperm_handler = xoops_getHandler('groupperm');
                         $module_handler     = xoops_getHandler('module');
                         $module             = $module_handler->getByDirname($new_value);

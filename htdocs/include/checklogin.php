@@ -29,6 +29,7 @@ if ($uname == '' || $pass == '') {
     redirect_header(XOOPS_URL . '/user.php', 1, _US_INCORRECTLOGIN);
 }
 
+/* @var $member_handler XoopsMemberHandler */
 $member_handler = xoops_getHandler('member');
 $myts           = MyTextSanitizer::getInstance();
 

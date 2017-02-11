@@ -77,6 +77,7 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_CONFIG')):
             return null;
         }
 
+        /* @var $config_handler XoopsConfigHandler  */
         $config_handler = xoops_getHandler('config');
         $criteria       = new CriteriaCompo(new Criteria('conf_modid', $module->getVar('mid')));
         $configs        = $config_handler->getConfigs($criteria);

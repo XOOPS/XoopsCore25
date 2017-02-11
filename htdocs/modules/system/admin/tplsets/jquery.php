@@ -15,6 +15,9 @@
  * @author              Maxime Cointin (AKA Kraven30)
  * @package             system
  */
+/* @var  $xoopsUser XoopsUser */
+/* @var $xoopsModule XoopsModule */
+/* @var $xoopsConfig XoopsConfigItem */
 
 include dirname(dirname(__DIR__)) . '/header.php';
 
