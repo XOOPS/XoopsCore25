@@ -14,7 +14,6 @@
  * @package             core
  * @since               2.0.0
  */
-/* @var  $xoopsUser XoopsUser */
 
 include __DIR__ . '/mainfile.php';
 
@@ -44,7 +43,6 @@ if ($op === 'list') {
     $xoopsTpl->assign('sitename', htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES));
     $target = htmlspecialchars($target, ENT_QUOTES);
     $xoopsTpl->assign('target', $target);
-    /* @var $imgcat_handler XoopsImagecategoryHandler */
     $imgcat_handler = xoops_getHandler('imagecategory');
     $catlist        = $imgcat_handler->getList($group, 'imgcat_read', 1);
     $catcount       = count($catlist);
@@ -146,7 +144,6 @@ if ($op === 'upload') {
     if (!is_object($imgcat)) {
         $error = true;
     } else {
-        /* @var $imgcatperm_handler XoopsGroupPermHandler */
         $imgcatperm_handler = xoops_getHandler('groupperm');
         if (is_object($xoopsUser)) {
             if (!$imgcatperm_handler->checkRight('imgcat_write', $imgcat_id, $xoopsUser->getGroups())) {
@@ -201,7 +198,6 @@ if ($op === 'doupload') {
         if (!is_object($imgcat)) {
             $error = true;
         } else {
-            /* @var $imgcatperm_handler XoopsGroupPermHandler */
             $imgcatperm_handler = xoops_getHandler('groupperm');
             if (is_object($xoopsUser)) {
                 if (!$imgcatperm_handler->checkRight('imgcat_write', $imgcat_id, $xoopsUser->getGroups())) {
