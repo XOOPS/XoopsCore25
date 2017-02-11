@@ -38,3 +38,5 @@ define('_AM_SYSTEM_COMMENTS_ACTION', 'Action');
 define('_AM_SYSTEM_COMMENTS_VIEW', 'See comment');
 define('_AM_SYSTEM_COMMENTS_NO_COMMENTS', 'No comments');
 define('_AM_SYSTEM_COMMENTS_COMMENTS_FOUND', '%s comment(s) found.');
+//XOOPS 2.5.9
+define('_MP_DELETECOUNT', 'The number of members in the group is too big ( > 4,000) ');

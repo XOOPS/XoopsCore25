@@ -69,3 +69,5 @@ define('_NOT_MODE_SENDALWAYS', 'Notify me of all selected updates');
 define('_NOT_MODE_SENDONCE', 'Notify me only once');
 define('_NOT_MODE_SENDONCEPERLOGIN', 'Notify me once then disable until I log in again');
 define('_NOT_NOTHINGTODELETE', 'There is nothing to delete.');
+//XOOPS 2.5.9
+define('_NOT_RUSUREDEL', 'Are you sure to delete this Notification?');

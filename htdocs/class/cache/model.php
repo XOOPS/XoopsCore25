@@ -115,7 +115,7 @@ class XoopsCacheModel extends XoopsCacheEngine
      */
     public function gc()
     {
-        return $this->model->deleteAll(new Criteria($this->fields[1], time, '<= '));
+        return $this->model->deleteAll(new Criteria($this->fields[1], time(), '<= '));
     }
 
     /**

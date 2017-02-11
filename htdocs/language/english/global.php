@@ -226,3 +226,6 @@ define('_DBTIMESTAMPSTRING', 'Y-m-d H:i:s');
 //define('_XOBJ_ERR_INVALID_EMAIL', 'Invalid Email');
 //define('_XOBJ_ERR_INVALID_ENUMERATION', 'Invalid Enumeration');
 
+//XOOPS 2.5.9
+define('_AM_MODULEADMIN_MISSING','Error: The ModuleAdmin class is missing. Please install the ModuleAdmin Class into /Frameworks (see /docs/readme.txt)');
+define('_MD_MESSAGEC', 'Message:');

@@ -323,7 +323,7 @@ class XoopsComments extends XoopsObject
             $avatar_image = "<img src='" . XOOPS_UPLOAD_URL . '/' . $poster->getVar('user_avatar') . "' alt='' />";
             $online_image = '';
             if ($poster->isOnline()) {
-                $online_image = "<span style='color:#ee0000;font-weight:bold;'>" . _ONLINE . '</span>';
+                $online_image = "<span style='color:#ee0000;font-weight:bold;'>" . _CM_ONLINE . '</span>';
             }
             $profile_image = "<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $poster->getVar('uid') . "'><img src='" . XOOPS_URL . "/images/icons/profile.gif' alt='" . _PROFILE . "' /></a>";
             $pm_image      = '';

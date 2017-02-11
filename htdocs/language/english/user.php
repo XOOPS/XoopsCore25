@@ -128,3 +128,5 @@ define('_US_WELCOME_SUBJECT', 'Welcome to %s');
 //XOOPS 2.5.4
 define('_US_SKYPE', 'Skype');
 define('_US_FACEBOOK', 'Facebook');
+//XOOPS 2.5.9
+define('_US_USERALREADYACTIVE', 'User already active');
