@@ -33,14 +33,15 @@
 // of missing fields in install file, when add new fields to database)
 function make_groups(&$dbm)
 {
-    $gruops['XOOPS_GROUP_ADMIN']     = $dbm->insert('groups', " VALUES (1, '" . addslashes(_INSTALL_WEBMASTER) . "', '" . addslashes(_INSTALL_WEBMASTERD) . "', 'Admin')");
-    $gruops['XOOPS_GROUP_USERS']     = $dbm->insert('groups', " VALUES (2, '" . addslashes(_INSTALL_REGUSERS) . "', '" . addslashes(_INSTALL_REGUSERSD) . "', 'User')");
-    $gruops['XOOPS_GROUP_ANONYMOUS'] = $dbm->insert('groups', " VALUES (3, '" . addslashes(_INSTALL_ANONUSERS) . "', '" . addslashes(_INSTALL_ANONUSERSD) . "', 'Anonymous')");
-    if (!$gruops['XOOPS_GROUP_ADMIN'] || !$gruops['XOOPS_GROUP_USERS'] || !$gruops['XOOPS_GROUP_ANONYMOUS']) {
+
+    $groups['XOOPS_GROUP_ADMIN']     = $dbm->insert('groups', " VALUES (1, '" . addslashes(_INSTALL_WEBMASTER) . "', '" . addslashes(_INSTALL_WEBMASTERD) . "', 'Admin')");
+    $groups['XOOPS_GROUP_USERS']     = $dbm->insert('groups', " VALUES (2, '" . addslashes(_INSTALL_REGUSERS) . "', '" . addslashes(_INSTALL_REGUSERSD) . "', 'User')");
+    $groups['XOOPS_GROUP_ANONYMOUS'] = $dbm->insert('groups', " VALUES (3, '" . addslashes(_INSTALL_ANONUSERS) . "', '" . addslashes(_INSTALL_ANONUSERSD) . "', 'Anonymous')");
+    if (!$groups['XOOPS_GROUP_ADMIN'] || !$groups['XOOPS_GROUP_USERS'] || !$groups['XOOPS_GROUP_ANONYMOUS']) {
         return false;
     }
 
-    return $gruops;
+    return $groups;
 }
 
 /**
