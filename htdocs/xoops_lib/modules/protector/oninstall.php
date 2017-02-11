@@ -22,6 +22,7 @@ if (!function_exists('protector_oninstall_base')) {
      */
     function protector_oninstall_base($module, $mydirname)
     {
+        /* @var $module XoopsModule */
         // transations on module install
 
         global $ret; // TODO :-D

@@ -250,7 +250,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
     /**
      * Get tplsets from the database
      *
-     * @param  CriteriaElement $criteria  {@link CriteriaElement}
+     * @param  CriteriaElement|CriteriaCompo $criteria  {@link CriteriaElement}
      * @param  bool            $id_as_key return the tplsets id as key?
      * @return array           Array of {@link XoopsTplset} objects
      */
@@ -285,7 +285,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
     /**
      * Count tplsets
      *
-     * @param  CriteriaElement $criteria {@link CriteriaElement}
+     * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement}
      * @return int             Count of tplsets matching $criteria
      */
     public function getCount(CriteriaElement $criteria = null)

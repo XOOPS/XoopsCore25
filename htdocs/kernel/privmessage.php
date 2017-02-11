@@ -253,7 +253,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
 
     /**
      * Load messages from the database
-     * @param  CriteriaElement $criteria  {@link CriteriaElement} object
+     * @param  CriteriaElement|CriteriaCompo $criteria  {@link CriteriaElement} object
      * @param  bool   $id_as_key use ID as key into the array?
      * @return array  Array of {@link XoopsPrivmessage} objects
      **/
@@ -292,7 +292,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
 
     /**
      * Count message
-     * @param  CriteriaElement $criteria = null     {@link CriteriaElement} object
+     * @param  CriteriaElement|CriteriaCompo $criteria = null     {@link CriteriaElement} object
      * @return int
      **/
     public function getCount(CriteriaElement $criteria = null)

@@ -38,6 +38,7 @@ class XoopsUserUtility
         global $xoopsConfigUser, $xoopsConfig;
 
         if (empty($xoopsConfigUser)) {
+            /* @var $config_handler XoopsConfigHandler  */
             $config_handler  = xoops_getHandler('config');
             $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
         }
@@ -46,6 +47,7 @@ class XoopsUserUtility
         }
 
         if (!empty($user) && !is_object($user)) {
+            /* @var $member_handler XoopsMemberHandler */
             $member_handler = xoops_getHandler('member');
             $user           = $member_handler->getUser($user);
         }
@@ -113,7 +115,7 @@ class XoopsUserUtility
             $uname = $user->getVar('uname', 'n');
             $email = $user->getVar('email', 'n');
         }
-
+        /* @var $config_handler XoopsConfigHandler  */
         $config_handler  = xoops_getHandler('config');
         $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
@@ -307,6 +309,7 @@ class XoopsUserUtility
         $userid   = (int)$userid;
         $username = '';
         if ($userid > 0) {
+            /* @var $member_handler XoopsMemberHandler */
             $member_handler = xoops_getHandler('member');
             $user           = $member_handler->getUser($userid);
             if (is_object($user)) {

@@ -32,6 +32,7 @@ $parser   = new XoopsXmlRpcParser(rawurlencode($http_raw_post_data));
 if (!$parser->parse()) {
     $response->add(new XoopsXmlRpcFault(102));
 } else {
+    /* @var $module_handler XoopsModuleHandler  */
     $module_handler = xoops_getHandler('module');
     $module         = $module_handler->getByDirname('news');
     if (!is_object($module)) {

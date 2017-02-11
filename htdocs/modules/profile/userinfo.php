@@ -30,6 +30,7 @@ if ($uid <= 0) {
     }
 }
 
+/* @var  $gperm_handler XoopsGroupPermHandler */
 $gperm_handler = xoops_getHandler('groupperm');
 $groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 
@@ -39,6 +40,7 @@ if (is_object($GLOBALS['xoopsUser']) && $uid == $GLOBALS['xoopsUser']->getVar('u
     $GLOBALS['xoopsOption']['template_main']                                                   = 'profile_userinfo.tpl';
     include $GLOBALS['xoops']->path('header.php');
 
+    /* @var $config_handler XoopsConfigHandler  */
     $config_handler             = xoops_getHandler('config');
     $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
@@ -57,6 +59,7 @@ if (is_object($GLOBALS['xoopsUser']) && $uid == $GLOBALS['xoopsUser']->getVar('u
     $GLOBALS['xoopsTpl']->assign('user_changeemail', $GLOBALS['xoopsConfigUser']['allow_chgmail']);
     $thisUser =& $GLOBALS['xoopsUser'];
 } else {
+    /* @var $member_handler XoopsMemberHandler */
     $member_handler = xoops_getHandler('member');
     $thisUser       = $member_handler->getUser($uid);
 
@@ -83,6 +86,7 @@ if (is_object($GLOBALS['xoopsUser']) && $uid == $GLOBALS['xoopsUser']->getVar('u
     $groups_thisUser          = $thisUser->getGroups();
     $groups_thisUser_nonbasic = array_diff($groups_thisUser, $groups_basic);
     $groups_xoopsUser         = $groups;
+    /* @var  $gperm_handler XoopsGroupPermHandler */
     $gperm_handler            = xoops_getHandler('groupperm');
     $groups_accessible        = $gperm_handler->getItemIds('profile_access', $groups_xoopsUser, $GLOBALS['xoopsModule']->getVar('mid'));
 
@@ -173,6 +177,7 @@ $GLOBALS['xoopsTpl']->assign('categories', $categories);
 // Dynamic user profiles end
 
 if ($GLOBALS['xoopsModuleConfig']['profile_search']) {
+    /* @var $module_handler XoopsModuleHandler */
     $module_handler = xoops_getHandler('module');
     $criteria       = new CriteriaCompo(new Criteria('hassearch', 1));
     $criteria->add(new Criteria('isactive', 1));

@@ -347,7 +347,7 @@ class XoopsModelWrite extends XoopsModelAbstract
     /**
      * delete all objects matching the conditions
      *
-     * @param  CriteriaElement $criteria {@link CriteriaElement} with conditions to meet
+     * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement} with conditions to meet
      * @param  bool   $force    force to delete
      * @param  bool   $asObject delete in object way: instantiate all objects and delete one by one
      * @return bool
@@ -385,7 +385,7 @@ class XoopsModelWrite extends XoopsModelAbstract
      *
      * @param  string $fieldname  Name of the field
      * @param  mixed  $fieldvalue Value to write
-     * @param  CriteriaElement  $criteria   {@link CriteriaElement}
+     * @param  CriteriaElement|CriteriaCompo  $criteria   {@link CriteriaElement}
      * @param  bool   $force      force to query
      * @return bool
      */

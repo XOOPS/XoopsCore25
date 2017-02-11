@@ -44,6 +44,7 @@ class Upgrade_220 extends XoopsUpgrade
      */
     public function check_profile()
     {
+        /* @var $module_handler XoopsModuleHandler */
         $module_handler = xoops_getHandler('module');
         if (!$profile_module = $module_handler->getByDirname('profile')) {
             return true;
@@ -141,7 +142,9 @@ class Upgrade_220 extends XoopsUpgrade
         $profile_config_arr['reg_disclaimer']        = '';
         $profile_config_arr['allow_register']        = 1;
 
+        /* @var $module_handler XoopsModuleHandler */
         $module_handler = xoops_getHandler('module');
+        /* @var $config_handler XoopsConfigHandler */
         $config_handler = xoops_getHandler('config');
         $profile_module = $module_handler->getByDirname('profile');
         if (is_object($profile_module)) {

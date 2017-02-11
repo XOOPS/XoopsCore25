@@ -436,6 +436,7 @@ class XoopsModule extends XoopsObject
      */
     public static function getByDirname($dirname)
     {
+        /* @var $modhandler XoopsModuleHandler */
         $modhandler = xoops_getHandler('module');
         $inst       = $modhandler->getByDirname($dirname);
 
@@ -847,7 +848,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
     /**
      * Load some modules
      *
-     * @param  CriteriaElement $criteria  {@link CriteriaElement}
+     * @param  CriteriaElement|CriteriaCompo $criteria  {@link CriteriaElement}
      * @param  boolean         $id_as_key Use the ID as key into the array
      * @return array
      */
@@ -883,7 +884,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
     /**
      * Count some modules
      *
-     * @param  CriteriaElement $criteria {@link CriteriaElement}
+     * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement}
      * @return int
      */
     public function getCount(CriteriaElement $criteria = null)

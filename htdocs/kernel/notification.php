@@ -148,6 +148,7 @@ class XoopsNotification extends XoopsObject
     public function notifyUser($template_dir, $template, $subject, $tags)
     {
         // Check the user's notification preference.
+        /* @var $member_handler XoopsMemberHandler */
         $member_handler = xoops_getHandler('member');
         $user           = $member_handler->getUser($this->getVar('not_uid'));
         if (!is_object($user)) {
@@ -160,6 +161,7 @@ class XoopsNotification extends XoopsObject
         switch ($method) {
             case XOOPS_NOTIFICATION_METHOD_PM:
                 $xoopsMailer->usePM();
+                /* @var $config_handler XoopsConfigHandler  */
                 $config_handler    = xoops_getHandler('config');
                 $xoopsMailerConfig = $config_handler->getConfigsByCat(XOOPS_CONF_MAILER);
                 $xoopsMailer->setFromUser($member_handler->getUser($xoopsMailerConfig['fromuid']));
@@ -330,7 +332,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
     /**
      * Get some {@link XoopsNotification}s
      *
-     * @param CriteriaElement $criteria
+     * @param CriteriaElement|CriteriaCompo $criteria
      * @param bool            $id_as_key Use IDs as keys into the array?
      *
      * @return array Array of {@link XoopsNotification} objects
@@ -369,7 +371,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
     /**
      * Count Notifications
      *
-     * @param CriteriaElement $criteria {@link CriteriaElement}
+     * @param CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement}
      *
      * @return int Count
      **/
@@ -390,7 +392,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
     /**
      * Delete multiple notifications
      *
-     * @param CriteriaElement $criteria {@link CriteriaElement}
+     * @param CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement}
      *
      * @return bool
      **/
@@ -502,6 +504,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
             $events = array($events);
         }
         foreach ($events as $event) {
+            /* @var  $notification XoopsNotification */
             if ($notification =& $this->getNotification($module_id, $category, $item_id, $event, $user_id)) {
                 if ($notification->getVar('not_mode') != $mode) {
                     $this->updateByField($notification, 'not_mode', $mode);
@@ -640,11 +643,13 @@ class XoopsNotificationHandler extends XoopsObjectHandler
             $module    =& $xoopsModule;
             $module_id = !empty($xoopsModule) ? $xoopsModule->getVar('mid') : 0;
         } else {
+            /* @var $module_handler XoopsModuleHandler */
             $module_handler = xoops_getHandler('module');
             $module         = $module_handler->get($module_id);
         }
 
         // Check if event is enabled
+        /* @var $config_handler XoopsConfigHandler  */
         $config_handler = xoops_getHandler('config');
         $mod_config     = $config_handler->getConfigsByCat(0, $module->getVar('mid'));
         if (empty($mod_config['notification_enabled'])) {

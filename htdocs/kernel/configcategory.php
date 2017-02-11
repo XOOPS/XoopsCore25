@@ -201,7 +201,7 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
     /**
      * Get some {@link XoopsConfigCategory}s
      *
-     * @param CriteriaElement $criteria  {@link CriteriaElement}
+     * @param CriteriaElement|CriteriaCompo $criteria  {@link CriteriaElement}
      * @param bool            $id_as_key Use the IDs as keys to the array?
      *
      * @return array Array of {@link XoopsConfigCategory}s

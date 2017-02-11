@@ -600,6 +600,7 @@ class Tables
             if (is_scalar($criteria)) {
                 $where = $criteria;
             } elseif (is_object($criteria)) {
+                /* @var  $criteria \CriteriaCompo */
                 $where = $criteria->renderWhere();
             }
             $this->queue[] = "DELETE FROM `{$tableDef['name']}` {$where}";
@@ -660,6 +661,7 @@ class Tables
             if (is_scalar($criteria)) {
                 $where = $criteria;
             } elseif (is_object($criteria)) {
+                /* @var  $criteria \CriteriaCompo */
                 $where = $criteria->renderWhere();
             }
             $colSql = '';

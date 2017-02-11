@@ -120,7 +120,7 @@ class Protector_postcommon_post_language_match extends ProtectorFilterAbstract
      */
     public function execute()
     {
-        /** @var XoopsUser $xoopsUser */
+        /* @var $xoopsUser XoopsUser */
         global $xoopsUser;
 
         if (!function_exists('mb_strlen')) {

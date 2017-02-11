@@ -564,7 +564,7 @@ class XoopsBlockHandler extends XoopsObjectHandler
 
     /**
      * retrieve array of {@link XoopsBlock}s meeting certain conditions
-     * @param  CriteriaElement $criteria  {@link CriteriaElement} with conditions for the blocks
+     * @param  CriteriaElement|CriteriaCompo $criteria  {@link CriteriaElement} with conditions for the blocks
      * @param  bool   $id_as_key should the blocks' bid be the key for the returned array?
      * @return array  {@link XoopsBlock}s matching the conditions
      **/

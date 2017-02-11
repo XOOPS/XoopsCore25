@@ -55,6 +55,7 @@ class XoopsCommentRenderer
         $this->_tpl           = $tpl;
         $this->_useIcons      = (bool)$use_icons;
         $this->_doIconCheck   = (bool)$do_iconcheck;
+        /* @var $this->_memberHandler XoopsMemberHandler  */
         $this->_memberHandler = xoops_getHandler('member');
         $this->_statusText    = array(
             XOOPS_COMMENT_PENDING => '<span style="text-decoration: none; font-weight: bold; color: #00ff00;">' . _CM_PENDING . '</span>',
@@ -427,6 +428,7 @@ class XoopsCommentRenderer
     {
         $poster['id'] = (int)$poster_id;
         if ($poster['id'] > 0) {
+            /* @var  $com_poster XoopsUser */
             $com_poster = $this->_memberHandler->getUser($poster['id']);
             if (is_object($com_poster)) {
                 $poster['uname']      = '<a href="' . XOOPS_URL . '/userinfo.php?uid=' . $poster['id'] . '">' . $com_poster->getVar('uname') . '</a>';

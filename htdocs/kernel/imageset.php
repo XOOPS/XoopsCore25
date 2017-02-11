@@ -202,7 +202,7 @@ class XoopsImagesetHandler extends XoopsObjectHandler
     /**
      * Load {@link XoopsImageSet}s from the database
      *
-     * @param CriteriaElement $criteria  {@link CriteriaElement}
+     * @param CriteriaElement|CriteriaCompo $criteria  {@link CriteriaElement}
      * @param boolean         $id_as_key Use the ID as key into the array
      * @internal param bool $getbinary
      * @return array Array of {@link XoopsImageSet} objects

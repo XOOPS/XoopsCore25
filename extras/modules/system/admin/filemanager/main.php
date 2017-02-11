@@ -14,6 +14,8 @@
  * @author              Maxime Cointin (AKA Kraven30)
  * @package             system
  */
+/* @var  $xoopsUser XoopsUser */
+/* @var $xoopsModule XoopsModule */
 
 // Check users rights
 if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid())) {

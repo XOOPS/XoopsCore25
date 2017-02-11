@@ -33,6 +33,7 @@ class SystemMaintenance
      */
     public function __construct()
     {
+        /* @var $db XoopsMySQLDatabase */
         $db           = XoopsDatabaseFactory::getDatabaseConnection();
         $this->db     = $db;
         $this->prefix = $this->db->prefix . '_';
@@ -269,6 +270,7 @@ class SystemMaintenance
         $class        = 'odd';
         $modulesCount = count($modules);
         for ($i = 0; $i < $modulesCount; ++$i) {
+            /* @var $module_handler XoopsModuleHandler */
             $module_handler = xoops_getHandler('module');
             $module         = $module_handler->getByDirname($modules[$i]);
             $ret[1] .= '<tr><th colspan="3" align="left">' . ucfirst($modules[$i]) . '</th></tr>';

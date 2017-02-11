@@ -30,7 +30,7 @@ class XoopsModelRead extends XoopsModelAbstract
     /**
      * get all objects matching a condition
      *
-     * @param  CriteriaElement $criteria  {@link CriteriaElement} to match
+     * @param  CriteriaElement|CriteriaCompo $criteria  {@link CriteriaElement} to match
      * @param  array           $fields    variables to fetch
      * @param  bool            $asObject  flag indicating as object, otherwise as array
      * @param  bool            $id_as_key use the ID as key for the array
@@ -155,7 +155,7 @@ class XoopsModelRead extends XoopsModelAbstract
     /**
      * get IDs of objects matching a condition
      *
-     * @param  CriteriaElement $criteria {@link CriteriaElement} to match
+     * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement} to match
      * @return array           of object IDs
      */
     public function &getIds(CriteriaElement $criteria = null)

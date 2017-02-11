@@ -15,6 +15,10 @@
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  */
+/* @var  $xoopsUser XoopsUser */
+/* @var $xoopsModule XoopsModule */
+/* @var $xoopsConfig XoopsConfigItem */
+
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
@@ -25,7 +29,6 @@ if (('system' !== $xoopsModule->getVar('dirname') && XOOPS_COMMENT_APPROVENONE =
 }
 
 xoops_loadLanguage('comment');
-
 $com_id   = isset($_GET['com_id']) ? (int)$_GET['com_id'] : 0;
 $com_mode = isset($_GET['com_mode']) ? htmlspecialchars(trim($_GET['com_mode']), ENT_QUOTES) : '';
 if ($com_mode == '') {

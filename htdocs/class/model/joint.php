@@ -59,7 +59,7 @@ class XoopsModelJoint extends XoopsModelAbstract
     /**
      * get a list of objects matching a condition joint with another related object
      *
-     * @param CriteriaElement $criteria
+     * @param CriteriaElement|CriteriaCompo $criteria
      * @param  array          $fields       variables to fetch
      * @param  bool           $asObject     flag indicating as object, otherwise as array
      * @param  string         $field_link   field of linked object for JOIN; deprecated, for backward compatibility
@@ -127,7 +127,7 @@ class XoopsModelJoint extends XoopsModelAbstract
     /**
      * Count of objects matching a condition
      *
-     * @param  CriteriaElement $criteria {@link CriteriaElement} to match
+     * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement} to match
      * @return int    count of objects
      */
     public function getCountByLink(CriteriaElement $criteria = null)
@@ -151,7 +151,7 @@ class XoopsModelJoint extends XoopsModelAbstract
     /**
      * array of count of objects matching a condition of, groupby linked object keyname
      *
-     * @param  CriteriaElement $criteria {@link CriteriaElement} to match
+     * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement} to match
      * @return int    count of objects
      */
     public function getCountsByLink(CriteriaElement $criteria = null)
@@ -176,10 +176,10 @@ class XoopsModelJoint extends XoopsModelAbstract
     }
 
     /**
-     * upate objects matching a condition against linked objects
+     * update objects matching a condition against linked objects
      *
      * @param  array  $data     array of key => value
-     * @param  CriteriaElement $criteria {@link CriteriaElement} to match
+     * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement} to match
      * @return int    count of objects
      */
     public function updateByLink($data, CriteriaElement $criteria = null)
@@ -202,7 +202,7 @@ class XoopsModelJoint extends XoopsModelAbstract
     /**
      * Delete objects matching a condition against linked objects
      *
-     * @param  CriteriaElement $criteria {@link CriteriaElement} to match
+     * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement} to match
      * @return int    count of objects
      */
     public function deleteByLink(CriteriaElement $criteria = null)

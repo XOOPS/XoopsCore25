@@ -38,6 +38,7 @@ $upload_size = 500000;
 // Get Action type
 $op = system_CleanVars($_REQUEST, 'op', 'list', 'string');
 // Get userrank handler
+/* @var $userrank_Handler SystemUserrankHandler */
 $userrank_Handler = xoops_getModuleHandler('userrank', 'system');
 
 switch ($op) {
@@ -109,6 +110,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(sprintf(_AM_SYSTEM_USERRANK_TIPS_FORM1, implode(', ', $mimetypes)) . sprintf(_AM_SYSTEM_USERRANK_TIPS_FORM2, $upload_size / 1000));
         $xoBreadCrumb->render();
         // Create form
+
         $obj  = $userrank_Handler->create();
         $form = $obj->getForm();
         // Assign form

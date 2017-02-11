@@ -390,7 +390,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
     /**
      * Get configs from the database
      *
-     * @param  CriteriaElement $criteria  {@link CriteriaElement}
+     * @param  CriteriaElement|CriteriaCompo $criteria  {@link CriteriaElement}
      * @param  bool            $id_as_key return the config's id as key?
      * @return array           Array of {@link XoopsConfigItem} objects
      */
@@ -426,7 +426,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
     /**
      * Count configs
      *
-     * @param  CriteriaElement $criteria {@link CriteriaElement}
+     * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement}
      * @return int             Count of configs matching $criteria
      */
     public function getCount(CriteriaElement $criteria = null)

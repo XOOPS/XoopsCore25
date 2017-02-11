@@ -59,6 +59,7 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
     // $dbm = new Db_manager;
     $tables = array();
     // data for table 'groups_users_link'
+    /* @var  $dbm Db_manager */
     $dbm->insert('groups_users_link', ' VALUES (0, ' . $groups['XOOPS_GROUP_ADMIN'] . ', 1)');
     $dbm->insert('groups_users_link', ' VALUES (0, ' . $groups['XOOPS_GROUP_USERS'] . ', 1)');
     // data for table 'group_permission'
