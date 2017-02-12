@@ -48,20 +48,6 @@ class SystemFineImUploadHandler extends SystemFineUploadHandler
         $this->allowedExtensions = array('gif', 'jpeg', 'jpg', 'png');
     }
 
-    /**
-     * Get the original filename
-     */
-    public function getName()
-    {
-        if (isset($_REQUEST['qqfilename'])) {
-            return $_REQUEST['qqfilename'];
-        }
-
-        if (isset($_FILES[$this->inputName])) {
-            return $_FILES[$this->inputName]['name'];
-        }
-    }
-
     protected function storeUploadedFile($target, $mimeType, $uuid)
     {
         /* @var XoopsImagecategoryHandler */
