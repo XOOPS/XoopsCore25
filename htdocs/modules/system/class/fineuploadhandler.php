@@ -210,14 +210,17 @@ class SystemFineUploadHandler
         if ($this->allowedExtensions
             && !in_array(strtolower($ext), array_map("strtolower", $this->allowedExtensions))) {
             $these = implode(', ', $this->allowedExtensions);
-            return array('error' => 'File has an invalid extension, it should be one of '. $these . '.');
+            return array(
+                'error' => 'File has an invalid extension, it should be one of '. $these . '.',
+                'preventRetry' => true
+            );
         }
 
         $mimeType = '';
         if (!empty($this->allowedMimeTypes)) {
             $mimeType = mime_content_type($_FILES[$this->inputName]['tmp_name']);
             if (!in_array($mimeType, $this->allowedMimeTypes)) {
-                return array('error' => 'File is of an invalid type.');
+                return array('error' => 'File is of an invalid type.', 'preventRetry' => true);
             }
         }
 
