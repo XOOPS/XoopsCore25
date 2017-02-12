@@ -222,7 +222,7 @@ class MyTextSanitizer
     /**
      * Access the only instance of this class
      *
-     * @return object
+     * @return MyTextSanitizer
      * @static
      * @staticvar object
      */

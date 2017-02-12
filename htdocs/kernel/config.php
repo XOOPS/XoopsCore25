@@ -35,7 +35,7 @@ class XoopsConfigHandler
     /**
      * holds reference to config item handler(DAO) class
      *
-     * @var object
+     * @var XoopsConfigItemHandler
      * @access    private
      */
     public $_cHandler;
@@ -43,7 +43,7 @@ class XoopsConfigHandler
     /**
      * holds reference to config option handler(DAO) class
      *
-     * @var object
+     * @var XoopsConfigOptionHandler
      * @access    private
      */
     public $_oHandler;
@@ -86,7 +86,7 @@ class XoopsConfigHandler
      *
      * @param  int  $id          ID of the config
      * @param  bool $withoptions load the config's options now?
-     * @return object reference to the {@link XoopsConfig}
+     * @return XoopsConfigItem|XoopsConfigOption reference to the {@link XoopsConfig}
      */
     public function getConfig($id, $withoptions = false)
     {

@@ -61,7 +61,7 @@ class XoopsPreload
     /**
      * Allow one instance only!
      *
-     * @return object
+     * @return XoopsPreload
      */
     public static function getInstance()
     {

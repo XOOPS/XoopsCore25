@@ -78,7 +78,7 @@ class XoopsDatabaseFactory
      *
      * @static
      * @staticvar object  The only instance of database class
-     * @return object Reference to the only instance of database class
+     * @return XoopsDatabase Reference to the only instance of database class
      */
     public static function getDatabase()
     {

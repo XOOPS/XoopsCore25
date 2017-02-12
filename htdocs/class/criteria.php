@@ -209,9 +209,9 @@ class CriteriaCompo extends CriteriaElement
     /**
      * Add an element
      *
-     * @param CriteriaElement|object $criteriaElement
+     * @param CriteriaElement $criteriaElement
      * @param string                 $condition
-     * @return object reference to this collection
+     * @return CriteriaCompo reference to this collection
      */
     public function &add(CriteriaElement $criteriaElement, $condition = 'AND')
     {

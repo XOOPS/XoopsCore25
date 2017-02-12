@@ -963,7 +963,7 @@ class XoopsObject
      * create a clone(copy) of the current object
      *
      * @access public
-     * @return object clone
+     * @return XoopsObject clone
      */
     public function xoopsClone()
     {
@@ -1254,7 +1254,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param string $path path to class
      * @internal param object $handler
      * @internal param mixed  $args
-     * @return object of handler
+     * @return string object of handler
      */
     public function setHandler($handler = null, $args = null, $path = null)
     {

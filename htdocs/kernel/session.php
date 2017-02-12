@@ -32,7 +32,7 @@ class XoopsSessionHandler
     /**
      * Database connection
      *
-     * @var object
+     * @var XoopsDatabase
      * @access    private
      */
     public $db;

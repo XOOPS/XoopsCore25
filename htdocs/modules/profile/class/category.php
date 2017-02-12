@@ -41,7 +41,7 @@ class ProfileCategory extends XoopsObject
      *
      * @param mixed $action URL to submit to or false for $_SERVER['REQUEST_URI']
      *
-     * @return object
+     * @return XoopsThemeForm
      */
     public function getForm($action = false)
     {

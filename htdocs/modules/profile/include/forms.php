@@ -25,7 +25,7 @@
  * @param ProfileField $field  {@link ProfileField} object to get edit form for
  * @param mixed        $action URL to submit to - or false for $_SERVER['REQUEST_URI']
  *
- * @return object
+ * @return XoopsThemeForm
  */
 function profile_getFieldForm(ProfileField $field, $action = false)
 {
@@ -277,7 +277,7 @@ function profile_getFieldForm(ProfileField $field, $action = false)
  * @param int       $step Which step we are at
  *
  * @internal param \profileRegstep $next_step
- * @return object
+ * @return XoopsThemeForm
  */
 function profile_getRegisterForm(XoopsUser $user, $profile, $step = null)
 {
@@ -387,7 +387,7 @@ function profile_getRegisterForm(XoopsUser $user, $profile, $step = null)
  * @param ProfileProfile|XoopsObject|null $profile
  * @param bool                $action
  *
- * @return object
+ * @return XoopsThemeForm
  */
 function profile_getUserForm(XoopsUser $user, ProfileProfile $profile = null, $action = false)
 {
@@ -526,7 +526,7 @@ function profile_getUserForm(XoopsUser $user, ProfileProfile $profile = null, $a
  * @param ProfileRegstep|null $step {@link ProfileRegstep} to edit
  * @param bool                $action
  *
- * @return object
+ * @return XoopsThemeForm
  */
 function profile_getStepForm(ProfileRegstep $step = null, $action = false)
 {

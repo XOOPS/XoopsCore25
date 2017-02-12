@@ -269,7 +269,7 @@ class XoopsModelWrite extends XoopsModelAbstract
     /**
      * insert an object into the database
      *
-     * @param  object $object {@link XoopsObject} reference to object
+     * @param  XoopsObject $object {@link XoopsObject} reference to object
      * @param  bool   $force  flag to force the query execution despite security settings
      * @return mixed  object ID
      */
@@ -321,7 +321,7 @@ class XoopsModelWrite extends XoopsModelAbstract
     /**
      * delete an object from the database
      *
-     * @param  object $object {@link XoopsObject} reference to the object to delete
+     * @param  XoopsObject $object {@link XoopsObject} reference to the object to delete
      * @param  bool   $force
      * @return bool   FALSE if failed.
      */

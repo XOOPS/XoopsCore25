@@ -225,9 +225,9 @@ class XoopsConfigItem extends XoopsObject
     }
 
     /**
-     * Assign one or more {@link XoopsConfigItemOption}s
+     * Assign one or more {@link XoopsConfigItem}s
      *
-     * @param mixed $option either a {@link XoopsConfigItemOption} object or an array of them
+     * @param mixed $option either a {@link XoopsConfigItem} object or an array of them
      */
     public function setConfOptions($option)
     {
@@ -244,9 +244,9 @@ class XoopsConfigItem extends XoopsObject
     }
 
     /**
-     * Get the {@link XoopsConfigItemOption}s of this Config
+     * Get the {@link XoopsConfigItem}s of this Config
      *
-     * @return array array of {@link XoopsConfigItemOption}
+     * @return array array of {@link XoopsConfigItem}
      */
     public function &getConfOptions()
     {
@@ -296,7 +296,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
      * Load a config from the database
      *
      * @param  int $id ID of the config
-     * @return XoopsConfigItem reference to the config, FALSE on fail
+     * @return XoopsConfigItem|false reference to the config, FALSE on fail
      */
     public function get($id)
     {

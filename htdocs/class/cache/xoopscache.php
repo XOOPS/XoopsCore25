@@ -29,7 +29,7 @@ class XoopsCache
     /**
      * Cache engine to use
      *
-     * @var object
+     * @var XoopsCache
      * @access protected
      */
 
@@ -61,7 +61,7 @@ class XoopsCache
     /**
      * Returns a singleton instance
      *
-     * @return object
+     * @return XoopsCache
      * @access public
      */
     public static function getInstance()

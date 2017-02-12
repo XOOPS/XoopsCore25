@@ -81,7 +81,7 @@ class XoopsLogger
     /**
      * Get a reference to the only instance of this class
      *
-     * @return object XoopsLogger  reference to the only instance
+     * @return XoopsLogger  reference to the only instance
      */
     public static function getInstance()
     {
