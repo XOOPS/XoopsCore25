@@ -50,32 +50,39 @@
 
             <p><{$message.msg_text}></p>
 
-            <{foreach item=element from=$pmform.elements}>
+            </div><!-- .message-read -->
+        </div>
+    <div class="row message-body">
+            <div class="col-xs-4 col-md-4">
+            </div>
+            <div class="col-xs-8 col-md-8">
+                <{foreach item=element from=$pmform.elements}>
                 <{$element.body}>
-            <{/foreach}>
-
-            <div class="aligncenter comments-nav">
-                <{if ($previous >= 0 )}>
+                <{/foreach}>
+                <br>
+                <div class="alignright">
+                    <{if ($previous >= 0 )}>
                     <a class="btn btn-primary btn-sm" href="readpmsg.php?start=<{$previous}>&amp;total_messages=<{$total_messages}>&amp;op=<{$op}>"
                        title="<{$smarty.const._PM_PREVIOUS}>">
                         <span class="glyphicon glyphicon-circle-arrow-left"></span>
                     </a>
-                <{else}>
+                    <{else}>
                     <button class="btn btn-primary btn-sm" disabled="disabled">
                         <span class="glyphicon glyphicon-circle-arrow-left"></span>
                     </button>
-                <{/if}>
-                <{if ( $next < $total_messages ) }>
+                    <{/if}>
+                    <{if ( $next < $total_messages ) }>
                     <a class="btn btn-primary btn-sm" href="readpmsg.php?start=<{$next}>&amp;total_messages=<{$total_messages}>&amp;op=<{$op}>"
                        title="<{$smarty.const._PM_NEXT}>">
                         <span class="glyphicon glyphicon-circle-arrow-right"></span>
                     </a>
-                <{else}>
+                    <{else}>
                     <button class="btn btn-primary btn-sm" disabled="disabled">
                         <span class="glyphicon glyphicon-circle-arrow-right"></span>
                     </button>
-                <{/if}>
-            </div><!-- .message-read -->
+                    <{/if}>
+            </div>
+        </div>
     </form>
     <{else}>
     <{$smarty.const._PM_YOUDONTHAVE}>

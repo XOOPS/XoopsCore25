@@ -66,11 +66,10 @@
 <form name="<{$pmform.name}>" id="<{$pmform.name}>" action="<{$pmform.action}>" method="<{$pmform.method}>" <{$pmform.extra}>>
     <div class="row xoops-message-list">
         <div class="xoops-message-header">
-            <div class="col-xs-1 col-md-1">
+            <div class="col-xs-3 col-md-2">
                 <input name="allbox" id="allbox" onclick='xoopsCheckAll("<{$pmform.name}>", "allbox");' type="checkbox" value="Check All">
-            </div>
-            <div class="col-xs-1 col-md-1">
-                <span class="glyphicon glyphicon-circle-arrow-down btn btn-primary"></span>
+                &nbsp;
+                <span class="glyphicon glyphicon-circle-arrow-down btn btn-xs btn-primary"></span>
             </div>
 
             <{if $op == "out"}>
@@ -79,9 +78,9 @@
                 <div class="col-xs-2 col-md-2"><strong><{$smarty.const._PM_FROM}></strong></div>
             <{/if}>
 
-            <div class="col-xs-4 col-md-4"><strong><{$smarty.const._PM_SUBJECT}></strong></div>
+            <div class="col-xs-4 col-md-5"><strong><{$smarty.const._PM_SUBJECT}></strong></div>
 
-            <div class="col-xs-2 col-md-2"><strong><{$smarty.const._PM_DATE}></strong></div>
+            <div class="col-xs-3 col-md-3"><strong><{$smarty.const._PM_DATE}></strong></div>
 
         </div><!-- .xoops-message-header -->
 
@@ -96,42 +95,34 @@
 
     <{foreach item=message from=$messages}>
         <div class="row xoops-message-list xoops-message-loop">
-            <div class="col-xs-1 col-md-1">
+            <div class="col-xs-3 col-md-2">
                 <input type="checkbox" id="msg_id_<{$message.msg_id}>" name='msg_id[]' value="<{$message.msg_id}>">
-            </div>
+                &nbsp;
             <{if $message.read_msg == 1}>
-                <div class="col-xs-1 col-md-1">
-                    <span class="glyphicon glyphicon-ok-sign btn btn-success"></span>
-                </div>
+                <span class="glyphicon glyphicon-ok-sign btn btn-xs btn-success"></span>
             <{else}>
-                <div class="col-xs-1 col-md-1">
-                    <span class="glyphicon glyphicon-envelope btn btn-warning" title="<{$smarty.const._PM_NOTREAD}>"></span>
-                </div>
+                <span class="glyphicon glyphicon-envelope btn btn-xs btn-warning" title="<{$smarty.const._PM_NOTREAD}>"></span>
             <{/if}>
-
             <{if $message.msg_image != ""}>
-                <div class="col-xs-2 col-md-2">
-                    <img src="<{$xoops_url}>/images/subject/<{$message.msg_image}>" alt="">
-                </div>
+                <img src="<{$xoops_url}>/images/subject/<{$message.msg_image}>" alt="">
             <{/if}>
+            </div>
+            <div class="col-xs-2 col-md-2">
             <{if $message.postername != ""}>
-                <div class="col-xs-2 col-md-2">
-                    <a href="<{$xoops_url}>/userinfo.php?uid=<{$message.posteruid}>" title=""><{$message.postername}></a>
-                </div>
+                <a href="<{$xoops_url}>/userinfo.php?uid=<{$message.posteruid}>" title=""><{$message.postername}></a>
             <{else}>
-                <div class="col-xs-2 col-md-2">
-                    <{$anonymous}>
-                </div>
+                <{$anonymous}>
             <{/if}>
+            </div>
 
-            <div class="col-xs-4 col-md-4">
+            <div class="col-xs-4 col-md-5">
                 <a href="readpmsg.php?msg_id=<{$message.msg_id}>&amp;start=<{$message.msg_no}>&amp;total_messages=<{$total_messages}>&amp;op=<{$op}>"
                    title="">
                     <{$message.subject}>
                 </a>
             </div>
 
-            <div class="col-xs-4 col-md-4">
+            <div class="col-xs-3 col-md-3">
                 <{$message.msg_time}>
             </div>
         </div>
