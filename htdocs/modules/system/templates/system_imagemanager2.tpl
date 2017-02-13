@@ -1,13 +1,13 @@
-<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<{$xoops_langcode}>" lang="<{$xoops_langcode}>">
+<!doctype html>
+<html lang="<{$xoops_langcode}>">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=<{$xoops_charset}>"/>
-    <meta http-equiv="content-language" content="<{$xoops_langcode}>"/>
+    <meta http-equiv="content-type" content="text/html; charset=<{$xoops_charset}>">
+    <meta http-equiv="content-language" content="<{$xoops_langcode}>">
     <title><{$xoops_sitename}> <{$lang_imgmanager}></title>
     <{$image_form.javascript}>
-    <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl xoops.css}>"/>
-    <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl modules/system/css/imagemanager.css}>"/>
-    <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl media/font-awesome/css/font-awesome.min.css}>"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl xoops.css}>">
+    <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl modules/system/css/imagemanager.css}>">
+    <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl media/font-awesome/css/font-awesome.min.css}>">
 
     <{php}>
         $language = $GLOBALS['xoopsConfig']['language'];
@@ -20,11 +20,11 @@
     <!-- fine-upload -->
     <!-- Fine Uploader New/Modern CSS file
     ====================================================================== -->
-    <link href="<{xoAppUrl Frameworks/fine-uploader/fine-uploader-new.css}>" rel="stylesheet">
+    <link href="<{xoAppUrl media/fine-uploader/fine-uploader-new.css}>" rel="stylesheet">
 
     <!-- Fine Uploader JS file
     ====================================================================== -->
-    <script src="<{$xoops_url}>/Frameworks/fine-uploader/fine-uploader.js"></script>
+    <script src="<{$xoops_url}>/media/fine-uploader/fine-uploader.js"></script>
 
     <!-- Fine Uploader Thumbnails template w/ customization
     ====================================================================== -->
@@ -96,9 +96,11 @@
         #trigger-upload {
             color: white;
             background-color: #00ABC7;
-            font-size: 14px;
-            padding: 7px 20px;
+            font-size: 12px;
+            padding: 9px 20px;
             background-image: none;
+            border: 0px;
+            border-radius: 2px;
         }
 
         #fine-uploader-manual-trigger .qq-upload-button {
@@ -141,21 +143,25 @@
         element: document.getElementById('fine-uploader-manual-trigger'),
         template: 'qq-template-manual-trigger',
         request: {
-            endpoint: '<{$xoops_url}>/imagemanager.php?op=doupload&imgcat_id=<{$show_cat}>'
+            endpoint: '<{$xoops_url}>/ajaxfineupload.php',
+            customHeaders: {
+                "Authorization": "Basic <{$jwt}>"
+            }
         },
         thumbnails: {
             placeholders: {
-                waitingPath: '<{$xoops_url}>/Frameworks/fine-uploader/placeholders/waiting-generic.png',
-                notAvailablePath: '<{$xoops_url}>/Frameworks/fine-uploader/placeholders/not_available-generic.png'
+                waitingPath: '<{$xoops_url}>/media/fine-uploader/placeholders/waiting-generic.png',
+                notAvailablePath: '<{$xoops_url}>/media/fine-uploader/placeholders/not_available-generic.png'
             }
         },
         validation: {
+            acceptFiles: ['image/jpeg', 'image/gif', 'image/png'],
             allowedExtensions: ['jpeg', 'jpg', 'png', 'gif'],
             image: {
                 maxHeight: <{$imgcat_maxheight}>,
                 maxWidth: <{$imgcat_maxwidth}>
             },
-            sizeLimit: <{$imgcat_maxsize}> // 50 kB = 50 * 1024 bytes
+            sizeLimit: <{$imgcat_maxsize}>
         },
         autoUpload: false,
         debug: true

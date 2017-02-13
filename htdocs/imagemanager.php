@@ -14,15 +14,17 @@
  * @package             core
  * @since               2.0.0
  */
+/* @var  $xoopsUser XoopsUser */
+
 include __DIR__ . '/mainfile.php';
 XoopsLoad::load('XoopsRequest');
- 
+
 // Get Action type
 $op = XoopsRequest::getCmd('op', 'list');
 
 switch ($op) {
     case 'list':
-        default:
+    default:
         XoopsLoad::load('XoopsFilterInput');
         if (isset($_REQUEST['target'])) {
             $target = trim(XoopsFilterInput::clean($_REQUEST['target'], 'WORD'));
@@ -40,6 +42,7 @@ switch ($op) {
         $xoopsTpl->assign('sitename', htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES));
         $target = htmlspecialchars($target, ENT_QUOTES);
         $xoopsTpl->assign('target', $target);
+        /* @var $imgcat_handler XoopsImagecategoryHandler */
         $imgcat_handler = xoops_getHandler('imagecategory');
         $catlist        = $imgcat_handler->getList($group, 'imgcat_read', 1);
         $catcount       = count($catlist);
@@ -147,6 +150,7 @@ switch ($op) {
         if (!is_object($imgcat)) {
             $error = true;
         } else {
+            /* @var $imgcatperm_handler XoopsGroupPermHandler */
             $imgcatperm_handler = xoops_getHandler('groupperm');
             if (is_object($xoopsUser)) {
                 if (!$imgcatperm_handler->checkRight('imgcat_write', $imgcat_id, $xoopsUser->getGroups())) {
@@ -175,119 +179,16 @@ switch ($op) {
         $xoopsTpl->assign('imgcat_maxheight', $imgcat->getVar('imgcat_maxheight'));
         $xoopsTpl->assign('imgcat_name', $imgcat->getVar('imgcat_name'));
         $xoopsTpl->assign('lang_close', _CLOSE);
+        $payload = array(
+            'aud' => 'ajaxfineupload.php',
+            'cat' => $imgcat_id,
+            'uid' => $xoopsUser instanceof \XoopsUser ? $xoopsUser->id() : 0,
+            'handler' => 'fineimuploadhandler',
+            'moddir' => 'system',
+        );
+        $jwt = \Xmf\Jwt\TokenFactory::build('fineuploader', $payload, 60*30); // token good for 30 minutes
+        $xoopsTpl->assign('jwt', $jwt);
         $xoopsTpl->display('db:system_imagemanager2.tpl');
-        exit(); 
+        exit();
         break;
-
-    case 'doupload':
-        $xoopsLogger->activated = false;
-        // Include the upload handler class
-        require_once __DIR__ . '/Frameworks/fine-uploader/handler.php';
-
-        // Get imgcat_id
-        $imgcat_id = XoopsRequest::getInt('imgcat_id', 0);
-
-        $imgcat_handler = xoops_getHandler('imagecategory');
-        $imgcat         = $imgcat_handler->get($imgcat_id);
-        $error          = false;
-        if (!is_object($imgcat)) {
-            $error = true;
-        } else {
-            $imgcatperm_handler = xoops_getHandler('groupperm');
-            if (is_object($xoopsUser)) {
-                if (!$imgcatperm_handler->checkRight('imgcat_write', $imgcat_id, $xoopsUser->getGroups())) {
-                    $error = true;
-                }
-            } else {
-                if (!$imgcatperm_handler->checkRight('imgcat_write', $imgcat_id, XOOPS_GROUP_ANONYMOUS)) {
-                    $error = true;
-                }
-            }
-        }
-        if ($error != false) {
-            // erreur
-            //header('location: ' . XOOPS_URL . 'imagemanager.php?op=list');
-            exit();
-        }
-        //config
-        $uploader = new UploadHandler();
-        // Specify the list of valid extensions, ex. array("jpeg", "xml", "bmp")
-        $uploader->allowedExtensions = array('jpeg', 'jpg', 'png', 'gif'); // all files types allowed by default
-        // Specify the list of valid mimetypes, ex. array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png')
-        $uploader->allowedMimeTypes = array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'); // all files types allowed by default
-        // Specify max file size in bytes.
-        $uploader->sizeLimit = null;
-        // Specify the input name set in the javascript.
-        $uploader->inputName = "qqfile"; // matches Fine Uploader's default inputName value by default
-        // If you want to use the chunking/resume feature, specify the folder to temporarily save parts.
-        $uploader->chunksFolder = __DIR__ . '/uploads/fine-uploader/files';
-
-        $method = get_request_method();
-        
-        if ($method == "POST") {
-            header("Content-Type: text/plain");
-
-            // Assumes you have a chunking.success.endpoint set to point here with a query parameter of "done".
-            // For example: /myserver/handlers/endpoint.php?done
-            if (isset($_GET["done"])) {
-                $result = $uploader->combineChunks(__DIR__ . '/uploads/images');
-            }
-            // Handles upload requests
-            else {
-                // Call handleUpload() with the name of the folder, relative to PHP's getcwd()
-                $result = $uploader->handleUpload(__DIR__ . '/uploads/images', null, 'img');
-                // To return a name used for uploaded file you can use the following line.
-                $result["uploadName"] = $uploader->getUploadName();
-            }
-            echo json_encode($result);
-            
-            $nicename = substr($uploader->getName(), 0, strrpos ($uploader->getName(), '.'));
-            $mimetype = mime_content_type(__DIR__ . '/uploads/images/' . $uploader->getUploadName());
-            
-            //save image	
-            $image_handler = xoops_getHandler('image');
-            $image         = $image_handler->create();
-            $image->setVar('image_name', 'images/' . $uploader->getUploadName());
-            $image->setVar('image_nicename', $nicename);
-            $image->setVar('image_mimetype', $mimetype);
-            $image->setVar('image_created', time());
-            $image->setVar('image_display', 1);
-            $image->setVar('image_weight', 0);
-            $image->setVar('imgcat_id', $imgcat_id);
-            
-            if ($imgcat->getVar('imgcat_storetype') === 'db') {
-                $destination = __DIR__ . '/uploads/images/' . $uploader->getUploadName();
-                $fp      = @fopen($destination, 'rb');
-                $fbinary = @fread($fp, filesize($destination));
-                @fclose($fp);
-                $image->setVar('image_body', $fbinary, true);
-                @unlink($destination);
-            }
-            if (!$image_handler->insert($image)) {
-                $err = sprintf(_FAILSAVEIMG, $image->getVar('image_nicename'));
-                // erreur
-                //header('location: ' . XOOPS_URL . 'imagemanager.php?op=list');
-                exit();
-            }
-            
-        // for delete file requests        
-        } else if ($method == "DELETE") {
-            $result = $uploader->handleDelete("files");
-            echo json_encode($result);
-        }
-        else {
-            header("HTTP/1.0 405 Method Not Allowed");
-        }
-        break;
-}
-
-function get_request_method() {
-    global $HTTP_RAW_POST_DATA;
-    if(isset($HTTP_RAW_POST_DATA)) {
-        parse_str($HTTP_RAW_POST_DATA, $_POST);
-    }
-    if (isset($_POST["_method"]) && $_POST["_method"] != null) {
-        return $_POST["_method"];
-    }
-    return $_SERVER["REQUEST_METHOD"];
 }
