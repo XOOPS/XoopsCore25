@@ -263,7 +263,7 @@ switch ($op) {
         $form .= '</select>&nbsp;<input type="hidden" name="fct" value="comments" /><input type="submit" value="' . _GO . '" name="selsubmit" /></form>';
 
         $xoopsTpl->assign('form_sort', $form);
-        $xoopsTpl->assign('php_selft', $_SERVER['PHP_SELF'] . '?fct=comments&op=comments_purge');
+        $xoopsTpl->assign('php_selft', XOOPS_URL . '/modules/system/admin.php?fct=comments&op=comments_purge');
 
         if ($comments_count > 0) {
             foreach (array_keys($comments_arr) as $i) {
