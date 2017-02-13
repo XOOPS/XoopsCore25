@@ -126,6 +126,33 @@ define('_FAILFETCHIMG', 'Could not get uploaded file %s');
 define('_FAILSAVEIMG', 'Failed storing image %s into the database');
 define('_NOCACHE', 'No Cache');
 define('_CLONE', 'Clone');
+/**
+ * fineupload
+ */
+define('_UPLOAD', 'Upload');
+define('_SELECTFILES', 'Select files');
+define('_DROPFILESHERE', 'Drop files here');
+define('_RETRY', 'Retry');
+define('_OK', 'Ok');
+define('_FORMATPROGRESS', '{percent}% of {total_size}');
+define('_FAILUPLOAD', 'Upload failed!');
+define('_WAITINGFORRESPONSE', 'Processing...');
+define('_PAUSED', 'Paused');
+define('_PROCESSINGDROPPEDFILES', 'Processing dropped files...');
+define('_TYPEERROR', '{file} has an invalid extension. Valid extension(s): {extensions}!');
+define('_SIZEERROR', '{file} is too large, maximum file size is {sizeLimit}!');
+define('_MINSIZEERROR', '{file} is too small, minimum file size is {minSizeLimit}!');
+define('_EMPTYERROR', '{file} is empty, please select files again without it!');
+define('_NOFILESERROR', 'No files to upload!');
+define('_TOOMANYITEMSERROR', 'Too many items ({netItems}) would be uploaded.  Item limit is {itemLimit}!');
+define('_MAXHEIGHTIMAGEERROR', 'Image is too tall!');
+define('_MAXWIDTHIMAGEERROR', 'Image is too wide!');
+define('_MINHEIGHTIMAGEERROR', 'Image is not tall enough!');
+define('_MINWIDTHIMAGEERROR', 'Image is not wide enough!');
+define('_RETRYFAILTOOMANYITEMS', 'Retry failed - you have reached your file limit!');
+define('_ONLEAVE', 'The files are being uploaded, if you leave now the upload will be canceled!');
+define('_UNSUPPORTEDBROWSERIOS8SAFARI', 'Unrecoverable error - this browser does not permit file uploading of any kind due to serious bugs in iOS8 Safari.  Please use iOS8 Chrome until Apple fixes these issues!');
+
 // %%%%%    For xoopsform files %%%%%
 define('_STARTSWITH', 'Starts with');
 define('_ENDSWITH', 'Ends with');
