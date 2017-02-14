@@ -185,3 +185,5 @@ define('CHMOD_CHGRP_IGNORE', 'Use Anyway');
 define('CHMOD_CHGRP_ERROR', 'Installer may not be able to write the configuration file %1$s.<p>PHP is writing files under user %2$s and group %3$s.<p>The directory %4$s/ has user %5$s and group %6$s');
 //2.5.9
 define("CURL_HTTP", "Client URL Library (cURL)");
+define('XOOPS_COOKIE_DOMAIN_LABEL', 'Cookie Domain for the Website');
+define('XOOPS_COOKIE_DOMAIN_HELP', 'Domain to set cookies. May be blank, the full host from the URL (www.example.com), or the registered domain without subdomains (example.com) to share across subdomains (www.example.com and blog.example.com.)');

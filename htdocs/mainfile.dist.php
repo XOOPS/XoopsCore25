@@ -41,6 +41,11 @@ if (!defined('XOOPS_MAINFILE_INCLUDED')) {
     // Example: define("XOOPS_URL", "http://url_to_xoops_directory");
     define('XOOPS_URL', 'http://');
 
+    // XOOPS Cookie Domain to specify when creating cookies. May be blank (i.e. for IP address host),
+    // full host from XOOPS_URL (i.e. www.example.com) or just the registered domain (i.e. example.com)
+    // to share cookies across multiple subdomains (i.e. www.example.com and blog.example.com)
+    define('XOOPS_COOKIE_DOMAIN', '');
+
     // Shall be handled later, don't forget!
     define('XOOPS_CHECK_PATH', 0);
     // Protect against external scripts execution if safe mode is not enabled
