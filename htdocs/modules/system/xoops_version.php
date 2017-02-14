@@ -59,6 +59,7 @@ $modversion['templates'][] = array('file' => 'system_bannerdisplay.tpl', 'descri
 $modversion['templates'][] = array('file' => 'system_search.tpl', 'description' => '');
 $modversion['templates'][] = array('file' => 'system_popup_header.tpl', 'description' => '');
 $modversion['templates'][] = array('file' => 'system_popup_footer.tpl', 'description' => '');
+$modversion['templates'][] = array('file' => 'system_trigger_uploads.tpl', 'description' => '');
 
 //in transition to .tpl, we keep the .html extension versions for previously existing templates
 

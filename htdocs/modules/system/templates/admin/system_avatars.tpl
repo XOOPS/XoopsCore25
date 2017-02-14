@@ -4,6 +4,18 @@
     IMG_ON = '<{xoAdminIcons success.png}>';
     IMG_OFF = '<{xoAdminIcons cancel.png}>';
 </script>
+<!-- Buttons -->
+<{if $type == 's'}>
+    <div class="floatright">
+        <div class="xo-buttons">
+            <button id="xo-addavatar-btn" class="ui-corner-all tooltip" onclick='location="admin.php?fct=avatars&amp;op=multiupload"'
+                    title="<{$smarty.const._AM_SYSTEM_AVATAR_MULTIUPLOAD}>">
+                <img src="<{xoAdminIcons add.png}>" alt="<{$smarty.const._AM_SYSTEM_AVATAR_MULTIUPLOAD}>"/>
+                <{$smarty.const._AM_SYSTEM_AVATAR_MULTIUPLOAD}>
+            </button>
+        </div>
+    </div>    
+<{/if}>
 <{if $view_cat}>
     <!-- Display Avatar header for switch between system & custom category -->
     <table class="outer" cellspacing="1">
@@ -75,6 +87,87 @@
         <div class="clear spacer"></div>
     <{/if}>
 <{/if}>
+
+<{if $multiupload}>
+    <div class="floatright">
+        <div class="xo-buttons">
+            <button id="xo-addavatar-btn" class="ui-corner-all tooltip" onclick='location="admin.php?fct=avatars&amp;op=listavt&amp;type=s"'
+                    title="<{$smarty.const._AM_SYSTEM_AVATAR_SYSTEM}>">
+                <img src="<{xoAdminIcons view.png}>" alt="<{$smarty.const._AM_SYSTEM_AVATAR_SYSTEM}>"/>
+                <{$smarty.const._AM_SYSTEM_AVATAR_SYSTEM}>
+            </button>
+        </div>
+    </div>
+    <div class="clear">&nbsp;</div>
+    <{includeq file="db:system_trigger_uploads.tpl"}>
+    <h2><{$smarty.const._AM_SYSTEM_AVATAR_SYSTEM}></h2>
+    <div id="fine-uploader-manual-trigger"></div>
+    <div><{$smarty.const._IMGMAXSIZE}> <{$imgcat_maxsize}></div>
+    <div><{$smarty.const._IMGMAXWIDTH}> <{$imgcat_maxwidth}></div>
+    <div><{$smarty.const._IMGMAXHEIGHT}> <{$imgcat_maxheight}></div>
+    <!-- Your code to create an instance of Fine Uploader and bind to the DOM/template
+    ====================================================================== -->
+    <script>
+        var manualUploader = new qq.FineUploader({
+            element: document.getElementById('fine-uploader-manual-trigger'),
+            template: 'qq-template-manual-trigger',
+            request: {
+                endpoint: '<{$xoops_url}>/ajaxfineupload.php',
+                customHeaders: {
+                    "Authorization": "Basic <{$jwt}>"
+                }
+            },
+            text: {
+                formatProgress: "<{$smarty.const._FORMATPROGRESS}>",
+                failUpload: "<{$smarty.const._FAILUPLOAD}>",
+                waitingForResponse: "<{$smarty.const._WAITINGFORRESPONSE}>",
+                paused: "<{$smarty.const._PAUSED}>"
+            },
+            messages: {
+                typeError: "<{$smarty.const._TYPEERROR}>",
+                sizeError: "<{$smarty.const._SIZEERROR}>",
+                minSizeError: "<{$smarty.const._MINSIZEERROR}>",
+                emptyError: "<{$smarty.const._EMPTYERROR}>",
+                noFilesError: "<{$smarty.const._NOFILESERROR}>",
+                tooManyItemsError: "<{$smarty.const._TOOMANYITEMSERROR}>",
+                maxHeightImageError: "<{$smarty.const._MAXHEIGHTIMAGEERROR}>",
+                maxWidthImageError: "<{$smarty.const._MAXWIDTHIMAGEERROR}>",
+                minHeightImageError: "<{$smarty.const._MINHEIGHTIMAGEERROR}>",
+                minWidthImageError: "<{$smarty.const.__MINWIDTHIMAGEERROR}>",
+                retryFailTooManyItems: "<{$smarty.const._RETRYFAILTOOMANYITEMS}>",
+                onLeave: "<{$smarty.const._ONLEAVE}>",
+                unsupportedBrowserIos8Safari: "<{$smarty.const._UNSUPPORTEDBROWSERIOS8SAFARI}>"
+            },
+            thumbnails: {
+                placeholders: {
+                    waitingPath: '<{$xoops_url}>/media/fine-uploader/placeholders/waiting-generic.png',
+                    notAvailablePath: '<{$xoops_url}>/media/fine-uploader/placeholders/not_available-generic.png'
+                }
+            },
+            validation: {
+                acceptFiles: ['image/jpeg', 'image/gif', 'image/png'],
+                allowedExtensions: ['jpeg', 'jpg', 'png', 'gif'],
+                image: {
+                    maxHeight: <{$imgcat_maxheight}>,
+                    maxWidth: <{$imgcat_maxwidth}>
+                },
+                sizeLimit: <{$imgcat_maxsize}>
+            },
+            autoUpload: false,
+            callbacks: {
+            onError: function(id, name, errorReason, xhrOrXdr) {
+                 console.log(qq.format("Error uploading {}.  Reason: {}", name, errorReason));
+             }
+         },
+        debug: <{$fineup_debug}>
+        });
+
+        qq(document.getElementById("trigger-upload")).attach("click", function() {
+            manualUploader.uploadStoredFiles();
+        });
+    </script>
+<{/if}>
+
 <!-- Display Avatar form (add,edit) -->
 <{if $form}>
     <div class="spacer"><{$form}></div>

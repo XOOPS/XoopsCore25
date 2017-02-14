@@ -116,10 +116,10 @@ if ($method == "POST") {
     // Assumes you have a chunking.success.endpoint set to point here with a query parameter of "done".
     // For example: /myserver/handlers/endpoint.php?done
     if (isset($_GET["done"])) {
-        $result = $uploader->combineChunks(XOOPS_ROOT_PATH . "/uploads/images");
+        $result = $uploader->combineChunks(XOOPS_ROOT_PATH . "/uploads");
     } else { // Handle upload requests
         // Call handleUpload() with the name of the folder, relative to PHP's getcwd()
-        $result = $uploader->handleUpload(XOOPS_ROOT_PATH . "/uploads/images");
+        $result = $uploader->handleUpload(XOOPS_ROOT_PATH . "/uploads");
 
         // To return a name used for uploaded file you can use the following line.
         $result["uploadName"] = $uploader->getUploadName();

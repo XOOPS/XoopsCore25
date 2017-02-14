@@ -13,6 +13,8 @@ define('_AM_SYSTEM_AVATAR_CUSTOM', 'Custom Avatars');
 define('_AM_SYSTEM_AVATAR_ADD', 'Add Avatar');
 define('_AM_SYSTEM_AVATAR_EDIT', 'Edit Avatar');
 define('_AM_SYSTEM_AVATAR_DELETE', 'Delete Avatar');
+// Main
+define('_AM_SYSTEM_AVATAR_MULTIUPLOAD', 'Multi uploads');
 // Infos
 define('_AM_SYSTEM_AVATAR_ERROR', 'Errors');
 define('_AM_SYSTEM_AVATAR_USERS', 'Users using this avatar');
