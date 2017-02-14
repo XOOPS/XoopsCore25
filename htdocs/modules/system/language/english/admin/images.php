@@ -12,6 +12,7 @@ define('_AM_SYSTEM_IMAGES_IMGLIST', 'Image List');
 // Main
 define('_AM_SYSTEM_IMAGES_ADDCAT', 'Add Category');
 define('_AM_SYSTEM_IMAGES_ADDIMG', 'Add Image');
+define('_AM_SYSTEM_IMAGES_MULTIUPLOAD', 'Multi uploads');
 define('_AM_SYSTEM_IMAGES_EDITIMG', 'Edit Image');
 define('_AM_SYSTEM_IMAGES_CATLIST', 'Category List');
 define('_AM_SYSTEM_IMAGES_NOCAT', 'No Category Available');
