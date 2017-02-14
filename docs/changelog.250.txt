@@ -50,7 +50,7 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - Bootstrap form support with XoopsFormRenderer (geekwright, mage)
 - new templates to allow more consistent theme overrides (geekwright, mage)
   (system_comments_controls.tpl system_search.tpl system_popup_header.tpl, system_popup_footer.tpl)
-- Multi-file uploads for Image Manager (mage)
+- Multi-file uploads for Image Manager, Avatars (mage)
 - PHP 7.1 compatibility fixes (mamba, geekwright)
 - set XOOPS_COOKIE_DOMAIN during install and set in mainfile.php
 
