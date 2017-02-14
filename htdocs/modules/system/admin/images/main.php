@@ -250,6 +250,7 @@ switch ($op) {
             $xoopsTpl->assign('xoops_language', 'english');
         }
         $xoopsTpl->assign('listimg', true);
+        $xoopsTpl->assign('imgcat_id', $imgcat_id);        
 
         // Image Form
         $form = new XoopsThemeForm(_ADDIMAGE, 'image_form', 'admin.php', 'post', true);
@@ -700,4 +701,64 @@ switch ($op) {
         }
         redirect_header('admin.php?fct=images', 2, _AM_SYSTEM_DBUPDATED);
         break;
+
+    case 'multiupload':
+        // Get category id
+        $imgcat_id = system_CleanVars($_REQUEST, 'imgcat_id', 0, 'int');
+        if ($imgcat_id <= 0) {
+            redirect_header('admin.php?fct=images', 1);
+        }
+        // Get rights
+        $imgcat_write = $gperm_handler->checkRight('imgcat_write', $imgcat_id, $groups, $xoopsModule->mid());
+        // Get category handler
+        $imgcat_handler = xoops_getHandler('imagecategory');
+
+        $imagecategory = $imgcat_handler->get($imgcat_id);
+        if (!is_object($imagecategory)) {
+            redirect_header('admin.php?fct=images', 1);
+        }
+        // Get image handler
+        //$image_handler = xoops_getHandler('image');
+        // Define main template
+        $GLOBALS['xoopsOption']['template_main'] = 'system_images.tpl';
+        // Call header
+        xoops_cp_header();
+        // Define Stylesheet
+        $xoTheme->addStylesheet(XOOPS_URL . '/media/fine-uploader/fine-uploader-new.css');
+        $xoTheme->addStylesheet(XOOPS_URL . '/media/fine-uploader/ManuallyTriggerUploads.css');
+        $xoTheme->addStylesheet(XOOPS_URL . '/media/font-awesome/css/font-awesome.min.css');        
+        $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
+        // Define scripts
+        $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
+        $xoTheme->addScript('modules/system/js/admin.js');
+        $xoTheme->addScript('media/fine-uploader/fine-uploader.js');
+        // Define Breadcrumb and tips
+        $xoBreadCrumb->addLink(_AM_SYSTEM_IMAGES_MANAGER, system_adminVersion('images', 'adminpath'));
+        $xoBreadCrumb->addLink($imagecategory->getVar('imgcat_name'), system_adminVersion('images', 'adminpath') . '&amp;op=listimg&amp;imgcat_id=' . $imgcat_id);
+        $xoBreadCrumb->addLink(_AM_SYSTEM_IMAGES_MULTIUPLOAD);
+        $xoBreadCrumb->render();
+
+        $xoopsTpl->assign('multiupload', true);
+        $xoopsTpl->assign('imgcat_maxsize', $imagecategory->getVar('imgcat_maxsize'));
+        $xoopsTpl->assign('imgcat_maxwidth', $imagecategory->getVar('imgcat_maxwidth'));
+        $xoopsTpl->assign('imgcat_maxheight', $imagecategory->getVar('imgcat_maxheight'));
+        $xoopsTpl->assign('imgcat_name', $imagecategory->getVar('imgcat_name'));
+        $payload = array(
+            'aud' => 'ajaxfineupload.php',
+            'cat' => $imgcat_id,
+            'uid' => $xoopsUser instanceof \XoopsUser ? $xoopsUser->id() : 0,
+            'handler' => 'fineimuploadhandler',
+            'moddir' => 'system',
+        );
+        $jwt = \Xmf\Jwt\TokenFactory::build('fineuploader', $payload, 60*30); // token good for 30 minutes
+        $xoopsTpl->assign('jwt', $jwt);
+        $fineup_debug = 'false';
+        if (($xoopsUser instanceof \XoopsUser ? $xoopsUser->isAdmin() : false)
+            && isset($_REQUEST['FINEUPLOADER_DEBUG']))
+        {
+            $fineup_debug = 'true';
+        }
+        $xoopsTpl->assign('fineup_debug', $fineup_debug);        
+        // Call footer
+        xoops_cp_footer();
 }
