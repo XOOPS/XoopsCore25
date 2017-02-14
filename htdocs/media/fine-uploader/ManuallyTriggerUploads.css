@@ -1,0 +1,21 @@
+#trigger-upload {
+    color: white;
+    background-color: #00ABC7;
+    font-size: 12px;
+    padding: 9px 20px;
+    background-image: none;
+    border: 0px;
+    border-radius: 2px;
+}
+
+#fine-uploader-manual-trigger .qq-upload-button {
+    margin-right: 15px;
+}
+
+#fine-uploader-manual-trigger .buttons {
+    width: 36%;
+}
+
+#fine-uploader-manual-trigger .qq-uploader .qq-total-progress-bar-container {
+    width: 60%;
+}
