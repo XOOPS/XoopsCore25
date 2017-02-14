@@ -70,7 +70,7 @@ if (is_object($xoopsUser)) {
         } else {
             $pm_handler = xoops_getHandler('privmessage');
             $pm         = $pm_handler->create();
-            $msg_image  = XoopsRequest::getCmd('icon', null, 'POST');
+            $msg_image  = XoopsRequest::getString('msg_image', null, 'POST');
             if (in_array($msg_image, $subject_icons)) {
                 $pm->setVar('msg_image', $msg_image);
             }
