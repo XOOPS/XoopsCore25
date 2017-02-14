@@ -19,6 +19,6 @@
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 return $config = array(
-    'highlight' => 'php',// Source code highlight: '' - disable; 'php' - php highlight; 'geshi' - geshi highlight
-    'language'  => 'PHP');// Default language for code highlight, applicable only if geshi is enabled
+    'highlight' => 'php',  // Source code highlight: '' - disable; 'php' - php highlight;
+);
 

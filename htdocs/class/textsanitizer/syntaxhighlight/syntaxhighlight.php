@@ -38,14 +38,6 @@ class MytsSyntaxhighlight extends MyTextSanitizerExtension
         }
         $source = $ts->undoHtmlSpecialChars($source);
         $source = stripslashes($source);
-        if ($config['highlight'] === 'geshi') {
-            $language = str_replace('=', '', $language);
-            $language = $language ? : $config['language'];
-            $language = strtolower($language);
-            if ($source2 = MytsSyntaxhighlight::geshi($source, $language)) {
-                return $source2;
-            }
-        }
         $source = MytsSyntaxhighlight::php($source);
 
         return $source;
@@ -99,35 +91,5 @@ class MytsSyntaxhighlight extends MyTextSanitizerExtension
         $buffer = $str_open . $str_internal . $str_close;
 
         return $buffer;
-    }
-
-    /**
-     * @param $source
-     * @param $language
-     *
-     * @return bool
-     */
-    public function geshi($source, $language)
-    {
-        if (!@xoops_load('geshi', 'framework')) {
-            return false;
-        }
-
-        // Create the new XoopsGeshi object, passing relevant stuff
-        // XoopsGeshi should be extending geSHi in Frameworks/geshi/xoopsgeshi.php
-        $geshi = new XoopsGeshi($source, $language);
-
-        // Enclose the code in a <div>
-        $geshi->set_header_type(GESHI_HEADER_NONE);
-
-        // Sets the proper encoding charset other than "ISO-8859-1"
-        $geshi->set_encoding(_CHARSET);
-
-        $geshi->set_link_target('_blank');
-
-        // Parse the code
-        $code = $geshi->parse_code();
-
-        return $code;
     }
 }
