@@ -99,7 +99,7 @@
         </div>
     </div>
     <div class="clear">&nbsp;</div>
-    <{includeq file="db:ManuallyTriggerUploads.tpl"}>
+    <{includeq file="db:system_trigger_uploads.tpl"}>
     <h2><{$smarty.const._AM_SYSTEM_AVATAR_SYSTEM}></h2>
     <div id="fine-uploader-manual-trigger"></div>
     <div><{$smarty.const._IMGMAXSIZE}> <{$imgcat_maxsize}></div>
