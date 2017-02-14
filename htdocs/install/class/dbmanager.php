@@ -303,8 +303,8 @@ class Db_manager
         if ($table != '') {
             $this->db->connect();
             $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix($table);
-//            $ret = (false != $this->db->query($sql));// ? true : false;
-            $ret = !empty($this->db->query($sql));  //return false on error or $table not found
+            $ret = $this->db->query($sql);
+            $ret = !empty($ret);  //return false on error or $table not found
         }
 
         return $ret;
