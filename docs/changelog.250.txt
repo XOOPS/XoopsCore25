@@ -52,6 +52,7 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
   (system_comments_controls.tpl system_search.tpl system_popup_header.tpl, system_popup_footer.tpl)
 - Multi-file uploads for Image Manager (mage)
 - PHP 7.1 compatibility fixes (mamba, geekwright)
+- set XOOPS_COOKIE_DOMAIN during install and set in mainfile.php
 
 Updated libraries and assets:
  - jQuery 3.1.1 (mamba)

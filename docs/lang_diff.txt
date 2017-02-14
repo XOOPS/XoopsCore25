@@ -8,6 +8,11 @@ Below are language differences from a version to next version.
 ===============================
 ADDED/DELETED DEFINES
 
+htdocs/install/language/english/install.php
+- added define("CURL_HTTP", "Client URL Library (cURL)");
+- added define('XOOPS_COOKIE_DOMAIN_LABEL', 'Cookie Domain for the Website');
+- added define('XOOPS_COOKIE_DOMAIN_HELP', 'Domain to set cookies. May be blank, the full host from the URL (www.example.com), or the registered domain without subdomains (example.com) to share across subdomains (www.example.com and blog.example.com.)');
+
 htdocs/language/english/global.php
 - added define('_UPLOAD', 'Upload');
 - added define('_SELECTFILES', 'Select files');
