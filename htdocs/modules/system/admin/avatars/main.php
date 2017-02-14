@@ -46,7 +46,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(_AM_SYSTEM_AVATAR_TIPS);
         $xoBreadCrumb->render();
         // Get avatar handler
-    /* @var  $avt_handler XoopsAvatarHandler */
+        /* @var  $avt_handler XoopsAvatarHandler */
         $avt_handler = xoops_getModuleHandler('avatar');
         // Get User Config
         /* @var $config_handler XoopsConfigHandler  */
@@ -311,5 +311,54 @@ switch ($op) {
             $xoopsDB->query('UPDATE ' . $xoopsDB->prefix('users') . " SET user_avatar='blank.gif' WHERE user_avatar='" . $file . "'");
         }
         redirect_header('admin.php?fct=avatars', 2, _AM_SYSTEM_DBUPDATED);
+        break;
+    
+    case 'multiupload':
+    
+        // Define main template
+        $GLOBALS['xoopsOption']['template_main'] = 'system_avatars.tpl';
+        // Call Header
+        xoops_cp_header();
+        // Define Stylesheet
+        $xoTheme->addStylesheet(XOOPS_URL . '/media/fine-uploader/fine-uploader-new.css');
+        $xoTheme->addStylesheet(XOOPS_URL . '/media/fine-uploader/ManuallyTriggerUploads.css');
+        $xoTheme->addStylesheet(XOOPS_URL . '/media/font-awesome/css/font-awesome.min.css');        
+        $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
+        // Define scripts
+        $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
+        $xoTheme->addScript('modules/system/js/admin.js');
+        $xoTheme->addScript('media/fine-uploader/fine-uploader.js');        
+        // Define Breadcrumb and tips
+        $xoBreadCrumb->addLink(_AM_SYSTEM_AVATAR_MANAGER, system_adminVersion('avatars', 'adminpath'));
+        $xoBreadCrumb->addLink(_AM_SYSTEM_AVATAR_MULTIUPLOAD);
+        $xoBreadCrumb->render();
+        /* @var $config_handler XoopsConfigHandler  */
+        $config_handler  = xoops_getHandler('config');
+        $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+        
+        $xoopsTpl->assign('multiupload', true);
+        $xoopsTpl->assign('imgcat_maxsize', $xoopsConfigUser['avatar_maxsize']);
+        $xoopsTpl->assign('imgcat_maxwidth', $xoopsConfigUser['avatar_width']);
+        $xoopsTpl->assign('imgcat_maxheight', $xoopsConfigUser['avatar_height']);
+        $payload = array(
+            'aud' => 'ajaxfineupload.php',
+            'cat' => '',
+            'uid' => $xoopsUser instanceof \XoopsUser ? $xoopsUser->id() : 0,
+            'handler' => 'fineavataruploadhandler',
+            'moddir' => 'system',
+        );
+        $jwt = \Xmf\Jwt\TokenFactory::build('fineuploader', $payload, 60*30); // token good for 30 minutes
+        $xoopsTpl->assign('jwt', $jwt);
+        $fineup_debug = 'false';
+        if (($xoopsUser instanceof \XoopsUser ? $xoopsUser->isAdmin() : false)
+            && isset($_REQUEST['FINEUPLOADER_DEBUG']))
+        {
+            $fineup_debug = 'true';
+        }
+        $xoopsTpl->assign('fineup_debug', $fineup_debug);
+        
+        // Call footer
+        xoops_cp_footer();
+
         break;
 }
