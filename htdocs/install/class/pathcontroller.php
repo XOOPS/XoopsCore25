@@ -38,6 +38,7 @@ class PathStuffController
         'lib'  => 'PATH');
 
     public $xoopsUrl = '';
+    public $xoopsCookieDomain = '';
 
     public $validPath = array(
         'root' => 0,
@@ -90,6 +91,11 @@ class PathStuffController
             $path           = $GLOBALS['wizard']->baseLocation();
             $this->xoopsUrl = substr($path, 0, strrpos($path, '/'));
         }
+        if (isset($_SESSION['settings']['COOKIE_DOMAIN'])) {
+            $this->xoopsCookieDomain = $_SESSION['settings']['COOKIE_DOMAIN'];
+        } else {
+            $this->xoopsCookieDomain = xoops_getBaseDomain($this->xoopsUrl);
+        }
     }
 
     public function execute()
@@ -101,6 +107,7 @@ class PathStuffController
                 $_SESSION['settings'][$sess] = $this->xoopsPath[$req];
             }
             $_SESSION['settings']['URL'] = $this->xoopsUrl;
+            $_SESSION['settings']['COOKIE_DOMAIN'] = $this->xoopsCookieDomain;
             if ($valid) {
                 $GLOBALS['wizard']->redirectToPage('+1');
             } else {
@@ -128,6 +135,10 @@ class PathStuffController
                     $request['URL'] = substr($request['URL'], 0, -1);
                 }
                 $this->xoopsUrl = $request['URL'];
+            }
+            if (isset($request['COOKIE_DOMAIN'])) {
+                $request['COOKIE_DOMAIN'] = trim($request['COOKIE_DOMAIN']);
+                $this->xoopsCookieDomain = $request['COOKIE_DOMAIN'];
             }
         }
     }

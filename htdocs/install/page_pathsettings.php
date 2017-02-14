@@ -29,6 +29,7 @@ require_once './include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 include_once './class/pathcontroller.php';
+include_once '../include/functions.php';
 
 $pageHasForm = true;
 $pageHasHelp = true;
@@ -132,6 +133,11 @@ ob_start();
 
         <div class="xoform-help"><?php echo XOOPS_URL_HELP; ?></div>
         <input type="text" name="URL" id="url" value="<?php echo $ctrl->xoopsUrl; ?>" onchange="removeTrailing('url', this.value)"/>
+
+        <label class="xolabel" for="cookie_domain"><?php echo XOOPS_COOKIE_DOMAIN_LABEL; ?></label>
+
+        <div class="xoform-help"><?php echo XOOPS_COOKIE_DOMAIN_HELP; ?></div>
+        <input type="text" name="COOKIE_DOMAIN" id="cookie_domain" value="<?php echo $ctrl->xoopsCookieDomain; ?>" onchange="removeTrailing('url', this.value)"/>
     </fieldset>
 
 <?php
