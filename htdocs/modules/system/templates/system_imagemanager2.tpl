@@ -184,7 +184,12 @@
             sizeLimit: <{$imgcat_maxsize}>
         },
         autoUpload: false,
-        debug: true
+        callbacks: {
+            onError: function(id, name, errorReason, xhrOrXdr) {
+                console.log(qq.format("Error uploading {}.  Reason: {}", name, errorReason));
+            }
+        },
+        debug: <{$fineup_debug}>
     });
 
     qq(document.getElementById("trigger-upload")).attach("click", function() {
