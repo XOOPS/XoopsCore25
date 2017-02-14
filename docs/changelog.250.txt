@@ -3,7 +3,6 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 ===================================
 2.5.9                  NOT RELEASED
 ===================================
-- update xmf v1.0.2, incl. Helper fix (geekwright)
 - fix issue with establishing database character set under mysqli
 - Add PHP4 same name constructor shim in XoopsMailer (geekwright)
 - Some cleanup in xBootstrap to reduce setup for users, especially with publisher
@@ -11,14 +10,14 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - Streamline setup for publisher with xBootstrap (geekwright)
 - various "Assign by reference" issues in PHP 7 (geekwright/mamba/ggoffy)
 - Icons for Edit, Delete, Download (bleekk)
-- replace <br /> with <br> (mamba)
+- use HTML5 br tags consitently (mamba)
 - Publisher templates cleanup in xBootstrap (geekwright)
 - Change set charset behavior for mysqli
 - bug in mysqldatabase.php in XOOPS_DB_CHARSET for PHP < 5.5 (mamba)
 - Update makedata.php (luciorota)
 - Backport Smarty securityToken plugin (geekwright)
 - Add a table property to handlers  (geekwright)
-- Fix occasional issues using xoops_loadLanguage('locale') (geekwright) 
+- Fix occasional issues using xoops_loadLanguage('locale') (geekwright)
 - Docblock fix for getHandler functions (geekwright)
 - Correct help/module_index in system (geekwright)
 - fixed missing language constants (mamba)
@@ -40,19 +39,33 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - changing icons in User Admin for consistency (mamba)
 - fixes for Publisher templates in xBootstrap (mamba)
 - Highlight Update System Module in upgrade(geekwright)
+- add recaptch2 support (mage)
+- fix login over IPv6 during upgrade (mage)
+- fix display of HTML5 banners in admin (mage)
+- profile module, hide ICQ, AIM, YIM and MSNM fields by default
+- profile module, us dhtml editor for signatures
+- use public suffix list when determining cookie domain
+- new admin theme - Transition (bitcero)
+- add XoopsObjectTree::makeSelectElement(), return tree as XoopsFormSelect (geekwright, mage)
+- Bootstrap form support with XoopsFormRenderer (geekwright, mage)
+- new templates to allow more consistent theme overrides (geekwright, mage)
+  (system_comments_controls.tpl system_search.tpl system_popup_header.tpl, system_popup_footer.tpl)
+- Multi-file uploads for Image Manager (mage)
+- PHP 7.1 compatibility fixes (mamba, geekwright)
 
-
-Updated:
- - jQuery 3.1 (mamba)
- - jQuery UI 1.12 (mamba)
+Updated libraries and assets:
+ - jQuery 3.1.1 (mamba)
+ - jQuery UI 1.12.1 (mamba)
  - jGrowl to 1.4.5 (mamba)
  - Tabs jQuery Tools to 1.2.7 (mamba)
  - jQuery Lightbox to 1.2.3 (mamba)
  - jQuery Form to 3.5.1 (mamba)
  - jQuery Tablesorter to 2.26.6 (mamba)
  - phpThumb to 1.7.14-201607141354 (mamba)
- - Bootstrap 3.7 in xBootstrap theme (geekwright/mamba)
+ - Bootstrap 3.3.7 in xBootstrap theme (geekwright, mamba)
  - HTML Purifier to 4.8.0 (mamba)
+ - PHPMailer to 5.2.21
+ - XMF to 1.2.0
 
 ===================================
 2.5.8 Final            2016-05-27

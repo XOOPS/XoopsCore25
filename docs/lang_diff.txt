@@ -4,6 +4,59 @@ LANGUAGE DIFFERENCES
 Below are language differences from a version to next version.
 
 ===============================
+2017/??/??: Version 2.5.9
+===============================
+ADDED/DELETED DEFINES
+
+htdocs/language/english/global.php
+- added define('_UPLOAD', 'Upload');
+- added define('_SELECTFILES', 'Select files');
+- added define('_DROPFILESHERE', 'Drop files here');
+- added define('_RETRY', 'Retry');
+- added define('_OK', 'Ok');
+- added define('_FORMATPROGRESS', '{percent}% of {total_size}');
+- added define('_FAILUPLOAD', 'Upload failed!');
+- added define('_WAITINGFORRESPONSE', 'Processing...');
+- added define('_PAUSED', 'Paused');
+- added define('_PROCESSINGDROPPEDFILES', 'Processing dropped files...');
+- added define('_TYPEERROR', '{file} has an invalid extension. Valid extension(s): {extensions}!');
+- added define('_SIZEERROR', '{file} is too large, maximum file size is {sizeLimit}!');
+- added define('_MINSIZEERROR', '{file} is too small, minimum file size is {minSizeLimit}!');
+- added define('_EMPTYERROR', '{file} is empty, please select files again without it!');
+- added define('_NOFILESERROR', 'No files to upload!');
+- added define('_TOOMANYITEMSERROR', 'Too many items ({netItems}) would be uploaded.  Item limit is {itemLimit}!');
+- added define('_MAXHEIGHTIMAGEERROR', 'Image is too tall!');
+- added define('_MAXWIDTHIMAGEERROR', 'Image is too wide!');
+- added define('_MINHEIGHTIMAGEERROR', 'Image is not tall enough!');
+- added define('_MINWIDTHIMAGEERROR', 'Image is not wide enough!');
+- added define('_RETRYFAILTOOMANYITEMS', 'Retry failed - you have reached your file limit!');
+- added define('_ONLEAVE', 'The files are being uploaded, if you leave now the upload will be canceled!');
+- added define('_UNSUPPORTEDBROWSERIOS8SAFARI', 'Unrecoverable error - this browser does not permit file uploading of any kind due to serious bugs in iOS8 Safari.  Please use iOS8 Chrome until Apple fixes these issues!');
+
+htdocs/language/english/uploader.php
+- added define('_ER_UP_INISIZE', 'The uploaded file exceeds the upload_max_filesize directive in php.ini');
+- added define('_ER_UP_FORMSIZE', 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form');
+- added define('_ER_UP_PARTIAL', 'The uploaded file was only partially uploaded');
+- added define('_ER_UP_NOFILE', 'No file was uploaded');
+- added define('_ER_UP_NOTMPDIR', 'Missing a temporary folder');
+- added define('_ER_UP_CANTWRITE', 'Failed to write file to disk');
+- added define('_ER_UP_EXTENSION', 'File upload stopped by extension. View phpinfo()');
+- added define('_ER_UP_UNKNOWN', 'Unknown upload error');
+
+htdocs/modules/profile/language/english/admin.php
+- added define('_PROFILE_AM_CANNOTDEACTIVATEWEBMASTERS', 'You cannot deactivate Webmaster account');
+
+htdocs/modules/system/language/english/admin/comments.php
+- added define('_MP_DELETECOUNT', 'The number of members in the group is too big ( > 4,000) ');
+
+htdocs/modules/system/language/english/admin/userrank.php
+- added define('_AM_SYSTEM_USERRANK_ERROR', 'Errors');
+
+NEW FILES:
+- htdocs/modules/system/themes/transition/language/english/admin.php
+- htdocs/modules/system/themes/transition/language/english/localsupport.php
+
+===============================
 2016/05/27: Version 2.5.8
 ===============================
 ADDED/DELETED DEFINES
