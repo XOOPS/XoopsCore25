@@ -43,6 +43,7 @@ $configs['language_files'] = array(
 // extension_loaded
 $configs['extensions'] = array(
     'mbstring' => array('MBString', sprintf(PHP_EXTENSION, CHAR_ENCODING)),
+    'intl'     => array('Intl', sprintf(PHP_EXTENSION, INTL_SUPPORT)),
     'iconv'    => array('Iconv', sprintf(PHP_EXTENSION, ICONV_CONVERSION)),
     'xml'      => array('XML', sprintf(PHP_EXTENSION, XML_PARSING)),
     'zlib'     => array('Zlib', sprintf(PHP_EXTENSION, ZLIB_COMPRESSION)),
