@@ -187,3 +187,4 @@ define('CHMOD_CHGRP_ERROR', 'Installer may not be able to write the configuratio
 define("CURL_HTTP", "Client URL Library (cURL)");
 define('XOOPS_COOKIE_DOMAIN_LABEL', 'Cookie Domain for the Website');
 define('XOOPS_COOKIE_DOMAIN_HELP', 'Domain to set cookies. May be blank, the full host from the URL (www.example.com), or the registered domain without subdomains (example.com) to share across subdomains (www.example.com and blog.example.com.)');
+define('INTL_SUPPORT', 'Internationalization functions');
