@@ -281,7 +281,7 @@ class PublicSuffixList
      */
     public function clearDataDirectory($cacheOnly = false)
     {
-        $dir = $this->dataDir;
+        $dir = __DIR__ . $this->dataDir;
         if (is_dir($dir)) {
             if ($dirHandle = opendir($dir)) {
                 while (($file = readdir($dirHandle)) !== false) {
