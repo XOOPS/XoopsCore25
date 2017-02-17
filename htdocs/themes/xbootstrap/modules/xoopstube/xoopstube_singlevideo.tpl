@@ -10,21 +10,21 @@
             <h3><{$video.title}></h3>
 
             <div class="row">
-                <div class="col-md-8"><strong><{$smarty.const._MD_XTUBE_PUBLISHER}>:</strong> <{$video.publisher}></div>
+                <div class="col-md-8"><strong><{$smarty.const._MD_XOOPSTUBE_PUBLISHER}>:</strong> <{$video.publisher}></div>
                 <div class="col-md-4 alignright"><{$video.hits|wordwrap:50:"\n":true}></div>
             </div>
 
             <div class="row">
-                <div class="col-md-6"><strong><{$smarty.const._MD_XTUBE_SUBMITTER}>:</strong> <{$video.submitter}></div>
+                <div class="col-md-6"><strong><{$smarty.const._MD_XOOPSTUBE_SUBMITTER}>:</strong> <{$video.submitter}></div>
                 <div class="col-md-6 alignright"><{$video.updated|wordwrap:50:"\n":true}></div>
             </div>
 
             <div class="row">
-                <div class="col-md-6"><strong><{$smarty.const._MD_XTUBE_CATEGORYC}></strong> <{$video.category}></div>
-                <div class="col-md-6 alignright"><strong><{$smarty.const._MD_XTUBE_TIMEB}></strong> <{$video.time}></div>
+                <div class="col-md-6"><strong><{$smarty.const._MD_XOOPSTUBE_CATEGORYC}></strong> <{$video.category}></div>
+                <div class="col-md-6 alignright"><strong><{$smarty.const._MD_XOOPSTUBE_TIMEB}></strong> <{$video.time}></div>
             </div>
 
-            <strong><{$smarty.const._MD_XTUBE_DESCRIPTIONC}></strong>
+            <strong><{$smarty.const._MD_XOOPSTUBE_DESCRIPTIONC}></strong>
 
             <p><{$video.description2}></p>
         </div>
@@ -35,14 +35,14 @@
                     <{if $video.allow_rating}>
                         <li><i class="glyphicon glyphicon-thumbs-up"></i>
                             <a href="<{$xoops_url}>/modules/<{$video.module_dir}>/ratevideo.php?cid=<{$video.cid}>&amp;lid=<{$video.id}>"
-                               title="<{$smarty.const._MD_XTUBE_RATETHISFILE}>"><{$smarty.const._MD_XTUBE_RATETHISFILE}></a></li>
+                               title="<{$smarty.const._MD_XOOPSTUBE_RATETHISFILE}>"><{$smarty.const._MD_XOOPSTUBE_RATETHISFILE}></a></li>
                     <{/if}>
                 <{/if}>
 
                 <li><i class="glyphicon glyphicon-warning-sign"></i>
                     <a href="<{$xoops_url}>/modules/<{$video.module_dir}>/brokenvideo.php?lid=<{$video.id}>"
-                       title="<{$smarty.const._MD_XTUBE_REPORTBROKEN}>">
-                        <{$smarty.const._MD_XTUBE_REPORTBROKEN}>
+                       title="<{$smarty.const._MD_XOOPSTUBE_REPORTBROKEN}>">
+                        <{$smarty.const._MD_XOOPSTUBE_REPORTBROKEN}>
                     </a>
                 </li>
 
@@ -51,8 +51,8 @@
                 <{/if}>
 
                 <li><i class="glyphicon glyphicon-share-alt"></i>
-                    <a href="mailto:?subject=<{$video.mail_subject}>&body=<{$video.mail_body}>" title="<{$smarty.const._MD_XTUBE_TELLAFRIEND}>">
-                        <{$smarty.const._MD_XTUBE_TELLAFRIEND}>
+                    <a href="mailto:?subject=<{$video.mail_subject}>&body=<{$video.mail_body}>" title="<{$smarty.const._MD_XOOPSTUBE_TELLAFRIEND}>">
+                        <{$smarty.const._MD_XOOPSTUBE_TELLAFRIEND}>
                     </a>
                 </li>
 
@@ -67,7 +67,7 @@
 
                 <{if $video.showrating}>
                     <li>
-                        <{$smarty.const._MD_XTUBE_RATINGC}>
+                        <{$smarty.const._MD_XOOPSTUBE_RATINGC}>
                         <img src="<{$xoops_url}>/modules/<{$video.module_dir}>/images/icon/<{$video.rateimg}>" alt=""> (<{$video.votes}>)
                     </li>
                 <{/if}>
