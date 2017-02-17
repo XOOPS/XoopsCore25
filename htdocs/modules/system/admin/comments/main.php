@@ -271,7 +271,7 @@ switch ($op) {
                 $comments_poster_uname = $xoopsConfig['anonymous'];
                 // Start edit by voltan
                 if ($comments_arr[$i]->getVar('com_uid') > 0) {
-                    $poster =& $member_handler->getUser($comments_arr[$i]->getVar('com_uid'));
+                    $poster = $member_handler->getUser($comments_arr[$i]->getVar('com_uid'));
                     if (is_object($poster)) {
                         $comments_poster_uname = '<a href="' . XOOPS_URL . '/userinfo.php?uid=' . $comments_arr[$i]->getVar('com_uid') . '">' . $poster->getVar('uname') . '</a>';
                     }
