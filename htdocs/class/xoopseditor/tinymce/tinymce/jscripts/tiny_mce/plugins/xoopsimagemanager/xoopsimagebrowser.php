@@ -425,7 +425,7 @@ if ($op === 'list') {
     if (!empty($catreadlist)) {
         echo '<table width="100%" class="outer" cellspacing="1">';
         // get all categories
-        $imagecategories =& $imgcat_handler->getObjects();
+        $imagecategories = $imgcat_handler->getObjects();
         $catcount        = count($imagecategories);
         $image_handler   = xoops_getHandler('image');
         for ($i = 0; $i < $catcount; ++$i) {
@@ -471,7 +471,7 @@ if ($op === 'listimg') {
     $criteria->setSort('image_id');
     $criteria->setOrder('DESC');
     $criteria->setLimit(20);
-    $images =& $image_handler->getObjects($criteria, true, false);
+    $images = $image_handler->getObjects($criteria, true, false);
 
     echo '<a href="' . $current_file . '?target=' . $target . '">' . _MD_IMGMAIN . '</a>&nbsp;<span style="font-weight:bold;">&gt;</span>&nbsp;' . $imagecategory->getVar('imgcat_name');
     echo '<br><br><strong>{#xoopsimagebrowser_dlg.select_image}</strong>';
@@ -482,19 +482,28 @@ if ($op === 'listimg') {
         // check if image stored in db/as file - start
         if ($imagecategory->getVar('imgcat_storetype') === 'db') {
             $image_src = '' . XOOPS_URL . '/image.php?id=' . $i . '';
+            if (ini_get('allow_url_fopen') == true){
+                $image_info = true;
+                $image_size = getimagesize($image_src);
+            } else {
+                $image_info = false;
+            }
         } else {
             $image_src = '' . XOOPS_UPLOAD_URL . '/' . $images[$i]->getVar('image_name') . '';
+            $image_size = getimagesize(XOOPS_ROOT_PATH . '/uploads/' . $images[$i]->getVar('image_name'));
+            $image_info = true;
         }
-        $image_size = getimagesize($image_src);
+        
         // check if image stored in db/as file - end
-
         echo '<table width="100%" class="outer">';
         echo '<tr>';
         echo '<td rowspan="' . $rowspan . '" class="xoopsimage">';
 
         echo '<img id="imageid' . $images[$i]->getVar('image_id') . '" src="' . $image_src . '" alt="' . $images[$i]->getVar('image_nicename', 'E') . '" title="' . $images[$i]->getVar('image_nicename', 'E') . '" onclick="XoopsimagebrowserDialog.insertAndClose(\'imageid' . $images[$i]->getVar('image_id') . '\');return false;"/>';
         echo '<br>';
-        echo '' . $image_size[0] . 'x' . $image_size[1] . '';
+        if ($image_info == true){
+            echo '' . $image_size[0] . 'x' . $image_size[1] . '';
+        }
         echo '</td>';
         echo '<td class="head">' . _IMAGENAME, '</td>';
         echo '<td class="even"><input type="hidden" name="image_id[]" value="' . $i . '" /><input type="text" name="image_nicename[]" value="' . $images[$i]->getVar('image_nicename', 'E') . '" size="20" maxlength="255" /></td>';
