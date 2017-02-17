@@ -19,7 +19,7 @@
             <th class="txtcenter width5"><input name='allbox' id='allbox' onclick='xoopsCheckAll("commentslist", "allbox");' type='checkbox'
                                                 value='Check All'/></th>
             <th class="txtcenter width5"></th>
-            <th class="txtcenter"><{$smarty.const._AM_SYSTEM_COMMENTS_TITLE}></th>
+            <th class="txtleft"><{$smarty.const._AM_SYSTEM_COMMENTS_TITLE}></th>
             <th class="txtcenter"><{$smarty.const._AM_SYSTEM_COMMENTS_POSTED}></th>
             <th class="txtcenter"><{$smarty.const._AM_SYSTEM_COMMENTS_IP}></th>
             <th class="txtcenter"><{$smarty.const._DATE}></th>
@@ -34,7 +34,11 @@
                 <tr class="<{cycle values='even,odd'}> alignmiddle">
                     <td class="txtcenter"><input type='checkbox' name='commentslist_id[]' id='commentslist_id[]' value='<{$comments.comments_id}>'/></td>
                     <td class="txtcenter"><{$comments.comments_icon}></td>
-                    <td><{$comments.comments_title}></td>
+                    <td>
+                        <a href="admin.php?fct=comments&amp;op=comments_jump&amp;com_id=<{$comments.comments_id}>" title="<{$comments.comments_title}>">
+                            <{$comments.comments_title}>
+                        </a>
+                    </td>
                     <td class="txtcenter"><{$comments.comments_poster}></td>
                     <td class="txtcenter"><{$comments.comments_ip}></td>
                     <td class="txtcenter"><{$comments.comments_date}></td>
