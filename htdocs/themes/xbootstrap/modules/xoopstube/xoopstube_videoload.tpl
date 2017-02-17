@@ -8,7 +8,7 @@
             </a>
         <{/if}>
 
-        <span><{$smarty.const._MD_XTUBE_TIMEB}> <{$video.time}></span>
+        <span><{$smarty.const._MD_XOOPSTUBE_TIMEB}> <{$video.time}></span>
     </div>
 
     <div class="col-sm-8 col-md-8">
@@ -33,11 +33,11 @@
                 <li><{$video.adminvideo}></li>
             <{/if}>
 
-            <li><strong><{$smarty.const._MD_XTUBE_CATEGORYC}></strong> <{$video.category}></li>
+            <li><strong><{$smarty.const._MD_XOOPSTUBE_CATEGORYC}></strong> <{$video.category}></li>
 
-            <li><strong><{$smarty.const._MD_XTUBE_SUBMITTER}>:</strong> <{$video.submitter}></li>
+            <li><strong><{$smarty.const._MD_XOOPSTUBE_SUBMITTER}>:</strong> <{$video.submitter}></li>
 
-            <li><strong><{$smarty.const._MD_XTUBE_PUBLISHER}>:</strong> <{$video.publisher}></li>
+            <li><strong><{$smarty.const._MD_XOOPSTUBE_PUBLISHER}>:</strong> <{$video.publisher}></li>
 
             <li><strong><{$lang_subdate}>:</strong> <{$video.updated}></li>
 
@@ -45,11 +45,11 @@
 
             <{if $video.showrating}>
                 <li>
-                    <strong><{$smarty.const._MD_XTUBE_RATINGC}></strong>
+                    <strong><{$smarty.const._MD_XOOPSTUBE_RATINGC}></strong>
                     <img src="<{$xoops_url}>/modules/<{$video.module_dir}>/images/icon/<{$video.rateimg}>" alt=""> (<{$video.votes}>)
                 </li>
             <{/if}>
-            <li><strong><{$smarty.const._MD_XTUBE_DESCRIPTIONC}></strong>
+            <li><strong><{$smarty.const._MD_XOOPSTUBE_DESCRIPTIONC}></strong>
 
                 <p><{$video.description|truncate:$video.total_chars}></p>
             </li>

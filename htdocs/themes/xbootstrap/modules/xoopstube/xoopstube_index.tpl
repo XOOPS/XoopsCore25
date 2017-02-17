@@ -25,7 +25,7 @@
     </div><!-- .xoopstube-navigation -->
 
     <{if count($categories) gt 0}>
-        <h1 class="xoops-default-title"><{$smarty.const._MD_XTUBE_MAINLISTING}></h1>
+        <h1 class="xoops-default-title"><{$smarty.const._MD_XOOPSTUBE_MAINLISTING}></h1>
         <div class="row">
             <{foreach item=category from=$categories}>
                 <div class="col-sm-4 col-md-4 category-titles">
@@ -52,7 +52,7 @@
     </div><!-- .xoopstube-footer -->
 
     <{if $showlatest}>
-        <{$smarty.const._MD_XTUBE_LATESTLIST}>
+        <{$smarty.const._MD_XOOPSTUBE_LATESTLIST}>
         <{if $pagenav}>
             <{$pagenav}>
         <{/if}>

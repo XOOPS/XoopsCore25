@@ -1,5 +1,5 @@
 <{if $show_categort_title == true}>
-<{$smarty.const._MD_XTUBE_CATEGORYC}> <{$video.category}>
+<{$smarty.const._MD_XOOPSTUBE_CATEGORYC}> <{$video.category}>
 <{/if}>
 
 <a href="<{$xoops_url}>/modules/<{$video.module_dir}>/singlevideo.php?cid=<{$video.cid}>&amp;lid=<{$video.id}>">
@@ -14,22 +14,22 @@
 <{if $video.published > 0 }>
 <a href="<{$xoops_url}>/modules/<{$video.module_dir}>/singlevideo.php?cid=<{$video.cid}>&amp;lid=<{$video.id}>">
     <img src="<{$xoops_url}>/modules/<{$video.module_dir}>/images/icon/play.png"
-         alt="<{$smarty.const._MD_XTUBE_VIEWDETAILS}>" title="<{$smarty.const._MD_XTUBE_VIEWDETAILS}>"/>
+         alt="<{$smarty.const._MD_XOOPSTUBE_VIEWDETAILS}>" title="<{$smarty.const._MD_XOOPSTUBE_VIEWDETAILS}>"/>
 </a>
 <{/if}>
 <{if $video.showsubmitterx}>
-<{$smarty.const._MD_XTUBE_SUBMITTER}>: <{$video.submitter}>
+<{$smarty.const._MD_XOOPSTUBE_SUBMITTER}>: <{$video.submitter}>
 <{/if}>
-<{$smarty.const._MD_XTUBE_PUBLISHER}>: <{$video.publisher}>
+<{$smarty.const._MD_XOOPSTUBE_PUBLISHER}>: <{$video.publisher}>
 <{$lang_subdate}>: <{$video.updated}>
 <{$video.hits|wordwrap:50:"\n":true}>
-<{$smarty.const._MD_XTUBE_TIMEB}> <{$video.time}>
+<{$smarty.const._MD_XOOPSTUBE_TIMEB}> <{$video.time}>
 
 <{if $video.showrating}>
 <br>
 
 <div class="xoopstube_infoblock">
-    <span style="font-weight: bold;"><{$smarty.const._MD_XTUBE_RATINGC}></span>&nbsp;<img
+    <span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_RATINGC}></span>&nbsp;<img
         src="<{$xoops_url}>/modules/<{$video.module_dir}>/images/icon/<{$video.rateimg}>" alt="" align="middle"/>&nbsp;&nbsp;(<{$video.votes}>)
 </div>
 <{/if}>
@@ -43,7 +43,7 @@
 </div>
 
 <div>
-    <span style="font-weight: bold;"><{$smarty.const._MD_XTUBE_DESCRIPTIONC}></span><br>
+    <span style="font-weight: bold;"><{$smarty.const._MD_XOOPSTUBE_DESCRIPTIONC}></span><br>
     <{$video.description|truncate:$video.total_chars}>
 </div>
 

@@ -15,7 +15,7 @@
     <{$category_path}>
 
     <{if $subcategories}>
-        <{$smarty.const._MD_XTUBE_SUBCATLISTING}>
+        <{$smarty.const._MD_XOOPSTUBE_SUBCATLISTING}>
         <{foreach item=subcat from=$subcategories}>
             <a href="viewcat.php?cid=<{$subcat.id}>" title="<{$subcat.alttext}>"><img src="<{$subcat.image}>" alt="<{$subcat.alttext}>"></a>
             <a href="viewcat.php?cid=<{$subcat.id}>"><{$subcat.title}></a>
@@ -29,10 +29,10 @@
 
     <div class="order-by">
         <{if $show_videos == true}>
-            <h3 class="xoops-default-title"><{$smarty.const._MD_XTUBE_SORTBY}></h3>
+            <h3 class="xoops-default-title"><{$smarty.const._MD_XOOPSTUBE_SORTBY}></h3>
             <div class="row">
                 <div class="col-sm-3 col-md-3">
-                    <{$smarty.const._MD_XTUBE_TITLE}>
+                    <{$smarty.const._MD_XOOPSTUBE_TITLE}>
                     <a href="viewcat.php?cid=<{$category_id}>&orderby=titleA">
                         <span class="glyphicon glyphicon glyphicon-collapse-up"></span>
                     </a>
@@ -42,7 +42,7 @@
                 </div>
 
                 <div class="col-sm-3 col-md-3">
-                    <{$smarty.const._MD_XTUBE_DATE}>
+                    <{$smarty.const._MD_XOOPSTUBE_DATE}>
                     <a href="viewcat.php?cid=<{$category_id}>&orderby=dateA">
                         <span class="glyphicon glyphicon glyphicon-collapse-up"></span>
                     </a>
@@ -52,7 +52,7 @@
                 </div>
 
                 <div class="col-sm-3 col-md-3">
-                    <{$smarty.const._MD_XTUBE_RATING}>
+                    <{$smarty.const._MD_XOOPSTUBE_RATING}>
                     <a href="viewcat.php?cid=<{$category_id}>&orderby=ratingA">
                         <span class="glyphicon glyphicon glyphicon-collapse-up"></span>
                     </a>
@@ -62,7 +62,7 @@
                 </div>
 
                 <div class="col-sm-3 col-md-3">
-                    <{$smarty.const._MD_XTUBE_POPULARITY}>
+                    <{$smarty.const._MD_XOOPSTUBE_POPULARITY}>
                     <a href="viewcat.php?cid=<{$category_id}>&orderby=hitsA">
                         <span class="glyphicon glyphicon glyphicon-collapse-up"></span>
                     </a>
@@ -90,7 +90,7 @@
     <{/if}>
 
     <{if $moderate == true}>
-        <{$smarty.const._MD_XTUBE_MODERATOR_OPTIONS}>
+        <{$smarty.const._MD_XOOPSTUBE_MODERATOR_OPTIONS}>
 
         <{section name=a loop=$mod_arr}>
             <{include file="db:xoopstube_videoload.tpl" video=$mod_arr[a]}>
