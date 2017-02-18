@@ -82,7 +82,7 @@ if (false !== $user) {
                 $token,
                 time() + $rememberTime,
                 '/',
-                XOOPS_COOKIE_DOMAIN, XOOPS_PROT == 'https://',
+                XOOPS_COOKIE_DOMAIN, XOOPS_PROT === 'https://',
                 true
             );
         } else {

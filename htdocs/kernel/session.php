@@ -278,7 +278,7 @@ class XoopsSessionHandler
             $session_expire ? time() + $session_expire : 0,
             '/',
             XOOPS_COOKIE_DOMAIN,
-            false,
+            (XOOPS_PROT === 'https://'),
             true
         );
     }
