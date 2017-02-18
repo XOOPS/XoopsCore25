@@ -270,7 +270,7 @@ if (!empty($_SESSION['xoopsUserId'])) {
                 time() + $rememberTime,
                 '/',
                 XOOPS_COOKIE_DOMAIN,
-                (XOOPS_PROT == 'https://'),
+                (XOOPS_PROT === 'https://'),
                 true
             );
         }
