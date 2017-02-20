@@ -185,6 +185,8 @@ function b_system_user_show()
     $xoopsPreload = XoopsPreload::getInstance();
     $xoopsPreload->triggerEvent('system.blocks.system_blocks.usershow', array(&$pm_handler));
 
+    $block['user_avatar']    = $xoopsUser->getVar('user_avatar');
+    $block['uname']          = $xoopsUser->getVar('uname');
     $block['new_messages']   = $pm_handler->getCount($criteria);
     $block['lang_inbox']     = _MB_SYSTEM_INBOX;
     $block['lang_adminmenu'] = _MB_SYSTEM_ADMENU;
