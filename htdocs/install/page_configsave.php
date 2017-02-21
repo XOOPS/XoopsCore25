@@ -56,8 +56,10 @@ if (true === $writeCheck) {
     $rewrite = array_merge($rewrite, $vars);
 
     $result = writeConfigurationFile($rewrite, $vars['VAR_PATH'] . '/data', 'secure.dist.php', 'secure.php');
+    $GLOBALS['error'] = !($result === true);
     if ($result === true) {
         $result = writeConfigurationFile($rewrite, $vars['ROOT_PATH'], 'mainfile.dist.php', 'mainfile.php');
+        $GLOBALS['error'] = !($result === true);
     }
 
     $_SESSION['settings']['authorized'] = false;
