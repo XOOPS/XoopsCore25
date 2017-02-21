@@ -81,28 +81,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 ob_start();
 
+$extraSources = '<script type="text/javascript" src="./js/zxcvbn.js"></script>';
 if ($isadmin) {
     $pageHasForm = false;
     $pageHasHelp = false;
-    echo "<div class='x2-note errorMsg'>" . ADMIN_EXIST . "</div>\n";
+    echo "<div class='alert alert-warning'>" . ADMIN_EXIST . "</div>\n";
 } else {
-    ?>
-    <fieldset>
-        <legend><?php echo LEGEND_ADMIN_ACCOUNT;
-            ?></legend>
-
-        <?php
         echo '<script type="text/javascript">
                 var desc = new Array();
-                desc[0] = "' . PASSWORD_DESC . '";
-                desc[1] = "' . PASSWORD_VERY_WEAK . '";
-                desc[2] = "' . PASSWORD_WEAK . '";
-                desc[3] = "' . PASSWORD_BETTER . '";
-                desc[4] = "' . PASSWORD_MEDIUM . '";
-                desc[5] = "' . PASSWORD_STRONG . '";
-                desc[6] = "' . PASSWORD_STRONGEST . '";
+                desc[0] = "' . PASSWORD_VERY_WEAK . '";
+                desc[1] = "' . PASSWORD_WEAK . '";
+                desc[2] = "' . PASSWORD_BETTER . '";
+                desc[3] = "' . PASSWORD_MEDIUM . '";
+                desc[4] = "' . PASSWORD_STRONG . '";
         </script>';
 
+    ?>
+    <div class="panel panel-info">
+        <div class="panel-heading"><?php echo LEGEND_ADMIN_ACCOUNT; ?></div>
+        <div class="panel-body">
+
+        <?php
+        echo '<div class="row"><div class="col-md-9">';
         echo xoFormField('adminname', $vars['adminname'], ADMIN_LOGIN_LABEL);
         if (!empty($error['name'])) {
             echo '<ul class="diags1">';
@@ -136,35 +136,30 @@ if ($isadmin) {
                 }
                 ?>
             </div>
-
-            <div id="passwordmetter" class="xoform-help">
-                <label class="xolabel" for='passwordStrength'><strong><?php echo PASSWORD_LABEL;
-                        ?></strong></label>
+        </div>
+    </div>
+    <div class="col-md-3">
+            <div id="passwordmeter" class="well">
+                <h4><?php echo PASSWORD_LABEL; ?></h4>
 
                 <div id='passwordStrength' class='strength0'>
-                    <span id='passwordDescription'><?php echo PASSWORD_DESC;
-                        ?></span>
+                    <span id='passwordDescription'><?php echo PASSWORD_DESC; ?></span>
                 </div>
 
-                <label class="xolabel" for='password_generator'><strong><?php echo PASSWORD_GENERATOR;
-                        ?></strong></label>
 
                 <div id="passwordgenerator">
-                    <input type='text' name='generated_pw' id='generated_pw' value=''/><br>
-                    <button type='button' onclick='suggestPassword(14);'/>
-                    <?php echo PASSWORD_GENERATE;
-                    ?></button>
-                    <button type='button' onclick='suggestPasswordCopy("adminpass");'/>
-                    <?php echo PASSWORD_COPY;
-                    ?></button>
+                    <label for='password_generator'><?php echo PASSWORD_GENERATOR; ?></label>
+                    <input type="text" class="form-control" name="generated_pw" id="generated_pw" value=""  onclick="this.setSelectionRange(0, this.value.length); document.execCommand('copy');"><br>
+                    <button type="button" class="btn btn-default" onclick="suggestPassword(16);">
+                    <?php echo PASSWORD_GENERATE; ?></button>
+                    <button type="button" class="btn btn-default" onclick="suggestPasswordCopy();">
+                    <?php echo PASSWORD_COPY; ?></button>
                 </div>
             </div>
         </div>
-        <br style="clear: both;"/>
-    </fieldset>
-    <script type="text/javascript">
-        showHideHelp(this);
-    </script>
+    </div>
+    </div>
+    </div>
     <?php
 
 }

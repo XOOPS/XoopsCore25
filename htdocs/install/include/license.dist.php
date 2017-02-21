@@ -15,7 +15,7 @@
 /**
  *  Xoops Version
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2017 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @deprecated
  */

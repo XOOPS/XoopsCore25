@@ -38,6 +38,9 @@ if (defined('_MD_AM_AUTHENTICATION')) {
  */
 function createConfigform($config)
 {
+    xoops_load('XoopsFormRendererBootstrap3');
+    XoopsFormRenderer::getInstance()->set(new XoopsFormRendererBootstrap3());
+
     /* @var $config_handler XoopsConfigHandler  */
     $config_handler         = xoops_getHandler('config');
     $GLOBALS['xoopsConfig'] = $xoopsConfig = $config_handler->getConfigsByCat(XOOPS_CONF);
@@ -240,6 +243,9 @@ function createConfigform($config)
  */
 function createThemeform($config)
 {
+    xoops_load('XoopsFormRendererBootstrap3');
+    XoopsFormRenderer::getInstance()->set(new XoopsFormRendererBootstrap3());
+
     $title          = (!defined($config->getVar('conf_desc')) || constant($config->getVar('conf_desc')) === '') ? constant($config->getVar('conf_title')) : constant($config->getVar('conf_title')) . '<br><br><span>' . constant($config->getVar('conf_desc')) . '</span>';
     $form_theme_set = new XoopsFormSelect('', $config->getVar('conf_name'), $config->getConfValueForOutput(), 1, false);
     $dirlist        = XoopsLists::getThemesList();
@@ -268,9 +274,9 @@ function createThemeform($config)
             'screenshot'  => 'screenshot.png');
 
         if ($theme == $config->getConfValueForOutput()) {
-            $label_content .= "<div id='$theme' rel='theme' style='display:block;'>";
+            $label_content .= '<div class="theme_preview" id="'.$theme.'" style="display:block;">';
         } else {
-            $label_content .= "<div id='$theme' rel='theme' style='display:none;'>";
+            $label_content .= '<div class="theme_preview" id="'.$theme.'" style="display:none;">';
         }
         if (file_exists(XOOPS_ROOT_PATH . "/themes/$theme/theme.ini")) {
             $theme_ini = parse_ini_file(XOOPS_ROOT_PATH . "/themes/$theme/theme.ini");

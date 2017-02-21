@@ -42,14 +42,23 @@ $_SESSION['settings'] = array();
 setcookie('xo_install_user', '', null, null, null);
 
 $pageHasForm = true;
-$title       = LANGUAGE_SELECTION;
-$content     = '<select name="lang" size="10" style="min-width: 10em;">';
+$title = LANGUAGE_SELECTION;
+$label = 'Available Languages';
+$content =<<<EOT
+<div class="form-group col-md-4">
+    <label for="lang" class="control-label">{$label}</label>
+    <select name="lang" id="lang" class="form-control">
+EOT;
 
 $languages = getDirList('./language/');
 foreach ($languages as $lang) {
     $sel = ($lang == $wizard->language) ? ' selected' : '';
     $content .= "<option value=\"{$lang}\"{$sel}>{$lang}</option>\n";
 }
-$content .= '</select>';
+$content .=<<<EOB
+    </select>
+</div><div class="clearfix"></div>
+EOB;
+
 
 include './include/install_tpl.php';

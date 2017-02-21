@@ -55,13 +55,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pageHasForm = false;
 
     if (count($msgs) > 0) {
-        $content = "<div class='x2-note successMsg'>" . INSTALLED_MODULES . "</div><ul class='log'>";
+        $content = '<div class="alert alert-success"><span class="fa fa-check text-success"></span> '
+            . INSTALLED_MODULES . '</div><div class="well"><ul class="list-unstyled">';
         foreach ($msgs as $msg) {
-            $content .= "<dt>{$msg}</dt>";
+            $content .= "<li>{$msg}</li>";
         }
-        $content .= '</ul>';
+        $content .= '</ul></div>';
     } else {
-        $content = "<div class='x2-note confirmMsg'>" . NO_INSTALLED_MODULES . '</div>';
+        $content = '<div class="alert alert-info"><span class="fa fa-info-circle text-info"></span> ' . NO_INSTALLED_MODULES . '</div>';
     }
 
     // Flush cache files for cpanel GUIs
@@ -89,8 +90,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $toinstal = 0;
 
     $javascript = '';
-    $content    = "<ul class='log'><li>";
-    $content .= "<table class='module'>\n";
+    $content  = '';
+    $content .= '<div class="panel panel-info">';
+    $content .= '<div class="panel-heading">' . MODULES_AVAILABLE . '</div>';
+    $content .= '<div class="panel-body">';
+
     foreach ($dirlist as $file) {
         clearstatcache();
         if (!in_array($file, $listed_mods)) {
@@ -108,10 +112,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             $form     = new XoopsThemeForm('', 'modules', 'index.php', 'post');
-            $moduleYN = new XoopsFormRadioYN('', 'modules[' . $module->getInfo('dirname') . ']', $value, _YES, _NO);
+            $moduleYN = new XoopsFormRadio('', 'modules[' . $module->getInfo('dirname') . ']', $value);
+            $moduleYN->addOption(1, sprintf(INSTALL_THIS_MODULE, $module->getInfo('name')));
             $moduleYN->setExtra("onclick='selectModule(\"" . $file . "\", this)'");
             $form->addElement($moduleYN);
-
+/*
             $content .= "<tr id='" . $file . "'" . $style . ">\n";
             $content .= "    <td class='img' ><img src='" . XOOPS_URL . '/modules/' . $module->getInfo('dirname') . '/' . $module->getInfo('image') . "' alt='" . $module->getInfo('name') . "'/></td>\n";
             $content .= '    <td>';
@@ -121,14 +126,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $content .= "    <td class='yesno'>";
             $content .= $moduleYN->render();
             $content .= "    </td></tr>\n";
+*/
+            $content .= '<div class="row module-row" id="' . $file . '">';
+            $content .= '<div class="col-md-2">';
+            $content .= '<br><img src="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname')
+                . '/' . $module->getInfo('image') . '" alt="' . $module->getInfo('name') . '">';
+            $content .= '</div>';
+            $content .= '<div class="col-md-7">';
+            $content .= '<h3>' . $module->getInfo('name');
+            $content .= ' <small> ' . number_format(round($module->getInfo('version'), 2), 2)
+                . ' (' . $module->getInfo('dirname') . ')' . '</small>' . '</h3>';
+            $content .= '<i>' . $module->getInfo('description') . '</i>';
+            $content .= '</div>';
+            $content .= '<div class="col-md-3"><br><br><br>' . $moduleYN->render() . '</div>';
+            $content .= '</div>';
+
             ++$toinstal;
         }
     }
-    $content .= '</table>';
-    $content .= "</li></ul><script type='text/javascript'>" . $javascript . '</script>';
+    $content .= '</div></div>';
+    $content .= "<script type='text/javascript'>" . $javascript . '</script>';
     if ($toinstal == 0) {
         $pageHasForm = false;
-        $content     = "<div class='x2-note confirmMsg'>" . NO_MODULES_FOUND . '</div>';
+        $content     = '<div class="alert alert-info"><span class="fa fa-info-circle text-info"></span> ' . NO_MODULES_FOUND . '</div>';
     }
 }
 

@@ -66,32 +66,25 @@ if (@empty($vars['DB_HOST'])) {
 ob_start();
 ?>
 <?php if (!empty($error)) {
-    echo '<div class="x2-note errorMsg">' . $error . "</div>\n";
+    echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $error . "</div>\n";
 } ?>
-    <fieldset>
-        <legend><?php echo LEGEND_CONNECTION; ?></legend>
-        <label class="xolabel" for="DB_DATABASE_LABEL" class="center">
-            <?php echo DB_DATABASE_LABEL; ?>
-            <select size="1" name="DB_TYPE">
-                <?php
-                foreach ($wizard->configs['db_types'] as $db_type) {
-                    $selected = ($vars['DB_TYPE'] == $db_type) ? 'selected' : '';
-                    echo "<option value='$db_type' $selected>$db_type</option>";
-                }
-                ?>
-            </select>
-        </label>
+    <div class="panel panel-info">
+    <div class="panel-heading"><?php echo LEGEND_CONNECTION; ?></div>
+    <div class="panel-body">
+        <?php echo xoFormSelect('DB_TYPE', $vars['DB_TYPE'], DB_DATABASE_LABEL, $wizard->configs['db_types']) ?>
+
         <?php echo xoFormField('DB_HOST', $vars['DB_HOST'], DB_HOST_LABEL, DB_HOST_HELP); ?>
         <?php echo xoFormField('DB_USER', $vars['DB_USER'], DB_USER_LABEL, DB_USER_HELP); ?>
         <?php echo xoPassField('DB_PASS', $vars['DB_PASS'], DB_PASS_LABEL, DB_PASS_HELP); ?>
 
-        <label class="xolabel" for="DB_PCONNECT" class="center">
-            <?php echo DB_PCONNECT_LABEL; ?>
-            <input class="checkbox" type="checkbox" name="DB_PCONNECT" value="1" <?php echo $vars['DB_PCONNECT'] ? "'checked'" : ''; ?>/>
-
-            <div class="xoform-help"><?php echo DB_PCONNECT_HELP; ?></div>
-        </label>
-    </fieldset>
+        <div class="checkbox">
+            <label>
+                <input class="checkbox" type="checkbox" name="DB_PCONNECT" value="1" <?php echo $vars['DB_PCONNECT'] ? 'checked' : ''; ?>/>
+                <?php echo DB_PCONNECT_LABEL; ?>
+            </label>
+            <div class="xoform-help alert alert-info"><?php echo DB_PCONNECT_HELP; ?></div>
+        </div>
+    </div>
 
 <?php
 $content = ob_get_contents();

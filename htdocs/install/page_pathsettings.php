@@ -60,85 +60,95 @@ ob_start();
 
         function updPath(key, val) {
             val = removeTrailing(key, val);
-            new Ajax.Updater(
-                key + 'pathimg', '<?php echo $_SERVER['PHP_SELF']; ?>',
-                {method: 'get', parameters: 'action=checkpath&var=' + key + '&path=' + val}
-            );
-            $(key + 'perms').style.display = 'none';
+            $.get( "<?php echo $_SERVER['PHP_SELF']; ?>", { action: "checkpath", var: key, path: val } )
+                .done(function( data ) {
+                    $("#" + key + 'pathimg').html(data);
+                });
+            $("#" + key + 'perms').style.display = 'none';
         }
     </script>
-    <fieldset>
-        <legend><?php echo XOOPS_PATHS; ?></legend>
+    <div class="panel panel-info">
+        <div class="panel-heading"><?php echo XOOPS_PATHS; ?></div>
+        <div class="panel-body">
 
-        <label class="xolabel" for="root"><?php echo XOOPS_ROOT_PATH_LABEL; ?></label>
+            <div class="form-group">
+                <label class="xolabel" for="root"><?php echo XOOPS_ROOT_PATH_LABEL; ?></label>
+                <div class="xoform-help alert alert-info"><?php echo XOOPS_ROOT_PATH_HELP; ?></div>
+                <input type="text" class="form-control" name="root" id="root" value="<?php echo $ctrl->xoopsPath['root']; ?>" onchange="updPath('root', this.value)"/>
+                <span id="rootpathimg"><?php echo genPathCheckHtml('root', $ctrl->validPath['root']); ?></span>
+            </div>
 
-        <div class="xoform-help"><?php echo XOOPS_ROOT_PATH_HELP; ?></div>
-        <input type="text" name="root" id="root" value="<?php echo $ctrl->xoopsPath['root']; ?>" onchange="updPath('root', this.value)"/>
-        <span id="rootpathimg"><?php echo genPathCheckHtml('root', $ctrl->validPath['root']); ?></span>
-        <?php
-        if ($ctrl->validPath['root'] && !empty($ctrl->permErrors['root'])) {
-            echo '<div id="rootperms" class="x2-note">';
-            echo CHECKING_PERMISSIONS . '<br><p>' . ERR_NEED_WRITE_ACCESS . '</p>';
-            echo '<ul class="diags">';
-            foreach ($ctrl->permErrors['root'] as $path => $result) {
-                if ($result) {
-                    echo '<li class="success">' . sprintf(IS_WRITABLE, $path) . '</li>';
-                } else {
-                    echo '<li class="failure">' . sprintf(IS_NOT_WRITABLE, $path) . '</li>';
+            <?php
+            if ($ctrl->validPath['root'] && !empty($ctrl->permErrors['root'])) {
+                echo '<div id="rootperms" class="x2-note">';
+                echo CHECKING_PERMISSIONS . '<br><p>' . ERR_NEED_WRITE_ACCESS . '</p>';
+                echo '<ul class="diags">';
+                foreach ($ctrl->permErrors['root'] as $path => $result) {
+                    if ($result) {
+                        echo '<li class="success">' . sprintf(IS_WRITABLE, $path) . '</li>';
+                    } else {
+                        echo '<li class="failure">' . sprintf(IS_NOT_WRITABLE, $path) . '</li>';
+                    }
                 }
+                echo '</ul></div>';
+            } else {
+                echo '<div id="rootperms" class="x2-note" style="display: none;"></div>';
             }
-            echo '</ul>';
-        } else {
-            echo '<div id="rootperms" class="x2-note" style="display: none;" />';
-        }
-        ?>
-        </div>
+            ?>
 
-        <label class="xolabel" for="data"><?php echo XOOPS_DATA_PATH_LABEL; ?></label>
-
-        <div class="xoform-help"><?php echo XOOPS_DATA_PATH_HELP; ?></div>
-        <input type="text" name="data" id="data" value="<?php echo $ctrl->xoopsPath['data']; ?>" onchange="updPath('data', this.value)"/>
-        <span id="datapathimg"><?php echo genPathCheckHtml('data', $ctrl->validPath['data']); ?></span>
-        <?php
-        if ($ctrl->validPath['data'] && !empty($ctrl->permErrors['data'])) {
-            echo '<div id="dataperms" class="x2-note">';
-            echo CHECKING_PERMISSIONS . '<br><p>' . ERR_NEED_WRITE_ACCESS . '</p>';
-            echo '<ul class="diags">';
-            foreach ($ctrl->permErrors['data'] as $path => $result) {
-                if ($result) {
-                    echo '<li class="success">' . sprintf(IS_WRITABLE, $path) . '</li>';
-                } else {
-                    echo '<li class="failure">' . sprintf(IS_NOT_WRITABLE, $path) . '</li>';
+            <div class="form-group">
+                <label for="data"><?php echo XOOPS_DATA_PATH_LABEL; ?></label>
+                <div class="xoform-help alert alert-info"><?php echo XOOPS_DATA_PATH_HELP; ?></div>
+                <input type="text" class="form-control" name="data" id="data" value="<?php echo $ctrl->xoopsPath['data']; ?>" onchange="updPath('data', this.value)"/>
+                <span id="datapathimg"><?php echo genPathCheckHtml('data', $ctrl->validPath['data']); ?></span>
+            </div>
+            <?php
+            if ($ctrl->validPath['data'] && !empty($ctrl->permErrors['data'])) {
+                echo '<div id="dataperms" class="x2-note">';
+                echo CHECKING_PERMISSIONS . '<br><p>' . ERR_NEED_WRITE_ACCESS . '</p>';
+                echo '<ul class="diags">';
+                foreach ($ctrl->permErrors['data'] as $path => $result) {
+                    if ($result) {
+                        echo '<li class="success">' . sprintf(IS_WRITABLE, $path) . '</li>';
+                    } else {
+                        echo '<li class="failure">' . sprintf(IS_NOT_WRITABLE, $path) . '</li>';
+                    }
                 }
+                echo '</ul></div>';
+            } else {
+                echo '<div id="dataperms" class="x2-note" style="display: none;"></div>';
             }
-            echo '</ul>';
-        } else {
-            echo '<div id="dataperms" class="x2-note" style="display: none;" />';
-        }
-        ?>
+            ?>
+
+            <div class="form-group">
+                <label class="xolabel" for="lib"><?php echo XOOPS_LIB_PATH_LABEL; ?></label>
+                <div class="xoform-help alert alert-info"><?php echo XOOPS_LIB_PATH_HELP; ?></div>
+                <input type="text" class="form-control" name="lib" id="lib" value="<?php echo $ctrl->xoopsPath['lib']; ?>" onchange="updPath('lib', this.value)"/>
+                <span id="libpathimg"><?php echo genPathCheckHtml('lib', $ctrl->validPath['lib']); ?></span>
+            </div>
+
+            <div id="libperms" class="x2-note" style="display: none;"></div>
         </div>
+    </div>
 
-        <label class="xolabel" for="lib"><?php echo XOOPS_LIB_PATH_LABEL; ?></label>
 
-        <div class="xoform-help"><?php echo XOOPS_LIB_PATH_HELP; ?></div>
-        <input type="text" name="lib" id="lib" value="<?php echo $ctrl->xoopsPath['lib']; ?>" onchange="updPath('lib', this.value)"/>
-        <span id="libpathimg"><?php echo genPathCheckHtml('lib', $ctrl->validPath['lib']); ?></span>
+    <div class="panel panel-info">
+        <div class="panel-heading"><?php echo XOOPS_URLS; ?></div>
+        <div class="panel-body">
 
-        <div id="libperms" class="x2-note" style="display: none;"/>
-    </fieldset>
+            <div class="form-group">
+                <label class="xolabel" for="url"><?php echo XOOPS_URL_LABEL; ?></label>
+                <div class="xoform-help alert alert-info"><?php echo XOOPS_URL_HELP; ?></div>
+                <input type="text" class="form-control" name="URL" id="url" value="<?php echo $ctrl->xoopsUrl; ?>" onchange="removeTrailing('url', this.value)"/>
+            </div>
 
-    <fieldset>
-        <legend><?php echo XOOPS_URLS; ?></legend>
-        <label class="xolabel" for="url"><?php echo XOOPS_URL_LABEL; ?></label>
-
-        <div class="xoform-help"><?php echo XOOPS_URL_HELP; ?></div>
-        <input type="text" name="URL" id="url" value="<?php echo $ctrl->xoopsUrl; ?>" onchange="removeTrailing('url', this.value)"/>
-
-        <label class="xolabel" for="cookie_domain"><?php echo XOOPS_COOKIE_DOMAIN_LABEL; ?></label>
-
-        <div class="xoform-help"><?php echo XOOPS_COOKIE_DOMAIN_HELP; ?></div>
-        <input type="text" name="COOKIE_DOMAIN" id="cookie_domain" value="<?php echo $ctrl->xoopsCookieDomain; ?>" onchange="removeTrailing('url', this.value)"/>
-    </fieldset>
+            <div class="form-group">
+                <label class="xolabel" for="cookie_domain"><?php echo XOOPS_COOKIE_DOMAIN_LABEL; ?></label>
+                <div class="xoform-help alert alert-info"><?php echo XOOPS_COOKIE_DOMAIN_HELP; ?></div>
+                <input type="text" class="form-control" name="COOKIE_DOMAIN" id="cookie_domain" value="<?php echo $ctrl->xoopsCookieDomain; ?>" onchange="removeTrailing('url', this.value)"/>
+            </div>
+        </div>
+    </div>
 
 <?php
 $content = ob_get_contents();

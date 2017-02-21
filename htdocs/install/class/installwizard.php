@@ -124,7 +124,7 @@ class XoopsInstallWizard
         }
 
         if (empty($GLOBALS['xoopsUser']) && !empty($_COOKIE['xo_install_user'])) {
-           return install_acceptUser($_COOKIE['xo_install_user']);
+            return install_acceptUser($_COOKIE['xo_install_user']);
         }
         if (empty($GLOBALS['xoopsUser'])) {
             redirect_header('../user.php');
@@ -251,7 +251,9 @@ class XoopsInstallWizard
         $ret    = '';
 
         foreach ($this->form as $form) {
-            $ret .= '<fieldset><legend>' . $form->getTitle() . "</legend>\n";
+            $ret .= '<div class="panel panel-info">';
+            $ret .= '<div class="panel-heading">' . $form->getTitle() . '</div>';
+            $ret .= '<div class="panel-body">';
 
             foreach ($form->getElements() as $ele) {
                 if (is_object($ele)) {
@@ -260,7 +262,7 @@ class XoopsInstallWizard
                             $name = $ele->getName();
                             $ret .= "<label class='xolabel' for='" . $ele->getName() . "'>" . $caption . '</label>';
                             if (($desc = $ele->getDescription()) != '') {
-                                $ret .= "<div class='xoform-help'>";
+                                $ret .= "<div class='xoform-help  alert alert-info'>";
                                 $ret .= $desc;
                                 $ret .= '</div>';
                             }
@@ -271,7 +273,7 @@ class XoopsInstallWizard
                     }
                 }
             }
-            $ret .= "</fieldset>\n" . $hidden . "\n" . $form->renderValidationJS(true);
+            $ret .= "</div></div>\n" . $hidden . "\n" . $form->renderValidationJS(true);
         }
 
         return $ret;

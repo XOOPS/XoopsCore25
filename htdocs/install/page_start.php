@@ -33,32 +33,32 @@ $pageHasForm = false;
 $content = '';
 include "./language/{$wizard->language}/welcome.php";
 
-$writable = "<ul class='confirmMsg'>";
+$writable = '<div class="alert alert-warning"><ul style="list-style: none;">';
 foreach ($wizard->configs['writable'] as $key => $value) {
     if (is_dir('../' . $value)) {
-        $writable .= "<li class='directory'>$value</li>";
+        $writable .= '<li><span class="fa fa-fw fa-folder-open-o"></span> <strong>' . $value . '</strong></li>';
     } else {
-        $writable .= "<li class='files'>$value</li>";
+        $writable .= '<li><span class="fa fa-fw fa-file-code-o"></span> <strong>' . $value . '</strong></li>';
     }
 }
-$writable .= '</ul>';
+$writable .= '</ul></div>';
 
-$xoops_trust = "<ul class='confirmMsg'>";
+$xoops_trust = '<div class="alert alert-warning"><ul style="list-style: none;">';
 foreach ($wizard->configs['xoopsPathDefault'] as $key => $value) {
-    $xoops_trust .= "<li class='directory'>$value</li>";
+    $xoops_trust .= '<li><span class="fa fa-fw fa-folder-open-o"></span> <strong>' . $value . '</strong></li>';
 }
-$xoops_trust .= '</ul>';
+$xoops_trust .= '</ul></div>';
 
-$writable_trust = "<ul class='confirmMsg'>";
+$writable_trust = '<div class="alert alert-warning"><ul style="list-style: none;">';
 foreach ($wizard->configs['dataPath'] as $key => $value) {
-    $writable_trust .= "<li class='directory'>" . $wizard->configs['xoopsPathDefault']['data'] . '/' . $key . '</li>';
+    $writable_trust .= '<li><span class="fa fa-fw fa-folder-open-o"></span> <strong>' . $wizard->configs['xoopsPathDefault']['data'] . '/' . $key . '</strong></li>';
     if (is_array($value)) {
         foreach ($value as $key2 => $value2) {
-            $writable_trust .= "<li class='directory'>" . $wizard->configs['xoopsPathDefault']['data'] . '/' . $key . '/' . $value2 . '</li>';
+            $writable_trust .= '<li><span class="fa fa-fw fa-folder-open-o"></span> <strong>' . $wizard->configs['xoopsPathDefault']['data'] . '/' . $key . '/' . $value2 . '</strong></li>';
         }
     }
 }
-$writable_trust .= '</ul>';
+$writable_trust .= '</ul></div>';
 
 $content = sprintf($content, $writable, $xoops_trust, $writable_trust);
 
