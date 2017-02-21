@@ -9,10 +9,18 @@ Below are language differences from a version to next version.
 ADDED/DELETED DEFINES
 
 htdocs/install/language/english/install.php
+*NOTE* The installer was significantly change, so this file should be reviewed closely
 - added define("CURL_HTTP", "Client URL Library (cURL)");
 - added define('XOOPS_COOKIE_DOMAIN_LABEL', 'Cookie Domain for the Website');
 - added define('XOOPS_COOKIE_DOMAIN_HELP', 'Domain to set cookies. May be blank, the full host from the URL (www.example.com), or the registered domain without subdomains (example.com) to share across subdomains (www.example.com and blog.example.com.)');
 - added define('INTL_SUPPORT', 'Internationalization functions');
+- added define('XOOPS_SOURCE_CODE', "XOOPS on GitHub");
+- added define('XOOPS_INSTALLING', 'Installing');
+- added define('XOOPS_ERROR_ENCOUNTERED', 'Error');
+- added define('XOOPS_ERROR_SEE_BELOW', 'See below for messages.');
+- added define('MODULES_AVAILABLE', 'Available Modules');
+- added define('INSTALL_THIS_MODULE', 'Add %s');
+
 
 htdocs/language/english/global.php
 - added define('_UPLOAD', 'Upload');

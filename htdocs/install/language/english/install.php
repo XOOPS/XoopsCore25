@@ -105,11 +105,11 @@ define('CHECKING_PERMISSIONS', 'Checking file and directory permissions...'); //
 define('IS_NOT_WRITABLE', '%s is NOT writable.'); // L83
 define('IS_WRITABLE', '%s is writable.'); // L84
 define('XOOPS_PATH_FOUND', 'Path found.');
-define('READY_CREATE_TABLES', 'No XOOPS tables were detected.<br>The installer is now ready to create the XOOPS system tables.');
+//define('READY_CREATE_TABLES', 'No XOOPS tables were detected.<br>The installer is now ready to create the XOOPS system tables.');
 define('XOOPS_TABLES_FOUND', 'The XOOPS system tables already exist in your database.'); // L131
 define('XOOPS_TABLES_CREATED', 'XOOPS system tables have been created.');
-define('READY_INSERT_DATA', 'The installer is now ready to insert initial data into your database.');
-define('READY_SAVE_MAINFILE', 'The installer is now ready to save the specified settings to <em>mainfile.php</em>.');
+//define('READY_INSERT_DATA', 'The installer is now ready to insert initial data into your database.');
+//define('READY_SAVE_MAINFILE', 'The installer is now ready to save the specified settings to <em>mainfile.php</em>.');
 define('SAVED_MAINFILE', 'Settings saved');
 define('SAVED_MAINFILE_MSG', 'The installer has saved the specified settings to <em>mainfile.php</em> and <em>secure.php</em>.');
 define('DATA_ALREADY_INSERTED', 'XOOPS data found in database.');
