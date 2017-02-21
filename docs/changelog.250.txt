@@ -54,6 +54,7 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - PHP 7.1 compatibility fixes (mamba, geekwright)
 - set XOOPS_COOKIE_DOMAIN during install and set in mainfile.php
 - recommend Intl extension
+- add 'rendered' key to XoopsForm::assign(), allows template to choose rendered or by element
 
 Updated libraries and assets:
  - jQuery 3.1.1 (mamba)

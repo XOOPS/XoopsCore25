@@ -816,7 +816,7 @@ function xoops_getcss($theme = '')
  *
  * @return \XoopsMailer|\XoopsMailerLocal
  */
-function &xoops_getMailer()
+function xoops_getMailer()
 {
     static $mailer;
     global $xoopsConfig;

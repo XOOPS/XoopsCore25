@@ -629,6 +629,8 @@ class XoopsForm
             'method'     => $this->getMethod(),
             'extra'      => 'onsubmit="return xoopsFormValidate_' . $this->getName() . '();"' . $this->getExtra(),
             'javascript' => $js,
-            'elements'   => $elements));
+            'elements'   => $elements,
+            'rendered'   => $this->render(),
+        ));
     }
 }
