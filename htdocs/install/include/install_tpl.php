@@ -42,12 +42,11 @@ include_once '../language/' . $wizard->language . '/global.php';
     <title><?php echo XOOPS_VERSION . ' : ' . XOOPS_INSTALL_WIZARD; ?>
         (<?php echo ($wizard->pageIndex + 1) . '/' . count($wizard->pages); ?>)</title>
 
-    <!-- link href="css/style.css" rel="stylesheet" -->
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="../media/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -68,8 +67,7 @@ include_once '../language/' . $wizard->language . '/global.php';
         echo '<link rel="stylesheet" type="text/css" media="all" href="language/' . $wizard->language . '/style.css" />';
     }
     ?>
-    <!--<script type="text/javascript" src="./js/prototype.js"></script>-->
-    <script type="text/javascript" src="./js/xo-installer.js"></script>
+    <script type="text/javascript" src="./assets/js/xo-installer.js"></script>
 
 </head>
 
@@ -87,7 +85,7 @@ include_once '../language/' . $wizard->language . '/global.php';
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <div class="navbar-brand"><img src="img/logo_small.png"></div>
+            <div class="navbar-brand"><img src="assets/img/logo_small.png"></div>
         </div>
         <!-- Top Menu Items -->
         <ul class="nav navbar-right top-nav">
@@ -237,10 +235,10 @@ include_once '../language/' . $wizard->language . '/global.php';
 <!-- /#wrapper -->
 
 <!-- jQuery -->
-<script src="js/jquery.js"></script>
+<script src="assets/js/jquery.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="js/bootstrap.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
 
 </body>
 
@@ -252,7 +250,7 @@ include_once '../language/' . $wizard->language . '/global.php';
          * Check the url to see if we reached 'page_end.php' and if so, launch the cleanup via ajax.
          **/
         if ('page_end.php' == location.pathname.substring(location.pathname.lastIndexOf('/') + 1)) {
-            $.post( "<?php echo "'" . @constant('XOOPS_URL') . "/install/cleanup.php'"; ?>", { instsuffix: <?php echo isset($install_rename_suffix) ? "'" . $install_rename_suffix . "'" : "''"; ?> } );
+            $.post( "cleanup.php", { instsuffix: <?php echo isset($install_rename_suffix) ? "'" . $install_rename_suffix . "'" : "''"; ?> } );
         };
     });
 </script>

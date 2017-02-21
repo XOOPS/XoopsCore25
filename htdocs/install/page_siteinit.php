@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 ob_start();
 
-$extraSources = '<script type="text/javascript" src="./js/zxcvbn.js"></script>';
+$extraSources = '<script type="text/javascript" src="./assets/js/zxcvbn.js"></script>';
 if ($isadmin) {
     $pageHasForm = false;
     $pageHasHelp = false;
