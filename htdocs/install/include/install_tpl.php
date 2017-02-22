@@ -11,8 +11,9 @@
 /**
  * Installer template file
  *
- * See the enclosed file license.txt for licensing information.
- * If you did not receive this file, get it at http://www.gnu.org/licenses/gpl-2.0.html
+ * This template was derived in part from sb-admin, a free, open source, Bootstrap
+ * admin theme created by Start Bootstrap, made available under an MIT license.
+ * See: https://github.com/BlackrockDigital/startbootstrap-sb-admin
  *
  * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
  * @license          GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
