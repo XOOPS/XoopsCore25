@@ -88,6 +88,7 @@ if (true === $writeCheck) {
         ob_end_clean();
     } else {
         $_GLOBAL['error'] = true;
+        $wizard->pageIndex -= 1;
         $content = '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $result . '</div>';
     }
 } else {

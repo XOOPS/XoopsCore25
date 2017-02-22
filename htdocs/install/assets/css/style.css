@@ -249,3 +249,7 @@ body {
     border-radius: 4px;
     margin: 0.25em;
 }
+
+#xo-logger-output {
+    margin-left: 260px;
+}

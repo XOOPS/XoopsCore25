@@ -105,20 +105,16 @@ if ($isadmin) {
         echo '<div class="row"><div class="col-md-9">';
         echo xoFormField('adminname', $vars['adminname'], ADMIN_LOGIN_LABEL);
         if (!empty($error['name'])) {
-            echo '<ul class="diags1">';
             foreach ($error['name'] as $errmsg) {
-                echo '<li class="failure">' . $errmsg . '</li>';
+                echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errmsg . '</div>';
             }
-            echo '</ul>';
         }
 
         echo xoFormField('adminmail', $vars['adminmail'], ADMIN_EMAIL_LABEL);
         if (!empty($error['email'])) {
-            echo '<ul class="diags1">';
-            foreach ($error['email'] as $errmsg) {
-                echo '<li class="failure">' . $errmsg . '</li>';
+            foreach ($error['pass'] as $errmsg) {
+                echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errmsg . '</div>';
             }
-            echo '</ul>';
         }
         ?>
 
@@ -128,11 +124,9 @@ if ($isadmin) {
                 echo xoPassField('adminpass', '', ADMIN_PASS_LABEL);
                 echo xoPassField('adminpass2', '', ADMIN_CONFIRMPASS_LABEL);
                 if (!empty($error['pass'])) {
-                    echo '<ul class="diags1">';
                     foreach ($error['pass'] as $errmsg) {
-                        echo '<li class="failure">' . $errmsg . '</li>';
+                        echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errmsg . '</div>';
                     }
-                    echo '</ul>';
                 }
                 ?>
             </div>
@@ -165,5 +159,5 @@ if ($isadmin) {
 }
 $content = ob_get_contents();
 ob_end_clean();
-$error = '';
+$error = !empty($error);
 include './include/install_tpl.php';
