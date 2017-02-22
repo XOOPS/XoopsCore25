@@ -9,7 +9,7 @@ Below are language differences from a version to next version.
 ADDED/DELETED DEFINES
 
 htdocs/install/language/english/install.php
-*NOTE* The installer was significantly change, so this file should be reviewed closely
+*NOTE* The installer was significantly changed, so this file should be reviewed closely
 - added define("CURL_HTTP", "Client URL Library (cURL)");
 - added define('XOOPS_COOKIE_DOMAIN_LABEL', 'Cookie Domain for the Website');
 - added define('XOOPS_COOKIE_DOMAIN_HELP', 'Domain to set cookies. May be blank, the full host from the URL (www.example.com), or the registered domain without subdomains (example.com) to share across subdomains (www.example.com and blog.example.com.)');
