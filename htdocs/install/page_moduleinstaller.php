@@ -58,7 +58,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $content = '<div class="alert alert-success"><span class="fa fa-check text-success"></span> '
             . INSTALLED_MODULES . '</div><div class="well"><ul class="list-unstyled">';
         foreach ($msgs as $msg) {
-            $content .= "<li>{$msg}</li>";
+            $noAnchors = preg_replace(array('"<a (.*?)>"', '"</a>"'), array('',''), $msg);
+            $content .= "<li>{$noAnchors}</li>";
         }
         $content .= '</ul></div>';
     } else {

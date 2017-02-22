@@ -253,3 +253,7 @@ body {
 #xo-logger-output {
     margin-left: 260px;
 }
+
+.noininstall {
+    display: none;
+}
