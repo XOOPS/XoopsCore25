@@ -431,5 +431,5 @@ class Upgrade_220 extends XoopsUpgrade
     }
 }
 
-$upg = new Upgrade_220(basename(__DIR__));
+$upg = new Upgrade_220();
 return $upg;
