@@ -109,7 +109,7 @@ $modversion['templates'][] = array('file' => 'system_maintenance.tpl', 'descript
 $modversion['templates'][] = array('file' => 'system_help.tpl', 'description' => '', 'type' => 'admin');
 
 // Blocks
-$modversion['blocks'][] = array(
+$modversion['blocks'][1] = array(
     'file'        => 'system_blocks.php',
     'name'        => _MI_SYSTEM_BNAME2,
     'description' => 'Shows user block',
