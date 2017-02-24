@@ -24,7 +24,7 @@
  */
 $modversion                   = array();
 $modversion['name']           = _PROFILE_MI_NAME;
-$modversion['version']        = 1.88;
+$modversion['version']        = 1.89;
 $modversion['description']    = _PROFILE_MI_DESC;
 $modversion['author']         = 'Jan Pedersen, Taiwen Jiang, alfred, Wishcraft';
 $modversion['credits']        = 'Ackbarr, mboyden, marco, mamba, trabis, etc.';
