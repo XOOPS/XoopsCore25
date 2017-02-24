@@ -191,7 +191,6 @@ global $upgradeControl;
 
                 <?php echo $content; ?>
 
-            <?php Xmf\Debug::dump($_SESSION, $_REQUEST, $upgradeControl); ?>
             </div>
         <!-- /.container-fluid -->
         </div>
