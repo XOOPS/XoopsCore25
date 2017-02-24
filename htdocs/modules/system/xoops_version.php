@@ -18,7 +18,7 @@
  */
 
 $modversion['name']        = _MI_SYSTEM_NAME;
-$modversion['version']     = 2.12; // irmtfan bug fix: bug fix: remove codes for delete templates
+$modversion['version']     = 2.14; // irmtfan bug fix: bug fix: remove codes for delete templates
 $modversion['description'] = _MI_SYSTEM_DESC;
 $modversion['author']      = '';
 $modversion['credits']     = 'The XOOPS Project; MusS, Kraven30, Mage';
