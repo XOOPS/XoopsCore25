@@ -6,39 +6,6 @@
 class Upgrade_2014 extends XoopsUpgrade
 {
     /**
-     * __construct
-     */
-    public function __construct()
-    {
-        parent::__construct(basename(__DIR__));
-        $this->usedFiles = array('mainfile.php');
-    }
-
-    /**
-     * @return bool
-     */
-    public function isApplied()
-    {
-        return (/*$this->check_0523patch() &&*/
-        $this->check_auth_db());
-    }
-
-    /**
-     * @return bool
-     */
-    public function apply()
-    {
-        return $this->apply_auth_db();
-        /*
-        if ( $this->apply_0523patch() ) {
-            return $this->apply_auth_db();
-        }
-
-        return false;
-        */
-    }
-
-    /**
      * @return bool
      */
     public function check_0523patch()
@@ -132,7 +99,7 @@ class Upgrade_2014 extends XoopsUpgrade
     public function check_auth_db()
     {
         $db    = $GLOBALS['xoopsDB'];
-        $value = getDbValue($db, 'config', 'conf_id', "`conf_name` = 'ldap_provisionning' AND `conf_catid` = " . XOOPS_CONF_AUTH);
+        $value = $this->getDbValue($db, 'config', 'conf_id', "`conf_name` = 'ldap_provisionning' AND `conf_catid` = " . XOOPS_CONF_AUTH);
 
         return (bool)$value;
     }
@@ -140,7 +107,7 @@ class Upgrade_2014 extends XoopsUpgrade
     /**
      * @param $sql
      */
-    public function query($sql)
+    protected function query($sql)
     {
         $db = $GLOBALS['xoopsDB'];
         if (!($ret = $db->queryF($sql))) {
@@ -155,7 +122,7 @@ class Upgrade_2014 extends XoopsUpgrade
     {
         $db = $GLOBALS['xoopsDB'];
 
-        $cat = getDbValue($db, 'configcategory', 'confcat_id', "`confcat_name` ='_MD_AM_AUTHENTICATION'");
+        $cat = $this->getDbValue($db, 'configcategory', 'confcat_id', "`confcat_name` ='_MD_AM_AUTHENTICATION'");
         if ($cat !== false && $cat != XOOPS_CONF_AUTH) {
             // 2.2 downgrade bug: LDAP cat is here but has a catid of 0
             $db->queryF('DELETE FROM ' . $db->prefix('configcategory') . " WHERE `confcat_name` ='_MD_AM_AUTHENTICATION' ");
@@ -186,12 +153,12 @@ class Upgrade_2014 extends XoopsUpgrade
             'ldap_givenname_attr'      => "'_MD_AM_LDAP_GIVENNAME_ATTR', 'givenname', '_MD_AM_LDAP_GIVENNAME_ATTR_DSC', 'textbox', 'text', 16",
             'ldap_surname_attr'        => "'_MD_AM_LDAP_SURNAME_ATTR', 'sn', '_MD_AM_LDAP_SURNAME_ATTR_DESC', 'textbox', 'text', 17");
         foreach ($data as $name => $values) {
-            if (!getDbValue($db, 'config', 'conf_id', "`conf_modid`=0 AND `conf_catid`=7 AND `conf_name`='$name'")) {
+            if (!$this->getDbValue($db, 'config', 'conf_id', "`conf_modid`=0 AND `conf_catid`=7 AND `conf_name`='$name'")) {
                 $this->query("INSERT INTO `$table` (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) " . "VALUES ( 0,7,'$name',$values)");
             }
         }
         // Insert auth_method config options
-        $id    = getDbValue($db, 'config', 'conf_id', "`conf_modid`=0 AND `conf_catid`=7 AND `conf_name`='auth_method'");
+        $id    = $this->getDbValue($db, 'config', 'conf_id', "`conf_modid`=0 AND `conf_catid`=7 AND `conf_name`='auth_method'");
         $table = $db->prefix('configoption');
         $data  = array(
             '_MD_AM_AUTH_CONFOPTION_XOOPS' => 'xoops',
@@ -203,6 +170,13 @@ class Upgrade_2014 extends XoopsUpgrade
         }
 
         return true;
+    }
+
+    public function __construct()
+    {
+        parent::__construct(basename(__DIR__));
+        $this->tasks = array('auth_db');
+        // $this->usedFiles = array('mainfile.php'); /* '0523patch' not run */
     }
 }
 

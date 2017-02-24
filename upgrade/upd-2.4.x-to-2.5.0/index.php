@@ -158,10 +158,55 @@ class Upgrade_250 extends XoopsUpgrade
         return true;
     }
 
+    /**
+     * Identify a block mangled in the change from XOOPS 2.4.x to 2.5.0
+     *
+     * The user menu block was element 1 in the old $modversion['blocks'] array, but
+     * became element 0 in 2.5.0. This results in the old block not being updated with
+     * new settings. We see it in 2.5.8+ where the theme overrides fail because of the
+     * extension change from .html to .tpl.
+     *
+     * Installs are not a problem, just upgrades. This is the only block affected.
+     *
+     * @return CriteriaElement
+     */
+    private function strayblockCriteria()
+    {
+        $criteria = new CriteriaCompo(new Criteria('mid','1', '='));
+        $criteria->add(new Criteria('block_type','S', '='));
+        $criteria->add(new Criteria('func_num','1', '='));
+        $criteria->add(new Criteria('template','system_block_user.html', '='));
+        return $criteria;
+    }
+
+    /**
+     * @return bool
+     */
+    public function check_strayblock()
+    {
+        $criteria = $this->strayblockCriteria();
+        $count = Xmf\Database\TableLoad::countRows('newblocks', $criteria);
+
+        return ($count === 0);
+    }
+
+    /**
+     * @return bool
+     */
+    public function apply_strayblock()
+    {
+        $criteria = $this->strayblockCriteria();
+        $tables = new Xmf\Database\Tables();
+        $tables->useTable('newblocks');
+        $tables->update('newblocks', array('func_num' => '0'), $criteria);
+
+        return $tables->executeQueue(true);
+    }
+
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
-        $this->tasks = array('config', 'templates');
+        $this->tasks = array('config', 'templates', 'strayblock');
     }
 }
 

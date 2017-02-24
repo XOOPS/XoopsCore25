@@ -21,15 +21,15 @@
 //Before xoops 2.5.8 the table 'sess_ip' was of type varchar (15). This is a problem for IPv6 addresses because it is longer. The upgrade process would change the column to VARCHAR(45) but it requires login, which is failing. If the user has an IPv6 address, it is converted to short IP during the upgrade. At the end of the upgrade IPV6 works
 //save current IP
 $ip = $_SERVER['REMOTE_ADDR'];
-if (strlen($_SERVER['REMOTE_ADDR']) > 15){
+if (strlen($_SERVER['REMOTE_ADDR']) > 15) {
     //new IP for upgrade
     $_SERVER['REMOTE_ADDR'] = '::1';
 }
 
-@include_once '../mainfile.php';
+include_once '../mainfile.php';
+defined('XOOPS_ROOT_PATH') or die('Bad installation: please add this folder to the XOOPS install you want to upgrade');
 
-@set_time_limit(0);
-$reporting = 0;
+$reporting = -1; // 0;
 if (isset($_GET['debug'])) {
     $reporting = -1;
 }
@@ -38,120 +38,61 @@ $xoopsLogger->activated = true;
 $xoopsLogger->enableRendering();
 xoops_loadLanguage('logger');
 
-require './abstract.php';
+require './class/abstract.php';
+require './class/patchstatus.php';
+require './class/control.php';
 
-defined('XOOPS_ROOT_PATH') or die('Bad installation: please add this folder to the XOOPS install you want to upgrade');
+$GLOBALS['error'] = false;
+$upgradeControl = new UpgradeControl();
 
-/*
- * gets list of name of directories inside a directory
- */
-/**
- * @param $dirname
- *
- * @return array
- */
-function getDirList($dirname)
-{
-    $dirlist = array();
-    if (is_dir($dirname) && $handle = opendir($dirname)) {
-        while (false !== ($file = readdir($handle))) {
-            if (substr($file, 0, 1) !== '.' && strtolower($file) !== 'cvs') {
-                if (is_dir("{$dirname}/{$file}")) {
-                    $dirlist[] = $file;
-                }
-            }
-        }
-        closedir($handle);
-        asort($dirlist);
-        reset($dirlist);
-    }
-
-    return $dirlist;
-}
-
-/**
- * @param XoopsDatabase $db
- * @param        $table
- * @param        $field
- * @param string $condition
- *
- * @return bool
- */
-function getDbValue(XoopsDatabase $db, $table, $field, $condition = '')
-{
-    $table = $db->prefix($table);
-    $sql   = "SELECT `{$field}` FROM `{$table}`";
-    if ($condition) {
-        $sql .= " WHERE {$condition}";
-    }
-    $result = $db->query($sql);
-    if ($result) {
-        $row = $db->fetchRow($result);
-        if ($row) {
-            return $row[0];
-        }
-    }
-
-    return false;
-}
-
-$upgrade_language = @$xoopsConfig['language'];
-// $xoopsConfig might not be able fetched
-if (empty($upgrade_language)) {
-    include_once './language.php';
-    $upgrade_language = xoops_detectLanguage();
-}
-
-if (file_exists("./language/{$upgrade_language}/upgrade.php")) {
-    include_once "./language/{$upgrade_language}/upgrade.php";
-} elseif (file_exists("./language/{$upgrade_language}_utf8/upgrade.php")) {
-    include_once "./language/{$upgrade_language}_utf8/upgrade.php";
-    $upgrade_language .= '_utf8';
-} elseif (file_exists('./language/english/upgrade.php')) {
-    include_once './language/english/upgrade.php';
-    $upgrade_language = 'english';
-} else {
-    echo 'no language file.';
-    exit();
-}
+$upgradeControl->determineLanguage();
+$upgradeControl->buildUpgradeQueue();
 
 ob_start();
 global $xoopsUser;
 if (!$xoopsUser || !$xoopsUser->isAdmin()) {
     include_once 'login.php';
 } else {
-    $op = @$_REQUEST['action'];
-    if (empty($_SESSION['xoops_upgrade']['steps'])) {
+    $op = Xmf\Request::getCmd('action', '');
+    if (!$upgradeControl->needUpgrade) {
         $op = '';
     }
     if (empty($op)) {
-        include_once 'check_version.php';
-        if (false === $needUpgrade) {
-            // Reset session with IP before upgrade
-            $_SERVER['REMOTE_ADDR'] = $ip;
-            $GLOBALS['sess_handler']->regenerate_id(true);
-        }
+        $upgradeControl->loadLanguage('welcome');
+        echo _XOOPS_UPGRADE_WELCOME;
     } else {
-        $next = array_shift($_SESSION['xoops_upgrade']['steps']);
-        printf('<h2>' . _PERFORMING_UPGRADE . '</h2>', $next);
-        $upgrader = include_once "{$next}/index.php";
-        $res      = $upgrader->apply();
-        if ($message = $upgrader->message()) {
-            echo '<p>' . $message . '</p>';
-        }
-
-        if (!$res) {
-            array_unshift($_SESSION['xoops_upgrade']['steps'], $next);
-            echo '<a id="link-next" href="index.php?action=next">' . _RELOAD . '</a>';
-        } else {
-            if (empty($_SESSION['xoops_upgrade']['steps'])) {
-                $text = _FINISH;
-            } else {
-                list($key, $val) = each($_SESSION['xoops_upgrade']['steps']);
-                $text = sprintf(_APPLY_NEXT, $val);
+        if (!empty($upgradeControl->needWriteFiles)) {
+            echo '<div class="panel panel-danger">'
+                . '<div class="panel-heading">' . _SET_FILES_WRITABLE . '</div>'
+                . '<div class="panel-body"><ul class="fa-ul">';
+            foreach ($upgradeControl->needWriteFiles as $file) {
+                echo '<li><i class="fa-li fa fa-ban text-danger"></i>' . $file . '</li>';
+                $GLOBALS['error'] = true;
             }
-            echo '<a id="link-next" href="index.php?action=next">' . $text . '</a>';
+            echo '</ul></div></div>';
+        } else {
+            $next = $upgradeControl->getNextPatch();
+            printf('<h2>' . _PERFORMING_UPGRADE . '</h2>', $next);
+            /** @var $upgrader XoopsUpgrade */
+            $upgradeClass = $upgradeControl->upgradeQueue[$next]->patchClass;
+            $upgrader = new $upgradeClass();
+            $res = $upgrader->apply();
+            if ($message = $upgrader->message()) {
+                echo '<div class="well">' . $message . '</div>';
+            }
+
+            if ($res) {
+                $upgradeControl->upgradeQueue[$next]->applied = true;
+            }
         }
+    }
+    if (0 === $upgradeControl->countUpgradeQueue()) {
+            echo $upgradeControl->oneButtonContinueForm(
+                XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=system',
+                array()
+            );
+    } else {
+        echo $upgradeControl->oneButtonContinueForm();
     }
 }
 $content = ob_get_contents();

@@ -5,19 +5,22 @@ if (empty($_POST['uname']) || empty($_POST['pass'])) {
     ?>
     <h2><?php echo _USER_LOGIN; ?></h2>
 
-    <form id="xo-loginupdate" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-        <div class="xo-formfield required">
-            <label><?php echo _USERNAME; ?></label>
-            <input type="text" name="uname" size="24" maxlength="25" value=""/>
+    <form action="index.php" method="post">
+        <label for="uname"><?php echo _USERNAME; ?></label>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input class="form-control" type="text" name="uname" id="uname" value="" placeholder="<?php echo _USERNAME_PLACEHOLDER; ?>">
         </div>
-        <div class="xo-formfield required">
-            <label><?php echo _PASSWORD; ?></label>
-            <input type="password" name="pass" size="24" maxlength="32"/>
+
+        <label for="pass"><?php echo _PASSWORD; ?></label>
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <input class="form-control" type="password" name="pass" id="pass" placeholder="<?php echo _PASSWORD_PLACEHOLDER; ?>">
         </div>
-        <div class="xo-formbuttons">
-            <button type="submit"><?php echo _LOGIN; ?></button>
+        <div class="input-group">
+            <br>
+            <button type="submit" class="btn btn-default"><?php echo _LOGIN; ?></button>
         </div>
-        <input type="hidden" name="xoops_redirect" value="/upgrade/index.php"/>
     </form>
     <?php
 } else {
@@ -66,18 +69,8 @@ if (empty($_POST['uname']) || empty($_POST['pass'])) {
         if (in_array($user_theme, $xoopsConfig['theme_set_allowed'])) {
             $_SESSION['xoopsUserTheme'] = $user_theme;
         }
-
-        // Set cookie for rememberme
-        if (!empty($xoopsConfig['usercookie'])) {
-            if (!empty($_POST['rememberme'])) {
-                setcookie($xoopsConfig['usercookie'], $_SESSION['xoopsUserId'], time() + 31536000, '/', '', 0);
-            } else {
-                setcookie($xoopsConfig['usercookie'], 0, -1, '/', '', 0);
-            }
-        }
     }
 
     header('location: ' . XOOPS_URL . '/upgrade/index.php');
     exit();
 }
-?>
