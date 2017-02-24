@@ -39,10 +39,18 @@ class XoopsUpgrade
     }
 
     /**
-     * @return bool
+     * Run the check_* tasks to see if the patch is needed.
+     *
+     * The check_* methods should return:
+     *  - true if the patch has been applied
+     *  - false if the patch needs to be performed
+     *
+     * @return PatchStatus
      */
     public function isApplied()
     {
+        return new PatchStatus($this);
+        /*
         $step = get_class($this);
         if (!isset($_SESSION['xoops_upgrade'][$step]) || !is_array($_SESSION['xoops_upgrade'][$step])) {
             $_SESSION['xoops_upgrade'][$step] = array();
@@ -56,6 +64,7 @@ class XoopsUpgrade
         }
 
         return empty($_SESSION['xoops_upgrade'][$step]) ? true : false;
+        */
     }
 
     /**
@@ -63,14 +72,13 @@ class XoopsUpgrade
      */
     public function apply()
     {
-        $step  = get_class($this);
-        $tasks = $_SESSION['xoops_upgrade'][$step];
+        $patchStatus  = $this->isApplied();
+        $tasks = $patchStatus->tasks;
         foreach ($tasks as $task) {
             $res = $this->{"apply_{$task}"}();
             if (!$res) {
                 return false;
             }
-            array_shift($_SESSION['xoops_upgrade'][$step]);
         }
 
         return true;
@@ -81,13 +89,9 @@ class XoopsUpgrade
      */
     public function loadLanguage($dirname)
     {
-        global $xoopsConfig, $upgrade_language;
+        global $upgradeControl;
 
-        if (file_exists("./{$dirname}/language/{$upgrade_language}.php")) {
-            include_once "./{$dirname}/language/{$upgrade_language}.php";
-        } elseif (file_exists("./{$dirname}/language/english.php")) {
-            include_once "./{$dirname}/language/english.php";
-        }
+        $upgradeControl->loadLanguage($dirname);
     }
 
     /**
@@ -96,5 +100,33 @@ class XoopsUpgrade
     public function message()
     {
         return empty($this->logs) ? '' : implode('<br>', $this->logs);
+    }
+
+    /**
+     * Relocated here from upgrade/index.php
+     *
+     * @param XoopsDatabase $db
+     * @param        $table
+     * @param        $field
+     * @param string $condition
+     *
+     * @return bool
+     */
+    protected function getDbValue(XoopsDatabase $db, $table, $field, $condition = '')
+    {
+        $table = $db->prefix($table);
+        $sql   = "SELECT `{$field}` FROM `{$table}`";
+        if ($condition) {
+            $sql .= " WHERE {$condition}";
+        }
+        $result = $db->query($sql);
+        if ($result) {
+            $row = $db->fetchRow($result);
+            if ($row) {
+                return $row[0];
+            }
+        }
+
+        return false;
     }
 }

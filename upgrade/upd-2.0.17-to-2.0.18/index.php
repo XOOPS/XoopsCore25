@@ -8,22 +8,6 @@ class Upgrade_2018 extends XoopsUpgrade
     /**
      * @return bool
      */
-    public function isApplied()
-    {
-        return $this->check_config_type();
-    }
-
-    /**
-     * @return bool
-     */
-    public function apply()
-    {
-        return $this->apply_alter_tables();
-    }
-
-    /**
-     * @return bool
-     */
     public function check_config_type()
     {
         $db     = $GLOBALS['xoopsDB'];
@@ -41,7 +25,7 @@ class Upgrade_2018 extends XoopsUpgrade
     /**
      * @param $sql
      */
-    public function query($sql)
+    protected function query($sql)
     {
         //echo $sql . "<br>";
         $db = $GLOBALS['xoopsDB'];
@@ -53,7 +37,7 @@ class Upgrade_2018 extends XoopsUpgrade
     /**
      * @return bool
      */
-    public function apply_alter_tables()
+    public function apply_config_type()
     {
         $db           = $GLOBALS['xoopsDB'];
         $this->fields = array(
@@ -70,6 +54,12 @@ class Upgrade_2018 extends XoopsUpgrade
         }
 
         return true;
+    }
+
+    public function __construct()
+    {
+        parent::__construct(basename(__DIR__));
+        $this->tasks = array('config_type');
     }
 }
 

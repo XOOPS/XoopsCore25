@@ -18,8 +18,6 @@ class Upgrade_259 extends XoopsUpgrade
 {
     /**
      * __construct
-     *
-     * make sure we have XMF active
      */
     public function __construct()
     {
