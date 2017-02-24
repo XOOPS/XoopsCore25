@@ -21,7 +21,7 @@ if (!defined('XOOPS_INSTALL')) {
 $configs = array();
 
 // setup config site info
-$configs['db_types'] = array('mysql');
+$configs['db_types'] = array('mysql' => 'mysql');
 
 // setup config site info
 $configs['conf_names'] = array(
@@ -63,7 +63,8 @@ $configs['writable'] = array(
     'uploads/smilies/',
     'xoops_lib/modules/protector/configs/',
     //'mainfile.php',
-    'include/license.php');
+    //'include/license.php',
+    );
 
 // Modules to be installed by default
 $configs['modules'] = array();

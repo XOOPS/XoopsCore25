@@ -93,27 +93,28 @@ if (@empty($vars['DB_NAME'])) {
 ob_start();
 ?>
 <?php if (!empty($error)) {
-    echo '<div class="x2-note errorMsg">' . $error . "</div>\n";
+    echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $error . "</div>\n";
 } ?>
 
     <script type="text/javascript">
         function setFormFieldCollation(id, val) {
-            var display = (val == '') ? 'none' : '';
-            $(id).style.display = display;
-            new Ajax.Updater(
-                id, '<?php echo $_SERVER['PHP_SELF']; ?>',
-                {method: 'get', parameters: 'action=updateCollation&charset=' + val}
-            );
+            $.get('<?php echo $_SERVER['PHP_SELF']; ?>', { action: 'updateCollation', charset: val } )
+                .done(function( data ) {
+                    $('#'+id).html(data);
+                });
         }
     </script>
 
-    <fieldset>
-        <legend><?php echo LEGEND_DATABASE; ?></legend>
+    <div class="panel panel-info">
+        <div class="panel-heading"><?php echo LEGEND_DATABASE; ?></div>
+        <div class="panel-body">
+
         <?php echo xoFormField('DB_NAME', $vars['DB_NAME'], DB_NAME_LABEL, DB_NAME_HELP); ?>
         <?php echo xoFormField('DB_PREFIX', $vars['DB_PREFIX'], DB_PREFIX_LABEL, DB_PREFIX_HELP); ?>
         <?php echo xoFormFieldCharset('DB_CHARSET', $vars['DB_CHARSET'], DB_CHARSET_LABEL, DB_CHARSET_HELP, $link); ?>
         <?php echo xoFormBlockCollation('DB_COLLATION', $vars['DB_COLLATION'], DB_COLLATION_LABEL, DB_COLLATION_HELP, $link, $vars['DB_CHARSET']); ?>
-    </fieldset>
+        </div>
+    </div>
 
 <?php
 $content = ob_get_contents();

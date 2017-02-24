@@ -44,18 +44,8 @@ foreach ($wizard->configs['extensions'] as $ext => $value) {
 }
 ob_start();
 ?>
-    <table class="diags">
-        <caption><?php echo REQUIREMENTS; ?></caption>
-        <thead>
-        <tr>
-            <th colspan='2'></th>
-        </tr>
-        </thead>
-        <tfoot>
-        <tr>
-            <td colspan='2'></td>
-        </tr>
-        </tfoot>
+    <h3><?php echo REQUIREMENTS; ?></h3>
+    <table class="table table-hover">
         <tbody>
         <tr>
             <th><?php echo SERVER_API; ?></th>
@@ -94,24 +84,13 @@ ob_start();
         </tbody>
     </table>
 
-    <table class="diags">
-        <caption><?php echo RECOMMENDED_EXTENSIONS; ?></caption>
-        <thead>
-        <tr>
-            <th colspan="2">
-                <div class='confirmMsg'><?php echo RECOMMENDED_EXTENSIONS_MSG; ?></div>
-            </th>
-        </tr>
-        </thead>
-        <tfoot>
-        <tr>
-            <td colspan='2'></td>
-        </tr>
-        </tfoot>
+    <h3><?php echo RECOMMENDED_EXTENSIONS; ?></h3>
+    <table class="table table-hover">
+        <caption><?php echo RECOMMENDED_EXTENSIONS_MSG; ?></caption>
         <tbody>
         <?php
         foreach ($wizard->configs['extensions'] as $key => $value) {
-            echo '<tr><th>' . $value[1] . '</th><td>' . $value[2] . '</td></tr>';
+            echo '<tr><th>' . $value[2] . '</th><td>' . $value[1] . '</td></tr>';
         }
         ?>
 

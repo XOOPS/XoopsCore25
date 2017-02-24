@@ -43,9 +43,10 @@ if (!$dbm->isConnectable()) {
 }
 
 if ($dbm->tableExists('users')) {
-    $content = '<div class="x2-note confirmMsg">' . XOOPS_TABLES_FOUND . '</div>';
+    $content = '<div class="alert alert-info"><span class="fa fa-info-circle text-info"></span> ' . XOOPS_TABLES_FOUND . '</div>';
 } else {
     $result  = $dbm->queryFromFile('./sql/' . XOOPS_DB_TYPE . '.structure.sql');
-    $content = '<div class="x2-note successMsg">' . XOOPS_TABLES_CREATED . '</div><br>' . $dbm->report();
+    $content = '<div class="alert alert-success"><span class="fa fa-check text-success"></span> ' . XOOPS_TABLES_CREATED
+        . '</div><div class="well">' . $dbm->report() . '</div>';
 }
 include './include/install_tpl.php';

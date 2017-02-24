@@ -56,8 +56,10 @@ if (true === $writeCheck) {
     $rewrite = array_merge($rewrite, $vars);
 
     $result = writeConfigurationFile($rewrite, $vars['VAR_PATH'] . '/data', 'secure.dist.php', 'secure.php');
+    $GLOBALS['error'] = !($result === true);
     if ($result === true) {
         $result = writeConfigurationFile($rewrite, $vars['ROOT_PATH'], 'mainfile.dist.php', 'mainfile.php');
+        $GLOBALS['error'] = !($result === true);
     }
 
     $_SESSION['settings']['authorized'] = false;
@@ -68,10 +70,8 @@ if (true === $writeCheck) {
         ob_start();
         ?>
 
-        <div class="caption"><?php echo SAVED_MAINFILE;
-            ?></div>
-        <div class='x2-note confirmMsg'><?php echo SAVED_MAINFILE_MSG;
-            ?></div>
+        <div class="alert alert-success"><span class="fa fa-check text-success"></span> <?php echo SAVED_MAINFILE; ?></div>
+        <div class='well'><?php echo SAVED_MAINFILE_MSG; ?>
         <ul class='diags'>
             <?php
             foreach ($vars as $k => $v) {
@@ -82,16 +82,20 @@ if (true === $writeCheck) {
             }
             ?>
         </ul>
+        </div>
         <?php
         $content = ob_get_contents();
         ob_end_clean();
     } else {
-        $content = '<div class="errorMsg">' . $result . '</div>';
+        $_GLOBAL['error'] = true;
+        $wizard->pageIndex -= 1;
+        $content = '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $result . '</div>';
     }
 } else {
     $content = '';
-    foreach ($writeCheck as $error) {
-        $content .= '<div class="errorMsg">' . $error . '</div>' . "\n";
+    foreach ($writeCheck as $errorMsg) {
+        $content .= '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errorMsg . '</div>' . "\n";
+        $_GLOBAL['error'] = true;
     }
     $form  = '<form action="" method="post">';
     $form .= '<button type="submit" name="op" value="retry">' . CHMOD_CHGRP_REPEAT . '</button>';

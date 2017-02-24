@@ -48,49 +48,41 @@ if (!$res) {
 }
 
 list($count) = $dbm->db->fetchRow($res);
-$process = $count ? '' : 'insert';
+$process = ($count == 0);
 $update  = false;
 
 extract($_SESSION['siteconfig'], EXTR_SKIP);
-if ($state = xoDiagIfWritable('include/license.php')) {
-    if (!is_writable('../include/license.php')) {
-    }
+
+include_once './include/makedata.php';
+//$cm = 'dummy';
+$wizard->loadLangFile('install2');
+
+$licenseFile = XOOPS_VAR_PATH . '/data/license.php';
+$touched = touch($licenseFile);
+if ($touched) {
+    $licenseReport = '<div class="alert alert-success"><span class="fa fa-check text-success"></span> '
+        . writeLicenseKey() . '</div>';
+} else {
+    $licenseReport = '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> '
+        . sprintf(LICENSE_NOT_WRITEABLE, $licenseFile) . '</div>';
 }
+$error = false;
 
 $hashedAdminPass = password_hash($adminpass, PASSWORD_DEFAULT);
-if ($process && is_writable('../include/license.php')) {
-    include_once './include/makedata.php';
-    //$cm = 'dummy';
-    $wizard->loadLangFile('install2');
-    $language = $wizard->language;
 
+if ($process) {
     $result  = $dbm->queryFromFile('./sql/' . XOOPS_DB_TYPE . '.data.sql');
     $result  = $dbm->queryFromFile('./language/' . $language . '/' . XOOPS_DB_TYPE . '.lang.data.sql');
     $group   = make_groups($dbm);
     $result  = make_data($dbm, $adminname, $hashedAdminPass, $adminmail, $language, $group);
-    $content = '<div class="x2-note successMsg">' . DATA_INSERTED . '</div><br>' . $dbm->report();
-    // Writes License Key
-    $content .= '<div class="x2-note successMsg">' . sprintf(LICENSE_IS_WRITEABLE, $state) . '</div>';
-    $content .= '<div class="x2-note successMsg">' . write_key() . '</div><br>';
-} elseif ($update) {
-    $sql = "UPDATE " . $dbm->db->prefix("users")
-        . " SET `uname` = " . $dbm->db->quote($adminname)
-        . ", `email` = " . $dbm->db->quote($adminmail)
-        . ", `user_regdate` = '" . time() . "'"
-        . ", `pass` = " . $dbm->db->quote($hashedAdminPass)
-        . ", `last_login` = '" . time() . "' "
-        . "WHERE uid = 1";
-    $dbm->db->queryF($sql);
-    $content = '';
-} elseif (!is_writable('../include/license.php')) {
-    include_once './include/makedata.php';
-    //$cm = 'dummy';
-    $wizard->loadLangFile('install2');
-
-    $content .= '<div class="x2-note errorMsg">' . sprintf(LICENSE_NOT_WRITEABLE, $state) . '</div>';
+    $content = '<div class="alert alert-success"><span class="fa fa-check text-success"></span> '
+        . DATA_INSERTED . '</div><div class="well">' . $dbm->report() . '</div>';
 } else {
-    $content = "<div class='x2-note confirmMsg'>" . DATA_ALREADY_INSERTED . '</div>';
+    $content = '<div class="alert alert-info"><span class="fa fa-info-circle text-info"></span> '
+        . DATA_ALREADY_INSERTED . '</div>';
 }
+$content .= $licenseReport;
+
 
 setcookie('xo_install_user', '', null, null, null);
 if (!empty($_SESSION['settings']['authorized']) && !empty($adminname) && !empty($adminpass)) {
@@ -98,7 +90,7 @@ if (!empty($_SESSION['settings']['authorized']) && !empty($adminname) && !empty(
         'uname' => $adminname,
         'sub' => 'xoopsinstall',
     );
-    $token = \Xmf\Jwt\TokenFactory::build('install', $claims, 60*15);
+    $token = \Xmf\Jwt\TokenFactory::build('install', $claims, 60*60);
 
     setcookie('xo_install_user', $token, 0, null, null, null, true);
 }

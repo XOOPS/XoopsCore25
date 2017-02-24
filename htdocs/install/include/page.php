@@ -25,43 +25,72 @@
 $pages = array(
     'langselect'      => array(
         'name'  => LANGUAGE_SELECTION,
-        'title' => LANGUAGE_SELECTION_TITLE),
+        'title' => LANGUAGE_SELECTION_TITLE,
+        'icon'  => 'fa fa-fw fa-language'
+    ),
     'start'           => array(
         'name'  => INTRODUCTION,
-        'title' => INTRODUCTION_TITLE),
+        'title' => INTRODUCTION_TITLE,
+        'icon'  => 'fa fa-fw fa-exclamation-circle'
+    ),
     'modcheck'        => array(
         'name'  => CONFIGURATION_CHECK,
-        'title' => CONFIGURATION_CHECK_TITLE),
+        'title' => CONFIGURATION_CHECK_TITLE,
+        'icon'  => 'fa fa-fw fa-server'
+    ),
     'pathsettings'    => array(
         'name'  => PATHS_SETTINGS,
-        'title' => PATHS_SETTINGS_TITLE),
+        'title' => PATHS_SETTINGS_TITLE,
+        'icon'  => 'fa fa-fw fa-folder-open'
+    ),
     'dbconnection'    => array(
         'name'  => DATABASE_CONNECTION,
-        'title' => DATABASE_CONNECTION_TITLE),
+        'title' => DATABASE_CONNECTION_TITLE,
+        'icon'  => 'fa fa-fw fa-exchange'
+    ),
     'dbsettings'      => array(
         'name'  => DATABASE_CONFIG,
-        'title' => DATABASE_CONFIG_TITLE),
+        'title' => DATABASE_CONFIG_TITLE,
+        'icon'  => 'fa fa-fw fa-database'
+    ),
     'configsave'      => array(
         'name'  => CONFIG_SAVE,
-        'title' => CONFIG_SAVE_TITLE),
+        'title' => CONFIG_SAVE_TITLE,
+        'icon'  => 'fa fa-fw fa-download'
+    ),
     'tablescreate'    => array(
         'name'  => TABLES_CREATION,
-        'title' => TABLES_CREATION_TITLE),
+        'title' => TABLES_CREATION_TITLE,
+        'icon'  => 'fa fa-fw fa-sitemap'
+    ),
     'siteinit'        => array(
         'name'  => INITIAL_SETTINGS,
-        'title' => INITIAL_SETTINGS_TITLE),
+        'title' => INITIAL_SETTINGS_TITLE,
+        'icon'  => 'fa fa-fw fa-sliders'
+    ),
     'tablesfill'      => array(
         'name'  => DATA_INSERTION,
-        'title' => DATA_INSERTION_TITLE),
+        'title' => DATA_INSERTION_TITLE,
+        'icon'  => 'fa fa-fw fa-cloud-upload'
+    ),
     'configsite'      => array(
         'name'  => CONFIG_SITE,
-        'title' => CONFIG_SITE_TITLE),
+        'title' => CONFIG_SITE_TITLE,
+        'icon'  => 'fa fa-fw fa-edit'
+    ),
     'theme'           => array(
         'name'  => THEME,
-        'title' => THEME_TITLE),
+        'title' => THEME_TITLE,
+        'icon'  => 'fa fa-fw fa-object-group'
+    ),
     'moduleinstaller' => array(
         'name'  => MODULES,
-        'title' => MODULES_TITLE),
+        'title' => MODULES_TITLE,
+        'icon'  => 'fa fa-fw fa-cubes'
+    ),
     'end'             => array(
         'name'  => WELCOME,
-        'title' => WELCOME_TITLE));
+        'title' => WELCOME_TITLE,
+        'icon'  => 'fa fa-fw fa-thumbs-o-up'
+    )
+);

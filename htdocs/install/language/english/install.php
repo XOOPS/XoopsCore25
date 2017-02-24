@@ -17,7 +17,7 @@
 // Translator: XOOPS Translation Team
 define('SHOW_HIDE_HELP', 'Show/hide help text');
 // License
-define('LICENSE_NOT_WRITEABLE', '%s License is NOT writable! <br><span style="colour:#ff0000;">Make ../include/license.php Writable</span>');
+define('LICENSE_NOT_WRITEABLE', 'License file "%s" is NOT writable!');
 define('LICENSE_IS_WRITEABLE', '%s License is writable.');
 // Configuration check page
 define('SERVER_API', 'Server API');
@@ -98,22 +98,22 @@ define('ADMIN_PASS_LABEL', 'Admin password'); // L39
 define('ADMIN_CONFIRMPASS_LABEL', 'Confirm password'); // L74
 // Buttons
 define('BUTTON_PREVIOUS', 'Previous'); // L42
-define('BUTTON_NEXT', 'Next'); // L47
+define('BUTTON_NEXT', 'Continue'); // L47
 // Messages
 define('XOOPS_FOUND', '%s found');
 define('CHECKING_PERMISSIONS', 'Checking file and directory permissions...'); // L82
 define('IS_NOT_WRITABLE', '%s is NOT writable.'); // L83
 define('IS_WRITABLE', '%s is writable.'); // L84
 define('XOOPS_PATH_FOUND', 'Path found.');
-define('READY_CREATE_TABLES', 'No XOOPS tables were detected.<br>The installer is now ready to create the XOOPS system tables.<br>Press <em>next</em> to proceed.');
-define('XOOPS_TABLES_FOUND', 'The XOOPS system tables already exists in your database.<br>Press <em>next</em> to go to the next step.'); // L131
-define('XOOPS_TABLES_CREATED', 'XOOPS system tables have been created.<br>Press <em>next</em> to go to the next step.');
-define('READY_INSERT_DATA', 'The installer is now ready to insert initial data into your database.');
-define('READY_SAVE_MAINFILE', 'The installer is now ready to save the specified settings to <em>mainfile.php</em>.<br>Press <em>next</em> to proceed.');
+//define('READY_CREATE_TABLES', 'No XOOPS tables were detected.<br>The installer is now ready to create the XOOPS system tables.');
+define('XOOPS_TABLES_FOUND', 'The XOOPS system tables already exist in your database.'); // L131
+define('XOOPS_TABLES_CREATED', 'XOOPS system tables have been created.');
+//define('READY_INSERT_DATA', 'The installer is now ready to insert initial data into your database.');
+//define('READY_SAVE_MAINFILE', 'The installer is now ready to save the specified settings to <em>mainfile.php</em>.');
 define('SAVED_MAINFILE', 'Settings saved');
-define('SAVED_MAINFILE_MSG', 'The installer has saved the specified settings to <em>mainfile.php</em> and <em>secure.php</em>. Press <em>next</em> to go to the next step.');
-define('DATA_ALREADY_INSERTED', 'XOOPS data found in database.<br>Press <em>next</em> to go to the next step.');
-define('DATA_INSERTED', 'Initial data has been inserted into database.<br>Press <em>next</em> to go to the next step.');
+define('SAVED_MAINFILE_MSG', 'The installer has saved the specified settings to <em>mainfile.php</em> and <em>secure.php</em>.');
+define('DATA_ALREADY_INSERTED', 'XOOPS data found in database.');
+define('DATA_INSERTED', 'Initial data has been inserted into database.');
 // %s is database name
 define('DATABASE_CREATED', 'Database %s created!'); // L43
 // %s is table name
@@ -142,7 +142,7 @@ define('ERR_INVALID_DBCHARSET', "The charset '%s' is not supported.");
 define('ERR_INVALID_DBCOLLATION', "The collation '%s' is not supported.");
 define('ERR_CHARSET_NOT_SET', 'Default character set is not set for XOOPS database.');
 define('_INSTALL_CHARSET', 'UTF-8');
-define('SUPPORT', 'Supports');
+define('SUPPORT', 'Support');
 define('LOGIN', 'Authentication');
 define('LOGIN_TITLE', 'Authentication');
 define('USER_LOGIN', 'Administrator Login');
@@ -153,20 +153,20 @@ define('ZLIB_COMPRESSION', 'Zlib Compression');
 define('IMAGE_FUNCTIONS', 'Image functions');
 define('IMAGE_METAS', 'Image meta data (exif)');
 define('FILTER_FUNCTIONS', 'Filter functions');
-define('ADMIN_EXIST', 'The administrator account already exists.<br>Press <strong>next</strong> to go to the next step.');
+define('ADMIN_EXIST', 'The administrator account already exists.');
 define('CONFIG_SITE', 'Site configuration');
 define('CONFIG_SITE_TITLE', 'Site configuration');
 define('MODULES', 'Modules installation');
 define('MODULES_TITLE', 'Modules installation');
 define('THEME', 'Select theme');
 define('THEME_TITLE', 'Select the default theme');
-define('INSTALLED_MODULES', 'The following modules have been installed.<br>Press <strong>next</strong> to go to the next step.');
-define('NO_MODULES_FOUND', 'No modules found.<br>Press <strong>next</strong> to go to the next step.');
-define('NO_INSTALLED_MODULES', 'No module installed.<br>Press <strong>next</strong> to go to the next step.');
+define('INSTALLED_MODULES', 'The following modules have been installed.');
+define('NO_MODULES_FOUND', 'No modules found.');
+define('NO_INSTALLED_MODULES', 'No module installed.');
 define('THEME_NO_SCREENSHOT', 'No screenshot found');
 define('IS_VALOR', ' => ');
 // password message
-define('PASSWORD_LABEL', 'Password strength : ');
+define('PASSWORD_LABEL', 'Password strength');
 define('PASSWORD_DESC', 'Password not entered');
 define('PASSWORD_GENERATOR', 'Password generator');
 define('PASSWORD_GENERATE', 'Generate');
@@ -178,7 +178,7 @@ define('PASSWORD_MEDIUM', 'Medium');
 define('PASSWORD_STRONG', 'Strong');
 define('PASSWORD_STRONGEST', 'Strongest');
 //2.5.7
-define('WRITTEN_LICENSE', 'Written XOOPS %s License Key: <strong>%s</strong>');
+define('WRITTEN_LICENSE', 'Wrote XOOPS %s License Key: <strong>%s</strong>');
 //2.5.8
 define('CHMOD_CHGRP_REPEAT', 'Retry');
 define('CHMOD_CHGRP_IGNORE', 'Use Anyway');
@@ -188,3 +188,9 @@ define("CURL_HTTP", "Client URL Library (cURL)");
 define('XOOPS_COOKIE_DOMAIN_LABEL', 'Cookie Domain for the Website');
 define('XOOPS_COOKIE_DOMAIN_HELP', 'Domain to set cookies. May be blank, the full host from the URL (www.example.com), or the registered domain without subdomains (example.com) to share across subdomains (www.example.com and blog.example.com.)');
 define('INTL_SUPPORT', 'Internationalization functions');
+define('XOOPS_SOURCE_CODE', "XOOPS on GitHub");
+define('XOOPS_INSTALLING', 'Installing');
+define('XOOPS_ERROR_ENCOUNTERED', 'Error');
+define('XOOPS_ERROR_SEE_BELOW', 'See below for messages.');
+define('MODULES_AVAILABLE', 'Available Modules');
+define('INSTALL_THIS_MODULE', 'Add %s');

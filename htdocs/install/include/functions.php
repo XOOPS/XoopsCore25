@@ -69,15 +69,13 @@ function xoFormField($name, $value, $label, $help = '')
     $label = $myts->htmlspecialchars($label, ENT_QUOTES, _INSTALL_CHARSET, false);
     $name  = $myts->htmlspecialchars($name, ENT_QUOTES, _INSTALL_CHARSET, false);
     $value = $myts->htmlspecialchars($value, ENT_QUOTES);
-    echo "<label class='xolabel' for='$name'>$label</label>\n";
+    echo '<div class="form-group">';
+    echo '<label class="xolabel" for="' . $name . '">' . $label . '</label>';
     if ($help) {
-        echo '<div class="xoform-help">' . $help . "</div>\n";
+        echo '<div class="xoform-help alert alert-info">' . $help . '</div>';
     }
-    if ($name === 'adminname') {
-        echo "<input type='text' name='$name' id='$name' value='$value' maxlength='25' />";
-    } else {
-        echo "<input type='text' name='$name' id='$name' value='$value' />";
-    }
+    echo '<input type="text" class="form-control" name="'.$name.'" id="'.$name.'" value="'.$value.'">';
+    echo '</div>';
 }
 
 /**
@@ -92,16 +90,45 @@ function xoPassField($name, $value, $label, $help = '')
     $label = $myts->htmlspecialchars($label, ENT_QUOTES, _INSTALL_CHARSET, false);
     $name  = $myts->htmlspecialchars($name, ENT_QUOTES, _INSTALL_CHARSET, false);
     $value = $myts->htmlspecialchars($value, ENT_QUOTES);
-    echo "<label class='xolabel' for='{$name}'>{$label}</label>\n";
+    echo '<div class="form-group">';
+    echo '<label class="xolabel" for="' . $name . '">' . $label . '</label>';
     if ($help) {
-        echo '<div class="xoform-help">' . $help . "</div>\n";
+        echo '<div class="xoform-help alert alert-info">' . $help . '</div>';
     }
-
     if ($name === 'adminpass') {
-        echo "<input type='password' name='{$name}' id='{$name}' value='{$value}' onkeyup='passwordStrength(this.value)' />";
+        echo '<input type="password" class="form-control" name="'.$name.'" id="'.$name.'" value="'.$value.'"  onkeyup="passwordStrength(this.value)">';
     } else {
-        echo "<input type='password' name='{$name}' id='{$name}' value='{$value}' />";
+        echo '<input type="password" class="form-control" name="'.$name.'" id="'.$name.'" value="'.$value.'">';
     }
+    echo '</div>';
+}
+
+/**
+ * @param        $name
+ * @param        $value
+ * @param        $label
+ * @param array  $options
+ * @param string $help
+ * @param        $extra
+ */
+function xoFormSelect($name, $value, $label, $options, $help = '', $extra='')
+{
+    $myts  = MyTextSanitizer::getInstance();
+    $label = $myts->htmlspecialchars($label, ENT_QUOTES, _INSTALL_CHARSET, false);
+    $name  = $myts->htmlspecialchars($name, ENT_QUOTES, _INSTALL_CHARSET, false);
+    $value = $myts->htmlspecialchars($value, ENT_QUOTES);
+    echo '<div class="form-group">';
+    echo '<label class="xolabel" for="' . $name . '">' . $label . '</label>';
+    if ($help) {
+        echo '<div class="xoform-help alert alert-info">' . $help . '</div>';
+    }
+    echo '<select class="form-control" name="'.$name.'" id="'.$name.'" value="'.$value.'" '.$extra.'>';
+    foreach ($options as $optionValue => $optionReadable) {
+        $selected = ($value === $optionValue) ? ' selected' : '';
+        echo '<option value="'.$optionValue . '"' . $selected . '>' . $optionReadable . '</option>';
+    }
+    echo '</select>';
+    echo '</div>';
 }
 
 /*
@@ -140,13 +167,13 @@ function xoDiag($status = -1, $str = '')
     if ($status == -1) {
         $GLOBALS['error'] = true;
     }
-    $classes = array(-1 => 'error', 0 => 'warning', 1 => 'success');
+    $classes = array(-1 => 'fa fa-fw fa-ban text-danger', 0 => 'fa fa-fw fa-square-o text-warning', 1 => 'fa fa-fw fa-check text-success');
     $strings = array(-1 => FAILED, 0 => WARNING, 1 => SUCCESS);
     if (empty($str)) {
         $str = $strings[$status];
     }
 
-    return '<span class="' . $classes[$status] . '">' . $str . '</span>';
+    return '<span class="' . $classes[$status] . '"></span>' . $str;
 }
 
 /**
@@ -226,7 +253,7 @@ function genPathCheckHtml($path, $valid)
                 break;
         }
 
-        return '<span class="pathmessage"><img src="img/yes.png" alt="Success" />' . $msg . '</span>';
+        return '<span class="pathmessage"><span class="fa fa-fw fa-check text-success"></span> ' . $msg . '</span>';
     } else {
         switch ($path) {
             case 'root':
@@ -239,8 +266,8 @@ function genPathCheckHtml($path, $valid)
                 $msg = ERR_COULD_NOT_ACCESS;
                 break;
         }
-
-        return '<span class="pathmessage"><img src="img/no.png" alt="Error" /> ' . $msg . '</span>';
+        $GLOBALS['error'] = true;
+        return '<div class="alert alert-danger"><span class="fa fa-fw fa-ban text-danger"></span> ' . $msg . '</div>';
     }
 }
 
@@ -256,18 +283,10 @@ function getDbCharsets($link)
         return $charsets;
     }
 
-    $charsets['utf8'] = 'UTF-8 Unicode';
-    $ut8_available    = false;
     if ($result = mysqli_query($link, 'SHOW CHARSET')) {
         while ($row = mysqli_fetch_assoc($result)) {
             $charsets[$row['Charset']] = $row['Description'];
-            if ($row['Charset'] === 'utf8') {
-                $ut8_available = true;
-            }
         }
-    }
-    if (!$ut8_available) {
-        unset($charsets['utf8']);
     }
 
     return $charsets;
@@ -342,33 +361,12 @@ function xoFormFieldCollation($name, $value, $label, $help, $link, $charset)
         return '';
     }
 
-    $myts  = MyTextSanitizer::getInstance();
-    $label = $myts->htmlspecialchars($label, ENT_QUOTES, _INSTALL_CHARSET, false);
-    $name  = $myts->htmlspecialchars($name, ENT_QUOTES, _INSTALL_CHARSET, false);
-    $value = $myts->htmlspecialchars($value, ENT_QUOTES);
-
-    $field = "<label class='xolabel' for='{$name}'>{$label}</label>\n";
-    if ($help) {
-        $field .= '<div class="xoform-help">' . $help . "</div>\n";
-    }
-    $field .= "<select name='{$name}' id='{$name}'\">";
-
-    $collation_default = '';
-    $options           = '';
+    $options           = array();
     foreach ($collations as $key => $isDefault) {
-        if ($isDefault) {
-            $collation_default = $key;
-            continue;
-        }
-        $options .= "<option value='{$key}'" . (($value == $key) ? " selected" : '') . ">{$key}</option>";
+        $options[$key] = $key . (($isDefault) ? ' (Default)' : '');
     }
-    if ($collation_default) {
-        $field .= "<option value='{$collation_default}'" . (($value == $collation_default || empty($value)) ? " 'selected'" : '') . ">{$collation_default} (Default)</option>";
-    }
-    $field .= $options;
-    $field .= '</select>';
 
-    return $field;
+    return xoFormSelect($name, $value, $label, $options, $help);
 }
 
 /**
@@ -383,11 +381,7 @@ function xoFormFieldCollation($name, $value, $label, $help, $link, $charset)
  */
 function xoFormBlockCollation($name, $value, $label, $help, $link, $charset)
 {
-    $block = '<div id="' . $name . '_div">';
-    $block .= xoFormFieldCollation($name, $value, $label, $help, $link, $charset);
-    $block .= '</div>';
-
-    return $block;
+    return xoFormFieldCollation($name, $value, $label, $help, $link, $charset);
 }
 
 /**
@@ -401,35 +395,19 @@ function xoFormBlockCollation($name, $value, $label, $help, $link, $charset)
  */
 function xoFormFieldCharset($name, $value, $label, $help = '', $link)
 {
-    if (!$chars = getDbCharsets($link)) {
+    if (!$charsets = getDbCharsets($link)) {
         return '';
     }
-
-    $charsets = array();
-    if (isset($chars['utf8'])) {
-        $charsets['utf8'] = $chars['utf8'];
-        unset($chars['utf8']);
+    foreach ($charsets as $k => $v) {
+        $charsets[$k] = $v . ' (' . $k . ')';
     }
-    ksort($chars);
-    $charsets = array_merge($charsets, $chars);
-
+    asort($charsets);
     $myts  = MyTextSanitizer::getInstance();
     $label = $myts->htmlspecialchars($label, ENT_QUOTES, _INSTALL_CHARSET, false);
     $name  = $myts->htmlspecialchars($name, ENT_QUOTES, _INSTALL_CHARSET, false);
     $value = $myts->htmlspecialchars($value, ENT_QUOTES);
-
-    $field = "<label class='xolabel' for='{$name}'>{$label}</label>\n";
-    if ($help) {
-        $field .= '<div class="xoform-help">' . $help . "</div>\n";
-    }
-    $field .= "<select name='{$name}' id='{$name}' onchange=\"setFormFieldCollation('DB_COLLATION_div', this.value)\">";
-    $field .= "<option value=''>None</option>";
-    foreach ($charsets as $key => $desc) {
-        $field .= "<option value='{$key}'" . (($value == $key) ? " selected" : '') . ">{$key} - {$desc}</option>";
-    }
-    $field .= '</select>';
-
-    return $field;
+    $extra = 'onchange="setFormFieldCollation(\'DB_COLLATION\', this.value)"';
+    return xoFormSelect($name, $value, $label, $charsets, $help, $extra);
 }
 
 /**
@@ -442,7 +420,7 @@ function xoFormFieldCharset($name, $value, $label, $help = '', $link)
  */
 function xoPutLicenseKey($system_key, $licensefile, $license_file_dist = 'license.dist.php')
 {
-    chmod($licensefile, 0777);
+    //chmod($licensefile, 0777);
     $fver     = fopen($licensefile, 'w');
     $fver_buf = file($license_file_dist);
     foreach ($fver_buf as $line => $value) {
@@ -547,4 +525,13 @@ function xoStripeKey($xoops_key)
     }
 
     return $ret;
+}
+
+
+/**
+ * @return string
+ */
+function writeLicenseKey()
+{
+    return xoPutLicenseKey(xoBuildLicenceKey(), XOOPS_VAR_PATH . '/data/license.php', __DIR__ . '/license.dist.php');
 }
