@@ -1,5 +1,0 @@
-<div id="xo-globalnav" class="x2-nl x2-navigation">
-    <ul>
-        <li class="x2-label">Main navigation</li>
-    </ul>
-</div>

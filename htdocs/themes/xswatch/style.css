@@ -1,0 +1,1310 @@
+/* CSS Document */
+/*
+    Bootstrap 3 Template
+    Author:            Angelo Rocha
+    Author URL:        www.angelorocha.com.br
+    Licence:           GPL v3
+
+    Contacts
+    Twitter:            https://twitter.com/_AngeloRocha
+    Google Plus:        https://plus.google.com/+AngeloRocha/posts
+    Linkedin:           http://br.linkedin.com/in/angelorocha
+    Github:             https://github.com/angelorocha
+*/
+
+/**
+    * Table of Contents:
+    *
+    * 1. Home Classes
+    * 2. XOOPS Codes
+    * 3. XOOPS Blocks
+    * 4. XOOPS Modules
+        * 4.1. News
+        * 4.2. Tag Module
+        * 4.3. System
+        * 4.4. System Comments
+        * 4.5. System Site Closed
+        * 4.6. Profile Module
+        * 4.7. Contact Module
+        * 4.8. PM Module
+        * 4.9. eXtgallery Module
+        * 4.10. TDMDownloads
+        * 4.11. XOOPS Tube
+        * 4.12. NewBB Module
+    * 5. Useful Classes
+**/
+
+/* For Mobile IE */
+@-webkit-viewport {
+    width: device-width;
+}
+
+@-moz-viewport {
+    width: device-width;
+}
+
+@-ms-viewport {
+    width: device-width;
+}
+
+@-o-viewport {
+    width: device-width;
+}
+
+@viewport {
+    width: device-width;
+}
+
+/* 1. Home Classes */
+.global-nav {
+    margin-bottom: 0;
+}
+
+a.navbar-brand.xlogo {
+    padding: 5px 20px 0 5px;
+}
+
+.slideshow {
+}
+
+.slideshow .carousel-caption {
+    bottom: 10%;
+}
+
+.slideshow .carousel-indicators {
+    bottom: 40px;
+}
+
+.slideshow .item {
+    text-align: center;
+}
+
+.slideshow .item img {
+    display: inline-block;
+}
+
+.maincontainer {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.home-message {
+    background: #FAFAFA;
+    padding-top: 5px;
+    border-left: 3px solid #9C6;
+    margin-top: -60px;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 5;
+}
+
+.bottom-blocks {
+    margin-top: 1em;
+    padding: 0 20px 0 20px;
+}
+
+.footer-blocks {
+    background: #111;
+    color: #EAEAEA;
+}
+
+.footer {
+    background: #111;
+    color: #EAEAEA;
+}
+
+.footer > h3 {
+    font-size: 0.9em;
+    margin: 0;
+    line-height: inherit;
+    max-width: 960px;
+    margin: 0 auto 0 auto;
+    padding: 10px 0 10px 0;
+    text-align: center;
+    position: relative;
+}
+
+.footer > h3 > a.credits {
+    position: absolute;
+    top: 3px;
+    right: 10px;
+}
+
+.xoops-banner {
+    position: relative;
+    top: 0px;
+}
+
+.xoops-banner * {
+    max-width: 100%;
+}
+
+/* 2. XOOPS Codes */
+.xoopsQuote blockquote {
+    font-size: 0.9em;
+    border-left: 2px solid #EEE;
+    padding-left: 10px;
+    font-style: italic;
+    color: #969696;
+}
+
+.xoopsCode {
+    background: url(images/code.png);
+    overflow-x: auto;
+    border: 1px solid #EEE;
+    padding-left: 10px;
+}
+
+.xoopsCode code {
+    background-color: transparent;
+    line-height: 25px;
+    position: relative;
+    padding: 0;
+    white-space: nowrap;
+}
+
+.xoopsCode code > span {
+    position: relative;
+    z-index: 5;
+}
+
+/* 3. XOOPS Blocks*/
+.xoops-side-blocks > aside {
+    margin-bottom: 20px;
+}
+
+.xoops-side-blocks > aside h1, div.xoops-side-blocks > aside h2, div.xoops-side-blocks > aside h3, div.xoops-side-blocks > aside h4, div.xoops-side-blocks > aside h5, div.xoops-side-blocks > aside h6 {
+    font-size: 0.9em;
+}
+
+.xoops-side-blocks > aside > h4.block-title {
+    line-height: inherit;
+    margin: 0;
+    font-size: 1.3em;
+}
+
+.xoops-blocks {
+    margin-bottom: 20px;
+}
+
+.xoops-blocks > h4 {
+    line-height: inherit;
+    margin: 0;
+}
+
+.xoops-bottom-blocks {
+    padding: 10px;
+    margin-bottom: 20px;
+    position: relative;
+    top: 0;
+}
+
+.toolbar-block-edit {
+    position: absolute;
+    z-index: +30;
+    opacity: 0.8;
+    box-shadow: 2px 2px 2px #222222;
+    display: none;
+}
+/* 4. XOOPS Modules */
+
+/* 4.1. News */
+.news-home {
+}
+
+.news-home .text-center form {
+    margin-bottom: 20px;
+}
+
+.home-news-loop {
+    margin-bottom: 20px;
+}
+
+.home-thumbnails {
+    height: 200px;
+    overflow: hidden;
+    border: 3px solid #EEE;
+}
+
+.home-thumbnails img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+section.news-item {
+    margin-bottom: 20px;
+}
+
+.news-header {
+    position: relative;
+}
+
+.news-header img {
+    position: relative;
+    min-width: 100%;
+    max-width: 100%;
+}
+
+.news-header > h2.news-title {
+    background: url(images/alpha.png);
+    position: absolute;
+    bottom: 10%;
+    left: 0;
+    padding: 10px;
+    margin: 0;
+    color: #FFF;
+    font-size: 1.8em;
+    z-index: 5;
+}
+
+.news-header > h2.news-title > a {
+    color: #CF9;
+}
+
+.news-header > h2.news-title > a:after {
+    content: ": ";
+}
+
+h2.news-no-image {
+    font-size: 1.5em;
+    margin: 0;
+    line-height: inherit;
+}
+
+strong.hit-counter {
+    background: #333;
+    color: #FFF;
+    border-radius: 5px 5px 0 0;
+    padding: 0 10px 0 10px;
+    font-size: 0.8em;
+    line-height: 20px;
+}
+
+.xoops-news-navigation {
+    padding: 10px 0 10px 0;
+}
+
+.xoops-news-navigation a {
+    background: #222;
+    padding: 5px 10px 5px 10px;
+    color: #EEE;
+    border-radius: 50px;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    letter-spacing: 0.5px;
+    transition: all linear 300ms;
+    -moz-transition: all linear 300ms;
+    -webkit-transition: all linear 300ms;
+}
+
+.xoops-news-navigation a:hover {
+    background: #EEE;
+    box-shadow: 0 0 5px #222;
+    color: #333;
+}
+
+.xoops-news-icons {
+    padding: 10px;
+}
+
+.xoops-news-icons a {
+    font-size: 1.5em;
+    margin: 0 10px 0 10px;
+}
+
+/* 4.2. Tag module */
+.xoops-tag-bar {
+}
+
+.xoops-tag-bar > ul {
+}
+
+.xoops-tag-bar > ul > li.tag-title {
+    font-weight: bold;
+    margin: 0 10px 0 0;
+}
+
+.xoops-tag-bar > ul > li {
+    display: inline-table;
+    line-height: 25px;
+    margin-right: 10px;
+}
+
+.xoops-tag-bar > ul > li > span {
+}
+
+/* 4.3. System */
+.loginform input[type=submit] {
+    margin-bottom: 5px;
+}
+
+.usermenu li span {
+    margin-right: 10px;
+}
+
+.xoops-theme-select {
+    text-align: center;
+}
+
+.xoops-theme-select form select {
+    border: 1px solid #D6D6D6;
+    width: 100%;
+}
+
+.xoops-theme-select img {
+    max-width: 100%;
+}
+
+ul.userblock {
+    border-bottom: 1px solid #EEE;
+    margin-bottom: 0;
+    padding: 5px 0 5px 0;
+}
+
+ul.userblock:nth-child(odd) {
+    background: #F9F9F9;
+}
+
+ul.userblock:hover {
+    background: #EEE;
+}
+
+ul.userblock:last-child {
+    border-bottom: none;
+}
+
+ul.userblock > li {
+    display: inline-block;
+    position: relative;
+}
+
+ul.userblock > li.avatar-image {
+    max-width: 20%;
+}
+
+ul.userblock > li.avatar-image img {
+    max-width: 100%;
+}
+
+ul.userblock > li.user-name {
+    padding: 0 0 0 10px;
+    width: 49%;
+}
+
+ul.userblock > li.join-date {
+    padding: 0 5px 0 0;
+    width: 9%;
+}
+
+ul.userblock > li span.badge {
+    background: #47A447;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+/* 4.4. System Comments */
+.xoops-comment-body {
+    margin-top: 20px;
+}
+
+.xoops-comment-template {
+    margin-bottom: 20px;
+}
+
+.xoops-comment-author img {
+    display: inline-block;
+}
+
+.xoops-comment-author ul.poster-info {
+    text-align: left;
+}
+
+.xoops-comment-author li.poster-rank {
+    margin-bottom: 10px;
+}
+
+.xoops-comment-author strong.poster-rank {
+    font-size: 0.8em;
+}
+
+.xoops-comment-author img.image-avatar {
+    width: 100%;
+    border: 1px solid #CCC;
+}
+
+.xoops-comment-author.col-md-2 {
+    padding-right: 0;
+}
+
+.xoops-comment-text > div {
+    display: none;
+}
+
+.xoops-comment-text p.message-text {
+    background: #EAEAEA;
+    color: #404040;
+    padding: 10px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    position: relative;
+}
+
+.xoops-comment-text p.message-text:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 0;
+    left: -10px;
+    background: url(images/comment-arrow.png) 50% 50% no-repeat;
+    background-size: contain;
+}
+
+.xoops-comment-form {
+}
+
+.xoops-comment-form input[type=text], div.xoops-comment-form textarea {
+    background: #EEE;
+    padding: 5px;
+    min-width: 100%;
+    border: 1px solid #DDD;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.xoops-comment-form input[type=text]:focus, div.xoops-comment-form textarea:focus {
+    background: #FFF;
+}
+
+.xoops-comment-form textarea {
+    max-height: 150px;
+    max-width: 150px;
+}
+
+.xoops-comment-form input[type=submit] {
+    background: #5BC0DE;
+    border: 1px solid #09C;
+    padding: 5px;
+    color: #FFF;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    float: right;
+}
+
+.xoops-comment-form span {
+    font-weight: bold;
+    color: #999;
+}
+
+.xoops-comment-form span.caption-marker {
+    color: #F00;
+    padding-left: 10px;
+    font-size: 1.5em;
+}
+
+.modal-dialog.comments-modal {
+}
+
+.comments-nav {
+    padding: 10px;
+}
+
+/* 4.5. System Site Closed */
+.site-closed-body {
+    background: url(images/background-site-closed.jpg) no-repeat center center;
+    background-size: cover;
+}
+
+.xoops-site-closed {
+    margin-top: 10%;
+}
+
+.site-closed-logo {
+    margin-bottom: 5%;
+}
+
+.xoops-site-closed-container {
+    background: #FFF;
+    padding: 10px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    box-shadow: 0 0 10px #333, 0 0 10px #333;
+}
+
+.xoops-site-closed-container input {
+    margin-bottom: 10px;
+}
+
+/* 4.6. Profile Module */
+ul.profile-values {
+    margin-top: 10px;
+}
+
+ul.profile-values > li {
+    margin-bottom: 5px;
+}
+
+ul.profile-values > li.profile-category-title {
+    font-size: 1.2em;
+    font-weight: 600;
+    border-bottom: 1px dashed #999;
+    margin-bottom: 0;
+    color: #09C;
+}
+
+/* 4.7. Contact Module */
+.contact-module {
+    font-weight: bold;
+}
+
+.contact-module input,
+.contact-module textarea {
+    background: #EEE;
+    border: 1px solid #EAEAEA;
+    padding: 10px;
+    display: block;
+    min-width: 100%;
+    max-width: 100%;
+    max-height: 250px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.contact-module input[type=text]:focus,
+.contact-module textarea:focus {
+    background: #FFF;
+}
+
+.contact-module input[type=submit] {
+    background: #5BC0DE;
+    color: #FFF;
+    font-weight: bold;
+}
+
+/* 4.8. PM Module */
+.xoops-message-header {
+    min-height: 40px;
+}
+
+.xoops-message-list div.col-xs-1,
+.xoops-message-list div.col-md-1 {
+    max-width: 14px;
+    text-align: center;
+}
+
+.xoops-message-list div.col-xs-1 .btn,
+.xoops-message-list div.col-md-1 .btn {
+    padding: 3px;
+    display: inline-block;
+    font-size: 0.9em;
+}
+
+.xoops-message-loop {
+    margin-bottom: 10px;
+}
+
+.current-tab {
+    margin-bottom: 20px;
+}
+
+.message-current-tab div.alert {
+    padding: 10px 30px 10px 10px;
+}
+
+/* 4.9. eXtgallery Module */
+.xoops-gallery-thumb {
+    margin-bottom: 20px;
+}
+
+.xoops-gallery-thumb img {
+    max-width: 100%;
+}
+
+a.extgallery-album-name {
+    background: #000;
+    padding: 5px 0 5px 0;
+    text-align: center;
+    color: #FFF;
+    display: block;
+}
+
+strong.number-photos {
+    background: #000;
+    opacity: 0.8;
+    color: #FFF;
+    font-size: 0.8em;
+    position: absolute;
+    top: 5%;
+    left: 10%;
+    padding: 0 10px 0 10px;
+}
+
+.extGalleryAlbum {
+}
+
+.extGalleryAlbum > .col-md-12 {
+    padding: 0;
+}
+
+h3.gallerytitle {
+    font-size: 1.3em;
+}
+
+.orderbyicons {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #999;
+}
+
+.orderbyicons ul li {
+    display: inline-block;
+    margin: 0 10px 0 10px;
+    line-height: 30px;
+}
+
+.orderbyicons a {
+    color: #333;
+    font-size: 1.2em;
+}
+
+.album-thumb {
+    margin-bottom: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+ul.adminlinks {
+    background: url(images/alpha.png);
+    color: #EAEAEA;
+    font-size: 0.9em;
+    position: absolute;
+    top: 0;
+    right: -300px;
+    height: 100%;
+    -moz-transition: all linear 300ms;
+    -webkit-transition: all linear 300ms;
+    transition: all linear 300ms;
+}
+
+.album-thumb:hover > ul.adminlinks {
+    right: 0;
+    text-align: center;
+}
+
+ul.adminlinks > li {
+    padding: 2px 5px 2px 5px;
+    position: relative;
+}
+
+ul.adminlinks > li > a {
+    color: #FFF;
+}
+
+.photoRating {
+    position: absolute;
+    bottom: 0;
+    padding: 3px;
+    background: #FFF;
+    opacity: 0.8;
+    border-radius: 0 5px 0 0;
+}
+
+.photo-nav-controls {
+}
+
+.photo-nav-controls ul {
+    background: url(images/alpha.png);
+    position: relative;
+    right: 5px;
+    color: #FFF;
+    font-weight: bold;
+    border-radius: 5px 5px 0 0;
+    -moz-border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+.photo-nav-controls ul li {
+    display: inline-table;
+}
+
+.photo-nav-controls ul li.nav-btn {
+    background: url(images/alpha.png);
+    width: 30px;
+    font-size: 1.5em;
+}
+
+.photo-nav-controls ul li a {
+    color: #000;
+    text-shadow: 1px 1px 0 #333;
+}
+
+.photo-nav-controls ul li.small {
+    font-size: 0.9em;
+    margin: 0 5px 0 5px;
+}
+
+.gallery-single-photo {
+}
+
+.gallery-single-photo img.img-thumbnail {
+    position: relative;
+    width: 100%;
+}
+
+ul.photo-info li {
+    margin-bottom: 10px;
+    border-bottom: 1px dotted #999;
+}
+
+ul.photo-info li:last-child {
+    border-bottom: none;
+}
+
+ul.form-send-e-card li {
+    max-width: 100%;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+ul.form-send-e-card input[type=submit] {
+    background: #09C;
+    min-width: 20%;
+    color: #FFF;
+}
+
+ul.form-send-e-card input, ul.form-send-e-card textarea {
+    min-width: 50%;
+    max-width: 50%;
+    border: 1px solid #E6E6E6;
+    padding: 5px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+ul.form-send-e-card input:focus, ul.form-send-e-card textarea:focus {
+    background: #EEE;
+}
+
+/* 4.10. TDMDownloads */
+.tdmdownloads {
+}
+
+.tdm-category-list {
+    margin-bottom: 10px;
+}
+
+.tdm-category-list img {
+    max-width: 100%;
+}
+
+a.tdm-category-image {
+    margin: 10px 0 10px 0;
+    display: block;
+    text-align: center;
+}
+
+a.tdm-download-btn {
+    font-size: 1.5em;
+}
+
+.tdm-downloads-info {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.tdm-downloads-info ul.list-unstyled {
+}
+
+.tdm-downloads-info ul.list-unstyled li {
+    line-height: 30px;
+    list-style: square;
+    margin-left: 20px;
+    font-size: 0.9em;
+}
+
+.tdm-minibox {
+    margin-bottom: 20px;
+}
+
+.tdm-download-logo {
+    max-height: 120px;
+    overflow: hidden;
+}
+
+.tdm-download-logo img {
+    width: 100%;
+}
+
+.tdm-short-description {
+    max-height: 80px;
+    overflow: hidden;
+    text-align: justify;
+    margin: 5px 0 5px 0;
+}
+
+.tdm-download-data.row {
+    font-weight: bold;
+    color: #999;
+    font-size: 0.8em;
+}
+
+.tdm-title {
+    font-size: 1.3em;
+    line-height: inherit;
+    margin: 0 0 5px 0;
+    display: block;
+}
+
+.tdm-screenshot-single {
+}
+
+.tdm-screenshot-single img {
+    min-width: 100%;
+    max-width: 100%;
+}
+
+.tdm-download-data {
+    padding-bottom: 5px;
+    border-bottom: 1px dashed #999;
+}
+
+.tdm-download-data ul.tdm-download-details {
+}
+
+.tdm-download-data ul.tdm-download-details li {
+    margin: 5px 10px 5px 10px;
+}
+
+.tdm-modify-file {
+    overflow-x: hidden;
+}
+
+.tdm-modify-file img {
+    max-width: 100%;
+}
+
+ul.tdm-new-download-block {
+}
+
+ul.tdm-new-download-block li {
+    line-height: 30px;
+    border-bottom: 1px dashed #EAEAEA;
+}
+
+ul.tdm-new-download-block li:last-child {
+    border-bottom: none;
+}
+
+/* 4.11. XOOPS Tube */
+.xoopstube {
+}
+
+.xoopstube .col-md-12 {
+    margin-bottom: 10px;
+}
+
+.xoopstube .xoopstube-header {
+    margin-bottom: 10px;
+}
+
+.xoopstube .xoopstube-header > a > img {
+    max-width: 100%;
+}
+
+.xoopstube .xoopstube-header-text {
+    margin-bottom: 10px;
+}
+
+.xoopstube .xoopstube-description {
+    margin-bottom: 10px;
+}
+
+.xoopstube .xoopstube-navigation {
+}
+
+.xoopstube .xoopstube-navigation span {
+    margin-bottom: 10px;
+}
+
+.xoopstube .xoopstube-navigation a {
+    background: #FAFAFA;
+    border: 1px solid #EEE;
+    font-size: 0.9em;
+    padding: 5px 10px 5px 10px;
+    display: inline-block;
+    margin: 0 0 5px 0;
+    border-radius: 5px;
+}
+
+.xoopstube .xoopstube-navigation a:hover {
+    background: #EBEBEB;
+    color: #979797;
+}
+
+.xoopstube-loop {
+    margin-bottom: 20px;
+}
+
+.xoopstube-loop ul li {
+    margin-bottom: 5px;
+}
+
+.xoopstube-video-title {
+    font-size: 1.5em;
+    line-height: inherit;
+    margin: 0;
+}
+
+.xoopstube-video-thumb {
+    padding: 0;
+    position: relative;
+}
+
+.xoopstube-video-thumb span {
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+    color: #666;
+}
+
+.xoopstube-video-thumb img {
+    max-width: 100%;
+}
+
+.xoopstube .xoopstube-video-info {
+}
+
+.xoopstube .xoopstube-video-info [class*=col] {
+    margin-bottom: 10px;
+}
+
+.xoopstube .category-titles {
+    margin-bottom: 10px;
+}
+
+.xoopstube .xoopstube-data {
+    margin-bottom: 10px;
+}
+
+.xoopstube ul.xoopstube-list li {
+    margin-bottom: 10px;
+}
+
+.xoopstube .xoopstube-footer {
+    margin-bottom: 20px;
+}
+
+.xoopstube-other-video {
+    background: #F9F9F9;
+    border-top: 1px solid #EEE;
+}
+
+.xoopstube-credits {
+    background: #333;
+    color: #EEE;
+    padding: 10px;
+}
+
+.xoopstube-blocks {
+}
+
+.xoopstube-blocks img {
+    max-width: 100%;
+}
+
+.xoopstube-thumb {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.xoopstube-thumb span {
+    background: #000;
+    display: block;
+}
+
+.xoopstube-video-play {
+}
+
+.xoopstube-video-play embed {
+    max-width: 100%;
+}
+
+/* 4.12. NewBB Module */
+.newbb {
+}
+
+.newbb-header {
+}
+
+.newbb-menu {
+}
+
+.newbb-header-icons {
+}
+
+.newbb-header-icons div {
+    margin-bottom: 10px;
+}
+
+.newbb-category-list {
+}
+
+.newbb-category-list a.pull-right {
+    margin-left: 5px;
+}
+
+.newbb-list-foruns {
+    border-bottom: 1px solid #EAEAEA;
+    padding-bottom: 5px;
+}
+
+.xoops-newbb-list-foruns:last-child {
+    border-bottom: none;
+}
+
+.newbb-viewtopic {
+}
+
+.newbb-tagbar {
+}
+
+.newbb-online-users {
+}
+
+.newbb-quick-reply textarea {
+    max-height: 150px;
+    width: 100%;
+}
+
+.newbb-forum-title {
+}
+
+.newbb-forum-title strong {
+    font-size: 1.5em;
+    color: #BBB;
+}
+
+.newbb-forum-title a.btn {
+    color: #FFF;
+}
+
+.newbb-subforum {
+}
+
+.newbb-subforum ul.subforum-loop {
+    background: #EEE;
+    margin: 0;
+    padding: 10px 0 10px 0;
+    border-bottom: 1px solid #E1E1E1;
+    border-top: 1px solid #FFF;
+}
+
+.newbb-topicslist {
+}
+
+.newbb-topiclist-loop {
+}
+
+.newbb-topiclist-header {
+    background: #F6F6F6;
+    padding: 10px 0 10px 0;
+    border-bottom: 1px solid #FFF;
+}
+
+.newbb-topiclist-itens {
+    border-bottom: 1px solid #FFF;
+    border-top: 1px solid #DDD;
+    padding: 10px 0 10px 0;
+}
+
+.newbb-topiclist-itens.even {
+    background: #FAFAFA;
+}
+
+.newbb-topiclist-itens.odd {
+    background: #F6F6F6;
+}
+
+.newbb-thread {
+    background: #EEE;
+    border: 1px solid #DADADA;
+    border-radius: 5px;
+}
+
+.newbb-post-anchor {
+    background: #09C;
+    color: #FFF;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 3px;
+    font-size: 0.8em;
+    border-radius: 5px;
+}
+
+.newbb-user-signature {
+    bottom: 0;
+    left: 0;
+    border-top: 1px dotted #DADADA;
+    width: 100%;
+    color: #BBB;
+    font-style: italic;
+    padding: 5px;
+    margin-top: 10px;
+}
+
+.newbb-thread-attachment {
+    margin-top: 20px;
+}
+
+.newbb-thread-attachment strong,
+.newbb-thread-attachment small {
+    display: block;
+}
+
+.newbb-user-data {
+}
+
+.newbb-message-area {
+    position: relative;
+    padding-bottom: 40px;
+    padding-left: 0;
+}
+
+.newbb-topic-id {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.newbb-links {
+    margin-top: 5px;
+    border-bottom: 1px dotted #E6E6E6;
+    padding-bottom: 2px;
+}
+
+.read-topic {
+    color: #999;
+}
+
+.read-topic:hover {
+    color: #333;
+}
+
+.new-topic {
+    font-weight: bold;
+}
+
+/* 5. Useful Classes */
+.big-info-icon-link {
+    color: #333;
+    font-size: 1.8em;
+    margin: 10px 0 10px 0;
+    display: inline-table;
+    cursor: pointer;
+}
+
+.xoops-default-title {
+    font-size: 1.3em;
+    margin: 0;
+    line-height: inherit;
+}
+
+.generic-pagination {
+}
+
+.generic-pagination a {
+    background: #FAFAFA;
+    border: 1px solid #EEE;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.generic-pagination a:hover {
+    background: #EBEBEB;
+}
+
+.generic-pagination .xo-pagact {
+    background: #09C;
+    color: #FFF;
+    border: 1px solid #EEE;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+div.order-by {
+    font-size: 1.2em;
+}
+
+div.order-by a {
+    color: #999;
+    font-size: 1.2em;
+}
+
+.mb10 {
+    margin-bottom: 10px;
+}
+
+/* Only Add Margin Bottom of 10px */
+.lw30 {
+    line-height: 30px;
+}
+
+/* Only Add Line Height 30px */
+.nompl {
+    margin: 0;
+    padding: 0;
+    line-height: inherit;
+}
+
+/* No margin, paddind and lineweight -> use in title tags if necessary... */
+
+/* Media Queries */
+@media (min-width: 320px) and (max-width: 768px) {
+    .xoops-banner {
+        top: 0;
+    }
+
+    .xoops-banner.pull-right {
+        float: none !important;
+    }
+}
+
+/* bla, bla, bla */
+.aligncenter {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.alignleft {
+    text-align: left;
+    float: left;
+}
+
+.alignright {
+    text-align: right;
+    float: right;
+}
+
+.pub_article_t_top h2 a.titlelink { color: inherit; }
+
+#xo-logger-output {padding-bottom: 55px;}
+
+.jumbotron p {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}

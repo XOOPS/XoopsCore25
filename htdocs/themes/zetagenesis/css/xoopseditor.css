@@ -1,7 +1,0 @@
-/*======= Tinymce background textarea ========*/
-body.mceContentBody {
-    margin:                     0 !important;
-    padding:                    0 !important;
-    background: #fff none;
-    color:                      #000;
-}
