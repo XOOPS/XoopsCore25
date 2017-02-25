@@ -39,7 +39,7 @@ foreach ($wizard->configs['extensions'] as $ext => $value) {
             $wizard->configs['extensions'][$ext][] = xoDiag(1, $value[0]);
         }
     } else {
-        $wizard->configs['extensions'][$ext][] = xoDiag(0, NONE);
+        $wizard->configs['extensions'][$ext][] = xoDiag(0, $value[0]);
     }
 }
 ob_start();
