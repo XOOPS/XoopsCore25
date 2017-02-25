@@ -66,9 +66,29 @@ htdocs/modules/system/language/english/admin/comments.php
 htdocs/modules/system/language/english/admin/userrank.php
 - added define('_AM_SYSTEM_USERRANK_ERROR', 'Errors');
 
+upgrade/language/english/upgrade.php
+- added define('_LANGUAGE', 'Language');
+- added define('_SUPPORT', 'Support');
+- added define('_XOOPS_SOURCE_CODE', 'XOOPS on GitHub');
+- added define('_PATCH_COUNT', 'Patches Sets');
+- added define('_USERNAME_PLACEHOLDER', 'Your Username');
+- added define('_PASSWORD_PLACEHOLDER', 'Your Password');
+- added define('_CONTINUE', 'Continue');
+- added define('XOOPS_ERROR_ENCOUNTERED', 'Error');
+- added define('XOOPS_ERROR_SEE_BELOW', 'See below for messages.');
+
 NEW FILES:
 - htdocs/modules/system/themes/transition/language/english/admin.php
 - htdocs/modules/system/themes/transition/language/english/localsupport.php
+
+- upgrade/language/english/
+*NOTE* The upgrade code was significantly changed, so these files should be reviewed closely
+- moved all per patch language files from patch directories to upgrade/language/*
+  i.e. upgrade/upd-2.0.18-to-2.3.0/language/english.php became
+  upgrade/language/english/upd-2.0.18-to-2.3.0.php
+
+- upgrade/language/english/support.php (same as  htdocs/install/language/english/support.php)
+- upgrade/language/english/welcome.php
 
 ===============================
 2016/05/27: Version 2.5.8

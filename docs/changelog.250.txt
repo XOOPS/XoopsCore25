@@ -55,7 +55,11 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - set XOOPS_COOKIE_DOMAIN during install and set in mainfile.php
 - recommend Intl extension
 - add 'rendered' key to XoopsForm::assign(), allows template to choose rendered or by element
+- add lexikon templates for xBootstrap (bleekk)
+- removed extras/modules/system/admin/filemanager/
 - installer updated
+- upgrader updated
+- theme changes: removed sucio and zetagenesis, added xswatch
 
 Updated libraries and assets:
  - jQuery 3.1.1 (mamba)
