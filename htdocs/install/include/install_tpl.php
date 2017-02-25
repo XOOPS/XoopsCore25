@@ -30,7 +30,7 @@
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 include_once '../language/' . $wizard->language . '/global.php';
 ?><!doctype html>
-<html lang="<? echo _LANGCODE; ?>">
+<html lang="<?php echo _LANGCODE; ?>">
 
 <head>
 

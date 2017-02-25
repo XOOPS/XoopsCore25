@@ -5,7 +5,7 @@ global $upgradeControl;
 
 ?><body>
 <!doctype html>
-<html lang="<? echo _LANGCODE; ?>">
+<html lang="<?php echo _LANGCODE; ?>">
 
 <head>
 
