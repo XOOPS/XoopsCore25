@@ -72,9 +72,9 @@ $hashedAdminPass = password_hash($adminpass, PASSWORD_DEFAULT);
 
 if ($process) {
     $result  = $dbm->queryFromFile('./sql/' . XOOPS_DB_TYPE . '.data.sql');
-    $result  = $dbm->queryFromFile('./language/' . $language . '/' . XOOPS_DB_TYPE . '.lang.data.sql');
+    $result  = $dbm->queryFromFile('./language/' . $wizard->language . '/' . XOOPS_DB_TYPE . '.lang.data.sql');
     $group   = make_groups($dbm);
-    $result  = make_data($dbm, $adminname, $hashedAdminPass, $adminmail, $language, $group);
+    $result  = make_data($dbm, $adminname, $hashedAdminPass, $adminmail, $wizard->language, $group);
     $content = '<div class="alert alert-success"><span class="fa fa-check text-success"></span> '
         . DATA_INSERTED . '</div><div class="well">' . $dbm->report() . '</div>';
 } else {

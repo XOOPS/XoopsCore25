@@ -87,21 +87,17 @@ if (true === $writeCheck) {
         $content = ob_get_contents();
         ob_end_clean();
     } else {
-        $_GLOBAL['error'] = true;
-        $wizard->pageIndex -= 1;
+        $GLOBALS['error'] = true;
+        $pageHasForm = true; // will redirect to same page
         $content = '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $result . '</div>';
     }
 } else {
     $content = '';
     foreach ($writeCheck as $errorMsg) {
+        $GLOBALS['error'] = true;
+        $pageHasForm = true; // will redirect to same page
         $content .= '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errorMsg . '</div>' . "\n";
-        $_GLOBAL['error'] = true;
     }
-    $form  = '<form action="" method="post">';
-    $form .= '<button type="submit" name="op" value="retry">' . CHMOD_CHGRP_REPEAT . '</button>';
-    $form .= '<button type="submit" name="op" value="proceed">' . CHMOD_CHGRP_IGNORE . '</button>';
-    $form .= '</form>';
-    $content .= $form;
 }
 include './include/install_tpl.php';
 
