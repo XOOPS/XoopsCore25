@@ -23,6 +23,20 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class XoopsCaptchaText extends XoopsCaptchaMethod
 {
+
+    /** @var string  */
+    protected $outputText = '';
+    /**
+     * XoopsCaptchaMethod::__construct()
+     *
+     * @param mixed $handler
+     */
+    public function __construct($handler = null)
+    {
+        parent::__construct($handler);
+        $this->buildQuestion();
+    }
+
     /**
      * XoopsCaptchaText::render()
      *
@@ -46,6 +60,11 @@ class XoopsCaptchaText extends XoopsCaptchaMethod
      */
     public function loadText()
     {
+        return '<span style="font-style: normal; font-weight: bold; font-size: 100%; color: #333; border: 1px solid #333; padding: 1px 5px;">' . $this->outputText . '</span>';
+    }
+
+    protected function buildQuestion()
+    {
         $val_a = mt_rand(0, 9);
         $val_b = mt_rand(0, 9);
         if ($val_a > $val_b) {
@@ -56,6 +75,6 @@ class XoopsCaptchaText extends XoopsCaptchaMethod
             $this->code = $val_a + $val_b;
         }
 
-        return '<span style="font-style: normal; font-weight: bold; font-size: 100%; color: #333; border: 1px solid #333; padding: 1px 5px;">' . $expression . '</span>';
+        $this->outputText = $expression;
     }
 }
