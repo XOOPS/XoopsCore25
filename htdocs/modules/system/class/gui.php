@@ -156,7 +156,7 @@ class XoopsSystemGui
         }
 
         if (isset($GLOBALS['xoopsOption']['template_main']) && $GLOBALS['xoopsOption']['template_main'] != $xoTheme->contentTemplate) {
-            trigger_error('xoopsOption[template_main] should be defined before call xoops_cp_header function', E_USER_WARNING);
+            trigger_error("xoopsOption['template_main'] should be defined before call xoops_cp_header function", E_USER_WARNING);
             if (false === strpos($GLOBALS['xoopsOption']['template_main'], ':')) {
                 $xoTheme->contentTemplate = 'db:' . $GLOBALS['xoopsOption']['template_main'];
             } else {
