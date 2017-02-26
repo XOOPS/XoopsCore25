@@ -1,29 +1,31 @@
 <!-- Header -->
 <{includeq file="db:system_header.tpl"}>
 <!-- Buttons -->
-<div class="floatright">
-    <div class="xo-buttons">
-        <{if !$edit_form && !$listimg && !$multiupload}>
-            <button id="xo-addcat-btn" class="ui-corner-all tooltip" onclick="xo_toggle('div#xo-category-add');"
-                    title="<{$smarty.const._AM_SYSTEM_IMAGES_ADDCAT}>">
-                <img src="<{xoAdminIcons add.png}>" alt="<{$smarty.const._AM_SYSTEM_IMAGES_ADDCAT}>"/>
-                <{$smarty.const._AM_SYSTEM_IMAGES_ADDCAT}>
-            </button>
-        <{/if}>
-        <{if $cat_img || $listimg}>
-            <button id="xo-addimg-btn" class="ui-corner-all tooltip" onclick="xo_toggle('div#xo-images-add');"
-                    title="<{$smarty.const._AM_SYSTEM_IMAGES_ADDIMG}>">
-                <img src="<{xoAdminIcons add.png}>" alt="<{$smarty.const._AM_SYSTEM_IMAGES_ADDIMG}>"/>
-                <{$smarty.const._AM_SYSTEM_IMAGES_ADDIMG}>
-            </button>
-        <{/if}>
-        <{if $listimg}>
-            <button id="xo-addavatar-btn" class="ui-corner-all tooltip" onclick='location="admin.php?fct=images&amp;op=multiupload&amp;imgcat_id=<{$imgcat_id}>"'
-                    title="<{$smarty.const._AM_SYSTEM_IMAGES_MULTIUPLOAD}>">
-                <img src="<{xoAdminIcons add.png}>" alt="<{$smarty.const._AM_SYSTEM_IMAGES_MULTIUPLOAD}>"/>
-                <{$smarty.const._AM_SYSTEM_IMAGES_MULTIUPLOAD}>
-            </button>
-        <{/if}>
+<div style="height: 30px;">
+    <div class="floatright">
+        <div class="xo-buttons">
+            <{if !$edit_form && !$listimg && !$multiupload}>
+                <button id="xo-addcat-btn" class="ui-corner-all tooltip" onclick="xo_toggle('div#xo-category-add');"
+                        title="<{$smarty.const._AM_SYSTEM_IMAGES_ADDCAT}>">
+                    <img src="<{xoAdminIcons add.png}>" alt="<{$smarty.const._AM_SYSTEM_IMAGES_ADDCAT}>"/>
+                    <{$smarty.const._AM_SYSTEM_IMAGES_ADDCAT}>
+                </button>
+            <{/if}>
+            <{if $cat_img || $listimg}>
+                <button id="xo-addimg-btn" class="ui-corner-all tooltip" onclick="xo_toggle('div#xo-images-add');"
+                        title="<{$smarty.const._AM_SYSTEM_IMAGES_ADDIMG}>">
+                    <img src="<{xoAdminIcons add.png}>" alt="<{$smarty.const._AM_SYSTEM_IMAGES_ADDIMG}>"/>
+                    <{$smarty.const._AM_SYSTEM_IMAGES_ADDIMG}>
+                </button>
+            <{/if}>
+            <{if $listimg}>
+                <button id="xo-addavatar-btn" class="ui-corner-all tooltip" onclick='location="admin.php?fct=images&amp;op=multiupload&amp;imgcat_id=<{$imgcat_id}>"'
+                        title="<{$smarty.const._AM_SYSTEM_IMAGES_MULTIUPLOAD}>">
+                    <img src="<{xoAdminIcons add.png}>" alt="<{$smarty.const._AM_SYSTEM_IMAGES_MULTIUPLOAD}>"/>
+                    <{$smarty.const._AM_SYSTEM_IMAGES_MULTIUPLOAD}>
+                </button>
+            <{/if}>
+        </div>
     </div>
 </div>
 <!-- Category List -->
