@@ -6,15 +6,17 @@
 </script>
 <!-- Buttons -->
 <{if $type == 's'}>
-    <div class="floatright">
-        <div class="xo-buttons">
-            <button id="xo-addavatar-btn" class="ui-corner-all tooltip" onclick='location="admin.php?fct=avatars&amp;op=multiupload"'
-                    title="<{$smarty.const._AM_SYSTEM_AVATAR_MULTIUPLOAD}>">
-                <img src="<{xoAdminIcons add.png}>" alt="<{$smarty.const._AM_SYSTEM_AVATAR_MULTIUPLOAD}>"/>
-                <{$smarty.const._AM_SYSTEM_AVATAR_MULTIUPLOAD}>
-            </button>
+    <div style="height: 30px;">
+        <div class="floatright">
+            <div class="xo-buttons" >
+                <button id="xo-addavatar-btn" class="ui-corner-all tooltip" onclick='location="admin.php?fct=avatars&amp;op=multiupload"'
+                        title="<{$smarty.const._AM_SYSTEM_AVATAR_MULTIUPLOAD}>">
+                    <img src="<{xoAdminIcons add.png}>" alt="<{$smarty.const._AM_SYSTEM_AVATAR_MULTIUPLOAD}>"/>
+                    <{$smarty.const._AM_SYSTEM_AVATAR_MULTIUPLOAD}>
+                </button>
+            </div>
         </div>
-    </div>    
+    </div>   
 <{/if}>
 <{if $view_cat}>
     <!-- Display Avatar header for switch between system & custom category -->
