@@ -1163,6 +1163,14 @@ class Protector
             return true;
         }
         $uri     = @$_SERVER['REQUEST_URI'];
+
+        // skip ajax fine uploader traffic
+        $parts = parse_url($uri);
+        $basename = empty($parts['path']) ? '' : basename($parts['path']);
+        if (('ajaxfineupload.php' === $basename) && ('' !== \Xmf\Request::getHeader('Authorization', ''))) {
+            return true;
+        }
+
         $ip4sql  = $xoopsDB->quote($ip->asReadable());
         $uri4sql = $xoopsDB->quote($uri);
 
