@@ -92,7 +92,8 @@
                 maxHeight: <{$imgcat_maxheight}>,
                 maxWidth: <{$imgcat_maxwidth}>
             },
-            sizeLimit: <{$imgcat_maxsize}>
+            sizeLimit: <{$imgcat_maxsize}>,
+            itemLimit: <{$imgcat_itemlimit|default:2}>
         },
         autoUpload: false,
         callbacks: {
