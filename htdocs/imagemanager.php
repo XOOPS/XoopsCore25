@@ -179,6 +179,9 @@ switch ($op) {
         $xoopsTpl->assign('imgcat_maxheight', $imgcat->getVar('imgcat_maxheight'));
         $xoopsTpl->assign('imgcat_name', $imgcat->getVar('imgcat_name'));
         $xoopsTpl->assign('lang_close', _CLOSE);
+
+        $xoopsTpl->assign('imgcat_itemlimit', ($xoopsUser instanceof \XoopsUser && $xoopsUser->isAdmin()) ? 0 : 2);
+
         $payload = array(
             'aud' => 'ajaxfineupload.php',
             'cat' => $imgcat_id,
