@@ -19,7 +19,9 @@
 include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 $indexAdmin = new ModuleAdmin();
+$indexAdmin->addItemButton(_PROFILE_AM_ADDUSER, 'step.php?op=new', 'add', '');
 echo $indexAdmin->addNavigation(basename(__FILE__));
+echo $indexAdmin->renderButton('right', '');
 
 $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list';
 if ($op === 'editordelete') {
