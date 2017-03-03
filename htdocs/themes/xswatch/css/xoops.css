@@ -125,8 +125,8 @@ div.center div.jGrowl-notification, div.center div.jGrowl-closer {
 }
 
 div.jGrowl div.jGrowl-notification, div.jGrowl div.jGrowl-closer {
-    background-color: #EBFBFE;
-    color: #000080;
+    background-color: #d6efff;
+    color: #022a50;
     width: 100%;
     padding: .5em;
     margin-top: .5em;
@@ -134,7 +134,7 @@ div.jGrowl div.jGrowl-notification, div.jGrowl div.jGrowl-closer {
     font-family: Tahoma, Geneva, sans-serif;
     font-size: 1.2em;
     text-align: center;
-    border: 1px solid #6699FF;
+    border: 1px solid #022a50;
     display: none;
     border-radius: 5px;
     -moz-border-radius: 5px;
