@@ -22,6 +22,10 @@ if ((!$loader = includeIfExists(__DIR__.'/../autoload.php'))
 
 use Geekwright\RegDom\PublicSuffixList;
 
+// force fetch of the PSL
 $psl = new \Geekwright\RegDom\PublicSuffixList();
 $psl->clearDataDirectory();
+$psl->getTree();
+// once more to build local copy cache
+$psl = new \Geekwright\RegDom\PublicSuffixList();
 $psl->getTree();

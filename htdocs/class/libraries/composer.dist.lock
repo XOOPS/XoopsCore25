@@ -51,16 +51,16 @@
         },
         {
             "name": "geekwright/regdom",
-            "version": "v1.0.3",
+            "version": "v1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/geekwright/RegDom.git",
-                "reference": "f4aefc20d3505cee7c39d1f3248c3233149b3822"
+                "reference": "bb901f0de76879c02d52597f4f154f86646932fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/geekwright/RegDom/zipball/f4aefc20d3505cee7c39d1f3248c3233149b3822",
-                "reference": "f4aefc20d3505cee7c39d1f3248c3233149b3822",
+                "url": "https://api.github.com/repos/geekwright/RegDom/zipball/bb901f0de76879c02d52597f4f154f86646932fd",
+                "reference": "bb901f0de76879c02d52597f4f154f86646932fd",
                 "shasum": ""
             },
             "require": {
@@ -94,7 +94,7 @@
                 "suffix",
                 "tld"
             ],
-            "time": "2017-02-15T15:09:19+00:00"
+            "time": "2017-03-03T13:57:40+00:00"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -465,16 +465,16 @@
         },
         {
             "name": "xoops/xmf",
-            "version": "V1.2.0",
+            "version": "v1.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/XOOPS/xmf.git",
-                "reference": "099a67ca3be5d434b88cb2cf58137081fe4a7c8f"
+                "reference": "aa9a6a9a00fce3e272e09a13fc92ad6655d41157"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/XOOPS/xmf/zipball/099a67ca3be5d434b88cb2cf58137081fe4a7c8f",
-                "reference": "099a67ca3be5d434b88cb2cf58137081fe4a7c8f",
+                "url": "https://api.github.com/repos/XOOPS/xmf/zipball/aa9a6a9a00fce3e272e09a13fc92ad6655d41157",
+                "reference": "aa9a6a9a00fce3e272e09a13fc92ad6655d41157",
                 "shasum": ""
             },
             "require": {
@@ -495,7 +495,7 @@
                 "GPL-2.0+"
             ],
             "description": "XMF - XOOPS Module Framework",
-            "time": "2016-11-02T18:11:58+00:00"
+            "time": "2017-03-03T14:17:14+00:00"
         }
     ],
     "packages-dev": [],
