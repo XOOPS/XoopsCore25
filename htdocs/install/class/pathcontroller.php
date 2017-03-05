@@ -137,8 +137,13 @@ class PathStuffController
                 $this->xoopsUrl = $request['URL'];
             }
             if (isset($request['COOKIE_DOMAIN'])) {
-                $request['COOKIE_DOMAIN'] = trim($request['COOKIE_DOMAIN']);
-                $this->xoopsCookieDomain = $request['COOKIE_DOMAIN'];
+                $tempCookieDomain = trim($request['COOKIE_DOMAIN']);
+                $tempParts = parse_url($tempCookieDomain);
+                if (!empty($tempParts['host'])) {
+                    $tempCookieDomain = $tempParts['host'];
+                }
+                $request['COOKIE_DOMAIN'] = $tempCookieDomain;
+                $this->xoopsCookieDomain = $tempCookieDomain;;
             }
         }
     }
