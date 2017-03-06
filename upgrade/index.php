@@ -27,10 +27,10 @@ function fatalPhpErrorHandler($e = null) {
         if ($lastError['type'] === E_ERROR) {
             // fatal error
             printf($messageFormat, 'Error', $lastError['message'], $lastError['file'], $lastError['line']);
-        } elseif ($e instanceof $exceptionClass || $e instanceof $throwableClass) {
-            /** @var $e \Exception */
-            printf($messageFormat, get_class($e), $e->getMessage(), $e->getFile(), $e->getLine());
         }
+    } elseif ($e instanceof $exceptionClass || $e instanceof $throwableClass) {
+        /** @var $e \Exception */
+        printf($messageFormat, get_class($e), $e->getMessage(), $e->getFile(), $e->getLine());
     }
 }
 register_shutdown_function('fatalPhpErrorHandler');
