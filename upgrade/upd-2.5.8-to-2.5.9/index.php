@@ -22,7 +22,12 @@ class Upgrade_259 extends XoopsUpgrade
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
-        $this->tasks = array('sess_id');
+        $this->tasks = array('sess_id', 'mainfile', 'zaplegacy');
+        $this->usedFiles = array(
+            'mainfile.php',
+            XOOPS_VAR_PATH . '/data/secure.php',
+            'modules/system/themes/legacy/legacy.php'
+        );
     }
 
     /**
@@ -83,6 +88,120 @@ class Upgrade_259 extends XoopsUpgrade
         $migrate->useTable('session');
         $migrate->alterColumn('session', 'sess_id', "varchar(256) CHARACTER SET ascii COLLATE ascii_general_ci NOT NULL DEFAULT ''");
         return $migrate->executeQueue(true);
+    }
+
+    /**
+     * Copy a configuration file from template, then rewrite with actual configuration values
+     *
+     * @param string[] $vars       config values
+     * @param string   $path       directory path where files reside
+     * @param string   $sourceName template file name
+     * @param string   $fileName   configuration file name
+     *
+     * @return true|string true on success, error message on failure
+     */
+    protected function writeConfigurationFile($vars, $path, $sourceName, $fileName)
+    {
+        $path .= '/';
+        clearstatcache();
+        if (!$inFile = fopen($path . $sourceName, 'r')) {
+            return sprintf(_FILE_ACCESS_ERROR, $sourceName);
+        } else {
+            $content = fread($inFile, filesize($path . $sourceName));
+            fclose($inFile);
+
+            foreach ($vars as $key => $val) {
+                if (is_int($val) && preg_match("/(define\()([\"'])({$key})\\2,\s*(\d+)\s*\)/", $content)) {
+                    $content = preg_replace("/(define\()([\"'])({$key})\\2,\s*(\d+)\s*\)/", "define('{$key}', {$val})", $content);
+                } elseif (preg_match("/(define\()([\"'])({$key})\\2,\s*([\"'])(.*?)\\4\s*\)/", $content)) {
+                    $val = str_replace('$', '\$', addslashes($val));
+                    $content = preg_replace("/(define\()([\"'])({$key})\\2,\s*([\"'])(.*?)\\4\s*\)/", "define('{$key}', '{$val}')", $content);
+                }
+            }
+            $outFile = fopen($path . $fileName, 'w');
+            if (false === $outFile) {
+                return sprintf(_FILE_ACCESS_ERROR, $fileName);
+            }
+            $writeResult = fwrite($outFile, $content);
+            fclose($outFile);
+            if (false === $writeResult) {
+                return sprintf(_FILE_ACCESS_ERROR, $fileName);
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Do we need to rewrite mainfile and secure?
+     *
+     * @return bool
+     */
+    public function check_mainfile()
+    {
+        /** @var $upgradeControl UpgradeControl */
+        global $upgradeControl;
+        return !$upgradeControl->needMainfileRewrite;
+    }
+
+    /**
+     * Rewrite mainfile and secure file with current templates
+     *
+     * @return bool
+     */
+    public function apply_mainfile()
+    {
+        /** @var $upgradeControl UpgradeControl */
+        global $upgradeControl;
+
+        if (null === $upgradeControl->mainfileKeys['XOOPS_COOKIE_DOMAIN']) {
+            $upgradeControl->mainfileKeys['XOOPS_COOKIE_DOMAIN'] = xoops_getBaseDomain(XOOPS_URL);
+        }
+        $result = $this->writeConfigurationFile(
+            $upgradeControl->mainfileKeys,
+            XOOPS_ROOT_PATH,
+            'mainfile.dist.php',
+            'mainfile.php'
+        );
+        if ($result !== true) {
+            $this->logs[] = $result;
+        } else {
+            $result = $this->writeConfigurationFile(
+                $upgradeControl->mainfileKeys,
+                XOOPS_VAR_PATH . '/data',
+                'secure.dist.php',
+                'secure.php'
+            );
+            if ($result !== true) {
+                $this->logs[] = $result;
+            }
+        }
+        return ($result === true);
+    }
+
+    //modules/system/themes/legacy/legacy.php
+    /**
+     * Do we need to rewrite mainfile and secure?
+     *
+     * @return bool
+     */
+    public function check_zaplegacy()
+    {
+        return !file_exists('../modules/system/themes/legacy/legacy.php');
+    }
+
+    /**
+     * Rewrite mainfile and secure file with current templates
+     *
+     * @return bool
+     */
+    public function apply_zaplegacy()
+    {
+        $fileName = 'modules/system/themes/legacy/legacy.php';
+        $result = rename('../' . $fileName, '../' . $fileName . '.bak');
+        if (false === $result) {
+            return sprintf(_FILE_ACCESS_ERROR, $fileName);
+        }
+        return true;
     }
 }
 

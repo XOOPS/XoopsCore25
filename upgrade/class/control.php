@@ -16,6 +16,12 @@ class UpgradeControl
      */
     public $supportSites = array();
 
+    /** @var bool */
+    public $needMainfileRewrite = false;
+
+    /** @var string[]  */
+    public $mainfileKeys = array();
+
     /**
      * @var string language being used in the upgrade process
      */
@@ -91,7 +97,7 @@ class UpgradeControl
         if (isset($xoopsConfig['language'])) {
             $upgrade_language = $xoopsConfig['language'];
         }
-        $upgrade_language = !empty($_COOKIE['xo_upgrade_lang']) ? $_COOKIE['xo_install_lang'] : $upgrade_language;
+        $upgrade_language = !empty($_COOKIE['xo_upgrade_lang']) ? $_COOKIE['xo_upgrade_lang'] : $upgrade_language;
         $upgrade_language = Xmf\Request::getString('lang', $upgrade_language);
         $upgrade_language = (null === $xoopsConfig['language']) ? 'english' : $upgrade_language;
         setcookie('xo_upgrade_lang', $upgrade_language, null, null, null);
@@ -135,7 +141,8 @@ class UpgradeControl
 
         if ($this->needUpgrade && !empty($files)) {
             foreach ($files as $k => $file) {
-                if (is_writable("../{$file}")) {
+                $testFile = preg_match('/^([.\/\\\\:])|([a-z]:)/i', $file) ? $file : "../{$file}";
+                if (is_writable($testFile) || !file_exists($testFile)) {
                     unset($files[$k]);
                 }
             }
@@ -203,4 +210,14 @@ class UpgradeControl
 
         return $form;
     }
+
+    public function storeMainfileCheck($needMainfileRewrite, $mainfileKeys)
+    {
+        $this->needMainfileRewrite = $needMainfileRewrite;
+
+        if ($needMainfileRewrite) {
+            $this->mainfileKeys = $mainfileKeys;
+        }
+    }
+
 }

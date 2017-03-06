@@ -33,6 +33,24 @@ define('INSTALL_PASSWORD', '');
 
 define('XOOPS_INSTALL', 1);
 
+function fatalPhpErrorHandler($e = null) {
+    $messageFormat = '<br><div>Fatal %s %s file: %s : %d </div>';
+    $exceptionClass = '\Exception';
+    $throwableClass = '\Throwable';
+    if ($e === null) {
+        $lastError = error_get_last();
+        if ($lastError['type'] === E_ERROR) {
+            // fatal error
+            printf($messageFormat, 'Error', $lastError['message'], $lastError['file'], $lastError['line']);
+        }
+    } elseif ($e instanceof $exceptionClass || $e instanceof $throwableClass) {
+        /** @var $e \Exception */
+        printf($messageFormat, get_class($e), $e->getMessage(), $e->getFile(), $e->getLine());
+    }
+}
+register_shutdown_function('fatalPhpErrorHandler');
+set_exception_handler('fatalPhpErrorHandler');
+
 // options for mainfile.php
 if (empty($xoopsOption['hascommon'])) {
     $xoopsOption['nocommon'] = true;
@@ -42,6 +60,7 @@ if (empty($xoopsOption['hascommon'])) {
 if (!defined('XOOPS_ROOT_PATH')) {
     define('XOOPS_ROOT_PATH', str_replace("\\", '/', realpath('../')));
 }
+
 /*
 error_reporting( 0 );
 if (isset($xoopsLogger)) {

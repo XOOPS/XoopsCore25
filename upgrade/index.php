@@ -18,18 +18,42 @@
  */
 /* @var  $xoopsUser XoopsUser */
 
-//Before xoops 2.5.8 the table 'sess_ip' was of type varchar (15). This is a problem for IPv6 addresses because it is longer. The upgrade process would change the column to VARCHAR(45) but it requires login, which is failing. If the user has an IPv6 address, it is converted to short IP during the upgrade. At the end of the upgrade IPV6 works
-//save current IP
+function fatalPhpErrorHandler($e = null) {
+    $messageFormat = '<br><div>Fatal %s %s file: %s : %d </div>';
+    $exceptionClass = '\Exception';
+    $throwableClass = '\Throwable';
+    if ($e === null) {
+        $lastError = error_get_last();
+        if ($lastError['type'] === E_ERROR) {
+            // fatal error
+            printf($messageFormat, 'Error', $lastError['message'], $lastError['file'], $lastError['line']);
+        }
+    } elseif ($e instanceof $exceptionClass || $e instanceof $throwableClass) {
+        /** @var $e \Exception */
+        printf($messageFormat, get_class($e), $e->getMessage(), $e->getFile(), $e->getLine());
+    }
+}
+register_shutdown_function('fatalPhpErrorHandler');
+set_exception_handler('fatalPhpErrorHandler');
+
+/*
+ * Before xoops 2.5.8 the table 'sess_ip' was of type varchar (15). This is a problem for IPv6
+ * addresses because it is longer. The upgrade process would change the column to VARCHAR(45)
+ * but it requires login, which is failing. If the user has an IPv6 address, it is converted to
+ * short IP during the upgrade. At the end of the upgrade IPV6 works
+ *
+ * Here we save the current IP address if needed
+ */
 $ip = $_SERVER['REMOTE_ADDR'];
 if (strlen($_SERVER['REMOTE_ADDR']) > 15) {
     //new IP for upgrade
     $_SERVER['REMOTE_ADDR'] = '::1';
 }
 
-include_once '../mainfile.php';
+include_once 'checkmainfile.php';
 defined('XOOPS_ROOT_PATH') or die('Bad installation: please add this folder to the XOOPS install you want to upgrade');
 
-$reporting = -1; // 0;
+$reporting = 0;
 if (isset($_GET['debug'])) {
     $reporting = -1;
 }
@@ -37,14 +61,16 @@ error_reporting($reporting);
 $xoopsLogger->activated = true;
 $xoopsLogger->enableRendering();
 xoops_loadLanguage('logger');
+set_exception_handler('fatalPhpErrorHandler'); // should have been changed by now, reset to ours
 
 require './class/abstract.php';
 require './class/patchstatus.php';
 require './class/control.php';
 
 $GLOBALS['error'] = false;
-$upgradeControl = new UpgradeControl();
+$GLOBALS['upgradeControl'] = new UpgradeControl();
 
+$upgradeControl->storeMainfileCheck($needMainfileRewrite, $mainfileKeys);
 $upgradeControl->determineLanguage();
 $upgradeControl->buildUpgradeQueue();
 
