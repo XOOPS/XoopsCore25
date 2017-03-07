@@ -17,6 +17,10 @@ class ComposerStaticInit274e5fff219a4f27a346e611b0580d6a
         array (
             'Xmf\\' => 4,
         ),
+        'W' => 
+        array (
+            'Webmozart\\Assert\\' => 17,
+        ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Mbstring\\' => 26,
@@ -36,6 +40,10 @@ class ComposerStaticInit274e5fff219a4f27a346e611b0580d6a
         'Xmf\\' => 
         array (
             0 => __DIR__ . '/..' . '/xoops/xmf/src/Xmf',
+        ),
+        'Webmozart\\Assert\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/webmozart/assert/src',
         ),
         'Symfony\\Polyfill\\Mbstring\\' => 
         array (
@@ -127,6 +135,7 @@ class ComposerStaticInit274e5fff219a4f27a346e611b0580d6a
         'Symfony\\Component\\Yaml\\Unescaper' => __DIR__ . '/..' . '/symfony/yaml/Unescaper.php',
         'Symfony\\Component\\Yaml\\Yaml' => __DIR__ . '/..' . '/symfony/yaml/Yaml.php',
         'Symfony\\Polyfill\\Mbstring\\Mbstring' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/Mbstring.php',
+        'Webmozart\\Assert\\Assert' => __DIR__ . '/..' . '/webmozart/assert/src/Assert.php',
         'WideImage\\Canvas' => __DIR__ . '/..' . '/smottt/wideimage/lib/WideImage/Canvas.php',
         'WideImage\\Coordinate' => __DIR__ . '/..' . '/smottt/wideimage/lib/WideImage/Coordinate.php',
         'WideImage\\Exception\\Exception' => __DIR__ . '/..' . '/smottt/wideimage/lib/WideImage/Exception/Exception.php',
@@ -182,6 +191,7 @@ class ComposerStaticInit274e5fff219a4f27a346e611b0580d6a
         'WideImage\\WideImage' => __DIR__ . '/..' . '/smottt/wideimage/lib/WideImage/WideImage.php',
         'WideImage\\vendor\\de77\\BMP' => __DIR__ . '/..' . '/smottt/wideimage/lib/WideImage/vendor/de77/BMP.php',
         'WideImage\\vendor\\de77\\TGA' => __DIR__ . '/..' . '/smottt/wideimage/lib/WideImage/vendor/de77/TGA.php',
+        'Xmf\\Assert' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Assert.php',
         'Xmf\\Database\\Migrate' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Database/Migrate.php',
         'Xmf\\Database\\TableLoad' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Database/TableLoad.php',
         'Xmf\\Database\\Tables' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Database/Tables.php',
