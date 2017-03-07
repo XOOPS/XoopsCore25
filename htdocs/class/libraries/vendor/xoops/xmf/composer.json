@@ -13,6 +13,7 @@
         "raveren/kint": "1.0.10",
         "symfony/yaml": "2.8.*",
         "ircmaxell/random-lib": "^1.1.0",
-        "firebase/php-jwt": "^4.0.0"
+        "firebase/php-jwt": "^4.0.0",
+        "webmozart/assert": "^1.2"
     }
 }
