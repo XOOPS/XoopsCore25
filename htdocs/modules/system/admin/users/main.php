@@ -246,7 +246,7 @@ switch ($op) {
                     $newuser->setVar('uname', $_REQUEST['username']);
                     $newuser->setVar('email', $_REQUEST['email']);
                     $newuser->setVar('url', formatURL($_REQUEST['url']));
-                    $newuser->setVar('user_avatar', 'blank.gif');
+                    $newuser->setVar('user_avatar', 'avatars/blank.gif');
                     $newuser->setVar('user_regdate', time());
                     $newuser->setVar('user_icq', $_REQUEST['user_icq']);
                     $newuser->setVar('user_from', $_REQUEST['user_from']);

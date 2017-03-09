@@ -107,6 +107,7 @@ switch ($op) {
             }
             $user->setVar('user_regdate', time());
             $user->setVar('level', 1);
+            $user->setVar('user_avatar', 'avatars/blank.gif');
         }
         $myts = MyTextSanitizer::getInstance();
         $user->setVar('uname', $_POST['uname']);
