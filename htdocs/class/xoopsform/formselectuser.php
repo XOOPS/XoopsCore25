@@ -117,7 +117,7 @@ class XoopsFormSelectUser extends XoopsFormElementTray
         }
 
         xoops_loadLanguage('findusers');
-        $js_addusers = "<script type='text/javascript'>
+        $js_addusers = "
             function addusers(opts)
             {
                 var num = opts.substring(0, opts.indexOf(':'));
@@ -145,8 +145,7 @@ class XoopsFormSelectUser extends XoopsFormElementTray
                 }
 
                 return true;
-            }
-            </script>";
+            }";
         $token       = $GLOBALS['xoopsSecurity']->createToken();
         $action_tray = new XoopsFormElementTray('', '');
         $removeUsers = new XoopsFormButton('', 'rmvusr_' . $name, _MA_USER_REMOVE, 'button');
