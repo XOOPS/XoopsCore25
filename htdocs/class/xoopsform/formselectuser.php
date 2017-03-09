@@ -158,6 +158,8 @@ class XoopsFormSelectUser extends XoopsFormElementTray
 
          if (isset($GLOBALS['xoTheme']) && is_object($GLOBALS['xoTheme'])) {
              $GLOBALS['xoTheme']->addScript('', array(), $js_addusers);
+         } else {
+             echo '<script>' . $js_addusers . '</script>';
          }
         parent::__construct($caption, '', $name);
         $this->addElement($select_element);
