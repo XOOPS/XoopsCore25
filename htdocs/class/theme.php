@@ -274,7 +274,9 @@ class xos_opal_Theme
         $this->template               = new XoopsTpl();
         $this->template->currentTheme = $this;
         $this->template->assign_by_ref('xoTheme', $this);
-        $xoops_page = str_replace(realpath(XOOPS_ROOT_PATH) . '/', '', realpath($_SERVER['SCRIPT_FILENAME']));
+        $tempPath = str_replace('\\', '/', realpath(XOOPS_ROOT_PATH) . '/');
+        $tempName = str_replace('\\', '/',  realpath($_SERVER['SCRIPT_FILENAME']));
+        $xoops_page = str_replace($tempPath, '', $tempName);
         if (strpos($xoops_page, 'modules') !== false) {
             $xoops_page = str_replace('modules/', '', $xoops_page);
         }
