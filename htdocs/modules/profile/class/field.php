@@ -254,6 +254,7 @@ class ProfileField extends XoopsObject
             case 'select':
             case 'radio':
                 $options = $this->getVar('field_options');
+                $value = $value[0];
                 if (isset($options[$value])) {
                     $value = htmlspecialchars(defined($options[$value]) ? constant($options[$value]) : $options[$value]);
                 } else {
