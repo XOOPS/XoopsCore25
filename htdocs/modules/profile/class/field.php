@@ -527,7 +527,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
                 $changetype = 'ADD';
             } else {
                 //update column information
-                $changetype = 'CHANGE `' . $obj->getVar('field_name', 'n') . '`';
+                $changetype = 'MODIFY COLUMN';
             }
             $maxlengthstring = $obj->getVar('field_maxlength') > 0 ? '(' . $obj->getVar('field_maxlength') . ')' : '';
 
@@ -537,6 +537,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
                 case XOBJ_DTYPE_ARRAY:
                 case XOBJ_DTYPE_UNICODE_ARRAY:
                     $type = 'mediumtext';
+                    $maxlengthstring = '';
                     break;
                 case XOBJ_DTYPE_UNICODE_EMAIL:
                 case XOBJ_DTYPE_UNICODE_TXTBOX:
@@ -581,6 +582,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
             $sql = 'ALTER TABLE `' . $profile_handler->table . '` ' . $changetype . ' `' . $obj->cleanVars['field_name'] . '` ' . $type . $maxlengthstring . ' NULL';
             $result = $force ? $this->db->queryF($sql) : $this->db->query($sql);
             if (!$result) {
+                $obj->setErrors($this->db->error());
                 return false;
             }
         }
