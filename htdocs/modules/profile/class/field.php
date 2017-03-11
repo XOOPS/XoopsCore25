@@ -237,6 +237,7 @@ class ProfileField extends XoopsObject
         switch ($this->getVar('field_type')) {
             default:
             case 'textbox':
+                $value = is_array($value) ? $value[0] : $value;
                 if ($this->getVar('field_name') === 'url' && $value !== '') {
                     return '<a href="' . formatURL($value) . '" rel="external">' . $value . '</a>';
                 } else {
@@ -253,8 +254,8 @@ class ProfileField extends XoopsObject
 
             case 'select':
             case 'radio':
+                $value = is_array($value) ? $value[0] : $value;
                 $options = $this->getVar('field_options');
-                $value = $value[0];
                 if (isset($options[$value])) {
                     $value = htmlspecialchars(defined($options[$value]) ? constant($options[$value]) : $options[$value]);
                 } else {

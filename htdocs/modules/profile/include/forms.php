@@ -84,16 +84,16 @@ function profile_getFieldForm(ProfileField $field, $action = false)
         switch ($field->getVar('field_type')) {
             case 'textbox':
                 $valuetypes = array(
-                    XOBJ_DTYPE_ARRAY           => _PROFILE_AM_ARRAY,
+                    XOBJ_DTYPE_TXTBOX          => _PROFILE_AM_TXTBOX,
+                    //XOBJ_DTYPE_ARRAY           => _PROFILE_AM_ARRAY,
                     XOBJ_DTYPE_EMAIL           => _PROFILE_AM_EMAIL,
                     XOBJ_DTYPE_INT             => _PROFILE_AM_INT,
                     XOBJ_DTYPE_FLOAT           => _PROFILE_AM_FLOAT,
                     XOBJ_DTYPE_DECIMAL         => _PROFILE_AM_DECIMAL,
                     XOBJ_DTYPE_TXTAREA         => _PROFILE_AM_TXTAREA,
-                    XOBJ_DTYPE_TXTBOX          => _PROFILE_AM_TXTBOX,
                     XOBJ_DTYPE_URL             => _PROFILE_AM_URL,
                     XOBJ_DTYPE_OTHER           => _PROFILE_AM_OTHER,
-                    XOBJ_DTYPE_UNICODE_ARRAY   => _PROFILE_AM_UNICODE_ARRAY,
+                    //XOBJ_DTYPE_UNICODE_ARRAY   => _PROFILE_AM_UNICODE_ARRAY,
                     XOBJ_DTYPE_UNICODE_TXTBOX  => _PROFILE_AM_UNICODE_TXTBOX,
                     XOBJ_DTYPE_UNICODE_TXTAREA => _PROFILE_AM_UNICODE_TXTAREA,
                     XOBJ_DTYPE_UNICODE_EMAIL   => _PROFILE_AM_UNICODE_EMAIL,
@@ -107,16 +107,16 @@ function profile_getFieldForm(ProfileField $field, $action = false)
             case 'select':
             case 'radio':
                 $valuetypes = array(
-                    XOBJ_DTYPE_ARRAY           => _PROFILE_AM_ARRAY,
+                    XOBJ_DTYPE_TXTBOX          => _PROFILE_AM_TXTBOX,
+                    //XOBJ_DTYPE_ARRAY           => _PROFILE_AM_ARRAY,
                     XOBJ_DTYPE_EMAIL           => _PROFILE_AM_EMAIL,
                     XOBJ_DTYPE_INT             => _PROFILE_AM_INT,
                     XOBJ_DTYPE_FLOAT           => _PROFILE_AM_FLOAT,
                     XOBJ_DTYPE_DECIMAL         => _PROFILE_AM_DECIMAL,
                     XOBJ_DTYPE_TXTAREA         => _PROFILE_AM_TXTAREA,
-                    XOBJ_DTYPE_TXTBOX          => _PROFILE_AM_TXTBOX,
                     XOBJ_DTYPE_URL             => _PROFILE_AM_URL,
                     XOBJ_DTYPE_OTHER           => _PROFILE_AM_OTHER,
-                    XOBJ_DTYPE_UNICODE_ARRAY   => _PROFILE_AM_UNICODE_ARRAY,
+                    //XOBJ_DTYPE_UNICODE_ARRAY   => _PROFILE_AM_UNICODE_ARRAY,
                     XOBJ_DTYPE_UNICODE_TXTBOX  => _PROFILE_AM_UNICODE_TXTBOX,
                     XOBJ_DTYPE_UNICODE_TXTAREA => _PROFILE_AM_UNICODE_TXTAREA,
                     XOBJ_DTYPE_UNICODE_EMAIL   => _PROFILE_AM_UNICODE_EMAIL,
