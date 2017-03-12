@@ -45,6 +45,7 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - profile module, hide ICQ, AIM, YIM and MSNM fields by default
 - profile module, us dhtml editor for signatures
 - use public suffix list when determining cookie domain
+- add polyfill for mb string, most functions always available if without extension
 - new admin theme - Transition (bitcero)
 - add XoopsObjectTree::makeSelectElement(), return tree as XoopsFormSelect (geekwright, mage)
 - Bootstrap form support with XoopsFormRenderer (geekwright, mage)
@@ -60,6 +61,11 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - installer updated
 - upgrader updated
 - theme changes: removed sucio and zetagenesis, added xswatch
+- error in search links (mage)
+- multiple issues in profile module (mage, trabis, geekwright)
+- issue with xBootstrap slider (mage)
+- XoopsFormSelectUsers issues
+- fix theme selection in install (mage)
 
 Updated libraries and assets:
  - jQuery 3.1.1 (mamba)
@@ -74,6 +80,7 @@ Updated libraries and assets:
  - HTML Purifier to 4.8.0 (mamba)
  - PHPMailer to 5.2.21
  - XMF to 1.2.0
+ - Font Awesome 4.7.0 now included
 
 ===================================
 2.5.8 Final            2016-05-27
