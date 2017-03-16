@@ -931,7 +931,8 @@ function xoops_module_update($dirname)
                     $editfunc    = isset($block['edit_func']) ? $block['edit_func'] : '';
                     $showfuncs[] = $block['show_func'];
                     $funcfiles[] = $block['file'];
-                    $template    = '';
+                    $content = '';
+                    $template = '';
                     if (isset($block['template']) && trim($block['template']) != '') {
                         $content =& xoops_module_gettemplate($dirname, $block['template'], 'blocks');
                     }
