@@ -35,7 +35,8 @@ switch ($op) {
     case 'list':
         include_once $GLOBALS['xoops']->path('/class/xoopsformloader.php');
         $form = new XoopsThemeForm(_PROFILE_AM_EDITUSER, 'form', 'user.php');
-        $form->addElement(new XoopsFormSelectUser(_PROFILE_AM_SELECTUSER, 'id'));
+        $lastUid = \Xmf\Request::getInt('lastuid', null, 'GET');
+        $form->addElement(new XoopsFormSelectUser(_PROFILE_AM_SELECTUSER, 'id', false, $lastUid));
         $form->addElement(new XoopsFormHidden('op', 'editordelete'));
         $button_tray = new XoopsFormElementTray('');
         $button_tray->addElement(new XoopsFormButton('', 'edit', _EDIT, 'submit'));
@@ -169,10 +170,12 @@ switch ($op) {
                         }
                     }
                 }
+                XoopsLoad::load('XoopsCache');
+                $queryCache = XoopsCache::delete('formselectuser');
                 if ($user->isNew()) {
-                    redirect_header('user.php', 2, _PROFILE_AM_USERCREATED, false);
+                    redirect_header('user.php?lastuid=' . $user->getVar('uid'), 2, _PROFILE_AM_USERCREATED, false);
                 } else {
-                    redirect_header('user.php', 2, _US_PROFUPDATED, false);
+                    redirect_header('user.php?lastuid=' . $user->getVar('uid'), 2, _US_PROFUPDATED, false);
                 }
             }
         } else {
