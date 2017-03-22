@@ -100,7 +100,7 @@
 
         <div class="col-md-12">
             <{if $video.showsbookmarx > 0}>
-                <div class='shareaholic-canvas' data-app='share_buttons' data-app-id='482507'></div>
+                <div class='shareaholic-canvas' data-app='share_buttons' data-app-id=''></div>
             <{/if}>
         </div>
     </div><!-- .xoopstube-data -->

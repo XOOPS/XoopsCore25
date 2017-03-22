@@ -90,7 +90,7 @@
 
         <!-- Start social network and bookmarks -->
         <div class="col-md-12 aligncenter">
-            <div class='shareaholic-canvas' data-app='share_buttons' data-app-id='482507'></div>
+            <div class='shareaholic-canvas' data-app='share_buttons' data-app-id=''></div>
         </div>
     </div><!-- .gallery-image-details -->
 
