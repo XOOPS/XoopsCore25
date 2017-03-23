@@ -200,9 +200,9 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
         $commentPostButton = new XoopsFormButton('', 'com_post', _CM_POSTCOMMENT, 'button');
         $commentPostButton->setExtra(' onclick="self.location.href=\'' . $postcomment_link . $link_extra . '\'"');
         $commentTpl->assign('commentPostButton', $commentPostButton);
+        $commentTpl->assign('commentPostHidden', $commentBarHidden);
 
         $navbar = $commentTpl->fetch('db:system_comments_controls.tpl');
-        //\Xmf\Debug::dump($navbar);
 
         if (!empty($xoopsModuleConfig['com_anonpost']) || is_object($xoopsUser)) {
             if (file_exists($GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/comment_fast.php'))) {
