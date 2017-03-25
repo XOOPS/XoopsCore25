@@ -186,7 +186,7 @@ $GLOBALS['xoopsTpl']->assign('total_messages', $total_messages);
 $GLOBALS['xoopsTpl']->assign('op', $_REQUEST['op']);
 
 if ($total_messages > $GLOBALS['xoopsModuleConfig']['perpage']) {
-    include $GLOBALS['xoops']->path('class/pagenav.php');
+    include_once $GLOBALS['xoops']->path('class/pagenav.php');
     $nav = new XoopsPageNav($total_messages, $GLOBALS['xoopsModuleConfig']['perpage'], $start, 'start', 'op=' . htmlspecialchars($_REQUEST['op']));
     $GLOBALS['xoopsTpl']->assign('pagenav', $nav->renderNav(4));
 }
