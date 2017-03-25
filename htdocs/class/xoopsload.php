@@ -102,7 +102,7 @@ class XoopsLoad
             $configs = XoopsLoad::loadCoreConfig();
         }
         if (isset($configs[$name])) {
-            require $configs[$name];
+            require_once $configs[$name];
             if (class_exists($name) && method_exists($name, '__autoload')) {
                 call_user_func(array($name, '__autoload'));
             }
