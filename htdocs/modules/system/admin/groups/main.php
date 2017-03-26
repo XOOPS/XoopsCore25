@@ -72,7 +72,7 @@ switch ($op) {
                 $groups['description'] = $groups_arr[$i]->getVar('description');
                 /* @var $member_handler SystemMemberHandler */
                 $member_handler        = xoops_getHandler('member', 'system');
-                if ($groups_id != 3) {
+                if ($groups_id != XOOPS_GROUP_ANONYMOUS) {
                     $group_id_arr[0]              = $groups_id;
                     $nb_users_by_groups           = $member_handler->getUserCountByGroupLink($group_id_arr);
                     $groups['nb_users_by_groups'] = sprintf(_AM_SYSTEM_GROUPS_NB_USERS_BY_GROUPS_USERS, $nb_users_by_groups);

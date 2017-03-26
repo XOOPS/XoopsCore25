@@ -351,7 +351,7 @@ switch ($op) {
             $group_arr     = $group_handler->getObjects();
             $group_select->addOption('', '--------------');
             foreach (array_keys($group_arr) as $i) {
-                if ($group_arr[$i]->getVar('groupid') != 3) {
+                if ($group_arr[$i]->getVar('groupid') != XOOPS_GROUP_ANONYMOUS) {
                     $group_select->addOption('' . $group_arr[$i]->getVar('groupid') . '', '' . $group_arr[$i]->getVar('name') . '');
                 }
             }
@@ -795,7 +795,7 @@ switch ($op) {
             $group_handler = xoops_getHandler('group');
             $group_arr     = $group_handler->getObjects();
             foreach (array_keys($group_arr) as $i) {
-                if ($group_arr[$i]->getVar('groupid') != 3) {
+                if ($group_arr[$i]->getVar('groupid') != XOOPS_GROUP_ANONYMOUS) {
                     $form .= '<option value="' . $group_arr[$i]->getVar('groupid') . '"  ' . ($selgroups == $group_arr[$i]->getVar('groupid') ? ' selected' : '') . '>' . $group_arr[$i]->getVar('name') . '</option>';
                 }
             }
@@ -821,7 +821,7 @@ switch ($op) {
             $group_handler = xoops_getHandler('group');
             $group_arr     = $group_handler->getObjects();
             foreach (array_keys($group_arr) as $i) {
-                if ($group_arr[$i]->getVar('groupid') != 3) {
+                if ($group_arr[$i]->getVar('groupid') != XOOPS_GROUP_ANONYMOUS) {
                     $form_select_groups .= '<option value="' . $group_arr[$i]->getVar('groupid') . '"  ' . ($selgroups == $group_arr[$i]->getVar('groupid') ? ' selected' : '') . '>' . $group_arr[$i]->getVar('name') . '</option>';
                 }
             }
@@ -842,7 +842,7 @@ switch ($op) {
                     $users['uid'] = $users_arr[$i]->getVar('uid');
                     //Display group
                     $user_group = $member_handler->getGroupsByUser($users_arr[$i]->getVar('uid'));
-                    if (in_array('1', $user_group)) {
+                    if (in_array(XOOPS_GROUP_ADMIN, $user_group)) {
                         $users['group'] = system_AdminIcons('xoops/group_1.png');
                         //$users['icon'] = '<img src="'.XOOPS_URL.'/modules/system/images/icons/admin.png" alt="'._AM_SYSTEM_USERS_ADMIN.'" title="'._AM_SYSTEM_USERS_ADMIN.'" />';
                         $users['checkbox_user'] = false;
