@@ -512,7 +512,7 @@ switch ($op) {
         // Cache management should be performed on a separate page
         require_once XOOPS_ROOT_PATH . '/modules/system/class/maintenance.php';
         $maintenance = new SystemMaintenance();
-        $options     = array(1,2); // smarty_cache and Smarty_compile
+        $options     = array(1,2,3); // smarty_cache and Smarty_compile
         register_shutdown_function(array(&$maintenance, 'CleanCache'), $options);
 
         if ($lang_updated) {
