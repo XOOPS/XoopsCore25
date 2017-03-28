@@ -382,6 +382,7 @@ switch ($op) {
                 }
             }
         }
+        xoops_module_delayed_clean_cache();
         // Call Footer
         xoops_cp_footer();
         break;
@@ -438,6 +439,7 @@ switch ($op) {
                 }
             }
         }
+        xoops_module_delayed_clean_cache();
         // Call Footer
         xoops_cp_footer();
         break;
@@ -469,7 +471,6 @@ switch ($op) {
         break;
 
     case 'update_ok':
-        //--------------------------
         $ret   = array();
         $ret[] = xoops_module_update($module);
         // Flush cache files for cpanel GUIs
@@ -495,10 +496,8 @@ switch ($op) {
                 }
             }
         }
+        xoops_module_delayed_clean_cache();
         // Call Footer
         xoops_cp_footer();
         break;
-
-    //---------------------------------------
-
 }

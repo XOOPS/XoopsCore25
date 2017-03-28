@@ -1424,3 +1424,23 @@ function xoops_module_log_header($module, $title)
 
     return $msgs;
 }
+
+/**
+ * Clean cache 'xoops_data/caches/smarty_cache'
+ *
+ * @param array|null $cacheList int[] of cache "ids"
+ *                              1 = smarty cache
+ *                              2 = smarty compile
+ *                              3 = xoops cache
+ *                              or null to clear all
+ * @return bool
+ */
+function xoops_module_delayed_clean_cache($cacheList = null)
+{
+    if (empty($cacheList)) {
+        $cacheList = array (1,2,3);
+    }
+    require_once XOOPS_ROOT_PATH . '/modules/system/class/maintenance.php';
+    $maintenance = new SystemMaintenance();
+    register_shutdown_function(array($maintenance, 'CleanCache'), $cacheList);
+}
