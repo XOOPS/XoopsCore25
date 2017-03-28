@@ -8,6 +8,14 @@ Below are language differences from a version to next version.
 ===============================
 ADDED/DELETED DEFINES
 
+htdocs/Frameworks/moduleclasses/moduleadmin/language/english/main.php
+- added define('_AM_MODULEADMIN_ABOUT_AMOUNT', 'Amount');
+- added define('_AM_MODULEADMIN_ABOUT_AMOUNT_TTL', 'Please enter USD amount e.g. $25.00');
+- added define('_AM_MODULEADMIN_ABOUT_AMOUNT_CURRENCY', 'USD');
+- added define('_AM_MODULEADMIN_ABOUT_AMOUNT_SUGGESTED', '25.00');
+- added define('_AM_MODULEADMIN_ABOUT_AMOUNT_PATTERN', '\\$?[0-9]+(,[0-9]{3})*(\\.[0-9]{0,2})?$');
+- added define('_AM_MODULEADMIN_ABOUT_DONATE_IMG_ALT', 'Donate using PayPal or a major credit card online!');
+
 htdocs/install/language/english/install.php
 *NOTE* The installer was significantly changed, so this file should be reviewed closely
 - added define("CURL_HTTP", "Client URL Library (cURL)");

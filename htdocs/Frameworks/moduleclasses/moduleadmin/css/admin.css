@@ -1,6 +1,6 @@
 /* Buttons style */
 .xo-buttons a, .xo-buttons button {
-    display: block-inline;
+    display: inline-block;
     margin: 0 5px 0 0;
     background: #e4e4e5 url('../images/bg_button.gif') repeat-x;
     border: 1px solid #d6d6d6;
@@ -83,26 +83,40 @@
     font-weight: bold;
 }
 
+.label_after::after {
+    content: ": ";
+}
 /* label */
 
 /* about */
-#about label, #about text {
+#about label, #about text, #about_donate label, #about_donate text, #about_donate input[type="text"] {
     display: block;
     float: left;
     margin-bottom: 12px;
 }
 
-#about label {
+#about label, #about_donate label {
     text-align: right;
     width: 200px;
     padding-right: 20px;
+    vertical-align: text-bottom;
+}
+
+input[type="text"].donate_amount {
+    text-align: right;
+    width: 8em;
+}
+
+input[type="image"].donate_button {
+    margin-left: 180px;
+    background-color: transparent;
 }
 
 br {
     clear: left;
 }
 
-#about br {
+#about br, #about_donate br {
     clear: both;
 }
 

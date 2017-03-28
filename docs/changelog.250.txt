@@ -66,6 +66,7 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - issue with xBootstrap slider (mage)
 - XoopsFormSelectUsers issues
 - fix theme selection in install (mage)
+- Update \ModuleAdmin::renderAbout() PayPal donations (zyspec)
 
 Updated libraries and assets:
  - jQuery 3.1.1 (mamba)
