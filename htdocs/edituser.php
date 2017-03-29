@@ -99,11 +99,6 @@ if ($op === 'saveuser') {
         $edituser->setVar('user_occ', XoopsRequest::getString('user_occ', ''));
         $edituser->setVar('user_intrest', XoopsRequest::getString('user_intrest', ''));
         $edituser->setVar('user_mailok', XoopsRequest::getBool('user_mailok', 0));
-        if (XoopsRequest::getBool('usecookie')) {
-            setcookie($xoopsConfig['usercookie'], $xoopsUser->getVar('uname'), time() + 31536000, '/', XOOPS_COOKIE_DOMAIN);
-        } else {
-            setcookie($xoopsConfig['usercookie']);
-        }
         if (!$member_handler->insertUser($edituser)) {
             include $GLOBALS['xoops']->path('header.php');
             echo $edituser->getHtmlErrors();
@@ -179,8 +174,6 @@ if ($op === 'editprofile') {
                                             XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE => _NOT_MODE_SENDONCE,
                                             XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT   => _NOT_MODE_SENDONCEPERLOGIN));
     $bio_tarea          = new XoopsFormTextArea(_US_EXTRAINFO, 'bio', $xoopsUser->getVar('bio', 'E'));
-    $cookie_radio_value = empty($_COOKIE[$xoopsConfig['usercookie']]) ? 0 : 1;
-    $cookie_radio       = new XoopsFormRadioYN(_US_USECOOKIE, 'usecookie', $cookie_radio_value, _YES, _NO);
     $pwd_text           = new XoopsFormPassword('', 'password', 10, 32);
     $pwd_text2          = new XoopsFormPassword('', 'vpass', 10, 32);
     $pwd_tray           = new XoopsFormElementTray(_US_PASSWORD . '<br>' . _US_TYPEPASSTWICE);
