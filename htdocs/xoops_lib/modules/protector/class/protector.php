@@ -247,12 +247,12 @@ class Protector
             }
 
             // clear autologin cookies
-            $xoops_cookie_path = defined('XOOPS_COOKIE_PATH') ? XOOPS_COOKIE_PATH : preg_replace('?http://[^/]+(/.*)$?', "$1", XOOPS_URL);
+            $xoops_cookie_path = defined('XOOPS_COOKIE_PATH') ? XOOPS_COOKIE_PATH : preg_replace('?http[s]{0,1}://[^/]+(/.*)$?', "$1", XOOPS_URL);
             if ($xoops_cookie_path == XOOPS_URL) {
                 $xoops_cookie_path = '/';
             }
-            setcookie($GLOBALS['xoopsConfig']['usercookie'], 0, -1, '/', XOOPS_COOKIE_DOMAIN, 0);
-            setcookie($GLOBALS['xoopsConfig']['usercookie'], 0, -1, '/');
+            setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600, '/', XOOPS_COOKIE_DOMAIN, 0);
+            setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600, '/');
 
             setcookie('autologin_uname', '', time() - 3600, $xoops_cookie_path, '', 0);
             setcookie('autologin_pass', '', time() - 3600, $xoops_cookie_path, '', 0);

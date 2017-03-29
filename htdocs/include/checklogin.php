@@ -71,14 +71,15 @@ if (false !== $user) {
     $xoopsPreload = XoopsPreload::getInstance();
     $xoopsPreload->triggerEvent('core.behavior.user.login', $user);
     // Set cookie for rememberme
-    if (!empty($xoopsConfig['usercookie'])) {
+    if (!empty($GLOBALS['xoopsConfig']['usercookie'])) {
         if (!empty($rememberme)) {
             $claims = array(
                 'uid' => $_SESSION['xoopsUserId'],
             );
             $rememberTime = 60*60*24*30;
             $token = \Xmf\Jwt\TokenFactory::build('rememberme', $claims, $rememberTime);
-            setcookie($xoopsConfig['usercookie'],
+            setcookie(
+                $GLOBALS['xoopsConfig']['usercookie'],
                 $token,
                 time() + $rememberTime,
                 '/',
@@ -86,7 +87,8 @@ if (false !== $user) {
                 true
             );
         } else {
-            setcookie($xoopsConfig['usercookie'], null, time() - 3600, '/', XOOPS_COOKIE_DOMAIN, 0, true);
+            setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600, '/', XOOPS_COOKIE_DOMAIN, 0, true);
+            setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600);
         }
     }
 

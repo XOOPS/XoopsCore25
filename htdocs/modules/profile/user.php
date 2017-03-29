@@ -78,8 +78,8 @@ if ($op === 'logout') {
     // Regenerate a new session id and destroy old session
     $GLOBALS['sess_handler']->regenerate_id(true);
     $_SESSION = array();
-    setcookie($GLOBALS['xoopsConfig']['usercookie'], 0, -1, '/', XOOPS_COOKIE_DOMAIN, 0);
-    setcookie($GLOBALS['xoopsConfig']['usercookie'], 0, -1, '/');
+    setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600, '/', XOOPS_COOKIE_DOMAIN, 0);
+    setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600, '/');
     // clear entry from online users table
     if (is_object($GLOBALS['xoopsUser'])) {
         /* @var $online_handler XoopsOnlineHandler  */

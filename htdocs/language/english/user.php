@@ -1,5 +1,5 @@
 <?php
-// 
+//
 // _LANGCODE: en
 // _CHARSET : UTF-8
 // Translator: XOOPS Translation Team
@@ -108,7 +108,7 @@ define('_US_NOEDITRIGHT', "Sorry, you don't have the right to edit this user's i
 define('_US_PASSNOTSAME', 'Both passwords are different. They must be identical.');
 define('_US_PWDTOOSHORT', 'Sorry, your password must be at least <strong>%s</strong> characters long.');
 define('_US_PROFUPDATED', 'Your Profile Updated!');
-define('_US_USECOOKIE', 'Store my user name in a cookie for 1 year');
+// removed in 2.5.9 define('_US_USECOOKIE', 'Store my user name in a cookie for 1 year');
 define('_US_NO', 'No');
 define('_US_DELACCOUNT', 'Delete Account');
 define('_US_MYAVATAR', 'My Avatar');
