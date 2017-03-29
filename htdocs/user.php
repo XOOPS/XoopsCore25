@@ -68,7 +68,7 @@ if ($op === 'main') {
         if (!empty($clean_redirect)) {
             $xoopsTpl->assign('redirect_page', htmlspecialchars(trim($clean_redirect), ENT_QUOTES));
         }
-        if ($xoopsConfig['usercookie']) {
+        if ($GLOBALS['xoopsConfig']['usercookie']) {
             $xoopsTpl->assign('lang_rememberme', _US_REMEMBERME);
         }
         $xoopsTpl->assign('lang_password', _PASSWORD);
@@ -104,8 +104,8 @@ if ($op === 'logout') {
     // Regenerate a new session id and destroy old session
     $GLOBALS['sess_handler']->regenerate_id(true);
     $_SESSION = array();
-    setcookie($xoopsConfig['usercookie'], null, -1, '/', XOOPS_COOKIE_DOMAIN, 0);
-    setcookie($xoopsConfig['usercookie'], null, -1);
+    setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600, '/', XOOPS_COOKIE_DOMAIN, 0);
+    setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600);
     // clear entry from online users table
     if (is_object($xoopsUser)) {
         /* @var $online_handler XoopsOnlineHandler  */

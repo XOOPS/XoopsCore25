@@ -221,13 +221,14 @@ if ($xoopsConfig['use_mysession']
  */
 $rememberClaims = false;
 if (empty($_SESSION['xoopsUserId'])
-    && !empty($xoopsConfig['usercookie'])
+    && !empty($GLOBALS['xoopsConfig']['usercookie'])
 ) {
-    $rememberClaims = \Xmf\Jwt\TokenReader::fromCookie('rememberme', $xoopsConfig['usercookie']);
+    $rememberClaims = \Xmf\Jwt\TokenReader::fromCookie('rememberme', $GLOBALS['xoopsConfig']['usercookie']);
     if (false !== $rememberClaims && !empty($rememberClaims->uid)) {
         $_SESSION['xoopsUserId'] = $rememberClaims->uid;
     } else {
-        setcookie($xoopsConfig['usercookie'], null, time() - 3600, '/', XOOPS_COOKIE_DOMAIN, 0, true);
+        setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600, '/', XOOPS_COOKIE_DOMAIN, 0, true);
+        setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600);
     }
 }
 
@@ -240,7 +241,8 @@ if (!empty($_SESSION['xoopsUserId'])) {
         $xoopsUser = '';
         $_SESSION  = array();
         session_destroy();
-        setcookie($xoopsConfig['usercookie'], null, time() - 3600, '/', XOOPS_COOKIE_DOMAIN, 0, true);
+        setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600, '/', XOOPS_COOKIE_DOMAIN, 0, true);
+        setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600);
     } else {
         if (((int)$xoopsUser->getVar('last_login') + 60 * 5) < time()) {
             $sql = 'UPDATE ' . $xoopsDB->prefix('users') . " SET last_login = '" . time()
@@ -265,7 +267,7 @@ if (!empty($_SESSION['xoopsUserId'])) {
             $rememberTime = 60*60*24*30;
             $token = \Xmf\Jwt\TokenFactory::build('rememberme', $claims, $rememberTime);
             setcookie(
-                $xoopsConfig['usercookie'],
+                $GLOBALS['xoopsConfig']['usercookie'],
                 $token,
                 time() + $rememberTime,
                 '/',

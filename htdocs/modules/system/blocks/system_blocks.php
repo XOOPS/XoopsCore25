@@ -94,7 +94,7 @@ function b_system_login_show()
         //$block['lang_rememberme'] = _MB_SYSTEM_REMEMBERME;
         if ($xoopsConfig['use_ssl'] == 1 && $xoopsConfig['sslloginlink'] != '') {
             $block['sslloginlink'] = "<a href=\"javascript:openWithSelfMain('" . $xoopsConfig['sslloginlink'] . "', 'ssllogin', 300, 200);\">" . _MB_SYSTEM_SECURE . '</a>';
-        } elseif ($xoopsConfig['usercookie']) {
+        } elseif ($GLOBALS['xoopsConfig']['usercookie']) {
             $block['lang_rememberme'] = _MB_SYSTEM_REMEMBERME;
         }
 

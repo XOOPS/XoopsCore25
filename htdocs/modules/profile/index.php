@@ -78,8 +78,8 @@ if ($op === 'logout') {
     $message  = '';
     $_SESSION = array();
     session_destroy();
-    setcookie($GLOBALS['xoopsConfig']['usercookie'], null, -1, '/');
-    setcookie($GLOBALS['xoopsConfig']['usercookie'], null, -1, '/', XOOPS_COOKIE_DOMAIN, 0);
+    setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600, '/', XOOPS_COOKIE_DOMAIN, 0);
+    setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600, '/');
     // clear entry from online users table
     if (is_object($GLOBALS['xoopsUser'])) {
         /* @var $online_handler XoopsOnlineHandler  */
