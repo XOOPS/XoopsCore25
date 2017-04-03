@@ -288,6 +288,7 @@
                 "kint",
                 "php"
             ],
+            "abandoned": "kint-php/kint",
             "time": "2015-09-16T14:09:00+00:00"
         },
         {

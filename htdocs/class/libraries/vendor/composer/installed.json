@@ -281,7 +281,8 @@
             "debug",
             "kint",
             "php"
-        ]
+        ],
+        "abandoned": "kint-php/kint"
     },
     {
         "name": "symfony/polyfill-mbstring",
