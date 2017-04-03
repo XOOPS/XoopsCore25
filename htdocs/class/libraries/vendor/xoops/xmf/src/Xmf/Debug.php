@@ -35,7 +35,8 @@ class Debug extends \Kint
     {
         $args = func_get_args();
         // options: 'original' (default), 'solarized', 'solarized-dark' and 'aante-light'
-        parent::$theme = 'aante-light';
+        parent::$displayCalledFrom = false;
+        parent::$theme = 'aante-light'; // options: 'original' (default), 'solarized', 'solarized-dark' and 'aante-light'
         call_user_func_array('parent::dump', $args);
     }
 
