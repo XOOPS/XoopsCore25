@@ -24,22 +24,25 @@ include_once '../mainfile.php';
 
 $mainfileKeys = array(
     // in mainfile.php
-    'XOOPS_ROOT_PATH'     => null,
-    'XOOPS_PATH'          => null,
-    'XOOPS_VAR_PATH'      => null, // *
-    'XOOPS_TRUST_PATH'    => null,
-    'XOOPS_URL'           => null,
-    'XOOPS_COOKIE_DOMAIN' => null, // *
-    'XOOPS_PROT'          => null, // *
+    'XOOPS_ROOT_PATH'       => null,
+    'XOOPS_PATH'            => null,
+    'XOOPS_VAR_PATH'        => null, // *
+    'XOOPS_TRUST_PATH'      => null,
+    'XOOPS_URL'             => null,
+    'XOOPS_COOKIE_DOMAIN'   => null, // *
+    'XOOPS_PROT'            => null, // *
+    'XOOPS_GROUP_ADMIN'     => null,
+    'XOOPS_GROUP_USERS'     => null,
+    'XOOPS_GROUP_ANONYMOUS' => null,
     // in data/secure.php
-    'XOOPS_DB_TYPE'       => null,
-    'XOOPS_DB_CHARSET'    => null,
-    'XOOPS_DB_PREFIX'     => null,
-    'XOOPS_DB_HOST'       => null,
-    'XOOPS_DB_USER'       => null,
-    'XOOPS_DB_PASS'       => null,
-    'XOOPS_DB_NAME'       => null,
-    'XOOPS_DB_PCONNECT'   => null,
+    'XOOPS_DB_TYPE'         => null,
+    'XOOPS_DB_CHARSET'      => null,
+    'XOOPS_DB_PREFIX'       => null,
+    'XOOPS_DB_HOST'         => null,
+    'XOOPS_DB_USER'         => null,
+    'XOOPS_DB_PASS'         => null,
+    'XOOPS_DB_NAME'         => null,
+    'XOOPS_DB_PCONNECT'     => null,
 );
 
 $needMainfileRewrite = false;
