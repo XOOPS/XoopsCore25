@@ -4,9 +4,11 @@
         <div class="col-xs-4 col-md-4">
             <small class="text-muted"><strong><{$lang_posted}></strong> <{$comment.date_posted}></small>
         </div><!-- .col-md-3 -->
+		<{if $comment.date_posted != $comment.date_modified}>
         <div class="col-xs-5 col-md-5">
             <small class="text-muted"><strong><{$lang_updated}></strong> <{$comment.date_modified}></small>
         </div><!-- .col-md-3 -->
+		<{/if}>
     </div><!-- row -->
 
     <div class="row">

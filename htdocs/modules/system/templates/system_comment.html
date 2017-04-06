@@ -2,8 +2,10 @@
 <tr>
     <td class="head"><a id="comment<{$comment.id}>"></a> <{$comment.poster.uname}></td>
     <td class="head">
-        <div class="comDate"><span class="comDateCaption"><{$lang_posted}>:</span> <{$comment.date_posted}>&nbsp;&nbsp;<span class="comDateCaption"><{$lang_updated}>:</span>
-            <{$comment.date_modified}>
+        <div class="comDate"><span class="comDateCaption"><{$lang_posted}>:</span> <{$comment.date_posted}>&nbsp;&nbsp;
+		<{if $comment.date_posted != $comment.date_modified}>
+			<span class="comDateCaption"><{$lang_updated}>:</span><{$comment.date_modified}>
+		<{/if}>
         </div>
     </td>
 </tr>
