@@ -1,7 +1,7 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
-2.5.9                  NOT RELEASED
+2.5.9 RC1                2017-04-08
 ===================================
 - fix issue with establishing database character set under mysqli
 - Add PHP4 same name constructor shim in XoopsMailer (geekwright)
@@ -69,7 +69,7 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - Update \ModuleAdmin::renderAbout() PayPal donations (zyspec)
 
 Updated libraries and assets:
- - jQuery 3.1.1 (mamba)
+ - jQuery 3.2.1 (mamba)
  - jQuery UI 1.12.1 (mamba)
  - jGrowl to 1.4.5 (mamba)
  - Tabs jQuery Tools to 1.2.7 (mamba)
@@ -80,7 +80,7 @@ Updated libraries and assets:
  - Bootstrap 3.3.7 in xBootstrap theme (geekwright, mamba)
  - HTML Purifier to 4.8.0 (mamba)
  - PHPMailer to 5.2.21
- - XMF to 1.2.0
+ - XMF to 1.2.5
  - Font Awesome 4.7.0 now included
 
 ===================================
