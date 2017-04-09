@@ -34,27 +34,6 @@
     * 5. Useful Classes
 **/
 
-/* For Mobile IE */
-@-webkit-viewport {
-    width: device-width;
-}
-
-@-moz-viewport {
-    width: device-width;
-}
-
-@-ms-viewport {
-    width: device-width;
-}
-
-@-o-viewport {
-    width: device-width;
-}
-
-@viewport {
-    width: device-width;
-}
-
 /* 1. Home Classes */
 .global-nav {
     margin-bottom: 0;
@@ -117,7 +96,6 @@ a.navbar-brand.xlogo {
 
 .footer > h3 {
     font-size: 0.9em;
-    margin: 0;
     line-height: inherit;
     max-width: 960px;
     margin: 0 auto 0 auto;
@@ -173,6 +151,7 @@ a.navbar-brand.xlogo {
 /* 3. XOOPS Blocks*/
 .xoops-side-blocks > aside {
     margin-bottom: 20px;
+    text-align: justify;
 }
 
 .xoops-side-blocks > aside h1, div.xoops-side-blocks > aside h2, div.xoops-side-blocks > aside h3, div.xoops-side-blocks > aside h4, div.xoops-side-blocks > aside h5, div.xoops-side-blocks > aside h6 {
@@ -187,6 +166,7 @@ a.navbar-brand.xlogo {
 
 .xoops-blocks {
     margin-bottom: 20px;
+    text-align: justify;
 }
 
 .xoops-blocks > h4 {
@@ -419,6 +399,17 @@ ul.userblock > li span.badge {
     position: absolute;
     bottom: 0;
     right: 0;
+}
+
+.userinfo {
+    border: 1px solid #DDD;
+    border-radius: 5px;
+}
+
+.userinfo .welcome {
+    padding: 6px;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
 /* 4.4. System Comments */
@@ -778,6 +769,7 @@ ul.adminlinks > li > a {
 
 .photo-nav-controls ul li {
     display: inline-table;
+    padding: 5px 0 0 0
 }
 
 .photo-nav-controls ul li.nav-btn {
@@ -787,13 +779,15 @@ ul.adminlinks > li > a {
 }
 
 .photo-nav-controls ul li a {
-    color: #000;
-    text-shadow: 1px 1px 0 #333;
+    color: #555;
+    text-shadow: 1px 1px 0 #111;
 }
 
 .photo-nav-controls ul li.small {
     font-size: 0.9em;
     margin: 0 5px 0 5px;
+    position: relative;
+    bottom: 5px;
 }
 
 .gallery-single-photo {
@@ -1090,6 +1084,13 @@ ul.tdm-new-download-block li:last-child {
 .newbb-header {
 }
 
+.anchor:before {
+    content: ' ';
+    height: 60px;
+    margin-top: -60px;
+    display: block;
+}
+
 .newbb-menu {
 }
 
@@ -1247,6 +1248,10 @@ ul.tdm-new-download-block li:last-child {
     font-weight: bold;
 }
 
+.forum-search {
+    margin-top: 10px;
+}
+
 /* 5. Useful Classes */
 .big-info-icon-link {
     color: #333;
@@ -1298,6 +1303,11 @@ div.order-by a {
 }
 
 /* Only Add Margin Bottom of 10px */
+.mt10 {
+    margin-top: 10px;
+}
+
+/* Only add Margin Top of 10px */
 .lw30 {
     line-height: 30px;
 }
@@ -1338,3 +1348,13 @@ div.order-by a {
     text-align: right;
     float: right;
 }
+
+/* Oswaldo */
+/* add hover dropdown*/
+@media (min-width: 769px) {
+    .dropdown:hover > .dropdown-menu {
+        display: block;
+    }
+}
+
+/* dropdown hover */

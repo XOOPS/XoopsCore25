@@ -38,7 +38,7 @@
             </div>
             <{if $item.image_path}>
                 <div class="article_wf_img">
-                    <img src="<{$item.image_path}>" alt="<{$item.title}>"/>
+                    <img class="img-responsive" src="<{$item.image_path}>" alt="<{$item.title}>"/>
                 </div>
             <{/if}>
             <div class="article_wf_summary">

@@ -3,7 +3,7 @@ xBootstrap
 
 xBootstrap is a theme for XOOPS (www.xoops.org) developed with Bootstrap.
 
-Online demo: http://themes.angelorocha.com.br
+Online demo: http://demo.xoopsfire.com
 
 ###Shareaholic support
 Previously, social sharing links through Shareaholic were automatically enabled.

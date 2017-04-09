@@ -17,8 +17,7 @@
                 <img src="<{$xoops_upload_url}>/<{$comment.poster.avatar}>" class="img-responsive img-circle image-avatar" alt="">
                 <ul class="list-unstyled">
                     <li><strong class="poster-rank hidden-xs"><{$comment.poster.rank_title}></strong></li>
-                    <li><img src="<{$xoops_upload_url}>/<{$comment.poster.rank_image}>" alt="<{$comment.poster.rank_title}>"
-                             class="poster-rank img-responsive"></li>
+                    <li><img src="<{$xoops_upload_url}>/<{$comment.poster.rank_image}>" alt="<{$comment.poster.rank_title}>" class="poster-rank img-responsive"></li>
                 </ul>
                 <ul class="list-unstyled poster-info hidden">
                     <li><{$lang_joined}> <{$comment.poster.regdate}></li>

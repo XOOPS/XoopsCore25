@@ -1,7 +1,7 @@
 <{* New Header block *}>
 <ol class="breadcrumb">
-  <li><a href="<{$xoops_url}>"><{$smarty.const._MD_LEXIKON_HOME}></a></li>
-  <li><{$lang_modulename}></li>
+    <li><a href="<{$xoops_url}>"><{$smarty.const._MD_LEXIKON_HOME}></a></li>
+    <li><{$lang_modulename}></li>
 </ol>
 
 <{if $empty == 1}>
@@ -9,70 +9,70 @@
 <{/if}>
 
 <{if $teaser == true}>
-<div class="row" >
-  <div class="col-md-12">
-    <div class="panel panel-default">
-      <div class="panel-body">
-         <{$teaser}>
-      </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <{$teaser}>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 <{/if}>
 
 <!--SEARCH-->
-  <div class="row" style="margin-bottom: 20px">
+<div class="row" style="margin-bottom: 20px">
     <div class="col-md-6">
-      <h3 style="padding-bottom: 10px;"><{$smarty.const._MD_LEXIKON_SEARCHENTRY}></h3>
-          <{$searchform}>
+        <h3 style="padding-bottom: 10px;"><{$smarty.const._MD_LEXIKON_SEARCHENTRY}></h3>
+        <{$searchform}>
     </div>
     <hr class="visible-sm visible-xs">
     <div class="col-md-6">
-      <h3 style="padding-bottom: 10px;"><{$smarty.const._MD_LEXIKON_WEHAVE}></h3>
-      <{$smarty.const._MD_LEXIKON_DEFS}><{$publishedwords}><br>
-      <{if $multicats == 1}><{$smarty.const._MD_LEXIKON_CATS}><{$totalcats}><br><{/if}>
-      <div style="padding-top: 10px">
-        <input class="btn btn-success btn-sm" type="button" value="<{$smarty.const._MD_LEXIKON_SUBMITENTRY}>" onclick="location.href = 'submit.php'"/>
-        <input class="btn btn-info btn-sm" type="button" value="<{$smarty.const._MD_LEXIKON_REQUESTDEF}>" onclick="location.href = 'request.php' "/>
-      </div>
+        <h3 style="padding-bottom: 10px;"><{$smarty.const._MD_LEXIKON_WEHAVE}></h3>
+        <{$smarty.const._MD_LEXIKON_DEFS}><{$publishedwords}><br>
+        <{if $multicats == 1}><{$smarty.const._MD_LEXIKON_CATS}><{$totalcats}><br><{/if}>
+        <div style="padding-top: 10px">
+            <input class="btn btn-success btn-sm" type="button" value="<{$smarty.const._MD_LEXIKON_SUBMITENTRY}>" onclick="location.href = 'submit.php'"/>
+            <input class="btn btn-info btn-sm" type="button" value="<{$smarty.const._MD_LEXIKON_REQUESTDEF}>" onclick="location.href = 'request.php' "/>
+        </div>
     </div>
-  </div>
+</div>
 
 <hr>
 
 <{* Alphabet block *}>
 <div class="row" style="margin-bottom: 20px">
-  <div class="col-md-12">
-    <h3><{$smarty.const._MD_LEXIKON_BROWSELETTER}></h3>
+    <div class="col-md-12">
+        <h3><{$smarty.const._MD_LEXIKON_BROWSELETTER}></h3>
 
-    <ul class="pagination pagination-sm">
-      <li><a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/letter.php" title="[ <{$publishedwords}> ]"><{$smarty.const._MD_LEXIKON_ALL}></a></li>
-      <{foreach item=letterlinks from=$alpha.initial}>
-          <{if $letterlinks.total > 0}>
-            <li><a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/letter.php?init=<{$letterlinks.id}>" title="[ <{$letterlinks.total}> ]" >
-              <{$letterlinks.linktext}>
-            </a></li>
-          <{else}>
-            <li><a href="#"><{$letterlinks.linktext}></a></li>
-          <{/if}>
-      <{/foreach}>
+        <ul class="pagination pagination-sm">
+            <li><a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/letter.php" title="[ <{$publishedwords}> ]"><{$smarty.const._MD_LEXIKON_ALL}></a></li>
+            <{foreach item=letterlinks from=$alpha.initial}>
+                <{if $letterlinks.total > 0}>
+                    <li><a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/letter.php?init=<{$letterlinks.id}>" title="[ <{$letterlinks.total}> ]">
+                            <{$letterlinks.linktext}>
+                        </a></li>
+                <{else}>
+                    <li><a href="#"><{$letterlinks.linktext}></a></li>
+                <{/if}>
+            <{/foreach}>
 
-      <{if $totalother > 0}>
-        <li><a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/letter.php?init=<{$smarty.const._MD_LEXIKON_OTHER}>" title="[ <{$totalother}> ]">
-          <{$smarty.const._MD_LEXIKON_OTHER}>
-        </a></li>
-      <{else}>
-        <li><a href="#"><{$smarty.const._MD_LEXIKON_OTHER}></a></li>
-      <{/if}>
-    </ul>
-  </div>
+            <{if $totalother > 0}>
+                <li><a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/letter.php?init=<{$smarty.const._MD_LEXIKON_OTHER}>" title="[ <{$totalother}> ]">
+                        <{$smarty.const._MD_LEXIKON_OTHER}>
+                    </a></li>
+            <{else}>
+                <li><a href="#"><{$smarty.const._MD_LEXIKON_OTHER}></a></li>
+            <{/if}>
+        </ul>
+    </div>
 </div>
 
 <hr>
 
 <{* Category block *}>
 <!-- $layout 0 and 1 are the same. if you want to change first change CONFIG_CATEGORY_LAYOUT_PLAIN in inlcude/common.inc.php -->
-<{if $layout == '0'}> 
+<{if $layout == '0'}>
     <{if $multicats == 1 && count($block0.categories) gt 0 }>
         <div class="row" style="margin-bottom: 20px">
             <div class="col-md-12">
@@ -80,90 +80,89 @@
             </div>
         </div>
         <table class="table table-bordered table-responsive">
-          <tbody>
-              <tr>
-                  <td>
-                      <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/category.php" title="[ <{$publishedwords}> ]">
-                          <{$smarty.const._MD_LEXIKON_ALLCATS}>
-                      </a>
-                      [<{$publishedwords}>]
-                   </td>
-                   <!-- Start category loop -->
-                   <{foreach item=catlinks from=$block0.categories}>
-                   <td>
+            <tbody>
+            <tr>
+                <td>
+                    <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/category.php" title="[ <{$publishedwords}> ]">
+                        <{$smarty.const._MD_LEXIKON_ALLCATS}>
+                    </a>
+                    [<{$publishedwords}>]
+                </td>
+                <!-- Start category loop -->
+                <{foreach item=catlinks from=$block0.categories}>
+                <td>
                     <{if $catlinks.image != "" && $show_screenshot == true}>
                         <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/category.php?categoryID=<{$catlinks.id}>" target="_parent">
-                            <img src="<{$xoops_url}>/uploads/<{$lang_moduledirname}>/categories/images/<{$catlinks.image}>" 
-                                width="<{$logo_maximgwidth}>" align="left" class="floatLeft"
-                                alt="[<{$catlinks.name}>]&nbsp;[<{$catlinks.total}>]"/>
-                         </a>
-                     <{/if}>
-                     <{if $catlinks.count > 0}>
+                            <img src="<{$xoops_url}>/uploads/<{$lang_moduledirname}>/categories/images/<{$catlinks.image}>"
+                                 width="<{$logo_maximgwidth}>" align="left" class="floatLeft"
+                                 alt="[<{$catlinks.name}>]&nbsp;[<{$catlinks.total}>]"/>
+                        </a>
+                    <{/if}>
+                    <{if $catlinks.count > 0}>
                         <{if $catlinks.total > 0}>
                             <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/category.php?categoryID=<{$catlinks.id}>" title="[<{$catlinks.total}>]">
                         <{/if}>
                         <{$catlinks.linktext}>
                         <{if $catlinks.total > 0}>
-                            </a> 
+                            </a>
                         <{/if}>
-                            [<{$catlinks.total}>]
-                        <{/if}>
-                     </td>
-                    <{if $catlinks.count is div by 4}>
-                    </tr>
-                    <tr>
-                     <{/if}>
-                    <{/foreach}>
-                    <!-- End category loop -->
+                        [<{$catlinks.total}>]
+                    <{/if}>
+                </td>
+                <{if $catlinks.count is div by 4}>
             </tr>
-        </tbody>
+            <tr>
+                <{/if}>
+                <{/foreach}>
+                <!-- End category loop -->
+            </tr>
+            </tbody>
         </table>
     <{/if}>
 <{else}>
     <{if $multicats == 1}>
-      <div class="row" style="margin-bottom: 20px">
+        <div class="row" style="margin-bottom: 20px">
             <div class="col-md-12">
                 <h3> <{$smarty.const._MD_LEXIKON_BROWSECAT}> </h3>
             </div>
         </div>
         <table class="table table-bordered table-responsive">
-          <tbody>
-              <tr>
-                   <!-- Start category loop -->
-                   <{foreach item=catlinks from=$block0.categories}>
-                   <td>
+            <tbody>
+            <tr>
+                <!-- Start category loop -->
+                <{foreach item=catlinks from=$block0.categories}>
+                <td>
                     <{if $catlinks.image != "" && $show_screenshot == true}>
                         <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/category.php?categoryID=<{$catlinks.id}>" target="_parent">
-                            <img src="<{$xoops_url}>/uploads/<{$lang_moduledirname}>/categories/images/<{$catlinks.image}>" 
-                                width="<{$logo_maximgwidth}>" align="left" class="floatLeft"
-                                alt="[<{$catlinks.name}>]&nbsp;[<{$catlinks.total}>]"/>
-                         </a>
-                     <{/if}>
-                     <{if $catlinks.count > 0}>
+                            <img src="<{$xoops_url}>/uploads/<{$lang_moduledirname}>/categories/images/<{$catlinks.image}>"
+                                 width="<{$logo_maximgwidth}>" align="left" class="floatLeft"
+                                 alt="[<{$catlinks.name}>]&nbsp;[<{$catlinks.total}>]"/>
+                        </a>
+                    <{/if}>
+                    <{if $catlinks.count > 0}>
                         <{if $catlinks.total > 0}>
                             <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/category.php?categoryID=<{$catlinks.id}>" title="[<{$catlinks.total}>]">
                         <{/if}>
                         <{$catlinks.linktext}>
                         <{if $catlinks.total > 0}>
-                            </a> 
+                            </a>
                         <{/if}>
-                            [<{$catlinks.total}>]
-                        <{/if}>
-                     </td>
-                    <{if $catlinks.count is div by 4}>
-                    </tr>
-                    <tr>
-                     <{/if}>
-                    <{/foreach}>
-                    <!-- End category loop -->
+                        [<{$catlinks.total}>]
+                    <{/if}>
+                </td>
+                <{if $catlinks.count is div by 4}>
             </tr>
-        </tbody>
+            <tr>
+                <{/if}>
+                <{/foreach}>
+                <!-- End category loop -->
+            </tr>
+            </tbody>
         </table>
-        
-        <div  style="text-align: right">
-        <a class="btn btn-success btn-sm" role="button" href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/category.php" title="[ <{$publishedwords}> ]">
-            <{$smarty.const._MD_LEXIKON_ALLCATS}>&nbsp;[<{$publishedwords}>]
-        </a>
+        <div style="text-align: right">
+            <a class="btn btn-success btn-sm" role="button" href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/category.php" title="[ <{$publishedwords}> ]">
+                <{$smarty.const._MD_LEXIKON_ALLCATS}>&nbsp;[<{$publishedwords}>]
+            </a>
         </div>
     <{/if}>
 <{/if}>
@@ -220,33 +219,35 @@
 
 
 <{if $userisadmin == 1}>
-   <div class="row" style="margin-bottom: 20px">
-    <div class="col-md-12">
-        <h3><{$smarty.const._MD_LEXIKON_SUBANDREQ}></h3>
+    <div class="row" style="margin-bottom: 20px">
+        <div class="col-md-12">
+            <h3><{$smarty.const._MD_LEXIKON_SUBANDREQ}></h3>
 
-        <dl class="dl-horizontal">
-            <dt><{$smarty.const._MD_LEXIKON_SUB}></dt>
-            <{if $wehavesubs == '0'}><dd><{$smarty.const._MD_LEXIKON_NOSUB}></dd><{/if}>
-            <dd>
-            <{foreach item=subentries from=$blockS.substuff}>
-                <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/admin/entry.php?op=mod&entryID=<{$subentries.id}>"><{$subentries.linktext}></a>
-                    &nbsp;
-            <{/foreach}>
-            </dd>
-       </dl>
+            <dl class="dl-horizontal">
+                <dt><{$smarty.const._MD_LEXIKON_SUB}></dt>
+                <{if $wehavesubs == '0'}>
+                    <dd><{$smarty.const._MD_LEXIKON_NOSUB}></dd><{/if}>
+                <dd>
+                    <{foreach item=subentries from=$blockS.substuff}>
+                        <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/admin/entry.php?op=mod&entryID=<{$subentries.id}>"><{$subentries.linktext}></a>
+                        &nbsp;
+                    <{/foreach}>
+                </dd>
+            </dl>
 
-       <dl class="dl-horizontal">
-            <dt><{$smarty.const._MD_LEXIKON_REQ}></dt>
-            <{if $wehavereqs == '0'}><dd><{$smarty.const._MD_LEXIKON_NOREQ}></dd><{/if}>
-            <dd>
-            <{foreach item=reqentries from=$blockR.reqstuff}>
-                <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/admin/entry.php?op=mod&entryID=<{$reqentries.id}>"><{$reqentries.linktext}></a>
-                &nbsp;
-            <{/foreach}>
-            </dd>
-        </dl>
+            <dl class="dl-horizontal">
+                <dt><{$smarty.const._MD_LEXIKON_REQ}></dt>
+                <{if $wehavereqs == '0'}>
+                    <dd><{$smarty.const._MD_LEXIKON_NOREQ}></dd><{/if}>
+                <dd>
+                    <{foreach item=reqentries from=$blockR.reqstuff}>
+                        <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/admin/entry.php?op=mod&entryID=<{$reqentries.id}>"><{$reqentries.linktext}></a>
+                        &nbsp;
+                    <{/foreach}>
+                </dd>
+            </dl>
+        </div>
     </div>
-</div>
 <{else}>
     <div class="row" style="margin-bottom: 20px">
         <div class="col-md-12">
@@ -255,17 +256,17 @@
     </div>
     <dl class="dl-horizontal">
         <dt><{$smarty.const._MD_LEXIKON_REQ}></dt>
-            <{if $wehavereqs == '0'}>
-                <dd><{$smarty.const._MD_LEXIKON_NOREQ}></dd>
-            <{else}>
-            <dd>
+        <{if $wehavereqs == '0'}>
+        <dd><{$smarty.const._MD_LEXIKON_NOREQ}></dd>
+        <{else}>
+        <dd>
             <h5><{$smarty.const._MD_LEXIKON_REQUESTSUGGEST}></h5>
             <{/if}>
             <{foreach item=reqentries from=$blockR.reqstuff}>
                 <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/submit.php?suggest=<{$reqentries.id}>"><{$reqentries.linktext}></a>
                 &nbsp;
             <{/foreach}>
-            </dd>
+        </dd>
     </dl>
 <{/if}>
 
@@ -279,12 +280,12 @@
 <br>
 <br>
 <script type="text/javascript">
-    $( "select[name*='type']" ).addClass( "form-control" );
-    $( "select[name*='type']" ).css({"width":"90%", "margin-bottom":"5px"});
-    $( "select[name*='categoryID']" ).addClass( "form-control" );
-    $( "select[name*='categoryID']" ).css( {"width":"90%", "margin-bottom":"5px"});
-    $( "input[name*='term']" ).addClass( "form-control" );
-    $( "input[name*='term']" ).css({"width":"90%", "margin-bottom":"5px", "background-position":"1px 8px"});
-    $('.btnDefault').addClass( "btn btn-success btn-sm" );
+    $("select[name*='type']").addClass("form-control");
+    $("select[name*='type']").css({"width": "90%", "margin-bottom": "5px"});
+    $("select[name*='categoryID']").addClass("form-control");
+    $("select[name*='categoryID']").css({"width": "90%", "margin-bottom": "5px"});
+    $("input[name*='term']").addClass("form-control");
+    $("input[name*='term']").css({"width": "90%", "margin-bottom": "5px", "background-position": "1px 8px"});
+    $('.btnDefault').addClass("btn btn-success btn-sm");
 </script>
 <{include file='db:system_notification_select.tpl'}>

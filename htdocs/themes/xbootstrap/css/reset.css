@@ -1,7 +1,18 @@
 /* CSS Document */
 /* h1, h2, h3, h4, h5, h6{line-height:inherit; margin:inherit;} */
-*{outline:none !important; outline: 0 !important;}
-a, a:hover, a:focus, a:link, a:visited{text-decoration:none;}
-.label-default a, .label-primary a, .label-success a, .label-info a, .label-warning a, .label-danger a{color: #ffffff;}
-.btn-primary a{color: inherit;
+* {
+    outline: none !important;
+    outline: 0 !important;
+}
+
+a, a:hover, a:focus, a:link, a:visited {
+    text-decoration: none;
+}
+
+.label-default a, .label-primary a, .label-success a, .label-info a, .label-warning a, .label-danger a {
+    color: #ffffff;
+}
+
+.btn-primary a {
+    color: inherit;
 }
