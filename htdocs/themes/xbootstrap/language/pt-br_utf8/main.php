@@ -37,3 +37,6 @@ define('THEME_ADD_POLL', 'Enquete');
 //Block login
 define('THEME_LOGIN', 'Nome de Usuário');
 define('THEME_PASS', 'Digite sua Senha');
+
+//Block User
+define("THEME_USER_WELCOME", "Bem Vindo");

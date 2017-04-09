@@ -9,7 +9,7 @@
 </style>
 <script>
     $(document).ready(function () {
-        $("#articleslider").owlCarousel({
+        jQuery("#articleslider").owlCarousel({
             navigation: false,
             slideSpeed: 300,
             paginationSpeed: 400,
