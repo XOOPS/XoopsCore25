@@ -199,7 +199,7 @@ if ($op === 'editprofile') {
     $form->addElement($notify_mode_select);
     $form->addElement($bio_tarea);
     $form->addElement($pwd_tray);
-    $form->addElement($cookie_radio);
+    //$form->addElement($cookie_radio);
     $form->addElement($mailok_radio);
     $form->addElement($uid_hidden);
     $form->addElement($op_hidden);
