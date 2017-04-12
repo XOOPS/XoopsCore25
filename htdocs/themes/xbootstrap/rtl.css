@@ -1,0 +1,36 @@
+/* CSS Document */
+/*
+    Bootstrap 3 Template
+    Author:            Angelo Rocha
+    Author URL:        www.angelorocha.com.br
+    Licence:           GPL v3
+
+    Paste this CSS in style.css or call in theme.html.
+*/
+
+.newbb-header,
+.contact-module,
+.newbb-message-area,
+.xoops-side-blocks,
+.xoops-blocks,
+.breadcrumbs,
+.register-steps,
+.home-news-loop,
+.article_wf_summary,
+.article_wf_title,
+.pub_article_t_top,
+.message-read,
+article,
+input[type="text"],
+input[type="password"],
+textarea {
+    text-align: right;
+}
+
+.global-nav ul.nav {
+    float: right;
+}
+
+.global-nav form.navbar-form {
+    display: none;
+}

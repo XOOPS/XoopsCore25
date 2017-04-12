@@ -46,7 +46,7 @@
     <{/foreach}>
 </div>
 
-    <div align="right"><{$category.navbar}></div>
+    <div align="right"><{$navbar}></div>
 
 <{$press_room_footer}>
 

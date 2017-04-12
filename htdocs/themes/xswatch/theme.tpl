@@ -12,6 +12,10 @@
     <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Owl Carousel Assets -->
+    <link href="<{xoImgUrl}>js/owl/assets/owl.carousel.css" rel="stylesheet">
+    <link href="<{xoImgUrl}>js/owl/assets/owl.theme.default.css" rel="stylesheet">
+
     <link href="<{$xoops_url}>/favicon.ico" rel="shortcut icon">
     <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/reset.css">
     <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/xoops.css">

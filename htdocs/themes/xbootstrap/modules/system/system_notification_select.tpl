@@ -36,8 +36,6 @@
 
         <p class="aligncenter"><input class="btn btn-primary" type="submit" name="not_submit" value="<{$lang_updatenow}>"></p>
 
-        <p class="aligncenter"><strong><{$lang_notificationmethodis}>: </strong><{$user_method}> <a class="btn btn-info btn-xs"
-                                                                                                    href="<{$editprofile_url}>" title="<{$lang_change}>"><{$lang_change}></a>
-        </p>
+        <p class="aligncenter"><strong><{$lang_notificationmethodis}>: </strong><{$user_method}> <a class="btn btn-info btn-xs" href="<{$editprofile_url}>" title="<{$lang_change}>"><{$lang_change}></a></p>
     </form>
 <{/if}>

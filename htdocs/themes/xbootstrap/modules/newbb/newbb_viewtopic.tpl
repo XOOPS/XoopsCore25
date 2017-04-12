@@ -244,3 +244,22 @@
     </script>
 -->
 </div><!-- .newbb-viewforum -->
+
+<!-- START irmtfan add scroll js function to scroll down to current post or top of the topic -->
+<script type="text/javascript">
+    if (document.body.scrollIntoView && window.location.href.indexOf('#') == -1) {
+        var el = xoopsGetElementById('<{$forum_post_prefix}><{$post_id}>');
+        if (el) {
+            banner.destroy();
+            header.destroy();
+            el.scrollIntoView();
+
+//        var offset = $(this).offset(); // Contains .top and .left
+            offsetleft -= 0;
+            offsettop -= 200;
+
+            document.documentElement.scrollTop = el.offsetTop;
+        }
+    }
+</script>
+<!-- END irmtfan add scroll js function to scroll down to current post or top of the topic -->

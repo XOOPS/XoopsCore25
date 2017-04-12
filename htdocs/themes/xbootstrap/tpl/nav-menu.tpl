@@ -15,8 +15,7 @@
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="<{$xoops_url}>"><{$smarty.const.THEME_HOME}></a></li>
                     <li><a href="javascript:;"><{$smarty.const.THEME_MODULE1}></a></li>
-                    <li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="javascript:;"><{$smarty.const.THEME_MODULE2}><b
-                                    class="caret"></b></a>
+                    <li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="javascript:;"><{$smarty.const.THEME_MODULE2}><b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="javascript:;">Topic 1</a></li>
                             <li><a href="javascript:;">Topic 2</a></li>
