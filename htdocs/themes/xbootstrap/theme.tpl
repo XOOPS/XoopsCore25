@@ -9,23 +9,39 @@
     <meta name="rating" content="<{$xoops_meta_rating}>">
     <meta name="author" content="<{$xoops_meta_author}>">
     <meta name="generator" content="XOOPS">
-    <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Owl Carousel Assets -->
-    <link href="<{xoImgUrl}>js/owl/owl.carousel.css" rel="stylesheet">
-    <link href="<{xoImgUrl}>js/owl/owl.theme.css" rel="stylesheet">
+    <link href="<{xoImgUrl}>js/owl/assets/owl.carousel.css" rel="stylesheet">
+    <link href="<{xoImgUrl}>js/owl/assets/owl.theme.default.css" rel="stylesheet">
 
     <link href="<{$xoops_url}>/favicon.ico" rel="shortcut icon">
     <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/xoops.css">
     <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/reset.css">
     <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_themecss}>">
-    <{*<script src="<{xoImgUrl}>js/jquery-1.10.2.js"></script>*}>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="<{xoImgUrl}>css/scrollup.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="<{xoImgUrl}>css/headhesive.css"/>
+    <!-- Multi-level Menu -->
+    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/multilevelmenu.css">
+
+    <{if $xoops_dirname=='newbb'}>
+        <link rel="stylesheet" type="text/css" media="screen" href="<{xoImgUrl}>css/forums.css"/>
+    <{/if}>
+
     <script src="<{$xoops_url}>/browse.php?Frameworks/jquery/jquery.js"></script>
+
     <script src="<{xoImgUrl}>js/bootstrap.min.js"></script>
     <script src="<{xoImgUrl}>js/masonry.pkgd.min.js"></script>
+
+    <script src="<{xoImgUrl}>js/headhesive.min.js"></script>
+    <{*<script src="<{xoImgUrl}>js/headhesive.js"></script>*}>
+    <script src="<{xoImgUrl}>js/jquery.scrollUp.min.js"></script>
     <script src="<{xoImgUrl}>js/imagesloaded.pkgd.min.js"></script>
+
 <!--[if lt IE 9]>
     <script src="http://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="http://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
@@ -60,7 +76,7 @@
         <p><a href="javascript:;" class="btn btn-md btn-success"><{$smarty.const.THEME_LEARNINGMORE}></a></p>
     </div>
 
-        <{if $xoops_banner != ""}><div class="col-md-6"><div class="xoops-banner pull-right"><{$xoops_banner}></div></div><{/if}>
+    <{if $xoops_banner != ""}><div class="col-md-6"><div class="xoops-banner pull-right"><{$xoops_banner}></div></div><{/if}>
 
     </div><!-- .home-message -->
 <{/if}>
@@ -102,6 +118,23 @@
         </div>
     </div><!-- .footer-blocks -->
 <{/if}>
+<!-- end of new footer blocks  -->
+
+<script>
+    // Set options
+    var options = {
+        offset: '#showHere',
+        classes: {
+            clone: 'adhesiveHeader--clone',
+            stick: 'adhesiveHeader--stick',
+            unstick: 'adhesiveHeader--unstick'
+        }
+    };
+    // Initialise with options
+    var adhesiveHeader = new Headhesive('.adhesiveHeader', options);
+    // Headhesive destroy
+    // adhesiveHeader.destroy();
+</script>
 
 <footer class="footer">
     <h3>

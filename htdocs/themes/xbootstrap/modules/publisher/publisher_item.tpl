@@ -9,21 +9,15 @@
 </style>
 <script>
     $(document).ready(function () {
-        $("#articleslider").owlCarousel({
-            navigation: false,
-            slideSpeed: 300,
-            paginationSpeed: 400,
-            singleItem: true,
+        $(".owl-carousel").owlCarousel({
+            margin: 10,
             autoHeight: true,
-            transitionStyle: "fade"
-
-            // "singleItem:true" is a shortcut for:
-            // items : 1,
-            // itemsDesktop : false,
-            // itemsDesktopSmall : false,
-            // itemsTablet: false,
-            // itemsMobile : false
-
+            autoplay: true,
+            items: 1,
+            dotsEach: true,
+            dots: true,
+            loop: true,
+            autoplayHoverPause: true
         });
     });
 </script>
@@ -35,16 +29,16 @@
             <span style="font-size: 11px; padding: 0; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
                     <span class="glyphicon glyphicon-tag"></span>&nbsp;<{$item.category}>
                 </span>
-                <span style="font-size: 11px; padding: 0 0 0 16px; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
+            <span style="font-size: 11px; padding: 0 0 0 16px; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
                     <span class="glyphicon glyphicon-user"></span>&nbsp;<{$item.who}>
                 </span>
-                <span style="font-size: 11px; padding: 0 0 0 16px; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
+            <span style="font-size: 11px; padding: 0 0 0 16px; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
                     <span class="glyphicon glyphicon-calendar"></span>&nbsp;<{$item.when}>
                 </span>
-                <span style="font-size: 11px; padding: 0 0 0 16px; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
+            <span style="font-size: 11px; padding: 0 0 0 16px; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
                     <span class="glyphicon glyphicon-comment"></span>&nbsp;<{$item.comments}>
                 </span>
-                <span style="font-size: 11px; padding: 0 0 0 16px; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
+            <span style="font-size: 11px; padding: 0 0 0 16px; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
                     <span class="glyphicon glyphicon-ok-circle"></span>&nbsp;<{$item.counter}> <{$smarty.const._MD_PUBLISHER_READS}>
                 </span>
         </h2>
@@ -56,7 +50,7 @@
     <{if $item.image_path || $item.images}>
         <figure>
             <{if $item.images}>
-                <div id="articleslider" style="margin-bottom:10px;">
+                <div id="articleslider" class="owl-carousel owl-theme" style="margin-bottom:10px;">
                     <div class="item">
                         <img class="img-responsive" src="<{$item.image_path}>"/>
                     </div>

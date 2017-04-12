@@ -37,3 +37,6 @@ define('THEME_ADD_POLL', 'Add Poll');
 //Block login
 define('THEME_LOGIN', 'Your Username');
 define('THEME_PASS', 'Your Password');
+
+//Block User
+define("THEME_USER_WELCOME", "Welcome");

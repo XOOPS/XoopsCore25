@@ -89,7 +89,7 @@
         <strong><{$topic_post.post_title}></strong>
 
         <{if $topic_post.post_id > 0}>
-            <a id="<{$forum_post_prefix}><{$topic_post.post_id}>" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$topic_post.post_id}>" title="<{$topic_post.post_no}>" class="newbb-post-anchor">
+            <a id="<{$forum_post_prefix}><{$topic_post.post_id}>" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$topic_post.post_id}>#forumpost<{$topic_post.post_no}>" title="<{$topic_post.post_no}>" class="newbb-post-anchor">
                 #<{$topic_post.post_no}>
             </a>
         <{/if}>
@@ -133,11 +133,9 @@
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=1" title="<{$smarty.const._MD_SPLIT_ONE}>">
             <{$smarty.const._MD_SPLIT_ONE}>
         </a>
-
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=2" title="<{$smarty.const._MD_SPLIT_TREE}>">
             <{$smarty.const._MD_SPLIT_TREE}>
         </a>
-
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=3" title="<{$smarty.const._MD_SPLIT_ALL}>">
             <{$smarty.const._MD_SPLIT_ALL}>
         </a>

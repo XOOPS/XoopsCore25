@@ -100,16 +100,11 @@
             <h3 class="gallerytitle"><{$lang.voteFor}></h3>
 
             <div class="aligncenter">
-                <a title="<{$lang.voteFor}> : 1" href="<{xoAppUrl modules/extgallery/}>public-rating.php?id=<{$photo.photo_id}>&amp;rate=1"><img
-                            src="assets/images/rating_1.gif" alt="<{$lang.voteFor}> : 1"></a>
-                <a title="<{$lang.voteFor}> : 2" href="<{xoAppUrl modules/extgallery/}>public-rating.php?id=<{$photo.photo_id}>&amp;rate=2"><img
-                            src="assets/images/rating_2.gif" alt="<{$lang.voteFor}> : 2"></a>
-                <a title="<{$lang.voteFor}> : 3" href="<{xoAppUrl modules/extgallery/}>public-rating.php?id=<{$photo.photo_id}>&amp;rate=3"><img
-                            src="assets/images/rating_3.gif" alt="<{$lang.voteFor}> : 3"></a>
-                <a title="<{$lang.voteFor}> : 4" href="<{xoAppUrl modules/extgallery/}>public-rating.php?id=<{$photo.photo_id}>&amp;rate=4"><img
-                            src="assets/images/rating_4.gif" alt="<{$lang.voteFor}> : 4"></a>
-                <a title="<{$lang.voteFor}> : 5" href="<{xoAppUrl modules/extgallery/}>public-rating.php?id=<{$photo.photo_id}>&amp;rate=5"><img
-                            src="assets/images/rating_5.gif" alt="<{$lang.voteFor}> : 5"></a>
+                <a title="<{$lang.voteFor}> : 1" href="<{xoAppUrl modules/extgallery/}>public-rating.php?id=<{$photo.photo_id}>&amp;rate=1"><img src="assets/images/rating_1.gif" alt="<{$lang.voteFor}> : 1"></a>
+                <a title="<{$lang.voteFor}> : 2" href="<{xoAppUrl modules/extgallery/}>public-rating.php?id=<{$photo.photo_id}>&amp;rate=2"><img src="assets/images/rating_2.gif" alt="<{$lang.voteFor}> : 2"></a>
+                <a title="<{$lang.voteFor}> : 3" href="<{xoAppUrl modules/extgallery/}>public-rating.php?id=<{$photo.photo_id}>&amp;rate=3"><img src="assets/images/rating_3.gif" alt="<{$lang.voteFor}> : 3"></a>
+                <a title="<{$lang.voteFor}> : 4" href="<{xoAppUrl modules/extgallery/}>public-rating.php?id=<{$photo.photo_id}>&amp;rate=4"><img src="assets/images/rating_4.gif" alt="<{$lang.voteFor}> : 4"></a>
+                <a title="<{$lang.voteFor}> : 5" href="<{xoAppUrl modules/extgallery/}>public-rating.php?id=<{$photo.photo_id}>&amp;rate=5"><img src="assets/images/rating_5.gif" alt="<{$lang.voteFor}> : 5"></a>
             </div>
         </div>
     <{/if}>
