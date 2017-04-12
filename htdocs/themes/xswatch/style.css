@@ -34,27 +34,6 @@
     * 5. Useful Classes
 **/
 
-/* For Mobile IE */
-@-webkit-viewport {
-    width: device-width;
-}
-
-@-moz-viewport {
-    width: device-width;
-}
-
-@-ms-viewport {
-    width: device-width;
-}
-
-@-o-viewport {
-    width: device-width;
-}
-
-@viewport {
-    width: device-width;
-}
-
 /* 1. Home Classes */
 .global-nav {
     margin-bottom: 0;
@@ -354,6 +333,7 @@ strong.hit-counter {
 
 .xoops-theme-select img {
     max-width: 100%;
+    display: inline;
 }
 
 ul.userblock {
@@ -1301,6 +1281,7 @@ div.order-by a {
 }
 
 .pub_article_t_top h2 a.titlelink { color: inherit; }
+.pub_article_extras a img {  display: inline; }
 
 #xo-logger-output {padding-bottom: 55px;}
 

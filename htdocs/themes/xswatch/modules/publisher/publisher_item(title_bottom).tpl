@@ -9,21 +9,15 @@
 </style>
 <script>
     $(document).ready(function () {
-        $("#articleslider").owlCarousel({
-            navigation: false,
-            slideSpeed: 300,
-            paginationSpeed: 400,
-            singleItem: true,
+        $(".owl-carousel").owlCarousel({
+            margin: 10,
             autoHeight: true,
-            transitionStyle: "fade"
-
-            // "singleItem:true" is a shortcut for:
-            // items : 1,
-            // itemsDesktop : false,
-            // itemsDesktopSmall : false,
-            // itemsTablet: false,
-            // itemsMobile : false
-
+            autoplay: true,
+            items: 1,
+            dotsEach: true,
+            dots: true,
+            loop: true,
+            autoplayHoverPause: true
         });
     });
 </script>
@@ -32,7 +26,7 @@
     <{if $item.image_path || $item.images}>
         <figure>
             <{if $item.images}>
-                <div id="articleslider">
+                <div id="articleslider" class="owl-carousel owl-theme">
                     <div class="item">
                         <img class="img-responsive" src="<{$item.image_path}>"/>
                     </div>

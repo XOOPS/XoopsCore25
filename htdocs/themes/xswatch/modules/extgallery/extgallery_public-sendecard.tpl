@@ -34,7 +34,7 @@
 
         <{if $send_ecard.elements.captcha.body}>
             <li><{$send_ecard.elements.captcha.caption}></li>
-            <li><img src="<{xoAppUrl modules/extgallery/}>images/captcha.php" alt="captcha"></li>
+            <li><img src="<{xoAppUrl modules/extgallery/}>assets/images/captcha.php" alt="captcha"></li>
             <li><{$send_ecard.elements.captcha.body}></li>
         <{/if}>
         <{$send_ecard.elements.step.body}>
