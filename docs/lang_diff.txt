@@ -4,7 +4,7 @@ LANGUAGE DIFFERENCES
 Below are language differences from a version to next version.
 
 ===============================
-2017/??/??: Version 2.5.9
+2017/04/08: Version 2.5.9 RC1
 ===============================
 ADDED/DELETED DEFINES
 
@@ -88,6 +88,9 @@ upgrade/language/english/upgrade.php
 - added define('XOOPS_ERROR_ENCOUNTERED', 'Error');
 - added define('XOOPS_ERROR_SEE_BELOW', 'See below for messages.');
 
+htdocs/themes/xbootstrap/language/english/main.php
+- added define("THEME_USER_WELCOME", "Welcome");
+
 NEW FILES:
 - htdocs/modules/system/themes/transition/language/english/admin.php
 - htdocs/modules/system/themes/transition/language/english/localsupport.php
@@ -116,7 +119,7 @@ define('_AM_SYSTEM_USERS_ACTIVATE', 'Activate User');
 /modules/system/language/english/blocks.php
 define('_MB_SYSTEM_BLOCK_HEIGHT',"Block Height (lines)");
 
-install/language/enggitglish/install.php
+install/language/english/install.php
 define('CHMOD_CHGRP_REPEAT', 'Retry');
 define('CHMOD_CHGRP_IGNORE', 'Use Anyway');
 define('CHMOD_CHGRP_ERROR', 'Installer may not be able to write the configuration file %1$s.<p>PHP is writing files under user %2$s and group %3$s.<p>The dire
