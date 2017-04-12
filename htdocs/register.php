@@ -116,6 +116,7 @@ if (!isset($_POST['op']) && isset($_GET['op'])) {
     if (isset($_GET['actkey'])) {
         $clean_actkey = XoopsFilterInput::clean($_GET['actkey'], 'STRING');
     }
+    $op = in_array($op, array('actv', 'activate'), true) ? $op : 'register';
 }
 
 switch ($op) {
@@ -215,7 +216,7 @@ switch ($op) {
             }
             // Sending notification email to user for self activation
             if ($xoopsConfigUser['activation_type'] == 0) {
-                $xoopsMailer =& xoops_getMailer();
+                $xoopsMailer = xoops_getMailer();
                 $xoopsMailer->useMail();
                 $xoopsMailer->setTemplate('register.tpl');
                 $xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
@@ -232,7 +233,7 @@ switch ($op) {
                 }
                 // Sending notification email to administrator for activation
             } elseif ($xoopsConfigUser['activation_type'] == 2) {
-                $xoopsMailer =& xoops_getMailer();
+                $xoopsMailer = xoops_getMailer();
                 $xoopsMailer->useMail();
                 $xoopsMailer->setTemplate('adminactivate.tpl');
                 $xoopsMailer->assign('USERNAME', $uname);
@@ -254,7 +255,7 @@ switch ($op) {
                 }
             }
             if ($xoopsConfigUser['new_user_notify'] == 1 && !empty($xoopsConfigUser['new_user_notify_group'])) {
-                $xoopsMailer =& xoops_getMailer();
+                $xoopsMailer = xoops_getMailer();
                 $xoopsMailer->reset();
                 $xoopsMailer->useMail();
                 /* @var $member_handler XoopsMemberHandler */
@@ -299,7 +300,7 @@ switch ($op) {
                     $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
                     if ($xoopsConfigUser['activation_type'] == 2) {
                         $myts        = MyTextSanitizer::getInstance();
-                        $xoopsMailer =& xoops_getMailer();
+                        $xoopsMailer = xoops_getMailer();
                         $xoopsMailer->useMail();
                         $xoopsMailer->setTemplate('activated.tpl');
                         $xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
