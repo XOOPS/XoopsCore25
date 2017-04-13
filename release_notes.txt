@@ -1,8 +1,7 @@
-XOOPS 2.5.8
+XOOPS 2.5.9
 
-The XOOPS Development Team is pleased to announce the release of XOOPS 2.5.8. This version includes
-fixes and enhancements, security updates, PHP 7 compatibility and introduces XMF, the XOOPS Module
-Framework library.
+The XOOPS Development Team is pleased to announce the release of XOOPS 2.5.9. This version includes
+fixes and enhancements, security updates, PHP 7.1 compatibility.
 
 See the Changelog for more details.
 
@@ -10,10 +9,10 @@ System requirements
 -----------------------------------
 
 PHP:
-Any PHP version >= 5.3.7 (PHP 5.5+ is strongly recommended)
+Any PHP version >= 5.3.7 (PHP 5.5 or higher is strongly recommended)
 
 MySQL:
-MySQL server 5.1+ (MySQL Server 5.5+ is strongly recommended)
+MySQL server 5.5 (MySQL Server 5.6 or higher is strongly recommended)
 
 Web server:
 Any server supporting the required PHP version (Apache highly recommended)
@@ -29,14 +28,14 @@ Installing XOOPS (new installation)
 -----------------------------------
 
     1. Copy the content of the htdocs/ folder where it can be accessed by your server
-    2. Ensure that directories:
-        - uploads/,
+    2. Ensure that these directories:
+        - uploads/
         - uploads/avatars/
         - uploads/images/
         - uploads/ranks/
         - uploads/smilies/
         - xoops_lib/modules/protector/configs/
-       and files:
+       and these files:
         - mainfile.php and
         - include/license.php
        are writable by the web server
@@ -73,8 +72,8 @@ installed to their latest versions.
 
 Upgrading from versions older than 2.5.0:
 ------------------------------------------
-The same basic process as described above applies. The upgrade process for 2.5.8 has been testing against
-fresh installs of XOOPS 2.3 and 2.4. By 2.3, it becomes difficult to install the distribution on a modern
+The same basic process as described above applies. The upgrade process for 2.5.8 has been tested using fresh
+installs of XOOPS 2.0.2, 2.3, and 2.4. By 2.3, it becomes difficult to install the distribution on a modern
 system due to the number of changes in both PHP and MySQL. This means there may be issues we may not have
 encountered in testing.
 
@@ -89,4 +88,4 @@ Documentation: https://www.gitbook.com/book/xoops/xoops-documentation-process/de
 Support Forums: http://xoops.org/modules/newbb/
 
 XOOPS Development Team
-2016
+2017
