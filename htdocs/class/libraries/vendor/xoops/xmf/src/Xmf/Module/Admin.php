@@ -33,7 +33,7 @@ class Admin
     /**
      * The real ModuleAdmin object
      *
-     * @var object
+     * @var Admin
      */
     protected static $ModuleAdmin = null;
     protected $lastInfoBoxTitle = null;
@@ -53,7 +53,7 @@ class Admin
      * Older systems with the Frameworks based admin class will get an instance of this class which
      * provides compatible methods built from the old Frameworks version.
      *
-     * @return object a ModuleAdmin or Xoops\Module\Admin instance.
+     * @return ModuleAdmin|Xoops\Module\Admin
      */
     public static function getInstance()
     {

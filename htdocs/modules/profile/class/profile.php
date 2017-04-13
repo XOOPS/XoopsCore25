@@ -79,7 +79,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      *
      * @param bool $isNew Flag the new objects as "new"?
      *
-     * @return object {@link ProfileProfile}
+     * @return ProfileProfile {@link ProfileProfile}
      */
     public function create($isNew = true)
     {
@@ -101,7 +101,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      * @param integer|null  $uid
      * @param string[]|null $fields array of field names to fetch, null for all
      *
-     * @return object {@link ProfileProfile}
+     * @return ProfileProfile {@link ProfileProfile}
      *
      * @internal This was get($uid, $createOnFailure = true). No callers found using the extra parameter.
      * @internal Modified to match parent signature.

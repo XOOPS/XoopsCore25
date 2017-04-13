@@ -118,7 +118,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
      *
      * @see XoopsTplset
      * @param  bool $isNew is the new tplsets new??
-     * @return object XoopsTplset reference to the new tplsets
+     * @return XoopsTplset reference to the new tplsets
      **/
     public function create($isNew = true)
     {
@@ -135,7 +135,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
      *
      * @see XoopsTplset
      * @param  int $id tplset_id of the tplsets to retrieve
-     * @return object XoopsTplset reference to the tplsets
+     * @return XoopsTplset reference to the tplsets
      **/
     public function get($id)
     {
@@ -164,7 +164,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
      * @param $tplset_name
      *
      * @internal param int $id tplset_id of the block to retrieve
-     * @return object XoopsTplset reference to the tplsets
+     * @return XoopsTplset reference to the tplsets
      */
     public function getByName($tplset_name)
     {

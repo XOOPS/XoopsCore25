@@ -99,7 +99,7 @@ class XoopsRankHandler extends XoopsObjectHandler
      * Get Object
      *
      * @param  int $id
-     * @return object
+     * @return null|XoopsRank
      */
     public function get($id = 0)
     {
@@ -248,7 +248,7 @@ class XoUserHandler extends XoopsObjectHandler
      *
      * @param  CriteriaElement $criteria
      * @param  array           $groups
-     * @return object
+     * @return array
      */
     public function getAll(CriteriaElement $criteria = null, $groups = array())
     {

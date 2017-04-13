@@ -191,7 +191,7 @@ class Permission extends AbstractHelper
      * @param int    $size         size of list
      * @param bool   $multiple     true to allow multiple selections
      *
-     * @return object XoopsFormSelectGroup
+     * @return XoopsFormSelectGroup
      */
     public function getGroupSelectFormForItem(
         $gperm_name,

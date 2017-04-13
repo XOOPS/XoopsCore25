@@ -104,7 +104,7 @@ class XoopsEditorHandler
     /**
      * Access the only instance of this class
      *
-     * @return object
+     * @return XoopsEditorHandler
      * @static
      * @staticvar object
      */

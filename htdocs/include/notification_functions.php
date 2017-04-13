@@ -288,7 +288,7 @@ function &notificationEvents($category_name, $enabled_only, $module_id = null)
  *
  * @param  array  $category Category info array
  * @param  array  $event    Event info array
- * @param  object $module   Module
+ * @param  XoopsModule $module   Module
  * @return bool
  **/
 function notificationEventEnabled(&$category, &$event, &$module)

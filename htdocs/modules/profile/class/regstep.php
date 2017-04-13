@@ -43,7 +43,7 @@ class ProfileRegstep extends XoopsObject
 class ProfileRegstepHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * @param null|object $db
+     * @param null|XoopsDatabase $db
      */
     public function __construct($db)
     {

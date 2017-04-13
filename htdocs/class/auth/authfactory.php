@@ -39,7 +39,7 @@ class XoopsAuthFactory
      *
      * @param $uname used to lookup in LDAP bypass config
      *
-     * @return object Reference to the only instance of authentication class
+     * @return false|null|XoopsDatabase Reference to the only instance of authentication class
      */
     public static function getAuthConnection($uname)
     {

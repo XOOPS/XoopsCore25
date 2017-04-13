@@ -88,7 +88,7 @@ class XoopsObjectTree
      * returns an object from the tree specified by its id
      *
      * @param  string $key ID of the object to retrieve
-     * @return object Object within the tree
+     * @return mixed|XoopsObject Object within the tree
      */
     public function &getByKey($key)
     {

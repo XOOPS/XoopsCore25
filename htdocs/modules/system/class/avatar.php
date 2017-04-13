@@ -115,7 +115,7 @@ class SystemAvatarHandler extends XoopsAvatarHandler
      * Create new Object
      *
      * @param  bool $isNew
-     * @return object
+     * @return SystemAvatar
      */
     public function create($isNew = true)
     {
@@ -131,7 +131,7 @@ class SystemAvatarHandler extends XoopsAvatarHandler
      * Egt Object
      *
      * @param  int $id
-     * @return object
+     * @return bool|SystemAvatar
      */
     public function get($id)
     {

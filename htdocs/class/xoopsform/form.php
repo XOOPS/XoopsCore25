@@ -368,7 +368,7 @@ class XoopsForm
      * get a reference to a {@link XoopsFormElement} object by its "name"
      *
      * @param  string $name "name" attribute assigned to a {@link XoopsFormElement}
-     * @return object reference to a {@link XoopsFormElement}, false if not found
+     * @return XoopsFormElement|false reference to a {@link XoopsFormElement}, false if not found
      */
     public function &getElementByName($name)
     {

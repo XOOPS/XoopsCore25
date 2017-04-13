@@ -48,8 +48,7 @@ abstract class XoopsDatabase
     /**
      * reference to a {@link XoopsLogger} object
      *
-     * @see XoopsLogger
-     * @var object XoopsLogger
+     * @var XoopsLogger
      */
     public $logger;
 
@@ -116,7 +115,7 @@ abstract class XoopsDatabase
 class Database
 {
     /**
-     * @return object
+     * @return XoopsDatabase
      */
     public function getInstance()
     {
