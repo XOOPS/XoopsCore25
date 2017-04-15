@@ -63,9 +63,8 @@
 <{includeq file="$theme_name/tpl/nav-menu.tpl"}>
 
 <{includeq file="$theme_name/tpl/slider.tpl"}>
-
 <div class="container maincontainer">
-
+<a id="stickyMenuHere"></a>
 <{if $xoops_page == "index"}>
     <div class="aligncenter home-message row">
     <div class="<{if $xoops_banner != ""}>col-md-6<{else}>col-md-12<{/if}>">
@@ -123,7 +122,7 @@
 <script>
     // Set options
     var options = {
-        offset: '#showHere',
+        offset: '#stickyMenuHere',
         classes: {
             clone: 'adhesiveHeader--clone',
             stick: 'adhesiveHeader--stick',
