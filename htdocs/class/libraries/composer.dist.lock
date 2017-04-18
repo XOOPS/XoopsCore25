@@ -386,16 +386,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.8.18",
+            "version": "v2.8.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "2a7bab3c16f6f452c47818fdd08f3b1e49ffcf7d"
+                "reference": "286d84891690b0e2515874717e49360d1c98a703"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/2a7bab3c16f6f452c47818fdd08f3b1e49ffcf7d",
-                "reference": "2a7bab3c16f6f452c47818fdd08f3b1e49ffcf7d",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/286d84891690b0e2515874717e49360d1c98a703",
+                "reference": "286d84891690b0e2515874717e49360d1c98a703",
                 "shasum": ""
             },
             "require": {
@@ -431,7 +431,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-03-01T18:13:50+00:00"
+            "time": "2017-03-20T09:41:44+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -515,16 +515,16 @@
         },
         {
             "name": "xoops/xmf",
-            "version": "V1.2.5",
+            "version": "V1.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/XOOPS/xmf.git",
-                "reference": "831f08819819a925acbdbdd64c1cc4031372b9b8"
+                "reference": "e8a34280e4e9c851b09af3e46a3d8157f0caddf0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/XOOPS/xmf/zipball/831f08819819a925acbdbdd64c1cc4031372b9b8",
-                "reference": "831f08819819a925acbdbdd64c1cc4031372b9b8",
+                "url": "https://api.github.com/repos/XOOPS/xmf/zipball/e8a34280e4e9c851b09af3e46a3d8157f0caddf0",
+                "reference": "e8a34280e4e9c851b09af3e46a3d8157f0caddf0",
                 "shasum": ""
             },
             "require": {
@@ -546,7 +546,7 @@
                 "GPL-2.0+"
             ],
             "description": "XMF - XOOPS Module Framework",
-            "time": "2017-04-03T22:33:06+00:00"
+            "time": "2017-04-18T15:15:55+00:00"
         }
     ],
     "packages-dev": [],
