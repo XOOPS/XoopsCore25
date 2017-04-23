@@ -56,7 +56,7 @@ class XoopsUserUtility
         }
 
         xoops_loadLanguage('user');
-        $xoopsMailer =& xoops_getMailer();
+        $xoopsMailer = xoops_getMailer();
         if ($xoopsConfigUser['welcome_type'] == 1 || $xoopsConfigUser['welcome_type'] == 3) {
             $xoopsMailer->useMail();
         }
