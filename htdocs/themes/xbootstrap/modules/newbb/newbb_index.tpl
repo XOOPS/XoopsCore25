@@ -64,6 +64,7 @@
                 <{/if}>
             </div><!-- .newbb-header-icons -->
         </div><!-- .newbb-header -->
+    </div>
 
         <div class="panel-group newbb-category-list" id="accordion">
             <{foreachq item=category from=$categories}><!-- Forum categories -->
