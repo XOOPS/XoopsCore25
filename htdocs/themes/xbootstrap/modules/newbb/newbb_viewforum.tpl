@@ -15,35 +15,37 @@
 
         <li class="active"><{$forum_name}></li>
     </ol>
-
-    <{if $viewer_level gt 1}>
-        <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/newtopic.php?forum=<{$forum_id}>" title="<{$smarty.const.THEME_FORUM_NEWTOPIC}>" class="btn btn-success"><{$smarty.const.THEME_FORUM_NEWTOPIC}></a>
-    <{else}>
-        <{if $xoops_isuser}>
+    <div class="row">
+        <div class="col-xs-12">
+        <{if $viewer_level gt 1}>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/newtopic.php?forum=<{$forum_id}>" title="<{$smarty.const.THEME_FORUM_NEWTOPIC}>" class="btn btn-success"><{$smarty.const.THEME_FORUM_NEWTOPIC}></a>
         <{else}>
-            <a href="<{$xoops_url}>/user.php" title="<{$smarty.const.THEME_FORUM_REGISTER}>" class="btn btn-success"><{$smarty.const.THEME_FORUM_REGISTER}></a>
+            <{if $xoops_isuser}>
+                <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/newtopic.php?forum=<{$forum_id}>" title="<{$smarty.const.THEME_FORUM_NEWTOPIC}>" class="btn btn-success"><{$smarty.const.THEME_FORUM_NEWTOPIC}></a>
+            <{else}>
+                <a href="<{$xoops_url}>/user.php" title="<{$smarty.const.THEME_FORUM_REGISTER}>" class="btn btn-success"><{$smarty.const.THEME_FORUM_REGISTER}></a>
+            <{/if}>
         <{/if}>
-    <{/if}>
-
-    <{if $forum_topictype}><{$forum_topictype}><{/if}>
-
-    <{if $forum_topicstatus}>
-        <span class="btn btn-info"><{$forum_topicstatus}></span>
-    <{else}>
-        <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>&amp;status=digest" title="<{$smarty.const._MD_DIGEST}>" class="btn btn-info">
-            <{$smarty.const._MD_DIGEST}>
+    
+        <{if $forum_topictype}><{$forum_topictype}><{/if}>
+    
+        <{if $forum_topicstatus}>
+            <span class="btn btn-info"><{$forum_topicstatus}></span>
+        <{else}>
+            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>&amp;status=digest" title="<{$smarty.const._MD_DIGEST}>" class="btn btn-info">
+                <{$smarty.const._MD_DIGEST}>
+            </a>
+        <{/if}>
+    
+        <a data-toggle="collapse" href="#forum-search" title="<{$smarty.const.THEME_FORUM_SEARCH}>" class="btn btn-info">
+            <span class="glyphicon glyphicon-search"></span>
         </a>
-    <{/if}>
-
-    <a data-toggle="collapse" href="#forum-search" title="<{$smarty.const.THEME_FORUM_SEARCH}>" class="btn btn-info">
-        <span class="glyphicon glyphicon-search"></span>
-    </a>
-
-    <{if $subforum}>
-        <{includeq file="db:newbb_viewforum_subforum.tpl"}>
-    <{/if}>
-
+    
+        <{if $subforum}>
+            <{includeq file="db:newbb_viewforum_subforum.tpl"}>
+        <{/if}>
+        </div>
+    </div>
     <!-- Forum Search -->
     <div class="row collapse forum-search" id="forum-search">
         <div class="col-sm-9 col-md-9">
@@ -66,55 +68,58 @@
 
 <!-- Newbb topics list -->
 <div class="newbb-topicslist mb10">
-        <div class="newbb-topic-options row mb10 mt10">
-    <div class="col-sm-8 col-md-8">
-    <{if $mode gt 1}>
-        <form name="form_topics_admin" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.topic.php" method="POST" onsubmit="if(window.document.form_topics_admin.op.value &lt; 1){return false;}">
-    <{/if}>
-
-    <{if $viewer_level gt 1}>
-                        <a class="btn btn-xs btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/newtopic.php?op=add&forum=<{$forum_id}>" title="<{$smarty.const.THEME_ADD_POLL}>"><{$smarty.const.THEME_ADD_POLL}></a>
-    <{if $mode gt 1}>
-                            <{$smarty.const._ALL}>:
-                            <input type="checkbox" name="topic_check1" id="topic_check1" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check1');"/>
-            <select name="op">
-                <option value="0"><{$smarty.const._SELECT}></option>
-                <option value="delete"><{$smarty.const._DELETE}></option>
-                    <{if $status eq "pending"}>
+    <div class="newbb-topic-options row mb10 mt10">
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-md-8 col-xs-12">
+                <{if $mode gt 1}>
+                    <form name="form_topics_admin" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.topic.php" method="POST" onsubmit="if(window.document.form_topics_admin.op.value &lt; 1){return false;}">
+                <{/if}>
+            
+                <{if $viewer_level gt 1}>
+                    <a class="btn btn-xs btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/newtopic.php?op=add&forum=<{$forum_id}>" title="<{$smarty.const.THEME_ADD_POLL}>"><{$smarty.const.THEME_ADD_POLL}></a>
+                <{if $mode gt 1}>
+                    <{$smarty.const._ALL}>:
+                    <input type="checkbox" name="topic_check1" id="topic_check1" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check1');"/>
+                    <select name="op">
+                        <option value="0"><{$smarty.const._SELECT}></option>
+                        <option value="delete"><{$smarty.const._DELETE}></option>
+                        <{if $status eq "pending"}>
                         <option value="approve"><{$smarty.const._MD_APPROVE}></option>
                         <option value="move"><{$smarty.const._MD_MOVE}></option>
-                    <{elseif $status eq "deleted"}>
+                        <{elseif $status eq "deleted"}>
                         <option value="restore"><{$smarty.const._MD_RESTORE}></option>
-                    <{else}>
+                        <{else}>
                         <option value="move"><{$smarty.const._MD_MOVE}></option>
-                    <{/if}>
-            </select>
-        <input type="hidden" name="forum_id" value="<{$forum_id}>">
-        <input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>">
-        |
-        <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>" title="<{$smarty.const._MD_TYPE_VIEW}>"><{$smarty.const._MD_TYPE_VIEW}></a>
-    <{else}>
-                            <a class="btn btn-xs btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>&amp;status=active#admin" title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a>
-                            <a class="btn btn-xs btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>&amp;status=pending#admin" title="<{$smarty.const._MD_TYPE_PENDING}>"><{$smarty.const._MD_TYPE_PENDING}></a>
-                            <a class="btn btn-xs btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>&amp;status=deleted#admin" title="<{$smarty.const._MD_TYPE_DELETED}>"><{$smarty.const._MD_TYPE_DELETED}></a>
-                            <a class="btn btn-xs btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/moderate.php?forum=<{$forum_id}>" title="<{$smarty.const._MD_TYPE_SUSPEND}>"><{$smarty.const._MD_TYPE_SUSPEND}></a>
-    <{/if}>
-
-    <{else}>
-                        <a class="btn btn-xs btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/newtopic.php?op=add&forum=<{$forum_id}>" title="<{$smarty.const.THEME_ADD_POLL}>"><{$smarty.const.THEME_ADD_POLL}></a>
-    <{/if}>
-
-    <{includeq file="db:newbb_viewforum_menu.tpl"}>
-
-    <{if $mode gt 1}>
-        <{$smarty.const._ALL}>:
-        <input type="checkbox" name="topic_check" id="topic_check" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check');">
-    <{else}>
-        &nbsp;
-    <{/if}>
-
+                        <{/if}>
+                    </select>
+                    <input type="hidden" name="forum_id" value="<{$forum_id}>">
+                    <input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>">
+                    |
+                    <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>" title="<{$smarty.const._MD_TYPE_VIEW}>"><{$smarty.const._MD_TYPE_VIEW}></a>
+                <{else}>
+                    <a class="btn btn-xs btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>&amp;status=active#admin" title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a>
+                    <a class="btn btn-xs btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>&amp;status=pending#admin" title="<{$smarty.const._MD_TYPE_PENDING}>"><{$smarty.const._MD_TYPE_PENDING}></a>
+                    <a class="btn btn-xs btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>&amp;status=deleted#admin" title="<{$smarty.const._MD_TYPE_DELETED}>"><{$smarty.const._MD_TYPE_DELETED}></a>
+                    <a class="btn btn-xs btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/moderate.php?forum=<{$forum_id}>" title="<{$smarty.const._MD_TYPE_SUSPEND}>"><{$smarty.const._MD_TYPE_SUSPEND}></a>
+                <{/if}>
+            
+                <{else}>
+                    <a class="btn btn-xs btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/newtopic.php?op=add&forum=<{$forum_id}>" title="<{$smarty.const.THEME_ADD_POLL}>"><{$smarty.const.THEME_ADD_POLL}></a>
+                <{/if}>
+            </div>
+            <div class="col-md-4 col-xs-12 pull-right">
+                <{includeq file="db:newbb_viewforum_menu.tpl"}>
+            </div>
+        </div>
+        <{if $mode gt 1}>
+            <{$smarty.const._ALL}>:
+            <input type="checkbox" name="topic_check" id="topic_check" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check');">
+        <{else}>
+            &nbsp;
+        <{/if}>
     </div>
-    <div class="generic-pagination col-sm-4 col-md-4 text-right">
+    <div class="generic-pagination col-sm-12 text-right">
         <{$forum_pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
     </div>
 
