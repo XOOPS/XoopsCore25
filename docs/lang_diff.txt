@@ -29,6 +29,8 @@ htdocs/install/language/english/install.php
 - added define('MODULES_AVAILABLE', 'Available Modules');
 - added define('INSTALL_THIS_MODULE', 'Add %s');
 
+htdocs/install/language/english/finish.php
+- change to refer new users to xoops.org for information on modules and themes
 
 htdocs/language/english/global.php
 - added define('_UPLOAD', 'Upload');
