@@ -268,24 +268,7 @@ class Metagen
      */
     public static function generateSeoTitle($title = '', $extension = '')
     {
-        $title = rawurlencode(strtolower($title));
-
-        $pattern = array(
-            "/%09/", "/%20/", "/%21/", "/%22/", "/%23/", "/%25/", "/%26/", "/%27/", "/%28/", "/%29/", "/%2C/", "/%2F/",
-            "/%3A/", "/%3B/", "/%3C/", "/%3D/", "/%3E/", "/%3F/", "/%40/", "/%5B/", "/%5C/", "/%5D/", "/%5E/", "/%7B/",
-            "/%7C/", "/%7D/", "/%7E/", "/\./"
-        );
-        $rep_pat = array(
-            "-", "-", "-", "-", "-", "-100", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-at-", "-",
-            "-", "-", "-", "-", "-", "-", "-", "-"
-        );
-        $title = preg_replace($pattern, $rep_pat, $title);
-        $pattern = array(
-            "/%B0/", "/%E8/", "/%E9/", "/%EA/", "/%EB/", "/%E7/", "/%E0/", "/%E2/", "/%E4/", "/%EE/", "/%EF/", "/%F9/",
-            "/%FC/", "/%FB/", "/%F4/", "/%F6/"
-        );
-        $rep_pat = array("-", "e", "e", "e", "e", "c", "a", "a", "a", "i", "i", "u", "u", "u", "o", "o");
-        $title = preg_replace($pattern, $rep_pat, $title);
+        $title = preg_replace("/[^\p{N}\p{L}]/u", "-", $title);
 
         $tableau = explode("-", $title);
         $tableau = array_filter($tableau, 'static::nonEmptyString');
