@@ -1,5 +1,5 @@
 <?php
-// 
+//
 // _LANGCODE: en
 // _CHARSET : UTF-8
 // Translator: XOOPS Translation Team
@@ -8,7 +8,10 @@ $content .= "<h3>Your site</h3>
 <p>You can now access the <a href='../index.php'>home page of your site</a>.</p>
 <h3>Support</h3>
 <p>Visit <a href='http://xoops.org/' rel='external'>The XOOPS Project</a></p>
-<p><strong>ATTENTION :</strong> Your site currently contains the minimum functionality, if you want to add content: text pages, photo gallery, forum, links directory, ... You must first download from the <a href='http://www.xoops.org/modules/repository' rel='external' title='Choice and download modules'>library of your local support</a> and install these components, it is the same for <a href='http://www.xoops.org/modules/extgallery' rel='external' title='Select and Install new themes'>design (theme) Additional</a>.</p>
+<p><strong>ATTENTION :</strong> Your site currently contains the minimum functionality. 
+Please visit <a href='http://xoops.org/' rel='external' title='XOOPS Web Application System'>xoops.org</a> 
+to learn more about extending XOOPS to present text pages, photo galleries, forums, and more, 
+with <em>modules</em> as well as customizing the look of your XOOPS with <em>themes</em>.</p>
 ";
 
 $content .= "<h3>Security configuration</h3>
