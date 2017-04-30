@@ -200,7 +200,8 @@ class Permission extends AbstractHelper
         $name = null,
         $include_anon = false,
         $size = 5,
-        $multiple = true
+        $multiple = true,
+        $default_values = false
     ) {
         if (!class_exists('XoopsFormSelectGroup', true)) {
             include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
@@ -209,7 +210,19 @@ class Permission extends AbstractHelper
             $name = $this->defaultFieldName($gperm_name, $gperm_itemid);
         }
         $gperm_itemid = (int) $gperm_itemid;
-        $value = $this->getGroupsForItem($gperm_name, $gperm_itemid);
+        if ($default_values == true && $gperm_itemid ==0){
+            $member_handler = xoops_getHandler('member');
+            if (!$include_anon) {
+                $member_arr = $member_handler->getGroupList(new Criteria('groupid', XOOPS_GROUP_ANONYMOUS, '!='));
+            } else {
+                $member_arr = $member_handler->getGroupList();
+            }
+            foreach (array_keys($member_arr) as $i) {
+                $value[] = $i;
+            }
+        } else {
+           $value = $this->getGroupsForItem($gperm_name, $gperm_itemid); 
+        }
         $element = new \XoopsFormSelectGroup(
             $caption,
             $name,
