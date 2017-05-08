@@ -479,23 +479,23 @@
     },
     {
         "name": "symfony/yaml",
-        "version": "v2.8.19",
-        "version_normalized": "2.8.19.0",
+        "version": "v2.8.20",
+        "version_normalized": "2.8.20.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/yaml.git",
-            "reference": "286d84891690b0e2515874717e49360d1c98a703"
+            "reference": "93ccdde79f4b079c7558da4656a3cb1c50c68e02"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/yaml/zipball/286d84891690b0e2515874717e49360d1c98a703",
-            "reference": "286d84891690b0e2515874717e49360d1c98a703",
+            "url": "https://api.github.com/repos/symfony/yaml/zipball/93ccdde79f4b079c7558da4656a3cb1c50c68e02",
+            "reference": "93ccdde79f4b079c7558da4656a3cb1c50c68e02",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3.9"
         },
-        "time": "2017-03-20T09:41:44+00:00",
+        "time": "2017-05-01T14:31:55+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -530,17 +530,17 @@
     },
     {
         "name": "xoops/xmf",
-        "version": "V1.2.7",
-        "version_normalized": "1.2.7.0",
+        "version": "V1.2.8",
+        "version_normalized": "1.2.8.0",
         "source": {
             "type": "git",
             "url": "https://github.com/XOOPS/xmf.git",
-            "reference": "243773f553b43f5477ebf1960e313caebb2d4ca5"
+            "reference": "14929c9b0df5dbb4b800b02bcba5d2243de60e7e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/XOOPS/xmf/zipball/243773f553b43f5477ebf1960e313caebb2d4ca5",
-            "reference": "243773f553b43f5477ebf1960e313caebb2d4ca5",
+            "url": "https://api.github.com/repos/XOOPS/xmf/zipball/14929c9b0df5dbb4b800b02bcba5d2243de60e7e",
+            "reference": "14929c9b0df5dbb4b800b02bcba5d2243de60e7e",
             "shasum": ""
         },
         "require": {
@@ -551,7 +551,7 @@
             "symfony/yaml": "2.8.*",
             "webmozart/assert": "^1.2"
         },
-        "time": "2017-04-29T17:59:15+00:00",
+        "time": "2017-05-08T02:03:10+00:00",
         "type": "project",
         "installation-source": "dist",
         "autoload": {
