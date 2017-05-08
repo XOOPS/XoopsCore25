@@ -239,11 +239,8 @@ class XoopsModelWrite extends XoopsModelAbstract
                     if (!$v['not_gpc']) {
                         $cleanv = array_map(array(&$ts, 'stripSlashesGPC'), $cleanv);
                     }
-                    foreach (array_keys($cleanv) as $key) {
-                        $cleanv[$key] = str_replace('\\"', '"', addslashes($cleanv[$key]));
-                    }
                     // TODO: Not encoding safe, should try base64_encode -- phppp
-                    $cleanv = "'" . serialize($cleanv) . "'";
+                    $cleanv = $this->handler->db->quote(serialize($cleanv));
                     break;
 
                 case XOBJ_DTYPE_STIME:
