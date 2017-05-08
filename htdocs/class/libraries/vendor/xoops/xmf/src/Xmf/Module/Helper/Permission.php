@@ -62,7 +62,7 @@ class Permission extends AbstractHelper
      *
      * @return bool   true if user has access, false if not
      **/
-    public function checkPermission($gperm_name, $gperm_itemid)
+    public function checkPermission($gperm_name, $gperm_itemid, $trueifadmin = true)
     {
         $gperm_itemid = (int) $gperm_itemid;
         $gperm_groupid = $this->getUserGroups();
@@ -71,7 +71,8 @@ class Permission extends AbstractHelper
             $gperm_name,
             $gperm_itemid,
             $gperm_groupid,
-            $this->mid
+            $this->mid,
+            $trueifadmin
         );
     }
 
@@ -91,7 +92,8 @@ class Permission extends AbstractHelper
         $gperm_itemid,
         $url,
         $time = 3,
-        $message = ''
+        $message = '',
+        $trueifadmin = true
     ) {
         $gperm_itemid = (int) $gperm_itemid;
         $gperm_groupid = $this->getUserGroups();
@@ -99,7 +101,8 @@ class Permission extends AbstractHelper
             $gperm_name,
             $gperm_itemid,
             $gperm_groupid,
-            $this->mid
+            $this->mid,
+            $trueifadmin
         );
         if (!$permission) {
             $helper = Helper::getHelper($this->dirname);
