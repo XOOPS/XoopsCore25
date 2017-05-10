@@ -59,10 +59,11 @@ class Permission extends AbstractHelper
      *
      * @param string $gperm_name   name of the permission to test
      * @param int    $gperm_itemid id of the object to check
+     * @param bool   $trueifadmin  true to always return true for admin groups
      *
      * @return bool   true if user has access, false if not
      **/
-    public function checkPermission($gperm_name, $gperm_itemid)
+    public function checkPermission($gperm_name, $gperm_itemid, $trueifadmin = true)
     {
         $gperm_itemid = (int) $gperm_itemid;
         $gperm_groupid = $this->getUserGroups();
@@ -71,7 +72,8 @@ class Permission extends AbstractHelper
             $gperm_name,
             $gperm_itemid,
             $gperm_groupid,
-            $this->mid
+            $this->mid,
+            (bool) $trueifadmin
         );
     }
 
@@ -83,6 +85,7 @@ class Permission extends AbstractHelper
      * @param string $url          module relative url to redirect to
      * @param int    $time         time in seconds to delay
      * @param string $message      message to display with redirect
+     * @param bool   $trueifadmin  true to always return true for admin groups
      *
      * @return void
      **/
@@ -91,7 +94,8 @@ class Permission extends AbstractHelper
         $gperm_itemid,
         $url,
         $time = 3,
-        $message = ''
+        $message = '',
+        $trueifadmin = true
     ) {
         $gperm_itemid = (int) $gperm_itemid;
         $gperm_groupid = $this->getUserGroups();
@@ -99,7 +103,8 @@ class Permission extends AbstractHelper
             $gperm_name,
             $gperm_itemid,
             $gperm_groupid,
-            $this->mid
+            $this->mid,
+            (bool) $trueifadmin
         );
         if (!$permission) {
             $helper = Helper::getHelper($this->dirname);
