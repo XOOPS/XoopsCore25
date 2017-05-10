@@ -27,7 +27,7 @@ $modversion['credits']        = 'PEAK Corp.';
 $modversion['author']         = 'GIJ=CHECKMATE PEAK Corp.(http://www.peak.ne.jp/)';
 $modversion['help']           = 'page=help';
 $modversion['license']        = 'GNU GPL 2.0';
-$modversion['license_url']    = 'www.gnu.org/licenses/gpl-2.0.html/';
+$modversion['license_url']    = 'www.gnu.org/licenses/gpl-2.0.html';
 $modversion['official']       = 1;
 $modversion['image']          = file_exists($mydirpath . '/module_icon.png') ? 'module_icon.png' : 'module_icon.php';
 $modversion['iconbig']        = 'module_icon.php?file=iconbig';

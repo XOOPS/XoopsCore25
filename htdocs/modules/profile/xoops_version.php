@@ -30,7 +30,7 @@ $modversion['author']         = 'Jan Pedersen, Taiwen Jiang, alfred, Wishcraft';
 $modversion['credits']        = 'Ackbarr, mboyden, marco, mamba, trabis, etc.';
 $modversion['help']           = 'page=help';
 $modversion['license']        = 'GNU GPL 2.0 or later';
-$modversion['license_url']    = 'www.gnu.org/licenses/gpl-2.0.html/';
+$modversion['license_url']    = 'www.gnu.org/licenses/gpl-2.0.html';
 $modversion['image']          = 'assets/images/logo.png';
 $modversion['dirname']        = 'profile';
 $modversion['dirmoduleadmin'] = '/Frameworks/moduleclasses/moduleadmin';

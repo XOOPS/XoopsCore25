@@ -503,6 +503,11 @@ class ModuleAdmin
         foreach ( $author as $k => $aName ) {
             $authorArray[$k] = ( isset( $nickname[$k] ) && ( '' != $nickname[$k] ) ) ? "{$aName} ({$nickname[$k]})" : "{$aName}";
         }
+        $license_url = $this->_obj->getInfo('license_url');
+        $license_url = preg_match('%^(https?:)?//%', $license_url) ? $license_url : 'http://' . $license_url;
+        $website = $this->_obj->getInfo('website');
+        $website = preg_match('%^(https?:)?//%', $website) ? $website : 'http://' . $website;
+
         $ret = "<table>\n<tr>\n"
              . "<td width=\"50%\">\n"
              . "<table>\n<tr>\n<td style=\"width: 100px;\">\n"
@@ -516,9 +521,9 @@ class ModuleAdmin
              . _AM_MODULEADMIN_ABOUT_BY . implode(', ', $authorArray) . "\n"
              . "</div>\n"
              . "<div style=\"line-height: 16px;\">\n"
-             . "<a href=\"http://" . $this->_obj->getInfo('license_url') . "\" target=\"_blank\" rel=\"external\">" . $this->_obj->getInfo('license') . "</a>\n"
+             . "<a href=\"$license_url\" target=\"_blank\" rel=\"external\">" . $this->_obj->getInfo('license') . "</a>\n"
              . "<br>\n"
-             . "<a href=\"http://" . $this->_obj->getInfo('website') . "\" target=\"_blank\">" . $this->_obj->getInfo('website') . "</a>\n"
+             . "<a href=\"$website\" target=\"_blank\">" . $this->_obj->getInfo('website') . "</a>\n"
              . "<br>\n"
              . "<br>\n"
              . "</div>\n"
