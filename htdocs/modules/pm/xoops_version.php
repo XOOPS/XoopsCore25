@@ -31,7 +31,7 @@ $modversion['author']         = 'Jan Pedersen, Taiwen Jiang';
 $modversion['credits']        = 'The XOOPS Project, Wanikoo';
 $modversion['help']           = 'page=help';
 $modversion['license']        = 'GNU GPL 2.0 or later';
-$modversion['license_url']    = 'www.gnu.org/licenses/gpl-2.0.html/';
+$modversion['license_url']    = 'www.gnu.org/licenses/gpl-2.0.html';
 $modversion['image']          = 'assets/images/logo.png';
 $modversion['dirname']        = 'pm';
 $modversion['dirmoduleadmin'] = '/Frameworks/moduleclasses/moduleadmin';
