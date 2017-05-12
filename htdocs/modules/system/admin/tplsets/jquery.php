@@ -95,6 +95,7 @@ switch ($op) {
         } catch(\InvalidArgumentException $e) {
             // handle the exception
             redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=tplsets', 2, $e->getMessage());
+            exit;
         }
 
         $path_file = str_replace('\\', '/', $path_file);
@@ -135,13 +136,17 @@ switch ($op) {
                     </td>
                 </tr>
                 <tr>
-                    <td><textarea id="code_mirror" name="templates" rows=24 cols=110>' . $content . '</textarea></td>
+                    <td><textarea id="code_mirror" name="templates" rows=24 cols=110>'
+                        . htmlentities($content, ENT_QUOTES)
+                    . '</textarea></td>
                 </tr>
               </table>';
         XoopsLoad::load('XoopsFormHiddenToken');
         $xoopsToken = new XoopsFormHiddenToken();
         echo $xoopsToken->render();
-        echo '<input type="hidden" name="path_file" value="'.$clean_path_file.'"><input type="hidden" name="file" value="'.trim($clean_file).'"><input type="hidden" name="ext" value="'.$ext.'"></form>';
+        echo '<input type="hidden" name="path_file" value="' . htmlentities($clean_path_file, ENT_QUOTES)
+            .'"><input type="hidden" name="file" value="' . htmlentities(trim($clean_file), ENT_QUOTES)
+            .'"><input type="hidden" name="ext" value="' . htmlentities($ext, ENT_QUOTES) . '"></form>';
         break;
 
     // Restore backup file
