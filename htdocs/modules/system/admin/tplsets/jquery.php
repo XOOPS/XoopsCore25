@@ -1,4 +1,7 @@
 <?php
+
+use Xmf\Assert;
+
 /**
  * Template Manager
  * Manage all templates: theme and module
@@ -86,6 +89,14 @@ switch ($op) {
         $clean_file = XoopsRequest::getString('file', '');
         $clean_path_file = XoopsRequest::getString('path_file', '');
         $path_file = realpath(XOOPS_ROOT_PATH.'/themes'.trim($clean_path_file));
+        $check_path = realpath(XOOPS_ROOT_PATH.'/themes');
+        try {
+            Assert::startsWith($path_file, $check_path, _AM_SYSTEM_TEMPLATES_ERROR);
+        } catch(\InvalidArgumentException $e) {
+            // handle the exception
+            redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=tplsets', 2, $e->getMessage());
+        }
+
         $path_file = str_replace('\\', '/', $path_file);
 
         //Button restore
