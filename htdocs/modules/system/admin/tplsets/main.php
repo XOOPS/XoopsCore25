@@ -138,7 +138,7 @@ switch ($op) {
 
                         if (count($tplstats) > 0) {
                             foreach ($tplstats as $moddir => $filecount) {
-                                $module =& $module_handler->getByDirname($moddir);
+                                $module = $module_handler->getByDirname($moddir);
                                 if (is_object($module)) {
                                     // create module folder
                                     if (!is_dir($theme_surcharge . '/' . $module->getVar('dirname'))) {
@@ -228,7 +228,7 @@ switch ($op) {
 
                         if (count($tplstats) > 0) {
                             $moddir = $_REQUEST['select_modules'];
-                            $module =& $module_handler->getByDirname($moddir);
+                            $module = $module_handler->getByDirname($moddir);
                             if (is_object($module)) {
                                 // create module folder
                                 if (!is_dir($theme_surcharge . '/' . $module->getVar('dirname'))) {
