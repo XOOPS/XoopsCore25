@@ -2,6 +2,10 @@
 include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
+if (!$GLOBALS['xoopsSecurity']->check()) {
+    redirect_header('index.php', 3, _NOPERM);
+}
+
 $uid = Xmf\Request::getInt('uid', 0);
 if ($uid === 0) {
     redirect_header('index.php', 2, _PROFILE_AM_NOSELECTION);
@@ -28,13 +32,13 @@ if ($level===0) {
     $result = $member_handler->activateUser($user);
 }
 if ($result) {
-    if ($_REQUEST['level'] !== 0) {
+    if ($level !== 0) {
         $message = _PROFILE_AM_USER_ACTIVATED;
     } else {
         $message = _PROFILE_AM_USER_DEACTIVATED;
     }
 } else {
-    if ($_REQUEST['level'] !== 0) {
+    if ($level !== 0) {
         $message = _PROFILE_AM_USER_NOT_ACTIVATED;
     } else {
         $message = _PROFILE_AM_USER_NOT_DEACTIVATED;

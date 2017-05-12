@@ -51,6 +51,7 @@
                 <input class="btn btn-info btn-xs btn-block" type="button" value="<{$lang_editprofile}>"
                        onclick="location='<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/user.php?op=edit&amp;id=<{$user_uid}>'">
                 <input type="hidden" name="uid" value="<{$user_uid}>">
+                <{securityToken}>
                 <{if $userlevel == 1}>
                     <input type="hidden" name="level" value="0">
                     <input class="btn btn-info btn-xs btn-block" type="button" value="<{$smarty.const._PROFILE_MA_DEACTIVATE}>" onclick="submit();">
