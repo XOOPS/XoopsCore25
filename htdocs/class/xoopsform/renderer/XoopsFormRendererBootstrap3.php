@@ -745,7 +745,7 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
             $ret .= '<div class="col-md-10">';
             $ret .= $element->render();
             if (($desc = $element->getDescription()) != '') {
-                $ret .= '<p class="text-muted">' . $desc . '</p>';
+                $ret .= '<p class="help-block">' . $desc . '</p>';
             }
             $ret .= '</div>';
             $ret .= '</div>';
