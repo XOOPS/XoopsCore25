@@ -46,7 +46,7 @@
             <{if $video.showrating}>
                 <li>
                     <strong><{$smarty.const._MD_XOOPSTUBE_RATINGC}></strong>
-                    <img src="<{$xoops_url}>/modules/<{$video.module_dir}>/images/icon/<{$video.rateimg}>" alt=""> (<{$video.votes}>)
+                    <img src="<{$xoops_url}>/modules/<{$video.module_dir}>/assets/images/icon/<{$video.rateimg}>" alt=""> (<{$video.votes}>)
                 </li>
             <{/if}>
             <li><strong><{$smarty.const._MD_XOOPSTUBE_DESCRIPTIONC}></strong>
