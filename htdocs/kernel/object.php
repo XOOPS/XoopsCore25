@@ -228,7 +228,7 @@ class XoopsObject
                 case XOBJ_DTYPE_UNICODE_OTHER:
                 case XOBJ_DTYPE_UNICODE_TXTBOX:
                 case XOBJ_DTYPE_UNICODE_TXTAREA:
-                    $this->vars[$key]['value'] =& xoops_convert_decode($value);
+                    $this->vars[$key]['value'] = xoops_convert_decode($value);
                     break;
                 case XOBJ_DTYPE_DATE:
                     if (!is_string($value) && is_numeric($value)) {
