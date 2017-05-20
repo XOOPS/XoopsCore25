@@ -1,4 +1,7 @@
 <?php
+
+use Xmf\Assert;
+
 /**
  * Template Manager
  * Manage all templates: theme and module
@@ -86,6 +89,15 @@ switch ($op) {
         $clean_file = XoopsRequest::getString('file', '');
         $clean_path_file = XoopsRequest::getString('path_file', '');
         $path_file = realpath(XOOPS_ROOT_PATH.'/themes'.trim($clean_path_file));
+        $check_path = realpath(XOOPS_ROOT_PATH.'/themes');
+        try {
+            Assert::startsWith($path_file, $check_path, _AM_SYSTEM_TEMPLATES_ERROR);
+        } catch(\InvalidArgumentException $e) {
+            // handle the exception
+            redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=tplsets', 2, $e->getMessage());
+            exit;
+        }
+
         $path_file = str_replace('\\', '/', $path_file);
 
         //Button restore
@@ -124,13 +136,17 @@ switch ($op) {
                     </td>
                 </tr>
                 <tr>
-                    <td><textarea id="code_mirror" name="templates" rows=24 cols=110>' . $content . '</textarea></td>
+                    <td><textarea id="code_mirror" name="templates" rows=24 cols=110>'
+                        . htmlentities($content, ENT_QUOTES)
+                    . '</textarea></td>
                 </tr>
               </table>';
         XoopsLoad::load('XoopsFormHiddenToken');
         $xoopsToken = new XoopsFormHiddenToken();
         echo $xoopsToken->render();
-        echo '<input type="hidden" name="path_file" value="'.$clean_path_file.'"><input type="hidden" name="file" value="'.trim($clean_file).'"><input type="hidden" name="ext" value="'.$ext.'"></form>';
+        echo '<input type="hidden" name="path_file" value="' . htmlentities($clean_path_file, ENT_QUOTES)
+            .'"><input type="hidden" name="file" value="' . htmlentities(trim($clean_file), ENT_QUOTES)
+            .'"><input type="hidden" name="ext" value="' . htmlentities($ext, ENT_QUOTES) . '"></form>';
         break;
 
     // Restore backup file
