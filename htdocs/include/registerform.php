@@ -19,7 +19,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 include_once $GLOBALS['xoops']->path('class/xoopslists.php');
 include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
 
-$email_tray   = new XoopsFormElementTray(_US_EMAIL, '<br>');
+$email_tray   = new XoopsFormElementTray(_US_EMAIL, '<br>', 'email');
 $email_text   = new XoopsFormText('', 'email', 25, 60, $myts->htmlSpecialChars($email));
 $email_option = new XoopsFormCheckBox('', 'user_viewemail', $user_viewemail);
 $email_option->addOption(1, _US_ALLOWVIEWEMAIL);
