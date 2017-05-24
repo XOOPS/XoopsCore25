@@ -154,7 +154,7 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
      * @param  XoopsUser $user
      * @return bool
      **/
-    public function sendEmail(XoopsPrivmessage $pm, XoopsUser $user)
+    public function sendEmail(PmMessage $pm, XoopsUser $user)
     {
         global $xoopsConfig;
 
