@@ -839,7 +839,6 @@ switch ($op) {
             if ($users_count > 0) {
                 //echo $requete_search;
                 foreach (array_keys($users_arr) as $i) {
-                    $users['uid'] = $users_arr[$i]->getVar('uid');
                     //Display group
                     $user_group = $member_handler->getGroupsByUser($users_arr[$i]->getVar('uid'));
                     if (in_array(XOOPS_GROUP_ADMIN, $user_group)) {
@@ -851,7 +850,7 @@ switch ($op) {
                         //$users['icon'] = '<img src="'.XOOPS_URL.'/modules/system/images/icons/user.png" alt="'._AM_SYSTEM_USERS_USER.'" title="'._AM_SYSTEM_USERS_USER.'" />';
                         $users['checkbox_user'] = true;
                     }
-                    $users['name']        = $users_arr[$i]->getVar('uid');
+                    $users['uid']         = $users_arr[$i]->getVar('uid');
                     $users['name']        = $users_arr[$i]->getVar('name');
                     $users['uname']       = $users_arr[$i]->getVar('uname');
                     $users['email']       = $users_arr[$i]->getVar('email');
