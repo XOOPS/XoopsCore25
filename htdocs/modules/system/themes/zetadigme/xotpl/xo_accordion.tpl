@@ -142,20 +142,12 @@
                         <a class="tooltip" rel="external" href="http://xoops.org" title="<{$lang_xoops_xoopsproject}>"><{$lang_xoops_xoopsproject}></a>
                     </td>
                     <td>
+                        <a class="tooltip" rel="external" href="https://github.com/XOOPS/XoopsCore25/releases" title="<{$lang_xoops_xoopscore}>"><{$lang_xoops_xoopscore}></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         <a class="tooltip" rel="external" href="http://www.xoops.org/modules/xoopspartners" title="<{$lang_xoops_localsupport}>"><{$lang_xoops_localsupport}></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <a class="tooltip" rel="external" href="http://www.xoops.org/modules/core" title="<{$lang_xoops_xoopscore}>"><{$lang_xoops_xoopscore}></a>
-                    </td>
-                    <td>
-                        <a class="tooltip" rel="external" href="http://www.xoops.org/modules/extgallery" title="<{$lang_xoops_xoopsthems}>"><{$lang_xoops_xoopsthems}></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <a class="tooltip" rel="external" href="http://www.xoops.org/modules/mediawiki/index.php/Main_Page" title="<{$lang_xoops_xoopswiki}>"><{$lang_xoops_xoopswiki}></a>
                     </td>
                     <td>
                         <a class="tooltip" rel="external" href="https://github.com/XOOPS/XoopsCore25" title="<{$lang_xoops_codesvn}>"><{$lang_xoops_codesvn}></a>

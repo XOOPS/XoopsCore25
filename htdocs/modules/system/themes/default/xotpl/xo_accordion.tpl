@@ -92,11 +92,7 @@
         <table>
             <tr>
                 <td><a rel="external" href="http://xoops.org"><{$smarty.const._OXYGEN_XOOPSPROJECT}></a></td>
-                <td><a rel="external" href="http://xoops.org"><{$smarty.const._OXYGEN_WEBSITE}></a></td>
-            </tr>
-            <tr>
-                <td><a rel="external" href="http://www.xoops.org/modules/core"><{$smarty.const._OXYGEN_XOOPSCORE}></a></td>
-                <td><a rel="external" href="http://www.xoops.org/modules/mediawiki/index.php/Main_Page"><{$smarty.const._OXYGEN_XOOPSWIKI}></a></td>
+                <td><a rel="external" href="https://github.com/XOOPS/XoopsCore25/releases"><{$smarty.const._OXYGEN_XOOPSCORE}></a></td>
             </tr>
             <tr>
                 <td><a rel="external" href="http://www.xoops.org/modules/xoopspartners"><{$smarty.const._OXYGEN_LOCALSUPPORT}></a></td>
