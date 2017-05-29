@@ -143,7 +143,7 @@ class PathStuffController
                     $tempCookieDomain = $tempParts['host'];
                 }
                 $request['COOKIE_DOMAIN'] = $tempCookieDomain;
-                $this->xoopsCookieDomain = $tempCookieDomain;;
+                $this->xoopsCookieDomain = $tempCookieDomain;
             }
         }
     }
