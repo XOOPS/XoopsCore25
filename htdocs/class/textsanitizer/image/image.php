@@ -34,7 +34,7 @@ class MytsImage extends MyTextSanitizerExtension
     {
         static $jsLoaded;
 
-        $config         = $this->loadConfig(__DIR__);
+        $config         = parent::loadConfig(__DIR__);
         $ts->patterns[] = "/\[img align=(['\"]?)(left|center|right)\\1 width=(['\"]?)(\d*)\\3]([^\"\(\)\?\&'<>]*)\[\/img\]/sU";
         $ts->patterns[] = "/\[img align=(['\"]?)(left|center|right)\\1]([^\"\(\)\?\&'<>]*)\[\/img\]/sU";
         $ts->patterns[] = "/\[img width=(['\"]?)(\d*)\\1]([^\"\(\)\?\&'<>]*)\[\/img\]/sU";

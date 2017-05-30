@@ -442,6 +442,7 @@ class XoopsCommentRenderer
      */
     public function _getPosterArray($poster_id, $poster_user, $poster_website)
     {
+        $poster = array();
         $poster['id'] = (int)$poster_id;
         if ($poster['id'] > 0) {
             $com_poster = $this->_memberHandler->getUser($poster['id']);

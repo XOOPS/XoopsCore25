@@ -10,6 +10,7 @@ if (isset($_GET['num'])) {
 }
 
 $myts = MyTextSanitizer::getInstance();
+/** @var \XoopsMySQLDatabase $db */
 $db   = XoopsDatabaseFactory::getDatabaseConnection();
 
 // GET vars
@@ -21,7 +22,6 @@ $log_table = $db->prefix($mydirname . '_log');
 
 // Protector object
 require_once dirname(__DIR__) . '/class/protector.php';
-/** @var \XoopsMySQLDatabase $db */
 $db        = XoopsDatabaseFactory::getDatabaseConnection();
 $protector = Protector::getInstance($db->conn);
 $conf      = $protector->getConf();

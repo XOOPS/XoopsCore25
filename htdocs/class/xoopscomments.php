@@ -89,7 +89,7 @@ class XoopsComments extends XoopsObject
     /**
      * Save Comment
      *
-     * @return int
+     * @return false|int
      */
     public function store()
     {

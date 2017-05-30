@@ -167,7 +167,7 @@ switch ($op) {
             $arr[$i] = $blocks_arr[$i]->toArray();
             $xoopsTpl->append_by_ref('blocks', $arr[$i]);
         }
-        /** @var \XoopsBlock $block */
+        /** @var \SystemBlock $block */
         $block     = $block_handler->create();
         $blockform = $block->getForm();
         $xoopsTpl->assign('blockform', $blockform->render());
@@ -258,7 +258,7 @@ switch ($op) {
             redirect_header('admin.php?fct=blocksadmin', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         // Initialize blocks handler
-        /** @var \XoopsBlockHandler $block_handler */
+        /** @var \SystemBlockHandler $block_handler */
         $block_handler = xoops_getModuleHandler('block');
         $block         = $block_handler->create();
         $block->setVars($_POST);
@@ -277,7 +277,7 @@ switch ($op) {
         $block_handler = xoops_getModuleHandler('block');
         // Get avatar id
         $block_id = system_CleanVars($_POST, 'bid', 0, 'int');
-        /** @var  \SystemBlock $block */
+        /** @var \SystemBlock $block */
         if ($block_id > 0) {
             $block = $block_handler->get($block_id);
         } else {

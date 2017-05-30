@@ -69,7 +69,7 @@ if (is_object($pm) && !empty($_POST['action'])) {
                 }
                 if ($pm->getVar('from_userid') == $GLOBALS['xoopsUser']->getVar('uid')) {
                     if (!empty($_REQUEST['delete_message'])) {
-                        $res2 = $pm_handler->setFromDelete($pm);
+                        $res2 = $pm_handler->setFromdelete($pm);
                         $res2 = $res2 ? $pm_handler->setFromsave($pm, 0) : false;
                     } elseif (!empty($_REQUEST['move_message'])) {
                         $res2 = $pm_handler->setFromsave($pm, 0);

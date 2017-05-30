@@ -264,7 +264,7 @@ switch ($op) {
 
         $banner_count = $banner_Handler->getCount($criteria);
         /** @var SystemBanner[] $banner_arr */
-        $banner_arr = $banner_Handler->getall($criteria);
+        $banner_arr = $banner_Handler->getAll($criteria);
 
         $xoopsTpl->assign('banner_count', $banner_count);
 
@@ -343,7 +343,7 @@ switch ($op) {
 
         $banner_finish_count = $banner_finish_Handler->getCount($criteria);
         /** @var SystemBannerfinish[] $banner_finish_arr */
-        $banner_finish_arr = $banner_finish_Handler->getall($criteria);
+        $banner_finish_arr = $banner_finish_Handler->getAll($criteria);
 
         $xoopsTpl->assign('banner_finish_count', $banner_finish_count);
 
@@ -386,7 +386,7 @@ switch ($op) {
 
         $banner_client_count = $banner_client_Handler->getCount($criteria);
         /** @var \SystemBannerclient[] $banner_client_arr */
-        $banner_client_arr = $banner_client_Handler->getall($criteria);
+        $banner_client_arr = $banner_client_Handler->getAll($criteria);
 
         $xoopsTpl->assign('banner_client_count', $banner_client_count);
 

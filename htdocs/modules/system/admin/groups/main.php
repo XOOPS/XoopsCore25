@@ -62,7 +62,7 @@ switch ($op) {
         // Count group
         $groups_count = $groups_Handler->getCount($criteria);
         /** @var \XoopsGroup[] $groups_arr */
-        $groups_arr   = $groups_Handler->getall($criteria);
+        $groups_arr   = $groups_Handler->getAll($criteria);
         // Assign Template variables
         $xoopsTpl->assign('groups_count', $groups_count);
         if ($groups_count > 0) {

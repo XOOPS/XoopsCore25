@@ -91,7 +91,7 @@ class XoopsBlock extends XoopsObject
     /**
      * Store Block Data to Database
      *
-     * @return int $id
+     * @return false|int $bid
      */
     public function store()
     {
@@ -149,7 +149,7 @@ class XoopsBlock extends XoopsObject
      * @param string $format output use: 's' for Show and 'e' for Edit
      * @param string $c_type type of block content
      *
-     * @returns string
+     * @return string
      */
     public function getContent($format = 's', $c_type = 't')
     {
@@ -193,7 +193,7 @@ class XoopsBlock extends XoopsObject
     /**
      * Build Block
      *
-     * @return unknown
+     * @return false|array|mixed
      */
     public function buildBlock()
     {
@@ -242,7 +242,7 @@ class XoopsBlock extends XoopsObject
     * after the original content
     */
     /**
-     * @param        $position
+     * @param  int   $position
      * @param string $content
      * @param string $contentdb
      *
@@ -250,6 +250,7 @@ class XoopsBlock extends XoopsObject
      */
     public function buildContent($position, $content = '', $contentdb = '')
     {
+        $ret = '';
         if ($position == 0) {
             $ret = $contentdb . $content;
         } elseif ($position == 1) {
@@ -291,7 +292,7 @@ class XoopsBlock extends XoopsObject
     /**
      * XoopsBlock::getOptions()
      *
-     * @return bool
+     * @return bool|string
      */
     public function getOptions()
     {
@@ -502,6 +503,7 @@ class XoopsBlock extends XoopsObject
     public function getAllByGroupModule($groupid, $module_id = 0, $toponlyblock = false, $visible = null, $orderby = 'b.weight, m.block_id', $isactive = 1)
     {
         $isactive = (int)$isactive;
+        /** @var \XoopsMySQLDatabase $db */
         $db       = XoopsDatabaseFactory::getDatabaseConnection();
         $ret      = array();
         if (isset($groupid)) {

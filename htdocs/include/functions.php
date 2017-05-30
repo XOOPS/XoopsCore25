@@ -845,7 +845,7 @@ function xoops_getMailer()
  *
  * @param integer $rank_id
  * @param mixed   $posts
- * @return
+ * @return array<string,string|integer>|string
  */
 function xoops_getrank($rank_id = 0, $posts = 0)
 {

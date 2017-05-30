@@ -967,7 +967,7 @@ class XoopsObject
      * create a clone(copy) of the current object
      *
      * @access public
-     * @return object clone
+     * @return XoopsObject $clone
      */
     public function xoopsClone()
     {

@@ -1105,13 +1105,13 @@ function xoops_module_update($dirname)
             $msgs[] = _AM_SYSTEM_MODULES_MODULE_DATA_DELETE;
             for ($i = 0; $i < $confcount; $i++) {
                 if (!$config_handler->deleteConfig($configs[$i])) {
-                    $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . _AM_SYSTEM_MODULES_CONFIG_DATA_DELETE_ERROR . sprintf(_AM_SYSTEM_MODULES_GONFIG_ID, '<strong>' . $configs[$i]->getvar('conf_id') . '</strong>') . '</span>';
+                    $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . _AM_SYSTEM_MODULES_CONFIG_DATA_DELETE_ERROR . sprintf(_AM_SYSTEM_MODULES_GONFIG_ID, '<strong>' . $configs[$i]->getVar('conf_id') . '</strong>') . '</span>';
                     // save the name of config failed to delete for later use
-                    $config_delng[] = $configs[$i]->getvar('conf_name');
+                    $config_delng[] = $configs[$i]->getVar('conf_name');
                 } else {
-                    $config_old[$configs[$i]->getvar('conf_name')]['value']     = $configs[$i]->getvar('conf_value', 'N');
-                    $config_old[$configs[$i]->getvar('conf_name')]['formtype']  = $configs[$i]->getvar('conf_formtype');
-                    $config_old[$configs[$i]->getvar('conf_name')]['valuetype'] = $configs[$i]->getvar('conf_valuetype');
+                    $config_old[$configs[$i]->getVar('conf_name')]['value']     = $configs[$i]->getVar('conf_value', 'N');
+                    $config_old[$configs[$i]->getVar('conf_name')]['formtype']  = $configs[$i]->getVar('conf_formtype');
+                    $config_old[$configs[$i]->getVar('conf_name')]['valuetype'] = $configs[$i]->getVar('conf_valuetype');
                     $msgs[]                                                     = '&nbsp;&nbsp;' . _AM_SYSTEM_MODULES_GONFIG_DATA_DELETE . sprintf(_AM_SYSTEM_MODULES_GONFIG_ID, '<strong>' . $configs[$i]->getVar('conf_id') . '</strong>');
                 }
             }

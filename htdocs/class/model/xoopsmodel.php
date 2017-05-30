@@ -65,7 +65,7 @@ class XoopsModelFactory
      * @param string $name     handler name
      * @param mixed  $args     args
      *
-     * @return object of handler
+     * @return null|object of handler
      */
     public static function loadHandler(XoopsPersistableObjectHandler $ohandler, $name, $args = null)
     {

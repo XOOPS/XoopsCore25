@@ -70,7 +70,7 @@ switch ($op) {
         // Count rank
         $userrank_count = $userrank_Handler->getCount($criteria);
     /** @var SystemUserrank[] $userrank_arr */
-    $userrank_arr = $userrank_Handler->getall($criteria);
+    $userrank_arr = $userrank_Handler->getAll($criteria);
         // Assign Template variables
         $xoopsTpl->assign('userrank_count', $userrank_count);
         if ($userrank_count > 0) {

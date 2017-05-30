@@ -329,7 +329,7 @@ class XoopsMemberHandler
         $uname = $db->escape($uname);
         $pwd = $db->escape($pwd);
         $criteria = new Criteria('uname', $uname);
-        /** @var \XoopsUser[] $user */
+        /** @var \XoopsUser $user */
         $user =& $this->userHandler->getObjects($criteria, false);
         if (!$user || count($user) != 1) {
             return false;

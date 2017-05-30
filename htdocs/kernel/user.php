@@ -225,7 +225,7 @@ class XoopsUser extends XoopsObject
 
     /**
      * get the user's rank
-     * @return array array of rank ID and title
+     * @return array<string,string|integer>|string array of rank ID and title
      */
     public function rank()
     {
