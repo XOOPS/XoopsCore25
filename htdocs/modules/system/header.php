@@ -34,7 +34,7 @@ include_once $GLOBALS['xoops']->path('/class/xoopsformloader.php');
 include_once $GLOBALS['xoops']->path('/class/xoopslists.php');
 // System Class
 include_once $GLOBALS['xoops']->path('/modules/system/class/breadcrumb.php');
-include_once $GLOBALS['xoops']->path('/modules/system/class/cookie.php');
+//include_once $GLOBALS['xoops']->path('/modules/system/class/cookie.php');
 // Load Language
 xoops_loadLanguage('admin', 'system');
 // Include System files
