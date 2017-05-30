@@ -48,7 +48,9 @@ class XoopsGuiZetadigme extends XoopsSystemGui
     {
         parent::header();
         global $xoopsConfig, $xoopsUser, $xoopsModule, $xoTheme, $xoopsDB;
+        /** @var \Smarty $tpl */
         $tpl =& $this->template;
+        /** @var \xos_opal_Theme $xoTheme */
         $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
         $xoTheme->addScript('', '', '
         startList = function() {
@@ -193,15 +195,16 @@ window.onload= function(){
         $tpl->assign('modid', $modid);
         $tpl->assign('moddir', $moddir);
         // add MODULES  Menu items
-        /* @var $module_handler XoopsModuleHandler */
+        /** @var \XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $criteria       = new CriteriaCompo();
         $criteria->add(new Criteria('hasadmin', 1));
         $criteria->add(new Criteria('isactive', 1));
         $criteria->setSort('mid');
-        $mods               = $module_handler->getObjects($criteria);
-        $menu               = array();
-        /* @var $moduleperm_handler XoopsGroupPermHandler  */
+        /** @var \XoopsModule[] $mods */
+        $mods = $module_handler->getObjects($criteria);
+        $menu = array();
+        /** @var \XoopsGroupPermHandler $moduleperm_handler  */
         $moduleperm_handler = xoops_getHandler('groupperm');
         foreach ($mods as $mod) {
             $rtn        = array();
@@ -282,6 +285,7 @@ window.onload= function(){
             'url'      => XOOPS_URL . '/modules/system/',
             'options'  => $OPT);
 
+        /** @var \XoopsModule $mod */
         foreach ($mods as $mod) {
             $rtn    = array();
             $sadmin = $moduleperm_handler->checkRight('module_admin', $mod->getVar('mid'), $xoopsUser->getGroups());

@@ -14,7 +14,7 @@
  * @package             core
  * @since               2.0.0
  */
-/* @var  $xoopsUser XoopsUser */
+/** @var \XoopsUser $xoopsUser */
 
 include __DIR__ . '/mainfile.php';
 XoopsLoad::load('XoopsRequest');
@@ -42,7 +42,7 @@ switch ($op) {
         $xoopsTpl->assign('sitename', htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES));
         $target = htmlspecialchars($target, ENT_QUOTES);
         $xoopsTpl->assign('target', $target);
-        /* @var $imgcat_handler XoopsImagecategoryHandler */
+        /** @var \XoopsImagecategoryHandler $imgcat_handler */
         $imgcat_handler = xoops_getHandler('imagecategory');
         $catlist        = $imgcat_handler->getList($group, 'imgcat_read', 1);
         $catcount       = count($catlist);
@@ -69,7 +69,9 @@ switch ($op) {
             }
             $xoopsTpl->assign('cat_options', $cat_options);
             if ($catshow > 0) {
+                /** @var \XoopsImageHandler $image_handler */
                 $image_handler = xoops_getHandler('image');
+                /** @var \XoopsImage[] $images */
                 $criteria      = new CriteriaCompo(new Criteria('imgcat_id', $catshow));
                 $criteria->add(new Criteria('image_display', 1));
                 $total = $image_handler->getCount($criteria);
@@ -150,7 +152,7 @@ switch ($op) {
         if (!is_object($imgcat)) {
             $error = true;
         } else {
-            /* @var $imgcatperm_handler XoopsGroupPermHandler */
+            /** @var \XoopsGroupPermHandler $imgcatperm_handler */
             $imgcatperm_handler = xoops_getHandler('groupperm');
             if (is_object($xoopsUser)) {
                 if (!$imgcatperm_handler->checkRight('imgcat_write', $imgcat_id, $xoopsUser->getGroups())) {

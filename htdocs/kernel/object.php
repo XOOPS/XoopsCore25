@@ -942,8 +942,9 @@ class XoopsObject
         xoops_load('XoopsCache');
         $class = get_class($this);
         if (!$modules_active = XoopsCache::read('system_modules_active')) {
-            /* @var $module_handler XoopsModuleHandler */
+            /** @var \XoopsModuleHandler $module_handler */
             $module_handler = xoops_getHandler('module');
+            /** @var \XoopsModule[] $modules_obj */
             $modules_obj    = $module_handler->getObjects(new Criteria('isactive', 1));
             $modules_active = array();
             foreach (array_keys($modules_obj) as $key) {
@@ -972,6 +973,7 @@ class XoopsObject
     {
         $class = get_class($this);
         $clone = null;
+        /** @var \XoopsObject $clone */
         $clone = new $class();
         foreach ($this->vars as $k => $v) {
             $clone->assignVar($k, $v['value']);
@@ -1078,7 +1080,7 @@ class XoopsObjectHandler
      */
     public function __construct(XoopsDatabase $db)
     {
-        /* @var $db XoopsMySQLDatabase  */
+        /** @var \XoopsMySQLDatabase $db */
         $this->db = $db;
     }
 

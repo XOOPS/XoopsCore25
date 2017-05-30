@@ -38,7 +38,7 @@ $upload_size = 500000;
 // Get Action type
 $op = system_CleanVars($_REQUEST, 'op', 'list', 'string');
 // Get userrank handler
-/* @var $userrank_Handler SystemUserrankHandler */
+/** @var \SystemUserrankHandler $userrank_Handler */
 $userrank_Handler = xoops_getModuleHandler('userrank', 'system');
 
 switch ($op) {
@@ -69,7 +69,8 @@ switch ($op) {
         $criteria->setLimit($nb_rank);
         // Count rank
         $userrank_count = $userrank_Handler->getCount($criteria);
-        $userrank_arr   = $userrank_Handler->getall($criteria);
+    /** @var SystemUserrank[] $userrank_arr */
+    $userrank_arr = $userrank_Handler->getall($criteria);
         // Assign Template variables
         $xoopsTpl->assign('userrank_count', $userrank_count);
         if ($userrank_count > 0) {
@@ -111,6 +112,7 @@ switch ($op) {
         $xoBreadCrumb->render();
         // Create form
 
+        /** @var SystemUserrank $obj */
         $obj  = $userrank_Handler->create();
         $form = $obj->getForm();
         // Assign form
@@ -134,6 +136,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(sprintf(_AM_SYSTEM_USERRANK_TIPS_FORM1, implode(', ', $mimetypes)) . sprintf(_AM_SYSTEM_USERRANK_TIPS_FORM2, $upload_size / 1000));
         $xoBreadCrumb->render();
         // Create form
+        /** @var SystemUserrank $obj */
         $obj  = $userrank_Handler->get(system_CleanVars($_REQUEST, 'rank_id', 0, 'int'));
         $form = $obj->getForm();
         // Assign form

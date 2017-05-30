@@ -24,6 +24,7 @@ xoops_loadLanguage('pmsg');
 if (!is_object($xoopsUser)) {
     redirect_header('user.php', 0);
 } else {
+    /** @var \XoopsPrivmessageHandler $pm_handler */
     $pm_handler = xoops_getHandler('privmessage');
     if (!empty($_POST['delete'])) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
@@ -49,6 +50,7 @@ if (!is_object($xoopsUser)) {
     $criteria->setLimit(1);
     $criteria->setStart($start);
     $criteria->setSort('msg_time');
+    /** @var \XoopsPrivmessage[] $pm_arr */
     $pm_arr = $pm_handler->getObjects($criteria);
     echo '<div><h4>' . _PM_PRIVATEMESSAGE . "</h4></div><br><a href='userinfo.php?uid=" . $xoopsUser->getVar('uid') . "' title=''>" . _PM_PROFILE . "</a>&nbsp;<span class='bold'>&raquo;</span>&nbsp;<a href='viewpmsg.php' title=''>" . _PM_INBOX . "</a>&nbsp;<span class='bold'>&raquo;</span>&nbsp;\n";
     if (empty($pm_arr)) {

@@ -2,6 +2,7 @@
 defined('XOOPS_ROOT_PATH') or die();
 
 global $upgradeControl;
+/** @var UpgradeControl $upgradeControl */
 
 ?><body>
 <!doctype html>

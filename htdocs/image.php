@@ -260,10 +260,11 @@ $imageId = isset($_GET['id']) ? (int)$_GET['id'] : false;
 $imageUrl = isset($_GET['url']) ? (string)$_GET['url'] : (isset($_GET['src']) ? (string)$_GET['src'] : false);
 if (!empty($imageId)) {
     // If image is a Xoops image
-    /* @var $imageHandler XoopsImageHandler */
+    /** @var \XoopsImageHandler $imageHandler */
     $imageHandler = xoops_getHandler('image');
     $criteria = new CriteriaCompo(new Criteria('i.image_display', true));
     $criteria->add(new Criteria('i.image_id', $imageId));
+    /** @var \XoopsImage[] $images */
     $images = $imageHandler->getObjects($criteria, false, true);
     if (count($images) != 1) {
         // No Xoops images or to many Xoops images

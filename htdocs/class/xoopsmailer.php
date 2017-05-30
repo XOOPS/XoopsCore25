@@ -335,6 +335,7 @@ class XoopsMailer
         // NOTE: we don't send to LIST of recipients, because the tags
         // below are dependent on the user identity; i.e. each user
         // receives (potentially) a different message
+        /** @var \XoopsUser $user */
         foreach ($this->toUsers as $user) {
             // set some user specific variables
             $subject = str_replace('{X_UNAME}', $user->getVar('uname'), $this->subject);
@@ -382,6 +383,7 @@ class XoopsMailer
     public function sendPM($uid, $subject, $body)
     {
         global $xoopsUser;
+        /** @var \XoopsPrivmessageHandler $pm_handler */
         $pm_handler = xoops_getHandler('privmessage');
         $pm         = $pm_handler->create();
         $pm->setVar('subject', $subject);
@@ -552,13 +554,13 @@ class XoopsMailer
 
     // public
     /**
-     * @param $group
+     * @param \XoopsGroup $group
      */
     public function setToGroups($group)
     {
         if (!is_array($group)) {
             if (strtolower(get_class($group)) === 'xoopsgroup') {
-                /* @var $member_handler XoopsMemberHandler */
+                /** @var \XoopsMemberHandler $member_handler */
                 $member_handler = xoops_getHandler('member');
                 $this->setToUsers($member_handler->getUsersByGroup($group->getVar('groupid'), true));
             }

@@ -302,6 +302,7 @@ function xoops_template_touch($tpl_id, $clear_old = true)
  */
 function xoops_template_clear_module_cache($mid)
 {
+    /** @var \XoopsObject[] $block_arr */
     $block_arr = XoopsBlock::getByModule($mid);
     $count     = count($block_arr);
     if ($count > 0) {

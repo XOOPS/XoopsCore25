@@ -90,6 +90,7 @@ class XoopsUpgrade
     public function loadLanguage($dirname)
     {
         global $upgradeControl;
+        /** @var UpgradeControl $upgradeControl */
 
         $upgradeControl->loadLanguage($dirname);
     }
@@ -105,7 +106,7 @@ class XoopsUpgrade
     /**
      * Relocated here from upgrade/index.php
      *
-     * @param XoopsDatabase $db
+     * @param \XoopsMySQLDatabase  $db
      * @param        $table
      * @param        $field
      * @param string $condition

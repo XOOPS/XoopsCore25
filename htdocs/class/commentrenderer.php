@@ -33,9 +33,10 @@ class XoopsCommentRenderer
      * @access private
      */
     public $_tpl;
-    public $_comments;
+    public $_comments = array();
     public $_useIcons    = true;
     public $_doIconCheck = false;
+    /** @var \XoopsMemberHandler  $_memberHandler */
     public $_memberHandler;
     public $_statusText;
     /**
@@ -55,7 +56,6 @@ class XoopsCommentRenderer
         $this->_tpl           = $tpl;
         $this->_useIcons      = (bool)$use_icons;
         $this->_doIconCheck   = (bool)$do_iconcheck;
-        /* @var $this->_memberHandler XoopsMemberHandler  */
         $this->_memberHandler = xoops_getHandler('member');
         $this->_statusText    = array(
             XOOPS_COMMENT_PENDING => '<span style="text-decoration: none; font-weight: bold; color: #00ff00;">' . _CM_PENDING . '</span>',
@@ -101,6 +101,7 @@ class XoopsCommentRenderer
      */
     public function renderFlatView($admin_view = false)
     {
+        /** @var \XoopsObject[] $this->_comments */
         $count = count($this->_comments);
         for ($i = 0; $i < $count; ++$i) {
             if (false !== $this->_useIcons) {
@@ -155,7 +156,7 @@ class XoopsCommentRenderer
         // construct comment tree
         $xot  = new XoopsObjectTree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
         $tree =& $xot->getTree();
-
+        /** @var \XoopsObject[][] $tree[$comment_id] */
         if (false !== $this->_useIcons) {
             $title = $this->_getTitleIcon($tree[$comment_id]['obj']->getVar('com_icon')) . '&nbsp;' . $tree[$comment_id]['obj']->getVar('com_title');
         } else {
@@ -228,6 +229,7 @@ class XoopsCommentRenderer
      */
     public function _renderThreadReplies(&$thread, $key, &$replies, $prefix, $admin_view, $depth = 0, $current_prefix = '')
     {
+        /** @var \XoopsObject[][] $thread[$key] */
         $admin_view = (bool)$admin_view;
         if ($depth > 0) {
             if (false !== $this->_useIcons) {
@@ -276,6 +278,7 @@ class XoopsCommentRenderer
      */
     public function renderNestView($comment_id = 0, $admin_view = false)
     {
+        /** @var \XoopsObject[][] $tree[$comment_id] */
         include_once $GLOBALS['xoops']->path('class/tree.php');
         $xot  = new XoopsObjectTree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
         $tree =& $xot->getTree();
@@ -340,6 +343,7 @@ class XoopsCommentRenderer
      */
     public function _renderNestReplies(&$thread, $key, &$replies, $prefix, $admin_view, $depth = 0)
     {
+        /** @var \XoopsObject[][] $thread[$key] */
         if ($depth > 0) {
             if (false !== $this->_useIcons) {
                 $title = $this->_getTitleIcon($thread[$key]['obj']->getVar('com_icon')) . '&nbsp;' . $thread[$key]['obj']->getVar('com_title');
@@ -390,6 +394,12 @@ class XoopsCommentRenderer
      * @access private
      */
     // Start edit by voltan
+    /**
+     * @param int $poster_id
+     * @param     $poster_user
+     * @param     $poster_website
+     * @return mixed
+     */
     public function _getPosterName($poster_id, $poster_user, $poster_website)
     {
         $poster['id'] = (int)$poster_id;
@@ -424,11 +434,16 @@ class XoopsCommentRenderer
      * @access private
      */
     // Start edit by voltan
+    /**
+     * @param int $poster_id
+     * @param     $poster_user
+     * @param     $poster_website
+     * @return mixed
+     */
     public function _getPosterArray($poster_id, $poster_user, $poster_website)
     {
         $poster['id'] = (int)$poster_id;
         if ($poster['id'] > 0) {
-            /* @var  $com_poster XoopsUser */
             $com_poster = $this->_memberHandler->getUser($poster['id']);
             if (is_object($com_poster)) {
                 $poster['uname']      = '<a href="' . XOOPS_URL . '/userinfo.php?uid=' . $poster['id'] . '">' . $com_poster->getVar('uname') . '</a>';

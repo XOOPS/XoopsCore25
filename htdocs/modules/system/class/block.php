@@ -49,16 +49,16 @@ class SystemBlock extends XoopsBlock
             $op = 'save';
         } else {
             // Search modules
-            /* @var  $blocklinkmodule_handler SystemBlockLinkModuleHandler */
+            /** @var \SystemBlockLinkModuleHandler $blocklinkmodule_handler */
             $blocklinkmodule_handler = xoops_getModuleHandler('blocklinkmodule');
             $criteria                = new CriteriaCompo(new Criteria('block_id', $this->getVar('bid')));
             $blocklinkmodule         = $blocklinkmodule_handler->getObjects($criteria);
             foreach ($blocklinkmodule as $link) {
-                /* @var  $link SystemBlockLinkModule */
+                /** @var \SystemBlockLinkModule $link */
                 $modules[] = $link->getVar('module_id');
             }
             // Search perms
-            /* @var $groupperm_handler XoopsGroupPermHandler  */
+            /** @var \XoopsGroupPermHandler $groupperm_handler  */
             $groupperm_handler = xoops_getHandler('groupperm');
             $groups            = $groupperm_handler->getGroupIds('block_read', $this->getVar('bid'));
             switch ($mode) {
@@ -103,7 +103,7 @@ class SystemBlock extends XoopsBlock
         $form->addElement(new XoopsFormRadioYN(_AM_SYSTEM_BLOCKS_VISIBLE, 'visible', $this->getVar('visible')));
         // Visible In
         $mod_select     = new XoopsFormSelect(_AM_SYSTEM_BLOCKS_VISIBLEIN, 'modules', $modules, 5, true);
-        /* @var $module_handler XoopsModuleHandler */
+        /** @var \XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $criteria       = new CriteriaCompo(new Criteria('hasmain', 1));
         $criteria->add(new Criteria('isactive', 1));
@@ -138,11 +138,14 @@ class SystemBlock extends XoopsBlock
             }
         } else {
             if ($this->getVar('template') !== '') {
+                /** @var \XoopsTplfileHandler $tplfile_handler */
                 $tplfile_handler = xoops_getHandler('tplfile');
-                $btemplate       = $tplfile_handler->find($GLOBALS['xoopsConfig']['template_set'], 'block', $this->getVar('bid'));
+                /** @var \XoopsTplfile[] $btemplate */
+                $btemplate = $tplfile_handler->find($GLOBALS['xoopsConfig']['template_set'], 'block', $this->getVar('bid'));
                 if (count($btemplate) > 0) {
                     $form->addElement(new XoopsFormLabel(_AM_SYSTEM_BLOCKS_CONTENT, '<a href="' . XOOPS_URL . '/modules/system/admin.php?fct=tplsets&amp;op=edittpl&amp;id=' . $btemplate[0]->getVar('tpl_id') . '">' . _AM_SYSTEM_BLOCKS_EDITTPL . '</a>'));
                 } else {
+                    /** @var \XoopsTplfile[] $btemplate2 */
                     $btemplate2 = $tplfile_handler->find('default', 'block', $this->getVar('bid'));
                     if (count($btemplate2) > 0) {
                         $form->addElement(new XoopsFormLabel(_AM_SYSTEM_BLOCKS_CONTENT, '<a href="' . XOOPS_URL . '/modules/system/admin.php?fct=tplsets&amp;op=edittpl&amp;id=' . $btemplate2[0]->getVar('tpl_id') . '" rel="external">' . _AM_SYSTEM_BLOCKS_EDITTPL . '</a>'));
@@ -397,7 +400,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
      */
     public function getAllBlocksByGroup($groupid, $asobject = true, $side = null, $visible = null, $orderby = 'b.weight,b.bid', $isactive = 1)
     {
-        /* @var $db XoopsMySQLDatabase  */
+        /** @var \XoopsMySQLDatabase  $db */
         $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $ret = array();
         $sql = 'SELECT b.* ';
@@ -625,7 +628,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
             // invalid query
             return 0;
         }
-        /* @var $db XoopsMySQLDatabase  */
+        /** @var \XoopsMySQLDatabase  $db */
         $db = XoopsDatabaseFactory::getDatabaseConnection();
         if (isset($showFunc)) {
             // showFunc is set for more strict comparison

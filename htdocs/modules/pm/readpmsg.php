@@ -25,8 +25,9 @@ if (!is_object($GLOBALS['xoopsUser'])) {
 $valid_op_requests = array('out', 'save', 'in');
 $_REQUEST['op']    = !empty($_REQUEST['op']) && in_array($_REQUEST['op'], $valid_op_requests) ? $_REQUEST['op'] : 'in';
 $msg_id            = empty($_REQUEST['msg_id']) ? 0 : (int)$_REQUEST['msg_id'];
-$pm_handler        = xoops_getModuleHandler('message');
-$pm                = null;
+/** @var \PmMessageHandler $pm_handler */
+$pm_handler = xoops_getModuleHandler('message');
+$pm         = null;
 if ($msg_id > 0) {
     $pm = $pm_handler->get($msg_id);
 }

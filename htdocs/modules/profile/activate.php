@@ -27,7 +27,7 @@ if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
     if (empty($id)) {
         redirect_header(XOOPS_URL, 1, '');
     }
-    /* @var $member_handler XoopsMemberHandler */
+    /** @var \XoopsMemberHandler $member_handler */
     $member_handler = xoops_getHandler('member');
     $thisuser       = $member_handler->getUser($id);
     if (!is_object($thisuser)) {
@@ -42,7 +42,7 @@ if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
             if (false !== $member_handler->activateUser($thisuser)) {
                 $xoopsPreload = XoopsPreload::getInstance();
                 $xoopsPreload->triggerEvent('core.behavior.user.activate', $thisuser);
-                /* @var $config_handler XoopsConfigHandler  */
+                /** @var \XoopsConfigHandler $config_handler  */
                 $config_handler             = xoops_getHandler('config');
                 $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
                 if ($GLOBALS['xoopsConfigUser']['activation_type'] == 2) {
@@ -75,9 +75,10 @@ if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
     // Not implemented yet: re-send activiation code
 } elseif (!empty($_REQUEST['email']) && $xoopsConfigUser['activation_type'] != 0) {
     $myts           = MyTextSanitizer::getInstance();
-    /* @var $member_handler XoopsMemberHandler */
+    /** @var \XoopsMemberHandler $member_handler */
     $member_handler = xoops_getHandler('member');
-    $getuser        = $member_handler->getUsers(new Criteria('email', $myts->addSlashes(trim($_REQUEST['email']))));
+    /** @var \XoopsUser[] $getuser */
+    $getuser = $member_handler->getUsers(new Criteria('email', $myts->addSlashes(trim($_REQUEST['email']))));
     if (count($getuser) == 0) {
         redirect_header(XOOPS_URL, 2, _US_SORRYNOTFOUND);
     }

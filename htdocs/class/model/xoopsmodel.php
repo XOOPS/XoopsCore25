@@ -65,7 +65,6 @@ class XoopsModelFactory
      * @param string $name     handler name
      * @param mixed  $args     args
      *
-     * @internal param XoopsPersistableObjectHandler $ohandler reference to {@link XoopsPersistableObjectHandler}
      * @return object of handler
      */
     public static function loadHandler(XoopsPersistableObjectHandler $ohandler, $name, $args = null)
@@ -106,7 +105,7 @@ class XoopsModelAbstract
     /**
      * holds referenced to handler object
      *
-     * @var   object
+     * @var   \XoopsObject object
      * @param XoopsPersistableObjectHandler $ohandler reference to {@link XoopsPersistableObjectHandler}
      * @access protected
      */

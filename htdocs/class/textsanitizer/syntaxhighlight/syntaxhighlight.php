@@ -24,8 +24,8 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 class MytsSyntaxhighlight extends MyTextSanitizerExtension
 {
     /**
-     * @param $ts
-     * @param $source
+     * @param MyTextSanitizer $ts
+     * @param string $source
      * @param $language
      *
      * @return bool|mixed|string

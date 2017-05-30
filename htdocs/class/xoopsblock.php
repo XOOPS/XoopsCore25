@@ -27,6 +27,7 @@ include_once $GLOBALS['xoops']->path('kernel/object.php');
  */
 class XoopsBlock extends XoopsObject
 {
+    /** @var \XoopsMySQLDatabase $db */
     public $db;
 
     /**
@@ -340,6 +341,7 @@ class XoopsBlock extends XoopsObject
      */
     public static function getAllBlocksByGroup($groupid, $asobject = true, $side = null, $visible = null, $orderby = 'b.weight,b.bid', $isactive = 1)
     {
+        /** @var \XoopsMySQLDatabase $db */
         $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $ret = array();
         $sql = 'SELECT b.* ';
@@ -405,6 +407,7 @@ class XoopsBlock extends XoopsObject
      */
     public function getAllBlocks($rettype = 'object', $side = null, $visible = null, $orderby = 'side,weight,bid', $isactive = 1)
     {
+        /** @var \XoopsMySQLDatabase $db */
         $db          = XoopsDatabaseFactory::getDatabaseConnection();
         $ret         = array();
         $where_query = ' WHERE isactive=' . $isactive;
@@ -630,6 +633,7 @@ class XoopsBlock extends XoopsObject
             // invalid query
             return 0;
         }
+        /** @var \XoopsMySQLDatabase $db */
         $db = XoopsDatabaseFactory::getDatabaseConnection();
         if (isset($showFunc)) {
             // showFunc is set for more strict comparison

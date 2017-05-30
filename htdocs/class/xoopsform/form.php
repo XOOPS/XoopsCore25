@@ -289,7 +289,7 @@ class XoopsForm
     /**
      * Add an element to the form
      *
-     * @param string|XoopsFormElement $formElement reference to a {@link XoopsFormElement}
+     * @param string|XoopsFormElement $formElement
      * @param bool             $required    is this a "required" element?
      *
      */
@@ -305,6 +305,7 @@ class XoopsForm
                     $this->_required[]      = &$formElement;
                 }
             } else {
+                /** @var \XoopsFormElement $formElement */
                 $required_elements = &$formElement->getRequired();
                 $count             = count($required_elements);
                 for ($i = 0; $i < $count; ++$i) {

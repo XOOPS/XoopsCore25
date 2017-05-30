@@ -49,11 +49,13 @@ global $xoopsConfig;
 // check user/group - start
 $isadmin = false;
 
+/** @var \XoopsGroupPermHandler $gperm_handler */
 $gperm_handler = xoops_getHandler('groupperm');
 $groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 $isadmin       = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_IMAGE, $groups);
 
 // check categories readability/writability
+/** @var \XoopsImagecategoryHandler $imgcat_handler */
 $imgcat_handler = xoops_getHandler('imagecategory');
 $catreadlist    = $imgcat_handler->getList($groups, 'imgcat_read', 1);    // get readable categories
 $catwritelist   = $imgcat_handler->getList($groups, 'imgcat_write', 1);  // get writable categories
@@ -257,6 +259,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
         if (!$imgcat_handler->insert($imagecategory)) {
             redirect_header($current_file . '?target=' . $target, 3);
         }
+        /** @var \XoopsGroupPermHandler $imagecategoryperm_handler */
         $imagecategoryperm_handler = xoops_getHandler('groupperm');
         $criteria                  = new CriteriaCompo(new Criteria('gperm_itemid', $imgcat_id));
         $criteria->add(new Criteria('gperm_modid', 1));
@@ -271,6 +274,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
             array_push($readgroup, XOOPS_GROUP_ADMIN);
         }
         foreach ($readgroup as $rgroup) {
+            /** @var \XoopsGroupPerm $imagecategoryperm */
             $imagecategoryperm = $imagecategoryperm_handler->create();
             $imagecategoryperm->setVar('gperm_groupid', $rgroup);
             $imagecategoryperm->setVar('gperm_itemid', $imgcat_id);
@@ -325,9 +329,11 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
         if ($imagecategory->getVar('imgcat_type') !== 'C') {
             redirect_header($current_file . '?target=' . $target, 3, _MD_SCATDELNG);
         }
+        /** @var \XoopsImageHandler $image_handler */
         $image_handler = xoops_getHandler('image');
-        $images        = $image_handler->getObjects(new Criteria('imgcat_id', $imgcat_id), true, false);
-        $errors        = array();
+        /** @var \XoopsImage[] $images */
+        $images = $image_handler->getObjects(new Criteria('imgcat_id', $imgcat_id), true, false);
+        $errors = array();
         foreach (array_keys($images) as $i) {
             if (!$image_handler->delete($images[$i])) {
                 $errors[] = sprintf(_MD_FAILDEL, $i);
@@ -425,6 +431,7 @@ if ($op === 'list') {
     if (!empty($catreadlist)) {
         echo '<table width="100%" class="outer" cellspacing="1">';
         // get all categories
+        /** @var \XoopsImagecategory[] $imagecategories */
         $imagecategories = $imgcat_handler->getObjects();
         $catcount        = count($imagecategories);
         $image_handler   = xoops_getHandler('image');

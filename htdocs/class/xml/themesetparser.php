@@ -161,7 +161,7 @@ class ThemeSetDateCreatedHandler extends XmlTagHandler
     }
 
     /**
-     * @param $parser
+     * @param XoopsThemeSetParser $parser
      * @param $data
      */
     public function handleCharacterData($parser, &$data)
@@ -197,7 +197,7 @@ class ThemeSetAuthorHandler extends XmlTagHandler
     }
 
     /**
-     * @param $parser
+     * @param XoopsThemeSetParser $parser
      * @param $attributes
      */
     public function handleBeginElement($parser, &$attributes)
@@ -206,7 +206,7 @@ class ThemeSetAuthorHandler extends XmlTagHandler
     }
 
     /**
-     * @param $parser
+     * @param  $parser
      */
     public function handleEndElement($parser)
     {
@@ -235,7 +235,7 @@ class ThemeSetDescriptionHandler extends XmlTagHandler
     }
 
     /**
-     * @param $parser
+     * @param XoopsThemeSetParser $parser
      * @param $data
      */
     public function handleCharacterData($parser, &$data)
@@ -274,7 +274,7 @@ class ThemeSetGeneratorHandler extends XmlTagHandler
     }
 
     /**
-     * @param $parser
+     * @param XoopsThemeSetParser $parser
      * @param $data
      */
     public function handleCharacterData($parser, &$data)
@@ -310,7 +310,7 @@ class ThemeSetNameHandler extends XmlTagHandler
     }
 
     /**
-     * @param $parser
+     * @param XoopsThemeSetParser $parser
      * @param $data
      */
     public function handleCharacterData($parser, &$data)
@@ -349,7 +349,7 @@ class ThemeSetEmailHandler extends XmlTagHandler
     }
 
     /**
-     * @param $parser
+     * @param XoopsThemeSetParser $parser
      * @param $data
      */
     public function handleCharacterData($parser, &$data)
@@ -385,7 +385,7 @@ class ThemeSetLinkHandler extends XmlTagHandler
     }
 
     /**
-     * @param $parser
+     * @param XoopsThemeSetParser $parser
      * @param $data
      */
     public function handleCharacterData($parser, &$data)
@@ -421,7 +421,7 @@ class ThemeSetTemplateHandler extends XmlTagHandler
     }
 
     /**
-     * @param $parser
+     * @param XoopsThemeSetParser $parser
      * @param $attributes
      */
     public function handleBeginElement($parser, &$attributes)
@@ -431,7 +431,7 @@ class ThemeSetTemplateHandler extends XmlTagHandler
     }
 
     /**
-     * @param $parser
+     * @param XoopsThemeSetParser $parser
      */
     public function handleEndElement($parser)
     {
@@ -460,7 +460,7 @@ class ThemeSetImageHandler extends XmlTagHandler
     }
 
     /**
-     * @param $parser
+     * @param XoopsThemeSetParser $parser
      * @param $attributes
      */
     public function handleBeginElement($parser, &$attributes)
@@ -470,7 +470,7 @@ class ThemeSetImageHandler extends XmlTagHandler
     }
 
     /**
-     * @param $parser
+     * @param XoopsThemeSetParser $parser
      */
     public function handleEndElement($parser)
     {
@@ -499,7 +499,7 @@ class ThemeSetModuleHandler extends XmlTagHandler
     }
 
     /**
-     * @param $parser
+     * @param XoopsThemeSetParser $parser
      * @param $data
      */
     public function handleCharacterData($parser, &$data)
@@ -536,7 +536,7 @@ class ThemeSetFileTypeHandler extends XmlTagHandler
     }
 
     /**
-     * @param $parser
+     * @param XoopsThemeSetParser $parser
      * @param $data
      */
     public function handleCharacterData($parser, &$data)
@@ -572,7 +572,7 @@ class ThemeSetTagHandler extends XmlTagHandler
     }
 
     /**
-     * @param $parser
+     * @param XoopsThemeSetParser $parser
      * @param $data
      */
     public function handleCharacterData($parser, &$data)

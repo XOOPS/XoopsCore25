@@ -135,6 +135,7 @@ class XoopsCacheModel extends XoopsCacheEngine
         if (!$value) {
             return false;
         }
+        /** @var \XoopsObject $cache_obj */
         $cache_obj = $this->model->create();
         $cache_obj->setVar($this->model->keyname, $key);
         $cache_obj->setVar($this->fields[0], $value);

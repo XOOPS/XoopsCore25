@@ -26,6 +26,7 @@ echo $indexAdmin->renderButton('right', '');
 
 $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : (isset($_REQUEST['id']) ? 'edit' : 'list');
 
+/** @var \ProfileRegstepHandler $handler */
 $handler = xoops_getModuleHandler('regstep');
 switch ($op) {
     case 'list':
@@ -34,6 +35,7 @@ switch ($op) {
         break;
 
     case 'new':
+
         $obj = $handler->create();
         include_once dirname(__DIR__) . '/include/forms.php';
         $form = profile_getStepForm($obj);

@@ -200,6 +200,7 @@ class XoopsMemberHandler
      */
     public function getGroupList(CriteriaElement $criteria = null)
     {
+        /** @var \XoopsObject[] $groups */
         $groups = $this->groupHandler->getObjects($criteria, true);
         $ret    = array();
         foreach (array_keys($groups) as $i) {
@@ -217,6 +218,7 @@ class XoopsMemberHandler
      */
     public function getUserList(CriteriaElement $criteria = null)
     {
+        /** @var \XoopsUser[] $users */
         $users =& $this->userHandler->getObjects($criteria, true);
         $ret   = array();
         foreach (array_keys($users) as $i) {
@@ -322,10 +324,12 @@ class XoopsMemberHandler
      */
     public function loginUser($uname, $pwd)
     {
+        /** @var \XoopsMySQLDatabase $db */
         $db = XoopsDatabaseFactory::getDatabaseConnection();
         $uname = $db->escape($uname);
         $pwd = $db->escape($pwd);
         $criteria = new Criteria('uname', $uname);
+        /** @var \XoopsUser[] $user */
         $user =& $this->userHandler->getObjects($criteria, false);
         if (!$user || count($user) != 1) {
             return false;
@@ -368,7 +372,7 @@ class XoopsMemberHandler
      */
     public function getColumnCharacterLength($table, $column)
     {
-        /** @var XoopsMySQLDatabase $db */
+        /** @var \XoopsMySQLDatabase $db */
         $db = XoopsDatabaseFactory::getDatabaseConnection();
 
         $dbname = constant('XOOPS_DB_NAME');

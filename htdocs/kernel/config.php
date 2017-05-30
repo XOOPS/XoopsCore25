@@ -110,6 +110,7 @@ class XoopsConfigHandler
         if (!$this->_cHandler->insert($config)) {
             return false;
         }
+        /** @var \XoopsConfigItem[] $options */
         $options =& $config->getConfOptions();
         $count   = count($options);
         $conf_id = $config->getVar('conf_id');
@@ -283,6 +284,7 @@ class XoopsConfigHandler
             if (empty($conf_catid)) {
                 $criteria->add(new Criteria('conf_catid', $conf_catid));
             }
+            /** @var \XoopsConfigItem[] $configs */
             $configs   = $this->_cHandler->getObjects($criteria);
             $confcount = count($configs);
             $ret       = array();

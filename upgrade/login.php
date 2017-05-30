@@ -28,6 +28,7 @@ if (empty($_POST['uname']) || empty($_POST['pass'])) {
     $uname = !isset($_POST['uname']) ? '' : $myts->addSlashes(trim($_POST['uname']));
     $pass  = !isset($_POST['pass']) ? '' : $myts->addSlashes(trim($_POST['pass']));
 
+    /** @var \XoopsMemberHandler $member_handler */
     $member_handler = xoops_getHandler('member');
 
     include_once XOOPS_ROOT_PATH . '/class/auth/authfactory.php';
@@ -35,7 +36,8 @@ if (empty($_POST['uname']) || empty($_POST['pass'])) {
         include_once XOOPS_ROOT_PATH . '/language/english/auth.php';
     }
     $xoopsAuth = XoopsAuthFactory::getAuthConnection($uname);
-    $user      = $xoopsAuth->authenticate($uname, $pass);
+    /** @var \XoopsUser $user */
+    $user = $xoopsAuth->authenticate($uname, $pass);
 
     // For XOOPS 2.2*
     if (!is_object($user)) {

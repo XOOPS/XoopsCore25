@@ -16,8 +16,8 @@
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
-/* @var  $xoopsUser XoopsUser */
-/* @var $xoopsModule XoopsModule */
+/** @var \XoopsUser $xoopsUser */
+/** @var \XoopsModule $xoopsModule */
 
 // Check users rights
 if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid())) {
@@ -28,9 +28,9 @@ $nb_group = xoops_getModuleOption('groups_pager', 'system');
 // Get Action type
 $op = system_CleanVars($_REQUEST, 'op', 'list', 'string');
 // Get groups handler
-/* @var $groups_Handler SystemGroupHandler */
+/** @var \SystemGroupHandler $groups_Handler */
 $groups_Handler = xoops_getModuleHandler('group', 'system');
-/* @var $member_handler XoopsMemberHandler */
+/** @var \XoopsMemberHandler $member_handler */
 $member_handler = xoops_getHandler('member');
 // Define main template
 $GLOBALS['xoopsOption']['template_main'] = 'system_groups.tpl';
@@ -61,6 +61,7 @@ switch ($op) {
         $criteria->setLimit($nb_group);
         // Count group
         $groups_count = $groups_Handler->getCount($criteria);
+        /** @var \XoopsGroup[] $groups_arr */
         $groups_arr   = $groups_Handler->getall($criteria);
         // Assign Template variables
         $xoopsTpl->assign('groups_count', $groups_count);
@@ -70,7 +71,7 @@ switch ($op) {
                 $groups['groups_id']   = $groups_id;
                 $groups['name']        = $groups_arr[$i]->getVar('name');
                 $groups['description'] = $groups_arr[$i]->getVar('description');
-                /* @var $member_handler SystemMemberHandler */
+                /** @var \XoopsMemberHandler $member_handler */
                 $member_handler        = xoops_getHandler('member', 'system');
                 if ($groups_id != XOOPS_GROUP_ANONYMOUS) {
                     $group_id_arr[0]              = $groups_id;
@@ -108,6 +109,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(_AM_SYSTEM_GROUPS_NAV_TIPS_2);
         $xoBreadCrumb->render();
         // Create form
+        /** @var \SystemGroup $obj */
         $obj  = $groups_Handler->create();
         $form = $obj->getForm();
         // Assign form
@@ -126,6 +128,7 @@ switch ($op) {
         // Create form
         $groups_id = system_CleanVars($_REQUEST, 'groups_id', 0, 'int');
         if ($groups_id > 0) {
+            /** @var SystemGroup $obj */
             $obj  = $groups_Handler->get($groups_id);
             $form = $obj->getForm();
             // Assign form
@@ -144,7 +147,7 @@ switch ($op) {
         $admin_mids    = system_CleanVars($_POST, 'admin_mids', array(), 'array');
         $read_mids     = system_CleanVars($_POST, 'read_mids', array(), 'array');
         $read_bids     = system_CleanVars($_POST, 'read_bids', array(), 'array');
-        /* @var $member_handler XoopsMemberHandler */
+        /** @var \XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $group          = $member_handler->createGroup();
         $group->setVar('name', $_POST['name']);
@@ -158,11 +161,12 @@ switch ($op) {
             xoops_cp_footer();
         } else {
             $groupid       = $group->getVar('groupid');
-            /* @var  $gperm_handler XoopsGroupPermHandler */
+            /** @var \XoopsGroupPermHandler $gperm_handler */
             $gperm_handler = xoops_getHandler('groupperm');
             if (count($system_catids) > 0) {
                 $admin_mids[] = 1;
                 foreach ($system_catids as $s_cid) {
+                    /** @var \XoopsGroup $sysperm */
                     $sysperm = $gperm_handler->create();
                     $sysperm->setVar('gperm_groupid', $groupid);
                     $sysperm->setVar('gperm_itemid', $s_cid);
@@ -172,6 +176,7 @@ switch ($op) {
                 }
             }
             foreach ($admin_mids as $a_mid) {
+                /** @var \XoopsGroup $modperm */
                 $modperm = $gperm_handler->create();
                 $modperm->setVar('gperm_groupid', $groupid);
                 $modperm->setVar('gperm_itemid', $a_mid);
@@ -189,6 +194,7 @@ switch ($op) {
                 $gperm_handler->insert($modperm);
             }
             foreach ($read_bids as $r_bid) {
+                /** @var \XoopsGroup $blockperm */
                 $blockperm = $gperm_handler->create();
                 $blockperm->setVar('gperm_groupid', $groupid);
                 $blockperm->setVar('gperm_itemid', $r_bid);
@@ -209,7 +215,7 @@ switch ($op) {
         $admin_mids    = system_CleanVars($_POST, 'admin_mids', array(), 'array');
         $read_mids     = system_CleanVars($_POST, 'read_mids', array(), 'array');
         $read_bids     = system_CleanVars($_POST, 'read_bids', array(), 'array');
-        /* @var $member_handler XoopsMemberHandler */
+        /** @var \XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $gid            = system_CleanVars($_POST, 'g_id', 0, 'int');
         if ($gid > 0) {
@@ -230,7 +236,7 @@ switch ($op) {
                 xoops_cp_footer();
             } else {
                 $groupid       = $group->getVar('groupid');
-                /* @var  $gperm_handler XoopsGroupPermHandler */
+                /** @var \XoopsGroupPermHandler $gperm_handler */
                 $gperm_handler = xoops_getHandler('groupperm');
                 $criteria      = new CriteriaCompo(new Criteria('gperm_groupid', $groupid));
                 $criteria->add(new Criteria('gperm_modid', 1));
@@ -243,6 +249,7 @@ switch ($op) {
                 if (count($system_catids) > 0) {
                     $admin_mids[] = 1;
                     foreach ($system_catids as $s_cid) {
+                        /** @var \XoopsGroup $sysperm */
                         $sysperm = $gperm_handler->create();
                         $sysperm->setVar('gperm_groupid', $groupid);
                         $sysperm->setVar('gperm_itemid', $s_cid);
@@ -252,6 +259,7 @@ switch ($op) {
                     }
                 }
                 foreach ($admin_mids as $a_mid) {
+                    /** @var \XoopsGroup $modperm */
                     $modperm = $gperm_handler->create();
                     $modperm->setVar('gperm_groupid', $groupid);
                     $modperm->setVar('gperm_itemid', $a_mid);
@@ -269,6 +277,7 @@ switch ($op) {
                     $gperm_handler->insert($modperm);
                 }
                 foreach ($read_bids as $r_bid) {
+                    /** @var \XoopsGroup $blockperm */
                     $blockperm = $gperm_handler->create();
                     $blockperm->setVar('gperm_groupid', $groupid);
                     $blockperm->setVar('gperm_itemid', $r_bid);
@@ -293,11 +302,11 @@ switch ($op) {
                     redirect_header('admin.php?fct=groups', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
                 }
                 if ($groups_id > 0 && !in_array($groups_id, array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS))) {
-                    /* @var $member_handler XoopsMemberHandler */
+                    /** @var \XoopsMemberHandler $member_handler */
                     $member_handler = xoops_getHandler('member');
                     $group          = $member_handler->getGroup($groups_id);
                     $member_handler->deleteGroup($group);
-                    /* @var $gperm_handler XoopsGroupPermHandler */
+                    /** @var \XoopsGroupPermHandler $gperm_handler */
                     $gperm_handler = xoops_getHandler('groupperm');
                     $gperm_handler->deleteByGroup($groups_id);
                     redirect_header('admin.php?fct=groups', 1, _AM_SYSTEM_GROUPS_DBUPDATED);

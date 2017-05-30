@@ -44,7 +44,7 @@ class Upgrade_220 extends XoopsUpgrade
      */
     public function check_profile()
     {
-        /* @var $module_handler XoopsModuleHandler */
+        /** @var \XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         if (!$profile_module = $module_handler->getByDirname('profile')) {
             return true;
@@ -142,12 +142,13 @@ class Upgrade_220 extends XoopsUpgrade
         $profile_config_arr['reg_disclaimer']        = '';
         $profile_config_arr['allow_register']        = 1;
 
-        /* @var $module_handler XoopsModuleHandler */
+        /** @var \XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
-        /* @var $config_handler XoopsConfigHandler */
+        /** @var \XoopsConfigHandler $config_handler */
         $config_handler = xoops_getHandler('config');
         $profile_module = $module_handler->getByDirname('profile');
         if (is_object($profile_module)) {
+            /** @var \XoopsConfigItem[] $profile_config */
             $profile_config = $config_handler->getConfigs(new Criteria('conf_modid', $profile_module->getVar('mid')));
             foreach (array_keys($profile_config) as $i) {
                 $profile_config_arr[$profile_config[$i]->getVar('conf_name')] = $profile_config[$i]->getVar('conf_value', 'n');
@@ -161,6 +162,7 @@ class Upgrade_220 extends XoopsUpgrade
         $criteria->add(new Criteria('conf_modid', 0));
         $criteria->setSort('conf_name');
         $criteria->setOrder('ASC');
+        /** @var \XoopsConfigItem[] $configs */
         $configs             = $config_handler->getConfigs($criteria);
         $id_activation_type  = $configs[0]->getVar('conf_id');
         $id_uname_test_level = $configs[1]->getVar('conf_id');

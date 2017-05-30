@@ -30,11 +30,13 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class XoopsTree
 {
+    /** @var \XoopsMySQLDatabase $db */
     public $table; //table with parent-child structure
     public $id; //name of unique id for records in table $table
     public $pid; // name of parent id used in table $table
     public $order; //specifies the order of query results
     public $title; // name of a field in table $table which will be used when  selection box and paths are generated
+    /** @var \XoopsMySQLDatabase $db */
     public $db;
 
     //constructor of class XoopsTree

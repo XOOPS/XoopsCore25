@@ -38,7 +38,7 @@ class XoopsUserUtility
         global $xoopsConfigUser, $xoopsConfig;
 
         if (empty($xoopsConfigUser)) {
-            /* @var $config_handler XoopsConfigHandler  */
+            /** @var \XoopsConfigHandler $config_handler  */
             $config_handler  = xoops_getHandler('config');
             $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
         }
@@ -47,7 +47,7 @@ class XoopsUserUtility
         }
 
         if (!empty($user) && !is_object($user)) {
-            /* @var $member_handler XoopsMemberHandler */
+            /** @var \XoopsMemberHandler $member_handler */
             $member_handler = xoops_getHandler('member');
             $user           = $member_handler->getUser($user);
         }
@@ -85,6 +85,7 @@ class XoopsUserUtility
     public static function validate()
     {
         global $xoopsUser;
+        /** @var \XoopsObject $user */
 
         $args     = func_get_args();
         $args_num = func_num_args();
@@ -115,7 +116,7 @@ class XoopsUserUtility
             $uname = $user->getVar('uname', 'n');
             $email = $user->getVar('email', 'n');
         }
-        /* @var $config_handler XoopsConfigHandler  */
+        /** @var \XoopsConfigHandler $config_handler  */
         $config_handler  = xoops_getHandler('config');
         $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
@@ -178,6 +179,7 @@ class XoopsUserUtility
              * }
              */
         }
+        /** @var \XoopsMySQLDatabase $xoopsDB */
         $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
         // Check if uname/email already exists if the user is a new one
         $uid    = is_object($user) ? $user->getVar('uid') : 0;
@@ -263,6 +265,7 @@ class XoopsUserUtility
      */
     public static function getUnameFromIds($uid, $usereal = false, $linked = false)
     {
+        /** @var \XoopsMySQLDatabase $xoopsDB */
         if (!is_array($uid)) {
             $uid = array($uid);
         }
@@ -309,7 +312,7 @@ class XoopsUserUtility
         $userid   = (int)$userid;
         $username = '';
         if ($userid > 0) {
-            /* @var $member_handler XoopsMemberHandler */
+            /** @var \XoopsMemberHandler $member_handler */
             $member_handler = xoops_getHandler('member');
             $user           = $member_handler->getUser($userid);
             if (is_object($user)) {

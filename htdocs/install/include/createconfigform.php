@@ -41,10 +41,11 @@ function createConfigform($config)
     xoops_load('XoopsFormRendererBootstrap3');
     XoopsFormRenderer::getInstance()->set(new XoopsFormRendererBootstrap3());
 
-    /* @var $config_handler XoopsConfigHandler  */
+    /** @var \XoopsConfigHandler $config_handler  */
     $config_handler         = xoops_getHandler('config');
     $GLOBALS['xoopsConfig'] = $xoopsConfig = $config_handler->getConfigsByCat(XOOPS_CONF);
 
+    /** @var \XoopsConfigItem[] $config */
     $ret       = array();
     $confcount = count($config);
 
@@ -70,6 +71,7 @@ function createConfigform($config)
 
             case 'select':
                 $ele     = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
+                /** @var \XoopsConfigOption[] $options */
                 $options = $config_handler->getConfigOptions(new Criteria('conf_id', $config[$i]->getVar('conf_id')));
                 $opcount = count($options);
                 for ($j = 0; $j < $opcount; ++$j) {
@@ -109,6 +111,7 @@ function createConfigform($config)
 
             case 'tplset':
                 $ele            = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
+                /** @var \XoopsTplsetHandler $tplset_handler */
                 $tplset_handler = xoops_getHandler('tplset');
                 $tplsetlist     = $tplset_handler->getList();
                 asort($tplsetlist);
@@ -129,7 +132,7 @@ function createConfigform($config)
 
             case 'startpage':
                 $ele            = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
-                /* @var $module_handler XoopsModuleHandler */
+                /** @var \XoopsModuleHandler $module_handler */
                 $module_handler = xoops_getHandler('module');
                 $criteria       = new CriteriaCompo(new Criteria('hasmain', 1));
                 $criteria->add(new Criteria('isactive', 1));
@@ -156,11 +159,12 @@ function createConfigform($config)
                 break;
 
             case 'module_cache':
-                /* @var $module_handler XoopsModuleHandler */
+                /** @var \XoopsModuleHandler $module_handler */
                 $module_handler = xoops_getHandler('module');
-                $modules        = $module_handler->getObjects(new Criteria('hasmain', 1), true);
-                $currrent_val   = $config[$i]->getConfValueForOutput();
-                $cache_options  = array(
+                /** @var \XoopsModule[] $modules */
+                $modules       = $module_handler->getObjects(new Criteria('hasmain', 1), true);
+                $currrent_val  = $config[$i]->getConfValueForOutput();
+                $cache_options = array(
                     '0'      => _NOCACHE,
                     '30'     => sprintf(_SECONDS, 30),
                     '60'     => _MINUTE,
@@ -243,6 +247,7 @@ function createConfigform($config)
  */
 function createThemeform($config)
 {
+    /** @var \XoopsConfigItem $config */
     xoops_load('XoopsFormRendererBootstrap3');
     XoopsFormRenderer::getInstance()->set(new XoopsFormRendererBootstrap3());
 

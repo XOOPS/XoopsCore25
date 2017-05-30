@@ -194,7 +194,7 @@ class SaxParser
      *
      */
     /**
-     * @param $tagHandler
+     * @param XmlTagHandler $tagHandler
      */
     public function addTagHandler($tagHandler)
     {

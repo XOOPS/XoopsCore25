@@ -2,6 +2,7 @@
 include '../../../include/cp_header.php';
 include 'admin_header.php';
 require_once dirname(__DIR__) . '/class/gtickets.php';
+/** @var \XoopsMySQLDatabase $db */
 $db = XoopsDatabaseFactory::getDatabaseConnection();
 
 // COPY TABLES

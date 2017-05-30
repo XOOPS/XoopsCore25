@@ -125,7 +125,7 @@ function system_AdminIcons($img)
 function system_loadTemplate($name)
 {
     global $sysTpl, $xoopsModule;
-
+    /** @var Smarty $sysTpl */
     $path = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/templates/admin/' . $name . '.tpl';
     if (file_exists($path)) {
         echo $sysTpl->fetch($path);

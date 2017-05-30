@@ -69,6 +69,7 @@ class XoopsModelJoint extends XoopsModelAbstract
      */
     public function &getByLink(CriteriaElement $criteria = null, $fields = null, $asObject = true, $field_link = null, $field_object = null)
     {
+
         if (!empty($field_link)) {
             $this->handler->field_link = $field_link;
         }

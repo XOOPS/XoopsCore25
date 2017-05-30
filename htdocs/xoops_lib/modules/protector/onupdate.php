@@ -36,8 +36,9 @@ if (!function_exists('protector_onupdate_base')) {
                 $msgs = array();
             }
         }
-
+        /** @var \XoopsMySQLDatabase $db */
         $db  = XoopsDatabaseFactory::getDatabaseConnection();
+        /** @var \XoopsModule $module */
         $mid = $module->getVar('mid');
 
         // TABLES (write here ALTER TABLE etc. if necessary)

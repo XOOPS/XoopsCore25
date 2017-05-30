@@ -20,6 +20,7 @@
  */
 function smarty_resource_db_source($tpl_name, &$tpl_source, &$smarty)
 {
+    /** @var \XoopsTplset $tpl */
     if (!$tpl = smarty_resource_db_tplinfo($tpl_name)) {
         return false;
     }
@@ -44,6 +45,7 @@ function smarty_resource_db_source($tpl_name, &$tpl_source, &$smarty)
  */
 function smarty_resource_db_timestamp($tpl_name, &$tpl_timestamp, &$smarty)
 {
+    /** @var \XoopsTplset $tpl */
     if (!$tpl = smarty_resource_db_tplinfo($tpl_name)) {
         return false;
     }
@@ -92,6 +94,7 @@ function smarty_resource_db_tplinfo($tpl_name)
     }
     $tplset          = $xoopsConfig['template_set'];
     $theme           = isset($xoopsConfig['theme_set']) ? $xoopsConfig['theme_set'] : 'default';
+    /** @var \XoopsTplfileHandler $tplfile_handler */
     $tplfile_handler = xoops_getHandler('tplfile');
     // If we're not using the "default" template set, then get the templates from the DB
     if ($tplset !== 'default') {
@@ -106,6 +109,7 @@ function smarty_resource_db_tplinfo($tpl_name)
     if (!count($tplobj)) {
         return $cache[$tpl_name] = false;
     }
+    /** @var \XoopsTplset $tplobj */
     $tplobj = $tplobj[0];
     $module = $tplobj->getVar('tpl_module', 'n');
     $type   = $tplobj->getVar('tpl_type', 'n');

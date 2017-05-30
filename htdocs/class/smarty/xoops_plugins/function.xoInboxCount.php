@@ -25,6 +25,7 @@ function smarty_function_xoInboxCount($params, &$smarty)
         $totals['assign'] = (int)$_SESSION['xoops_inbox_count'];
         $totals['total'] = (int)$_SESSION['xoops_inbox_total'];
     } else {
+        /** @var \XoopsPrivmessageHandler $pm_handler */
         $pm_handler = xoops_getHandler('privmessage');
 
         $xoopsPreload = XoopsPreload::getInstance();
@@ -44,6 +45,7 @@ function smarty_function_xoInboxCount($params, &$smarty)
     $printCount = true;
     foreach ($totals as $key => $count) {
         if (!empty($params[$key])) {
+            /** @var \Smarty $smarty */
             $smarty->assign($params[$key], $count);
             $printCount = false;
         }

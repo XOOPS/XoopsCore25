@@ -35,7 +35,7 @@ class XoopsModelWrite extends XoopsModelAbstract
      * CleanVars only contains changed and cleaned variables
      * Reference is used for PHP4 compliance
      *
-     * @param $object
+     * @param \XoopsObject $object
      *
      * @return bool true if successful
      * @access public

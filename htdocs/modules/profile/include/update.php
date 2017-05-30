@@ -50,9 +50,10 @@ function xoops_module_update_profile(XoopsModule $module, $oldversion = null)
 
         include_once __DIR__ . '/install.php';
         xoops_module_install_profile($module);
-        /* @var $goupperm_handler XoopsGroupPermHandler */
+        /** @var \XoopsGroupPermHandler $goupperm_handler */
         $goupperm_handler = xoops_getHandler('groupperm');
 
+        /** @var \ProfileFieldHandler $field_handler */
         $field_handler = xoops_getModuleHandler('field', $module->getVar('dirname', 'n'));
         $skip_fields   = $field_handler->getUserVars();
         $skip_fields[] = 'newemail';
@@ -126,7 +127,8 @@ function xoops_module_update_profile(XoopsModule $module, $oldversion = null)
         xoops_load('xoopsfile');
         //delete /images directory
         $imagesDirectory = XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'n') . '/images/';
-        $folderHandler   = XoopsFile::getHandler('folder', $imagesDirectory);
+        /** @var \XoopsFolderHandler $folderHandler */
+        $folderHandler = XoopsFile::getHandler('folder', $imagesDirectory);
         $folderHandler->delete($imagesDirectory);
         //delete /templates/style.css file
         $cssFile       = XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'n') . '/templates/style.css';
@@ -146,6 +148,7 @@ function xoops_module_update_profile(XoopsModule $module, $oldversion = null)
         $tables->executeQueue(true);
     }
 
+    /** @var \ProfileProfileHandler $profile_handler */
     $profile_handler = xoops_getModuleHandler('profile', $module->getVar('dirname', 'n'));
     $profile_handler->cleanOrphan($GLOBALS['xoopsDB']->prefix('users'), 'uid', 'profile_id');
     $field_handler = xoops_getModuleHandler('field', $module->getVar('dirname', 'n'));

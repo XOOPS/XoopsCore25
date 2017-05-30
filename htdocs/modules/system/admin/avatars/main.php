@@ -46,12 +46,13 @@ switch ($op) {
         $xoBreadCrumb->addTips(_AM_SYSTEM_AVATAR_TIPS);
         $xoBreadCrumb->render();
         // Get avatar handler
-        /* @var  $avt_handler XoopsAvatarHandler */
+        /** @var  \XoopsAvatarHandler $avt_handler */
         $avt_handler = xoops_getModuleHandler('avatar');
         // Get User Config
-        /* @var $config_handler XoopsConfigHandler  */
+        /** @var \XoopsConfigHandler  $config_handler */
         $config_handler  = xoops_getHandler('config');
-        $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+    /** @var \XoopsConfigItem $xoopsConfigUser */
+    $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
         // User language
         xoops_loadLanguage('user');
         // Count avatars
@@ -62,8 +63,9 @@ switch ($op) {
         $xoopsTpl->assign('count_system', $savatar_count);
         $xoopsTpl->assign('count_custom', $cavatar_count);
         // Create form
-        $avatar = $avt_handler->create();
-        $form   = $avatar->getForm();
+    /** @var \SystemAvatar $avatar */
+    $avatar   = $avt_handler->create();
+        $form = $avatar->getForm();
         // Assign form
         $xoopsTpl->assign('form', $form->render());
         // Call Footer
@@ -90,7 +92,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(_AM_SYSTEM_AVATAR_TIPS);
         $xoBreadCrumb->render();
         // Get avatar handler
-        /* @var  $avt_handler XoopsAvatarHandler */
+        /** @var  \XoopsAvatarHandler $avt_handler */
         $avt_handler = xoops_getHandler('avatar');
         // Count avatars
         $savatar_count = $avt_handler->getCount(new Criteria('avatar_type', 'S'));
@@ -146,9 +148,11 @@ switch ($op) {
         // User language
         xoops_loadLanguage('user');
         // Get avatar handler
+        /** @var \SystemAvatarHandler $avt_handler */
         $avt_handler = xoops_getModuleHandler('avatar');
         $avatar_id   = system_CleanVars($_REQUEST, 'avatar_id', 0, 'int');
         if ($avatar_id > 0) {
+            /** @var SystemAvatar $avatar */
             $avatar = $avt_handler->get($avatar_id);
             // Create form
             $form = $avatar->getForm();
@@ -166,7 +170,7 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=avatars', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        /* @var $config_handler XoopsConfigHandler  */
+        /** @var \XoopsConfigHandler  $config_handler */
         $config_handler  = xoops_getHandler('config');
         $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
         // Upload class
@@ -332,7 +336,7 @@ switch ($op) {
         $xoBreadCrumb->addLink(_AM_SYSTEM_AVATAR_MANAGER, system_adminVersion('avatars', 'adminpath'));
         $xoBreadCrumb->addLink(_AM_SYSTEM_AVATAR_MULTIUPLOAD);
         $xoBreadCrumb->render();
-        /* @var $config_handler XoopsConfigHandler  */
+        /** @var \XoopsConfigHandler  $config_handler */
         $config_handler  = xoops_getHandler('config');
         $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
         

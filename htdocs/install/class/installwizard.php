@@ -249,7 +249,7 @@ class XoopsInstallWizard
     {
         $hidden = '';
         $ret    = '';
-
+/** @var  \XoopsForm $form */
         foreach ($this->form as $form) {
             $ret .= '<div class="panel panel-info">';
             $ret .= '<div class="panel-heading">' . $form->getTitle() . '</div>';

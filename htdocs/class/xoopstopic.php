@@ -36,6 +36,8 @@ class XoopsTopic
     public $prefix; // only used in topic tree
     public $use_permission = false;
     public $mid; // module id used for setting permission
+    /** @var \XoopsMySQLDatabase $db */
+    public $db;
 
     /**
      * @param     $table

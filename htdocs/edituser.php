@@ -32,7 +32,7 @@ if (!is_object($xoopsUser)) {
 
 // initialize $op variable
 $op = XoopsRequest::getCmd('op', 'editprofile');
-/* @var $config_handler XoopsConfigHandler  */
+/** @var \XoopsConfigHandler $config_handler  */
 $config_handler  = xoops_getHandler('config');
 $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 $myts            = MyTextSanitizer::getInstance();
@@ -71,6 +71,7 @@ if ($op === 'saveuser') {
         echo '</div><br>';
         $op = 'editprofile';
     } else {
+        /** @var \XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $edituser       = $member_handler->getUser($uid);
         $edituser->setVar('name', XoopsRequest::getString('name', ''));
@@ -232,9 +233,11 @@ if ($op === 'avatarform') {
         $form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
         $form->display();
     }
+    /** @var \XoopsAvatarHandler $avatar_handler */
     $avatar_handler  = xoops_getHandler('avatar');
     $form2           = new XoopsThemeForm(_US_CHOOSEAVT, 'uploadavatar', 'edituser.php', 'post', true);
     $avatar_select   = new XoopsFormSelect('', 'user_avatar', $xoopsUser->getVar('user_avatar'));
+    /** @var \XoopsAvatar[] $avatar_list */
     $avatar_list     = $avatar_handler->getList('S', true);
     $avatar_selected = $xoopsUser->getVar('user_avatar', 'E');
 //    $avatar_selected = in_array($avatar_selected, array_keys($avatar_list)) ? $avatar_selected : "blank.gif";
@@ -280,7 +283,7 @@ if ($op === 'avatarupload') {
             $uploader->setPrefix('cavt');
             if ($uploader->upload()) {
 
-                /* @var $avt_handler XoopsAvatarHandler */
+                /** @var \XoopsAvatarHandler $avt_handler */
                 $avt_handler = xoops_getHandler('avatar');
                 $avatar      = $avt_handler->create();
                 $avatar->setVar('avatar_file', 'avatars/' . $uploader->getSavedFileName());
@@ -340,7 +343,7 @@ if ($op === 'avatarchoose') {
     if (0 === strpos($user_avatarpath, realpath(XOOPS_UPLOAD_PATH)) && is_file($user_avatarpath)) {
         $oldavatar = $xoopsUser->getVar('user_avatar');
         $xoopsUser->setVar('user_avatar', $user_avatar);
-        /* @var $member_handler XoopsMemberHandler */
+        /** @var \XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         if (!$member_handler->insertUser($xoopsUser)) {
             include $GLOBALS['xoops']->path('header.php');
@@ -350,6 +353,7 @@ if ($op === 'avatarchoose') {
         }
 //        if ($oldavatar && preg_match("/^cavt/", strtolower(substr($oldavatar, 8)))) {
         if ($oldavatar && 0 === strpos(strtolower(substr($oldavatar, 8)), 'cavt')) {
+            /** @var \XoopsAvatar[] $avatars */
             $avatars = $avt_handler->getObjects(new Criteria('avatar_file', $oldavatar));
             if (!empty($avatars) && count($avatars) == 1 && is_object($avatars[0])) {
                 $avt_handler->delete($avatars[0]);

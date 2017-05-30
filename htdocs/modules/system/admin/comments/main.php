@@ -60,10 +60,12 @@ $comments = array();
 $status = (!isset($_REQUEST['status']) || !array_key_exists((int)$_REQUEST['status'], $status_array)) ? 0 : (int)$_REQUEST['status'];
 
 $module          = !isset($_REQUEST['module']) ? 0 : (int)$_REQUEST['module'];
+/** @var \XoopsModuleHandler $modules_Handler */
 $modules_Handler = xoops_getHandler('module');
+/** @var \XoopsModule[] $module_array */
 $module_array    = $modules_Handler->getList(new Criteria('hascomments', 1));
 $module_array[0] = _AM_SYSTEM_COMMENTS_FORM_ALL_MODS;
-/* @var  $comment_handler XoopsCommentHandler */
+/** @var  \XoopsCommentHandler $comment_handler */
 $comment_handler = xoops_getHandler('comment');
 
 switch ($op) {
@@ -73,7 +75,7 @@ switch ($op) {
         if ($com_id > 0) {
             $comment = $comment_handler->get($com_id);
             if (is_object($comment)) {
-                /* @var $module_handler XoopsModuleHandler */
+                /** @var \XoopsModuleHandler $module_handler */
                 $module_handler = xoops_getHandler('module');
                 $module         = $module_handler->get($comment->getVar('com_modid'));
                 $comment_config = $module->getInfo('comments');
@@ -157,10 +159,11 @@ switch ($op) {
         $comments_groupe = system_CleanVars($_POST, 'comments_groupe', '', 'string');
         if ($comments_groupe != '') {
             foreach ($_POST['comments_groupe'] as $del => $u_name) {
-                /* @var $member_handler XoopsMemberHandler */
+                /** @var \XoopsMemberHandler $member_handler */
                 $member_handler = xoops_getHandler('member');
-                $members        = $member_handler->getUsersByGroup($u_name, true);
-                $mcount         = count($members);
+                /** @var XoopsMembership[] $members */
+                $members = $member_handler->getUsersByGroup($u_name, true);
+                $mcount  = count($members);
                 if ($mcount > 4000) {
                     redirect_header('admin.php?fct=comments', 2, _MP_DELETECOUNT);
                 }
@@ -196,7 +199,7 @@ switch ($op) {
         $xoBreadCrumb->render();
 
         $myts             = MyTextSanitizer::getInstance();
-        /* @var  $comments_Handler XoopsCommentHandler */
+        /** @var  \XoopsCommentHandler $comments_Handler */
         $comments_Handler = xoops_getHandler('comment');
         $comments_module  = '';
         $comments_status  = '';
@@ -229,6 +232,7 @@ switch ($op) {
             $criteria->setLimit($comments_limit);
             $criteria->setStart($comments_start);
 
+            /** @var \XoopsComments[] $comments_arr */
             $comments_arr = $comments_Handler->getObjects($criteria, true);
         }
 

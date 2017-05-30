@@ -50,7 +50,7 @@ class Permission extends AbstractHelper
     {
         $this->mid = $this->module->getVar('mid');
         $this->dirname = $this->module->getVar('dirname');
-        /* @var $this->permissionHandler XoopsGroupPermHandler */
+        /** @var \XoopsGroupPermHandler $this->permissionHandler */
         $this->permissionHandler = xoops_getHandler('groupperm');
     }
 

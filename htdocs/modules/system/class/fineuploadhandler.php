@@ -52,7 +52,7 @@ class SystemFineUploadHandler
     public $claims;
 
     /**
-     * XoopsFineUploadHandler constructor.
+     * SystemFineUploadHandler constructor.
      * @param stdClass $claims claims passed in JWT header
      */
     public function __construct(\stdClass $claims)

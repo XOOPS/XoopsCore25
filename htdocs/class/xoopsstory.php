@@ -48,6 +48,7 @@ class XoopsStory
     public $approved;
     public $topicdisplay;
     public $topicalign;
+    /** @var \XoopsMySQLDatabase $db */
     public $db;
     public $topicstable;
     public $comments;

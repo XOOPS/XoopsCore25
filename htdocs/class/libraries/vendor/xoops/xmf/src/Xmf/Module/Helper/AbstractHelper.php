@@ -60,7 +60,7 @@ abstract class AbstractHelper
             }
         } else {
             // assume dirname specified, try to get a module object
-            /* @var $moduleHandler \XoopsModuleHandler */
+            /** @var \XoopsModuleHandler $moduleHandler */
             $moduleHandler = xoops_getHandler('module');
             $this->module = $moduleHandler->getByDirname($dirname);
         }

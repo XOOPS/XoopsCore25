@@ -18,6 +18,8 @@
  */
 
 // Check users rights
+/** @var \XoopsUser $xoopsUser */
+/** @var \XoopsModule $xoopsModule */
 if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid())) {
     exit(_NOPERM);
 }
@@ -211,12 +213,13 @@ switch ($op) {
                     $crit->prefix = 'u';
                     $criteria_object->add($crit, 'AND');
                 }
-                /* @var $member_handler XoopsMemberHandler */
+                /** @var \XoopsMemberHandler $member_handler */
                 $member_handler = xoops_getHandler('member');
                 $groups         = empty($_POST['mail_to_group']) ? array() : array_map('intval', $_POST['mail_to_group']);
                 $getusers       = $member_handler->getUsersByGroupLink($groups, $criteria_object, true);
                 $count_criteria = $member_handler->getUserCountByGroupLink($groups, $criteria_object);
                 foreach ($getusers as $getuser) {
+                    /** @var \XoopsUser $getuser */
                     if (!in_array($getuser->getVar('uid'), $added_id)) {
                         $added[]    = $getuser;
                         $added_id[] = $getuser->getVar('uid');

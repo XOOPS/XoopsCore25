@@ -27,7 +27,7 @@ $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list';
 if ($op === 'editordelete') {
     $op = isset($_REQUEST['delete']) ? 'delete' : 'edit';
 }
-/* @var $handler XoopsMemberHandler */
+/** @var \XoopsMemberHandler $handler */
 $handler = xoops_getHandler('member');
 
 switch ($op) {
@@ -73,14 +73,17 @@ switch ($op) {
         }
 
         // Dynamic fields
-        /* @var  $profile_handler ProfileProfileHandler */
+        /** @var ProfileProfileHandler $profile_handler */
         $profile_handler = xoops_getModuleHandler('profile');
         // Get fields
+        /** @var \ProfileField[] $fields */
         $fields     = $profile_handler->loadFields();
+        /** @var \ProfileField[] $userfields */
         $userfields = $profile_handler->getUserVars();
         // Get ids of fields that can be edited
-        /* @var  $gperm_handler XoopsGroupPermHandler */
+        /** @var \XoopsGroupPermHandler $gperm_handler */
         $gperm_handler   = xoops_getHandler('groupperm');
+        /** @var \ProfileField[] $editable_fields */
         $editable_fields = $gperm_handler->getItemIds('profile_edit', $GLOBALS['xoopsUser']->getGroups(), $GLOBALS['xoopsModule']->getVar('mid'));
 
         $uid = empty($_POST['uid']) ? 0 : (int)$_POST['uid'];

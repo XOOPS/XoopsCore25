@@ -22,7 +22,7 @@ if (!function_exists('protector_oninstall_base')) {
      */
     function protector_oninstall_base($module, $mydirname)
     {
-        /* @var $module XoopsModule */
+        /** @var \XoopsModule $module */
         // transations on module install
 
         global $ret; // TODO :-D
@@ -37,7 +37,7 @@ if (!function_exists('protector_oninstall_base')) {
                 $ret = array();
             }
         }
-
+        /** @var \XoopsMySQLDatabase $db */
         $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $mid = $module->getVar('mid');
 

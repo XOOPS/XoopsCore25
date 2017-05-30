@@ -267,11 +267,11 @@ class Protector
 
     public function deactivateCurrentUser()
     {
-        /* @var $xoopsUser XoopsUser */
+        /** @var \XoopsUser $xoopsUser */
         global $xoopsUser;
 
         if (is_object($xoopsUser)) {
-            /** @var XoopsMemberHandler */
+            /** @var \XoopsMemberHandler */
             $userHandler = xoops_getHandler('user');
             $xoopsUser->setVar('level', 0);
             $actkey = substr(md5(uniqid(mt_rand(), 1)), 0, 8);

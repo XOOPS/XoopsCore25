@@ -51,8 +51,11 @@ class XoopsGuiDefault extends XoopsSystemGui
         parent::header();
 
         global $xoopsConfig, $xoopsUser, $xoopsModule, $xoTheme, $xoopsTpl, $xoopsDB;
+        /** @var \XoopsModule $mod */
+        /** @var \Smarty $tpl */
         $tpl =& $this->template;
 
+        /** @var \xos_opal_Theme $xoTheme */
         $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
         $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/default/js/styleswitch.js');
         $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/default/js/formenu.js');
@@ -142,7 +145,7 @@ class XoopsGuiDefault extends XoopsSystemGui
         $tpl->assign('moddir', $moddir);
 
         // add MODULES  Menu items
-        /* @var $module_handler XoopsModuleHandler */
+        /** @var \XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $criteria       = new CriteriaCompo();
         $criteria->add(new Criteria('hasadmin', 1));
@@ -151,7 +154,7 @@ class XoopsGuiDefault extends XoopsSystemGui
         $mods = $module_handler->getObjects($criteria);
 
         $menu               = array();
-        /* @var $moduleperm_handler XoopsGroupPermHandler  */
+        /** @var \XoopsGroupPermHandler $moduleperm_handler  */
         $moduleperm_handler = xoops_getHandler('groupperm');
         foreach ($mods as $mod) {
             $rtn        = array();

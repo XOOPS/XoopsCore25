@@ -30,6 +30,7 @@ $valid_op_requests = array('out', 'save', 'in');
 $_REQUEST['op']    = !empty($_REQUEST['op']) && in_array($_REQUEST['op'], $valid_op_requests) ? $_REQUEST['op'] : 'in';
 
 $start      = empty($_REQUEST['start']) ? 0 : (int)$_REQUEST['start'];
+/** @var \PmMessageHandler $pm_handler */
 $pm_handler = xoops_getModuleHandler('message');
 
 if (isset($_POST['delete_messages']) && (isset($_POST['msg_id']) || isset($_POST['msg_ids']))) {
@@ -132,6 +133,7 @@ if (isset($_REQUEST['empty_messages'])) {
          * The following method has critical scalability problem !
          * deleteAll method should be used instead
          */
+        /** @var \PmMessage[] $pms */
         $pms = $pm_handler->getObjects($criteria);
         unset($criteria);
         if (count($pms) > 0) {
@@ -201,7 +203,7 @@ if (count($pm_arr) > 0) {
             $uids[] = $pm_arr[$i]['from_userid'];
         }
     }
-    /* @var $member_handler XoopsMemberHandler */
+    /** @var \XoopsMemberHandler $member_handler */
     $member_handler = xoops_getHandler('member');
     $senders        = $member_handler->getUserList(new Criteria('uid', '(' . implode(', ', array_unique($uids)) . ')', 'IN'));
     foreach (array_keys($pm_arr) as $i) {

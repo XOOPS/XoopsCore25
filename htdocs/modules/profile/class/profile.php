@@ -54,9 +54,7 @@ class ProfileProfile extends XoopsObject
  */
 class ProfileProfileHandler extends XoopsPersistableObjectHandler
 {
-    /**
-     * holds reference to {@link profileFieldHandler} object
-     */
+    /** @var false|\ProfileFieldHandler $_fHandler */
     public $_fHandler;
 
     /**
@@ -79,10 +77,11 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      *
      * @param bool $isNew Flag the new objects as "new"?
      *
-     * @return object {@link ProfileProfile}
+     * @return ProfileProfile $obj {@link ProfileProfile}
      */
     public function create($isNew = true)
     {
+        /** @var \ProfileProfile $obj */
         $obj          = new $this->className($this->loadFields());
         $obj->handler = $this;
         if ($isNew === true) {

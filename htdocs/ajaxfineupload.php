@@ -93,7 +93,7 @@ $moddir  = (property_exists($claims, 'moddir'))  ? $claims->moddir  : 'system';
 XoopsLoad::load($handler, $moddir);
 
 $className = $moddir . $handler;
-/* $uploader XoopsFineUploadHandler */
+/* $uploader SystemFineUploadHandler */
 $uploader = new $className($claims);
 
 // Specify the list of valid extensions, ex. array("jpeg", "xml", "bmp")

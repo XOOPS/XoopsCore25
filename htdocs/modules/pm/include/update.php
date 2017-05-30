@@ -62,7 +62,8 @@ function xoops_module_update_pm(XoopsModule $module, $oldversion = null)
         xoops_load('xoopsfile');
         //remove /images directory
         $imagesDirectory = XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'n') . '/images/';
-        $folderHandler   = XoopsFile::getHandler('folder', $imagesDirectory);
+        /** @var \XoopsFolderHandler $folderHandler */
+        $folderHandler = XoopsFile::getHandler('folder', $imagesDirectory);
         $folderHandler->delete($imagesDirectory);
         //delete .html entries from the tpl table
         $sql = 'DELETE FROM ' . $xoopsDB->prefix('tplfile') . " WHERE `tpl_module` = '" . $module->getVar('dirname', 'n') . "' AND `tpl_file` LIKE '%.html%'";

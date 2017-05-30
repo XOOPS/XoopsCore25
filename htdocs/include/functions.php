@@ -190,8 +190,9 @@ function xoops_getActiveModules()
 function xoops_setActiveModules()
 {
     xoops_load('XoopsCache');
-    /* @var $module_handler XoopsModuleHandler */
+    /** @var \XoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
+    /** @var XoopsModule[] $modules_obj */
     $modules_obj    = $module_handler->getObjects(new Criteria('isactive', 1));
     $modules_active = array();
     foreach (array_keys($modules_obj) as $key) {
@@ -611,7 +612,7 @@ function formatURL($url)
 function xoops_getbanner()
 {
     global $xoopsConfig;
-
+    /** @var \XoopsMySQLDatabase $db */
     $db      = XoopsDatabaseFactory::getDatabaseConnection();
     $bresult = $db->query('SELECT COUNT(*) FROM ' . $db->prefix('banner'));
     list($numrows) = $db->fetchRow($bresult);
@@ -848,6 +849,7 @@ function xoops_getMailer()
  */
 function xoops_getrank($rank_id = 0, $posts = 0)
 {
+    /** @var \XoopsMySQLDatabase $db */
     $db      = XoopsDatabaseFactory::getDatabaseConnection();
     $myts    = MyTextSanitizer::getInstance();
     $rank_id = (int)$rank_id;
@@ -933,6 +935,7 @@ function xoops_notification_deletebyitem($module_id, $category, $item_id)
  */
 function xoops_comment_count($module_id, $item_id = null)
 {
+    /** @var \XoopsCommentHandler $comment_handler */
     $comment_handler = xoops_getHandler('comment');
     $criteria        = new CriteriaCompo(new Criteria('com_modid', (int)$module_id));
     if (isset($item_id)) {
@@ -966,7 +969,7 @@ function xoops_comment_delete($module_id, $item_id)
                     }
                 }
             }
-            /* @var $member_handler XoopsMemberHandler */
+            /** @var \XoopsMemberHandler $member_handler */
             $member_handler = xoops_getHandler('member');
             foreach ($deleted_num as $user_id => $post_num) {
                 // update user posts
@@ -999,7 +1002,7 @@ function xoops_groupperm_deletebymoditem($module_id, $perm_name, $item_id = null
     if ((int)$module_id <= 1) {
         return false;
     }
-    /* @var  $gperm_handler XoopsGroupPermHandler */
+    /** @var \XoopsGroupPermHandler $gperm_handler */
     $gperm_handler = xoops_getHandler('groupperm');
 
     return $gperm_handler->deleteByModule($module_id, $perm_name, $item_id);
@@ -1083,7 +1086,7 @@ function xoops_getConfigOption($option, $type = 'XOOPS_CONF')
         return $coreOptions[$option];
     }
     $ret            = false;
-    /* @var $config_handler XoopsConfigHandler  */
+    /** @var \XoopsConfigHandler $config_handler  */
     $config_handler = xoops_getHandler('config');
     $configs        = $config_handler->getConfigsByCat(is_array($type) ? $type : constant($type));
     if ($configs) {
@@ -1135,10 +1138,10 @@ function xoops_getModuleOption($option, $dirname = '')
     }
 
     $ret            = false;
-    /* @var $module_handler XoopsModuleHandler */
+    /** @var \XoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
     $module         = $module_handler->getByDirname($dirname);
-    /* @var $config_handler XoopsConfigHandler  */
+    /** @var \XoopsConfigHandler $config_handler  */
     $config_handler = xoops_getHandler('config');
     if (is_object($module)) {
         $moduleConfig = $config_handler->getConfigsByCat(0, $module->getVar('mid'));

@@ -56,6 +56,7 @@ function update_system_v211($module)
         $tplids[] = $tplid;
     }
     if (count($tplids) > 0) {
+        /** @var \XoopsTplfileHandler $tplfile_handler */
         $tplfile_handler = xoops_getHandler('tplfile');
         $duplicate_files = $tplfile_handler->getObjects(new Criteria('tpl_id', '(' . implode(',', $tplids) . ')', 'IN'));
 
@@ -75,6 +76,7 @@ function update_system_v211($module)
     while ($myrow = $xoopsDB->fetchArray($result)) {
         $ret[] = $myrow;
     }
+    /** @var \XoopsModule $module */
     if (!empty($ret)) {
         $module->setErrors("'tpl_refid_module_set_file_type' unique index is exist. Note: check 'tplfile' table to be sure this index is UNIQUE because XOOPS CORE need it.");
 

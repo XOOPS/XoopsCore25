@@ -58,7 +58,7 @@ xoops_header();
 
 $myts = MyTextSanitizer::getInstance();
 if ($op === 'submit') {
-    /* @var $member_handler XoopsMemberHandler */
+    /** @var \XoopsMemberHandler $member_handler */
     $member_handler = xoops_getHandler('member');
     $count          = $member_handler->getUserCount(new Criteria('uid', XoopsRequest::getInt('to_userid', 0, 'POST')));
     if ($count != 1) {
@@ -66,6 +66,7 @@ if ($op === 'submit') {
         echo _PM_PLZTRYAGAIN . '</h4><br>';
         echo "[ <a href='javascript:history.go(-1)'>" . _PM_GOBACK . '</a> ]</div>';
     } elseif ($GLOBALS['xoopsSecurity']->check()) {
+        /** @var \PmMessageHandler $pm_handler */
         $pm_handler = xoops_getModuleHandler('message', 'pm');
         $pm         = $pm_handler->create();
         $pm->setVar('msg_time', time());

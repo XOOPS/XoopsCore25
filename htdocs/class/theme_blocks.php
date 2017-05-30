@@ -34,6 +34,7 @@ include_once $GLOBALS['xoops']->path('class/template.php');
  */
 class xos_logos_PageBuilder
 {
+    /** @var \xos_opal_Theme $theme */
     public $theme  = false;
     public $blocks = array();
 
@@ -126,6 +127,7 @@ class xos_logos_PageBuilder
         $block_arr  = array();
         $block_arr  = $xoopsblock->getAllByGroupModule($groups, $mid, $isStart, XOOPS_BLOCK_VISIBLE);
         $xoopsPreload->triggerEvent('core.class.theme_blocks.retrieveBlocks', array(&$this, &$template, &$block_arr));
+        /** @var \XoopsBlock $block */
         foreach ($block_arr as $block) {
             $side = $oldzones[$block->getVar('side')];
             if ($var = $this->buildBlock($block, $template)) {

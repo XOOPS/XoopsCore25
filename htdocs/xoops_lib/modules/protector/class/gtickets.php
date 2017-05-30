@@ -69,7 +69,7 @@ if (!class_exists('XoopsGTicket')) {
 
         // add a ticket as Hidden Element into XoopsForm
         /**
-         * @param        $form
+         * @param \XoopsForm       $form
          * @param string $salt
          * @param int    $timeout
          * @param string $area

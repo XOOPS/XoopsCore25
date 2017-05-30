@@ -265,7 +265,7 @@ class xos_opal_Theme
      */
     public function xoInit($options = array())
     {
-        /** @var XoopsConfigHandler $configHandler */
+        /** @var \XoopsConfigHandler $configHandler */
         $configHandler = xoops_getHandler('config');
 
         $this->path                   = XOOPS_THEME_PATH . '/' . $this->folderName;
@@ -337,6 +337,7 @@ class xos_opal_Theme
         $criteria->add(new Criteria('conf_catid', XOOPS_CONF_METAFOOTER));
         $config = $configHandler->getConfigs($criteria, true);
         foreach (array_keys($config) as $i) {
+            /** @var \XoopsObject[] $config */
             $name  = $config[$i]->getVar('conf_name', 'n');
             $value = $config[$i]->getVar('conf_value', 'n');
             if (substr($name, 0, 5) === 'meta_') {

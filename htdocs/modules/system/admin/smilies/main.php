@@ -33,7 +33,7 @@ $upload_size = 500000;
 // Get Action type
 $op = system_CleanVars($_REQUEST, 'op', 'list', 'string');
 // Get smilies handler
-/* @var  $smilies_Handler SystemsmiliesHandler */
+/** @var \SystemsmiliesHandler $smilies_Handler */
 $smilies_Handler = xoops_getModuleHandler('smilies', 'system');
 // Define main template
 $GLOBALS['xoopsOption']['template_main'] = 'system_smilies.tpl';
@@ -65,7 +65,8 @@ switch ($op) {
         $criteria->setLimit($nb_smilies);
         // Count smilies
         $smilies_count = $smilies_Handler->getCount($criteria);
-        $smilies_arr   = $smilies_Handler->getall($criteria);
+    /** @var Systemsmilies[] $smilies_arr */
+    $smilies_arr = $smilies_Handler->getall($criteria);
         // Assign Template variables
         $xoopsTpl->assign('smilies_count', $smilies_count);
         if ($smilies_count > 0) {
@@ -102,6 +103,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(sprintf(_AM_SYSTEM_SMILIES_NAV_TIPS_FORM1, implode(', ', $mimetypes)) . sprintf(_AM_SYSTEM_SMILIES_NAV_TIPS_FORM2, $upload_size / 1000));
         $xoBreadCrumb->render();
         // Create form
+        /** @var Systemsmilies $obj */
         $obj  = $smilies_Handler->create();
         $form = $obj->getForm();
         // Assign form
@@ -118,6 +120,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(sprintf(_AM_SYSTEM_SMILIES_NAV_TIPS_FORM1, implode(', ', $mimetypes)) . sprintf(_AM_SYSTEM_SMILIES_NAV_TIPS_FORM2, $upload_size / 1000));
         $xoBreadCrumb->render();
         // Create form
+        /** @var Systemsmilies $obj */
         $obj  = $smilies_Handler->get(system_CleanVars($_REQUEST, 'smilies_id', 0, 'int'));
         $form = $obj->getForm();
         // Assign form

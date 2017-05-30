@@ -61,6 +61,7 @@ class XoopsGuiTransition extends XoopsSystemGui
         parent::header();
 
         global $xoopsConfig, $xoopsUser, $xoopsModule, $xoTheme, $xoopsTpl, $xoopsDB;
+        /** @var \Smarty $tpl */
         $tpl =& $this->template;
 
         // Determine if information box must be shown
@@ -83,7 +84,7 @@ class XoopsGuiTransition extends XoopsSystemGui
 
         // language
         $tpl->assign('xoops_language', $xoopsConfig['language']);
-
+        /** @var \xos_opal_Theme $xoTheme */
         $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
         $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/transition/js/styleswitch.js');
         $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/transition/js/formenu.js');
@@ -175,7 +176,7 @@ class XoopsGuiTransition extends XoopsSystemGui
         $tpl->assign('moddir', $moddir);
 
         // add MODULES  Menu items
-        /* @var $module_handler XoopsModuleHandler */
+        /** @var \XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $criteria       = new CriteriaCompo();
         $criteria->add(new Criteria('hasadmin', 1));
@@ -184,9 +185,10 @@ class XoopsGuiTransition extends XoopsSystemGui
         $mods = $module_handler->getObjects($criteria);
 
         $menu               = array();
-        /* @var $moduleperm_handler XoopsGroupPermHandler  */
+        /** @var \XoopsGroupPermHandler $moduleperm_handler  */
         $moduleperm_handler = xoops_getHandler('groupperm');
         foreach ($mods as $mod) {
+            /** @var \XoopsModule $mod */
             $rtn        = array();
             $modOptions = array();                                                         //add for sub menus
             $sadmin     = $moduleperm_handler->checkRight('module_admin', $mod->getVar('mid'), $xoopsUser->getGroups());

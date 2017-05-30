@@ -29,7 +29,7 @@ if ($uname == '' || $pass == '') {
     redirect_header(XOOPS_URL . '/user.php', 1, _US_INCORRECTLOGIN);
 }
 
-/* @var $member_handler XoopsMemberHandler */
+/** @var \XoopsMemberHandler $member_handler */
 $member_handler = xoops_getHandler('member');
 $myts           = MyTextSanitizer::getInstance();
 
@@ -38,7 +38,8 @@ include_once $GLOBALS['xoops']->path('class/auth/authfactory.php');
 xoops_loadLanguage('auth');
 
 $xoopsAuth = XoopsAuthFactory::getAuthConnection($myts->addSlashes($uname));
-$user      = $xoopsAuth->authenticate($uname, $pass);
+/** @var \XoopsUser $user */
+$user = $xoopsAuth->authenticate($uname, $pass);
 
 if (false !== $user) {
     if (0 == $user->getVar('level')) {
@@ -116,6 +117,7 @@ if (false !== $user) {
 
     // RMV-NOTIFY
     // Perform some maintenance of notification records
+    /** @var \XoopsNotificationHandler $notification_handler */
     $notification_handler = xoops_getHandler('notification');
     $notification_handler->doLoginMaintenance($user->getVar('uid'));
 

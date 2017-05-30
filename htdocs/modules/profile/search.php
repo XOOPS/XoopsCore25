@@ -43,13 +43,16 @@ switch ($op) {
         $sortby_arr      = array();
 
         // Dynamic fields
+        /** @var \ProfileProfileHandler $profile_handler */
         $profile_handler = xoops_getModuleHandler('profile');
         // Get fields
+        /** @var \ProfileField[] $fields */
         $fields = $profile_handler->loadFields();
         // Get ids of fields that can be searched
-        /* @var  $gperm_handler XoopsGroupPermHandler */
+        /** @var \XoopsGroupPermHandler $gperm_handler */
         $gperm_handler     = xoops_getHandler('groupperm');
-        $searchable_fields = $gperm_handler->getItemIds('profile_search', $groups, $GLOBALS['xoopsModule']->getVar('mid'));
+    /** @var \ProfileField[] $searchable_fields */
+    $searchable_fields = $gperm_handler->getItemIds('profile_search', $groups, $GLOBALS['xoopsModule']->getVar('mid'));
 
         include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
         $searchform = new XoopsThemeForm('', 'searchform', 'search.php', 'post');
@@ -150,7 +153,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('page_title', _PROFILE_MA_SEARCH);
 
         //added count user
-        /* @var $member_handler XoopsMemberHandler */
+        /** @var \XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $acttotal       = $member_handler->getUserCount(new Criteria('level', 0, '>'));
         $total          = sprintf(_PROFILE_MA_ACTUS, "<span style='color:#ff0000;'>{$acttotal}</span>");
@@ -165,14 +168,15 @@ switch ($op) {
             'link'  => XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/search.php',
             'title' => _SEARCH);
         $xoBreadcrumbs[] = array('title' => _PROFILE_MA_RESULTS);
-        /* @var $member_handler XoopsMemberHandler */
+        /** @var \XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         // Dynamic fields
+        /** @var \ProfileProfileHandler $profile_handler */
         $profile_handler = xoops_getModuleHandler('profile');
         // Get fields
         $fields = $profile_handler->loadFields();
         // Get ids of fields that can be searched
-        /* @var  $gperm_handler XoopsGroupPermHandler */
+        /** @var \XoopsGroupPermHandler $gperm_handler */
         $gperm_handler     = xoops_getHandler('groupperm');
         $searchable_fields = $gperm_handler->getItemIds('profile_search', $groups, $GLOBALS['xoopsModule']->getVar('mid'));
         $searchvars        = array();
@@ -392,6 +396,7 @@ switch ($op) {
         $start = isset($_REQUEST['start']) ? (int)$_REQUEST['start'] : 0;
         $criteria->setStart($start);
 
+        /** @var \XoopsUser[] $users */
         list($users, $profiles, $total_users) = $profile_handler->search($criteria, $searchvars, $searchgroups);
 
         $total = sprintf(_PROFILE_MA_FOUNDUSER, "<span class='red'>{$total_users}</span>") . ' ';

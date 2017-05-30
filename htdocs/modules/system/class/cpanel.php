@@ -21,6 +21,7 @@ class XoopsSystemCpanel
     /**
      * Reference to GUI object
      */
+
     public $gui;
 
     /**

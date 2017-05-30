@@ -15,7 +15,7 @@ eval(' function xoops_module_uninstall_' . $mydirname . '( $module ) { return pr
 if (!function_exists('protector_onuninstall_base')) {
 
     /**
-     * @param $module
+     * @param \XoopsModule $module
      * @param $mydirname
      *
      * @return bool
@@ -36,7 +36,7 @@ if (!function_exists('protector_onuninstall_base')) {
                 $ret = array();
             }
         }
-
+        /** @var \XoopsMySQLDatabase $db */
         $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $mid = $module->getVar('mid');
 

@@ -36,6 +36,7 @@
 function smarty_compiler_xoImgUrl($argStr, &$smarty)
 {
     global $xoops, $xoTheme;
+    /** @var \xos_opal_Theme $xoTheme */
     $path = (isset($xoTheme) && is_object($xoTheme)) ? $xoTheme->resourcePath($argStr) : $argStr;
 
     return "\necho '" . addslashes($xoops->url($path)) . "';";

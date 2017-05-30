@@ -37,6 +37,7 @@ $GLOBALS['xoopsLogger']->addDeprecated("'/class/xoopscommments.php' is deprecate
 class XoopsComments extends XoopsObject
 {
     public $ctable;
+    /** @var \XoopsMySQLDatabase $db */
     public $db;
 
     /**

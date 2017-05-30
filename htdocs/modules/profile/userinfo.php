@@ -30,7 +30,7 @@ if ($uid <= 0) {
     }
 }
 
-/* @var  $gperm_handler XoopsGroupPermHandler */
+/** @var \XoopsGroupPermHandler $gperm_handler */
 $gperm_handler = xoops_getHandler('groupperm');
 $groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 
@@ -40,7 +40,7 @@ if (is_object($GLOBALS['xoopsUser']) && $uid == $GLOBALS['xoopsUser']->getVar('u
     $GLOBALS['xoopsOption']['template_main']                                                   = 'profile_userinfo.tpl';
     include $GLOBALS['xoops']->path('header.php');
 
-    /* @var $config_handler XoopsConfigHandler  */
+    /** @var \XoopsConfigHandler $config_handler  */
     $config_handler             = xoops_getHandler('config');
     $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
@@ -59,7 +59,7 @@ if (is_object($GLOBALS['xoopsUser']) && $uid == $GLOBALS['xoopsUser']->getVar('u
     $GLOBALS['xoopsTpl']->assign('user_changeemail', $GLOBALS['xoopsConfigUser']['allow_chgmail']);
     $thisUser =& $GLOBALS['xoopsUser'];
 } else {
-    /* @var $member_handler XoopsMemberHandler */
+    /** @var \XoopsMemberHandler $member_handler */
     $member_handler = xoops_getHandler('member');
     $thisUser       = $member_handler->getUser($uid);
 
@@ -86,7 +86,7 @@ if (is_object($GLOBALS['xoopsUser']) && $uid == $GLOBALS['xoopsUser']->getVar('u
     $groups_thisUser          = $thisUser->getGroups();
     $groups_thisUser_nonbasic = array_diff($groups_thisUser, $groups_basic);
     $groups_xoopsUser         = $groups;
-    /* @var  $gperm_handler XoopsGroupPermHandler */
+    /** @var \XoopsGroupPermHandler $gperm_handler */
     $gperm_handler            = xoops_getHandler('groupperm');
     $groups_accessible        = $gperm_handler->getItemIds('profile_access', $groups_xoopsUser, $GLOBALS['xoopsModule']->getVar('mid'));
 
@@ -123,14 +123,18 @@ $xoopsOption['xoops_pagetitle'] = sprintf(_US_ALLABOUT, $thisUser->getVar('uname
 
 // Dynamic User Profiles
 $thisUsergroups     = $thisUser->getGroups();
+/** @var \ProfileVisibilityHandler $visibility_handler */
 $visibility_handler = xoops_getModuleHandler('visibility');
 //search for visible Fields or null for none
 $field_ids_visible = $visibility_handler->getVisibleFields($thisUsergroups, $groups);
 
+/** @var \ProfileProfileHandler $profile_handler */
 $profile_handler = xoops_getModuleHandler('profile');
+/** @var ProfileField[] $fields */
 $fields          = $profile_handler->loadFields();
-$cat_handler     = xoops_getModuleHandler('category');
-$cat_crit        = new CriteriaCompo();
+/** @var \ProfileCategoryHandler $cat_handler */
+$cat_handler = xoops_getModuleHandler('category');
+$cat_crit    = new CriteriaCompo();
 $cat_crit->setSort('cat_weight');
 $cats = $cat_handler->getObjects($cat_crit, true, false);
 unset($cat_crit);
@@ -177,10 +181,11 @@ $GLOBALS['xoopsTpl']->assign('categories', $categories);
 // Dynamic user profiles end
 
 if ($GLOBALS['xoopsModuleConfig']['profile_search']) {
-    /* @var $module_handler XoopsModuleHandler */
+    /** @var \XoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
     $criteria       = new CriteriaCompo(new Criteria('hassearch', 1));
     $criteria->add(new Criteria('isactive', 1));
+    /** @var \XoopsModule[] $modules */
     $modules = $module_handler->getObjects($criteria, true);
     $mids    = array_keys($modules);
 
@@ -189,6 +194,7 @@ if ($GLOBALS['xoopsModuleConfig']['profile_search']) {
     if (count($mids) > 0 && count($allowed_mids) > 0) {
         foreach ($mids as $mid) {
             if (in_array($mid, $allowed_mids)) {
+                /** @var \XoopsModule[] $results */
                 $results = $modules[$mid]->search('', '', 5, 0, $thisUser->getVar('uid'));
                 $count   = count($results);
                 if (is_array($results) && $count > 0) {
