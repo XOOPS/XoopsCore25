@@ -654,6 +654,9 @@ function b_system_themes_show($options)
     global $xoopsConfig;
     $block = array();
 
+    if (!isset($options[2])) {
+        $options[2] = 3; // this was the fixed value pre 2.5.8
+    }
     $selectSize = ($options[0] == 1) ? 1 : (int) $options[2];
     $select = new XoopsFormSelect('', 'xoops_theme_select', $xoopsConfig['theme_set'], $selectSize);
     foreach ($xoopsConfig['theme_set_allowed'] as $theme) {
@@ -693,6 +696,9 @@ function b_system_themes_edit($options)
 {
     $chk  = '';
     $form = _MB_SYSTEM_THSHOW . '&nbsp;';
+    if (!isset($options[2])) {
+        $options[2] = 3; // this was the fixed value pre 2.5.8
+    }
     if ($options[0] == 1) {
         $chk = " checked";
     }
