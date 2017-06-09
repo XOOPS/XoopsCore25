@@ -169,7 +169,7 @@ class xos_opal_Theme
      *
      * @var string
      */
-    public $canvasTemplate = 'theme.html';
+    public $canvasTemplate = 'theme.tpl';
 
     /**
      * Theme folder path
@@ -527,14 +527,11 @@ class xos_opal_Theme
 
         // Do not cache the main (theme.html) template output
         $this->template->caching = 0;
-        //mb -------------------------
-//        $this->template->display($this->path . '/' . $this->canvasTemplate);
         if (file_exists($this->path . '/' . $this->canvasTemplate)) {
             $this->template->display($this->path . '/' . $this->canvasTemplate);
         } else {
-            $this->template->display($this->path . '/theme.tpl');
+            $this->template->display($this->path . '/theme.html');
         }
-        //mb -------------------------
         $this->renderCount++;
         $xoopsLogger->stopTime('Page rendering');
 
