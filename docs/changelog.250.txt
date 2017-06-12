@@ -89,6 +89,7 @@ Updated libraries and assets:
  - PHPMailer to 5.2.21
  - XMF to 1.2.9
  - Font Awesome 4.7.0 now included
+ - TinyMCE to 3.5.12 (mamba)
 
 ===================================
 2.5.8 Final            2016-05-27

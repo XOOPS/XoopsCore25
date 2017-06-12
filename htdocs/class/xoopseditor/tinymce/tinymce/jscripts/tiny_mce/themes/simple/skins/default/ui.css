@@ -9,8 +9,7 @@
 
 /* Layout */
 .defaultSimpleSkin span.mceIcon, .defaultSimpleSkin img.mceIcon {display:block; width:20px; height:20px}
-.defaultSimpleSkin .mceIcon {background:url(../../img/icons.gif) no-repeat 20px 20px;
-}
+.defaultSimpleSkin .mceIcon {background:url(../../img/icons.gif) no-repeat 20px 20px}
 
 /* Button */
 .defaultSimpleSkin .mceButton {display:block; border:1px solid #F0F0EE; width:20px; height:20px}
