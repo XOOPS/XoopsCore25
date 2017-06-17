@@ -78,7 +78,14 @@ if (!$allowed) {
     $xoopsTpl->debugging      = false;
     $xoopsTpl->debugging_ctrl = 'none';
     $xoopsTpl->caching        = 0;
-    $xoopsTpl->display('db:system_siteclosed.tpl');
+    // handle error and transition to tpl naming convention
+    if ($xoopsTpl->template_exists('db:system_siteclosed.tpl')) {
+        $xoopsTpl->display('db:system_siteclosed.tpl');
+    } elseif ($xoopsTpl->template_exists('db:system_siteclosed.html')) {
+        $xoopsTpl->display('db:system_siteclosed.html');
+    } else {
+        echo $xoopsConfig['closesite_text'];
+    }
     exit();
 }
 unset($allowed, $group);
