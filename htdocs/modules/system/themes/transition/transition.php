@@ -34,6 +34,7 @@ class XoopsGuiTransition extends XoopsSystemGui
     /**
      *
      */
+    /*
     public function __construct()
     {
         // Check cookie
@@ -47,7 +48,7 @@ class XoopsGuiTransition extends XoopsSystemGui
             die();
         }
     }
-
+    */
     /**
      * @return bool
      */
