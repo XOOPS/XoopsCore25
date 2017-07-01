@@ -158,7 +158,8 @@ class XoopsEditorHandler
         */
         if (!isset($this->root_path)) {
             $this->root_path = XOOPS_ROOT_PATH . '/class/xoopseditor';
-            $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . '() should not be called statically.');
+            $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+            $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . '() should not be called statically.'. " Called from {$trace[0]['file']}line {$trace[0]['line']}");
         }
 
         xoops_load('XoopsCache');
@@ -210,7 +211,8 @@ class XoopsEditorHandler
      */
     public function render($editor)
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . '() deprecated', E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . '() deprecated' . ". Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
         return $editor->render();
     }

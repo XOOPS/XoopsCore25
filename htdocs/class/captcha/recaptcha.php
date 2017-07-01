@@ -44,7 +44,8 @@ class XoopsCaptchaRecaptcha extends XoopsCaptchaMethod
      */
     public function render()
     {
-        trigger_error("recaptcha is outdated , use recaptcha_2 in \class\captcha\config.php", E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error("recaptcha is outdated , use recaptcha_2 in \class\captcha\config.php" . ". Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
         require_once __DIR__ . '/recaptcha/recaptchalib.php';
         $form = "<script type=\"text/javascript\">
             var RecaptchaOptions = {

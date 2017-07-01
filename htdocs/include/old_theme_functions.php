@@ -24,7 +24,8 @@ if (!function_exists('opentable')) {
      */
     function openTable($width = '100%')
     {
-        $GLOBALS['xoopsLogger']->addDeprecated("Function '" . __FUNCTION__ . "' in '" . __FILE__ . "' is deprecated, should not be used any more");
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        $GLOBALS['xoopsLogger']->addDeprecated("Function '" . __FUNCTION__ . "' in '" . __FILE__ . "' is deprecated, should not be used any more." . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
         echo '<table width="' . $width . '" cellspacing="0" class="outer"><tr><td class="even">';
     }
 }
@@ -32,7 +33,8 @@ if (!function_exists('opentable')) {
 if (!function_exists('closetable')) {
     function closeTable()
     {
-        $GLOBALS['xoopsLogger']->addDeprecated("Function '" . __FUNCTION__ . "' in '" . __FILE__ . "' is deprecated, should not be used any more");
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        $GLOBALS['xoopsLogger']->addDeprecated("Function '" . __FUNCTION__ . "' in '" . __FILE__ . "' is deprecated, should not be used any more." . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
         echo '</td></tr></table>';
     }
 }
@@ -44,7 +46,8 @@ if (!function_exists('themecenterposts')) {
      */
     function themecenterposts($title, $content)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated("Function '" . __FUNCTION__ . "' in '" . __FILE__ . "' is deprecated, should not be used any more");
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        $GLOBALS['xoopsLogger']->addDeprecated("Function '" . __FUNCTION__ . "' in '" . __FILE__ . "' is deprecated, should not be used any more." . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
         echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer"><tr><td class="head">' . $title . '</td></tr><tr><td><br>' . $content . '<br></td></tr></table>';
     }
 }

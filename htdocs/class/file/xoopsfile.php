@@ -105,6 +105,7 @@ class XoopsFile
         if (class_exists($class)) {
             $handler = new $class($path, $create, $mode);
         } else {
+            $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
             trigger_error('Class ' . $class . ' not exist in File ' . __FILE__ . ' at Line ' . __LINE__, E_USER_WARNING);
         }
 

@@ -17,7 +17,8 @@
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-$GLOBALS['xoopsLogger']->addDeprecated("'/class/xoopsobject.php' is deprecated since XOOPS 2.5.4, please use 'kernel/object.php' instead.");
+$trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+$GLOBALS['xoopsLogger']->addDeprecated("'/class/xoopsobject.php' is deprecated since XOOPS 2.5.4, please use 'kernel/object.php' instead. Called from {$trace[0]['file']} line {$trace[0]['line']}");
 
 /**
  * Path Change: This file is here for backward compatibility only.

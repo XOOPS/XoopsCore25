@@ -121,7 +121,8 @@ class Database
     public function getInstance()
     {
         if (is_object($GLOBALS['xoopsLogger'])) {
-            $GLOBALS['xoopsLogger']->addDeprecated("'Database::getInstance();' is deprecated since XOOPS 2.5.4, please use 'XoopsDatabaseFactory::getDatabaseConnection();' instead.");
+            $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+            $GLOBALS['xoopsLogger']->addDeprecated("'Database::getInstance();' is deprecated since XOOPS 2.5.4, please use 'XoopsDatabaseFactory::getDatabaseConnection();' instead. Called from {$trace[0]['file']}line {$trace[0]['line']}");
         }
         $inst = XoopsDatabaseFactory::getDatabaseConnection();
 

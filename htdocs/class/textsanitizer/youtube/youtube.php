@@ -102,7 +102,8 @@ EOH;
         } elseif (preg_match('%^[^"&?/ ]{11}$%', $url)) {
             $videoId = $url; // have a bare video id
         } else {
-            trigger_error("Not matched: {$url} {$width} {$height}", E_USER_WARNING);
+            $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+            trigger_error("Not matched: {$url} {$width} {$height}" . ". Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
             return '';
         }
 

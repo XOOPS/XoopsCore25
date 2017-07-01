@@ -180,7 +180,8 @@ class XoopsTpl extends Smarty
      */
     public function xoops_setTemplateDir($dirname)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsTpl->xoops_setTemplateDir($value)\' is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->template_dir=$value;\' instead.');
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsTpl->xoops_setTemplateDir($value)\' is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->template_dir=$value;\' instead.'. " Called from {$trace[0]['file']}line {$trace[0]['line']}");
 
         $this->template_dir = $dirname;
     }
@@ -190,7 +191,8 @@ class XoopsTpl extends Smarty
      */
     public function xoops_getTemplateDir()
     {
-        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsTpl->xoops_getTemplateDir()\' is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->template_dir;\' instead.');
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsTpl->xoops_getTemplateDir()\' is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->template_dir;\' instead.'. " Called from {$trace[0]['file']}line {$trace[0]['line']}");
 
         return $this->template_dir;
     }
@@ -200,7 +202,8 @@ class XoopsTpl extends Smarty
      */
     public function xoops_setDebugging($flag = false)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsTpl->xoops_setDebugging($value)\' is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->debugging=$value;\' instead.');
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsTpl->xoops_setDebugging($value)\' is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->debugging=$value;\' instead.'. " Called from {$trace[0]['file']}line {$trace[0]['line']}");
 
         $this->debugging = is_bool($flag) ? $flag : false;
     }
@@ -210,7 +213,8 @@ class XoopsTpl extends Smarty
      */
     public function xoops_setCaching($num = 0)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsTpl->xoops_setCaching($value)\' is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->caching=$value;\' instead.');
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsTpl->xoops_setCaching($value)\' is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->caching=$value;\' instead.'. " Called from {$trace[0]['file']}line {$trace[0]['line']}");
 
         $this->caching = (int)$num;
     }
@@ -220,7 +224,8 @@ class XoopsTpl extends Smarty
      */
     public function xoops_setCompileDir($dirname)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsTpl->xoops_setCompileDir($value)\' is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->compile_dir=$value;\' instead.');
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsTpl->xoops_setCompileDir($value)\' is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->compile_dir=$value;\' instead.'. " Called from {$trace[0]['file']}line {$trace[0]['line']}");
 
         $this->compile_dir = $dirname;
     }
@@ -230,7 +235,8 @@ class XoopsTpl extends Smarty
      */
     public function xoops_setCacheDir($dirname)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsTpl->xoops_setCacheDir($value)\' is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->cache_dir=$value;\' instead.');
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsTpl->xoops_setCacheDir($value)\' is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->cache_dir=$value;\' instead.'. " Called from {$trace[0]['file']}line {$trace[0]['line']}");
 
         $this->cache_dir = $dirname;
     }
@@ -240,7 +246,8 @@ class XoopsTpl extends Smarty
      */
     public function xoops_canUpdateFromFile()
     {
-        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsTpl->xoops_canUpdateFromFile()\' is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->compile_check;\' instead.');
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsTpl->xoops_canUpdateFromFile()\' is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->compile_check;\' instead.'. " Called from {$trace[0]['file']}line {$trace[0]['line']}");
 
         return $this->compile_check;
     }
@@ -252,7 +259,8 @@ class XoopsTpl extends Smarty
      */
     public function xoops_fetchFromData($data)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsTpl->xoops_fetchFromData($value)\' is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->fetchFromData($value);\' instead.');
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsTpl->xoops_fetchFromData($value)\' is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->fetchFromData($value);\' instead.'. " Called from {$trace[0]['file']}line {$trace[0]['line']}");
 
         return $this->fetchFromData($data);
     }
@@ -262,7 +270,8 @@ class XoopsTpl extends Smarty
      */
     public function xoops_setCacheTime($num = 0)
     {
-        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsTpl->xoops_setCacheTime($value)\' is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->cache_lifetime=$value;\' instead.');
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        $GLOBALS['xoopsLogger']->addDeprecated('\'$xoopsTpl->xoops_setCacheTime($value)\' is deprecated since XOOPS 2.5.4, please use \'$xoopsTpl->cache_lifetime=$value;\' instead.'. " Called from {$trace[0]['file']}line {$trace[0]['line']}");
 
         if (($num = (int)$num) <= 0) {
             $this->caching = 0;

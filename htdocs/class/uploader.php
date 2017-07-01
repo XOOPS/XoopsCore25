@@ -490,7 +490,8 @@ class XoopsMediaUploader
                 return false;
             }
         } else {
-            trigger_error(sprintf(_ER_UP_FAILEDFETCHIMAGESIZE, $this->mediaTmpName), E_USER_WARNING);
+            $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+            trigger_error(sprintf(_ER_UP_FAILEDFETCHIMAGESIZE, $this->mediaTmpName) . ". Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
         }
 
         return true;
@@ -513,7 +514,8 @@ class XoopsMediaUploader
                 return false;
             }
         } else {
-            trigger_error(sprintf(_ER_UP_FAILEDFETCHIMAGESIZE, $this->mediaTmpName), E_USER_WARNING);
+            $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+            trigger_error(sprintf(_ER_UP_FAILEDFETCHIMAGESIZE, $this->mediaTmpName) . ". Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
         }
 
         return true;

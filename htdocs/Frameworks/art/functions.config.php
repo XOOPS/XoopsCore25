@@ -72,7 +72,8 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_CONFIG')):
 
         $module_handler = xoops_getHandler('module');
         if (!$module = $module_handler->getByDirname($dirname)) {
-            trigger_error("Module '{$dirname}' does not exist", E_USER_WARNING);
+            $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+            trigger_error("Module '{$dirname}' does not exist" . ". Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
             return null;
         }

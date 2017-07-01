@@ -50,10 +50,11 @@ class XoopsLoad
         }
         $name = strtolower($name);
         if (in_array($type, array('core', 'class')) && array_key_exists($name, $deprecated)) {
+            $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
             if (isset($GLOBALS['xoopsLogger'])) {
-                $GLOBALS['xoopsLogger']->addDeprecated("xoops_load('{$name}') is deprecated, use xoops_load('{$deprecated[$name]}')");
+                $GLOBALS['xoopsLogger']->addDeprecated("xoops_load('{$name}') is deprecated, use xoops_load('{$deprecated[$name]}'), called from {$trace[0]['file']} line {$trace[0]['line']}");
             } else {
-                trigger_error("xoops_load('{$name}') is deprecated, use xoops_load('{$deprecated[$name]}')", E_USER_WARNING);
+                trigger_error("xoops_load('{$name}') is deprecated, use xoops_load('{$deprecated[$name]}'), called from {$trace[0]['file']} line {$trace[0]['line']}", E_USER_WARNING);
             }
             $name = $deprecated[$name];
         }
@@ -114,7 +115,8 @@ class XoopsLoad
             if (class_exists($class)) {
                 return $class;
             } else {
-                trigger_error('Class ' . $name . ' not found in file ' . __FILE__ . 'at line ' . __LINE__, E_USER_WARNING);
+                $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+                trigger_error('Class ' . $name . ' not found in file ' . __FILE__ . 'at line ' . __LINE__ . ". Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
             }
         }
 
@@ -131,7 +133,7 @@ class XoopsLoad
     public static function loadFramework($name)
     {
         if (!file_exists($file = XOOPS_ROOT_PATH . '/Frameworks/' . $name . '/xoops' . $name . '.php')) {
-            trigger_error('File ' . str_replace(XOOPS_ROOT_PATH, '', $file) . ' not found in file ' . __FILE__ . ' at line ' . __LINE__, E_USER_WARNING);
+            trigger_error('File ' . str_replace(XOOPS_ROOT_PATH, '', $file) . ' not found in file ' . __FILE__ , E_USER_WARNING);
 
             return false;
         }

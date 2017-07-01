@@ -558,7 +558,8 @@ class XoopsUser extends XoopsObject
      */
     public function getProfile()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
         return false;
     }
@@ -613,7 +614,8 @@ class XoopsUserHandler extends XoopsPersistableObjectHandler
      */
     public function &loginUser($uname, $pwd, $md5 = false)
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
         return false;
     }
@@ -627,7 +629,8 @@ class XoopsUserHandler extends XoopsPersistableObjectHandler
      */
     public function updateUserByField($fieldName, $fieldValue, $uid)
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated' . ", called from {$trace[0]['file']} line {$trace[0]['line']}", E_USER_WARNING);
 
         return false;
     }

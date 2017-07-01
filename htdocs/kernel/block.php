@@ -626,7 +626,8 @@ class XoopsBlockHandler extends XoopsObjectHandler
      */
     public function getByModule($moduleid, $asobject = true, $id_as_key = false)
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
         return false;
     }
@@ -643,7 +644,8 @@ class XoopsBlockHandler extends XoopsObjectHandler
      */
     public function getAllByGroupModule($groupid, $module_id = 0, $toponlyblock = false, $visible = null, $orderby = 'i.weight,i.instanceid', $isactive = 1)
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
         return false;
     }
@@ -656,7 +658,8 @@ class XoopsBlockHandler extends XoopsObjectHandler
      */
     public function getAdminBlocks($groupid, $orderby = 'i.weight,i.instanceid')
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
         return false;
     }
@@ -666,7 +669,8 @@ class XoopsBlockHandler extends XoopsObjectHandler
      */
     public function assignBlocks()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
         return false;
     }

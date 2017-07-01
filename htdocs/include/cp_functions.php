@@ -108,7 +108,8 @@ function xoopsfwrite()
  */
 function xoops_module_get_admin_menu()
 {
-    $GLOBALS['xoopsLogger']->addDeprecated(__FUNCTION__ . ' is deprecated, should not be used any longer');
+    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+    $GLOBALS['xoopsLogger']->addDeprecated(__FUNCTION__ . ' is deprecated, should not be used any longer.'. " Called from {$trace[0]['file']}line {$trace[0]['line']}");
     /************************************************************
      * Based on:
      * - PHP Layers Menu 1.0.7(c)2001,2002 Marco Pratesi <pratesi@telug.it>
@@ -192,7 +193,8 @@ function xoops_module_get_admin_menu()
  */
 function xoops_module_write_admin_menu($content)
 {
-    $GLOBALS['xoopsLogger']->addDeprecated(__FUNCTION__ . ' is deprecated, should not be used any longer');
+    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+    $GLOBALS['xoopsLogger']->addDeprecated(__FUNCTION__ . ' is deprecated, should not be used any longer. '. " Called from {$trace[0]['file']}line {$trace[0]['line']}");
     if (!xoopsfwrite()) {
         return false;
     }
