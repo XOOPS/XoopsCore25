@@ -22,7 +22,7 @@ xoops_loadLanguage('errors');
 
 XoopsLoad::load('xoopslogger');
 
-$GLOBALS['xoopsLogger']->addDeprecated("'/class/errorhandler.php' is deprecated since XOOPS 2.5.4, please use 'class/logger/xoopslogger.php' instead.");
+$GLOBALS['xoopsLogger']->addDeprecated("'/class/errorhandler.php' is deprecated since XOOPS 2.5.4, please use '/class/logger/xoopslogger.php' instead.");
 
 /**
  * Xoops ErrorHandler
