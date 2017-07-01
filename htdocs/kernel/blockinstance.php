@@ -137,7 +137,7 @@ class XoopsBlockInstanceHandler
      */
     public function __get($name)
     {
-        trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the variable '{$name}' is not vailable") . '!', E_USER_WARNING);
+        trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the variable '{$name}' is not available") . '!', E_USER_WARNING);
 
         return null;
     }
