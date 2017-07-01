@@ -22,6 +22,6 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * Path Change: This file is here for backward compatibility only.
  *
  **/
-$GLOBALS['xoopsLogger']->addDeprecated("'/class/xoopsuser.php' is deprecated since XOOPS 2.5.4, please use 'kernel/user.php' instead.");
+$GLOBALS['xoopsLogger']->addDeprecated("'/class/xoopsuser.php' is deprecated since XOOPS 2.5.4, please use '/kernel/user.php' instead.");
 
 include_once $GLOBALS['xoops']->path('kernel/user.php');
