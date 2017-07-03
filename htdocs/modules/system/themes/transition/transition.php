@@ -89,7 +89,7 @@ class XoopsGuiTransition extends XoopsSystemGui
         $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/transition/js/styleswitch.js');
         $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/transition/js/formenu.js');
         $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/transition/js/menu.js');
-        //$xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/transition/js/tooltip.js');
+        $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/transition/js/tooltip.js');
 //        $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/transition/js/tabs.jquery.tools.min.js');
         $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/transition/js/tabs.js');
         $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/transition/js/tabs.slideshow.js');
