@@ -1,5 +1,5 @@
 <{includeq file="db:system_header.tpl"}>
-<table>
+<table id="help-system">
     <tr>
         <td class="width20">
             <{if $help}>
