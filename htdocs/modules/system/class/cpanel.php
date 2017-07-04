@@ -69,10 +69,10 @@ class XoopsSystemCpanel
             }
         }
         if (!isset($this->gui)) {
-            if (file_exists($file = XOOPS_ADMINTHEME_PATH . '/default/default.php')) {
+            if (file_exists($file = XOOPS_ADMINTHEME_PATH . '/transition/transition.php')) {
                 include_once $file;
-                $this->gui             = new XoopsGuiDefault();
-                $this->gui->foldername = 'default';
+                $this->gui             = new XoopsGuiTransition();
+                $this->gui->foldername = 'transition';
             }
         }
     }
