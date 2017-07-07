@@ -72,7 +72,7 @@ installed to their latest versions.
 
 Upgrading from versions older than 2.5.0:
 ------------------------------------------
-The same basic process as described above applies. The upgrade process for 2.5.8 has been tested using fresh
+The same basic process as described above applies. The upgrade process for 2.5.9 has been tested using fresh
 installs of XOOPS 2.0.2, 2.3, and 2.4. By 2.3, it becomes difficult to install the distribution on a modern
 system due to the number of changes in both PHP and MySQL. This means there may be issues we may not have
 encountered in testing.

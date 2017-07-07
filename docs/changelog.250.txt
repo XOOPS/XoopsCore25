@@ -1,7 +1,7 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
-2.5.9 RC1                2017-05-31
+2.5.9 RC2                2017-07-07
 ===================================
 - fix issue with establishing database character set under mysqli
 - Add PHP4 same name constructor shim in XoopsMailer (geekwright)
@@ -74,6 +74,12 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - deprecate system module "Cookie" class
 - fix issues reported by JPCERT/CC
 - fix issues reported by Mustafa Hasan
+- fix regressions in system theme select block
+- fix template search order issues
+- fix white screen issue with text sanitise wiki support
+- fix extgallery template issues (mamba)
+- added missing tooltip.js in transition GUI (ihackcode)
+- fix issues with transition admin theme (bitcero)
 
 Updated libraries and assets:
  - jQuery 3.2.1 (mamba)
@@ -85,7 +91,7 @@ Updated libraries and assets:
  - jQuery Tablesorter to 2.26.6 (mamba)
  - phpThumb to 1.7.14-201607141354 (mamba)
  - Bootstrap 3.3.7 in xBootstrap theme (geekwright, mamba)
- - HTML Purifier to 4.8.0 (mamba)
+ - HTML Purifier to 4.9.3 (mamba)
  - PHPMailer to 5.2.21
  - XMF to 1.2.9
  - Font Awesome 4.7.0 now included
