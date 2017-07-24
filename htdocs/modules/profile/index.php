@@ -51,20 +51,31 @@ if ($op === 'main') {
         include __DIR__ . '/footer.php';
         exit();
     }
-    if (!empty($_GET['xoops_redirect'])) {
-        $redirect   = trim($_GET['xoops_redirect']);
-        $isExternal = false;
-        if ($pos = strpos($redirect, '://')) {
-            $xoopsLocation = substr(XOOPS_URL, strpos(XOOPS_URL, '://') + 3);
-            if (strcasecmp(substr($redirect, $pos + 3, strlen($xoopsLocation)), $xoopsLocation)) {
-                $isExternal = true;
+
+    $redirect = \Xmf\Request::getUrl('xoops_redirect', '', 'get');
+    if (!empty($redirect)) {
+        $urlParts = parse_url($redirect);
+        $xoopsUrlParts = parse_url(XOOPS_URL);
+        if (false !== $urlParts) {
+            if (false !== $urlParts) {
+                // make sure $redirect is somewhere inside XOOPS_URL
+                // catch https:example.com (no //)
+                $badScheme = (isset($urlParts['path']) && !isset($urlParts['host']) && isset($urlParts['scheme']));
+                // no host or matching host
+                $hostMatch = (!isset($urlParts['host'])) || (0 === strcasecmp($urlParts['host'], $xoopsUrlParts['host']));
+                // path only, or path matches
+                $pathMatch = (isset($urlParts['path']) && !isset($urlParts['host']) && !isset($urlParts['scheme']))
+                    || ($hostMatch && isset($urlParts['path']) && isset($xoopsUrlParts['path'])
+                        && 0 === strncmp($urlParts['path'], $xoopsUrlParts['path'], strlen($xoopsUrlParts['path'])));
+                if ($badScheme || !($hostMatch && $pathMatch)) {
+                    $redirect = XOOPS_URL;
+                }
             }
-        }
-        if (!$isExternal) {
             header('Location: ' . $redirect);
             exit();
         }
     }
+
     header('Location: ./userinfo.php?uid=' . $GLOBALS['xoopsUser']->getVar('uid'));
     exit();
 }
