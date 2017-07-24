@@ -80,7 +80,9 @@ class XoopsMediaUploader
         'cgi',
         'pl',
         'asp',
-        'php5');
+        'php5',
+        'php7',
+    );
     // extensions needed image check (anti-IE Content-Type XSS)
     public $imageExtensions = array(
         1  => 'gif',
@@ -259,7 +261,7 @@ class XoopsMediaUploader
                     break;
             }
         }
-        
+
         if ((int)$this->mediaSize < 0) {
             $this->setErrors(_ER_UP_INVALIDFILESIZE);
 
@@ -526,6 +528,14 @@ class XoopsMediaUploader
      */
     public function checkMimeType()
     {
+        // if the browser supplied mime type looks suspicious, refuse it
+        $structureCheck = (bool) preg_match('/^\w+\/[-+.\w]+$/', $this->mediaType);
+        if (false === $structureCheck) {
+            $this->mediaType = 'invalid';
+            $this->setErrors(_ER_UP_UNKNOWNFILETYPEREJECTED);
+            return false;
+        }
+
         if (empty($this->mediaRealType) && empty($this->allowUnknownTypes)) {
             $this->setErrors(_ER_UP_UNKNOWNFILETYPEREJECTED);
 
@@ -533,7 +543,7 @@ class XoopsMediaUploader
         }
 
         if ((!empty($this->allowedMimeTypes) && !in_array($this->mediaRealType, $this->allowedMimeTypes)) || (!empty($this->deniedMimeTypes) && in_array($this->mediaRealType, $this->deniedMimeTypes))) {
-            $this->setErrors(sprintf(_ER_UP_MIMETYPENOTALLOWED, $this->mediaType));
+            $this->setErrors(sprintf(_ER_UP_MIMETYPENOTALLOWED, htmlspecialchars($this->mediaRealType, ENT_QUOTES)));
 
             return false;
         }
