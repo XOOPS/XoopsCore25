@@ -699,7 +699,7 @@ function xoops_module_uninstall($dirname)
                     if (!in_array($table, $reservedTables)) {
                         $sql = 'DROP TABLE ' . $db->prefix($table);
                         if (!$db->query($sql)) {
-                            $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_TABLE_DROPPED_ERROR, '<strong>' . $db->prefix($table) . '<strong>') . '</span>';
+                            $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_TABLE_DROPPED_ERROR, '<strong>' . $db->prefix($table) . '</strong>') . '</span>';
                         } else {
                             $msgs[] = '&nbsp;&nbsp;' . sprintf(_AM_SYSTEM_MODULES_TABLE_DROPPED, '<strong>' . $db->prefix($table) . '</strong>');
                         }
@@ -1060,7 +1060,7 @@ function xoops_module_update($dirname)
                     if (!$xoopsDB->query($sql)) {
                         $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_BLOCK_DELETE_ERROR, '<strong>' . $block->getVar('name') . '</strong>') . sprintf(_AM_SYSTEM_MODULES_BLOCK_ID, '<strong>' . $block->getVar('bid') . '</strong>') . '</span>';
                     } else {
-                        $msgs[] = '&nbsp;&nbsp;Block <strong>' . $block->getVar('name') . ' deleted. Block ID: <strong>' . $block->getVar('bid') . '</strong>';
+                        $msgs[] = '&nbsp;&nbsp;Block <strong>' . $block->getVar('name') . '</strong> deleted. Block ID: <strong>' . $block->getVar('bid') . '</strong>';
                         if ($block->getVar('template') != '') {
                             $tplfiles = $tplfile_handler->find(null, 'block', $block->getVar('bid'));
                             if (is_array($tplfiles)) {
