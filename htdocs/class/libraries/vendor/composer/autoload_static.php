@@ -9,6 +9,7 @@ class ComposerStaticInit274e5fff219a4f27a346e611b0580d6a
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '35d1e42abf4d8c181ae544a92d8f3f6a' => __DIR__ . '/..' . '/kint-php/kint/Kint.class.php',
+        '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
         'e40631d46120a9c38ea139981f8dab26' => __DIR__ . '/..' . '/ircmaxell/password-compat/lib/password.php',
     );
 
@@ -71,20 +72,6 @@ class ComposerStaticInit274e5fff219a4f27a346e611b0580d6a
                 0 => __DIR__ . '/..' . '/smottt/wideimage/lib',
             ),
         ),
-        'S' => 
-        array (
-            'SecurityLib' => 
-            array (
-                0 => __DIR__ . '/..' . '/ircmaxell/security-lib/lib',
-            ),
-        ),
-        'R' => 
-        array (
-            'RandomLib' => 
-            array (
-                0 => __DIR__ . '/..' . '/ircmaxell/random-lib/lib',
-            ),
-        ),
     );
 
     public static $classMap = array (
@@ -94,36 +81,6 @@ class ComposerStaticInit274e5fff219a4f27a346e611b0580d6a
         'Firebase\\JWT\\SignatureInvalidException' => __DIR__ . '/..' . '/firebase/php-jwt/src/SignatureInvalidException.php',
         'Geekwright\\RegDom\\PublicSuffixList' => __DIR__ . '/..' . '/geekwright/regdom/src/PublicSuffixList.php',
         'Geekwright\\RegDom\\RegisteredDomain' => __DIR__ . '/..' . '/geekwright/regdom/src/RegisteredDomain.php',
-        'RandomLib\\AbstractMcryptMixer' => __DIR__ . '/..' . '/ircmaxell/random-lib/lib/RandomLib/AbstractMcryptMixer.php',
-        'RandomLib\\AbstractMixer' => __DIR__ . '/..' . '/ircmaxell/random-lib/lib/RandomLib/AbstractMixer.php',
-        'RandomLib\\AbstractSource' => __DIR__ . '/..' . '/ircmaxell/random-lib/lib/RandomLib/AbstractSource.php',
-        'RandomLib\\Factory' => __DIR__ . '/..' . '/ircmaxell/random-lib/lib/RandomLib/Factory.php',
-        'RandomLib\\Generator' => __DIR__ . '/..' . '/ircmaxell/random-lib/lib/RandomLib/Generator.php',
-        'RandomLib\\Mixer' => __DIR__ . '/..' . '/ircmaxell/random-lib/lib/RandomLib/Mixer.php',
-        'RandomLib\\Mixer\\Hash' => __DIR__ . '/..' . '/ircmaxell/random-lib/lib/RandomLib/Mixer/Hash.php',
-        'RandomLib\\Mixer\\McryptRijndael128' => __DIR__ . '/..' . '/ircmaxell/random-lib/lib/RandomLib/Mixer/McryptRijndael128.php',
-        'RandomLib\\Mixer\\XorMixer' => __DIR__ . '/..' . '/ircmaxell/random-lib/lib/RandomLib/Mixer/XorMixer.php',
-        'RandomLib\\Source' => __DIR__ . '/..' . '/ircmaxell/random-lib/lib/RandomLib/Source.php',
-        'RandomLib\\Source\\CAPICOM' => __DIR__ . '/..' . '/ircmaxell/random-lib/lib/RandomLib/Source/CAPICOM.php',
-        'RandomLib\\Source\\MTRand' => __DIR__ . '/..' . '/ircmaxell/random-lib/lib/RandomLib/Source/MTRand.php',
-        'RandomLib\\Source\\MicroTime' => __DIR__ . '/..' . '/ircmaxell/random-lib/lib/RandomLib/Source/MicroTime.php',
-        'RandomLib\\Source\\OpenSSL' => __DIR__ . '/..' . '/ircmaxell/random-lib/lib/RandomLib/Source/OpenSSL.php',
-        'RandomLib\\Source\\Rand' => __DIR__ . '/..' . '/ircmaxell/random-lib/lib/RandomLib/Source/Rand.php',
-        'RandomLib\\Source\\Random' => __DIR__ . '/..' . '/ircmaxell/random-lib/lib/RandomLib/Source/Random.php',
-        'RandomLib\\Source\\RandomBytes' => __DIR__ . '/..' . '/ircmaxell/random-lib/lib/RandomLib/Source/RandomBytes.php',
-        'RandomLib\\Source\\Sodium' => __DIR__ . '/..' . '/ircmaxell/random-lib/lib/RandomLib/Source/Sodium.php',
-        'RandomLib\\Source\\URandom' => __DIR__ . '/..' . '/ircmaxell/random-lib/lib/RandomLib/Source/URandom.php',
-        'RandomLib\\Source\\UniqID' => __DIR__ . '/..' . '/ircmaxell/random-lib/lib/RandomLib/Source/UniqID.php',
-        'SecurityLib\\AbstractFactory' => __DIR__ . '/..' . '/ircmaxell/security-lib/lib/SecurityLib/AbstractFactory.php',
-        'SecurityLib\\BaseConverter' => __DIR__ . '/..' . '/ircmaxell/security-lib/lib/SecurityLib/BaseConverter.php',
-        'SecurityLib\\BigMath' => __DIR__ . '/..' . '/ircmaxell/security-lib/lib/SecurityLib/BigMath.php',
-        'SecurityLib\\BigMath\\BCMath' => __DIR__ . '/..' . '/ircmaxell/security-lib/lib/SecurityLib/BigMath/BCMath.php',
-        'SecurityLib\\BigMath\\GMP' => __DIR__ . '/..' . '/ircmaxell/security-lib/lib/SecurityLib/BigMath/GMP.php',
-        'SecurityLib\\BigMath\\PHPMath' => __DIR__ . '/..' . '/ircmaxell/security-lib/lib/SecurityLib/BigMath/PHPMath.php',
-        'SecurityLib\\Enum' => __DIR__ . '/..' . '/ircmaxell/security-lib/lib/SecurityLib/Enum.php',
-        'SecurityLib\\Hash' => __DIR__ . '/..' . '/ircmaxell/security-lib/lib/SecurityLib/Hash.php',
-        'SecurityLib\\Strength' => __DIR__ . '/..' . '/ircmaxell/security-lib/lib/SecurityLib/Strength.php',
-        'SecurityLib\\Util' => __DIR__ . '/..' . '/ircmaxell/security-lib/lib/SecurityLib/Util.php',
         'Symfony\\Component\\Yaml\\Dumper' => __DIR__ . '/..' . '/symfony/yaml/Dumper.php',
         'Symfony\\Component\\Yaml\\Escaper' => __DIR__ . '/..' . '/symfony/yaml/Escaper.php',
         'Symfony\\Component\\Yaml\\Exception\\DumpException' => __DIR__ . '/..' . '/symfony/yaml/Exception/DumpException.php',
