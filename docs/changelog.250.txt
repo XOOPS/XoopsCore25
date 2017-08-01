@@ -1,7 +1,7 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
-2.5.9 RC3                2017-07-25
+2.5.9 Final              2017-08-01
 ===================================
 - fix issue with establishing database character set under mysqli
 - Add PHP4 same name constructor shim in XoopsMailer (geekwright)
