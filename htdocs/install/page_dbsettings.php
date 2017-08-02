@@ -36,7 +36,7 @@ $vars =& $_SESSION['settings'];
 $hostConnectPrefix = empty($vars['DB_PCONNECT']) ? '' : 'p:';
 $link = mysqli_connect($hostConnectPrefix.$vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS']);
 if (0 !== $link->connect_errno) {
-    $error = ERR_NO_DBCONNECTION .' (' . $link->connect_errno . ') ' . $link->connect_error;;
+    $error = ERR_NO_DBCONNECTION .' (' . $link->connect_errno . ') ' . $link->connect_error;
     $wizard->redirectToPage('-1', $error);
     exit();
 }
@@ -55,19 +55,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($vars['DB_NAME'])) {
+    $dbName   = mysqli_real_escape_string($link, $vars['DB_NAME']);
     $error    = validateDbCharset($link, $vars['DB_CHARSET'], $vars['DB_COLLATION']);
     $db_exist = true;
     if (empty($error)) {
-        if (!@mysqli_select_db($link, $vars['DB_NAME'])) {
+        if (!@mysqli_select_db($link, $dbName)) {
             // Database not here: try to create it
-            $result = mysqli_query($link, 'CREATE DATABASE `' . $vars['DB_NAME'] . '`');
+            $result = mysqli_query($link, 'CREATE DATABASE `' . $dbName . '`');
             if (!$result) {
                 $error    = ERR_NO_DATABASE;
                 $db_exist = false;
             }
         }
         if ($db_exist && $vars['DB_CHARSET']) {
-            $sql = 'ALTER DATABASE `' . $vars['DB_NAME'] . '` DEFAULT CHARACTER SET '
+            $sql = 'ALTER DATABASE `' . $dbName . '` DEFAULT CHARACTER SET '
                    . mysqli_real_escape_string($link, $vars['DB_CHARSET'])
                    . ($vars['DB_COLLATION'] ? ' COLLATE ' . mysqli_real_escape_string($link, $vars['DB_COLLATION']) : '');
             if (!mysqli_query($link, $sql)) {
@@ -93,7 +94,7 @@ if (@empty($vars['DB_NAME'])) {
 ob_start();
 ?>
 <?php if (!empty($error)) {
-    echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $error . "</div>\n";
+    echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . htmlspecialchars($error) . "</div>\n";
 } ?>
 
     <script type="text/javascript">
