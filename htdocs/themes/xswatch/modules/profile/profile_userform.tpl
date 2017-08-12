@@ -38,7 +38,7 @@
     <legend class="bold"><{$lang_lostpassword}></legend>
     <p><{$lang_noproblem}></p>
     <form action="lostpass.php" method="post">
-        <label for="profile-lostpass"><{$lang_password}></label>
+        <label for="profile-lostpass"><{$lang_youremail}></label>
         <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
             <input class="form-control" type="text" name="email" id="profile-lostpass" placeholder="<{$smarty.const.THEME_EMAIL}>">

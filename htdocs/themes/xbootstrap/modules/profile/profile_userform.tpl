@@ -1,7 +1,6 @@
 <div class="container-fluid">
     <div class="row">
     <legend class="bold"><{$lang_login}></legend>
-
     <form action="user.php" method="post">
         <label for="profile-uname"><{$lang_username}></label>
         <div class="input-group">
@@ -16,10 +15,10 @@
         </div>
         <div class="checkbox">
             <label>
-                <{if isset($lang_rememberme)}>
+        <{if isset($lang_rememberme)}>
             <input type="checkbox" name="rememberme">
-                <{$lang_rememberme}>
-                <{/if}>
+            <{$lang_rememberme}>
+        <{/if}>
             </label>
         </div>
 
@@ -33,7 +32,7 @@
     <div><{$lang_notregister}><br></div>
     </div>
 
-    <br>
+<br>
     <div class="row">
     <legend class="bold"><{$lang_lostpassword}></legend>
     <p><{$lang_noproblem}></p>
@@ -41,10 +40,10 @@
         <label for="profile-lostpass"><{$lang_youremail}></label>
         <div class="input-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-            <input class="form-control" type="text" name="email" id="profile-lostpass" placeholder="<{$smarty.const.THEME_EMAIL}>">
+            <input class="form-control" type="text" name="email" id="profile-lostpass">
         </div>
         <input type="hidden" name="op" value="mailpasswd"/>
-        <input type="hidden" name="t"  value="<{$mailpasswd_token}>"/>
+        <input type="hidden" name="t" value="<{$mailpasswd_token}>"/>
         <button type="submit" class="btn btn-default"><{$lang_sendpassword}></button>
     </form>
     </div>
