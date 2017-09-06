@@ -1,6 +1,13 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
+Post 2.5.9               unreleased
+===================================
+- fix typo error in profile and system userform templates (mamba)
+- fix issues in install/page_dbsettings.php (blogged by Nguyen Thanh Nguyen)
+- fix stylesheet inclusion in ModuleAdmin
+
+===================================
 2.5.9 Final              2017-08-01
 ===================================
 - fix issue with establishing database character set under mysqli
