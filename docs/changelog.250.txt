@@ -1,11 +1,13 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
-Post 2.5.9               unreleased
+2.5.10 WIP               unreleased
 ===================================
 - fix typo error in profile and system userform templates (mamba)
 - fix issues in install/page_dbsettings.php (blogged by Nguyen Thanh Nguyen)
 - fix stylesheet inclusion in ModuleAdmin
+- Smarty to v2.6.31 (mamba)
+- Misplaced MAX_FILE_SIZE (cadch)
 
 ===================================
 2.5.9 Final              2017-08-01
