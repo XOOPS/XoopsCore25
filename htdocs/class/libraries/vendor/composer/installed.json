@@ -113,55 +113,6 @@
         "description": "Primary dependencies for XOOPS/XoopsCore25"
     },
     {
-        "name": "geekwright/regdom",
-        "version": "v1.0.4",
-        "version_normalized": "1.0.4.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/geekwright/RegDom.git",
-            "reference": "bb901f0de76879c02d52597f4f154f86646932fd"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/geekwright/RegDom/zipball/bb901f0de76879c02d52597f4f154f86646932fd",
-            "reference": "bb901f0de76879c02d52597f4f154f86646932fd",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.9",
-            "symfony/polyfill-mbstring": "^1.3.0"
-        },
-        "time": "2017-03-03T13:57:40+00:00",
-        "bin": [
-            "bin/reloadpsl"
-        ],
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Geekwright\\RegDom\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "Apache-2.0"
-        ],
-        "authors": [
-            {
-                "name": "Richard Griffith",
-                "email": "richard@geekwright.com"
-            }
-        ],
-        "description": "OO adaptation of Florian Sager's regdom library for querying Mozilla Public Suffix List",
-        "homepage": "https://github.com/geekwright/RegDom",
-        "keywords": [
-            "public",
-            "regdom",
-            "suffix",
-            "tld"
-        ]
-    },
-    {
         "name": "webmozart/assert",
         "version": "1.2.0",
         "version_normalized": "1.2.0.0",
@@ -214,120 +165,6 @@
         ]
     },
     {
-        "name": "kint-php/kint",
-        "version": "1.1",
-        "version_normalized": "1.1.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/kint-php/kint.git",
-            "reference": "a8549198558560b24e2879c6bac2875de5371483"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/kint-php/kint/zipball/a8549198558560b24e2879c6bac2875de5371483",
-            "reference": "a8549198558560b24e2879c6bac2875de5371483",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.1.0"
-        },
-        "time": "2017-01-15T14:23:43+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.0.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "files": [
-                "Kint.class.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Rokas Šleinius",
-                "homepage": "https://github.com/kint-php"
-            },
-            {
-                "name": "Contributors",
-                "homepage": "https://github.com/kint-php/kint/contributors"
-            }
-        ],
-        "description": "Kint - debugging helper for PHP developers",
-        "homepage": "https://github.com/kint-php/kint",
-        "keywords": [
-            "debug",
-            "kint",
-            "php"
-        ]
-    },
-    {
-        "name": "symfony/polyfill-mbstring",
-        "version": "v1.4.0",
-        "version_normalized": "1.4.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/polyfill-mbstring.git",
-            "reference": "f29dca382a6485c3cbe6379f0c61230167681937"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/f29dca382a6485c3cbe6379f0c61230167681937",
-            "reference": "f29dca382a6485c3cbe6379f0c61230167681937",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3"
-        },
-        "suggest": {
-            "ext-mbstring": "For best performance"
-        },
-        "time": "2017-06-09T14:24:12+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.4-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Symfony\\Polyfill\\Mbstring\\": ""
-            },
-            "files": [
-                "bootstrap.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Nicolas Grekas",
-                "email": "p@tchwork.com"
-            },
-            {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
-            }
-        ],
-        "description": "Symfony polyfill for the Mbstring extension",
-        "homepage": "https://symfony.com",
-        "keywords": [
-            "compatibility",
-            "mbstring",
-            "polyfill",
-            "portable",
-            "shim"
-        ]
-    },
-    {
         "name": "firebase/php-jwt",
         "version": "v5.0.0",
         "version_normalized": "5.0.0.0",
@@ -376,18 +213,131 @@
         "homepage": "https://github.com/firebase/php-jwt"
     },
     {
-        "name": "paragonie/random_compat",
-        "version": "v2.0.10",
-        "version_normalized": "2.0.10.0",
+        "name": "symfony/polyfill-mbstring",
+        "version": "v1.6.0",
+        "version_normalized": "1.6.0.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/paragonie/random_compat.git",
-            "reference": "634bae8e911eefa89c1abfbf1b66da679ac8f54d"
+            "url": "https://github.com/symfony/polyfill-mbstring.git",
+            "reference": "2ec8b39c38cb16674bbf3fea2b6ce5bf117e1296"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/paragonie/random_compat/zipball/634bae8e911eefa89c1abfbf1b66da679ac8f54d",
-            "reference": "634bae8e911eefa89c1abfbf1b66da679ac8f54d",
+            "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/2ec8b39c38cb16674bbf3fea2b6ce5bf117e1296",
+            "reference": "2ec8b39c38cb16674bbf3fea2b6ce5bf117e1296",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "suggest": {
+            "ext-mbstring": "For best performance"
+        },
+        "time": "2017-10-11T12:05:26+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.6-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Polyfill\\Mbstring\\": ""
+            },
+            "files": [
+                "bootstrap.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Nicolas Grekas",
+                "email": "p@tchwork.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony polyfill for the Mbstring extension",
+        "homepage": "https://symfony.com",
+        "keywords": [
+            "compatibility",
+            "mbstring",
+            "polyfill",
+            "portable",
+            "shim"
+        ]
+    },
+    {
+        "name": "geekwright/regdom",
+        "version": "v1.0.5",
+        "version_normalized": "1.0.5.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/geekwright/RegDom.git",
+            "reference": "cd812fb06312ca0a1dbe450093def2f67fb7caab"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/geekwright/RegDom/zipball/cd812fb06312ca0a1dbe450093def2f67fb7caab",
+            "reference": "cd812fb06312ca0a1dbe450093def2f67fb7caab",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.9",
+            "symfony/polyfill-mbstring": "^1.3.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "4.8.*|5.*"
+        },
+        "time": "2017-10-03T15:10:07+00:00",
+        "bin": [
+            "bin/reloadpsl"
+        ],
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Geekwright\\RegDom\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "Apache-2.0"
+        ],
+        "authors": [
+            {
+                "name": "Richard Griffith",
+                "email": "richard@geekwright.com"
+            }
+        ],
+        "description": "OO adaptation of Florian Sager's regdom library for querying Mozilla Public Suffix List",
+        "homepage": "https://github.com/geekwright/RegDom",
+        "keywords": [
+            "public",
+            "regdom",
+            "suffix",
+            "tld"
+        ]
+    },
+    {
+        "name": "paragonie/random_compat",
+        "version": "v2.0.11",
+        "version_normalized": "2.0.11.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/paragonie/random_compat.git",
+            "reference": "5da4d3c796c275c55f057af5a643ae297d96b4d8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/paragonie/random_compat/zipball/5da4d3c796c275c55f057af5a643ae297d96b4d8",
+            "reference": "5da4d3c796c275c55f057af5a643ae297d96b4d8",
             "shasum": ""
         },
         "require": {
@@ -399,7 +349,7 @@
         "suggest": {
             "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
         },
-        "time": "2017-03-13T16:27:32+00:00",
+        "time": "2017-09-27T21:40:39+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -427,23 +377,23 @@
     },
     {
         "name": "symfony/yaml",
-        "version": "v2.8.25",
-        "version_normalized": "2.8.25.0",
+        "version": "v2.8.29",
+        "version_normalized": "2.8.29.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/yaml.git",
-            "reference": "4c29dec8d489c4e37cf87ccd7166cd0b0e6a45c5"
+            "reference": "d819bf267e901727141fe828ae888486fd21236e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/yaml/zipball/4c29dec8d489c4e37cf87ccd7166cd0b0e6a45c5",
-            "reference": "4c29dec8d489c4e37cf87ccd7166cd0b0e6a45c5",
+            "url": "https://api.github.com/repos/symfony/yaml/zipball/d819bf267e901727141fe828ae888486fd21236e",
+            "reference": "d819bf267e901727141fe828ae888486fd21236e",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3.9"
         },
-        "time": "2017-06-01T20:52:29+00:00",
+        "time": "2017-11-05T15:25:56+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -477,29 +427,89 @@
         "homepage": "https://symfony.com"
     },
     {
-        "name": "xoops/xmf",
-        "version": "v1.2.10",
-        "version_normalized": "1.2.10.0",
+        "name": "kint-php/kint",
+        "version": "2.2",
+        "version_normalized": "2.2.0.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/XOOPS/xmf.git",
-            "reference": "e5a0cbe5e6f2e0a84089d3b72c8b9df04b47c603"
+            "url": "https://github.com/kint-php/kint.git",
+            "reference": "b091715eadaf6e1a7ef927f3e81d1004611d2aea"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/XOOPS/xmf/zipball/e5a0cbe5e6f2e0a84089d3b72c8b9df04b47c603",
-            "reference": "e5a0cbe5e6f2e0a84089d3b72c8b9df04b47c603",
+            "url": "https://api.github.com/repos/kint-php/kint/zipball/b091715eadaf6e1a7ef927f3e81d1004611d2aea",
+            "reference": "b091715eadaf6e1a7ef927f3e81d1004611d2aea",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.1.2"
+        },
+        "require-dev": {
+            "friendsofphp/php-cs-fixer": "^2.0",
+            "phpunit/phpunit": "^4.0",
+            "symfony/finder": "^2.6"
+        },
+        "time": "2017-09-06T17:46:03+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "init.php"
+            ],
+            "classmap": [
+                "src/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Rokas Šleinius",
+                "homepage": "https://github.com/raveren"
+            },
+            {
+                "name": "Jonathan Vollebregt",
+                "homepage": "https://github.com/jnvsor"
+            },
+            {
+                "name": "Contributors",
+                "homepage": "https://github.com/kint-php/kint/graphs/contributors"
+            }
+        ],
+        "description": "Kint - debugging tool for PHP developers",
+        "homepage": "https://kint-php.github.io/kint/",
+        "keywords": [
+            "debug",
+            "kint",
+            "php"
+        ]
+    },
+    {
+        "name": "xoops/xmf",
+        "version": "v1.2.12",
+        "version_normalized": "1.2.12.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/XOOPS/xmf.git",
+            "reference": "a69eec1df6f50497787d749586a45ebb04023106"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/XOOPS/xmf/zipball/a69eec1df6f50497787d749586a45ebb04023106",
+            "reference": "a69eec1df6f50497787d749586a45ebb04023106",
             "shasum": ""
         },
         "require": {
             "firebase/php-jwt": "^5.0.0",
-            "kint-php/kint": "^1.0",
+            "kint-php/kint": "^2.2",
             "paragonie/random_compat": "^2",
             "php": ">=5.3.9",
             "symfony/yaml": "2.8.*",
             "webmozart/assert": "^1.2"
         },
-        "time": "2017-07-24T18:20:13+00:00",
+        "time": "2017-11-12T22:00:34+00:00",
         "type": "project",
         "installation-source": "dist",
         "autoload": {

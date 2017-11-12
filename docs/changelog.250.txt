@@ -11,6 +11,7 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 Updated libraries and assets:
  - TinyMCE to 3.5.12 (mamba)
+ - Xmf to 1.2.12 including dependencies
 
 ===================================
 2.5.9 Final              2017-08-01
