@@ -9,6 +9,9 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - Smarty to v2.6.31 (mamba)
 - Misplaced MAX_FILE_SIZE (cadch)
 
+Updated libraries and assets:
+ - TinyMCE to 3.5.12 (mamba)
+
 ===================================
 2.5.9 Final              2017-08-01
 ===================================
