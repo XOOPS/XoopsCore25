@@ -455,10 +455,10 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
      */
     public function renderFormFile(XoopsFormFile $element)
     {
-        return '<input class="form-control-static" type="file" name="' . $element->getName()
+        return '<input type="hidden" name="MAX_FILE_SIZE" value="' . $element->getMaxFileSize() . '" />'
+            . '<input class="form-control-static" type="file" name="' . $element->getName()
             . '" id="' . $element->getName()
             . '" title="' . $element->getTitle() . '" ' . $element->getExtra() . ' />'
-            . '<input type="hidden" name="MAX_FILE_SIZE" value="' . $element->getMaxFileSize() . '" />'
             . '<input type="hidden" name="xoops_upload_file[]" id="xoops_upload_file[]" value="'
             . $element->getName() . '" />';
     }
