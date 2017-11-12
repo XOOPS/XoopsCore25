@@ -190,7 +190,10 @@ if ($GLOBALS['xoopsModuleConfig']['profile_search']) {
         foreach ($mids as $mid) {
             if (in_array($mid, $allowed_mids)) {
                 $results = $modules[$mid]->search('', '', 5, 0, $thisUser->getVar('uid'));
-                $count   = count($results);
+                $count = 0;
+                if(is_array($results)) {
+                    $count = count($results);
+                }
                 if (is_array($results) && $count > 0) {
                     for ($i = 0; $i < $count; ++$i) {
                         if (isset($results[$i]['image']) && $results[$i]['image'] != '') {
