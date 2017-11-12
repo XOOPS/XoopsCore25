@@ -32,12 +32,24 @@ class ModuleAdmin
      */
     public function __construct()
     {
-        //global $xoopsModule, $xoTheme;
         global $xoopsModule;
         $this->_obj =& $xoopsModule;
-        echo "<style type=\"text/css\" media=\"screen\">@import \"" . XOOPS_URL . "/Frameworks/moduleclasses/moduleadmin/css/admin.css\";</style>";
-        //$xoTheme->addStylesheet("Frameworks/moduleclasses/moduleadmin/css/admin.css");
         $this->loadLanguage();
+    }
+
+    /**
+     * addAssets - add assets to theme, if it is established
+     *
+     * @return void
+     */
+    private function addAssets()
+    {
+        static $added;
+
+        if (empty($added) && !empty($GLOBALS['xoTheme'])) {
+            $added = true;
+            $GLOBALS['xoTheme']->addStylesheet("Frameworks/moduleclasses/moduleadmin/css/admin.css");
+        }
     }
 
     /**
@@ -128,6 +140,7 @@ class ModuleAdmin
      */
     public function renderMenuIndex()
     {
+        $this->addAssets();
         $path       = XOOPS_URL . '/modules/' . $this->_obj->getVar('dirname') . '/';
         $pathsystem = XOOPS_URL . '/modules/system/';
         $this->_obj->loadAdminMenu();
@@ -168,6 +181,7 @@ class ModuleAdmin
      */
     public function renderButton($position = 'right', $delimeter = '&nbsp;')
     {
+        $this->addAssets();
         $path = XOOPS_URL . '/Frameworks/moduleclasses/icons/32/';
         switch ($position) {
             default:
@@ -286,6 +300,7 @@ class ModuleAdmin
      */
     public function renderIndex()
     {
+        $this->addAssets();
         $ret = "<table id='xo-modadmin-index'>\n<tr>\n";
         $ret .= "<td width=\"40%\">\n";
         $ret .= $this->renderMenuIndex();
@@ -453,6 +468,7 @@ class ModuleAdmin
      */
     public function renderInfoBox()
     {
+        $this->addAssets();
         $ret = '';
         foreach (array_keys($this->_itemInfoBox) as $i) {
             $ret .= "<fieldset><legend class=\"label\">";
@@ -481,6 +497,7 @@ class ModuleAdmin
      */
     public function renderAbout($business = '', $logo_xoops = true)
     {
+        $this->addAssets();
         $path         = XOOPS_URL . '/Frameworks/moduleclasses/icons/32/';
         $date         = preg_replace('/-\\\/', '/', $this->_obj->getInfo('release_date')); // make format a little more forgiving
         $date         = explode('/', $date);
@@ -587,6 +604,7 @@ class ModuleAdmin
      */
     public function addNavigation($menu = '')
     {
+        $this->addAssets();
         $ret        = '';
         $navigation = '';
         $path       = XOOPS_URL . '/modules/' . $this->_obj->getVar('dirname') . '/';
