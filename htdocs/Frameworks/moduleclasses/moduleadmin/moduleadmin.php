@@ -374,7 +374,7 @@ class ModuleAdmin
 
             // xoops version
             if ($this->_obj->getInfo('min_xoops')) {
-                $currentXoopsVersion = strtolower(str_replace(array('XOOPS ', '-'), '', XOOPS_VERSION));
+                $currentXoopsVersion = strtolower(str_replace('XOOPS ', '', XOOPS_VERSION));
                 if (version_compare($currentXoopsVersion, $this->_obj->getInfo('min_xoops'), '<')) {
                     $ret .= "<span style='color : red; font-weight : bold;'><img src='" . $path . "0.png' >" . sprintf(_AM_MODULEADMIN_CONFIG_XOOPS, $this->_obj->getInfo('min_xoops'), substr(XOOPS_VERSION, 6, strlen(XOOPS_VERSION) - 6)) . "</span>\n";
                 } else {
