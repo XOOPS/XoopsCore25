@@ -1,4 +1,9 @@
 = CHANGES =
+3.60 RC (2017/11/12)
+- add overview visual summary
+- add "ban ip" button to log display
+- tweak stopforumspam diagnostics
+
 3.51 RC (2011/10/10)
 - database patch check ok if XOOPS_VERSION > 2.4.x (trabis)
 - changed Database::getInstance() to XoopsDatabaseFactory::getDatabaseConnection();
