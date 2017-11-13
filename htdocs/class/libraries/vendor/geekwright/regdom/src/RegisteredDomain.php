@@ -59,11 +59,14 @@ class RegisteredDomain
      */
     protected function convertPunycode($part)
     {
-        if (strpos($part,'xn--')===0) {
+        if (strpos($part, 'xn--')===0) {
             if (function_exists('idn_to_utf8')) {
-                $part = idn_to_utf8($part);
+                if (defined('INTL_IDNA_VARIANT_UTS46')) { // PHP 7.2
+                    return idn_to_utf8($part, 0, INTL_IDNA_VARIANT_UTS46);
+                }
+                return idn_to_utf8($part);
             } else {
-                $part = $this->decodePunycode($part);
+                return $this->decodePunycode($part);
             }
         }
         return $part;
