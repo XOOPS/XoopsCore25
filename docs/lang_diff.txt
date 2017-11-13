@@ -4,7 +4,24 @@ LANGUAGE DIFFERENCES
 Below are language differences from a version to next version.
 
 ===============================
-2017/04/08: Version 2.5.9 RC1
+2017/11/12: Version 2.5.10  WIP
+===============================
+ADDED/DELETED DEFINES:
+htdocs/xoops_lib/modules/protector/language/english/admin.php
+- added define('_AM_LABEL_BAN_BY_IP', 'Ban the IPs on checked records:');
+- added define('_AM_BUTTON_BAN_BY_IP', 'IP Ban!');
+- added define('_AM_JS_BANCONFIRM', 'IP Bans OK?');
+- added define('_AM_MSG_BANNEDIP', 'IPs are banned');
+- added define('_AM_ADMINSTATS_TITLE', 'Protector Log Summary');
+
+htdocs/xoops_lib/modules/protector/language/english/modinfo.php
+- added define($constpref . '_ADMINSTATS', 'Overview');
+- added define($constpref . '_BANIP_TIME0DSC', 'Suspension time in seconds for automatic IP bans');
+
+NEW FILES:
+
+===============================
+2017/08/01: Version 2.5.9 Final
 ===============================
 ADDED/DELETED DEFINES
 

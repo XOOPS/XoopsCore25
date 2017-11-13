@@ -44,7 +44,7 @@ class Protector_postcommon_post_stopforumspam extends ProtectorFilterAbstract
         $report['email'] = $xoopsUser->email();
         $report['ip'] = $_SERVER['REMOTE_ADDR'];
         $result = $this->protector->stopForumSpamLookup($report['email'], $report['ip'], null);
-        if (false === $result) {
+        if (false === $result || is_set($result['http_code'])) {
             return true;
         }
         if (!is_array($result)) {

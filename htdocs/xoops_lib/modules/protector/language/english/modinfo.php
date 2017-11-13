@@ -121,4 +121,7 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . '_LOADED')) {
     //3.50
     define($constpref . '_STOPFORUMSPAM_ACTION', 'Stop Forum Spam');
     define($constpref . '_STOPFORUMSPAM_ACTIONDSC', 'Checks POST data against spammers registered on www.stopforumspam.com database. Requires php CURL lib.');
+    // 3.60
+    define($constpref . '_ADMINSTATS', 'Overview');
+    define($constpref . '_BANIP_TIME0DSC', 'Suspension time in seconds for automatic IP bans');
 }

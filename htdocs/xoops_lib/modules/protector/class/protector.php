@@ -1069,7 +1069,7 @@ class Protector
             isset($_POST['uname']) ? $_POST['uname'] : null
         );
 
-        if (false === $result) {
+        if (false === $result || is_set($result['http_code'])) {
             return false;
         }
 
@@ -1138,7 +1138,12 @@ class Protector
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-        $result = json_decode(curl_exec($ch), true);
+        $result = curl_exec($ch);
+        if (false === $result) {
+            $result = curl_getinfo($ch);
+        } else {
+            $result = json_decode(curl_exec($ch), true);
+        }
         curl_close($ch);
 
         return $result;
