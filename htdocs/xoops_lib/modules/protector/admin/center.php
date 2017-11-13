@@ -74,6 +74,19 @@ if (!empty($_POST['action'])) {
         }
         redirect_header('center.php?page=center', 2, _AM_MSG_REMOVED);
         exit;
+    } elseif ($_POST['action'] === 'banbyip' && isset($_POST['ids']) && is_array($_POST['ids'])) {
+        // remove selected records
+        foreach ($_POST['ids'] as $lid) {
+            $lid = (int)$lid;
+            $result = $db->query("SELECT `ip` FROM $log_table WHERE lid='$lid'");
+            if (false !== $result) {
+                list($ip) = $db->fetchRow($result);
+                $protector->register_bad_ips(0, $ip);
+            }
+            $db->freeRecordSet($result);
+        }
+        redirect_header('center.php?page=center', 2, _AM_MSG_BANNEDIP);
+        exit;
     } elseif ($_POST['action'] === 'deleteall') {
         // remove all records
         $db->query("DELETE FROM $log_table");
@@ -127,7 +140,7 @@ include __DIR__ . '/mymenu.php';
 
 // title
 echo "<h3 style='text-align:left;'>" . $xoopsModule->name() . "</h3>\n";
-echo '<style>td.log_description {width: 80em; display: inline-block; word-wrap: break-word; white-space: pre-line;}</style>';
+echo '<style>td.log_description {width: 60em; display: inline-block; word-wrap: break-word; white-space: pre-line;}</style>';
 
 // configs writable check
 if (!is_writable(dirname(__DIR__) . '/configs')) {
@@ -259,7 +272,8 @@ while (list($lid, $uid, $ip, $agent, $type, $description, $timestamp, $uname) = 
 // footer of log listing
 echo "
   <tr>
-    <td colspan='8' align='left'>" . _AM_LABEL_REMOVE . "<input type='button' value='" . _AM_BUTTON_REMOVE . "' onclick='if (confirm(\"" . _AM_JS_REMOVECONFIRM . "\")) {document.MainForm.action.value=\"delete\"; submit();}' /></td>
+    <td colspan='8' align='left'>" . _AM_LABEL_REMOVE . "<input type='button' value='" . _AM_BUTTON_REMOVE . "' onclick='if (confirm(\"" . _AM_JS_REMOVECONFIRM . "\")) {document.MainForm.action.value=\"delete\"; submit();}' />
+    &nbsp " . _AM_LABEL_BAN_BY_IP . "<input type='button' value='" . _AM_BUTTON_BAN_BY_IP . "' onclick='if (confirm(\"" . _AM_JS_BANCONFIRM . "\")) {document.MainForm.action.value=\"banbyip\"; submit();}' /></td>
   </tr>
 </table>
 <div align='right'>

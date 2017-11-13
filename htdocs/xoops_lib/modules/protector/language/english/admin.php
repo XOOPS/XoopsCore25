@@ -54,3 +54,10 @@ define('_AM_PROTECTOR_TABLES', 'Tables');
 define('_AM_PROTECTOR_UPDATED', 'Updated');
 define('_AM_PROTECTOR_COPY', 'Copy');
 define('_AM_PROTECTOR_ACTIONS', 'Actions');
+// XOOPS 2.5.10 v Protector 3.60
+define('_AM_LABEL_BAN_BY_IP', 'Ban the IPs on checked records:');
+define('_AM_BUTTON_BAN_BY_IP', 'IP Ban!');
+define('_AM_JS_BANCONFIRM', 'IP Bans OK?');
+define('_AM_MSG_BANNEDIP', 'IPs are banned');
+define('_AM_ADMINSTATS_TITLE', 'Protector Log Summary');
+

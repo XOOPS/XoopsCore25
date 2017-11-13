@@ -29,6 +29,10 @@ $adminmenu = array(
         //'link' => 'admin/center.php' ,
         'icon'  => '../../' . $pathIcon32 . '/firewall.png'),
     array(
+        'title' => constant($constpref . '_ADMINSTATS'),
+        'link'  => 'admin/stats.php',
+        'icon'  => '../../' . $pathIcon32 . '/stats.png'),
+    array(
         'title' => constant($constpref . '_ADVISORY'),
         //'link' => 'admin/center.php?page=advisory' ,
         'link'  => 'admin/advisory.php',
