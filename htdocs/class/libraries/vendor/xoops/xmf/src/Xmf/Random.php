@@ -33,6 +33,7 @@ class Random
      * @param integer $bytes the number of random bit to generate
      *
      * @return string hashed token
+     * @throws \Exception on insufficient entropy
      */
     public static function generateOneTimeToken($hash = 'sha512', $bytes = 64)
     {
@@ -50,6 +51,7 @@ class Random
      * @param integer $bytes the number of random bytes to generate
      *
      * @return string hashed token
+     * @throws \Exception on insufficient entropy
      */
     public static function generateKey($hash = 'sha512', $bytes = 128)
     {

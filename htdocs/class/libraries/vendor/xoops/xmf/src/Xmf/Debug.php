@@ -25,6 +25,23 @@ namespace Xmf;
 class Debug extends \Kint
 {
     /**
+     * doOnce - do some local housekeeping on first use. Any method needing this
+     * assist just calls every time, the one time logic is all here.
+     *
+     * @return void
+     */
+    private static function doOnce()
+    {
+        static $done;
+        if (true !== $done) {
+            $done = true;
+            $class = get_called_class();
+            parent::$aliases[] = [$class, 'dump'];
+            parent::$aliases[] = [$class, 'backtrace'];
+        }
+    }
+
+    /**
      * Dump one or more variables
      *
      * @param mixed $data variable(s) to dump
@@ -34,10 +51,10 @@ class Debug extends \Kint
     public static function dump($data = null)
     {
         $args = func_get_args();
-        // options: 'original' (default), 'solarized', 'solarized-dark' and 'aante-light'
-        parent::$displayCalledFrom = false;
-        parent::$theme = 'aante-light'; // options: 'original' (default), 'solarized', 'solarized-dark' and 'aante-light'
-        call_user_func_array('parent::dump', $args);
+
+        static::doOnce();
+        \Kint_Renderer_Rich::$theme = 'aante-light.css'; // options: 'original' (default), 'solarized', 'solarized-dark' and 'aante-light'
+        forward_static_call_array(array('parent', 'dump'), $args);
     }
 
     /**

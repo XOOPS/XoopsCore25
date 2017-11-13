@@ -1,3 +1,7 @@
+filter:
+    paths: ["htdocs/*"]
+    excluded_paths:
+        - "htdocs/class/libraries/vendor/kint-php/"
 checks:
     php:
         code_rating: true
