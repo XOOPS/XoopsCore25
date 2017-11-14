@@ -69,6 +69,8 @@ foreach ($keys as $type) {
     $stats[$type] = $count;
 }
 
+$height = (count($keys) + 1) * 24;
+
 //
 // http://gionkunz.github.io/chartist-js/examples.html#example-bar-horizontal
 $script = "new Chartist.Bar('.ct-chart', {\n";
@@ -92,8 +94,9 @@ $script .= <<<EOS
   reverseData: true,
   horizontalBars: true,
   stackBars: true,
+  height: $height,
   axisY: {
-        offset: 80
+        offset: 120
   },
   axisX: {
     position: 'start',
