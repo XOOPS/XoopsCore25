@@ -1069,7 +1069,7 @@ class Protector
             isset($_POST['uname']) ? $_POST['uname'] : null
         );
 
-        if (false === $result || is_set($result['http_code'])) {
+        if (false === $result || isset($result['http_code'])) {
             return false;
         }
 
