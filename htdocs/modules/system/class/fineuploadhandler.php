@@ -425,8 +425,13 @@ class SystemFineUploadHandler
      */
     protected function toBytes($str)
     {
-        $val = trim($str);
+        $str = trim($str);
         $last = strtolower($str[strlen($str)-1]);
+        if(is_numeric($last)) {
+            $val = (int) $str;
+        } else {
+            $val = (int) substr($str, 0, -1);
+        }
         switch ($last) {
             case 'g':
                 $val *= 1024; // fall thru
