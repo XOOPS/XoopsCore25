@@ -240,22 +240,12 @@ class Protector
     public function purgeCookies()
     {
         if (!headers_sent()) {
-            // clear typical session id of PHP
-            setcookie('PHPSESSID', '', time() - 3600, '/', '', 0);
-            if (isset($_COOKIE[session_name()])) {
-                setcookie(session_name(), '', time() - 3600, '/', '', 0);
+            $domain =  defined(XOOPS_COOKIE_DOMAIN) ? XOOPS_COOKIE_DOMAIN : '';
+            $past = time() - 3600;
+            foreach ($_COOKIE as $key => $value) {
+                setcookie($key, '', $past, '', $domain);
+                setcookie($key, '', $past, '/', $domain);
             }
-
-            // clear autologin cookies
-            $xoops_cookie_path = defined('XOOPS_COOKIE_PATH') ? XOOPS_COOKIE_PATH : preg_replace('?http[s]{0,1}://[^/]+(/.*)$?', "$1", XOOPS_URL);
-            if ($xoops_cookie_path == XOOPS_URL) {
-                $xoops_cookie_path = '/';
-            }
-            setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600, '/', XOOPS_COOKIE_DOMAIN, 0);
-            setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600, '/');
-
-            setcookie('autologin_uname', '', time() - 3600, $xoops_cookie_path, '', 0);
-            setcookie('autologin_pass', '', time() - 3600, $xoops_cookie_path, '', 0);
         }
     }
 
