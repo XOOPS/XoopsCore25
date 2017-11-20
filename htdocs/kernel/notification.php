@@ -156,7 +156,7 @@ class XoopsNotification extends XoopsObject
         }
         $method = $user->getVar('notify_method');
 
-        $xoopsMailer =& xoops_getMailer();
+        $xoopsMailer = xoops_getMailer();
         include_once $GLOBALS['xoops']->path('include/notification_constants.php');
         switch ($method) {
             case XOOPS_NOTIFICATION_METHOD_PM:
@@ -357,9 +357,9 @@ class XoopsNotificationHandler extends XoopsObjectHandler
             $notification = new XoopsNotification();
             $notification->assignVars($myrow);
             if (!$id_as_key) {
-                $ret[] =& $notification;
+                $ret[] = $notification;
             } else {
-                $ret[$myrow['not_id']] =& $notification;
+                $ret[$myrow['not_id']] = $notification;
             }
             unset($notification);
         }
@@ -505,7 +505,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
         }
         foreach ($events as $event) {
             /* @var  $notification XoopsNotification */
-            if ($notification =& $this->getNotification($module_id, $category, $item_id, $event, $user_id)) {
+            if ($notification = $this->getNotification($module_id, $category, $item_id, $event, $user_id)) {
                 if ($notification->getVar('not_mode') != $mode) {
                     $this->updateByField($notification, 'not_mode', $mode);
                 }
@@ -640,7 +640,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
     {
         if (!isset($module_id)) {
             global $xoopsModule;
-            $module    =& $xoopsModule;
+            $module    = $xoopsModule;
             $module_id = !empty($xoopsModule) ? $xoopsModule->getVar('mid') : 0;
         } else {
             /* @var $module_handler XoopsModuleHandler */

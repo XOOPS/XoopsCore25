@@ -56,7 +56,7 @@ class SystemMaintenance
             $value          = substr($value[0], strlen(XOOPS_DB_PREFIX) + 1);
             $tables[$value] = $value;
         }
-        if ($array = true) {
+        if (true === (bool) $array) {
             return $tables;
         } else {
             return implode(',', $tables);
