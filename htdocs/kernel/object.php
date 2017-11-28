@@ -337,7 +337,7 @@ class XoopsObject
     public function destoryVars($var)
     {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
-        trigger_error("XoopsObject::destoryVars() is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']},");
+        trigger_error("XoopsObject::destoryVars() is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
         return $this->destroyVars($var);
     }
 
@@ -891,7 +891,7 @@ class XoopsObject
     public function registerFilter($filtername)
     {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
-        trigger_error("XoopsObject::registerFilter() is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']},");
+        trigger_error("XoopsObject::registerFilter() is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
         $this->_filters[] = $filtername;
     }
 
@@ -935,7 +935,7 @@ class XoopsObject
     public function loadFilters($method)
     {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
-        trigger_error("XoopsObject::loadFilters() is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']},");
+        trigger_error("XoopsObject::loadFilters() is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
 
         $this->_loadFilters();
 

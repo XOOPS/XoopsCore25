@@ -17,7 +17,7 @@
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-$GLOBALS['xoopsLogger']->addDeprecated("'/class/xoopsobject.php' is deprecated since XOOPS 2.5.4, please use 'kernel/object.php' instead.");
+$GLOBALS['xoopsLogger']->addDeprecated("'/class/xoopsobject.php' is deprecated since XOOPS 2.5.4, please use '/kernel/object.php' instead.");
 
 /**
  * Path Change: This file is here for backward compatibility only.
