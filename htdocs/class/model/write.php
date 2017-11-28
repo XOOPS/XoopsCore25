@@ -273,12 +273,14 @@ class XoopsModelWrite extends XoopsModelAbstract
     public function insert(&$object, $force = true)
     {
         if (!$object->isDirty()) {
-            trigger_error("Data entry is not inserted - the object '" . get_class($object) . "' is not dirty", E_USER_NOTICE);
+            $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+            trigger_error("Data entry is not inserted - the object '" . get_class($object) . "' is not dirty" . ". Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_NOTICE);
 
             return $object->getVar($this->handler->keyName);
         }
         if (!$this->cleanVars($object)) {
-            trigger_error("Insert failed in method 'cleanVars' of object '" . get_class($object) . "'", E_USER_WARNING);
+            $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+            trigger_error("Insert failed in method 'cleanVars' of object '" . get_class($object) . "'" . ". Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
             return $object->getVar($this->handler->keyName);
         }
@@ -291,7 +293,8 @@ class XoopsModelWrite extends XoopsModelAbstract
                 $vals = array_values($object->cleanVars);
                 $sql .= ' (`' . implode('`, `', $keys) . '`) VALUES (' . implode(',', $vals) . ')';
             } else {
-                trigger_error("Data entry is not inserted - no variable is changed in object of '" . get_class($object) . "'", E_USER_NOTICE);
+                $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+                trigger_error("Data entry is not inserted - no variable is changed in object of '" . get_class($object) . "'" . ". Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_NOTICE);
 
                 return $object->getVar($this->handler->keyName);
             }

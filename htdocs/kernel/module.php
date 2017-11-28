@@ -450,7 +450,8 @@ class XoopsModule extends XoopsObject
      */
     public function checkAccess()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
         return false;
     }
@@ -462,7 +463,8 @@ class XoopsModule extends XoopsObject
      */
     public function loadLanguage($type = 'main')
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
         return false;
     }
@@ -472,7 +474,8 @@ class XoopsModule extends XoopsObject
      */
     public function loadErrorMessages()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
         return false;
     }
@@ -482,7 +485,8 @@ class XoopsModule extends XoopsObject
      */
     public function getCurrentPage()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
         return false;
     }
@@ -495,7 +499,8 @@ class XoopsModule extends XoopsObject
      */
     public function install($admingroups = array(), $accessgroups = array())
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
         return false;
     }
@@ -505,7 +510,8 @@ class XoopsModule extends XoopsObject
      */
     public function update()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
         return false;
     }
@@ -515,7 +521,8 @@ class XoopsModule extends XoopsObject
      */
     public function insert()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
         return false;
     }
@@ -525,7 +532,8 @@ class XoopsModule extends XoopsObject
      */
     public function executeSQL()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
         return false;
     }
@@ -535,7 +543,8 @@ class XoopsModule extends XoopsObject
      */
     public function insertTemplates()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
         return false;
     }
@@ -548,7 +557,8 @@ class XoopsModule extends XoopsObject
      */
     public function gettemplate($template, $block = false)
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
         return false;
     }
@@ -558,7 +568,8 @@ class XoopsModule extends XoopsObject
      */
     public function insertBlocks()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
         return false;
     }
@@ -568,7 +579,8 @@ class XoopsModule extends XoopsObject
      */
     public function insertConfigCategories()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
         return false;
     }
@@ -578,7 +590,8 @@ class XoopsModule extends XoopsObject
      */
     public function insertConfig()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
         return false;
     }
@@ -588,7 +601,8 @@ class XoopsModule extends XoopsObject
      */
     public function insertProfileFields()
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
         return false;
     }
@@ -601,7 +615,8 @@ class XoopsModule extends XoopsObject
      */
     public function executeScript($type, $state = 2)
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
         return false;
     }
@@ -614,7 +629,8 @@ class XoopsModule extends XoopsObject
      */
     public function insertGroupPermissions($groups, $type)
     {
-        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
         return false;
     }

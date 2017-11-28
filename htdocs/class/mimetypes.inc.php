@@ -17,6 +17,7 @@
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-$GLOBALS['xoopsLogger']->addDeprecated("'/class/mimetypes.inc.php' is deprecated, use '/include/mimetypes.inc.php' directly.");
+$trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+$GLOBALS['xoopsLogger']->addDeprecated("'/class/mimetypes.inc.php' is deprecated, use '/include/mimetypes.inc.php' directly, called from {$trace[0]['file']} line {$trace[0]['line']}");
 
 return include XOOPS_ROOT_PATH . '/include/mimetypes.inc.php';

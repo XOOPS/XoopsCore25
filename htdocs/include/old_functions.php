@@ -18,7 +18,8 @@
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-trigger_error('Functions in ' . __FILE__ . ' are deprecated, should not be used any more', E_USER_WARNING);
+$trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+trigger_error('Functions in ' . __FILE__ . ' are deprecated, should not be used any more.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 // #################### Block functions from here ##################
 /*
  * Purpose : Builds the blocks on both sides

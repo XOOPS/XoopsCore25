@@ -22,7 +22,8 @@ xoops_loadLanguage('errors');
 
 XoopsLoad::load('xoopslogger');
 
-$GLOBALS['xoopsLogger']->addDeprecated("'/class/errorhandler.php' is deprecated since XOOPS 2.5.4, please use 'class/logger/xoopslogger.php' instead.");
+$trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+$GLOBALS['xoopsLogger']->addDeprecated("'/class/errorhandler.php' is deprecated since XOOPS 2.5.4, please use 'class/logger/xoopslogger.php' instead, called from {$trace[0]['file']} line {$trace[0]['line']}");
 
 /**
  * Xoops ErrorHandler

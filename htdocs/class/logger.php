@@ -28,4 +28,5 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * Load the new XoopsLogger class
  **/
 require_once $GLOBALS['xoops']->path('class/logger/xoopslogger.php');
-trigger_error('Instance of ' . __FILE__ . " file is deprecated, check 'XoopsLogger' in class/logger/xoopslogger.php");
+$trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+trigger_error('Instance of ' . __FILE__ . " file is deprecated, check 'XoopsLogger' in class/logger/xoopslogger.php, called from {$trace[0]['file']} line {$trace[0]['line']}");

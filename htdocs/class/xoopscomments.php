@@ -22,7 +22,8 @@ include_once XOOPS_ROOT_PATH . '/class/xoopstree.php';
 require_once XOOPS_ROOT_PATH . '/kernel/object.php';
 include_once XOOPS_ROOT_PATH . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/comment.php';
 
-$GLOBALS['xoopsLogger']->addDeprecated("'/class/xoopscommments.php' is deprecated since XOOPS 2.5.4, please use 'kernel/comment.php' instead.");
+$trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+$GLOBALS['xoopsLogger']->addDeprecated("'/class/xoopscommments.php' is deprecated since XOOPS 2.5.4, please use 'kernel/comment.php' instead, called from {$trace[0]['file']} line {$trace[0]['line']}");
 
 /**
  * Xoops Comments Object Class

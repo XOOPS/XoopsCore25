@@ -58,7 +58,8 @@ EOH;
         $url    = $match[1] . $match[2];
         $config = parent::loadConfig(__DIR__);
         if (!preg_match("/^http[s]?:\/\/(www\.)?soundcloud\.com\/(.*)/i", $url, $matches)) {
-            trigger_error("Not matched: {$url}", E_USER_WARNING);
+            $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+            trigger_error("Not matched: {$url}" . ". Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
             return '';
         }

@@ -47,7 +47,8 @@ class XoopsBlockInstance
      */
     public function __call($name, $args)
     {
-        trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the method '{$name}' is not executed") . '!', E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the method '{$name}' is not executed") . '!'. " Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
         return null;
     }
@@ -61,7 +62,8 @@ class XoopsBlockInstance
      */
     public function __set($name, $args)
     {
-        trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the variable '{$name}' is not set") . '!', E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the variable '{$name}' is not set") . '!'. " Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
         return false;
     }
@@ -74,7 +76,8 @@ class XoopsBlockInstance
      */
     public function __get($name)
     {
-        trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the variable '{$name}' is not vailable") . '!', E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the variable '{$name}' is not vailable") . '!'. " Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
         return null;
     }
@@ -110,7 +113,8 @@ class XoopsBlockInstanceHandler
      */
     public function __call($name, $args)
     {
-        trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the method '{$name}' is not executed") . '!', E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the method '{$name}' is not executed") . '!'. " Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
         return null;
     }
@@ -124,7 +128,8 @@ class XoopsBlockInstanceHandler
      */
     public function __set($name, $args)
     {
-        trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the variable '{$name}' is not set") . '!', E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the variable '{$name}' is not set") . '!'. " Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
         return false;
     }
@@ -137,7 +142,8 @@ class XoopsBlockInstanceHandler
      */
     public function __get($name)
     {
-        trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the variable '{$name}' is not vailable") . '!', E_USER_WARNING);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the variable '{$name}' is not vailable") . '!'. " Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_WARNING);
 
         return null;
     }

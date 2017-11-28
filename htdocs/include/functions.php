@@ -67,7 +67,8 @@ function xoops_getModuleHandler($name = null, $module_dir = null, $optional = fa
         if (isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule'])) {
             $module_dir = $GLOBALS['xoopsModule']->getVar('dirname', 'n');
         } else {
-            trigger_error('No Module is loaded', E_USER_ERROR);
+            $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+            trigger_error('No Module is loaded' . ". Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_ERROR);
         }
     } else {
         $module_dir = trim($module_dir);
@@ -84,7 +85,8 @@ function xoops_getModuleHandler($name = null, $module_dir = null, $optional = fa
         }
     }
     if (!isset($handlers[$module_dir][$name])) {
-        trigger_error('Handler does not exist<br>Module: ' . $module_dir . '<br>Name: ' . $name, $optional ? E_USER_WARNING : E_USER_ERROR);
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error('Handler does not exist<br>Module: ' . $module_dir . '<br>Name: ' . $name . ". Called from {$trace[0]['file']}line {$trace[0]['line']}", $optional ? E_USER_WARNING : E_USER_ERROR);
     }
     if (isset($handlers[$module_dir][$name])) {
         return $handlers[$module_dir][$name];

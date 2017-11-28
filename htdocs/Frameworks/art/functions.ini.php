@@ -11,7 +11,8 @@
  */
 
 if (substr(XOOPS_VERSION, 0, 9) < 'XOOPS 2.3') {
-    trigger_error('The package only works for XOOPS 2.3+', E_USER_ERROR);
+    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+    trigger_error('The package only works for XOOPS 2.3+' . " Called from {$trace[0]['file']}line {$trace[0]['line']}", E_USER_ERROR);
 }
 
 if (!defined('FRAMEWORKS_ART_FUNCTIONS_INI')):

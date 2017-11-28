@@ -19,7 +19,8 @@
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-$GLOBALS['xoopsLogger']->addDeprecated("'/class/module.errorhandler.php' is deprecated since XOOPS 2.5.4, please create your own error messages instead.");
+$trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+$GLOBALS['xoopsLogger']->addDeprecated("'/class/module.errorhandler.php' is deprecated since XOOPS 2.5.4, please create your own error messages instead, called from {$trace[0]['file']} line {$trace[0]['line']}");
 
 /**
  * Error Handler class

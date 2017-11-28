@@ -47,7 +47,8 @@ if (empty($xoopsConfigUser['allow_register'])) {
  */
 function userCheck($uname, $email, $pass, $vpass)
 {
-    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . ' is deprecated, use XoopsUserUtility::validate() instead');
+    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . ' is deprecated, use XoopsUserUtility::validate() instead' . ". Called from {$trace[0]['file']}line {$trace[0]['line']}");
 
     return XoopsUserUtility::validate($uname, $email, $pass, $vpass);
 }

@@ -28,7 +28,8 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 // Backward compatibility for 2.2*
 function xoops_load_lang_file($name, $module = '', $default = 'english')
 {
-    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . '() is deprecated, use xoops_loadLanguage() instead');
+    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . '() is deprecated, use xoops_loadLanguage() instead.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
 
     return xoops_loadLanguage($name, $module);
 }
@@ -40,7 +41,8 @@ function xoops_load_lang_file($name, $module = '', $default = 'english')
  */
 function xoops_refcheck($docheck = 1)
 {
-    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . '() is deprecated, use xoopsSecurity::checkReferer instead');
+    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . '() is deprecated, use xoopsSecurity::checkReferer instead.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
 
     return $GLOBALS['xoopsSecurity']->checkReferer($docheck);
 }
@@ -52,7 +54,8 @@ function xoops_refcheck($docheck = 1)
  */
 function xoops_getLinkedUnameFromId($userid)
 {
-    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . '() is deprecated, use XoopsUserUtility::getUnameFromId() instead');
+    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . '() is deprecated, use XoopsUserUtility::getUnameFromId() instead.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
     xoops_load('XoopsUserUtility');
 
     return XoopsUserUtility::getUnameFromId($userid, false, true);
@@ -63,7 +66,8 @@ function xoops_getLinkedUnameFromId($userid)
  */
 function showbanner()
 {
-    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . '() is deprecated, use xoops_getbanner instead');
+    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . '() is deprecated, use xoops_getbanner instead.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
     echo xoops_getbanner();
 }
 
@@ -72,7 +76,8 @@ function showbanner()
  */
 function getTheme()
 {
-    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . "() is deprecated, use \$xoopsConfig['theme_set'] directly");
+    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . "() is deprecated, use \$xoopsConfig['theme_set'] directly." . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
 
     return $GLOBALS['xoopsConfig']['theme_set'];
 }
@@ -88,7 +93,8 @@ function getTheme()
  */
 function getcss($theme = '')
 {
-    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . '() is deprecated, use xoops_getcss instead');
+    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . '() is deprecated, use xoops_getcss instead.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
 
     return xoops_getcss($theme);
 }
@@ -98,7 +104,8 @@ function getcss($theme = '')
  */
 function &getMailer()
 {
-    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . '() is deprecated, use xoops_getMailer instead');
+    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . '() is deprecated, use xoops_getMailer instead.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
     $mailer =& xoops_getMailer();
 
     return $mailer;
@@ -109,7 +116,8 @@ function &getMailer()
  */
 function OpenWaitBox()
 {
-    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . '() is deprecated');
+    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . '() is deprecated.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
     echo "<div id='waitDiv' style='position:absolute;left:40%;top:50%;visibility:hidden;text-align: center;'>
     <table cellpadding='6' border='2' class='bg2'>
       <tr>
@@ -154,7 +162,8 @@ function OpenWaitBox()
 
 function CloseWaitBox()
 {
-    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . '() is deprecated');
+    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+    $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . '() is deprecated.' . " Called from {$trace[0]['file']}line {$trace[0]['line']}");
     echo "<script type='text/javascript'>
     <!--//
     ap_showWaitMessage('waitDiv', 0);

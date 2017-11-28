@@ -118,7 +118,8 @@ if ($op === 'logout') {
 }
 
 if ($op === 'actv') {
-    $GLOBALS['xoopsLogger']->addDeprecated('Deprecated code. The activation is now handled by register.php');
+    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+    $GLOBALS['xoopsLogger']->addDeprecated('Deprecated code. The activation is now handled by register.php'. ", called from {$trace[0]['file']} line {$trace[0]['line']}");
     $id     = isset($clean_id) ? $clean_id : 0;
     $actkey = isset($clean_actkey) ? $clean_actkey : '';
     redirect_header("register.php?id={$id}&amp;actkey={$actkey}", 1, '');
