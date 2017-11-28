@@ -445,6 +445,11 @@ ini_set('memory_limit', MEMORY_TO_ALLOCATE);
 // Set up a blank canvas for our resized image (destination)
 $destination_image = imagecreatetruecolor($tn_width, $tn_height);
 
+imagealphablending($destination_image, false);
+imagesavealpha($destination_image, true);
+$transparent = imagecolorallocatealpha($destination_image, 255, 255, 255, 127);
+imagefilledrectangle($destination_image, 0, 0, $tn_width, $tn_height, $transparent);
+
 // Set up the appropriate image handling functions based on the original image's mime type
 switch ($imageMimetype) {
     case 'image/gif':
