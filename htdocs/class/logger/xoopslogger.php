@@ -64,13 +64,6 @@ class XoopsLogger
     }
 
     /**
-     * XoopsLogger::XoopsLogger()
-     */
-    public function XoopsLogger()
-    {
-    }
-
-    /**
      * Deprecated, use getInstance() instead
      */
     public function instance()
@@ -200,7 +193,16 @@ class XoopsLogger
     public function addDeprecated($msg)
     {
         if ($this->activated) {
-            $this->deprecated[] = $msg;
+            $backTrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+            $miniTrace = ' trace: ';
+            foreach ($backTrace as $i => $trace) {
+                $miniTrace .= $trace['file'] . ':' . $trace['line'] . ' ';
+            }
+            $miniTrace = str_replace(XOOPS_VAR_PATH, '', $miniTrace);
+            $miniTrace = str_replace(XOOPS_PATH, '', $miniTrace);
+            $miniTrace = str_replace(XOOPS_ROOT_PATH, '', $miniTrace);
+
+            $this->deprecated[] = $msg . $miniTrace;
         }
     }
 
