@@ -304,6 +304,7 @@ class XoopsMemberHandler
         if (!$asobject) {
             return $group_ids;
         } else {
+            $ret = array();
             foreach ($group_ids as $g_id) {
                 $ret[] = $this->getGroup($g_id);
             }
