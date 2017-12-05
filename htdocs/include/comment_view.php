@@ -196,9 +196,11 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
             }
         }
 
-        // <input type="button" onclick="self.location.href=\'' . $postcomment_link . '' . $link_extra . '\'" class="formButton" value="' . _CM_POSTCOMMENT . '" />';
-        $commentPostButton = new XoopsFormButton('', 'com_post', _CM_POSTCOMMENT, 'button');
-        $commentPostButton->setExtra(' onclick="self.location.href=\'' . $postcomment_link . $link_extra . '\'"');
+        $commentPostButton = false;
+        if (!empty($xoopsModuleConfig['com_anonpost']) || is_object($xoopsUser)) {
+            $commentPostButton = new XoopsFormButton('', 'com_post', _CM_POSTCOMMENT, 'button');
+            $commentPostButton->setExtra(' onclick="self.location.href=\'' . $postcomment_link . $link_extra . '\'"');
+        }
         $commentTpl->assign('commentPostButton', $commentPostButton);
         $commentTpl->assign('commentPostHidden', $commentBarHidden);
 

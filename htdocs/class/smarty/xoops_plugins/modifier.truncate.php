@@ -34,7 +34,7 @@ function smarty_modifier_truncate($string, $length = 80, $etc = '…', $break_wo
     $charset = defined('_CHARSET') ? _CHARSET : 'UTF-8';
 
     if (mb_strlen($string) <= $length) {
-        return '';
+        return $string;
     }
     $length -= min($length, mb_strlen($etc));
     if (!$break_words && !$middle) {
