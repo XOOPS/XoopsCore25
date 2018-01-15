@@ -29,7 +29,7 @@ if (isset($_POST['op'])) {
 }
 
 if ($op === 'main') {
-    if (!$GLOBALS['xoopsUser']) {
+    if (!is_object($GLOBALS['xoopsUser'])) {
         $GLOBALS['xoopsOption']['template_main'] = 'system_userform.tpl';
         include $GLOBALS['xoops']->path('header.php');
         $GLOBALS['xoopsTpl']->assign('lang_login', _LOGIN);
