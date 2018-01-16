@@ -462,16 +462,18 @@ switch ($imageMimetype) {
                                                 // level of 0 (no compression) through 9 (max)
         break;
     case 'image/png':
+    case 'image/x-png':
         $output_function = 'imagepng';
         $do_sharpen = false;
         $quality = round(10 - ($quality / 10)); // PNG needs a compression level of 0 (no compression) through 9
         break;
     case 'image/jpeg':
+    case 'image/pjpeg':
         $output_function = 'imagejpeg';
         $do_sharpen = true;
         break;
     default:
-        exit400BadReq();
+        exit404BadReq();
         break;
 }
 
