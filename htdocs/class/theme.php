@@ -274,6 +274,8 @@ class xos_opal_Theme
         $this->template               = new XoopsTpl();
         $this->template->currentTheme = $this;
         $this->template->assign_by_ref('xoTheme', $this);
+        $GLOBALS['xoTheme']  = $this;
+        $GLOBALS['xoopsTpl'] = $this->template;
         $tempPath = str_replace('\\', '/', realpath(XOOPS_ROOT_PATH) . '/');
         $tempName = str_replace('\\', '/',  realpath($_SERVER['SCRIPT_FILENAME']));
         $xoops_page = str_replace($tempPath, '', $tempName);
@@ -353,9 +355,7 @@ class xos_opal_Theme
         if ($this->bufferOutput) {
             ob_start();
         }
-        $GLOBALS['xoTheme']  =& $this;
-        $GLOBALS['xoopsTpl'] =& $this->template;
-        // Instanciate and initialize all the theme plugins
+        // Instantiate and initialize all the theme plugins
         foreach ($this->plugins as $k => $bundleId) {
             if (!is_object($bundleId)) {
                 $this->plugins[$bundleId]        = null;
