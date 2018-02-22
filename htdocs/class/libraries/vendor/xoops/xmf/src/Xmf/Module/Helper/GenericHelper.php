@@ -107,7 +107,7 @@ abstract class GenericHelper
             return $default;
         }
 
-        $this->addLog("Getting config '{$name}' : " . $this->configs[$name]);
+        $this->addLog("Getting config '{$name}' : " . !is_array($this->configs[$name]) ?: json_encode($this->configs[$name]));
 
         return $this->configs[$name];
     }
