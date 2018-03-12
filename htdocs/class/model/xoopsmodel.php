@@ -80,7 +80,7 @@ class XoopsModelFactory
                 $handler = XoopsModel::loadHandler($name);
             }
             if (!is_object($handler)) {
-                trigger_error('Handler not found in file ' . __FILE__ . 'at line ' . __LINE__, E_USER_WARNING);
+                trigger_error('Handler not found in file ' . __FILE__ . ' at line ' . __LINE__, E_USER_WARNING);
 
                 return null;
             }
