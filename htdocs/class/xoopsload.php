@@ -114,7 +114,7 @@ class XoopsLoad
             if (class_exists($class)) {
                 return $class;
             } else {
-                trigger_error('Class ' . $name . ' not found in file ' . __FILE__ . 'at line ' . __LINE__, E_USER_WARNING);
+                trigger_error('Class ' . $name . ' not found in file ' . __FILE__ . ' at line ' . __LINE__, E_USER_WARNING);
             }
         }
 
