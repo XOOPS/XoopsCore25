@@ -364,7 +364,7 @@ class Protector
      */
     public static function get_filepath4bwlimit()
     {
-        return XOOPS_TRUST_PATH . '/modules/protector/configs/bwlimit' . substr(md5(XOOPS_ROOT_PATH . XOOPS_DB_USER . XOOPS_DB_PREFIX), 0, 6);
+        return XOOPS_VAR_PATH . '/protector/bwlimit' . substr(md5(XOOPS_ROOT_PATH . XOOPS_DB_USER . XOOPS_DB_PREFIX), 0, 6);
     }
 
     /**
@@ -445,7 +445,7 @@ class Protector
      */
     public static function get_filepath4badips()
     {
-        return XOOPS_TRUST_PATH . '/modules/protector/configs/badips' . substr(md5(XOOPS_ROOT_PATH . XOOPS_DB_USER . XOOPS_DB_PREFIX), 0, 6);
+        return XOOPS_VAR_PATH . '/protector/badips' . substr(md5(XOOPS_ROOT_PATH . XOOPS_DB_USER . XOOPS_DB_PREFIX), 0, 6);
     }
 
     /**
@@ -473,7 +473,7 @@ class Protector
      */
     public static function get_filepath4group1ips()
     {
-        return XOOPS_TRUST_PATH . '/modules/protector/configs/group1ips' . substr(md5(XOOPS_ROOT_PATH . XOOPS_DB_USER . XOOPS_DB_PREFIX), 0, 6);
+        return XOOPS_VAR_PATH . '/protector/group1ips' . substr(md5(XOOPS_ROOT_PATH . XOOPS_DB_USER . XOOPS_DB_PREFIX), 0, 6);
     }
 
     /**
@@ -481,7 +481,7 @@ class Protector
      */
     public function get_filepath4confighcache()
     {
-        return XOOPS_TRUST_PATH . '/modules/protector/configs/configcache' . substr(md5(XOOPS_ROOT_PATH . XOOPS_DB_USER . XOOPS_DB_PREFIX), 0, 6);
+        return XOOPS_VAR_PATH . '/protector/configcache' . substr(md5(XOOPS_ROOT_PATH . XOOPS_DB_USER . XOOPS_DB_PREFIX), 0, 6);
     }
 
     /**
