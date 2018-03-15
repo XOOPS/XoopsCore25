@@ -179,7 +179,7 @@ class XoopsModelWrite extends XoopsModelAbstract
                         continue 2;
                     }
                     if ($cleanv != '' && !preg_match("/^http[s]*:\/\//i", $cleanv)) {
-                        $cleanv = 'http://' . $cleanv;
+                        $cleanv = XOOPS_PROT . $cleanv;
                     }
                     if (!$v['not_gpc']) {
                         $cleanv = $ts->stripSlashesGPC($cleanv);
@@ -193,7 +193,7 @@ class XoopsModelWrite extends XoopsModelAbstract
                         continue 2;
                     }
                     if ($cleanv != '' && !preg_match("/^http[s]*:\/\//i", $cleanv)) {
-                        $cleanv = 'http://' . $cleanv;
+                        $cleanv = XOOPS_PROT . $cleanv;
                     }
                     if (!$v['not_gpc']) {
                         $cleanv = $ts->stripSlashesGPC($cleanv);
