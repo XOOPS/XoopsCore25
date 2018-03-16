@@ -350,7 +350,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
         }
 
         if ($as_object) {
-            while ($myrow = $this->db->fetchArray($result)) {
+            while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $object = $this->create(false);
                 $object->assignVars($myrow);
                 if ($id_as_key) {
@@ -362,7 +362,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
             }
         } else {
             $object = $this->create(false);
-            while ($myrow = $this->db->fetchArray($result)) {
+            while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $object->assignVars($myrow);
                 if ($id_as_key) {
                     $ret[$myrow[$this->keyName]] = $object->getValues(array_keys($myrow));
@@ -437,7 +437,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
         $sql .= " ORDER BY $orderby";
         $result = $db->query($sql);
         $added  = array();
-        while ($myrow = $db->fetchArray($result)) {
+        while (false !== ($myrow = $db->fetchArray($result))) {
             if (!in_array($myrow['bid'], $added)) {
                 if (!$asobject) {
                     $ret[] = $myrow['bid'];
@@ -469,7 +469,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
             }
             $result   = $this->db->query($sql);
             $blockids = array();
-            while ($myrow = $this->db->fetchArray($result)) {
+            while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $blockids[] = $myrow['gperm_itemid'];
             }
             if (empty($blockids)) {
@@ -508,7 +508,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
             }
             $result   = $db->query($sql);
             $blockids = array();
-            while ($myrow = $db->fetchArray($result)) {
+            while (false !== ($myrow = $db->fetchArray($result))) {
                 $blockids[] = $myrow['gperm_itemid'];
             }
             if (empty($blockids)) {
@@ -539,7 +539,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
         }
         $sql .= ' ORDER BY ' . $orderby;
         $result = $db->query($sql);
-        while ($myrow = $db->fetchArray($result)) {
+        while (false !== ($myrow = $db->fetchArray($result))) {
             $block              = new XoopsBlock($myrow);
             $ret[$myrow['bid']] =& $block;
             unset($block);
@@ -564,14 +564,14 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
         $bids = array();
         $sql  = 'SELECT DISTINCT(bid) from ' . $db->prefix('newblocks');
         if ($result = $db->query($sql)) {
-            while ($myrow = $db->fetchArray($result)) {
+            while (false !== ($myrow = $db->fetchArray($result))) {
                 $bids[] = $myrow['bid'];
             }
         }
         $sql     = 'SELECT DISTINCT(p.gperm_itemid) from ' . $db->prefix('group_permission') . ' p, ' . $db->prefix('groups') . " g WHERE g.groupid=p.gperm_groupid AND p.gperm_name='block_read'";
         $grouped = array();
         if ($result = $db->query($sql)) {
-            while ($myrow = $db->fetchArray($result)) {
+            while (false !== ($myrow = $db->fetchArray($result))) {
                 $grouped[] = $myrow['gperm_itemid'];
             }
         }
@@ -599,7 +599,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
             $sql .= ' AND b.bid IN (' . implode(',', $non_grouped) . ')';
             $sql .= ' ORDER BY ' . $orderby;
             $result = $db->query($sql);
-            while ($myrow = $db->fetchArray($result)) {
+            while (false !== ($myrow = $db->fetchArray($result))) {
                 $block              = new XoopsBlock($myrow);
                 $ret[$myrow['bid']] =& $block;
                 unset($block);

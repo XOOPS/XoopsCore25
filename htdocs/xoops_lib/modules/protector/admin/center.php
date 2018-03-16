@@ -97,7 +97,7 @@ if (!empty($_POST['action'])) {
         $result = $db->query("SELECT `lid`,`ip`,`type` FROM $log_table ORDER BY lid DESC");
         $buf    = array();
         $ids    = array();
-        while (list($lid, $ip, $type) = $db->fetchRow($result)) {
+        while (false !== (list($lid, $ip, $type) = $db->fetchRow($result))) {
             if (isset($buf[$ip . $type])) {
                 $ids[] = $lid;
             } else {
@@ -231,7 +231,7 @@ echo "
 
 // body of log listing
 $oddeven = 'odd';
-while (list($lid, $uid, $ip, $agent, $type, $description, $timestamp, $uname) = $db->fetchRow($prs)) {
+while (false !== (list($lid, $uid, $ip, $agent, $type, $description, $timestamp, $uname) = $db->fetchRow($prs))) {
     $oddeven = ($oddeven === 'odd' ? 'even' : 'odd');
     $style = '';
 

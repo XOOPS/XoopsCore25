@@ -276,7 +276,7 @@ class XoopsUserUtility
             if (!$result = $xoopsDB->query($sql)) {
                 return $users;
             }
-            while ($row = $xoopsDB->fetchArray($result)) {
+            while (false !== ($row = $xoopsDB->fetchArray($result))) {
                 $uid = $row['uid'];
                 if ($usereal && $row['name']) {
                     $users[$uid] = $myts->htmlSpecialChars($row['name']);

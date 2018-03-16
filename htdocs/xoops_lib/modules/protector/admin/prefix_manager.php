@@ -25,7 +25,7 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
     }
 
     $count = 0;
-    while ($row_table = $db->fetchArray($srs)) {
+    while (false !== ($row_table = $db->fetchArray($srs))) {
         ++$count;
         $old_table = $row_table['Name'];
         if (substr($old_table, 0, strlen($old_prefix) + 1) !== $old_prefix . '_') {
@@ -82,7 +82,7 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
     $export_string = '';
     $rowLimit = 100;
 
-    while ($row_table = $db->fetchArray($srs)) {
+    while (false !== ($row_table = $db->fetchArray($srs))) {
         $table = $row_table['Name'];
         if (substr($table, 0, strlen($prefix) + 1) !== $prefix . '_') {
             continue;
@@ -109,7 +109,7 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
 
             $rowCount = 0;
             $insertValues = $insertNames;
-            while ($row = $db->fetchArray($result)) {
+            while (false !== ($row = $db->fetchArray($result))) {
                 if ($rowCount >= $rowLimit) {
                     $insertValues .= ");\n\n" . $insertNames;
                     $rowCount = 0;
@@ -189,7 +189,7 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
         die('You are not allowed to delete tables');
     }
 
-    while ($row_table = $db->fetchArray($srs)) {
+    while (false !== ($row_table = $db->fetchArray($srs))) {
         $table = $row_table['Name'];
         if (substr($table, 0, strlen($prefix) + 1) !== $prefix . '_') {
             continue;
@@ -218,7 +218,7 @@ if (!$db->getRowsNum($srs)) {
 // search prefixes
 $tables   = array();
 $prefixes = array();
-while ($row_table = $db->fetchArray($srs)) {
+while (false !== ($row_table = $db->fetchArray($srs))) {
     if (substr($row_table['Name'], -6) === '_users') {
         $prefixes[] = array(
             'name'    => substr($row_table['Name'], 0, -6),

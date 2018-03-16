@@ -30,7 +30,7 @@ class Upgrade_255 extends XoopsUpgrade
                 continue;
             }
             $existing_keys = array();
-            while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+            while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
                 $existing_keys[] = $row['Key_name'];
             }
             foreach ($keys as $key) {
@@ -58,7 +58,7 @@ class Upgrade_255 extends XoopsUpgrade
                 continue;
             }
             $existing_keys = array();
-            while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+            while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
                 $existing_keys[] = $row['Key_name'];
             }
             foreach ($keys as $key) {

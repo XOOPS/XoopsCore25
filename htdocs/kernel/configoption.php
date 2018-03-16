@@ -244,7 +244,7 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
         if (!$result) {
             return $ret;
         }
-        while ($myrow = $this->db->fetchArray($result)) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $confoption = new XoopsConfigOption();
             $confoption->assignVars($myrow);
             if (!$id_as_key) {

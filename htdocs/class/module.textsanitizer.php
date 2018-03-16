@@ -249,7 +249,7 @@ class MyTextSanitizer
             /* @var $xoopsDB XoopsMySQLDatabase */
             $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
             if ($getsmiles = $xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('smiles'))) {
-                while ($smiles = $xoopsDB->fetchArray($getsmiles)) {
+                while (false !== ($smiles = $xoopsDB->fetchArray($getsmiles))) {
                     $this->smileys[] = $smiles;
                 }
             }

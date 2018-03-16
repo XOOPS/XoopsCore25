@@ -948,7 +948,7 @@ function xoops_module_update($dirname)
                     $sql     = 'SELECT bid, name FROM ' . $xoopsDB->prefix('newblocks') . ' WHERE mid=' . $module->getVar('mid') . ' AND func_num=' . $i . " AND show_func='" . addslashes($block['show_func']) . "' AND func_file='" . addslashes($block['file']) . "'";
                     $fresult = $xoopsDB->query($sql);
                     $fcount  = 0;
-                    while ($fblock = $xoopsDB->fetchArray($fresult)) {
+                    while (false !== ($fblock = $xoopsDB->fetchArray($fresult))) {
                         ++$fcount;
                         $sql    = 'UPDATE ' . $xoopsDB->prefix('newblocks') . " SET name='" . addslashes($block['name']) . "', edit_func='" . addslashes($editfunc) . "', content='', template='" . $template . "', last_modified=" . time() . ' WHERE bid=' . $fblock['bid'];
                         $result = $xoopsDB->query($sql);

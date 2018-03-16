@@ -110,7 +110,7 @@ class XoopsRankHandler extends XoopsObjectHandler
 
             return $ret;
         }
-        while ($row = $this->db->fetchArray($result)) {
+        while (false !== ($row = $this->db->fetchArray($result))) {
             $object->assignVars($row);
         }
 
@@ -146,7 +146,7 @@ class XoopsRankHandler extends XoopsObjectHandler
             return $ret;
         }
         $myts = MyTextSanitizer::getInstance();
-        while ($myrow = $this->db->fetchArray($result)) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[$myrow['rank_id']] = $myts->htmlSpecialChars($myrow['rank_title']);
         }
 
@@ -280,7 +280,7 @@ class XoUserHandler extends XoopsObjectHandler
         }
         $result = $this->db->query($sql, $limit, $start);
         $ret    = array();
-        while ($myrow = $this->db->fetchArray($result)) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $object = $this->create(false);
             $object->assignVars($myrow);
             $ret[$myrow['uid']] = $object;
@@ -574,7 +574,7 @@ if (empty($_POST['user_submit'])) {
         list($total) = $xoopsDB->FetchRow($result);
         $result     = $xoopsDB->query($query, $limit, $start);
         $foundusers = array();
-        while ($myrow = $xoopsDB->fetchArray($result)) {
+        while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
             $object = $user_handler->create(false);
             $object->assignVars($myrow);
             $foundusers[$myrow['uid']] = $object;

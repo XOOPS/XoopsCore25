@@ -327,7 +327,7 @@ class Upgrade_220 extends XoopsUpgrade
         $dirname   = '';
         $bid       = 0;
         $block_key = null;
-        while ($row = $xoopsDB->fetchArray($result)) {
+        while (false !== ($row = $xoopsDB->fetchArray($result))) {
             if ($row['dirname'] != $dirname) {
                 $dirname    = $row['dirname'];
                 $modversion = array();
@@ -361,7 +361,7 @@ class Upgrade_220 extends XoopsUpgrade
         $dirname   = '';
         $bid       = 0;
         $block_key = null;
-        while ($row = $xoopsDB->fetchArray($result)) {
+        while (false !== ($row = $xoopsDB->fetchArray($result))) {
             if ($row['dirname'] != $dirname) {
                 $dirname    = $row['dirname'];
                 $modversion = array();
@@ -398,7 +398,7 @@ class Upgrade_220 extends XoopsUpgrade
         // Deal with custom blocks, convert options to type and content
         $sql    = 'SELECT bid, options FROM `' . $xoopsDB->prefix('newblocks') . "` WHERE show_func='b_system_custom_show'";
         $result = $xoopsDB->query($sql);
-        while (list($bid, $options) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($bid, $options) = $xoopsDB->fetchRow($result))) {
             $_options = unserialize($options);
             $content  = $_options[0];
             $type     = $_options[1];
@@ -410,7 +410,7 @@ class Upgrade_220 extends XoopsUpgrade
         $result = $xoopsDB->queryF($sql);
         $sql    = 'SELECT bid, options FROM `' . $xoopsDB->prefix('newblocks') . "` WHERE show_func <> 'b_system_custom_show' AND options <> ''";
         $result = $xoopsDB->query($sql);
-        while (list($bid, $_options) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($bid, $_options) = $xoopsDB->fetchRow($result))) {
             $options = unserialize($_options);
             if (empty($options) || !is_array($options)) {
                 $options = array();

@@ -58,7 +58,7 @@ class Upgrade_231 extends XoopsUpgrade
             if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
                 return false;
             }
-            while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+            while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
                 if ($row['Field'] != $field) {
                     continue;
                 }

@@ -163,7 +163,7 @@ class TableLoad
         $rows = array();
         $result = $db->query($sql);
         if ($result) {
-            while ($row = $db->fetchArray($result)) {
+            while (false !== ($row = $db->fetchArray($result))) {
                 $rows[] = $row;
             }
         }

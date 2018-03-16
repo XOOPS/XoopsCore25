@@ -260,7 +260,7 @@ function synchronize($uid, $type)
                 redirect_header('admin.php?fct=users', 1, sprintf(_AM_SYSTEM_USERS_CNGUSERID, $uid));
             }
 
-            while ($data = $xoopsDB->fetchArray($result)) {
+            while (false !== ($data = $xoopsDB->fetchArray($result))) {
                 synchronize($data['uid'], 'user');
             }
             break;

@@ -158,7 +158,7 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
     $sql    = 'SELECT bid, side FROM ' . $dbm->prefix('newblocks');
     $result = $dbm->query($sql);
 
-    while ($myrow = $dbm->fetchArray($result)) {
+    while (false !== ($myrow = $dbm->fetchArray($result))) {
         if ($myrow['side'] == 0) {
             $dbm->insert('block_module_link', ' VALUES (' . $myrow['bid'] . ', 0)');
         } else {
