@@ -777,7 +777,7 @@ class XoopsObject
                             continue 2;
                         }
                         if ($cleanv != '' && !preg_match("/^http[s]*:\/\//i", $cleanv)) {
-                            $cleanv = 'http://' . $cleanv;
+                            $cleanv = XOOPS_PROT . $cleanv;
                         }
                         if (!$v['not_gpc']) {
                             $cleanv =& $ts->stripSlashesGPC($cleanv);
@@ -852,7 +852,7 @@ class XoopsObject
                             continue 2;
                         }
                         if ($cleanv != '' && !preg_match("/^http[s]*:\/\//i", $cleanv)) {
-                            $cleanv = 'http://' . $cleanv;
+                            $cleanv = XOOPS_PROT . $cleanv;
                         }
                         $cleanv = xoops_convert_encode($cleanv);
                         if (!$v['not_gpc']) {
