@@ -312,7 +312,7 @@ class XoopsImageHandler extends XoopsObjectHandler
         if (!$result) {
             return $ret;
         }
-        while ($myrow = $this->db->fetchArray($result)) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $image = new XoopsImage();
             $image->assignVars($myrow);
             if (!$id_as_key) {

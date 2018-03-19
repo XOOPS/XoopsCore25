@@ -73,7 +73,7 @@ class XoopsTree
         if ($count == 0) {
             return $arr;
         }
-        while ($myrow = $this->db->fetchArray($result)) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $arr[] = $myrow;
         }
 
@@ -95,7 +95,7 @@ class XoopsTree
         if ($count == 0) {
             return $idarray;
         }
-        while (list($id) = $this->db->fetchRow($result)) {
+        while (false !== (list($id) = $this->db->fetchRow($result))) {
             $idarray[] = $id;
         }
 
@@ -122,7 +122,7 @@ class XoopsTree
         if ($count == 0) {
             return $idarray;
         }
-        while (list($r_id) = $this->db->fetchRow($result)) {
+        while (false !== (list($r_id) = $this->db->fetchRow($result))) {
             $idarray[] = $r_id;
             $idarray   = $this->getAllChildId($r_id, $order, $idarray);
         }
@@ -214,7 +214,7 @@ class XoopsTree
         if ($none) {
             echo "<option value='0'>----</option>\n";
         }
-        while (list($catid, $name) = $this->db->fetchRow($result)) {
+        while (false !== (list($catid, $name) = $this->db->fetchRow($result))) {
             $sel = '';
             if ($catid == $preset_id) {
                 $sel = " selected";
@@ -311,7 +311,7 @@ class XoopsTree
         if ($count == 0) {
             return $parray;
         }
-        while ($row = $this->db->fetchArray($result)) {
+        while (false !== ($row = $this->db->fetchArray($result))) {
             $parray[] = $row;
             $parray   = $this->getAllChild($row[$this->id], $order, $parray);
         }
@@ -340,7 +340,7 @@ class XoopsTree
         if ($count == 0) {
             return $parray;
         }
-        while ($row = $this->db->fetchArray($result)) {
+        while (false !== ($row = $this->db->fetchArray($result))) {
             $row['prefix'] = $r_prefix . '.';
             $parray[]      = $row;
             $parray        = $this->getChildTreeArray($row[$this->id], $order, $parray, $row['prefix']);

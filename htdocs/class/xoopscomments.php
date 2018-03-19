@@ -198,13 +198,13 @@ class XoopsComments extends XoopsObject
         if (!$asobject) {
             $sql    = 'SELECT comment_id FROM ' . $this->ctable . "$where_query ORDER BY $orderby";
             $result = $this->db->query($sql, $limit, $start);
-            while ($myrow = $this->db->fetchArray($result)) {
+            while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $ret[] = $myrow['comment_id'];
             }
         } else {
             $sql    = 'SELECT * FROM ' . $this->ctable . '' . $where_query . " ORDER BY $orderby";
             $result = $this->db->query($sql, $limit, $start);
-            while ($myrow = $this->db->fetchArray($result)) {
+            while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $ret[] = new XoopsComments($this->ctable, $myrow);
             }
         }

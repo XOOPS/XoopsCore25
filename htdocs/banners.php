@@ -127,7 +127,7 @@ function bannerstats()
 
         $result = $xoopsDB->query('SELECT bid, imptotal, impmade, clicks, date FROM ' . $xoopsDB->prefix('banner') . " WHERE cid={$cid}");
         $i      = 0;
-        while (list($bid, $imptotal, $impmade, $clicks, $date) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($bid, $imptotal, $impmade, $clicks, $date) = $xoopsDB->fetchRow($result))) {
             if ($impmade == 0) {
                 $percent = 0;
             } else {
@@ -154,7 +154,7 @@ function bannerstats()
               <h4 class='content_title'>" . _BANNERS_FOW_IN . htmlspecialchars($xoopsConfig['sitename']) . '</h4><hr />';
 
         $result = $xoopsDB->query('SELECT bid, imageurl, clickurl, htmlbanner, htmlcode FROM ' . $xoopsDB->prefix('banner') . " WHERE cid={$cid}");
-        while (list($bid, $imageurl, $clickurl, $htmlbanner, $htmlcode) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($bid, $imageurl, $clickurl, $htmlbanner, $htmlcode) = $xoopsDB->fetchRow($result))) {
             $numrows = $xoopsDB->getRowsNum($result);
             if ($numrows > 1) {
                 echo '<br>';
@@ -199,7 +199,7 @@ function bannerstats()
                   <tfoot><tr><td colspan='6'></td></tr></tfoot>";
 
             $i = 0;
-            while (list($bid, $impressions, $clicks, $datestart, $dateend) = $xoopsDB->fetchRow($result)) {
+            while (false !== (list($bid, $impressions, $clicks, $datestart, $dateend) = $xoopsDB->fetchRow($result))) {
                 if ($impressions == 0) {
                     $percent = 0;
                 } else {

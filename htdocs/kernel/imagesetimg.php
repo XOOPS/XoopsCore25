@@ -227,7 +227,7 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
         if (!$result) {
             return $ret;
         }
-        while ($myrow = $this->db->fetchArray($result)) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $imgsetimg = new XoopsImagesetimg();
             $imgsetimg->assignVars($myrow);
             if (!$id_as_key) {

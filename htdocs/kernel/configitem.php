@@ -409,7 +409,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
         if (!$result) {
             return false;
         }
-        while ($myrow = $this->db->fetchArray($result)) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $config = new XoopsConfigItem();
             $config->assignVars($myrow);
             if (!$id_as_key) {

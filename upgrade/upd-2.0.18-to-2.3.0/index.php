@@ -90,7 +90,7 @@ class Upgrade_230 extends XoopsUpgrade
         if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
             return false;
         }
-        while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+        while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
             if ($row['Key_name'] === 'PRIMARY') {
                 return true;
             }
@@ -110,7 +110,7 @@ class Upgrade_230 extends XoopsUpgrade
         }
         $keys_drop   = array();
         $primary_add = true;
-        while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+        while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
             if ($row['Key_name'] === 'PRIMARY') {
                 $primary_add = false;
             }
@@ -269,7 +269,7 @@ class Upgrade_230 extends XoopsUpgrade
             return false;
         }
         $tables = array();
-        while (list($table) = $GLOBALS['xoopsDB']->fetchRow($result)) {
+        while (false !== (list($table) = $GLOBALS['xoopsDB']->fetchRow($result))) {
             $tables[] = $table;
             //$GLOBALS["xoopsDB"]->queryF( "ALTER TABLE `{$table}` DEFAULT CHARACTER SET " . $GLOBALS["xoopsDB"]->quote($charset) . " COLLATE " . $GLOBALS["xoopsDB"]->quote($collation) );
             //$GLOBALS["xoopsDB"]->queryF( "ALTER TABLE `{$table}` CONVERT TO CHARACTER SET " . $GLOBALS["xoopsDB"]->quote($charset) . " COLLATE " . $GLOBALS["xoopsDB"]->quote($collation) );
@@ -302,7 +302,7 @@ class Upgrade_230 extends XoopsUpgrade
             foreach ((array)$tables as $table) {
                 // Analyze tables for string types columns and generate his binary and string correctness sql sentences.
                 $resource = $GLOBALS['xoopsDB']->queryF("DESCRIBE $table");
-                while ($result = $GLOBALS['xoopsDB']->fetchArray($resource)) {
+                while (false !== ($result = $GLOBALS['xoopsDB']->fetchArray($resource))) {
                     if (preg_match('/(char)|(text)|(enum)|(set)/', $result['Type'])) {
                         // String Type SQL Sentence.
                         $string_querys[] = "ALTER TABLE `$table` MODIFY `" . $result['Field'] . '` ' . $result['Type'] . " CHARACTER SET $charset COLLATE $collation " . (((!empty($result['Default'])) || ($result['Default'] === '0') || ($result['Default'] === 0)) ? "DEFAULT '" . $result['Default'] . "' " : '') . ('YES' === $result['Null'] ? '' : 'NOT ') . 'NULL';
@@ -321,7 +321,7 @@ class Upgrade_230 extends XoopsUpgrade
                 // Analyze table indexs for any FULLTEXT-Type of index in the table.
                 $fulltext_indexes = array();
                 $resource         = $GLOBALS['xoopsDB']->queryF("SHOW INDEX FROM `$table`");
-                while ($result = $GLOBALS['xoopsDB']->fetchArray($resource)) {
+                while (false !== ($result = $GLOBALS['xoopsDB']->fetchArray($resource))) {
                     if (preg_match('/FULLTEXT/', $result['Index_type'])) {
                         $fulltext_indexes[$result['Key_name']][$result['Column_name']] = 1;
                     }

@@ -506,7 +506,7 @@ class XoopsMemberHandler
         if (!$result = $this->userHandler->db->query($sql, $limit, $start)) {
             return $ret;
         }
-        while ($myrow = $this->userHandler->db->fetchArray($result)) {
+        while (false !== ($myrow = $this->userHandler->db->fetchArray($result))) {
             if ($asobject) {
                 $user = new XoopsUser();
                 $user->assignVars($myrow);

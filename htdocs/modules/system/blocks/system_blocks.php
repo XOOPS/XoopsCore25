@@ -318,7 +318,7 @@ function b_system_info_show($options)
         if ($xoopsDB->getRowsNum($result) > 0) {
             $prev_caption = '';
             $i            = 0;
-            while ($userinfo = $xoopsDB->fetchArray($result)) {
+            while (false !== ($userinfo = $xoopsDB->fetchArray($result))) {
                 if ($prev_caption != $userinfo['groupname']) {
                     $prev_caption                = $userinfo['groupname'];
                     $block['groups'][$i]['name'] = $myts->htmlSpecialChars($userinfo['groupname']);

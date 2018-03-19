@@ -63,7 +63,7 @@ class ProfileVisibilityHandler extends XoopsPersistableObjectHandler
         $sql .= ' AND user_group IN (' . implode(',', $user_groups) . ')';
         $field_ids = array();
         if ($result = $this->db->query($sql)) {
-            while (list($field_id) = $this->db->fetchRow($result)) {
+            while (false !== (list($field_id) = $this->db->fetchRow($result))) {
                 $field_ids[] = $field_id;
             }
         }

@@ -39,7 +39,7 @@ function getDbCharsets()
     $charsets['utf8'] = array();
     $ut8_available    = false;
     if ($result = $GLOBALS['xoopsDB']->queryF('SHOW CHARSET')) {
-        while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+        while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
             $charsets[$row['Charset']]['desc'] = $row['Description'];
             if ($row['Charset'] === 'utf8') {
                 $ut8_available = true;
@@ -62,7 +62,7 @@ function getDbCollations()
     $charsets   = getDbCharsets();
 
     if ($result = $GLOBALS['xoopsDB']->queryF('SHOW COLLATION')) {
-        while ($row = $GLOBALS['xoopsDB']->fetchArray($result)) {
+        while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
             $charsets[$row['Charset']]['collation'][] = $row['Collation'];
         }
     }

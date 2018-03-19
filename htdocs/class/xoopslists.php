@@ -624,7 +624,7 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
             $sql    = sprintf('SELECT rank_id, rank_title FROM ' . $db->prefix('ranks') . ' WHERE rank_special = %u', 1);
             $ret    = array();
             $result = $db->query($sql);
-            while ($myrow = $db->fetchArray($result)) {
+            while (false !== ($myrow = $db->fetchArray($result))) {
                 $ret[$myrow['rank_id']] = $myts->htmlspecialchars($myrow['rank_title']);
             }
 

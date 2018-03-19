@@ -51,7 +51,7 @@ class SystemMaintenance
     {
         $tables = array();
         $result = $this->db->queryF('SHOW TABLES');
-        while ($myrow = $this->db->fetchArray($result)) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $value          = array_values($myrow);
             $value          = substr($value[0], strlen(XOOPS_DB_PREFIX) + 1);
             $tables[$value] = $value;
@@ -88,7 +88,7 @@ class SystemMaintenance
     {
         $result = $this->db->queryF('SELECT avatar_id, avatar_file FROM ' . $this->db->prefix('avatar') . " WHERE avatar_type='C' AND avatar_id IN (" . 'SELECT t1.avatar_id FROM ' . $this->db->prefix('avatar_user_link') . ' AS t1 ' . 'LEFT JOIN ' . $this->db->prefix('users') . ' AS t2 ON t2.uid=t1.user_id ' . 'WHERE t2.uid IS NULL)');
 
-        while ($myrow = $this->db->fetchArray($result)) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             //delete file
             @unlink(XOOPS_UPLOAD_PATH . '/' . $myrow['avatar_file']);
             //clean avatar table

@@ -160,7 +160,7 @@ class XoopsOnlineHandler
         if (!$result) {
             return false;
         }
-        while ($myrow = $this->db->fetchArray($result)) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[] = $myrow;
             unset($myrow);
         }
