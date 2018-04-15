@@ -11,15 +11,22 @@
 //                                                         ///
 //////////////////////////////////////////////////////////////
 require dirname(dirname(__DIR__)) . '/header.php';
-define('phpThumbConfigFileVersion', '1.7.14');
+define('phpThumbConfigFileVersion', '1.7.15');
 ob_start();
+if (!class_exists('phpthumb_functions')) { // normally include_once should take care of this, but see https://github.com/JamesHeinrich/phpThumb/issues/94
 if (!file_exists(__DIR__ . '/phpthumb.functions.php') || !include_once(__DIR__ . '/phpthumb.functions.php')) {
     ob_end_flush();
     die('failed to include_once(phpthumb.functions.php) - realpath="' . realpath(__DIR__ . '/phpthumb.functions.php') . '"');
 }
+}
 ob_end_clean();
 
-// START USER CONFIGURATION SECTION:
+
+
+/****************************************************************************************/
+/* START USER CONFIGURATION SECTION: */
+global $PHPTHUMB_CONFIG;  // declare as global to prevent scope issues (when including phpThumb.config.php inside functions inside included files, etc)
+$PHPTHUMB_CONFIG = array();
 
 // * DocumentRoot configuration
 // phpThumb() depends on $_SERVER['DOCUMENT_ROOT'] to resolve path/filenames. This value is usually correct,
@@ -30,6 +37,8 @@ ob_end_clean();
 //$PHPTHUMB_CONFIG['document_root'] = $_SERVER['DOCUMENT_ROOT'];
 //$PHPTHUMB_CONFIG['document_root'] = realpath((@$_SERVER['DOCUMENT_ROOT'] && file_exists(@$_SERVER['DOCUMENT_ROOT'].$_SERVER['PHP_SELF'])) ? $_SERVER['DOCUMENT_ROOT'] : str_replace(dirname(@$_SERVER['PHP_SELF']), '', str_replace(DIRECTORY_SEPARATOR, '/', realpath('.'))));
 $PHPTHUMB_CONFIG['document_root'] = XOOPS_ROOT_PATH;
+
+
 // * Security configuration
 $PHPTHUMB_CONFIG['disable_debug']               = true;    // DO NOT DISABLE THIS ON ANY PUBLIC-ACCESSIBLE SERVER. Prevents phpThumb from displaying any information about your system. If true, phpThumbDebug and error messages will be disabled. If set to false (debug messages enabled) then debug mode will be FORCED -- ONLY debug output will be presented, no actual thumbnail (to avoid accidentally leaving debug mode enabled on a production server)
 $PHPTHUMB_CONFIG['high_security_enabled']       = true;    // DO NOT DISABLE THIS ON ANY PUBLIC-ACCESSIBLE SERVER. If disabled, your server is more vulnerable to hacking attempts, both on your server and via your server to other servers. When enabled, requires 'high_security_password' set to be set and requires the use of phpThumbURL() function (at the bottom of phpThumb.config.php) to generate hashed URLs
@@ -50,13 +59,11 @@ $PHPTHUMB_CONFIG['cache_directory'] = XOOPS_CACHE_PATH;                         
 //$PHPTHUMB_CONFIG['cache_directory'] = null;                                                 // disable thumbnail caching (not recommended)
 //if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') {
 //    $PHPTHUMB_CONFIG['cache_directory'] = __DIR__.'/cache/'; // set the cache directory to an absolute directory for all source images
-//} else {
 //    $PHPTHUMB_CONFIG['cache_directory'] = '/tmp/persistent/phpthumb/cache/';
 //}
 
 $PHPTHUMB_CONFIG['cache_disable_warning'] = false; // If [cache_directory] is non-existant or not writable, and [cache_disable_warning] is false, an error image will be generated warning to either set the cache directory or disable the warning (to avoid people not knowing about the cache)
-
-$PHPTHUMB_CONFIG['cache_directory_depth'] = 4; // If this larger than zero, cache structure will be broken into a broad directory structure based on cache filename. For example "cache_src012345..." will be stored in "/0/01/012/0123/cache_src012345..." when (cache_directory_depth = 4)
+$PHPTHUMB_CONFIG['cache_directory_depth'] = 4; // If this larger than zero, cache structure will be broken into a broad directory structure based on cache filename. For example "cache_src012345..." will be stored in "/0/01/012/0123/cache_src012345..." when (cache_directory_depth = 4). Caution: larger values can lead to an exponentially larger number of subdirectories which will also affect disk space due to (typically) 4kB used per directory entry: "2" gives a maximum of 16^2=256 subdirectories (up to 1MB wasted space), "3": 16^3=4096 subdirs (up to 16MB wasted), "4": 16^4=65536 subdirs (256MB wasted space), etc.
 
 // * Cache culling: phpThumb can automatically limit the contents of the cache directory
 //   based on last-access date and/or number of files and/or total filesize.
@@ -65,7 +72,7 @@ $PHPTHUMB_CONFIG['cache_directory_depth'] = 4; // If this larger than zero, cach
 $PHPTHUMB_CONFIG['cache_maxage'] = 86400 * 30;        // delete cached thumbnails that haven't been accessed in more than [30 days] (value is maximum time since last access in seconds to avoid deletion)
 
 //$PHPTHUMB_CONFIG['cache_maxsize'] = null;           // never delete cached thumbnails based on byte size of cache directory
-$PHPTHUMB_CONFIG['cache_maxsize'] = 10 * 1024 * 1024; // delete least-recently-accessed cached thumbnails when more than [10MB] of cached files are present (value is maximum bytesize of all cached files)
+$PHPTHUMB_CONFIG['cache_maxsize'] = 10 * 1024 * 1024; // delete least-recently-accessed cached thumbnails when more than [10MB] of cached files are present (value is maximum bytesize of all cached files). Note: this only counts file size, does not count space "wasted" by directory entries in the cache structure -- see notes under $PHPTHUMB_CONFIG['cache_directory_depth']
 
 //$PHPTHUMB_CONFIG['cache_maxfiles'] = null;          // never delete cached thumbnails based on number of cached files
 $PHPTHUMB_CONFIG['cache_maxfiles'] = 200;             // delete least-recently-accessed cached thumbnails when more than [200] cached files are present (value is maximum number of cached files to keep)
@@ -100,19 +107,28 @@ $PHPTHUMB_CONFIG['cache_force_passthru'] = true;  // if true, cached image data 
 //$PHPTHUMB_CONFIG['temp_directory'] = '/tmp/persistent/phpthumb/cache/';  // set to absolute path
 $PHPTHUMB_CONFIG['temp_directory'] = $PHPTHUMB_CONFIG['cache_directory'];  // set to same as cache directory
 
-// NOTE: "max_source_pixels" only affects GD-resized thumbnails. If you have ImageMagick
-//       installed it will bypass most of these limits
+
+// ImageMagick configuration
+$PHPTHUMB_CONFIG['prefer_imagemagick']        = true;  // If true, use ImageMagick to resize thumbnails if possible, since it is usually faster than GD functions; if false only use ImageMagick if PHP memory limit is too low.
+$PHPTHUMB_CONFIG['imagemagick_use_thumbnail'] = true;  // If true, use ImageMagick's "-thumbnail" resizing parameter (if available) which removes extra non-image metadata (profiles, EXIF info, etc) resulting in much smaller filesize; if false, use "-resize" paramter which retains this info
+if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') {
+	// Windows: set absolute pathname
+	$PHPTHUMB_CONFIG['imagemagick_path'] = 'C:/ImageMagick/convert.exe';
+} else {
+	// *nix: set absolute pathname to "convert", or leave as null if "convert" is in the path (location detected with `which`)
+	//$PHPTHUMB_CONFIG['imagemagick_path'] = '/usr/local/bin/convert';
+	$PHPTHUMB_CONFIG['imagemagick_path'] = null;
+}
+
+
+// NOTE: "max_source_pixels" only affects GD-resized thumbnails. If you have ImageMagick installed it will bypass most of these limits
 // maximum number of pixels in source image to attempt to process entire image in GD mode.
 // If this is zero then no limit on source image dimensions.
-// If this is nonzero then this is the maximum number of pixels the source image
-// can have to be processed normally, otherwise the embedded EXIF thumbnail will
-// be used (if available) or an "image too large" notice will be displayed.
-// This is to be used for large source images (> 1600x1200) and low PHP memory
-// limits. If PHP runs out of memory the script will usually just die with no output.
-// To calculate this number, multiply the dimensions of the largest image
-// you can process with your memory limitation (e.g. 1600 * 1200 = 1920000)
-// As a general guideline, this number will be about 20% of your PHP memory
-// configuration, so 8M = 1,677,722; 16M = 3,355,443; 32M = 6,710,886; etc.
+// If this is nonzero then this is the maximum number of pixels the source image can have to be processed normally, otherwise the
+// embedded EXIF thumbnail will be used (if available) or an "image too large" notice will be displayed. This is to be used for large
+// source images (>2Mpx) and low PHP memory limits. If PHP runs out of memory the script will usually just die with no output.
+// To calculate this number, multiply the dimensions of the largest image you can process with your memory limitation (e.g. 1600 * 1200 = 1920000)
+// As a general guideline, this number will be about 20% of your PHP memory configuration, so 8M = 1,677,722; 16M = 3,355,443; 32M = 6,710,886; etc.
 if (phpthumb_functions::version_compare_replacement(phpversion(), '4.3.2', '>=') && !defined('memory_get_usage') && !@ini_get('memory_limit')) {
     // memory_get_usage() will only be defined if your PHP is compiled with the --enable-memory-limit configuration option.
     $PHPTHUMB_CONFIG['max_source_pixels'] = 0;         // no memory limit
@@ -125,17 +141,6 @@ if (phpthumb_functions::version_compare_replacement(phpversion(), '4.3.2', '>=')
     //$PHPTHUMB_CONFIG['max_source_pixels'] = 3871488; // allow 2272x1704 images (4Mpx), no larger (about 24MB memory required)
 }
 
-// ImageMagick configuration
-$PHPTHUMB_CONFIG['prefer_imagemagick']        = true;  // If true, use ImageMagick to resize thumbnails if possible, since it is usually faster than GD functions; if false only use ImageMagick if PHP memory limit is too low.
-$PHPTHUMB_CONFIG['imagemagick_use_thumbnail'] = true;  // If true, use ImageMagick's "-thumbnail" resizing parameter (if available) which removes extra non-image metadata (profiles, EXIF info, etc) resulting in much smaller filesize; if false, use "-resize" paramter which retains this info
-if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-    // Windows: set absolute pathname
-    $PHPTHUMB_CONFIG['imagemagick_path'] = 'C:/ImageMagick/convert.exe';
-} else {
-    // *nix: set absolute pathname to "convert", or leave as null if "convert" is in the path (location detected with `which`)
-    //$PHPTHUMB_CONFIG['imagemagick_path'] = '/usr/local/bin/convert';
-    $PHPTHUMB_CONFIG['imagemagick_path'] = null;
-}
 
 // * Default output configuration:
 $PHPTHUMB_CONFIG['output_format']    = 'png'; // default output format ('jpeg', 'png' or 'gif') - thumbnail will be output in this format (if available in your version of GD or ImageMagick). This is only used if the "f" parameter is not specified, and if the thumbnail can't be output in the input format.
@@ -155,7 +160,7 @@ $PHPTHUMB_CONFIG['error_silent_die_on_error']   = false;    // simply die with n
 $PHPTHUMB_CONFIG['error_die_on_source_failure'] = true;     // die with error message if source image cannot be processed by phpThumb() (usually because source image is corrupt in some way). If false the source image will be passed through unprocessed, if true (default) an error message will be displayed.
 
 // * Off-server Thumbnailing Configuration:
-$PHPTHUMB_CONFIG['nohotlink_enabled']       = false;                                    // If false will allow thumbnailing from any source domain
+$PHPTHUMB_CONFIG['nohotlink_enabled']       = false;                                    // If false will allow thumbnailing from any source domain, if true then only domains in 'nohotlink_valid_domains' will be accepted
 $PHPTHUMB_CONFIG['nohotlink_valid_domains'] = array(@$_SERVER['HTTP_HOST']);            // This is the list of domains for which thumbnails are allowed to be created. Note: domain only, do not include port numbers. The default value of the current domain should be fine in most cases, but if neccesary you can add more domains in here, in the format "www.example.com"
 $PHPTHUMB_CONFIG['nohotlink_erase_image']   = true;                                     // if true thumbnail is covered up with $PHPTHUMB_CONFIG['nohotlink_fill_color'] before text is applied, if false text is written over top of thumbnail
 $PHPTHUMB_CONFIG['nohotlink_text_message']  = 'Off-server thumbnailing is not allowed'; // text of error message
@@ -169,7 +174,7 @@ $PHPTHUMB_CONFIG['nooffsitelink_watermark_src'] = '/demo/images/watermark.png'; 
 $PHPTHUMB_CONFIG['nooffsitelink_text_message']  = 'Image taken from ' . @$_SERVER['HTTP_HOST']; // text of error message (used if [nooffsitelink_watermark_src] is not a valid image)
 
 // * Border & Background default colors
-$PHPTHUMB_CONFIG['border_hexcolor']     = '000000'; // Default border color - usual HTML-style hex color notation (overridden with 'bc' parameter)
+$PHPTHUMB_CONFIG['border_hexcolor']     = '000000'; // Default border color - usual HTML-style hex color notation (overidden with 'bc' parameter)
 $PHPTHUMB_CONFIG['background_hexcolor'] = 'FFFFFF'; // Default background color when thumbnail aspect ratio does not match fixed-dimension box - usual HTML-style hex color notation (overridden with 'bg' parameter)
 
 // * Watermark configuration
@@ -180,9 +185,10 @@ $PHPTHUMB_CONFIG['ttf_directory'] = __DIR__ . '/fonts'; // Base directory for TT
 // You may want to pull data from a database rather than a physical file
 // If so, modify the $PHPTHUMB_CONFIG['mysql_query'] line to suit your database structure
 // Note: the data retrieved must be the actual binary data of the image, not a URL or filename
+$PHPTHUMB_CONFIG['mysql_extension'] = 'mysqli'; // either "mysqli" or "mysql"
 
 $PHPTHUMB_CONFIG['mysql_query'] = '';
-//$PHPTHUMB_CONFIG['mysql_query'] = 'SELECT `picture` FROM `products` WHERE (`id` = \''.mysql_escape_string(@$_GET['id']).'\')';
+//$PHPTHUMB_CONFIG['mysql_query'] = 'SELECT `picture` FROM `products` WHERE (`id` = \''.mysqli_real_escape_string(@$_GET['id']).'\')';
 
 // These 4 values must be modified if $PHPTHUMB_CONFIG['mysql_query'] is not empty, but may be ignored if $PHPTHUMB_CONFIG['mysql_query'] is blank.
 $PHPTHUMB_CONFIG['mysql_hostname'] = 'localhost';
@@ -190,38 +196,35 @@ $PHPTHUMB_CONFIG['mysql_username'] = '';
 $PHPTHUMB_CONFIG['mysql_password'] = '';
 $PHPTHUMB_CONFIG['mysql_database'] = '';
 
-// * Security configuration
-$PHPTHUMB_CONFIG['high_security_enabled']    = false;  // if enabled, requires 'high_security_password' set to be set and requires the use of phpThumbURL() function (at the bottom of phpThumb.config.php) to generate hashed URLs
-$PHPTHUMB_CONFIG['high_security_password']   = '';     // required if 'high_security_enabled' is true, and must be at complex (uppercase, lowercase, numbers, punctuation, etc -- punctuation is strongest, lowercase is weakest; see PasswordStrength() in phpThumb.php). You can use a password generator like http://silisoftware.com/tools/password-random.php to generate a strong password
-$PHPTHUMB_CONFIG['disable_debug']            = true;   // prevent phpThumb from displaying any information about your system. If true, phpThumbDebug and error messages will be disabled
-$PHPTHUMB_CONFIG['allow_src_above_docroot']  = true;  // if true, allow src to be anywhere in filesystem; if false (default) only allow src within document_root
-$PHPTHUMB_CONFIG['allow_src_above_phpthumb'] = true;   // if true (default), allow src to be anywhere in filesystem; if false only allow src within sub-directory of phpThumb installation
-$PHPTHUMB_CONFIG['allow_parameter_file']     = false;  // if true, allow use of 'file' parameter; if false (default) the 'file' parameter is disabled/ignored
-$PHPTHUMB_CONFIG['allow_parameter_goto']     = false;  // if true, allow use of 'goto' parameter; if false (default) the 'goto' parameter is disabled/ignored
 
 // * HTTP UserAgent configuration
 //$PHPTHUMB_CONFIG['http_user_agent'] = '';                                                                                      // PHP default: none
 //$PHPTHUMB_CONFIG['http_user_agent'] = 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)';                                    // Windows XP, Internet Explorer
-$PHPTHUMB_CONFIG['http_user_agent'] = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.12) Gecko/20050915 Firefox/1.0.7'; // Windows XP, Firefox
+//$PHPTHUMB_CONFIG['http_user_agent'] = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.12) Gecko/20050915 Firefox/1.0.7'; // Windows XP, Firefox
+$PHPTHUMB_CONFIG['http_user_agent'] = @$_SERVER['HTTP_USER_AGENT'];                                                                // use client user-agent
 
-// * Compatibility settings
-$PHPTHUMB_CONFIG['disable_pathinfo_parsing']        = false;  // if true, $_SERVER[PATH_INFO] is not parsed. May be needed on some server configurations to allow normal behavior.
-$PHPTHUMB_CONFIG['disable_imagecopyresampled']      = false;  // if true, ImageCopyResampled is replaced with ImageCopyResampleBicubic. May be needed for buggy versions of PHP-GD.
+
+// * Compatability settings
+$PHPTHUMB_CONFIG['disable_pathinfo_parsing']        = false;   // if true, $_SERVER[PATH_INFO] is not parsed. May be needed on some server configurations to allow normal behavior.
+$PHPTHUMB_CONFIG['disable_imagecopyresampled']      = false;  // if true, imagecopyresampled is replaced with ImageCopyResampleBicubic. May be needed for buggy versions of PHP-GD.
 $PHPTHUMB_CONFIG['disable_onlycreateable_passthru'] = true;   // if true, any image that can be parsed by getimagesize() can be passed through; if false, only images that can be converted to GD by ImageCreateFrom(JPEG|GIF|PNG) functions are allowed
+$PHPTHUMB_CONFIG['disable_realpath']                = false;  // PHP realpath() function requires that "the running script must have executable permissions on all directories in the hierarchy, otherwise realpath() will return FALSE". Set config_disable_realpath=false to enable alternate filename-parsing that does not use realpath() function (but also does not resolve symbolic links)
+
 
 // * HTTP remote file opening settings
 $PHPTHUMB_CONFIG['http_fopen_timeout']   = 10;   // timeout (in seconds) for fopen / curl / fsockopen
 $PHPTHUMB_CONFIG['http_follow_redirect'] = true; // if true (default), follow "302 Found" redirects to new URL; if false, return error message
 
 // * Speed optimizations configuration
-$PHPTHUMB_CONFIG['use_exif_thumbnail_for_speed'] = true; // If true, and EXIF thumbnail is available, and is larger or equal to output image dimensions, use EXIF thumbnail rather than actual source image for generating thumbnail. Benefit is only speed, avoiding resizing large image.
 $PHPTHUMB_CONFIG['allow_local_http_src']         = true; // If true, 'src' parameter can be "http://<thishostname>/path/image.ext" instead of just "/path/image.ext"; if false then display warning message to encourage more efficient local-filename calling.
+$PHPTHUMB_CONFIG['use_exif_thumbnail_for_speed'] = true; // If true, and EXIF thumbnail is available, and is larger or equal to output image dimensions, use EXIF thumbnail rather than actual source image for generating thumbnail. Benefit is only speed, avoiding resizing large image.
 
-// END USER CONFIGURATION SECTION
+/* END USER CONFIGURATION SECTION */
 
-///////////////////////////////////////////////////////////////////////////////
 
-// START DEFAULT PARAMETERS SECTION
+
+
+/* START DEFAULT PARAMETERS SECTION */
 // If any parameters are constant across ALL images, you can set them here
 
 $PHPTHUMB_DEFAULTS_GETSTRINGOVERRIDE = true;  // if true, any parameters in the URL will override the defaults set here; if false, any parameters set here cannot be overridden in the URL
@@ -231,20 +234,36 @@ $PHPTHUMB_DEFAULTS_DISABLEGETPARAMS  = false; // if true, GETstring parameters w
 //$PHPTHUMB_DEFAULTS['fltr'] = array('blur|10');
 //$PHPTHUMB_DEFAULTS['q']    =  90;
 
-// END DEFAULT PARAMETERS SECTION
 
-///////////////////////////////////////////////////////////////////////////////
+/* END DEFAULT PARAMETERS SECTION */
+
+
+
+//////////////////////////////////////////////////////////////////////////////
 // Function for generating hashed calls to phpThumb if 'high_security_enabled'
 // example:
-//   require_once($_SERVER['DOCUMENT_ROOT'].'/phpThumb/phpThumb.config.php');
-//   echo '<img src="'.phpThumbURL('src=/images/pic.jpg&w=50').'">';
+//   require_once('phpThumb/phpThumb.config.php');
+//   echo '<img src="'.htmlspecialchars(phpThumbURL('src=/images/pic.jpg&w=50', '/phpThumb/phpThumb.php')).'">';
 
-function phpThumbURL($ParameterString)
-{
+$GLOBALS['PHPTHUMB_CONFIG'] = $PHPTHUMB_CONFIG;
+function phpThumbURL($ParameterString, $path_to_phpThumb='phpThumb.php') {
     global $PHPTHUMB_CONFIG;
-
-    return str_replace(@$PHPTHUMB_CONFIG['document_root'], '', __DIR__) . DIRECTORY_SEPARATOR . 'phpThumb.php?' . $ParameterString . '&hash=' . md5($ParameterString . @$PHPTHUMB_CONFIG['high_security_password']);
+	if (is_array($ParameterString)) {
+		$ParameterStringArray = $ParameterString;
+	} else {
+		parse_str($ParameterString, $ParameterStringArray);
+	}
+	$ParamterStringEncodedArray = array();
+	foreach ($ParameterStringArray as $key => $value) {
+		if (is_array($value)) {
+			// e.g. fltr[] is passed as an array
+			foreach ($value as $subvalue) {
+				$ParamterStringEncodedArray[] = $key.'[]='.rawurlencode($subvalue);
+			}
+		} else {
+			$ParamterStringEncodedArray[] = $key.'='.rawurlencode($value);
+		}
+	}
+	$ParameterString = implode($PHPTHUMB_CONFIG['high_security_url_separator'], $ParamterStringEncodedArray);
+	return $path_to_phpThumb.'?'.$ParameterString.$PHPTHUMB_CONFIG['high_security_url_separator'].'hash='.md5($ParameterString.$PHPTHUMB_CONFIG['high_security_password']);
 }
-
-///////////////////////////////////////////////////////////////////////////////
-
