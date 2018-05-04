@@ -16,6 +16,8 @@
  * @author              Kazumi Ono (http://www.myweb.ne.jp/, http://jp.xoops.org/)
  */
 
+use Xmf\Request;
+
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
@@ -54,7 +56,7 @@ class XoopsPageNav
         if ($extra_arg != '' && (substr($extra_arg, -5) !== '&amp;' || substr($extra_arg, -1) !== '&')) {
             $this->extra = '&amp;' . $extra_arg;
         }
-        $this->url = $_SERVER['PHP_SELF'] . '?' . trim($start_name) . '=';
+        $this->url = htmlspecialchars(Request::getString('PHP_SELF', '', 'SERVER'), ENT_QUOTES) . '?' . trim($start_name) . '=';
     }
 
     /**
