@@ -108,9 +108,9 @@ function RedirectToCachedFile() {
 
 // instantiate a new phpThumb() object
 ob_start();
-if (!include_once(dirname(__FILE__).'/phpthumb.class.php')) {
+if (!include_once( __DIR__ .'/phpthumb.class.php')) {
 	ob_end_flush();
-	die('failed to include_once("'.realpath(dirname(__FILE__).'/phpthumb.class.php').'")');
+	die('failed to include_once("'.realpath( __DIR__ .'/phpthumb.class.php').'")');
 }
 ob_end_clean();
 $phpThumb = new phpThumb();
@@ -124,22 +124,22 @@ if (!phpthumb_functions::FunctionIsDisabled('set_time_limit')) {
 // phpThumbDebug[0] used to be here, but may reveal too much
 // info when high_security_mode should be enabled (not set yet)
 
-if (file_exists(dirname(__FILE__).'/phpThumb.config.php')) {
+if (file_exists( __DIR__ .'/phpThumb.config.php')) {
 	ob_start();
-	if (include_once(dirname(__FILE__).'/phpThumb.config.php')) {
+	if (include_once( __DIR__ .'/phpThumb.config.php')) {
 		// great
 	} else {
 		ob_end_flush();
 		$phpThumb->config_disable_debug = false; // otherwise error message won't print
-		$phpThumb->ErrorImage('failed to include_once('.dirname(__FILE__).'/phpThumb.config.php) - realpath="'.realpath(dirname(__FILE__).'/phpThumb.config.php').'"');
+		$phpThumb->ErrorImage('failed to include_once('. __DIR__ .'/phpThumb.config.php) - realpath="'.realpath( __DIR__ .'/phpThumb.config.php').'"');
 	}
 	ob_end_clean();
-} elseif (file_exists(dirname(__FILE__).'/phpThumb.config.php.default')) {
+} elseif (file_exists( __DIR__ .'/phpThumb.config.php.default')) {
 	$phpThumb->config_disable_debug = false; // otherwise error message won't print
 	$phpThumb->ErrorImage('Please rename "phpThumb.config.php.default" to "phpThumb.config.php"');
 } else {
 	$phpThumb->config_disable_debug = false; // otherwise error message won't print
-	$phpThumb->ErrorImage('failed to include_once('.dirname(__FILE__).'/phpThumb.config.php) - realpath="'.realpath(dirname(__FILE__).'/phpThumb.config.php').'"');
+	$phpThumb->ErrorImage('failed to include_once('. __DIR__ .'/phpThumb.config.php) - realpath="'.realpath( __DIR__ .'/phpThumb.config.php').'"');
 }
 
 if (!empty($PHPTHUMB_CONFIG)) {
@@ -152,7 +152,7 @@ if (!empty($PHPTHUMB_CONFIG)) {
 	}
 	if (!$phpThumb->config_disable_debug) {
 		// if debug mode is enabled, force phpThumbDebug output, do not allow normal thumbnails to be generated
-		$_GET['phpThumbDebug'] = (!empty($_GET['phpThumbDebug']) ? max(1, intval($_GET['phpThumbDebug'])) : 9);
+		$_GET['phpThumbDebug'] = (!empty($_GET['phpThumbDebug']) ? max(1, (int) $_GET[ 'phpThumbDebug']) : 9);
 		$phpThumb->setParameter('phpThumbDebug', $_GET['phpThumbDebug']);
 	}
 } else {
@@ -474,7 +474,7 @@ if (isset($_GET['phpThumbDebug']) && ($_GET['phpThumbDebug'] == '4')) {
 }
 ////////////////////////////////////////////////////////////////
 
-$phpThumb->DebugMessage('$CanPassThroughDirectly="'.intval($CanPassThroughDirectly).'" && $phpThumb->src="'.$phpThumb->src.'"', __FILE__, __LINE__);
+$phpThumb->DebugMessage('$CanPassThroughDirectly="'. (int) $CanPassThroughDirectly .'" && $phpThumb->src="'.$phpThumb->src.'"', __FILE__, __LINE__);
 while ($CanPassThroughDirectly && $phpThumb->src) {
 	// no parameters set, passthru
 
@@ -590,7 +590,7 @@ if ($phpThumb->rawImageData) {
 	if (!phpthumb_functions::IsHexColor($bghexcolor)) {
 		$phpThumb->ErrorImage('BGcolor parameter for "new" is not valid');
 	}
-	$opacity = (strlen($opacity) ? $opacity : 100);
+	$opacity = ('' !== $opacity ? $opacity : 100);
 	if ($phpThumb->gdimg_source = phpthumb_functions::ImageCreateFunction($phpThumb->w, $phpThumb->h)) {
 		$alpha = (100 - min(100, max(0, $opacity))) * 1.27;
 		if ($alpha) {
@@ -621,7 +621,7 @@ if ($phpThumb->rawImageData) {
 		$phpThumb->src = $cleanedupurl;
 		unset($cleanedupurl);
 		if ($rawImageData = phpthumb_functions::SafeURLread($phpThumb->src, $error, $phpThumb->config_http_fopen_timeout, $phpThumb->config_http_follow_redirect)) {
-			$phpThumb->DebugMessage('SafeURLread('.$phpThumb->src.') succeeded'.($error ? ' with messsages: "'.$error.'"' : ''), __FILE__, __LINE__);
+			$phpThumb->DebugMessage('SafeURLread('.$phpThumb->src.') succeeded'.($error ? ' with messages: "'.$error.'"' : ''), __FILE__, __LINE__);
 			$phpThumb->DebugMessage('Setting source data from URL "'.$phpThumb->src.'"', __FILE__, __LINE__);
 			$phpThumb->setSourceData($rawImageData, urlencode($phpThumb->src));
 		} else {
