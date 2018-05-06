@@ -124,7 +124,6 @@ class HTMLPurifier_VarParser_Flexible extends HTMLPurifier_VarParser
                 $this->errorInconsistent(__CLASS__, $type);
         }
         $this->errorGeneric($var, $type);
-        return null;
     }
 }
 

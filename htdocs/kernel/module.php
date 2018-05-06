@@ -137,7 +137,7 @@ class XoopsModule extends XoopsObject
      * Get module info
      *
      * @param  string $name
-     * @return array  |string    Array of module information.
+     * @return array|string    Array of module information.
      *                     If {@link $name} is set, returns a single module information item as string.
      */
     public function &getInfo($name = null)
