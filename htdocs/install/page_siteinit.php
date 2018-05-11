@@ -36,10 +36,10 @@ $vars =& $_SESSION['siteconfig'];
 $error =& $_SESSION['error'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $vars['adminname']  = $_POST['adminname'];
-    $vars['adminmail']  = $_POST['adminmail'];
-    $vars['adminpass']  = $_POST['adminpass'];
-    $vars['adminpass2'] = $_POST['adminpass2'];
+    $vars['adminname']  = trim($_POST['adminname']);
+    $vars['adminmail']  = trim($_POST['adminmail']);
+    $vars['adminpass']  = trim($_POST['adminpass']);
+    $vars['adminpass2'] = trim($_POST['adminpass2']);
     $error              = array();
 
     if (empty($vars['adminname'])) {
@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($vars['adminpass'])) {
         $error['pass'][] = ERR_REQUIRED;
     }
-    if (!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $vars['adminmail'])) {
+    if (!filter_var($vars['adminmail'], FILTER_VALIDATE_EMAIL)) {
         $error['email'][] = ERR_INVALID_EMAIL;
     }
     if ($vars['adminpass'] != $vars['adminpass2']) {
@@ -104,15 +104,15 @@ if ($isadmin) {
         <?php
         echo '<div class="row"><div class="col-md-9">';
         echo xoFormField('adminname', $vars['adminname'], ADMIN_LOGIN_LABEL);
-        if (!empty($error['name'])) {
+        if (isset($error['name'])) {
             foreach ($error['name'] as $errmsg) {
                 echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errmsg . '</div>';
             }
         }
 
         echo xoFormField('adminmail', $vars['adminmail'], ADMIN_EMAIL_LABEL);
-        if (!empty($error['email'])) {
-            foreach ($error['pass'] as $errmsg) {
+        if (isset($error['email'])) {
+            foreach ($error['email'] as $errmsg) {
                 echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errmsg . '</div>';
             }
         }
@@ -123,7 +123,7 @@ if ($isadmin) {
                 <?php
                 echo xoPassField('adminpass', '', ADMIN_PASS_LABEL);
                 echo xoPassField('adminpass2', '', ADMIN_CONFIRMPASS_LABEL);
-                if (!empty($error['pass'])) {
+                if (isset($error['pass'])) {
                     foreach ($error['pass'] as $errmsg) {
                         echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errmsg . '</div>';
                     }
