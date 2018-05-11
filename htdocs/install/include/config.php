@@ -61,10 +61,7 @@ $configs['writable'] = array(
     'uploads/images/',
     'uploads/ranks/',
     'uploads/smilies/',
-    'xoops_lib/modules/protector/configs/',
-    //'mainfile.php',
-    //'include/license.php',
-    );
+);
 
 // Modules to be installed by default
 $configs['modules'] = array();
@@ -72,13 +69,17 @@ $configs['modules'] = array();
 // xoops_lib, xoops_data directories
 $configs['xoopsPathDefault'] = array(
     'lib'  => 'xoops_lib',
-    'data' => 'xoops_data');
+    'data' => 'xoops_data',
+);
 
 // writable xoops_lib, xoops_data directories
 $configs['dataPath'] = array(
-    'caches'  => array(
+    'caches'    => array(
         'xoops_cache',
         'smarty_cache',
-        'smarty_compile'),
-    'configs' => null,
-    'data'    => null);
+        'smarty_compile',
+        ),
+    'configs'   => null,
+    'data'      => null,
+    'protector' => null,
+);
