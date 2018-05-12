@@ -1,6 +1,6 @@
 {
     "name": "xoops/base-requires25",
-    "license": "GPL-2.0+",
+    "license": "GPL-2.0-or-later",
     "type": "project",
     "description": "Primary dependencies for XOOPS/XoopsCore25",
     "require": {
