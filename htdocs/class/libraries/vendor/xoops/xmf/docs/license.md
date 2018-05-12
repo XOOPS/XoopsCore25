@@ -1,7 +1,7 @@
 xmf - XOOPS Module Framework
 ============================
 
-**XMF is Copyright © 2011-2016 XOOPS Project**
+**XMF is Copyright © 2011-2018 XOOPS Project**
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.
 
@@ -11,4 +11,4 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 You should have received a copy of the GNU General Public License, and the GNU Lesser General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-You may contact the copyright holder through XOOPS Project: <http://xoops.org>
+You may contact the copyright holder through XOOPS Project: <https://xoops.org>

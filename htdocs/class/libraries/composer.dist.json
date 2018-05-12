@@ -1,7 +1,10 @@
 {
     "name": "xoops-259/libraries",
-    "license": "GPL-2.0+",
+    "license": "GPL-2.0-or-later",
     "type": "project",
+    "config": {
+        "php": "5.3.9"
+    },
     "description": "Libraries for XOOPS 2.5.9",
     "require": {
         "xoops/base-requires25": "^0.2.0"

@@ -10,6 +10,7 @@ htdocs/xoops_data/caches/smarty_compile/*
 htdocs/xoops_data/caches/xoops_cache/*
 htdocs/xoops_data/caches/xoops_cache/*/
 htdocs/xoops_data/configs/*
+htdocs/xoops_data/protector/*
 htdocs/xoops_data/data/secure.php
 htdocs/xoops_data/data/license.php
 htdocs/xoops_data/data/*key*

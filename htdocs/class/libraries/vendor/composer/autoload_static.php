@@ -4,12 +4,12 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit274e5fff219a4f27a346e611b0580d6a
+class ComposerStaticInitfb0e5c3e4af98ed910184391855ba473
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
-        '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
         '3917c79c5052b270641b5a200963dbc2' => __DIR__ . '/..' . '/kint-php/kint/init.php',
+        '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
         'e40631d46120a9c38ea139981f8dab26' => __DIR__ . '/..' . '/ircmaxell/password-compat/lib/password.php',
     );
 
@@ -40,7 +40,7 @@ class ComposerStaticInit274e5fff219a4f27a346e611b0580d6a
     public static $prefixDirsPsr4 = array (
         'Xmf\\' => 
         array (
-            0 => __DIR__ . '/..' . '/xoops/xmf/src/Xmf',
+            0 => __DIR__ . '/..' . '/xoops/xmf/src',
         ),
         'Webmozart\\Assert\\' => 
         array (
@@ -225,46 +225,46 @@ class ComposerStaticInit274e5fff219a4f27a346e611b0580d6a
         'WideImage\\WideImage' => __DIR__ . '/..' . '/smottt/wideimage/lib/WideImage/WideImage.php',
         'WideImage\\vendor\\de77\\BMP' => __DIR__ . '/..' . '/smottt/wideimage/lib/WideImage/vendor/de77/BMP.php',
         'WideImage\\vendor\\de77\\TGA' => __DIR__ . '/..' . '/smottt/wideimage/lib/WideImage/vendor/de77/TGA.php',
-        'Xmf\\Assert' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Assert.php',
-        'Xmf\\Database\\Migrate' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Database/Migrate.php',
-        'Xmf\\Database\\TableLoad' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Database/TableLoad.php',
-        'Xmf\\Database\\Tables' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Database/Tables.php',
-        'Xmf\\Debug' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Debug.php',
-        'Xmf\\FilterInput' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/FilterInput.php',
-        'Xmf\\Highlighter' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Highlighter.php',
-        'Xmf\\IPAddress' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/IPAddress.php',
-        'Xmf\\Jwt\\JsonWebToken' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Jwt/JsonWebToken.php',
-        'Xmf\\Jwt\\KeyFactory' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Jwt/KeyFactory.php',
-        'Xmf\\Jwt\\TokenFactory' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Jwt/TokenFactory.php',
-        'Xmf\\Jwt\\TokenReader' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Jwt/TokenReader.php',
-        'Xmf\\Key\\ArrayStorage' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Key/ArrayStorage.php',
-        'Xmf\\Key\\Basic' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Key/Basic.php',
-        'Xmf\\Key\\FileStorage' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Key/FileStorage.php',
-        'Xmf\\Key\\KeyAbstract' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Key/KeyAbstract.php',
-        'Xmf\\Key\\StorageInterface' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Key/StorageInterface.php',
-        'Xmf\\Language' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Language.php',
-        'Xmf\\Metagen' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Metagen.php',
-        'Xmf\\Module\\Admin' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Module/Admin.php',
-        'Xmf\\Module\\Helper' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Module/Helper.php',
-        'Xmf\\Module\\Helper\\AbstractHelper' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Module/Helper/AbstractHelper.php',
-        'Xmf\\Module\\Helper\\Cache' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Module/Helper/Cache.php',
-        'Xmf\\Module\\Helper\\GenericHelper' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Module/Helper/GenericHelper.php',
-        'Xmf\\Module\\Helper\\Permission' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Module/Helper/Permission.php',
-        'Xmf\\Module\\Helper\\Session' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Module/Helper/Session.php',
-        'Xmf\\Random' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Random.php',
-        'Xmf\\Request' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Request.php',
-        'Xmf\\StopWords' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/StopWords.php',
-        'Xmf\\Uuid' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Uuid.php',
-        'Xmf\\Yaml' => __DIR__ . '/..' . '/xoops/xmf/src/Xmf/Yaml.php',
+        'Xmf\\Assert' => __DIR__ . '/..' . '/xoops/xmf/src/Assert.php',
+        'Xmf\\Database\\Migrate' => __DIR__ . '/..' . '/xoops/xmf/src/Database/Migrate.php',
+        'Xmf\\Database\\TableLoad' => __DIR__ . '/..' . '/xoops/xmf/src/Database/TableLoad.php',
+        'Xmf\\Database\\Tables' => __DIR__ . '/..' . '/xoops/xmf/src/Database/Tables.php',
+        'Xmf\\Debug' => __DIR__ . '/..' . '/xoops/xmf/src/Debug.php',
+        'Xmf\\FilterInput' => __DIR__ . '/..' . '/xoops/xmf/src/FilterInput.php',
+        'Xmf\\Highlighter' => __DIR__ . '/..' . '/xoops/xmf/src/Highlighter.php',
+        'Xmf\\IPAddress' => __DIR__ . '/..' . '/xoops/xmf/src/IPAddress.php',
+        'Xmf\\Jwt\\JsonWebToken' => __DIR__ . '/..' . '/xoops/xmf/src/Jwt/JsonWebToken.php',
+        'Xmf\\Jwt\\KeyFactory' => __DIR__ . '/..' . '/xoops/xmf/src/Jwt/KeyFactory.php',
+        'Xmf\\Jwt\\TokenFactory' => __DIR__ . '/..' . '/xoops/xmf/src/Jwt/TokenFactory.php',
+        'Xmf\\Jwt\\TokenReader' => __DIR__ . '/..' . '/xoops/xmf/src/Jwt/TokenReader.php',
+        'Xmf\\Key\\ArrayStorage' => __DIR__ . '/..' . '/xoops/xmf/src/Key/ArrayStorage.php',
+        'Xmf\\Key\\Basic' => __DIR__ . '/..' . '/xoops/xmf/src/Key/Basic.php',
+        'Xmf\\Key\\FileStorage' => __DIR__ . '/..' . '/xoops/xmf/src/Key/FileStorage.php',
+        'Xmf\\Key\\KeyAbstract' => __DIR__ . '/..' . '/xoops/xmf/src/Key/KeyAbstract.php',
+        'Xmf\\Key\\StorageInterface' => __DIR__ . '/..' . '/xoops/xmf/src/Key/StorageInterface.php',
+        'Xmf\\Language' => __DIR__ . '/..' . '/xoops/xmf/src/Language.php',
+        'Xmf\\Metagen' => __DIR__ . '/..' . '/xoops/xmf/src/Metagen.php',
+        'Xmf\\Module\\Admin' => __DIR__ . '/..' . '/xoops/xmf/src/Module/Admin.php',
+        'Xmf\\Module\\Helper' => __DIR__ . '/..' . '/xoops/xmf/src/Module/Helper.php',
+        'Xmf\\Module\\Helper\\AbstractHelper' => __DIR__ . '/..' . '/xoops/xmf/src/Module/Helper/AbstractHelper.php',
+        'Xmf\\Module\\Helper\\Cache' => __DIR__ . '/..' . '/xoops/xmf/src/Module/Helper/Cache.php',
+        'Xmf\\Module\\Helper\\GenericHelper' => __DIR__ . '/..' . '/xoops/xmf/src/Module/Helper/GenericHelper.php',
+        'Xmf\\Module\\Helper\\Permission' => __DIR__ . '/..' . '/xoops/xmf/src/Module/Helper/Permission.php',
+        'Xmf\\Module\\Helper\\Session' => __DIR__ . '/..' . '/xoops/xmf/src/Module/Helper/Session.php',
+        'Xmf\\Random' => __DIR__ . '/..' . '/xoops/xmf/src/Random.php',
+        'Xmf\\Request' => __DIR__ . '/..' . '/xoops/xmf/src/Request.php',
+        'Xmf\\StopWords' => __DIR__ . '/..' . '/xoops/xmf/src/StopWords.php',
+        'Xmf\\Uuid' => __DIR__ . '/..' . '/xoops/xmf/src/Uuid.php',
+        'Xmf\\Yaml' => __DIR__ . '/..' . '/xoops/xmf/src/Yaml.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit274e5fff219a4f27a346e611b0580d6a::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit274e5fff219a4f27a346e611b0580d6a::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit274e5fff219a4f27a346e611b0580d6a::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit274e5fff219a4f27a346e611b0580d6a::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitfb0e5c3e4af98ed910184391855ba473::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitfb0e5c3e4af98ed910184391855ba473::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitfb0e5c3e4af98ed910184391855ba473::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitfb0e5c3e4af98ed910184391855ba473::$classMap;
 
         }, null, ClassLoader::class);
     }
