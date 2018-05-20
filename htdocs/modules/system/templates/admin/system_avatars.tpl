@@ -16,7 +16,7 @@
                 </button>
             </div>
         </div>
-    </div>   
+    </div>
 <{/if}>
 <{if $view_cat}>
     <!-- Display Avatar header for switch between system & custom category -->
@@ -115,8 +115,8 @@
             template: 'qq-template-manual-trigger',
             request: {
                 endpoint: '<{$xoops_url}>/ajaxfineupload.php',
-                customHeaders: {
-                    "Authorization": "Basic <{$jwt}>"
+                params: {
+                    "Authorization": "<{$jwt}>"
                 }
             },
             text: {

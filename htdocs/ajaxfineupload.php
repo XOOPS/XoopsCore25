@@ -77,7 +77,7 @@ $assert = array(
     'aud' => basename(__FILE__),
     'uid' => $xoopsUser instanceof \XoopsUser ? $xoopsUser->id() : 0,
 );
-$claims = TokenReader::fromHeader('fineuploader', $assert);
+$claims = TokenReader::fromRequest('fineuploader', 'Authorization', $assert);
 
 if ($claims === false) {
     echo json_encode(array('error' => "Invalid request token"));
@@ -149,7 +149,7 @@ function get_request_method()
     global $HTTP_RAW_POST_DATA;
 
     if(isset($HTTP_RAW_POST_DATA)) {
-    	parse_str($HTTP_RAW_POST_DATA, $_POST);
+        parse_str($HTTP_RAW_POST_DATA, $_POST);
     }
     */
 
