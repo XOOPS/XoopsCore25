@@ -79,7 +79,7 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
         die('You are not allowed to delete tables');
     }
 
-    $export_string = '';
+    $exportString = '';
     $rowLimit = 100;
 
     while (false !== ($row_table = $db->fetchArray($srs))) {
