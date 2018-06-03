@@ -215,8 +215,8 @@
             template: 'qq-template-manual-trigger',
             request: {
                 endpoint: '<{$xoops_url}>/ajaxfineupload.php',
-                customHeaders: {
-                    "Authorization": "Basic <{$jwt}>"
+                params: {
+                    "Authorization": "<{$jwt}>"
                 }
             },
             text: {
