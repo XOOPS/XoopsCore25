@@ -485,7 +485,7 @@ class XoopsMemberHandler
         }
 
         $limit = $start = 0;
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $criteriaCompo->add($criteria);
             $sql_criteria = $criteriaCompo->render();
             if ($criteria->getSort() != '') {
@@ -540,7 +540,7 @@ class XoopsMemberHandler
         if (!empty($groups)) {
             $criteriaCompo->add(new Criteria('m.groupid', '(' . implode(', ', $groups) . ')', 'IN'));
         }
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $criteriaCompo->add($criteria);
         }
         $sql_criteria = $criteriaCompo->render();
