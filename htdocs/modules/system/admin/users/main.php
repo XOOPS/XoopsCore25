@@ -185,13 +185,9 @@ switch ($op) {
                 $edituser->setVar('user_occ', $_REQUEST['user_occ']);
                 $edituser->setVar('user_intrest', $_REQUEST['user_intrest']);
                 $edituser->setVar('user_mailok', $_REQUEST['user_mailok']);
-                if ($_REQUEST['pass2'] !== '') {
-                    if ($_REQUEST['password'] != $_REQUEST['pass2']) {
-                        xoops_cp_header();
-                        echo '
-                        <strong>' . _AM_SYSTEM_USERS_STNPDNM . '</strong>';
-                        xoops_cp_footer();
-                        exit();
+                if ($_REQUEST['password_confirm'] !== '') {
+                    if ($_REQUEST['password'] != $_REQUEST['password_confirm']) {
+                        redirect_header("?fct=users&op=users_edit&uid={$uid}" , 3, _AM_SYSTEM_USERS_STNPDNM);
                     }
                     $edituser->setVar('pass', password_hash($_REQUEST['password'], PASSWORD_DEFAULT));
                 }
@@ -254,12 +250,9 @@ switch ($op) {
                     $newuser->setVar('user_aim', $_REQUEST['user_aim']);
                     $newuser->setVar('user_yim', $_REQUEST['user_yim']);
                     $newuser->setVar('user_msnm', $_REQUEST['user_msnm']);
-                    if ($_REQUEST['pass2'] !== '') {
-                        if ($_REQUEST['password'] != $_REQUEST['pass2']) {
-                            xoops_cp_header();
-                            echo '<strong>' . _AM_SYSTEM_USERS_STNPDNM . '</strong>';
-                            xoops_cp_footer();
-                            exit();
+                    if ($_REQUEST['password_confirm'] !== '') {
+                        if ($_REQUEST['password'] != $_REQUEST['password_confirm']) {
+                            redirect_header("?fct=users&op=users_add" , 3, _AM_SYSTEM_USERS_STNPDNM);
                         }
                         $newuser->setVar('pass', password_hash($_REQUEST['password'], PASSWORD_DEFAULT));
                     }

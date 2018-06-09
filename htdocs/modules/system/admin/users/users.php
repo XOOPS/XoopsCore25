@@ -170,14 +170,11 @@ function form_user($add_or_edit, $user = '')
     } else {
         $rank_select->addOption(0, _AM_SYSTEM_USERS_NSRID);
     }
-    $form->addElement($rank_select);
     // adding a new user requires password fields
     if (!$form_isedit) {
-        $form->addElement(new XoopsFormPassword(_AM_SYSTEM_USERS_PASSWORD, 'password', 10, 32), true);
-        $form->addElement(new XoopsFormPassword(_AM_SYSTEM_USERS_RETYPEPD, 'pass2', 10, 32), true);
+        $form->addElement(new XoopsFormPassword(_AM_SYSTEM_USERS_PASSWORD, 'password', 10, 32, '', true, true), true);
     } else {
-        $form->addElement(new XoopsFormPassword(_AM_SYSTEM_USERS_PASSWORD, 'password', 10, 32));
-        $form->addElement(new XoopsFormPassword(_AM_SYSTEM_USERS_RETYPEPD, 'pass2', 10, 32));
+        $form->addElement(new XoopsFormPassword(_AM_SYSTEM_USERS_PASSWORD, 'password', 10, 32, '', true, true));
     }
     $form->addElement(new XoopsFormRadioYN(_AM_SYSTEM_USERS_ACCEPT_EMAIL, 'user_mailok', $mailok_value));
 
