@@ -49,7 +49,7 @@ class XoopsModelRead extends XoopsModelAbstract
         $limit = null;
         $start = null;
         $sql   = "SELECT {$select} FROM `{$this->handler->table}`";
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
             if ($groupby = $criteria->getGroupby()) {
                 $sql .= $groupby;
@@ -130,7 +130,7 @@ class XoopsModelRead extends XoopsModelAbstract
             $sql .= ", `{$this->handler->identifierName}`";
         }
         $sql .= " FROM `{$this->handler->table}`";
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
             if ($sort = $criteria->getSort()) {
                 $sql .= ' ORDER BY ' . $sort . ' ' . $criteria->getOrder();
@@ -163,7 +163,7 @@ class XoopsModelRead extends XoopsModelAbstract
         $ret   = array();
         $sql   = "SELECT `{$this->handler->keyName}` FROM `{$this->handler->table}`";
         $limit = $start = null;
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
@@ -193,7 +193,7 @@ class XoopsModelRead extends XoopsModelAbstract
     public function &getByLimit($limit = 0, $start = 0, CriteriaElement $criteria = null, $fields = null, $asObject = true)
     {
         $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . '() is deprecated, please use getAll instead.');
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $criteria->setLimit($limit);
             $criteria->setStart($start);
         } elseif (!empty($limit)) {

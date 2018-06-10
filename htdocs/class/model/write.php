@@ -364,7 +364,7 @@ class XoopsModelWrite extends XoopsModelAbstract
         $queryFunc = empty($force) ? 'query' : 'queryF';
         $sql       = 'DELETE FROM ' . $this->handler->table;
         if (!empty($criteria)) {
-            if (is_subclass_of($criteria, 'criteriaelement')) {
+            if (is_subclass_of($criteria, 'CriteriaElement')) {
                 $sql .= ' ' . $criteria->renderWhere();
             } else {
                 return false;
@@ -397,7 +397,7 @@ class XoopsModelWrite extends XoopsModelAbstract
             $set_clause .= $this->handler->db->quote($fieldvalue);
         }
         $sql = 'UPDATE `' . $this->handler->table . '` SET ' . $set_clause;
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         $queryFunc = empty($force) ? 'query' : 'queryF';

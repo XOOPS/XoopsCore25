@@ -288,7 +288,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
         $ret   = array();
         $limit = $start = 0;
         $sql   = 'SELECT a.*, COUNT(u.user_id) AS count FROM ' . $this->db->prefix('avatar') . ' a LEFT JOIN ' . $this->db->prefix('avatar_user_link') . ' u ON u.avatar_id=a.avatar_id';
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
             $sql .= ' GROUP BY a.avatar_id ORDER BY avatar_weight, avatar_id';
             $limit = $criteria->getLimit();
@@ -324,7 +324,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
 
 
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('avatar');
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->db->query($sql)) {

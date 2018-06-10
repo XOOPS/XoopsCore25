@@ -225,7 +225,7 @@ class SaxParser
     {
         $this->tags[] = $tagName;
         $this->level++;
-        if (isset($this->tagHandlers[$tagName]) && is_subclass_of($this->tagHandlers[$tagName], 'xmltaghandler')) {
+        if (isset($this->tagHandlers[$tagName]) && is_subclass_of($this->tagHandlers[$tagName], 'XmlTagHandler')) {
             $this->tagHandlers[$tagName]->handleBeginElement($this, $attributesArray);
         } else {
             $this->handleBeginElementDefault($parser, $tagName, $attributesArray);
@@ -243,7 +243,7 @@ class SaxParser
     public function handleEndElement($parser, $tagName)
     {
         array_pop($this->tags);
-        if (isset($this->tagHandlers[$tagName]) && is_subclass_of($this->tagHandlers[$tagName], 'xmltaghandler')) {
+        if (isset($this->tagHandlers[$tagName]) && is_subclass_of($this->tagHandlers[$tagName], 'XmlTagHandler')) {
             $this->tagHandlers[$tagName]->handleEndElement($this);
         } else {
             $this->handleEndElementDefault($parser, $tagName);
@@ -261,7 +261,7 @@ class SaxParser
     public function handleCharacterData($parser, $data)
     {
         $tagHandler =& $this->tagHandlers[$this->getCurrentTag()];
-        if (isset($tagHandler) && is_subclass_of($tagHandler, 'xmltaghandler')) {
+        if (isset($tagHandler) && is_subclass_of($tagHandler, 'XmlTagHandler')) {
             $tagHandler->handleCharacterData($this, $data);
         } else {
             $this->handleCharacterDataDefault($parser, $data);

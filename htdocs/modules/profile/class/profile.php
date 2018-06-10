@@ -307,7 +307,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
         $sql_order  = '';
 
         $limit = $start = 0;
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql_clause .= ' AND ' . $criteria->render();
             if ($criteria->getSort() !== '') {
                 $sql_order = ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
