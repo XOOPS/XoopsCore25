@@ -25,3 +25,5 @@ Thank you for considering contributing to the XOOPS Project. See [CONTRIBUTING](
 When your changes are complete and tested, send us a Pull Request
 on GitHub and we will take a look.
 
+A huge thank you to [JetBrains](https://www.jetbrains.com/) for supporting the development of this project with complimentary [PhpStorm](https://www.jetbrains.com/phpstorm/) licenses.
+
