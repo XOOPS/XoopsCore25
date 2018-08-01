@@ -18,12 +18,68 @@ Pull your fork to your development environment.
 
 To install this version of XOOPS 2.5.x follow the instructions in this [XOOPS Installation Guide](https://www.gitbook.com/book/xoops/xoops-installation-guide/)
 
+## Awesome contributors:
+
+<a href="https://github.com/xoops/XoopsCore25/graphs/contributors"><img src="https://opencollective.com/XoopsCore/contributors.svg?width=890" /></a>
+
 ## Contributing
 
 Thank you for considering contributing to the XOOPS Project. See [CONTRIBUTING](CONTRIBUTING.md) file.
 
 When your changes are complete and tested, send us a Pull Request
 on GitHub and we will take a look.
+
+
+## Backers
+
+Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/XoopsCore#backer)]
+
+<a href="https://opencollective.com/XoopsCore/backer/0/website" target="_blank"><img src="https://opencollective.com/XoopsCore/backer/0/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/backer/1/website" target="_blank"><img src="https://opencollective.com/XoopsCore/backer/1/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/backer/2/website" target="_blank"><img src="https://opencollective.com/XoopsCore/backer/2/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/backer/3/website" target="_blank"><img src="https://opencollective.com/XoopsCore/backer/3/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/backer/4/website" target="_blank"><img src="https://opencollective.com/XoopsCore/backer/4/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/backer/5/website" target="_blank"><img src="https://opencollective.com/XoopsCore/backer/5/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/backer/6/website" target="_blank"><img src="https://opencollective.com/XoopsCore/backer/6/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/backer/7/website" target="_blank"><img src="https://opencollective.com/XoopsCore/backer/7/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/backer/8/website" target="_blank"><img src="https://opencollective.com/XoopsCore/backer/8/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/backer/9/website" target="_blank"><img src="https://opencollective.com/XoopsCore/backer/9/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/backer/10/website" target="_blank"><img src="https://opencollective.com/XoopsCore/backer/10/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/backer/11/website" target="_blank"><img src="https://opencollective.com/XoopsCore/backer/11/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/backer/12/website" target="_blank"><img src="https://opencollective.com/XoopsCore/backer/12/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/backer/13/website" target="_blank"><img src="https://opencollective.com/XoopsCore/backer/13/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/backer/14/website" target="_blank"><img src="https://opencollective.com/XoopsCore/backer/14/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/backer/15/website" target="_blank"><img src="https://opencollective.com/XoopsCore/backer/15/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/backer/16/website" target="_blank"><img src="https://opencollective.com/XoopsCore/backer/16/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/backer/17/website" target="_blank"><img src="https://opencollective.com/XoopsCore/backer/17/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/backer/18/website" target="_blank"><img src="https://opencollective.com/XoopsCore/backer/18/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/backer/19/website" target="_blank"><img src="https://opencollective.com/XoopsCore/backer/19/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/backer/20/website" target="_blank"><img src="https://opencollective.com/XoopsCore/backer/20/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/backer/21/website" target="_blank"><img src="https://opencollective.com/XoopsCore/backer/21/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/backer/22/website" target="_blank"><img src="https://opencollective.com/XoopsCore/backer/22/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/backer/23/website" target="_blank"><img src="https://opencollective.com/XoopsCore/backer/23/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/backer/24/website" target="_blank"><img src="https://opencollective.com/XoopsCore/backer/24/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/backer/25/website" target="_blank"><img src="https://opencollective.com/XoopsCore/backer/25/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/backer/26/website" target="_blank"><img src="https://opencollective.com/XoopsCore/backer/26/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/backer/27/website" target="_blank"><img src="https://opencollective.com/XoopsCore/backer/27/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/backer/28/website" target="_blank"><img src="https://opencollective.com/XoopsCore/backer/28/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/backer/29/website" target="_blank"><img src="https://opencollective.com/XoopsCore/backer/29/avatar.svg"></a>
+
+
+## Sponsors
+
+Become a sponsor and get your logo on our README on Github with a link to your site. [[Become a sponsor](https://opencollective.com/XoopsCore#sponsor)]
+
+<a href="https://opencollective.com/XoopsCore/sponsor/0/website" target="_blank"><img src="https://opencollective.com/XoopsCore/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/sponsor/1/website" target="_blank"><img src="https://opencollective.com/XoopsCore/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/sponsor/2/website" target="_blank"><img src="https://opencollective.com/XoopsCore/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/sponsor/3/website" target="_blank"><img src="https://opencollective.com/XoopsCore/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/sponsor/4/website" target="_blank"><img src="https://opencollective.com/XoopsCore/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/sponsor/5/website" target="_blank"><img src="https://opencollective.com/XoopsCore/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/sponsor/6/website" target="_blank"><img src="https://opencollective.com/XoopsCore/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/sponsor/7/website" target="_blank"><img src="https://opencollective.com/XoopsCore/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/sponsor/8/website" target="_blank"><img src="https://opencollective.com/XoopsCore/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/XoopsCore/sponsor/9/website" target="_blank"><img src="https://opencollective.com/XoopsCore/sponsor/9/avatar.svg"></a>
 
 A huge thank you to [JetBrains](https://www.jetbrains.com/) for supporting the development of this project with complimentary [PhpStorm](https://www.jetbrains.com/phpstorm/) licenses.
 
