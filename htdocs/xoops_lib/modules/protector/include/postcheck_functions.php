@@ -113,7 +113,7 @@ function protector_postcommon()
         }
     }
 
-    // module can controll DoS skipping
+    // module can control DoS skipping
     if (defined('PROTECTOR_SKIP_DOS_CHECK')) {
         $dos_skipping = true;
     }

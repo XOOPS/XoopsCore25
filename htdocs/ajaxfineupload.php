@@ -57,6 +57,9 @@ use Xmf\Jwt\TokenReader;
  * SOFTWARE.
  */
 
+if(isset($_POST['Authorization'])) {
+    define('PROTECTOR_SKIP_DOS_CHECK', 1);
+}
 include __DIR__ . '/mainfile.php';
 $xoopsLogger->activated = false;
 
