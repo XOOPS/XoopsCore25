@@ -51,7 +51,7 @@ if (isset($xoopsConfig['startpage']) && $xoopsConfig['startpage'] != '' && $xoop
     $moduleperm_handler = xoops_getHandler('groupperm');
     if ($xoopsUser) {
         if (!$moduleperm_handler->checkRight('module_read', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
-            redirect_header(XOOPS_URL, 1, _NOPERM, false);
+            redirect_header(XOOPS_URL . '/user.php', 1, _NOPERM, false);
         }
         $xoopsUserIsAdmin = $xoopsUser->isAdmin($xoopsModule->getVar('mid'));
     } else {
