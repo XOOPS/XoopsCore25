@@ -32,3 +32,4 @@ define('_ER_UP_NOTMPDIR', 'Missing a temporary folder');
 define('_ER_UP_CANTWRITE', 'Failed to write file to disk');
 define('_ER_UP_EXTENSION', 'File upload stopped by extension. View phpinfo()');
 define('_ER_UP_UNKNOWN', 'Unknown upload error');
+define('_ER_UP_INDEXNOTSET', 'Attempt to fetch multiple file, index must be set.');
