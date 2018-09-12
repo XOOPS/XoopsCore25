@@ -22,15 +22,39 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 /**
  * Upload Media files
  *
- * Example of usage:
+ * Example of usage (single file):
  * <code>
  * include_once 'uploader.php';
  * $allowed_mimetypes = array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png');
  * $maxfilesize = 50000;
  * $maxfilewidth = 120;
  * $maxfileheight = 120;
- * $uploader = new XoopsMediaUploader('/home/xoops/uploads', $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
- * if ($uploader->fetchMedia($_POST['uploade_file_name'])) {
+ * $randomFilename = true;
+ * $uploader = new XoopsMediaUploader('/home/xoops/uploads', $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight, $randomFilename);
+ * if ($uploader->fetchMedia('single_file_name')) {
+ *     if (!$uploader->upload()) {
+ *         echo $uploader->getErrors();
+ *     } else {
+ *         echo '<h4>File uploaded successfully!</h4>'
+ *         echo 'Saved as: ' . $uploader->getSavedFileName() . '<br>';
+ *         echo 'Full path: ' . $uploader->getSavedDestination();
+ *     }
+ * } else {
+ *        echo $uploader->getErrors();
+ * }
+ * </code>
+ *
+ * Example of usage (multiple file):
+ * <code>
+ * include_once 'uploader.php';
+ * $allowed_mimetypes = array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png');
+ * $maxfilesize = 50000;
+ * $maxfilewidth = 120;
+ * $maxfileheight = 120;
+ * $randomFilename = true;
+ * $uploader = new XoopsMediaUploader('/home/xoops/uploads', $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight, $randomFilename);
+ * for ($i = 0; $i < $uploader->countMedia('multiple_file_name'); $i++) {
+ *     if ($uploader->fetchMedia('miltiple_file_name')) {
  *        if (!$uploader->upload()) {
  *           echo $uploader->getErrors();
  *        } else {
@@ -38,8 +62,9 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  *           echo 'Saved as: ' . $uploader->getSavedFileName() . '<br>';
  *           echo 'Full path: ' . $uploader->getSavedDestination();
  *        }
- * } else {
+ *     } else {
  *        echo $uploader->getErrors();
+ *     }
  * }
  * </code>
  *
@@ -177,6 +202,20 @@ class XoopsMediaUploader
     }
 
     /**
+     * Count the uploaded files (in case of miltiple upload)
+     *
+     * @param  string $media_name Name of the file field
+     * @return int
+     */
+    public function countMedia($media_name) {
+        if (!isset($_FILES[$media_name])) {
+            $this->setErrors(_ER_UP_FILENOTFOUND);
+            return false;
+        }
+        return count($_FILES[$media_name]['name']);
+    }
+    
+    /**
      * Fetch the uploaded file
      *
      * @param  string $media_name Name of the file field
@@ -205,6 +244,10 @@ class XoopsMediaUploader
             $this->mediaSize    = $_FILES[$media_name]['size'][$index];
             $this->mediaTmpName = $_FILES[$media_name]['tmp_name'][$index];
             $this->mediaError   = !empty($_FILES[$media_name]['error'][$index]) ? $_FILES[$media_name]['error'][$index] : 0;
+        } elseif (is_array($_FILES[$media_name]['name']) && !isset($index)) {
+            $this->setErrors(_ER_UP_INDEXNOTSET);
+
+            return false;
         } else {
             $media_name      =& $_FILES[$media_name];
             $this->mediaName = get_magic_quotes_gpc() ? stripslashes($media_name['name']) : $media_name['name'];
