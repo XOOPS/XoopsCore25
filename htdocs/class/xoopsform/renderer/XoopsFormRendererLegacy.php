@@ -30,7 +30,8 @@ class XoopsFormRendererLegacy implements XoopsFormRendererInterface
      */
     public function renderFormButton(XoopsFormButton $element)
     {
-        return "<input type='" . $element->getType() . "' class='formButton' name='" . $element->getName()
+        $element->setClass('formButton');
+        return "<input type='" . $element->getType() . "' class='" . $element->getClass() . "' name='" . $element->getName()
             . "'  id='" . $element->getName() . "' value='" . $element->getValue() . "' title='"
             . $element->getValue() . "'" . $element->getExtra() . ' />';
     }
