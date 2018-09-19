@@ -18,6 +18,13 @@ htdocs/xoops_lib/modules/protector/language/english/modinfo.php
 - added define($constpref . '_ADMINSTATS', 'Overview');
 - added define($constpref . '_BANIP_TIME0DSC', 'Suspension time in seconds for automatic IP bans');
 
+htdocs/language/english/uploader.php
+- added define('_ER_UP_INDEXNOTSET', 'Attempt to fetch multiple file, index must be set.');
+
+htdocs/install/english/welcome.php
+- changed recommended PHP version
+
+
 NEW FILES:
 
 ===============================

@@ -3,13 +3,24 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 ===================================
 2.5.10 WIP               unreleased
 ===================================
+- allow multiple files in \XoopsMediaUploader (luciorota)
+- fix potential redirect loop when start module in use
+- Pass JWT for fineuploader in POST body instead of header (goffy, geekwright)
+- change meta_robots config to textbox instead of select
+- move protector config files to XOOPS_VAR_PATH/protector
+- use Request to access $_SERVER variable in XoopsPageNav
+- add Smarty modifiers truncateHtml and a UTF-8 safe truncate
+- update protector add overview chart, ip ban button to log
+- fixed bug in image.php when resizing transparent png (luciorota)
 - fix typo error in profile and system userform templates (mamba)
 - fix issues in install/page_dbsettings.php (blogged by Nguyen Thanh Nguyen)
 - fix stylesheet inclusion in ModuleAdmin
-- Smarty to v2.6.31 (mamba)
 - Misplaced MAX_FILE_SIZE (cadch)
 
 Updated libraries and assets:
+ - Smarty to v2.6.31 (mamba)
+ - phpmailer to 5.2.26 (mamba)
+ - phpThumb to 1.7.15-201802181529 (mamba)
  - TinyMCE to 3.5.12 (mamba)
  - jQuery 3.3.1 (mamba)
  - jGrowl to 1.4.6 (mamba)
