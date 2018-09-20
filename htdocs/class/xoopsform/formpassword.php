@@ -58,6 +58,15 @@ class XoopsFormPassword extends XoopsFormElement
     public $autoComplete = false;
 
     /**
+     * Confirm password
+     * Added in 2.5.10
+     *
+     * @var boolean
+     * @access public
+     */
+    public $confirm = false;
+
+    /**
      * Constructor
      *
      * @param string $caption      Caption
@@ -67,8 +76,9 @@ class XoopsFormPassword extends XoopsFormElement
      * @param string $value        Initial value of the field.
      *                             <strong>Warning:</strong> this is readable in cleartext in the page's source!
      * @param bool   $autoComplete To enable autoComplete or browser cache
+     * @param bool   $confirm      To enable the password confirmation
      */
-    public function __construct($caption, $name, $size, $maxlength, $value = '', $autoComplete = false)
+    public function __construct($caption, $name, $size, $maxlength, $value = '', $autoComplete = false, $confirm = false)
     {
         $this->setCaption($caption);
         $this->setName($name);
@@ -76,6 +86,7 @@ class XoopsFormPassword extends XoopsFormElement
         $this->_maxlength = (int)$maxlength;
         $this->setValue($value);
         $this->autoComplete = !empty($autoComplete);
+        $this->confirm = !empty($confirm);
     }
 
     /**

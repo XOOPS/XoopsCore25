@@ -484,10 +484,25 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
      */
     public function renderFormPassword(XoopsFormPassword $element)
     {
-        return '<input class="form-control" type="password" name="'
+        $ret = '<input class="form-control" type="password" name="'
             . $element->getName() . '" id="' . $element->getName() . '" size="' . $element->getSize()
             . '" maxlength="' . $element->getMaxlength() . '" value="' . $element->getValue() . '"'
             . $element->getExtra() . ' ' . ($element->autoComplete ? '' : 'autocomplete="off" ') . '/>';
+        if ($element->confirm) {
+            $ret .= '&nbsp;';
+            $ret .= '<input class="form-control" type="password" name="';
+            $ret .= $element->getName() . '_confirm" id="' . $element->getName() . '_confirm" size="' . $element->getSize();
+            $ret .= '" maxlength="' . $element->getMaxlength() . '" value="' . $element->getValue() . '"';
+            $ret .= ' onfocusout="';
+            $ret .= "var password = document.getElementById('{$element->getName()}'), password_confirm = document.getElementById('{$element->getName()}_confirm');";
+            $ret .= "if(password.value != password_confirm.value) {";
+            $ret .= "alert('" . _XOOPS_FORMPASSWORD_NOTMATCH . "');";
+            $ret .= "}";
+            $ret .= '"';
+            $ret .= $element->getExtra() . ' ' . ($element->autoComplete ? '' : 'autocomplete="off" ') . '/>';
+
+        }
+        return $ret;
     }
 
     /**
