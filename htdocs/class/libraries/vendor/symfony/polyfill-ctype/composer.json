@@ -1,14 +1,14 @@
 {
-    "name": "symfony/polyfill-mbstring",
+    "name": "symfony/polyfill-ctype",
     "type": "library",
-    "description": "Symfony polyfill for the Mbstring extension",
-    "keywords": ["polyfill", "shim", "compatibility", "portable", "mbstring"],
+    "description": "Symfony polyfill for ctype functions",
+    "keywords": ["polyfill", "compatibility", "portable", "ctype"],
     "homepage": "https://symfony.com",
     "license": "MIT",
     "authors": [
         {
-            "name": "Nicolas Grekas",
-            "email": "p@tchwork.com"
+            "name": "Gert de Pagter",
+            "email": "BackEndTea@gmail.com"
         },
         {
             "name": "Symfony Community",
@@ -19,11 +19,11 @@
         "php": ">=5.3.3"
     },
     "autoload": {
-        "psr-4": { "Symfony\\Polyfill\\Mbstring\\": "" },
+        "psr-4": { "Symfony\\Polyfill\\Ctype\\": "" },
         "files": [ "bootstrap.php" ]
     },
     "suggest": {
-        "ext-mbstring": "For best performance"
+        "ext-ctype": "For best performance"
     },
     "minimum-stability": "dev",
     "extra": {
