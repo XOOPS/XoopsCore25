@@ -858,7 +858,7 @@ function xoops_getrank($rank_id = 0, $posts = 0)
         $sql = 'SELECT rank_title AS title, rank_image AS image FROM ' . $db->prefix('ranks') . ' WHERE rank_min <= ' . $posts . ' AND rank_max >= ' . $posts . ' AND rank_special = 0';
     }
     $rank          = $db->fetchArray($db->query($sql));
-    $rank['title'] = $myts->htmlspecialchars($rank['title']);
+    $rank['title'] = $myts->htmlSpecialChars($rank['title']);
     $rank['id']    = $rank_id;
 
     return $rank;

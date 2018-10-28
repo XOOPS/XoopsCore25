@@ -181,7 +181,7 @@ switch ($action) {
                             $results[$i]['link'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['link']; 
                         }
 						$results_arr[$i]['link'] = $results[$i]['link'];
-						$results_arr[$i]['link_title'] = $myts->htmlspecialchars($results[$i]['title']);
+						$results_arr[$i]['link_title'] = $myts->htmlSpecialChars($results[$i]['title']);
 						
                         $results[$i]['uid'] = @(int)$results[$i]['uid'];
                         if (!empty($results[$i]['uid'])) {
@@ -256,7 +256,7 @@ switch ($action) {
                     $results[$i]['link'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['link'];
                 }
 				$results_arr['link'] = $results[$i]['link'];
-				$results_arr['link_title'] = $myts->htmlspecialchars($results[$i]['title']);
+				$results_arr['link_title'] = $myts->htmlSpecialChars($results[$i]['title']);
                 $results['uid'] = @(int)$results[$i]['uid'];
                 if (!empty($results[$i]['uid'])) {
                     $uname = XoopsUser::getUnameFromId($results[$i]['uid']);

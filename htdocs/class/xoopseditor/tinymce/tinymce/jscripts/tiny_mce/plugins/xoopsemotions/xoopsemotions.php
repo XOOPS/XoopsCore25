@@ -148,10 +148,10 @@ if (!$_SESSION['XoopsEmotions'] && !$admin) {
             for ($i = 0; $i < $count; ++$i) {
                 if ($op == '') {
                     if ($smiles[$i]['display']) {
-                        echo '<img class="xoopsEmotions" onclick="XoopsemotionsDialog.insert(this);" src="' . XOOPS_UPLOAD_URL . '/' . $smiles[$i]['smile_url'] . '" alt="' . $myts->htmlspecialchars($smiles[$i]['emotion']) . '" title="' . $myts->htmlspecialchars($smiles[$i]['emotion']) . '" />';
+                        echo '<img class="xoopsEmotions" onclick="XoopsemotionsDialog.insert(this);" src="' . XOOPS_UPLOAD_URL . '/' . $smiles[$i]['smile_url'] . '" alt="' . $myts->htmlSpecialChars($smiles[$i]['emotion']) . '" title="' . $myts->htmlSpecialChars($smiles[$i]['emotion']) . '" />';
                     }
                 } else {
-                    echo '<img class="xoopsEmotions" onclick="XoopsemotionsDialog.insert(this);" src="' . XOOPS_UPLOAD_URL . '/' . $smiles[$i]['smile_url'] . '" alt="' . $myts->htmlspecialchars($smiles[$i]['emotion']) . '" title="' . $myts->htmlspecialchars($smiles[$i]['emotion']) . '" />';
+                    echo '<img class="xoopsEmotions" onclick="XoopsemotionsDialog.insert(this);" src="' . XOOPS_UPLOAD_URL . '/' . $smiles[$i]['smile_url'] . '" alt="' . $myts->htmlSpecialChars($smiles[$i]['emotion']) . '" title="' . $myts->htmlSpecialChars($smiles[$i]['emotion']) . '" />';
                 }
             }
             if ($op == '') {

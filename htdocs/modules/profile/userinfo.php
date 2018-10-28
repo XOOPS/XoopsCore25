@@ -204,7 +204,7 @@ if ($GLOBALS['xoopsModuleConfig']['profile_search']) {
                         if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                             $results[$i]['link'] = XOOPS_URL . '/modules/' . $modules[$mid]->getVar('dirname', 'n') . '/' . $results[$i]['link'];
                         }
-                        $results[$i]['title'] = $myts->htmlspecialchars($results[$i]['title']);
+                        $results[$i]['title'] = $myts->htmlSpecialChars($results[$i]['title']);
                         $results[$i]['time']  = isset($results[$i]['time']) ? formatTimestamp($results[$i]['time']) : '';
                     }
                     $showall_link = '';
