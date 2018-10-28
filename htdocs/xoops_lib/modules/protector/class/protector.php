@@ -445,7 +445,7 @@ class Protector
      */
     public static function get_filepath4badips()
     {
-        return XOOPS_VAR_PATH . '/protector/badips' . substr(md5(XOOPS_ROOT_PATH . XOOPS_DB_USER . XOOPS_DB_PREFIX), 0, 6);
+        return XOOPS_VAR_PATH . '/protector/configcache' . substr(md5(XOOPS_ROOT_PATH . XOOPS_DB_USER . XOOPS_DB_PREFIX), 0, 6);
     }
 
     /**
@@ -1423,7 +1423,7 @@ class Protector
             }
 
             // security bug of class/criteria.php 2005/6/27
-            if ($_POST['uname'] === '0' || $_COOKIE['autologin_pass'] === '0') {
+            if ((isset($_POST['uname']) && $_POST['uname'] === '0') || (isset($_COOKIE['autologin_pass']) && $_COOKIE['autologin_pass'] === '0')) {
                 $this->output_log('CRITERIA');
                 exit;
             }
