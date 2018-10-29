@@ -546,13 +546,17 @@ class MyTextSanitizer
      * Convert special characters to HTML entities
      *
      * @param  string $text    string being converted
-     * @param  int    $quote_style
+     * @param  int|null    $quote_style
      * @param  string $charset character set used in conversion
      * @param  bool   $double_encode
      * @return string
      */
-    public function htmlSpecialChars($text, $quote_style = ENT_QUOTES, $charset = null, $double_encode = true)
+    public function htmlSpecialChars($text, $quote_style = NULL, $charset = null, $double_encode = true)
     {
+        if ($quote_style === NULL) {
+            $quote_style = ENT_QUOTES;
+        }
+
         if (version_compare(phpversion(), '5.2.3', '>=')) {
             $text = htmlspecialchars($text, $quote_style, $charset ?: (defined('_CHARSET') ? _CHARSET : 'UTF-8'), $double_encode);
         } else {
