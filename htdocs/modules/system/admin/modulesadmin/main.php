@@ -231,9 +231,9 @@ switch ($op) {
             $mid                          = (int)$mid;
             $newname[$mid]                = trim(XoopsFilterInput::clean($newname[$mid], 'STRING'));
             $modifs_mods[$i]['mid']       = $mid;
-            $modifs_mods[$i]['oldname']   = $myts->htmlspecialchars($myts->stripSlashesGPC($oldname[$mid]));
-            $modifs_mods[$i]['newname']   = $myts->htmlspecialchars(trim($myts->stripslashesGPC($newname[$mid])));
-            $modifs_mods[$i]['newstatus'] = isset($newstatus[$mid]) ? $myts->htmlspecialchars($newstatus[$mid]) : 0;
+            $modifs_mods[$i]['oldname']   = $myts->htmlSpecialChars($myts->stripSlashesGPC($oldname[$mid]));
+            $modifs_mods[$i]['newname']   = $myts->htmlSpecialChars(trim($myts->stripslashesGPC($newname[$mid])));
+            $modifs_mods[$i]['newstatus'] = isset($newstatus[$mid]) ? $myts->htmlSpecialChars($newstatus[$mid]) : 0;
             ++$i;
         }
         $xoopsTpl->assign('modifs_mods', $modifs_mods);
@@ -330,7 +330,7 @@ switch ($op) {
         break;
 
     case 'install':
-        $module = $myts->htmlspecialchars($module);
+        $module = $myts->htmlSpecialChars($module);
         // Get module handler
         /* @var $module_handler XoopsModuleHandler */
         $module_handler = xoops_getHandler('module');
@@ -388,7 +388,7 @@ switch ($op) {
         break;
 
     case 'uninstall':
-        $module = $myts->htmlspecialchars($module);
+        $module = $myts->htmlSpecialChars($module);
         // Get module handler
         /* @var $module_handler XoopsModuleHandler */
         $module_handler = xoops_getHandler('module');
@@ -445,7 +445,7 @@ switch ($op) {
         break;
 
     case 'update':
-        $module = $myts->htmlspecialchars($module);
+        $module = $myts->htmlSpecialChars($module);
         // Get module handler
         /* @var $module_handler XoopsModuleHandler */
         $module_handler = xoops_getHandler('module');

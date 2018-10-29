@@ -185,7 +185,7 @@ foreach ($mids as $mid) {
                     $results[$i]['link'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['link'];
                 }
 
-                $results[$i]['title'] = $myts->htmlspecialchars($results[$i]['title']);
+                $results[$i]['title'] = $myts->htmlSpecialChars($results[$i]['title']);
 				$results[$i]['time']  = isset($results[$i]['time']) ? formatTimestamp($results[$i]['time']) : '';
             }
             $showall_link = '';
