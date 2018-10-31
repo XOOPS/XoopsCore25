@@ -113,13 +113,13 @@ class XoopsCommentRenderer
             if (false !== (bool)$admin_view) {
                 $com_email = $this->_comments[$i]->getVar('com_email');
                 $text      = $this->_comments[$i]->getVar('com_text');
-                $text .= '<div style="text-align:right; margin-top: 2px; margin-bottom: 0; margin-right: 2px;">';
+                $text .= '<p style="text-align:right; margin-top: 2px; margin-bottom: 0; margin-right: 2px;">';
                 $text .= _CM_STATUS . ': ' . $this->_statusText[$this->_comments[$i]->getVar('com_status')] . '<br>';
                 $text .= 'IP: <span style="font-weight: bold;">' . $this->_comments[$i]->getVar('com_ip') . '</span>';
                 if (!empty($com_email)) {
                     $text .= '<br>' . _CM_EMAIL . ' :<span style="font-weight: bold;"><a href="mailto:' . $com_email . '" title="' . $com_email . '">' . $com_email . '</a></span>';
                 }
-                $text .= '</div>';
+                $text .= '</p>';
             } else {
                 // hide comments that are not active
                 if (XOOPS_COMMENT_ACTIVE != $this->_comments[$i]->getVar('com_status')) {
