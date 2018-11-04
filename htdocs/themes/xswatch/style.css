@@ -419,7 +419,7 @@ ul.userblock > li span.badge {
 }
 
 .xoops-comment-text > div {
-    display: none;
+    display: block;
 }
 
 .xoops-comment-text p.message-text {
