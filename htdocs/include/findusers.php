@@ -571,7 +571,7 @@ if (empty($_POST['user_submit'])) {
         }
         $sql_count = 'SELECT COUNT(DISTINCT ' . (empty($alias) ? '' : $alias . '.') . 'uid) FROM ' . $subquery;
         $result    = $xoopsDB->query($sql_count);
-        list($total) = $xoopsDB->FetchRow($result);
+        list($total) = $xoopsDB->fetchRow($result);
         $result     = $xoopsDB->query($query, $limit, $start);
         $foundusers = array();
         while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
