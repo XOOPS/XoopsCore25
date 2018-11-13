@@ -20,7 +20,7 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 Updated libraries and assets:
  - Smarty to v2.6.31 (mamba)
  - phpmailer to 5.2.26 (mamba)
- - phpThumb to 1.7.15-201802181529 (mamba)
+ - phpThumb to 1.7.15-201810050741 (mamba)
  - TinyMCE to 3.5.12 (mamba)
  - jQuery 3.3.1 (mamba)
  - jGrowl to 1.4.6 (mamba)

@@ -107,8 +107,8 @@ class phpthumb_functions {
 
 		// and also inserts dots . before and after any non number so that for example '4.3.2RC1' becomes '4.3.2.RC.1'.
 		// Then it splits the results like if you were using explode('.',$ver). Then it compares the parts starting from left to right.
-		$version1 = preg_replace('#([0-9]+)([A-Z]+)([0-9]+)#i', "$1.$2.$3", $version1);
-		$version2 = preg_replace('#([0-9]+)([A-Z]+)([0-9]+)#i', "$1.$2.$3", $version2);
+		$version1 = preg_replace('#([\d]+)([A-Z]+)([\d]+)#i', '$1.$2.$3', $version1);
+		$version2 = preg_replace('#([\d]+)([A-Z]+)([\d]+)#i', '$1.$2.$3', $version2);
 
 		$parts1 = explode('.', $version1);
 		$parts2 = explode('.', $version1);
@@ -391,11 +391,12 @@ class phpthumb_functions {
 
 				$newcolor = self::ImageColorAllocateAlphaSafe(
 					$dst_im,
-					round($RealPixel['red']   * (1 - $overlaypct)) + ($OverlayPixel['red']   * $overlaypct),
-					round($RealPixel['green'] * (1 - $overlaypct)) + ($OverlayPixel['green'] * $overlaypct),
-					round($RealPixel['blue']  * (1 - $overlaypct)) + ($OverlayPixel['blue']  * $overlaypct),
-					//$RealPixel['alpha']);
-					0);
+					$RealPixel['alpha'] == 127 ? $OverlayPixel['red'] : ($OverlayPixel['alpha'] == 127 ? $RealPixel['red'] : (round($RealPixel['red'] * (1 - $overlaypct)) + ($OverlayPixel['red'] * $overlaypct))),
+					$RealPixel['alpha'] == 127 ? $OverlayPixel['green'] : ($OverlayPixel['alpha'] == 127 ? $RealPixel['green'] : (round($RealPixel['green'] * (1 - $overlaypct)) + ($OverlayPixel['green'] * $overlaypct))),
+					$RealPixel['alpha'] == 127 ? $OverlayPixel['blue'] : ($OverlayPixel['alpha'] == 127 ? $RealPixel['blue'] : (round($RealPixel['blue'] * (1 - $overlaypct)) + ($OverlayPixel['blue'] * $overlaypct))),
+//					0);
+					min([$RealPixel['alpha'], floor($OverlayPixel['alpha'] * $opacipct)])
+				);
 
 				imagesetpixel($dst_im, $dst_x + $x, $dst_y + $y, $newcolor);
 			}
@@ -536,9 +537,9 @@ class phpthumb_functions {
 
 	public static function filesize_remote($remotefile, $timeout=10) {
 		$size = false;
-		$url = self::ParseURLbetter($remotefile);
-		if ($fp = @fsockopen($url['host'], ($url['port'] ? $url['port'] : 80), $errno, $errstr, $timeout)) {
-			fwrite($fp, 'HEAD '.@$url['path'].@$url['query'].' HTTP/1.0'."\r\n".'Host: '.@$url['host']."\r\n\r\n");
+		$parsed_url = self::ParseURLbetter($remotefile);
+		if ($fp = @fsockopen($parsed_url['host'], $parsed_url['port'], $errno, $errstr, $timeout)) {
+			fwrite($fp, 'HEAD '.$parsed_url['path'].$parsed_url['query'].' HTTP/1.0'."\r\n".'Host: '.$parsed_url['host']."\r\n\r\n");
 			if (self::version_compare_replacement(PHP_VERSION, '4.3.0', '>=')) {
 				stream_set_timeout($fp, $timeout);
 			}
@@ -557,9 +558,9 @@ class phpthumb_functions {
 
 	public static function filedate_remote($remotefile, $timeout=10) {
 		$date = false;
-		$url = self::ParseURLbetter($remotefile);
-		if ($fp = @fsockopen($url['host'], ($url['port'] ? $url['port'] : 80), $errno, $errstr, $timeout)) {
-			fwrite($fp, 'HEAD '.@$url['path'].@$url['query'].' HTTP/1.0'."\r\n".'Host: '.@$url['host']."\r\n\r\n");
+		$parsed_url = self::ParseURLbetter($remotefile);
+		if ($fp = @fsockopen($parsed_url['host'], $parsed_url['port'], $errno, $errstr, $timeout)) {
+			fwrite($fp, 'HEAD '.$parsed_url['path'].$parsed_url['query'].' HTTP/1.0'."\r\n".'Host: '.$parsed_url['host']."\r\n\r\n");
 			if (self::version_compare_replacement(PHP_VERSION, '4.3.0', '>=')) {
 				stream_set_timeout($fp, $timeout);
 			}
@@ -638,11 +639,12 @@ class phpthumb_functions {
 		return false;
 	}
 
-	public static function URLreadFsock($host, $file, &$errstr, $successonly=true, $port=80, $timeout=10) {
+	public static function URLreadFsock($host, $file, &$errstr, $successonly=true, $port=-1, $timeout=10) {
 		if (!function_exists('fsockopen') || self::FunctionIsDisabled('fsockopen')) {
-			$errstr = 'fsockopen() unavailable';
+			$errstr = 'URLreadFsock says: function fsockopen() unavailable';
 			return false;
 		}
+		$port = (int) ($port ? $port : -1); // passing anything as the $port parameter (even empty values like null, false, 0, "") will override the default -1. fsockopen uses -1 as the default port value.
 		//if ($fp = @fsockopen($host, $port, $errno, $errstr, $timeout)) {
 		if ($fp = @fsockopen((($port == 443) ? 'ssl://' : '').$host, $port, $errno, $errstr, $timeout)) { // https://github.com/JamesHeinrich/phpThumb/issues/39
 			$out  = 'GET '.$file.' HTTP/1.0'."\r\n";
@@ -651,17 +653,17 @@ class phpthumb_functions {
 			fwrite($fp, $out);
 
 			$isHeader = true;
-			$Data_header = '';
-			$Data_body   = '';
+			$data_header = '';
+			$data_body   = '';
 			$header_newlocation = '';
 			while (!feof($fp)) {
 				$line = fgets($fp, 1024);
 				if ($isHeader) {
-					$Data_header .= $line;
+					$data_header .= $line;
 				} else {
-					$Data_body .= $line;
+					$data_body .= $line;
 				}
-				if (preg_match('#^HTTP/[\\.0-9]+ ([0-9]+) (.+)$#i', rtrim($line), $matches)) {
+				if (preg_match('#^HTTP/[\\.\d]+ ([\d]+) (.+)$#i', rtrim($line), $matches)) {
 					list( , $errno, $errstr) = $matches;
 					$errno = (int) $errno;
 				} elseif (preg_match('#^Location: (.*)$#i', rtrim($line), $matches)) {
@@ -685,17 +687,17 @@ class phpthumb_functions {
 				}
 			}
 			fclose($fp);
-			return $Data_body;
+			return $data_body;
 		}
 		return null;
 	}
 
 	public static function CleanUpURLencoding($url, $queryseperator='&') {
-		if (!preg_match('#^http#i', $url)) {
+		if (!0 === stripos($url, "http") ) {
 			return $url;
 		}
-		$parse_url = self::ParseURLbetter($url);
-		$pathelements = explode('/', $parse_url['path']);
+		$parsed_url = self::ParseURLbetter($url);
+		$pathelements = explode('/', $parsed_url['path']);
 		$CleanPathElements = array();
 		$TranslationMatrix = array(' '=>'%20');
 		foreach ($pathelements as $key => $pathelement) {
@@ -707,7 +709,7 @@ class phpthumb_functions {
 			}
 		}
 
-		$queries = explode($queryseperator, (isset($parse_url['query']) ? $parse_url['query'] : ''));
+		$queries = explode($queryseperator, $parsed_url['query']);
 		$CleanQueries = array();
 		foreach ($queries as $key => $query) {
 			@list($param, $value) = explode('=', $query);
@@ -719,30 +721,32 @@ class phpthumb_functions {
 			}
 		}
 
-		$cleaned_url  = $parse_url['scheme'].'://';
-		$cleaned_url .= (@$parse_url['username'] ? $parse_url['host'].(@$parse_url['password'] ? ':'.$parse_url['password'] : '').'@' : '');
-		$cleaned_url .= $parse_url['host'];
-		$cleaned_url .= ((!empty($parse_url['port']) && ($parse_url['port'] != 80)) ? ':'.$parse_url['port'] : '');
+		$cleaned_url  = $parsed_url['scheme'].'://';
+		$cleaned_url .= ($parsed_url['username'] ? $parsed_url['username'].($parsed_url['password'] ? ':'.$parsed_url['password'] : '').'@' : '');
+		$cleaned_url .= $parsed_url['host'];
+		$cleaned_url .= (($parsed_url['port'] && ($parsed_url['port'] != self::URLschemeDefaultPort($parsed_url['scheme']))) ? ':'.$parsed_url['port'] : '');
 		$cleaned_url .= '/'.implode('/', $CleanPathElements);
-		$cleaned_url .= (@$CleanQueries ? '?'.implode($queryseperator, $CleanQueries) : '');
+		$cleaned_url .= (!empty($CleanQueries) ? '?'.implode($queryseperator, $CleanQueries) : '');
 		return $cleaned_url;
+	}
+
+	public static function URLschemeDefaultPort($scheme) {
+		static $schemePort = array(
+			'ftp'   => 21,
+			'http'  => 80,
+			'https' => 443,
+		);
+		return (isset($schemePort[strtolower($scheme)]) ? $schemePort[strtolower($scheme)] : null);
 	}
 
 	public static function ParseURLbetter($url) {
 		$parsedURL = @parse_url($url);
-		if (!@$parsedURL['port']) {
-			switch (strtolower(@$parsedURL['scheme'])) {
-				case 'ftp':
-					$parsedURL['port'] = 21;
-					break;
-				case 'https':
-					$parsedURL['port'] = 443;
-					break;
-				case 'http':
-					$parsedURL['port'] = 80;
-					break;
+		foreach (array('scheme', 'host', 'port', 'user', 'pass', 'path', 'query', 'fragment') as $key) { // ensure all possible array keys are always returned
+			if (!array_key_exists($key, $parsedURL)) {
+				$parsedURL[$key] = null;
 			}
 		}
+		$parsedURL['port'] = ($parsedURL['port'] ? $parsedURL['port'] : self::URLschemeDefaultPort($parsedURL['scheme']));
 		return $parsedURL;
 	}
 
@@ -756,7 +760,7 @@ class phpthumb_functions {
 
 		while (true) {
 			$tryagain = false;
-			$rawData = self::URLreadFsock(@$parsed_url[ 'host'], @$parsed_url[ 'path'].'?'.@$parsed_url[ 'query'], $errstr, true, (@$parsed_url[ 'port'] ? @$parsed_url[ 'port'] : 80), $timeout);
+			$rawData = self::URLreadFsock($parsed_url['host'], $parsed_url['path'].'?'.$parsed_url['query'], $errstr, true, $parsed_url['port'], $timeout);
 			if ($followredirects && preg_match('#302 [a-z ]+; Location\\: (http.*)#i', $errstr, $matches)) {
 				$matches[1] = trim(@$matches[1]);
 				if (!@$alreadyLookedAtURLs[$matches[1]]) {
@@ -789,8 +793,8 @@ class phpthumb_functions {
 			curl_setopt($ch, CURLOPT_HEADER, false);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
-			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
 			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, (bool) $followredirects);
 			curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
 			$rawData = curl_exec($ch);
