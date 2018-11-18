@@ -25,7 +25,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 return $config = array(
     'disabled'    => false,  // Disable CAPTCHA
-    'mode'        => 'text',  // default mode, you can choose 'text', 'image', 'recaptcha'(requires api key), 'recaptcha2'(requires api key)
+    'mode'        => 'text',  // default mode, you can choose 'text', 'image', 'recaptcha2'(requires api key)
     'name'        => 'xoopscaptcha',  // captcha name
     'skipmember'  => true,  // Skip CAPTCHA check for members
     'maxattempts' => 10,  // Maximum attempts for each session
