@@ -323,7 +323,8 @@ class Criteria extends CriteriaElement
      */
     public function render()
     {
-        $clause = (!empty($this->prefix) ? "{$this->prefix}." : '') . $this->column;
+        $backtick = (false === strpos($this->column, '.')) ? '`' : '';
+        $clause = (!empty($this->prefix) ? "{$this->prefix}." : '') . $backtick . $this->column . $backtick;
         if (!empty($this->function)) {
             $clause = sprintf($this->function, $clause);
         }

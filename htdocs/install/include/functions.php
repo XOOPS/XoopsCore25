@@ -363,7 +363,11 @@ function xoFormFieldCollation($name, $value, $label, $help, $link, $charset)
 
     $options           = array();
     foreach ($collations as $key => $isDefault) {
-        $options[$key] = $key . (($isDefault) ? ' (Default)' : '');
+        if ($isDefault) {  // 'Yes' or ''
+            $options = array($key => $key . ' (Default)') + $options;
+        } else {
+            $options[$key] = $key;
+        }
     }
 
     return xoFormSelect($name, $value, $label, $options, $help);

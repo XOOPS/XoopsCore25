@@ -549,7 +549,7 @@ CREATE TABLE users (
   pass varchar(255) NOT NULL default '',
   posts mediumint(8) unsigned NOT NULL default '0',
   attachsig tinyint(1) unsigned NOT NULL default '0',
-  rank smallint(5) unsigned NOT NULL default '0',
+  `rank` smallint(5) unsigned NOT NULL default '0',
   level tinyint(3) unsigned NOT NULL default '1',
   theme varchar(100) NOT NULL default '',
   timezone_offset float(3,1) NOT NULL default '0.0',
