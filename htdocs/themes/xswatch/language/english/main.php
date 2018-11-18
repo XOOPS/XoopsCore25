@@ -87,5 +87,5 @@ define('THEME_TOOLBAR_CLOSE', 'Close');
 define('THEME_TOOLBAR_SHOW_BLOCK_EDIT', 'Block Edits');
 define('THEME_TOOLBAR_EDIT_THIS_BLOCK', 'Edit this block');
 
-
-
+define('THEME_COMMENT_ADD', 'Add Your Comment');
+define('THEME_COMMENT_OPTIONS', 'Comment View Options:');

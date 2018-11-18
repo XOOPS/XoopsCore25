@@ -200,7 +200,7 @@ a.navbar-brand.xlogo {
 }
 
 .home-thumbnails {
-    height: 200px;
+/*    max-height: 200px; */
     overflow: hidden;
     border: 3px solid #EEE;
 }
@@ -493,7 +493,9 @@ ul.userblock > li span.badge {
 }
 
 .comments-nav {
-    padding: 10px;
+    text-align: center;
+    padding: 3px;
+    margin: 3px;
 }
 
 /* 4.5. System Site Closed */
@@ -1288,4 +1290,8 @@ div.order-by a {
 .jumbotron p {
     margin-left: 0.5em;
     margin-right: 0.5em;
+}
+
+img.avatar {
+    max-width: 128px;
 }
