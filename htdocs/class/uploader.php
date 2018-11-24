@@ -472,8 +472,9 @@ class XoopsMediaUploader
         } else {
             $this->savedFileName = strtolower($this->mediaName);
         }
-
-        $this->savedFileName = iconv('UTF-8', 'ASCII//TRANSLIT', $this->savedFileName);
+        if (function_exists('iconv')) {
+           $this->savedFileName = iconv('UTF-8', 'ASCII//TRANSLIT', $this->savedFileName);
+        }
         $this->savedFileName = preg_replace('!\s+!', '_', $this->savedFileName);
         $this->savedFileName = preg_replace("/[^a-zA-Z0-9\._-]/", '', $this->savedFileName);
 
