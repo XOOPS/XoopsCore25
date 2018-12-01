@@ -5,8 +5,8 @@
     "config": {
         "php": "5.3.9"
     },
-    "description": "Libraries for XOOPS 2.5.9",
+    "description": "Libraries for XOOPS 2.5.10",
     "require": {
-        "xoops/base-requires25": "^0.2.0"
+        "xoops/base-requires25": "^1.0"
     }
 }
