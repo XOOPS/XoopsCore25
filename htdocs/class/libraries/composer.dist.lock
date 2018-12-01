@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "efc38873e28855232dda893acea555c3",
+    "content-hash": "d15e78f929c9b9b1a411930abae636ea",
     "packages": [
         {
             "name": "firebase/php-jwt",
@@ -288,7 +288,7 @@
         },
         {
             "name": "symfony/polyfill-ctype",
-            "version": "v1.9.0",
+            "version": "v1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-ctype.git",
@@ -345,17 +345,76 @@
             "time": "2018-08-06T14:22:27+00:00"
         },
         {
-            "name": "symfony/polyfill-mbstring",
-            "version": "v1.9.0",
+            "name": "symfony/polyfill-iconv",
+            "version": "v1.10.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "d0cd638f4634c16d8df4508e847f14e9e43168b8"
+                "url": "https://github.com/symfony/polyfill-iconv.git",
+                "reference": "97001cfc283484c9691769f51cdf25259037eba2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/d0cd638f4634c16d8df4508e847f14e9e43168b8",
-                "reference": "d0cd638f4634c16d8df4508e847f14e9e43168b8",
+                "url": "https://api.github.com/repos/symfony/polyfill-iconv/zipball/97001cfc283484c9691769f51cdf25259037eba2",
+                "reference": "97001cfc283484c9691769f51cdf25259037eba2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "suggest": {
+                "ext-iconv": "For best performance"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.9-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Polyfill\\Iconv\\": ""
+                },
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill for the Iconv extension",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "iconv",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "time": "2018-09-21T06:26:08+00:00"
+        },
+        {
+            "name": "symfony/polyfill-mbstring",
+            "version": "v1.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-mbstring.git",
+                "reference": "c79c051f5b3a46be09205c73b80b346e4153e494"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/c79c051f5b3a46be09205c73b80b346e4153e494",
+                "reference": "c79c051f5b3a46be09205c73b80b346e4153e494",
                 "shasum": ""
             },
             "require": {
@@ -401,20 +460,20 @@
                 "portable",
                 "shim"
             ],
-            "time": "2018-08-06T14:22:27+00:00"
+            "time": "2018-09-21T13:07:52+00:00"
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.8.46",
+            "version": "v2.8.48",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "5baf0f821b14eee8ca415e6a0361a9fa140c002c"
+                "reference": "02c1859112aa779d9ab394ae4f3381911d84052b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/5baf0f821b14eee8ca415e6a0361a9fa140c002c",
-                "reference": "5baf0f821b14eee8ca415e6a0361a9fa140c002c",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/02c1859112aa779d9ab394ae4f3381911d84052b",
+                "reference": "02c1859112aa779d9ab394ae4f3381911d84052b",
                 "shasum": ""
             },
             "require": {
@@ -451,7 +510,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2018-08-29T13:11:53+00:00"
+            "time": "2018-11-11T11:18:13+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -505,16 +564,16 @@
         },
         {
             "name": "xoops/base-requires25",
-            "version": "v0.2.1",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/XOOPS/base-requires25.git",
-                "reference": "2121606740afae927c15f07753a17420935297d4"
+                "reference": "c824250b4656c2821d1162792ac93598464da5f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/XOOPS/base-requires25/zipball/2121606740afae927c15f07753a17420935297d4",
-                "reference": "2121606740afae927c15f07753a17420935297d4",
+                "url": "https://api.github.com/repos/XOOPS/base-requires25/zipball/c824250b4656c2821d1162792ac93598464da5f9",
+                "reference": "c824250b4656c2821d1162792ac93598464da5f9",
                 "shasum": ""
             },
             "require": {
@@ -522,8 +581,9 @@
                 "ircmaxell/password-compat": "^1.0.4",
                 "php": ">=5.3.9",
                 "smottt/wideimage": "1.1.2",
-                "symfony/polyfill-mbstring": "^1.3.0",
-                "xoops/xmf": "^1.2.0"
+                "symfony/polyfill-iconv": "^1.10.0",
+                "symfony/polyfill-mbstring": "^1.10.0",
+                "xoops/xmf": "^1.2.16"
             },
             "type": "project",
             "notification-url": "https://packagist.org/downloads/",
@@ -531,20 +591,20 @@
                 "GPL-2.0-or-later"
             ],
             "description": "Primary dependencies for XOOPS/XoopsCore25",
-            "time": "2018-02-22T18:10:03+00:00"
+            "time": "2018-12-01T00:07:02+00:00"
         },
         {
             "name": "xoops/xmf",
-            "version": "v1.2.15",
+            "version": "v1.2.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/XOOPS/xmf.git",
-                "reference": "ccabea4f31e10586dfaeb5a78f5b9d1ddef942cf"
+                "reference": "7fc1b27db4d7887f0b7f2892100342dff037aa72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/XOOPS/xmf/zipball/ccabea4f31e10586dfaeb5a78f5b9d1ddef942cf",
-                "reference": "ccabea4f31e10586dfaeb5a78f5b9d1ddef942cf",
+                "url": "https://api.github.com/repos/XOOPS/xmf/zipball/7fc1b27db4d7887f0b7f2892100342dff037aa72",
+                "reference": "7fc1b27db4d7887f0b7f2892100342dff037aa72",
                 "shasum": ""
             },
             "require": {
@@ -570,7 +630,7 @@
                 "GPL-2.0-or-later"
             ],
             "description": "XMF - XOOPS Module Framework",
-            "time": "2018-10-01T16:22:57+00:00"
+            "time": "2018-11-20T02:45:17+00:00"
         }
     ],
     "packages-dev": [],

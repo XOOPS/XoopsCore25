@@ -78,11 +78,6 @@ ob_start();
         </tr>
 
         <tr>
-            <th><?php printf(PHP_EXTENSION, 'iconv'); ?></th>
-            <td><?php echo xoDiag(extension_loaded('iconv') ? 1 : -1); ?></td>
-        </tr>
-
-        <tr>
             <th scope="row">file_uploads</th>
             <td><?php echo xoDiagBoolSetting('file_uploads', true); ?></td>
         </tr>
