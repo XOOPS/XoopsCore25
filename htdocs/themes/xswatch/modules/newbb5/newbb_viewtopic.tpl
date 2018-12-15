@@ -141,7 +141,7 @@
                         <option value="<{$act.link}>"><{$act.name}></option>
                     <{/foreach}>
                 <{/if}>
-                <{if count($adminpoll_actions) > 0 }>
+                <{if $adminpoll_actions|is_array && count($adminpoll_actions) > 0 }>
                     <option value="">--------</option>
                     <option value=""><{$smarty.const._MD_NEWBB_POLLOPTIONADMIN}></option>
                     <{foreachq item=actpoll from=$adminpoll_actions}>
