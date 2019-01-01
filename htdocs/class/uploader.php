@@ -54,7 +54,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * $randomFilename = true;
  * $uploader = new XoopsMediaUploader('/home/xoops/uploads', $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight, $randomFilename);
  * for ($i = 0; $i < $uploader->countMedia('multiple_file_name'); $i++) {
- *     if ($uploader->fetchMedia('miltiple_file_name')) {
+ *     if ($uploader->fetchMedia('multiple_file_name')) {
  *        if (!$uploader->upload()) {
  *           echo $uploader->getErrors();
  *        } else {
@@ -238,7 +238,7 @@ class XoopsMediaUploader
             $this->mediaName = get_magic_quotes_gpc() ? stripslashes($_FILES[$media_name]['name'][$index]) : $_FILES[$media_name]['name'][$index];
             if ($this->randomFilename) {
                 $unique          = uniqid();
-                $this->mediaName = '' . $unique . '--' . $this->mediaName;
+                $this->targetFileName = '' . $unique . '--' . $this->mediaName;
             }
             $this->mediaType    = $_FILES[$media_name]['type'][$index];
             $this->mediaSize    = $_FILES[$media_name]['size'][$index];
@@ -253,7 +253,7 @@ class XoopsMediaUploader
             $this->mediaName = get_magic_quotes_gpc() ? stripslashes($media_name['name']) : $media_name['name'];
             if ($this->randomFilename) {
                 $unique          = uniqid();
-                $this->mediaName = '' . $unique . '--' . $this->mediaName;
+                $this->targetFileName = '' . $unique . '--' . $this->mediaName;
             }
             $this->mediaType    = $media_name['type'];
             $this->mediaSize    = $media_name['size'];
