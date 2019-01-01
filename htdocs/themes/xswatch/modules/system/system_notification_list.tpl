@@ -23,7 +23,7 @@
                 <{foreach item=item from=$category.items}>
                     <{foreach item=notification from=$item.notifications}>
                         <tr>
-                            <{cycle values=odd,even assign=class}>
+                            <{cycle values="odd,even" assign=class}>
                             <td class="<{$class}>"><input type="checkbox" name="del_not[<{$module.id}>][]" id="del_not[<{$module.id}>]" value="<{$notification.id}>"/>
                             </td>
                             <td class="<{$class}>"><{$notification.event_title}></td>
