@@ -26,6 +26,7 @@ Updated libraries and assets:
  - jGrowl to 1.4.6 (mamba)
  - jQuery Form to 4.2.2 (mamba)
  - jQuery Tablesorter to 2.31.0 (mamba)
+ - HTML Purifier to 4.10 (mamba)
 
 ===================================
 2.5.9 Final              2017-08-01
