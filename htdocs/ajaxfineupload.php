@@ -90,30 +90,30 @@ if ($claims === false) {
 // Include the base upload handler class
 XoopsLoad::load('fineuploadhandler', 'system');
 
-$handler = (property_exists($claims, 'handler')) ? $claims->handler : 'fineuploadhandler';
-$moddir  = (property_exists($claims, 'moddir'))  ? $claims->moddir  : 'system';
+$handler = (property_exists($claims, 'handler')) ? $claims->handler : '';
+$moddir  = (property_exists($claims, 'moddir'))  ? $claims->moddir  : '';
 
-XoopsLoad::load($handler, $moddir);
+if ($handler === '' || $moddir === '') {
+    header("HTTP/1.0 400 Bad Request");
+    exit;
+}
 
-$className = $moddir . $handler;
+/**
+ * The handler claim can be specified as either:
+ * - a fully qualified and autoloading namespaced name,
+ * - a legacy handler name
+ */
+$className = $handler;
+if (false === strpos($handler, '\\')) {
+    XoopsLoad::load($handler, $moddir);
+    $className = $moddir . $handler;
+}
 /* $uploader XoopsFineUploadHandler */
 $uploader = new $className($claims);
 
-// Specify the list of valid extensions, ex. array("jpeg", "xml", "bmp")
-$uploader->allowedExtensions = array(); // all files types allowed by default
-
-// Specify max file size in bytes.
-$uploader->sizeLimit = null;
-
-// Specify the input name set in the javascript.
-$uploader->inputName = "qqfile"; // matches Fine Uploader's default inputName value by default
-
-// If you want to use the chunking/resume feature, specify the folder to temporarily save parts.
-$uploader->chunksFolder = "chunks";
-
 $method = get_request_method();
 
-if ($method == "POST") {
+if ($method === "POST") {
     header("Content-Type: text/plain");
 
     // Assumes you have a chunking.success.endpoint set to point here with a query parameter of "done".
@@ -147,15 +147,6 @@ if ($method == "POST") {
  */
 function get_request_method()
 {
-    //skipping this as we are not using deletes and this is not PHP 7 compatible
-    /*
-    global $HTTP_RAW_POST_DATA;
-
-    if(isset($HTTP_RAW_POST_DATA)) {
-        parse_str($HTTP_RAW_POST_DATA, $_POST);
-    }
-    */
-
     if (isset($_POST["_method"]) && $_POST["_method"] != null) {
         return $_POST["_method"];
     }
