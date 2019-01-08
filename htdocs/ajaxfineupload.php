@@ -57,7 +57,7 @@ use Xmf\Jwt\TokenReader;
  * SOFTWARE.
  */
 
-if(isset($_POST['Authorization'])) {
+if (isset($_POST['Authorization'])) {
     define('PROTECTOR_SKIP_DOS_CHECK', 1);
 }
 include __DIR__ . '/mainfile.php';
@@ -108,7 +108,7 @@ if (false === strpos($handler, '\\')) {
     XoopsLoad::load($handler, $moddir);
     $className = $moddir . $handler;
 }
-/* $uploader XoopsFineUploadHandler */
+/* $uploader SystemFineUploadHandler */
 $uploader = new $className($claims);
 
 $method = get_request_method();
