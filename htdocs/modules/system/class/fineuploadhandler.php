@@ -36,11 +36,11 @@
  * SOFTWARE.
  */
 
-class SystemFineUploadHandler
+abstract class SystemFineUploadHandler
 {
 
     public $allowedExtensions = array();
-    public $allowedMimeTypes = array();
+    public $allowedMimeTypes = array('(none)'); // must specify!
     public $sizeLimit = null;
     public $inputName = 'qqfile';
     public $chunksFolder = 'chunks';
