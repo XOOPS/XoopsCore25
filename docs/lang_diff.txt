@@ -24,6 +24,8 @@ htdocs/language/english/uploader.php
 htdocs/install/english/welcome.php
 - changed recommended PHP version
 
+htdocs/language/english/admin.php
+- added define('_AD_WARNING_OLD_PHP', 'WARNING: Consider upgrading to a newer version of PHP. Version %s or newer is recommended and will be required in future XOOPS versions.');
 
 NEW FILES:
 
