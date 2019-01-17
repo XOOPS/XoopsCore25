@@ -166,7 +166,7 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
             $filelist = array();
             if ($handle = opendir($dirname)) {
                 while (false !== ($file = readdir($handle))) {
-                    if (preg_match('/(\.gif|\.jpg|\.png)$/i', $file)) {
+                    if (preg_match('/\.(gif|jpe?g|png)$/i', $file)) {
                         $file            = $prefix . $file;
                         $filelist[$file] = $file;
                     }
