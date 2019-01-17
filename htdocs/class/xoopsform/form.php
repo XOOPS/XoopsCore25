@@ -78,6 +78,13 @@ class XoopsForm
     public $_elements = array();
 
     /**
+     * HTML classes for the <form> tag
+     *
+     * @var array
+     */
+    public $_class = array();
+    
+    /**
      * extra information for the <form> tag
      *
      * @var array
@@ -458,6 +465,19 @@ class XoopsForm
     }
 
     /**
+     * set the "class" attribute for the <form> tag
+     *
+     * @param string $class
+     */
+    public function setClass($class)
+    {
+        $class = trim($class);
+        if (!empty($class)) {
+            $this->_class[] = $class;
+        }
+    }
+    
+    /**
      * set the extra attributes for the <form> tag
      *
      * @param string $extra extra attributes for the <form> tag
@@ -481,6 +501,24 @@ class XoopsForm
         }
     }
 
+    /**
+     * get the "class" attribute for the <form> tag
+     *
+     * @return string "class" attribute value
+     */
+    public function &getClass()
+    {
+        if (empty($this->_class)) {
+            return false;
+        }
+        $classes = array();
+        foreach ($this->_class as $class) {
+            $classes[] = htmlspecialchars($class, ENT_QUOTES);
+        }
+
+        return implode(' ', $classes);
+    }
+    
     /**
      * get the extra attributes for the <form> tag
      *
