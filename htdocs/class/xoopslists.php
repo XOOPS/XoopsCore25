@@ -156,17 +156,28 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
         }
 
         /**
-         * gets list of image file names in a directory
-         * @param        $dirname
-         * @param string $prefix
-         * @return array
+         * get list of files in a directory matching a list of extensions
+         *
+         * @param string   $dirname    file system directory to process
+         * @param string[] $extensions list of extensions to select
+         * @param string   $prefix     prefix sny matching files returned with this string
+         *
+         * @return string[]
          */
-        public static function getImgListAsArray($dirname, $prefix = '')
+        public static function getFileListByExtension($dirname, $extensions, $prefix = '')
         {
             $filelist = array();
+
+            $extToLower = function($ext) {
+                return strtolower($ext);
+            };
+
+            $extensionList = array_map($extToLower, $extensions);
+
             if ($handle = opendir($dirname)) {
                 while (false !== ($file = readdir($handle))) {
-                    if (preg_match('/\.(gif|jpe?g|png)$/i', $file)) {
+                    $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+                    if (in_array(strtolower($ext), $extensionList)) {
                         $file            = $prefix . $file;
                         $filelist[$file] = $file;
                     }
@@ -177,6 +188,22 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
             }
 
             return $filelist;
+        }
+
+        /**
+         * Get a list of image file names in a directory.
+         * This selects only the most common file extensions for web use,
+         * gif, jpeg/jpg, and png
+         *
+         * @param string $dirname file system directory to process
+         * @param string $prefix  prefix sny matching files returned with this string
+         *
+         * @return string[]
+         */
+        public static function getImgListAsArray($dirname, $prefix = '')
+        {
+            $extensions = array('gif','jpeg','jpg','png');
+            return static::getFileListByExtension($dirname, $extensions, $prefix);
         }
 
         /**
