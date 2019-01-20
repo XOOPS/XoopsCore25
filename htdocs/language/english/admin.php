@@ -1,5 +1,5 @@
 <?php
-// 
+//
 // _LANGCODE: en
 // _CHARSET : UTF-8
 // Translator: XOOPS Translation Team
@@ -19,3 +19,4 @@ define('_AD_WARNINGINSTALL', 'WARNING: Directory %s exists on your server. <br>P
 define('_AD_WARNINGWRITEABLE', 'WARNING: File %s is writeable by the server. <br>Please change the permission of this file for security reasons.<br> in Unix (444), in Win32 (read-only)');
 define('_AD_WARNINGNOTWRITEABLE', 'WARNING: Folder %s is not writeable by the server. <br>Please change the permission of this folder.<br> in Unix (777), in Win32 (writable)');
 define('_AD_WARNINGXOOPSLIBINSIDE', 'WARNING: Folder %s is inside DocumentRoot! <br>For security considerations it is highly suggested to move it out of DocumentRoot.');
+define('_AD_WARNING_OLD_PHP', 'WARNING: Consider upgrading to a newer version of PHP. Version %s or newer is recommended and will be required in future XOOPS versions.');

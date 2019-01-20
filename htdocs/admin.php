@@ -33,6 +33,14 @@ xoops_cp_header();
  * Error warning messages
  */
 if (!isset($xoopsConfig['admin_warnings_enable']) || $xoopsConfig['admin_warnings_enable']) {
+    // recommend lowest security supported version at time of XOOPS release
+    // see: http://php.net/supported-versions.php
+    $minRecommendedPHP = '7.1.0';
+    if (version_compare(PHP_VERSION, $minRecommendedPHP) < 0) {
+        xoops_error(sprintf(_AD_WARNING_OLD_PHP, $minRecommendedPHP));
+        echo '<br>';
+    }
+
     if (is_dir(XOOPS_ROOT_PATH . '/install/')) {
         xoops_error(sprintf(_AD_WARNINGINSTALL, XOOPS_ROOT_PATH . '/install/'));
         echo '<br>';
