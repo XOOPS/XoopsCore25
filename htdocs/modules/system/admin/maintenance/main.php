@@ -54,10 +54,11 @@ switch ($op) {
 
         $cache = new XoopsFormSelect(_AM_SYSTEM_MAINTENANCE_CACHE, 'cache', '', 3, true);
         $cache->setDescription(XOOPS_VAR_PATH . '/cache/smarty_cache/<br>' . XOOPS_VAR_PATH . '/cache/smarty_compile/<br>' . XOOPS_VAR_PATH . '/cache/xoops_cache/');
-        $cache_arr = array(
+        $cache_arr = [
             1 => 'smarty_cache',
             2 => 'smarty_compile',
-            3 => 'xoops_cache');
+            3 => 'xoops_cache'
+        ];
         $cache->addOptionArray($cache_arr);
         $form_maintenance->addElement($cache);
 
@@ -70,11 +71,12 @@ switch ($op) {
         $tables_tray->addElement($select_tables, false);
         $tables_tray->addElement(new xoopsFormLabel('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . _AM_SYSTEM_MAINTENANCE_DUMP_AND . '&nbsp;'));
         $choice  = new XoopsFormSelect('&nbsp;&nbsp;', 'maintenance', '', 4, true);
-        $options = array(
+        $options = [
             '1' => _AM_SYSTEM_MAINTENANCE_CHOICE1,
             '2' => _AM_SYSTEM_MAINTENANCE_CHOICE2,
             '3' => _AM_SYSTEM_MAINTENANCE_CHOICE3,
-            '4' => _AM_SYSTEM_MAINTENANCE_CHOICE4);
+            '4' => _AM_SYSTEM_MAINTENANCE_CHOICE4
+        ];
         $choice->addOptionArray($options);
         $tables_tray->addElement($choice, false);
         $form_maintenance->addElement($tables_tray);
@@ -124,10 +126,10 @@ switch ($op) {
         $xoBreadCrumb->render();
 
         $session            = system_CleanVars($_REQUEST, 'session', 1, 'int');
-        $cache              = system_CleanVars($_REQUEST, 'cache', array(), 'array');
-        $tables             = system_CleanVars($_REQUEST, 'tables', array(), 'array');
+        $cache              = system_CleanVars($_REQUEST, 'cache', [], 'array');
+        $tables             = system_CleanVars($_REQUEST, 'tables', [], 'array');
         $avatar             = system_CleanVars($_REQUEST, 'avatar', 1, 'int');
-        $tables_op          = system_CleanVars($_REQUEST, 'maintenance', array(), 'array');
+        $tables_op          = system_CleanVars($_REQUEST, 'maintenance', [], 'array');
         $verif_cache        = false;
         $verif_session      = false;
         $verif_avatar       = false;

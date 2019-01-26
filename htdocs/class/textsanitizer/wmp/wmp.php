@@ -32,7 +32,7 @@ class MytsWmp extends MyTextSanitizerExtension
     {
         $config     = parent::loadConfig(__DIR__);
         if ($config['enable_wmp_entry'] === false) {
-            return array();
+            return [];
         }
 
         $code = "<button type='button' class='btn btn-default btn-sm' onclick='xoopsCodeWmp(\"{$textarea_id}\",\""
@@ -63,9 +63,10 @@ class MytsWmp extends MyTextSanitizerExtension
             }
 EOH;
 
-        return array(
+        return [
             $code,
-            $javascript);
+            $javascript
+        ];
     }
 
     /**

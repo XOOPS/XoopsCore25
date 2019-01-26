@@ -86,10 +86,10 @@ $content .= $licenseReport;
 
 setcookie('xo_install_user', '', null, null, null);
 if (!empty($_SESSION['settings']['authorized']) && !empty($adminname) && !empty($adminpass)) {
-    $claims = array(
+    $claims = [
         'uname' => $adminname,
         'sub' => 'xoopsinstall',
-    );
+    ];
     $token = \Xmf\Jwt\TokenFactory::build('install', $claims, 60*60);
 
     setcookie('xo_install_user', $token, 0, null, null, null, true);

@@ -53,9 +53,10 @@ class MytsMp3 extends MyTextSanitizerExtension
             }
 EOF;
 
-        return array(
+        return [
             $code,
-            $javascript);
+            $javascript
+        ];
     }
 
     /**

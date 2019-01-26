@@ -181,7 +181,7 @@ switch ($op) {
                     $module_handler = xoops_getHandler('module');
                     $modules        = $module_handler->getObjects(new Criteria('hasmain', 1), true);
                     $currrent_val   = $config[$i]->getConfValueForOutput();
-                    $cache_options  = array(
+                    $cache_options  = [
                         '0'      => _NOCACHE,
                         '30'     => sprintf(_SECONDS, 30),
                         '60'     => _MINUTE,
@@ -191,7 +191,8 @@ switch ($op) {
                         '18000'  => sprintf(_HOURS, 5),
                         '86400'  => _DAY,
                         '259200' => sprintf(_DAYS, 3),
-                        '604800' => _WEEK);
+                        '604800' => _WEEK
+                    ];
                     if (count($modules) > 0) {
                         $ele = new XoopsFormElementTray($title, '<br>');
                         foreach (array_keys($modules) as $mid) {
@@ -208,7 +209,7 @@ switch ($op) {
 
                 case 'site_cache':
                     $ele = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
-                    $ele->addOptionArray(array(
+                    $ele->addOptionArray([
                                              '0'      => _NOCACHE,
                                              '30'     => sprintf(_SECONDS, 30),
                                              '60'     => _MINUTE,
@@ -218,7 +219,8 @@ switch ($op) {
                                              '18000'  => sprintf(_HOURS, 5),
                                              '86400'  => _DAY,
                                              '259200' => sprintf(_DAYS, 3),
-                                             '604800' => _WEEK));
+                                             '604800' => _WEEK
+                                         ]);
                     break;
 
                 case 'password':
@@ -512,8 +514,8 @@ switch ($op) {
         // Cache management should be performed on a separate page
         require_once XOOPS_ROOT_PATH . '/modules/system/class/maintenance.php';
         $maintenance = new SystemMaintenance();
-        $options     = array(1,2,3); // smarty_cache and Smarty_compile
-        register_shutdown_function(array(&$maintenance, 'CleanCache'), $options);
+        $options     = [1, 2, 3]; // smarty_cache and Smarty_compile
+        register_shutdown_function([&$maintenance, 'CleanCache'], $options);
 
         if ($lang_updated) {
             // Flush cache files for cpanel GUIs

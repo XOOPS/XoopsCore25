@@ -31,7 +31,7 @@ if (!is_object($module) || !$module->getVar('isactive')) {
     redirect_header(XOOPS_URL . '/admin.php', 1, _MODULENOEXIST);
 }
 
-$msg = array();
+$msg = [];
 
 /* @var $member_handler XoopsMemberHandler */
 $member_handler = xoops_getHandler('member');

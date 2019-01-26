@@ -23,19 +23,23 @@
  */
 class PathStuffController
 {
-    public $xoopsPath   = array(
+    public $xoopsPath   = [
         'lib'  => '',
-        'data' => '');
-    public $path_lookup = array(
+        'data' => ''
+    ];
+    public $path_lookup = [
         'data' => 'VAR_PATH',
-        'lib'  => 'PATH');
+        'lib'  => 'PATH'
+    ];
 
-    public $validPath = array(
+    public $validPath = [
         'data' => 0,
-        'lib'  => 0);
+        'lib'  => 0
+    ];
 
-    public $permErrors = array(
-        'data' => null);
+    public $permErrors = [
+        'data' => null
+    ];
 
     public function __construct()
     {
@@ -191,15 +195,19 @@ class PathStuffController
      */
     public function checkPermissions($path = 'data')
     {
-        $paths  = array(
-            'data' => array(
-                'caches' => array(
+        $paths  = [
+            'data' => [
+                'caches' => [
                     'xoops_cache',
                     'smarty_cache',
-                    'smarty_compile'),
-                'configs'));
-        $errors = array(
-            'data' => null);
+                    'smarty_compile'
+                ],
+                'configs'
+            ]
+        ];
+        $errors = [
+            'data' => null
+        ];
         if (!isset($this->xoopsPath[$path])) {
             return false;
         }

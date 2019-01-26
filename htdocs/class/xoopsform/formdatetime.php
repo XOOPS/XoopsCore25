@@ -73,7 +73,7 @@ class XoopsFormDateTime extends XoopsFormElementTray
         }
 
         if ($displayTime) {
-            $timearray = array();
+            $timearray = [];
             for ($i = 0; $i < 24; ++$i) {
                 for ($j = 0; $j < 60; $j += 10) {
                     $key = ($i * 3600) + ($j * 60);

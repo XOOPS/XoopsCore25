@@ -21,7 +21,7 @@
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-return $config = array(
+return $config = [
     'website_key' => 'YourWebsiteKey', //https://www.google.com/recaptcha/intro/index.html YourWebsiteKey
     'secret_key'  => 'YourSecretKey',  //https://www.google.com/recaptcha/intro/index.html YourSecretKey
-);
+];

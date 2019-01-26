@@ -46,8 +46,8 @@ class BloggerApi extends XoopsXmlRpcApi
             if (!$fields =& $this->_getPostFields(null, $this->params[1])) {
                 $this->response->add(new XoopsXmlRpcFault(106));
             } else {
-                $missing = array();
-                $post    = array();
+                $missing = [];
+                $post    = [];
                 foreach ($fields as $tag => $detail) {
                     $maptag = $this->_getXoopsTagMap($tag);
                     $data   = $this->_getTagCdata($this->params[4], $maptag, true);
@@ -66,7 +66,7 @@ class BloggerApi extends XoopsXmlRpcApi
                     }
                     $this->response->add(new XoopsXmlRpcFault(109, $msg));
                 } else {
-                    $newparams = array();
+                    $newparams = [];
                     // Xoops Api ignores App key
                     $newparams[0] = $this->params[1];
                     $newparams[1] = $this->params[2];
@@ -92,8 +92,8 @@ class BloggerApi extends XoopsXmlRpcApi
         } else {
             if (!$fields =& $this->_getPostFields($this->params[1])) {
             } else {
-                $missing = array();
-                $post    = array();
+                $missing = [];
+                $post    = [];
                 foreach ($fields as $tag => $detail) {
                     $data = $this->_getTagCdata($this->params[4], $tag, true);
                     if (trim($data) == '') {
@@ -111,7 +111,7 @@ class BloggerApi extends XoopsXmlRpcApi
                     }
                     $this->response->add(new XoopsXmlRpcFault(109, $msg));
                 } else {
-                    $newparams = array();
+                    $newparams = [];
                     // XOOPS API ignores App key (index 0 of params)
                     $newparams[0] = $this->params[1];
                     $newparams[1] = $this->params[2];

@@ -208,15 +208,16 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
      */
     public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('configcategory');
         if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
-            $sort = !in_array($criteria->getSort(), array(
+            $sort = !in_array($criteria->getSort(), [
                 'confcat_id',
                 'confcat_name',
-                'confcat_order')) ? 'confcat_order' : $criteria->getSort();
+                'confcat_order'
+            ]) ? 'confcat_order' : $criteria->getSort();
             $sql .= ' ORDER BY ' . $sort . ' ' . $criteria->getOrder();
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();

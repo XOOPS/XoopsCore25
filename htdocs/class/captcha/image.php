@@ -37,13 +37,14 @@ class XoopsCaptchaImage extends XoopsCaptchaMethod
 
             return false;
         } else {
-            $required_functions = array(
+            $required_functions = [
                 'imagecreatetruecolor',
                 'imagecolorallocate',
                 'imagefilledrectangle',
                 'imagejpeg',
                 'imagedestroy',
-                'imageftbbox');
+                'imageftbbox'
+            ];
             foreach ($required_functions as $func) {
                 if (!function_exists($func)) {
                     trigger_error('Function ' . $func . ' is not defined', E_USER_WARNING);

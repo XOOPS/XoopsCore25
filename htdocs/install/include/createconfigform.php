@@ -45,7 +45,7 @@ function createConfigform($config)
     $config_handler         = xoops_getHandler('config');
     $GLOBALS['xoopsConfig'] = $xoopsConfig = $config_handler->getConfigsByCat(XOOPS_CONF);
 
-    $ret       = array();
+    $ret       = [];
     $confcount = count($config);
 
     for ($i = 0; $i < $confcount; ++$i) {
@@ -160,7 +160,7 @@ function createConfigform($config)
                 $module_handler = xoops_getHandler('module');
                 $modules        = $module_handler->getObjects(new Criteria('hasmain', 1), true);
                 $currrent_val   = $config[$i]->getConfValueForOutput();
-                $cache_options  = array(
+                $cache_options  = [
                     '0'      => _NOCACHE,
                     '30'     => sprintf(_SECONDS, 30),
                     '60'     => _MINUTE,
@@ -170,7 +170,8 @@ function createConfigform($config)
                     '18000'  => sprintf(_HOURS, 5),
                     '86400'  => _DAY,
                     '259200' => sprintf(_DAYS, 3),
-                    '604800' => _WEEK);
+                    '604800' => _WEEK
+                ];
                 if (count($modules) > 0) {
                     $ele = new XoopsFormElementTray($title, '<br>');
                     foreach (array_keys($modules) as $mid) {
@@ -187,7 +188,7 @@ function createConfigform($config)
 
             case 'site_cache':
                 $ele = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
-                $ele->addOptionArray(array(
+                $ele->addOptionArray([
                                          '0'      => _NOCACHE,
                                          '30'     => sprintf(_SECONDS, 30),
                                          '60'     => _MINUTE,
@@ -197,7 +198,8 @@ function createConfigform($config)
                                          '18000'  => sprintf(_HOURS, 5),
                                          '86400'  => _DAY,
                                          '259200' => sprintf(_DAYS, 3),
-                                         '604800' => _WEEK));
+                                         '604800' => _WEEK
+                                     ]);
                 break;
 
             case 'password':
@@ -259,7 +261,7 @@ function createThemeform($config)
     // read ini file for each theme
     foreach ($dirlist as $theme) {
         // set default value
-        $theme_ini = array(
+        $theme_ini = [
             'Name'        => $theme,
             'Description' => '',
             'Version'     => '',
@@ -271,7 +273,8 @@ function createThemeform($config)
             'W3C'         => '',
             'Licence'     => '',
             'thumbnail'   => 'screenshot.gif',
-            'screenshot'  => 'screenshot.png');
+            'screenshot'  => 'screenshot.png'
+        ];
 
         if ($theme == $config->getConfValueForOutput()) {
             $label_content .= '<div class="theme_preview" id="'.$theme.'" style="display:block;">';
@@ -305,5 +308,5 @@ function createThemeform($config)
 
     $form->addElement(new XoopsFormHidden('conf_ids[]', $config->getVar('conf_id')));
 
-    return $ret = array($form);
+    return $ret = [$form];
 }

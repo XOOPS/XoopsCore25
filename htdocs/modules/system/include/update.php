@@ -51,7 +51,7 @@ function update_system_v211($module)
 {
     global $xoopsDB;
     $result = $xoopsDB->query('SELECT t1.tpl_id FROM ' . $xoopsDB->prefix('tplfile') . ' t1, ' . $xoopsDB->prefix('tplfile') . ' t2 WHERE t1.tpl_refid = t2.tpl_refid AND t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_type = t2.tpl_type AND t1.tpl_id > t2.tpl_id');
-    $tplids = array();
+    $tplids = [];
     while (false !== (list($tplid) = $xoopsDB->fetchRow($result))) {
         $tplids[] = $tplid;
     }
@@ -71,7 +71,7 @@ function update_system_v211($module)
 
         return false;
     }
-    $ret = array();
+    $ret = [];
     while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         $ret[] = $myrow;
     }

@@ -76,7 +76,7 @@ function form_user($add_or_edit, $user = '')
         $mailok_value        = 0;
         $form_title          = _AM_SYSTEM_USERS_ADDUSER;
         $form_isedit         = false;
-        $groups              = array(XOOPS_GROUP_USERS);
+        $groups              = [XOOPS_GROUP_USERS];
     } else {
         //Edit user
         /* @var $member_handler XoopsMemberHandler */
@@ -143,23 +143,25 @@ function form_user($add_or_edit, $user = '')
     $sig_tray->addElement($sig_cbox);
     $form->addElement($sig_tray);
     $umode_select = new XoopsFormSelect(_AM_SYSTEM_USERS_CDISPLAYMODE, 'umode', $umode_value);
-    $umode_select->addOptionArray(array('nest' => _NESTED, 'flat' => _FLAT, 'thread' => _THREADED));
+    $umode_select->addOptionArray(['nest' => _NESTED, 'flat' => _FLAT, 'thread' => _THREADED]);
     $form->addElement($umode_select);
     $uorder_select = new XoopsFormSelect(_AM_SYSTEM_USERS_CSORTORDER, 'uorder', $uorder_value);
-    $uorder_select->addOptionArray(array('0' => _OLDESTFIRST, '1' => _NEWESTFIRST));
+    $uorder_select->addOptionArray(['0' => _OLDESTFIRST, '1' => _NEWESTFIRST]);
     $form->addElement($uorder_select);
     // RMV-NOTIFY
     $notify_method_select = new XoopsFormSelect(_NOT_NOTIFYMETHOD, 'notify_method', $notify_method_value);
-    $notify_method_select->addOptionArray(array(
+    $notify_method_select->addOptionArray([
                                               XOOPS_NOTIFICATION_METHOD_DISABLE => _NOT_METHOD_DISABLE,
                                               XOOPS_NOTIFICATION_METHOD_PM      => _NOT_METHOD_PM,
-                                              XOOPS_NOTIFICATION_METHOD_EMAIL   => _NOT_METHOD_EMAIL));
+                                              XOOPS_NOTIFICATION_METHOD_EMAIL   => _NOT_METHOD_EMAIL
+                                          ]);
     $form->addElement($notify_method_select);
     $notify_mode_select = new XoopsFormSelect(_NOT_NOTIFYMODE, 'notify_mode', $notify_mode_value);
-    $notify_mode_select->addOptionArray(array(
+    $notify_mode_select->addOptionArray([
                                             XOOPS_NOTIFICATION_MODE_SENDALWAYS         => _NOT_MODE_SENDALWAYS,
                                             XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE => _NOT_MODE_SENDONCE,
-                                            XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT   => _NOT_MODE_SENDONCEPERLOGIN));
+                                            XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT   => _NOT_MODE_SENDONCEPERLOGIN
+                                        ]);
     $form->addElement($notify_mode_select);
     $form->addElement(new XoopsFormTextArea(_AM_SYSTEM_USERS_EXTRAINFO, 'bio', $bio_value));
     $rank_select = new XoopsFormSelect(_AM_SYSTEM_USERS_RANK, 'rank', $rank_value);
@@ -220,16 +222,16 @@ function synchronize($uid, $type)
     include_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
     include_once XOOPS_ROOT_PATH . '/kernel/module.php';
 
-    $tables = array();
+    $tables = [];
     // Count comments (approved only: com_status == XOOPS_COMMENT_ACTIVE)
-    $tables[] = array('table_name' => 'xoopscomments', 'uid_column' => 'com_uid', 'criteria' => new Criteria('com_status', XOOPS_COMMENT_ACTIVE));
+    $tables[] = ['table_name' => 'xoopscomments', 'uid_column' => 'com_uid', 'criteria' => new Criteria('com_status', XOOPS_COMMENT_ACTIVE)];
     // Count Content posts
     if (XoopsModule::getByDirname('fmcontent')) {
-        $tables[] = array('table_name' => 'fmcontent_content', 'uid_column' => 'content_uid');
+        $tables[] = ['table_name' => 'fmcontent_content', 'uid_column' => 'content_uid'];
     }
     // Count forum posts
     if (XoopsModule::getByDirname('newbb')) {
-        $tables[] = array('table_name' => 'bb_posts', 'uid_column' => 'uid');
+        $tables[] = ['table_name' => 'bb_posts', 'uid_column' => 'uid'];
     }
 
     switch ($type) {

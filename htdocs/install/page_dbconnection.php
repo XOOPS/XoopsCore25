@@ -34,7 +34,7 @@ $pageHasHelp = true;
 $vars =& $_SESSION['settings'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $params = array('DB_TYPE', 'DB_HOST', 'DB_USER', 'DB_PASS');
+    $params = ['DB_TYPE', 'DB_HOST', 'DB_USER', 'DB_PASS'];
     foreach ($params as $name) {
         $vars[$name] = $_POST[$name];
     }
@@ -56,12 +56,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($vars['DB_HOST']) && !empty(
 
 if (@empty($vars['DB_HOST'])) {
     // Fill with default values
-    $vars = array_merge($vars, array(
+    $vars = array_merge($vars, [
                                  'DB_TYPE'     => 'mysql',
                                  'DB_HOST'     => 'localhost',
                                  'DB_USER'     => '',
                                  'DB_PASS'     => '',
-                                 'DB_PCONNECT' => 0));
+                                 'DB_PCONNECT' => 0
+    ]);
 }
 ob_start();
 ?>

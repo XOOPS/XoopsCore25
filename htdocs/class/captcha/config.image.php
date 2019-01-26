@@ -21,7 +21,7 @@
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-return $config = array(
+return $config = [
     'num_chars'       => 6,
     // Maximum characters
     'casesensitive'   => false,
@@ -35,10 +35,12 @@ return $config = array(
     'background_num'  => 50,
     // Number of background images to generate
     'polygon_point'   => 3,
-    'skip_characters' => array(
+    'skip_characters' => [
         'o',
         '0',
         'i',
         'l',
-        '1')); // characters that should not be used
+        '1'
+    ]
+]; // characters that should not be used
 

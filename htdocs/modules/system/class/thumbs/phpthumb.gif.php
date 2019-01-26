@@ -395,7 +395,7 @@ class CGIFCOLORTABLE
 	public function load($lpData, $num)
 	{
 		$this->m_nColors  = 0;
-		$this->m_arColors = array();
+		$this->m_arColors = [];
 
 		for ($i = 0; $i < $num; $i++) {
 			$rgb = substr($lpData, $i * 3, 3);
@@ -1089,7 +1089,7 @@ class CGIF
 
 		$PlottingIMG = imagecreate($this->m_gfh->m_nWidth, $this->m_gfh->m_nHeight);
 		$NumColorsInPal = floor(strlen($pal) / 3);
-		$ThisImageColor = array();
+		$ThisImageColor = [];
 		for ($i = 0; $i < $NumColorsInPal; $i++) {
 			$ThisImageColor[$i] = imagecolorallocate(
 									$PlottingIMG,

@@ -56,7 +56,7 @@ function smarty_function_block($params, &$smarty)
         $blockObj = $block_objs[$block_id];
     }
 
-    $user_groups = $GLOBALS['xoopsUser'] ? $GLOBALS['xoopsUser']->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+    $user_groups = $GLOBALS['xoopsUser'] ? $GLOBALS['xoopsUser']->getGroups() : [XOOPS_GROUP_ANONYMOUS];
 
     static $allowed_blocks;
     if (!is_array(@$allowed_blocks) || count($allowed_blocks) == 0) {

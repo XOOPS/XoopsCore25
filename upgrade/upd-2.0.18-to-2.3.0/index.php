@@ -35,8 +35,8 @@ class Upgrade_230 extends XoopsUpgrade
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
-        $this->usedFiles = array('mainfile.php');
-        $this->tasks     = array('config', 'cache', 'path', 'db', 'bmlink');
+        $this->usedFiles = ['mainfile.php'];
+        $this->tasks     = ['config', 'cache', 'path', 'db', 'bmlink'];
     }
 
     /**
@@ -108,13 +108,13 @@ class Upgrade_230 extends XoopsUpgrade
         if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
             return false;
         }
-        $keys_drop   = array();
+        $keys_drop   = [];
         $primary_add = true;
         while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
             if ($row['Key_name'] === 'PRIMARY') {
                 $primary_add = false;
             }
-            if (in_array($row['Key_name'], array('block_id', 'module_id'))) {
+            if (in_array($row['Key_name'], ['block_id', 'module_id'])) {
                 $keys_drop[] = $row['Key_name'];
             }
         }
@@ -268,7 +268,7 @@ class Upgrade_230 extends XoopsUpgrade
         if (!$result = $GLOBALS['xoopsDB']->queryF("SHOW TABLES LIKE '" . XOOPS_DB_PREFIX . "\_%'")) {
             return false;
         }
-        $tables = array();
+        $tables = [];
         while (false !== (list($table) = $GLOBALS['xoopsDB']->fetchRow($result))) {
             $tables[] = $table;
             //$GLOBALS["xoopsDB"]->queryF( "ALTER TABLE `{$table}` DEFAULT CHARACTER SET " . $GLOBALS["xoopsDB"]->quote($charset) . " COLLATE " . $GLOBALS["xoopsDB"]->quote($collation) );
@@ -289,13 +289,13 @@ class Upgrade_230 extends XoopsUpgrade
     public function convert_table($tables, $charset, $collation)
     {
         // Initialize vars.
-        $string_querys     = array();
-        $binary_querys     = array();
-        $gen_index_querys  = array();
-        $drop_index_querys = array();
-        $tables_querys     = array();
-        $optimize_querys   = array();
-        $final_querys      = array();
+        $string_querys     = [];
+        $binary_querys     = [];
+        $gen_index_querys  = [];
+        $drop_index_querys = [];
+        $tables_querys     = [];
+        $optimize_querys   = [];
+        $final_querys      = [];
 
         // Begin Converter Core
         if (!empty($tables)) {
@@ -319,7 +319,7 @@ class Upgrade_230 extends XoopsUpgrade
                 }
 
                 // Analyze table indexs for any FULLTEXT-Type of index in the table.
-                $fulltext_indexes = array();
+                $fulltext_indexes = [];
                 $resource         = $GLOBALS['xoopsDB']->queryF("SHOW INDEX FROM `$table`");
                 while (false !== ($result = $GLOBALS['xoopsDB']->fetchArray($resource))) {
                     if (preg_match('/FULLTEXT/', $result['Index_type'])) {
@@ -392,7 +392,7 @@ class Upgrade_230 extends XoopsUpgrade
             return false;
         } else {
             $newline = defined(PHP_EOL) ? PHP_EOL : (strpos(php_uname(), 'Windows') ? "\r\n" : "\n");
-            $content = str_replace(array("\r\n", "\n"), $newline, implode('', $lines));
+            $content = str_replace(["\r\n", "\n"], $newline, implode('', $lines));
 
             fwrite($fp, $content);
             fclose($fp);
@@ -408,7 +408,7 @@ class Upgrade_230 extends XoopsUpgrade
      */
     public function set_configs($task)
     {
-        $ret     = array();
+        $ret     = [];
         $configs = include __DIR__ . "/settings_{$task}.php";
         if (!$configs || !is_array($configs)) {
             return $ret;

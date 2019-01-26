@@ -40,11 +40,12 @@ if ($xoopsConfig['debug_mode'] == 3) {
     $xoopsTpl->debugging = true;
 }
 if ($xoopsUser != '') {
-    $xoopsTpl->assign(array(
+    $xoopsTpl->assign([
                           'xoops_isuser'  => true,
                           'xoops_userid'  => $xoopsUser->getVar('uid'),
                           'xoops_uname'   => $xoopsUser->getVar('uname'),
-                          'xoops_isadmin' => $xoopsUserIsAdmin));
+                          'xoops_isadmin' => $xoopsUserIsAdmin
+                      ]);
 }
 $xoopsTpl->assign('xoops_requesturi', htmlspecialchars($GLOBALS['xoopsRequestUri'], ENT_QUOTES));
 include XOOPS_ROOT_PATH . '/include/old_functions.php';

@@ -28,7 +28,7 @@ include_once XOOPS_ROOT_PATH . '/modules/system/constants.php';
 $admin = false;
 
 $gperm_handler = xoops_getHandler('groupperm');
-$groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+$groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : [XOOPS_GROUP_ANONYMOUS];
 $admin         = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_IMAGE, $groups);
 
 // check categories readability/writability by group

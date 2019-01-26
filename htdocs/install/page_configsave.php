@@ -42,17 +42,18 @@ if (empty($vars['ROOT_PATH'])) {
     exit();
 }
 
-$writeFiles = array(
+$writeFiles = [
     $vars['ROOT_PATH'] . '/mainfile.php',
     $vars['VAR_PATH'] . '/data/secure.php',
-);
+];
 
 $writeCheck = checkFileWriteablity($writeFiles);
 if (true === $writeCheck) {
-    $rewrite = array(
+    $rewrite = [
         'GROUP_ADMIN' => 1,
         'GROUP_USERS' => 2,
-        'GROUP_ANONYMOUS' => 3);
+        'GROUP_ANONYMOUS' => 3
+    ];
     $rewrite = array_merge($rewrite, $vars);
 
     $result = writeConfigurationFile($rewrite, $vars['VAR_PATH'] . '/data', 'secure.dist.php', 'secure.php');
@@ -191,7 +192,7 @@ function getTmpStats()
  */
 function prepStats($stat)
 {
-    $subSet = array();
+    $subSet = [];
     $mode = $stat['mode'];
     $subSet['mode'] = $mode;
     $subSet['uid'] = $stat['uid'];
@@ -227,7 +228,7 @@ function checkFileWriteablity($files)
         return true; // tests are not applicable
     }
 
-    $message = array();
+    $message = [];
 
     foreach ($files as $file) {
         $dirName = dirname($file);

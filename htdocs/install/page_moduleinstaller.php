@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $config_handler = xoops_getHandler('config');
     $xoopsConfig    = $config_handler->getConfigsByCat(XOOPS_CONF);
 
-    $msgs = array();
+    $msgs = [];
     foreach ($_REQUEST['modules'] as $dirname => $installmod) {
         if ($installmod) {
             $msgs[] = xoops_module_install($dirname);
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $content = '<div class="alert alert-success"><span class="fa fa-check text-success"></span> '
             . INSTALLED_MODULES . '</div><div class="well"><ul class="list-unstyled">';
         foreach ($msgs as $msg) {
-            $noAnchors = preg_replace(array('"<a (.*?)>"', '"</a>"'), array('',''), $msg);
+            $noAnchors = preg_replace(['"<a (.*?)>"', '"</a>"'], ['', ''], $msg);
             $content .= "<li>{$noAnchors}</li>";
         }
         $content .= '</ul></div>';
@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     /* @var $module_handler XoopsModuleHandler */
     $module_handler = xoops_getHandler('module');
     $installed_mods = $module_handler->getObjects();
-    $listed_mods    = array();
+    $listed_mods    = [];
     foreach ($installed_mods as $module) {
         $listed_mods[] = $module->getVar('dirname');
     }

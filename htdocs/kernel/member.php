@@ -51,7 +51,7 @@ class XoopsMemberHandler
     /**
      * holds temporary user objects
      */
-    protected $membersWorkingList = array();
+    protected $membersWorkingList = [];
 
     /**
      * constructor
@@ -201,7 +201,7 @@ class XoopsMemberHandler
     public function getGroupList(CriteriaElement $criteria = null)
     {
         $groups = $this->groupHandler->getObjects($criteria, true);
-        $ret    = array();
+        $ret    = [];
         foreach (array_keys($groups) as $i) {
             $ret[$i] = $groups[$i]->getVar('name');
         }
@@ -218,7 +218,7 @@ class XoopsMemberHandler
     public function getUserList(CriteriaElement $criteria = null)
     {
         $users =& $this->userHandler->getObjects($criteria, true);
-        $ret   = array();
+        $ret   = [];
         foreach (array_keys($users) as $i) {
             $ret[$i] = $users[$i]->getVar('uname');
         }
@@ -249,7 +249,7 @@ class XoopsMemberHandler
      * @param  array $user_ids array of user-IDs
      * @return bool  success?
      */
-    public function removeUsersFromGroup($group_id, $user_ids = array())
+    public function removeUsersFromGroup($group_id, $user_ids = [])
     {
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('groupid', $group_id));
@@ -278,7 +278,7 @@ class XoopsMemberHandler
         if (!$asobject) {
             return $user_ids;
         } else {
-            $ret = array();
+            $ret = [];
             foreach ($user_ids as $u_id) {
                 $user =& $this->getUser($u_id);
                 if (is_object($user)) {
@@ -304,7 +304,7 @@ class XoopsMemberHandler
         if (!$asobject) {
             return $group_ids;
         } else {
-            $ret = array();
+            $ret = [];
             foreach ($group_ids as $g_id) {
                 $ret[] = $this->getGroup($g_id);
             }
@@ -476,7 +476,7 @@ class XoopsMemberHandler
      */
     public function getUsersByGroupLink($groups, CriteriaElement $criteria = null, $asobject = false, $id_as_key = false)
     {
-        $ret           = array();
+        $ret           = [];
         $criteriaCompo = new CriteriaCompo();
         $select        = $asobject ? 'u.*' : 'u.uid';
         $sql           = "SELECT DISTINCT {$select} " . ' FROM ' . $this->userHandler->db->prefix('users') . ' AS u' . ' LEFT JOIN ' . $this->membershipHandler->db->prefix('groups_users_link') . ' AS m ON m.uid = u.uid WHERE ';

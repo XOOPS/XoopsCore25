@@ -38,7 +38,7 @@ if ($op === 'save') {
         exit();
     }
     $uid      = $GLOBALS['xoopsUser']->getVar('uid');
-    $errors   = array();
+    $errors   = [];
     $edituser =& $GLOBALS['xoopsUser'];
     if ($GLOBALS['xoopsUser']->isAdmin()) {
         $edituser->setVar('uname', trim($_POST['uname']));
@@ -98,13 +98,13 @@ if ($op === 'editprofile') {
         $GLOBALS['xoopsTpl']->assign('stop', $stop);
     }
 
-    $xoBreadcrumbs[] = array('title' => _US_EDITPROFILE);
+    $xoBreadcrumbs[] = ['title' => _US_EDITPROFILE];
 }
 
 if ($op === 'avatarform') {
     $GLOBALS['xoopsOption']['template_main'] = 'profile_avatar.tpl';
     include $GLOBALS['xoops']->path('header.php');
-    $xoBreadcrumbs[] = array('title' => _US_MYAVATAR);
+    $xoBreadcrumbs[] = ['title' => _US_MYAVATAR];
 
     $oldavatar = $GLOBALS['xoopsUser']->getVar('user_avatar');
     if (!empty($oldavatar) && $oldavatar !== 'blank.gif') {
@@ -147,7 +147,7 @@ if ($op === 'avatarupload') {
         redirect_header('index.php', 3, _US_NOEDITRIGHT . '<br>' . implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         exit;
     }
-    $xoops_upload_file = array();
+    $xoops_upload_file = [];
     $uid               = 0;
     if (!empty($_POST['xoops_upload_file']) && is_array($_POST['xoops_upload_file'])) {
         $xoops_upload_file = $_POST['xoops_upload_file'];
@@ -160,12 +160,13 @@ if ($op === 'avatarupload') {
     }
     if ($GLOBALS['xoopsConfigUser']['avatar_allow_upload'] == 1 && $GLOBALS['xoopsUser']->getVar('posts') >= $GLOBALS['xoopsConfigUser']['avatar_minposts']) {
         include_once $GLOBALS['xoops']->path('class/uploader.php');
-        $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH . '/avatars', array(
+        $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH . '/avatars', [
             'image/gif',
             'image/jpeg',
             'image/pjpeg',
             'image/x-png',
-            'image/png'), $GLOBALS['xoopsConfigUser']['avatar_maxsize'], $GLOBALS['xoopsConfigUser']['avatar_width'], $GLOBALS['xoopsConfigUser']['avatar_height']);
+            'image/png'
+        ], $GLOBALS['xoopsConfigUser']['avatar_maxsize'], $GLOBALS['xoopsConfigUser']['avatar_width'], $GLOBALS['xoopsConfigUser']['avatar_height']);
         if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
             $uploader->setPrefix('cavt');
             if ($uploader->upload()) {

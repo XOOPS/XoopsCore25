@@ -22,75 +22,75 @@
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  */
-$pages = array(
-    'langselect'      => array(
+$pages = [
+    'langselect'      => [
         'name'  => LANGUAGE_SELECTION,
         'title' => LANGUAGE_SELECTION_TITLE,
         'icon'  => 'fa fa-fw fa-language'
-    ),
-    'start'           => array(
+    ],
+    'start'           => [
         'name'  => INTRODUCTION,
         'title' => INTRODUCTION_TITLE,
         'icon'  => 'fa fa-fw fa-exclamation-circle'
-    ),
-    'modcheck'        => array(
+    ],
+    'modcheck'        => [
         'name'  => CONFIGURATION_CHECK,
         'title' => CONFIGURATION_CHECK_TITLE,
         'icon'  => 'fa fa-fw fa-server'
-    ),
-    'pathsettings'    => array(
+    ],
+    'pathsettings'    => [
         'name'  => PATHS_SETTINGS,
         'title' => PATHS_SETTINGS_TITLE,
         'icon'  => 'fa fa-fw fa-folder-open'
-    ),
-    'dbconnection'    => array(
+    ],
+    'dbconnection'    => [
         'name'  => DATABASE_CONNECTION,
         'title' => DATABASE_CONNECTION_TITLE,
         'icon'  => 'fa fa-fw fa-exchange'
-    ),
-    'dbsettings'      => array(
+    ],
+    'dbsettings'      => [
         'name'  => DATABASE_CONFIG,
         'title' => DATABASE_CONFIG_TITLE,
         'icon'  => 'fa fa-fw fa-database'
-    ),
-    'configsave'      => array(
+    ],
+    'configsave'      => [
         'name'  => CONFIG_SAVE,
         'title' => CONFIG_SAVE_TITLE,
         'icon'  => 'fa fa-fw fa-download'
-    ),
-    'tablescreate'    => array(
+    ],
+    'tablescreate'    => [
         'name'  => TABLES_CREATION,
         'title' => TABLES_CREATION_TITLE,
         'icon'  => 'fa fa-fw fa-sitemap'
-    ),
-    'siteinit'        => array(
+    ],
+    'siteinit'        => [
         'name'  => INITIAL_SETTINGS,
         'title' => INITIAL_SETTINGS_TITLE,
         'icon'  => 'fa fa-fw fa-sliders'
-    ),
-    'tablesfill'      => array(
+    ],
+    'tablesfill'      => [
         'name'  => DATA_INSERTION,
         'title' => DATA_INSERTION_TITLE,
         'icon'  => 'fa fa-fw fa-cloud-upload'
-    ),
-    'configsite'      => array(
+    ],
+    'configsite'      => [
         'name'  => CONFIG_SITE,
         'title' => CONFIG_SITE_TITLE,
         'icon'  => 'fa fa-fw fa-edit'
-    ),
-    'theme'           => array(
+    ],
+    'theme'           => [
         'name'  => THEME,
         'title' => THEME_TITLE,
         'icon'  => 'fa fa-fw fa-object-group'
-    ),
-    'moduleinstaller' => array(
+    ],
+    'moduleinstaller' => [
         'name'  => MODULES,
         'title' => MODULES_TITLE,
         'icon'  => 'fa fa-fw fa-cubes'
-    ),
-    'end'             => array(
+    ],
+    'end'             => [
         'name'  => WELCOME,
         'title' => WELCOME_TITLE,
         'icon'  => 'fa fa-fw fa-thumbs-o-up'
-    )
-);
+    ]
+];

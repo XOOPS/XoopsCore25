@@ -41,7 +41,7 @@ class XoopsGroupPermForm extends XoopsForm
      *
      * @var array
      */
-    public $_itemTree = array();
+    public $_itemTree = [];
     /**
      * Name of permission
      *
@@ -134,7 +134,7 @@ class XoopsGroupPermForm extends XoopsForm
     {
         // load all child ids for javascript codes
         foreach (array_keys($this->_itemTree) as $item_id) {
-            $this->_itemTree[$item_id]['allchild'] = array();
+            $this->_itemTree[$item_id]['allchild'] = [];
             $this->_loadAllChildItemIds($item_id, $this->_itemTree[$item_id]['allchild']);
         }
         /* @var  $gperm_handler XoopsGroupPermHandler */
@@ -195,7 +195,7 @@ class XoopsGroupFormCheckBox extends XoopsFormElement
      *
      * @var array ;
      */
-    public $_value = array();
+    public $_value = [];
     /**
      * Group ID
      *
@@ -207,7 +207,7 @@ class XoopsGroupFormCheckBox extends XoopsFormElement
      *
      * @var array
      */
-    public $_optionTree = array();
+    public $_optionTree = [];
 
     /**
      * Constructor
@@ -277,7 +277,7 @@ class XoopsGroupFormCheckBox extends XoopsFormElement
             ++$cols;
         }
         $ret .= '</tr></table></td><td class="even" valign="top">';
-        $option_ids = array();
+        $option_ids = [];
         foreach (array_keys($this->_optionTree) as $id) {
             if (!empty($id)) {
                 $option_ids[] = "'" . $ele_name . '[groups][' . $this->_groupId . '][' . $id . ']' . "'";
@@ -300,7 +300,7 @@ class XoopsGroupFormCheckBox extends XoopsFormElement
      * @param array  $parentIds
      * @access private
      */
-    public function _renderOptionTree(&$tree, $option, $prefix, $parentIds = array())
+    public function _renderOptionTree(&$tree, $option, $prefix, $parentIds = [])
     {
         $ele_name = $this->getName();
         $tree .= $prefix . "<input type=\"checkbox\" name=\"" . $ele_name . '[groups][' . $this->_groupId . '][' . $option['id'] . "]\" id=\"" . $ele_name . '[groups][' . $this->_groupId . '][' . $option['id'] . "]\" onclick=\"";

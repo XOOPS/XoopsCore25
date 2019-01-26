@@ -29,8 +29,8 @@ include_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
  */
 class Db_manager
 {
-    public $s_tables = array();
-    public $f_tables = array();
+    public $s_tables = [];
+    public $f_tables = [];
     public $db;
 
     public function __construct()
@@ -75,7 +75,7 @@ class Db_manager
      */
     public function queryFromFile($sql_file_path)
     {
-        $tables = array();
+        $tables = [];
 
         if (!file_exists($sql_file_path)) {
             return false;
@@ -141,23 +141,25 @@ class Db_manager
         return true;
     }
 
-    public $successStrings = array(
+    public $successStrings = [
         'create' => 'create',
         'insert' => 'insert',
         'alter'  => 'alter',
-        'drop'   => 'drop');
-    public $failureStrings = array(
+        'drop'   => 'drop'
+    ];
+    public $failureStrings = [
         'create' => 'fail',
         'insert' => 'fail',
         'alter'  => 'error',
-        'drop'   => 'error');
+        'drop'   => 'error'
+    ];
 
     /**
      * @return string
      */
     public function report()
     {
-        $commands = array('create', 'insert', 'alter', 'drop');
+        $commands = ['create', 'insert', 'alter', 'drop'];
         $content  = '<ul class="log">';
         foreach ($commands as $cmd) {
             if (!@empty($this->s_tables[$cmd])) {
@@ -263,7 +265,7 @@ class Db_manager
      */
     public function deleteTables($tables)
     {
-        $deleted = array();
+        $deleted = [];
         $this->db->connect();
         foreach ($tables as $key => $val) {
             if (!$this->db->query('DROP TABLE ' . $this->db->prefix($key))) {

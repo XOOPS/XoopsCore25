@@ -25,7 +25,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class XoopsSecurity
 {
-    public $errors = array();
+    public $errors = [];
 
     /**
      * Check if there is a valid token in $_REQUEST[$name . '_REQUEST'] - can be expanded for more wide use, later (Mith)
@@ -59,11 +59,12 @@ class XoopsSecurity
         $token_id = md5(uniqid(mt_rand(), true));
         // save token data on the server
         if (!isset($_SESSION[$name . '_SESSION'])) {
-            $_SESSION[$name . '_SESSION'] = array();
+            $_SESSION[$name . '_SESSION'] = [];
         }
-        $token_data = array(
+        $token_data = [
             'id'     => $token_id,
-            'expire' => time() + (int)$timeout);
+            'expire' => time() + (int)$timeout
+        ];
         $_SESSION[$name . '_SESSION'][] = $token_data;
 
         return md5($token_id . $_SERVER['HTTP_USER_AGENT'] . XOOPS_DB_PREFIX);
@@ -124,7 +125,7 @@ class XoopsSecurity
      */
     public function clearTokens($name = 'XOOPS_TOKEN')
     {
-        $_SESSION[$name . '_SESSION'] = array();
+        $_SESSION[$name . '_SESSION'] = [];
     }
 
     /**
@@ -150,7 +151,7 @@ class XoopsSecurity
     {
         $sessionName = $name . '_SESSION';
         if (!empty($_SESSION[$sessionName]) && is_array($_SESSION[$sessionName])) {
-            $_SESSION[$sessionName] = array_filter($_SESSION[$sessionName], array($this, 'filterToken'));
+            $_SESSION[$sessionName] = array_filter($_SESSION[$sessionName], [$this, 'filterToken']);
         }
     }
 
@@ -180,7 +181,7 @@ class XoopsSecurity
      **/
     public function checkSuperglobals()
     {
-        foreach (array(
+        foreach ([
                      'GLOBALS',
                      '_SESSION',
                      'HTTP_SESSION_VARS',
@@ -206,7 +207,8 @@ class XoopsSecurity
                      'xoopsOption',
                      'xoopsModule',
                      'xoopsModuleConfig',
-                     'xoopsRequestUri') as $bad_global) {
+                     'xoopsRequestUri'
+                 ] as $bad_global) {
             if (isset($_REQUEST[$bad_global])) {
                 header('Location: ' . XOOPS_URL . '/');
                 exit();

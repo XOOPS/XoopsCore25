@@ -33,7 +33,7 @@ class MytsRtsp extends MyTextSanitizerExtension
     {
         $config     = parent::loadConfig(__DIR__);
         if ($config['enable_rtsp_entry'] === false) {
-            return array();
+            return [];
         }
         $code = "<button type='button' class='btn btn-default btn-sm' onclick='xoopsCodeRtsp(\"{$textarea_id}\",\""
             . htmlspecialchars(_XOOPS_FORM_ENTERRTSPURL, ENT_QUOTES) . "\",\""
@@ -63,7 +63,7 @@ class MytsRtsp extends MyTextSanitizerExtension
             }
 EOH;
 
-        return array($code, $javascript);
+        return [$code, $javascript];
     }
 
     /**

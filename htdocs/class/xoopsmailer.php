@@ -131,16 +131,16 @@ class XoopsMailer
         $this->fromName     = '';
         $this->fromUser     = null; // RMV-NOTIFY
         $this->priority     = '';
-        $this->toUsers      = array();
-        $this->toEmails     = array();
-        $this->headers      = array();
+        $this->toUsers      = [];
+        $this->toEmails     = [];
+        $this->headers      = [];
         $this->subject      = '';
         $this->body         = '';
-        $this->errors       = array();
-        $this->success      = array();
+        $this->errors       = [];
+        $this->success      = [];
         $this->isMail       = false;
         $this->isPM         = false;
-        $this->assignedTags = array();
+        $this->assignedTags = [];
         $this->template     = '';
         $this->templatedir  = '';
         // Change below to \r\n if you have problem sending mail

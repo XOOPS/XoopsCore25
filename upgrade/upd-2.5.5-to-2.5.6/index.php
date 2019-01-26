@@ -20,7 +20,7 @@ class Upgrade_256 extends XoopsUpgrade
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
-        $this->tasks = array('com_user', 'com_email',  'com_url');
+        $this->tasks = ['com_user', 'com_email', 'com_url'];
     }
 
     /**

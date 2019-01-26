@@ -30,10 +30,10 @@ if (!function_exists('protector_onuninstall_base')) {
         if (defined('XOOPS_CUBE_LEGACY')) {
             $root =& XCube_Root::getSingleton();
             $root->mDelegateManager->add('Legacy.Admin.Event.ModuleUninstall.' . ucfirst($mydirname) . '.Success', 'protector_message_append_onuninstall');
-            $ret = array();
+            $ret = [];
         } else {
             if (!is_array($ret)) {
-                $ret = array();
+                $ret = [];
             }
         }
 

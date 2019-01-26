@@ -87,7 +87,7 @@ if ($op === 'login') {
 
 if ($op === 'logout') {
     $message  = '';
-    $_SESSION = array();
+    $_SESSION = [];
     session_destroy();
     setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600, '/', XOOPS_COOKIE_DOMAIN, 0);
     setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600, '/');
@@ -122,7 +122,7 @@ if ($op === 'delete') {
         $ok = !isset($_POST['ok']) ? 0 : (int)$_POST['ok'];
         if ($ok != 1) {
             include $GLOBALS['xoops']->path('header.php');
-            xoops_confirm(array('op' => 'delete', 'ok' => 1), 'user.php', _US_SURETODEL . '<br>' . _US_REMOVEINFO);
+            xoops_confirm(['op' => 'delete', 'ok' => 1], 'user.php', _US_SURETODEL . '<br>' . _US_REMOVEINFO);
             include __DIR__ . '/footer.php';
         } else {
             $del_uid        = $GLOBALS['xoopsUser']->getVar('uid');

@@ -58,7 +58,7 @@ function smarty_function_xoMemberInfo($params, &$smarty)
         $infos = explode('|', $params['infos']);
 
         if (!is_array($member_info)) {
-            $member_info = array();
+            $member_info = [];
         }
         foreach ($infos as $info) {
             if (!array_key_exists($info, $member_info) && @$_SESSION['xoops_member_info'][$info . '_expire'] < $time) {

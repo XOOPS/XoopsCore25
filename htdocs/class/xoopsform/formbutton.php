@@ -101,7 +101,7 @@ class XoopsFormButton extends XoopsFormElement
      */
     public function getType()
     {
-        return in_array(strtolower($this->_type), array('button', 'submit', 'reset')) ? $this->_type : 'button';
+        return in_array(strtolower($this->_type), ['button', 'submit', 'reset']) ? $this->_type : 'button';
     }
 
     /**

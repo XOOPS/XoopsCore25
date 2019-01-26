@@ -362,7 +362,7 @@ switch ($op) {
             $path_file = realpath(XOOPS_ROOT_PATH.'/themes'.trim($clean_path_file));
             $path_file = str_replace('\\','/',$path_file);
             $pathInfo = pathinfo($path_file);
-            if (!in_array($pathInfo['extension'], array('css', 'html', 'tpl'))) {
+            if (!in_array($pathInfo['extension'], ['css', 'html', 'tpl'])) {
                 redirect_header('admin.php?fct=tplsets', 2, _AM_SYSTEM_TEMPLATES_ERROR);
                 exit;
             }

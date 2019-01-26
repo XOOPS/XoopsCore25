@@ -179,7 +179,7 @@ include_once '../language/' . $wizard->language . '/global.php';
                     </div>
                 </div>
                 <?php
-                $versionParts=array();
+                $versionParts= [];
                 $versionResult = preg_match ('/(^[a-z\s]*)([0-9\.]*)/i', XOOPS_VERSION, $versionParts);
                 ?>
 

@@ -63,7 +63,7 @@ function xoops_bin2hex($bin)
  */
 function xoops_ishexstr($hex, $checklen = 32)
 {
-    $accepted = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f');
+    $accepted = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
     $len      = strlen($hex);
     if ($checklen > $len) {
         $checklen = $len;//And???

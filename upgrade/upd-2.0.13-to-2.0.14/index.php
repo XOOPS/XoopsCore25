@@ -81,7 +81,7 @@ class Upgrade_2014 extends XoopsUpgrade
                     $append  = implode('', array_slice($lines, $insert));
 
                     $content = $prepend . $patchCode . $append;
-                    $content = str_replace(array("\r\n", "\n"), $newline, $content);
+                    $content = str_replace(["\r\n", "\n"], $newline, $content);
 
                     fwrite($fp, $content);
                     fclose($fp);
@@ -135,14 +135,14 @@ class Upgrade_2014 extends XoopsUpgrade
         }
         // Insert config values
         $table = $db->prefix('config');
-        $data  = array(
+        $data  = [
             'auth_method'              => "'_MD_AM_AUTHMETHOD', 'xoops', '_MD_AM_AUTHMETHODDESC', 'select', 'text', 1",
             'ldap_port'                => "'_MD_AM_LDAP_PORT', '389', '_MD_AM_LDAP_PORT', 'textbox', 'int', 2 ",
             'ldap_server'              => "'_MD_AM_LDAP_SERVER', 'your directory server', '_MD_AM_LDAP_SERVER_DESC', 'textbox', 'text', 3 ",
             'ldap_manager_dn'          => "'_MD_AM_LDAP_MANAGER_DN', 'manager_dn', '_MD_AM_LDAP_MANAGER_DN_DESC', 'textbox', 'text', 5",
             'ldap_manager_pass'        => "'_MD_AM_LDAP_MANAGER_PASS', 'manager_pass', '_MD_AM_LDAP_MANAGER_PASS_DESC', 'textbox', 'text', 6",
             'ldap_version'             => "'_MD_AM_LDAP_VERSION', '3', '_MD_AM_LDAP_VERSION_DESC', 'textbox', 'text', 7",
-            'ldap_users_bypass'        => "'_MD_AM_LDAP_USERS_BYPASS', '" . serialize(array('admin')) . "', '_MD_AM_LDAP_USERS_BYPASS_DESC', 'textarea', 'array', 8",
+            'ldap_users_bypass'        => "'_MD_AM_LDAP_USERS_BYPASS', '" . serialize(['admin']) . "', '_MD_AM_LDAP_USERS_BYPASS_DESC', 'textarea', 'array', 8",
             'ldap_loginname_asdn'      => "'_MD_AM_LDAP_LOGINNAME_ASDN', 'uid_asdn', '_MD_AM_LDAP_LOGINNAME_ASDN_D', 'yesno', 'int', 9",
             'ldap_loginldap_attr'      => "'_MD_AM_LDAP_LOGINLDAP_ATTR', 'uid', '_MD_AM_LDAP_LOGINLDAP_ATTR_D', 'textbox', 'text', 10",
             'ldap_filter_person'       => "'_MD_AM_LDAP_FILTER_PERSON', '', '_MD_AM_LDAP_FILTER_PERSON_DESC', 'textbox', 'text', 11",
@@ -151,7 +151,8 @@ class Upgrade_2014 extends XoopsUpgrade
             'ldap_provisionning_group' => "'_MD_AM_LDAP_PROVIS_GROUP', 'a:1:{i:0;s:1:\"2\";}', '_MD_AM_LDAP_PROVIS_GROUP_DSC', 'group_multi', 'array', 14",
             'ldap_mail_attr'           => "'_MD_AM_LDAP_MAIL_ATTR', 'mail', '_MD_AM_LDAP_MAIL_ATTR_DESC', 'textbox', 'text', 15",
             'ldap_givenname_attr'      => "'_MD_AM_LDAP_GIVENNAME_ATTR', 'givenname', '_MD_AM_LDAP_GIVENNAME_ATTR_DSC', 'textbox', 'text', 16",
-            'ldap_surname_attr'        => "'_MD_AM_LDAP_SURNAME_ATTR', 'sn', '_MD_AM_LDAP_SURNAME_ATTR_DESC', 'textbox', 'text', 17");
+            'ldap_surname_attr'        => "'_MD_AM_LDAP_SURNAME_ATTR', 'sn', '_MD_AM_LDAP_SURNAME_ATTR_DESC', 'textbox', 'text', 17"
+        ];
         foreach ($data as $name => $values) {
             if (!$this->getDbValue($db, 'config', 'conf_id', "`conf_modid`=0 AND `conf_catid`=7 AND `conf_name`='$name'")) {
                 $this->query("INSERT INTO `$table` (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) " . "VALUES ( 0,7,'$name',$values)");
@@ -160,10 +161,11 @@ class Upgrade_2014 extends XoopsUpgrade
         // Insert auth_method config options
         $id    = $this->getDbValue($db, 'config', 'conf_id', "`conf_modid`=0 AND `conf_catid`=7 AND `conf_name`='auth_method'");
         $table = $db->prefix('configoption');
-        $data  = array(
+        $data  = [
             '_MD_AM_AUTH_CONFOPTION_XOOPS' => 'xoops',
             '_MD_AM_AUTH_CONFOPTION_LDAP'  => 'ldap',
-            '_MD_AM_AUTH_CONFOPTION_AD'    => 'ad');
+            '_MD_AM_AUTH_CONFOPTION_AD'    => 'ad'
+        ];
         $this->query("DELETE FROM `$table` WHERE `conf_id`=$id");
         foreach ($data as $name => $value) {
             $this->query("INSERT INTO `$table` (confop_name, confop_value, conf_id) VALUES ('$name', '$value', $id)");
@@ -175,7 +177,7 @@ class Upgrade_2014 extends XoopsUpgrade
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
-        $this->tasks = array('auth_db');
+        $this->tasks = ['auth_db'];
         // $this->usedFiles = array('mainfile.php'); /* '0523patch' not run */
     }
 }

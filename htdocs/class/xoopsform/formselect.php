@@ -40,7 +40,7 @@ class XoopsFormSelect extends XoopsFormElement
      * @var array
      * @access private
      */
-    public $_options = array();
+    public $_options = [];
 
     /**
      * Allow multiple selections?
@@ -64,7 +64,7 @@ class XoopsFormSelect extends XoopsFormElement
      * @var array
      * @access private
      */
-    public $_value = array();
+    public $_value = [];
 
     /**
      * Constructor
@@ -117,7 +117,7 @@ class XoopsFormSelect extends XoopsFormElement
         if (!$encode) {
             return $this->_value;
         }
-        $value = array();
+        $value = [];
         foreach ($this->_value as $val) {
             $value[] = $val ? htmlspecialchars($val, ENT_QUOTES) : $val;
         }
@@ -184,7 +184,7 @@ class XoopsFormSelect extends XoopsFormElement
         if (!$encode) {
             return $this->_options;
         }
-        $value = array();
+        $value = [];
         foreach ($this->_options as $val => $name) {
             $value[$encode ? htmlspecialchars($val, ENT_QUOTES) : $val] = ($encode > 1) ? htmlspecialchars($name, ENT_QUOTES) : $name;
         }

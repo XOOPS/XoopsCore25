@@ -28,7 +28,7 @@ if (!xoops_getModuleOption('active_smilies', 'system')) {
 
 // Parameters
 $nb_smilies  = xoops_getModuleOption('smilies_pager', 'system');
-$mimetypes   = array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png');
+$mimetypes   = ['image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'];
 $upload_size = 500000;
 // Get Action type
 $op = system_CleanVars($_REQUEST, 'op', 'list', 'string');
@@ -206,10 +206,11 @@ switch ($op) {
             $xoBreadCrumb->addHelp(system_adminVersion('smilies', 'help') . '#delete');
             $xoBreadCrumb->render();
             $smilies_img = $obj->getVar('smile_url') ?: 'blank.gif';
-            xoops_confirm(array(
+            xoops_confirm([
                               'ok' => 1,
                               'smilies_id' => $_REQUEST['smilies_id'],
-                              'op' => 'smilies_delete'), $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_SMILIES_SUREDEL) . '<br \><img src="' . XOOPS_UPLOAD_URL . '/' . $smilies_img . '" alt="" /><br \>');
+                              'op' => 'smilies_delete'
+                          ], $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_SMILIES_SUREDEL) . '<br \><img src="' . XOOPS_UPLOAD_URL . '/' . $smilies_img . '" alt="" /><br \>');
         }
         break;
 

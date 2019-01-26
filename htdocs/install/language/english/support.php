@@ -4,12 +4,13 @@
 // _CHARSET : UTF-8
 // Translator: XOOPS Translation Team
 
-$supports = array();
+$supports = [];
 
 // Support site for English
-$supports['english'] = array(
+$supports['english'] = [
     'url' => 'http://www.xoops.org/',
-    'title' => 'English support');
+    'title' => 'English support'
+];
 
 // Add extra support sites, use corresponding language folder name as key, for instance:
 /*

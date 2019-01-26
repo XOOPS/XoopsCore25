@@ -8,23 +8,24 @@ class Protector
     public $mydirname;
 
     public $_conn;
-    public $_conf            = array();
+    public $_conf            = [];
     public $_conf_serialized = '';
 
-    public $_bad_globals = array();
+    public $_bad_globals = [];
 
     public $message                = '';
     public $warning                = false;
     public $error                  = false;
-    public $_doubtful_requests     = array();
-    public $_bigumbrella_doubtfuls = array();
+    public $_doubtful_requests     = [];
+    public $_bigumbrella_doubtfuls = [];
 
-    public $_dblayertrap_doubtfuls        = array();
-    public $_dblayertrap_doubtful_needles = array(
+    public $_dblayertrap_doubtfuls        = [];
+    public $_dblayertrap_doubtful_needles = [
         'information_schema',
         'select',
         "'",
-        '"');
+        '"'
+    ];
 
     public $_logged = false;
 
@@ -64,7 +65,7 @@ class Protector
         $this->_conf_serialized = @file_get_contents($this->get_filepath4confighcache());
         $this->_conf            = @unserialize($this->_conf_serialized);
         if (empty($this->_conf)) {
-            $this->_conf = array();
+            $this->_conf = [];
         }
 
         if (!empty($this->_conf['global_disabled'])) {
@@ -82,7 +83,7 @@ class Protector
         //    $_SERVER['PHP_SELF'] = strtr( @$_SERVER['PHP_SELF'] , array( '<' => '%3C' , '>' => '%3E' , "'" => '%27' , '"' => '%22' ) ) ;
         //    if( ! empty( $_SERVER['PATH_INFO'] ) ) $_SERVER['PATH_INFO'] = strtr( @$_SERVER['PATH_INFO'] , array( '<' => '%3C' , '>' => '%3E' , "'" => '%27' , '"' => '%22' ) ) ;
 
-        $this->_bad_globals = array(
+        $this->_bad_globals = [
             'GLOBALS',
             '_SESSION',
             'HTTP_SESSION_VARS',
@@ -105,7 +106,8 @@ class Protector
             'xoopsConfig',
             'xoopsOption',
             'xoopsModule',
-            'xoopsModuleConfig');
+            'xoopsModuleConfig'
+        ];
 
         $this->_initial_recursive($_GET, 'G');
         $this->_initial_recursive($_POST, 'P');
@@ -173,7 +175,7 @@ class Protector
         if (!$result || mysqli_num_rows($result) < 5) {
             return false;
         }
-        $db_conf = array();
+        $db_conf = [];
         while (list($key, $val) = mysqli_fetch_row($result)) {
             $db_conf[$key] = $val;
         }
@@ -418,9 +420,9 @@ class Protector
     public function get_bad_ips($with_jailed_time = false)
     {
         list($bad_ips_serialized) = @file(Protector::get_filepath4badips());
-        $bad_ips = empty($bad_ips_serialized) ? array() : @unserialize($bad_ips_serialized);
+        $bad_ips = empty($bad_ips_serialized) ? [] : @unserialize($bad_ips_serialized);
         if (!is_array($bad_ips) || isset($bad_ips[0])) {
-            $bad_ips = array();
+            $bad_ips = [];
         }
 
         // expire jailed_time
@@ -456,9 +458,9 @@ class Protector
     public function get_group1_ips($with_info = false)
     {
         list($group1_ips_serialized) = @file(Protector::get_filepath4group1ips());
-        $group1_ips = empty($group1_ips_serialized) ? array() : @unserialize($group1_ips_serialized);
+        $group1_ips = empty($group1_ips_serialized) ? [] : @unserialize($group1_ips_serialized);
         if (!is_array($group1_ips)) {
-            $group1_ips = array();
+            $group1_ips = [];
         }
 
         if ($with_info) {
@@ -643,7 +645,7 @@ class Protector
             return null;
         } // skip
 
-        $this->_dblayertrap_doubtfuls = array();
+        $this->_dblayertrap_doubtfuls = [];
         $this->_dblayertrap_check_recursive($_GET);
         $this->_dblayertrap_check_recursive($_POST);
         $this->_dblayertrap_check_recursive($_COOKIE);
@@ -675,12 +677,12 @@ class Protector
 
     public function bigumbrella_init()
     {
-        $this->_bigumbrella_doubtfuls = array();
+        $this->_bigumbrella_doubtfuls = [];
         $this->_bigumbrella_check_recursive($_GET);
         $this->_bigumbrella_check_recursive(@$_SERVER['PHP_SELF']);
 
         if (!empty($this->_bigumbrella_doubtfuls)) {
-            ob_start(array($this, 'bigumbrella_outputcheck'));
+            ob_start([$this, 'bigumbrella_outputcheck']);
         }
     }
 
@@ -894,9 +896,9 @@ class Protector
         }
 
         // extensions never uploaded
-        $bad_extensions = array('php', 'phtml', 'phtm', 'php3', 'php4', 'cgi', 'pl', 'asp');
+        $bad_extensions = ['php', 'phtml', 'phtm', 'php3', 'php4', 'cgi', 'pl', 'asp'];
         // extensions needed image check (anti-IE Content-Type XSS)
-        $image_extensions = array(
+        $image_extensions = [
             1  => 'gif',
             2  => 'jpg',
             3  => 'png',
@@ -912,7 +914,8 @@ class Protector
             13 => 'swc',
             14 => 'iff',
             15 => 'wbmp',
-            16 => 'xbm');
+            16 => 'xbm'
+        ];
 
         foreach ($_FILES as $_file) {
             if (!empty($_file['error'])) {
@@ -1027,7 +1030,7 @@ class Protector
         }
 
         foreach ($this->_doubtful_requests as $key => $val) {
-            $str = str_replace(array('/*', '*/'), '', preg_replace('?/\*.+\*/?sU', '', $val));
+            $str = str_replace(['/*', '*/'], '', preg_replace('?/\*.+\*/?sU', '', $val));
             if (preg_match('/\sUNION\s+(ALL|SELECT)/i', $str)) {
                 $this->message .= "Pattern like SQL injection found. ($val)\n";
                 if ($sanitize) {
@@ -1088,16 +1091,16 @@ class Protector
             case 'log' :
                 break;
             case 'san' :
-                $_POST = array();
+                $_POST = [];
                 $this->message .= 'POST deleted for IP:' . $_SERVER['REMOTE_ADDR'];
                 break;
             case 'biptime0' :
-                $_POST = array();
+                $_POST = [];
                 $this->message .= 'BAN and POST deleted for IP:' . $_SERVER['REMOTE_ADDR'];
                 $this->_should_be_banned_time0 = true;
                 break;
             case 'bip' :
-                $_POST = array();
+                $_POST = [];
                 $this->message .= 'Ban and POST deleted for IP:' . $_SERVER['REMOTE_ADDR'];
                 $this->_should_be_banned = true;
                 break;

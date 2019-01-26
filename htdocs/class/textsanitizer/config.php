@@ -18,8 +18,8 @@
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-return $config = array(
-    'extensions' => array(
+return $config = [
+    'extensions' => [
         'iframe' => 0,
         'image' => 1,
         'flash' => 1,
@@ -32,8 +32,10 @@ return $config = array(
         'rtsp' => 0,
         'soundcloud' => 0, //new in XOOPS 2.5.7
         'ul' => 1,
-        'li' => 1),
+        'li' => 1
+    ],
     'truncate_length' => 60,
     // Filters XSS scripts on display of text
     // There is considerable trade-off between security and performance
-    'filterxss_on_display' => false);
+    'filterxss_on_display' => false
+];

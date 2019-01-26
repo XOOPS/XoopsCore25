@@ -43,7 +43,7 @@ class FormDhtmlTextArea extends XoopsEditor
      *
      * @param array $options
      */
-    public function __construct($options = array())
+    public function __construct($options = [])
     {
         parent::__construct($options);
         $this->rootPath = '/class/xoopseditor/' . basename(__DIR__);

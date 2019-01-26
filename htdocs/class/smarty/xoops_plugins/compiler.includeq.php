@@ -46,7 +46,7 @@
 function smarty_compiler_includeq($tag_args, &$comp)
 {
     $attrs    = $comp->_parse_attrs($tag_args);
-    $arg_list = array();
+    $arg_list = [];
 
     if (empty($attrs['file'])) {
         $comp->_syntax_error("missing 'file' attribute in includeq tag", E_USER_ERROR, __FILE__, __LINE__);

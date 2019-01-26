@@ -58,7 +58,7 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
     $defaultTheme = 'xbootstrap';
     // $xoopsDB = Database::getInstance();
     // $dbm = new Db_manager;
-    $tables = array();
+    $tables = [];
     // data for table 'groups_users_link'
     /* @var  $dbm Db_manager */
     $dbm->insert('groups_users_link', ' VALUES (0, ' . $groups['XOOPS_GROUP_ADMIN'] . ', 1)');
@@ -102,7 +102,7 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
         $language = 'english';
     }
 
-    $modversion = array();
+    $modversion = [];
     include_once '../modules/system/xoops_version.php';
     $time = time();
     // RMV-NOTIFY (updated for extra column in table)
@@ -130,7 +130,7 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
     foreach ($modversion['blocks'] as $func_num => $newblock) {
         if ($fp = fopen('../modules/system/templates/blocks/' . $newblock['template'], 'r')) {
             $visible = 0;
-            if (in_array($newblock['template'], array('system_block_user.tpl', 'system_block_login.tpl', 'system_block_mainmenu.tpl'))) {
+            if (in_array($newblock['template'], ['system_block_user.tpl', 'system_block_login.tpl', 'system_block_mainmenu.tpl'])) {
                 $visible = 1;
             }
             $options   = !isset($newblock['options']) ? '' : trim($newblock['options']);
@@ -197,19 +197,21 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
     $dbm->insert('config', " VALUES (31, 0, 2, 'self_delete', '_MD_AM_SELFDELETE', '0', '_MD_AM_SELFDELETEDSC', 'yesno', 'int', 22)");
     $dbm->insert('config', " VALUES (32, 0, 1, 'com_mode', '_MD_AM_COMMODE', 'flat', '_MD_AM_COMMODEDSC', 'select', 'text', 34)");
     $dbm->insert('config', " VALUES (33, 0, 1, 'com_order', '_MD_AM_COMORDER', '0', '_MD_AM_COMORDERDSC', 'select', 'int', 36)");
-    $dbm->insert('config', " VALUES (34, 0, 2, 'bad_unames', '_MD_AM_BADUNAMES', '" . addslashes(serialize(array(
+    $dbm->insert('config', " VALUES (34, 0, 2, 'bad_unames', '_MD_AM_BADUNAMES', '" . addslashes(serialize([
                                                                                                                'webmaster',
                                                                                                                '^xoops',
-                                                                                                               '^admin'))) . "', '_MD_AM_BADUNAMESDSC', 'textarea', 'array', 24)");
-    $dbm->insert('config', " VALUES (35, 0, 2, 'bad_emails', '_MD_AM_BADEMAILS', '" . addslashes(serialize(array('xoops.org$'))) . "', '_MD_AM_BADEMAILSDSC', 'textarea', 'array', 26)");
+                                                                                                               '^admin'
+                                                                                                           ])) . "', '_MD_AM_BADUNAMESDSC', 'textarea', 'array', 24)");
+    $dbm->insert('config', " VALUES (35, 0, 2, 'bad_emails', '_MD_AM_BADEMAILS', '" . addslashes(serialize(['xoops.org$'])) . "', '_MD_AM_BADEMAILSDSC', 'textarea', 'array', 26)");
     $dbm->insert('config', " VALUES (36, 0, 2, 'maxuname', '_MD_AM_MAXUNAME', '10', '_MD_AM_MAXUNAMEDSC', 'textbox', 'int', 3)");
-    $dbm->insert('config', " VALUES (37, 0, 1, 'bad_ips', '_MD_AM_BADIPS', '" . addslashes(serialize(array('127.0.0.1'))) . "', '_MD_AM_BADIPSDSC', 'textarea', 'array', 42)");
+    $dbm->insert('config', " VALUES (37, 0, 1, 'bad_ips', '_MD_AM_BADIPS', '" . addslashes(serialize(['127.0.0.1'])) . "', '_MD_AM_BADIPSDSC', 'textarea', 'array', 42)");
     $dbm->insert('config', " VALUES (38, 0, 3, 'meta_keywords', '_MD_AM_METAKEY', 'xoops, web application framework, cms, content management system', '_MD_AM_METAKEYDSC', 'textarea', 'text', 0)");
     $dbm->insert('config', " VALUES (39, 0, 3, 'footer', '_MD_AM_FOOTER', 'Powered by XOOPS &#169; 2001-" . date('Y', time()) . " <a href=\"http://xoops.org\" rel=\"external\" title=\"The XOOPS Project\">The XOOPS Project</a>', '_MD_AM_FOOTERDSC', 'textarea', 'text', 20)");
     $dbm->insert('config', " VALUES (40, 0, 4, 'censor_enable', '_MD_AM_DOCENSOR', '0', '_MD_AM_DOCENSORDSC', 'yesno', 'int', 0)");
-    $dbm->insert('config', " VALUES (41, 0, 4, 'censor_words', '_MD_AM_CENSORWRD', '" . addslashes(serialize(array(
+    $dbm->insert('config', " VALUES (41, 0, 4, 'censor_words', '_MD_AM_CENSORWRD', '" . addslashes(serialize([
                                                                                                                  'fuck',
-                                                                                                                 'shit'))) . "', '_MD_AM_CENSORWRDDSC', 'textarea', 'array', 1)");
+                                                                                                                 'shit'
+                                                                                                             ])) . "', '_MD_AM_CENSORWRDDSC', 'textarea', 'array', 1)");
     $dbm->insert('config', " VALUES (42, 0, 4, 'censor_replace', '_MD_AM_CENSORRPLC', '#OOPS#', '_MD_AM_CENSORRPLCDSC', 'textbox', 'text', 2)");
     $dbm->insert('config', " VALUES (43, 0, 3, 'meta_robots', '_MD_AM_METAROBOTS', 'index,follow', '_MD_AM_METAROBOTSDSC', 'textbox', 'text', 2)");
     $dbm->insert('config', " VALUES (44, 0, 5, 'enable_search', '_MD_AM_DOSEARCH', '1', '_MD_AM_DOSEARCHDSC', 'yesno', 'int', 0)");
@@ -227,7 +229,7 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
     $dbm->insert('config', " VALUES (56, 0, 2, 'allow_register', '_MD_AM_ALLOWREG', 1, '_MD_AM_ALLOWREGDSC', 'yesno', 'int', 0)");
     $dbm->insert('config', " VALUES (57, 0, 1, 'theme_fromfile', '_MD_AM_THEMEFILE', '0', '_MD_AM_THEMEFILEDSC', 'yesno', 'int', 13)");
     $dbm->insert('config', " VALUES (58, 0, 1, 'closesite', '_MD_AM_CLOSESITE', '0', '_MD_AM_CLOSESITEDSC', 'yesno', 'int', 26)");
-    $dbm->insert('config', " VALUES (59, 0, 1, 'closesite_okgrp', '_MD_AM_CLOSESITEOK', '" . addslashes(serialize(array('1'))) . "', '_MD_AM_CLOSESITEOKDSC', 'group_multi', 'array', 27)");
+    $dbm->insert('config', " VALUES (59, 0, 1, 'closesite_okgrp', '_MD_AM_CLOSESITEOK', '" . addslashes(serialize(['1'])) . "', '_MD_AM_CLOSESITEOKDSC', 'group_multi', 'array', 27)");
     $dbm->insert('config', " VALUES (60, 0, 1, 'closesite_text', '_MD_AM_CLOSESITETXT', '" . _INSTALL_L165 . "', '_MD_AM_CLOSESITETXTDSC', 'textarea', 'text', 28)");
     $dbm->insert('config', " VALUES (61, 0, 1, 'sslpost_name', '_MD_AM_SSLPOST', 'xoops_ssl', '_MD_AM_SSLPOSTDSC', 'textbox', 'text', 31)");
     $dbm->insert('config', " VALUES (62, 0, 1, 'module_cache', '_MD_AM_MODCACHE', '', '_MD_AM_MODCACHEDSC', 'module_cache', 'array', 50)");
@@ -241,7 +243,7 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
     $dbm->insert('config', " VALUES (69,0,6,'from','_MD_AM_MAILFROM','','_MD_AM_MAILFROMDESC','textbox','text', 1)");
     $dbm->insert('config', " VALUES (70,0,6,'fromname','_MD_AM_MAILFROMNAME','','_MD_AM_MAILFROMNAMEDESC','textbox','text',2)");
     $dbm->insert('config', " VALUES (71, 0, 1, 'sslloginlink', '_MD_AM_SSLLINK', 'https://', '_MD_AM_SSLLINKDSC', 'textbox', 'text', 33)");
-    $dbm->insert('config', " VALUES (72, 0, 1, 'theme_set_allowed', '_MD_AM_THEMEOK', '" . serialize(array($defaultTheme)) . "', '_MD_AM_THEMEOKDSC', 'theme_multi', 'array', 13)");
+    $dbm->insert('config', " VALUES (72, 0, 1, 'theme_set_allowed', '_MD_AM_THEMEOK', '" . serialize([$defaultTheme]) . "', '_MD_AM_THEMEOKDSC', 'theme_multi', 'array', 13)");
     // RMV-NOTIFY... Need to specify which user is sender of notification PM
     $dbm->insert('config', " VALUES (73,0,6,'fromuid','_MD_AM_MAILFROMUID','1','_MD_AM_MAILFROMUIDDESC','user','int',3)");
 
@@ -252,7 +254,7 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
     $dbm->insert('config', " VALUES (78,0,7,'ldap_manager_dn','_MD_AM_LDAP_MANAGER_DN','manager_dn','_MD_AM_LDAP_MANAGER_DN_DESC','textbox','text',5)");
     $dbm->insert('config', " VALUES (79,0,7,'ldap_manager_pass','_MD_AM_LDAP_MANAGER_PASS','manager_pass','_MD_AM_LDAP_MANAGER_PASS_DESC','password','text',6)");
     $dbm->insert('config', " VALUES (80,0,7,'ldap_version','_MD_AM_LDAP_VERSION','3','_MD_AM_LDAP_VERSION_DESC','textbox','text', 7)");
-    $dbm->insert('config', " VALUES (81,0,7,'ldap_users_bypass','_MD_AM_LDAP_USERS_BYPASS','" . serialize(array('admin')) . "','_MD_AM_LDAP_USERS_BYPASS_DESC','textarea','array',8)");
+    $dbm->insert('config', " VALUES (81,0,7,'ldap_users_bypass','_MD_AM_LDAP_USERS_BYPASS','" . serialize(['admin']) . "','_MD_AM_LDAP_USERS_BYPASS_DESC','textarea','array',8)");
     $dbm->insert('config', " VALUES (82,0,7,'ldap_loginname_asdn','_MD_AM_LDAP_LOGINNAME_ASDN','uid_asdn','_MD_AM_LDAP_LOGINNAME_ASDN_D','yesno','int',9)");
     $dbm->insert('config', " VALUES (83,0,7,'ldap_loginldap_attr', '_MD_AM_LDAP_LOGINLDAP_ATTR', 'uid', '_MD_AM_LDAP_LOGINLDAP_ATTR_D', 'textbox', 'text', 10)");
     $dbm->insert('config', " VALUES (84,0,7,'ldap_filter_person','_MD_AM_LDAP_FILTER_PERSON','','_MD_AM_LDAP_FILTER_PERSON_DESC','textbox','text',11)");

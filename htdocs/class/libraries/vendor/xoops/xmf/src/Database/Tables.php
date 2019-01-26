@@ -99,10 +99,10 @@ class Tables
      */
     public function addColumn($table, $column, $attributes)
     {
-        $columnDef = array(
+        $columnDef = [
             'name' => $column,
             'attributes' => $attributes
-        );
+        ];
 
         // Find table def.
         if (isset($this->tables[$table])) {
@@ -237,16 +237,16 @@ class Tables
             return true;
         } else {
             if ($tableDef === true) {
-                $tableDef = array(
+                $tableDef = [
                     'name' => $this->name($table),
                     'options' => 'ENGINE=InnoDB',
-                    'columns' => array(),
-                    'keys' => array(),
+                    'columns' => [],
+                    'keys' => [],
                     'create' => true,
-                );
+                ];
                 $this->tables[$table] = $tableDef;
 
-                $this->queue[] = array('createtable' => $table);
+                $this->queue[] = ['createtable' => $table];
 
                 return true;
             } else {
@@ -391,7 +391,7 @@ class Tables
                 $this->queue[] = "INSERT INTO `{$copy}` SELECT * FROM `{$original}` ;";
             } else {
                 $tableDef['create'] = true;
-                $this->queue[] = array('createtable' => $newTable);
+                $this->queue[] = ['createtable' => $newTable];
             }
             $this->tables[$newTable] = $tableDef;
 
@@ -575,8 +575,8 @@ class Tables
      */
     public function resetQueue()
     {
-        $this->tables = array();
-        $this->queue  = array();
+        $this->tables = [];
+        $this->queue  = [];
     }
 
     /**
@@ -814,7 +814,7 @@ class Tables
      */
     protected function getTable($table)
     {
-        $tableDef = array();
+        $tableDef = [];
 
         $sql  = 'SELECT TABLE_NAME, ENGINE, CHARACTER_SET_NAME ';
         $sql .= ' FROM `INFORMATION_SCHEMA`.`TABLES` t, ';
@@ -849,10 +849,10 @@ class Tables
                 . (($column['COLUMN_DEFAULT'] === null) ? '' : " DEFAULT '" . $column['COLUMN_DEFAULT'] . "' ")
                 . $column['EXTRA'];
 
-            $columnDef = array(
+            $columnDef = [
                 'name' => $column['COLUMN_NAME'],
                 'attributes' => $attributes
-            );
+            ];
 
             $tableDef['columns'][] = $columnDef;
         };

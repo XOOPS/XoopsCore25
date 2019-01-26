@@ -26,7 +26,7 @@ $xoopsConfig['module_cache']  = 0; //disable caching since the URL will be the s
 $GLOBALS['xoopsOption']['template_main'] = 'pm_viewpmsg.tpl';
 include $GLOBALS['xoops']->path('header.php');
 
-$valid_op_requests = array('out', 'save', 'in');
+$valid_op_requests = ['out', 'save', 'in'];
 $_REQUEST['op']    = !empty($_REQUEST['op']) && in_array($_REQUEST['op'], $valid_op_requests) ? $_REQUEST['op'] : 'in';
 
 $start      = empty($_REQUEST['start']) ? 0 : (int)$_REQUEST['start'];
@@ -36,11 +36,12 @@ if (isset($_POST['delete_messages']) && (isset($_POST['msg_id']) || isset($_POST
     if (!$GLOBALS['xoopsSecurity']->check()) {
         $GLOBALS['xoopsTpl']->assign('errormsg', implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
     } elseif (empty($_REQUEST['ok'])) {
-        xoops_confirm(array(
+        xoops_confirm([
                           'ok'              => 1,
                           'delete_messages' => 1,
                           'op'              => $_REQUEST['op'],
-                          'msg_ids'         => json_encode(array_map('intval', $_POST['msg_id']))), $_SERVER['REQUEST_URI'], _PM_SURE_TO_DELETE);
+                          'msg_ids'         => json_encode(array_map('intval', $_POST['msg_id']))
+                      ], $_SERVER['REQUEST_URI'], _PM_SURE_TO_DELETE);
         include $GLOBALS['xoops']->path('footer.php');
         exit();
     } else {
@@ -106,7 +107,7 @@ if (isset($_REQUEST['empty_messages'])) {
     if (!$GLOBALS['xoopsSecurity']->check()) {
         $GLOBALS['xoopsTpl']->assign('errormsg', implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
     } elseif (empty($_REQUEST['ok'])) {
-        xoops_confirm(array('ok' => 1, 'empty_messages' => 1, 'op' => $_REQUEST['op']), $_SERVER['REQUEST_URI'], _PM_RUSUREEMPTY);
+        xoops_confirm(['ok' => 1, 'empty_messages' => 1, 'op' => $_REQUEST['op']], $_SERVER['REQUEST_URI'], _PM_RUSUREEMPTY);
         include $GLOBALS['xoops']->path('footer.php');
         exit();
     } else {

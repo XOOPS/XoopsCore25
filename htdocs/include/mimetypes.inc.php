@@ -21,7 +21,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  *
  * This should really be replaced with a more accurate way of determining the actually mimetype
  */
-return array(
+return [
     'hqx'   => 'application/mac-binhex40',
     'doc'   => 'application/msword',
     'dot'   => 'application/msword',
@@ -145,4 +145,5 @@ return array(
     'xlsb'  => 'application/vnd.ms-excel.sheet.binary.macroEnabled.12',
     'xlsm'  => 'application/vnd.ms-excel.sheet.macroEnabled.12',
     'xlsx'  => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    'xps'   => 'application/vnd.ms-xpsdocument');
+    'xps'   => 'application/vnd.ms-xpsdocument'
+];

@@ -159,7 +159,7 @@ global $upgradeControl;
                     </div>
                 </div>
                 <?php
-                $versionParts=array();
+                $versionParts= [];
                 $versionResult = preg_match ('/(^[a-z\s]*)([0-9\.]*)/i', XOOPS_VERSION, $versionParts);
                 ?>
 

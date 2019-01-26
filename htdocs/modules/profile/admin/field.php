@@ -53,7 +53,7 @@ switch ($op) {
         }
         $GLOBALS['xoopsTpl']->assign('categories', $categories);
         unset($categories);
-        $valuetypes = array(
+        $valuetypes = [
             XOBJ_DTYPE_ARRAY   => _PROFILE_AM_ARRAY,
             XOBJ_DTYPE_EMAIL   => _PROFILE_AM_EMAIL,
             XOBJ_DTYPE_INT     => _PROFILE_AM_INT,
@@ -61,9 +61,10 @@ switch ($op) {
             XOBJ_DTYPE_TXTBOX  => _PROFILE_AM_TXTBOX,
             XOBJ_DTYPE_URL     => _PROFILE_AM_URL,
             XOBJ_DTYPE_OTHER   => _PROFILE_AM_OTHER,
-            XOBJ_DTYPE_MTIME   => _PROFILE_AM_DATE);
+            XOBJ_DTYPE_MTIME   => _PROFILE_AM_DATE
+        ];
 
-        $fieldtypes = array(
+        $fieldtypes = [
             'checkbox'     => _PROFILE_AM_CHECKBOX,
             'group'        => _PROFILE_AM_GROUP,
             'group_multi'  => _PROFILE_AM_GROUPMULTI,
@@ -81,7 +82,8 @@ switch ($op) {
             'longdate'     => _PROFILE_AM_LONGDATE,
             'theme'        => _PROFILE_AM_THEME,
             'autotext'     => _PROFILE_AM_AUTOTEXT,
-            'rank'         => _PROFILE_AM_RANK);
+            'rank'         => _PROFILE_AM_RANK
+        ];
 
         foreach (array_keys($fields) as $i) {
             $fields[$i]['canEdit']               = $fields[$i]['field_config'] || $fields[$i]['field_show'] || $fields[$i]['field_edit'];
@@ -127,7 +129,7 @@ switch ($op) {
             $oldcat    = $_POST['oldcat'];
             $category  = $_POST['category'];
             $weight    = $_POST['weight'];
-            $ids       = array();
+            $ids       = [];
             foreach ($_POST['field_ids'] as $field_id) {
                 if ($oldweight[$field_id] != $weight[$field_id] || $oldcat[$field_id] != $category[$field_id]) {
                     //if field has changed
@@ -135,7 +137,7 @@ switch ($op) {
                 }
             }
             if (count($ids) > 0) {
-                $errors = array();
+                $errors = [];
                 //if there are changed fields, fetch the fieldcategory objects
                 /* @var $field_handler XoopsModuleHandler */
                 $field_handler = xoops_getModuleHandler('field');
@@ -233,7 +235,7 @@ switch ($op) {
             /* @var $groupperm_handler XoopsGroupPermHandler  */
             $groupperm_handler = xoops_getHandler('groupperm');
 
-            $perm_arr = array();
+            $perm_arr = [];
             if ($obj->getVar('field_show')) {
                 $perm_arr[] = 'profile_show';
                 $perm_arr[] = 'profile_visible';
@@ -256,7 +258,7 @@ switch ($op) {
                                 $groups[$perms[$i]->getVar('gperm_groupid')] =& $perms[$i];
                             }
                         } else {
-                            $groups = array();
+                            $groups = [];
                         }
                         foreach ($_REQUEST[$perm] as $groupid) {
                             $groupid = (int)$groupid;
@@ -306,10 +308,11 @@ switch ($op) {
                 echo $obj->getHtmlErrors();
             }
         } else {
-            xoops_confirm(array(
+            xoops_confirm([
                               'ok' => 1,
                               'id' => $_REQUEST['id'],
-                              'op' => 'delete'), $_SERVER['REQUEST_URI'], sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('field_title')));
+                              'op' => 'delete'
+                          ], $_SERVER['REQUEST_URI'], sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('field_title')));
         }
         break;
 

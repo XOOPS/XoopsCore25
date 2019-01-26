@@ -22,7 +22,7 @@ $loadCommon = !isset($xoopsOption['nocommon']);
 $xoopsOption['nocommon'] = true;
 include_once '../mainfile.php';
 
-$mainfileKeys = array(
+$mainfileKeys = [
     // in mainfile.php
     'XOOPS_ROOT_PATH'       => null,
     'XOOPS_PATH'            => null,
@@ -43,7 +43,7 @@ $mainfileKeys = array(
     'XOOPS_DB_PASS'         => null,
     'XOOPS_DB_NAME'         => null,
     'XOOPS_DB_PCONNECT'     => null,
-);
+];
 
 $needMainfileRewrite = false;
 foreach ($mainfileKeys as $key => $unused) {

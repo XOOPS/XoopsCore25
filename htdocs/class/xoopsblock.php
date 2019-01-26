@@ -197,7 +197,7 @@ class XoopsBlock extends XoopsObject
     public function buildBlock()
     {
         global $xoopsConfig, $xoopsOption, $xoTheme;
-        $block = array();
+        $block = [];
         if (!$this->isCustom()) {
             // get block display function
             $show_func = $this->getVar('show_func');
@@ -282,9 +282,10 @@ class XoopsBlock extends XoopsObject
      */
     public function isCustom()
     {
-        return in_array($this->getVar('block_type'), array(
+        return in_array($this->getVar('block_type'), [
             'C',
-            'E'));
+            'E'
+        ]);
     }
 
     /**
@@ -341,7 +342,7 @@ class XoopsBlock extends XoopsObject
     public static function getAllBlocksByGroup($groupid, $asobject = true, $side = null, $visible = null, $orderby = 'b.weight,b.bid', $isactive = 1)
     {
         $db  = XoopsDatabaseFactory::getDatabaseConnection();
-        $ret = array();
+        $ret = [];
         $sql = 'SELECT b.* ';
         if (!$asobject) {
             $sql = 'SELECT b.bid ';
@@ -378,7 +379,7 @@ class XoopsBlock extends XoopsObject
         }
         $sql .= " ORDER BY $orderby";
         $result = $db->query($sql);
-        $added  = array();
+        $added  = [];
         while (false !== ($myrow = $db->fetchArray($result))) {
             if (!in_array($myrow['bid'], $added)) {
                 if (!$asobject) {
@@ -406,7 +407,7 @@ class XoopsBlock extends XoopsObject
     public function getAllBlocks($rettype = 'object', $side = null, $visible = null, $orderby = 'side,weight,bid', $isactive = 1)
     {
         $db          = XoopsDatabaseFactory::getDatabaseConnection();
-        $ret         = array();
+        $ret         = [];
         $where_query = ' WHERE isactive=' . $isactive;
         if (isset($side)) {
             // get both sides in sidebox? (some themes need this)
@@ -473,7 +474,7 @@ class XoopsBlock extends XoopsObject
             $sql = 'SELECT bid FROM ' . $db->prefix('newblocks') . ' WHERE mid=' . $moduleid;
         }
         $result = $db->query($sql);
-        $ret    = array();
+        $ret    = [];
         while (false !== ($myrow = $db->fetchArray($result))) {
             if ($asobject) {
                 $ret[] = new XoopsBlock($myrow);
@@ -500,7 +501,7 @@ class XoopsBlock extends XoopsObject
     {
         $isactive = (int)$isactive;
         $db       = XoopsDatabaseFactory::getDatabaseConnection();
-        $ret      = array();
+        $ret      = [];
         if (isset($groupid)) {
             $sql = 'SELECT DISTINCT gperm_itemid FROM ' . $db->prefix('group_permission') . " WHERE gperm_name = 'block_read' AND gperm_modid = 1";
             if (is_array($groupid)) {
@@ -511,7 +512,7 @@ class XoopsBlock extends XoopsObject
                 }
             }
             $result   = $db->query($sql);
-            $blockids = array();
+            $blockids = [];
             while (false !== ($myrow = $db->fetchArray($result))) {
                 $blockids[] = $myrow['gperm_itemid'];
             }
@@ -565,8 +566,8 @@ class XoopsBlock extends XoopsObject
     public function getNonGroupedBlocks($module_id = 0, $toponlyblock = false, $visible = null, $orderby = 'b.weight, m.block_id', $isactive = 1)
     {
         $db   = XoopsDatabaseFactory::getDatabaseConnection();
-        $ret  = array();
-        $bids = array();
+        $ret  = [];
+        $bids = [];
         $sql  = 'SELECT DISTINCT(bid) from ' . $db->prefix('newblocks');
         if ($result = $db->query($sql)) {
             while (false !== ($myrow = $db->fetchArray($result))) {
@@ -574,7 +575,7 @@ class XoopsBlock extends XoopsObject
             }
         }
         $sql     = 'SELECT DISTINCT(p.gperm_itemid) from ' . $db->prefix('group_permission') . ' p, ' . $db->prefix('groups') . " g WHERE g.groupid=p.gperm_groupid AND p.gperm_name='block_read'";
-        $grouped = array();
+        $grouped = [];
         if ($result = $db->query($sql)) {
             while (false !== ($myrow = $db->fetchArray($result))) {
                 $grouped[] = $myrow['gperm_itemid'];

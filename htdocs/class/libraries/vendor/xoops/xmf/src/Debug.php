@@ -55,7 +55,7 @@ class Debug extends \Kint
         static::doOnce();
         // options: 'original' (default), 'solarized', 'solarized-dark' and 'aante-light'
         \Kint_Renderer_Rich::$theme = 'aante-light.css';
-        forward_static_call_array(array('parent', 'dump'), $args);
+        forward_static_call_array(['parent', 'dump'], $args);
     }
 
     /**

@@ -49,7 +49,7 @@ function smarty_compiler_foreachq($argStr, &$comp)
 
     $attrs = $comp->_parse_attrs($argStr, false);
 
-    $arg_list = array();
+    $arg_list = [];
 
     if (empty($attrs['from'])) {
         return $comp->_syntax_error("foreachq: missing 'from' attribute", E_USER_ERROR, __FILE__, __LINE__);

@@ -56,7 +56,7 @@ class XoopsDatabaseFactory
                 }
 
                 $xoopsPreload = XoopsPreload::getInstance();
-                $xoopsPreload->triggerEvent('core.class.database.databasefactory.connection', array(&$class));
+                $xoopsPreload->triggerEvent('core.class.database.databasefactory.connection', [&$class]);
 
                 $instance = new $class();
                 $instance->setLogger(XoopsLogger::getInstance());

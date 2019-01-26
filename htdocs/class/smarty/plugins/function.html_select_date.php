@@ -181,8 +181,8 @@ function smarty_function_html_select_date($params, &$smarty)
     $field_separator_count = -1;
     if ($display_months) {
     	$field_separator_count++;
-        $month_names = array();
-        $month_values = array();
+        $month_names = [];
+        $month_values = [];
         if(isset($month_empty)) {
             $month_names[''] = $month_empty;
             $month_values[''] = '';
@@ -209,17 +209,19 @@ function smarty_function_html_select_date($params, &$smarty)
         }
         $month_result .= $extra_attrs . '>'."\n";
 
-        $month_result .= smarty_function_html_options(array('output'     => $month_names,
-                                                            'values'     => $month_values,
-                                                            'selected'   => (int)$time[1] ? strftime($month_value_format, mktime(0, 0, 0, (int)$time[1], 1, 2000)) : '',
-                                                            'print_result' => false),
+        $month_result .= smarty_function_html_options([
+                                                          'output'       => $month_names,
+                                                          'values'       => $month_values,
+                                                          'selected'     => (int)$time[1] ? strftime($month_value_format, mktime(0, 0, 0, (int)$time[1], 1, 2000)) : '',
+                                                          'print_result' => false
+                                                      ],
                                                       $smarty);
         $month_result .= '</select>';
     }
 
     if ($display_days) {
     	$field_separator_count++;
-        $days = array();
+        $days = [];
         if (isset($day_empty)) {
             $days[''] = $day_empty;
             $day_values[''] = '';
@@ -245,10 +247,12 @@ function smarty_function_html_select_date($params, &$smarty)
             $day_result .= ' ' . $day_extra;
         }
         $day_result .= $extra_attrs . '>'."\n";
-        $day_result .= smarty_function_html_options(array('output'     => $days,
-                                                          'values'     => $day_values,
-                                                          'selected'   => $time[2],
-                                                          'print_result' => false),
+        $day_result .= smarty_function_html_options([
+                                                        'output'       => $days,
+                                                        'values'       => $day_values,
+                                                        'selected'     => $time[2],
+                                                        'print_result' => false
+                                                    ],
                                                     $smarty);
         $day_result .= '</select>';
     }
@@ -292,10 +296,12 @@ function smarty_function_html_select_date($params, &$smarty)
                 $year_result .= ' ' . $year_extra;
             }
             $year_result .= $extra_attrs . '>'."\n";
-            $year_result .= smarty_function_html_options(array('output' => $years,
-                                                               'values' => $yearvals,
-                                                               'selected'   => $time[0],
-                                                               'print_result' => false),
+            $year_result .= smarty_function_html_options([
+                                                             'output'       => $years,
+                                                             'values'       => $yearvals,
+                                                             'selected'     => $time[0],
+                                                             'print_result' => false
+                                                         ],
                                                          $smarty);
             $year_result .= '</select>';
         }

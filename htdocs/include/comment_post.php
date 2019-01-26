@@ -90,7 +90,7 @@ if (!empty($_POST)) {
         $myts = MyTextSanitizer::getInstance();
 
         // Check user name
-        $search_arr  = array(
+        $search_arr  = [
             '&nbsp;',
             "\t",
             "\r\n",
@@ -124,8 +124,9 @@ if (!empty($_POST)) {
             '$',
             '%',
             '^',
-            '&');
-        $replace_arr = array(
+            '&'
+        ];
+        $replace_arr = [
             ' ',
             ' ',
             ' ',
@@ -159,7 +160,8 @@ if (!empty($_POST)) {
             ' ',
             ' ',
             ' ',
-            '');
+            ''
+        ];
         $com_user    = trim($_POST['com_user']);
         $com_user    = $myts->stripSlashesGPC($com_user);
         $com_user    = $myts->xoopsCodeDecode($com_user);
@@ -465,10 +467,11 @@ switch ($op) {
                     $criteria->add(new Criteria('com_status', XOOPS_COMMENT_ACTIVE));
                     $comment_count = $comment_handler->getCount($criteria);
                     $func          = $comment_config['callback']['update'];
-                    call_user_func_array($func, array(
+                    call_user_func_array($func, [
                         $com_itemid,
                         $comment_count,
-                        $comment->getVar('com_id')));
+                        $comment->getVar('com_id')
+                    ]);
                 }
             }
 
@@ -495,7 +498,7 @@ switch ($op) {
                 // Build an ABSOLUTE URL to view the comment.  Make sure we
                 // point to a viewable page (i.e. not the system administration
                 // module).
-                $comment_tags = array();
+                $comment_tags = [];
                 if ('system' === $xoopsModule->getVar('dirname')) {
                     /* @var $module_handler XoopsModuleHandler */
                     $module_handler = xoops_getHandler('module');

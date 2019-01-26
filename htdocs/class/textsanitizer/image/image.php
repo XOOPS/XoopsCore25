@@ -55,8 +55,9 @@ class MytsImage extends MyTextSanitizerExtension
             if (!empty($config['resize']) && empty($config['clickable']) && !empty($config['max_width']) && !empty($GLOBALS['xoTheme'])) {
                 if (!$jsLoaded) {
                     $jsLoaded = true;
-                    $GLOBALS['xoTheme']->addScript('/class/textsanitizer/image/image.js', array(
-                        'type' => 'text/javascript'));
+                    $GLOBALS['xoTheme']->addScript('/class/textsanitizer/image/image.js', [
+                        'type' => 'text/javascript'
+                    ]);
                 }
                 $ts->replacements[] = "<img src='\\5' class='\\2' alt='" . _MSC_RESIZED_IMAGE . "' border='0' onload=\"JavaScript:if(this.width>\\4)this.width=\\4\" />";
                 $ts->replacements[] = "<img src='\\3' class='\\2' alt='" . _MSC_RESIZED_IMAGE . "' border='0'" . ($config['resize'] ? "onload=\"javascript:resizeImage(this, " . $config['max_width'] . ")\"" : '') . '/>';
@@ -65,8 +66,9 @@ class MytsImage extends MyTextSanitizerExtension
             } elseif (!empty($config['clickable']) && !empty($config['max_width']) && !empty($GLOBALS['xoTheme'])) {
                 if (!$jsLoaded) {
                     $jsLoaded = true;
-                    $GLOBALS['xoTheme']->addScript('/class/textsanitizer/image/image.js', array(
-                        'type' => 'text/javascript'));
+                    $GLOBALS['xoTheme']->addScript('/class/textsanitizer/image/image.js', [
+                        'type' => 'text/javascript'
+                    ]);
                 }
                 $ts->replacements[] = "<a href='javascript:loadImage(\"\\5\");'><img src='\\5' class='\\2' alt='" . _MSC_CLICK_TO_OPEN_IMAGE . "' border='0' onload=\"if(this.width>\\4)this.width=\\4\" /></a>";
                 $ts->replacements[] = "<a href='javascript:loadImage(\"\\3\");'><img src='\\3' class='\\2' alt='" . _MSC_CLICK_TO_OPEN_IMAGE . "' border='0' " . ($config['resize'] ? "onload=\"javascript:resizeImage(this, " . $config['max_width'] . ")\"" : '') . '/></a>';

@@ -33,7 +33,7 @@ class MytsMms extends MyTextSanitizerExtension
     {
         $config     = parent::loadConfig(__DIR__);
         if ($config['enable_mms_entry'] === false) {
-            return array();
+            return [];
         }
         $code = "<button type='button' class='btn btn-default btn-sm' onclick='xoopsCodeMms(\"{$textarea_id}\",\""
             . htmlspecialchars(_XOOPS_FORM_ENTERMMSURL, ENT_QUOTES) . "\",\""
@@ -64,9 +64,10 @@ class MytsMms extends MyTextSanitizerExtension
             }
 EOH;
 
-        return array(
+        return [
             $code,
-            $javascript);
+            $javascript
+        ];
     }
 
     /**

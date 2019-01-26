@@ -43,7 +43,7 @@ class XoopsApi extends XoopsXmlRpcApi
             if (!$fields =& $this->_getPostFields(null, $this->params[0])) {
                 $this->response->add(new XoopsXmlRpcFault(106));
             } else {
-                $missing = array();
+                $missing = [];
                 foreach ($fields as $tag => $detail) {
                     if (!isset($this->params[3][$tag])) {
                         $data = $this->_getTagCdata($this->params[3]['xoops_text'], $tag, true);
@@ -130,7 +130,7 @@ class XoopsApi extends XoopsXmlRpcApi
         } else {
             if (!$fields =& $this->_getPostFields($this->params[0])) {
             } else {
-                $missing = array();
+                $missing = [];
                 foreach ($fields as $tag => $detail) {
                     if (!isset($this->params[3][$tag])) {
                         $data = $this->_getTagCdata($this->params[3]['xoops_text'], $tag, true);
@@ -220,14 +220,14 @@ class XoopsApi extends XoopsXmlRpcApi
             // will be removed... don't worry if this looks bad
             include_once XOOPS_ROOT_PATH . '/modules/news/class/class.newsstory.php';
             $story = new NewsStory($this->params[0]);
-            $ret   = array(
+            $ret   = [
                 'uid'       => $story->uid(),
                 'published' => $story->published(),
                 'storyid'   => $story->storyid(),
                 'title'     => $story->title('Edit'),
                 'hometext'  => $story->hometext('Edit'),
                 'moretext'  => $story->bodytext('Edit')
-            );
+            ];
             if (!$respond) {
                 return $ret;
             } else {
@@ -283,16 +283,16 @@ class XoopsApi extends XoopsXmlRpcApi
                 $stories =& NewsStory::getAllPublished((int)$this->params[3]);
             }
             $scount = count($stories);
-            $ret    = array();
+            $ret    = [];
             for ($i = 0; $i < $scount; ++$i) {
-                $ret[] = array(
+                $ret[] = [
                     'uid'       => $stories[$i]->uid(),
                     'published' => $stories[$i]->published(),
                     'storyid'   => $stories[$i]->storyId(),
                     'title'     => $stories[$i]->title('Edit'),
                     'hometext'  => $stories[$i]->hometext('Edit'),
                     'moretext'  => $stories[$i]->bodytext('Edit')
-                );
+                ];
             }
             if (!$respond) {
                 return $ret;

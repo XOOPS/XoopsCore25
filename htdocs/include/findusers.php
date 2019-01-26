@@ -127,7 +127,7 @@ class XoopsRankHandler extends XoopsObjectHandler
      */
     public function getList(CriteriaElement $criteria = null, $limit = 0, $start = 0)
     {
-        $ret = array();
+        $ret = [];
         if ($criteria == null) {
             $criteria = new CriteriaCompo();
         }
@@ -167,13 +167,14 @@ class XoUser extends XoopsUser
     public function __construct()
     {
         parent::__construct();
-        $unsets = array(
+        $unsets = [
             'actkey',
             'pass',
             'theme',
             'umode',
             'uorder',
-            'notify_mode');
+            'notify_mode'
+        ];
         foreach ($unsets as $var) {
             unset($this->vars[$var]);
         }
@@ -219,11 +220,12 @@ class XoUserHandler extends XoopsObjectHandler
      * @param  array           $groups
      * @return int
      */
-    public function getCount(CriteriaElement $criteria = null, $groups = array())
+    public function getCount(CriteriaElement $criteria = null, $groups = [])
     {
         if (!is_array($groups)) {
-            $groups = array(
-                $groups);
+            $groups = [
+                $groups
+            ];
         }
         $groups = array_filter($groups);
         if (empty($groups)) {
@@ -250,11 +252,12 @@ class XoUserHandler extends XoopsObjectHandler
      * @param  array           $groups
      * @return object
      */
-    public function getAll(CriteriaElement $criteria = null, $groups = array())
+    public function getAll(CriteriaElement $criteria = null, $groups = [])
     {
         if (!is_array($groups)) {
-            $groups = array(
-                $groups);
+            $groups = [
+                $groups
+            ];
         }
         $groups = array_filter($groups);
         $limit  = null;
@@ -279,7 +282,7 @@ class XoUserHandler extends XoopsObjectHandler
             $sql .= ' ORDER BY u.uid ASC';
         }
         $result = $this->db->query($sql, $limit, $start);
-        $ret    = array();
+        $ret    = [];
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $object = $this->create(false);
             $object->assignVars($myrow);
@@ -294,28 +297,31 @@ class XoUserHandler extends XoopsObjectHandler
 $rank_handler = new XoopsRankHandler($xoopsDB);
 $user_handler = new XoUserHandler($xoopsDB);
 
-$items_match = array(
+$items_match = [
     'uname'     => _MA_USER_UNAME,
     'name'      => _MA_USER_REALNAME,
     'email'     => _MA_USER_EMAIL,
     'user_icq'  => _MA_USER_ICQ,
     'user_aim'  => _MA_USER_AIM,
     'user_yim'  => _MA_USER_YIM,
-    'user_msnm' => _MA_USER_MSNM);
+    'user_msnm' => _MA_USER_MSNM
+];
 
-$items_range = array(
+$items_range = [
     'user_regdate' => _MA_USER_RANGE_USER_REGDATE,
     'last_login'   => _MA_USER_RANGE_LAST_LOGIN,
-    'posts'        => _MA_USER_RANGE_POSTS);
+    'posts'        => _MA_USER_RANGE_POSTS
+];
 
 define('FINDUSERS_MODE_SIMPLE', 0);
 define('FINDUSERS_MODE_ADVANCED', 1);
 define('FINDUSERS_MODE_QUERY', 2);
 
-$modes = array(
+$modes = [
     FINDUSERS_MODE_SIMPLE   => _MA_USER_MODE_SIMPLE,
     FINDUSERS_MODE_ADVANCED => _MA_USER_MODE_ADVANCED,
-    FINDUSERS_MODE_QUERY    => _MA_USER_MODE_QUERY);
+    FINDUSERS_MODE_QUERY    => _MA_USER_MODE_QUERY
+];
 
 if (empty($_POST['user_submit'])) {
     include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
@@ -351,22 +357,25 @@ if (empty($_POST['user_submit'])) {
             }
 
             $mailok_radio = new XoopsFormRadio(_MA_USER_SHOWMAILOK, 'user_mailok', empty($_POST['user_mailok']) ? 'both' : $_POST['user_mailok']);
-            $mailok_radio->addOptionArray(array(
+            $mailok_radio->addOptionArray([
                                               'mailok' => _MA_USER_MAILOK,
                                               'mailng' => _MA_USER_MAILNG,
-                                              'both' => _MA_USER_BOTH));
+                                              'both' => _MA_USER_BOTH
+                                          ]);
             $avatar_radio = new XoopsFormRadio(_MA_USER_HASAVATAR, 'user_avatar', empty($_POST['user_avatar']) ? 'both' : $_POST['user_avatar']);
-            $avatar_radio->addOptionArray(array(
+            $avatar_radio->addOptionArray([
                                               'y' => _YES,
                                               'n' => _NO,
-                                              'both' => _MA_USER_BOTH));
+                                              'both' => _MA_USER_BOTH
+                                          ]);
 
             $level_radio = new XoopsFormRadio(_MA_USER_LEVEL, 'level', @$_POST['level']);
-            $levels      = array(
+            $levels      = [
                 0 => _ALL,
                 1 => _MA_USER_LEVEL_ACTIVE,
                 2 => _MA_USER_LEVEL_INACTIVE,
-                3 => _MA_USER_LEVEL_DISABLED);
+                3 => _MA_USER_LEVEL_DISABLED
+            ];
             $level_radio->addOptionArray($levels);
 
             /* @var $member_handler XoopsMemberHandler */
@@ -390,9 +399,10 @@ if (empty($_POST['user_submit'])) {
             $form->addElement($group_select);
             $form->addElement($rank_select);
         } else {
-            foreach (array(
+            foreach ([
                          'uname',
-                         'email') as $var) {
+                         'email'
+                     ] as $var) {
                 $title      = $items_match[$var];
                 $text       = new XoopsFormText('', $var, 30, 100, @$_POST[$var]);
                 $match      = new XoopsFormSelectMatchOption('', "{$var}_match", @$_POST["{$var}_match"]);
@@ -405,15 +415,17 @@ if (empty($_POST['user_submit'])) {
         }
 
         $sort_select = new XoopsFormSelect(_MA_USER_SORT, 'user_sort', @$_POST['user_sort']);
-        $sort_select->addOptionArray(array(
+        $sort_select->addOptionArray([
                                          'uname' => _MA_USER_UNAME,
                                          'last_login' => _MA_USER_LASTLOGIN,
                                          'user_regdate' => _MA_USER_REGDATE,
-                                         'posts' => _MA_USER_POSTS));
+                                         'posts' => _MA_USER_POSTS
+                                     ]);
         $order_select = new XoopsFormSelect(_MA_USER_ORDER, 'user_order', @$_POST['user_order']);
-        $order_select->addOptionArray(array(
+        $order_select->addOptionArray([
                                           'ASC' => _MA_USER_ASC,
-                                          'DESC' => _MA_USER_DESC));
+                                          'DESC' => _MA_USER_DESC
+                                      ]);
 
         $form->addElement($sort_select);
         $form->addElement($order_select);
@@ -429,7 +441,7 @@ if (empty($_POST['user_submit'])) {
     $inacttotal = $user_handler->getCount(new Criteria('level', 0, '<='));
     echo '</html><body>';
     echo "<h2 style='text-align:left;'>" . _MA_USER_FINDUS . ' - ' . $modes[$mode] . '</h2>';
-    $modes_switch = array();
+    $modes_switch = [];
     foreach ($modes as $_mode => $title) {
         if ($mode == $_mode) {
             continue;
@@ -478,9 +490,10 @@ if (empty($_POST['user_submit'])) {
         if (!empty($_POST['user_occ'])) {
             $criteria->add(new Criteria('user_occ', '%' . $myts->addSlashes(trim($_POST['user_occ'])) . '%', 'LIKE'));
         }
-        foreach (array(
+        foreach ([
                      'last_login',
-                     'user_regdate') as $var) {
+                     'user_regdate'
+                 ] as $var) {
             if (!empty($_POST["{$var}_more"]) && is_numeric($_POST["{$var}_more"])) {
                 $time = time() - (60 * 60 * 24 * (int)trim($_POST["{$var}_more"]));
                 if ($time > 0) {
@@ -515,10 +528,11 @@ if (empty($_POST['user_submit'])) {
             }
         }
         if (!empty($_POST['level'])) {
-            $level_value = array(
+            $level_value = [
                 1 => 1,
                 2 => 0,
-                3 => -1);
+                3 => -1
+            ];
             $level       = isset($level_value[(int)$_POST['level']]) ? $level_value[(int)$_POST['level']] : 1;
             $criteria->add(new Criteria('level', $level));
         }
@@ -536,12 +550,13 @@ if (empty($_POST['user_submit'])) {
             }
         }
         $total     = $user_handler->getCount($criteria, @$_POST['groups']);
-        $validsort = array(
+        $validsort = [
             'uname',
             'email',
             'last_login',
             'user_regdate',
-            'posts');
+            'posts'
+        ];
         $sort      = (!in_array($_POST['user_sort'], $validsort)) ? 'uname' : $_POST['user_sort'];
         $order     = 'ASC';
         if (isset($_POST['user_order']) && $_POST['user_order'] === 'DESC') {
@@ -573,7 +588,7 @@ if (empty($_POST['user_submit'])) {
         $result    = $xoopsDB->query($sql_count);
         list($total) = $xoopsDB->fetchRow($result);
         $result     = $xoopsDB->query($query, $limit, $start);
-        $foundusers = array();
+        $foundusers = [];
         while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
             $object = $user_handler->create(false);
             $object->assignVars($myrow);

@@ -32,7 +32,7 @@ class XoopsFormCheckBox extends XoopsFormElement
      * @var array
      * @access private
      */
-    public $_options = array();
+    public $_options = [];
 
     /**
      * pre-selected values in array
@@ -40,7 +40,7 @@ class XoopsFormCheckBox extends XoopsFormElement
      * @var array
      * @access private
      */
-    public $_value = array();
+    public $_value = [];
 
     /**
      * HTML to seperate the elements
@@ -91,7 +91,7 @@ class XoopsFormCheckBox extends XoopsFormElement
         if (!$encode) {
             return $this->_value;
         }
-        $value = array();
+        $value = [];
         foreach ($this->_value as $val) {
             $value[] = $val ? htmlspecialchars($val, ENT_QUOTES) : $val;
         }
@@ -107,7 +107,7 @@ class XoopsFormCheckBox extends XoopsFormElement
      */
     public function setValue($value)
     {
-        $this->_value = array();
+        $this->_value = [];
         if (is_array($value)) {
             foreach ($value as $v) {
                 $this->_value[] = $v;
@@ -157,7 +157,7 @@ class XoopsFormCheckBox extends XoopsFormElement
         if (!$encode) {
             return $this->_options;
         }
-        $value = array();
+        $value = [];
         foreach ($this->_options as $val => $name) {
             $value[$encode ? htmlspecialchars($val, ENT_QUOTES) : $val] = ($encode > 1) ? htmlspecialchars($name, ENT_QUOTES) : $name;
         }

@@ -154,7 +154,7 @@ switch ($op) {
             $form->addElement(new XoopsFormRadioYN(_AM_SYSTEM_IMAGES_IMGCATDISPLAY, 'imgcat_display', 1, _YES, _NO));
 
             $storetype = new XoopsFormRadio(_MD_IMGCATSTRTYPE . '<br><span style="color:#ff0000;">' . _MD_STRTYOPENG . '</span>', 'imgcat_storetype', 'file');
-            $storetype->addOptionArray(array('file' => _MD_ASFILE, 'db' => _MD_INDB));
+            $storetype->addOptionArray(['file' => _MD_ASFILE, 'db' => _MD_INDB]);
             $form->addElement($storetype);
 
             //$form->addElement(new XoopsFormHidden('imgcat_storetype', 'file'));
@@ -366,7 +366,7 @@ switch ($op) {
             }
             $msg .= '<div class="spacer">' . $image->getVar('image_nicename') . '</div>';
             $msg .= '<div class="spacer">' . _AM_SYSTEM_IMAGES_RUDELIMG . '</div>';
-            xoops_confirm(array('op' => 'delfileok', 'image_id' => $image_id, 'fct' => 'images'), 'admin.php', $msg, _DELETE);
+            xoops_confirm(['op' => 'delfileok', 'image_id' => $image_id, 'fct' => 'images'], 'admin.php', $msg, _DELETE);
         } else {
             redirect_header('admin.php?fct=images', 1, _AM_SYSTEM_DBERROR);
         }
@@ -435,15 +435,16 @@ switch ($op) {
             redirect_header('admin.php?fct=images', 1);
         }
         xoops_load('xoopsmediauploader');
-        $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH . '/images', array(
+        $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH . '/images', [
             'image/gif',
             'image/jpeg',
             'image/pjpeg',
             'image/x-png',
             'image/png',
-            'image/bmp'), $imagecategory->getVar('imgcat_maxsize'), $imagecategory->getVar('imgcat_maxwidth'), $imagecategory->getVar('imgcat_maxheight'));
+            'image/bmp'
+        ], $imagecategory->getVar('imgcat_maxsize'), $imagecategory->getVar('imgcat_maxwidth'), $imagecategory->getVar('imgcat_maxheight'));
         $uploader->setPrefix('img');
-        $err    = array();
+        $err    = [];
         $ucount = count($_POST['xoops_upload_file']);
         for ($i = 0; $i < $ucount; ++$i) {
             if ($uploader->fetchMedia($_POST['xoops_upload_file'][$i])) {
@@ -507,7 +508,7 @@ switch ($op) {
         /* @var  $imagecategoryperm_handler XoopsGroupPermHandler */
         $imagecategoryperm_handler = xoops_getHandler('groupperm');
         if (!isset($readgroup)) {
-            $readgroup = array();
+            $readgroup = [];
         }
         if (!in_array(XOOPS_GROUP_ADMIN, $readgroup)) {
             $readgroup[] = XOOPS_GROUP_ADMIN;
@@ -522,7 +523,7 @@ switch ($op) {
             unset($imagecategoryperm);
         }
         if (!isset($writegroup)) {
-            $writegroup = array();
+            $writegroup = [];
         }
         if (!in_array(XOOPS_GROUP_ADMIN, $writegroup)) {
             $writegroup[] = XOOPS_GROUP_ADMIN;
@@ -560,7 +561,7 @@ switch ($op) {
         $form->addElement(new XoopsFormText(_IMGMAXHEIGHT, 'imgcat_maxheight', 3, 4, $imagecategory->getVar('imgcat_maxheight')));
         $form->addElement(new XoopsFormText(_AM_SYSTEM_IMAGES_IMGCATWEIGHT, 'imgcat_weight', 3, 4, $imagecategory->getVar('imgcat_weight')));
         $form->addElement(new XoopsFormRadioYN(_AM_SYSTEM_IMAGES_IMGCATDISPLAY, 'imgcat_display', $imagecategory->getVar('imgcat_display'), _YES, _NO));
-        $storetype = array('db' => _AM_SYSTEM_IMAGES_INDB, 'file' => _AM_SYSTEM_IMAGES_ASFILE);
+        $storetype = ['db' => _AM_SYSTEM_IMAGES_INDB, 'file' => _AM_SYSTEM_IMAGES_ASFILE];
         $form->addElement(new XoopsFormLabel(_AM_SYSTEM_IMAGES_IMGCATSTRTYPE, $storetype[$imagecategory->getVar('imgcat_storetype')]));
         $form->addElement(new XoopsFormHidden('imgcat_id', $imgcat_id));
         $form->addElement(new XoopsFormHidden('op', 'updatecat'));
@@ -617,7 +618,7 @@ switch ($op) {
         $criteria->add($criteria2);
         $imagecategoryperm_handler->deleteAll($criteria);
         if (!isset($readgroup)) {
-            $readgroup = array();
+            $readgroup = [];
         }
         if (!in_array(XOOPS_GROUP_ADMIN, $readgroup)) {
             $readgroup[] = XOOPS_GROUP_ADMIN;
@@ -632,7 +633,7 @@ switch ($op) {
             unset($imagecategoryperm);
         }
         if (!isset($writegroup)) {
-            $writegroup = array();
+            $writegroup = [];
         }
         if (!in_array(XOOPS_GROUP_ADMIN, $writegroup)) {
             $writegroup[] = XOOPS_GROUP_ADMIN;
@@ -653,7 +654,7 @@ switch ($op) {
         // Call Header
         xoops_cp_header();
         // Display message
-        xoops_confirm(array('op' => 'delcatok', 'imgcat_id' => $imgcat_id, 'fct' => 'images'), 'admin.php', _AM_SYSTEM_IMAGES_RUDELIMGCAT);
+        xoops_confirm(['op' => 'delcatok', 'imgcat_id' => $imgcat_id, 'fct' => 'images'], 'admin.php', _AM_SYSTEM_IMAGES_RUDELIMGCAT);
         // Call Footer
         xoops_cp_footer();
         break;
@@ -680,7 +681,7 @@ switch ($op) {
         /* @var  $image_handler XoopsImageHandler */
         $image_handler = xoops_getHandler('image');
         $images        = $image_handler->getObjects(new Criteria('imgcat_id', $imgcat_id), true, false);
-        $errors        = array();
+        $errors        = [];
         foreach (array_keys($images) as $i) {
             if (!$image_handler->delete($images[$i])) {
                 $errors[] = sprintf(_AM_SYSTEM_IMAGES_FAILDEL, $i);
@@ -743,13 +744,13 @@ switch ($op) {
         $xoopsTpl->assign('imgcat_maxwidth', $imagecategory->getVar('imgcat_maxwidth'));
         $xoopsTpl->assign('imgcat_maxheight', $imagecategory->getVar('imgcat_maxheight'));
         $xoopsTpl->assign('imgcat_name', $imagecategory->getVar('imgcat_name'));
-        $payload = array(
+        $payload = [
             'aud' => 'ajaxfineupload.php',
             'cat' => $imgcat_id,
             'uid' => $xoopsUser instanceof \XoopsUser ? $xoopsUser->id() : 0,
             'handler' => 'fineimuploadhandler',
             'moddir' => 'system',
-        );
+        ];
         $jwt = \Xmf\Jwt\TokenFactory::build('fineuploader', $payload, 60*30); // token good for 30 minutes
         $xoopsTpl->assign('jwt', $jwt);
         $fineup_debug = 'false';

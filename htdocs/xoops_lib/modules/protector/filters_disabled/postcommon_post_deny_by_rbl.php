@@ -11,7 +11,7 @@ class Protector_postcommon_post_deny_by_rbl extends ProtectorFilterAbstract
     public function execute()
     {
         // RBL servers (don't enable too many servers)
-        $rbls = array(
+        $rbls = [
             'sbl-xbl.spamhaus.org',
             #            'niku.2ch.net' ,
             #            'list.dsbl.org' ,
@@ -20,7 +20,7 @@ class Protector_postcommon_post_deny_by_rbl extends ProtectorFilterAbstract
             #            'opm.blitzed.org' ,
             #            'bsb.empty.us' ,
             #            'bsb.spamlookup.net' ,
-        );
+        ];
 
         global $xoopsUser;
 

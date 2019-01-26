@@ -31,7 +31,7 @@ if (!is_object($xoopsUser)) {
             exit();
         } elseif (empty($_REQUEST['ok'])) {
             include $GLOBALS['xoops']->path('header.php');
-            xoops_confirm(array('ok' => 1, 'delete' => 1, 'msg_id' => (int)$_POST['msg_id']), $_SERVER['REQUEST_URI'], _PM_SURE_TO_DELETE);
+            xoops_confirm(['ok' => 1, 'delete' => 1, 'msg_id' => (int)$_POST['msg_id']], $_SERVER['REQUEST_URI'], _PM_SURE_TO_DELETE);
             include $GLOBALS['xoops']->path('footer.php');
             exit();
         }

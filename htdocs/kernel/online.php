@@ -148,7 +148,7 @@ class XoopsOnlineHandler
      */
     public function getAll(CriteriaElement $criteria = null)
     {
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('online');
         if (is_object($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {

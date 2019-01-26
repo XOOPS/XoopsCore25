@@ -57,12 +57,13 @@ if (!$tpl->is_cached('db:system_rss.tpl')) {
     }
     if (!empty($sarray) && is_array($sarray)) {
         foreach ($sarray as $story) {
-            $tpl->append('items', array(
+            $tpl->append('items', [
                 'title'       => XoopsLocal::convert_encoding(htmlspecialchars($story->title(), ENT_QUOTES)),
                 'link'        => XOOPS_URL . '/modules/news/article.php?storyid=' . $story->storyid(),
                 'guid'        => XOOPS_URL . '/modules/news/article.php?storyid=' . $story->storyid(),
                 'pubdate'     => formatTimestamp($story->published(), 'rss'),
-                'description' => XoopsLocal::convert_encoding(htmlspecialchars($story->hometext(), ENT_QUOTES))));
+                'description' => XoopsLocal::convert_encoding(htmlspecialchars($story->hometext(), ENT_QUOTES))
+            ]);
         }
     }
 }

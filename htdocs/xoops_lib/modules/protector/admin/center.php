@@ -39,8 +39,8 @@ if (!empty($_POST['action'])) {
     if ($_POST['action'] === 'update_ips') {
         $error_msg = '';
 
-        $lines   = empty($_POST['bad_ips']) ? array() : explode("\n", trim($_POST['bad_ips']));
-        $bad_ips = array();
+        $lines   = empty($_POST['bad_ips']) ? [] : explode("\n", trim($_POST['bad_ips']));
+        $bad_ips = [];
         foreach ($lines as $line) {
             @list($bad_ip, $jailed_time) = explode(':', $line, 2);
             $bad_ips[trim($bad_ip)] = empty($jailed_time) ? 0x7fffffff : (int)$jailed_time;
@@ -49,7 +49,7 @@ if (!empty($_POST['action'])) {
             $error_msg .= _AM_MSG_BADIPSCANTOPEN;
         }
 
-        $group1_ips = empty($_POST['group1_ips']) ? array() : explode("\n", trim($_POST['group1_ips']));
+        $group1_ips = empty($_POST['group1_ips']) ? [] : explode("\n", trim($_POST['group1_ips']));
         foreach (array_keys($group1_ips) as $i) {
             $group1_ips[$i] = trim($group1_ips[$i]);
         }
@@ -95,8 +95,8 @@ if (!empty($_POST['action'])) {
     } elseif ($_POST['action'] === 'compactlog') {
         // compactize records (removing duplicated records (ip,type)
         $result = $db->query("SELECT `lid`,`ip`,`type` FROM $log_table ORDER BY lid DESC");
-        $buf    = array();
-        $ids    = array();
+        $buf    = [];
+        $ids    = [];
         while (false !== (list($lid, $ip, $type) = $db->fetchRow($result))) {
             if (isset($buf[$ip . $type])) {
                 $ids[] = $lid;
@@ -125,7 +125,7 @@ $nav_html = $nav->renderNav(10);
 
 // Number selection
 $num_options = '';
-$num_array   = array(20, 100, 500, 2000);
+$num_array   = [20, 100, 500, 2000];
 foreach ($num_array as $n) {
     if ($n == $num) {
         $num_options .= "<option value='$n' selected>$n</option>\n";

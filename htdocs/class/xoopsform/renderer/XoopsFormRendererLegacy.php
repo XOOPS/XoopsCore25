@@ -174,7 +174,7 @@ class XoopsFormRendererLegacy implements XoopsFormRendererInterface
             if (empty($GLOBALS['xoTheme'])) {
                 $element->js .= implode('', file(XOOPS_ROOT_PATH . '/class/textsanitizer/image/image.js'));
             } else {
-                $GLOBALS['xoTheme']->addScript('/class/textsanitizer/image/image.js', array('type' => 'text/javascript'));
+                $GLOBALS['xoTheme']->addScript('/class/textsanitizer/image/image.js', ['type' => 'text/javascript']);
             }
             $button = "<button type='button' class='btn btn-primary' onclick=\"form_instantPreview('" . XOOPS_URL . "', '" . $element->getName() . "','" . XOOPS_URL . "/images', " . (int)$element->doHtml . ", '" . $GLOBALS['xoopsSecurity']->createToken() . "')\" title='" . _PREVIEW . "'>" . _PREVIEW . "</button>";
 
@@ -226,7 +226,7 @@ class XoopsFormRendererLegacy implements XoopsFormRendererInterface
         $code .= "<button type='button' class='btn btn-default' onclick='xoopsCodeQuote(\"{$textarea_id}\", \"" . htmlspecialchars(_ENTERQUOTE, ENT_QUOTES) . "\");' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALT_QUOTE . "'><span class='fa fa-fw fa-quote-right' aria-hidden='true'></span></button>";
 
         $xoopsPreload = XoopsPreload::getInstance();
-        $xoopsPreload->triggerEvent('core.class.xoopsform.formdhtmltextarea.codeicon', array(&$code));
+        $xoopsPreload->triggerEvent('core.class.xoopsform.formdhtmltextarea.codeicon', [&$code]);
 
         return $code;
     }
@@ -249,14 +249,15 @@ class XoopsFormRendererLegacy implements XoopsFormRendererInterface
         }
         $fontStr .= " + '</select> '";
         $fontStr .= "+ '<select class=\"input-sm form-control\" id=\'{$textarea_id}Font\' onchange=\'xoopsSetElementAttribute(\"font\", this.options[this.selectedIndex].value, \"{$textarea_id}\", \"{$hiddentext}\");\'>'" . "+ '<option value=\'FONT\'>" . _FONT . "</option>'";
-        $fontarray = !empty($GLOBALS['formtextdhtml_fonts']) ? $GLOBALS['formtextdhtml_fonts'] : array(
+        $fontarray = !empty($GLOBALS['formtextdhtml_fonts']) ? $GLOBALS['formtextdhtml_fonts'] : [
             'Arial',
             'Courier',
             'Georgia',
             'Helvetica',
             'Impact',
             'Verdana',
-            'Haettenschweiler');
+            'Haettenschweiler'
+        ];
         foreach ($fontarray as $font) {
             $fontStr .= " + '<option value=\'{$font}\'>{$font}</option>'";
         }

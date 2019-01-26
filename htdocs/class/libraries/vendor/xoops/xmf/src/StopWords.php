@@ -32,7 +32,7 @@ class StopWords
     const ENCODING = 'UTF-8';
 
     /** @var string[] */
-    protected $stopwordList = array();
+    protected $stopwordList = [];
 
     /**
      * StopWords constructor - load stop words for current locale

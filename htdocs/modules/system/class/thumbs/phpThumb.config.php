@@ -26,7 +26,7 @@ ob_end_clean();
 /****************************************************************************************/
 /* START USER CONFIGURATION SECTION: */
 global $PHPTHUMB_CONFIG;  // declare as global to prevent scope issues (when including phpThumb.config.php inside functions inside included files, etc)
-$PHPTHUMB_CONFIG = array();
+$PHPTHUMB_CONFIG = [];
 
 // * DocumentRoot configuration
 // phpThumb() depends on $_SERVER['DOCUMENT_ROOT'] to resolve path/filenames. This value is usually correct,
@@ -48,7 +48,7 @@ $PHPTHUMB_CONFIG['high_security_url_separator'] = '&';     // should almost alwa
 $PHPTHUMB_CONFIG['allow_src_above_docroot']     = false;   // if false (default) only allow src within document_root; if true, allow src to be anywhere in filesystem
 $PHPTHUMB_CONFIG['allow_src_above_phpthumb']    = true;    // if true (default), allow src to be anywhere in filesystem; if false only allow src within sub-directory of phpThumb installation
 $PHPTHUMB_CONFIG['auto_allow_symlinks']         = true;    // if true (default), allow symlink target directories without explicitly whitelisting them
-$PHPTHUMB_CONFIG['additional_allowed_dirs']     = array(); // array of additional directories to allow source images to be read from
+$PHPTHUMB_CONFIG['additional_allowed_dirs']     = []; // array of additional directories to allow source images to be read from
 
 // * Cache directory configuration (choose only one of these - leave the other lines commented-out):
 // Note: this directory must be writable (usually chmod 777 is neccesary) for caching to work.
@@ -161,13 +161,13 @@ $PHPTHUMB_CONFIG['error_die_on_source_failure'] = true;     // die with error me
 
 // * Off-server Thumbnailing Configuration:
 $PHPTHUMB_CONFIG['nohotlink_enabled']       = false;                                    // If false will allow thumbnailing from any source domain, if true then only domains in 'nohotlink_valid_domains' will be accepted
-$PHPTHUMB_CONFIG['nohotlink_valid_domains'] = array(@$_SERVER['HTTP_HOST']);            // This is the list of domains for which thumbnails are allowed to be created. Note: domain only, do not include port numbers. The default value of the current domain should be fine in most cases, but if neccesary you can add more domains in here, in the format "www.example.com"
+$PHPTHUMB_CONFIG['nohotlink_valid_domains'] = [@$_SERVER['HTTP_HOST']];            // This is the list of domains for which thumbnails are allowed to be created. Note: domain only, do not include port numbers. The default value of the current domain should be fine in most cases, but if neccesary you can add more domains in here, in the format "www.example.com"
 $PHPTHUMB_CONFIG['nohotlink_erase_image']   = true;                                     // if true thumbnail is covered up with $PHPTHUMB_CONFIG['nohotlink_fill_color'] before text is applied, if false text is written over top of thumbnail
 $PHPTHUMB_CONFIG['nohotlink_text_message']  = 'Off-server thumbnailing is not allowed'; // text of error message
 
 // * Off-server Linking Configuration:
 $PHPTHUMB_CONFIG['nooffsitelink_enabled']       = false;                                       // If false will allow thumbnails to be linked to from any domain, if true only domains listed below in 'nooffsitelink_valid_domains' will be allowed.
-$PHPTHUMB_CONFIG['nooffsitelink_valid_domains'] = array(@$_SERVER['HTTP_HOST']);              // This is the list of domains for which thumbnails are allowed to be created. The default value of the current domain should be fine in most cases, but if neccesary you can add more domains in here, in the format 'www.example.com'
+$PHPTHUMB_CONFIG['nooffsitelink_valid_domains'] = [@$_SERVER['HTTP_HOST']];              // This is the list of domains for which thumbnails are allowed to be created. The default value of the current domain should be fine in most cases, but if neccesary you can add more domains in here, in the format 'www.example.com'
 $PHPTHUMB_CONFIG['nooffsitelink_require_refer'] = false;                                      // If false will allow standalone calls to phpThumb(). If true then only requests with a $_SERVER['HTTP_REFERER'] value in 'nooffsitelink_valid_domains' are allowed.
 $PHPTHUMB_CONFIG['nooffsitelink_erase_image']   = false;                                      // if true thumbnail is covered up with $PHPTHUMB_CONFIG['nohotlink_fill_color'] before text is applied, if false text is written over top of thumbnail
 $PHPTHUMB_CONFIG['nooffsitelink_watermark_src'] = '/demo/images/watermark.png';                // webroot-relative image to overlay on hotlinked images
@@ -253,7 +253,7 @@ function phpThumbURL($ParameterString, $path_to_phpThumb='phpThumb.php') {
 	} else {
 		parse_str($ParameterString, $ParameterStringArray);
 	}
-	$ParamterStringEncodedArray = array();
+	$ParamterStringEncodedArray = [];
 	foreach ($ParameterStringArray as $key => $value) {
 		if (is_array($value)) {
 			// e.g. fltr[] is passed as an array

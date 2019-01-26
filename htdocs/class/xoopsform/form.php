@@ -75,28 +75,28 @@ class XoopsForm
      *
      * @var array
      */
-    public $_elements = array();
+    public $_elements = [];
 
     /**
      * HTML classes for the <form> tag
      *
      * @var array
      */
-    public $_class = array();
+    public $_class = [];
     
     /**
      * extra information for the <form> tag
      *
      * @var array
      */
-    public $_extra = array();
+    public $_extra = [];
 
     /**
      * required elements
      *
      * @var array
      */
-    public $_required = array();
+    public $_required = [];
 
     /**
      * additional serialised object checksum (ERM Analysis - Requirement)
@@ -333,7 +333,7 @@ class XoopsForm
         if (!$recurse) {
             return $this->_elements;
         } else {
-            $ret   = array();
+            $ret   = [];
             $count = count($this->_elements);
             for ($i = 0; $i < $count; ++$i) {
                 if (is_object($this->_elements[$i])) {
@@ -361,7 +361,7 @@ class XoopsForm
      */
     public function getElementNames()
     {
-        $ret      = array();
+        $ret      = [];
         $elements = &$this->getElements(true);
         $count    = count($elements);
         for ($i = 0; $i < $count; ++$i) {
@@ -453,7 +453,7 @@ class XoopsForm
         // will not use getElementByName() for performance..
         $elements = &$this->getElements(true);
         $count    = count($elements);
-        $values   = array();
+        $values   = [];
         for ($i = 0; $i < $count; ++$i) {
             $name = $elements[$i]->getName(false);
             if ($name && method_exists($elements[$i], 'getValue')) {
@@ -511,7 +511,7 @@ class XoopsForm
         if (empty($this->_class)) {
             return false;
         }
-        $classes = array();
+        $classes = [];
         foreach ($this->_class as $class) {
             $classes[] = htmlspecialchars($class, ENT_QUOTES);
         }
@@ -637,7 +637,7 @@ class XoopsForm
     public function assign(XoopsTpl $tpl)
     {
         $i        = -1;
-        $elements = array();
+        $elements = [];
         if (count($this->getRequired()) > 0) {
             $this->_elements[] = "<tr class='foot'><td colspan='2'>* = " . _REQUIRED . '</td></tr>';
         }
@@ -660,7 +660,7 @@ class XoopsForm
             }
         }
         $js = $this->renderValidationJS();
-        $tpl->assign($this->getName(), array(
+        $tpl->assign($this->getName(), [
             'title'      => $this->getTitle(),
             'name'       => $this->getName(),
             'action'     => $this->getAction(),
@@ -669,6 +669,6 @@ class XoopsForm
             'javascript' => $js,
             'elements'   => $elements,
             'rendered'   => $this->render(),
-        ));
+        ]);
     }
 }

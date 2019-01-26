@@ -232,7 +232,7 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
      */
     public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('configoption');
         if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {

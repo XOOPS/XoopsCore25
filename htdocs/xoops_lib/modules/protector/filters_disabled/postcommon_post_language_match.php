@@ -59,13 +59,13 @@ class Protector_postcommon_post_language_match extends ProtectorFilterAbstract
     protected $minLength = 15;
 
     /** @var string[] script names we do NOT want to process */
-    protected $skipThese = array('edituser.php', 'register.php', 'search.php', 'user.php', 'lostpass.php');
+    protected $skipThese = ['edituser.php', 'register.php', 'search.php', 'user.php', 'lostpass.php'];
 
     // map regex compatible unicode script range to a XOOPS language name
     // http://php.net/manual/en/regexp.reference.unicode.php
     // http://www.regular-expressions.info/unicode.html
     // http://www.localizingjapan.com/blog/2012/01/20/regular-expressions-for-japanese-text/
-    protected $scriptCodes = array(
+    protected $scriptCodes = [
         'arabic'       => '\p{Arabic}',
         'brazilian'    => 'A-Za-zÁáÂâĀãÀàÇçÉéÊêÍíÓóÔôŌõÚú',
         'bulgarian'    => '\p{Cyrillic}',
@@ -99,7 +99,7 @@ class Protector_postcommon_post_language_match extends ProtectorFilterAbstract
         'thai'         => '\p{Thai}',
         'turkish'      => 'A-PR-VYZÇĞİÖŞÜÂÎÛa-pr-vyzçğiöşüâîû',
         'vietnamese'   => 'A-Za-zàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬđĐèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆìÌỉỈĩĨíÍịỊòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰỳỲỷỶỹỸýÝỵỴ',
-    );
+    ];
 
     /**
      * stripEmoji - remove pictographic characters, i.e. emoji and dingbats from a string
@@ -173,11 +173,11 @@ class Protector_postcommon_post_language_match extends ProtectorFilterAbstract
         $percent = ($fullLength > 0) ? $remainingLength / $fullLength : 0.0;
 
         if ($percent > $this->maximumTolerance) {
-            $report = array(
+            $report = [
                 'score' => $percent,
                 'uri' => $_SERVER['REQUEST_URI'],
                 'post' => $_POST,
-            );
+            ];
             $this->protector->message = json_encode($report);
             $this->protector->output_log('SPAM Language Map', $uid);
             if ($uid > 0 && $percent > (2.0 * $this->maximumTolerance)) {

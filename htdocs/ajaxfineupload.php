@@ -76,14 +76,14 @@ $xoopsLogger->activated = false;
  *
  * We will assert that aud and uid agree with our expectations (for security)
  */
-$assert = array(
+$assert = [
     'aud' => basename(__FILE__),
     'uid' => $xoopsUser instanceof \XoopsUser ? $xoopsUser->id() : 0,
-);
+];
 $claims = TokenReader::fromRequest('fineuploader', 'Authorization', $assert);
 
 if ($claims === false) {
-    echo json_encode(array('error' => "Invalid request token"));
+    echo json_encode(['error' => "Invalid request token"]);
     exit;
 }
 

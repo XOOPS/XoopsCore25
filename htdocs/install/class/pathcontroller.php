@@ -16,40 +16,47 @@
  **/
 class PathStuffController
 {
-    public $xoopsPath = array(
+    public $xoopsPath = [
         'root' => '',
         'lib'  => '',
-        'data' => '');
+        'data' => ''
+    ];
 
-    public $xoopsPathDefault = array(
+    public $xoopsPathDefault = [
         'lib'  => 'xoops_lib',
-        'data' => 'xoops_data');
+        'data' => 'xoops_data'
+    ];
 
-    public $dataPath = array(
-        'caches' => array(
+    public $dataPath = [
+        'caches' => [
             'xoops_cache',
             'smarty_cache',
-            'smarty_compile'),
-        'configs');
+            'smarty_compile'
+        ],
+        'configs'
+    ];
 
-    public $path_lookup = array(
+    public $path_lookup = [
         'root' => 'ROOT_PATH',
         'data' => 'VAR_PATH',
-        'lib'  => 'PATH');
+        'lib'  => 'PATH'
+    ];
 
     public $xoopsUrl = '';
     public $xoopsCookieDomain = '';
 
-    public $validPath = array(
+    public $validPath = [
         'root' => 0,
         'data' => 0,
-        'lib'  => 0);
+        'lib'  => 0
+    ];
 
     public $validUrl = false;
 
-    public $permErrors = array(
+    public $permErrors = [
         'root' => null,
-        'data' => null);
+        'data' => null
+    ];
 
     /**
      * @param $xoopsPathDefault
@@ -248,12 +255,14 @@ class PathStuffController
      */
     public function checkPermissions($path)
     {
-        $paths  = array(
-            'root' => array('mainfile.php', 'uploads', /*'templates_c', 'cache'*/),
-            'data' => $this->dataPath);
-        $errors = array(
+        $paths  = [
+            'root' => ['mainfile.php', 'uploads', /*'templates_c', 'cache'*/],
+            'data' => $this->dataPath
+        ];
+        $errors = [
             'root' => null,
-            'data' => null);
+            'data' => null
+        ];
 
         if (!isset($this->xoopsPath[$path])) {
             return false;

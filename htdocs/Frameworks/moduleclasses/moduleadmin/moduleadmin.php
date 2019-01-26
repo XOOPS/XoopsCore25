@@ -17,10 +17,10 @@
  */
 class ModuleAdmin
 {
-    private $_itemButton        = array();
-    private $_itemInfoBox       = array();
-    private $_itemInfoBoxLine   = array();
-    private $_itemConfigBoxLine = array();
+    private $_itemButton        = [];
+    private $_itemInfoBox       = [];
+    private $_itemInfoBoxLine   = [];
+    private $_itemConfigBoxLine = [];
 
     /**
      * @var XoopsModule
@@ -57,9 +57,9 @@ class ModuleAdmin
      */
     public function getInfo()
     {
-        $infoArray = array();
+        $infoArray = [];
         if (!isset($infoArray) || empty($infoArray)) {
-            $infoArray                = array();
+            $infoArray                = [];
             $infoArray['version']     = $this->getVersion();
             $infoArray['releasedate'] = $this->getReleaseDate();
             $infoArray['methods']     = $this->getClassMethods();
@@ -222,7 +222,7 @@ class ModuleAdmin
      */
     public function addItemButton($title, $link, $icon = 'add', $extra = '')
     {
-        $ret = array();
+        $ret = [];
         $ret['title']        = $title;
         $ret['link']         = $link;
         $ret['icon']         = $icon . '.png';
@@ -418,7 +418,7 @@ class ModuleAdmin
      */
     public function addInfoBox($title)
     {
-        $ret = array();
+        $ret = [];
         $ret['title']         = $title;
         $this->_itemInfoBox[] = $ret;
 
@@ -445,7 +445,7 @@ class ModuleAdmin
      */
     public function addInfoBoxLine($label, $text, $value = '', $color = 'inherit', $type = 'default')
     {
-        $ret = array();
+        $ret = [];
         $ret['label'] = $label;
         $line         = '';
         switch ($type) {
@@ -517,7 +517,7 @@ class ModuleAdmin
                       . $this->_obj->getInfo('module_website_name') . " - " . $this->_obj->getInfo('module_website_url') . "\">"
                       . $this->_obj->getInfo('module_website_name') . "</a></text>\n"
                       . "</div>\n";
-        $authorArray  = array();
+        $authorArray  = [];
         foreach ( $author as $k => $aName ) {
             $authorArray[$k] = ( isset( $nickname[$k] ) && ( '' != $nickname[$k] ) ) ? "{$aName} ({$nickname[$k]})" : "{$aName}";
         }

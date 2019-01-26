@@ -64,7 +64,7 @@ function smarty_compiler_xoAppUrl($argStr, &$compiler)
         if (isset($params)) {
             $params = $compiler->_parse_attrs($params, false);
             foreach ($params as $k => $v) {
-                if (in_array(substr($v, 0, 1), array('"', "'"))) {
+                if (in_array(substr($v, 0, 1), ['"', "'"])) {
                     $params[$k] = substr($v, 1, -1);
                 }
             }

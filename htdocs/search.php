@@ -69,7 +69,7 @@ if (!empty($_GET['start'])) {
     $start = (int)$_POST['start'];
 }
 
-$queries = array();
+$queries = [];
 
 if ($action === 'results') {
     if ($query == '') {
@@ -103,7 +103,7 @@ if ($andor !== 'OR' && $andor !== 'exact' && $andor !== 'AND') {
 $myts = MyTextSanitizer::getInstance();
 if ($action !== 'showallbyuser') {
     if ($andor !== 'exact') {
-        $ignored_queries = array(); // holds kewords that are shorter than allowed minmum length
+        $ignored_queries = []; // holds kewords that are shorter than allowed minmum length
         $temp_queries    = preg_split('/[\s,]+/', $query);
         foreach ($temp_queries as $q) {
             $q = trim($q);
@@ -121,7 +121,7 @@ if ($action !== 'showallbyuser') {
         if (strlen($query) < $xoopsConfigSearch['keyword_min']) {
             redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
         }
-        $queries = array($myts->addSlashes($query));
+        $queries = [$myts->addSlashes($query)];
     }
 }
 switch ($action) {
@@ -132,7 +132,7 @@ switch ($action) {
         $criteria->add(new Criteria('isactive', 1));
         $criteria->add(new Criteria('mid', '(' . implode(',', $available_modules) . ')', 'IN'));
         $modules = $module_handler->getObjects($criteria, true);
-        $mids    = isset($_REQUEST['mids']) ? $_REQUEST['mids'] : array();
+        $mids    = isset($_REQUEST['mids']) ? $_REQUEST['mids'] : [];
         if (empty($mids) || !is_array($mids)) {
             unset($mids);
             $mids = array_keys($modules);
@@ -160,7 +160,7 @@ switch ($action) {
 		$xoopsTpl->assign('keywords', $keywords);
 		$xoopsTpl->assign('error_length', $error_length);
 		$xoopsTpl->assign('error_keywords', $error_keywords);
-		$results_arr = array();
+		$results_arr = [];
         foreach ($mids as $mid) {
             $mid = (int)$mid;			
             if (in_array($mid, $available_modules)) {
@@ -244,7 +244,7 @@ switch ($action) {
             }
 			$xoopsTpl->assign('showing', sprintf(_SR_SHOWING, $start + 1, $start + $count));
 			$xoopsTpl->assign('module_name', $module->getVar('name'));
-			$results_arr = array();
+			$results_arr = [];
             for ($i = 0; $i < $count; ++$i) {
                 if (isset($results[$i]['image']) && $results[$i]['image'] != '') {
 					$results_arr['image_link'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['image'];

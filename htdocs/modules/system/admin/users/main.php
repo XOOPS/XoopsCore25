@@ -91,10 +91,11 @@ switch ($op) {
             $xoBreadCrumb->addHelp(system_adminVersion('users', 'help') . '#delete');
             $xoBreadCrumb->addLink(_AM_SYSTEM_USERS_NAV_DELETE_USER);
             $xoBreadCrumb->render();
-            xoops_confirm(array(
+            xoops_confirm([
                               'ok'  => 1,
                               'uid' => $uid,
-                              'op'  => 'users_delete'), $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_USERS_FORM_SURE_DEL, $user->getVar('uname')));
+                              'op'  => 'users_delete'
+                          ], $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_USERS_FORM_SURE_DEL, $user->getVar('uname')));
         }
         break;
 
@@ -200,7 +201,7 @@ switch ($op) {
                     echo $edituser->getHtmlErrors();
                     xoops_cp_footer();
                 } else {
-                    if ($_REQUEST['groups'] != array()) {
+                    if ($_REQUEST['groups'] != []) {
                         global $xoopsUser;
                         $oldgroups = $edituser->getGroups();
                         //If the edited user is the current user and the current user WAS in the webmaster's group and is NOT in the new groups array
@@ -211,7 +212,7 @@ switch ($op) {
                         /* @var $member_handler XoopsMemberHandler */
                         $member_handler = xoops_getHandler('member');
                         foreach ($oldgroups as $groupid) {
-                            $member_handler->removeUsersFromGroup($groupid, array($edituser->getVar('uid')));
+                            $member_handler->removeUsersFromGroup($groupid, [$edituser->getVar('uid')]);
                         }
                         foreach ($_REQUEST['groups'] as $groupid) {
                             $member_handler->addUserToGroup($groupid, $edituser->getVar('uid'));
@@ -278,7 +279,7 @@ switch ($op) {
                     if (!$member_handler->insertUser($newuser)) {
                         $adduser_errormsg = _AM_SYSTEM_USERS_CNRNU;
                     } else {
-                        $groups_failed = array();
+                        $groups_failed = [];
                         foreach ($_REQUEST['groups'] as $group) {
                             $group = (int)$group;
                             if (!$member_handler->addUserToGroup($group, $newuser->getVar('uid'))) {
@@ -403,24 +404,27 @@ switch ($op) {
             $posts_more   = new XoopsFormText(_AM_SYSTEM_USERS_POSTSMORE, 'user_posts_more', 10, 5);
             $posts_less   = new XoopsFormText(_AM_SYSTEM_USERS_POSTSLESS, 'user_posts_less', 10, 5);
             $mailok_radio = new XoopsFormRadio(_AM_SYSTEM_USERS_SHOWMAILOK, 'user_mailok', 'both');
-            $mailok_radio->addOptionArray(array(
+            $mailok_radio->addOptionArray([
                                               'mailok' => _AM_SYSTEM_USERS_MAILOK,
                                               'mailng' => _AM_SYSTEM_USERS_MAILNG,
-                                              'both' => _AM_SYSTEM_USERS_BOTH));
+                                              'both' => _AM_SYSTEM_USERS_BOTH
+                                          ]);
             $type_radio = new XoopsFormRadio(_AM_SYSTEM_USERS_SHOWTYPE, 'user_type', 'actv');
-            $type_radio->addOptionArray(array(
+            $type_radio->addOptionArray([
                                             'actv' => _AM_SYSTEM_USERS_ACTIVE,
                                             'inactv' => _AM_SYSTEM_USERS_INACTIVE,
-                                            'both' => _AM_SYSTEM_USERS_BOTH));
+                                            'both' => _AM_SYSTEM_USERS_BOTH
+                                        ]);
             $sort_select = new XoopsFormSelect(_AM_SYSTEM_USERS_SORT, 'user_sort');
-            $sort_select->addOptionArray(array(
+            $sort_select->addOptionArray([
                                              'uname' => _AM_SYSTEM_USERS_UNAME,
                                              'email' => _AM_SYSTEM_USERS_EMAIL,
                                              'last_login' => _AM_SYSTEM_USERS_LASTLOGIN,
                                              'user_regdate' => _AM_SYSTEM_USERS_REGDATE,
-                                             'posts' => _AM_SYSTEM_USERS_POSTS));
+                                             'posts' => _AM_SYSTEM_USERS_POSTS
+                                         ]);
             $order_select = new XoopsFormSelect(_AM_SYSTEM_USERS_ORDER, 'user_order');
-            $order_select->addOptionArray(array('ASC' => _AM_SYSTEM_USERS_ASC, 'DESC' => _AM_SYSTEM_USERS_DESC));
+            $order_select->addOptionArray(['ASC' => _AM_SYSTEM_USERS_ASC, 'DESC' => _AM_SYSTEM_USERS_DESC]);
             $limit_text    = new XoopsFormText(_AM_SYSTEM_USERS_LIMIT, 'user_limit', 6, 2, 20);
             $submit_button = new XoopsFormButton('', 'user_submit', _SUBMIT, 'submit');
 
@@ -709,7 +713,7 @@ switch ($op) {
             }
 
             //$groups = empty($_REQUEST['selgroups']) ? array() : array_map("intval", $_REQUEST['selgroups']);
-            $validsort = array('uname', 'email', 'last_login', 'user_regdate', 'posts');
+            $validsort = ['uname', 'email', 'last_login', 'user_regdate', 'posts'];
             if (isset($_REQUEST['user_sort'])) {
                 $sort = (!in_array($_REQUEST['user_sort'], $validsort)) ? 'user_regdate' : $_REQUEST['user_sort'];
                 $requete_pagenav .= '&amp;user_sort=' . htmlspecialchars($_REQUEST['user_sort']);
@@ -745,16 +749,16 @@ switch ($op) {
             if (isset($_REQUEST['selgroups'])) {
                 if ($_REQUEST['selgroups'] != 0) {
                     if (count($_REQUEST['selgroups']) == 1) {
-                        $groups = array( 0 => (int) $_REQUEST['selgroups']);
+                        $groups = [0 => (int)$_REQUEST['selgroups']];
                     } else {
                         $groups = array_map('intval', $_REQUEST['selgroups']);
                     }
                 } else {
-                    $groups = array();
+                    $groups = [];
                 }
                 $requete_pagenav .= '&amp;selgroups=' . htmlspecialchars($_REQUEST['selgroups']);
             } else {
-                $groups = array();
+                $groups = [];
             }
             //print_r($groups);
             /* @var $member_handler XoopsMemberHandler */

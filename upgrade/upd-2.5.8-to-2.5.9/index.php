@@ -22,12 +22,12 @@ class Upgrade_259 extends XoopsUpgrade
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
-        $this->tasks = array('sess_id', 'mainfile', 'zaplegacy');
-        $this->usedFiles = array(
+        $this->tasks = ['sess_id', 'mainfile', 'zaplegacy'];
+        $this->usedFiles = [
             'mainfile.php',
             XOOPS_VAR_PATH . '/data/secure.php',
             'modules/system/themes/legacy/legacy.php'
-        );
+        ];
     }
 
     /**

@@ -370,9 +370,10 @@ class XoopsBlock extends XoopsObject
      */
     public function isCustom()
     {
-        return in_array($this->getVar('block_type'), array(
+        return in_array($this->getVar('block_type'), [
             'C',
-            'E'));
+            'E'
+        ]);
     }
 }
 
@@ -570,7 +571,7 @@ class XoopsBlockHandler extends XoopsObjectHandler
      **/
     public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT DISTINCT(b.bid), b.* FROM ' . $this->db->prefix('newblocks') . ' b LEFT JOIN '
             . $this->db->prefix('block_module_link') . ' l ON b.bid=l.block_id';
@@ -606,7 +607,7 @@ class XoopsBlockHandler extends XoopsObjectHandler
     public function getList(CriteriaElement $criteria = null)
     {
         $blocks = $this->getObjects($criteria, true);
-        $ret    = array();
+        $ret    = [];
         foreach (array_keys($blocks) as $i) {
             $name    = (!$blocks[$i]->isCustom()) ? $blocks[$i]->getVar('name') : $blocks[$i]->getVar('title');
             $ret[$i] = $name;

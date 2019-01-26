@@ -18,6 +18,6 @@
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-return $config = array(
+return $config = [
     'enable_mms_entry' => true,  // false to disable entry button in editor, existing content will still play
-);
+];

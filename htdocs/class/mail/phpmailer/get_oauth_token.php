@@ -129,13 +129,13 @@ class Google extends AbstractProvider
 
 //Set Redirect URI in Developer Console as [https/http]://<yourdomain>/<folder>/get_oauth_token.php
 $provider = new Google(
-    array(
+    [
         'clientId' => $clientId,
         'clientSecret' => $clientSecret,
         'redirectUri' => $redirectUri,
-        'scope' => array('https://mail.google.com/'),
-	'accessType' => 'offline'
-    )
+        'scope' => ['https://mail.google.com/'],
+        'accessType' => 'offline'
+    ]
 );
 
 if (!isset($_GET['code'])) {
@@ -152,9 +152,9 @@ if (!isset($_GET['code'])) {
     // Try to get an access token (using the authorization code grant)
     $token = $provider->getAccessToken(
         'authorization_code',
-        array(
+        [
             'code' => $_GET['code']
-        )
+        ]
     );
 
     // Use this to get a new access token if the old one expires

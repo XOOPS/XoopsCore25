@@ -33,7 +33,7 @@ if (!xoops_getModuleOption('active_userrank', 'system')) {
 
 // Parameters
 $nb_rank     = xoops_getModuleOption('userranks_pager', 'system');
-$mimetypes   = array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png');
+$mimetypes   = ['image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'];
 $upload_size = 500000;
 // Get Action type
 $op = system_CleanVars($_REQUEST, 'op', 'list', 'string');
@@ -157,7 +157,7 @@ switch ($op) {
         $obj->setVar('rank_max', $_POST['rank_max']);
         $verif_rank_special = ($_POST['rank_special'] == 1) ? '1' : '0';
         $obj->setVar('rank_special', $verif_rank_special);
-        $err = array();
+        $err = [];
         include_once XOOPS_ROOT_PATH . '/class/uploader.php';
         $uploader_rank_img = new XoopsMediaUploader(XOOPS_UPLOAD_PATH . '/ranks', $mimetypes, $upload_size, null, null);
         if ($_FILES['rank_image']['error'] != UPLOAD_ERR_NO_FILE) {
@@ -233,10 +233,11 @@ switch ($op) {
             $xoBreadCrumb->addHelp(system_adminVersion('userrank', 'help') . '#delete');
             $xoBreadCrumb->render();
             $rank_img = $obj->getVar('rank_image') ?: 'blank.gif';
-            xoops_confirm(array(
+            xoops_confirm([
                               'ok' => 1,
                               'rank_id' => $_REQUEST['rank_id'],
-                              'op' => 'userrank_delete'), $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_USERRANK_SUREDEL) . '<br \><img src="' . XOOPS_UPLOAD_URL . '/' . $rank_img . '" alt="" /><br \>');
+                              'op' => 'userrank_delete'
+                          ], $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_USERRANK_SUREDEL) . '<br \><img src="' . XOOPS_UPLOAD_URL . '/' . $rank_img . '" alt="" /><br \>');
             // Call Footer
             xoops_cp_footer();
         }

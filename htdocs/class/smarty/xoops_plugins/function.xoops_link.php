@@ -49,17 +49,17 @@ function smarty_function_xoops_link($params, &$smarty)
     $urlstr = '';
     if (isset($params['urlvars'])) {
         $szvars = explode('&', $params['urlvars']);
-        $vars   = array();
+        $vars   = [];
         // Split the string making an array from the ('name','value') pairs
         foreach ($szvars as $szvar) {
             $pos = strpos($szvar, '=');
             if ($pos != false) {             // If a value is specified, use it
-                $vars[] = array('name' => substr($szvar, 0, $pos), 'value' => substr($szvar, $pos + 1));
+                $vars[] = ['name' => substr($szvar, 0, $pos), 'value' => substr($szvar, $pos + 1)];
             } else {                         // Otherwise use current one (if any)
                 if (isset($_POST[$szvar])) {
-                    $vars[] = array('name' => $szvar, 'value' => $_POST[$szvar]);
+                    $vars[] = ['name' => $szvar, 'value' => $_POST[$szvar]];
                 } elseif (isset($_GET[$szvar])) {
-                    $vars[] = array('name' => $szvar, 'value' => $_GET[$szvar]);
+                    $vars[] = ['name' => $szvar, 'value' => $_GET[$szvar]];
                 }
             }
         }

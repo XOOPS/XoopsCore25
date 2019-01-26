@@ -13,7 +13,7 @@ function altsys_set_module_config()
         $altsysModuleConfig = $config_handler->getConfigList($module->getVar('mid'));
         $altsysModuleId     = $module->getVar('mid');
     } else {
-        $altsysModuleConfig = array();
+        $altsysModuleConfig = [];
         $altsysModuleId     = 0;
     }
 }
@@ -22,11 +22,12 @@ function altsys_include_mymenu()
 {
     global $xoopsModule, $xoopsConfig, $mydirname, $mydirpath, $mytrustdirname, $mytrustdirpath, $mymenu_fake_uri;
 
-    $mymenu_find_paths = array(
+    $mymenu_find_paths = [
         $mydirpath . '/admin/mymenu.php',
         $mydirpath . '/mymenu.php',
         $mytrustdirpath . '/admin/mymenu.php',
-        $mytrustdirpath . '/mymenu.php');
+        $mytrustdirpath . '/mymenu.php'
+    ];
 
     foreach ($mymenu_find_paths as $mymenu_find_path) {
         if (file_exists($mymenu_find_path)) {

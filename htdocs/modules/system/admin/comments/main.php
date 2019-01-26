@@ -46,16 +46,17 @@ $xoBreadCrumb->addLink(_AM_SYSTEM_COMMENTS_NAV_MANAGER, system_adminVersion('com
 include_once $GLOBALS['xoops']->path('/include/comment_constants.php');
 xoops_loadLanguage('comment');
 
-$limit_array     = array(20, 50, 100);
-$status_array    = array(XOOPS_COMMENT_PENDING => _CM_PENDING, XOOPS_COMMENT_ACTIVE => _CM_ACTIVE, XOOPS_COMMENT_HIDDEN => _CM_HIDDEN);
-$status_array2   = array(
+$limit_array     = [20, 50, 100];
+$status_array    = [XOOPS_COMMENT_PENDING => _CM_PENDING, XOOPS_COMMENT_ACTIVE => _CM_ACTIVE, XOOPS_COMMENT_HIDDEN => _CM_HIDDEN];
+$status_array2   = [
     XOOPS_COMMENT_PENDING => '<span style="text-decoration: none; font-weight: bold; color: #008000;">' . _CM_PENDING . '</span>',
     XOOPS_COMMENT_ACTIVE  => '<span style="text-decoration: none; font-weight: bold; color: #ff0000;">' . _CM_ACTIVE . '</span>',
-    XOOPS_COMMENT_HIDDEN  => '<span style="text-decoration: none; font-weight: bold; color: #0000ff;">' . _CM_HIDDEN . '</span>');
+    XOOPS_COMMENT_HIDDEN  => '<span style="text-decoration: none; font-weight: bold; color: #0000ff;">' . _CM_HIDDEN . '</span>'
+];
 $start           = 0;
 $status_array[0] = _AM_SYSTEM_COMMENTS_FORM_ALL_STATUS;
 
-$comments = array();
+$comments = [];
 //$status   = (!isset($_REQUEST['status']) || !in_array((int)($_REQUEST['status']), array_keys($status_array))) ? 0 : (int)($_REQUEST['status']);
 $status = (!isset($_REQUEST['status']) || !array_key_exists((int)$_REQUEST['status'], $status_array)) ? 0 : (int)$_REQUEST['status'];
 

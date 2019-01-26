@@ -46,7 +46,7 @@ if (!class_exists('XoopsAuthProvisionning')) {
  */
 class XoopsAuthLdap extends XoopsAuth
 {
-    public $cp1252_map = array(
+    public $cp1252_map = [
         "\xc2\x80" => "\xe2\x82\xac",
         /**
          * EURO SIGN
@@ -151,7 +151,8 @@ class XoopsAuthLdap extends XoopsAuth
         /**
          * LATIN SMALL LETTER Z WITH CARON
          */
-        "\xc2\x9f" => "\xc5\xb8");
+        "\xc2\x9f" => "\xc5\xb8"
+    ];
     /**
      * LATIN CAPITAL LETTER Y WITH DIAERESIS
      */

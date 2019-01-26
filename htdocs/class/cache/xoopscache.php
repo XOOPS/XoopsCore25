@@ -41,7 +41,7 @@ class XoopsCache
      * @var array
      * @access private
      */
-    private $configs = array();
+    private $configs = [];
 
     /**
      * Holds name of the current configuration being used
@@ -105,7 +105,7 @@ class XoopsCache
      * @return array  (engine, settings) on success, false on failure
      * @access public
      */
-    public function config($name = 'default', $settings = array())
+    public function config($name = 'default', $settings = [])
     {
         $_this = XoopsCache::getInstance();
         if (is_array($name)) {
@@ -124,8 +124,9 @@ class XoopsCache
             if (!empty($_this->configs['default'])) {
                 $settings = $_this->configs['default'];
             } else {
-                $settings = array(
-                    'engine' => 'file');
+                $settings = [
+                    'engine' => 'file'
+                ];
             }
         }
         $engine = 'file';
@@ -156,7 +157,7 @@ class XoopsCache
      * @return boolean True on success, false on failure
      * @access public
      */
-    public function engine($name = 'file', $settings = array())
+    public function engine($name = 'file', $settings = [])
     {
         if (!$name) {
             return false;
@@ -377,7 +378,7 @@ class XoopsCache
             return $_this->engine[$engine]->settings();
         }
 
-        return array();
+        return [];
     }
 
     /**
@@ -392,7 +393,7 @@ class XoopsCache
         if (empty($key)) {
             return false;
         }
-        $key = str_replace(array('/', '.'), '_', (string)$key);
+        $key = str_replace(['/', '.'], '_', (string)$key);
 
         return $key;
     }
@@ -423,11 +424,12 @@ class XoopsCacheEngine
      * @return boolean True if the engine has been successfully initialized, false if not
      * @access   public
      */
-    public function init($settings = array())
+    public function init($settings = [])
     {
-        $this->settings = array_merge(array(
+        $this->settings = array_merge([
                                           'duration'    => 31556926,
-                                          'probability' => 100), $settings);
+                                          'probability' => 100
+                                      ], $settings);
 
         return true;
     }

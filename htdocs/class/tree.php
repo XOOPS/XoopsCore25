@@ -33,7 +33,7 @@ class XoopsObjectTree
     protected $parentId;
     protected $myId;
     protected $rootId;
-    protected $tree = array();
+    protected $tree = [];
     protected $objects;
 
     /**
@@ -103,7 +103,7 @@ class XoopsObjectTree
      */
     public function getFirstChild($key)
     {
-        $ret = array();
+        $ret = [];
         if (isset($this->tree[$key]['child'])) {
             foreach ($this->tree[$key]['child'] as $childKey) {
                 $ret[$childKey] = $this->tree[$childKey]['obj'];
@@ -120,7 +120,7 @@ class XoopsObjectTree
      * @param  array  $ret (Empty when called from client) Array of children from previous recursions.
      * @return array  Array of child nodes.
      */
-    public function getAllChild($key, $ret = array())
+    public function getAllChild($key, $ret = [])
     {
         if (isset($this->tree[$key]['child'])) {
             foreach ($this->tree[$key]['child'] as $childKey) {
@@ -144,7 +144,7 @@ class XoopsObjectTree
      * @param  int    $upLevel (empty when called from outside) level of recursion
      * @return array  Array of parent nodes.
      */
-    public function getAllParent($key, $ret = array(), $upLevel = 1)
+    public function getAllParent($key, $ret = [], $upLevel = 1)
     {
         if (isset($this->tree[$key]['parent']) && isset($this->tree[$this->tree[$key]['parent']]['obj'])) {
             $ret[$upLevel] = $this->tree[$this->tree[$key]['parent']]['obj'];

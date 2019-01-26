@@ -44,7 +44,7 @@ if ($op === 'saveuser') {
     if (empty($uid) || $xoopsUser->getVar('uid') != $uid) {
         redirect_header('index.php', 3, _US_NOEDITRIGHT);
     }
-    $errors = array();
+    $errors = [];
     if ($xoopsConfigUser['allow_chgmail'] == 1) {
         $email = XoopsRequest::getEmail('email', '');
         if (empty($email)) {
@@ -151,28 +151,32 @@ if ($op === 'editprofile') {
     $sig_cbox->addOption(1, _US_SHOWSIG);
     $sig_tray->addElement($sig_cbox);
     $umode_select = new XoopsFormSelect(_US_CDISPLAYMODE, 'umode', $xoopsUser->getVar('umode'));
-    $umode_select->addOptionArray(array(
+    $umode_select->addOptionArray([
                                       'nest'   => _NESTED,
                                       'flat'   => _FLAT,
-                                      'thread' => _THREADED));
+                                      'thread' => _THREADED
+                                  ]);
     $uorder_select = new XoopsFormSelect(_US_CSORTORDER, 'uorder', $xoopsUser->getVar('uorder'));
-    $uorder_select->addOptionArray(array(
+    $uorder_select->addOptionArray([
                                        XOOPS_COMMENT_OLD1ST => _OLDESTFIRST,
-                                       XOOPS_COMMENT_NEW1ST => _NEWESTFIRST));
+                                       XOOPS_COMMENT_NEW1ST => _NEWESTFIRST
+                                   ]);
     // RMV-NOTIFY
     // TODO: add this to admin user-edit functions...
     include_once $GLOBALS['xoops']->path('language/' . $xoopsConfig['language'] . '/notification.php');
     include_once $GLOBALS['xoops']->path('include/notification_constants.php');
     $notify_method_select = new XoopsFormSelect(_NOT_NOTIFYMETHOD, 'notify_method', $xoopsUser->getVar('notify_method'));
-    $notify_method_select->addOptionArray(array(
+    $notify_method_select->addOptionArray([
                                               XOOPS_NOTIFICATION_METHOD_DISABLE => _NOT_METHOD_DISABLE,
                                               XOOPS_NOTIFICATION_METHOD_PM      => _NOT_METHOD_PM,
-                                              XOOPS_NOTIFICATION_METHOD_EMAIL   => _NOT_METHOD_EMAIL));
+                                              XOOPS_NOTIFICATION_METHOD_EMAIL   => _NOT_METHOD_EMAIL
+                                          ]);
     $notify_mode_select = new XoopsFormSelect(_NOT_NOTIFYMODE, 'notify_mode', $xoopsUser->getVar('notify_mode'));
-    $notify_mode_select->addOptionArray(array(
+    $notify_mode_select->addOptionArray([
                                             XOOPS_NOTIFICATION_MODE_SENDALWAYS         => _NOT_MODE_SENDALWAYS,
                                             XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE => _NOT_MODE_SENDONCE,
-                                            XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT   => _NOT_MODE_SENDONCEPERLOGIN));
+                                            XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT   => _NOT_MODE_SENDONCEPERLOGIN
+                                        ]);
     $bio_tarea          = new XoopsFormTextArea(_US_EXTRAINFO, 'bio', $xoopsUser->getVar('bio', 'E'));
     $pwd_text           = new XoopsFormPassword('', 'password', 10, 32);
     $pwd_text2          = new XoopsFormPassword('', 'vpass', 10, 32);
@@ -257,7 +261,7 @@ if ($op === 'avatarupload') {
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header('index.php', 3, _US_NOEDITRIGHT . '<br>' . implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
     }
-    $xoops_upload_file = array();
+    $xoops_upload_file = [];
     $uid               = 0;
     if (!empty($_POST['xoops_upload_file']) && is_array($_POST['xoops_upload_file'])) {
         $xoops_upload_file = $_POST['xoops_upload_file'];
@@ -270,12 +274,13 @@ if ($op === 'avatarupload') {
     }
     if ($xoopsConfigUser['avatar_allow_upload'] == 1 && $xoopsUser->getVar('posts') >= $xoopsConfigUser['avatar_minposts']) {
         include_once $GLOBALS['xoops']->path('class/uploader.php');
-        $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH . '/avatars', array(
+        $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH . '/avatars', [
             'image/gif',
             'image/jpeg',
             'image/pjpeg',
             'image/x-png',
-            'image/png'), $xoopsConfigUser['avatar_maxsize'], $xoopsConfigUser['avatar_width'], $xoopsConfigUser['avatar_height']);
+            'image/png'
+        ], $xoopsConfigUser['avatar_maxsize'], $xoopsConfigUser['avatar_width'], $xoopsConfigUser['avatar_height']);
         if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
             $uploader->setPrefix('cavt');
             if ($uploader->upload()) {

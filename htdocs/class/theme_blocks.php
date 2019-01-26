@@ -35,7 +35,7 @@ include_once $GLOBALS['xoops']->path('class/template.php');
 class xos_logos_PageBuilder
 {
     public $theme  = false;
-    public $blocks = array();
+    public $blocks = [];
 
     /**
      * xos_logos_PageBuilder::xoInit()
@@ -44,7 +44,7 @@ class xos_logos_PageBuilder
      *
      * @return bool
      */
-    public function xoInit($options = array())
+    public function xoInit($options = [])
     {
         $this->retrieveBlocks();
         if ($this->theme) {
@@ -82,21 +82,24 @@ class xos_logos_PageBuilder
 
         $startMod = ($xoopsConfig['startpage'] == '--') ? 'system' : $xoopsConfig['startpage'];
         if (isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule'])) {
-            list($mid, $dirname) = array(
+            list($mid, $dirname) = [
                 $GLOBALS['xoopsModule']->getVar('mid'),
-                $GLOBALS['xoopsModule']->getVar('dirname'));
+                $GLOBALS['xoopsModule']->getVar('dirname')
+            ];
             $isStart = (substr($_SERVER['PHP_SELF'], -9) === 'index.php' && $xoopsConfig['startpage'] == $dirname && empty($_SERVER['QUERY_STRING']));
         } else {
-            list($mid, $dirname) = array(
+            list($mid, $dirname) = [
                 0,
-                'system');
+                'system'
+            ];
             $isStart = !empty($GLOBALS['xoopsOption']['show_cblock']);
         }
 
-        $groups = (isset($GLOBALS['xoopsUser']) && is_object($GLOBALS['xoopsUser'])) ? $GLOBALS['xoopsUser']->getGroups() : array(
-            XOOPS_GROUP_ANONYMOUS);
+        $groups = (isset($GLOBALS['xoopsUser']) && is_object($GLOBALS['xoopsUser'])) ? $GLOBALS['xoopsUser']->getGroups() : [
+            XOOPS_GROUP_ANONYMOUS
+        ];
 
-        $oldzones = array(
+        $oldzones = [
             XOOPS_SIDEBLOCK_LEFT          => 'canvas_left',
             XOOPS_SIDEBLOCK_RIGHT         => 'canvas_right',
             XOOPS_CENTERBLOCK_LEFT        => 'page_topleft',
@@ -108,24 +111,26 @@ class xos_logos_PageBuilder
             XOOPS_FOOTERBLOCK_LEFT        => 'footer_left',
             XOOPS_FOOTERBLOCK_RIGHT       => 'footer_right',
             XOOPS_FOOTERBLOCK_CENTER      => 'footer_center',
-            XOOPS_FOOTERBLOCK_ALL         => 'footer_all');
+            XOOPS_FOOTERBLOCK_ALL         => 'footer_all'
+        ];
 
         foreach ($oldzones as $zone) {
-            $this->blocks[$zone] = array();
+            $this->blocks[$zone] = [];
         }
         if ($this->theme) {
             $template =& $this->theme->template;
-            $backup   = array(
+            $backup   = [
                 $template->caching,
-                $template->cache_lifetime);
+                $template->cache_lifetime
+            ];
         } else {
             $template = null;
             $template = new XoopsTpl();
         }
         $xoopsblock = new XoopsBlock();
-        $block_arr  = array();
+        $block_arr  = [];
         $block_arr  = $xoopsblock->getAllByGroupModule($groups, $mid, $isStart, XOOPS_BLOCK_VISIBLE);
-        $xoopsPreload->triggerEvent('core.class.theme_blocks.retrieveBlocks', array(&$this, &$template, &$block_arr));
+        $xoopsPreload->triggerEvent('core.class.theme_blocks.retrieveBlocks', [&$this, &$template, &$block_arr]);
         foreach ($block_arr as $block) {
             $side = $oldzones[$block->getVar('side')];
             if ($var = $this->buildBlock($block, $template)) {
@@ -163,13 +168,14 @@ class xos_logos_PageBuilder
     {
         // The lame type workaround will change
         // bid is added temporarily as workaround for specific block manipulation
-        $block = array(
+        $block = [
             'id'      => $xobject->getVar('bid'),
             'module'  => $xobject->getVar('dirname'),
             'title'   => $xobject->getVar('title'),
             // 'name'        => strtolower( preg_replace( '/[^0-9a-zA-Z_]/', '', str_replace( ' ', '_', $xobject->getVar( 'name' ) ) ) ),
             'weight'  => $xobject->getVar('weight'),
-            'lastmod' => $xobject->getVar('last_modified'));
+            'lastmod' => $xobject->getVar('last_modified')
+        ];
 
         $bcachetime = (int)$xobject->getVar('bcachetime');
         if (empty($bcachetime)) {
@@ -203,7 +209,7 @@ class xos_logos_PageBuilder
 
             //check if theme added new metas
             if ($this->theme && $bcachetime) {
-                $metas = array();
+                $metas = [];
                 foreach ($this->theme->metas as $type => $value) {
                     $dif = array_diff_key($this->theme->metas[$type], $old[$type]);
                     if (count($dif)) {

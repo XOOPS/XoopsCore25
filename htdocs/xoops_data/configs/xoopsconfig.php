@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     /**#@+
      * Extended HTML editor for {@link XoopsFormDhtmlTextArea}
      *
@@ -46,4 +46,5 @@ return array(
      *  <li> 1 - Enabled</li>
      * </ul>
      */
-    'admin_warnings_enable' => 1);
+    'admin_warnings_enable' => 1
+];

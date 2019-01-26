@@ -73,7 +73,7 @@ class PublicSuffixList
             return;
         }
 
-        $this->tree = array();
+        $this->tree = [];
         $list = $this->readPSL();
 
         if (false===$list) {
@@ -141,9 +141,9 @@ class PublicSuffixList
 
         if (!array_key_exists($dom, $node)) {
             if ($isNotDomain) {
-                $node[$dom] = array("!" => "");
+                $node[$dom] = ["!" => ""];
             } else {
-                $node[$dom] = array();
+                $node[$dom] = [];
             }
         }
 

@@ -29,7 +29,7 @@ class Upgrade_231 extends XoopsUpgrade
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
-        $this->tasks = array('field');
+        $this->tasks = ['field'];
     }
 
     /**
@@ -38,7 +38,7 @@ class Upgrade_231 extends XoopsUpgrade
      */
     public function check_field()
     {
-        $fields = array(
+        $fields = [
             'cache_data' => 'cache_model',
             'htmlcode' => 'banner',
             'extrainfo' => 'bannerclient',
@@ -52,7 +52,8 @@ class Upgrade_231 extends XoopsUpgrade
             'tplset_credits' => 'tplset',
             'tpl_source' => 'tplsource',
             'user_sig' => 'users',
-            'bio' => 'users');
+            'bio' => 'users'
+        ];
         foreach ($fields as $field => $table) {
             $sql = 'SHOW COLUMNS FROM `' . $GLOBALS['xoopsDB']->prefix($table) . "` LIKE '{$field}'";
             if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {

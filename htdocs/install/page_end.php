@@ -31,7 +31,7 @@ include_once '../class/preload.php';
 include_once '../class/database/databasefactory.php';
 include_once '../class/logger/xoopslogger.php';
 
-$_SESSION = array();
+$_SESSION = [];
 setcookie('xo_install_user', '', null, null, null);
 $key = \Xmf\Jwt\KeyFactory::build('install');
 $key->kill();

@@ -20,7 +20,7 @@
 class Cookie
 {
     // Reserved session keys
-    private static $_reserved = array('XOLOGGERVIEW', 'xoops_user');
+    private static $_reserved = ['XOLOGGERVIEW', 'xoops_user'];
 
     // Static class cannot be initialized
     /**
@@ -205,7 +205,7 @@ class Cookie
             // is this a string representation of an array?
             if (preg_match('/([\w\d]+)\[([\w\d]+)\]$/i', $key, $matches)) {
                 // Store as key/value pair
-                $key = array($matches[1] => $matches[2]);
+                $key = [$matches[1] => $matches[2]];
             }
         }
 

@@ -285,7 +285,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
      */
     public function &getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT a.*, COUNT(u.user_id) AS count FROM ' . $this->db->prefix('avatar') . ' a LEFT JOIN ' . $this->db->prefix('avatar_user_link') . ' u ON u.avatar_id=a.avatar_id';
         if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
@@ -367,7 +367,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
      */
     public function getUser(XoopsAvatar $avatar)
     {
-        $ret = array();
+        $ret = [];
         /**
          * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
          */
@@ -403,8 +403,9 @@ class XoopsAvatarHandler extends XoopsObjectHandler
             $criteria->add(new Criteria('avatar_display', (int)$avatar_display));
         }
         $avatars = &$this->getObjects($criteria, true);
-        $ret     = array(
-            'blank.gif' => _NONE);
+        $ret     = [
+            'blank.gif' => _NONE
+        ];
         foreach (array_keys($avatars) as $i) {
             $ret[$avatars[$i]->getVar('avatar_file')] = $avatars[$i]->getVar('avatar_name');
         }

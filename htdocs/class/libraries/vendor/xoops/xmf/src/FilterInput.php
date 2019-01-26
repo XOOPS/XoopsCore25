@@ -41,7 +41,7 @@ class FilterInput
     protected $attrMethod;        // default is 0
 
     protected $xssAuto;           // default is 1
-    protected $tagBlacklist = array(
+    protected $tagBlacklist = [
         'applet',
         'body',
         'bgsound',
@@ -64,9 +64,9 @@ class FilterInput
         'style',
         'title',
         'xml'
-    );
+    ];
     // also will strip ALL event handlers
-    protected $attrBlacklist = array('action', 'background', 'codebase', 'dynsrc', 'lowsrc');
+    protected $attrBlacklist = ['action', 'background', 'codebase', 'dynsrc', 'lowsrc'];
 
     /**
      * Constructor
@@ -78,8 +78,8 @@ class FilterInput
      * @param int   $xssAuto    - 0 = only auto clean essentials, 1 = allow clean blacklisted tags/attr
      */
     protected function __construct(
-        $tagsArray = array(),
-        $attrArray = array(),
+        $tagsArray = [],
+        $attrArray = [],
         $tagsMethod = 0,
         $attrMethod = 0,
         $xssAuto = 1
@@ -117,8 +117,8 @@ class FilterInput
      * @return FilterInput object.
      */
     public static function getInstance(
-        $tagsArray = array(),
-        $attrArray = array(),
+        $tagsArray = [],
+        $attrArray = [],
         $tagsMethod = 0,
         $attrMethod = 0,
         $xssAuto = 1
@@ -127,10 +127,10 @@ class FilterInput
 
         $className = get_called_class(); // so an extender gets an instance of itself
 
-        $sig = md5(serialize(array($className, $tagsArray, $attrArray, $tagsMethod, $attrMethod, $xssAuto)));
+        $sig = md5(serialize([$className, $tagsArray, $attrArray, $tagsMethod, $attrMethod, $xssAuto]));
 
         if (!isset($instances)) {
-            $instances = array();
+            $instances = [];
         }
 
         if (empty($instances[$sig])) {
@@ -364,7 +364,7 @@ class FilterInput
             }
             // iterate through tag finding attribute pairs - setup
             $tagLeft = $currentTag;
-            $attrSet = array();
+            $attrSet = [];
             $currentSpace = strpos($tagLeft, ' ');
             if (substr($currentTag, 0, 1) === "/") {
                 // is end tag
@@ -460,7 +460,7 @@ class FilterInput
      */
     protected function filterAttr($attrSet)
     {
-        $newSet = array();
+        $newSet = [];
         // process attributes
         $attrSetCount = count($attrSet);
         for ($i = 0; $i < $attrSetCount; ++$i) {

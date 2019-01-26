@@ -13,13 +13,13 @@
 class phpthumb_ico {
 
 	public function GD2ICOstring(&$gd_image_array) {
-		$ImageWidths  = array();
-		$ImageHeights = array();
-		$bpp          = array();
-		$totalcolors  = array();
-		$icXOR        = array();
-		$icAND        = array();
-		$icANDmask    = array();
+		$ImageWidths  = [];
+		$ImageHeights = [];
+		$bpp          = [];
+		$totalcolors  = [];
+		$icXOR        = [];
+		$icAND        = [];
+		$icANDmask    = [];
 		foreach ($gd_image_array as $key => $gd_image) {
 
 			$ImageWidths[$key]  = imagesx($gd_image);

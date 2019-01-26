@@ -32,7 +32,7 @@ class Protector_postcommon_register_stopforumspam extends ProtectorFilterAbstrac
             return true;
         }
 
-        $report = array();
+        $report = [];
         $report['email'] = isset($_POST['email']) ? $_POST['email'] : null;
         $report['ip'] = $_SERVER['REMOTE_ADDR'];
         $report['uname'] = isset($_POST['uname']) ? $_POST['uname'] : null;

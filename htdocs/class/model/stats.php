@@ -57,7 +57,7 @@ class XoopsModelStats extends XoopsModelAbstract
 
             return $count;
         } else {
-            $ret = array();
+            $ret = [];
             while (false !== (list($id, $count) = $this->handler->db->fetchRow($result))) {
                 $ret[$id] = $count;
             }
@@ -74,7 +74,7 @@ class XoopsModelStats extends XoopsModelAbstract
      */
     public function getCounts(CriteriaElement $criteria = null)
     {
-        $ret         = array();
+        $ret         = [];
         $sql_where   = '';
         $limit       = null;
         $start       = null;

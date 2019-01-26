@@ -61,8 +61,8 @@ class MyTextSanitizerExtension
                 }
             }
         }
-        $config_default = array();
-        $config_custom  = array();
+        $config_default = [];
+        $config_custom  = [];
         if (file_exists($path . '/config.php')) {
             $config_default = include $path . '/config.php';
         }
@@ -104,7 +104,7 @@ class MyTextSanitizerExtension
      */
     public function encode($textarea_id)
     {
-        return array();
+        return [];
     }
 
     /**
@@ -136,7 +136,7 @@ class MyTextSanitizer
      *
      * @var array
      */
-    public $smileys = array();
+    public $smileys = [];
 
     /**
      */
@@ -147,12 +147,12 @@ class MyTextSanitizer
      * @var holding reference to text
      */
     public $text         = '';
-    public $patterns     = array();
-    public $replacements = array();
+    public $patterns     = [];
+    public $replacements = [];
 
     //mb------------------------------
-    public $callbackPatterns = array();
-    public $callbacks        = array();
+    public $callbackPatterns = [];
+    public $callbacks        = [];
     //mb------------------------------
 
     public $path_basic;
@@ -189,7 +189,7 @@ class MyTextSanitizer
             return MyTextSanitizerExtension::loadConfig($name);
         }
         $config_default = include $this->path_basic . '/config.php';
-        $config_custom  = array();
+        $config_custom  = [];
         if (file_exists($file = $this->path_basic . '/config.custom.php')) {
             $config_custom = include $file;
         }
@@ -258,7 +258,7 @@ class MyTextSanitizer
             return $this->smileys;
         }
 
-        $smileys = array();
+        $smileys = [];
         foreach ($this->smileys as $smile) {
             if (empty($smile['display'])) {
                 continue;
@@ -401,8 +401,8 @@ class MyTextSanitizer
      */
     public function &xoopsCodeDecode(&$text, $allowimage = 1)
     {
-        $patterns       = array();
-        $replacements   = array();
+        $patterns       = [];
+        $replacements   = [];
         $patterns[]     = "/\[siteurl=(['\"]?)([^\"'<>]*)\\1](.*)\[\/siteurl\]/sU";
         $replacements[] = '<a href="' . XOOPS_URL . '/\\2" title="">\\3</a>';
         $patterns[]     = "/\[url=(['\"]?)(http[s]?:\/\/[^\"'<>]*)\\1](.*)\[\/url\]/sU";
@@ -486,8 +486,8 @@ class MyTextSanitizer
      */
     public function filterXss($text)
     {
-        $patterns       = array();
-        $replacements   = array();
+        $patterns       = [];
+        $replacements   = [];
         $text           = str_replace("\x00", '', $text);
         $c              = "[\x01-\x1f]*";
         $patterns[]     = "/\bj{$c}a{$c}v{$c}a{$c}s{$c}c{$c}r{$c}i{$c}p{$c}t{$c}[\s]*:/si";
@@ -563,7 +563,7 @@ class MyTextSanitizer
             $text = htmlspecialchars($text, $quote_style);
         }
 
-        return preg_replace(array('/&amp;/i', '/&nbsp;/i'), array('&', '&amp;nbsp;'), $text);
+        return preg_replace(['/&amp;/i', '/&nbsp;/i'], ['&', '&amp;nbsp;'], $text);
     }
 
     /**
@@ -574,7 +574,7 @@ class MyTextSanitizer
      */
     public function undoHtmlSpecialChars($text)
     {
-        return preg_replace(array('/&gt;/i', '/&lt;/i', '/&quot;/i', '/&#039;/i', '/&amp;nbsp;/i'), array('>', '<', '"', '\'', '&nbsp;'), $text);
+        return preg_replace(['/&gt;/i', '/&lt;/i', '/&quot;/i', '/&#039;/i', '/&amp;nbsp;/i'], ['>', '<', '"', '\'', '&nbsp;'], $text);
     }
 
     /**
@@ -710,7 +710,7 @@ class MyTextSanitizer
             return $text;
         }
         $patterns = "/\[code([^\]]*?)\](.*)\[\/code\]/sU";
-        $text1    = preg_replace_callback($patterns, array($this, 'codeConvCallback'), $text);
+        $text1    = preg_replace_callback($patterns, [$this, 'codeConvCallback'], $text);
 
         return $text1;
     }
@@ -771,7 +771,7 @@ class MyTextSanitizer
         $args      = array_slice(func_get_args(), 1);
         array_unshift($args, $this);
 
-        return call_user_func_array(array($extension, 'load'), $args);
+        return call_user_func_array([$extension, 'load'], $args);
     }
 
     /**

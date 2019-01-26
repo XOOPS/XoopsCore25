@@ -41,7 +41,7 @@ if (!isset($_POST['submit']) || !isset($_POST['passwd'])) {
     $myts   = MyTextSanitizer::getInstance();
     $pass   = @$myts->stripSlashesGPC(trim($_POST['passwd']));
     $email  = @$myts->stripSlashesGPC(trim($_POST['newmail']));
-    $errors = array();
+    $errors = [];
     if (!password_verify($oldpass, $GLOBALS['xoopsUser']->getVar('pass', 'n'))) {
         $errors[] = _PROFILE_MA_WRONGPASSWORD;
     }
@@ -80,6 +80,6 @@ if (!isset($_POST['submit']) || !isset($_POST['passwd'])) {
     redirect_header(XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/userinfo.php?uid=' . $GLOBALS['xoopsUser']->getVar('uid'), 2, $msg);
 }
 
-$xoBreadcrumbs[] = array('title' => _PROFILE_MA_CHANGEMAIL);
+$xoBreadcrumbs[] = ['title' => _PROFILE_MA_CHANGEMAIL];
 
 include __DIR__ . '/footer.php';

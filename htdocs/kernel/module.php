@@ -180,12 +180,13 @@ class XoopsModule extends XoopsObject
      */
     public function subLink()
     {
-        $ret = array();
+        $ret = [];
         if ($this->getInfo('sub') && is_array($this->getInfo('sub'))) {
             foreach ($this->getInfo('sub') as $submenu) {
-                $ret[] = array(
+                $ret[] = [
                     'name' => $submenu['name'],
-                    'url'  => $submenu['url']);
+                    'url'  => $submenu['url']
+                ];
             }
         }
 
@@ -198,7 +199,7 @@ class XoopsModule extends XoopsObject
     public function loadAdminMenu()
     {
         if ($this->getInfo('adminmenu') && $this->getInfo('adminmenu') != '' && file_exists(XOOPS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu'))) {
-            $adminmenu = array();
+            $adminmenu = [];
             include XOOPS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu');
             $this->adminmenu =& $adminmenu;
         }
@@ -493,7 +494,7 @@ class XoopsModule extends XoopsObject
      *
      * @return bool
      */
-    public function install($admingroups = array(), $accessgroups = array())
+    public function install($admingroups = [], $accessgroups = [])
     {
         trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 
@@ -641,7 +642,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
      * @var array
      * @access private
      */
-    public $_cachedModule_mid = array();
+    public $_cachedModule_mid = [];
 
     /**
      * holds an array of cached module references, indexed by module dirname
@@ -649,7 +650,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
      * @var array
      * @access private
      */
-    public $_cachedModule_dirname = array();
+    public $_cachedModule_dirname = [];
 
     /**
      * Create a new {@link XoopsModule} object
@@ -810,7 +811,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
 
         $sql = sprintf('SELECT block_id FROM %s WHERE module_id = %u', $this->db->prefix('block_module_link'), $module->getVar('mid'));
         if ($result = $this->db->query($sql)) {
-            $block_id_arr = array();
+            $block_id_arr = [];
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $block_id_arr[] = $myrow['block_id'];
             }
@@ -854,7 +855,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
      */
     public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('modules');
         if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
@@ -911,7 +912,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
      */
     public function getList(CriteriaElement $criteria = null, $dirname_as_key = false)
     {
-        $ret     = array();
+        $ret     = [];
         $modules = $this->getObjects($criteria, true);
         foreach (array_keys($modules) as $i) {
             if (!$dirname_as_key) {

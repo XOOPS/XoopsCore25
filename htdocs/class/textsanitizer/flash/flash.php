@@ -32,7 +32,7 @@ class MytsFlash extends MyTextSanitizerExtension
     {
         $config     = parent::loadConfig(__DIR__);
         if ($config['enable_flash_entry'] === false) {
-            return array();
+            return [];
         }
         $code = "<button type='button' class='btn btn-default btn-sm' onclick='xoopsCodeFlash(\"{$textarea_id}\",\""
             . htmlspecialchars(_XOOPS_FORM_ENTERFLASHURL, ENT_QUOTES) . "\",\""
@@ -60,9 +60,10 @@ class MytsFlash extends MyTextSanitizerExtension
             }
 EOF;
 
-        return array(
+        return [
             $code,
-            $javascript);
+            $javascript
+        ];
     }
 
     /**
@@ -113,9 +114,10 @@ EOF;
             } elseif (!empty($height)) {
                 $width = $dimension[0] * $height / $dimension[1];
             } else {
-                list($width, $height) = array(
+                list($width, $height) = [
                     $dimension[0],
-                    $dimension[1]);
+                    $dimension[1]
+                ];
             }
         }
 

@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_REQUEST['lang'])) {
     exit();
 }
 
-$_SESSION['settings'] = array();
+$_SESSION['settings'] = [];
 setcookie('xo_install_user', '', null, null, null);
 
 $pageHasForm = true;

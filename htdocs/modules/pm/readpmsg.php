@@ -22,7 +22,7 @@ include_once dirname(dirname(__DIR__)) . '/mainfile.php';
 if (!is_object($GLOBALS['xoopsUser'])) {
     redirect_header(XOOPS_URL, 3, _NOPERM);
 }
-$valid_op_requests = array('out', 'save', 'in');
+$valid_op_requests = ['out', 'save', 'in'];
 $_REQUEST['op']    = !empty($_REQUEST['op']) && in_array($_REQUEST['op'], $valid_op_requests) ? $_REQUEST['op'] : 'in';
 $msg_id            = empty($_REQUEST['msg_id']) ? 0 : (int)$_REQUEST['msg_id'];
 $pm_handler        = xoops_getModuleHandler('message');

@@ -49,7 +49,7 @@ class SystemMaintenance
      */
     public function displayTables($array = true)
     {
-        $tables = array();
+        $tables = [];
         $result = $this->db->queryF('SHOW TABLES');
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $value          = array_values($myrow);
@@ -161,11 +161,11 @@ class SystemMaintenance
     public function CheckRepairAnalyzeOptimizeQueries($tables, $maintenance)
     {
         $ret = '<table class="outer"><th>' . _AM_SYSTEM_MAINTENANCE_TABLES1 . '</th><th>' . _AM_SYSTEM_MAINTENANCE_TABLES_OPTIMIZE . '</th><th>' . _AM_SYSTEM_MAINTENANCE_TABLES_CHECK . '</th><th>' . _AM_SYSTEM_MAINTENANCE_TABLES_REPAIR . '</th><th>' . _AM_SYSTEM_MAINTENANCE_TABLES_ANALYZE . '</th>';
-        $tab = array();
+        $tab = [];
         for ($i = 0; $i < 4; ++$i) {
             $tab[$i] = $i + 1;
         }
-        $tab1 = array();
+        $tab1 = [];
         for ($i = 0; $i < 4; ++$i) {
             if (in_array($tab[$i], $maintenance)) {
                 $tab1[$i] = $tab[$i];
@@ -232,7 +232,7 @@ class SystemMaintenance
      */
     public function dump_tables($tables, $drop)
     {
-        $ret    = array();
+        $ret    = [];
         $ret[0] = "# \n";
         $ret[0] .= "# Dump SQL, Generate by Xoops \n";
         $ret[0] .= '# Date : ' . date('d-m-Y - H:i') . " \n";
@@ -261,7 +261,7 @@ class SystemMaintenance
      */
     public function dump_modules($modules, $drop)
     {
-        $ret    = array();
+        $ret    = [];
         $ret[0] = "# \n";
         $ret[0] .= "# Dump SQL, Generate by Xoops \n";
         $ret[0] .= '# Date : ' . date('d-m-Y - H:i') . " \n";
@@ -340,7 +340,7 @@ class SystemMaintenance
             $num_fields = $this->db->getFieldsNum($result);
 
             if ($num_rows > 0) {
-                $field_type = array();
+                $field_type = [];
                 $i          = 0;
                 while ($i < $num_fields) {
                     $meta = mysqli_fetch_field($result);

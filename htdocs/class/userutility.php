@@ -264,12 +264,12 @@ class XoopsUserUtility
     public static function getUnameFromIds($uid, $usereal = false, $linked = false)
     {
         if (!is_array($uid)) {
-            $uid = array($uid);
+            $uid = [$uid];
         }
         $userid = array_map('intval', array_filter($uid));
 
         $myts  = MyTextSanitizer::getInstance();
-        $users = array();
+        $users = [];
         if (count($userid) > 0) {
             $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
             $sql     = 'SELECT uid, uname, name FROM ' . $xoopsDB->prefix('users') . ' WHERE level > 0 AND uid IN(' . implode(',', array_unique($userid)) . ')';

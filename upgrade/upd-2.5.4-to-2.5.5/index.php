@@ -22,14 +22,14 @@ class Upgrade_255 extends XoopsUpgrade
      */
     public function check_keys()
     {
-        $tables['groups_users_link'] = array('uid');
+        $tables['groups_users_link'] = ['uid'];
 
         foreach ($tables as $table => $keys) {
             $sql = 'SHOW KEYS FROM `' . $GLOBALS['xoopsDB']->prefix($table) . '`';
             if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
                 continue;
             }
-            $existing_keys = array();
+            $existing_keys = [];
             while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
                 $existing_keys[] = $row['Key_name'];
             }
@@ -50,14 +50,14 @@ class Upgrade_255 extends XoopsUpgrade
      */
     public function apply_keys()
     {
-        $tables['groups_users_link'] = array('uid');
+        $tables['groups_users_link'] = ['uid'];
 
         foreach ($tables as $table => $keys) {
             $sql = 'SHOW KEYS FROM `' . $GLOBALS['xoopsDB']->prefix($table) . '`';
             if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
                 continue;
             }
-            $existing_keys = array();
+            $existing_keys = [];
             while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
                 $existing_keys[] = $row['Key_name'];
             }
@@ -109,7 +109,7 @@ class Upgrade_255 extends XoopsUpgrade
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
-        $this->tasks = array('keys', 'imptotal');
+        $this->tasks = ['keys', 'imptotal'];
     }
 }
 

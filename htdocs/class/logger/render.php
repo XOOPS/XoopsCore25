@@ -45,7 +45,7 @@ if ($mode === 'popup') {
 ';
     $lines = preg_split("/(\r\n|\r|\n)( *)/", $content);
     foreach ($lines as $line) {
-        $ret .= "\n" . 'debug_window.document.writeln("' . str_replace(array('"', '</'), array('\"', '<\/'), $line) . '");';
+        $ret .= "\n" . 'debug_window.document.writeln("' . str_replace(['"', '</'], ['\"', '<\/'], $line) . '");';
     }
     $ret .= '
     debug_window.focus();
@@ -61,7 +61,7 @@ if (function_exists('memory_get_usage')) {
     $memory = memory_get_usage() . ' bytes';
 } else {
     if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-        $out = array();
+        $out = [];
         exec('tasklist /FI "PID eq ' . getmypid() . '" /FO LIST', $out);
         if (isset($out[5])) {
             $memory = sprintf(_LOGGER_MEM_ESTIMATED, substr($out[5], strpos($out[5], ':') + 1));
@@ -73,7 +73,7 @@ if ($memory) {
 }
 
 if (empty($mode)) {
-    $views = array('errors', 'deprecated', 'queries', 'blocks', 'extra');
+    $views = ['errors', 'deprecated', 'queries', 'blocks', 'extra'];
     $ret .= "\n<div id=\"xo-logger-output\">\n<div id='xo-logger-tabs'>\n";
     $ret .= "<a href='javascript:xoSetLoggerView(\"none\")'>" . _LOGGER_NONE . "</a>\n";
     $ret .= "<a href='javascript:xoSetLoggerView(\"\")'>" . _LOGGER_ALL . "</a>\n";
@@ -87,12 +87,13 @@ if (empty($mode)) {
 }
 
 if (empty($mode) || $mode === 'errors') {
-    $types = array(
+    $types = [
         E_USER_NOTICE  => _LOGGER_E_USER_NOTICE,
         E_USER_WARNING => _LOGGER_E_USER_WARNING,
         E_USER_ERROR   => _LOGGER_E_USER_ERROR,
         E_NOTICE       => _LOGGER_E_NOTICE,
-        E_WARNING      => _LOGGER_E_WARNING,/*E_STRICT       => _LOGGER_E_STRICT*/);
+        E_WARNING      => _LOGGER_E_WARNING,/*E_STRICT       => _LOGGER_E_STRICT*/
+    ];
     $class = 'even';
     $ret .= '<table id="xo-logger-errors" class="outer"><tr><th>' . _LOGGER_ERRORS . '</th></tr>';
     foreach ($this->errors as $error) {

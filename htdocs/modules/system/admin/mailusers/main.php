@@ -64,7 +64,7 @@ switch ($op) {
             $display_criteria = 0;
         }
         if (!empty($display_criteria)) {
-            $selected_groups = array();
+            $selected_groups = [];
             $group_select    = new XoopsFormSelectGroup('<div class="bold spacer">' . _AM_SYSTEM_MAILUSERS_GROUPIS . '<span class="bold green">*</span></div>', 'mail_to_group', false, $selected_groups, 5, true);
 
             $lastlog_min = new XoopsFormTextDateSelect(_AM_SYSTEM_MAILUSERS_LASTLOGMIN . '<span class="bold green">*</span>', 'mail_lastlog_min');
@@ -150,9 +150,9 @@ switch ($op) {
         $xoBreadCrumb->render();
 
         if (!empty($_POST['mail_send_to'])) {
-            $added          = array();
-            $added_id       = array();
-            $criteria       = array();
+            $added          = [];
+            $added_id       = [];
+            $criteria       = [];
             $count_criteria = 0; // user count via criteria;
             if (!empty($_POST['mail_inactive'])) {
                 $criteria[] = 'level = 0';
@@ -213,7 +213,7 @@ switch ($op) {
                 }
                 /* @var $member_handler XoopsMemberHandler */
                 $member_handler = xoops_getHandler('member');
-                $groups         = empty($_POST['mail_to_group']) ? array() : array_map('intval', $_POST['mail_to_group']);
+                $groups         = empty($_POST['mail_to_group']) ? [] : array_map('intval', $_POST['mail_to_group']);
                 $getusers       = $member_handler->getUsersByGroupLink($groups, $criteria_object, true);
                 $count_criteria = $member_handler->getUserCountByGroupLink($groups, $criteria_object);
                 foreach ($getusers as $getuser) {

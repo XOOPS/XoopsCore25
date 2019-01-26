@@ -36,85 +36,86 @@ $modversion['adminmenu']  = 'menu.php';
 $modversion['onUpdate'] = 'include/update.php';
 
 // Templates
-$modversion['templates'][] = array('file' => 'system_imagemanager.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_imagemanager2.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_userinfo.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_userform.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_rss.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_redirect.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_comment.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_comments_controls.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_comments_flat.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_comments_thread.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_comments_nest.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_siteclosed.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_dummy.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_notification_list.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_notification_select.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_block_dummy.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_homepage.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_bannerlogin.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_banner.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_bannerdisplay.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_search.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_popup_header.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_popup_footer.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_trigger_uploads.tpl', 'description' => '');
+$modversion['templates'][] = ['file' => 'system_imagemanager.tpl', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_imagemanager2.tpl', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_userinfo.tpl', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_userform.tpl', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_rss.tpl', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_redirect.tpl', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_comment.tpl', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_comments_controls.tpl', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_comments_flat.tpl', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_comments_thread.tpl', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_comments_nest.tpl', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_siteclosed.tpl', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_dummy.tpl', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_notification_list.tpl', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_notification_select.tpl', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_block_dummy.tpl', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_homepage.tpl', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_bannerlogin.tpl', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_banner.tpl', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_bannerdisplay.tpl', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_search.tpl', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_popup_header.tpl', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_popup_footer.tpl', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_trigger_uploads.tpl', 'description' => ''];
 
 //in transition to .tpl, we keep the .html extension versions for previously existing templates
 
-$modversion['templates'][] = array('file' => 'system_imagemanager.html', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_imagemanager2.html', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_userinfo.html', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_userform.html', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_rss.html', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_redirect.html', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_comment.html', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_comments_flat.html', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_comments_thread.html', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_comments_nest.html', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_siteclosed.html', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_dummy.html', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_notification_list.html', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_notification_select.html', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_block_dummy.html', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_homepage.html', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_bannerlogin.html', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_banner.html', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_bannerdisplay.html', 'description' => '');
+$modversion['templates'][] = ['file' => 'system_imagemanager.html', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_imagemanager2.html', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_userinfo.html', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_userform.html', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_rss.html', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_redirect.html', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_comment.html', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_comments_flat.html', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_comments_thread.html', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_comments_nest.html', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_siteclosed.html', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_dummy.html', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_notification_list.html', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_notification_select.html', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_block_dummy.html', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_homepage.html', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_bannerlogin.html', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_banner.html', 'description' => ''];
+$modversion['templates'][] = ['file' => 'system_bannerdisplay.html', 'description' => ''];
 
 // Admin Templates
-$modversion['templates'][] = array('file' => 'system_header.tpl', 'description' => '', 'type' => 'admin');
-$modversion['templates'][] = array('file' => 'system_banners.tpl', 'description' => '', 'type' => 'admin');
-$modversion['templates'][] = array('file' => 'system_modules.tpl', 'description' => '', 'type' => 'admin');
-$modversion['templates'][] = array('file' => 'system_modules_install.tpl', 'description' => '', 'type' => 'admin');
-$modversion['templates'][] = array('file' => 'system_modules_confirm.tpl', 'description' => '', 'type' => 'admin');
-$modversion['templates'][] = array('file' => 'system_modules_result.tpl', 'description' => '', 'type' => 'admin');
-$modversion['templates'][] = array('file' => 'system_avatars.tpl', 'description' => '', 'type' => 'admin');
-$modversion['templates'][] = array('file' => 'system_smilies.tpl', 'description' => '', 'type' => 'admin');
-$modversion['templates'][] = array('file' => 'system_blocks.tpl', 'description' => '', 'type' => 'admin');
-$modversion['templates'][] = array('file' => 'system_blocks_item.tpl', 'description' => '', 'type' => 'admin');
-$modversion['templates'][] = array('file' => 'system_comments.tpl', 'description' => '', 'type' => 'admin');
-$modversion['templates'][] = array('file' => 'system_comments_list.tpl', 'description' => '', 'type' => 'admin');
-$modversion['templates'][] = array('file' => 'system_userrank.tpl', 'description' => '', 'type' => 'admin');
-$modversion['templates'][] = array('file' => 'system_users.tpl', 'description' => '', 'type' => 'admin');
-$modversion['templates'][] = array('file' => 'system_preferences.tpl', 'description' => '', 'type' => 'admin');
-$modversion['templates'][] = array('file' => 'system_mailusers.tpl', 'description' => '', 'type' => 'admin');
-$modversion['templates'][] = array('file' => 'system_groups.tpl', 'description' => '', 'type' => 'admin');
-$modversion['templates'][] = array('file' => 'system_images.tpl', 'description' => '', 'type' => 'admin');
-$modversion['templates'][] = array('file' => 'system_templates.tpl', 'description' => '', 'type' => 'admin');
-$modversion['templates'][] = array('file' => 'system_filemanager.tpl', 'description' => '', 'type' => 'admin');
-$modversion['templates'][] = array('file' => 'system_index.tpl', 'description' => '', 'type' => 'admin');
-$modversion['templates'][] = array('file' => 'system_maintenance.tpl', 'description' => '', 'type' => 'admin');
-$modversion['templates'][] = array('file' => 'system_help.tpl', 'description' => '', 'type' => 'admin');
+$modversion['templates'][] = ['file' => 'system_header.tpl', 'description' => '', 'type' => 'admin'];
+$modversion['templates'][] = ['file' => 'system_banners.tpl', 'description' => '', 'type' => 'admin'];
+$modversion['templates'][] = ['file' => 'system_modules.tpl', 'description' => '', 'type' => 'admin'];
+$modversion['templates'][] = ['file' => 'system_modules_install.tpl', 'description' => '', 'type' => 'admin'];
+$modversion['templates'][] = ['file' => 'system_modules_confirm.tpl', 'description' => '', 'type' => 'admin'];
+$modversion['templates'][] = ['file' => 'system_modules_result.tpl', 'description' => '', 'type' => 'admin'];
+$modversion['templates'][] = ['file' => 'system_avatars.tpl', 'description' => '', 'type' => 'admin'];
+$modversion['templates'][] = ['file' => 'system_smilies.tpl', 'description' => '', 'type' => 'admin'];
+$modversion['templates'][] = ['file' => 'system_blocks.tpl', 'description' => '', 'type' => 'admin'];
+$modversion['templates'][] = ['file' => 'system_blocks_item.tpl', 'description' => '', 'type' => 'admin'];
+$modversion['templates'][] = ['file' => 'system_comments.tpl', 'description' => '', 'type' => 'admin'];
+$modversion['templates'][] = ['file' => 'system_comments_list.tpl', 'description' => '', 'type' => 'admin'];
+$modversion['templates'][] = ['file' => 'system_userrank.tpl', 'description' => '', 'type' => 'admin'];
+$modversion['templates'][] = ['file' => 'system_users.tpl', 'description' => '', 'type' => 'admin'];
+$modversion['templates'][] = ['file' => 'system_preferences.tpl', 'description' => '', 'type' => 'admin'];
+$modversion['templates'][] = ['file' => 'system_mailusers.tpl', 'description' => '', 'type' => 'admin'];
+$modversion['templates'][] = ['file' => 'system_groups.tpl', 'description' => '', 'type' => 'admin'];
+$modversion['templates'][] = ['file' => 'system_images.tpl', 'description' => '', 'type' => 'admin'];
+$modversion['templates'][] = ['file' => 'system_templates.tpl', 'description' => '', 'type' => 'admin'];
+$modversion['templates'][] = ['file' => 'system_filemanager.tpl', 'description' => '', 'type' => 'admin'];
+$modversion['templates'][] = ['file' => 'system_index.tpl', 'description' => '', 'type' => 'admin'];
+$modversion['templates'][] = ['file' => 'system_maintenance.tpl', 'description' => '', 'type' => 'admin'];
+$modversion['templates'][] = ['file' => 'system_help.tpl', 'description' => '', 'type' => 'admin'];
 
 // Blocks
-$modversion['blocks'][] = array(
+$modversion['blocks'][] = [
     'file'        => 'system_blocks.php',
     'name'        => _MI_SYSTEM_BNAME2,
     'description' => 'Shows user block',
     'show_func'   => 'b_system_user_show',
-    'template'    => 'system_block_user.tpl');
+    'template'    => 'system_block_user.tpl'
+];
 
 $modversion['blocks'][2]['file']        = 'system_blocks.php';
 $modversion['blocks'][2]['name']        = _MI_SYSTEM_BNAME3;

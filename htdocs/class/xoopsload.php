@@ -38,7 +38,7 @@ class XoopsLoad
         static $deprecated;
 
         if (!isset($deprecated)) {
-            $deprecated = array(
+            $deprecated = [
                 'uploader'    => 'xoopsmediauploader',
                 'utility'     => 'xoopsutility',
                 'captcha'     => 'xoopscaptcha',
@@ -46,10 +46,11 @@ class XoopsLoad
                 'file'        => 'xoopsfile',
                 'model'       => 'xoopsmodelfactory',
                 'calendar'    => 'xoopscalendar',
-                'userutility' => 'xoopsuserutility');
+                'userutility' => 'xoopsuserutility'
+            ];
         }
         $name = strtolower($name);
-        if (in_array($type, array('core', 'class')) && array_key_exists($name, $deprecated)) {
+        if (in_array($type, ['core', 'class']) && array_key_exists($name, $deprecated)) {
             if (isset($GLOBALS['xoopsLogger'])) {
                 $GLOBALS['xoopsLogger']->addDeprecated("xoops_load('{$name}') is deprecated, use xoops_load('{$deprecated[$name]}')");
             } else {
@@ -104,7 +105,7 @@ class XoopsLoad
         if (isset($configs[$name])) {
             require_once $configs[$name];
             if (class_exists($name) && method_exists($name, '__autoload')) {
-                call_user_func(array($name, '__autoload'));
+                call_user_func([$name, '__autoload']);
             }
 
             return true;
@@ -173,7 +174,7 @@ class XoopsLoad
      */
     public static function loadCoreConfig()
     {
-        return $configs = array(
+        return $configs = [
             'xoopsuserutility'           => XOOPS_ROOT_PATH . '/class/userutility.php',
             'xoopsmediauploader'         => XOOPS_ROOT_PATH . '/class/uploader.php',
             'xoopsutility'               => XOOPS_ROOT_PATH . '/class/utility/xoopsutility.php',
@@ -231,7 +232,8 @@ class XoopsLoad
             'xoopsformrendererlegacy'    => XOOPS_ROOT_PATH . '/class/xoopsform/renderer/XoopsFormRendererLegacy.php',
             'xoopsformrendererbootstrap3'=> XOOPS_ROOT_PATH . '/class/xoopsform/renderer/XoopsFormRendererBootstrap3.php',
             'xoopsfilterinput'           => XOOPS_ROOT_PATH . '/class/xoopsfilterinput.php',
-            'xoopsrequest'               => XOOPS_ROOT_PATH . '/class/xoopsrequest.php');
+            'xoopsrequest'               => XOOPS_ROOT_PATH . '/class/xoopsrequest.php'
+        ];
     }
 
     /**

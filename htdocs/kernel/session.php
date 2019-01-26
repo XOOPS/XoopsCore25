@@ -52,11 +52,11 @@ class XoopsSessionHandler
      */
     public $securityLevel = 3;
 
-    protected $bitMasks = array(
-        2 => array('v4' => 16, 'v6' => 64),
-        3 => array('v4' => 24, 'v6' => 56),
-        4 => array('v4' => 32, 'v6' => 128),
-    );
+    protected $bitMasks = [
+        2 => ['v4' => 16, 'v6' => 64],
+        3 => ['v4' => 24, 'v6' => 56],
+        4 => ['v4' => 32, 'v6' => 128],
+    ];
 
     /**
      * Enable regenerate_id

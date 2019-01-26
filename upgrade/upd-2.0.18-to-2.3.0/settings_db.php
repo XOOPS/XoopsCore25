@@ -34,9 +34,9 @@ $vars =& $_SESSION['settings'];
  */
 function getDbCharsets()
 {
-    $charsets = array();
+    $charsets = [];
 
-    $charsets['utf8'] = array();
+    $charsets['utf8'] = [];
     $ut8_available    = false;
     if ($result = $GLOBALS['xoopsDB']->queryF('SHOW CHARSET')) {
         while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
@@ -58,7 +58,7 @@ function getDbCharsets()
  */
 function getDbCollations()
 {
-    $collations = array();
+    $collations = [];
     $charsets   = getDbCharsets();
 
     if ($result = $GLOBALS['xoopsDB']->queryF('SHOW COLLATION')) {
@@ -109,7 +109,7 @@ function xoFormFieldCollation($name, $value, $label, $help = '')
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && @$_POST['task'] === 'db') {
-    $params = array('DB_COLLATION');
+    $params = ['DB_COLLATION'];
     foreach ($params as $name) {
         $vars[$name] = isset($_POST[$name]) ? $_POST[$name] : '';
     }

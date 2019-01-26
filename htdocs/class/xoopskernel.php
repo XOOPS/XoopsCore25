@@ -25,19 +25,19 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class xos_kernel_Xoops2
 {
-    public $paths = array('XOOPS' => array(), 'www' => array(), 'var' => array(), 'lib' => array(), 'modules' => array(), 'themes' => array());
+    public $paths = ['XOOPS' => [], 'www' => [], 'var' => [], 'lib' => [], 'modules' => [], 'themes' => []];
 
     /**
      * Actual Xoops OS
      */
     public function __construct()
     {
-        $this->paths['XOOPS']   = array(XOOPS_PATH, XOOPS_URL . 'browse.php');
-        $this->paths['www']     = array(XOOPS_ROOT_PATH, XOOPS_URL);
-        $this->paths['var']     = array(XOOPS_VAR_PATH, null);
-        $this->paths['lib']     = array(XOOPS_PATH, XOOPS_URL . 'browse.php');
-        $this->paths['modules'] = array(XOOPS_ROOT_PATH . '/modules', XOOPS_URL . '/modules');
-        $this->paths['themes']  = array(XOOPS_ROOT_PATH . '/themes', XOOPS_URL . '/themes');
+        $this->paths['XOOPS']   = [XOOPS_PATH, XOOPS_URL . 'browse.php'];
+        $this->paths['www']     = [XOOPS_ROOT_PATH, XOOPS_URL];
+        $this->paths['var']     = [XOOPS_VAR_PATH, null];
+        $this->paths['lib']     = [XOOPS_PATH, XOOPS_URL . 'browse.php'];
+        $this->paths['modules'] = [XOOPS_ROOT_PATH . '/modules', XOOPS_URL . '/modules'];
+        $this->paths['themes']  = [XOOPS_ROOT_PATH . '/themes', XOOPS_URL . '/themes'];
     }
 
     /**
@@ -52,7 +52,7 @@ class xos_kernel_Xoops2
         $path = '';
         @list($root, $path) = explode('/', $url, 2);
         if (!isset($this->paths[$root])) {
-            list($root, $path) = array('www', $url);
+            list($root, $path) = ['www', $url];
         }
         if (!$virtual) { // Returns a physical path
             $path = $this->paths[$root][0] . '/' . $path;
@@ -80,7 +80,7 @@ class xos_kernel_Xoops2
      * @param  array  $params
      * @return string
      */
-    public function buildUrl($url, $params = array())
+    public function buildUrl($url, $params = [])
     {
         if ($url === '.') {
             $url = $_SERVER['REQUEST_URI'];

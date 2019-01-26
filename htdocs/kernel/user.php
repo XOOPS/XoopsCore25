@@ -31,7 +31,7 @@ class XoopsUser extends XoopsObject
      * @var array
      * @access private
      */
-    public $_groups = array();
+    public $_groups = [];
     /**
      * @var bool is the user admin?
      * @access private

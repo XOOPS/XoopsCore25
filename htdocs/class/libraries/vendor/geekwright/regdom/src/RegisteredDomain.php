@@ -98,7 +98,7 @@ class RegisteredDomain
         $bias = 72;
         $idx = 0;
         $char = 0x80;
-        $decoded = array();
+        $decoded = [];
         $output = '';
 
         $delim_pos = strrpos($encoded, '-');

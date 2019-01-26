@@ -81,7 +81,7 @@ class XoopsFolderHandler
      * @var array
      * @access private
      */
-    public $messages = array();
+    public $messages = [];
 
     /**
      * holds errors from last method.
@@ -172,7 +172,7 @@ class XoopsFolderHandler
      */
     public function read($sort = true, $exceptions = false)
     {
-        $dirs = $files = array();
+        $dirs = $files = [];
         $dir  = opendir($this->path);
         if ($dir !== false) {
             while (false !== ($n = readdir($dir))) {
@@ -201,9 +201,10 @@ class XoopsFolderHandler
             closedir($dir);
         }
 
-        return array(
+        return [
             $dirs,
-            $files);
+            $files
+        ];
     }
 
     /**
@@ -219,10 +220,10 @@ class XoopsFolderHandler
     {
         $data = $this->read($sort);
         if (!is_array($data)) {
-            return array();
+            return [];
         }
         list($dirs, $files) = $data;
-        $found = array();
+        $found = [];
         foreach ($files as $file) {
             if (preg_match("/^{$regexp_pattern}$/i", $file)) {
                 $found[] = $file;
@@ -262,7 +263,7 @@ class XoopsFolderHandler
     public function _findRecursive($pattern, $sort = false)
     {
         list($dirs, $files) = $this->read($sort);
-        $found = array();
+        $found = [];
         foreach ($files as $file) {
             if (preg_match("/^{$pattern}$/i", $file)) {
                 $found[] = $this->addPathElement($this->path, $file);
@@ -432,7 +433,7 @@ class XoopsFolderHandler
      * @return boolean Returns TRUE on success, FALSE on failure
      * @access public
      */
-    public function chmod($path, $mode = false, $recursive = true, $exceptions = array())
+    public function chmod($path, $mode = false, $recursive = true, $exceptions = [])
     {
         if (!$mode) {
             $mode = $this->mode;
@@ -485,19 +486,21 @@ class XoopsFolderHandler
     public function tree($path, $hidden = true, $type = null)
     {
         $path              = rtrim($path, '/');
-        $this->files       = array();
-        $this->directories = array(
-            $path);
-        $directories       = array();
+        $this->files       = [];
+        $this->directories = [
+            $path
+        ];
+        $directories       = [];
         while (count($this->directories)) {
             $dir = array_pop($this->directories);
             $this->_tree($dir, $hidden);
             $directories[] =  $dir;
         }
         if ($type === null) {
-            return array(
+            return [
                 $directories,
-                $this->files);
+                $this->files
+            ];
         }
         if ($type === 'dir') {
             return $directories;
@@ -586,7 +589,7 @@ class XoopsFolderHandler
     {
         $size      = 0;
         $directory = $this->slashTerm($this->path);
-        $stack     = array($directory);
+        $stack     = [$directory];
         $count     = count($stack);
         for ($i = 0, $j = $count; $i < $j; ++$i) {
             if (is_file($stack[$i])) {
@@ -672,18 +675,19 @@ class XoopsFolderHandler
      * @return bool
      * @access public
      */
-    public function copy($options = array())
+    public function copy($options = [])
     {
         $to = null;
         if (is_string($options)) {
             $to      = $options;
-            $options = array();
+            $options = [];
         }
-        $options = array_merge(array(
+        $options = array_merge([
                                    'to'   => $to,
                                    'from' => $this->path,
                                    'mode' => $this->mode,
-                                   'skip' => array()), $options);
+                                   'skip' => []
+                               ], $options);
 
         $fromDir = $options['from'];
         $toDir   = $options['to'];
@@ -701,10 +705,11 @@ class XoopsFolderHandler
 
             return false;
         }
-        $exceptions = array_merge(array(
+        $exceptions = array_merge([
                                       '.',
                                       '..',
-                                      '.svn'), $options['skip']);
+                                      '.svn'
+                                  ], $options['skip']);
         $handle     = opendir($fromDir);
         if ($handle) {
             while (false !== ($item = readdir($handle))) {
@@ -724,9 +729,10 @@ class XoopsFolderHandler
                         if (mkdir($to, intval($mode, 8))) {
                             chmod($to, intval($mode, 8));
                             $this->messages[] = sprintf('%s created', $to);
-                            $options          = array_merge($options, array(
+                            $options          = array_merge($options, [
                                                                         'to'   => $to,
-                                                                        'from' => $from));
+                                                                        'from' => $from
+                            ]);
                             $this->copy($options);
                         } else {
                             $this->errors[] = sprintf('%s not created', $to);
@@ -760,11 +766,12 @@ class XoopsFolderHandler
             $to      = $options;
             $options = (array)$options;
         }
-        $options = array_merge(array(
+        $options = array_merge([
                                    'to'   => $to,
                                    'from' => $this->path,
                                    'mode' => $this->mode,
-                                   'skip' => array()), $options);
+                                   'skip' => []
+                               ], $options);
         if ($this->copy($options)) {
             if ($this->delete($options['from'])) {
                 return $this->cd($options['to']);
@@ -814,7 +821,7 @@ class XoopsFolderHandler
             return $path;
         }
         $parts    = explode('/', $path);
-        $newparts = array();
+        $newparts = [];
         $newpath  = $path{0} === '/' ? '/' : '';
         while (($part = array_shift($parts)) !== null) {
             if ($part === '.' || $part == '') {

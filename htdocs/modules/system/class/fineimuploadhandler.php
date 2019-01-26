@@ -44,8 +44,8 @@ class SystemFineImUploadHandler extends SystemFineUploadHandler
     public function __construct(\stdClass $claims)
     {
         parent::__construct($claims);
-        $this->allowedMimeTypes = array('image/gif', 'image/jpeg', 'image/png');
-        $this->allowedExtensions = array('gif', 'jpeg', 'jpg', 'png');
+        $this->allowedMimeTypes = ['image/gif', 'image/jpeg', 'image/png'];
+        $this->allowedExtensions = ['gif', 'jpeg', 'jpg', 'png'];
     }
 
     protected function storeUploadedFile($target, $mimeType, $uuid)
@@ -57,7 +57,7 @@ class SystemFineImUploadHandler extends SystemFineUploadHandler
         $pathParts = pathinfo($this->getName());
 
         $imageName = uniqid('img') . '.' . strtolower($pathParts['extension']);
-        $imageNicename = str_replace(array('_','-'), ' ', $pathParts['filename']);
+        $imageNicename = str_replace(['_', '-'], ' ', $pathParts['filename']);
         $imagePath = XOOPS_ROOT_PATH . '/uploads/images/' . $imageName;
 
         $fbinary = null;
@@ -85,10 +85,10 @@ class SystemFineImUploadHandler extends SystemFineUploadHandler
             $image->setVar('image_name', 'images/' . $imageName);
         }
         if (!$imageHandler->insert($image)) {
-            return array(
+            return [
                 'error' => sprintf(_FAILSAVEIMG, $image->getVar('image_nicename'))
-            );
+            ];
         }
-        return array('success'=> true, "uuid" => $uuid);
+        return ['success' => true, "uuid" => $uuid];
     }
 }

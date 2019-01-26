@@ -10,7 +10,7 @@ class Protector_postcommon_register_insert_js_check extends ProtectorFilterAbstr
      */
     public function execute()
     {
-        ob_start(array($this, 'ob_filter'));
+        ob_start([$this, 'ob_filter']);
 
         if (!empty($_POST)) {
             if (!$this->checkValidate()) {
@@ -56,9 +56,9 @@ class Protector_postcommon_register_insert_js_check extends ProtectorFilterAbstr
     {
         $as_md5        = $this->getMd5();
         $as_md5array   = preg_split('//', $as_md5, -1, PREG_SPLIT_NO_EMPTY);
-        $as_md5shuffle = array();
+        $as_md5shuffle = [];
         foreach ($as_md5array as $key => $val) {
-            $as_md5shuffle[] = array('key' => $key, 'val' => $val);
+            $as_md5shuffle[] = ['key' => $key, 'val' => $val];
         }
         shuffle($as_md5shuffle);
         $js_in_validate_function = "antispam_md5s=new Array(32);\n";
@@ -75,9 +75,10 @@ class Protector_postcommon_register_insert_js_check extends ProtectorFilterAbstr
             xoopsGetElementById('antispam_md5').value = antispam_md5 ;
         ";
 
-        return array(
+        return [
             'html_in_form' => '<input type="hidden" name="antispam_md5" id="antispam_md5" value="" />',
-            'js_global'    => '<script type="text/javascript"><!--//' . "\n" . $js_in_validate_function . "\n" . '//--></script><noscript><div class="errorMsg">' . _MD_PROTECTOR_TURNJAVASCRIPTON . '</div></noscript>');
+            'js_global'    => '<script type="text/javascript"><!--//' . "\n" . $js_in_validate_function . "\n" . '//--></script><noscript><div class="errorMsg">' . _MD_PROTECTOR_TURNJAVASCRIPTON . '</div></noscript>'
+        ];
     }
 
     /**

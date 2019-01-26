@@ -98,7 +98,7 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
         $insertValues = '';
 
         if ($db->getRowsNum($result)>0) {
-            $fieldInfo = array();
+            $fieldInfo = [];
             $insertNames = "INSERT INTO `$table` (";
             for ($j = 0; $j < $fieldCount; ++$j) {
                 $field = $result->fetch_field_direct($j);
@@ -216,13 +216,14 @@ if (!$db->getRowsNum($srs)) {
 }
 
 // search prefixes
-$tables   = array();
-$prefixes = array();
+$tables   = [];
+$prefixes = [];
 while (false !== ($row_table = $db->fetchArray($srs))) {
     if (substr($row_table['Name'], -6) === '_users') {
-        $prefixes[] = array(
+        $prefixes[] = [
             'name'    => substr($row_table['Name'], 0, -6),
-            'updated' => $row_table['Update_time']);
+            'updated' => $row_table['Update_time']
+        ];
     }
     $tables[] = $row_table['Name'];
 }

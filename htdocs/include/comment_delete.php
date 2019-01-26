@@ -24,11 +24,12 @@ include_once $GLOBALS['xoops']->path('include/comment_constants.php');
 
 $op = 'delete';
 
-$filters = array(
+$filters = [
     'com_mode' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
     'op' => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
     'com_order' => FILTER_VALIDATE_INT,
-    'com_id' => FILTER_VALIDATE_INT);
+    'com_id' => FILTER_VALIDATE_INT
+];
 
 if (!empty($_POST)) {
     $result = filter_input_array(INPUT_POST, $filters);
@@ -59,7 +60,7 @@ if ('system' === $xoopsModule->getVar('dirname')) {
     $comment_config        = $xoopsModule->getInfo('comments');
     $com_modid             = $xoopsModule->getVar('mid');
     $redirect_page         = $comment_config['pageName'] . '?';
-    $comment_confirm_extra = array();
+    $comment_confirm_extra = [];
     if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
         foreach ($comment_config['extraParams'] as $extra_param) {
             if (isset(${$extra_param})) {
@@ -161,7 +162,7 @@ switch ($op) {
         $child_comments =& $xot->getFirstChild($com_id);
         // now set new parent ID for direct child comments
         $new_pid = $comment->getVar('com_pid');
-        $errs    = array();
+        $errs    = [];
         foreach (array_keys($child_comments) as $i) {
             $child_comments[$i]->setVar('com_pid', $new_pid);
             // if the deleted comment is a root comment, need to change root id to own id
@@ -211,8 +212,8 @@ switch ($op) {
         $child_comments =& $xot->getAllChild($com_id);
         // add itself here
         $child_comments[$com_id] = &$comment;
-        $msgs                    = array();
-        $deleted_num             = array();
+        $msgs                    = [];
+        $deleted_num             = [];
         /* @var $member_handler XoopsMemberHandler */
         $member_handler          = xoops_getHandler('member');
         foreach (array_keys($child_comments) as $i) {
@@ -269,13 +270,15 @@ switch ($op) {
     case 'delete':
     default:
         include_once $GLOBALS['xoops']->path('header.php');
-        $comment_confirm = array(
+        $comment_confirm = [
             'com_id'    => $com_id,
             'com_mode'  => $com_mode,
             'com_order' => $com_order,
-            'op'        => array(
+            'op'        => [
                 _CM_DELETEONE => 'delete_one',
-                _CM_DELETEALL => 'delete_all'));
+                _CM_DELETEALL => 'delete_all'
+            ]
+        ];
         if (!empty($comment_confirm_extra) && is_array($comment_confirm_extra)) {
             $comment_confirm += $comment_confirm_extra;
         }

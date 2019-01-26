@@ -62,7 +62,7 @@ class XoopsSystemCpanel
                 include_once XOOPS_ADMINTHEME_PATH . '/' . $gui . '/' . $gui . '.php';
             }
             if (class_exists($class)) {
-                if (call_user_func(array($class, 'validate'))) {
+                if (call_user_func([$class, 'validate'])) {
                     $this->gui             = new $class();
                     $this->gui->foldername = $gui;
                 }
@@ -84,14 +84,14 @@ class XoopsSystemCpanel
      */
     public static function getGuis()
     {
-        $guis = array();
+        $guis = [];
         xoops_load('XoopsLists');
         $lists = XoopsLists::getDirListAsArray(XOOPS_ADMINTHEME_PATH);
         foreach (array_keys($lists) as $gui) {
             if (file_exists($file = XOOPS_ADMINTHEME_PATH . '/' . $gui . '/' . $gui . '.php')) {
                 include_once $file;
                 if (class_exists($class = 'XoopsGui' . ucfirst($gui))) {
-                    if (call_user_func(array($class, 'validate'))) {
+                    if (call_user_func([$class, 'validate'])) {
                         $guis[$gui] = $gui;
                     }
                 }
@@ -112,7 +112,7 @@ class XoopsSystemCpanel
             if ($file = XOOPS_ADMINTHEME_PATH . '/' . $gui . '/' . $gui . '.php') {
                 include_once $file;
                 if (class_exists($class = 'XoopsGui' . ucfirst($gui))) {
-                    call_user_func(array($class, 'flush'));
+                    call_user_func([$class, 'flush']);
                 }
             }
         }

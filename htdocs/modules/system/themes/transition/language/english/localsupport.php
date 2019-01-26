@@ -1,7 +1,7 @@
 <?php
 //
 
-$menu = array();
+$menu = [];
 
 // sample for English  support
 /*

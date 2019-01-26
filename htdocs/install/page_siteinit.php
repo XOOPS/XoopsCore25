@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $vars['adminmail']  = trim($_POST['adminmail']);
     $vars['adminpass']  = trim($_POST['adminpass']);
     $vars['adminpass2'] = trim($_POST['adminpass2']);
-    $error              = array();
+    $error              = [];
 
     if (empty($vars['adminname'])) {
         $error['name'][] = ERR_REQUIRED;

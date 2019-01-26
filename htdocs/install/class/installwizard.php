@@ -26,10 +26,10 @@
 class XoopsInstallWizard
 {
     public $language    = 'english';
-    public $pages       = array();
+    public $pages       = [];
     public $currentPage = 'langselect';
     public $pageIndex   = 0;
-    public $configs     = array();
+    public $configs     = [];
 
     /**
      * @return bool

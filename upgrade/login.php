@@ -62,7 +62,7 @@ if (empty($_POST['uname']) || empty($_POST['pass'])) {
         }
         // Regenrate a new session id and destroy old session
         $GLOBALS['sess_handler']->regenerate_id(true);
-        $_SESSION                    = array();
+        $_SESSION                    = [];
         $_SESSION['xoopsUserId']     = $user->getVar('uid');
         $_SESSION['xoopsUserGroups'] = $user->getGroups();
         $user_theme                  = $user->getVar('theme');

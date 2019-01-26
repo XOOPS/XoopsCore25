@@ -192,10 +192,11 @@ foreach ($mids as $mid) {
             if ($count == 5) {
                 $showall_link = '<a href="search.php?action=showallbyuser&amp;mid=' . $mid . '&amp;uid=' . $thisUser->getVar('uid') . '">' . _US_SHOWALL . '</a>';
             }
-            $xoopsTpl->append('modules', array(
+            $xoopsTpl->append('modules', [
                 'name'         => $module->getVar('name'),
                 'results'      => $results,
-                'showall_link' => $showall_link));
+                'showall_link' => $showall_link
+            ]);
         }
         unset($module);
     }

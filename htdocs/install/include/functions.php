@@ -19,9 +19,9 @@
 function install_acceptUser($hash = '')
 {
     $GLOBALS['xoopsUser'] = null;
-    $assertClaims = array(
+    $assertClaims = [
         'sub' => 'xoopsinstall',
-    );
+    ];
     $claims = \Xmf\Jwt\TokenReader::fromCookie('install', 'xo_install_user', $assertClaims);
     if (false === $claims || empty($claims->uname)) {
         return false;
@@ -141,7 +141,7 @@ function xoFormSelect($name, $value, $label, $options, $help = '', $extra='')
  */
 function getDirList($dirname)
 {
-    $dirlist = array();
+    $dirlist = [];
     if ($handle = opendir($dirname)) {
         while ($file = readdir($handle)) {
             if ($file{0} !== '.' && is_dir($dirname . $file)) {
@@ -167,8 +167,8 @@ function xoDiag($status = -1, $str = '')
     if ($status == -1) {
         $GLOBALS['error'] = true;
     }
-    $classes = array(-1 => 'fa fa-fw fa-ban text-danger', 0 => 'fa fa-fw fa-square-o text-warning', 1 => 'fa fa-fw fa-check text-success');
-    $strings = array(-1 => FAILED, 0 => WARNING, 1 => SUCCESS);
+    $classes = [-1 => 'fa fa-fw fa-ban text-danger', 0 => 'fa fa-fw fa-square-o text-warning', 1 => 'fa fa-fw fa-check text-success'];
+    $strings = [-1 => FAILED, 0 => WARNING, 1 => SUCCESS];
     if (empty($str)) {
         $str = $strings[$status];
     }
@@ -278,7 +278,7 @@ function genPathCheckHtml($path, $valid)
  */
 function getDbCharsets($link)
 {
-    static $charsets = array();
+    static $charsets = [];
     if ($charsets) {
         return $charsets;
     }
@@ -300,7 +300,7 @@ function getDbCharsets($link)
  */
 function getDbCollations($link, $charset)
 {
-    static $collations = array();
+    static $collations = [];
     if (!empty($collations[$charset])) {
         return $collations[$charset];
     }
@@ -361,10 +361,10 @@ function xoFormFieldCollation($name, $value, $label, $help, $link, $charset)
         return '';
     }
 
-    $options           = array();
+    $options           = [];
     foreach ($collations as $key => $isDefault) {
         if ($isDefault) {  // 'Yes' or ''
-            $options = array($key => $key . ' (Default)') + $options;
+            $options = [$key => $key . ' (Default)'] + $options;
         } else {
             $options[$key] = $key;
         }
@@ -446,10 +446,10 @@ function xoPutLicenseKey($system_key, $licensefile, $license_file_dist = 'licens
  */
 function xoBuildLicenceKey()
 {
-    $xoops_serdat = array();
+    $xoops_serdat = [];
     mt_srand(((float)('0' . substr(microtime(), strpos(microtime(), ' ') + 1, strlen(microtime()) - strpos(microtime(), ' ') + 1))) * mt_rand(30, 99999));
     mt_srand(((float)('0' . substr(microtime(), strpos(microtime(), ' ') + 1, strlen(microtime()) - strpos(microtime(), ' ') + 1))) * mt_rand(30, 99999));
-    $checksums = array(1 => 'md5', 2 => 'sha1');
+    $checksums = [1 => 'md5', 2 => 'sha1'];
     $type      = mt_rand(1, 2);
     $func      = $checksums[$type];
 

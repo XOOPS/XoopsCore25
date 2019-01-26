@@ -226,7 +226,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
      */
     public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('groups');
         if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
@@ -411,7 +411,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
      */
     public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('groups_users_link');
         if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
@@ -488,7 +488,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
      */
     public function getGroupsByUser($uid)
     {
-        $ret    = array();
+        $ret    = [];
         $sql    = 'SELECT groupid FROM ' . $this->db->prefix('groups_users_link') . ' WHERE uid=' . (int)$uid;
         $result = $this->db->query($sql);
         if (!$result) {
@@ -513,7 +513,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
      */
     public function getUsersByGroup($groupid, $limit = 0, $start = 0)
     {
-        $ret    = array();
+        $ret    = [];
         $sql    = 'SELECT uid FROM ' . $this->db->prefix('groups_users_link') . ' WHERE groupid=' . (int)$groupid;
         $result = $this->db->query($sql, $limit, $start);
         if (!$result) {

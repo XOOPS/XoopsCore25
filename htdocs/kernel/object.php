@@ -63,7 +63,7 @@ class XoopsObject
      * @var array
      * @access protected
      */
-    public $vars = array();
+    public $vars = [];
 
     /**
      * variables cleaned for store in DB
@@ -71,7 +71,7 @@ class XoopsObject
      * @var array
      * @access protected
      */
-    public $cleanVars = array();
+    public $cleanVars = [];
 
     /**
      * is it a newly created object?
@@ -95,14 +95,14 @@ class XoopsObject
      * @var array
      * @access private
      */
-    public $_errors = array();
+    public $_errors = [];
 
     /**
      * additional filters registered dynamically by a child class object
      *
      * @access private
      */
-    public $_filters = array();
+    public $_filters = [];
 
     /**
      * constructor
@@ -195,14 +195,15 @@ class XoopsObject
      */
     public function initVar($key, $data_type, $value = null, $required = false, $maxlength = null, $options = '', $enumerations = '')
     {
-        $this->vars[$key] = array(
+        $this->vars[$key] = [
             'value'       => $value,
             'required'    => $required,
             'data_type'   => $data_type,
             'maxlength'   => $maxlength,
             'changed'     => false,
             'options'     => $options,
-            'enumeration' => $enumerations);
+            'enumeration' => $enumerations
+        ];
     }
 
     /**
@@ -318,7 +319,7 @@ class XoopsObject
         if (empty($var)) {
             return true;
         }
-        $var = !is_array($var) ? array($var) : $var;
+        $var = !is_array($var) ? [$var] : $var;
         foreach ($var as $key) {
             if (!isset($this->vars[$key])) {
                 continue;
@@ -387,7 +388,7 @@ class XoopsObject
         if (!isset($keys)) {
             $keys = array_keys($this->vars);
         }
-        $vars = array();
+        $vars = [];
         foreach ($keys as $key) {
             if (isset($this->vars[$key])) {
                 if (is_object($this->vars[$key]) && is_a($this->vars[$key], 'XoopsObject')) {
@@ -493,7 +494,7 @@ class XoopsObject
                             if ($ret != '') {
                                 $ret = unserialize($ret);
                             }
-                            $ret = is_array($ret) ? $ret : array();
+                            $ret = is_array($ret) ? $ret : [];
                             if (is_array($ret)) {
                                 $ret = array_walk($ret, 'xoops_aw_decode');
                             }
@@ -513,7 +514,7 @@ class XoopsObject
                             if ($ret != '') {
                                 $ret = unserialize($ret);
                             }
-                            $ret = is_array($ret) ? $ret : array();
+                            $ret = is_array($ret) ? $ret : [];
                         }
 
                         return $ret;
@@ -671,7 +672,7 @@ class XoopsObject
                             $selected = explode('|', $ret);
                             $options  = explode('|', $this->vars[$key]['options']);
                             $i        = 1;
-                            $ret      = array();
+                            $ret      = [];
                             foreach ($options as $op) {
                                 if (in_array($i, $selected)) {
                                     $ret[] = $op;
@@ -707,7 +708,7 @@ class XoopsObject
     {
         $ts              = MyTextSanitizer::getInstance();
         $existing_errors = $this->getErrors();
-        $this->_errors   = array();
+        $this->_errors   = [];
         foreach ($this->vars as $k => $v) {
             $cleanv = $v['value'];
             if (!$v['changed']) {
@@ -945,7 +946,7 @@ class XoopsObject
             /* @var $module_handler XoopsModuleHandler */
             $module_handler = xoops_getHandler('module');
             $modules_obj    = $module_handler->getObjects(new Criteria('isactive', 1));
-            $modules_active = array();
+            $modules_active = [];
             foreach (array_keys($modules_obj) as $key) {
                 $modules_active[] = $modules_obj[$key]->getVar('dirname');
             }
@@ -956,7 +957,7 @@ class XoopsObject
             if (file_exists($file = XOOPS_ROOT_PATH . '/modules/' . $dirname . '/filter/' . $class . '.' . $method . '.php')) {
                 include_once $file;
                 if (function_exists($class . '_' . $method)) {
-                    call_user_func_array($dirname . '_' . $class . '_' . $method, array(&$this));
+                    call_user_func_array($dirname . '_' . $class . '_' . $method, [&$this]);
                 }
             }
         }
@@ -1172,7 +1173,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * static protected
      */
-    public $handlers = array('read' => null, 'stats' => null, 'joint' => null, 'write' => null, 'sync' => null);
+    public $handlers = ['read' => null, 'stats' => null, 'joint' => null, 'write' => null, 'sync' => null];
 
     /**
      * Information about the class, the handler is managing
@@ -1318,13 +1319,13 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      */
     public function __call($name, $args)
     {
-        if (is_object($this->handler) && is_callable(array($this->handler, $name))) {
-            return call_user_func_array(array($this->handler, $name), $args);
+        if (is_object($this->handler) && is_callable([$this->handler, $name])) {
+            return call_user_func_array([$this->handler, $name], $args);
         }
         foreach (array_keys($this->handlers) as $_handler) {
             $handler = $this->loadHandler($_handler);
-            if (is_callable(array($handler, $name))) {
-                return call_user_func_array(array($handler, $name), $args);
+            if (is_callable([$handler, $name])) {
+                return call_user_func_array([$handler, $name], $args);
             }
         }
 

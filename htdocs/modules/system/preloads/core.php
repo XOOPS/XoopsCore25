@@ -68,7 +68,7 @@ class SystemCorePreload extends XoopsPreloadItem
             //$GLOBALS['xoTheme']->addStylesheet('xoops.css');
             $GLOBALS['xoTheme']->addScript('browse.php?Frameworks/jquery/jquery.js');
             $GLOBALS['xoTheme']->addScript('browse.php?Frameworks/jquery/plugins/jquery.jgrowl.js');
-            $GLOBALS['xoTheme']->addScript('', array('type' => 'text/javascript'), '
+            $GLOBALS['xoTheme']->addScript('', ['type' => 'text/javascript'], '
             (function($){
                 $(document).ready(function(){
                 $.jGrowl("' . $_SESSION['redirect_message'] . '", {  life:3000 , position: "center", speed: "slow" });
@@ -88,7 +88,7 @@ class SystemCorePreload extends XoopsPreloadItem
             //$GLOBALS['xoTheme']->addStylesheet('xoops.css');
             $GLOBALS['xoTheme']->addScript('browse.php?Frameworks/jquery/jquery.js');
             $GLOBALS['xoTheme']->addScript('browse.php?Frameworks/jquery/plugins/jquery.jgrowl.js');
-            $GLOBALS['xoTheme']->addScript('', array('type' => 'text/javascript'), '
+            $GLOBALS['xoTheme']->addScript('', ['type' => 'text/javascript'], '
             (function($){
             $(document).ready(function(){
                 $.jGrowl("' . $_SESSION['redirect_message'] . '", {  life:3000 , position: "center", speed: "slow" });

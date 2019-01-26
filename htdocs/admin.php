@@ -79,7 +79,7 @@ if (!isset($xoopsConfig['admin_warnings_enable']) || $xoopsConfig['admin_warning
 if (!empty($_GET['xoopsorgnews'])) {
     // Multiple feeds
     $myts     = MyTextSanitizer::getInstance();
-    $rssurl   = array();
+    $rssurl   = [];
     //$rssurl[] = 'http://sourceforge.net/export/rss2_projnews.php?group_id=41586&rss_fulltext=1';
     $rssurl[] = 'http://www.xoops.org/backend.php';
     if ($URLs = include $GLOBALS['xoops']->path('language/' . xoops_getConfigOption('language') . '/backend.php')) {
@@ -87,7 +87,7 @@ if (!empty($_GET['xoopsorgnews'])) {
     }
     $rssfile = 'adminnews-' . xoops_getConfigOption('language');
     xoops_load('XoopsCache');
-    $items = array();
+    $items = [];
     if (!$items = XoopsCache::read($rssfile)) {
         require_once $GLOBALS['xoops']->path('class/snoopy.php');
         include_once $GLOBALS['xoops']->path('class/xml/rss/xmlrss2parser.php');

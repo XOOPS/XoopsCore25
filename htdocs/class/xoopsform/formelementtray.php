@@ -30,14 +30,14 @@ class XoopsFormElementTray extends XoopsFormElement
      * @var array
      * @access private
      */
-    private $_elements = array();
+    private $_elements = [];
 
     /**
      * required elements
      *
      * @var array
      */
-    public $_required = array();
+    public $_required = [];
 
     /**
      * HTML to seperate the elements
@@ -127,7 +127,7 @@ class XoopsFormElementTray extends XoopsFormElement
         if (!$recurse) {
             return $this->_elements;
         } else {
-            $ret   = array();
+            $ret   = [];
             $count = count($this->_elements);
             for ($i = 0; $i < $count; ++$i) {
                 if (!$this->_elements[$i]->isContainer()) {

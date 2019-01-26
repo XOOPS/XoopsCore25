@@ -51,7 +51,7 @@ function xoops_module_update_pm(XoopsModule $module, $oldversion = null)
     if ($oldversion < 110) {
         // remove old html template files
         $templateDirectory = XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'n') . '/templates/';
-        $template_list     = array_diff(scandir($templateDirectory), array('..', '.'));
+        $template_list     = array_diff(scandir($templateDirectory), ['..', '.']);
         foreach ($template_list as $k => $v) {
             $fileinfo = new SplFileInfo($templateDirectory . $v);
             if ($fileinfo->getExtension() === 'html' && $fileinfo->getFilename() !== 'index.html') {

@@ -110,7 +110,7 @@ if (false !== $error) {
 
     $admin_dir        = XOOPS_ROOT_PATH . '/modules/system/admin';
     $dirlist          = XoopsLists::getDirListAsArray($admin_dir);
-    $inactive_section = array('blocksadmin', 'groups', 'modulesadmin', 'preferences', 'tplsets');
+    $inactive_section = ['blocksadmin', 'groups', 'modulesadmin', 'preferences', 'tplsets'];
     foreach ($dirlist as $directory) {
         if (file_exists($admin_dir . '/' . $directory . '/xoops_version.php')) {
             require $admin_dir . '/' . $directory . '/xoops_version.php';

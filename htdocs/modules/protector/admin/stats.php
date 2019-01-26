@@ -45,7 +45,7 @@ $sql .= sprintf($queryFormat, 'day', 24*60*60);
 $sql .= 'UNION ALL ';
 $sql .= sprintf($queryFormat, 'hour', 60*60);
 
-$rawStats = array();
+$rawStats = [];
 $rawStats['']['month'] = 0;
 $rawStats['']['week'] = 0;
 $rawStats['']['day'] = 0;
@@ -54,7 +54,7 @@ $result = $xoopsDB->query($sql);
 while (false !== ($row = $xoopsDB->fetchArray($result))) {
     $rawStats[$row['type']][$row['age']] = $row['count'];
 }
-$ages = array('month', 'week', 'day', 'hour');
+$ages = ['month', 'week', 'day', 'hour'];
 $stats = [];
 foreach ($rawStats as $type => $hits) {
     $stats[$type] = [];

@@ -62,11 +62,11 @@ if ($op === 'dologin') {
         $user->setVar('last_login', time());
         if (!$member_handler->insertUser($user)) {
         }
-        $_SESSION                    = array();
+        $_SESSION                    = [];
         $_SESSION['xoopsUserId']     = $user->getVar('uid');
         $_SESSION['xoopsUserGroups'] = $user->getGroups();
         if (!empty($xoopsConfig['use_ssl'])) {
-            xoops_confirm(array($xoopsConfig['sslpost_name'] => session_id()), XOOPS_URL . '/misc.php?action=showpopups&amp;type=ssllogin', _US_PRESSLOGIN, _LOGIN);
+            xoops_confirm([$xoopsConfig['sslpost_name'] => session_id()], XOOPS_URL . '/misc.php?action=showpopups&amp;type=ssllogin', _US_PRESSLOGIN, _LOGIN);
         } else {
             echo sprintf(_US_LOGGINGU, $user->getVar('uname'));
             echo '<div style="text-align:center;"><input value="' . _CLOSE . '" type="button" onclick="document.window.opener.location.reload();document.window.close();" /></div>';

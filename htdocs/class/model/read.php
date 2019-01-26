@@ -65,7 +65,7 @@ class XoopsModelRead extends XoopsModelAbstract
             //$sql .= " ORDER BY `{$this->handler->keyName}` DESC";
         }
         $result = $this->handler->db->query($sql, $limit, $start);
-        $ret    = array();
+        $ret    = [];
         if ($asObject) {
             while (false !== ($myrow = $this->handler->db->fetchArray($result))) {
                 $object = $this->handler->create(false);
@@ -120,7 +120,7 @@ class XoopsModelRead extends XoopsModelAbstract
      */
     public function getList(CriteriaElement $criteria = null, $limit = 0, $start = 0)
     {
-        $ret = array();
+        $ret = [];
         if ($criteria == null) {
             $criteria = new CriteriaCompo();
         }
@@ -160,7 +160,7 @@ class XoopsModelRead extends XoopsModelAbstract
      */
     public function &getIds(CriteriaElement $criteria = null)
     {
-        $ret   = array();
+        $ret   = [];
         $sql   = "SELECT `{$this->handler->keyName}` FROM `{$this->handler->table}`";
         $limit = $start = null;
         if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
@@ -217,7 +217,7 @@ class XoopsModelRead extends XoopsModelAbstract
     public function convertResultSet($result, $id_as_key = false, $as_object = true)
     {
         $GLOBALS['xoopsLogger']->addDeprecated(__CLASS__ . '::' . __FUNCTION__ . '() is deprecated.');
-        $ret = array();
+        $ret = [];
         while (false !== ($myrow = $this->handler->db->fetchArray($result))) {
             $obj = $this->handler->create(false);
             $obj->assignVars($myrow);
@@ -225,7 +225,7 @@ class XoopsModelRead extends XoopsModelAbstract
                 if ($as_object) {
                     $ret[] = $obj;
                 } else {
-                    $row  = array();
+                    $row  = [];
                     $vars = $obj->getVars();
                     foreach (array_keys($vars) as $i) {
                         $row[$i] = $obj->getVar($i);
@@ -236,7 +236,7 @@ class XoopsModelRead extends XoopsModelAbstract
                 if ($as_object) {
                     $ret[$myrow[$this->handler->keyName]] =& $obj;
                 } else {
-                    $row  = array();
+                    $row  = [];
                     $vars = $obj->getVars();
                     foreach (array_keys($vars) as $i) {
                         $row[$i] = $obj->getVar($i);

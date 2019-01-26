@@ -188,12 +188,12 @@ if ($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && $_
     @ini_set('session.gc_maxlifetime', $xoopsConfig['session_expire'] * 60);
 }
 session_set_save_handler(
-    array($sess_handler, 'open'),
-    array($sess_handler, 'close'),
-    array($sess_handler, 'read'),
-    array($sess_handler, 'write'),
-    array($sess_handler, 'destroy'),
-    array($sess_handler, 'gc')
+    [$sess_handler, 'open'],
+    [$sess_handler, 'close'],
+    [$sess_handler, 'read'],
+    [$sess_handler, 'write'],
+    [$sess_handler, 'destroy'],
+    [$sess_handler, 'gc']
 );
 
 if (function_exists('session_status')) {
@@ -239,7 +239,7 @@ if (!empty($_SESSION['xoopsUserId'])) {
     $xoopsUser = $member_handler->getUser($_SESSION['xoopsUserId']);
     if (!is_object($xoopsUser)) {
         $xoopsUser = '';
-        $_SESSION  = array();
+        $_SESSION  = [];
         session_destroy();
         setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600, '/', XOOPS_COOKIE_DOMAIN, 0, true);
         setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600);
@@ -261,9 +261,9 @@ if (!empty($_SESSION['xoopsUserId'])) {
                 $_SESSION['xoopsUserTheme'] = $user_theme;
             }
             // update our remember me cookie
-            $claims = array(
+            $claims = [
                 'uid' => $_SESSION['xoopsUserId'],
-            );
+            ];
             $rememberTime = 60*60*24*30;
             $token = \Xmf\Jwt\TokenFactory::build('rememberme', $claims, $rememberTime);
             setcookie(

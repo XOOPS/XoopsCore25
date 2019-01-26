@@ -61,7 +61,7 @@ if (false !== $user) {
     }
     // Regenrate a new session id and destroy old session
     $GLOBALS['sess_handler']->regenerate_id(true);
-    $_SESSION                    = array();
+    $_SESSION                    = [];
     $_SESSION['xoopsUserId']     = $user->getVar('uid');
     $_SESSION['xoopsUserGroups'] = $user->getGroups();
     $user_theme                  = $user->getVar('theme');
@@ -73,9 +73,9 @@ if (false !== $user) {
     // Set cookie for rememberme
     if (!empty($GLOBALS['xoopsConfig']['usercookie'])) {
         if (!empty($rememberme)) {
-            $claims = array(
+            $claims = [
                 'uid' => $_SESSION['xoopsUserId'],
-            );
+            ];
             $rememberTime = 60*60*24*30;
             $token = \Xmf\Jwt\TokenFactory::build('rememberme', $claims, $rememberTime);
             setcookie(

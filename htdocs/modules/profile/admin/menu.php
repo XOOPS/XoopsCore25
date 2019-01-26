@@ -36,7 +36,7 @@ if (!file_exists($fileinc = $pathLanguage . '/language/' . $GLOBALS['xoopsConfig
 
 include_once $fileinc;
 
-$adminmenu = array();
+$adminmenu = [];
 
 $i                      = 1;
 $adminmenu[$i]['title'] = _PROFILE_MI_HOME;

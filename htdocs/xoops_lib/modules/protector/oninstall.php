@@ -31,10 +31,10 @@ if (!function_exists('protector_oninstall_base')) {
         if (defined('XOOPS_CUBE_LEGACY')) {
             $root =& XCube_Root::getSingleton();
             $root->mDelegateManager->add('Legacy.Admin.Event.ModuleInstall.' . ucfirst($mydirname) . '.Success', 'protector_message_append_oninstall');
-            $ret = array();
+            $ret = [];
         } else {
             if (!is_array($ret)) {
-                $ret = array();
+                $ret = [];
             }
         }
 
@@ -57,7 +57,7 @@ if (!function_exists('protector_oninstall_base')) {
 
             $sql_query = trim(file_get_contents($sql_file_path));
             $sqlutil->splitMySqlFile($pieces, $sql_query);
-            $created_tables = array();
+            $created_tables = [];
             foreach ($pieces as $piece) {
                 $prefixed_query = $sqlutil->prefixQuery($piece, $prefix_mod);
                 if (!$prefixed_query) {
@@ -90,7 +90,7 @@ if (!function_exists('protector_oninstall_base')) {
                     continue;
                 }
                 $file_path = $tpl_path . '/' . $file;
-                if (is_file($file_path) && in_array(strrchr($file, '.'), array('.html', '.css', '.js'))) {
+                if (is_file($file_path) && in_array(strrchr($file, '.'), ['.html', '.css', '.js'])) {
                     $mtime   = (int)(@filemtime($file_path));
                     $tplfile = $tplfile_handler->create();
                     $tplfile->setVar('tpl_source', file_get_contents($file_path), true);

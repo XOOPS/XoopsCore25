@@ -43,10 +43,10 @@ class XoopsModelWrite extends XoopsModelAbstract
     public function cleanVars(&$object)
     {
         $ts     = MyTextSanitizer::getInstance();
-        $errors = array();
+        $errors = [];
 
         $vars              = $object->getVars();
-        $object->cleanVars = array();
+        $object->cleanVars = [];
         foreach ($vars as $k => $v) {
             if (!$v['changed']) {
                 continue;
@@ -225,7 +225,7 @@ class XoopsModelWrite extends XoopsModelAbstract
                 // Should not be used!
                 case XOBJ_DTYPE_UNICODE_ARRAY:
                     if (!$v['not_gpc']) {
-                        $cleanv = array_map(array(&$ts, 'stripSlashesGPC'), $cleanv);
+                        $cleanv = array_map([&$ts, 'stripSlashesGPC'], $cleanv);
                     }
                     foreach (array_keys($cleanv) as $key) {
                         $cleanv[$key] = str_replace('\\"', '"', addslashes($cleanv[$key]));
@@ -237,7 +237,7 @@ class XoopsModelWrite extends XoopsModelAbstract
                 case XOBJ_DTYPE_ARRAY:
                     $cleanv = (array)$cleanv;
                     if (!$v['not_gpc']) {
-                        $cleanv = array_map(array(&$ts, 'stripSlashesGPC'), $cleanv);
+                        $cleanv = array_map([&$ts, 'stripSlashesGPC'], $cleanv);
                     }
                     // TODO: Not encoding safe, should try base64_encode -- phppp
                     $cleanv = $this->handler->db->quote(serialize($cleanv));
@@ -302,7 +302,7 @@ class XoopsModelWrite extends XoopsModelAbstract
                 $object->assignVar($this->handler->keyName, $object_id);
             }
         } elseif (!empty($object->cleanVars)) {
-            $keys = array();
+            $keys = [];
             foreach ($object->cleanVars as $k => $v) {
                 $keys[] = " `{$k}` = {$v}";
             }
@@ -325,7 +325,7 @@ class XoopsModelWrite extends XoopsModelAbstract
     public function delete(&$object, $force = false)
     {
         if (is_array($this->handler->keyName)) {
-            $clause = array();
+            $clause = [];
             $thishandlerkeyNameCount = count($this->handler->keyName);
             for ($i = 0; $i < $thishandlerkeyNameCount; ++$i) {
                 $clause[] = '`' . $this->handler->keyName[$i] . '` = ' . $this->handler->db->quote($object->getVar($this->handler->keyName[$i]));

@@ -30,10 +30,10 @@ if (!function_exists('protector_onupdate_base')) {
         if (defined('XOOPS_CUBE_LEGACY')) {
             $root =& XCube_Root::getSingleton();
             $root->mDelegateManager->add('Legacy.Admin.Event.ModuleUpdate.' . ucfirst($mydirname) . '.Success', 'protector_message_append_onupdate');
-            $msgs = array();
+            $msgs = [];
         } else {
             if (!is_array($msgs)) {
-                $msgs = array();
+                $msgs = [];
             }
         }
 
@@ -70,7 +70,7 @@ if (!function_exists('protector_onupdate_base')) {
                     continue;
                 }
                 $file_path = $tpl_path . '/' . $file;
-                if (is_file($file_path) && in_array(strrchr($file, '.'), array('.html', '.css', '.js'))) {
+                if (is_file($file_path) && in_array(strrchr($file, '.'), ['.html', '.css', '.js'])) {
                     $mtime   = (int)(@filemtime($file_path));
                     $tplfile = $tplfile_handler->create();
                     $tplfile->setVar('tpl_source', file_get_contents($file_path), true);

@@ -53,7 +53,7 @@ class MytsYoutube extends MyTextSanitizerExtension
             }
 EOH;
 
-        return array($code, $javascript);
+        return [$code, $javascript];
     }
 
     /**
