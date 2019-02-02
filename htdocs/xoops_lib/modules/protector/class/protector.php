@@ -1423,7 +1423,7 @@ class Protector
             }
 
             // security bug of class/criteria.php 2005/6/27
-            if ($_POST['uname'] === '0' || $_COOKIE['autologin_pass'] === '0') {
+            if ((isset($_POST['uname']) && $_POST['uname'] === '0') || (isset($_COOKIE['autologin_pass']) && $_COOKIE['autologin_pass'] === '0')) {
                 $this->output_log('CRITERIA');
                 exit;
             }
