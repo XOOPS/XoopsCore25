@@ -447,8 +447,6 @@ function xoPutLicenseKey($system_key, $licensefile, $license_file_dist = 'licens
 function xoBuildLicenceKey()
 {
     $xoops_serdat = array();
-    mt_srand(((float)('0' . substr(microtime(), strpos(microtime(), ' ') + 1, strlen(microtime()) - strpos(microtime(), ' ') + 1))) * mt_rand(30, 99999));
-    mt_srand(((float)('0' . substr(microtime(), strpos(microtime(), ' ') + 1, strlen(microtime()) - strpos(microtime(), ' ') + 1))) * mt_rand(30, 99999));
     $checksums = array(1 => 'md5', 2 => 'sha1');
     $type      = mt_rand(1, 2);
     $func      = $checksums[$type];

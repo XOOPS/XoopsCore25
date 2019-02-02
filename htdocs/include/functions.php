@@ -536,7 +536,6 @@ function xoops_makepass()
         'en',
         'be',
         'se');
-    mt_srand((double)microtime() * 1000000);
     for ($count = 1; $count <= 4; ++$count) {
         if (mt_rand() % 10 == 1) {
             $makepass .= sprintf('%0.0f', (mt_rand() % 50) + 1);
@@ -617,7 +616,6 @@ function xoops_getbanner()
     list($numrows) = $db->fetchRow($bresult);
     if ($numrows > 1) {
         --$numrows;
-        mt_srand((double)microtime() * 1000000);
         $bannum = mt_rand(0, $numrows);
     } else {
         $bannum = 0;

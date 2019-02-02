@@ -27,7 +27,6 @@ function b_system_online_show()
     global $xoopsUser, $xoopsModule;
     /* @var $online_handler XoopsOnlineHandler  */
     $online_handler = xoops_getHandler('online');
-    mt_srand((double)microtime() * 1000000);
     // set gc probabillity to 10% for now..
     if (mt_rand(1, 100) < 11) {
         $online_handler->gc(300);
