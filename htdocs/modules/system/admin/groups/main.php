@@ -61,7 +61,7 @@ switch ($op) {
         $criteria->setLimit($nb_group);
         // Count group
         $groups_count = $groups_Handler->getCount($criteria);
-        $groups_arr   = $groups_Handler->getall($criteria);
+        $groups_arr   = $groups_Handler->getAll($criteria);
         // Assign Template variables
         $xoopsTpl->assign('groups_count', $groups_count);
         if ($groups_count > 0) {
