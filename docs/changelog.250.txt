@@ -1,20 +1,26 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
-2.5.10 WIP               unreleased
+2.5.10 BETA              2019/02/03
 ===================================
-- allow multiple files in \XoopsMediaUploader (luciorota)
-- fix potential redirect loop when start module in use
+- Warn in admin if using an unsupported version of PHP (security concern)
+- Add method XoopsLists::getFileListByExtension()
+- Fix missing jpeg extension in XoopsLists::getImgListAsArray()
+- Optimize images (mamba)
+- Allow multiple files in XoopsMediaUploader (luciorota)
+- change declaration of SystemFineUploadHandler class to abstract in #618
+- Add basic support for MySQL 8.0
+- Fix potential redirect loop when start module in use
 - Pass JWT for fineuploader in POST body instead of header (goffy, geekwright)
-- change meta_robots config to textbox instead of select
-- move protector config files to XOOPS_VAR_PATH/protector
-- use Request to access $_SERVER variable in XoopsPageNav
-- add Smarty modifiers truncateHtml and a UTF-8 safe truncate
-- update protector add overview chart, ip ban button to log
-- fixed bug in image.php when resizing transparent png (luciorota)
-- fix typo error in profile and system userform templates (mamba)
-- fix issues in install/page_dbsettings.php (blogged by Nguyen Thanh Nguyen)
-- fix stylesheet inclusion in ModuleAdmin
+- Change meta_robots config to textbox instead of select
+- Move protector config files to XOOPS_VAR_PATH/protector
+- Use Request to access $_SERVER variable in XoopsPageNav
+- Add Smarty modifiers truncateHtml and a UTF-8 safe truncate
+- Update protector add overview chart, ip ban button to log
+- Fix bug in image.php when resizing transparent png (luciorota)
+- Fix typo error in profile and system userform templates (mamba)
+- Fix issues in install/page_dbsettings.php (blogged by Nguyen Thanh Nguyen)
+- Fix stylesheet inclusion in ModuleAdmin
 - Misplaced MAX_FILE_SIZE (cadch)
 
 Updated libraries and assets:
