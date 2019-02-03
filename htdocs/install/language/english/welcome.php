@@ -19,7 +19,7 @@ $content .= '
 <h3>Requirements</h3>
 <ul>
     <li>WWW Server (<a href="http://www.apache.org/" rel="external">Apache</a>, <a href="https://www.nginx.com/" rel="external">NGINX</a>, IIS, etc)</li>
-    <li><a href="http://www.php.net/" rel="external">PHP</a> 5.3.7 or higher, 7.1+ recommended</li>
+    <li><a href="http://www.php.net/" rel="external">PHP</a> 5.3.9 or higher, 7.1+ recommended</li>
     <li><a href="http://www.mysql.com/" rel="external">MySQL</a> 5.5 or higher, 5.6+ recommended </li>
 </ul>
 <h3>Before you install</h3>

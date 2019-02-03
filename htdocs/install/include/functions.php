@@ -225,8 +225,6 @@ function xoPhpVersion()
 {
     if (version_compare(phpversion(), '5.3.9', '>=')) {
         return xoDiag(1, phpversion());
-    //} elseif (version_compare(phpversion(), '5.3.7', '>=')) {
-    //    return xoDiag(0, phpversion());
     } else {
         return xoDiag(-1, phpversion());
     }
