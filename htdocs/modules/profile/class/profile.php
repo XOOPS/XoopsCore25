@@ -40,7 +40,7 @@ class ProfileProfile extends XoopsObject
      */
     public function init($fields)
     {
-        if (is_array($fields) && count($fields) > 0) {
+        if ($fields && is_array($fields)) {
             foreach (array_keys($fields) as $key) {
                 $this->initVar($key, $fields[$key]->getVar('field_valuetype'), $fields[$key]->getVar('field_default', 'n'), $fields[$key]->getVar('field_required'), $fields[$key]->getVar('field_maxlength'));
             }
