@@ -4,7 +4,7 @@ LANGUAGE DIFFERENCES
 Below are language differences from a version to next version.
 
 ===============================
-2017/11/12: Version 2.5.10  WIP
+2019/02/03: Version 2.5.10 BETA
 ===============================
 ADDED/DELETED DEFINES:
 htdocs/xoops_lib/modules/protector/language/english/admin.php
