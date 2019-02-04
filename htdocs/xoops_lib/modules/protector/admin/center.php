@@ -175,7 +175,7 @@ echo "
     <td class='even'>
       <textarea name='bad_ips' id='bad_ips' style='width:200px;height:60px;'>$bad_ips4disp</textarea>
       <br>
-      " . htmlspecialchars($protector->get_filepath4badips()) . "
+      " . htmlspecialchars($protector::get_filepath4badips()) . "
     </td>
   </tr>
   <tr valign='top' align='left'>
@@ -185,7 +185,7 @@ echo "
     <td class='even'>
       <textarea name='group1_ips' id='group1_ips' style='width:200px;height:60px;'>$group1_ips4disp</textarea>
       <br>
-      " . htmlspecialchars($protector->get_filepath4group1ips()) . "
+      " . htmlspecialchars($protector::get_filepath4group1ips()) . "
     </td>
   </tr>
   <tr valign='top' align='left'>
