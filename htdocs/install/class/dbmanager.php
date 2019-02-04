@@ -2,7 +2,7 @@
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //          Copyright (c) 2000-2016 XOOPS Project (www.xoops.org)            //
-//                         <http://xoops.org/>                               //
+//                         <http://xoops.org>                               //
 //  ------------------------------------------------------------------------ //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -23,19 +23,19 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
-include_once XOOPS_ROOT_PATH . '/class/logger/xoopslogger.php';
-include_once XOOPS_ROOT_PATH . '/class/xoopsload.php';
-include_once XOOPS_ROOT_PATH . '/class/preload.php';
-include_once XOOPS_ROOT_PATH . '/class/database/databasefactory.php';
-include_once XOOPS_ROOT_PATH . '/class/database/' . XOOPS_DB_TYPE . 'database.php';
-include_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
+require_once XOOPS_ROOT_PATH . '/class/logger/xoopslogger.php';
+require_once XOOPS_ROOT_PATH . '/class/xoopsload.php';
+require_once XOOPS_ROOT_PATH . '/class/preload.php';
+require_once XOOPS_ROOT_PATH . '/class/database/databasefactory.php';
+require_once XOOPS_ROOT_PATH . '/class/database/' . XOOPS_DB_TYPE . 'database.php';
+require_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
 
 /**
  * database manager for XOOPS installer
  *
  * @copyright (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @author    Haruki Setoyama  <haruki@planewave.org>
+ * @license       GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @author        Haruki Setoyama  <haruki@planewave.org>
  **/
 class Db_manager
 {
@@ -70,7 +70,7 @@ class Db_manager
      */
     public function dbExists()
     {
-        return ($this->db->connect() != false);// ? true : false;
+        return ($this->db->connect() !== false);// ? true : false;
     }
 
     /**
@@ -82,7 +82,7 @@ class Db_manager
 
         $result = $this->db->query('CREATE DATABASE ' . XOOPS_DB_NAME);
 
-        return ($result != false);// ? true : false;
+        return ($result !== false);// ? true : false;
     }
 
     /**
@@ -105,10 +105,10 @@ class Db_manager
             // [0] contains the prefixed query
             // [4] contains unprefixed table name
             $prefixed_query = SqlUtility::prefixQuery($piece, $this->db->prefix());
-            if ($prefixed_query != false) {
+            if ($prefixed_query !== false) {
                 $table = $this->db->prefix($prefixed_query[4]);
                 if ($prefixed_query[1] === 'CREATE TABLE') {
-                    if ($this->db->query($prefixed_query[0]) != false) {
+                    if ($this->db->query($prefixed_query[0]) !== false) {
                         if (!isset($this->s_tables['create'][$table])) {
                             $this->s_tables['create'][$table] = 1;
                         }
@@ -118,7 +118,7 @@ class Db_manager
                         }
                     }
                 } elseif ($prefixed_query[1] === 'INSERT INTO') {
-                    if ($this->db->query($prefixed_query[0]) != false) {
+                    if ($this->db->query($prefixed_query[0]) !== false) {
                         if (!isset($this->s_tables['insert'][$table])) {
                             $this->s_tables['insert'][$table] = 1;
                         } else {
@@ -132,7 +132,7 @@ class Db_manager
                         }
                     }
                 } elseif ($prefixed_query[1] === 'ALTER TABLE') {
-                    if ($this->db->query($prefixed_query[0]) != false) {
+                    if ($this->db->query($prefixed_query[0]) !== false) {
                         if (!isset($this->s_tables['alter'][$table])) {
                             $this->s_tables['alter'][$table] = 1;
                         }
@@ -142,7 +142,7 @@ class Db_manager
                         }
                     }
                 } elseif ($prefixed_query[1] === 'DROP TABLE') {
-                    if ($this->db->query('DROP TABLE ' . $table) != false) {
+                    if ($this->db->query('DROP TABLE ' . $table) !== false) {
                         if (!isset($this->s_tables['drop'][$table])) {
                             $this->s_tables['drop'][$table] = 1;
                         }
@@ -162,12 +162,14 @@ class Db_manager
         'create' => TABLE_CREATED,
         'insert' => ROWS_INSERTED,
         'alter'  => TABLE_ALTERED,
-        'drop'   => TABLE_DROPPED);
+        'drop'   => TABLE_DROPPED
+    );
     public $failureStrings = array(
         'create' => TABLE_NOT_CREATED,
         'insert' => ROWS_FAILED,
         'alter'  => TABLE_NOT_ALTERED,
-        'drop'   => TABLE_NOT_DROPPED);
+        'drop'   => TABLE_NOT_DROPPED
+    );
 
     /**
      * @return string

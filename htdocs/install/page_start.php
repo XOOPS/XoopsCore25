@@ -25,13 +25,13 @@
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  **/
 
-require_once './include/common.inc.php';
+require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 $pageHasForm = false;
 
 $content = '';
-include "./language/{$wizard->language}/welcome.php";
+require __DIR__ . "/language/{$wizard->language}/welcome.php";
 
 $writable = '<div class="alert alert-warning"><ul style="list-style: none;">';
 foreach ($wizard->configs['writable'] as $key => $value) {
@@ -62,4 +62,4 @@ $writable_trust .= '</ul></div>';
 
 $content = sprintf($content, $writable, $xoops_trust, $writable_trust);
 
-include './include/install_tpl.php';
+require __DIR__ . '/include/install_tpl.php';

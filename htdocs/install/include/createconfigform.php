@@ -18,8 +18,8 @@ if (!defined('XOOPS_INSTALL')) {
     die('XOOPS Custom Installation die');
 }
 
-include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-include_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
+require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
 
 define('PREF_1', _MD_AM_GENERAL);
 define('PREF_2', _MD_AM_USERSETTINGS);
@@ -41,9 +41,9 @@ function createConfigform($config)
     xoops_load('XoopsFormRendererBootstrap3');
     XoopsFormRenderer::getInstance()->set(new XoopsFormRendererBootstrap3());
 
-    /* @var XoopsConfigHandler $config_handler */
-    $config_handler         = xoops_getHandler('config');
-    $GLOBALS['xoopsConfig'] = $xoopsConfig = $config_handler->getConfigsByCat(XOOPS_CONF);
+    /* @var XoopsConfigHandler $configHandler */
+    $configHandler          = xoops_getHandler('config');
+    $GLOBALS['xoopsConfig'] = $xoopsConfig = $configHandler->getConfigsByCat(XOOPS_CONF);
 
     $ret       = array();
     $confcount = count($config);
@@ -70,7 +70,7 @@ function createConfigform($config)
 
             case 'select':
                 $ele     = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
-                $options = $config_handler->getConfigOptions(new Criteria('conf_id', $config[$i]->getVar('conf_id')));
+                $options = $configHandler->getConfigOptions(new Criteria('conf_id', $config[$i]->getVar('conf_id')));
                 $opcount = count($options);
                 for ($j = 0; $j < $opcount; ++$j) {
                     $optval = defined($options[$j]->getVar('confop_value')) ? constant($options[$j]->getVar('confop_value')) : $options[$j]->getVar('confop_value');
@@ -81,7 +81,7 @@ function createConfigform($config)
 
             case 'select_multi':
                 $ele     = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput(), 5, true);
-                $options = $config_handler->getConfigOptions(new Criteria('conf_id', $config[$i]->getVar('conf_id')));
+                $options = $configHandler->getConfigOptions(new Criteria('conf_id', $config[$i]->getVar('conf_id')));
                 $opcount = count($options);
                 for ($j = 0; $j < $opcount; ++$j) {
                     $optval = defined($options[$j]->getVar('confop_value')) ? constant($options[$j]->getVar('confop_value')) : $options[$j]->getVar('confop_value');
@@ -108,9 +108,9 @@ function createConfigform($config)
                 break;
 
             case 'tplset':
-                $ele            = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
-                $tplset_handler = xoops_getHandler('tplset');
-                $tplsetlist     = $tplset_handler->getList();
+                $ele           = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
+                $tplsetHandler = xoops_getHandler('tplset');
+                $tplsetlist    = $tplsetHandler->getList();
                 asort($tplsetlist);
                 foreach ($tplsetlist as $key => $name) {
                     $ele->addOption($key, $name);
@@ -128,12 +128,12 @@ function createConfigform($config)
                 break;
 
             case 'startpage':
-                $ele            = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
-                /* @var XoopsModuleHandler $module_handler */
-                $module_handler = xoops_getHandler('module');
-                $criteria       = new CriteriaCompo(new Criteria('hasmain', 1));
+                $ele = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
+                /* @var XoopsModuleHandler $moduleHandler */
+                $moduleHandler = xoops_getHandler('module');
+                $criteria      = new CriteriaCompo(new Criteria('hasmain', 1));
                 $criteria->add(new Criteria('isactive', 1));
-                $moduleslist       = $module_handler->getList($criteria, true);
+                $moduleslist       = $moduleHandler->getList($criteria, true);
                 $moduleslist['--'] = _MD_AM_NONE;
                 $ele->addOptionArray($moduleslist);
                 break;
@@ -156,11 +156,11 @@ function createConfigform($config)
                 break;
 
             case 'module_cache':
-                /* @var XoopsModuleHandler $module_handler */
-                $module_handler = xoops_getHandler('module');
-                $modules        = $module_handler->getObjects(new Criteria('hasmain', 1), true);
-                $currrent_val   = $config[$i]->getConfValueForOutput();
-                $cache_options  = array(
+                /* @var XoopsModuleHandler $moduleHandler */
+                $moduleHandler = xoops_getHandler('module');
+                $modules       = $moduleHandler->getObjects(new Criteria('hasmain', 1), true);
+                $currrent_val  = $config[$i]->getConfValueForOutput();
+                $cache_options = array(
                     '0'      => _NOCACHE,
                     '30'     => sprintf(_SECONDS, 30),
                     '60'     => _MINUTE,
@@ -170,7 +170,8 @@ function createConfigform($config)
                     '18000'  => sprintf(_HOURS, 5),
                     '86400'  => _DAY,
                     '259200' => sprintf(_DAYS, 3),
-                    '604800' => _WEEK);
+                    '604800' => _WEEK
+                );
                 if (count($modules) > 0) {
                     $ele = new XoopsFormElementTray($title, '<br>');
                     foreach (array_keys($modules) as $mid) {
@@ -197,7 +198,8 @@ function createConfigform($config)
                                          '18000'  => sprintf(_HOURS, 5),
                                          '86400'  => _DAY,
                                          '259200' => sprintf(_DAYS, 3),
-                                         '604800' => _WEEK));
+                                         '604800' => _WEEK
+                                     ));
                 break;
 
             case 'password':
@@ -271,12 +273,13 @@ function createThemeform($config)
             'W3C'         => '',
             'Licence'     => '',
             'thumbnail'   => 'screenshot.gif',
-            'screenshot'  => 'screenshot.png');
+            'screenshot'  => 'screenshot.png'
+        );
 
         if ($theme == $config->getConfValueForOutput()) {
-            $label_content .= '<div class="theme_preview" id="'.$theme.'" style="display:block;">';
+            $label_content .= '<div class="theme_preview" id="' . $theme . '" style="display:block;">';
         } else {
-            $label_content .= '<div class="theme_preview" id="'.$theme.'" style="display:none;">';
+            $label_content .= '<div class="theme_preview" id="' . $theme . '" style="display:none;">';
         }
         if (file_exists(XOOPS_ROOT_PATH . "/themes/$theme/theme.ini")) {
             $theme_ini = parse_ini_file(XOOPS_ROOT_PATH . "/themes/$theme/theme.ini");
@@ -287,9 +290,9 @@ function createThemeform($config)
         }
 
         if ($theme_ini['screenshot'] !== '' && file_exists(XOOPS_ROOT_PATH . '/themes/' . $theme . '/' . $theme_ini['screenshot'])) {
-            $label_content .= '<img class="img-responsive" src="' . XOOPS_URL . '/themes/' . $theme . '/' . $theme_ini['screenshot'] . '" alt="Screenshot" />';
-        } elseif ($theme_ini['thumbnail'] !== '' && file_exists(XOOPS_ROOT_PATH . '/themes/' . $theme .'/' . $theme_ini['thumbnail'])) {
-            $label_content .= '<img class="img-responsive" src="' . XOOPS_URL . '/themes/' . $theme . '/' . $theme_ini['thumbnail'] . '" alt="$theme" />';
+            $label_content .= '<img class="img-responsive" src="' . XOOPS_URL . '/themes/' . $theme . '/' . $theme_ini['screenshot'] . '" alt="Screenshot">';
+        } elseif ($theme_ini['thumbnail'] !== '' && file_exists(XOOPS_ROOT_PATH . '/themes/' . $theme . '/' . $theme_ini['thumbnail'])) {
+            $label_content .= '<img class="img-responsive" src="' . XOOPS_URL . '/themes/' . $theme . '/' . $theme_ini['thumbnail'] . '" alt="$theme">';
         } else {
             $label_content .= THEME_NO_SCREENSHOT;
         }

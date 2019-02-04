@@ -33,8 +33,12 @@ define('INSTALL_PASSWORD', '');
 
 define('XOOPS_INSTALL', 1);
 
-function fatalPhpErrorHandler($e = null) {
-    $messageFormat = '<br><div>Fatal %s %s file: %s : %d </div>';
+/**
+ * @param null $e
+ */
+function fatalPhpErrorHandler($e = null)
+{
+    $messageFormat  = '<br><div>Fatal %s %s file: %s : %d </div>';
     $exceptionClass = '\Exception';
     $throwableClass = '\Throwable';
     if ($e === null) {
@@ -48,6 +52,7 @@ function fatalPhpErrorHandler($e = null) {
         printf($messageFormat, get_class($e), $e->getMessage(), $e->getFile(), $e->getLine());
     }
 }
+
 register_shutdown_function('fatalPhpErrorHandler');
 set_exception_handler('fatalPhpErrorHandler');
 
@@ -71,11 +76,11 @@ $xoopsLogger->activated = true;
 */
 
 date_default_timezone_set(@date_default_timezone_get());
-include './class/installwizard.php';
-include_once '../include/version.php';
-include_once './include/functions.php';
-include_once '../class/module.textsanitizer.php';
-include_once '../class/libraries/vendor/autoload.php';
+require dirname(__DIR__) . '/class/installwizard.php';
+require_once dirname(dirname(__DIR__)) . '/include/version.php';
+require_once __DIR__ . '/functions.php';
+require_once dirname(dirname(__DIR__)) . '/class/module.textsanitizer.php';
+require_once dirname(dirname(__DIR__)) . '/class/libraries/vendor/autoload.php';
 
 $pageHasHelp = false;
 $pageHasForm = false;

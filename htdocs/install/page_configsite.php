@@ -16,18 +16,18 @@
 
 $xoopsOption['checkadmin'] = true;
 $xoopsOption['hascommon']  = true;
-require_once './include/common.inc.php';
+require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    /* @var XoopsConfigHandler $config_handler */
-    $config_handler = xoops_getHandler('config');
+    /* @var XoopsConfigHandler $configHandler */
+    $configHandler = xoops_getHandler('config');
     if (array_key_exists('conf_ids', $_REQUEST)) {
         foreach ($_REQUEST['conf_ids'] as $key => $conf_id) {
-            $config    = $config_handler->getConfig($conf_id);
+            $config    = $configHandler->getConfig($conf_id);
             $new_value = $_REQUEST[$config->getVar('conf_name')];
             $config->setConfValueForInput($new_value);
-            $config_handler->insertConfig($config);
+            $configHandler->insertConfig($config);
         }
     }
     $wizard->redirectToPage('+1');
@@ -36,16 +36,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $pageHasForm = true;
 $pageHasHelp = true;
 
-if (!@include_once "../modules/system/language/{$wizard->language}/admin.php") {
-    include_once '../modules/system/language/english/admin.php';
+if (!@require_once dirname(__DIR__) . "/modules/system/language/{$wizard->language}/admin.php") {
+    require_once dirname(__DIR__) . '/modules/system/language/english/admin.php';
 }
 
-if (!@include_once "../modules/system/language/{$wizard->language}/admin/preferences.php") {
-    include_once '../modules/system/language/english/admin/preferences.php';
+if (!@require_once dirname(__DIR__) . "/modules/system/language/{$wizard->language}/admin/preferences.php") {
+    require_once dirname(__DIR__) . '/modules/system/language/english/admin/preferences.php';
 }
-/* @var XoopsConfigHandler $config_handler */
-$config_handler = xoops_getHandler('config');
-$criteria       = new CriteriaCompo();
+/* @var XoopsConfigHandler $configHandler */
+$configHandler = xoops_getHandler('config');
+$criteria      = new CriteriaCompo();
 $criteria->add(new Criteria('conf_modid', 0));
 
 $criteria2 = new CriteriaCompo();
@@ -54,9 +54,9 @@ foreach ($wizard->configs['conf_names'] as $conf_name) {
 }
 $criteria->add($criteria2);
 $criteria->setSort('conf_catid ASC, conf_order ASC');
-$configs = $config_handler->getConfigs($criteria);
+$configs = $configHandler->getConfigs($criteria);
 
-include './include/createconfigform.php';
+require __DIR__ . '/include/createconfigform.php';
 $wizard->form = createConfigform($configs);
 $content      = $wizard->CreateForm();
-include './include/install_tpl.php';
+require __DIR__ . '/include/install_tpl.php';

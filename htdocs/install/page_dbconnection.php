@@ -25,7 +25,7 @@
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  **/
 
-require_once './include/common.inc.php';
+require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 $pageHasForm = true;
@@ -44,9 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($vars['DB_HOST']) && !empty($vars['DB_USER'])) {
     $hostConnectPrefix = empty($vars['DB_PCONNECT']) ? '' : 'p:';
-    $link = new mysqli($hostConnectPrefix.$vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS']);
+    $link              = new mysqli($hostConnectPrefix . $vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS']);
     if (0 !== $link->connect_errno) {
-        $error = ERR_NO_DBCONNECTION .' (' . $link->connect_errno . ') ' . $link->connect_error;;
+        $error = ERR_NO_DBCONNECTION . ' (' . $link->connect_errno . ') ' . $link->connect_error;;
     }
     if (empty($error)) {
         $wizard->redirectToPage('+1');
@@ -57,11 +57,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($vars['DB_HOST']) && !empty(
 if (@empty($vars['DB_HOST'])) {
     // Fill with default values
     $vars = array_merge($vars, array(
-                                 'DB_TYPE'     => 'mysql',
-                                 'DB_HOST'     => 'localhost',
-                                 'DB_USER'     => '',
-                                 'DB_PASS'     => '',
-                                 'DB_PCONNECT' => 0));
+        'DB_TYPE'     => 'mysql',
+        'DB_HOST'     => 'localhost',
+        'DB_USER'     => '',
+        'DB_PASS'     => '',
+        'DB_PCONNECT' => 0
+    ));
 }
 ob_start();
 ?>
@@ -79,7 +80,7 @@ ob_start();
 
         <div class="checkbox">
             <label>
-                <input class="checkbox" type="checkbox" name="DB_PCONNECT" value="1" <?php echo $vars['DB_PCONNECT'] ? 'checked' : ''; ?>/>
+                <input class="checkbox" type="checkbox" name="DB_PCONNECT" value="1" <?php echo $vars['DB_PCONNECT'] ? 'checked' : ''; ?>>
                 <?php echo DB_PCONNECT_LABEL; ?>
             </label>
             <div class="xoform-help alert alert-info"><?php echo DB_PCONNECT_HELP; ?></div>
@@ -89,4 +90,4 @@ ob_start();
 <?php
 $content = ob_get_contents();
 ob_end_clean();
-include './include/install_tpl.php';
+require __DIR__ . '/include/install_tpl.php';

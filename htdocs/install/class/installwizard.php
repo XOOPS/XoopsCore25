@@ -43,11 +43,11 @@ class XoopsInstallWizard
         // Load the main language file
         $this->initLanguage(!empty($_COOKIE['xo_install_lang']) ? $_COOKIE['xo_install_lang'] : 'english');
         // Setup pages
-        include_once './include/page.php';
+        require_once dirname(__DIR__) . '/include/page.php';
         $this->pages = $pages;
 
         // Load default configs
-        include_once './include/config.php';
+        require_once dirname(__DIR__) . '/include/config.php';
         $this->configs = $configs;
         /*
         // Database type
@@ -142,9 +142,9 @@ class XoopsInstallWizard
     public function loadLangFile($file)
     {
         if (file_exists("./language/{$this->language}/{$file}.php")) {
-            include_once "./language/{$this->language}/{$file}.php";
+            require_once dirname(__DIR__) . "/language/{$this->language}/{$file}.php";
         } else {
-            include_once "./language/english/$file.php";
+            require_once dirname(__DIR__) . "/language/english/$file.php";
         }
     }
 
@@ -260,7 +260,7 @@ class XoopsInstallWizard
                     if (!$ele->isHidden()) {
                         if (($caption = $ele->getCaption()) != '') {
                             $name = $ele->getName();
-                            $ret .= "<label class='xolabel' for='" . $ele->getName() . "'>" . $caption . '</label>';
+                            $ret  .= "<label class='xolabel' for='" . $ele->getName() . "'>" . $caption . '</label>';
                             if (($desc = $ele->getDescription()) != '') {
                                 $ret .= "<div class='xoform-help  alert alert-info'>";
                                 $ret .= $desc;

@@ -38,7 +38,8 @@ $configs['conf_names'] = array(
 
 // languages config files
 $configs['language_files'] = array(
-    'global');
+    'global'
+);
 
 // extension_loaded
 $configs['extensions'] = array(
@@ -49,7 +50,8 @@ $configs['extensions'] = array(
     'zlib'     => array('Zlib', sprintf(PHP_EXTENSION, ZLIB_COMPRESSION)),
     'gd'       => array(
         (function_exists('gd_info') && $gdlib = @gd_info()) ? 'GD ' . $gdlib['GD Version'] : '',
-        sprintf(PHP_EXTENSION, IMAGE_FUNCTIONS)),
+        sprintf(PHP_EXTENSION, IMAGE_FUNCTIONS)
+    ),
     'exif'     => array('Exif', sprintf(PHP_EXTENSION, IMAGE_METAS)),
     'curl'     => array('Curl', sprintf(PHP_EXTENSION, CURL_HTTP)),
 );
@@ -78,7 +80,7 @@ $configs['dataPath'] = array(
         'xoops_cache',
         'smarty_cache',
         'smarty_compile',
-        ),
+    ),
     'configs'   => null,
     'data'      => null,
     'protector' => null,

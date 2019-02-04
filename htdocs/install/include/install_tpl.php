@@ -28,7 +28,7 @@
  **/
 
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
-include_once '../language/' . $wizard->language . '/global.php';
+require_once dirname(dirname(__DIR__)) . '/language/' . $wizard->language . '/global.php';
 ?><!doctype html>
 <html lang="<?php echo _LANGCODE; ?>">
 
@@ -65,7 +65,7 @@ include_once '../language/' . $wizard->language . '/global.php';
     ?>
     <?php
     if (file_exists('language/' . $wizard->language . '/style.css')) {
-        echo '<link rel="stylesheet" type="text/css" media="all" href="language/' . $wizard->language . '/style.css" />';
+        echo '<link rel="stylesheet" type="text/css" media="all" href="language/' . $wizard->language . '/style.css">';
     }
     ?>
     <script type="text/javascript" src="./assets/js/xo-installer.js"></script>
@@ -94,7 +94,7 @@ include_once '../language/' . $wizard->language . '/global.php';
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-book"></i> <?php echo SUPPORT; ?> <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <?php
-                    @include_once './language/' . $wizard->language . '/support.php';
+                    @require_once dirname(__DIR__) . '/language/' . $wizard->language . '/support.php';
                     foreach ($supports as $lang => $support) {
                         echo '<li><a href="' . $support['url'] . '" target="_blank">' . $support['title'] . '</a></li>';
                     }
@@ -116,15 +116,11 @@ include_once '../language/' . $wizard->language . '/global.php';
                 <?php
                 foreach (array_keys($wizard->pages) as $k => $page) {
                     if ($k == $wizard->pageIndex) {
-                        echo'<li class="active"><a><i class="' . $wizard->pages[$page]['icon'] . '"></i> '
-                            . $wizard->pages[$page]['name'] . '</a></li>';
+                        echo '<li class="active"><a><i class="' . $wizard->pages[$page]['icon'] . '"></i> ' . $wizard->pages[$page]['name'] . '</a></li>';
                     } elseif ($k > $wizard->pageIndex) {
-                        echo'<li class="disabled"><a><i class="' . $wizard->pages[$page]['icon'] . '"></i> '
-                            . $wizard->pages[$page]['name'] . '</a></li>';
+                        echo '<li class="disabled"><a><i class="' . $wizard->pages[$page]['icon'] . '"></i> ' . $wizard->pages[$page]['name'] . '</a></li>';
                     } else {
-                        echo'<li><a href="' . $wizard->pageURI($page) . '"><i class="'
-                            . $wizard->pages[$page]['icon'] . ' text-success"></i> ' . $wizard->pages[$page]['name']
-                            . '</a></li>';
+                        echo '<li><a href="' . $wizard->pageURI($page) . '"><i class="' . $wizard->pages[$page]['icon'] . ' text-success"></i> ' . $wizard->pages[$page]['name'] . '</a></li>';
                     }
                 }
                 ?>
@@ -157,8 +153,8 @@ include_once '../language/' . $wizard->language . '/global.php';
                             <div class="clearfix"></div>
                         </div>
                     </div>
-                <?php } ?>
-            </div>
+                    <?php } ?>
+                </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
@@ -179,8 +175,8 @@ include_once '../language/' . $wizard->language . '/global.php';
                     </div>
                 </div>
                 <?php
-                $versionParts=array();
-                $versionResult = preg_match ('/(^[a-z\s]*)([0-9\.]*)/i', XOOPS_VERSION, $versionParts);
+                $versionParts  = array();
+                $versionResult = preg_match('/(^[a-z\s]*)([0-9\.]*)/i', XOOPS_VERSION, $versionParts);
                 ?>
 
                 <div class="col-lg-3 col-md-6">
@@ -216,11 +212,11 @@ include_once '../language/' . $wizard->language . '/global.php';
                         <div id="buttons">
                             <?php if (@$pageHasForm) { ?>
                             <button class="btn btn-lg btn-success" type="submit">
-                            <?php } else { ?>
-                            <button class="btn btn-lg btn-success" type="button" accesskey="n" onclick="location.href='<?php echo $wizard->pageURI('+1'); ?>'">
-                            <?php } ?>
-                            <?php echo BUTTON_NEXT; ?>  <span class="fa fa-caret-right"></span>
-                            </button>
+                                <?php } else { ?>
+                                <button class="btn btn-lg btn-success" type="button" accesskey="n" onclick="location.href='<?php echo $wizard->pageURI('+1'); ?>'">
+                                    <?php } ?>
+                                    <?php echo BUTTON_NEXT; ?> <span class="fa fa-caret-right"></span>
+                                </button>
                         </div>
                     </form>
                 </div>
@@ -251,7 +247,8 @@ include_once '../language/' . $wizard->language . '/global.php';
          * Check the url to see if we reached 'page_end.php' and if so, launch the cleanup via ajax.
          **/
         if ('page_end.php' == location.pathname.substring(location.pathname.lastIndexOf('/') + 1)) {
-            $.post( "cleanup.php", { instsuffix: <?php echo isset($install_rename_suffix) ? "'" . $install_rename_suffix . "'" : "''"; ?> } );
-        };
+            $.post("cleanup.php", {instsuffix: <?php echo isset($install_rename_suffix) ? "'" . $install_rename_suffix . "'" : "''"; ?> });
+        }
+        ;
     });
 </script>

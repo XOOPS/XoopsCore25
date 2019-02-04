@@ -25,7 +25,7 @@
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  */
 
-require_once './include/common.inc.php';
+require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 $pageHasForm = false;
@@ -33,8 +33,8 @@ $pageHasHelp = false;
 
 $vars =& $_SESSION['settings'];
 
-include_once '../mainfile.php';
-include_once './class/dbmanager.php';
+require_once dirname(__DIR__) . '/mainfile.php';
+require_once __DIR__ . '/class/dbmanager.php';
 $dbm = new Db_manager();
 
 if (!$dbm->isConnectable()) {
@@ -53,18 +53,16 @@ $update  = false;
 
 extract($_SESSION['siteconfig'], EXTR_SKIP);
 
-include_once './include/makedata.php';
+require_once __DIR__ . '/include/makedata.php';
 //$cm = 'dummy';
 $wizard->loadLangFile('install2');
 
 $licenseFile = XOOPS_VAR_PATH . '/data/license.php';
-$touched = touch($licenseFile);
+$touched     = touch($licenseFile);
 if ($touched) {
-    $licenseReport = '<div class="alert alert-success"><span class="fa fa-check text-success"></span> '
-        . writeLicenseKey() . '</div>';
+    $licenseReport = '<div class="alert alert-success"><span class="fa fa-check text-success"></span> ' . writeLicenseKey() . '</div>';
 } else {
-    $licenseReport = '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> '
-        . sprintf(LICENSE_NOT_WRITEABLE, $licenseFile) . '</div>';
+    $licenseReport = '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . sprintf(LICENSE_NOT_WRITEABLE, $licenseFile) . '</div>';
 }
 $error = false;
 
@@ -75,24 +73,21 @@ if ($process) {
     $result  = $dbm->queryFromFile('./language/' . $wizard->language . '/' . XOOPS_DB_TYPE . '.lang.data.sql');
     $group   = make_groups($dbm);
     $result  = make_data($dbm, $adminname, $hashedAdminPass, $adminmail, $wizard->language, $group);
-    $content = '<div class="alert alert-success"><span class="fa fa-check text-success"></span> '
-        . DATA_INSERTED . '</div><div class="well">' . $dbm->report() . '</div>';
+    $content = '<div class="alert alert-success"><span class="fa fa-check text-success"></span> ' . DATA_INSERTED . '</div><div class="well">' . $dbm->report() . '</div>';
 } else {
-    $content = '<div class="alert alert-info"><span class="fa fa-info-circle text-info"></span> '
-        . DATA_ALREADY_INSERTED . '</div>';
+    $content = '<div class="alert alert-info"><span class="fa fa-info-circle text-info"></span> ' . DATA_ALREADY_INSERTED . '</div>';
 }
 $content .= $licenseReport;
-
 
 setcookie('xo_install_user', '', null, null, null);
 if (!empty($_SESSION['settings']['authorized']) && !empty($adminname) && !empty($adminpass)) {
     $claims = array(
         'uname' => $adminname,
-        'sub' => 'xoopsinstall',
+        'sub'   => 'xoopsinstall',
     );
-    $token = \Xmf\Jwt\TokenFactory::build('install', $claims, 60*60);
+    $token  = \Xmf\Jwt\TokenFactory::build('install', $claims, 60 * 60);
 
     setcookie('xo_install_user', $token, 0, null, null, null, true);
 }
 
-include './include/install_tpl.php';
+require __DIR__ . '/include/install_tpl.php';

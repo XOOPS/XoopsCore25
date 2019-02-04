@@ -25,7 +25,7 @@
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  **/
 
-require_once './include/common.inc.php';
+require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 $pageHasForm = true;
@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         return 302;
     }
 } else {
-    include_once './class/dbmanager.php';
+    require_once __DIR__ . '/class/dbmanager.php';
     $dbm = new Db_manager();
 
     if (!$dbm->isConnectable()) {
@@ -87,7 +87,7 @@ if ($isadmin) {
     $pageHasHelp = false;
     echo "<div class='alert alert-warning'>" . ADMIN_EXIST . "</div>\n";
 } else {
-        echo '<script type="text/javascript">
+    echo '<script type="text/javascript">
                 var desc = new Array();
                 desc[0] = "' . PASSWORD_VERY_WEAK . '";
                 desc[1] = "' . PASSWORD_WEAK . '";
@@ -101,38 +101,38 @@ if ($isadmin) {
         <div class="panel-heading"><?php echo LEGEND_ADMIN_ACCOUNT; ?></div>
         <div class="panel-body">
 
-        <?php
-        echo '<div class="row"><div class="col-md-9">';
-        echo xoFormField('adminname', $vars['adminname'], ADMIN_LOGIN_LABEL);
-        if (isset($error['name'])) {
-            foreach ($error['name'] as $errmsg) {
-                echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errmsg . '</div>';
-            }
-        }
-
-        echo xoFormField('adminmail', $vars['adminmail'], ADMIN_EMAIL_LABEL);
-        if (isset($error['email'])) {
-            foreach ($error['email'] as $errmsg) {
-                echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errmsg . '</div>';
-            }
-        }
-        ?>
-
-        <div id="password">
-            <div id="passwordinput">
-                <?php
-                echo xoPassField('adminpass', '', ADMIN_PASS_LABEL);
-                echo xoPassField('adminpass2', '', ADMIN_CONFIRMPASS_LABEL);
-                if (isset($error['pass'])) {
-                    foreach ($error['pass'] as $errmsg) {
-                        echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errmsg . '</div>';
-                    }
+            <?php
+            echo '<div class="row"><div class="col-md-9">';
+            echo xoFormField('adminname', $vars['adminname'], ADMIN_LOGIN_LABEL);
+            if (isset($error['name'])) {
+                foreach ($error['name'] as $errmsg) {
+                    echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errmsg . '</div>';
                 }
-                ?>
+            }
+
+            echo xoFormField('adminmail', $vars['adminmail'], ADMIN_EMAIL_LABEL);
+            if (isset($error['email'])) {
+                foreach ($error['email'] as $errmsg) {
+                    echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errmsg . '</div>';
+                }
+            }
+            ?>
+
+            <div id="password">
+                <div id="passwordinput">
+                    <?php
+                    echo xoPassField('adminpass', '', ADMIN_PASS_LABEL);
+                    echo xoPassField('adminpass2', '', ADMIN_CONFIRMPASS_LABEL);
+                    if (isset($error['pass'])) {
+                        foreach ($error['pass'] as $errmsg) {
+                            echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errmsg . '</div>';
+                        }
+                    }
+                    ?>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-3">
+        <div class="col-md-3">
             <div id="passwordmeter" class="well">
                 <h4><?php echo PASSWORD_LABEL; ?></h4>
 
@@ -143,11 +143,11 @@ if ($isadmin) {
 
                 <div id="passwordgenerator">
                     <label for='password_generator'><?php echo PASSWORD_GENERATOR; ?></label>
-                    <input type="text" class="form-control" name="generated_pw" id="generated_pw" value=""  onclick="this.setSelectionRange(0, this.value.length); document.execCommand('copy');"><br>
+                    <input type="text" class="form-control" name="generated_pw" id="generated_pw" value="" onclick="this.setSelectionRange(0, this.value.length); document.execCommand('copy');"><br>
                     <button type="button" class="btn btn-default" onclick="suggestPassword(16);">
-                    <?php echo PASSWORD_GENERATE; ?></button>
+                        <?php echo PASSWORD_GENERATE; ?></button>
                     <button type="button" class="btn btn-default" onclick="suggestPasswordCopy();">
-                    <?php echo PASSWORD_COPY; ?></button>
+                        <?php echo PASSWORD_COPY; ?></button>
                 </div>
             </div>
         </div>
@@ -160,4 +160,4 @@ if ($isadmin) {
 $content = ob_get_contents();
 ob_end_clean();
 $error = !empty($error);
-include './include/install_tpl.php';
+require __DIR__ . '/include/install_tpl.php';

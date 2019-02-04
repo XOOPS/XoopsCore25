@@ -8,8 +8,9 @@ $supports = array();
 
 // Support site for English
 $supports['english'] = array(
-    'url' => 'http://www.xoops.org/',
-    'title' => 'English support');
+    'url'   => 'https://www.xoops.org/',
+    'title' => 'English support'
+);
 
 // Add extra support sites, use corresponding language folder name as key, for instance:
 /*

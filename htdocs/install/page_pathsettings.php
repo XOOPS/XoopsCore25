@@ -25,11 +25,11 @@
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  **/
 
-require_once './include/common.inc.php';
+require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
-include_once './class/pathcontroller.php';
-include_once '../include/functions.php';
+require_once __DIR__ . '/class/pathcontroller.php';
+require_once dirname(__DIR__) . '/include/functions.php';
 
 $pageHasForm = true;
 $pageHasHelp = true;
@@ -60,8 +60,8 @@ ob_start();
 
         function updPath(key, val) {
             val = removeTrailing(key, val);
-            $.get( "<?php echo $_SERVER['PHP_SELF']; ?>", { action: "checkpath", var: key, path: val } )
-                .done(function( data ) {
+            $.get("<?php echo $_SERVER['PHP_SELF']; ?>", {action: "checkpath", var: key, path: val})
+                .done(function (data) {
                     $("#" + key + 'pathimg').html(data);
                 });
             $("#" + key + 'perms').style.display = 'none';
@@ -74,7 +74,7 @@ ob_start();
             <div class="form-group">
                 <label class="xolabel" for="root"><?php echo XOOPS_ROOT_PATH_LABEL; ?></label>
                 <div class="xoform-help alert alert-info"><?php echo XOOPS_ROOT_PATH_HELP; ?></div>
-                <input type="text" class="form-control" name="root" id="root" value="<?php echo $ctrl->xoopsPath['root']; ?>" onchange="updPath('root', this.value)"/>
+                <input type="text" class="form-control" name="root" id="root" value="<?php echo $ctrl->xoopsPath['root']; ?>" onchange="updPath('root', this.value)">
                 <span id="rootpathimg"><?php echo genPathCheckHtml('root', $ctrl->validPath['root']); ?></span>
             </div>
 
@@ -99,7 +99,7 @@ ob_start();
             <div class="form-group">
                 <label for="data"><?php echo XOOPS_DATA_PATH_LABEL; ?></label>
                 <div class="xoform-help alert alert-info"><?php echo XOOPS_DATA_PATH_HELP; ?></div>
-                <input type="text" class="form-control" name="data" id="data" value="<?php echo $ctrl->xoopsPath['data']; ?>" onchange="updPath('data', this.value)"/>
+                <input type="text" class="form-control" name="data" id="data" value="<?php echo $ctrl->xoopsPath['data']; ?>" onchange="updPath('data', this.value)">
                 <span id="datapathimg"><?php echo genPathCheckHtml('data', $ctrl->validPath['data']); ?></span>
             </div>
             <?php
@@ -123,7 +123,7 @@ ob_start();
             <div class="form-group">
                 <label class="xolabel" for="lib"><?php echo XOOPS_LIB_PATH_LABEL; ?></label>
                 <div class="xoform-help alert alert-info"><?php echo XOOPS_LIB_PATH_HELP; ?></div>
-                <input type="text" class="form-control" name="lib" id="lib" value="<?php echo $ctrl->xoopsPath['lib']; ?>" onchange="updPath('lib', this.value)"/>
+                <input type="text" class="form-control" name="lib" id="lib" value="<?php echo $ctrl->xoopsPath['lib']; ?>" onchange="updPath('lib', this.value)">
                 <span id="libpathimg"><?php echo genPathCheckHtml('lib', $ctrl->validPath['lib']); ?></span>
             </div>
 
@@ -139,13 +139,13 @@ ob_start();
             <div class="form-group">
                 <label class="xolabel" for="url"><?php echo XOOPS_URL_LABEL; ?></label>
                 <div class="xoform-help alert alert-info"><?php echo XOOPS_URL_HELP; ?></div>
-                <input type="text" class="form-control" name="URL" id="url" value="<?php echo $ctrl->xoopsUrl; ?>" onchange="removeTrailing('url', this.value)"/>
+                <input type="text" class="form-control" name="URL" id="url" value="<?php echo $ctrl->xoopsUrl; ?>" onchange="removeTrailing('url', this.value)">
             </div>
 
             <div class="form-group">
                 <label class="xolabel" for="cookie_domain"><?php echo XOOPS_COOKIE_DOMAIN_LABEL; ?></label>
                 <div class="xoform-help alert alert-info"><?php echo XOOPS_COOKIE_DOMAIN_HELP; ?></div>
-                <input type="text" class="form-control" name="COOKIE_DOMAIN" id="cookie_domain" value="<?php echo $ctrl->xoopsCookieDomain; ?>" onchange="removeTrailing('url', this.value)"/>
+                <input type="text" class="form-control" name="COOKIE_DOMAIN" id="cookie_domain" value="<?php echo $ctrl->xoopsCookieDomain; ?>" onchange="removeTrailing('url', this.value)">
             </div>
         </div>
     </div>
@@ -154,4 +154,4 @@ ob_start();
 $content = ob_get_contents();
 ob_end_clean();
 
-include './include/install_tpl.php';
+require __DIR__ . '/include/install_tpl.php';
