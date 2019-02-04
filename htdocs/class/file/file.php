@@ -569,7 +569,7 @@ class XoopsFileHandler
     /**
      * Returns the current folder.
      *
-     * @return Folder Current folder
+     * @return string Folder Current folder
      * @access public
      */
     public function &folder()
