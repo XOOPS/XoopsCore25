@@ -53,7 +53,7 @@ if (!empty($_POST['action'])) {
         foreach (array_keys($group1_ips) as $i) {
             $group1_ips[$i] = trim($group1_ips[$i]);
         }
-        $fp = @fopen($protector->get_filepath4group1ips(), 'w');
+        $fp = @fopen($protector::get_filepath4group1ips(), 'w');
         if ($fp) {
             @flock($fp, LOCK_EX);
             fwrite($fp, serialize(array_unique($group1_ips)) . "\n");
