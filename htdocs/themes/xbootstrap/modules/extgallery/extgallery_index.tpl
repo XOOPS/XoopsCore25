@@ -6,7 +6,7 @@
 </div>
 
 <div id="xoopsgrid" class="row">
-    <{foreachq item=child from=$cats}>
+    <{foreach item=child from=$cats}>
     <div class="col-xs-6 col-sm-4 col-md-4 xoops-gallery-thumb">
         <{if $disp_cat_img == 1 }>
             <{if $child.cat_imgurl != "" }>

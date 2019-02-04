@@ -7,7 +7,7 @@
         <span class="delimiter">&raquo;</span>
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>"><{$category.title}></a>
         <{if $parentforum}>
-            <{foreachq item=forum from=$parentforum}>
+            <{foreach item=forum from=$parentforum}>
             <span class="delimiter">&raquo;</span>
             &nbsp;
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a>
@@ -52,7 +52,7 @@
 <form name="<{$form_post.name}>" id="<{$form_post.name}>" action="<{$form_post.action}>"
       method="<{$form_post.method}>" <{$form_post.extra}> >
     <table width='100%' class='outer' cellspacing='1'>
-        <{foreachq item=element from=$form_post.elements}>
+        <{foreach item=element from=$form_post.elements}>
         <{if $element.hidden != true}>
             <tr valign="top">
                 <td class="head">
@@ -68,7 +68,7 @@
         <{/if}>
         <{/foreach}>
     </table>
-    <{foreachq item=element from=$form_post.elements}>
+    <{foreach item=element from=$form_post.elements}>
     <{if $element.hidden == true}>
         <{$element.body}>
     <{/if}>
@@ -80,7 +80,7 @@
 
 <{if $posts_context}>
     <table width='100%' class='outer' cellspacing='1'>
-        <{foreachq item=post from=$posts_context}>
+        <{foreach item=post from=$posts_context}>
         <tr valign="top">
             <td class="head"><{$post.subject}></td>
         </tr>

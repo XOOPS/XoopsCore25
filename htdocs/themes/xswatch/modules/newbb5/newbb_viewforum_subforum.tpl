@@ -3,7 +3,7 @@
 </a>
 <div class="newbb-subforum mb10 clearfix">
     <div class="collapse" id="xoops-subforum">
-        <{foreachq item=sforum from=$subforum}>
+        <{foreach item=sforum from=$subforum}>
         <ul class="subforum-loop list-unstyled clearfix">
         <li class="col-xs-12 col-md-6">
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$sforum.forum_id}>" title="<{$sforum.forum_name}>">
