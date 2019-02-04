@@ -15,15 +15,15 @@ $mytrustdirpath = __DIR__;
 
 // environment
 require_once XOOPS_ROOT_PATH . '/class/template.php';
-/* @var $module_handler XoopsModuleHandler  */
+/* @var XoopsModuleHandler $module_handler */
 $module_handler    = xoops_getHandler('module');
 $xoopsModule       = $module_handler->getByDirname($mydirname);
-/* @var $config_handler XoopsConfigHandler  */
+/* @var XoopsConfigHandler $config_handler */
 $config_handler    = xoops_getHandler('config');
 $xoopsModuleConfig = $config_handler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
 
 // check permission of 'module_admin' of this module
-/* @var $moduleperm_handler XoopsGroupPermHandler  */
+/* @var XoopsGroupPermHandler $moduleperm_handler */
 $moduleperm_handler = xoops_getHandler('groupperm');
 if (!is_object(@$xoopsUser) || !$moduleperm_handler->checkRight('module_admin', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
     die('only admin can access this area');

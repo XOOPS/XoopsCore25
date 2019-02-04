@@ -44,7 +44,7 @@ function fatalPhpErrorHandler($e = null) {
             printf($messageFormat, 'Error', $lastError['message'], $lastError['file'], $lastError['line']);
         }
     } elseif ($e instanceof $exceptionClass || $e instanceof $throwableClass) {
-        /** @var $e \Exception */
+        /** @var \Exception $e */
         printf($messageFormat, get_class($e), $e->getMessage(), $e->getFile(), $e->getLine());
     }
 }

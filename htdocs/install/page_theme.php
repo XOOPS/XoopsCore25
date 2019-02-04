@@ -20,7 +20,7 @@ require_once './include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    /* @var $config_handler XoopsConfigHandler  */
+    /* @var XoopsConfigHandler $config_handler */
     $config_handler = xoops_getHandler('config');
     if (array_key_exists('conf_ids', $_REQUEST)) {
         foreach ($_REQUEST['conf_ids'] as $key => $conf_id) {
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    /* @var $member_handler XoopsMemberHandler */
+    /* @var XoopsMemberHandler $member_handler */
     $member_handler = xoops_getHandler('member');
     $member_handler->updateUsersByField('theme', $new_value);
 
@@ -45,7 +45,7 @@ if (!@include_once "../modules/system/language/{$wizard->language}/admin/prefere
     include_once '../modules/system/language/english/admin/preferences.php';
 }
 
-/* @var $config_handler XoopsConfigHandler  */
+/* @var XoopsConfigHandler $config_handler */
 $config_handler = xoops_getHandler('config');
 $criteria       = new CriteriaCompo();
 $criteria->add(new Criteria('conf_modid', 0));

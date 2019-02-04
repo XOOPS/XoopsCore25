@@ -142,7 +142,7 @@ class XoopsMultiMailer extends PHPMailer
      */
     public function __construct()
     {
-        /* @var $config_handler XoopsConfigHandler  */
+        /* @var XoopsConfigHandler $config_handler */
         $config_handler    = xoops_getHandler('config');
         $xoopsMailerConfig = $config_handler->getConfigsByCat(XOOPS_CONF_MAILER);
         $this->From        = $xoopsMailerConfig['from'];

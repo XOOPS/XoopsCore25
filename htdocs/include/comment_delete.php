@@ -80,14 +80,14 @@ if ('system' === $xoopsModule->getVar('dirname')) {
     $redirect_page .= $comment_config['itemName'];
     $moddir = $xoopsModule->getVar('dirname');
 }
-/* @var  $xoopsUser XoopsUser */
+/* @var  XoopsUser $xoopsUser */
 $accesserror = false;
 if (!is_object($xoopsUser)) {
     $accesserror = true;
 } else {
     if (!$xoopsUser->isAdmin($com_modid)) {
         include_once $GLOBALS['xoops']->path('modules/system/constants.php');
-        /* @var  $sysperm_handler XoopsGroupPermHandler */
+        /* @var  XoopsGroupPermHandler $sysperm_handler */
         $sysperm_handler = xoops_getHandler('groupperm');
         if (!$sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $xoopsUser->getGroups())) {
             $accesserror = true;
@@ -108,7 +108,7 @@ if (false !== $accesserror) {
 xoops_loadLanguage('comment');
 switch ($op) {
     case 'delete_one':
-        /* @var  $comment_handler XoopsCommentHandler */
+        /* @var  XoopsCommentHandler $comment_handler */
         $comment_handler = xoops_getHandler('comment');
         $comment         = $comment_handler->get($com_id);
         if (!$comment_handler->delete($comment)) {
@@ -146,7 +146,7 @@ switch ($op) {
 
         // update user posts if its not an anonymous post
         if ($comment->getVar('com_uid') != 0) {
-            /* @var $member_handler XoopsMemberHandler */
+            /* @var XoopsMemberHandler $member_handler */
             $member_handler = xoops_getHandler('member');
             $com_poster     = $member_handler->getUser($comment->getVar('com_uid'));
             if (is_object($com_poster)) {
@@ -197,7 +197,7 @@ switch ($op) {
         break;
 
     case 'delete_all':
-        /* @var  $comment_handler XoopsCommentHandler */
+        /* @var  XoopsCommentHandler $comment_handler */
         $comment_handler = xoops_getHandler('comment');
         $comment         = $comment_handler->get($com_id);
         $com_rootid      = $comment->getVar('com_rootid');
@@ -213,7 +213,7 @@ switch ($op) {
         $child_comments[$com_id] = &$comment;
         $msgs                    = array();
         $deleted_num             = array();
-        /* @var $member_handler XoopsMemberHandler */
+        /* @var XoopsMemberHandler $member_handler */
         $member_handler          = xoops_getHandler('member');
         foreach (array_keys($child_comments) as $i) {
             if (!$comment_handler->delete($child_comments[$i])) {

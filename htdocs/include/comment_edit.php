@@ -33,7 +33,7 @@ $com_mode = isset($_GET['com_mode']) ? htmlspecialchars(trim($_GET['com_mode']),
 
 if ($com_mode == '') {
     if (is_object($xoopsUser)) {
-        /* @var  $xoopsUser XoopsUser */
+        /* @var  XoopsUser $xoopsUser */
         $com_mode = $xoopsUser->getVar('umode');
     } else {
         $com_mode = $xoopsConfig['com_mode'];

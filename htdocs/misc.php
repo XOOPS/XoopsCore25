@@ -89,7 +89,7 @@ if ($action === 'showpopups') {
 <table width='100%'>
     <tr>
         <?php
-        /* @var  $avatar_handler XoopsAvatarHandler */
+        /* @var  XoopsAvatarHandler $avatar_handler */
             $avatar_handler = xoops_getHandler('avatar');
             $avatarslist = $avatar_handler->getList('S');
             $cntavs = 0;
@@ -176,7 +176,7 @@ if ($action === 'showpopups') {
             echo '</head><body>';
             echo '<table style="width:100%;" cellspacing="1" class="outer"><tr><th colspan="3">' . _WHOSONLINE . '</th></tr>';
             $start = isset($_GET['start']) ? (int)$_GET['start'] : 0;
-            /* @var $online_handler XoopsOnlineHandler  */
+            /* @var XoopsOnlineHandler $online_handler */
             $online_handler = xoops_getHandler('online');
             $online_total = $online_handler->getCount();
             $limit = ($online_total > 20) ? 20 : $online_total;
@@ -185,7 +185,7 @@ if ($action === 'showpopups') {
             $criteria->setStart($start);
             $onlines = $online_handler->getAll($criteria);
             $count = count($onlines);
-            /* @var $module_handler XoopsModuleHandler  */
+            /* @var XoopsModuleHandler $module_handler */
             $module_handler = xoops_getHandler('module');
             $modules = $module_handler->getList(new Criteria('isactive', 1));
             for ($i = 0; $i < $count; ++$i) {

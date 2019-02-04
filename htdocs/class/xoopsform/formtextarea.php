@@ -102,7 +102,7 @@ class XoopsFormTextArea extends XoopsFormElement
     /**
      * Set initial content
      *
-     * @param  $value string
+     * @param  string $value
      */
     public function setValue($value)
     {
