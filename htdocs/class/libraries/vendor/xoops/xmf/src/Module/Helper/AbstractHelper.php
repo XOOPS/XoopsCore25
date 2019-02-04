@@ -31,7 +31,7 @@ abstract class AbstractHelper
     protected $dirname;
 
     /**
-     * @var XoopsModule
+     * @var \XoopsModule
      */
     protected $module;
 

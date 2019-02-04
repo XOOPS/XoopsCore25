@@ -112,7 +112,7 @@ class XoopsFormTextArea extends XoopsFormElement
     /**
      * prepare HTML for output
      *
-     * @return sting HTML
+     * @return string HTML
      */
     public function render()
     {

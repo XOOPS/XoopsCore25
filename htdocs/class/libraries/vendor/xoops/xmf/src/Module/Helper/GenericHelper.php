@@ -108,7 +108,7 @@ abstract class GenericHelper extends AbstractHelper
      *
      * @param string $name name of handler to load
      *
-     * @return bool|XoopsObjectHandler|XoopsPersistableObjectHandler
+     * @return bool|\XoopsObjectHandler|\XoopsPersistableObjectHandler
      */
     public function getHandler($name)
     {

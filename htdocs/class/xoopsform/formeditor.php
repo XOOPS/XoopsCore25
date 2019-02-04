@@ -80,7 +80,7 @@ class XoopsFormEditor extends XoopsFormTextArea
     /**
      * XoopsFormEditor::render()
      *
-     * @return \sting
+     * @return \string
      */
     public function render()
     {
