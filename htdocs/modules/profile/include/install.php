@@ -63,10 +63,10 @@ function xoops_module_install_profile(XoopsModule $module)
     profile_install_addField('bio', _US_EXTRAINFO, '', 1, 'textarea', 2, 6, 1, array(), 2, 0);
     profile_install_addField('user_regdate', _US_MEMBERSINCE, '', 1, 'datetime', 3, 7, 0, array(), 0, 10);
 
-    profile_install_addField('user_icq', _US_ICQ, '', 2, 'textbox', 1, 1, 1, array(), 0, 255, false);
-    profile_install_addField('user_aim', _US_AIM, '', 2, 'textbox', 1, 2, 1, array(), 0, 255, false);
-    profile_install_addField('user_yim', _US_YIM, '', 2, 'textbox', 1, 3, 1, array(), 0, 255, false);
-    profile_install_addField('user_msnm', _US_MSNM, '', 2, 'textbox', 1, 4, 1, array(), 0, 255, false);
+    profile_install_addField('user_icq', _US_ICQ, '', 2, 'textbox', 1, 1, 0, array(), 0, 255, false);
+    profile_install_addField('user_aim', _US_AIM, '', 2, 'textbox', 1, 2, 0, array(), 0, 255, false);
+    profile_install_addField('user_yim', _US_YIM, '', 2, 'textbox', 1, 3, 0, array(), 0, 255, false);
+    profile_install_addField('user_msnm', _US_MSNM, '', 2, 'textbox', 1, 4, 0, array(), 0, 255, false);
 
     profile_install_addField('user_viewemail', _US_ALLOWVIEWEMAIL, '', 3, 'yesno', 3, 1, 1, array(), 2, 1, false);
     profile_install_addField('attachsig', _US_SHOWSIG, '', 3, 'yesno', 3, 2, 1, array(), 0, 1, false);
