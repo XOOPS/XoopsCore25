@@ -1,41 +1,40 @@
 <{if $xoops_notification.show}>
-    <div class="clearfix"></div>
     <form name="notification_select" action="<{$xoops_notification.target_page}>" method="post">
-        <h4><{$lang_activenotifications}></h4>
-
-        <input type="hidden" name="not_redirect" value="<{$xoops_notification.redirect_script}>">
-        <{securityToken}>
-
-        <p><strong><{$lang_notificationoptions}></strong></p>
-
-        <div class="row">
-            <div class="col-xs-4 col-md-4"><{$lang_category}></div>
-
-            <div class="col-xs-8 col-md-8">
-                <input name="allbox" id="allbox" onclick="xoopsCheckAll('notification_select','allbox');" type="checkbox" value="<{$lang_checkall}>">
-                <{$lang_events}>
-            </div>
-        </div>
-        <div class="row">
+        <h4 class="txtcenter"><{$lang_activenotifications}></h4>
+        <input type="hidden" name="not_redirect" value="<{$xoops_notification.redirect_script}>"/>
+        <input type="hidden" name="XOOPS_TOKEN_REQUEST" value="<{php}>echo $GLOBALS['xoopsSecurity']->createToken();<{/php}>"/>
+        <table class="table table-condensed">
+            <tr>
+                <th colspan="3"><{$lang_notificationoptions}></th>
+            </tr>
+            <tr>
+                <th class="head"><{$lang_category}></th>
+                <td class="head"><input name="allbox" id="allbox" onclick="xoopsCheckAll('notification_select','allbox');" type="checkbox"
+                                        value="<{$lang_checkall}>"/></td>
+                <th class="head"><{$lang_events}></th>
+            </tr>
             <{foreach name=outer item=category from=$xoops_notification.categories}>
                 <{foreach name=inner item=event from=$category.events}>
-                    <{if $smarty.foreach.inner.first}>
-                        <div class="col-xs-4 col-md-4"><strong><{$category.title}></strong></div>
-                    <{/if}>
-
-                    <{counter assign=index}>
-                    <input type="hidden" name="not_list[<{$index}>][params]" value="<{$category.name}>,<{$category.itemid}>,<{$event.name}>"/>
-                    <div class="col-xs-8 col-md-8 pull-right">
-                        <input type="checkbox" id="not_list[]" name="not_list[<{$index}>][status]" value="1" <{if $event.subscribed}>checked<{/if}>>
-
-                        <{$event.caption}>
-                    </div>
+                    <tr>
+                        <{if $smarty.foreach.inner.first}>
+                            <td class="even" rowspan="<{$smarty.foreach.inner.total}>"><{$category.title}></td>
+                        <{/if}>
+                        <td class="odd">
+                            <{counter assign=index}>
+                            <input type="hidden" name="not_list[<{$index}>][params]" value="<{$category.name}>,<{$category.itemid}>,<{$event.name}>"/>
+                            <input type="checkbox" id="not_list[]" name="not_list[<{$index}>][status]" value="1" <{if $event.subscribed}>checked<{/if}>
+                            />
+                        </td>
+                        <td class="odd"><{$event.caption}></td>
+                    </tr>
                 <{/foreach}>
             <{/foreach}>
+            <tr>
+                <td class="foot txtcenter" colspan="3"><button class="btn btn-primary" type="submit" name="not_submit"><span class="glyphicon glyphicon-refresh"></span> <{$lang_updatenow}></button></td>
+            </tr>
+        </table>
+        <div class="txtcenter">
+            <span style="font-weight: bold;"><{$lang_notificationmethodis}>:</span>&nbsp;<{$user_method}>&nbsp;&nbsp;<a class="btn btn-info btn-xs" href="<{$editprofile_url}>" title="<{$lang_change}>"><{$lang_change}></a>
         </div>
-
-        <p class="aligncenter"><input class="btn btn-primary" type="submit" name="not_submit" value="<{$lang_updatenow}>"></p>
-
-        <p class="aligncenter"><strong><{$lang_notificationmethodis}>: </strong><{$user_method}> <a class="btn btn-info btn-xs" href="<{$editprofile_url}>" title="<{$lang_change}>"><{$lang_change}></a></p>
     </form>
 <{/if}>
