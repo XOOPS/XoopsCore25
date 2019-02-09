@@ -314,6 +314,20 @@ class Criteria extends CriteriaElement
         $this->column   = $column;
         $this->value    = $value;
         $this->operator = $operator;
+
+        /**
+         * A common custom in some older programs was to use "new Criteria(1, '1')" to
+         * create an always true clause, WHERE 1 = "1"
+         *
+         * This is no longer needed and now no longer works. Instead use "new Criteria('')"
+         * or "new CriteriaCompo()", either of which will produce no WHERE clause.
+         *
+         * The following is a temporary workaround for the old technique
+         */
+        if ((int) $column === 1 && (int) $value === 1 && $operator === '=') {
+            $this->column = '';
+            $this->value  = '';
+        }
     }
 
     /**
