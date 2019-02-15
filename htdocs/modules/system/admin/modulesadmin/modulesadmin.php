@@ -612,7 +612,7 @@ function xoops_module_uninstall($dirname)
     } else {
         $msgs   = array();
         $msgs[] = '<div id="xo-module-log"><div class="header">';
-        $msgs[] = $errs[] = '<h4>' . _AM_SYSTEM_MODULES_UNINSTALL . $module->getInfo('name', 's') . '</h4>';
+        $msgs[] = $errs[] = '<h4>' . _AM_SYSTEM_MODULES_UNINSTALL . ' ' . $module->getInfo('name', 's') . '</h4>';
         if ($module->getInfo('image') !== false && trim($module->getInfo('image')) != '') {
             $msgs[] = '<img src="' . XOOPS_URL . '/modules/' . $dirname . '/' . trim($module->getInfo('image')) . '" alt="" />';
         }
