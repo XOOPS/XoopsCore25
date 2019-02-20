@@ -32,4 +32,18 @@ $content .= '
     <li>Create (if not already present) and make these directories writable: %s</li>
     <li>Turn cookie and JavaScript of your browser on.</li>
 </ol>
+<h3>Special Notes</h3>
+<p>Some specific system software combinations may require some additional configurations to work
+ with XOOPS. If any of these topics apply to your environment, please see the full 
+ <a href="https://xoops.gitbook.io/xoops-2-5-9-install-upgrade/" class="external">XOOPS 
+ installation manual</a> for more information. 
+</p>
+<p>MySQL 8.0 is not supported in all PHP versions. Even in the supported versions, issues with the 
+ PHP <em>mysqlnd</em> library may require the MySQL server&apos;s <em>default-authentication-plugin</em> 
+ to be set to <em>mysql_native_password</em> to function correctly.
+</p>
+<p>SELinux enabled systems (such as CentOS and RHEL) may require changes to the security context
+ for XOOPS directories in addition to the normal file permissions to make directories writable. 
+ Consult your system documentation and/or systems administrator.
+</p>
 ';
