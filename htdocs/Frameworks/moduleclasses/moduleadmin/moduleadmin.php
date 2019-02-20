@@ -320,7 +320,7 @@ class ModuleAdmin
             // php version
             $path = XOOPS_URL . '/Frameworks/moduleclasses/icons/16/';
             if ($this->_obj->getInfo('min_php')) {
-                if (version_compare(phpversion(), $this->_obj->getInfo('min_php'), '<')) {
+                if (version_compare(phpversion(), strtolower($this->_obj->getInfo('min_php')), '<')) {
                     $ret .= "<span style='color : red; font-weight : bold;'><img src='" . $path . "0.png' >" . sprintf(_AM_MODULEADMIN_CONFIG_PHP, $this->_obj->getInfo('min_php'), phpversion()) . "</span>\n";
                 } else {
                     $ret .= "<span style='color : green;'><img src='" . $path . "1.png' >" . sprintf(_AM_MODULEADMIN_CONFIG_PHP, $this->_obj->getInfo('min_php'), phpversion()) . "</span>\n";
@@ -375,7 +375,7 @@ class ModuleAdmin
             // xoops version
             if ($this->_obj->getInfo('min_xoops')) {
                 $currentXoopsVersion = strtolower(str_replace('XOOPS ', '', XOOPS_VERSION));
-                if (version_compare($currentXoopsVersion, $this->_obj->getInfo('min_xoops'), '<')) {
+                if (version_compare($currentXoopsVersion, strtolower($this->_obj->getInfo('min_xoops')), '<')) {
                     $ret .= "<span style='color : red; font-weight : bold;'><img src='" . $path . "0.png' >" . sprintf(_AM_MODULEADMIN_CONFIG_XOOPS, $this->_obj->getInfo('min_xoops'), substr(XOOPS_VERSION, 6, strlen(XOOPS_VERSION) - 6)) . "</span>\n";
                 } else {
                     $ret .= "<span style='color : green;'><img src='" . $path . "1.png' >" . sprintf(_AM_MODULEADMIN_CONFIG_XOOPS, $this->_obj->getInfo('min_xoops'), substr(XOOPS_VERSION, 6)) . "</span>\n";
