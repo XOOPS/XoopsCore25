@@ -30,7 +30,7 @@ define('_AM_FMT_CONFIGSNOTWRITABLE', 'Turn the configs directory writable: %s');
 define('_AM_H3_PREFIXMAN', 'Prefix Manager');
 define('_AM_MSG_DBUPDATED', 'Database Updated Successfully!');
 define('_AM_CONFIRM_DELETE', 'All data will be dropped. OK?');
-define('_AM_TXT_HOWTOCHANGEDB',"If you want to change prefix,<br> edit %s/mainfile.php manually.<br><br>define('XOOPS_DB_PREFIX', '<b>%s</b>');");
+define('_AM_TXT_HOWTOCHANGEDB',"If you want to change prefix,<br> edit %s/data/secure.php manually.<br><br>define('XOOPS_DB_PREFIX', '<b>%s</b>');");
 // advisory.php
 define('_AM_ADV_NOTSECURE', 'Not secure');
 define('_AM_ADV_TRUSTPATHPUBLIC', 'If you can see an image -NG- or the link returns normal page, your XOOPS_TRUST_PATH is not placed properly. The best place for XOOPS_TRUST_PATH is outside of DocumentRoot. If you cannot do that, you have to put .htaccess (DENY FROM ALL) just under XOOPS_TRUST_PATH as the second best way.');
