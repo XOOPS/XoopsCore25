@@ -17,16 +17,13 @@
                         alt="<{if $item.visible}><{$smarty.const._AM_SYSTEM_BLOCKS_HIDE}><{else}><{$smarty.const._AM_SYSTEM_BLOCKS_DISPLAY}><{/if}><{$item.name}>"
                         title="<{if $item.visible}><{$smarty.const._AM_SYSTEM_BLOCKS_HIDE}><{else}><{$smarty.const._AM_SYSTEM_BLOCKS_DISPLAY}><{/if}><{$item.name}>"/>
                 <a class="tooltip" href="admin.php?fct=blocksadmin&amp;op=edit&amp;bid=<{$item.bid}>" title="<{$smarty.const._EDIT}>">
-                    <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._EDIT}>"/>
-                </a>
+                    <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._EDIT}>"/></a>
                 <{if $item.block_type != 'S'}>
                     <a class="tooltip" href="admin.php?fct=blocksadmin&amp;op=delete&amp;bid=<{$item.bid}>" title="<{$smarty.const._DELETE}>">
-                        <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._DELETE}>"/>
-                    </a>
+                        <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._DELETE}>"/></a>
                 <{/if}>
                 <a class="tooltip" href="admin.php?fct=blocksadmin&amp;op=clone&amp;bid=<{$item.bid}>" title="<{$smarty.const._AM_SYSTEM_BLOCKS_CLONE}>">
-                    <img src="<{xoAdminIcons clone.png}>" alt="<{$smarty.const._AM_SYSTEM_BLOCKS_CLONE}>"/>
-                </a>
+                    <img src="<{xoAdminIcons clone.png}>" alt="<{$smarty.const._AM_SYSTEM_BLOCKS_CLONE}>"/></a>
             </div>
         </div>
     <{/if}>
