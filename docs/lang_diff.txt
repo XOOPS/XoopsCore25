@@ -27,6 +27,10 @@ htdocs/install/english/welcome.php
 htdocs/language/english/admin.php
 - added define('_AD_WARNING_OLD_PHP', 'WARNING: Consider upgrading to a newer version of PHP. Version %s or newer is recommended and will be required in future XOOPS versions.');
 
+CHANGED DEFINES
+htdocs/xoops_lib/modules/protector/language/english/admin.php
+- define('_AM_TXT_HOWTOCHANGEDB',"If you want to change prefix,<br> edit %s/data/secure.php manually.<br><br>define('XOOPS_DB_PREFIX', '<b>%s</b>');");
+
 NEW FILES:
 
 ===============================
