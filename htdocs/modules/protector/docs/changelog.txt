@@ -1,4 +1,7 @@
 = CHANGES =
+3.61 (2019/02/18)
+- the prefix setting is in secure.php. The text in prefix manager is now up to date.
+
 3.60 RC (2017/11/12)
 - add overview visual summary
 - add "ban ip" button to log display
