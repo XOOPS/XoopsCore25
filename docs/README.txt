@@ -1,10 +1,12 @@
 XOOPS 2.5.10
 
 The XOOPS Development Team is pleased to announce the release of XOOPS 2.5.10. This version
-includes fixes and enhancements, security updates, PHP 7.2 compatibility.
+includes fixes and enhancements, security updates, PHP 7.3 and MySQL 8.0 compatibility.
 
 Download XOOPS 2.5.10 from GitHub: https://github.com/XOOPS/XoopsCore25/releases
 
+For full documentation on installing or upgrading XOOPS please see:
+https://xoops.gitbook.io/xoops-2-5-9-install-upgrade/
 
 How to contribute
 -----------------------------------
@@ -14,4 +16,4 @@ Documentation: https://xoops.gitbook.io/xoops-documentation-process
 Support Forums: https://xoops.org/modules/newbb/
 
 XOOPS Development Team
-2018
+2019

@@ -1,8 +1,11 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
-2.5.10 BETA              2019/02/03
+2.5.10 RC                2019/03/03
 ===================================
+- fix version check in module administration (mage)
+- fix notification template in boostrap based themes (mage)
+- fix incorrect message in protector prefix manager (mage)
 - Warn in admin if using an unsupported version of PHP (security concern)
 - Add method XoopsLists::getFileListByExtension()
 - Fix missing jpeg extension in XoopsLists::getImgListAsArray()
