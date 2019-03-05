@@ -6,7 +6,7 @@ includes fixes and enhancements, security updates, PHP 7.3 and MySQL 8.0 compati
 Download XOOPS 2.5.10 from GitHub: https://github.com/XOOPS/XoopsCore25/releases
 
 For full documentation on installing or upgrading XOOPS please see:
-https://xoops.gitbook.io/xoops-2-5-9-install-upgrade/
+https://xoops.gitbook.io/xoops-install-upgrade/
 
 How to contribute
 -----------------------------------
