@@ -94,7 +94,7 @@ if ($xoopsConfig['theme_set'] !== 'default' && file_exists(XOOPS_THEME_PATH . '/
     }
 
     if (!isset($GLOBALS['xoopsOption']['template_main']) && $xoopsModule) {
-        // new themes using Smarty does not have old functions that are required in old modules, so include them now
+        // new themes using Smarty do not have old functions that are required in old modules, so include them now
         include $GLOBALS['xoops']->path('include/old_theme_functions.php');
         // need this also
         $xoopsTheme['thename'] = $xoopsConfig['theme_set'];
