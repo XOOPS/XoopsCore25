@@ -592,7 +592,7 @@ class ModuleAdmin
               . "</table>\n";
         if ( true === $logo_xoops ) {
             $ret .= "<div class=\"center\">"
-                  . "<a href=\"http://www.xoops.org\" target=\"_blank\"><img src=\"{$path}xoopsmicrobutton.gif\" alt=\"XOOPS\" title=\"XOOPS\"></a>"
+                  . "<a href=\"https://xoops.org\" target=\"_blank\"><img src=\"{$path}xoopsmicrobutton.gif\" alt=\"XOOPS\" title=\"XOOPS\"></a>"
                   . "</div>";
         }
         return $ret;

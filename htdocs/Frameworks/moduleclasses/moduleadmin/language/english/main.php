@@ -48,4 +48,4 @@ define('_AM_MODULEADMIN_DASHBOARD', 'Dashboard');
 define('_AM_MODULEADMIN_ABOUT', 'About');
 define('_AM_MODULEADMIN_PERMISSIONS', 'Permissions');
 //ModuleAdmin
-define('_AM_MODULEADMIN_ADMIN_FOOTER', "<div class='center smallsmall italic pad5'>This module is maintained by the <a class='tooltip' rel='external' href='http://xoops.org/' title='Visit XOOPS Community'>XOOPS Community</a></div>");
+define('_AM_MODULEADMIN_ADMIN_FOOTER', "<div class='center smallsmall italic pad5'>This module is maintained by the <a class='tooltip' rel='external' href='https://xoops.org/' title='Visit XOOPS Community'>XOOPS Community</a></div>");
