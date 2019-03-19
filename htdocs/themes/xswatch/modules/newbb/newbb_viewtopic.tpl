@@ -4,7 +4,7 @@
 
         <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>"><{$category.title}></a></li>
         <{if $parentforum}>
-            <{foreachq item=forum from=$parentforum}>
+            <{foreach item=forum from=$parentforum}>
                 <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a></li>
             <{/foreach}>
         <{/if}>
@@ -22,7 +22,7 @@
         <div class="newbb-online-users row mb10">
             <div class="col-md-12">
                 <strong><{$smarty.const._MD_BROWSING}> </strong>
-                <{foreachq item=user from=$online.users}>
+                <{foreach item=user from=$online.users}>
                     <a href="<{$user.link}>">
                         <{if $user.level eq 2}><!-- If is admin -->
                             <label class="label label-success"><{$user.uname}></label>
@@ -137,14 +137,14 @@
             <select class="form-control" name="topicoption" id="topicoption" onchange="if(this.options[this.selectedIndex].value.length >0 ) { window.document.location=this.options[this.selectedIndex].value;}">
                 <option value=""><{$smarty.const._MD_TOPICOPTION}></option>
                 <{if $viewer_level gt 1}>
-                    <{foreachq item=act from=$admin_actions}>
+                    <{foreach item=act from=$admin_actions}>
                         <option value="<{$act.link}>"><{$act.name}></option>
                     <{/foreach}>
                 <{/if}>
                 <{if $adminpoll_actions|is_array && count($adminpoll_actions) > 0 }>
                     <option value="">--------</option>
                     <option value=""><{$smarty.const._MD_POLLOPTIONADMIN}></option>
-                    <{foreachq item=actpoll from=$adminpoll_actions}>
+                    <{foreach item=actpoll from=$adminpoll_actions}>
                         <option value="<{$actpoll.link}>"><{$actpoll.name}></option>
                     <{/foreach}>
                 <{/if}>
@@ -167,7 +167,7 @@
         <div class="col-sm-4 col-md-4">
             <select class="form-control" name="viewmode" id="viewmode" onchange="if(this.options[this.selectedIndex].value.length >0 ) { window.location=this.options[this.selectedIndex].value;}">
                 <option value=""><{$smarty.const._MD_VIEWMODE}></option>
-                <{foreachq item=act from=$viewmode_options}>
+                <{foreach item=act from=$viewmode_options}>
                     <option value="<{$act.link}>"><{$act.title}></option>
                 <{/foreach}>
             </select>
@@ -178,7 +178,7 @@
         <{$smarty.const._MD_TOPICLOCK}>
     <{/if}>
 
-    <{foreachq item=topic_post from=$topic_posts}>
+    <{foreach item=topic_post from=$topic_posts}>
         <{includeq file="db:newbb_thread.tpl" topic_post=$topic_post mode=$mode}>
     <{foreachelse}>
         <{$smarty.const._MD_ERRORPOST}>

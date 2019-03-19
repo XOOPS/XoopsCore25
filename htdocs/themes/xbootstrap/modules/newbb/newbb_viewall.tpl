@@ -181,7 +181,7 @@
     </thead>
     <tbody>
     <!-- start forum topic -->
-    <{foreachq name=loop item=topic from=$topics}>
+    <{foreach name=loop item=topic from=$topics}>
     <tr class="<{cycle values="even,odd"}>">
         <!-- irmtfan add topic-read/topic-new smarty variable  -->
         <td width="4%" align="center" class="<{if $topic.topic_read eq 1 }>topic-read<{else}>topic-new<{/if}>">

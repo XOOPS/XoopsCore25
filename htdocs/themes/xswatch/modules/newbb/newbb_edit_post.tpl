@@ -47,7 +47,7 @@
 
 <{if $posts_context}>
     <table width='100%' class='outer' cellspacing='1'>
-        <{foreachq item=post from=$posts_context}>
+        <{foreach item=post from=$posts_context}>
         <tr valign="top">
             <td class="head"><{$post.subject}></td>
         </tr>

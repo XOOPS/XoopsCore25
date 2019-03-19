@@ -8,7 +8,7 @@
 <div class="extcalform mb10 text-center">
     <form action="<{$navigSelectBox.action}>" method="<{$navigSelectBox.method}>">
         <ul class="list-inline">
-            <{foreachq item=element from=$navigSelectBox.elements}>
+            <{foreach item=element from=$navigSelectBox.elements}>
             <li><{$element.body}></li>
             <{/foreach}>
         </ul>

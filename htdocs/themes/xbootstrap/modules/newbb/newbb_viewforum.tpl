@@ -8,7 +8,7 @@
 
     <!-- If is subforum-->
     <{if $parentforum}>
-        <{foreachq item=forum from=$parentforum}>
+        <{foreach item=forum from=$parentforum}>
              <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a></li>
         <{/foreach}>
     <{/if}>
@@ -148,7 +148,7 @@
             <{/if}>
         <{/if}>
 
-    <{foreachq name=loop item=topic from=$topics}>
+    <{foreach name=loop item=topic from=$topics}>
     <div class="clearfix newbb-topiclist-itens <{cycle values="even,odd"}>">
 <!--
         <{if $topic.stick AND $smarty.foreach.loop.iteration == $sticky+1}>
@@ -224,7 +224,7 @@
 
 <div class="row collapse" id="forum-info">
     <div class="col-sm-6 col-md-6">
-        <{foreachq item=perm from=$permission_table}>
+        <{foreach item=perm from=$permission_table}>
             <{$perm}>
         <{/foreach}>
     </div>

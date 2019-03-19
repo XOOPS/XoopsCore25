@@ -74,7 +74,7 @@
 <br>
 <br>
 
-<{foreachq item=post from=$posts}>
+<{foreach item=post from=$posts}>
 <{includeq file="db:newbb_thread.tpl" topic_post=$post}>
 <!-- irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" -->
 <div class="pagenav">

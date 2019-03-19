@@ -67,7 +67,7 @@
     </div>
 
         <div class="panel-group newbb-category-list" id="accordion">
-            <{foreachq item=category from=$categories}><!-- Forum categories -->
+            <{foreach item=category from=$categories}><!-- Forum categories -->
             <div class="panel panel-default mb10">
                 <div class="panel-heading">
                     <h4 class="panel-title newbb-forum-title">
@@ -137,7 +137,7 @@
                                 <div class="col-sm-4 col-md-4"><strong><{$smarty.const._MD_LASTPOST}></strong></div>
                             </div>
                         <{/if}>
-                        <{foreachq item=forum from=$category.forums}>
+                        <{foreach item=forum from=$category.forums}>
                         <div class="row newbb-list-foruns mb10">
                             <div class="col-sm-6 col-md-6">
                                 <{if $forum.subforum}>
@@ -223,7 +223,7 @@
 
                                 <{if $forum.subforum}>
                                     <{$smarty.const._MD_SUBFORUMS}><{$img_subforum}>
-                                    <{foreachq item=subforum from=$forum.subforum}>
+                                    <{foreach item=subforum from=$forum.subforum}>
                                     [
                                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$subforum.forum_id}>"><{$subforum.forum_name}></a>
                                     ]
