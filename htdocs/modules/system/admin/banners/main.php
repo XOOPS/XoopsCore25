@@ -28,7 +28,7 @@ if (!xoops_getModuleOption('active_banners', 'system')) {
 // Parameters
 $nb_aff = xoops_getModuleOption('banners_pager', 'system');
 // Classes
-/* @var  SystemBannerHandler$banner_Handler  */
+/* @var  SystemBannerHandler $banner_Handler */
 $banner_Handler        = xoops_getModuleHandler('banner', 'system');
 /* @var  SystemBannerfinishHandler $banner_finish_Handler */
 $banner_finish_Handler = xoops_getModuleHandler('bannerfinish', 'system');
@@ -263,7 +263,7 @@ switch ($op) {
         $criteria->setLimit($nb_aff);
 
         $banner_count = $banner_Handler->getCount($criteria);
-        $banner_arr   = $banner_Handler->getall($criteria);
+        $banner_arr   = $banner_Handler->getAll($criteria);
 
         $xoopsTpl->assign('banner_count', $banner_count);
 
@@ -341,7 +341,7 @@ switch ($op) {
         $criteria->setLimit($nb_aff);
 
         $banner_finish_count = $banner_finish_Handler->getCount($criteria);
-        $banner_finish_arr   = $banner_finish_Handler->getall($criteria);
+        $banner_finish_arr   = $banner_finish_Handler->getAll($criteria);
 
         $xoopsTpl->assign('banner_finish_count', $banner_finish_count);
 
@@ -383,7 +383,7 @@ switch ($op) {
         $criteria->setLimit($nb_aff);
 
         $banner_client_count = $banner_client_Handler->getCount($criteria);
-        $banner_client_arr   = $banner_client_Handler->getall($criteria);
+        $banner_client_arr   = $banner_client_Handler->getAll($criteria);
 
         $xoopsTpl->assign('banner_client_count', $banner_client_count);
 

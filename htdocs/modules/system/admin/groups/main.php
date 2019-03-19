@@ -16,7 +16,7 @@
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
-/* @var  XoopsUser$xoopsUser  */
+/* @var  XoopsUser $xoopsUser */
 /* @var XoopsModule $xoopsModule */
 
 // Check users rights
@@ -61,7 +61,7 @@ switch ($op) {
         $criteria->setLimit($nb_group);
         // Count group
         $groups_count = $groups_Handler->getCount($criteria);
-        $groups_arr   = $groups_Handler->getall($criteria);
+        $groups_arr   = $groups_Handler->getAll($criteria);
         // Assign Template variables
         $xoopsTpl->assign('groups_count', $groups_count);
         if ($groups_count > 0) {
@@ -144,7 +144,7 @@ switch ($op) {
         $admin_mids    = system_CleanVars($_POST, 'admin_mids', array(), 'array');
         $read_mids     = system_CleanVars($_POST, 'read_mids', array(), 'array');
         $read_bids     = system_CleanVars($_POST, 'read_bids', array(), 'array');
-        /* @var XoopsMemberHandler$member_handler  */
+        /* @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $group          = $member_handler->createGroup();
         $group->setVar('name', $_POST['name']);
@@ -209,7 +209,7 @@ switch ($op) {
         $admin_mids    = system_CleanVars($_POST, 'admin_mids', array(), 'array');
         $read_mids     = system_CleanVars($_POST, 'read_mids', array(), 'array');
         $read_bids     = system_CleanVars($_POST, 'read_bids', array(), 'array');
-        /* @var XoopsMemberHandler$member_handler  */
+        /* @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $gid            = system_CleanVars($_POST, 'g_id', 0, 'int');
         if ($gid > 0) {
@@ -293,7 +293,7 @@ switch ($op) {
                     redirect_header('admin.php?fct=groups', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
                 }
                 if ($groups_id > 0 && !in_array($groups_id, array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS))) {
-                    /* @var XoopsMemberHandler$member_handler  */
+                    /* @var XoopsMemberHandler $member_handler */
                     $member_handler = xoops_getHandler('member');
                     $group          = $member_handler->getGroup($groups_id);
                     $member_handler->deleteGroup($group);
