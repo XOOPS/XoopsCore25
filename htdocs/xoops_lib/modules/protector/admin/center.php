@@ -53,7 +53,7 @@ if (!empty($_POST['action'])) {
         foreach (array_keys($group1_ips) as $i) {
             $group1_ips[$i] = trim($group1_ips[$i]);
         }
-        $fp = @fopen($protector->get_filepath4group1ips(), 'w');
+        $fp = @fopen($protector::get_filepath4group1ips(), 'w');
         if ($fp) {
             @flock($fp, LOCK_EX);
             fwrite($fp, serialize(array_unique($group1_ips)) . "\n");
@@ -175,7 +175,7 @@ echo "
     <td class='even'>
       <textarea name='bad_ips' id='bad_ips' style='width:200px;height:60px;'>$bad_ips4disp</textarea>
       <br>
-      " . htmlspecialchars($protector->get_filepath4badips()) . "
+      " . htmlspecialchars($protector::get_filepath4badips()) . "
     </td>
   </tr>
   <tr valign='top' align='left'>
@@ -185,7 +185,7 @@ echo "
     <td class='even'>
       <textarea name='group1_ips' id='group1_ips' style='width:200px;height:60px;'>$group1_ips4disp</textarea>
       <br>
-      " . htmlspecialchars($protector->get_filepath4group1ips()) . "
+      " . htmlspecialchars($protector::get_filepath4group1ips()) . "
     </td>
   </tr>
   <tr valign='top' align='left'>
