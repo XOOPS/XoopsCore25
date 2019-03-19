@@ -38,7 +38,7 @@ $upload_size = 500000;
 // Get Action type
 $op = system_CleanVars($_REQUEST, 'op', 'list', 'string');
 // Get userrank handler
-/* @var $userrank_Handler SystemUserrankHandler */
+/* @var SystemUserrankHandler $userrank_Handler */
 $userrank_Handler = xoops_getModuleHandler('userrank', 'system');
 
 switch ($op) {

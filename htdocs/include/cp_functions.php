@@ -124,7 +124,7 @@ function xoops_module_get_admin_menu()
     $shutdown        = '';
     $firstleveltable = '';
     $menu_layers     = '';
-    /* @var $module_handler XoopsModuleHandler */
+    /* @var XoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
     $criteria       = new CriteriaCompo();
     $criteria->add(new Criteria('hasadmin', 1));

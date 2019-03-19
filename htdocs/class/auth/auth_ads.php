@@ -110,7 +110,7 @@ class XoopsAuthAds extends XoopsAuthLdap
      *
      * @param $uname
      *
-     * @return userDN or false
+     * @return false|string $userDN
      */
     public function getUPN($uname)
     {

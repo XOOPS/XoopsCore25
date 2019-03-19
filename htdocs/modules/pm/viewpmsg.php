@@ -201,7 +201,7 @@ if (count($pm_arr) > 0) {
             $uids[] = $pm_arr[$i]['from_userid'];
         }
     }
-    /* @var $member_handler XoopsMemberHandler */
+    /* @var XoopsMemberHandler $member_handler */
     $member_handler = xoops_getHandler('member');
     $senders        = $member_handler->getUserList(new Criteria('uid', '(' . implode(', ', array_unique($uids)) . ')', 'IN'));
     foreach (array_keys($pm_arr) as $i) {

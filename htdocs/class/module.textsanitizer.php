@@ -144,7 +144,7 @@ class MyTextSanitizer
 
     /**
      *
-     * @var holding reference to text
+     * @var string holding reference to text
      */
     public $text         = '';
     public $patterns     = array();
@@ -181,7 +181,7 @@ class MyTextSanitizer
      * Enter description here...
      *
      * @param  string $name
-     * @return array
+     * @return array|string
      */
     public function loadConfig($name = null)
     {
@@ -202,7 +202,7 @@ class MyTextSanitizer
      *
      * @param  array $config_default
      * @param  array $config_custom
-     * @return unknown
+     * @return array
      */
     public function mergeConfig($config_default, $config_custom)
     {
@@ -246,7 +246,7 @@ class MyTextSanitizer
     public function getSmileys($isAll = true)
     {
         if (count($this->smileys) == 0) {
-            /* @var $xoopsDB XoopsMySQLDatabase */
+            /* @var XoopsMySQLDatabase $xoopsDB */
             $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
             if ($getsmiles = $xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('smiles'))) {
                 while (false !== ($smiles = $xoopsDB->fetchArray($getsmiles))) {

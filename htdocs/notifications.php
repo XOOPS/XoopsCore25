@@ -56,12 +56,12 @@ switch ($op) {
         // Get an array of all notifications for the selected user
         $criteria = new Criteria('not_uid', $uid);
         $criteria->setSort('not_modid,not_category,not_itemid');
-        /* @var  $notification_handler XoopsNotificationHandler */
+        /* @var  XoopsNotificationHandler $notification_handler */
         $notification_handler = xoops_getHandler('notification');
         $notifications        = $notification_handler->getObjects($criteria);
 
         // Generate the info for the template
-        /* @var $module_handler XoopsModuleHandler  */
+        /* @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         include_once $GLOBALS['xoops']->path('include/notification_functions.php');
         $modules       = array();

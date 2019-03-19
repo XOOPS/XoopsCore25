@@ -28,7 +28,7 @@ echo $indexAdmin->renderButton('right', '');
 
 $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : (isset($_REQUEST['id']) ? 'edit' : 'list');
 
-/* @var $handler ProfileCategoryHandler */
+/* @var ProfileCategoryHandler $handler */
 $handler = xoops_getModuleHandler('category');
 switch ($op) {
     default:
@@ -71,7 +71,7 @@ switch ($op) {
         }
         include_once dirname(__DIR__) . '/include/forms.php';
         echo $obj->getHtmlErrors();
-        /* @var  $form XoopsThemeForm */
+        /* @var  XoopsThemeForm $form */
         $form = $obj->getForm();
         $form->display();
         break;

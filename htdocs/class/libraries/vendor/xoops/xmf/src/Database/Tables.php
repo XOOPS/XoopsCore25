@@ -612,7 +612,7 @@ class Tables
      * Create a DELETE statement and add it to the work queue
      *
      * @param string                 $table    table
-     * @param string|CriteriaElement $criteria string where clause or object criteria
+     * @param string|\CriteriaElement $criteria string where clause or object criteria
      *
      * @return bool true if no errors, false if errors encountered
      */
@@ -624,7 +624,7 @@ class Tables
             if (is_scalar($criteria)) {
                 $where = $criteria;
             } elseif (is_object($criteria)) {
-                /* @var  $criteria \CriteriaCompo */
+                /* @var  \CriteriaCompo $criteria */
                 $where = $criteria->renderWhere();
             }
             $this->queue[] = "DELETE FROM `{$tableDef['name']}` {$where}";
@@ -672,7 +672,7 @@ class Tables
      *
      * @param string                 $table      table
      * @param array                  $columns    array of 'column'=>'value' entries
-     * @param string|CriteriaElement $criteria   string where clause or object criteria
+     * @param string|\CriteriaElement $criteria   string where clause or object criteria
      * @param boolean                $quoteValue true to quote values, false if caller handles quoting
      *
      * @return boolean true if no errors, false if errors encountered
@@ -685,7 +685,7 @@ class Tables
             if (is_scalar($criteria)) {
                 $where = $criteria;
             } elseif (is_object($criteria)) {
-                /* @var  $criteria \CriteriaCompo */
+                /* @var  \CriteriaCompo $criteria */
                 $where = $criteria->renderWhere();
             }
             $colSql = '';

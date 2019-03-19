@@ -15,9 +15,9 @@
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  */
-/* @var  $xoopsUser XoopsUser */
-/* @var $xoopsModule XoopsModule */
-/* @var $xoopsConfig XoopsConfigItem */
+/* @var XoopsUser $xoopsUser */
+/* @var XoopsModule $xoopsModule */
+/* @var XoopsConfigItem $xoopsConfig */
 
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');

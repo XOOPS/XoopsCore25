@@ -44,7 +44,7 @@ class SystemUsers extends XoopsUser
             $blank_img = $this->getVar('avatar_file', 'e');
         }
         // Get User Config
-        /* @var $config_handler XoopsConfigHandler  */
+        /* @var XoopsConfigHandler $config_handler */
         $config_handler  = xoops_getHandler('config');
         $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 

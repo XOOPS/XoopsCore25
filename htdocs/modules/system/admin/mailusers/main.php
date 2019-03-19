@@ -211,7 +211,7 @@ switch ($op) {
                     $crit->prefix = 'u';
                     $criteria_object->add($crit, 'AND');
                 }
-                /* @var $member_handler XoopsMemberHandler */
+                /* @var XoopsMemberHandler $member_handler */
                 $member_handler = xoops_getHandler('member');
                 $groups         = empty($_POST['mail_to_group']) ? array() : array_map('intval', $_POST['mail_to_group']);
                 $getusers       = $member_handler->getUsersByGroupLink($groups, $criteria_object, true);

@@ -23,11 +23,11 @@ $xoopsOption['pagetype'] = 'admin';
 include_once dirname(__DIR__) . '/mainfile.php';
 include_once $GLOBALS['xoops']->path('include/cp_functions.php');
 
-/* @var $moduleperm_handler XoopsGroupPermHandler  */
+/* @var XoopsGroupPermHandler $moduleperm_handler */
 $moduleperm_handler = xoops_getHandler('groupperm');
 if ($xoopsUser) {
     $url_arr        = explode('/', strstr($_SERVER['REQUEST_URI'], '/modules/'));
-    /* @var $module_handler XoopsModuleHandler */
+    /* @var XoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
     $xoopsModule    = $module_handler->getByDirname($url_arr[2]);
     unset($url_arr);
@@ -40,7 +40,7 @@ if ($xoopsUser) {
 
 // set config values for this module
 if ($xoopsModule->getVar('hasconfig') == 1 || $xoopsModule->getVar('hascomments') == 1) {
-    /* @var $config_handler XoopsConfigHandler  */
+    /* @var XoopsConfigHandler $config_handler */
     $config_handler    = xoops_getHandler('config');
     $xoopsModuleConfig = $config_handler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
 }
