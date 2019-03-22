@@ -65,7 +65,7 @@ switch ($op) {
         $criteria->setLimit($nb_smilies);
         // Count smilies
         $smilies_count = $smilies_Handler->getCount($criteria);
-        $smilies_arr   = $smilies_Handler->getall($criteria);
+        $smilies_arr   = $smilies_Handler->getAll($criteria);
         // Assign Template variables
         $xoopsTpl->assign('smilies_count', $smilies_count);
         if ($smilies_count > 0) {
