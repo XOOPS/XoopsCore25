@@ -58,7 +58,7 @@ xoops_header();
 
 $myts = MyTextSanitizer::getInstance();
 if ($op === 'submit') {
-    /* @var $member_handler XoopsMemberHandler */
+    /* @var XoopsMemberHandler $member_handler */
     $member_handler = xoops_getHandler('member');
     $count          = $member_handler->getUserCount(new Criteria('uid', XoopsRequest::getInt('to_userid', 0, 'POST')));
     if ($count != 1) {

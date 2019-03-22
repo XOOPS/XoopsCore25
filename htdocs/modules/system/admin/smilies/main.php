@@ -33,7 +33,7 @@ $upload_size = 500000;
 // Get Action type
 $op = system_CleanVars($_REQUEST, 'op', 'list', 'string');
 // Get smilies handler
-/* @var  $smilies_Handler SystemsmiliesHandler */
+/* @var  SystemsmiliesHandler $smilies_Handler */
 $smilies_Handler = xoops_getModuleHandler('smilies', 'system');
 // Define main template
 $GLOBALS['xoopsOption']['template_main'] = 'system_smilies.tpl';

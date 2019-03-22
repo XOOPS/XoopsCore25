@@ -71,7 +71,7 @@ class XoopsFormSelectUser extends XoopsFormElementTray
         if ($includeAnonymous) {
             $select_element->addOption(0, $GLOBALS['xoopsConfig']['anonymous']);
         }
-        /* @var $member_handler XoopsMemberHandler */
+        /* @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $value          = is_array($value) ? $value : (empty($value) ? array() : array($value));
         $selectedUsers = array();

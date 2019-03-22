@@ -34,14 +34,14 @@ if ($uid <= 0) {
     redirect_header('index.php', 3, _US_SELECTNG);
 }
 
-/* @var  $gperm_handler XoopsGroupPermHandler */
+/* @var  XoopsGroupPermHandler $gperm_handler */
 $gperm_handler = xoops_getHandler('groupperm');
 $groups        = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 
 $isAdmin = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_USER, $groups);
 if (is_object($xoopsUser)) {
     if ($uid == $xoopsUser->getVar('uid')) {
-        /* @var $config_handler XoopsConfigHandler  */
+        /* @var XoopsConfigHandler $config_handler */
         $config_handler               = xoops_getHandler('config');
         $xoopsConfigUser              = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
         $GLOBALS['xoopsOption']['template_main'] = 'system_userinfo.tpl';
@@ -59,7 +59,7 @@ if (is_object($xoopsUser)) {
         }
         $thisUser =& $xoopsUser;
     } else {
-        /* @var $member_handler XoopsMemberHandler */
+        /* @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $thisUser       = $member_handler->getUser($uid);
         if (!is_object($thisUser) || !$thisUser->isActive()) {
@@ -70,7 +70,7 @@ if (is_object($xoopsUser)) {
         $xoopsTpl->assign('user_ownpage', false);
     }
 } else {
-    /* @var $member_handler XoopsMemberHandler */
+    /* @var XoopsMemberHandler $member_handler */
     $member_handler = xoops_getHandler('member');
     $thisUser       = $member_handler->getUser($uid);
     if (!is_object($thisUser) || !$thisUser->isActive()) {
@@ -163,7 +163,7 @@ $date = $thisUser->getVar('last_login');
 if (!empty($date)) {
     $xoopsTpl->assign('user_lastlogin', formatTimestamp($date, 'm'));
 }
-/* @var $module_handler XoopsModuleHandler  */
+/* @var XoopsModuleHandler $module_handler */
 $module_handler = xoops_getHandler('module');
 $criteria       = new CriteriaCompo(new Criteria('hassearch', 1));
 $criteria->add(new Criteria('isactive', 1));

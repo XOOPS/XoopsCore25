@@ -16,7 +16,7 @@
  * @author              Skalpa Keo <skalpa@xoops.org>
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
-/* @var  $xoopsUser XoopsUser */
+/* @var  XoopsUser $xoopsUser */
 
 function fatalPhpErrorHandler($e = null) {
     $messageFormat = '<br><div>Fatal %s %s file: %s : %d </div>';
@@ -29,7 +29,7 @@ function fatalPhpErrorHandler($e = null) {
             printf($messageFormat, 'Error', $lastError['message'], $lastError['file'], $lastError['line']);
         }
     } elseif ($e instanceof $exceptionClass || $e instanceof $throwableClass) {
-        /** @var $e \Exception */
+        /** @var \Exception $e */
         printf($messageFormat, get_class($e), $e->getMessage(), $e->getFile(), $e->getLine());
     }
 }
@@ -99,7 +99,7 @@ if (!$xoopsUser || !$xoopsUser->isAdmin()) {
         } else {
             $next = $upgradeControl->getNextPatch();
             printf('<h2>' . _PERFORMING_UPGRADE . '</h2>', $next);
-            /** @var $upgrader XoopsUpgrade */
+            /** @var XoopsUpgrade $upgrader */
             $upgradeClass = $upgradeControl->upgradeQueue[$next]->patchClass;
             $upgrader = new $upgradeClass();
             $res = $upgrader->apply();

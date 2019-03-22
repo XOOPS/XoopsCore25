@@ -28,7 +28,7 @@ if ($email == '') {
 }
 
 $myts           = MyTextSanitizer::getInstance();
-/* @var $member_handler XoopsMemberHandler */
+/* @var XoopsMemberHandler $member_handler */
 $member_handler = xoops_getHandler('member');
 list($user) = $member_handler->getUsers(new Criteria('email', $myts->addSlashes($email)));
 
