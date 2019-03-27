@@ -58,7 +58,7 @@ class SystemFineAvatarUploadHandler extends SystemFineUploadHandler
         if (false === move_uploaded_file($_FILES[$this->inputName]['tmp_name'], $avatarPath)) {
             return false;
         }
-        /* @var  $avt_handler XoopsAvatarHandler */
+        /* @var  XoopsAvatarHandler $avt_handler */
         $avt_handler = xoops_getHandler('avatar');
         $avatar = $avt_handler->create();
         

@@ -38,7 +38,7 @@ $upload_size = 500000;
 // Get Action type
 $op = system_CleanVars($_REQUEST, 'op', 'list', 'string');
 // Get userrank handler
-/* @var $userrank_Handler SystemUserrankHandler */
+/* @var SystemUserrankHandler $userrank_Handler */
 $userrank_Handler = xoops_getModuleHandler('userrank', 'system');
 
 switch ($op) {
@@ -69,7 +69,7 @@ switch ($op) {
         $criteria->setLimit($nb_rank);
         // Count rank
         $userrank_count = $userrank_Handler->getCount($criteria);
-        $userrank_arr   = $userrank_Handler->getall($criteria);
+        $userrank_arr   = $userrank_Handler->getAll($criteria);
         // Assign Template variables
         $xoopsTpl->assign('userrank_count', $userrank_count);
         if ($userrank_count > 0) {

@@ -69,7 +69,7 @@ class SystemFineImUploadHandler extends SystemFineUploadHandler
             }
         }
 
-        /* @var $imageHandler XoopsImageHandler */
+        /* @var XoopsImageHandler $imageHandler */
         $imageHandler = xoops_getHandler('image');
         $image = $imageHandler->create();
 

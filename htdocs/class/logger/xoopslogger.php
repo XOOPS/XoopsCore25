@@ -384,7 +384,7 @@ class XoopsLogger
     }
 
     /**
-     * dnmp Blocks @deprecated
+     * dumpBlocks @deprecated
      *
      * @return dump
      */
@@ -398,7 +398,7 @@ class XoopsLogger
     /**
      * dumpExtra @deprecated
      *
-     * @return dimp
+     * @return dump
      */
     public function dumpExtra()
     {

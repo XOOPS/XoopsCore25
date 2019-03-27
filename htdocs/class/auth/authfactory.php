@@ -37,7 +37,7 @@ class XoopsAuthFactory
      *
      * @static
      *
-     * @param $uname used to lookup in LDAP bypass config
+     * @param string $uname used to lookup in LDAP bypass config
      *
      * @return object Reference to the only instance of authentication class
      */
@@ -45,7 +45,7 @@ class XoopsAuthFactory
     {
         static $auth_instance;
         if (!isset($auth_instance)) {
-            /* @var $config_handler XoopsConfigHandler  */
+            /* @var XoopsConfigHandler $config_handler */
             $config_handler = xoops_getHandler('config');
             $authConfig     = $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
 

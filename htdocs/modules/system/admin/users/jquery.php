@@ -15,8 +15,8 @@
  * @author              Maxime Cointin (AKA Kraven30)
  * @package             system
  */
-/* @var  $xoopsUser XoopsUser */
-/* @var $xoopsModule XoopsModule */
+/* @var XoopsUser $xoopsUser */
+/* @var XoopsModule $xoopsModule */
 
 require dirname(dirname(dirname(dirname(__DIR__)))) . '/mainfile.php';
 require XOOPS_ROOT_PATH . '/header.php';

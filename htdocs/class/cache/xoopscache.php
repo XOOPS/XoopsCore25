@@ -78,7 +78,7 @@ class XoopsCache
     /**
      * Tries to find and include a file for a cache engine and returns object instance
      *
-     * @param  $name Name of the engine
+     * @param  string $name Name of the engine
      * @return mixed $engine object or null
      * @access private
      */

@@ -45,7 +45,7 @@ class SystemAvatar extends XoopsAvatar
             $blank_img = str_replace('avatars/', '', $this->getVar('avatar_file', 'e'));
         }
         // Get User Config
-        /* @var $config_handler XoopsConfigHandler  */
+        /* @var XoopsConfigHandler $config_handler */
         $config_handler  = xoops_getHandler('config');
         $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
         // New and edit form

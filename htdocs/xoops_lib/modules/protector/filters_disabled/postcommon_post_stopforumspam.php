@@ -27,7 +27,7 @@ class Protector_postcommon_post_stopforumspam extends ProtectorFilterAbstract
      */
     public function execute()
     {
-        /* @var $xoopsUser XoopsUser */
+        /* @var XoopsUser $xoopsUser */
         global $xoopsUser;
 
         // we only check POST transactions

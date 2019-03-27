@@ -33,7 +33,7 @@ $upload_size = 500000;
 // Get Action type
 $op = system_CleanVars($_REQUEST, 'op', 'list', 'string');
 // Get smilies handler
-/* @var  $smilies_Handler SystemsmiliesHandler */
+/* @var  SystemsmiliesHandler $smilies_Handler */
 $smilies_Handler = xoops_getModuleHandler('smilies', 'system');
 // Define main template
 $GLOBALS['xoopsOption']['template_main'] = 'system_smilies.tpl';
@@ -65,7 +65,7 @@ switch ($op) {
         $criteria->setLimit($nb_smilies);
         // Count smilies
         $smilies_count = $smilies_Handler->getCount($criteria);
-        $smilies_arr   = $smilies_Handler->getall($criteria);
+        $smilies_arr   = $smilies_Handler->getAll($criteria);
         // Assign Template variables
         $xoopsTpl->assign('smilies_count', $smilies_count);
         if ($smilies_count > 0) {

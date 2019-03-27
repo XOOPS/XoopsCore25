@@ -18,7 +18,7 @@
 
 $xoopsOption['pagetype'] = 'user';
 include __DIR__ . '/header.php';
-/* @var $config_handler XoopsConfigHandler  */
+/* @var XoopsConfigHandler $config_handler */
 $config_handler             = xoops_getHandler('config');
 $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
@@ -54,7 +54,7 @@ if (!isset($_POST['submit']) || !isset($_POST['passwd'])) {
     } else {
         //update password
         $GLOBALS['xoopsUser']->setVar('email', trim($_POST['newmail']));
-        /* @var $member_handler XoopsMemberHandler */
+        /* @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         if ($member_handler->insertUser($GLOBALS['xoopsUser'])) {
             $msg = _PROFILE_MA_EMAILCHANGED;
