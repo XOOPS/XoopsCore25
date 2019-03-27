@@ -1,7 +1,7 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
-2.5.10 RC                2019/03/03
+2.5.10 RC                2019/03/27
 ===================================
 - fix version check in module administration (mage)
 - fix notification template in boostrap based themes (mage)
