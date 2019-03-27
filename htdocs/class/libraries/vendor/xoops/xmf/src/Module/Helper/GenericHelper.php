@@ -141,7 +141,7 @@ abstract class GenericHelper extends AbstractHelper
         ) {
             $this->module = $xoopsModule;
         } else {
-            /* @var $module_handler \XoopsModuleHandler */
+            /* @var \XoopsModuleHandler $module_handler */
             $module_handler = xoops_getHandler('module');
             $this->module = $module_handler->getByDirname($this->dirname);
         }
@@ -163,7 +163,7 @@ abstract class GenericHelper extends AbstractHelper
             global $xoopsModuleConfig;
             $this->configs = $xoopsModuleConfig;
         } else {
-            /* @var $config_handler \XoopsConfigHandler */
+            /* @var \XoopsConfigHandler $config_handler */
             $config_handler = xoops_getHandler('config');
             $this->configs = $config_handler->getConfigsByCat(0, $this->getModule()->getVar('mid'));
         }
