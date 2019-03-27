@@ -293,17 +293,17 @@
     },
     {
         "name": "symfony/polyfill-ctype",
-        "version": "v1.10.0",
-        "version_normalized": "1.10.0.0",
+        "version": "v1.11.0",
+        "version_normalized": "1.11.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/polyfill-ctype.git",
-            "reference": "e3d826245268269cd66f8326bd8bc066687b4a19"
+            "reference": "82ebae02209c21113908c229e9883c419720738a"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/e3d826245268269cd66f8326bd8bc066687b4a19",
-            "reference": "e3d826245268269cd66f8326bd8bc066687b4a19",
+            "url": "https://api.github.com/repos/symfony/polyfill-ctype/zipball/82ebae02209c21113908c229e9883c419720738a",
+            "reference": "82ebae02209c21113908c229e9883c419720738a",
             "shasum": ""
         },
         "require": {
@@ -312,11 +312,11 @@
         "suggest": {
             "ext-ctype": "For best performance"
         },
-        "time": "2018-08-06T14:22:27+00:00",
+        "time": "2019-02-06T07:57:58+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.9-dev"
+                "dev-master": "1.11-dev"
             }
         },
         "installation-source": "dist",
@@ -339,7 +339,7 @@
             },
             {
                 "name": "Gert de Pagter",
-                "email": "BackEndTea@gmail.com"
+                "email": "backendtea@gmail.com"
             }
         ],
         "description": "Symfony polyfill for ctype functions",
@@ -353,17 +353,17 @@
     },
     {
         "name": "symfony/polyfill-iconv",
-        "version": "v1.10.0",
-        "version_normalized": "1.10.0.0",
+        "version": "v1.11.0",
+        "version_normalized": "1.11.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/polyfill-iconv.git",
-            "reference": "97001cfc283484c9691769f51cdf25259037eba2"
+            "reference": "f037ea22acfaee983e271dd9c3b8bb4150bd8ad7"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/polyfill-iconv/zipball/97001cfc283484c9691769f51cdf25259037eba2",
-            "reference": "97001cfc283484c9691769f51cdf25259037eba2",
+            "url": "https://api.github.com/repos/symfony/polyfill-iconv/zipball/f037ea22acfaee983e271dd9c3b8bb4150bd8ad7",
+            "reference": "f037ea22acfaee983e271dd9c3b8bb4150bd8ad7",
             "shasum": ""
         },
         "require": {
@@ -372,11 +372,11 @@
         "suggest": {
             "ext-iconv": "For best performance"
         },
-        "time": "2018-09-21T06:26:08+00:00",
+        "time": "2019-02-06T07:57:58+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.9-dev"
+                "dev-master": "1.11-dev"
             }
         },
         "installation-source": "dist",
@@ -414,17 +414,17 @@
     },
     {
         "name": "symfony/polyfill-mbstring",
-        "version": "v1.10.0",
-        "version_normalized": "1.10.0.0",
+        "version": "v1.11.0",
+        "version_normalized": "1.11.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/polyfill-mbstring.git",
-            "reference": "c79c051f5b3a46be09205c73b80b346e4153e494"
+            "reference": "fe5e94c604826c35a32fa832f35bd036b6799609"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/c79c051f5b3a46be09205c73b80b346e4153e494",
-            "reference": "c79c051f5b3a46be09205c73b80b346e4153e494",
+            "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/fe5e94c604826c35a32fa832f35bd036b6799609",
+            "reference": "fe5e94c604826c35a32fa832f35bd036b6799609",
             "shasum": ""
         },
         "require": {
@@ -433,11 +433,11 @@
         "suggest": {
             "ext-mbstring": "For best performance"
         },
-        "time": "2018-09-21T13:07:52+00:00",
+        "time": "2019-02-06T07:57:58+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.9-dev"
+                "dev-master": "1.11-dev"
             }
         },
         "installation-source": "dist",
@@ -613,17 +613,17 @@
     },
     {
         "name": "xoops/xmf",
-        "version": "v1.2.16",
-        "version_normalized": "1.2.16.0",
+        "version": "v1.2.17",
+        "version_normalized": "1.2.17.0",
         "source": {
             "type": "git",
             "url": "https://github.com/XOOPS/xmf.git",
-            "reference": "7fc1b27db4d7887f0b7f2892100342dff037aa72"
+            "reference": "a8a74d8910fae7ea70179d1ac07fcebde69b69db"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/XOOPS/xmf/zipball/7fc1b27db4d7887f0b7f2892100342dff037aa72",
-            "reference": "7fc1b27db4d7887f0b7f2892100342dff037aa72",
+            "url": "https://api.github.com/repos/XOOPS/xmf/zipball/a8a74d8910fae7ea70179d1ac07fcebde69b69db",
+            "reference": "a8a74d8910fae7ea70179d1ac07fcebde69b69db",
             "shasum": ""
         },
         "require": {
@@ -638,7 +638,7 @@
             "phpunit/phpunit": "^7.0",
             "roave/security-advisories": "dev-master"
         },
-        "time": "2018-11-20T02:45:17+00:00",
+        "time": "2019-03-27T19:46:44+00:00",
         "type": "project",
         "installation-source": "dist",
         "autoload": {

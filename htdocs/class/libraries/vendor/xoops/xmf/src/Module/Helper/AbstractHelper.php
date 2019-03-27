@@ -67,7 +67,7 @@ abstract class AbstractHelper
             if (isset($xoops)) {
                 $moduleHandler = $xoops->getHandlerModule();
             } else {
-                /* @var $moduleHandler \XoopsModuleHandler */
+                /* @var \XoopsModuleHandler $moduleHandler */
                 $moduleHandler = xoops_getHandler('module');
             }
             $this->module = $moduleHandler->getByDirname($dirname);
