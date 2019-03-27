@@ -102,7 +102,7 @@ class XoopsFormTextArea extends XoopsFormElement
     /**
      * Set initial content
      *
-     * @param  $value string
+     * @param  string $value
      */
     public function setValue($value)
     {
@@ -112,7 +112,7 @@ class XoopsFormTextArea extends XoopsFormElement
     /**
      * prepare HTML for output
      *
-     * @return sting HTML
+     * @return string HTML
      */
     public function render()
     {

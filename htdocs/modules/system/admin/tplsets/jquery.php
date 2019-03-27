@@ -18,9 +18,9 @@ use Xmf\Assert;
  * @author              Maxime Cointin (AKA Kraven30)
  * @package             system
  */
-/* @var  $xoopsUser XoopsUser */
-/* @var $xoopsModule XoopsModule */
-/* @var $xoopsConfig XoopsConfigItem */
+/* @var XoopsUser $xoopsUser */
+/* @var XoopsModule $xoopsModule */
+/* @var XoopsConfigItem $xoopsConfig */
 
 include dirname(dirname(__DIR__)) . '/header.php';
 

@@ -257,7 +257,7 @@ class Protector
 
     public function deactivateCurrentUser()
     {
-        /* @var $xoopsUser XoopsUser */
+        /* @var XoopsUser $xoopsUser */
         global $xoopsUser;
 
         if (is_object($xoopsUser)) {

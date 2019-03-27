@@ -40,7 +40,7 @@ class Upgrade_259 extends XoopsUpgrade
      */
     private function getColumnLength($table, $column)
     {
-        /* @var $db XoopsMySQLDatabase */
+        /* @var XoopsMySQLDatabase $db */
         $db = XoopsDatabaseFactory::getDatabaseConnection();
 
         $dbname = constant('XOOPS_DB_NAME');
@@ -138,7 +138,7 @@ class Upgrade_259 extends XoopsUpgrade
      */
     public function check_mainfile()
     {
-        /** @var $upgradeControl UpgradeControl */
+        /** @var UpgradeControl $upgradeControl */
         global $upgradeControl;
         return !$upgradeControl->needMainfileRewrite;
     }
@@ -150,7 +150,7 @@ class Upgrade_259 extends XoopsUpgrade
      */
     public function apply_mainfile()
     {
-        /** @var $upgradeControl UpgradeControl */
+        /** @var UpgradeControl $upgradeControl */
         global $upgradeControl;
 
         if (null === $upgradeControl->mainfileKeys['XOOPS_COOKIE_DOMAIN']) {

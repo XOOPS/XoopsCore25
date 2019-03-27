@@ -126,8 +126,8 @@ class XoopsPreload
     /**
      * Triggers a specific event
      *
-     * @param $event_name string Name of the event to trigger
-     * @param $args       array Method arguments
+     * @param string $event_name Name of the event to trigger
+     * @param array  $args       Method arguments
      *
      * @return void
      */

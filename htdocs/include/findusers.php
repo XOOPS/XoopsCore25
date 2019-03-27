@@ -15,7 +15,7 @@
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
-/* @var  $xoopsUser XoopsUser */
+/* @var  XoopsUser $xoopsUser */
 
 include_once dirname(__DIR__) . '/mainfile.php';
 
@@ -369,7 +369,7 @@ if (empty($_POST['user_submit'])) {
                 3 => _MA_USER_LEVEL_DISABLED);
             $level_radio->addOptionArray($levels);
 
-            /* @var $member_handler XoopsMemberHandler */
+            /* @var XoopsMemberHandler $member_handler */
             $member_handler = xoops_getHandler('member');
             $groups         = $member_handler->getGroupList();
             $groups[0]      = _ALL;

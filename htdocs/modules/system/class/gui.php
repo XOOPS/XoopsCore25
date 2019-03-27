@@ -102,7 +102,7 @@ class XoopsSystemGui
 
                 $xoopsModule->loadAdminMenu();
                 // Get menu tab handler
-                /* @var $menu_handler SystemMenuHandler */
+                /* @var SystemMenuHandler $menu_handler */
                 $menu_handler = xoops_getModuleHandler('menu', 'system');
                 // Define top navigation
                 $menu_handler->addMenuTop(XOOPS_URL . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $xoopsModule->getVar('mid', 'e'), _AM_SYSTEM_PREF);

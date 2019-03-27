@@ -16,8 +16,8 @@
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
-/* @var  $xoopsUser XoopsUser */
-/* @var $xoopsModule XoopsModule */
+/* @var XoopsUser $xoopsUser */
+/* @var XoopsModule $xoopsModule */
 
 // Check users rights
 if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid())) {
@@ -47,7 +47,7 @@ if (isset($_GET['imgcat_id'])) {
     $imgcat_id = (int)$_GET['imgcat_id'];
 }
 
-/* @var  $gperm_handler XoopsGroupPermHandler */
+/* @var  XoopsGroupPermHandler $gperm_handler */
 $gperm_handler = xoops_getHandler('groupperm');
 $groups        = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 
@@ -100,7 +100,7 @@ switch ($op) {
         $imagecategorys = $imgcat_handler->getObjects();
 
         $catcount      = count($imagecategorys);
-        /* @var  $image_handler XoopsImageHandler */
+        /* @var  XoopsImageHandler $image_handler */
         $image_handler = xoops_getHandler('image');
 
         foreach (array_keys($imagecategorys) as $i) {
@@ -504,7 +504,7 @@ switch ($op) {
             exit();
         }
         $newid                     = $imagecategory->getVar('imgcat_id');
-        /* @var  $imagecategoryperm_handler XoopsGroupPermHandler */
+        /* @var  XoopsGroupPermHandler $imagecategoryperm_handler */
         $imagecategoryperm_handler = xoops_getHandler('groupperm');
         if (!isset($readgroup)) {
             $readgroup = array();
@@ -677,7 +677,7 @@ switch ($op) {
             xoops_cp_footer();
             exit();
         }
-        /* @var  $image_handler XoopsImageHandler */
+        /* @var  XoopsImageHandler $image_handler */
         $image_handler = xoops_getHandler('image');
         $images        = $image_handler->getObjects(new Criteria('imgcat_id', $imgcat_id), true, false);
         $errors        = array();

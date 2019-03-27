@@ -384,7 +384,7 @@ class XoopsLogger
     }
 
     /**
-     * dnmpBlocks @deprecated
+     * dumpBlocks @deprecated
      *
      * @return dump
      */

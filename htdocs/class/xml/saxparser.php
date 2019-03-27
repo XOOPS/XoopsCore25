@@ -282,7 +282,7 @@ class SaxParser
     }
 
     /****************************************************************************
-     * @param $parser int.  The handle to the parser.
+     * @param int $parser The handle to the parser.
      * @param $data
      * @returns void
      */
@@ -365,7 +365,7 @@ class SaxParser
     /**
      * Sets error messages
      *
-     * @param   $error string    an error message
+     * @param string $error an error message
      */
     public function setErrors($error)
     {

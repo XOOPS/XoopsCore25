@@ -33,7 +33,7 @@ class Upgrade_2510 extends XoopsUpgrade
      */
     public function check_metarobots()
     {
-        /* @var $db XoopsMySQLDatabase */
+        /* @var XoopsMySQLDatabase $db */
         $db = XoopsDatabaseFactory::getDatabaseConnection();
 
         $table = $db->prefix('config');

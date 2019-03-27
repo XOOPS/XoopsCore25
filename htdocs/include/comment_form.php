@@ -76,7 +76,7 @@ $option_tray = new XoopsFormElementTray(_OPTIONS, '<br>');
 $button_tray = new XoopsFormElementTray('', '&nbsp;');
 
 if (is_object($xoopsUser)) {
-    /* @var  $xoopsUser XoopsUser */
+    /* @var  XoopsUser $xoopsUser */
     if (isset($xoopsModuleConfig['com_anonpost'])) {
         if ($xoopsModuleConfig['com_anonpost'] == 1) {
             $noname          = !empty($noname) ? 1 : 0;
