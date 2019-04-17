@@ -24,6 +24,8 @@ if (!defined('XOOPS_ROOT_PATH') || !is_object($xoopsModule)) {
 
 include_once $GLOBALS['xoops']->path('include/comment_constants.php');
 
+global xoopsModuleConfig;
+
 if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
     xoops_load('XoopsLists');
     xoops_load('XoopsFormLoader');
