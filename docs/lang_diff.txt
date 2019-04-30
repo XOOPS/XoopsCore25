@@ -3,9 +3,9 @@ LANGUAGE DIFFERENCES
 
 Below are language differences from a version to next version.
 
-=============================
-2019/03/27: Version 2.5.10 RC
-=============================
+================================
+2019/04/29: Version 2.5.10 Final
+================================
 ADDED/DELETED DEFINES:
 htdocs/xoops_lib/modules/protector/language/english/admin.php
 - added define('_AM_LABEL_BAN_BY_IP', 'Ban the IPs on checked records:');

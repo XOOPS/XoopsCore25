@@ -29,4 +29,4 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 /**
  *  Define XOOPS version
  */
-define('XOOPS_VERSION', 'XOOPS 2.5.10-RC');
+define('XOOPS_VERSION', 'XOOPS 2.5.10');
