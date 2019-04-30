@@ -96,4 +96,4 @@ Documentation: https://www.gitbook.com/book/xoops/xoops-documentation-process/de
 Support Forums: https://xoops.org/modules/newbb/
 
 XOOPS Development Team
-2017
+2019
