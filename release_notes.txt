@@ -1,7 +1,14 @@
 XOOPS 2.5.10
 
-The XOOPS Development Team is pleased to announce the release of XOOPS 2.5.9. This version includes
-fixes and enhancements, security updates, PHP 7.1 compatibility.
+The XOOPS Development Team is pleased to announce the availability of XOOPS 2.5.10 final.
+
+This version includes numerous improvements and fixes, including:
+- PHP 7.3 compatibility
+- MySQL 8.0 compatibility
+- XMF improvements for module writers
+- Security updates
+- Updated libraries
+- and many more fixes and updates
 
 See the Changelog for more details.
 
@@ -36,13 +43,12 @@ Installing XOOPS (new installation)
         - uploads/images/
         - uploads/ranks/
         - uploads/smilies/
-        - xoops_lib/modules/protector/configs/
        and these files:
         - mainfile.php and
         - include/license.php
        are writable by the web server
     3. For security considerations, you are encouraged to move directories "/xoops_lib" (for XOOPS libraries) and "/xoops_data" (for XOOPS data) out of Document Root, and change the folder names.
-    4. Make the directory xoops_data/ writable; Create (if not already present) and make the directories xoops_data/caches/, xoops_data/caches/xoops_cache/, xoops_data/caches/smarty_cache/ and  xoops_data/caches/smarty_compile/ writable.
+    4. Make the directory xoops_data/ writable; Create (if not already present) and make the directories xoops_data/caches/, xoops_data/caches/xoops_cache/, xoops_data/caches/smarty_cache/, xoops_data/caches/smarty_compile/ and xoops_data/protector/configs/ writable.
     5. Access the folder where you installed the htdocs/ files using your web browser to launch the installation wizard
 
 
@@ -80,14 +86,14 @@ system due to the number of changes in both PHP and MySQL. This means there may 
 encountered in testing.
 
 If you are upgrading a older system and need help, please visit our support forums at
-http://xoops.org/modules/newbb/
+https://xoops.org/modules/newbb/
 
 How you can contribute to XOOPS
 -------------------------------
 Bug reports and feature requests: https://github.com/XOOPS/XoopsCore25/issues
 Patches and enhancements: https://github.com/XOOPS/XoopsCore25/blob/master/CONTRIBUTING.md
 Documentation: https://www.gitbook.com/book/xoops/xoops-documentation-process/details
-Support Forums: http://xoops.org/modules/newbb/
+Support Forums: https://xoops.org/modules/newbb/
 
 XOOPS Development Team
 2017
