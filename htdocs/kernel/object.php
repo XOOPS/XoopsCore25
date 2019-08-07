@@ -9,8 +9,8 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright       (c) 2000-2019 XOOPS Project (https://xoops.org)
+ * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
@@ -348,13 +348,19 @@ class XoopsObject
      * - prefixed CGI args are considered save
      * - avoids polluting of namespace with CGI args
      *
-     * @access private
      * @param array  $var_arr associative array of values to assign
      * @param string $pref    prefix (only keys starting with the prefix will be set)
      * @param bool   $not_gpc
+     *
+     * @return void
+     *
+     * @deprecated This method will be removed in the next major XOOPS version
      */
     public function setFormVars($var_arr = null, $pref = 'xo_', $not_gpc = false)
     {
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        trigger_error("XoopsObject::setFormVars() is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
+
         $len = strlen($pref);
         foreach ($var_arr as $key => $value) {
             if ($pref == substr($key, 0, $len)) {
