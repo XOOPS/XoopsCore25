@@ -1078,7 +1078,7 @@ class XoopsObjectHandler
      */
     public function __construct(XoopsDatabase $db)
     {
-        /* @var XoopsMySQLDatabase $db */
+        /* @var XoopsMysqlDatabase $db */
         $this->db = $db;
     }
 

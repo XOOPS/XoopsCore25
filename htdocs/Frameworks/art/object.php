@@ -61,14 +61,14 @@ class ArtObjectHandler extends XoopsPersistableObjectHandler
     /**
      * Constructor
      *
-     * @param XoopsMySQLDatabase $db reference to the {@link XoopsDatabase} object
+     * @param XoopsMysqlDatabase $db reference to the {@link XoopsDatabase} object
      * @param string             $table
      * @param string             $className
      * @param string             $keyName
      * @param string             $identifierName
      */
 
-    public function __construct(XoopsMySQLDatabase $db, $table = '', $className = '', $keyName = '', $identifierName = '')
+    public function __construct(XoopsMysqlDatabase $db, $table = '', $className = '', $keyName = '', $identifierName = '')
     {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
         trigger_error("ArtObjectHandler is deprecated, instantiated from {$trace[0]['file']} line {$trace[0]['line']},");

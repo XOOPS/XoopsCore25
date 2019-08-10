@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !$xoopsSecurity->checkReferer(XOOPS
  * Requires XoopsLogger, XOOPS_DB_PROXY;
  */
 include_once $xoops->path('class/database/databasefactory.php');
-/* @var XoopsMySQLDatabase $xoopsDB */
+/* @var XoopsMysqlDatabase $xoopsDB */
 $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
 
 /**

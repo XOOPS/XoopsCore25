@@ -369,7 +369,7 @@ class XoopsMemberHandler
      */
     public function getColumnCharacterLength($table, $column)
     {
-        /** @var XoopsMySQLDatabase $db */
+        /** @var XoopsMysqlDatabase $db */
         $db = XoopsDatabaseFactory::getDatabaseConnection();
 
         $dbname = constant('XOOPS_DB_NAME');

@@ -40,7 +40,7 @@ class Upgrade_259 extends XoopsUpgrade
      */
     private function getColumnLength($table, $column)
     {
-        /* @var XoopsMySQLDatabase $db */
+        /* @var XoopsMysqlDatabase $db */
         $db = XoopsDatabaseFactory::getDatabaseConnection();
 
         $dbname = constant('XOOPS_DB_NAME');

@@ -11,7 +11,7 @@ require_once XOOPS_ROOT_PATH . '/class/database/database.php';
 /**
  * Class ProtectorMySQLDatabase
  */
-class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
+class ProtectorMySQLDatabase extends XoopsMysqlDatabaseProxy
 {
     public $doubtful_requests = array();
     public $doubtful_needles  = array(

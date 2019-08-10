@@ -30,7 +30,7 @@ include_once XOOPS_ROOT_PATH . '/class/database/database.php';
  * @package             class
  * @subpackage          database
  */
-class XoopsMySQLDatabase extends XoopsDatabase
+class XoopsMysqlDatabase extends XoopsDatabase
 {
     /**
      * Database connection
@@ -135,7 +135,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
     }
 
     /**
-     * XoopsMySQLiDatabase::fetchObjected()
+     * XoopsMysqliDatabase::fetchObjected()
      *
      * @param mixed $result
      * @return stdClass|false false on end of data
@@ -472,7 +472,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
  * @package             kernel
  * @subpackage          database
  */
-class XoopsMySQLDatabaseSafe extends XoopsMySQLDatabase
+class XoopsMysqlDatabaseSafe extends XoopsMysqlDatabase
 {
     /**
      * perform a query on the database
@@ -500,7 +500,7 @@ class XoopsMySQLDatabaseSafe extends XoopsMySQLDatabase
  * @package             class
  * @subpackage          database
  */
-class XoopsMySQLDatabaseProxy extends XoopsMySQLDatabase
+class XoopsMysqlDatabaseProxy extends XoopsMysqlDatabase
 {
     /**
      * perform a query on the database
