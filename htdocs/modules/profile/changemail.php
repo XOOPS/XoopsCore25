@@ -50,7 +50,7 @@ if (!isset($_POST['submit']) || !isset($_POST['passwd'])) {
     }
 
     if ($errors) {
-        $msg = implode('<br>', $errros);
+        $msg = implode('<br>', $errors);
     } else {
         //update password
         $GLOBALS['xoopsUser']->setVar('email', trim($_POST['newmail']));
@@ -60,7 +60,7 @@ if (!isset($_POST['submit']) || !isset($_POST['passwd'])) {
             $msg = _PROFILE_MA_EMAILCHANGED;
 
             //send email to new email address
-            $xoopsMailer =& xoops_getMailer();
+            $xoopsMailer = xoops_getMailer();
             $xoopsMailer->useMail();
             $xoopsMailer->setTemplateDir($GLOBALS['xoopsModule']->getVar('dirname', 'n'));
             $xoopsMailer->setTemplate('emailchanged.tpl');
