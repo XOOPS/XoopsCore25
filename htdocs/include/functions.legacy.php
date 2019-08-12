@@ -96,10 +96,10 @@ function getcss($theme = '')
 /**
  * @return XoopsMailer|XoopsMailerLocal
  */
-function &getMailer()
+function getMailer()
 {
     $GLOBALS['xoopsLogger']->addDeprecated('Function ' . __FUNCTION__ . '() is deprecated, use xoops_getMailer instead');
-    $mailer =& xoops_getMailer();
+    $mailer = xoops_getMailer();
 
     return $mailer;
 }

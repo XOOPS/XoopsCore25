@@ -258,7 +258,7 @@ function emailStats($cid, $bid)
                         $fecha       = date('F jS Y, h:iA.');
                         $subject     = sprintf(_BANNERS_MAIL_SUBJECT, $xoopsConfig['sitename']);
                         $message     = sprintf(_BANNERS_MAIL_MESSAGE, $xoopsConfig['sitename'], $name, $bid, $imageurl, $clickurl, $imptotal, $impmade, $left, $clicks, $percent, $fecha);
-                        $xoopsMailer = &xoops_getMailer();
+                        $xoopsMailer = xoops_getMailer();
                         $xoopsMailer->useMail();
                         $xoopsMailer->setToEmails($email);
                         $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);

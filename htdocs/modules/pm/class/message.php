@@ -177,7 +177,7 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
         $msg .= "--------------\n";
         $msg .= $xoopsConfig['sitename'] . ': ' . XOOPS_URL . "\n";
 
-        $xoopsMailer =& xoops_getMailer();
+        $xoopsMailer = xoops_getMailer();
         $xoopsMailer->useMail();
         $xoopsMailer->setToEmails($user->getVar('email'));
         $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);

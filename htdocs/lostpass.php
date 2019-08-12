@@ -42,7 +42,7 @@ if (empty($getuser)) {
     $areyou = substr($getuser[0]->getVar('pass'), 0, 5);
     if ($code != '' && $areyou == $code) {
         $newpass     = xoops_makepass();
-        $xoopsMailer =& xoops_getMailer();
+        $xoopsMailer = xoops_getMailer();
         $xoopsMailer->useMail();
         $xoopsMailer->setTemplate('lostpass2.tpl');
         $xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
@@ -73,7 +73,7 @@ if (empty($getuser)) {
         redirect_header('user.php', 3, sprintf(_US_PWDMAILED, $getuser[0]->getVar('uname')), false);
         // If no Code, send it
     } else {
-        $xoopsMailer =& xoops_getMailer();
+        $xoopsMailer = xoops_getMailer();
         $xoopsMailer->useMail();
         $xoopsMailer->setTemplate('lostpass1.tpl');
         $xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
