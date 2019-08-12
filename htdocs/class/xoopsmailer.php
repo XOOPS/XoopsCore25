@@ -537,7 +537,7 @@ class XoopsMailer
     /**
      * @param $user
      */
-    public function setToUsers(&$user)
+    public function setToUsers($user)
     {
         if (!is_array($user)) {
             if (strtolower(get_class($user)) === 'xoopsuser') {
