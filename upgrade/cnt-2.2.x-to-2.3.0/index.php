@@ -306,7 +306,7 @@ class Upgrade_220 extends XoopsUpgrade
               bcachetime int(10) unsigned NOT NULL default '0',
               last_modified int(10) unsigned NOT NULL default '0',
               PRIMARY KEY  (bid),
-              KEY mid (mid),
+              KEY `mid` (mid),
               KEY visible (visible),
               KEY isactive_visible_mid (isactive,visible,mid),
               KEY mid_funcnum (mid,func_num)
