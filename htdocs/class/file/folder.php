@@ -815,7 +815,7 @@ class XoopsFolderHandler
         }
         $parts    = explode('/', $path);
         $newparts = array();
-        $newpath  = $path{0} === '/' ? '/' : '';
+        $newpath  = $path[0] === '/' ? '/' : '';
         while (($part = array_shift($parts)) !== null) {
             if ($part === '.' || $part == '') {
                 continue;
@@ -831,7 +831,7 @@ class XoopsFolderHandler
             $newparts[] = $part;
         }
         $newpath .= implode('/', $newparts);
-        if (strlen($path > 1) && $path{strlen($path) - 1} === '/') {
+        if (strlen($path > 1) && $path[strlen($path) - 1] === '/') {
             $newpath .= '/';
         }
 
