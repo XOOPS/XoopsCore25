@@ -114,11 +114,6 @@ class Request
         if (isset($input[$name]) && $input[$name] !== null) {
             // Get the variable from the input hash and clean it
             $var = static::cleanVar($input[$name], $mask, $type);
-
-            // Handle magic quotes compatibility
-            if (get_magic_quotes_gpc() && ($var != $default) && ($hash !== 'FILES')) {
-                $var = static::stripSlashesRecursive($var);
-            }
         } else {
             if ($default !== null) {
                 // Clean the default value
@@ -499,11 +494,6 @@ class Request
             default:
                 $input = $_REQUEST;
                 break;
-        }
-
-        // Handle magic quotes compatibility
-        if (get_magic_quotes_gpc() && ($hash !== 'FILES')) {
-            $input = static::stripSlashesRecursive($input);
         }
 
         $result = static::cleanVars($input, $mask);
