@@ -292,7 +292,7 @@ class MyTextSanitizer
      */
     public function makeClickableCallback01($match)
     {
-        return $match[1] . "<a href=\"$match[2]://$match[3]\" title=\"$match[2]://$match[3]\" rel=\"external\">$match[2]://" . $this->truncate($match[3]) . '</a>';
+        return $match[1] . "<a href=\"$match[2]://$match[3]\" title=\"$match[2]://$match[3]\" rel=\"noopener external\">$match[2]://" . $this->truncate($match[3]) . '</a>';
     }
 
     /**
@@ -302,7 +302,7 @@ class MyTextSanitizer
      */
     public function makeClickableCallback02($match)
     {
-        return $match[1] . "<a href=\"http://www.$match[2]$match[6]\" title=\"www.$match[2]$match[6]\" rel=\"external\">" . $this->truncate('www.' . $match[2] . $match[6]) . '</a>';
+        return $match[1] . "<a href=\"http://www.$match[2]$match[6]\" title=\"www.$match[2]$match[6]\" rel=\"noopener external\">" . $this->truncate('www.' . $match[2] . $match[6]) . '</a>';
     }
 
     /**
@@ -406,11 +406,11 @@ class MyTextSanitizer
         $patterns[]     = "/\[siteurl=(['\"]?)([^\"'<>]*)\\1](.*)\[\/siteurl\]/sU";
         $replacements[] = '<a href="' . XOOPS_URL . '/\\2" title="">\\3</a>';
         $patterns[]     = "/\[url=(['\"]?)(http[s]?:\/\/[^\"'<>]*)\\1](.*)\[\/url\]/sU";
-        $replacements[] = '<a href="\\2" rel="external" title="">\\3</a>';
+        $replacements[] = '<a href="\\2" rel="noopener external" title="">\\3</a>';
         $patterns[]     = "/\[url=(['\"]?)(ftp?:\/\/[^\"'<>]*)\\1](.*)\[\/url\]/sU";
         $replacements[] = '<a href="\\2" rel="external" title="">\\3</a>';
         $patterns[]     = "/\[url=(['\"]?)([^'\"<>]*)\\1](.*)\[\/url\]/sU";
-        $replacements[] = '<a href="http://\\2" rel="external" title="">\\3</a>';
+        $replacements[] = '<a href="http://\\2" rel="noopener external" title="">\\3</a>';
         $patterns[]     = "/\[color=(['\"]?)([a-zA-Z0-9]*)\\1](.*)\[\/color\]/sU";
         $replacements[] = '<span style="color: #\\2;">\\3</span>';
         $patterns[]     = "/\[size=(['\"]?)([a-z0-9-]*)\\1](.*)\[\/size\]/sU";
