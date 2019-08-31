@@ -37,7 +37,7 @@ function xoops_hex2bin($hex)
     $r   = '';
     $len = strlen($hex);
     for ($a = 0; $a < $len; $a += 2) {
-        $r .= chr(hexdec($hex{$a} . $hex{$a + 1}));
+        $r .= chr(hexdec($hex[$a] . $hex[$a + 1]));
     }
 
     return $r;
@@ -70,7 +70,7 @@ function xoops_ishexstr($hex, $checklen = 32)
     }
     $hex = strtolower($hex);
     for ($i = 0; $i < $len; ++$i) {
-        if (!in_array($hex{$i}, $accepted)) {
+        if (!in_array($hex[$i], $accepted)) {
             return false;
         }
     }
