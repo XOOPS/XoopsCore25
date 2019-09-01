@@ -412,7 +412,6 @@ class HTMLPurifier_Encoder
                 E_USER_ERROR
             );
         }
-        return null;
     }
 
     /**
@@ -460,7 +459,6 @@ class HTMLPurifier_Encoder
         // might be OK, however, this is *not* universally true over all
         // encodings.  So we take the conservative route here, rather
         // than forcibly turn on %Core.EscapeNonASCIICharacters
-        return null;
     }
 
     /**

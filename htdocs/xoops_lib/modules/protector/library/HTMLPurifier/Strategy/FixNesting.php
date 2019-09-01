@@ -127,7 +127,7 @@ class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
                         0);
                     break;
                 }
-            }
+            };
             if ($go) continue;
             list($token, $d) = $node->toTokenPair();
             // base case
