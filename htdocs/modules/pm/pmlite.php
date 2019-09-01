@@ -94,6 +94,8 @@ if ($op === 'submit') {
         echo "<br><a href=\"javascript:window.close();\">" . _PM_ORCLOSEWINDOW . '</a>';
     }
 } elseif ($reply == 1 || $send == 1 || $send2 == 1 || $sendmod == 1) {
+	$subject = '';
+    $message = '';
     if ($reply == 1) {
         $pm_handler = xoops_getModuleHandler('message', 'pm');
         $pm         = $pm_handler->get($msg_id);
@@ -111,8 +113,6 @@ if ($op === 'submit') {
     include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
     $pmform = new XoopsThemeForm('', 'pmform', 'pmlite.php', 'post', true);
 
-    $subject = '';
-    $message = '';
     if ($reply == 1) {
         $subject = $pm->getVar('subject', 'E');
         if (!preg_match('/^' . _RE . '/i', $subject)) {
