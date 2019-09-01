@@ -9,6 +9,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
+use Xmf\Request;
+
 /**
  * @copyright    XOOPS Project http://xoops.org/
  * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -37,9 +39,9 @@ $sel = array(
     'selgrp' => XOOPS_GROUP_USERS,
     'selvis' => -1);
 foreach ($sel as $key => $value) {
-    $_{$key} = isset($_COOKIE[$key]) ? (int)$_COOKIE[$key] : $value;
-    ${$key}  = system_CleanVars($method, $key, $_{$key}, 'int');
-    setcookie($key, ${$key});
+    $temp = Request::getInt($key, $value, 'cookie');
+    $$key = Request::getInt($key, $temp);
+    setcookie($key, $$key);
 }
 
 $type = system_CleanVars($method, 'type', '', 'string');
