@@ -309,7 +309,7 @@ if (!empty($imageId)) {
             exit404BadReq();
         }
     } else {
-        if ($imageUrl{0} === '/') {
+        if ($imageUrl[0] === '/') {
             $imageUrl = substr($imageUrl, 0, 1);
         }
         $imagePath = $imageUrl;

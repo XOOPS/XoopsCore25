@@ -39,7 +39,7 @@ function fatalPhpErrorHandler($e = null) {
     $throwableClass = '\Throwable';
     if ($e === null) {
         $lastError = error_get_last();
-        if ($lastError['type'] === E_ERROR) {
+        if ($lastError !== null && $lastError['type'] === E_ERROR) {
             // fatal error
             printf($messageFormat, 'Error', $lastError['message'], $lastError['file'], $lastError['line']);
         }

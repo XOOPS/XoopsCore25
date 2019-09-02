@@ -144,7 +144,7 @@ function getDirList($dirname)
     $dirlist = array();
     if ($handle = opendir($dirname)) {
         while ($file = readdir($handle)) {
-            if ($file{0} !== '.' && is_dir($dirname . $file)) {
+            if ($file[0] !== '.' && is_dir($dirname . $file)) {
                 $dirlist[] = $file;
             }
         }

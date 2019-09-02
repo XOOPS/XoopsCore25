@@ -207,10 +207,10 @@ class XoopsInstallWizard
     {
         $pages     = array_keys($this->pages);
         $pageIndex = $this->pageIndex;
-        if (!(int)$page{0}) {
-            if ($page{0} == '+') {
+        if (!(int)$page[0]) {
+            if ($page[0] == '+') {
                 $pageIndex += substr($page, 1);
-            } elseif ($page{0} == '-') {
+            } elseif ($page[0] == '-') {
                 $pageIndex -= substr($page, 1);
             } else {
                 $pageIndex = (int)array_search($page, $pages);
