@@ -230,6 +230,7 @@ class XoopsLoad
             'xoopsformrendererinterface' => XOOPS_ROOT_PATH . '/class/xoopsform/renderer/XoopsFormRendererInterface.php',
             'xoopsformrendererlegacy'    => XOOPS_ROOT_PATH . '/class/xoopsform/renderer/XoopsFormRendererLegacy.php',
             'xoopsformrendererbootstrap3'=> XOOPS_ROOT_PATH . '/class/xoopsform/renderer/XoopsFormRendererBootstrap3.php',
+            'xoopsformrendererbootstrap4'=> XOOPS_ROOT_PATH . '/class/xoopsform/renderer/XoopsFormRendererBootstrap4.php',
             'xoopsfilterinput'           => XOOPS_ROOT_PATH . '/class/xoopsfilterinput.php',
             'xoopsrequest'               => XOOPS_ROOT_PATH . '/class/xoopsrequest.php');
     }
