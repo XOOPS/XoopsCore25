@@ -1,6 +1,6 @@
 <h4><{$smarty.const._PM_PRIVATEMESSAGE}></h4>
 <div class="message-current-tab">
-    <{if $op==out}>
+    <{if $op=='out'}>
         <div class="alert alert-success alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             <strong><a href="viewpmsg.php?op=out" title="<{$smarty.const._PM_OUTBOX}>"><{$smarty.const._PM_OUTBOX}></a></strong>
@@ -27,7 +27,7 @@
     <form name="<{$pmform.name}>" id="<{$pmform.name}>" action="<{$pmform.action}>" method="<{$pmform.method}>"
             <{$pmform.extra}>>
         <div class="col-xs-4 col-md-4 sender-info">
-            <{if $op==out}><strong><{$smarty.const._PM_TO}>: </strong><{else}><strong><{$smarty.const._PM_FROM}>: </strong><{/if}>
+            <{if $op=='out'}><strong><{$smarty.const._PM_TO}>: </strong><{else}><strong><{$smarty.const._PM_FROM}>: </strong><{/if}>
             <{if ( $poster != false ) }>
                 <a href="<{$xoops_url}>/userinfo.php?uid=<{$poster->getVar('uid')}>"><{$poster->getVar('uname')}></a>
                 <{if ( $poster->getVar("user_avatar") != "")}>
