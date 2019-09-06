@@ -1,6 +1,17 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
+2.5.11 Alpha             NOT RELEASED
+===================================
+- Deprecate \XoopsObject::setFormVars() (geekwright)
+- Unneeded by reference (geekwright)
+- Implement Xmf\Request for input (geekwright)
+- Fix install error under MySQL in ANSI mode (geekwright)
+- Add noopener rel attribute to external links in TextSanitizer (geekwright)
+- fix quote_answer_pm  (Mage)
+
+
+===================================
 2.5.10 Final             2019/04/29
 ===================================
 - fix version check in module administration (mage)
