@@ -17,7 +17,7 @@
 <form name="<{$pmform.name}>" id="<{$pmform.name}>" action="<{$pmform.action}>" method="<{$pmform.method}>" <{$pmform.extra}>>
     <div class="row">
         <div class="col-md-4">
-            <{if $op==out}><{$smarty.const._PM_TO}>: <{else}><{$smarty.const._PM_FROM}>: <{/if}>
+            <{if $op=='out'}><{$smarty.const._PM_TO}>: <{else}><{$smarty.const._PM_FROM}>: <{/if}>
             <{if ( $poster != false ) }>
                 <a href="<{$xoops_url}>/userinfo.php?uid=<{$poster->getVar('uid')}>"><{$poster->getVar('uname')}></a><br>
                 <{if ( $poster->getVar("user_avatar") != "")}>
