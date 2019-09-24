@@ -229,7 +229,13 @@ function synchronize($uid, $type)
     }
     // Count forum posts
     if (XoopsModule::getByDirname('newbb')) {
-        $tables[] = array('table_name' => 'bb_posts', 'uid_column' => 'uid');
+        // Added support for NewBB 5.0 new table naming convention
+        $tableTest = new \Xmf\Database\Tables();
+        if($tableTest->useTable('newbb_posts')) {
+            $tables[] = array('table_name' => 'newbb_posts', 'uid_column' => 'uid');
+        } else {
+            $tables[] = array('table_name' => 'bb_posts', 'uid_column' => 'uid');
+        }
     }
 
     switch ($type) {
