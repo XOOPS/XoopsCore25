@@ -16,6 +16,7 @@
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
+use Xmf\Request;
 
 // Check users rights
 if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->getVar('mid'))) {
@@ -28,9 +29,9 @@ if (isset($_REQUEST)) {
     }
 }
 // Get Action type
-$op = system_CleanVars($_REQUEST, 'op', 'default', 'string');
+$op = Request::getString('op', 'default');
 // Setting type
-$confcat_id = system_CleanVars($_REQUEST, 'confcat_id', 0, 'int');
+$confcat_id = Request::getInt('confcat_id', 0);
 // Define main template
 $GLOBALS['xoopsOption']['template_main'] = 'system_preferences.tpl';
 // Call Header
