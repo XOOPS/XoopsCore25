@@ -18,6 +18,7 @@
  */
 /* @var XoopsUser $xoopsUser */
 /* @var XoopsModule $xoopsModule */
+use Xmf\Request;
 
 // Check users rights
 if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid())) {
@@ -26,7 +27,7 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
 
 include_once XOOPS_ROOT_PATH . '/modules/system/admin/users/users.php';
 // Get Action type
-$op = system_CleanVars($_REQUEST, 'op', 'default', 'string');
+$op = Request::getString('op', 'default');
 /* @var XoopsMemberHandler $member_handler */
 $member_handler = xoops_getHandler('member', 'system');
 // Define main template
@@ -43,7 +44,7 @@ $xoTheme->addScript('modules/system/js/admin.js');
 // Define Breadcrumb and tips
 $xoBreadCrumb->addLink(_AM_SYSTEM_USERS_NAV_MAIN, system_adminVersion('users', 'adminpath'));
 
-$uid = system_CleanVars($_REQUEST, 'uid', 0);
+$uid = Request::getInt('uid', 0);
 switch ($op) {
 
     // Edit user
