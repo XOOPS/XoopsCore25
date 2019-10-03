@@ -33,9 +33,7 @@ if (!xoops_getModuleOption('active_images', 'system')) {
 
 // Get Action type
 $op = Request::getString('op', 'list');
-if (isset($_GET['op'])) {
-    $op = trim($_GET['op']);
-}
+
 $image_id = Request::getInt('image_id', 0);
 $imgcat_id = Request::getInt('imgcat_id', 0);
 
