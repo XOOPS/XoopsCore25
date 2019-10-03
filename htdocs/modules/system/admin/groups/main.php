@@ -18,7 +18,7 @@
  */
 /* @var XoopsUser $xoopsUser */
 /* @var XoopsModule $xoopsModule */
-
+use Xmf\Request;
 // Check users rights
 if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid())) {
     exit(_NOPERM);
@@ -26,7 +26,7 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
 // Parameters
 $nb_group = xoops_getModuleOption('groups_pager', 'system');
 // Get Action type
-$op = system_CleanVars($_REQUEST, 'op', 'list', 'string');
+$op = Request::getString('op', 'list');
 // Get groups handler
 /* @var SystemGroupHandler $groups_Handler */
 $groups_Handler = xoops_getModuleHandler('group', 'system');
@@ -52,7 +52,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(_AM_SYSTEM_GROUPS_NAV_TIPS_1);
         $xoBreadCrumb->render();
         // Get start pager
-        $start = system_CleanVars($_REQUEST, 'start', 0, 'int');
+        $start = Request::getInt('start', 0);
         // Criteria
         $criteria = new CriteriaCompo();
         $criteria->setSort('groupid');
@@ -124,7 +124,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(_AM_SYSTEM_GROUPS_NAV_TIPS_2);
         $xoBreadCrumb->render();
         // Create form
-        $groups_id = system_CleanVars($_REQUEST, 'groups_id', 0, 'int');
+        $groups_id = Request::getInt('groups_id', 0);
         if ($groups_id > 0) {
             $obj  = $groups_Handler->get($groups_id);
             $form = $obj->getForm();
@@ -140,10 +140,10 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=groups', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        $system_catids = system_CleanVars($_POST, 'system_catids', array(), 'array');
-        $admin_mids    = system_CleanVars($_POST, 'admin_mids', array(), 'array');
-        $read_mids     = system_CleanVars($_POST, 'read_mids', array(), 'array');
-        $read_bids     = system_CleanVars($_POST, 'read_bids', array(), 'array');
+        $system_catids = Request::getArray('system_catids', array());
+        $admin_mids    = Request::getArray('admin_mids', array());
+        $read_mids     = Request::getArray('read_mids', array());
+        $read_bids     = Request::getArray('read_bids', array());
         /* @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $group          = $member_handler->createGroup();
@@ -205,13 +205,13 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=groups', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        $system_catids = system_CleanVars($_POST, 'system_catids', array(), 'array');
-        $admin_mids    = system_CleanVars($_POST, 'admin_mids', array(), 'array');
-        $read_mids     = system_CleanVars($_POST, 'read_mids', array(), 'array');
-        $read_bids     = system_CleanVars($_POST, 'read_bids', array(), 'array');
+		$system_catids = Request::getArray('system_catids', array());
+        $admin_mids    = Request::getArray('admin_mids', array());
+        $read_mids     = Request::getArray('read_mids', array());
+        $read_bids     = Request::getArray('read_bids', array());
         /* @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
-        $gid            = system_CleanVars($_POST, 'g_id', 0, 'int');
+        $gid            = Request::getInt('g_id', 0);
         if ($gid > 0) {
             $group = $member_handler->getGroup($gid);
             $group->setVar('name', $_POST['name']);
@@ -285,7 +285,7 @@ switch ($op) {
 
     //Del a group
     case 'groups_delete':
-        $groups_id = system_CleanVars($_REQUEST, 'groups_id', 0, 'int');
+        $groups_id = Request::getInt('groups_id', 0);
         if ($groups_id > 0) {
             $obj = $groups_Handler->get($groups_id);
             if (isset($_POST['ok']) && $_POST['ok'] == 1) {
