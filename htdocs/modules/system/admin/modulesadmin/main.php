@@ -16,6 +16,7 @@
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
+use Xmf\Request;
 
 // Check users rights
 if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid())) {
@@ -33,8 +34,8 @@ if (isset($_POST)) {
 }
 
 // Get Action type
-$op     = system_CleanVars($_REQUEST, 'op', 'list', 'string');
-$module = system_CleanVars($_REQUEST, 'module', '', 'string');
+$op = Request::getString('op', 'list');
+$module = Request::getString('module', 'list');
 
 if (in_array($op, array('confirm', 'submit', 'install_ok', 'update_ok', 'uninstall_ok'))) {
     if (!$GLOBALS['xoopsSecurity']->check()) {
@@ -246,7 +247,7 @@ switch ($op) {
         // Get module handler
         /* @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
-        $module_id      = system_CleanVars($_POST, 'mid', 0, 'int');
+        $module_id      = Request::getInt('mid', 0);
         if ($module_id > 0) {
             /* @var XoopsModule $module */
             $module = $module_handler->get($module_id);
@@ -271,7 +272,7 @@ switch ($op) {
         // Get module handler
 
         $module_handler = xoops_getHandler('module');
-        $module_id      = system_CleanVars($_POST, 'mid', 0, 'int');
+		$module_id      = Request::getInt('mid', 0);
         if ($module_id > 0) {
             $module = $module_handler->get($module_id);
             $old    = $module->getVar('weight');
