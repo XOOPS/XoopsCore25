@@ -17,6 +17,8 @@
  * @author         XOOPS Development Team
  */
 
+use Xmf\Request;
+
 // Check users rights
 if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid())) {
     exit(_NOPERM);
@@ -35,7 +37,7 @@ $banner_finish_Handler = xoops_getModuleHandler('bannerfinish', 'system');
 /* @var  SystemBannerclientHandler $banner_client_Handler */
 $banner_client_Handler = xoops_getModuleHandler('bannerclient', 'system');
 // Get Action type
-$op = system_CleanVars($_REQUEST, 'op', 'default', 'string');
+$op = Request::getString('op', 'default');
 // Define template
 $GLOBALS['xoopsOption']['template_main'] = 'system_banners.tpl';
 // Call header
@@ -56,7 +58,7 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=banners', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        $bid = system_CleanVars($_POST, 'bid', 0, 'int');
+		$bid = Request::getInt('bid', 0);
         /* @var  SystemBanner $obj */
     if ($bid > 0) {
             $obj = $banner_Handler->get($bid);
@@ -64,9 +66,12 @@ switch ($op) {
             $obj = $banner_Handler->create();
             $obj->setVar('date', time());
         }
-        $obj->setVars($_POST);
-        $verif_htmlbanner = system_CleanVars($_POST, 'htmlbanner', 0, 'int');
-        $obj->setVar('htmlbanner', $verif_htmlbanner);
+		$obj->setVar('cid', Request::getInt('cid', 0));
+		$obj->setVar('imptotal', Request::getInt('imptotal', 0));
+		$obj->setVar('imageurl', Request::getUrl('imageurl', ''));
+		$obj->setVar('clickurl', Request::getUrl('clickurl', ''));
+		$obj->setVar('htmlbanner', Request::getInt('htmlbanner', 0));
+		$obj->setVar('htmlcode', Request::getText('htmlcode', ''));
 
         if ($banner_Handler->insert($obj)) {
             redirect_header('admin.php?fct=banners', 2, _AM_SYSTEM_BANNERS_DBUPDATED);
@@ -82,7 +87,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(_AM_SYSTEM_BANNERS_NAV_TIPS);
         $xoBreadCrumb->render();
 
-        $bid = system_CleanVars($_REQUEST, 'bid', 0, 'int');
+		$bid = Request::getInt('bid', 0);
         if ($bid > 0) {
             /* @var  SystemBanner $obj */
             $obj  = $banner_Handler->get($bid);
@@ -99,7 +104,7 @@ switch ($op) {
         $xoBreadCrumb->addHelp(system_adminVersion('banners', 'help') . '#banner_delete');
         $xoBreadCrumb->render();
 
-        $bid = system_CleanVars($_REQUEST, 'bid', 0, 'int');
+		$bid = Request::getInt('bid', 0);
         if ($bid > 0) {
             $obj = $banner_Handler->get($bid);
             if (isset($_POST['ok']) && $_POST['ok'] == 1) {
@@ -127,7 +132,7 @@ switch ($op) {
         $xoBreadCrumb->addHelp(system_adminVersion('banners', 'help') . '#banner_finish_delete');
         $xoBreadCrumb->render();
 
-        $bid = system_CleanVars($_REQUEST, 'bid', 0, 'int');
+		$bid = Request::getInt('bid', 0);
         if ($bid > 0) {
             $obj = $banner_finish_Handler->get($bid);
             if (isset($_POST['ok']) && $_POST['ok'] == 1) {
@@ -155,14 +160,19 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=banners', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        $cid = system_CleanVars($_REQUEST, 'cid', 0, 'int');
+		$cid = Request::getInt('cid', 0);
         /* @var  SystemBanner $obj */
         if ($cid > 0) {
             $obj = $banner_client_Handler->get($cid);
         } else {
             $obj = $banner_client_Handler->create();
         }
-        $obj->setVars($_POST);
+		$obj->setVar('name', Request::getString('name', ''));
+		$obj->setVar('contact', Request::getString('contact', ''));
+		$obj->setVar('email', Request::getEmail('email', ''));
+		$obj->setVar('login', Request::getString('login', ''));
+		$obj->setVar('passwd ', Request::getString('passwd ', ''));
+		$obj->setVar('extrainfo', Request::getText('extrainfo', ''));
 
         if ($banner_client_Handler->insert($obj)) {
             redirect_header('admin.php?fct=banners', 2, _AM_SYSTEM_BANNERS_DBUPDATED);
@@ -180,7 +190,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(_AM_SYSTEM_BANNERS_NAV_TIPS);
         $xoBreadCrumb->render();
 
-        $cid = system_CleanVars($_REQUEST, 'cid', 0, 'int');
+		$cid = Request::getInt('cid', 0);
         if ($cid > 0) {
             /* @var  SystemBanner $obj */
             $obj  = $banner_client_Handler->get($cid);
@@ -196,7 +206,7 @@ switch ($op) {
         $xoBreadCrumb->addHelp(system_adminVersion('banners', 'help') . '#banner_client_delete');
         $xoBreadCrumb->render();
 
-        $cid = system_CleanVars($_REQUEST, 'cid', 0, 'int');
+		$cid = Request::getInt('cid', 0);
         if ($cid > 0) {
             $obj = $banner_client_Handler->get($cid);
             if (isset($_POST['ok']) && $_POST['ok'] == 1) {
@@ -251,9 +261,9 @@ switch ($op) {
         $xoBreadCrumb->render();
 
         // Get start pager
-        $start  = system_CleanVars($_REQUEST, 'start', 0, 'int');
-        $startF = system_CleanVars($_REQUEST, 'startF', 0, 'int');
-        $startC = system_CleanVars($_REQUEST, 'startC', 0, 'int');
+		$start = Request::getInt('start', 0);
+		$startF = Request::getInt('startF', 0);
+		$startC = Request::getInt('startC', 0);
         // Display Banners
         // Criteria
         $criteria = new CriteriaCompo();
