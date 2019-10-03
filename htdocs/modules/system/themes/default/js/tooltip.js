@@ -8,7 +8,22 @@
  *
  */
 
+var entityMap = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+    '/': '&#x2F;',
+    '`': '&#x60;',
+    '=': '&#x3D;'
+};
 
+function escapeHtml (string) {
+    return String(string).replace(/[&<>"'`=\/]/g, function (s) {
+        return entityMap[s];
+    });
+}
 
 this.tooltip = function(){
     /* CONFIG */
@@ -22,7 +37,7 @@ this.tooltip = function(){
         //Removing alt atribute for IE
         $("a.tooltip img").each(function() { $(this).attr("title", ""); $(this).attr("alt", ""); });
 
-        $("body").append("<p id='tooltip'>"+ this.t +"</p>");
+        $("body").append("<p id='tooltip'>"+ escapeHtml(this.t) +"</p>");
 
         $("#tooltip")
             .css("top",(e.pageY + yOffset) + "px")
