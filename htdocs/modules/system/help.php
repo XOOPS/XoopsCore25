@@ -14,12 +14,13 @@
  * @author              Andricq Nicolas (AKA MusS)
  */
 /* @var XoopsModule $module */
+use Xmf\Request;
 
 // Include header
 include __DIR__ . '/header.php';
 
-$page = system_CleanVars($_REQUEST, 'page', '', 'string');
-$mid  = system_CleanVars($_REQUEST, 'mid', 0, 'int');
+$page = Request::getString('page', '');
+$mid  = Request::getInt('mid', 0);
 
 // Define main template
 $GLOBALS['xoopsOption']['template_main'] = 'system_help.tpl';
