@@ -16,6 +16,7 @@
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
+use Xmf\Request;
 
 // Check users rights
 if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid())) {
@@ -31,7 +32,7 @@ $nb_smilies  = xoops_getModuleOption('smilies_pager', 'system');
 $mimetypes   = array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png');
 $upload_size = 500000;
 // Get Action type
-$op = system_CleanVars($_REQUEST, 'op', 'list', 'string');
+$op = Request::getString('op', 'list');
 // Get smilies handler
 /* @var  SystemsmiliesHandler $smilies_Handler */
 $smilies_Handler = xoops_getModuleHandler('smilies', 'system');
@@ -56,7 +57,7 @@ switch ($op) {
         $xoBreadCrumb->addHelp(system_adminVersion('smilies', 'help'));
         $xoBreadCrumb->render();
         // Get start pager
-        $start = system_CleanVars($_REQUEST, 'start', 0, 'int');
+        $start = Request::getInt('start', 0);
         // Criteria
         $criteria = new CriteriaCompo();
         $criteria->setSort('id');
@@ -118,7 +119,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(sprintf(_AM_SYSTEM_SMILIES_NAV_TIPS_FORM1, implode(', ', $mimetypes)) . sprintf(_AM_SYSTEM_SMILIES_NAV_TIPS_FORM2, $upload_size / 1000));
         $xoBreadCrumb->render();
         // Create form
-        $obj  = $smilies_Handler->get(system_CleanVars($_REQUEST, 'smilies_id', 0, 'int'));
+        $obj  = $smilies_Handler->get(Request::getInt('smilies_id', 0));
         $form = $obj->getForm();
         // Assign form
         $xoopsTpl->assign('form', $form->render());
@@ -135,15 +136,18 @@ switch ($op) {
         $xoBreadCrumb->render();
 
         if (isset($_POST['smilies_id'])) {
-            $obj = $smilies_Handler->get(system_CleanVars($_POST, 'smilies_id', 0, 'int'));
+            $obj = $smilies_Handler->get(Request::getInt('smilies_id', 0));
         } else {
             $obj = $smilies_Handler->create();
         }
         // erreur
-        $obj->setVar('code', $_POST['code']);
-        $obj->setVar('emotion', $_POST['emotion']);
-        $display = ($_POST['display'] == 1) ? '1' : '0';
-        $obj->setVar('display', $display);
+        $obj->setVar('code', Request::getString('code', ''));
+
+        $obj->setVar('emotion', Request::getString('emotion', ''));
+        $obj->setVar('display', Request::getInt('display', 0));		
+		if (Request::getString('code', '') == '' || Request::getString('emotion', '') == ''){
+			$err[] = 'the code or description are empty';
+		}
 
         include_once XOOPS_ROOT_PATH . '/class/uploader.php';
         $uploader_smilies_img = new XoopsMediaUploader(XOOPS_UPLOAD_PATH . '/smilies', $mimetypes, $upload_size, null, null);
@@ -182,7 +186,7 @@ switch ($op) {
 
     //Del a smilie
     case 'smilies_delete':
-        $smilies_id = system_CleanVars($_REQUEST, 'smilies_id', 0, 'int');
+        $smilies_id = Request::getInt('smilies_id', 0);
         $obj        = $smilies_Handler->get($smilies_id);
         if (isset($_POST['ok']) && $_POST['ok'] == 1) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
@@ -215,7 +219,7 @@ switch ($op) {
 
     case 'smilies_update_display':
         // Get smilies id
-        $smilies_id = system_CleanVars($_POST, 'smilies_id', 0, 'int');
+        $smilies_id = Request::getInt('smilies_id', 0);
         if ($smilies_id > 0) {
             $obj = $smilies_Handler->get($smilies_id);
             $old = $obj->getVar('display');
