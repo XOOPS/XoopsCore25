@@ -16,6 +16,7 @@
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
+use Xmf\Request;
 
 // Check users rights
 if (!is_object($GLOBALS['xoopsUser']) || !is_object($GLOBALS['xoopsModule']) || !$GLOBALS['xoopsUser']->isAdmin($GLOBALS['xoopsModule']->mid())) {
@@ -23,7 +24,7 @@ if (!is_object($GLOBALS['xoopsUser']) || !is_object($GLOBALS['xoopsModule']) || 
 }
 
 // Get Action type
-$op = system_CleanVars($_REQUEST, 'op', 'default', 'string');
+$op = Request::getString('op', 'default');
 
 // Define main template
 $GLOBALS['xoopsOption']['template_main'] = 'system_templates.tpl';
@@ -112,7 +113,7 @@ switch ($op) {
                     copy($indexFile, $theme_surcharge . '/index.html');
                 }
 
-                $tplset = system_CleanVars($POST, 'tplset', 'default', 'string');
+                $tplset = Request::getString('tplset', 'default');
 
                 //on crée uniquement les templates qui n'existent pas
                 /* @var XoopsModuleHandler $module_handler */
@@ -327,7 +328,7 @@ switch ($op) {
             // Generate one module
             $GLOBALS['xoopsTpl']->assign('index', true);
 
-            $tplset = system_CleanVars($POST, 'tplset', 'default', 'string');
+            $tplset = Request::getString('tplset', 'default');
 
             $form = new XoopsThemeForm(_AM_SYSTEM_TEMPLATES_SELECT_TEMPLATES, 'form', 'admin.php?fct=tplsets', 'post', true);
 

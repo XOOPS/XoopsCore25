@@ -17,6 +17,7 @@
  */
 /* @var XoopsUser $xoopsUser */
 /* @var XoopsModule $xoopsModule */
+use Xmf\Request;
 
 require dirname(dirname(dirname(dirname(__DIR__)))) . '/mainfile.php';
 require XOOPS_ROOT_PATH . '/header.php';
@@ -58,7 +59,7 @@ switch ($op) {
                 $tables[] = array('table_name' => 'bb_posts', 'uid_column' => 'uid');
             }
         }
-        $uid         = system_CleanVars($_REQUEST, 'uid', 'int');
+        $uid         = Request::getInt('uid', 0);
         $total_posts = 0;
         foreach ($tables as $table) {
             $criteria = new CriteriaCompo();

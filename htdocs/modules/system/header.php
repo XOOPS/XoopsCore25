@@ -14,6 +14,8 @@
  */
 /* @var  XoopsUser $xoopsUser */
 
+use Xmf\Request;
+
 // Include XOOPS control panel header
 include_once dirname(dirname(__DIR__)) . '/include/cp_header.php';
 // Check user rights
@@ -42,7 +44,7 @@ include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 // include system category definitions
 include_once $GLOBALS['xoops']->path('/modules/system/constants.php');
 // Get request variable
-$fct = system_CleanVars($_REQUEST, 'fct', '', 'string');
+$fct = Request::getString('fct', '');
 
 $xoBreadCrumb = new SystemBreadcrumb($fct);
 $xoBreadCrumb->addLink(_AM_SYSTEM_CPANEL, XOOPS_URL . '/admin.php', true);

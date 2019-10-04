@@ -16,7 +16,7 @@
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
-
+use Xmf\Request;
 // Check users rights
 if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid())) {
     exit(_NOPERM);
@@ -42,7 +42,7 @@ include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 function form_user($add_or_edit, $user = '')
 {
     global $xoopsConfig, $xoopsUser;
-    $uid = system_CleanVars($_REQUEST, 'uid', 0);
+    $uid = Request::getInt('uid', 0);
 
     //RMV-NOTIFY
     include_once XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/notification.php';

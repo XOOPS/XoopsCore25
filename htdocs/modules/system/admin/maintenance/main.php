@@ -14,6 +14,7 @@
  * @author              Cointin Maxime (AKA Kraven30)
  * @package             system
  */
+use Xmf\Request;
 
 require_once XOOPS_ROOT_PATH . '/modules/system/class/maintenance.php';
 
@@ -27,7 +28,7 @@ if (!xoops_getModuleOption('active_maintenance', 'system')) {
 }
 
 // Get Action type
-$op = system_CleanVars($_REQUEST, 'op', 'list', 'string');
+$op = Request::getString('op', 'list');
 // Define main template
 $GLOBALS['xoopsOption']['template_main'] = 'system_maintenance.tpl';
 // Call Header
@@ -123,11 +124,11 @@ switch ($op) {
         //$xoBreadCrumb->addLink(_AM_SYSTEM_MAINTENANCE_NAV_MAINTENANCE);
         $xoBreadCrumb->render();
 
-        $session            = system_CleanVars($_REQUEST, 'session', 1, 'int');
-        $cache              = system_CleanVars($_REQUEST, 'cache', array(), 'array');
-        $tables             = system_CleanVars($_REQUEST, 'tables', array(), 'array');
-        $avatar             = system_CleanVars($_REQUEST, 'avatar', 1, 'int');
-        $tables_op          = system_CleanVars($_REQUEST, 'maintenance', array(), 'array');
+        $session            = Request::getInt('session', 1);
+        $cache              = Request::getArray('cache', array());
+        $tables             = Request::getArray('tables', array());
+        $avatar             = Request::getInt('avatar', 1);
+        $tables_op          = Request::getArray('maintenance', array());
         $verif_cache        = false;
         $verif_session      = false;
         $verif_avatar       = false;
@@ -198,7 +199,7 @@ switch ($op) {
         $dump         = new SystemMaintenance();
         $dump_modules = isset($_REQUEST['dump_modules']) ? $_REQUEST['dump_modules'] : false;
         $dump_tables  = isset($_REQUEST['dump_tables']) ? $_REQUEST['dump_tables'] : false;
-        $drop         = system_CleanVars($_REQUEST, 'drop', 1, 'int');
+        $drop         = Request::getInt('drop', 1);
 
         if (($dump_tables === true && $dump_modules === true) || ($dump_tables === false && $dump_modules === false)) {
             redirect_header('admin.php?fct=maintenance', 2, _AM_SYSTEM_MAINTENANCE_DUMP_ERROR_TABLES_OR_MODULES);

@@ -15,7 +15,8 @@
  * @package
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
- */
+ */ 
+use Xmf\Request;
 
 // Check users rights
 if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->getVar('mid'))) {
@@ -28,7 +29,7 @@ if (!xoops_getModuleOption('active_comments', 'system')) {
 }
 
 // Get Action type
-$op = system_CleanVars($_REQUEST, 'op', 'default', 'string');
+$op = Request::getString('op', 'default');
 // Define main template
 $GLOBALS['xoopsOption']['template_main'] = 'system_comments.tpl';
 xoops_cp_header();
@@ -69,7 +70,7 @@ $comment_handler = xoops_getHandler('comment');
 switch ($op) {
 
     case 'comments_jump':
-        $com_id = system_CleanVars($_GET, 'com_id', 0, 'int');
+        $com_id = Request::getInt('com_id', 0);
         if ($com_id > 0) {
             $comment = $comment_handler->get($com_id);
             if (is_object($comment)) {
@@ -126,8 +127,8 @@ switch ($op) {
         $verif    = false;
         if (isset($_POST['comments_after']) && isset($_POST['comments_before'])) {
             if ($_POST['comments_after'] != $_POST['comments_before']) {
-                $com_after  = system_CleanVars($_POST, 'comments_after', time(), 'date');
-                $com_before = system_CleanVars($_POST, 'comments_before', time(), 'date');
+				$com_after = strtotime(Request::getString('comments_after', time()));
+                $com_before = strtotime(Request::getString('comments_before', time()));
                 if ($com_after) {
                     $criteria->add(new Criteria('com_created', $com_after, '>'));
                 }
@@ -137,24 +138,24 @@ switch ($op) {
                 $verif = true;
             }
         }
-        $com_modid = system_CleanVars($_POST, 'comments_modules', 0, 'int');
+        $com_modid = Request::getInt('comments_modules', 0);
         if ($com_modid > 0) {
             $criteria->add(new Criteria('com_modid', $com_modid));
             $verif = true;
         }
-        $comments_status = system_CleanVars($_POST, 'comments_status', 0, 'int');
+        $comments_status = Request::getInt('comments_status', 0);
         if ($comments_status > 0) {
             $criteria->add(new Criteria('com_status', $_POST['comments_status']));
             $verif = true;
         }
-        $comments_userid = system_CleanVars($_POST, 'comments_userid', '', 'string');
+        $comments_userid = Request::getString('comments_userid', '');
         if ($comments_userid != '') {
             foreach ($_REQUEST['comments_userid'] as $del) {
                 $criteria->add(new Criteria('com_uid', $del), 'OR');
             }
             $verif = true;
         }
-        $comments_groupe = system_CleanVars($_POST, 'comments_groupe', '', 'string');
+        $comments_groupe = Request::getString('comments_groupe', '');
         if ($comments_groupe != '') {
             foreach ($_POST['comments_groupe'] as $del => $u_name) {
                 /* @var XoopsMemberHandler $member_handler */
@@ -202,12 +203,12 @@ switch ($op) {
         $comments_status  = '';
 
         $criteria        = new CriteriaCompo();
-        $comments_module = system_CleanVars($_REQUEST, 'comments_module', 0, 'int');
+        $comments_module = Request::getInt('comments_module', 0);
         if ($comments_module > 0) {
             $criteria->add(new Criteria('com_modid', $comments_module));
             $comments_module = $_REQUEST['comments_module'];
         }
-        $comments_status = system_CleanVars($_REQUEST, 'comments_status', 0, 'int');
+        $comments_status = Request::getInt('comments_status', 0);
         if ($comments_status > 0) {
             $criteria->add(new Criteria('com_status', $comments_status));
             $comments_status = $_REQUEST['comments_status'];
@@ -221,8 +222,8 @@ switch ($op) {
         $xoopsTpl->assign('comments_count', $comments_count);
 
         if ($comments_count > 0) {
-            $comments_start = system_CleanVars($_REQUEST, 'comments_start', 0, 'int');
-            $comments_limit = system_CleanVars($_REQUEST, 'comments_limit', 0, 'int');
+            $comments_start = Request::getInt('comments_start', 0);
+            $comments_limit = Request::getInt('comments_limit', 0);
             if (!in_array($comments_limit, $limit_array)) {
                 $comments_limit = xoops_getModuleOption('comments_pager', 'system');
             }

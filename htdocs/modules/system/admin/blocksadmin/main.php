@@ -8,7 +8,6 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
-
 use Xmf\Request;
 
 /**
@@ -24,14 +23,9 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
     exit(_NOPERM);
 }
 // Get Action type
-$op = system_CleanVars($_REQUEST, 'op', 'list', 'string');
+$op = Request::getString('op', 'list');
 
-$filter = system_CleanVars($_GET, 'filter', 0, 'int');
-if ($filter) {
-    $method = $_GET;
-} else {
-    $method = $_REQUEST;
-}
+$filter = Request::getInt('filter', 0);
 
 $sel = array(
     'selmod' => -2,
@@ -44,17 +38,12 @@ foreach ($sel as $key => $value) {
     setcookie($key, $$key);
 }
 
-$type = system_CleanVars($method, 'type', '', 'string');
+$type = Request::getString('type', '');
 if ($type === 'preview') {
     $op = 'preview';
 }
 
-if (isset($_GET['op'])) {
-    if ($_GET['op'] === 'edit' || $_GET['op'] === 'delete' || $_GET['op'] === 'delete_ok' || $_GET['op'] === 'clone') {
-        $op  = $_GET['op'];
-        $bid = isset($_GET['bid']) ? (int)$_GET['bid'] : 0;
-    }
-}
+$bid = Request::getInt('bid', 0);
 
 switch ($op) {
 
@@ -207,8 +196,8 @@ switch ($op) {
         /* @var SystemBlockHandler $block_handler */
         $block_handler = xoops_getModuleHandler('block');
         // Get variable
-        $block_id = system_CleanVars($_POST, 'bid', 0, 'int');
-        $visible  = system_CleanVars($_POST, 'visible', 0, 'int');
+        $block_id = Request::getInt('bid', 0);
+        $visible  = Request::getInt('visible', 0);
         if ($block_id > 0) {
             $block = $block_handler->get($block_id);
             $block->setVar('visible', $visible);
@@ -222,8 +211,8 @@ switch ($op) {
         // Initialize blocks handler
         $block_handler = xoops_getModuleHandler('block');
         // Get variable
-        $block_id = system_CleanVars($_POST, 'bid', 0, 'int');
-        $side     = system_CleanVars($_POST, 'side', 0, 'int');
+        $block_id = Request::getInt('bid', 0);
+        $side     = Request::getInt('side', 0);
         if ($block_id > 0) {
             $block = $block_handler->get($block_id);
             $block->setVar('side', $side);
@@ -273,14 +262,14 @@ switch ($op) {
         }
         // Initialize blocks handler
         $block_handler = xoops_getModuleHandler('block');
-        // Get avatar id
-        $block_id = system_CleanVars($_POST, 'bid', 0, 'int');
+        // Get block id
+        $block_id = Request::getInt('bid', 0);
         if ($block_id > 0) {
             $block = $block_handler->get($block_id);
         } else {
             $block = $block_handler->create();
         }
-        $block_type = system_CleanVars($_POST, 'block_type', '', 'string');
+        $block_type = Request::getString('block_type', '');
         $block->setVar('block_type', $block_type);
 
         if (!$block->isCustom()) {
@@ -379,8 +368,8 @@ switch ($op) {
     case 'edit':
         // Initialize blocks handler
         $block_handler = xoops_getModuleHandler('block');
-        // Get avatar id
-        $block_id = system_CleanVars($_REQUEST, 'bid', 0, 'int');
+        // Get block id
+        $block_id = Request::getInt('bid', 0);
         if ($block_id > 0) {
             // Define main template
             $GLOBALS['xoopsOption']['template_main'] = 'system_blocks.tpl';
@@ -413,8 +402,8 @@ switch ($op) {
         // Initialize blocks handler
         /* @var SystemBlockHandler $block_handler */
         $block_handler = xoops_getModuleHandler('block');
-        // Get avatar id
-        $block_id = system_CleanVars($_REQUEST, 'bid', 0, 'int');
+        // Get block id
+        $block_id = Request::getInt('bid', 0);
         if ($block_id > 0) {
             $block = $block_handler->get($block_id);
             if ($block->getVar('block_type') === 'S') {
@@ -448,8 +437,8 @@ switch ($op) {
         }
         // Initialize blocks handler
         $block_handler = xoops_getModuleHandler('block');
-        // Get avatar id
-        $block_id = system_CleanVars($_POST, 'bid', 0, 'int');
+        // Get block id
+        $block_id = Request::getInt('bid', 0);
         if ($block_id > 0) {
             $block = $block_handler->get($block_id);
             if ($block_handler->delete($block)) {
@@ -486,8 +475,8 @@ switch ($op) {
     case 'clone':
         // Initialize blocks handler
         $block_handler = xoops_getModuleHandler('block');
-        // Get avatar id
-        $block_id = system_CleanVars($_REQUEST, 'bid', 0, 'int');
+        // Get block id
+        $block_id = Request::getInt('bid', 0);
         if ($block_id > 0) {
             // Define main template
             $GLOBALS['xoopsOption']['template_main'] = 'system_blocks.tpl';

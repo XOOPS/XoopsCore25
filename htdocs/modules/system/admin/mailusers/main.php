@@ -16,7 +16,7 @@
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
-
+use Xmf\Request;
 // Check users rights
 if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid())) {
     exit(_NOPERM);
@@ -29,7 +29,7 @@ if (!xoops_getModuleOption('active_mailusers', 'system')) {
 // Parameters
 $limit = 100;
 // Get Action type
-$op = system_CleanVars($_REQUEST, 'op', 'list', 'string');
+$op = Request::getString('op', 'list');
 // Define main template
 $GLOBALS['xoopsOption']['template_main'] = 'system_mailusers.tpl';
 // Call Header

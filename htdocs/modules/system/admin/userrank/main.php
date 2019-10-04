@@ -16,6 +16,7 @@
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
+use Xmf\Request;
 
 /**
  * Manage user rank.
@@ -36,7 +37,7 @@ $nb_rank     = xoops_getModuleOption('userranks_pager', 'system');
 $mimetypes   = array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png');
 $upload_size = 500000;
 // Get Action type
-$op = system_CleanVars($_REQUEST, 'op', 'list', 'string');
+$op = Request::getString('op', 'list');
 // Get userrank handler
 /* @var SystemUserrankHandler $userrank_Handler */
 $userrank_Handler = xoops_getModuleHandler('userrank', 'system');
@@ -60,7 +61,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(_AM_SYSTEM_USERRANK_TIPS);
         $xoBreadCrumb->render();
         // Get start pager
-        $start = system_CleanVars($_REQUEST, 'start', 0, 'int');
+        $start = Request::getInt('start', 0);
         // Criteria
         $criteria = new CriteriaCompo();
         $criteria->setSort('rank_id');
@@ -134,7 +135,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(sprintf(_AM_SYSTEM_USERRANK_TIPS_FORM1, implode(', ', $mimetypes)) . sprintf(_AM_SYSTEM_USERRANK_TIPS_FORM2, $upload_size / 1000));
         $xoBreadCrumb->render();
         // Create form
-        $obj  = $userrank_Handler->get(system_CleanVars($_REQUEST, 'rank_id', 0, 'int'));
+        $obj  = $userrank_Handler->get(Request::getInt('rank_id', 0));
         $form = $obj->getForm();
         // Assign form
         $xoopsTpl->assign('form', $form->render());
@@ -152,11 +153,10 @@ switch ($op) {
         } else {
             $obj = $userrank_Handler->create();
         }
-        $obj->setVar('rank_title', $_POST['rank_title']);
-        $obj->setVar('rank_min', $_POST['rank_min']);
-        $obj->setVar('rank_max', $_POST['rank_max']);
-        $verif_rank_special = ($_POST['rank_special'] == 1) ? '1' : '0';
-        $obj->setVar('rank_special', $verif_rank_special);
+        $obj->setVar('rank_title', Request::getString('rank_title', ''));
+        $obj->setVar('rank_min', Request::getInt('rank_min', 0));
+        $obj->setVar('rank_max', Request::getInt('rank_max', 0));
+        $obj->setVar('rank_special', Request::getInt('rank_special', 0));
         $err = array();
         include_once XOOPS_ROOT_PATH . '/class/uploader.php';
         $uploader_rank_img = new XoopsMediaUploader(XOOPS_UPLOAD_PATH . '/ranks', $mimetypes, $upload_size, null, null);
@@ -204,7 +204,7 @@ switch ($op) {
 
     // Delete userrank
     case 'userrank_delete':
-        $rank_id = system_CleanVars($_REQUEST, 'rank_id', 0, 'int');
+        $rank_id = Request::getInt('rank_id', 0);
         $obj     = $userrank_Handler->get($rank_id);
         if (isset($_POST['ok']) && $_POST['ok'] == 1) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
@@ -245,7 +245,7 @@ switch ($op) {
     // Update userrank status
     case 'userrank_update_special':
         // Get rank id
-        $rank_id = system_CleanVars($_POST, 'rank_id', 0, 'int');
+        $rank_id = Request::getInt('rank_id', 0);
         if ($rank_id > 0) {
             $obj = $userrank_Handler->get($rank_id);
             $old = $obj->getVar('rank_special');
