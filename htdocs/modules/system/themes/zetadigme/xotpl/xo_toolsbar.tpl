@@ -4,7 +4,7 @@
             <img src='<{"$theme_icons/help.png"}>' alt='<{$smarty.const._AM_SYSTEM_HELP}>'/>
         </a>
         <{foreach item=op from=$mod_options}>
-            <a class="tooltip" href="<{$op.link}>" title="<strong class='italic'><{$op.title}></strong>: <{$op.desc}>">
+            <a class="tooltip" href="<{$op.link}>" title="<{$op.title}>: <{$op.desc}>">
                 <img src='<{$op.icon|default:"$theme_icons/icon_options_small.png"}>' alt="<{$op.title}>"/>
             </a>
         <{/foreach}>
