@@ -142,7 +142,7 @@ switch ($op) {
         //Cache
         if (!empty($cache)) {
             $verif_cache = true;
-            if ($maintenance->CleanCache($_REQUEST['cache'])) {
+            if ($maintenance->CleanCache($cache)) {
                 $result_cache = true;
                 //Set active modules in cache folder
                 xoops_setActiveModules();
