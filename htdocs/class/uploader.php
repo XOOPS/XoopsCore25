@@ -152,16 +152,12 @@ class XoopsMediaUploader
         }
         $this->uploadDir = $uploadDir;
 
-        $maxUploadInBytes   = $this->return_bytes(ini_get('upload_max_filesize'));
-        $maxPostInBytes     = $this->return_bytes(ini_get('post_max_size'));
-        $memoryLimitInBytes = $this->return_bytes(ini_get('memory_limit'));
-        if ((int)$maxFileSize > 0) {
-            $maxFileSizeInBytes = $this->return_bytes($maxFileSize);
-            $newMaxFileSize     = min($maxFileSizeInBytes, $maxUploadInBytes, $maxPostInBytes, $memoryLimitInBytes);
-        } else {
-            $newMaxFileSize = min($maxUploadInBytes, $maxPostInBytes, $memoryLimitInBytes);
-        }
-        $this->maxFileSize = $newMaxFileSize;
+        $limits = array();
+        $limits = $this->arrayPushIfPositive($limits, $maxFileSize);
+        $limits = $this->arrayPushIfPositive($limits, $this->return_bytes(ini_get('upload_max_filesize')));
+        $limits = $this->arrayPushIfPositive($limits, $this->return_bytes(ini_get('post_max_size')));
+        $limits = $this->arrayPushIfPositive($limits, $this->return_bytes(ini_get('memory_limit')));
+        $this->maxFileSize = min($limits);
 
         if (isset($maxWidth)) {
             $this->maxWidth = (int)$maxWidth;
@@ -214,7 +210,7 @@ class XoopsMediaUploader
         }
         return count($_FILES[$media_name]['name']);
     }
-    
+
     /**
      * Fetch the uploaded file
      *
@@ -665,5 +661,21 @@ class XoopsMediaUploader
 
             return $ret;
         }
+    }
+
+    /**
+     * Push value onto set.
+     * Used in max file size calculation to eliminate -1 (unlimited) ini values
+     *
+     * @param array $set   array of values
+     * @param int   $value value to push
+     *
+     * @return mixed
+     */
+    protected function arrayPushIfPositive($set, $value) {
+        if ($value > 0) {
+            array_push($set, $value);
+        }
+        return $set;
     }
 }
