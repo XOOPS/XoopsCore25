@@ -240,7 +240,7 @@ switch ($op) {
             $xoopsTpl->assign('xoops_language', 'english');
         }
         $xoopsTpl->assign('listimg', true);
-        $xoopsTpl->assign('imgcat_id', $imgcat_id);        
+        $xoopsTpl->assign('imgcat_id', $imgcat_id);
 
         // Image Form
         $form = new XoopsThemeForm(_ADDIMAGE, 'image_form', 'admin.php', 'post', true);
@@ -406,7 +406,7 @@ switch ($op) {
 			$image->setVar('image_nicename', Request::getString('image_nicename', ''));
 			$image->setVar('image_weight', Request::getInt('image_weight', 0));
 			$image->setVar('image_display', Request::getInt('image_display', 1));
-			$image->setVar('imgcat_id', Request::getInt('imgcat_id', 0));			
+			$image->setVar('imgcat_id', Request::getInt('imgcat_id', 0));
             if (!$image_handler->insert($image)) {
 				xoops_cp_header();
                 echo sprintf(_AM_SYSTEM_IMAGES_FAILSAVE, $image->getVar('image_nicename'));
@@ -451,8 +451,7 @@ switch ($op) {
                     $image->setVar('image_nicename', Request::getString('image_nicename', ''));
                     $image->setVar('image_mimetype', $uploader->getMediaType());
                     $image->setVar('image_created', time());
-                    $image_display = empty($image_display) ? 0 : 1;
-                    $image->setVar('image_display', $image_display);
+                    $image->setVar('image_display', Request::getInt('image_display', 1));
                     $image->setVar('image_weight', Request::getInt('image_weight', 0));
                     $image->setVar('imgcat_id', $imgcat_id);
                     if ($imagecategory->getVar('imgcat_storetype') === 'db') {
@@ -615,9 +614,7 @@ switch ($op) {
         $criteria2->add(new Criteria('gperm_name', 'imgcat_read'), 'OR');
         $criteria->add($criteria2);
         $imagecategoryperm_handler->deleteAll($criteria);
-        if (!isset($readgroup)) {
-            $readgroup = array();
-        }
+        $readgroup = Request::getArray('readgroup', array());
         if (!in_array(XOOPS_GROUP_ADMIN, $readgroup)) {
             $readgroup[] = XOOPS_GROUP_ADMIN;
         }
@@ -630,9 +627,7 @@ switch ($op) {
             $imagecategoryperm_handler->insert($imagecategoryperm);
             unset($imagecategoryperm);
         }
-        if (!isset($writegroup)) {
-            $writegroup = array();
-        }
+        $writegroup = Request::getArray('writegroup', array());
         if (!in_array(XOOPS_GROUP_ADMIN, $writegroup)) {
             $writegroup[] = XOOPS_GROUP_ADMIN;
         }
@@ -725,7 +720,7 @@ switch ($op) {
         // Define Stylesheet
         $xoTheme->addStylesheet(XOOPS_URL . '/media/fine-uploader/fine-uploader-new.css');
         $xoTheme->addStylesheet(XOOPS_URL . '/media/fine-uploader/ManuallyTriggerUploads.css');
-        $xoTheme->addStylesheet(XOOPS_URL . '/media/font-awesome/css/font-awesome.min.css');        
+        $xoTheme->addStylesheet(XOOPS_URL . '/media/font-awesome/css/font-awesome.min.css');
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         // Define scripts
         $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
@@ -757,7 +752,7 @@ switch ($op) {
         {
             $fineup_debug = 'true';
         }
-        $xoopsTpl->assign('fineup_debug', $fineup_debug);        
+        $xoopsTpl->assign('fineup_debug', $fineup_debug);
         // Call footer
         xoops_cp_footer();
 }
