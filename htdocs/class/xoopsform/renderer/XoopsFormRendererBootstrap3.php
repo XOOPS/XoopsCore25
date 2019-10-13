@@ -700,7 +700,7 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
             . '" value="' . $display_value . '"' . $element->getExtra() . ' />'
             . '<span class="input-group-btn"><button class="btn btn-default" type="button"'
             . ' onclick="return showCalendar(\'' . $ele_name . '\');">'
-            . '<span class="fa fa-calendar" aria-hidden="true"></span></button>'
+            . '<span class="fa fa-calendar" aria-hidden="true"></span>&nbsp;</button>'
             . '</span>'
             . '</div>';
     }
