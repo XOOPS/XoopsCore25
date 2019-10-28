@@ -1,55 +1,89 @@
-<div class="newbb">
-    <ol class="breadcrumb">
-        <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$forumindex}></a></li>
-        <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._SR_SEARCH}></a></li>
-    </ol>
-</div>
-
+<ol class="breadcrumb">
+    <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$forumindex}></a></li>
+    <li class="active"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._SR_SEARCH}></a></li>
+</ol>
 <{if $search_info}>
-    <{includeq file="db:newbb_searchresults.tpl" results=$results}>
+    <{include file="db:newbb_searchresults.tpl" results=$results}>
 <{/if}>
+
 <form name="Search" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php" method="get">
-    <div class="form-group">
-        <label for="andor"><{$smarty.const._SR_KEYWORDS}></label>
-        <input class="form-control" type="text" name="term" id="term" value="<{$search_term}>" />
-    </div>
-    <div class="form-group">
-        <label for="andor"><{$smarty.const._SR_TYPE}></label>
-        <{$andor_selection_box}>
-    </div>
-    <div class="form-group">
-        <label for="forum"><{$smarty.const._MD_FORUMC}></label>
-        <{$forum_selection_box}>
-    </div>
-    <div class="form-group">
-        <label><{$smarty.const._SR_SEARCHIN}></label>
-        <{$searchin_radio}>
-    </div>
-    <div class="form-group">
-        <label for="uname"><{$smarty.const._MD_AUTHOR}></label>
-        <input class="form-control" type="text" name="uname" id="uname" value="<{$author_select}>"/>
-    </div>
-    <div class="form-group">
-        <label for="sortby"><{$smarty.const._MD_SORTBY}></label>
-        <{$sortby_selection_box}>
-    </div>
-    <div class="form-group">
-        <label for="since"><{$smarty.const._MD_SINCE}></label>
-        <{$since_selection_box}>
-    </div>
-    <div class="form-group">
-        <label for="selectlength"><{$smarty.const._MD_SELECT_LENGTH}></label>
-        <input class="form-control" type="text" name="selectlength" id="selectlength" value="<{$selectlength_select}>"/>
-    </div>
-    <div class="form-group">
-        <label for="selectlength"><{$smarty.const._MD_SHOWSEARCH}></label>
-        <{$show_search_radio}>
-    </div>
-
-    <div class="form-group">
-        <label><{$smarty.const._SR_SEARCHRULE}></label>
-        <p class="help-block"><{$search_rule}></p>
-    </div>
-
-    <button type="submit" class="btn btn-default"><{$smarty.const._MD_SEARCH}></button>
+    <table class="table" border="0" cellpadding="1" cellspacing="0" align="center" width="95%">
+        <tr>
+            <!-- irmtfan hardcode removed align="right" -->
+            <td class="head" width="10%" id="align_right"><strong><{$smarty.const._SR_KEYWORDS}></strong>&nbsp;</td>
+            <!-- irmtfan add  value="$search_term" -->
+            <td class="even"><input class="form-control" type="text" name="term" value="<{$search_term}>"></td>
+        </tr>
+        <tr>
+            <!-- irmtfan hardcode removed align="right" add $andor_selection_box -->
+            <td class="head" id="align_right"><strong><{$smarty.const._SR_TYPE}></strong>&nbsp;</td>
+            <td class="even"><{$andor_selection_box}></td>
+        </tr>
+        <tr>
+            <!-- irmtfan hardcode removed align="right" -->
+            <td class="head" id="align_right"><strong><{$smarty.const._MD_NEWBB_FORUMC}></strong>&nbsp;</td>
+            <td class="even"><{$forum_selection_box}></td>
+        </tr>
+        <tr>
+            <!-- irmtfan hardcode removed align="right" add $searchin_radio -->
+            <td class="head" id="align_right"><strong><{$smarty.const._SR_SEARCHIN}></strong>&nbsp;</td>
+            <td class="even"><{$searchin_radio}></td>
+        </tr>
+        <tr>
+            <!-- irmtfan hardcode removed align="right" add value="$author_select"-->
+            <td class="head" id="align_right"><strong><{$smarty.const._MD_NEWBB_AUTHOR}></strong>&nbsp;</td>
+            <td class="even"><input class="form-control" type="text" name="uname" value="<{$author_select}>"></td>
+        </tr>
+        <tr>
+            <!-- irmtfan hardcode removed align="right" add $sortby_selection_box -->
+            <td class="head" id="align_right"><strong><{$smarty.const._MD_NEWBB_SORTBY}></strong>&nbsp;</td>
+            <td class="even"><{$sortby_selection_box}></td>
+        </tr>
+        <tr>
+            <!-- irmtfan hardcode removed align="right" -->
+            <td class="head" id="align_right"><strong><{$smarty.const._MD_NEWBB_SINCE}></strong>&nbsp;</td>
+            <td class="even"><{$since_selection_box}></td>
+        </tr>
+        <!-- START irmtfan add select text options -->
+        <tr>
+            <td class="head" id="align_right" title="<{$smarty.const._MD_NEWBB_SELECT_STARTLAG_DESC}>">
+                <strong><{$smarty.const._MD_NEWBB_SELECT_STARTLAG}></strong>&nbsp;
+            </td>
+            <td class="even" title="<{$smarty.const._MD_NEWBB_SELECT_STARTLAG_DESC}>">
+                <input class="form-control" type="text" name="selectstartlag" value="<{$selectstartlag_select}>">
+            </td>
+        </tr>
+        <tr>
+            <td class="head" id="align_right"><strong><{$smarty.const._MD_NEWBB_SELECT_LENGTH}></strong>&nbsp; </td>
+            <td class="even"><input class="form-control" type="text" name="selectlength" value="<{$selectlength_select}>"></td>
+        </tr>
+        <tr>
+            <td class="head" id="align_right"><strong><{$smarty.const._MD_NEWBB_SELECT_HTML}></strong>&nbsp;</td>
+            <td class="even"><{$selecthtml_radio}></td>
+        </tr>
+        <tr>
+            <td class="head" id="align_right"><strong><{$smarty.const._MD_NEWBB_SELECT_EXCLUDE}></strong>&nbsp;</td>
+            <td class="even"><{$selectexclude_check_box}></td>
+        </tr>
+        <!-- END irmtfan add select text options -->
+        <!-- START irmtfan add show search -->
+        <tr>
+            <td class="head" id="align_right"><strong><{$smarty.const._MD_NEWBB_SHOWSEARCH}></strong>&nbsp;</td>
+            <td class="even"><{$show_search_radio}></td>
+        </tr>
+        <!-- START irmtfan add show search -->
+        <{if $search_rule}>
+        <tr>
+            <!-- irmtfan hardcode removed align="right" -->
+            <td class="head" id="align_right"><strong><{$smarty.const._SR_SEARCHRULE}></strong>&nbsp;</td>
+            <td class="even"><{$search_rule}></td>
+        </tr>
+        <{/if}>
+        <tr>
+            <!-- irmtfan hardcode removed align="right" -->
+            <td class="head" id="align_right">&nbsp;</td>
+            <!-- irmtfan remove name="submit" -->
+            <td class="even"><input class="btn btn-default" type="submit" value="<{$smarty.const._MD_NEWBB_SEARCH}>"></td>
+        </tr>
+    </table>
 </form>

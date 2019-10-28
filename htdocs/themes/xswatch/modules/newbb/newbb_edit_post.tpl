@@ -1,15 +1,20 @@
-<div class="newbb">
-    <ol class="breadcrumb">
-        <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_FORUMINDEX}></a></li>
-        <li></li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>"><{$category.title}></a></li>
-        <{if $parentforum}>
-            <{foreach item=forum from=$parentforum}>
-            <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a></li>
-            <{/foreach}>
-        <{/if}>
-        <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>"><{$forum_name}></a></li>
-        <li><{$form_title}></li>
-    </ol>
+<div>
+<ol class="breadcrumb">
+    <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$lang_forum_index}></a></li>
+
+    <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMHOME}></a></li>
+
+    <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>"><{$category.title}></a></li>
+
+    <!-- If is subforum-->
+    <{if $parentforum}>
+    <{foreach item=forum from=$parentforum}>
+    <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a></li>
+    <{/foreach}>
+    <{/if}>
+
+    <li class="active"><{$form_title}></li>
+</ol>
 </div>
 <div class="clear"></div>
 <br>
@@ -41,13 +46,38 @@
     <br>
 <{/if}>
 
-<{$form_post.rendered}>
+<form name="<{$form_post.name}>" id="<{$form_post.name}>" action="<{$form_post.action}>"
+      method="<{$form_post.method}>" <{$form_post.extra}> >
+    <table width='100%' class='outer' cellspacing='1'>
+        <{foreach item=element from=$form_post.elements}>
+        <{if $element.hidden != true}>
+            <tr valign="top">
+                <td class="head">
+                    <div class="xoops-form-element-caption<{if $element.required}>-required<{/if}>"><span
+                                class="caption-text"><{$element.caption}></span><span class="caption-marker">*</span>
+                    </div>
+                    <{if $element.description != ''}>
+                        <div class="xoops-form-element-help"><{$element.description}></div>
+                    <{/if}>
+                </td>
+                <td class="odd" style="white-space: nowrap;"><{$element.body}></td>
+            </tr>
+        <{/if}>
+        <{/foreach}>
+    </table>
+    <{foreach item=element from=$form_post.elements}>
+    <{if $element.hidden == true}>
+        <{$element.body}>
+    <{/if}>
+    <{/foreach}>
+</form>
+<{$form_post.javascript}>
 <div class="clear"></div>
 <br>
 
 <{if $posts_context}>
     <table width='100%' class='outer' cellspacing='1'>
-        <{foreachq item=post from=$posts_context}>
+        <{foreach item=post from=$posts_context}>
         <tr valign="top">
             <td class="head"><{$post.subject}></td>
         </tr>
