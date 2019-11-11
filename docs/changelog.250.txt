@@ -10,6 +10,8 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - Add noopener rel attribute to external links in TextSanitizer (geekwright)
 - fix quote_answer_pm  (Mage)
 
+Updated libraries and assets:
+ - HTML Purifier to 4.12 (mamba)
 
 ===================================
 2.5.10 Final             2019/04/29
