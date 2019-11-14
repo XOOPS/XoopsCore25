@@ -282,6 +282,13 @@ class xos_opal_Theme
         if (strpos($xoops_page, 'modules') !== false) {
             $xoops_page = str_replace('modules/', '', $xoops_page);
         }
+		$tempScriptname = str_replace('\\', '/',  $_SERVER['SCRIPT_NAME']);
+		$tempRequesturi = str_replace('\\', '/',  $_SERVER['REQUEST_URI']);
+		if (strlen($tempRequesturi) > strlen($tempScriptname)){
+			$xoops_modulepage =  $xoops_page . str_replace($tempScriptname, '', $tempRequesturi);
+		} else {
+			$xoops_modulepage =  '';
+		}
         $xoops_page = str_replace('.php', '', $xoops_page);
         if (isset($GLOBALS['xoopsConfig']['startpage'])) {
             $xoops_startpage = $GLOBALS['xoopsConfig']['startpage'];
@@ -309,6 +316,7 @@ class xos_opal_Theme
                 ? $GLOBALS['xoopsModule']->getVar('dirname') : 'system',
             'xoops_page'       => $xoops_page,
             'xoops_startpage'  => $xoops_startpage,
+            'xoops_modulepage' => $xoops_modulepage,
             'xoops_banner'     => ($GLOBALS['xoopsConfig']['banners'] && $this->renderBanner)
                 ? xoops_getbanner() : '&nbsp;',
             'xoops_pagetitle'  => isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule'])
