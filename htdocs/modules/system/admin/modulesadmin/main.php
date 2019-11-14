@@ -35,7 +35,7 @@ if (isset($_POST)) {
 
 // Get Action type
 $op = Request::getString('op', 'list');
-$module = Request::getString('module', 'list');
+$module = Request::getArray('module', 'list');
 
 if (in_array($op, array('confirm', 'submit', 'install_ok', 'update_ok', 'uninstall_ok'))) {
     if (!$GLOBALS['xoopsSecurity']->check()) {
