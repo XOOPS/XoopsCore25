@@ -35,7 +35,6 @@ if (isset($_POST)) {
 
 // Get Action type
 $op = Request::getString('op', 'list');
-$module = Request::getArray('module', 'list');
 
 if (in_array($op, array('confirm', 'submit', 'install_ok', 'update_ok', 'uninstall_ok'))) {
     if (!$GLOBALS['xoopsSecurity']->check()) {
@@ -74,6 +73,7 @@ switch ($op) {
         $listed_mods    = array();
         $i              = 0;
         $install_mods   = array();
+		$module = Request::getArray('module', array());
         foreach ($installed_mods as $module) {
             /* @var XoopsModule $module */
             $listed_mods[$i]                  = $module->toArray();
@@ -331,6 +331,7 @@ switch ($op) {
         break;
 
     case 'install':
+		$module = Request::getString('module', '');
         $module = $myts->htmlSpecialChars($module);
         // Get module handler
         /* @var XoopsModuleHandler $module_handler */
@@ -389,6 +390,7 @@ switch ($op) {
         break;
 
     case 'uninstall':
+		$module = Request::getString('module', '');
         $module = $myts->htmlSpecialChars($module);
         // Get module handler
         /* @var XoopsModuleHandler $module_handler */
@@ -415,6 +417,7 @@ switch ($op) {
         break;
 
     case 'uninstall_ok':
+		$module = Request::getString('module', '');
         $ret   = array();
         $ret[] = xoops_module_uninstall($module);
         // Flush cache files for cpanel GUIs
@@ -446,6 +449,7 @@ switch ($op) {
         break;
 
     case 'update':
+		$module = Request::getString('module', '');
         $module = $myts->htmlSpecialChars($module);
         // Get module handler
         /* @var XoopsModuleHandler $module_handler */
@@ -472,6 +476,7 @@ switch ($op) {
         break;
 
     case 'update_ok':
+		$module = Request::getString('module', '');
         $ret   = array();
         $ret[] = xoops_module_update($module);
         // Flush cache files for cpanel GUIs
