@@ -63,15 +63,12 @@
                 </td>
                 <td class="xo-actions txtcenter">
                     <a class="tooltip" href="admin.php?fct=images&amp;op=listimg&amp;imgcat_id=<{$cat.id}>" title="<{$smarty.const._AM_SYSTEM_IMAGES_VIEW}>">
-                        <img src="<{xoAdminIcons display.png}>" alt="<{$smarty.const._AM_SYSTEM_IMAGES_VIEW}>"/>
-                    </a>
+                        <img src="<{xoAdminIcons display.png}>" alt="<{$smarty.const._AM_SYSTEM_IMAGES_VIEW}>"/></a>
                     <{if $xoops_isadmin}>
                         <a class="tooltip" href="admin.php?fct=images&amp;op=editcat&amp;imgcat_id=<{$cat.id}>" title="<{$smarty.const._EDIT}>">
-                            <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._EDIT}>"/>
-                        </a>
+                            <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._EDIT}>"/></a>
                         <a class="tooltip" href="admin.php?fct=images&amp;op=delcat&amp;imgcat_id=<{$cat.id}>" title="<{$smarty.const._DELETE}>">
-                            <img src="<{xoAdminIcons delete.png}>" alt=""/>
-                        </a>
+                            <img src="<{xoAdminIcons delete.png}>" alt=""/></a>
                     <{/if}>
                 </td>
             </tr>

@@ -49,11 +49,9 @@
                              src="<{xoAdminIcons display.png}>" alt="<{$smarty.const._AM_SYSTEM_COMMENTS_VIEW}>"
                              title="<{$smarty.const._AM_SYSTEM_COMMENTS_VIEW}>"/>
                         <a href="admin/comments/comment_edit.php?com_id=<{$comments.comments_id}>" title="<{$smarty.const._EDIT}>">
-                            <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._EDIT}>">
-                        </a>
+                            <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._EDIT}>"></a>
                         <a href="admin/comments/comment_delete.php?com_id=<{$comments.comments_id}>" title="<{$smarty.const._DELETE}>">
-                            <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._DELETE}>">
-                        </a>
+                            <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._DELETE}>"></a>
                     </td>
                 </tr>
             <{/foreach}>

@@ -61,28 +61,23 @@
                                      title="<{$smarty.const._AM_SYSTEM_USERS_VIEW}>"/>
                                 <a class="tooltip" href="admin.php?fct=users&amp;op=users_edit&amp;uid=<{$users.uid}>"
                                    title="<{$smarty.const._AM_SYSTEM_USERS_EDIT}>">
-                                    <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._AM_SYSTEM_USERS_EDIT}>"/>
-                                </a>
+                                    <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._AM_SYSTEM_USERS_EDIT}>"/></a>
                                 <a class="tooltip" href="admin.php?fct=users&amp;op=users_delete&amp;uid=<{$users.uid}>"
                                    title="<{$smarty.const._AM_SYSTEM_USERS_DEL}>">
-                                    <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._AM_SYSTEM_USERS_DEL}>"/>
-                                </a>
+                                    <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._AM_SYSTEM_USERS_DEL}>"/></a>
                             <{else}>
                                 <a class="tooltip" href="admin.php?fct=users&amp;op=users_active&amp;uid=<{$users.uid}>"
                                    title="<{$smarty.const._AM_SYSTEM_USERS_ACTIVE}>">
-                                    <img src="<{xoAdminIcons xoops/active_user.png}>" alt="<{$smarty.const._AM_SYSTEM_USERS_ACTIVE}>"/>
-                                </a>
+                                    <img src="<{xoAdminIcons xoops/active_user.png}>" alt="<{$smarty.const._AM_SYSTEM_USERS_ACTIVE}>"/></a>
                                 <img class="tooltip" onclick="display_dialog('<{$users.uid}>', true, true, 'slide', 'slide', 300, 400);"
                                      src="<{xoAdminIcons display.png}>" alt="<{$smarty.const._AM_SYSTEM_USERS_VIEW}>"
                                      title="<{$smarty.const._AM_SYSTEM_USERS_VIEW}>"/>
                                 <a class="tooltip" href="admin.php?fct=users&amp;op=users_edit&amp;uid=<{$users.uid}>"
                                    title="<{$smarty.const._AM_SYSTEM_USERS_EDIT}>">
-                                    <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._AM_SYSTEM_USERS_EDIT}>"/>
-                                </a>
+                                    <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._AM_SYSTEM_USERS_EDIT}>"/></a>
                                 <a class="tooltip" href="admin.php?fct=users&amp;op=users_delete&amp;uid=<{$users.uid}>"
                                    title="<{$smarty.const._AM_SYSTEM_USERS_DEL}>">
-                                    <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._AM_SYSTEM_USERS_DEL}>"/>
-                                </a>
+                                    <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._AM_SYSTEM_USERS_DEL}>"/></a>
                             <{/if}>
                         </td>
                     </tr>
