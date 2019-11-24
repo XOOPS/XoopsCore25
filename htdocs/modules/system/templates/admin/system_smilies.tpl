@@ -40,12 +40,10 @@
                 <td class="xo-actions txtcenter width10">
                     <a class="tooltip" href="admin.php?fct=smilies&amp;op=edit_smilie&amp;smilies_id=<{$smilies.smilies_id}>"
                        title="<{$smarty.const._AM_SYSTEM_SMILIES_EDIT}>">
-                        <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._AM_SYSTEM_SMILIES_EDIT}>"/>
-                    </a>
+                        <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._AM_SYSTEM_SMILIES_EDIT}>"/></a>
                     <a class="tooltip" href="admin.php?fct=smilies&amp;op=smilies_delete&amp;smilies_id=<{$smilies.smilies_id}>"
                        title="<{$smarty.const._AM_SYSTEM_SMILIES_DELETE}>">
-                        <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._AM_SYSTEM_SMILIES_DELETE}>"/>
-                    </a>
+                        <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._AM_SYSTEM_SMILIES_DELETE}>"/></a>
                 </td>
             </tr>
         <{/foreach}>

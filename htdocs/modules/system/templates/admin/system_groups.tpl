@@ -36,13 +36,11 @@
                 <td class="xo-actions txtcenter">
                     <a class="tooltip" href="admin.php?fct=groups&amp;op=groups_edit&amp;groups_id=<{$groups.groups_id}>"
                        title="<{$smarty.const._AM_SYSTEM_GROUPS_EDIT}>">
-                        <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._AM_SYSTEM_GROUPS_EDIT}>"/>
-                    </a>
+                        <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._AM_SYSTEM_GROUPS_EDIT}>"/></a>
                     <{if $groups.delete}>
                         <a class="tooltip" href="admin.php?fct=groups&amp;op=groups_delete&amp;groups_id=<{$groups.groups_id}>"
                            title="<{$smarty.const._AM_SYSTEM_GROUPS_DELETE}>">
-                            <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._AM_SYSTEM_GROUPS_DELETE}>"/>
-                        </a>
+                            <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._AM_SYSTEM_GROUPS_DELETE}>"/></a>
                     <{/if}>
                 </td>
             </tr>

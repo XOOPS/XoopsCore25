@@ -42,12 +42,10 @@
                 <td class="xo-actions txtcenter">
                     <a class="tooltip" href="admin.php?fct=userrank&amp;op=userrank_edit&amp;rank_id=<{$userrank.rank_id}>"
                        title="<{$smarty.const._AM_SYSTEM_USERRANK_EDIT}>">
-                        <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._AM_SYSTEM_USERRANK_EDIT}>"/>
-                    </a>
+                        <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._AM_SYSTEM_USERRANK_EDIT}>"/></a>
                     <a class="tooltip" href="admin.php?fct=userrank&amp;op=userrank_delete&amp;rank_id=<{$userrank.rank_id}>"
                        title="<{$smarty.const._AM_SYSTEM_USERRANK_DELETE}>">
-                        <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._AM_SYSTEM_USERRANK_DELETE}>"/>
-                    </a>
+                        <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._AM_SYSTEM_USERRANK_DELETE}>"/></a>
                 </td>
             </tr>
         <{/foreach}>
