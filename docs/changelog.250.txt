@@ -12,6 +12,7 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 Updated libraries and assets:
  - HTML Purifier to 4.12 (mamba)
+ - phpmailer to 5.2.27 (mamba)
 
 ===================================
 2.5.10 Final             2019/04/29
