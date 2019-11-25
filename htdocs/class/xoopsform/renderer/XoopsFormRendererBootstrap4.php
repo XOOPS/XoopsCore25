@@ -351,7 +351,7 @@ class XoopsFormRendererBootstrap4 implements XoopsFormRendererInterface
         $fontStr .= '<div class="btn-group">'
             . '<button type="button" class="btn btn-secondary btn-sm dropdown-toggle" title="'. _SIZE .'"'
             . ' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
-            . '<span class = "glyphicon glyphicon-text-height"></span><span class="caret"></span></button>'
+            . '<span class = "fa fa-text-height"></span><span class="caret"></span></button>'
             . '<ul class="dropdown-menu">';
             //. _SIZE . '&nbsp;&nbsp;<span class="caret"></span></button><ul class="dropdown-menu">';
         foreach ($GLOBALS['formtextdhtml_sizes'] as $value => $name) {
@@ -363,7 +363,7 @@ class XoopsFormRendererBootstrap4 implements XoopsFormRendererInterface
         $fontStr .= '<div class="btn-group">'
             . '<button type="button" class="btn btn-secondary btn-sm dropdown-toggle" title="'. _FONT .'"'
             . ' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
-            . '<span class = "glyphicon glyphicon-font"></span><span class="caret"></span></button>'
+            . '<span class = "fa fa-font"></span><span class="caret"></span></button>'
             . '<ul class="dropdown-menu">';
             //. _FONT . '&nbsp;&nbsp;<span class="caret"></span></button><ul class="dropdown-menu">';
         foreach ($fontarray as $font) {
@@ -375,7 +375,7 @@ class XoopsFormRendererBootstrap4 implements XoopsFormRendererInterface
         $fontStr .= '<div class="btn-group">'
             . '<button type="button" class="btn btn-secondary btn-sm dropdown-toggle" title="'. _COLOR .'"'
             . ' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
-            . '<span class = "glyphicon glyphicon-text-color"></span><span class="caret"></span></button>'
+            . '<span class = "fa fa-tint"></span><span class="caret"></span></button>'
             . '<ul class="dropdown-menu">';
             //. _COLOR . '&nbsp;&nbsp;<span class="caret"></span></button><ul class="dropdown-menu">';
         foreach ($colorArray as $color => $hex) {
