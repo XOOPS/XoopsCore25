@@ -219,7 +219,7 @@ if (isset($_GET['phpThumbDebug']) && ($_GET['phpThumbDebug'] == '0')) {
 ////////////////////////////////////////////////////////////////
 
 // returned the fixed string if the evil "magic_quotes_gpc" setting is on
-if (get_magic_quotes_gpc()) {
+if (@get_magic_quotes_gpc()) { //patched for XOOPS
 	// deprecated: 'err', 'file', 'goto',
 	$RequestVarsToStripSlashes = array('src', 'wmf', 'down');
 	foreach ($RequestVarsToStripSlashes as $key) {
