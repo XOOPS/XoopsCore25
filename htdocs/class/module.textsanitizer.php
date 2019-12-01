@@ -520,7 +520,7 @@ class MyTextSanitizer
      */
     public function addSlashes($text)
     {
-        if (!get_magic_quotes_gpc()) {
+        if (!@get_magic_quotes_gpc()) {
             $text = addslashes($text);
         }
 
@@ -535,7 +535,7 @@ class MyTextSanitizer
      */
     public function stripSlashesGPC($text)
     {
-        if (get_magic_quotes_gpc()) {
+        if (@get_magic_quotes_gpc()) {
             $text = stripslashes($text);
         }
 
@@ -1056,6 +1056,7 @@ class MyTextSanitizer
      *
      * @param  mixed $text
      * @return mixed|string
+     * @deprecated will be removed
      */
     public function oopsStripSlashesRT($text)
     {

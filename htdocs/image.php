@@ -68,7 +68,7 @@ define('ENABLE_IMAGEFILTER', true); // Set to false to avoid excessive server lo
 define('ENABLE_ROUNDCORNER', true); // Set to false to avoid excessive server load
 define('ENABLE_IMAGEROTATE', true); // Set to false to avoid excessive server load
 
-if (get_magic_quotes_runtime()) {
+if (@get_magic_quotes_runtime()) {
     set_magic_quotes_runtime(false); // will never get called on PHP 5.4+
 }
 if (function_exists('mb_http_output')) {
