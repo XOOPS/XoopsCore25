@@ -65,9 +65,8 @@ class RegisteredDomain
                     return idn_to_utf8($part, 0, INTL_IDNA_VARIANT_UTS46);
                 }
                 return idn_to_utf8($part);
-            } else {
-                return $this->decodePunycode($part);
             }
+            return $this->decodePunycode($part);
         }
         return $part;
     }
@@ -104,7 +103,7 @@ class RegisteredDomain
         $delim_pos = strrpos($encoded, '-');
         if ($delim_pos > strlen($prefix)) {
             for ($k = strlen($prefix); $k < $delim_pos; ++$k) {
-                $decoded[] = ord($encoded{$k});
+                $decoded[] = ord($encoded[$k]);
             }
         }
         $deco_len = count($decoded);
@@ -112,7 +111,7 @@ class RegisteredDomain
 
         for ($enco_idx = $delim_pos ? ($delim_pos + 1) : 0; $enco_idx < $enco_len; ++$deco_len) {
             for ($old_idx = $idx, $w = 1, $k = $base; 1; $k += $base) {
-                $cp = ord($encoded{$enco_idx++});
+                $cp = ord($encoded[$enco_idx++]);
                 $digit = ($cp - 48 < 10) ? $cp - 22 : (($cp - 65 < 26) ? $cp - 65 : (($cp - 97 < 26) ? $cp - 97 : $base));
                 $idx += $digit * $w;
                 $t = ($k <= $bias) ? $tmin : (($k >= $bias + $tmax) ? $tmax : ($k - $bias));
@@ -122,12 +121,12 @@ class RegisteredDomain
                 $w = (int)($w * ($base - $t));
             }
             $delta = $idx - $old_idx;
-            $delta = intval($is_first ? ($delta / $damp) : ($delta / 2));
-            $delta += intval($delta / ($deco_len + 1));
+            $delta = (int) ($is_first ? ($delta / $damp) : ($delta / 2));
+            $delta += (int) ($delta / ($deco_len + 1));
             for ($k = 0; $delta > (($base - $tmin) * $tmax) / 2; $k += $base) {
-                $delta = intval($delta / ($base - $tmin));
+                $delta = (int) ($delta / ($base - $tmin));
             }
-            $bias = intval($k + ($base - $tmin + 1) * $delta / ($delta + $skew));
+            $bias = (int) ($k + ($base - $tmin + 1) * $delta / ($delta + $skew));
             $is_first = false;
             $char += (int)($idx / ($deco_len + 1));
             $idx %= ($deco_len + 1);

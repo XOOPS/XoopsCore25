@@ -265,6 +265,7 @@ class ComposerStaticInitfb0e5c3e4af98ed910184391855ba473
         'Xmf\\Module\\Helper\\GenericHelper' => __DIR__ . '/..' . '/xoops/xmf/src/Module/Helper/GenericHelper.php',
         'Xmf\\Module\\Helper\\Permission' => __DIR__ . '/..' . '/xoops/xmf/src/Module/Helper/Permission.php',
         'Xmf\\Module\\Helper\\Session' => __DIR__ . '/..' . '/xoops/xmf/src/Module/Helper/Session.php',
+        'Xmf\\ProxyCheck' => __DIR__ . '/..' . '/xoops/xmf/src/ProxyCheck.php',
         'Xmf\\Random' => __DIR__ . '/..' . '/xoops/xmf/src/Random.php',
         'Xmf\\Request' => __DIR__ . '/..' . '/xoops/xmf/src/Request.php',
         'Xmf\\StopWords' => __DIR__ . '/..' . '/xoops/xmf/src/StopWords.php',

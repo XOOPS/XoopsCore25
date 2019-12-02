@@ -277,4 +277,38 @@ abstract class GenericHelper extends AbstractHelper
     {
         redirect_header($this->url($url), $time, $message);
     }
+
+    /**
+     * Return absolute URL for a module relative upload file
+     *
+     * Uploads may be stored in special directories for many reasons,
+     * such as permissions, security, replication and directory balancing
+     * Rather than build their own URL's, modules should use this method
+     * which will know how to reference the upload now and in the future.
+     *
+     * @param string $url module relative upload URL
+     *
+     * @return string
+     */
+    public function uploadUrl($url = '')
+    {
+        return XOOPS_UPLOAD_URL . '/' . $this->dirname . '/' . $url;
+    }
+
+    /**
+     * Return absolute filesystem path for a module relative upload file
+     *
+     * Uploads may be stored in special directories for many reasons,
+     * such as permissions, security, replication and directory balancing
+     * Rather than build their own URL's, modules should use this method
+     * which will know how to reference the upload now and in the future.
+     *
+     * @param string $path module relative upload file path
+     *
+     * @return string
+     */
+    public function uploadPath($path = '')
+    {
+        return XOOPS_UPLOAD_PATH . '/' . $this->dirname . '/' . $path;
+    }
 }
