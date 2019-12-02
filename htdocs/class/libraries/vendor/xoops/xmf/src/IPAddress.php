@@ -49,6 +49,9 @@ class IPAddress
     {
         $ip = (array_key_exists('REMOTE_ADDR', $_SERVER)) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0';
         $class = get_called_class();
+        $proxyCheck = new ProxyCheck();
+        $proxyIP = $proxyCheck->get();
+        $ip = (false === $proxyIP) ? $ip : $proxyIP;
         $instance = new $class($ip);
         return $instance;
     }

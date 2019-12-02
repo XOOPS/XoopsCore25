@@ -184,6 +184,7 @@ return array(
     'Xmf\\Module\\Helper\\GenericHelper' => $vendorDir . '/xoops/xmf/src/Module/Helper/GenericHelper.php',
     'Xmf\\Module\\Helper\\Permission' => $vendorDir . '/xoops/xmf/src/Module/Helper/Permission.php',
     'Xmf\\Module\\Helper\\Session' => $vendorDir . '/xoops/xmf/src/Module/Helper/Session.php',
+    'Xmf\\ProxyCheck' => $vendorDir . '/xoops/xmf/src/ProxyCheck.php',
     'Xmf\\Random' => $vendorDir . '/xoops/xmf/src/Random.php',
     'Xmf\\Request' => $vendorDir . '/xoops/xmf/src/Request.php',
     'Xmf\\StopWords' => $vendorDir . '/xoops/xmf/src/StopWords.php',

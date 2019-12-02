@@ -77,8 +77,7 @@ class PublicSuffixList
         $list = $this->readPSL();
 
         if (false===$list) {
-            $e = new \RuntimeException('Cannot read ' . $this->url);
-            throw $e;
+            throw new \RuntimeException('Cannot read ' . $this->url);
         }
 
         $this->parsePSL($list);
@@ -118,7 +117,7 @@ class PublicSuffixList
      */
     protected function startsWith($search, $startString)
     {
-        return (substr($search, 0, strlen($startString)) == $startString);
+        return (0 === strpos($search, $startString));
     }
 
     /**
@@ -156,6 +155,7 @@ class PublicSuffixList
      * Return the current tree, loading it if needed
      *
      * @return array the PSL tree
+     * @throws \RuntimeException if PSL cannot be loaded
      */
     public function getTree()
     {
@@ -286,8 +286,7 @@ class PublicSuffixList
             if ($dirHandle = opendir($dir)) {
                 while (($file = readdir($dirHandle)) !== false) {
                     if (filetype($dir . $file) === 'file'
-                        && (false === $cacheOnly || $this->startsWith($file, $this->cachedPrefix)))
-                    {
+                        && (false === $cacheOnly || $this->startsWith($file, $this->cachedPrefix))) {
                         unlink($dir . $file);
                     }
                 }
