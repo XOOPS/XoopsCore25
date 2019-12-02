@@ -18,7 +18,8 @@
  * @subpackage          xos_opal_Theme
  */
 
-use \Xmf\Request;
+use Xmf\Request;
+
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
@@ -39,7 +40,7 @@ class xos_opal_ThemeFactory
      */
     public $allowedThemes = array();
     /**
-     * Default theme to instanciate if none specified
+     * Default theme to instantiate if none specified
      *
      * @var string
      */
@@ -52,7 +53,7 @@ class xos_opal_ThemeFactory
     public $allowUserSelection = true;
 
     /**
-     * Instanciate the specified theme
+     * Instantiate the specified theme
      * @param  array $options
      * @param  array $initArgs
      * @return null|xos_opal_Theme
@@ -73,8 +74,15 @@ class xos_opal_ThemeFactory
             }
             $GLOBALS['xoopsConfig']['theme_set'] = $options['folderName'];
         }
+        if (!(file_exists(XOOPS_THEME_PATH . '/' . $options['folderName'] .'/theme.tpl')
+            || file_exists(XOOPS_THEME_PATH . '/' . $options['folderName'] .'/theme.html'))
+        ) {
+            trigger_error('Theme not found -- ' . $options['folderName']);
+            $this->defaultTheme = 'default';
+            $options['folderName'] = $this->defaultTheme;
+            $GLOBALS['xoopsConfig']['theme_set'] = $options['folderName'];
+        }
         $options['path'] = XOOPS_THEME_PATH . '/' . $options['folderName'];
-        $inst            = null;
         $inst            = new xos_opal_Theme();
         foreach ($options as $k => $v) {
             $inst->$k = $v;
@@ -278,18 +286,18 @@ class xos_opal_Theme
         $GLOBALS['xoTheme']  = $this;
         $GLOBALS['xoopsTpl'] = $this->template;
         $tempPath = str_replace('\\', '/', realpath(XOOPS_ROOT_PATH) . '/');
-        $tempName = str_replace('\\', '/',  realpath($_SERVER['SCRIPT_FILENAME']));
+        $tempName = str_replace('\\', '/', realpath($_SERVER['SCRIPT_FILENAME']));
         $xoops_page = str_replace($tempPath, '', $tempName);
         if (strpos($xoops_page, 'modules') !== false) {
             $xoops_page = str_replace('modules/', '', $xoops_page);
         }
-		$tempScriptname = str_replace('\\', '/',  $_SERVER['SCRIPT_NAME']);
-		$tempRequesturi = str_replace('\\', '/',  Request::getString('REQUEST_URI', '', 'SERVER'));
-		if (strlen($tempRequesturi) > strlen($tempScriptname)){
-			$xoops_modulepage =  $xoops_page . str_replace($tempScriptname, '', $tempRequesturi);
-		} else {
-			$xoops_modulepage =  '';
-		}
+        $tempScriptname = str_replace('\\', '/', $_SERVER['SCRIPT_NAME']);
+        $tempRequesturi = str_replace('\\', '/', Request::getString('REQUEST_URI', '', 'SERVER'));
+        if (strlen($tempRequesturi) > strlen($tempScriptname)) {
+            $xoops_modulepage =  $xoops_page . str_replace($tempScriptname, '', $tempRequesturi);
+        } else {
+            $xoops_modulepage =  '';
+        }
         $xoops_page = str_replace('.php', '', $xoops_page);
         if (isset($GLOBALS['xoopsConfig']['startpage'])) {
             $xoops_startpage = $GLOBALS['xoopsConfig']['startpage'];
