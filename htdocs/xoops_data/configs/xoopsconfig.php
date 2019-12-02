@@ -46,4 +46,12 @@ return array(
      *  <li> 1 - Enabled</li>
      * </ul>
      */
-    'admin_warnings_enable' => 1);
+    'admin_warnings_enable' => 1,
+    /**
+     * proxy_env controls which HTTP header is used, if any, to determine the
+     * client IP address. Some common options are HTTP_X_FORWARDED_FOR,
+     * HTTP_CLIENT_IP and HTTP_FORWARDED. This is determined by the configuration
+     * of any proxy server or load balancer in your server environment.
+     */
+    //'proxy_env' => 'HTTP_FORWARDED',
+    );
