@@ -32,9 +32,10 @@ $sel = array(
     'selgen' => -1,
     'selgrp' => XOOPS_GROUP_USERS,
     'selvis' => -1);
+
 foreach ($sel as $key => $value) {
     $temp = Request::getInt($key, $value, 'cookie');
-    $$key = Request::getInt($key, $temp);
+    $$key = Request::getInt($key, $temp, 'get');
     setcookie($key, $$key);
 }
 
