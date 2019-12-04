@@ -74,8 +74,11 @@ class xos_opal_ThemeFactory
             }
             $GLOBALS['xoopsConfig']['theme_set'] = $options['folderName'];
         }
-        if (!(file_exists(XOOPS_THEME_PATH . '/' . $options['folderName'] .'/theme.tpl')
-            || file_exists(XOOPS_THEME_PATH . '/' . $options['folderName'] .'/theme.html'))
+        $testPath = isset($options['themesPath'])
+            ? XOOPS_ROOT_PATH  . '/' . $options['themesPath'] . '/' . $options['folderName']
+            : XOOPS_THEME_PATH . '/' . $options['folderName'];
+        if (!(file_exists($testPath  . '/theme.tpl')
+            || file_exists($testPath . '/theme.html'))
         ) {
             trigger_error('Theme not found -- ' . $options['folderName']);
             $this->defaultTheme = 'default';
@@ -863,7 +866,7 @@ class xos_opal_Theme
     }
 
     /**
-     * Return a themable file resource path
+     * Return a themeable file resource path
      *
      * @param  string $path
      * @return string
