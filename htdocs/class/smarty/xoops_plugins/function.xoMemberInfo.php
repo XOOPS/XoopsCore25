@@ -23,19 +23,21 @@
  * Type:     function
  * Name:     xoMemberInfo
  * Version:  1.0
- * Author:     DuGris
- * Purpose:  Get member informations
- * Input:    infos    =    informations to be recovered in the profile of the member
- *                        if empty uname,name,email,user_avatar,url,user_icq,user_aim,user_yim,user_msnm,user_from,
- *                        user_occ, user_intrest, bio, user_sig will be recovered
+ * Author:   DuGris
+ * Purpose:  Get member information
+ * Input:    infos = list of vars in XoopsUser to be fetched delimited by a '|'
+ *                   if infos is not specified the default will be:
+ *                   'uname|name|email|user_avatar|url|user_icq|user_aim|user_yim|user_msnm|posts|user_from|user_occ|user_intrest|bio|user_sig'
  *
- *           assign    =    variable to be initialized for the templates
+ *           assign = smarty variable to be initialized for the templates
  *
- *            I.e: Get all informations
- *                <{xoMemberInfo assign=member_info}>
+ * Examples:
+ * Get all fields
+ *   <{xoMemberInfo assign=member_info}>
  *
- *            I.e: Get uname, avatar and email
- *                <{xoMemberInfo assign=member_info infos="uname|email|avatar"}>
+ * Get uname, avatar and email
+ *   <{xoMemberInfo assign=memberInfo infos="uname|email|avatar"}>
+ *   Hello <{$memberInfo.uname}>.
  * -------------------------------------------------------------
  */
 
@@ -47,8 +49,7 @@ function smarty_function_xoMemberInfo($params, &$smarty)
 {
     global $xoopsUser, $xoopsConfig;
 
-    $time        = time();
-    $member_info = $_SESSION['xoops_member_info'];
+    $member_info = array();
     if (!isset($xoopsUser) || !is_object($xoopsUser)) {
         $member_info['uname'] = $xoopsConfig['anonymous'];
     } else {
@@ -57,14 +58,10 @@ function smarty_function_xoMemberInfo($params, &$smarty)
         }
         $infos = explode('|', $params['infos']);
 
-        if (!is_array($member_info)) {
-            $member_info = array();
-        }
         foreach ($infos as $info) {
-            if (!array_key_exists($info, $member_info) && @$_SESSION['xoops_member_info'][$info . '_expire'] < $time) {
-                $member_info[$info]                               = $xoopsUser->getVar($info, 'E');
-                $_SESSION['xoops_member_info'][$info]             = $member_info[$info];
-                $_SESSION['xoops_member_info'][$info . '_expire'] = $time + 60;
+            $value = $xoopsUser->getVar($info, 'E');
+            if (null !== $value) {
+                $member_info[$info] = $value;
             }
         }
     }
