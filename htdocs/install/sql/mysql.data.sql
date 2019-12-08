@@ -81,6 +81,8 @@ INSERT INTO configoption VALUES (32, '_MD_AM_WELCOMETYPE_EMAIL', '1', 95);
 INSERT INTO configoption VALUES (33, '_MD_AM_WELCOMETYPE_PM', '2', 95);
 INSERT INTO configoption VALUES (34, '_MD_AM_WELCOMETYPE_BOTH', '3', 95);
 
+# addition to email
+INSERT INTO configoption VALUES (35,'qmail','qmail',64);
 
 #
 # Dumping data for table `image`
