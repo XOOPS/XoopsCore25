@@ -3,15 +3,15 @@
 use Xmf\Database\Tables;
 
 /**
- * Upgrade from 2.5.8 to 2.5.9
+ * Upgrade from 2.5.9 to 2.5.10
  *
  * See the enclosed file license.txt for licensing information.
- * If you did not receive this file, get it at http://www.gnu.org/licenses/gpl-2.0.html
+ * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
- * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license          GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright    (c) 2000-2019 XOOPS Project (https://xoops.org)
+ * @license          GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          Upgrade
- * @since            2.5.9
+ * @since            2.5.10
  * @author           XOOPS Team
  */
 class Upgrade_2510 extends XoopsUpgrade
