@@ -75,7 +75,7 @@ class SystemGroup extends XoopsGroup
         $form->setExtra('enctype="multipart/form-data"');
 
         $name_text = new XoopsFormText(_AM_SYSTEM_GROUPS_NAME, 'name', 30, 50, $this->getVar('name'));
-        $desc_text = new XoopsFormTextArea(_AM_SYSTEM_GROUPS_DESCRIPTION, 'desc', $this->getVar('description'));
+        $desc_text = new XoopsFormTextArea(_AM_SYSTEM_GROUPS_DESCRIPTION, 'desc', $this->getVar('description', 'e'));
 
         $system_catids = new XoopsFormElementTray(_AM_SYSTEM_GROUPS_SYSTEMRIGHTS, '');
 
