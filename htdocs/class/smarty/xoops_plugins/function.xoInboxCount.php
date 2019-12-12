@@ -20,6 +20,18 @@ function smarty_function_xoInboxCount($params, &$smarty)
     if (!isset($xoopsUser) || !is_object($xoopsUser)) {
         return null;
     }
+
+    // unset cache in pm programs so stale cache won't show inconsistencies
+    $freshRead = isset($GLOBALS['xoInboxCountFresh']);
+    $pmScripts = array('pmlite', 'readpmsg', 'viewpmsg');
+    if (in_array(basename($_SERVER['SCRIPT_FILENAME'], '.php'), $pmScripts)) {
+        trigger_error(sprintf('$freshRead = %d', (int) $freshRead));
+        if (!$freshRead) {
+            unset($_SESSION['xoops_inbox_count'], $_SESSION['xoops_inbox_total'], $_SESSION['xoops_inbox_count_expire']);
+            $GLOBALS['xoInboxCountFresh'] = true;
+        }
+    }
+
     $time = time();
     if (isset($_SESSION['xoops_inbox_count']) && @$_SESSION['xoops_inbox_count_expire'] > $time) {
         $totals['assign'] = (int)$_SESSION['xoops_inbox_count'];
