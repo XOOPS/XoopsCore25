@@ -30,7 +30,7 @@ class XoopsFormRendererBootstrap4 implements XoopsFormRendererInterface
      */
     public function renderFormButton(XoopsFormButton $element)
     {
-        return "<button type='" . $element->getType() . "' class='btn btn-primary' name='"
+        return "<button type='" . $element->getType() . "' class='btn btn-secondary' name='"
             . $element->getName() . "'  id='" . $element->getName() . "' title='" . $element->getValue() . "'" . $element->getExtra() . '>' . $element->getValue() . '</button>';
     }
 
@@ -297,6 +297,9 @@ class XoopsFormRendererBootstrap4 implements XoopsFormRendererInterface
             if (empty($encode)) {
                 continue;
             }
+            // TODO - MyTextSanitizer button rendering should go through XoopsFormRenderer
+            $encode = str_replace('btn-default', 'btn-secondary', $encode);
+
             $code .= $encode;
             if (!empty($js)) {
                 $element->js .= $js;
