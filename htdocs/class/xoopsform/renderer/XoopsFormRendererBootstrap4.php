@@ -30,9 +30,13 @@ class XoopsFormRendererBootstrap4 implements XoopsFormRendererInterface
      */
     public function renderFormButton(XoopsFormButton $element)
     {
-        return "<button type='" . $element->getType() . "' class='btn btn-secondary' name='"
-            . $element->getName() . "'  id='" . $element->getName() . "' title='" . $element->getValue() . "'" . $element->getExtra() . '>' . $element->getValue() . '</button>';
+        return '<button type="' . $element->getType() . '"'
+            . ' class="btn btn-secondary" name="' . $element->getName() . '"'
+            . ' id="' . $element->getName() . '" title="' . $element->getValue() . '"'
+            . ' value="' . $element->getValue() . '"'
+            . $element->getExtra() . '>' . $element->getValue() . '</button>';
     }
+
 
     /**
      * Render support for XoopsFormButtonTray

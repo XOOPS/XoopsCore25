@@ -384,8 +384,9 @@ function xoops_confirm($hiddens, $action, $msg, $submit = '', $addtoken = true)
     if ($addtoken != false) {
         echo $GLOBALS['xoopsSecurity']->getTokenHTML();
     }
-    echo '<input type="submit" class="btn btn-default" name="confirm_submit" value="' . $submit . '" title="' . $submit . '"/>
-          <input type="button" class="btn btn-default" name="confirm_back" value="' . _CANCEL . '" onclick="history.go(-1);" title="' . _CANCEL . '" />
+    // TODO - these buttons should go through formRenderer
+    echo '<input type="submit" class="btn btn-default btn-secondary" name="confirm_submit" value="' . $submit . '" title="' . $submit . '"/>
+          <input type="button" class="btn btn-default btn-secondary" name="confirm_back" value="' . _CANCEL . '" onclick="history.go(-1);" title="' . _CANCEL . '" />
           </form>
           </div>';
 }
