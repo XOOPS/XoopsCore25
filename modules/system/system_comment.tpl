@@ -1,18 +1,18 @@
 <div class="xoops-comment-template" id="comment<{$comment.id}>">
     <div class="row hidden-xs">
-        <div class="col-xs-2 col-md-2 aligncenter"><{$comment.poster.uname}></div><!-- .col-md-3 -->
-        <div class="col-xs-4 col-md-4">
+        <div class="col-6 col-md-2 aligncenter"><{$comment.poster.uname}></div><!-- .col-md-3 -->
+        <div class="col-5 col-md-4">
             <small class="text-muted"><strong><{$lang_posted}></strong> <{$comment.date_posted}></small>
         </div><!-- .col-md-3 -->
 		<{if $comment.date_posted != $comment.date_modified}>
-        <div class="col-xs-5 col-md-5">
+        <div class="col-0 col-md-5">
             <small class="text-muted"><strong><{$lang_updated}></strong> <{$comment.date_modified}></small>
         </div><!-- .col-md-3 -->
 		<{/if}>
     </div><!-- row -->
 
     <div class="row">
-        <div class="col-xs-2 col-md-2 xoops-comment-author aligncenter">
+        <div class="col-2 col-md-2 xoops-comment-author aligncenter">
             <{if $comment.poster.id != 0}>
                 <img src="<{$xoops_upload_url}>/<{$comment.poster.avatar}>" class="img-responsive img-rounded image-avatar" alt="">
                 <ul class="list-unstyled">
@@ -31,7 +31,7 @@
             <{/if}>
         </div><!-- .col-md-3 .xoops-comment-author -->
 
-        <div class="col-xs-10 col-md-10 xoops-comment-text">
+        <div class="col-10 col-md-10 xoops-comment-text">
             <h4><{$comment.image}><{$comment.title}></h4>
 
             <p class="message-text"><{$comment.text}></p>
@@ -39,7 +39,7 @@
     </div><!-- row -->
 
     <div class="row">
-        <div class="col-xs-12 col-md-12 alignright">
+        <div class="col-12 col-md-12 alignright">
             <{if $xoops_iscommentadmin == true}>
                 <a href="<{$editcomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_edit}>" class="btn btn-secondary btn-xs">
                     <span class="fa fa-edit"></span>

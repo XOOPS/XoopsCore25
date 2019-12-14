@@ -15,5 +15,5 @@
 
     <{if $closeHead|default:false}>
 </head>
-<body id="xswatch-popup-body">
+<body id="xswatch4-popup-body">
 <{/if}>
