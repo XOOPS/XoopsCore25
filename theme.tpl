@@ -51,7 +51,7 @@
 
 <body id="<{$xoops_dirname}>">
 
-<{includeq file="$theme_name/tpl/nav-menu.tpl"}>
+<{include file="$theme_name/tpl/nav-menu.tpl"}>
 
 <div class="container maincontainer">
 
@@ -69,11 +69,11 @@
 <{/if}>
 
 <div class="row">
-    <{includeq file="$theme_name/tpl/leftBlock.tpl"}>
+    <{include file="$theme_name/tpl/leftBlock.tpl"}>
 
-    <{includeq file="$theme_name/tpl/content-zone.tpl"}>
+    <{include file="$theme_name/tpl/content-zone.tpl"}>
 
-    <{includeq file="$theme_name/tpl/rightBlock.tpl"}>
+    <{include file="$theme_name/tpl/rightBlock.tpl"}>
 </div>
 
 </div><!-- .maincontainer -->
@@ -83,14 +83,14 @@
         <div class="container">
             <{if $xoBlocks.page_bottomcenter}>
             <div class="row">
-                <{includeq file="$theme_name/tpl/centerBottom.tpl"}>
+                <{include file="$theme_name/tpl/centerBottom.tpl"}>
             </div>
             <{/if}>
             <{if $xoBlocks.page_bottomright || $xoBlocks.page_bottomleft}>
             <div class="row">
-                <{includeq file="$theme_name/tpl/leftBottom.tpl"}>
+                <{include file="$theme_name/tpl/leftBottom.tpl"}>
 
-                <{includeq file="$theme_name/tpl/rightBottom.tpl"}>
+                <{include file="$theme_name/tpl/rightBottom.tpl"}>
             </div>
         </div>
         <{/if}>
@@ -101,11 +101,11 @@
     <div class="footer-blocks">
         <div class="container">
             <div class="row">
-                <{includeq file="$theme_name/tpl/leftFooter.tpl"}>
+                <{include file="$theme_name/tpl/leftFooter.tpl"}>
 
-                <{includeq file="$theme_name/tpl/centerFooter.tpl"}>
+                <{include file="$theme_name/tpl/centerFooter.tpl"}>
 
-                <{includeq file="$theme_name/tpl/rightFooter.tpl"}>
+                <{include file="$theme_name/tpl/rightFooter.tpl"}>
             </div>
         </div>
     </div><!-- .footer-blocks -->
@@ -124,6 +124,6 @@
         <img src="<{xoImgUrl}>images/favicon.png" alt="Design by: XOOPS UI/UX Team">
     </a>
 </div>
-<{if $xoops_isadmin|default:false}><{includeq file="$theme_name/tpl/nav-admin.tpl"}><{/if}>
+<{if $xoops_isadmin|default:false}><{include file="$theme_name/tpl/nav-admin.tpl"}><{/if}>
 </body>
 </html>
