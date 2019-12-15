@@ -528,21 +528,6 @@ class MyTextSanitizer
     }
 
     /**
-     * if magic_quotes_gpc is on, stirip back slashes
-     *
-     * @param  string $text
-     * @return string
-     */
-    public function stripSlashesGPC($text)
-    {
-        if (@get_magic_quotes_gpc()) {
-            $text = stripslashes($text);
-        }
-
-        return $text;
-    }
-
-    /**
      * Convert special characters to HTML entities
      *
      * @param  string $text    string being converted
@@ -593,6 +578,13 @@ class MyTextSanitizer
         $charset = (defined('_CHARSET') ? _CHARSET : 'UTF-8');
         if (function_exists('mb_convert_encoding')) {
             $text = mb_convert_encoding($text, $charset, mb_detect_encoding($text, mb_detect_order(), true));
+        }
+        if ($html && $br) {
+            $testText = strip_tags($text);
+            if (mb_strlen($text) != mb_strlen($testText)) {
+                $br = 0;
+            }
+            unset($testText);
         }
         if ($html != 1) {
             // html not allowed
@@ -736,7 +728,7 @@ class MyTextSanitizer
      * MyTextSanitizer::loadExtension()
      *
      * @param  mixed $name
-     * @return bool|null
+     * @return MyTextSanitizerExtension|false
      */
     public function loadExtension($name)
     {
@@ -753,10 +745,7 @@ class MyTextSanitizer
 
             return false;
         }
-        $extension = null;
-        $extension = new $class($this);
-
-        return $extension;
+        return new $class($this);
     }
 
     /**
@@ -793,11 +782,24 @@ class MyTextSanitizer
     }
 
     // #################### Deprecated Methods ######################
+
     /**
-     * *#@+
+     * if magic_quotes_gpc is on, strip back slashes
      *
-     * @deprecated
+     * @param  string $text
+     * @return string
+     * @deprecated as of XOOPS 2.5.11 and will be removed in next XOOPS version
+     *
+     * This remains here until we officially drop support for PHP 5.3 in next release
      */
+    public function stripSlashesGPC($text)
+    {
+        if (@get_magic_quotes_gpc()) {
+            $text = stripslashes($text);
+        }
+
+        return $text;
+    }
 
     /**
      * MyTextSanitizer::codeSanitizer()
@@ -805,6 +807,7 @@ class MyTextSanitizer
      * @param  mixed $str
      * @param  mixed $image
      * @return mixed|string
+     * @deprecated will be removed in next XOOPS version
      */
     public function codeSanitizer($str, $image = 1)
     {
@@ -823,6 +826,7 @@ class MyTextSanitizer
      * @param  integer $smiley
      * @param  mixed   $bbcode
      * @return mixed|string
+     * @deprecated will be removed in next XOOPS version
      */
     public function sanitizeForDisplay($text, $allowhtml = 0, $smiley = 1, $bbcode = 1)
     {
@@ -854,6 +858,7 @@ class MyTextSanitizer
      * @param  integer $smiley
      * @param  mixed   $bbcode
      * @return mixed|string
+     * @deprecated will be removed in next XOOPS version
      */
     public function sanitizeForPreview($text, $allowhtml = 0, $smiley = 1, $bbcode = 1)
     {
@@ -883,6 +888,7 @@ class MyTextSanitizer
      *
      * @param  mixed $text
      * @return string
+     * @deprecated will be removed in next XOOPS version
      */
     public function makeTboxData4Save($text)
     {
@@ -898,6 +904,7 @@ class MyTextSanitizer
      * @param  mixed $text
      * @param  mixed $smiley
      * @return mixed|string
+     * @deprecated will be removed in next XOOPS version
      */
     public function makeTboxData4Show($text, $smiley = 0)
     {
@@ -912,6 +919,7 @@ class MyTextSanitizer
      *
      * @param  mixed $text
      * @return string
+     * @deprecated will be removed in next XOOPS version
      */
     public function makeTboxData4Edit($text)
     {
@@ -926,6 +934,7 @@ class MyTextSanitizer
      * @param  mixed $text
      * @param  mixed $smiley
      * @return mixed|string
+     * @deprecated will be removed in next XOOPS version
      */
     public function makeTboxData4Preview($text, $smiley = 0)
     {
@@ -941,6 +950,7 @@ class MyTextSanitizer
      *
      * @param  mixed $text
      * @return string
+     * @deprecated will be removed in next XOOPS version
      */
     public function makeTboxData4PreviewInForm($text)
     {
@@ -955,6 +965,7 @@ class MyTextSanitizer
      *
      * @param  mixed $text
      * @return string
+     * @deprecated will be removed in next XOOPS version
      */
     public function makeTareaData4Save($text)
     {
@@ -971,6 +982,7 @@ class MyTextSanitizer
      * @param  integer $smiley
      * @param  mixed   $xcode
      * @return mixed|string
+     * @deprecated will be removed in next XOOPS version
      */
     public function &makeTareaData4Show(&$text, $html = 1, $smiley = 1, $xcode = 1)
     {
@@ -985,6 +997,7 @@ class MyTextSanitizer
      *
      * @param  mixed $text
      * @return string
+     * @deprecated will be removed in next XOOPS version
      */
     public function makeTareaData4Edit($text)
     {
@@ -1001,6 +1014,7 @@ class MyTextSanitizer
      * @param  integer $smiley
      * @param  mixed   $xcode
      * @return mixed|string
+     * @deprecated will be removed in next XOOPS version
      */
     public function &makeTareaData4Preview(&$text, $html = 1, $smiley = 1, $xcode = 1)
     {
@@ -1015,6 +1029,7 @@ class MyTextSanitizer
      *
      * @param  mixed $text
      * @return string
+     * @deprecated will be removed in next XOOPS version
      */
     public function makeTareaData4PreviewInForm($text)
     {
@@ -1030,6 +1045,7 @@ class MyTextSanitizer
      *
      * @param  mixed $text
      * @return string
+     * @deprecated will be removed in next XOOPS version
      */
     public function makeTareaData4InsideQuotes($text)
     {
@@ -1043,6 +1059,7 @@ class MyTextSanitizer
      *
      * @param  mixed $text
      * @return string
+     * @deprecated will be removed in next XOOPS version
      */
     public function oopsStripSlashesGPC($text)
     {
@@ -1056,7 +1073,7 @@ class MyTextSanitizer
      *
      * @param  mixed $text
      * @return mixed|string
-     * @deprecated will be removed
+     * @deprecated will be removed in next XOOPS version
      */
     public function oopsStripSlashesRT($text)
     {
@@ -1073,6 +1090,7 @@ class MyTextSanitizer
      *
      * @param  mixed $text
      * @return string
+     * @deprecated will be removed in next XOOPS version
      */
     public function oopsAddSlashes($text)
     {
@@ -1086,6 +1104,7 @@ class MyTextSanitizer
      *
      * @param  mixed $text
      * @return string
+     * @deprecated will be removed in next XOOPS version
      */
     public function oopsHtmlSpecialChars($text)
     {
@@ -1099,6 +1118,7 @@ class MyTextSanitizer
      *
      * @param  mixed $text
      * @return string
+     * @deprecated will be removed in next XOOPS version
      */
     public function oopsNl2Br($text)
     {
