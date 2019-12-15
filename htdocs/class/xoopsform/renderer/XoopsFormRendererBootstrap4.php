@@ -703,14 +703,14 @@ class XoopsFormRendererBootstrap4 implements XoopsFormRendererInterface
                 ');
             }
         }
-        return '<div class="input-group">'
+		return '<div class="input-group">'
             . '<input class="form-control" type="text" name="' . $ele_name . '" id="' . $ele_name
             . '" size="' . $element->getSize() . '" maxlength="' . $element->getMaxlength()
             . '" value="' . $display_value . '"' . $element->getExtra() . '>'
-            . '<span class="input-group-btn"><button class="btn btn-secondary" type="button"'
+            . '<div class="input-group-append"><button class="btn btn-secondary" type="button"'
             . ' onclick="return showCalendar(\'' . $ele_name . '\');">'
-            . '<span class="fa fa-calendar" aria-hidden="true"></span></button>'
-            . '</span>'
+            . '<i class="fa fa-calendar" aria-hidden="true"></i></button>'
+            . '</div>'
             . '</div>';
     }
 
