@@ -56,19 +56,16 @@
 <div class="container maincontainer">
 
 <{if $xoops_page == "index"}>
-    <div class="jumbotron">
-        <div class="row clearfix">
+	<div class="jumbotron">
+		<div class="row">
             <div class="<{if $xoops_banner != ""}>col-md-6<{else}>col-md-12<{/if}>">
-            <h2><{$smarty.const.THEME_ABOUTUS}></h2>
+            <h2 class="display-5"><{$smarty.const.THEME_ABOUTUS}></h2>
             <{if $xoops_banner != ""}></div><div class="col-md-6"><div class="xoops-banner"><{$xoops_banner}></div></div><{/if}>
-        </div>
-        <div class="row">
-            <p class="lead"><{$xoops_meta_description}></p>
-
-            <p><a href="<{$xoops_url}>/" class="btn btn-md btn-success"><{$smarty.const.THEME_LEARNMORE}></a></p>
-        </div>
-
-    </div>
+        </div>		
+		<p class="lead"><{$xoops_meta_description}></p>
+		<hr class="my-4">
+		<a class="btn btn-primary btn-md" href="<{$xoops_url}>/"><{$smarty.const.THEME_LEARNMORE}></a>
+	</div>
 <{/if}>
 
 <div class="row">
@@ -117,12 +114,12 @@
 <footer class="footer">
     <h3>
         <{$xoops_footer}>
-        <a href="http://xoops.org" title="Design by: XOOPS UI/UX Team" target="_blank" class="credits visible-md visible-sm visible-lg">
+        <a href="http://xoops.org" title="Design by: XOOPS UI/UX Team" target="_blank" class="credits d-none d-sm-block">
             <img src="<{xoImgUrl}>images/favicon.png" alt="Design by: XOOPS UI/UX Team">
         </a>
     </h3>
 </footer>
-<div class="aligncenter comments-nav visible-xs">
+<div class="aligncenter comments-nav d-block d-sm-none">
     <a href="http://xoops.org" title="Design by: XOOPS UI/UX Team" target="_blank">
         <img src="<{xoImgUrl}>images/favicon.png" alt="Design by: XOOPS UI/UX Team">
     </a>
