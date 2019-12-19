@@ -18,7 +18,7 @@
  */
 
 $modversion['name']        = _MI_SYSTEM_NAME;
-$modversion['version']     = 2.14; // irmtfan bug fix: bug fix: remove codes for delete templates
+$modversion['version']     = 2.15; // irmtfan bug fix: bug fix: remove codes for delete templates
 $modversion['description'] = _MI_SYSTEM_DESC;
 $modversion['author']      = '';
 $modversion['credits']     = 'The XOOPS Project; MusS, Kraven30, Mage';
@@ -60,6 +60,7 @@ $modversion['templates'][] = array('file' => 'system_search.tpl', 'description' 
 $modversion['templates'][] = array('file' => 'system_popup_header.tpl', 'description' => '');
 $modversion['templates'][] = array('file' => 'system_popup_footer.tpl', 'description' => '');
 $modversion['templates'][] = array('file' => 'system_trigger_uploads.tpl', 'description' => '');
+$modversion['templates'][] = array('file' => 'system_confirm.tpl', 'description' => '');
 
 //in transition to .tpl, we keep the .html extension versions for previously existing templates
 
