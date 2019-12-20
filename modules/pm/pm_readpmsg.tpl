@@ -1,7 +1,7 @@
 <h4><{$smarty.const._PM_PRIVATEMESSAGE}></h4>
 <div class="message-current-tab">
     <div class="message-current-tab">
-        <a class="btn btn-success btn-block" href="viewpmsg.php?op=<{$op}>">
+        <a class="btn btn-info btn-block" href="viewpmsg.php?op=<{$op}>">
         <{if $op == "out"}>
         <{$smarty.const._PM_OUTBOX}>
         <{elseif $op == "save"}>
