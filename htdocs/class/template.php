@@ -25,6 +25,8 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 define('SMARTY_DIR', XOOPS_ROOT_PATH . '/class/smarty/');
 require_once SMARTY_DIR . 'Smarty.class.php';
 
+xoops_loadLanguage('global');
+
 /**
  * Template engine
  *
