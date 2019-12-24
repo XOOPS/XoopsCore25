@@ -163,7 +163,7 @@ class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
      * @param int    $limit
      * @param int    $start
      *
-     * @return resource
+     * @return mysqli_result|bool
      */
     public function &query($sql, $limit = 0, $start = 0)
     {
