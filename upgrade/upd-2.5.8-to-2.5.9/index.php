@@ -54,7 +54,7 @@ class Upgrade_259 extends XoopsUpgrade
             $db->escape($column)
         );
 
-        /** @var mysqli_result $result */
+        /** @var mysqli_result|bool $result */
         $result = $db->query($sql);
         if ($result) {
             $row = $db->fetchRow($result);

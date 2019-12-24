@@ -633,6 +633,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
         } else {
             $sql = sprintf('SELECT COUNT(*) FROM %s WHERE mid = %d AND func_num = %d', $db->prefix('newblocks'), $moduleId, $funcNum);
         }
+        /** @var mysqli_result|false $result */
         if (!$result = $db->query($sql)) {
             return 0;
         }
