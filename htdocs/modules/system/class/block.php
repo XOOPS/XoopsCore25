@@ -344,6 +344,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
         }
+        /** @var mysqli_result|false $result */
         $result = $this->db->query($sql, $limit, $start);
         if (!$result) {
             return $ret;
@@ -435,6 +436,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
             $sql .= " AND b.visible=$visible";
         }
         $sql .= " ORDER BY $orderby";
+        /** @var mysqli_result|false $result */
         $result = $db->query($sql);
         $added  = array();
         while (false !== ($myrow = $db->fetchArray($result))) {
@@ -467,6 +469,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
                     $sql .= ' AND gperm_groupid=' . (int)$groupid;
                 }
             }
+            /** @var mysqli_result|false $result */
             $result   = $this->db->query($sql);
             $blockids = array();
             while (false !== ($myrow = $this->db->fetchArray($result))) {
@@ -559,10 +562,12 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
      */
     public function getNonGroupedBlocks($module_id = 0, $toponlyblock = false, $visible = null, $orderby = 'b.weight, m.block_id', $isactive = 1)
     {
+        /* @var XoopsMySQLDatabase $db */
         $db   = $GLOBALS['xoopsDB'];
         $ret  = array();
         $bids = array();
         $sql  = 'SELECT DISTINCT(bid) from ' . $db->prefix('newblocks');
+        /** @var mysqli_result|false $result */
         if ($result = $db->query($sql)) {
             while (false !== ($myrow = $db->fetchArray($result))) {
                 $bids[] = $myrow['bid'];
@@ -625,7 +630,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
             // invalid query
             return 0;
         }
-        /* @var XoopsMySQLDatabase $db */
+        /* @var \XoopsMySQLDatabaseProxy $db */
         $db = XoopsDatabaseFactory::getDatabaseConnection();
         if (isset($showFunc)) {
             // showFunc is set for more strict comparison
