@@ -297,7 +297,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
      * @param string $sql   a valid MySQL query
      * @param int    $limit number of records to return
      * @param int    $start offset of first record to return
-     * @return mysqli_result
+     * @return mysqli_result|bool
      * @abstract
      */
     public function query($sql, $limit = 0, $start = 0)
@@ -481,7 +481,7 @@ class XoopsMySQLDatabaseSafe extends XoopsMySQLDatabase
      * @param string $sql   a valid MySQL query
      * @param int    $limit number of records to return
      * @param int    $start offset of first record to return
-     * @return mysqli_result query result or FALSE if successful
+     * @return mysqli_result|bool query result or FALSE if successful
      *                      or TRUE if successful and no result
      */
     public function query($sql, $limit = 0, $start = 0)
@@ -511,7 +511,7 @@ class XoopsMySQLDatabaseProxy extends XoopsMySQLDatabase
      * @param string $sql   a valid MySQL query
      * @param int    $limit number of records to return
      * @param int    $start offset of first record to return
-     * @return mysqli_result query result or FALSE if unsuccessful
+     * @return mysqli_result|bool query result or FALSE if unsuccessful
      */
     public function query($sql, $limit = 0, $start = 0)
     {
