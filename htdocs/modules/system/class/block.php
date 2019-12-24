@@ -398,7 +398,7 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
      */
     public function getAllBlocksByGroup($groupid, $asobject = true, $side = null, $visible = null, $orderby = 'b.weight,b.bid', $isactive = 1)
     {
-        /* @var XoopsMySQLDatabase $db */
+        /* @var XoopsMySQLDatabaseProxy $db */
         $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $ret = array();
         $sql = 'SELECT b.* ';
@@ -562,20 +562,22 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
      */
     public function getNonGroupedBlocks($module_id = 0, $toponlyblock = false, $visible = null, $orderby = 'b.weight, m.block_id', $isactive = 1)
     {
-        /* @var XoopsMySQLDatabase $db */
+        /* @var XoopsMySQLDatabaseProxy $db */
         $db   = $GLOBALS['xoopsDB'];
         $ret  = array();
         $bids = array();
         $sql  = 'SELECT DISTINCT(bid) from ' . $db->prefix('newblocks');
         /** @var mysqli_result|false $result */
-        if ($result = $db->query($sql)) {
+        $result = $db->query($sql);
+        if ($result) {
             while (false !== ($myrow = $db->fetchArray($result))) {
                 $bids[] = $myrow['bid'];
             }
         }
         $sql     = 'SELECT DISTINCT(p.gperm_itemid) from ' . $db->prefix('group_permission') . ' p, ' . $db->prefix('groups') . " g WHERE g.groupid=p.gperm_groupid AND p.gperm_name='block_read'";
         $grouped = array();
-        if ($result = $db->query($sql)) {
+        $result  = $db->query($sql);
+        if ($result) {
             while (false !== ($myrow = $db->fetchArray($result))) {
                 $grouped[] = $myrow['gperm_itemid'];
             }
