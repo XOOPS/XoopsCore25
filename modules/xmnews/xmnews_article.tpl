@@ -63,7 +63,7 @@
 								<{/if}>
 								<{if $dorating == 0}>
 								<div class="col-12 col-lg-6">
-									<i class="fa fa-star" aria-hidden="true"></i> <{$smarty.const._MA_XMNEWS_NEWS_RATING}>: <{$rating}> (<{$votes}>)
+									<i class="fa fa-star" aria-hidden="true"></i> <{$smarty.const._MA_XMNEWS_NEWS_RATING}>: <{$rating}> <{$votes}>
 								</div>
 								<{/if}>
 								<{if $domdate == 1}>
