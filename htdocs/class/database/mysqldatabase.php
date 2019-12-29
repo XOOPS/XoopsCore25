@@ -9,8 +9,8 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright       (c) 2000-2019 XOOPS Project (https://xoops.org)
+ * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             class
  * @subpackage          database
  * @since               1.0.0
@@ -26,11 +26,11 @@ include_once XOOPS_ROOT_PATH . '/class/database/database.php';
  *
  * @abstract
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2019 XOOPS Project (https://xoops.org)
  * @package             class
  * @subpackage          database
  */
-class XoopsMySQLDatabase extends XoopsDatabase
+abstract class XoopsMySQLDatabase extends XoopsDatabase
 {
     /**
      * Database connection
@@ -297,11 +297,11 @@ class XoopsMySQLDatabase extends XoopsDatabase
      * @param string $sql   a valid MySQL query
      * @param int    $limit number of records to return
      * @param int    $start offset of first record to return
-     * @abstract
+     *
+     * @return mysqli_result|bool query result or FALSE if successful
+     *                      or TRUE if successful and no result
      */
-    public function query($sql, $limit = 0, $start = 0)
-    {
-    }
+    abstract public function query($sql, $limit = 0, $start = 0);
 
     /**
      * perform queries from SQL dump file in a batch
@@ -468,7 +468,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
  * Safe Connection to a MySQL database.
  *
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2019 XOOPS Project (https://xoops.org)
  * @package             kernel
  * @subpackage          database
  */
@@ -480,7 +480,7 @@ class XoopsMySQLDatabaseSafe extends XoopsMySQLDatabase
      * @param string $sql   a valid MySQL query
      * @param int    $limit number of records to return
      * @param int    $start offset of first record to return
-     * @return resource query result or FALSE if successful
+     * @return mysqli_result|bool query result or FALSE if successful
      *                      or TRUE if successful and no result
      */
     public function query($sql, $limit = 0, $start = 0)
@@ -496,7 +496,7 @@ class XoopsMySQLDatabaseSafe extends XoopsMySQLDatabase
  * {@link query()} method for security reasons.
  *
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2019 XOOPS Project (https://xoops.org)
  * @package             class
  * @subpackage          database
  */
@@ -510,7 +510,9 @@ class XoopsMySQLDatabaseProxy extends XoopsMySQLDatabase
      * @param string $sql   a valid MySQL query
      * @param int    $limit number of records to return
      * @param int    $start offset of first record to return
-     * @return resource query result or FALSE if unsuccessful
+     *
+     * @return mysqli_result|bool query result or FALSE if successful
+     *                      or TRUE if successful and no result
      */
     public function query($sql, $limit = 0, $start = 0)
     {
