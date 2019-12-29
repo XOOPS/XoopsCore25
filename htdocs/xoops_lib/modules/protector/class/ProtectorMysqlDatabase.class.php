@@ -163,9 +163,10 @@ class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
      * @param int    $limit
      * @param int    $start
      *
-     * @return resource
+     * @return mysqli_result|bool query result or FALSE if successful
+     *                      or TRUE if successful and no result
      */
-    public function &query($sql, $limit = 0, $start = 0)
+    public function query($sql, $limit = 0, $start = 0)
     {
         $sql4check = substr($sql, 7);
         foreach ($this->doubtful_needles as $needle) {
