@@ -52,20 +52,7 @@
 				<p class="card-text mb-auto"><{if $news.logo != ''}><img class="col-3 rounded float-right d-none d-md-block" src="<{$news.logo}>" alt="<{$news.title}>"><{/if}><{$news.news}></p>
 
 			</div>
-			<div class="w-100"></div>
-			<{if $xmdoc_viewdocs == true}>
-			<div class="col-12 pl-4 pr-4 pb-4">
-				<div class="card">
-					<div class="card-header">
-						<{$smarty.const._MA_XMNEWS_NEWS_XMDOC}>
-					</div>					
-					<div class="card-body">
-						<{include file="db:xmdoc_viewdoc.tpl"}>
-					</div>
-				</div>
-			</div>
-			<div class="w-100"></div>
-			<{/if}>	
+			<div class="w-100"></div>	
 			<div class="col-12 pl-4 pr-4 pb-4">
 				<div class="card">
 					<div class="card-header">
