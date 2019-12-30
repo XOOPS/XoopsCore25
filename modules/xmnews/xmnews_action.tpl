@@ -71,7 +71,5 @@
 			<div class="floatright"><{$nav_menu}></div>
 			<div class="clear spacer"></div>
 		<{/if}>
-    <{/if}>
-    
-    
-</div><!-- .xmarticle -->
+    <{/if}>    
+</div><!-- .xmnews -->
