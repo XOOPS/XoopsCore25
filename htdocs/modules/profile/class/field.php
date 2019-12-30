@@ -187,10 +187,6 @@ class ProfileField extends XoopsObject
                 $element = new XoopsFormDatetime($caption, $name, 15, $value);
                 break;
 
-            case 'list':
-                $element = new XoopsFormSelectList($caption, $name, $value, 1, $options[0]);
-                break;
-
             case 'timezone':
                 $element = new XoopsFormSelectTimezone($caption, $name, $value);
                 $element->setExtra("style='width: 280px;'");
@@ -248,7 +244,6 @@ class ProfileField extends XoopsObject
             case 'dhtml':
             case 'theme':
             case 'language':
-            case 'list':
                 return $value;
                 break;
 
@@ -371,7 +366,6 @@ class ProfileField extends XoopsObject
             case 'timezone':
             case 'theme':
             case 'language':
-            case 'list':
             case 'select':
             case 'radio':
             case 'select_multi':
