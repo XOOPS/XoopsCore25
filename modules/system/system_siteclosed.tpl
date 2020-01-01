@@ -32,7 +32,7 @@
         <div class="xoops-site-closed col-lg-6">
 
             <div class="aligncenter site-closed-logo">
-                <img src="<{$xoops_imageurl}>images/logo.png" alt="<{$lang_login}>">
+                <img class="img-fluid" src="<{$xoops_imageurl}>images/logo.png" alt="<{$lang_login}>">
             </div>
 
             <div class="xoops-site-closed-container">
