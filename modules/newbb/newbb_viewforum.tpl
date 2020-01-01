@@ -1,21 +1,21 @@
 <div class="newbb">
     <ol class="breadcrumb">
-        <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$forum_index_title}></a></li>
+        <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$forum_index_title}></a></li>
 
-        <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMHOME}></a></li>
+        <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMHOME}></a></li>
 
-        <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>"><{$category.title}></a></li>
+        <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>"><{$category.title}></a></li>
 
     <!-- If is subforum-->
     <{if $parentforum}>
         <{foreach item=forum from=$parentforum}>
-             <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a></li>
+             <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a></li>
         <{/foreach}>
     <{/if}>
 
-        <li class="active"><{$forum_name}></li>
+        <li class="breadcrumb-item active"><{$forum_name}></li>
     </ol>
-    <div class="row">
+    <div>
         <div class="col-xs-12">
         <{if $viewer_level gt 1}>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/newtopic.php?forum=<{$forum_id}>" title="<{$smarty.const.THEME_FORUM_NEWTOPIC}>" class="btn btn-success"><{$smarty.const.THEME_FORUM_NEWTOPIC}></a>
@@ -38,7 +38,7 @@
         <{/if}>
 
         <a data-toggle="collapse" href="#forum-search" title="<{$smarty.const.THEME_FORUM_SEARCH}>" class="btn btn-info">
-            <span class="glyphicon glyphicon-search"></span>
+            <span class="fa fa-search"></span>
         </a>
 
         <{if $subforum}>
@@ -51,11 +51,11 @@
         <div class="col-sm-9 col-md-9">
             <form class="input-group" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php" method="get" role="search">
                 <input name="term" id="term" type="text" class="form-control" placeholder="<{$smarty.const.THEME_NEWBB_SEARCH_FORUM}>">
-                <input type="hidden" name="forum" id="forum" value="<{$forum_id}>">
-                <input type="hidden" name="sortby" id="sortby" value="p.post_time desc">
-                <input type="hidden" name="since" id="since" value="<{$forum_since}>">
-                <input type="hidden" name="action" id="action" value="yes">
-                <input type="hidden" name="searchin" id="searchin" value="both">
+                <input type="hidden" name="forum" value="<{$forum_id}>">
+                <input type="hidden" name="sortby" value="p.post_time desc">
+                <input type="hidden" name="since" value="<{$forum_since}>">
+                <input type="hidden" name="action" value="yes">
+                <input type="hidden" name="searchin" value="both">
                 <span class="input-group-btn">
                     <input type="submit" class="btn btn-primary" value="<{$smarty.const.THEME_FORUM_SEARCH}>">
                 </span>
@@ -65,7 +65,7 @@
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php" class="btn btn-primary btn-block" title="<{$smarty.const._MD_NEWBB_ADVSEARCH}>"><{$smarty.const.THEME_FORUM_ADVSEARCH}></a>
         </div>
     </div>
-
+<br>
 <!-- Newbb topics list -->
 <div class="newbb-topicslist mb10">
     <div class="newbb-topic-options row mb10 mt10">
@@ -101,7 +101,7 @@
                     <a class="btn btn-xs btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>&amp;status=active#admin" title="<{$smarty.const._MD_NEWBB_TYPE_ADMIN}>"><{$smarty.const._MD_NEWBB_TYPE_ADMIN}></a>
                     <a class="btn btn-xs btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>&amp;status=pending#admin" title="<{$smarty.const._MD_NEWBB_TYPE_PENDING}>"><{$smarty.const._MD_NEWBB_TYPE_PENDING}></a>
                     <a class="btn btn-xs btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>&amp;status=deleted#admin" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>"><{$smarty.const._MD_NEWBB_TYPE_DELETED}></a>
-                    <a class="btn btn-xs btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/moderate.php?forum=<{$forum_id}>" title="<{$smarty.const._MD_NEWBB_TYPE_SUSPEND}>"><{$smarty.const._MD_NEWBB_TYPE_SUSPEND}></a>
+                    <a class="btn btn-xs btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/moderate.php?forum=<{$forum_id}>" title="<{$smarty.const._MD_NEWBB_TYPE_SUSPEND}>"><span class="fa fa-ban" aria-hidden="true"></span></a>
                 <{/if}>
 
                 <{else}>
@@ -124,79 +124,56 @@
     </div>
 
     </div><!-- .newbb-topic-options -->
-    <div><strong><{$smarty.const._MD_NEWBB_FORUMDESCRIPTION}></strong> <{$forumDescription}></div>
-    <div class="newbb-topiclist-loop">
-        <div class="newbb-topiclist-header clearfix">
-        <div class="col-xs-6 col-sm-6 col-md-3"><a href="<{$h_topic_link}>" title="<{$smarty.const._MD_NEWBB_TOPICS}>"><{$smarty.const._MD_NEWBB_TOPICS}></a></div>
-        <div class="col-md-2 visible-lg visible-md"><a href="<{$h_poster_link}>" title="<{$smarty.const._MD_NEWBB_TOPICPOSTER}>"><{$smarty.const._MD_NEWBB_TOPICPOSTER}></a></div>
-        <div class="col-md-2 visible-lg visible-md"><a href="<{$h_publish_link}>" title="<{$smarty.const._MD_NEWBB_TOPICTIME}>"><{$smarty.const._MD_NEWBB_TOPICTIME}></a></div>
-        <div class="col-md-1 visible-lg visible-md"><a href="<{$h_reply_link}>" title="<{$smarty.const._MD_NEWBB_REPLIES}>"><{$smarty.const._MD_NEWBB_REPLIES}></a></div>
-        <div class="col-md-1 visible-lg visible-md"><a href="<{$h_views_link}>" title="<{$smarty.const._MD_NEWBB_VIEWS}>"><{$smarty.const._MD_NEWBB_VIEWS}></a></div>
-
+    <{* assign var='desctext' value=`$smarty.const._MD_NEWBB_FORUMDESCRIPTION` *}>
+    <{* $desctext|regex_replace:"/:$/":"" *}>
+    <div>
+        <h3><{$forum_name}></h3>
+        <{$forumDescription}>
+    </div>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+        <{if $mode gt 1}>
+            <th> </th>
+        <{/if}>
+        <th class="d-none d-sm-table-cell"> </th>
+        <th scope="col"><a href="<{$h_topic_link}>" title="<{$smarty.const._MD_NEWBB_TOPICS}>"><{$smarty.const._MD_NEWBB_TOPICS}> <span class="fa fa-sort" aria-hidden="true"></span></a></th>
+        <th class="d-none d-sm-table-cell" scope="col"><a href="<{$h_poster_link}>" title="<{$smarty.const._MD_NEWBB_TOPICPOSTER}>"><{$smarty.const._MD_NEWBB_TOPICPOSTER}> <span class="fa fa-sort" aria-hidden="true"></a></span></th>
+        <th scope="col"><a href="<{$h_publish_link}>" title="<{$smarty.const._MD_NEWBB_TOPICTIME}>"><{$smarty.const._MD_NEWBB_TOPICTIME}> <span class="fa fa-sort" aria-hidden="true"></span></a></th>
+        <th class="d-none d-sm-table-cell" scope="col"><a href="<{$h_reply_link}>" title="<{$smarty.const._MD_NEWBB_REPLIES}>"><{$smarty.const._MD_NEWBB_REPLIES}> <span class="fa fa-sort" aria-hidden="true"></span></a></th>
+        <th class="d-none d-sm-table-cell" scope="col"><a href="<{$h_views_link}>" title="<{$smarty.const._MD_NEWBB_VIEWS}>"><{$smarty.const._MD_NEWBB_VIEWS}> <span class="fa fa-sort" aria-hidden="true"></span></a></th>
         <{if $rating_enable}>
-            <div class="col-md-1 visible-lg"><a href="<{$h_rating_link}>" title="<{$smarty.const._MD_NEWBB_RATINGS}>"><{$smarty.const._MD_NEWBB_RATINGS}></a></div>
+            <th class="d-none d-sm-table-cell" scope="col"><a href="<{$h_rating_link}>" title="<{$smarty.const._MD_NEWBB_RATINGS}>"><{$smarty.const._MD_NEWBB_RATINGS}> <span class="fa fa-sort" aria-hidden="true"></span></a></th>
         <{/if}>
-
-        <div class="<{if $rating_enable}>col-xs-6 col-sm-6 col-md-2<{else}>col-xs-6 col-sm-6 col-md-3<{/if}>"><a href="<{$h_date_link}>" title="<{$smarty.const._MD_NEWBB_LASTPOSTTIME}>"><{$smarty.const._MD_NEWBB_LASTPOSTTIME}></a></div>
-        </div><!-- .newbb-topiclist-header -->
-
-        <{if $sticky > 0}>
-            <{if $rating_enable}>
-                <{$smarty.const._MD_NEWBB_IMTOPICS}>
-            <{else}>
-                <{$smarty.const._MD_NEWBB_IMTOPICS}>
-            <{/if}>
+        <th scope="col"><a href="<{$h_date_link}>" title="<{$smarty.const._MD_NEWBB_LASTPOSTTIME}>"><{$smarty.const._MD_NEWBB_LASTPOSTTIME}> <span class="fa fa-sort" aria-hidden="true"></span></a></th>
+        </tr>
+        </thead>
+        <tbody>
+        <{foreach name=loop item=topic from=$topics}>
+        <tr>
+        <{if $mode gt 1}>
+            <td><input type="checkbox" name="topic_id[]" id="topic_id[<{$topic.topic_id}>]" value="<{$topic.topic_id}>"></td>
         <{/if}>
-
-    <{foreach name=loop item=topic from=$topics}>
-    <div class="clearfix newbb-topiclist-itens <{cycle values="even,odd"}>">
-<!--
-        <{if $topic.stick AND $smarty.foreach.loop.iteration == $sticky+1}>
-            <{if $rating_enable}>
-                <{$smarty.const._MD_NEWBB_NOTIMTOPICS}>
-            <{else}>
-                <{$smarty.const._MD_NEWBB_NOTIMTOPICS}>
-            <{/if}>
+        <td class="d-none d-sm-table-cell"><{$topic.topic_folder}> <{$topic.topic_icon}></td>
+        <td><a class="<{if $topic.topic_read eq 1 }>read-topic<{else}>new-topic<{/if}>" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/<{$topic.topic_link}>" title="<{$topic.topic_excerpt}>"><{$topic.topic_title}></a></td>
+        <td class="d-none d-sm-table-cell"><span class="fa fa-user"></span> <{$topic.topic_poster}></td>
+        <td><{$topic.topic_time}></td>
+        <td class="d-none d-sm-table-cell"><{$topic.topic_replies}></td>
+        <td class="d-none d-sm-table-cell"><{$topic.topic_views}></td>
+        <{if $rating_enable}>
+            <td class="d-none d-sm-table-cell"><{$topic.rating_img}></td>
         <{/if}>
--->
-        <div class="col-xs-6 col-sm-6 col-md-3">
-        <span>
-            <{if $mode gt 1}>
-                <input type="checkbox" name="topic_id[]" id="topic_id[<{$topic.topic_id}>]" value="<{$topic.topic_id}>">
-            <{else}>
-                <{$topic.topic_folder}>
-            <{/if}>
-            <{$topic.topic_icon}>
-        </span>
-
-        <a class="<{if $topic.topic_read eq 1 }>read-topic<{else}>new-topic<{/if}>" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/<{$topic.topic_link}>" title="<{$topic.topic_excerpt}>">
-            <{$topic.topic_title}>
-        </a></div>
-
-        <!-- <{$topic.attachment}> <{$topic.topic_page_jump}> -->
-
-        <div class="col-md-2 visible-lg visible-md"><label class="label label-info"><span class="glyphicon glyphicon-user"></span> <{$topic.topic_poster}></label></div>
-        <div class="col-md-2 visible-lg visible-md"><{$topic.topic_time}></div>
-        <div class="col-md-1 visible-lg visible-md text-center"><{$topic.topic_replies}></div>
-        <div class="col-md-1 visible-lg visible-md text-center"><{$topic.topic_views}></div>
-        <{if $rating_enable}><div class="col-md-1 visible-lg"><{$topic.rating_img}></div><{/if}>
-        <div class="<{if $rating_enable}>col-xs-6 col-sm-6 col-md-2<{else}>col-xs-6 col-sm-6 col-md-3<{/if}>"><{$topic.topic_last_posttime}> <{$smarty.const._MD_NEWBB_BY}> <{$topic.topic_last_poster}> <{$topic.topic_page_jump_icon}></div>
-
-    </div><!-- .newbb-topiclist-itens -->
-    <{/foreach}>
-
-    </div><!-- .newbb-topiclist-loop -->
+        <td><{$topic.topic_last_posttime}> <{$smarty.const._MD_NEWBB_BY}> <{$topic.topic_last_poster}> <{$topic.topic_page_jump_icon}></td>
+        <{/foreach}>
+        </tr>
+        </tbody>
+    </table>
 
     <{if $mode gt 1}>
         </form>
     <{/if}>
 
-    <{if $rating_enable}>
-        <!-- do do something -->
-    <{else}>
-        <!-- do do something -->
-    <{/if}>
-</div><!-- .newbb-topicslist -->
+</div>
 
 <div class="text-right generic-pagination"><{$forum_pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}></div>
 
@@ -209,7 +186,7 @@
             <li><{$forum_selection_sort}></li>
             <li><{$forum_selection_order}></li>
             <li><{$forum_selection_since}></li>
-            <input type="hidden" name="forum" id="forum" value="<{$forum_id}>">
+            <input type="hidden" name="forum" value="<{$forum_id}>">
             <input type="hidden" name="status" value="<{$status}>">
             <li><input type="submit" value="<{$smarty.const._SUBMIT}>" class="btn btn-primary"></li>
             </ul>
@@ -217,7 +194,7 @@
         <{/strip}>
     </div>
 
-    <div class="col-sm-2 col-md-2"><a data-toggle="collapse" href="#forum-info" class="btn btn-info" title=""><span class="glyphicon glyphicon-info-sign"></span></a></div>
+    <div class="col-sm-2 col-md-2"><a data-toggle="collapse" href="#forum-info" class="btn btn-info" title="<{$smarty.const.THEME_PERMISSIONS_LEGEND}>"><span class="fa fa-info"></span></a></div>
     <div class="col-sm-10 col-md-10 text-right xoopsform"><{$forum_jumpbox}></div>
 <!--<{$forum_addpoll}>-->
 </div>

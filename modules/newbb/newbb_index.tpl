@@ -53,7 +53,7 @@
 
                         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/moderate.php" title="<{$smarty.const._MD_NEWBB_TYPE_SUSPEND}>"
                            class="btn btn-xs btn-primary">
-                            <{$smarty.const._MD_NEWBB_TYPE_SUSPEND}>
+                            <span class="fa fa-ban" aria-hidden="true">
                         </a>
 
                         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/index.php" title="<{$smarty.const._MD_NEWBB_ADMINCP}>"
@@ -74,7 +74,7 @@
                         <{if $category.forums}>
                             <a data-toggle="collapse" data-parent="#accordion" href="#<{$category.cat_element_id}>"
                                title="<{$smarty.const.THEME_NEWBB_TOPIC}>">
-                                <span class="glyphicon glyphicon-plus-sign"></span>
+                                <span class="fa fa-plus"></span>
                             </a>
                         <{/if}>
                         <{if $category.cat_image}>
@@ -95,13 +95,12 @@
                         <{if $category.cat_description}>
                             <a href="#forum-desc-<{$category.cat_element_id}>" title="<{$smarty.const.THEME_FORUM_DESCRIPTION}>" data-toggle="modal"
                                data-target="#forum-desc-<{$category.cat_element_id}>" class="btn btn-xs btn-info pull-right">
-                                <span class="glyphicon glyphicon-info-sign"></span>
+                                <span class="fa fa-info"></span>
                             </a>
                         <{/if}>
                     </h4>
                     <{if $category.cat_description}>
-                        <div class="modal fade" id="forum-desc-<{$category.cat_element_id}>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                             aria-hidden="true">
+                        <div class="modal fade" id="forum-desc-<{$category.cat_element_id}>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -163,7 +162,7 @@
                                 <!-- Forum description -->
                                 <{if $forum.forum_desc != ""}>
                                     <button class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#forumDesc-<{$forum.forum_id}>"><span
-                                                class="glyphicon glyphicon-info-sign"></span></button>
+                                                class="fa fa-info"></span></button>
                                     <div class="modal fade" id="forumDesc-<{$forum.forum_id}>" tabindex="-1" role="dialog" aria-labelledby="ForumDescription"
                                          aria-hidden="true">
                                         <div class="modal-dialog">

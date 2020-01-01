@@ -1,6 +1,6 @@
 <ol class="breadcrumb">
-    <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$forumindex}></a></li>
-    <li class="active"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._SR_SEARCH}></a></li>
+    <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$forumindex}></a></li>
+    <li class="breadcrumb-item active"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._SR_SEARCH}></a></li>
 </ol>
 <{if $search_info}>
     <{include file="db:newbb_searchresults.tpl" results=$results}>
@@ -27,7 +27,21 @@
         <tr>
             <!-- irmtfan hardcode removed align="right" add $searchin_radio -->
             <td class="head" id="align_right"><strong><{$smarty.const._SR_SEARCHIN}></strong>&nbsp;</td>
-            <td class="even"><{$searchin_radio}></td>
+            <td class="even">
+                <{*$searchin_radio*}>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="searchin" id="searchin1" value="title">
+                    <label class="form-check-label" for="searchin1"><{$smarty.const._MD_NEWBB_SUBJECT}></label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="searchin" id="searchin2" value="text">
+                    <label class="form-check-label" for="searchin2"><{$smarty.const._MD_NEWBB_BODY}></label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="searchin" id="searchin3" value="both" checked>
+                    <label class="form-check-label" for="searchi3"><{$smarty.const._MD_NEWBB_SUBJECT}> &amp; <{$smarty.const._MD_NEWBB_BODY}></label>
+                </div>
+            </td>
         </tr>
         <tr>
             <!-- irmtfan hardcode removed align="right" add value="$author_select"-->
@@ -57,19 +71,22 @@
             <td class="head" id="align_right"><strong><{$smarty.const._MD_NEWBB_SELECT_LENGTH}></strong>&nbsp; </td>
             <td class="even"><input class="form-control" type="text" name="selectlength" value="<{$selectlength_select}>"></td>
         </tr>
-        <tr>
-            <td class="head" id="align_right"><strong><{$smarty.const._MD_NEWBB_SELECT_HTML}></strong>&nbsp;</td>
-            <td class="even"><{$selecthtml_radio}></td>
-        </tr>
-        <tr>
-            <td class="head" id="align_right"><strong><{$smarty.const._MD_NEWBB_SELECT_EXCLUDE}></strong>&nbsp;</td>
-            <td class="even"><{$selectexclude_check_box}></td>
-        </tr>
         <!-- END irmtfan add select text options -->
         <!-- START irmtfan add show search -->
         <tr>
             <td class="head" id="align_right"><strong><{$smarty.const._MD_NEWBB_SHOWSEARCH}></strong>&nbsp;</td>
-            <td class="even"><{$show_search_radio}></td>
+            <td class="even">
+                <{*$show_search_radio*}>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="show_search" id="show_search1" value="post">
+                    <label class="form-check-label" for="show_search1"><{$smarty.const._MD_NEWBB_POSTS}></label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="show_search" id="show_search2" value="post_text" checked>
+                    <label class="form-check-label" for="show_search2"><{$smarty.const._MD_NEWBB_SEARCHPOSTTEXT}></label>
+                </div>
+
+            </td>
         </tr>
         <!-- START irmtfan add show search -->
         <{if $search_rule}>

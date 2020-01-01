@@ -1,23 +1,23 @@
 <div class="newbb-viewtopic">
     <ol class="breadcrumb">
-        <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$lang_forum_index}></a></li>
+        <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$lang_forum_index}></a></li>
 
-        <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMHOME}></a></li>
+        <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMHOME}></a></li>
 
-        <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>"><{$category.title}></a></li>
+        <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.id}>"><{$category.title}></a></li>
         <{if $parentforum}>
             <{foreach item=forum from=$parentforum}>
-                <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a></li>
+                <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>"><{$forum.forum_name}></a></li>
             <{/foreach}>
         <{/if}>
-        <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>"><{$forum_name}></a></li>
-        <li class="active"><{$topic_title|strip_tags}> <{if $topicstatus}><{$topicstatus}><{/if}></li>
+        <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>"><{$forum_name}></a></li>
+        <li class="breadcrumb-item active"><{$topic_title|strip_tags}> <{if $topicstatus}><{$topicstatus}><{/if}></li>
     </ol>
 
     <{if $tagbar}>
         <div class="newbb-tagbar">
             <{include file="db:tag_bar.tpl"}>
-        </div><!-- .newbb-tagbar -->
+        </div>
     <{/if}>
 
     <{if $online}>
@@ -40,7 +40,7 @@
                     <span class="label label-default"><{$online.num_anonymous}> <{$smarty.const._MD_NEWBB_ANONYMOUS_USERS}></span>
             <{/if}>
             </div>
-        </div><!-- .newbb-online-users -->
+        </div>
     <{/if}>
 
     <div class="row mb10">
@@ -89,12 +89,12 @@
 
             <{if $viewer_level gt 1}>
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/newtopic.php?forum=<{$forum_id}>" title="<{$smarty.const.THEME_FORUM_NEWTOPIC}>" class="btn btn-primary"><{$smarty.const.THEME_FORUM_NEWTOPIC}></a>
-            <{else}>
+            <{elseif !$xoops_isuser}>
                 <a href="<{$xoops_url}>/user.php" title="<{$smarty.const.THEME_FORUM_REGISTER}>" class="btn btn-success"><{$smarty.const.THEME_FORUM_REGISTER}></a>
             <{/if}>
 
             <a data-toggle="collapse" href="#forum-search" title="<{$smarty.const.THEME_FORUM_SEARCH}>" class="btn btn-info">
-                <span class="glyphicon glyphicon-search"></span>
+                <span class="fa fa-search"></span>
             </a>
 
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/polls.php?op=add&topic_id=<{$topic_id}>" title="<{$smarty.const.THEME_ADD_POLL}>" class="btn btn-info"><{$smarty.const.THEME_ADD_POLL}></a>
@@ -104,13 +104,13 @@
         <div class="col-sm-6 col-md-6 text-right hidden-xs">
             <a id="threadtop"></a>
             <a class="btn btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=prev" title="<{$smarty.const._MD_NEWBB_PREVTOPIC}>">
-                <span class="glyphicon glyphicon-circle-arrow-left"></span>
+                <span class="fa fa-arrow-circle-left"></span>
             </a>
             <a class="btn btn-info" href="#threadbottom" title="<{$smarty.const._MD_NEWBB_BOTTOM}>">
-                <span class="glyphicon glyphicon-circle-arrow-down"></span>
+                <span class="fa fa-arrow-circle-down"></span>
             </a>
             <a class="btn btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=next" title="<{$smarty.const._MD_NEWBB_NEXTTOPIC}>">
-                <span class="glyphicon glyphicon-circle-arrow-right"></span>
+                <span class="fa fa-arrow-circle-right"></span>
             </a>
         </div>
     </div>
@@ -215,13 +215,13 @@
         <div class="col-sm-2 col-md-2 text-right nompl hidden-xs">
             <a id="threadbottom"></a>
             <a class="btn btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=prev" title="<{$smarty.const._MD_NEWBB_PREVTOPIC}>">
-                <span class="glyphicon glyphicon-circle-arrow-left"></span>
+                <span class="fa fa-arrow-circle-left"></span>
             </a>
             <a class="btn btn-info" href="#threadtop" title="<{$smarty.const._MD_NEWBB_TOP}>">
-                <span class="glyphicon glyphicon-circle-arrow-up"></span>
+                <span class="fa fa-arrow-circle-up"></span>
             </a>
             <a class="btn btn-info" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?order=<{$order_current}>&amp;topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;move=next" title="<{$smarty.const._MD_NEWBB_NEXTTOPIC}>">
-                <span class="glyphicon glyphicon-circle-arrow-right"></span>
+                <span class="fa fa-arrow-circle-right"></span>
             </a>
         </div>
     </div>
@@ -229,21 +229,11 @@
     <{if $quickreply.show}>
         <div class="col-md-12 collapse newbb-quick-reply" id="quickReply"><{$quickreply.form}></div>
     <{/if}>
-    </div><!-- .newbb-viewtopic-footer -->
+    </div>
 
 <{include file='db:newbb_notification_select.tpl'}>
 
-<!--
-    <script type="text/javascript">
-    if (document.body.scrollIntoView && window.location.href.indexOf('#') == -1){
-        var el = xoopsGetElementById('<{$forum_post_prefix}><{$post_id}>');
-        if (el){
-            el.scrollIntoView(true);
-        }
-    }
-    </script>
--->
-</div><!-- .newbb-viewforum -->
+</div>
 
 <!-- START irmtfan add scroll js function to scroll down to current post or top of the topic -->
 <script type="text/javascript">

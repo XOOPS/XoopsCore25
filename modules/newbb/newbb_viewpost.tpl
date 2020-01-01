@@ -1,15 +1,15 @@
 <div>
     <ol class="breadcrumb">
-        <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$lang_forum_index}></a></li>
+        <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$lang_forum_index}></a></li>
 
-        <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMHOME}></a></li>
+        <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMHOME}></a></li>
 
         <!-- If is subforum-->
         <{if $parent_forum}>
-        <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$parent_forum}>"><{$parent_name}></a></li>
+        <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$parent_forum}>"><{$parent_name}></a></li>
         <{/if}>
 
-        <li class="active"><{$lang_title}></li>
+        <li class="breadcrumb-item active"><{$lang_title}></li>
     </ol>
 </div>
 <div class="clear"></div>
@@ -48,49 +48,43 @@
 <div class="clear"></div>
 <div class="text-right">
 <a id="threadtop"></a><a class="btn btn-info" href="#threadbottom" title="<{$smarty.const._MD_NEWBB_BOTTOM}>">
-    <span class="glyphicon glyphicon-circle-arrow-down"></span>
+    <span class="fa fa-arrow-circle-down"></span>
 </a>
 </div>
 <div>
-    <div class="dropdown">
-        <form class="form-inline">
-            <div class="form-group">
-        <select
-                name="topicoption" id="topicoption"
-                class="form-control menu"
-                onchange="if(this.options[this.selectedIndex].value.length >0 )    { window.document.location=this.options[this.selectedIndex].value;}"
-        >
-            <option value=""><{$smarty.const._MD_NEWBB_TOPICOPTION}></option>
-            <option value="<{$newpost_link}>"><{$smarty.const._MD_NEWBB_VIEW}>&nbsp;<{$smarty.const._MD_NEWBB_NEWPOSTS}></option>
-            <option value="<{$all_link}>"><{$smarty.const._MD_NEWBB_VIEW}>&nbsp;<{$smarty.const._MD_NEWBB_ALL}></option>
-            <!--
-            <option value="<{$digest_link}>"><{$smarty.const._MD_NEWBB_VIEW}>&nbsp;<{$smarty.const._MD_NEWBB_DIGEST}></option>
-            <option value="<{$unreplied_link}>"><{$smarty.const._MD_NEWBB_VIEW}>&nbsp;<{$smarty.const._MD_NEWBB_UNREPLIED}></option>
-            <option value="<{$unread_link}>"><{$smarty.const._MD_NEWBB_VIEW}>&nbsp;<{$smarty.const._MD_NEWBB_UNREAD}></option>
-            //-->
-        </select>
-
-        <select
-                name="viewmode" id="viewmode"
-                class="form-control menu"
-                onchange="if(this.options[this.selectedIndex].value.length >0 )    { window.document.location=this.options[this.selectedIndex].value;}"
-        >
-            <option value=""><{$smarty.const._MD_NEWBB_VIEWMODE}></option>
-            <{foreach item=act from=$viewmode_options}>
-            <option value="<{$act.link}>"><{$act.title}></option>
-            <{/foreach}>
-        </select>
+    <form>
+        <div class="form-row">
+            <div class="col">
+                <select
+                        name="topicoption" id="topicoption"
+                        class="form-control menu"
+                        onchange="if(this.options[this.selectedIndex].value.length >0 )    { window.document.location=this.options[this.selectedIndex].value;}"
+                >
+                    <option value=""><{$smarty.const._MD_NEWBB_TOPICOPTION}></option>
+                    <option value="<{$newpost_link}>"><{$smarty.const._MD_NEWBB_VIEW}>&nbsp;<{$smarty.const._MD_NEWBB_NEWPOSTS}></option>
+                    <option value="<{$all_link}>"><{$smarty.const._MD_NEWBB_VIEW}>&nbsp;<{$smarty.const._MD_NEWBB_ALL}></option>
+                </select>
             </div>
-        </form>
-    </div>
-    <!-- irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" -->
+            <div class="col">
+                <select
+                        name="viewmode" id="viewmode"
+                        class="form-control menu"
+                        onchange="if(this.options[this.selectedIndex].value.length >0 )    { window.document.location=this.options[this.selectedIndex].value;}"
+                >
+                    <option value=""><{$smarty.const._MD_NEWBB_VIEWMODE}></option>
+                    <{foreach item=act from=$viewmode_options}>
+                    <option value="<{$act.link}>"><{$act.title}></option>
+                    <{/foreach}>
+                </select>
+            </div>
+        </div>
+    </form>
+
     <div class="pagenav">
         <{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
-        <!-- irmtfan to solve nested forms and id="xo-pagenav" issue -->
     </div>
 </div>
 <div class="clear"></div>
-<br>
 <br>
 
 <{foreach item=post from=$posts}>
@@ -116,7 +110,7 @@
 <div>
     <div class="text-right">
         <a id="threadbottom"></a><a class="btn btn-info" href="#threadtop" title="<{$smarty.const._MD_NEWBB_TOP}>">
-            <span class="glyphicon glyphicon-circle-arrow-up"></span>
+            <span class="fa fa-arrow-circle-up"></span>
         </a>
     </div>
     <!-- irmtfan hardcode removed style="float: right; text-align:right;" -->

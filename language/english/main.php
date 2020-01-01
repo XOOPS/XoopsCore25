@@ -89,3 +89,5 @@ define('THEME_TOOLBAR_EDIT_THIS_BLOCK', 'Edit this block');
 
 define('THEME_COMMENT_ADD', 'Add Your Comment');
 define('THEME_COMMENT_OPTIONS', 'Comment View Options:');
+
+define('THEME_PERMISSIONS_LEGEND', 'Permissions &amp; Legend');

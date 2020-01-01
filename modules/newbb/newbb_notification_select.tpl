@@ -1,10 +1,8 @@
 <{if $xoops_notification.show}>
     <form name="notification_select" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/<{$xoops_notification.target_page}>" method="post">
         <h4 class="txtcenter"><{$lang_activenotifications}>    </h4>
-        <!-- irmtfan remove value=xoops_url -->
         <input type="hidden" name="not_redirect" value="<{$xoops_notification.redirect_script}>">
-        <input type="hidden" name="XOOPS_TOKEN_REQUEST"
-               value="<{php}>echo $GLOBALS['xoopsSecurity']->createToken();<{/php}>">
+        <{securityToken}>
         <table class="outer">
             <tr>
                 <th colspan="3"><{$lang_notificationoptions}></th>
@@ -26,7 +24,7 @@
                             <{counter assign=index}>
                             <input type="hidden" name="not_list[<{$index}>][params]"
                                    value="<{$category.name}>,<{$category.itemid}>,<{$event.name}>">
-                            <input type="checkbox" id="not_list[]" name="not_list[<{$index}>][status]" value="1"
+                            <input type="checkbox" name="not_list[<{$index}>][status]" value="1"
                                    <{if $event.subscribed}>checked="checked"<{/if}> >
                         </td>
                         <td class="odd"><{$event.caption}></td>

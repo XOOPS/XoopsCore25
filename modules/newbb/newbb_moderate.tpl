@@ -1,7 +1,7 @@
 <div class="newbb">
     <ul class="breadcrumb">
-        <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_FORUMHOME}></a></li>
-        <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/<{$moderate_url}>"><{$smarty.const._MD_SUSPEND_MANAGEMENT}></a></li>
+        <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMHOME}></a></li>
+        <li class="breadcrumb-item active"><{$smarty.const._MD_NEWBB_SUSPEND_MANAGEMENT}></li>
     </ul>
 </div>
 
@@ -11,7 +11,7 @@
     <br>
 <{/if}>
 
-<h3><{$smarty.const._MD_SUSPEND_LIST}></h3>
+<h3><{$smarty.const._MD_NEWBB_SUSPEND_LIST}></h3>
 <div class="table-responsive">
     <table class="table table-hover">
     <thead>
@@ -19,7 +19,7 @@
     <{foreach item=colHead from=$columnHeaders}>
         <th>
             <{if $colHead.url}>
-            <a href="<{$colHead.url}>" title="<{$colHead.title}>"><{$colHead.header}></a>
+            <a href="<{$colHead.url}>" title="<{$colHead.title}>"><{$colHead.header}> <span class="fa fa-sort" aria-hidden="true"></span></a>
             <{else}>
             <{$colHead.header}>
             <{/if}>
@@ -47,30 +47,7 @@
 
 
 <br>
-<h3><{$suspend_form.title}></h3>
 <hr class="align_left" width="100%" size="1"/>
-<form name="<{$suspend_form.name}>" id="<{$suspend_form.name}>" action="<{$suspend_form.action}>" method="<{$suspend_form.method}>" <{$suspend_form.extra}> >
-    <{foreach item=element from=$suspend_form.elements}>
-    <{if $element.hidden != true}>
-    <{if $element.name === 'submit'}>
-    <button name="submit" type="submit" class="btn btn-secondary"><{$smarty.const._SUBMIT}></button>
-    <{else}>
-    <div class="form-group">
-        <label for="<{$element.name}>"><{$element.caption}><{if $element.required}><span class="text-info">*</span><{/if}></label>
-        <{$element.body|replace:'<input ':'<input class="form-control" '|replace:'<select ':'<select class="form-control" '}>
-        <{if $element.description != ''}>
-        <span class="help-block"><{$element.description}></span>
-        <{/if}>
-    </div>
-    <{/if}>
-    <{/if}>
-    <{/foreach}>
-    <{foreachq item=element from=$suspend_form.elements}>
-    <{if $element.hidden == true}>
-        <{$element.body}>
-    <{/if}>
-    <{/foreach}>
-</form>
-<{$suspend_form.javascript}>
+<{$suspend_form.rendered|replace:'<select name="forum">':'<select class="form-control" id="forum" name="forum">'}>
 <div class="clear"></div>
 <br>

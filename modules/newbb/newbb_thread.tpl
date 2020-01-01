@@ -3,7 +3,9 @@
         <{assign var=forum_post_prefix value="forumpost"}>
         <div id="<{$forum_post_prefix}>0"></div>
     <{/if}>
-<div class="col-sm-3 col-md-3 text-center newbb-user-data">
+    <div class="container">
+    <div class="row">
+<div class="col-3 text-center newbb-user-data">
     <{$topic_post.poster.link}>
 
     <{if $topic_post.poster.uid gt -1}>
@@ -16,13 +18,13 @@
 
             <{if $topic_post.poster.rank.title !=""}>
                 <ul class="list-unstyled">
-                    <li><{$topic_post.poster.rank.title}></li>
-                    <li><img src="<{$xoops_upload_url}>/<{$topic_post.poster.rank.image}>" alt="<{$topic_post.poster.rank.title}>"></li>
+                    <li><span class="small"><{$topic_post.poster.rank.title}></span></li>
+                    <li><img class="img-fluid" src="<{$xoops_upload_url}>/<{$topic_post.poster.rank.image}>" alt="<{$topic_post.poster.rank.title}>"></li>
                 </ul>
             <{/if}>
 
                 <{if $infobox.show}>
-                    <a data-toggle="collapse" href="#<{$topic_post.post_id}>" title="<{$smarty.const.THEME_INFO}>" class="btn btn-primary btn-sm mb10"><span class="glyphicon glyphicon-info-sign"></span></a>
+                    <a data-toggle="collapse" href="#<{$topic_post.post_id}>" title="<{$smarty.const.THEME_INFO}>" class="btn btn-primary btn-sm mb10"><span class="fa fa-info"></span></a>
                     <div id="<{$topic_post.post_id}>" class="collapse">
                         <ul class="list-unstyled text-left">
                             <li><{$smarty.const._MD_NEWBB_JOINED}>: <{$topic_post.poster.regdate}></li>
@@ -74,17 +76,18 @@
 
         <ul class="list-unstyled">
             <{if $topic_post.poster_ip}>
-                <li>IP: <a href="http://www.whois.sc/<{$topic_post.poster_ip}>" target="_blank"><{$topic_post.poster_ip}></a></li>
+                <li><span class="d-none d-sm-block small">IP: <a href="http://www.whois.sc/<{$topic_post.poster_ip}>" target="_blank"><{$topic_post.poster_ip}></a></li>
             <{/if}>
 
             <{if $topic_post.poster.uid gt 0}>
-                <li><{$smarty.const._MD_NEWBB_POSTEDON}><{$topic_post.post_date}></li>
+            <li><span class="small"><span class="d-none d-sm-block"><{$smarty.const._MD_NEWBB_POSTEDON}></span><{$topic_post.post_date}></span></li>
             <{/if}>
         </ul>
 
 </div>
 
-<div class="col-sm-9 col-md-9 newbb-message-area">
+<div class="col-8 newbb-message-area">
+    <br>
     <div class="newbb-forum-title">
         <strong><{$topic_post.post_title}></strong>
 
@@ -93,7 +96,7 @@
                 #<{$topic_post.post_no}>
             </a>
         <{/if}>
-    </div><!-- .newbb-forum-title -->
+    </div>
 
     <{$topic_post.post_text}>
 
@@ -115,10 +118,12 @@
         </div>
     <{/if}>
 </div>
-</div><!-- .newbb-thread -->
+    </div>
+</div>
+</div>
 
-<div class="clearfix newbb-links mb10">
-    <div class="col-md-6 nompl hidden-xs">
+<div class="row clearfix newbb-links mb10">
+    <div class="col-3 mr-auto d-none d-sm-block">
     <{if $topic_post.thread_action}>
         <{foreach item=btn from=$topic_post.thread_action}>
             <a href="<{$btn.link}>&amp;post_id=<{$topic_post.post_id}>" title="<{$btn.name}>" <{if $btn.target}>target="<{$btn.target}>"<{/if}>>
@@ -128,7 +133,7 @@
     <{/if}>
     </div>
 
-    <div class="col-md-6 text-right nompl">
+    <div class="col-auto">
     <{if $mode gt 1 && $topic_post.poster.uid gt -1}>
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=1" title="<{$smarty.const._MD_NEWBB_SPLIT_ONE}>">
             <{$smarty.const._MD_NEWBB_SPLIT_ONE}>
@@ -142,12 +147,14 @@
             <input type="checkbox" name="post_id[]" id="post_id[<{$topic_post.post_id}>]" value="<{$topic_post.post_id}>">
     <{else}>
         <{if $topic_post.thread_buttons}>
+                <{assign var='bantext' value=`$smarty.const._MD_NEWBB_SUSPEND_MANAGEMENT`}>
+                <{assign var='banprompt' value=">$bantext<"}>
 
                 <{foreach item=btn from=$topic_post.thread_buttons}>
-                    <a class="btn btn-primary btn-xs" href="<{$btn.link}>&amp;post_id=<{$topic_post.post_id}>" title="<{$btn.name}>"><{$btn.image}></a>
+                   <a class="btn btn-primary btn-xs" href="<{$btn.link}>&amp;post_id=<{$topic_post.post_id}>" title="<{$btn.name}>"><{$btn.image|replace:$banprompt:'><span class="fa fa-ban" aria-hidden="true"><'}></a>
                 <{/foreach}>
         <{/if}>
     <{/if}>
-    <a class="btn btn-success btn-xs" href="#threadtop" title="<{$smarty.const._MD_NEWBB_TOP}>"><span class="glyphicon glyphicon-circle-arrow-up"></span></a>
+    <a class="btn btn-success btn-xs" href="#threadtop" title="<{$smarty.const._MD_NEWBB_TOP}>"><span class="fa fa-arrow-circle-up"></span></a>
     </div>
 </div>
