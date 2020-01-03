@@ -66,7 +66,7 @@ if (@empty($vars['DB_HOST'])) {
 ob_start();
 ?>
 <?php if (!empty($error)) {
-    echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $error . "</div>\n";
+    echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . htmlspecialchars($error) . "</div>\n";
 } ?>
     <div class="panel panel-info">
     <div class="panel-heading"><?php echo LEGEND_CONNECTION; ?></div>
