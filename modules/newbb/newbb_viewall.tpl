@@ -1,9 +1,9 @@
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMHOME}></a></li>
-    <{if $parent_forum}>
+    <{if $parent_forum|default:false}>
         <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$parent_forum}>"><{$parent_name}></a></li>
         <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>"><{$forum_name}></a></li>
-    <{elseif $forum_name}>
+    <{elseif $forum_name|default:false}>
         <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>"><{$forum_name}></a></li>
     <{/if}>
     <{if $current}>
@@ -53,7 +53,7 @@
                        title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>"><{$smarty.const._MD_NEWBB_TYPE_DELETED}></a>
                     |
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/moderate.php" target="_self"
-                       title="<{$smarty.const._MD_NEWBB_TYPE_SUSPEND}>"><span class="fa fa-ban" aria-hidden="true"></a>
+                       title="<{$smarty.const._MD_NEWBB_TYPE_SUSPEND}>"><{$smarty.const._MD_NEWBB_TYPE_SUSPEND}></a>
                     <!-- irmtfan remove < { else } > no need for mode=1
                     < { else } >
                     <!--<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?mode=1#admin" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_VIEW}>">
@@ -81,7 +81,7 @@
                             <option value="<{$filter.link}>"><{$filter.title}></option>
                         <{/foreach}>
                         <option value="">--------</option>
-                        <{foreach item=filter from=$types}>
+                        <{foreach item=filter from=$types|default:false}>
                             <option value="<{$filter.link}>"><{$filter.title}></option>
                         <{/foreach}>
                     </select>
@@ -145,8 +145,8 @@
                 <{/if}>
             </div>
             <!-- irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" -->
-            <div class="pagenav">
-                <{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
+            <div class="generic-pagination col text-right mt-2">
+                <{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''|replace:' //':'/'}>
                 <!-- irmtfan to solve nested forms and id="xo-pagenav" issue -->
             </div>
         </div>
@@ -220,11 +220,13 @@
     <tr class="foot">
     <td colspan="8" align="center">
         <{strip}>
-            <form method="get" action="<{$selection.action}>">
-                <strong><{$smarty.const._MD_NEWBB_SORTEDBY}></strong>&nbsp;
-                <{$selection.sort}>&nbsp;
-                <{$selection.order}>&nbsp;
-                <{$selection.since}>&nbsp;
+            <form class="xoopsform" method="get" action="<{$selection.action}>">
+                <ul class="list-inline">
+                    <li><strong><{$smarty.const._MD_NEWBB_SORTEDBY}>:</strong></li>
+                    <li><{$selection.sort}></li>
+                    <li><{$selection.order}></li>
+                    <li><{$selection.since}></li>
+                </ul>
                 <{foreach item=hidval key=hidvar from=$selection.vars}>
                     <{if $hidval && $hidvar neq "sort" && $hidvar neq "order" && $hidvar neq "since"}>
                         <!-- irmtfan correct name="$hidvar" -->
@@ -243,7 +245,7 @@
 
 <{if $pagenav}>
     <!-- irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" -->
-    <div class="pagenav"><{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
+    <div class="generic-pagination col text-right"><{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''|replace:' //':'/'}>
         <!-- irmtfan to solve nested forms and id="xo-pagenav" issue --></div>
     <br>
 <{/if}>
@@ -272,26 +274,14 @@
             [<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._MD_NEWBB_ADVSEARCH}></a>]
         </form>
         <br>
-        <!-- START irmtfan add forum selection box -->
-        <{if $forum_jumpbox }>
-            <form method="get" action="<{$selection.action}>">
-                <{$selection.forum}>&nbsp;
-                <{foreach item=hidval key=hidvar from=$selection.vars}>
-                    <{if $hidval && $hidvar neq "forum"}>
-                        <input type="hidden" name="<{$hidvar}>" value="<{$hidval}>">
-                    <{/if}>
-                <{/foreach}>
-                <input type="submit" value="<{$smarty.const._SUBMIT}>">
-            </form>
-            <br>
+        <div class="xoopsform col-sm-4 col-md-4">
             <{$forum_jumpbox}>
-        <{/if}>
-        <!-- END irmtfan add forum selection box -->
+        </div>
     </div>
 </div>
 <div class="clear"></div>
 <br>
 
 <{if $online}><{include file="db:newbb_online.tpl"}><{/if}>
-<{include file='db:newbb_notification_select.tpl'}>
+<{include file='db:system_notification_select.tpl'}>
 <!-- end module contents -->

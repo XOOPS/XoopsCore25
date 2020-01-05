@@ -8,234 +8,117 @@
         </h3>
 
         <p><{$index_desc}></p>
-        <div class="row">
 
-            <div class="newbb-header-icons hidden-xs">
-                <{if $viewer_level gt 1}>
-                    <div class="col-md-6 mb10">
-                        <strong><{$smarty.const._MD_NEWBB_TOPIC}>:</strong>
-                        <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=active#admin" title="<{$smarty.const._MD_NEWBB_TYPE_ADMIN}>" class="btn btn-xs btn-primary">
-                            <{$smarty.const._MD_NEWBB_TYPE_ADMIN}>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <{include file="db:newbb_index_menu.tpl"}>
+                </div>
+            </div>
+
+            <{if $viewer_level gt 1}>
+            <br>
+            <div class="row">
+                <div class="col">
+                    <strong><{$smarty.const._MD_NEWBB_TOPIC}>:</strong>
+                        <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=active#admin" title="<{$smarty.const._MD_NEWBB_TYPE_ADMIN}>" class="btn btn-primary">
+                            <span class="fa fa-tasks" aria-hidden="true"></span>
                         </a>
 
-                        <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=pending#admin" title="<{$smarty.const._MD_NEWBB_TYPE_PENDING}>" class="btn btn-xs btn-primary">
-                            <{if $wait_new_topic}><span class="badge"><{$wait_new_topic}></span><{/if}> <{$smarty.const._MD_NEWBB_TYPE_PENDING}>
+                        <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=pending#admin" title="<{$smarty.const._MD_NEWBB_TYPE_PENDING}>" class="btn btn-primary">
+                            <span class="fa fa-check-square-o" aria-hidden="true"></span> <{if $wait_new_topic}><span class="badge badge-light"><{$wait_new_topic}></span><{/if}>
                         </a>
 
-                        <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=deleted#admin" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>" class="btn btn-xs btn-danger">
-                            <{if $delete_topic}><span class="badge"><{$delete_topic}></span><{/if}> <{$smarty.const._MD_NEWBB_TYPE_DELETED}>
+                        <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=deleted#admin" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>" class="btn btn-danger">
+                            <span class="fa fa-trash-o" aria-hidden="true"></span> <{if $delete_topic}><span class="badge badge-light"><{$delete_topic}></span><{/if}>
                         </a>
-                    </div>
-                <{/if}>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col">
+                    <strong><{$smarty.const._MD_NEWBB_POST2}>:</strong>
 
-                <div class="<{if $viewer_level gt 1}>col-md-6<{else}>col-md-12<{/if}> text-right"><{include file="db:newbb_index_menu.tpl"}></div>
+                    <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=active#admin" title="<{$smarty.const._MD_NEWBB_TYPE_ADMIN}>" class="btn btn-primary">
+                        <span class="fa fa-tasks" aria-hidden="true"></span>
+                    </a>
 
-                <{if $viewer_level gt 1}>
-                    <div class="col-md-12">
-                        <strong><{$smarty.const._MD_NEWBB_POST2}>:</strong>
-                        <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=active#admin" title="<{$smarty.const._MD_NEWBB_TYPE_ADMIN}>" class="btn btn-xs btn-primary">
-                            <{$smarty.const._MD_NEWBB_TYPE_ADMIN}>
-                        </a>
+                    <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=pending#admin" title="<{$smarty.const._MD_NEWBB_TYPE_PENDING}>" class="btn btn-primary">
+                        <span class="fa fa-check-square-o" aria-hidden="true"></span> <{if $wait_new_post}><span class="badge badge-light"><{$wait_new_post}></span><{/if}>
+                    </a>
 
-                        <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=pending#admin" title="<{$smarty.const._MD_NEWBB_TYPE_PENDING}>" class="btn btn-xs btn-primary">
-                            <{if $wait_new_post}>(<span style="color:#ff0000;"><{$wait_new_post}></span>)<{/if}> <{$smarty.const._MD_NEWBB_TYPE_PENDING}>
-                        </a>
+                    <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=deleted#admin" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>" class="btn btn-primary">
+                        <span class="fa fa-trash-o" aria-hidden="true"></span> <{if $delete_post}><span class="badge badge-light"><{$delete_post}></span><{/if}>
+                    </a>
 
-                        <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=deleted#admin" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>" class="btn btn-xs btn-primary">
-                            <{if $delete_post}>(<span style="color:#ff0000;"><{$delete_post}></span>)<{/if}> <{$smarty.const._MD_NEWBB_TYPE_DELETED}>
-                        </a>
+                    <{if $report_post}>
+                    <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/admin_report.php" title="_MD_NEWBB_REPORT" class="btn btn-primary">
+                        <span class="fa fa-thumbs-o-down" aria-hidden="true"></span> <span class="badge badge-light"><{$reported_count}></span>
+                    </a>
+                    <{/if}>
 
-                        <{if $report_post}>
-                            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/admin_report.php" title="<{$report_post}>" class="btn btn-xs btn-primary">
-                                <{$report_post}>
-                            </a>
-                        <{/if}>
+                    <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/moderate.php" title="<{$smarty.const._MD_NEWBB_TYPE_SUSPEND}>" class="btn btn-primary">
+                        <span class="fa fa-ban" aria-hidden="true">
+                    </a>
 
-                        <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/moderate.php" title="<{$smarty.const._MD_NEWBB_TYPE_SUSPEND}>"
-                           class="btn btn-xs btn-primary">
-                            <span class="fa fa-ban" aria-hidden="true">
-                        </a>
-
-                        <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/index.php" title="<{$smarty.const._MD_NEWBB_ADMINCP}>"
-                           class="btn btn-xs btn-primary">
-                            <{$smarty.const._MD_NEWBB_ADMINCP}>
-                        </a>
-                    </div>
-                <{/if}>
-            </div><!-- .newbb-header-icons -->
+                    <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/index.php" title="<{$smarty.const._MD_NEWBB_ADMINCP}>" class="btn btn-primary">
+                        <span class="fa fa-cogs" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </div>
+            <{/if}>
         </div><!-- .newbb-header -->
     </div>
 
-        <div class="panel-group newbb-category-list" id="accordion">
-            <{foreach item=category from=$categories}><!-- Forum categories -->
-            <div class="panel panel-default mb10">
-                <div class="panel-heading">
-                    <h4 class="panel-title newbb-forum-title">
-                        <{if $category.forums}>
-                            <a data-toggle="collapse" data-parent="#accordion" href="#<{$category.cat_element_id}>"
-                               title="<{$smarty.const.THEME_NEWBB_TOPIC}>">
-                                <span class="fa fa-plus"></span>
-                            </a>
-                        <{/if}>
-                        <{if $category.cat_image}>
-                            <img src="<{$category.cat_image}>" alt="<{$category.cat_title}>">
-                        <{/if}>
-
-                        <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.cat_id}>" title="<{$category.cat_title}>">
-                            <{$category.cat_title}>
-                        </a>
-
-                        <{if $category.cat_sponsor}>
-                            <a href="<{$category.cat_sponsor.link}>" title="<{$smarty.const.THEME_FORUM_SPONSORBY}> <{$category.cat_sponsor.title}>"
-                               target="_blank" class="pull-right btn btn-xs btn-success">
-                                <{$category.cat_sponsor.title}>
-                            </a>
-                        <{/if}>
-
-                        <{if $category.cat_description}>
-                            <a href="#forum-desc-<{$category.cat_element_id}>" title="<{$smarty.const.THEME_FORUM_DESCRIPTION}>" data-toggle="modal"
-                               data-target="#forum-desc-<{$category.cat_element_id}>" class="btn btn-xs btn-info pull-right">
-                                <span class="fa fa-info"></span>
-                            </a>
-                        <{/if}>
-                    </h4>
-                    <{if $category.cat_description}>
-                        <div class="modal fade" id="forum-desc-<{$category.cat_element_id}>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title" id="myModalLabel"><{$category.cat_title}></h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p><{$category.cat_description}></p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.cat_id}>"
-                                           title="<{$smarty.const.THEME_GOTOTHEFORUM}>" class="btn btn-secondary">
-                                            <{$smarty.const.THEME_GOTOTHEFORUM}>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    <{/if}>
-                </div><!-- .panel-heading -->
-
-                <div id="<{$category.cat_element_id}>" class="panel-collapse collapse <{if $subforum_display == 'expand'}>in<{/if}>">
-                    <div class="panel-body">
-                        <{if $category.forums}>
-                            <div class="row hidden-xs">
-                                <{if $subforum_display == "expand"}>
-                                    <div class="col-sm-6 col-md-6"><strong><{$smarty.const._MD_NEWBB_FORUM}></strong></div>
-                                <{else}>
-                                    <div class="col-sm-6 col-md-6"><strong><{$smarty.const._MD_NEWBB_FORUM}></strong></div>
-                                <{/if}>
-                                <div class="col-sm-1 col-md-1"><strong><{$smarty.const._MD_NEWBB_TOPICS}></strong></div>
-                                <div class="col-sm-1 col-md-1"><strong><{$smarty.const._MD_NEWBB_POSTS}></strong></div>
-                                <div class="col-sm-4 col-md-4"><strong><{$smarty.const._MD_NEWBB_LASTPOST}></strong></div>
-                            </div>
-                        <{/if}>
-                        <{foreach item=forum from=$category.forums}>
-                        <div class="row newbb-list-foruns mb10">
-                            <div class="col-sm-6 col-md-6">
-                                <{if $forum.subforum}>
-                                    <div class="<{if $forum.forum_read eq 1 }>forum-read<{else}>forum-new2<{/if}> pull-left">
-                                        <{$forum.forum_folder}>
-                                    </div>
-                                <{else}>
-                                    <div class="<{if $forum.forum_read eq 1 }>forum-read<{else}>forum-new2<{/if}> pull-left">
-                                        <{$forum.forum_folder}>
-                                    </div>
-                                <{/if}>
-
-                                <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>" title="<{$forum.forum_name}>">
-                                    <{$forum.forum_name}>
-                                </a>
-
-                                <{if $rss_enable}>
-                                    <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?f=<{$forum.forum_id}>" target="_blank" title="RSS feed"
-                                       class="pull-right btn btn-xs btn-warning">
-                                        RSS
-                                    </a>
-                                <{/if}>
-                                <!-- Forum description -->
-                                <{if $forum.forum_desc != ""}>
-                                    <button class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#forumDesc-<{$forum.forum_id}>"><span
-                                                class="fa fa-info"></span></button>
-                                    <div class="modal fade" id="forumDesc-<{$forum.forum_id}>" tabindex="-1" role="dialog" aria-labelledby="ForumDescription"
-                                         aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                    <h4 class="modal-title" id="ForumDescription"><{$smarty.const.THEME_FORUM_DESC}>: <{$category.cat_title}>
-                                                        - <{$forum.forum_name}></h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <{$forum.forum_desc}>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <{if $forum.forum_moderators}>
-                                                        <div class="pull-left"><span class="label label-info"><{$smarty.const._MD_NEWBB_MODERATOR}>: <{$forum.forum_moderators}></span>
-                                                        </div>
-                                                    <{/if}>
-                                                    <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.cat_id}>"
-                                                       class="btn btn-secondary"
-                                                       title="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.cat_id}>">
-                                                        <{$smarty.const.THEME_GOTOTHEFORUM}>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <{/if}>
-                                <!-- End forum description-->
-                            </div>
-
-                            <div class="col-sm-1 col-md-1 text-center hidden-xs">
-                                <{if $stats[$forum.forum_id].topic.day}>
-                                    <strong><{$stats[$forum.forum_id].topic.day}></strong>
-                                    /
-                                <{/if}>
-                                <{$forum.forum_topics}>
-                            </div>
-
-                            <div class="col-sm-1 col-md-1 text-center hidden-xs">
-                                <{if $stats[$forum.forum_id].post.day}>
-                                    <strong><{$stats[$forum.forum_id].post.day}></strong>
-                                    /
-                                <{/if}>
-                                <{$forum.forum_posts}>
-                            </div>
-
-                            <div class="col-sm-4 col-md-4 hidden-xs">
-                                <{if $forum.forum_lastpost_subject}>
-                                    <{$forum.forum_lastpost_time}> <{$smarty.const._MD_NEWBB_BY}> <{$forum.forum_lastpost_user}>
-                                    <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$forum.forum_lastpost_id}>">
-                                        <{$forum.forum_lastpost_subject}>
-                                        <{$forum.forum_lastpost_icon}>
-                                    </a>
-                                <{else}>
-                                    <{$smarty.const._AM_NEWBB_NOTOPIC}>
-                                <{/if}>
-
-                                <{if $forum.subforum}>
-                                    <{$smarty.const._MD_NEWBB_SUBFORUMS}><{$img_subforum}>
-                                    <{foreach item=subforum from=$forum.subforum}>
-                                    [
-                                    <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$subforum.forum_id}>"><{$subforum.forum_name}></a>
-                                    ]
-                                <{/foreach}>
-                                <{/if}>
-                            </div>
-                        </div>
-                        <{/foreach}>
-                    </div><!-- .panel-body -->
-                </div><!-- .panel-collapse .collapse -->
-            </div><!-- .panel .panel-default -->
-            <{/foreach}><!-- End Forum Categories -->
-        </div><!-- .panel-group -->
+    <table class="table table-hover">
+        <{foreach item=category from=$categories}><!-- Forum categories -->
+        <thead>
+        <tr class="thead-light">
+            <th scope="col" colspan="5">
+                <span class="fa fa-list"></span>
+                <span class="font-weight-bold"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php?cat=<{$category.cat_id}>" title="<{$category.cat_title}>"><{$category.cat_title}></a></span>
+                <br><small><{$category.cat_description}></small>
+            </th>
+        </tr>
+        <tr class="table-sm">
+            <th scope="col"> </th>
+            <th scope="col"><{$smarty.const._MD_NEWBB_FORUM}></th>
+            <th scope="col"><{$smarty.const._MD_NEWBB_TOPICS}></th>
+            <th scope="col"><{$smarty.const._MD_NEWBB_POSTS}></th>
+            <th scope="col"><{$smarty.const._MD_NEWBB_LASTPOST}></th>
+        </tr>
+        </thead>
+        <tbody>
+        <{foreach item=forum from=$category.forums}>
+        <tr>
+            <td><{$forum.forum_folder}></td>
+            <td><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>" title="<{$forum.forum_name}>"><{$forum.forum_name}></a>
+                <br><small><{$forum.forum_desc}></small></td>
+            <td><{$forum.forum_topics}></td>
+            <td><{$forum.forum_posts}></td>
+            <td>
+                <{if $forum.forum_lastpost_subject}>
+                <{$forum.forum_lastpost_time}> <{$smarty.const._MD_NEWBB_BY}> <{$forum.forum_lastpost_user}>
+                <br>
+                <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$forum.forum_lastpost_id}>">
+                    <{$forum.forum_lastpost_subject}>
+                    <span class="fa fa-forward" aria-hidden="true" title="<{$smarty.const._MD_NEWBB_GOTOLASTPOST}>"></span>
+                </a>
+                <{else}>
+                <{$smarty.const._MD_NEWBB_NOTOPIC}>
+                <{/if}>
+                <{if $forum.subforum}>
+                <br><{$smarty.const._MD_NEWBB_SUBFORUMS}> <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                <{foreach item=subforum from=$forum.subforum}><br>
+                [<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$subforum.forum_id}>"><{$subforum.forum_name}></a>]
+                <{/foreach}>
+                <{/if}>
+            </td>
+        </tr>
+        <{/foreach}>
+        </tbody>
+        <{/foreach}>
+    </table>
 
         <div class="row mb10">
             <div class="col-md-12">
@@ -254,7 +137,7 @@
                     <input type="hidden" name="searchin" id="searchin" value="both">
 
                     <span class="input-group-btn">
-                <button class="btn btn-primary" type="submit" id="submit"><{$smarty.const.THEME_FORUM_SEARCH}></button>
+                <button class="btn btn-primary" type="submit" id="searchsubmit"><{$smarty.const.THEME_FORUM_SEARCH}></button>
             </span>
                 </form>
             </div>
@@ -287,7 +170,7 @@
                                 </a></li>
                         <{/if}>
 
-                        <li><a class="btn btn-xs btn-primary" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=new"
+                        <li><a class="btn btn-primary" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=new"
                                title="<{$smarty.const._MD_NEWBB_VIEW_NEWPOSTS}>">
                                 <{$smarty.const._MD_NEWBB_VIEW_NEWPOSTS}>
                             </a></li>
@@ -321,7 +204,7 @@
             <{include file="db:newbb_online.tpl"}>
         <{/if}>
 
-        <a title="NewBB" href="https://xoops.org" class="btn btn-xs btn-success">NewBB Version <{$version/100}></a>
+        <a title="NewBB" href="https://xoops.org" class="btn btn-success">NewBB Version <{$version/100}></a>
         <{if $rss_button}>
             <div class="text-right">
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?c=<{$viewcat}>" target="_blank" title="RSS FEED">
@@ -330,6 +213,6 @@
             </div>
         <{/if}>
 
-        <{include file='db:newbb_notification_select.tpl'}>
+        <{include file='db:system_notification_select.tpl'}>
 
     </div><!-- .xoops-newbb -->

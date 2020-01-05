@@ -24,8 +24,8 @@
             <{/if}>
 
                 <{if $infobox.show}>
-                    <a data-toggle="collapse" href="#<{$topic_post.post_id}>" title="<{$smarty.const.THEME_INFO}>" class="btn btn-primary btn-sm mb10"><span class="fa fa-info"></span></a>
-                    <div id="<{$topic_post.post_id}>" class="collapse">
+                    <button  data-toggle="collapse" data-target="#p<{$topic_post.post_id}>" title="<{$smarty.const.THEME_INFO}>" class="btn btn-primary btn-sm mb10"><span class="fa fa-info"></span></button>
+                    <div id="p<{$topic_post.post_id}>" class="collapse">
                         <ul class="list-unstyled text-left">
                             <li><{$smarty.const._MD_NEWBB_JOINED}>: <{$topic_post.poster.regdate}></li>
                             <{if $topic_post.poster.from}>

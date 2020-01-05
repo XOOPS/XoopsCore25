@@ -17,22 +17,36 @@
     <div class="right" id="admin">
         <{if $mode gt 1}>
         <form class="form-inline" name="form_posts_admin" action="action.post.php" method="POST" onsubmit="if(window.document.form_posts_admin.op.value &lt; 1){return false;}">
-            <{$smarty.const._ALL}>:
-                <input type="checkbox" name="post_check" id="post_check" value="1" onclick="xoopsCheckAll('form_posts_admin', 'post_check');">
-            <select name="op">
-                <option value="0"><{$smarty.const._SELECT}></option>
-                <option value="delete"><{$smarty.const._DELETE}></option>
-                <{if $status eq "pending"}>
-                    <option value="approve"><{$smarty.const._MD_NEWBB_APPROVE}></option>
-                <{elseif $status eq "deleted"}>
-                    <option value="restore"><{$smarty.const._MD_NEWBB_RESTORE}></option>
-                <{/if}>
-            </select>
-            <input type="hidden" name="uid" value="<{$uid}>"> |
-            <input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>"> |
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>" target="_self"
-               title="<{$smarty.const._MD_NEWBB_TYPE_VIEW}>"><{$smarty.const._MD_NEWBB_TYPE_VIEW}></a>
-            <{else}>
+            <div class="form-row align-items-center">
+                <div class="col-auto">
+                    <div class="form-check mb-2">
+                        <label for="post_check">
+                            <{$smarty.const._ALL}>:
+                        </label>
+                        <input type="checkbox" name="post_check" id="post_check" value="1" onclick="xoopsCheckAll('form_posts_admin', 'post_check');">
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <select name="op" class="custom-select mb-2">
+                        <option value="0"><{$smarty.const._SELECT}></option>
+                        <option value="delete"><{$smarty.const._DELETE}></option>
+                        <{if $status eq "pending"}>
+                        <option value="approve"><{$smarty.const._MD_NEWBB_APPROVE}></option>
+                        <{elseif $status eq "deleted"}>
+                        <option value="restore"><{$smarty.const._MD_NEWBB_RESTORE}></option>
+                        <{/if}>
+                    </select>
+                </div>
+                <input type="hidden" name="uid" value="<{$uid}>">
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                </div>
+                <div class="col-auto">
+                    <a class="btn btn-primary mb-2" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>" target="_self"
+                       title="<{$smarty.const._MD_NEWBB_TYPE_VIEW}>"><{$smarty.const._MD_NEWBB_TYPE_VIEW}></a>
+                </div>
+            </div>
+        <{else}>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>&amp;status=active#admin"
                target="_self"
                title="<{$smarty.const._MD_NEWBB_TYPE_ADMIN}>"><{$smarty.const._MD_NEWBB_TYPE_ADMIN}></a> |
@@ -42,7 +56,7 @@
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?uid=<{$uid}>&amp;status=deleted#admin"
                target="_self"
                title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>"><{$smarty.const._MD_NEWBB_TYPE_DELETED}></a>
-            <{/if}>
+        <{/if}>
     </div>
 <{/if}>
 <div class="clear"></div>
@@ -52,12 +66,11 @@
 </a>
 </div>
 <div>
-    <form>
         <div class="form-row">
             <div class="col">
                 <select
                         name="topicoption" id="topicoption"
-                        class="form-control menu"
+                        class="form-control  mb-2"
                         onchange="if(this.options[this.selectedIndex].value.length >0 )    { window.document.location=this.options[this.selectedIndex].value;}"
                 >
                     <option value=""><{$smarty.const._MD_NEWBB_TOPICOPTION}></option>
@@ -68,7 +81,7 @@
             <div class="col">
                 <select
                         name="viewmode" id="viewmode"
-                        class="form-control menu"
+                        class="form-control  mb-2"
                         onchange="if(this.options[this.selectedIndex].value.length >0 )    { window.document.location=this.options[this.selectedIndex].value;}"
                 >
                     <option value=""><{$smarty.const._MD_NEWBB_VIEWMODE}></option>
@@ -78,9 +91,9 @@
                 </select>
             </div>
         </div>
-    </form>
 
-    <div class="pagenav">
+
+    <div class="generic-pagination col text-right`">
         <{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
     </div>
 </div>
@@ -114,7 +127,7 @@
         </a>
     </div>
     <!-- irmtfan hardcode removed style="float: right; text-align:right;" -->
-    <div class="icon_right">
+    <div class="generic-pagination col text-right mt-2">
         <{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
         <!-- irmtfan to solve nested forms and id="xo-pagenav" issue -->
     </div>
@@ -146,5 +159,5 @@
     <br>
     <{include file="db:newbb_online.tpl"}>
 <{/if}>
-<{include file='db:newbb_notification_select.tpl'}>
+<{include file='db:system_notification_select.tpl'}>
 <!-- end module contents -->

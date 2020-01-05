@@ -47,21 +47,37 @@
         <{if $viewer_level gt 1}>
             <div class="col-sm-8 col-md-8">
                 <{if $mode gt 1}>
-                    <form name="form_posts_admin" action="action.post.php" method="POST" onsubmit="if(window.document.form_posts_admin.op.value &lt; 1){return false;}">
-                    <{$smarty.const._ALL}>: <input type="checkbox" name="post_check" id="post_check" value="1" onclick="xoopsCheckAll('form_posts_admin', 'post_check');">
-                    <select name="op">
-                        <option value="0"><{$smarty.const._SELECT}></option>
-                        <option value="delete"><{$smarty.const._DELETE}></option>
-                        <{if $status eq "pending"}>
-                            <option value="approve"><{$smarty.const._MD_NEWBB_APPROVE}></option>
-                        <{elseif $status eq "deleted"}>
-                            <option value="restore"><{$smarty.const._MD_NEWBB_RESTORE}></option>
-                        <{/if}>
-                    </select>
-                    <input type="hidden" name="topic_id" value="<{$topic_id}>">
-                    <input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>"> |
-                    <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_VIEW}>"><{$smarty.const._MD_NEWBB_TYPE_VIEW}></a>
-                    <{else}>
+                <form class="form-inline" name="form_posts_admin" action="action.post.php" method="POST" onsubmit="if(window.document.form_posts_admin.op.value &lt; 1){return false;}">
+                    <div class="form-row align-items-center">
+                        <div class="col-auto">
+                            <div class="form-check mb-2">
+                                <label for="post_check">
+                                    <{$smarty.const._ALL}>:
+                                </label>
+                                <input type="checkbox" name="post_check" id="post_check" value="1" onclick="xoopsCheckAll('form_posts_admin', 'post_check');">
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <select name="op" class="custom-select mb-2">
+                                <option value="0"><{$smarty.const._SELECT}></option>
+                                <option value="delete"><{$smarty.const._DELETE}></option>
+                                <{if $status eq "pending"}>
+                                <option value="approve"><{$smarty.const._MD_NEWBB_APPROVE}></option>
+                                <{elseif $status eq "deleted"}>
+                                <option value="restore"><{$smarty.const._MD_NEWBB_RESTORE}></option>
+                                <{/if}>
+                            </select>
+                        </div>
+                        <input type="hidden" name="topic_id" value="<{$topic_id}>">
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                        </div>
+                        <div class="col-auto">
+                            <a class="btn btn-primary mb-2" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>" target="_self"
+                               title="<{$smarty.const._MD_NEWBB_TYPE_VIEW}>"><{$smarty.const._MD_NEWBB_TYPE_VIEW}></a>
+                        </div>
+                    </div>
+                <{else}>
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=active#admin" title="<{$smarty.const._MD_NEWBB_TYPE_ADMIN}>"><{$smarty.const._MD_NEWBB_TYPE_ADMIN}></a> |
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=pending#admin" title="<{$smarty.const._MD_NEWBB_TYPE_PENDING}>"><{$smarty.const._MD_NEWBB_TYPE_PENDING}></a> |
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$topic_id}>&amp;status=deleted#admin" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>"><{$smarty.const._MD_NEWBB_TYPE_DELETED}></a>
@@ -134,43 +150,41 @@
         </div>
     </div>
 
-    <div class="row mb10">
-        <div class="<{if $rating_enable}>col-sm-4 col-md-4<{else}>col-sm-8 col-md-8<{/if}>">
-            <select class="form-control" name="topicoption" id="topicoption" onchange="if(this.options[this.selectedIndex].value.length >0 ) { window.document.location=this.options[this.selectedIndex].value;}">
+    <div class="form-row">
+        <div class="col">
+            <select class="form-control mb-2" name="topicoption" id="topicoption" onchange="if(this.options[this.selectedIndex].value.length >0 ) { window.document.location=this.options[this.selectedIndex].value;}">
                 <option value=""><{$smarty.const._MD_NEWBB_TOPICOPTION}></option>
-                <{if $viewer_level gt 1}>
-                    <{foreach item=act from=$admin_actions}>
-                        <option value="<{$act.link}>"><{$act.name}></option>
-                    <{/foreach}>
+                <{if $viewer_level > 1}>
+                <{foreach item=act from=$admin_actions}>
+                <option value="<{$act.link}>"><{$act.name}></option>
+                <{/foreach}>
                 <{/if}>
                 <{if $adminpoll_actions|is_array && count($adminpoll_actions) > 0 }>
-                    <option value="">--------</option>
-                    <option value=""><{$smarty.const._MD_NEWBB_POLLOPTIONADMIN}></option>
-                    <{foreach item=actpoll from=$adminpoll_actions}>
-                        <option value="<{$actpoll.link}>"><{$actpoll.name}></option>
-                    <{/foreach}>
+                <option value="">--------</option>
+                <option value=""><{$smarty.const._MD_NEWBB_POLLOPTIONADMIN}></option>
+                <{foreach item=actpoll from=$adminpoll_actions}>
+                <option value="<{$actpoll.link}>"><{$actpoll.name}></option>
+                <{/foreach}>
                 <{/if}>
             </select>
         </div>
-
-        <div class="col-sm-4 col-md-4">
-            <{if $rating_enable && $forum_post && $forum_reply}>
-                <select class="form-control" name="rate" id="rate" onchange="if(this.options[this.selectedIndex].value.length >0 ) { window.document.location=this.options[this.selectedIndex].value;}">
-                    <option value=""><{$smarty.const._MD_NEWBB_RATE}></option>
-                    <option value="<{$xoops_url}>/modules/<{$xoops_dirname}>/ratethread.php?topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;rate=5"><{$smarty.const._MD_NEWBB_RATE5}></option>
-                    <option value="<{$xoops_url}>/modules/<{$xoops_dirname}>/ratethread.php?topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;rate=4"><{$smarty.const._MD_NEWBB_RATE4}></option>
-                    <option value="<{$xoops_url}>/modules/<{$xoops_dirname}>/ratethread.php?topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;rate=3"><{$smarty.const._MD_NEWBB_RATE3}></option>
-                    <option value="<{$xoops_url}>/modules/<{$xoops_dirname}>/ratethread.php?topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;rate=2"><{$smarty.const._MD_NEWBB_RATE2}></option>
-                    <option value="<{$xoops_url}>/modules/<{$xoops_dirname}>/ratethread.php?topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;rate=1"><{$smarty.const._MD_NEWBB_RATE1}></option>
-                </select>
-            <{/if}>
+        <{if $rating_enable && $forum_post && $forum_reply}>
+        <div class="col">
+            <select class="form-control  mb-2" name="rate" id="rate" onchange="if(this.options[this.selectedIndex].value.length >0 ) { window.document.location=this.options[this.selectedIndex].value;}">
+                <option value=""><{$smarty.const._MD_NEWBB_RATE}></option>
+                <option value="<{$xoops_url}>/modules/<{$xoops_dirname}>/ratethread.php?topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;rate=5"><{$smarty.const._MD_NEWBB_RATE5}></option>
+                <option value="<{$xoops_url}>/modules/<{$xoops_dirname}>/ratethread.php?topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;rate=4"><{$smarty.const._MD_NEWBB_RATE4}></option>
+                <option value="<{$xoops_url}>/modules/<{$xoops_dirname}>/ratethread.php?topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;rate=3"><{$smarty.const._MD_NEWBB_RATE3}></option>
+                <option value="<{$xoops_url}>/modules/<{$xoops_dirname}>/ratethread.php?topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;rate=2"><{$smarty.const._MD_NEWBB_RATE2}></option>
+                <option value="<{$xoops_url}>/modules/<{$xoops_dirname}>/ratethread.php?topic_id=<{$topic_id}>&amp;forum=<{$forum_id}>&amp;rate=1"><{$smarty.const._MD_NEWBB_RATE1}></option>
+            </select>
         </div>
-
-        <div class="col-sm-4 col-md-4">
-            <select class="form-control" name="viewmode" id="viewmode" onchange="if(this.options[this.selectedIndex].value.length >0 ) { window.location=this.options[this.selectedIndex].value;}">
+        <{/if}>
+        <div class="col">
+            <select class="form-control mb-2" name="viewmode" id="viewmode" onchange="if(this.options[this.selectedIndex].value.length >0 ) { window.location=this.options[this.selectedIndex].value;}">
                 <option value=""><{$smarty.const._MD_NEWBB_VIEWMODE}></option>
                 <{foreach item=act from=$viewmode_options}>
-                    <option value="<{$act.link}>"><{$act.title}></option>
+                <option value="<{$act.link}>"><{$act.title}></option>
                 <{/foreach}>
             </select>
         </div>
@@ -183,7 +197,7 @@
     <{foreach item=topic_post from=$topic_posts}>
         <{include file="db:newbb_thread.tpl" topic_post=$topic_post mode=$mode}>
     <{foreachelse}>
-        <{$smarty.const._MD_NEWBB_ERRORPOST}>
+        <div class="alert alert-warning" role="alert"><{$smarty.const._MD_NEWBB_NOTOPIC}></div>
     <{/foreach}>
 
     <{if $mode gt 1}>
@@ -231,7 +245,7 @@
     <{/if}>
     </div>
 
-<{include file='db:newbb_notification_select.tpl'}>
+<{include file='db:system_notification_select.tpl'}>
 
 </div>
 

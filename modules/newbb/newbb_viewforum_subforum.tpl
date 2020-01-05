@@ -3,72 +3,40 @@
 </a>
 <div class="newbb-subforum mb10 clearfix">
     <div class="collapse" id="xoops-subforum">
-        <{foreach item=sforum from=$subforum}>
-        <ul class="subforum-loop list-unstyled clearfix">
-        <li class="col-xs-12 col-md-6">
-            <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$sforum.forum_id}>" title="<{$sforum.forum_name}>">
-                <{$sforum.forum_folder}> <strong><{$sforum.forum_name}></strong>
-            </a>
-        </li>
 
-        <li class="col-xs-12 col-md-6 text-right">
-            <strong><{$smarty.const._MD_NEWBB_LASTPOST}>:</strong>
-            <{$sforum.forum_lastpost_time}> <strong><{$smarty.const._MD_NEWBB_BY}></strong> <{$sforum.forum_lastpost_user}>
-        </li>
-
-        <li>
-        <ul class="list-inline col-md-6 hidden-xs">
-            <{if $sforum.forum_moderators}><li><span class="label label-info"><{$smarty.const._MD_NEWBB_MODERATOR}>: <{$sforum.forum_moderators}></span></li><{/if}>
-
-            <li><span class="label label-info"><{$smarty.const._MD_NEWBB_TOPICS}>: <{$sforum.forum_topics}></span></li>
-
-            <li><span class="label label-info"><{$smarty.const._MD_NEWBB_POSTS}>: <{$sforum.forum_posts}></span></li>
-
-            <!-- If subforum description -->
-            <{if $sforum.forum_desc != ""}>
-                <li>
-                    <button class="btn btn-xs btn-info" data-toggle="modal" data-target="#subforum-<{$sforum.forum_id}>">
-                        <span class="fa fa-info></span>
-                    </button>
-                </li>
-            <{/if}>
-        </ul>
-
-        <ul class="list-inline col-md-6 text-right">
-        <{if $sforum.forum_lastpost_subject}>
-            <li>
-                <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$sforum.forum_lastpost_id}>">
-                    <{$sforum.forum_lastpost_subject}>
-                    <{$sforum.forum_lastpost_icon}>
-                </a>
-            </li>
-        <{else}>
-            <li><{$smarty.const._MD_NEWBB_NONEWPOSTS}></li>
-        <{/if}>
-        </ul>
-        </li>
-
-        </ul><!-- .subforum-loop -->
-
-        <!-- Modal -->
-        <div class="modal fade" id="subforum-<{$sforum.forum_id}>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title"><{$sforum.forum_name}></h4>
-              </div>
-              <div class="modal-body">
-                <p><{$sforum.forum_desc}></p>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal"><{$smarty.const.THEME_CLOSE}></button>
-                <button type="button" class="btn btn-primary"><{$smarty.const.THEME_GOTOTHEFORUM}></button>
-              </div>
-            </div><!-- /.modal-content -->
-          </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-
-        <{/foreach}>
+        <table class="table table-hover">
+            <thead>
+            <tr class="table-sm">
+                <th scope="col"> </th>
+                <th scope="col"><{$smarty.const._MD_NEWBB_FORUM}></th>
+                <th scope="col"><{$smarty.const._MD_NEWBB_TOPICS}></th>
+                <th scope="col"><{$smarty.const._MD_NEWBB_POSTS}></th>
+                <th scope="col"><{$smarty.const._MD_NEWBB_LASTPOST}></th>
+            </tr>
+            </thead>
+            <{foreach item=sforum from=$subforum}>
+            <tbody>
+                <tr>
+                    <td><{$sforum.forum_folder}></td>
+                    <td><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$sforum.forum_id}>" title="<{$sforum.forum_name}>"><{$sforum.forum_name}></a>
+                        <br><small><{$sforum.forum_desc}></small></td>
+                    <td><{$sforum.forum_topics}></td>
+                    <td><{$sforum.forum_posts}></td>
+                    <td>
+                        <{if $sforum.forum_lastpost_subject}>
+                        <{$sforum.forum_lastpost_time}> <{$smarty.const._MD_NEWBB_BY}> <{$sforum.forum_lastpost_user}>
+                    <br>
+                        <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$sforum.forum_lastpost_id}>">
+                            <{$sforum.forum_lastpost_subject}>
+                            <span class="fa fa-forward" aria-hidden="true" title="<{$smarty.const._MD_NEWBB_GOTOLASTPOST}>"></span>
+                        </a>
+                        <{else}>
+                        <{$smarty.const._MD_NEWBB_NOTOPIC}>
+                        <{/if}>
+                    </td>
+                </tr>
+                <{/foreach}>
+            </tbody>
+        </table>
     </div><!-- #xoops-subforum -->
 </div><!-- .xoops-newbb-subforum -->
