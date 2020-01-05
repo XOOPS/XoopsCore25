@@ -322,10 +322,11 @@ strong.hit-counter {
     margin-right: 10px;
 }
 
+/*
 .xoops-theme-select {
     text-align: center;
 }
-
+*/
 .xoops-theme-select form select {
     border: 1px solid #D6D6D6;
     width: 100%;
@@ -334,6 +335,7 @@ strong.hit-counter {
 .xoops-theme-select img {
     max-width: 100%;
     display: inline;
+    text-align: center;
 }
 
 ul.userblock {
