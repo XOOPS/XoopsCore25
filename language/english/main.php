@@ -91,3 +91,6 @@ define('THEME_COMMENT_ADD', 'Add Your Comment');
 define('THEME_COMMENT_OPTIONS', 'Comment View Options:');
 
 define('THEME_PERMISSIONS_LEGEND', 'Permissions &amp; Legend');
+
+define('THEME_INBOX_ALERT', 'PM Alert');
+define('THEME_INBOX_LINK', 'Click here to view your Inbox!');

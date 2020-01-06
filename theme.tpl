@@ -61,7 +61,7 @@
             <div class="<{if $xoops_banner != ""}>col-md-6<{else}>col-md-12<{/if}>">
             <h2 class="display-5"><{$smarty.const.THEME_ABOUTUS}></h2>
             <{if $xoops_banner != ""}></div><div class="col-md-6"><div class="xoops-banner"><{$xoops_banner}></div></div><{/if}>
-        </div>		
+        </div>
 		<p class="lead"><{$xoops_meta_description}></p>
 		<hr class="my-4">
 		<a class="btn btn-primary btn-md" href="<{$xoops_url}>/"><{$smarty.const.THEME_LEARNMORE}></a>
@@ -125,5 +125,7 @@
     </a>
 </div>
 <{if $xoops_isadmin|default:false}><{include file="$theme_name/tpl/nav-admin.tpl"}><{/if}>
+<!-- Inbox alert -->
+<{include file="$theme_name/tpl/inboxAlert.tpl"}>
 </body>
 </html>

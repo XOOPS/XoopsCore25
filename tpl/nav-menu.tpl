@@ -15,7 +15,7 @@
 
                     <{xoInboxCount assign='unread_count'}>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="xswatch-account-menu"><{if $unread_count > 0}><span class="fa fa-envelope-o"></span> <{/if}><{$smarty.const.THEME_ACCOUNT}> <span class="caret"></span></a>
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="xswatch-account-menu"><{$smarty.const.THEME_ACCOUNT}> <span class="caret"></span></a>
                         <div class="dropdown-menu" aria-labelledby="xswatch-account-menu">
                             <{if $xoops_isuser|default:false}>
                             <a class="dropdown-item" href="<{$xoops_url}>/user.php"><{$smarty.const.THEME_ACCOUNT_EDIT}></a>
@@ -60,7 +60,7 @@
                 <{if $xoops_search|default:false}>
                 <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <form class="form-inline my-2 my-lg-0" role="search" action="<{xoAppUrl search.php}>" method="get">					
+                    <form class="form-inline my-2 my-lg-0" role="search" action="<{xoAppUrl search.php}>" method="get">
 						<div class="input-group mb-3">
 							<input class="form-control" type="text" name="query" placeholder="<{$smarty.const.THEME_SEARCH_TEXT}>">
 							<div class="input-group-append">
