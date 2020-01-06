@@ -134,23 +134,19 @@
 </div>
 <div class="clear"></div>
 
-<br>
-<br>
 <div>
-    <!-- irmtfan hardcode removed style="float: left; text-align: left;" -->
-    <div class="icon_left">
+    <div class="xoopsform col mb-3">
+        <{$forum_jumpbox}>
+    </div>
+    <div class="xoopsform col">
         <form action="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php" method="get">
             <input name="term" id="term" type="text" size="15">
             <input type="hidden" name="sortby" id="sortby" value="p.post_time desc">
             <input type="hidden" name="action" id="action" value="yes">
             <input type="hidden" name="searchin" id="searchin" value="both">
-            <input type="submit" class="formButton" value="<{$smarty.const._MD_NEWBB_SEARCH}>"><br>
+            <input type="submit" class="formButton" value="<{$smarty.const._MD_NEWBB_SEARCH}>">
             [<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._MD_NEWBB_ADVSEARCH}></a>]
         </form>
-    </div>
-    <!-- irmtfan hardcode removed style="float: right; text-align: right;" -->
-    <div class="icon_right">
-        <{$forum_jumpbox}>
     </div>
 </div>
 <div class="clear"></div>
