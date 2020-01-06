@@ -28,16 +28,16 @@
             <{if $item.images}>
                 <div id="articleslider" class="owl-carousel owl-theme">
                     <div class="item">
-                        <img class="img-responsive" src="<{$item.image_path}>"/>
+                        <img class="img-fluid" src="<{$item.image_path}>"/>
                     </div>
                     <{foreach item=image from=$item.images}>
                         <div class="item">
-                            <img class="img-responsive" src="<{$image.path}>" alt="<{$image.name}>"/>
+                            <img class="img-fluid" src="<{$image.path}>" alt="<{$image.name}>"/>
                         </div>
                     <{/foreach}>
                 </div>
             <{elseif $item.image_path}>
-                <img class="img-responsive" src="<{$item.image_path}>" alt="<{$item.image_name}>"/>
+                <img class="img-fluid" src="<{$item.image_path}>" alt="<{$item.image_name}>"/>
             <{/if}>
         </figure>
     <{/if}>
@@ -49,7 +49,7 @@
     </header>
     <div class="pub_article_t_bottom_info">
         <div class="pull-left">
-            <span class="glyphicon glyphicon-paperclip"></span>&nbsp;<{$item.category}>
+            <span class="fa fa-paperclip"></span>&nbsp;<{$item.category}>
             &nbsp;&nbsp;<{$item.who_when}>
         </div>
         <div class="pull-right">

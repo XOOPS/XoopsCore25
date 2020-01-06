@@ -19,16 +19,16 @@
                 <div class="article_wf_title">
                     <h3><{$item.titlelink}></h3>
                     <span>
-                        <span class="glyphicon glyphicon-tag"></span>&nbsp;<{$item.category}>
+                        <span class="fa fa-tag"></span>&nbsp;<{$item.category}>
                     </span>
                     <span>
-                        <span class="glyphicon glyphicon-user"></span>&nbsp;<{$item.who}>
+                        <span class="fa fa-user"></span>&nbsp;<{$item.who}>
                     </span>
                     <span>
-                        <span class="glyphicon glyphicon-calendar"></span>&nbsp;<{$item.when}>
+                        <span class="fa fa-calendar"></span>&nbsp;<{$item.when}>
                     </span>
                     <span>
-                        <span class="glyphicon glyphicon-comment"></span>&nbsp;<{$item.comments}>
+                        <span class="fa fa-comment"></span>&nbsp;<{$item.comments}>
                     </span>
                 </div>
                 <{if $item.image_path}>

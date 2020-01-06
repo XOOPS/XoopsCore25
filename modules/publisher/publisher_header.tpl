@@ -3,9 +3,14 @@
     <{if $module_home or $categoryPath}>
         <ol class="breadcrumb">
             <{if $module_home}>
-                <li><{$module_home}></li>
+                <li class="breadcrumb-item<{if !$categoryPath|default:false}> active<{/if}>"><{$module_home}></li>
             <{/if}>
-            <{$categoryPath}>
+            <{if $categoryPath|default:false}>
+                <{if !$categoryPath|strstr:'<li>'}>
+                    <{assign var=categoryPath value="<li>$categoryPath</li>"}>
+                <{/if}>
+                <{$categoryPath|replace:'<li>':'<li class="breadcrumb-item">'}>
+            <{/if}>
         </ol>
     <{/if}>
 <{/if}>
@@ -15,4 +20,3 @@
         <{$lang_mainintro}>
     </div>
 <{/if}>
-

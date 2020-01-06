@@ -27,19 +27,19 @@
         <h2>
             <{$item.titlelink}>
             <span style="font-size: 11px; padding: 0; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
-                    <span class="glyphicon glyphicon-tag"></span>&nbsp;<{$item.category}>
+                    <span class="fa fa-tag"></span>&nbsp;<{$item.category}>
                 </span>
             <span style="font-size: 11px; padding: 0 0 0 16px; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
-                    <span class="glyphicon glyphicon-user"></span>&nbsp;<{$item.who}>
+                    <span class="fa fa-user"></span>&nbsp;<{$item.who}>
                 </span>
             <span style="font-size: 11px; padding: 0 0 0 16px; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
-                    <span class="glyphicon glyphicon-calendar"></span>&nbsp;<{$item.when}>
+                    <span class="fa fa-calendar"></span>&nbsp;<{$item.when}>
                 </span>
             <span style="font-size: 11px; padding: 0 0 0 16px; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
-                    <span class="glyphicon glyphicon-comment"></span>&nbsp;<{$item.comments}>
+                    <span class="fa fa-comment"></span>&nbsp;<{$item.comments}>
                 </span>
             <span style="font-size: 11px; padding: 0 0 0 16px; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
-                    <span class="glyphicon glyphicon-ok-circle"></span>&nbsp;<{$item.counter}> <{$smarty.const._MD_PUBLISHER_READS}>
+                    <span class="fa fa-check-circle-o"></span>&nbsp;<{$item.counter}> <{$smarty.const._MD_PUBLISHER_READS}>
                 </span>
         </h2>
 
@@ -52,16 +52,16 @@
             <{if $item.images}>
                 <div id="articleslider" class="owl-carousel owl-theme" style="margin-bottom:10px;">
                     <div class="item">
-                        <img class="img-responsive" src="<{$item.image_path}>"/>
+                        <img class="img-fluid" src="<{$item.image_path}>"/>
                     </div>
                     <{foreach item=image from=$item.images}>
                         <div class="item">
-                            <img class="img-responsive" src="<{$image.path}>" alt="<{$image.name}>"/>
+                            <img class="img-fluid" src="<{$image.path}>" alt="<{$image.name}>"/>
                         </div>
                     <{/foreach}>
                 </div>
             <{elseif $item.image_path}>
-                <img style="margin-bottom:15px;" class="img-responsive" src="<{$item.image_path}>" alt="<{$item.image_name}>"/>
+                <img style="margin-bottom:15px;" class="img-fluid" src="<{$item.image_path}>" alt="<{$item.image_name}>"/>
             <{/if}>
         </figure>
     <{/if}>
