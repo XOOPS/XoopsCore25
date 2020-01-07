@@ -126,6 +126,6 @@
 </div>
 <{if $xoops_isadmin|default:false}><{include file="$theme_name/tpl/nav-admin.tpl"}><{/if}>
 <!-- Inbox alert -->
-<{include file="$theme_name/tpl/inboxAlert.tpl"}>
+<{if $xoops_isuser|default:false}><{include file="$theme_name/tpl/inboxAlert.tpl"}><{/if}>
 </body>
 </html>
