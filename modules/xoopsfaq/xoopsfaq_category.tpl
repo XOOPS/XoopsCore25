@@ -1,36 +1,43 @@
+<{* remove jquery loaded by module *}>
+<script>$.noConflict();</script>
+<script>$( document ).ready(function() {
+            $('.collapsefaq').collapse('hide');
+            if(window.location.hash) {
+                setTimeout(function(){
+                    var hash = window.location.hash.substring(1);
+                    $('#collapsefa' + hash).collapse('toggle');
+                    var hash = window.location.hash;
+                    $('html, body').animate({
+                        scrollTop: $(hash).offset().top
+                    }, 'fast');
+                }, 500);
+        }
+    });
+</script>
 <ol class="breadcrumb">
-    <li><a href="index.php"><{$smarty.const._XO_LA_XOOPSFAQ}></a></li>
-    <li><a href="index.php"><{$smarty.const._XO_LA_MAIN}></a></li>
-    <li><a href="#"><{$category_name}></a></li>
+    <li class="breadcrumb-item"><a href="index.php"><{$smarty.const._XO_LA_XOOPSFAQ}></a></li>
+    <li class="breadcrumb-item active"><a href="#"><{$category_name}></a></li>
 </ol>
 
-
-<ul class="list-group">
-    <!-- start question loop -->
-    <{foreach item=question from=$questions}>
-        <li class="list-group-item"><a href="#q<{$question.id}>"><span class="glyphicon glyphicon-hand-right"></span>&nbsp;&nbsp;<{$question.title}></a>
-        </li>
-    <{/foreach}>
-    <!-- end question loop -->
-</ul>
-
-
-<!-- start question and answer loop -->
+<div class="accordion" id="accordionExample">
 <{foreach item=question from=$questions}>
-    <div class="panel panel-default">
-        <div class="panel-heading"><a id="q<{$question.id}>" name="q<{$question.id}>"></a><span class="label label-danger"><{$question.title}></span>
+    <div id="q<{$question.id}>" class="card">
+        <div class="card-header" id="faqheading<{$question.id}>">
+            <h2 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapsefaq<{$question.id}>" aria-expanded="true" aria-controls="collapseOne">
+                    <{$question.title}>
+                </button>
+            </h2>
         </div>
-        <div class="panel-body">
-            <td class="even"><{$question.answer}>
-                <div style="text-align: right;"><a href="#top"><span class="label label-primary"><{$smarty.const._XO_LA_BACKTOTOP}></span></a></div>
-            </td>
+
+        <div id="collapsefaq<{$question.id}>" class="collapsefaq show" aria-labelledby="faqheading<{$question.id}>" data-parent="#accordionExample">
+            <div class="card-body">
+                <{$question.answer}>
+            </div>
         </div>
     </div>
 <{/foreach}>
-<!-- end question and answer loop -->
-
-<br><br>
-<div style="text-align:center;"><b>[ <a href="index.php"><{$smarty.const._XO_LA_BACKTOINDEX}></a> ]</b></div>
+</div>
 
 <div style="text-align:center; padding: 3px; margin:3px;">
     <{$commentsnav}>
