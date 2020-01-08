@@ -26,11 +26,11 @@
                         </a>
 
                         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=pending#admin" title="<{$smarty.const._MD_NEWBB_TYPE_PENDING}>" class="btn btn-primary">
-                            <span class="fa fa-check-square-o" aria-hidden="true"></span> <{if $wait_new_topic}><span class="badge badge-light"><{$wait_new_topic}></span><{/if}>
+                            <span class="fa fa-check-square-o" aria-hidden="true"></span> <{if $wait_new_topic}><span class="badge badge-light badge-pill"><{$wait_new_topic}></span><{/if}>
                         </a>
 
                         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=deleted#admin" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>" class="btn btn-danger">
-                            <span class="fa fa-trash-o" aria-hidden="true"></span> <{if $delete_topic}><span class="badge badge-light"><{$delete_topic}></span><{/if}>
+                            <span class="fa fa-trash-o" aria-hidden="true"></span> <{if $delete_topic}><span class="badge badge-light badge-pill"><{$delete_topic}></span><{/if}>
                         </a>
                 </div>
             </div>
@@ -44,16 +44,16 @@
                     </a>
 
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=pending#admin" title="<{$smarty.const._MD_NEWBB_TYPE_PENDING}>" class="btn btn-primary">
-                        <span class="fa fa-check-square-o" aria-hidden="true"></span> <{if $wait_new_post}><span class="badge badge-light"><{$wait_new_post}></span><{/if}>
+                        <span class="fa fa-check-square-o" aria-hidden="true"></span> <{if $wait_new_post}><span class="badge badge-light badge-pill"><{$wait_new_post}></span><{/if}>
                     </a>
 
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=deleted#admin" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>" class="btn btn-primary">
-                        <span class="fa fa-trash-o" aria-hidden="true"></span> <{if $delete_post}><span class="badge badge-light"><{$delete_post}></span><{/if}>
+                        <span class="fa fa-trash-o" aria-hidden="true"></span> <{if $delete_post}><span class="badge badge-light badge-pill"><{$delete_post}></span><{/if}>
                     </a>
 
                     <{if $report_post}>
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/admin_report.php" title="_MD_NEWBB_REPORT" class="btn btn-primary">
-                        <span class="fa fa-thumbs-o-down" aria-hidden="true"></span> <span class="badge badge-light"><{$reported_count}></span>
+                        <span class="fa fa-thumbs-o-down" aria-hidden="true"></span> <span class="badge badge-light badge-pill"><{$reported_coun badge-pillt}></span>
                     </a>
                     <{/if}>
 

@@ -16,7 +16,7 @@
         <{xoInboxCount assign='unread_count'}>
         <{if $unread_count > 0}>
             <li class="nav-item"><a class="nav-link info" href="<{xoAppUrl viewpmsg.php}>" title="<{$block.lang_inbox}>"><span class="fa fa-envelope-o"></span><{$block.lang_inbox}>
-                    <span class="badge badge-primary"><{$unread_count}></span></a></li>
+                    <span class="badge badge-primary badge-pill"><{$unread_count}></span></a></li>
         <{else}>
             <li class="nav-item"><a class="nav-link" href="<{xoAppUrl viewpmsg.php}>" title="<{$block.lang_inbox}>"><span class="fa fa-envelope-open-o"></span><{$block.lang_inbox}></a>
             </li>
