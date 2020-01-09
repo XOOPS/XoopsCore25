@@ -1,18 +1,24 @@
 <{* remove jquery loaded by module *}>
 <script>$.noConflict();</script>
 <script>$( document ).ready(function() {
-            $('.collapsefaq').collapse('hide');
-            if(window.location.hash) {
-                setTimeout(function(){
-                    var hash = window.location.hash.substring(1);
-                    $('#collapsefa' + hash).collapse('toggle');
-                    var hash = window.location.hash;
-                    $('html, body').animate({
-                        scrollTop: $(hash).offset().top
-                    }, 'fast');
-                }, 500);
+        $('.collapsefaq').collapse('hide');
+        if(window.location.hash) {
+            hashChange(window.location.hash);
         }
     });
+    window.onhashchange = function () {
+        hashChange(window.location.hash);
+    }
+    function hashChange(hash) {
+        $('.collapsefaq').collapse('hide');
+        setTimeout(function(){
+            var hashid = hash.substring(1);
+            $('#collapsefa' + hashid).collapse('toggle');
+            $('html, body').animate({
+                scrollTop: $(hash).offset().top
+            }, 'fast');
+        }, 500);
+    }
 </script>
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="index.php"><{$smarty.const._XO_LA_XOOPSFAQ}></a></li>
