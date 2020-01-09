@@ -9,8 +9,8 @@
             <tr class="table-sm">
                 <th scope="col"> </th>
                 <th scope="col"><{$smarty.const._MD_NEWBB_FORUM}></th>
-                <th scope="col"><{$smarty.const._MD_NEWBB_TOPICS}></th>
-                <th scope="col"><{$smarty.const._MD_NEWBB_POSTS}></th>
+                <th class="d-none d-sm-table-cell" scope="col"><{$smarty.const._MD_NEWBB_TOPICS}></th>
+                <th class="d-none d-sm-table-cell" scope="col"><{$smarty.const._MD_NEWBB_POSTS}></th>
                 <th scope="col"><{$smarty.const._MD_NEWBB_LASTPOST}></th>
             </tr>
             </thead>
@@ -20,8 +20,8 @@
                     <td><{$sforum.forum_folder}></td>
                     <td><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$sforum.forum_id}>" title="<{$sforum.forum_name}>"><{$sforum.forum_name}></a>
                         <br><small><{$sforum.forum_desc}></small></td>
-                    <td><{$sforum.forum_topics}></td>
-                    <td><{$sforum.forum_posts}></td>
+                    <td class="d-none d-sm-table-cell"><{$sforum.forum_topics}></td>
+                    <td class="d-none d-sm-table-cell"><{$sforum.forum_posts}></td>
                     <td>
                         <{if $sforum.forum_lastpost_subject}>
                         <{$sforum.forum_lastpost_time}> <{$smarty.const._MD_NEWBB_BY}> <{$sforum.forum_lastpost_user}>
