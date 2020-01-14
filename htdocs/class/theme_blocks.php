@@ -171,6 +171,11 @@ class xos_logos_PageBuilder
             'weight'  => $xobject->getVar('weight'),
             'lastmod' => $xobject->getVar('last_modified'));
 
+        // title is a comment, don't show it
+        if (0 === strpos($block['title'], '// ')) {
+            $block['title'] = '';
+        }
+
         $bcachetime = (int)$xobject->getVar('bcachetime');
         if (empty($bcachetime)) {
             $template->caching = 0;
