@@ -1,10 +1,10 @@
 <div class="tdmdownloads">
 
-    <div class="breadcrumb"><{$navigation}></div>
+    <div class="breadcrumb"><{$navigation|replace:'<img src="assets/images/deco/arrow.gif" alt="arrow">':'&nbsp;/&nbsp;'}></div>
 
     <!-- <{if $new || $pop}><{$new}><{$pop}><{/if}> -->
 
-    <h1 class="tdm-title"><{$title}> <label class="label label-success">v <{$version}></label></h1>
+    <h1 class="tdm-title"><{$title}> <{if !empty($version)}><label class="label label-success"><{$version}></label><{/if}></h1>
 
     <div class="tdm-download-data row">
         <{if $show_screenshot == true}>
@@ -80,10 +80,7 @@
         </div>
     </div><!-- .tdm-download-data -->
 
-    <div class="text-center">
-        <a class="big-info-icon-link" title="Info" data-toggle="collapse" href="#tdm-description"><span class="glyphicon glyphicon-info-sign"></span></a>
-    </div>
-    <div class="collapse" id="tdm-description">
+    <div class="col m2-3 mb-3">
         <{$description}>
     </div>
 
@@ -100,9 +97,8 @@
     <{/if}>
 </div><!-- .tdmdownloads -->
 
-<!-- <{$commentsnav}> -->
-
-<{$lang_notice}>
+<{$commentsnav}>
+<div class="row d-flex justify-content-center"><{$lang_notice}></div>
 
 <{if $comment_mode == "flat"}>
     <{include file="db:system_comments_flat.tpl"}>
@@ -111,5 +107,5 @@
 <{elseif $comment_mode == "nest"}>
     <{include file="db:system_comments_nest.tpl"}>
 <{/if}>
-
+<br><br>
 <{include file="db:system_notification_select.tpl"}>

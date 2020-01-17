@@ -1,58 +1,27 @@
 <div class="tdmdownloads">
+    <div class="breadcrumb"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/"><{$xoops_pagetitle}></a></div>
     <{if count($categories) gt 0}>
 
     <div class="tdm-category row">
         <{foreach item=category from=$categories}>
-            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 tdm-category-list">
-                <a class="btn btn-primary btn-md btn-block" title="<{$category.title}>"
-                   href="<{$xoops_url}>/modules/tdmdownloads/viewcat.php?cid=<{$category.id}>">
-                    <{$category.title}>
-                </a>
-
-                <a title="<{$category.title}>" href="<{$xoops_url}>/modules/tdmdownloads/viewcat.php?cid=<{$category.id}>" class="tdm-category-image">
-                    <img class="<{$img_float}>" src="<{$category.image}>" alt="<{$category.title}>">
-                </a>
-
-                <!-- Category Description -->
-                <div class="aligncenter">
-                    <{if $category.description_main != ""}>
-                        <button class="btn btn-success btn-xs" data-toggle="modal" data-target="#tdmDesc-<{$category.id}>">+</button>
-                    <{else}>
-                        <button class="btn btn-xs disabled" data-toggle="modal">+</button>
-                    <{/if}>
-                </div>
-
-                <div class="modal fade" id="tdmDesc-<{$category.id}>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header"><h4 class="modal-title aligncenter"><{$category.title}></h4></div>
-                            <div class="modal-body">
-                                <{$category.description_main}>
-                            </div>
-                            <div class="modal-footer">
-                                <a title="<{$category.title}>" href="<{$xoops_url}>/modules/tdmdownloads/viewcat.php?cid=<{$category.id}>"
-                                   class="pull-left btn btn-success">
-                                    There are <strong><{$category.totaldownloads}></strong> files in this category!
-                                </a>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">&times;</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Category Description -->
-
-                <{if $category.subcategories != ""}>
-                    <{$smarty.const._MD_TDMDOWNLOADS_INDEX_SCAT}>
-                    <ul><{$category.subcategories}></ul>
-                <{/if}>
+        <div class="card col-8 col-sm-6 col-md-4 col-xl-3">
+            <h5 class="card-title"><{$category.title}></h5>
+            <{if !empty($category.image)}>
+            <img class="card-img-top img-fluid" src="<{$category.image}>" alt="<{$category.title}>">
+            <{/if}>
+            <div class="card-body">
+                <p class="card-text text-muted"><span class="fa fa-file-o"></span> <{$category.totaldownloads}></p>
+                <p class="card-text"><{$category.description_main|default:''|truncateHtml:20:'...'}>
+                    <a class="stretched-link"title="<{$category.title}>" href="<{$xoops_url}>/modules/tdmdownloads/viewcat.php?cid=<{$category.id}>"><span class="fa fa-forward"></span></a>
+                </p>
             </div>
-            <!-- .tdm-category-list -->
+        </div>
         <{/foreach}>
     </div><!-- .tdm-category -->
 
-    <div class="aligncenter">
-        <a title="<{$smarty.const._MD_TDMDOWNLOADS_RSS}>" href="<{$xoops_url}>/modules/tdmdownloads/rss.php?cid=0">
-            <img src="images/rss.gif" alt="<{$smarty.const._MD_TDMDOWNLOADS_RSS}>">
+    <div class="row">
+        <a class="btn btn-warning" title="<{$smarty.const._MD_TDMDOWNLOADS_RSS}>" href="<{$xoops_url}>/modules/tdmdownloads/rss.php?cid=<{$category_id}>">
+            <span class="fa fa-fw fa-rss"></span>
         </a>
     </div>
 
@@ -61,7 +30,7 @@
             <div class="col-md-12"><h3><{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLNAME}>:</h3></div>
             <{if $bl_date != ""}>
                 <div class="col-sm-4 col-md-4">
-                    <h3 class="tdm-title"><span class="glyphicon glyphicon-calendar"></span> <{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLDATE}></h3>
+                    <h3 class="tdm-title"><span class="fa fa-calendar"></span> <{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLDATE}></h3>
                     <ul class="list-unstyled">
                         <{foreach item=bl_date from=$bl_date}>
                             <li>
@@ -76,7 +45,7 @@
 
             <{if $bl_pop != ""}>
                 <div class="col-sm-4 col-md-4">
-                    <h3 class="tdm-title"><span class="glyphicon glyphicon-star"></span> <{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLPOP}></h3>
+                    <h3 class="tdm-title"><span class="fa fa-star"></span> <{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLPOP}></h3>
                     <ul class="list-unstyled">
                         <{foreach item=bl_pop from=$bl_pop}>
                             <li>
@@ -90,7 +59,7 @@
 
             <{if $bl_rating != ""}>
                 <div class="col-sm-4 col-md-4">
-                    <h3 class="tdm-title"><span class="glyphicon glyphicon-thumbs-up"></span> <{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLRATING}></h3>
+                    <h3 class="tdm-title"><span class="fa fa-thumbs-o-up"></span> <{$smarty.const._MD_TDMDOWNLOADS_INDEX_BLRATING}></h3>
                     <ul class="list-unstyled">
                         <{foreach item=bl_rating from=$bl_rating}>
                             <li>
@@ -114,16 +83,14 @@
     </div><!-- .downloads-info -->
 
     <{if $show_latest_files}>
-        <div class="row">
             <{if $file != ""}>
-                <div class="col-md-12">
-                    <h1><{$smarty.const._MD_TDMDOWNLOADS_INDEX_LATESTLIST}>:</h1>
-                </div>
+            <h1><{$smarty.const._MD_TDMDOWNLOADS_INDEX_LATESTLIST}>:</h1>
+            <div class="row">
                 <{section name=i loop=$file}>
                     <{include file="db:tdmdownloads_download.tpl" down=$file[i]}>
                 <{/section}>
+            </div>
             <{/if}>
-        </div>
     <{/if}>
 
 </div><!-- .tdmdownloads -->
