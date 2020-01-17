@@ -49,7 +49,7 @@
 <div class="container maincontainer">
 
 <{if $xoops_page == "index"}>
-    <{include file="$theme_name/tpl/slider.tpl"}>
+    <{**include file="$theme_name/tpl/slider.tpl"**}>
     <{include file="$theme_name/tpl/jumbotron.tpl"}>
 <{/if}>
 
