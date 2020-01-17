@@ -66,6 +66,7 @@ define('THEME_TOOLBAR_SYSTEM_MODULE', 'System Module');
 define('THEME_TOOLBAR_GENERAL_SETTINGS', 'General Settings');
 define('THEME_TOOLBAR_TOOLS', 'Tools');
 define('THEME_TOOLBAR_SYSTEM_OPTIONS', 'System Options');
+define('THEME_TOOLBAR_THIS_MODULE', 'This Module');
 define('THEME_TOOLBAR_MODULES', 'Modules');
 define('THEME_TOOLBAR_BLOCKS', 'Blocks');
 define('THEME_TOOLBAR_TEMPLATES', 'Templates');

@@ -10,11 +10,7 @@
     <meta name="author" content="<{$xoops_meta_author}>">
     <meta name="generator" content="XOOPS">
     <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Owl Carousel Assets -->
-    <link href="<{xoImgUrl}>js/owl/assets/owl.carousel.css" rel="stylesheet">
-    <link href="<{xoImgUrl}>js/owl/assets/owl.theme.default.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link href="<{$xoops_url}>/favicon.ico" rel="shortcut icon">
     <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/xoops.css">
@@ -22,10 +18,7 @@
     <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/cookieconsent.css">
     <script src="<{$xoops_url}>/browse.php?Frameworks/jquery/jquery.js"></script>
     <script src="<{xoImgUrl}>js/bootstrap.bundle.min.js"></script>
-    <script src="<{xoImgUrl}>js/masonry.pkgd.min.js"></script>
-    <script src="<{xoImgUrl}>js/imagesloaded.pkgd.min.js"></script>
-    <script src="<{xoImgUrl}>js/js.js"></script>
-    <!-- Begin Cookie Consent plugin by Silktide - https://silktide.com/tools/cookie-consent/docs/installation/ -->
+    <!-- Begin Cookie Consent plugin by Silktide - https://www.osano.com/cookieconsent/documentation/about-cookie-consent/ -->
     <script type="text/javascript">
         window.cookieconsent_options = {
             message: '<{$smarty.const.THEME_COOKIE_MESSAGE}>',
@@ -56,16 +49,8 @@
 <div class="container maincontainer">
 
 <{if $xoops_page == "index"}>
-	<div class="jumbotron">
-		<div class="row">
-            <div class="<{if $xoops_banner != ""}>col-md-6<{else}>col-md-12<{/if}>">
-            <h2 class="display-5"><{$smarty.const.THEME_ABOUTUS}></h2>
-            <{if $xoops_banner != ""}></div><div class="col-md-6"><div class="xoops-banner"><{$xoops_banner}></div></div><{/if}>
-        </div>
-		<p class="lead"><{$xoops_meta_description}></p>
-		<hr class="my-4">
-		<a class="btn btn-primary btn-md" href="<{$xoops_url}>/"><{$smarty.const.THEME_LEARNMORE}></a>
-	</div>
+    <{include file="$theme_name/tpl/slider.tpl"}>
+    <{include file="$theme_name/tpl/jumbotron.tpl"}>
 <{/if}>
 
 <div class="row">

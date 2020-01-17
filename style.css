@@ -862,7 +862,6 @@ a.tdm-download-btn {
 
 .tdm-download-data {
     padding-bottom: 5px;
-    border-bottom: 1px dashed #999;
 }
 
 .tdm-download-data ul.tdm-download-details {
@@ -1296,4 +1295,14 @@ div.order-by a {
 
 img.avatar {
     max-width: 128px;
+}
+
+.slidetext {
+    color: whitesmoke;
+    text-shadow: 1em 0.5em 0.5em black;
+}
+
+.slidetext-dark {
+    color: #020202;
+    text-shadow: 1em 1em 2em whitesmoke;
 }

@@ -28,6 +28,9 @@
                             <a class="dropdown-item" href="<{xoAppUrl modules/system/admin.php?fct=blocksadmin}>"><span class="fa fa-object-ungroup"></span> <{$smarty.const.THEME_TOOLBAR_BLOCKS}></a>
                             <a class="dropdown-item" href="<{xoAppUrl modules/system/admin.php?fct=tplsets}>"><span class="fa fa-file"></span> <{$smarty.const.THEME_TOOLBAR_TEMPLATES}></a>
                             <a class="dropdown-item" href="<{xoAppUrl modules/system/admin.php?fct=maintenance}>"><span class="fa fa-wrench"></span> <{$smarty.const.THEME_TOOLBAR_MAINTENANCE}></a>
+                            <{if $xoops_dirname!='system'}>
+                            <a class="dropdown-item" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/index.php"><span class="fa fa-hand-o-up"></span> <{$smarty.const.THEME_TOOLBAR_THIS_MODULE}></a>
+                            <{/if}>
                         </div>
                     </li>
                     <li class="nav-item dropup">
@@ -69,11 +72,11 @@
         }
     }
     function xswatchToolbarIndOn() {
-        $('#xswatch-toolbar-ind').attr('class', 'fa fa-minus-square-o');
+        $('#xswatch-toolbar-ind').attr('class', 'fa fa-toggle-on');
         $('#xswatch-toolbar').show();
     }
     function xswatchToolbarIndOff() {
-        $('#xswatch-toolbar-ind').attr('class', 'fa fa-plus-square-o');
+        $('#xswatch-toolbar-ind').attr('class', 'fa fa-toggle-off');
         $('#xswatch-toolbar').hide();
     }
     function xswatchToolbarToggle() {
