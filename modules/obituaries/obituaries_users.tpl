@@ -35,7 +35,6 @@
 <{if isset($pagenav)}>
     <div class="generic-pagination col text-right mt-2">
         <{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''|replace:' //':'/'}>
-        <!-- irmtfan to solve nested forms and id="xo-pagenav" issue -->
     </div>
 <{/if}>
 
