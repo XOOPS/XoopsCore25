@@ -107,5 +107,5 @@
 <{elseif $comment_mode == "nest"}>
     <{include file="db:system_comments_nest.tpl"}>
 <{/if}>
-<br><br>
+
 <{include file="db:system_notification_select.tpl"}>
