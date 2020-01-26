@@ -1,7 +1,7 @@
 <{if count($obituaries_users) > 0}>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$module.directory}>/index.php"><{$module.name}></a></li>
+            <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/obituaries/index.php">Obituaries</a></li>
             <li class="breadcrumb-item active" aria-current="page"><{$smarty.const._AM_OBITUARIES_USERS_LIST}></li>
         </ol>
     </nav>
