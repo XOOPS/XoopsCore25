@@ -786,6 +786,10 @@ ul.form-send-e-card input:focus, ul.form-send-e-card textarea:focus {
 .tdmdownloads {
 }
 
+.tdm-category {
+    margin-left: 0;
+}
+
 .tdm-category-list {
     margin-bottom: 10px;
 }
@@ -1305,4 +1309,12 @@ img.avatar {
 .slidetext-dark {
     color: #020202;
     text-shadow: 1em 1em 2em whitesmoke;
+}
+
+.xswatch-media-img {
+    max-width: 128px;
+}
+
+.xswatch-media-img-lrg {
+    max-width: 256px;
 }
