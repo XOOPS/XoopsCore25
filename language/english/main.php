@@ -66,6 +66,7 @@ define('THEME_TOOLBAR_SYSTEM_MODULE', 'System Module');
 define('THEME_TOOLBAR_GENERAL_SETTINGS', 'General Settings');
 define('THEME_TOOLBAR_TOOLS', 'Tools');
 define('THEME_TOOLBAR_SYSTEM_OPTIONS', 'System Options');
+define('THEME_TOOLBAR_DEBUGMODE', 'Debug Mode');
 define('THEME_TOOLBAR_THIS_MODULE', 'This Module');
 define('THEME_TOOLBAR_MODULES', 'Modules');
 define('THEME_TOOLBAR_BLOCKS', 'Blocks');
@@ -95,3 +96,7 @@ define('THEME_PERMISSIONS_LEGEND', 'Permissions &amp; Legend');
 
 define('THEME_INBOX_ALERT', 'PM Alert');
 define('THEME_INBOX_LINK', 'Click here to view your Inbox!');
+
+define('THEME_EVENT_DOWNLOADS', 'Event Downloads');
+define('THEME_FILE_NAME', 'File');
+define('THEME_FILE_SIZE', 'Size');
