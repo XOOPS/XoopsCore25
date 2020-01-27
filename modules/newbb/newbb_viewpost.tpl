@@ -136,7 +136,7 @@
 
 <div>
     <div class="xoopsform col mb-3">
-        <{$forum_jumpbox}>
+        <{$forum_jumpbox|replace:' class="select"':' class="btn btn-light"'|replace:"'button'":'"btn btn-sm btn-light"'}>
     </div>
     <div class="xoopsform col">
         <form action="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php" method="get">

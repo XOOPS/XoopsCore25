@@ -223,7 +223,7 @@
         </div>
 
         <div class="xoopsform col-sm-4 col-md-4">
-            <{$forum_jumpbox}>
+            <{$forum_jumpbox|replace:' class="select"':' class="btn btn-light"'|replace:"'button'":'"btn btn-sm btn-light"'}>
         </div>
 
         <div class="col-sm-2 col-md-2 text-right nompl hidden-xs">

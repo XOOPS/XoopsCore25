@@ -223,8 +223,8 @@
             <form class="xoopsform" method="get" action="<{$selection.action}>">
                 <ul class="list-inline">
                     <li><strong><{$smarty.const._MD_NEWBB_SORTEDBY}>:</strong></li>
-                    <li><{$selection.sort}></li>
-                    <li><{$selection.order}></li>
+                    <li><{$selection.sort|replace:'<select name':'<select class="form-control" name'}></li>
+                    <li><{$selection.order|replace:'<select name':'<select class="form-control" name'}></li>
                     <li><{$selection.since}></li>
                 </ul>
                 <{foreach item=hidval key=hidvar from=$selection.vars}>
@@ -234,7 +234,7 @@
                     <{/if}>
                 <{/foreach}>
                 <!-- irmtfan remove name="refresh" -->
-                <input type="submit" value="<{$smarty.const._SUBMIT}>">
+                <input class="btn btn-primary" type="submit" value="<{$smarty.const._SUBMIT}>">
             </form>
         <{/strip}>
     </td>
@@ -275,7 +275,7 @@
         </form>
         <br>
         <div class="xoopsform col-sm-4 col-md-4">
-            <{$forum_jumpbox}>
+            <{$forum_jumpbox|replace:' class="select"':' class="btn btn-light"'|replace:"'button'":'"btn btn-sm btn-light"'}>
         </div>
     </div>
 </div>
