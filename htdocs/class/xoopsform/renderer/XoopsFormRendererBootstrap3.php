@@ -600,7 +600,7 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
             $display_value = date(_SHORTDATESTRING, $ele_value);
         }
 
-        $jstime = formatTimestamp($ele_value, _SHORTDATESTRING);
+        $jstime = formatTimestamp($ele_value, 'm/d/Y');
         if (isset($GLOBALS['xoTheme']) && is_object($GLOBALS['xoTheme'])) {
             $GLOBALS['xoTheme']->addScript('include/calendar.js');
             $GLOBALS['xoTheme']->addStylesheet('include/calendar-blue.css');
