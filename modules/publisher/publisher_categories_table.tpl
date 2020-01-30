@@ -1,38 +1,30 @@
 <{assign var=temp value=0}>
-<div class="row clearfix">
-    <{foreach item=category from=$categories}>
-    <{assign var=temp value=$temp+1}>
-    <{if !$indexpage}>
-    <div class="col-sm-12 col-md-12" style="margin-bottom: 10px;">
-        <{else}>
-        <div class="col-sm-4 col-md-4" style="margin-bottom: 10px;">
-            <{/if}>
-            <{if $selected_category == $category.categoryid}>
-                <h4 class="info"><span class="fa fa-paperclip"></span>&nbsp;
-                    <{$category.name}>
-                </h4>
-            <{else}>
-                <h4 class="info"><span class="fa fa-paperclip" style="color:#4087C4;"></span>&nbsp;
-                    <{$category.categorylink}>
-                </h4>
-            <{/if}>
-            <div style="display: block;">
-                <small><{$category.description}></small>
-            </div>
-
-
-            <{if $category.subcats}>
-                <div style="height: 1px; background: #F5F5F5; margin: 5px 0;"></div>
-                <{foreach item=subcat from=$category.subcats}>
-                    <small><{$subcat.categorylink}> &nbsp;</small>
-                <{/foreach}>
-            <{/if}>
-
-
-        </div>
-        <{if $temp%3 == 0}>
-            <div class="clearfix"></div>
+<div class="row">
+<{foreach item=category from=$categories}>
+    <div class="media col-12 col-md-6">
+        <{if !empty($category.image_path)}>
+        <{if $category.categoryurl|default:false}><a href="<{$category.categoryurl}>"><{/if}>
+        <img class="mr-3 mb-2 xswatch-media-img" src="<{$category.image_path}>" alt="<{$category.name}>">
+        <{if $category.categoryurl|default:false}></a><{/if}>
         <{/if}>
+        <div class="media-body">
+            <h5 class="mt-0 mb-1"><{if $selected_category == $category.categoryid}><{$category.name}><{else}><{$category.categorylink}><{/if}></h5>
+            <{$category.description}>
+        <{if $category.subcats}>
+        <br>
+        <{foreach item=subcat from=$category.subcats}>
+        <small><{$subcat.categorylink}> &nbsp;</small>
         <{/foreach}>
+        <{/if}>
+        </div>
     </div>
-    <hr>
+<{/foreach}>
+</div>
+    <{if $catnavbar|default:false}>
+    <div class=""row">
+        <div class="generic-pagination col text-right mt-2">
+        <{$catnavbar|replace:'form':'div'|replace:'id="xo-pagenav"':''|replace:' //':'/'}>
+        </div>
+    </div>
+    <{/if}>
+<hr>
