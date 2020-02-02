@@ -31,11 +31,11 @@
                 <{/if}>
                 <a class="carousel-control-prev" href="#extEventSlides" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
+                    <span class="sr-only"<{$smarty.const.THEME_CONTROL_PREVIOUS}>/span>
                 </a>
                 <a class="carousel-control-next" href="#extEventSlides" role="button" data-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
+                    <span class="sr-only"<{$smarty.const.THEME_CONTROL_NEXT}>/span>
                 </a>
             </div>
         </div>

@@ -19,6 +19,14 @@
             </div>
             <{assign var=active value=''}>
             <{/foreach}>
+            <a class="carousel-control-prev" href="#wgBlockImagesCarouselSlides" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only"<{$smarty.const.THEME_CONTROL_PREVIOUS}>/span>
+            </a>
+            <a class="carousel-control-next" href="#wgBlockImagesCarouselSlides" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only"<{$smarty.const.THEME_CONTROL_NEXT}>/span>
+            </a>
         </div>
     </div>
     <{if $show_more_images}>

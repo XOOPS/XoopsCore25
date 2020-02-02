@@ -100,3 +100,6 @@ define('THEME_INBOX_LINK', 'Click here to view your Inbox!');
 define('THEME_EVENT_DOWNLOADS', 'Event Downloads');
 define('THEME_FILE_NAME', 'File');
 define('THEME_FILE_SIZE', 'Size');
+
+define('THEME_CONTROL_NEXT', 'Next');
+define('THEME_CONTROL_PREVIOUS', 'Previous');
