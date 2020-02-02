@@ -1311,10 +1311,22 @@ img.avatar {
     text-shadow: 1em 1em 2em whitesmoke;
 }
 
+.slidetext-trans {
+    color: whitesmoke;
+    text-shadow: 1em 0.5em 0.5em black;
+    margin: 1em;
+    background: rgba(25, 25, 25, 0.4);
+}
+
+
 .xswatch-media-img {
     max-width: 128px;
 }
 
 .xswatch-media-img-lrg {
     max-width: 256px;
+}
+
+.xo-jumbotron {
+    padding-bottom: 0.5rem;
 }
