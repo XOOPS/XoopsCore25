@@ -156,7 +156,7 @@
         <input type="hidden" name="mode" value="<{$eventmember.member.joinevent_mode}>"/>
         <input type="hidden" name="event" value="<{$event.event_id}>"/>
         <{$token}>
-        <input class="btn btn-primary" type="submit" value="<{$eventmember.member.button_text}>"<{$eventmember.member.button_disabled}> />
+        <input class="btn btn-sm btn-primary" type="submit" value="<{$eventmember.member.button_text}>"<{$eventmember.member.button_disabled}> />
     </form>
     <{/if}>
 </div>
@@ -173,7 +173,7 @@
         <input type="hidden" name="mode" value="<{$eventmember.notmember.joinevent_mode}>"/>
         <input type="hidden" name="event" value="<{$event.event_id}>"/>
         <{$token}>
-        <input class="btn btn-primary" type="submit" value="<{$eventmember.notmember.button_text}>"<{$eventmember.notmember.button_disabled}> />
+        <input class="btn btn-sm btn-primary" type="submit" value="<{$eventmember.notmember.button_text}>"<{$eventmember.notmember.button_disabled}> />
     </form>
     <{/if}>
 </div>
