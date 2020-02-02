@@ -304,9 +304,11 @@
 <!-- end of modals -->
 
 <script type="application/javascript">
-	$('#btnCropCreate').click(function () {
-        $('#btnCropApply').removeClass('disabled');
-	});
+    $( document ).ready(function() {
+        $('#btnCropCreate').click(function () {
+            $('#btnCropApply').removeClass('disabled');
+	    });
+    });
 
     $( document ).ready(function() {
         $('#btnCreateGrid4').click(function () {
