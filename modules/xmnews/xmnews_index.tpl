@@ -9,7 +9,7 @@
 			<form class="form-inline" id="form_news_tri" name="form_news_tri" method="get" action="index.php">
 				<div class="form-group">
 					<label><{$smarty.const._MA_XMNEWS_NEWS_SELECTCATEGORY}>&nbsp;</label>
-					<select class="form-control" name="news_filter" id="news_filter" onchange="location='index.php?news_cid='+this.options[this.selectedIndex].value">
+					<select class="form-control form-control-sm" name="news_filter" id="news_filter" onchange="location='index.php?news_cid='+this.options[this.selectedIndex].value">
 						<{$news_cid_options}>
 					</select>
 				</div>
