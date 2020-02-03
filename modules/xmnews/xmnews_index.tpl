@@ -2,7 +2,7 @@
 	<{if $filter}>
 		<nav aria-label="breadcrumb">
 		  <ol class="breadcrumb">
-			<li class="breadcrumb-item active" aria-current="page"><{$smarty.const._MA_XMNEWS_HOME}></li>
+			<li class="breadcrumb-item active" aria-current="page"><{$index_module}></li>
 		  </ol>
 		</nav>
 		<div align="center">
@@ -20,7 +20,7 @@
 	<{else}>
 		<nav aria-label="breadcrumb">
 		  <ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="index.php"><{$smarty.const._MA_XMNEWS_HOME}></a></li>
+			<li class="breadcrumb-item"><a href="index.php"><{$index_module}></a></li>
 			<li class="breadcrumb-item active" aria-current="page"><{$category_name}></li>
 		  </ol>
 		</nav>
