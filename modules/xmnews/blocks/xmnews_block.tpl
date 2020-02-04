@@ -25,7 +25,7 @@
 						<i class="fa fa-rotate-right" aria-hidden="true"></i> <{$smarty.const._MA_XMNEWS_NEWS_READING}>: <{$news.hits}>
 						<{/if}>
 						<{if $news.type == "rating"}>
-						<i class="fa fa-star" aria-hidden="true"></i> <{$smarty.const._MA_XMNEWS_NEWS_RATING}>: <{$news.rating}> (<{$news.votes}>)
+						<i class="fa fa-star" aria-hidden="true"></i> <{$smarty.const._MA_XMNEWS_NEWS_RATING}>: <{$news.rating}> <{$news.votes}>
 						<{/if}>
 					</div>
 					<div class="col-12 pt-2 text-left">	

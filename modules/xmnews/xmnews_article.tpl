@@ -1,7 +1,7 @@
 <div class="xmmews">
 	<nav aria-label="breadcrumb">
 	  <ol class="breadcrumb">
-		<li class="breadcrumb-item"><a href="index.php"><{$smarty.const._MA_XMNEWS_HOME}></a></li>
+		<li class="breadcrumb-item"><a href="index.php"><{$index_module}></a></li>
 		<li class="breadcrumb-item"><a href="index.php?news_cid=<{$category_id}>"><{$category_name}></a></li>
 		<li class="breadcrumb-item active" aria-current="page"><{$title}></li>
 	  </ol>

@@ -5,7 +5,7 @@
     <{if $form}>	
 		<nav aria-label="breadcrumb">
 		  <ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="index.php"><{$smarty.const._MA_XMNEWS_HOME}></a></li>
+			<li class="breadcrumb-item"><a href="index.php"><{$index_module}></a></li>
 			<li class="breadcrumb-item"><a href="action.php?op=add"><{$smarty.const._MA_XMNEWS_SELECTCATEGORY}></a></li>
 			<li class="breadcrumb-item active" aria-current="page"><{$smarty.const._MA_XMNEWS_ADD}></li>
 		  </ol>
@@ -17,7 +17,7 @@
     <{if $categories > 0}>
 		<nav aria-label="breadcrumb">
 		  <ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="index.php"><{$smarty.const._MA_XMNEWS_HOME}></a></li>
+			<li class="breadcrumb-item"><a href="index.php"><{$index_module}></a></li>
 			<li class="breadcrumb-item active" aria-current="page"><{$smarty.const._MA_XMNEWS_SELECTCATEGORY}></li>
 		  </ol>
 		</nav>

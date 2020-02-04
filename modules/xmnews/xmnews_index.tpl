@@ -2,14 +2,14 @@
 	<{if $filter}>
 		<nav aria-label="breadcrumb">
 		  <ol class="breadcrumb">
-			<li class="breadcrumb-item active" aria-current="page"><{$smarty.const._MA_XMNEWS_HOME}></li>
+			<li class="breadcrumb-item active" aria-current="page"><{$index_module}></li>
 		  </ol>
 		</nav>
 		<div align="center">
 			<form class="form-inline" id="form_news_tri" name="form_news_tri" method="get" action="index.php">
 				<div class="form-group">
 					<label><{$smarty.const._MA_XMNEWS_NEWS_SELECTCATEGORY}>&nbsp;</label>
-					<select class="form-control" name="news_filter" id="news_filter" onchange="location='index.php?news_cid='+this.options[this.selectedIndex].value">
+					<select class="form-control form-control-sm" name="news_filter" id="news_filter" onchange="location='index.php?news_cid='+this.options[this.selectedIndex].value">
 						<{$news_cid_options}>
 					</select>
 				</div>
@@ -20,7 +20,7 @@
 	<{else}>
 		<nav aria-label="breadcrumb">
 		  <ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="index.php"><{$smarty.const._MA_XMNEWS_HOME}></a></li>
+			<li class="breadcrumb-item"><a href="index.php"><{$index_module}></a></li>
 			<li class="breadcrumb-item active" aria-current="page"><{$category_name}></li>
 		  </ol>
 		</nav>
