@@ -1,7 +1,8 @@
 <{include file="db:wggallery_header.tpl"}>
 
+<div class="container">
 <{if $albums}>
-	<div class="container">
+	<div>
 		<div class="row alert alert-info border wgg-cats-header" role="alert"><{$index_alb_title}></div>
 		<div class="row">
 			<{foreach item=album from=$albums}>
@@ -10,42 +11,31 @@
 		</div>
 	</div>
 	<{if $pagenav_albums}>
-	<div class="col">
-		<div class="generic-pagination xo-pagenav pull-right"><{$pagenav_albums|replace:'form':'div'|replace:'id="xo-pagenav"':''|replace:' //':'/'}></div>
+	<div class="row">
+		<div class="col mb-2">
+			<div class="generic-pagination xo-pagenav pull-right"><{$pagenav_albums|replace:'form':'div'|replace:'id="xo-pagenav"':''|replace:' //':'/'}></div>
+		</div>
 	</div>
 	<{/if}>
 <{/if}>
 <{if $categories}>
-	<div class="panel panel-<{$panel_type}>">
-		<div class="panel-heading wgg-cats-header"><{$index_cats_title}></div>
-		<div class="panel-body">
+	<div>
+		<div class="row alert alert-info border wgg-cats-header" role="alert"><{$index_cats_title}></div>
+		<div class="row">
 			<{foreach item=category from=$categories}>
-                <{if $number_cols_cat == 6}>
-                    <div class="col-xs-12 col-sm-2">
-                <{elseif $number_cols_cat == 4}>
-                    <div class="col-xs-12 col-sm-3">
-                <{elseif $number_cols_cat == 3}>
-                    <div class="col-xs-12 col-sm-4">
-                <{elseif $number_cols_cat == 2}>
-                    <div class="col-xs-12 col-sm-6">
-                <{else}>
-                    <div class="col-xs-12 col-sm-12">
-                <{/if}>
-                    <{include file="db:wggallery_categoryitem_bcards.tpl" category=$category}>
-                </div>
-                <{if $category.linebreak}>
-                    <div class="clear">&nbsp;</div>
-                <{/if}>
+			<{include file="db:wggallery_categoryitem_bcards.tpl" category=$category}>
 			<{/foreach}>
-			<div class="clear">&nbsp;</div>
-			<{if $pagenav_cats}>
-				<div class="col">
-				<div class="generic-pagination xo-pagenav pull-right"><{$pagenav_cats|replace:'form':'div'|replace:'id="xo-pagenav"':''|replace:' //':'/'}></div>
-				</div>
-			<{/if}>
 		</div>
 	</div>
+	<{if $pagenav_cats}>
+	<div class="row">
+		<div class="col mb-2">
+		<div class="generic-pagination xo-pagenav pull-right"><{$pagenav_cats|replace:'form':'div'|replace:'id="xo-pagenav"':''|replace:' //':'/'}></div>
+		</div>
+	</div>
+	<{/if}>
 <{/if}>
+</div>
 
 <{if $alb_pid}>
 	<div class="clear">&nbsp;</div>

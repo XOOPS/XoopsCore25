@@ -1,5 +1,6 @@
 <{include file='db:wggallery_header.tpl'}>
 
+<div class="container no-pad-lr">
 <{if $albums}>
 	<div class='card panel-<{$panel_type}>'>
 		<div class='card-header wgg-cats-header'><{$index_alb_title}></div>
@@ -7,26 +8,30 @@
 			<{foreach name=album item=album from=$albums}>
                 <{include file='db:wggallery_albumitem_hovereffectideas.tpl' album=$album}>
 			<{/foreach}>
-			<{if $pagenav_albums}>
-				<div class='xo-pagenav floatright'><{$pagenav_albums}></div>
-				<div class='clear spacer'></div>
-			<{/if}>
 		</div>
 	</div>
+	<{if $pagenav_albums}>
+	<div class="row mt-2">
+		<div class="col">
+			<div class="generic-pagination xo-pagenav pull-right"><{$pagenav_albums|replace:'form':'div'|replace:'id="xo-pagenav"':''|replace:' //':'/'}></div>
+		</div>
+	</div>
+	<{/if}>
 <{/if}>
 <{if $categories}>
-	<div class='panel panel-<{$panel_type}>'>
-		<div class='panel-heading wgg-cats-header'><{$index_cats_title}></div>
-		<div class='panel-body'>
+	<div class='card panel-<{$panel_type}>'>
+		<div class='card-header wgg-cats-header'><{$index_cats_title}></div>
+		<div class='card-body'>
 			<{foreach name=category item=category from=$categories}>
                 <{if $category.newrow}><div class="grid"><{/if}>
                 <{include file='db:wggallery_categoryitem_hovereffectideas.tpl' category=$category}>
                 <{if $category.linebreak}></div><div class='clear'>&nbsp;</div><{/if}>
 			<{/foreach}>
-			<{if $pagenav_cats}>
-				<div class='xo-pagenav floatright'><{$pagenav_cats}></div>
-				<div class='clear spacer'></div>
-			<{/if}>
+		</div>
+	</div>
+	<div class="row mt-2">
+		<div class="col">
+			<div class="generic-pagination xo-pagenav pull-right"><{$pagenav_cats|replace:'form':'div'|replace:'id="xo-pagenav"':''|replace:' //':'/'}></div>
 		</div>
 	</div>
 <{/if}>
@@ -41,6 +46,7 @@
 	</div>
 <{/if}>
 
-<div class='clear'>&nbsp;</div>
+</div>
+
 
 <{include file='db:wggallery_footer.tpl'}>

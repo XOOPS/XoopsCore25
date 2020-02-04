@@ -1330,3 +1330,8 @@ img.avatar {
 .xo-jumbotron {
     padding-bottom: 0.5rem;
 }
+
+.no-pad-lr {
+    padding-left: 0;
+    padding-right: 0;
+}
