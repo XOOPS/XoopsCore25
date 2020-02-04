@@ -29,7 +29,8 @@
                 <a class='btn btn-secondary wgg-btn' href='<{$wggallery_url}>/images.php?op=list&amp;alb_id=<{$album.id}>&amp;alb_pid=<{$alb_pid}><{if $subm_id}>&amp;subm_id=<{$subm_id}><{/if}>' title='<{$smarty.const._CO_WGGALLERY_IMAGES_INDEX}>'>
                     <span class = "wgg-btn-icon"><img class='' src='<{$wggallery_icon_url_16}>photos.png' alt='<{$smarty.const._CO_WGGALLERY_IMAGES_COUNT}>' title='<{$smarty.const._CO_WGGALLERY_IMAGES_COUNT}>'></span><{if $displayButtonText}><{$smarty.const._CO_WGGALLERY_IMAGES_INDEX}><{/if}></a>
             <{else}>
-                <span class='btn btn-secondary wgg-btn'><img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>photos.png' alt='<{$smarty.const._CO_WGGALLERY_IMAGES_COUNT}>' title='<{$smarty.const._CO_WGGALLERY_IMAGES_COUNT}>'><{$smarty.const._CO_WGGALLERY_ALBUM_NO_IMAGES}></span>
+                <a disabled class='disabled btn btn-secondary wgg-btn' title='<{$smarty.const._CO_WGGALLERY_IMAGES_INDEX}>'>
+                    <span class='wgg-btn'><img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>photos.png' alt='<{$smarty.const._CO_WGGALLERY_IMAGES_COUNT}>' title='<{$smarty.const._CO_WGGALLERY_IMAGES_COUNT}>'><{$smarty.const._CO_WGGALLERY_ALBUM_NO_IMAGES}></span></a>
             <{/if}>
             <{if $album.edit}>
                 <a class='btn btn-secondary wgg-btn' href='albums.php?op=edit&amp;alb_id=<{$album.id}>' title='<{$smarty.const._EDIT}>'>

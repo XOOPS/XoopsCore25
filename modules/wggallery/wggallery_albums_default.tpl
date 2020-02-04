@@ -39,7 +39,7 @@
 								<{if $displayButtonText}><{$smarty.const._CO_WGGALLERY_IMAGES_INDEX}><{/if}>
 							</a>
 						<{else}>
-							<span class = 'btn btn-secondary wgg-btn'><img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>photos.png' alt='<{$smarty.const._CO_WGGALLERY_IMAGES_INDEX}>' title='<{$smarty.const._CO_WGGALLERY_IMAGES_INDEX}>'><{$album.nb_images}></span>
+							<a class='disabled btn btn-secondary wgg-btn'><img class='wgg-btn-icon' src='<{$wggallery_icon_url_16}>photos.png' alt='<{$smarty.const._CO_WGGALLERY_IMAGES_INDEX}>' title='<{$smarty.const._CO_WGGALLERY_IMAGES_INDEX}>'><{$smarty.const._CO_WGGALLERY_ALBUM_NO_IMAGES}></a>
 						<{/if}>
 						<{if $album.edit}>
                             <{if $album.nb_images}>
