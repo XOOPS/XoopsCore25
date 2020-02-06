@@ -1,5 +1,11 @@
 <{if $xoops_page == "index"}>
-    <div id="sliderCarousel" class="carousel slide mb-4" data-ride="carousel">
+    <!-- remove "vert" class for standard horizontal scroll -->
+    <div id="sliderCarousel" class="vert carousel slide mb-4" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#sliderCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#sliderCarousel" data-slide-to="1"></li>
+            <li data-target="#sliderCarousel" data-slide-to="2"></li>
+        </ol>
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img class="d-block w-100" src="<{$xoops_imageurl}>images/slides/1-DSCN1071.jpeg" alt="First slide">
@@ -13,6 +19,7 @@
                 <div class="carousel-caption d-none d-md-block">
                     <h2 class="slidetext"><{$xoops_sitename}></h2>
                     <p class="slidetext"><{$xoops_slogan}></p>
+                    <a class="btn btn-primary" href="#"><{$smarty.const.THEME_LEARNMORE}></a>
                 </div>
             </div>
             <div class="carousel-item">
@@ -23,6 +30,7 @@
                 </div>
             </div>
         </div>
+        <{* horizontal controls
         <a class="carousel-control-prev" href="#sliderCarousel" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="sr-only"<{$smarty.const.THEME_CONTROL_PREVIOUS}>/span>
@@ -31,5 +39,6 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only"<{$smarty.const.THEME_CONTROL_NEXT}>/span>
         </a>
+        *}>
     </div>
 <{/if}>

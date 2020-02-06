@@ -1335,3 +1335,34 @@ img.avatar {
     padding-left: 0;
     padding-right: 0;
 }
+
+/**
+ * Vertical carousel
+ *
+ * Add 'vert' class to carousel for vertical slide
+ *
+ * This section is credited to stackoverflow and used under a
+ * Creative Commons CC-BY-SA license.
+ *
+ * Authored by user Zim: https://stackoverflow.com/users/171456/zim
+ * Full Answer:
+ * https://stackoverflow.com/questions/42910076/bootstrap-4-alpha-6-vertical-carousel/42911427#42911427
+ **/
+.vert .carousel-item-next.carousel-item-left,
+.vert .carousel-item-prev.carousel-item-right {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+
+.vert .carousel-item-next,
+.vert .active.carousel-item-right {
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100% 0);
+}
+
+.vert .carousel-item-prev,
+.vert .active.carousel-item-left {
+    -webkit-transform: translate3d(0,-100%, 0);
+    transform: translate3d(0,-100%, 0);
+}
+/* End Creative Commons CC-BY-SA license. */
