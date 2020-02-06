@@ -18,19 +18,7 @@
     <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/cookieconsent.css">
     <script src="<{$xoops_url}>/browse.php?Frameworks/jquery/jquery.js"></script>
     <script src="<{xoImgUrl}>js/bootstrap.bundle.min.js"></script>
-    <!-- Begin Cookie Consent plugin by Silktide - https://www.osano.com/cookieconsent/documentation/about-cookie-consent/ -->
-    <script type="text/javascript">
-        window.cookieconsent_options = {
-            message: '<{$smarty.const.THEME_COOKIE_MESSAGE}>',
-            dismiss: '<{$smarty.const.THEME_COOKIE_DISMISS}>',
-            learnMore: '<{$smarty.const.THEME_COOKIE_LEARNMORE}>',
-            link: null,
-            container: null,
-            theme: false,
-        };
-    </script>
-    <script src="<{xoImgUrl}>js/cookieconsent.min.js"></script>
-    <!-- End Cookie Consent plugin -->
+    <{include file="$theme_name/tpl/cookieConsent.tpl"}>
     <{if $xoops_isadmin|default:false}>
     <script src="<{xoImgUrl}>js/js.cookie.min.js"></script>
     <{/if}>
@@ -46,10 +34,15 @@
 
 <{include file="$theme_name/tpl/nav-menu.tpl"}>
 
+<{* un-comment to enable slider
+<{if $xoops_page == "index"}>
+    <{include file="$theme_name/tpl/slider.tpl"}>
+<{/if}>
+*}>
+
 <div class="container maincontainer">
 
 <{if $xoops_page == "index"}>
-    <{**include file="$theme_name/tpl/slider.tpl"**}>
     <{include file="$theme_name/tpl/jumbotron.tpl"}>
 <{/if}>
 
