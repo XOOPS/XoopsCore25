@@ -1,17 +1,18 @@
 <script>
     jQuery(document).ready(function ($) {
         $('.extcalform > form select').addClass('form-control');
-        $('.extcalform > form input[type="submit"]').addClass('btn btn-primary');
+        $('.extcalform > form button[type="submit"]').removeClass();
+        $('.extcalform > form button[type="submit"]').addClass('btn btn-sm btn-secondary');
     });
 </script>
 
-<div class="extcalform mb10 text-center">
+<div class="extcalform mb-3">
     <form action="<{$navigSelectBox.action}>" method="<{$navigSelectBox.method}>">
-        <ul class="list-inline">
-            <{foreachq item=element from=$navigSelectBox.elements}>
-            <li><{$element.body}></li>
+        <div class="form-row">
+            <{foreach item=element from=$navigSelectBox.elements}>
+            <div class="col"><{$element.body}></div>
             <{/foreach}>
-        </ul>
+        </div>
     </form>
 </div>
 
@@ -46,7 +47,7 @@
                                         src="images/icons/event-<{$event.status}>.gif"/> <a
                                         href="<{$xoops_url}>/modules/extcal/event.php?event=<{$event.event_id}>"
                                         class="extcalTips"
-                                        title="<{$event.event_title}> :: <b><{$lang.start}></b> <{$event.formated_event_start}><br /><b><{$lang.end}></b> <{$event.formated_event_end}>"><{$event.event_title}></a>
+                                        title="<{$event.event_title}> :: <{$lang.start}> <{$event.formated_event_start}> <{$lang.end}> <{$event.formated_event_end}>"><{$event.event_title}></a>
                             </div>
                             <div style="background-color:#<{$event.cat.cat_color}>; height:2px; font-size:2px;">
                                 &nbsp;

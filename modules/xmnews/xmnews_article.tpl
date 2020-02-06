@@ -33,7 +33,6 @@
 					<h3 class="mb-0"><{$title}></h3>
 					<div class="mb-2 text-muted"><{if $douser == 1}><{$smarty.const._MA_XMNEWS_NEWS_PUBLISHEDBY}> <{$author}><{/if}> <{$smarty.const._MA_XMNEWS_NEWS_ON}> <{$date}></div>
 					<p class="card-text mb-auto"><{if $logo != ''}><{if $CAT == true}><a href="index.php?news_cid=<{$category_id}>"><{/if}><img class="col-3 rounded float-right d-none d-md-block" src="<{$logo}>" alt="<{$title}>"><{if $CAT == true}></a><{/if}><{/if}><{$news}></p>
-  
 				</div>
 				<div class="w-100"></div>
 				<{if $xmdoc_viewdocs == true}>
@@ -41,14 +40,14 @@
 					<div class="card">
 						<div class="card-header">
 							<{$smarty.const._MA_XMNEWS_NEWS_XMDOC}>
-						</div>					
+						</div>
 						<div class="card-body">
 							<{include file="db:xmdoc_viewdoc.tpl"}>
 						</div>
 					</div>
 				</div>
 				<div class="w-100"></div>
-				<{/if}>	
+				<{/if}>
 				<div class="col-12 pl-4 pr-4 pb-4">
 					<div class="card">
 						<div class="card-header">
@@ -72,8 +71,8 @@
 									<i class="fa fa-calendar" aria-hidden="true"></i> <{$smarty.const._MA_XMNEWS_NEWS_MDATE}>: <{$mdate}>
 								</div>
 								<{/if}>
-								<{/if}>							
-							</div>						
+								<{/if}>
+							</div>
 							<div class="text-center pt-2">
 								<div class="btn-group text-center" role="group">
 									<{if $perm_edit == true}>
@@ -86,8 +85,8 @@
 										<button type="button" class="btn btn-secondary" onclick=window.location.href="action.php?op=del&amp;news_id=<{$news_id}>"><i class="fa fa-trash" aria-hidden="true"></i> <{$smarty.const._MA_XMNEWS_DEL}></button>
 									<{/if}>
 								</div>
-							</div>	
-							
+							</div>
+
 						</div>
 					</div>
 				</div>

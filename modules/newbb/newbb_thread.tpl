@@ -151,7 +151,7 @@
                 <{assign var='banprompt' value=">$bantext<"}>
 
                 <{foreach item=btn from=$topic_post.thread_buttons}>
-                   <a class="btn btn-primary btn-xs" href="<{$btn.link}>&amp;post_id=<{$topic_post.post_id}>" title="<{$btn.name}>"><{$btn.image|replace:$banprompt:'><span class="fa fa-ban" aria-hidden="true"><'}></a>
+                   <a class="btn btn-primary btn-xs" href="<{$btn.link}>&amp;post_id=<{$topic_post.post_id}>" title="<{$btn.name}>"><{$btn.image|replace:$banprompt:'><span class="fa fa-ban" aria-hidden="true"><'|replace:forum_button:xforum_button}></a>
                 <{/foreach}>
         <{/if}>
     <{/if}>

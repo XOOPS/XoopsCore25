@@ -1,3 +1,15 @@
+<div class="card">
+    <{if $item.image_path}>
+    <img class="card-img-top" src="<{$item.image_path}>" alt="<{$item.title}>">
+    <{/if}>
+    <div class="card-body">
+        <h5 class="card-title"><{$item.titlelink}></h5>
+        <{if $display_whowhen_link}>
+        <p class="card-text"><small class="text-muted"><{$item.who_when}> (<{$item.counter}> <{$smarty.const._MD_PUBLISHER_READS}>)</small></p>
+        <{/if}>
+        <p class="card-text"><{$item.summary}></p>
+    </div>
+</div>
 <div class="sitem">
     <{if $item.image_path}>
         <div class="sitem_img_div">

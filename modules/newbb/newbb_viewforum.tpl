@@ -194,8 +194,8 @@
             <form class="xoopsform" method="get" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php">
             <ul class="list-inline">
             <li><strong><{$smarty.const._MD_NEWBB_SORTEDBY}>:</strong></li>
-            <li><{$forum_selection_sort}></li>
-            <li><{$forum_selection_order}></li>
+            <li><{$forum_selection_sort|replace:'<select name':'<select class="form-control" name'}></li>
+            <li><{$forum_selection_order|replace:'<select name':'<select class="form-control" name'}></li>
             <li><{$forum_selection_since}></li>
             <input type="hidden" name="forum" value="<{$forum_id}>">
             <input type="hidden" name="status" value="<{$status}>">
@@ -206,7 +206,7 @@
     </div>
 
     <div class="col-sm-2 col-md-2"><a data-toggle="collapse" href="#forum-info" class="btn btn-info" title="<{$smarty.const.THEME_PERMISSIONS_LEGEND}>"><span class="fa fa-info"></span></a></div>
-    <div class="col-sm-10 col-md-10 text-right xoopsform"><{$forum_jumpbox}></div>
+    <div class="col-sm-10 col-md-10 text-right xoopsform"><{$forum_jumpbox|replace:' class="select"':' class="btn btn-light"'|replace:"'button'":'"btn btn-sm btn-light"'}></div>
 <!--<{$forum_addpoll}>-->
 </div>
 

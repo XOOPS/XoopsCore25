@@ -11,7 +11,7 @@
     <{include file='db:publisher_categories_table.tpl'}>
     <!-- End of if !$category || $category.subcats || ($category && $display_category_summary) //-->
 <{/if}>
-<h4 class="pub_last_articles_list"><span class="fa fa-chevron-right"></span>&nbsp;<{$lang_items_title}></h4>
+<h4 class="pub_last_articles_list"><span class="fa fa-newspaper-o"></span>&nbsp;<{$lang_items_title}></h4>
 <div class="publisher_items_list_">
     <{if $items}>
     <{foreach item=item from=$items}>
@@ -46,7 +46,9 @@
     <{/foreach}>
 </div>
 
-    <div align="right"><{$navbar}></div>
+    <div class="generic-pagination col text-right mt-2">
+        <{$navbar|replace:'form':'div'|replace:'id="xo-pagenav"':''|replace:' //':'/'}>
+    </div>
 
 <{$press_room_footer}>
 
