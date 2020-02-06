@@ -26,13 +26,13 @@
 			<div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
 				<div class="col-12 d-block d-md-none pt-4 pl-4 pr-4">
 					<{if $logo != ''}>
-						<img class="rounded img-fluid" src="<{$logo}>" alt="<{$title}>">
+						<{if $CAT == true}><a href="index.php?news_cid=<{$category_id}>"><{/if}><img class="rounded img-fluid" src="<{$logo}>" alt="<{$title}>"><{if $CAT == true}></a><{/if}>
 					<{/if}>
 				</div>
 				<div class="col p-4 d-flex flex-column position-static">
 					<h3 class="mb-0"><{$title}></h3>
 					<div class="mb-2 text-muted"><{if $douser == 1}><{$smarty.const._MA_XMNEWS_NEWS_PUBLISHEDBY}> <{$author}><{/if}> <{$smarty.const._MA_XMNEWS_NEWS_ON}> <{$date}></div>
-					<p class="card-text mb-auto"><{if $logo != ''}><img class="col-3 rounded float-right d-none d-md-block" src="<{$logo}>" alt="<{$title}>"><{/if}><{$news}></p>
+					<p class="card-text mb-auto"><{if $logo != ''}><{if $CAT == true}><a href="index.php?news_cid=<{$category_id}>"><{/if}><img class="col-3 rounded float-right d-none d-md-block" src="<{$logo}>" alt="<{$title}>"><{if $CAT == true}></a><{/if}><{/if}><{$news}></p>
   
 				</div>
 				<div class="w-100"></div>
@@ -61,7 +61,7 @@
 									<i class="fa fa-rotate-right" aria-hidden="true"></i> <{$smarty.const._MA_XMNEWS_NEWS_READING}>: <{$counter}>
 								</div>
 								<{/if}>
-								<{if $dorating == 0}>
+								<{if $dorating == 1}>
 								<div class="col-12 col-lg-6">
 									<i class="fa fa-star" aria-hidden="true"></i> <{$smarty.const._MA_XMNEWS_NEWS_RATING}>: <{$rating}> <{$votes}>
 								</div>
