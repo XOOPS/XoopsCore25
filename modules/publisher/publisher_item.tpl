@@ -1,26 +1,3 @@
-<!-- Article Slider -->
-<script src="<{xoImgUrl}>js/owl/owl.carousel.js"></script>
-<style>
-    #articleslider .item img {
-        display: block;
-        width: 100%;
-        height: auto;
-    }
-</style>
-<script>
-    $(document).ready(function () {
-        $(".owl-carousel").owlCarousel({
-            margin: 10,
-            autoHeight: true,
-            autoplay: true,
-            items: 1,
-            dotsEach: true,
-            dots: true,
-            loop: true,
-            autoplayHoverPause: true
-        });
-    });
-</script>
 <{include file='db:publisher_header.tpl'}>
 <div class="pub_article_t_top clearfix">
     <header>
@@ -50,16 +27,37 @@
     <{if $item.image_path || $item.images}>
         <figure>
             <{if $item.images}>
-                <div id="articleslider" class="owl-carousel owl-theme" style="margin-bottom:10px;">
-                    <div class="item">
-                        <img class="img-fluid" src="<{$item.image_path}>"/>
-                    </div>
-                    <{foreach item=image from=$item.images}>
-                        <div class="item">
-                            <img class="img-fluid" src="<{$image.path}>" alt="<{$image.name}>"/>
+            <div id="articleslider" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <{assign var=active value=' active'}>
+                    <{if $item.image_path}>
+                    <div class="carousel-item<{$active}>">
+                        <img class="d-block w-100" src="<{$item.image_path}>" alt="<{$item.image_name}>"/>
+                        <div class="carousel-caption d-none d-md-block">
+                            <p class="slidetext-trans center"><{$item.image_name}><p>
                         </div>
+                    </div>
+                    <{assign var=active value=''}>
+                    <{/if}>
+                    <{foreach item=image from=$item.images name=foo}>
+                    <div class="carousel-item<{$active}>">
+                        <img class="d-block w-100" src="<{$image.path}>" alt="<{$image.name}>"/>
+                        <div class="carousel-caption d-none d-md-block">
+                            <p class="slidetext-trans center"><{$image.name}><p>
+                        </div>
+                    </div>
+                    <{assign var=active value=''}>
                     <{/foreach}>
+                    <a class="carousel-control-prev" href="#articleslider" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only"<{$smarty.const.THEME_CONTROL_PREVIOUS}>/span>
+                    </a>
+                    <a class="carousel-control-next" href="#articleslider" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only"<{$smarty.const.THEME_CONTROL_NEXT}>/span>
+                    </a>
                 </div>
+            </div>
             <{elseif $item.image_path}>
                 <img style="margin-bottom:15px;" class="img-fluid" src="<{$item.image_path}>" alt="<{$item.image_name}>"/>
             <{/if}>
