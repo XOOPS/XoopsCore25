@@ -59,7 +59,7 @@
                 </div>
             </div>
             <{elseif $item.image_path}>
-                <img style="margin-bottom:15px;" class="img-fluid" src="<{$item.image_path}>" alt="<{$item.image_name}>"/>
+                <img class="img-fluid mh-100" src="<{$item.image_path}>" alt="<{$item.image_name}>"/>
             <{/if}>
         </figure>
     <{/if}>
