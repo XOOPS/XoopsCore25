@@ -97,7 +97,7 @@
 
 <!-- Attached Files -->
 <{if $item.files}>
-    <table class="table table-bordered table-condensed" style="margin: 15px 0;">
+    <table class="table table-bordered table-sm" style="margin: 15px 0;">
         <thead>
         <tr>
             <th width="60%"><{$smarty.const._CO_PUBLISHER_FILENAME}></th>
@@ -168,7 +168,7 @@
         <{/if}>
     <{/if}>
 <{elseif $other_items == 'all'}>
-    <table class="table table-bordered table-condensed" style="margin: 15px 0;">
+    <table class="table table-bordered table-sm" style="margin: 15px 0;">
         <thead>
         <tr>
             <th><{$smarty.const._MD_PUBLISHER_OTHER_ITEMS}></th>
