@@ -3,7 +3,7 @@
         <h4 class="txtcenter mt-4"><{$lang_activenotifications}></h4>
         <input type="hidden" name="not_redirect" value="<{$xoops_notification.redirect_script}>"/>
         <input type="hidden" name="XOOPS_TOKEN_REQUEST" value="<{php}>echo $GLOBALS['xoopsSecurity']->createToken();<{/php}>"/>
-        <table class="table table-condensed">
+        <table class="table table-sm">
             <tr>
                 <th colspan="3"><{$lang_notificationoptions}></th>
             </tr>

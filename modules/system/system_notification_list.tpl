@@ -1,14 +1,14 @@
 <h4><{$lang_activenotifications}></h4>
 <form name="notificationlist" action="notifications.php" method="post">
 	<div class="table-responsive">
-		<table class="table">
+		<table class="table table-hover">
 			<thead>
 			<tr class="table-primary">
 				<th><input name="allbox" id="allbox" onclick="xoopsCheckAll('notificationlist', 'allbox');" type="checkbox" value="<{$lang_checkall}>"/>
 				</th>
 				<th><{$lang_event}></th>
 				<th><{$lang_category}></th>
-				<th><{$lang_itemid}></th>
+				<th class="d-none d-sm-table-cell"><{$lang_itemid}></th>
 				<th><{$lang_itemname}></th>
 			</tr>
 			</thead>
@@ -28,7 +28,7 @@
 					</td>
 					<td><{$notification.event_title}></td>
 					<td><{$notification.category_title}></td>
-					<td><{if $item.id != 0}><{$item.id}><{/if}></td>
+					<td class="d-none d-sm-table-cell"><{if $item.id != 0}><{$item.id}><{/if}></td>
 					<td><{if $item.id != 0}><{if $item.url != ''}><a href="<{$item.url}>" title="<{$item.name}>"><{/if}><{$item.name}><{if
 						$item.url != ''}></a><{/if}><{/if}>
 					</td>
