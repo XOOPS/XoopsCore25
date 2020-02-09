@@ -76,13 +76,13 @@
 							<div class="text-center pt-2">
 								<div class="btn-group text-center" role="group">
 									<{if $perm_edit == true}>
-										<button type="button" class="btn btn-secondary" onclick=window.location.href="action.php?op=edit&amp;news_id=<{$news_id}>"><i class="fa fa-edit" aria-hidden="true"></i> <{$smarty.const._MA_XMNEWS_EDIT}></button>
+										<a class="btn btn-secondary" href="action.php?op=edit&amp;news_id=<{$news_id}>"><i class="fa fa-edit" aria-hidden="true"></i> <{$smarty.const._MA_XMNEWS_EDIT}></a>
 									<{/if}>
 									<{if $perm_clone == true}>
-										<button type="button" class="btn btn-secondary" onclick=window.location.href="action.php?op=clone&amp;news_id=<{$news_id}>"><i class="fa fa-clone" aria-hidden="true"></i> <{$smarty.const._MA_XMNEWS_CLONE}></button>
+										<a class="btn btn-secondary" href="action.php?op=clone&amp;news_id=<{$news_id}>"><i class="fa fa-clone" aria-hidden="true"></i> <{$smarty.const._MA_XMNEWS_CLONE}></a>
 									<{/if}>
 									<{if $perm_del == true}>
-										<button type="button" class="btn btn-secondary" onclick=window.location.href="action.php?op=del&amp;news_id=<{$news_id}>"><i class="fa fa-trash" aria-hidden="true"></i> <{$smarty.const._MA_XMNEWS_DEL}></button>
+										<a class="btn btn-secondary" href="action.php?op=del&amp;news_id=<{$news_id}>"><i class="fa fa-trash" aria-hidden="true"></i> <{$smarty.const._MA_XMNEWS_DEL}></a>
 									<{/if}>
 								</div>
 							</div>

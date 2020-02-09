@@ -15,7 +15,7 @@
 				</div>
 			</form>
 		</div>
-		<br>		
+		<br>
 		<br>
 	<{else}>
 		<nav aria-label="breadcrumb">
@@ -31,12 +31,12 @@
 			<div class="col-9 col-md-8 col-lg-9 " style="padding-bottom: 5px; padding-top: 5px;">
 				<h4 class="mt-0"><{$category_name}></h4>
 				<{$category_description}>
-			</div>		
+			</div>
 		</div>
-		<br>	
+		<br>
 	<{/if}>
 	<{if $news_count != 0}>
-		<{foreach item=news from=$news}>		
+		<{foreach item=news from=$news}>
 			<div class="row mb-2">
 				<div class="col-md-12">
 					<div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
@@ -49,16 +49,16 @@
 							<h3 class="mb-0"><{$news.title}></h3>
 							<div class="mb-2 text-muted"><{if $news.douser == 1}><{$smarty.const._MA_XMNEWS_NEWS_PUBLISHEDBY}> <{$news.author}><{/if}> <{if $news.dodate == 1}><{$smarty.const._MA_XMNEWS_NEWS_ON}> <{$news.date}><{/if}></div>
 							<p class="card-text mb-auto"><{$news.description}></p>
-		  
+
 						</div>
 						<div class="col-2 col-md-4 p-4 d-none d-lg-block">
-							<{if $news.logo != ''}>	
+							<{if $news.logo != ''}>
 							<img class="rounded img-fluid" src="<{$news.logo}>" alt="<{$news.title}>">
 							<{/if}>
 						</div>
 						<div class="w-100"></div>
 						<div class="col-12 pl-4 pb-4">
-							<button type="button" class="btn btn-secondary" onclick=window.location.href="article.php?news_id=<{$news.id}>"><i class="fa fa-book" aria-hidden="true"></i> <{$smarty.const._MA_XMNEWS_NEWS_MORE}></button>
+							<a class="btn btn-secondary" href="article.php?news_id=<{$news.id}>"><i class="fa fa-book" aria-hidden="true"></i> <{$smarty.const._MA_XMNEWS_NEWS_MORE}></a>
 						</div>
 					</div>
 				</div>
@@ -74,7 +74,7 @@
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			<{$smarty.const._MA_XMNEWS_ERROR_NONEWS}>
 		</div>
-	<{/if}>	
+	<{/if}>
 	<div style="margin:3px; padding: 3px;">
 		<{include file='db:system_notification_select.tpl'}>
     </div>
