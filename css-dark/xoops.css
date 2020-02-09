@@ -1218,13 +1218,47 @@ div.jGrowl div.jGrowl-closer {
     margin: 1em;
     background: linear-gradient(135deg, #191919 0%,#4c4c4c 93%,#919191 100%);
 }
-
+/*
 .xoops-theme-select form select {
     background-color: black;
 }
-
+*/
 input[type=submit], input[type=reset], input[type=button], .xo-formbuttons, .formButton, button {
     background-color: #3a3f44;
     color: #eeeeee;
     padding: 8px 12px;
+}
+
+a.xo-counterpage {
+    color: blue;
+}
+a.xo-pagarrow {
+    color: blue;
+}
+.generic-pagination a:hover {
+    color: blue;
+    background: #333333;
+}
+a.read-topic {
+    color: #bfbff0;
+}
+
+a.read-topic:hover {
+    color: #846eff !important;
+}
+div.newbb-thread {
+    background-color: #333333;
+    border: 1px solid #666666;
+}
+
+#about.bg-contact {
+    background-color: #272B30;
+}
+
+div.newbb thead a {
+    color: grey;
+}
+
+.toast-body a {
+    color: black;
 }
