@@ -3,24 +3,24 @@
 <div class="current-tab">
     <div class="row">
         <{if $op == "out"}>
-            <div class="col-xs-6 col-md-6">
+            <div class="col-6">
                 <a class="btn btn-info btn-block" href="viewpmsg.php?op=in" title="<{$smarty.const._PM_INBOX}>"><{$smarty.const._PM_INBOX}></a>
             </div>
-            <div class="col-xs-6 col-md-6">
+            <div class="col-6">
                 <a class="btn btn-info btn-block" href="viewpmsg.php?op=save" title="<{$smarty.const._PM_SAVEBOX}>"><{$smarty.const._PM_SAVEBOX}></a>
             </div>
         <{elseif $op == "save"}>
-            <div class="col-xs-6 col-md-6">
+            <div class="col-6">
                 <a class="btn btn-info btn-block" href="viewpmsg.php?op=in" title="<{$smarty.const._PM_INBOX}>"><{$smarty.const._PM_INBOX}></a>
             </div>
-            <div class="col-xs-6 col-md-6">
+            <div class="col-6">
                 <a class="btn btn-info btn-block" href="viewpmsg.php?op=out" title="<{$smarty.const._PM_OUTBOX}>"><{$smarty.const._PM_OUTBOX}></a>
             </div>
         <{elseif $op == "in"}>
-            <div class="col-xs-6 col-md-6">
+            <div class="col-6">
                 <a class="btn btn-info btn-block" href="viewpmsg.php?op=out" title="<{$smarty.const._PM_OUTBOX}>"><{$smarty.const._PM_OUTBOX}></a>
             </div>
-            <div class="col-xs-6 col-md-6">
+            <div class="col-6">
                 <a class="btn btn-info btn-block" href="viewpmsg.php?op=save" title="<{$smarty.const._PM_SAVEBOX}>"><{$smarty.const._PM_SAVEBOX}></a>
             </div>
         <{/if}>
@@ -56,7 +56,7 @@
 <{/if}>
 
 <form name="<{$pmform.name}>" id="<{$pmform.name}>" action="<{$pmform.action}>" method="<{$pmform.method}>" <{$pmform.extra}>>
-<table class="table table-striped table-condensed" cellspacing='1' cellpadding='4'>
+<table class="table table-hover table-sm" cellspacing='1' cellpadding='4'>
 
     <tr class="txtcenter alignmiddle">
         <th class="txtcenter"><input name='allbox' id='allbox' onclick='xoopsCheckAll("<{$pmform.name}>", "allbox");' type='checkbox' value='Check All' title="<{$smarty.const.THEME_SELECT_ALL}>"/></th>

@@ -49,29 +49,29 @@
             <{/foreach}>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-8">
-            <ul class="pager">
+    <div class="mt-3">
+        <div>
+            <ul class="pagination justify-content-end"">
                 <{if ( $previous >= 0 ) }>
-                    <li>
-                        <a href='readpmsg.php?start=<{$previous}>&amp;total_messages=<{$total_messages}>&amp;op=<{$op}>' title='<{$smarty.const._PM_PREVIOUS}>'>
-                            <{$smarty.const._PM_PREVIOUS}>
+                    <li class="page-item">
+                        <a class="page-link" href='readpmsg.php?start=<{$previous}>&amp;total_messages=<{$total_messages}>&amp;op=<{$op}>' title='<{$smarty.const._PM_PREVIOUS}>'>
+                            <span class="fa fa-arrow-left"></span> <{$smarty.const._PM_PREVIOUS}>
                         </a>
                     </li>
                 <{else}>
-                    <li class="disabled">
-                        <a href="#"><{$smarty.const._PM_PREVIOUS}></a>
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#"><span class="fa fa-arrow-left"></span> <{$smarty.const._PM_PREVIOUS}></a>
                     </li>
                 <{/if}>
                 <{if ( $next < $total_messages ) }>
-                    <li>
-                        <a href='readpmsg.php?start=<{$next}>&amp;total_messages=<{$total_messages}>&amp;op=<{$op}>' title='<{$smarty.const._PM_NEXT}>'>
-                            <{$smarty.const._PM_NEXT}>
+                    <li class="page-item">
+                        <a class="page-link" href='readpmsg.php?start=<{$next}>&amp;total_messages=<{$total_messages}>&amp;op=<{$op}>' title='<{$smarty.const._PM_NEXT}>'>
+                            <{$smarty.const._PM_NEXT}> <span class="fa fa-arrow-right"></span>
                         </a>
                     </li>
                 <{else}>
-                    <li class="disabled">
-                        <a href="#"><{$smarty.const._PM_NEXT}></a>
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#"><{$smarty.const._PM_NEXT}> <span class="fa fa-arrow-right"></a>
                     </li>
                 <{/if}>
             </ul>
