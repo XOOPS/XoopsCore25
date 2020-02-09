@@ -1244,7 +1244,7 @@ a.read-topic {
 }
 
 a.read-topic:hover {
-    color: #846eff !important;
+    color: #846eff;
 }
 div.newbb-thread {
     background-color: #333333;
