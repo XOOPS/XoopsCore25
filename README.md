@@ -14,10 +14,11 @@ Features:
 
 Customize xSwatch:
 
-- customize the Navigation Bar in tpl/nav-menu.tpl and language/*/main.php to match your system
+- customize the Navigation Bar in tpl/nav-menu.tpl and language/*/main.php to match your system and installed modules
 - customize the Jumbotron in theme.tpl and tpl/jumbotron.tpl
 - enable a slider in theme.tpl and tpl/slider.tpl
 - customize cookie consent in tpl/cookieConsent.tpl, or disable include in theme.tpl
+- customize or disable inbox alert in theme.tpl and tpl/inboxAlert.tpl
 - for best experience install both the PM and Profile modules
 - to enable the dark theme, copy the contents of the *css-dark* directory to the *css* directory.
 - alternate [Bootswatch](https://bootswatch.com/) themes can be swapped in easily by copying the theme's bootstrap.min.css into the css folder.
