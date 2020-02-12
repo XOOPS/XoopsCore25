@@ -62,7 +62,7 @@
 								<{/if}>
 								<{if $dorating == 1}>
 								<div class="col-12 col-lg-6">
-									<i class="fa fa-star" aria-hidden="true"></i> <{$smarty.const._MA_XMNEWS_NEWS_RATING}>: <{$rating}> <{$votes}>
+									<{include file="db:xmsocial_rating.tpl"}>
 								</div>
 								<{/if}>
 								<{if $domdate == 1}>
