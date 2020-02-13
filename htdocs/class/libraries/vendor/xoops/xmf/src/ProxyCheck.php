@@ -17,7 +17,7 @@ namespace Xmf;
  * @category  Xmf\ProxyCheck
  * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
- * @copyright 2019 XOOPS Project (https://xoops.org)
+ * @copyright 2019-2020 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  */
 class ProxyCheck
@@ -52,13 +52,13 @@ class ProxyCheck
      */
     public function get()
     {
-        if(false===$this->proxyHeaderName || false===$this->proxyHeader) {
+        if (false===$this->proxyHeaderName || false===$this->proxyHeader) {
             return false;
         }
         $proxyVars = $this->splitOnComma($this->proxyHeader);
         // only consider the first (left most) value
         $header = reset($proxyVars);
-        $ip=false;
+        $ip = false;
         switch ($this->proxyHeaderName) {
             case static::FORWARDED:
                 $ip = $this->getFor($header);
@@ -103,7 +103,7 @@ class ProxyCheck
 
     /**
      * get the configured proxy header
-     * 
+     *
      * @return string|false
      */
     protected function getProxyHeader()
@@ -158,7 +158,7 @@ class ProxyCheck
      */
     protected function validateRoutableIP($ip)
     {
-        if(!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+        if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
             return false;
         }
         return $ip;

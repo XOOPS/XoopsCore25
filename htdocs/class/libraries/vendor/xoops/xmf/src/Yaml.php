@@ -29,7 +29,7 @@ use Symfony\Component\Yaml\Yaml as VendorYaml;
  * @category  Xmf\Yaml
  * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
- * @copyright 2013-2018 XOOPS Project (https://xoops.org)
+ * @copyright 2013-2020 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @link      https://xoops.org
  * @see       http://www.yaml.org/
@@ -80,10 +80,13 @@ class Yaml
      *
      * @param string $yamlFile filename of YAML file
      *
-     * @return array|boolean PHP array or false on error
+     * @return array|false PHP array or false on error
      */
     public static function read($yamlFile)
     {
+        if (!file_exists($yamlFile)) {
+            return false;
+        }
         try {
             $yamlString = file_get_contents($yamlFile);
             $ret = VendorYaml::parse($yamlString);
@@ -191,10 +194,13 @@ class Yaml
      *
      * @param string $yamlFile filename of YAML file
      *
-     * @return array|boolean PHP array or false on error
+     * @return array|false PHP array or false on error
      */
     public static function readWrapped($yamlFile)
     {
+        if (!file_exists($yamlFile)) {
+            return false;
+        }
         try {
             $yamlString = file_get_contents($yamlFile);
             $ret = static::loadWrapped($yamlString);
