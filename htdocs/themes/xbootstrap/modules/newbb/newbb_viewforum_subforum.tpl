@@ -1,9 +1,9 @@
-<a title="<{$smarty.const._MD_SUBFORUMS}>" data-toggle="collapse" href="#xoops-subforum" class="btn btn-primary pull-right">
-    <span class="glyphicon glyphicon-plus-sign"></span> <{$smarty.const._MD_SUBFORUMS}>
+<a title="<{$smarty.const._MD_NEWBB_SUBFORUMS}>" data-toggle="collapse" href="#xoops-subforum" class="btn btn-primary pull-right">
+    <span class="glyphicon glyphicon-plus-sign"></span> <{$smarty.const._MD_NEWBB_SUBFORUMS}>
 </a>
 <div class="newbb-subforum mb10 clearfix">
     <div class="collapse" id="xoops-subforum">
-        <{foreachq item=sforum from=$subforum}>
+        <{foreach item=sforum from=$subforum}>
         <ul class="subforum-loop list-unstyled clearfix">
         <li class="col-xs-12 col-md-6">
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$sforum.forum_id}>" title="<{$sforum.forum_name}>">
@@ -12,17 +12,17 @@
         </li>
 
         <li class="col-xs-12 col-md-6 text-right">
-            <strong><{$smarty.const._MD_LASTPOST}>:</strong>
-            <{$sforum.forum_lastpost_time}> <strong><{$smarty.const._MD_BY}></strong> <{$sforum.forum_lastpost_user}>
+            <strong><{$smarty.const._MD_NEWBB_LASTPOST}>:</strong>
+            <{$sforum.forum_lastpost_time}> <strong><{$smarty.const._MD_NEWBB_BY}></strong> <{$sforum.forum_lastpost_user}>
         </li>
 
         <li>
         <ul class="list-inline col-md-6 hidden-xs">
-            <{if $sforum.forum_moderators}><li><span class="label label-info"><{$smarty.const._MD_MODERATOR}>: <{$sforum.forum_moderators}></span></li><{/if}>
+            <{if $sforum.forum_moderators}><li><span class="label label-info"><{$smarty.const._MD_NEWBB_MODERATOR}>: <{$sforum.forum_moderators}></span></li><{/if}>
 
-            <li><span class="label label-info"><{$smarty.const._MD_TOPICS}>: <{$sforum.forum_topics}></span></li>
+            <li><span class="label label-info"><{$smarty.const._MD_NEWBB_TOPICS}>: <{$sforum.forum_topics}></span></li>
 
-            <li><span class="label label-info"><{$smarty.const._MD_POSTS}>: <{$sforum.forum_posts}></span></li>
+            <li><span class="label label-info"><{$smarty.const._MD_NEWBB_POSTS}>: <{$sforum.forum_posts}></span></li>
 
             <!-- If subforum description -->
             <{if $sforum.forum_desc != ""}>
@@ -43,7 +43,7 @@
                 </a>
             </li>
         <{else}>
-            <li><{$smarty.const._MD_NONEWPOSTS}></li>
+            <li><{$smarty.const._MD_NEWBB_NONEWPOSTS}></li>
         <{/if}>
         </ul>
         </li>
