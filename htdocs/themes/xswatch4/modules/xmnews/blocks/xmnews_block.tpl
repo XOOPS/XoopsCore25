@@ -29,7 +29,7 @@
 						<{/if}>
 					</div>
 					<div class="col-12 pt-2 text-left">
-						<{$blocknews.description|truncateHtml:20:'...'}>
+						<{$blocknews.description|truncateHtml:$block.desclenght:'...'}>
 					</div>
 					<div class="col-12 pt-2">
 						<a class="btn btn-primary btn-sm" href="<{$xoops_url}>/modules/xmnews/article.php?news_id=<{$blocknews.id}>"><{$smarty.const._MA_XMNEWS_NEWS_MORE}></a>

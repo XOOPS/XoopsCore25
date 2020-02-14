@@ -12,7 +12,7 @@
 		<{foreach item=waitingnews from=$block.news}>
 			<tr>
 				<td class="text-sm-center text-warning text-nowrap"><{$waitingnews.title}></td>
-				<td class="d-none d-md-block text-warning"><{$waitingnews.description|truncateHtml:50:'...'}></td>
+				<td class="d-none d-md-block text-warning"><{$waitingnews.description|truncateHtml:$block.desclenght:'...'}></td>
 				<td class="text-center text-warning text-nowrap"><{$waitingnews.author}></td>
 				<td>
 					<a class="btn btn-outline-primary text-warning text-center" title="<{$smarty.const._MA_XMNEWS_EDIT}>" href="<{$xoops_url}>/modules/xmnews/action.php?op=edit&amp;news_id=<{$waitingnews.id}>"><i class="fas fa-edit" aria-hidden="true"></i></a>
