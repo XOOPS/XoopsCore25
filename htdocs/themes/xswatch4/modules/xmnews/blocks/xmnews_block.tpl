@@ -1,7 +1,7 @@
 <div class="row">
 	<{foreach item=blocknews from=$block.news}>
 	<{if $block.full == 0}>
-	<div class="col p-2">
+	<div class="col-sm-12 col-md-6 col-lg-4 mb-3">
 		<div class="card">
 			<div class="card-header text-center">
 				<a class="text-decoration-none" title="<{$category.name}>" href="<{$xoops_url}>/modules/xmnews/article.php?news_id=<{$blocknews.id}>">
