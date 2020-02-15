@@ -52,7 +52,7 @@
 
     <div class="aligncenter">
         <a title="<{$smarty.const._MD_TDMDOWNLOADS_RSS}>" href="<{$xoops_url}>/modules/tdmdownloads/rss.php?cid=0">
-            <img src="images/rss.gif" alt="<{$smarty.const._MD_TDMDOWNLOADS_RSS}>">
+            <img src="assets/images/rss.gif" alt="<{$smarty.const._MD_TDMDOWNLOADS_RSS}>">
         </a>
     </div>
 

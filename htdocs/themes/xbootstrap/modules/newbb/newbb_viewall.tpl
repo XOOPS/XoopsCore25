@@ -1,5 +1,5 @@
 <ol class="breadcrumb">
-    <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_FORUMHOME}></a></li>
+    <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMHOME}></a></li>
     <{if $parent_forum}>
         <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$parent_forum}>"><{$parent_name}></a></li>
         <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>"><{$forum_name}></a></li>
@@ -23,41 +23,41 @@
             <div class="pagenav" id="admin">
                 <{if $mode gt 1}>
                     <{$smarty.const._ALL}>:
-                    <input type="checkbox" name="topic_check1" id="topic_check1" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check1');"/>
+                    <input type="checkbox" name="topic_check1" id="topic_check1" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check1');">
                     <select class="form-control" name="op">
                         <option value="0"><{$smarty.const._SELECT}></option>
                         <option value="delete"><{$smarty.const._DELETE}></option>
                         <{if $status eq "pending"}>
-                            <option value="approve"><{$smarty.const._MD_APPROVE}></option>
-                            <option value="move"><{$smarty.const._MD_MOVE}></option>
+                            <option value="approve"><{$smarty.const._MD_NEWBB_APPROVE}></option>
+                            <option value="move"><{$smarty.const._MD_NEWBB_MOVE}></option>
                         <{elseif $status eq "deleted"}>
-                            <option value="restore"><{$smarty.const._MD_RESTORE}></option>
+                            <option value="restore"><{$smarty.const._MD_NEWBB_RESTORE}></option>
                         <{else}>
-                            <option value="move"><{$smarty.const._MD_MOVE}></option>
+                            <option value="move"><{$smarty.const._MD_NEWBB_MOVE}></option>
                         <{/if}>
                     </select>
-                    <input type="hidden" name="forum_id" value="<{$forum_id}>"/>
-                    <input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>"/>
+                    <input type="hidden" name="forum_id" value="<{$forum_id}>">
+                    <input type="submit" name="submit" value="<{$smarty.const._SUBMIT}>">
                     |
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php" target="_self"
-                       title="<{$smarty.const._MD_TYPE_VIEW}>"><{$smarty.const._MD_TYPE_VIEW}></a>
+                       title="<{$smarty.const._MD_NEWBB_TYPE_VIEW}>"><{$smarty.const._MD_NEWBB_TYPE_VIEW}></a>
                     <!-- irmtfan remove < { elseif $mode eq 1} > to show all admin links in admin mode in the initial page loading -->
                 <{else}>
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=active#admin" target="_self"
-                       title="<{$smarty.const._MD_TYPE_ADMIN}>"><{$smarty.const._MD_TYPE_ADMIN}></a>
+                       title="<{$smarty.const._MD_NEWBB_TYPE_ADMIN}>"><{$smarty.const._MD_NEWBB_TYPE_ADMIN}></a>
                     |
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=pending#admin" target="_self"
-                       title="<{$smarty.const._MD_TYPE_PENDING}>"><{$smarty.const._MD_TYPE_PENDING}></a>
+                       title="<{$smarty.const._MD_NEWBB_TYPE_PENDING}>"><{$smarty.const._MD_NEWBB_TYPE_PENDING}></a>
                     |
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=deleted#admin" target="_self"
-                       title="<{$smarty.const._MD_TYPE_DELETED}>"><{$smarty.const._MD_TYPE_DELETED}></a>
+                       title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>"><{$smarty.const._MD_NEWBB_TYPE_DELETED}></a>
                     |
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/moderate.php" target="_self"
-                       title="<{$smarty.const._MD_TYPE_SUSPEND}>"><{$smarty.const._MD_TYPE_SUSPEND}></a>
+                       title="<{$smarty.const._MD_NEWBB_TYPE_SUSPEND}>"><{$smarty.const._MD_NEWBB_TYPE_SUSPEND}></a>
                     <!-- irmtfan remove < { else } > no need for mode=1
                     < { else } >
-                    <!--<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?mode=1#admin" target="_self" title="<{$smarty.const._MD_TYPE_VIEW}>">
-                        <{$smarty.const._MD_TYPE_VIEW}></a>-->
+                    <!--<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?mode=1#admin" target="_self" title="<{$smarty.const._MD_NEWBB_TYPE_VIEW}>">
+                        <{$smarty.const._MD_NEWBB_TYPE_VIEW}></a>-->
                 <{/if}>
             </div>
             <br>
@@ -65,16 +65,16 @@
             <br>
         <{/if}>
         <div class="clear"></div>
-    
+
         <div>
             <div>
                 <{if $menumode eq 0}>
                     <select class="form-control menu" name="topicoption" id="topicoption" onchange="if(this.options[this.selectedIndex].value.length >0 )    { window.document.location=this.options[this.selectedIndex].value;}">
-                        <option value=""><{$smarty.const._MD_TOPICOPTION}></option>
-                        <option value="<{$post_link}>"><{$smarty.const._MD_VIEW}>
-                            &nbsp;<{$smarty.const._MD_ALLPOSTS}></option>
-                        <option value="<{$newpost_link}>"><{$smarty.const._MD_VIEW}>
-                            &nbsp;<{$smarty.const._MD_NEWPOSTS}></option>
+                        <option value=""><{$smarty.const._MD_NEWBB_TOPICOPTION}></option>
+                        <option value="<{$post_link}>"><{$smarty.const._MD_NEWBB_VIEW}>
+                            &nbsp;<{$smarty.const._MD_NEWBB_ALLPOSTS}></option>
+                        <option value="<{$newpost_link}>"><{$smarty.const._MD_NEWBB_VIEW}>
+                            &nbsp;<{$smarty.const._MD_NEWBB_NEWPOSTS}></option>
                         <!-- irmtfan add a separator -->
                         <option value="">--------</option>
                         <{foreach item=filter from=$filters}>
@@ -90,50 +90,50 @@
                         <table>
                             <tr>
                                 <td>
-                                    <a class="item" href="<{$post_link}>"><{$smarty.const._MD_VIEW}>
-                                        &nbsp;<{$smarty.const._MD_ALLPOSTS}></a>
-                                    <a class="item" href="<{$newpost_link}>"><{$smarty.const._MD_VIEW}>
-                                        &nbsp;<{$smarty.const._MD_NEWPOSTS}></a>
-                                    <a class="item" href="<{$all_link}>"><{$smarty.const._MD_VIEW}>
-                                        &nbsp;<{$smarty.const._MD_ALL}></a>
-                                    <a class="item" href="<{$digest_link}>"><{$smarty.const._MD_VIEW}>
-                                        &nbsp;<{$smarty.const._MD_DIGEST}></a>
-                                    <a class="item" href="<{$unreplied_link}>"><{$smarty.const._MD_VIEW}>
-                                        &nbsp;<{$smarty.const._MD_UNREPLIED}></a>
-                                    <a class="item" href="<{$unread_link}>"><{$smarty.const._MD_VIEW}>
-                                        &nbsp;<{$smarty.const._MD_UNREAD}></a>
-    
+                                    <a class="item" href="<{$post_link}>"><{$smarty.const._MD_NEWBB_VIEW}>
+                                        &nbsp;<{$smarty.const._MD_NEWBB_ALLPOSTS}></a>
+                                    <a class="item" href="<{$newpost_link}>"><{$smarty.const._MD_NEWBB_VIEW}>
+                                        &nbsp;<{$smarty.const._MD_NEWBB_NEWPOSTS}></a>
+                                    <a class="item" href="<{$all_link}>"><{$smarty.const._MD_NEWBB_VIEW}>
+                                        &nbsp;<{$smarty.const._MD_NEWBB_ALL}></a>
+                                    <a class="item" href="<{$digest_link}>"><{$smarty.const._MD_NEWBB_VIEW}>
+                                        &nbsp;<{$smarty.const._MD_NEWBB_DIGEST}></a>
+                                    <a class="item" href="<{$unreplied_link}>"><{$smarty.const._MD_NEWBB_VIEW}>
+                                        &nbsp;<{$smarty.const._MD_NEWBB_UNREPLIED}></a>
+                                    <a class="item" href="<{$unread_link}>"><{$smarty.const._MD_NEWBB_VIEW}>
+                                        &nbsp;<{$smarty.const._MD_NEWBB_UNREAD}></a>
+
                                 </td>
                             </tr>
                         </table>
                     </div>
                     <script type="text/javascript">document.getElementById("topicoption").onmouseout = closeMenu;</script>
-                    <div class="menubar"><a href="" onclick="openMenu(event, 'topicoption');return false;"><{$smarty.const._MD_TOPICOPTION|escape:'quotes'}></a>
+                    <div class="menubar"><a href="" onclick="openMenu(event, 'topicoption');return false;"><{$smarty.const._MD_NEWBB_TOPICOPTION|escape:'quotes'}></a>
                     </div>
                 <{elseif $menumode eq 2}>
                     <div class="menu">
                         <ul>
                             <li>
-                                <div class="item"><strong><{$smarty.const._MD_TOPICOPTION}></strong></div>
+                                <div class="item"><strong><{$smarty.const._MD_NEWBB_TOPICOPTION}></strong></div>
                                 <ul>
                                     <li>
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <div class="item"><a href="<{$post_link}>"><{$smarty.const._MD_VIEW}>
-                                                            &nbsp;<{$smarty.const._MD_ALLPOSTS}></a></div>
-                                                    <div class="item"><a href="<{$newpost_link}>"><{$smarty.const._MD_VIEW}>
-                                                            &nbsp;<{$smarty.const._MD_NEWPOSTS}></a></div>
-                                                    <div class="item"><a href="<{$all_link}>"><{$smarty.const._MD_VIEW}>
-                                                            &nbsp;<{$smarty.const._MD_ALL}></a></div>
-                                                    <div class="item"><a href="<{$digest_link}>"><{$smarty.const._MD_VIEW}>
-                                                            &nbsp;<{$smarty.const._MD_DIGEST}></a></div>
+                                                    <div class="item"><a href="<{$post_link}>"><{$smarty.const._MD_NEWBB_VIEW}>
+                                                            &nbsp;<{$smarty.const._MD_NEWBB_ALLPOSTS}></a></div>
+                                                    <div class="item"><a href="<{$newpost_link}>"><{$smarty.const._MD_NEWBB_VIEW}>
+                                                            &nbsp;<{$smarty.const._MD_NEWBB_NEWPOSTS}></a></div>
+                                                    <div class="item"><a href="<{$all_link}>"><{$smarty.const._MD_NEWBB_VIEW}>
+                                                            &nbsp;<{$smarty.const._MD_NEWBB_ALL}></a></div>
+                                                    <div class="item"><a href="<{$digest_link}>"><{$smarty.const._MD_NEWBB_VIEW}>
+                                                            &nbsp;<{$smarty.const._MD_NEWBB_DIGEST}></a></div>
                                                     <div class="item"><a
-                                                                href="<{$unreplied_link}>"><{$smarty.const._MD_VIEW}>
-                                                            &nbsp;<{$smarty.const._MD_UNREPLIED}></a></div>
-                                                    <div class="item"><a href="<{$unread_link}>"><{$smarty.const._MD_VIEW}>
-                                                            &nbsp;<{$smarty.const._MD_UNREAD}></a></div>
-    
+                                                                href="<{$unreplied_link}>"><{$smarty.const._MD_NEWBB_VIEW}>
+                                                            &nbsp;<{$smarty.const._MD_NEWBB_UNREPLIED}></a></div>
+                                                    <div class="item"><a href="<{$unread_link}>"><{$smarty.const._MD_NEWBB_VIEW}>
+                                                            &nbsp;<{$smarty.const._MD_NEWBB_UNREAD}></a></div>
+
                                                 </td>
                                             </tr>
                                         </table>
@@ -156,7 +156,7 @@
     <{if $mode gt 1}>
     </form>
     <{/if}>
-    
+
         </div> <!-- end column -->
     </div><!-- end row -->
 <table class="table table-responsive" width="100%" align="center">
@@ -166,7 +166,7 @@
         <th width="5%" colspan="2">
             <{if $mode gt 1}>
                 <{$smarty.const._ALL}>:
-                <input type="checkbox" name="topic_check" id="topic_check" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check');"/>
+                <input type="checkbox" name="topic_check" id="topic_check" value="1" onclick="xoopsCheckAll('form_topics_admin', 'topic_check');">
             <{else}>
                 &nbsp;
             <{/if}>
@@ -181,12 +181,12 @@
     </thead>
     <tbody>
     <!-- start forum topic -->
-    <{foreachq name=loop item=topic from=$topics}>
+    <{foreach name=loop item=topic from=$topics}>
     <tr class="<{cycle values="even,odd"}>">
         <!-- irmtfan add topic-read/topic-new smarty variable  -->
         <td width="4%" align="center" class="<{if $topic.topic_read eq 1 }>topic-read<{else}>topic-new<{/if}>">
         <{if $mode gt 1}>
-            <input type="checkbox" name="topic_id[]" id="topic_id[<{$topic.topic_id}>]" value="<{$topic.topic_id}>"/>
+            <input type="checkbox" name="topic_id[]" id="topic_id[<{$topic.topic_id}>]" value="<{$topic.topic_id}>">
         <{else}>
         <!-- irmtfan add lock -->
             <{$topic.topic_folder}><{$topic.lock}>
@@ -212,7 +212,7 @@
         <td align="center" valign="middle"><{$topic.topic_views}></td>
         <!-- irmtfan hardcode removed align="right" -->
         <td class="align_right" valign="middle"><{$topic.topic_last_posttime}><br>
-            <{$smarty.const._MD_BY}> <{$topic.topic_last_poster}>&nbsp;&nbsp;<{$topic.topic_page_jump_icon}>
+            <{$smarty.const._MD_NEWBB_BY}> <{$topic.topic_last_poster}>&nbsp;&nbsp;<{$topic.topic_page_jump_icon}>
         </td>
     </tr>
     <{/foreach}>
@@ -221,18 +221,18 @@
     <td colspan="8" align="center">
         <{strip}>
             <form method="get" action="<{$selection.action}>">
-                <strong><{$smarty.const._MD_SORTEDBY}></strong>&nbsp;
+                <strong><{$smarty.const._MD_NEWBB_SORTEDBY}></strong>&nbsp;
                 <{$selection.sort}>&nbsp;
                 <{$selection.order}>&nbsp;
                 <{$selection.since}>&nbsp;
                 <{foreach item=hidval key=hidvar from=$selection.vars}>
                     <{if $hidval && $hidvar neq "sort" && $hidvar neq "order" && $hidvar neq "since"}>
                         <!-- irmtfan correct name="$hidvar" -->
-                        <input type="hidden" name="<{$hidvar}>" value="<{$hidval}>"/>
+                        <input type="hidden" name="<{$hidvar}>" value="<{$hidval}>">
                     <{/if}>
                 <{/foreach}>
                 <!-- irmtfan remove name="refresh" -->
-                <input type="submit" value="<{$smarty.const._SUBMIT}>"/>
+                <input type="submit" value="<{$smarty.const._SUBMIT}>">
             </form>
         <{/strip}>
     </td>
@@ -251,25 +251,25 @@
 
 <div>
     <div class="left floatleft">
-        <{$img_newposts}> = <{$smarty.const._MD_NEWPOSTS}> (<{$img_hotnewposts}> = <{$smarty.const._MD_MORETHAN}>) <br>
-        <{$img_folder}> = <{$smarty.const._MD_NONEWPOSTS}> (<{$img_hotfolder}> = <{$smarty.const._MD_MORETHAN2}>) <br>
-        <{$img_locked}> = <{$smarty.const._MD_TOPICLOCKED}> <br>
-        <{$img_sticky}> = <{$smarty.const._MD_TOPICSTICKY}> <br>
-        <{$img_digest}> = <{$smarty.const._MD_TOPICDIGEST}> <br>
-        <{$img_poll}> = <{$smarty.const._MD_TOPICHASPOLL}>
+        <{$img_newposts}> = <{$smarty.const._MD_NEWBB_NEWPOSTS}> (<{$img_hotnewposts}> = <{$smarty.const._MD_NEWBB_MORETHAN}>) <br>
+        <{$img_folder}> = <{$smarty.const._MD_NEWBB_NONEWPOSTS}> (<{$img_hotfolder}> = <{$smarty.const._MD_NEWBB_MORETHAN2}>) <br>
+        <{$img_locked}> = <{$smarty.const._MD_NEWBB_TOPICLOCKED}> <br>
+        <{$img_sticky}> = <{$smarty.const._MD_NEWBB_TOPICSTICKY}> <br>
+        <{$img_digest}> = <{$smarty.const._MD_NEWBB_TOPICDIGEST}> <br>
+        <{$img_poll}> = <{$smarty.const._MD_NEWBB_TOPICHASPOLL}>
     </div>
     <!-- irmtfan hardcode removed style="float: right; text-align: right;" -->
     <div class="icon_right">
         <form action="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php" method="get">
-            <input name="term" id="term" type="text" size="15"/>
+            <input name="term" id="term" type="text" size="15">
             <{foreach item=hidval key=hidvar from=$search}>
                 <{if $hidval }>
                     <!-- irmtfan correct name="$hidvar" -->
-                    <input type="hidden" name="<{$hidvar}>" value="<{$hidval}>"/>
+                    <input type="hidden" name="<{$hidvar}>" value="<{$hidval}>">
                 <{/if}>
             <{/foreach}>
-            <input type="submit" class="formButton" value="<{$smarty.const._MD_SEARCH}>"/><br>
-            [<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._MD_ADVSEARCH}></a>]
+            <input type="submit" class="formButton" value="<{$smarty.const._MD_NEWBB_SEARCH}>"><br>
+            [<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._MD_NEWBB_ADVSEARCH}></a>]
         </form>
         <br>
         <!-- START irmtfan add forum selection box -->
@@ -278,10 +278,10 @@
                 <{$selection.forum}>&nbsp;
                 <{foreach item=hidval key=hidvar from=$selection.vars}>
                     <{if $hidval && $hidvar neq "forum"}>
-                        <input type="hidden" name="<{$hidvar}>" value="<{$hidval}>"/>
+                        <input type="hidden" name="<{$hidvar}>" value="<{$hidval}>">
                     <{/if}>
                 <{/foreach}>
-                <input type="submit" value="<{$smarty.const._SUBMIT}>"/>
+                <input type="submit" value="<{$smarty.const._SUBMIT}>">
             </form>
             <br>
             <{$forum_jumpbox}>
@@ -292,6 +292,6 @@
 <div class="clear"></div>
 <br>
 
-<{if $online}><{includeq file="db:newbb_online.tpl"}><{/if}>
-<{includeq file='db:newbb_notification_select.tpl'}>
+<{if $online}><{include file="db:newbb_online.tpl"}><{/if}>
+<{include file='db:newbb_notification_select.tpl'}>
 <!-- end module contents -->

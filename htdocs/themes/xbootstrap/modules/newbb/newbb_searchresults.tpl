@@ -4,10 +4,10 @@
     <table class="table" border="0" cellpadding="0" cellspacing="0" align="center" width="95%">
         <thead>
         <tr class="head" align="center">
-            <th><{$smarty.const._MD_FORUMC}></th>
-            <th><{$smarty.const._MD_SUBJECT}></th>
-            <th><{$smarty.const._MD_AUTHOR}></th>
-            <th nowrap="nowrap"><{$smarty.const._MD_POSTTIME}></th>
+            <th><{$smarty.const._MD_NEWBB_FORUMC}></th>
+            <th><{$smarty.const._MD_NEWBB_SUBJECT}></th>
+            <th><{$smarty.const._MD_NEWBB_AUTHOR}></th>
+            <th nowrap="nowrap"><{$smarty.const._MD_NEWBB_POSTTIME}></th>
         </tr>
         </thead>
         <tbody>
@@ -34,7 +34,7 @@
         <!-- end each result -->
         <{/section}>
         <!-- end search results -->
-        
+
         <{if $search_next or $search_prev}>
         <tr>
             <!-- irmtfan hardcode removed align="left" -->

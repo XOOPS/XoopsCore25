@@ -30,7 +30,7 @@
                         <img src="<{$xoops_url}>/uploads/<{$obituaries_user.obituaries_user_user_avatar}>" alt="<{$obituaries_user.obituaries_href_title}>"
                              class="img-thumbnail"/>
                     <{else}>
-                        <img src="<{$xoops_url}>/modules/obituaries/images/nophoto.jpg" alt="<{$obituaries_user.obituaries_href_title}>" width="130"
+                        <img src="<{$xoops_url}>/modules/obituaries/assets/images/nophoto.jpg" alt="<{$obituaries_user.obituaries_href_title}>" width="130"
                              class="img-thumbnail"/>
                     <{/if}>
 
