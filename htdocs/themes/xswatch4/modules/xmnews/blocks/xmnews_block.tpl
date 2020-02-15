@@ -1,7 +1,7 @@
 <div class="row">
 	<{foreach item=blocknews from=$block.news}>
 	<{if $block.full == 0}>
-	<div class="col p-2">
+	<div class="col-sm-12 col-md-6 col-lg-4 mb-3">
 		<div class="card">
 			<div class="card-header text-center">
 				<a class="text-decoration-none" title="<{$category.name}>" href="<{$xoops_url}>/modules/xmnews/article.php?news_id=<{$blocknews.id}>">
@@ -28,9 +28,15 @@
 						<i class="fa fa-star" aria-hidden="true"></i> <{$smarty.const._MA_XMNEWS_NEWS_RATING}>: <{$blocknews.rating}> <{$blocknews.votes}>
 						<{/if}>
 					</div>
-					<div class="col-12 pt-2 text-left">
-						<{$blocknews.description|truncateHtml:20:'...'}>
+					<{if $block.desclenght != '0'}>
+					<div class="col-12 pt-2 text-left">						
+						<{if $block.desclenght != 'all'}>
+						<{$blocknews.description|truncateHtml:$block.desclenght:'...'}>
+						<{else}>
+						<{$blocknews.description}>
+						<{/if}>						
 					</div>
+					<{/if}>
 					<div class="col-12 pt-2">
 						<a class="btn btn-primary btn-sm" href="<{$xoops_url}>/modules/xmnews/article.php?news_id=<{$blocknews.id}>"><{$smarty.const._MA_XMNEWS_NEWS_MORE}></a>
 					</div>
