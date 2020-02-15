@@ -122,10 +122,12 @@
 										<{/if}>
 										<div class="col-12 col-lg-6">
 											<i class="fa fa-download" aria-hidden="true"></i> <{$smarty.const._MA_XMDOC_FORMDOC_DOWNLOAD}>: <{$document.counter}>
-										</div>										
-										<div class="col-12 col-lg-6">
-											<i class="fa fa-star" aria-hidden="true"></i> <{$smarty.const._MA_XMDOC_FORMDOC_RATING}>: <{$document.rating}> <{$document.votes}>
 										</div>
+										<{if $document.dorating == 1}>
+										<div class="col-12 col-lg-6">
+											<{include file="db:xmsocial_rating.tpl"}>
+										</div>
+										<{/if}>
 									</div>									
 								</div>
 							</div>

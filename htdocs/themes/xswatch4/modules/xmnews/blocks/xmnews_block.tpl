@@ -28,9 +28,15 @@
 						<i class="fa fa-star" aria-hidden="true"></i> <{$smarty.const._MA_XMNEWS_NEWS_RATING}>: <{$blocknews.rating}> <{$blocknews.votes}>
 						<{/if}>
 					</div>
-					<div class="col-12 pt-2 text-left">
+					<{if $block.desclenght != '0'}>
+					<div class="col-12 pt-2 text-left">						
+						<{if $block.desclenght != 'all'}>
 						<{$blocknews.description|truncateHtml:$block.desclenght:'...'}>
+						<{else}>
+						<{$blocknews.description}>
+						<{/if}>						
 					</div>
+					<{/if}>
 					<div class="col-12 pt-2">
 						<a class="btn btn-primary btn-sm" href="<{$xoops_url}>/modules/xmnews/article.php?news_id=<{$blocknews.id}>"><{$smarty.const._MA_XMNEWS_NEWS_MORE}></a>
 					</div>
