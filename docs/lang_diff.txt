@@ -4,6 +4,28 @@ LANGUAGE DIFFERENCES
 Below are language differences from a version to next version.
 
 ================================
+2020/02/14: Version 2.5.11-Beta1
+================================
+CHANGED FILES:
+htdocs/install/language/english/welcome.php
+- changed recommended PHP & MySQL versions, links changed to "https:"
+htdocs/modules/system/language/english/help/blocksadmin.html
+
+NEW FILES:
+htdocs/themes/xswatch4/language/english/main.php
+Started as copy of xswatch/language/english/main.php then:
+- added define('THEME_TOOLBAR_DEBUGMODE', 'Debug Mode');
+- added define('THEME_TOOLBAR_THIS_MODULE', 'This Module');
+- added define('THEME_PERMISSIONS_LEGEND', 'Permissions &amp; Legend');
+- added define('THEME_INBOX_ALERT', 'PM Alert');
+- added define('THEME_INBOX_LINK', 'Click here to view your Inbox!');
+- added define('THEME_EVENT_DOWNLOADS', 'Event Downloads');
+- added define('THEME_FILE_NAME', 'File');
+- added define('THEME_FILE_SIZE', 'Size');
+- added define('THEME_CONTROL_NEXT', 'Next');
+- added define('THEME_CONTROL_PREVIOUS', 'Previous');
+
+================================
 2019/04/29: Version 2.5.10 Final
 ================================
 ADDED/DELETED DEFINES:

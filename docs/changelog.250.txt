@@ -1,18 +1,55 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
-2.5.11 Alpha             NOT RELEASED
+2.5.11 Beta1             2020/02/14
 ===================================
-- Deprecate \XoopsObject::setFormVars() (geekwright)
+- Add xswatch4, a Bootstrap v4.4 based theme (geekwright, mage, alain01)
+- Fix "NaN" issue involving calendar.js use in MailUsers
+- Update Help page in Blocks Admin
+- Treat Block title starting with comment style '// ' (slash-slash-space) as blank
+- Fix incorrect DB quoting of function calls
+- Only load jquery for jgrowl support if jQuery is not defined
+- Remove dead "list" type from profile module field support
+- Type inconsistency fixes in XoopsMySQLDatabase and children
+- PHP 7.4 compatibility fixes (mamba)
+- Use Smarty template system_confirm.tpl for xoops_confirm (luciorota)
+- In text sanitizer, do not add br tags on new line characters if text contains HTML
+- Fix error in Group administration causing unrequested Description changes during edit
+- Fix inconsistencies in XoopsMultiMailer
+- Fix broken caching in Smarty xoMemberInfo function
+- Fix corruption of chosen options in Blocks administration
+- Attempt graceful failure on missing theme
+- Fix active hyperlink on space between icons in admin screens (mage)
+- Add Smarty $xoops_modulepage variable, form module/script.php?args... (mage)
+- Fix incorrect tooltip in image manager category list
+- Reset DHTML Editor Typography Controls (size, font and color) when focus lost
+- Handle negative ini sizes properly in upload file sizes (goffy)
+- Remove zetadigme admin theme
+- Escape tooltip text in admin themes (HTML no longer supported)
+- Deprecate system_CleanVars(), replace with appropriate Xmf\Request calls (mage)
+- Fix incorrect user admin synchronization for newbb (fabou78)
+- Fix message quoting in pm module (mage)
+- Update admin.php RSS URL (poehoes)
+- XoopsFormRendererBootstrap4 (tad0616, mage, geekwright)
+- Deprecate \XoopsObject::setFormVars() (geekwright, mage)
 - Unneeded by reference (geekwright)
 - Implement Xmf\Request for input (geekwright)
 - Fix install error under MySQL in ANSI mode (geekwright)
 - Add noopener rel attribute to external links in TextSanitizer (geekwright)
-- fix quote_answer_pm  (Mage)
+- fix quote_answer_pm  (mage)
+
+Xmf updated to v1.2.19, includes:
+- fix issue in Xmf\Database\TableLoad::loadTableFromYamlFile()
+- add \Xmf\ProxyCheck
+- add \Xmf\Module\Helper::uploadUrl()
+- add \Xmf\Module\Helper::uploadPath()
+- add \Xmf\Uuid::packAsBinary()
+- add \Xmf\Uuid::unpackBinary()
 
 Updated libraries and assets:
- - HTML Purifier to 4.12 (mamba)
- - phpmailer to 5.2.27 (mamba)
+- HTML Purifier to 4.12 (mamba)
+- phpmailer to 5.2.27 (mamba)
+- jQuery to 3.4.1 (mamba)
 
 ===================================
 2.5.10 Final             2019/04/29
