@@ -62,7 +62,7 @@
 								<{/if}>
 								<{if $dorating == 1}>
 								<div class="col-12 col-lg-6">
-									<{include file="db:xmsocial_rating.tpl"}>
+									<{include file="db:xmsocial_rating.tpl" down_xmsocial=$xmsocial_arr}>
 								</div>
 								<{/if}>
 								<{if $domdate == 1}>

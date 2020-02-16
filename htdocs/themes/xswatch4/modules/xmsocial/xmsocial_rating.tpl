@@ -1,20 +1,20 @@
-<{if $xmsocial_perm == true}>
+<{if $down_xmsocial.perm == true}>
 <small>
-	<div id="unit_long<{$xmsocial_itemid}>">
-		<div id="unit_ul<{$xmsocial_itemid}>" class="xmsocial_unit-rating">
-			<div class="xmsocial_current-rating" style="width:<{$xmsocial_size}>;"></div>
-			<{foreach item=itemstars from=$xmsocial_stars}>
+	<div id="unit_long<{$down_xmsocial.itemid}>">
+		<div id="unit_ul<{$down_xmsocial.itemid}>" class="xmsocial_unit-rating">
+			<div class="xmsocial_current-rating" style="width:<{$down_xmsocial.size}>;"></div>
+			<{foreach item=itemstars from=$down_xmsocial.stars}>
 			<div>
-				<a class="xmsocial_r<{$itemstars}>-unit rater" href="<{$xoops_url}>/modules/xmsocial/rate.php?mod=<{$xmsocial_module}>&amp;itemid=<{$xmsocial_itemid}>&amp;rating=<{$itemstars}>" title="<{$itemstars}>" rel="nofollow"><{$itemstars}></a>
+				<a class="xmsocial_r<{$itemstars}>-unit rater" href='<{$xoops_url}>/modules/xmsocial/rate.php?mod=<{$down_xmsocial.module}>&amp;itemid=<{$down_xmsocial.itemid}>&amp;rating=<{$itemstars}>&amp;opt=<{$down_xmsocial.options}>' title="<{$itemstars}>" rel="nofollow"><{$itemstars}></a>
 			</div>
 			<{/foreach}>
 		</div>
 		<div>
-			<{$smarty.const._MA_XMSOCIAL_RATING_RATING}>: <{$xmsocial_rating}> / <{$xmsocial_total}> (<{$xmsocial_votes}>)
+			<{$smarty.const._MA_XMSOCIAL_RATING_RATING}>: <{$down_xmsocial.rating}> / <{$down_xmsocial.total}> (<{$down_xmsocial.votes}>)
 		</div>
 	</div>
 </small>
 <{else}>
 <i class="fa fa-star" aria-hidden="true"></i>
-<{$smarty.const._MA_XMSOCIAL_RATING_RATING}>: <{$xmsocial_rating}> / <{$xmsocial_total}> (<{$xmsocial_votes}>)
+<{$smarty.const._MA_XMSOCIAL_RATING_RATING}>: <{$down_xmsocial.rating}> / <{$down_xmsocial.total}> (<{$down_xmsocial.votes}>)
 <{/if}>
