@@ -218,7 +218,7 @@
                                         <{$forum.forum_lastpost_icon}>
                                     </a>
                                 <{else}>
-                                    <{$smarty.const._AM_NEWBB_NOTOPIC}>
+                                    <{$smarty.const._MD_NEWBB_NOTOPIC}>
                                 <{/if}>
 
                                 <{if $forum.subforum}>
