@@ -1,5 +1,5 @@
 <?php
-// 
+//
 // _LANGCODE: en
 // _CHARSET : UTF-8
 // Translator: XOOPS Translation Team
@@ -162,9 +162,9 @@ define('_REQUIRED', 'Required');
 // %%%%%%    File Name commentform.php     %%%%%
 define('_REGISTER', 'Register');
 // %%%%%%    File Name xoopscodes.php     %%%%%
-define('_SIZE', 'SIZE'); // font size
-define('_FONT', 'FONT'); // font family
-define('_COLOR', 'COLOR'); // font color
+define('_SIZE', 'Size'); // font size
+define('_FONT', 'Font'); // font family
+define('_COLOR', 'Color'); // font color
 define('_EXAMPLE', 'SAMPLE');
 define('_ENTERURL', 'Enter the URL of the link you want to add:');
 define('_ENTERWEBTITLE', 'Enter the web site title:');
