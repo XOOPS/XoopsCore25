@@ -7,6 +7,10 @@ Below are language differences from a version to next version.
 2020/02/14: Version 2.5.11-Beta1
 ================================
 CHANGED FILES:
+htdocs/language/english/global.php
+- changed define('_SIZE', 'Size'); // font size
+- changed define('_FONT', 'Font'); // font family
+- changed define('_COLOR', 'Color'); // font color
 htdocs/install/language/english/welcome.php
 - changed recommended PHP & MySQL versions, links changed to "https:"
 htdocs/modules/system/language/english/help/blocksadmin.html
