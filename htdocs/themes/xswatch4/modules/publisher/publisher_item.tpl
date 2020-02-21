@@ -3,27 +3,42 @@
     <header>
         <h2>
             <{$item.titlelink}>
+			<{if $display_itemcategory}>
             <span style="font-size: 11px; padding: 0; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
                     <span class="fa fa-tag"></span>&nbsp;<{$item.category}>
                 </span>
+			<{/if}>	
+			<{if $display_who_link}>
             <span style="font-size: 11px; padding: 0 0 0 16px; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
                     <span class="fa fa-user"></span>&nbsp;<{$item.who}>
                 </span>
+			<{/if}>	
+			<{if $display_when_link}>
             <span style="font-size: 11px; padding: 0 0 0 16px; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
                     <span class="fa fa-calendar"></span>&nbsp;<{$item.when}>
                 </span>
+			<{/if}>
+			<{if $display_comment_link && $item.cancomment && $item.comments != -1}>
             <span style="font-size: 11px; padding: 0 0 0 16px; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
                     <span class="fa fa-comment"></span>&nbsp;<{$item.comments}>
                 </span>
+			<{/if}>
+            <{if $display_hits_link}>	
             <span style="font-size: 11px; padding: 0 0 0 16px; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
                     <span class="fa fa-check-circle-o"></span>&nbsp;<{$item.counter}> <{$smarty.const._MD_PUBLISHER_READS}>
                 </span>
+			<{/if}>	
         </h2>
 
         <{if $show_subtitle && $item.subtitle}>
             <h5><{$item.subtitle}></h5>
         <{/if}>
     </header>
+	<{if $item.image_path==''}>
+			  <{if $display_defaultimage}>
+			  <img class="d-block w-100" src="<{$publisher_url}>/assets/images/default_image.jpg" alt="<{$item.title}>" title="<{$item.title}>"/>
+		      <{/if}>  
+	     <{/if}>
     <{if $item.image_path || $item.images}>
         <figure>
             <{if $item.images}>
@@ -83,6 +98,12 @@
         </div>
     <{/if}>
     <div class="pull-right text-right">
+	<{if $display_print_link}>
+        <{$item.printlink}> 
+  <{/if}>
+  <{if $display_pdf_button}>
+       <{$item.pdfbutton}>
+   <{/if}>
         <{$item.adminlink}>
     </div>
     <div class="clearfix"></div>
@@ -118,7 +139,7 @@
                                  alt="<{$smarty.const._CO_PUBLISHER_DELETEFILE}>"/></a>
                     <{/if}>
                     <a href="<{$publisher_url}>/visit.php?fileid=<{$file.fileid}>" target="_blank">
-                        <img src="<{$publisher_url}>/assets/images/links/file.gif" title="<{$lang_download_file}>"
+                        <img src="<{$publisher_url}>/assets/images/links/file.png" title="<{$lang_download_file}>"
                              alt="<{$smarty.const._MD_PUBLISHER_DOWNLOAD_FILE}>"/>&nbsp;<strong><{$file.name}></strong>
                     </a>
 
@@ -184,7 +205,39 @@
         <!-- Start item loop -->
         <{foreach item=item from=$items}>
             <tr>
-                <td class="even" align="left"><{$item.titlelink}></td>
+                <td class="even" align="left">
+				<{if $show_mainimage == 1}>					
+		          <{if $item.item_image==''}>
+		             <a href="<{$item.itemurl}>"><img src="<{$publisher_url}>/assets/images/default_image.jpg" alt="<{$item.title}>" title="<{$item.title}>" align="left" width="100" style="padding:5px"/>
+		          <{else}>
+				   <a href="<{$item.itemurl}>"><img src="<{$item.item_image}>" alt="<{$item.title}>" align="left" width="100" style="padding:5px" /></a> 
+                  <{/if}> 
+				<{/if}>
+				<{$item.titlelink}>
+				<{if $show_summary == 1}>
+                   <br><{$item.summary}><br />
+                   <{/if}> 
+					<{if $show_readmore == 1}>
+					<div class="pull-right">
+                    <a href="<{$item.itemurl}>" class="btn btn-primary btn-sm"> <{$smarty.const._MD_PUBLISHER_VIEW_MORE}></a>
+                     </div>
+                    <{/if}>
+				     <{if $display_category == 1}> 
+					   <span style="font-size: 11px; padding: 0; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
+                       <span class="fa fa-tag"></span>&nbsp;<{$item.category}>
+                       </span>
+					<{/if}>
+					<{if $show_poster == 1}>
+                       <span style="font-size: 11px; padding: 0 0 0 16px; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
+				       &nbsp;&nbsp;<span class="fa fa-user"></span>&nbsp;<{$item.who}>
+				       </span>
+                    <{/if}>
+					<{if $show_commentlink == 1 && $item.cancomment && $item.comments != -1}>
+                    <span style="font-size: 11px; padding: 0 0 0 16px; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
+				    &nbsp;&nbsp;<span class="fa fa-comment"></span>&nbsp;<{$item.comments}>
+				    </span>
+                    <{/if}>
+				</td>
                 <{if $display_date_col == 1}>
                     <td style="text-align: center;"><{$item.datesub}></td>
                 <{/if}>

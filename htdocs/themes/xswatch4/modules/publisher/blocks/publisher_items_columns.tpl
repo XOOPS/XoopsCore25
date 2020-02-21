@@ -10,7 +10,9 @@
                         <div class="publisher-content clearfix">
                             <h4 class="publisher-title">
                                 <a href="<{$item.itemurl}>" title="<{$item.item_cleantitle}>"><{$item.item_title}></a>
-                            </h4>
+                            </h4><{if $block.display_datemainitem == '1'}><span style="font-size: 11px; padding: 0 0 0 16px; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
+                     <span class="fa fa-calendar"></span>&nbsp;<{$item.date}></span>
+                <{/if}>
 
                             <p>
                                 <{if $item.item_image != ''}>
@@ -25,7 +27,7 @@
                             <ul class="publisher-links">
                                 <{foreach item=subitem from=$item.subitem}>
                                     <li>
-                                        <a title="<{$subitem.title}>" href="<{$subitem.itemurl}>"> <{$subitem.title}></a>
+                                        <a title="<{$subitem.title}>" href="<{$subitem.itemurl}>"> <{$subitem.title}></a> <{if $block.display_datesubitem == '1'}>(<{$subitem.date}>) <{/if}>
                                     </li>
                                 <{/foreach}>
                             </ul>
@@ -42,11 +44,13 @@
     <{section name=i loop=$block.columns}>
         <div style="width: <{$block.columnwidth}>%;" class="publisher-left">
             <{foreach item=item from=$block.columns[i]}>
-                <div class="publisher-box">
+                <div class="publisher-box publisher-clearfix">
 
                     <h3 class="publisher-title">
                         <a href="<{$item.itemurl}>" title="<{$item.item_title}>"><{$item.item_title}></a>
-                    </h3>
+                    </h3><{if $block.display_datemainitem == '1'}><span style="font-size: 11px; padding: 0 0 0 16px; margin: 0; line-height: 12px; opacity:0.8;-moz-opacity:0.8;">
+                    <span class="fa fa-calendar"></span>&nbsp;<{$item.date}>
+                </span><{/if}>
 
                     <div style="float:right; width:60%;">
 
@@ -71,7 +75,7 @@
                             <ul class="publisher-links">
                                 <{foreach item=subitem from=$item.subitem}>
                                     <li>
-                                        <a title="<{$subitem.summary}>" href="<{$subitem.itemurl}>"> <{$subitem.title}></a>
+                                        <a title="<{$subitem.summary}>" href="<{$subitem.itemurl}>"> <{$subitem.title}></a> <{if $block.display_datesubitem == '1'}>(<{$subitem.date}>) <{/if}>
                                     </li>
                                 <{/foreach}>
                             </ul>
