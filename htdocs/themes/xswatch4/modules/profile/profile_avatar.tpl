@@ -21,6 +21,8 @@
 				<div class="col-10">
 					<{$element.body}>
 				</div>
+		    <{else}>
+			<{$element.body}>
 			<{/if}>
 			<{if $element.description != ""}>
 				<small id="passwordHelpBlock" class="form-text text-muted">
@@ -48,6 +50,8 @@
 				<div class="col-sm-10">
 					<{$element.body}>
 				</div>
+			<{else}>
+			<{$element.body}>
 			<{/if}>
 			<{if $element.description != ""}>
 				<small id="passwordHelpBlock" class="form-text text-muted">
