@@ -81,9 +81,9 @@ if (!empty($_GET['xoopsorgnews'])) {
     $myts     = MyTextSanitizer::getInstance();
     $rssurl   = array();
     //$rssurl[] = 'http://sourceforge.net/export/rss2_projnews.php?group_id=41586&rss_fulltext=1';
-    $rssurl[] = 'http://www.xoops.org/modules/publisher/backend.php';
+    $rssurl[] = 'https://xoops.org/modules/publisher/backend.php';
     if ($URLs = include $GLOBALS['xoops']->path('language/' . xoops_getConfigOption('language') . '/backend.php')) {
-        $rssurl = array_unique(array_merge($rssurl, $URLs));
+        $rssurl = array_unique(array_merge($URLs, $rssurl));
     }
     $rssfile = 'adminnews-' . xoops_getConfigOption('language');
     xoops_load('XoopsCache');
@@ -103,8 +103,8 @@ if (!empty($_GET['xoopsorgnews'])) {
                     $_items =& $rss2parser->getItems();
                     $count  = count($_items);
                     for ($i = 0; $i < $count; ++$i) {
-                        $_items[$i]['title']                                                         = XoopsLocal::convert_encoding($_items[$i]['title'], _CHARSET, 'UTF-8');
-                        $_items[$i]['description']                                                   = XoopsLocal::convert_encoding($_items[$i]['description'], _CHARSET, 'UTF-8');
+                        $_items[$i]['title'] = XoopsLocal::convert_encoding($_items[$i]['title'], _CHARSET, 'UTF-8');
+                        $_items[$i]['description'] = XoopsLocal::convert_encoding($_items[$i]['description'], _CHARSET, 'UTF-8');
                         $items[(string)strtotime($_items[$i]['pubdate']) . '-' . (string)($cnt++)] = $_items[$i];
                     }
                 } else {
@@ -112,7 +112,7 @@ if (!empty($_GET['xoopsorgnews'])) {
                 }
             }
         }
-        krsort($items);
+        //krsort($items);
         XoopsCache::write($rssfile, $items, 86400);
     }
     if ($items != '') {
