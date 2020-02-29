@@ -28,6 +28,11 @@
  *************************************************/
 class Snoopy
 {
+    public function __construct()
+    {
+        trigger_error('Use of Snoopy in XOOPS is deprecated, and the class will be removed in future version.', E_USER_DEPRECATED);
+    }
+
     /**** Public variables ****/
 
     /* user definable vars */
