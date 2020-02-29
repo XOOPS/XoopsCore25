@@ -61,6 +61,10 @@ class XoopsHttpGet
     protected function fetchCurl()
     {
         $curlHandle = curl_init($this->url);
+        if (false === $curlHandle) {
+            $this->error = 'curl_init failed';
+            return false;
+        }
         $options = array(
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_HEADER         => 0,
