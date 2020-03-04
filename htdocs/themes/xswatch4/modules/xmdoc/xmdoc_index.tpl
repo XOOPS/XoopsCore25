@@ -5,31 +5,33 @@
         </div>
     </div>
 <{/if}>
-<{if $filter}>
-	<nav>
-		<ol class="breadcrumb">
-			<li class="breadcrumb-item active"><{$smarty.const._MA_XMDOC_HOME}></li>
-		</ol>
+<{if $cat}>
+	<nav aria-label="breadcrumb">
+	  <ol class="breadcrumb">
+		<li class="breadcrumb-item"><a href="index.php"><{$index_module}></a></li>
+		<li class="breadcrumb-item active" aria-current="page"><{$category_name}></li>
+	  </ol>
 	</nav>
-	<div class="text-center">
-		<form class="form-inline" id="form_document_tri" name="form_document_tri" method="get" action="index.php">
-			<div class="form-group">
-				<label><{$smarty.const._MA_XMDOC_INDEX_SELECTCATEGORY}>&nbsp;</label>
-				<select class="form-control" name="document_filter" id="document_filter" onchange="location='index.php?doc_cid='+this.options[this.selectedIndex].value">
-					<{$doc_cid_options}>
-				</select>
-			</div>
-		</form>
-	</div>
-	<br>		
-	<br>
 <{else}>
-	<nav>
-		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="index.php"><{$smarty.const._MA_XMDOC_HOME}></a></li>
-			<li class="breadcrumb-item active"><{$category_name}></li>
-		</ol>
+	<nav aria-label="breadcrumb">
+	  <ol class="breadcrumb">
+		<li class="breadcrumb-item active" aria-current="page"><{$index_module}></li>
+	  </ol>
 	</nav>
+<{/if}>
+<div align="center">
+	<form class="form-inline" id="form_document_tri" name="form_document_tri" method="get" action="index.php">
+		<div class="form-group">
+			<label><{$smarty.const._MA_XMDOC_SELECTCATEGORY}>&nbsp;</label>
+			<select class="form-control form-control-sm" name="news_filter" id="news_filter" onchange="location='index.php?doc_cid='+this.options[this.selectedIndex].value">
+				<{$doc_cid_options}>
+			</select>
+		</div>
+	</form>
+</div>
+<br>
+<br>
+<{if $cat}>
 	<div class="row">
 		<div class="col-3 col-md-4 col-lg-3 text-center" style="padding-bottom: 5px; padding-top: 5px;">
 			<img class="rounded img-fluid" src="<{$category_logo}>" alt="<{$category_name}>">
@@ -37,9 +39,9 @@
 		<div class="col-9 col-md-8 col-lg-9 " style="padding-bottom: 5px; padding-top: 5px;">
 			<h4 class="mt-0"><{$category_name}></h4>
 			<{$category_description}>
-		</div>		
+		</div>
 	</div>
-	<br>		
+	<br>
 <{/if}>
 <{if $document_count != 0}>
 	<div class="row">

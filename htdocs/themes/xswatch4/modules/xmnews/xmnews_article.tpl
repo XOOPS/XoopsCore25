@@ -33,18 +33,20 @@
 					<h3 class="mb-0"><{$title}></h3>
 					<div class="mb-2 text-muted"><{if $douser == 1}><{$smarty.const._MA_XMNEWS_NEWS_PUBLISHEDBY}> <{$author}><{/if}> <{$smarty.const._MA_XMNEWS_NEWS_ON}> <{$date}></div>
 					<p class="card-text mb-auto">
-						<{if $logo != ''}>
-						<{if $CAT == true}>
-						<a href="index.php?news_cid=<{$category_id}>">
-						<{/if}>
-						<img class="col-3 rounded float-right d-none d-md-block" src="<{$logo}>" alt="<{$title}>">
-						<{if $CAT == true}>
-						</a>
-						<{/if}>
-						<{/if}>
 						<div class="row">
 							<div class="col">
+								<{if $logo != ''}>
+								<{if $CAT == true}>
+								<a href="index.php?news_cid=<{$category_id}>">
+								<{/if}>
+								<img class="col-3 rounded float-right d-none d-md-block" src="<{$logo}>" alt="<{$title}>">
+								<{if $CAT == true}>
+								</a>
+								<{/if}>
+								<{/if}>
+								<p>
 								<{$news}>
+								</p>
 							</div>
 						</div>
 					</p>

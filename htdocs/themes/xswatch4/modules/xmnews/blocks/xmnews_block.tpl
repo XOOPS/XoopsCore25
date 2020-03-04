@@ -56,11 +56,11 @@
 				<h3 class="mb-0"><{$blocknews.title}></h3>
 				<div class="mb-2 text-muted"><{if $blocknews.douser == 1}><{$smarty.const._MA_XMNEWS_NEWS_PUBLISHEDBY}> <{$blocknews.$author}><{/if}> <{$smarty.const._MA_XMNEWS_NEWS_ON}> <{$blocknews.date}></div>
 				<p class="card-text mb-auto">
-					<{if $blocknews.logo != ''}>
-					<img class="col-3 rounded float-right d-none d-md-block" src="<{$blocknews.logo}>" alt="<{$blocknews.title}>">
-					<{/if}>
 					<div class="row">
 						<div class="col">
+							<{if $blocknews.logo != ''}>
+							<img class="col-3 rounded float-right d-none d-md-block" src="<{$blocknews.logo}>" alt="<{$blocknews.title}>">
+							<{/if}>
 							<{$blocknews.news}>
 						</div>
 					</div>
