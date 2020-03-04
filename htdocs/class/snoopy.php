@@ -30,7 +30,7 @@ class Snoopy
 {
     public function __construct()
     {
-        trigger_error('Use of Snoopy in XOOPS is deprecated, and the class will be removed in future version.', E_USER_DEPRECATED);
+        trigger_error('Use of Snoopy in XOOPS is deprecated and has been replaced in core with XoopsHttpGet. Snoopy will be removed in future versions.', E_USER_DEPRECATED);
     }
 
     /**** Public variables ****/
