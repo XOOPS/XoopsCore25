@@ -625,15 +625,15 @@ class XoopsNotificationHandler extends XoopsObjectHandler
     }
 
     /**
-     * Enter description here...
+     * Trigger a single notification event
      *
-     * @param  int   $category
-     * @param  int   $item_id
-     * @param  int   $event
-     * @param  array $extra_tags
-     * @param  array $user_list
-     * @param  int   $module_id
-     * @param  int   $omit_user_id
+     * @param  string $category
+     * @param  int    $item_id
+     * @param  string $event
+     * @param  array  $extra_tags
+     * @param  array  $user_list
+     * @param  int    $module_id
+     * @param  int    $omit_user_id
      * @return mixed
      */
     public function triggerEvent($category, $item_id, $event, $extra_tags = array(), $user_list = array(), $module_id = null, $omit_user_id = null)
