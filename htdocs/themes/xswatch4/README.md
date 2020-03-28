@@ -3,27 +3,25 @@ xSwatch4
 
 xSwatch4 is a theme for [XOOPS 2.5.11](https://xoops.org) that is based on [Bootstrap](https://getbootstrap.com) 4.4.1.
 
-The main theme is based on [Bootswatch Cerulean](https://bootswatch.com/cerulean/), and a *dark* alternative is based on [Bootswatch Slate](https://bootswatch.com/slate/).
+The default theme is based on [Bootswatch Cerulean](https://bootswatch.com/cerulean/).
 
 Features:
 
-- emphasis on better mobile experience
-- self hosted, with no off domain resources required
-- built in cookie consent
-- administrator toolbar with block edit feature
+- Emphasis on better mobile experience
+- Self hosted, with no off domain resources required
+- Built in cookie consent
+- Administrator toolbar with block edit feature
 
 Customize xSwatch:
 
 - 21 themes in 1 theme (Preview : [Bootswatch](https://bootswatch.com/))
-
-In theme.tpl : 
-
+In theme.tpl file : 
 	<{* pick the css directory you want to use in the assign var="xswatchCss" value below. *}>
-    <{* Valid values are css-cerulean, css-slate, css-darkly, css-journal... *}>
-    <{assign var="xswatchCss" value="css-cerulean"}>
-    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/xoops.css">
-    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/cookieconsent.css">
+	<{* Valid values are css-cerulean, css-slate, css-darkly, css-journal... *}>
+	<{assign var="xswatchCss" value="css-cerulean"}>
+	<link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/xoops.css">
+	<link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/cookieconsent.css">
 - customize the Navigation Bar in tpl/nav-menu.tpl and language/*/main.php to match your system and installed modules
 - customize the Jumbotron in theme.tpl and tpl/jumbotron.tpl
 - enable a slider in theme.tpl and tpl/slider.tpl
