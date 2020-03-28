@@ -14,14 +14,22 @@ Features:
 
 Customize xSwatch:
 
+- 21 themes in 1 theme (Preview : [Bootswatch](https://bootswatch.com/))
+
+In theme.tpl : 
+
+	<{* pick the css directory you want to use in the assign var="xswatchCss" value below. *}>
+    <{* Valid values are css-cerulean, css-slate, css-darkly, css-journal... *}>
+    <{assign var="xswatchCss" value="css-cerulean"}>
+    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/xoops.css">
+    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/cookieconsent.css">
 - customize the Navigation Bar in tpl/nav-menu.tpl and language/*/main.php to match your system and installed modules
 - customize the Jumbotron in theme.tpl and tpl/jumbotron.tpl
 - enable a slider in theme.tpl and tpl/slider.tpl
 - customize cookie consent in tpl/cookieConsent.tpl, or disable include in theme.tpl
 - customize or disable inbox alert in theme.tpl and tpl/inboxAlert.tpl
 - for best experience install both the PM and Profile modules
-- to enable the dark theme, copy the contents of the *css-dark* directory to the *css* directory.
-- alternate [Bootswatch](https://bootswatch.com/) themes can be swapped in easily by copying the theme's bootstrap.min.css into the css folder.
 
 In addition to templates for the modules included in XOOPS (pm, profile and system,) Bootstrap v4.4 templates are included for the following modules:
 
@@ -48,3 +56,4 @@ Credits:
 - Thomas Park - [BootSwatch](https://bootswatch.com/)
 - Silktide - [Cookie Consent](https://silktide.com/tools/cookie-consent/)
 - Klaus Hartl - [js-cookie](https://github.com/js-cookie/js-cookie)
+- Alain01 - 21 themes in 1 theme
