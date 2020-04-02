@@ -8,7 +8,7 @@
 	<{if $form}>
 		<nav aria-label="breadcrumb">
 		  <ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="index.php"><{$smarty.const._MD_XMCONTACT_INDEX_CONTACT}></a></li>
+			<li class="breadcrumb-item"><a href="index.php"><{$index_module}></a></li>
 			<{if $cat_id ==0}>
 				<li class="breadcrumb-item active"><{$smarty.const._MD_XMCONTACT_INDEX_FORM}></li>
 			<{else}>
@@ -25,7 +25,7 @@
 			<div class="col-9 col-md-8 col-lg-9 ">
 				<h4 class="mt-0"><{$category_title}></h4>
 				<{$category_description}>
-			</div>
+			</div>		
 		</div>
 		<{/if}>
 		<{include file="db:xmcontact_form.tpl"}>

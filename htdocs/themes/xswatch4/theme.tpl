@@ -13,9 +13,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link href="<{$xoops_url}>/favicon.ico" rel="shortcut icon">
-    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/xoops.css">
-    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/cookieconsent.css">
+	
+	<{* pick the css directory you want to use in the assign var="xswatchCss" value below. *}>
+    <{* Valid values are css-cerulean, css-slate, css-darkly, css-journal... *}>
+    <{assign var="xswatchCss" value="css-cerulean"}>
+    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/xoops.css">
+    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/cookieconsent.css">
+	
     <script src="<{$xoops_url}>/browse.php?Frameworks/jquery/jquery.js"></script>
     <script src="<{xoImgUrl}>js/bootstrap.bundle.min.js"></script>
     <{include file="$theme_name/tpl/cookieConsent.tpl"}>
