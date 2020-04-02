@@ -121,6 +121,7 @@ function b_system_main_show()
     $moduleperm_handler = xoops_getHandler('groupperm');
     $groups             = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
     $read_allowed       = $moduleperm_handler->getItemIds('module_read', $groups);
+    $block['modules'] = array();
     foreach (array_keys($modules) as $i) {
         if (in_array($i, $read_allowed)) {
             $block['modules'][$i]['name']      = $modules[$i]->getVar('name');
