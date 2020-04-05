@@ -49,7 +49,7 @@
 									<{if $news.dohits == 1}>
 										<div class="row align-items-center text-right">
 											<div class="col">
-												<span class="badge badge-secondary fa-lg text-primary mx-2"><span class="fa fa-eye fa-lg text-primary" aria-hidden="true"></span><small> <{$news.counter}></small></span>
+												<span class="badge badge-secondary fa-lg text-primary ml-2"><span class="fa fa-eye fa-lg" aria-hidden="true"></span><small> <{$news.counter}></small></span>
 											</div>	
 										</div>	
 									<{/if}>
