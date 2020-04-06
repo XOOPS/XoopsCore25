@@ -63,7 +63,7 @@
 						<{/if}>
 					</div>
 					<div class="col-12 pt-2 text-left">	
-						<{$document.description_short|truncateHtml:10:'...'}>
+						<{$document.description_short}>
 					</div>
 					<div class="col-12 pt-2 text-left">
 						<button type="button" class="btn btn-light btn-sm" data-toggle="modal" data-target="#myModal<{$document.id}>"><i class="fa fa-eye" aria-hidden="true"></i></button>
