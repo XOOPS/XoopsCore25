@@ -72,15 +72,17 @@
 												  <figcaption class="figure-caption text-center d-block d-md-none"><{$news.date|truncate:10:''|replace:'-':'/'}> </figcaption>
 											</figure>
 										</span>	
-										<figure class="figure text-muted m-1 pr-2 text-center border-right border-secondary">
-											<span class="d-md-block d-none">
-												<span class="fa fa-calendar fa-fw" aria-hidden="true"></span> <{$smarty.const._MA_XMNEWS_NEWS_MDATE_BT}>
-											</span>
-											<span class="d-block d-md-none">
-												<span class="fa fa-newspaper-o fa-fw" aria-hidden="true"></span> <{$smarty.const._MA_XMNEWS_NEWS_MDATE_BT}>
-											</span>
-											<figcaption class="figure-caption text-center"><{$news.mdate|replace:'-':'/'}></figcaption>
-										</figure>
+										<{if $mdate}>
+											<figure class="figure text-muted m-1 pr-2 text-center border-right border-secondary">
+												<span class="d-md-block d-none">
+													<span class="fa fa-calendar fa-fw" aria-hidden="true"></span> <{$smarty.const._MA_XMNEWS_NEWS_MDATE_BT}>
+												</span>
+												<span class="d-block d-md-none">
+													<span class="fa fa-newspaper-o fa-fw" aria-hidden="true"></span> <{$smarty.const._MA_XMNEWS_NEWS_MDATE_BT}>
+												</span>
+												<figcaption class="figure-caption text-center"><{$news.mdate|replace:'-':'/'}></figcaption>
+											</figure>
+										<{/if}>
 									<{else}>
 										<{if $news.dodate == 1}>
 											<figure class="figure text-muted m-1 pr-2 text-center border-right border-secondary">

@@ -58,7 +58,7 @@
 				<div class="card">
 					<div class="card-header">
 						<div class="d-flex justify-content-between">
-							<h3 class="mb-0"><{$blocknews.title}></h3>
+							<h3 class="mb-0 text-white"><{$blocknews.title}></h3>
 							<{if $blocknews.dohits == 1}>
 								<div class="row align-items-center text-right">
 									<div class="col">
