@@ -28,6 +28,7 @@ In theme.tpl file :
 - customize cookie consent in tpl/cookieConsent.tpl, or disable include in theme.tpl
 - customize or disable inbox alert in theme.tpl and tpl/inboxAlert.tpl
 - for best experience install both the PM and Profile modules
+- customize xmnews block : for column blocks, copy xmnews_block_colonnes.tpl to xmnews_block.tpl (copy xmnews_block_lignes.tpl to xmnews_block.tpl to return to initial state)
 
 In addition to templates for the modules included in XOOPS (pm, profile and system,) Bootstrap v4.4 templates are included for the following modules:
 
@@ -54,4 +55,4 @@ Credits:
 - Thomas Park - [BootSwatch](https://bootswatch.com/)
 - Silktide - [Cookie Consent](https://silktide.com/tools/cookie-consent/)
 - Klaus Hartl - [js-cookie](https://github.com/js-cookie/js-cookie)
-- Alain01 - 21 themes in 1 theme
+- Alain01 - 21 themes in 1 theme + xmnews templates
