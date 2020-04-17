@@ -20,7 +20,13 @@
 						<{$blockdocument.description_short}>
 					</div>
 					<div class="col-12 pt-2 text-left">
+						<{if $block.use_modal == 1}>
 						<button type="button" class="btn btn-light btn-sm" data-toggle="modal" data-target="#myModal<{$blockdocument.id}>"><i class="fa fa-eye" aria-hidden="true"></i></button>
+						<{else}>
+						<a href="<{$xoops_url}>/modules/xmdoc/document.php?doc_id=<{$blockdocument.id}>" target="_blank">
+							<button type="button" class="btn btn-light btn-sm"><i class="fa fa-eye" aria-hidden="true"></i></button>
+						</a>
+						<{/if}>
 					</div>
 					<div class="col-12 pt-2">	
 						<a class="text-decoration-none" title="<{$blockdocument.name}>" href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$blockdocument.categoryid}>&amp;doc_id=<{$blockdocument.id}>" target="_blank">

@@ -1,15 +1,23 @@
 <{if $xmdoc_viewdocs == true}>
 <div class="row">
 	<{foreach item=document from=$document}>
-	<div class="col-6 col-sm-6 col-md-4 p-2">
+	<div class="col-12 col-md-6 col-lg-4 p-2">
 		<div class="card">
-			<div class="card-header text-center">
+			<div class="card-header text-center text-truncate d-none d-sm-block">
 				<a class="text-decoration-none" title="<{$document.name}>" href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$document.categoryid}>&amp;doc_id=<{$document.id}>" target="_blank">
-					<{$document.name|truncate:25:'...'}>
+					<{$document.name}>
 				</a>
 			</div>
+			<div class="card-header text-center d-block d-sm-none">
+				<a class="text-decoration-none" title="<{$document.name}>" href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$document.categoryid}>&amp;doc_id=<{$document.id}>" target="_blank">
+					<{$document.name}>
+				</a>
+			</div>
+
+
+
 			<div class="card-body text-center">
-				<div class="row" >
+				<div class="row d-flex justify-content-center" >
 					<div class="col-12" style="height: 150px;">
 						<{if $document.logo != ''}>
 						<a title="<{$document.name}>" href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$document.categoryid}>&amp;doc_id=<{$document.id}>" target="_blank">
@@ -17,17 +25,26 @@
 						</a>
 						<{/if}>
 					</div>
-					<div class="col-12 pt-2 text-left">	
+					<div class="col-12 text-left">	
+						<hr />
 						<{$document.description_short}>
+						<hr />
 					</div>
-					<div class="col-12 pt-2 text-left">
-						<button type="button" class="btn btn-light btn-sm" data-toggle="modal" data-target="#myModal<{$document.id}>"><i class="fa fa-eye" aria-hidden="true"></i></button>
-					</div>
-					<div class="col-12 pt-2">
-						<a class="text-decoration-none" title="<{$document.name}>" href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$document.categoryid}>&amp;doc_id=<{$document.id}>" target="_blank">
-							<button class="btn btn-primary btn-sm"><{$smarty.const._MA_XMDOC_DOWNLOAD}></button>
+					<div class="col-10 col-md-11 col-xl-10 btn-group" role="group">
+						<{if $use_modal == 1}>
+							<a class="btn btn-primary" data-toggle="modal" data-target="#myModal<{$document.id}>" role="button"> <span class="fa fa-info-circle fa-lg text-light" aria-hidden="true"></span></a>
+						<{else}>
+							<a class="btn btn-primary" href="<{$xoops_url}>/modules/xmdoc/document.php?doc_id=<{$document.id}>" role="button" target="_blank">
+								<span class="fa fa-info-circle fa-lg" aria-hidden="true"></span>
+							</a>
+						<{/if}>
+						<a class="btn btn-primary d-block d-sm-none"  href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$document.categoryid}>&amp;doc_id=<{$document.id}>" target="_blank" title="<{$document.name}>">
+							<span class="fa fa-download fa-lg" aria-hidden="true"></span> 
 						</a>
-					</div>					
+						<a class="btn btn-primary d-none d-sm-block"  href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$document.categoryid}>&amp;doc_id=<{$document.id}>" target="_blank" title="<{$document.name}>">
+							<span class="fa fa-download fa-lg" aria-hidden="true"></span> <{$smarty.const._MA_XMDOC_DOWNLOAD}>
+						</a>
+					</div>
 				</div>				
 			</div>				
 		</div>
