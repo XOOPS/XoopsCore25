@@ -198,7 +198,7 @@ $modversion['blocks'][12]['template']    = 'system_block_themes.tpl';
 // Menu
 $modversion['hasMain'] = 0;
 
-// Préférences
+// Preferences
 $i                                       = 0;
 $modversion['config'][$i]['name']        = 'break1';
 $modversion['config'][$i]['title']       = '_MI_SYSTEM_PREFERENCE_BREAK_GENERAL';
