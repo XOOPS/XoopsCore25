@@ -86,13 +86,13 @@ switch ($op) {
         break;
 
     case 'comments_form_purge':
-        //Affichage des coms
+        //display Comments
         $xoBreadCrumb->addLink(_AM_SYSTEM_COMMENTS_NAV_PURGE);
         $xoBreadCrumb->addHelp(system_adminVersion('comments', 'help') . '#purge');
         $xoBreadCrumb->addTips(_AM_SYSTEM_COMMENTS_NAV_TIPS);
         $xoBreadCrumb->render();
 
-        //Affichage du formulaire de purge
+        //Displaying the purge form
         $form_purge = new XoopsThemeForm(_AM_SYSTEM_COMMENTS_FORM_PURGE, 'form', 'admin.php?fct=comments', 'post', true);
 
         $form_purge->addElement(new XoopsFormTextDateSelect(_AM_SYSTEM_COMMENTS_FORM_PURGE_DATE_AFTER, 'comments_after', '15'));
