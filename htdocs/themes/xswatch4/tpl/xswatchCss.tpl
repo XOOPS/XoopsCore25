@@ -6,4 +6,4 @@ Valid values are:
  css-slate     css-solar     css-spacelab  css-superhero css-united
  css-yeti
 *}>
-css-slate
+css-cerulean
