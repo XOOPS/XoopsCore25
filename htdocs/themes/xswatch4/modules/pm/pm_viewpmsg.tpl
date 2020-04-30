@@ -52,7 +52,9 @@
 <{/if}>
 
 <{if $pagenav}>
-    <{$pagenav}>
+    <div class="generic-pagination col text-right mb-2">
+    <{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
+    </div>
 <{/if}>
 
 <form name="<{$pmform.name}>" id="<{$pmform.name}>" action="<{$pmform.action}>" method="<{$pmform.method}>" <{$pmform.extra}>>
@@ -127,6 +129,8 @@
 </form>
 
 <{if $pagenav}>
-    <{$pagenav}>
+<div class="generic-pagination col text-right mb-2">
+    <{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
+</div>
 <{/if}>
 <{/if}>

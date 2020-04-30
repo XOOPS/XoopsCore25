@@ -232,7 +232,9 @@ class XoopsLoad
             'xoopsformrendererbootstrap3'=> XOOPS_ROOT_PATH . '/class/xoopsform/renderer/XoopsFormRendererBootstrap3.php',
             'xoopsformrendererbootstrap4'=> XOOPS_ROOT_PATH . '/class/xoopsform/renderer/XoopsFormRendererBootstrap4.php',
             'xoopsfilterinput'           => XOOPS_ROOT_PATH . '/class/xoopsfilterinput.php',
-            'xoopsrequest'               => XOOPS_ROOT_PATH . '/class/xoopsrequest.php');
+            'xoopsrequest'               => XOOPS_ROOT_PATH . '/class/xoopsrequest.php',
+            'xoopshttpget'               => XOOPS_ROOT_PATH . '/class/xoopshttpget.php',
+        );
     }
 
     /**

@@ -28,6 +28,11 @@
  *************************************************/
 class Snoopy
 {
+    public function __construct()
+    {
+        $GLOBALS['xoopsLogger']->addDeprecated("Use of Snoopy in XOOPS is deprecated and has been replaced in core with XoopsHttpGet. Snoopy will be removed in future versions..");
+    }
+
     /**** Public variables ****/
 
     /* user definable vars */

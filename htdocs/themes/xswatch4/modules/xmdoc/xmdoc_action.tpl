@@ -5,7 +5,7 @@
     <{if $form}>	
 		<nav aria-label="breadcrumb">
 		  <ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="index.php"><{$smarty.const._MA_XMDOC_HOME}></a></li>
+			<li class="breadcrumb-item"><a href="index.php"><{$index_module}></a></li>
 			<li class="breadcrumb-item"><a href="action.php?op=add"><{$smarty.const._MA_XMDOC_SELECTCATEGORY}></a></li>
 			<li class="breadcrumb-item active"><{$smarty.const._MA_XMDOC_ADD}></li>
 		  </ol>
@@ -29,7 +29,7 @@
     <{if $categories > 0}>
 		<nav aria-label="breadcrumb">
 		  <ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="index.php"><{$smarty.const._MA_XMDOC_HOME}></a></li>
+			<li class="breadcrumb-item"><a href="index.php"><{$index_module}></a></li>
 			<li class="breadcrumb-item active"><{$smarty.const._MA_XMDOC_SELECTCATEGORY}></li>
 		  </ol>
 		</nav>
