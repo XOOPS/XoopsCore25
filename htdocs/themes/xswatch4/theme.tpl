@@ -13,14 +13,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link href="<{$xoops_url}>/favicon.ico" rel="shortcut icon">
-	
-	<{* pick the css directory you want to use in the assign var="xswatchCss" value below. *}>
-    <{* Valid values are css-cerulean, css-slate, css-darkly, css-journal... *}>
-    <{assign var="xswatchCss" value="css-cerulean"}>
+
+	<{* Edit tpl/xswatchCss.tpl to pick the css directory you want to use *}>
+    <{include file="$theme_name/tpl/xswatchCss.tpl" assign="xswatchCss"}>
     <link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/xoops.css">
     <link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/cookieconsent.css">
-	
+
     <script src="<{$xoops_url}>/browse.php?Frameworks/jquery/jquery.js"></script>
     <script src="<{xoImgUrl}>js/bootstrap.bundle.min.js"></script>
     <{include file="$theme_name/tpl/cookieConsent.tpl"}>
