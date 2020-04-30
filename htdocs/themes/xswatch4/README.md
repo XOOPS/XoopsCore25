@@ -15,13 +15,10 @@ Features:
 Customize xSwatch:
 
 - 21 themes in 1 theme (Preview : [Bootswatch](https://bootswatch.com/))
-In theme.tpl file : 
-	<{* pick the css directory you want to use in the assign var="xswatchCss" value below. *}>
-	<{* Valid values are css-cerulean, css-slate, css-darkly, css-journal... *}>
-	<{assign var="xswatchCss" value="css-cerulean"}>
-	<link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/xoops.css">
-	<link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/cookieconsent.css">
+  In the file _tpl/xswatchCss.tpl_, edit the bottom line to match the Bootswatch theme of your 
+  choice. By default, the line reads **css-cerulean**. To change to a dark theme, like the one 
+  used in the original xswatch for example, change it to **css-slate**.
+  You can pick from any of the 21 variations listed in the comments in _tpl/xswatchCss.tpl_  
 - customize the Navigation Bar in tpl/nav-menu.tpl and language/*/main.php to match your system and installed modules
 - customize the Jumbotron in theme.tpl and tpl/jumbotron.tpl
 - enable a slider in theme.tpl and tpl/slider.tpl
