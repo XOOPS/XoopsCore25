@@ -8,6 +8,8 @@
     <{$headItems[item]}>
     <{/section}>
 
+    <link href="<{$xoops_url}>/favicon.ico" rel="shortcut icon">
+
     <{include file="$themePath/tpl/xswatchCss.tpl" assign="xswatchCss"}>
     <link rel="stylesheet" type="text/css" href="<{$themeUrl}><{$xswatchCss}>/xoops.css">
     <link rel="stylesheet" type="text/css" href="<{$themeUrl}><{$xswatchCss}>/bootstrap.min.css">
