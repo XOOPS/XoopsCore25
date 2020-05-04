@@ -177,8 +177,6 @@ foreach ($mids as $mid) {
             for ($i = 0; $i < $count; ++$i) {
                 if (isset($results[$i]['image']) && $results[$i]['image'] != '') {
                     $results[$i]['image'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['image'];
-                } else {
-                    $results[$i]['image'] = 'images/icons/posticon2.gif';
                 }
 
                 if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {

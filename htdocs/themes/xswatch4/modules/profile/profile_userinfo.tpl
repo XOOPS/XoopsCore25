@@ -81,9 +81,12 @@
         <{foreach item=module from=$modules}>
             <li><strong><{$module.name}></strong></li>
             <{foreach item=result from=$module.results}>
-                <li><img src="<{$result.image}>" alt="<{$module.name}>"> <a href="<{$result.link}>"><{$result.title}></a> (<{$result.time}>)</li>
+                <li><{if $result.image}><img src="<{$result.image}>" alt="<{$module.name}>"><{/if}> <a href="<{$result.link}>"><{$result.title}></a><br>&nbsp;<span class="text-muted"><small><i class="fa fa-calendar"></i>&nbsp;<{$result.time}></small></span></li>
             <{/foreach}>
-            <{$module.showall_link}>
+            <{if $module.showall_link}>
+			<button type="button" class="btn btn-info btn-sm"><i class="fa fa-search"></i> <{$module.showall_link}> </button><br><br>
+			<{/if}>
+			
         <{/foreach}>
     </ul>
 <{/if}>

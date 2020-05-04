@@ -198,8 +198,6 @@ if ($GLOBALS['xoopsModuleConfig']['profile_search']) {
                     for ($i = 0; $i < $count; ++$i) {
                         if (isset($results[$i]['image']) && $results[$i]['image'] != '') {
                             $results[$i]['image'] = XOOPS_URL . '/modules/' . $modules[$mid]->getVar('dirname', 'n') . '/' . $results[$i]['image'];
-                        } else {
-                            $results[$i]['image'] = XOOPS_URL . '/images/icons/posticon2.gif';
                         }
                         if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                             $results[$i]['link'] = XOOPS_URL . '/modules/' . $modules[$mid]->getVar('dirname', 'n') . '/' . $results[$i]['link'];
