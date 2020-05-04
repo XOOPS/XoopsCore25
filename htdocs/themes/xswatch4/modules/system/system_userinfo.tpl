@@ -48,7 +48,7 @@
                 <{if $user_avatarurl}>
                     <tr>
                         <td><strong><{$lang_avatar}></strong></td>
-                        <td><img src="<{$user_avatarurl}>" alt="Avatar"/></td>
+                        <td><img src="<{$user_avatarurl}>" alt="Avatar" class="img-fluid"/></td>
                     </tr>
                 <{/if}>
                 <{if $user_realname}>
