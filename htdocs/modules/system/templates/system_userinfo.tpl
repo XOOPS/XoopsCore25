@@ -71,7 +71,7 @@
                         <td class="even"><{$user_pmlink}></td>
                     </tr>
                 <{/if}>
-                <{if $user_icq}>
+                <!--<{if $user_icq}>
                     <tr class="aligntop">
                         <td class="head"><{$lang_icq}></td>
                         <td class="odd"><{$user_icq}></td>
@@ -94,7 +94,7 @@
                         <td class="head"><{$lang_msnm}></td>
                         <td class="even"><{$user_msnm}></td>
                     </tr>
-                <{/if}>
+                <{/if}>-->
                 <{if $user_location}>
                     <tr class="aligntop">
                         <td class="head"><{$lang_location}></td>
