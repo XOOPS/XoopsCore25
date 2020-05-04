@@ -170,7 +170,7 @@
 <h5><{$smarty.const._US_RECENTACTIVITY}></h5>
 <{foreach item=module from=$modules}>
     <br class="clear"/>
-    <button class="btn btn-primary btn-sm"><i class='fa fa-history'></i>&nbsp;<{$module.name}></button><br>
+    <strong><{$module.name}></strong><br>
     <!-- start results item loop -->
     <{foreach item=result from=$module.results}>
 		<{if $result.image}>
@@ -182,9 +182,9 @@
 		<br>	
     <{/foreach}>
     <!-- end results item loop -->
-
-    <{$module.showall_link}>
-
+	<{if $module.showall_link}>
+	<button type="button" class="btn btn-info btn-sm"><i class="fa fa-search"></i>&nbsp;<{$module.showall_link}></button><br>
+	<{/if}>
 
 <{/foreach}>
 
