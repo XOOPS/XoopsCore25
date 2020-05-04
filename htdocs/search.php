@@ -173,9 +173,7 @@ switch ($action) {
                     for ($i = 0; $i < $count; ++$i) {
                         if (isset($results[$i]['image']) && $results[$i]['image'] != '') {
 							$results_arr[$i]['image_link'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['image'];
-                        } else {
-							$results_arr[$i]['image_link'] = 'images/icons/posticon2.gif';							
-                        }
+                        } 
 						$results_arr[$i]['image_title'] = $module->getVar('name');
                         if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                             $results[$i]['link'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['link']; 
