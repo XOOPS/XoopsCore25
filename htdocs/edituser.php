@@ -82,13 +82,13 @@ if ($op === 'saveuser') {
             //$edituser->setVar('last_pass_change', time());
         }
         $edituser->setVar('url', XoopsRequest::getUrl('url', ''));
-        $edituser->setVar('user_icq', XoopsRequest::getString('user_icq', ''));
+        //$edituser->setVar('user_icq', XoopsRequest::getString('user_icq', ''));
         $edituser->setVar('user_from', XoopsRequest::getString('user_from', ''));
         $edituser->setVar('user_sig', xoops_substr(XoopsRequest::getString('user_sig', ''), 0, 255));
         $edituser->setVar('user_viewemail', XoopsRequest::getBool('user_viewemail', 0));
-        $edituser->setVar('user_aim', XoopsRequest::getString('user_aim', ''));
-        $edituser->setVar('user_yim', XoopsRequest::getString('user_yim', ''));
-        $edituser->setVar('user_msnm', XoopsRequest::getString('user_msnm', ''));
+        //$edituser->setVar('user_aim', XoopsRequest::getString('user_aim', ''));
+        //$edituser->setVar('user_yim', XoopsRequest::getString('user_yim', ''));
+        //$edituser->setVar('user_msnm', XoopsRequest::getString('user_msnm', ''));
         $edituser->setVar('attachsig', XoopsRequest::getBool('attachsig', 0));
         $edituser->setVar('timezone_offset', XoopsRequest::getFloat('timezone_offset', 0.0));
         $edituser->setVar('uorder', XoopsRequest::getInt('uorder', 0));
@@ -136,10 +136,10 @@ if ($op === 'editprofile') {
     $form->addElement($url_text);
 
     $timezone_select = new XoopsFormSelectTimezone(_US_TIMEZONE, 'timezone_offset', $xoopsUser->getVar('timezone_offset'));
-    $icq_text        = new XoopsFormText(_US_ICQ, 'user_icq', 15, 15, $xoopsUser->getVar('user_icq', 'E'));
-    $aim_text        = new XoopsFormText(_US_AIM, 'user_aim', 18, 18, $xoopsUser->getVar('user_aim', 'E'));
-    $yim_text        = new XoopsFormText(_US_YIM, 'user_yim', 25, 25, $xoopsUser->getVar('user_yim', 'E'));
-    $msnm_text       = new XoopsFormText(_US_MSNM, 'user_msnm', 30, 100, $xoopsUser->getVar('user_msnm', 'E'));
+    //$icq_text        = new XoopsFormText(_US_ICQ, 'user_icq', 15, 15, $xoopsUser->getVar('user_icq', 'E'));
+    //$aim_text        = new XoopsFormText(_US_AIM, 'user_aim', 18, 18, $xoopsUser->getVar('user_aim', 'E'));
+    //$yim_text        = new XoopsFormText(_US_YIM, 'user_yim', 25, 25, $xoopsUser->getVar('user_yim', 'E'));
+    //$msnm_text       = new XoopsFormText(_US_MSNM, 'user_msnm', 30, 100, $xoopsUser->getVar('user_msnm', 'E'));
     $location_text   = new XoopsFormText(_US_LOCATION, 'user_from', 30, 100, $xoopsUser->getVar('user_from', 'E'));
     $occupation_text = new XoopsFormText(_US_OCCUPATION, 'user_occ', 30, 100, $xoopsUser->getVar('user_occ', 'E'));
     $interest_text   = new XoopsFormText(_US_INTEREST, 'user_intrest', 30, 150, $xoopsUser->getVar('user_intrest', 'E'));
@@ -185,10 +185,10 @@ if ($op === 'editprofile') {
     $submit_button = new XoopsFormButton('', 'submit', _US_SAVECHANGES, 'submit');
 
     $form->addElement($timezone_select);
-    $form->addElement($icq_text);
-    $form->addElement($aim_text);
-    $form->addElement($yim_text);
-    $form->addElement($msnm_text);
+    //$form->addElement($icq_text);
+    //$form->addElement($aim_text);
+    //$form->addElement($yim_text);
+    //$form->addElement($msnm_text);
     $form->addElement($location_text);
     $form->addElement($occupation_text);
     $form->addElement($interest_text);
