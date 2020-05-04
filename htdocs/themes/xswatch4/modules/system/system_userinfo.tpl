@@ -169,7 +169,6 @@
 <!-- start module search results loop -->
 <h5><{$smarty.const._US_RECENTACTIVITY}></h5>
 <{foreach item=module from=$modules}>
-    <br class="clear"/>
     <strong><{$module.name}></strong><br>
     <!-- start results item loop -->
     <{foreach item=result from=$module.results}>
@@ -183,7 +182,7 @@
     <{/foreach}>
     <!-- end results item loop -->
 	<{if $module.showall_link}>
-	<button type="button" class="btn btn-info btn-sm"><i class="fa fa-search"></i>&nbsp;<{$module.showall_link}></button><br>
+	<button type="button" class="btn btn-info btn-sm"><i class="fa fa-search"></i>&nbsp;<{$module.showall_link}></button><br><br>
 	<{/if}>
 
 <{/foreach}>
