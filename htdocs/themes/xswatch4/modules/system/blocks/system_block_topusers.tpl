@@ -3,12 +3,12 @@
 
         <{if $user.avatar != ""}>
             <li class="avatar-image">
-                <img src="<{$user.avatar}>" alt="<{$user.name}>" class="rounded-circle">
+                <img src="<{$user.avatar}>" alt="<{$user.name}>" title="<{$user.name}>" class="rounded-circle">
                 <span class="badge float-right"><{$user.rank}></span>
             </li>
         <{else}>
             <li class="avatar-image">
-                <img src="<{$xoops_imageurl}>images/blank.gif" alt="<{$user.name}>" class="rounded-circle">
+                <img src="<{$xoops_imageurl}>images/blank.gif" title="<{$user.name}>" alt="<{$user.name}>" class="rounded-circle">
                 <span class="badge float-right"><{$user.rank}></span>
             </li>
         <{/if}>
