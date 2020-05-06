@@ -1,10 +1,3 @@
-<{if $index_header}>
-    <div class="row">
-        <div class="col-sm-12" style="padding-bottom: 10px; padding-top: 5px;">
-            <{$index_header}>
-        </div>
-    </div>
-<{/if}>
 <{if $cat}>
 	<nav aria-label="breadcrumb">
 		<ol class="breadcrumb">
@@ -19,7 +12,44 @@
 		</ol>
 	</nav>
 <{/if}>
+<{if $index_header}>
+    <div class="row">
+        <div class="col-sm-12">
+            <{$index_header}>
+			<hr />
+        </div>
+    </div>
+<{/if}>
 <div align="center">
+	<{if $index_cat == 2 || $index_cat == 3}>
+	<h3><{$smarty.const._MA_XMDOC_CATEGORY_LIST}></h3>
+	<div class="xm-category row">
+	<{foreach item=categories from=$cat_array}>
+		<div class="col-6 col-sm-4 col-md-3 col-lg-2 p-2 
+			<{if $cat && $categories.id == $doc_cid}>
+				bg-info
+			<{/if}>">
+			<a title="<{$categories.name}>" href="<{$xoops_url}>/modules/xmdoc/index.php?doc_cid=<{$categories.id}>">
+				<div class="card">
+					<div class="card-header text-center">						
+						<{$categories.name}>
+					</div>
+					<div class="card-body h-md-550 text-center">
+						<div class="row" style="height: 90px;">
+							<div class="col-12 h-75">
+								<{if $categories.logo != ''}>								
+									<img class="rounded img-fluid mh-100" src="<{$categories.logo}>" alt="<{$categories.name}>">
+								<{/if}>
+							</div>							
+						</div>				
+					</div>				
+				</div>
+			</a>
+		</div>	
+	<{/foreach}>
+	</div>
+	<{/if}>
+	<{if $index_cat == 1 || $index_cat == 3}>
 	<form class="form-inline" id="form_document_tri" name="form_document_tri" method="get" action="index.php">
 		<div class="form-group">
 			<label><{$smarty.const._MA_XMDOC_INDEX_SELECTCATEGORY}>&nbsp;</label>
@@ -28,148 +58,150 @@
 			</select>
 		</div>
 	</form>
+	<{/if}>
 </div>
-<br>
-<br>
 <{if $cat}>
-	<div class="row">
-		<div class="col-3 col-md-4 text-center" style="padding-bottom: 5px; padding-top: 5px;">
+<hr />
+	<div class="row mt-4">
+		<div class="col-3 col-md-4 text-center">
 			<img class="rounded img-fluid" src="<{$category_logo}>" alt="<{$category_name}>">
 		</div>
-		<div class="col-9 col-md-8 col-lg-9 " style="padding-bottom: 5px; padding-top: 5px;">
+		<div class="col-9 col-md-8 py-2">
 			<h4 class="mt-0"><{$category_name}></h4>
 			<{$category_description}>
 		</div>
 	</div>
-	<br>
 <{/if}>
 <{if $document_count != 0}>
+	<hr />
 	<div class="row">
-	<{foreach item=document from=$documents}>
-		<div class="col-sm-12 col-md-6 col-lg-4 p-2">
-		<div class="card">
-			<div class="card-header text-center text-truncate d-none d-sm-block">
-				<a class="text-decoration-none" title="<{$document.name}>" href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$document.categoryid}>&amp;doc_id=<{$document.id}>" target="_blank">
-					<{$document.name}>
-				</a>
-			</div>
-			<div class="card-header text-center d-block d-sm-none">
-				<a class="text-decoration-none" title="<{$document.name}>" href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$document.categoryid}>&amp;doc_id=<{$document.id}>" target="_blank">
-					<{$document.name}>
-				</a>
-			</div>
-			<div class="card-body text-center">
-				<div class="row d-flex justify-content-center">
-					<div class="col-12" style="height: 150px;">
-						<{if $document.logo != ''}>
-							<a title="<{$document.name}>" href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$document.categoryid}>&amp;doc_id=<{$document.id}>" target="_blank">
-								<img class="rounded img-fluid mh-100" src="<{$document.logo}>" alt="<{$document.name}>">
-							</a>
-						<{/if}>
-					</div>
-					<div class="col-12 text-left">	
-						<hr />
-						<{$document.description_short}>
-						<hr />
-					</div>
-					<div class="col-6 col-md-11 col-xl-9 btn-group" role="group">
-						<{if $use_modal == 1}>
-							<a class="btn btn-primary" data-toggle="modal" data-target="#myModal<{$document.id}>" role="button"> <span class="fa fa-info-circle fa-lg text-light" aria-hidden="true"></span></a>
-						<{else}>
-							<a class="btn btn-primary" href="<{$xoops_url}>/modules/xmdoc/document.php?doc_id=<{$document.id}>" role="button">
-								<span class="fa fa-info-circle fa-lg" aria-hidden="true"></span>
-							</a>
-						<{/if}>
-						<a class="btn btn-primary d-block d-sm-none"  href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$document.categoryid}>&amp;doc_id=<{$document.id}>" target="_blank" title="<{$document.name}>">
-							<span class="fa fa-download fa-lg" aria-hidden="true"></span> 
-						</a>
-						<a class="btn btn-primary d-none d-sm-block"  href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$document.categoryid}>&amp;doc_id=<{$document.id}>" target="_blank" title="<{$document.name}>">
-							<span class="fa fa-download fa-lg" aria-hidden="true"></span> <{$smarty.const._MA_XMDOC_DOWNLOAD}>
+		<{foreach item=document from=$documents}>
+			<div class="col-sm-12 col-md-6 col-lg-4 p-2">
+				<div class="card">
+					<div class="card-header text-center text-truncate d-none d-sm-block">
+						<a class="text-decoration-none" title="<{$document.name}>" href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$document.categoryid}>&amp;doc_id=<{$document.id}>" target="_blank">
+							<{$document.name}>
 						</a>
 					</div>
-				</div>				
-			</div>				
-		</div>
-	</div>
-	<div class="modal" tabindex="-1" id="myModal<{$document.id}>" role="dialog">
-		<div class="modal-dialog modal-lg" role="document">
-			<div class="modal-content">
-
-				<div class="modal-header">
-					<h5 class="modal-title"><{$document.name}></h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-					</button>
+					<div class="card-header text-center d-block d-sm-none">
+						<a class="text-decoration-none" title="<{$document.name}>" href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$document.categoryid}>&amp;doc_id=<{$document.id}>" target="_blank">
+							<{$document.name}>
+						</a>
+					</div>
+					<div class="card-body text-center">
+						<div class="row d-flex justify-content-center">
+							<div class="col-12" style="height: 150px;">
+								<{if $document.logo != ''}>
+									<a title="<{$document.name}>" href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$document.categoryid}>&amp;doc_id=<{$document.id}>" target="_blank">
+										<img class="rounded img-fluid mh-100" src="<{$document.logo}>" alt="<{$document.name}>">
+									</a>
+								<{/if}>
+							</div>
+							<div class="col-12 text-left">	
+								<hr />
+								<{$document.description_short}>
+								<hr />
+							</div>
+							<div class="col-6 col-md-11 col-xl-9 btn-group" role="group">
+								<{if $use_modal == 1}>
+									<a class="btn btn-primary" data-toggle="modal" data-target="#myModal<{$document.id}>" role="button"> <span class="fa fa-info-circle fa-lg text-light" aria-hidden="true"></span></a>
+								<{else}>
+									<a class="btn btn-primary" href="<{$xoops_url}>/modules/xmdoc/document.php?doc_id=<{$document.id}>" role="button">
+										<span class="fa fa-info-circle fa-lg" aria-hidden="true"></span>
+									</a>
+								<{/if}>
+								<a class="btn btn-primary d-block d-sm-none"  href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$document.categoryid}>&amp;doc_id=<{$document.id}>" target="_blank" title="<{$document.name}>">
+									<span class="fa fa-download fa-lg" aria-hidden="true"></span> 
+								</a>
+								<a class="btn btn-primary d-none d-sm-block"  href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$document.categoryid}>&amp;doc_id=<{$document.id}>" target="_blank" title="<{$document.name}>">
+									<span class="fa fa-download fa-lg" aria-hidden="true"></span> <{$smarty.const._MA_XMDOC_DOWNLOAD}>
+								</a>
+							</div>
+						</div>				
+					</div>				
 				</div>
-				<div class="modal-body">
-					<div class="row">
-						<div class="col-12 col-md-3">
-							<{if $document.logo != ''}>
-							<a title="<{$document.name}>" href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$document.categoryid}>&amp;doc_id=<{$document.id}>" target="_blank">
-								<img class="rounded img-fluid mh-100" src="<{$document.logo}>" alt="<{$document.name}>">
-							</a>
-							<{/if}>
-						</div>						
-						<div class="col-12 col-md-9 text-left">
-							<{$document.description}>
-						</div>
-						<{if $document.showinfo == 1}>
-						<div class="col-12 p-4">
-							<div class="card">
-								<div class="card-header">
-									<{$smarty.const._MA_XMDOC_GENINFORMATION}>
-								</div>
-								<div class="card-body">
-									<div class="row">
-										<div class="col-12 col-lg-6">
-											<i class="fa fa-calendar" aria-hidden="true"></i> <{$smarty.const._MA_XMDOC_FORMDOC_DATE}>: <{$document.date}>
-										</div>
-										<div class="col-12 col-lg-6">
-											<i class="fa fa-user" aria-hidden="true"></i> <{$smarty.const._MA_XMDOC_FORMDOC_AUTHOR}>: <{$document.author}>
-										</div>
-										<{if $document.mdate}>
-										<div class="col-12 col-lg-6">
-											<i class="fa fa-calendar" aria-hidden="true"></i> <{$smarty.const._MA_XMDOC_FORMDOC_MDATE}>: <{$document.mdate}>
-										</div>
-										<{/if}>
-										<{if $document.size}>
-										<div class="col-12 col-lg-6">
-											<i class="fa fa-expand" aria-hidden="true"></i> <{$smarty.const._MA_XMDOC_FORMDOC_SIZE}>: <{$document.size}>
-										</div>
-										<{/if}>
-										<div class="col-12 col-lg-6">
-											<i class="fa fa-download" aria-hidden="true"></i> <{$smarty.const._MA_XMDOC_FORMDOC_DOWNLOAD}>: <{$document.counter}>
-										</div>
-										<{if $document.dorating == 1}>
-										<div class="col-12 col-lg-6">
-											<{include file="db:xmsocial_rating.tpl" down_xmsocial=$document.xmsocial_arr}>
-										</div>
-										<{/if}>
-									</div>									
-								</div>
+			</div>
+			<div class="modal" tabindex="-1" id="myModal<{$document.id}>" role="dialog">
+				<div class="modal-dialog modal-lg" role="document">
+					<div class="modal-content">
+						<div class="modal-header d-flex justify-content-between">
+							<h5 class="modal-title"><{$document.name}></h5>
+							<div class="row text-right">
+								<div class="col">
+									<{if $document.showinfo == 1}>
+										<span class="badge badge-secondary fa-lg text-primary ml-1"><span class="fa fa-download" aria-hidden="true"></span><small> <{$document.counter}></small></span>
+										<{if $document.size != ''}>
+											<span class="badge badge-secondary fa-lg text-primary ml-1 mt-1 mt-lg-0"><span class="fa fa-archive" aria-hidden="true"></span><small> <{$document.size}></small></span>
+										<{/if}>	
+									<{/if}>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								</div>	
 							</div>
 						</div>
+						<div class="modal-body">
+							<{if $document.showinfo == 1}>
+								<div class="row border-bottom border-secondary mx-1 pl-1">
+									<figure class="figure text-muted my-1 pr-2 text-center border-right border-secondary">
+										  <span class="fa fa-calendar fa-fw" aria-hidden="true"></span> <{$smarty.const._MA_XMDOC_FORMDOC_DATE_BT}>
+										  <figcaption class="figure-caption text-center"><{$document.date}></figcaption>
+									</figure>
+									<{if $document.mdate}>
+									<figure class="figure text-muted my-1 pr-2 text-center border-right border-secondary">
+										  <span class="fa fa-repeat fa-fw" aria-hidden="true"></span> <{$smarty.const._MA_XMDOC_FORMDOC_MDATE_BT}>
+										  <figcaption class="figure-caption text-center"><{$document.mdate}></figcaption>
+									</figure>
+									<{/if}>
+									<figure class="figure text-muted my-1 pr-2 text-center border-right border-secondary">
+										  <span class="fa fa-user fa-fw" aria-hidden="true"></span> <{$smarty.const._MA_XMDOC_FORMDOC_AUTHOR}>
+										  <figcaption class="figure-caption text-center"><{$document.author}></figcaption>
+									</figure>
+									<{if $document.dorating == 1}>
+									<figure class="text-muted m-1 pr-2 text-center border-right border-secondary">
+										<{include file="db:xmsocial_rating.tpl" down_xmsocial=$document.xmsocial_arr}>
+										<figcaption class="figure-caption text-center"></figcaption>
+									</figure>
+									<{/if}>									
+								</div>
+							<{/if}>
+								<div class="row">
+									<div class="col-md-3 d-flex justify-content-center">
+										<figure class="figure mt-3">
+											<img src="<{$document.logo}>" class="figure-img img-fluid rounded mx-auto d-block" alt="<{$document.name}>">
+											<figcaption class="figure-caption text-center"><h5 class="mt-0"><{$document.name}></h5></figcaption>
+										</figure>
+									</div>
+									<div class="col-md-9 align-self-center">
+											<{if $document.description_end}>
+												<{$document.description_short}>
+												<hr />
+												<{$document.description_end}>
+											<{else}>
+												<{$document.description}>
+											<{/if}>
+									</div>
+								</div>
+						</div>
+						<div class="modal-footer d-flex justify-content-center">
+							<a class="btn btn-primary" href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$document.categoryid}>&amp;doc_id=<{$document.id}>" target="_blank" title="<{$document.name}>">
+								<span class="fa fa-download fa-lg" aria-hidden="true"></span> <{$smarty.const._MA_XMDOC_DOWNLOAD}>
+							</a>
+						</div>
+						<{if ($document.perm_edit == true) || ($document.perm_del == true)}>
+							<div class="modal-footer d-flex justify-content-center">
+								<div class="btn-group text-center" role="group">
+									<{if $document.perm_edit == true}>
+										<button type="button" class="btn btn-secondary" onclick=window.location.href="<{$xoops_url}>/modules/xmdoc/action.php?op=edit&amp;document_id=<{$document.id}>"><span class="fa fa-edit" aria-hidden="true"></span> <{$smarty.const._MA_XMDOC_EDIT}></button>
+									<{/if}>
+									<{if $document.perm_del == true}>
+										<button type="button" class="btn btn-secondary" onclick=window.location.href="<{$xoops_url}>/modules/xmdoc/action.php?op=del&amp;document_id=<{$document.id}>"><span class="fa fa-trash" aria-hidden="true"></span> <{$smarty.const._MA_XMDOC_DEL}></button>
+									<{/if}>
+								</div>
+							</div>
 						<{/if}>
 					</div>
-					<div class="text-center">
-						<div class="btn-group text-center" role="group">
-							<{if $document.perm_edit == true}>
-								<button type="button" class="btn btn-secondary" onclick=window.location.href="<{$xoops_url}>/modules/xmdoc/action.php?op=edit&amp;document_id=<{$document.id}>"><i class="fa fa-edit" aria-hidden="true"></i> <{$smarty.const._MA_XMDOC_EDIT}></button>
-							<{/if}>
-							<{if $document.perm_del == true}>
-								<button type="button" class="btn btn-secondary" onclick=window.location.href="<{$xoops_url}>/modules/xmdoc/action.php?op=del&amp;document_id=<{$document.id}>"><i class="fa fa-trash" aria-hidden="true"></i> <{$smarty.const._MA_XMDOC_DEL}></button>
-							<{/if}>
-						</div>
-					</div>
 				</div>
-
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<{/foreach}>
+			</div>			
+		<{/foreach}>
 	</div>
 	<{if $nav_menu}>
 		<div class="row">
@@ -179,16 +211,17 @@
 		</div>
 	<{/if}>
 <{else}>
-<div class="alert alert-danger alert-dismissible" role="alert">
-	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	<{$smarty.const._MA_XMDOC_ERROR_NODOCUMENT}>
-</div>
+	<div class="alert alert-danger alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<{$smarty.const._MA_XMDOC_ERROR_NODOCUMENT}>
+	</div>
 <{/if}>
 
 <{if $index_footer}>
-    <div class="row" style="padding-bottom: 5px; padding-top: 5px;">
+    <div class="row pb-2">
         <div class="col-sm-12">
-            <{$index_footer}>
+            <hr />
+			<{$index_footer}>
         </div>
     </div>
 <{/if}>

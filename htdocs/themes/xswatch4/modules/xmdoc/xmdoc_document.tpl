@@ -40,13 +40,13 @@
 					<div class="row border-bottom border-secondary mx-1 pl-1">
 						<figure class="figure text-muted my-1 pr-2 text-center border-right border-secondary">
 							  <span class="fa fa-circle-notch fa-fw" aria-hidden="true"></span> <{$smarty.const._MA_XMDOC_FORMDOC_DATE_BT}>
-							  <figcaption class="figure-caption text-center"><{$date|replace:'-':'/'}></figcaption>
+							  <figcaption class="figure-caption text-center"><{$date}></figcaption>
 						</figure>
 
 						<{if $mdate}>
 						<figure class="figure text-muted my-1 pr-2 text-center border-right border-secondary">
 							  <span class="fa fa-repeat fa-fw" aria-hidden="true"></span> <{$smarty.const._MA_XMDOC_FORMDOC_MDATE_BT}>
-							  <figcaption class="figure-caption text-center"><{$mdate|replace:'-':'/'}></figcaption>
+							  <figcaption class="figure-caption text-center"><{$mdate}></figcaption>
 						</figure>
 						<{/if}>
 
