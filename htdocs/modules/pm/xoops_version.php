@@ -69,14 +69,10 @@ $modversion['onUpdate']  = 'include/update.php';
 
 // Templates
 $modversion['templates']                   = array();
-$modversion['templates'][1]['file']        = 'pm_pmlite.tpl';
+$modversion['templates'][1]['file']        = 'pm_readpmsg.tpl';
 $modversion['templates'][1]['description'] = '';
-$modversion['templates'][2]['file']        = 'pm_readpmsg.tpl';
+$modversion['templates'][2]['file']        = 'pm_viewpmsg.tpl';
 $modversion['templates'][2]['description'] = '';
-$modversion['templates'][3]['file']        = 'pm_viewpmsg.tpl';
-$modversion['templates'][3]['description'] = '';
-//$modversion['templates'][4]['file'] = 'pm_lookup.tpl';
-//$modversion['templates'][4]['description'] = '';
 
 // Menu
 $modversion['hasMain'] = 1;
