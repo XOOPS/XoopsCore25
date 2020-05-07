@@ -11,13 +11,13 @@
 
 if (!class_exists('phpthumb_functions'))
 {
-ob_start();
+	ob_start();
 	if(!include_once __DIR__ . '/phpthumb.functions.php')
 	{
-	ob_end_flush();
-	die('failed to include_once("'. __DIR__ .'/phpthumb.functions.php")');
-}
-ob_end_clean();
+		ob_end_flush();
+		die('failed to include_once("' . __DIR__ . '/phpthumb.functions.php")');
+	}
+	ob_end_clean();
 }
 
 class phpthumb {
@@ -219,7 +219,7 @@ class phpthumb {
 	public $issafemode       = null;
 	public $php_memory_limit = null;
 
-	public $phpthumb_version = '1.7.15-202002130926';
+	public $phpthumb_version = '1.7.15-202004301145';
 
 	//////////////////////////////////////////////////////////////////////
 
@@ -1290,7 +1290,7 @@ class phpthumb {
 			return false;
 		}
 
-		if (preg_match('#^[a-z0-9]+\:/{1,2}#i', $filename)) {
+		if (preg_match('#^[a-z0-9]+\\:/{1,2}#i', $filename)) {
 			// eg: http://host/path/file.jpg (HTTP URL)
 			// eg: ftp://host/path/file.jpg  (FTP URL)
 			// eg: data1:/path/file.jpg      (Netware path)
@@ -1879,7 +1879,7 @@ if (false) {
 								$commandline .= ' -'.$IMresizeParameter.' '.phpthumb_functions::escapeshellarg_replacement(phpthumb_functions::nonempty_min($this->w, $getimagesize[0]).'x'.phpthumb_functions::nonempty_min($this->h, $getimagesize[1]));
 								$commandline .= ' -gravity center';
 								if ($this->bg) {
-								$commandline .= ' -background '.phpthumb_functions::escapeshellarg_replacement('#'.$this->bg);
+									$commandline .= ' -background ' . phpthumb_functions::escapeshellarg_replacement('#' . $this->bg);
 								} else {
 									$commandline .= ' -background none';
 								}
