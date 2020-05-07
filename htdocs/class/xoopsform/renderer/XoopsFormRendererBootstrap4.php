@@ -14,8 +14,9 @@
  * @category  XoopsForm
  * @package   XoopsFormRendererBootstrap4
  * @author    Richard Griffith <richard@geekwright.com>
- * @copyright 2018-2020 XOOPS Project (https://xoops.org)
- * @license   GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright 2018 XOOPS Project (http://xoops.org)
+ * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @link      http://xoops.org
  */
 class XoopsFormRendererBootstrap4 implements XoopsFormRendererInterface
 {
@@ -361,7 +362,7 @@ class XoopsFormRendererBootstrap4 implements XoopsFormRendererInterface
             . '<ul class="dropdown-menu">';
             //. _SIZE . '&nbsp;&nbsp;<span class="caret"></span></button><ul class="dropdown-menu">';
         foreach ($GLOBALS['formtextdhtml_sizes'] as $value => $name) {
-            $fontStr .= '<li class="dropdown-item"><a href="javascript:xoopsSetElementAttribute(\'size\', \'' . $value . '\', \''
+			$fontStr .= '<li class="dropdown-item"><a href="javascript:xoopsSetElementAttribute(\'size\', \'' . $value . '\', \''
                 . $textarea_id . '\', \'' . $hiddentext . '\');">' . $name . '</a></li>';
         }
         $fontStr .= '</ul></div>';
@@ -374,7 +375,7 @@ class XoopsFormRendererBootstrap4 implements XoopsFormRendererInterface
             //. _FONT . '&nbsp;&nbsp;<span class="caret"></span></button><ul class="dropdown-menu">';
         foreach ($fontarray as $font) {
             $fontStr .= '<li class="dropdown-item"><a href="javascript:xoopsSetElementAttribute(\'font\', \'' . $font . '\', \''
-                . $textarea_id . '\', \'' . $hiddentext . '\');">' . $font . '</a></li>';
+				. $textarea_id . '\', \'' . $hiddentext . '\');">' . $font . '</a></li>';
         }
         $fontStr .= '</ul></div>';
 
@@ -743,7 +744,7 @@ class XoopsFormRendererBootstrap4 implements XoopsFormRendererInterface
 
             $ret .= '<div class="form-group row">';
             if (($caption = $element->getCaption()) != '') {
-                $ret .= '<label for="' . $element->getName() . '" class="col-lg-2 col-form-label text-sm-right">'
+                $ret .= '<label for="' . $element->getName() . '" class="col-lg-2 col-form-label text-lg-right">'
                     . $element->getCaption()
                     . ($element->isRequired() ? '<span class="caption-required">*</span>' : '')
                     . '</label>';
