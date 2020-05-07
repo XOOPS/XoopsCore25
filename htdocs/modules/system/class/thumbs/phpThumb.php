@@ -15,10 +15,10 @@ ini_set('display_errors', '1');
 
 // check for magic quotes in PHP < 7.4.0 (when these functions became deprecated)
 if (version_compare(PHP_VERSION, '7.4.0', '<')) {
-ini_set('magic_quotes_runtime', '0');
-if (ini_get('magic_quotes_runtime')) {
-	die('"magic_quotes_runtime" is set in php.ini, cannot run phpThumb with this enabled');
-}
+	ini_set('magic_quotes_runtime', '0');
+	if (ini_get('magic_quotes_runtime')) {
+		die('"magic_quotes_runtime" is set in php.ini, cannot run phpThumb with this enabled');
+	}
 }
 // Set a default timezone if web server has not done already in php.ini
 if (!ini_get('date.timezone') && function_exists('date_default_timezone_set')) { // PHP >= 5.1.0
@@ -224,20 +224,20 @@ if (isset($_GET['phpThumbDebug']) && ($_GET['phpThumbDebug'] == '0')) {
 
 // check for magic quotes in PHP < 7.4.0 (when these functions became deprecated)
 if (version_compare(PHP_VERSION, '7.4.0', '<')) {
-// returned the fixed string if the evil "magic_quotes_gpc" setting is on
-if (@get_magic_quotes_gpc()) { //patched for XOOPS
-	// deprecated: 'err', 'file', 'goto',
-	$RequestVarsToStripSlashes = array('src', 'wmf', 'down');
-	foreach ($RequestVarsToStripSlashes as $key) {
-		if (isset($_GET[$key])) {
-			if (is_string($_GET[$key])) {
-				$_GET[$key] = stripslashes($_GET[$key]);
-			} else {
-				unset($_GET[$key]);
+	// returned the fixed string if the evil "magic_quotes_gpc" setting is on
+	if (@get_magic_quotes_gpc()) { // patched for XOOPS
+		// deprecated: 'err', 'file', 'goto',
+		$RequestVarsToStripSlashes = array('src', 'wmf', 'down');
+		foreach ($RequestVarsToStripSlashes as $key) {
+			if (isset($_GET[$key])) {
+				if (is_string($_GET[$key])) {
+					$_GET[$key] = stripslashes($_GET[$key]);
+				} else {
+					unset($_GET[$key]);
+				}
 			}
 		}
 	}
-}
 }
 
 if (empty($_SERVER['PATH_INFO']) && empty($_SERVER['QUERY_STRING'])) {
@@ -514,9 +514,9 @@ while ($CanPassThroughDirectly && $phpThumb->src) {
 			break;
 		}
 		switch ($phpThumb->getimagesizeinfo[2]) {
-			case 1: // GIF
-			case 2: // JPG
-			case 3: // PNG
+			case  1: // GIF
+			case  2: // JPG
+			case  3: // PNG
 			case 18: // WEBP
 				// great, let it through
 				break;
