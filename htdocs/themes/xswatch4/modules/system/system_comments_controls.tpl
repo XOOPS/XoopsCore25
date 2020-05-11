@@ -1,15 +1,20 @@
-<div class="row d-flex justify-content-center">
-<form class="form-inline" method="get" action="<{$pageName}>">
-    <div class="form-group">
-        <{$smarty.const.THEME_COMMENT_OPTIONS}>&nbsp;
-        <{$commentModeSelect->render()}>&nbsp;
-        <{$commentOrderSelect->render()}>&nbsp;
-        <{$commentRefreshButton->render()}>&nbsp;
-
-        <{if ($commentPostButton|default:false) }>
-            <{$commentPostButton->render()}>
-        <{/if}>
-    </div>
-<{$commentPostHidden}>
+<{$smarty.const.THEME_COMMENT_OPTIONS}>
+<form method="get" action="<{$pageName}>">
+	<div class="form-row mt-1">
+		<div class="form-group col-md-3">
+			<{$commentModeSelect->render()}>
+		</div>
+		<div class="form-group col-md-6 col-lg-5">
+			<{$commentOrderSelect->render()}>
+		</div>
+		<div class="form-group col text-md-left text-center">
+			<{$commentRefreshButton->render()}>
+		</div>
+		<{if ($commentPostButton|default:false) }>
+			<div class="form-group col text-nowrap">
+				<{$commentPostButton->render()}>
+			</div>
+		<{/if}>
+	</div>	
+	<{$commentPostHidden}>
 </form>
-</div>
