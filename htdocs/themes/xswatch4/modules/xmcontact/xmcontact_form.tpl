@@ -52,7 +52,7 @@
     <label for="Message"><{$captcha_caption}> <span style="color: red;">*</span></label>
     <{$captcha}>
     <{/if}>
-    <div class="form-group">
+    <div class="form-group text-center">
         <input type="hidden" name="op" id="op" value="save">
         <input type="hidden" name="cat_id" id="cat_id" value="<{$cat_id}>">
 		<input type="hidden" name="XOOPS_TOKEN_REQUEST" id="XOOPS_TOKEN_REQUEST" value="<{$token}>" />
