@@ -28,8 +28,8 @@
 					</div>
 					<div class="col-12 pt-2 text-left text-muted xmnews-data">
 						<{if $blocknews.type == "date" || $blocknews.type == "random"}>
-							<div class="d-block d-lg-none d-xl-block"><span class="fa fa-calendar" aria-hidden="true"></span> <{$smarty.const._MA_XMNEWS_BLOCKS_DATE}>: <{$blocknews.date|replace:'-':'/'}></div>
-							<div class="d-none d-lg-block d-xl-none"><br /><span class="fa fa-calendar" aria-hidden="true"></span> <{$smarty.const._MA_XMNEWS_BLOCKS_DATE}>: <{$blocknews.date|truncate:10:''|replace:'-':'/'}></div>
+							<div class="d-block d-lg-none d-xl-block"><span class="fa fa-calendar" aria-hidden="true"></span> <{$smarty.const._MA_XMNEWS_BLOCKS_DATE}>: <{$blocknews.date}></div>
+							<div class="d-none d-lg-block d-xl-none"><br /><span class="fa fa-calendar" aria-hidden="true"></span> <{$smarty.const._MA_XMNEWS_BLOCKS_DATE}>: <{$blocknews.date|truncate:10:''}></div>
 						<{/if}>
 						<{if $blocknews.type == "hits"}>
 							<span class="fa fa-eye" aria-hidden="true"></span> <{$smarty.const._MA_XMNEWS_NEWS_READING}>: <{$blocknews.hits}>
@@ -89,14 +89,14 @@
 							<{if ($blocknews.dodate == 1) && (($blocknews.domdate == 1) && ($blocknews.mdate)) && ($blocknews.douser == 1)}>
 								<figure class="figure text-muted m-1 pr-2 text-center border-right border-secondary">
 									  <span class="fa fa-calendar fa-fw" aria-hidden="true"></span> <{$smarty.const._MA_XMNEWS_NEWS_PUBLISHED_BT}>
-									  <figcaption class="figure-caption text-center d-none d-md-block"><{$blocknews.date|replace:'-':'/'}></figcaption>
-									  <figcaption class="figure-caption text-center d-block d-md-none"><{$blocknews.date|truncate:10:''|replace:'-':'/'}> </figcaption>
+									  <figcaption class="figure-caption text-center d-none d-md-block"><{$blocknews.date}></figcaption>
+									  <figcaption class="figure-caption text-center d-block d-md-none"><{$blocknews.date|truncate:10:''}> </figcaption>
 								</figure>
 							<{else}>
 								<{if $blocknews.dodate == 1}>
 									<figure class="figure text-muted m-1 pr-2 text-center border-right border-secondary">
 										  <span class="fa fa-calendar fa-fw" aria-hidden="true"></span> <{$smarty.const._MA_XMNEWS_NEWS_PUBLISHED_BT}>
-										  <figcaption class="figure-caption text-center"><{$blocknews.date|replace:'-':'/'}></figcaption>
+										  <figcaption class="figure-caption text-center"><{$blocknews.date}></figcaption>
 									</figure>
 								<{/if}>
 							<{/if}>	
@@ -104,7 +104,7 @@
 								<{if $blocknews.mdate}>
 									<figure class="figure text-muted m-1 pr-2 text-center border-right border-secondary">
 										<span class="fa fa-repeat fa-fw" aria-hidden="true"></span> <{$smarty.const._MA_XMNEWS_NEWS_MDATE_BT}>
-										<figcaption class="figure-caption text-center"><{$blocknews.mdate|replace:'-':'/'}></figcaption>
+										<figcaption class="figure-caption text-center"><{$blocknews.mdate}></figcaption>
 									</figure>
 								<{/if}>
 							<{/if}>

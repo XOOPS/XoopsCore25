@@ -66,14 +66,14 @@
 									<{if ($news.dodate == 1) && (($news.domdate == 1) && ($news.mdate)) && ($news.douser == 1)}>
 										<figure class="figure text-muted m-1 pr-2 text-center border-right border-secondary">
 											  <span class="fa fa-calendar fa-fw" aria-hidden="true"></span> <{$smarty.const._MA_XMNEWS_NEWS_PUBLISHED_BT}>
-											  <figcaption class="figure-caption text-center d-none d-md-block"><{$news.date|replace:'-':'/'}></figcaption>
-											  <figcaption class="figure-caption text-center d-block d-md-none"><{$news.date|truncate:10:''|replace:'-':'/'}> </figcaption>
+											  <figcaption class="figure-caption text-center d-none d-md-block"><{$news.date}></figcaption>
+											  <figcaption class="figure-caption text-center d-block d-md-none"><{$news.date|truncate:10:''}> </figcaption>
 										</figure>
 									<{else}>
 										<{if $news.dodate == 1}>
 											<figure class="figure text-muted m-1 pr-2 text-center border-right border-secondary">
 												  <span class="fa fa-calendar fa-fw" aria-hidden="true"></span> <{$smarty.const._MA_XMNEWS_NEWS_PUBLISHED_BT}>
-												  <figcaption class="figure-caption text-center"><{$news.date|replace:'-':'/'}></figcaption>
+												  <figcaption class="figure-caption text-center"><{$news.date}></figcaption>
 											</figure>
 										<{/if}>
 									<{/if}>	
@@ -81,7 +81,7 @@
 										<{if $news.mdate}>
 											<figure class="figure text-muted m-1 pr-2 text-center border-right border-secondary">
 												<span class="fa fa-repeat fa-fw" aria-hidden="true"></span> <{$smarty.const._MA_XMNEWS_NEWS_MDATE_BT}>
-												<figcaption class="figure-caption text-center"><{$news.mdate|replace:'-':'/'}></figcaption>
+												<figcaption class="figure-caption text-center"><{$news.mdate}></figcaption>
 											</figure>
 										<{/if}>
 									<{/if}>
