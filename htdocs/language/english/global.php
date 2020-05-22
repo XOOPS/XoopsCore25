@@ -199,7 +199,8 @@ define('_DAYS', '%s days');
 define('_WEEK', '1 week');
 define('_MONTH', '1 month');
 define('_DATESTRING', 'Y/n/j G:i:s');
-define('_MEDIUMDATESTRING', 'Y/n/j G:i');
+//define('_MEDIUMDATESTRING', 'Y/n/j G:i');
+define('_MEDIUMDATESTRING', 'm/d/Y G:i');
 //define('_SHORTDATESTRING','n/j/Y');
 define('_SHORTDATESTRING', 'm/d/Y');
 /**
