@@ -146,7 +146,7 @@
             </div>
             <!-- irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" -->
             <div class="pagenav">
-                <{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
+                <{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''|replace:' //':'/'}>
                 <!-- irmtfan to solve nested forms and id="xo-pagenav" issue -->
             </div>
         </div>
@@ -243,7 +243,7 @@
 
 <{if $pagenav}>
     <!-- irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" -->
-    <div class="pagenav"><{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
+    <div class="pagenav"><{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''|replace:' //':'/'}>
         <!-- irmtfan to solve nested forms and id="xo-pagenav" issue --></div>
     <br>
 <{/if}>
