@@ -5,8 +5,12 @@
 
     <{if $displaynav == true}>
         <div class="text-center">
-            <form name="form1" action="<{$xoops_url}>/modules/news/index.php" method="get">
-                <{$topic_select}> <select name="storynum"><{$storynum_options}></select> <input type="submit" value="<{$lang_go}>">
+            <form  class="form-inline" name="form1" action="<{$xoops_url}>/modules/news/index.php" method="get">
+                <div class="form-group">
+                    <{$topic_select}>
+                    <select name="storynum" class="form-control"><{$storynum_options}></select>
+                    <button type="submit" class="btn btn-default"><{$lang_go}></button>
+                </div>
             </form>
         </div>
     <{/if}>
@@ -25,8 +29,8 @@
                         </div>
                         <!-- .home-thumbnails -->
                     <{else}>
-                        <div class="home-thumbnails">
-                            <img src="<{$xoops_imageurl}>images/tdm-no-image.jpg" alt="" class="img-responsive">
+                        <div>
+                            <img src="<{$xoops_imageurl}>images/separator.png" alt="" class="img-responsive">
                         </div>
                         <!-- .home-thumbnails -->
                     <{/if}>

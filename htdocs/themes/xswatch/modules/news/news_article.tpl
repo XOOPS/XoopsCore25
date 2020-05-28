@@ -1,3 +1,4 @@
+<div class="row">
 <{include file="db:news_item.tpl" story=$story}>
 
 <{if $attached_files_count>0}>
@@ -67,12 +68,10 @@
 <{if $share == true}>
     <div class='shareaholic-canvas' data-app='share_buttons' data-app-id=''></div>
 <{/if}>
-
 <div class="comments-nav">
     <{$commentsnav}>
+    <{$lang_notice}>
 </div>
-
-<{$lang_notice}>
 
 <{if $comment_mode == "flat"}>
     <{include file="db:system_comments_flat.tpl"}>
@@ -83,3 +82,4 @@
 <{/if}>
 
 <{include file='db:system_notification_select.tpl'}>
+</div>

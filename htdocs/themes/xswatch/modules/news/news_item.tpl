@@ -2,7 +2,7 @@
     <article role="article">
         <{if $story.picture != ""}>
             <div class="news-header">
-                <{if $story.poster != ""}><em><strong><{$lang_postedby}>: </strong><{$story.poster}><{/if}> <{$lang_on}> <{$story.posttime}></em>
+                <{if $story.poster != ""}><em><strong><{$lang_postedby}>: </strong> <{$story.poster}><{/if}> <{$lang_on}> <{$story.posttime}></em>
 
                 <strong class="pull-right hit-counter"><{$story.hits}> <{$lang_reads}></strong>
 
@@ -12,11 +12,13 @@
                 </a>
             </div>
         <{else}>
+        <div class="mb10">
             <h2 role="heading" class="news-no-image"><{$story.topic_title}>: <{$story.news_title}></h2>
             <{if $story.poster != ""}>
-                <em><strong><{$lang_postedby}>: </strong><{$story.poster}><{/if}><{$lang_on}> <{$story.posttime}></em>
+                <em><strong><{$lang_postedby}>: </strong> <{$story.poster}><{/if}> <{$lang_on}> <{$story.posttime}></em>
             <strong class="pull-right hit-counter"><{$story.hits}> <{$lang_reads}></strong>
-        <{/if}>
+            <{/if}>
+        </div>
         <{if $story.files_attached}>
             <{$story.attached_link}>
         <{/if}>
