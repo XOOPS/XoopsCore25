@@ -20,7 +20,7 @@
                 <div class="modal-content">
                     <div class="modal-body">
                         <div class="xoops-comment-form">
-                            <{$commentform}>
+                            <{$commentform|replace:'id="com_mode"':''}>
                         </div>
                     </div>
                     <div class="modal-footer">
