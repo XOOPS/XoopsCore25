@@ -1,5 +1,5 @@
 <?php
-// 
+//
 // _LANGCODE: en
 // _CHARSET : UTF-8
 // Translator: XOOPS Translation Team
@@ -103,4 +103,5 @@ define('_PROFILE_AM_SAVESTEP_TOGGLE_SUCCESS', 'Successfully Changed Save After S
 define('_PROFILE_AM_SAVESTEP_TOGGLE_FAILED', "Changing 'Save After Step' Failed");
 //XOOPS 2.5.9
 define('_PROFILE_AM_CANNOTDEACTIVATEWEBMASTERS', 'You cannot deactivate Webmaster account');
-
+//XOOPS 2.5.11
+define('_PROFILE_AM_EDIT_OPTION_STRINGS', 'Edit option strings');

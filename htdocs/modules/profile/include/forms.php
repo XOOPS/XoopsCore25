@@ -265,6 +265,36 @@ function profile_getFieldForm(ProfileField $field, $action = false)
     $form->addElement(new XoopsFormHidden('op', 'save'));
     $form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
 
+    $options = $field->getVar('field_options');
+    if (count($options) > 0) {
+        $linkText = defined('_PROFILE_AM_EDIT_OPTION_STRINGS') ? _PROFILE_AM_EDIT_OPTION_STRINGS : 'Edit Option Strings';
+        $editOptionsButton = new XoopsFormLabel('','<a href="'.$action.'&op=edit-option-strings"><i class="fa fa-fw fa-2x fa-language" aria-hidden="true"></i> ' . $linkText . '</a>');
+        $form->addElement($editOptionsButton);
+    }
+
+    return $form;
+}
+
+function profile_getFieldOptionForm(ProfileField $field, $action = false)
+{
+    if ($action === false) {
+        $action = ''; // $_SERVER['REQUEST_URI'];
+    }
+    $title = sprintf(_PROFILE_AM_EDIT, _PROFILE_AM_FIELD);
+
+    include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
+    $form = new XoopsThemeForm($title, 'form', $action, 'post', true);
+
+    $form->addElement(new XoopsFormLabel(_PROFILE_AM_TITLE, $field->getVar('field_title', 'e')));
+
+    $options = $field->getVar('field_options');
+    foreach($options as $name=>$value) {
+        $form->addElement(new XoopsFormText($name, "field_options[$name]", 80, 255, $value));
+    }
+
+    $form->addElement(new XoopsFormHidden('op', 'save-option-strings'));
+    $form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
+
     return $form;
 }
 
