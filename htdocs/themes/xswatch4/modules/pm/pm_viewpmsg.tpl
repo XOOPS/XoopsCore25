@@ -16,10 +16,10 @@
 	<{/if}>
 
 	<{if $pagenav}>
-		<{$pagenav}>
+	<div class="generic-pagination col text-right mb-2">
+		<{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
+	</div>
 	<{/if}>
-
-	<{xoMemberInfo assign=member_info}>
 
 	<form name="<{$pmform.name}>" id="<{$pmform.name}>" action="<{$pmform.action}>" method="<{$pmform.method}>" <{$pmform.extra}>>
 		<hr />
@@ -28,7 +28,7 @@
 
 		<div class="row mb-3">
 			<div class="col-12 btn-group" role="group" aria-label="Basic example">
-				<{if $op == "in" || (!($op == out) && !($op == save))}>
+				<{if $op == "in" || (!($op == "out") && !($op == "save"))}>
 					<a class="btn btn-primary" href="viewpmsg.php?op=in" title="<{$smarty.const._PM_INBOX}>"><span class="fa fa-inbox fa-2x fa-fw"></span><br /><{$smarty.const._PM_INBOX}></a>
 					<a class="btn btn-secondary" href="viewpmsg.php?op=out" title="<{$smarty.const._PM_OUTBOX}>"><span class="fa fa-paper-plane fa-2x fa-fw"></span><br /><{$smarty.const._PM_OUTBOX}></a>
 					<a class="btn btn-secondary" href="viewpmsg.php?op=save" title="<{$smarty.const._PM_SAVEBOX}>"><span class="fa fa-archive fa-2x fa-fw"></span><br /><{$smarty.const._PM_SAVEBOX}></a>
@@ -41,12 +41,12 @@
 					<a class="btn btn-secondary" href="viewpmsg.php?op=out" title="<{$smarty.const._PM_OUTBOX}>"><span class="fa fa-paper-plane fa-2x fa-fw"></span><br /><{$smarty.const._PM_OUTBOX}></a>
 					<a class="btn btn-primary" href="viewpmsg.php?op=save" title="<{$smarty.const._PM_SAVEBOX}>"><span class="fa fa-archive fa-2x fa-fw"></span><br /><{$smarty.const._PM_SAVEBOX}></a>
 				<{/if}>
-			</div>	
+			</div>
 		</div>
 		<div class="row">
 			<div class="col-12">
 				<table class="table table-hover" cellspacing='1' cellpadding='4'>
-					<!-- Table - Head --> 
+					<!-- Table - Head -->
 					<tr class="table-secondary">
 						<th class="text-center"><input name='allbox' id='allbox' onclick='xoopsCheckAll("<{$pmform.name}>", "allbox");' type='checkbox' value='Check All' title="<{$smarty.const.THEME_SELECT_ALL}>"/></th>
 						<th class="text-center d-none d-sm-table-cell"><span class="fa fa-envelope text-primary"></span> <span class="fa fa-envelope-open text-secondary"></span></th>
@@ -60,13 +60,13 @@
 						<th class='d-none d-sm-table-cell'><{$smarty.const._PM_DATE}></th>
 					</tr>
 					<!-- Table - End Head -->
-					
+
 					<{if $total_messages == 0}>
 						<tr>
 							<td class='even text-center bg-secondary' colspan='6'><{$smarty.const._PM_YOUDONTHAVE}></td>
 						</tr>
 					<{/if}>
-					
+
 					<{foreach item=message from=$messages}>
 						<tr>
 							<td class='d-none d-sm-table-cell aligntop text-center'>
@@ -81,7 +81,7 @@
 									<span class="fa fa-envelope fa-2x text-primary"></span>
 								<{/if}>
 							</td>
-							
+
 							<td class="text-center d-none d-sm-table-cell">
 								<{if $message.read_msg == 1}>
 									<span class="fa fa-envelope-open fa-2x text-secondary"></span>
@@ -89,19 +89,17 @@
 									<span class="fa fa-envelope fa-2x text-primary"></span>
 								<{/if}>
 							</td>
-							
+
 							<td class='text-center'>
 								<{if $message.postername != ""}>
 									<{assign var="tempPosteruid" value=$message.posteruid}>
+									<{xoUserInfo uid=$message.posteruid}>
 									<a href='<{$xoops_url}>/userinfo.php?uid=<{$message.posteruid}>' alt="<{$message.postername}>" title='<{$message.postername}>'>
-										<img src="<{$xoops_url}>/uploads/
-											<{php}>
-												$user_handler = xoops_getHandler('user');
-												if($posterObj = $user_handler->get($this->get_template_vars('tempPosteruid'))) {
-													echo $posterObj->getVar('user_avatar');
-												}
-											<{/php}>"
-										class="rounded-circle" height="48px">
+										<{if $userInfo.user_avatar != "blank.gif"}>
+											<img src="<{$xoops_url}>/uploads/<{$userInfo.user_avatar}>" alt="<{$message.postername}>" class="img-rounded img-thumbnail" width="128">
+										<{else}>
+											<img src="<{$xoops_imageurl}>images/no-avatar.png" alt="<{$message.postername}>"  class="img-rounded img-thumbnail" width="128">
+										<{/if}>
 										<br />
 										<{$message.postername}>
 									</a>
@@ -136,7 +134,7 @@
 					<{/foreach}>
 				</table>
 			</div>
-		</div>		
+		</div>
 		<hr />
 		<{if $display}>
 			<{$pmform.elements.move_messages.body|replace:'formButton':'btn btn-success'|replace:'" >':'" ><span class="fa fa-sign-in fa-2x"></span><br />'}>
@@ -148,11 +146,13 @@
 				<{$element.body}>
 			<{/if}>
 		<{/foreach}>
-		</div>		
+		</div>
 	</form>
 
 	<{if $pagenav}>
-		<{$pagenav}>
+	<div class="generic-pagination col text-right mt-2">
+		<{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
+	</div>
 	<{/if}>
 
 <{/if}>

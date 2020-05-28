@@ -30,7 +30,7 @@
 			<a class="btn btn-secondary" href="viewpmsg.php?op=out" title="<{$smarty.const._PM_OUTBOX}>"><span class="fa fa-paper-plane fa-lg fa-fw"></span><br /><{$smarty.const._PM_OUTBOX}></a>
 			<a class="btn btn-primary" href="viewpmsg.php?op=save" title="<{$smarty.const._PM_SAVEBOX}>"><span class="fa fa-archive fa-lg fa-fw"></span><br /><{$smarty.const._PM_SAVEBOX}></a>
 		<{/if}>
-	</div>	
+	</div>
 </div>
 <{if $message}>
 	<form name="<{$pmform.name}>" id="<{$pmform.name}>" action="<{$pmform.action}>" method="<{$pmform.method}>" <{$pmform.extra}>>
@@ -41,16 +41,18 @@
 					<{if ( $poster != false ) }>
 						<a href="<{$xoops_url}>/userinfo.php?uid=<{$poster->getVar('uid')}>">
 							<h5><{$poster->getVar('uname')}></h5>
-							<{if ( $poster->getVar("user_avatar") != "")}>
-								<img src="<{$xoops_url}>/uploads/<{$poster->getVar('user_avatar')}>" alt="<{$poster->getVar('uname')}>" class="img-fluid rounded-circle img-thumbnail">
+							<{if ($poster->getVar("user_avatar") != "blank.gif")}>
+								<img src="<{$xoops_url}>/uploads/<{$poster->getVar('user_avatar')}>" alt="<{$poster->getVar('uname')}>" class="img-fluid img-rounded img-thumbnail" width="128">
+							<{else}>
+								<img src="<{$xoops_imageurl}>images/no-avatar.png" alt="<{$poster->getVar('uname')}>" class="img-fluid img-rounded img-thumbnail" width="128">
 							<{/if}>
 						</a>
 						<{if ( $poster->getVar("user_from") != "" ) }>
 							<{$smarty.const._PM_FROMC}><{$poster->getVar("user_from")}>
 						<{/if}>
-					   <{if ( $poster->isOnline() ) }> 
-							<br><br><button type="button" class="btn btn-danger btn-sm"><i class="fa fa-user-circle-o"></i> <{$smarty.const._PM_ONLINE}></button><br>                     
-					   <{/if}> 
+					   <{if ( $poster->isOnline() ) }>
+							<br><br><button type="button" class="btn btn-danger btn-sm"><i class="fa fa-user-circle-o"></i> <{$smarty.const._PM_ONLINE}></button><br>
+					   <{/if}>
 					<{else}>
 						<{$anonymous}>
 					<{/if}>
