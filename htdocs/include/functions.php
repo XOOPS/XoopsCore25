@@ -234,6 +234,7 @@ function xoops_header($closehead = true)
     $themeUrl = XOOPS_THEME_URL . '/' . $themeSet . '/';
     include_once XOOPS_ROOT_PATH . '/class/template.php';
     $headTpl = new \XoopsTpl();
+    $GLOBALS['xoopsHeadTpl'] = $headTpl;  // expose template for use by caller
     $headTpl->assign(array(
         'closeHead'      => (bool) $closehead,
         'themeUrl'       => $themeUrl,
