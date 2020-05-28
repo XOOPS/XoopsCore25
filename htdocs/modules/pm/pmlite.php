@@ -163,6 +163,8 @@ if ($op === 'submit') {
     $elementTray->addElement($cancel_send);
     $pmform->addElement($elementTray);
 
-    $pmform->display();
+    $pmform->assign($GLOBALS['xoopsHeadTpl']);
+    $GLOBALS['xoopsHeadTpl']->assign('radio_icons', $subject_icons);
+    $GLOBALS['xoopsHeadTpl']->display('db:pm_pmlite.tpl');
 }
 xoops_footer();
