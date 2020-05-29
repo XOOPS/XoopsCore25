@@ -13,6 +13,7 @@
  *
  * @category  XoopsForm
  * @package   XoopsFormRendererBootstrap4
+ * @author    Tad <tad0616@gmail.com>
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2018-2020 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
@@ -743,14 +744,14 @@ class XoopsFormRendererBootstrap4 implements XoopsFormRendererInterface
 
             $ret .= '<div class="form-group row">';
             if (($caption = $element->getCaption()) != '') {
-                $ret .= '<label for="' . $element->getName() . '" class="col-lg-2 col-form-label text-sm-right">'
+                $ret .= '<label for="' . $element->getName() . '" class="col-xs-12 col-sm-2 col-form-label text-sm-right">'
                     . $element->getCaption()
                     . ($element->isRequired() ? '<span class="caption-required">*</span>' : '')
                     . '</label>';
             } else {
-                $ret .= '<div class="col-lg-2"> </div>';
+                $ret .= '<div class="col-xs-12 col-sm-2"> </div>';
             }
-            $ret .= '<div class="col-lg-10">';
+            $ret .= '<div class="col-xs-12 col-sm-10">';
             $ret .= $element->render();
             if (($desc = $element->getDescription()) != '') {
                 $ret .= '<p class="form-text text-muted">' . $desc . '</p>';

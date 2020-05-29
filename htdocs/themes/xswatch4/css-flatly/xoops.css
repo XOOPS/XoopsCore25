@@ -125,8 +125,8 @@ div.center div.jGrowl-notification, div.center div.jGrowl-closer {
 }
 
 div.jGrowl div.jGrowl-notification, div.jGrowl div.jGrowl-closer {
-    background-color: #42b142;
-    color: #f0f0f0;
+    background-color: #d5edfa;
+    color: #185578;
     width: 100%;
     padding: .5em;
     margin-top: .5em;
@@ -134,7 +134,7 @@ div.jGrowl div.jGrowl-notification, div.jGrowl div.jGrowl-closer {
     font-family: Tahoma, Geneva, sans-serif;
     font-size: 1.2em;
     text-align: center;
-    border: 1px solid #296a29;
+    border: 1px solid #c5e6f8;
     display: none;
     border-radius: 5px;
     -moz-border-radius: 5px;
@@ -156,11 +156,6 @@ div.jGrowl div.jGrowl-notification button.jGrowl-close {
     font-weight: bold;
     font-size: 12px;
     cursor: pointer;
-}
-
-div.jGrowl button {
-    padding: 2px 4px;
-    background-color: #a9b3b7;
 }
 
 div.jGrowl div.jGrowl-closer {
@@ -1216,49 +1211,5 @@ div.jGrowl div.jGrowl-closer {
 
 #xswatch-popup-body {
     margin: 1em;
-    background: linear-gradient(135deg, #191919 0%,#4c4c4c 93%,#919191 100%);
-}
-/*
-.xoops-theme-select form select {
-    background-color: black;
-}
-*/
-input[type=submit], input[type=reset], input[type=button], .xo-formbuttons, .formButton, button {
-    background-color: #3a3f44;
-    color: #eeeeee;
-    padding: 8px 12px;
-}
-
-a.xo-counterpage {
-    color: blue;
-}
-a.xo-pagarrow {
-    color: blue;
-}
-.generic-pagination a:hover {
-    color: blue;
-    background: #333333;
-}
-a.read-topic {
-    color: #bfbff0;
-}
-
-a.read-topic:hover {
-    color: #846eff;
-}
-div.newbb-thread {
-    background-color: #333333;
-    border: 1px solid #666666;
-}
-
-#about.bg-contact {
-    background-color: #272B30;
-}
-
-div.newbb thead a {
-    color: grey;
-}
-
-.toast-body a {
-    color: black;
+    background: linear-gradient(135deg, #ffffff 0%, #eefffa 88%, #d2f8f0 97%, #a2f8e0 100%);
 }

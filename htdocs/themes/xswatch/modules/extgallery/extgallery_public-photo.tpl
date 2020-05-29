@@ -170,9 +170,10 @@
 
 </div><!-- .row || .extGalleryAlbum -->
 
+<div class="comments-nav">
 <{$commentsnav}>
-
 <{$lang_notice}>
+</div>
 
 <{if $comment_mode == "flat"}>
     <{include file="db:system_comments_flat.tpl"}>

@@ -234,9 +234,11 @@ function xoops_header($closehead = true)
     $themeUrl = XOOPS_THEME_URL . '/' . $themeSet . '/';
     include_once XOOPS_ROOT_PATH . '/class/template.php';
     $headTpl = new \XoopsTpl();
+    $GLOBALS['xoopsHeadTpl'] = $headTpl;  // expose template for use by caller
     $headTpl->assign(array(
         'closeHead'      => (bool) $closehead,
         'themeUrl'       => $themeUrl,
+        'themePath'      => $themePath,
         'xoops_langcode' => _LANGCODE,
         'xoops_charset'  => _CHARSET,
         'xoops_sitename' => $xoopsConfig['sitename'],
@@ -369,13 +371,13 @@ function xoops_result($msg, $title = '')
 function xoops_confirm($hiddens, $action, $msg, $submit = '', $addtoken = true)
 {
 	if (!isset($GLOBALS['xoTheme']) || !is_object($GLOBALS['xoTheme'])) {
-		include_once $GLOBALS['xoops']->path('/class/theme.php'); 
-		$GLOBALS['xoTheme'] = new \xos_opal_Theme(); 
+		include_once $GLOBALS['xoops']->path('/class/theme.php');
+		$GLOBALS['xoTheme'] = new \xos_opal_Theme();
 	}
 	require_once $GLOBALS['xoops']->path('/class/template.php');
-	$confirmTpl = new \XoopsTpl(); 
-	$confirmTpl->assign('msg', $msg); 
-	$confirmTpl->assign('action', $action); 
+	$confirmTpl = new \XoopsTpl();
+	$confirmTpl->assign('msg', $msg);
+	$confirmTpl->assign('action', $action);
 	$tempHiddens = '';
     foreach ($hiddens as $name => $value) {
         if (is_array($value)) {
@@ -387,14 +389,14 @@ function xoops_confirm($hiddens, $action, $msg, $submit = '', $addtoken = true)
             $tempHiddens .= '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($value) . '" />';
         }
     }
-	$confirmTpl->assign('hiddens', $tempHiddens); 
-	$confirmTpl->assign('addtoken', $addtoken); 
-	if ($addtoken != false) { 
-		$confirmTpl->assign('token', $GLOBALS['xoopsSecurity']->getTokenHTML()); 
-	} 
+	$confirmTpl->assign('hiddens', $tempHiddens);
+	$confirmTpl->assign('addtoken', $addtoken);
+	if ($addtoken != false) {
+		$confirmTpl->assign('token', $GLOBALS['xoopsSecurity']->getTokenHTML());
+	}
     $submit = ($submit != '') ? trim($submit) : _SUBMIT;
-	$confirmTpl->assign('submit', $submit); 
-	$html = $confirmTpl->fetch("db:system_confirm.tpl");	
+	$confirmTpl->assign('submit', $submit);
+	$html = $confirmTpl->fetch("db:system_confirm.tpl");
 	if (!empty($html)) {
 		echo $html;
 	} else {
