@@ -12,37 +12,35 @@
         </a>
     </div><!-- .message-current-tab -->
 </div>
-<br>
+
 <{if $message}>
 <form name="<{$pmform.name}>" id="<{$pmform.name}>" action="<{$pmform.action}>" method="<{$pmform.method}>" <{$pmform.extra}>>
-    <div class="container-fluid">
-	<div class="row border p-2">
-        <div class="col-md-4 text-center">
-            <{if $op=='out'}><b><{$smarty.const._PM_TO}></b><br> <{else}><b><{$smarty.const._PM_FROM}></b><br> <{/if}>
+    <div class="row">
+        <div class="col-md-4">
+            <{if $op=='out'}><{$smarty.const._PM_TO}>: <{else}><{$smarty.const._PM_FROM}>: <{/if}>
             <{if ( $poster != false ) }>
                 <a href="<{$xoops_url}>/userinfo.php?uid=<{$poster->getVar('uid')}>"><{$poster->getVar('uname')}></a><br>
                 <{if ( $poster->getVar("user_avatar") != "")}>
-                    <img src="<{$xoops_url}>/uploads/<{$poster->getVar('user_avatar')}>" alt="<{$poster->getVar('uname')}>" class="img-fluid rounded-circle img-thumbnail">
+                    <img src="<{$xoops_url}>/uploads/<{$poster->getVar('user_avatar')}>" alt="<{$poster->getVar('uname')}>" class="img-responsive img-rounded img-thumbnail">
                 <{/if}>
                 <{if ( $poster->getVar("user_from") != "" ) }>
                     <{$smarty.const._PM_FROMC}><{$poster->getVar("user_from")}>
                 <{/if}>
-               <{if ( $poster->isOnline() ) }> 
-                    <br><br><button type="button" class="btn btn-danger btn-sm"><i class="fa fa-user-circle-o"></i> <{$smarty.const._PM_ONLINE}></button><br>                     
-               <{/if}> 
+                <{if ( $poster->isOnline() ) }>
+                    <br><{$smarty.const._PM_ONLINE}>
+                <{/if}>
             <{else}>
                 <{$anonymous}>
             <{/if}>
         </div>
         <div class="col-md-8">
-            <h5><{if $message.msg_image != ""}><img src='<{$xoops_url}>/images/subject/<{$message.msg_image}>' alt='' /><{/if}>
+            <h4><{if $message.msg_image != ""}><img src='<{$xoops_url}>/images/subject/<{$message.msg_image}>' alt='' /><{/if}>
                 <{$message.subject}>
-            </h5>
-            <div class="text-muted text-left"><small><i class="fa fa-calendar-o"></i>&nbsp;<{$smarty.const._PM_SENTC}>&nbsp;<{$message.msg_time}></small></div>
-            <{$message.msg_text}><br><br>
+            </h4>
+            <div class="text-muted text-right"><small><{$smarty.const._PM_SENTC}>&nbsp;<{$message.msg_time}></small></div>
+            <{$message.msg_text}>
         </div>
     </div>
-	</div>
     <div class="row">
         <div class="col-md-8">
             <br>

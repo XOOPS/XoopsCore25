@@ -60,7 +60,7 @@
 <form name="<{$pmform.name}>" id="<{$pmform.name}>" action="<{$pmform.action}>" method="<{$pmform.method}>" <{$pmform.extra}>>
 <table class="table table-hover table-sm" cellspacing='1' cellpadding='4'>
 
-    <tr>
+    <tr class="txtcenter alignmiddle">
         <th class="txtcenter"><input name='allbox' id='allbox' onclick='xoopsCheckAll("<{$pmform.name}>", "allbox");' type='checkbox' value='Check All' title="<{$smarty.const.THEME_SELECT_ALL}>"/></th>
         <th><span class="glyphicon glyphicon-download-alt"></span></th>
         <{if $op == "out"}>
@@ -69,7 +69,7 @@
             <th><{$smarty.const._PM_FROM}></th>
         <{/if}>
         <th><{$smarty.const._PM_SUBJECT}></th>
-        <th><{$smarty.const._PM_DATE}></th>
+        <th class='txtcenter'><{$smarty.const._PM_DATE}></th>
     </tr>
 
     <{if $total_messages == 0}>
@@ -84,9 +84,12 @@
             </td>
             <td class='aligntop'>
             <{if $message.read_msg == 1}>
-                <img src='<{xoModuleIcons16 mail_read.png}>' alt='{translate key="READ"}' title='<{$smarty.const._PM_READ}>'/>
+                <img src='<{xoModuleIcons16 mail_read.png}>' alt='{translate key="READ"}' title='{translate key="READ"}'/>
             <{else}>
-                <img src='<{xoModuleIcons16 mail_notread.png}>' alt='{translate key="NOT_READ"}' title='<{$smarty.const._PM_NOTREAD}>'/>
+                <img src='<{xoModuleIcons16 mail_notread.png}>' alt='{translate key="NOT_READ"}' title='{translate key="NOT_READ"}'/>
+            <{/if}>
+            <{if $message.msg_image|default:false}>
+                <img src='<{$xoops_url}>/images/subject/<{$message.msg_image}>' alt='' />
             <{/if}>
             </td>
             <td class='alignmiddle'>
@@ -98,32 +101,28 @@
             </td>
             <td class='alignmiddle'>
                 <a href='readpmsg.php?msg_id=<{$message.msg_id}>&amp;start=<{$message.msg_no}>&amp;total_messages=<{$total_messages}>&amp;op=<{$op}>' title=''>
-                    <{if $message.msg_image|default:false}>
-						<img src='<{$xoops_url}>/images/subject/<{$message.msg_image}>' alt='' />
-					<{/if}> 
-						<{$message.subject}>
+                    <{$message.subject}>
                 </a>
             </td>
-            <td>
+            <td class='alignmiddle txtcenter'>
                 <{$message.msg_time}>
             </td>
         </tr>
     <{/foreach}>
     <tr class='bg2 txtleft'>
-        <td class='txtleft' colspan='6'><br>
+        <td class='txtleft' colspan='6'>
             <{$pmform.elements.send.body|replace:'formButton':'btn btn-secondary'}>
             <{if $display}>
             <{$pmform.elements.move_messages.body|replace:'formButton':'btn btn-secondary'}>
             <{$pmform.elements.delete_messages.body|replace:'formButton':'btn btn-secondary'}>
             <{$pmform.elements.empty_messages.body|replace:'formButton':'btn btn-secondary'}>
             <{/if}>
-		    
+
             <{foreach item=element from=$pmform.elements}>
             <{if $element.hidden == 1}>
             <{$element.body}>
             <{/if}>
             <{/foreach}>
-			<br>
         </td>
     </tr>
 </table>
