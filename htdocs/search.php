@@ -166,7 +166,11 @@ switch ($action) {
             if (in_array($mid, $available_modules)) {
                 $module  = $modules[$mid];
                 $results = $module->search($queries, $andor, 5, 0);
-                $count   = count($results);
+				if (empty($results)){
+					$count = 0;
+                } else {
+					$count = count($results);
+				}
                 if (is_array($results) && $count > 0) {
                     $nomatch = false;
 					$module_name = $module->getVar('name');					
