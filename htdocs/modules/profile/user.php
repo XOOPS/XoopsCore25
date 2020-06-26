@@ -20,6 +20,7 @@
 $xoopsOption['pagetype'] = 'user';
 include __DIR__ . '/header.php';
 
+XoopsLoad::load('XoopsFilterInput');
 $op = 'main';
 
 if (isset($_POST['op'])) {
@@ -35,7 +36,8 @@ if ($op === 'main') {
         $GLOBALS['xoopsTpl']->assign('lang_login', _LOGIN);
         $GLOBALS['xoopsTpl']->assign('lang_username', _USERNAME);
         if (isset($_GET['xoops_redirect'])) {
-            $GLOBALS['xoopsTpl']->assign('redirect_page', htmlspecialchars(trim($_GET['xoops_redirect']), ENT_QUOTES));
+            $clean_redirect = XoopsFilterInput::clean($_GET['xoops_redirect'], 'WEBURL');
+            $GLOBALS['xoopsTpl']->assign('redirect_page', $clean_redirect);
         }
         if ($GLOBALS['xoopsConfig']['usercookie']) {
             $GLOBALS['xoopsTpl']->assign('lang_rememberme', _US_REMEMBERME);
