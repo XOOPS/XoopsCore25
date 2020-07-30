@@ -8,6 +8,7 @@
     <meta name="robots" content="<{$xoops_meta_robots}>">
     <meta name="rating" content="<{$xoops_meta_rating}>">
     <meta name="author" content="<{$xoops_meta_author}>">
+    <meta name="copyright" content="<{$xoops_meta_copyright}>">
     <meta name="generator" content="XOOPS">
     <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
