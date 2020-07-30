@@ -9,8 +9,8 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright       (c) 2000-2020 XOOPS Project (https://xoops.org)
+ * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Skalpa Keo <skalpa@xoops.org>
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @since               2.3.0
@@ -359,8 +359,13 @@ class xos_opal_Theme
         $criteria->add(new Criteria('conf_catid', XOOPS_CONF_METAFOOTER));
         $config = $configHandler->getConfigs($criteria, true);
         foreach (array_keys($config) as $i) {
-            $name  = $config[$i]->getVar('conf_name', 'n');
+            $name = $config[$i]->getVar('conf_name', 'n');
             $value = $config[$i]->getVar('conf_value', 'n');
+            // limited substitutions for {X_SITEURL} and {X_YEAR}
+            if ($name === 'footer' || $name === 'meta_copyright') {
+                $value = str_replace('{X_SITEURL}', XOOPS_URL . '/', $value);
+                $value = str_replace('{X_YEAR}', date('Y', time()), $value);
+            }
             if (substr($name, 0, 5) === 'meta_') {
                 $this->addMeta('meta', substr($name, 5), $value);
             } else {
