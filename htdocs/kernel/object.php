@@ -429,7 +429,7 @@ class XoopsObject
         $ts  = MyTextSanitizer::getInstance();
         switch ($this->vars[$key]['data_type']) {
             case XOBJ_DTYPE_INT:
-                $ret = (int) $ret;
+                $ret = (null === $ret) ? null : (int) $ret;
                 break;
             case XOBJ_DTYPE_UNICODE_TXTBOX:
             case XOBJ_DTYPE_TXTBOX:
