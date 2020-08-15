@@ -151,7 +151,7 @@ if ($action === 'showpopups') {
                     $errormessage = _MSC_INVALIDEMAIL1 . '<br>' . _MSC_INVALIDEMAIL2 . '';
                     redirect_header(XOOPS_URL . '/misc.php?action=showpopups&amp;type=friend&amp;op=sendform', 2, $errormessage);
                 }
-                $xoopsMailer =& xoops_getMailer();
+                $xoopsMailer = xoops_getMailer();
                 $xoopsMailer->setTemplate('tellfriend.tpl');
                 $xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
                 $xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);

@@ -159,7 +159,7 @@ class xos_logos_PageBuilder
      * @param  mixed $template
      * @return array|bool
      */
-    public function buildBlock($xobject, &$template)
+    public function buildBlock($xobject, $template)
     {
         // The lame type workaround will change
         // bid is added temporarily as workaround for specific block manipulation

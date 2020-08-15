@@ -230,7 +230,7 @@ class phpthumb_functions {
 	}
 
 
-	public static function ImageColorAllocateAlphaSafe(&$gdimg_hexcolorallocate, $R, $G, $B, $alpha=false) {
+	public static function ImageColorAllocateAlphaSafe($gdimg_hexcolorallocate, $R, $G, $B, $alpha=false) {
 		if (self::version_compare_replacement(PHP_VERSION, '4.3.2', '>=') && ($alpha !== false)) {
 			return imagecolorallocatealpha($gdimg_hexcolorallocate, $R, $G, $B, (int) $alpha);
 		} else {
@@ -238,7 +238,7 @@ class phpthumb_functions {
 		}
 	}
 
-	public static function ImageHexColorAllocate(&$gdimg_hexcolorallocate, $HexColorString, $dieOnInvalid=false, $alpha=false) {
+	public static function ImageHexColorAllocate($gdimg_hexcolorallocate, $HexColorString, $dieOnInvalid=false, $alpha=false) {
 		if (!is_resource($gdimg_hexcolorallocate)) {
 			die('$gdimg_hexcolorallocate is not a GD resource in ImageHexColorAllocate()');
 		}
@@ -260,7 +260,7 @@ class phpthumb_functions {
 	}
 
 
-	public static function GetPixelColor(&$img, $x, $y) {
+	public static function GetPixelColor($img, $x, $y) {
 		if (!is_resource($img)) {
 			return false;
 		}
@@ -383,7 +383,7 @@ class phpthumb_functions {
 	}
 
 
-	public static function ImageCopyRespectAlpha(&$dst_im, &$src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $opacity_pct=100) {
+	public static function ImageCopyRespectAlpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $opacity_pct=100) {
 		$opacipct = $opacity_pct / 100;
 		for ($x = $src_x; $x < $src_w; $x++) {
 			for ($y = $src_y; $y < $src_h; $y++) {

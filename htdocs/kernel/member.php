@@ -280,7 +280,7 @@ class XoopsMemberHandler
         } else {
             $ret = array();
             foreach ($user_ids as $u_id) {
-                $user =& $this->getUser($u_id);
+                $user = $this->getUser($u_id);
                 if (is_object($user)) {
                     $ret[] = &$user;
                 }

@@ -152,7 +152,7 @@ class BloggerApi extends XoopsXmlRpcApi
             array_shift($this->params);
             $xoopsapi =& $this->_getXoopsApi($this->params);
             $xoopsapi->_setUser($this->user, $this->isadmin);
-            $ret =& $xoopsapi->getPost(false);
+            $ret = $xoopsapi->getPost(false);
             if (is_array($ret)) {
                 $struct  = new XoopsXmlRpcStruct();
                 $content = '';
@@ -190,7 +190,7 @@ class BloggerApi extends XoopsXmlRpcApi
             array_shift($this->params);
             $xoopsapi =& $this->_getXoopsApi($this->params);
             $xoopsapi->_setUser($this->user, $this->isadmin);
-            $ret =& $xoopsapi->getRecentPosts(false);
+            $ret = $xoopsapi->getRecentPosts(false);
             if (is_array($ret)) {
                 $arr   = new XoopsXmlRpcArray();
                 $count = count($ret);

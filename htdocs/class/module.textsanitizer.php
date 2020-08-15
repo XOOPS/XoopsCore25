@@ -331,7 +331,7 @@ class MyTextSanitizer
      * @param  string $text
      * @return string
      */
-    public function makeClickable(&$text)
+    public function makeClickable($text)
     {
         $text1 = $text;
 

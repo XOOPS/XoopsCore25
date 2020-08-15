@@ -42,7 +42,7 @@ class MovableTypeApi extends XoopsXmlRpcApi
         } else {
             $xoopsapi =& $this->_getXoopsApi($this->params);
             $xoopsapi->_setUser($this->user, $this->isadmin);
-            $ret =& $xoopsapi->getCategories(false);
+            $ret = $xoopsapi->getCategories(false);
             if (is_array($ret)) {
                 $arr = new XoopsXmlRpcArray();
                 foreach ($ret as $id => $name) {

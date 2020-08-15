@@ -111,7 +111,7 @@ if (!function_exists('protector_onupdate_base')) {
      * @param $module_obj
      * @param $log
      */
-    function protector_message_append_onupdate(&$module_obj, &$log)
+    function protector_message_append_onupdate(&$module_obj, $log)
     {
         if (is_array(@$GLOBALS['msgs'])) {
             foreach ($GLOBALS['msgs'] as $message) {

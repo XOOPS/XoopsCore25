@@ -89,7 +89,7 @@ class XoopsXmlRpcParser extends SaxParser
      * @see
      * @param $input
      */
-    public function __construct(&$input)
+    public function __construct($input)
     {
         parent::__construct($input);
         $this->addTagHandler(new RpcMethodNameHandler());
@@ -318,7 +318,7 @@ class RpcIntHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    public function handleCharacterData($parser, &$data)
+    public function handleCharacterData($parser, $data)
     {
         $parser->setTempValue((int)$data);
     }
@@ -389,7 +389,7 @@ class RpcStringHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    public function handleCharacterData($parser, &$data)
+    public function handleCharacterData($parser, $data)
     {
         $parser->setTempValue((string)$data);
     }
@@ -412,7 +412,7 @@ class RpcDateTimeHandler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    public function handleCharacterData($parser, &$data)
+    public function handleCharacterData($parser, $data)
     {
         $matches = array();
         if (!preg_match("/^(\d{4})(\d{2})(\d{2})T(\d{2}):(\d{2}):(\d{2})$/", $data, $matches)) {
@@ -440,7 +440,7 @@ class RpcBase64Handler extends XmlTagHandler
      * @param $parser
      * @param $data
      */
-    public function handleCharacterData($parser, &$data)
+    public function handleCharacterData($parser, $data)
     {
         $parser->setTempValue(base64_decode($data));
     }

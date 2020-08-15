@@ -767,7 +767,7 @@ class xos_opal_Theme
      *
      * @return void
      */
-    public function headContent($params, $content, &$smarty, &$repeat)
+    public function headContent($params, $content, &$smarty, $repeat)
     {
         if (!$repeat) {
             $this->htmlHeadStrings[] = $content;

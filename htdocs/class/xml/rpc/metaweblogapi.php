@@ -156,7 +156,7 @@ class MetaWeblogApi extends XoopsXmlRpcApi
         } else {
             $xoopsapi =& $this->_getXoopsApi($this->params);
             $xoopsapi->_setUser($this->user, $this->isadmin);
-            $ret =& $xoopsapi->getPost(false);
+            $ret = $xoopsapi->getPost(false);
             if (is_array($ret)) {
                 $struct  = new XoopsXmlRpcStruct();
                 $content = '';
@@ -197,7 +197,7 @@ class MetaWeblogApi extends XoopsXmlRpcApi
         } else {
             $xoopsapi =& $this->_getXoopsApi($this->params);
             $xoopsapi->_setUser($this->user, $this->isadmin);
-            $ret =& $xoopsapi->getRecentPosts(false);
+            $ret = $xoopsapi->getRecentPosts(false);
             if (is_array($ret)) {
                 $arr   = new XoopsXmlRpcArray();
                 $count = count($ret);
@@ -248,7 +248,7 @@ class MetaWeblogApi extends XoopsXmlRpcApi
         } else {
             $xoopsapi =& $this->_getXoopsApi($this->params);
             $xoopsapi->_setUser($this->user, $this->isadmin);
-            $ret =& $xoopsapi->getCategories(false);
+            $ret = $xoopsapi->getCategories(false);
             if (is_array($ret)) {
                 $arr = new XoopsXmlRpcArray();
                 foreach ($ret as $id => $detail) {

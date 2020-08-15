@@ -24,7 +24,7 @@
  * @return int|mixed|string
  * @deprecated since 2.5.11, please use Xmf\Request
  */
-function system_CleanVars(&$global, $key, $default = '', $type = 'int')
+function system_CleanVars($global, $key, $default = '', $type = 'int')
 {
 	$GLOBALS['xoopsLogger']->addDeprecated("system_CleanVars() is deprecated since XOOPS 2.5.11, please use 'Xmf\Request' instead");
 	switch ($type) {

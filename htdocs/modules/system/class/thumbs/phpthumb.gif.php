@@ -186,7 +186,7 @@ class CGIFLZW
 
 	///////////////////////////////////////////////////////////////////////////
 
-	public function deCompress($data, &$datLen)
+	public function deCompress($data, $datLen)
 	{
 		$stLen  = strlen($data);
 		$datLen = 0;
@@ -504,7 +504,7 @@ class CGIFFILEHEADER
 
 	///////////////////////////////////////////////////////////////////////////
 
-	public function load($lpData, &$hdrLen)
+	public function load($lpData, $hdrLen)
 	{
 		$hdrLen = 0;
 
@@ -579,7 +579,7 @@ class CGIFIMAGEHEADER
 
 	///////////////////////////////////////////////////////////////////////////
 
-	public function load($lpData, &$hdrLen)
+	public function load($lpData, $hdrLen)
 	{
 		$hdrLen = 0;
 
@@ -649,7 +649,7 @@ class CGIFIMAGE
 
 	///////////////////////////////////////////////////////////////////////////
 
-	public function load($data, &$datLen)
+	public function load($data, $datLen)
 	{
 		$datLen = 0;
 
@@ -696,7 +696,7 @@ class CGIFIMAGE
 
 	///////////////////////////////////////////////////////////////////////////
 
-	public function skipExt(&$data, &$extLen)
+	public function skipExt(&$data, $extLen)
 	{
 		$extLen = 0;
 

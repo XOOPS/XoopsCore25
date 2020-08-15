@@ -424,7 +424,7 @@ class XoopsXmlRpcStruct extends XoopsXmlRpcTag
      * @param $name
      * @param $tagobj
      */
-    public function add($name, &$tagobj)
+    public function add($name, $tagobj)
     {
         $this->_tags[] = array('name' => $name, 'value' => $tagobj);
     }

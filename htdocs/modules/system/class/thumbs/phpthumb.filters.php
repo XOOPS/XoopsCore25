@@ -26,7 +26,7 @@ class phpthumb_filters {
 	}
 
 
-	public function ApplyMask(&$gdimg_mask, &$gdimg_image) {
+	public function ApplyMask($gdimg_mask, &$gdimg_image) {
 		if (phpthumb_functions::gd_version() < 2) {
 			$this->DebugMessage('Skipping ApplyMask() because gd_version is "'.phpthumb_functions::gd_version().'"', __FILE__, __LINE__);
 			return false;
@@ -95,7 +95,7 @@ class phpthumb_filters {
     }
 
 
-	public function Blur(&$gdimg, $radius=0.5) {
+	public function Blur($gdimg, $radius=0.5) {
 		// Taken from Torstein Hønsi's phpUnsharpMask (see phpthumb.unsharp.php)
 
 		$radius = round(max(0, min($radius, 50)) * 2);
@@ -131,7 +131,7 @@ class phpthumb_filters {
 	}
 
 
-	public function BlurGaussian(&$gdimg) {
+	public function BlurGaussian($gdimg) {
 		if (phpthumb_functions::version_compare_replacement(PHP_VERSION, '5.0.0', '>=') && phpthumb_functions::gd_is_bundled()) {
 			if (imagefilter($gdimg, IMG_FILTER_GAUSSIAN_BLUR)) {
 				return true;
@@ -144,7 +144,7 @@ class phpthumb_filters {
 	}
 
 
-	public function BlurSelective(&$gdimg) {
+	public function BlurSelective($gdimg) {
 		if (phpthumb_functions::version_compare_replacement(PHP_VERSION, '5.0.0', '>=') && phpthumb_functions::gd_is_bundled()) {
 			if (imagefilter($gdimg, IMG_FILTER_SELECTIVE_BLUR)) {
 				return true;
@@ -158,7 +158,7 @@ class phpthumb_filters {
 	}
 
 
-	public function Brightness(&$gdimg, $amount=0) {
+	public function Brightness($gdimg, $amount=0) {
 		if ($amount == 0) {
 			return true;
 		}
@@ -189,7 +189,7 @@ class phpthumb_filters {
 	}
 
 
-	public function Contrast(&$gdimg, $amount=0) {
+	public function Contrast($gdimg, $amount=0) {
 		if ($amount == 0) {
 			return true;
 		}
@@ -225,7 +225,7 @@ class phpthumb_filters {
 	}
 
 
-	public function Colorize(&$gdimg, $amount, $targetColor) {
+	public function Colorize($gdimg, $amount, $targetColor) {
 		$amount      = (is_numeric($amount)                          ? $amount      : 25);
 		$amountPct   = $amount / 100;
 		$targetColor = (phpthumb_functions::IsHexColor($targetColor) ? $targetColor : 'gray');
@@ -303,7 +303,7 @@ class phpthumb_filters {
 	}
 
 
-	public function Desaturate(&$gdimg, $amount, $color='') {
+	public function Desaturate($gdimg, $amount, $color='') {
 		if ($amount == 0) {
 			return true;
 		}
@@ -394,7 +394,7 @@ class phpthumb_filters {
 	}
 
 
-	public function EdgeDetect(&$gdimg) {
+	public function EdgeDetect($gdimg) {
 		if (phpthumb_functions::version_compare_replacement(PHP_VERSION, '5.0.0', '>=') && phpthumb_functions::gd_is_bundled()) {
 			if (imagefilter($gdimg, IMG_FILTER_EDGEDETECT)) {
 				return true;
@@ -435,7 +435,7 @@ class phpthumb_filters {
 	}
 
 
-	public function Emboss(&$gdimg) {
+	public function Emboss($gdimg) {
 		if (phpthumb_functions::version_compare_replacement(PHP_VERSION, '5.0.0', '>=') && phpthumb_functions::gd_is_bundled()) {
 			if (imagefilter($gdimg, IMG_FILTER_EMBOSS)) {
 				return true;
@@ -449,7 +449,7 @@ class phpthumb_filters {
 	}
 
 
-	public function Flip(&$gdimg, $x=false, $y=false) {
+	public function Flip($gdimg, $x=false, $y=false) {
 		if (!$x && !$y) {
 			return false;
 		}
@@ -472,7 +472,7 @@ class phpthumb_filters {
 	}
 
 
-	public function Frame(&$gdimg, $frame_width, $edge_width, $hexcolor_frame, $hexcolor1, $hexcolor2) {
+	public function Frame($gdimg, $frame_width, $edge_width, $hexcolor_frame, $hexcolor1, $hexcolor2) {
 		$frame_width    = ($frame_width    ? $frame_width    : 5);
 		$edge_width     = ($edge_width     ? $edge_width     : 1);
 		$hexcolor_frame = ($hexcolor_frame ? $hexcolor_frame : 'CCCCCC');
@@ -504,7 +504,7 @@ class phpthumb_filters {
 	}
 
 
-	public function Gamma(&$gdimg, $amount) {
+	public function Gamma($gdimg, $amount) {
 		if (number_format($amount, 4) == '1.0000') {
 			return true;
 		}
@@ -512,7 +512,7 @@ class phpthumb_filters {
 	}
 
 
-	public function Grayscale(&$gdimg) {
+	public function Grayscale($gdimg) {
 		if (phpthumb_functions::version_compare_replacement(PHP_VERSION, '5.0.0', '>=') && phpthumb_functions::gd_is_bundled()) {
 			if (imagefilter($gdimg, IMG_FILTER_GRAYSCALE)) {
 				return true;
@@ -524,7 +524,7 @@ class phpthumb_filters {
 	}
 
 
-	public function HistogramAnalysis(&$gdimg, $calculateGray=false) {
+	public function HistogramAnalysis($gdimg, $calculateGray=false) {
 		$ImageSX = imagesx($gdimg);
 		$ImageSY = imagesy($gdimg);
 		$Analysis = array();
@@ -552,7 +552,7 @@ class phpthumb_filters {
 	}
 
 
-	public function HistogramStretch(&$gdimg, $band='*', $method=0, $threshold=0.1) {
+	public function HistogramStretch($gdimg, $band='*', $method=0, $threshold=0.1) {
 		// equivalent of "Auto Contrast" in Adobe Photoshop
 		// method 0 stretches according to RGB colors. Gives a more conservative stretch.
 		// method 1 band stretches according to grayscale which is color-biased (59% green, 30% red, 11% blue). May give a punchier / more aggressive stretch, possibly appearing over-saturated
@@ -752,7 +752,7 @@ class phpthumb_filters {
 	}
 
 
-	public static function ImprovedImageRotate(&$gdimg_source, $rotate_angle=0, $config_background_hexcolor='FFFFFF', $bg=null, &$phpThumbObject) {
+	public static function ImprovedImageRotate(&$gdimg_source, $rotate_angle=0, $config_background_hexcolor='FFFFFF', $bg=null, $phpThumbObject) {
 		while ($rotate_angle < 0) {
 			$rotate_angle += 360;
 		}
@@ -849,7 +849,7 @@ class phpthumb_filters {
 	}
 
 
-	public function MeanRemoval(&$gdimg) {
+	public function MeanRemoval($gdimg) {
 		if (phpthumb_functions::version_compare_replacement(PHP_VERSION, '5.0.0', '>=') && phpthumb_functions::gd_is_bundled()) {
 			if (imagefilter($gdimg, IMG_FILTER_MEAN_REMOVAL)) {
 				return true;
@@ -863,7 +863,7 @@ class phpthumb_filters {
 	}
 
 
-	public function Negative(&$gdimg) {
+	public function Negative($gdimg) {
 		if (phpthumb_functions::version_compare_replacement(PHP_VERSION, '5.0.0', '>=') && phpthumb_functions::gd_is_bundled()) {
 			if (imagefilter($gdimg, IMG_FILTER_NEGATE)) {
 				return true;
@@ -918,7 +918,7 @@ class phpthumb_filters {
 	}
 
 
-	public function Saturation(&$gdimg, $amount, $color='') {
+	public function Saturation($gdimg, $amount, $color='') {
 		if ($amount == 0) {
 			return true;
 		} elseif ($amount > 0) {
@@ -930,7 +930,7 @@ class phpthumb_filters {
 	}
 
 
-	public function Sepia(&$gdimg, $amount, $targetColor) {
+	public function Sepia($gdimg, $amount, $targetColor) {
 		$amount      = (is_numeric($amount) ? max(0, min(100, $amount)) : 50);
 		$amountPct   = $amount / 100;
 		$targetColor = (phpthumb_functions::IsHexColor($targetColor) ? $targetColor : 'A28065');
@@ -987,7 +987,7 @@ class phpthumb_filters {
 	}
 
 
-	public function Smooth(&$gdimg, $amount=6) {
+	public function Smooth($gdimg, $amount=6) {
 		$amount = min(25, max(0, $amount));
 		if ($amount == 0) {
 			return true;
@@ -1005,7 +1005,7 @@ class phpthumb_filters {
 	}
 
 
-	public function SourceTransparentColorMask(&$gdimg, $hexcolor, $min_limit=5, $max_limit=10) {
+	public function SourceTransparentColorMask($gdimg, $hexcolor, $min_limit=5, $max_limit=10) {
 		$width  = imagesx($gdimg);
 		$height = imagesy($gdimg);
 		if ($gdimg_mask = imagecreatetruecolor($width, $height)) {
@@ -1029,7 +1029,7 @@ class phpthumb_filters {
 	}
 
 
-	public function Threshold(&$gdimg, $cutoff) {
+	public function Threshold($gdimg, $cutoff) {
 		$width  = imagesx($gdimg);
 		$height = imagesy($gdimg);
 		$cutoff = min(255, max(0, ($cutoff ? $cutoff : 128)));
@@ -1049,7 +1049,7 @@ class phpthumb_filters {
 	}
 
 
-	public function ImageTrueColorToPalette2(&$image, $dither, $ncolors) {
+	public function ImageTrueColorToPalette2($image, $dither, $ncolors) {
 		// http://www.php.net/manual/en/function.imagetruecolortopalette.php
 		// zmorris at zsculpt dot com (17-Aug-2004 06:58)
 		$width  = imagesx($image);
@@ -1063,7 +1063,7 @@ class phpthumb_filters {
 		return true;
 	}
 
-	public function ReduceColorDepth(&$gdimg, $colors=256, $dither=true) {
+	public function ReduceColorDepth($gdimg, $colors=256, $dither=true) {
 		$colors = max(min($colors, 256), 2);
 		// imagetruecolortopalette usually makes ugly colors, the replacement is a bit better
 		//imagetruecolortopalette($gdimg, $dither, $colors);
@@ -1072,7 +1072,7 @@ class phpthumb_filters {
 	}
 
 
-	public function WhiteBalance(&$gdimg, $targetColor='') {
+	public function WhiteBalance($gdimg, $targetColor='') {
 		if (phpthumb_functions::IsHexColor($targetColor)) {
 			$targetPixel = array(
 				'red'   => hexdec(substr($targetColor, 0, 2)),

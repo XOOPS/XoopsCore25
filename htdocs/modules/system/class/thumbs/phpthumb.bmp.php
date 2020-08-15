@@ -20,7 +20,7 @@
 
 class phpthumb_bmp {
 
-	public function phpthumb_bmp2gd(&$BMPdata, $truecolor=true) {
+	public function phpthumb_bmp2gd($BMPdata, $truecolor=true) {
 		$ThisFileInfo = array();
 		if ($this->getid3_bmp($BMPdata, $ThisFileInfo, true, true)) {
 			$gd = $this->PlotPixelsGD($ThisFileInfo['bmp'], $truecolor);
@@ -38,7 +38,7 @@ class phpthumb_bmp {
 		return false;
 	}
 
-	public function GD2BMPstring(&$gd_image) {
+	public function GD2BMPstring($gd_image) {
 		$imageX = imagesx($gd_image);
 		$imageY = imagesy($gd_image);
 
@@ -79,7 +79,7 @@ class phpthumb_bmp {
 		return $BITMAPFILEHEADER.$BITMAPINFOHEADER.$BMP;
 	}
 
-	public function getid3_bmp(&$BMPdata, &$ThisFileInfo, $ExtractPalette=false, $ExtractData=false) {
+	public function getid3_bmp($BMPdata, &$ThisFileInfo, $ExtractPalette=false, $ExtractData=false) {
 
 		// shortcuts
 		$ThisFileInfo['bmp']['header']['raw'] = array();
@@ -696,7 +696,7 @@ class phpthumb_bmp {
 		return array($red, $green, $blue);
 	}
 
-	public function PlotPixelsGD(&$BMPdata, $truecolor=true) {
+	public function PlotPixelsGD($BMPdata, $truecolor=true) {
 		$imagewidth  = $BMPdata['header']['raw']['width'];
 		$imageheight = $BMPdata['header']['raw']['height'];
 
@@ -746,7 +746,7 @@ class phpthumb_bmp {
 		return $gd;
 	}
 
-	public function PlotBMP(&$BMPinfo) {
+	public function PlotBMP($BMPinfo) {
 		$starttime = time();
 		if (!isset($BMPinfo['bmp']['data']) || !is_array($BMPinfo['bmp']['data'])) {
 			echo 'ERROR: no pixel data<BR>';

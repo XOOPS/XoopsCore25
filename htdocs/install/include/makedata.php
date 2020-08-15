@@ -31,7 +31,7 @@
 // TODO: Shouldn't we insert specific field names??  That way we can use
 // the defaults specified in the database...!!!! (and don't have problem
 // of missing fields in install file, when add new fields to database)
-function make_groups(&$dbm)
+function make_groups($dbm)
 {
     $groups['XOOPS_GROUP_ADMIN']     = $dbm->insert('groups', " VALUES (1, '" . addslashes(_INSTALL_WEBMASTER) . "', '" . addslashes(_INSTALL_WEBMASTERD) . "', 'Admin')");
     $groups['XOOPS_GROUP_USERS']     = $dbm->insert('groups', " VALUES (2, '" . addslashes(_INSTALL_REGUSERS) . "', '" . addslashes(_INSTALL_REGUSERSD) . "', 'User')");
@@ -53,7 +53,7 @@ function make_groups(&$dbm)
  *
  * @return mixed
  */
-function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $groups)
+function make_data($dbm, $adminname, $hashedAdminPass, $adminmail, $language, $groups)
 {
     $defaultTheme = 'xbootstrap';
     // $xoopsDB = Database::getInstance();

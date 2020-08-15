@@ -4281,7 +4281,7 @@ if (false) {
 		exit;
 	}
 
-	public function ImageCreateFromStringReplacement(&$RawImageData, $DieOnErrors=false) {
+	public function ImageCreateFromStringReplacement($RawImageData, $DieOnErrors=false) {
 		// there are serious bugs in the non-bundled versions of GD which may cause
 		// PHP to segfault when calling imagecreatefromstring() - avoid if at all possible
 		// when not using a bundled version of GD2
@@ -4397,7 +4397,7 @@ if (false) {
 		return false;
 	}
 
-	public function ImageResizeFunction(&$dst_im, &$src_im, $dstX, $dstY, $srcX, $srcY, $dstW, $dstH, $srcW, $srcH) {
+	public function ImageResizeFunction($dst_im, $src_im, $dstX, $dstY, $srcX, $srcY, $dstW, $dstH, $srcW, $srcH) {
 		$this->DebugMessage('ImageResizeFunction($o, $s, '.$dstX.', '.$dstY.', '.$srcX.', '.$srcY.', '.$dstW.', '.$dstH.', '.$srcW.', '.$srcH.')', __FILE__, __LINE__);
 		if (($dstW == $srcW) && ($dstH == $srcH)) {
 			return imagecopy($dst_im, $src_im, $dstX, $dstY, $srcX, $srcY, $srcW, $srcH);

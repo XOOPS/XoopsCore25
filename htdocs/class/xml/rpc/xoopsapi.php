@@ -212,7 +212,7 @@ class XoopsApi extends XoopsXmlRpcApi
      *
      * @return array
      */
-    public function &getPost($respond = true)
+    public function getPost($respond = true)
     {
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
@@ -271,7 +271,7 @@ class XoopsApi extends XoopsXmlRpcApi
      *
      * @return array
      */
-    public function &getRecentPosts($respond = true)
+    public function getRecentPosts($respond = true)
     {
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
@@ -343,7 +343,7 @@ class XoopsApi extends XoopsXmlRpcApi
      *
      * @return array
      */
-    public function &getCategories($respond = true)
+    public function getCategories($respond = true)
     {
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
