@@ -1,6 +1,68 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
+2.5.11 RC1           NOT RELEASED
+===================================
+
+- update xmsocial, xmmodules, xmdoc and xmnews (mage)
+- fix NEWBB_NOTOPIC error (geekwright)
+- New clean favicon.ico (alain01)
+- Add missing "dropdown-item" class on list items (geekwright)
+- Use mixed case constants in DHTML editor controls (geekwright)
+- Correct issues in dhtmltextarea
+- Fix:https://github.com/XOOPS/XoopsCore25/issues/783 (mage)
+- Tweak feeds used in XOOPS News in admin.php (geekwright)
+    - use https and no "www." for xoops.org feeds
+    - give priority to feed(s) in htdocs/language/.../backend.php
+    - present multiple feeds sequentially, not merged
+- Add XoopsHttpGet (geekwright)
+- Deprecate the Snoopy class (use XoopsHttpGet to fetch rss feeds) (geekwright)
+- Add check for curl_init failing (geekwright)
+- Remove unreferenced templates in extCal (mamba/geekwright)
+- Modified: htdocs/kernel/notification.php (geekwright)
+- Fix docblock \XoopsNotificationHandler::triggerEvent() - Fixes #794 (geekwright)
+- cloning of all xswatch derivatives (alain01)
+- Update style.css (alain01)
+  - Delete little space between pages number
+- Modified: htdocs/class/snoopy.php (mage)
+- Fix Error when no modules installed (geekwright)
+- Add meaningful default page to xswatch4 (geekwright)
+- Small tweak to pm module (geekwright)
+- cosmetic bt4 modification (alain01)
+- Convert to English (mamba)
+- Fix Profile Index Template (liomj)
+- Admin user sync: issue823 (geekwright)
+- Security update jquery 3.5.1 (geekwright)
+- New modern templates for PM (alain01)
+- Template patches for Newbb 5.0 Final (geekwright)
+- change of _MEDIUMDATESTRIN (mamba)
+- Implement Xmf\Request (geekwright)
+- Bootstrap-Bootswatch-4.5.0 (geekwright)
+- Avatar cleanup (geekwright)
+- Smarty plugin xoUserInfo (geekwright)
+- Add themePath variable to xoops_header()  (geekwright)
+- Add tpl/xswatchCss.tpl and document use (geekwright)
+- Adjust templates which are not wrapped by theme.tpl (geekwright)
+- Fix dependency on default shortcut icon (geekwright)
+- Expose template for use by caller (geekwright)
+- Add options text editing to profile field edit (geekwright)
+- Eliminate smarty <{php}> tag use (geekwright)
+- Fix Incorrect responsive behavior in renderThemeForm (geekwright)
+- Match *box icons sizes in pm_viewpmsg.tpl (geekwright)
+- Fix: count search (mage)
+- Fixed error when redirect (luciorota)
+- Return proper null value for integer columns (geekwright)
+- Add macro substitutions for {X_SITEURL} and {X_YEAR}
+- Patch a few issues when using PHP 8 (geekwright)
+
+Updated libraries and assets:
+- Smarty: allow StdClass to be cast to array when compiling foreach (mamba)
+- HTML Purifier to 4.13 (mamba)
+- phpThumb to 1.7.16-202008101454 (mamba)
+- bootstrap 3.4.1 (geekwright)
+- jQuery to 3.5.1 (geekwright)
+
+===================================
 2.5.11 Beta1             2020/02/14
 ===================================
 - Add xswatch4, a Bootstrap v4.4 based theme (geekwright, mage, alain01)
