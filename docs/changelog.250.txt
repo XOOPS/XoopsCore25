@@ -50,6 +50,7 @@ Updated libraries and assets:
 - HTML Purifier to 4.12 (mamba)
 - phpmailer to 5.2.27 (mamba)
 - jQuery to 3.4.1 (mamba)
+- phpThumb to 1.7.16-202008101454 (mamba)
 
 ===================================
 2.5.10 Final             2019/04/29
