@@ -124,7 +124,7 @@ class HTMLPurifier_URIFilter_MakeAbsolute extends HTMLPurifier_URIFilter
             if ($stack[$i] == '' && $i && isset($stack[$i + 1])) {
                 continue;
             }
-            if ($stack[$i] === '..') {
+            if ($stack[$i] == '..') {
                 if (!empty($result)) {
                     $segment = array_pop($result);
                     if ($segment === '' && empty($result)) {
@@ -141,7 +141,7 @@ class HTMLPurifier_URIFilter_MakeAbsolute extends HTMLPurifier_URIFilter
                 $is_folder = true;
                 continue;
             }
-            if ($stack[$i] === '.') {
+            if ($stack[$i] == '.') {
                 // silently absorb
                 $is_folder = true;
                 continue;

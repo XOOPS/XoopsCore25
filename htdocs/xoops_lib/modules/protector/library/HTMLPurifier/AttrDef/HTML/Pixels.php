@@ -35,7 +35,7 @@ class HTMLPurifier_AttrDef_HTML_Pixels extends HTMLPurifier_AttrDef
             return false;
         }
         $length = strlen($string);
-        if (substr($string, $length - 2) === 'px') {
+        if (substr($string, $length - 2) == 'px') {
             $string = substr($string, 0, $length - 2);
         }
         if (!is_numeric($string)) {

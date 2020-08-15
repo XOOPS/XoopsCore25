@@ -410,7 +410,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
             $last_char = @$quoted_value[strlen($quoted_value) - 1];
 
             $same_quote = ($first_char == $last_char);
-            $open_quote = ($first_char === '"' || $first_char === "'");
+            $open_quote = ($first_char == '"' || $first_char == "'");
 
             if ($same_quote && $open_quote) {
                 // well behaved
@@ -480,7 +480,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
             // pair, otherwise, it's a bool attribute
             $first_char = @$string[$cursor];
 
-            if ($first_char === '=') {
+            if ($first_char == '=') {
                 // key="value"
 
                 $cursor++;
@@ -495,7 +495,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
 
                 $char = @$string[$cursor];
 
-                if ($char === '"' || $char === "'") {
+                if ($char == '"' || $char == "'") {
                     // it's quoted, end bound is $char
                     $cursor++;
                     $value_begin = $cursor;

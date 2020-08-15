@@ -61,7 +61,7 @@ class HTMLPurifier_AttrDef_CSS_Background extends HTMLPurifier_AttrDef
                 continue;
             }
             foreach ($caught as $key => $status) {
-                if ($key !== 'position') {
+                if ($key != 'position') {
                     if ($status !== false) {
                         continue;
                     }
@@ -72,7 +72,7 @@ class HTMLPurifier_AttrDef_CSS_Background extends HTMLPurifier_AttrDef
                 if ($r === false) {
                     continue;
                 }
-                if ($key === 'position') {
+                if ($key == 'position') {
                     if ($caught[$key] === false) {
                         $caught[$key] = '';
                     }

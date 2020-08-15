@@ -425,10 +425,10 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
             if (strlen($key) < 2) {
                 continue;
             }
-            if ($key[0] !== '*') {
+            if ($key[0] != '*') {
                 continue;
             }
-            if ($key[1] === '.') {
+            if ($key[1] == '.') {
                 trigger_error(
                     "Error with $key: *.attr syntax not supported for HTML.ForbiddenAttributes; use attr instead",
                     E_USER_WARNING

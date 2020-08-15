@@ -64,7 +64,6 @@ abstract class HTMLPurifier_Token
                     return null;
             }
         }
-        return null;
     }
 
     /**

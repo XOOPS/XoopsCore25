@@ -439,7 +439,7 @@ class HTMLPurifier_HTMLModuleManager
             // descendants_are_inline, for ChildDef_Chameleon
             if (is_string($def->content_model) &&
                 strpos($def->content_model, 'Inline') !== false) {
-                if ($name !== 'del' && $name !== 'ins') {
+                if ($name != 'del' && $name != 'ins') {
                     // this is for you, ins/del
                     $def->descendants_are_inline = true;
                 }

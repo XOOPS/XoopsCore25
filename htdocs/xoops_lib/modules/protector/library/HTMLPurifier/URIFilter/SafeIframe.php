@@ -53,7 +53,7 @@ class HTMLPurifier_URIFilter_SafeIframe extends HTMLPurifier_URIFilter
             return true;
         }
         $token = $context->get('CurrentToken', true);
-        if (!($token && $token->name === 'iframe')) {
+        if (!($token && $token->name == 'iframe')) {
             return true;
         }
         // check if we actually have some whitelists enabled

@@ -84,7 +84,7 @@ class HTMLPurifier_Strategy_RemoveForeignElements extends HTMLPurifier_Strategy
                     // we need to make sure required attributes are in order
                     if (($token instanceof HTMLPurifier_Token_Start || $token instanceof HTMLPurifier_Token_Empty) &&
                         $definition->info[$token->name]->required_attr &&
-                        ($token->name !== 'img' || $remove_invalid_img) // ensure config option still works
+                        ($token->name != 'img' || $remove_invalid_img) // ensure config option still works
                     ) {
                         $attr_validator->validateToken($token, $config, $context);
                         $ok = true;

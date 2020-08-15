@@ -45,11 +45,11 @@ class HTMLPurifier_URIScheme_data extends HTMLPurifier_URIScheme
             $metas = explode(';', $metadata);
             while (!empty($metas)) {
                 $cur = array_shift($metas);
-                if ($cur === 'base64') {
+                if ($cur == 'base64') {
                     $is_base64 = true;
                     break;
                 }
-                if (substr($cur, 0, 8) === 'charset=') {
+                if (substr($cur, 0, 8) == 'charset=') {
                     // doesn't match if there are arbitrary spaces, but
                     // whatever dude
                     if ($charset !== null) {
@@ -89,7 +89,7 @@ class HTMLPurifier_URIScheme_data extends HTMLPurifier_URIScheme
         if (function_exists('sys_get_temp_dir')) {
             $file = tempnam(sys_get_temp_dir(), "");
         } else {
-        $file = tempnam("/tmp", "");
+            $file = tempnam("/tmp", "");
         }
         file_put_contents($file, $raw_data);
         if (function_exists('exif_imagetype')) {
