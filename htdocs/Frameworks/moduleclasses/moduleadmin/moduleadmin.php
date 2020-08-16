@@ -331,8 +331,8 @@ class ModuleAdmin
             // Database version
             $path    = XOOPS_URL . '/Frameworks/moduleclasses/icons/16/';
             $dbarray = $this->_obj->getInfo('min_db');
-
-            if ($dbarray[XOOPS_DB_TYPE]) {
+Xmf\Debug::dump($dbarray);
+            if ($dbarray!=false) {
                 // changes from redheadedrod to use connector specific version info
                 switch (XOOPS_DB_TYPE) {
                     // server should be the same in both cases

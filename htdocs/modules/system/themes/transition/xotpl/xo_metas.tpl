@@ -11,7 +11,7 @@
 <meta name="author" content="<{$xoops_meta_author}>"/>
 <meta name="copyright" content="<{$xoops_meta_copyright}>"/>
 <meta name="generator" content="XOOPS"/>
-<{if $url}>
+<{if $url|default:false}>
     <meta http-equiv="Refresh" content="<{$time}>; url=<{$url}>"/>
 <{/if}>
 

@@ -1,8 +1,8 @@
-<{if $breadcrumb}>
+<{if $breadcrumb|default:false}>
     <{includeq file="db:system_header.tpl"}>
 <{/if}>
 <!--Preferences-->
-<{if $menu}>
+<{if $menu|default:false}>
     <div class="xo-catsetting">
         <{foreach item=preferences from=$preferences}>
             <a class="tooltip" href="admin.php?fct=preferences&amp;op=show&amp;confcat_id=<{$preferences.id}>" title="<{$preferences.name}>">

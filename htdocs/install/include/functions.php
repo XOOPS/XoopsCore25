@@ -395,7 +395,7 @@ function xoFormBlockCollation($name, $value, $label, $help, $link, $charset)
  *
  * @return string
  */
-function xoFormFieldCharset($name, $value, $label, $help = '', $link)
+function xoFormFieldCharset($name, $value, $label, $help, $link)
 {
     if (!$charsets = getDbCharsets($link)) {
         return '';

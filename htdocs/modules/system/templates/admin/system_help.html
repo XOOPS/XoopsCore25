@@ -2,7 +2,7 @@
 <table id="help-system">
     <tr>
         <td class="width20">
-            <{if $help}>
+            <{if $help|default:false}>
                 <div class="xo-help-menu">
                     <h2 class="head"><{$modname}></h2>
                     <{foreach item=help from=$help}>
@@ -10,7 +10,7 @@
                     <{/foreach}>
                 </div>
             <{/if}>
-            <{if $list_mods}>
+            <{if $list_mods|default:false}>
                 <div class="xo-help-menu">
                     <{foreach item=row from=$list_mods}>
                         <h2 class="head"><{$row.name}></h2>
