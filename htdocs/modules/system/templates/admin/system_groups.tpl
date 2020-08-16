@@ -1,6 +1,6 @@
 <!--groups-->
 <{includeq file="db:system_header.tpl"}>
-<{if $groups_count == true}>
+<{if $groups_count|default:false == true}>
     <div class="floatright">
         <div class="xo-buttons">
             <button class="ui-corner-all" onclick="self.location.href='admin.php?fct=groups&amp;op=groups_add'">

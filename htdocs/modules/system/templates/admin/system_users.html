@@ -1,6 +1,6 @@
 <{includeq file="db:system_header.tpl"}>
 
-<{if $users_display == true}>
+<{if $users_display|default:false == true}>
     <!--Display form sort-->
     <div class="xo-headercontent">
         <div class="floatleft"><{$form_sort}></div>
@@ -112,7 +112,7 @@
         <{/if}>
     </table>
     <!--Pop-pup-->
-    <{if $users_count == true}>
+    <{if $users_count|default:false == true}>
         <{foreach item=users from=$users_popup}>
             <div id="dialog<{$users.uid}>" title="<{$users.uname}>" style='display:none;'>
                 <table>
