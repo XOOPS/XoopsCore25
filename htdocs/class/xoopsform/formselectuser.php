@@ -135,6 +135,7 @@ class XoopsFormSelectUser extends XoopsFormElementTray
                     for (var k = 0; k < sel.options.length; k++) {
                         if (sel.options[k].value == val) {
                             added = true;
+                            sel.options[k].selected = true;
                             break;
                         }
                     }
