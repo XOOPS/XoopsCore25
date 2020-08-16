@@ -11,7 +11,7 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
     public function add($def, $config)
     {
         if (!$this->checkDefType($def)) {
-            return null;
+            return;
         }
         $file = $this->generateFilePath($config);
         if (file_exists($file)) {
@@ -31,7 +31,7 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
     public function set($def, $config)
     {
         if (!$this->checkDefType($def)) {
-            return null;
+            return;
         }
         $file = $this->generateFilePath($config);
         if (!$this->_prepareDir($config)) {
@@ -202,7 +202,7 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
             $chmod = $config->get('Cache.SerializerPermissions');
             if ($chmod !== null) {
                 chmod($file, $chmod & 0666);
-        }
+            }
         }
         return $result;
     }

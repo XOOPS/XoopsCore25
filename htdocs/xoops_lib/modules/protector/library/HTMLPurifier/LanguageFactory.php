@@ -104,7 +104,7 @@ class HTMLPurifier_LanguageFactory
         $pcode = str_replace('-', '_', $code); // make valid PHP classname
         static $depth = 0; // recursion protection
 
-        if ($code === 'en') {
+        if ($code == 'en') {
             $lang = new HTMLPurifier_Language($config, $context);
         } else {
             $class = 'HTMLPurifier_Language_' . $pcode;
@@ -156,7 +156,7 @@ class HTMLPurifier_LanguageFactory
         $filename = $this->dir . '/Language/messages/' . $code . '.php';
 
         // default fallback : may be overwritten by the ensuing include
-        $fallback = ($code !== 'en') ? 'en' : false;
+        $fallback = ($code != 'en') ? 'en' : false;
 
         // load primary localisation
         if (!file_exists($filename)) {

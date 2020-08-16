@@ -145,7 +145,7 @@ class HTMLPurifier_Generator
         } elseif ($token instanceof HTMLPurifier_Token_Start) {
             $attr = $this->generateAttributes($token->attr, $token->name);
             if ($this->_flashCompat) {
-                if ($token->name === "object") {
+                if ($token->name == "object") {
                     $flash = new stdClass();
                     $flash->attr = $token->attr;
                     $flash->param = array();
@@ -157,14 +157,14 @@ class HTMLPurifier_Generator
         } elseif ($token instanceof HTMLPurifier_Token_End) {
             $_extra = '';
             if ($this->_flashCompat) {
-                if ($token->name === "object" && !empty($this->_flashStack)) {
+                if ($token->name == "object" && !empty($this->_flashStack)) {
                     // doesn't do anything for now
                 }
             }
             return $_extra . '</' . $token->name . '>';
 
         } elseif ($token instanceof HTMLPurifier_Token_Empty) {
-            if ($this->_flashCompat && $token->name === "param" && !empty($this->_flashStack)) {
+            if ($this->_flashCompat && $token->name == "param" && !empty($this->_flashStack)) {
                 $this->_flashStack[count($this->_flashStack)-1]->param[$token->attr['name']] = $token->attr['value'];
             }
             $attr = $this->generateAttributes($token->attr, $token->name);

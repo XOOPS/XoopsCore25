@@ -88,7 +88,7 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
             }
             // Is the current parent a <p> tag?
         } elseif (!empty($this->currentNesting) &&
-            $this->currentNesting[count($this->currentNesting) - 1]->name === 'p') {
+            $this->currentNesting[count($this->currentNesting) - 1]->name == 'p') {
             // State 3.1: ...<p>PAR1
             //                  ----
 

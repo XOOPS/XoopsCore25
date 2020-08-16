@@ -43,8 +43,8 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
         $ret .= $this->element('caption', 'Doctype');
         $ret .= $this->row('Name', $doctype->name);
         $ret .= $this->row('XML', $doctype->xml ? 'Yes' : 'No');
-        $ret .= $this->row('Default Modules', implode($doctype->modules, ', '));
-        $ret .= $this->row('Default Tidy Modules', implode($doctype->tidyModules, ', '));
+        $ret .= $this->row('Default Modules', implode(', ', $doctype->modules));
+        $ret .= $this->row('Default Tidy Modules', implode(', ', $doctype->tidyModules));
         $ret .= $this->end('table');
         return $ret;
     }
@@ -189,16 +189,16 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
         $elements = array();
         $attr = array();
         if (isset($def->elements)) {
-            if ($def->type === 'strictblockquote') {
+            if ($def->type == 'strictblockquote') {
                 $def->validateChildren(array(), $this->config, $context);
             }
             $elements = $def->elements;
         }
-        if ($def->type === 'chameleon') {
+        if ($def->type == 'chameleon') {
             $attr['rowspan'] = 2;
-        } elseif ($def->type === 'empty') {
+        } elseif ($def->type == 'empty') {
             $elements = array();
-        } elseif ($def->type === 'table') {
+        } elseif ($def->type == 'table') {
             $elements = array_flip(
                 array(
                     'col',
@@ -232,7 +232,7 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
                 0
             );
 
-        } elseif ($def->type === 'custom') {
+        } elseif ($def->type == 'custom') {
 
             $ret .= $this->element(
                 'td',

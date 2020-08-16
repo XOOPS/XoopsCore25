@@ -62,7 +62,7 @@ class HTMLPurifier_Injector_SafeObject extends HTMLPurifier_Injector
      */
     public function handleElement(&$token)
     {
-        if ($token->name === 'object') {
+        if ($token->name == 'object') {
             $this->objectStack[] = $token;
             $this->paramStack[] = array();
             $new = array($token);
@@ -70,7 +70,7 @@ class HTMLPurifier_Injector_SafeObject extends HTMLPurifier_Injector
                 $new[] = new HTMLPurifier_Token_Empty('param', array('name' => $name, 'value' => $value));
             }
             $token = $new;
-        } elseif ($token->name === 'param') {
+        } elseif ($token->name == 'param') {
             $nest = count($this->currentNesting) - 1;
             if ($nest >= 0 && $this->currentNesting[$nest]->name === 'object') {
                 $i = count($this->objectStack) - 1;
@@ -83,7 +83,7 @@ class HTMLPurifier_Injector_SafeObject extends HTMLPurifier_Injector
                 // attribute, which we need if a type is specified. This is
                 // *very* Flash specific.
                 if (!isset($this->objectStack[$i]->attr['data']) &&
-                    ($token->attr['name'] === 'movie' || $token->attr['name'] === 'src')
+                    ($token->attr['name'] == 'movie' || $token->attr['name'] == 'src')
                 ) {
                     $this->objectStack[$i]->attr['data'] = $token->attr['value'];
                 }
@@ -114,7 +114,7 @@ class HTMLPurifier_Injector_SafeObject extends HTMLPurifier_Injector
         // This is the WRONG way of handling the object and param stacks;
         // we should be inserting them directly on the relevant object tokens
         // so that the global stack handling handles it.
-        if ($token->name === 'object') {
+        if ($token->name == 'object') {
             array_pop($this->objectStack);
             array_pop($this->paramStack);
         }

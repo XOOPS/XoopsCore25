@@ -53,7 +53,7 @@ class HTMLPurifier_Encoder
         } elseif ($code == self::ICONV_TRUNCATES) {
             // we can only work around this if the input character set
             // is utf-8
-            if ($in === 'utf-8') {
+            if ($in == 'utf-8') {
                 if ($max_chunk_size < 4) {
                     trigger_error('max_chunk_size is too small', E_USER_WARNING);
                     return false;

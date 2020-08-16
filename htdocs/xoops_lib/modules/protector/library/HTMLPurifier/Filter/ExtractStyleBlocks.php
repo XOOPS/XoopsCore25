@@ -133,7 +133,7 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
         if (strncmp('<!--', $css, 4) === 0) {
             $css = substr($css, 4);
         }
-        if (strlen($css) > 3 && substr($css, -3) === '-->') {
+        if (strlen($css) > 3 && substr($css, -3) == '-->') {
             $css = substr($css, 0, -3);
         }
         $css = trim($css);

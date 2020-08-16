@@ -52,7 +52,7 @@ class HTMLPurifier_AttrDef_CSS_ListStyle extends HTMLPurifier_AttrDef
 
         foreach ($bits as $bit) {
             if ($i >= 3) {
-                return null;
+                return;
             } // optimization bit
             if ($bit === '') {
                 continue;
@@ -71,7 +71,7 @@ class HTMLPurifier_AttrDef_CSS_ListStyle extends HTMLPurifier_AttrDef
                     } else {
                         $none = true;
                     }
-                    if ($key === 'image') {
+                    if ($key == 'image') {
                         continue;
                     }
                 }

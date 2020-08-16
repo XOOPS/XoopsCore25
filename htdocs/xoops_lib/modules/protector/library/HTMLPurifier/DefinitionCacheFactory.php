@@ -74,7 +74,7 @@ class HTMLPurifier_DefinitionCacheFactory
             class_exists($class = $this->implementations[$method], false)) {
             $cache = new $class($type);
         } else {
-            if ($method !== 'Serializer') {
+            if ($method != 'Serializer') {
                 trigger_error("Unrecognized DefinitionCache $method, using Serializer instead", E_USER_WARNING);
             }
             $cache = new HTMLPurifier_DefinitionCache_Serializer($type);

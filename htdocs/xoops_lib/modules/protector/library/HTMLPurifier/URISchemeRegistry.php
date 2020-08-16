@@ -49,19 +49,19 @@ class HTMLPurifier_URISchemeRegistry
         if (!$config->get('URI.OverrideAllowedSchemes') &&
             !isset($allowed_schemes[$scheme])
         ) {
-            return null;
+            return;
         }
 
         if (isset($this->schemes[$scheme])) {
             return $this->schemes[$scheme];
         }
         if (!isset($allowed_schemes[$scheme])) {
-            return null;
+            return;
         }
 
         $class = 'HTMLPurifier_URIScheme_' . $scheme;
         if (!class_exists($class)) {
-            return null;
+            return;
         }
         $this->schemes[$scheme] = new $class();
         return $this->schemes[$scheme];

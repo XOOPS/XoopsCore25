@@ -46,7 +46,7 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
         $files = array();
         $dh = opendir($dir);
         while (false !== ($file = readdir($dh))) {
-            if (!$file || $file[0] === '.' || strrchr($file, '.') !== '.txt') {
+            if (!$file || $file[0] == '.' || strrchr($file, '.') !== '.txt') {
                 continue;
             }
             $files[] = $file;
@@ -176,7 +176,6 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
     /**
      * Evaluates an array PHP code string without array() wrapper
      * @param string $contents
-     * @return mixed
      */
     protected function evalArray($contents)
     {
