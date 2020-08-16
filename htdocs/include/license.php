@@ -21,8 +21,9 @@
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-$licenseFile = XOOPS_VAR_PATH . '/data/license.php';
-if (file_exists($licenseFile)) {
+$licenseFile = (defined('XOOPS_VAR_PATH')) ? XOOPS_VAR_PATH . '/data/license.php' : '';
+
+if (defined('XOOPS_VAR_PATH') && file_exists($licenseFile)) {
     include_once $licenseFile;
 } else {
     define('XOOPS_LICENSE_CODE', 'GPL');

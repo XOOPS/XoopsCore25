@@ -37,13 +37,15 @@ if (version_compare(PHP_VERSION, '5.1.2', '>=')) {
     } else {
         spl_autoload_register('PHPMailerAutoload');
     }
-} else {
+}
+/* This section customized for XOOPS for compatibility with PHP 5.3-8.0 */
+//else {
     /**
      * Fall back to traditional autoload for old PHP versions
      * @param string $classname The name of the class to load
      */
-    function __autoload($classname)
-    {
-        PHPMailerAutoload($classname);
-    }
-}
+//    function __autoload($classname)
+//    {
+//        PHPMailerAutoload($classname);
+//    }
+//}

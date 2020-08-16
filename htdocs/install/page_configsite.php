@@ -18,6 +18,12 @@ $xoopsOption['checkadmin'] = true;
 $xoopsOption['hascommon']  = true;
 require_once './include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
+if (!@include_once "../modules/system/language/{$wizard->language}/admin.php") {
+    include_once '../modules/system/language/english/admin.php';
+}
+if (!@include_once "../modules/system/language/{$wizard->language}/admin/preferences.php") {
+    include_once '../modules/system/language/english/admin/preferences.php';
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     /* @var XoopsConfigHandler $config_handler */
@@ -36,13 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $pageHasForm = true;
 $pageHasHelp = true;
 
-if (!@include_once "../modules/system/language/{$wizard->language}/admin.php") {
-    include_once '../modules/system/language/english/admin.php';
-}
-
-if (!@include_once "../modules/system/language/{$wizard->language}/admin/preferences.php") {
-    include_once '../modules/system/language/english/admin/preferences.php';
-}
 /* @var XoopsConfigHandler $config_handler */
 $config_handler = xoops_getHandler('config');
 $criteria       = new CriteriaCompo();

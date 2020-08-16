@@ -4,7 +4,7 @@
     IMG_OFF = '<{xoAdminIcons cancel.png}>';
 </script>
 <!--User rank-->
-<{if $userrank_count == true}>
+<{if $userrank_count|default:false == true}>
     <div class="floatright">
         <div class="xo-buttons">
             <a class="ui-corner-all tooltip" href="admin.php?fct=userrank&amp;op=userrank_new" title="<{$smarty.const._AM_SYSTEM_USERRANK_ADD}>">
@@ -42,12 +42,10 @@
                 <td class="xo-actions txtcenter">
                     <a class="tooltip" href="admin.php?fct=userrank&amp;op=userrank_edit&amp;rank_id=<{$userrank.rank_id}>"
                        title="<{$smarty.const._AM_SYSTEM_USERRANK_EDIT}>">
-                        <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._AM_SYSTEM_USERRANK_EDIT}>"/>
-                    </a>
+                        <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._AM_SYSTEM_USERRANK_EDIT}>"/></a>
                     <a class="tooltip" href="admin.php?fct=userrank&amp;op=userrank_delete&amp;rank_id=<{$userrank.rank_id}>"
                        title="<{$smarty.const._AM_SYSTEM_USERRANK_DELETE}>">
-                        <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._AM_SYSTEM_USERRANK_DELETE}>"/>
-                    </a>
+                        <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._AM_SYSTEM_USERRANK_DELETE}>"/></a>
                 </td>
             </tr>
         <{/foreach}>
@@ -55,13 +53,13 @@
     </table>
     <!-- Display rank navigation -->
     <div class="clear spacer"></div>
-    <{if $nav_menu}>
+    <{if $nav_menu|default:false}>
         <div class="xo-avatar-pagenav floatright"><{$nav_menu}></div>
         <div class="clear spacer"></div>
     <{/if}>
 <{/if}>
 <!--Display rank form (add,edit)-->
-<{if $form}>
+<{if $form|default:false}>
     <div class="spacer"><{$form}></div>
 <{/if}>
 

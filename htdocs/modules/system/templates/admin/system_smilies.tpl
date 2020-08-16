@@ -4,7 +4,7 @@
     IMG_ON = '<{xoAdminIcons success.png}>';
     IMG_OFF = '<{xoAdminIcons cancel.png}>';
 </script>
-<{if $smilies_count == true}>
+<{if $smilies_count|default:false == true}>
     <div class="floatright">
         <div class="xo-buttons">
             <a class="ui-corner-all tooltip" href="admin.php?fct=smilies&amp;op=new_smilie" title="<{$smarty.const._AM_SYSTEM_SMILIES_ADD}>">
@@ -51,12 +51,12 @@
     </table>
     <!-- Display smilies navigation -->
     <div class="clear spacer"></div>
-    <{if $nav_menu}>
+    <{if $nav_menu|default:false}>
         <div class="xo-avatar-pagenav floatright"><{$nav_menu}></div>
         <div class="clear spacer"></div>
     <{/if}>
 <{/if}>
 <!-- Display smilies form (add,edit) -->
-<{if $form}>
+<{if $form|default:false}>
     <div class="spacer"><{$form}></div>
 <{/if}>

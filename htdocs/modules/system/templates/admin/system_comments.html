@@ -1,6 +1,6 @@
 <{includeq file="db:system_header.tpl"}>
 <!--Comments-->
-<{if $form}>
+<{if $form|default:false}>
     <div class="spacer"><{$form}></div>
 <{else}>
     <div class="floatleft"><{$form_sort}></div>
@@ -30,7 +30,7 @@
         </thead>
         <form name='commentslist' id='commentslist' action='<{$php_selft}>' method="post">
             <tbody>
-            <{foreach item=comments from=$comments}>
+            <{foreach item=comments from=$comments|default:null}>
                 <tr class="<{cycle values='even,odd'}> alignmiddle">
                     <td class="txtcenter"><input type='checkbox' name='commentslist_id[]' id='commentslist_id[]' value='<{$comments.comments_id}>'/></td>
                     <td class="txtcenter"><{$comments.comments_icon}></td>
@@ -49,11 +49,9 @@
                              src="<{xoAdminIcons display.png}>" alt="<{$smarty.const._AM_SYSTEM_COMMENTS_VIEW}>"
                              title="<{$smarty.const._AM_SYSTEM_COMMENTS_VIEW}>"/>
                         <a href="admin/comments/comment_edit.php?com_id=<{$comments.comments_id}>" title="<{$smarty.const._EDIT}>">
-                            <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._EDIT}>">
-                        </a>
+                            <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._EDIT}>"></a>
                         <a href="admin/comments/comment_delete.php?com_id=<{$comments.comments_id}>" title="<{$smarty.const._DELETE}>">
-                            <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._DELETE}>">
-                        </a>
+                            <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._DELETE}>"></a>
                     </td>
                 </tr>
             <{/foreach}>
@@ -64,7 +62,7 @@
             </tr>
         </form>
     </table>
-    <{foreach item=comments from=$comments_popup}>
+    <{foreach item=comments from=$comments_popup|default:null}>
         <!--Pop-pup-->
         <div id='dialog<{$comments.comments_id}>' title='<{$comments.comments_title}>' style='display:none;'>
             <img src="<{xoAdminIcons comment.png}>" alt="comments" title="comments" class="xo-commentsimg"/>
@@ -73,5 +71,5 @@
         </div>
     <{/foreach}>
     <!--Pop-pup-->
-    <div class="txtright"><{$nav}></div>
+    <div class="txtright"><{$nav|default:''}></div>
 <{/if}>

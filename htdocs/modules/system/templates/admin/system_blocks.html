@@ -4,7 +4,7 @@
     IMG_ON = '<{xoAdminIcons success.png}>';
     IMG_OFF = '<{xoAdminIcons cancel.png}>';
 </script>
-<{if $filterform}>
+<{if $filterform|default:false}>
     <div class="floatright">
         <div class="xo-buttons">
             <button id="xo-add-btn" class="ui-corner-all" onclick="self.location.href='admin.php?fct=blocksadmin&amp;op=add';">
@@ -101,8 +101,8 @@
         </table>
     </div>
 <{/if}>
-<div id="xo-block-add" <{if $filterform}>class="hide"<{/if}>>
-    <{if !$filterform}><br><{/if}>
+<div id="xo-block-add" <{if $filterform|default:false}>class="hide"<{/if}>>
+    <{if !$filterform|default:false}><br><{/if}>
     <{$blockform}>
 </div>
 <!-- Preview block -->
