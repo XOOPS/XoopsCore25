@@ -2,7 +2,7 @@
 <!--Banner-->
 <table class='width100 bnone' cellspacing='1'>
     <tr>
-        <{if $banner_count == true}>
+        <{if $banner_count|default:false == true}>
             <td>
                 <h4><{$smarty.const._AM_SYSTEM_BANNERS_CURACTBNR}></h4>
             </td>
@@ -13,19 +13,17 @@
                     <a class="ui-corner-all tooltip" href="admin.php?fct=banners&amp;op=new_banner"
                        title="<{$smarty.const._AM_SYSTEM_BANNERS_ADDNWBNR}>">
                         <img src="<{xoAdminIcons attach.png}>" alt="<{$smarty.const._AM_SYSTEM_BANNERS_ADDNWBNR}>"/>
-                        <{$smarty.const._AM_SYSTEM_BANNERS_ADDNWBNR}>
-                    </a>
+                        <{$smarty.const._AM_SYSTEM_BANNERS_ADDNWBNR}></a>
                     <a class="ui-corner-all tooltip" href="admin.php?fct=banners&amp;op=new_client"
                        title="<{$smarty.const._AM_SYSTEM_BANNERS_ADDCLI}>">
                         <img src="<{xoAdminIcons user_add.png}>" alt="<{$smarty.const._AM_SYSTEM_BANNERS_ADDCLI}>"/>
-                        <{$smarty.const._AM_SYSTEM_BANNERS_ADDCLI}>
-                    </a>
+                        <{$smarty.const._AM_SYSTEM_BANNERS_ADDCLI}></a>
                 </div>
             </div>
         </td>
     </tr>
 </table>
-<{if $banner_count == true}>
+<{if $banner_count|default:false == true}>
     <table id="xo-bannerslist-sorter" cellspacing="1" class="outer tablesorter">
         <thead>
         <tr>
@@ -50,19 +48,17 @@
                          alt="<{$smarty.const._AM_SYSTEM_BANNERS_VIEW}>" title="<{$smarty.const._AM_SYSTEM_BANNERS_VIEW}>"/>
                     <a class="tooltip" href="admin.php?fct=banners&amp;op=banner_edit&amp;bid=<{$banner.bid}>"
                        title="<{$smarty.const._AM_SYSTEM_BANNERS_EDIT}>">
-                        <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._AM_SYSTEM_BANNERS_EDIT}>"/>
-                    </a>
+                        <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._AM_SYSTEM_BANNERS_EDIT}>"/></a>
                     <a class="tooltip" href="admin.php?fct=banners&amp;op=banner_delete&amp;bid=<{$banner.bid}>"
                        title="<{$smarty.const._AM_SYSTEM_BANNERS_DELETE}>">
-                        <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._AM_SYSTEM_BANNERS_DELETE}>"/>
-                    </a>
+                        <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._AM_SYSTEM_BANNERS_DELETE}>"/></a>
                 </td>
             </tr>
         <{/foreach}>
         </tbody>
     </table>
     <div class="clear spacer"></div>
-    <{if $nav_menu_banner}>
+    <{if $nav_menu_banner|default:false}>
         <div class="xo-avatar-pagenav floatright"><{$nav_menu_banner}></div>
         <div class="clear spacer"></div>
     <{/if}>
@@ -76,7 +72,7 @@
 <{/if}>
 
 <!--Banner Finish-->
-<{if $banner_finish_count == true}>
+<{if $banner_finish_count|default:false == true}>
     <h4><{$smarty.const._AM_SYSTEM_BANNERS_FINISHBNR}></h4>
     <table id="xo-bannersfinish-sorter" cellspacing="1" class="outer tablesorter">
         <thead>
@@ -102,8 +98,7 @@
                 <td class="xo-actions txtcenter">
                     <a class="tooltip" href="admin.php?fct=banners&amp;op=banner_finish_delete&amp;bid=<{$banner_finish.bid}>"
                        title="<{$smarty.const._AM_SYSTEM_BANNERS_DELETE}>">
-                        <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._AM_SYSTEM_BANNERS_DELETE}>"/>
-                    </a>
+                        <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._AM_SYSTEM_BANNERS_DELETE}>"/></a>
                 </td>
             </tr>
         <{/foreach}>
@@ -117,7 +112,7 @@
 
 <{/if}>
 <!--Banner Client-->
-<{if $banner_client_count == true}>
+<{if $banner_client_count|default:false == true}>
     <h4><{$smarty.const._AM_SYSTEM_BANNERS_ADVCLI}></h4>
     <table id="xo-bannersclient-sorter" cellspacing="1" class="outer tablesorter">
         <thead>
@@ -139,25 +134,23 @@
                 <td class="xo-actions txtcenter">
                     <a class="tooltip" href="admin.php?fct=banners&amp;op=banner_client_edit&amp;cid=<{$banner_client.cid}>"
                        title="<{$smarty.const._AM_SYSTEM_BANNERS_EDIT}>">
-                        <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._AM_SYSTEM_BANNERS_EDIT}>"/>
-                    </a>
+                        <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._AM_SYSTEM_BANNERS_EDIT}>"/></a>
                     <a class="tooltip" href="admin.php?fct=banners&amp;op=banner_client_delete&amp;cid=<{$banner_client.cid}>"
                        title="<{$smarty.const._AM_SYSTEM_BANNERS_DELETE}>">
-                        <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._AM_SYSTEM_BANNERS_DELETE}>"/>
-                    </a>
+                        <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._AM_SYSTEM_BANNERS_DELETE}>"/></a>
                 </td>
             </tr>
         <{/foreach}>
         </tbody>
     </table>
     <div class="clear spacer"></div>
-    <{if $nav_menu_client}>
+    <{if $nav_menu_client|default:false}>
         <div class="xo-avatar-pagenav floatright"><{$nav_menu_client}></div>
         <div class="clear spacer"></div>
     <{/if}>
 <{/if}>
 <br>
 <!-- Display Avatar form (add,edit) -->
-<{if $form}>
+<{if $form|default:false}>
     <div class="spacer"><{$form}></div>
 <{/if}>

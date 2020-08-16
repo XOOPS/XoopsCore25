@@ -1,6 +1,6 @@
 <{includeq file="db:system_header.tpl"}>
 <!--Comments-->
-<{if $form}>
+<{if $form|default:false}>
     <div class="spacer"><{$form}></div>
 <{else}>
     <div class="floatleft"><{$form_sort}></div>
@@ -30,7 +30,7 @@
         </thead>
         <form name='commentslist' id='commentslist' action='<{$php_selft}>' method="post">
             <tbody>
-            <{foreach item=comments from=$comments}>
+            <{foreach item=comments from=$comments|default:null}>
                 <tr class="<{cycle values='even,odd'}> alignmiddle">
                     <td class="txtcenter"><input type='checkbox' name='commentslist_id[]' id='commentslist_id[]' value='<{$comments.comments_id}>'/></td>
                     <td class="txtcenter"><{$comments.comments_icon}></td>
@@ -62,7 +62,7 @@
             </tr>
         </form>
     </table>
-    <{foreach item=comments from=$comments_popup}>
+    <{foreach item=comments from=$comments_popup|default:null}>
         <!--Pop-pup-->
         <div id='dialog<{$comments.comments_id}>' title='<{$comments.comments_title}>' style='display:none;'>
             <img src="<{xoAdminIcons comment.png}>" alt="comments" title="comments" class="xo-commentsimg"/>
@@ -71,5 +71,5 @@
         </div>
     <{/foreach}>
     <!--Pop-pup-->
-    <div class="txtright"><{$nav}></div>
+    <div class="txtright"><{$nav|default:''}></div>
 <{/if}>

@@ -105,7 +105,7 @@
             </form>
         <{/if}>
         <!--No found-->
-        <{if $users_no_found == true}>
+        <{if $users_no_found|default:falsef == true}>
             <tr class="<{cycle values='even,odd'}> alignmiddle">
                 <td colspan='8' class="txtcenter"><{$smarty.const._AM_SYSTEM_USERS_NO_FOUND}></td>
             </tr>
@@ -131,12 +131,12 @@
                     <tr>
                         <td colspan="2">
                             <ul style="border: 1px solid #666; padding: 8px;">
-                                <{if $users.user_name}>
+                                <{if $users.user_name|default:false}>
                                     <li><span class="bold"><{$smarty.const._AM_SYSTEM_USERS_NAME}></span>&nbsp;:&nbsp;<{$users.name}></li>
                                 <{/if}>
                                 <li><span class="bold"><{$smarty.const._AM_SYSTEM_USERS_UNAME}></span>&nbsp;:&nbsp;<{$users.uname}></li>
                                 <li><span class="bold"><{$smarty.const._AM_SYSTEM_USERS_EMAIL}></span>&nbsp;:&nbsp;<{$users.email}></li>
-                                <{if $users.user_url}>
+                                <{if $users.user_url|default:false}>
                                     <li><span class="bold"><{$smarty.const._AM_SYSTEM_USERS_URL}></span>&nbsp;:&nbsp;<{$users.url}></li>
                                 <{/if}>
                                 <{if $users.user_icq}>
@@ -159,10 +159,10 @@
         <{/foreach}>
     <{/if}>
     <!--Pop-pup-->
-    <div class='txtright'><{$nav}></div>
+    <div class='txtright'><{$nav|default:''}></div>
 <{/if}>
 <br>
 <!-- Display Avatar form (add,edit) -->
-<{if $form}>
+<{if $form|default:false}>
     <div class="spacer"><{$form}></div>
 <{/if}>

@@ -53,13 +53,13 @@
     </table>
     <!-- Display rank navigation -->
     <div class="clear spacer"></div>
-    <{if $nav_menu}>
+    <{if $nav_menu|default:false}>
         <div class="xo-avatar-pagenav floatright"><{$nav_menu}></div>
         <div class="clear spacer"></div>
     <{/if}>
 <{/if}>
 <!--Display rank form (add,edit)-->
-<{if $form}>
+<{if $form|default:false}>
     <div class="spacer"><{$form}></div>
 <{/if}>
 
