@@ -226,7 +226,7 @@ class XoopsLogger
                 $trace  = false;
                 $errstr = substr($errstr, 8);
             }
-            echo sprintf(_XOOPS_FATAL_MESSAGE, $errstr);
+            echo sprintf(_XOOPS_FATAL_MESSAGE, $errstr . $errfile . $errline);
             if ($trace && function_exists('debug_backtrace')) {
                 echo "<div style='color:#f0f0f0;background-color:#f0f0f0;'>" . _XOOPS_FATAL_BACKTRACE . ':<br>';
                 $trace = debug_backtrace();

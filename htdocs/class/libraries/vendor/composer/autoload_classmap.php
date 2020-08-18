@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'Firebase\\JWT\\BeforeValidException' => $vendorDir . '/firebase/php-jwt/src/BeforeValidException.php',
     'Firebase\\JWT\\ExpiredException' => $vendorDir . '/firebase/php-jwt/src/ExpiredException.php',
+    'Firebase\\JWT\\JWK' => $vendorDir . '/firebase/php-jwt/src/JWK.php',
     'Firebase\\JWT\\JWT' => $vendorDir . '/firebase/php-jwt/src/JWT.php',
     'Firebase\\JWT\\SignatureInvalidException' => $vendorDir . '/firebase/php-jwt/src/SignatureInvalidException.php',
     'Geekwright\\RegDom\\PublicSuffixList' => $vendorDir . '/geekwright/regdom/src/PublicSuffixList.php',
@@ -103,6 +104,7 @@ return array(
     'Symfony\\Polyfill\\Iconv\\Iconv' => $vendorDir . '/symfony/polyfill-iconv/Iconv.php',
     'Symfony\\Polyfill\\Mbstring\\Mbstring' => $vendorDir . '/symfony/polyfill-mbstring/Mbstring.php',
     'Webmozart\\Assert\\Assert' => $vendorDir . '/webmozart/assert/src/Assert.php',
+    'Webmozart\\Assert\\Mixin' => $vendorDir . '/webmozart/assert/src/Mixin.php',
     'WideImage\\Canvas' => $vendorDir . '/smottt/wideimage/lib/WideImage/Canvas.php',
     'WideImage\\Coordinate' => $vendorDir . '/smottt/wideimage/lib/WideImage/Coordinate.php',
     'WideImage\\Exception\\Exception' => $vendorDir . '/smottt/wideimage/lib/WideImage/Exception/Exception.php',

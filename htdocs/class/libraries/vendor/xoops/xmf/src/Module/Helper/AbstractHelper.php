@@ -137,8 +137,8 @@ abstract class AbstractHelper
      */
     protected function serializeForHelperLog($value)
     {
-        if (is_resource($value) || !is_null(@get_resource_type($value))) {
-            $value = '(resource)';
+        if (is_resource($value)) {
+            $value = '(resource:' . get_resource_type($value) . ')';
         }
         if (!is_string($value)) {
             $value = json_encode($value);
