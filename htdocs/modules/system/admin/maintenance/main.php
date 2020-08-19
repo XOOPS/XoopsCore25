@@ -62,7 +62,7 @@ switch ($op) {
         $cache->addOptionArray($cache_arr);
         $form_maintenance->addElement($cache);
 
-        $form_maintenance->addElement(new XoopsFormRadioYN(_AM_SYSTEM_MAINTENANCE_SESSION, 'session', '', _YES, _NO));
+        $form_maintenance->addElement(new XoopsFormRadioYN(_AM_SYSTEM_MAINTENANCE_SESSION, 'session', 0, _YES, _NO));
 
         $tables_tray = new XoopsFormElementTray(_AM_SYSTEM_MAINTENANCE_TABLES, '');
         $tables_tray->setDescription(_AM_SYSTEM_MAINTENANCE_TABLES_DESC);
@@ -80,7 +80,7 @@ switch ($op) {
         $tables_tray->addElement($choice, false);
         $form_maintenance->addElement($tables_tray);
 
-        $form_maintenance->addElement(new XoopsFormRadioYN(_AM_SYSTEM_MAINTENANCE_AVATAR, 'avatar', '', _YES, _NO));
+        $form_maintenance->addElement(new XoopsFormRadioYN(_AM_SYSTEM_MAINTENANCE_AVATAR, 'avatar', 0, _YES, _NO));
 
         $form_maintenance->addElement(new XoopsFormHidden('op', 'maintenance_save'));
         $form_maintenance->addElement(new XoopsFormButton('', 'maintenance_save', _SUBMIT, 'submit'));
