@@ -1,21 +1,21 @@
 <h4><{$smarty.const._PM_PRIVATEMESSAGE}></h4>
 <{if $op}>
 
-	<{if $msg}>
+	<{if $msg|default:false}>
 		<div class="alert alert-success alert-dismissable">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 			<strong><{$msg}></strong>
 		</div>
 	<{/if}>
 
-	<{if $errormsg}>
+	<{if $errormsg|default:false}>
 		<div class="alert alert-danger alert-dismissable">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 			<strong><{$errormsg}></strong>
 		</div>
 	<{/if}>
 
-	<{if $pagenav}>
+	<{if $pagenav|default:false}>
 	<div class="generic-pagination col text-right mb-2">
 		<{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
 	</div>
@@ -67,7 +67,7 @@
 						</tr>
 					<{/if}>
 
-					<{foreach item=message from=$messages}>
+					<{foreach item=message from=$messages|default:null}>
 						<tr>
 							<td class='d-none d-sm-table-cell aligntop text-center'>
 								<input type='checkbox' id='msg_id_<{$message.msg_id}>' name='msg_id[]' value='<{$message.msg_id}>' />
@@ -136,7 +136,7 @@
 			</div>
 		</div>
 		<hr />
-		<{if $display}>
+		<{if $display|default:false}>
 			<{$pmform.elements.move_messages.body|replace:'formButton':'btn btn-success'|replace:'" >':'" ><span class="fa fa-sign-in fa-2x"></span><br />'}>
 			<{$pmform.elements.delete_messages.body|replace:'formButton':'btn btn-secondary'|replace:'" >':'" ><span class="fa fa-times fa-2x"></span><br />'}>
 			<{$pmform.elements.empty_messages.body|replace:'formButton':'btn btn-secondary'|replace:'" >':'" ><span class="fa fa-trash fa-2x"></span><br />'}>
@@ -149,7 +149,7 @@
 		</div>
 	</form>
 
-	<{if $pagenav}>
+	<{if $pagenav|default:false}>
 	<div class="generic-pagination col text-right mt-2">
 		<{$pagenav|replace:'form':'div'|replace:'id="xo-pagenav"':''}>
 	</div>

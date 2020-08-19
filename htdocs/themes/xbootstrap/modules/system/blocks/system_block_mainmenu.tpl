@@ -1,9 +1,9 @@
 <ul class="nav nav-pills nav-stacked">
-    <li class="<{if !$block.nothome}>active<{/if}>"><a href="<{xoAppUrl }>" title="<{$block.lang_home}>"><span
+    <li class="<{if !$block.nothome|default:false}>active<{/if}>"><a href="<{xoAppUrl }>" title="<{$block.lang_home}>"><span
                     class="glyphicon glyphicon-home"></span> <{$block.lang_home}></a></li>
     <!-- start module menu loop -->
     <{foreach item=module from=$block.modules}>
-        <li class="<{if $module.highlight}>active<{/if}>">
+        <li class="<{if $module.highlight|default:false}>active<{/if}>">
             <a href="<{$xoops_url}>/modules/<{$module.directory}>/" title="<{$module.name}>"><span class="glyphicon glyphicon-ok"></span>
                 <{$module.name}>
             </a>

@@ -12,7 +12,7 @@
     &nbsp;
 <{/if}>
 
-<{if $message}>
+<{if $message|default:false}>
     <span class='bold'>&raquo;</span>
     &nbsp;<{$message.subject}>
     <br>
