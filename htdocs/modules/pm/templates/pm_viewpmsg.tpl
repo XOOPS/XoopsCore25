@@ -1,5 +1,5 @@
 <h4 class="txtcenter"><{$smarty.const._PM_PRIVATEMESSAGE}></h4>
-<{if $op}>
+<{if $op|default:false}>
     <br>
     <div class="floatright txtright" style="width: 18%;">
         <{if $op == "out"}>
@@ -23,14 +23,14 @@
     </div>
     <br>
     <br>
-    <{if $msg}>
+    <{if $msg|default:false}>
         <div class="confirmMsg"><{$msg}></div>
     <{/if}>
-    <{if $errormsg}>
+    <{if $errormsg|default:false}>
         <div class="errorMsg"><{$errormsg}></div>
     <{/if}>
 
-    <{if $pagenav}>
+    <{if $pagenav|default:false}>
         <div class="floatright txtright pad5">
             <{$pagenav}>
         </div>
@@ -57,7 +57,7 @@
                     <td class='even txtcenter' colspan='6'><{$smarty.const._PM_YOUDONTHAVE}></td>
                 </tr>
             <{/if}>
-            <{foreach item=message from=$messages}>
+            <{foreach item=message from=$messages|default:null}>
                 <tr class='<{cycle values="odd, even"}> txtleft'>
                     <td class='aligntop txtcenter width2'>
                         <input type='checkbox' id='msg_id_<{$message.msg_id}>' name='msg_id[]' value='<{$message.msg_id}>'/>
@@ -106,7 +106,7 @@
             </tr>
         </table>
     </form>
-    <{if $pagenav}>
+    <{if $pagenav|default:false}>
         <div class="floatright txtright pad5">
             <{$pagenav}>
         </div>

@@ -3,7 +3,7 @@
     <table class='outer txtcenter width100'>
         <tr>
             <td class='head width30 txtright'><{$smarty.const._PM_TO}></td>
-            <td class='even txtleft'><{if $pmform.elements.to_userid.hidden != 1}><{$pmform.elements.to_userid.body}><{/if}><{$to_username}></td>
+            <td class='even txtleft'><{if $pmform.elements.to_userid.hidden != 1}><{$pmform.elements.to_userid.body}><{/if}><{$to_username|default:''}></td>
         </tr>
         <tr>
             <td class='head width30 txtright'><{$smarty.const._PM_SUBJECTC}></td>
@@ -30,7 +30,7 @@
             <td class='head'>&nbsp;</td>
             <td class='even'>
                 <{foreach item=element from=$pmform.elements}>
-                    <{if $element.hidden == 1}>
+                    <{if $element.hidden|default:false == 1}>
                         <{$element.body}>
                     <{/if}>
                 <{/foreach}>
