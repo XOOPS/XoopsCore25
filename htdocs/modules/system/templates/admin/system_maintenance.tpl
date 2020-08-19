@@ -2,11 +2,11 @@
 <{includeq file="db:system_header.tpl"}>
 <!-- Display mailusers form  -->
 <br>
-<{if $form_maintenance}>
+<{if $form_maintenance|default:false}>
     <div class="spacer"><{$form_maintenance}></div>
     <br>
     <div class="spacer"><{$form_dump}></div>
-<{elseif $maintenance}>
+<{elseif $maintenance|default:false}>
     <{if $verif_cache || $verif_session || $verif_avatar}>
         <table class="outer ui-corner-all" cellspacing="1">
             <tr>
@@ -45,7 +45,7 @@
         </table>
         <br>
     <{/if}>
-    <{if $verif_maintenance}>
+    <{if $verif_maintenance|default:false}>
         <{$result_maintenance}>
     <{/if}>
 <{else}>
