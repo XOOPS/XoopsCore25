@@ -14,12 +14,14 @@
  * @category  XoopsForm
  * @package   XoopsFormRenderer
  * @author    Richard Griffith <richard@geekwright.com>
- * @copyright 2017 XOOPS Project (http://xoops.org)
- * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      http://xoops.org
+ * @copyright 2017-2020 XOOPS Project (https://xoops.org)
+ * @license   GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @link      https://xoops.org
  */
-class XoopsFormRenderer
+final class XoopsFormRenderer
 {
+    const NOT_PERMITTED = 'Not supported for Singleton';
+
     /**
      * @var XoopsFormRenderer The reference to *Singleton* instance of this class
      */
@@ -57,9 +59,12 @@ class XoopsFormRenderer
      * *Singleton* instance.
      *
      * @return void
+     *
+     * @throws \LogicException
      */
-    private function __clone()
+    public function __clone()
     {
+        throw new \LogicException(static::NOT_PERMITTED);
     }
 
     /**
@@ -67,9 +72,12 @@ class XoopsFormRenderer
      * instance.
      *
      * @return void
+     *
+     * @throws \LogicException
      */
-    private function __wakeup()
+    public function __wakeup()
     {
+        throw new \LogicException(static::NOT_PERMITTED);
     }
 
     /**
