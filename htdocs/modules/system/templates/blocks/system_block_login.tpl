@@ -13,7 +13,7 @@
         <input type="hidden" name="xoops_redirect" value="<{$xoops_requesturi}>"/>
         <input type="hidden" name="op" value="login"/>
         <input type="submit" value="<{$block.lang_login}>"/><br>
-        <{$block.sslloginlink}>
+        <{$block.sslloginlink|default:''}>
     </form>
     <br>
     <a href="<{xoAppUrl user.php#lost}>" title="<{$block.lang_lostpass}>"><{$block.lang_lostpass}></a>

@@ -11,7 +11,7 @@
         <{/if}>
 
         <input type="hidden" name="op" value="login"/>
-        <input type="hidden" name="xoops_redirect" value="<{$redirect_page}>"/>
+        <input type="hidden" name="xoops_redirect" value="<{$redirect_page|default:''}>"/>
         <input type="submit" value="<{$lang_login}>"/>
     </form>
     <br>
