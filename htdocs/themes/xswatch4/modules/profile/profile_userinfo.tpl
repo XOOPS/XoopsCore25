@@ -75,7 +75,7 @@
     <{/if}>
 <{/foreach}>
 
-<{if $modules}>
+<{if $modules|default:false}>
     <ul class="profile-values list-unstyled">
         <li class="profile-category-title"><{$recent_activity}></li>
         <{foreach item=module from=$modules}>

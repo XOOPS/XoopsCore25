@@ -24,7 +24,7 @@
         </div>
 
         <input type="hidden" name="op" value="login"/>
-        <input type="hidden" name="xoops_redirect" value="<{$redirect_page}>"/>
+        <input type="hidden" name="xoops_redirect" value="<{$redirect_page|default:''}>"/>
         <button type="submit" class="btn btn-default"><{$lang_login}></button>
     </form>
     <br>

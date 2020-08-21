@@ -83,7 +83,7 @@
     <{/if}>
 <{/foreach}>
 
-<{if $modules}>
+<{if $modules|default:false}>
     <br class="clear"/>
     <div class="profile-list-activity">
         <h2><{$recent_activity}></h2>
