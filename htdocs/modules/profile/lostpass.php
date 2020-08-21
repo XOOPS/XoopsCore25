@@ -37,7 +37,7 @@ if (empty($user)) {
     redirect_header('user.php', 2, $msg, false);
 } else {
     $code   = isset($_GET['code']) ? trim($_GET['code']) : '';
-    $areyou = substr($user->getVar('pass'), 0, 5);
+    $areyou = substr($user->getVar('pass'), 8, 5);
     if ($code != '' && $areyou == $code) {
         $newpass     = xoops_makepass();
         $xoopsMailer = xoops_getMailer();

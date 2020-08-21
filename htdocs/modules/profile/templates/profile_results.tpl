@@ -15,7 +15,7 @@
             </tr>
         <{/foreach}>
     </table>
-    <{$nav}>
+    <{$nav|default:''}>
 <{else}>
     <div class="errorMsg">
         <{$smarty.const._PROFILE_MA_NOUSERSFOUND}>
