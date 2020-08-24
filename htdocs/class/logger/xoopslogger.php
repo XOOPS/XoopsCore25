@@ -9,8 +9,8 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright       (c) 2000-2020 XOOPS Project (https://xoops.org)
+ * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @subpackage          logger
  * @since               2.3.0
@@ -226,7 +226,7 @@ class XoopsLogger
                 $trace  = false;
                 $errstr = substr($errstr, 8);
             }
-            echo sprintf(_XOOPS_FATAL_MESSAGE, $errstr . $errfile . $errline);
+            echo sprintf(_XOOPS_FATAL_MESSAGE, $errstr);
             if ($trace && function_exists('debug_backtrace')) {
                 echo "<div style='color:#f0f0f0;background-color:#f0f0f0;'>" . _XOOPS_FATAL_BACKTRACE . ':<br>';
                 $trace = debug_backtrace();
