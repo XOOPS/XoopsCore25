@@ -16,10 +16,10 @@
     </tr>
     <!-- start of form elements loop -->
     <{foreach item=element from=$uploadavatar.elements}>
-      <{if $element.hidden != true}>
+      <{if $element.hidden|default:false != true}>
       <tr>
-        <td class="head"><{$element.caption}>
-        <{if $element.description}>
+        <td class="head"><{$element.caption|default:''}>
+        <{if $element.description|default:false}>
             <div style="font-weight: normal;"><{$element.description}></div>
         <{/if}>
         </td>
@@ -44,10 +44,10 @@
     </tr>
     <!-- start of form elements loop -->
     <{foreach item=element from=$chooseavatar.elements}>
-      <{if $element.hidden != true}>
+      <{if $element.hidden|default:false != true}>
       <tr>
-        <td class="head"><{$element.caption}>
-        <{if $element.description}>
+        <td class="head"><{$element.caption|default:''}>
+        <{if $element.description|default:false}>
             <div style="font-weight: normal;"><{$element.description}></div>
         <{/if}>
         </td>
