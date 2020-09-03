@@ -55,6 +55,7 @@ class XoopsTpl extends Smarty
             XOOPS_ROOT_PATH . '/class/smarty/plugins');
         if ($xoopsConfig['debug_mode']) {
             $this->debugging_ctrl = 'URL';
+            $this->debug_tpl = XOOPS_ROOT_PATH . '/class/smarty/xoops_tpl/debug.tpl';
             if ($xoopsConfig['debug_mode'] == 3) {
                 $this->debugging = true;
             }
