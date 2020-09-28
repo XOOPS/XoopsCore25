@@ -1316,8 +1316,9 @@ function xoops_module_activate($mid)
     include_once XOOPS_ROOT_PATH . '/class/template.php';
     xoops_template_clear_module_cache($module->getVar('mid'));
     // Display header
+    $msgs   = array();
     $msgs[] = '<div id="xo-module-log">';
-    $msgs .= xoops_module_log_header($module, _AM_SYSTEM_MODULES_ACTIVATE);
+    $msgs[] = xoops_module_log_header($module, _AM_SYSTEM_MODULES_ACTIVATE);
     // Change value
     $module->setVar('isactive', 1);
     if (!$module_handler->insert($module)) {
@@ -1353,8 +1354,9 @@ function xoops_module_deactivate($mid)
     include_once XOOPS_ROOT_PATH . '/class/template.php';
     xoops_template_clear_module_cache($mid);
     // Display header
+    $msgs   = array();
     $msgs[] = '<div id="xo-module-log">';
-    $msgs .= xoops_module_log_header($module, _AM_SYSTEM_MODULES_DEACTIVATE);
+    $msgs[] = xoops_module_log_header($module, _AM_SYSTEM_MODULES_DEACTIVATE);
     // Change value
     $module->setVar('isactive', 0);
     if ($module->getVar('dirname') === 'system') {
