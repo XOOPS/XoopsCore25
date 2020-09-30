@@ -27,7 +27,7 @@
  * @copyright 2005 Daniel Morris
  * @copyright 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @copyright 2011-2016 XOOPS Project (http://xoops.org)
- * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license   GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link      http://xoops.org
  * @since     2.5.7
  */
