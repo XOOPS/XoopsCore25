@@ -30,8 +30,8 @@ XoopsLoad::load('XoopsCache');
 /**
  * Class for handling events
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright       (c) 2000-2020 XOOPS Project (https://xoops.org)
+ * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @subpackage          class
  * @author              trabis <lusopoemas@gmail.com>
@@ -88,10 +88,12 @@ class XoopsPreload
                     $file_list = XoopsLists::getFileListAsArray($dir);
                     foreach ($file_list as $file) {
                         if (preg_match('/(\.php)$/i', $file)) {
-                            $file                          = substr($file, 0, -4);
-                            $this->_preloads[$i]['module'] = $module;
-                            $this->_preloads[$i]['file']   = $file;
-                            ++$i;
+                            $file = substr($file, 0, -4);
+                            if ('index' !== $file) {
+                                $this->_preloads[$i]['module'] = $module;
+                                $this->_preloads[$i]['file'] = $file;
+                                ++$i;
+                            }
                         }
                     }
                 }
