@@ -84,7 +84,7 @@
     <{/foreach}>
     <!-- Display Avatars navigation -->
     <div class="clear">&nbsp;</div>
-    <{if $nav_menu}>
+    <{if $nav_menu|default:false}>
         <div class="xo-pagenav floatright"><{$nav_menu}></div>
         <div class="clear spacer"></div>
     <{/if}>
