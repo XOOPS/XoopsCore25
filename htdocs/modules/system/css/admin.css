@@ -59,7 +59,10 @@ form {
 
 #xo-breadcrumb .home {
     border: none;
-    margin: 8px 0;
+    margin: 0 0;
+    padding: 1px 0;
+    width: 28px;
+    height: 28px
 }
 
 #xo-breadcrumb .xo-help {
