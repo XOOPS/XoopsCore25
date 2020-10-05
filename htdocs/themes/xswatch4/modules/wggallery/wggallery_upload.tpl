@@ -41,7 +41,7 @@
                 maxHeightImageError: "<{$smarty.const._MAXHEIGHTIMAGEERROR}>",
                 maxWidthImageError: "<{$smarty.const._MAXWIDTHIMAGEERROR}>",
                 minHeightImageError: "<{$smarty.const._MINHEIGHTIMAGEERROR}>",
-                minWidthImageError: "<{$smarty.const.__MINWIDTHIMAGEERROR}>",
+                minWidthImageError: "<{$smarty.const._MINWIDTHIMAGEERROR}>",
                 retryFailTooManyItems: "<{$smarty.const._RETRYFAILTOOMANYITEMS}>",
                 onLeave: "<{$smarty.const._ONLEAVE}>",
                 unsupportedBrowserIos8Safari: "<{$smarty.const._UNSUPPORTEDBROWSERIOS8SAFARI}>"
