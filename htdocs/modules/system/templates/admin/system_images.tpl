@@ -97,7 +97,7 @@
                              title="<{$img.image_nicename}>" style="max-width:120px; max-height:120px;"/>
                     </div>
                     <div class="xo-actions txtcenter">
-                        <div class="spacer bold"><{$img.image_nicename}></div>
+                        <div class="spacer bold"><{$img.image_nicename|truncate:18:'…':true}></div>
                         <img id="loading_img<{$img.image_id}>" src="./images/spinner.gif" style="display:none;"
                              alt="<{$smarty.const._AM_SYSTEM_LOADING}>"/><img class="cursorpointer tooltip" id="img<{$img.image_id}>"
                                                                               onclick="system_setStatus( { fct: 'images', op: 'display_img', image_id: <{$img.image_id}> }, 'img<{$img.image_id}>', 'admin.php' )"
