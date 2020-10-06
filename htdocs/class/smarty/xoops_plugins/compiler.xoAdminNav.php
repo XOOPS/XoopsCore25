@@ -29,11 +29,11 @@ function smarty_compiler_xoAdminNav($argStr, &$smarty)
         $icons = 'default';
     }
 
-    if (file_exists($xoops->path('modules/system/images/breadcrumb/' . $icons . '/index.html'))) {
+    if (file_exists($xoops->path('modules/system/images/breadcrumb/' . $icons . '/index.php'))) {
         $url = $xoops->url('modules/system/images/breadcrumb/' . $icons . '/' . $argStr);
     } else {
         if (file_exists($xoops->path('modules/system/images/breadcrumb/default/' . $argStr))) {
-            $url = $xoops->url('modules/system/images/icons/default/' . $argStr);
+            $url = $xoops->url('modules/system/images/breadcrumb/default/' . $argStr);
         }
     }
 
