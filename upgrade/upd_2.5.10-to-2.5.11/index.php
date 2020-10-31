@@ -90,7 +90,7 @@ class Upgrade_2511 extends XoopsUpgrade
 
         $sql = sprintf(
             'SELECT count(*) FROM `%s` '
-            . "WHERE `conf_modid` = 0 AND `conf_catid` = 0 AND `confop_name` = 'smtpsecure'",
+            . "WHERE `conf_modid` = 0 AND `conf_catid` = 0 AND `conf_name` = 'smtpsecure'",
             $db->escape($table)
         );
 
@@ -129,7 +129,7 @@ class Upgrade_2511 extends XoopsUpgrade
         }
         $conf_id = $db->getInsertId();
         
-        $configoptionTable = $db->prefix('configconfigoption');
+        $configoptionTable = $db->prefix('configoption');
         $sql = "INSERT INTO `{$configoptionTable}`";
         $sql .= " (`confop_name`, `confop_value`, `conf_id`)";
         $sql .= " VALUES";
