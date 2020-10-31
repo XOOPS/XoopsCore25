@@ -84,6 +84,11 @@ INSERT INTO configoption VALUES (34, '_MD_AM_WELCOMETYPE_BOTH', '3', 95);
 # addition to email
 INSERT INTO configoption VALUES (35,'qmail','qmail',64);
 
+# smtpsecure
+INSERT INTO configoption VALUES (36,'','',135);
+INSERT INTO configoption VALUES (37,'SSL','ssl',135);
+INSERT INTO configoption VALUES (38,'TLS','tls',135);
+
 #
 # Dumping data for table `image`
 #
