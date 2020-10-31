@@ -205,7 +205,7 @@ define('_MD_AM_SMTPUSERDESC', 'Username to connect to an SMTP host with SMTPAuth
 define('_MD_AM_SMTPPASS', 'SMTP password');
 define('_MD_AM_SMTPPASSDESC', 'Password to connect to an SMTP host with SMTPAuth.');
 define('_MD_AM_SMTPSECURE', 'SMPT connection encryption ');
-define('_MD_AM_SMTPSECUREDESC', '\'\', \'tss\' or \'tls\'');
+define('_MD_AM_SMTPSECUREDESC', "none or \"TSS\" or \"TLS\"");
 define('_MD_AM_SENDMAILPATH', 'Path to sendmail');
 define('_MD_AM_SENDMAILPATHDESC', 'Path to the sendmail program (or substitute) on the webserver.');
 define('_MD_AM_THEMEOK', 'Selectable themes');
