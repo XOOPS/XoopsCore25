@@ -4,6 +4,14 @@ LANGUAGE DIFFERENCES
 Below are language differences from a version to next version.
 
 ================================
+2020/10/31: Version 2.5.11-Beta2
+================================
+ADDED/DELETED DEFINES:
+htdocs/modules/system/language/english/admin/preferences.php
+- added define('_MD_AM_SMTPSECURE', 'SMPT connection encryption ');
+- define('_MD_AM_SMTPSECUREDESC', "none or \"TSS\" or \"TLS\"");
+
+================================
 2020/02/14: Version 2.5.11-Beta1
 ================================
 CHANGED FILES:
