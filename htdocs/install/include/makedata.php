@@ -309,6 +309,8 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
     $dbm->insert('config', " VALUES (133, 1, 0, 'jquery_theme', '_MI_SYSTEM_PREFERENCE_JQUERY_THEME', 'base', '', 'select', 'text', 35)");
 
     $dbm->insert('config', " VALUES (134, 0, 1, 'redirect_message_ajax', '_MD_AM_CUSTOM_REDIRECT', '1', '_MD_AM_CUSTOM_REDIRECT_DESC', 'yesno', 'int', 12)");
+ 
+    $dbm->insert('config', " VALUES (135, 0, 6, 'smtpsecure', '_MD_AM_SMTPSECURE', '', '_MD_AM_SMTPSECUREDESC', 'select', 'text', 9)");
 
     require_once '../class/xoopslists.php';
     $editors = XoopsLists::getDirListAsArray('../class/xoopseditor');
