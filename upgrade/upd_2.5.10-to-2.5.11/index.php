@@ -22,7 +22,7 @@ class Upgrade_2511 extends XoopsUpgrade
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
-        $this->tasks = array('qmail');
+        $this->tasks = array('qmail', 'smtpsecure');
         $this->usedFiles = array();
     }
 
@@ -71,6 +71,88 @@ class Upgrade_2511 extends XoopsUpgrade
         $migrate->insert('configoption',
             array('confop_name' => 'qmail', 'confop_value' => 'qmail', 'conf_id' => 64));
         return $migrate->executeQueue(true);
+    }
+    
+    /**
+     * Add smtpsecure support
+     *
+     * phpMailer has SMTPSecure support
+     * This will allow webmasters to set SMTPSecure if it is provisioned on server.
+     *
+     * @return bool
+     */
+    public function check_smtpsecure()
+    {
+        /* @var XoopsMySQLDatabase $db */
+        $db = XoopsDatabaseFactory::getDatabaseConnection();
+
+        $table = $db->prefix('config');
+
+        $sql = sprintf(
+            'SELECT count(*) FROM `%s` '
+            . "WHERE `conf_modid` = 0 AND `conf_catid` = 0 AND `confop_name` = 'smtpsecure'",
+            $db->escape($table)
+        );
+
+        /** @var mysqli_result $result */
+        $result = $db->query($sql);
+        if ($result) {
+            $row = $db->fetchRow($result);
+            if ($row) {
+                $count = $row[0];
+                return (0 === (int) $count) ? false : true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Add smtpsecure support
+     *
+     * phpMailer has SMTPSecure support
+     * This will allow webmasters to set SMTPSecure if it is provisioned on server.
+     *
+     * @return bool
+     */
+    public function apply_smtpsecure()
+    {
+        /* @var XoopsMySQLDatabase $db */
+        $db = XoopsDatabaseFactory::getDatabaseConnection();
+        
+        $configTable = $db->prefix('config');
+        $sql = "INSERT INTO `{$configTable}`";
+        $sql .= " (`conf_modid`, `conf_catid`, `conf_name`, `conf_title`, `conf_value`, `conf_desc`, `conf_formtype`, `conf_valuetype`, `conf_order`)";
+        $sql .= " VALUES";
+        $sql .= " (0, 6, 'smtpsecure', '_MD_AM_SMTPSECURE', '', '_MD_AM_SMTPSECUREDESC', 'select', 'text', 9)";
+        if (!$db->queryF($sql)) {
+            return false;
+        }
+        $conf_id = $db->getInsertId();
+        
+        $configoptionTable = $db->prefix('configconfigoption');
+        $sql = "INSERT INTO `{$configoptionTable}`";
+        $sql .= " (`confop_name`, `confop_value`, `conf_id`)";
+        $sql .= " VALUES";
+        $sql .= " ('', '', {$conf_id})";
+        if (!$db->queryF($sql)) {
+            return false;
+        }
+        $sql = "INSERT INTO `{$configoptionTable}`";
+        $sql .= " (`confop_name`, `confop_value`, `conf_id`)";
+        $sql .= " VALUES";
+        $sql .= " ('SSL', 'ssl', {$conf_id})";
+        if (!$db->queryF($sql)) {
+            return false;
+        }
+        $sql = "INSERT INTO `{$configoptionTable}`";
+        $sql .= " (`confop_name`, `confop_value`, `conf_id`)";
+        $sql .= " VALUES";
+        $sql .= " ('TLS', 'tls', {$conf_id})";
+        if (!$db->queryF($sql)) {
+            return false;
+        }
+
+        return true;        
     }
 }
 
