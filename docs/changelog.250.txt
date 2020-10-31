@@ -4,6 +4,7 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 2.5.11 RC1           NOT RELEASED
 ===================================
 
+- Add SMPT connection encryption option to email options (luciorota)
 - update xmsocial, xmmodules, xmdoc and xmnews (mage)
 - fix NEWBB_NOTOPIC error (geekwright)
 - New clean favicon.ico (alain01)
