@@ -60,7 +60,7 @@ class XoopsCaptchaText extends XoopsCaptchaMethod
      */
     public function loadText()
     {
-        return '<span style="font-style: normal; font-weight: bold; font-size: 100%; color: #333; border: 1px solid #333; padding: 1px 5px;">' . $this->outputText . '</span>';
+        return '<span class="captchatext">' . $this->outputText . '</span>';
     }
 
     protected function buildQuestion()
