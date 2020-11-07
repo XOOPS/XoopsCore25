@@ -338,13 +338,17 @@ function profile_getRegisterForm(XoopsUser $user, $profile, $step = null)
 
         $elements[0][] = array(
             'element'  => new XoopsFormText(_US_NICKNAME, 'uname', 35, $GLOBALS['xoopsConfigUser']['maxuname'], $user->getVar('uname', 'e')),
-            'required' => true);
+            'required' => true,
+			'description' => sprintf(_US_NICKNAMEDESCRIPTIONMIN, $GLOBALS['xoopsConfigUser']['minuname']) . '<br>' . sprintf(_US_NICKNAMEDESCRIPTIONMAX, $GLOBALS['xoopsConfigUser']['maxuname']));
         $weights[0][]  = 0;
 
         $elements[0][] = array('element' => new XoopsFormText(_US_EMAIL, 'email', 35, 255, $user->getVar('email', 'e')), 'required' => true);
         $weights[0][]  = 0;
 
-        $elements[0][] = array('element' => new XoopsFormPassword(_US_PASSWORD, 'pass', 35, 32, ''), 'required' => true);
+        $elements[0][] = array(
+			'element' => new XoopsFormPassword(_US_PASSWORD, 'pass', 35, 32, ''),
+			'required' => true,
+			'description' => sprintf(_US_PASSWORDDESCRIPTIONMIN, $GLOBALS['xoopsConfigUser']['minpass']));
         $weights[0][]  = 0;
 
         $elements[0][] = array('element' => new XoopsFormPassword(_US_VERIFYPASS, 'vpass', 35, 32, ''), 'required' => true);
@@ -381,7 +385,14 @@ function profile_getRegisterForm(XoopsUser $user, $profile, $step = null)
         //$reg_form->insertBreak("<p>{$title}</p>{$desc}");
         //$reg_form->addElement(new XoopsFormLabel("<h2>".$title."</h2>", $desc), false);
         foreach (array_keys($elements[$k]) as $i) {
-            $reg_form->addElement($elements[$k][$i]['element'], $elements[$k][$i]['required']);
+			if (array_key_exists('description', $elements[$k][$i])){
+				$element = $elements[$k][$i]['element'];
+				$element->setDescription($elements[$k][$i]['description']);
+				$reg_form->addElement($element, $elements[$k][$i]['required']);
+				unset($element);
+			} else {
+				$reg_form->addElement($elements[$k][$i]['element'], $elements[$k][$i]['required']);
+			}
         }
     }
     //end of Dynamic User fields
