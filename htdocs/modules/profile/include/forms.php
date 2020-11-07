@@ -339,7 +339,7 @@ function profile_getRegisterForm(XoopsUser $user, $profile, $step = null)
         $elements[0][] = array(
             'element'  => new XoopsFormText(_US_NICKNAME, 'uname', 35, $GLOBALS['xoopsConfigUser']['maxuname'], $user->getVar('uname', 'e')),
             'required' => true,
-			'description' => sprintf(_US_NICKNAMEDESCRIPTIONMIN, $GLOBALS['xoopsConfigUser']['minuname']) . '<br>' . sprintf(_US_NICKNAMEDESCRIPTIONMAX, $GLOBALS['xoopsConfigUser']['maxuname']));
+			'description' => sprintf(_US_DESCRIPTIONMIN, $GLOBALS['xoopsConfigUser']['minuname']) . '<br>' . sprintf(_US_DESCRIPTIONMAX, $GLOBALS['xoopsConfigUser']['maxuname']));
         $weights[0][]  = 0;
 
         $elements[0][] = array('element' => new XoopsFormText(_US_EMAIL, 'email', 35, 255, $user->getVar('email', 'e')), 'required' => true);
@@ -348,7 +348,7 @@ function profile_getRegisterForm(XoopsUser $user, $profile, $step = null)
         $elements[0][] = array(
 			'element' => new XoopsFormPassword(_US_PASSWORD, 'pass', 35, 32, ''),
 			'required' => true,
-			'description' => sprintf(_US_PASSWORDDESCRIPTIONMIN, $GLOBALS['xoopsConfigUser']['minpass']));
+			'description' => sprintf(_US_DESCRIPTIONMIN, $GLOBALS['xoopsConfigUser']['minpass']));
         $weights[0][]  = 0;
 
         $elements[0][] = array('element' => new XoopsFormPassword(_US_VERIFYPASS, 'vpass', 35, 32, ''), 'required' => true);

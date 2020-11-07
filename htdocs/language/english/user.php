@@ -131,6 +131,5 @@ define('_US_FACEBOOK', 'Facebook');
 //XOOPS 2.5.9
 define('_US_USERALREADYACTIVE', 'User already active');
 //XOOPS 2.5.11
-define('_US_NICKNAMEDESCRIPTIONMIN', 'Minimum length of username: %s');
-define('_US_NICKNAMEDESCRIPTIONMAX', 'Maximum length of username: %s');
-define('_US_PASSWORDDESCRIPTIONMIN', 'Minimum required length of the password: %s');
+define('_US_DESCRIPTIONMIN', 'Minimum required length: %s');
+define('_US_DESCRIPTIONMAX', 'Maximum length: %s');
