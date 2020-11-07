@@ -28,9 +28,14 @@ $email_tray->addElement($email_option);
 
 $reg_form   = new XoopsThemeForm(_US_USERREG, 'userinfo', 'register.php', 'post', true);
 $uname_size = $xoopsConfigUser['maxuname'] < 25 ? $xoopsConfigUser['maxuname'] : 25;
-$reg_form->addElement(new XoopsFormText(_US_NICKNAME, 'uname', $uname_size, $uname_size, $myts->htmlSpecialChars($uname)), true);
+$uname = new XoopsFormText(_US_NICKNAME, 'uname', $uname_size, $uname_size, $myts->htmlSpecialChars($uname));
+$uname->setDescription(sprintf(_US_NICKNAMEDESCRIPTIONMIN, $xoopsConfigUser['minuname']) . '<br>' . sprintf(_US_NICKNAMEDESCRIPTIONMAX, $xoopsConfigUser['maxuname']));
+$reg_form->addElement($uname, true);
 $reg_form->addElement($email_tray);
-$reg_form->addElement(new XoopsFormPassword(_US_PASSWORD, 'pass', 10, 32, $myts->htmlSpecialChars($pass)), true);
+$password = new XoopsFormPassword(_US_PASSWORD, 'pass', 10, 32, $myts->htmlSpecialChars($pass));
+$password->setDescription(sprintf(_US_PASSWORDDESCRIPTIONMIN, $xoopsConfigUser['minpass']));
+$reg_form->addElement($password, true);
+
 $reg_form->addElement(new XoopsFormPassword(_US_VERIFYPASS, 'vpass', 10, 32, $myts->htmlSpecialChars($vpass)), true);
 $reg_form->addElement(new XoopsFormText(_US_WEBSITE, 'url', 25, 255, $myts->htmlSpecialChars($url)));
 $tzselected = ($timezone_offset != '') ? $timezone_offset : $xoopsConfig['default_TZ'];
