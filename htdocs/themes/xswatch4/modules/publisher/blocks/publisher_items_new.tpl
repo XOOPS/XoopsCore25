@@ -1,5 +1,5 @@
 <table class"table" cellpadding="0" cellspacing="0" border="0">
-<{foreach item=newitems from=$block.newitems}>
+<{foreach item=newitems from=$block.newitems|default:null}>
     <tr class="<{cycle values=" even,odd"}>">
         <{if $newitems.image}>
             <td style="padding: 5px 0;" width="120px">

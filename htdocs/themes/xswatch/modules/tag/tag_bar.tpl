@@ -1,4 +1,4 @@
-<{if $tagbar}>
+<{if $tagbar|default:false}>
     <div class="row">
         <div class="col-md-12 xoops-tag-bar">
             <ul class="list-unstyled">

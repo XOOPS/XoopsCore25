@@ -3,7 +3,7 @@
 <!-- if we are on the index page OR inside a category that has subcats OR (inside a category with no subcats
     AND $display_category_summary is set to TRUE), let's display the summary table ! //-->
 
-<{if $indexpage || $category.subcats || ($category && $display_category_summary)}>
+<{if $indexpage|default:false || $category.subcats || ($category && $display_category_summary)}>
 
     <{if $display_category_summary && $category}>
         <div class="well well-sm">
@@ -41,7 +41,7 @@
                     <{$item.summary}>
                 </div>
                 <div class="pull-left" style="margin-top: 15px;">
-                    <{if $op != 'preview'}>
+                    <{if $op|default:false != 'preview'}>
                         <span style="float: right; text-align: right;"><{$item.adminlink}></span>
                     <{else}>
                         <span style="float: right;">&nbsp;</span>

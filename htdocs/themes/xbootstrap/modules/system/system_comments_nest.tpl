@@ -1,4 +1,5 @@
 <div class="xoops-comment-body">
+    <{if ($comments|default:false) }>
     <{section name=i loop=$comments}>
     <div class="row">
         <div class="col-xs-2 col-md-2"><strong><{$lang_poster}></strong></div>
@@ -22,6 +23,7 @@
     </div>
     <{/foreach}>
     <{/section}>
+    <{/if}>
     <{if $commentform}>
     <div class="aligncenter">
         <button class="btn-comment btn btn-primary btn-md" data-toggle="modal" data-target="#comments-form">

@@ -4,7 +4,7 @@
     <div class="">
         <a class="btn btn-secondary" href="viewpmsg.php?op=<{$op}>">
 			<span class="fa fa-arrow-left fa-lg fa-fw"></span>
-			<{if $op == "out"}>
+			<{if $op|default:false == "out"}>
 				<span class="fa fa-paper-plane fa-lg fa-fw"></span> <{$smarty.const._PM_OUTBOX}>
 			<{elseif $op == "save"}>
 				<span class="fa fa-archive fa-lg fa-fw"></span> <{$smarty.const._PM_SAVEBOX}>
@@ -17,7 +17,7 @@
 <hr />
 <div class="row mb-3">
 	<div class="col-12 btn-group" role="group" aria-label="Basic example">
-		<{if $op == "in" || (!($op == out) && !($op == save))}>
+		<{if $op == "in" || (!($op == "out") && !($op == "save"))}>
 			<a class="btn btn-primary" href="viewpmsg.php?op=in" title="<{$smarty.const._PM_INBOX}>"><span class="fa fa-inbox fa-2x fa-fw"></span><br /><{$smarty.const._PM_INBOX}></a>
 			<a class="btn btn-secondary" href="viewpmsg.php?op=out" title="<{$smarty.const._PM_OUTBOX}>"><span class="fa fa-paper-plane fa-2x fa-fw"></span><br /><{$smarty.const._PM_OUTBOX}></a>
 			<a class="btn btn-secondary" href="viewpmsg.php?op=save" title="<{$smarty.const._PM_SAVEBOX}>"><span class="fa fa-archive fa-2x fa-fw"></span><br /><{$smarty.const._PM_SAVEBOX}></a>

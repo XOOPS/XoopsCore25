@@ -20,7 +20,7 @@
                             </p>
                         </div>
 
-                        <{if $item.subitem}>
+                        <{if $item.subitem|default:false}>
                             <strong class="publisher-more"><{$smarty.const._MB_PUBLISHER_MORE}></strong>
                             <ul class="publisher-links">
                                 <{foreach item=subitem from=$item.subitem}>

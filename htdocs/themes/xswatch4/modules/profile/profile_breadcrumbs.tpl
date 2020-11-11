@@ -2,7 +2,7 @@
 	<ol class="breadcrumb">
 	<{foreach item=itm from=$xoBreadcrumbs name=bcloop}>
 		<{if $itm.link|default:false}>
-			<li class="breadcrumb-item"><a href="<{$itm.link}>"><{$itm.title}></a></li>
+			<li class="breadcrumb-item"><a href="<{$itm.link|default:false}>"><{$itm.title}></a></li>
 		<{else}>
 			<li class="breadcrumb-item active" aria-current="page"><{$itm.title}></li>
 		 <{/if}>
