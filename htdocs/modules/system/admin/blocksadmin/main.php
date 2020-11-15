@@ -279,7 +279,7 @@ switch ($op) {
             $name = $block->getVar('name');
             // Save block options
             $options = $_POST['options'];
-            if (isset($options)) {
+            if (isset($options) && is_array($options)) {
                 $options_count = count($options);
                 if ($options_count > 0) {
                     //Convert array values to comma-separated
