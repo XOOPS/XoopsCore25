@@ -278,8 +278,8 @@ switch ($op) {
             $type = $block->getVar('block_type');
             $name = $block->getVar('name');
             // Save block options
-            $options = $_POST['options'];
-            if (isset($options) && is_array($options)) {
+            $options = Xmf\Request::getArray('options', [], 'POST');
+            if (is_array($options) && !empty($options)) {
                 $options_count = count($options);
                 if ($options_count > 0) {
                     //Convert array values to comma-separated
