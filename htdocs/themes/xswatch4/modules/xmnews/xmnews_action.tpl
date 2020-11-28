@@ -14,7 +14,7 @@
             <{$form}>
         </div>
     <{/if}>
-    <{if $categories > 0}>
+    <{if $categories|default:0 > 0}>
 		<nav aria-label="breadcrumb">
 		  <ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="index.php"><{$index_module}></a></li>
