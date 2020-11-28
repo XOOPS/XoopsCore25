@@ -3,8 +3,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=<{$xoops_charset}>">
     <meta http-equiv="content-language" content="<{$xoops_langcode}>">
-    <title><{$xoops_sitename}> <{$lang_imgmanager}></title>
-    <{$image_form.javascript}>
+    <title>Xmdoc manager</title>
     <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl xoops.css}>">
 	<link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl modules/system/css/imagemanager.css}>">
 	<link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl modules/system/css/admin.css}>">
@@ -16,7 +15,7 @@
 <body onload="window.resizeTo(<{$xsize|default:1024}>, <{$ysize|default:768}>);window.moveTo(400,300);">
 	<div class="m-3">
 		<div class="card text-center mb-3">
-			<{if $selected}>
+			<{if $selected|default:false}>
 				<div class="card-header">
 					<{$seldoc_count}>
 					<{if $seldoc_count > 1}>
@@ -73,12 +72,12 @@
 						</a>
 					</div>
 				</div>
-					<{if $error_message != ''}>
+					<{if $error_message|default:'' != ''}>
 						<div class="errorMsg text-left mt-2">
 							<{$error_message}>
 						</div>
 					<{/if}>
-					<{if $document != ""}>
+					<{if $document|default:'' != ""}>
 						<div class="">
 							<form name="formsel" id="formsel" action="docmanager.php" method="post">
 								
@@ -137,7 +136,7 @@
 		</div>
 
 		<div class="clear spacer"></div>
-		<{if $nav_menu}>
+		<{if $nav_menu|default:false}>
 			<div class="floatright"><{$nav_menu}></div>
 			<div class="clear spacer"></div>
 		<{/if}>

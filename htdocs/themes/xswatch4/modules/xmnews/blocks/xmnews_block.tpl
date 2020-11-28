@@ -1,4 +1,5 @@
 <div class="row">
+	<{if $block.news|default:false}>
 	<{foreach item=blocknews from=$block.news}>
 		<{if $block.full == 0}>
 			<div class="col-xs-12 col-sm-6 col-lg-3 mb-3 px-1 px-sm-2 mx-3 mx-sm-0">
@@ -164,4 +165,5 @@
 			</div>				
 		<{/if}>
 	<{/foreach}>
+	<{/if}>
 </div>

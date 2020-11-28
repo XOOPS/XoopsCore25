@@ -1,4 +1,5 @@
 <div class="row">
+	<{if $block.document|default:'' != ''}>
 	<{foreach item=blockdocument from=$block.document}>
 	<div class="col-sm-12 col-md-6 col-lg-4 p-2">
 		<div class="card">
@@ -35,7 +36,7 @@
 								<span class="fa fa-info-circle fa-lg" aria-hidden="true"></span>
 							</a>
 						<{/if}>
-						<a class="btn btn-primary d-block d-sm-none"  href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$document.categoryid}>&amp;doc_id=<{$document.id}>" target="_blank" title="<{$document.name}>">
+						<a class="btn btn-primary d-block d-sm-none"  href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$blockdocument.categoryid}>&amp;doc_id=<{$blockdocument.id}>" target="_blank" title="<{$blockdocument.name}>">
 							<span class="fa fa-download fa-lg" aria-hidden="true"></span> 
 						</a>
 						<a class="btn btn-primary d-none d-sm-block"  href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$blockdocument.categoryid}>&amp;doc_id=<{$blockdocument.id}>" target="_blank" title="<{$blockdocument.name}>">
@@ -127,4 +128,5 @@
 		</div>
 	</div>
 	<{/foreach}>
+	<{/if}>
 </div>
