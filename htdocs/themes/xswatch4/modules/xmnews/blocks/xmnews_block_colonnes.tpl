@@ -8,12 +8,12 @@
 -->
 		<div class="card">
 			<div class="card-header text-center text-truncate d-none d-sm-block">
-				<a class="text-decoration-none" title="<{$category.name}>" href="<{$xoops_url}>/modules/xmnews/article.php?news_id=<{$blocknews.id}>">
+				<a class="text-decoration-none" title="<{$category.name|default:''}>" href="<{$xoops_url}>/modules/xmnews/article.php?news_id=<{$blocknews.id}>">
 					<{$blocknews.title}>
 				</a>
 			</div>
 			<div class="card-header text-center d-block d-sm-none">
-				<a class="text-decoration-none" title="<{$category.name}>" href="<{$xoops_url}>/modules/xmnews/article.php?news_id=<{$blocknews.id}>">
+				<a class="text-decoration-none" title="<{$category.name|default:''}>" href="<{$xoops_url}>/modules/xmnews/article.php?news_id=<{$blocknews.id}>">
 					<{$blocknews.title}>
 				</a>
 			</div>
