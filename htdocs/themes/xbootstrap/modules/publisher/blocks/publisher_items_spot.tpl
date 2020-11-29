@@ -1,4 +1,4 @@
-<{if $block.category && $block.category.image_path|default:false != ''}>
+<{if $block.category && $block.category.image_path|default:'' != ''}>
     <div align="center">
         <a href="<{$block.category.categoryurl}>" title="<{$block.category.name}>">
             <img src="<{$block.category.image_path|default:false}>" width="185" height="80" alt="<{$block.category.name}>">

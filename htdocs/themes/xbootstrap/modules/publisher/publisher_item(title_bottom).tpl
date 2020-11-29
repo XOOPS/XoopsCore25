@@ -143,7 +143,7 @@
 <!-- Other articles in the category -->
 <{if $other_items == "previous_next"}>
     <{if $previous_item_link || $next_item_link}>
-        <{if $previous_item_link|default:false}>
+        <{if $previous_item_link|default:''}>
             <div class="pull-left">
                 <a href="<{$previous_item_url}>">
                     <img style="vertical-align: middle;" src="<{$publisher_images_url}>/links/previous.gif" title="<{$smarty.const._MD_PUBLISHER_PREVIOUS_ITEM}>"
@@ -152,7 +152,7 @@
                 <{$previous_item_link|default:false}>
             </div>
         <{/if}>
-        <{if $next_item_link|default:false}>
+        <{if $next_item_link|default:''}>
             <div class="text-right">
                 <{$next_item_link}>
                 <a href="<{$next_item_url}>">

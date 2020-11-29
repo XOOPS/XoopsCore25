@@ -84,10 +84,10 @@
     <{/if}>
     <div class="pull-right text-right">
 
-        <{if $display_print_link}>
+        <{if $display_print_link|default:0 !=0}>
             <{$item.printlink}>
         <{/if}>
-        <{if $display_pdf_button}>
+        <{if $display_pdf_button|default:0 !=0}>
             <{$item.pdfbutton}>
         <{/if}>
 
@@ -155,17 +155,17 @@
 
 <!-- Other articles in the category -->
 <{if $other_items == "previous_next"}>
-    <{if $previous_item_link|default:false || $next_item_link|default:false}>
-        <{if $previous_item_link|default:false}>
+    <{if $previous_item_link|default:'' || $next_item_link|default:''}>
+        <{if $previous_item_link|default:''}>
             <div class="pull-left">
                 <a href="<{$previous_item_url}>">
                     <img style="vertical-align: middle;" src="<{$publisher_images_url}>/links/previous.gif" title="<{$smarty.const._MD_PUBLISHER_PREVIOUS_ITEM}>"
                          alt="<{$smarty.const._MD_PUBLISHER_PREVIOUS_ITEM}>"/>
                 </a>
-                <{$previous_item_link|default:false}>
+                <{$previous_item_link}>
             </div>
         <{/if}>
-        <{if $next_item_link|default:false}>
+        <{if $next_item_link|default:''}>
             <div class="text-right">
                 <{$next_item_link}>
                 <a href="<{$next_item_url}>">
