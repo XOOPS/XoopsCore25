@@ -24,7 +24,7 @@
                     </a>
                 </td>
                 <td class=""><{$menu.desc}></td>
-                <td class="width15"><{$menu.infos|default:false}></td>
+                <td class="width15"><{$menu.infos|default:''}></td>
                 <td class="xo-actions width2">
                     <{if $menu.used|default:false}>
                         <img id="loading_<{$menu.file}>" src="images/spinner.gif" style="display:none;" alt="<{$smarty.const._AM_SYSTEM_LOADING}>"/>

@@ -35,7 +35,7 @@
 			<{/if}>
 		</div>
 		<div class="col-9 col-md-10 xoops-comment-text">
-			<h4><{$comment.image|default:false}><{$comment.title|default:false}></h4>
+			<h4><{$comment.image|default:''}><{$comment.title|default:''}></h4>
 
 			<p class="message-text"><{$comment.text}></p>
 		</div>
