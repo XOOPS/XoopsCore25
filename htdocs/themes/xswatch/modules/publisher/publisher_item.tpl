@@ -166,7 +166,7 @@
                     <img style="vertical-align: middle;" src="<{$publisher_images_url}>/links/previous.gif" title="<{$smarty.const._MD_PUBLISHER_PREVIOUS_ITEM}>"
                          alt="<{$smarty.const._MD_PUBLISHER_PREVIOUS_ITEM}>"/>
                 </a>
-                <{$previous_item_link|default:false}>
+                <{$previous_item_link|default:''}>
             </div>
         <{/if}>
         <{if $next_item_link|default:''}>

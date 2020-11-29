@@ -20,6 +20,8 @@
 
 </table>
 
+<{if $publisher_url|default:'' != ''}>
 <div style="text-align:right; padding: 5px;">
     <a class="btn btn-primary btn-xs" href="<{$publisher_url}>"><{$block.lang_visitItem}></a>
 </div>
+<{/if}>

@@ -7,7 +7,7 @@
         <{else}>
         <div class="col-sm-4 col-md-4" style="margin-bottom: 10px;">
             <{/if}>
-            <{if $selected_category|default:false == $category.categoryid}>
+            <{if $selected_category|default:0 == $category.categoryid}>
                 <h4 class="info"><span class="glyphicon glyphicon-paperclip"></span>&nbsp;
                     <{$category.name}>
                 </h4>

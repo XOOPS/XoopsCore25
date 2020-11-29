@@ -4,9 +4,9 @@
     <div class="">
         <a class="btn btn-secondary" href="viewpmsg.php?op=<{$op}>">
 			<span class="fa fa-arrow-left fa-lg fa-fw"></span>
-			<{if $op|default:false == "out"}>
+			 <{if $op|default:'' == "out"}>
 				<span class="fa fa-paper-plane fa-lg fa-fw"></span> <{$smarty.const._PM_OUTBOX}>
-                      <{elseif $op|default:false == "save"}>
+                      <{elseif $op|default:'' == "save"}>
 				<span class="fa fa-archive fa-lg fa-fw"></span> <{$smarty.const._PM_SAVEBOX}>
 			<{else}>
 				<span class="fa fa-inbox fa-lg fa-fw"></span> <{$smarty.const._PM_INBOX}>

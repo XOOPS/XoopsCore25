@@ -2,7 +2,7 @@
 <div class="message-current-tab">
     <div class="message-current-tab">
         <a class="btn btn-success btn-block" href="viewpmsg.php?op=<{$op}>">
-        <{if $op == "out"}>
+        <{if $op|default:'' == "out"}>
         <{$smarty.const._PM_OUTBOX}>
         <{elseif $op == "save"}>
         <{$smarty.const._PM_SAVEBOX}>

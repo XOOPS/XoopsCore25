@@ -1,8 +1,8 @@
 <h4 class="txtcenter"><{$smarty.const._PM_PRIVATEMESSAGE}></h4>
-<{if $op|default:false}>
+ <{if $op|default:''}>
     <br>
     <div class="floatright txtright" style="width: 18%;">
-        <{if $op == "out"}>
+        <{if $op|default:'' == "out"}>
             <a href='viewpmsg.php?op=in' title='<{$smarty.const._PM_INBOX}>'><{$smarty.const._PM_INBOX}></a>
             |
             <a href='viewpmsg.php?op=save' title='<{$smarty.const._PM_SAVEBOX}>'><{$smarty.const._PM_SAVEBOX}></a>
@@ -17,7 +17,7 @@
         <{/if}>
     </div>
     <div class="floatleft width80">
-        <{if $op == "out"}><{$smarty.const._PM_OUTBOX}>
+        <{if $op|default:'' == "out"}><{$smarty.const._PM_OUTBOX}>
         <{elseif $op == "save"}><{$smarty.const._PM_SAVEBOX}>
         <{else}><{$smarty.const._PM_INBOX}><{/if}>
     </div>
@@ -43,7 +43,7 @@
                 <th><input name='allbox' id='allbox' onclick='xoopsCheckAll("<{$pmform.name}>", "allbox");' type='checkbox' value='Check All'/></th>
                 <th><img class='bnone' src='<{xoAppUrl images/download.gif}>' alt=''/></th>
                 <th>&nbsp;</th>
-                <{if $op == "out"}>
+                <{if $op|default:'' == "out"}>
                     <th><{$smarty.const._PM_TO}></th>
                 <{else}>
                     <th><{$smarty.const._PM_FROM}></th>

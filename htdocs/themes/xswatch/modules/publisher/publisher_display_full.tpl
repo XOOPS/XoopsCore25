@@ -5,7 +5,7 @@
 
 <{if $indexpage|default:false || $category.subcats || ($category && $display_category_summary)}>
 
-    <{if $display_category_summary && $category}>
+    <{if $display_category_summary && $category|default:''}>
         <div class="well well-sm">
             <{$lang_category_summary}>
         </div>
@@ -41,7 +41,7 @@
                     <{$item.summary}>
                 </div>
                 <div class="pull-left" style="margin-top: 15px;">
-                    <{if $op|default:false != 'preview'}>
+                    <{if $op|default:'' != 'preview'}>
                         <span style="float: right; text-align: right;"><{$item.adminlink}></span>
                     <{else}>
                         <span style="float: right;">&nbsp;</span>

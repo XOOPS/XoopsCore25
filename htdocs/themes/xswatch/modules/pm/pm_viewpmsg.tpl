@@ -1,8 +1,8 @@
 <h4><{$smarty.const._PM_PRIVATEMESSAGE}></h4>
-<{if $op|default:false}>
+ <{if $op|default:''}>
 <div class="current-tab">
     <div class="row">
-        <{if $op == "out"}>
+        <{if $op|default:'' == "out"}>
             <div class="col-xs-6 col-md-6">
                 <a class="btn btn-info btn-block" href="viewpmsg.php?op=in" title="<{$smarty.const._PM_INBOX}>"><{$smarty.const._PM_INBOX}></a>
             </div>
@@ -28,7 +28,7 @@
 </div><!-- .current-tab -->
 
 <div class="message-current-tab">
-    <{if $op == "out"}>
+    <{if $op|default:'' == "out"}>
     <div class="alert alert-success" role="alert"><{$smarty.const._PM_OUTBOX}></div>
     <{elseif $op == "save"}>
     <div class="alert alert-success" role="alert"><{$smarty.const._PM_SAVEBOX}></div>
@@ -61,7 +61,7 @@
     <tr class="txtcenter alignmiddle">
         <th class="txtcenter"><input name='allbox' id='allbox' onclick='xoopsCheckAll("<{$pmform.name}>", "allbox");' type='checkbox' value='Check All' title="<{$smarty.const.THEME_SELECT_ALL}>"/></th>
         <th><span class="glyphicon glyphicon-download-alt"></span></th>
-        <{if $op == "out"}>
+        <{if $op|default:'' == "out"}>
             <th><{$smarty.const._PM_TO}></th>
         <{else}>
             <th><{$smarty.const._PM_FROM}></th>

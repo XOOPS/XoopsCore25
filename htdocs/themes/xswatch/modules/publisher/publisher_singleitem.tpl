@@ -15,7 +15,7 @@
             <{$item.summary}>
         </div>
         <div class="pull-left">
-            <{if $op|default:false != 'preview'}>
+             <{if $op|default:'' != 'preview'}>
                 <span style="float: right; text-align: right;"><{$item.adminlink}></span>
             <{else}>
                 <span style="float: right;">&nbsp;</span>

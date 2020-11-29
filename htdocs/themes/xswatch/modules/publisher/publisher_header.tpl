@@ -5,12 +5,12 @@
             <{if $module_home}>
                 <li><{$module_home}></li>
             <{/if}>
-            <{$categoryPath|default:false}>
+            <{$categoryPath|default:''}>
         </ol>
     <{/if}>
 <{/if}>
 
-<{if $title_and_welcome|default:false && $lang_mainintro != ""}>
+<{if $title_and_welcome|default:0 && $lang_mainintro != ''}>
     <div class="well">
         <{$lang_mainintro}>
     </div>

@@ -19,7 +19,7 @@
             <{$item.summary}>
         </div>
         <div class="pull-left" style="margin-top: 15px;">
-            <{if $op|default:false != 'preview'}>
+            <{if $op|default:'' != 'preview'}>
                 <span style="float: right; text-align: right;"><{$item.adminlink}></span>
             <{else}>
                 <span style="float: right;">&nbsp;</span>

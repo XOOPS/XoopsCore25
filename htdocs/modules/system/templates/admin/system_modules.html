@@ -242,7 +242,7 @@
                     <img class="xo-logonormal" src="<{$xoops_url}>/modules/<{$row.dirname}>/<{$row.image}>" alt="<{$row.name}>" title="<{$row.name}>"/>
 
                     <div class="spacer xo-modsimages">
-                        <{if $row.hasadmin|default:false == 1 && $row.isactive == 1}>
+                        <{if $row.hasadmin|default:0 == 1 && $row.isactive|default:0 == 1}>
                             <a class="tooltip" href="<{$xoops_url}>/modules/<{$row.dirname}>/<{$row.adminindex}>" title="<{$row.name}>">
                                 <img class="xo-mods hide" src="<{xoAdminIcons applications.png}>" alt="<{$row.name}>" title="<{$row.name}>"/></a>
                         <{else}>

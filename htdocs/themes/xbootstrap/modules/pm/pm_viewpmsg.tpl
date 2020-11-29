@@ -1,7 +1,7 @@
 <h4><{$smarty.const._PM_PRIVATEMESSAGE}></h4>
 <div class="current-tab">
     <div class="row">
-        <{if $op == "out"}>
+        <{if $op|default:'' == "out"}>
             <div class="col-xs-6 col-md-6">
                 <a class="btn btn-info btn-block" href="viewpmsg.php?op=in" title="<{$smarty.const._PM_INBOX}>"><{$smarty.const._PM_INBOX}></a>
             </div>
@@ -27,7 +27,7 @@
 </div><!-- .current-tab -->
 
 <div class="message-current-tab">
-    <{if $op == "out"}>
+    <{if $op|default:'' == "out"}>
         <div class="alert alert-success alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             <strong><{$smarty.const._PM_OUTBOX}></strong>
@@ -72,7 +72,7 @@
                 <span class="glyphicon glyphicon-circle-arrow-down btn btn-xs btn-primary"></span>
             </div>
 
-            <{if $op == "out"}>
+            <{if $op|default:'' == "out"}>
                 <div class="col-xs-2 col-md-2"><strong><{$smarty.const._PM_TO}></strong></div>
             <{else}>
                 <div class="col-xs-2 col-md-2"><strong><{$smarty.const._PM_FROM}></strong></div>
