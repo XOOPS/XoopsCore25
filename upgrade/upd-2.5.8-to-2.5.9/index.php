@@ -6,10 +6,10 @@ use Xmf\Database\Tables;
  * Upgrade from 2.5.8 to 2.5.9
  *
  * See the enclosed file license.txt for licensing information.
- * If you did not receive this file, get it at http://www.gnu.org/licenses/gpl-2.0.html
+ * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license          GNU GPL 2 (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license          GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          Upgrade
  * @since            2.5.9
  * @author           XOOPS Team
