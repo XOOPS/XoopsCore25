@@ -4,7 +4,7 @@
 	<div class="col-12 col-md-6 col-lg-4 p-2">
 		<div class="card">
 			<div class="card-header text-center text-truncate d-none d-sm-block">
-				<a class="text-decoration-none" title="<{$document.name}>" href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$viewdocument.categoryid}>&amp;doc_id=<{$viewdocument.id}>" target="_blank">
+				<a class="text-decoration-none" title="<{$viewdocument.name}>" href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$viewdocument.categoryid}>&amp;doc_id=<{$viewdocument.id}>" target="_blank">
 					<{$viewdocument.name}>
 				</a>
 			</div>

@@ -1,11 +1,11 @@
 <div class="container">
-	<{if $error}>
+	<{if $error|default:false}>
 	<div class="alert alert-danger" role="alert">
 		<{$error}>
 	</div>
 	<{/if}>
 
-	<{if $form}>
+	<{if $form|default:false}>
 		<nav aria-label="breadcrumb">
 		  <ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="index.php"><{$index_module}></a></li>
@@ -31,13 +31,13 @@
 		<{include file="db:xmcontact_form.tpl"}>
 	<{/if}>
 
-	<{if $info_header}>
+	<{if $info_header|default:''}>
 	<div class="pt-2 pb-3">
 		<{$info_header}>
 	</div>
 	<{/if}>
 
-	<{if $info_googlemaps && $info_addresse}>
+	<{if $info_googlemaps|default:'' != '' && $info_addresse|default:'' != ''}>
 		<div class="row" style="padding-bottom: 5px; padding-top: 5px;">
 			<div class="col-md-8 col-sm-12">
 				<{$info_googlemaps}>
@@ -47,14 +47,14 @@
 			</div>
 		</div>
 	<{else}>
-		<{if $info_googlemaps}>
+		<{if $info_googlemaps|default:'' != ''}>
 			<div class="row" style="padding-bottom: 5px; padding-top: 5px;">
 				<div class="col-sm-12">
 					<{$info_googlemaps}>
 				</div>
 			</div>
 		<{/if}>
-		<{if $info_addresse}>
+		<{if $info_addresse|default:'' != ''}>
 			<div class="row" style="padding-bottom: 5px; padding-top: 5px;">
 				<div class="col-sm-12">
 					<{$info_addresse}>
@@ -62,7 +62,7 @@
 			</div>
 		<{/if}>
 	<{/if}>
-	<{if $category_count != 0}>
+	<{if $category_count|default:0 != 0}>
 	<div class="row">
 		<{foreach item=category from=$category}>
 		<{if $info_columncat == 1}>
@@ -107,13 +107,13 @@
 		<{/foreach}>
 	</div>
 	<{/if}>
-	<{if $simple_contact}>
+	<{if $simple_contact|default:false}>
 	<div class="pt-3 pb-2">
 		<{include file="db:xmcontact_form.tpl"}>
 	</div>
 	<{/if}>
 
-	<{if $info_footer}>
+	<{if $info_footer|default:''}>
 	<div class="pt-3 pb-2">
 		<{$info_footer}>
 	</div>

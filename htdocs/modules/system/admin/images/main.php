@@ -724,6 +724,7 @@ switch ($op) {
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
         // Define scripts
         $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
+        $xoTheme->addScript('browse.php?Frameworks/jquery/plugins/jquery.lightbox.js');
         $xoTheme->addScript('modules/system/js/admin.js');
         $xoTheme->addScript('media/fine-uploader/fine-uploader.js');
         // Define Breadcrumb and tips

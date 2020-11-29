@@ -1,8 +1,8 @@
 <div class="xmnews">
-    <{if $error_message}>
+    <{if $error_message|default:false}>
         <div class="alert alert-danger" role="alert"><{$error_message}></div>
     <{/if}>
-    <{if $form}>	
+    <{if $form|default:false}>	
 		<nav aria-label="breadcrumb">
 		  <ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="index.php"><{$index_module}></a></li>
@@ -14,7 +14,7 @@
             <{$form}>
         </div>
     <{/if}>
-    <{if $categories > 0}>
+    <{if $categories|default:0 > 0}>
 		<nav aria-label="breadcrumb">
 		  <ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="index.php"><{$index_module}></a></li>
@@ -67,7 +67,7 @@
 			<{/foreach}>
 		</div>
 		<div class="clear spacer"></div>
-		<{if $nav_menu}>
+		<{if $nav_menu|default:false}>
 			<div class="floatright"><{$nav_menu}></div>
 			<div class="clear spacer"></div>
 		<{/if}>

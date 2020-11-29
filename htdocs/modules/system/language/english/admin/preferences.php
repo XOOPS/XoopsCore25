@@ -199,7 +199,7 @@ define('_MD_AM_MAILFROMUIDDESC', 'When the system sends a private message, which
 define('_MD_AM_MAILERMETHOD', 'Email delivery method');
 define('_MD_AM_MAILERMETHODDESC', "Method used to deliver email. Default is \"mail\", use others only if that makes trouble.");
 define('_MD_AM_SMTPHOST', 'SMTP host(s)');
-define('_MD_AM_SMTPHOSTDESC', 'List of SMTP servers to try to connect to.');
+define('_MD_AM_SMTPHOSTDESC', 'Either a single hostname or multiple semicolon-delimited hostnames.<br>You can also specify a different port for each host by using this format: [hostname:port] (e.g. "smtp1.example.com:25;smtp2.example.com").<br>You can also specify encryption type, for example: (e.g. "tls://smtp1.example.com:587;ssl://smtp2.example.com:465").<br>Hosts will be tried in order.');
 define('_MD_AM_SMTPUSER', 'SMTP username');
 define('_MD_AM_SMTPUSERDESC', 'Username to connect to an SMTP host with SMTPAuth.');
 define('_MD_AM_SMTPPASS', 'SMTP password');

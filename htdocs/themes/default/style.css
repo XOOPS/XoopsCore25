@@ -693,3 +693,13 @@ body.mceContentBody {
     background: #fff none;
     color: #000;
 }
+
+/* for captcha text */
+.captchatext {
+	font-style: normal;
+	font-weight: bold;
+	font-size: 100%;
+	color: #333;
+	border: 1px solid #333;
+	padding: 1px 5px;	
+}

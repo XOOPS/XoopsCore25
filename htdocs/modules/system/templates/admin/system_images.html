@@ -97,13 +97,13 @@
                              title="<{$img.image_nicename}>" style="max-width:120px; max-height:120px;"/>
                     </div>
                     <div class="xo-actions txtcenter">
-                        <div class="spacer bold"><{$img.image_nicename}></div>
+                        <div class="spacer bold"><{$img.image_nicename|truncate:18:'…':true}></div>
                         <img id="loading_img<{$img.image_id}>" src="./images/spinner.gif" style="display:none;"
                              alt="<{$smarty.const._AM_SYSTEM_LOADING}>"/><img class="cursorpointer tooltip" id="img<{$img.image_id}>"
                                                                               onclick="system_setStatus( { fct: 'images', op: 'display_img', image_id: <{$img.image_id}> }, 'img<{$img.image_id}>', 'admin.php' )"
                                                                               src="<{if $img.image_display}><{xoAdminIcons success.png}><{else}><{xoAdminIcons cancel.png}><{/if}>"
                                                                               alt="<{$smarty.const._IMGDISPLAY}>" title="<{$smarty.const._IMGDISPLAY}>"/>
-                        <{if !$db_store}>
+                        <{if !$db_store|default:false}>
                         <a class="lightbox tooltip" href="<{$xoops_upload_url}>/<{$img.image_name}>" title="<{$smarty.const._PREVIEW}>">
                             <{else}>
                             <a class="lightbox tooltip" href="<{$xoops_url}>/image.php?id=<{$img.image_id}>" title="<{$smarty.const._PREVIEW}>">
@@ -124,7 +124,7 @@
             </div>
             <div id="dialog<{$img.image_id}>" title="<{$img.image_nicename}>" style='display:none;'>
                 <div class="center">
-                    <{if !$db_store}>
+                    <{if !$db_store|default:false}>
                         <{$xoops_upload_url}>/<{$img.image_name}>
                     <{else}>
                         <{$xoops_url}>/image.php?id=<{$img.image_id}>
@@ -134,7 +134,7 @@
         <{/foreach}>
         <div class="clear"></div>
     </div>
-    <{if $nav_menu}>
+    <{if $nav_menu|default:false}>
         <div class="xo-avatar-pagenav floatright"><{$nav_menu}></div>
         <div class="clear spacer"></div>
     <{/if}>
@@ -173,7 +173,7 @@
 </div>
 <{/if}>
 <!-- Add Category form -->
-<{if $imagecat_form}>
+<{if $imagecat_form|default:false}>
 <div id="xo-category-add" class="hide">
     <br>
     <{$imagecat_form.javascript}>
@@ -236,7 +236,7 @@
                 maxHeightImageError: "<{$smarty.const._MAXHEIGHTIMAGEERROR}>",
                 maxWidthImageError: "<{$smarty.const._MAXWIDTHIMAGEERROR}>",
                 minHeightImageError: "<{$smarty.const._MINHEIGHTIMAGEERROR}>",
-                minWidthImageError: "<{$smarty.const.__MINWIDTHIMAGEERROR}>",
+                minWidthImageError: "<{$smarty.const._MINWIDTHIMAGEERROR}>",
                 retryFailTooManyItems: "<{$smarty.const._RETRYFAILTOOMANYITEMS}>",
                 onLeave: "<{$smarty.const._ONLEAVE}>",
                 unsupportedBrowserIos8Safari: "<{$smarty.const._UNSUPPORTEDBROWSERIOS8SAFARI}>"
