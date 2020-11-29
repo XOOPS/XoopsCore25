@@ -1,4 +1,4 @@
-<{if $block.template}>
+<{if $block.template|default:false}>
 	<{if $block.dotitle == 1}>
 	<h2><{$block.title}></h2>
 	<{/if}>

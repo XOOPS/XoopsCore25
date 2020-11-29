@@ -13,4 +13,4 @@ We use a [fork and pull](https://www.atlassian.com/git/tutorials/comparing-workf
 
 # Licensing
 
-By contributing code you agree to license your contribution under the [GNU General Public License, Version 2 or any later version.](http://www.gnu.org/licenses/gpl-2.0.html)
+By contributing code you agree to license your contribution under the [GNU General Public License, Version 2 or any later version.](https://www.gnu.org/licenses/gpl-2.0.html)

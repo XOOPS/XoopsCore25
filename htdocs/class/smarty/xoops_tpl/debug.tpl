@@ -2,7 +2,7 @@
 {* debug.tpl, last updated version 2.1.0 *}
 {* @author     debianus *}
 {* @copyright  http://www.impresscms.org/ The ImpressCMS Project *}
-{* @license	   http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL) *}
+{* @license	   https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL) *}
 {assign_debug_info}
 {capture assign=debug_output}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">

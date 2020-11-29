@@ -13,10 +13,10 @@
  * Upgrader from 2.3.3 to 2.4.0
  *
  * See the enclosed file license.txt for licensing information.
- * If you did not receive this file, get it at http://www.gnu.org/licenses/gpl-2.0.html
+ * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license          GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license          GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          upgrader
  * @since            2.4.0
  * @author           Taiwen Jiang <phppp@users.sourceforge.net>

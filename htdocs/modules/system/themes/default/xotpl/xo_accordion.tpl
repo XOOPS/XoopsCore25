@@ -79,7 +79,7 @@
     <h5><{$smarty.const._OXYGEN_XOOPS_LICENSE}></h5>
 
     <div class="pane">
-        <p id="xolicenses"><a class="tooltip" rel="external" href="http://www.gnu.org/licenses/gpl-2.0.html" title="<{$smarty.const.XOOPS_LICENSE_TEXT}>"><{$smarty.const.XOOPS_LICENSE_TEXT}></a></p>
+        <p id="xolicenses"><a class="tooltip" rel="external" href="https://www.gnu.org/licenses/gpl-2.0.html" title="<{$smarty.const.XOOPS_LICENSE_TEXT}>"><{$smarty.const.XOOPS_LICENSE_TEXT}></a></p>
     </div>
 
     <h5><{$smarty.const._OXYGEN_ABOUT}></h5>

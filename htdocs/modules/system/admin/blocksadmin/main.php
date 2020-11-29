@@ -12,7 +12,7 @@ use Xmf\Request;
 
 /**
  * @copyright    XOOPS Project http://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
@@ -278,8 +278,8 @@ switch ($op) {
             $type = $block->getVar('block_type');
             $name = $block->getVar('name');
             // Save block options
-            $options = $_POST['options'];
-            if (isset($options)) {
+            $options = Xmf\Request::getArray('options', [], 'POST');
+            if (is_array($options) && !empty($options)) {
                 $options_count = count($options);
                 if ($options_count > 0) {
                     //Convert array values to comma-separated

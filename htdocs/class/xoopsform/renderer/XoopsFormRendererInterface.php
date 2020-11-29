@@ -18,7 +18,7 @@
  * @package   XoopsFormRendererInterface
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2017 XOOPS Project (http://xoops.org)
- * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license   GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link      http://xoops.org
  */
 interface XoopsFormRendererInterface

@@ -2,7 +2,7 @@
 	<{if $docivility == 1}>
     <div class="form-group">
         <label for="Civility"><{$smarty.const._MD_XMCONTACT_INDEX_CIVILITY}> <{if $recivility ==1}><span style="color: red;">*</span><{/if}></label>
-		<select class="form-control" id="civility" name="civility" value="<{$request.name}>">
+		<select class="form-control" id="civility" name="civility" value="<{$request.civility}>">
 			<option></option>
 			<option><{$smarty.const._MD_XMCONTACT_INDEX_CIVILITY_OPT1}></option>
 			<option><{$smarty.const._MD_XMCONTACT_INDEX_CIVILITY_OPT2}></option>
@@ -48,9 +48,9 @@
         <label for="Message"><{$smarty.const._MD_XMCONTACT_INDEX_MESSAGE}> <span style="color: red;">*</span></label>
         <textarea class="form-control" id="message" name="message" rows="5" placeholder="<{$smarty.const._MD_XMCONTACT_INDEX_MESSAGE_PH}>" required><{$request.message}></textarea>
     </div>
-    <{if $captcha}>
+    <{if $captcha|default:false}>
     <label for="Message"><{$captcha_caption}> <span style="color: red;">*</span></label>
-    <{$captcha}>
+    <{$block.captcha}>
     <{/if}>
     <div class="form-group text-center">
         <input type="hidden" name="op" id="op" value="save">
