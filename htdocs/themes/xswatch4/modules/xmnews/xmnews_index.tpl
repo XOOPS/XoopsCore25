@@ -1,5 +1,5 @@
 <div class="xmnews">
-	<{if $cat}>
+	<{if $cat|default:false}>
 		<nav aria-label="breadcrumb">
 		  <ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="index.php"><{$index_module}></a></li>
@@ -13,8 +13,7 @@
 		  </ol>
 		</nav>
 	<{/if}>
-	<div align="center">
-		<form class="form-inline" id="form_news_tri" name="form_news_tri" method="get" action="index.php">
+		<form class="form-inline mb-3" id="form_news_tri" name="form_news_tri" method="get" action="index.php">
 			<div class="form-group">
 				<label><{$smarty.const._MA_XMNEWS_NEWS_SELECTCATEGORY}>&nbsp;</label>
 				<select class="form-control form-control-sm" name="news_filter" id="news_filter" onchange="location='index.php?news_cid='+this.options[this.selectedIndex].value">
@@ -22,11 +21,8 @@
 				</select>
 			</div>
 		</form>
-	</div>
-	<br>
-	<br>
-	<{if $cat}>
-		<div class="row">
+	<{if $cat|default:false}>
+		<div class="row mb-2">
 			<div class="col-3 col-md-4 col-lg-3 text-center">
 				<img class="rounded img-fluid" src="<{$category_logo}>" alt="<{$category_name}>">
 			</div>
@@ -35,99 +31,34 @@
 				<{$category_description}>
 			</div>
 		</div>
-		<br>
 	<{/if}>
 	<{if $news_count != 0}>
-		<div class="row">
+		<div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 justify-content-center">
 			<{foreach item=news from=$news}>
-				<div class="col-md-12 mb-3">
-<!--				<div class="row no-gutters rounded overflow-hidden flex-md-row mb-0 shadow-sm h-md-250 position-relative">-->
-						<div class="card">
-							<div class="card-header">
-								<div class="d-flex justify-content-between">
-									<h3 class="mb-0"><{$news.title}></h3>
-									<{if $news.dohits == 1}>
-										<div class="row align-items-center text-right">
-											<div class="col">
-												<span class="badge badge-secondary fa-lg text-primary ml-2"><span class="fa fa-eye fa-lg" aria-hidden="true"></span><small> <{$news.counter}></small></span>
-											</div>	
-										</div>	
-									<{/if}>
-								</div>
+				<div class="col mb-3">
+					<div class="card h-100 border">
+						<div class="card-header">
+							<div class="d-flex justify-content-center text-center">
+								<h5 class="mb-0"><{$news.title}></h5>
 							</div>
-							<{if ($news.douser == 1) || ($news.dodate == 1) || (($news.domdate == 1) && ($news.mdate)) || ($news.dorating == 1) }> 
-								<div class="row border-bottom border-secondary mx-1 pl-1">
-									<{if $news.douser == 1}>
-										<figure class="figure text-muted my-1 pr-2 text-center border-right border-secondary">
-											  <span class="fa fa-user fa-fw" aria-hidden="true"></span> <{$smarty.const._MA_XMNEWS_NEWS_PUBLISHEDBY_BT}>
-											  <figcaption class="figure-caption text-center"><{$news.author}></figcaption>
-										</figure>
-									<{/if}>
-									<{if ($news.dodate == 1) && (($news.domdate == 1) && ($news.mdate)) && ($news.douser == 1)}>
-										<figure class="figure text-muted m-1 pr-2 text-center border-right border-secondary">
-											  <span class="fa fa-calendar fa-fw" aria-hidden="true"></span> <{$smarty.const._MA_XMNEWS_NEWS_PUBLISHED_BT}>
-											  <figcaption class="figure-caption text-center d-none d-md-block"><{$news.date}></figcaption>
-											  <figcaption class="figure-caption text-center d-block d-md-none"><{$news.date|truncate:10:''}> </figcaption>
-										</figure>
-									<{else}>
-										<{if $news.dodate == 1}>
-											<figure class="figure text-muted m-1 pr-2 text-center border-right border-secondary">
-												  <span class="fa fa-calendar fa-fw" aria-hidden="true"></span> <{$smarty.const._MA_XMNEWS_NEWS_PUBLISHED_BT}>
-												  <figcaption class="figure-caption text-center"><{$news.date}></figcaption>
-											</figure>
-										<{/if}>
-									<{/if}>	
-									<{if $news.domdate == 1}>
-										<{if $news.mdate}>
-											<figure class="figure text-muted m-1 pr-2 text-center border-right border-secondary">
-												<span class="fa fa-repeat fa-fw" aria-hidden="true"></span> <{$smarty.const._MA_XMNEWS_NEWS_MDATE_BT}>
-												<figcaption class="figure-caption text-center"><{$news.mdate}></figcaption>
-											</figure>
-										<{/if}>
-									<{/if}>
-									<{if $news.dorating == 1}>
-										<{if $xmsocial == true}>
-											<figure class="text-muted m-1 pr-2 text-center border-right border-secondary">
-												<span class="fa fa-star" aria-hidden="true"></span> <{$smarty.const._MA_XMNEWS_NEWS_RATING}>
-												<figcaption class="figure-caption text-center"><{$news.rating}></figcaption>	
-											</figure>	
-										<{/if}>
-									<{/if}>
-								</div>
+						</div>
+
+						<{if $news.logo != ''}>
+							<{if $CAT|default:false == true}>
+								<a href="index.php?news_cid=<{$category_id}>">
 							<{/if}>
-							<div class="d-block d-md-none pt-2 px-4">
-								<{if $news.logo != ''}>
-									<{if $CAT == true}><a href="index.php?news_cid=<{$category_id}>"><{/if}><img class="card-img-top rounded img-fluid" src="<{$news.logo}>" alt="<{$news.title}>"><{if $CAT == true}></a><{/if}>
-								<{/if}>
+							<img class="img-fluid" src="<{$news.logo}>" alt="<{$news.title}>">
+							<{if $CAT|default:false == true}>
+								</a>
+							<{/if}>
+						<{/if}>
+
+						<div class="card-body">
+							<{$news.description}>
+							<div class="text-right mt-1 ">
+								<button type="button" class="btn btn-primary btn-sm text-right" onclick=window.location.href="article.php?news_id=<{$news.id}>"><span class="fa fa-book" aria-hidden="true"></span> <{$smarty.const._MA_XMNEWS_NEWS_MORE}></button>
 							</div>
-
-							<div class="card-body">
-								<div class="col d-flex flex-column position-static">
-
-									<p class="card-text mb-auto">
-										<div class="row">
-											<div class="col">
-												<{if $news.logo != ''}>
-												<{if $CAT == true}>
-												<a href="index.php?news_cid=<{$category_id}>">
-												<{/if}>
-												<img class="col-3 rounded float-right d-none d-md-block" src="<{$news.logo}>" alt="<{$title}>">
-												<{if $CAT == true}>
-												</a>
-												<{/if}>
-												<{/if}>
-												
-												<p class="card-text mb-auto"><{$news.description}></p>
-											</div>
-									</p>
-										</div>
-								</div>
-								<div class="w-100"></div>
-								<div class="col-12 pl-4 pt-4 pb-2">
-									<button type="button" class="btn btn-primary" onclick=window.location.href="article.php?news_id=<{$news.id}>"><span class="fa fa-book" aria-hidden="true"></span> <{$smarty.const._MA_XMNEWS_NEWS_MORE}></button>
-								</div>
-								<div class="w-100"></div>
-								<{if $xmdoc_viewdocs == true}>
+							<{if $xmdoc_viewdocs|default:false == true}>
 								<div class="col-12 pl-4 pr-4 pb-4"> 
 									<div class="card">
 										<div class="card-header">
@@ -138,17 +69,54 @@
 										</div>
 									</div>
 								</div>
-								<div class="w-100"></div>
-								<{/if}>
-							</div>
+							<{/if}>
 						</div>
-<!--				</div>-->
+
+						<div class="card-footer text-secondary">
+							<div class="row">
+								<{if $news.douser == 1}>
+									<div class="col-5 text-left">
+										<span class="fa fa-user fa-fw" aria-hidden="true"></span> <{$news.author}>
+									</div>
+								<{/if}>
+								<{if $news.dodate == 1}>
+									<div class="col-7 text-right">
+										<span class="fa fa-calendar fa-fw" aria-hidden="true"></span> <{$news.date}>
+									</div>
+								<{/if}>
+									
+							</div>
+							<div class="row">
+								<{if $news.dohits == 1}>
+									<div class="col-5 text-left">
+										<span class="fa fa-eye fa-fw" aria-hidden="true"></span> <{$news.counter}>
+									</div>
+								<{/if}>
+								<{if $news.domdate == 1}>
+									<{if $news.mdate|default:false}>
+										<div class="col-7 text-right">
+											<span class="fa fa-repeat fa-fw" aria-hidden="true"></span> <{$news.mdate}>
+										</div>
+									<{/if}>
+								<{/if}>										
+							</div>
+							<{if $news.dorating == 1}>
+								<{if $xmsocial == true}>
+									<div class="row">
+										<div class="col">
+											<span class="fa fa-star" aria-hidden="true"></span> <{$smarty.const._MA_XMNEWS_NEWS_RATING}> <{$news.rating}>	
+										</div>	
+									</div>
+								<{/if}>
+							<{/if}>
+						</div>
+					</div>
 				</div>				
 			
 			<{/foreach}>
 		</div>
 		<div class="clear spacer"></div>
-		<{if $nav_menu}>
+		<{if $nav_menu|default:false}>
 			<div class="floatright"><{$nav_menu}></div>
 			<div class="clear spacer"></div>
 		<{/if}>

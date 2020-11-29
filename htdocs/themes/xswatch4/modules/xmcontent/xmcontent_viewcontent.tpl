@@ -1,4 +1,4 @@
-﻿<{if $content_template}>
+<{if $content_template|default:false}>
 	<{if $content_dotitle == 1}>
 	<h2><{$content_title}></h2>
 	<{/if}>
@@ -17,7 +17,7 @@
 <{/if}>
 <{if $perm_edit == true}>
 <div align="center">
-	<a class="btn btn-secondary" href="admin/content.php?op=edit&content_id=<{$content_id}>"><i class="fa fa-edit" aria-hidden="true"></i> <{$smarty.const._AM_XMCONTENT_EDIT}></a>
+	<a class="btn btn-secondary" href="action.php?op=edit&content_id=<{$content_id}>"><i class="fa fa-edit" aria-hidden="true"></i> <{$smarty.const._AM_XMCONTENT_EDIT}></a>
 </div>
 <{/if}>
 <{if $xmdoc_viewdocs == true}>

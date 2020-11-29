@@ -1,15 +1,16 @@
 <div class="row">
+	<{if $block.news|default:false}>
 	<{foreach item=blocknews from=$block.news}>
 		<{if $block.full == 0}>
 			<div class="col-xs-12 col-sm-6 col-lg-3 mb-3 px-1 px-sm-2 mx-3 mx-sm-0">
 				<div class="card">
 					<div class="card-header text-center text-truncate d-none d-sm-block">
-						<a class="text-decoration-none" title="<{$category.name}>" href="<{$xoops_url}>/modules/xmnews/article.php?news_id=<{$blocknews.id}>">
+						<a class="text-decoration-none" title="<{$category.name|default:''}>" href="<{$xoops_url}>/modules/xmnews/article.php?news_id=<{$blocknews.id}>">
 							<{$blocknews.title}>
 						</a>
 					</div>
 					<div class="card-header text-center d-block d-sm-none">
-						<a class="text-decoration-none" title="<{$category.name}>" href="<{$xoops_url}>/modules/xmnews/article.php?news_id=<{$blocknews.id}>">
+						<a class="text-decoration-none" title="<{$category.name|default:''}>" href="<{$xoops_url}>/modules/xmnews/article.php?news_id=<{$blocknews.id}>">
 							<{$blocknews.title}>
 						</a>
 					</div>
@@ -164,4 +165,5 @@
 			</div>				
 		<{/if}>
 	<{/foreach}>
+	<{/if}>
 </div>
