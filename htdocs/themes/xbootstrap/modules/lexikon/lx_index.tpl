@@ -4,7 +4,7 @@
   <li><{$lang_modulename}></li>
 </ol>
 
-<{if $empty|default:false == 1}>
+<{if $empty|default:0 == 1}>
     <div class="alert alert-warning" role="alert"><{$smarty.const._MD_LEXIKON_STILLNOTHINGHERE}></div>
 <{/if}>
 
@@ -200,15 +200,15 @@
     <div class="col-md-4 col-sm-12">
         <h3><{$smarty.const._MD_LEXIKON_RANDOMTERM}></h3>
         <{if $multicats == 1}>
-            <{if $empty|default:false != 1}>
+            <{if $empty|default:0 != 1}>
                 <div class="catname"><a
                             href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/category.php?categoryID=<{$random.categoryID}>"><{$random.categoryname}></a>
                 </div>
             <{/if}>
         <{/if}>
         <div class="pad4">
-            <h5 class="term"><{$microlinks|default:null}><a
-                        href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/entry.php?entryID=<{$random.id|default:null}>"><{$random.term|default:null}></a>
+            <h5 class="term"><{$microlinks|default:''}><a
+                        href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/entry.php?entryID=<{$random.id|default:''}>"><{$random.term|default:''}></a>
             </h5>
 
             <div class="nopadding"><{$random.definition|default:null}></div>
