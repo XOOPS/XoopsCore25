@@ -6,7 +6,7 @@
 			<span class="fa fa-arrow-left fa-lg fa-fw"></span>
 			<{if $op|default:false == "out"}>
 				<span class="fa fa-paper-plane fa-lg fa-fw"></span> <{$smarty.const._PM_OUTBOX}>
-			<{elseif $op == "save"}>
+                      <{elseif $op|default:false == "save"}>
 				<span class="fa fa-archive fa-lg fa-fw"></span> <{$smarty.const._PM_SAVEBOX}>
 			<{else}>
 				<span class="fa fa-inbox fa-lg fa-fw"></span> <{$smarty.const._PM_INBOX}>
