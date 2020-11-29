@@ -2,7 +2,7 @@
 <div class="row clearfix">
     <{foreach item=category from=$categories}>
     <{assign var=temp value=$temp+1}>
-    <{if !$indexpage}>
+    <{if !$indexpage|default:false}>
     <div class="col-sm-12 col-md-12" style="margin-bottom: 10px;">
         <{else}>
         <div class="col-sm-4 col-md-4" style="margin-bottom: 10px;">

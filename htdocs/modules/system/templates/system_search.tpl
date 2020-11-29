@@ -6,7 +6,7 @@
 		<{$error_length}> <strong><{$error_keywords}></strong>
 		<br>
 	<{/if}>
-	<{if $nomatch}>	
+	<{if $nomatch|default:false}>
 		<br>
 		<{$nomatch}>
 		<br>
@@ -26,14 +26,14 @@
 				<br>
 			<{/if}>
 		<{/foreach}>
-		<{if $search.module_show_all}>
+		<{if $search.module_show_all|default:false}>
 			<p>
 				<a href="<{$search.module_show_all}>"><{$smarty.const._SR_SHOWALLR}></a>
 			</p>
 		<{/if}>
 	<{/foreach}>
 <{/if}>
-<{if $showallbyuser}>	
+<{if $showallbyuser|default:false}>
 	<h3><{$smarty.const._SR_SEARCHRESULTS}></h3>
 	<{if $showall}>
 		<{$smarty.const._SR_KEYWORDS}>: <strong><{$keywords}></strong>

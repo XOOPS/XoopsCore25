@@ -4,7 +4,7 @@
   <li><{$lang_modulename}></li>
 </ol>
 
-<{if $empty == 1}>
+<{if $empty|default:0 == 1}>
     <div class="alert alert-warning" role="alert"><{$smarty.const._MD_LEXIKON_STILLNOTHINGHERE}></div>
 <{/if}>
 
@@ -174,7 +174,7 @@
     <div class="col-md-4 col-sm-12">
         <h3><{$smarty.const._MD_LEXIKON_RECENTENT}></h3>
         <ul>
-            <{foreach item=newentries from=$block.newstuff}>
+            <{foreach item=newentries from=$block.newstuff|default:null}>
                 <li>
                     <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/entry.php?entryID=<{$newentries.id}>"><{$newentries.linktext}></a> <{if $showdate == 1}>
                         <span
@@ -187,7 +187,7 @@
     <div class="col-md-4 col-sm-12">
         <h3><{$smarty.const._MD_LEXIKON_POPULARENT}></h3>
         <ul>
-            <{foreach item=popentries from=$block2.popstuff}>
+            <{foreach item=popentries from=$block2.popstuff|default:null}>
                 <li>
                     <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/entry.php?entryID=<{$popentries.id}>"><{$popentries.linktext}></a> <{if $showcount == 1}>
                         <span
@@ -200,18 +200,18 @@
     <div class="col-md-4 col-sm-12">
         <h3><{$smarty.const._MD_LEXIKON_RANDOMTERM}></h3>
         <{if $multicats == 1}>
-            <{if $empty != 1}>
+            <{if $empty|default:0 != 1}>
                 <div class="catname"><a
                             href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/category.php?categoryID=<{$random.categoryID}>"><{$random.categoryname}></a>
                 </div>
             <{/if}>
         <{/if}>
         <div class="pad4">
-            <h5 class="term"><{$microlinks}><a
-                        href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/entry.php?entryID=<{$random.id}>"><{$random.term}></a>
+            <h5 class="term"><{$microlinks|default:''}><a
+                        href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/entry.php?entryID=<{$random.id|default:''}>"><{$random.term|default:''}></a>
             </h5>
 
-            <div class="nopadding"><{$random.definition}></div>
+            <div class="nopadding"><{$random.definition|default:null}></div>
         </div>
     </div>
 </div>
@@ -228,7 +228,7 @@
             <dt><{$smarty.const._MD_LEXIKON_SUB}></dt>
             <{if $wehavesubs == '0'}><dd><{$smarty.const._MD_LEXIKON_NOSUB}></dd><{/if}>
             <dd>
-            <{foreach item=subentries from=$blockS.substuff}>
+            <{foreach item=subentries from=$blockS.substuff|default:null}>
                 <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/admin/entry.php?op=mod&entryID=<{$subentries.id}>"><{$subentries.linktext}></a>
                     &nbsp;
             <{/foreach}>
@@ -239,7 +239,7 @@
             <dt><{$smarty.const._MD_LEXIKON_REQ}></dt>
             <{if $wehavereqs == '0'}><dd><{$smarty.const._MD_LEXIKON_NOREQ}></dd><{/if}>
             <dd>
-            <{foreach item=reqentries from=$blockR.reqstuff}>
+            <{foreach item=reqentries from=$blockR.reqstuff|default:null}>
                 <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/admin/entry.php?op=mod&entryID=<{$reqentries.id}>"><{$reqentries.linktext}></a>
                 &nbsp;
             <{/foreach}>
@@ -261,7 +261,7 @@
             <dd>
             <h5><{$smarty.const._MD_LEXIKON_REQUESTSUGGEST}></h5>
             <{/if}>
-            <{foreach item=reqentries from=$blockR.reqstuff}>
+            <{foreach item=reqentries from=$blockR.reqstuff|default:null}>
                 <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/submit.php?suggest=<{$reqentries.id}>"><{$reqentries.linktext}></a>
                 &nbsp;
             <{/foreach}>

@@ -72,7 +72,7 @@
                     </li>
                 <{/if}>
 
-                <{if $tagbar}>
+                <{if $tagbar|default:false}>
                     <li><{include file="db:tag_bar.tpl"}></li>
                 <{/if}>
 

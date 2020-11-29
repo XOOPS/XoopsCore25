@@ -5,7 +5,7 @@
         <!-- start group loop -->
         <{foreach item=group from=$block.groups}>
             <tr>
-                <th colspan="2"><{$group.name}></th>
+                <th colspan="2"><{$group.name|default:''}></th>
             </tr>
             <!-- start group member loop -->
             <{foreach item=user from=$group.users}>

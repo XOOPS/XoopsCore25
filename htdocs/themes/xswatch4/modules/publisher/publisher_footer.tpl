@@ -14,7 +14,7 @@
     </tr>
     </table><{/if}>
 
-<{if $rssfeed_link != ""}>
+<{if $rssfeed_link|default:'' != ""}>
     <div id="publisher_rpublisher_feed"><{$rssfeed_link}></div><{/if}>
 
 <{include file='db:system_notification_select.tpl'}>

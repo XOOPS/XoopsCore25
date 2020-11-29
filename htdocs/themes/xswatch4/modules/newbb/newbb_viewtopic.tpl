@@ -14,7 +14,7 @@
         <li class="breadcrumb-item active"><{$topic_title|strip_tags}> <{if $topicstatus}><{$topicstatus}><{/if}></li>
     </ol>
 
-    <{if $tagbar}>
+    <{if $tagbar|default:false}>
         <div class="newbb-tagbar">
             <{include file="db:tag_bar.tpl"}>
         </div>

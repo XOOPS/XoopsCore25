@@ -22,9 +22,9 @@
     <h3><{$requestform.title}></h3>
     <form id="sub-lex" name="<{$requestform.name}>" action="<{$requestform.action}>" method="<{$requestform.method}>" <{$requestform.extra}>>
       <{foreach item=element from=$requestform.elements}>
-        <{if $element.hidden != true}>
+        <{if $element.hidden|default:false  != true}>
         <div class="form-group">
-          <label><{$element.caption}></label>
+          <label><{$element.caption|default:''}></label>
           <{$element.body}>
         </div>
         <{else}>
