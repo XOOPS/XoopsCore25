@@ -396,11 +396,13 @@ function profile_getRegisterForm(XoopsUser $user, $profile, $step = null)
         $reg_form->addElement($disc_tray);
     }
     global $xoopsModuleConfig;
-    $useCaptchaAfterStep2 = $xoopsModuleConfig['profileCaptchaAfterStep1'] + 1;
-
-    if ($step_no <= $useCaptchaAfterStep2) {
+    $useCaptchaAfterStep2 = $xoopsModuleConfig['profileCaptchaAfterStep1'];
+	
+	if ($step_no == 1) {
         $reg_form->addElement(new XoopsFormCaptcha(), true);
-    }
+    } elseif($useCaptchaAfterStep2 == 1){
+		$reg_form->addElement(new XoopsFormCaptcha(), true);
+	}
 
     $reg_form->addElement(new XoopsFormHidden($next_opname, 'register'));
     $reg_form->addElement(new XoopsFormHidden('uid', $user->getVar('uid')));
