@@ -29,6 +29,10 @@ Started as copy of xswatch/language/english/main.php then:
 - added define('THEME_CONTROL_NEXT', 'Next');
 - added define('THEME_CONTROL_PREVIOUS', 'Previous');
 
+htdocs\language\english\user.php
+- added define('_US_DESCRIPTIONMIN', 'Minimum required length: %s');
+- added define('_US_DESCRIPTIONMAX', 'Maximum length: %s');
+
 ================================
 2019/04/29: Version 2.5.10 Final
 ================================
