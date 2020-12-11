@@ -262,13 +262,14 @@ class XoopsObject
      * assign values to multiple variables in a batch
      *
      * @access   private
-     * @param $var_arr
-     * @internal param array $var_array associative array of values to assign
+     * @param array $var_arr associative array of values to assign
      */
     public function assignVars($var_arr)
     {
-        foreach ($var_arr as $key => $value) {
-            $this->assignVar($key, $value);
+        if (is_array($var_arr)) {
+            foreach ($var_arr as $key => $value) {
+                $this->assignVar($key, $value);
+            }
         }
     }
 
@@ -299,8 +300,10 @@ class XoopsObject
      */
     public function setVars($var_arr, $not_gpc = false)
     {
-        foreach ($var_arr as $key => $value) {
-            $this->setVar($key, $value, $not_gpc);
+        if (is_array($var_arr)) {
+            foreach ($var_arr as $key => $value) {
+                $this->setVar($key, $value, $not_gpc);
+            }
         }
     }
 
@@ -362,9 +365,11 @@ class XoopsObject
         trigger_error("XoopsObject::setFormVars() is deprecated, called from {$trace[0]['file']} line {$trace[0]['line']}");
 
         $len = strlen($pref);
-        foreach ($var_arr as $key => $value) {
-            if ($pref == substr($key, 0, $len)) {
-                $this->setVar(substr($key, $len), $value, $not_gpc);
+        if (is_array($var_arr)) {
+            foreach ($var_arr as $key => $value) {
+                if ($pref == substr($key, 0, $len)) {
+                    $this->setVar(substr($key, $len), $value, $not_gpc);
+                }
             }
         }
     }
