@@ -41,3 +41,6 @@ define('_AM_SYSTEM_MAILUSERS_SENDTOUSERS2', 'Send to:');
 define('_AM_SYSTEM_MAILUSERS_SENT', 'Sent Users');
 define('_AM_SYSTEM_MAILUSERS_SENTNUM', '%s - %s (total: %s users)');
 define('_AM_SYSTEM_MAILUSERS_TIMEFORMAT', '(Format yyyy-mm-dd, optional)');
+
+//XOOPS 2.5.11
+define('_AM_SYSTEM_MAILUSERS_MAILTAGS5', '{X_NAME} will print name or uname if empty');
