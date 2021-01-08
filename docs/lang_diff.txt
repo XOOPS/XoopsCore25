@@ -35,6 +35,9 @@ htdocs/language/english/user.php
 - added define('_US_DESCRIPTIONMIN', 'Minimum required length: %s');
 - added define('_US_DESCRIPTIONMAX', 'Maximum length: %s');
 
+htdocs/modules/system/language/english/admin/mailusers.php
+- added define('_AM_SYSTEM_MAILUSERS_MAILTAGS5', '{X_NAME} will print name');
+
 ================================
 2019/04/29: Version 2.5.10 Final
 ================================
