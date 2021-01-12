@@ -341,6 +341,12 @@ class XoopsMailer
             $text    = str_replace('{X_UID}', $user->getVar('uid'), $this->body);
             $text    = str_replace('{X_UEMAIL}', $user->getVar('email'), $text);
             $text    = str_replace('{X_UNAME}', $user->getVar('uname'), $text);
+			if ($user->getVar('name') == ''){
+				$x_name = $user->getVar('uname');
+			} else {
+				$x_name = $user->getVar('name');
+			}
+            $text    = str_replace('{X_NAME}', $x_name, $text);
             $text    = str_replace('{X_UACTLINK}', XOOPS_URL . '/register.php?op=actv&id=' . $user->getVar('uid') . '&actkey=' . $user->getVar('actkey'), $text);
             // send mail
             if ($this->isMail) {

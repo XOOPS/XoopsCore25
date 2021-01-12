@@ -13,6 +13,8 @@ htdocs/language/english/global.php
 - changed define('_COLOR', 'Color'); // font color
 htdocs/install/language/english/welcome.php
 - changed recommended PHP & MySQL versions, links changed to "https:"
+htdocs/modules/system/language/english/admin/preferences.php
+- changed define('_MD_AM_SMTPHOSTDESC', 'Either a single hostname or multiple semicolon-delimited hostnames.<br>You can also specify a different port for each host by using this format: [hostname:port] (e.g. "smtp1.example.com:25;smtp2.example.com").<br>You can also specify encryption type, for example: (e.g. "tls://smtp1.example.com:587;ssl://smtp2.example.com:465").<br>Hosts will be tried in order.');
 htdocs/modules/system/language/english/help/blocksadmin.html
 
 NEW FILES:
@@ -29,9 +31,12 @@ Started as copy of xswatch/language/english/main.php then:
 - added define('THEME_CONTROL_NEXT', 'Next');
 - added define('THEME_CONTROL_PREVIOUS', 'Previous');
 
-htdocs\language\english\user.php
+htdocs/language/english/user.php
 - added define('_US_DESCRIPTIONMIN', 'Minimum required length: %s');
 - added define('_US_DESCRIPTIONMAX', 'Maximum length: %s');
+
+htdocs/modules/system/language/english/admin/mailusers.php
+- added define('_AM_SYSTEM_MAILUSERS_MAILTAGS5', '{X_NAME} will print name or uname if empty');
 
 ================================
 2019/04/29: Version 2.5.10 Final
