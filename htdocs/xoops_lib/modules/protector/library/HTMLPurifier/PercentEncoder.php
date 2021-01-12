@@ -24,13 +24,13 @@ class HTMLPurifier_PercentEncoder
     public function __construct($preserve = false)
     {
         // unreserved letters, ought to const-ify
-        for ($i = 48; $i <= 57; $i++) { // digits
+        for ($i = 48; $i <= 57; ++$i) { // digits
             $this->preserve[$i] = true;
         }
-        for ($i = 65; $i <= 90; $i++) { // upper-case
+        for ($i = 65; $i <= 90; ++$i) { // upper-case
             $this->preserve[$i] = true;
         }
-        for ($i = 97; $i <= 122; $i++) { // lower-case
+        for ($i = 97; $i <= 122; ++$i) { // lower-case
             $this->preserve[$i] = true;
         }
         $this->preserve[45] = true; // Dash         -
@@ -40,7 +40,7 @@ class HTMLPurifier_PercentEncoder
 
         // extra letters not to escape
         if ($preserve !== false) {
-            for ($i = 0, $c = strlen($preserve); $i < $c; $i++) {
+            for ($i = 0, $c = strlen($preserve); $i < $c; ++$i) {
                 $this->preserve[ord($preserve[$i])] = true;
             }
         }
@@ -59,7 +59,7 @@ class HTMLPurifier_PercentEncoder
     public function encode($string)
     {
         $ret = '';
-        for ($i = 0, $c = strlen($string); $i < $c; $i++) {
+        for ($i = 0, $c = strlen($string); $i < $c; ++$i) {
             if ($string[$i] !== '%' && !isset($this->preserve[$int = ord($string[$i])])) {
                 $ret .= '%' . sprintf('%02X', $int);
             } else {

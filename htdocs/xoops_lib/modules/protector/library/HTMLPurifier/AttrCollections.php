@@ -68,7 +68,7 @@ class HTMLPurifier_AttrCollections
         $merge = $attr[0];
         $seen  = array(); // recursion guard
         // loop through all the inclusions
-        for ($i = 0; isset($merge[$i]); $i++) {
+        for ($i = 0; isset($merge[$i]); ++$i) {
             if (isset($seen[$merge[$i]])) {
                 continue;
             }

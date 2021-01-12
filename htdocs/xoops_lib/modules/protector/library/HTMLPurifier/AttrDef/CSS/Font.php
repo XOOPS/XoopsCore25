@@ -65,7 +65,7 @@ class HTMLPurifier_AttrDef_CSS_Font extends HTMLPurifier_AttrDef
         $stage_1 = array('font-style', 'font-variant', 'font-weight');
         $final = ''; // output
 
-        for ($i = 0, $size = count($bits); $i < $size; $i++) {
+        for ($i = 0, $size = count($bits); $i < $size; ++$i) {
             if ($bits[$i] === '') {
                 continue;
             }

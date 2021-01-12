@@ -223,7 +223,7 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
                     $nsel = null;
                     $delim = null; // guaranteed to be non-null after
                     // two loop iterations
-                    for ($i = 0, $c = count($basic_selectors); $i < $c; $i++) {
+                    for ($i = 0, $c = count($basic_selectors); $i < $c; ++$i) {
                         $x = $basic_selectors[$i];
                         if ($i % 2) {
                             // delimiter

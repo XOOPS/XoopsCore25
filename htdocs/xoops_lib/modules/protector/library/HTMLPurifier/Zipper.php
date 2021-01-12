@@ -70,7 +70,7 @@ class HTMLPurifier_Zipper
      * @return Original contents of new hole, i away
      */
     public function advance($t, $n) {
-        for ($i = 0; $i < $n; $i++) {
+        for ($i = 0; $i < $n; ++$i) {
             $t = $this->next($t);
         }
         return $t;

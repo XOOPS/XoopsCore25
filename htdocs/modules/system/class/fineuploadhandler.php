@@ -107,7 +107,7 @@ abstract class SystemFineUploadHandler
         }
         $target = fopen($targetPath, 'wb');
 
-        for ($i=0; $i<$totalParts; $i++) {
+        for ($i=0; $i<$totalParts; ++$i) {
             $chunk = fopen($targetFolder.DIRECTORY_SEPARATOR.$i, "rb");
             stream_copy_to_stream($chunk, $target);
             fclose($chunk);
@@ -116,7 +116,7 @@ abstract class SystemFineUploadHandler
         // Success
         fclose($target);
 
-        for ($i=0; $i<$totalParts; $i++) {
+        for ($i=0; $i<$totalParts; ++$i) {
             unlink($targetFolder.DIRECTORY_SEPARATOR.$i);
         }
 

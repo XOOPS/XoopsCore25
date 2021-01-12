@@ -859,7 +859,7 @@ function xoops_module_update($dirname)
         if (is_array($deltpl)) {
             // delete template file entry in db
             $dcount = count($deltpl);
-            for ($i = 0; $i < $dcount; $i++) {
+            for ($i = 0; $i < $dcount; ++$i) {
                 if (!$tplfile_handler->delete($deltpl[$i])) {
                     $delng[] = $deltpl[$i]->getVar('tpl_file');
                 }
@@ -1098,7 +1098,7 @@ function xoops_module_update($dirname)
         $config_delng   = array();
         if ($confcount > 0) {
             $msgs[] = _AM_SYSTEM_MODULES_MODULE_DATA_DELETE;
-            for ($i = 0; $i < $confcount; $i++) {
+            for ($i = 0; $i < $confcount; ++$i) {
                 if (!$config_handler->deleteConfig($configs[$i])) {
                     $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . _AM_SYSTEM_MODULES_CONFIG_DATA_DELETE_ERROR . sprintf(_AM_SYSTEM_MODULES_GONFIG_ID, '<strong>' . $configs[$i]->getvar('conf_id') . '</strong>') . '</span>';
                     // save the name of config failed to delete for later use

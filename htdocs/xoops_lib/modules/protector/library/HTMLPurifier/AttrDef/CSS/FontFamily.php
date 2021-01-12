@@ -21,7 +21,7 @@ class HTMLPurifier_AttrDef_CSS_FontFamily extends HTMLPurifier_AttrDef
             $this->mask .= $c;
         } // cast-y, but should be fine
         // special bytes used by UTF-8
-        for ($i = 0x80; $i <= 0xFF; $i++) {
+        for ($i = 0x80; $i <= 0xFF; ++$i) {
             // We don't bother excluding invalid bytes in this range,
             // because the our restriction of well-formed UTF-8 will
             // prevent these from ever occurring.

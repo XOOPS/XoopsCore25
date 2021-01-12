@@ -78,7 +78,7 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
             return array();
         }
         $activated_levels = array();
-        for ($i = 1, $c = count($this->levels); $i < $c; $i++) {
+        for ($i = 1, $c = count($this->levels); $i < $c; ++$i) {
             $activated_levels[] = $this->levels[$i];
             if ($this->levels[$i] == $level) {
                 break;

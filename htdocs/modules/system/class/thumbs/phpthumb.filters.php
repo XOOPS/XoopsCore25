@@ -81,7 +81,7 @@ class phpthumb_filters {
         $hexcolor2 = ($hexcolor2 ? $hexcolor2 : '000000');
 
         imagealphablending($gdimg, true);
-        for ($i = 0; $i < $width; $i++) {
+        for ($i = 0; $i < $width; ++$i) {
             $alpha = round(($i / $width) * 127);
             $color1 = phpthumb_functions::ImageHexColorAllocate($gdimg, $hexcolor1, false, $alpha);
             $color2 = phpthumb_functions::ImageHexColorAllocate($gdimg, $hexcolor2, false, $alpha);
@@ -113,7 +113,7 @@ class phpthumb_filters {
 
 			// Move copies of the image around one pixel at the time and merge them with weight
 			// according to the matrix. The same matrix is simply repeated for higher radii.
-			for ($i = 0; $i < $radius; $i++)	{
+			for ($i = 0; $i < $radius; ++$i)	{
 				imagecopy     ($imgBlur, $gdimg, 0, 0, 1, 1, $w - 1, $h - 1);            // up left
 				imagecopymerge($imgBlur, $gdimg, 1, 1, 0, 0, $w,     $h,     50.00000);  // down right
 				imagecopymerge($imgBlur, $gdimg, 0, 1, 1, 0, $w - 1, $h,     33.33333);  // down left
@@ -335,7 +335,7 @@ class phpthumb_filters {
 		//$scaling = min(imagesx($gdimg) / (imagesx($gdimg) + abs($width_shadow)), imagesy($gdimg) / (imagesy($gdimg) + abs($height_shadow)));
 
 		$Offset = array();
-		for ($i = 0; $i < $width; $i++) {
+		for ($i = 0; $i < $width; ++$i) {
 			$WidthAlpha[$i] = (abs(($width / 2) - $i) / $width);
 			$Offset['x'] = cos(deg2rad($angle)) * ($distance + $i);
 			$Offset['y'] = sin(deg2rad($angle)) * ($distance + $i);
@@ -359,8 +359,8 @@ class phpthumb_filters {
 			}
 			for ($x = 0; $x < $tempImageWidth; $x++) {
 				for ($y = 0; $y < $tempImageHeight; $y++) {
-					//for ($i = 0; $i < $width; $i++) {
-					for ($i = 0; $i < 1; $i++) {
+					//for ($i = 0; $i < $width; ++$i) {
+					for ($i = 0; $i < 1; ++$i) {
 						if (!isset($PixelMap[$x][$y]['alpha']) || ($PixelMap[$x][$y]['alpha'] > 0)) {
 							if (isset($PixelMap[$x + $Offset['x']][$y + $Offset['y']]['alpha']) && ($PixelMap[$x + $Offset['x']][$y + $Offset['y']]['alpha'] < 127)) {
 								$thisColor = phpthumb_functions::ImageHexColorAllocate($gdimg, $hexcolor, false, $PixelMap[$x + $Offset['x']][$y + $Offset['y']]['alpha']);
@@ -482,18 +482,18 @@ class phpthumb_filters {
 		$color_frame = phpthumb_functions::ImageHexColorAllocate($gdimg, $hexcolor_frame);
 		$color1      = phpthumb_functions::ImageHexColorAllocate($gdimg, $hexcolor1);
 		$color2      = phpthumb_functions::ImageHexColorAllocate($gdimg, $hexcolor2);
-		for ($i = 0; $i < $edge_width; $i++) {
+		for ($i = 0; $i < $edge_width; ++$i) {
 			// outer bevel
 			imageline($gdimg,                   $i,                   $i,                   $i, imagesy($gdimg) - $i, $color1); // left
 			imageline($gdimg,                   $i,                   $i, imagesx($gdimg) - $i,                   $i, $color1); // top
 			imageline($gdimg, imagesx($gdimg) - $i, imagesy($gdimg) - $i, imagesx($gdimg) - $i,                   $i, $color2); // right
 			imageline($gdimg, imagesx($gdimg) - $i, imagesy($gdimg) - $i,                   $i, imagesy($gdimg) - $i, $color2); // bottom
 		}
-		for ($i = 0; $i < $frame_width; $i++) {
+		for ($i = 0; $i < $frame_width; ++$i) {
 			// actual frame
 			imagerectangle($gdimg, $edge_width + $i, $edge_width + $i, imagesx($gdimg) - $edge_width - $i, imagesy($gdimg) - $edge_width - $i, $color_frame);
 		}
-		for ($i = 0; $i < $edge_width; $i++) {
+		for ($i = 0; $i < $edge_width; ++$i) {
 			// inner bevel
 			imageline($gdimg,                   $frame_width + $edge_width + $i,                   $frame_width + $edge_width + $i,                   $frame_width + $edge_width + $i, imagesy($gdimg) - $frame_width - $edge_width - $i, $color2); // left
 			imageline($gdimg,                   $frame_width + $edge_width + $i,                   $frame_width + $edge_width + $i, imagesx($gdimg) - $frame_width - $edge_width - $i,                   $frame_width + $edge_width + $i, $color2); // top
@@ -573,7 +573,7 @@ class phpthumb_filters {
 
 		$countsum  = 0;
 		$range_min = 0;
-		for ($i = 0; $i <= 255; $i++) {
+		for ($i = 0; $i <= 255; ++$i) {
 			if ($method == 0) {
 				$countsum = max(@$Analysis['red'][$i], @$Analysis['green'][$i], @$Analysis['blue'][$i]);
 			} else {
@@ -700,7 +700,7 @@ class phpthumb_filters {
 
 			$color_border = phpthumb_functions::ImageHexColorAllocate($gd_border_canvas, (phpthumb_functions::IsHexColor($hexcolor_border) ? $hexcolor_border : '000000'));
 
-			for ($i = 0; $i < $border_width; $i++) {
+			for ($i = 0; $i < $border_width; ++$i) {
 				imageline($gd_border_canvas,             floor($offset_x / 2) + $radius_x,                      $i, $output_width - $radius_x - ceil($offset_x / 2),                         $i, $color_border); // top
 				imageline($gd_border_canvas,             floor($offset_x / 2) + $radius_x, $output_height - 1 - $i, $output_width - $radius_x - ceil($offset_x / 2),    $output_height - 1 - $i, $color_border); // bottom
 				imageline($gd_border_canvas,                    floor($offset_x / 2) + $i,               $radius_y,                      floor($offset_x / 2) +  $i, $output_height - $radius_y, $color_border); // left
@@ -767,7 +767,7 @@ class phpthumb_filters {
 				if ($gdimg_rotate_mask = phpthumb_functions::ImageCreateFunction(imagesx($gdimg_source), imagesy($gdimg_source))) {
 
 					$color_mask = array();
-					for ($i = 0; $i <= 255; $i++) {
+					for ($i = 0; $i <= 255; ++$i) {
 						$color_mask[$i] = imagecolorallocate($gdimg_rotate_mask, $i, $i, $i);
 					}
 					imagefilledrectangle($gdimg_rotate_mask, 0, 0, imagesx($gdimg_rotate_mask), imagesy($gdimg_rotate_mask), $color_mask[255]);

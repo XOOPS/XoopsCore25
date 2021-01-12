@@ -106,7 +106,7 @@ class HTMLPurifier_HTMLModule_Legacy extends HTMLPurifier_HTMLModule
         $dl = $this->addBlankElement('dl');
         $dl->attr['compact'] = 'Bool#compact';
 
-        for ($i = 1; $i <= 6; $i++) {
+        for ($i = 1; $i <= 6; ++$i) {
             $h = $this->addBlankElement("h$i");
             $h->attr['align'] = $align;
         }

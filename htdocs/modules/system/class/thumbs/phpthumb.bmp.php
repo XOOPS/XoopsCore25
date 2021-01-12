@@ -358,7 +358,7 @@ class phpthumb_bmp {
 				$overalloffset += 4 * $PaletteEntries;
 
 				$paletteoffset = 0;
-				for ($i = 0; $i < $PaletteEntries; $i++) {
+				for ($i = 0; $i < $PaletteEntries; ++$i) {
 					// RGBQUAD          - http://msdn.microsoft.com/library/en-us/gdi/bitmaps_5f8y.asp
 					// BYTE    rgbBlue;
 					// BYTE    rgbGreen;
@@ -511,7 +511,7 @@ class phpthumb_bmp {
 											// value in the range 03H through FFH. The second byte represents the
 											// number of bytes that follow, each of which contains the color index
 											// of a single pixel. Each run must be aligned on a word boundary.
-											for ($i = 0; $i < $secondbyte; $i++) {
+											for ($i = 0; $i < $secondbyte; ++$i) {
 												$paletteindex = $this->LittleEndian2Int($BMPpixelData[ $pixeldataoffset++ ]);
 												$col = $pixelcounter % $thisfile_bmp_header_raw['width'];
 												$row = $thisfile_bmp_header_raw['height'] - 1 - (($pixelcounter - $col) / $thisfile_bmp_header_raw['width']);
@@ -529,7 +529,7 @@ class phpthumb_bmp {
 
 									// encoded mode - the first byte specifies the number of consecutive pixels
 									// to be drawn using the color index contained in the second byte.
-									for ($i = 0; $i < $firstbyte; $i++) {
+									for ($i = 0; $i < $firstbyte; ++$i) {
 										$col = $pixelcounter % $thisfile_bmp_header_raw['width'];
 										$row = $thisfile_bmp_header_raw['height'] - 1 - (($pixelcounter - $col) / $thisfile_bmp_header_raw['width']);
 										$thisfile_bmp['data'][$row][$col] = $thisfile_bmp['palette'][$secondbyte];
@@ -588,7 +588,7 @@ class phpthumb_bmp {
 											// high- and low-order 4 bits, one color index for each pixel. In absolute mode,
 											// each run must be aligned on a word boundary.
 											$paletteindexes = array();
-											for ($i = 0, $iMax = ceil($secondbyte / 2); $i < $iMax; $i++) {
+											for ($i = 0, $iMax = ceil($secondbyte / 2); $i < $iMax; ++$i) {
 												$paletteindexbyte = $this->LittleEndian2Int($BMPpixelData[ $pixeldataoffset++ ]);
 												$paletteindexes[] = ($paletteindexbyte & 0xF0) >> 4;
 												$paletteindexes[] = ($paletteindexbyte & 0x0F);
@@ -618,7 +618,7 @@ class phpthumb_bmp {
 									// pixels specified by the first byte have been drawn.
 									$paletteindexes[0] = ($secondbyte & 0xF0) >> 4;
 									$paletteindexes[1] = ($secondbyte & 0x0F);
-									for ($i = 0; $i < $firstbyte; $i++) {
+									for ($i = 0; $i < $firstbyte; ++$i) {
 										$col = $pixelcounter % $thisfile_bmp_header_raw['width'];
 										$row = $thisfile_bmp_header_raw['height'] - 1 - (($pixelcounter - $col) / $thisfile_bmp_header_raw['width']);
 										$thisfile_bmp['data'][$row][$col] = $thisfile_bmp['palette'][ $paletteindexes[ $i % 2 ]];
@@ -813,7 +813,7 @@ class phpthumb_bmp {
 		$intvalue = 0;
 		$byteword = strrev($byteword);
 		$bytewordlen = strlen($byteword);
-		for ($i = 0; $i < $bytewordlen; $i++) {
+		for ($i = 0; $i < $bytewordlen; ++$i) {
 			$intvalue += ord($byteword[$i]) * pow(256, $bytewordlen - 1 - $i);
 		}
 		return $intvalue;
@@ -826,7 +826,7 @@ class phpthumb_bmp {
 	public function BigEndian2Bin($byteword) {
 		$binvalue = '';
 		$bytewordlen = strlen($byteword);
-		for ($i = 0; $i < $bytewordlen; $i++) {
+		for ($i = 0; $i < $bytewordlen; ++$i) {
 			$binvalue .= str_pad(decbin(ord($byteword[$i])), 8, '0', STR_PAD_LEFT);
 		}
 		return $binvalue;
@@ -846,7 +846,7 @@ class phpthumb_bmp {
 			$binstring = substr($binstring, 1);
 		}
 		$decvalue = 0;
-		for ($i = 0, $iMax = strlen($binstring); $i < $iMax; $i++) {
+		for ($i = 0, $iMax = strlen($binstring); $i < $iMax; ++$i) {
 			$decvalue += ((int) $binstring[ strlen($binstring) - $i - 1 ]) * pow(2, $i);
 		}
 		return $this->CastAsInt($decvalue * $signmult);

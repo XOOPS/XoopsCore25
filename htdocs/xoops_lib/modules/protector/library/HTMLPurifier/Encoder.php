@@ -158,7 +158,7 @@ class HTMLPurifier_Encoder
         $char = '';
 
         $len = strlen($str);
-        for ($i = 0; $i < $len; $i++) {
+        for ($i = 0; $i < $len; ++$i) {
             $in = ord($str[$i]);
             $char .= $str[$i]; // append byte to char
             if (0 == $mState) {
@@ -483,7 +483,7 @@ class HTMLPurifier_Encoder
         $result = '';
         $working = 0;
         $len = strlen($str);
-        for ($i = 0; $i < $len; $i++) {
+        for ($i = 0; $i < $len; ++$i) {
             $bytevalue = ord($str[$i]);
             if ($bytevalue <= 0x7F) { //0xxx xxxx
                 $result .= chr($bytevalue);
@@ -595,7 +595,7 @@ class HTMLPurifier_Encoder
         if (self::unsafeIconv('UTF-8', $encoding, 'a') === false) {
             return false;
         }
-        for ($i = 0x20; $i <= 0x7E; $i++) { // all printable ASCII chars
+        for ($i = 0x20; $i <= 0x7E; ++$i) { // all printable ASCII chars
             $c = chr($i); // UTF-8 char
             $r = self::unsafeIconv('UTF-8', "$encoding//IGNORE", $c); // initial conversion
             if ($r === '' ||

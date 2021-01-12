@@ -155,7 +155,7 @@ class IPAddress
         $length = (4 === $ip->ipVersion()) ? 4 : 16;
         $binaryIp = $ip->asBinary();
         $bits = '';
-        for ($i = 0; $i < $length; $i++) {
+        for ($i = 0; $i < $length; ++$i) {
             $byte = decbin(ord($binaryIp[$i]));
             $bits .= substr("00000000" . $byte, -8);
         }

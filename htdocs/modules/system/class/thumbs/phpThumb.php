@@ -187,7 +187,7 @@ if (empty($phpThumb->config_disable_pathinfo_parsing) && (empty($_GET) || isset(
 		$_GET['h'] = $matches[2];
 		$phpThumb->DebugMessage('PATH_INFO."w"x"h" set to "'.$_GET['w'].'"x"'.$_GET['h'].'"', __FILE__, __LINE__);
 	}
-	for ($i = 0; $i < count($args) - 2; $i++) {
+	for ($i = 0; $i < count($args) - 2; ++$i) {
 		@list($key, $value) = explode('=', @$args[$i]);
 		if (substr($key, -2) == '[]') {
 			$array_key_name = substr($key, 0, -2);

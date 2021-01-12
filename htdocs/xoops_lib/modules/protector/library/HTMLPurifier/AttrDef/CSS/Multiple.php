@@ -51,7 +51,7 @@ class HTMLPurifier_AttrDef_CSS_Multiple extends HTMLPurifier_AttrDef
         $parts = explode(' ', $string); // parseCDATA replaced \r, \t and \n
         $length = count($parts);
         $final = '';
-        for ($i = 0, $num = 0; $i < $length && $num < $this->max; $i++) {
+        for ($i = 0, $num = 0; $i < $length && $num < $this->max; ++$i) {
             if (ctype_space($parts[$i])) {
                 continue;
             }

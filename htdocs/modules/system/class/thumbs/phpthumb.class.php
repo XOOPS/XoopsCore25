@@ -1205,7 +1205,7 @@ class phpthumb {
 			// do not use "cleaner" foreach version of this loop as later code relies on both $segments and $i
 			// http://support.silisoftware.com/phpBB3/viewtopic.php?t=964
 			$segments = explode(DIRECTORY_SEPARATOR, $path);
-			for ($i = 0, $iMax = count($segments); $i < $iMax; $i++) {
+			for ($i = 0, $iMax = count($segments); $i < $iMax; ++$i) {
 				$this->applyPathSegment($parts, $segments[$i]);
 				$thispart = implode(DIRECTORY_SEPARATOR, $parts);
 				if ($this->isInOpenBasedir($thispart)) {
@@ -1974,12 +1974,12 @@ if (false) {
 								$contDiv10 = round((int) $parameter / 10);
 								if ($contDiv10 > 0) {
 									$contDiv10 = min($contDiv10, 100);
-									for ($i = 0; $i < $contDiv10; $i++) {
+									for ($i = 0; $i < $contDiv10; ++$i) {
 										$commandline .= ' -contrast'; // increase contrast by 10%
 									}
 								} elseif ($contDiv10 < 0) {
 									$contDiv10 = max($contDiv10, -100);
-									for ($i = $contDiv10; $i < 0; $i++) {
+									for ($i = $contDiv10; $i < 0; ++$i) {
 										$commandline .= ' +contrast'; // decrease contrast by 10%
 									}
 								} else {
@@ -2650,7 +2650,7 @@ if (false) {
 					if ($img_alpha_mixdown_dither = @imagecreatetruecolor(imagesx($this->gdimg_output), imagesy($this->gdimg_output))) {
 
 						$dither_color = array();
-						for ($i = 0; $i <= 255; $i++) {
+						for ($i = 0; $i <= 255; ++$i) {
 							$dither_color[$i] = imagecolorallocate($img_alpha_mixdown_dither, $i, $i, $i);
 						}
 
@@ -3223,7 +3223,7 @@ if (false) {
 					ob_end_clean();
 
 					if (strlen($imgdata) > $this->maxb) {
-						for ($i = 3; $i < 20; $i++) {
+						for ($i = 3; $i < 20; ++$i) {
 							$q = round(100 * (1 - log10($i / 2)));
 							ob_start();
 							imagejpeg($this->gdimg_output, null, $q);
@@ -3660,7 +3660,7 @@ if (false) {
 
 		$this->cache_filename .= '.'.strtolower($this->thumbnailFormat);
 		$broad_directories = '';
-		for ($i = 0; $i < $this->config_cache_directory_depth; $i++) {
+		for ($i = 0; $i < $this->config_cache_directory_depth; ++$i) {
 			$broad_directories .= DIRECTORY_SEPARATOR.substr($broad_directory_name, 0, $i + 1);
 		}
 
@@ -3749,7 +3749,7 @@ if (false) {
 				$filesize = filesize($filename);
 				$blocksize = 8192;
 				$blockreads = ceil($filesize / $blocksize);
-				for ($i = 0; $i < $blockreads; $i++) {
+				for ($i = 0; $i < $blockreads; ++$i) {
 					$rawimagedata .= fread($fp, $blocksize);
 				}
 				fclose($fp);

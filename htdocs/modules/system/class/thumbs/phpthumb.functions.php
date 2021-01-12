@@ -113,7 +113,7 @@ class phpthumb_functions {
 		$parts1 = explode('.', $version1);
 		$parts2 = explode('.', $version1);
 		$parts_count = max(count($parts1), count($parts2));
-		for ($i = 0; $i < $parts_count; $i++) {
+		for ($i = 0; $i < $parts_count; ++$i) {
 			$comparison = self::version_compare_replacement_sub($version1, $version2, $operator);
 			if ($comparison != 0) {
 				return $comparison;
@@ -218,7 +218,7 @@ class phpthumb_functions {
 	public static function HexCharDisplay($string) {
 		$len = strlen($string);
 		$output = '';
-		for ($i = 0; $i < $len; $i++) {
+		for ($i = 0; $i < $len; ++$i) {
 			$output .= ' 0x'.str_pad(dechex(ord($string[$i])), 2, '0', STR_PAD_LEFT);
 		}
 		return $output;
@@ -853,7 +853,7 @@ class phpthumb_functions {
 		}
 		$i = $startoffset;
 		$endoffset = count($directory_elements);
-		for ($i = $startoffset; $i <= $endoffset; $i++) {
+		for ($i = $startoffset; $i <= $endoffset; ++$i) {
 			$test_directory = implode(DIRECTORY_SEPARATOR, array_slice($directory_elements, 0, $i));
 			if (!$test_directory) {
 				continue;
@@ -1018,7 +1018,7 @@ if (!function_exists('preg_quote')) {
 		static $preg_quote_array = array();
 		if (empty($preg_quote_array)) {
 			$escapeables = '.\\+*?[^]$(){}=!<>|:';
-			for ($i = 0, $iMax = strlen($escapeables); $i < $iMax; $i++) {
+			for ($i = 0, $iMax = strlen($escapeables); $i < $iMax; ++$i) {
 				$strtr_preg_quote[$escapeables[$i]] = $delimiter.$escapeables[$i];
 			}
 		}

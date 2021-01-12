@@ -225,12 +225,12 @@ class CGIFLZW
 			$this->GetCode($data, $bInit);
 
 			$this->Fresh = 1;
-			for ($i = 0; $i < $this->ClearCode; $i++) {
+			for ($i = 0; $i < $this->ClearCode; ++$i) {
 				$this->Next[$i] = 0;
 				$this->Vals[$i] = $i;
 			}
 
-			for (; $i < (1 << $this->MAX_LZW_BITS); $i++) {
+			for (; $i < (1 << $this->MAX_LZW_BITS); ++$i) {
 				$this->Next[$i] = 0;
 				$this->Vals[$i] = 0;
 			}
@@ -257,12 +257,12 @@ class CGIFLZW
 
 		while (($Code = $this->GetCode($data, $bInit)) >= 0) {
 			if ($Code == $this->ClearCode) {
-				for ($i = 0; $i < $this->ClearCode; $i++) {
+				for ($i = 0; $i < $this->ClearCode; ++$i) {
 					$this->Next[$i] = 0;
 					$this->Vals[$i] = $i;
 				}
 
-				for (; $i < (1 << $this->MAX_LZW_BITS); $i++) {
+				for (; $i < (1 << $this->MAX_LZW_BITS); ++$i) {
 					$this->Next[$i] = 0;
 					$this->Vals[$i] = 0;
 				}
@@ -351,7 +351,7 @@ class CGIFLZW
 			$data  = substr($data, 1);
 
 			if ($Count) {
-				for ($i = 0; $i < $Count; $i++) {
+				for ($i = 0; $i < $Count; ++$i) {
 					$this->Buf[2 + $i] = ord($data[$i]);
 				}
 				$data = substr($data, $Count);
@@ -397,7 +397,7 @@ class CGIFCOLORTABLE
 		$this->m_nColors  = 0;
 		$this->m_arColors = array();
 
-		for ($i = 0; $i < $num; $i++) {
+		for ($i = 0; $i < $num; ++$i) {
 			$rgb = substr($lpData, $i * 3, 3);
 			if (strlen($rgb) < 3) {
 				return false;
@@ -416,7 +416,7 @@ class CGIFCOLORTABLE
 	{
 		$ret = '';
 
-		for ($i = 0; $i < $this->m_nColors; $i++) {
+		for ($i = 0; $i < $this->m_nColors; ++$i) {
 			$ret .=
 				chr($this->m_arColors[ $i] & 0x000000FF)       . // R
 				chr(($this->m_arColors[$i] & 0x0000FF00) >>  8) . // G
@@ -432,7 +432,7 @@ class CGIFCOLORTABLE
 	{
 		$ret = '';
 
-		for ($i = 0; $i < $this->m_nColors; $i++) {
+		for ($i = 0; $i < $this->m_nColors; ++$i) {
 			$ret .=
 				chr(($this->m_arColors[$i] & 0x00FF0000) >> 16) . // B
 				chr(($this->m_arColors[$i] & 0x0000FF00) >>  8) . // G
@@ -454,7 +454,7 @@ class CGIFCOLORTABLE
 		$idx = -1;
 		$dif = 0;
 
-		for ($i = 0; $i < $this->m_nColors; $i++) {
+		for ($i = 0; $i < $this->m_nColors; ++$i) {
 			$r2 = ($this->m_arColors[$i] & 0x000000FF);
 			$g2 = ($this->m_arColors[$i] & 0x0000FF00) >>  8;
 			$b2 = ($this->m_arColors[$i] & 0x00FF0000) >> 16;
@@ -754,7 +754,7 @@ class CGIFIMAGE
 		$s = 0;
 		$y = 0;
 
-		for ($i = 0; $i < 4; $i++) {
+		for ($i = 0; $i < 4; ++$i) {
 			switch($i) {
 			case 0:
 				$s = 8;
@@ -1046,7 +1046,7 @@ class CGIF
 		if (@$this->m_img->m_bTrans && ($nColors > 0)) {
 			$out .= $this->ndword($nColors);
 			$tmp  = 'tRNS';
-			for ($i = 0; $i < $nColors; $i++) {
+			for ($i = 0; $i < $nColors; ++$i) {
 				$tmp .= ($i == $this->m_img->m_nTrans) ? "\x00" : "\xFF";
 			}
 			$out .= $tmp;
@@ -1090,7 +1090,7 @@ class CGIF
 		$PlottingIMG = imagecreate($this->m_gfh->m_nWidth, $this->m_gfh->m_nHeight);
 		$NumColorsInPal = floor(strlen($pal) / 3);
 		$ThisImageColor = array();
-		for ($i = 0; $i < $NumColorsInPal; $i++) {
+		for ($i = 0; $i < $NumColorsInPal; ++$i) {
 			$ThisImageColor[$i] = imagecolorallocate(
 									$PlottingIMG,
 									ord($pal{($i * 3) + 0}),

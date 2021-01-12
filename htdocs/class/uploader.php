@@ -53,7 +53,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * $maxfileheight = 120;
  * $randomFilename = true;
  * $uploader = new XoopsMediaUploader('/home/xoops/uploads', $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight, $randomFilename);
- * for ($i = 0; $i < $uploader->countMedia('multiple_file_name'); $i++) {
+ * for ($i = 0; $i < $uploader->countMedia('multiple_file_name'); ++$i) {
  *     if ($uploader->fetchMedia('multiple_file_name')) {
  *        if (!$uploader->upload()) {
  *           echo $uploader->getErrors();

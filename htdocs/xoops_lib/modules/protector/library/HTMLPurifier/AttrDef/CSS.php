@@ -36,7 +36,7 @@ class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
         $accum = "";
         $declarations = array();
         $quoted = false;
-        for ($i = 0; $i < $len; $i++) {
+        for ($i = 0; $i < $len; ++$i) {
             $c = strcspn($css, ";'\"", $i);
             $accum .= substr($css, $i, $c);
             $i += $c;
