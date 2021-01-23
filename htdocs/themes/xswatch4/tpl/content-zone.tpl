@@ -1,5 +1,5 @@
 <{if $xoBlocks.canvas_left && $xoBlocks.canvas_right}>
-    <div class="col-6 col-sm-6">
+    <div class="col-12 col-md-6">
 <{elseif $xoBlocks.canvas_left}>
     <div class="col-12 col-md-9">
 <{elseif $xoBlocks.canvas_right}>
