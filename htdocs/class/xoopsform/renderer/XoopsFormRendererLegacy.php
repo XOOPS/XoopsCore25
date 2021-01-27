@@ -14,7 +14,7 @@
  * @category  XoopsForm
  * @package   XoopsFormRendererLegacy
  * @author    Richard Griffith <richard@geekwright.com>
- * @copyright 2017-2020 XOOPS Project (https://xoops.org)
+ * @copyright 2017-2021 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  */
 class XoopsFormRendererLegacy implements XoopsFormRendererInterface
@@ -155,8 +155,6 @@ class XoopsFormRendererLegacy implements XoopsFormRendererInterface
      */
     public function renderFormDhtmlTextArea(XoopsFormDhtmlTextArea $element)
     {
-        static $js_loaded;
-
         xoops_loadLanguage('formdhtmltextarea');
         $ret = '';
         // actions
@@ -180,13 +178,23 @@ class XoopsFormRendererLegacy implements XoopsFormRendererInterface
             $ret .= '<br>' . "<div id='" . $element->getName() . "_hidden' style='display: block;'> " . '   <fieldset>' . '       <legend>' . $button . '</legend>' . "       <div id='" . $element->getName() . "_hidden_data'>" . _XOOPS_FORM_PREVIEW_CONTENT . '</div>' . '   </fieldset>' . '</div>';
         }
         // Load javascript
-        if (empty($js_loaded)) {
-            $javascript = ($element->js ? '<script type="text/javascript">' . $element->js . '</script>' : '') . '<script type="text/javascript" src="' . XOOPS_URL . '/include/formdhtmltextarea.js"></script>';
-            $ret        = $javascript . $ret;
-            $js_loaded  = true;
-        }
+        $javascript_file = XOOPS_URL . '/include/formdhtmltextarea.js';
+        $javascript_file_element = 'include_formdhtmltextarea_js';
+        $javascript = ($element->js ? '<script type="text/javascript">' . $element->js . '</script>' : '');
+        $javascript .= <<<EOJS
+<script>
+    var el = document.getElementById('{$javascript_file_element}');
+    if (el === null) {
+        var xformtag = document.createElement('script');
+        xformtag.id = '{$javascript_file_element}';
+        xformtag.type = 'text/javascript';
+        xformtag.src = '{$javascript_file}';
+        document.body.appendChild(xformtag);
+    }
+</script>
+EOJS;
 
-        return $ret;
+        return $javascript . $ret;
     }
 
     /**

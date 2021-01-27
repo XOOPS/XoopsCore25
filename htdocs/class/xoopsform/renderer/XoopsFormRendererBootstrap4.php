@@ -15,7 +15,7 @@
  * @package   XoopsFormRendererBootstrap4
  * @author    Tad <tad0616@gmail.com>
  * @author    Richard Griffith <richard@geekwright.com>
- * @copyright 2018-2020 XOOPS Project (https://xoops.org)
+ * @copyright 2018-2021 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  */
 class XoopsFormRendererBootstrap4 implements XoopsFormRendererInterface
@@ -36,7 +36,6 @@ class XoopsFormRendererBootstrap4 implements XoopsFormRendererInterface
             . ' value="' . $element->getValue() . '"'
             . $element->getExtra() . '>' . $element->getValue() . '</button>';
     }
-
 
     /**
      * Render support for XoopsFormButtonTray
@@ -226,8 +225,6 @@ class XoopsFormRendererBootstrap4 implements XoopsFormRendererInterface
      */
     public function renderFormDhtmlTextArea(XoopsFormDhtmlTextArea $element)
     {
-        static $js_loaded;
-
         xoops_loadLanguage('formdhtmltextarea');
         $ret = '';
         // actions
@@ -264,14 +261,23 @@ class XoopsFormRendererBootstrap4 implements XoopsFormRendererInterface
                 . '</div>' . '   </fieldset>' . '</div>';
         }
         // Load javascript
-        if (empty($js_loaded)) {
-            $javascript = ($element->js ? '<script type="text/javascript">' . $element->js . '</script>' : '')
-                . '<script type="text/javascript" src="' . XOOPS_URL . '/include/formdhtmltextarea.js"></script>';
-            $ret        = $javascript . $ret;
-            $js_loaded  = true;
-        }
+        $javascript_file = XOOPS_URL . '/include/formdhtmltextarea.js';
+        $javascript_file_element = 'include_formdhtmltextarea_js';
+        $javascript = ($element->js ? '<script type="text/javascript">' . $element->js . '</script>' : '');
+        $javascript .= <<<EOJS
+<script>
+    var el = document.getElementById('{$javascript_file_element}');
+    if (el === null) {
+        var xformtag = document.createElement('script');
+        xformtag.id = '{$javascript_file_element}';
+        xformtag.type = 'text/javascript';
+        xformtag.src = '{$javascript_file}';
+        document.body.appendChild(xformtag);
+    }
+</script>
+EOJS;
 
-        return $ret;
+        return $javascript . $ret;
     }
 
     /**
@@ -554,6 +560,7 @@ class XoopsFormRendererBootstrap4 implements XoopsFormRendererInterface
 
         return $ret;
     }
+
     /**
      * Render support for XoopsFormText
      *
