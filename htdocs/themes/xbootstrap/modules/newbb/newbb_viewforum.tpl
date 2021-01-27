@@ -27,7 +27,7 @@
             <{/if}>
         <{/if}>
 
-        <{if $forum_topictype}><{$forum_topictype}><{/if}>
+        <{if $forum_topictype|default:''}><{$forum_topictype}><{/if}>
 
         <{if $forum_topicstatus}>
             <span class="btn btn-info"><{$forum_topicstatus}></span>
@@ -41,7 +41,7 @@
             <span class="glyphicon glyphicon-search"></span>
         </a>
 
-        <{if $subforum}>
+        <{if $subforum|default:''}>
             <{include file="db:newbb_viewforum_subforum.tpl"}>
         <{/if}>
         </div>
@@ -173,7 +173,7 @@
             <{$topic.topic_title}>
         </a></div>
 
-        <!-- <{$topic.attachment}> <{$topic.topic_page_jump}> -->
+<{*         <{$topic.attachment}> <{$topic.topic_page_jump}> *}>
 
         <div class="col-md-2 visible-lg visible-md"><label class="label label-info"><span class="glyphicon glyphicon-user"></span> <{$topic.topic_poster}></label></div>
         <div class="col-md-2 visible-lg visible-md"><{$topic.topic_time}></div>

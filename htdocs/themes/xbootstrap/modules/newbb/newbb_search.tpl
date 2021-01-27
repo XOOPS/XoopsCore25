@@ -2,7 +2,7 @@
     <li><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$forumindex}></a></li>
     <li class="active"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/search.php"><{$smarty.const._SR_SEARCH}></a></li>
 </ol>
-<{if $search_info}>
+<{if $search_info|default:''}>
     <{include file="db:newbb_searchresults.tpl" results=$results}>
 <{/if}>
 
@@ -50,7 +50,7 @@
                 <strong><{$smarty.const._MD_NEWBB_SELECT_STARTLAG}></strong>&nbsp;
             </td>
             <td class="even" title="<{$smarty.const._MD_NEWBB_SELECT_STARTLAG_DESC}>">
-                <input class="form-control" type="text" name="selectstartlag" value="<{$selectstartlag_select}>">
+                <input class="form-control" type="text" name="selectstartlag" value="<{$selectstartlag_select|default:''}>">
             </td>
         </tr>
         <tr>
@@ -59,11 +59,11 @@
         </tr>
         <tr>
             <td class="head" id="align_right"><strong><{$smarty.const._MD_NEWBB_SELECT_HTML}></strong>&nbsp;</td>
-            <td class="even"><{$selecthtml_radio}></td>
+            <td class="even"><{$selecthtml_radio|default:''}></td>
         </tr>
         <tr>
             <td class="head" id="align_right"><strong><{$smarty.const._MD_NEWBB_SELECT_EXCLUDE}></strong>&nbsp;</td>
-            <td class="even"><{$selectexclude_check_box}></td>
+            <td class="even"><{$selectexclude_check_box|default:''}></td>
         </tr>
         <!-- END irmtfan add select text options -->
         <!-- START irmtfan add show search -->
