@@ -10,7 +10,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2017 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2021 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             class
  * @subpackage          textsanitizer
@@ -34,18 +34,21 @@ class MytsYoutube extends MyTextSanitizerExtension
             . "\");' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALTYOUTUBE
             . "'><span class='fa fa-fw fa-youtube' aria-hidden='true'></span></button>";
         $javascript = <<<EOH
-            function xoopsCodeYoutube(id, enterFlashPhrase, enterFlashHeightPhrase, enterFlashWidthPhrase)
+            function xoopsCodeYoutube(id, enterYouTubePhrase, enterYouTubeHeightPhrase, enterYouTubeWidthPhrase)
             {
                 var selection = xoopsGetSelect(id);
                 if (selection.length > 0) {
                     var text = selection;
                 } else {
-                    var text = prompt(enterFlashPhrase, "");
+                    var text = prompt(enterYouTubePhrase, "");
+                    if (text === null) {
+                        text = '';
+                    }
                 }
                 var domobj = xoopsGetElementById(id);
                 if (text.length > 0) {
-                    var text2 = prompt(enterFlashWidthPhrase, "16x9");
-                    var text3 = prompt(enterFlashHeightPhrase, "");
+                    var text2 = prompt(enterYouTubeWidthPhrase, "16x9");
+                    var text3 = prompt(enterYouTubeHeightPhrase, "");
                     var result = "[youtube="+text2+","+text3+"]" + text + "[/youtube]";
                     xoopsInsertText(domobj, result);
                 }
