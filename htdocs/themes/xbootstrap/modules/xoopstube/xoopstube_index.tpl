@@ -51,7 +51,7 @@
         <{$catarray.indexfooter}>
     </div><!-- .xoopstube-footer -->
 
-    <{if $showlatest}>
+    <{if $showlatest|default:''}>
         <{$smarty.const._MD_XOOPSTUBE_LATESTLIST}>
         <{if $pagenav}>
             <{$pagenav}>

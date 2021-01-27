@@ -14,7 +14,7 @@
 
     <{$category_path}>
 
-    <{if $subcategories}>
+    <{if $subcategories|default:''}>
         <{$smarty.const._MD_XOOPSTUBE_SUBCATLISTING}>
         <{foreach item=subcat from=$subcategories}>
             <a href="viewcat.php?cid=<{$subcat.id}>" title="<{$subcat.alttext}>"><img src="<{$subcat.image}>" alt="<{$subcat.alttext}>"></a>
@@ -89,7 +89,7 @@
         <{$pagenav}>
     <{/if}>
 
-    <{if $moderate == true}>
+    <{if $moderate|default:false == true}>
         <{$smarty.const._MD_XOOPSTUBE_MODERATOR_OPTIONS}>
 
         <{section name=a loop=$mod_arr}>

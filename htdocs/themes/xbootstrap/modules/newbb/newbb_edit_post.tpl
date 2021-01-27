@@ -22,19 +22,19 @@
 <div class="clear"></div>
 <br>
 
-<{if $disclaimer}>
+<{if $disclaimer|default:''}>
     <div class="confirmMsg"><{$disclaimer}></div>
     <div class="clear"></div>
     <br>
 <{/if}>
 
-<{if $error_message}>
+<{if $error_message|default:''}>
     <div class="errorMsg"><{$error_message}></div>
     <div class="clear"></div>
     <br>
 <{/if}>
 
-<{if $post_preview}>
+<{if $post_preview|default:''}>
     <table width='100%' class='outer' cellspacing='1'>
         <tr valign="top">
             <td class="head"><{$post_preview.subject}></td>
@@ -53,13 +53,13 @@
       method="<{$form_post.method}>" <{$form_post.extra}> >
     <table width='100%' class='outer' cellspacing='1'>
         <{foreach item=element from=$form_post.elements}>
-        <{if $element.hidden != true}>
+        <{if $element.hidden|default:false != true}>
             <tr valign="top">
                 <td class="head">
-                    <div class="xoops-form-element-caption<{if $element.required}>-required<{/if}>"><span
-                                class="caption-text"><{$element.caption}></span><span class="caption-marker">*</span>
+                    <div class="xoops-form-element-caption<{if $element.required|default:''}>-required<{/if}>"><span
+                                class="caption-text"><{$element.caption|default:''}></span><span class="caption-marker">*</span>
                     </div>
-                    <{if $element.description != ''}>
+                    <{if $element.description|default:'' != ''}>
                         <div class="xoops-form-element-help"><{$element.description}></div>
                     <{/if}>
                 </td>
@@ -69,7 +69,7 @@
         <{/foreach}>
     </table>
     <{foreach item=element from=$form_post.elements}>
-    <{if $element.hidden == true}>
+    <{if $element.hidden|default:false == true}>
         <{$element.body}>
     <{/if}>
     <{/foreach}>
@@ -78,7 +78,7 @@
 <div class="clear"></div>
 <br>
 
-<{if $posts_context}>
+<{if $posts_context|default:''}>
     <table width='100%' class='outer' cellspacing='1'>
         <{foreach item=post from=$posts_context}>
         <tr valign="top">

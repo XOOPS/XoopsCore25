@@ -19,7 +19,7 @@
                         </a>
 
                         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=pending#admin" title="<{$smarty.const._MD_NEWBB_TYPE_PENDING}>" class="btn btn-xs btn-primary">
-                            <{if $wait_new_topic}><span class="badge"><{$wait_new_topic}></span><{/if}> <{$smarty.const._MD_NEWBB_TYPE_PENDING}>
+                            <{if $wait_new_topic|default:''}><span class="badge"><{$wait_new_topic}></span><{/if}> <{$smarty.const._MD_NEWBB_TYPE_PENDING}>
                         </a>
 
                         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=deleted#admin" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>" class="btn btn-xs btn-danger">
@@ -38,7 +38,7 @@
                         </a>
 
                         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=pending#admin" title="<{$smarty.const._MD_NEWBB_TYPE_PENDING}>" class="btn btn-xs btn-primary">
-                            <{if $wait_new_post}>(<span style="color:#ff0000;"><{$wait_new_post}></span>)<{/if}> <{$smarty.const._MD_NEWBB_TYPE_PENDING}>
+                            <{if $wait_new_post|default:''}>(<span style="color:#ff0000;"><{$wait_new_post}></span>)<{/if}> <{$smarty.const._MD_NEWBB_TYPE_PENDING}>
                         </a>
 
                         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=deleted#admin" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>" class="btn btn-xs btn-primary">
@@ -140,13 +140,13 @@
                         <{foreach item=forum from=$category.forums}>
                         <div class="row newbb-list-foruns mb10">
                             <div class="col-sm-6 col-md-6">
-                                <{if $forum.subforum}>
-                                    <div class="<{if $forum.forum_read eq 1 }>forum-read<{else}>forum-new2<{/if}> pull-left">
-                                        <{$forum.forum_folder}>
+                                <{if $forum.subforum|default:false}>
+                                    <div class="<{if $forum.forum_read|default:0  eq 1 }>forum-read<{else}>forum-new2<{/if}> pull-left">
+                                        <{$forum.forum_folder|default:'' }>
                                     </div>
                                 <{else}>
-                                    <div class="<{if $forum.forum_read eq 1 }>forum-read<{else}>forum-new2<{/if}> pull-left">
-                                        <{$forum.forum_folder}>
+                                    <div class="<{if $forum.forum_read|default:0  eq 1 }>forum-read<{else}>forum-new2<{/if}> pull-left">
+                                        <{$forum.forum_folder|default:'' }>
                                     </div>
                                 <{/if}>
 
@@ -195,7 +195,7 @@
                             </div>
 
                             <div class="col-sm-1 col-md-1 text-center hidden-xs">
-                                <{if $stats[$forum.forum_id].topic.day}>
+                                <{if $stats[$forum.forum_id].topic.day|default:''}>
                                     <strong><{$stats[$forum.forum_id].topic.day}></strong>
                                     /
                                 <{/if}>
@@ -203,7 +203,7 @@
                             </div>
 
                             <div class="col-sm-1 col-md-1 text-center hidden-xs">
-                                <{if $stats[$forum.forum_id].post.day}>
+                                <{if $stats[$forum.forum_id].post.day|default:''}>
                                     <strong><{$stats[$forum.forum_id].post.day}></strong>
                                     /
                                 <{/if}>
@@ -211,7 +211,7 @@
                             </div>
 
                             <div class="col-sm-4 col-md-4 hidden-xs">
-                                <{if $forum.forum_lastpost_subject}>
+                                <{if $forum.forum_lastpost_subject|default:''}>
                                     <{$forum.forum_lastpost_time}> <{$smarty.const._MD_NEWBB_BY}> <{$forum.forum_lastpost_user}>
                                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$forum.forum_lastpost_id}>">
                                         <{$forum.forum_lastpost_subject}>
@@ -221,9 +221,9 @@
                                     <{$smarty.const._MD_NEWBB_NOTOPIC}>
                                 <{/if}>
 
-                                <{if $forum.subforum}>
+                                <{if $forum.subforum|default:false}>
                                     <{$smarty.const._MD_NEWBB_SUBFORUMS}><{$img_subforum}>
-                                    <{foreach item=subforum from=$forum.subforum}>
+                                    <{foreach item=subforum from=$forum.subforum|default:false}>
                                     [
                                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$subforum.forum_id}>"><{$subforum.forum_name}></a>
                                     ]

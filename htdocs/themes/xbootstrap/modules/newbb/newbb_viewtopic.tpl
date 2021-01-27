@@ -74,7 +74,7 @@
     </div>
 
     <{if $mode lte 1}>
-        <{if $topic_poll}>
+        <{if $topic_poll|default:''}>
             <{if $topic_pollresult}>
                 <{include file="db:newbb_poll_results.tpl" poll=$poll}>
             <{else}>
@@ -143,7 +143,7 @@
                         <option value="<{$act.link}>"><{$act.name}></option>
                     <{/foreach}>
                 <{/if}>
-                <{if $adminpoll_actions|is_array && count($adminpoll_actions) > 0 }>
+                <{if $adminpoll_actions|default:null|is_array && count($adminpoll_actions) > 0 }>
                     <option value="">--------</option>
                     <option value=""><{$smarty.const._MD_NEWBB_POLLOPTIONADMIN}></option>
                     <{foreach item=actpoll from=$adminpoll_actions}>
@@ -233,22 +233,22 @@
 
 <{include file='db:newbb_notification_select.tpl'}>
 
-<!--
-    <script type="text/javascript">
-    if (document.body.scrollIntoView && window.location.href.indexOf('#') == -1){
-        var el = xoopsGetElementById('<{$forum_post_prefix}><{$post_id}>');
-        if (el){
-            el.scrollIntoView(true);
-        }
-    }
-    </script>
--->
+
+<{*    <script type="text/javascript">*}>
+<{*    if (document.body.scrollIntoView && window.location.href.indexOf('#') == -1){*}>
+<{*        var el = xoopsGetElementById('<{$forum_post_prefix|default:''}><{$post_id}>');*}>
+<{*        if (el){*}>
+<{*            el.scrollIntoView(true);*}>
+<{*        }*}>
+<{*    }*}>
+<{*    </script>*}>
+
 </div><!-- .newbb-viewforum -->
 
 <!-- START irmtfan add scroll js function to scroll down to current post or top of the topic -->
 <script type="text/javascript">
     if (document.body.scrollIntoView && window.location.href.indexOf('#') == -1) {
-        var el = xoopsGetElementById('<{$forum_post_prefix}><{$post_id}>');
+        var el = xoopsGetElementById('<{$forum_post_prefix|default:''}><{$post_id}>');
         if (el) {
             banner.destroy();
             header.destroy();
