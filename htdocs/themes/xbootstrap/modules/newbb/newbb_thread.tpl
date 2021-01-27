@@ -1,17 +1,17 @@
 <div class="newbb-thread clearfix">
-    <{if $forum_post_prefix === null }>
+    <{if $forum_post_prefix|default:'' === null }>
         <{assign var=forum_post_prefix value="forumpost"}>
         <div id="<{$forum_post_prefix}>0"></div>
     <{/if}>
 <div class="col-sm-3 col-md-3 text-center newbb-user-data">
     <{$topic_post.poster.link}>
 
-    <{if $topic_post.poster.uid gt -1}>
+    <{if $topic_post.poster.uid|default:'' gt -1}>
         <{if $topic_post.poster.uid != 0}>
             <{if $topic_post.poster.avatar != "blank.gif"}>
                     <img src="<{$xoops_upload_url}>/<{$topic_post.poster.avatar}>" alt="<{$topic_post.poster.name}>" class="img-circle img-thumbnail">
                 <{else}>
-                   <img src="<{$xoops_imageurl}>images/no-avatar.png" alt="<{$topic_post.poster.name}>" class="img-circle img-thumbnail">
+                   <img src="<{$xoops_imageurl}>images/newbb-noavatar.png" alt="<{$topic_post.poster.name}>" class="img-circle img-thumbnail">
             <{/if}>
 
             <{if $topic_post.poster.rank.title !=""}>
@@ -77,7 +77,7 @@
                 <li>IP: <a href="http://www.whois.sc/<{$topic_post.poster_ip}>" target="_blank"><{$topic_post.poster_ip}></a></li>
             <{/if}>
 
-            <{if $topic_post.poster.uid gt 0}>
+            <{if $topic_post.poster.uid|default:'' gt 0}>
                 <li><{$smarty.const._MD_NEWBB_POSTEDON}><{$topic_post.post_date}></li>
             <{/if}>
         </ul>
@@ -89,7 +89,7 @@
         <strong><{$topic_post.post_title}></strong>
 
         <{if $topic_post.post_id > 0}>
-            <a id="<{$forum_post_prefix}><{$topic_post.post_id}>" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$topic_post.post_id}>#forumpost<{$topic_post.post_no}>" title="<{$topic_post.post_no}>" class="newbb-post-anchor">
+            <a id="<{$forum_post_prefix|default:''}><{$topic_post.post_id}>" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$topic_post.post_id}>#forumpost<{$topic_post.post_no}>" title="<{$topic_post.post_no}>" class="newbb-post-anchor">
                 #<{$topic_post.post_no}>
             </a>
         <{/if}>
