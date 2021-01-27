@@ -179,6 +179,10 @@ function b_system_user_show()
     $block['lang_logout']        = _MB_SYSTEM_LOUT;
     $criteria                    = new CriteriaCompo(new Criteria('read_msg', 0));
     $criteria->add(new Criteria('to_userid', $xoopsUser->getVar('uid')));
+    // BigKev73 - Added to prevent MSGs that were deleted, but never read from showing up in the unread message count. I had several test messages that I batch delete from
+    // the Inbox. Afterwards, it still showed I had unread msgs, even though there were no msgs visible in my Inbox. This is because this check for unread msgs does no filter
+    // the deleted one. This corrects that.
+     $criteria->add(new Criteria('to_delete', 0));
 
     $pm_handler = xoops_getHandler('privmessage');
 
