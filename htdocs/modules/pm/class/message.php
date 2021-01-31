@@ -97,8 +97,13 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
      */
     public function setTodelete(PmMessage $pm, $val = 1)
     {
+        $val = (int)$val;
         if ($pm->getVar('from_delete') == 0 || $pm->getVar('from_userid') == 0) {
-            return $this->updateAll('to_delete', (int)$val, new Criteria('msg_id', $pm->getVar('msg_id')));
+            $pm->setVar('to_delete', $val);
+            if ($val) {
+                $pm->setVar('read_msg', 1);
+            }
+            return $this->insert($pm);
         } else {
             return parent::delete($pm);
         }
