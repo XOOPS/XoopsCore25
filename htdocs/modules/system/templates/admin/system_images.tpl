@@ -98,27 +98,20 @@
                     </div>
                     <div class="xo-actions txtcenter">
                         <div class="spacer bold"><{$img.image_nicename|truncate:18:'…':true}></div>
-                        <img id="loading_img<{$img.image_id}>" src="./images/spinner.gif" style="display:none;"
-                             alt="<{$smarty.const._AM_SYSTEM_LOADING}>"/><img class="cursorpointer tooltip" id="img<{$img.image_id}>"
-                                                                              onclick="system_setStatus( { fct: 'images', op: 'display_img', image_id: <{$img.image_id}> }, 'img<{$img.image_id}>', 'admin.php' )"
-                                                                              src="<{if $img.image_display}><{xoAdminIcons success.png}><{else}><{xoAdminIcons cancel.png}><{/if}>"
-                                                                              alt="<{$smarty.const._IMGDISPLAY}>" title="<{$smarty.const._IMGDISPLAY}>"/>
-                        <{if !$db_store|default:false}>
-                        <a class="lightbox tooltip" href="<{$xoops_upload_url}>/<{$img.image_name}>" title="<{$smarty.const._PREVIEW}>">
-                            <{else}>
-                            <a class="lightbox tooltip" href="<{$xoops_url}>/image.php?id=<{$img.image_id}>" title="<{$smarty.const._PREVIEW}>">
-                                <{/if}>
-                                <img src="<{xoAdminIcons display.png}>" alt="<{$smarty.const._AM_SYSTEM_IMAGES_VIEW}>"/>
-                            </a>
-                            <a class="tooltip" href="admin.php?fct=images&amp;op=editimg&amp;image_id=<{$img.image_id}>" title="<{$smarty.const._EDIT}>">
-                                <img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._EDIT}>"/>
-                            </a>
-                            <a class="tooltip" href="admin.php?fct=images&amp;op=delfile&amp;image_id=<{$img.image_id}>" title="<{$smarty.const._DELETE}>">
-                                <img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._DELETE}>"/>
-                            </a>
-                            <img class="tooltip" onclick="display_dialog(<{$img.image_id}>, true, true, 'slide', 'slide', 120, 350);"
-                                 src="<{xoAdminIcons url.png}>" alt="<{$smarty.const._AM_SYSTEM_IMAGES_URL}>"
-                                 title="<{$smarty.const._AM_SYSTEM_IMAGES_URL}>"/>
+						<img id="loading_img<{$img.image_id}>" src="./images/spinner.gif" style="display:none;" alt="<{$smarty.const._AM_SYSTEM_LOADING}>"/>
+						<img class="cursorpointer tooltip" id="img<{$img.image_id}>" 
+							onclick="system_setStatus( { fct: 'images', op: 'display_img', image_id: <{$img.image_id}> }, 'img<{$img.image_id}>', 'admin.php' )"
+							src="<{if $img.image_display}><{xoAdminIcons success.png}><{else}><{xoAdminIcons cancel.png}><{/if}>"
+							alt="<{$smarty.const._IMGDISPLAY}>" title="<{$smarty.const._IMGDISPLAY}>"/>
+						<{if !$db_store|default:false}>
+							<a class="lightbox tooltip" href="<{$xoops_upload_url}>/<{$img.image_name}>" title="<{$smarty.const._PREVIEW}>">
+						<{else}>
+							<a class="lightbox tooltip" href="<{$xoops_url}>/image.php?id=<{$img.image_id}>" title="<{$smarty.const._PREVIEW}>">
+						<{/if}>
+						<img src="<{xoAdminIcons display.png}>" alt="<{$smarty.const._AM_SYSTEM_IMAGES_VIEW}>"/></a>
+						<a class="tooltip" href="admin.php?fct=images&amp;op=editimg&amp;image_id=<{$img.image_id}>" title="<{$smarty.const._EDIT}>"><img src="<{xoAdminIcons edit.png}>" alt="<{$smarty.const._EDIT}>"/></a>
+                        <a class="tooltip" href="admin.php?fct=images&amp;op=delfile&amp;image_id=<{$img.image_id}>" title="<{$smarty.const._DELETE}>"><img src="<{xoAdminIcons delete.png}>" alt="<{$smarty.const._DELETE}>"/></a>
+						<img class="tooltip" onclick="display_dialog(<{$img.image_id}>, true, true, 'slide', 'slide', 120, 350);" src="<{xoAdminIcons url.png}>" alt="<{$smarty.const._AM_SYSTEM_IMAGES_URL}>" title="<{$smarty.const._AM_SYSTEM_IMAGES_URL}>"/>
                     </div>
                 </div>
             </div>
