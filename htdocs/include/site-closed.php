@@ -11,7 +11,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2021 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.17
@@ -68,6 +68,11 @@ if (!$allowed) {
     foreach (array_keys($config) as $i) {
         $name  = $config[$i]->getVar('conf_name', 'n');
         $value = $config[$i]->getVar('conf_value', 'n');
+        // limited substitutions for {X_SITEURL} and {X_YEAR}
+        if ($name === 'footer' || $name === 'meta_copyright') {
+            $value = str_replace('{X_SITEURL}', XOOPS_URL . '/', $value);
+            $value = str_replace('{X_YEAR}', date('Y', time()), $value);
+        }
         if (substr($name, 0, 5) === 'meta_') {
             $xoopsTpl->assign("xoops_$name", htmlspecialchars($value, ENT_QUOTES));
         } else {
