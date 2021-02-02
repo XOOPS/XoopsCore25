@@ -1,7 +1,7 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
-2.5.11 RC1           NOT RELEASED
+2.5.11 Beta2           NOT RELEASED
 ===================================
 
 - update xmsocial, xmmodules, xmdoc and xmnews (mage)
@@ -54,6 +54,7 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - Return proper null value for integer columns (geekwright)
 - Add macro substitutions for {X_SITEURL} and {X_YEAR}
 - Patch a few issues when using PHP 8 (geekwright)
+- explicitly require fileinfo extension in install
 
 Updated libraries and assets:
 - Smarty: allow StdClass to be cast to array when compiling foreach (mamba)
