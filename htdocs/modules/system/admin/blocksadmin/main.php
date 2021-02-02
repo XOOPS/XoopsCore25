@@ -153,10 +153,14 @@ switch ($op) {
         }
 
         $arr = array();
-        foreach (array_keys($blocks_arr) as $i) {
-            $arr[$i] = $blocks_arr[$i]->toArray();
-            $xoopsTpl->append_by_ref('blocks', $arr[$i]);
-        }
+		if (!empty($blocks_arr)){
+			foreach (array_keys($blocks_arr) as $i) {
+				$arr[$i] = $blocks_arr[$i]->toArray();
+				$xoopsTpl->append_by_ref('blocks', $arr[$i]);
+			}
+		} else {
+			$xoopsTpl->assign('blocks', array());
+		}
         $block     = $block_handler->create();
         $blockform = $block->getForm();
         $xoopsTpl->assign('blockform', $blockform->render());
