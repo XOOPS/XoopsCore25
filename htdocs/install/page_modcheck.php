@@ -14,7 +14,7 @@
  * See the enclosed file license.txt for licensing information.
  * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
- * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright    (c) 2000-2021 XOOPS Project (https://xoops.org)
  * @license          GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          installer
  * @since            2.3.0
@@ -80,6 +80,11 @@ ob_start();
         <tr>
             <th scope="row">file_uploads</th>
             <td><?php echo xoDiagBoolSetting('file_uploads', true); ?></td>
+        </tr>
+
+        <tr>
+            <th><?php printf(PHP_EXTENSION, 'fileinfo'); ?></th>
+            <td><?php echo xoDiag(extension_loaded('fileinfo') ? 1 : -1); ?></td>
         </tr>
         </tbody>
     </table>
