@@ -222,11 +222,7 @@ class ProfileField extends XoopsObject
      **/
     public function getOutputValue(&$user, $profile)
     {
-        if (file_exists($file = $GLOBALS['xoops']->path('modules/profile/language/' . $GLOBALS['xoopsConfig']['language'] . '/modinfo.php'))) {
-            include_once $file;
-        } else {
-            include_once $GLOBALS['xoops']->path('modules/profile/language/english/modinfo.php');
-        }
+        xoops_loadLanguage('modinfo', 'profile');
 
         $value = in_array($this->getVar('field_name'), $this->getUserVars()) ? $user->getVar($this->getVar('field_name')) : $profile->getVar($this->getVar('field_name'));
 
