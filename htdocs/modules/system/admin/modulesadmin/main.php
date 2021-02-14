@@ -159,7 +159,7 @@ switch ($op) {
                     $toinstall_mods[$i]['name']          = htmlspecialchars($module->getInfo('name'), ENT_QUOTES);
                     $toinstall_mods[$i]['dirname']       = $module->getInfo('dirname');
                     $toinstall_mods[$i]['image']         = $module->getInfo('image');
-                    $toinstall_mods[$i]['version']       = round($module->getInfo('version'), 2);
+                    $toinstall_mods[$i]['version']       = round((float)$module->getInfo('version'), 2);
                     $toinstall_mods[$i]['module_status'] = $module->getInfo('module_status');
                     $toinstall_mods[$i]['author']        = $module->getInfo('author');
                     $toinstall_mods[$i]['credits']       = $module->getInfo('credits');
