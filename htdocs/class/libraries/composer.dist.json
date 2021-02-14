@@ -1,5 +1,5 @@
 {
-    "name": "xoops-259/libraries",
+    "name": "xoopscore25/libraries",
     "license": "GPL-2.0-or-later",
     "type": "project",
     "config": {
@@ -7,6 +7,6 @@
     },
     "description": "Libraries for XOOPS 2.5.10",
     "require": {
-        "xoops/base-requires25": "^1.0"
+        "xoops/base-requires25": "^1.0.1"
     }
 }
