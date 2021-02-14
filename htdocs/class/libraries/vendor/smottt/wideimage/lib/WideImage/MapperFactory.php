@@ -56,6 +56,10 @@ abstract class MapperFactory
 	public static function selectMapper($uri, $format = null)
 	{
 		$format = self::determineFormat($uri, $format);
+
+		if (empty($format)) {
+			return false;
+		}
 		
 		if (array_key_exists($format, self::$mappers)) {
 			return self::$mappers[$format];

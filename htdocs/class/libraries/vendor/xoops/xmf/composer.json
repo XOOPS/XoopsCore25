@@ -10,10 +10,10 @@
     },
     "require": {
       "php": ">=5.3.9",
-      "kint-php/kint": "^2.2",
-      "symfony/yaml": "2.8.*",
+      "kint-php/kint": "^3.3",
+      "symfony/yaml": "^2.8",
       "paragonie/random_compat": "^2",
-      "firebase/php-jwt": "^5.0.0",
+      "firebase/php-jwt": "^5.0",
       "webmozart/assert": "^1.2"
     },
     "require-dev": {

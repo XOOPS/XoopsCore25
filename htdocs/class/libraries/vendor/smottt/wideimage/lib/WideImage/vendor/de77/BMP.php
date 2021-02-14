@@ -125,17 +125,31 @@ class BMP
 	    	return false;
 	    }
 
-		$bps    = $header['bits_per_pixel']; //bits per pixel
+	    $bps    = $header['bits_per_pixel']; //bits per pixel
 	    $wid2   = ceil(($bps/8 * $header['width']) / 4) * 4;
-		$colors = $header['colors'];
+	    $colors = $header['colors'];
+	    // The absolute height value is necessary because ImageHeight can be negative
+	    // If Height is a positive number, then the image is a "bottom-up" bitmap with the origin in the lower-left corner.
+	    // If Height is a negative number, then the image is a "top-down" bitmap with the origin in the upper-left corner.
+	    $header['height'] = abs($header['height']);
 
 	    $wid = $header['width'];
 	    $hei = $header['height'];
 
 	    $img = imagecreatetruecolor($header['width'], $header['height']);
+	    if (!$img) {
+		    return false; // Invalid width or height
+	    }
+	    //read palette
+	    $palette = [];
 
-		//read palette
 		if ($bps < 9) {
+			// A color table is mandatory for color depths <= 8
+			if (isset($header['colors']) && $header['colors'] > 0) {
+				// The number of entries in the palette is either 2n 
+				// or a smaller number specified in the header
+				$colors = min($header['colors'], $colors);
+			}
 			for ($i = 0; $i < $colors; $i++) {
 				$palette[] = self::undword(substr($data, $pos, 4));
 				$pos += 4;

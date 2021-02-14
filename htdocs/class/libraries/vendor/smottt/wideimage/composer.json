@@ -4,7 +4,7 @@
     "homepage": "http://wideimage.sourceforge.net",
     "type": "library",
     "license": ["GPL-2.0","LGPL-2.1"],
-    "version": "1.1.2",
+    "version": "1.1.4",
     "autoload": {
         "psr-0" : {
           "WideImage" : "lib/"
