@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2021 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Kazumi Ono <onokazu@xoops.org>
  * @author              Skalpa Keo <skalpa@xoops.org>
@@ -33,7 +33,7 @@ xoops_loadLanguage('global');
  * @package             kernel
  * @subpackage          core
  * @author              Kazumi Ono <onokazu@xoops.org>
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2021 XOOPS Project (https://xoops.org)
  */
 class XoopsTpl extends Smarty
 {
@@ -69,6 +69,8 @@ class XoopsTpl extends Smarty
                           'xoops_charset'    => _CHARSET,
                           'xoops_version'    => XOOPS_VERSION,
                           'xoops_upload_url' => XOOPS_UPLOAD_URL));
+        $xoopsPreload = XoopsPreload::getInstance();
+        $xoopsPreload->triggerEvent('core.class.template.new', array($this));
     }
 
     /**
