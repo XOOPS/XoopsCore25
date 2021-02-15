@@ -292,9 +292,10 @@ if (!empty($_SESSION['xoopsUserId'])) {
         $xoopsUserIsAdmin = $xoopsUser->isAdmin();
     }
 }
+// user characteristics are established
+$xoopsPreload->triggerEvent('core.include.common.auth.success');
 
 /**
- * *#@+
  * Debug level for XOOPS
  * Check /xoops_data/configs/xoopsconfig.php for details
  *
