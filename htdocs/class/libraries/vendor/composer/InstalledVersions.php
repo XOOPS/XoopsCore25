@@ -29,7 +29,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '07e43299444bd598acb3d94542dd65446d502593',
+    'reference' => '94219f26b4432ccd4906f966afd548bbfcc86c2d',
     'name' => 'xoopscore25/libraries',
   ),
   'versions' => 
@@ -144,12 +144,12 @@ private static $installed = array (
     ),
     'xoops/xmf' => 
     array (
-      'pretty_version' => 'v1.2.22',
-      'version' => '1.2.22.0',
+      'pretty_version' => 'v1.2.23',
+      'version' => '1.2.23.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'beefd06989cfee4af6db43b68776a7b465d86a73',
+      'reference' => 'd84ac791d39753a51eae5eaebcf990342ea9f1e2',
     ),
     'xoopscore25/libraries' => 
     array (
@@ -158,7 +158,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '07e43299444bd598acb3d94542dd65446d502593',
+      'reference' => '94219f26b4432ccd4906f966afd548bbfcc86c2d',
     ),
   ),
 );

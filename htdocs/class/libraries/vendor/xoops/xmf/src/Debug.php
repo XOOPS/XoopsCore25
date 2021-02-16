@@ -69,7 +69,8 @@ class Debug extends \Kint
      */
     public static function backtrace()
     {
-        static::dump(debug_backtrace());
+        static::doOnce();
+        static::trace();
     }
 
     /**
