@@ -56,40 +56,37 @@ class XoopsModelRead extends XoopsModelAbstract
             }
             if ($sort = $criteria->getSort()) {
                 $sql .= " ORDER BY {$sort} " . $criteria->getOrder();
-                $orderSet = true;
             }
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
         }
-        if (empty($orderSet)) {
-            //$sql .= " ORDER BY `{$this->handler->keyName}` DESC";
-        }
         $result = $this->handler->db->query($sql, $limit, $start);
         $ret    = array();
-        if ($asObject) {
-            while (false !== ($myrow = $this->handler->db->fetchArray($result))) {
+        if (false !== $result) {
+            if ($asObject) {
+                while (false !== ($myrow = $this->handler->db->fetchArray($result))) {
+                    $object = $this->handler->create(false);
+                    $object->assignVars($myrow);
+                    if ($id_as_key) {
+                        $ret[$myrow[$this->handler->keyName]] = $object;
+                    } else {
+                        $ret[] = $object;
+                    }
+                    unset($object);
+                }
+            } else {
                 $object = $this->handler->create(false);
-                $object->assignVars($myrow);
-                if ($id_as_key) {
-                    $ret[$myrow[$this->handler->keyName]] = $object;
-                } else {
-                    $ret[] = $object;
+                while (false !== ($myrow = $this->handler->db->fetchArray($result))) {
+                    $object->assignVars($myrow);
+                    if ($id_as_key) {
+                        $ret[$myrow[$this->handler->keyName]] = $object->getValues(array_keys($myrow));
+                    } else {
+                        $ret[] = $object->getValues(array_keys($myrow));
+                    }
                 }
                 unset($object);
             }
-        } else {
-            $object = $this->handler->create(false);
-            while (false !== ($myrow = $this->handler->db->fetchArray($result))) {
-                $object->assignVars($myrow);
-                if ($id_as_key) {
-                    $ret[$myrow[$this->handler->keyName]] = $object->getValues(array_keys($myrow));
-                } else {
-                    $ret[] = $object->getValues(array_keys($myrow));
-                }
-            }
-            unset($object);
         }
-
         return $ret;
     }
 
