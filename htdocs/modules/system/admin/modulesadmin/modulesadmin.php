@@ -1312,6 +1312,7 @@ function xoops_module_activate($mid)
     // Get module handler
 
     $module_handler = xoops_getHandler('module');
+    /** @var \XoopsModule $module */
     $module         = $module_handler->get($mid);
     include_once XOOPS_ROOT_PATH . '/class/template.php';
     xoops_template_clear_module_cache($module->getVar('mid'));
