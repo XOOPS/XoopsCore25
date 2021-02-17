@@ -409,7 +409,7 @@ class XoopsCacheEngine
     /**
      * settings of current engine instance
      *
-     * @var int
+     * @var array
      * @access public
      */
     public $settings;
@@ -494,7 +494,7 @@ class XoopsCacheEngine
     /**
      * Cache Engine settings
      *
-     * @return array|int settings
+     * @return array settings
      * @access public
      */
     public function settings()
