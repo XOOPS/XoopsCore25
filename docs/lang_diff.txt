@@ -38,6 +38,9 @@ htdocs/language/english/user.php
 htdocs/modules/system/language/english/admin/mailusers.php
 - added define('_AM_SYSTEM_MAILUSERS_MAILTAGS5', '{X_NAME} will print name or uname if empty');
 
+htdocs/modules/system/language/english/admin/images.php
+- added define("_AM_SYSTEM_IMAGES_SCATDELNG","Can't delete this category");
+
 ================================
 2019/04/29: Version 2.5.10 Final
 ================================
