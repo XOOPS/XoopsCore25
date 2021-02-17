@@ -100,13 +100,13 @@ class XoopsUserUtility
                 $user = $args[0];
                 break;
             case 2:
-                [$uname, $email] = $args;
+                list($uname, $email) = $args;
                 break;
             case 3:
-                [$user, $pass, $vpass] = $args;
+                list($user, $pass, $vpass) = $args;
                 break;
             case 4:
-                [$uname, $email, $pass, $vpass] = $args;
+                list($uname, $email, $pass, $vpass) = $args;
                 break;
             default:
                 return false;
@@ -184,15 +184,13 @@ class XoopsUserUtility
         $uid    = is_object($user) ? $user->getVar('uid') : 0;
         $sql    = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix('users') . '` WHERE `uname` = ' . $xoopsDB->quote(addslashes($uname)) . (($uid > 0) ? " AND `uid` <> {$uid}" : '');
         $result = $xoopsDB->query($sql);
-        if ($result instanceof \mysqli_result) {
-            [$count] = $xoopsDB->fetchRow($result);
-        }
+        list($count) = $xoopsDB->fetchRow($result);
         if ($count > 0) {
             $stop .= _US_NICKNAMETAKEN . '<br>';
         }
         $sql    = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix('users') . '` WHERE `email` = ' . $xoopsDB->quote(addslashes($email)) . (($uid > 0) ? " AND `uid` <> {$uid}" : '');
         $result = $xoopsDB->query($sql);
-        [$count] = $xoopsDB->fetchRow($result);
+        list($count) = $xoopsDB->fetchRow($result);
         if ($count > 0) {
             $stop .= _US_EMAILTAKEN . '<br>';
         }
