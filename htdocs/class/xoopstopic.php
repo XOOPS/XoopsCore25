@@ -400,7 +400,7 @@ class XoopsTopic
     {
         $sql = 'SELECT COUNT(*) from ' . $this->table . ' WHERE topic_pid = ' . (int)$pid . " AND topic_title = '" . trim($title) . "'";
         $rs  = $this->db->query($sql);
-        [$count] = $this->db->fetchRow($rs);
+        list($count) = $this->db->fetchRow($rs);
         if ($count > 0) {
             return true;
         } else {
