@@ -46,11 +46,12 @@ if ('system' === $xoopsModule->getVar('dirname')) {
     $comment_handler = xoops_getHandler('comment');
     $comment         = $comment_handler->get($com_id);
     $module_handler  = xoops_getHandler('module');
-    $module          = $module_handler->get($comment->getVar('com_modid'));
-    $comment_config  = $module->getInfo('comments');
-    $com_modid       = $module->getVar('mid');
-    $redirect_page   = XOOPS_URL . '/modules/system/admin.php?fct=comments&com_modid=' . $com_modid . '&com_itemid';
-    $moddir          = $module->getVar('dirname');
+    /** @var \XoopsModule $module */
+    $module         = $module_handler->get($comment->getVar('com_modid'));
+    $comment_config = $module->getInfo('comments');
+    $com_modid      = $module->getVar('mid');
+    $redirect_page  = XOOPS_URL . '/modules/system/admin.php?fct=comments&com_modid=' . $com_modid . '&com_itemid';
+    $moddir         = $module->getVar('dirname');
     unset($comment);
 } else {
     if (XOOPS_COMMENT_APPROVENONE == $xoopsModuleConfig['com_rule']) {

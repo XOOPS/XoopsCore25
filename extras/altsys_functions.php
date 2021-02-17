@@ -7,8 +7,10 @@ function altsys_set_module_config()
     global $altsysModuleConfig, $altsysModuleId;
 
     $module_handler = xoops_getHandler('module');
-    $module         = $module_handler->getByDirname('altsys');
+    /** @var \XoopsModule $module */
+    $module = $module_handler->getByDirname('altsys');
     if (is_object($module)) {
+        /** @var \XoopsConfigHandler $config_handler */
         $config_handler     = xoops_getHandler('config');
         $altsysModuleConfig = $config_handler->getConfigList($module->getVar('mid'));
         $altsysModuleId     = $module->getVar('mid');

@@ -344,7 +344,7 @@ class XoopsFileHandler
     /**
      * Returns the File extension.
      *
-     * @return string The File extension
+     * @return string|false The File extension
      * @access public
      */
     public function ext()
@@ -362,7 +362,7 @@ class XoopsFileHandler
     /**
      * Returns the File name without extension.
      *
-     * @return string The File name without extension.
+     * @return string|false The File name without extension.
      * @access public
      */
     public function name()
@@ -403,7 +403,7 @@ class XoopsFileHandler
      * Get md5 Checksum of file with previous check of Filesize
      *
      * @param  mixed $maxsize in MB or true to force
-     * @return string md5 Checksum {@link http://php.net/md5_file See md5_file()}
+     * @return string|false md5 Checksum {@link http://php.net/md5_file See md5_file()}
      * @access public
      */
     public function md5($maxsize = 5)
@@ -447,7 +447,7 @@ class XoopsFileHandler
     /**
      * Returns the "chmod" (permissions) of the File.
      *
-     * @return string Permissions for the file
+     * @return string|false Permissions for the file
      * @access public
      */
     public function perms()
@@ -462,7 +462,7 @@ class XoopsFileHandler
     /**
      * Returns the Filesize, either in bytes or in human-readable format.
      *
-     * @return string |int filesize as int or as a human-readable string
+     * @return string|false |int filesize as int or as a human-readable string
      * @access   public
      */
     public function size()
@@ -510,7 +510,7 @@ class XoopsFileHandler
     /**
      * Returns the File's owner.
      *
-     * @return integer the Fileowner
+     * @return integer|false the Fileowner
      */
     public function owner()
     {
@@ -524,7 +524,7 @@ class XoopsFileHandler
     /**
      * Returns the File group.
      *
-     * @return integer the Filegroup
+     * @return integer|false the Filegroup
      * @access public
      */
     public function group()
@@ -539,7 +539,7 @@ class XoopsFileHandler
     /**
      * Returns last access time.
      *
-     * @return integer timestamp Timestamp of last access time
+     * @return integer|false timestamp Timestamp of last access time
      * @access public
      */
     public function lastAccess()
@@ -554,7 +554,7 @@ class XoopsFileHandler
     /**
      * Returns last modified time.
      *
-     * @return integer timestamp Timestamp of last modification
+     * @return integer|false timestamp Timestamp of last modification
      * @access public
      */
     public function lastChange()

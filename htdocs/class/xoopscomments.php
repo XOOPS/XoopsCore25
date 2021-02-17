@@ -37,6 +37,9 @@ $GLOBALS['xoopsLogger']->addDeprecated("'/class/xoopscommments.php' is deprecate
 class XoopsComments extends XoopsObject
 {
     public $ctable;
+    /**
+     * @var \XoopsMySQLDatabase
+     */
     public $db;
 
     /**
@@ -88,7 +91,7 @@ class XoopsComments extends XoopsObject
     /**
      * Save Comment
      *
-     * @return int
+     * @return int|false
      */
     public function store()
     {
@@ -160,7 +163,7 @@ class XoopsComments extends XoopsObject
     /**
      * Get Comments Tree
      *
-     * @return unknown
+     * @return mixed
      */
     public function getCommentTree()
     {

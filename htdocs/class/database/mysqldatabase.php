@@ -149,7 +149,7 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
     /**
      * Get the ID generated from the previous INSERT operation
      *
-     * @return int
+     * @return int|string
      */
     public function getInsertId()
     {

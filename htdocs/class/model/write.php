@@ -347,7 +347,7 @@ class XoopsModelWrite extends XoopsModelAbstract
      * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement} with conditions to meet
      * @param  bool   $force    force to delete
      * @param  bool   $asObject delete in object way: instantiate all objects and delete one by one
-     * @return bool
+     * @return bool|int
      */
     public function deleteAll(CriteriaElement $criteria = null, $force = true, $asObject = false)
     {

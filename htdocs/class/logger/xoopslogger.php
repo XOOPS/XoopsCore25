@@ -410,7 +410,7 @@ class XoopsLogger
     /**
      * dump Queries @deprecated
      *
-     * @return unknown
+     * @return mixed
      */
     public function dumpQueries()
     {

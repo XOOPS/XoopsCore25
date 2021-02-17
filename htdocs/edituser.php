@@ -15,6 +15,8 @@
  * @since               2.0.0
  */
 
+/* @var XoopsAvatarHandler $avt_handler */
+
 include __DIR__ . '/mainfile.php';
 
 XoopsLoad::load('XoopsRequest');
@@ -71,6 +73,7 @@ if ($op === 'saveuser') {
         echo '</div><br>';
         $op = 'editprofile';
     } else {
+        /* @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $edituser       = $member_handler->getUser($uid);
         $edituser->setVar('name', XoopsRequest::getString('name', ''));
@@ -232,6 +235,7 @@ if ($op === 'avatarform') {
         $form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
         $form->display();
     }
+    /** @var \XoopsAvatarHandler $avatar_handler */
     $avatar_handler  = xoops_getHandler('avatar');
     $form2           = new XoopsThemeForm(_US_CHOOSEAVT, 'uploadavatar', 'edituser.php', 'post', true);
     $avatar_select   = new XoopsFormSelect('', 'user_avatar', $xoopsUser->getVar('user_avatar'));
@@ -279,8 +283,7 @@ if ($op === 'avatarupload') {
         if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
             $uploader->setPrefix('cavt');
             if ($uploader->upload()) {
-
-                /* @var XoopsAvatarHandler $avt_handler */
+                /** @var \XoopsAvatarHandler $avt_handler */
                 $avt_handler = xoops_getHandler('avatar');
                 $avatar      = $avt_handler->create();
                 $avatar->setVar('avatar_file', 'avatars/' . $uploader->getSavedFileName());

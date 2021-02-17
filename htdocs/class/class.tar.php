@@ -651,7 +651,7 @@ class Tar
      *
      * @param  string $filename
      * @param  bool   $useGzip Use GZ compression?
-     * @return string
+     * @return string|false
      */
     public function toTarOutput($filename, $useGzip)
     {

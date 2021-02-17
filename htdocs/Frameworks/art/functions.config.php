@@ -70,6 +70,7 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_CONFIG')):
             return null;
         }
 
+        /** @var \XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         if (!$module = $module_handler->getByDirname($dirname)) {
             trigger_error("Module '{$dirname}' does not exist", E_USER_WARNING);

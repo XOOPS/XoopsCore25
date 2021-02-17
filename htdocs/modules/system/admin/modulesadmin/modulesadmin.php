@@ -1312,13 +1312,17 @@ function xoops_module_activate($mid)
     // Get module handler
 
     $module_handler = xoops_getHandler('module');
+    /** @var \XoopsModule $module */
     $module         = $module_handler->get($mid);
     include_once XOOPS_ROOT_PATH . '/class/template.php';
     xoops_template_clear_module_cache($module->getVar('mid'));
     // Display header
     $msgs   = array();
     $msgs[] = '<div id="xo-module-log">';
-    $msgs[] = xoops_module_log_header($module, _AM_SYSTEM_MODULES_ACTIVATE);
+
+    $logHeader = xoops_module_log_header($module, _AM_SYSTEM_MODULES_ACTIVATE);
+    $msgs[] = implode('<br>', $logHeader);
+
     // Change value
     $module->setVar('isactive', 1);
     if (!$module_handler->insert($module)) {
@@ -1330,7 +1334,11 @@ function xoops_module_activate($mid)
             $blocks[$i]->setVar('isactive', 1);
             $blocks[$i]->store();
         }
-        $msgs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_OKACT, '<strong>' . $module->getVar('name', 's') . '</strong>') . '</p></div>';
+        // provide a link to the activated module
+        $moduleName = $module->getVar('name', 's');
+        $moduleLink = '<a href="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname', 'e') . '/' . $module->getInfo('adminindex') . '">' . $moduleName . '</a>';
+        $msgs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_OKACT, '<strong>' . $moduleLink . '</strong>') . '</p></div>';
+
     }
     //$msgs[] = '</div>';
     $msgs[] = '<div class="center"><a href="admin.php?fct=modulesadmin">' . _AM_SYSTEM_MODULES_BTOMADMIN . '</a></div>';
@@ -1356,7 +1364,10 @@ function xoops_module_deactivate($mid)
     // Display header
     $msgs   = array();
     $msgs[] = '<div id="xo-module-log">';
-    $msgs[] = xoops_module_log_header($module, _AM_SYSTEM_MODULES_DEACTIVATE);
+
+    $logHeader = xoops_module_log_header($module, _AM_SYSTEM_MODULES_DEACTIVATE);
+    $msgs[] = implode('<br>', $logHeader);
+
     // Change value
     $module->setVar('isactive', 0);
     if ($module->getVar('dirname') === 'system') {

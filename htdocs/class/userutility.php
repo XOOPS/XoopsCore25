@@ -178,6 +178,7 @@ class XoopsUserUtility
              * }
              */
         }
+        /** @var XoopsMySQLDatabase $xoopsDB */
         $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
         // Check if uname/email already exists if the user is a new one
         $uid    = is_object($user) ? $user->getVar('uid') : 0;
@@ -271,6 +272,7 @@ class XoopsUserUtility
         $myts  = MyTextSanitizer::getInstance();
         $users = array();
         if (count($userid) > 0) {
+            /** @var XoopsMySQLDatabase $xoopsDB */
             $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
             $sql     = 'SELECT uid, uname, name FROM ' . $xoopsDB->prefix('users') . ' WHERE level > 0 AND uid IN(' . implode(',', array_unique($userid)) . ')';
             if (!$result = $xoopsDB->query($sql)) {

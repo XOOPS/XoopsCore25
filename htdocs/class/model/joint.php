@@ -128,7 +128,7 @@ class XoopsModelJoint extends XoopsModelAbstract
      * Count of objects matching a condition
      *
      * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement} to match
-     * @return int    count of objects
+     * @return int|false    count of objects
      */
     public function getCountByLink(CriteriaElement $criteria = null)
     {
@@ -152,7 +152,7 @@ class XoopsModelJoint extends XoopsModelAbstract
      * array of count of objects matching a condition of, groupby linked object keyname
      *
      * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement} to match
-     * @return int    count of objects
+     * @return int|false|array|null    count of objects
      */
     public function getCountsByLink(CriteriaElement $criteria = null)
     {
@@ -180,7 +180,7 @@ class XoopsModelJoint extends XoopsModelAbstract
      *
      * @param  array  $data     array of key => value
      * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement} to match
-     * @return int    count of objects
+     * @return int|null    count of objects
      */
     public function updateByLink($data, CriteriaElement $criteria = null)
     {
@@ -203,7 +203,7 @@ class XoopsModelJoint extends XoopsModelAbstract
      * Delete objects matching a condition against linked objects
      *
      * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement} to match
-     * @return int    count of objects
+     * @return int|null    count of objects
      */
     public function deleteByLink(CriteriaElement $criteria = null)
     {

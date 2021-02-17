@@ -35,6 +35,7 @@ include_once XOOPS_ROOT_PATH . '/modules/system/constants.php';
 
 // check user/group
 $groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+/** @var XoopsGroupPermHandler $gperm_handler */
 $gperm_handler = xoops_getHandler('groupperm');
 $admin         = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_SMILE, $groups);
 
@@ -51,6 +52,7 @@ if ($admin && $op === 'SmilesAdd') {
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header($current_file, 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
     }
+    /** @var XoopsMySQLDatabase $db */
     $db = XoopsDatabaseFactory::getDatabaseConnection();
     include_once XOOPS_ROOT_PATH . '/class/uploader.php';
     $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, array(

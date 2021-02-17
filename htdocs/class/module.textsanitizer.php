@@ -46,7 +46,7 @@ class MyTextSanitizerExtension
      * loadConfig
      *
      * @param  string $path
-     * @return string
+     * @return string|array
      */
     public static function loadConfig($path = null)
     {
@@ -144,7 +144,7 @@ class MyTextSanitizer
 
     /**
      *
-     * @var holding reference to text
+     * @var string holding reference to text
      */
     public $text         = '';
     public $patterns     = array();
@@ -181,7 +181,7 @@ class MyTextSanitizer
      * Enter description here...
      *
      * @param  string $name
-     * @return array
+     * @return array|string
      */
     public function loadConfig($name = null)
     {
@@ -202,7 +202,7 @@ class MyTextSanitizer
      *
      * @param  array $config_default
      * @param  array $config_custom
-     * @return unknown
+     * @return mixed
      */
     public function mergeConfig($config_default, $config_custom)
     {

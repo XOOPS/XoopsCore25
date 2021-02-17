@@ -215,7 +215,7 @@ class XoopsFormElement
     /**
      * get the "class" attribute for the element
      *
-     * @return string "class" attribute value
+     * @return string|false "class" attribute value
      */
     public function getClass()
     {
@@ -372,7 +372,7 @@ class XoopsFormElement
      * Get the element's nocolspan
      * Modified by Catzwolf
      *
-     * @return string
+     * @return string|bool
      *
      * @deprecated  PLEASE AVOID USING THIS METHOD
      */

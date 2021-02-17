@@ -28,6 +28,10 @@ include_once XOOPS_ROOT_PATH . '/class/xoopstree.php';
  */
 class XoopsTopic
 {
+    /**
+     * @var \XoopsMySQLDatabase
+     */
+    public $db;
     public $table;
     public $topic_id;
     public $topic_pid;

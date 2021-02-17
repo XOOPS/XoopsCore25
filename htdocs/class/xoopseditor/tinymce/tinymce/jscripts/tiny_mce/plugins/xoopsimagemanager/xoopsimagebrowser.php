@@ -49,11 +49,13 @@ global $xoopsConfig;
 // check user/group - start
 $isadmin = false;
 
+/** @var XoopsGroupPermHandler  $gperm_handler */
 $gperm_handler = xoops_getHandler('groupperm');
 $groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 $isadmin       = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_IMAGE, $groups);
 
 // check categories readability/writability
+/** @var \XoopsImagecategoryHandler $imgcat_handler */
 $imgcat_handler = xoops_getHandler('imagecategory');
 $catreadlist    = $imgcat_handler->getList($groups, 'imgcat_read', 1);    // get readable categories
 $catwritelist   = $imgcat_handler->getList($groups, 'imgcat_write', 1);  // get writable categories
@@ -257,6 +259,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
         if (!$imgcat_handler->insert($imagecategory)) {
             redirect_header($current_file . '?target=' . $target, 3);
         }
+        /** @var \XoopsGroupPermHandler $imagecategoryperm_handler */
         $imagecategoryperm_handler = xoops_getHandler('groupperm');
         $criteria                  = new CriteriaCompo(new Criteria('gperm_itemid', $imgcat_id));
         $criteria->add(new Criteria('gperm_modid', 1));
@@ -271,6 +274,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
             array_push($readgroup, XOOPS_GROUP_ADMIN);
         }
         foreach ($readgroup as $rgroup) {
+            /** @var XoopsGroupPerm $imagecategoryperm */
             $imagecategoryperm = $imagecategoryperm_handler->create();
             $imagecategoryperm->setVar('gperm_groupid', $rgroup);
             $imagecategoryperm->setVar('gperm_itemid', $imgcat_id);
@@ -302,7 +306,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
     if (!empty($_GET['op']) && $op === 'delcat') {
         xoops_header();
         echo "<link href='css/xoopsimagebrowser.css' rel='stylesheet' type='text/css' />";
-        xoops_confirm(array('op' => 'delcatok', 'imgcat_id' => $imgcat_id, 'target' => $target), 'xoopsimagebrowser.php', _MD_RUDELIMGCAT);
+        xoops_confirm(array('op' => 'delcatok', 'imgcat_id' => $imgcat_id, 'target' => $target), 'xoopsimagebrowser.php', _AM_SYSTEM_IMAGES_RUDELIMGCAT);
         xoops_footer();
         exit();
     }
@@ -323,7 +327,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
             redirect_header($current_file . '?target=' . $target, 3);
         }
         if ($imagecategory->getVar('imgcat_type') !== 'C') {
-            redirect_header($current_file . '?target=' . $target, 3, _MD_SCATDELNG);
+            redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_IMAGES_SCATDELNG);
         }
         $image_handler = xoops_getHandler('image');
         $images        = $image_handler->getObjects(new Criteria('imgcat_id', $imgcat_id), true, false);
@@ -333,12 +337,12 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
                 $errors[] = sprintf(_MD_FAILDEL, $i);
             } else {
                 if (file_exists(XOOPS_UPLOAD_PATH . '/' . $images[$i]->getVar('image_name')) && !unlink(XOOPS_UPLOAD_PATH . '/' . $images[$i]->getVar('image_name'))) {
-                    $errors[] = sprintf(_MD_FAILUNLINK, $i);
+                    $errors[] = sprintf(_AM_SYSTEM_IMAGES_FAILUNLINK, $i);
                 }
             }
         }
         if (!$imgcat_handler->delete($imagecategory)) {
-            $errors[] = sprintf(_MD_FAILDELCAT, $imagecategory->getVar('imgcat_name'));
+            $errors[] = sprintf(_AM_SYSTEM_IMAGES_FAILDEL, $imagecategory->getVar('imgcat_name'));
         }
         if (count($errors) > 0) {
             redirect_header($current_file . '?target=' . $target, 3, xoops_error(implode('<br>', $error)));
@@ -352,7 +356,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
     if (!empty($_GET['op']) && $op === 'delfile') {
         xoops_header();
         echo "<link href='css/xoopsimagebrowser.css' rel='stylesheet' type='text/css' />";
-        xoops_confirm(array('op' => 'delfileok', 'image_id' => $image_id, 'target' => $target), 'xoopsimagebrowser.php', _MD_RUDELIMG);
+        xoops_confirm(array('op' => 'delfileok', 'image_id' => $image_id, 'target' => $target), 'xoopsimagebrowser.php', _AM_SYSTEM_IMAGES_RUDELIMG);
         xoops_footer();
         exit();
     }
