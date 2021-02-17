@@ -153,7 +153,7 @@ class XoopsFolderHandler
     public function cd($path)
     {
         $path = $this->realpath($path);
-        if (is_dir($path) && file_exists($path)) {
+        if (is_string($path) && is_dir($path) && file_exists($path)) {
             return $this->path = $path;
         }
 

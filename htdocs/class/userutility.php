@@ -184,7 +184,9 @@ class XoopsUserUtility
         $uid    = is_object($user) ? $user->getVar('uid') : 0;
         $sql    = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix('users') . '` WHERE `uname` = ' . $xoopsDB->quote(addslashes($uname)) . (($uid > 0) ? " AND `uid` <> {$uid}" : '');
         $result = $xoopsDB->query($sql);
-        [$count] = $xoopsDB->fetchRow($result);
+        if ($result instanceof \mysqli_result) {
+            [$count] = $xoopsDB->fetchRow($result);
+        }
         if ($count > 0) {
             $stop .= _US_NICKNAMETAKEN . '<br>';
         }
@@ -272,6 +274,7 @@ class XoopsUserUtility
         $myts  = MyTextSanitizer::getInstance();
         $users = array();
         if (count($userid) > 0) {
+            /** @var XoopsMySQLDatabase $xoopsDB */
             $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
             $sql     = 'SELECT uid, uname, name FROM ' . $xoopsDB->prefix('users') . ' WHERE level > 0 AND uid IN(' . implode(',', array_unique($userid)) . ')';
             if (!$result = $xoopsDB->query($sql)) {

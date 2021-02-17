@@ -274,6 +274,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
             array_push($readgroup, XOOPS_GROUP_ADMIN);
         }
         foreach ($readgroup as $rgroup) {
+            /** @var XoopsGroupPerm $imagecategoryperm */
             $imagecategoryperm = $imagecategoryperm_handler->create();
             $imagecategoryperm->setVar('gperm_groupid', $rgroup);
             $imagecategoryperm->setVar('gperm_itemid', $imgcat_id);

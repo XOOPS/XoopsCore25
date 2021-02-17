@@ -58,7 +58,6 @@ class XoopsCommentRenderer
         $this->_tpl           = $tpl;
         $this->_useIcons      = (bool)$use_icons;
         $this->_doIconCheck   = (bool)$do_iconcheck;
-        /* @var $this->_memberHandler XoopsMemberHandler  */
         $this->_memberHandler = xoops_getHandler('member');
         $this->_statusText    = array(
             XOOPS_COMMENT_PENDING => '<span style="text-decoration: none; font-weight: bold; color: #00ff00;">' . _CM_PENDING . '</span>',
