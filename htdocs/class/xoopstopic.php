@@ -28,6 +28,10 @@ include_once XOOPS_ROOT_PATH . '/class/xoopstree.php';
  */
 class XoopsTopic
 {
+    /**
+     * @var \XoopsMySQLDatabase
+     */
+    public $db;
     public $table;
     public $topic_id;
     public $topic_pid;
@@ -396,7 +400,7 @@ class XoopsTopic
     {
         $sql = 'SELECT COUNT(*) from ' . $this->table . ' WHERE topic_pid = ' . (int)$pid . " AND topic_title = '" . trim($title) . "'";
         $rs  = $this->db->query($sql);
-        list($count) = $this->db->fetchRow($rs);
+        [$count] = $this->db->fetchRow($rs);
         if ($count > 0) {
             return true;
         } else {

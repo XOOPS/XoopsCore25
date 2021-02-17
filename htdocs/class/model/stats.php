@@ -31,7 +31,7 @@ class XoopsModelStats extends XoopsModelAbstract
      * count objects matching a condition
      *
      * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement} to match
-     * @return int    count of objects
+     * @return int|array    count of objects
      */
     public function getCount(CriteriaElement $criteria = null)
     {

@@ -69,6 +69,7 @@ switch ($op) {
             }
             $xoopsTpl->assign('cat_options', $cat_options);
             if ($catshow > 0) {
+                /** @var \XoopsImageHandler $image_handler */
                 $image_handler = xoops_getHandler('image');
                 $criteria      = new CriteriaCompo(new Criteria('imgcat_id', $catshow));
                 $criteria->add(new Criteria('image_display', 1));

@@ -116,6 +116,7 @@ if (false !== $user) {
 
     // RMV-NOTIFY
     // Perform some maintenance of notification records
+    /** @var \XoopsNotificationHandler $notification_handler */
     $notification_handler = xoops_getHandler('notification');
     $notification_handler->doLoginMaintenance($user->getVar('uid'));
 

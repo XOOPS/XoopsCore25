@@ -31,6 +31,7 @@ if ('system' === $xoopsModule->getVar('dirname')) {
     $comment_handler = xoops_getHandler('comment');
     $comment         = $comment_handler->get($com_id);
     $module_handler  = xoops_getHandler('module');
+    /** @var \XoopsModule $module */
     $module          = $module_handler->get($comment->getVar('com_modid'));
     $comment_config  = $module->getInfo('comments');
     $com_modid       = $module->getVar('mid');

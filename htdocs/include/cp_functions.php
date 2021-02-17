@@ -73,9 +73,9 @@ function themecenterposts($title, $content)
 /**
  * Text Form : DO NOT USE
  *
- * @param unknown_type $url
- * @param unknown_type $value
- * @return unknown
+ * @param mixed $url
+ * @param mixed $value
+ * @return mixed
  */
 function myTextForm($url, $value)
 {
@@ -85,7 +85,7 @@ function myTextForm($url, $value)
 /**
  * Enter description here...
  *
- * @return unknown
+ * @return mixed
  */
 function xoopsfwrite()
 {
@@ -104,7 +104,7 @@ function xoopsfwrite()
 /**
  * Xoops Module Menu
  * @deprecated
- * @return unknown
+ * @return mixed
  */
 function xoops_module_get_admin_menu()
 {

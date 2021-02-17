@@ -17,6 +17,8 @@
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
+/** @var \XoopsNotificationHandler $notification_handler */
+
 /**
  * xoops_getHandler()
  *
@@ -965,6 +967,7 @@ function xoops_notification_deletebyitem($module_id, $category, $item_id)
  */
 function xoops_comment_count($module_id, $item_id = null)
 {
+    /** @var \XoopsCommentHandler $comment_handler */
     $comment_handler = xoops_getHandler('comment');
     $criteria        = new CriteriaCompo(new Criteria('com_modid', (int)$module_id));
     if (isset($item_id)) {
@@ -984,6 +987,7 @@ function xoops_comment_count($module_id, $item_id = null)
 function xoops_comment_delete($module_id, $item_id)
 {
     if ((int)$module_id > 0 && (int)$item_id > 0) {
+        /** @var \XoopsCommentHandler $comment_handler */
         $comment_handler = xoops_getHandler('comment');
         $comments        = $comment_handler->getByItemId($module_id, $item_id);
         if (is_array($comments)) {

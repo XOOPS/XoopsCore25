@@ -667,7 +667,7 @@ switch ($op) {
         }
         if ($imagecategory->getVar('imgcat_type') !== 'C') {
             xoops_cp_header();
-            xoops_error(_MD_SCATDELNG);
+            xoops_error(_AM_SYSTEM_IMAGES_SCATDELNG);
             xoops_cp_footer();
             exit();
         }

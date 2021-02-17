@@ -201,7 +201,7 @@ class XoopsMediaUploader
      * Count the uploaded files (in case of miltiple upload)
      *
      * @param  string $media_name Name of the file field
-     * @return int
+     * @return int|false
      */
     public function countMedia($media_name) {
         if (!isset($_FILES[$media_name])) {

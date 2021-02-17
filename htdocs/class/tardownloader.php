@@ -41,7 +41,7 @@ class XoopsTarDownloader extends XoopsDownloader
     {
         $this->archiver = new tar();
         $this->ext      = trim($ext);
-        $this->mimeType = trim($mimyType);
+        $this->mimetype = trim($mimyType);
     }
 
     /**

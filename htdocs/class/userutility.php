@@ -100,13 +100,13 @@ class XoopsUserUtility
                 $user = $args[0];
                 break;
             case 2:
-                list($uname, $email) = $args;
+                [$uname, $email] = $args;
                 break;
             case 3:
-                list($user, $pass, $vpass) = $args;
+                [$user, $pass, $vpass] = $args;
                 break;
             case 4:
-                list($uname, $email, $pass, $vpass) = $args;
+                [$uname, $email, $pass, $vpass] = $args;
                 break;
             default:
                 return false;
@@ -178,18 +178,19 @@ class XoopsUserUtility
              * }
              */
         }
+        /** @var XoopsMySQLDatabase $xoopsDB */
         $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
         // Check if uname/email already exists if the user is a new one
         $uid    = is_object($user) ? $user->getVar('uid') : 0;
         $sql    = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix('users') . '` WHERE `uname` = ' . $xoopsDB->quote(addslashes($uname)) . (($uid > 0) ? " AND `uid` <> {$uid}" : '');
         $result = $xoopsDB->query($sql);
-        list($count) = $xoopsDB->fetchRow($result);
+        [$count] = $xoopsDB->fetchRow($result);
         if ($count > 0) {
             $stop .= _US_NICKNAMETAKEN . '<br>';
         }
         $sql    = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix('users') . '` WHERE `email` = ' . $xoopsDB->quote(addslashes($email)) . (($uid > 0) ? " AND `uid` <> {$uid}" : '');
         $result = $xoopsDB->query($sql);
-        list($count) = $xoopsDB->fetchRow($result);
+        [$count] = $xoopsDB->fetchRow($result);
         if ($count > 0) {
             $stop .= _US_EMAILTAKEN . '<br>';
         }

@@ -51,7 +51,7 @@ class XoopsLocal extends XoopsLocalAbstract
      * Number Formats
      *
      * @param  unknown_type $number
-     * @return unknown
+     * @return mixed
      */
     public function number_format($number)
     {

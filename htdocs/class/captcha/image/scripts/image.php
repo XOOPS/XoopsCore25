@@ -231,7 +231,7 @@ class XoopsCaptchaImageHandler
     /**
      * Return random background
      *
-     * @return array
+     * @return array|string
      */
     public function loadBackground()
     {

@@ -36,6 +36,9 @@ class XoopsCommentRenderer
     public $_comments;
     public $_useIcons    = true;
     public $_doIconCheck = false;
+    /**
+     * @var false|\XoopsMemberHandler
+     */
     public $_memberHandler;
     public $_statusText;
     /**

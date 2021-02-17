@@ -44,7 +44,7 @@ class XoopsLocalWrapper
 /**
  * Enter description here...
  *
- * @return unknown
+ * @return mixed
  */
 function xoops_local()
 {

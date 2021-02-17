@@ -56,7 +56,7 @@ class XoopsHttpGet
     /**
      * Use curl to GET the specified URL.
      *
-     * @return string|false response or false on error
+     * @return string|bool response or false on error
      */
     protected function fetchCurl()
     {

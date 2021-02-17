@@ -26,7 +26,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 /**
  * xoops_hex2bin()
  *
- * @param hex string $hex
+ * @param string $hex
  * @return string
  */
 function xoops_hex2bin($hex)
@@ -46,7 +46,7 @@ function xoops_hex2bin($hex)
 /**
  * xoops_bin2hex()
  *
- * @param bin string $bin
+ * @param string $bin
  * @return string
  */
 function xoops_bin2hex($bin)
@@ -57,8 +57,8 @@ function xoops_bin2hex($bin)
 /**
  * xoops_ishexstr()
  *
- * @param hex      string $hex
- * @param checklen int $checklen
+ * @param string $hex
+ * @param int $checklen
  * @return boolean
  */
 function xoops_ishexstr($hex, $checklen = 32)
@@ -81,10 +81,10 @@ function xoops_ishexstr($hex, $checklen = 32)
 /**
  * xoops_convert_encode()
  *
- * @param        value of array  $data
+ * @param string $data value of array
  * @param string $store_method
  *
- * @return boolean
+ * @return boolean|string
  */
 function xoops_convert_encode($data, $store_method = 'urlcode')
 {
@@ -105,9 +105,9 @@ function xoops_convert_encode($data, $store_method = 'urlcode')
 /**
  * xoops_convert_decode()
  *
- * @param        value of array  $data
+ * @param string $data value of array
  * @param string $store_method
- * @return boolean
+ * @return boolean|string
  */
 function xoops_convert_decode($data, $store_method = 'urlcode')
 {
@@ -129,9 +129,9 @@ function xoops_convert_decode($data, $store_method = 'urlcode')
  * xoops_aw_encode()
  *
  * @param  mixed $value value of array
- * @param        key   of array   $key
+ * @param  mixed $key key of array
  * @param string $store_method
- * @return boolean
+ * @return boolean|string
  */
 function xoops_aw_encode($value, $key, $store_method = 'urlcode')
 {
@@ -142,9 +142,9 @@ function xoops_aw_encode($value, $key, $store_method = 'urlcode')
  * xoops_aw_decode()
  *
  * @param mixed $value value of array
- * @param        key   of array $key
+ * @param mixed $key key of array
  * @param string $store_method
- * @return boolean
+ * @return boolean|string
  */
 function xoops_aw_decode($value, $key, $store_method = 'urlcode')
 {

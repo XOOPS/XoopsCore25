@@ -43,5 +43,6 @@ define('_AM_SYSTEM_IMAGES_RUDELIMGCAT', 'Are you sure that you want to delete th
 define('_AM_SYSTEM_IMAGES_FAILDEL', 'Failed deleting image %s from the database');
 define('_AM_SYSTEM_IMAGES_FAILDELCAT', 'Failed deleting image category %s from the database');
 define('_AM_SYSTEM_IMAGES_FAILUNLINK', 'Failed deleting image %s from the server directory');
+define("_AM_SYSTEM_IMAGES_SCATDELNG","Can't delete this category");
 // Tips
 define('_AM_SYSTEM_IMAGES_TIPS', '<ul><li>Manage categories of images and users permissions</li></ul>');

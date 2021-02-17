@@ -192,7 +192,7 @@ class XoopsBlock extends XoopsObject
     /**
      * Build Block
      *
-     * @return unknown
+     * @return mixed
      */
     public function buildBlock()
     {

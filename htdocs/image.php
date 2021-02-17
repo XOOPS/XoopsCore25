@@ -125,7 +125,7 @@ function doConditionalGet($etag, $lastModified)
  * @param int[]    $radii       array(top left, top right, bottom left, bottom right) of pixel radius
  *                               for each corner. A 0 disables rounding on a corner.
  *
- * @return resource
+ * @return resource|\GdImage
  */
 function imageCreateCorners($sourceImage, $radii)
 {

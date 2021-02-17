@@ -45,7 +45,7 @@ class XoopsZipDownloader extends XoopsDownloader
     {
         $this->archiver = new Zipfile();
         $this->ext      = trim($ext);
-        $this->mimeType = trim($mimyType);
+        $this->mimetype = trim($mimyType);
     }
 
     /**
@@ -85,7 +85,7 @@ class XoopsZipDownloader extends XoopsDownloader
      *
      * @param string            $data
      * @param string            $filename
-     * @param int|\unknown_type $time
+     * @param int|mixed $time
      */
     public function addFileData(&$data, $filename, $time = 0)
     {

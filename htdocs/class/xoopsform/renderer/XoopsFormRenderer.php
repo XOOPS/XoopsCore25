@@ -39,7 +39,7 @@ final class XoopsFormRenderer
      */
     public static function getInstance()
     {
-        if (null === static::$instance) {
+        if (null === self::$instance) {
             static::$instance = new static();
         }
 

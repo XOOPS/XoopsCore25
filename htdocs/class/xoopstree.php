@@ -35,6 +35,9 @@ class XoopsTree
     public $pid; // name of parent id used in table $table
     public $order; //specifies the order of query results
     public $title; // name of a field in table $table which will be used when  selection box and paths are generated
+    /**
+     * @var \XoopsMySQLDatabase
+     */
     public $db;
 
     //constructor of class XoopsTree
