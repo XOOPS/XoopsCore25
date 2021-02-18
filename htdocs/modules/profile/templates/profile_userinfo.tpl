@@ -31,15 +31,9 @@
                 <input type="button" value="<{$smarty.const._PROFILE_MA_CHANGEMAIL}>"
                        onclick="location='<{$xoops_url}>/modules/<{$xoops_dirname}>/changemail.php'"/>
             <{/if}>
-
             <{if $user_candelete == true}>
-                <form method="post" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/user.php">
-                    <input type="hidden" name="op" value="delete">
-                    <input type="hidden" name="uid" value="<{$user_uid}>">
-                    <input type="button" value="<{$lang_deleteaccount}>" onclick="submit();"/>
-                </form>
+                <input type="button" value="<{$lang_deleteaccount}>" onclick="location='user.php?op=delete'">
             <{/if}>
-
             <input type="button" value="<{$lang_avatar}>" onclick="location='edituser.php?op=avatarform'"/>
             <input type="button" value="<{$lang_inbox}>" onclick="location='<{$xoops_url}>/viewpmsg.php'"/>
             <input type="button" value="<{$lang_logout}>" onclick="location='<{$xoops_url}>/modules/<{$xoops_dirname}>/user.php?op=logout'"/>
