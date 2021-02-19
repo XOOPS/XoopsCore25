@@ -148,7 +148,7 @@ class XoopsGuiTransition extends XoopsSystemGui
             $modid   = 1;
             $moddir  = 'system';
 
-            $mod_options = $adminmenu;
+            $mod_options = $xoopsModule->getAdminMenu();
             foreach (array_keys($mod_options) as $item) {
                 $mod_options[$item]['link'] = empty($mod_options[$item]['absolute']) ? XOOPS_URL . '/modules/' . $moddir . '/' . $mod_options[$item]['link'] : $mod_options[$item]['link'];
                 $mod_options[$item]['icon'] = empty($mod_options[$item]['icon']) ? '' : XOOPS_URL . '/modules/system/images/' . $mod_options[$item]['icon'];
