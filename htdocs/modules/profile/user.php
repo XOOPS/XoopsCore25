@@ -9,35 +9,31 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright       (c) 2000-2021 XOOPS Project (https://xoops.org)
+ * @license             GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             profile
  * @since               2.3.0
  * @author              Jan Pedersen
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
 
+use Xmf\Request;
+
 $xoopsOption['pagetype'] = 'user';
 include __DIR__ . '/header.php';
 
-XoopsLoad::load('XoopsFilterInput');
-$op = 'main';
+xoops_loadLanguage('user');
 
-if (isset($_POST['op'])) {
-    $op = trim($_POST['op']);
-} elseif (isset($_GET['op'])) {
-    $op = trim($_GET['op']);
-}
+$op = Request::getString('op', 'main');
 
 if ($op === 'main') {
-    if (!$GLOBALS['xoopsUser']) {
+    if (!is_object($GLOBALS['xoopsUser'])) {
         $GLOBALS['xoopsOption']['template_main'] = 'profile_userform.tpl';
         include $GLOBALS['xoops']->path('header.php');
         $GLOBALS['xoopsTpl']->assign('lang_login', _LOGIN);
         $GLOBALS['xoopsTpl']->assign('lang_username', _USERNAME);
-        if (isset($_GET['xoops_redirect'])) {
-            $clean_redirect = XoopsFilterInput::clean($_GET['xoops_redirect'], 'WEBURL');
-            $GLOBALS['xoopsTpl']->assign('redirect_page', $clean_redirect);
+        if (Request::hasVar('xoops_redirect', 'GET')) {
+            $GLOBALS['xoopsTpl']->assign('redirect_page', htmlspecialchars(Request::getUrl('xoops_redirect', 'GET'), ENT_QUOTES));
         }
         if ($GLOBALS['xoopsConfig']['usercookie']) {
             $GLOBALS['xoopsTpl']->assign('lang_rememberme', _US_REMEMBERME);
@@ -52,20 +48,29 @@ if ($op === 'main') {
         include __DIR__ . '/footer.php';
         exit();
     }
-    if (!empty($_GET['xoops_redirect'])) {
-        $redirect   = trim($_GET['xoops_redirect']);
-        $isExternal = false;
-        if ($pos = strpos($redirect, '://')) {
-            $xoopsLocation = substr(XOOPS_URL, strpos(XOOPS_URL, '://') + 3);
-            if (strcasecmp(substr($redirect, $pos + 3, strlen($xoopsLocation)), $xoopsLocation)) {
-                $isExternal = true;
+
+    $redirect = Request::getUrl('xoops_redirect', '', 'GET');
+    if (!empty($redirect)) {
+        $urlParts = parse_url($redirect);
+        $xoopsUrlParts = parse_url(XOOPS_URL);
+        if (false !== $urlParts) {
+            // make sure $redirect is somewhere inside XOOPS_URL
+            // catch https:example.com (no //)
+            $badScheme = (isset($urlParts['path']) && !isset($urlParts['host']) && isset($urlParts['scheme']));
+            // no host or matching host
+            $hostMatch = (!isset($urlParts['host'])) || (0 === strcasecmp($urlParts['host'], $xoopsUrlParts['host']));
+            // path only, or path matches
+            $pathMatch = (isset($urlParts['path']) && !isset($urlParts['host']) && !isset($urlParts['scheme']))
+                || ($hostMatch && isset($urlParts['path']) && isset($xoopsUrlParts['path'])
+                    && 0 === strncmp($urlParts['path'], $xoopsUrlParts['path'], strlen($xoopsUrlParts['path'])));
+            if ($badScheme || !($hostMatch && $pathMatch)) {
+                $redirect = XOOPS_URL;
             }
-        }
-        if (!$isExternal) {
             header('Location: ' . $redirect);
             exit();
         }
     }
+
     header('Location: ./userinfo.php?uid=' . $GLOBALS['xoopsUser']->getVar('uid'));
     exit();
 }
@@ -95,8 +100,8 @@ if ($op === 'logout') {
 }
 
 if ($op === 'actv') {
-    $id     = (int)$_GET['id'];
-    $actkey = trim($_GET['actkey']);
+    $id     = Request::getInt('id', 0, 'GET');
+    $actkey = Request::getString('actkey', '', 'GET');
     redirect_header("activate.php?op=actv&amp;id={$id}&amp;actkey={$actkey}", 1, '');
 }
 
@@ -112,8 +117,9 @@ if ($op === 'delete') {
             // users in the webmasters group may not be deleted
             redirect_header(XOOPS_URL . '/', 5, _US_ADMINNO);
         }
-        $ok = !isset($_POST['ok']) ? 0 : (int)$_POST['ok'];
+        $ok = Request::getInt('ok', 0, 'POST');
         if ($ok != 1) {
+            include $GLOBALS['xoops']->path('header.php');
             include __DIR__ . '/header.php';
             xoops_confirm(array('op' => 'delete', 'ok' => 1), 'user.php', _US_SURETODEL . '<br>' . _US_REMOVEINFO);
             include __DIR__ . '/footer.php';
