@@ -30,7 +30,7 @@ class Protector_postcommon_post_htmlpurify4everyone extends ProtectorFilterAbstr
         // use HTMLPurifier inside Protector
         require_once dirname(__DIR__) . '/library/HTMLPurifier.auto.php';
         $config = HTMLPurifier_Config::createDefault();
-        $config->set('Cache', 'SerializerPath', XOOPS_TRUST_PATH . '/modules/protector/configs');
+        $config->set('Cache', 'SerializerPath', XOOPS_VAR_PATH . '/configs/protector');
         $config->set('Core', 'Encoding', _CHARSET);
         //$config->set('HTML', 'Doctype', 'HTML 4.01 Transitional');
         $this->purifier = new HTMLPurifier($config);
