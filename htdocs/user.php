@@ -1,101 +1,82 @@
 <?php
-/*
- You may not change or alter any portion of this comment or credits
- of supporting developers from this source code or any supporting source code
- which is considered copyrighted (c) material of the original comment or credit authors.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-*/
-
 /**
  * XOOPS User
  *
- * See the enclosed file license.txt for licensing information.
- * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2021 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             core
  * @since               2.0.0
  * @author              Kazumi Ono <webmaster@myweb.ne.jp>
  */
+
+use Xmf\Request;
+
 include __DIR__ . '/mainfile.php';
 $xoopsPreload = XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.user.start');
 
 xoops_loadLanguage('user');
 
-XoopsLoad::load('XoopsFilterInput');
-$op = 'main';
-if (isset($_POST['op'])) {
-    // from $_POST we use keys: op, ok
-    $op       = trim(XoopsFilterInput::clean($_POST['op']));
-    $clean_ok = false;
-    if (isset($_POST['ok'])) {
-        $clean_ok = XoopsFilterInput::clean($_POST['ok'], 'BOOLEAN');
-    }
-} elseif (isset($_GET['op'])) {
-    // from $_GET we may use keys: op, xoops_redirect, id, actkey
-    $op             = trim(XoopsFilterInput::clean($_GET['op']));
-    $clean_redirect = '';
-    if (isset($_GET['xoops_redirect'])) {
-        $clean_redirect = XoopsFilterInput::clean($_GET['xoops_redirect'], 'WEBURL');
-    }
-    if (isset($_GET['id'])) {
-        $clean_id = XoopsFilterInput::clean($_GET['id'], 'INT');
-    }
-    if (isset($_GET['actkey'])) {
-        $clean_actkey = XoopsFilterInput::clean($_GET['actkey'], 'STRING');
-    }
-}
-
-if ($op === 'login') {
-    include_once $GLOBALS['xoops']->path('include/checklogin.php');
-    exit();
-}
+$op = Request::getString('op', 'main');
 
 if ($op === 'main') {
-    if (!$xoopsUser) {
-        $GLOBALS['xoopsOption']['template_main'] = 'system_userform.tpl';
+    if (!is_object($GLOBALS['xoopsUser'])) {
+        $GLOBALS['xoopsOption']['template_main'] = 'profile_userform.tpl';
         include $GLOBALS['xoops']->path('header.php');
-        $xoopsTpl->assign('xoops_pagetitle', _LOGIN);
-        $xoTheme->addMeta('meta', 'keywords', _USERNAME . ', ' . _US_PASSWORD . ', ' . _US_LOSTPASSWORD);
-        $xoTheme->addMeta('meta', 'description', _US_LOSTPASSWORD . ' ' . _US_NOPROBLEM);
-        $xoopsTpl->assign('lang_login', _LOGIN);
-        $xoopsTpl->assign('lang_username', _USERNAME);
-        if (!empty($clean_redirect)) {
-            $xoopsTpl->assign('redirect_page', htmlspecialchars(trim($clean_redirect), ENT_QUOTES));
+        $GLOBALS['xoopsTpl']->assign('lang_login', _LOGIN);
+        $GLOBALS['xoopsTpl']->assign('lang_username', _USERNAME);
+        if (Request::hasVar('xoops_redirect', 'GET')) {
+            $GLOBALS['xoopsTpl']->assign('redirect_page', htmlspecialchars(Request::getUrl('xoops_redirect', 'GET'), ENT_QUOTES));
         }
         if ($GLOBALS['xoopsConfig']['usercookie']) {
-            $xoopsTpl->assign('lang_rememberme', _US_REMEMBERME);
+            $GLOBALS['xoopsTpl']->assign('lang_rememberme', _US_REMEMBERME);
         }
-        $xoopsTpl->assign('lang_password', _PASSWORD);
-        $xoopsTpl->assign('lang_notregister', _US_NOTREGISTERED);
-        $xoopsTpl->assign('lang_lostpassword', _US_LOSTPASSWORD);
-        $xoopsTpl->assign('lang_noproblem', _US_NOPROBLEM);
-        $xoopsTpl->assign('lang_youremail', _US_YOUREMAIL);
-        $xoopsTpl->assign('lang_sendpassword', _US_SENDPASSWORD);
-        $xoopsTpl->assign('mailpasswd_token', $GLOBALS['xoopsSecurity']->createToken());
-        include $GLOBALS['xoops']->path('footer.php');
+        $GLOBALS['xoopsTpl']->assign('lang_password', _PASSWORD);
+        $GLOBALS['xoopsTpl']->assign('lang_notregister', _US_NOTREGISTERED);
+        $GLOBALS['xoopsTpl']->assign('lang_lostpassword', _US_LOSTPASSWORD);
+        $GLOBALS['xoopsTpl']->assign('lang_noproblem', _US_NOPROBLEM);
+        $GLOBALS['xoopsTpl']->assign('lang_youremail', _US_YOUREMAIL);
+        $GLOBALS['xoopsTpl']->assign('lang_sendpassword', _US_SENDPASSWORD);
+        $GLOBALS['xoopsTpl']->assign('mailpasswd_token', $GLOBALS['xoopsSecurity']->createToken());
+        include __DIR__ . '/footer.php';
         exit();
     }
-    if (!empty($clean_redirect)) {
-        $redirect   = trim($clean_redirect);
-        $isExternal = false;
-        if ($pos = strpos($redirect, '://')) {
-            $xoopsLocation = substr(XOOPS_URL, strpos(XOOPS_URL, '://') + 3);
-            if (strcasecmp(substr($redirect, $pos + 3, strlen($xoopsLocation)), $xoopsLocation)) {
-                $isExternal = true;
+
+    $redirect = Request::getUrl('xoops_redirect', '', 'GET');
+    if (!empty($redirect)) {
+        $urlParts = parse_url($redirect);
+        $xoopsUrlParts = parse_url(XOOPS_URL);
+        if (false !== $urlParts) {
+            // make sure $redirect is somewhere inside XOOPS_URL
+            // catch https:example.com (no //)
+            $badScheme = (isset($urlParts['path']) && !isset($urlParts['host']) && isset($urlParts['scheme']));
+            // no host or matching host
+            $hostMatch = (!isset($urlParts['host'])) || (0 === strcasecmp($urlParts['host'], $xoopsUrlParts['host']));
+            // path only, or path matches
+            $pathMatch = (isset($urlParts['path']) && !isset($urlParts['host']) && !isset($urlParts['scheme']))
+                || ($hostMatch && isset($urlParts['path']) && isset($xoopsUrlParts['path'])
+                    && 0 === strncmp($urlParts['path'], $xoopsUrlParts['path'], strlen($xoopsUrlParts['path'])));
+            if ($badScheme || !($hostMatch && $pathMatch)) {
+                $redirect = XOOPS_URL;
             }
-        }
-        if (!$isExternal) {
             header('Location: ' . $redirect);
             exit();
         }
     }
-    header('Location: ' . XOOPS_URL . '/userinfo.php?uid=' . $xoopsUser->getVar('uid'));
+
+    header('Location: ./userinfo.php?uid=' . $GLOBALS['xoopsUser']->getVar('uid'));
+    exit();
+}
+
+if ($op === 'login') {
+    include_once $GLOBALS['xoops']->path('include/checklogin.php');
     exit();
 }
 
@@ -105,53 +86,54 @@ if ($op === 'logout') {
     $GLOBALS['sess_handler']->regenerate_id(true);
     $_SESSION = array();
     setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600, '/', XOOPS_COOKIE_DOMAIN, 0);
-    setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600);
+    setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600, '/');
     // clear entry from online users table
-    if (is_object($xoopsUser)) {
+    if (is_object($GLOBALS['xoopsUser'])) {
         /* @var XoopsOnlineHandler $online_handler */
         $online_handler = xoops_getHandler('online');
-        $online_handler->destroy($xoopsUser->getVar('uid'));
+        $online_handler->destroy($GLOBALS['xoopsUser']->getVar('uid'));
     }
     $xoopsPreload->triggerEvent('core.behavior.user.logout');
     $message = _US_LOGGEDOUT . '<br>' . _US_THANKYOUFORVISIT;
-    redirect_header('index.php', 1, $message);
+    redirect_header(XOOPS_URL . '/', 1, $message);
 }
 
 if ($op === 'actv') {
     $GLOBALS['xoopsLogger']->addDeprecated('Deprecated code. The activation is now handled by register.php');
-    $id     = isset($clean_id) ? $clean_id : 0;
-    $actkey = isset($clean_actkey) ? $clean_actkey : '';
+    $id     = Request::getInt('id', 0, 'GET');
+    $actkey = Request::getString('actkey', '', 'GET');
     redirect_header("register.php?id={$id}&amp;actkey={$actkey}", 1, '');
 }
 
 if ($op === 'delete') {
     /* @var XoopsConfigHandler $config_handler */
-    $config_handler  = xoops_getHandler('config');
-    $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-    if (!$xoopsUser || $xoopsConfigUser['self_delete'] != 1) {
-        redirect_header('index.php', 5, _US_NOPERMISS);
+    $config_handler             = xoops_getHandler('config');
+    $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+    if (!$GLOBALS['xoopsUser'] || $GLOBALS['xoopsConfigUser']['self_delete'] != 1) {
+        redirect_header(XOOPS_URL . '/', 5, _US_NOPERMISS);
     } else {
-        $groups = $xoopsUser->getGroups();
+        $groups = $GLOBALS['xoopsUser']->getGroups();
         if (in_array(XOOPS_GROUP_ADMIN, $groups)) {
             // users in the webmasters group may not be deleted
             redirect_header('user.php', 5, _US_ADMINNO);
         }
-        if (!$clean_ok) {
+        $ok = Request::getInt('ok', 0, 'POST');
+        if ($ok != 1) {
             include $GLOBALS['xoops']->path('header.php');
             xoops_confirm(array('op' => 'delete', 'ok' => 1), 'user.php', _US_SURETODEL . '<br>' . _US_REMOVEINFO);
             include $GLOBALS['xoops']->path('footer.php');
         } else {
-            $del_uid        = $xoopsUser->getVar('uid');
+            $del_uid        = $GLOBALS['xoopsUser']->getVar('uid');
             /* @var XoopsMemberHandler $member_handler */
             $member_handler = xoops_getHandler('member');
-            if (false !== $member_handler->deleteUser($xoopsUser)) {
+            if (false !== $member_handler->deleteUser($GLOBALS['xoopsUser'])) {
                 /* @var XoopsOnlineHandler $online_handler */
                 $online_handler = xoops_getHandler('online');
                 $online_handler->destroy($del_uid);
                 xoops_notification_deletebyuser($del_uid);
-                redirect_header('index.php', 5, _US_BEENDELED);
+                redirect_header(XOOPS_URL . '/', 5, _US_BEENDELED);
             }
-            redirect_header('index.php', 5, _US_NOPERMISS);
+            redirect_header(XOOPS_URL . '/', 5, _US_NOPERMISS);
         }
         exit();
     }
