@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2021 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             class
  * @subpackage          textsanitizer
@@ -19,8 +19,9 @@
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 return $config = array(
-    'tags'     => array(),  // Tags to be filtered out
-    'patterns' => array( // patterns to be used for filtering
-                         array(
-                             'search'  => '',
-                             'replace' => '')));
+    // Click to open an image in a new window in full size using CaricaFoto
+    'clickable' => 0,
+    // Resize the image down to max_width set below
+    'resize'    => 1,
+    // Maximum width of an image displayed on page, otherwise it will be resized
+    'max_width' => 300);
