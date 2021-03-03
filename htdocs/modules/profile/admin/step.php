@@ -29,7 +29,10 @@ $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : (isset($_REQUEST['id']) ? 'edit
 $handler = xoops_getModuleHandler('regstep');
 switch ($op) {
     case 'list':
-        $GLOBALS['xoopsTpl']->assign('steps', $handler->getObjects(null, true, false));
+        $criteria = new CriteriaCompo();
+        $criteria->setSort('step_order');
+        $criteria->setOrder('ASC');
+        $GLOBALS['xoopsTpl']->assign('steps', $handler->getObjects($criteria, true, false));
         $template_main = 'profile_admin_steplist.tpl';
         break;
 

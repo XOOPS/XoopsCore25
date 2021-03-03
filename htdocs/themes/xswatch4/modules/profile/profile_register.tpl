@@ -31,8 +31,11 @@
 <{/if}>
 
 <{if $regform}>
+    <{$regform.rendered}>
+<{*
     <h3><{$regform.title}></h3>
     <{includeq file="db:profile_form.tpl" xoForm=$regform}>
+*}>
 <{elseif $finish}>
     <h1><{$finish}></h1>
     <{if $finish_message}><p><{$finish_message}></p><{/if}>
