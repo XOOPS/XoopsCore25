@@ -38,6 +38,9 @@
 
             <div class="xoops-site-closed-container">
                 <p class="text-muted"><{$lang_siteclosemsg}></p>
+                <{if $redirect_message|default:false}>
+                    <p class="text-warning"><{$redirect_message}></p>
+                <{/if}>
                 <form action="<{xoAppUrl user.php}>" method="post" role="form" class="form-horizontal">
                     <label for="xo-login-uname"><{$lang_username}></label>
                     <div class="input-group mb-3">
