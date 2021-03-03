@@ -75,6 +75,9 @@
         <div id="xo-canvas-content">
             <div id="xo-page">
                 <div id="xo-siteclose"><{$lang_siteclosemsg}></div>
+                <{if $redirect_message|default:false}>
+                <div class="center red"><b><{$redirect_message}></b><br><br></div>
+                <{/if}>
             </div>
         </div>
 

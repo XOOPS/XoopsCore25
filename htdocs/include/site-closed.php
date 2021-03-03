@@ -60,6 +60,11 @@ if (!$allowed) {
                           'lang_username'     => _USERNAME,
                           'lang_password'     => _PASSWORD,
                           'lang_siteclosemsg' => $xoopsConfig['closesite_text']));
+    if (isset($_SESSION['redirect_message'])) {
+        $xoopsTpl->assign('redirect_message', $_SESSION['redirect_message']);
+        unset($_SESSION['redirect_message']);
+    }
+
     /* @var XoopsConfigHandler $config_handler */
     $config_handler = xoops_getHandler('config');
     $criteria       = new CriteriaCompo(new Criteria('conf_modid', 0));
