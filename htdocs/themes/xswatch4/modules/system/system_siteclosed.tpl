@@ -25,7 +25,7 @@
 
     <title><{if $xoops_dirname == "system"}><{$xoops_sitename}><{if $xoops_pagetitle !=''}> - <{$xoops_pagetitle}><{/if}><{else}><{if $xoops_pagetitle
         !=''}><{$xoops_pagetitle}> - <{$xoops_sitename}><{/if}><{/if}></title>
-    <{$xoops_module_header}>
+    <{$xoops_module_header|default:''}>
 </head>
 <body class="site-closed-body">
 <div class="container">
