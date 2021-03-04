@@ -11,15 +11,8 @@
     <meta name="author" content="<{$xoops_meta_author}>"/>
     <meta name="copyright" content="<{$xoops_meta_copyright}>"/>
     <meta name="generator" content="XOOPS"/>
-    <{if $url}>
+    <{if $url|default:false}>
         <meta http-equiv="Refresh" content="<{$time}>; url=<{$url}>"/>
-    <{/if}>
-
-    <!-- Force MSIE without  javascript actived to take the default theme. not conforms to the standards but functional -->
-    <{if $isMsie}>
-        <noscript>
-            <meta http-equiv="refresh" content="0; url=<{xoAppUrl . xoops_theme_select=default}>"/>
-        </noscript>
     <{/if}>
 
     <!-- path favicon -->
