@@ -302,7 +302,7 @@ $xoopsPreload->triggerEvent('core.include.common.auth.success');
  * Note: temporary solution only. Will be re-designed in XOOPS 3.0
  */
 if ($xoopsLogger->activated) {
-    $level = isset($xoopsConfig['debugLevel']) ? (int)$xoopsConfig['debugLevel'] : 0;
+    $level = isset($xoopsConfig['debugLevel']) ? (int)$xoopsConfig['debugLevel'] : 2;
     if (($level == 2 && empty($xoopsUserIsAdmin)) || ($level == 1 && !$xoopsUser)) {
         error_reporting(0);
         $xoopsLogger->activated = false;
