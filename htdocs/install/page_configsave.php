@@ -15,7 +15,7 @@
  * See the enclosed file license.txt for licensing information.
  * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
- * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright    (c) 2000-2021 XOOPS Project (www.xoops.org)
  * @license          GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          installer
  * @since            2.3.0
@@ -56,10 +56,14 @@ if (true === $writeCheck) {
     $rewrite = array_merge($rewrite, $vars);
 
     $result = writeConfigurationFile($rewrite, $vars['VAR_PATH'] . '/data', 'secure.dist.php', 'secure.php');
-    $GLOBALS['error'] = !($result === true);
+    $GLOBALS['error'] = ($result !== true);
+    if ($result === true) {
+        $result = copyConfigDistFiles($vars);
+        $GLOBALS['error'] = ($result !== true);
+    }
     if ($result === true) {
         $result = writeConfigurationFile($rewrite, $vars['ROOT_PATH'], 'mainfile.dist.php', 'mainfile.php');
-        $GLOBALS['error'] = !($result === true);
+        $GLOBALS['error'] = ($result !== true);
     }
 
     $_SESSION['settings']['authorized'] = false;
@@ -271,4 +275,77 @@ function checkFileWriteablity($files)
         }
     }
     return empty($message) ? true : $message;
+}
+
+/**
+ * Install working versions of various *.dist.php files to xoops_data/configs/
+ *
+ * @param $vars array of system variables, we care about ROOT_PATH and VAR_PATH keys
+ *
+ * @return true|string true if all files were copied, otherwise error message
+ */
+function copyConfigDistFiles($vars)
+{
+    $copied = 0;
+    $failed = 0;
+    $logs = array();
+
+    /* xoopsconfig.php */
+    $source = $vars['VAR_PATH'] . '/configs/xoopsconfig.dist.php';
+    $destination = $vars['VAR_PATH'] . '/configs/xoopsconfig.php';
+    if (!file_exists($destination)) { // don't overwrite anything
+        $result = copy($source, $destination);
+        $result ? ++$copied : ++$failed;
+        if (false === $result) {
+            $logs[] = sprintf(ERR_COPY_CONFIG_FILE,  'configs/' . basename($destination));
+        }
+    }
+
+    /* captcha files */
+    $captchaConfigFiles = array(
+        'config.dist.php'            => 'config.php',
+        'config.image.dist.php'      => 'config.image.php',
+        'config.recaptcha2.dist.php' => 'config.recaptcha2.php',
+        'config.text.dist.php'       => 'config.text.php',
+    );
+
+    foreach ($captchaConfigFiles as $source => $destination) {
+        $src  = $vars['ROOT_PATH'] . '/class/captcha/' . $source;
+        $dest = $vars['VAR_PATH'] . '/configs/captcha/' . $destination;
+        if (!file_exists($dest) && file_exists($src)) {
+            $result = copy($src, $dest);
+            $result ? ++$copied : ++$failed;
+            if (false === $result) {
+                $logs[] = sprintf('captcha config file copy to %s failed', $destination);
+                $logs[] = sprintf(ERR_COPY_CONFIG_FILE,  'captcha/' . $destination);
+            }
+        }
+    }
+
+    /* text sanitizer  files */
+    $textsanitizerConfigFiles = array(
+        'config.dist.php'                 => 'config.php',
+        'censor/config.dist.php'          => 'config.censor.php',
+        'flash/config.dist.php'           => 'config.flash.php',
+        'image/config.dist.php'           => 'config.image.php',
+        'mms/config.dist.php'             => 'config.mms.php',
+        'rtsp/config.dist.php'            => 'config.rtsp.php',
+        'syntaxhighlight/config.dist.php' => 'config.syntaxhighlight.php',
+        'textfilter/config.dist.php'      => 'config.textfilter.php',
+        'wiki/config.dist.php'            => 'config.wiki.php',
+        'wmp/config.dist.php'             => 'config.wmp.php',
+    );
+    foreach ($textsanitizerConfigFiles as $source => $destination) {
+        $src  = $vars['ROOT_PATH'] . '/class/textsanitizer/' . $source;
+        $dest = $vars['VAR_PATH'] . '/configs/textsanitizer/' . $destination;
+        if (!file_exists($dest) && file_exists($src)) {
+            $result = copy($src, $dest);
+            $result ? ++$copied : ++$failed;
+            if (false === $result) {
+                $logs[] = sprintf(ERR_COPY_CONFIG_FILE, 'textsanitizer/' . $destination);
+            }
+        }
+    }
+
+    return $failed === 0 ? true : implode('<br>', $logs);
 }

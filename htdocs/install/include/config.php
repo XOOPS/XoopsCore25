@@ -79,7 +79,10 @@ $configs['dataPath'] = array(
         'smarty_cache',
         'smarty_compile',
         ),
-    'configs'   => null,
+    'configs'   => array(
+        'captcha',
+        'textsanitizer',
+    ),
     'data'      => null,
     'protector' => null,
 );
