@@ -5,10 +5,7 @@ use Xmf\Database\Tables;
 /**
  * Upgrade from 2.5.10 to 2.5.11
  *
- * See the enclosed file license.txt for licensing information.
- * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
- *
- * @copyright    (c) 2000-2019 XOOPS Project (https://xoops.org)
+ * @copyright    (c) 2000-2021 XOOPS Project (https://xoops.org)
  * @license          GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          Upgrade
  * @since            2.5.11
@@ -22,8 +19,76 @@ class Upgrade_2511 extends XoopsUpgrade
     public function __construct()
     {
         parent::__construct(basename(__DIR__));
-        $this->tasks = array('qmail');
+        $this->tasks = array(
+            'bannerintsize',
+            'qmail',
+        );
         $this->usedFiles = array();
+    }
+
+
+    /**
+     * Determine if columns are declared mediumint, and if
+     * so, queue ddl to alter to int.
+     *
+     * @param $migrate           \Xmf\Database\Tables
+     * @param $bannerTableName   string
+     * @param $bannerColumnNames string[] array of columns to check
+     *
+     * @return integer count of queue items added
+     */
+    protected function fromMediumToInt(Tables $migrate, $bannerTableName, $bannerColumnNames)
+    {
+        $migrate->useTable($bannerTableName);
+        $count = 0;
+        foreach ($bannerColumnNames as $column) {
+            $attributes = $migrate->getColumnAttributes($bannerTableName, $column);
+            if (0 === strpos(trim($attributes), 'mediumint')) {
+                $count++;
+                $migrate->alterColumn($bannerTableName, $column, 'int(10) UNSIGNED NOT NULL DEFAULT \'0\'');
+            }
+        }
+        return $count;
+    }
+
+    private $bannerTableName = 'banner';
+    private $bannerColumnNames = array('impmade', 'clicks');
+
+    /**
+     * Increase count columns from mediumint to int
+     *
+     * @return bool true if patch IS applied, false if NOT applied
+     */
+    public function check_bannerintsize()
+    {
+        $migrate = new Tables();
+        $count = $this->fromMediumToInt($migrate, $this->bannerTableName, $this->bannerColumnNames);
+
+        return $count==0;
+    }
+
+    /**
+     * Increase count columns from mediumint to int (Think BIG!)
+     *
+     * @return bool true if applied, false if failed
+     */
+    public function apply_bannerintsize()
+    {
+        $migrate = new \Xmf\Database\Tables();
+
+        $count = $this->fromMediumToInt($migrate, $this->bannerTableName, $this->bannerColumnNames);
+
+        $result = $migrate->executeQueue(true);
+        if (false === $result) {
+            $this->logs[] = sprintf('Migration of %s table failed. Error: %s - %s' .
+                $this->bannerTableName,
+                $migrate->getLastErrNo(),
+                $migrate->getLastError()
+            );
+            return false;
+        }
+
+        return $count!==0;
     }
 
     /**
@@ -68,11 +133,12 @@ class Upgrade_2511 extends XoopsUpgrade
     {
         $migrate = new Tables();
         $migrate->useTable('configoption');
-        $migrate->insert('configoption',
-            array('confop_name' => 'qmail', 'confop_value' => 'qmail', 'conf_id' => 64));
+        $migrate->insert(
+            'configoption',
+            array('confop_name' => 'qmail', 'confop_value' => 'qmail', 'conf_id' => 64)
+        );
         return $migrate->executeQueue(true);
     }
 }
 
-$upg = new Upgrade_2511();
-return $upg;
+return new Upgrade_2511();
