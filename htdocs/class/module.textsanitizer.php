@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2021 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             class
  * @since               2.0.0
@@ -22,7 +22,7 @@
  * Abstract class for extensions
  *
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2021 XOOPS Project (https://xoops.org)
  */
 class MyTextSanitizerExtension
 {
@@ -51,26 +51,25 @@ class MyTextSanitizerExtension
     public static function loadConfig($path = null)
     {
         $ts   = MyTextSanitizer::getInstance();
-        $path = str_replace(DIRECTORY_SEPARATOR, '/', $path);
-        if (false === strpos($path, '/')) {
-            if (is_dir($ts->path_basic . '/' . $path)) {
-                $path = $ts->path_basic . '/' . $path;
-            } else {
-                if (is_dir($ts->path_plugin . '/' . $path)) {
-                    $path = $ts->path_plugin . '/' . $path;
-                }
+        $extensionName = (null === $path) ? '' : basename($path);
+        $pathDist = $ts->path_basic;
+        $pathConfig = $ts->path_config;
+
+        if ('' !== $extensionName) {
+            $configFileName = $pathConfig . '/config.' . $extensionName . '.php';
+            $distFileName = $pathDist . '/' . $extensionName . '/config.' . $extensionName . '.dist.php';
+        } else {
+            $configFileName = $pathConfig . '/config.php';
+            $distFileName = $pathDist . '/config.dist.php';
+        }
+        if (!file_exists($configFileName)) {
+            if (false === copy($distFileName, $configFileName)) {
+                trigger_error('Could not create textsanitizer config file ' . basename($configFileName));
+                return $a = array();
             }
         }
-        $config_default = array();
-        $config_custom  = array();
-        if (file_exists($path . '/config.php')) {
-            $config_default = include $path . '/config.php';
-        }
-        if (file_exists($path . '/config.custom.php')) {
-            $config_custom = include $path . '/config.custom.php';
-        }
-
-        return self::mergeConfig($config_default, $config_custom);
+        $configs = include $configFileName;
+        return $configs;
     }
 
     /**
@@ -110,6 +109,10 @@ class MyTextSanitizerExtension
     /**
      * decode
      *
+     * @param string $url
+     * @param string|integer $width
+     * @param string|integer $height
+     *
      * @return Null
      */
     public static function decode($url, $width, $height)
@@ -128,7 +131,7 @@ class MyTextSanitizerExtension
  * @author        Kazumi Ono <onokazu@xoops.org>
  * @author        Taiwen Jiang <phppp@users.sourceforge.net>
  * @author        Goghs Cheng
- * @copyright (c) 2000-2016 XOOPS Project - www.xoops.org
+ * @copyright (c) 2000-2021 XOOPS Project (https://xoops.org)
  */
 class MyTextSanitizer
 {
@@ -156,6 +159,7 @@ class MyTextSanitizer
     //mb------------------------------
 
     public $path_basic;
+    public $path_config;
     public $path_plugin;
 
     public $config;
@@ -173,6 +177,7 @@ class MyTextSanitizer
     public function __construct()
     {
         $this->path_basic  = XOOPS_ROOT_PATH . '/class/textsanitizer';
+        $this->path_config = XOOPS_VAR_PATH . '/configs/textsanitizer';
         $this->path_plugin = XOOPS_ROOT_PATH . '/Frameworks/textsanitizer';
         $this->config      = $this->loadConfig();
     }
@@ -185,16 +190,21 @@ class MyTextSanitizer
      */
     public function loadConfig($name = null)
     {
+        // NB: sending a null name results in an infinite loop
         if (!empty($name)) {
             return MyTextSanitizerExtension::loadConfig($name);
         }
-        $config_default = include $this->path_basic . '/config.php';
-        $config_custom  = array();
-        if (file_exists($file = $this->path_basic . '/config.custom.php')) {
-            $config_custom = include $file;
-        }
 
-        return $this->mergeConfig($config_default, $config_custom);
+        $configFileName = $this->path_config . '/config.php';
+        $distFileName = $this->path_basic . '/config.dist.php';
+
+        if (!file_exists($configFileName)) {
+            if (false===copy($distFileName, $configFileName)) {
+                trigger_error('Could not create textsanitizer config file ' . basename($configFileName));
+                return array();
+            }
+        }
+        return include $configFileName;
     }
 
     /**
@@ -222,9 +232,7 @@ class MyTextSanitizer
     /**
      * Access the only instance of this class
      *
-     * @return object
-     * @static
-     * @staticvar object
+     * @return MyTextSanitizer
      */
     public static function getInstance()
     {
