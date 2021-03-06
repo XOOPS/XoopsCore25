@@ -312,7 +312,7 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
 
     require_once '../class/xoopslists.php';
     $editors = XoopsLists::getDirListAsArray('../class/xoopseditor');
-    $conf    = 35;
+    $conf    = 36;
     foreach ($editors as $dir) {
         $dbm->insert('configoption', ' VALUES (' . $conf . ", '" . $dir . "', '" . $dir . "', 126)");
         ++$conf;

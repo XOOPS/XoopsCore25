@@ -26,11 +26,18 @@ class PathStuffController
         'data' => 'xoops_data');
 
     public $dataPath = array(
-        'caches' => array(
+        'caches'    => array(
             'xoops_cache',
             'smarty_cache',
-            'smarty_compile'),
-        'configs');
+            'smarty_compile',
+        ),
+        'configs'   => array(
+            'captcha',
+            'textsanitizer',
+        ),
+        'data'      => null,
+        'protector' => null,
+    );
 
     public $path_lookup = array(
         'root' => 'ROOT_PATH',
