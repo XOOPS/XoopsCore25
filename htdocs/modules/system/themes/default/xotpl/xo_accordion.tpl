@@ -100,6 +100,11 @@
             </tr>
             <tr>
                 <td><a rel="external" href="https://github.com/XOOPS/XoopsCore25/issues"><{$smarty.const._OXYGEN_REPORTBUG}></a></td>
+                <td><a rel="external" href="https://github.com/XoopsThemes"><{$smarty.const._OXYGEN_XOOPSTHEME}></a></td>
+            </tr>
+            <tr>
+                <td><a rel="external" href="https://github.com/XoopsModules25x"><{$smarty.const._OXYGEN_XOOPSMODULES}></a></td>
+
             </tr>
         </table>
     </div>
