@@ -55,7 +55,7 @@ function make_groups(&$dbm)
  */
 function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $groups)
 {
-    $defaultTheme = 'xbootstrap';
+    $defaultTheme = 'xswatch4';
     // $xoopsDB = Database::getInstance();
     // $dbm = new Db_manager;
     $tables = array();
