@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2021 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             class
  * @subpackage          textsanitizer
@@ -19,6 +19,6 @@
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 return $config = array(
-    'highlight' => 'php',  // Source code highlight: '' - disable; 'php' - php highlight;
-);
+    'link'    => XOOPS_URL . '/modules/mediawiki/?title=%s',// The link to wiki module
+    'charset' => 'UTF-8');// Charset of wiki module
 

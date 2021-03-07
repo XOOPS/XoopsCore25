@@ -1,6 +1,6 @@
 <?php
 /**
- * CAPTCHA configurations for Text mode
+ * TextSanitizer extension
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -9,16 +9,16 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2021 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             class
- * @subpackage          CAPTCHA
- * @since               2.5.2
- * @author              trabis <lusopoemas@gmail.com>
+ * @subpackage          textsanitizer
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
-
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 return $config = array(
-    'num_chars' => 6,  // Maximum characters
+    'detect_dimension' => 1,
+    'enable_flash_entry' => false,  // false to disable entry button in editor, existing content will still play
 );

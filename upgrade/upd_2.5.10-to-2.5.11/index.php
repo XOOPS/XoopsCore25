@@ -21,7 +21,10 @@ class Upgrade_2511 extends XoopsUpgrade
         parent::__construct(basename(__DIR__));
         $this->tasks = array(
             'bannerintsize',
+            'captchadata',
             'qmail',
+            'textsanitizer',
+            'xoopsconfig',
         );
         $this->usedFiles = array();
     }
@@ -138,6 +141,206 @@ class Upgrade_2511 extends XoopsUpgrade
             array('confop_name' => 'qmail', 'confop_value' => 'qmail', 'conf_id' => 64)
         );
         return $migrate->executeQueue(true);
+    }
+
+    /**
+     * Do we need to move captcha writable data?
+     *
+     * @return bool
+     */
+    public function check_captchadata()
+    {
+        $captchaConfigFile = XOOPS_VAR_PATH . '/configs/captcha/config.php';
+        return file_exists($captchaConfigFile);
+    }
+
+    /**
+     * Attempt to make the supplied path
+     * @param $newPath string
+     *
+     * @return bool
+     */
+    private function makeDirectory($newPath)
+    {
+        if (!mkdir($newPath) && !is_dir($newPath)) {
+            $this->logs[] = sprintf('Captcha config directory %s was not created', $newPath);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Copy file $source to $destination
+     *
+     * @param $source      string
+     * @param $destination string
+     *
+     * @return bool true if successful, false on error
+     */
+    private function copyFile($source, $destination)
+    {
+        if (!file_exists($destination)) { // don't overwrite anything
+            $result = copy($source, $destination);
+            if (false === $result) {
+                $this->logs[] = sprintf('Captcha config file copy %s failed', basename($source));
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Move captcha configs to xoops_data to segregate writable data
+     *
+     * @return bool
+     */
+    public function apply_captchadata()
+    {
+        $returnResult = false;
+        $sourcePath = XOOPS_ROOT_PATH . '/class/captcha/';
+        $destinationPath = XOOPS_VAR_PATH . '/configs/captcha/';
+
+        if (!file_exists($destinationPath)) {
+            $this->makeDirectory($destinationPath);
+        }
+        $directory = dir($sourcePath);
+        if (false === $directory) {
+            $this->logs[] = sprintf('Failed to read source %s', $sourcePath);
+            return false;
+        }
+        while (false !== ($entry = $directory->read())) {
+            if (false === strpos($entry, '.dist.')
+                && strpos($entry, 'config.') === 0 && '.php' === substr($entry, -4)) {
+                $src = $sourcePath . $entry;
+                $dest = $destinationPath . $entry;
+                $status = $this->copyFile($src, $dest);
+                if (false === $status) {
+                    $returnResult = false;
+                }
+            }
+        }
+        $directory->close();
+
+        return $returnResult;
+    }
+
+    /**
+     * Do we need to create a xoops_data/configs/xoopsconfig.php?
+     *
+     * @return bool true if patch IS applied, false if NOT applied
+     */
+    public function check_xoopsconfig()
+    {
+        $xoopsConfigFile = XOOPS_VAR_PATH . '/configs/xoopsconfig.php';
+        return file_exists($xoopsConfigFile);
+    }
+
+    /**
+     * Create xoops_data/configs/xoopsconfig.php from xoopsconfig.dist.php
+     *
+     * @return bool true if applied, false if failed
+     */
+    public function apply_xoopsconfig()
+    {
+        $source = XOOPS_VAR_PATH . '/configs/xoopsconfig.dist.php';
+        $destination = XOOPS_VAR_PATH . '/configs/xoopsconfig.php';
+        if (!file_exists($destination)) { // don't overwrite anything
+            $result = copy($source, $destination);
+            if (false === $result) {
+                $this->logs[] = 'xoopsconfig.php file copy failed';
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * This is a default list based on extensions as supplied by XOOPS.
+     * If possible, we will build a list based on contents of class/textsanitizer/
+     * key is file path relative to XOOPS_ROOT_PATH . '/class/textsanitizer/
+     * value is file path relative to XOOPS_VAR_PATH . '/configs/textsanitizer/'
+     *
+     * @var string[]
+     */
+    protected $textsanitizerConfigFiles = array(
+        'config.php' => 'config.php',
+        'censor/config.php' => 'config.censor.php',
+        'flash/config.php' => 'config.flash.php',
+        'image/config.php' => 'config.image.php',
+        'mms/config.php' => 'config.mms.php',
+        'rtsp/config.php' => 'config.rtsp.php',
+        'syntaxhighlight/config.php' => 'config.syntaxhighlight.php',
+        'textfilter/config.php' => 'config.textfilter.php',
+        'wiki/config.php' => 'config.wiki.php',
+        'wmp/config.php' => 'config.wmp.php',
+    );
+
+    /**
+     * Build a list of config files using the existing textsanitizer/config.php
+     * This should prevent some issues with customized systems.
+     *
+     * @return string[] array of existing ts and extension config files
+     *                  each as source name => destination name
+     */
+    protected function buildListTSConfigs()
+    {
+        if (file_exists(XOOPS_ROOT_PATH . '/class/textsanitizer/config.php')) {
+            $config = include XOOPS_ROOT_PATH . '/class/textsanitizer/config.php';
+            if (is_array($config) && array_key_exists('extentions')) {
+                $this->textsanitizerConfigFiles = array(
+                    'config.php' => 'config.php',
+                );
+                foreach ($config['extentions'] as $module => $enabled) {
+                    $source = "{$module}/config.php";
+                    if (file_exists(XOOPS_ROOT_PATH . '/class/textsanitizer/' . $source)) {
+                        $destination = "{$module}/config.{$module}.php";
+                        $this->textsanitizerConfigFiles[$source] = $destination;
+                    }
+                }
+            }
+        }
+        return;
+    }
+
+    /**
+     * Do we need to move any existing files to xoops_data/configs/textsanitizer/ ?
+     *
+     * @return bool true if patch IS applied, false if NOT applied
+     */
+    public function check_textsanitizer()
+    {
+        $this->buildListTSConfigs();
+        foreach ($this->textsanitizerConfigFiles as $source => $destination) {
+            $src  = XOOPS_ROOT_PATH . '/class/textsanitizer/' . $source;
+            $dest = XOOPS_VAR_PATH . '/configs/textsanitizer/' . $destination;
+            if (!file_exists($dest) && file_exists($src)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Copy and rename any existing class/textsanitizer/ config files to xoops_data/configs/textsanitizer/
+     *
+     * @return bool true if applied, false if failed
+     */
+    public function apply_textsanitizer()
+    {
+        $this->buildListTSConfigs();
+        $return = true;
+        foreach ($this->textsanitizerConfigFiles as $source => $destination) {
+            $src  = XOOPS_ROOT_PATH . '/class/textsanitizer/' . $source;
+            $dest = XOOPS_VAR_PATH . '/configs/textsanitizer/' . $destination;
+            if (!file_exists($dest) && file_exists($src)) {
+                $result = copy($src, $dest);
+                if (false === $result) {
+                    $this->logs[] = sprintf('textsanitizer file copy to %s failed', $destination);
+                    $return = false;
+                }
+            }
+        }
+        return $return;
     }
 }
 

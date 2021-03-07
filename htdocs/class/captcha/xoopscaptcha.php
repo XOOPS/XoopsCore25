@@ -14,7 +14,7 @@ use Xmf\Request;
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2021 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             class
  * @subpackage          CAPTCHA
@@ -28,10 +28,10 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class XoopsCaptcha
 {
-    // static $instance;
     public $active;
     public $handler;
     public $path_basic;
+    public $path_config;
     public $path_plugin;
     public $name;
     public $config  = array();
@@ -45,6 +45,7 @@ class XoopsCaptcha
         xoops_loadLanguage('captcha');
         // Load static configurations
         $this->path_basic  = XOOPS_ROOT_PATH . '/class/captcha';
+        $this->path_config = XOOPS_VAR_PATH . '/configs/captcha';
         $this->path_plugin = XOOPS_ROOT_PATH . '/Frameworks/captcha';
         $this->config      = $this->loadConfig();
         $this->name        = $this->config['name'];
@@ -68,25 +69,32 @@ class XoopsCaptcha
     /**
      * XoopsCaptcha::loadConfig()
      *
-     * @param mixed $filename
+     * @param string|null $methodname the captcha method, i.e. text, image, recaptcha2, etc
      *
      * @return array
      */
-    public function loadConfig($filename = null)
+    public function loadConfig($methodname = null)
     {
         $basic_config  = array();
         $plugin_config = array();
-        $filename      = empty($filename) ? 'config.php' : 'config.' . $filename . '.php';
-        if (file_exists($file = $this->path_basic . '/' . $filename)) {
+        $filename      = empty($methodname) ? 'config.php' : 'config.' . $methodname . '.php';
+        $distfilename  = empty($methodname) ? 'config.dist.php' : 'config.' . $methodname . '.dist.php';
+        if (file_exists($file = $this->path_config . '/' . $filename)) {
             $basic_config = include $file;
+        } elseif (file_exists($distfile = $this->path_basic . '/' . $distfilename)) {
+            $basic_config = include $distfile;
+            if (false===copy($distfile, $file)) {
+                trigger_error('Could not create captcha config file ' . $filename);
+            }
         }
+        // use of the path_plugin
         if (file_exists($file = $this->path_plugin . '/' . $filename)) {
             $plugin_config = include $file;
         }
 
         $config = array_merge($basic_config, $plugin_config);
         foreach ($config as $key => $val) {
-            $config[$key] = $val;
+            $this->config[$key] = $val;
         }
 
         return $config;
@@ -436,7 +444,6 @@ class XoopsCaptchaMethod
         $is_valid = false;
         if (!empty($_SESSION["{$sessionName}_code"])) {
             $func     = !empty($this->config['casesensitive']) ? 'strcmp' : 'strcasecmp';
-//            $is_valid = !$func(trim(@$_POST[$sessionName]), $_SESSION["{$sessionName}_code"]);
             $is_valid = !$func(trim(Request::getString($sessionName, '', 'POST')), $_SESSION["{$sessionName}_code"]);
         }
 

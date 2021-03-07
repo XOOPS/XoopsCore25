@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2021 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
@@ -21,12 +21,6 @@ include __DIR__  . '/../../../../mainfile.php';
 
 error_reporting(0);
 $xoopsLogger->activated = false;
-
-/*
-if (empty($_SERVER['HTTP_REFERER']) || !preg_match("/^" . preg_quote(XOOPS_URL, '/') . "/", $_SERVER['HTTP_REFERER'])) {
-    exit();
-}
-*/
 
 /**
  * Class XoopsCaptchaImageHandler
@@ -137,17 +131,17 @@ class XoopsCaptchaImageHandler
         return $items;
     }
 
-    /**#@+
+    /**
      *  Create CAPTCHA iamge with GD
      *  Originated by DuGris' SecurityImage
+     *  --------------------------------------------------------------------------- //
+     *  Class : SecurityImage 1.5                                                    //
+     *  Author: DuGris aka L. Jen <http://www.dugris.info>                            //
+     *  Email : DuGris@wanadoo.fr                                                    //
+     *  Licence: GNU                                                                    //
+     *  Project: The XOOPS Project                                                    //
+     *  --------------------------------------------------------------------------- //
      */
-    //  --------------------------------------------------------------------------- //
-    // Class : SecurityImage 1.5                                                    //
-    // Author: DuGris aka L. Jen <http://www.dugris.info>                            //
-    // Email : DuGris@wanadoo.fr                                                    //
-    // Licence: GNU                                                                    //
-    // Project: The XOOPS Project                                                    //
-    //  --------------------------------------------------------------------------- //
     public function createImageGd()
     {
         $this->loadFont();
@@ -284,7 +278,7 @@ class XoopsCaptchaImageHandler
             // write text to image
             $Angle = mt_rand(10, 30);
             if ($i % 2) {
-                $Angle = mt_rand(-10, -30);
+                $Angle = mt_rand(-30, -10);
             }
 
             // select random font size

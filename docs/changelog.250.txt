@@ -1,7 +1,7 @@
 XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 ===================================
-2.5.11 Beta2           NOT RELEASED
+2.5.11 Beta2           2021/03/06
 ===================================
 
 - update xmsocial, xmmodules, xmdoc and xmnews (mage)
@@ -10,7 +10,7 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - Add missing "dropdown-item" class on list items (geekwright)
 - Use mixed case constants in DHTML editor controls (geekwright)
 - Correct issues in dhtmltextarea
-- Fix:https://github.com/XOOPS/XoopsCore25/issues/783 (mage)
+- Fix changing avatar with profile module and xswatch4 #784 (mage)
 - Tweak feeds used in XOOPS News in admin.php (geekwright)
     - use https and no "www." for xoops.org feeds
     - give priority to feed(s) in htdocs/language/.../backend.php
@@ -23,7 +23,7 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - Fix docblock \XoopsNotificationHandler::triggerEvent() - Fixes #794 (geekwright)
 - cloning of all xswatch derivatives (alain01)
 - Update style.css (alain01)
-  - Delete little space between pages number
+- Delete little space between pages number
 - Modified: htdocs/class/snoopy.php (mage)
 - Fix Error when no modules installed (geekwright)
 - Add meaningful default page to xswatch4 (geekwright)
@@ -52,14 +52,20 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 - Fix: count search (mage)
 - Fixed error when redirect (luciorota)
 - Return proper null value for integer columns (geekwright)
-- Add macro substitutions for {X_SITEURL} and {X_YEAR}
-- Patch a few issues when using PHP 8 (geekwright)
+- Add macro substitutions for {X_SITEURL} and {X_YEAR} #850
+- Patch issues when using PHP 8.0 (mamba, et al.)
 - explicitly require fileinfo extension in install
+- XoopsModelRead::getAll() now recognizes database errors #943
+- fix "array to string conversion error" in module install #944 (mamba)
+- Make $redirect_message available in system_siteclosed.tpl #952
+- fix default for debugLevel configuration #953
+- remove non-useful links from module admin page #956 (mage)
+- stop overwriting config files when updating XOOPS
 
 Updated libraries and assets:
 - Smarty: allow StdClass to be cast to array when compiling foreach (mamba)
 - HTML Purifier to 4.13 (mamba)
-- phpThumb to 1.7.16-202008101454 (mamba)
+- phpThumb has been removed #939
 - bootstrap 3.4.1 (geekwright)
 - jQuery to 3.5.1 (geekwright)
 

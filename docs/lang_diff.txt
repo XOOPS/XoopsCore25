@@ -11,6 +11,8 @@ htdocs/language/english/global.php
 - changed define('_SIZE', 'Size'); // font size
 - changed define('_FONT', 'Font'); // font family
 - changed define('_COLOR', 'Color'); // font color
+htdocs/install/language/english/install.php
+- added define('ERR_COPY_CONFIG_FILE', 'Could not copy the configuration file %s');
 htdocs/install/language/english/welcome.php
 - changed recommended PHP & MySQL versions, links changed to "https:"
 htdocs/modules/system/language/english/admin/preferences.php

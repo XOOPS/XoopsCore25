@@ -1,6 +1,6 @@
 <?php
 /**
- * TextSanitizer extension
+ * CAPTCHA configurations for All modes
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -9,15 +9,24 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2017 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2021 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             class
- * @subpackage          textsanitizer
+ * @subpackage          CAPTCHA
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
+
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
+/**
+ * This keeping config in files has really got to stop. If we can't actually put these into
+ * the actual XOOPS config then we should do this. (Who said this? You are right!)
+ */
 return $config = array(
-    'enable_rtsp_entry' => true,  // false to disable entry button in editor, existing content will still play
+    'disabled'    => false,  // Disable CAPTCHA
+    'mode'        => 'text',  // default mode, you can choose 'text', 'image', 'recaptcha2'(requires api key)
+    'name'        => 'xoopscaptcha',  // captcha name
+    'skipmember'  => true,  // Skip CAPTCHA check for members
+    'maxattempts' => 10,  // Maximum attempts for each session
 );

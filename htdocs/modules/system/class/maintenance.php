@@ -112,7 +112,7 @@ class SystemMaintenance
         if (is_dir($dir)) {
             if ($dirHandle = opendir($dir)) {
                 while (($file = readdir($dirHandle)) !== false) {
-                    if (filetype($dir . $file) === 'file' && $file !== 'index.html') {
+                    if (filetype($dir . $file) === 'file' && $file !== 'index.php') {
                         unlink($dir . $file);
                     }
                 }
