@@ -1,4 +1,4 @@
-<aside class="col-sm-4 col-md-4">
+<aside class="col-12 col-md-4">
     <{foreach item=block from=$xoBlocks.footer_center}>
         <div class="xoops-footer-blocks mt-2 mb-2">
             <{if $block.title}><h4><{$block.title}></h4><{/if}>
