@@ -44,7 +44,7 @@ function genPathCheckHtml($path, $valid)
                 $msg = XOOPS_PATH_FOUND;
                 break;
         }
-        $msg = $myts->htmlspecialchars($msg, ENT_QUOTES, _UPGRADE_CHARSET, false);
+        $msg = $myts->htmlSpecialChars($msg, ENT_QUOTES, _UPGRADE_CHARSET, false);
 
         return '<span class="result-y">y</span> ' . $msg;
     } else {
@@ -55,7 +55,7 @@ function genPathCheckHtml($path, $valid)
                 $msg = ERR_COULD_NOT_ACCESS;
                 break;
         }
-        $msg = $myts->htmlspecialchars($msg, ENT_QUOTES, _UPGRADE_CHARSET, false);
+        $msg = $myts->htmlSpecialChars($msg, ENT_QUOTES, _UPGRADE_CHARSET, false);
 
         return '<span class="result-x">x</span> ' . $msg;
     }
@@ -77,7 +77,7 @@ $myts = MyTextSanitizer::getInstance();
         <legend><?php echo LEGEND_XOOPS_PATHS; ?></legend>
         <label for="data"><?php echo XOOPS_DATA_PATH_LABEL; ?></label>
 
-        <div class="xoform-help"><?php echo $myts->htmlspecialchars(XOOPS_DATA_PATH_HELP, ENT_QUOTES, _UPGRADE_CHARSET, false); ?></div>
+        <div class="xoform-help"><?php echo $myts->htmlSpecialChars(XOOPS_DATA_PATH_HELP, ENT_QUOTES, _UPGRADE_CHARSET, false); ?></div>
         <span class="bold"><?php echo $ctrl->xoopsPath['data']; ?></span>
 
         <div><?php echo genPathCheckHtml('data', $ctrl->validPath['data']); ?></div>
@@ -101,7 +101,7 @@ $myts = MyTextSanitizer::getInstance();
 
         <label for="lib"><?php echo XOOPS_LIB_PATH_LABEL; ?></label>
 
-        <div class="xoform-help"><?php echo $myts->htmlspecialchars(XOOPS_LIB_PATH_HELP, ENT_QUOTES, _UPGRADE_CHARSET, false); ?></div>
+        <div class="xoform-help"><?php echo $myts->htmlSpecialChars(XOOPS_LIB_PATH_HELP, ENT_QUOTES, _UPGRADE_CHARSET, false); ?></div>
         <span class="bold"><?php echo $ctrl->xoopsPath['lib']; ?></span><br/>
         <span><?php echo genPathCheckHtml('lib', $ctrl->validPath['lib']); ?></span>
 
