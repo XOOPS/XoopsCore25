@@ -83,9 +83,9 @@ function xoFormFieldCollation($name, $value, $label, $help = '')
     $collations = getDbCollations();
 
     $myts  = MyTextSanitizer::getInstance();
-    $label = $myts->htmlspecialchars($label, ENT_QUOTES, _UPGRADE_CHARSET, false);
-    $name  = $myts->htmlspecialchars($name, ENT_QUOTES, _UPGRADE_CHARSET, false);
-    $value = $myts->htmlspecialchars($value, ENT_QUOTES);
+    $label = $myts->htmlSpecialChars($label, ENT_QUOTES, _UPGRADE_CHARSET, false);
+    $name  = $myts->htmlSpecialChars($name, ENT_QUOTES, _UPGRADE_CHARSET, false);
+    $value = $myts->htmlSpecialChars($value, ENT_QUOTES);
 
     $field = "<label for='$name'>$label</label>\n";
     if ($help) {

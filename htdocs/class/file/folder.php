@@ -322,7 +322,7 @@ class XoopsFolderHandler
      */
     public function normalizePath($path)
     {
-        if (XoopsFolderHandler::isWindowsPath($path)) {
+        if ($this->isWindowsPath($path)) {
             return '\\';
         }
 
@@ -340,7 +340,7 @@ class XoopsFolderHandler
      */
     public function correctSlashFor($path)
     {
-        if (XoopsFolderHandler::isWindowsPath($path)) {
+        if ($this->isWindowsPath($path)) {
             return '\\';
         }
 
@@ -358,11 +358,11 @@ class XoopsFolderHandler
      */
     public function slashTerm($path)
     {
-        if (XoopsFolderHandler::isSlashTerm($path)) {
+        if ($this->isSlashTerm($path)) {
             return $path;
         }
 
-        return $path . XoopsFolderHandler::correctSlashFor($path);
+        return $path . $this->correctSlashFor($path);
     }
 
     /**

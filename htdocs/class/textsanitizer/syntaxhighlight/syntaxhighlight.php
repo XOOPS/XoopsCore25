@@ -38,7 +38,7 @@ class MytsSyntaxhighlight extends MyTextSanitizerExtension
         }
         $source = $ts->undoHtmlSpecialChars($source);
         $source = stripslashes($source);
-        $source = MytsSyntaxhighlight::php($source);
+        $source = $this->php($source);
 
         return $source;
     }
