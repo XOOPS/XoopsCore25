@@ -38,7 +38,7 @@ class MytsSyntaxhighlight extends MyTextSanitizerExtension
         }
         $source = $ts->undoHtmlSpecialChars($source);
         $source = stripslashes($source);
-        $source = MytsSyntaxhighlight::php($source);
+        $source = $this->php($source);
 
         return $source;
     }
@@ -48,7 +48,7 @@ class MytsSyntaxhighlight extends MyTextSanitizerExtension
      *
      * @return mixed|string
      */
-    public static function php($text)
+    public function php($text)
     {
         $text          = trim($text);
         $addedtag_open = 0;
