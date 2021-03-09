@@ -48,7 +48,7 @@ class MytsSyntaxhighlight extends MyTextSanitizerExtension
      *
      * @return mixed|string
      */
-    public function php($text)
+    public static function php($text)
     {
         $text          = trim($text);
         $addedtag_open = 0;

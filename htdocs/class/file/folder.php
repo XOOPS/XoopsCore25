@@ -286,7 +286,7 @@ class XoopsFolderHandler
      * @access public
      * @static
      */
-    public function isWindowsPath($path)
+    public static function isWindowsPath($path)
     {
         if (preg_match('/^[A-Z]:\\\\/i', $path)) {
             return true;
@@ -338,7 +338,7 @@ class XoopsFolderHandler
      * @access public
      * @static
      */
-    public function correctSlashFor($path)
+    public static function correctSlashFor($path)
     {
         if (XoopsFolderHandler::isWindowsPath($path)) {
             return '\\';
@@ -356,7 +356,7 @@ class XoopsFolderHandler
      * @access public
      * @static
      */
-    public function slashTerm($path)
+    public static function slashTerm($path)
     {
         if (XoopsFolderHandler::isSlashTerm($path)) {
             return $path;
