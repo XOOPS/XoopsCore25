@@ -25,6 +25,6 @@ templates such as modules/publisher/publisher_item.tpl with this line:
 In the file `tpl/nav-menu.tpl` there is an option at the top of the file in
 the line `<{assign var='stickyHeader' value='yes'}>`. This option keeps the
 menu bar stuck to the top of the display. If you would prefer to let the menu
-disapper as you scroll down the page, change the setting to `value='no'` and
+disappear as you scroll down the page, change the setting to `value='no'` and
 save the file.
 
