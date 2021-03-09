@@ -26,6 +26,7 @@
                                                 value='Check All'/></th>
             <th class="txtcenter width5"><{$smarty.const._AM_SYSTEM_USERS_STATUS}></th>
             <th class="txtcenter"><{$smarty.const._AM_SYSTEM_USERS_UNAME}></th>
+            <th class="txtcenter"><{$smarty.const._AM_SYSTEM_USERS_REALNAME}></th>
             <th class="txtcenter"><{$smarty.const._AM_SYSTEM_USERS_EMAIL}></th>
             <th class="txtcenter"><{$smarty.const._AM_SYSTEM_USERS_REG_DATE}></th>
             <th class="txtcenter"><{$smarty.const._AM_SYSTEM_USERS_LAST_LOGIN}></th>
@@ -44,6 +45,7 @@
                         </td>
                         <td class="txtcenter"><img class="xo-imgmini" src="<{$users.group}>" alt=""/></td>
                         <td class="txtcenter"><a title="<{$users.uname}>" href="<{$xoops_url}>/userinfo.php?uid=<{$users.uid}>"><{$users.uname}></a></td>
+                        <td class="txtcenter"><{$users.name}></td>
                         <td class="txtcenter"><{$users.email}></td>
                         <td class="txtcenter"><{$users.reg_date}></td>
                         <td class="txtcenter"><{$users.last_login}></td>
