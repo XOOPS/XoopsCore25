@@ -286,7 +286,7 @@ class Upgrade_2511 extends XoopsUpgrade
     {
         if (file_exists(XOOPS_ROOT_PATH . '/class/textsanitizer/config.php')) {
             $config = include XOOPS_ROOT_PATH . '/class/textsanitizer/config.php';
-            if (is_array($config) && array_key_exists('extentions')) {
+            if (is_array($config) && array_key_exists('extentions', $config)) {
                 $this->textsanitizerConfigFiles = array(
                     'config.php' => 'config.php',
                 );
