@@ -23,9 +23,11 @@
 		</form>
 	<{if $cat|default:false}>
 		<div class="row mb-2">
+			<{if $category_logo != ''}>
 			<div class="col-3 col-md-4 col-lg-3 text-center">
 				<img class="rounded img-fluid" src="<{$category_logo}>" alt="<{$category_name}>">
 			</div>
+			<{/if}>
 			<div class="col-9 col-md-8 col-lg-9 " style="padding-bottom: 5px; padding-top: 5px;">
 				<h4 class="mt-0"><{$category_name}></h4>
 				<{$category_description}>
@@ -36,10 +38,10 @@
 		<div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 justify-content-center">
 			<{foreach item=news from=$news}>
 				<div class="col mb-3">
-					<div class="card h-100 border">
-						<div class="card-header">
+					<div class="card h-100 xmnews-border" <{if $news.color != false}>style="border-color : <{$news.color}>;"<{/if}>>
+						<div class="card-header" <{if $news.color != false}>style="background-color : <{$news.color}>;"<{/if}>>
 							<div class="d-flex justify-content-center text-center">
-								<h5 class="mb-0"><{$news.title}></h5>
+								<h5 class="mb-0 text-white"><{$news.title}></h5>
 							</div>
 						</div>
 
