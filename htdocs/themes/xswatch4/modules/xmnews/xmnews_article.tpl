@@ -24,10 +24,10 @@
 	<div class="row mb-2">
 		<div class="col-md-12">
 <!--		<div class="no-gutters rounded overflow-hidden flex-md-row mb-0 shadow-sm h-md-250 position-relative">-->
-				<div class="card">
-					<div class="card-header">
+				<div class="card" <{if $category_color != false}>style="border-color : <{$category_color}>;"<{/if}>>
+					<div class="card-header category_color" <{if $category_color != false}>style="background-color : <{$category_color}>;"<{/if}>>
 						<div class="d-flex justify-content-between">
-							<h3 class="mb-0"><{$title}></h3>
+							<h3 class="mb-0 text-white"><{$title}></h3>
 							<{if $dohits == 1}>
 								<div class="row align-items-center text-right">
 									<div class="col">
@@ -81,28 +81,29 @@
 						<{/if}>
 					</div>
 					<div class="card-body">
-						<div class="col d-flex flex-column position-static">
-
-							<p class="card-text mb-auto">
-								<div class="row">
-									<div class="col">
-										<{if $logo != ''}>
-										<{if $CAT == true}>
-										<a href="index.php?news_cid=<{$category_id}>">
-										<{/if}>
-										<img class="col-3 rounded float-right d-none d-md-block" src="<{$logo}>" alt="<{$title}>">
-										<{if $CAT == true}>
-										</a>
-										<{/if}>
-										<{/if}>
-										<p>
-										<{$news}>
-										</p>
-									</div>
+						<p class="card-text mb-auto">
+							<div class="row">
+								<div class="col">
+									<{if $logo != ''}>
+									<{if $CAT == true}>
+									<a href="index.php?news_cid=<{$category_id}>">
+									<{/if}>
+									<img class="col-3 rounded float-right d-none d-md-block" src="<{$logo}>" alt="<{$title}>">
+									<{if $CAT == true}>
+									</a>
+									<{/if}>
+									<{/if}>
+									<p>
+									<{$news}>
+									</p>
 								</div>
-							</p>
-						</div>
+							</div>
+						</p>
 						<div class="w-100"></div>
+						<{if $social == true}>
+							<{include file="db:xmsocial_social.tpl"}>
+							<br>
+						<{/if}>
 						<{if $xmdoc_viewdocs|default:false == true}>
 						<div class="col-12 pl-4 pr-4 pb-4">
 							<div class="card">

@@ -3,9 +3,9 @@
 	<{foreach item=blocknews from=$block.news}>
 		<{if $block.full == 0}>
 			<div class="col-xs-12 col-sm-6 col-lg-3 mb-3 px-1 px-sm-2 mx-3 mx-sm-0">
-				<div class="card">
-					<div class="card-header text-center text-truncate d-none d-sm-block">
-						<a class="text-decoration-none" title="<{$category.name|default:''}>" href="<{$xoops_url}>/modules/xmnews/article.php?news_id=<{$blocknews.id}>">
+				<div class="card xmnews-border" <{if $blocknews.color != false}>style="border-color : <{$blocknews.color}>;"<{/if}>>
+					<div class="card-header text-center text-truncate d-none d-sm-block" <{if $blocknews.color != false}>style="background-color : <{$blocknews.color}>;"<{/if}>>
+						<a class="text-decoration-none text-white" title="<{$category.name|default:''}>" href="<{$xoops_url}>/modules/xmnews/article.php?news_id=<{$blocknews.id}>">
 							<{$blocknews.title}>
 						</a>
 					</div>
@@ -55,11 +55,10 @@
 			</div>
 		<{else}>
 			<div class="col-md-12">
-	<!--		<div class="row no-gutters rounded overflow-hidden flex-md-row mb-0 shadow-sm h-md-250 position-relative">-->
-				<div class="card">
-					<div class="card-header">
+				<div class="card xmnews-border" <{if $blocknews.color != false}>style="border-color : <{$blocknews.color}>;"<{/if}>>
+					<div class="card-header" <{if $blocknews.color != false}>style="background-color : <{$blocknews.color}>;"<{/if}>>
 						<div class="d-flex justify-content-between">
-							<h3 class="mb-0"><{$blocknews.title}></h3>
+							<h3 class="mb-0 text-white"><{$blocknews.title}></h3>
 							<{if $blocknews.dohits == 1}>
 								<div class="row align-items-center text-right">
 									<div class="col">
@@ -99,15 +98,6 @@
 									</figure>
 								<{/if}>
 							<{/if}>
-
-							<{if $blocknews.dorating == 1}>
-								<{if $xmsocial == true}>
-									<figure class="text-muted m-1 pr-2 text-center border-right border-secondary">
-										<span class="fa fa-star" aria-hidden="true"></span> <{$smarty.const._MA_XMNEWS_NEWS_RATING}>
-										<figcaption class="figure-caption text-center"><{$blocknews.rating}></figcaption>	
-									</figure>	
-								<{/if}>
-							<{/if}>
 							<{if $blocknews.dorating == 1}>
 								<{if $block.xmsocial == true}>
 									<figure class="text-muted m-1 pr-2 text-center border-right border-secondary">
@@ -120,7 +110,7 @@
 					<{/if}>
 					<div class="d-block d-md-none pt-2 px-4">
 						<{if $blocknews.logo != ''}>
-							<{if $CAT == true}><a href="index.php?news_cid=<{$category_id}>"><{/if}><img class="card-img-top rounded img-fluid" src="<{$blocknews.logo}>" alt="<{$blocknews.title}>"><{if $CAT == true}></a><{/if}>
+							<img class="card-img-top rounded img-fluid" src="<{$blocknews.logo}>" alt="<{$blocknews.title}>">
 						<{/if}>
 					</div>
 
@@ -131,13 +121,7 @@
 								<div class="row">
 									<div class="col">
 										<{if $blocknews.logo != ''}>
-										<{if $CAT == true}>
-										<a href="index.php?news_cid=<{$category_id}>">
-										<{/if}>
-										<img class="col-3 rounded float-right d-none d-md-block" src="<{$blocknews.logo}>" alt="<{$title}>">
-										<{if $CAT == true}>
-										</a>
-										<{/if}>
+											<img class="col-3 rounded float-right d-none d-md-block" src="<{$blocknews.logo}>" alt="<{$blocknews.title}>">
 										<{/if}>
 										<p>
 										<{$blocknews.news}>
@@ -147,19 +131,6 @@
 							</p>
 						</div>
 						<div class="w-100"></div>
-						<{if $xmdoc_viewdocs == true}>
-						<div class="col-12 pl-4 pr-4 pb-4"> 
-							<div class="card">
-								<div class="card-header">
-									<{$smarty.const._MA_XMNEWS_NEWS_XMDOC}>
-								</div>
-								<div class="card-body">
-									<{include file="db:xmdoc_viewdoc.tpl"}>
-								</div>
-							</div>
-						</div>
-						<div class="w-100"></div>
-						<{/if}>
 					</div>
 				</div>
 			</div>				
