@@ -14,7 +14,7 @@
  * See the enclosed file license.txt for licensing information.
  * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
- * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright    (c) 2000-2021 XOOPS Project (www.xoops.org)
  * @license          GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          installer
  * @since            2.3.0
@@ -60,15 +60,6 @@ if (empty($xoopsOption['hascommon'])) {
 if (!defined('XOOPS_ROOT_PATH')) {
     define('XOOPS_ROOT_PATH', str_replace("\\", '/', realpath('../')));
 }
-
-/*
-error_reporting( 0 );
-if (isset($xoopsLogger)) {
-    $xoopsLogger->activated = false;
-}
-error_reporting(E_ALL);
-$xoopsLogger->activated = true;
-*/
 
 date_default_timezone_set(@date_default_timezone_get());
 include './class/installwizard.php';

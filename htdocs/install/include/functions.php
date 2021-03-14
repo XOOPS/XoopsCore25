@@ -3,7 +3,7 @@
  * See the enclosed file license.txt for licensing information.
  * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
- * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright    (c) 2000-2021 XOOPS Project (www.xoops.org)
  * @license          GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          installer
  * @since            2.3.0
@@ -15,6 +15,16 @@
  * @param string $hash
  * @return bool
  */
+
+/**
+ * call htmlspecialchars with standard arguments
+ * @param $value string
+ * @return string
+ */
+function installerHtmlSpecialChars($value)
+{
+    return htmlspecialchars($value, ENT_QUOTES, _INSTALL_CHARSET, true);
+}
 
 function install_acceptUser($hash = '')
 {
@@ -29,7 +39,8 @@ function install_acceptUser($hash = '')
     $uname = $claims->uname;
     /* @var XoopsMemberHandler $memberHandler */
     $memberHandler = xoops_getHandler('member');
-    $user = array_pop($memberHandler->getUsers(new Criteria('uname', $uname)));
+    $users = $memberHandler->getUsers(new Criteria('uname', $uname));
+    $user = array_pop($users);
 
     if (is_object($GLOBALS['xoops']) && method_exists($GLOBALS['xoops'], 'acceptUser')) {
         $res = $GLOBALS['xoops']->acceptUser($uname, true, '');
@@ -65,10 +76,9 @@ function install_finalize($installer_modified)
  */
 function xoFormField($name, $value, $label, $help = '')
 {
-    $myts  = MyTextSanitizer::getInstance();
-    $label = $myts->htmlSpecialChars($label, ENT_QUOTES, _INSTALL_CHARSET, false);
-    $name  = $myts->htmlSpecialChars($name, ENT_QUOTES, _INSTALL_CHARSET, false);
-    $value = $myts->htmlSpecialChars($value, ENT_QUOTES);
+    $label = installerHtmlSpecialChars($label);
+    $name  = installerHtmlSpecialChars($name);
+    $value = installerHtmlSpecialChars($value);
     echo '<div class="form-group">';
     echo '<label class="xolabel" for="' . $name . '">' . $label . '</label>';
     if ($help) {
@@ -86,10 +96,9 @@ function xoFormField($name, $value, $label, $help = '')
  */
 function xoPassField($name, $value, $label, $help = '')
 {
-    $myts  = MyTextSanitizer::getInstance();
-    $label = $myts->htmlSpecialChars($label, ENT_QUOTES, _INSTALL_CHARSET, false);
-    $name  = $myts->htmlSpecialChars($name, ENT_QUOTES, _INSTALL_CHARSET, false);
-    $value = $myts->htmlSpecialChars($value, ENT_QUOTES);
+    $label = installerHtmlSpecialChars($label);
+    $name  = installerHtmlSpecialChars($name);
+    $value = installerHtmlSpecialChars($value);
     echo '<div class="form-group">';
     echo '<label class="xolabel" for="' . $name . '">' . $label . '</label>';
     if ($help) {
@@ -113,10 +122,9 @@ function xoPassField($name, $value, $label, $help = '')
  */
 function xoFormSelect($name, $value, $label, $options, $help = '', $extra='')
 {
-    $myts  = MyTextSanitizer::getInstance();
-    $label = $myts->htmlSpecialChars($label, ENT_QUOTES, _INSTALL_CHARSET, false);
-    $name  = $myts->htmlSpecialChars($name, ENT_QUOTES, _INSTALL_CHARSET, false);
-    $value = $myts->htmlSpecialChars($value, ENT_QUOTES);
+    $label = installerHtmlSpecialChars($label);
+    $name  = installerHtmlSpecialChars($name);
+    $value = installerHtmlSpecialChars($value);
     echo '<div class="form-group">';
     echo '<label class="xolabel" for="' . $name . '">' . $label . '</label>';
     if ($help) {
@@ -404,10 +412,9 @@ function xoFormFieldCharset($name, $value, $label, $help, $link)
         $charsets[$k] = $v . ' (' . $k . ')';
     }
     asort($charsets);
-    $myts  = MyTextSanitizer::getInstance();
-    $label = $myts->htmlSpecialChars($label, ENT_QUOTES, _INSTALL_CHARSET, false);
-    $name  = $myts->htmlSpecialChars($name, ENT_QUOTES, _INSTALL_CHARSET, false);
-    $value = $myts->htmlSpecialChars($value, ENT_QUOTES);
+    $label = installerHtmlSpecialChars($label);
+    $name  = installerHtmlSpecialChars($name);
+    $value = installerHtmlSpecialChars($value);
     $extra = 'onchange="setFormFieldCollation(\'DB_COLLATION\', this.value)"';
     return xoFormSelect($name, $value, $label, $charsets, $help, $extra);
 }
