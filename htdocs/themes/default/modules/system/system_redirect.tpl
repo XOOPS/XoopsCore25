@@ -40,8 +40,8 @@
         <div class="notreload">
             <{$lang_ifnotreload}>
         </div>
-        <{if $xoops_logdump != ''}>
-            <div><{$xoops_logdump}></div>
+        <{if $xoops_logdump|default:false}>
+        <div><{$xoops_logdump}></div>
         <{/if}>
     </div>
 </div>
