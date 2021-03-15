@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2021 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -72,37 +72,53 @@ class XoopsPageNav
             return $ret;
         }
         if (($this->total != 0) && ($this->perpage != 0)) {
+			$navigation = array();
             $total_pages = ceil($this->total / $this->perpage);
             if ($total_pages > 1) {
-                $ret .= '<div id="xo-pagenav">';
+				$i = 0;
                 $prev = $this->current - $this->perpage;
                 if ($prev >= 0) {
-                    $ret .= '<a class="xo-pagarrow" href="' . $this->url . $prev . $this->extra . '"><u>&laquo;</u></a> ';
+					$navigation[$i]['url'] = $this->url . $prev . $this->extra;
+					$navigation[$i]['value'] = '';
+					$navigation[$i]['option'] = 'first';
+					++$i;
                 }
                 $counter      = 1;
                 $current_page = (int)floor(($this->current + $this->perpage) / $this->perpage);
-                while ($counter <= $total_pages) {
+                while ($counter <= $total_pages) {					
                     if ($counter == $current_page) {
-                        $ret .= '<strong class="xo-pagact" >(' . $counter . ')</strong> ';
+						$navigation[$i]['url'] = $this->url . $prev . $this->extra;
+						$navigation[$i]['value'] = $counter;
+						$navigation[$i]['option'] = 'selected';
                     } elseif (($counter > $current_page - $offset && $counter < $current_page + $offset) || $counter == 1 || $counter == $total_pages) {
                         if ($counter == $total_pages && $current_page < $total_pages - $offset) {
-                            $ret .= '... ';
+							$navigation[$i]['url'] = '';
+							$navigation[$i]['value'] = '';
+							$navigation[$i]['option'] = 'break';
+							++$i;
                         }
-                        $ret .= '<a class="xo-counterpage" href="' . $this->url . (($counter - 1) * $this->perpage) . $this->extra . '">' . $counter . '</a> ';
+						$navigation[$i]['url'] = $this->url . (($counter - 1) * $this->perpage) . $this->extra;
+						$navigation[$i]['value'] = $counter;
+						$navigation[$i]['option'] = 'show';
+						++$i;
                         if ($counter == 1 && $current_page > 1 + $offset) {
-                            $ret .= '... ';
+							$navigation[$i]['url'] = '';
+							$navigation[$i]['value'] = '';
+							$navigation[$i]['option'] = 'break';
                         }
                     }
                     ++$counter;
+					++$i;
                 }
                 $next = $this->current + $this->perpage;
                 if ($this->total > $next) {
-                    $ret .= '<a class="xo-pagarrow" href="' . $this->url . $next . $this->extra . '"><u>&raquo;</u></a> ';
+					$navigation[$i]['url'] = $this->url . $next . $this->extra;
+					$navigation[$i]['value'] = '';
+					$navigation[$i]['option'] = 'last';
                 }
-                $ret .= '</div> ';
             }
+			return $this->displayPageNav('Nav', $navigation);
         }
-
         return $ret;
     }
 
@@ -114,17 +130,15 @@ class XoopsPageNav
      */
     public function renderSelect($showbutton = false)
     {
-        if ($this->total < $this->perpage) {
-            return null;
+        $ret = '';
+		if ($this->total < $this->perpage) {
+            return $ret;
         }
         $total_pages = ceil($this->total / $this->perpage);
-        $ret         = '';
         if ($total_pages > 1) {
-            $ret = '<form name="pagenavform">';
-            $ret .= '<select name="pagenavselect" onchange="location=this.options[this.options.selectedIndex].value;">';
             $counter      = 1;
             $current_page = (int)floor(($this->current + $this->perpage) / $this->perpage);
-            while ($counter <= $total_pages) {
+			while ($counter <= $total_pages) {
                 if ($counter == $current_page) {
                     $ret .= '<option value="' . $this->url . (($counter - 1) * $this->perpage) . $this->extra . '" selected>' . $counter . '</option>';
                 } else {
@@ -132,13 +146,14 @@ class XoopsPageNav
                 }
                 ++$counter;
             }
-            $ret .= '</select>';
             if ($showbutton) {
-                $ret .= '&nbsp;<input type="submit" value="' . _GO . '" />';
-            }
-            $ret .= '</form>';
+				$navigation['button'] = true;
+            } else {
+				$navigation['button'] = false;
+			}
+			$navigation['select'] = $ret;
+			return $this->displayPageNav('Select', $navigation);
         }
-
         return $ret;
     }
 
@@ -150,44 +165,86 @@ class XoopsPageNav
      */
     public function renderImageNav($offset = 4)
     {
-        if ($this->total < $this->perpage) {
-            return null;
+        $ret = '';
+		if ($this->total < $this->perpage) {
+            return $ret;
         }
         $total_pages = ceil($this->total / $this->perpage);
-        $ret         = '';
         if ($total_pages > 1) {
-            $ret  = '<table><tr>';
+			$i = 0;
             $prev = $this->current - $this->perpage;
             if ($prev >= 0) {
-                $ret .= '<td class="pagneutral"><a href="' . $this->url . $prev . $this->extra . '">&lt;</a></td><td><img src="' . XOOPS_URL . '/images/blank.gif" width="6" alt="" /></td>';
+				$navigation[$i]['url'] = $this->url . $prev . $this->extra;
+				$navigation[$i]['value'] = '';
+				$navigation[$i]['option'] = 'first';
+				++$i;
             } else {
-                $ret .= '<td class="pagno"></a></td><td><img src="' . XOOPS_URL . '/images/blank.gif" width="6" alt="" /></td>';
+				$navigation[$i]['url'] = '';
+				$navigation[$i]['value'] = '';
+				$navigation[$i]['option'] = 'firstempty';
+				++$i;
             }
             $counter      = 1;
             $current_page = (int)floor(($this->current + $this->perpage) / $this->perpage);
             while ($counter <= $total_pages) {
                 if ($counter == $current_page) {
-                    $ret .= '<td class="pagact"><strong>' . $counter . '</strong></td>';
+					$navigation[$i]['url'] = '';
+					$navigation[$i]['value'] = $counter;
+					$navigation[$i]['option'] = 'selected';
                 } elseif (($counter > $current_page - $offset && $counter < $current_page + $offset) || $counter == 1 || $counter == $total_pages) {
                     if ($counter == $total_pages && $current_page < $total_pages - $offset) {
-                        $ret .= '<td class="paginact">...</td>';
+						$navigation[$i]['url'] = '';
+						$navigation[$i]['value'] = '';
+						$navigation[$i]['option'] = 'break';
+						++$i;
                     }
-                    $ret .= '<td class="paginact"><a href="' . $this->url . (($counter - 1) * $this->perpage) . $this->extra . '">' . $counter . '</a></td>';
+					$navigation[$i]['url'] = $this->url . (($counter - 1) * $this->perpage) . $this->extra;
+					$navigation[$i]['value'] = $counter;
+					$navigation[$i]['option'] = 'show';
+					++$i;
                     if ($counter == 1 && $current_page > 1 + $offset) {
-                        $ret .= '<td class="paginact">...</td>';
+						$navigation[$i]['url'] = '';
+						$navigation[$i]['value'] = '';
+						$navigation[$i]['option'] = 'break';
                     }
                 }
                 ++$counter;
+				++$i;
             }
             $next = $this->current + $this->perpage;
             if ($this->total > $next) {
-                $ret .= '<td><img src="' . XOOPS_URL . '/images/blank.gif" width="6" alt="" /></td><td class="pagneutral"><a href="' . $this->url . $next . $this->extra . '">&gt;</a></td>';
+				$navigation[$i]['url'] = $this->url . $next . $this->extra;
+				$navigation[$i]['value'] = '';
+				$navigation[$i]['option'] = 'last';
+				++$i;
             } else {
-                $ret .= '<td><img src="' . XOOPS_URL . '/images/blank.gif" width="6" alt="" /></td><td class="pagno"></td>';
+				$navigation[$i]['url'] = '';
+				$navigation[$i]['value'] = '';
+				$navigation[$i]['option'] = 'lastempty';
             }
-            $ret .= '</tr></table>';
+			return $this->displayPageNav('Image', $navigation);
         }
-
         return $ret;
     }
+
+    /**
+     * Display navigation in template
+     *
+     * @param  string $type
+     * @param  array $navigation
+     * @return string
+     */
+	private function displayPageNav($type = 'nav', $navigation = array()){
+		if (!isset($GLOBALS['xoTheme']) || !is_object($GLOBALS['xoTheme'])) {
+			include_once $GLOBALS['xoops']->path('/class/theme.php');
+			$GLOBALS['xoTheme'] = new \xos_opal_Theme();
+		}
+		require_once $GLOBALS['xoops']->path('/class/template.php');
+		$pageNavTpl = new \XoopsTpl();
+		$pageNavTpl->assign('pageNavType', $type);
+		$pageNavTpl->assign('pageNavigation', $navigation);
+		
+		return $pageNavTpl->fetch("db:system_pagenav.tpl");
+		
+	}
 }

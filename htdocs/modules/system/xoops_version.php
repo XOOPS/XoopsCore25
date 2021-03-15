@@ -61,6 +61,7 @@ $modversion['templates'][] = array('file' => 'system_popup_header.tpl', 'descrip
 $modversion['templates'][] = array('file' => 'system_popup_footer.tpl', 'description' => '');
 $modversion['templates'][] = array('file' => 'system_trigger_uploads.tpl', 'description' => '');
 $modversion['templates'][] = array('file' => 'system_confirm.tpl', 'description' => '');
+$modversion['templates'][] = array('file' => 'system_pagenav.tpl', 'description' => '');
 
 //in transition to .tpl, we keep the .html extension versions for previously existing templates
 
@@ -83,6 +84,7 @@ $modversion['templates'][] = array('file' => 'system_homepage.html', 'descriptio
 $modversion['templates'][] = array('file' => 'system_bannerlogin.html', 'description' => '');
 $modversion['templates'][] = array('file' => 'system_banner.html', 'description' => '');
 $modversion['templates'][] = array('file' => 'system_bannerdisplay.html', 'description' => '');
+$modversion['templates'][] = array('file' => 'system_pagenav.html', 'description' => '');
 
 // Admin Templates
 $modversion['templates'][] = array('file' => 'system_header.tpl', 'description' => '', 'type' => 'admin');
