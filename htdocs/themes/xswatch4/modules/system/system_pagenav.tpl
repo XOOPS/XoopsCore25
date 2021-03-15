@@ -44,54 +44,58 @@
 	</form>
 <{/if}>
 <{if ($pageNavType == 'Image')}>
-	<table>
-		<tr>
-		 <{foreach item=itemNavigation from=$pageNavigation}>
-			<{if ($itemNavigation.option == 'first')}>
-				<td class="pagneutral">
-					<a href="<{$itemNavigation.url}>"><u>&lt;</u></a>
-				</td>
-				<td>
-					<img src="<{$xoops_url}>/images/blank.gif" width="6" alt="" />
-				</td>
-			<{/if}>
-			<{if ($itemNavigation.option == 'firstempty')}>
-				<td class="pagno">
-				</td>
-				<td>
-					<img src="<{$xoops_url}>/images/blank.gif" width="6" alt="" />
-				</td>
-			<{/if}>
-			<{if ($itemNavigation.option == 'selected')}>
-				<td class="pagact">
-					<strong><{$itemNavigation.value}></strong>
-				</td>
-			<{/if}>
-			<{if ($itemNavigation.option == 'break')}>
-				<td class="paginact">...</td>
-			<{/if}>
-			<{if ($itemNavigation.option == 'show')}>
-				<td class="paginact">
-					<a href="<{$itemNavigation.url}>"><{$itemNavigation.value}></a>
-				</td>
-			<{/if}>	
-			<{if ($itemNavigation.option == 'last')}>
-				<td>
-					<img src="<{$xoops_url}>/images/blank.gif" width="6" alt="" />
-				</td>
-				<td class="pagneutral">
-					<a href="<{$itemNavigation.url}>"><u>&gt;</u></a>
-				</td>
-			<{/if}>
-			<{if ($itemNavigation.option == 'lastempty')}>
-				<td>
-					<img src="<{$xoops_url}>/images/blank.gif" width="6" alt="" />
-				</td>
-				<td class="pagno">					
-				</td>
-			<{/if}>
-		 <{/foreach}>			
-		</tr>
-	</table>
+	<div class="row">
+		<div class="col" style="line-height: 18px">
+			<table>
+				<tr>
+				 <{foreach item=itemNavigation from=$pageNavigation}>
+					<{if ($itemNavigation.option == 'first')}>
+						<td class="pagneutral">
+							<a href="<{$itemNavigation.url}>"><u>&lt;</u></a>
+						</td>
+						<td>
+							<img src="<{$xoops_url}>/images/blank.gif" width="6" alt="" />
+						</td>
+					<{/if}>
+					<{if ($itemNavigation.option == 'firstempty')}>
+						<td class="pagno">
+						</td>
+						<td>
+							<img src="<{$xoops_url}>/images/blank.gif" width="6" alt="" />
+						</td>
+					<{/if}>
+					<{if ($itemNavigation.option == 'selected')}>
+						<td class="pagact">
+							<strong><{$itemNavigation.value}></strong>
+						</td>
+					<{/if}>
+					<{if ($itemNavigation.option == 'break')}>
+						<td class="paginact">...</td>
+					<{/if}>
+					<{if ($itemNavigation.option == 'show')}>
+						<td class="paginact">
+							<a href="<{$itemNavigation.url}>"><{$itemNavigation.value}></a>
+						</td>
+					<{/if}>	
+					<{if ($itemNavigation.option == 'last')}>
+						<td>
+							<img src="<{$xoops_url}>/images/blank.gif" width="6" alt="" />
+						</td>
+						<td class="pagneutral">
+							<a href="<{$itemNavigation.url}>"><u>&gt;</u></a>
+						</td>
+					<{/if}>
+					<{if ($itemNavigation.option == 'lastempty')}>
+						<td>
+							<img src="<{$xoops_url}>/images/blank.gif" width="6" alt="" />
+						</td>
+						<td class="pagno">					
+						</td>
+					<{/if}>
+				 <{/foreach}>			
+				</tr>
+			</table>
+		</div>
+	</div>
 <{/if}>
   
