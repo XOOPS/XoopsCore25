@@ -87,7 +87,7 @@ switch ($op) {
             $listed_mods[$i]['credits']       = $module->getInfo('credits');
             $listed_mods[$i]['license']       = $module->getInfo('license');
             $listed_mods[$i]['description']   = $module->getInfo('description');
-            if (round($module->getInfo('version'), 2) != $listed_mods[$i]['version']) {
+            if (round((float)$module->getInfo('version'), 2) != $listed_mods[$i]['version']) {
                 $listed_mods[$i]['warning_update'] = true;
             } else {
                 $listed_mods[$i]['warning_update'] = false;
