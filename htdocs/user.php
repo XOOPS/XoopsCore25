@@ -28,7 +28,7 @@ $op = Request::getString('op', 'main');
 
 if ($op === 'main') {
     if (!is_object($GLOBALS['xoopsUser'])) {
-        $GLOBALS['xoopsOption']['template_main'] = 'profile_userform.tpl';
+        $GLOBALS['xoopsOption']['template_main'] = 'system_userform.tpl';
         include $GLOBALS['xoops']->path('header.php');
         $GLOBALS['xoopsTpl']->assign('lang_login', _LOGIN);
         $GLOBALS['xoopsTpl']->assign('lang_username', _USERNAME);
