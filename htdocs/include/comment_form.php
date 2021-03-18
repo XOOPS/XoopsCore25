@@ -68,7 +68,7 @@ if (class_exists('XoopsFormEditor')) {
         'width'  => '100%',
         'height' => '400px',
         'editor' => $editor);
-    $cform->addElement(new XoopsFormEditor(_CM_MESSAGE, 'com_text', $configs, false, $onfailure = 'textarea'));
+    $cform->addElement(new XoopsFormEditor(_CM_MESSAGE, 'com_text', $configs, false, $onfailure = 'textarea'), true);
 } else {
     $cform->addElement(new XoopsFormDhtmlTextArea(_CM_MESSAGE, 'com_text', $com_text, 10, 50), true);
 }
