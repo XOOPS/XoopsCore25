@@ -107,7 +107,7 @@
             </form>
         <{/if}>
         <!--No found-->
-        <{if $users_no_found|default:falsef == true}>
+        <{if $users_no_found|default:false == true}>
             <tr class="<{cycle values='even,odd'}> alignmiddle">
                 <td colspan='8' class="txtcenter"><{$smarty.const._AM_SYSTEM_USERS_NO_FOUND}></td>
             </tr>

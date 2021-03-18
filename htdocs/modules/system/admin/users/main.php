@@ -448,9 +448,9 @@ switch ($op) {
             $form->addElement($type_radio);
             $form->addElement($sort_select);
             $form->addElement($order_select);
-            $form->addElement($fct_hidden);
+            //$form->addElement($fct_hidden);
             $form->addElement($limit_text);
-            $form->addElement($op_hidden);
+            //$form->addElement($op_hidden);
 
             // if this is to find users for a specific group
             if (!empty($_GET['group']) && (int)$_GET['group'] > 0) {
@@ -712,12 +712,12 @@ switch ($op) {
             //$groups = empty($_REQUEST['selgroups']) ? array() : array_map("intval", $_REQUEST['selgroups']);
             $validsort = array('uname', 'email', 'last_login', 'user_regdate', 'posts');
             if (isset($_REQUEST['user_sort'])) {
-                $sort = (!in_array($_REQUEST['user_sort'], $validsort)) ? 'user_regdate' : $_REQUEST['user_sort'];
+                $sort = (!in_array($_REQUEST['user_sort'], $validsort)) ? 'uid' : $_REQUEST['user_sort'];
                 $requete_pagenav .= '&amp;user_sort=' . htmlspecialchars($_REQUEST['user_sort']);
                 $requete_search .= 'order by : ' . $sort . '<br>';
             } else {
-                $sort = 'user_regdate';
-                $requete_pagenav .= '&amp;user_sort=user_regdate';
+                $sort = 'uid';
+                $requete_pagenav .= '&amp;user_sort=uid';
                 $requete_search .= 'order by : ' . $sort . '<br>';
             }
 
@@ -744,14 +744,13 @@ switch ($op) {
             $start = (!empty($_REQUEST['start'])) ? (int)$_REQUEST['start'] : 0;
 
             if (isset($_REQUEST['selgroups'])) {
+                $groups = array();
                 if ($_REQUEST['selgroups'] != 0) {
-                    if (count($_REQUEST['selgroups']) == 1) {
-                        $groups = array( 0 => (int) $_REQUEST['selgroups']);
+                    if (!is_array($_REQUEST['selgroups'])) {
+                        $groups = array((int) $_REQUEST['selgroups']);
                     } else {
                         $groups = array_map('intval', $_REQUEST['selgroups']);
                     }
-                } else {
-                    $groups = array();
                 }
                 $requete_pagenav .= '&amp;selgroups=' . htmlspecialchars($_REQUEST['selgroups']);
             } else {
@@ -762,7 +761,7 @@ switch ($op) {
             $member_handler = xoops_getHandler('member');
 
             if (empty($groups)) {
-                $users_count = $member_handler->getUserCount();
+                $users_count = $member_handler->getUserCount($criteria);
             } else {
                 $users_count = $member_handler->getUserCountByGroupLink($groups, $criteria);
             }
