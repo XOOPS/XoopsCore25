@@ -84,7 +84,6 @@ $modversion['templates'][] = array('file' => 'system_homepage.html', 'descriptio
 $modversion['templates'][] = array('file' => 'system_bannerlogin.html', 'description' => '');
 $modversion['templates'][] = array('file' => 'system_banner.html', 'description' => '');
 $modversion['templates'][] = array('file' => 'system_bannerdisplay.html', 'description' => '');
-$modversion['templates'][] = array('file' => 'system_pagenav.html', 'description' => '');
 
 // Admin Templates
 $modversion['templates'][] = array('file' => 'system_header.tpl', 'description' => '', 'type' => 'admin');
