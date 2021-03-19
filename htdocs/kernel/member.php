@@ -280,7 +280,7 @@ class XoopsMemberHandler
         } else {
             $ret = array();
             foreach ($user_ids as $u_id) {
-                $user =& $this->getUser($u_id);
+                $user = $this->getUser($u_id);
                 if (is_object($user)) {
                     $ret[] = &$user;
                 }
@@ -479,14 +479,16 @@ class XoopsMemberHandler
         $ret           = array();
         $criteriaCompo = new CriteriaCompo();
         $select        = $asobject ? 'u.*' : 'u.uid';
-        $sql           = "SELECT DISTINCT {$select} " . ' FROM ' . $this->userHandler->db->prefix('users') . ' AS u' . ' LEFT JOIN ' . $this->membershipHandler->db->prefix('groups_users_link') . ' AS m ON m.uid = u.uid WHERE ';
+        $sql = "SELECT {$select} FROM " . $this->userHandler->db->prefix('users') . " u WHERE ";
         if (!empty($groups)) {
-            $criteriaCompo->add(new Criteria('m.groupid', '(' . implode(', ', $groups) . ')', 'IN'));
+            $group_in = '(' . implode(', ', $groups) . ')';
+            $sql .= " EXISTS (SELECT * FROM " . $this->membershipHandler->db->prefix('groups_users_link')
+                . " m " . "WHERE m.groupid IN {$group_in} and m.uid = u.uid) AND ";
         }
 
         $limit = $start = 0;
         if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
-            $criteriaCompo->add($criteria);
+            $criteriaCompo->add($criteria, 'AND');
             $sql_criteria = $criteriaCompo->render();
             if ($criteria->getSort() != '') {
                 $sql_criteria .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
@@ -499,8 +501,6 @@ class XoopsMemberHandler
 
         if ($sql_criteria) {
             $sql .= $sql_criteria;
-        } else {
-            $sql .= '1 = 1';
         }
 
         if (!$result = $this->userHandler->db->query($sql, $limit, $start)) {
@@ -536,19 +536,20 @@ class XoopsMemberHandler
     {
         $ret           = 0;
         $criteriaCompo = new CriteriaCompo();
-        $sql           = 'SELECT DISTINCT COUNT(u.uid) ' . ' FROM ' . $this->userHandler->db->prefix('users') . ' AS u' . ' LEFT JOIN ' . $this->membershipHandler->db->prefix('groups_users_link') . ' AS m ON m.uid = u.uid' . ' WHERE ';
+        $sql = "SELECT COUNT(*) FROM " . $this->userHandler->db->prefix('users') . " u WHERE ";
         if (!empty($groups)) {
-            $criteriaCompo->add(new Criteria('m.groupid', '(' . implode(', ', $groups) . ')', 'IN'));
+            $group_in = '(' . implode(', ', $groups) . ')';
+            $sql .= " EXISTS (SELECT * FROM " . $this->membershipHandler->db->prefix('groups_users_link')
+                . " m " . "WHERE m.groupid IN {$group_in} and m.uid = u.uid) ";
         }
+
         if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
-            $criteriaCompo->add($criteria);
+            $criteriaCompo->add($criteria, 'AND');
         }
         $sql_criteria = $criteriaCompo->render();
 
         if ($sql_criteria) {
-            $sql .= $sql_criteria;
-        } else {
-            $sql .= '1 = 1';
+            $sql .= ' AND ' . $sql_criteria;
         }
 
         if (!$result = $this->userHandler->db->query($sql)) {
