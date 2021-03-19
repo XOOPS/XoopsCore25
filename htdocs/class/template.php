@@ -150,6 +150,10 @@ class XoopsTpl extends Smarty
 
         $template_set      = empty($template_set) ? $xoopsConfig['template_set'] : $template_set;
         $theme_set         = empty($theme_set) ? $xoopsConfig['theme_set'] : $theme_set;
+        if (class_exists('XoopsSystemCpanel', false)) {
+            $cPrefix = 'cp-';
+            $theme_set =  isset($xoopsConfig['cpanel']) ? $cPrefix .$xoopsConfig['cpanel'] : $cPrefix . 'default';
+        }
         $module_dirname    = empty($module_dirname) ? (empty($GLOBALS['xoopsModule']) ? 'system' : $GLOBALS['xoopsModule']->getVar('dirname', 'n')) : $module_dirname;
         $this->compile_id  = substr(md5(XOOPS_URL), 0, 8) . '-' . $module_dirname . '-' . $theme_set . '-' . $template_set;
         $this->_compile_id = $this->compile_id;
