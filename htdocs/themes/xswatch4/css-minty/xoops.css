@@ -35,7 +35,7 @@ img.right {
     width: 16px;
     height: 19px;
     text-align: center;
-    /* background-image: url(../images/pagneutral.gif); */
+    background-image: url(/images/pagneutral.gif);
 }
 
 .pagact {
@@ -43,7 +43,7 @@ img.right {
     width: 16px;
     height: 19px;
     text-align: center;
-    /* background-image: url(../images/pagact.gif); */
+    background-image: url(/images/pagact.gif);
 }
 
 .paginact {
@@ -51,7 +51,7 @@ img.right {
     width: 16px;
     height: 19px;
     text-align: center;
-    /* background-image: url(../images/paginact.gif); */
+    background-image: url(/images/paginact.gif);
 }
 
 /* For required elements in XOOPS form */
