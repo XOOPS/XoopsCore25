@@ -107,17 +107,18 @@ class XoopsSystemGui
                 // Define top navigation
                 $menu_handler->addMenuTop(XOOPS_URL . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $xoopsModule->getVar('mid', 'e'), _AM_SYSTEM_PREF);
                 $menu_handler->addMenuTop(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=' . $xoopsModule->getVar('dirname', 'e'), _AM_SYSTEM_UPDATE);
-				if (!empty($xoopsModule->getInfo('blocks'))){
-					$menu_handler->addMenuTop(XOOPS_URL . '/modules/system/admin.php?fct=blocksadmin&amp;op=list&amp;filter=1&amp;selgen=' . $xoopsModule->getVar('mid', 'e') . '&amp;selmod=-2&amp;selgrp=-1&amp;selvis=-1', _AM_SYSTEM_BLOCKS);
-				}
+                $blocksTest = $xoopsModule->getInfo('blocks');
+                if (!empty($blocksTest)) {
+                    $menu_handler->addMenuTop(XOOPS_URL . '/modules/system/admin.php?fct=blocksadmin&amp;op=list&amp;filter=1&amp;selgen=' . $xoopsModule->getVar('mid', 'e') . '&amp;selmod=-2&amp;selgrp=-1&amp;selvis=-1', _AM_SYSTEM_BLOCKS);
+                }
                 $menu_handler->addMenuTop(XOOPS_URL . '/modules/system/admin.php?fct=tplsets&amp;op=listtpl&amp;tplset=default&amp;moddir=' . $xoopsModule->getVar('dirname', 'e'), _AM_SYSTEM_TPLSETS);
-				if ($xoopsModule->getInfo('hasComments') == 1){
-					$menu_handler->addMenuTop(XOOPS_URL . '/modules/system/admin.php?module=' . $xoopsModule->getVar('mid', 'e') . '&amp;status=0&amp;limit=10&amp;fct=comments', _AM_SYSTEM_COMMENTS);
-				}
+                if ($xoopsModule->getInfo('hasComments') == 1){
+                    $menu_handler->addMenuTop(XOOPS_URL . '/modules/system/admin.php?module=' . $xoopsModule->getVar('mid', 'e') . '&amp;status=0&amp;limit=10&amp;fct=comments', _AM_SYSTEM_COMMENTS);
+                }
                 $menu_handler->addMenuTop(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&amp;op=uninstall&amp;module=' . $xoopsModule->getVar('dirname', 'e'), _AM_SYSTEM_UNINSTALL);
-				if ($xoopsModule->getInfo('hasMain') == 1){
-					$menu_handler->addMenuTop(XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'e') . '/', _AM_SYSTEM_GOTOMODULE);
-				}
+                if ($xoopsModule->getInfo('hasMain') == 1){
+                    $menu_handler->addMenuTop(XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname', 'e') . '/', _AM_SYSTEM_GOTOMODULE);
+                }
                 // Define main tab navigation
                 $i       = 0;
                 $current = $i;
