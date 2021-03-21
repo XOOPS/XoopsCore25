@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2021 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             class
  * @subpackage          cache
@@ -112,7 +112,7 @@ class XoopsCacheFile extends XoopsCacheEngine
         $this->settings = array_merge($defaults, $this->settings);
         if (!isset($this->file)) {
             XoopsLoad::load('XoopsFile');
-            $this->file = XoopsFile::getHandler('file', $this->settings['path'] . '/index.html', true);
+            $this->file = XoopsFile::getHandler('file', $this->settings['path'] . '/index.php', true);
         }
         $this->settings['path'] = $this->file->folder->cd($this->settings['path']);
         if (empty($this->settings['path'])) {

@@ -23,10 +23,33 @@ class Upgrade_2511 extends XoopsUpgrade
             'bannerintsize',
             'captchadata',
             'qmail',
+            'rmindexhtml',
             'textsanitizer',
             'xoopsconfig',
         );
         $this->usedFiles = array();
+        $this->pathsToCheck = array(
+            XOOPS_ROOT_PATH . '/cache',
+            XOOPS_ROOT_PATH . '/class',
+            XOOPS_ROOT_PATH . '/Frameworks',
+            XOOPS_ROOT_PATH . '/images',
+            XOOPS_ROOT_PATH . '/include',
+            XOOPS_ROOT_PATH . '/kernel',
+            XOOPS_ROOT_PATH . '/language',
+            XOOPS_ROOT_PATH . '/media',
+            XOOPS_ROOT_PATH . '/modules/pm',
+            XOOPS_ROOT_PATH . '/modules/profile',
+            XOOPS_ROOT_PATH . '/modules/protector',
+            XOOPS_ROOT_PATH . '/modules/system',
+            XOOPS_ROOT_PATH . '/templates_c',
+            XOOPS_ROOT_PATH . '/themes/default',
+            XOOPS_ROOT_PATH . '/themes/xbootstrap',
+            XOOPS_ROOT_PATH . '/themes/xswatch',
+            XOOPS_ROOT_PATH . '/themes/xswatch4',
+            XOOPS_ROOT_PATH . '/uploads',
+            XOOPS_VAR_PATH,
+            XOOPS_PATH,
+        );
     }
 
 
@@ -341,6 +364,121 @@ class Upgrade_2511 extends XoopsUpgrade
             }
         }
         return $return;
+    }
+
+    /**
+     * Attempt to remove index.html files replaced by index.php
+     */
+    /**
+     * List of directories supplied by XOOPS. This is used to try and keep us out
+     * of things added to the system locally. (Set in __construct() for php BC.)
+     *
+     * @var string[]
+     */
+    private $pathsToCheck;
+
+    /**
+     * Do we need to remove any index.html files that were replaced by index.php files?
+     *
+     * @return bool true if patch IS applied, false if NOT applied
+     */
+    public function check_rmindexhtml()
+    {
+        /**
+         * If we find an index.html that is writable, we know there is work to do
+         *
+         * @param string $name file name to check
+         *
+         * @return bool  true to continue, false to stop scan
+         */
+        $stopIfFound = function ($name) {
+            $ok = is_writable($name);
+            return !($ok);
+        };
+
+        clearstatcache();
+
+        return $this->dirWalker($stopIfFound);
+    }
+
+    /**
+     * Unlink any index.html files that have been replaced by index.php files
+     *
+     * @return bool true if patch applied, false if failed
+     */
+    public function apply_rmindexhtml()
+    {
+        /**
+         * Do unlink() on file
+         * Always return true so we process each writable index.html
+         *
+         * @param string $name file name to unlink
+         *
+         * @return true always report true, even if we can't delete -- best effort only
+         */
+        $unlinkByName = function ($name) {
+            if (is_writable($name)) {
+                $result = unlink($name);
+            }
+            return true;
+        };
+
+
+        return $this->dirWalker($unlinkByName);
+    }
+
+    /**
+     * Walk list of directories in $pathsToCheck
+     *
+     * @param \Closure $onFound
+     *
+     * @return bool
+     */
+    private function dirWalker(\Closure $onFound)
+    {
+        $check = true;
+        foreach ($this->pathsToCheck as $path) {
+            $check = $this->checkDirForIndexHtml($path, $onFound);
+            if (false === $check) {
+                break;
+            }
+        }
+        if (false !== $check) {
+            $check = true;
+        }
+        return $check;
+    }
+
+    /**
+     * Recursively check for index.html files that have a corresponding index.php file
+     * in the supplied path.
+     *
+     * @param string   $startingPath
+     * @param \Closure $onFound
+     *
+     * @return false|int false if onFound returned false (don't continue) else count of matches
+     */
+    private function checkDirForIndexHtml($startingPath, \Closure $onFound)
+    {
+        $i = 0;
+        $rdi = new \RecursiveDirectoryIterator($startingPath);
+        $rii = new \RecursiveIteratorIterator($rdi);
+        /** @var \SplFileInfo $fileinfo */
+        foreach ($rii as $fileinfo) {
+            if ($fileinfo->isFile() && 'index.html' === $fileinfo->getFilename() && 60 > $fileinfo->getSize()) {
+                $path = $fileinfo->getPath();
+                $testFilename = $path . '/index.php';
+                if (file_exists($testFilename)) {
+                    $unlinkName = $path . '/' . $fileinfo->getFilename();
+                    ++$i;
+                    $continue = $onFound($unlinkName);
+                    if (false === $continue) {
+                        return $continue;
+                    }
+                }
+            }
+        }
+        return $i;
     }
 }
 

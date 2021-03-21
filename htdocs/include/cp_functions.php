@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2021 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -209,7 +209,7 @@ function xoops_module_write_admin_menu($content)
     }
     fclose($file);
 
-    // write index.html file in cache folder
+    // write index.php file in cache folder
     // file is delete after clear_cache (smarty)
     xoops_write_index_file(XOOPS_CACHE_PATH);
 
@@ -232,7 +232,7 @@ function xoops_write_index_file($path = '')
     }
 
     $path     = substr($path, -1) === '/' ? substr($path, 0, -1) : $path;
-    $filename = $path . '/index.html';
+    $filename = $path . '/index.php';
     if (file_exists($filename)) {
         return true;
     }
@@ -241,7 +241,8 @@ function xoops_write_index_file($path = '')
 
         return false;
     }
-    if (fwrite($file, '<script>history.go(-1);</script>') == -1) {
+    if (fwrite($file, "<?php\nheader('HTTP/1.0 404 Not Found');\n") == -1) {
+
         echo 'failed write file';
 
         return false;
