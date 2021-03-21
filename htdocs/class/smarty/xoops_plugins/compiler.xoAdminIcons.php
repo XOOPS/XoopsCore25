@@ -11,7 +11,7 @@
 /**
  * xoAdminIcons Smarty compiler plug-in
  *
- * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright    (c) 2000-2021 XOOPS Project (https://xoops.org)
  * @license          GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author           Andricq Nicolas (AKA MusS)
  * @since            2.5
@@ -29,7 +29,7 @@ function smarty_compiler_xoAdminIcons($argStr, &$smarty)
         $icons = 'default';
     }
 
-    if (file_exists($xoops->path('modules/system/images/icons/' . $icons . '/index.html'))) {
+    if (file_exists($xoops->path('modules/system/images/icons/' . $icons . '/index.php'))) {
         $url = $xoops->url('modules/system/images/icons/' . $icons . '/' . $argStr);
     } else {
         if (file_exists($xoops->path('modules/system/images/icons/default/' . $argStr))) {
