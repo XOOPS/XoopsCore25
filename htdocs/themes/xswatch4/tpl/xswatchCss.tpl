@@ -5,5 +5,8 @@ Valid values are:
  css-minty     css-pulse     css-sandstone css-simplex   css-sketchy
  css-slate     css-solar     css-spacelab  css-superhero css-united
  css-yeti
+
+If a file name is specified in xswatchDarkCss.tpl, the name below will be
+used for media="(prefers-color-scheme: light)" queries.
 *}>
 css-cerulean
