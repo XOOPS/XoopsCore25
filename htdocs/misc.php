@@ -15,143 +15,135 @@
  * @since           2.0.0
  */
 
+use Xmf\Request;
+
 include __DIR__ . '/mainfile.php';
 
 xoops_loadLanguage('misc');
+xoops_loadLanguage('user');
 
-$action = isset($_GET['action']) ? strip_tags(trim($_GET['action'])) : '';
-$action = isset($_POST['action']) ? strip_tags(trim($_POST['action'])) : $action;
-$type = isset($_GET['type']) ? strip_tags(trim($_GET['type'])) : '';
-$type = isset($_POST['type']) ? strip_tags(trim($_POST['type'])) : $type;
-if ($action === 'showpopups') {
+$action = Request::getCmd('action', '');
+$type = Request::getCmd('type', '');
+
+if ($action !== 'showpopups') {
+    header("HTTP/1.0 404 Not Found");
+    exit();
+}
     xoops_header(false);
     // show javascript close button?
     $closebutton = 1;
     switch ($type) {
         case 'smilies':
-            $target = isset($_GET['target']) ? trim($_GET['target']) : '';
-            if ($target == '' || !preg_match('/^[0-9a-z_]*$/i', $target)) {
-            } else {
-                echo "<script type=\"text/javascript\"><!--//
-            function doSmilie(addSmilie)
-            {
-                var textareaDom = window.opener.xoopsGetElementById(\"" . $target . "\");
-                xoopsInsertText(textareaDom, addSmilie);
-                textareaDom.focus();
-
-//                return;
-            }
-            //-->
-            </script>
-            ";
-                echo '</head><body>
-            <table width="100%" class="outer">
-            <tr><th colspan="3">' . _MSC_SMILIES . '</th></tr>
-            <tr class="head"><td>' . _MSC_CODE . '</td><td>' . _MSC_EMOTION . '</td><td>' . _IMAGE . '</td></tr>';
+            $target = Request::getString('target', '');
+            if ($target !== '' && preg_match('/^[0-9a-z_]*$/i', $target)) {
+                $variables = array();
+$javaScript = <<<EOSMJS
+<script type="text/javascript">
+function doSmilie(addSmilie) {
+    var textareaDom = window.opener.xoopsGetElementById("{$target}");
+    xoopsInsertText(textareaDom, addSmilie);
+    textareaDom.focus();
+}
+</script>
+EOSMJS;
+                $variables['headContents'] = $javaScript;
+                $variables['closeHead'] = true;
+                $variables['lang_smiles'] = _MSC_SMILIES;
+                $variables['lang_code'] = _MSC_CODE;
+                $variables['lang_emotion'] = _MSC_EMOTION;
+                $variables['lang_image'] = _IMAGE;
+                $variables['lang_clicksmile'] = _MSC_CLICKASMILIE;
+                $variables['lang_close'] = _CLOSE;
+                $variables['upload_url'] = XOOPS_UPLOAD_URL .'/';
                 $myts = MyTextSanitizer::getInstance();
                 if ($smiles = $myts->getSmileys()) {
-                    $rcolor = 'even';
-                    foreach ($smiles as $key => $smile) {
-                        echo "<tr class='$rcolor'><td>" . $smile['code'] . '</td><td>' . $smile['emotion'] . "</td><td><img onmouseover='style.cursor=\"hand\"' onclick='doSmilie(\" " . $smile['code'] . " \");' src='" . XOOPS_UPLOAD_URL . '/' . $smile['smile_url'] . "' alt='' /></td></tr>";
-                        $rcolor = ($rcolor === 'even') ? 'odd' : 'even';
-                    }
+                    $variables['smilies'] = $smiles;
                 } else {
-                    echo 'Could not retrieve data from the database.';
+                    $variables['smilies'] = array();
+                    trigger_error('Could not retrieve smilies from the database.', E_USER_NOTICE);
                 }
-                echo '</table>' . _MSC_CLICKASMILIE;
+                xoops_misc_popup_body('db:system_misc_smilies.tpl', $variables);
             }
             break;
         case 'avatars':
-            ?>
+            /* @var  XoopsAvatarHandler $avatarHandler */
+            $avatarHandler = xoops_getHandler('avatar');
+            $avatarsList = $avatarHandler->getList('S');
+
+            $upload_url = XOOPS_UPLOAD_URL . '/';
+            $javaScript = <<<EOAVJS
 <script language='javascript'>
-        <!--//
-        function myimage_onclick(counter)
-        {
-            window.opener.xoopsGetElementById("user_avatar").options[counter].selected = true;
-            showAvatar();
-            window.opener.xoopsGetElementById("user_avatar").focus();
-            window.close();
-        }
-        function showAvatar()
-        {
-            window.opener.xoopsGetElementById("avatar").src='<?php
-            echo XOOPS_UPLOAD_URL;
-            ?>/' + window.opener.xoopsGetElementById("user_avatar").options[window.opener.xoopsGetElementById("user_avatar").selectedIndex].value;
-        }
-        //-->
-        </script>
-</head>
-<body>
-<h4><?php
-            echo _MSC_AVAVATARS;
-            ?></h4>
-<form name='avatars'>
-<table width='100%'>
-    <tr>
-        <?php
-        /* @var  XoopsAvatarHandler $avatar_handler */
-            $avatar_handler = xoops_getHandler('avatar');
-            $avatarslist = $avatar_handler->getList('S');
-            $cntavs = 0;
-            $counter = isset($_GET['start']) ? (int)$_GET['start'] : 0;
-            foreach ($avatarslist as $file => $name) {
-                echo '<td><img src="uploads/' . $file . '" alt="' . $name . '" style="padding:10px; vertical-align:top;"  /><br>' . $name . '<br><input name="myimage" type="button" value="' . _SELECT . '" onclick="myimage_onclick(' . $counter . ')" /></td>';
-                ++$counter;
-                ++$cntavs;
-                if ($cntavs > 8) {
-                    echo '</tr><tr>';
-                    $cntavs = 0;
-                }
-            }
-            echo '</tr></table></form></div>';
+    function myimage_onclick(counter) {
+        window.opener.xoopsGetElementById("user_avatar").options[counter].selected = true;
+        showAvatar();
+        window.opener.xoopsGetElementById("user_avatar").focus();
+        window.close();
+    }
+    function showAvatar() {
+        window.opener.xoopsGetElementById("avatar").src="{$upload_url}" + window.opener.xoopsGetElementById("user_avatar").options[window.opener.xoopsGetElementById("user_avatar").selectedIndex].value;
+    }
+</script>
+EOAVJS;
+            $variables['headContents'] = $javaScript;
+            $variables['closeHead'] = true;
+            $variables['lang_avavatars'] = _MSC_AVAVATARS;
+            $variables['lang_select'] = _SELECT;
+            $variables['lang_close'] = _CLOSE;
+            $variables['avatars'] = $avatarsList;
+            $variables['upload_url'] = $upload_url;
+            xoops_misc_popup_body('db:system_misc_avatars.tpl', $variables);
             break;
         case 'friend':
-            if (!$GLOBALS['xoopsSecurity']->check() || ! isset($_POST['op']) || $_POST['op'] === 'sendform') {
-                if ($xoopsUser) {
-                    $yname = $xoopsUser->getVar('uname', 'e');
-                    $ymail = $xoopsUser->getVar('email', 'e');
-                    $fname = '';
-                    $fmail = '';
-                } else {
-                    $yname = '';
-                    $ymail = '';
-                    $fname = '';
-                    $fmail = '';
+            include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+
+            $variables['headContents'] = '';
+            $variables['closeHead'] = true;
+            $variables['lang_recommend'] = _MSC_RECOMMENDSITE;
+            $variables['lang_yourname'] = _MSC_YOURNAMEC;
+            $variables['lang_youremail'] = _MSC_YOUREMAILC;
+            $variables['lang_friendname'] = _MSC_FRIENDNAMEC;
+            $variables['lang_friendemail'] = _MSC_FRIENDEMAILC;
+            $variables['lang_send'] = _SEND;
+            $variables['lang_close'] = _CLOSE;
+
+            $error = false;
+            $errorMessage = '';
+
+            $method = Request::getMethod();
+            if ('POST' === $method) {
+                $yname = Request::getString('yname', '', 'POST');
+                $ymail = Request::getString('ymail', '', 'POST');
+                $fname = Request::getString('fname', '', 'POST');
+                $fmail = Request::getString('fmail', '', 'POST');
+
+                if (!$GLOBALS['xoopsSecurity']->check()) {
+                    $error = true;
+                    $temp = $GLOBALS['xoopsSecurity']->getErrors();
+                    $errorMessage = (is_array($temp)) ? implode('<br>', $temp) : $temp;
                 }
-                printCheckForm();
-                echo '</head><body>';
-                echo "<div class='errorMsg'>" . implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()) . '</div>';
-                echo '
-            <form action="' . XOOPS_URL . '/misc.php" method="post" onsubmit="return checkForm();"><table  width="100%" class="outer" cellspacing="1"><tr><th colspan="2">' . _MSC_RECOMMENDSITE . '</th></tr>';
-                echo "<tr><td class='head'>
-                <input type='hidden' name='op' value='sendsite' />
-                <input type='hidden' name='action' value='showpopups' />
-                <input type='hidden' name='type' value='friend' />\n";
-                echo _MSC_YOURNAMEC . "</td><td class='even'><input type='text' name='yname' value='{$yname}' id='yname' /></td></tr>
-                <tr><td class='head'>" . _MSC_YOUREMAILC . "</td><td class='odd'><input type='text' name='ymail' value='{$ymail}' id='ymail' /></td></tr>
-                <tr><td class='head'>" . _MSC_FRIENDNAMEC . "</td><td class='even'><input type='text' name='fname' value='{$fname}' id='fname' /></td></tr>
-                <tr><td class='head'>" . _MSC_FRIENDEMAILC . "</td><td class='odd'><input type='text' name='fmail' value='{$fmail}' id='fmail' /></td></tr>
-                <tr><td class='head'>&nbsp;</td><td class='even'><input type='submit' value='" . _SEND . "' />&nbsp;<input value='" . _CLOSE . "' type='button' onclick='window.close();' />" . $GLOBALS['xoopsSecurity']->getTokenHTML() . "</td></tr>
-                </table></form>\n";
-                $closebutton = 0;
-            } elseif ($_POST['op'] === 'sendsite') {
-                $myts = MyTextSanitizer::getInstance();
-                if ($xoopsUser) {
-                    $ymail = $xoopsUser->getVar('email');
-                } else {
-                    $ymail = isset($_POST['ymail']) ? $myts->stripSlashesGPC(trim($_POST['ymail'])) : '';
+                if (!$error && false === filter_var($ymail, FILTER_VALIDATE_EMAIL)) {
+                    $error = true;
+                    $errorMessage = _MSC_INVALIDEMAIL1;
                 }
-                if (!isset($_POST['yname']) || trim($_POST['yname']) == '' || $ymail == '' || !isset($_POST['fname']) || trim($_POST['fname']) == '' || !isset($_POST['fmail']) || trim($_POST['fmail']) == '') {
-                    redirect_header(XOOPS_URL . '/misc.php?action=showpopups&amp;type=friend&amp;op=sendform', 2, _MSC_NEEDINFO);
+                if (!$error && false === filter_var($fmail, FILTER_VALIDATE_EMAIL)) {
+                    $error = true;
+                    $errorMessage = _MSC_INVALIDEMAIL1;
                 }
-                $yname = $myts->stripSlashesGPC(trim($_POST['yname']));
-                $fname = $myts->stripSlashesGPC(trim($_POST['fname']));
-                $fmail = $myts->stripSlashesGPC(trim($_POST['fmail']));
-                if (!checkEmail($fmail) || !checkEmail($ymail) || preg_match("/[\\0-\\31]/", $yname)) {
-                    $errormessage = _MSC_INVALIDEMAIL1 . '<br>' . _MSC_INVALIDEMAIL2 . '';
-                    redirect_header(XOOPS_URL . '/misc.php?action=showpopups&amp;type=friend&amp;op=sendform', 2, $errormessage);
+                if (!$error && '' === $yname) {
+                    $error = true;
+                    $errorMessage = _MSC_ENTERYNAME;
                 }
-                $xoopsMailer =& xoops_getMailer();
+                if (!$error && '' === $fname) {
+                    $error = true;
+                    $errorMessage = _MSC_ENTERFNAME;
+                }
+                if ($error) {
+                    $variables['errorMessage'] = $errorMessage;
+                }
+            }
+            if ('POST' === $method && false === $error) {
+                // send it
+                $xoopsMailer = xoops_getMailer();
                 $xoopsMailer->setTemplate('tellfriend.tpl');
                 $xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
                 $xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
@@ -162,63 +154,120 @@ if ($action === 'showpopups') {
                 $xoopsMailer->setFromEmail($ymail);
                 $xoopsMailer->setFromName($yname);
                 $xoopsMailer->setSubject(sprintf(_MSC_INTSITE, $xoopsConfig['sitename']));
-                //openTable();
+
                 if (!$xoopsMailer->send()) {
-                    echo $xoopsMailer->getErrors();
+                    $error = true;
+                    $errorMessage = $xoopsMailer->getErrors();
+                    $variables['errorMessage'] = $errorMessage;
                 } else {
-                    echo '<div><h4>' . _MSC_REFERENCESENT . '</h4></div>';
+                    $variables['successMessage'] = _MSC_REFERENCESENT;
                 }
-                //closeTable();
+            } else {
+                // build form
+                $ynameDefault = '';
+                $ymailDefault = '';
+                if (is_object($xoopsUser)) {
+                    $ynameDefault = $xoopsUser->getVar('uname', 'e');
+                    $ymailDefault = $xoopsUser->getVar('email', 'e');
+                }
+                $yname = Request::getString('yname', $ynameDefault);
+                $ymail = Request::getString('ymail', $ymailDefault);
+                $fname = Request::getString('fname', '');
+                $fmail = Request::getString('fmail', '');
             }
+            $form = new XoopsThemeForm(_MSC_RECOMMENDSITE, 'recommendus', XOOPS_URL . '/misc.php', 'post', true);
+            $ynameElelment = new XoopsFormText(_MSC_YOURNAMEC, 'yname', 32, 64, $yname);
+            $form->addElement($ynameElelment, true);
+            $ymailElelment = new XoopsFormText(_MSC_YOUREMAILC, 'ymail', 48, 96, $ymail);
+            $form->addElement($ymailElelment, true);
+            if ('' !== $ymail && false === filter_var($ymail, FILTER_VALIDATE_EMAIL)) {
+                $ynameElelment->setDescription(_MSC_INVALIDEMAIL1);
+            }
+            $fnameElement = new XoopsFormText(_MSC_FRIENDNAMEC, 'fname', 32, 64, $fname);
+            $form->addElement($fnameElement, true);
+            $fmailElelment = new XoopsFormText(_MSC_FRIENDEMAILC, 'fmail', 48, 96, $fmail);
+            if ('' !== $fmail && false === filter_var($fmail, FILTER_VALIDATE_EMAIL)) {
+                $fmailElelment->setDescription(_MSC_INVALIDEMAIL1);
+            }
+            $form->addElement($fmailElelment, true);
+            $form->addElement(new XoopsFormHidden('action', $action));
+            $form->addElement(new XoopsFormHidden('type', $type));
+            $form->addElement(new XoopsFormButton('', 'submit', _SEND, 'submit'));
+
+            xoops_misc_popup_body('db:system_misc_friend.tpl', $variables, true, true, $form);
             break;
         case 'online':
-            $isadmin = $xoopsUserIsAdmin;
-            echo '</head><body>';
-            echo '<table style="width:100%;" cellspacing="1" class="outer"><tr><th colspan="3">' . _WHOSONLINE . '</th></tr>';
-            $start = isset($_GET['start']) ? (int)$_GET['start'] : 0;
-            /* @var XoopsOnlineHandler $online_handler */
-            $online_handler = xoops_getHandler('online');
-            $online_total = $online_handler->getCount();
-            $limit = ($online_total > 20) ? 20 : $online_total;
-            $criteria = new CriteriaCompo();
-            $criteria->setLimit($limit);
-            $criteria->setStart($start);
-            $onlines = $online_handler->getAll($criteria);
-            $count = count($onlines);
+            include_once $GLOBALS['xoops']->path('class/pagenav.php');
+
+            $isadmin = false;
+            $timezone = $xoopsConfig['default_TZ'];
+            if (is_object($xoopsUser)) {
+                $isadmin = $xoopsUser->isAdmin();
+                $timezone = $xoopsUser->timezone();
+            }
+
+            $variables['headContents'] = '';
+            $variables['closeHead'] = true;
+            $variables['isadmin'] = $isadmin;
+            $variables['lang_whoisonline'] = _WHOSONLINE;
+            $variables['lang_close'] = _CLOSE;
+            $variables['lang_avatar'] = _US_AVATAR;
+            $variables['anonymous'] = $xoopsConfig['anonymous'];
+            $variables['upload_url'] = XOOPS_UPLOAD_URL .'/';
+
+            $start = Request::getInt('start', 0);
+            $limit = 20; // how many to make available per page
+
             /* @var XoopsModuleHandler $module_handler */
             $module_handler = xoops_getHandler('module');
-            $modules = $module_handler->getList(new Criteria('isactive', 1));
-            for ($i = 0; $i < $count; ++$i) {
-                if ($onlines[$i]['online_uid'] == 0) {
-                    $onlineUsers[$i]['user'] = '';
+            $modules = $module_handler->getObjects(new Criteria('isactive', 1), true);
+
+            /* @var XoopsOnlineHandler $onlineHandler */
+            $onlineHandler = xoops_getHandler('online');
+            $onlineTotal = $onlineHandler->getCount();
+            $criteria = new CriteriaCompo();
+            $criteria->setStart($start);
+            $criteria->setLimit($limit);
+            $onlines = $onlineHandler->getAll($criteria);
+
+            $onlineUserInfo = array();
+            foreach ($onlines as $online) {
+                $info = array();
+                if (0 == $online['online_uid']) {
+                    $info['uid'] = $online['online_uid'];
+                    $info['uname'] = $xoopsConfig['anonymous'];;
+                    $info['name'] = '';
+                    $info['xoopsuser'] = false;
+                    $info['avatar'] = 'avatars/blank.gif';
                 } else {
-                    $onlineUsers[$i]['user'] =  new XoopsUser($onlines[$i]['online_uid']);
+                    /** @var XoopsUser $onlineUser */
+                    $onlineUser = new XoopsUser($online['online_uid']);
+                    $info['xoopsuser'] = $onlineUser;
+                    $info['uid'] = $online['online_uid'];
+                    $info['uname'] = $online['online_uname'];
+                    $info['name'] = $onlineUser->name();
+                    $info['avatar'] = $onlineUser->user_avatar();
                 }
-                $onlineUsers[$i]['ip'] = $onlines[$i]['online_ip'];
-                $onlineUsers[$i]['updated'] = $onlines[$i]['online_updated'];
-                $onlineUsers[$i]['module'] = ($onlines[$i]['online_module'] > 0) ? $modules[$onlines[$i]['online_module']] : '';
-            }
-            $class = 'even';
-            for ($i = 0; $i < $count; ++$i) {
-                $class = ($class === 'odd') ? 'even' : 'odd';
-                echo '<tr style="vertical-align:middle; text-align: center;" class="' . $class . '">';
-                if (is_object($onlineUsers[$i]['user'])) {
-                    $avatar = $onlineUsers[$i]['user']->getVar('user_avatar') ? '<img src="' . XOOPS_UPLOAD_URL . '/' . $onlineUsers[$i]['user']->getVar('user_avatar') . '" alt="" />' : '&nbsp;';
-                    echo '<td>' . $avatar . "</td><td><a href=\"javascript:window.opener.location='" . XOOPS_URL . '/userinfo.php?uid=' . $onlineUsers[$i]['user']->getVar('uid') . "';window.close();\">" . $onlineUsers[$i]['user']->getVar('uname') . '</a>';
+                $info['updated'] = formatTimestamp($online['online_updated'], 'm', $timezone);
+                $info['ip'] = $online['online_ip'];
+                $info['mid'] = $online['online_module'];
+                if (0 === $online['online_module'] || !isset($modules[$online['online_module']])) {
+                    $info['module_name'] = '';
+                    $info['dirname'] = '';
                 } else {
-                    echo '<td>&nbsp;</td><td>' . $xoopsConfig['anonymous'];
+                    /** @var \XoopsModule $mod */
+                    $mod = $modules[$online['online_module']];
+                    $info['module_name'] = $mod->name();
+                    $info['dirname'] = $mod->dirname();
                 }
-                if ($isadmin == 1) {
-                    echo '<br>(' . $onlineUsers[$i]['ip'] . ')';
-                }
-                echo '</td><td>' . $onlineUsers[$i]['module'] . '</td></tr>';
+                $onlineUserInfo[] = $info;
             }
-            echo '</table><br>';
-            if ($online_total > 20) {
-                include_once $GLOBALS['xoops']->path('class/pagenav.php');
-                $nav = new XoopsPageNav($online_total, 20, $start, 'start', 'action=showpopups&amp;type=online');
-                echo '<div style="text-align: right;">' . $nav->renderNav() . '</div>';
-            }
+            $variables['onlineUserInfo'] = $onlineUserInfo;
+
+            $nav = new XoopsPageNav($onlineTotal, $limit, $start, 'start', 'action=showpopups&amp;type=online');
+            $variables['pageNav'] = $nav->renderNav();
+
+            xoops_misc_popup_body('db:system_misc_online.tpl', $variables, true, true);
             break;
         case 'ssllogin':
             if ($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && is_object($xoopsUser)) {
@@ -231,46 +280,47 @@ if ($action === 'showpopups') {
         default:
             break;
     }
+    $closebutton=false;
     if ($closebutton) {
         echo '<div style="text-align:center;"><input class="formButton" value="' . _CLOSE . '" type="button" onclick="window.close();" /></div>';
     }
     xoops_footer();
-}
 
-function printCheckForm()
+/**
+ * xoops_misc_popup_body()
+ *
+ * @param string         $template  smarty template to user
+ * @param array          $variables array of variables to assign for template
+ * @param bool           $closehead if true, close the head element and open the body
+ * @param XoopsForm|null $xoopsForm optioal form
+ * @return void  echos rendered template
+ */
+function xoops_misc_popup_body($template, $variables, $closehead = true, $closebutton = true, $xoopsForm = null)
 {
-    ?>
-    <script language='javascript' type="text/javascript">
-        <!--//
-        function checkForm()
-        {
-            if ( xoopsGetElementById("yname").value == "" ) {
-                alert( "<?php
-    echo _MSC_ENTERYNAME;
-    ?>" );
-                xoopsGetElementById("yname").focus();
+    global $xoopsConfig;
 
-                return false;
-            } elseif ( xoopsGetElementById("fname").value == "" ) {
-                alert( "<?php
-    echo _MSC_ENTERFNAME;
-    ?>" );
-                xoopsGetElementById("fname").focus();
+    $themeSet = $xoopsConfig['theme_set'];
+    $themePath = XOOPS_THEME_PATH . '/' . $themeSet . '/';
+    $themeUrl = XOOPS_THEME_URL . '/' . $themeSet . '/';
+    include_once XOOPS_ROOT_PATH . '/class/template.php';
+    $headTpl = new \XoopsTpl();
+    //$GLOBALS['xoopsHeadTpl'] = $headTpl;  // expose template for use by caller
+    $headTpl->assign(array(
+        'closeHead'      => (bool) $closehead,
+        'closeButton'    => (bool) $closebutton,
+        'themeUrl'       => $themeUrl,
+        'themePath'      => $themePath,
+        'xoops_langcode' => _LANGCODE,
+        'xoops_charset'  => _CHARSET,
+        'xoops_sitename' => $xoopsConfig['sitename'],
+        'xoops_url'      => XOOPS_URL,
+    ));
 
-                return false;
-            } elseif ( xoopsGetElementById("fmail").value =="") {
-                alert( "<?php
-    echo _MSC_ENTERFMAIL;
-    ?>" );
-                xoopsGetElementById("fmail").focus();
+    $headTpl->assign($variables);
+    if ($xoopsForm instanceof XoopsForm) {
+        $xoopsForm->assign($headTpl);
+    }
 
-                return false;
-            } else {
-                return true;
-            }
-        }
-        //-->
-    </script>
-    <?php
-
+    $output = $headTpl->fetch($template);
+    echo $output;
 }
