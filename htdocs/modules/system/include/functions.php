@@ -35,7 +35,7 @@ function system_CleanVars(&$global, $key, $default = '', $type = 'int')
             $ret = isset($global[$key]) ? strtotime($global[$key]) : $default;
             break;
         case 'string':
-            $ret = isset($global[$key]) ? Xmf\FilterInput::cleanVar($global[$key], 'STRING') : $default;
+            $ret = isset($global[$key]) ? Xmf\FilterInput::clean($global[$key], 'STRING') : $default;
             break;
         case 'int':
         default:
