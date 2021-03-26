@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '38000a7eb05dad9711fd6006d8b4e00755206a8c',
+    'reference' => 'f0c7352d8e51cf42eba0501caf1ffe1b027e37f7',
     'name' => 'xoopscore25/libraries',
   ),
   'versions' => 
@@ -112,21 +112,21 @@
     ),
     'xoops/base-requires25' => 
     array (
-      'pretty_version' => 'v1.0.1',
-      'version' => '1.0.1.0',
+      'pretty_version' => 'v1.0.2',
+      'version' => '1.0.2.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'e25bf69c7d2ad6f04d44b6cad3aaf5a8b35cc5fc',
+      'reference' => '0b6ceee06dcea1eaf0f56f0f63aa1caf75552f6e',
     ),
     'xoops/xmf' => 
     array (
-      'pretty_version' => 'v1.2.23',
-      'version' => '1.2.23.0',
+      'pretty_version' => 'v1.2.24',
+      'version' => '1.2.24.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'd84ac791d39753a51eae5eaebcf990342ea9f1e2',
+      'reference' => '4dcdf969f278f16f50af7bc76ec9595879c9fad8',
     ),
     'xoopscore25/libraries' => 
     array (
@@ -135,7 +135,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '38000a7eb05dad9711fd6006d8b4e00755206a8c',
+      'reference' => 'f0c7352d8e51cf42eba0501caf1ffe1b027e37f7',
     ),
   ),
 );
