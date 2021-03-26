@@ -55,14 +55,14 @@ while (false !== ($row = $xoopsDB->fetchArray($result))) {
     $rawStats[$row['type']][$row['age']] = $row['count'];
 }
 $ages = array('month', 'week', 'day', 'hour');
-$stats = [];
+$stats = array();
 foreach ($rawStats as $type => $hits) {
-    $stats[$type] = [];
+    $stats[$type] = array();
 }
 ksort($stats);
 $keys = array_keys($stats);
 foreach ($keys as $type) {
-    $count = [];
+    $count = array();
     foreach ($ages as $age) {
         $count[] = isset($rawStats[$type][$age]) ? (int)$rawStats[$type][$age] : 0;
     }
@@ -76,9 +76,9 @@ $height = (count($keys) + 1) * 24;
 $script = "new Chartist.Bar('.ct-chart', {\n";
 $script .= '  labels: ' . dumpArray(array_keys($stats)) . ",\n";
 $script .= '  series: ';
-$allSets = [];
+$allSets = array();
 for ($i=0; $i<4; ++$i) {
-    $newSet = [];
+    $newSet = array();
     foreach ($stats as $set) {
         $newSet[] = $set[$i] - (($i<3) ? $set[$i+1] : 0);
     }
@@ -109,7 +109,7 @@ EOS;
 
 $GLOBALS['xoTheme']->addStylesheet('modules/protector/assets/css/chartist.min.css');
 $GLOBALS['xoTheme']->addScript('modules/protector/assets/js/chartist.min.js');
-$GLOBALS['xoTheme']->addScript('', [], $script);
+$GLOBALS['xoTheme']->addScript('', array(), $script);
 $styles =<<<EOSS
 .ct-series-a .ct-bar { stroke: grey; }
 .ct-series-b .ct-bar { stroke: orange; }
@@ -128,7 +128,7 @@ $styles =<<<EOSS
 .color-series-c { background: yellow; }
 .color-series-d { background: red; }
 EOSS;
-$GLOBALS['xoTheme']->addStylesheet('', [], $styles);
+$GLOBALS['xoTheme']->addStylesheet('', array(), $styles);
 
 
 $moduleAdmin = \Xmf\Module\Admin::getInstance();

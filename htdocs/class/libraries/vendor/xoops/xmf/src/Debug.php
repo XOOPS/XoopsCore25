@@ -18,7 +18,7 @@ namespace Xmf;
  * @package   Xmf
  * @author    trabis <lusopoemas@gmail.com>
  * @author    Richard Griffith <richard@geekwright.com>
- * @copyright 2011-2018 XOOPS Project (https://xoops.org)
+ * @copyright 2011-2021 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @link      https://xoops.org
  */
@@ -36,8 +36,8 @@ class Debug extends \Kint
         if (true !== $done) {
             $done = true;
             $class = get_called_class();
-            parent::$aliases[] = [$class, 'dump'];
-            parent::$aliases[] = [$class, 'backtrace'];
+            parent::$aliases[] = array($class, 'dump');
+            parent::$aliases[] = array($class, 'backtrace');
             parent::$enabled_mode = true;
             parent::$mode_default = \Kint::MODE_RICH;
             // display output inline ::folder = false, true puts all output at bottom of window
