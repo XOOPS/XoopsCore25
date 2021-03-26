@@ -11,13 +11,24 @@ Features:
 - Self hosted, with no off domain resources required
 - Built in cookie consent
 - Administrator toolbar with block edit feature
+- Switch between light and dark theme based on media queries
 
 Customize xSwatch:
 
 - 21 themes in 1 theme (Preview : [Bootswatch](https://bootswatch.com/))
-  In the file _tpl/xswatchCss.tpl_, edit the bottom line to match the Bootswatch theme of your 
-  choice. By default, the line reads **css-cerulean**. To change to a dark theme, like the one 
-  used in the original xswatch for example, change it to **css-slate**.
+- Dual theme light and dark media query responsive operation - 
+  Two files control which themes are used, _tpl/xswatchCss.tpl_ and _tpl/xswatchDarkCss.tpl_.
+  In the file _tpl/xswatchCss.tpl_, edit the bottom line to match the Bootswatch theme of your
+  choice for use with prefers-color-scheme light media queries. By default, the line reads 
+  **css-cerulean**. In the file _tpl/xswatchDarkCss.tpl_, edit the bottom line to match the Bootswatch theme of your
+  choice for use with dark media queries.  By default, the line reads **css-slate**. 
+  Your site will then follow the use's browser or OS preference to choose light or dark.
+- Single theme operation - 
+  Edit _tpl/xswatchDarkCss.tpl_ and delete the line with the file name, and the theme will
+  be locked to whatever theme is specified in the file _tpl/xswatchCss.tpl_. No consideration
+  of prefers-color-scheme queries will be made. In the file _tpl/xswatchCss.tpl_, edit the 
+  bottom line to match the Bootswatch theme of your choice. By default, the line reads 
+  **css-cerulean**. To change to a dark theme, for example, change it to **css-slate**.
   You can pick from any of the 21 variations listed in the comments in _tpl/xswatchCss.tpl_  
 - customize the Navigation Bar in tpl/nav-menu.tpl and language/*/main.php to match your system and installed modules
 - customize the Jumbotron in theme.tpl and tpl/jumbotron.tpl

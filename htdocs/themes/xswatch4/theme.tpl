@@ -17,9 +17,21 @@
 
 	<{* Edit tpl/xswatchCss.tpl to pick the css directory you want to use *}>
     <{include file="$theme_name/tpl/xswatchCss.tpl" assign="xswatchCss"}>
-    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/xoops.css">
-    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/cookieconsent.css">
+    <{* Edit tpl/xswatchDarkCss.tpl to pick the css directory you want to use for dark mode *}>
+    <{include file="$theme_name/tpl/xswatchDarkCss.tpl" assign="xswatchDarkCss"}>
+    <{* if xswatchDarkCss doesn't set a dark mode theme, just use one for all *}>
+    <{if $xswatchDarkCss == ''}>
+        <link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/xoops.css">
+        <link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/cookieconsent.css">
+    <{else}>
+        <link rel="stylesheet" media="(prefers-color-scheme: light)" href="<{xoImgUrl}><{$xswatchCss}>/xoops.css">
+        <link rel="stylesheet" media="(prefers-color-scheme: light)" href="<{xoImgUrl}><{$xswatchCss}>/bootstrap.min.css">
+        <link rel="stylesheet" media="(prefers-color-scheme: light)" href="<{xoImgUrl}><{$xswatchCss}>/cookieconsent.css">
+        <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="<{xoImgUrl}><{$xswatchDarkCss}>/xoops.css">
+        <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="<{xoImgUrl}><{$xswatchDarkCss}>/bootstrap.min.css">
+        <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="<{xoImgUrl}><{$xswatchDarkCss}>/cookieconsent.css">
+    <{/if}>
 
     <script src="<{$xoops_url}>/browse.php?Frameworks/jquery/jquery.js"></script>
     <script src="<{xoImgUrl}>js/bootstrap.bundle.min.js"></script>
