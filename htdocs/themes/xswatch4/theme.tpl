@@ -26,10 +26,10 @@
         <link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/cookieconsent.css">
     <{else}>
         <link rel="stylesheet" media="(prefers-color-scheme: light)" href="<{xoImgUrl}><{$xswatchCss}>/xoops.css">
-        <link rel="stylesheet" media="(prefers-color-scheme: light)" href="<{xoImgUrl}><{$xswatchCss}>/xoops.css">
         <link rel="stylesheet" media="(prefers-color-scheme: light)" href="<{xoImgUrl}><{$xswatchCss}>/bootstrap.min.css">
+        <link rel="stylesheet" media="(prefers-color-scheme: light)" href="<{xoImgUrl}><{$xswatchCss}>/cookieconsent.css">
+        <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="<{xoImgUrl}><{$xswatchDarkCss}>/xoops.css">
         <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="<{xoImgUrl}><{$xswatchDarkCss}>/bootstrap.min.css">
-        <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="<{xoImgUrl}><{$xswatchDarkCss}>/cookieconsent.css">
         <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="<{xoImgUrl}><{$xswatchDarkCss}>/cookieconsent.css">
     <{/if}>
 
