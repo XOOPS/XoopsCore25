@@ -282,7 +282,7 @@ switch ($op) {
             $type = $block->getVar('block_type');
             $name = $block->getVar('name');
             // Save block options
-            $options = Xmf\Request::getArray('options', [], 'POST');
+            $options = Xmf\Request::getArray('options', array(), 'POST');
             if (is_array($options) && !empty($options)) {
                 $options_count = count($options);
                 if ($options_count > 0) {
