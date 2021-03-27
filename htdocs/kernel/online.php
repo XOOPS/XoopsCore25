@@ -75,7 +75,7 @@ class XoopsOnlineHandler
         $ip = $this->db->quote($ip);
 
         if ($uid > 0) {
-            $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('online') . " WHERE online_uid={$uid}";
+            $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('online') . " WHERE online_ip={$ip}";
         } else {
             $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('online')
                    . " WHERE online_uid={$uid} AND online_ip={$ip}";
@@ -83,10 +83,7 @@ class XoopsOnlineHandler
         list($count) = $this->db->fetchRow($this->db->queryF($sql));
         if ($count > 0) {
             $sql = 'UPDATE ' . $this->db->prefix('online')
-                   . " SET online_updated = {$time}, online_module = {$module} WHERE online_uid = {$uid}";
-            if ($uid === 0) {
-                $sql .= " AND online_ip={$ip}";
-            }
+                   . " SET online_updated = {$time}, online_module = {$module}, online_uid = {$uid}  WHERE online_ip={$ip} AND online_uid IN (0, {$uid})";
         } else {
             $sql = sprintf(
                 'INSERT INTO %s (online_uid, online_uname, online_updated, online_ip, online_module)'
