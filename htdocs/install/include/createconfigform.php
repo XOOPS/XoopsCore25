@@ -280,7 +280,9 @@ function createThemeform($config)
                 $theme_ini['thumbnail']  = 'thumbnail.png';
             }
         }
-
+        if (!empty($theme_ini['Description'])) {
+            $label_content .= '<div class="alert alert-info" role="alert">' . $theme_ini['Description'] . '</div>';
+        }
         if ($theme_ini['screenshot'] !== '' && file_exists(XOOPS_ROOT_PATH . '/themes/' . $theme . '/' . $theme_ini['screenshot'])) {
             $label_content .= '<img class="img-responsive" src="' . XOOPS_URL . '/themes/' . $theme . '/' . $theme_ini['screenshot'] . '" alt="Screenshot" />';
         } elseif ($theme_ini['thumbnail'] !== '' && file_exists(XOOPS_ROOT_PATH . '/themes/' . $theme .'/' . $theme_ini['thumbnail'])) {
