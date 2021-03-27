@@ -88,6 +88,12 @@ class XoopsOnlineHandler
                 $sql .= " AND online_ip={$ip}";
             }
         } else {
+            if ($uid != 0) {
+                // this condition (no entry for a real user) exists when a user first signs in
+                // first, cleanup the uid == 0 row the user generated before signing in
+                $loginSql = sprintf('DELETE FROM %s WHERE online_uid = 0 AND online_ip=%s', $this->db->prefix('online'), $ip);
+                $this->db->queryF($loginSql);
+            }
             $sql = sprintf(
                 'INSERT INTO %s (online_uid, online_uname, online_updated, online_ip, online_module)'
                 . ' VALUES (%u, %s, %u, %s, %u)',
