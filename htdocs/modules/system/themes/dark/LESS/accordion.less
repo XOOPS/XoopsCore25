@@ -1,0 +1,100 @@
+/*
+ * Default Admin Theme
+ *
+ * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @package         themes
+ * @since           2.5.x
+ * @author          Xoops Design Theme <http://www.xoops.org/>
+ * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ *
+*/
+
+#accordion {
+    background-color: #fff;
+    color: #333;
+    width: 100%;
+    box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+    -moz-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+    -webkit-box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+}
+
+/* accordion header */
+#accordion h5 {
+    padding: 10px;
+  color: @toolbar-bg;
+    cursor: pointer;
+    position: relative;
+    margin-top: 1px;
+    background: @gray-light;
+    border: 1px solid darken(@gray-light, 10%);
+    font-weight: bold;
+  text-transform: uppercase;
+  transition: ease-in-out all 250ms;
+
+  &:after{
+    content: '';
+    display: block;
+    border-top: 4px solid @toolbar-bg;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    position: absolute;top: 50%;margin-top: -4px; right: 10px;
+    transition: ease-in-out all 250ms;
+  }
+}
+
+/* currently active header */
+#accordion h5.current {
+    cursor:default;
+    background-color: @blue-light;
+  position: relative;
+
+  &:after{
+    transform: rotate(180deg);
+  }
+
+}
+
+/* accordion pane */
+#accordion .pane {
+    display:none;
+    padding:10px;
+    font-size:12px;
+    line-height: 120%;
+  border: 1px solid darken(@gray-light, 10%);
+  border-top: 0;
+  background-color: #FFF;
+}
+
+.xgiftshop {
+  text-align: center !important;
+}
+
+#xokeytitle {
+    padding: 2px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #333;
+}
+
+#xokeynumber {
+   text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 13px;
+    font-weight: bold;
+    color: #92EF2C;
+}
+
+#xolicenses {
+    padding: 5px 18px 5px 18px !important;
+}
+
+#xolicenses a{
+    color: #45C5DF;
+}
+
+#xolicenses a:hover {
+    color: #FF0000;
+    text-decoration: none;
+}

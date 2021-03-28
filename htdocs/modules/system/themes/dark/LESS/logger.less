@@ -1,0 +1,79 @@
+/*
+ * Default Admin Theme
+ *
+ * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @package         themes
+ * @since           2.5.x
+ * @author          Xoops Design Theme <http://www.xoops.org/>
+ * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ *
+*/
+#xo-logger-errors, #xo-logger-deprecated, #xo-logger-queries, #xo-logger-blocks,
+#xo-logger-extra, #xo-logger-timers{
+   max-width: 95% !important;
+}
+#xo-logger-output {
+    margin: 20px !important;
+
+  &:after{
+    content: '';
+    display: table;
+    clear: both;
+  }
+
+  > table{
+    border: 0!important;
+    border: 1px solid rgba(0,0,0,0.1)!important;
+    margin: 0 0 20px;
+    background-color: @gray-light;
+
+    tr, td{
+      border: 0;
+      background-color: transparent;
+    }
+
+    th{
+      background-color: transparent!important;
+      padding: 6px;
+      text-align: left;
+      font-weight: 700;
+      font-size: 1.4em!important;
+      text-transform: uppercase;
+      font-family: @font-family-secondary;
+      color: @text-color;
+    }
+
+    td{
+      padding: 4px 6px!important;
+    }
+  }
+}
+#xo-logger-tabs {
+    background-color: @body-bg;
+    margin-top: -2px;
+    padding: 0;
+
+  &:after{
+    content: '';
+    display: table;
+    clear: both;
+  }
+
+  > a{
+    display: block;
+    float: left;
+    padding: 8px 12px;
+    background-color: @gray-light;
+    border-radius: 2px 2px 0 0;
+    margin-right: 1px;
+    border: 1px solid rgba(0,0,0,0.1);
+    margin-bottom: -1px;
+  }
+}
+#xo-logger-errors {}
+#xo-logger-deprecated {}
+#xo-logger-queries {}
+#xo-logger-blocks {}
+#xo-logger-extra {}
+#xo-logger-timers {}

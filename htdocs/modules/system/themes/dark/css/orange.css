@@ -1,0 +1,137 @@
+/*
+ * Default Admin Theme
+ *
+ * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @package         themes
+ * @since           2.5.x
+ * @author          Xoops Design Theme <http://www.xoops.org/>
+ * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ *
+*/
+body {
+  background-color: #fbe0d5;
+}
+a,
+a:link,
+a:active,
+a:visited {
+  color: #CA6A25 !important;
+}
+a:hover {
+  color: #FF4500 !important;
+}
+.outer {
+  border: 2px solid #F3F4F4;
+}
+.head {
+  background-color: #F3F4F4;
+}
+.even {
+  background-color: transparent;
+}
+.odd {
+  background-color: #F3F4F4;
+}
+#xo-logo-head {
+  background: #FF4D00;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+#xo-headnav > li {
+  border-left: 1px solid #AF8878;
+}
+#xo-headnav > li > a {
+  background-color: #FFEBE2;
+  border-left: 1px solid #fff;
+  color: #330F00;
+}
+#xo-headnav > li > a:hover {
+  background-color: #FFA252;
+}
+#xo_globalnav {
+  background: #FF7600;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+#xo_globalnav ul.menu ul li a {
+  background: #351800;
+  color: #FFEDDD !important;
+}
+#xo_globalnav ul.menu ul li a:hover {
+  background-color: #FFA252;
+  color: #FFF !important;
+}
+#xo_globalnav ul.menu .menulink {
+  color: #FFF !important;
+}
+#xo_globalnav ul.menu .menulink:hover,
+ul.menu .menuhover {
+  background: #351800;
+  color: #FFF !important;
+}
+#xo_globalnav ul.menu .sub:after {
+  border-left-color: #FFEDDD;
+}
+#xo_globalnav ul.menu .sub:hover:after {
+  border-left-color: #FFF;
+}
+#choosestyle a {
+  background: #FF9300;
+  /* Old browsers */
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: -1px 0 0 rgba(0, 0, 0, 0.1), inset -1px 0 0 rgba(0, 0, 0, 0.1);
+  color: #FFF;
+}
+#choosestyle a:hover {
+  background-color: #330F00;
+  color: #FFF;
+}
+#xo-body {
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+#xo-nav-options {
+  background: #330F00;
+  border-bottom: 1px solid #000;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+#xo-nav-options .modname {
+  color: #1d1f24;
+}
+#xo-footer {
+  background-color: #330F00;
+  color: #ff4b00;
+}
+#xo-footer a {
+  color: #FFEDDD;
+  background-color: transparent;
+}
+#xo-footer a:hover {
+  color: #FFF;
+  text-decoration: none;
+  background-color: transparent;
+}
+#xo-icon a,
+#xo-module-icons a {
+  background-color: #FFF;
+  border: 1px solid #d8dcdc;
+}
+#xo-icon a:hover,
+#xo-module-icons a:hover {
+  background: #eaf6fa;
+}
+.xo-title {
+  color: #330F00;
+  border-bottom: 3px solid #330F00;
+}
+#xo-logger-output > table {
+  background-color: #fdf1ec;
+}
+#xo-logger-output > table th {
+  color: #4E5159;
+}
+#xo-logger-tabs {
+  background-color: #fbe0d5;
+}
+#xo-logger-tabs > a {
+  background-color: #fdf1ec;
+}

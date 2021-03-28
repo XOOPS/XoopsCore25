@@ -1,0 +1,73 @@
+/*
+ * Default Admin Theme
+ *
+ * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @package         themes
+ * @since           2.5.x
+ * @author          Xoops Design Theme <http://www.xoops.org/>
+ * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ *
+*/
+#xo-pagenav {
+    margin: 7px 0;
+    text-align: center;
+    font-size: 1.05em;
+}
+
+#xo-pagenav a {
+    margin: 2px;
+    background-color: #D3D2D6;
+    padding: 4px 8px 4px 8px;
+    color: #405A80;
+    font-size: 1em;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+    -moz-box-shadow : 0 20px 10px -10px rgba( 255, 255, 255, 0.3) inset;
+    -webkit-box-shadow : 0 20px 10px -10px rgba( 255, 255, 255, 0.3) inset;
+    cursor: pointer;
+}
+
+#xo-pagenav a:hover {
+    background-color: #E6EBFF;
+    padding: 4px 8px 4px 8px;
+    color: inherit;
+    cursor: pointer;
+}
+
+.xo-pagact {
+    margin: 2px 5px 2px 5px;
+    background-color: #E6EBFF;
+    padding: 4px;
+    color: #405A80;
+    font-size: 1em;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    box-shadow: 0 20px 10px -10px rgba(255, 255, 255, 0.3) inset;
+    -moz-box-shadow : 0 20px 10px -10px rgba( 255, 255, 255, 0.3) inset;
+    -webkit-box-shadow : 0 20px 10px -10px rgba( 255, 255, 255, 0.3) inset;
+    cursor: pointer;
+}
+
+.xo-counterpage,.xo-pagarrow {
+    margin: 0;
+    padding: 4px;
+    color: #405A80;
+    background-color: #D3D2D6;
+    border: 1px solid #ccc;
+}
+
+.xo-counterpage:hover {
+
+}
+
+.xo-pagarrow {
+    letter-spacing: 0.2em;
+}

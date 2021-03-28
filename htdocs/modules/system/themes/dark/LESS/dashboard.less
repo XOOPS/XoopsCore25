@@ -1,0 +1,122 @@
+/*
+ * Default Admin Theme
+ *
+ * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @package         themes
+ * @since           2.5.x
+ * @author          Xoops Design Theme <http://www.xoops.org/>
+ * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ *
+*/
+
+#xo-body-contain {
+    padding: 0;
+    margin: 0;
+}
+
+#xo-body {
+    margin: 0 auto;
+    background-color: #FFF;
+    border: 1px solid rgba(0,0,0,0.15);
+    padding: 20px;
+    border-radius: 3px;
+    margin: 20px !important;
+  font-size: ceil(@font-size * 1.1);
+}
+
+#xo-index {
+    width: 100%;
+    border: 0;
+    min-height: 200px;
+    clear: both;
+}
+
+#xo-index-bottom {
+    width: 100%;
+    border: 0;
+    clear: both;
+}
+
+#xo-body-icons {
+    width: 66%;
+    float: left;
+}
+
+#xo-tabs {
+    width: 32%;
+    float: right;
+}
+
+#xo-modules {
+    width: 66%;
+    float: left;
+}
+
+#xo-accordion {
+    width: 32%;
+    float: right;
+}
+
+#xo-content {
+    clear: both;
+}
+
+.xo-title {
+    font-size: 18px;
+    color: @toolbar-bg;
+    background: no-repeat left top;
+    font-weight: bold;
+    vertical-align: middle;
+    padding: 0 0 10px;
+    border-bottom: 3px solid @toolbar-bg;
+    font-weight: 700;
+  font-family: @font-family-secondary;
+    margin-bottom: 10px;
+}
+
+#xo-title-modules {
+    &:before{
+      content: "\f12e";
+      display: inline-block;
+      font: normal normal normal 14px/1 FontAwesome;
+      font-size: inherit;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      margin-right: 8px;
+    }
+}
+
+#xo-title-icons {
+    &:before{
+      content: "\f0e4";
+      display: inline-block;
+      font: normal normal normal 14px/1 FontAwesome;
+      font-size: inherit;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      margin-right: 8px;
+    }
+}
+
+#xo-title-accordion {
+  &:before{
+    content: "\f013";
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin-right: 8px;
+  }
+}
+
+.xo-index-option {
+    padding: 4px;
+    vertical-align: top;
+}
+#xo-module-log {text-align: center;}
+.logger {margin: 1em auto !important; text-align: left;}
