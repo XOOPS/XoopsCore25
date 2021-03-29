@@ -296,11 +296,11 @@
     IMG_OFF = '<{xoAdminIcons cancel.png}>';
 
     $('.lightbox').lightBox({
-        imageLoading: 'language/<{$xoops_language}>/images/lightbox-ico-loading.gif',
-        imageBtnClose: 'language/<{$xoops_language}>/images/lightbox-btn-close.gif',
-        imageBtnNext: 'language/<{$xoops_language}>/images/lightbox-btn-next.gif',
-        imageBtnPrev: 'language/<{$xoops_language}>/images/lightbox-btn-prev.gif',
-        imageBlank: 'language/<{$xoops_language}>/images/lightbox-blank.gif'
+        imageLoading: 'language/<{$xoops_language|default:english}>/images/lightbox-ico-loading.gif',
+        imageBtnClose: 'language/<{$xoops_language|default:english}>/images/lightbox-btn-close.gif',
+        imageBtnNext: 'language/<{$xoops_language|default:english}>/images/lightbox-btn-next.gif',
+        imageBtnPrev: 'language/<{$xoops_language|default:english}>/images/lightbox-btn-prev.gif',
+        imageBlank: 'language/<{$xoops_language|default:english}>/images/lightbox-blank.gif'
     });
 
 
