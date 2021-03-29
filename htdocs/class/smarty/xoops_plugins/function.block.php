@@ -43,7 +43,11 @@ function smarty_function_block($params, &$smarty)
 
     static $block_objs;
     if (!isset($block_objs[$block_id])) {
+<<<<<<< HEAD
         include_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
+=======
+        include_once XOOPS_ROOT_PATH . '/kernel/block.php';
+>>>>>>> parent of 11db8681 (Update function.block.php)
 
         $blockObj = new XoopsBlock($block_id);
 
