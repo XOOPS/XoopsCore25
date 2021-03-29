@@ -1,0 +1,134 @@
+/*
+ * Default Admin Theme
+ *
+ * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @package         themes
+ * @since           2.5.x
+ * @author          Xoops Design Theme <http://www.xoops.org/>
+ * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ *
+ */
+
+@import "themes/dark";
+
+body {
+    background-color: @body-bg;
+}
+
+.outer {
+    border: 2px solid @gray-light;
+}
+
+.head {
+    background-color: @gray-light;
+}
+
+.even {
+    background-color: transparent;
+}
+
+.odd {
+    background-color: @gray-light;
+}
+
+#xo-logo-head {
+    background: #333740;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+#xo-headnav {
+
+  > li{
+    border-left: 1px solid @headnav-separator-color;
+
+    > a{
+      background-color: @head-links-bg;
+      border-left: 1px solid @headnav-separator-color-light;
+      color: @head-links-color;
+
+      &:hover{
+        background-color: darken(@head-links-bg, 10%);
+      }
+    }
+
+  }
+
+}
+
+#xo_globalnav {
+    background: @nav-bg;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+#xo_globalnav ul.menu ul li a {
+    color: @nav-menu-links-color;
+  transition: ease all 250ms;
+}
+
+#xo_globalnav ul.menu ul li a:hover {
+    background-color: @color-blue;
+    color: @nav-links-color-hover;
+}
+
+#xo_globalnav ul.menu .menulink {
+    color: @nav-links-color;
+}
+
+#xo_globalnav ul.menu .menulink:hover,ul.menu .menuhover {
+    background: @nav-bg-hover;
+  color: @nav-links-color-hover;
+}
+
+#xo_globalnav ul.menu .sub {
+
+  &:after{
+    border-left-color: @nav-menu-links-color;
+  }
+
+  &:hover{
+    &:after{
+      border-left-color: @nav-menu-links-color-hover;
+    }
+  }
+}
+
+#choosestyle a {
+  background-color: rgba(0,0,0,0.2);
+  border-left: 1px solid rgba(255,255,255,0.1);
+  color: @nav-links-color;
+
+  &:hover{
+    background-color: @color-blue;
+    color: @nav-links-color-hover;
+  }
+}
+
+#xo-body {
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,0.15);
+}
+
+#xo-nav-options {
+  background: @toolbar-bg;
+  border-bottom: 1px solid #000;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+#xo-nav-options .modname {
+    color: #1d1f24;
+}
+
+#xo-footer {
+    background-color: @head-logo-bg;
+    color: @footer-color;
+}
+
+#xo-icon a, #xo-module-icons a {
+    background-color: #FFF;
+  border: 1px solid darken(@gray-light, 10%);
+}
+
+#xo-icon a:hover,#xo-module-icons a:hover {
+  background: @blue-light;
+}

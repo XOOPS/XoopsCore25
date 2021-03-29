@@ -1,0 +1,119 @@
+/*
+ * Default Admin Theme
+ *
+ * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @package         themes
+ * @since           2.5.x
+ * @author          Xoops Design Theme <http://www.xoops.org/>
+ * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ *
+*/
+.tabs {
+    list-style:none;
+    margin:0 !important;
+    padding: 10px 4px 1px;
+    border-bottom: 1px solid darken(@gray-light, 10%);
+
+  &:after{
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+/* single tab */
+.tabs li {
+    float:left;
+    text-indent:0;
+    padding:0;
+    margin:0 !important;
+    list-style-image:none !important;
+    list-style-type: none;
+}
+
+/* link inside the tab. uses a background image */
+.tabs a {
+    display:block;
+    text-align:center;
+    text-decoration:none;
+    color:#000;
+    padding: 8px 12px;
+    margin:  -10px 1px 0 1px  !important;
+    position:relative;
+    top:1px;
+    background-color: @gray-light !important;
+    border: 1px solid darken(@gray-light, 10%);
+    border-bottom-width: 0;
+    border-radius: 2px 2px 0 0;
+
+  > img{
+    width: 24px;
+    height: 24px;
+  }
+}
+
+
+.tabs a:active {
+    outline:none;
+
+}
+
+/* when mouse enters the tab move the background image */
+.tabs a:hover {
+    background-color: #FFF !important;
+}
+
+/* active tab uses a class name "current". it's highlight is also done by moving the background image. */
+.tabs .current, .tabs .current:hover, .tabs li.current a {
+    cursor:default !important;
+    color:#000 !important;
+    background-color: #FFF !important;
+  margin-bottom: -1px!important;
+  padding-bottom: 9px;
+}
+
+.tabs + .panes{
+  padding: 15px;
+  border: 1px solid darken(@gray-light, 10%);
+  border-top: 0;
+  border-radius: 0 0 3px 3px;
+}
+
+/* initially all panes are hidden */
+.panes .pane {
+    display:none;
+}
+
+.panes ul {
+    margin: 5px 0 5px 0;
+  padding: 0;
+}
+
+.panes li {
+    list-style-type: none;
+    padding: 8px;
+    border-bottom: 1px solid darken(@gray-light, 10%);
+
+  &:last-child{
+    border: 0;
+  }
+}
+
+.help {
+    vertical-align: middle;
+    text-decoration: none;
+    padding: 8px;
+    margin-bottom: 3px;
+    text-align: justify;
+    border-bottom: 1px solid darken(@gray-light, 10%);
+
+  &:last-child{
+    border: 0;
+  }
+
+  > a{
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+}

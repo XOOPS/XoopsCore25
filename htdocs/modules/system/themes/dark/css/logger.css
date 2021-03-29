@@ -1,0 +1,30 @@
+/*
+ * Default Admin Theme
+ *
+ * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
+ * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @package         themes
+ * @since           2.5.x
+ * @author          Xoops Design Theme <http://www.xoops.org/>
+ * @maintained      Xoops Design Theme <http://www.xoops.org/>
+ *
+*/
+#xo-logger-errors, #xo-logger-deprecated, #xo-logger-queries, #xo-logger-blocks,
+#xo-logger-extra, #xo-logger-timers{
+   max-width: 95% !important;
+}
+#xo-logger-output {
+    margin: 0 auto !important;
+}
+#xo-logger-tabs {
+    background-color: #4E4949;
+    margin-top: -2px;
+    padding: 8px 2%;
+    width: 96% !important;
+}
+#xo-logger-errors {}
+#xo-logger-deprecated {}
+#xo-logger-queries {}
+#xo-logger-blocks {}
+#xo-logger-extra {}
+#xo-logger-timers {}
