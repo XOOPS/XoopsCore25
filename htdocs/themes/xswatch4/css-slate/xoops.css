@@ -1222,13 +1222,13 @@ div.jGrowl div.jGrowl-closer {
 .xoops-theme-select form select {
     background-color: black;
 }
-*/
+
 input[type=submit], input[type=reset], input[type=button], .xo-formbuttons, .formButton, button {
     background-color: #3a3f44;
     color: #eeeeee;
     padding: 8px 12px;
 }
-
+*/
 a.xo-counterpage {
     color: blue;
 }
@@ -1261,4 +1261,15 @@ div.newbb thead a {
 
 .toast-body a {
     color: black;
+}
+
+/* darken form entry areas */
+input[type=text], input[type=password], input[type=checkbox], input[type=radio], input[type=file], textarea, select, textarea.form-control, select.form-control[size], select.form-control[multiple], .form-control {
+    background-color: #555555;
+    color: #CCCCFF;
+}
+
+input[type=text]:focus, input[type=password]:focus, input[type=checkbox]:focus, input[type=radio]:focus, input[type=file]:focus, textarea:focus, select:focus, textarea.form-control:focus, select.form-control[size]:focus, select.form-control[multiple]:focus, .form-control:focus {
+    background-color: #CCCCCC;
+    color: #3333CC;
 }
