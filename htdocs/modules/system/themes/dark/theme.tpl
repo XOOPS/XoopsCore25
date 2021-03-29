@@ -12,10 +12,13 @@
             filter: invert(1) hue-rotate(180deg);
         }
         .darken-please img {
-            filter: invert(1) hue-rotate(180deg);
+            filter: invert(1) hue-rotate(180deg) brightness(75%);
+        }
+        #xo-nav-options img {
+            filter: grayscale(100%) brightness(75%);
         }
         .CPbigTitle[style^="background-image:"] {
-            filter: invert(1) hue-rotate(180deg);
+            filter: invert(1) hue-rotate(180deg) grayscale(1);
         }
         .xct-chart { filter: invert(1) hue-rotate(180deg); }
         .xct-labels { filter: invert(1) hue-rotate(180deg); }
@@ -45,6 +48,18 @@
         }
         .xo-thumbimg {
             background-color: #DDD;
+        }
+        .tips {
+            color: #666;
+            border: 1px solid #cccccc;
+        }
+        #xo-logger-tabs>a {
+            background-color: #666666;
+            color: #000;
+        }
+        #xo-logger-output>table {
+            background-color: #AAA;
+            color: #000;
         }
     </style>
 </head>
