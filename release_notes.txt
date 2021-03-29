@@ -43,6 +43,7 @@ Installing XOOPS (new installation)
     2. Ensure that these directories:
         - uploads/
         - uploads/avatars/
+        - uploads/files/
         - uploads/images/
         - uploads/ranks/
         - uploads/smilies/

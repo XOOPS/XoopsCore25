@@ -58,6 +58,7 @@ $configs['extensions'] = array(
 $configs['writable'] = array(
     'uploads/',
     'uploads/avatars/',
+    'uploads/files/',
     'uploads/images/',
     'uploads/ranks/',
     'uploads/smilies/',
