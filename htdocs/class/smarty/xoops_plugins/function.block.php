@@ -43,7 +43,7 @@ function smarty_function_block($params, &$smarty)
 
     static $block_objs;
     if (!isset($block_objs[$block_id])) {
-        include_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
+        include_once XOOPS_ROOT_PATH . '/kernel/block.php';
 
         $blockObj = new XoopsBlock($block_id);
 
