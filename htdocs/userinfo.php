@@ -172,31 +172,33 @@ foreach ($mids as $mid) {
     if ($gperm_handler->checkRight('module_read', $mid, $groups)) {
         $module  = $module_handler->get($mid);
         $results = $module->search('', '', 5, 0, $thisUser->getVar('uid'));
-        $count   = count($results);
-        if (is_array($results) && $count > 0) {
-            for ($i = 0; $i < $count; ++$i) {
-                if (isset($results[$i]['image']) && $results[$i]['image'] != '') {
-                    $results[$i]['image'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['image'];
-                } else {
-                    $results[$i]['image'] = 'images/icons/posticon2.gif';
+        if ($results) {
+            $count   = count($results);
+            if (is_array($results) && $count > 0) {
+                for ($i = 0; $i < $count; ++$i) {
+                    if (isset($results[$i]['image']) && $results[$i]['image'] != '') {
+                        $results[$i]['image'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['image'];
+                    } else {
+                        $results[$i]['image'] = 'images/icons/posticon2.gif';
+                    }
+    
+                    if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
+                        $results[$i]['link'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['link'];
+                    }
+    
+                    $results[$i]['title'] = $myts->htmlSpecialChars($results[$i]['title']);
+    				$results[$i]['time']  = isset($results[$i]['time']) ? formatTimestamp($results[$i]['time']) : '';
                 }
-
-                if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
-                    $results[$i]['link'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['link'];
+                $showall_link = '';
+                if ($count == 5) {
+                    $showall_link = '<a href="search.php?action=showallbyuser&amp;mid=' . $mid . '&amp;uid=' . $thisUser->getVar('uid') . '">' . _US_SHOWALL . '</a>';
                 }
-
-                $results[$i]['title'] = $myts->htmlSpecialChars($results[$i]['title']);
-				$results[$i]['time']  = isset($results[$i]['time']) ? formatTimestamp($results[$i]['time']) : '';
+                $xoopsTpl->append('modules', array(
+                    'name'         => $module->getVar('name'),
+                    'results'      => $results,
+                    'showall_link' => $showall_link));
             }
-            $showall_link = '';
-            if ($count == 5) {
-                $showall_link = '<a href="search.php?action=showallbyuser&amp;mid=' . $mid . '&amp;uid=' . $thisUser->getVar('uid') . '">' . _US_SHOWALL . '</a>';
-            }
-            $xoopsTpl->append('modules', array(
-                'name'         => $module->getVar('name'),
-                'results'      => $results,
-                'showall_link' => $showall_link));
-        }
+          }
         unset($module);
     }
 }
