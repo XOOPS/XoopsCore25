@@ -159,7 +159,7 @@
 </table>
 
 <!-- start module search results loop -->
-<{foreach item=module from=$modules}>
+<{foreach item=module from=$modules|default:null}>
     <br class="clear"/>
     <h4><{$module.name}></h4>
     <!-- start results item loop -->
