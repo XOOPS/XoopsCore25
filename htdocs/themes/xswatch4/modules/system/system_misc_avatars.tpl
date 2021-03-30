@@ -15,7 +15,7 @@
 <{counter name=loopid start=0 print=false}>
 <{assign var=tdcnt value=1}>
 
-<div class="d-flex align-content-stretch flex-wrap justify-content-center">
+<div class="d-flex flex-wrap align-items-end justify-content-center">
 <{foreach from=$avatars key=file item=name}>
     <div class="px-1">  
         <figure class="figure">
