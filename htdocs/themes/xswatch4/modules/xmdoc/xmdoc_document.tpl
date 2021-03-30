@@ -18,10 +18,10 @@
 
 	<div class="row mb-2">
 		<div class="col-md-12">
-			<div class="card">
-				<div class="card-header">
+			<div class="card xmdoc-border" <{if $category_color != false}>style="border-color : <{$category_color}>;"<{/if}>>
+				<div class="card-header" <{if $category_color != false}>style="background-color : <{$category_color}>;"<{/if}>>
 					<div class="d-flex justify-content-between">
-						<h3 class="mb-0"><{$name}></h3>
+						<h3 class="mb-0 text-white"><{$name}></h3>
 						
 						<{if $showinfo == 1}>
 							<div class="row align-items-center text-right">
@@ -39,7 +39,7 @@
 				<{if $showinfo == 1}>
 					<div class="row border-bottom border-secondary mx-1 pl-1">
 						<figure class="figure text-muted my-1 pr-2 text-center border-right border-secondary">
-							  <span class="fa fa-circle-notch fa-fw" aria-hidden="true"></span> <{$smarty.const._MA_XMDOC_FORMDOC_DATE_BT}>
+							  <span class="fa fa-calendar fa-fw" aria-hidden="true"></span> <{$smarty.const._MA_XMDOC_FORMDOC_DATE_BT}>
 							  <figcaption class="figure-caption text-center"><{$date}></figcaption>
 						</figure>
 
@@ -55,20 +55,6 @@
 							  <figcaption class="figure-caption text-center"><{$author}></figcaption>
 						</figure>
 
-<!--
-						<{if $size != ''}>
-						<figure class="figure text-muted my-1 pr-2 text-center border-right border-secondary">
-							  <span class="fa fa-archive fa-fw" aria-hidden="true"></span> <{$smarty.const._MA_XMDOC_FORMDOC_SIZE}>
-							  <figcaption class="figure-caption text-center"><{$size}></figcaption>
-						</figure>
-						<{/if}>
--->
-<!--
-						<figure class="figure text-muted my-1 pr-2 text-center border-right border-secondary">
-							  <span class="fa fa-download fa-fw" aria-hidden="true"></span> <{$smarty.const._MA_XMDOC_FORMDOC_DOWNLOAD}>
-							  <figcaption class="figure-caption text-center"><{$counter}></figcaption>
-						</figure>
--->
 						<{if $dorating == 1}>
 						<figure class="text-muted m-1 pr-2 text-center border-right border-secondary">
 							<{include file="db:xmsocial_rating.tpl" down_xmsocial=$xmsocial_arr}>
@@ -98,7 +84,7 @@
 					</div>	
 				</div>	
 
-				<div class="card-footer d-flex justify-content-center">
+				<div class="card-footer d-flex justify-content-center" <{if $category_color != false}>style="background-color : <{$category_color}>;"<{/if}>>
 					<a class="btn btn-primary btn-lg" title="<{$name}>" href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$category_id}>&amp;doc_id=<{$doc_id}>" target="_blank">
 						<span class="fa fa-download fa-2x" aria-hidden="true"></span> <{$smarty.const._MA_XMDOC_DOWNLOAD}>
 					</a>

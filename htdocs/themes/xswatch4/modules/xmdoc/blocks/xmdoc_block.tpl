@@ -2,16 +2,20 @@
 	<{if $block.document|default:'' != ''}>
 	<{foreach item=blockdocument from=$block.document}>
 	<div class="col-sm-12 col-md-6 col-lg-4 p-2">
-		<div class="card">
-			<div class="card-header text-center text-truncate d-none d-sm-block">
-				<a class="text-decoration-none" title="<{$blockdocument.name}>" href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$blockdocument.categoryid}>&amp;doc_id=<{$blockdocument.id}>" target="_blank">
-					<{$blockdocument.name}>
-				</a>
+		<div class="card xmdoc-border" <{if $blockdocument.color != false}>style="border-color : <{$blockdocument.color}>;"<{/if}>>
+			<div class="card-header text-center text-truncate d-none d-sm-block" <{if $blockdocument.color != false}>style="background-color : <{$blockdocument.color}>;"<{/if}>>
+				<div class="d-flex justify-content-center text-center">
+					<a class="text-decoration-none" title="<{$blockdocument.name}>" href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$blockdocument.categoryid}>&amp;doc_id=<{$blockdocument.id}>" target="_blank">
+						<h5 class="mb-0 text-white"><{$blockdocument.name}></h5>
+					</a>
+				</div>
 			</div>
 			<div class="card-header text-center d-block d-sm-none">
-				<a class="text-decoration-none" title="<{$blockdocument.name}>" href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$blockdocument.categoryid}>&amp;doc_id=<{$blockdocument.id}>" target="_blank">
-					<{$blockdocument.name}>
-				</a>
+				<div class="d-flex justify-content-center text-center">
+					<a class="text-decoration-none" title="<{$blockdocument.name}>" href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$blockdocument.categoryid}>&amp;doc_id=<{$blockdocument.id}>" target="_blank">
+						<h5 class="mb-0 text-white"><{$blockdocument.name}></h5>
+					</a>
+				</div>
 			</div>
 			<div class="card-body text-center">
 				<div class="row d-flex justify-content-center" >
@@ -71,7 +75,7 @@
 								  <span class="fa fa-calendar fa-fw" aria-hidden="true"></span> <{$smarty.const._MA_XMDOC_FORMDOC_DATE_BT}>
 								  <figcaption class="figure-caption text-center"><{$blockdocument.date}></figcaption>
 							</figure>
-							<{if $blockdocument.mdate}>
+							<{if $blockdocument.mdate|default:''}>
 							<figure class="figure text-muted my-1 pr-2 text-center border-right border-secondary">
 								  <span class="fa fa-repeat fa-fw" aria-hidden="true"></span> <{$smarty.const._MA_XMDOC_FORMDOC_MDATE_BT}>
 								  <figcaption class="figure-caption text-center"><{$blockdocument.mdate}></figcaption>
