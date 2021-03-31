@@ -8,6 +8,10 @@
 
 <h4 class="text-center"><{$lang_whoisonline}></h4>
 
+<{if $closeButton|default:true}>
+    <div class="text-center m-3"><input class="btn btn-primary btn-block" value="<{$lang_close}>" type="button" onclick="window.close();" /></div>
+<{/if}>
+
 <{foreach item=online from=$onlineUserInfo}>
     <div class="row justify-content-center align-items-center <{cycle values='alert-primary,alert-secondary'}>">
         <div class="col-12 col-sm-3 text-center mt-2">
@@ -41,5 +45,5 @@
 <{/foreach}>
 
 <{if $closeButton|default:true}>
-    <div class="text-center m-3"><input class="btn btn-primary btn-lg btn-block" value="<{$lang_close}>" type="button" onclick="window.close();" /></div>
+    <div class="text-center m-3"><input class="btn btn-primary btn-block" value="<{$lang_close}>" type="button" onclick="window.close();" /></div>
 <{/if}>
