@@ -460,6 +460,9 @@ class Upgrade_2511 extends XoopsUpgrade
      */
     private function checkDirForIndexHtml($startingPath, \Closure $onFound)
     {
+        if (!is_dir($startingPath)) {
+            return 0;
+        }
         $i = 0;
         $rdi = new \RecursiveDirectoryIterator($startingPath);
         $rii = new \RecursiveIteratorIterator($rdi);
