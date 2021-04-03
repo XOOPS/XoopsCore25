@@ -64,6 +64,7 @@ if (!defined('XOOPS_ROOT_PATH')) {
 date_default_timezone_set(@date_default_timezone_get());
 include './class/installwizard.php';
 include_once '../include/version.php';
+require_once '../include/xoopssetcookie.php';
 include_once './include/functions.php';
 include_once '../class/module.textsanitizer.php';
 include_once '../class/libraries/vendor/autoload.php';

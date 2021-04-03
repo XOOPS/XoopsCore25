@@ -78,7 +78,7 @@ if (false !== $user) {
             );
             $rememberTime = 60*60*24*30;
             $token = \Xmf\Jwt\TokenFactory::build('rememberme', $claims, $rememberTime);
-            setcookie(
+            xoops_setcookie(
                 $GLOBALS['xoopsConfig']['usercookie'],
                 $token,
                 time() + $rememberTime,
@@ -87,8 +87,8 @@ if (false !== $user) {
                 true
             );
         } else {
-            setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600, '/', XOOPS_COOKIE_DOMAIN, 0, true);
-            setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600);
+            xoops_setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600, '/', XOOPS_COOKIE_DOMAIN, 0, true);
+            xoops_setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600);
         }
     }
 

@@ -148,6 +148,7 @@ class XoopsSessionHandler
      **/
     public function write($sess_id, $sess_data)
     {
+        $myReturn = true;
         $remoteAddress = \Xmf\IPAddress::fromRequest()->asReadable();
         $sess_id = $this->db->quoteString($sess_id);
         $sql = sprintf(
@@ -168,10 +169,10 @@ class XoopsSessionHandler
                 $this->db->quote($sess_data)
             );
 
-            return $this->db->queryF($sql);
+            $myReturn = $this->db->queryF($sql);
         }
-
-        return true;
+        $this->update_cookie();
+        return $myReturn;
     }
 
     /**
@@ -262,9 +263,7 @@ class XoopsSessionHandler
     public function update_cookie($sess_id = null, $expire = null)
     {
         global $xoopsConfig;
-        $session_name = ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '')
-            ? $xoopsConfig['session_name']
-            : session_name();
+        $session_name = session_name();
         $session_expire = null !== $expire
             ? (int)$expire
             : (($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '')
@@ -272,7 +271,7 @@ class XoopsSessionHandler
                 : ini_get('session.cookie_lifetime')
             );
         $session_id     = empty($sess_id) ? session_id() : $sess_id;
-        setcookie(
+        xoops_setcookie(
             $session_name,
             $session_id,
             $session_expire ? time() + $session_expire : 0,

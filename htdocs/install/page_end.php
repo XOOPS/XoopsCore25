@@ -32,7 +32,7 @@ include_once '../class/database/databasefactory.php';
 include_once '../class/logger/xoopslogger.php';
 
 $_SESSION = array();
-setcookie('xo_install_user', '', null, null, null);
+xoops_setcookie('xo_install_user', '', null, null, null);
 $key = \Xmf\Jwt\KeyFactory::build('install');
 $key->kill();
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
