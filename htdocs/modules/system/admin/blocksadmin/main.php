@@ -34,9 +34,9 @@ $sel = array(
     'selvis' => -1);
 
 foreach ($sel as $key => $value) {
-    $temp = Request::getInt($key, $value, 'cookie');
-    $$key = Request::getInt($key, $temp, 'get');
-    setcookie($key, $$key);
+    $temp = isset($_SESSION[$key]) ? (int)$_SESSION[$key] : $value;
+    $$key = Request::getInt($key, $temp);
+    $_SESSION[$key] = $$key;
 }
 
 $type = Request::getString('type', '');
