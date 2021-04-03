@@ -74,7 +74,24 @@ class XoopsSessionHandler
      */
     public function __construct(XoopsDatabase $db)
     {
+        global $xoopsConfig;
+
         $this->db = $db;
+        // after php 7.3 we just let php handle the session cookie
+        if (PHP_VERSION_ID >= 70300) {
+            $lifetime = ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '')
+                ? $xoopsConfig['session_expire'] * 60
+                : ini_get('session.cookie_lifetime');
+            $options = array(
+                'lifetime' => $lifetime,
+                'path'     => '/',
+                'domain'   => XOOPS_COOKIE_DOMAIN,
+                'secure'   => (XOOPS_PROT === 'https://'),
+                'httponly' => true,
+                'samesite' => 'strict',
+            );
+            session_set_cookie_params($options);
+        }
     }
 
     /**
@@ -262,23 +279,25 @@ class XoopsSessionHandler
      **/
     public function update_cookie($sess_id = null, $expire = null)
     {
-        global $xoopsConfig;
-        $session_name = session_name();
-        $session_expire = null !== $expire
-            ? (int)$expire
-            : (($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '')
-                ? $xoopsConfig['session_expire'] * 60
-                : ini_get('session.cookie_lifetime')
+        if (PHP_VERSION_ID >= 70300) {
+            global $xoopsConfig;
+            $session_name = session_name();
+            $session_expire = null !== $expire
+                ? (int)$expire
+                : (($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '')
+                    ? $xoopsConfig['session_expire'] * 60
+                    : ini_get('session.cookie_lifetime')
+                );
+            $session_id = empty($sess_id) ? session_id() : $sess_id;
+            xoops_setcookie(
+                $session_name,
+                $session_id,
+                $session_expire ? time() + $session_expire : 0,
+                '/',
+                XOOPS_COOKIE_DOMAIN,
+                (XOOPS_PROT === 'https://'),
+                true
             );
-        $session_id     = empty($sess_id) ? session_id() : $sess_id;
-        xoops_setcookie(
-            $session_name,
-            $session_id,
-            $session_expire ? time() + $session_expire : 0,
-            '/',
-            XOOPS_COOKIE_DOMAIN,
-            (XOOPS_PROT === 'https://'),
-            true
-        );
+        }
     }
 }
