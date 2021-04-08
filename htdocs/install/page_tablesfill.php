@@ -83,8 +83,7 @@ if ($process) {
 }
 $content .= $licenseReport;
 
-
-xoops_setcookie('xo_install_user', '', null, null, null);
+xoops_setcookie('xo_install_user', '', time()-60*60*12);
 if (!empty($_SESSION['settings']['authorized']) && !empty($adminname) && !empty($adminpass)) {
     $claims = array(
         'uname' => $adminname,

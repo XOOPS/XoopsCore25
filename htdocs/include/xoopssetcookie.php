@@ -75,7 +75,7 @@ function xoops_buildCookieHeader($args)
 
     $header = 'Set-Cookie: ' . $args['name'] . '=' . rawurlencode($args['value']) . ' ';
 
-    if (isset($options['expires'])) {
+    if (isset($options['expires']) && 0 !== $options['expires']) {
         $dateTime = new DateTime();
         if (time() >= $options['expires']) {
             $dateTime->setTimestamp(0);

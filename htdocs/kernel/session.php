@@ -78,31 +78,34 @@ class XoopsSessionHandler
 
         $this->db = $db;
         // after php 7.3 we just let php handle the session cookie
+        $lifetime = ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '')
+            ? $xoopsConfig['session_expire'] * 60
+            : ini_get('session.cookie_lifetime');
+        $secure = (XOOPS_PROT === 'https://');
         if (PHP_VERSION_ID >= 70300) {
-            $lifetime = ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '')
-                ? $xoopsConfig['session_expire'] * 60
-                : ini_get('session.cookie_lifetime');
             $options = array(
                 'lifetime' => $lifetime,
                 'path'     => '/',
                 'domain'   => XOOPS_COOKIE_DOMAIN,
-                'secure'   => (XOOPS_PROT === 'https://'),
+                'secure'   => $secure,
                 'httponly' => true,
                 'samesite' => 'strict',
             );
             session_set_cookie_params($options);
+        } else {
+            session_set_cookie_params($lifetime, '/', XOOPS_COOKIE_DOMAIN, $secure, true);
         }
     }
 
     /**
      * Open a session
      *
-     * @param string $save_path
-     * @param string $session_name
+     * @param string $savePath
+     * @param string $sessionName
      *
      * @return bool
      */
-    public function open($save_path, $session_name)
+    public function open($savePath, $sessionName)
     {
         return true;
     }
@@ -122,19 +125,19 @@ class XoopsSessionHandler
     /**
      * Read a session from the database
      *
-     * @param string $sess_id ID of the session
+     * @param string $sessionId ID of the session
      *
-     * @return array Session data
+     * @return string Session data
      */
-    public function read($sess_id)
+    public function read($sessionId)
     {
         $ip = \Xmf\IPAddress::fromRequest();
         $sql = sprintf(
             'SELECT sess_data, sess_ip FROM %s WHERE sess_id = %s',
             $this->db->prefix('session'),
-            $this->db->quoteString($sess_id)
+            $this->db->quoteString($sessionId)
         );
-//        if (false != $result = $this->db->query($sql)) {
+
         $result = $this->db->query($sql);
         if (!empty($result)) {
             if (list($sess_data, $sess_ip) = $this->db->fetchRow($result)) {
@@ -158,32 +161,32 @@ class XoopsSessionHandler
     /**
      * Write a session to the database
      *
-     * @param string $sess_id
-     * @param string $sess_data
+     * @param string $sessionId
+     * @param string $data
      *
      * @return bool
      **/
-    public function write($sess_id, $sess_data)
+    public function write($sessionId, $data)
     {
         $myReturn = true;
         $remoteAddress = \Xmf\IPAddress::fromRequest()->asReadable();
-        $sess_id = $this->db->quoteString($sess_id);
+        $sessionId = $this->db->quoteString($sessionId);
         $sql = sprintf(
             'UPDATE %s SET sess_updated = %u, sess_data = %s WHERE sess_id = %s',
             $this->db->prefix('session'),
             time(),
-            $this->db->quoteString($sess_data),
-            $sess_id
+            $this->db->quoteString($data),
+            $sessionId
         );
         $this->db->queryF($sql);
         if (!$this->db->getAffectedRows()) {
             $sql = sprintf(
                 'INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data) VALUES (%s, %u, %s, %s)',
                 $this->db->prefix('session'),
-                $sess_id,
+                $sessionId,
                 time(),
                 $this->db->quote($remoteAddress),
-                $this->db->quote($sess_data)
+                $this->db->quote($data)
             );
 
             $myReturn = $this->db->queryF($sql);
@@ -195,16 +198,16 @@ class XoopsSessionHandler
     /**
      * Destroy a session
      *
-     * @param string $sess_id
+     * @param string $sessionId
      *
      * @return bool
      **/
-    public function destroy($sess_id)
+    public function destroy($sessionId)
     {
         $sql = sprintf(
             'DELETE FROM %s WHERE sess_id = %s',
             $this->db->prefix('session'),
-            $this->db->quoteString($sess_id)
+            $this->db->quoteString($sessionId)
         );
         if (!$result = $this->db->queryF($sql)) {
             return false;
@@ -216,16 +219,16 @@ class XoopsSessionHandler
     /**
      * Garbage Collector
      *
-     * @param  int $expire Time in seconds until a session expires
+     * @param  int $lifetime Time in seconds until a session expires
      * @return bool
      **/
-    public function gc($expire)
+    public function gc($lifetime)
     {
-        if (empty($expire)) {
+        if (empty($lifetime)) {
             return true;
         }
 
-        $mintime = time() - (int)$expire;
+        $mintime = time() - (int)$lifetime;
         $sql     = sprintf('DELETE FROM %s WHERE sess_updated < %u', $this->db->prefix('session'), $mintime);
 
         return $this->db->queryF($sql);
@@ -279,7 +282,7 @@ class XoopsSessionHandler
      **/
     public function update_cookie($sess_id = null, $expire = null)
     {
-        if (PHP_VERSION_ID >= 70300) {
+        if (PHP_VERSION_ID < 70300) {
             global $xoopsConfig;
             $session_name = session_name();
             $session_expire = null !== $expire
@@ -289,12 +292,17 @@ class XoopsSessionHandler
                     : ini_get('session.cookie_lifetime')
                 );
             $session_id = empty($sess_id) ? session_id() : $sess_id;
+            $cookieDomain = XOOPS_COOKIE_DOMAIN;
+            if (2 > substr_count($cookieDomain, '.')) {
+                $cookieDomain  = '.' . $cookieDomain ;
+            }
+
             xoops_setcookie(
                 $session_name,
                 $session_id,
                 $session_expire ? time() + $session_expire : 0,
                 '/',
-                XOOPS_COOKIE_DOMAIN,
+                $cookieDomain,
                 (XOOPS_PROT === 'https://'),
                 true
             );
