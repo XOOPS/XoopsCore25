@@ -219,16 +219,16 @@ class XoopsSessionHandler
     /**
      * Garbage Collector
      *
-     * @param  int $lifetime Time in seconds until a session expires
+     * @param  int $expire Time in seconds until a session expires
      * @return bool
      **/
-    public function gc($lifetime)
+    public function gc($expire)
     {
-        if (empty($lifetime)) {
+        if (empty($expire)) {
             return true;
         }
 
-        $mintime = time() - (int)$lifetime;
+        $mintime = time() - (int)$expire;
         $sql     = sprintf('DELETE FROM %s WHERE sess_updated < %u', $this->db->prefix('session'), $mintime);
 
         return $this->db->queryF($sql);
