@@ -30,7 +30,7 @@ $filter = Request::getInt('filter', 0);
 $sel = array(
     'selmod' => -2,
     'selgen' => -1,
-    'selgrp' => XOOPS_GROUP_USERS,
+    'selgrp' => -1,
     'selvis' => -1);
 
 foreach ($sel as $key => $value) {
