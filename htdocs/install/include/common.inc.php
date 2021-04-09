@@ -54,6 +54,18 @@ set_exception_handler('fatalPhpErrorHandler');
 // options for mainfile.php
 if (empty($xoopsOption['hascommon'])) {
     $xoopsOption['nocommon'] = true;
+    if (PHP_VERSION_ID >= 70300) {
+        $options = array(
+            'lifetime' => 0,
+            'path'     => '/',
+            'domain'   => null,
+            'secure'   => false,
+            'httponly' => true,
+            'samesite' => 'strict',
+        );
+        session_set_cookie_params($options);
+    }
+
     session_start();
 }
 @include '../mainfile.php';
