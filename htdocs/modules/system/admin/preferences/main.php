@@ -505,7 +505,7 @@ switch ($op) {
         }
 
         if (!empty($use_mysession) && $xoopsConfig['use_mysession'] == 0 && $session_name != '') {
-            setcookie($session_name, session_id(), time() + (60 * (int)$session_expire), '/', XOOPS_COOKIE_DOMAIN, 0);
+            xoops_setcookie($session_name, session_id(), time() + (60 * (int)$session_expire), '/', XOOPS_COOKIE_DOMAIN, 0);
         }
 
         // Clean cached files, may take long time

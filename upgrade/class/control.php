@@ -100,7 +100,7 @@ class UpgradeControl
         $upgrade_language = !empty($_COOKIE['xo_upgrade_lang']) ? $_COOKIE['xo_upgrade_lang'] : $upgrade_language;
         $upgrade_language = Xmf\Request::getString('lang', $upgrade_language);
         $upgrade_language = (null === $xoopsConfig['language']) ? 'english' : $upgrade_language;
-        setcookie('xo_upgrade_lang', $upgrade_language, null, null, null);
+        xoops_setcookie('xo_upgrade_lang', $upgrade_language, null, null, null);
 
         $this->upgradeLanguage = $upgrade_language;
         $this->loadLanguage('upgrade');

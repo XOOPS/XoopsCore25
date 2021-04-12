@@ -83,8 +83,7 @@ if ($process) {
 }
 $content .= $licenseReport;
 
-
-setcookie('xo_install_user', '', null, null, null);
+xoops_setcookie('xo_install_user', '', time()-60*60*12);
 if (!empty($_SESSION['settings']['authorized']) && !empty($adminname) && !empty($adminpass)) {
     $claims = array(
         'uname' => $adminname,
@@ -92,7 +91,7 @@ if (!empty($_SESSION['settings']['authorized']) && !empty($adminname) && !empty(
     );
     $token = \Xmf\Jwt\TokenFactory::build('install', $claims, 60*60);
 
-    setcookie('xo_install_user', $token, 0, null, null, null, true);
+    xoops_setcookie('xo_install_user', $token, 0, null, null, null, true);
 }
 
 include './include/install_tpl.php';

@@ -185,7 +185,7 @@ if (empty($mode)) {
             date.setTime(date.getTime()+(days*24*60*60*1000));
             var expires = "; expires="+date.toGMTString();
         } else var expires = "";
-        document.cookie = name+"="+value+expires+"; path=/";
+        document.cookie = name+"="+value+expires+";path=/;samesite=strict;";
     }
     function xoLogReadCookie(name)
     {

@@ -51,11 +51,30 @@ function fatalPhpErrorHandler($e = null) {
 register_shutdown_function('fatalPhpErrorHandler');
 set_exception_handler('fatalPhpErrorHandler');
 
+$options = array(
+    'lifetime' => 0,
+    'path'     => '/',
+    'domain'   => null,
+    'secure'   => false,
+    'httponly' => true,
+    'samesite' => 'strict',
+);
 // options for mainfile.php
 if (empty($xoopsOption['hascommon'])) {
     $xoopsOption['nocommon'] = true;
+    if (PHP_VERSION_ID >= 70300) {
+        session_set_cookie_params($options);
+    }
+
     session_start();
+
+    if (PHP_VERSION_ID < 70300) {
+        require_once '../include/xoopssetcookie.php';
+        xoops_setcookie(session_name(), session_id(), $options);
+    }
+
 }
+
 @include '../mainfile.php';
 if (!defined('XOOPS_ROOT_PATH')) {
     define('XOOPS_ROOT_PATH', str_replace("\\", '/', realpath('../')));
@@ -64,6 +83,7 @@ if (!defined('XOOPS_ROOT_PATH')) {
 date_default_timezone_set(@date_default_timezone_get());
 include './class/installwizard.php';
 include_once '../include/version.php';
+require_once '../include/xoopssetcookie.php';
 include_once './include/functions.php';
 include_once '../class/module.textsanitizer.php';
 include_once '../class/libraries/vendor/autoload.php';

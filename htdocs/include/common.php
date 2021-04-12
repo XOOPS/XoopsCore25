@@ -92,6 +92,7 @@ $xoopsLogger->startTime('XOOPS Boot');
 include_once $xoops->path('kernel/object.php');
 include_once $xoops->path('class/criteria.php');
 include_once $xoops->path('class/module.textsanitizer.php');
+require_once $xoops->path('include/xoopssetcookie.php');
 include_once $xoops->path('include/functions.php');
 
 /* new installs should create this in mainfile */
@@ -192,6 +193,7 @@ $xoopsUser        = '';
 $xoopsUserIsAdmin = false;
 /* @var XoopsMemberHandler $member_handler */
 $member_handler   = xoops_getHandler('member');
+/* @var \XoopsSessionHandler $sess_handler */
 $sess_handler     = xoops_getHandler('session');
 if ($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && $_POST[$xoopsConfig['sslpost_name']] != '') {
     session_id($_POST[$xoopsConfig['sslpost_name']]);
@@ -240,8 +242,8 @@ if (empty($_SESSION['xoopsUserId'])
     if (false !== $rememberClaims && !empty($rememberClaims->uid)) {
         $_SESSION['xoopsUserId'] = $rememberClaims->uid;
     } else {
-        setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600, '/', XOOPS_COOKIE_DOMAIN, 0, true);
-        setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600);
+        xoops_setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600, '/', XOOPS_COOKIE_DOMAIN, 0, true);
+        xoops_setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600);
     }
 }
 
@@ -254,15 +256,15 @@ if (!empty($_SESSION['xoopsUserId'])) {
         $xoopsUser = '';
         $_SESSION  = array();
         session_destroy();
-        setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600, '/', XOOPS_COOKIE_DOMAIN, 0, true);
-        setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600);
+        xoops_setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600, '/', XOOPS_COOKIE_DOMAIN, 0, true);
+        xoops_setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600);
     } else {
         if (((int)$xoopsUser->getVar('last_login') + 60 * 5) < time()) {
             $sql = 'UPDATE ' . $xoopsDB->prefix('users') . " SET last_login = '" . time()
                    . "' WHERE uid = " . $_SESSION['xoopsUserId'];
             @$xoopsDB->queryF($sql);
         }
-        $sess_handler->update_cookie();
+        //$sess_handler->update_cookie();
         if (isset($_SESSION['xoopsUserGroups'])) {
             $xoopsUser->setGroups($_SESSION['xoopsUserGroups']);
         } else {
@@ -279,7 +281,7 @@ if (!empty($_SESSION['xoopsUserId'])) {
             );
             $rememberTime = 60*60*24*30;
             $token = \Xmf\Jwt\TokenFactory::build('rememberme', $claims, $rememberTime);
-            setcookie(
+            xoops_setcookie(
                 $GLOBALS['xoopsConfig']['usercookie'],
                 $token,
                 time() + $rememberTime,
@@ -291,6 +293,9 @@ if (!empty($_SESSION['xoopsUserId'])) {
         }
         $xoopsUserIsAdmin = $xoopsUser->isAdmin();
     }
+}
+if (PHP_VERSION_ID < 70300) {
+    $sess_handler->update_cookie(); // make sure we supply the cookie, not PHP's session code
 }
 // user characteristics are established
 $xoopsPreload->triggerEvent('core.include.common.auth.success');
