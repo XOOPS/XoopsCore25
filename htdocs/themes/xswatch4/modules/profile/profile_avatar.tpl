@@ -1,13 +1,13 @@
 <{include file="db:profile_breadcrumbs.tpl"}>
 
-<{if $old_avatar}>
+<{if $old_avatar|default:false}>
     <div class="pad10 center">
         <h4 class="bold red"><{$smarty.const._US_OLDDELETED}></h4>
         <img src="<{$old_avatar}>" alt="" />
     </div>
 <{/if}>
 
-<{if $uploadavatar}>
+<{if $uploadavatar|default:false}>
 <{$uploadavatar.javascript}>
 <legend class="bold"><{$uploadavatar.title}></legend>
 <form name="<{$uploadavatar.name}>" action="<{$uploadavatar.action}>" method="<{$uploadavatar.method}>" <{$uploadavatar.extra}>>
