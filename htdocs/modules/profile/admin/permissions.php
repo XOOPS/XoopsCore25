@@ -28,6 +28,7 @@ switch ($op) {
     case 'visibility':
         //redirect_header("visibility.php", 0, _PROFILE_AM_PROF_VISIBLE);
         header('Location: visibility.php');
+        exit;
         break;
 
     case 'edit':
