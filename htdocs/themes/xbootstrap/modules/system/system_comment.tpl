@@ -31,7 +31,7 @@
         </div><!-- .col-md-3 .xoops-comment-author -->
 
         <div class="col-xs-10 col-md-10 xoops-comment-text">
-            <h4><{$comment.image}><{$comment.title}></h4>
+            <h4><{$comment.image|default:''}><{$comment.title|default:''}></h4>
 
             <p class="message-text text-muted"><{$comment.text}></p>
         </div><!-- .col-md-3 -->
