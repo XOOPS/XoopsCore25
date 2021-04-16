@@ -229,7 +229,7 @@ switch ($op) {
                 continue;
             }
             $fieldname = $fields[$i]->getVar('field_name');
-            if (in_array($fields[$i]->getVar('field_type'), array('select', 'radio'))) {
+            if (in_array($fields[$i]->getVar('field_type'), array('select', 'radio', 'timezone'))) {
                 if (empty($_REQUEST[$fieldname])) {
                     continue;
                 }
