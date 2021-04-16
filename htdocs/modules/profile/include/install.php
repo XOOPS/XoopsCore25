@@ -186,10 +186,15 @@ function profile_install_addField($name, $title, $description, $category, $type,
  */
 function profile_install_setPermissions($field_id, $module_id, $canedit, $visible)
 {
-    $gperm_itemid = $field_id;
-    $gperm_modid  = $module_id;
-    $sql          = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('group_permission') . ' (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) ' . ' VALUES ' . ($canedit ? ' (' . XOOPS_GROUP_ADMIN . ", {$gperm_itemid}, {$gperm_modid}, 'profile_edit'), " : '') . ($canedit == 1 ? ' (' . XOOPS_GROUP_USERS . ", {$gperm_itemid}, {$gperm_modid}, 'profile_edit'), " : '') . ' (' . XOOPS_GROUP_ADMIN . ", {$gperm_itemid}, {$gperm_modid}, 'profile_search'), " . ' (' . XOOPS_GROUP_USERS . ", {$gperm_itemid}, {$gperm_modid}, 'profile_search') " . ' ';
-    $GLOBALS['xoopsDB']->queryF($sql);
+    // do not assign any permissions for these defunct fields
+    $skip_icq_aim_yim_msnm = array(8, 9, 10, 11);
+
+    if (!in_array($field_id, $skip_icq_aim_yim_msnm)) {
+        $gperm_itemid = $field_id;
+        $gperm_modid = $module_id;
+        $sql = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('group_permission') . ' (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) ' . ' VALUES ' . ($canedit ? ' (' . XOOPS_GROUP_ADMIN . ", {$gperm_itemid}, {$gperm_modid}, 'profile_edit'), " : '') . ($canedit == 1 ? ' (' . XOOPS_GROUP_USERS . ", {$gperm_itemid}, {$gperm_modid}, 'profile_edit'), " : '') . ' (' . XOOPS_GROUP_ADMIN . ", {$gperm_itemid}, {$gperm_modid}, 'profile_search'), " . ' (' . XOOPS_GROUP_USERS . ", {$gperm_itemid}, {$gperm_modid}, 'profile_search') " . ' ';
+        $GLOBALS['xoopsDB']->queryF($sql);
+    }
 
     if ($visible) {
         $sql = 'INSERT INTO ' . $GLOBALS['xoopsDB']->prefix('profile_visibility') . ' (field_id, user_group, profile_group) ' . ' VALUES ' . " ({$gperm_itemid}, " . XOOPS_GROUP_ADMIN . ', ' . XOOPS_GROUP_ADMIN . '), ' . " ({$gperm_itemid}, " . XOOPS_GROUP_ADMIN . ', ' . XOOPS_GROUP_USERS . '), ' . " ({$gperm_itemid}, " . XOOPS_GROUP_USERS . ', ' . XOOPS_GROUP_ADMIN . '), ' . " ({$gperm_itemid}, " . XOOPS_GROUP_USERS . ', ' . XOOPS_GROUP_USERS . '), ' . " ({$gperm_itemid}, " . XOOPS_GROUP_ANONYMOUS . ', ' . XOOPS_GROUP_ADMIN . '), ' . " ({$gperm_itemid}, " . XOOPS_GROUP_ANONYMOUS . ', ' . XOOPS_GROUP_USERS . ')' . ' ';
