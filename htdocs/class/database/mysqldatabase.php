@@ -60,6 +60,7 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
         } else {
             $dbname = '';
         }
+        mysqli_report(MYSQLI_REPORT_OFF);
         if (XOOPS_DB_PCONNECT == 1) {
             $this->conn = new mysqli('p:' . XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS, $dbname);
         } else {

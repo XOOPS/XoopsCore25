@@ -44,6 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($vars['DB_HOST']) && !empty($vars['DB_USER'])) {
     $hostConnectPrefix = empty($vars['DB_PCONNECT']) ? '' : 'p:';
+    mysqli_report(MYSQLI_REPORT_OFF);
     $link = new mysqli($hostConnectPrefix.$vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS']);
     if (0 !== $link->connect_errno) {
         $error = ERR_NO_DBCONNECTION .' (' . $link->connect_errno . ') ' . $link->connect_error;

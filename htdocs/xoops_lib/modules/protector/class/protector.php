@@ -290,6 +290,7 @@ class Protector
         }
 
         if (empty($this->_conn)) {
+            mysqli_report(MYSQLI_REPORT_OFF);
             $this->_conn = new mysqli(XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS);
             if (0 !== $this->_conn->connect_errno) {
                 die('db connection failed.');
