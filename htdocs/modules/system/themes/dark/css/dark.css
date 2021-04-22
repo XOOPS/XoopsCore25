@@ -115,3 +115,6 @@ img.module-size {
 #xo-module-sort tr.foot td {
   background-color: #3c3c3c;
 }
+.ui-dialog {
+  background-color: #dedede !important;
+}
