@@ -98,8 +98,8 @@ class XoopsGuiDark extends XoopsSystemGui
 //        $xoTheme->addStylesheet('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
         $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/dark/css/style.css');
         $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/dark/css/dark.css', array('title' => 'dark', 'media' => 'screen'));
-        $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/dark/css/silver.css', array('title' => 'silver', 'media' => 'screen'));
-        $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/dark/css/orange.css', array('title' => 'orange', 'media' => 'screen'));
+        //$xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/dark/css/silver.css', array('title' => 'silver', 'media' => 'screen'));
+        //$xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/dark/css/orange.css', array('title' => 'orange', 'media' => 'screen'));
 
         $tpl->assign('lang_cp', _CPHOME);
         //start system overview

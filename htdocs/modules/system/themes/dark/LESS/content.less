@@ -1,8 +1,8 @@
 /*
- * Default Admin Theme
+ * Dark Admin Theme
  *
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @copyright       (c) 2000-2021 XOOPS Project (www.xoops.org)
+ * @license         GNU public license 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  * @package         themes
  * @since           2.5.x
  * @author          Xoops Design Theme <http://www.xoops.org/>
@@ -133,7 +133,6 @@ code {
 }
 
 code,pre {
-  white-space: -pre-wrap /* for opera */;
   white-space: pre-wrap;
   word-wrap : break-word;
 }
@@ -254,13 +253,15 @@ tr.head td {
 }
 
 tr.even td {
-    background-color: #fff;
+    background-color: @gray-light;
+    color: #333;
     padding: 5px;
     border-bottom: 1px solid #ccc;
 }
 
 tr.odd td {
-    background-color: @gray-light;
+    background-color: darken(@gray-light, 10%);
+    color: #333;
     padding: 5px;
     border-bottom: 1px solid #ccc;
 }

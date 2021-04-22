@@ -2,11 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<{$xoops_langcode}>" lang="<{$xoops_langcode}>">
 <head>
     <script type="application/javascript">
-        var tplUrl = '<{$xoops_url}>/modules/system/themes/transition';
+        var tplUrl = '<{$xoops_url}>/modules/system/themes/dark';
     </script>
     <{includeq file="$theme_tpl/xo_metas.tpl"}>
     <{includeq file="$theme_tpl/xo_scripts.tpl"}>
-    <style>
+    <{*style>
         .darken-please {
             background: black;
             filter: invert(1) hue-rotate(180deg);
@@ -61,7 +61,8 @@
             background-color: #AAA;
             color: #000;
         }
-    </style>
+    </style*}>
+    <link rel="stylesheet" href="<{$xoops_url}>/modules/system/themes/dark/css/admin.css" type="text/css" />
 </head>
 <body id="<{$xoops_dirname}>" class="<{$xoops_langcode}>">
 
