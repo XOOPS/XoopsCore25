@@ -2,66 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<{$xoops_langcode}>" lang="<{$xoops_langcode}>">
 <head>
     <script type="application/javascript">
-        var tplUrl = '<{$xoops_url}>/modules/system/themes/transition';
+        var tplUrl = '<{$xoops_url}>/modules/system/themes/dark';
     </script>
     <{includeq file="$theme_tpl/xo_metas.tpl"}>
     <{includeq file="$theme_tpl/xo_scripts.tpl"}>
-    <style>
-        .darken-please {
-            background: black;
-            filter: invert(1) hue-rotate(180deg);
-        }
-        .darken-please img {
-            filter: invert(1) hue-rotate(180deg) brightness(75%);
-        }
-        #xo-nav-options img {
-            filter: grayscale(100%) brightness(75%);
-        }
-        .CPbigTitle[style^="background-image:"] {
-            filter: invert(1) hue-rotate(180deg) grayscale(1);
-        }
-        .xct-chart { filter: invert(1) hue-rotate(180deg); }
-        .xct-labels { filter: invert(1) hue-rotate(180deg); }
-        .ct-label { color: #0A246A;}
-        #xo-logger-tabs { background: black; }
-        #xo-body-containx {
-            background: black;
-        }
-        #xo-nav-options {
-            background: #303030;
-        }
-        body {
-            background: #080808;
-        }
-        #choosestyle { display: none; }
-        input[type='submit'], button[type='submit'] {
-            background-color: #666666;
-            color: #fff;
-        }
-        #xo-headnav>li>a {
-            background-color: #666666;
-            border-left: 1px solid #444444;
-            color: #FFF;
-        }
-        input[type="image"].donate_button {
-            filter: invert(1) hue-rotate(180deg);
-        }
-        .xo-thumbimg {
-            background-color: #DDD;
-        }
-        .tips {
-            color: #666;
-            border: 1px solid #cccccc;
-        }
-        #xo-logger-tabs>a {
-            background-color: #666666;
-            color: #000;
-        }
-        #xo-logger-output>table {
-            background-color: #AAA;
-            color: #000;
-        }
-    </style>
+    <link rel="stylesheet" href="<{$xoops_url}>/modules/system/themes/dark/css/admin.css" type="text/css" />
 </head>
 <body id="<{$xoops_dirname}>" class="<{$xoops_langcode}>">
 

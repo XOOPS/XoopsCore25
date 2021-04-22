@@ -21,13 +21,14 @@
 (function($)
 {
     $(document).ready(function() {
-        $('.styleswitch').click(function()
-        {
-            switchStylestyle(this.getAttribute("rel"));
-            return false;
-        });
-        var c = readCookie('xoadmstyle');
-        if (c) switchStylestyle(c);
+        //$('.styleswitch').click(function()
+        //{
+        //    switchStylestyle(this.getAttribute("rel"));
+        //    return false;
+        //});
+        //var c = readCookie('xoadmstyle');
+        //if (c) switchStylestyle(c);
+        switchStylestyle('dark');
 
         // Close error messages
         if($(".errorMsg").length > 0){

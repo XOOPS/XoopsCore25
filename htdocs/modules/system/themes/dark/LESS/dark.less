@@ -1,8 +1,8 @@
 /*
- * Default Admin Theme
+ * Dark Admin Theme
  *
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @copyright       (c) 2000-2021 XOOPS Project (www.xoops.org)
+ * @license         GNU public license 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  * @package         themes
  * @since           2.5.x
  * @author          Xoops Design Theme <http://www.xoops.org/>
@@ -17,7 +17,7 @@ body {
 }
 
 .outer {
-    border: 2px solid @gray-light;
+    border: 2px solid darken(@gray-light, 20%);
 }
 
 .head {
@@ -105,7 +105,7 @@ body {
 }
 
 #xo-body {
-    background-color: #fff;
+    background-color: @body-bg;
     border: 1px solid rgba(0,0,0,0.15);
 }
 
@@ -117,6 +117,10 @@ body {
 
 #xo-nav-options .modname {
     color: #1d1f24;
+}
+
+#xo-nav-options img {
+  filter: grayscale(50%) brightness(75%);
 }
 
 #xo-footer {
@@ -131,4 +135,25 @@ body {
 
 #xo-icon a:hover,#xo-module-icons a:hover {
   background: @blue-light;
+}
+
+img.module-size {
+  background: #888;
+}
+
+#xo-module-sort tr td {
+  color: @gray-light;
+  background-color: #0a0a0a;
+}
+
+#xo-module-sort img {
+  filter: brightness(75%);
+}
+
+#xo-module-sort tr.foot td {
+  background-color: #3c3c3c;
+}
+
+.ui-dialog {
+  background-color: @gray-light !important;
 }

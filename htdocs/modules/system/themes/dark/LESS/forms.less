@@ -1,8 +1,8 @@
 /*
- * Default Admin Theme
+ * Dark Admin Theme
  *
- * @copyright       (c) 2000-2015 XOOPS Project (www.xoops.org)
- * @license         http://www.fsf.org/copyleft/gpl.html GNU public license 3.0
+ * @copyright       (c) 2000-2021 XOOPS Project (www.xoops.org)
+ * @license         GNU public license 3.0 (https://www.gnu.org/licenses/gpl-3.0.html)
  * @package         themes
  * @since           2.5.x
  * @author          Xoops Design Theme <http://www.xoops.org/>
@@ -23,9 +23,9 @@ input,button,select {
 fieldset {
     margin: .5em;
     padding: 1em;
-    border: 1px solid #333;
-    color: #000;
-    background-color: #f0f0f0;
+    border: 1px solid #575757;
+    color: #6282ba;
+    background-color: #171717;
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
     border-radius: 6px;
@@ -90,14 +90,18 @@ input[type='submit'], button[type='submit']{
 input[type=text],input[type=password],input[type=checkbox],input[type=file],textarea,select
     {
     margin: 2px 5px 2px 0;
-    background-color: #FFF;
+    background-color: #BBB;
     padding: 8px;
-    color: inherit;
+    color: @text-color;
     border: 1px solid rgba(0,0,0,0.2);;
     border-radius: 2px;
   outline: none;
   transition: ease all 250ms;
 
+}
+
+.xoops-form-element-caption {
+  color: #333;
 }
 
 input[type=text],input[type=password],input[type=file] {

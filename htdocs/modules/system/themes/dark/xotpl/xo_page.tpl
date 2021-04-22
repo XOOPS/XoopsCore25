@@ -1,5 +1,5 @@
 <div id="xo-body-contain">
-    <div id="xo-body" class="darken-please">
+    <div id="xo-body">
 
         <{if $showTransitionInfo|default:false}>
         <div id="trans-info">

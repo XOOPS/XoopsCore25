@@ -23,12 +23,6 @@
             </li>
         <{/foreach}>
     </ul>
-    <!-- start style choose -->
-    <div id="choosestyle">
-        <a href="<{$theme_css}>/index.php?style=dark" rel="dark" class="styleswitch"><{$smarty.const._OXYGEN_DARK}></a>
-        <a href="<{$theme_css}>/index.php?style=silver" rel="silver" class="styleswitch"><{$smarty.const._OXYGEN_SILVER}></a>
-        <a href="<{$theme_css}>/index.php?style=orange" rel="orange" class="styleswitch"><{$smarty.const._OXYGEN_ORANGE}></a>
-    </div>
 </div>
 
 <script type="text/javascript">
