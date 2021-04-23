@@ -101,7 +101,12 @@ input[type=text],input[type=password],input[type=checkbox],input[type=file],text
 }
 
 .xoops-form-element-caption {
-  color: #333;
+  color: @text-color;
+}
+
+.xoops-form-element-caption-required {
+  color: @text-color;
+  font-size: 105%;
 }
 
 input[type=text],input[type=password],input[type=file] {
@@ -118,4 +123,8 @@ input[type=text]:focus,input[type=password]:focus,input[type=file]:focus,input[t
 input[type=checkbox],input[type=radio] {
     margin: 3px;
     padding: 2px;
+}
+
+.qq-uploader {
+    background-color: @gray-light !important;
 }
