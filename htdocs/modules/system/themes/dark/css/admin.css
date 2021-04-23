@@ -295,51 +295,21 @@ ul.jqueryFileTree a:hover {
 .expanded {
   letter-spacing: 0.5em;
 }
-.jqueryFileTree LI.directory {
-  background: url(../images/mimetypes/folder.png) left top no-repeat;
-}
-.jqueryFileTree LI.expanded {
-  letter-spacing: 0;
-  background: url(../images/mimetypes/folder_open.png) left top no-repeat;
-}
-.jqueryFileTree LI.file {
-  background: url(../images/mimetypes/empty.png) left top no-repeat;
-}
-.jqueryFileTree LI.wait {
-  background: url(../images/mimetypes/spinner.gif) left top no-repeat;
-}
-/* File Extensions*/
-.jqueryFileTree LI.ext_css {
-  background: url(../images/mimetypes/css.png) left top no-repeat;
-}
-.jqueryFileTree LI.ext_htm {
-  background: url(../images/mimetypes/html.png) left top no-repeat;
-}
-.jqueryFileTree LI.ext_html {
-  background: url(../images/mimetypes/html.png) left top no-repeat;
-}
 .ui-corner-all {
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
+  border-radius: 5px;
 }
 /*==================== tooltip =========================*/
 #tooltip {
   position: absolute;
   border: 1px solid #A4C3EF;
   border-radius: 3px;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
   background: #D2E2F9;
   padding: 10px;
   color: #333;
   display: none;
   box-shadow: 3px 2px 3px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 3px 2px 3px rgba(0, 0, 0, 0.5);
-  -webkit-box-shadow: 3px 2px 3px rgba(0, 0, 0, 0.5);
   opacity: 0.8;
   filter: alpha(opacity=80);
-  -moz-opacity: 0.8;
-  -webkit-opacity: 0.8;
 }
 /* ===== Redirect messages ===== */
 .errorMsg,
@@ -468,6 +438,15 @@ p {
   width: 98% !important;
   border: 1px solid #ccc;
   padding: 5px;
+  background-color: #dedede;
+  color: #424242;
+}
+#help-template .even {
+  background-color: #c5c5c5;
+  color: #424242;
+}
+#help-template .odd {
+  background-color: #dedede;
   color: #424242;
 }
 #help-content {
