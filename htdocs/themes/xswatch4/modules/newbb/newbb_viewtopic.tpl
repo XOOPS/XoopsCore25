@@ -91,10 +91,10 @@
 
     <{if $mode lte 1}>
         <{if $topic_poll}>
-            <{if $topic_pollresult}>
-                <{include file="db:newbb_poll_results.tpl" poll=$poll}>
+            <{if $topic_pollresult|default:''}>
+                <{include file="db:newbb_poll_results.tpl" poll=$poll|default:''}>
             <{else}>
-                <{include file="db:newbb_poll_view.tpl" poll=$poll}>
+                <{include file="db:newbb_poll_view.tpl" poll=$poll|default:''}>
             <{/if}>
         <{/if}>
     <{/if}>
@@ -252,7 +252,7 @@
 <!-- START irmtfan add scroll js function to scroll down to current post or top of the topic -->
 <script type="text/javascript">
     if (document.body.scrollIntoView && window.location.href.indexOf('#') == -1) {
-        var el = xoopsGetElementById('<{$forum_post_prefix}><{$post_id}>');
+        var el = xoopsGetElementById('<{$forum_post_prefix|default:''}><{$post_id}>');
         if (el) {
             banner.destroy();
             header.destroy();
