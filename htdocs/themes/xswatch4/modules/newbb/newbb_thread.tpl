@@ -1,5 +1,5 @@
 <div class="newbb-thread clearfix">
-    <{if $forum_post_prefix === null }>
+    <{if $forum_post_prefix|default:null === null }>
         <{assign var=forum_post_prefix value="forumpost"}>
         <div id="<{$forum_post_prefix}>0"></div>
     <{/if}>
