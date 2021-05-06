@@ -165,6 +165,7 @@ form {
 .xo-block .xo-blockaction {
     padding: 2px;
     text-align: right;
+    background-color: lighten(@gray-light, 10%);
 }
 
 .xo-block .xo-blockaction img {
@@ -176,7 +177,7 @@ form {
 .xo-blocksection {
     vertical-align: top;
     height: 100px;
-    background: #fff;
+    background: @gray-light;
     border: 1px dashed #666;
 }
 
@@ -184,6 +185,7 @@ form {
     font-weight: bold;
     padding: 2px;
     border-bottom: 1px dashed #666;
+    color: lighten(@text-color, 10%);
 }
 
 #xo-tabs .tabs, .tabs li a {
@@ -259,6 +261,7 @@ ul.xo-log-success li {
 .xo-catsetting img {
     margin: 8px 25px 0;
     text-align: center;
+    filter: brightness(90%);
 }
 
 .xo-catsetting span {
@@ -302,7 +305,7 @@ ul.xo-log-success li {
     border: 1px solid #BBB;
     border-right-color: #FFF;
     border-bottom-color: #FFF;
-    background: #FFF;
+    background-color: @gray-light;
     overflow: scroll;
     padding: 3px;
 }
@@ -447,4 +450,27 @@ fieldset img { filter: invert(1) hue-rotate(180deg); }
 #xo-icon a:hover , #xo-module-icons a:hover {
     background-color: #444;
     border: 1px solid #c5c5c5;
+}
+
+.red {
+    color: @color-red;
+}
+
+#xo-module-sort strong.red {
+    color: #ff4545;
+    font-size: 1.5em;
+}
+
+#xoopsorgnews td.odd {
+    background-color: @gray-light;
+    color: @text-color;
+}
+
+#xoopsorgnews tr.head td {
+    background-color: saturate(@blue-bg, -25%);
+    color: @text-color;
+}
+
+#xoopsorgnews tr.head td a {
+    color: darken(@color-blue, 30%);
 }

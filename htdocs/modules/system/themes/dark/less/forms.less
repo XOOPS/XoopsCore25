@@ -26,8 +26,6 @@ fieldset {
     border: 1px solid #575757;
     color: #6282ba;
     background-color: #171717;
-    -moz-border-radius: 6px;
-    -webkit-border-radius: 6px;
     border-radius: 6px;
 }
 
@@ -77,7 +75,7 @@ input[type=submit]:hover,input[type=reset]:hover,input[type=button]:hover,.xo-fo
     cursor: pointer;
 }
 input[type='submit'], button[type='submit']{
-  background-color: @color-blue;
+  background-color: darken(@color-blue, 15%);
   color: #FFF;
   border: 0;
 
@@ -87,16 +85,15 @@ input[type='submit'], button[type='submit']{
   }
 }
 
-input[type=text],input[type=password],input[type=checkbox],input[type=file],textarea,select
-    {
+input[type=text],input[type=password],input[type=checkbox],input[type=file],textarea,select {
     margin: 2px 5px 2px 0;
-    background-color: #BBB;
+    background-color: #E0E0E0;
     padding: 8px;
     color: @text-color;
-    border: 1px solid rgba(0,0,0,0.2);;
+    border: 1px solid rgba(0,0,0,0.2);
     border-radius: 2px;
-  outline: none;
-  transition: ease all 250ms;
+    outline: none;
+    transition: ease all 250ms;
 
 }
 
@@ -127,4 +124,8 @@ input[type=checkbox],input[type=radio] {
 
 .qq-uploader {
     background-color: @gray-light !important;
+}
+
+.spacer.bold {
+   color: @text-color;
 }

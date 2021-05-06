@@ -22,10 +22,12 @@ body {
 
 .head {
     background-color: @gray-light;
+    color: darken(@text-color, 20%);
 }
 
 .even {
-    background-color: transparent;
+    background-color: @gray-dark!important;
+    color: @text-color;
 }
 
 .odd {
@@ -120,7 +122,7 @@ body {
 }
 
 #xo-nav-options img {
-  filter: grayscale(50%) brightness(75%);
+  filter: grayscale(50%) brightness(85%);
 }
 
 #xo-footer {
@@ -138,7 +140,7 @@ body {
 }
 
 img.module-size {
-  background: #888;
+  background: #b0b0b0;
 }
 
 #xo-module-sort tr td {
@@ -147,7 +149,15 @@ img.module-size {
 }
 
 #xo-module-sort img {
-  filter: brightness(75%);
+  filter: brightness(85%);
+}
+
+#xo-installable-modules img {
+  filter: brightness(90%);
+}
+
+#xo-installable-modules tr.even td {
+  background-color: @gray-dark;
 }
 
 #xo-module-sort tr.foot td {

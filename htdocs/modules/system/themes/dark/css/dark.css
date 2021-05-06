@@ -17,9 +17,11 @@ body {
 }
 .head {
   background-color: #dedede;
+  color: #0f0f0f;
 }
 .even {
-  background-color: transparent;
+  background-color: #ADADAD !important;
+  color: #424242;
 }
 .odd {
   background-color: #dedede;
@@ -87,7 +89,7 @@ ul.menu .menuhover {
   color: #1d1f24;
 }
 #xo-nav-options img {
-  filter: grayscale(50%) brightness(75%);
+  filter: grayscale(50%) brightness(85%);
 }
 #xo-footer {
   background-color: #333740;
@@ -103,14 +105,20 @@ ul.menu .menuhover {
   background: #eaf6fa;
 }
 img.module-size {
-  background: #888;
+  background: #b0b0b0;
 }
 #xo-module-sort tr td {
   color: #dedede;
   background-color: #0a0a0a;
 }
 #xo-module-sort img {
-  filter: brightness(75%);
+  filter: brightness(85%);
+}
+#xo-installable-modules img {
+  filter: brightness(90%);
+}
+#xo-installable-modules tr.even td {
+  background-color: #ADADAD;
 }
 #xo-module-sort tr.foot td {
   background-color: #3c3c3c;
