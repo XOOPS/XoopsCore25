@@ -221,13 +221,13 @@
 
 <{if $toinstall_mods|default:false}>
     <div class="floatleft">
-        <img class="cursorpointer tooltip" onclick="system_moduleLargeView();" src="<{xoAdminIcons view_large.png}>"
+        <img class="module-size cursorpointer tooltip" onclick="system_moduleLargeView();" src="<{xoAdminIcons view_large.png}>"
              alt="<{$smarty.const._AM_SYSTEM_MODULES_VIEWLARGE}>" title="<{$smarty.const._AM_SYSTEM_MODULES_VIEWLARGE}>"/>
-        <img class="cursorpointer tooltip" onclick="system_moduleListView();" src="<{xoAdminIcons view_small.png}>"
+        <img class="module-size cursorpointer tooltip" onclick="system_moduleListView();" src="<{xoAdminIcons view_small.png}>"
              alt="<{$smarty.const._AM_SYSTEM_MODULES_VIEWLINE}>" title="<{$smarty.const._AM_SYSTEM_MODULES_VIEWLINE}>"/>
     </div>
     <div class="clear spacer"></div>
-    <table class="outer" cellspacing="1">
+    <table id="xo-installable-modules" class="outer" cellspacing="1">
         <thead>
         <tr class="txtcenter">
             <th><{$smarty.const._AM_SYSTEM_MODULES_MODULE}></th>

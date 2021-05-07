@@ -86,11 +86,10 @@ class XoopsGuiDark extends XoopsSystemGui
         $tpl->assign('xoops_language', $xoopsConfig['language']);
 
         $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
-        $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/dark/js/styleswitch.js');
+        $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/dark/js/close_errors.js');
         $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/dark/js/formenu.js');
         $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/dark/js/menu.js');
         $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/dark/js/tooltip.js');
-//        $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/dark/js/tabs.jquery.tools.min.js');
         $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/dark/js/tabs.js');
         $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/dark/js/tabs.slideshow.js');
 

@@ -120,14 +120,14 @@
                 <table>
                     <tr>
                         <td class="txtcenter">
-                            <img src="<{$users.user_avatar}>" alt="<{$users.uname}>" title="<{$users.uname}>"/>
+                            <img src="<{$users.user_avatar}>" class="user_avatar" alt="<{$users.uname}>" title="<{$users.uname}>"/>
                         </td>
                         <td class="txtcenter">
                             <a href='mailto:<{$users.email}>'><img src="<{xoAdminIcons mail_send.png}>" alt="" title=<{$smarty.const._AM_SYSTEM_USERS_EMAIL}>
                                 /></a>
                             <a href='javascript:openWithSelfMain("<{$xoops_url}>/pmlite.php?send2=1&amp;to_userid=<{$users.uid}>","pmlite",565,500);'><img
                                         src="<{xoAdminIcons pm.png}>" alt="" title="<{$smarty.const._AM_SYSTEM_USERS_PM}>"></a>
-                            <a href='<{$users.url}>' rel='external'><img src="<{xoAdminIcons url.png}>" alt="" title="<{$smarty.const._AM_SYSTEM_USERS_URL}>"></a>
+                            <{if $users.url|default:'' != ''}><a href='<{$users.url}>' rel='external'><img src="<{xoAdminIcons url.png}>" alt="" title="<{$smarty.const._AM_SYSTEM_USERS_URL}>"></a><{/if}>
                         </td>
                     </tr>
                     <tr>

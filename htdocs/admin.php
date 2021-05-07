@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2021 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  */
 $xoopsOption['pagetype'] = 'admin';
@@ -122,9 +122,9 @@ if (!empty($_GET['xoopsorgnews'])) {
         XoopsCache::write($rssfile, $items, 86400);
     }
     if ($items != '') {
-        $ret = '<table class="outer width100">';
+        $ret = '<table id="xoopsorgnews" class="outer width100">';
         foreach (array_keys($items) as $i) {
-            $ret .= '<tr class="head"><td><a href="' . htmlspecialchars($items[$i]['link']) . '" rel="external">';
+            $ret .= '<tr class="head"><td><a href="' . htmlspecialchars(trim($items[$i]['link'])) . '" rel="external">';
             $ret .= htmlspecialchars($items[$i]['title']) . '</a> (' . htmlspecialchars($items[$i]['pubdate']) . ')</td></tr>';
             if ($items[$i]['description'] != '') {
                 $ret .= '<tr><td class="odd">' . $items[$i]['description'];

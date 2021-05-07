@@ -129,7 +129,8 @@ q:before,q:after {
     border-left-width: 3px;
 }
 
-code {
+#xo-content code {
+    background-color: darken(@gray-light, 20%);
 }
 
 code,pre {
@@ -171,8 +172,6 @@ code,pre {
     margin: 80px auto;
     padding: 12px;
     padding-top: 30px !important;
-    -moz-border-radius: 6px;
-    -webkit-border-radius: 6px;
     border-radius: 6px;
     line-height: 190%;
 }
@@ -216,8 +215,6 @@ th {
 .outer {
     width: 99%;
     border: 2px solid #ccc;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
     border-radius: 3px;
     margin: 5px;
 }
@@ -247,13 +244,14 @@ th {
 }
 
 tr.head td {
-    background-color: #BDE3FB;
+    background-color: @blue-bg;
+    color: @text-color;
     padding: 5px;
     font-weight: bold;
 }
 
 tr.even td {
-    background-color: @gray-light;
+    background-color: @gray-dark;
     color: #333;
     padding: 5px;
     border-bottom: 1px solid #ccc;
@@ -283,7 +281,7 @@ body.mceContentBody {
 #trans-info{
   background-color: #D6F1FF;
   padding: 15px 15px 15px 70px;
-  color: darken(#139EE8, 15%);
+  color: darken(@color-blue, 15%);
   margin-bottom: 30px;
   border-radius: 3px;
   border: 1px solid darken(#D6F1FF, 5%);
