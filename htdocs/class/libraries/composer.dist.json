@@ -9,6 +9,6 @@
         }
     },
     "require": {
-        "xoops/base-requires25": "^1.0.2"
+        "xoops/base-requires25": "^1.0.3"
     }
 }
