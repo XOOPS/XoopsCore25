@@ -23,9 +23,8 @@ use Xmf\Language;
  * @category  Xmf\Module\Admin
  * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
- * @copyright 2011-2018 XOOPS Project (https://xoops.org)
- * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @link      https://xoops.org
+ * @copyright 2011-2021 XOOPS Project (https://xoops.org)
+ * @license   GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  */
 class Admin
 {
@@ -229,6 +228,18 @@ class Admin
     public function displayIndex()
     {
         echo $this->renderIndex();
+    }
+
+    /**
+     * Render the navigation menu
+     *
+     * @param string $menu menu key (script name, i.e. index.php)
+     *
+     * @return string
+     */
+    public function renderNavigation($menu = '')
+    {
+        return static::$ModuleAdmin->addNavigation($menu);
     }
 
     /**

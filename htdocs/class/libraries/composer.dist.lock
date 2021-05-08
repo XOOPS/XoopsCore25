@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "02d764246d285feaf013073dee1968db",
+    "content-hash": "05df5551ec464d49a98ad50505109550",
     "packages": [
         {
             "name": "firebase/php-jwt",
@@ -236,16 +236,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v2.0.19",
+            "version": "v2.0.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "446fc9faa5c2a9ddf65eb7121c0af7e857295241"
+                "reference": "0f1f60250fccffeaf5dda91eea1c018aed1adc2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/446fc9faa5c2a9ddf65eb7121c0af7e857295241",
-                "reference": "446fc9faa5c2a9ddf65eb7121c0af7e857295241",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/0f1f60250fccffeaf5dda91eea1c018aed1adc2a",
+                "reference": "0f1f60250fccffeaf5dda91eea1c018aed1adc2a",
                 "shasum": ""
             },
             "require": {
@@ -286,7 +286,7 @@
                 "issues": "https://github.com/paragonie/random_compat/issues",
                 "source": "https://github.com/paragonie/random_compat"
             },
-            "time": "2020-10-15T10:06:57+00:00"
+            "time": "2021-04-17T09:33:01+00:00"
         },
         {
             "name": "smottt/wideimage",
@@ -674,16 +674,16 @@
         },
         {
             "name": "xoops/base-requires25",
-            "version": "v1.0.2",
+            "version": "v1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/XOOPS/base-requires25.git",
-                "reference": "0b6ceee06dcea1eaf0f56f0f63aa1caf75552f6e"
+                "reference": "274aef0e1b6c67f80a2f094b5f353e9ee9912e02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/XOOPS/base-requires25/zipball/0b6ceee06dcea1eaf0f56f0f63aa1caf75552f6e",
-                "reference": "0b6ceee06dcea1eaf0f56f0f63aa1caf75552f6e",
+                "url": "https://api.github.com/repos/XOOPS/base-requires25/zipball/274aef0e1b6c67f80a2f094b5f353e9ee9912e02",
+                "reference": "274aef0e1b6c67f80a2f094b5f353e9ee9912e02",
                 "shasum": ""
             },
             "require": {
@@ -693,7 +693,7 @@
                 "smottt/wideimage": "^1.1.4",
                 "symfony/polyfill-iconv": "^1.10.0",
                 "symfony/polyfill-mbstring": "^1.10.0",
-                "xoops/xmf": "^1.2.24"
+                "xoops/xmf": "^1.2.25"
             },
             "type": "project",
             "notification-url": "https://packagist.org/downloads/",
@@ -703,22 +703,22 @@
             "description": "Primary dependencies for XOOPS/XoopsCore25",
             "support": {
                 "issues": "https://github.com/XOOPS/base-requires25/issues",
-                "source": "https://github.com/XOOPS/base-requires25/tree/v1.0.2"
+                "source": "https://github.com/XOOPS/base-requires25/tree/v1.0.3"
             },
-            "time": "2021-03-26T02:53:01+00:00"
+            "time": "2021-05-07T15:38:03+00:00"
         },
         {
             "name": "xoops/xmf",
-            "version": "v1.2.24",
+            "version": "v1.2.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/XOOPS/xmf.git",
-                "reference": "4dcdf969f278f16f50af7bc76ec9595879c9fad8"
+                "reference": "0f73d7cab150771faa3bbf022d25769f6b5ec226"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/XOOPS/xmf/zipball/4dcdf969f278f16f50af7bc76ec9595879c9fad8",
-                "reference": "4dcdf969f278f16f50af7bc76ec9595879c9fad8",
+                "url": "https://api.github.com/repos/XOOPS/xmf/zipball/0f73d7cab150771faa3bbf022d25769f6b5ec226",
+                "reference": "0f73d7cab150771faa3bbf022d25769f6b5ec226",
                 "shasum": ""
             },
             "require": {
@@ -746,9 +746,9 @@
             "description": "XMF - XOOPS Module Framework",
             "support": {
                 "issues": "https://github.com/XOOPS/xmf/issues",
-                "source": "https://github.com/XOOPS/xmf/tree/v1.2.24"
+                "source": "https://github.com/XOOPS/xmf/tree/v1.2.25"
             },
-            "time": "2021-03-26T02:38:23+00:00"
+            "time": "2021-05-07T15:23:17+00:00"
         }
     ],
     "packages-dev": [],

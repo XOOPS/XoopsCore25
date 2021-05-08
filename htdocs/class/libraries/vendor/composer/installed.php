@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'f0c7352d8e51cf42eba0501caf1ffe1b027e37f7',
+    'reference' => '14bff2c7fac9f09164b40af2f33c5871eac83eb6',
     'name' => 'xoopscore25/libraries',
   ),
   'versions' => 
@@ -49,12 +49,12 @@
     ),
     'paragonie/random_compat' => 
     array (
-      'pretty_version' => 'v2.0.19',
-      'version' => '2.0.19.0',
+      'pretty_version' => 'v2.0.20',
+      'version' => '2.0.20.0',
       'aliases' => 
       array (
       ),
-      'reference' => '446fc9faa5c2a9ddf65eb7121c0af7e857295241',
+      'reference' => '0f1f60250fccffeaf5dda91eea1c018aed1adc2a',
     ),
     'smottt/wideimage' => 
     array (
@@ -112,21 +112,21 @@
     ),
     'xoops/base-requires25' => 
     array (
-      'pretty_version' => 'v1.0.2',
-      'version' => '1.0.2.0',
+      'pretty_version' => 'v1.0.3',
+      'version' => '1.0.3.0',
       'aliases' => 
       array (
       ),
-      'reference' => '0b6ceee06dcea1eaf0f56f0f63aa1caf75552f6e',
+      'reference' => '274aef0e1b6c67f80a2f094b5f353e9ee9912e02',
     ),
     'xoops/xmf' => 
     array (
-      'pretty_version' => 'v1.2.24',
-      'version' => '1.2.24.0',
+      'pretty_version' => 'v1.2.25',
+      'version' => '1.2.25.0',
       'aliases' => 
       array (
       ),
-      'reference' => '4dcdf969f278f16f50af7bc76ec9595879c9fad8',
+      'reference' => '0f73d7cab150771faa3bbf022d25769f6b5ec226',
     ),
     'xoopscore25/libraries' => 
     array (
@@ -135,7 +135,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'f0c7352d8e51cf42eba0501caf1ffe1b027e37f7',
+      'reference' => '14bff2c7fac9f09164b40af2f33c5871eac83eb6',
     ),
   ),
 );
