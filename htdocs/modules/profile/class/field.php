@@ -189,7 +189,7 @@ class ProfileField extends XoopsObject
 
             case 'timezone':
                 $element = new XoopsFormSelectTimezone($caption, $name, $value);
-                $element->setExtra("style='width: 280px;'");
+                //$element->setExtra("style='width: 280px;'");
                 break;
 
             case 'rank':
