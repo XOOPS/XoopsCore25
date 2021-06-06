@@ -1,6 +1,6 @@
 <?php
 /**
- * Mail user main page
+ * Maintenance main page
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2021 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Cointin Maxime (AKA Kraven30)
  * @package             system
@@ -54,7 +54,9 @@ switch ($op) {
         $form_maintenance = new XoopsThemeForm(_AM_SYSTEM_MAINTENANCE, 'maintenance_save', 'admin.php?fct=maintenance', 'post', true);
 
         $cache = new XoopsFormSelect(_AM_SYSTEM_MAINTENANCE_CACHE, 'cache', '', 3, true);
-        $cache->setDescription(XOOPS_VAR_PATH . '/cache/smarty_cache/<br>' . XOOPS_VAR_PATH . '/cache/smarty_compile/<br>' . XOOPS_VAR_PATH . '/cache/xoops_cache/');
+        $cache->setDescription(XOOPS_VAR_PATH . '/caches/smarty_cache/<br>'
+            . XOOPS_VAR_PATH . '/caches/smarty_compile/<br>'
+            . XOOPS_VAR_PATH . '/caches/xoops_cache/');
         $cache_arr = array(
             1 => 'smarty_cache',
             2 => 'smarty_compile',
