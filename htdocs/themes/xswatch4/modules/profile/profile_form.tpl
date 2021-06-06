@@ -1,3 +1,5 @@
+<{$xoForm.rendered}>
+<{*
 <{$xoForm.javascript}>
 <form id="<{$xoForm.name}>" name="<{$xoForm.name}>" action="<{$xoForm.action}>" method="<{$xoForm.method}>" <{$xoForm.extra}> >
 	<div class="form-group">
@@ -24,3 +26,4 @@
         <{/if}>
     <{/foreach}>
 </form>
+*}>

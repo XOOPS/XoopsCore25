@@ -1264,12 +1264,18 @@ div.newbb thead a {
 }
 
 /* darken form entry areas */
-input[type=text], input[type=password], input[type=checkbox], input[type=radio], input[type=file], textarea, select, textarea.form-control, select.form-control[size], select.form-control[multiple], .form-control {
+input[type=submit], input[type=reset], input[type=button], .xo-formbuttons, .formButton, button {
+    background-color: #D3D2D6;
+    color: #668dc7;
+    padding: 3px;
+}
+
+input[type=text], input[type=password], input[type=checkbox], input[type=radio], input[type=file], textarea, select, textarea.form-control, select.form-control[size], select.form-control[multiple], .form-control, .xo-formbuttons, .formButton {
     background-color: #555555;
     color: #CCCCFF;
 }
 
-input[type=text]:focus, input[type=password]:focus, input[type=checkbox]:focus, input[type=radio]:focus, input[type=file]:focus, textarea:focus, select:focus, textarea.form-control:focus, select.form-control[size]:focus, select.form-control[multiple]:focus, .form-control:focus {
+input[type=text]:focus, input[type=password]:focus, input[type=checkbox]:focus, input[type=radio]:focus, input[type=file]:focus, textarea:focus, select:focus, textarea.form-control:focus, select.form-control[size]:focus, select.form-control[multiple]:focus, .form-control:focus, .xo-formbuttons:focus, .formButton:focus, {
     background-color: #CCCCCC;
     color: #3333CC;
 }

@@ -87,8 +87,8 @@
 
                 <{include file="$theme_name/tpl/rightBottom.tpl"}>
             </div>
+            <{/if}>
         </div>
-        <{/if}>
     </div><!-- .bottom-blocks -->
 <{/if}>
 
