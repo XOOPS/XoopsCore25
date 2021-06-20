@@ -3,8 +3,8 @@
 <div id="xo-system-icons">
     <div id="xo-icon">
         <{foreach item=op from=$mod_options}>
-            <a class="tooltip" href="<{$op.link}>" title="<{$op.desc}>">
-                <img src='<{$op.icon|default:"$theme_icons/icon_options.png"}>' alt="<{$op.desc}>"/>
+            <a class="tooltip" href="<{$op.link}>" title="<{$op.desc|default:''}>">
+                <img src='<{$op.icon|default:"$theme_icons/icon_options.png"}>' alt="<{$op.desc|default:''}>"/>
                 <br><span><{$op.title}></span>
             </a>
         <{/foreach}>
