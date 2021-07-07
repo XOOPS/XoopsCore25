@@ -487,7 +487,7 @@ EOJS;
      */
     public function renderFormLabel(XoopsFormLabel $element)
     {
-        return '<div class="form-control-static">' . $element->getValue() . '</div>';
+        return '<div class="form-control-static" id="' . $element->getName() . '">' . $element->getValue() . '</div>';
     }
 
     /**
