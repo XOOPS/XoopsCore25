@@ -75,7 +75,7 @@ define('_CREDITS', 'Credits');
 define('_LICENCE', 'Licence');
 define('_ERRORS', 'Errors');
 define('_NONE', 'None');
-define('_ON', 'on');
+define('_ON', 'On');
 define('_READS', 'reads');
 define('_WELCOMETO', 'Welcome to %s');
 define('_SEARCH', 'Search');
