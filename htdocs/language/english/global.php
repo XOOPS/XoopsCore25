@@ -75,7 +75,7 @@ define('_CREDITS', 'Credits');
 define('_LICENCE', 'Licence');
 define('_ERRORS', 'Errors');
 define('_NONE', 'None');
-define('_ON', 'on');
+define('_ON', 'On');
 define('_READS', 'reads');
 define('_WELCOMETO', 'Welcome to %s');
 define('_SEARCH', 'Search');
@@ -257,3 +257,9 @@ define('_DBTIMESTAMPSTRING', 'Y-m-d H:i:s');
 //XOOPS 2.5.9
 define('_AM_MODULEADMIN_MISSING','Error: The ModuleAdmin class is missing. Please install the ModuleAdmin Class into /Frameworks (see /docs/readme.txt)');
 define('_MD_MESSAGEC', 'Message:');
+
+
+//XOOPS 2.5.11
+define('_PRINT', 'Print');
+define('_PDF', 'PDF');
+define('_OFF', 'Off');
