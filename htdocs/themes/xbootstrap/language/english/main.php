@@ -33,7 +33,7 @@ define('THEME_FORUM_SEARCH', 'Search');
 define('THEME_FORUM_ADVSEARCH', 'Advanced Search');
 //define('THEME_FORUM_REPLY', 'Reply');
 if (!defined ('THEME_FORUM_REPLY')) {
-    define('THEME_FORUM_REPLY', 'Reply');
+define('THEME_FORUM_REPLY', 'Reply');
 }
 define('THEME_ADD_POLL', 'Add Poll');
 

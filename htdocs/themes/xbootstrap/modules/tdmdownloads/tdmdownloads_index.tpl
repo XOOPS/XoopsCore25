@@ -1,5 +1,5 @@
 <div class="tdmdownloads">
-    <{if count($categories) gt 0}>
+    <{if is_array($categories|default:'') && count($categories) gt 0}>
 
     <div class="tdm-category row">
         <{foreach item=category from=$categories}>
@@ -115,7 +115,7 @@
 
     <{if $show_latest_files}>
         <div class="row">
-            <{if $file != ""}>
+            <{if $file|default:'' != ''}>
                 <div class="col-md-12">
                     <h1><{$smarty.const._MD_TDMDOWNLOADS_INDEX_LATESTLIST}>:</h1>
                 </div>

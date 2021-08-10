@@ -878,7 +878,7 @@ class xos_opal_Theme
      */
     public function resourcePath($path)
     {
-        if (substr($path, 0, 1) === '/') {
+        if (null !== $path && substr($path, 0, 1) === '/') {
             $path = substr($path, 1);
         }
 

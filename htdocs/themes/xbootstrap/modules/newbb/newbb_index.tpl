@@ -45,7 +45,7 @@
                             <{if $delete_post}>(<span style="color:#ff0000;"><{$delete_post}></span>)<{/if}> <{$smarty.const._MD_NEWBB_TYPE_DELETED}>
                         </a>
 
-                        <{if $report_post}>
+                        <{if $report_post|default:''}>
                             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/admin_report.php" title="<{$report_post}>" class="btn btn-xs btn-primary">
                                 <{$report_post}>
                             </a>
@@ -281,7 +281,7 @@
                             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php" title="<{$smarty.const._MD_NEWBB_ALLPOSTS}>">
                                 <{$stats[0].post.total}>
                             </a></li>
-                        <{if $stats[0].digest.total}>
+                        <{if $stats[0].digest.total|default:''}>
                             <li><{$smarty.const._MD_NEWBB_TOTALDIGESTSC}>
                                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=digest" title="<{$smarty.const._MD_NEWBB_TOTALDIGESTSC}>">
                                     <{$stats[0].digest.total}>

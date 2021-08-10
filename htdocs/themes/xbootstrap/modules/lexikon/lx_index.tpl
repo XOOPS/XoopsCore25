@@ -32,8 +32,8 @@
       <{$smarty.const._MD_LEXIKON_DEFS}><{$publishedwords}><br>
       <{if $multicats == 1}><{$smarty.const._MD_LEXIKON_CATS}><{$totalcats}><br><{/if}>
       <div style="padding-top: 10px">
-        <input class="btn btn-success btn-sm" type="button" value="<{$smarty.const._MD_LEXIKON_SUBMITENTRY}>" onclick="location.href = 'submit.php'"/>
-        <input class="btn btn-info btn-sm" type="button" value="<{$smarty.const._MD_LEXIKON_REQUESTDEF}>" onclick="location.href = 'request.php' "/>
+        <input class="btn btn-success btn-sm" type="button" value="<{$smarty.const._MD_LEXIKON_SUBMITENTRY}>" onclick="location.href = 'submit.php'">
+        <input class="btn btn-info btn-sm" type="button" value="<{$smarty.const._MD_LEXIKON_REQUESTDEF}>" onclick="location.href = 'request.php' ">
       </div>
     </div>
   </div>
@@ -177,8 +177,7 @@
             <{foreach item=newentries from=$block.newstuff|default:null}>
                 <li>
                     <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/entry.php?entryID=<{$newentries.id}>"><{$newentries.linktext}></a> <{if $showdate == 1}>
-                        <span
-                                style="font-size: xx-small; color: #456;">[<{$newentries.date}>]</span><{/if}>
+                        <span style="font-size: xx-small; color: #456;">[<{$newentries.date}>]</span><{/if}>
                 </li>
             <{/foreach}>
         </ul>
@@ -190,8 +189,7 @@
             <{foreach item=popentries from=$block2.popstuff|default:null}>
                 <li>
                     <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/entry.php?entryID=<{$popentries.id}>"><{$popentries.linktext}></a> <{if $showcount == 1}>
-                        <span
-                                style="font-size: xx-small; color: #456;">[<{$popentries.counter}>
+                        <span style="font-size: xx-small; color: #456;">[<{$popentries.counter}>
                         ]</span><{/if}></li>
             <{/foreach}>
         </ul>
@@ -201,8 +199,7 @@
         <h3><{$smarty.const._MD_LEXIKON_RANDOMTERM}></h3>
         <{if $multicats == 1}>
             <{if $empty|default:0 != 1}>
-                <div class="catname"><a
-                            href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/category.php?categoryID=<{$random.categoryID}>"><{$random.categoryname}></a>
+                <div class="catname"><a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/category.php?categoryID=<{$random.categoryID}>"><{$random.categoryname}></a>
                 </div>
             <{/if}>
         <{/if}>
@@ -272,7 +269,7 @@
 <{if $syndication == true}>
     <div align="center" class="clearer" style="padding: 4px;"><br><br>
         <a href="rss.php" title="recent glossary definitions">
-            <img src="assets/images/rss.gif" ALT="RSS" border="0"/>
+            <img src="assets/images/rss.gif" ALT="RSS" border="0">
         </a>
     </div>
 <{/if}>

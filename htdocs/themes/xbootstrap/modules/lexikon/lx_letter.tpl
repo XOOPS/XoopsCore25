@@ -60,8 +60,7 @@
             <br>
         <{/foreach}>
         <div align='left'><{$entriesarray.navbar}></div>
-        <div class="letters"> [ <a href='javascript:history.go(-1)'><{$smarty.const._MD_LEXIKON_RETURN}></a><b> | </b><a
-                    href='./index.php'><{$smarty.const._MD_LEXIKON_RETURN2INDEX}></a> ]
+        <div class="letters"> [ <a href='javascript:history.go(-1)'><{$smarty.const._MD_LEXIKON_RETURN}></a><b> | </b><a href='./index.php'><{$smarty.const._MD_LEXIKON_RETURN2INDEX}></a> ]
         </div>
     <{elseif $pagetype == '1'}>
         <h2 style="text-align: center"><{$firstletter}></h2>
@@ -81,8 +80,7 @@
             <br>
         <{/foreach}>
         <div align="left"><{$entriesarray2.navbar}></div>
-        <div class='letters'> [ <a href='javascript:history.go(-1)'><{$smarty.const._MD_LEXIKON_RETURN}></a><b> | </b><a
-                    href='./index.php'><{$smarty.const._MD_LEXIKON_RETURN2INDEX}></a> ]
+        <div class='letters'> [ <a href='javascript:history.go(-1)'><{$smarty.const._MD_LEXIKON_RETURN}></a><b> | </b><a href='./index.php'><{$smarty.const._MD_LEXIKON_RETURN2INDEX}></a> ]
         </div>
     <{/if}>
 

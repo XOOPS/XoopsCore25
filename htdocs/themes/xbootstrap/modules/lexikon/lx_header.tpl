@@ -28,7 +28,7 @@
                         <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/category.php?categoryID=<{$category.id}>"
                            target="_parent">
                             <img src="<{$xoops_url}>/uploads/lexikon/categories/images/<{$catlinks.image}>"
-                                 width="<{$logo_maximgwidth}>" align="middle" alt="[<{$catlinks.total}>]"/></A>
+                                 width="<{$logo_maximgwidth}>" align="middle" alt="[<{$catlinks.total}>]"></A>
                     <{/if}>
                     <{if $catlinks.total > 0}><a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/category.php?categoryID=<{$catlinks.id}>" title="[<{$catlinks.total}>]"><{/if}><{$catlinks.linktext}>
                     <{if $catlinks.total > 0}></a> <{/if}>[<{$catlinks.total}>] |

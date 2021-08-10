@@ -4,12 +4,12 @@
         <!-- irmtfan hardcode removed align="left" -->
         <hr class="align_left" width="50%" size="1">
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMHOME}></a>
-        <{if $parent_forum}>
+        <{if $parent_forum|default:''}>
             <span class="delimiter">&raquo;</span>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$parent_forum}>"><{$parent_name}></a>
             <span class="delimiter">&raquo;</span>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>"><{$forum_name}></a>
-        <{elseif $forum_name}>
+        <{elseif $forum_name|default:''}>
             <span class="delimiter">&raquo;</span>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum_id}>"><{$forum_name}></a>
         <{/if}>
@@ -98,7 +98,7 @@
 <br>
 <br>
 
-<{foreach item=post from=$posts}>
+<{foreach item=post from=$posts|default:null}>
 <{include file="db:newbb_thread.tpl" topic_post=$post}>
 <!-- irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" -->
 <div class="pagenav">
@@ -153,7 +153,7 @@
 </div>
 <div class="clear"></div>
 <br>
-<{if $online}>
+<{if $online|default:''}>
     <br>
     <{include file="db:newbb_online.tpl"}>
 <{/if}>
