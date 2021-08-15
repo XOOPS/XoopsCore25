@@ -4,15 +4,15 @@
     <script type="application/javascript">
         var tplUrl = '<{$xoops_url}>/modules/system/themes/transition';
     </script>
-    <{includeq file="$theme_tpl/xo_metas.tpl"}>
-    <{includeq file="$theme_tpl/xo_scripts.tpl"}>
+    <{include file="$theme_tpl/xo_metas.tpl"}>
+    <{include file="$theme_tpl/xo_scripts.tpl"}>
 </head>
 <body id="<{$xoops_dirname}>" class="<{$xoops_langcode}>">
 
-<{includeq file="$theme_tpl/xo_head.tpl"}>
-<{includeq file="$theme_tpl/xo_globalnav.tpl"}>
-<{includeq file="$theme_tpl/xo_toolbar.tpl"}>
-<{includeq file="$theme_tpl/xo_page.tpl" }>
-<{includeq file="$theme_tpl/xo_footer.tpl"}>
+<{include file="$theme_tpl/xo_head.tpl"}>
+<{include file="$theme_tpl/xo_globalnav.tpl"}>
+<{include file="$theme_tpl/xo_toolbar.tpl"}>
+<{include file="$theme_tpl/xo_page.tpl" }>
+<{include file="$theme_tpl/xo_footer.tpl"}>
 </body>
 </html>

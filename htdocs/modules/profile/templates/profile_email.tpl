@@ -1,3 +1,3 @@
-<{includeq file="db:profile_breadcrumbs.tpl"}>
+<{include file="db:profile_breadcrumbs.tpl"}>
 
-<{includeq file="db:profile_form.tpl" xoForm=$emailform}>
+<{include file="db:profile_form.tpl" xoForm=$emailform}>

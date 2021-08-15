@@ -1,5 +1,5 @@
 <!--groups-->
-<{includeq file="db:system_header.tpl"}>
+<{include file="db:system_header.tpl"}>
 <{if $groups_count|default:false == true}>
     <div class="floatright">
         <div class="xo-buttons">

@@ -1,5 +1,5 @@
 <{if $breadcrumb|default:false}>
-    <{includeq file="db:system_header.tpl"}>
+    <{include file="db:system_header.tpl"}>
 <{/if}>
 <!--Preferences-->
 <{if $menu|default:false}>

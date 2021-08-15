@@ -1,4 +1,4 @@
-<{includeq file="db:profile_breadcrumbs.tpl"}>
+<{include file="db:profile_breadcrumbs.tpl"}>
 
 <{if $old_avatar|default:false}>
     <div class="pad10 center">

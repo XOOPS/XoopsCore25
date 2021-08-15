@@ -54,7 +54,7 @@
         <{if $xoops_showlblock}>
         <td id="leftcolumn">
             <{foreach item=block from=$xoBlocks.canvas_left}>
-            <{includeq file="$theme_name/theme_blockleft.tpl"}>
+            <{include file="$theme_name/theme_blockleft.tpl"}>
             <{/foreach}>
         </td>
         <{/if}>
@@ -68,7 +68,7 @@
                     <td id="centerCcolumn" colspan="2">
                         <!-- Start center-center blocks loop -->
                         <{foreach item=block from=$xoBlocks.page_topcenter}>
-                        <{includeq file="$theme_name/theme_blockcenter_c.tpl"}>
+                        <{include file="$theme_name/theme_blockcenter_c.tpl"}>
                         <{/foreach}>
                         <!-- End center-center blocks loop -->
                     </td>
@@ -77,14 +77,14 @@
                     <td id="centerLcolumn">
                         <!-- Start center-left blocks loop -->
                         <{foreach item=block from=$xoBlocks.page_topleft}>
-                        <{includeq file="$theme_name/theme_blockcenter_l.tpl"}>
+                        <{include file="$theme_name/theme_blockcenter_l.tpl"}>
                         <{/foreach}>
                         <!-- End center-left blocks loop -->
                     </td>
                     <td id="centerRcolumn">
                         <!-- Start center-right blocks loop -->
                         <{foreach item=block from=$xoBlocks.page_topright}>
-                        <{includeq file="$theme_name/theme_blockcenter_r.tpl"}>
+                        <{include file="$theme_name/theme_blockcenter_r.tpl"}>
                         <{/foreach}>
                         <!-- End center-right blocks loop -->
                     </td>
@@ -136,7 +136,7 @@
         <{if $xoops_showrblock}>
         <td id="rightcolumn">
             <{foreach item=block from=$xoBlocks.canvas_right}>
-            <{includeq file="$theme_name/theme_blockright.tpl"}>
+            <{include file="$theme_name/theme_blockright.tpl"}>
             <{/foreach}>
         </td>
         <{/if}>
