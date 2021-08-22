@@ -1,5 +1,5 @@
 <!-- Header -->
-<{includeq file="db:system_header.tpl"}>
+<{include file="db:system_header.tpl"}>
 <script type="text/javascript">
     IMG_ON = '<{xoAdminIcons success.png}>';
     IMG_OFF = '<{xoAdminIcons cancel.png}>';
@@ -101,7 +101,7 @@
         </div>
     </div>
     <div class="clear">&nbsp;</div>
-    <{includeq file="db:system_trigger_uploads.tpl"}>
+    <{include file="db:system_trigger_uploads.tpl"}>
     <h2><{$smarty.const._AM_SYSTEM_AVATAR_SYSTEM}></h2>
     <div id="fine-uploader-manual-trigger"></div>
     <div><{$smarty.const._IMGMAXSIZE}> <{$imgcat_maxsize}></div>

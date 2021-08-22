@@ -1,4 +1,4 @@
-<{includeq file="db:profile_breadcrumbs.tpl"}>
+<{include file="db:profile_breadcrumbs.tpl"}>
 
 <{if $steps|@count > 1 AND $current_step >= 0}>
     <div class='register-steps'>
@@ -32,7 +32,7 @@
 
 <{if $regform}>
     <h3><{$regform.title}></h3>
-    <{includeq file="db:profile_form.tpl" xoForm=$regform}>
+    <{include file="db:profile_form.tpl" xoForm=$regform}>
 <{elseif $finish}>
     <h1><{$finish}></h1>
     <{if $finish_message}><p><{$finish_message}></p><{/if}>

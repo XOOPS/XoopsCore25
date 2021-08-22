@@ -1,4 +1,4 @@
-<{includeq file="db:system_header.tpl"}>
+<{include file="db:system_header.tpl"}>
 <{if $install_mods|default:false}>
     <script type="text/javascript">
         IMG_ON = '<{xoAdminIcons success.png}>';

@@ -26,7 +26,7 @@
     <link rel="alternate" type="application/rss+xml" title="" href="<{xoAppUrl backend.php}>">
     <title><{if $xoops_dirname == "system"}><{$xoops_sitename}><{if $xoops_pagetitle !=''}> - <{$xoops_pagetitle}><{/if}><{else}><{if $xoops_pagetitle
         !=''}><{$xoops_pagetitle}> - <{$xoops_sitename}><{/if}><{/if}></title>
-    <{includeq file="$theme_name/tpl/shareaholic-script.tpl"}>
+    <{include file="$theme_name/tpl/shareaholic-script.tpl"}>
     <{$xoops_module_header|default:''}>
 </head>
 <body class="site-closed-body">

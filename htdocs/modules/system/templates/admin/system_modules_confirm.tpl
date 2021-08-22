@@ -1,4 +1,4 @@
-<{includeq file="db:system_header.tpl"}>
+<{include file="db:system_header.tpl"}>
 <{if $modifs_mods}>
     <form action="admin.php" method="post">
         <table class="outer" cellspacing="1">
