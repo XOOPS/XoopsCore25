@@ -1,5 +1,5 @@
 <!-- Breadcrumb Header -->
-<{includeq file="db:system_header.tpl"}>
+<{include file="db:system_header.tpl"}>
 <script type="text/javascript">
     IMG_ON = '<{xoAdminIcons success.png}>';
     IMG_OFF = '<{xoAdminIcons cancel.png}>';
@@ -39,23 +39,23 @@
                         <tr>
                             <td side="0" class="xo-blocksection" rowspan="3" id="xo-leftcolumn">
                                 <div class="xo-title"><{$smarty.const._AM_SYSTEM_BLOCKS_SIDELEFT}></div>
-                                <{includeq file="db:system_blocks_item.tpl" blocks=$blocks side=0}>
+                                <{include file="db:system_blocks_item.tpl" blocks=$blocks side=0}>
                             </td>
                             <td side="3" class="xo-blocksection">
                                 <div class="xo-title"><{$smarty.const._AM_SYSTEM_BLOCKS_SIDETOPLEFT}></div>
-                                <{includeq file="db:system_blocks_item.tpl" blocks=$blocks side=3}>
+                                <{include file="db:system_blocks_item.tpl" blocks=$blocks side=3}>
                             </td>
                             <td side="5" class="xo-blocksection">
                                 <div class="xo-title"><{$smarty.const._AM_SYSTEM_BLOCKS_SIDETOPCENTER}></div>
-                                <{includeq file="db:system_blocks_item.tpl" blocks=$blocks side=5}>
+                                <{include file="db:system_blocks_item.tpl" blocks=$blocks side=5}>
                             </td>
                             <td side="4" class="xo-blocksection">
                                 <div class="xo-title"><{$smarty.const._AM_SYSTEM_BLOCKS_SIDETOPRIGHT}></div>
-                                <{includeq file="db:system_blocks_item.tpl" blocks=$blocks side=4}>
+                                <{include file="db:system_blocks_item.tpl" blocks=$blocks side=4}>
                             </td>
                             <td side="1" class="xo-blocksection" rowspan="3" id="xo-rightcolumn">
                                 <div class="xo-title"><{$smarty.const._AM_SYSTEM_BLOCKS_SIDERIGHT}></div>
-                                <{includeq file="db:system_blocks_item.tpl" blocks=$blocks side=1}>
+                                <{include file="db:system_blocks_item.tpl" blocks=$blocks side=1}>
                             </td>
                         </tr>
                         <tr style="height:30px;">
@@ -64,15 +64,15 @@
                         <tr>
                             <td side="7" class="xo-blocksection">
                                 <div class="xo-title"><{$smarty.const._AM_SYSTEM_BLOCKS_SIDEBOTTOMLEFT}></div>
-                                <{includeq file="db:system_blocks_item.tpl" blocks=$blocks side=7}>
+                                <{include file="db:system_blocks_item.tpl" blocks=$blocks side=7}>
                             </td>
                             <td side="9" class="xo-blocksection">
                                 <div class="xo-title"><{$smarty.const._AM_SYSTEM_BLOCKS_SIDEBOTTOMCENTER}></div>
-                                <{includeq file="db:system_blocks_item.tpl" blocks=$blocks side=9}>
+                                <{include file="db:system_blocks_item.tpl" blocks=$blocks side=9}>
                             </td>
                             <td side="8" class="xo-blocksection">
                                 <div class="xo-title"><{$smarty.const._AM_SYSTEM_BLOCKS_SIDEBOTTOMRIGHT}></div>
-                                <{includeq file="db:system_blocks_item.tpl" blocks=$blocks side=8}>
+                                <{include file="db:system_blocks_item.tpl" blocks=$blocks side=8}>
                             </td>
                         </tr>
                         <tr>
@@ -81,15 +81,15 @@
                                 <tr>
                                     <td side="10" class="xo-blocksection">
                                         <div class="xo-title"><{$smarty.const._AM_SYSTEM_BLOCKS_SIDEFOOTERLEFT}></div>
-                                        <{includeq file="db:system_blocks_item.tpl" blocks=$blocks side=10}>
+                                        <{include file="db:system_blocks_item.tpl" blocks=$blocks side=10}>
                                     </td>
                                     <td side="12" class="xo-blocksection">
                                         <div class="xo-title"><{$smarty.const._AM_SYSTEM_BLOCKS_SIDEFOOTERCENTER}></div>
-                                        <{includeq file="db:system_blocks_item.tpl" blocks=$blocks side=12}>
+                                        <{include file="db:system_blocks_item.tpl" blocks=$blocks side=12}>
                                     </td>
                                     <td side="11" class="xo-blocksection">
                                         <div class="xo-title"><{$smarty.const._AM_SYSTEM_BLOCKS_SIDEFOOTERRIGHT}></div>
-                                        <{includeq file="db:system_blocks_item.tpl" blocks=$blocks side=11}>
+                                        <{include file="db:system_blocks_item.tpl" blocks=$blocks side=11}>
                                     </td>
                                 </tr>
                             </table>

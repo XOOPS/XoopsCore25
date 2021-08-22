@@ -1,4 +1,4 @@
-<{includeq file="db:profile_breadcrumbs.tpl"}>
+<{include file="db:profile_breadcrumbs.tpl"}>
 
 
 <{if $stop|default:false}>
@@ -6,4 +6,4 @@
     <br class='clear'/>
 <{/if}>
 
-<{includeq file="db:profile_form.tpl" xoForm=$userinfo}>
+<{include file="db:profile_form.tpl" xoForm=$userinfo}>

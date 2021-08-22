@@ -25,7 +25,7 @@
 </ul>
 <{if $help_content|default:false}>
     <div class="hide" id="xo-system-help">
-        <{includeq file="$help_content"}>
+        <{include file="$help_content"}>
     </div>
 <{/if}>
 <{if $xo_sys_tips|default:false}>
