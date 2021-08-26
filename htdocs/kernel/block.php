@@ -510,6 +510,7 @@ class XoopsBlock extends XoopsObject
      */
     public function buildContent($position, $content = '', $contentdb = '')
     {
+        $ret = null;
         if ($position == 0) {
             $ret = $contentdb . $content;
         } elseif ($position == 1) {
