@@ -190,7 +190,7 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
             return false;
         }
 
-        $sql = sprintf('DELETE FROM %s WHERE confcat_id = %u', $this->db->prefix('configcategory'), $configcategory->getVar('confcat_id'));
+        $sql = sprintf('DELETE FROM %s WHERE confcat_id = %u', $this->db->prefix('configcategory'), $confcat->getVar('confcat_id'));
         if (!$result = $this->db->query($sql)) {
             return false;
         }
