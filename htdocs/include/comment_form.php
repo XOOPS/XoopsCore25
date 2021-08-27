@@ -117,8 +117,8 @@ if (isset($editor) && in_array($editor, array('textarea', 'dhtmltextarea'))) {
     $br_checkbox->addOption(1, _CM_DOAUTOWRAP);
     $option_tray->addElement($br_checkbox);
 } else {
-    $cform->addElement(new xoopsFormHidden('dohtml', 1));
-    $cform->addElement(new xoopsFormHidden('dobr', 0));
+    $cform->addElement(new XoopsFormHidden('dohtml', 1));
+    $cform->addElement(new XoopsFormHidden('dobr', 0));
 }
 $cform->addElement($option_tray);
 if (!$xoopsUser) {
