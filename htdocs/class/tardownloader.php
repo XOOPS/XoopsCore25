@@ -39,7 +39,7 @@ class XoopsTarDownloader extends XoopsDownloader
      */
     public function __construct($ext = '.tar.gz', $mimyType = 'application/x-gzip')
     {
-        $this->archiver = new tar();
+        $this->archiver = new Tar();
         $this->ext      = trim($ext);
         $this->mimetype = trim($mimyType);
     }
