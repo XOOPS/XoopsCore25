@@ -256,10 +256,10 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
             $cform->addElement(new XoopsFormHidden('com_order', 0));
             $cform->addElement(new XoopsFormHidden('com_itemid', $com_itemid));
             $cform->addElement(new XoopsFormHidden('com_mode', $com_mode));
-            $cform->addElement(new xoopsFormHidden('dohtml', 0));
-            $cform->addElement(new xoopsFormHidden('dobr', 0));
-            $cform->addElement(new xoopsFormHidden('dosmiley', 0));
-            $cform->addElement(new xoopsFormHidden('doxcode', 0));
+            $cform->addElement(new XoopsFormHidden('dohtml', 0));
+            $cform->addElement(new XoopsFormHidden('dobr', 0));
+            $cform->addElement(new XoopsFormHidden('dosmiley', 0));
+            $cform->addElement(new XoopsFormHidden('doxcode', 0));
 
             // add module specific extra params
             if ('system' !== $xoopsModule->getVar('dirname')) {
