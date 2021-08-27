@@ -384,6 +384,7 @@ class Criteria extends CriteriaElement
             if ($this->operator === 'IN') {
                 $newvalue = str_replace(array('(', ')'), '', $this->value);
                 $tab      = explode(',', $newvalue);
+                $clause = '';
                 foreach ($tab as $uid) {
                     $clause .= "({$this->column}={$uid})";
                 }
