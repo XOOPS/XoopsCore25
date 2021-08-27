@@ -497,7 +497,7 @@ class XoopsForm
     public function setSummary($summary)
     {
         if (!empty($summary)) {
-            $this->summary = strip_tags($summary);
+            $this->_summary = strip_tags($summary);
         }
     }
 
