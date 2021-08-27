@@ -576,7 +576,7 @@ class Request
                 if (null === $noHtmlFilter) {
                     $noHtmlFilter = FilterInput::getInstance();
                 }
-                $var = $noHtmlFilter->clean($var, $type);
+                $var = $noHtmlFilter::clean($var, $type);
             }
         }
 

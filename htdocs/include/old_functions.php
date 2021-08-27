@@ -44,9 +44,9 @@ function make_sidebar($side)
         $side = XOOPS_SIDEBLOCK_BOTH;
     }
     if (is_object($xoopsUser)) {
-        $block_arr = $xoopsblock->getAllBlocksByGroup($xoopsUser->getGroups(), true, $side, XOOPS_BLOCK_VISIBLE);
+        $block_arr = $xoopsblock::getAllBlocksByGroup($xoopsUser->getGroups(), true, $side, XOOPS_BLOCK_VISIBLE);
     } else {
-        $block_arr = $xoopsblock->getAllBlocksByGroup(XOOPS_GROUP_ANONYMOUS, true, $side, XOOPS_BLOCK_VISIBLE);
+        $block_arr = $xoopsblock::getAllBlocksByGroup(XOOPS_GROUP_ANONYMOUS, true, $side, XOOPS_BLOCK_VISIBLE);
     }
 
     $block_count = count($block_arr);
@@ -129,9 +129,9 @@ function make_cblock()
             $xoopsTpl =& $GLOBALS['xoopsTpl'];
         }
         if (is_object($xoopsUser)) {
-            $block_arr = $xoopsblock->getAllBlocksByGroup($xoopsUser->getGroups(), true, XOOPS_CENTERBLOCK_ALL, XOOPS_BLOCK_VISIBLE);
+            $block_arr = $xoopsblock::getAllBlocksByGroup($xoopsUser->getGroups(), true, XOOPS_CENTERBLOCK_ALL, XOOPS_BLOCK_VISIBLE);
         } else {
-            $block_arr = $xoopsblock->getAllBlocksByGroup(XOOPS_GROUP_ANONYMOUS, true, XOOPS_CENTERBLOCK_ALL, XOOPS_BLOCK_VISIBLE);
+            $block_arr = $xoopsblock::getAllBlocksByGroup(XOOPS_GROUP_ANONYMOUS, true, XOOPS_CENTERBLOCK_ALL, XOOPS_BLOCK_VISIBLE);
         }
         $block_count = count($block_arr);
         $xoopsLogger = XoopsLogger::getInstance();
