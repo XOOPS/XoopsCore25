@@ -256,4 +256,19 @@ class XoopsLocalAbstract
         }
         return null;
     }
+
+    /**
+     * Format a currency value
+     *
+     * @param float $amount The numeric currency value.
+     * @param string $currency The 3-letter ISO 4217 currency code indicating the currency to use.
+     * @return mixed formatted currency value
+     */
+    function formatCurrency($amount, $currency)
+    {
+        return $amount;
+    }
+
+
+
 }

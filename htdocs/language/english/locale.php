@@ -30,7 +30,7 @@ define('_YESTERDAY', "\Y\\e\s\\t\\e\\r\d\a\y G:i");
 define('_MONTHDAY', 'n/j G:i');
 define('_YEARMONTHDAY', 'Y/n/j G:i');
 define('_ELAPSE', '%s ago');
-define('_TIMEFORMAT_DESC', "Valid formats: \"s\" - " . _SHORTDATESTRING . "; \"m\" - " . _MEDIUMDATESTRING . "; \"l\" - " . _DATESTRING . ';<br>' . "\"c\" or \"custom\" - format determined according to interval to present; \"e\" - Elapsed; \"mysql\" - Y-m-d H:i:s;<br>" . "specified string - Refer to <a href=\"http://php.net/manual/en/function.date.php\" rel=\"external\">PHP manual</a>.");
+define('_TIMEFORMAT_DESC', "Valid formats: \"s\" - " . _SHORTDATESTRING . "; \"m\" - " . _MEDIUMDATESTRING . "; \"l\" - " . _DATESTRING . ';<br>' . "\"c\" or \"custom\" - format determined according to interval to present; \"e\" - Elapsed; \"mysql\" - Y-m-d H:i:s;<br>" . "specified string - Refer to <a href=\"https://php.net/manual/en/function.date.php\" rel=\"external\">PHP manual</a>.");
 
 if (!class_exists('XoopsLocalAbstract')) {
     include_once XOOPS_ROOT_PATH . '/class/xoopslocal.php';
@@ -50,8 +50,8 @@ class XoopsLocal extends XoopsLocalAbstract
     /**
      * Number Formats
      *
-     * @param  unknown_type $number
-     * @return mixed
+     * @param  int|float $number
+     * @return string
      */
     public function number_format($number)
     {
@@ -62,13 +62,38 @@ class XoopsLocal extends XoopsLocalAbstract
      * Money Format
      *
      * @param  string $format
-     * @param  string $number
-     * @return money  format
+     * @param  float $number
+     * @return string|null formatted money or error message
      */
     public function money_format($format, $number)
     {
+        $trace                  = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+        $errorMessageDeprecated = "Function '" . __FUNCTION__ . "' in '" . __FILE__ . ' is deprecated, ';
+        $errorMessageRemoved    = "Function '" . __FUNCTION__ . "' in '" . __FILE__ . ' is removed in PHP8, ';
+        $errorMessageAdvise     = 'use formatCurrency($number, $currency) instead.' . ". Called from {$trace[0]['file']}line {$trace[0]['line']}";
+        $GLOBALS['xoopsLogger']->addDeprecated($errorMessageDeprecated . $errorMessageAdvise);
+
         setlocale(LC_MONETARY, 'en_US');
 
-        return money_format($format, $number);
+        if (function_exists('money_format')) {
+            return money_format($format, $number);
+        }
+
+        trigger_error($errorMessageRemoved . $errorMessageAdvise, E_USER_NOTICE);
+        return null;
     }
+
+    /**
+     * Format a currency value
+     *
+     * @param float  $amount The numeric currency value.
+     * @param string $currency The 3-letter ISO 4217 currency code indicating the currency to use.
+     * @return string String representing the formatted currency value.
+     */
+    public function formatCurrency($amount, $currency = 'USD')
+    {
+        $fmt = new \NumberFormatter('en_US', NumberFormatter::CURRENCY);
+        return $fmt->formatCurrency($amount, $currency);
+    }
+
 }
