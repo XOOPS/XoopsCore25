@@ -528,17 +528,17 @@ class XoopsMemberHandler
      * Get count of users belonging to certain groups and matching criteria
      * Temporary solution
      *
-     * @param  int             $groups IDs of groups
+     * @param  array           $groups IDs of groups
      * @param  CriteriaElement $criteria
      * @return int             count of users
      */
-    public function getUserCountByGroupLink($groups, CriteriaElement $criteria = null)
+    public function getUserCountByGroupLink(array $groups, CriteriaElement $criteria = null)
     {
         $ret           = 0;
         $criteriaCompo = new CriteriaCompo();
         $sql = "SELECT COUNT(*) FROM " . $this->userHandler->db->prefix('users') . " u WHERE ";
         if (!empty($groups)) {
-            $group_in = '(' . implode(', ', $groups) . ')';
+            $group_in = is_array($groups) ? '(' . implode(', ', $groups) . ')' : (array) $groups;
             $sql .= " EXISTS (SELECT * FROM " . $this->membershipHandler->db->prefix('groups_users_link')
                 . " m " . "WHERE m.groupid IN {$group_in} and m.uid = u.uid) ";
         }
