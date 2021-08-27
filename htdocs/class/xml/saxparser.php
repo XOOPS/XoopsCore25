@@ -27,7 +27,7 @@ class SaxParser
     public $tags = array();
 
     /* Xml Source Input */
-    public $xmlInput;
+    public $input;
 
     public $errors = array();
 
