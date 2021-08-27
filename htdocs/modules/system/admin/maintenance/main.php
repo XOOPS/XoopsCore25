@@ -71,7 +71,7 @@ switch ($op) {
         $select_tables = new XoopsFormSelect('', 'tables', '', 7, true);
         $select_tables->addOptionArray($maintenance->displayTables(true));
         $tables_tray->addElement($select_tables, false);
-        $tables_tray->addElement(new xoopsFormLabel('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . _AM_SYSTEM_MAINTENANCE_DUMP_AND . '&nbsp;'));
+        $tables_tray->addElement(new XoopsFormLabel('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . _AM_SYSTEM_MAINTENANCE_DUMP_AND . '&nbsp;'));
         $choice  = new XoopsFormSelect('&nbsp;&nbsp;', 'maintenance', '', 4, true);
         $options = array(
             '1' => _AM_SYSTEM_MAINTENANCE_CHOICE1,
@@ -95,7 +95,7 @@ switch ($op) {
         $select_tables1->addOptionArray($maintenance->displayTables(true));
         $dump_tray->addElement($select_tables1, false);
 
-        $dump_tray->addElement(new xoopsFormLabel('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . _AM_SYSTEM_MAINTENANCE_DUMP_OR . '&nbsp;'));
+        $dump_tray->addElement(new XoopsFormLabel('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . _AM_SYSTEM_MAINTENANCE_DUMP_OR . '&nbsp;'));
         $ele            = new XoopsFormSelect('&nbsp;&nbsp;', 'dump_modules', '', 7, true);
     /* @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');

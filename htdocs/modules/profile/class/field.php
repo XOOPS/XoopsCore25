@@ -184,7 +184,7 @@ class ProfileField extends XoopsObject
                 break;
 
             case 'datetime':
-                $element = new XoopsFormDatetime($caption, $name, 15, $value);
+                $element = new XoopsFormDateTime($caption, $name, 15, $value);
                 break;
 
             case 'timezone':

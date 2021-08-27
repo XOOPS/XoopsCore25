@@ -75,7 +75,7 @@ class SystemBanner extends XoopsObject
         $htmlbanner = $this->isNew() ? 0 : $this->getVar('htmlbanner');
         $form->addElement(new XoopsFormRadioYN(_AM_SYSTEM_BANNERS_USEHTML, 'htmlbanner', $htmlbanner, _YES, _NO));
 
-        $form->addElement(new xoopsFormTextArea(_AM_SYSTEM_BANNERS_CODEHTML, 'htmlcode', $this->getVar('htmlcode'), 5, 50), false);
+        $form->addElement(new XoopsFormTextArea(_AM_SYSTEM_BANNERS_CODEHTML, 'htmlcode', $this->getVar('htmlcode'), 5, 50), false);
         if (!$this->isNew()) {
             $form->addElement(new XoopsFormHidden('bid', $this->getVar('bid')));
         }

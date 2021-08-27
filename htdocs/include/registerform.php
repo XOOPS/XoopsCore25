@@ -44,7 +44,7 @@ $reg_form->addElement(new XoopsFormSelectTimezone(_US_TIMEZONE, 'timezone_offset
 $reg_form->addElement(new XoopsFormRadioYN(_US_MAILOK, 'user_mailok', $user_mailok));
 if ($xoopsConfigUser['reg_dispdsclmr'] != 0 && $xoopsConfigUser['reg_disclaimer'] != '') {
     $disc_tray = new XoopsFormElementTray(_US_DISCLAIMER, '<br>');
-    $disc_text = new XoopsFormTextarea('', 'disclaimer', $xoopsConfigUser['reg_disclaimer'], 15, 80);
+    $disc_text = new XoopsFormTextArea('', 'disclaimer', $xoopsConfigUser['reg_disclaimer'], 15, 80);
     $disc_text->setExtra('readonly="readonly"');
     $disc_tray->addElement($disc_text);
     $agree_chk = new XoopsFormCheckBox('', 'agree_disc', $agree_disc);
