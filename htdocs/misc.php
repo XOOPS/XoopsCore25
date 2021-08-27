@@ -235,7 +235,7 @@ EOAVJS;
                 $info = array();
                 if (0 == $online['online_uid']) {
                     $info['uid'] = $online['online_uid'];
-                    $info['uname'] = $xoopsConfig['anonymous'];;
+                    $info['uname'] = $xoopsConfig['anonymous'];
                     $info['name'] = '';
                     $info['xoopsuser'] = false;
                     $info['avatar'] = 'avatars/blank.gif';
