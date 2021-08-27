@@ -264,7 +264,7 @@ class XoopsLocalAbstract
      * @param string $currency The 3-letter ISO 4217 currency code indicating the currency to use.
      * @return mixed formatted currency value
      */
-    function formatCurrency($amount, $currency)
+    public function formatCurrency($amount, $currency)
     {
         return $amount;
     }
