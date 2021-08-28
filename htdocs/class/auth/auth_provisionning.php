@@ -71,7 +71,7 @@ class XoopsAuthProvisionning
     /**
      * Return a Xoops User Object
      *
-     * @param $uname
+     * @param string $uname
      * @return false|\XoopsUser
      */
     public function getXoopsUser($uname)
@@ -90,9 +90,9 @@ class XoopsAuthProvisionning
     /**
      * Launch the synchronisation process
      *
-     * @param       $datas
-     * @param       $uname
-     * @param  null $pwd
+     * @param array  $datas
+     * @param string $uname
+     * @param null   $pwd
      * @return bool
      */
     public function sync($datas, $uname, $pwd = null)
@@ -116,9 +116,9 @@ class XoopsAuthProvisionning
     /**
      * Add a new user to the system
      *
-     * @param       $datas
-     * @param       $uname
-     * @param  null $pwd
+     * @param array  $datas
+     * @param string $uname
+     * @param null   $pwd
      * @return bool|\XoopsObject
      */
     public function add($datas, $uname, $pwd = null)
@@ -160,10 +160,10 @@ class XoopsAuthProvisionning
     /**
      * Modify user information
      *
-     * @param       $xoopsUser
-     * @param       $datas
-     * @param       $uname
-     * @param  null $pwd
+     * @param XoopsUser $xoopsUser
+     * @param array     $datas
+     * @param string    $uname
+     * @param null      $pwd
      * @return bool
      */
     public function change(&$xoopsUser, $datas, $uname, $pwd = null)

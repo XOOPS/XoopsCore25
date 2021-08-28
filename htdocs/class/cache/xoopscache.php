@@ -263,7 +263,6 @@ class XoopsCache
      * @param  string $key    Identifier for the data
      * @param  string|array $config name of the configuration to use
      * @return mixed  The cached data, or false if the data doesn't exist, has expired, or if there was an error fetching it
-     * @access public
      */
     public static function read($key, $config = null)
     {
