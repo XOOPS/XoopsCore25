@@ -189,7 +189,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
      * Egt Object
      *
      * @param  int $id
-     * @return XoopsAvatar
+     * @return false|\XoopsAvatar
      */
     public function get($id)
     {
@@ -281,7 +281,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
      *
      * @param  CriteriaElement|CriteriaCompo $criteria
      * @param  bool  $id_as_key
-     * @return object
+     * @return array
      */
     public function &getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
@@ -363,7 +363,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
      * Get User
      *
      * @param  XoopsAvatar $avatar
-     * @return array
+     * @return array|false
      */
     public function getUser(XoopsAvatar $avatar)
     {

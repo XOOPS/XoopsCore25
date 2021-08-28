@@ -59,7 +59,7 @@ class XoopsCaptchaImage extends XoopsCaptchaMethod
     /**
      * XoopsCaptchaImage::render()
      *
-     * @return string|void
+     * @return string
      */
     public function render()
     {

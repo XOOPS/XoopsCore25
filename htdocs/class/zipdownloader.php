@@ -38,7 +38,7 @@ class XoopsZipDownloader extends XoopsDownloader
      *
      * @param  string $ext
      * @param  string $mimyType
-     * @return XoopsZipDownloader
+     * @return void
      */
 
     public function __construct($ext = '.zip', $mimyType = 'application/x-zip')

@@ -466,7 +466,7 @@ function formatTimestamp($time, $format = 'l', $timeoffset = '')
  * Function to calculate server timestamp from user entered time (timestamp)
  * @param      $timestamp
  * @param null $userTZ
- * @return
+ * @return float|int
  */
 function userTimeToServerTime($timestamp, $userTZ = null)
 {
@@ -626,7 +626,7 @@ function checkEmail($email, $antispam = false)
  * formatURL()
  *
  * @param mixed $url
- * @return mixed|string
+ * @return string
  */
 function formatURL($url)
 {
@@ -878,7 +878,7 @@ function xoops_getMailer()
  *
  * @param integer $rank_id
  * @param mixed   $posts
- * @return
+ * @return mixed
  */
 function xoops_getrank($rank_id = 0, $posts = 0)
 {
@@ -934,7 +934,7 @@ function xoops_notification_deletebymodule($module_id)
  * xoops_notification_deletebyuser()
  *
  * @param mixed $user_id
- * @return
+ * @return mixed
  */
 function xoops_notification_deletebyuser($user_id)
 {
@@ -949,7 +949,7 @@ function xoops_notification_deletebyuser($user_id)
  * @param mixed $module_id
  * @param mixed $category
  * @param mixed $item_id
- * @return
+ * @return mixed
  */
 function xoops_notification_deletebyitem($module_id, $category, $item_id)
 {
@@ -963,7 +963,7 @@ function xoops_notification_deletebyitem($module_id, $category, $item_id)
  *
  * @param mixed $module_id
  * @param mixed $item_id
- * @return
+ * @return int
  */
 function xoops_comment_count($module_id, $item_id = null)
 {

@@ -167,7 +167,7 @@ class XoopsFolderHandler
      * @param boolean $sort
      * @param mixed   $exceptions either an array or boolean true will no grab dot files
      *
-     * @return mixed Contents of current directory as an array, false on failure
+     * @return array|false Contents of current directory as an array, false on failure
      * @access public
      */
     public function read($sort = true, $exceptions = false)
@@ -479,7 +479,7 @@ class XoopsFolderHandler
      * @param boolean $hidden return hidden files and directories
      * @param string  $type   either file or dir. null returns both files and directories
      *
-     * @return mixed array of nested directories and files in each directory
+     * @return array array of nested directories and files in each directory
      * @access public
      */
     public function tree($path, $hidden = true, $type = null)

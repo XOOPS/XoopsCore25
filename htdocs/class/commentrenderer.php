@@ -388,7 +388,7 @@ class XoopsCommentRenderer
      * @param  int    $poster_id
      * @param         $poster_user
      * @param         $poster_website
-     * @return string
+     * @return array
      * @access private
      */
     // Start edit by voltan

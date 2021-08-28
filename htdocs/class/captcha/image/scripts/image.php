@@ -108,7 +108,7 @@ class XoopsCaptchaImageHandler
      * @param string $name
      * @param string $extension
      *
-     * @return array|mixed
+     * @return array|false|null
      */
     public function getList($name, $extension = '')
     {

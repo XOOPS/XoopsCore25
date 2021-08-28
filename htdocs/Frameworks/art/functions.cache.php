@@ -37,7 +37,7 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_CACHE')):
     }
 
     /**
-     * @param null $groups
+     * @param array|null $groups
      *
      * @return string
      */
@@ -68,9 +68,9 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_CACHE')):
     }
 
     /**
-     * @param      $data
-     * @param null $name
-     * @param null $dirname
+     * @param             $data
+     * @param string|null $name
+     * @param string|null $dirname
      *
      * @return bool
      */
@@ -99,7 +99,7 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_CACHE')):
      * @param null|string   $dirname
      * @param string $root_path
      *
-     * @return mixed|null
+     * @return false|null
      */
     function mod_loadFile($name, $dirname = null, $root_path = XOOPS_CACHE_PATH)
     {

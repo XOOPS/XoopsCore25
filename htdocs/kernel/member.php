@@ -231,7 +231,7 @@ class XoopsMemberHandler
      *
      * @param  int $group_id ID of the group
      * @param  int $user_id  ID of the user
-     * @return XoopsMembership XoopsMembership
+     * @return bool true on success, otherwise false
      */
     public function addUserToGroup($group_id, $user_id)
     {

@@ -40,7 +40,7 @@ class XoopsCaptchaText extends XoopsCaptchaMethod
     /**
      * XoopsCaptchaText::render()
      *
-     * @return string|void
+     * @return string
      */
     public function render()
     {

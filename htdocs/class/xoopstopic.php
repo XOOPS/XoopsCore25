@@ -232,7 +232,7 @@ class XoopsTopic
     /**
      * @param string $format
      *
-     * @return mixed
+     * @return string
      */
     public function topic_title($format = 'S')
     {
@@ -254,7 +254,7 @@ class XoopsTopic
     /**
      * @param string $format
      *
-     * @return mixed
+     * @return string
      */
     public function topic_imgurl($format = 'S')
     {

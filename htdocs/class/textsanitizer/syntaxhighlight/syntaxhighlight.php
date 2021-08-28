@@ -28,7 +28,7 @@ class MytsSyntaxhighlight extends MyTextSanitizerExtension
      * @param $source
      * @param $language
      *
-     * @return bool|mixed|string
+     * @return string
      */
     public function load($ts, $source, $language)
     {
@@ -46,7 +46,7 @@ class MytsSyntaxhighlight extends MyTextSanitizerExtension
     /**
      * @param $text
      *
-     * @return mixed|string
+     * @return string
      */
     public function php($text)
     {

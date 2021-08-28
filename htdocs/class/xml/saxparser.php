@@ -376,7 +376,7 @@ class SaxParser
      * Gets all the error messages
      *
      * @param  bool $ashtml return as html?
-     * @return mixed
+     * @return array|string
      */
     public function &getErrors($ashtml = true)
     {

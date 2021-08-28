@@ -44,7 +44,7 @@ class xos_kernel_Xoops2
      * Convert a XOOPS path to a physical one
      * @param               $url
      * @param  bool         $virtual
-     * @return mixed|string
+     * @return array|string|string[]
      */
     public function path($url, $virtual = false)
     {

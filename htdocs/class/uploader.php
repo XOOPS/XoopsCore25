@@ -670,7 +670,7 @@ class XoopsMediaUploader
      * @param array $set   array of values
      * @param int   $value value to push
      *
-     * @return mixed
+     * @return array
      */
     protected function arrayPushIfPositive($set, $value) {
         if ($value > 0) {

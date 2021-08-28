@@ -372,7 +372,7 @@ class XoopsFormElement
      * Get the element's nocolspan
      * Modified by Catzwolf
      *
-     * @return string|bool
+     * @return bool
      *
      * @deprecated  PLEASE AVOID USING THIS METHOD
      */

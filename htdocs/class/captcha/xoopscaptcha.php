@@ -349,7 +349,7 @@ class XoopsCaptcha
     /**
      * XoopsCaptcha::loadForm()
      *
-     * @return
+     * @return mixed
      */
     public function loadForm()
     {

@@ -168,7 +168,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
     /**
      * Load a {@link XoopsPrivmessage} object
      * @param  int $id ID of the message
-     * @return XoopsPrivmessage
+     * @return false|\XoopsPrivmessage
      **/
     public function get($id)
     {
@@ -192,12 +192,10 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
     /**
      * Insert a message in the database
      *
-     * @param  XoopsPrivmessage $pm    {@link XoopsPrivmessage} object
-     * @param  bool   $force flag to force the query execution skip request method check, which might be required in some situations
-     * @param  XoopsObject|XoopsPrivmessage $pm a XoopsMembership object
-     *
+     * @param XoopsObject|XoopsPrivmessage $pm a XoopsMembership object
+     * @param bool                         $force flag to force the query execution skip request method check, which might be required in some situations
      * @return bool true on success, otherwise false
-     **/
+     */
     public function insert(XoopsObject $pm, $force = false)
     {
         $className = 'XoopsPrivmessage';

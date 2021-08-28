@@ -301,13 +301,12 @@ function profile_getFieldOptionForm(ProfileField $field, $action = false)
 /**
  * Get {@link XoopsThemeForm} for registering new users
  *
- * @param XoopsUser $user
- * @param           $profile
  * @param XoopsUser $user {@link XoopsUser} to register
+ * @param ProfileProfile  $profile
  * @param int       $step Which step we are at
  *
  * @internal param \profileRegstep $next_step
- * @return object
+ * @return XoopsThemeForm object
  */
 function profile_getRegisterForm(XoopsUser $user, $profile, $step = null)
 {

@@ -146,7 +146,7 @@ class XoopsLogger
      * @param string $sql   SQL string
      * @param string $error error message (if any)
      * @param int    $errno error number (if any)
-     * @param null   $query_time
+     * @param float|null   $query_time
      */
     public function addQuery($sql, $error = null, $errno = null, $query_time = null)
     {
@@ -314,7 +314,7 @@ class XoopsLogger
      *
      * @protected
      * @param string $mode
-     * @return
+     * @return mixed
      */
     public function dump($mode = '')
     {
@@ -436,7 +436,7 @@ class XoopsLogger
  * @param       $errFile
  * @param       $errLine
  * @param  null $errContext
- * @return bool
+ * @return bool|null
  */
 function XoopsErrorHandler_HandleError($errNo, $errStr, $errFile, $errLine, $errContext = null)
 {

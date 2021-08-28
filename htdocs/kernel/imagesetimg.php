@@ -120,8 +120,8 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
      *
      * @param int $id ID
      *
+     * @return false|\XoopsImagesetimg {@link XoopsImageSetImg}, FALSE on fail
      * @internal param bool $getbinary
-     * @return XoopsImageSetImg {@link XoopsImageSetImg}, FALSE on fail
      */
     public function get($id)
     {

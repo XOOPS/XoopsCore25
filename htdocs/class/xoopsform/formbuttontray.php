@@ -97,7 +97,7 @@ class XoopsFormButtonTray extends XoopsFormElement
     /**
      * XoopsFormButtonTray::render()
      *
-     * @return string|void
+     * @return string
      */
     public function render()
     {

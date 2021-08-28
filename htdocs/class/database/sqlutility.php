@@ -146,7 +146,7 @@ class SqlUtility
      *
      * @param  string $query  valid SQL query string
      * @param  string $prefix prefix to add to all table names
-     * @return mixed  FALSE on failure
+     * @return false|mixed  false on failure
      */
     public static function prefixQuery($query, $prefix)
     {

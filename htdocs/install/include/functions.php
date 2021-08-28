@@ -18,7 +18,7 @@
 
 /**
  * call htmlspecialchars with standard arguments
- * @param $value string
+ * @param string $value
  * @return string
  */
 function installerHtmlSpecialChars($value)
@@ -280,7 +280,7 @@ function genPathCheckHtml($path, $valid)
 /**
  * @param $link
  *
- * @return mixed
+ * @return array|null
  */
 function getDbCharsets($link)
 {

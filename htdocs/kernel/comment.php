@@ -352,7 +352,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
      *
      * @param int $id ID
      *
-     * @return XoopsComment {@link XoopsComment}, FALSE on fail
+     * @return false|\XoopsComment {@link XoopsComment}, FALSE on fail
      **/
     public function get($id)
     {
@@ -569,7 +569,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
      * @param int $item_id   Item ID
      * @param int $status    Status of the comment
      *
-     * @return array Array of {@link XoopsComment} objects
+     * @return int Count of {@link XoopsComment} objects
      **/
     public function getCountByItemId($module_id, $item_id, $status = null)
     {

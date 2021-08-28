@@ -25,8 +25,8 @@ require_once $path . '/include' . '/cp_header.php';
  * @return bool
  */
 /**
- * @param      $module
- * @param null $oldversion
+ * @param \XoopsModule $module
+ * @param null         $oldversion
  * @return bool
  */
 function xoops_module_update_pm(XoopsModule $module, $oldversion = null)

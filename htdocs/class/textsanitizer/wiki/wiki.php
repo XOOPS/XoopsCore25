@@ -90,7 +90,8 @@ EOH;
 
     /**
      * @param $text
-     *
+     * @param $width
+     * @param $height
      * @return string
      */
     public static function decode($text, $width, $height)

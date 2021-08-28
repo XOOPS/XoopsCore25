@@ -163,7 +163,7 @@ class XoopsComments extends XoopsObject
     /**
      * Get Comments Tree
      *
-     * @return mixed
+     * @return array
      */
     public function getCommentTree()
     {

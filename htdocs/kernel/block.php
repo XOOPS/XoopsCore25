@@ -421,7 +421,7 @@ class XoopsBlock extends XoopsObject
     /**
      * Store Block Data to Database
      *
-     * @return int $id
+     * @return bool $id
      *
      * @deprecated
      */

@@ -95,7 +95,7 @@ class XoopsMailer
     /**
      * Constructor
      *
-     * @return XoopsMailer
+     * @return void
      */
     public function __construct()
     {
@@ -149,7 +149,7 @@ class XoopsMailer
 
     // public
     /**
-     * @param null $value
+     * @param string|null $value
      */
     public function setTemplateDir($value = null)
     {

@@ -298,7 +298,7 @@ class XoopsObjectTree
      * @param string $name unknown variable name requested
      *                      currently only '_tree' is supported
      *
-     * @return mixed value
+     * @return array|null value
      */
     public function __get($name)
     {

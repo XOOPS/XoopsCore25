@@ -136,7 +136,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
      * retrieve a specific group
      *
      * @param  int $id ID of the group to get
-     * @return XoopsGroup XoopsGroup reference to the group object, FALSE if failed
+     * @return false|\XoopsGroup reference to the group object, FALSE if failed
      */
     public function get($id)
     {
@@ -222,7 +222,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
      *
      * @param  CriteriaElement|CriteriaCompo $criteria  {@link CriteriaElement} with conditions for the groups
      * @param  bool            $id_as_key should the groups' IDs be used as keys for the associative array?
-     * @return mixed           Array of groups
+     * @return array           Array of groups
      */
     public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
@@ -320,7 +320,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
      * retrieve a membership
      *
      * @param  int $id ID of the membership to get
-     * @return mixed reference to the object if successful, else FALSE
+     * @return false|\XoopsMembership reference to the object if successful, else FALSE
      */
     public function get($id)
     {

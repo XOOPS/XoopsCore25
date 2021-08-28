@@ -247,7 +247,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      *
      * @param int $id ID
      *
-     * @return XoopsNotification {@link XoopsNotification}, FALSE on fail
+     * @return false|\XoopsNotification {@link XoopsNotification}, FALSE on fail
      **/
     public function get($id)
     {
@@ -634,7 +634,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      * @param  array  $user_list
      * @param  int    $module_id
      * @param  int    $omit_user_id
-     * @return mixed
+     * @return false|null
      */
     public function triggerEvent($category, $item_id, $event, $extra_tags = array(), $user_list = array(), $module_id = null, $omit_user_id = null)
     {

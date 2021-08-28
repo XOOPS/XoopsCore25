@@ -287,7 +287,7 @@ class XoopsCacheFile extends XoopsCacheEngine
      * Get absolute file for a given key
      *
      * @param  string $key The key
-     * @return mixed  Absolute cache file for the given key or false if erroneous
+     * @return false|null  Absolute cache file for the given key or false if erroneous
      * @access private
      */
     private function setKey($key)

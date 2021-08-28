@@ -156,7 +156,7 @@ class SystemMaintenance
      *
      * @param array tables 'list of tables'
      * @param array maintenance 'optimize, check, repair, analyze'
-     * @return array
+     * @return string
      */
     public function CheckRepairAnalyzeOptimizeQueries($tables, $maintenance)
     {

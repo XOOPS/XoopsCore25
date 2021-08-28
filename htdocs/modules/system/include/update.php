@@ -18,7 +18,7 @@
  */
 
 /**
- * @param      $module
+ * @param \XoopsModule $module
  * @param null $prev_version
  *
  * @return bool|null

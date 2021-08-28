@@ -1446,7 +1446,7 @@ function xoops_module_log_header($module, $title)
  *                              2 = smarty compile
  *                              3 = xoops cache
  *                              or null to clear all
- * @return bool
+ * @return void
  */
 function xoops_module_delayed_clean_cache($cacheList = null)
 {

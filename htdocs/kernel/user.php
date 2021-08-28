@@ -605,11 +605,11 @@ class XoopsUserHandler extends XoopsPersistableObjectHandler
     }
 
     /**#@+
-     * @deprecated
      * @param bool $uname
      * @param      $pwd
      * @param bool $md5
-     * @return bool|object
+     * @return false
+     * @deprecated
      */
     public function &loginUser($uname, $pwd, $md5 = false)
     {

@@ -178,7 +178,7 @@ class XoopsFileHandler
      * @param string      $mode
      * @param boolean     $force If true then the file will be re-opened even if its already opened, otherwise it won't
      *
-     * @return mixed string on success, false on failure
+     * @return false|string string on success, false on failure
      * @access public
      */
     public function read($bytes = false, $mode = 'rb', $force = false)
@@ -214,7 +214,7 @@ class XoopsFileHandler
      *
      * @param  mixed   $offset The $offset in bytes to seek. If set to false then the current offset is returned.
      * @param  integer $seek   PHP Constant SEEK_SET | SEEK_CUR | SEEK_END determining what the $offset is relative to
-     * @return mixed   True on success, false on failure (set mode), false on failure or integer offset on success (get mode)
+     * @return bool|int   True on success, false on failure (set mode), false on failure or integer offset on success (get mode)
      * @access public
      */
     public function offset($offset = false, $seek = SEEK_SET)
@@ -462,7 +462,7 @@ class XoopsFileHandler
     /**
      * Returns the Filesize, either in bytes or in human-readable format.
      *
-     * @return string|false |int filesize as int or as a human-readable string
+     * @return false |int filesize as int or as a human-readable string
      * @access   public
      */
     public function size()

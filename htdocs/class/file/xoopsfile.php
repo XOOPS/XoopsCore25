@@ -37,7 +37,7 @@ class XoopsFile
     /**
      * XoopsFile::getInstance()
      *
-     * @return
+     * @return mixed
      */
     public function getInstance()
     {
@@ -95,7 +95,7 @@ class XoopsFile
      * @param mixed  $path
      * @param mixed  $create
      * @param mixed  $mode
-     * @return
+     * @return mixed|null
      */
     public static function getHandler($name = 'file', $path = false, $create = false, $mode = null)
     {

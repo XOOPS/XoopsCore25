@@ -24,7 +24,7 @@ if (!function_exists('protector_notify_base')) {
      * @param $category
      * @param $item_id
      *
-     * @return mixed
+     * @return array|null
      */
     function protector_notify_base($mydirname, $category, $item_id)
     {

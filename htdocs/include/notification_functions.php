@@ -138,7 +138,7 @@ function &notificationCommentCategoryInfo($module_id = null)
  * @param  string $category_name Category name
  * @param  bool   $enabled_only  If true, return only enabled events
  * @param  int    $module_id     ID of the module (default current module)
- * @return mixed
+ * @return array
  */
 function &notificationEvents($category_name, $enabled_only, $module_id = null)
 {
@@ -336,7 +336,7 @@ function &notificationEventInfo($category_name, $event_name, $module_id = null)
  * for the selected module.
  *
  * @param  int $module_id ID of the module
- * @return mixed
+ * @return array
  */
 
 function &notificationSubscribableCategoryInfo($module_id = null)

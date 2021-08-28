@@ -87,7 +87,8 @@ EOF;
 
     /**
      * @param $url
-     *
+     * @param $width
+     * @param $height
      * @return string
      */
     public static function decode($url, $width, $height)

@@ -75,7 +75,7 @@ function themecenterposts($title, $content)
  *
  * @param mixed $url
  * @param mixed $value
- * @return mixed
+ * @return string
  */
 function myTextForm($url, $value)
 {
@@ -85,7 +85,7 @@ function myTextForm($url, $value)
 /**
  * Enter description here...
  *
- * @return mixed
+ * @return bool
  */
 function xoopsfwrite()
 {
@@ -103,8 +103,8 @@ function xoopsfwrite()
 
 /**
  * Xoops Module Menu
+ * @return string
  * @deprecated
- * @return mixed
  */
 function xoops_module_get_admin_menu()
 {

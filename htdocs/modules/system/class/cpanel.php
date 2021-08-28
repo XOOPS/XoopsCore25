@@ -80,7 +80,7 @@ class XoopsSystemCpanel
     /**
      * Get a list of Xoops Admin Gui
      *
-     * @return mixed
+     * @return array
      */
     public static function getGuis()
     {

@@ -57,9 +57,9 @@ class Upgrade_2511 extends XoopsUpgrade
      * Determine if columns are declared mediumint, and if
      * so, queue ddl to alter to int.
      *
-     * @param $migrate           \Xmf\Database\Tables
-     * @param $bannerTableName   string
-     * @param $bannerColumnNames string[] array of columns to check
+     * @param \Xmf\Database\Tables $migrate
+     * @param string               $bannerTableName
+     * @param string[]             $bannerColumnNames array of columns to check
      *
      * @return integer count of queue items added
      */
@@ -179,7 +179,7 @@ class Upgrade_2511 extends XoopsUpgrade
 
     /**
      * Attempt to make the supplied path
-     * @param $newPath string
+     * @param string $newPath
      *
      * @return bool
      */
@@ -195,8 +195,8 @@ class Upgrade_2511 extends XoopsUpgrade
     /**
      * Copy file $source to $destination
      *
-     * @param $source      string
-     * @param $destination string
+     * @param string $source
+     * @param string $destination
      *
      * @return bool true if successful, false on error
      */
@@ -302,7 +302,7 @@ class Upgrade_2511 extends XoopsUpgrade
      * Build a list of config files using the existing textsanitizer/config.php
      * This should prevent some issues with customized systems.
      *
-     * @return string[] array of existing ts and extension config files
+     * @return void array of existing ts and extension config files
      *                  each as source name => destination name
      */
     protected function buildListTSConfigs()

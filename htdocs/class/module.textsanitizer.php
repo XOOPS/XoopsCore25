@@ -212,7 +212,7 @@ class MyTextSanitizer
      *
      * @param  array $config_default
      * @param  array $config_custom
-     * @return mixed
+     * @return array
      */
     public function mergeConfig($config_default, $config_custom)
     {
@@ -490,7 +490,7 @@ class MyTextSanitizer
      *
      * @TODO : To be improved
      * @param $text
-     * @return mixed
+     * @return array|string|string[]|null
      */
     public function filterXss($text)
     {
@@ -814,7 +814,7 @@ class MyTextSanitizer
      *
      * @param  mixed $str
      * @param  mixed $image
-     * @return mixed|string
+     * @return string
      * @deprecated will be removed in next XOOPS version
      */
     public function codeSanitizer($str, $image = 1)
@@ -833,7 +833,7 @@ class MyTextSanitizer
      * @param  integer $allowhtml
      * @param  integer $smiley
      * @param  mixed   $bbcode
-     * @return mixed|string
+     * @return string
      * @deprecated will be removed in next XOOPS version
      */
     public function sanitizeForDisplay($text, $allowhtml = 0, $smiley = 1, $bbcode = 1)
@@ -865,7 +865,7 @@ class MyTextSanitizer
      * @param  integer $allowhtml
      * @param  integer $smiley
      * @param  mixed   $bbcode
-     * @return mixed|string
+     * @return string
      * @deprecated will be removed in next XOOPS version
      */
     public function sanitizeForPreview($text, $allowhtml = 0, $smiley = 1, $bbcode = 1)
@@ -911,7 +911,7 @@ class MyTextSanitizer
      *
      * @param  mixed $text
      * @param  mixed $smiley
-     * @return mixed|string
+     * @return string
      * @deprecated will be removed in next XOOPS version
      */
     public function makeTboxData4Show($text, $smiley = 0)
@@ -941,7 +941,7 @@ class MyTextSanitizer
      *
      * @param  mixed $text
      * @param  mixed $smiley
-     * @return mixed|string
+     * @return string
      * @deprecated will be removed in next XOOPS version
      */
     public function makeTboxData4Preview($text, $smiley = 0)
@@ -989,7 +989,7 @@ class MyTextSanitizer
      * @param  integer $html
      * @param  integer $smiley
      * @param  mixed   $xcode
-     * @return mixed|string
+     * @return string
      * @deprecated will be removed in next XOOPS version
      */
     public function &makeTareaData4Show(&$text, $html = 1, $smiley = 1, $xcode = 1)
@@ -1021,7 +1021,7 @@ class MyTextSanitizer
      * @param  integer $html
      * @param  integer $smiley
      * @param  mixed   $xcode
-     * @return mixed|string
+     * @return string
      * @deprecated will be removed in next XOOPS version
      */
     public function &makeTareaData4Preview(&$text, $html = 1, $smiley = 1, $xcode = 1)

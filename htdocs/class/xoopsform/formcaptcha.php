@@ -75,7 +75,7 @@ class XoopsFormCaptcha extends XoopsFormElement
      * @param $name
      * @param $val
      *
-     * @return mixed
+     * @return bool
      */
     public function setConfig($name, $val)
     {
@@ -83,7 +83,7 @@ class XoopsFormCaptcha extends XoopsFormElement
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function render()
     {
@@ -93,7 +93,7 @@ class XoopsFormCaptcha extends XoopsFormElement
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function renderValidationJS()
     {

@@ -137,7 +137,7 @@ class XoopsModule extends XoopsObject
      * Get module info
      *
      * @param  string $name
-     * @return array|string    Array of module information.
+     * @return array|string|false    Array of module information.
      *                     If {@link $name} is set, returns a single module information item as string.
      */
     public function &getInfo($name = null)
@@ -176,7 +176,7 @@ class XoopsModule extends XoopsObject
     /**
      * Get links to the subpages
      *
-     * @return string
+     * @return array
      */
     public function subLink()
     {
@@ -432,7 +432,7 @@ class XoopsModule extends XoopsObject
     /**
      * @param $dirname
      *
-     * @return mixed
+     * @return false|\XoopsModule
      */
     public static function getByDirname($dirname)
     {
@@ -671,7 +671,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
      * Load a module from the database
      *
      * @param  int $id ID of the module
-     * @return object FALSE on fail
+     * @return false|\XoopsModule
      */
     public function get($id)
     {
@@ -707,7 +707,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
      * Load a module by its dirname
      *
      * @param  string $dirname
-     * @return XoopsModule|FALSE on fail
+     * @return XoopsModule|false on fail
      */
     public function getByDirname($dirname)
     {

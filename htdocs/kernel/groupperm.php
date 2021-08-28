@@ -136,7 +136,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
      *
      * @param bool $isNew
      *
-     * @return bool $isNew  Flag the object as "new"?
+     * @return \XoopsGroupPerm $isNew  Flag the object as "new"?
      */
     public function create($isNew = true)
     {
@@ -153,7 +153,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
      *
      * @param int $id ID
      *
-     * @return XoopsGroupPerm {@link XoopsGroupPerm}, FALSE on fail
+     * @return false|\XoopsGroupPerm {@link XoopsGroupPerm}, FALSE on fail
      */
     public function get($id)
     {

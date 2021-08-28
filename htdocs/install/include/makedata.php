@@ -24,7 +24,7 @@
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  * @author              DuGris (aka L. JEN) <dugris@frxoops.org>
  * @param $dbm
- * @return bool
+ * @return array|bool
  */
 // include_once './class/dbmanager.php';
 // RMV

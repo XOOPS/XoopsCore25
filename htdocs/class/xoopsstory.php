@@ -356,7 +356,7 @@ class XoopsStory
     /**
      * @param string $format
      *
-     * @return mixed
+     * @return string
      */
     public function title($format = 'Show')
     {

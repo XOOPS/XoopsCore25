@@ -72,7 +72,7 @@ class XoopsAuthProvisionning
      * Return a Xoops User Object
      *
      * @param $uname
-     * @return XoopsUser or false
+     * @return false|\XoopsUser
      */
     public function getXoopsUser($uname)
     {
@@ -119,7 +119,7 @@ class XoopsAuthProvisionning
      * @param       $datas
      * @param       $uname
      * @param  null $pwd
-     * @return bool
+     * @return bool|\XoopsObject
      */
     public function add($datas, $uname, $pwd = null)
     {

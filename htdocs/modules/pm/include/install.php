@@ -14,7 +14,7 @@
  * @package             pm
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
- * @param $module
+ * @param \XoopsModule $module
  * @return bool
  */
 

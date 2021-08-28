@@ -17,7 +17,7 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_USER')):
     /**
      * @param bool $asString
      *
-     * @return mixed
+     * @return false|int|string
      */
     function mod_getIP($asString = false)
     {

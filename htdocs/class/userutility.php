@@ -217,7 +217,7 @@ class XoopsUserUtility
      * Adapted from PMA_getIp() [phpmyadmin project]
      *
      * @param  bool $asString requiring integer or dotted string
-     * @return mixed string or integer value for the IP
+     * @return false|int|string string or integer value for the IP
      */
     public static function getIP($asString = false)
     {

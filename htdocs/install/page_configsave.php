@@ -280,7 +280,7 @@ function checkFileWriteablity($files)
 /**
  * Install working versions of various *.dist.php files to xoops_data/configs/
  *
- * @param $vars array of system variables, we care about ROOT_PATH and VAR_PATH keys
+ * @param array $vars of system variables, we care about ROOT_PATH and VAR_PATH keys
  *
  * @return true|string true if all files were copied, otherwise error message
  */

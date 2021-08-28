@@ -79,7 +79,7 @@ class XoopsCache
      * Tries to find and include a file for a cache engine and returns object instance
      *
      * @param  string $name Name of the engine
-     * @return mixed $engine object or null
+     * @return bool true if engine file exist, or false on failure
      * @access private
      */
     private function loadEngine($name)

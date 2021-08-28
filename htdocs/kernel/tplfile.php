@@ -31,7 +31,7 @@ class XoopsTplfile extends XoopsObject
     /**
      * Constructor
      *
-     * @return XoopsTplfile
+     * @return void
      */
     public function __construct()
     {
@@ -216,7 +216,7 @@ class XoopsTplfileHandler extends XoopsObjectHandler
      * @param int  $id tpl_id of the block to retrieve
      * @param bool $getsource
      *
-     * @return object XoopsTplfile reference to the Tplfile
+     * @return false|\XoopsTplfile reference to the Tplfile object
      */
     public function get($id, $getsource = false)
     {
@@ -477,7 +477,7 @@ class XoopsTplfileHandler extends XoopsObjectHandler
      * @param  string       $module
      * @param  string       $file
      * @param  bool|string  $getsource
-     * @return object
+     * @return array
      */
     public function find($tplset = null, $type = null, $refid = null, $module = null, $file = null, $getsource = false)
     {
