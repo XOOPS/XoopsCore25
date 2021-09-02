@@ -140,10 +140,10 @@ echo '<div class="ct-chart xct-minor-seventh"></div>';
 echo '<script>'. $script .'</script>';
 
 echo '<div class="right">'
-    . '<div class="colorkeys color-series-a">&nbsp;&nbsp;&nbsp;</div><span>Last Month </span>'
-    . '<div class="colorkeys color-series-b">&nbsp;&nbsp;&nbsp;</div><span>Last Week </span>'
-    . '<div class="colorkeys color-series-c">&nbsp;&nbsp;&nbsp;</div><span>Last Day </span>'
-    . '<div class="colorkeys color-series-d">&nbsp;&nbsp;&nbsp;</div><span>Last Hour</span>'
+    . '<div class="colorkeys color-series-a">&nbsp;&nbsp;&nbsp;</div><span>' . _AM_ADMINSTATS_LAST_MONTH . ' </span>'
+    . '<div class="colorkeys color-series-b">&nbsp;&nbsp;&nbsp;</div><span>' . _AM_ADMINSTATS_LAST_WEEK . ' </span>'
+    . '<div class="colorkeys color-series-c">&nbsp;&nbsp;&nbsp;</div><span>' . _AM_ADMINSTATS_LAST_DAY . ' </span>'
+    . '<div class="colorkeys color-series-d">&nbsp;&nbsp;&nbsp;</div><span>' . _AM_ADMINSTATS_LAST_HOUR . '</span>'
     . '</div>';
 
 /*

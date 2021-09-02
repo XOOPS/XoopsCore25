@@ -60,4 +60,8 @@ define('_AM_BUTTON_BAN_BY_IP', 'IP Ban!');
 define('_AM_JS_BANCONFIRM', 'IP Bans OK?');
 define('_AM_MSG_BANNEDIP', 'IPs are banned');
 define('_AM_ADMINSTATS_TITLE', 'Protector Log Summary');
-
+// XOOPS 2.5.11
+define('_AM_ADMINSTATS_LAST_MONTH', 'Last Month');
+define('_AM_ADMINSTATS_LAST_WEEK', 'Last Week');
+define('_AM_ADMINSTATS_LAST_DAY', 'Last Day');
+define('_AM_ADMINSTATS_LAST_HOUR', 'Last Hour');
