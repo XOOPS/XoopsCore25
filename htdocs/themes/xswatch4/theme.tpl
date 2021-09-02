@@ -109,16 +109,14 @@
 <footer class="footer">
     <h3>
         <{$xoops_footer}>
-        <a href="http://xoops.org" title="Design by: XOOPS UI/UX Team" target="_blank" class="credits d-none d-sm-block">
+        <a href="https://xoops.org" title="Design by: XOOPS UI/UX Team" target="_blank" class="credits d-none d-sm-block">
             <img src="<{xoImgUrl}>images/favicon.png" alt="Design by: XOOPS UI/UX Team">
         </a>
     </h3>
-</footer>
-<div class="aligncenter comments-nav d-block d-sm-none">
-    <a href="http://xoops.org" title="Design by: XOOPS UI/UX Team" target="_blank">
+    <a href="https://xoops.org" title="Design by: XOOPS UI/UX Team" target="_blank" class="credits text-center d-block d-sm-none">
         <img src="<{xoImgUrl}>images/favicon.png" alt="Design by: XOOPS UI/UX Team">
     </a>
-</div>
+</footer>
 <{if $xoops_isadmin|default:false}><{include file="$theme_name/tpl/nav-admin.tpl"}><{/if}>
 <!-- Inbox alert -->
 <{if $xoops_isuser|default:false}><{include file="$theme_name/tpl/inboxAlert.tpl"}><{/if}>
