@@ -32,6 +32,8 @@
         <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="<{xoImgUrl}><{$xswatchDarkCss}>/bootstrap.min.css">
         <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="<{xoImgUrl}><{$xswatchDarkCss}>/cookieconsent.css">
     <{/if}>
+    <{* Edit css/my_xoops.css to customize your css definitions and override Bootstrap definitions *}>
+    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/my_xoops.css">
 
     <script src="<{$xoops_url}>/browse.php?Frameworks/jquery/jquery.js"></script>
     <script src="<{xoImgUrl}>js/bootstrap.bundle.min.js"></script>
