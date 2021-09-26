@@ -37,7 +37,8 @@ Customize xSwatch:
 - Customize or disable inbox alert in theme.tpl and tpl/inboxAlert.tpl
 - For best experience install both the PM and Profile modules
 - Customize xmnews block : for column blocks, copy xmnews_block_colonnes.tpl to xmnews_block.tpl (copy xmnews_block_lignes.tpl to xmnews_block.tpl to return to initial state)
-- Customize _css/my_xoops.css to add your css definitions and override Bootstrap definitions
+- Customize _css/my_xoops.css to add your css definitions and override Bootstrap definitions for the light variant or the unique variant
+- Customize _css/my_xoops_dark.css to add your css definitions and override Bootstrap definitions for the dark variant
 
 In addition to templates for the modules included in XOOPS (pm, profile and system,) Bootstrap v4.4 templates are included for the following modules:
 

@@ -24,16 +24,21 @@
         <link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/xoops.css">
         <link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/cookieconsent.css">
+        <{* Edit css/my_xoops.css to customize your css definitions and override Bootstrap definitions for the unique variant *}>
+        <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/my_xoops.css">
     <{else}>
         <link rel="stylesheet" media="(prefers-color-scheme: light)" href="<{xoImgUrl}><{$xswatchCss}>/xoops.css">
         <link rel="stylesheet" media="(prefers-color-scheme: light)" href="<{xoImgUrl}><{$xswatchCss}>/bootstrap.min.css">
         <link rel="stylesheet" media="(prefers-color-scheme: light)" href="<{xoImgUrl}><{$xswatchCss}>/cookieconsent.css">
+        <{* Edit css/my_xoops.css to customize your css definitions and override Bootstrap definitions for the light variant *}>
+        <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/my_xoops.css">
+        
         <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="<{xoImgUrl}><{$xswatchDarkCss}>/xoops.css">
         <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="<{xoImgUrl}><{$xswatchDarkCss}>/bootstrap.min.css">
         <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="<{xoImgUrl}><{$xswatchDarkCss}>/cookieconsent.css">
+        <{* Edit css/my_xoops.css to customize your css definitions and override Bootstrap definitions for the dark variant *}>
+        <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/my_xoops_dark.css">
     <{/if}>
-    <{* Edit css/my_xoops.css to customize your css definitions and override Bootstrap definitions *}>
-    <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/my_xoops.css">
 
     <script src="<{$xoops_url}>/browse.php?Frameworks/jquery/jquery.js"></script>
     <script src="<{xoImgUrl}>js/bootstrap.bundle.min.js"></script>
