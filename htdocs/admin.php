@@ -76,6 +76,12 @@ if (!isset($xoopsConfig['admin_warnings_enable']) || $xoopsConfig['admin_warning
     }
 }
 
+if (!empty($_GET['xoopsorgnews']) && !function_exists('xml_parser_create')) {
+    xoops_result(_AD_WARNING_NO_XML);
+    echo '<br>';
+    unset($_GET['xoopsorgnews']);
+}
+
 if (!empty($_GET['xoopsorgnews'])) {
     // Multiple feeds
     $myts     = MyTextSanitizer::getInstance();
