@@ -36,7 +36,7 @@
         <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="<{xoImgUrl}><{$xswatchDarkCss}>/xoops.css">
         <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="<{xoImgUrl}><{$xswatchDarkCss}>/bootstrap.min.css">
         <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="<{xoImgUrl}><{$xswatchDarkCss}>/cookieconsent.css">
-        <{* Edit css/my_xoops.css to customize your css definitions and override Bootstrap definitions for the dark variant *}>
+        <{* Edit css/my_xoops_dark.css to customize your css definitions and override Bootstrap definitions for the dark variant *}>
         <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/my_xoops_dark.css">
     <{/if}>
 
