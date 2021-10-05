@@ -32,6 +32,8 @@ xoops_cp_header();
 /**
  * Error warning messages
  */
+ // Define Stylesheet
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
 if (!isset($xoopsConfig['admin_warnings_enable']) || $xoopsConfig['admin_warnings_enable']) {
     // recommend lowest security supported version at time of XOOPS release
     // see: http://php.net/supported-versions.php
