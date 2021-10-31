@@ -52,19 +52,17 @@ class XoopsFormCaptcha extends XoopsFormElement
      * Constructor
      * @param string  $caption    Caption of the form element, default value is defined in captcha/language/
      * @param string  $name       Name for the input box
-     * @param boolean $skipmember Skip CAPTCHA check for members
-     * @param array   $configs
+     * @param boolean $skipmember Skip CAPTCHA check for members deprecated
+     * @param array   $configs									 deprecated
      */
-    public function __construct($caption = '', $name = '', $skipmember = '', $configs = array())
+    public function __construct($caption = '', $name = 'xoopscaptcha', $skipmember = '', $configs = array())
     {
 		xoops_load('XoopsCaptcha');
         $this->captchaHandler  = XoopsCaptcha::getInstance();
-		if (!empty($name)){
-			$configs['name'] = $name;
+		if(!empty($configs)){
+			unset($configs);
 		}
-		if (!empty($skipmember)){
-			$configs['skipmember'] = $skipmember;
-		}
+		$configs['name'] = $name;
 		$this->captchaHandler->setConfigs($configs);
         if (!$this->captchaHandler->isActive()) {
             $this->setHidden();
