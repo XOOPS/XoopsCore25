@@ -8,6 +8,9 @@ Below are language differences from a version to next version.
 ================================
 
 CHANGED FILES:
+htdocs/language/english/admin.php
+- added define('_AD_WARNING_NO_XML', 'The PHP XML Extension is required for this function.');
+
 htdocs/xoops_lib/modules/protector/language/english/admin.php
 - added define('_AM_ADMINSTATS_LAST_MONTH', 'Last Month');
 - added define('_AM_ADMINSTATS_LAST_WEEK', 'Last Week');
