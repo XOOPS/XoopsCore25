@@ -87,7 +87,6 @@ switch ($op) {
             $listed_mods[$i]['license']       = $module->getInfo('license');
             $listed_mods[$i]['description']   = $module->getInfo('description');
 			
-			//if (version_compare($listed_mods[$i]['version'], strtolower($module->getInfo('version')), '<')) {
 			if (true === $module->versionCompare($listed_mods[$i]['version'], $module->getInfo('version'))) {
                 $listed_mods[$i]['warning_update'] = true;
             } else {
