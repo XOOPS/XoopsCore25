@@ -26,6 +26,7 @@ class Upgrade_2511 extends XoopsUpgrade
             'rmindexhtml',
             'textsanitizer',
             'xoopsconfig',
+			'modulesvarchar',
         );
         $this->usedFiles = array();
         $this->pathsToCheck = array(
@@ -483,6 +484,71 @@ class Upgrade_2511 extends XoopsUpgrade
         }
         return $i;
     }
+
+	 /**
+     * Determine if columns are declared smallint, and if
+     * so, queue ddl to alter to varchar.
+     *
+     * @param $migrate           \Xmf\Database\Tables
+     * @param $modulesTableName   string
+     * @param $modulesColumnNames string[] array of columns to check
+     *
+     * @return integer count of queue items added
+     */
+    protected function fromSmallintToVarchar(Tables $migrate, $modulesTableName, $modulesColumnNames)
+    {
+        $migrate->useTable($modulesTableName);
+        $count = 0;
+        foreach ($modulesColumnNames as $column) {
+            $attributes = $migrate->getColumnAttributes($modulesTableName, $column);
+            if (0 === strpos(trim($attributes), 'smallint')) {
+                $count++;
+                $migrate->alterColumn($modulesTableName, $column, 'varchar(12) NOT NULL DEFAULT \'\'');
+            }
+        }
+        return $count;
+    }
+
+    private $modulesTableName = 'modules';
+    private $modulesColumnNames = array('version');
+
+    /**
+     * Increase count columns from smallint to varchar
+     *
+     * @return bool true if patch IS applied, false if NOT applied
+     */
+    public function check_modulesvarchar()
+    {
+        $migrate = new Tables();
+        $count = $this->fromSmallintToVarchar($migrate, $this->modulesTableName, $this->modulesColumnNames);
+		echo 'count: ' .$count;
+        return $count==0;
+    }
+
+    /**
+     * Increase count columns from smallint to varchar
+     *
+     * @return bool true if applied, false if failed
+     */
+    public function apply_modulesvarchar()
+    {
+        $migrate = new \Xmf\Database\Tables();
+
+        $count = $this->fromSmallintToVarchar($migrate, $this->modulesTableName, $this->modulesColumnNames);
+
+        $result = $migrate->executeQueue(true);
+        if (false === $result) {
+            $this->logs[] = sprintf('Migration of %s table failed. Error: %s - %s' .
+                $this->modulesTableName,
+                $migrate->getLastErrNo(),
+                $migrate->getLastError()
+            );
+            return false;
+        }
+
+        return $count!==0;
+    }
+
 }
 
 return new Upgrade_2511();
