@@ -164,11 +164,7 @@ class XoopsModule extends XoopsObject
      */
     public function getStatus()
     {
-		if (isset($this->modinfo['version'])) {
-			return substr(strrchr($this->modinfo['version'], '-'), 1);
-		} else {
-            $return = '';
-        }
+		return substr(strrchr($this->getVar('version'), '-'), 1);
     }
 	
 	/**

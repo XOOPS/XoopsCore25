@@ -531,7 +531,7 @@ class ModuleAdmin
              . "<img src=\"" . XOOPS_URL . '/modules/' . $module_dir . '/' . $this->_obj->getInfo('image') . "\" alt=\"" . $module_dir . "\" style=\"float: left; margin-right: 10px;\">\n"
              . "</td><td>\n"
              . "<div style=\"margin-top: 1px; margin-bottom: 4px; font-size: 18px; line-height: 18px; color: #2F5376; font-weight: bold;\">\n"
-             . $this->_obj->getInfo('name') . ' ' . $this->_obj->getInfo('version') . ' ' . " ({$release_date})\n"
+             . $this->_obj->getInfo('name') . ' ' . $this->_obj->getVar('version') . ' ' . " ({$release_date})\n"
              . "<br>\n"
              . "</div>\n"
              . "<div style=\"line-height: 16px; font-weight: bold;\">\n"
