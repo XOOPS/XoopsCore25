@@ -68,6 +68,7 @@ Updated libraries and assets:
 - phpThumb has been removed #939
 - bootstrap 3.4.1 (geekwright)
 - jQuery to 3.5.1 (geekwright)
+- Smarty to v2.6.32 (mamba)
 
 ===================================
 2.5.11 Beta1             2020/02/14
