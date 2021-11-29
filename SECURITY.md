@@ -7,11 +7,6 @@ This documentation provides guidelines and standard procedures regarding maintai
 
 By default, only the latest version built from branch `master` (or `main`) is supported with security updates.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 2.5.10   | :white_check_mark: |
-| < 2.5.10   | :x:                |
-
 ## Reporting a Vulnerability
 
 **Please do not report security vulnerabilities through public GitHub issues.**
