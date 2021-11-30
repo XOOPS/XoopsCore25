@@ -191,7 +191,8 @@ class SystemMenuHandler
         $menu .= "</div>\n";
         $menu .= "<div id='buttonbar_mod'><ul>";
         foreach ($this->_menutabs as $k => $v) {
-            $menu .= "<li id='" . $menuItems[$i] . "'><a href='" . XOOPS_URL . '/modules/' . $this->_obj->getVar('dirname') . '/' . $k . "'><span>$v</span></a></li>\n";
+            $temp = ($menuItems[$i] == 'current') ? 'current' : 'menu_'.$i;
+            $menu .= '<li id="'.$temp. '"><a href="' . XOOPS_URL . '/modules/' . $this->_obj->getVar('dirname') . '/' . $k . '"><span>'.$v.'</span></a></li>'."\n";
             ++$i;
         }
         $menu .= "</ul>\n</div>\n";
