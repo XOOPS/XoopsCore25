@@ -176,7 +176,7 @@ class SystemMenuHandler
             $menuItems[] = $menus;
         }
         $breadcrumb                = $menuItems[$currentoption];
-        $menuItems[$currentoption] = 'current';
+        /*$menuItems[$currentoption] = 'current';*/
         $menu                      = "<div id='buttontop_mod'>";
         $menu .= "<table style='width: 100%; padding: 0;' cellspacing='0'>\n<tr>";
         $menu .= "<td style='font-size: 10px; text-align: left; color: #2F5376; padding: 0 6px; line-height: 18px;'>";
