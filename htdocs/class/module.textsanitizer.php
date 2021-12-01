@@ -528,7 +528,7 @@ class MyTextSanitizer
      */
     public function addSlashes($text)
     {
-        if (!@get_magic_quotes_gpc()) {
+        if (version_compare(PHP_VERSION, '7.4.0', '>=') OR !is_function('get_magic_quotes_gpc') OR !get_magic_quotes_gpc()) {
             $text = addslashes($text);
         }
 
