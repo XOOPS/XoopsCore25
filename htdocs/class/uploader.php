@@ -246,7 +246,7 @@ class XoopsMediaUploader
             return false;
         } else {
             $media_name      =& $_FILES[$media_name];
-            $this->mediaName = @get_magic_quotes_gpc() ? stripslashes($media_name['name']) : $media_name['name'];
+            $this->mediaName = (version_compare(PHP_VERSION, '7.4.0', '<') && get_magic_quotes_gpc()) ? stripslashes($media_name['name']) : $media_name['name'];
             if ($this->randomFilename) {
                 $unique          = uniqid();
                 $this->targetFileName = '' . $unique . '--' . $this->mediaName;
