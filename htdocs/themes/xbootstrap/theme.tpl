@@ -44,8 +44,8 @@
     <script src="<{xoImgUrl}>js/imagesloaded.pkgd.min.js"></script>
 
 <!--[if lt IE 9]>
-    <script src="http://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="http://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <script src="<{xoImgUrl}>js/selectivizr-min.js"></script>
 <![endif]-->
     <script src="<{xoImgUrl}>js/js.js"></script>
@@ -139,13 +139,13 @@
 <footer class="footer">
     <h3>
         <{$xoops_footer}>
-        <a href="http://xoops.org" title="Design by: XOOPS UI/UX Team" target="_blank" class="credits visible-md visible-sm visible-lg">
+        <a href="https://xoops.org" title="Design by: XOOPS UI/UX Team" target="_blank" class="credits visible-md visible-sm visible-lg">
             <img src="<{xoImgUrl}>images/favicon.png" alt="Design by: XOOPS UI/UX Team">
         </a>
     </h3>
 </footer>
 <div class="aligncenter comments-nav visible-xs">
-    <a href="http://xoops.org" title="Design by: XOOPS UI/UX Team" target="_blank">
+    <a href="https://xoops.org" title="Design by: XOOPS UI/UX Team" target="_blank">
         <img src="<{xoImgUrl}>images/favicon.png" alt="Design by: XOOPS UI/UX Team">
     </a>
 </div>
