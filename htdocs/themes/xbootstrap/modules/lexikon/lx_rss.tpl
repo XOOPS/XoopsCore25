@@ -11,7 +11,7 @@
         </description>
         <lastBuildDate><{$channel_lastbuild}>
         </lastBuildDate>
-        <docs>https://backend.userland.com/rss/</docs>
+        <docs>https://cyber.harvard.edu/rss/rss.html/</docs>
         <generator><{$channel_generator}>
         </generator>
         <category><{$channel_category}>
