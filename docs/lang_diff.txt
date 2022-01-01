@@ -27,13 +27,20 @@ htdocs/language/english/global.php
 - changed define('_SIZE', 'Size'); // font size
 - changed define('_FONT', 'Font'); // font family
 - changed define('_COLOR', 'Color'); // font color
+
 htdocs/install/language/english/install.php
 - added define('ERR_COPY_CONFIG_FILE', 'Could not copy the configuration file %s');
+
 htdocs/install/language/english/welcome.php
 - changed recommended PHP & MySQL versions, links changed to "https:"
+
 htdocs/modules/system/language/english/admin/preferences.php
 - changed define('_MD_AM_SMTPHOSTDESC', 'Either a single hostname or multiple semicolon-delimited hostnames.<br>You can also specify a different port for each host by using this format: [hostname:port] (e.g. "smtp1.example.com:25;smtp2.example.com").<br>You can also specify encryption type, for example: (e.g. "tls://smtp1.example.com:587;ssl://smtp2.example.com:465").<br>Hosts will be tried in order.');
+
 htdocs/modules/system/language/english/help/blocksadmin.html
+
+htdocs/modules/system/language/english/admin/modulesadmin.php
+- changed define('_AM_SYSTEM_MODULES_ADMIN', 'XOOPS Module Administration');
 
 NEW FILES:
 htdocs/themes/xswatch4/language/english/main.php
@@ -58,6 +65,9 @@ htdocs/modules/system/language/english/admin/mailusers.php
 
 htdocs/modules/system/language/english/admin/images.php
 - added define("_AM_SYSTEM_IMAGES_SCATDELNG","Can't delete this category");
+
+htdocs/modules/system/language/english/admin/modulesadmin.php
+- added define('_AM_SYSTEM_MODULES_INSTALL_THISMODULE', 'This Module Admin');
 
 ================================
 2019/04/29: Version 2.5.10 Final
