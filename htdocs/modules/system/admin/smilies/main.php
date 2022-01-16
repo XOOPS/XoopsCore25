@@ -141,6 +141,7 @@ switch ($op) {
             $obj = $smilies_Handler->create();
         }
         // erreur
+		$err = [];
         $obj->setVar('code', Request::getString('code', ''));
 
         $obj->setVar('emotion', Request::getString('emotion', ''));
