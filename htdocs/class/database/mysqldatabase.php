@@ -254,7 +254,7 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
      */
     public function escape($string)
     {
-        return mysqli_real_escape_string($this->conn, $string);
+        return mysqli_real_escape_string($this->conn, (string) $string);
     }
 
     /**
@@ -462,6 +462,18 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
     public function getServerVersion()
     {
         return mysqli_get_server_info($this->conn);
+    }
+
+    /**
+     * Test the passed result to determine if it is a valid result set
+     *
+     * @param mixed $result value to test
+     *
+     * @return bool true if $result is a database result set, otherwise false
+     */
+    public function isResultSet($result)
+    {
+        return is_a($result, 'mysqli_result');
     }
 }
 

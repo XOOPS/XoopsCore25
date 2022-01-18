@@ -106,6 +106,15 @@ abstract class XoopsDatabase
             return $this->prefix;
         }
     }
+
+    /**
+     * Test the passed result to determine if it is a valid result set
+     *
+     * @param mixed $result value to test
+     *
+     * @return bool true if $result is a database result set, otherwise false
+     */
+    abstract public function isResultSet($result);
 }
 
 /**
