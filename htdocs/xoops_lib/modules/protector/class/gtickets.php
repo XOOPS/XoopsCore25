@@ -119,7 +119,11 @@ if (!class_exists('XoopsGTicket')) {
             global $xoopsModule;
 
             if ('' === $salt) {
-                $salt = '$2y$07$' . str_replace('+', '.', base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)));
+				if (version_compare(PHP_VERSION, '7.0.0') >= 0) {
+					$salt = '$2y$07$' . str_replace('+', '.', base64_encode(random_bytes(16)));
+				} else {
+					$salt = '$2y$07$' . str_replace('+', '.', base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)));
+				}
             }
 
             // create a token
