@@ -22,7 +22,7 @@
 						</a>
 						<{/if}>
 					</div>
-					<div class="col-12 text-left">	
+					<div class="col-12 text-left">
 						<hr />
 						<{$viewdocument.description_short}>
 						<hr />
@@ -36,14 +36,14 @@
 							</a>
 						<{/if}>
 						<a class="btn btn-primary d-block d-sm-none"  href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$viewdocument.categoryid}>&amp;doc_id=<{$viewdocument.id}>" target="_blank" title="<{$viewdocument.name}>">
-							<span class="fa fa-download fa-lg" aria-hidden="true"></span> 
+							<span class="fa fa-download fa-lg" aria-hidden="true"></span>
 						</a>
 						<a class="btn btn-primary d-none d-sm-block"  href="<{$xoops_url}>/modules/xmdoc/download.php?cat_id=<{$viewdocument.categoryid}>&amp;doc_id=<{$viewdocument.id}>" target="_blank" title="<{$viewdocument.name}>">
 							<span class="fa fa-download fa-lg" aria-hidden="true"></span> <{$smarty.const._MA_XMDOC_DOWNLOAD}>
 						</a>
 					</div>
-				</div>				
-			</div>				
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="modal" tabindex="-1" id="myModal<{$viewdocument.id}>" role="dialog">
@@ -57,10 +57,10 @@
 								<span class="badge badge-secondary fa-lg text-primary ml-1"><span class="fa fa-download" aria-hidden="true"></span><small> <{$viewdocument.counter}></small></span>
 								<{if $viewdocument.size != ''}>
 									<span class="badge badge-secondary fa-lg text-primary ml-1 mt-1 mt-lg-0"><span class="fa fa-archive" aria-hidden="true"></span><small> <{$viewdocument.size}></small></span>
-								<{/if}>	
+								<{/if}>
 							<{/if}>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						</div>	
+						</div>
 					</div>
 				</div>
 				<div class="modal-body">
@@ -70,7 +70,7 @@
 								  <span class="fa fa-calendar fa-fw" aria-hidden="true"></span> <{$smarty.const._MA_XMDOC_FORMDOC_DATE_BT}>
 								  <figcaption class="figure-caption text-center"><{$viewdocument.date}></figcaption>
 							</figure>
-							<{if $viewdocument.mdate}>
+							<{if $viewdocument.mdate|default:false}>
 							<figure class="figure text-muted my-1 pr-2 text-center border-right border-secondary">
 								  <span class="fa fa-repeat fa-fw" aria-hidden="true"></span> <{$smarty.const._MA_XMDOC_FORMDOC_MDATE_BT}>
 								  <figcaption class="figure-caption text-center"><{$viewdocument.mdate}></figcaption>
@@ -85,7 +85,7 @@
 								<{include file="db:xmsocial_rating.tpl" down_xmsocial=$viewdocument.xmsocial_arr}>
 								<figcaption class="figure-caption text-center"></figcaption>
 							</figure>
-							<{/if}>									
+							<{/if}>
 						</div>
 					<{/if}>
 						<div class="row">
