@@ -1,10 +1,4 @@
 <div class="container">
-	<{if $error|default:false}>
-	<div class="alert alert-danger" role="alert">
-		<{$error}>
-	</div>
-	<{/if}>
-
 	<{if $form|default:false}>
 		<nav aria-label="breadcrumb">
 		  <ol class="breadcrumb">
@@ -16,7 +10,11 @@
 			<{/if}>
 		  </ol>
 		</nav>
-
+		<{if $error|default:false}>
+		<div class="alert alert-danger" role="alert">
+			<{$error}>
+		</div>
+		<{/if}>
 		<{if $cat_id !=0}>
 		<div class="row pt-2 pb-3">
 			<div class="col-3 col-md-4 col-lg-3 text-center">
@@ -29,14 +27,47 @@
 		</div>
 		<{/if}>
 		<{include file="db:xmcontact_form.tpl"}>
+	<{else}>
+		<{if $confirm|default:false}>
+			<nav aria-label="breadcrumb">
+			  <ol class="breadcrumb">
+				<li class="breadcrumb-item"><a href="index.php"><{$index_module}></a></li>
+				<li class="breadcrumb-item active"><{$smarty.const._MD_XMCONTACT_INDEX_CONFIRM}></li>
+			  </ol>
+			</nav>
+			<div class="alert alert-success" role="alert">
+				<{$smarty.const._MD_XMCONTACT_CONFIRM_SEND}>
+			</div>
+			<table class="table table-striped">
+				<tr>
+					<th class="txtleft width40"><{$smarty.const._AM_XMCONTACT_REQUEST_TITLE}></th>
+					<th class="txtleft"><{$smarty.const._AM_XMCONTACT_REQUEST_INFORMATION}></th>
+				</tr>
+				<{foreach from=$request_arr key=title item=information}>
+					<tr>
+						<td class="txtleft"><{$title}></td>
+						<td class="txtleft"><{$information}></td>
+					</tr>
+				<{/foreach}>
+			</table>			
+		<{else}>
+		<nav aria-label="breadcrumb">
+		  <ol class="breadcrumb">
+			<li class="breadcrumb-item active"><{$index_module}></li>
+		  </ol>
+		</nav>
+		<{/if}>
+		<{if $error|default:false}>
+		<div class="alert alert-danger" role="alert">
+			<{$error}>
+		</div>
+		<{/if}>
 	<{/if}>
-
-	<{if $info_header|default:''}>
+	<{if $info_header|default:'' != ''}>
 	<div class="pt-2 pb-3">
 		<{$info_header}>
 	</div>
 	<{/if}>
-
 	<{if $info_googlemaps|default:'' != '' && $info_addresse|default:'' != ''}>
 		<div class="row" style="padding-bottom: 5px; padding-top: 5px;">
 			<div class="col-md-8 col-sm-12">
@@ -113,7 +144,7 @@
 	</div>
 	<{/if}>
 
-	<{if $info_footer|default:''}>
+	<{if $info_footer|default:'' != ''}>
 	<div class="pt-3 pb-2">
 		<{$info_footer}>
 	</div>

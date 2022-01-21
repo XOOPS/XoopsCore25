@@ -42,7 +42,7 @@
 <{/if}>
 <{if $perm_edit == true}>
 	<div align="center">
-		<a class="btn btn-secondary" href="action.php?op=edit&content_id=<{$content_id}>"><i class="fa fa-edit" aria-hidden="true"></i> <{$smarty.const._AM_XMCONTENT_EDIT}></a>
+		<a class="btn btn-secondary" href="<{$xoops_url}>/modules/xmcontent/action.php?op=edit&content_id=<{$content_id}>"><i class="fa fa-edit" aria-hidden="true"></i> <{$smarty.const._AM_XMCONTENT_EDIT}></a>
 	</div>
 <{/if}>
 <{if $xmdoc_viewdocs|default:false == true}>
