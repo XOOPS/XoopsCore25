@@ -103,11 +103,11 @@
                 <{$microlinksnew}>
             <{if $bookmarkme == 3}>
                 &nbsp; <!-- AddThis Bookmark Button -->
-                <a href="http://www.addthis.com/bookmark.php" onclick="addthis_url = location.href; addthis_title = document.title; return addthis_click(this);" target="_blank">
+                <a href="https://www.addthis.com/bookmark.php" onclick="addthis_url = location.href; addthis_title = document.title; return addthis_click(this);" target="_blank">
                     <img src="assets/images/addthis_button1-bm.gif" align="absmiddle" width="125" height="16" border="0" alt="AddThis Social Bookmark Button"/>
                 </a>
                 <script type="text/javascript">var addthis_pub = 'JJXUY2C9CQIWTKI1';</script>
-                <script type="text/javascript" src="http://s9.addthis.com/js/widget.php?v=10"></script>
+                <script type="text/javascript" src="https://s9.addthis.com/js/widget.php?v=10"></script>
             <{elseif $bookmarkme == 4}>
                 &nbsp; <!-- AddThis Bookmark dropdown -->
                 <script type="text/javascript">
@@ -115,7 +115,7 @@
                   addthis_title = document.title;
                   addthis_pub = 'JJXUY2C9CQIWTKI1';
                 </script>
-                <script type="text/javascript" src="http://s7.addthis.com/js/addthis_widget.php?v=12"></script>
+                <script type="text/javascript" src="https://s7.addthis.com/js/addthis_widget.php?v=12"></script>
             <{/if}>
             </span>
         </div>        
