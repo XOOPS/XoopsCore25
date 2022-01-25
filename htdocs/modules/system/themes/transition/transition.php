@@ -157,7 +157,7 @@ class XoopsGuiTransition extends XoopsSystemGui
         } else {
             $moddir  = $xoopsModule->getVar('dirname', 'n');
             $modpath = XOOPS_URL . '/modules/' . $moddir;
-            $modname = $xoopsModule->getVar('name');
+            $modname = $xoopsModule->getInfo('name') . '  (' . $xoopsModule->getInfo('version') . '  ' . $xoopsModule->getInfo('module_status') . ')';
             $modid   = $xoopsModule->getVar('mid');
 
             $mod_options = $xoopsModule->getAdminMenu();
