@@ -251,7 +251,7 @@ class XoUserHandler extends XoopsObjectHandler
      *
      * @param  CriteriaElement $criteria
      * @param  array           $groups
-     * @return object
+     * @return array of matching objects
      */
     public function getAll(CriteriaElement $criteria = null, $groups = array())
     {
