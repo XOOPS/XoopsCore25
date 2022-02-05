@@ -29,7 +29,7 @@ class XoopsFormRendererBootstrap3 implements XoopsFormRendererInterface
      */
     public function renderFormButton(XoopsFormButton $element)
     {
-        return "<input type='" . $element->getType() . "' class='btn btn-default' name='"
+        return "<input type='" . $element->getType() . "' class='btn btn-default " . $element->getClass() . "' name='"
             . $element->getName() . "'  id='" . $element->getName() . "' value='" . $element->getValue()
             . "' title='" . $element->getValue() . "'" . $element->getExtra() . ' />';
     }
