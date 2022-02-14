@@ -71,7 +71,7 @@
 					<h5><{$module_name}></h5>
 					<{$showing|replace:"-":"- "}>
 				</div>	
-				<{if $previous || next}>
+				<{if $previous || $next}>
 					<div>			
 					<{if $previous}>
 						<span class="d-none d-sm-inline"><a class="btn btn-secondary" href="<{$previous}>" role="button"><{$smarty.const._SR_PREVIOUS|replace:"<<":"<span class='fa fa-chevron-left fa-lg'></span>"}></a></span>
@@ -128,7 +128,7 @@
 					<h5><{$module_name}></h5>
 					<{$showing|replace:"-":"- "}>
 				</div>	
-				<{if $previous || next}>
+				<{if $previous || $next}>
 					<div>			
 					<{if $previous}>
 						<span class="d-none d-sm-inline"><a class="btn btn-secondary" href="<{$previous}>" role="button"><{$smarty.const._SR_PREVIOUS|replace:"<<":"<span class='fa fa-chevron-left fa-lg'></span>"}></a></span>
