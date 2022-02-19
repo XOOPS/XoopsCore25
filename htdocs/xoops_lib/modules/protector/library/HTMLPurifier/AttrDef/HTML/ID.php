@@ -77,17 +77,17 @@ class HTMLPurifier_AttrDef_HTML_ID extends HTMLPurifier_AttrDef
                 return false;
             }
         } else {
-        if (ctype_alpha($id)) {
+            if (ctype_alpha($id)) {
                 // OK
-        } else {
-            if (!ctype_alpha(@$id[0])) {
-                return false;
-            }
-            // primitive style of regexps, I suppose
-            $trim = trim(
-                $id,
-                'A..Za..z0..9:-._'
-            );
+            } else {
+                if (!ctype_alpha(@$id[0])) {
+                    return false;
+                }
+                // primitive style of regexps, I suppose
+                $trim = trim(
+                    $id,
+                    'A..Za..z0..9:-._'
+                );
                 if ($trim !== '') {
                     return false;
                 }

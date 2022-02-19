@@ -64,7 +64,7 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 Updated libraries and assets:
 - Smarty: allow StdClass to be cast to array when compiling foreach (mamba)
-- HTML Purifier to 4.13 (mamba)
+- HTML Purifier to 4.14 (mamba)
 - phpThumb has been removed #939
 - bootstrap 3.4.1 (geekwright)
 - jQuery to 3.5.1 (geekwright)
