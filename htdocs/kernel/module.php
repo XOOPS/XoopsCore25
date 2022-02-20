@@ -160,7 +160,7 @@ class XoopsModule extends XoopsObject
     /**
      * Get a link to the modules main page
      *
-     * @return string FALSE on fail
+     * @return string|false FALSE on fail
      */
     public function mainLink()
     {
