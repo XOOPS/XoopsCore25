@@ -541,8 +541,8 @@ class XoopsModule extends XoopsObject
     }
 
     /**
-     * @param      $template
-     * @param bool $block
+     * @param string $template
+     * @param bool   $block
      *
      * @return bool
      */
