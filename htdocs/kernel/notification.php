@@ -545,10 +545,10 @@ class XoopsNotificationHandler extends XoopsObjectHandler
     /**
      * Get a list of notification events for the current item/mod/user
      *
-     * @param $category
-     * @param $item_id
-     * @param $module_id
-     * @param $user_id
+     * @param string $category
+     * @param int    $item_id
+     * @param int    $module_id
+     * @param int    $user_id
      * @return array
      */
     public function getSubscribedEvents($category, $item_id, $module_id, $user_id)
@@ -632,8 +632,8 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      * @param  string $event
      * @param  array  $extra_tags
      * @param  array  $user_list
-     * @param  int    $module_id
-     * @param  int    $omit_user_id
+     * @param  int|null    $module_id
+     * @param  int|null    $omit_user_id
      * @return mixed
      */
     public function triggerEvent($category, $item_id, $event, $extra_tags = array(), $user_list = array(), $module_id = null, $omit_user_id = null)
