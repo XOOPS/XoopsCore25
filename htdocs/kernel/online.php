@@ -150,7 +150,7 @@ class XoopsOnlineHandler
      * Get an array of online information
      *
      * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement}
-     * @return array  Array of associative arrays of online information
+     * @return array|false  Array of associative arrays of online information
      */
     public function getAll(CriteriaElement $criteria = null)
     {
