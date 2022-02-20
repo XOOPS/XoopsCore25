@@ -477,7 +477,7 @@ class XoopsTplfileHandler extends XoopsObjectHandler
      * @param  string       $module
      * @param  string       $file
      * @param  bool|string  $getsource
-     * @return object
+     * @return array|object
      */
     public function find($tplset = null, $type = null, $refid = null, $module = null, $file = null, $getsource = false)
     {
