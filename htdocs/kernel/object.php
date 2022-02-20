@@ -1366,7 +1366,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @access protected
      * @param  mixed $id     ID
      * @param  array $fields fields to fetch
-     * @return XoopsObject {@link XoopsObject}
+     * @return XoopsObject|null {@link XoopsObject}
      */
     public function get($id = null, $fields = null)
     {
