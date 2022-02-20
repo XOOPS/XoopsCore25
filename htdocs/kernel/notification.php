@@ -247,7 +247,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      *
      * @param int $id ID
      *
-     * @return XoopsNotification {@link XoopsNotification}, FALSE on fail
+     * @return XoopsNotification|false {@link XoopsNotification}, FALSE on fail
      **/
     public function get($id)
     {
@@ -412,13 +412,13 @@ class XoopsNotificationHandler extends XoopsObjectHandler
     // TODO: rename this...
     // Also, should we have get by module, get by category, etc...??
     /**
-     * @param $module_id
-     * @param $category
-     * @param $item_id
-     * @param $event
-     * @param $user_id
+     * @param int    $module_id
+     * @param string $category
+     * @param int    $item_id
+     * @param string $event
+     * @param int    $user_id
      *
-     * @return bool
+     * @return XoopsNotification|bool
      */
     public function &getNotification($module_id, $category, $item_id, $event, $user_id)
     {
@@ -468,16 +468,16 @@ class XoopsNotificationHandler extends XoopsObjectHandler
     /**
      * Subscribe for notification for an event(s)
      *
-     * @param string $category  category of notification
-     * @param int    $item_id   ID of the item
-     * @param mixed  $events    event string or array of events
-     * @param int    $mode      force a particular notification mode
-     *                          (e.g. once_only) (default to current user preference)
-     * @param int    $module_id ID of the module (default to current module)
-     * @param int    $user_id   ID of the user (default to current user)
+     * @param string   $category  category of notification
+     * @param int      $item_id   ID of the item
+     * @param mixed    $events    event string or array of events
+     * @param int|null $mode      force a particular notification mode
+     *                            (e.g. once_only) (default to current user preference)
+     * @param int|null $module_id ID of the module (default to current module)
+     * @param int|null $user_id   ID of the user (default to current user)
      *                          *
      *
-     * @return bool
+     * @return bool|null
      */
     public function subscribe($category, $item_id, $events, $mode = null, $module_id = null, $user_id = null)
     {
