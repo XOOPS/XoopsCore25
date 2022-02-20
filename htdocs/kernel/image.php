@@ -353,11 +353,11 @@ class XoopsImageHandler extends XoopsObjectHandler
      * @param  bool $image_display
      * @return array Array of {@link XoopsImage} objects
      **/
-    public function getList($imgcat_id, $image_display = null)
+    public function getList($imgcat_id, $image_display = false)
     {
         $criteria = new CriteriaCompo(new Criteria('imgcat_id', (int)$imgcat_id));
-        if (isset($image_display)) {
-            $criteria->add(new Criteria('image_display', (int)$image_display));
+        if (!empty($image_display)) {
+            $criteria->add(new Criteria('image_display', (string)$image_display));
         }
         $images = $this->getObjects($criteria, false, true);
         $ret    = array();

@@ -483,16 +483,16 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * @param        $groupid
-     * @param int $module_id
-     * @param bool $toponlyblock
-     * @param null $visible
+     * @param mixed  $groupid
+     * @param int    $module_id
+     * @param bool   $toponlyblock
+     * @param bool   $visible
      * @param string $orderby
-     * @param int $isactive
+     * @param int    $isactive
      *
      * @return array
      */
-    public function getAllByGroupModule($groupid, $module_id = 0, $toponlyblock = false, $visible = null, $orderby = 'b.weight, m.block_id', $isactive = 1)
+    public function getAllByGroupModule($groupid, $module_id = 0, $toponlyblock = false, $visible = false, $orderby = 'b.weight, m.block_id', $isactive = 1)
     {
         $isactive = (int)$isactive;
         $db       = $GLOBALS['xoopsDB'];
@@ -551,13 +551,13 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
     /**
      * @param int $module_id
      * @param bool $toponlyblock
-     * @param null $visible
+     * @param bool $visible
      * @param string $orderby
      * @param int $isactive
      *
      * @return array
      */
-    public function getNonGroupedBlocks($module_id = 0, $toponlyblock = false, $visible = null, $orderby = 'b.weight, m.block_id', $isactive = 1)
+    public function getNonGroupedBlocks($module_id = 0, $toponlyblock = false, $visible = false, $orderby = 'b.weight, m.block_id', $isactive = 1)
     {
         $db   = $GLOBALS['xoopsDB'];
         $ret  = array();

@@ -388,19 +388,19 @@ class XoopsAvatarHandler extends XoopsObjectHandler
     /**
      * Get a list of Avatars
      *
-     * @param  string $avatar_type
-     * @param  string $avatar_display
+     * @param string|null $avatar_type
+     * @param bool        $avatar_display
      * @return array
      */
-    public function getList($avatar_type = null, $avatar_display = null)
+    public function getList($avatar_type = null, $avatar_display = false)
     {
         $criteria = new CriteriaCompo();
         if (isset($avatar_type)) {
             $avatar_type = ($avatar_type === 'C') ? 'C' : 'S';
             $criteria->add(new Criteria('avatar_type', $avatar_type));
         }
-        if (isset($avatar_display)) {
-            $criteria->add(new Criteria('avatar_display', (int)$avatar_display));
+        if (!empty($avatar_display)) {
+            $criteria->add(new Criteria('avatar_display', (string)$avatar_display));
         }
         $avatars = &$this->getObjects($criteria, true);
         $ret     = array(

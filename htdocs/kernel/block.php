@@ -720,7 +720,7 @@ class XoopsBlock extends XoopsObject
      *
      * @deprecated (This also appears, dead, in XoopsBlockHandler)
      */
-    public function getAllByGroupModule($groupid, $module_id = 0, $toponlyblock = false, $visible = null, $orderby = 'b.weight, m.block_id', $isactive = 1)
+    public function getAllByGroupModule($groupid, $module_id = 0, $toponlyblock = false, $visible = false, $orderby = 'b.weight, m.block_id', $isactive = 1)
     {
         $isactive = (int)$isactive;
         $db       = XoopsDatabaseFactory::getDatabaseConnection();
@@ -780,15 +780,15 @@ class XoopsBlock extends XoopsObject
      * XoopsBlock::getNonGroupedBlocks()
      *
      * @param  integer $module_id
-     * @param  mixed   $toponlyblock
-     * @param  mixed   $visible
+     * @param  bool   $toponlyblock
+     * @param  bool   $visible
      * @param  string  $orderby
      * @param  integer $isactive
      * @return array
      *
      * @deprecated
      */
-    public function getNonGroupedBlocks($module_id = 0, $toponlyblock = false, $visible = null, $orderby = 'b.weight, m.block_id', $isactive = 1)
+    public function getNonGroupedBlocks($module_id = 0, $toponlyblock = false, $visible = false, $orderby = 'b.weight, m.block_id', $isactive = 1)
     {
         $db   = XoopsDatabaseFactory::getDatabaseConnection();
         $ret  = array();
@@ -1133,14 +1133,14 @@ class XoopsBlockHandler extends XoopsObjectHandler
      * @param        $groupid
      * @param int    $module_id
      * @param bool   $toponlyblock
-     * @param null   $visible
+     * @param bool   $visible
      * @param string $orderby
      * @param int    $isactive
      *
      * @return bool
      * @deprecated
      */
-    public function getAllByGroupModule($groupid, $module_id = 0, $toponlyblock = false, $visible = null, $orderby = 'i.weight,i.instanceid', $isactive = 1)
+    public function getAllByGroupModule($groupid, $module_id = 0, $toponlyblock = false, $visible = false, $orderby = 'i.weight,i.instanceid', $isactive = 1)
     {
         trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
 

@@ -102,6 +102,8 @@ class SystemAvatar extends XoopsAvatar
  */
 class SystemAvatarHandler extends XoopsAvatarHandler
 {
+    public $className;
+
     /**
      * @param $db
      */

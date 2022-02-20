@@ -287,8 +287,8 @@ class XoopsImageSetHandler extends XoopsObjectHandler
     /**
      * Get a list of XoopsImageSet
      *
-     * @param null $refid
-     * @param null $tplset
+     * @param string|null $refid
+     * @param string|null $tplset
      * @internal param int $imgcat_id
      * @internal param bool $image_display
      * @return array Array of {@link XoopsImage} objects
@@ -297,7 +297,7 @@ class XoopsImageSetHandler extends XoopsObjectHandler
     {
         $criteria = new CriteriaCompo();
         if (isset($refid)) {
-            $criteria->add(new Criteria('imgset_refid', (int)$refid));
+            $criteria->add(new Criteria('imgset_refid', $refid));
         }
         if (isset($tplset)) {
             $criteria->add(new Criteria('tplset_name', $tplset));
