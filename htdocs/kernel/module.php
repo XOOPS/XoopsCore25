@@ -430,7 +430,7 @@ class XoopsModule extends XoopsObject
     }
 
     /**
-     * @param $dirname
+     * @param string $dirname
      *
      * @return mixed
      */
