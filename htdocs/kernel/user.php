@@ -225,10 +225,11 @@ class XoopsUser extends XoopsObject
 
     /**
      * get the user's rank
-     * @return array array of rank ID and title
+     * @return array|string array of rank ID and title
      */
     public function rank()
     {
+        //TODO mb:  xoops_getrank() returns an array, but $this->_rank is a string
         if (!isset($this->_rank)) {
             $this->_rank = xoops_getrank($this->getVar('rank'), $this->getVar('posts'));
         }

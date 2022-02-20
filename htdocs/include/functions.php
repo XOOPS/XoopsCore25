@@ -905,9 +905,9 @@ function xoops_getMailer()
 /**
  * xoops_getrank()
  *
- * @param integer $rank_id
- * @param mixed   $posts
- * @return
+ * @param int   $rank_id
+ * @param mixed $posts
+ * @return array
  */
 function xoops_getrank($rank_id = 0, $posts = 0)
 {
