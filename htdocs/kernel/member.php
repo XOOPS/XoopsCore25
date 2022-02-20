@@ -457,7 +457,7 @@ class XoopsMemberHandler
             return true;
         }
         $user->setVar('level', 1);
-        $actkey = substr(md5(uniqid(mt_rand(), 1)), 0, 8);
+        $actkey = substr(md5(uniqid((string)mt_rand(), 1)), 0, 8);
         $user->setVar('actkey', $actkey);
 
         return $this->userHandler->insert($user, true);
