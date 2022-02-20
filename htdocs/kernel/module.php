@@ -594,8 +594,8 @@ class XoopsModule extends XoopsObject
     }
 
     /**
-     * @param     $type
-     * @param int $state
+     * @param string $type
+     * @param int    $state
      *
      * @return bool
      */
@@ -607,8 +607,8 @@ class XoopsModule extends XoopsObject
     }
 
     /**
-     * @param $groups
-     * @param $type
+     * @param array $groups
+     * @param string $type
      *
      * @return bool
      */
