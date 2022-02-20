@@ -26,11 +26,11 @@ require_once XOOPS_ROOT_PATH . '/class/xml/rpc/xmlrpcapi.php';
 class MetaWeblogApi extends XoopsXmlRpcApi
 {
     /**
-     * @param $params
-     * @param $response
-     * @param $module
+     * @param array $params
+     * @param \XoopsXmlRpcResponse $response
+     * @param \XoopsModule $module
      */
-    public function __construct(&$params, &$response, &$module)
+    public function __construct(&$params, $response, $module)
     {
         parent::__construct($params, $response, $module);
         $this->_setXoopsTagMap('storyid', 'postid');
@@ -156,7 +156,7 @@ class MetaWeblogApi extends XoopsXmlRpcApi
         } else {
             $xoopsapi =& $this->_getXoopsApi($this->params);
             $xoopsapi->_setUser($this->user, $this->isadmin);
-            $ret =& $xoopsapi->getPost(false);
+            $ret =& $xoopsapi->getPost();
             if (is_array($ret)) {
                 $struct  = new XoopsXmlRpcStruct();
                 $content = '';
@@ -197,7 +197,7 @@ class MetaWeblogApi extends XoopsXmlRpcApi
         } else {
             $xoopsapi =& $this->_getXoopsApi($this->params);
             $xoopsapi->_setUser($this->user, $this->isadmin);
-            $ret =& $xoopsapi->getRecentPosts(false);
+            $ret =& $xoopsapi->getRecentPosts();
             if (is_array($ret)) {
                 $arr   = new XoopsXmlRpcArray();
                 $count = count($ret);
@@ -248,7 +248,7 @@ class MetaWeblogApi extends XoopsXmlRpcApi
         } else {
             $xoopsapi =& $this->_getXoopsApi($this->params);
             $xoopsapi->_setUser($this->user, $this->isadmin);
-            $ret =& $xoopsapi->getCategories(false);
+            $ret =& $xoopsapi->getCategories();
             if (is_array($ret)) {
                 $arr = new XoopsXmlRpcArray();
                 foreach ($ret as $id => $detail) {

@@ -26,11 +26,11 @@ require_once XOOPS_ROOT_PATH . '/class/xml/rpc/xmlrpcapi.php';
 class XoopsApi extends XoopsXmlRpcApi
 {
     /**
-     * @param $params
-     * @param $response
-     * @param $module
+     * @param array $params
+     * @param \XoopsXmlRpcResponse $response
+     * @param \XoopsModule $module
      */
-    public function __construct(&$params, &$response, &$module)
+    public function __construct(&$params, $response, $module)
     {
         parent::__construct($params, $response, $module);
     }
@@ -269,10 +269,11 @@ class XoopsApi extends XoopsXmlRpcApi
     /**
      * @param bool $respond
      *
-     * @return array
+     * @return array|null
      */
     public function &getRecentPosts($respond = true)
     {
+        $ret = null;
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
@@ -335,13 +336,13 @@ class XoopsApi extends XoopsXmlRpcApi
             }
         }
 
-        return null;
+        return $ret;
     }
 
     /**
      * @param bool $respond
      *
-     * @return array
+     * @return array|null
      */
     public function &getCategories($respond = true)
     {
@@ -349,7 +350,7 @@ class XoopsApi extends XoopsXmlRpcApi
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
             include_once XOOPS_ROOT_PATH . '/class/xoopstopic.php';
-            $this->db = XoopsDatabaseFactory::getDatabaseConnection();
+            $db = \XoopsDatabaseFactory::getDatabaseConnection();
             $xt       = new XoopsTopic($db->prefix('topics'));
             $ret      = $xt->getTopicsList();
             if (!$respond) {

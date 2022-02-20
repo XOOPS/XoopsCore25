@@ -24,7 +24,7 @@
 class XoopsXmlRpcApi
 {
     // reference to method parameters
-    public $params;
+    public $params = array();
 
     // reference to xmlrpc document class object
     public $response;
@@ -35,44 +35,48 @@ class XoopsXmlRpcApi
     // map between xoops tags and blogger specific tags
     public $xoopsTagMap = array();
 
-    // user class object
+
+    /**
+     * @var \XoopsUser $user user class object
+     */
     public $user;
 
     public $isadmin = false;
 
     /**
-     * @param $params
-     * @param $response
-     * @param $module
+     * @param array $params
+     * @param \XoopsXmlRpcResponse $response
+     * @param \XoopsModule $module
      */
-    public function __construct(&$params, &$response, &$module)
+    public function __construct(&$params, $response, $module)
     {
         $this->params   =& $params;
-        $this->response =& $response;
-        $this->module   =& $module;
+        $this->response = $response;
+        $this->module   = $module;
     }
 
     /**
-     * @param      $user
-     * @param bool $isadmin
+     * @param XoopsUser $user
+     * @param bool      $isadmin
      */
-    public function _setUser(&$user, $isadmin = false)
+    public function _setUser($user, $isadmin = false)
     {
         if (is_object($user)) {
-            $this->user    =& $user;
+            $this->user    = $user;
             $this->isadmin = $isadmin;
         }
     }
 
     /**
-     * @param $username
-     * @param $password
+     * @param string $username
+     * @param string $password
      *
      * @return bool
      */
     public function _checkUser($username, $password)
     {
-        if (isset($this->user)) {
+//        if (isset($this->user)) {
+        if (is_object($this->user) && $this->user instanceof \XoopsUser) {
             return true;
         }
         /* @var XoopsMemberHandler $member_handler */
@@ -102,9 +106,11 @@ class XoopsXmlRpcApi
         if ($this->isadmin) {
             return true;
         }
-        if (!isset($this->user)) {
+//        if (!isset($this->user)) {
+        if (!is_object($this->user) || !$this->user instanceof \XoopsUser) {
             return false;
         }
+
         if (!$this->user->isAdmin($this->module->getVar('mid'))) {
             return false;
         }
@@ -114,8 +120,8 @@ class XoopsXmlRpcApi
     }
 
     /**
-     * @param null $post_id
-     * @param null $blog_id
+     * @param int|null $post_id
+     * @param int|null $blog_id
      *
      * @return array
      */
@@ -145,8 +151,8 @@ class XoopsXmlRpcApi
     }
 
     /**
-     * @param $xoopstag
-     * @param $blogtag
+     * @param string $xoopstag
+     * @param string $blogtag
      */
     public function _setXoopsTagMap($xoopstag, $blogtag)
     {
@@ -156,7 +162,7 @@ class XoopsXmlRpcApi
     }
 
     /**
-     * @param $xoopstag
+     * @param string $xoopstag
      *
      * @return mixed
      */
@@ -170,9 +176,9 @@ class XoopsXmlRpcApi
     }
 
     /**
-     * @param      $text
-     * @param      $tag
-     * @param bool $remove
+     * @param string $text
+     * @param string $tag
+     * @param bool   $remove
      *
      * @return string
      */
@@ -193,7 +199,7 @@ class XoopsXmlRpcApi
     // kind of dirty method to load XOOPS API and create a new object thereof
     // returns itself if the calling object is XOOPS API
     /**
-     * @param $params
+     * @param array $params
      *
      * @return $this|XoopsApi
      */

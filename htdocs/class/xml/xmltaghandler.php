@@ -26,8 +26,8 @@ class XmlTagHandler
 
     /****************************************************************************
      ***************************************************************************
-     * @param $parser
-     * @param $attributes
+     * @param SaxParser $parser
+     * @param array $attributes
      */
     public function handleBeginElement($parser, &$attributes)
     {
@@ -35,7 +35,7 @@ class XmlTagHandler
 
     /****************************************************************************
      ***************************************************************************
-     * @param $parser
+     * @param SaxParser $parser
      */
     public function handleEndElement($parser)
     {
@@ -43,8 +43,8 @@ class XmlTagHandler
 
     /****************************************************************************
      ***************************************************************************
-     * @param $parser
-     * @param $data
+     * @param SaxParser $parser
+     * @param  string $data
      */
     public function handleCharacterData($parser, &$data)
     {

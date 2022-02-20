@@ -32,12 +32,12 @@ class XoopsThemeSetParser extends SaxParser
     public $templatesData = array();
 
     /**
-     * @param $input
+     * @param string $input
      */
     public function __construct(&$input)
     {
         parent::__construct($input);
-        $this->addTagHandler(new ThemeSetThemeNameHandler());
+//        $this->addTagHandler(new ThemeSetThemeNameHandler());
         $this->addTagHandler(new ThemeSetDateCreatedHandler());
         $this->addTagHandler(new ThemeSetAuthorHandler());
         $this->addTagHandler(new ThemeSetDescriptionHandler());
@@ -53,8 +53,8 @@ class XoopsThemeSetParser extends SaxParser
     }
 
     /**
-     * @param $name
-     * @param $value
+     * @param string $name
+     * @param mixed $value
      */
     public function setThemeSetData($name, &$value)
     {
@@ -62,29 +62,30 @@ class XoopsThemeSetParser extends SaxParser
     }
 
     /**
-     * @param null $name
+     * @param string|null $name
      *
      * @return array|bool
      */
     public function &getThemeSetData($name = null)
     {
+        $false = false;
         if (isset($name)) {
             if (isset($this->themeSetData[$name])) {
                 return $this->themeSetData[$name];
             }
 
-            return false;
+            return $false;
         }
 
         return $this->themeSetData;
     }
 
     /**
-     * @param $imagearr
+     * @param array $imagearr
      */
-    public function setImagesData(&$imagearr)
+    public function setImagesData($imagearr)
     {
-        $this->imagesData[] = &$imagearr;
+        $this->imagesData[] = $imagearr;
     }
 
     /**
@@ -96,11 +97,11 @@ class XoopsThemeSetParser extends SaxParser
     }
 
     /**
-     * @param $tplarr
+     * @param array $tplarr
      */
-    public function setTemplatesData(&$tplarr)
+    public function setTemplatesData($tplarr)
     {
-        $this->templatesData[] = &$tplarr;
+        $this->templatesData[] = $tplarr;
     }
 
     /**
@@ -112,8 +113,8 @@ class XoopsThemeSetParser extends SaxParser
     }
 
     /**
-     * @param        $name
-     * @param        $value
+     * @param string $name
+     * @param string  $value
      * @param string $delim
      */
     public function setTempArr($name, &$value, $delim = '')
@@ -161,8 +162,8 @@ class ThemeSetDateCreatedHandler extends XmlTagHandler
     }
 
     /**
-     * @param $parser
-     * @param $data
+     * @param \XoopsThemeSetParser $parser
+     * @param  string $data
      */
     public function handleCharacterData($parser, &$data)
     {
@@ -197,8 +198,8 @@ class ThemeSetAuthorHandler extends XmlTagHandler
     }
 
     /**
-     * @param $parser
-     * @param $attributes
+     * @param \XoopsThemeSetParser $parser
+     * @param array $attributes
      */
     public function handleBeginElement($parser, &$attributes)
     {
@@ -206,7 +207,7 @@ class ThemeSetAuthorHandler extends XmlTagHandler
     }
 
     /**
-     * @param $parser
+     * @param \XoopsThemeSetParser $parser
      */
     public function handleEndElement($parser)
     {
@@ -235,8 +236,8 @@ class ThemeSetDescriptionHandler extends XmlTagHandler
     }
 
     /**
-     * @param $parser
-     * @param $data
+     * @param \XoopsThemeSetParser $parser
+     * @param  string $data
      */
     public function handleCharacterData($parser, &$data)
     {
@@ -274,8 +275,8 @@ class ThemeSetGeneratorHandler extends XmlTagHandler
     }
 
     /**
-     * @param $parser
-     * @param $data
+     * @param \XoopsThemeSetParser $parser
+     * @param  string $data
      */
     public function handleCharacterData($parser, &$data)
     {
@@ -310,8 +311,8 @@ class ThemeSetNameHandler extends XmlTagHandler
     }
 
     /**
-     * @param $parser
-     * @param $data
+     * @param \XoopsThemeSetParser $parser
+     * @param  string $data
      */
     public function handleCharacterData($parser, &$data)
     {
@@ -349,8 +350,8 @@ class ThemeSetEmailHandler extends XmlTagHandler
     }
 
     /**
-     * @param $parser
-     * @param $data
+     * @param \XoopsThemeSetParser $parser
+     * @param  string $data
      */
     public function handleCharacterData($parser, &$data)
     {
@@ -385,8 +386,8 @@ class ThemeSetLinkHandler extends XmlTagHandler
     }
 
     /**
-     * @param $parser
-     * @param $data
+     * @param \XoopsThemeSetParser $parser
+     * @param  string $data
      */
     public function handleCharacterData($parser, &$data)
     {
@@ -421,8 +422,8 @@ class ThemeSetTemplateHandler extends XmlTagHandler
     }
 
     /**
-     * @param $parser
-     * @param $attributes
+     * @param \XoopsThemeSetParser $parser
+     * @param array $attributes
      */
     public function handleBeginElement($parser, &$attributes)
     {
@@ -431,7 +432,7 @@ class ThemeSetTemplateHandler extends XmlTagHandler
     }
 
     /**
-     * @param $parser
+     * @param \XoopsThemeSetParser $parser
      */
     public function handleEndElement($parser)
     {
@@ -460,8 +461,8 @@ class ThemeSetImageHandler extends XmlTagHandler
     }
 
     /**
-     * @param $parser
-     * @param $attributes
+     * @param \XoopsThemeSetParser $parser
+     * @param array $attributes
      */
     public function handleBeginElement($parser, &$attributes)
     {
@@ -470,7 +471,7 @@ class ThemeSetImageHandler extends XmlTagHandler
     }
 
     /**
-     * @param $parser
+     * @param \XoopsThemeSetParser $parser
      */
     public function handleEndElement($parser)
     {
@@ -499,8 +500,8 @@ class ThemeSetModuleHandler extends XmlTagHandler
     }
 
     /**
-     * @param $parser
-     * @param $data
+     * @param \XoopsThemeSetParser $parser
+     * @param  string $data
      */
     public function handleCharacterData($parser, &$data)
     {
@@ -536,8 +537,8 @@ class ThemeSetFileTypeHandler extends XmlTagHandler
     }
 
     /**
-     * @param $parser
-     * @param $data
+     * @param \XoopsThemeSetParser $parser
+     * @param  string $data
      */
     public function handleCharacterData($parser, &$data)
     {
@@ -572,8 +573,8 @@ class ThemeSetTagHandler extends XmlTagHandler
     }
 
     /**
-     * @param $parser
-     * @param $data
+     * @param \XoopsThemeSetParser $parser
+     * @param  string $data
      */
     public function handleCharacterData($parser, &$data)
     {

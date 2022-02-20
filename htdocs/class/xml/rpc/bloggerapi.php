@@ -26,9 +26,9 @@ require_once XOOPS_ROOT_PATH . '/class/xml/rpc/xmlrpcapi.php';
 class BloggerApi extends XoopsXmlRpcApi
 {
     /**
-     * @param $params
-     * @param $response
-     * @param $module
+     * @param array $params
+     * @param \XoopsXmlRpcResponse $response
+     * @param \XoopsModule $module
      */
     public function __construct(&$params, &$response, &$module)
     {
@@ -152,7 +152,7 @@ class BloggerApi extends XoopsXmlRpcApi
             array_shift($this->params);
             $xoopsapi =& $this->_getXoopsApi($this->params);
             $xoopsapi->_setUser($this->user, $this->isadmin);
-            $ret =& $xoopsapi->getPost(false);
+            $ret =& $xoopsapi->getPost();
             if (is_array($ret)) {
                 $struct  = new XoopsXmlRpcStruct();
                 $content = '';
@@ -190,7 +190,7 @@ class BloggerApi extends XoopsXmlRpcApi
             array_shift($this->params);
             $xoopsapi =& $this->_getXoopsApi($this->params);
             $xoopsapi->_setUser($this->user, $this->isadmin);
-            $ret =& $xoopsapi->getRecentPosts(false);
+            $ret =& $xoopsapi->getRecentPosts();
             if (is_array($ret)) {
                 $arr   = new XoopsXmlRpcArray();
                 $count = count($ret);

@@ -32,11 +32,11 @@ class XoopsXmlRpcDocument
     }
 
     /**
-     * @param $tagobj
+     * @param \XoopsXmlRpcTag $tagobj
      */
-    public function add(&$tagobj)
+    public function add($tagobj)
     {
-        $this->_tags[] =& $tagobj;
+        $this->_tags[] = $tagobj;
     }
 
     public function render()
@@ -76,7 +76,7 @@ class XoopsXmlRpcRequest extends XoopsXmlRpcDocument
     public $methodName;
 
     /**
-     * @param $methodName
+     * @param string $methodName
      */
     public function __construct($methodName)
     {
@@ -113,7 +113,7 @@ class XoopsXmlRpcTag
     }
 
     /**
-     * @param $text
+     * @param string $text
      *
      * @return mixed
      */
@@ -161,8 +161,8 @@ class XoopsXmlRpcFault extends XoopsXmlRpcTag
     public $_extra;
 
     /**
-     * @param      $code
-     * @param null $extra
+     * @param int $code
+     * @param string|null $extra
      */
     public function __construct($code, $extra = null)
     {
@@ -228,7 +228,7 @@ class XoopsXmlRpcInt extends XoopsXmlRpcTag
     public $_value;
 
     /**
-     * @param $value
+     * @param mixed $value
      */
     public function __construct($value)
     {
@@ -252,7 +252,7 @@ class XoopsXmlRpcDouble extends XoopsXmlRpcTag
     public $_value;
 
     /**
-     * @param $value
+     * @param mixed $value
      */
     public function __construct($value)
     {
@@ -276,7 +276,7 @@ class XoopsXmlRpcBoolean extends XoopsXmlRpcTag
     public $_value;
 
     /**
-     * @param $value
+     * @param mixed $value
      */
     public function __construct($value)
     {
@@ -300,7 +300,7 @@ class XoopsXmlRpcString extends XoopsXmlRpcTag
     public $_value;
 
     /**
-     * @param $value
+     * @param mixed $value
      */
     public function __construct($value)
     {
@@ -324,7 +324,7 @@ class XoopsXmlRpcDatetime extends XoopsXmlRpcTag
     public $_value;
 
     /**
-     * @param $value
+     * @param mixed $value
      */
     public function __construct($value)
     {
@@ -352,7 +352,7 @@ class XoopsXmlRpcBase64 extends XoopsXmlRpcTag
     public $_value;
 
     /**
-     * @param $value
+     * @param string $value
      */
     public function __construct($value)
     {
@@ -383,7 +383,7 @@ class XoopsXmlRpcArray extends XoopsXmlRpcTag
     }
 
     /**
-     * @param $tagobj
+     * @param XoopsXmlRpcTag $tagobj
      */
     public function add(&$tagobj)
     {
@@ -421,10 +421,10 @@ class XoopsXmlRpcStruct extends XoopsXmlRpcTag
     }
 
     /**
-     * @param $name
-     * @param $tagobj
+     * @param string $name
+     * @param \XoopsXmlRpcTag $tagobj
      */
-    public function add($name, &$tagobj)
+    public function add($name, $tagobj)
     {
         $this->_tags[] = array('name' => $name, 'value' => $tagobj);
     }
