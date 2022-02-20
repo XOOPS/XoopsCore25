@@ -333,7 +333,7 @@ class XoopsObject
     }
 
     /**
-     * @param $var
+     * @param mixed $var
      * @return bool
      * @deprecated use destroyVars() instead,  destoryVars() will be removed in the next major release
      */
@@ -955,7 +955,7 @@ class XoopsObject
         if (!$modules_active = XoopsCache::read('system_modules_active')) {
             /* @var XoopsModuleHandler $module_handler */
             $module_handler = xoops_getHandler('module');
-            $modules_obj    = $module_handler->getObjects(new Criteria('isactive', 1));
+            $modules_obj    = $module_handler->getObjects(new Criteria('isactive', '1'));
             $modules_active = array();
             foreach (array_keys($modules_obj) as $key) {
                 $modules_active[] = $modules_obj[$key]->getVar('dirname');
