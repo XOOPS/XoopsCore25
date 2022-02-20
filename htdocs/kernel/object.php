@@ -1005,7 +1005,7 @@ class XoopsObject
     /**
      * add an error
      *
-     * @param $err_str
+     * @param array|string $err_str
      * @internal param string $value error to add
      * @access   public
      */
