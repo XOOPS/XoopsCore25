@@ -42,7 +42,7 @@ class XoopsMailerLocal extends XoopsMailer
     /**
      * Multibyte languages are encouraged to make their proper method for encoding FromName
      *
-     * @param $text
+     * @param string $text
      *
      * @return mixed
      */
@@ -57,7 +57,7 @@ class XoopsMailerLocal extends XoopsMailer
     /**
      * Multibyte languages are encouraged to make their proper method for encoding Subject
      *
-     * @param $text
+     * @param string $text
      *
      * @return mixed
      */
