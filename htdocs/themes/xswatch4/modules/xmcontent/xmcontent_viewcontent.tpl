@@ -2,7 +2,7 @@
 	<{if $content_dotitle == 1}>
 	<h2><{$content_title}></h2>
 	<{/if}>
-	<{includeq file="$content_template"}>
+	<{include file="$content_template"}>
 <{else}>
 	<{if $content_warning != ''}>
 		<div class="row">

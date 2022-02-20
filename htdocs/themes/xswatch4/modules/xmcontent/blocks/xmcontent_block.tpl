@@ -3,7 +3,7 @@
 	<h2><{$block.title}></h2>
 	<{/if}>
 	<{foreach item=b_template from=$block.template}>
-		<{includeq file="$b_template"}>
+		<{include file="$b_template"}>
 	<{/foreach}>
 <{else}>
 	<{if $block.warning != ''}>

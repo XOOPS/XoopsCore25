@@ -7,11 +7,11 @@
             <{else}>
             <div class="col-sm-12 col-md-12">
                 <{/if}>
-                <{includeq file="$theme_name/tpl/contents.tpl"}>
+                <{include file="$theme_name/tpl/contents.tpl"}>
 
                 <div class="row">
-                    <{includeq file="$theme_name/tpl/centerBlock.tpl"}>
-                    <{includeq file="$theme_name/tpl/centerLeft.tpl"}>
-                    <{includeq file="$theme_name/tpl/centerRight.tpl"}>
+                    <{include file="$theme_name/tpl/centerBlock.tpl"}>
+                    <{include file="$theme_name/tpl/centerLeft.tpl"}>
+                    <{include file="$theme_name/tpl/centerRight.tpl"}>
                 </div>
             </div>
