@@ -135,7 +135,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
      *
      * @see XoopsTplset
      * @param  int $id tplset_id of the tplsets to retrieve
-     * @return object XoopsTplset reference to the tplsets
+     * @return XoopsTplset|false XoopsTplset reference to the tplsets
      **/
     public function get($id)
     {
