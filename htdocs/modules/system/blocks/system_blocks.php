@@ -645,7 +645,7 @@ function b_system_info_edit($options)
 }
 
 /**
- * @param $options
+ * @param array $options
  *
  * @return array
  */
