@@ -204,7 +204,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
      * @param int $id ID
      *
      * @internal param bool $getbinary
-     * @return XoopsImageCategory {@link XoopsImageCategory}, FALSE on fail
+     * @return XoopsImageCategory|false {@link XoopsImageCategory}, FALSE on fail
      */
     public function get($id)
     {
@@ -348,13 +348,13 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
     /**
      * Get a list of image categories
      *
-     * @param array  $groups
-     * @param string $perm
-     * @param null   $display
-     * @param null   $storetype
-     * @internal param int $imgcat_id
-     * @internal param bool $image_display
+     * @param array    $groups
+     * @param string   $perm
+     * @param int|null $display
+     * @param int|null $storetype
      * @return array Array of {@link XoopsImage} objects
+     * @internal param bool $image_display
+     * @internal param int $imgcat_id
      */
     public function getList($groups = array(), $perm = 'imgcat_read', $display = null, $storetype = null)
     {
@@ -371,10 +371,10 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
             }
         }
         if (isset($display)) {
-            $criteria->add(new Criteria('imgcat_display', (int)$display));
+            $criteria->add(new Criteria('imgcat_display', (string)$display));
         }
         if (isset($storetype)) {
-            $criteria->add(new Criteria('imgcat_storetype', $storetype));
+            $criteria->add(new Criteria('imgcat_storetype', (string)$storetype));
         }
         $categories = $this->getObjects($criteria, true);
         $ret        = array();

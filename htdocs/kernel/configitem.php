@@ -175,7 +175,7 @@ class XoopsConfigItem extends XoopsObject
     /**
      * Get a config value in a format ready for output
      *
-     * @return string
+     * @return string|int|float|array
      */
     public function getConfValueForOutput()
     {
@@ -392,7 +392,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
      *
      * @param  CriteriaElement|CriteriaCompo $criteria  {@link CriteriaElement}
      * @param  bool            $id_as_key return the config's id as key?
-     * @return array           Array of {@link XoopsConfigItem} objects
+     * @return array|false           Array of {@link XoopsConfigItem} objects
      */
     public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
@@ -427,7 +427,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
      * Count configs
      *
      * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement}
-     * @return int             Count of configs matching $criteria
+     * @return int|false             Count of configs matching $criteria
      */
     public function getCount(CriteriaElement $criteria = null)
     {

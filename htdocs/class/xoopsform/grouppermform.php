@@ -211,10 +211,10 @@ class XoopsGroupFormCheckBox extends XoopsFormElement
 
     /**
      * Constructor
-     * @param      $caption
-     * @param      $name
-     * @param      $groupId
-     * @param null $values
+     * @param string $caption
+     * @param string $name
+     * @param int    $groupId
+     * @param mixed  $values
      */
     public function __construct($caption, $name, $groupId, $values = null)
     {

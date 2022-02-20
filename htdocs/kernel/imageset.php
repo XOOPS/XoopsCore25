@@ -115,7 +115,7 @@ class XoopsImageSetHandler extends XoopsObjectHandler
      * @param int $id ID
      *
      * @internal param bool $getbinary
-     * @return XoopsImageSet {@link XoopsImageSet}, FALSE on fail
+     * @return XoopsImageSet|false {@link XoopsImageSet}, FALSE on fail
      */
     public function get($id)
     {
@@ -240,7 +240,7 @@ class XoopsImageSetHandler extends XoopsObjectHandler
      *
      * @param  int    $imgset_id
      * @param  string $tplset_name
-     * @return array
+     * @return array|false
      */
     public function linkThemeset($imgset_id, $tplset_name)
     {
@@ -266,7 +266,7 @@ class XoopsImageSetHandler extends XoopsObjectHandler
      *
      * @param  int    $imgset_id
      * @param  string $tplset_name
-     * @return array
+     * @return array|false
      */
     public function unlinkThemeset($imgset_id, $tplset_name)
     {
@@ -287,8 +287,8 @@ class XoopsImageSetHandler extends XoopsObjectHandler
     /**
      * Get a list of XoopsImageSet
      *
-     * @param null $refid
-     * @param null $tplset
+     * @param int|null $refid
+     * @param string|null $tplset
      * @internal param int $imgcat_id
      * @internal param bool $image_display
      * @return array Array of {@link XoopsImage} objects
@@ -297,7 +297,7 @@ class XoopsImageSetHandler extends XoopsObjectHandler
     {
         $criteria = new CriteriaCompo();
         if (isset($refid)) {
-            $criteria->add(new Criteria('imgset_refid', (int)$refid));
+            $criteria->add(new Criteria('imgset_refid', (string)$refid));
         }
         if (isset($tplset)) {
             $criteria->add(new Criteria('tplset_name', $tplset));

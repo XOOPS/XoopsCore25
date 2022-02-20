@@ -116,7 +116,7 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
      *
      * @param int $id ID
      *
-     * @return XoopsConfigCategory {@link XoopsConfigCategory}, FALSE on fail
+     * @return XoopsConfigCategory|false {@link XoopsConfigCategory}, FALSE on fail
      */
     public function get($id)
     {

@@ -345,7 +345,7 @@ class XoopsBlock extends XoopsObject
     /**
      * (HTML-) form for setting the options of the block
      *
-     * @return string HTML for the form, FALSE if not defined for this block
+     * @return string|false HTML for the form, FALSE if not defined for this block
      */
     public function getOptions()
     {
@@ -421,7 +421,7 @@ class XoopsBlock extends XoopsObject
     /**
      * Store Block Data to Database
      *
-     * @return int $id
+     * @return bool
      *
      * @deprecated
      */
@@ -433,7 +433,7 @@ class XoopsBlock extends XoopsObject
     }
 
     /**
-     * Delete a ID from the database
+     * Delete an ID from the database
      *
      * @return bool
      *
@@ -500,7 +500,7 @@ class XoopsBlock extends XoopsObject
     * after the original content
     */
     /**
-     * @param        $position
+     * @param int    $position
      * @param string $content
      * @param string $contentdb
      *
@@ -541,18 +541,18 @@ class XoopsBlock extends XoopsObject
 
     /**
      * get all the blocks that match the supplied parameters
-     * @param int|array $groupid  groupid (can be an array)
-     * @param bool   $asobject
-     * @param null|string $side     0: sideblock - left
-     *                         1: sideblock - right
-     *                         2: sideblock - left and right
-     *                         3: centerblock - left
-     *                         4: centerblock - right
-     *                         5: centerblock - center
-     *                         6: centerblock - left, right, center
-     * @param        $visible  0: not visible 1: visible
-     * @param string $orderby  order of the blocks
-     * @param int    $isactive
+     * @param int|array   $groupid groupid (can be an array)
+     * @param bool        $asobject
+     * @param string|null $side    0: sideblock - left
+     *                             1: sideblock - right
+     *                             2: sideblock - left and right
+     *                             3: centerblock - left
+     *                             4: centerblock - right
+     *                             5: centerblock - center
+     *                             6: centerblock - left, right, center
+     * @param int|null    $visible 0: not visible 1: visible
+     * @param string      $orderby order of the blocks
+     * @param int         $isactive
      * @returns array of block objects
      *
      * @deprecated
@@ -710,12 +710,12 @@ class XoopsBlock extends XoopsObject
     /**
      * XoopsBlock::getAllByGroupModule()
      *
-     * @param  mixed   $groupid
-     * @param  integer $module_id
-     * @param  mixed   $toponlyblock
-     * @param  mixed   $visible
-     * @param  string  $orderby
-     * @param  integer $isactive
+     * @param int|int[] $groupid
+     * @param integer   $module_id
+     * @param mixed     $toponlyblock
+     * @param mixed     $visible
+     * @param string    $orderby
+     * @param integer   $isactive
      * @return array
      *
      * @deprecated (This also appears, dead, in XoopsBlockHandler)
@@ -1116,11 +1116,11 @@ class XoopsBlockHandler extends XoopsObjectHandler
     ##################### Deprecated Methods ######################
     /* These are not deprecated, they are dead and should be removed */
     /**
-     * @deprecated
-     * @param      $moduleid
-     * @param bool $asobject
-     * @param bool $id_as_key
+     * @param mixed $moduleid
+     * @param bool  $asobject
+     * @param bool  $id_as_key
      * @return bool
+     * @deprecated
      */
     public function getByModule($moduleid, $asobject = true, $id_as_key = false)
     {
@@ -1130,12 +1130,12 @@ class XoopsBlockHandler extends XoopsObjectHandler
     }
 
     /**
-     * @param        $groupid
-     * @param int    $module_id
-     * @param bool   $toponlyblock
-     * @param null   $visible
-     * @param string $orderby
-     * @param int    $isactive
+     * @param int|int[] $groupid
+     * @param int       $module_id
+     * @param bool      $toponlyblock
+     * @param bool|null $visible
+     * @param string    $orderby
+     * @param int       $isactive
      *
      * @return bool
      * @deprecated
@@ -1148,7 +1148,7 @@ class XoopsBlockHandler extends XoopsObjectHandler
     }
 
     /**
-     * @param        $groupid
+     * @param int|int[] $groupid
      * @param string $orderby
      *
      * @return bool

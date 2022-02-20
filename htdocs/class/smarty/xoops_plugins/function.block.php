@@ -22,7 +22,7 @@
 //  <{block id=600 options="100|100|s_poweredby.gif|0"}> displays block with diferent options
 
 /**
- * @param $params
+ * @param array $params
  * @param $smarty
  *
  * @return mixed

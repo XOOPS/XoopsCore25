@@ -18,8 +18,8 @@
  */
 
 /**
- * @param      $module
- * @param null $prev_version
+ * @param XoopsModule     $module
+ * @param int|null $prev_version
  *
  * @return bool|null
  */

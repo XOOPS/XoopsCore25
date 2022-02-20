@@ -20,13 +20,8 @@ $path = dirname(dirname(dirname(__DIR__)));
 require_once $path . '/include' . '/cp_header.php';
 
 /**
- * @param      $module
- * @param null $oldversion
- * @return bool
- */
-/**
- * @param      $module
- * @param null $oldversion
+ * @param XoopsModule     $module
+ * @param int|null $oldversion
  * @return bool
  */
 function xoops_module_update_profile(XoopsModule $module, $oldversion = null)

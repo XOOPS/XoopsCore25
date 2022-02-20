@@ -10,7 +10,7 @@
 */
 
 /**
- * @param $params
+ * @param array $params
  * @param $smarty
  *
  * @return string

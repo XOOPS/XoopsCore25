@@ -14,7 +14,7 @@
  * but there are several token generations done in {php} tags which don't work with
  * Smarty 3.1
  *
- * @param $params
+ * @param array $params
  * @param $smarty
  * @return null
  */

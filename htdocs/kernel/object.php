@@ -183,13 +183,13 @@ class XoopsObject
      *
      * @access   public
      *
-     * @param string $key
-     * @param int    $data_type set to one of XOBJ_DTYPE_XXX constants (set to XOBJ_DTYPE_OTHER if no data type checking nor text sanitizing is required)
-     * @param null   $value
-     * @param bool   $required  require html form input?
-     * @param int    $maxlength for XOBJ_DTYPE_TXTBOX type only
-     * @param string $options
-     * @param string $enumerations
+     * @param string   $key
+     * @param int      $data_type set to one of XOBJ_DTYPE_XXX constants (set to XOBJ_DTYPE_OTHER if no data type checking nor text sanitizing is required)
+     * @param mixed    $value
+     * @param bool     $required  require html form input?
+     * @param int|null $maxlength for XOBJ_DTYPE_TXTBOX type only
+     * @param string   $options
+     * @param string   $enumerations
      *
      * @return void
      */
@@ -1263,12 +1263,12 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * Set custom handler
      *
      * @access   protected
-     * @param null|string   $handler
-     * @param null   $args
-     * @param string $path path to class
-     * @internal param object $handler
-     * @internal param mixed  $args
+     * @param string|null $handler
+     * @param mixed       $args
+     * @param string      $path path to class
      * @return object of handler
+     * @internal param mixed  $args
+     * @internal param object $handler
      */
     public function setHandler($handler = null, $args = null, $path = null)
     {

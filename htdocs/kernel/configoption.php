@@ -125,7 +125,7 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
      *
      * @param int $id ID of the option
      *
-     * @return XoopsConfigOption reference to the {@link XoopsConfigOption}, FALSE on fail
+     * @return XoopsConfigOption|false reference to the {@link XoopsConfigOption}, FALSE on fail
      */
     public function get($id)
     {

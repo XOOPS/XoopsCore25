@@ -71,7 +71,7 @@ class XoopsHandlerRegistry
      *
      * @param string $name Short name of a handler class
      *
-     * @return XoopsObjectHandler {@link XoopsObjectHandler}, FALSE if not registered
+     * @return XoopsObjectHandler|false {@link XoopsObjectHandler}, FALSE if not registered
      */
     public function getHandler($name)
     {
@@ -110,7 +110,7 @@ class XoopsHandlerRegistry
      * @param string $module Directory name of a module
      * @param string $name   Short name of a handler class
      *
-     * @return XoopsObjectHandler {@link XoopsObjectHandler}, FALSE if not registered
+     * @return XoopsObjectHandler|false {@link XoopsObjectHandler}, FALSE if not registered
      */
     public function getModuleHandler($module, $name)
     {

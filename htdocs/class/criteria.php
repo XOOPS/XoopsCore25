@@ -301,11 +301,11 @@ class Criteria extends CriteriaElement
     /**
      * Constructor
      *
-     * @param string $column
-     * @param string $value
-     * @param string $operator
-     * @param string $prefix
-     * @param string $function
+     * @param string     $column
+     * @param string|int $value
+     * @param string     $operator
+     * @param string     $prefix
+     * @param string     $function
      */
     public function __construct($column, $value = '', $operator = '=', $prefix = '', $function = '')
     {

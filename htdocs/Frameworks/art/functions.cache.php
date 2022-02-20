@@ -14,7 +14,7 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_CACHE')):
     define('FRAMEWORKS_ART_FUNCTIONS_CACHE', true);
 
     /**
-     * @param null|array $groups
+     * @param array|null $groups
      *
      * @return string
      */
@@ -37,7 +37,7 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_CACHE')):
     }
 
     /**
-     * @param null $groups
+     * @param array|null $groups
      *
      * @return string
      */
@@ -47,10 +47,10 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_CACHE')):
     }
 
     /**
-     * @param        $data
-     * @param null|string   $name
-     * @param null|string   $dirname
-     * @param string $root_path
+     * @param mixed       $data
+     * @param string|null $name
+     * @param string|null $dirname
+     * @param string      $root_path
      *
      * @return bool
      */
@@ -68,9 +68,9 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_CACHE')):
     }
 
     /**
-     * @param      $data
-     * @param null $name
-     * @param null $dirname
+     * @param mixed       $data
+     * @param string|null $name
+     * @param string|null $dirname
      *
      * @return bool
      */
@@ -80,10 +80,10 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_CACHE')):
     }
 
     /**
-     * @param      $data
-     * @param null|string $name
-     * @param null $dirname
-     * @param null $groups
+     * @param mixed       $data
+     * @param string|null $name
+     * @param string|null $dirname
+     * @param array|null $groups
      *
      * @return bool
      */
@@ -95,9 +95,9 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_CACHE')):
     }
 
     /**
-     * @param        $name
-     * @param null|string   $dirname
-     * @param string $root_path
+     * @param string      $name
+     * @param string|null $dirname
+     * @param string      $root_path
      *
      * @return mixed|null
      */
@@ -118,8 +118,8 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_CACHE')):
     }
 
     /**
-     * @param      $name
-     * @param null $dirname
+     * @param string      $name
+     * @param string|null $dirname
      *
      * @return mixed|null
      */
@@ -131,9 +131,9 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_CACHE')):
     }
 
     /**
-     * @param      $name
-     * @param null $dirname
-     * @param null $groups
+     * @param string $name
+     * @param string|null $dirname
+     * @param array|null $groups
      *
      * @return mixed|null
      */
@@ -149,7 +149,7 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_CACHE')):
 
     /**
      * @param string $name
-     * @param null   $dirname
+     * @param string|null   $dirname
      * @param string $root_path
      *
      * @return bool
@@ -177,8 +177,8 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_CACHE')):
     }
 
     /**
-     * @param string $name
-     * @param null   $dirname
+     * @param string      $name
+     * @param string|null $dirname
      *
      * @return bool
      */

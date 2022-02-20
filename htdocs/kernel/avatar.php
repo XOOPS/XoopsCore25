@@ -189,7 +189,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
      * Egt Object
      *
      * @param  int $id
-     * @return XoopsAvatar
+     * @return XoopsAvatar|false
      */
     public function get($id)
     {

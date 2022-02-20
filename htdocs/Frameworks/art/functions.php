@@ -31,7 +31,7 @@ if (!class_exists('ArtObject')) {
  *
  * In some cases mysql_get_client_info is required instead
  *
- * @param null $conn
+ * @param XoopsDatabase|mysqli|null $conn
  *
  * @return     string
  */

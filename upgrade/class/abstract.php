@@ -29,7 +29,7 @@ class XoopsUpgrade
     public $logs           = array();
 
     /**
-     * @param null $dirname
+     * @param string|null $dirname
      */
     public function __construct($dirname = null)
     {
@@ -85,7 +85,7 @@ class XoopsUpgrade
     }
 
     /**
-     * @param $dirname
+     * @param string $dirname
      */
     public function loadLanguage($dirname)
     {

@@ -61,14 +61,14 @@ class XoopsModelFactory
      *
      * @access   public
      *
-     * @param XoopsPersistableObjectHandler $ohandler reference to {@link XoopsPersistableObjectHandler}
+     * @param \XoopsPersistableObjectHandler $ohandler reference to {@link XoopsPersistableObjectHandler}
      * @param string $name     handler name
      * @param mixed  $args     args
      *
      * @internal param XoopsPersistableObjectHandler $ohandler reference to {@link XoopsPersistableObjectHandler}
      * @return object of handler
      */
-    public static function loadHandler(XoopsPersistableObjectHandler $ohandler, $name, $args = null)
+    public static function loadHandler(\XoopsPersistableObjectHandler $ohandler, $name, $args = null)
     {
         static $handlers;
         if (!isset($handlers[$name])) {
@@ -118,8 +118,8 @@ class XoopsModelAbstract
      * normally, this is called from child classes only
      *
      * @access protected
-     * @param null $args
-     * @param null $handler
+     * @param mixed $args
+     * @param \XoopsPersistableObjectHandler|null $handler
      */
     public function __construct($args = null, $handler = null)
     {

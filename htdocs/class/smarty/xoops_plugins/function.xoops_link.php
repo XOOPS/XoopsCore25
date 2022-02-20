@@ -41,7 +41,7 @@
  */
 
 /**
- * @param $params
+ * @param array $params
  * @param $smarty
  */
 function smarty_function_xoops_link($params, &$smarty)

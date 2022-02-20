@@ -577,7 +577,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      * @param int    $item_id   Item ID
      * @param string $order     Sort order
      *
-     * @param null   $status
+     * @param mixed   $status
      *
      * @return array Array of {@link XoopsNotification} objects
      */

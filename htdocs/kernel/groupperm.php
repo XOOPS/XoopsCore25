@@ -134,9 +134,9 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
     /**
      * Create a new {@link XoopsGroupPerm}
      *
-     * @param bool $isNew
+     * @param bool $isNew Flag the object as "new"?
      *
-     * @return bool $isNew  Flag the object as "new"?
+     * @return XoopsGroupPerm   {@link XoopsGroupPerm}
      */
     public function create($isNew = true)
     {
@@ -355,11 +355,11 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
     /**
      * Check permission
      *
-     * @param string $gperm_name   Name of permission
-     * @param int    $gperm_itemid ID of an item
-     * @param        int           /array $gperm_groupid A group ID or an array of group IDs
-     * @param int    $gperm_modid  ID of a module
-     * @param bool   $trueifadmin  Returns true for admin groups
+     * @param string    $gperm_name    Name of permission
+     * @param int       $gperm_itemid  ID of an item
+     * @param int|array $gperm_groupid A group ID or an array of group IDs
+     * @param int       $gperm_modid   ID of a module
+     * @param bool      $trueifadmin   Returns true for admin groups
      *
      * @return bool TRUE if permission is enabled
      */
@@ -416,9 +416,9 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
     /**
      * Get all item IDs that a group is assigned a specific permission
      *
-     * @param string $gperm_name  Name of permission
-     * @param        int          /array $gperm_groupid A group ID or an array of group IDs
-     * @param int    $gperm_modid ID of a module
+     * @param string    $gperm_name    Name of permission
+     * @param int|array $gperm_groupid A group ID or an array of group IDs
+     * @param int       $gperm_modid   ID of a module
      *
      * @return array array of item IDs
      */

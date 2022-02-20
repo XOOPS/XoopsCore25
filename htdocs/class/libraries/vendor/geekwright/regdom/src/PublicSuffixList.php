@@ -258,7 +258,7 @@ class PublicSuffixList
     /**
      * Set localPSL name based on URL
      *
-     * @param null|string $url the URL for the PSL
+     * @param string|null  $url the URL for the PSL
      *
      * @return void (sets $this->localPSL)
      */

@@ -9,7 +9,7 @@
  * - assign = variable name to assign with the current unread message count
  * - total  = variable name to assign with the current inbox total
  *
- * @param $params
+ * @param array $params
  * @param $smarty
  * @return null
  */

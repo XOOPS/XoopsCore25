@@ -493,9 +493,9 @@ function formatTimestamp($time, $format = 'l', $timeoffset = '')
 
 /**
  * Function to calculate server timestamp from user entered time (timestamp)
- * @param      $timestamp
- * @param null $userTZ
- * @return
+ * @param int        $timestamp
+ * @param float|null $userTZ
+ * @return int
  */
 function userTimeToServerTime($timestamp, $userTZ = null)
 {
@@ -1168,9 +1168,9 @@ function xoops_getConfigOption($option, $type = 'XOOPS_CONF')
  * xoops_setConfigOption()
  *
  * @param mixed $option
- * @param null  $new
+ * @param mixed $new
  * @return void
-@deprecated
+ * @deprecated
  */
 function xoops_setConfigOption($option, $new = null)
 {
