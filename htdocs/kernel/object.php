@@ -1263,12 +1263,10 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * Set custom handler
      *
      * @access   protected
-     * @param string|null $handler
-     * @param mixed       $args
-     * @param string      $path path to class
-     * @return object of handler
-     * @internal param mixed  $args
-     * @internal param object $handler
+     * @param string|\XoopsPersistableObjectHandler|null $handler
+     * @param mixed                                      $args
+     * @param string                                     $path path to class
+     * @return XoopsPersistableObjectHandler object
      */
     public function setHandler($handler = null, $args = null, $path = null)
     {
