@@ -24,7 +24,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * @author          Kazumi Ono  <onokazu@xoops.org>
  * @copyright   (c) 2000-2016 XOOPS Project - www.xoops.org
  */
-class XoopsImagesetimg extends XoopsObject
+class XoopsImageSetImg extends XoopsObject
 {
     /**
      * Constructor
@@ -97,17 +97,17 @@ class XoopsImagesetimg extends XoopsObject
  *
  * @author  Kazumi Ono <onokazu@xoops.org>
  */
-class XoopsImagesetimgHandler extends XoopsObjectHandler
+class XoopsImageSetImgHandler extends XoopsObjectHandler
 {
     /**
      * Create a new {@link XoopsImageSetImg}
      *
      * @param  boolean $isNew Flag the object as "new"
-     * @return XoopsImagesetimg
+     * @return XoopsImageSetImg
      **/
     public function create($isNew = true)
     {
-        $imgsetimg = new XoopsImagesetimg();
+        $imgsetimg = new XoopsImageSetImg();
         if ($isNew) {
             $imgsetimg->setNew();
         }
@@ -134,7 +134,7 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
             }
             $numrows = $this->db->getRowsNum($result);
             if ($numrows == 1) {
-                $imgsetimg = new XoopsImagesetimg();
+                $imgsetimg = new XoopsImageSetImg();
                 $imgsetimg->assignVars($this->db->fetchArray($result));
             }
         }
@@ -228,7 +228,7 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
             return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
-            $imgsetimg = new XoopsImagesetimg();
+            $imgsetimg = new XoopsImageSetImg();
             $imgsetimg->assignVars($myrow);
             if (!$id_as_key) {
                 $ret[] =& $imgsetimg;
