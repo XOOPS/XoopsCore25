@@ -26,7 +26,7 @@ $action = Request::getCmd('action', '');
 $type = Request::getCmd('type', '');
 
 if ($action !== 'showpopups') {
-    header("HTTP/1.0 404 Not Found");
+    header('HTTP/1.0 404 Not Found');
     exit();
 }
     xoops_header(false);
