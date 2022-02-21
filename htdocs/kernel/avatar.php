@@ -281,7 +281,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
      *
      * @param  CriteriaElement|CriteriaCompo $criteria
      * @param  bool  $id_as_key
-     * @return object
+     * @return array
      */
     public function &getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {

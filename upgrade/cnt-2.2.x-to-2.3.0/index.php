@@ -245,7 +245,7 @@ class Upgrade_220 extends XoopsUpgrade
      * @param $block
      * @param $blocks
      *
-     * @return int|null|string
+     * @return int|string|null
      */
     public function _block_lookup($block, $blocks)
     {

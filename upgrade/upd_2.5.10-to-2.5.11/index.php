@@ -322,7 +322,7 @@ class Upgrade_2511 extends XoopsUpgrade
                 }
             }
         }
-        return;
+        return '';
     }
 
     /**

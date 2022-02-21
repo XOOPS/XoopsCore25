@@ -326,7 +326,7 @@ class Smarty
     /**
      * The function used for cache file handling. If not set, built-in caching is used.
      *
-     * @var null|string function name
+     * @var string|null function name
      */
     var $cache_handler_func   = null;
 

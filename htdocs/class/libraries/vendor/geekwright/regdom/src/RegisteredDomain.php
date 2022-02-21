@@ -196,7 +196,7 @@ class RegisteredDomain
      * @param string[] $remainingSigningDomainParts parts of domain being queried
      * @param string[] $treeNode                    subset of tree array by reference
      *
-     * @return null|string
+     * @return string|null
      */
     protected function findRegisteredDomain($remainingSigningDomainParts, &$treeNode)
     {

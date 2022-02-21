@@ -72,7 +72,7 @@ class XoopsAuthProvisionning
      * Return a Xoops User Object
      *
      * @param $uname
-     * @return XoopsUser or false
+     * @return XoopsUser|false
      */
     public function getXoopsUser($uname)
     {
@@ -160,10 +160,10 @@ class XoopsAuthProvisionning
     /**
      * Modify user information
      *
-     * @param       $xoopsUser
-     * @param       $datas
-     * @param       $uname
-     * @param  null $pwd
+     * @param XoopsUser   $xoopsUser
+     * @param array       $datas
+     * @param string      $uname
+     * @param string|null $pwd
      * @return bool
      */
     public function change(&$xoopsUser, $datas, $uname, $pwd = null)

@@ -118,7 +118,7 @@ class SystemMaintenance
                 }
                 closedir($dirHandle);
             }
-			file_put_contents($dir . 'index.php', '<?php' . PHP_EOL  . 'header("HTTP/1.0 404 Not Found");');
+            file_put_contents($dir . 'index.php', '<?php' . PHP_EOL  . 'header("HTTP/1.0 404 Not Found");');
         }
     }
 
@@ -157,7 +157,7 @@ class SystemMaintenance
      *
      * @param array tables 'list of tables'
      * @param array maintenance 'optimize, check, repair, analyze'
-     * @return array
+     * @return string
      */
     public function CheckRepairAnalyzeOptimizeQueries($tables, $maintenance)
     {

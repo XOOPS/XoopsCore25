@@ -212,7 +212,7 @@ class XoopsGuiDark extends XoopsSystemGui
         $tpl->append('navitems', array(
             'link' => XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin',
             'text' => '<span class="fa fa-puzzle-piece"></span> ' . _AM_SYSTEM_MODULES,
-            'dir'  => $mod->getVar('dirname', 'n'),
+            'dir'  => $mod->getVar('dirname', 'n'), //TODO $mod is not defined
             'menu' => $menu));
 
         // add preferences menu

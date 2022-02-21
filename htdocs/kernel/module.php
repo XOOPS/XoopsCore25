@@ -31,7 +31,7 @@ class XoopsModule extends XoopsObject
     public $modinfo;
     /**
      *
-     * @var string
+     * @var array
      */
     public $adminmenu;
     /**
@@ -671,7 +671,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
      * Load a module from the database
      *
      * @param  int $id ID of the module
-     * @return object FALSE on fail
+     * @return XoopsModule|false FALSE on fail
      */
     public function get($id)
     {

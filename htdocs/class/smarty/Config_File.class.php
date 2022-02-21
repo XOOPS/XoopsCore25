@@ -82,14 +82,14 @@ class Config_File {
     /**
      * Set the path where configuration files can be found.
      *
-     * @param string $config_path path to the config files
+     * @param string|false $config_path path to the config files
      */
     function set_path($config_path)
     {
         if (!empty($config_path)) {
             if (!is_string($config_path) || !file_exists($config_path) || !is_dir($config_path)) {
                 $this->_trigger_error_msg("Bad config file path '$config_path'");
-                return;
+                return false;
             }
             if(substr($config_path, -1) != DIRECTORY_SEPARATOR) {
                 $config_path .= DIRECTORY_SEPARATOR;
@@ -106,13 +106,13 @@ class Config_File {
      * @param string $file_name config file to get info for
      * @param string $section_name (optional) section to get info for
      * @param string $var_name (optional) variable to get info for
-     * @return string|array a value or array of values
+     * @return string|array|false a value or array of values
      */
     function get($file_name, $section_name = NULL, $var_name = NULL)
     {
         if (empty($file_name)) {
             $this->_trigger_error_msg('Empty config file name');
-            return;
+            return false;
         } else {
             $file_name = $this->_config_path . $file_name;
             if (!isset($this->_config_data[$file_name]))
@@ -170,14 +170,14 @@ class Config_File {
      * Get all section names from a loaded file.
      *
      * @param string $file_name config file to get section names from
-     * @return array an array of section names from the specified file
+     * @return array|false an array of section names from the specified file
      */
     function get_section_names($file_name)
     {
         $file_name = $this->_config_path . $file_name;
         if (!isset($this->_config_data[$file_name])) {
             $this->_trigger_error_msg("Unknown config file '$file_name'");
-            return;
+            return false;
         }
 
         return array_keys($this->_config_data[$file_name]["sections"]);
@@ -189,16 +189,16 @@ class Config_File {
      *
      * @param string $file_name config file to get info for
      * @param string $section_name (optional) section to get info for
-     * @return array an array of variables names from the specified file/section
+     * @return array|false an array of variables names from the specified file/section
      */
     function get_var_names($file_name, $section = NULL)
     {
         if (empty($file_name)) {
             $this->_trigger_error_msg('Empty config file name');
-            return;
+            return false;
         } else if (!isset($this->_config_data[$file_name])) {
             $this->_trigger_error_msg("Unknown config file '$file_name'");
-            return;
+            return false;
         }
 
         if (empty($section))
@@ -347,19 +347,20 @@ class Config_File {
      * @param mixed $var_value
      * @param boolean $booleanize determines whether $var_value is converted to
      *                            to true/false
+     * @return false|void
      */
     function _set_config_var(&$container, $var_name, $var_value, $booleanize)
     {
         if (substr($var_name, 0, 1) == '.') {
             if (!$this->read_hidden)
-                return;
+                return false;
             else
                 $var_name = substr($var_name, 1);
         }
 
         if (!preg_match("/^[a-zA-Z_]\w*$/", $var_name)) {
             $this->_trigger_error_msg("Bad variable name '$var_name'");
-            return;
+            return false;
         }
 
         if ($booleanize) {

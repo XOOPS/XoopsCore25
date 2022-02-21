@@ -91,7 +91,7 @@ function altsys_get_core_type()
 /**
  * @param $mid
  * @param $coretype
- * @return null|string
+ * @return string|null
  */
 function altsys_get_link2modpreferences($mid, $coretype)
 {

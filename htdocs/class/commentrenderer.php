@@ -272,7 +272,7 @@ class XoopsCommentRenderer
      *
      * Danger: Recursive!
      *
-     * @param  integer $comment_id Always "0" when called by client.
+     * @param  int $comment_id Always "0" when called by client.
      * @param  boolean $admin_view
      * @return void
      */
@@ -386,8 +386,8 @@ class XoopsCommentRenderer
      * Get the name of the poster
      *
      * @param  int    $poster_id
-     * @param         $poster_user
-     * @param         $poster_website
+     * @param  string $poster_user
+     * @param  string $poster_website
      * @return string
      * @access private
      */
@@ -419,9 +419,9 @@ class XoopsCommentRenderer
     /**
      * Get an array with info about the poster
      *
-     * @param  int   $poster_id
-     * @param        $poster_user
-     * @param        $poster_website
+     * @param int    $poster_id
+     * @param string $poster_user
+     * @param string $poster_website
      * @return array
      * @access private
      */

@@ -392,7 +392,7 @@ class Protector
 
     /**
      * @param int  $jailed_time
-     * @param null|string|false $ip
+     * @param string|null|false $ip
      *
      * @return bool
      */
@@ -545,7 +545,7 @@ class Protector
     }
 
     /**
-     * @param null|string|false $ip
+     * @param string|null|false $ip
      *
      * @return bool
      */

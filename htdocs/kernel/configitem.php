@@ -296,7 +296,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
      * Load a config from the database
      *
      * @param  int $id ID of the config
-     * @return XoopsConfigItem reference to the config, FALSE on fail
+     * @return XoopsConfigItem|false reference to the config, FALSE on fail
      */
     public function get($id)
     {

@@ -251,7 +251,7 @@ class XoopsAuthLdap extends XoopsAuth
      * Compose the user DN with the configuration.
      *
      * @param $uname
-     * @return userDN or false
+     * @return string|false
      */
     public function getUserDN($uname)
     {
@@ -281,7 +281,7 @@ class XoopsAuthLdap extends XoopsAuth
     /**
      * Load user from XOOPS Database
      *
-     * @param $uname
+     * @param string $uname
      * @return XoopsUser object
      */
     public function getFilter($uname)

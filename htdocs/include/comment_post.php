@@ -324,6 +324,7 @@ switch ($op) {
                 redirect_header($redirect_page . '=' . $com_itemid . '&amp;com_id=' . $com_id . '&amp;com_mode=' . $com_mode . '&amp;com_order=' . $com_order, 1, _NOPERM);
             }
         } else {
+            /** @var XoopsComment $comment */
             $comment = $comment_handler->create();
             $comment->setVar('com_created', time());
             $comment->setVar('com_pid', $com_pid);
@@ -419,7 +420,7 @@ switch ($op) {
                 if (!$comment_handler->updateByField($comment, 'com_rootid', $com_rootid)) {
                     $comment_handler->delete($comment);
                     include $GLOBALS['xoops']->path('header.php');
-                    xoops_error();
+                    xoops_error('');
                     include $GLOBALS['xoops']->path('footer.php');
                 }
             }

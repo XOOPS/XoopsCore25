@@ -39,7 +39,7 @@ class XoopsAuthFactory
      *
      * @param string $uname used to lookup in LDAP bypass config
      *
-     * @return object Reference to the only instance of authentication class
+     * @return object|false Reference to the only instance of authentication class
      */
     public static function getAuthConnection($uname)
     {
@@ -61,7 +61,7 @@ class XoopsAuthFactory
                 $xoops_auth_method = 'xoops';
             }
 
-            $ret = include_once $GLOBALS['xoops']->path('class/auth/auth_' . $xoops_auth_method . '.php');
+            $ret = include $GLOBALS['xoops']->path('class/auth/auth_' . $xoops_auth_method . '.php');
             if ($ret == false) {
                 return false;
             }

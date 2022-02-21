@@ -153,7 +153,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
      *
      * @param int $id ID
      *
-     * @return XoopsGroupPerm {@link XoopsGroupPerm}, FALSE on fail
+     * @return XoopsGroupPerm|false {@link XoopsGroupPerm}, FALSE on fail
      */
     public function get($id)
     {

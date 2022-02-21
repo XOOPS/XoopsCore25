@@ -146,7 +146,7 @@ class FilterInput
      *
      * @param mixed $source - input string/array-of-string to be 'cleaned'
      *
-     * @return string $source - 'cleaned' version of input parameter
+     * @return string|array $source - 'cleaned' version of input parameter
      */
     public function process($source)
     {

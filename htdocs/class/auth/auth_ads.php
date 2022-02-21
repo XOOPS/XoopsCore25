@@ -108,9 +108,9 @@ class XoopsAuthAds extends XoopsAuthLdap
      *         looks like an email address.  Very useful for logging on especially in
      *         a large Forest.   Note UPN must be unique in the forest.
      *
-     * @param $uname
+     * @param string $uname
      *
-     * @return userDN or false
+     * @return string
      */
     public function getUPN($uname)
     {

@@ -325,7 +325,7 @@ function getDbCollations($link, $charset)
  * @param $charset
  * @param $collation
  *
- * @return null|string
+ * @return string|null
  */
 function validateDbCharset($link, &$charset, &$collation)
 {
