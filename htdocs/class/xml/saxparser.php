@@ -79,7 +79,7 @@ class SaxParser
     {
         assert(is_bool($isCaseFolding));
 
-        $this->isCaseFolding = (int)$isCaseFolding;
+        $this->isCaseFolding = $isCaseFolding;
         xml_parser_set_option($this->parser, XML_OPTION_CASE_FOLDING, $this->isCaseFolding);
     }
 
@@ -137,6 +137,9 @@ class SaxParser
 
     /****************************************************************************
      ****************************************************************************/
+     /**
+     * @return bool
+     */
     public function parse()
     {
         if (!is_resource($this->input)) {
@@ -286,7 +289,7 @@ class SaxParser
 
     /****************************************************************************
      * @param int $parser The handle to the parser.
-     * @param  string $data
+     * @param  array $data
      * @returns void
      */
     public function handleDefault($parser, $data)
@@ -295,11 +298,11 @@ class SaxParser
 
     /****************************************************************************
      * @param int $parser The handle to the parser.
-     * @param     $entityName
-     * @param     $base
-     * @param     $systemId
-     * @param     $publicId
-     * @param     $notationName
+     * @param string    $entityName
+     * @param string    $base
+     * @param int    $systemId
+     * @param int    $publicId
+     * @param string    $notationName
      * @returns void
      *
      */
@@ -309,10 +312,10 @@ class SaxParser
 
     /****************************************************************************
      * @param int $parser The handle to the parser.
-     * @param     $notationName
-     * @param     $base
-     * @param     $systemId
-     * @param     $publicId
+     * @param spring    $notationName
+     * @param string    $base
+     * @param int    $systemId
+     * @param int    $publicId
      * @returns void
      */
     public function handleNotationDecl($parser, $notationName, $base, $systemId, $publicId)
@@ -321,10 +324,10 @@ class SaxParser
 
     /****************************************************************************
      * @param int $parser The handle to the parser.
-     * @param     $openEntityNames
-     * @param     $base
-     * @param     $systemId
-     * @param     $publicId
+     * @param array    $openEntityNames
+     * @param string    $base
+     * @param int    $systemId
+     * @param int    $publicId
      * @returns void
      */
     public function handleExternalEntityRef($parser, $openEntityNames, $base, $systemId, $publicId)
@@ -359,7 +362,7 @@ class SaxParser
      *
      * @abstract
      * @param SaxParser $parser
-     * @param  string $data
+     * @param array $data
      */
     public function handleCharacterDataDefault($parser, $data)
     {

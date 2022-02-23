@@ -41,7 +41,7 @@ class XoopsXmlRpcApi
      */
     public $user;
 
-    public $isadmin = false;
+    public bool $isadmin = false;
 
     /**
      * @param array $params

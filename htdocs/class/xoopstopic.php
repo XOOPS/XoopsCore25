@@ -59,7 +59,7 @@ class XoopsTopic
     }
 
     /**
-     * @param $value
+     * @param string $value
      */
     public function setTopicTitle($value)
     {
@@ -94,7 +94,7 @@ class XoopsTopic
     }
 
     /**
-     * @param $array
+     * @param array $array
      */
     public function makeTopic($array)
     {
@@ -104,7 +104,7 @@ class XoopsTopic
     }
 
     /**
-     * @param $mid
+     * @param int $mid
      */
     public function usePermission($mid)
     {
@@ -224,6 +224,9 @@ class XoopsTopic
         return $this->topic_id;
     }
 
+    /**
+     * @return int
+     */
     public function topic_pid()
     {
         return $this->topic_pid;
@@ -391,8 +394,8 @@ class XoopsTopic
     }
 
     /**
-     * @param $pid
-     * @param $title
+     * @param int $pid
+     * @param string $title
      *
      * @return bool
      */

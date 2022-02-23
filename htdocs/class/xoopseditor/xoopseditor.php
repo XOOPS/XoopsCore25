@@ -206,7 +206,7 @@ class XoopsEditorHandler
      * XoopsEditorHandler::render()
      *
      * @param mixed $editor
-     * @return
+     * @return mixed
      */
     public function render($editor)
     {
@@ -238,7 +238,7 @@ class XoopsEditorHandler
      *
      * @param mixed $name
      * @param mixed $options
-     * @return
+     * @return mixed|null
      */
     public function _loadEditor($name, $options = null)
     {

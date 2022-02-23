@@ -103,12 +103,14 @@ switch ($op) {
 
     case 'new':
         include_once dirname(__DIR__) . '/include/forms.php';
+        /** @var ProfileField $obj */
         $obj  = $profilefield_handler->create();
         $form = profile_getFieldForm($obj);
         $form->display();
         break;
 
     case 'edit':
+        /** @var ProfileField $obj */
         $obj = $profilefield_handler->get($_REQUEST['id']);
         if (!$obj->getVar('field_config') && !$obj->getVar('field_show') && !$obj->getVar('field_edit')) { //If no configs exist
             redirect_header('field.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
@@ -119,6 +121,7 @@ switch ($op) {
         break;
 
     case 'edit-option-strings':
+        /** @var ProfileField $obj */
         $obj = $profilefield_handler->get($_REQUEST['id']);
         $fieldOptions = $obj->getVar('field_options');
         if (empty($fieldOptions)) { //If no option strings exist
@@ -169,6 +172,7 @@ switch ($op) {
         break;
 
     case 'save':
+        /** @var ProfileField $obj */
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('field.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
@@ -363,6 +367,7 @@ function profile_visible_toggle($field_id, $field_required)
 {
     $field_required = ($field_required == 1) ? 0 : 1;
     $this_handler   = xoops_getModuleHandler('field', 'profile');
+    /** @var ProfileField $obj */
     $obj            = $this_handler->get($field_id);
     $obj->setVar('field_required', $field_required);
     if ($this_handler->insert($obj, true)) {
