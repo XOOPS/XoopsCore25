@@ -275,7 +275,7 @@ var XoopsimagemanagerDialog = {
         var dom = tinyMCEPopup.dom, lst = dom.get(id), v, cl;
 
         if (v = tinyMCEPopup.getParam('theme_advanced_styles')) {
-            cl = array();
+            cl = [];
 
             tinymce.each(v.split(';'), function(v) {
                 var p = v.split('=');
