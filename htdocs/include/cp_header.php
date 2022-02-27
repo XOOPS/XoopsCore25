@@ -27,7 +27,7 @@ include_once $GLOBALS['xoops']->path('include/cp_functions.php');
 $moduleperm_handler = xoops_getHandler('groupperm');
 if ($xoopsUser) {
     $url_arr        = explode('/', strstr($_SERVER['REQUEST_URI'], '/modules/'));
-    /* @var XoopsModuleHandler $module_handler */
+    /** @varXoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
     $xoopsModule    = $module_handler->getByDirname($url_arr[2]);
     unset($url_arr);
@@ -40,7 +40,7 @@ if ($xoopsUser) {
 
 // set config values for this module
 if ($xoopsModule->getVar('hasconfig') == 1 || $xoopsModule->getVar('hascomments') == 1) {
-    /* @var XoopsConfigHandler $config_handler */
+    /** @varXoopsConfigHandler $config_handler */
     $config_handler    = xoops_getHandler('config');
     $xoopsModuleConfig = $config_handler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
 }

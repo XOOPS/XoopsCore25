@@ -67,7 +67,7 @@ EOSMJS;
         }
         break;
     case 'avatars':
-        /* @var  XoopsAvatarHandler $avatarHandler */
+        /** @var XoopsAvatarHandler $avatarHandler */
         $avatarHandler = xoops_getHandler('avatar');
         $avatarsList   = $avatarHandler->getList('S');
 
@@ -219,11 +219,11 @@ EOAVJS;
         $start = Request::getInt('start', 0);
         $limit = 20; // how many to make available per page
 
-        /* @var XoopsModuleHandler $module_handler */
+        /** @varXoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $modules        = $module_handler->getObjects(new Criteria('isactive', 1), true);
 
-        /* @var XoopsOnlineHandler $onlineHandler */
+        /** @varXoopsOnlineHandler $onlineHandler */
         $onlineHandler = xoops_getHandler('online');
         $onlineTotal   = $onlineHandler->getCount();
         $criteria      = new CriteriaCompo();

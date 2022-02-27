@@ -176,12 +176,13 @@ class XoopsImageCategory extends XoopsObject
 }
 
 /**
- * XOOPS image caetgory handler class.
+ * XOOPS image category handler class.
  * This class is responsible for providing data access mechanisms to the data source
  * of XOOPS image category class objects.
  *
- *
  * @author  Kazumi Ono <onokazu@xoops.org>
+ *
+ * @property XoopsMySQLDatabase $db
  */
 class XoopsImageCategoryHandler extends XoopsObjectHandler
 {

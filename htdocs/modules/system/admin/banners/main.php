@@ -59,7 +59,7 @@ switch ($op) {
             redirect_header('admin.php?fct=banners', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
 		$bid = Request::getInt('bid', 0);
-        /* @var  SystemBanner $obj */
+        /** @var SystemBanner $obj */
     if ($bid > 0) {
             $obj = $banner_Handler->get($bid);
         } else {
@@ -89,9 +89,9 @@ switch ($op) {
 
 		$bid = Request::getInt('bid', 0);
         if ($bid > 0) {
-            /* @var  SystemBanner $obj */
+            /** @var SystemBanner $obj */
             $obj  = $banner_Handler->get($bid);
-            /* @var  XoopsThemeForm $form */
+            /** @var XoopsThemeForm $form */
             $form = $obj->getForm();
             $form->display();
         } else {
@@ -163,7 +163,7 @@ switch ($op) {
             redirect_header('admin.php?fct=banners', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
 		$cid = Request::getInt('cid', 0);
-        /* @var  SystemBanner $obj */
+        /** @var SystemBanner $obj */
         if ($cid > 0) {
             $obj = $banner_client_Handler->get($cid);
         } else {
@@ -181,7 +181,7 @@ switch ($op) {
         }
 
         xoops_error($obj->getHtmlErrors());
-        /* @var  XoopsThemeForm $form */
+        /** @var XoopsThemeForm $form */
         $form = $obj->getForm(false);
         $form->display();
         break;
@@ -194,7 +194,7 @@ switch ($op) {
 
 		$cid = Request::getInt('cid', 0);
         if ($cid > 0) {
-            /* @var  SystemBanner $obj */
+            /** @var SystemBanner $obj */
             $obj  = $banner_client_Handler->get($cid);
             $form = $obj->getForm();
             $xoopsTpl->assign('form', $form->render());
@@ -241,7 +241,7 @@ switch ($op) {
         $xoBreadCrumb->addHelp(system_adminVersion('banners', 'help') . '#new_banner');
         $xoBreadCrumb->addTips(_AM_SYSTEM_BANNERS_NAV_TIPS);
         $xoBreadCrumb->render();
-        /* @var  SystemBanner $obj */
+        /** @var SystemBanner $obj */
         $obj  = $banner_Handler->create();
         $form = $obj->getForm();
         $xoopsTpl->assign('form', $form->render());
@@ -252,7 +252,7 @@ switch ($op) {
         $xoBreadCrumb->addHelp(system_adminVersion('banners', 'help') . '#new_client');
         $xoBreadCrumb->addTips(_AM_SYSTEM_BANNERS_NAV_TIPS);
         $xoBreadCrumb->render();
-        /* @var  SystemBanner $obj */
+        /** @var SystemBanner $obj */
         $obj  = $banner_client_Handler->create();
         $form = $obj->getForm();
         $xoopsTpl->assign('form', $form->render());

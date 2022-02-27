@@ -119,16 +119,16 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !$xoopsSecurity->checkReferer(XOOPS
  * Requires XoopsLogger, XOOPS_DB_PROXY;
  */
 include_once $xoops->path('class/database/databasefactory.php');
-/* @var XoopsMySQLDatabase $xoopsDB */
+/** @var XoopsMySQLDatabase $xoopsDB */
 $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
 
 /**
  * Get xoops configs
  * Requires functions and database loaded
  */
-/* @var XoopsConfigHandler $config_handler */
+/** @var XoopsConfigHandler $config_handler */
 $config_handler = xoops_getHandler('config');
-$xoopsConfig    = $config_handler->getConfigsByCat(XOOPS_CONF);
+$xoopsConfig = $config_handler->getConfigsByCat(XOOPS_CONF);
 
 /**
  * Merge file and db configs.
@@ -197,16 +197,16 @@ xoops_loadLanguage('pagetype');
  */
 $xoopsUser        = '';
 $xoopsUserIsAdmin = false;
-/* @var XoopsMemberHandler $member_handler */
+/** @var XoopsMemberHandler $member_handler */
 $member_handler   = xoops_getHandler('member');
-/* @var \XoopsSessionHandler $sess_handler */
+/** @var \XoopsSessionHandler $sess_handler */
 $sess_handler     = xoops_getHandler('session');
 if ($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && $_POST[$xoopsConfig['sslpost_name']] != '') {
     session_id($_POST[$xoopsConfig['sslpost_name']]);
 } elseif ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && $xoopsConfig['session_expire'] > 0) {
     session_name($xoopsConfig['session_name']);
     session_cache_expire($xoopsConfig['session_expire']);
-    @ini_set('session.gc_maxlifetime', $xoopsConfig['session_expire'] * 60);
+    @ini_set('session.gc_maxlifetime', (string)($xoopsConfig['session_expire'] * 60));
 }
 session_set_save_handler(
     array($sess_handler, 'open'),
@@ -266,6 +266,7 @@ if (!empty($_SESSION['xoopsUserId'])) {
         xoops_setcookie($GLOBALS['xoopsConfig']['usercookie'], null, time() - 3600);
     } else {
         if (((int)$xoopsUser->getVar('last_login') + 60 * 5) < time()) {
+            /** @var XoopsMySQLDatabase $xoopsDB */
             $sql = 'UPDATE ' . $xoopsDB->prefix('users') . " SET last_login = '" . time()
                    . "' WHERE uid = " . $_SESSION['xoopsUserId'];
             @$xoopsDB->queryF($sql);
@@ -343,7 +344,7 @@ if ($xoopsConfig['closesite'] == 1) {
  */
 if (file_exists('./xoops_version.php')) {
     $url_arr        = explode('/', strstr($_SERVER['PHP_SELF'], '/modules/'));
-    /* @var XoopsModuleHandler $module_handler */
+    /** @varXoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
     $xoopsModule    = $module_handler->getByDirname($url_arr[2]);
     unset($url_arr);
@@ -354,9 +355,9 @@ if (file_exists('./xoops_version.php')) {
         include_once $xoops->path('footer.php');
         exit();
     }
-    /* @var XoopsGroupPermHandler $moduleperm_handler */
+    /** @var XoopsGroupPermHandler $moduleperm_handler */
     $moduleperm_handler = xoops_getHandler('groupperm');
-    if ($xoopsUser) {
+    if ($xoopsUser && $moduleperm_handler) {
         if (!$moduleperm_handler->checkRight('module_read', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
             redirect_header(XOOPS_URL, 1, _NOPERM, false);
         }

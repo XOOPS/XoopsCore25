@@ -44,7 +44,7 @@ class XoopsFormSelectCheckGroup extends XoopsFormCheckBox
      */
     public function __construct($caption, $name, $value = null)
     {
-        /* @var XoopsMemberHandler $member_handler */
+        /** @varXoopsMemberHandler $member_handler */
         $member_handler   = xoops_getHandler('member');
         $userGroups = $member_handler->getGroupList();
         parent::__construct($caption, $name, $value);

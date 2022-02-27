@@ -83,7 +83,7 @@ switch ($op) {
         if ($com_id > 0) {
             $comment = $comment_handler->get($com_id);
             if (is_object($comment)) {
-                /* @var XoopsModuleHandler $module_handler */
+                /** @varXoopsModuleHandler $module_handler */
                 $module_handler = xoops_getHandler('module');
                 $module         = $module_handler->get($comment->getVar('com_modid'));
                 $comment_config = $module->getInfo('comments');
@@ -167,7 +167,7 @@ switch ($op) {
         $comments_groupe = Request::getString('comments_groupe', '');
         if ($comments_groupe != '') {
             foreach ($_POST['comments_groupe'] as $del => $u_name) {
-                /* @var XoopsMemberHandler $member_handler */
+                /** @varXoopsMemberHandler $member_handler */
                 $member_handler = xoops_getHandler('member');
                 $members        = $member_handler->getUsersByGroup($u_name, true);
                 $mcount         = count($members);
@@ -206,7 +206,7 @@ switch ($op) {
         $xoBreadCrumb->render();
 
         $myts             = MyTextSanitizer::getInstance();
-        /* @var  XoopsCommentHandler $comments_Handler */
+        /** @var XoopsCommentHandler $comments_Handler */
         $comments_Handler = xoops_getHandler('comment');
         $comments_module  = '';
         $comments_status  = '';

@@ -109,7 +109,7 @@ class XoopsStory
      */
     public $topicalign;
     /**
-     * @var XoopsDatabase
+     * @var XoopsMySQLDatabase
      */
     public $db;
     /**
@@ -126,18 +126,21 @@ class XoopsStory
      */
     public function Story($storyid = -1)
     {
-        $this->db = XoopsDatabaseFactory::getDatabaseConnection();
+        /** @var XoopsMySQLDatabase $db */
+        $db           = XoopsDatabaseFactory::getDatabaseConnection();
+        $this->db     = $db;
+
         $this->table       = '';
         $this->topicstable = '';
         if (is_array($storyid)) {
             $this->makeStory($storyid);
-        } elseif ($storyid != -1) {
+        } elseif ($storyid !== -1) {
             $this->getStory((int)$storyid);
         }
     }
 
     /**
-     * @param $value
+     * @param int $value
      */
     public function setStoryId($value)
     {
@@ -145,7 +148,7 @@ class XoopsStory
     }
 
     /**
-     * @param $value
+     * @param int $value
      */
     public function setTopicId($value)
     {
@@ -153,7 +156,7 @@ class XoopsStory
     }
 
     /**
-     * @param $value
+     * @param int $value
      */
     public function setUid($value)
     {
@@ -161,7 +164,7 @@ class XoopsStory
     }
 
     /**
-     * @param $value
+     * @param string $value
      */
     public function setTitle($value)
     {
@@ -169,7 +172,7 @@ class XoopsStory
     }
 
     /**
-     * @param $value
+     * @param string $value
      */
     public function setHometext($value)
     {
@@ -177,7 +180,7 @@ class XoopsStory
     }
 
     /**
-     * @param $value
+     * @param string $value
      */
     public function setBodytext($value)
     {
@@ -185,7 +188,7 @@ class XoopsStory
     }
 
     /**
-     * @param $value
+     * @param int $value
      */
     public function setPublished($value)
     {
@@ -193,7 +196,7 @@ class XoopsStory
     }
 
     /**
-     * @param $value
+     * @param int $value
      */
     public function setExpired($value)
     {
@@ -201,7 +204,7 @@ class XoopsStory
     }
 
     /**
-     * @param $value
+     * @param string $value
      */
     public function setHostname($value)
     {
@@ -225,7 +228,7 @@ class XoopsStory
     }
 
     /**
-     * @param $value
+     * @param int $value
      */
     public function setIhome($value)
     {
@@ -233,7 +236,7 @@ class XoopsStory
     }
 
     /**
-     * @param $value
+     * @param int $value
      */
     public function setNotifyPub($value)
     {
@@ -241,7 +244,7 @@ class XoopsStory
     }
 
     /**
-     * @param $value
+     * @param string $value
      */
     public function setType($value)
     {
@@ -249,7 +252,7 @@ class XoopsStory
     }
 
     /**
-     * @param $value
+     * @param int $value
      */
     public function setApproved($value)
     {
@@ -257,7 +260,7 @@ class XoopsStory
     }
 
     /**
-     * @param $value
+     * @param int $value
      */
     public function setTopicdisplay($value)
     {
@@ -265,7 +268,7 @@ class XoopsStory
     }
 
     /**
-     * @param $value
+     * @param string $value
      */
     public function setTopicalign($value)
     {
@@ -273,7 +276,7 @@ class XoopsStory
     }
 
     /**
-     * @param $value
+     * @param int $value
      */
     public function setComments($value)
     {
@@ -283,7 +286,7 @@ class XoopsStory
     /**
      * @param bool $approved
      *
-     * @return bool
+     * @return bool|int
      */
     public function store($approved = false)
     {
@@ -295,21 +298,24 @@ class XoopsStory
         $title    = $myts->addSlashes($title);
         $hometext = $myts->addSlashes($hometext);
         $bodytext = $myts->addSlashes($bodytext);
-        if (!isset($this->nohtml) || $this->nohtml != 1) {
+//        if (!isset($this->nohtml) || $this->nohtml != 1) {
+         if (!($this->nohtml) || $this->nohtml !== 1) {
             $this->nohtml = 0;
         }
-        if (!isset($this->nosmiley) || $this->nosmiley != 1) {
+        if (!($this->nosmiley) || $this->nosmiley !== 1) {
             $this->nosmiley = 0;
         }
-        if (!isset($this->notifypub) || $this->notifypub != 1) {
+        if (!($this->notifypub) || $this->notifypub !== 1) {
             $this->notifypub = 0;
         }
-        if (!isset($this->topicdisplay) || $this->topicdisplay != 0) {
+        if (!($this->topicdisplay) || $this->topicdisplay !== 0) {
             $this->topicdisplay = 1;
         }
         $expired = !empty($this->expired) ? $this->expired : 0;
-        if (!isset($this->storyid)) {
+        if (!($this->storyid)) {
             //$newpost = 1;
+
+            /** @property XoopsMySQLDatabase $db */
             $newstoryid = $this->db->genId($this->table . '_storyid_seq');
             $created    = time();
             $published  = $this->approved ? $this->published : 0;
@@ -328,14 +334,14 @@ class XoopsStory
         }
         if (empty($newstoryid)) {
             $newstoryid    = $this->db->getInsertId();
-            $this->storyid = $newstoryid;
+            $this->storyid = (int)$newstoryid;
         }
 
         return $newstoryid;
     }
 
     /**
-     * @param $storyid
+     * @param int $storyid
      */
     public function getStory($storyid)
     {
@@ -383,7 +389,7 @@ class XoopsStory
     }
 
     /**
-     * @param $total
+     * @param int $total
      *
      * @return bool
      */
@@ -436,6 +442,7 @@ class XoopsStory
      */
     public function title($format = 'Show')
     {
+        $title = '';
         $myts   = MyTextSanitizer::getInstance();
         $smiley = 1;
         if ($this->nosmiley()) {
@@ -462,6 +469,7 @@ class XoopsStory
      */
     public function hometext($format = 'Show')
     {
+        $hometext = '';
         $myts   = MyTextSanitizer::getInstance();
         $html   = 1;
         $smiley = 1;
@@ -497,6 +505,7 @@ class XoopsStory
      */
     public function bodytext($format = 'Show')
     {
+        $bodytext = '';
         $myts   = MyTextSanitizer::getInstance();
         $html   = 1;
         $smiley = 1;

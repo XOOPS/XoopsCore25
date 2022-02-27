@@ -71,7 +71,9 @@ class XoopsTopic
      */
     public function __construct($table, $topicid = 0)
     {
-        $this->db    = XoopsDatabaseFactory::getDatabaseConnection();
+        /** @var XoopsMySQLDatabase $db */
+        $db           = XoopsDatabaseFactory::getDatabaseConnection();
+        $this->db     = $db;
         $this->table = $table;
         if (is_array($topicid)) {
             $this->makeTopic($topicid);
@@ -112,6 +114,7 @@ class XoopsTopic
     public function getTopic($topicid)
     {
         $topicid = (int)$topicid;
+        /** @property XoopsMySQLDatabase $db */
         $sql     = 'SELECT * FROM ' . $this->table . ' WHERE topic_id=' . $topicid . '';
         $array   = $this->db->fetchArray($this->db->query($sql));
         $this->makeTopic($array);
@@ -144,13 +147,14 @@ class XoopsTopic
      */
     public function store()
     {
+        /** @property XoopsMySQLDatabase $db */
         $myts   = MyTextSanitizer::getInstance();
         $title  = '';
         $imgurl = '';
-        if (isset($this->topic_title) && $this->topic_title != '') {
+        if (($this->topic_title) && $this->topic_title != '') {
             $title = $myts->addSlashes($this->topic_title);
         }
-        if (isset($this->topic_imgurl) && $this->topic_imgurl != '') {
+        if (($this->topic_imgurl) && $this->topic_imgurl != '') {
             $imgurl = $myts->addSlashes($this->topic_imgurl);
         }
         if (!isset($this->topic_pid) || !is_numeric($this->topic_pid)) {

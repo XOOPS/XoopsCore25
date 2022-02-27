@@ -38,7 +38,7 @@ $member_handler = xoops_getHandler('member');
 $group_list     = $member_handler->getGroupList();
 
 if (is_array($_POST['perms']) && !empty($_POST['perms'])) {
-    /* @var  XoopsGroupPermHandler $gperm_handler */
+    /** @var XoopsGroupPermHandler $gperm_handler */
     $gperm_handler = xoops_getHandler('groupperm');
     foreach ($_POST['perms'] as $perm_name => $perm_data) {
         if ($GLOBALS['xoopsSecurity']->check(true, false, $perm_name) && false !== $gperm_handler->deleteByModule($modid, $perm_name)) {
@@ -57,7 +57,7 @@ if (is_array($_POST['perms']) && !empty($_POST['perms'])) {
                                 }
                             }
                         }
-                        /* @var XoopsGroupPerm $gperm */
+                        /** @varXoopsGroupPerm $gperm */
                         $gperm = $gperm_handler->create();
                         $gperm->setVar('gperm_groupid', $group_id);
                         $gperm->setVar('gperm_name', $perm_name);

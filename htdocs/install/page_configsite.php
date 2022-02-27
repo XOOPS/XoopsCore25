@@ -26,7 +26,7 @@ if (!@include_once "../modules/system/language/{$wizard->language}/admin/prefere
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    /* @var XoopsConfigHandler $config_handler */
+    /** @varXoopsConfigHandler $config_handler */
     $config_handler = xoops_getHandler('config');
     if (array_key_exists('conf_ids', $_REQUEST)) {
         foreach ($_REQUEST['conf_ids'] as $key => $conf_id) {

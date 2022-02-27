@@ -54,7 +54,7 @@ if (!isset($_POST['submit']) || !isset($_POST['passwd'])) {
     } else {
         //update password
         $GLOBALS['xoopsUser']->setVar('email', trim($_POST['newmail']));
-        /* @var XoopsMemberHandler $member_handler */
+        /** @varXoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         if ($member_handler->insertUser($GLOBALS['xoopsUser'])) {
             $msg = _PROFILE_MA_EMAILCHANGED;

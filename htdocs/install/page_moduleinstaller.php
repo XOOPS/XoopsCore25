@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     include_once dirname(__DIR__) . '/include/version.php';
     include_once __DIR__ . '/include/modulesadmin.php';
 
-    /* @var XoopsConfigHandler $config_handler */
+    /** @varXoopsConfigHandler $config_handler */
     $config_handler = xoops_getHandler('config');
     $xoopsConfig    = $config_handler->getConfigsByCat(XOOPS_CONF);
 
@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Get installed modules
-    /* @var XoopsModuleHandler $module_handler */
+    /** @varXoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
     $installed_mods = $module_handler->getObjects();
     $listed_mods    = array();

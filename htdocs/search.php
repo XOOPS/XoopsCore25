@@ -126,7 +126,7 @@ if ($action !== 'showallbyuser') {
 }
 switch ($action) {
     case 'results':
-        /* @var XoopsModuleHandler $module_handler */
+        /** @varXoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $criteria       = new CriteriaCompo(new Criteria('hassearch', 1));
         $criteria->add(new Criteria('isactive', 1));
@@ -222,7 +222,7 @@ switch ($action) {
     case 'showallbyuser':
         include $GLOBALS['xoops']->path('header.php');
 		$xoopsTpl->assign('showallbyuser', true);
-    /* @var XoopsModuleHandler $module_handler */
+    /** @varXoopsModuleHandler $module_handler */
 		$module_handler = xoops_getHandler('module');
         $module         = $module_handler->get($mid);
         $results        = $module->search($queries[0], $andor, 20, $start, $uid);

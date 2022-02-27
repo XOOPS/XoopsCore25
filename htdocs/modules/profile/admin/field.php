@@ -34,11 +34,11 @@ switch ($op) {
     case 'list':
         $fields = $profilefield_handler->getObjects(null, true, false);
 
-    /* @var XoopsModuleHandler $module_handler */
+    /** @varXoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $modules        = $module_handler->getObjects(null, true);
 
-    /* @var XoopsModuleHandler $cat_handler */
+    /** @varXoopsModuleHandler $cat_handler */
         $cat_handler = xoops_getModuleHandler('category');
         $criteria    = new CriteriaCompo();
         $criteria->setSort('cat_weight');
@@ -153,7 +153,7 @@ switch ($op) {
             if (count($ids) > 0) {
                 $errors = array();
                 //if there are changed fields, fetch the fieldcategory objects
-                /* @var XoopsModuleHandler $field_handler */
+                /** @varXoopsModuleHandler $field_handler */
                 $field_handler = xoops_getModuleHandler('field');
                 $fields        = $field_handler->getObjects(new Criteria('field_id', '(' . implode(',', $ids) . ')', 'IN'), true);
                 foreach ($ids as $i) {
@@ -247,7 +247,7 @@ switch ($op) {
             $obj->setVar('step_id', $_REQUEST['step_id']);
         }
         if ($profilefield_handler->insert($obj)) {
-            /* @var XoopsGroupPermHandler $groupperm_handler */
+            /** @varXoopsGroupPermHandler $groupperm_handler */
             $groupperm_handler = xoops_getHandler('groupperm');
 
             $perm_arr = array();

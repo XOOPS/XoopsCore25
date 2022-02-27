@@ -73,7 +73,7 @@ if ($op === 'saveuser') {
         echo '</div><br>';
         $op = 'editprofile';
     } else {
-        /* @var XoopsMemberHandler $member_handler */
+        /** @varXoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $edituser       = $member_handler->getUser($uid);
         $edituser->setVar('name', XoopsRequest::getString('name', ''));
@@ -348,7 +348,7 @@ if ($op === 'avatarchoose') {
     if (0 === strpos($user_avatarpath, realpath(XOOPS_UPLOAD_PATH)) && is_file($user_avatarpath)) {
         $oldavatar = $xoopsUser->getVar('user_avatar');
         $xoopsUser->setVar('user_avatar', $user_avatar);
-        /* @var XoopsMemberHandler $member_handler */
+        /** @varXoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         if (!$member_handler->insertUser($xoopsUser)) {
             include $GLOBALS['xoops']->path('header.php');

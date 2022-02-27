@@ -93,7 +93,7 @@ class XoopsXmlRpcApi
         if (is_object($this->user) && $this->user instanceof \XoopsUser) {
             return true;
         }
-        /* @var XoopsMemberHandler $member_handler */
+        /** @varXoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $this->user     = $member_handler->loginUser(addslashes($username), addslashes($password));
         if (!is_object($this->user)) {
@@ -101,7 +101,7 @@ class XoopsXmlRpcApi
 
             return false;
         }
-        /* @var  XoopsGroupPermHandler $moduleperm_handler */
+        /** @var XoopsGroupPermHandler $moduleperm_handler */
         $moduleperm_handler = xoops_getHandler('groupperm');
         if (!$moduleperm_handler->checkRight('module_read', $this->module->getVar('mid'), $this->user->getGroups())) {
             unset($this->user);

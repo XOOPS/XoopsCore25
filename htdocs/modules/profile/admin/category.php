@@ -71,7 +71,7 @@ switch ($op) {
         }
         include_once dirname(__DIR__) . '/include/forms.php';
         echo $obj->getHtmlErrors();
-        /* @var  XoopsThemeForm $form */
+        /** @var XoopsThemeForm $form */
         $form = $obj->getForm();
         $form->display();
         break;

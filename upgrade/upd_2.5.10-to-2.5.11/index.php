@@ -124,7 +124,7 @@ class Upgrade_2511 extends XoopsUpgrade
      */
     public function check_qmail()
     {
-        /* @var XoopsMySQLDatabase $db */
+        /** @var XoopsMySQLDatabase $db */
         $db = XoopsDatabaseFactory::getDatabaseConnection();
 
         $table = $db->prefix('configoption');

@@ -183,7 +183,7 @@ class XoopsGuiDark extends XoopsSystemGui
         $tpl->assign('moddir', $moddir);
 
         // add MODULES  Menu items
-        /* @var XoopsModuleHandler $module_handler */
+        /** @varXoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $criteria       = new CriteriaCompo();
         $criteria->add(new Criteria('hasadmin', 1));
@@ -192,7 +192,7 @@ class XoopsGuiDark extends XoopsSystemGui
         $mods = $module_handler->getObjects($criteria);
 
         $menu = array();
-        /* @var XoopsGroupPermHandler $moduleperm_handler */
+        /** @varXoopsGroupPermHandler $moduleperm_handler */
         $moduleperm_handler = xoops_getHandler('groupperm');
         foreach ($mods as $mod) {
             $rtn        = array();

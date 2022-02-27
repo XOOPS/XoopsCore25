@@ -56,7 +56,7 @@ if ($op === 'save') {
         // Get fields
         $fields = $profile_handler->loadFields();
         // Get ids of fields that can be edited
-        /* @var  XoopsGroupPermHandler $gperm_handler */
+        /** @var XoopsGroupPermHandler $gperm_handler */
         $gperm_handler   = xoops_getHandler('groupperm');
         $editable_fields = $gperm_handler->getItemIds('profile_edit', $GLOBALS['xoopsUser']->getGroups(), $GLOBALS['xoopsModule']->getVar('mid'));
 
@@ -169,7 +169,7 @@ if ($op === 'avatarupload') {
         if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
             $uploader->setPrefix('cavt');
             if ($uploader->upload()) {
-                /* @var XoopsAvatarHandler $avt_handler */
+                /** @varXoopsAvatarHandler $avt_handler */
                 $avt_handler = xoops_getHandler('avatar');
                 $avatar      = $avt_handler->create();
                 $avatar->setVar('avatar_file', 'avatars/' . $uploader->getSavedFileName());
@@ -230,7 +230,7 @@ if ($op === 'avatarchoose') {
     if (0 === strpos($user_avatarpath, realpath(XOOPS_UPLOAD_PATH)) && is_file($user_avatarpath)) {
         $oldavatar = $GLOBALS['xoopsUser']->getVar('user_avatar');
         $GLOBALS['xoopsUser']->setVar('user_avatar', $user_avatar);
-        /* @var XoopsMemberHandler $member_handler */
+        /** @varXoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         if (!$member_handler->insertUser($GLOBALS['xoopsUser'])) {
             include $GLOBALS['xoops']->path('header.php');

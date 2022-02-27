@@ -75,13 +75,13 @@ switch ($op) {
         }
 
         // Dynamic fields
-        /* @var  ProfileProfileHandler $profile_handler */
+        /** @var ProfileProfileHandler $profile_handler */
         $profile_handler = xoops_getModuleHandler('profile');
         // Get fields
         $fields     = $profile_handler->loadFields();
         $userfields = $profile_handler->getUserVars();
         // Get ids of fields that can be edited
-        /* @var  XoopsGroupPermHandler $gperm_handler */
+        /** @var XoopsGroupPermHandler $gperm_handler */
         $gperm_handler   = xoops_getHandler('groupperm');
         $editable_fields = $gperm_handler->getItemIds('profile_edit', $GLOBALS['xoopsUser']->getGroups(), $GLOBALS['xoopsModule']->getVar('mid'));
 

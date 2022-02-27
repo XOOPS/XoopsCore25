@@ -59,7 +59,7 @@ class SystemFineImUploadHandler extends SystemFineUploadHandler
 
     protected function storeUploadedFile($target, $mimeType, $uuid)
     {
-        /* @var XoopsImageCategoryHandler */
+        /** @varXoopsImageCategoryHandler */
         $imgcatHandler = xoops_getHandler('imagecategory');
         $imgcat = $imgcatHandler->get($this->claims->cat);
 
@@ -78,7 +78,7 @@ class SystemFineImUploadHandler extends SystemFineUploadHandler
             }
         }
 
-        /* @var XoopsImageHandler $imageHandler */
+        /** @varXoopsImageHandler $imageHandler */
         $imageHandler = xoops_getHandler('image');
         $image = $imageHandler->create();
 

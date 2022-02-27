@@ -29,7 +29,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
     xoops_load('XoopsFormLoader');
 
     include_once $GLOBALS['xoops']->path('modules/system/constants.php');
-    /* @var  XoopsGroupPermHandler $gperm_handler */
+    /** @var XoopsGroupPermHandler $gperm_handler */
     $gperm_handler = xoops_getHandler('groupperm');
     $groups        = $xoopsUser ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
     $xoopsTpl->assign('xoops_iscommentadmin', $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $groups));
@@ -75,7 +75,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
 
         $com_id          = isset($_GET['com_id']) ? (int)$_GET['com_id'] : 0;
         $com_rootid      = isset($_GET['com_rootid']) ? (int)$_GET['com_rootid'] : 0;
-        /* @var  XoopsCommentHandler $comment_handler */
+        /** @var XoopsCommentHandler $comment_handler */
         $comment_handler = xoops_getHandler('comment');
         if ($com_mode === 'flat') {
             $comments = $comment_handler->getByItemId($xoopsModule->getVar('mid'), $com_itemid, $com_dborder);

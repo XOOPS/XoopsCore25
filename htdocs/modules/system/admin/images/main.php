@@ -91,7 +91,7 @@ switch ($op) {
         $imagecategorys = $imgcat_handler->getObjects();
 
         $catcount      = count($imagecategorys);
-        /* @var  XoopsImageHandler $image_handler */
+        /** @var XoopsImageHandler $image_handler */
         $image_handler = xoops_getHandler('image');
 
         foreach (array_keys($imagecategorys) as $i) {
@@ -509,7 +509,7 @@ switch ($op) {
             exit();
         }
         $newid                     = $imagecategory->getVar('imgcat_id');
-        /* @var  XoopsGroupPermHandler $imagecategoryperm_handler */
+        /** @var XoopsGroupPermHandler $imagecategoryperm_handler */
         $imagecategoryperm_handler = xoops_getHandler('groupperm');
         if (!isset($readgroup)) {
             $readgroup = array();
@@ -687,7 +687,7 @@ switch ($op) {
             xoops_cp_footer();
             exit();
         }
-        /* @var  XoopsImageHandler $image_handler */
+        /** @var XoopsImageHandler $image_handler */
         $image_handler = xoops_getHandler('image');
         $images        = $image_handler->getObjects(new Criteria('imgcat_id', $imgcat_id), true, false);
         $errors        = array();

@@ -372,7 +372,7 @@ if (!Request::hasVar('user_submit', 'POST')) {
         );
         $level_radio->addOptionArray($levels);
 
-        /* @var XoopsMemberHandler $member_handler */
+        /** @varXoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $groups         = $member_handler->getGroupList();
         $groups[0]      = _ALL;
