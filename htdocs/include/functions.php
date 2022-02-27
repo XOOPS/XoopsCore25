@@ -150,7 +150,7 @@ function xoops_loadLanguage($name, $domain = '', $language = null)
             return false;
         }
     }
-    $ret = include_once $fileinc;
+    $ret = include $fileinc;
 
     return $ret;
 }
@@ -676,6 +676,7 @@ function xoops_getbanner()
 {
     global $xoopsConfig;
 
+    /** @var XoopsMySQLDatabase $db */
     $db      = XoopsDatabaseFactory::getDatabaseConnection();
     $bresult = $db->query('SELECT COUNT(*) FROM ' . $db->prefix('banner'));
     list($numrows) = $db->fetchRow($bresult);
@@ -925,6 +926,7 @@ function xoops_getMailer()
  */
 function xoops_getrank($rank_id = 0, $posts = 0)
 {
+    /** @var XoopsMySQLDatabase $db */
     $db      = XoopsDatabaseFactory::getDatabaseConnection();
     $myts    = MyTextSanitizer::getInstance();
     $rank_id = (int)$rank_id;

@@ -48,7 +48,7 @@ class Db_manager
      */
     public $f_tables = array();
     /**
-     * @var XoopsDatabase
+     * @var XoopsMySQLDatabase
      */
     public $db;
 
@@ -57,7 +57,9 @@ class Db_manager
      */
     public function __construct()
     {
-        $this->db = XoopsDatabaseFactory::getDatabase();
+        /** @var XoopsMySQLDatabase $db */
+        $db           = XoopsDatabaseFactory::getDatabase();
+        $this->db     = $db;
         $this->db->setPrefix(XOOPS_DB_PREFIX);
         $this->db->setLogger(XoopsLogger::getInstance());
     }
@@ -67,6 +69,7 @@ class Db_manager
      */
     public function isConnectable()
     {
+        /** @property XoopsMySQLDatabase $db */
         $isConnected = ($this->db->connect(false) !== false);
         if (!$isConnected) {
             $_SESSION['error'] = '(' . $this->db->conn->connect_errno . ') ' . $this->db->conn->connect_error;
@@ -223,19 +226,20 @@ class Db_manager
     }
 
     /**
-     * @param $sql
+     * @param string $sql
      *
      * @return mixed
      */
     public function query($sql)
     {
+        /** @property XoopsMySQLDatabase $db */
         $this->db->connect();
 
         return $this->db->query($sql);
     }
 
     /**
-     * @param $table
+     * @param string $table
      *
      * @return mixed
      */
@@ -247,7 +251,7 @@ class Db_manager
     }
 
     /**
-     * @param $ret
+     * @param mysqli_result $ret
      *
      * @return mixed
      */
@@ -259,10 +263,10 @@ class Db_manager
     }
 
     /**
-     * @param $table
-     * @param $query
+     * @param string $table
+     * @param string $query
      *
-     * @return bool
+     * @return int|string|bool
      */
     public function insert($table, $query)
     {
@@ -293,11 +297,11 @@ class Db_manager
      */
     public function isError()
     {
-        return isset($this->f_tables) ? true : false;
+        return ($this->f_tables) ? true : false;
     }
 
     /**
-     * @param $tables
+     * @param array $tables
      *
      * @return array
      */
@@ -315,7 +319,7 @@ class Db_manager
     }
 
     /**
-     * @param $table
+     * @param string $table
      *
      * @return bool
      */
