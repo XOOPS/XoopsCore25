@@ -37,7 +37,7 @@
 
 /**
  * @param array $params
- * @param $smarty
+ * @param XoopsTpl $smarty
  */
 function smarty_function_xoUserInfo($params, &$smarty)
 {
@@ -56,8 +56,17 @@ function smarty_function_xoUserInfo($params, &$smarty)
     $assign = empty($params['assign']) ? 'userInfo' : $params['assign'];
 
     $infoFields = array(
-        'uname', 'name', 'email', 'user_avatar', 'url', 'posts',
-        'user_from', 'user_occ', 'user_intrest', 'bio', 'user_sig'
+        'uname',
+        'name',
+        'email',
+        'user_avatar',
+        'url',
+        'posts',
+        'user_from',
+        'user_occ',
+        'user_intrest',
+        'bio',
+        'user_sig',
     );
 
     if (!isset($usersInfo[0])) {
@@ -68,7 +77,7 @@ function smarty_function_xoUserInfo($params, &$smarty)
     if (isset($usersInfo[$uid])) {
         $userData = $usersInfo[$uid];
     } elseif ($userObject = $userHandler->get($uid)) {
-        $userData =  array();
+        $userData = array();
         foreach ($infoFields as $field) {
             $userData[$field] = $userObject->getVar($field, 'E');
         }

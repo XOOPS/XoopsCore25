@@ -52,7 +52,7 @@ class ProfileVisibilityHandler extends XoopsPersistableObjectHandler
      * Get fields visible to the $user_groups on a $profile_groups profile
      *
      * @param array $profile_groups groups of the user to be accessed
-     * @param array $user_groups    groups of the visitor, default as $GLOBALS['xoopsUser']
+     * @param array|null $user_groups groups of the visitor, default as $GLOBALS['xoopsUser']
      *
      * @return array
      */
@@ -74,7 +74,7 @@ class ProfileVisibilityHandler extends XoopsPersistableObjectHandler
     /**
      * get all rows matching a condition
      *
-     * @param  CriteriaElement $criteria  {@link CriteriaElement} to match
+     * @param \CriteriaElement|null $criteria  {@link CriteriaElement} to match
      *
      * @return array of row arrays, indexed by field_id
      */
@@ -82,7 +82,10 @@ class ProfileVisibilityHandler extends XoopsPersistableObjectHandler
     {
         $rawRows = parent::getAll($criteria, null, false, false);
 
-        usort($rawRows, array($this, 'visibilitySort'));
+        usort($rawRows, array(
+            $this,
+            'visibilitySort',
+        ));
 
         $rows = array();
         foreach ($rawRows as $rawRow) {

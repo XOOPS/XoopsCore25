@@ -94,9 +94,16 @@ class Tar
     /**
      * *#@+
      * Unprocessed Archive Information
+     * @var string
      */
     public $filename;
+    /**
+     * @var bool
+     */
     public $isGzipped;
+    /**
+     * @var string
+     */
     public $tar_file;
     /**
      * *#@-
@@ -105,10 +112,20 @@ class Tar
     /**
      * *#@+
      * Processed Archive Information
+     * @var array
      */
     public $files;
+    /**
+     * @var array
+     */
     public $directories;
+    /**
+     * @var int
+     */
     public $numFiles;
+    /**
+     * @var int
+     */
     public $numDirectories;
     /**
      * *#@-
@@ -514,7 +531,7 @@ class Tar
      * Add a file to the tar archive
      *
      * @param  string  $filename
-     * @param  boolean $binary Binary file?
+     * @param  bool $binary Binary file?
      * @return bool
      */
     public function addFile($filename, $binary = false)

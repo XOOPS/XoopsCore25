@@ -222,7 +222,8 @@ while (false !== ($row_table = $db->fetchArray($srs))) {
     if (substr($row_table['Name'], -6) === '_users') {
         $prefixes[] = array(
             'name'    => substr($row_table['Name'], 0, -6),
-            'updated' => $row_table['Update_time']);
+            'updated' => $row_table['Update_time'],
+        );
     }
     $tables[] = $row_table['Name'];
 }
@@ -241,7 +242,6 @@ echo '
 ';
 
 foreach ($prefixes as $prefix) {
-
     // count the number of tables with the prefix
     $table_count       = 0;
     $has_xoopscomments = false;

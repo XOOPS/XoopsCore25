@@ -17,17 +17,18 @@
  * Get variables passed by GET or POST method
  *
  * Comment by Taiwen Jiang (a.k.a. phppp): THE METHOD IS NOT COMPLETE AND NOT SAFE. YOU ARE ENCOURAGED TO USE PHP'S NATIVE FILTER_VAR OR FILTER_INPUT FUNCTIONS DIRECTLY BEFORE WE MIGRATE TO XOOPS 3.
- * @param                   $global
- * @param                   $key
- * @param  string           $default
- * @param  string           $type
+ * @param array  $global
+ * @param mixed  $key
+ * @param string $default
+ * @param string $type
+ *
  * @return int|mixed|string
  * @deprecated since 2.5.11, please use Xmf\Request
  */
 function system_CleanVars(&$global, $key, $default = '', $type = 'int')
 {
-	$GLOBALS['xoopsLogger']->addDeprecated("system_CleanVars() is deprecated since XOOPS 2.5.11, please use 'Xmf\Request' instead");
-	switch ($type) {
+    $GLOBALS['xoopsLogger']->addDeprecated("system_CleanVars() is deprecated since XOOPS 2.5.11, please use 'Xmf\Request' instead");
+    switch ($type) {
         case 'array':
             $ret = (isset($global[$key]) && is_array($global[$key])) ? $global[$key] : $default;
             break;
@@ -53,10 +54,10 @@ function system_CleanVars(&$global, $key, $default = '', $type = 'int')
  * System language loader wrapper
  *
  *
- * @param  string  $name     Name of language file to be loaded, without extension
- * @param  string  $domain   Module dirname; global language file will be loaded if $domain is set to 'global' or not specified
- * @param  string  $language Language to be loaded, current language content will be loaded if not specified
- * @return boolean
+ * @param string $name     Name of language file to be loaded, without extension
+ * @param string $domain   Module dirname; global language file will be loaded if $domain is set to 'global' or not specified
+ * @param string $language Language to be loaded, current language content will be loaded if not specified
+ * @return bool
  * @todo    expand domain to multiple categories, e.g. module:system, framework:filter, etc.
  *
  */
@@ -80,8 +81,8 @@ function system_loadLanguage($name, $domain = '', $language = null)
 }
 
 /**
- * @param        $version
- * @param string $value
+ * @param array|string $version
+ * @param string       $value
  *
  * @return mixed
  */
@@ -105,7 +106,7 @@ function system_adminVersion($version, $value = '')
 }
 
 /**
- * @param $img
+ * @param string $img
  *
  * @return mixed
  */
@@ -137,9 +138,9 @@ function system_loadTemplate($name)
 }
 
 /**
- * @param $value_chmod
- * @param $path_file
- * @param $id
+ * @param int    $value_chmod
+ * @param string $path_file
+ * @param string $id
  *
  * @return string
  */

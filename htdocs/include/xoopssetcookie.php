@@ -22,13 +22,23 @@
  * It supports both of the two declared signatures:
  * - setcookie ( string $name , string $value = "" , int $expires = 0 , string $path = "" , string $domain = "" , bool $secure = false , bool $httponly = false ) : bool
  * - setcookie ( string $name , string $value = "" , array $options = [] ) : bool
+ *
+ * @return bool
  */
 function xoops_setcookie()
 {
     if (headers_sent()) {
         return false;
     }
-    $argNames    = array('name', 'value', 'expires', 'path', 'domain', 'secure', 'httponly');
+    $argNames = array(
+        'name',
+        'value',
+        'expires',
+        'path',
+        'domain',
+        'secure',
+        'httponly',
+    );
     //$argDefaults = array(null,   '',       0,        '',     '',        false,    false);
     //$optionsKeys = array('expires', 'path', 'domain', 'secure', 'httponly', 'samesite');
     $rawArgs = func_get_args();
@@ -68,7 +78,7 @@ function xoops_setcookie()
  *
  * @return string
  */
-function xoops_buildCookieHeader($args)
+function xoops_buildCookieHeader(array $args)
 {
     //$optionsKeys = array('expires', 'path', 'domain', 'secure', 'httponly', 'samesite');
     $options = $args['options'];

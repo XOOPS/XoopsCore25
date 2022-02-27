@@ -220,7 +220,7 @@ class ProfileField extends XoopsObject
      *
      * @return mixed
      **/
-    public function getOutputValue(&$user, $profile)
+    public function getOutputValue($user, $profile)
     {
         xoops_loadLanguage('modinfo', 'profile');
 
@@ -445,84 +445,84 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
     /**
      * save a profile field in the database
      *
-     * @param XoopsObject|ProfileField $obj   reference to the object
+     * @param XoopsObject|ProfileField $object reference to the object
      * @param bool                     $force whether to force the query execution despite security settings
      *
      * @internal param bool $checkObject check if the object is dirty and clean the attributes
      * @return bool FALSE if failed, TRUE if already present and unchanged or successful
      */
-    public function insert(XoopsObject $obj, $force = false)
+    public function insert($object, $force = false)
     {
-        if (!($obj instanceof $this->className)) {
+        if (!($object instanceof $this->className)) {
             return false;
         }
          /* @var ProfileProfileHandler $profile_handler */
         $profile_handler = xoops_getModuleHandler('profile', 'profile');
-        $obj->setVar('field_name', str_replace(' ', '_', $obj->getVar('field_name')));
-        $obj->cleanVars();
+        $object->setVar('field_name', str_replace(' ', '_', $object->getVar('field_name')));
+        $object->cleanVars();
         $defaultstring = '';
-        switch ($obj->getVar('field_type')) {
+        switch ($object->getVar('field_type')) {
             case 'datetime':
             case 'date':
-                $obj->setVar('field_valuetype', XOBJ_DTYPE_INT);
-                $obj->setVar('field_maxlength', 10);
+                $object->setVar('field_valuetype', XOBJ_DTYPE_INT);
+                $object->setVar('field_maxlength', 10);
                 break;
 
             case 'longdate':
-                $obj->setVar('field_valuetype', XOBJ_DTYPE_MTIME);
+                $object->setVar('field_valuetype', XOBJ_DTYPE_MTIME);
                 break;
 
             case 'yesno':
-                $obj->setVar('field_valuetype', XOBJ_DTYPE_INT);
-                $obj->setVar('field_maxlength', 1);
+                $object->setVar('field_valuetype', XOBJ_DTYPE_INT);
+                $object->setVar('field_maxlength', 1);
                 break;
 
             case 'textbox':
-                if ($obj->getVar('field_valuetype') != XOBJ_DTYPE_INT) {
-                    $obj->setVar('field_valuetype', XOBJ_DTYPE_TXTBOX);
+                if ($object->getVar('field_valuetype') != XOBJ_DTYPE_INT) {
+                    $object->setVar('field_valuetype', XOBJ_DTYPE_TXTBOX);
                 }
                 break;
 
             case 'autotext':
-                if ($obj->getVar('field_valuetype') != XOBJ_DTYPE_INT) {
-                    $obj->setVar('field_valuetype', XOBJ_DTYPE_TXTAREA);
+                if ($object->getVar('field_valuetype') != XOBJ_DTYPE_INT) {
+                    $object->setVar('field_valuetype', XOBJ_DTYPE_TXTAREA);
                 }
                 break;
 
             case 'group_multi':
             case 'select_multi':
             case 'checkbox':
-                $obj->setVar('field_valuetype', XOBJ_DTYPE_ARRAY);
+                $object->setVar('field_valuetype', XOBJ_DTYPE_ARRAY);
                 break;
 
             case 'language':
             case 'timezone':
             case 'theme':
-                $obj->setVar('field_valuetype', XOBJ_DTYPE_TXTBOX);
+                $object->setVar('field_valuetype', XOBJ_DTYPE_TXTBOX);
                 break;
 
             case 'dhtml':
             case 'textarea':
-                $obj->setVar('field_valuetype', XOBJ_DTYPE_TXTAREA);
+                $object->setVar('field_valuetype', XOBJ_DTYPE_TXTAREA);
                 break;
         }
 
-        if ($obj->getVar('field_valuetype') === '') {
-            $obj->setVar('field_valuetype', XOBJ_DTYPE_TXTBOX);
+        if ($object->getVar('field_valuetype') === '') {
+            $object->setVar('field_valuetype', XOBJ_DTYPE_TXTBOX);
         }
 
-        if ((!in_array($obj->getVar('field_name'), $this->getUserVars())) && isset($_REQUEST['field_required'])) {
-            if ($obj->isNew()) {
+        if ((!in_array($object->getVar('field_name'), $this->getUserVars())) && isset($_REQUEST['field_required'])) {
+            if ($object->isNew()) {
                 //add column to table
                 $changetype = 'ADD';
             } else {
                 //update column information
                 $changetype = 'MODIFY COLUMN';
             }
-            $maxlengthstring = $obj->getVar('field_maxlength') > 0 ? '(' . $obj->getVar('field_maxlength') . ')' : '';
+            $maxlengthstring = $object->getVar('field_maxlength') > 0 ? '(' . $object->getVar('field_maxlength') . ')' : '';
 
             //set type
-            switch ($obj->getVar('field_valuetype')) {
+            switch ($object->getVar('field_valuetype')) {
                 default:
                 case XOBJ_DTYPE_ARRAY:
                 case XOBJ_DTYPE_UNICODE_ARRAY:
@@ -540,7 +540,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
                     if (!$maxlengthstring) {
                         //so set it to max if maxlength is not set - or should it fail?
                         $maxlengthstring = '(255)';
-                        $obj->setVar('field_maxlength', 255);
+                        $object->setVar('field_maxlength', 255);
                     }
                     break;
 
@@ -569,46 +569,46 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
                     break;
             }
 
-            $sql = 'ALTER TABLE `' . $profile_handler->table . '` ' . $changetype . ' `' . $obj->cleanVars['field_name'] . '` ' . $type . $maxlengthstring . ' NULL';
+            $sql    = 'ALTER TABLE `' . $profile_handler->table . '` ' . $changetype . ' `' . $object->cleanVars['field_name'] . '` ' . $type . $maxlengthstring . ' NULL';
             $result = $force ? $this->db->queryF($sql) : $this->db->query($sql);
             if (!$result) {
-                $obj->setErrors($this->db->error());
+                $object->setErrors($this->db->error());
                 return false;
             }
         }
 
         //change this to also update the cached field information storage
-        $obj->setDirty();
-        if (!parent::insert($obj, $force)) {
+        $object->setDirty();
+        if (!parent::insert($object, $force)) {
             return false;
         }
 
-        return $obj->getVar('field_id');
+        return $object->getVar('field_id');
     }
 
     /**
      * delete a profile field from the database
      *
-     * @param XoopsObject|ProfileField $obj reference to the object to delete
+     * @param XoopsObject|ProfileField $object reference to the object to delete
      * @param bool   $force
      * @return bool FALSE if failed.
      **/
-    public function delete(XoopsObject $obj, $force = false)
+    public function delete(XoopsObject $object, $force = false)
     {
-        if (!($obj instanceof $this->className)) {
+        if (!($object instanceof $this->className)) {
             return false;
         }
          /* @var ProfileProfileHandler $profile_handler */
         $profile_handler = xoops_getModuleHandler('profile', 'profile');
         // remove column from table
-        $sql = 'ALTER TABLE ' . $profile_handler->table . ' DROP `' . $obj->getVar('field_name', 'n') . '`';
+        $sql = 'ALTER TABLE ' . $profile_handler->table . ' DROP `' . $object->getVar('field_name', 'n') . '`';
         if ($this->db->query($sql)) {
             //change this to update the cached field information storage
-            if (!parent::delete($obj, $force)) {
+            if (!parent::delete($object, $force)) {
                 return false;
             }
 
-            if ($obj->getVar('field_show') || $obj->getVar('field_edit')) {
+            if ($object->getVar('field_show') || $object->getVar('field_edit')) {
                 /* @var XoopsModuleHandler $module_handler */
                 $module_handler = xoops_getHandler('module');
                 $profile_module = $module_handler->getByDirname('profile');
@@ -617,7 +617,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
                     /* @var XoopsGroupPermHandler $groupperm_handler */
                     $groupperm_handler = xoops_getHandler('groupperm');
                     $criteria          = new CriteriaCompo(new Criteria('gperm_modid', $profile_module->getVar('mid')));
-                    $criteria->add(new Criteria('gperm_itemid', $obj->getVar('field_id')));
+                    $criteria->add(new Criteria('gperm_itemid', $object->getVar('field_id')));
 
                     return $groupperm_handler->deleteAll($criteria);
                 }
@@ -665,6 +665,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
             'user_occ',
             'bio',
             'user_intrest',
-            'user_mailok');
+            'user_mailok',
+        );
     }
 }

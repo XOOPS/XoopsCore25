@@ -75,7 +75,7 @@ class Request
      *                         information see FilterInput::clean().
      * @param int    $mask    Filter mask for the variable
      *
-     * @return mixed Requested variable
+     * @return array|string|null Requested variable
      */
     public static function getVar($name, $default = null, $hash = 'default', $type = 'none', $mask = 0)
     {
@@ -117,7 +117,8 @@ class Request
 
             // Handle magic quotes compatibility
             if (function_exists('get_magic_quotes_gpc')
-                && @get_magic_quotes_gpc() && ($var != $default)
+                && @get_magic_quotes_gpc()
+                && ($var != $default)
                 && ($hash !== 'FILES')
             ) {
                 $var = static::stripSlashesRecursive($var);
@@ -372,7 +373,7 @@ class Request
      * @param string $name variable to look for
      * @param string $hash hash to check
      *
-     * @return boolean True if hash has an element 'name', otherwise false
+     * @return bool True if hash has an element 'name', otherwise false
      */
     public static function hasVar($name, $hash = 'default')
     {
@@ -393,11 +394,11 @@ class Request
      * Set a variable in one of the request variables
      *
      * @param string  $name      Name
-     * @param string  $value     Value
+     * @param string|null $value     Value
      * @param string  $hash      Hash
-     * @param boolean $overwrite Boolean
+     * @param bool $overwrite Boolean
      *
-     * @return string Previous value
+     * @return string|null Previous value
      */
     public static function setVar($name, $value = null, $hash = 'method', $overwrite = true)
     {
@@ -470,7 +471,7 @@ class Request
      * @param string $hash to get (POST, GET, FILES, METHOD)
      * @param int    $mask Filter mask for the variable
      *
-     * @return mixed Request hash
+     * @return array|string Request hash
      */
     public static function get($hash = 'default', $mask = 0)
     {
@@ -519,7 +520,7 @@ class Request
      *
      * @param array   $array     An associative array of key-value pairs
      * @param string  $hash      The request variable to set (POST, GET, FILES, METHOD)
-     * @param boolean $overwrite If true and an existing key is found, the value is overwritten,
+     * @param bool $overwrite If true and an existing key is found, the value is overwritten,
      *                            otherwise it is ignored
      *
      * @return void
@@ -542,7 +543,7 @@ class Request
      *                      - 4=allow_html: HTML is allowed, but passed through a safe HTML filter first.
      *                        If set, no more filtering is performed.
      *                      - If no bits other than the 1 bit is set, a strict filter is applied.
-     * @param string $type The variable type. See {@link FilterInput::clean()}.
+     * @param string|null $type The variable type. See {@link FilterInput::clean()}.
      *
      * @return string
      */
@@ -576,7 +577,7 @@ class Request
                 if (null === $noHtmlFilter) {
                     $noHtmlFilter = FilterInput::getInstance();
                 }
-                $var = $noHtmlFilter->clean($var, $type);
+                $var = $noHtmlFilter::clean($var, $type);
             }
         }
 
@@ -588,7 +589,7 @@ class Request
      *
      * @param mixed  $var  The input variable.
      * @param int    $mask Filter bit mask. See {@link Request::cleanVar()}
-     * @param string $type The variable type. See {@link FilterInput::clean()}.
+     * @param string|null $type The variable type. See {@link FilterInput::clean()}.
      *
      * @return string
      */
@@ -615,7 +616,10 @@ class Request
     protected static function stripSlashesRecursive($value)
     {
         $value = is_array($value)
-            ? array_map(array(get_called_class(), 'stripSlashesRecursive'), $value)
+            ? array_map(array(
+                            get_called_class(),
+                            'stripSlashesRecursive',
+                        ), $value)
             : stripslashes($value);
 
         return $value;

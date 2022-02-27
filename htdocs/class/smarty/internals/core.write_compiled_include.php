@@ -10,7 +10,7 @@
  *
  * @param string $compile_path
  * @param string $template_compiled
- * @return boolean
+ * @return bool
  */
 
 function smarty_core_write_compiled_include($params, &$smarty)

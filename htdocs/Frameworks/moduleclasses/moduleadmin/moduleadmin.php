@@ -17,11 +17,22 @@
  */
 class ModuleAdmin
 {
+    /**
+     * @var array
+     */
     private $_itemButton        = array();
+    /**
+     * @var array
+     */
     private $_itemInfoBox       = array();
+    /**
+     * @var array
+     */
     private $_itemInfoBoxLine   = array();
+    /**
+     * @var array
+     */
     private $_itemConfigBoxLine = array();
-
     /**
      * @var XoopsModule
      */
@@ -71,6 +82,7 @@ class ModuleAdmin
     /**
      * Return the Module Admin class version number
      * return string version
+     * @return string
      **/
     public function getVersion()
     {
@@ -86,6 +98,7 @@ class ModuleAdmin
     /**
      * Return the Module Admin class release date
      * return string version
+     * @return string
      **/
     public function getReleaseDate()
     {

@@ -116,6 +116,8 @@ class XoopsFormTextArea extends XoopsFormElement
      */
     public function render()
     {
-        return XoopsFormRenderer::getInstance()->get()->renderFormTextArea($this);
+        return XoopsFormRenderer::getInstance()
+                                ->get()
+                                ->renderFormTextArea($this);
     }
 }

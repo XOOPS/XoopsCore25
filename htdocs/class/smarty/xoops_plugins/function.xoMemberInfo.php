@@ -43,7 +43,7 @@
 
 /**
  * @param array $params
- * @param $smarty
+ * @param XoopsTpl $smarty
  */
 function smarty_function_xoMemberInfo($params, &$smarty)
 {

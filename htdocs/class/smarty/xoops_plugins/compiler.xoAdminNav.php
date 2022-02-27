@@ -15,8 +15,8 @@
  * @license          GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author           Andricq Nicolas (AKA MusS)
  * @since            2.5
- * @param $argStr
- * @param $smarty
+ * @param string $argStr
+ * @param XoopsTpl $smarty
  * @return string
  */
 

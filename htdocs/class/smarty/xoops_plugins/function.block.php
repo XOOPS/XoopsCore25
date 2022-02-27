@@ -23,9 +23,9 @@
 
 /**
  * @param array $params
- * @param $smarty
+ * @param XoopsTpl $smarty
  *
- * @return mixed
+ * @return mixed|null
  */
 function smarty_function_block($params, &$smarty)
 {

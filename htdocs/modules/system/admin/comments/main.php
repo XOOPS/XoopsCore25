@@ -16,6 +16,7 @@
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */ 
+
 use Xmf\Request;
 
 // Check users rights
@@ -47,12 +48,21 @@ $xoBreadCrumb->addLink(_AM_SYSTEM_COMMENTS_NAV_MANAGER, system_adminVersion('com
 include_once $GLOBALS['xoops']->path('/include/comment_constants.php');
 xoops_loadLanguage('comment');
 
-$limit_array     = array(20, 50, 100);
-$status_array    = array(XOOPS_COMMENT_PENDING => _CM_PENDING, XOOPS_COMMENT_ACTIVE => _CM_ACTIVE, XOOPS_COMMENT_HIDDEN => _CM_HIDDEN);
+$limit_array     = array(
+    20,
+    50,
+    100,
+);
+$status_array    = array(
+    XOOPS_COMMENT_PENDING => _CM_PENDING,
+    XOOPS_COMMENT_ACTIVE  => _CM_ACTIVE,
+    XOOPS_COMMENT_HIDDEN  => _CM_HIDDEN,
+);
 $status_array2   = array(
     XOOPS_COMMENT_PENDING => '<span style="text-decoration: none; font-weight: bold; color: #008000;">' . _CM_PENDING . '</span>',
     XOOPS_COMMENT_ACTIVE  => '<span style="text-decoration: none; font-weight: bold; color: #ff0000;">' . _CM_ACTIVE . '</span>',
-    XOOPS_COMMENT_HIDDEN  => '<span style="text-decoration: none; font-weight: bold; color: #0000ff;">' . _CM_HIDDEN . '</span>');
+    XOOPS_COMMENT_HIDDEN  => '<span style="text-decoration: none; font-weight: bold; color: #0000ff;">' . _CM_HIDDEN . '</span>',
+);
 $start           = 0;
 $status_array[0] = _AM_SYSTEM_COMMENTS_FORM_ALL_STATUS;
 
@@ -68,7 +78,6 @@ $module_array[0] = _AM_SYSTEM_COMMENTS_FORM_ALL_MODS;
 $comment_handler = xoops_getHandler('comment');
 
 switch ($op) {
-
     case 'comments_jump':
         $com_id = Request::getInt('com_id', 0);
         if ($com_id > 0) {

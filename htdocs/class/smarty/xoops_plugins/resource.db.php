@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Smarty plugin
  *
@@ -13,9 +14,9 @@
  *
  * @copyright       (c) 2000-2021 XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
- * @param $tpl_name
- * @param $tpl_source
- * @param $smarty
+ * @param string       $tpl_name
+ * @param string|false $tpl_source
+ * @param XoopsTpl     $smarty
  * @return bool
  */
 function smarty_resource_db_source($tpl_name, &$tpl_source, &$smarty)
@@ -26,7 +27,7 @@ function smarty_resource_db_source($tpl_name, &$tpl_source, &$smarty)
     if (is_object($tpl)) {
         $tpl_source = $tpl->getVar('tpl_source', 'n');
     } else {
-        $fp         = fopen($tpl, 'r');
+        $fp         = fopen($tpl, 'rb');
         $filesize   = filesize($tpl);
         $tpl_source = ($filesize > 0) ? fread($fp, $filesize) : '';
         fclose($fp);
@@ -36,9 +37,9 @@ function smarty_resource_db_source($tpl_name, &$tpl_source, &$smarty)
 }
 
 /**
- * @param $tpl_name
- * @param $tpl_timestamp
- * @param $smarty
+ * @param string $tpl_name
+ * @param int|false $tpl_timestamp
+ * @param XoopsTpl $smarty
  *
  * @return bool
  */
@@ -57,8 +58,8 @@ function smarty_resource_db_timestamp($tpl_name, &$tpl_timestamp, &$smarty)
 }
 
 /**
- * @param $tpl_name
- * @param $smarty
+ * @param string $tpl_name
+ * @param XoopsTpl $smarty
  *
  * @return bool
  */
@@ -69,8 +70,8 @@ function smarty_resource_db_secure($tpl_name, &$smarty)
 }
 
 /**
- * @param $tpl_name
- * @param $smarty
+ * @param string $tpl_name
+ * @param XoopsTpl $smarty
  */
 function smarty_resource_db_trusted($tpl_name, &$smarty)
 {
@@ -78,7 +79,7 @@ function smarty_resource_db_trusted($tpl_name, &$smarty)
 }
 
 /**
- * @param $tpl_name
+ * @param string $tpl_name
  *
  * @return bool|string
  */
@@ -90,8 +91,8 @@ function smarty_resource_db_tplinfo($tpl_name)
     if (isset($cache[$tpl_name])) {
         return $cache[$tpl_name];
     }
-    $tplset          = $xoopsConfig['template_set'];
-    $theme           = isset($xoopsConfig['theme_set']) ? $xoopsConfig['theme_set'] : 'default';
+    $tplset = $xoopsConfig['template_set'];
+    $theme  = isset($xoopsConfig['theme_set']) ? $xoopsConfig['theme_set'] : 'default';
     /** @var \XoopsTplfileHandler $tplfile_handler */
     $tplfile_handler = xoops_getHandler('tplfile');
     // If we're not using the "default" template set, then get the templates from the DB

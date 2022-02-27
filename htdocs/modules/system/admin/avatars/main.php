@@ -186,7 +186,8 @@ switch ($op) {
             'image/jpeg',
             'image/pjpeg',
             'image/x-png',
-            'image/png'),
+                'image/png',
+            ),
             $xoopsConfigUser['avatar_maxsize'],
             $xoopsConfigUser['avatar_width'],
             $xoopsConfigUser['avatar_height']
@@ -295,7 +296,7 @@ switch ($op) {
                     'op' => 'delfileok',
                     'avatar_id' => $avatar_id,
                     'fct' => 'avatars',
-                    'user_id' => $user_id
+                    'user_id'   => $user_id,
                 ),
                 'admin.php',
                 $msg
@@ -334,11 +335,15 @@ switch ($op) {
         @unlink(XOOPS_UPLOAD_PATH . '/' . $file);
         // Update member profile
         if (isset($user_id) && $avatar->getVar('avatar_type') === 'C') {
-            $xoopsDB->query('UPDATE ' . $xoopsDB->prefix('users')
-                . " SET user_avatar='blank.gif' WHERE uid=" . (int)$user_id);
+            $xoopsDB->query(
+                'UPDATE ' . $xoopsDB->prefix('users')
+                . " SET user_avatar='blank.gif' WHERE uid=" . (int)$user_id
+            );
         } else {
-            $xoopsDB->query('UPDATE ' . $xoopsDB->prefix('users')
-                . " SET user_avatar='blank.gif' WHERE user_avatar='" . $file . "'");
+            $xoopsDB->query(
+                'UPDATE ' . $xoopsDB->prefix('users')
+                . " SET user_avatar='blank.gif' WHERE user_avatar='" . $file . "'"
+            );
         }
         redirect_header('admin.php?fct=avatars', 2, _AM_SYSTEM_DBUPDATED);
         break;

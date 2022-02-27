@@ -11,7 +11,7 @@
 
 /**
  * @param array $params
- * @param $smarty
+ * @param XoopsTpl $smarty
  *
  * @return string
  */

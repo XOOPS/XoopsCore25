@@ -1,4 +1,5 @@
 <?php
+
 /**
  * XOOPS Kernel Class
  *
@@ -160,7 +161,7 @@ class XoopsImageHandler extends XoopsObjectHandler
     /**
      * Create a new {@link XoopsImage}
      *
-     * @param  boolean $isNew Flag the object as "new"
+     * @param  bool $isNew Flag the object as "new"
      * @return XoopsImage
      **/
     public function create($isNew = true)
@@ -176,14 +177,13 @@ class XoopsImageHandler extends XoopsObjectHandler
     /**
      * Load a {@link XoopsImage} object from the database
      *
-     * @param  int     $id ID
-     * @param  boolean $getbinary
-     * @return XoopsImage|false {@link XoopsImage}, FALSE on fail
+     * @param int $id ID
+     * @return false|\XoopsImage {@link XoopsImage}, FALSE on fail
      **/
-    public function get($id, $getbinary = true)
+    public function get($id)
     {
         $image = false;
-        $id    = (int)$id;
+        $id = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT i.*, b.image_body FROM ' . $this->db->prefix('image') . ' i LEFT JOIN ' . $this->db->prefix('imagebody') . ' b ON b.image_id=i.image_id WHERE i.image_id=' . $id;
             if (!$result = $this->db->query($sql)) {
@@ -191,7 +191,7 @@ class XoopsImageHandler extends XoopsObjectHandler
             }
             $numrows = $this->db->getRowsNum($result);
             if ($numrows == 1) {
-                $image = new XoopsImage();
+                $image = new \XoopsImage();
                 $image->assignVars($this->db->fetchArray($result));
             }
         }
@@ -288,8 +288,8 @@ class XoopsImageHandler extends XoopsObjectHandler
      * Load {@link XoopsImage}s from the database
      *
      * @param  CriteriaElement|CriteriaCompo $criteria  {@link CriteriaElement}
-     * @param  boolean         $id_as_key Use the ID as key into the array
-     * @param  boolean         $getbinary
+     * @param  bool         $id_as_key Use the ID as key into the array
+     * @param  bool         $getbinary
      * @return array           Array of {@link XoopsImage} objects
      **/
     public function getObjects(CriteriaElement $criteria = null, $id_as_key = false, $getbinary = false)
@@ -350,7 +350,7 @@ class XoopsImageHandler extends XoopsObjectHandler
      * Get a list of images
      *
      * @param  int  $imgcat_id
-     * @param  bool $image_display
+     * @param bool|null $image_display
      * @return array Array of {@link XoopsImage} objects
      **/
     public function getList($imgcat_id, $image_display = null)

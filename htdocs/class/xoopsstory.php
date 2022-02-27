@@ -28,28 +28,97 @@ include_once XOOPS_ROOT_PATH . '/kernel/user.php';
  */
 class XoopsStory
 {
+    /**
+     * @var string
+     */
     public $table;
+    /**
+     * @var int
+     */
     public $storyid;
+    /**
+     * @var int
+     */
     public $topicid;
+    /**
+     * @var int
+     */
     public $uid;
+    /**
+     * @var string
+     */
     public $title;
+    /**
+     * @var string
+     */
     public $hometext;
+    /**
+     * @var string
+     */
     public $bodytext  = '';
+    /**
+     * @var int
+     */
     public $counter;
+    /**
+     * @var int
+     */
     public $created;
+    /**
+     * @var int
+     */
     public $published;
+    /**
+     * @var int
+     */
     public $expired;
+    /**
+     * @var string
+     */
     public $hostname;
+    /**
+     * @var int
+     */
     public $nohtml    = 0;
+    /**
+     * @var int
+     */
     public $nosmiley  = 0;
+    /**
+     * @var int
+     */
     public $ihome     = 0;
+    /**
+     * @var int
+     */
     public $notifypub = 0;
+    /**
+     * @var string
+     */
     public $type;
+    /**
+     * @var int
+     */
     public $approved;
+    /**
+     * @var int
+     */
     public $topicdisplay;
+    /**
+     * @var string
+     */
     public $topicalign;
+    /**
+     * @var XoopsDatabase
+     */
     public $db;
+    /**
+     * @var string
+     */
     public $topicstable;
+    /**
+     * @var int
+     */
     public $comments;
 
     /**
@@ -277,7 +346,8 @@ class XoopsStory
     }
 
     /**
-     * @param $array
+     * @param array $array
+     * @return void
      */
     public function makeStory($array)
     {
@@ -327,6 +397,9 @@ class XoopsStory
         return true;
     }
 
+    /**
+     * @return int
+     */
     public function topicid()
     {
         return $this->topicid;
@@ -340,6 +413,9 @@ class XoopsStory
         return new XoopsTopic($this->topicstable, $this->topicid);
     }
 
+    /**
+     * @return int
+     */
     public function uid()
     {
         return $this->uid;
@@ -356,7 +432,7 @@ class XoopsStory
     /**
      * @param string $format
      *
-     * @return mixed
+     * @return string
      */
     public function title($format = 'Show')
     {
@@ -449,26 +525,41 @@ class XoopsStory
         return $bodytext;
     }
 
+    /**
+     * @return int
+     */
     public function counter()
     {
         return $this->counter;
     }
 
+    /**
+     * @return int
+     */
     public function created()
     {
         return $this->created;
     }
 
+    /**
+     * @return int
+     */
     public function published()
     {
         return $this->published;
     }
 
+    /**
+     * @return int
+     */
     public function expired()
     {
         return $this->expired;
     }
 
+    /**
+     * @return string
+     */
     public function hostname()
     {
         return $this->hostname;
@@ -516,6 +607,9 @@ class XoopsStory
         return $this->ihome;
     }
 
+    /**
+     * @return int
+     */
     public function topicdisplay()
     {
         return $this->topicdisplay;
@@ -540,6 +634,9 @@ class XoopsStory
         return $this->topicalign;
     }
 
+    /**
+     * @return int
+     */
     public function comments()
     {
         return $this->comments;

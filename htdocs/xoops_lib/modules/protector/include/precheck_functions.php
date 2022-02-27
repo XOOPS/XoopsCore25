@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @return bool
+ * @return bool|null
  */
 function protector_prepare()
 {

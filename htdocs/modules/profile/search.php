@@ -31,7 +31,8 @@ $searchable_types = array(
     'date',
     'datetime',
     'timezone',
-    'language');
+    'language',
+);
 
 switch ($op) {
     default:
@@ -131,7 +132,11 @@ switch ($op) {
             }
         }
         asort($sortby_arr);
-        $sortby_arr    = array_merge(array('' => _NONE, 'uname' => _US_NICKNAME, 'email' => _US_EMAIL), $sortby_arr);
+        $sortby_arr    = array_merge(   array(
+                                      ''      => _NONE,
+                                      'uname' => _US_NICKNAME,
+                                      'email' => _US_EMAIL,
+                                  ), $sortby_arr);
         $sortby_select = new XoopsFormSelect(_PROFILE_MA_SORTBY, 'sortby');
         $sortby_select->addOptionArray($sortby_arr);
         $searchform->addElement($sortby_select);
@@ -163,7 +168,8 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('page_title', _PROFILE_MA_RESULTS);
         $xoBreadcrumbs[] = array(
             'link'  => XOOPS_URL . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname', 'n') . '/search.php',
-            'title' => _SEARCH);
+            'title' => _SEARCH,
+        );
         $xoBreadcrumbs[] = array('title' => _PROFILE_MA_RESULTS);
         /* @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
@@ -229,7 +235,11 @@ switch ($op) {
                 continue;
             }
             $fieldname = $fields[$i]->getVar('field_name');
-            if (in_array($fields[$i]->getVar('field_type'), array('select', 'radio', 'timezone'))) {
+            if (in_array($fields[$i]->getVar('field_type'), array(
+                'select',
+                'radio',
+                'timezone',
+            ))) {
                 if (empty($_REQUEST[$fieldname])) {
                     continue;
                 }
@@ -246,7 +256,10 @@ switch ($op) {
                     case XOBJ_DTYPE_URL:
                     case XOBJ_DTYPE_TXTBOX:
                     case XOBJ_DTYPE_TXTAREA:
-                        $value        = array_map(array($GLOBALS['xoopsDB'], 'quoteString'), $_REQUEST[$fieldname]);
+                        $value        = array_map(   array(
+                                               $GLOBALS['xoopsDB'],
+                                               'quoteString',
+                                           ), $_REQUEST[$fieldname]);
                         $searchvars[] = $fieldname;
                         $criteria->add(new Criteria($fieldname, '(' . implode(',', $value) . ')', 'IN'));
                         break;

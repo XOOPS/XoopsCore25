@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Extended User Profile
  *
@@ -34,7 +35,7 @@ switch ($op) {
     default:
     case 'list':
         include_once $GLOBALS['xoops']->path('/class/xoopsformloader.php');
-        $form = new XoopsThemeForm(_PROFILE_AM_EDITUSER, 'form', 'user.php');
+        $form    = new XoopsThemeForm(_PROFILE_AM_EDITUSER, 'form', 'user.php');
         $lastUid = \Xmf\Request::getInt('lastuid', null, 'GET');
         $form->addElement(new XoopsFormSelectUser(_PROFILE_AM_SELECTUSER, 'id', false, $lastUid));
         $form->addElement(new XoopsFormHidden('op', 'editordelete'));
@@ -43,10 +44,11 @@ switch ($op) {
         $button_tray->addElement(new XoopsFormButton('', 'delete', _DELETE, 'submit'));
         $form->addElement($button_tray);
         $form->display();
-        // no break;
+    // no break;
     case 'new':
         xoops_loadLanguage('main', $GLOBALS['xoopsModule']->getVar('dirname', 'n'));
         include_once dirname(__DIR__) . '/include/forms.php';
+        /** @var XoopsUser $obj */
         $obj = $handler->createUser();
         $obj->setGroups(array(XOOPS_GROUP_USERS));
         $form = profile_getUserForm($obj);
@@ -85,7 +87,8 @@ switch ($op) {
 
         $uid = empty($_POST['uid']) ? 0 : (int)$_POST['uid'];
         if (!empty($uid)) {
-            $user    = $handler->getUser($uid);
+            $user = $handler->getUser($uid);
+            /** @var \ProfileProfile $profile */
             $profile = $profile_handler->get($uid);
             if (!is_object($profile)) {
                 $profile = $profile_handler->create();
@@ -219,7 +222,8 @@ switch ($op) {
             xoops_confirm(array(
                               'ok' => 1,
                               'id' => $_REQUEST['id'],
-                              'op' => 'delete'), $_SERVER['REQUEST_URI'], sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('uname') . ' (' . $obj->getVar('email') . ')'));
+                              'op' => 'delete',
+                          ), $_SERVER['REQUEST_URI'], sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('uname') . ' (' . $obj->getVar('email') . ')'));
         }
         break;
 }

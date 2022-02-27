@@ -18,7 +18,7 @@
  * @param string
  * @param integer
  * @param string
- * @param boolean
+ * @param bool
  * @return string
  */
 function smarty_modifier_wordwrap($string,$length=80,$break="\n",$cut=false)

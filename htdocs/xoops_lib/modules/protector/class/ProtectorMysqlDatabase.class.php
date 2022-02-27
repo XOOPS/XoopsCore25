@@ -13,6 +13,9 @@ require_once XOOPS_ROOT_PATH . '/class/database/database.php';
  */
 class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
 {
+    /**
+     * @var array
+     */
     public $doubtful_requests = array();
     public $doubtful_needles  = array(
         // 'order by' ,
@@ -20,9 +23,11 @@ class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
         'information_schema',
         'select',
         'union',
-        '/*', /**/
+        '/*',
+        /**/
         '--',
-        '#');
+        '#',
+    );
 
     /**
      * ProtectorMySQLDatabase constructor.
@@ -107,7 +112,10 @@ class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
             // because unescaped ' or " have been already checked in stage1
         }
 
-        return array($sql_wo_string, $strings);
+        return array(
+            $sql_wo_string,
+            $strings,
+        );
     }
 
     /**

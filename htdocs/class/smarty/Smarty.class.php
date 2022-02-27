@@ -99,7 +99,7 @@ class Smarty
      * when the page loads (make sure your browser allows unrequested
      * popup windows)
      *
-     * @var boolean
+     * @var bool
      */
     var $debugging       =  false;
 
@@ -135,7 +135,7 @@ class Smarty
      * Typically you enable this during development, and disable for
      * production.
      *
-     * @var boolean
+     * @var bool
      */
     var $compile_check   =  true;
 
@@ -143,7 +143,7 @@ class Smarty
      * This forces templates to compile every time. Useful for development
      * or debugging.
      *
-     * @var boolean
+     * @var bool
      */
     var $force_compile   =  false;
 
@@ -182,7 +182,7 @@ class Smarty
      * This way repeated hits to a cached page do not send the entire page to the
      * client every time.
      *
-     * @var boolean
+     * @var bool
      */
     var $cache_modified_check = false;
 
@@ -206,7 +206,7 @@ class Smarty
      * untrusted parties are editing templates and you want a reasonable level
      * of security. (no direct execution of PHP in templates for example)
      *
-     * @var boolean
+     * @var bool
      */
     var $security       =   false;
 
@@ -276,7 +276,7 @@ class Smarty
      * request_use_auto_globals is true, then $request_vars_order has
      * no effect, but the php-ini-value "gpc_order"
      *
-     * @var boolean
+     * @var bool
      */
     var $request_use_auto_globals      = true;
 
@@ -295,7 +295,7 @@ class Smarty
      * templates_c/ directories. sub directories better organized, but
      * may not work well with PHP safe mode enabled.
      *
-     * @var boolean
+     * @var bool
      *
      */
     var $use_sub_dirs          = false;
@@ -338,7 +338,7 @@ class Smarty
     var $autoload_filters = array();
 
     /**#@+
-     * @var boolean
+     * @var bool
      */
     /**
      * This tells if config file vars of the same name overwrite each other or not.
@@ -716,7 +716,7 @@ class Smarty
      * @param string $object name of template object
      * @param object &$object_impl the referenced PHP object to register
      * @param null|array $allowed list of allowed methods (empty = all)
-     * @param boolean $smarty_args smarty argument format, else traditional
+     * @param bool $smarty_args smarty argument format, else traditional
      * @param null|array $block_functs list of methods that are block format
      */
     function register_object($object, &$object_impl, $allowed = array(), $smarty_args = true, $block_methods = array())
@@ -936,7 +936,7 @@ class Smarty
      * @param string $cache_id name of cache_id
      * @param string $compile_id name of compile_id
      * @param string $exp_time expiration time
-     * @return boolean
+     * @return bool
      */
     function clear_cache($tpl_file = null, $cache_id = null, $compile_id = null, $exp_time = null)
     {
@@ -968,7 +968,7 @@ class Smarty
      * clear the entire contents of cache (all templates)
      *
      * @param string $exp_time expire time
-     * @return boolean results of {@link smarty_core_rm_auto()}
+     * @return bool results of {@link smarty_core_rm_auto()}
      */
     function clear_all_cache($exp_time = null)
     {
@@ -1019,7 +1019,7 @@ class Smarty
      * @param string $tpl_file
      * @param string $compile_id
      * @param string $exp_time
-     * @return boolean results of {@link smarty_core_rm_auto()}
+     * @return bool results of {@link smarty_core_rm_auto()}
      */
     function clear_compiled_tpl($tpl_file = null, $compile_id = null, $exp_time = null)
     {
@@ -1039,7 +1039,7 @@ class Smarty
      * Checks whether requested template exists.
      *
      * @param string $tpl_file
-     * @return boolean
+     * @return bool
      */
     function template_exists($tpl_file)
     {
@@ -1091,7 +1091,7 @@ class Smarty
      * trigger Smarty error
      *
      * @param string $error_msg
-     * @param integer $error_type
+     * @param int $error_type
      */
     function trigger_error($error_msg, $error_type = E_USER_WARNING)
     {
@@ -1118,7 +1118,7 @@ class Smarty
      * @param string $resource_name
      * @param string $cache_id
      * @param string $compile_id
-     * @param boolean $display
+     * @param bool $display
      */
     function fetch($resource_name, $cache_id = null, $compile_id = null, $display = false)
     {
@@ -1379,7 +1379,7 @@ class Smarty
      *
      * @param string $resource_name
      * @param string $compile_path
-     * @return boolean
+     * @return bool
      */
     function _is_compiled($resource_name, $compile_path)
     {
@@ -1412,7 +1412,7 @@ class Smarty
      *
      * @param string $resource_name
      * @param string $compile_path
-     * @return boolean
+     * @return bool
      */
     function _compile_resource($resource_name, $compile_path)
     {
@@ -1449,7 +1449,7 @@ class Smarty
      * @param string $resource_name
      * @param string $source_content
      * @param string $compiled_content
-     * @return boolean
+     * @return bool
      */
     function _compile_source($resource_name, &$source_content, &$compiled_content, $cache_include_path=null)
     {
@@ -1528,10 +1528,10 @@ class Smarty
      * $resource_timestamp to its time stamp
      * @param string $resource_name
      * @param string $source_content
-     * @param integer $resource_timestamp
-     * @param boolean $get_source
-     * @param boolean $quiet
-     * @return boolean
+     * @param int $resource_timestamp
+     * @param bool $get_source
+     * @param bool $quiet
+     * @return bool
      */
 
     function _fetch_resource_info(&$params)
@@ -1615,7 +1615,7 @@ class Smarty
      * @param string $resource_name
      * @param string $resource_type
      * @param string $resource_name
-     * @return boolean
+     * @return bool
      */
 
     function _parse_resource_name(&$params)
@@ -1770,7 +1770,7 @@ class Smarty
      * unlink a file, possibly using expiration time
      *
      * @param string $resource
-     * @param integer $exp_time
+     * @param int $exp_time
      */
     function _unlink($resource, $exp_time = null)
     {
@@ -1804,10 +1804,10 @@ class Smarty
      *
      * @param string $error_msg
      * @param string $tpl_file
-     * @param integer $tpl_line
+     * @param int $tpl_line
      * @param string $file
-     * @param integer $line
-     * @param integer $error_type
+     * @param int $line
+     * @param int $error_type
      */
     function _trigger_fatal_error($error_msg, $tpl_file = null, $tpl_line = null,
             $file = null, $line = null, $error_type = E_USER_ERROR)

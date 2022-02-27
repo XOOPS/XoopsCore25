@@ -102,6 +102,7 @@ class XoopsForm
      * additional serialised object checksum (ERM Analysis - Requirement)
      * @deprecated
      * @access private
+     * @var string
      */
     public $_objid = 'da39a3ee5e6b4b0d3255bfef95601890afd80709';
 
@@ -130,15 +131,22 @@ class XoopsForm
             $this->addElement(new XoopsFormHiddenToken());
         }
     }
+
     /**
      * PHP 4 style constructor compatibility shim
+     * @param string $title
+     * @param string $name
+     * @param string $action
+     * @param string $method
+     * @param bool   $addtoken
+     * @param string $summary
      * @deprecated all callers should be using parent::__construct()
      */
-    public function XoopsForm()
+    public function XoopsForm($title, $name, $action, $method = 'post', $addtoken = false, $summary = '')
     {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
         trigger_error("Should call parent::__construct in {$trace[0]['file']} line {$trace[0]['line']},");
-        self::__construct();
+        self::__construct($title, $name, $action, $method, $addtoken, $summary);
     }
     /**
      * *#@+
@@ -430,7 +438,7 @@ class XoopsForm
      *
      * @param  string $name   the "name" attribute of a form element
      * @param  bool   $encode To sanitizer the text?
-     * @return string the "value" attribute assigned to a form element, null if not set
+     * @return string|null the "value" attribute assigned to a form element, null if not set
      */
     public function getElementValue($name, $encode = false)
     {
@@ -559,7 +567,7 @@ class XoopsForm
      * @param string $extra extra information for the break
      * @abstract
      */
-    public function insertBreak($extra = null)
+    public function insertBreak($extra = '')
     {
     }
 
@@ -602,7 +610,7 @@ class XoopsForm
      * }
      * </code>
      *
-     * @param boolean $withtags Include the < javascript > tags in the returned string
+     * @param bool $withtags Include the < javascript > tags in the returned string
      *
      * @return string
      */

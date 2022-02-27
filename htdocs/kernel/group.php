@@ -1,4 +1,5 @@
 <?php
+
 /**
  * XOOPS Kernel Class
  *
@@ -135,12 +136,12 @@ class XoopsGroupHandler extends XoopsObjectHandler
     /**
      * retrieve a specific group
      *
-     * @param  int $id ID of the group to get
-     * @return XoopsGroup|false XoopsGroup reference to the group object, FALSE if failed
+     * @param int $id ID of the group to get
+     * @return false|\XoopsGroup XoopsGroup reference to the group object, FALSE if failed
      */
     public function get($id)
     {
-        $id    = (int)$id;
+        $id = (int)$id;
         $group = false;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('groups') . ' WHERE groupid=' . $id;
@@ -149,7 +150,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
             }
             $numrows = $this->db->getRowsNum($result);
             if ($numrows == 1) {
-                $group = new XoopsGroup();
+                $group = new \XoopsGroup();
                 $group->assignVars($this->db->fetchArray($result));
             }
         }
@@ -222,7 +223,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
      *
      * @param  CriteriaElement|CriteriaCompo $criteria  {@link CriteriaElement} with conditions for the groups
      * @param  bool            $id_as_key should the groups' IDs be used as keys for the associative array?
-     * @return mixed           Array of groups
+     * @return array           Array of groups
      */
     public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
@@ -304,7 +305,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
      * create a new membership
      *
      * @param  bool $isNew should the new object be set to "new"?
-     * @return XoopsMembership XoopsMembership
+     * @return XoopsMembership
      */
     public function create($isNew = true)
     {
@@ -319,12 +320,12 @@ class XoopsMembershipHandler extends XoopsObjectHandler
     /**
      * retrieve a membership
      *
-     * @param  int $id ID of the membership to get
-     * @return mixed reference to the object if successful, else FALSE
+     * @param int $id ID of the membership to get
+     * @return false|\XoopsMembership reference to the object if successful, else FALSE
      */
     public function get($id)
     {
-        $id    = (int)$id;
+        $id = (int)$id;
         $mship = false;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('groups_users_link') . ' WHERE linkid=' . $id;

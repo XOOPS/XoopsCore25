@@ -118,7 +118,7 @@ class TableLoad
      * countRows - get count of rows in a table
      *
      * @param string           $table    name of table to count
-     * @param \CriteriaElement $criteria optional criteria
+     * @param \CriteriaElement|null $criteria optional criteria
      *
      * @return int number of rows
      */
@@ -144,7 +144,7 @@ class TableLoad
      * extractRows - get rows, all or a subset, from a table as an array
      *
      * @param string           $table       name of table to count
-     * @param \CriteriaElement $criteria    optional criteria
+     * @param \CriteriaElement|null $criteria    optional criteria
      * @param string[]         $skipColumns do not include columns in this list
      *
      * @return array of table rows
@@ -186,7 +186,7 @@ class TableLoad
      *
      * @param string           $table name of table to load without prefix
      * @param string           $yamlFile name of file containing data dump in YAML format
-     * @param \CriteriaElement $criteria optional criteria
+     * @param \CriteriaElement|null $criteria    optional criteria
      * @param string[]         $skipColumns do not include columns in this list
      *
      * @return bool true on success, false on error

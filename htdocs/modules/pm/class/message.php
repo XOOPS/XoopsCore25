@@ -133,9 +133,9 @@ class PmMessageHandler extends XoopsPersistableObjectHandler
 
     /**
      * get user's message count in savebox
-     * @param  XoopsUser $user
+     * @param \XoopsUser|null $user
      * @return int
-     **/
+     */
     public function getSavecount(XoopsUser $user = null)
     {
         if (!is_object($user)) {

@@ -26,9 +26,21 @@
  */
 class MyTextSanitizerExtension
 {
+    /**
+     * @var \MyTextSanitizer
+     */
     public $instance;
+    /**
+     * @var \MyTextSanitizer
+     */
     public $ts;
+    /**
+     * @var \XoopsConfig
+     */
     public $config;
+    /**
+     * @var string
+     */
     public $image_path;
 
     /**
@@ -45,7 +57,7 @@ class MyTextSanitizerExtension
     /**
      * loadConfig
      *
-     * @param  string $path
+     * @param string|null $path
      * @return string|array
      */
     public static function loadConfig($path = null)
@@ -110,8 +122,8 @@ class MyTextSanitizerExtension
      * decode
      *
      * @param string $url
-     * @param string|integer $width
-     * @param string|integer $height
+     * @param string|int $width
+     * @param string|int $height
      *
      * @return Null
      */
@@ -142,6 +154,7 @@ class MyTextSanitizer
     public $smileys = array();
 
     /**
+     * @var \MytsCensor
      */
     public $censorConf;
 
@@ -150,18 +163,40 @@ class MyTextSanitizer
      * @var string holding reference to text
      */
     public $text         = '';
+    /**
+     * @var array
+     */
     public $patterns     = array();
+    /**
+     * @var array
+     */
     public $replacements = array();
 
     //mb------------------------------
+    /**
+     * @var array
+     */
     public $callbackPatterns = array();
+    /**
+     * @var array
+     */
     public $callbacks        = array();
     //mb------------------------------
-
+    /**
+     * @var string
+     */
     public $path_basic;
+    /**
+     * @var string
+     */
     public $path_config;
+    /**
+     * @var string
+     */
     public $path_plugin;
-
+    /**
+     * @var \XoopsConfig
+     */
     public $config;
 
     /**
@@ -185,7 +220,7 @@ class MyTextSanitizer
     /**
      * Enter description here...
      *
-     * @param  string $name
+     * @param string|null $name
      * @return array|string
      */
     public function loadConfig($name = null)
@@ -212,7 +247,7 @@ class MyTextSanitizer
      *
      * @param  array $config_default
      * @param  array $config_custom
-     * @return mixed
+     * @return array
      */
     public function mergeConfig($config_default, $config_custom)
     {
@@ -294,7 +329,7 @@ class MyTextSanitizer
     }
 
     /**
-     * @param $match
+     * @param array $match
      *
      * @return string
      */
@@ -304,7 +339,7 @@ class MyTextSanitizer
     }
 
     /**
-     * @param $match
+     * @param array $match
      *
      * @return string
      */
@@ -314,7 +349,7 @@ class MyTextSanitizer
     }
 
     /**
-     * @param $match
+     * @param array $match
      *
      * @return string
      */
@@ -324,7 +359,7 @@ class MyTextSanitizer
     }
 
     /**
-     * @param $match
+     * @param array $match
      *
      * @return string
      */
@@ -343,8 +378,8 @@ class MyTextSanitizer
     {
         $text1 = $text;
 
-        $valid_chars = "a-z0-9\/\-_+=.~!%@?#&;:$\|";
-        $end_chars   = "a-z0-9\/\-_+=~!%@?#&;:$\|";
+        $valid_chars = 'a-z0-9\/\-_+=.~!%@?#&;:$\|';
+        $end_chars   = 'a-z0-9\/\-_+=~!%@?#&;:$\|';
 
         //        $patterns   = array();
         //        $replacements   = array();
@@ -428,19 +463,19 @@ class MyTextSanitizer
         $patterns[]     = "/\[email]([^;<>\*\(\)\"']*)\[\/email\]/sU";
         $replacements[] = '<a href="mailto:\\1" title="">\\1</a>';
 
-        $patterns[]     = "/\[b](.*)\[\/b\]/sU";
+        $patterns[]     = '/\[b](.*)\[\/b\]/sU';
         $replacements[] = '<strong>\\1</strong>';
-        $patterns[]     = "/\[i](.*)\[\/i\]/sU";
+        $patterns[]     = '/\[i](.*)\[\/i\]/sU';
         $replacements[] = '<em>\\1</em>';
-        $patterns[]     = "/\[u](.*)\[\/u\]/sU";
+        $patterns[]     = '/\[u](.*)\[\/u\]/sU';
         $replacements[] = '<span style="text-decoration: underline;">\\1</span>';
-        $patterns[]     = "/\[d](.*)\[\/d\]/sU";
+        $patterns[]     = '/\[d](.*)\[\/d\]/sU';
         $replacements[] = '<del>\\1</del>';
-        $patterns[]     = "/\[center](.*)\[\/center\]/sU";
+        $patterns[]     = '/\[center](.*)\[\/center\]/sU';
         $replacements[] = '<div style="text-align: center;">\\1</div>';
-        $patterns[]     = "/\[left](.*)\[\/left\]/sU";
+        $patterns[]     = '/\[left](.*)\[\/left\]/sU';
         $replacements[] = '<div style="text-align: left;">\\1</div>';
-        $patterns[]     = "/\[right](.*)\[\/right\]/sU";
+        $patterns[]     = '/\[right](.*)\[\/right\]/sU';
         $replacements[] = '<div style="text-align: right;">\\1</div>';
 
         $this->text         = $text;
@@ -472,7 +507,7 @@ class MyTextSanitizer
     public function quoteConv($text)
     {
         //look for both open and closing tags in the correct order
-        $pattern     = "/\[quote](.*)\[\/quote\]/sU";
+        $pattern     = '/\[quote](.*)\[\/quote\]/sU';
         $replacement = _QUOTEC . '<div class="xoopsQuote"><blockquote>\\1</blockquote></div>';
 
         $text = preg_replace($pattern, $replacement, $text, -1, $count);
@@ -489,8 +524,8 @@ class MyTextSanitizer
      * A quick solution for filtering XSS scripts
      *
      * @TODO : To be improved
-     * @param $text
-     * @return mixed
+     * @param string $text
+     * @return array|string|string[]|null
      */
     public function filterXss($text)
     {
@@ -540,20 +575,20 @@ class MyTextSanitizer
      *
      * @param  string $text    string being converted
      * @param  int|null    $quote_style
-     * @param  string $charset character set used in conversion
+     * @param string|null $charset character set used in conversion
      * @param  bool   $double_encode
      * @return string
      */
-    public function htmlSpecialChars($text, $quote_style = NULL, $charset = null, $double_encode = true)
+    public function htmlSpecialChars($text, $quote_style = null, $charset = null, $double_encode = true)
     {
-        if ($quote_style === NULL) {
+        if ($quote_style === null) {
             $quote_style = ENT_QUOTES;
         }
 
         if (version_compare(phpversion(), '5.2.3', '>=')) {
-            $text = htmlspecialchars($text, $quote_style, $charset ?: (defined('_CHARSET') ? _CHARSET : 'UTF-8'), $double_encode);
+            $text = htmlspecialchars(isset($text) ? $text : '', $quote_style, $charset ?: (defined('_CHARSET') ? _CHARSET : 'UTF-8'), $double_encode);
         } else {
-            $text = htmlspecialchars($text, $quote_style);
+            $text = htmlspecialchars(isset($text) ? $text : '', $quote_style);
         }
 
         return preg_replace(array('/&amp;/i', '/&nbsp;/i'), array('&', '&amp;nbsp;'), $text);
@@ -585,7 +620,7 @@ class MyTextSanitizer
     {
         $charset = (defined('_CHARSET') ? _CHARSET : 'UTF-8');
         if (function_exists('mb_convert_encoding')) {
-            $text = mb_convert_encoding($text, $charset, mb_detect_encoding($text, mb_detect_order(), true));
+            $text = mb_convert_encoding(isset($text) ? $text : '', $charset, mb_detect_encoding(isset($text) ? $text : '', mb_detect_order(), true));
         }
         if ($html && $br) {
             $testText = strip_tags($text);
@@ -674,7 +709,7 @@ class MyTextSanitizer
             //            $patterns = "/\[code([^\]]*?)\](.*)\[\/code\]/esU";
             //            $replacements = "'[code\\1]'.base64_encode('\\2').'[/code]'";
 
-            $patterns = "/\[code([^\]]*?)\](.*)\[\/code\]/sU";
+            $patterns = '/\[code([^\]]*?)\](.*)\[\/code\]/sU';
             $text = preg_replace_callback(
                 $patterns,
                 function ($matches) {
@@ -709,8 +744,11 @@ class MyTextSanitizer
         if (empty($xcode)) {
             return $text;
         }
-        $patterns = "/\[code([^\]]*?)\](.*)\[\/code\]/sU";
-        $text1    = preg_replace_callback($patterns, array($this, 'codeConvCallback'), $text);
+        $patterns = '/\[code([^\]]*?)\](.*)\[\/code\]/sU';
+        $text1    = preg_replace_callback($patterns, array(
+            $this,
+            'codeConvCallback',
+        ),  $text);
 
         return $text1;
     }
@@ -718,7 +756,7 @@ class MyTextSanitizer
     /**
      * MyTextSanitizer::executeExtensions()
      *
-     * @return bool
+     * @return bool|null
      */
     public function executeExtensions()
     {
@@ -768,7 +806,10 @@ class MyTextSanitizer
         $args      = array_slice(func_get_args(), 1);
         array_unshift($args, $this);
 
-        return call_user_func_array(array($extension, 'load'), $args);
+        return call_user_func_array(array(
+                                        $extension,
+                                        'load',
+                                    ), $args);
     }
 
     /**
@@ -814,7 +855,7 @@ class MyTextSanitizer
      *
      * @param  mixed $str
      * @param  mixed $image
-     * @return mixed|string
+     * @return string
      * @deprecated will be removed in next XOOPS version
      */
     public function codeSanitizer($str, $image = 1)
@@ -830,10 +871,10 @@ class MyTextSanitizer
      * MyTextSanitizer::sanitizeForDisplay()
      *
      * @param  mixed   $text
-     * @param  integer $allowhtml
-     * @param  integer $smiley
+     * @param int $allowhtml
+     * @param int $smiley
      * @param  mixed   $bbcode
-     * @return mixed|string
+     * @return string
      * @deprecated will be removed in next XOOPS version
      */
     public function sanitizeForDisplay($text, $allowhtml = 0, $smiley = 1, $bbcode = 1)
@@ -862,10 +903,10 @@ class MyTextSanitizer
      * MyTextSanitizer::sanitizeForPreview()
      *
      * @param  mixed   $text
-     * @param  integer $allowhtml
-     * @param  integer $smiley
+     * @param int $allowhtml
+     * @param int $smiley
      * @param  mixed   $bbcode
-     * @return mixed|string
+     * @return string
      * @deprecated will be removed in next XOOPS version
      */
     public function sanitizeForPreview($text, $allowhtml = 0, $smiley = 1, $bbcode = 1)
@@ -911,7 +952,7 @@ class MyTextSanitizer
      *
      * @param  mixed $text
      * @param  mixed $smiley
-     * @return mixed|string
+     * @return string
      * @deprecated will be removed in next XOOPS version
      */
     public function makeTboxData4Show($text, $smiley = 0)
@@ -941,7 +982,7 @@ class MyTextSanitizer
      *
      * @param  mixed $text
      * @param  mixed $smiley
-     * @return mixed|string
+     * @return string
      * @deprecated will be removed in next XOOPS version
      */
     public function makeTboxData4Preview($text, $smiley = 0)
@@ -986,10 +1027,10 @@ class MyTextSanitizer
      * MyTextSanitizer::makeTareaData4Show()
      *
      * @param  mixed   $text
-     * @param  integer $html
-     * @param  integer $smiley
+     * @param int $html
+     * @param int $smiley
      * @param  mixed   $xcode
-     * @return mixed|string
+     * @return string
      * @deprecated will be removed in next XOOPS version
      */
     public function &makeTareaData4Show(&$text, $html = 1, $smiley = 1, $xcode = 1)
@@ -1018,10 +1059,10 @@ class MyTextSanitizer
      * MyTextSanitizer::makeTareaData4Preview()
      *
      * @param  mixed   $text
-     * @param  integer $html
-     * @param  integer $smiley
+     * @param int $html
+     * @param int $smiley
      * @param  mixed   $xcode
-     * @return mixed|string
+     * @return string
      * @deprecated will be removed in next XOOPS version
      */
     public function &makeTareaData4Preview(&$text, $html = 1, $smiley = 1, $xcode = 1)

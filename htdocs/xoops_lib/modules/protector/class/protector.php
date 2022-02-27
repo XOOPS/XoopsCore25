@@ -5,52 +5,134 @@
  */
 class Protector
 {
+    /**
+     * @var string
+     */
     public $mydirname;
-
+    /**
+     * @var \mysqli
+     */
     public $_conn;
-    public $_conf            = array();
-    public $_conf_serialized = '';
-
+    /**
+     * @var array
+     */
+    public $_conf = array(); //mb TODO
+    /**
+     * @var string
+     */
+    public $_conf_serialized = ''; //mb TODO could be also false
+    /**
+     * @var array
+     */
     public $_bad_globals = array();
-
+    /**
+     * @var string
+     */
     public $message                = '';
+    /**
+     * @var bool
+     */
     public $warning                = false;
+    /**
+     * @var bool
+     */
     public $error                  = false;
+    /**
+     * @var array
+     */
     public $_doubtful_requests     = array();
+    /**
+     * @var array
+     */
     public $_bigumbrella_doubtfuls = array();
-
+    /**
+     * @var array
+     */
     public $_dblayertrap_doubtfuls        = array();
+    /**
+     * @var array
+     */
     public $_dblayertrap_doubtful_needles = array(
         'information_schema',
         'select',
         "'",
-        '"');
-
+        '"',
+    );
+    /**
+     * @var bool
+     */
     public $_logged = false;
-
+    /**
+     * @var bool
+     */
     public $_done_badext   = false;
+    /**
+     * @var bool
+     */
     public $_done_intval   = false;
+    /**
+     * @var bool
+     */
     public $_done_dotdot   = false;
+    /**
+     * @var bool
+     */
     public $_done_nullbyte = false;
+    /**
+     * @var bool
+     */
     public $_done_contami  = false;
+    /**
+     * @var bool
+     */
     public $_done_isocom   = false;
+    /**
+     * @var bool
+     */
     public $_done_union    = false;
+    /**
+     * @var bool
+     */
     public $_done_dos      = false;
-
+    /**
+     * @var bool
+     */
     public $_safe_badext  = true;
+    /**
+     * @var bool
+     */
     public $_safe_contami = true;
+    /**
+     * @var bool
+     */
     public $_safe_isocom  = true;
+    /**
+     * @var bool
+     */
     public $_safe_union   = true;
-
+    /**
+     * @var int
+     */
     public $_spamcount_uri = 0;
-
+    /**
+     * @var bool
+     */
     public $_should_be_banned_time0 = false;
+    /**
+     * @var bool
+     */
     public $_should_be_banned       = false;
-
-    public $_dos_stage;
-
-    public $ip_matched_info;
-
+    /**
+     * @var string
+     */
+    public $_dos_stage; //mb TODO is not used anywhere
+    /**
+     * @var string
+     */
+    public $ip_matched_info; //mb TODO could be also null
+    /**
+     * @var string
+     */
     public $last_error_type = 'UNKNOWN';
 
     /**
@@ -105,7 +187,8 @@ class Protector
             'xoopsConfig',
             'xoopsOption',
             'xoopsModule',
-            'xoopsModuleConfig');
+            'xoopsModuleConfig',
+        );
 
         $this->_initial_recursive($_GET, 'G');
         $this->_initial_recursive($_POST, 'P');
@@ -113,8 +196,10 @@ class Protector
     }
 
     /**
-     * @param $val
-     * @param $key
+     * @param array|string $val
+     * @param string       $key
+     *
+     * @return void
      */
     protected function _initial_recursive($val, $key)
     {
@@ -192,6 +277,8 @@ class Protector
 
     /**
      * @param $conn
+     *
+     * @return void
      */
     public function setConn($conn)
     {
@@ -208,6 +295,8 @@ class Protector
 
     /**
      * @param bool $redirect_to_top
+     *
+     * @return void
      */
     public function purge($redirect_to_top = false)
     {
@@ -224,6 +313,9 @@ class Protector
         }
     }
 
+    /**
+     * @return void
+     */
     public function purgeSession()
     {
         // clear all session values
@@ -237,6 +329,9 @@ class Protector
         }
     }
 
+    /**
+     * @return void
+     */
     public function purgeCookies()
     {
         if (!headers_sent()) {
@@ -249,12 +344,18 @@ class Protector
         }
     }
 
+    /**
+     * @return void
+     */
     public function purgeNoExit()
     {
         $this->purgeSession();
         $this->purgeCookies();
     }
 
+    /**
+     * @return void
+     */
     public function deactivateCurrentUser()
     {
         /* @var XoopsUser $xoopsUser */
@@ -300,7 +401,8 @@ class Protector
             }
         }
 
-        $ip    = \Xmf\IPAddress::fromRequest()->asReadable();
+        $ip    = \Xmf\IPAddress::fromRequest()
+                               ->asReadable();
         $agent = @$_SERVER['HTTP_USER_AGENT'];
 
         if ($unique_check) {
@@ -399,7 +501,8 @@ class Protector
     public function register_bad_ips($jailed_time = 0, $ip = null)
     {
         if (empty($ip)) {
-            $ip = \Xmf\IPAddress::fromRequest()->asReadable();
+            $ip = \Xmf\IPAddress::fromRequest()
+                                ->asReadable();
         }
         if (empty($ip)) {
             return false;
@@ -486,13 +589,14 @@ class Protector
     }
 
     /**
-     * @param $ips
+     * @param array $ips
      *
      * @return bool
      */
     public function ip_match($ips)
     {
-        $requestIp = \Xmf\IPAddress::fromRequest()->asReadable();
+        $requestIp = \Xmf\IPAddress::fromRequest()
+                                   ->asReadable();
         if (false === $requestIp) { // nothing to match
             $this->ip_matched_info = null;
             return false;
@@ -552,7 +656,8 @@ class Protector
     public function deny_by_htaccess($ip = null)
     {
         if (empty($ip)) {
-            $ip = \Xmf\IPAddress::fromRequest()->asReadable();
+            $ip = \Xmf\IPAddress::fromRequest()
+                                ->asReadable();
         }
         if (empty($ip)) {
             return false;
@@ -612,8 +717,8 @@ class Protector
     }
 
     /**
-     * @param $val
-     * @return null
+     * @param array|string $val
+     * @return null|void
      */
     protected function _dblayertrap_check_recursive($val)
     {
@@ -636,7 +741,8 @@ class Protector
 
     /**
      * @param  bool $force_override
-     * @return null
+     *
+     * @return void
      */
     public function dblayertrap_init($force_override = false)
     {
@@ -659,7 +765,9 @@ class Protector
     }
 
     /**
-     * @param $val
+     * @param array|string $val
+     *
+     * @return void
      */
     protected function _bigumbrella_check_recursive($val)
     {
@@ -674,6 +782,9 @@ class Protector
         }
     }
 
+    /**
+     * @return void
+     */
     public function bigumbrella_init()
     {
         $this->_bigumbrella_doubtfuls = array();
@@ -681,12 +792,15 @@ class Protector
         $this->_bigumbrella_check_recursive(@$_SERVER['PHP_SELF']);
 
         if (!empty($this->_bigumbrella_doubtfuls)) {
-            ob_start(array($this, 'bigumbrella_outputcheck'));
+            ob_start(array(
+                         $this,
+                         'bigumbrella_outputcheck',
+                     ));
         }
     }
 
     /**
-     * @param $s
+     * @param string $s
      *
      * @return string
      */
@@ -826,10 +940,10 @@ class Protector
     }
 
     /**
-     * @param $current
-     * @param $indexes
+     * @param array|string $current
+     * @param array        $indexes
      *
-     * @return bool
+     * @return bool|array
      */
     public function &get_ref_from_base64index(&$current, $indexes)
     {
@@ -845,8 +959,10 @@ class Protector
     }
 
     /**
-     * @param $key
-     * @param $val
+     * @param string       $key
+     * @param array|string $val
+     *
+     * @return void
      */
     public function replace_doubtful($key, $val)
     {
@@ -895,7 +1011,16 @@ class Protector
         }
 
         // extensions never uploaded
-        $bad_extensions = array('php', 'phtml', 'phtm', 'php3', 'php4', 'cgi', 'pl', 'asp');
+        $bad_extensions = array(
+            'php',
+            'phtml',
+            'phtm',
+            'php3',
+            'php4',
+            'cgi',
+            'pl',
+            'asp',
+        );
         // extensions needed image check (anti-IE Content-Type XSS)
         $image_extensions = array(
             1  => 'gif',
@@ -913,7 +1038,8 @@ class Protector
             13 => 'swc',
             14 => 'iff',
             15 => 'wbmp',
-            16 => 'xbm');
+            16 => 'xbm',
+        );
 
         foreach ($_FILES as $_file) {
             if (!empty($_file['error'])) {
@@ -1044,7 +1170,7 @@ class Protector
     }
 
     /**
-     * @param $uid
+     * @param int $uid
      *
      * @return bool
      */
@@ -1109,6 +1235,13 @@ class Protector
         return true;
     }
 
+    /**
+     * @param string $email
+     * @param string $ip
+     * @param string $username
+     *
+     * @return string|bool
+     */
     public function stopForumSpamLookup($email, $ip, $username)
     {
         if (!function_exists('curl_init')) {
@@ -1193,7 +1326,8 @@ class Protector
         // F5 attack check (High load & same URI)
         $result = $xoopsDB->query(
             'SELECT COUNT(*) FROM ' . $xoopsDB->prefix($this->mydirname . '_access')
-            . " WHERE ip={$ip4sql} AND request_uri={$uri4sql}");
+            . " WHERE ip={$ip4sql} AND request_uri={$uri4sql}"
+        );
         list($f5_count) = $xoopsDB->fetchRow($result);
         if ($f5_count > $this->_conf['dos_f5count']) {
 
@@ -1324,7 +1458,7 @@ class Protector
         }
         $mal4sql = $xoopsDB->quote("BRUTE FORCE: $victim_uname");
 
-        // gargage collection
+        // garbage collection
         $result = $xoopsDB->queryF(
             'DELETE FROM ' . $xoopsDB->prefix($this->mydirname . '_access') . ' WHERE expire < UNIX_TIMESTAMP()'
         );
@@ -1355,7 +1489,9 @@ class Protector
     }
 
     /**
-     * @param $val
+     * @param array|string $val
+     *
+     * @return void
      */
     protected function _spam_check_point_recursive($val)
     {
@@ -1385,8 +1521,10 @@ class Protector
     }
 
     /**
-     * @param $points4deny
-     * @param $uid
+     * @param int $points4deny
+     * @param int $uid
+     *
+     * @return void
      */
     public function spam_check($points4deny, $uid)
     {
@@ -1403,6 +1541,9 @@ class Protector
         }
     }
 
+    /**
+     * @return void
+     */
     public function disable_features()
     {
         global $HTTP_POST_VARS, $HTTP_GET_VARS, $HTTP_COOKIE_VARS;
@@ -1496,7 +1637,7 @@ class Protector
     }
 
     /**
-     * @param        $type
+     * @param string $type
      * @param string $dying_message
      *
      * @return int|mixed

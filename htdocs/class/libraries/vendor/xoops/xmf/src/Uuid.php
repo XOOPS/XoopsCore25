@@ -59,7 +59,7 @@ class Uuid
         if (!preg_match(static::UUID_REGEX, $uuid)) {
             throw new \InvalidArgumentException('Invalid UUID');
         }
-        $return = pack("H*", str_replace('-', '', $uuid));
+        $return = pack('H*', str_replace('-', '', $uuid));
         if (false === $return) {
             throw new \UnexpectedValueException('Packing UUID Failed');
         }

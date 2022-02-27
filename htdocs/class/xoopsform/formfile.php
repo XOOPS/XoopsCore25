@@ -63,6 +63,8 @@ class XoopsFormFile extends XoopsFormElement
      */
     public function render()
     {
-        return XoopsFormRenderer::getInstance()->get()->renderFormFile($this);
+        return XoopsFormRenderer::getInstance()
+                                ->get()
+                                ->renderFormFile($this);
     }
 }

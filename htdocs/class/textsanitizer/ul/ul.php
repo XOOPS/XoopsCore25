@@ -1,4 +1,5 @@
 <?php
+
 /**
  * TextSanitizer extension
  *
@@ -25,13 +26,13 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 class MytsUl extends MyTextSanitizerExtension
 {
     /**
-     * @param $ts
+     * @param MyTextSanitizer $ts
      *
      * @return bool
      */
     public function load($ts)
     {
-        $ts->patterns[]     = "/\[ul](.*)\[\/ul\]/sU";
+        $ts->patterns[]     = '/\[ul](.*)\[\/ul\]/sU';
         $ts->replacements[] = '<ul>\\1</ul>';
 
         return true;

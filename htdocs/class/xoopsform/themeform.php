@@ -35,7 +35,9 @@ class XoopsThemeForm extends XoopsForm
      */
     public function insertBreak($extra = '', $class = '')
     {
-        XoopsFormRenderer::getInstance()->get()->addThemeFormBreak($this, $extra, $class);
+        XoopsFormRenderer::getInstance()
+                         ->get()
+                         ->addThemeFormBreak($this, $extra, $class);
     }
 
     /**
@@ -53,6 +55,8 @@ class XoopsThemeForm extends XoopsForm
      */
     public function render()
     {
-        return XoopsFormRenderer::getInstance()->get()->renderThemeForm($this);
+        return XoopsFormRenderer::getInstance()
+                                ->get()
+                                ->renderThemeForm($this);
     }
 }

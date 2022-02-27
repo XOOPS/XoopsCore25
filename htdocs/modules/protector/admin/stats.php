@@ -19,6 +19,11 @@ require XOOPS_TRUST_PATH.'/modules/'.$mytrustdirname.'/admin/admin_header.php';
 
 xoops_cp_header();
 
+/**
+ * @param array       $array
+ * @param string|null $wrap
+ * @return string
+ */
 function dumpArray($array, $wrap = null)
 {
     $firstTime = true;
@@ -33,8 +38,8 @@ function dumpArray($array, $wrap = null)
     return $string;
 }
 
-$queryFormat = "SELECT `type`, '%s' as age, COUNT(*) as count FROM `" . $xoopsDB->prefix($mydirname . "_log")
-    . "` WHERE `timestamp` > NOW() - INTERVAL %d SECOND GROUP BY `type`, 2 ";
+$queryFormat = "SELECT `type`, '%s' as age, COUNT(*) as count FROM `" . $xoopsDB->prefix($mydirname . '_log')
+               . '` WHERE `timestamp` > NOW() - INTERVAL %d SECOND GROUP BY `type`, 2 ';
 
 $sql = '';
 $sql .= sprintf($queryFormat, 'month', 30*24*60*60);
@@ -54,7 +59,12 @@ $result = $xoopsDB->query($sql);
 while (false !== ($row = $xoopsDB->fetchArray($result))) {
     $rawStats[$row['type']][$row['age']] = $row['count'];
 }
-$ages = array('month', 'week', 'day', 'hour');
+$ages  = array(
+    'month',
+    'week',
+    'day',
+    'hour',
+);
 $stats = array();
 foreach ($rawStats as $type => $hits) {
     $stats[$type] = array();

@@ -28,8 +28,8 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 class MytsCensor extends MyTextSanitizerExtension
 {
     /**
-     * @param $ts
-     * @param $text
+     * @param MyTextSanitizer $ts
+     * @param string $text
      *
      * @return mixed|string
      */

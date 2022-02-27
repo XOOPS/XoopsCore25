@@ -116,7 +116,10 @@ if (!isset($_POST['op']) && isset($_GET['op'])) {
     if (isset($_GET['actkey'])) {
         $clean_actkey = XoopsFilterInput::clean($_GET['actkey'], 'STRING');
     }
-    $op = in_array($op, array('actv', 'activate'), true) ? $op : 'register';
+    $op = in_array($op, array(
+        'actv',
+        'activate',
+    ),             true) ? $op : 'register';
 }
 
 switch ($op) {
@@ -177,6 +180,7 @@ switch ($op) {
         if (empty($stop)) {
             /* @var XoopsMemberHandler $member_handler */
             $member_handler = xoops_getHandler('member');
+            /** @var XoopsUser $newuser */
             $newuser        = $member_handler->createUser();
             $newuser->setVar('user_viewemail', $user_viewemail, true);
             $newuser->setVar('uname', $uname, true);
@@ -284,6 +288,7 @@ switch ($op) {
         }
     /* @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
+        /** @var XoopsUser $thisuser */
         $thisuser       = $member_handler->getUser($id);
         if (!is_object($thisuser)) {
             exit();
@@ -295,7 +300,7 @@ switch ($op) {
                 redirect_header('user.php', 5, _US_ACONTACT, false);
             } else {
                 if (false !== $member_handler->activateUser($thisuser)) {
-                    $xoopsPreload->triggerEvent('core.behavior.user.activate', $thisuser);
+                    $xoopsPreload->triggerEvent('core.behavior.user.activate', (array)$thisuser); //mb TODO triggerEvent 2nd parameter needs to be array 
                     $config_handler  = xoops_getHandler('config');
                     $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
                     if ($xoopsConfigUser['activation_type'] == 2) {

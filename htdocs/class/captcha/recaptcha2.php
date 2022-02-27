@@ -65,7 +65,8 @@ class XoopsCaptchaRecaptcha2 extends XoopsCaptchaMethod
         $isValid = false;
         $recaptchaResponse = Request::getString('g-recaptcha-response', '');
         $recaptchaVerifyURL = 'https://www.google.com/recaptcha/api/siteverify?secret=' . $this->config['secret_key']
-            . '&response=' .  $recaptchaResponse . '&remoteip=' . IPAddress::fromRequest()->asReadable();
+                              . '&response=' . $recaptchaResponse . '&remoteip=' . IPAddress::fromRequest()
+                                                                                            ->asReadable();
         $usedCurl = false;
         if (function_exists('curl_init') && false !== ($curlHandle  = curl_init())) {
             curl_setopt($curlHandle, CURLOPT_URL, $recaptchaVerifyURL);

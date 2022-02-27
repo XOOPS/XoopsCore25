@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @return bool
+ * @return bool|null
  */
 function protector_postcommon()
 {
@@ -35,7 +35,11 @@ function protector_postcommon()
 
     // phpmailer vulnerability
     // http://larholm.com/2007/06/11/phpmailer-0day-remote-execution/
-    if (in_array(substr(XOOPS_VERSION, 0, 12), array('XOOPS 2.0.16', 'XOOPS 2.0.13', 'XOOPS 2.2.4'))) {
+    if (in_array(substr(XOOPS_VERSION, 0, 12), array(
+        'XOOPS 2.0.16',
+        'XOOPS 2.0.13',
+        'XOOPS 2.2.4',
+    ))) {
         /* @var XoopsConfigHandler $config_handler */
         $config_handler    = xoops_getHandler('config');
         $xoopsMailerConfig = $config_handler->getConfigsByCat(XOOPS_CONF_MAILER);

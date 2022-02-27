@@ -65,7 +65,7 @@
     <{/if}>
     <{/if}>
     <{/foreach}>
-    <{foreachq item=element from=$suspend_form.elements}>
+    <{foreach item=element from=$suspend_form.elements}>
     <{if $element.hidden == true}>
         <{$element.body}>
     <{/if}>

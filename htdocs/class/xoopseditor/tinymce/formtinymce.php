@@ -27,10 +27,21 @@ xoops_load('XoopsEditor');
  */
 class XoopsFormTinymce extends XoopsEditor
 {
+    /**
+     * @var string
+     */
     public $language;
-    public $width  = '100%';
+    /**
+     * @var string
+     */
+    public $width = '100%';
+    /**
+     * @var string
+     */
     public $height = '500px';
-
+    /**
+     * @var \TinyMCE
+     */
     public $editor;
 
     /**
@@ -74,8 +85,8 @@ class XoopsFormTinymce extends XoopsEditor
             $eltmsg     = empty($eltcaption) ? sprintf(_FORM_ENTER, $eltname) : sprintf(_FORM_ENTER, $eltcaption);
             $eltmsg     = str_replace('"', '\"', stripslashes($eltmsg));
             $ret        = "\n";
-            $ret .= "if ( tinyMCE.get('{$eltname}').getContent() == \"\" || tinyMCE.get('{$eltname}').getContent() == null) ";
-            $ret .= "{ window.alert(\"{$eltmsg}\"); tinyMCE.get('{$eltname}').focus(); return false; }";
+            $ret        .= "if ( tinyMCE.get('{$eltname}').getContent() == \"\" || tinyMCE.get('{$eltname}').getContent() == null) ";
+            $ret        .= "{ window.alert(\"{$eltmsg}\"); tinyMCE.get('{$eltname}').focus(); return false; }";
 
             return $ret;
         }

@@ -157,6 +157,9 @@ class XoopsXmlRpcParser extends SaxParser
         return $this->_tempValue;
     }
 
+    /**
+     * @return void
+     */
     public function resetTempValue()
     {
         unset($this->_tempValue);
@@ -179,11 +182,17 @@ class XoopsXmlRpcParser extends SaxParser
         return $this->_tempMember[$this->getWorkingLevel()];
     }
 
+    /**
+     * @return void
+     */
     public function resetTempMember()
     {
         $this->_tempMember[$this->getCurrentLevel()] = array();
     }
 
+    /**
+     * @return void
+     */
     public function setWorkingLevel()
     {
         $this->_workingLevel[] = $this->getCurrentLevel();
@@ -197,6 +206,9 @@ class XoopsXmlRpcParser extends SaxParser
         return $this->_workingLevel[count($this->_workingLevel) - 1];
     }
 
+    /**
+     * @return void
+     */
     public function releaseWorkingLevel()
     {
         array_pop($this->_workingLevel);
@@ -219,6 +231,9 @@ class XoopsXmlRpcParser extends SaxParser
         return $this->_tempStruct[$this->getWorkingLevel()];
     }
 
+    /**
+     * @return void
+     */
     public function resetTempStruct()
     {
         $this->_tempStruct[$this->getCurrentLevel()] = array();
@@ -240,6 +255,9 @@ class XoopsXmlRpcParser extends SaxParser
         return $this->_tempArray[$this->getWorkingLevel()];
     }
 
+    /**
+     * @return void
+     */
     public function resetTempArray()
     {
         $this->_tempArray[$this->getCurrentLevel()] = array();
@@ -311,7 +329,10 @@ class RpcIntHandler extends XmlTagHandler
      */
     public function getName()
     {
-        return array('int', 'i4');
+        return array(
+            'int',
+            'i4',
+        );
     }
 
     /**
@@ -415,7 +436,7 @@ class RpcDateTimeHandler extends XmlTagHandler
     public function handleCharacterData($parser, &$data)
     {
         $matches = array();
-        if (!preg_match("/^(\d{4})(\d{2})(\d{2})T(\d{2}):(\d{2}):(\d{2})$/", $data, $matches)) {
+        if (!preg_match('/^(\d{4})(\d{2})(\d{2})T(\d{2}):(\d{2}):(\d{2})$/', $data, $matches)) {
             $parser->setTempValue(time());
         } else {
             $parser->setTempValue(gmmktime($matches[4], $matches[5], $matches[6], $matches[2], $matches[3], $matches[1]));

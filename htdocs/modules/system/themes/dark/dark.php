@@ -67,9 +67,9 @@ class XoopsGuiDark extends XoopsSystemGui
         // Determine if information box must be shown
         $currentScript = str_replace(XOOPS_ROOT_PATH . '/', '', $_SERVER['SCRIPT_FILENAME']);
 
-        if('admin.php' == $currentScript){
+        if ('admin.php' == $currentScript) {
             $show = isset($_GET['show']) ? $_GET['show'] : '';
-            if('info' == $show){
+            if ('info' == $show) {
                 $tpl->assign('showTransitionInfo', true);
             }
         }
@@ -96,7 +96,10 @@ class XoopsGuiDark extends XoopsSystemGui
         $xoTheme->addStylesheet('https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:300,300i,400,400i,700,700i');
 //        $xoTheme->addStylesheet('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
         $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/dark/css/style.css');
-        $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/dark/css/dark.css', array('title' => 'dark', 'media' => 'screen'));
+        $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/dark/css/dark.css', array(
+            'title' => 'dark',
+            'media' => 'screen',
+        ));
         //$xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/dark/css/silver.css', array('title' => 'silver', 'media' => 'screen'));
         //$xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/dark/css/orange.css', array('title' => 'orange', 'media' => 'screen'));
 
@@ -137,10 +140,15 @@ class XoopsGuiDark extends XoopsSystemGui
         $menu[2]['title']    = "<span class='fa fa-sign-out'></span> " . _LOGOUT;
         $menu[2]['absolute'] = 1;
         $menu[2]['icon']     = XOOPS_ADMINTHEME_URL . '/dark/images/logout.png';
-        $tpl->append('navitems', array('link' => XOOPS_URL . '/admin.php', 'text' => '<span class="fa fa-cog"></span> ' . _CPHOME, 'menu' => $menu));
+        $tpl->append('navitems', array(
+            'link' => XOOPS_URL . '/admin.php',
+            'text' => '<span class="fa fa-cog"></span> ' . _CPHOME,
+            'menu' => $menu,
+        ));
 
         //add SYSTEM  Menu items
         include __DIR__ . '/menu.php';
+        $mod_options = array();
         if (empty($xoopsModule) || 'system' === $xoopsModule->getVar('dirname', 'n')) {
             $modpath = XOOPS_URL . '/admin.php';
             $modname = _OXYGEN_SYSOPTIONS;
@@ -183,7 +191,7 @@ class XoopsGuiDark extends XoopsSystemGui
         $criteria->setSort('mid');
         $mods = $module_handler->getObjects($criteria);
 
-        $menu               = array();
+        $menu = array();
         /* @var XoopsGroupPermHandler $moduleperm_handler */
         $moduleperm_handler = xoops_getHandler('groupperm');
         foreach ($mods as $mod) {
@@ -213,7 +221,8 @@ class XoopsGuiDark extends XoopsSystemGui
             'link' => XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin',
             'text' => '<span class="fa fa-puzzle-piece"></span> ' . _AM_SYSTEM_MODULES,
             'dir'  => $mod->getVar('dirname', 'n'), //TODO $mod is not defined
-            'menu' => $menu));
+            'menu' => $menu,
+        ));
 
         // add preferences menu
         $menu = array();
@@ -265,7 +274,8 @@ class XoopsGuiDark extends XoopsSystemGui
             'title'    => _OXYGEN_SYSOPTIONS,
             'absolute' => 1,
             'url'      => XOOPS_URL . '/modules/system/',
-            'options'  => $OPT);
+            'options'  => $OPT,
+        );
 
         foreach ($mods as $mod) {
             $rtn    = array();
@@ -282,37 +292,50 @@ class XoopsGuiDark extends XoopsSystemGui
             'link' => XOOPS_URL . '/modules/system/admin.php?fct=preferences',
             'text' => '<span class="fa fa-wrench"></span> ' . _OXYGEN_SITEPREF,
             'dir'  => $mod->getVar('dirname', 'n'),
-            'menu' => $menu));
+            'menu' => $menu,
+        ));
 
         //add OPTIONS/Links Menu Items
         $menu   = array();
         $menu[] = array(
             'link'     => 'http://xoops.org',
             'title'    => _OXYGEN_XOOPSPROJECT,
-            'absolute' => 1);
+            'absolute' => 1,
+        );
         $menu[] = array(
             'link'     => 'http://xoops.org',
             'title'    => _OXYGEN_WEBSITE,
             'absolute' => 1,
-            'icon'     => XOOPS_ADMINTHEME_URL . '/dark/images/xoops.png');
+            'icon'     => XOOPS_ADMINTHEME_URL . '/dark/images/xoops.png',
+        );
         $menu[] = array(
             'link'     => 'http://www.xoops.org/modules/repository/',
             'title'    => _OXYGEN_XOOPSMODULES,
             'absolute' => 1,
-            'icon'     => XOOPS_ADMINTHEME_URL . '/dark/images/xoops.png');
+            'icon'     => XOOPS_ADMINTHEME_URL . '/dark/images/xoops.png',
+        );
         $menu[] = array(
             'link'     => 'http://www.xoops.org/modules/extgallery/',
             'title'    => _OXYGEN_XOOPSTHEMES,
             'absolute' => 1,
-            'icon'     => XOOPS_ADMINTHEME_URL . '/dark/images/tweb.png');
+            'icon'     => XOOPS_ADMINTHEME_URL . '/dark/images/tweb.png',
+        );
 
-        $tpl->append('navitems', array('link' => XOOPS_URL . '/admin.php', 'text' => '<span class="fa fa-link"></span> ' . _OXYGEN_INTERESTSITES, 'menu' => $menu));
+        $tpl->append('navitems', array(
+            'link' => XOOPS_URL . '/admin.php',
+            'text' => '<span class="fa fa-link"></span> ' . _OXYGEN_INTERESTSITES,
+            'menu' => $menu,
+        ));
 
         //add OPTIONS/links for local support
         if (file_exists($file = XOOPS_ADMINTHEME_PATH . '/dark/language/' . $xoopsConfig['language'] . '/localsupport.php')) {
             $links = include XOOPS_ADMINTHEME_PATH . '/dark/language/' . $xoopsConfig['language'] . '/localsupport.php';
             if (count($links) > 0) {
-                $tpl->append('navitems', array('link' => XOOPS_URL . '/admin.php', 'text' => '<span class="fa fa-link"></span> ' . _OXYGEN_LOCALSUPPORT, 'menu' => $links));
+                $tpl->append('navitems', array(
+                    'link' => XOOPS_URL . '/admin.php',
+                    'text' => '<span class="fa fa-link"></span> ' . _OXYGEN_LOCALSUPPORT,
+                    'menu' => $links,
+                ));
             }
         }
 

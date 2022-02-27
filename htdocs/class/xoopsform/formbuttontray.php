@@ -37,7 +37,9 @@ class XoopsFormButtonTray extends XoopsFormElement
      * @access private
      */
     public $_type;
-
+    /**
+     * @var bool
+     */
     public $_showDelete;
 
     /**
@@ -97,10 +99,12 @@ class XoopsFormButtonTray extends XoopsFormElement
     /**
      * XoopsFormButtonTray::render()
      *
-     * @return string|void
+     * @return string
      */
     public function render()
     {
-        return XoopsFormRenderer::getInstance()->get()->renderFormButtonTray($this);
+        return XoopsFormRenderer::getInstance()
+                                ->get()
+                                ->renderFormButtonTray($this);
     }
 }

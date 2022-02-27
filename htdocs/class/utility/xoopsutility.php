@@ -1,4 +1,5 @@
 <?php
+
 /**
  * XOOPS Utilities
  *
@@ -48,19 +49,21 @@ class XoopsUtility
         if (is_array($data)) {
             $return = array_map(array(
                                     'XoopsUtility',
-                                    'recursive'), $handler, $data);
+                                    'recursive',
+                                ), $handler, $data);
 
             return $return;
         }
         // single function
         if (is_string($handler)) {
-            return function_exists($handler) ? $handler($data) : $data;
+            return function_exists($handler) ? call_user_func($handler, $data) : $data; //mb TODO call_user_func()
         }
         // Method of a class
         if (is_array($handler)) {
             return call_user_func(array(
                                       $handler[0],
-                                      $handler[1]), $data);
+                                      $handler[1],
+                                  ), $data);
         }
 
         return $data;

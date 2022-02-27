@@ -8,6 +8,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
+
 /**
  * Installer path configuration page
  *
@@ -25,7 +26,7 @@
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  **/
 
-require_once './include/common.inc.php';
+require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 include_once './class/pathcontroller.php';
@@ -60,8 +61,8 @@ ob_start();
 
         function updPath(key, val) {
             val = removeTrailing(key, val);
-            $.get( "<?php echo $_SERVER['PHP_SELF']; ?>", { action: "checkpath", var: key, path: val } )
-                .done(function( data ) {
+            $.get("<?php echo $_SERVER['PHP_SELF']; ?>", {action: "checkpath", var: key, path: val})
+                .done(function (data) {
                     $("#" + key + 'pathimg').html(data);
                 });
             $("#" + key + 'perms').style.display = 'none';
@@ -154,4 +155,4 @@ ob_start();
 $content = ob_get_contents();
 ob_end_clean();
 
-include './include/install_tpl.php';
+include __DIR__ . '/include/install_tpl.php';

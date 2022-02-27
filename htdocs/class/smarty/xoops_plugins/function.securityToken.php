@@ -15,7 +15,7 @@
  * Smarty 3.1
  *
  * @param array $params
- * @param $smarty
+ * @param XoopsTpl $smarty
  * @return null
  */
 function smarty_function_securityToken($params, &$smarty)

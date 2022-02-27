@@ -26,9 +26,21 @@ require_once(XOOPS_ROOT_PATH . '/class/xml/xmltaghandler.php');
  */
 class XoopsXmlRss2Parser extends SaxParser
 {
+    /**
+     * @var array
+     */
     public $_tempArr     = array();
+    /**
+     * @var array
+     */
     public $_channelData = array();
+    /**
+     * @var array
+     */
     public $_imageData   = array();
+    /**
+     * @var array
+     */
     public $_items       = array();
 
     /**
@@ -160,6 +172,9 @@ class XoopsXmlRss2Parser extends SaxParser
         return $this->_tempArr;
     }
 
+    /**
+     * @return void
+     */
     public function resetTempArr()
     {
         unset($this->_tempArr);
@@ -610,6 +625,9 @@ class RssTtlHandler extends XmlTagHandler
  */
 class RssTextInputHandler extends XmlTagHandler
 {
+    /**
+     * @return void
+     */
     public function RssWebMasterHandler()
     {
     }
@@ -979,6 +997,9 @@ class RssGuidHandler extends XmlTagHandler
  */
 class RssAuthorHandler extends XmlTagHandler
 {
+    /**
+     * @return void
+     */
     public function RssGuidHandler()
     {
     }

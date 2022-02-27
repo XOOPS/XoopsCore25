@@ -25,6 +25,9 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class XoopsSecurity
 {
+    /**
+     * @var array
+     */
     public $errors = array();
 
     /**
@@ -63,7 +66,8 @@ class XoopsSecurity
         }
         $token_data = array(
             'id'     => $token_id,
-            'expire' => time() + (int)$timeout);
+            'expire' => time() + (int)$timeout,
+        );
         $_SESSION[$name . '_SESSION'][] = $token_data;
 
         return md5($token_id . $_SERVER['HTTP_USER_AGENT'] . XOOPS_DB_PREFIX);
@@ -150,7 +154,10 @@ class XoopsSecurity
     {
         $sessionName = $name . '_SESSION';
         if (!empty($_SESSION[$sessionName]) && is_array($_SESSION[$sessionName])) {
-            $_SESSION[$sessionName] = array_filter($_SESSION[$sessionName], array($this, 'filterToken'));
+            $_SESSION[$sessionName] = array_filter($_SESSION[$sessionName], array(
+                $this,
+                'filterToken',
+            ));
         }
     }
 
@@ -180,7 +187,8 @@ class XoopsSecurity
      **/
     public function checkSuperglobals()
     {
-        foreach (array(
+        foreach (
+            array(
                      'GLOBALS',
                      '_SESSION',
                      'HTTP_SESSION_VARS',
@@ -206,7 +214,9 @@ class XoopsSecurity
                      'xoopsOption',
                      'xoopsModule',
                      'xoopsModuleConfig',
-                     'xoopsRequestUri') as $bad_global) {
+                'xoopsRequestUri',
+            ) as $bad_global
+        ) {
             if (isset($_REQUEST[$bad_global])) {
                 header('Location: ' . XOOPS_URL . '/');
                 exit();

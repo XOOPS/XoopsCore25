@@ -73,29 +73,86 @@ class XoopsMediaUploader
 {
     /**
      * Flag indicating if unrecognized mimetypes should be allowed (use with precaution ! may lead to security issues )
+     * @var bool
      */
 
     public $allowUnknownTypes       = false;
+    /**
+     * @var string
+     */
     public $mediaName;
+    /**
+     * @var string
+     */
     public $mediaType;
+    /**
+     * @var int
+     */
     public $mediaSize;
+    /**
+     * @var string
+     */
     public $mediaTmpName;
+    /**
+     * @var string
+     */
     public $mediaError;
+    /**
+     * @var string
+     */
     public $mediaRealType           = '';
+    /**
+     * @var string
+     */
     public $uploadDir               = '';
+    /**
+     * @var array
+     */
     public $allowedMimeTypes        = array();
-    public $deniedMimeTypes         = array(
-        'application/x-httpd-php');
+    /**
+     * @var array
+     */
+    public $deniedMimeTypes = array('application/x-httpd-php');
     public $maxFileSize             = 0;
+    /**
+     * @var int
+     */
     public $maxWidth;
+    /**
+     * @var int
+     */
     public $maxHeight;
+    /**
+     * @var string
+     */
     public $targetFileName;
+    /**
+     * @var string
+     */
     public $prefix;
+    /**
+     * @var array
+     */
     public $errors                  = array();
+    /**
+     * @var string
+     */
     public $savedDestination;
+    /**
+     * @var string
+     */
     public $savedFileName;
+    /**
+     * @var array
+     */
     public $extensionToMime         = array();
+    /**
+     * @var bool
+     */
     public $checkImageType          = true;
+    /**
+     * @var array
+     */
     public $extensionsToBeSanitized = array(
         'php',
         'phtml',
@@ -109,6 +166,9 @@ class XoopsMediaUploader
         'php7',
     );
     // extensions needed image check (anti-IE Content-Type XSS)
+    /**
+     * @var array
+     */
     public $imageExtensions = array(
         1  => 'gif',
         2  => 'jpg',
@@ -125,7 +185,11 @@ class XoopsMediaUploader
         13 => 'swc',
         14 => 'iff',
         15 => 'wbmp',
-        16 => 'xbm');
+        16 => 'xbm',
+    );
+    /**
+     * @var bool
+     */
     public $randomFilename  = false;
 
     /**
@@ -138,8 +202,7 @@ class XoopsMediaUploader
      * @param int    $maxHeight
      * @param bool   $randomFilename
      */
-
-    public function __construct($uploadDir, $allowedMimeTypes, $maxFileSize = 0, $maxWidth = null, $maxHeight = null, $randomFilename = false)
+    public function __construct($uploadDir, array $allowedMimeTypes, $maxFileSize = 0, $maxWidth = null, $maxHeight = null, $randomFilename = false)
     {
         $this->extensionToMime = include $GLOBALS['xoops']->path('include/mimetypes.inc.php');
         if (!is_array($this->extensionToMime)) {
@@ -203,7 +266,8 @@ class XoopsMediaUploader
      * @param  string $media_name Name of the file field
      * @return int|false
      */
-    public function countMedia($media_name) {
+    public function countMedia($media_name)
+    {
         if (!isset($_FILES[$media_name])) {
             $this->setErrors(_ER_UP_FILENOTFOUND);
             return false;
@@ -215,7 +279,7 @@ class XoopsMediaUploader
      * Fetch the uploaded file
      *
      * @param  string $media_name Name of the file field
-     * @param  int    $index      Index of the file (if more than one uploaded under that name)
+     * @param int|null $index      Index of the file (if more than one uploaded under that name)
      * @return bool
      */
     public function fetchMedia($media_name, $index = null)
@@ -456,7 +520,7 @@ class XoopsMediaUploader
     public function _copyFile($chmod)
     {
         $matched = array();
-        if (!preg_match("/\.([a-zA-Z0-9]+)$/", $this->mediaName, $matched)) {
+        if (!preg_match('/\.([a-zA-Z0-9]+)$/', $this->mediaName, $matched)) {
             $this->setErrors(_ER_UP_INVALIDFILENAME);
 
             return false;
@@ -471,7 +535,7 @@ class XoopsMediaUploader
 
         $this->savedFileName = iconv('UTF-8', 'ASCII//TRANSLIT', $this->savedFileName);
         $this->savedFileName = preg_replace('!\s+!', '_', $this->savedFileName);
-        $this->savedFileName = preg_replace("/[^a-zA-Z0-9\._-]/", '', $this->savedFileName);
+        $this->savedFileName = preg_replace('/[^a-zA-Z0-9\._-]/', '', $this->savedFileName);
 
         $this->savedDestination = $this->uploadDir . '/' . $this->savedFileName;
         if (!move_uploaded_file($this->mediaTmpName, $this->savedDestination)) {
@@ -624,7 +688,7 @@ class XoopsMediaUploader
         $patterns = array();
         $replaces = array();
         foreach ($this->extensionsToBeSanitized as $ext) {
-            $patterns[] = "/\." . preg_quote($ext) . "\./i";
+            $patterns[] = '/\.' . preg_quote($ext) . '\./i';
             $replaces[] = '_' . $ext . '.';
         }
         $this->mediaName = preg_replace($patterns, $replaces, $this->mediaName);
@@ -670,9 +734,10 @@ class XoopsMediaUploader
      * @param array $set   array of values
      * @param int   $value value to push
      *
-     * @return mixed
+     * @return array
      */
-    protected function arrayPushIfPositive($set, $value) {
+    protected function arrayPushIfPositive($set, $value)
+    {
         if ($value > 0) {
             array_push($set, $value);
         }

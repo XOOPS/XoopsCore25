@@ -181,7 +181,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
             }
             $numrows = $this->db->getRowsNum($result);
             if ($numrows == 1) {
-                $pm = new XoopsPrivmessage();
+                $pm = new \XoopsPrivmessage();
                 $pm->assignVars($this->db->fetchArray($result));
             }
         }
@@ -197,7 +197,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
      * @param  XoopsObject|XoopsPrivmessage $pm a XoopsMembership object
      *
      * @return bool true on success, otherwise false
-     **/
+     */
     public function insert(XoopsObject $pm, $force = false)
     {
         $className = 'XoopsPrivmessage';

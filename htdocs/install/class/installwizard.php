@@ -25,10 +25,25 @@
  */
 class XoopsInstallWizard
 {
+    /**
+     * @var string
+     */
     public $language    = 'english';
+    /**
+     * @var array
+     */
     public $pages       = array();
+    /**
+     * @var string
+     */
     public $currentPage = 'langselect';
+    /**
+     * @var int
+     */
     public $pageIndex   = 0;
+    /**
+     * @var array
+     */
     public $configs     = array();
 
     /**
@@ -137,7 +152,7 @@ class XoopsInstallWizard
     }
 
     /**
-     * @param $file
+     * @param string $file
      */
     public function loadLangFile($file)
     {
@@ -149,11 +164,11 @@ class XoopsInstallWizard
     }
 
     /**
-     * @param $language
+     * @param string $language
      */
     public function initLanguage($language)
     {
-        $language = preg_replace("/[^a-z0-9_\-]/i", '', $language);
+        $language = preg_replace('/[^a-z0-9_\-]/i', '', $language);
         if (!file_exists("./language/{$language}/install.php")) {
             $language = 'english';
         }
@@ -162,16 +177,17 @@ class XoopsInstallWizard
     }
 
     /**
-     * @param $page
+     * @param string $page
      *
-     * @return bool|mixed
+     * @return int
      */
     public function setPage($page)
     {
+        $page = (int)$page;
         $pages = array_keys($this->pages);
-        if ((int)$page && $page >= 0 && $page < count($pages)) {
-            $this->pageIndex   = $page;
-            $this->currentPage = $pages[$page];
+        if ($page && $page >= 0 && $page < count($pages)) {
+            $this->pageIndex   = (int)$page;
+            $this->currentPage = $pages[(int)$page];
         } elseif (isset($this->pages[$page])) {
             $this->currentPage = $page;
             $this->pageIndex   = array_search($this->currentPage, $pages);

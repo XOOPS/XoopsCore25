@@ -8,6 +8,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
+
 /**
  * Installer final page
  *
@@ -25,7 +26,7 @@
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  **/
 
-require_once './include/common.inc.php';
+require_once __DIR__ . '/include/common.inc.php';
 include_once '../class/xoopsload.php';
 include_once '../class/preload.php';
 include_once '../class/database/databasefactory.php';
@@ -45,4 +46,4 @@ $pageHasForm = false;
 $content = '';
 include "./language/{$wizard->language}/finish.php";
 
-include './include/install_tpl.php';
+include __DIR__ . '/include/install_tpl.php';

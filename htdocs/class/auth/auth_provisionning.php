@@ -29,12 +29,15 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class XoopsAuthProvisionning
 {
+    /**
+     * @var \XoopsAuth
+     */
     protected $_auth_instance;
 
     /**
      * XoopsAuthProvisionning::getInstance()
      *
-     * @param mixed $auth_instance
+     * @param \XoopsAuth|null $auth_instance
      *
      * @return \XoopsAuthProvisionning
      */
@@ -116,9 +119,9 @@ class XoopsAuthProvisionning
     /**
      * Add a new user to the system
      *
-     * @param       $datas
-     * @param       $uname
-     * @param  null $pwd
+     * @param array       $datas
+     * @param string      $uname
+     * @param string|null $pwd
      * @return bool
      */
     public function add($datas, $uname, $pwd = null)

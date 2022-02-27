@@ -20,10 +20,22 @@
 class SystemBreadcrumb
 {
     /* Variables */
+    /**
+     * @var string
+     */
     public $_directory;
+    /**
+     * @var array
+     */
     public $_bread = array();
+    /**
+     * @var string
+     */
     public $_help;
-    public $_tips;
+    /**
+     * @var mixed
+     */
+    public $_tips; //mb TODO string or array?
 
     /**
      * @param $directory

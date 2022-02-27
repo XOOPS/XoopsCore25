@@ -39,9 +39,9 @@
  *   {$elt}
  * {/foreach}
  * </code>
- * @param $argStr
- * @param $comp
- * @return string
+ * @param string $argStr
+ * @param Smarty_Compiler $comp
+ * @return string|void
  */
 function smarty_compiler_foreachq($argStr, &$comp)
 {
@@ -85,7 +85,7 @@ function smarty_compiler_foreachq($argStr, &$comp)
     //$output .= "\$_from = $from; if (!is_array(\$_from) && !is_object(\$_from)) { settype(\$_from, 'array'); }";
     if (isset($name)) {
         $foreach_props = "\$this->_foreach[$name]";
-        $output .= "{$foreach_props} = array('total' => count($from), 'iteration' => 0);\n";
+        $output        .= "{$foreach_props} = array('total' => count($from), 'iteration' => 0);\n";
         //$output .= "{$foreach_props} = array('total' => count(\$_from), 'iteration' => 0);\n";
         $output .= "if ({$foreach_props}['total'] > 0):\n";
         $output .= "    foreach ($from as $key_part\$this->_tpl_vars['$item']):\n";

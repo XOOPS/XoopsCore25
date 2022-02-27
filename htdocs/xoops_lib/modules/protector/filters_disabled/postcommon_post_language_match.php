@@ -53,18 +53,26 @@ class Protector_postcommon_post_language_match extends ProtectorFilterAbstract
     protected $maximumTolerance = 0.02;
 
     /** @var string|null custom character range to match, null to use default for current language */
-    protected $customRange = null;
+    protected $customRange;
 
     /** @var int do not run analysis if input length is less than this */
     protected $minLength = 15;
 
     /** @var string[] script names we do NOT want to process */
-    protected $skipThese = array('edituser.php', 'register.php', 'search.php', 'user.php', 'lostpass.php');
-
+    protected $skipThese = array(
+        'edituser.php',
+        'register.php',
+        'search.php',
+        'user.php',
+        'lostpass.php',
+    );
     // map regex compatible unicode script range to a XOOPS language name
     // http://php.net/manual/en/regexp.reference.unicode.php
     // http://www.regular-expressions.info/unicode.html
     // http://www.localizingjapan.com/blog/2012/01/20/regular-expressions-for-japanese-text/
+    /**
+     * @var array
+     */
     protected $scriptCodes = array(
         'arabic'       => '\p{Arabic}',
         'brazilian'    => 'A-Za-zÁáÂâĀãÀàÇçÉéÊêÍíÓóÔôŌõÚú',

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * TextSanitizer extension
  *
@@ -24,23 +25,23 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 class MytsWmp extends MyTextSanitizerExtension
 {
     /**
-     * @param $textarea_id
+     * @param string $textarea_id
      *
      * @return array
      */
     public function encode($textarea_id)
     {
-        $config     = parent::loadConfig(__DIR__);
+        $config = parent::loadConfig(__DIR__);
         if ($config['enable_wmp_entry'] === false) {
             return array();
         }
 
         $code = "<button type='button' class='btn btn-default btn-sm' onclick='xoopsCodeWmp(\"{$textarea_id}\",\""
-            . htmlspecialchars(_XOOPS_FORM_ENTERWMPURL, ENT_QUOTES) . "\",\""
-            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\""
-            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES)
-            . "\");' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALTWMP
-            . "'><span class='fa fa-fw fa-windows' aria-hidden='true'></span></button>";
+                . htmlspecialchars(_XOOPS_FORM_ENTERWMPURL, ENT_QUOTES) . "\",\""
+                . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\""
+                . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES)
+                . "\");' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALTWMP
+                . "'><span class='fa fa-fw fa-windows' aria-hidden='true'></span></button>";
 
         //$code = "<img src='{$this->image_path}/wmp.gif' alt='" . _XOOPS_FORM_ALTWMP . "' title='" . _XOOPS_FORM_ALTWMP . "' '" . "' onclick='xoopsCodeWmp(\"{$textarea_id}\",\"" . htmlspecialchars(_XOOPS_FORM_ENTERWMPURL, ENT_QUOTES) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES) . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
         $javascript = <<<EOH
@@ -65,16 +66,17 @@ EOH;
 
         return array(
             $code,
-            $javascript);
+            $javascript,
+        );
     }
 
     /**
-     * @param $ts
+     * @param MyTextSanitizer $ts
      */
     public function load($ts)
     {
         $ts->patterns[] = "/\[wmp=(['\"]?)([^\"']*),([^\"']*)\\1]([^\"]*)\[\/wmp\]/sU";
-        $rp             = "<object classid=\"clsid:6BF52A52-394A-11D3-B153-00C04F79FAA6\" id=\"WindowsMediaPlayer\" width=\"\\2\" height=\"\\3\">\n";
+        $rp = "<object classid=\"clsid:6BF52A52-394A-11D3-B153-00C04F79FAA6\" id=\"WindowsMediaPlayer\" width=\"\\2\" height=\"\\3\">\n";
         $rp .= "<param name=\"URL\" value=\"\\4\">\n";
         $rp .= "<param name=\"AutoStart\" value=\"0\">\n";
         $rp .= "<embed autostart=\"0\" src=\"\\4\" type=\"video/x-ms-wmv\" width=\"\\2\" height=\"\\3\" controls=\"ImageWindow\" console=\"cons\"> </embed>";

@@ -52,7 +52,7 @@ class XoopsUser extends XoopsObject
      * constructor
      * @param array|null $id ID of the user to be loaded from the database.
      */
-    public function __construct($id = null)
+    public function __construct(array $id = null)
     {
         $this->initVar('uid', XOBJ_DTYPE_INT, null, false);
         $this->initVar('name', XOBJ_DTYPE_TXTBOX, null, false, 60);
@@ -149,6 +149,7 @@ class XoopsUser extends XoopsObject
     /**
      * increase the number of posts for the user
      *
+     * @return bool
      * @deprecated
      */
     public function incrementPost()
@@ -207,7 +208,7 @@ class XoopsUser extends XoopsObject
      * - If you don't specify any module ID, the current module will be checked.<br>
      * - If you set the module_id to -1, it will return true if the user has admin rights for at least one module
      *
-     * @param  int $module_id check if user is admin of this module
+     * @param int|null $module_id check if user is admin of this module
      * @return bool is the user admin of that module?
      */
     public function isAdmin($module_id = null)
@@ -557,6 +558,9 @@ class XoopsUser extends XoopsObject
     /**#@+
      * @deprecated
      */
+    /**
+     * @return bool
+     */
     public function getProfile()
     {
         trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);
@@ -606,12 +610,13 @@ class XoopsUserHandler extends XoopsPersistableObjectHandler
     }
 
     /**#@+
-     * @deprecated
      * @param bool $uname
-     * @param      $pwd
+     * @param string $pwd
      * @param bool $md5
-     * @return bool|object
+     * @return bool|false
+     * @deprecated
      */
+
     public function &loginUser($uname, $pwd, $md5 = false)
     {
         trigger_error(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated', E_USER_WARNING);

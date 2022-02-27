@@ -23,9 +23,15 @@ global $xoops, $xoopsPreload, $xoopsLogger, $xoopsErrorHandler, $xoopsSecurity, 
  * Please remove these functions from your code
  */
 if (!function_exists('get_magic_quotes_gpc')) {
+    /**
+     * @return bool
+     */
     function get_magic_quotes_gpc() { return false; }
 }
 if (!function_exists('get_magic_quotes_runtime')) {
+    /**
+     * @return bool
+     */
     function get_magic_quotes_runtime() { return false; }
 }
 /* end BC polyfill */

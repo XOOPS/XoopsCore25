@@ -24,15 +24,27 @@
 class XoopsXmlRpcApi
 {
     // reference to method parameters
+    /**
+     * @var array
+     */
     public $params = array();
 
     // reference to xmlrpc document class object
+    /**
+     * @var \XoopsXmlRpcResponse
+     */
     public $response;
 
     // reference to module class object
+    /**
+     * @var \XoopsModule
+     */
     public $module;
 
     // map between xoops tags and blogger specific tags
+    /**
+     * @var array
+     */
     public $xoopsTagMap = array();
 
 
@@ -40,8 +52,10 @@ class XoopsXmlRpcApi
      * @var \XoopsUser $user user class object
      */
     public $user;
-
-    public bool $isadmin = false;
+    /**
+     * @var bool
+     */
+    public $isadmin = false;
 
     /**
      * @param array $params
@@ -186,7 +200,7 @@ class XoopsXmlRpcApi
     {
         $ret   = '';
         $match = array();
-        if (preg_match("/\<" . $tag . "\>(.*)\<\/" . $tag . "\>/is", $text, $match)) {
+        if (preg_match('/\<' . $tag . '\>(.*)\<\/' . $tag . '\>/is', $text, $match)) {
             if ($remove) {
                 $text = str_replace($match[0], '', $text);
             }

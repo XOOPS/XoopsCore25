@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Extended User Profile
  *
@@ -55,7 +56,7 @@ switch ($op) {
 }
 
 include_once $GLOBALS['xoops']->path('/class/xoopsformloader.php');
-$opform    = new XoopsSimpleForm('', 'opform', 'permissions.php', 'get');
+$opform = new XoopsSimpleForm('', 'opform', 'permissions.php', 'get');
 $op_select = new XoopsFormSelect('', 'op', $op);
 $op_select->setExtra('onchange="document.forms.opform.submit()"');
 $op_select->addOption('visibility', _PROFILE_AM_PROF_VISIBLE);
@@ -96,7 +97,8 @@ if ($op === 'access') {
             'date',
             'datetime',
             'timezone',
-            'language');
+            'language',
+        );
         foreach (array_keys($fields) as $i) {
             if (in_array($fields[$i]->getVar('field_type'), $searchable_types)) {
                 $form->addItem($fields[$i]->getVar('field_id'), xoops_substr($fields[$i]->getVar('field_title'), 0, 25));

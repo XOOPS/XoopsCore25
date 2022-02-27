@@ -46,7 +46,8 @@ class XoopsLoad
                 'file'        => 'xoopsfile',
                 'model'       => 'xoopsmodelfactory',
                 'calendar'    => 'xoopscalendar',
-                'userutility' => 'xoopsuserutility');
+                'userutility' => 'xoopsuserutility',
+            );
         }
         $name = strtolower($name);
         if (in_array($type, array('core', 'class')) && array_key_exists($name, $deprecated)) {
@@ -126,7 +127,7 @@ class XoopsLoad
      *
      * @access private
      * @param $name
-     * @return bool|string
+     * @return bool|string|null
      */
     public static function loadFramework($name)
     {

@@ -95,7 +95,8 @@ switch ($op) {
             xoops_confirm(array(
                               'ok'  => 1,
                               'uid' => $uid,
-                              'op'  => 'users_delete'), $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_USERS_FORM_SURE_DEL, $user->getVar('uname')));
+                              'op'  => 'users_delete',
+                          ), $_SERVER['REQUEST_URI'], sprintf(_AM_SYSTEM_USERS_FORM_SURE_DEL, $user->getVar('uname')));
         }
         break;
 
@@ -407,21 +408,27 @@ switch ($op) {
             $mailok_radio->addOptionArray(array(
                                               'mailok' => _AM_SYSTEM_USERS_MAILOK,
                                               'mailng' => _AM_SYSTEM_USERS_MAILNG,
-                                              'both' => _AM_SYSTEM_USERS_BOTH));
+                                              'both'   => _AM_SYSTEM_USERS_BOTH,
+                                          ));
             $type_radio = new XoopsFormRadio(_AM_SYSTEM_USERS_SHOWTYPE, 'user_type', 'actv');
             $type_radio->addOptionArray(array(
                                             'actv' => _AM_SYSTEM_USERS_ACTIVE,
                                             'inactv' => _AM_SYSTEM_USERS_INACTIVE,
-                                            'both' => _AM_SYSTEM_USERS_BOTH));
+                                            'both'   => _AM_SYSTEM_USERS_BOTH,
+                                        ));
             $sort_select = new XoopsFormSelect(_AM_SYSTEM_USERS_SORT, 'user_sort');
             $sort_select->addOptionArray(array(
                                              'uname' => _AM_SYSTEM_USERS_UNAME,
                                              'email' => _AM_SYSTEM_USERS_EMAIL,
                                              'last_login' => _AM_SYSTEM_USERS_LASTLOGIN,
                                              'user_regdate' => _AM_SYSTEM_USERS_REGDATE,
-                                             'posts' => _AM_SYSTEM_USERS_POSTS));
+                                             'posts'        => _AM_SYSTEM_USERS_POSTS,
+                                         ));
             $order_select = new XoopsFormSelect(_AM_SYSTEM_USERS_ORDER, 'user_order');
-            $order_select->addOptionArray(array('ASC' => _AM_SYSTEM_USERS_ASC, 'DESC' => _AM_SYSTEM_USERS_DESC));
+            $order_select->addOptionArray(array(
+                                              'ASC'  => _AM_SYSTEM_USERS_ASC,
+                                              'DESC' => _AM_SYSTEM_USERS_DESC,
+                                          ));
             $limit_text    = new XoopsFormText(_AM_SYSTEM_USERS_LIMIT, 'user_limit', 6, 2, 20);
             $submit_button = new XoopsFormButton('', 'user_submit', _SUBMIT, 'submit');
 
@@ -710,7 +717,13 @@ switch ($op) {
             }
 
             //$groups = empty($_REQUEST['selgroups']) ? array() : array_map("intval", $_REQUEST['selgroups']);
-            $validsort = array('uname', 'email', 'last_login', 'user_regdate', 'posts');
+            $validsort = array(
+                'uname',
+                'email',
+                'last_login',
+                'user_regdate',
+                'posts',
+            );
             if (isset($_REQUEST['user_sort'])) {
                 $sort = (!in_array($_REQUEST['user_sort'], $validsort)) ? 'uid' : $_REQUEST['user_sort'];
                 $requete_pagenav .= '&amp;user_sort=' . htmlspecialchars($_REQUEST['user_sort']);

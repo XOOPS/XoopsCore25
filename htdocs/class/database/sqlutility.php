@@ -36,7 +36,7 @@ class SqlUtility
      *
      * @param  array  $ret the splitted sql commands
      * @param  string $sql the sql commands
-     * @return boolean always true
+     * @return bool always true
      * @access   public
      */
     public static function splitMySqlFile(&$ret, $sql)

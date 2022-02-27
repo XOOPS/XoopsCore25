@@ -335,7 +335,12 @@ if (!empty($stop) || isset($steps[$current_step])) {
     }
     if (isset($_SESSION['profile_post']['_message_'])) {
         //todo, if user is activated by admin, then we should inform it along with error messages.  _US_YOURREGMAILNG is not enough
-        $messages = array(_US_YOURREGMAILNG, _US_YOURREGISTERED, _US_YOURREGMAILNG, _US_YOURREGISTERED2);
+        $messages = array(
+            _US_YOURREGMAILNG,
+            _US_YOURREGISTERED,
+            _US_YOURREGMAILNG,
+            _US_YOURREGISTERED2,
+        );
         $GLOBALS['xoopsTpl']->assign('finish_message', $messages[$_SESSION['profile_post']['_message_']]);
     }
     $_SESSION['profile_post'] = null;

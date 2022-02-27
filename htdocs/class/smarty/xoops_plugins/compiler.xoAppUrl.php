@@ -45,14 +45,14 @@
  * // Use the value of the $sortby template variable in the URL
  * ([xoAppUrl "modules/something/yourpage.php?order=`$sortby`"])
  * </code>
- * @param $argStr
- * @param $compiler
+ * @param string $argStr
+ * @param Smarty_Compiler $compiler
  * @return string
  */
 function smarty_compiler_xoAppUrl($argStr, &$compiler)
 {
     global $xoops;
-    $argStr = trim($argStr);
+    $argStr = trim((string)$argStr);
 
     @list($url, $params) = explode(' ', $argStr, 2);
 
@@ -72,7 +72,7 @@ function smarty_compiler_xoAppUrl($argStr, &$compiler)
         }
         $url = $xoops->path($url, true);
 
-        return "echo '" . addslashes(htmlspecialchars($url)) . "';";
+        return "echo '" . addslashes(htmlspecialchars($url, ENT_QUOTES | ENT_HTML5)) . "';";
     }
     // Dynamic URL generation
     $str = "\$xoops->path('$url', true)";

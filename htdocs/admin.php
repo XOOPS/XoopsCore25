@@ -1,4 +1,5 @@
 <?php
+
 /**
  * XOOPS admin file
  *

@@ -18,7 +18,7 @@
     </h3>
 </div>
 <{*
-<div class="clearer"><DIV style="text-align: left; font-size: small;">
+<div class="clearer"><div style="text-align: left; font-size: small;">
 <{$authorterms}>
 </div></div>
 *}>
@@ -26,12 +26,12 @@
 <br>
 <br><br>
 <div class="clearer">
-    <DIV style="text-align: left; font-size: small;">
+    <div style="text-align: left; font-size: small;">
         <{if $nothing==false}>
-            <img src='<{$xoops_url}>/modules/<{$lang_moduledirname}>/assets/images/square-green.gif' align='absmiddle'/>
+            <img src='<{$xoops_url}>/modules/<{$lang_moduledirname}>/assets/images/square-green.gif' align='absmiddle'>
             <{$submitted}>
             <br>
-            <img src='<{$xoops_url}>/modules/<{$lang_moduledirname}>/assets/images/square-red.gif' align='absmiddle'/>
+            <img src='<{$xoops_url}>/modules/<{$lang_moduledirname}>/assets/images/square-red.gif' align='absmiddle'>
             <{$waiting}>
         <{/if}>
         <br><br>

@@ -79,7 +79,7 @@ class XoopsCache
      * Tries to find and include a file for a cache engine and returns object instance
      *
      * @param  string $name Name of the engine
-     * @return mixed $engine object or null
+     * @return bool $engine object or null
      * @access private
      */
     private function loadEngine($name)
@@ -153,7 +153,7 @@ class XoopsCache
      *
      * @param  string $name     Name of the engine (without 'Engine')
      * @param  array  $settings Optional associative array of settings passed to the engine
-     * @return boolean True on success, false on failure
+     * @return bool True on success, false on failure
      * @access public
      */
     public function engine($name = 'file', $settings = array())
@@ -208,7 +208,7 @@ class XoopsCache
      * @param  mixed  $value     Data to be cached - anything except a resource
      * @param  mixed  $duration  Optional - string configuration name OR how long to cache the data, either in seconds or a
      *                           string that can be parsed by the strtotime() function OR array('config' => 'default', 'duration' => '3600')
-     * @return boolean True if the data was successfully cached, false on failure
+     * @return bool|null True if the data was successfully cached, false on failure
      * @access public
      */
     public static function write($key, $value, $duration = null)
@@ -262,7 +262,7 @@ class XoopsCache
      *
      * @param  string $key    Identifier for the data
      * @param  string|array $config name of the configuration to use
-     * @return mixed  The cached data, or false if the data doesn't exist, has expired, or if there was an error fetching it
+     * @return bool|null The cached data, or false if the data doesn't exist, has expired, or if there was an error fetching it
      * @access public
      */
     public static function read($key, $config = null)
@@ -293,8 +293,8 @@ class XoopsCache
      * Delete a key from the cache
      *
      * @param  string $key    Identifier for the data
-     * @param  string $config name of the configuration to use
-     * @return boolean True if the value was successfully deleted, false if it didn't exist or couldn't be removed
+     * @param string|null $config name of the configuration to use
+     * @return bool True if the value was successfully deleted, false if it didn't exist or couldn't be removed
      * @access public
      */
     public static function delete($key, $config = null)
@@ -322,9 +322,9 @@ class XoopsCache
     /**
      * Delete all keys from the cache
      *
-     * @param  boolean $check  if true will check expiration, otherwise delete all
-     * @param  string  $config name of the configuration to use
-     * @return boolean True if the cache was successfully cleared, false otherwise
+     * @param  bool $check  if true will check expiration, otherwise delete all
+     * @param string|null $config name of the configuration to use
+     * @return bool True if the cache was successfully cleared, false otherwise
      * @access public
      */
     public function clear($check = false, $config = null)
@@ -345,7 +345,7 @@ class XoopsCache
     /**
      * Check if Cache has initialized a working storage engine
      *
-     * @param  string $engine Name of the engine
+     * @param string|null $engine Name of the engine
      * @return bool
      * @internal param string $configs Name of the configuration setting
      * @access   public
@@ -363,7 +363,7 @@ class XoopsCache
     /**
      * Return the settings for current cache engine
      *
-     * @param  string $engine Name of the engine
+     * @param string|null $engine Name of the engine
      * @return array  list of settings for this engine
      * @access public
      */
@@ -384,7 +384,7 @@ class XoopsCache
      * generates a safe key
      *
      * @param  string $key the key passed over
-     * @return mixed  string $key or false
+     * @return array|false|string|string[]  string $key or false
      * @access private
      */
     public function key($key)
@@ -420,14 +420,17 @@ class XoopsCacheEngine
      * Called automatically by the cache frontend
      *
      * @param  array $settings Associative array of parameters for the engine
-     * @return boolean True if the engine has been successfully initialized, false if not
+     * @return bool True if the engine has been successfully initialized, false if not
      * @access   public
      */
     public function init($settings = array())
     {
-        $this->settings = array_merge(array(
+        $this->settings = array_merge(
+                                             array(
                                           'duration'    => 31556926,
-                                          'probability' => 100), $settings);
+                                              'probability' => 100,
+                                          ), $settings
+        );
 
         return true;
     }
@@ -449,7 +452,7 @@ class XoopsCacheEngine
      * @param  string $key      Identifier for the data
      * @param  mixed  $value    Data to be cached
      * @param  mixed  $duration How long to cache the data, in seconds
-     * @return boolean True if the data was successfully cached, false on failure
+     * @return bool True if the data was successfully cached, false on failure
      * @access public
      */
     public function write($key, $value, $duration = null)
@@ -473,7 +476,7 @@ class XoopsCacheEngine
      * Delete a key from the cache
      *
      * @param  string $key Identifier for the data
-     * @return boolean True if the value was successfully deleted, false if it didn't exist or couldn't be removed
+     * @return bool True if the value was successfully deleted, false if it didn't exist or couldn't be removed
      * @access public
      */
     public function delete($key)
@@ -483,8 +486,8 @@ class XoopsCacheEngine
     /**
      * Delete all keys from the cache
      *
-     * @param  boolean $check if true will check expiration, otherwise delete all
-     * @return boolean True if the cache was successfully cleared, false otherwise
+     * @param  bool $check if true will check expiration, otherwise delete all
+     * @return bool True if the cache was successfully cleared, false otherwise
      * @access public
      */
     public function clear($check)

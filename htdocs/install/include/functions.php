@@ -18,7 +18,7 @@
 
 /**
  * call htmlspecialchars with standard arguments
- * @param $value string
+ * @param string $value
  * @return string
  */
 function installerHtmlSpecialChars($value)
@@ -69,9 +69,9 @@ function install_finalize($installer_modified)
 }
 
 /**
- * @param        $name
- * @param        $value
- * @param        $label
+ * @param string $name
+ * @param string $value
+ * @param string $label
  * @param string $help
  */
 function xoFormField($name, $value, $label, $help = '')
@@ -89,9 +89,9 @@ function xoFormField($name, $value, $label, $help = '')
 }
 
 /**
- * @param        $name
- * @param        $value
- * @param        $label
+ * @param string $name
+ * @param string $value
+ * @param string $label
  * @param string $help
  */
 function xoPassField($name, $value, $label, $help = '')
@@ -113,14 +113,14 @@ function xoPassField($name, $value, $label, $help = '')
 }
 
 /**
- * @param        $name
- * @param        $value
- * @param        $label
+ * @param string $name
+ * @param string $value
+ * @param string $label
  * @param array  $options
  * @param string $help
- * @param        $extra
+ * @param string $extra
  */
-function xoFormSelect($name, $value, $label, $options, $help = '', $extra='')
+function xoFormSelect($name, $value, $label, array $options, $help = '', $extra = '')
 {
     $label = installerHtmlSpecialChars($label);
     $name  = installerHtmlSpecialChars($name);
@@ -143,7 +143,7 @@ function xoFormSelect($name, $value, $label, $options, $help = '', $extra='')
  * gets list of name of directories inside a directory
  */
 /**
- * @param $dirname
+ * @param string $dirname
  *
  * @return array
  */
@@ -165,7 +165,7 @@ function getDirList($dirname)
 }
 
 /**
- * @param        $status
+ * @param int    $status
  * @param string $str
  *
  * @return string
@@ -175,8 +175,16 @@ function xoDiag($status = -1, $str = '')
     if ($status == -1) {
         $GLOBALS['error'] = true;
     }
-    $classes = array(-1 => 'fa fa-fw fa-ban text-danger', 0 => 'fa fa-fw fa-square-o text-warning', 1 => 'fa fa-fw fa-check text-success');
-    $strings = array(-1 => FAILED, 0 => WARNING, 1 => SUCCESS);
+    $classes = array(
+        -1 => 'fa fa-fw fa-ban text-danger',
+        0  => 'fa fa-fw fa-square-o text-warning',
+        1  => 'fa fa-fw fa-check text-success',
+    );
+    $strings = array(
+        -1 => FAILED,
+        0  => WARNING,
+        1  => SUCCESS,
+    );
     if (empty($str)) {
         $str = $strings[$status];
     }
@@ -185,7 +193,7 @@ function xoDiag($status = -1, $str = '')
 }
 
 /**
- * @param      $name
+ * @param string $name
  * @param bool $wanted
  * @param bool $severe
  *
@@ -239,8 +247,8 @@ function xoPhpVersion()
 }
 
 /**
- * @param $path
- * @param $valid
+ * @param string $path
+ * @param int   $valid
  *
  * @return string
  */
@@ -278,9 +286,9 @@ function genPathCheckHtml($path, $valid)
 }
 
 /**
- * @param $link
+ * @param mysqli $link
  *
- * @return mixed
+ * @return array
  */
 function getDbCharsets($link)
 {
@@ -422,8 +430,8 @@ function xoFormFieldCharset($name, $value, $label, $help, $link)
 /**
  * *#@+
  * Xoops Write Licence System Key
- * @param        $system_key
- * @param        $licensefile
+ * @param string $system_key
+ * @param string $licensefile
  * @param string $license_file_dist
  * @return string
  */
@@ -452,7 +460,10 @@ function xoPutLicenseKey($system_key, $licensefile, $license_file_dist = 'licens
 function xoBuildLicenceKey()
 {
     $xoops_serdat = array();
-    $checksums = array(1 => 'md5', 2 => 'sha1');
+    $checksums    = array(
+        1 => 'md5',
+        2 => 'sha1',
+    );
     $type      = mt_rand(1, 2);
     $func      = $checksums[$type];
 
@@ -497,8 +508,8 @@ function xoBuildLicenceKey()
 /**
  * *#@+
  * Xoops Stripe Licence System Key
- * @param $xoops_key
- * @return mixed|string
+ * @param string $xoops_key
+ * @return string
  */
 function xoStripeKey($xoops_key)
 {

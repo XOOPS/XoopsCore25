@@ -59,7 +59,7 @@ class XoopsCacheApc extends XoopsCacheEngine
      *
      * @param array $settings array of setting for the engine
      *
-     * @return boolean True if the engine has been successfully initialized, false if not
+     * @return bool True if the engine has been successfully initialized, false if not
      * @see      CacheEngine::__defaults
      * @access   public
      */
@@ -75,7 +75,7 @@ class XoopsCacheApc extends XoopsCacheEngine
      *
      * @param  string  $key      Identifier for the data
      * @param  mixed   $value    Data to be cached
-     * @param  integer $duration How long to cache the data, in seconds
+     * @param int $duration How long to cache the data, in seconds
      * @return bool|array Returns TRUE on success or FALSE on failure | array with error keys.
      * @access public
      */
@@ -111,7 +111,8 @@ class XoopsCacheApc extends XoopsCacheEngine
     /**
      * Delete all keys from the cache
      *
-     * @return boolean True if the cache was successfully cleared, false otherwise
+     * @param bool|null $check
+     * @return bool True if the cache was successfully cleared, false otherwise
      * @access public
      */
     public function clear($check = null)

@@ -73,7 +73,13 @@ if ($memory) {
 }
 
 if (empty($mode)) {
-    $views = array('errors', 'deprecated', 'queries', 'blocks', 'extra');
+    $views = array(
+        'errors',
+        'deprecated',
+        'queries',
+        'blocks',
+        'extra',
+    );
     $ret .= "\n<div id=\"xo-logger-output\">\n<div id='xo-logger-tabs'>\n";
     $ret .= "<a href='javascript:xoSetLoggerView(\"none\")'>" . _LOGGER_NONE . "</a>\n";
     $ret .= "<a href='javascript:xoSetLoggerView(\"\")'>" . _LOGGER_ALL . "</a>\n";

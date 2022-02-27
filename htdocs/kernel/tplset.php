@@ -119,7 +119,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
      * @see XoopsTplset
      * @param  bool $isNew is the new tplsets new??
      * @return object XoopsTplset reference to the new tplsets
-     **/
+     */
     public function create($isNew = true)
     {
         $tplset = new XoopsTplset();
@@ -135,8 +135,8 @@ class XoopsTplsetHandler extends XoopsObjectHandler
      *
      * @see XoopsTplset
      * @param  int $id tplset_id of the tplsets to retrieve
-     * @return XoopsTplset|false XoopsTplset reference to the tplsets
-     **/
+     * @return \XoopsTplset|false XoopsTplset reference to the tplsets
+     */
     public function get($id)
     {
         $tplset = false;
@@ -148,7 +148,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
             }
             $numrows = $this->db->getRowsNum($result);
             if ($numrows == 1) {
-                $tplset = new XoopsTplset();
+                $tplset = new \XoopsTplset();
                 $tplset->assignVars($this->db->fetchArray($result));
             }
         }
@@ -164,7 +164,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
      * @param string $tplset_name
      *
      * @internal param int $id tplset_id of the block to retrieve
-     * @return XoopsTplset|false XoopsTplset reference to the tplsets
+     * @return \XoopsTplset|false XoopsTplset reference to the tplsets
      */
     public function getByName($tplset_name)
     {
@@ -177,7 +177,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
             }
             $numrows = $this->db->getRowsNum($result);
             if ($numrows == 1) {
-                $tplset = new XoopsTplset();
+                $tplset = new \XoopsTplset();
                 $tplset->assignVars($this->db->fetchArray($result));
             }
         }
@@ -305,7 +305,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
     /**
      * get a list of tplsets matchich certain conditions
      *
-     * @param  CriteriaElement $criteria conditions to match
+     * @param \CriteriaElement|null $criteria conditions to match
      * @return array           array of tplsets matching the conditions
      **/
     public function getList(CriteriaElement $criteria = null)

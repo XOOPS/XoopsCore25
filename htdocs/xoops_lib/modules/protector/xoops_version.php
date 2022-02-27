@@ -302,7 +302,12 @@ $modversion['config'][] = array(
     'formtype'    => 'select',
     'valuetype'   => 'int',
     'default'     => 1,
-    'options'     => array('xmlrpc' => 1, 'xmlrpc + 2.0.9.2 bugs' => 1025, '_NONE' => 0));
+    'options'     => array(
+        'xmlrpc'                => 1,
+        'xmlrpc + 2.0.9.2 bugs' => 1025,
+        '_NONE'                 => 0,
+    ),
+);
 $modversion['config'][] = array(
     'name'        => 'enable_dblayertrap',
     'title'       => $constpref . '_DBLAYERTRAP',

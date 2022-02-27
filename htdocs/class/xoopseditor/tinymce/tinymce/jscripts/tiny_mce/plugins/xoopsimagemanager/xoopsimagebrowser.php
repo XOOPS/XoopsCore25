@@ -49,7 +49,7 @@ global $xoopsConfig;
 // check user/group - start
 $isadmin = false;
 
-/** @var XoopsGroupPermHandler  $gperm_handler */
+/** @var XoopsGroupPermHandler $gperm_handler */
 $gperm_handler = xoops_getHandler('groupperm');
 $groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 $isadmin       = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_IMAGE, $groups);
@@ -92,7 +92,6 @@ if (isset($imgcat_id)) {
 $target = htmlspecialchars($target);
 
 if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
-
     // Save Image modification - start
     if (!empty($_POST['op']) && $op === 'save') {
         if (!$GLOBALS['xoopsSecurity']->check()) {
@@ -105,7 +104,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
             for ($i = 0; $i < $count; ++$i) {
                 $image = $image_handler->get($image_id[$i]);
                 if (!is_object($image)) {
-                    $error[] = sprintf(_FAILGETIMG, $image_id[$i]);
+                    $error[] = sprintf(_FAILFETCHIMG, $image_id[$i]);
                     continue;
                 }
                 $image_display[$i] = empty($image_display[$i]) ? 0 : 1;
@@ -306,7 +305,11 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
     if (!empty($_GET['op']) && $op === 'delcat') {
         xoops_header();
         echo "<link href='css/xoopsimagebrowser.css' rel='stylesheet' type='text/css' />";
-        xoops_confirm(array('op' => 'delcatok', 'imgcat_id' => $imgcat_id, 'target' => $target), 'xoopsimagebrowser.php', _AM_SYSTEM_IMAGES_RUDELIMGCAT);
+        xoops_confirm(   array(
+                          'op'        => 'delcatok',
+                          'imgcat_id' => $imgcat_id,
+                          'target'    => $target,
+                      ), 'xoopsimagebrowser.php', _AM_SYSTEM_IMAGES_RUDELIMGCAT);
         xoops_footer();
         exit();
     }
@@ -334,7 +337,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
         $errors        = array();
         foreach (array_keys($images) as $i) {
             if (!$image_handler->delete($images[$i])) {
-                $errors[] = sprintf(_MD_FAILDEL, $i);
+                $errors[] = sprintf(_AM_SYSTEM_IMAGES_FAILDEL, $i);
             } else {
                 if (file_exists(XOOPS_UPLOAD_PATH . '/' . $images[$i]->getVar('image_name')) && !unlink(XOOPS_UPLOAD_PATH . '/' . $images[$i]->getVar('image_name'))) {
                     $errors[] = sprintf(_AM_SYSTEM_IMAGES_FAILUNLINK, $i);
@@ -356,7 +359,11 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
     if (!empty($_GET['op']) && $op === 'delfile') {
         xoops_header();
         echo "<link href='css/xoopsimagebrowser.css' rel='stylesheet' type='text/css' />";
-        xoops_confirm(array('op' => 'delfileok', 'image_id' => $image_id, 'target' => $target), 'xoopsimagebrowser.php', _AM_SYSTEM_IMAGES_RUDELIMG);
+        xoops_confirm(   array(
+                          'op'       => 'delfileok',
+                          'image_id' => $image_id,
+                          'target'   => $target,
+                      ), 'xoopsimagebrowser.php', _AM_SYSTEM_IMAGES_RUDELIMG);
         xoops_footer();
         exit();
     }
@@ -377,7 +384,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
             redirect_header($current_file . '?target=' . $target, 3);
         }
         if (!$image_handler->delete($image)) {
-            redirect_header($current_file . '?target=' . $target, 3, xoops_error(sprintf(_MD_FAILDEL, $image->getVar('image_id'))));
+            redirect_header($current_file . '?target=' . $target, 3, xoops_error(sprintf(_AM_SYSTEM_IMAGES_FAILDEL, $image->getVar('image_id'))));
         }
         @unlink(XOOPS_UPLOAD_PATH . '/' . $image->getVar('image_name'));
         redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_DBUPDATED);
@@ -486,18 +493,18 @@ if ($op === 'listimg') {
         // check if image stored in db/as file - start
         if ($imagecategory->getVar('imgcat_storetype') === 'db') {
             $image_src = '' . XOOPS_URL . '/image.php?id=' . $i . '';
-            if (ini_get('allow_url_fopen') == true){
+            if (ini_get('allow_url_fopen') == true) {
                 $image_info = true;
                 $image_size = getimagesize($image_src);
             } else {
                 $image_info = false;
             }
         } else {
-            $image_src = '' . XOOPS_UPLOAD_URL . '/' . $images[$i]->getVar('image_name') . '';
+            $image_src  = '' . XOOPS_UPLOAD_URL . '/' . $images[$i]->getVar('image_name') . '';
             $image_size = getimagesize(XOOPS_ROOT_PATH . '/uploads/' . $images[$i]->getVar('image_name'));
             $image_info = true;
         }
-        
+
         // check if image stored in db/as file - end
         echo '<table width="100%" class="outer">';
         echo '<tr>';
@@ -505,7 +512,7 @@ if ($op === 'listimg') {
 
         echo '<img id="imageid' . $images[$i]->getVar('image_id') . '" src="' . $image_src . '" alt="' . $images[$i]->getVar('image_nicename', 'E') . '" title="' . $images[$i]->getVar('image_nicename', 'E') . '" onclick="XoopsimagebrowserDialog.insertAndClose(\'imageid' . $images[$i]->getVar('image_id') . '\');return false;"/>';
         echo '<br>';
-        if ($image_info == true){
+        if ($image_info == true) {
             echo '' . $image_size[0] . 'x' . $image_size[1] . '';
         }
         echo '</td>';
@@ -582,7 +589,10 @@ if ($op === 'editcat') {
     $form->addElement(new XoopsFormText(_IMGMAXHEIGHT, 'imgcat_maxheight', 3, 4, $imagecategory->getVar('imgcat_maxheight')));
     $form->addElement(new XoopsFormText(_MD_IMGCATWEIGHT, 'imgcat_weight', 3, 4, $imagecategory->getVar('imgcat_weight')));
     $form->addElement(new XoopsFormRadioYN(_MD_IMGCATDISPLAY, 'imgcat_display', $imagecategory->getVar('imgcat_display'), _YES, _NO));
-    $storetype = array('db' => _MD_INDB, 'file' => _MD_ASFILE);
+    $storetype = array(
+        'db'   => _MD_INDB,
+        'file' => _MD_ASFILE,
+    );
     $form->addElement(new XoopsFormLabel(_MD_IMGCATSTRTYPE, $storetype[$imagecategory->getVar('imgcat_storetype')]));
     $form->addElement(new XoopsFormHidden('imgcat_id', $imgcat_id));
     $form->addElement(new XoopsFormHidden('op', 'updatecat'));
@@ -635,7 +645,10 @@ if ($isadmin) {
     $form->addElement(new XoopsFormText(_MD_IMGCATWEIGHT, 'imgcat_weight', 3, 4, 0));
     $form->addElement(new XoopsFormRadioYN(_MD_IMGCATDISPLAY, 'imgcat_display', 1, _YES, _NO));
     $storetype = new XoopsFormRadio(_MD_IMGCATSTRTYPE . '<br><span style="color:#ff0000;">' . _MD_STRTYOPENG . '</span>', 'imgcat_storetype', 'file');
-    $storetype->addOptionArray(array('file' => _MD_ASFILE, 'db' => _MD_INDB));
+    $storetype->addOptionArray(array(
+                                   'file' => _MD_ASFILE,
+                                   'db'   => _MD_INDB,
+                               ));
     $form->addElement($storetype);
     $form->addElement(new XoopsFormHidden('op', 'addcat'));
     $form->addElement(new XoopsFormButton('', 'imgcat_button', _SUBMIT, 'submit'));

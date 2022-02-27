@@ -104,7 +104,7 @@
             <{if $bookmarkme == 3}>
                 &nbsp; <!-- AddThis Bookmark Button -->
                 <a href="https://www.addthis.com/bookmark.php" onclick="addthis_url = location.href; addthis_title = document.title; return addthis_click(this);" target="_blank">
-                    <img src="assets/images/addthis_button1-bm.gif" align="absmiddle" width="125" height="16" border="0" alt="AddThis Social Bookmark Button"/>
+                    <img src="assets/images/addthis_button1-bm.gif" align="absmiddle" width="125" height="16" border="0" alt="AddThis Social Bookmark Button">
                 </a>
                 <script type="text/javascript">var addthis_pub = 'JJXUY2C9CQIWTKI1';</script>
                 <script type="text/javascript" src="https://s9.addthis.com/js/widget.php?v=10"></script>

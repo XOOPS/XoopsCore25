@@ -26,9 +26,21 @@ include_once XOOPS_ROOT_PATH . '/class/xml/xmltaghandler.php';
  */
 class XoopsThemeSetParser extends SaxParser
 {
+    /**
+     * @var array
+     */
     public $tempArr       = array();
+    /**
+     * @var array
+     */
     public $themeSetData  = array();
+    /**
+     * @var array
+     */
     public $imagesData    = array();
+    /**
+     * @var array
+     */
     public $templatesData = array();
 
     /**
@@ -37,7 +49,7 @@ class XoopsThemeSetParser extends SaxParser
     public function __construct(&$input)
     {
         parent::__construct($input);
-//        $this->addTagHandler(new ThemeSetThemeNameHandler());
+//        $this->addTagHandler(new ThemeSetThemeNameHandler());//mb TODO ThemeSetThemeNameHandler doesn't exist
         $this->addTagHandler(new ThemeSetDateCreatedHandler());
         $this->addTagHandler(new ThemeSetAuthorHandler());
         $this->addTagHandler(new ThemeSetDescriptionHandler());
@@ -82,6 +94,7 @@ class XoopsThemeSetParser extends SaxParser
 
     /**
      * @param array $imagearr
+     * @return void
      */
     public function setImagesData($imagearr)
     {
@@ -98,6 +111,7 @@ class XoopsThemeSetParser extends SaxParser
 
     /**
      * @param array $tplarr
+     * @return void
      */
     public function setTemplatesData($tplarr)
     {
@@ -116,6 +130,7 @@ class XoopsThemeSetParser extends SaxParser
      * @param string $name
      * @param string  $value
      * @param string $delim
+     * @return void
      */
     public function setTempArr($name, &$value, $delim = '')
     {
@@ -134,6 +149,9 @@ class XoopsThemeSetParser extends SaxParser
         return $this->tempArr;
     }
 
+    /**
+     * @return void
+     */
     public function resetTempArr()
     {
         unset($this->tempArr);
@@ -211,7 +229,7 @@ class ThemeSetAuthorHandler extends XmlTagHandler
      */
     public function handleEndElement($parser)
     {
-        $parser->setCreditsData($parser->getTempArr());
+        $parser->setCreditsData($parser->getTempArr()); //mb TODO missing reference
     }
 }
 
@@ -436,7 +454,8 @@ class ThemeSetTemplateHandler extends XmlTagHandler
      */
     public function handleEndElement($parser)
     {
-        $parser->setTemplatesData($parser->getTempArr());
+        $tplarr = $parser->getTempArr();
+        $parser->setTemplatesData($tplarr);
     }
 }
 

@@ -16,6 +16,7 @@
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
+
 use Xmf\Request;
 
 // Check users rights
@@ -29,7 +30,13 @@ if (!xoops_getModuleOption('active_smilies', 'system')) {
 
 // Parameters
 $nb_smilies  = xoops_getModuleOption('smilies_pager', 'system');
-$mimetypes   = array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png');
+$mimetypes   = array(
+    'image/gif',
+    'image/jpeg',
+    'image/pjpeg',
+    'image/x-png',
+    'image/png',
+);
 $upload_size = 500000;
 // Get Action type
 $op = Request::getString('op', 'list');
@@ -44,7 +51,6 @@ xoops_cp_header();
 $xoBreadCrumb->addLink(_AM_SYSTEM_SMILIES_NAV_MANAGER, system_adminVersion('smilies', 'adminpath'));
 
 switch ($op) {
-
     case 'list':
     default:
         // Define Stylesheet
@@ -141,7 +147,7 @@ switch ($op) {
             $obj = $smilies_Handler->create();
         }
         // erreur
-		$err = [];
+        $err = array();
         $obj->setVar('code', Request::getString('code', ''));
 
         $obj->setVar('emotion', Request::getString('emotion', ''));

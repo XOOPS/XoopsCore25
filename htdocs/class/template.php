@@ -52,7 +52,8 @@ class XoopsTpl extends Smarty
         $this->compile_check   = ($xoopsConfig['theme_fromfile'] == 1);
         $this->plugins_dir     = array(
             XOOPS_ROOT_PATH . '/class/smarty/xoops_plugins',
-            XOOPS_ROOT_PATH . '/class/smarty/plugins');
+            XOOPS_ROOT_PATH . '/class/smarty/plugins',
+        );
         if ($xoopsConfig['debug_mode']) {
             $this->debugging_ctrl = 'URL';
             $this->debug_tpl = XOOPS_ROOT_PATH . '/class/smarty/xoops_tpl/debug.tpl';
@@ -68,7 +69,8 @@ class XoopsTpl extends Smarty
                           'xoops_langcode'   => _LANGCODE,
                           'xoops_charset'    => _CHARSET,
                           'xoops_version'    => XOOPS_VERSION,
-                          'xoops_upload_url' => XOOPS_UPLOAD_URL));
+                          'xoops_upload_url' => XOOPS_UPLOAD_URL,
+                      ));
         $xoopsPreload = XoopsPreload::getInstance();
         $xoopsPreload->triggerEvent('core.class.template.new', array($this));
     }
@@ -121,8 +123,8 @@ class XoopsTpl extends Smarty
     /**
      * returns an auto_id for auto-file-functions
      *
-     * @param  string $cache_id
-     * @param  string $compile_id
+     * @param string|null $cache_id
+     * @param string|null $compile_id
      * @return string |null
      */
     public function _get_auto_id($cache_id = null, $compile_id = null)
@@ -175,7 +177,8 @@ class XoopsTpl extends Smarty
             'auto_base'   => $this->cache_dir,
             'auto_source' => null,
             'auto_id'     => $this->compile_id,
-            'exp_time'    => null);
+            'exp_time'    => null,
+        );
         $this->_compile_id = $this->compile_id = $compile_id;
         require_once SMARTY_CORE_DIR . 'core.rm_auto.php';
 
@@ -285,8 +288,8 @@ class XoopsTpl extends Smarty
  * function to update compiled template file in templates_c folder
  *
  * @param  string  $tpl_id
- * @param  boolean $clear_old
- * @return boolean
+ * @param  bool $clear_old
+ * @return bool
  */
 function xoops_template_touch($tpl_id, $clear_old = true)
 {

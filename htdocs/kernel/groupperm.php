@@ -1,4 +1,5 @@
 <?php
+
 /**
  * XOOPS Kernel Class
  *
@@ -136,11 +137,11 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
      *
      * @param bool $isNew Flag the object as "new"?
      *
-     * @return XoopsGroupPerm   {@link XoopsGroupPerm}
+     * @return \XoopsGroupPerm   {@link XoopsGroupPerm}
      */
     public function create($isNew = true)
     {
-        $perm = new XoopsGroupPerm();
+        $perm = new \XoopsGroupPerm();
         if ($isNew) {
             $perm->setNew();
         }
@@ -153,11 +154,11 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
      *
      * @param int $id ID
      *
-     * @return XoopsGroupPerm|false {@link XoopsGroupPerm}, FALSE on fail
+     * @return false|\XoopsGroupPerm {@link XoopsGroupPerm}, FALSE on fail
      */
     public function get($id)
     {
-        $id   = (int)$id;
+        $id = (int)$id;
         $perm = false;
         if ($id > 0) {
             $sql = sprintf('SELECT * FROM %s WHERE gperm_id = %u', $this->db->prefix('group_permission'), $id);
@@ -166,7 +167,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
             }
             $numrows = $this->db->getRowsNum($result);
             if ($numrows == 1) {
-                $perm = new XoopsGroupPerm();
+                $perm = new \XoopsGroupPerm();
                 $perm->assignVars($this->db->fetchArray($result));
             }
         }
@@ -316,7 +317,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
      * Delete all module specific permissions assigned for a group
      *
      * @param int $gperm_groupid ID of a group
-     * @param int $gperm_modid   ID of a module
+     * @param int|null $gperm_modid   ID of a module
      *
      * @return bool TRUE on success
      */
@@ -334,8 +335,8 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
      * Delete all module specific permissions
      *
      * @param int    $gperm_modid  ID of a module
-     * @param string $gperm_name   Name of a module permission
-     * @param int    $gperm_itemid ID of a module item
+     * @param string|null $gperm_name   Name of a module permission
+     * @param int|null    $gperm_itemid ID of a module item
      *
      * @return bool TRUE on success
      */

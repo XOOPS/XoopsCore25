@@ -8,6 +8,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
+
 /**
  * Installer database configuration page
  *
@@ -25,7 +26,7 @@
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  **/
 
-require_once './include/common.inc.php';
+require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 $pageHasForm = true;
@@ -34,9 +35,9 @@ $pageHasHelp = true;
 $vars =& $_SESSION['settings'];
 
 $hostConnectPrefix = empty($vars['DB_PCONNECT']) ? '' : 'p:';
-$link = mysqli_connect($hostConnectPrefix.$vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS']);
+$link              = mysqli_connect($hostConnectPrefix . $vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS']);
 if (0 !== $link->connect_errno) {
-    $error = ERR_NO_DBCONNECTION .' (' . $link->connect_errno . ') ' . $link->connect_error;
+    $error = ERR_NO_DBCONNECTION . ' (' . $link->connect_errno . ') ' . $link->connect_error;
     $wizard->redirectToPage('-1', $error);
     exit();
 }
@@ -47,7 +48,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['charset']) && @$_GET['a
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $params = array('DB_NAME', 'DB_CHARSET', 'DB_COLLATION', 'DB_PREFIX');
+    $params = array(
+        'DB_NAME',
+        'DB_CHARSET',
+        'DB_COLLATION',
+        'DB_PREFIX',
+    );
     foreach ($params as $name) {
         $vars[$name] = isset($_POST[$name]) ? $_POST[$name] : '';
     }
@@ -85,10 +91,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($vars['DB_NAME'])) {
 if (@empty($vars['DB_NAME'])) {
     // Fill with default values
     $vars = array_merge($vars, array(
-                                 'DB_NAME'      => '',
-                                 'DB_CHARSET'   => 'utf8',
-                                 'DB_COLLATION' => '',
-                                 'DB_PREFIX'    => 'x' . substr(md5(time()), 0, 3)));
+        'DB_NAME'      => '',
+        'DB_CHARSET'   => 'utf8',
+        'DB_COLLATION' => '',
+        'DB_PREFIX'    => 'x' . substr(md5(time()), 0, 3),
+    ));
 }
 
 ob_start();
@@ -99,9 +106,9 @@ ob_start();
 
     <script type="text/javascript">
         function setFormFieldCollation(id, val) {
-            $.get('<?php echo $_SERVER['PHP_SELF']; ?>', { action: 'updateCollation', charset: val } )
-                .done(function( data ) {
-                    $('#'+id).html(data);
+            $.get('<?php echo $_SERVER['PHP_SELF']; ?>', {action: 'updateCollation', charset: val})
+                .done(function (data) {
+                    $('#' + id).html(data);
                 });
         }
     </script>
@@ -110,14 +117,14 @@ ob_start();
         <div class="panel-heading"><?php echo LEGEND_DATABASE; ?></div>
         <div class="panel-body">
 
-        <?php echo xoFormField('DB_NAME', $vars['DB_NAME'], DB_NAME_LABEL, DB_NAME_HELP); ?>
-        <?php echo xoFormField('DB_PREFIX', $vars['DB_PREFIX'], DB_PREFIX_LABEL, DB_PREFIX_HELP); ?>
-        <?php echo xoFormFieldCharset('DB_CHARSET', $vars['DB_CHARSET'], DB_CHARSET_LABEL, DB_CHARSET_HELP, $link); ?>
-        <?php echo xoFormBlockCollation('DB_COLLATION', $vars['DB_COLLATION'], DB_COLLATION_LABEL, DB_COLLATION_HELP, $link, $vars['DB_CHARSET']); ?>
+            <?php echo xoFormField('DB_NAME', $vars['DB_NAME'], DB_NAME_LABEL, DB_NAME_HELP); ?>
+            <?php echo xoFormField('DB_PREFIX', $vars['DB_PREFIX'], DB_PREFIX_LABEL, DB_PREFIX_HELP); ?>
+            <?php echo xoFormFieldCharset('DB_CHARSET', $vars['DB_CHARSET'], DB_CHARSET_LABEL, DB_CHARSET_HELP, $link); ?>
+            <?php echo xoFormBlockCollation('DB_COLLATION', $vars['DB_COLLATION'], DB_COLLATION_LABEL, DB_COLLATION_HELP, $link, $vars['DB_CHARSET']); ?>
         </div>
     </div>
 
 <?php
 $content = ob_get_contents();
 ob_end_clean();
-include './include/install_tpl.php';
+include __DIR__ . '/include/install_tpl.php';

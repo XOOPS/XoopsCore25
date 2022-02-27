@@ -82,7 +82,11 @@ if (is_object($GLOBALS['xoopsUser']) && $uid == $GLOBALS['xoopsUser']->getVar('u
      *
      */
     // Redirect if current user is not allowed to access the user's profile based on group permission
-    $groups_basic             = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS);
+    $groups_basic             = array(
+        XOOPS_GROUP_ADMIN,
+        XOOPS_GROUP_USERS,
+        XOOPS_GROUP_ANONYMOUS,
+    );
     $groups_thisUser          = $thisUser->getGroups();
     $groups_thisUser_nonbasic = array_diff($groups_thisUser, $groups_basic);
     $groups_xoopsUser         = $groups;
@@ -168,7 +172,10 @@ foreach (array_keys($fields) as $i) {
         $value = implode('<br>', array_values($value));
     }
     if ($value) {
-        $categories[$cat_id]['fields'][] = array('title' => $fields[$i]->getVar('field_title'), 'value' => $value);
+        $categories[$cat_id]['fields'][] = array(
+            'title' => $fields[$i]->getVar('field_title'),
+            'value' => $value,
+        );
         $weights[$cat_id][]              = $fields[$i]->getVar('cat_id');
     }
 }
@@ -201,7 +208,7 @@ if ($GLOBALS['xoopsModuleConfig']['profile_search']) {
                         } else {
                             $results[$i]['image'] = XOOPS_URL . '/images/icons/posticon2.gif';
                         }
-                        if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
+                        if (!preg_match('/^http[s]*:\/\//i', $results[$i]['link'])) {
                             $results[$i]['link'] = XOOPS_URL . '/modules/' . $modules[$mid]->getVar('dirname', 'n') . '/' . $results[$i]['link'];
                         }
                         $results[$i]['title'] = $myts->htmlSpecialChars($results[$i]['title']);
@@ -214,7 +221,8 @@ if ($GLOBALS['xoopsModuleConfig']['profile_search']) {
                     $GLOBALS['xoopsTpl']->append('modules', array(
                         'name'         => $modules[$mid]->getVar('name'),
                         'results'      => $results,
-                        'showall_link' => $showall_link));
+                        'showall_link' => $showall_link,
+                    ));
                 }
                 unset($modules[$mid]);
             }

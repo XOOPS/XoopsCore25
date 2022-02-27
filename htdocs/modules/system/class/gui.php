@@ -19,23 +19,25 @@ class XoopsSystemGui
 {
     /**
      * Reference to template object
+     * @var \XoopsTpl
      */
-    public $template;
-
+    public $template; //mb TODO
     /**
      * Holding navigation
+     * @var string
      */
-    public $navigation;
-
+    public $navigation; //mb TODO doesn't seem to be used
     /**
      * Holding gui folder name
+     * @var string
      */
     public $foldername;
 
     /**
      * Reference for Theme
+     * @var \xos_opal_Theme
      */
-    public $xoTheme;
+    public $xoTheme; //mb TODO
 
     public function header()
     {

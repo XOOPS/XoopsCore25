@@ -36,8 +36,8 @@ class XoopsFormDateTime extends XoopsFormElementTray
      *
      * @param mixed   $caption  form field caption
      * @param mixed   $name     form variable name
-     * @param integer $size     size of date select
-     * @param integer $value    unix timestamp, defaults to now
+     * @param int $size     size of date select
+     * @param int $value    unix timestamp, defaults to now
      * @param mixed   $showtime control display of date and time elements
      *                           SHOW_BOTH, true  - show both date and time selectors
      *                           SHOW_DATE, false - only show date selector

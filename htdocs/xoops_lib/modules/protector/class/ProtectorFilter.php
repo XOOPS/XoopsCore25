@@ -6,6 +6,9 @@
  */
 class ProtectorFilterAbstract
 {
+    /**
+     * @var \Protector
+     */
     public $protector;
 
     /**
@@ -47,7 +50,13 @@ class ProtectorFilterAbstract
  */
 class ProtectorFilterHandler
 {
+    /**
+     * @var \Protector
+     */
     public $protector;
+    /**
+     * @var string
+     */
     public $filters_base = '';
 
     /**
@@ -74,7 +83,7 @@ class ProtectorFilterHandler
 
     // return: false : execute default action
     /**
-     * @param $type
+     * @param string $type
      *
      * @return int|mixed
      */

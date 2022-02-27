@@ -78,7 +78,8 @@ switch ($op) {
                 $modules[$modid] = array(
                     'id'         => $modid,
                     'name'       => $module->getVar('name'),
-                    'categories' => array());
+                    'categories' => array(),
+                );
                 // TODO: note, we could auto-generate the url from the id
                 // and category info... (except when category has multiple
                 // subscription scripts defined...)
@@ -108,7 +109,8 @@ switch ($op) {
                 $modules[$modid]['categories'][$category] = array(
                     'name'  => $category,
                     'title' => $category_info['title'],
-                    'items' => array());
+                    'items' => array(),
+                );
             }
             $item = $n->getVar('not_itemid');
             if ($item != $prev_item) {
@@ -118,13 +120,15 @@ switch ($op) {
                 } else {
                     $item_info = array(
                         'name' => '[' . _NOT_NAMENOTAVAILABLE . ']',
-                        'url'  => '');
+                        'url'  => '',
+                    );
                 }
                 $modules[$modid]['categories'][$category]['items'][$item] = array(
                     'id'            => $item,
                     'name'          => $item_info['name'],
                     'url'           => $item_info['url'],
-                    'notifications' => array());
+                    'notifications' => array(),
+                );
             }
             $event_info                                                                  =& notificationEventInfo($category, $n->getVar('not_event'), $n->getVar('not_modid'));
             $modules[$modid]['categories'][$category]['items'][$item]['notifications'][] = array(
@@ -135,7 +139,8 @@ switch ($op) {
                 'item_id'        => $n->getVar('not_itemid'),
                 'event'          => $n->getVar('not_event'),
                 'event_title'    => $event_info['title'],
-                'user_id'        => $n->getVar('not_uid'));
+                'user_id'        => $n->getVar('not_uid'),
+            );
         }
         $GLOBALS['xoopsOption']['template_main'] = 'system_notification_list.tpl';
         include $GLOBALS['xoops']->path('header.php');
@@ -177,7 +182,8 @@ switch ($op) {
         $hidden_vars = array(
             'uid'       => $uid,
             'delete_ok' => 1,
-            'del_not'   => $_POST['del_not']);
+            'del_not'   => $_POST['del_not'],
+        );
         echo '<h4>' . _NOT_DELETINGNOTIFICATIONS . '</h4>';
         xoops_confirm($hidden_vars, xoops_getenv('PHP_SELF'), _NOT_RUSUREDEL);
         include $GLOBALS['xoops']->path('footer.php');

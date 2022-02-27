@@ -1,4 +1,5 @@
 <?php
+
 /**
  * TextSanitizer extension
  *
@@ -20,7 +21,10 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 return $config = array(
     'tags'     => array(),  // Tags to be filtered out
-    'patterns' => array( // patterns to be used for filtering
-                         array(
-                             'search'  => '',
-                             'replace' => '')));
+    'patterns' => array(    // patterns to be used for filtering
+        array(
+            'search'  => '',
+            'replace' => '',
+        ),
+    ),
+);

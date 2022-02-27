@@ -51,11 +51,22 @@ class XoopsSessionHandler
      * @access    public
      */
     public $securityLevel = 3;
-
+    /**
+     * @var array
+     */
     protected $bitMasks = array(
-        2 => array('v4' => 16, 'v6' => 64),
-        3 => array('v4' => 24, 'v6' => 56),
-        4 => array('v4' => 32, 'v6' => 128),
+        2 => array(
+            'v4' => 16,
+            'v6' => 64,
+        ),
+        3 => array(
+            'v4' => 24,
+            'v6' => 56,
+        ),
+        4 => array(
+            'v4' => 32,
+            'v6' => 128,
+        ),
     );
 
     /**
@@ -169,7 +180,8 @@ class XoopsSessionHandler
     public function write($sessionId, $data)
     {
         $myReturn = true;
-        $remoteAddress = \Xmf\IPAddress::fromRequest()->asReadable();
+        $remoteAddress = \Xmf\IPAddress::fromRequest()
+                                       ->asReadable();
         $sessionId = $this->db->quoteString($sessionId);
         $sql = sprintf(
             'UPDATE %s SET sess_updated = %u, sess_data = %s WHERE sess_id = %s',
@@ -276,9 +288,9 @@ class XoopsSessionHandler
      * To be refactored
      * FIXME: how about $xoopsConfig['use_ssl'] is enabled?
      *
-     * @param  string $sess_id session ID
-     * @param  int    $expire  Time in seconds until a session expires
-     * @return bool
+     * @param string|null $sess_id session ID
+     * @param int|null    $expire  Time in seconds until a session expires
+     * @return void
      **/
     public function update_cookie($sess_id = null, $expire = null)
     {

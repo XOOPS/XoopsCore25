@@ -56,7 +56,7 @@ abstract class XoopsDatabase
     /**
      * If statements that modify the database are selected
      *
-     * @var boolean
+     * @var bool
      */
     public $allowWebChanges = false;
 

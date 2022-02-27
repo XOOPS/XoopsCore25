@@ -25,7 +25,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 class MytsRtsp extends MyTextSanitizerExtension
 {
     /**
-     * @param $textarea_id
+     * @param string $textarea_id
      *
      * @return array
      */
@@ -67,7 +67,7 @@ EOH;
     }
 
     /**
-     * @param $ts
+     * @param MyTextSanitizer $ts
      */
     public function load($ts)
     {

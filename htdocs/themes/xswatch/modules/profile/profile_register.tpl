@@ -3,7 +3,7 @@
 <{if $steps|@count > 1 AND $current_step >= 0}>
     <div class='register-steps'>
         <span class='caption'><{$lang_register_steps}></span>
-        <{foreachq item=step from=$steps key=stepno name=steploop}>
+        <{foreach item=step from=$steps key=stepno name=steploop}>
             <{if $stepno == $current_step}>
                 <span class='item current'><{$step.step_name}></span>
             <{else}>

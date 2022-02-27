@@ -33,6 +33,7 @@ class IPAddress
      */
     public function __construct($ip)
     {
+        $ip = (string)$ip;
         if (!filter_var((string) $ip, FILTER_VALIDATE_IP)) {
             $this->ip = false;
         } else {
@@ -153,7 +154,7 @@ class IPAddress
         $bits = '';
         for ($i = 0; $i < $length; ++$i) {
             $byte = decbin(ord($binaryIp[$i]));
-            $bits .= substr("00000000" . $byte, -8);
+            $bits .= substr('00000000' . $byte, -8);
         }
         return $bits;
     }

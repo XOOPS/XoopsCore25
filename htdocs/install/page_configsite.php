@@ -16,7 +16,7 @@
 
 $xoopsOption['checkadmin'] = true;
 $xoopsOption['hascommon']  = true;
-require_once './include/common.inc.php';
+require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 if (!@include_once "../modules/system/language/{$wizard->language}/admin.php") {
     include_once '../modules/system/language/english/admin.php';
@@ -30,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $config_handler = xoops_getHandler('config');
     if (array_key_exists('conf_ids', $_REQUEST)) {
         foreach ($_REQUEST['conf_ids'] as $key => $conf_id) {
+            /** @var XoopsConfigItem $config */
             $config    = $config_handler->getConfig($conf_id);
             $new_value = $_REQUEST[$config->getVar('conf_name')];
             $config->setConfValueForInput($new_value);
@@ -55,7 +56,7 @@ $criteria->add($criteria2);
 $criteria->setSort('conf_catid ASC, conf_order ASC');
 $configs = $config_handler->getConfigs($criteria);
 
-include './include/createconfigform.php';
+include __DIR__ . '/include/createconfigform.php';
 $wizard->form = createConfigform($configs);
 $content      = $wizard->CreateForm();
-include './include/install_tpl.php';
+include __DIR__.'/include/install_tpl.php';

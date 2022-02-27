@@ -209,9 +209,10 @@ class CriteriaCompo extends CriteriaElement
     /**
      * Add an element
      *
-     * @param CriteriaElement|object $criteriaElement
+     * @param \CriteriaElement $criteriaElement
      * @param string                 $condition
-     * @return object reference to this collection
+     *
+     * @return CriteriaCompo reference to this collection
      */
     public function &add(CriteriaElement $criteriaElement, $condition = 'AND')
     {
@@ -289,13 +290,24 @@ class CriteriaCompo extends CriteriaElement
 class Criteria extends CriteriaElement
 {
     /**
-     *
      * @var string
      */
     public $prefix;
+    /**
+     * @var string
+     */
     public $function;
+    /**
+     * @var string
+     */
     public $column;
+    /**
+     * @var string
+     */
     public $operator;
+    /**
+     * @var string
+     */
     public $value;
 
     /**
@@ -343,13 +355,19 @@ class Criteria extends CriteriaElement
         if (!empty($this->function)) {
             $clause = sprintf($this->function, $clause);
         }
-        if (in_array(strtoupper($this->operator), array('IS NULL', 'IS NOT NULL'))) {
+        if (in_array(strtoupper($this->operator), array(
+            'IS NULL',
+            'IS NOT NULL',
+        ))) {
             $clause .= ' ' . $this->operator;
         } else {
             if ('' === ($value = trim($this->value))) {
                 return '';
             }
-            if (!in_array(strtoupper($this->operator), array('IN', 'NOT IN'))) {
+            if (!in_array(strtoupper($this->operator), array(
+                'IN',
+                'NOT IN',
+            ))) {
                 if ((substr($value, 0, 1) !== '`') && (substr($value, -1) !== '`')) {
                     $value = "'{$value}'";
                 } elseif (!preg_match('/^[a-zA-Z0-9_\.\-`]*$/', $value)) {

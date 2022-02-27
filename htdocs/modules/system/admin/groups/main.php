@@ -16,9 +16,12 @@
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
+
 /* @var XoopsUser $xoopsUser */
 /* @var XoopsModule $xoopsModule */
+
 use Xmf\Request;
+
 // Check users rights
 if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid())) {
     exit(_NOPERM);
@@ -39,7 +42,6 @@ xoops_cp_header();
 $xoBreadCrumb->addLink(_AM_SYSTEM_GROUPS_NAV_MANAGER, system_adminVersion('groups', 'adminpath'));
 
 switch ($op) {
-
     case 'list':
     default:
         // Define Stylesheet
@@ -81,7 +83,11 @@ switch ($op) {
                 }
                 $edit_delete = '<a href="admin.php?fct=groups&amp;op=groups_edit&amp;groups_id=' . $groups_id . '">
                                            <img src="./images/icons/edit.png" border="0" alt="' . _AM_SYSTEM_GROUPS_EDIT . '" title="' . _AM_SYSTEM_GROUPS_EDIT . '"></a>';
-                if (!in_array($groups_arr[$i]->getVar('groupid'), array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS))) {
+                if (!in_array($groups_arr[$i]->getVar('groupid'), array(
+                    XOOPS_GROUP_ADMIN,
+                    XOOPS_GROUP_USERS,
+                    XOOPS_GROUP_ANONYMOUS,
+                ))) {
                     $groups['delete'] = 1;
                     $edit_delete .= '<a href="admin.php?fct=groups&amp;op=groups_delete&amp;groups_id=' . $groups_id . '">
                                      <img src="./images/icons/delete.png" border="0" alt="' . _AM_SYSTEM_GROUPS_DELETE . '" title="' . _AM_SYSTEM_GROUPS_DELETE . '"></a>';
@@ -217,7 +223,11 @@ switch ($op) {
             $group->setVar('name', $_POST['name']);
             $group->setVar('description', $_POST['desc']);
             // if this group is not one of the default groups
-            if (!in_array($group->getVar('groupid'), array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS))) {
+            if (!in_array($group->getVar('groupid'), array(
+                XOOPS_GROUP_ADMIN,
+                XOOPS_GROUP_USERS,
+                XOOPS_GROUP_ANONYMOUS,
+            ))) {
                 if (count($system_catids) > 0) {
                     $group->setVar('group_type', 'Admin');
                 } else {
@@ -292,7 +302,12 @@ switch ($op) {
                 if (!$GLOBALS['xoopsSecurity']->check()) {
                     redirect_header('admin.php?fct=groups', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
                 }
-                if ($groups_id > 0 && !in_array($groups_id, array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS))) {
+                if ($groups_id > 0
+                    && !in_array($groups_id, array(
+                        XOOPS_GROUP_ADMIN,
+                        XOOPS_GROUP_USERS,
+                        XOOPS_GROUP_ANONYMOUS,
+                    ))) {
                     /* @var XoopsMemberHandler $member_handler */
                     $member_handler = xoops_getHandler('member');
                     $group          = $member_handler->getGroup($groups_id);
@@ -315,7 +330,8 @@ switch ($op) {
                 xoops_confirm(array(
                                   'ok' => 1,
                                   'groups_id' => $_REQUEST['groups_id'],
-                                  'op' => 'groups_delete'), 'admin.php?fct=groups', sprintf(_AM_SYSTEM_GROUPS_SUREDEL) . '<br \>' . $obj->getVar('name') . '<br \>');
+                                  'op'        => 'groups_delete',
+                              ), 'admin.php?fct=groups', sprintf(_AM_SYSTEM_GROUPS_SUREDEL) . '<br \>' . $obj->getVar('name') . '<br \>');
             }
         } else {
             redirect_header('admin.php?fct=groups', 1, _AM_SYSTEM_DBERROR);

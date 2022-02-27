@@ -48,7 +48,10 @@ if (empty($_GET['refresh']) && $op !== 'submit') {
 xoops_header();
 
 $method      = XoopsRequest::getMethod();
-$safeMethods = array('GET', 'HEAD');
+$safeMethods = array(
+    'GET',
+    'HEAD',
+);
 if (!in_array($method, $safeMethods)) {
     if (!$GLOBALS['xoopsSecurity']->check()) {
         echo '<br><br><div><h4>' . _ERRORS . '</h4><br>';

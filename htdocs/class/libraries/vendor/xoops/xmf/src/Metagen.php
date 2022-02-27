@@ -34,7 +34,7 @@ class Metagen
      * horizontal ellipsis
      * This will be used to replace omitted text.
      */
-    const ELLIPSIS = "...";
+    const ELLIPSIS = '...';
 
     /**
      * assignTitle set the page title
@@ -89,7 +89,9 @@ class Metagen
     protected static function assignThemeMeta($name, $value)
     {
         if (class_exists('Xoops', false)) {
-            \Xoops::getInstance()->theme()->addMeta('meta', $name, $value);
+            \Xoops::getInstance()
+                  ->theme()
+                  ->addMeta('meta', $name, $value);
         } else {
             global $xoTheme;
             $xoTheme->addMeta('meta', $name, $value);
@@ -105,7 +107,9 @@ class Metagen
     protected static function assignTemplateVar($name, $value)
     {
         if (class_exists('Xoops', false)) {
-            \Xoops::getInstance()->tpl()->assign($name, $value);
+            \Xoops::getInstance()
+                  ->tpl()
+                  ->assign($name, $value);
         } else {
             global $xoopsTpl;
             $xoopsTpl->assign($name, $value);
@@ -116,8 +120,8 @@ class Metagen
      * generateKeywords builds a set of keywords from text body
      *
      * @param string        $body      text to extract keywords from
-     * @param integer       $count     number of keywords to use
-     * @param integer       $minLength minimum length of word to consider as a keyword
+     * @param int       $count     number of keywords to use
+     * @param int       $minLength minimum length of word to consider as a keyword
      * @param string[]|null $forceKeys array of keywords to force use, or null for none
      *
      * @return array of keywords
@@ -148,10 +152,12 @@ class Metagen
         );
 
         foreach ($originalKeywords as $originalKeyword) {
-            if (static::stopWordsObject()->check($originalKeyword)) {
+            if (static::stopWordsObject()
+                      ->check($originalKeyword)) {
                 $secondRoundKeywords = explode("'", $originalKeyword);
                 foreach ($secondRoundKeywords as $secondRoundKeyword) {
-                    if (static::stopWordsObject()->check($secondRoundKeyword)
+                    if (static::stopWordsObject()
+                              ->check($secondRoundKeyword)
                         && strlen($secondRoundKeyword) >= $minLength
                     ) {
                         $keyCount[$secondRoundKeyword] =
@@ -177,7 +183,7 @@ class Metagen
      * generateDescription - generate a short description from a body of text
      *
      * @param string  $body      body text
-     * @param integer $wordCount maximum word count for description
+     * @param int $wordCount maximum word count for description
      *
      * @return string
      */
@@ -185,7 +191,7 @@ class Metagen
     {
         $text = static::asPlainText($body);
 
-        $words = explode(" ", $text);
+        $words = explode(' ', $text);
 
         // Only keep $maxWords words
         $newWords = array();
@@ -247,7 +253,7 @@ class Metagen
      *
      * @param string $var to test
      *
-     * @return boolean
+     * @return bool
      *
      * @author psylove
      */
@@ -268,12 +274,15 @@ class Metagen
      */
     public static function generateSeoTitle($title = '', $extension = '')
     {
-        $title = preg_replace("/[^\p{N}\p{L}]/u", "-", $title);
+        $title = preg_replace('/[^\p{N}\p{L}]/u', '-', $title);
 
-        $tableau = explode("-", $title);
+        $tableau = explode('-', $title);
         $tableau = array_filter($tableau, 'static::nonEmptyString');
-        $tableau = array_filter($tableau, array(static::stopWordsObject(), 'check'));
-        $title = implode("-", $tableau);
+        $tableau = array_filter($tableau, array(
+            static::stopWordsObject(),
+            'check',
+        ));
+        $title   = implode('-', $tableau);
 
         $title = (empty($title)) ? '' : $title . $extension;
         return $title;
@@ -392,7 +401,7 @@ class Metagen
      * purifyText
      *
      * @param string  $text    text to clean
-     * @param boolean $keyword replace some punctuation with white space
+     * @param bool $keyword replace some punctuation with white space
      *
      * @return string cleaned text
      */
@@ -452,23 +461,23 @@ class Metagen
             "'&(iexcl|#161);'i",
             "'&(cent|#162);'i",
             "'&(pound|#163);'i",
-            "'&(copy|#169);'i"
+            "'&(copy|#169);'i",
         );
 
         $replace = array(
-            "",
-            "",
-            "",
+            '',
+            '',
+            '',
             "\\1",
             "\"",
-            "&",
-            "<",
-            ">",
-            " ",
+            '&',
+            '<',
+            '>',
+            ' ',
             chr(161),
             chr(162),
             chr(163),
-            chr(169)
+            chr(169),
         );
 
         $text = preg_replace($search, $replace, $document);
@@ -495,7 +504,8 @@ class Metagen
      */
     public static function checkStopWords($key)
     {
-        return static::stopWordsObject()->check($key);
+        return static::stopWordsObject()
+                     ->check($key);
     }
 
     /**

@@ -15,15 +15,15 @@ eval(' function xoops_module_install_' . $mydirname . '( $module ) { return prot
 if (!function_exists('protector_oninstall_base')) {
 
     /**
-     * @param $module
-     * @param $mydirname
+     * @param XoopsModule $module
+     * @param string      $mydirname
      *
      * @return bool
      */
-    function protector_oninstall_base($module, $mydirname)
+    function protector_oninstall_base(XoopsModule $module, $mydirname)
     {
         /* @var XoopsModule $module */
-        // transations on module install
+        // translations on module install
 
         global $ret; // TODO :-D
 
@@ -49,17 +49,18 @@ if (!function_exists('protector_oninstall_base')) {
 
             if (file_exists(XOOPS_ROOT_PATH . '/class/database/oldsqlutility.php')) {
                 include_once XOOPS_ROOT_PATH . '/class/database/oldsqlutility.php';
-                $sqlutil = new OldSqlUtility; //old code is -> $sqlutil =& new OldSqlUtility ; //hack by Trabis
+                $sqlutil = new OldSqlUtility(); //old code is -> $sqlutil =& new OldSqlUtility ; //hack by Trabis
             } else {
                 include_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
-                $sqlutil = new SqlUtility; //old code is -> $sqlutil =& new SqlUtility ; //hack by Trabis
+                $sqlutil = new SqlUtility(); //old code is -> $sqlutil =& new SqlUtility ; //hack by Trabis
             }
 
             $sql_query = trim(file_get_contents($sql_file_path));
-            $sqlutil->splitMySqlFile($pieces, $sql_query);
+            $pieces    = array();
+            $sqlutil::splitMySqlFile($pieces, $sql_query);
             $created_tables = array();
             foreach ($pieces as $piece) {
-                $prefixed_query = $sqlutil->prefixQuery($piece, $prefix_mod);
+                $prefixed_query = $sqlutil::prefixQuery($piece, $prefix_mod);
                 if (!$prefixed_query) {
                     $ret[] = 'Invalid SQL <b>' . htmlspecialchars($piece) . '</b><br>';
 
@@ -90,7 +91,12 @@ if (!function_exists('protector_oninstall_base')) {
                     continue;
                 }
                 $file_path = $tpl_path . '/' . $file;
-                if (is_file($file_path) && in_array(strrchr($file, '.'), array('.html', '.css', '.js'))) {
+                if (is_file($file_path)
+                    && in_array(strrchr($file, '.'), array(
+                        '.html',
+                        '.css',
+                        '.js',
+                    ))) {
                     $mtime   = (int)(@filemtime($file_path));
                     $tplfile = $tplfile_handler->create();
                     $tplfile->setVar('tpl_source', file_get_contents($file_path), true);

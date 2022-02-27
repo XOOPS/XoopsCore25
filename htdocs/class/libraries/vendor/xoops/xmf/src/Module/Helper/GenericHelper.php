@@ -76,7 +76,7 @@ abstract class GenericHelper extends AbstractHelper
     /**
      * get a module config item
      *
-     * @param string $name    name of config item, or blank for all items
+     * @param string|null $name    name of config item, or blank for all items
      * @param mixed  $default default value to return if config $name is not set
      *
      * @return mixed string config item, array of config items,
@@ -88,7 +88,7 @@ abstract class GenericHelper extends AbstractHelper
             $this->initConfig();
         }
         if (empty($name)) {
-            $this->addLog("Getting all config");
+            $this->addLog('Getting all config');
 
             return $this->configs;
         }
@@ -165,7 +165,10 @@ abstract class GenericHelper extends AbstractHelper
         } else {
             /* @var \XoopsConfigHandler $config_handler */
             $config_handler = xoops_getHandler('config');
-            $this->configs = $config_handler->getConfigsByCat(0, $this->getModule()->getVar('mid'));
+            $this->configs  = $config_handler->getConfigsByCat(
+                0, $this->getModule()
+                        ->getVar('mid')
+            );
         }
     }
 
@@ -237,7 +240,10 @@ abstract class GenericHelper extends AbstractHelper
     public function isUserAdmin()
     {
         return (isset($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser'] instanceof \XoopsUser)
-            ? $GLOBALS['xoopsUser']->isAdmin($this->getModule()->getVar('mid')) : false;
+            ? $GLOBALS['xoopsUser']->isAdmin(
+                $this->getModule()
+                     ->getVar('mid')
+            ) : false;
     }
 
     /**

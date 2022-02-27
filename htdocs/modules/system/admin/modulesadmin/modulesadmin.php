@@ -24,7 +24,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
 */
 
 /**
- * @param $dirname
+ * @param string $dirname
  *
  * @return string
  */
@@ -67,7 +67,8 @@ function xoops_module_install($dirname)
         'xoopsnotifications',
         'banner',
         'bannerclient',
-        'bannerfinish');
+        'bannerfinish',
+    );
     /* @var XoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
     if ($module_handler->getCount(new Criteria('dirname', $dirname)) == 0) {
@@ -79,6 +80,7 @@ function xoops_module_install($dirname)
         $error = false;
         $errs  = array();
         $msgs  = array();
+        $pieces = array();
 
         $msgs[] = '<div id="xo-module-log"><div class="header">';
         $msgs[] = $errs[] = '<h4>' . _AM_SYSTEM_MODULES_INSTALLING . $module->getInfo('name', 's') . '</h4>';
@@ -298,14 +300,17 @@ function xoops_module_install($dirname)
                                 '_CM_COMNOCOM'        => XOOPS_COMMENT_APPROVENONE,
                                 '_CM_COMAPPROVEALL'   => XOOPS_COMMENT_APPROVEALL,
                                 '_CM_COMAPPROVEUSER'  => XOOPS_COMMENT_APPROVEUSER,
-                                '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN));
+                                '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN,
+                            ),
+                        );
                         $configs[] = array(
                             'name'        => 'com_anonpost',
                             'title'       => '_CM_COMANONPOST',
                             'description' => '',
                             'formtype'    => 'yesno',
                             'valuetype'   => 'int',
-                            'default'     => 0);
+                            'default'     => 0,
+                        );
                     }
                 } else {
                     if ($module->getVar('hascomments') != 0) {
@@ -322,14 +327,17 @@ function xoops_module_install($dirname)
                                 '_CM_COMNOCOM'        => XOOPS_COMMENT_APPROVENONE,
                                 '_CM_COMAPPROVEALL'   => XOOPS_COMMENT_APPROVEALL,
                                 '_CM_COMAPPROVEUSER'  => XOOPS_COMMENT_APPROVEUSER,
-                                '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN));
+                                '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN,
+                            ),
+                        );
                         $configs[] = array(
                             'name'        => 'com_anonpost',
                             'title'       => '_CM_COMANONPOST',
                             'description' => '',
                             'formtype'    => 'yesno',
                             'valuetype'   => 'int',
-                            'default'     => 0);
+                            'default'     => 0,
+                        );
                     }
                 }
                 // RMV-NOTIFY
@@ -353,7 +361,8 @@ function xoops_module_install($dirname)
                         'formtype'    => 'select',
                         'valuetype'   => 'int',
                         'default'     => XOOPS_NOTIFICATION_ENABLEBOTH,
-                        'options'     => $options);
+                        'options'     => $options,
+                    );
                     // Event-specific notification options
                     // FIXME: doesn't work when update module... can't read back the array of options properly...  " changing to &quot;
                     $options    = array();
@@ -378,7 +387,8 @@ function xoops_module_install($dirname)
                         'formtype'    => 'select_multi',
                         'valuetype'   => 'array',
                         'default'     => array_values($options),
-                        'options'     => $options);
+                        'options'     => $options,
+                    );
                 }
 
                 if ($configs !== false) {
@@ -421,7 +431,11 @@ function xoops_module_install($dirname)
             }
             $groups = array(XOOPS_GROUP_ADMIN);
             if ($module->getInfo('hasMain')) {
-                $groups = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS);
+                $groups = array(
+                    XOOPS_GROUP_ADMIN,
+                    XOOPS_GROUP_USERS,
+                    XOOPS_GROUP_ANONYMOUS,
+                );
             }
             // retrieve all block ids for this module
             $blocks        = XoopsBlock::getByModule($newmid, false);
@@ -526,8 +540,8 @@ function xoops_module_install($dirname)
 }
 
 /**
- * @param        $dirname
- * @param        $template
+ * @param string $dirname
+ * @param string $template
  * @param string $type
  *
  * @return string
@@ -562,7 +576,7 @@ function &xoops_module_gettemplate($dirname, $template, $type = '')
 }
 
 /**
- * @param $dirname
+ * @param string $dirname
  *
  * @return string
  */
@@ -603,7 +617,8 @@ function xoops_module_uninstall($dirname)
         'xoopsnotifications',
         'banner',
         'bannerclient',
-        'bannerfinish');
+        'bannerfinish',
+    );
     $db             = XoopsDatabaseFactory::getDatabaseConnection();
     /* @var XoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
@@ -650,7 +665,6 @@ function xoops_module_uninstall($dirname)
         if (false === $module_handler->delete($module)) {
             $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_DELETE_ERROR, $module->getVar('name')) . '</span>';
         } else {
-
             // delete template files
             $tplfile_handler = xoops_getHandler('tplfile');
             $templates       = $tplfile_handler->find(null, 'module', $module->getVar('mid'));
@@ -782,7 +796,7 @@ function xoops_module_uninstall($dirname)
 }
 
 /**
- * @param $dirname
+ * @param string $dirname
  * @return string
  */
 function xoops_module_update($dirname)
@@ -1007,7 +1021,11 @@ function xoops_module_update($dirname)
                                 $newbid = $xoopsDB->getInsertId();
                             }
                             if ($module->getInfo('hasMain')) {
-                                $groups = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS);
+                                $groups = array(
+                                    XOOPS_GROUP_ADMIN,
+                                    XOOPS_GROUP_USERS,
+                                    XOOPS_GROUP_ANONYMOUS,
+                                );
                             } else {
                                 $groups = array(XOOPS_GROUP_ADMIN);
                             }
@@ -1133,14 +1151,17 @@ function xoops_module_update($dirname)
                         '_CM_COMNOCOM'        => XOOPS_COMMENT_APPROVENONE,
                         '_CM_COMAPPROVEALL'   => XOOPS_COMMENT_APPROVEALL,
                         '_CM_COMAPPROVEUSER'  => XOOPS_COMMENT_APPROVEUSER,
-                        '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN)));
+                        '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN,
+                    ),
+                ));
                 array_push($configs, array(
                     'name'        => 'com_anonpost',
                     'title'       => '_CM_COMANONPOST',
                     'description' => '',
                     'formtype'    => 'yesno',
                     'valuetype'   => 'int',
-                    'default'     => 0));
+                    'default'     => 0,
+                ));
             }
         } else {
             if ($module->getVar('hascomments') != 0) {
@@ -1157,14 +1178,17 @@ function xoops_module_update($dirname)
                         '_CM_COMNOCOM'        => XOOPS_COMMENT_APPROVENONE,
                         '_CM_COMAPPROVEALL'   => XOOPS_COMMENT_APPROVEALL,
                         '_CM_COMAPPROVEUSER'  => XOOPS_COMMENT_APPROVEUSER,
-                        '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN));
+                        '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN,
+                    ),
+                );
                 $configs[] = array(
                     'name'        => 'com_anonpost',
                     'title'       => '_CM_COMANONPOST',
                     'description' => '',
                     'formtype'    => 'yesno',
                     'valuetype'   => 'int',
-                    'default'     => 0);
+                    'default'     => 0,
+                );
             }
         }
         // RMV-NOTIFY
@@ -1189,7 +1213,8 @@ function xoops_module_update($dirname)
                 'formtype'    => 'select',
                 'valuetype'   => 'int',
                 'default'     => XOOPS_NOTIFICATION_ENABLEBOTH,
-                'options'     => $options);
+                'options'     => $options,
+            );
             // Event specific notification options
             // FIXME: for some reason the default doesn't come up properly
             //  initially is ok, but not when 'update' module..
@@ -1214,7 +1239,8 @@ function xoops_module_update($dirname)
                 'formtype'    => 'select_multi',
                 'valuetype'   => 'array',
                 'default'     => array_values($options),
-                'options'     => $options);
+                'options'     => $options,
+            );
         }
 
         if ($configs !== false) {
@@ -1308,7 +1334,7 @@ function xoops_module_update($dirname)
 }
 
 /**
- * @param $mid
+ * @param int $mid
  *
  * @return string
  */
@@ -1353,7 +1379,7 @@ function xoops_module_activate($mid)
 }
 
 /**
- * @param $mid
+ * @param int $mid
  *
  * @return string
  */
@@ -1399,8 +1425,8 @@ function xoops_module_deactivate($mid)
 }
 
 /**
- * @param $mid
- * @param $name
+ * @param int    $mid
+ * @param string $name
  *
  * @return string
  */
@@ -1457,14 +1483,21 @@ function xoops_module_log_header($module, $title)
  *                              2 = smarty compile
  *                              3 = xoops cache
  *                              or null to clear all
- * @return bool
+ * @return void
  */
-function xoops_module_delayed_clean_cache($cacheList = null)
+function xoops_module_delayed_clean_cache(array $cacheList = null)
 {
     if (empty($cacheList)) {
-        $cacheList = array (1,2,3);
+        $cacheList = array(
+            1,
+            2,
+            3,
+        );
     }
     require_once XOOPS_ROOT_PATH . '/modules/system/class/maintenance.php';
     $maintenance = new SystemMaintenance();
-    register_shutdown_function(array($maintenance, 'CleanCache'), $cacheList);
+    register_shutdown_function(array(
+                                   $maintenance,
+                                   'CleanCache',
+                               ), $cacheList);
 }

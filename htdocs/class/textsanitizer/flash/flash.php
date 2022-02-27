@@ -1,4 +1,5 @@
 <?php
+
 /**
  * TextSanitizer extension
  *
@@ -24,22 +25,22 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 class MytsFlash extends MyTextSanitizerExtension
 {
     /**
-     * @param $textarea_id
+     * @param string $textarea_id
      *
      * @return array
      */
     public function encode($textarea_id)
     {
-        $config     = parent::loadConfig(__DIR__);
+        $config = parent::loadConfig(__DIR__);
         if ($config['enable_flash_entry'] === false) {
             return array();
         }
         $code = "<button type='button' class='btn btn-default btn-sm' onclick='xoopsCodeFlash(\"{$textarea_id}\",\""
-            . htmlspecialchars(_XOOPS_FORM_ENTERFLASHURL, ENT_QUOTES) . "\",\""
-            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\""
-            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES) . "\", \""
-            . $config['detect_dimension'] . "\");' onmouseover='style.cursor=\"hand\"' title='"
-            . _XOOPS_FORM_ALTFLASH . "'><span class='fa fa-fw fa-flash' aria-hidden='true'></span></button>";
+                . htmlspecialchars(_XOOPS_FORM_ENTERFLASHURL, ENT_QUOTES) . "\",\""
+                . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\""
+                . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES) . "\", \""
+                . $config['detect_dimension'] . "\");' onmouseover='style.cursor=\"hand\"' title='"
+                . _XOOPS_FORM_ALTFLASH . "'><span class='fa fa-fw fa-flash' aria-hidden='true'></span></button>";
         $javascript = <<<EOF
             function xoopsCodeFlash(id, enterFlashPhrase, enterFlashHeightPhrase, enterFlashWidthPhrase, enableDimensionDetect)
             {
@@ -62,7 +63,8 @@ EOF;
 
         return array(
             $code,
-            $javascript);
+            $javascript,
+        );
     }
 
     /**
@@ -76,7 +78,7 @@ EOF;
     }
 
     /**
-     * @param $ts
+     * @param MyTextSanitizer $ts
      *
      * @return bool
      */
@@ -94,9 +96,9 @@ EOF;
     }
 
     /**
-     * @param $url
-     * @param $width
-     * @param $height
+     * @param string $url
+     * @param        $width
+     * @param        $height
      *
      * @return string
      */
@@ -115,7 +117,8 @@ EOF;
             } else {
                 list($width, $height) = array(
                     $dimension[0],
-                    $dimension[1]);
+                    $dimension[1],
+                );
             }
         }
 

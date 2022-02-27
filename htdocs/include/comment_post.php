@@ -520,7 +520,7 @@ switch ($op) {
                 $comment_tags['X_COMMENT_URL'] = XOOPS_URL . '/modules/' . $not_module->getVar('dirname') . '/' . $comment_url . '=' . $com_itemid . '&amp;com_id=' . $newcid . '&amp;com_rootid=' . $com_rootid . '&amp;com_mode=' . $com_mode . '&amp;com_order=' . $com_order . '#comment' . $newcid;
                 /* @var  XoopsNotificationHandler $notification_handler */
                 $notification_handler          = xoops_getHandler('notification');
-                $notification_handler->triggerEvent($not_category, $not_itemid, $not_event, $comment_tags, false, $not_modid);
+                $notification_handler->triggerEvent($not_category, $not_itemid, $not_event, $comment_tags, array(), $not_modid);
             }
             if (!isset($comment_post_results)) {
                 // if the comment is active, redirect to posted comment

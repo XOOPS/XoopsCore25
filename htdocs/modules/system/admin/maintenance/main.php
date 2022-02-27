@@ -54,13 +54,16 @@ switch ($op) {
         $form_maintenance = new XoopsThemeForm(_AM_SYSTEM_MAINTENANCE, 'maintenance_save', 'admin.php?fct=maintenance', 'post', true);
 
         $cache = new XoopsFormSelect(_AM_SYSTEM_MAINTENANCE_CACHE, 'cache', '', 3, true);
-        $cache->setDescription(XOOPS_VAR_PATH . '/caches/smarty_cache/<br>'
+        $cache->setDescription(
+            XOOPS_VAR_PATH . '/caches/smarty_cache/<br>'
             . XOOPS_VAR_PATH . '/caches/smarty_compile/<br>'
-            . XOOPS_VAR_PATH . '/caches/xoops_cache/');
+            . XOOPS_VAR_PATH . '/caches/xoops_cache/'
+        );
         $cache_arr = array(
             1 => 'smarty_cache',
             2 => 'smarty_compile',
-            3 => 'xoops_cache');
+            3 => 'xoops_cache',
+        );
         $cache->addOptionArray($cache_arr);
         $form_maintenance->addElement($cache);
 
@@ -77,7 +80,8 @@ switch ($op) {
             '1' => _AM_SYSTEM_MAINTENANCE_CHOICE1,
             '2' => _AM_SYSTEM_MAINTENANCE_CHOICE2,
             '3' => _AM_SYSTEM_MAINTENANCE_CHOICE3,
-            '4' => _AM_SYSTEM_MAINTENANCE_CHOICE4);
+            '4' => _AM_SYSTEM_MAINTENANCE_CHOICE4,
+        );
         $choice->addOptionArray($options);
         $tables_tray->addElement($choice, false);
         $form_maintenance->addElement($tables_tray);

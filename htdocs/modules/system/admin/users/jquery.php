@@ -48,15 +48,25 @@ switch ($op) {
 
         $tables = array();
         // Count comments (approved only: com_status == XOOPS_COMMENT_ACTIVE)
-        $tables[] = array('table_name' => 'xoopscomments', 'uid_column' => 'com_uid', 'criteria' => new Criteria('com_status', XOOPS_COMMENT_ACTIVE));
+        $tables[] = array(
+            'table_name' => 'xoopscomments',
+            'uid_column' => 'com_uid',
+            'criteria'   => new Criteria('com_status', XOOPS_COMMENT_ACTIVE),
+        );
         // Count forum posts
         if (XoopsModule::getByDirname('newbb')) {
             // Added support for NewBB 5.0 new table naming convention
             $tableTest = new \Xmf\Database\Tables();
             if($tableTest->useTable('newbb_posts')) {
-                $tables[] = array('table_name' => 'newbb_posts', 'uid_column' => 'uid');
+                $tables[] = array(
+                    'table_name' => 'newbb_posts',
+                    'uid_column' => 'uid',
+                );
             } else {
-                $tables[] = array('table_name' => 'bb_posts', 'uid_column' => 'uid');
+                $tables[] = array(
+                    'table_name' => 'bb_posts',
+                    'uid_column' => 'uid',
+                );
             }
         }
         $uid         = Request::getInt('uid', 0);

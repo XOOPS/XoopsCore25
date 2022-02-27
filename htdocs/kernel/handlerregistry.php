@@ -1,4 +1,5 @@
 <?php
+
 /**
  * XOOPS Kernel Class
  *
@@ -60,6 +61,7 @@ class XoopsHandlerRegistry
      *
      * @param string $name     Short name of a handler class
      * @param XoopsObjectHandler &$handler {@link XoopsObjectHandler} class object
+     * @return void
      */
     public function setHandler($name, XoopsObjectHandler $handler)
     {
@@ -71,7 +73,7 @@ class XoopsHandlerRegistry
      *
      * @param string $name Short name of a handler class
      *
-     * @return XoopsObjectHandler|false {@link XoopsObjectHandler}, FALSE if not registered
+     * @return false|\XoopsObjectHandler {@link XoopsObjectHandler}, FALSE if not registered
      */
     public function getHandler($name)
     {
@@ -86,6 +88,7 @@ class XoopsHandlerRegistry
      * Unregister a handler class object
      *
      * @param string $name Short name of a handler class
+     * @return void
      */
     public function unsetHandler($name)
     {
@@ -98,6 +101,7 @@ class XoopsHandlerRegistry
      * @param string $module   Directory name of a module
      * @param string $name     Short name of a handler class
      * @param XoopsObjectHandler &$handler {@link XoopsObjectHandler} class object
+     * @return void
      */
     public function setModuleHandler($module, $name, XoopsObjectHandler $handler)
     {
@@ -125,6 +129,7 @@ class XoopsHandlerRegistry
      * Unregister a handler class object for a module
      *
      * @param string $module Directory name of a module
+     * @return void
      * @param string $name   Short name of a handler class
      */
     public function unsetModuleHandler($module, $name)

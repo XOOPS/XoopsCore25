@@ -46,6 +46,9 @@ if (!class_exists('XoopsAuthProvisionning')) {
  */
 class XoopsAuthLdap extends XoopsAuth
 {
+    /**
+     * @var array
+     */
     public $cp1252_map = array(
         "\xc2\x80" => "\xe2\x82\xac",
         /**
@@ -151,24 +154,59 @@ class XoopsAuthLdap extends XoopsAuth
         /**
          * LATIN SMALL LETTER Z WITH CARON
          */
-        "\xc2\x9f" => "\xc5\xb8");
+        "\xc2\x9f" => "\xc5\xb8",
+    );
     /**
      * LATIN CAPITAL LETTER Y WITH DIAERESIS
+     * @var string
      */
 
     public $ldap_server;
+    /**
+     * @var string
+     */
     public $ldap_port    = '389';
+    /**
+     * @var string
+     */
     public $ldap_version = '3';
+    /**
+     * @var string
+     */
     public $ldap_base_dn;
+    /**
+     * @var string
+     */
     public $ldap_loginname_asdn;
+    /**
+     * @var string
+     */
     public $ldap_loginldap_attr;
+    /**
+     * @var string
+     */
     public $ldap_mail_attr;
+    /**
+     * @var string
+     */
     public $ldap_name_attr;
+    /**
+     * @var string
+     */
     public $ldap_surname_attr;
+    /**
+     * @var string
+     */
     public $ldap_givenname_attr;
+    /**
+     * @var string
+     */
     public $ldap_manager_dn;
+    /**
+     * @var string
+     */
     public $ldap_manager_pass;
-    public $_ds;
+    public $_ds; //mb TODO resource|false, it comes from: $this->_ds = ldap_connect($this->ldap_server, $this->ldap_port);
 
     /**
      * Authentication Service constructor
@@ -207,7 +245,7 @@ class XoopsAuthLdap extends XoopsAuth
      *
      * @param  string $uname Username
      * @param  string $pwd   Password
-     * @return bool
+     * @return bool|null
      */
     public function authenticate($uname, $pwd = null)
     {
@@ -302,7 +340,7 @@ class XoopsAuthLdap extends XoopsAuth
      * @param  mixed $userdn
      * @param  mixed $uname
      * @param  mixed $pwd
-     * @return bool
+     * @return XoopsUser|bool
      */
     public function loadXoopsUser($userdn, $uname, $pwd = null)
     {

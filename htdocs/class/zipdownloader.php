@@ -38,7 +38,7 @@ class XoopsZipDownloader extends XoopsDownloader
      *
      * @param  string $ext
      * @param  string $mimyType
-     * @return XoopsZipDownloader
+     * @return void
      */
 
     public function __construct($ext = '.zip', $mimyType = 'application/x-zip')
@@ -52,7 +52,7 @@ class XoopsZipDownloader extends XoopsDownloader
      * Add file
      *
      * @param string $filepath
-     * @param string $newfilename
+     * @param string|null $newfilename
      */
     public function addFile($filepath, $newfilename = null)
     {
@@ -68,7 +68,7 @@ class XoopsZipDownloader extends XoopsDownloader
      * Add Binary File
      *
      * @param string $filepath
-     * @param string $newfilename
+     * @param string|null $newfilename
      */
     public function addBinaryFile($filepath, $newfilename = null)
     {
@@ -85,7 +85,7 @@ class XoopsZipDownloader extends XoopsDownloader
      *
      * @param string            $data
      * @param string            $filename
-     * @param int|mixed $time
+     * @param int    $time
      */
     public function addFileData(&$data, $filename, $time = 0)
     {
@@ -97,7 +97,7 @@ class XoopsZipDownloader extends XoopsDownloader
      *
      * @param string     $data
      * @param string     $filename
-     * @param int|string $time
+     * @param int    $time
      */
     public function addBinaryFileData(&$data, $filename, $time = 0)
     {

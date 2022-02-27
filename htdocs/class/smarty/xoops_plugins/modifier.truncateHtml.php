@@ -15,14 +15,17 @@
  *           valid markup is maintained.
  * Example:  <{$body|truncateHtml:30:'...'}>
  *
- * @param string  $string HTML to be truncated
- * @param integer $count  truncate to $count words
- * @param string  $etc    ellipsis
+ * @param string $string HTML to be truncated
+ * @param int    $count  truncate to $count words
+ * @param string $etc    ellipsis
  *
  * @return string
  */
 function smarty_modifier_truncateHtml($string, $count = 80, $etc = '…')
 {
+    $string = (string)$string;
+    $count  = (int)$count;
+    $etc    = (string)$etc;
     if($count <= 0) {
         return '';
     }
@@ -81,7 +84,7 @@ if (!class_exists('\BaseStringHelper', false)) {
          *
          * @param string $string the input string. Must be one character or longer.
          * @param int    $start  the starting position
-         * @param int    $length the desired portion length. If not specified or `null`, there will be
+         * @param int|null $length the desired portion length. If not specified or `null`, there will be
          *                       no limit on length i.e. the output will be until the end of the string.
          *
          * @return string the extracted part of string, or FALSE on failure or an empty string.
@@ -145,7 +148,7 @@ if (!class_exists('\BaseStringHelper', false)) {
          * @param string $string   The string to truncate.
          * @param int    $length   How many characters from original string to include into truncated string.
          * @param string $suffix   String to append to the end of truncated string.
-         * @param string $encoding The charset to use, defaults to charset currently used by application.
+         * @param string|null $encoding The charset to use, defaults to charset currently used by application.
          * @param bool   $asHtml   Whether to treat the string being truncated as HTML and preserve proper HTML tags.
          *                         This parameter is available since version 2.0.1.
          *
@@ -331,9 +334,11 @@ if (!class_exists('\BaseStringHelper', false)) {
             }
             if ($skipEmpty) {
                 // Wrapped with array_values to make array keys sequential after empty values removing
-                $result = array_values(array_filter($result, function ($value) {
+                $result = array_values(
+                    array_filter($result, function ($value) {
                     return $value !== '';
-                }));
+                    })
+                );
             }
 
             return $result;
@@ -342,11 +347,11 @@ if (!class_exists('\BaseStringHelper', false)) {
         /**
          * Counts words in a string.
          *
-         * @since 2.0.8
-         *
          * @param string $string
          *
          * @return int
+         * @since 2.0.8
+         *
          */
         public static function countWords($string)
         {

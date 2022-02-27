@@ -8,6 +8,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
+
 /**
  * Installer introduction page
  *
@@ -25,7 +26,7 @@
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  **/
 
-require_once './include/common.inc.php';
+require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 $pageHasForm = false;
@@ -62,4 +63,4 @@ $writable_trust .= '</ul></div>';
 
 $content = sprintf($content, $writable, $xoops_trust, $writable_trust);
 
-include './include/install_tpl.php';
+include __DIR__ . '/include/install_tpl.php';

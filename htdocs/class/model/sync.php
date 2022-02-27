@@ -43,7 +43,7 @@ class XoopsModelSync extends XoopsModelAbstract
      * @param  string $table_link   table of linked object for JOIN; deprecated, for backward compatibility
      * @param  string $field_link   field of linked object for JOIN; deprecated, for backward compatibility
      * @param  string $field_object field of current object for JOIN; deprecated, for backward compatibility
-     * @return bool   true on success
+     * @return bool|null true on success
      */
     public function cleanOrphan($table_link = '', $field_link = '', $field_object = '')
     {
@@ -81,9 +81,8 @@ class XoopsModelSync extends XoopsModelAbstract
 
     /**
      * Synchronizing objects
+     * @return bool|null true on success
      * @deprecated
-     *
-     * @return bool true on success
      */
     public function synchronization()
     {

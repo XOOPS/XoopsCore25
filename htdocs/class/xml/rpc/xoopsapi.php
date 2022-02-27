@@ -35,8 +35,12 @@ class XoopsApi extends XoopsXmlRpcApi
         parent::__construct($params, $response, $module);
     }
 
+    /**
+     * @return void
+     */
     public function newPost()
     {
+        $post = array();
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
@@ -123,8 +127,12 @@ class XoopsApi extends XoopsXmlRpcApi
         }
     }
 
+    /**
+     * @return void
+     */
     public function editPost()
     {
+        $post = array();
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
@@ -186,6 +194,9 @@ class XoopsApi extends XoopsXmlRpcApi
         }
     }
 
+    /**
+     * @return void
+     */
     public function deletePost()
     {
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
@@ -214,6 +225,7 @@ class XoopsApi extends XoopsXmlRpcApi
      */
     public function &getPost($respond = true)
     {
+        $ret = array();
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
@@ -263,17 +275,17 @@ class XoopsApi extends XoopsXmlRpcApi
             }
         }
 
-        return null;
+        return $ret;
     }
 
     /**
      * @param bool $respond
      *
-     * @return array|null
+     * @return array
      */
     public function &getRecentPosts($respond = true)
     {
-        $ret = null;
+        $ret = array();
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
@@ -342,10 +354,11 @@ class XoopsApi extends XoopsXmlRpcApi
     /**
      * @param bool $respond
      *
-     * @return array|null
+     * @return array
      */
     public function &getCategories($respond = true)
     {
+        $ret = array();
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
@@ -373,6 +386,6 @@ class XoopsApi extends XoopsXmlRpcApi
             }
         }
 
-        return null;
+        return $ret;
     }
 }

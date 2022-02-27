@@ -1,4 +1,5 @@
 <?php
+
 /**
  * XOOPS Kernel Class
  *
@@ -116,12 +117,12 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
      *
      * @param int $id ID
      *
-     * @return XoopsConfigCategory|false {@link XoopsConfigCategory}, FALSE on fail
+     * @return false|\XoopsConfigCategory {@link XoopsConfigCategory}, FALSE on fail
      */
     public function get($id)
     {
         $confcat = false;
-        $id      = (int)$id;
+        $id  = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('configcategory') . ' WHERE confcat_id=' . $id;
             if (!$result = $this->db->query($sql)) {
@@ -129,7 +130,7 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
             }
             $numrows = $this->db->getRowsNum($result);
             if ($numrows == 1) {
-                $confcat = new XoopsConfigCategory();
+                $confcat = new \XoopsConfigCategory();
                 $confcat->assignVars($this->db->fetchArray($result));
             }
         }
@@ -240,7 +241,11 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
     }
 
     /**#@+
+     * @param int $modid
+     * @return bool
      * @deprecated
+     */
+    /**
      * @param int $modid
      * @return bool
      */

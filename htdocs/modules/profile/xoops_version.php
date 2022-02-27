@@ -88,7 +88,8 @@ $modversion['config'][] = array(
     'description' => '',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 1);
+     'default'     => 1,
+);
 
 $modversion['config'][] = array(
     'name'        => 'profileCaptchaAfterStep1',
@@ -96,22 +97,53 @@ $modversion['config'][] = array(
     'description' => '_PROFILE_MI_PROFILE_CAPTCHA_STEP1_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => 1);
+    'default'     => 1,
+);
 
 // Templates
 
-$modversion['templates'][] = array('file' => 'profile_breadcrumbs.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'profile_form.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'profile_admin_fieldlist.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'profile_userinfo.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'profile_admin_categorylist.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'profile_search.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'profile_results.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'profile_admin_visibility.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'profile_admin_steplist.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'profile_register.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'profile_changepass.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'profile_editprofile.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'profile_userform.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'profile_avatar.tpl', 'description' => '');
-$modversion['templates'][] = array('file' => 'profile_email.tpl', 'description' => '');
+$modversion['templates'][] = array('file'        => 'profile_breadcrumbs.tpl',
+                                   'description' => '',
+);
+$modversion['templates'][] = array('file'        => 'profile_form.tpl',
+                                   'description' => '',
+);
+$modversion['templates'][] = array('file'        => 'profile_admin_fieldlist.tpl',
+                                   'description' => '',
+);
+$modversion['templates'][] = array('file'        => 'profile_userinfo.tpl',
+                                   'description' => '',
+);
+$modversion['templates'][] = array('file'        => 'profile_admin_categorylist.tpl',
+                                   'description' => '',
+);
+$modversion['templates'][] = array('file'        => 'profile_search.tpl',
+                                   'description' => '',
+);
+$modversion['templates'][] = array('file'        => 'profile_results.tpl',
+                                   'description' => '',
+);
+$modversion['templates'][] = array('file'        => 'profile_admin_visibility.tpl',
+                                   'description' => '',
+);
+$modversion['templates'][] = array('file'        => 'profile_admin_steplist.tpl',
+                                   'description' => '',
+);
+$modversion['templates'][] = array('file'        => 'profile_register.tpl',
+                                   'description' => '',
+);
+$modversion['templates'][] = array('file'        => 'profile_changepass.tpl',
+                                   'description' => '',
+);
+$modversion['templates'][] = array('file'        => 'profile_editprofile.tpl',
+                                   'description' => '',
+);
+$modversion['templates'][] = array('file'        => 'profile_userform.tpl',
+                                   'description' => '',
+);
+$modversion['templates'][] = array('file'        => 'profile_avatar.tpl',
+                                   'description' => '',
+);
+$modversion['templates'][] = array('file'        => 'profile_email.tpl',
+                                   'description' => '',
+);

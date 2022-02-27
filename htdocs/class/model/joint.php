@@ -41,6 +41,7 @@ class XoopsModelJoint extends XoopsModelAbstract
      * Validate information for the link
      *
      * @access private
+     * @return bool|null
      */
     public function validateLinks()
     {
@@ -59,13 +60,13 @@ class XoopsModelJoint extends XoopsModelAbstract
     /**
      * get a list of objects matching a condition joint with another related object
      *
-     * @param CriteriaElement|CriteriaCompo $criteria
-     * @param  array          $fields       variables to fetch
+     * @param \CriteriaElement|null $criteria CriteriaElement to match
+     * @param array|null            $fields       variables to fetch
      * @param  bool           $asObject     flag indicating as object, otherwise as array
-     * @param  string         $field_link   field of linked object for JOIN; deprecated, for backward compatibility
-     * @param  string         $field_object field of current object for JOIN; deprecated, for backward compatibility
-     * @return array of objects <a href='psi_element://XoopsObject'>XoopsObject</a>
-     * @internal param CriteriaElement $object <a href='psi_element://CriteriaElement'>CriteriaElement</a> to match to match
+     * @param string|null           $field_link   field of linked object for JOIN; deprecated, for backward compatibility
+     * @param string|null           $field_object field of current object for JOIN; deprecated, for backward compatibility
+     *
+     * @return array|null array of objects <a href='psi_element://XoopsObject'>XoopsObject</a>
      */
     public function &getByLink(CriteriaElement $criteria = null, $fields = null, $asObject = true, $field_link = null, $field_object = null)
     {
@@ -127,8 +128,8 @@ class XoopsModelJoint extends XoopsModelAbstract
     /**
      * Count of objects matching a condition
      *
-     * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement} to match
-     * @return int|false    count of objects
+     * @param \CriteriaElement|null $criteria {@link CriteriaElement} to match
+     * @return int|false|null    count of objects
      */
     public function getCountByLink(CriteriaElement $criteria = null)
     {
@@ -151,8 +152,8 @@ class XoopsModelJoint extends XoopsModelAbstract
     /**
      * array of count of objects matching a condition of, groupby linked object keyname
      *
-     * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement} to match
-     * @return int|false|array|null    count of objects
+     * @param  \CriteriaElement|CriteriaCompo|null $criteria {@link CriteriaElement} to match
+     * @return int|array|false|null    count of objects
      */
     public function getCountsByLink(CriteriaElement $criteria = null)
     {
@@ -179,7 +180,7 @@ class XoopsModelJoint extends XoopsModelAbstract
      * update objects matching a condition against linked objects
      *
      * @param  array  $data     array of key => value
-     * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement} to match
+     * @param \CriteriaElement|CriteriaCompo|null $criteria {@link CriteriaElement} to match
      * @return int|null    count of objects
      */
     public function updateByLink($data, CriteriaElement $criteria = null)
@@ -202,7 +203,7 @@ class XoopsModelJoint extends XoopsModelAbstract
     /**
      * Delete objects matching a condition against linked objects
      *
-     * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement} to match
+     * @param \CriteriaElement|CriteriaCompo|null $criteria {@link CriteriaElement} to match
      * @return int|null    count of objects
      */
     public function deleteByLink(CriteriaElement $criteria = null)

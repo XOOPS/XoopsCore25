@@ -44,9 +44,9 @@ function make_sidebar($side)
         $side = XOOPS_SIDEBLOCK_BOTH;
     }
     if (is_object($xoopsUser)) {
-        $block_arr = $xoopsblock->getAllBlocksByGroup($xoopsUser->getGroups(), true, $side, XOOPS_BLOCK_VISIBLE);
+        $block_arr = $xoopsblock::getAllBlocksByGroup($xoopsUser->getGroups(), true, $side, XOOPS_BLOCK_VISIBLE);
     } else {
-        $block_arr = $xoopsblock->getAllBlocksByGroup(XOOPS_GROUP_ANONYMOUS, true, $side, XOOPS_BLOCK_VISIBLE);
+        $block_arr = $xoopsblock::getAllBlocksByGroup(XOOPS_GROUP_ANONYMOUS, true, $side, XOOPS_BLOCK_VISIBLE);
     }
 
     $block_count = count($block_arr);
@@ -129,9 +129,9 @@ function make_cblock()
             $xoopsTpl =& $GLOBALS['xoopsTpl'];
         }
         if (is_object($xoopsUser)) {
-            $block_arr = $xoopsblock->getAllBlocksByGroup($xoopsUser->getGroups(), true, XOOPS_CENTERBLOCK_ALL, XOOPS_BLOCK_VISIBLE);
+            $block_arr = $xoopsblock::getAllBlocksByGroup($xoopsUser->getGroups(), true, XOOPS_CENTERBLOCK_ALL, XOOPS_BLOCK_VISIBLE);
         } else {
-            $block_arr = $xoopsblock->getAllBlocksByGroup(XOOPS_GROUP_ANONYMOUS, true, XOOPS_CENTERBLOCK_ALL, XOOPS_BLOCK_VISIBLE);
+            $block_arr = $xoopsblock::getAllBlocksByGroup(XOOPS_GROUP_ANONYMOUS, true, XOOPS_CENTERBLOCK_ALL, XOOPS_BLOCK_VISIBLE);
         }
         $block_count = count($block_arr);
         $xoopsLogger = XoopsLogger::getInstance();
@@ -209,7 +209,7 @@ function make_cblock()
 /**
  * Enter description here...
  *
- * @param string|\unknown_type $width
+ * @param string|\mixed $width
  */
 function openThread($width = '100%')
 {
@@ -219,31 +219,31 @@ function openThread($width = '100%')
 /**
  * showThread :: DO NOT USE
  *
- * @param unknown_type         $color_number
- * @param unknown_type         $subject_image
- * @param unknown_type         $subject
- * @param unknown_type         $text
- * @param unknown_type         $post_date
- * @param unknown_type         $ip_image
- * @param unknown_type         $reply_image
- * @param unknown_type         $edit_image
- * @param unknown_type         $delete_image
- * @param string|\unknown_type $username
- * @param string|\unknown_type $rank_title
- * @param string|\unknown_type $rank_image
- * @param string|\unknown_type $avatar_image
- * @param string|\unknown_type $reg_date
- * @param string|\unknown_type $posts
- * @param string|\unknown_type $user_from
- * @param string|\unknown_type $online_image
- * @param string|\unknown_type $profile_image
- * @param string|\unknown_type $pm_image
- * @param string|\unknown_type $email_image
- * @param string|\unknown_type $www_image
- * @param string|\unknown_type $icq_image
- * @param string|\unknown_type $aim_image
- * @param string|\unknown_type $yim_image
- * @param string|\unknown_type $msnm_image
+ * @param mixed         $color_number
+ * @param mixed         $subject_image
+ * @param mixed         $subject
+ * @param mixed         $text
+ * @param mixed         $post_date
+ * @param mixed         $ip_image
+ * @param mixed         $reply_image
+ * @param mixed         $edit_image
+ * @param mixed         $delete_image
+ * @param string|\mixed $username
+ * @param string|\mixed $rank_title
+ * @param string|\mixed $rank_image
+ * @param string|\mixed $avatar_image
+ * @param string|\mixed $reg_date
+ * @param string|\mixed $posts
+ * @param string|\mixed $user_from
+ * @param string|\mixed $online_image
+ * @param string|\mixed $profile_image
+ * @param string|\mixed $pm_image
+ * @param string|\mixed $email_image
+ * @param string|\mixed $www_image
+ * @param string|\mixed $icq_image
+ * @param string|\mixed $aim_image
+ * @param string|\mixed $yim_image
+ * @param string|\mixed $msnm_image
  */
 function showThread($color_number, $subject_image, $subject, $text, $post_date, $ip_image, $reply_image, $edit_image, $delete_image, $username = '', $rank_title = '', $rank_image = '', $avatar_image = '', $reg_date = '', $posts = '', $user_from = '', $online_image = '', $profile_image = '', $pm_image = '', $email_image = '', $www_image = '', $icq_image = '', $aim_image = '', $yim_image = '', $msnm_image = '')
 {

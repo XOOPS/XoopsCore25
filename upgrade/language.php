@@ -99,7 +99,7 @@ $available_languages = array(
  * that should be used
  *
  * @param string  $str     string to analyze
- * @param integer $envType type of the PHP environment variable which value is $str
+ * @param int $envType type of the PHP environment variable which value is $str
  * @global        array    the list of available translations
  * @global        string   the retained translation keyword
  * @access   private

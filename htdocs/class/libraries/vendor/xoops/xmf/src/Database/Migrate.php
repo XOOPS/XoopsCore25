@@ -66,7 +66,7 @@ class Migrate
         $module = $this->helper->getModule();
         $this->moduleTables = $module->getInfo('tables');
         if (empty($this->moduleTables)) {
-            throw new \RuntimeException("No tables established in module");
+            throw new \RuntimeException('No tables established in module');
         }
         $version = $module->getInfo('version');
         $this->tableDefinitionFile = $this->helper->path("sql/{$dirname}_{$version}_migrate.yml");
@@ -121,7 +121,7 @@ class Migrate
         if (!isset($this->targetDefinitions)) {
             $this->targetDefinitions = Yaml::read($this->tableDefinitionFile);
             if (null === $this->targetDefinitions) {
-                throw new \RuntimeException("No schema definition " . $this->tableDefinitionFile);
+                throw new \RuntimeException('No schema definition ' . $this->tableDefinitionFile);
             }
         }
         return $this->targetDefinitions;

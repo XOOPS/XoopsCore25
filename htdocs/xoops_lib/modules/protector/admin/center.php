@@ -127,7 +127,12 @@ $nav_html = $nav->renderNav(10);
 
 // Number selection
 $num_options = '';
-$num_array   = array(20, 100, 500, 2000);
+$num_array   = array(
+    20,
+    100,
+    500,
+    2000,
+);
 foreach ($num_array as $n) {
     if ($n == $num) {
         $num_options .= "<option value='$n' selected>$n</option>\n";

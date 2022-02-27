@@ -18,14 +18,18 @@
  * Purpose:  formats variable contents for display in the console
  * @link  http://smarty.php.net/manual/en/language.modifier.debug.print.var.php
  *          debug_print_var (Smarty online manual)
- * @param array|object
- * @param integer
- * @param integer
+ * @param array|object $var
+ * @param integer $depth
+ * @param integer $length
  * @return string
  */
 function smarty_modifier_debug_print_var($var, $depth = 0, $length = 40)
 {
-    $_replace = array("\n" => '<i>&#92;n</i>', "\r" => '<i>&#92;r</i>', "\t" => '<i>&#92;t</i>');
+    $_replace = array(
+        "\n" => '<i>&#92;n</i>',
+        "\r" => '<i>&#92;r</i>',
+        "\t" => '<i>&#92;t</i>',
+    );
     if (is_array($var)) {
         $results = '<b>Array (' . count($var) . ')</b>';
         foreach ($var as $curr_key => $curr_val) {

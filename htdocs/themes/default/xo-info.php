@@ -23,4 +23,8 @@
 return array(
     'copyright' => '&copy; XOOPS Core Team, maintained by XOOPS Design Team',
     // Types of language constants
-    'languages' => array('main', 'admin'));
+    'languages' => array(
+        'main',
+        'admin',
+    ),
+);

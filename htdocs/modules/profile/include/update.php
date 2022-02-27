@@ -20,7 +20,7 @@ $path = dirname(dirname(dirname(__DIR__)));
 require_once $path . '/include' . '/cp_header.php';
 
 /**
- * @param XoopsModule     $module
+ * @param \XoopsModule $module
  * @param int|null $oldversion
  * @return bool
  */
@@ -136,7 +136,7 @@ function xoops_module_update_profile(XoopsModule $module, $oldversion = null)
         // update user_sig field to use dhtml editor
         $tables = new Xmf\Database\Tables();
         $tables->useTable('profile_field');
-        $criteria = new Criteria('field_name', 'user_sig', '=');
+        $criteria = new \Criteria('field_name', 'user_sig', '=');
         $tables->update('profile_field', array('field_type' => 'dhtml'), $criteria);
         $tables->executeQueue(true);
     }

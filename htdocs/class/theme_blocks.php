@@ -34,7 +34,13 @@ include_once $GLOBALS['xoops']->path('class/template.php');
  */
 class xos_logos_PageBuilder
 {
+    /**
+     * @var bool
+     */
     public $theme  = false;
+    /**
+     * @var array
+     */
     public $blocks = array();
 
     /**
@@ -84,17 +90,18 @@ class xos_logos_PageBuilder
         if (isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule'])) {
             list($mid, $dirname) = array(
                 $GLOBALS['xoopsModule']->getVar('mid'),
-                $GLOBALS['xoopsModule']->getVar('dirname'));
+                $GLOBALS['xoopsModule']->getVar('dirname'),
+            );
             $isStart = (substr($_SERVER['PHP_SELF'], -9) === 'index.php' && $xoopsConfig['startpage'] == $dirname && empty($_SERVER['QUERY_STRING']));
         } else {
             list($mid, $dirname) = array(
                 0,
-                'system');
+                'system',
+            );
             $isStart = !empty($GLOBALS['xoopsOption']['show_cblock']);
         }
 
-        $groups = (isset($GLOBALS['xoopsUser']) && is_object($GLOBALS['xoopsUser'])) ? $GLOBALS['xoopsUser']->getGroups() : array(
-            XOOPS_GROUP_ANONYMOUS);
+        $groups = (isset($GLOBALS['xoopsUser']) && is_object($GLOBALS['xoopsUser'])) ? $GLOBALS['xoopsUser']->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 
         $oldzones = array(
             XOOPS_SIDEBLOCK_LEFT          => 'canvas_left',
@@ -108,7 +115,8 @@ class xos_logos_PageBuilder
             XOOPS_FOOTERBLOCK_LEFT        => 'footer_left',
             XOOPS_FOOTERBLOCK_RIGHT       => 'footer_right',
             XOOPS_FOOTERBLOCK_CENTER      => 'footer_center',
-            XOOPS_FOOTERBLOCK_ALL         => 'footer_all');
+            XOOPS_FOOTERBLOCK_ALL         => 'footer_all',
+        );
 
         foreach ($oldzones as $zone) {
             $this->blocks[$zone] = array();
@@ -117,7 +125,8 @@ class xos_logos_PageBuilder
             $template =& $this->theme->template;
             $backup   = array(
                 $template->caching,
-                $template->cache_lifetime);
+                $template->cache_lifetime,
+            );
         } else {
             $template = null;
             $template = new XoopsTpl();
@@ -125,7 +134,11 @@ class xos_logos_PageBuilder
         $xoopsblock = new XoopsBlock();
         $block_arr  = array();
         $block_arr  = $xoopsblock->getAllByGroupModule($groups, $mid, $isStart, XOOPS_BLOCK_VISIBLE);
-        $xoopsPreload->triggerEvent('core.class.theme_blocks.retrieveBlocks', array(&$this, &$template, &$block_arr));
+        $xoopsPreload->triggerEvent('core.class.theme_blocks.retrieveBlocks', array(
+            &$this,
+            &$template,
+            &$block_arr,
+        ));
         foreach ($block_arr as $block) {
             $side = $oldzones[$block->getVar('side')];
             if ($var = $this->buildBlock($block, $template)) {
@@ -169,7 +182,8 @@ class xos_logos_PageBuilder
             'title'   => $xobject->getVar('title'),
             // 'name'        => strtolower( preg_replace( '/[^0-9a-zA-Z_]/', '', str_replace( ' ', '_', $xobject->getVar( 'name' ) ) ) ),
             'weight'  => $xobject->getVar('weight'),
-            'lastmod' => $xobject->getVar('last_modified'));
+            'lastmod' => $xobject->getVar('last_modified'),
+        );
 
         // title is a comment, don't show it
         if (0 === strpos($block['title'], '// ')) {

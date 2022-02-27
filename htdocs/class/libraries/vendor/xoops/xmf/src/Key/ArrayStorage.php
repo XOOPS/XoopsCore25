@@ -31,7 +31,7 @@ class ArrayStorage extends \ArrayObject implements StorageInterface
      * @param string $name key name
      * @param string $data key data, serialized to string if required
      *
-     * @return boolean true if key saved, otherwise false
+     * @return bool true if key saved, otherwise false
      */
     public function save($name, $data)
     {
@@ -59,7 +59,7 @@ class ArrayStorage extends \ArrayObject implements StorageInterface
      *
      * @param string $name key name
      *
-     * @return boolean true if key exists, otherwise false
+     * @return bool true if key exists, otherwise false
      */
     public function exists($name)
     {
@@ -71,7 +71,7 @@ class ArrayStorage extends \ArrayObject implements StorageInterface
      *
      * @param string $name key name
      *
-     * @return boolean true if key deleted, otherwise false
+     * @return bool true if key deleted, otherwise false
      */
     public function delete($name)
     {

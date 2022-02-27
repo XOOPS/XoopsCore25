@@ -44,24 +44,33 @@ class SystemFineAvatarUploadHandler extends SystemFineUploadHandler
     public function __construct(\stdClass $claims)
     {
         parent::__construct($claims);
-        $this->allowedMimeTypes = array('image/gif', 'image/jpeg', 'image/png');
-        $this->allowedExtensions = array('gif', 'jpeg', 'jpg', 'png');
+        $this->allowedMimeTypes  = array(
+            'image/gif',
+            'image/jpeg',
+            'image/png',
+        );
+        $this->allowedExtensions = array(
+            'gif',
+            'jpeg',
+            'jpg',
+            'png',
+        );
     }
 
     protected function storeUploadedFile($target, $mimeType, $uuid)
     {
-        $pathParts = pathinfo($this->getName());
-        $avatarName = uniqid('savt') . '.' . strtolower($pathParts['extension']);
+        $pathParts      = pathinfo($this->getName());
+        $avatarName     = uniqid('savt') . '.' . strtolower($pathParts['extension']);
         $avatarNicename = str_replace(array('_','-'), ' ', $pathParts['filename']);
-        $avatarPath = XOOPS_ROOT_PATH . '/uploads/avatars/' . $avatarName;
+        $avatarPath     = XOOPS_ROOT_PATH . '/uploads/avatars/' . $avatarName;
 
         if (false === move_uploaded_file($_FILES[$this->inputName]['tmp_name'], $avatarPath)) {
             return false;
         }
         /* @var  XoopsAvatarHandler $avt_handler */
         $avt_handler = xoops_getHandler('avatar');
-        $avatar = $avt_handler->create();
-        
+        $avatar      = $avt_handler->create();
+
         $avatar->setVar('avatar_file', 'avatars/' . $avatarName);
         $avatar->setVar('avatar_name', $avatarNicename);
         $avatar->setVar('avatar_mimetype', $mimeType);
@@ -74,6 +83,9 @@ class SystemFineAvatarUploadHandler extends SystemFineUploadHandler
                 'error' => sprintf(_FAILSAVEIMG, $avatar->getVar('avatar_name'))
             );
         }
-        return array('success'=> true, "uuid" => $uuid);
+        return array(
+            'success' => true,
+            'uuid'    => $uuid,
+        );
     }
 }

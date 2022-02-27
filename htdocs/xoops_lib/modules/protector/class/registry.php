@@ -10,7 +10,13 @@ defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
  */
 class ProtectorRegistry
 {
+    /**
+     * @var array
+     */
     public $_entries;
+    /**
+     * @var array
+     */
     public $_locks;
 
     /**

@@ -214,7 +214,7 @@ class XoopsGroupFormCheckBox extends XoopsFormElement
      * @param string $caption
      * @param string $name
      * @param int    $groupId
-     * @param mixed  $values
+     * @param array|int|string|null $values
      */
     public function __construct($caption, $name, $groupId, $values = null)
     {

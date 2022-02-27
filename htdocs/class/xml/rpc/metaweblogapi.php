@@ -149,6 +149,9 @@ class MetaWeblogApi extends XoopsXmlRpcApi
         }
     }
 
+    /**
+     * @return void
+     */
     public function getPost()
     {
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
@@ -190,6 +193,9 @@ class MetaWeblogApi extends XoopsXmlRpcApi
         }
     }
 
+    /**
+     * @return void
+     */
     public function getRecentPosts()
     {
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
@@ -241,6 +247,9 @@ class MetaWeblogApi extends XoopsXmlRpcApi
         }
     }
 
+    /**
+     * @return void
+     */
     public function getCategories()
     {
         if (!$this->_checkUser($this->params[1], $this->params[2])) {

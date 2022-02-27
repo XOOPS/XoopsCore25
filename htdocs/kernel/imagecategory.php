@@ -32,6 +32,9 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class XoopsImagecategory extends XoopsObject
 {
+    /**
+     * @var int
+     */
     public $_imageCount;
 
     /**
@@ -185,7 +188,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
     /**
      * Create a new {@link XoopsImageCategory}
      *
-     * @param  boolean $isNew Flag the object as "new"
+     * @param  bool $isNew Flag the object as "new"
      * @return XoopsImagecategory
      **/
     public function create($isNew = true)
@@ -203,12 +206,12 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
      *
      * @param int $id ID
      *
+     * @return false|\XoopsImageCategory {@link XoopsImageCategory}, FALSE on fail
      * @internal param bool $getbinary
-     * @return XoopsImageCategory|false {@link XoopsImageCategory}, FALSE on fail
      */
     public function get($id)
     {
-        $id     = (int)$id;
+        $id = (int)$id;
         $imgcat = false;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('imagecategory') . ' WHERE imgcat_id=' . $id;
@@ -217,7 +220,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
             }
             $numrows = $this->db->getRowsNum($result);
             if ($numrows == 1) {
-                $imgcat = new XoopsImagecategory();
+                $imgcat = new \XoopsImagecategory();
                 $imgcat->assignVars($this->db->fetchArray($result));
             }
         }
@@ -290,7 +293,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
     /**
      * Enter description here...
      *
-     * @param  CriteriaElement $criteria
+     * @param \CriteriaElement|null $criteria
      * @param  bool            $id_as_key if true, use id as array key
      * @return array of XoopsImagecategory objects
      */
@@ -327,7 +330,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
     /**
      * Count some images
      *
-     * @param  CriteriaElement $criteria {@link CriteriaElement}
+     * @param \CriteriaElement|null $criteria {@link CriteriaElement}
      * @return int
      **/
     public function getCount(CriteriaElement $criteria = null)

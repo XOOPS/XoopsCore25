@@ -163,6 +163,8 @@ class XoopsFormRadio extends XoopsFormElement
      */
     public function render()
     {
-        return XoopsFormRenderer::getInstance()->get()->renderFormRadio($this);
+        return XoopsFormRenderer::getInstance()
+                                ->get()
+                                ->renderFormRadio($this);
     }
 }

@@ -39,7 +39,8 @@ if (defined('_MD_AM_AUTHENTICATION')) {
 function createConfigform($config)
 {
     xoops_load('XoopsFormRendererBootstrap3');
-    XoopsFormRenderer::getInstance()->set(new XoopsFormRendererBootstrap3());
+    XoopsFormRenderer::getInstance()
+                     ->set(new XoopsFormRendererBootstrap3());
 
     /* @var XoopsConfigHandler $config_handler */
     $config_handler         = xoops_getHandler('config');
@@ -239,7 +240,8 @@ function createConfigform($config)
 function createThemeform($config)
 {
     xoops_load('XoopsFormRendererBootstrap3');
-    XoopsFormRenderer::getInstance()->set(new XoopsFormRendererBootstrap3());
+    XoopsFormRenderer::getInstance()
+                     ->set(new XoopsFormRendererBootstrap3());
 
     $title          = (!defined($config->getVar('conf_desc')) || constant($config->getVar('conf_desc')) === '') ? constant($config->getVar('conf_title')) : constant($config->getVar('conf_title')) . '<br><br><span>' . constant($config->getVar('conf_desc')) . '</span>';
     $form_theme_set = new XoopsFormSelect('', $config->getVar('conf_name'), $config->getConfValueForOutput(), 1, false);

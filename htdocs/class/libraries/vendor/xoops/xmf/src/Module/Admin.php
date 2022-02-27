@@ -34,8 +34,14 @@ class Admin
      *
      * @var object
      */
-    protected static $ModuleAdmin = null;
-    protected $lastInfoBoxTitle = null;
+    protected static $ModuleAdmin;
+    /**
+     * @var string
+     */
+    protected $lastInfoBoxTitle; //mb TODO this is not null
+    /**
+     * @var string
+     */
     protected static $paypal = '';
 
     /**
@@ -61,11 +67,11 @@ class Admin
 
         if ($instance === null) {
             if (class_exists('\Xoops\Module\Admin', true)) {
-                $instance = new \Xoops\Module\Admin;
+                $instance            = new \Xoops\Module\Admin();
                 static::$ModuleAdmin = $instance;
             } else {
                 include_once $GLOBALS['xoops']->path('Frameworks/moduleclasses/moduleadmin/moduleadmin.php');
-                static::$ModuleAdmin = new \ModuleAdmin;
+                static::$ModuleAdmin = new \ModuleAdmin();
                 Language::load('xmf');
                 $instance = new static();
             }
@@ -163,12 +169,12 @@ class Admin
     /**
      * Render all items buttons
      *
-     * @param string $position  button position (left, right)
+     * @param string|null $position  button position (left, right)
      * @param string $delimiter delimiter between buttons
      *
      * @return string
      */
-    public function renderButton($position = null, $delimiter = "&nbsp;")
+    public function renderButton($position = null, $delimiter = '&nbsp;')
     {
         if (null === $position) {
             $position = 'right';
@@ -180,12 +186,12 @@ class Admin
     /**
      * Display all item buttons
      *
-     * @param string $position  button position (left, right)
+     * @param string|null $position  button position (left, right)
      * @param string $delimiter delimiter between buttons
      *
      * @return void
      */
-    public function displayButton($position = null, $delimiter = "&nbsp;")
+    public function displayButton($position = null, $delimiter = '&nbsp;')
     {
         echo $this->renderButton($position, $delimiter);
     }
@@ -288,11 +294,11 @@ class Admin
     public function addConfigError($value = '')
     {
         $path = XOOPS_URL . '/Frameworks/moduleclasses/icons/16/';
-        $line = "";
+        $line  = '';
         $line .= "<span style='color : red; font-weight : bold;'>";
         $line .= "<img src='" . $path . "0.png' >";
         $line .= $value;
-        $line .= "</span>";
+        $line  .= '</span>';
         $value = $line;
         $type = 'default';
 
@@ -309,11 +315,11 @@ class Admin
     public function addConfigAccept($value = '')
     {
         $path = XOOPS_URL . '/Frameworks/moduleclasses/icons/16/';
-        $line = "";
+        $line  = '';
         $line .= "<span style='color : green;'>";
         $line .= "<img src='" . $path . "1.png' >";
         $line .= $value;
-        $line .= "</span>";
+        $line  .= '</span>';
         $value = $line;
         $type = 'default';
 
@@ -330,11 +336,11 @@ class Admin
     public function addConfigWarning($value = '')
     {
         $path = XOOPS_URL . '/Frameworks/moduleclasses/icons/16/';
-        $line = "";
+        $line  = '';
         $line .= "<span style='color : orange; font-weight : bold;'>";
         $line .= "<img src='" . $path . "warning.png' >";
         $line .= $value;
-        $line .= "</span>";
+        $line  .= '</span>';
         $value = $line;
         $type = 'default';
 
@@ -346,7 +352,7 @@ class Admin
      * Check for installed module and version and do addConfigBoxLine()
      *
      * @param string  $moddir     - module directory name
-     * @param integer $minversion - minimum acceptable module version (100 = V1.00)
+     * @param int $minversion - minimum acceptable module version (100 = V1.00)
      *
      * @return bool true if requested version of the module is available
      */
@@ -355,7 +361,8 @@ class Admin
         $return = false;
         $helper = Helper::getHelper($moddir);
         if (is_object($helper) && is_object($helper->getModule())) {
-            $mod_modversion = $helper->getModule()->getVar('version');
+            $mod_modversion = $helper->getModule()
+                                     ->getVar('version');
             $mod_version_f = $mod_modversion / 100;
             $min_version_f = $minversion / 100;
             $value = sprintf(

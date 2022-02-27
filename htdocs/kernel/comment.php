@@ -1,4 +1,5 @@
 <?php
+
 /**
  * XOOPS Kernel Class
  *
@@ -357,7 +358,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
     public function get($id)
     {
         $comment = false;
-        $id      = (int)$id;
+        $id  = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('xoopscomments') . ' WHERE com_id=' . $id;
             if (!$result = $this->db->query($sql)) {
@@ -365,7 +366,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
             }
             $numrows = $this->db->getRowsNum($result);
             if ($numrows == 1) {
-                $comment = new XoopsComment();
+                $comment = new \XoopsComment();
                 $comment->assignVars($this->db->fetchArray($result));
             }
         }
@@ -537,9 +538,9 @@ class XoopsCommentHandler extends XoopsObjectHandler
      *
      * @param int    $module_id Module ID
      * @param int    $item_id   Item ID
-     * @param string $order     Sort order
-     * @param int    $status    Status of the comment
-     * @param int    $limit     Max num of comments to retrieve
+     * @param string|null $order     Sort order
+     * @param int|null    $status    Status of the comment
+     * @param int|null    $limit     Max num of comments to retrieve
      * @param int    $start     Start offset
      *
      * @return array Array of {@link XoopsComment} objects
@@ -588,7 +589,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
      * @param int    $module_id
      * @param int    $item_id
      * @param string $order
-     * @param int    $status
+     * @param int|null $status
      *
      * @return array Array of {@link XoopsComment} objects
      **/
@@ -610,7 +611,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
      *
      * @param int $comment_rootid
      * @param int $comment_id
-     * @param int $status
+     * @param int|null $status
      *
      * @return array Array of {@link XoopsComment} objects
      **/

@@ -114,6 +114,8 @@ class XoopsFormText extends XoopsFormElement
      */
     public function render()
     {
-        return XoopsFormRenderer::getInstance()->get()->renderFormText($this);
+        return XoopsFormRenderer::getInstance()
+                                ->get()
+                                ->renderFormText($this);
     }
 }

@@ -10,7 +10,7 @@
  *
  * @param string $file_path
  * @param string $new_file_path
- * @return boolean
+ * @return bool
  * @staticvar array|null
  */
 

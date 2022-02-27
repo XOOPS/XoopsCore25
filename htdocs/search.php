@@ -225,10 +225,10 @@ switch ($action) {
     /* @var XoopsModuleHandler $module_handler */
 		$module_handler = xoops_getHandler('module');
         $module         = $module_handler->get($mid);
-        $results        = $module->search($queries, $andor, 20, $start, $uid);
+        $results        = $module->search($queries[0], $andor, 20, $start, $uid);
         $count          = count($results);
         if (is_array($results) && $count > 0) {
-            $next_results = $module->search($queries, $andor, 1, $start + 20, $uid);
+            $next_results = $module->search($queries[0], $andor, 1, $start + 20, $uid);
             $next_count   = count($next_results);
             $has_next     = false;
             if (is_array($next_results) && $next_count == 1) {

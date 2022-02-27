@@ -18,7 +18,7 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_CACHE')):
      *
      * @return string
      */
-    function mod_generateCacheId_byGroup($groups = null)
+    function mod_generateCacheId_byGroup(array $groups = null)
     {
         global $xoopsUser;
 

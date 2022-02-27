@@ -20,7 +20,7 @@ $path = dirname(dirname(dirname(__DIR__)));
 require_once $path . '/include' . '/cp_header.php';
 
 /**
- * @param XoopsModule $module
+ * @param \XoopsModule $module
  * @param int|null    $oldversion
  * @return bool
  */

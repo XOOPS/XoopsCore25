@@ -8,6 +8,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 use Xmf\Request;
 
 /**
@@ -47,7 +48,6 @@ if ($type === 'preview') {
 $bid = Request::getInt('bid', 0);
 
 switch ($op) {
-
     case 'list':
         // Define main template
         $GLOBALS['xoopsOption']['template_main'] = 'system_blocks.tpl';

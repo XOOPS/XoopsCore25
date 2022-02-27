@@ -34,13 +34,29 @@ namespace Xmf;
  */
 class FilterInput
 {
+    /**
+     * @var array
+     */
     protected $tagsArray;         // default is empty array
+    /**
+     * @var array
+     */
     protected $attrArray;         // default is empty array
-
+    /**
+     * @var int
+     */
     protected $tagsMethod;        // default is 0
+    /**
+     * @var int
+     */
     protected $attrMethod;        // default is 0
-
+    /**
+     * @var int
+     */
     protected $xssAuto;           // default is 1
+    /**
+     * @var array
+     */
     protected $tagBlacklist = array(
         'applet',
         'body',
@@ -63,10 +79,19 @@ class FilterInput
         'script',
         'style',
         'title',
-        'xml'
+        'xml',
     );
     // also will strip ALL event handlers
-    protected $attrBlacklist = array('action', 'background', 'codebase', 'dynsrc', 'lowsrc');
+    /**
+     * @var array
+     */
+    protected $attrBlacklist = array(
+        'action',
+        'background',
+        'codebase',
+        'dynsrc',
+        'lowsrc',
+    );
 
     /**
      * Constructor
@@ -78,8 +103,8 @@ class FilterInput
      * @param int   $xssAuto    - 0 = only auto clean essentials, 1 = allow clean blacklisted tags/attr
      */
     protected function __construct(
-        $tagsArray = array(),
-        $attrArray = array(),
+        array $tagsArray = array(),
+        array $attrArray = array(),
         $tagsMethod = 0,
         $attrMethod = 0,
         $xssAuto = 1
@@ -127,7 +152,16 @@ class FilterInput
 
         $className = get_called_class(); // so an extender gets an instance of itself
 
-        $sig = md5(serialize(array($className, $tagsArray, $attrArray, $tagsMethod, $attrMethod, $xssAuto)));
+        $sig = md5(
+            serialize(array(
+                          $className,
+                          $tagsArray,
+                          $attrArray,
+                          $tagsMethod,
+                          $attrMethod,
+                          $xssAuto,
+                      ))
+        );
 
         if (!isset($instances)) {
             $instances = array();
@@ -177,7 +211,7 @@ class FilterInput
      *                       (INTEGER, FLOAT, BOOLEAN, WORD, ALPHANUM, CMD, BASE64,
      *                        STRING, ARRAY, PATH, USERNAME, WEBURL, EMAIL, IP)
      *
-     * @return mixed 'Cleaned' version of input parameter
+     * @return array|bool|float|int|string 'Cleaned' version of input parameter
      * @static
      */
     public static function clean($source, $type = 'string')
@@ -203,7 +237,7 @@ class FilterInput
      *                       (INTEGER, FLOAT, BOOLEAN, WORD, ALPHANUM, CMD, BASE64,
      *                        STRING, ARRAY, PATH, USERNAME, WEBURL, EMAIL, IP)
      *
-     * @return mixed 'Cleaned' version of input parameter
+     * @return array|bool|float|int|string 'Cleaned' version of input parameter
      * @static
      */
     public function cleanVar($source, $type = 'string')
@@ -366,7 +400,7 @@ class FilterInput
             $tagLeft = $currentTag;
             $attrSet = array();
             $currentSpace = strpos($tagLeft, ' ');
-            if (substr($currentTag, 0, 1) === "/") {
+            if (substr($currentTag, 0, 1) === '/') {
                 // is end tag
                 $isCloseTag = true;
                 list($tagName) = explode(' ', $currentTag);
@@ -377,7 +411,7 @@ class FilterInput
                 list($tagName) = explode(' ', $currentTag);
             }
             // excludes all "non-regular" tagnames OR no tagname OR remove if xssauto is on and tag is blacklisted
-            if ((!preg_match("/^[a-z][a-z0-9]*$/i", $tagName))
+            if ((!preg_match('/^[a-z][a-z0-9]*$/i', $tagName))
                 || (!$tagName)
                 || ((in_array(strtolower($tagName), $this->tagBlacklist))
                     && ($this->xssAuto))
@@ -431,7 +465,7 @@ class FilterInput
                         $preTag .= ' ' . $attrSet[$i];
                     }
                     // reformat single tags to XHTML
-                    if (strpos($fromTagOpen, "</" . $tagName)) {
+                    if (strpos($fromTagOpen, '</' . $tagName)) {
                         $preTag .= '>';
                     } else {
                         $preTag .= ' />';
@@ -499,12 +533,12 @@ class FilterInput
             }
             // auto strip attr's with "javascript:
             if (((strpos(strtolower($attrSubSet[1]), 'expression') !== false)
-                    && (strtolower($attrSubSet[0]) === 'style')) ||
-                (strpos(strtolower($attrSubSet[1]), 'javascript:') !== false) ||
-                (strpos(strtolower($attrSubSet[1]), 'behaviour:') !== false) ||
-                (strpos(strtolower($attrSubSet[1]), 'vbscript:') !== false) ||
-                (strpos(strtolower($attrSubSet[1]), 'mocha:') !== false) ||
-                (strpos(strtolower($attrSubSet[1]), 'livescript:') !== false)
+                 && (strtolower($attrSubSet[0]) === 'style'))
+                || (strpos(strtolower($attrSubSet[1]), 'javascript:') !== false)
+                || (strpos(strtolower($attrSubSet[1]), 'behaviour:') !== false)
+                || (strpos(strtolower($attrSubSet[1]), 'vbscript:') !== false)
+                || (strpos(strtolower($attrSubSet[1]), 'mocha:') !== false)
+                || (strpos(strtolower($attrSubSet[1]), 'livescript:') !== false)
             ) {
                 continue;
             }
@@ -516,7 +550,7 @@ class FilterInput
                 if ($attrSubSet[1]) {
                     // attr has value
                     $newSet[] = $attrSubSet[0] . '="' . $attrSubSet[1] . '"';
-                } elseif ($attrSubSet[1] == "0") {
+                } elseif ($attrSubSet[1] == '0') {
                     // attr has decimal zero as value
                     $newSet[] = $attrSubSet[0] . '="0"';
                 } else {

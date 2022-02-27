@@ -37,33 +37,41 @@
 class Config_File {
     /**#@+
      * Options
-     * @var boolean
+     * @var bool
      */
     /**
      * Controls whether variables with the same name overwrite each other.
+     * @var bool
      */
     var $overwrite        =    true;
 
     /**
      * Controls whether config values of on/true/yes and off/false/no get
      * converted to boolean values automatically.
+     * @var bool
      */
     var $booleanize        =    true;
 
     /**
      * Controls whether hidden config sections/vars are read from the file.
+     * @var bool
      */
     var $read_hidden     =    true;
 
     /**
      * Controls whether or not to fix mac or dos formatted newlines.
      * If set to true, \r or \r\n will be changed to \n.
+     * @var bool
      */
     var $fix_newlines =    true;
     /**#@-*/
-
-    /** @access private */
+    /** @access private
+     * @var string
+     */
     var $_config_path    = "";
+    /**
+     * @var array
+     */
     var $_config_data    = array();
     /**#@-*/
 
@@ -72,7 +80,7 @@ class Config_File {
      *
      * @param string $config_path (optional) path to the config files
      */
-    public function __construct($config_path = NULL)
+    public function __construct($config_path = null)
     {
         if (isset($config_path))
             $this->set_path($config_path);
@@ -99,16 +107,15 @@ class Config_File {
         }
     }
 
-
     /**
      * Retrieves config info based on the file, section, and variable name.
      *
-     * @param string $file_name config file to get info for
-     * @param string $section_name (optional) section to get info for
-     * @param string $var_name (optional) variable to get info for
-     * @return string|array|false a value or array of values
+     * @param string      $file_name    config file to get info for
+     * @param string|null $section_name (optional) section to get info for
+     * @param string|null $var_name     (optional) variable to get info for
+     * @return string|array a value or array of values
      */
-    function get($file_name, $section_name = NULL, $var_name = NULL)
+    function get($file_name, $section_name = null, $var_name = null)
     {
         if (empty($file_name)) {
             $this->_trigger_error_msg('Empty config file name');
@@ -144,7 +151,7 @@ class Config_File {
     /**
      * Retrieves config info based on the key.
      *
-     * @param $file_name string config key (filename/section/var)
+     * @param string $file_name config key (filename/section/var)
      * @return string|array same as get()
      * @uses get() retrieves information from config file and returns it
      */
@@ -191,7 +198,7 @@ class Config_File {
      * @param string $section_name (optional) section to get info for
      * @return array|false an array of variables names from the specified file/section
      */
-    function get_var_names($file_name, $section = NULL)
+    function get_var_names($file_name, $section = null)
     {
         if (empty($file_name)) {
             $this->_trigger_error_msg('Empty config file name');
@@ -213,9 +220,9 @@ class Config_File {
      *
      * @param string $file_name file to clear config data for
      */
-    function clear($file_name = NULL)
+    function clear($file_name = null)
     {
-        if ($file_name === NULL)
+        if ($file_name === null)
             $this->_config_data = array();
         else if (isset($this->_config_data[$file_name]))
             $this->_config_data[$file_name] = array();
@@ -226,7 +233,7 @@ class Config_File {
      * Load a configuration file manually.
      *
      * @param string $file_name file name to load
-     * @param boolean $prepend_path whether current config path should be
+     * @param bool $prepend_path whether current config path should be
      *                              prepended to the filename
      */
     function load_file($file_name, $prepend_path = true)
@@ -255,6 +262,7 @@ class Config_File {
      *
      * @param string $config_file file name of the related contents
      * @param string $contents the file-contents to parse
+     * @return bool
      */
     function set_file_contents($config_file, $contents)
     {
@@ -345,7 +353,7 @@ class Config_File {
      * @param array &$container
      * @param string $var_name
      * @param mixed $var_value
-     * @param boolean $booleanize determines whether $var_value is converted to
+     * @param bool $booleanize determines whether $var_value is converted to
      *                            to true/false
      * @return false|void
      */
@@ -381,7 +389,7 @@ class Config_File {
     /**
      * @uses trigger_error() creates a PHP warning/error
      * @param string $error_msg
-     * @param integer $error_type one of
+     * @param int $error_type one of
      */
     function _trigger_error_msg($error_msg, $error_type = E_USER_WARNING)
     {

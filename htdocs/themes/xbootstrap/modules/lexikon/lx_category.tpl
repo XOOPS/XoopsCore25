@@ -164,7 +164,7 @@
                        <a href="<{$xoops_url}>/modules/<{$lang_moduledirname}>/category.php?categoryID=<{$eachcat.id}>" target="_parent">
                         <img src="<{$xoops_url}>/uploads/lexikon/categories/images/<{$eachcat.image}>"
                                  width="<{$imgcatwd}>" align="bottom" vspace="2" hspace="2" border="0"
-                                 alt="[<{$eachcat.name}>]"/>
+                                 alt="[<{$eachcat.name}>]">
                        </a>
                      <{/if}>
                     <{$eachcat.description}>
@@ -183,7 +183,7 @@
     <{* syndication *}>
     <{if $syndication == true}>
         <div align="center" style="padding: 4px;"><br><br>
-            <a href="rss.php" title="recent entries"><img src="assets/images/rss.gif" border="0"/></a>
+            <a href="rss.php" title="recent entries"><img src="assets/images/rss.gif" border="0"></a>
         </div>
     <{/if}>
 
@@ -191,7 +191,7 @@
     <h3><{$singlecat.name}></h3>
     <p>
         <{if $singlecat.image != "" && $show_screenshot == '1'}>
-            <img src="<{$xoops_url}>/uploads/lexikon/categories/images/<{$singlecat.image}>" width="<{$imgcatwd}>" align="center" vspace="2" hspace="2" border="0" alt="[<{$singlecat.name}>]"/>
+            <img src="<{$xoops_url}>/uploads/lexikon/categories/images/<{$singlecat.image}>" width="<{$imgcatwd}>" align="center" vspace="2" hspace="2" border="0" alt="[<{$singlecat.name}>]">
                 <{$singlecat.name}>
         <{/if}>
         <{$singlecat.description}>
@@ -227,7 +227,7 @@
         <{if $syndication == true}>
             <div align="center" style="padding: 4px;"><br><br>
                 <a href="rss.php?categoryID=<{$singlecat.id}>" title="Recent terms in this category"><img
-                            src="assets/images/rss.gif" border="0"/></a>
+                            src="assets/images/rss.gif" border="0"></a>
             </div>
         <{/if}>
 

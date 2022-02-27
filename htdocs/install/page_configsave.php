@@ -26,7 +26,7 @@
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  **/
 
-require_once './include/common.inc.php';
+require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 $pageHasForm = false;
@@ -52,7 +52,8 @@ if (true === $writeCheck) {
     $rewrite = array(
         'GROUP_ADMIN' => 1,
         'GROUP_USERS' => 2,
-        'GROUP_ANONYMOUS' => 3);
+        'GROUP_ANONYMOUS' => 3,
+    );
     $rewrite = array_merge($rewrite, $vars);
 
     $result = writeConfigurationFile($rewrite, $vars['VAR_PATH'] . '/data', 'secure.dist.php', 'secure.php');
@@ -103,7 +104,7 @@ if (true === $writeCheck) {
         $content .= '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . $errorMsg . '</div>' . "\n";
     }
 }
-include './include/install_tpl.php';
+include __DIR__ . '/include/install_tpl.php';
 
 /**
  * Copy a configuration file from template, then rewrite with actual configuration values
@@ -115,8 +116,11 @@ include './include/install_tpl.php';
  *
  * @return true|string true on success, error message on failure
  */
-function writeConfigurationFile($vars, $path, $sourceName, $fileName)
+function writeConfigurationFile(array $vars, $path, $sourceName, $fileName)
 {
+    $path       = (string)$path;
+    $sourceName = (string)$sourceName;
+    $fileName   = (string)$fileName;
     $path .= '/';
     if (!@copy($path . $sourceName, $path . $fileName)) {
         return sprintf(ERR_COPY_MAINFILE, $fileName);
@@ -160,6 +164,7 @@ function writeConfigurationFile($vars, $path, $sourceName, $fileName)
  */
 function getStats($filename)
 {
+    $filename = (string)$filename;
     $stat = stat($filename);
     if (false === $stat) {
         return false;
@@ -193,7 +198,7 @@ function getTmpStats()
  *
  * @return array selected information gleaned from $stat
  */
-function prepStats($stat)
+function prepStats(array $stat)
 {
     $subSet = array();
     $mode = $stat['mode'];
@@ -221,7 +226,7 @@ function prepStats($stat)
  *
  * @return string[]|true true if no issues found, array
  */
-function checkFileWriteablity($files)
+function checkFileWriteablity(array $files)
 {
     if (isset($_POST['op']) && $_POST['op'] === 'proceed') {
         return true; // user said skip this
@@ -251,14 +256,18 @@ function checkFileWriteablity($files)
                 $gidStr = (string) $gid;
                 $dGidStr = (string) $dirStat['gid'];
                 if (function_exists('posix_getpwuid')) {
+                    /** @var array $tempUsr */
                     $tempUsr = posix_getpwuid($uid);
                     $uidStr = isset($tempUsr['name']) ? $tempUsr['name'] : (string) $uid;
+                    /** @var array $tempUsr */
                     $tempUsr = posix_getpwuid($dirStat['uid']);
                     $dUidStr = isset($tempUsr['name']) ? $tempUsr['name'] : (string) $dirStat['uid'];
                 }
                 if (function_exists('posix_getgrgid')) {
+                    /** @var array $tempGrp */
                     $tempGrp = posix_getgrgid($gid);
                     $gidStr = isset($tempGrp['name']) ? $tempGrp['name'] : (string) $gid;
+                    /** @var array $tempGrp */
                     $tempGrp = posix_getgrgid($dirStat['gid']);
                     $dGidStr = isset($tempGrp['name']) ? $tempGrp['name'] : (string) $dirStat['gid'];
                 }
@@ -280,11 +289,11 @@ function checkFileWriteablity($files)
 /**
  * Install working versions of various *.dist.php files to xoops_data/configs/
  *
- * @param $vars array of system variables, we care about ROOT_PATH and VAR_PATH keys
+ * @param array $vars of system variables, we care about ROOT_PATH and VAR_PATH keys
  *
  * @return true|string true if all files were copied, otherwise error message
  */
-function copyConfigDistFiles($vars)
+function copyConfigDistFiles(array $vars)
 {
     $copied = 0;
     $failed = 0;

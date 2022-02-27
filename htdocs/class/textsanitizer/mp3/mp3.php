@@ -1,4 +1,5 @@
 <?php
+
 /**
  * TextSanitizer extension
  *
@@ -24,16 +25,16 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 class MytsMp3 extends MyTextSanitizerExtension
 {
     /**
-     * @param $textarea_id
+     * @param string $textarea_id
      *
      * @return array
      */
     public function encode($textarea_id)
     {
         $code = "<button type='button' class='btn btn-default' onclick='xoopsCodeMp3(\"{$textarea_id}\",\""
-            . htmlspecialchars(_XOOPS_FORM_ENTERMP3URL, ENT_QUOTES)
-            . "\");' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALTMP3
-            . "'><span class='fa fa-fw fa-music' aria-hidden='true'></span></button>";
+                . htmlspecialchars(_XOOPS_FORM_ENTERMP3URL, ENT_QUOTES)
+                . "\");' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALTMP3
+                . "'><span class='fa fa-fw fa-music' aria-hidden='true'></span></button>";
 
         $javascript = <<<EOF
             function xoopsCodeMp3(id, enterMp3Phrase)
@@ -55,21 +56,22 @@ EOF;
 
         return array(
             $code,
-            $javascript);
+            $javascript,
+        );
     }
 
     /**
-     * @param $match
+     * @param array $match
      *
      * @return string
      */
     public static function myCallback($match)
     {
-        return self::decode($match[1]);
+        return self::decode($match[1]); //mb TODO - Required parameters '$width, $height' missing
     }
 
     /**
-     * @param $ts
+     * @param MyTextSanitizer $ts
      *
      * @return bool
      */
@@ -78,7 +80,7 @@ EOF;
         //        $ts->patterns[] = "/\[mp3\](.*?)\[\/mp3\]/es";
         //        $ts->replacements[] = __CLASS__ . "::decode( '\\1' )";
         //mb------------------------------
-        $ts->callbackPatterns[] = "/\[mp3\](.*?)\[\/mp3\]/s";
+        $ts->callbackPatterns[] = '/\[mp3\](.*?)\[\/mp3\]/s';
         $ts->callbacks[]        = __CLASS__ . '::myCallback';
 
         //mb------------------------------
@@ -86,8 +88,9 @@ EOF;
     }
 
     /**
-     * @param $url
-     *
+     * @param string $url
+     * @param string|int $width
+     * @param string|int $height
      * @return string
      */
     public static function decode($url, $width, $height)

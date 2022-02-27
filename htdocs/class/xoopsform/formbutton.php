@@ -87,7 +87,7 @@ class XoopsFormButton extends XoopsFormElement
      *
      * @param $value
      *
-     * @return string
+     * @return void
      */
     public function setValue($value)
     {
@@ -101,7 +101,11 @@ class XoopsFormButton extends XoopsFormElement
      */
     public function getType()
     {
-        return in_array(strtolower($this->_type), array('button', 'submit', 'reset')) ? $this->_type : 'button';
+        return in_array(strtolower($this->_type), array(
+            'button',
+            'submit',
+            'reset',
+        )) ? $this->_type : 'button';
     }
 
     /**
@@ -111,6 +115,8 @@ class XoopsFormButton extends XoopsFormElement
      */
     public function render()
     {
-        return XoopsFormRenderer::getInstance()->get()->renderFormButton($this);
+        return XoopsFormRenderer::getInstance()
+                                ->get()
+                                ->renderFormButton($this);
     }
 }

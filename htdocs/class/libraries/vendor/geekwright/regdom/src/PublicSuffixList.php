@@ -13,12 +13,30 @@ namespace Geekwright\RegDom;
  */
 class PublicSuffixList
 {
+    /**
+     * @var string
+     */
     protected $sourceURL = 'https://publicsuffix.org/list/public_suffix_list.dat';
+    /**
+     * @var string
+     */
     protected $localPSL = 'public_suffix_list.dat';
+    /**
+     * @var string
+     */
     protected $cachedPrefix = 'cached_';
 
-    protected $tree;
-    protected $url;
+    /**
+     * @var array
+     */
+    protected $tree; //mb TODO - could be also null
+    /**
+     * @var string
+     */
+    protected $url;  //mb TODO - could be also null
+    /**
+     * @var string
+     */
     protected $dataDir = '/../data/'; // relative to __DIR__
 
     /**
@@ -96,7 +114,7 @@ class PublicSuffixList
         $lines = explode("\n", $fileData);
 
         foreach ($lines as $line) {
-            if ($this->startsWith($line, "//") || $line == '') {
+            if ($this->startsWith($line, '//') || $line == '') {
                 continue;
             }
 
@@ -133,14 +151,14 @@ class PublicSuffixList
         $dom = trim(array_pop($tldParts));
 
         $isNotDomain = false;
-        if ($this->startsWith($dom, "!")) {
+        if ($this->startsWith($dom, '!')) {
             $dom = substr($dom, 1);
             $isNotDomain = true;
         }
 
         if (!array_key_exists($dom, $node)) {
             if ($isNotDomain) {
-                $node[$dom] = array("!" => "");
+                $node[$dom] = array('!' => '');
             } else {
                 $node[$dom] = array();
             }

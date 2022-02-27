@@ -102,7 +102,7 @@ class XoopsImageSetImgHandler extends XoopsObjectHandler
     /**
      * Create a new {@link XoopsImageSetImg}
      *
-     * @param  boolean $isNew Flag the object as "new"
+     * @param  bool $isNew Flag the object as "new"
      * @return XoopsImageSetImg
      **/
     public function create($isNew = true)
@@ -120,13 +120,13 @@ class XoopsImageSetImgHandler extends XoopsObjectHandler
      *
      * @param int $id ID
      *
+     * @return false|\XoopsImageSetImg {@link XoopsImageSetImg}, FALSE on fail
      * @internal param bool $getbinary
-     * @return XoopsImageSetImg|false {@link XoopsImageSetImg}, FALSE on fail
      */
-    public function get($id)
+    public function get($id) //mb TODO should we refactor XoopsObject to rename $id to $id?
     {
         $imgsetimg = false;
-        $id        = (int)$id;
+        $id    = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('imgsetimg') . ' WHERE imgsetimg_id=' . $id;
             if (!$result = $this->db->query($sql)) {
@@ -134,7 +134,7 @@ class XoopsImageSetImgHandler extends XoopsObjectHandler
             }
             $numrows = $this->db->getRowsNum($result);
             if ($numrows == 1) {
-                $imgsetimg = new XoopsImageSetImg();
+                $imgsetimg = new \XoopsImageSetImg();
                 $imgsetimg->assignVars($this->db->fetchArray($result));
             }
         }
@@ -208,7 +208,7 @@ class XoopsImageSetImgHandler extends XoopsObjectHandler
      * Load {@link XoopsImageSetImg}s from the database
      *
      * @param CriteriaElement|CriteriaCompo $criteria  {@link CriteriaElement}
-     * @param boolean         $id_as_key Use the ID as key into the array
+     * @param bool         $id_as_key Use the ID as key into the array
      * @internal param bool $getbinary
      * @return array Array of {@link XoopsImageSetImg} objects
      */

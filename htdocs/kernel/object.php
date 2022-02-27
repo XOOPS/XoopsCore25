@@ -101,6 +101,7 @@ class XoopsObject
      * additional filters registered dynamically by a child class object
      *
      * @access private
+     * @var array
      */
     public $_filters = array();
 
@@ -193,8 +194,9 @@ class XoopsObject
      *
      * @return void
      */
-    public function initVar($key, $data_type, $value = null, $required = false, $maxlength = null, $options = '', $enumerations = '')
-    {
+    public function initVar(
+        $key, $data_type, $value = null, $required = false, $maxlength = null, $options = '', $enumerations = ''
+    ) {
         $this->vars[$key] = array(
             'value'       => $value,
             'required'    => $required,
@@ -202,7 +204,8 @@ class XoopsObject
             'maxlength'   => $maxlength,
             'changed'     => false,
             'options'     => $options,
-            'enumeration' => $enumerations);
+            'enumeration' => $enumerations,
+        );
     }
 
     /**
@@ -351,7 +354,7 @@ class XoopsObject
      * - prefixed CGI args are considered save
      * - avoids polluting of namespace with CGI args
      *
-     * @param array  $var_arr associative array of values to assign
+     * @param array|null $var_arr associative array of values to assign
      * @param string $pref    prefix (only keys starting with the prefix will be set)
      * @param bool   $not_gpc
      *
@@ -388,7 +391,7 @@ class XoopsObject
     /**
      * Returns the values of the specified variables
      *
-     * @param  mixed  $keys     An array containing the names of the keys to retrieve, or null to get all of them
+     * @param  array|null $keys     An array containing the names of the keys to retrieve, or null to get all of them
      * @param  string $format   Format to use (see getVar)
      * @param  int    $maxDepth Maximum level of recursion to use if some vars are objects themselves
      * @return array  associative array of key->value pairs
@@ -438,7 +441,7 @@ class XoopsObject
                 break;
             case XOBJ_DTYPE_UNICODE_TXTBOX:
             case XOBJ_DTYPE_TXTBOX:
-                switch (strtolower($format)) {
+                switch (strtolower((string)$format)) {
                     case 's':
                     case 'show':
                     case 'e':
@@ -459,7 +462,7 @@ class XoopsObject
                 break;
             case XOBJ_DTYPE_UNICODE_TXTAREA:
             case XOBJ_DTYPE_TXTAREA:
-                switch (strtolower($format)) {
+                switch (strtolower((string)$format)) {
                     case 's':
                     case 'show':
                         $html   = !empty($this->vars['dohtml']['value']) ? 1 : 0;
@@ -774,7 +777,7 @@ class XoopsObject
                             $this->setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
                             continue 2;
                         }
-                        if ($cleanv != '' && !preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $cleanv)) {
+                        if ($cleanv != '' && !preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i', $cleanv)) {
                             $this->setErrors('Invalid Email'); //_XOBJ_ERR_INVALID_EMAIL
                             continue 2;
                         }
@@ -787,7 +790,7 @@ class XoopsObject
                             $this->setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
                             continue 2;
                         }
-                        if ($cleanv != '' && !preg_match("/^http[s]*:\/\//i", $cleanv)) {
+                        if ($cleanv != '' && !preg_match('/^http[s]*:\/\//i', $cleanv)) {
                             $cleanv = XOOPS_PROT . $cleanv;
                         }
                         if (!$v['not_gpc']) {
@@ -848,7 +851,7 @@ class XoopsObject
                             $this->setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
                             continue 2;
                         }
-                        if ($cleanv != '' && !preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $cleanv)) {
+                        if ($cleanv != '' && !preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i', $cleanv)) {
                             $this->setErrors('Invalid Email');
                             continue 2;
                         }
@@ -862,7 +865,7 @@ class XoopsObject
                             $this->setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
                             continue 2;
                         }
-                        if ($cleanv != '' && !preg_match("/^http[s]*:\/\//i", $cleanv)) {
+                        if ($cleanv != '' && !preg_match('/^http[s]*:\/\//i', $cleanv)) {
                             $cleanv = XOOPS_PROT . $cleanv;
                         }
                         $cleanv = xoops_convert_encode($cleanv);
@@ -1119,11 +1122,11 @@ class XoopsObjectHandler
     /**
      * gets a value object
      *
-     * @param int $int_id
+     * @param int $id
      * @abstract
      * @return XoopsObject
      */
-    public function get($int_id)
+    public function get($id)
     {
     }
 
@@ -1176,15 +1179,20 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * The handlers hold methods for different purposes, which could be all put together inside of current class.
      * However, load codes only if they are necessary, thus they are now split out.
      *
-     * var array of objects
+     * @var array of objects
      *
      * @access private
      */
     /**
      * static protected
      */
-    public $handlers = array('read' => null, 'stats' => null, 'joint' => null, 'write' => null, 'sync' => null);
-
+    public $handlers = array(
+        'read'  => null,
+        'stats' => null,
+        'joint' => null,
+        'write' => null,
+        'sync'  => null,
+    );
     /**
      * Information about the class, the handler is managing
      *
@@ -1229,6 +1237,10 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      */
     public function __construct(XoopsDatabase $db = null, $table = '', $className = '', $keyName = '', $identifierName = '')
     {
+        $table          = (string)$table;
+        $className      = (string)$className;
+        $keyName        = (string)$keyName;
+        $identifierName = (string)$identifierName;
         $db    = XoopsDatabaseFactory::getDatabaseConnection();
         $table = $db->prefix($table);
         parent::__construct($db);
@@ -1264,8 +1276,8 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      *
      * @access   protected
      * @param string|\XoopsPersistableObjectHandler|null $handler
-     * @param mixed                                      $args
-     * @param string                                     $path path to class
+     * @param array|null  $args
+     * @param string|null $path path to class
      * @return XoopsPersistableObjectHandler object
      */
     public function setHandler($handler = null, $args = null, $path = null)
@@ -1325,7 +1337,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * @param  array  $args arguments
      * @return mixed
      */
-    public function __call($name, $args)
+    public function __call($name, array $args)
     {
         if (is_object($this->handler) && is_callable(array($this->handler, $name))) {
             return call_user_func_array(array($this->handler, $name), $args);
@@ -1365,8 +1377,8 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      *
      * @access protected
      * @param  mixed $id     ID
-     * @param  array $fields fields to fetch
-     * @return XoopsObject|null {@link XoopsObject}
+     * @param array|null $fields fields to fetch
+     * @return \XoopsObject|null {@link XoopsObject}
      */
     public function get($id = null, $fields = null)
     {
@@ -1436,7 +1448,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * delete all objects matching the conditions
      *
-     * @param  CriteriaElement $criteria {@link CriteriaElement} with conditions to meet
+     * @param \CriteriaElement|null $criteria {@link CriteriaElement} with conditions to meet
      * @param  bool            $force    force to delete
      * @param  bool            $asObject delete in object way: instantiate all objects and delete one by one
      * @return bool
@@ -1453,7 +1465,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      *
      * @param  string          $fieldname  Name of the field
      * @param  mixed           $fieldvalue Value to write
-     * @param  CriteriaElement $criteria   {@link CriteriaElement}
+     * @param \CriteriaElement|null $criteria   {@link CriteriaElement}
      * @param  bool            $force      force to query
      * @return bool
      */
@@ -1474,7 +1486,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * Retrieve objects from the database
      *
-     * @param  CriteriaElement $criteria  {@link CriteriaElement} conditions to be met
+     * @param \CriteriaElement|null $criteria  {@link CriteriaElement} conditions to be met
      * @param  bool            $id_as_key use the ID as key for the array
      * @param  bool            $as_object return an array of objects
      * @return array
@@ -1490,8 +1502,8 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * get all objects matching a condition
      *
-     * @param  CriteriaElement $criteria  {@link CriteriaElement} to match
-     * @param  array           $fields    variables to fetch
+     * @param \CriteriaElement|null $criteria  {@link CriteriaElement} to match
+     * @param array|null            $fields    variables to fetch
      * @param  bool            $asObject  flag indicating as object, otherwise as array
      * @param  bool            $id_as_key use the ID as key for the array
      * @return array           of objects/array {@link XoopsObject}
@@ -1507,7 +1519,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * Retrieve a list of objects data
      *
-     * @param  CriteriaElement $criteria {@link CriteriaElement} conditions to be met
+     * @param \CriteriaElement|null $criteria {@link CriteriaElement} conditions to be met
      * @param  int             $limit    Max number of objects to fetch
      * @param  int             $start    Which record to start at
      * @return array
@@ -1523,7 +1535,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * get IDs of objects matching a condition
      *
-     * @param  CriteriaElement $criteria {@link CriteriaElement} to match
+     * @param \CriteriaElement|null $criteria {@link CriteriaElement} to match
      * @return array           of object IDs
      */
     public function &getIds(CriteriaElement $criteria = null)
@@ -1541,8 +1553,8 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      *
      * @param  int             $limit    Max number of objects to fetch
      * @param  int             $start    Which record to start at
-     * @param  CriteriaElement $criteria {@link CriteriaElement} to match
-     * @param  array           $fields   variables to fetch
+     * @param \CriteriaElement|null $criteria {@link CriteriaElement} to match
+     * @param array|null            $fields   variables to fetch
      * @param  bool            $asObject flag indicating as object, otherwise as array
      * @return array           of objects     {@link XoopsObject}
      */
@@ -1564,7 +1576,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * count objects matching a condition
      *
-     * @param  CriteriaElement $criteria {@link CriteriaElement} to match
+     * @param \CriteriaElement|null $criteria {@link CriteriaElement} to match
      * @return int             count of objects
      */
     public function getCount(CriteriaElement $criteria = null)
@@ -1577,7 +1589,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * Get counts of objects matching a condition
      *
-     * @param  CriteriaElement $criteria {@link CriteriaElement} to match
+     * @param \CriteriaElement|null $criteria {@link CriteriaElement} to match
      * @return array           of counts
      */
     public function getCounts(CriteriaElement $criteria = null)
@@ -1597,11 +1609,11 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * get a list of objects matching a condition joint with another related object
      *
-     * @param  CriteriaElement $criteria     {@link CriteriaElement} to match
-     * @param  array           $fields       variables to fetch
+     * @param \CriteriaElement|null $criteria     {@link CriteriaElement} to match
+     * @param array|null            $fields       variables to fetch
      * @param  bool            $asObject     flag indicating as object, otherwise as array
-     * @param  string          $field_link   field of linked object for JOIN
-     * @param  string          $field_object field of current object for JOIN
+     * @param string|null           $field_link   field of linked object for JOIN
+     * @param string|null           $field_object field of current object for JOIN
      * @return array           of objects {@link XoopsObject}
      */
     public function &getByLink(CriteriaElement $criteria = null, $fields = null, $asObject = true, $field_link = null, $field_object = null)
@@ -1615,7 +1627,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * Count of objects matching a condition
      *
-     * @param  CriteriaElement $criteria {@link CriteriaElement} to match
+     * @param \CriteriaElement|null $criteria {@link CriteriaElement} to match
      * @return int             count of objects
      */
     public function getCountByLink(CriteriaElement $criteria = null)
@@ -1629,7 +1641,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * array of count of objects matching a condition of, groupby linked object keyname
      *
-     * @param  CriteriaElement $criteria {@link CriteriaElement} to match
+     * @param \CriteriaElement|null $criteria {@link CriteriaElement} to match
      * @return int             count of objects
      */
     public function getCountsByLink(CriteriaElement $criteria = null)
@@ -1644,7 +1656,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
      * update objects matching a condition against linked objects
      *
      * @param  array           $data     array of key => value
-     * @param  CriteriaElement $criteria {@link CriteriaElement} to match
+     * @param \CriteriaElement|null $criteria {@link CriteriaElement} to match
      * @return int             count of objects
      */
     public function updateByLink($data, CriteriaElement $criteria = null)
@@ -1658,7 +1670,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * Delete objects matching a condition against linked objects
      *
-     * @param  CriteriaElement $criteria {@link CriteriaElement} to match
+     * @param \CriteriaElement|null $criteria {@link CriteriaElement} to match
      * @return int             count of objects
      */
     public function deleteByLink(CriteriaElement $criteria = null)
@@ -1705,6 +1717,9 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
     }
     /**
      * *#@-
+     * @param bool $id_as_key
+     * @param bool $as_object
+     * @return bool
      */
 
     /**#@+

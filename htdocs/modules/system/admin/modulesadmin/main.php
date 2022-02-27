@@ -16,6 +16,7 @@
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
+
 use Xmf\Request;
 
 // Check users rights
@@ -36,7 +37,13 @@ if (isset($_POST)) {
 // Get Action type
 $op = Request::getString('op', 'list');
 
-if (in_array($op, array('confirm', 'submit', 'install_ok', 'update_ok', 'uninstall_ok'))) {
+if (in_array($op, array(
+    'confirm',
+    'submit',
+    'install_ok',
+    'update_ok',
+    'uninstall_ok',
+))) {
     if (!$GLOBALS['xoopsSecurity']->check()) {
         $op = 'list';
     }
@@ -353,7 +360,11 @@ switch ($op) {
         $xoBreadCrumb->addHelp(system_adminVersion('modulesadmin', 'help') . '#install');
         $xoBreadCrumb->render();
         // Display question message
-        xoops_confirm(array('module' => $module, 'op' => 'install_ok', 'fct' => 'modulesadmin'), 'admin.php', $msgs, _AM_SYSTEM_MODULES_INSTALL);
+        xoops_confirm(array(
+                          'module' => $module,
+                          'op'     => 'install_ok',
+                          'fct'    => 'modulesadmin',
+                      ), 'admin.php', $msgs, _AM_SYSTEM_MODULES_INSTALL);
         // Call Footer
         xoops_cp_footer();
         break;
@@ -411,7 +422,11 @@ switch ($op) {
         $xoBreadCrumb->addHelp(system_adminVersion('modulesadmin', 'help') . '#delete');
         $xoBreadCrumb->render();
         // Display Question
-        xoops_confirm(array('module' => $module, 'op' => 'uninstall_ok', 'fct' => 'modulesadmin'), 'admin.php', $msgs, _AM_SYSTEM_MODULES_UNINSTALL);
+        xoops_confirm(array(
+                          'module' => $module,
+                          'op'     => 'uninstall_ok',
+                          'fct'    => 'modulesadmin',
+                      ), 'admin.php', $msgs, _AM_SYSTEM_MODULES_UNINSTALL);
         // Call Footer
         xoops_cp_footer();
         break;
@@ -470,7 +485,11 @@ switch ($op) {
         $xoBreadCrumb->addHelp(system_adminVersion('modulesadmin', 'help') . '#update');
         $xoBreadCrumb->render();
         // Display message
-        xoops_confirm(array('module' => $module, 'op' => 'update_ok', 'fct' => 'modulesadmin'), 'admin.php', $msgs, _AM_SYSTEM_MODULES_UPDATE);
+        xoops_confirm(array(
+                          'module' => $module,
+                          'op'     => 'update_ok',
+                          'fct'    => 'modulesadmin',
+                      ), 'admin.php', $msgs, _AM_SYSTEM_MODULES_UPDATE);
         // Call Footer
         xoops_cp_footer();
         break;

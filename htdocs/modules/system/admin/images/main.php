@@ -17,6 +17,7 @@
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
 /* @var XoopsUser $xoopsUser */
+
 /* @var XoopsModule $xoopsModule */
 
 use Xmf\Request;
@@ -144,7 +145,10 @@ switch ($op) {
             $form->addElement(new XoopsFormRadioYN(_AM_SYSTEM_IMAGES_IMGCATDISPLAY, 'imgcat_display', 1, _YES, _NO));
 
             $storetype = new XoopsFormRadio(_MD_IMGCATSTRTYPE . '<br><span style="color:#ff0000;">' . _MD_STRTYOPENG . '</span>', 'imgcat_storetype', 'file');
-            $storetype->addOptionArray(array('file' => _MD_ASFILE, 'db' => _MD_INDB));
+            $storetype->addOptionArray(array(
+                                           'file' => _MD_ASFILE,
+                                           'db'   => _MD_INDB,
+                                       ));
             $form->addElement($storetype);
 
             //$form->addElement(new XoopsFormHidden('imgcat_storetype', 'file'));
@@ -357,7 +361,11 @@ switch ($op) {
             }
             $msg .= '<div class="spacer">' . $image->getVar('image_nicename') . '</div>';
             $msg .= '<div class="spacer">' . _AM_SYSTEM_IMAGES_RUDELIMG . '</div>';
-            xoops_confirm(array('op' => 'delfileok', 'image_id' => $image_id, 'fct' => 'images'), 'admin.php', $msg, _DELETE);
+            xoops_confirm(   array(
+                              'op'       => 'delfileok',
+                              'image_id' => $image_id,
+                              'fct'      => 'images',
+                          ), 'admin.php', $msg, _DELETE);
         } else {
             redirect_header('admin.php?fct=images', 1, _AM_SYSTEM_DBERROR);
         }
@@ -436,7 +444,8 @@ switch ($op) {
             'image/pjpeg',
             'image/x-png',
             'image/png',
-            'image/bmp'), $imagecategory->getVar('imgcat_maxsize'), $imagecategory->getVar('imgcat_maxwidth'), $imagecategory->getVar('imgcat_maxheight'));
+            'image/bmp',
+        ),               $imagecategory->getVar('imgcat_maxsize'), $imagecategory->getVar('imgcat_maxwidth'), $imagecategory->getVar('imgcat_maxheight'));
         $uploader->setPrefix('img');
         $err    = array();
         $ucount = count($_POST['xoops_upload_file']);
@@ -556,7 +565,10 @@ switch ($op) {
         $form->addElement(new XoopsFormText(_IMGMAXHEIGHT, 'imgcat_maxheight', 3, 4, $imagecategory->getVar('imgcat_maxheight')));
         $form->addElement(new XoopsFormText(_AM_SYSTEM_IMAGES_IMGCATWEIGHT, 'imgcat_weight', 3, 4, $imagecategory->getVar('imgcat_weight')));
         $form->addElement(new XoopsFormRadioYN(_AM_SYSTEM_IMAGES_IMGCATDISPLAY, 'imgcat_display', $imagecategory->getVar('imgcat_display'), _YES, _NO));
-        $storetype = array('db' => _AM_SYSTEM_IMAGES_INDB, 'file' => _AM_SYSTEM_IMAGES_ASFILE);
+        $storetype = array(
+            'db'   => _AM_SYSTEM_IMAGES_INDB,
+            'file' => _AM_SYSTEM_IMAGES_ASFILE,
+        );
         $form->addElement(new XoopsFormLabel(_AM_SYSTEM_IMAGES_IMGCATSTRTYPE, $storetype[$imagecategory->getVar('imgcat_storetype')]));
         $form->addElement(new XoopsFormHidden('imgcat_id', $imgcat_id));
         $form->addElement(new XoopsFormHidden('op', 'updatecat'));
@@ -647,7 +659,11 @@ switch ($op) {
         // Call Header
         xoops_cp_header();
         // Display message
-        xoops_confirm(array('op' => 'delcatok', 'imgcat_id' => $imgcat_id, 'fct' => 'images'), 'admin.php', _AM_SYSTEM_IMAGES_RUDELIMGCAT);
+        xoops_confirm(   array(
+                          'op'        => 'delcatok',
+                          'imgcat_id' => $imgcat_id,
+                          'fct'       => 'images',
+                      ), 'admin.php', _AM_SYSTEM_IMAGES_RUDELIMGCAT);
         // Call Footer
         xoops_cp_footer();
         break;
@@ -749,8 +765,7 @@ switch ($op) {
         $xoopsTpl->assign('jwt', $jwt);
         $fineup_debug = 'false';
         if (($xoopsUser instanceof \XoopsUser ? $xoopsUser->isAdmin() : false)
-            && isset($_REQUEST['FINEUPLOADER_DEBUG']))
-        {
+            && isset($_REQUEST['FINEUPLOADER_DEBUG'])) {
             $fineup_debug = 'true';
         }
         $xoopsTpl->assign('fineup_debug', $fineup_debug);

@@ -45,8 +45,9 @@ class XoopsBlockInstance
      * @param  array  $args
      * @return null
      */
-    public function __call($name, $args)
+    public function __call($name, array $args)
     {
+        $name = (string)$name;
         trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the method '{$name}' is not executed") . '!', E_USER_WARNING);
 
         return null;
@@ -59,8 +60,9 @@ class XoopsBlockInstance
      * @param  array  $args
      * @return null
      */
-    public function __set($name, $args)
+    public function __set($name, array $args)
     {
+        $name = (string)$name;
         trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the variable '{$name}' is not set") . '!', E_USER_WARNING);
 
         return null;
@@ -74,6 +76,7 @@ class XoopsBlockInstance
      */
     public function __get($name)
     {
+        $name = (string)$name;
         trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the variable '{$name}' is not vailable") . '!', E_USER_WARNING);
 
         return null;
@@ -108,8 +111,9 @@ class XoopsBlockInstanceHandler
      * @param  array  $args
      * @return null
      */
-    public function __call($name, $args)
+    public function __call($name, array $args)
     {
+        $name = (string)$name;
         trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the method '{$name}' is not executed") . '!', E_USER_WARNING);
 
         return null;
@@ -122,8 +126,9 @@ class XoopsBlockInstanceHandler
      * @param  array  $args
      * @return null
      */
-    public function __set($name, $args)
+    public function __set($name, array $args)
     {
+        $name = (string)$name;
         trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the variable '{$name}' is not set") . '!', E_USER_WARNING);
 
         return false;
@@ -137,6 +142,7 @@ class XoopsBlockInstanceHandler
      */
     public function __get($name)
     {
+        $name = (string)$name;
         trigger_error("Class '" . __CLASS__ . "' is deprecated" . (empty($name) ? '' : " thus the variable '{$name}' is not available") . '!', E_USER_WARNING);
 
         return null;

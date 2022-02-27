@@ -120,7 +120,10 @@ if ($op === 'delete') {
         $ok = Request::getInt('ok', 0, 'POST');
         if ($ok != 1) {
             include $GLOBALS['xoops']->path('header.php');
-            xoops_confirm(array('op' => 'delete', 'ok' => 1), 'user.php', _US_SURETODEL . '<br>' . _US_REMOVEINFO);
+            xoops_confirm(array(
+                              'op' => 'delete',
+                              'ok' => 1,
+                          ), 'user.php', _US_SURETODEL . '<br>' . _US_REMOVEINFO);
             include $GLOBALS['xoops']->path('footer.php');
         } else {
             $del_uid        = $GLOBALS['xoopsUser']->getVar('uid');

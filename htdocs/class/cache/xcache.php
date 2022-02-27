@@ -69,13 +69,16 @@ class XoopsCacheXcache extends XoopsCacheEngine
      * To reinitialize the settings call Cache::engine('EngineName', [optional] settings = array());
      *
      * @param  array $settings array of setting for the engine
-     * @return boolean True if the engine has been successfully initialized, false if not
+     * @return bool True if the engine has been successfully initialized, false if not
      * @access   public
      */
     public function init($settings = array())
     {
         parent::init($settings);
-        $defaults       = array('PHP_AUTH_USER' => 'cake', 'PHP_AUTH_PW' => 'cake');
+        $defaults       = array(
+            'PHP_AUTH_USER' => 'cake',
+            'PHP_AUTH_PW'   => 'cake',
+        );
         $this->settings = array_merge($defaults, $this->settings);
 
         return function_exists('xcache_info');
@@ -86,8 +89,8 @@ class XoopsCacheXcache extends XoopsCacheEngine
      *
      * @param  string  $key      Identifier for the data
      * @param  mixed   $value    Data to be cached
-     * @param  integer $duration How long to cache the data, in seconds
-     * @return boolean True if the data was successfully cached, false on failure
+     * @param int $duration How long to cache the data, in seconds
+     * @return bool True if the data was successfully cached, false on failure
      * @access public
      */
     public function write($key, $value, $duration = null)
@@ -115,7 +118,7 @@ class XoopsCacheXcache extends XoopsCacheEngine
      * Delete a key from the cache
      *
      * @param  string $key Identifier for the data
-     * @return boolean True if the value was successfully deleted, false if it didn't exist or couldn't be removed
+     * @return bool True if the value was successfully deleted, false if it didn't exist or couldn't be removed
      * @access public
      */
     public function delete($key)
@@ -126,7 +129,8 @@ class XoopsCacheXcache extends XoopsCacheEngine
     /**
      * Delete all keys from the cache
      *
-     * @return boolean True if the cache was successfully cleared, false otherwise
+     * @param bool|null $check
+     * @return bool True if the cache was successfully cleared, false otherwise
      * @access public
      */
     public function clear($check = null)
@@ -157,7 +161,10 @@ class XoopsCacheXcache extends XoopsCacheEngine
     private function __auth($reverse = false)
     {
         static $backup = array();
-        $keys = array('PHP_AUTH_USER', 'PHP_AUTH_PW');
+        $keys = array(
+            'PHP_AUTH_USER',
+            'PHP_AUTH_PW',
+        );
         foreach ($keys as $key) {
             if ($reverse) {
                 if (isset($backup[$key])) {

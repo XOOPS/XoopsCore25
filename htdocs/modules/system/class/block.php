@@ -13,6 +13,7 @@
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             system
  */
+
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 require_once XOOPS_ROOT_PATH . '/kernel/block.php';
@@ -311,18 +312,18 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
     }
 
     /**
-     * @param XoopsObject|SystemBlock $obj
+     * @param XoopsObject|SystemBlock $object
      *
      * @return int|bool object id on success, otherwise false
      */
-    public function insert(XoopsObject $obj, $force = true)
+    public function insert(XoopsObject $object, $force = true)
     {
-        if (!($obj instanceof $this->className)) {
+        if (!($object instanceof $this->className)) {
             return false;
         }
-        $obj->setVar('last_modified', time());
+        $object->setVar('last_modified', time());
 
-        return parent::insert($obj, $force);
+        return parent::insert($object, $force);
     }
 
     /**

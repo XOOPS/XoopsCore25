@@ -39,10 +39,13 @@ class XoopsFormTextDateSelect extends XoopsFormText
 
     /**
      * {@inheritDoc}
+     * @return string
      * @see XoopsFormText::render()
      */
     public function render()
     {
-        return XoopsFormRenderer::getInstance()->get()->renderFormTextDateSelect($this);
+        return XoopsFormRenderer::getInstance()
+                                ->get()
+                                ->renderFormTextDateSelect($this);
     }
 }

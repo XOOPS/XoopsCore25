@@ -27,9 +27,21 @@ class SystemMenuHandler
      * @var string
      */
     public $_menutop  = array();
+    /**
+     * @var array
+     */
     public $_menutabs = array();
+    /**
+     * @var \XoopsModule
+     */
     public $_obj;
+    /**
+     * @var string
+     */
     public $_header;
+    /**
+     * @var string
+     */
     public $_subheader;
 
     /**
@@ -42,7 +54,7 @@ class SystemMenuHandler
     }
 
     /**
-     * @param $addon
+     * @param $addon //mb TODO XoopsModule??? , but it's not used anywhere
      */
     public function getAddon($addon)
     {
@@ -63,7 +75,7 @@ class SystemMenuHandler
     }
 
     /**
-     * @param      $options
+     * @param array $options //mb TODO - should it be also null?
      * @param bool $multi
      */
     public function addMenuTopArray($options, $multi = true)
@@ -82,7 +94,7 @@ class SystemMenuHandler
     }
 
     /**
-     * @param        $value
+     * @param string $value
      * @param string $name
      */
     public function addMenuTabs($value, $name = '')
@@ -95,7 +107,7 @@ class SystemMenuHandler
     }
 
     /**
-     * @param      $options
+     * @param array $options
      * @param bool $multi
      */
     public function addMenuTabsArray($options, $multi = true)
@@ -114,7 +126,7 @@ class SystemMenuHandler
     }
 
     /**
-     * @param $value
+     * @param string $value
      */
     public function addHeader($value)
     {
@@ -122,7 +134,7 @@ class SystemMenuHandler
     }
 
     /**
-     * @param $value
+     * @param string $value
      */
     public function addSubHeader($value)
     {
@@ -161,7 +173,7 @@ class SystemMenuHandler
      * @param int  $currentoption
      * @param bool $display
      *
-     * @return string
+     * @return string|null
      */
     public function render($currentoption = 1, $display = true)
     {

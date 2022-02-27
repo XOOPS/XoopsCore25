@@ -25,7 +25,7 @@ setlocale(LC_ALL, 'en_US');
 
 // !!IMPORTANT!! insert '\' before any char among reserved chars: "a","A","B","c","d","D","e","F","g","G","h","H","i","I","j","l","L","m","M","n","O","r","s","S","t","T","U","w","W","Y","y","z","Z"
 // insert double '\' before 't','r','n'
-define('_TODAY', "\T\o\d\a\y G:i");
+define('_TODAY', '\T\o\d\a\y G:i');
 define('_YESTERDAY', "\Y\\e\s\\t\\e\\r\d\a\y G:i");
 define('_MONTHDAY', 'n/j G:i');
 define('_YEARMONTHDAY', 'Y/n/j G:i');
@@ -50,12 +50,12 @@ class XoopsLocal extends XoopsLocalAbstract
     /**
      * Number Formats
      *
-     * @param  unknown_type $number
+     * @param mixed $number
      * @return mixed
      */
     public function number_format($number)
     {
-        return number_format($number, 2, '.', ',');
+        return number_format((float)$number, 2, '.', ',');
     }
 
     /**
@@ -63,7 +63,7 @@ class XoopsLocal extends XoopsLocalAbstract
      *
      * @param  string $format
      * @param  string $number
-     * @return money  format
+     * @return string|null  format
      */
     public function money_format($format, $number)
     {

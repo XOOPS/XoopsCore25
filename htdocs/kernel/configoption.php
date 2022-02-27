@@ -125,12 +125,12 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
      *
      * @param int $id ID of the option
      *
-     * @return XoopsConfigOption|false reference to the {@link XoopsConfigOption}, FALSE on fail
+     * @return false|\XoopsConfigOption reference to the {@link XoopsConfigOption}, FALSE on fail
      */
     public function get($id)
     {
         $confoption = false;
-        $id         = (int)$id;
+        $id     = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('configoption') . ' WHERE confop_id=' . $id;
             if (!$result = $this->db->query($sql)) {
@@ -138,7 +138,7 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
             }
             $numrows = $this->db->getRowsNum($result);
             if ($numrows == 1) {
-                $confoption = new XoopsConfigOption();
+                $confoption = new \XoopsConfigOption();
                 $confoption->assignVars($this->db->fetchArray($result));
             }
         }

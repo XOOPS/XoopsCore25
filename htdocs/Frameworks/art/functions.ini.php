@@ -30,6 +30,8 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_INI')):
      */
     function load_objectHandler($handler = '', $dirname = 'art')
     {
+        $handler = (string)$handler;
+        $dirname = (string)$dirname;
         if (empty($handler)) {
             $handlerClass = 'ArtObject';
             $fileName     = 'object.php';
@@ -60,6 +62,8 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_INI')):
      */
     function load_functions($group = '', $dirname = 'art')
     {
+        $group    = (string)$group;
+        $dirname  = (string)$dirname;
         $dirname  = ('' == $dirname) ? 'art' : $dirname;
         $constant = strtoupper("frameworks_{$dirname}_functions" . ($group ? "_{$group}" : ''));
         if (defined($constant)) {
@@ -83,6 +87,8 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_INI')):
      */
     function mod_loadFunctions($group = '', $dirname = '')
     {
+        $group    = (string)$group;
+        $dirname  = (string)$dirname;
         $dirname  = !empty($dirname) ? $dirname : $GLOBALS['xoopsModule']->getVar('dirname', 'n');
         $constant = strtoupper("{$dirname}_functions" . ($group ? "_{$group}" : '') . '_loaded');
         if (defined($constant)) {
@@ -105,6 +111,8 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_INI')):
      */
     function mod_loadRenderer($class, $dirname = '')
     {
+        $class    = (string)$class;
+        $dirname  = (string)$dirname;
         $dirname  = !empty($dirname) ? $dirname : $GLOBALS['xoopsModule']->getVar('dirname', 'n');
         $renderer = ucfirst($dirname) . ucfirst($class) . 'Renderer';
         if (!class_exists($renderer)) {
@@ -122,7 +130,7 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_INI')):
      */
     if (!function_exists('mod_constant')) {
         /**
-         * @param $name
+         * @param string $name
          *
          * @return mixed
          */
@@ -144,17 +152,18 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_INI')):
      * Get completed DB prefix if it is defined
      *
      * @param string  $name  string to be completed
-     * @param boolean $isRel relative - do not add XOOPS->DB prefix
+     * @param bool $isRel relative - do not add XOOPS->DB prefix
      */
     if (!function_exists('mod_DB_prefix')) {
         /**
-         * @param      $name
+         * @param string $name
          * @param bool $isRel
          *
          * @return string
          */
         function mod_DB_prefix($name, $isRel = false)
         {
+            $isRel         = (bool)$isRel;
             $relative_name = $GLOBALS['MOD_DB_PREFIX'] . '_' . $name;
             if ($isRel) {
                 return $relative_name;
@@ -171,8 +180,9 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_INI')):
      */
     if (!function_exists('xoops_message')):
         /**
-         * @param     $message
+         * @param string|array|object    $message
          * @param int $userlevel
+         * @return null|void
          */
         function xoops_message($message, $userlevel = 0)
         {
@@ -200,7 +210,7 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_INI')):
         }
     endif;
     /**
-     * @param $message
+     * @param string|array|object $message
      *
      * @return bool
      */
@@ -228,10 +238,11 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_INI')):
      */
     function mod_getDirname($current_path = null)
     {
+        $current_path = (string)$current_path;
         if (DIRECTORY_SEPARATOR !== '/') {
             $current_path = str_replace(strpos($current_path, '\\\\', 2) ? '\\\\' : DIRECTORY_SEPARATOR, '/', $current_path);
         }
-        $url_arr = explode('/', strstr($current_path, '/modules/'));
+        $url_arr = explode('/', strstr((string)$current_path, '/modules/'));
 
         return $url_arr[2];
     }
@@ -247,6 +258,7 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_INI')):
      */
     function mod_isModuleAction($dirname = 'system')
     {
+        $dirname = (string)$dirname;
         $ret = @(// action module "system"
             !empty($GLOBALS['xoopsModule']) && 'system' === $GLOBALS['xoopsModule']->getVar('dirname', 'n') && // current dirname
             ($dirname == $_POST['dirname'] || $dirname == $_POST['module']) && // current op

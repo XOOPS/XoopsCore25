@@ -34,7 +34,13 @@ if (!xoops_getModuleOption('active_userrank', 'system')) {
 
 // Parameters
 $nb_rank     = xoops_getModuleOption('userranks_pager', 'system');
-$mimetypes   = array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png');
+$mimetypes   = array(
+    'image/gif',
+    'image/jpeg',
+    'image/pjpeg',
+    'image/x-png',
+    'image/png',
+);
 $upload_size = 500000;
 // Get Action type
 $op = Request::getString('op', 'list');

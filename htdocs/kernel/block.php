@@ -383,7 +383,8 @@ class XoopsBlock extends XoopsObject
     {
         return in_array($this->getVar('block_type'), array(
             'C',
-            'E'));
+            'E',
+        ));
     }
 
     /**
@@ -504,7 +505,7 @@ class XoopsBlock extends XoopsObject
      * @param string $content
      * @param string $contentdb
      *
-     * @return string
+     * @return string|null
      *
      * @deprecated
      */
@@ -555,6 +556,7 @@ class XoopsBlock extends XoopsObject
      * @param int         $isactive
      * @returns array of block objects
      *
+     * @return array
      * @deprecated
      */
     public static function getAllBlocksByGroup($groupid, $asobject = true, $side = null, $visible = null, $orderby = 'b.weight,b.bid', $isactive = 1)
@@ -619,7 +621,7 @@ class XoopsBlock extends XoopsObject
      * @param  mixed   $side
      * @param  mixed   $visible
      * @param  string  $orderby
-     * @param  integer $isactive
+     * @param int $isactive
      * @return array
      *
      * @deprecated
@@ -710,12 +712,12 @@ class XoopsBlock extends XoopsObject
     /**
      * XoopsBlock::getAllByGroupModule()
      *
-     * @param int|int[] $groupid
-     * @param integer   $module_id
+     * @param mixed   $groupid
+     * @param int   $module_id
      * @param mixed     $toponlyblock
      * @param mixed     $visible
      * @param string    $orderby
-     * @param integer   $isactive
+     * @param int   $isactive
      * @return array
      *
      * @deprecated (This also appears, dead, in XoopsBlockHandler)
@@ -779,11 +781,11 @@ class XoopsBlock extends XoopsObject
     /**
      * XoopsBlock::getNonGroupedBlocks()
      *
-     * @param  integer $module_id
+     * @param int $module_id
      * @param  mixed   $toponlyblock
      * @param  mixed   $visible
      * @param  string  $orderby
-     * @param  integer $isactive
+     * @param int $isactive
      * @return array
      *
      * @deprecated
@@ -892,10 +894,10 @@ class XoopsBlockHandler extends XoopsObjectHandler
     /**
      * create a new block
      *
-     * @see XoopsBlock
+     * @see \XoopsBlock
      * @param  bool $isNew is the new block new??
-     * @return XoopsBlock XoopsBlock reference to the new block
-     **/
+     * @return \XoopsBlock XoopsBlock reference to the new block
+     */
     public function create($isNew = true)
     {
         $block = new XoopsBlock();
@@ -909,14 +911,14 @@ class XoopsBlockHandler extends XoopsObjectHandler
     /**
      * retrieve a specific {@link XoopsBlock}
      *
-     * @see XoopsBlock
-     * @param  int $id bid of the block to retrieve
+     * @param int $id bid of the block to retrieve
      * @return XoopsBlock reference to the block
-     **/
+     *                    *@see XoopsBlock
+     */
     public function get($id)
     {
         $block = false;
-        $id    = (int)$id;
+        $id = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('newblocks') . ' WHERE bid=' . $id;
             if ($result = $this->db->query($sql)) {
@@ -1098,7 +1100,7 @@ class XoopsBlockHandler extends XoopsObjectHandler
     /**
      * get a list of blocks matchich certain conditions
      *
-     * @param  CriteriaElement $criteria conditions to match
+     * @param \CriteriaElement|null $criteria conditions to match
      * @return array  array of blocks matching the conditions
      **/
     public function getList(CriteriaElement $criteria = null)

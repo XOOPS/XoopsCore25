@@ -27,7 +27,7 @@ class Language
      * Attempt a translation of a simple string
      *
      * @param string $string string to translate
-     * @param string $domain language domain
+     * @param string|null $domain language domain
      *
      * @return string translated string
      *
@@ -43,7 +43,7 @@ class Language
      *
      * @param string $name     name of the language file
      * @param string $domain   domain or module supplying language file
-     * @param string $language language folder name
+     * @param string|null $language language folder name
      *
      * @return bool true if loaded, otherwise false
      */

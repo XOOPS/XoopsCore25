@@ -315,6 +315,7 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
         if (false !== ($fp = fopen($file, 'r'))) {
             include_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
             $sql_queries = trim(fread($fp, filesize($file)));
+            $pieces      = array();
             SqlUtility::splitMySqlFile($pieces, $sql_queries);
             foreach ($pieces as $query) {
                 // [0] contains the prefixed query

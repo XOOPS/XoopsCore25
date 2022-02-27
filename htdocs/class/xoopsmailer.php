@@ -48,54 +48,105 @@ class XoopsMailer
     public $multimailer;
     // sender email address
     // private
+    /**
+     * @var string
+     */
     public $fromEmail;
     // sender name
     // private
+    /**
+     * @var string
+     */
     public $fromName;
     // RMV-NOTIFY
     // sender UID
     // private
+    /**
+     * @var string
+     */
     public $fromUser;
     // array of user class objects
     // private
+    /**
+     * @var array
+     */
     public $toUsers;
     // array of email addresses
     // private
+    /**
+     * @var array
+     */
     public $toEmails;
     // custom headers
     // private
+    /**
+     * @var array
+     */
     public $headers;
     // subject of mail
     // private
+    /**
+     * @var string
+     */
     public $subject;
     // body of mail
     // private
+    /**
+     * @var string
+     */
     public $body;
     // error messages
     // private
+    /**
+     * @var array
+     */
     public $errors;
     // messages upon success
     // private
+    /**
+     * @var array
+     */
     public $success;
     // private
+    /**
+     * @var bool
+     */
     public $isMail;
     // private
+    /**
+     * @var bool
+     */
     public $isPM;
     // private
+    /**
+     * @var array
+     */
     public $assignedTags;
     // private
+    /**
+     * @var string
+     */
     public $template;
     // private
+    /**
+     * @var string
+     */
     public $templatedir;
     // protected
+    /**
+     * @var string
+     */
     public $charSet = 'iso-8859-1';
     // protected
+    /**
+     * @var string
+     */
     public $encoding = '8bit';
 
     /**
      * Constructor
      *
-     * @return XoopsMailer
+     * @return void
      */
     public function __construct()
     {
@@ -148,6 +199,7 @@ class XoopsMailer
     }
 
     // public
+
     /**
      * @param string|null $value
      */
@@ -162,6 +214,7 @@ class XoopsMailer
     }
 
     // private
+
     /**
      * @return bool|string
      */
@@ -186,6 +239,7 @@ class XoopsMailer
     }
 
     // public
+
     /**
      * @param $value
      */
@@ -195,6 +249,7 @@ class XoopsMailer
     }
 
     // pupblic
+
     /**
      * @param $value
      */
@@ -204,6 +259,7 @@ class XoopsMailer
     }
 
     // public
+
     /**
      * @param $value
      */
@@ -225,6 +281,7 @@ class XoopsMailer
     }
 
     // public
+
     /**
      * @param $value
      */
@@ -234,6 +291,7 @@ class XoopsMailer
     }
 
     // public
+
     /**
      * @param $value
      */
@@ -243,6 +301,7 @@ class XoopsMailer
     }
 
     // public
+
     /**
      * @param $value
      */
@@ -264,6 +323,7 @@ class XoopsMailer
     }
 
     // public
+
     /**
      * @param bool $debug
      *
@@ -378,6 +438,7 @@ class XoopsMailer
     }
 
     // private
+
     /**
      * @param $uid
      * @param $subject
@@ -445,6 +506,7 @@ class XoopsMailer
     }
 
     // public
+
     /**
      * @param bool $ashtml
      *
@@ -469,6 +531,7 @@ class XoopsMailer
     }
 
     // public
+
     /**
      * @param bool $ashtml
      *
@@ -491,6 +554,7 @@ class XoopsMailer
     }
 
     // public
+
     /**
      * @param array|string $tag
      * @param mixed        $value
@@ -514,6 +578,7 @@ class XoopsMailer
     }
 
     // public
+
     /**
      * @param $value
      */
@@ -523,13 +588,14 @@ class XoopsMailer
     }
 
     // public
+
     /**
      * @param $email
      */
     public function setToEmails($email)
     {
         if (!is_array($email)) {
-            if (preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $email)) {
+            if (preg_match('/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i', $email)) {
                 array_push($this->toEmails, $email);
             }
         } else {
@@ -540,6 +606,7 @@ class XoopsMailer
     }
 
     // public
+
     /**
      * @param $user
      */
@@ -557,6 +624,7 @@ class XoopsMailer
     }
 
     // public
+
     /**
      * @param $group
      */

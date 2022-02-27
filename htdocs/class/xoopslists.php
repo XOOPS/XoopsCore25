@@ -68,13 +68,15 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
                 '9.5'  => _TZ_GMTP95,
                 '10'   => _TZ_GMTP10,
                 '11'   => _TZ_GMTP11,
-                '12'   => _TZ_GMTP12);
+                '12'   => _TZ_GMTP12,
+            );
 
             return $time_zone_list;
         }
 
         /**
          * gets list of themes folder from themes directory
+         * @return array
          */
         public static function getThemesList()
         {
@@ -83,6 +85,7 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
 
         /**
          * gets a list of module folders from the modules directory
+         * @return array
          */
         public static function getModulesList()
         {
@@ -91,6 +94,7 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
 
         /**
          * gets list of editors folder from xoopseditor directory
+         * @return array
          */
         public static function getEditorList()
         {
@@ -106,7 +110,8 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
         {
             $ignored = array(
                 'cvs',
-                '_darcs');
+                '_darcs',
+            );
             $list    = array();
             if (substr($dirname, -1) !== '/') {
                 $dirname .= '/';
@@ -162,7 +167,7 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
          * @param string[] $extensions list of extensions to select
          * @param string   $prefix     prefix sny matching files returned with this string
          *
-         * @return string[]
+         * @return array
          */
         public static function getFileListByExtension($dirname, $extensions, $prefix = '')
         {
@@ -198,11 +203,16 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
          * @param string $dirname file system directory to process
          * @param string $prefix  prefix sny matching files returned with this string
          *
-         * @return string[]
+         * @return array
          */
         public static function getImgListAsArray($dirname, $prefix = '')
         {
-            $extensions = array('gif','jpeg','jpg','png');
+            $extensions = array(
+                'gif',
+                'jpeg',
+                'jpg',
+                'png',
+            );
             return static::getFileListByExtension($dirname, $extensions, $prefix);
         }
 
@@ -287,6 +297,7 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
 
         /**
          * gets list of language folders inside default language directory
+         * @return array
          */
         public static function getLangList()
         {
@@ -632,7 +643,8 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
                 'tt'         => '&lt;tt&gt;',
                 'u'          => '&lt;u&gt;',
                 'ul'         => '&lt;ul&gt;',
-                'var'        => '&lt;var&gt;');
+                'var'        => '&lt;var&gt;',
+            );
             asort($html_list);
             reset($html_list);
 

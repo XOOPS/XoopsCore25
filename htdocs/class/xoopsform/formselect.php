@@ -199,7 +199,9 @@ class XoopsFormSelect extends XoopsFormElement
      */
     public function render()
     {
-        return XoopsFormRenderer::getInstance()->get()->renderFormSelect($this);
+        return XoopsFormRenderer::getInstance()
+                                ->get()
+                                ->renderFormSelect($this);
     }
 
     /**

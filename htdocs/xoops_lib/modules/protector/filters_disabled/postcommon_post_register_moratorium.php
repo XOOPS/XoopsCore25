@@ -8,7 +8,7 @@ define('PROTECTOR_POSTCOMMON_POST_REGISTER_MORATORIUM', 60); // minutes
 class Protector_postcommon_post_register_moratorium extends ProtectorFilterAbstract
 {
     /**
-     * @return bool
+     * @return bool|null
      */
     public function execute()
     {

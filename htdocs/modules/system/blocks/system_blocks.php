@@ -38,7 +38,8 @@ function b_system_online_show()
         $uid   = 0;
         $uname = '';
     }
-    $requestIp = \Xmf\IPAddress::fromRequest()->asReadable();
+    $requestIp = \Xmf\IPAddress::fromRequest()
+                               ->asReadable();
     $requestIp = (false === $requestIp) ? '0.0.0.0' : $requestIp;
     if (is_object($xoopsModule)) {
         $online_handler->write($uid, $uname, time(), $xoopsModule->getVar('mid'), $requestIp);
@@ -139,7 +140,8 @@ function b_system_main_show()
                 foreach ($sublinks as $sublink) {
                     $block['modules'][$i]['sublinks'][] = array(
                         'name' => $sublink['name'],
-                        'url'  => XOOPS_URL . '/modules/' . $modules[$i]->getVar('dirname') . '/' . $sublink['url']);
+                        'url'  => XOOPS_URL . '/modules/' . $modules[$i]->getVar('dirname') . '/' . $sublink['url'],
+                    );
                 }
             } else {
                 $block['modules'][$i]['sublinks'] = array();
@@ -328,20 +330,23 @@ function b_system_info_show($options)
                         'id'      => $userinfo['uid'],
                         'name'    => $myts->htmlSpecialChars($userinfo['uname']),
                         'msglink' => "<a href=\"javascript:openWithSelfMain('" . XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . $userinfo['uid'] . "','pmlite',565,500);\"><img src=\"" . XOOPS_URL . "/images/icons/pm_small.gif\" border=\"0\" width=\"27\" height=\"17\" alt=\"\" /></a>",
-                        'avatar'  => XOOPS_UPLOAD_URL . '/' . $userinfo['user_avatar']);
+                        'avatar'  => XOOPS_UPLOAD_URL . '/' . $userinfo['user_avatar'],
+                    );
                 } else {
                     if ($userinfo['user_viewemail']) {
                         $block['groups'][$i]['users'][] = array(
                             'id'      => $userinfo['uid'],
                             'name'    => $myts->htmlSpecialChars($userinfo['uname']),
                             'msglink' => '<a href="mailto:' . $userinfo['email'] . '"><img src="' . XOOPS_URL . '/images/icons/em_small.gif" border="0" width="16" height="14" alt="" /></a>',
-                            'avatar'  => XOOPS_UPLOAD_URL . '/' . $userinfo['user_avatar']);
+                            'avatar'  => XOOPS_UPLOAD_URL . '/' . $userinfo['user_avatar'],
+                        );
                     } else {
                         $block['groups'][$i]['users'][] = array(
                             'id'      => $userinfo['uid'],
                             'name'    => $myts->htmlSpecialChars($userinfo['uname']),
                             'msglink' => '&nbsp;',
-                            'avatar'  => XOOPS_UPLOAD_URL . '/' . $userinfo['user_avatar']);
+                            'avatar'  => XOOPS_UPLOAD_URL . '/' . $userinfo['user_avatar'],
+                        );
                     }
                 }
                 ++$i;
@@ -529,7 +534,8 @@ function b_system_notification_show()
                 'title'       => $event['title'],
                 'caption'     => $event['caption'],
                 'description' => $event['description'],
-                'subscribed'  => $subscribed);
+                'subscribed'  => $subscribed,
+            );
         }
         $block['categories'][$category['name']] = $section;
     }
@@ -668,8 +674,10 @@ function b_system_themes_show($options)
             . XOOPS_THEME_URL . '/' . $xoopsConfig['theme_set'] . '/shot.gif" '
             . ' alt="screenshot" width="' . (int)$options[1] . '" />'
             . '<br>';
-        $select->setExtra(' onchange="showImgSelected(\'xoops_theme_img\', \'xoops_theme_select\', \'themes\', \'/shot.gif\', '
-            .  '\'' . XOOPS_URL . '\');" ');
+        $select->setExtra(
+            ' onchange="showImgSelected(\'xoops_theme_img\', \'xoops_theme_select\', \'themes\', \'/shot.gif\', '
+            . '\'' . XOOPS_URL . '\');" '
+        );
         $selectTray = new XoopsFormElementTray('');
         $selectTray->addElement($select);
         $selectTray->addElement(new XoopsFormButton('', 'submit', _GO, 'submit'));
@@ -681,8 +689,10 @@ function b_system_themes_show($options)
         $themeSelect = $select->render();
     }
 
-    $block['theme_select'] = $themeSelect . '<br>(' . sprintf(_MB_SYSTEM_NUMTHEME, '<strong>'
-            . count($xoopsConfig['theme_set_allowed']) . '</strong>') . ')<br>';
+    $block['theme_select'] = $themeSelect . '<br>(' . sprintf(
+            _MB_SYSTEM_NUMTHEME, '<strong>'
+                                 . count($xoopsConfig['theme_set_allowed']) . '</strong>'
+        ) . ')<br>';
 
     return $block;
 }

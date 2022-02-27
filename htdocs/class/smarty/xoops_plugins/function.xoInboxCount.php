@@ -10,8 +10,8 @@
  * - total  = variable name to assign with the current inbox total
  *
  * @param array $params
- * @param $smarty
- * @return null
+ * @param XoopsTpl $smarty
+ * @return null|void
  */
 function smarty_function_xoInboxCount($params, &$smarty)
 {
@@ -23,7 +23,11 @@ function smarty_function_xoInboxCount($params, &$smarty)
 
     // unset cache in pm programs so stale cache won't show inconsistencies
     $freshRead = isset($GLOBALS['xoInboxCountFresh']);
-    $pmScripts = array('pmlite', 'readpmsg', 'viewpmsg');
+    $pmScripts = array(
+        'pmlite',
+        'readpmsg',
+        'viewpmsg',
+    );
     if (in_array(basename($_SERVER['SCRIPT_FILENAME'], '.php'), $pmScripts)) {
         if (!$freshRead) {
             unset($_SESSION['xoops_inbox_count'], $_SESSION['xoops_inbox_total'], $_SESSION['xoops_inbox_count_expire']);
@@ -34,7 +38,7 @@ function smarty_function_xoInboxCount($params, &$smarty)
     $time = time();
     if (isset($_SESSION['xoops_inbox_count']) && @$_SESSION['xoops_inbox_count_expire'] > $time) {
         $totals['assign'] = (int)$_SESSION['xoops_inbox_count'];
-        $totals['total'] = (int)$_SESSION['xoops_inbox_total'];
+        $totals['total']  = (int)$_SESSION['xoops_inbox_total'];
     } else {
         /** @var \XoopsPrivmessageHandler $pm_handler */
         $pm_handler = xoops_getHandler('privmessage');
@@ -42,14 +46,14 @@ function smarty_function_xoInboxCount($params, &$smarty)
         $xoopsPreload = XoopsPreload::getInstance();
         $xoopsPreload->triggerEvent('core.class.smarty.xoops_plugins.xoinboxcount', array($pm_handler));
 
-        $criteria = new CriteriaCompo(new Criteria('to_userid', $xoopsUser->getVar('uid')));
+        $criteria        = new CriteriaCompo(new Criteria('to_userid', $xoopsUser->getVar('uid')));
         $totals['total'] = $pm_handler->getCount($criteria);
 
         $criteria->add(new Criteria('read_msg', 0));
         $totals['assign'] = $pm_handler->getCount($criteria);
 
-        $_SESSION['xoops_inbox_count'] = $totals['assign'];
-        $_SESSION['xoops_inbox_total'] = $totals['total'];
+        $_SESSION['xoops_inbox_count']        = $totals['assign'];
+        $_SESSION['xoops_inbox_total']        = $totals['total'];
         $_SESSION['xoops_inbox_count_expire'] = $time + 60;
     }
 

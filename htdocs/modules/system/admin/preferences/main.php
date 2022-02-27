@@ -192,7 +192,8 @@ switch ($op) {
                         '18000'  => sprintf(_HOURS, 5),
                         '86400'  => _DAY,
                         '259200' => sprintf(_DAYS, 3),
-                        '604800' => _WEEK);
+                        '604800' => _WEEK,
+                    );
                     if (count($modules) > 0) {
                         $ele = new XoopsFormElementTray($title, '<br>');
                         foreach (array_keys($modules) as $mid) {
@@ -219,7 +220,8 @@ switch ($op) {
                                              '18000'  => sprintf(_HOURS, 5),
                                              '86400'  => _DAY,
                                              '259200' => sprintf(_DAYS, 3),
-                                             '604800' => _WEEK));
+                                             '604800' => _WEEK,
+                                         ));
                     break;
 
                 case 'password':
@@ -420,6 +422,7 @@ switch ($op) {
         $lang_updated     = false;
         if ($count > 0) {
             for ($i = 0; $i < $count; ++$i) {
+                /** @var XoopsConfigItem $config */
                 $config    = $config_handler->getConfig($conf_ids[$i]);
                 $new_value =& ${$config->getVar('conf_name')};
                 if (is_array($new_value) || $new_value != $config->getVar('conf_value')) {
@@ -513,8 +516,15 @@ switch ($op) {
         // Cache management should be performed on a separate page
         require_once XOOPS_ROOT_PATH . '/modules/system/class/maintenance.php';
         $maintenance = new SystemMaintenance();
-        $options     = array(1,2,3); // smarty_cache and Smarty_compile
-        register_shutdown_function(array(&$maintenance, 'CleanCache'), $options);
+        $options     = array(
+            1,
+            2,
+            3,
+        ); // smarty_cache and Smarty_compile
+        register_shutdown_function(array(
+                                       &$maintenance,
+                                       'CleanCache',
+                                   ), $options);
 
         if ($lang_updated) {
             // Flush cache files for cpanel GUIs

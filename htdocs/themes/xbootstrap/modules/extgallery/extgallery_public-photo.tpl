@@ -74,7 +74,7 @@
             </div>
         <{/if}>
 
-        <{foreach item=pluginLink from=$pluginPhotoAlbumLink}>
+        <{foreach item=pluginLink from=$pluginPhotoAlbumLink|default:null}>
         <a href="<{$pluginLink.link}><{$photo.photo_id}>" title="<{$pluginLink.name}>"><{$pluginLink.name}></a>
         <{/foreach}>
         <{foreach item=pluginLink from=$photo.link}>
@@ -163,7 +163,7 @@
     <{if $show_rss}>
         <div id="rss">
             <a href="<{xoAppUrl modules/extgallery/public-rss.php}>" title="<{$smarty.const._MD_EXTGALLERY_RSS}>">
-                <img src="<{xoAppUrl modules/extgallery/assets/images/feed.png}>" alt="<{$smarty.const._MD_EXTGALLERY_RSS}>"/>
+                <img src="<{xoAppUrl modules/extgallery/assets/images/feed.png}>" alt="<{$smarty.const._MD_EXTGALLERY_RSS}>">
             </a>
         </div>
     <{/if}>

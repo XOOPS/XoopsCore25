@@ -70,7 +70,12 @@ if (!function_exists('protector_onupdate_base')) {
                     continue;
                 }
                 $file_path = $tpl_path . '/' . $file;
-                if (is_file($file_path) && in_array(strrchr($file, '.'), array('.html', '.css', '.js'))) {
+                if (is_file($file_path)
+                    && in_array(strrchr($file, '.'), array(
+                        '.html',
+                        '.css',
+                        '.js',
+                    ))) {
                     $mtime   = (int)(@filemtime($file_path));
                     $tplfile = $tplfile_handler->create();
                     $tplfile->setVar('tpl_source', file_get_contents($file_path), true);
@@ -111,7 +116,7 @@ if (!function_exists('protector_onupdate_base')) {
      * @param $module_obj
      * @param $log
      */
-    function protector_message_append_onupdate(&$module_obj, &$log)
+    function protector_message_append_onupdate(&$module_obj, $log)
     {
         if (is_array(@$GLOBALS['msgs'])) {
             foreach ($GLOBALS['msgs'] as $message) {

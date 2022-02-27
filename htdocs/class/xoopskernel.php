@@ -25,26 +25,54 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class xos_kernel_Xoops2
 {
-    public $paths = array('XOOPS' => array(), 'www' => array(), 'var' => array(), 'lib' => array(), 'modules' => array(), 'themes' => array());
+    /**
+     * @var array
+     */
+    public $paths = array(
+        'XOOPS'   => array(),
+        'www'     => array(),
+        'var'     => array(),
+        'lib'     => array(),
+        'modules' => array(),
+        'themes'  => array(),
+    );
 
     /**
      * Actual Xoops OS
      */
     public function __construct()
     {
-        $this->paths['XOOPS']   = array(XOOPS_PATH, XOOPS_URL . 'browse.php');
-        $this->paths['www']     = array(XOOPS_ROOT_PATH, XOOPS_URL);
-        $this->paths['var']     = array(XOOPS_VAR_PATH, null);
-        $this->paths['lib']     = array(XOOPS_PATH, XOOPS_URL . 'browse.php');
-        $this->paths['modules'] = array(XOOPS_ROOT_PATH . '/modules', XOOPS_URL . '/modules');
-        $this->paths['themes']  = array(XOOPS_ROOT_PATH . '/themes', XOOPS_URL . '/themes');
+        $this->paths['XOOPS']   = array(
+            XOOPS_PATH,
+            XOOPS_URL . 'browse.php',
+        );
+        $this->paths['www']     = array(
+            XOOPS_ROOT_PATH,
+            XOOPS_URL,
+        );
+        $this->paths['var']     = array(
+            XOOPS_VAR_PATH,
+            null,
+        );
+        $this->paths['lib']     = array(
+            XOOPS_PATH,
+            XOOPS_URL . 'browse.php',
+        );
+        $this->paths['modules'] = array(
+            XOOPS_ROOT_PATH . '/modules',
+            XOOPS_URL . '/modules',
+        );
+        $this->paths['themes']  = array(
+            XOOPS_ROOT_PATH . '/themes',
+            XOOPS_URL . '/themes',
+        );
     }
 
     /**
      * Convert a XOOPS path to a physical one
-     * @param               $url
+     * @param string       $url
      * @param  bool         $virtual
-     * @return mixed|string
+     * @return array|string|string[]
      */
     public function path($url, $virtual = false)
     {

@@ -75,7 +75,7 @@ function themecenterposts($title, $content)
  *
  * @param mixed $url
  * @param mixed $value
- * @return mixed
+ * @return string
  */
 function myTextForm($url, $value)
 {
@@ -85,7 +85,7 @@ function myTextForm($url, $value)
 /**
  * Enter description here...
  *
- * @return mixed
+ * @return bool
  */
 function xoopsfwrite()
 {
@@ -103,8 +103,8 @@ function xoopsfwrite()
 
 /**
  * Xoops Module Menu
+ * @return string
  * @deprecated
- * @return mixed
  */
 function xoops_module_get_admin_menu()
 {
@@ -143,16 +143,16 @@ function xoops_module_get_admin_menu()
         $js .= "\nfunction popUpL" . $mid . "() {\n    shutdown();\n    popUp('L" . $mid . "',true);}";
         $moveLayers .= "\n    setleft('L" . $mid . "'," . $left . ");\n    settop('L" . $mid . "'," . $top . ');';
         $shutdown .= "\n    popUp('L" . $mid . "',false);";
-        $firstleveltable .= "$" . 'xoops_admin_menu_ft[' . $mid . "] = \"<a href='" . $module_url . "' title='" . $module_name . "' onmouseover='moveLayerY(\\\"L" . $mid . "\\\", currentY, event) ; popUpL" . $mid . "(); ' >" . $module_img . "</a><br>\";\n";
+        $firstleveltable .= '$' . 'xoops_admin_menu_ft[' . $mid . "] = \"<a href='" . $module_url . "' title='" . $module_name . "' onmouseover='moveLayerY(\\\"L" . $mid . "\\\", currentY, event) ; popUpL" . $mid . "(); ' >" . $module_img . "</a><br>\";\n";
         $menu_layers .= "\n<div id='L" . $mid . "' style='position: absolute; visibility: hidden; z-index:1000;' >\n<table class='admin_layer' cellpadding='0' cellspacing='0'>\n<tr><th nowrap='nowrap'>" . $module_name . "</th></tr>\n<tr><td class='even' nowrap='nowrap'>";
 
         $adminmenu = $mod->getAdminMenu();
 
         if ($mod->getVar('hasnotification') || ($mod->getInfo('config') && is_array($mod->getInfo('config'))) || ($mod->getInfo('comments') && is_array($mod->getInfo('comments')))) {
-            $adminmenu[] = array(
-                'link'     => '".XOOPS_URL."/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $mid,
+            $adminmenu[] = array('link'     => '".XOOPS_URL."/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $mid,
                 'title'    => _PREFERENCES,
-                'absolute' => true);
+                                 'absolute' => true,
+            );
         }
         if (count($adminmenu) != 0) {
             $currenttarget = '';

@@ -20,8 +20,8 @@
  * @param string
  * @param integer
  * @param string
- * @param boolean
- * @param boolean
+ * @param bool
+ * @param bool
  * @return string
  */
 function smarty_modifier_truncate($string, $length = 80, $etc = '...',

@@ -247,12 +247,12 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      *
      * @param int $id ID
      *
-     * @return XoopsNotification|false {@link XoopsNotification}, FALSE on fail
+     * @return false|\XoopsNotification {@link XoopsNotification}, FALSE on fail
      **/
     public function get($id)
     {
         $notification = false;
-        $id           = (int)$id;
+        $id       = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('xoopsnotifications') . ' WHERE not_id=' . $id;
             if (!$result = $this->db->query($sql)) {
@@ -260,7 +260,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
             }
             $numrows = $this->db->getRowsNum($result);
             if ($numrows == 1) {
-                $notification = new XoopsNotification();
+                $notification = new \XoopsNotification();
                 $notification->assignVars($this->db->fetchArray($result));
             }
         }
@@ -575,9 +575,9 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      *
      * @param int    $module_id Module ID
      * @param int    $item_id   Item ID
-     * @param string $order     Sort order
+     * @param string|null $order     Sort order
      *
-     * @param mixed   $status
+     * @param mixed|null   $status
      *
      * @return array Array of {@link XoopsNotification} objects
      */
@@ -604,8 +604,8 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      * @param array  $extra_tags   array of substitutions for template to be
      *                              merged with the one from function..
      * @param array  $user_list    only notify the selected users
-     * @param int    $module_id    ID of the module
-     * @param int    $omit_user_id ID of the user to omit from notifications. (default to current user).  set to 0 for all users to receive notification.
+     * @param int|null $module_id    ID of the module
+     * @param int|null $omit_user_id ID of the user to omit from notifications. (default to current user).  set to 0 for all users to receive notification.
      * @internal param string $event notification event
      */
     // TODO:(?) - pass in an event LIST.  This will help to avoid
@@ -634,7 +634,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      * @param  array  $user_list
      * @param  int|null    $module_id
      * @param  int|null    $omit_user_id
-     * @return mixed
+     * @return bool|null
      */
     public function triggerEvent($category, $item_id, $event, $extra_tags = array(), $user_list = array(), $module_id = null, $omit_user_id = null)
     {
@@ -766,8 +766,8 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      * @param string $category  category of the events
      * @param int    $item_id   ID of the item
      * @param mixed  $events    event string or array of events
-     * @param int    $module_id ID of the module (default current module)
-     * @param int    $user_id   UID of the user (default current user)
+     * @param int|null $module_id ID of the module (default current module)
+     * @param int|null $user_id   UID of the user (default current user)
      *
      * @return bool
      **/

@@ -8,6 +8,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
+
 /**
  * Cleanup from install
  *
@@ -23,7 +24,7 @@
  * @author          Richard Griffith <richard@geekwright.com>
  */
 
-require_once './include/common.inc.php';
+require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 $install_rename_suffix = $_POST['instsuffix'];

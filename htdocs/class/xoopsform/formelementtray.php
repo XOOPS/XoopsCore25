@@ -40,7 +40,7 @@ class XoopsFormElementTray extends XoopsFormElement
     public $_required = array();
 
     /**
-     * HTML to seperate the elements
+     * HTML to separate the elements
      *
      * @var string
      * @access private
@@ -164,6 +164,8 @@ class XoopsFormElementTray extends XoopsFormElement
      */
     public function render()
     {
-        return XoopsFormRenderer::getInstance()->get()->renderFormElementTray($this);
+        return XoopsFormRenderer::getInstance()
+                                ->get()
+                                ->renderFormElementTray($this);
     }
 }

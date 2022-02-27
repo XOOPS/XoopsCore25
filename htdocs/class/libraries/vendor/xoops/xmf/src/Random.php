@@ -30,7 +30,7 @@ class Random
      * algorithm specified in $hash.
      *
      * @param string  $hash  hash function to use
-     * @param integer $bytes the number of random bit to generate
+     * @param int $bytes the number of random bit to generate
      *
      * @return string hashed token
      * @throws \Exception on insufficient entropy
@@ -48,7 +48,7 @@ class Random
      * algorithm specified in $hash.
      *
      * @param string  $hash  hash function to use
-     * @param integer $bytes the number of random bytes to generate
+     * @param int $bytes the number of random bytes to generate
      *
      * @return string hashed token
      * @throws \Exception on insufficient entropy

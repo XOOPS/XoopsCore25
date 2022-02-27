@@ -28,13 +28,37 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class XoopsCaptcha
 {
+    /**
+     * @var bool
+     */
     public $active;
-    public $handler;
+    /**
+     * @var \XoopsCaptchaMethod
+     */
+    public $handler; //mb TODO could be also null
+    /**
+     * @var string
+     */
     public $path_basic;
+    /**
+     * @var string
+     */
     public $path_config;
+    /**
+     * @var string
+     */
     public $path_plugin;
+    /**
+     * @var string
+     */
     public $name;
+    /**
+     * @var array
+     */
     public $config  = array();
+    /**
+     * @var array
+     */
     public $message = array(); // Logging error messages
 
     /**
@@ -132,7 +156,7 @@ class XoopsCaptcha
      * XoopsCaptcha::loadHandler()
      *
      * @param mixed $name
-     * @return
+     * @return mixed|\XoopsCaptchaMethod|null
      */
     public function loadHandler($name = null)
     {
@@ -141,7 +165,7 @@ class XoopsCaptcha
         if (!empty($this->handler) && get_class($this->handler) == $class) {
             return $this->handler;
         }
-        $this->handler = null;
+//        $this->handler = null; //mb TODO - Incompatible types: Expected property of type '\XoopsCaptchaMethod', 'null' provided
         if (file_exists($file = $this->path_basic . '/' . $name . '.php')) {
             require_once $file;
         } else {
@@ -226,7 +250,7 @@ class XoopsCaptcha
         } else {
             $is_valid = $this->handler->verify($sessionName);
             $xoopsPreload = XoopsPreload::getInstance();
-            $xoopsPreload->triggerEvent('core.behavior.captcha.result', $is_valid);
+            $xoopsPreload->triggerEvent('core.behavior.captcha.result', (array)$is_valid);
         }
 
         if (!$is_valid) {
@@ -349,7 +373,7 @@ class XoopsCaptcha
     /**
      * XoopsCaptcha::loadForm()
      *
-     * @return
+     * @return mixed
      */
     public function loadForm()
     {
@@ -371,8 +395,17 @@ class XoopsCaptcha
  */
 class XoopsCaptchaMethod
 {
+    /**
+     * @var \XoopsCaptchaMethod
+     */
     public $handler;
+    /**
+     * @var array
+     */
     public $config;
+    /**
+     * @var string
+     */
     public $code;
 
     /**
@@ -403,7 +436,7 @@ class XoopsCaptchaMethod
      */
     public function loadConfig($name = '')
     {
-        $this->config = empty($name) ? $this->handler->config : array_merge($this->handler->config, $this->handler->loadConfig($name));
+        $this->config = empty($name) ? $this->handler->config : array_merge($this->handler->config, (array)$this->handler->loadConfig($name));
     }
 
     /**

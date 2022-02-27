@@ -41,8 +41,8 @@ class Yaml
      * Dump an PHP array as a YAML string
      *
      * @param mixed   $var    Variable which will be dumped
-     * @param integer $inline Nesting level where you switch to inline YAML
-     * @param integer $indent Number of spaces to indent for nested nodes
+     * @param int $inline Nesting level where you switch to inline YAML
+     * @param int $indent Number of spaces to indent for nested nodes
      *
      * @return string|bool YAML string or false on error
      */
@@ -62,7 +62,7 @@ class Yaml
      *
      * @param string $yamlString YAML dump string
      *
-     * @return array|boolean PHP array or false on error
+     * @return array|bool PHP array or false on error
      */
     public static function load($yamlString)
     {
@@ -102,10 +102,10 @@ class Yaml
      *
      * @param array   $var      variable which will be dumped
      * @param string  $yamlFile filename of YAML file
-     * @param integer $inline   Nesting level where you switch to inline YAML
-     * @param integer $indent   Number of spaces to indent for nested nodes
+     * @param int $inline   Nesting level where you switch to inline YAML
+     * @param int $indent   Number of spaces to indent for nested nodes
      *
-     * @return integer|boolean number of bytes written, or false on error
+     * @return int|bool number of bytes written, or false on error
      */
     public static function save($var, $yamlFile, $inline = 4, $indent = 4)
     {
@@ -128,10 +128,10 @@ class Yaml
      * a poorly configured server.
      *
      * @param mixed   $var    Variable which will be dumped
-     * @param integer $inline Nesting level where you switch to inline YAML
-     * @param integer $indent Number of spaces to indent for nested nodes
+     * @param int $inline Nesting level where you switch to inline YAML
+     * @param int $indent Number of spaces to indent for nested nodes
      *
-     * @return string|boolean YAML string or false on error
+     * @return string|bool YAML string or false on error
      */
     public static function dumpWrapped($var, $inline = 4, $indent = 4)
     {
@@ -155,7 +155,7 @@ class Yaml
      *
      * @param string $yamlString YAML dump string
      *
-     * @return array|boolean PHP array or false on error
+     * @return array|bool PHP array or false on error
      */
     public static function loadWrapped($yamlString)
     {
@@ -221,10 +221,10 @@ class Yaml
      *
      * @param array   $var      variable which will be dumped
      * @param string  $yamlFile filename of YAML file
-     * @param integer $inline   Nesting level where you switch to inline YAML
-     * @param integer $indent   Number of spaces to indent for nested nodes
+     * @param int $inline   Nesting level where you switch to inline YAML
+     * @param int $indent   Number of spaces to indent for nested nodes
      *
-     * @return integer|boolean number of bytes written, or false on error
+     * @return int|bool number of bytes written, or false on error
      */
     public static function saveWrapped($var, $yamlFile, $inline = 4, $indent = 4)
     {
@@ -244,7 +244,9 @@ class Yaml
     protected static function logError($e)
     {
         if (class_exists('Xoops')) {
-            \Xoops::getInstance()->events()->triggerEvent('core.exception', $e);
+            \Xoops::getInstance()
+                  ->events()
+                  ->triggerEvent('core.exception', $e);
         } else {
             trigger_error($e->getMessage(), E_USER_ERROR);
         }

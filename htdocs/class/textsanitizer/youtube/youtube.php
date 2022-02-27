@@ -20,19 +20,19 @@
 class MytsYoutube extends MyTextSanitizerExtension
 {
     /**
-     * @param $textarea_id
+     * @param string $textarea_id
      *
      * @return array
      */
     public function encode($textarea_id)
     {
-        $config = parent::loadConfig(__DIR__);
-        $code = "<button type='button' class='btn btn-default btn-sm' onclick='xoopsCodeYoutube(\"{$textarea_id}\",\""
-            . htmlspecialchars(_XOOPS_FORM_ENTERYOUTUBEURL, ENT_QUOTES) . "\",\""
-            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\""
-            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES)
-            . "\");' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALTYOUTUBE
-            . "'><span class='fa fa-fw fa-youtube' aria-hidden='true'></span></button>";
+        $config     = parent::loadConfig(__DIR__);
+        $code       = "<button type='button' class='btn btn-default btn-sm' onclick='xoopsCodeYoutube(\"{$textarea_id}\",\""
+                      . htmlspecialchars(_XOOPS_FORM_ENTERYOUTUBEURL, ENT_QUOTES) . "\",\""
+                      . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\""
+                      . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES)
+                      . "\");' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALTYOUTUBE
+                      . "'><span class='fa fa-fw fa-youtube' aria-hidden='true'></span></button>";
         $javascript = <<<EOH
             function xoopsCodeYoutube(id, enterYouTubePhrase, enterYouTubeHeightPhrase, enterYouTubeWidthPhrase)
             {
@@ -56,11 +56,14 @@ class MytsYoutube extends MyTextSanitizerExtension
             }
 EOH;
 
-        return array($code, $javascript);
+        return array(
+            $code,
+            $javascript,
+        );
     }
 
     /**
-     * @param $match
+     * @param array $match
      *
      * @return string
      */
@@ -70,7 +73,7 @@ EOH;
     }
 
     /**
-     * @param $ts
+     * @param MyTextSanitizer $ts
      */
     public function load($ts)
     {
@@ -84,9 +87,9 @@ EOH;
     }
 
     /**
-     * @param $url
-     * @param $width
-     * @param $height
+     * @param string $url
+     * @param int    $width
+     * @param int    $height
      *
      * @return string
      */
@@ -98,7 +101,7 @@ EOH;
         // match known youtube urls
         // from: http://stackoverflow.com/questions/2936467/parse-youtube-video-id-using-preg-match/6382259#6382259
         $youtubeRegex = '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)'
-            .'([^"&?/ ]{11})%i';
+                        . '([^"&?/ ]{11})%i';
 
         if (preg_match($youtubeRegex, $url, $match)) {
             $videoId = $match[1]; // extract just the video id from a url
@@ -109,7 +112,7 @@ EOH;
             return '';
         }
 
-        $width = empty($width) ? 426 : (int) $width;
+        $width = empty($width) ? 426 : (int)$width;
         switch ($width) {
             case 4:
                 $height = 3;
@@ -118,15 +121,15 @@ EOH;
                 $height = 9;
                 break;
             default:
-                $height = empty($height) ? 240 : (int) $height;
+                $height = empty($height) ? 240 : (int)$height;
                 break;
         }
 
-        $aspectRatio = $width/$height; // 16x9 = 1.777777778, 4x3 = 1.333333333
+        $aspectRatio      = $width / $height; // 16x9 = 1.777777778, 4x3 = 1.333333333
         $responsiveAspect = ($aspectRatio < 1.4) ? 'embed-responsive-4by3' : 'embed-responsive-16by9';
         if ($width < 17 && $height < 10) {
-            $scale = (int) 450 / $width;
-            $width = $width * $scale;
+            $scale  = (int)450 / $width;
+            $width  = $width * $scale;
             $height = $height * $scale;
         }
 

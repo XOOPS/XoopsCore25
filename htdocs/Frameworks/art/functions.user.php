@@ -27,7 +27,7 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_USER')):
     }
 
     /**
-     * @param      $uid
+     * @param mixed $uid
      * @param bool $usereal
      * @param bool $linked
      *
@@ -42,7 +42,7 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_USER')):
     }
 
     /**
-     * @param      $uid
+     * @param mixed $uid
      * @param int  $usereal
      * @param bool $linked
      *

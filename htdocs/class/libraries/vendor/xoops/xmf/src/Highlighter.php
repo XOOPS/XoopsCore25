@@ -62,7 +62,7 @@ class Highlighter
      * @param string $pre      insert before needle
      * @param string $post     insert after needle
      *
-     * @return mixed return from preg_replace_callback()
+     * @return array|string|string[]|null return from preg_replace_callback()
      */
     protected static function splitOnTag($needle, $haystack, $pre, $post)
     {

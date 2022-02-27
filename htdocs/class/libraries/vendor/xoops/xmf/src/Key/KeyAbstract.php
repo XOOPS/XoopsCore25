@@ -59,14 +59,14 @@ abstract class KeyAbstract
     /**
      * create the key and store it for use
      *
-     * @return boolean true if key was created and stored, otherwise false
+     * @return bool true if key was created and stored, otherwise false
      */
     abstract public function create();
 
     /**
      * delete the key
      *
-     * @return boolean true if key was deleted, otherwise false
+     * @return bool true if key was deleted, otherwise false
      */
     abstract public function kill();
 }

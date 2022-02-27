@@ -111,6 +111,7 @@ class XoopsLocalAbstract
 
     /**
      * Get description for setting time format
+     * @return string
      */
     public static function getTimeFormatDesc()
     {

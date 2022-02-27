@@ -35,6 +35,9 @@ class MovableTypeApi extends XoopsXmlRpcApi
         parent::__construct($params, $response, $module);
     }
 
+    /**
+     * @return void
+     */
     public function getCategoryList()
     {
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
@@ -59,16 +62,25 @@ class MovableTypeApi extends XoopsXmlRpcApi
         }
     }
 
+    /**
+     * @return void
+     */
     public function getPostCategories()
     {
         $this->response->add(new XoopsXmlRpcFault(107));
     }
 
+    /**
+     * @return void
+     */
     public function setPostCategories()
     {
         $this->response->add(new XoopsXmlRpcFault(107));
     }
 
+    /**
+     * @return void
+     */
     public function supportedMethods()
     {
         $this->response->add(new XoopsXmlRpcFault(107));

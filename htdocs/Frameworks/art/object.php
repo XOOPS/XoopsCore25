@@ -56,6 +56,9 @@ class ArtObject extends XoopsObject
  */
 class ArtObjectHandler extends XoopsPersistableObjectHandler
 {
+    /**
+     * @var \XoopsMySQLDatabase
+     */
     public $db;
 
     /**

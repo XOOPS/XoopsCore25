@@ -14,7 +14,13 @@ namespace Geekwright\RegDom;
  */
 class RegisteredDomain
 {
+    /**
+     * @var array|null
+     */
     protected $tree;
+    /**
+     * @var \Geekwright\RegDom\PublicSuffixList|null
+     */
     protected $psl;
 
     /**

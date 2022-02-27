@@ -38,21 +38,44 @@ class XoopsLogger
      * @var array
      */
     public $queries    = array();
+    /**
+     * @var array
+     */
     public $blocks     = array();
+    /**
+     * @var array
+     */
     public $extra      = array();
+    /**
+     * @var array
+     */
     public $logstart   = array();
+    /**
+     * @var array
+     */
     public $logend     = array();
+    /**
+     * @var array
+     */
     public $errors     = array();
+    /**
+     * @var array
+     */
     public $deprecated = array();
     /**
      * *#@-
+     * @var bool
      */
 
     public $usePopup  = false;
+    /**
+     * @var bool
+     */
     public $activated = true;
 
     /**
      * *@access protected
+     * @var bool
      */
     public $renderingEnabled = false;
 
@@ -84,7 +107,10 @@ class XoopsLogger
             // Always catch errors, for security reasons
             set_error_handler('XoopsErrorHandler_HandleError');
             // grab any uncaught exception
-            set_exception_handler(array($instance, 'handleException'));
+            set_exception_handler(array(
+                                      $instance,
+                                      'handleException',
+                                  ));
         }
 
         return $instance;
@@ -99,7 +125,10 @@ class XoopsLogger
     public function enableRendering()
     {
         if (!$this->renderingEnabled) {
-            ob_start(array(&$this, 'render'));
+            ob_start(array(
+                         &$this,
+                         'render',
+                     ));
             $this->renderingEnabled = true;
         }
     }
@@ -151,7 +180,12 @@ class XoopsLogger
     public function addQuery($sql, $error = null, $errno = null, $query_time = null)
     {
         if ($this->activated) {
-            $this->queries[] = array('sql' => $sql, 'error' => $error, 'errno' => $errno, 'query_time' => $query_time);
+            $this->queries[] = array(
+                'sql'        => $sql,
+                'error'      => $error,
+                'errno'      => $errno,
+                'query_time' => $query_time,
+            );
         }
     }
 
@@ -165,7 +199,11 @@ class XoopsLogger
     public function addBlock($name, $cached = false, $cachetime = 0)
     {
         if ($this->activated) {
-            $this->blocks[] = array('name' => $name, 'cached' => $cached, 'cachetime' => $cachetime);
+            $this->blocks[] = array(
+                'name'      => $name,
+                'cached'    => $cached,
+                'cachetime' => $cachetime,
+            );
         }
     }
 
@@ -178,7 +216,10 @@ class XoopsLogger
     public function addExtra($name, $msg)
     {
         if ($this->activated) {
-            $this->extra[] = array('name' => $name, 'msg' => $msg);
+            $this->extra[] = array(
+                'name' => $name,
+                'msg'  => $msg,
+            );
         }
     }
 
@@ -209,7 +250,7 @@ class XoopsLogger
     /**
      * Error handling callback (called by the zend engine)
      *
-     * @param integer $errno
+     * @param int $errno
      * @param string  $errstr
      * @param string  $errfile
      * @param string  $errline
@@ -277,7 +318,7 @@ class XoopsLogger
      *
      * @param string $path
      *
-     * @return mixed|string
+     * @return array|string|string[]
      */
     public function sanitizePath($path)
     {
@@ -314,7 +355,7 @@ class XoopsLogger
      *
      * @protected
      * @param string $mode
-     * @return
+     * @return mixed
      */
     public function dump($mode = '')
     {
@@ -357,7 +398,7 @@ class XoopsLogger
      * @param  string  $errStr
      * @param  string  $errFile
      * @param  string  $errLine
-     * @param  integer $errNo
+     * @param int $errNo
      * @return void
      */
     public function triggerError($errkey = 0, $errStr = '', $errFile = '', $errLine = '', $errNo = 0)
@@ -384,9 +425,10 @@ class XoopsLogger
     }
 
     /**
-     * dumpBlocks @deprecated
+     * dumpBlocks @return dump
+     * @return \dump
+     * @deprecated
      *
-     * @return dump
      */
     public function dumpBlocks()
     {
@@ -396,9 +438,10 @@ class XoopsLogger
     }
 
     /**
-     * dumpExtra @deprecated
+     * dumpExtra @return dump
+     * @return \dump
+     * @deprecated
      *
-     * @return dump
      */
     public function dumpExtra()
     {
@@ -408,9 +451,9 @@ class XoopsLogger
     }
 
     /**
-     * dump Queries @deprecated
+     * dump Queries @return mixed
+     * @deprecated
      *
-     * @return mixed
      */
     public function dumpQueries()
     {
@@ -431,12 +474,13 @@ class XoopsLogger
  *
  * @internal : Using a function and not calling the handler method directly because of old PHP versions
  * set_error_handler() have problems with the array( obj,methodname ) syntax
- * @param       $errNo
- * @param       $errStr
- * @param       $errFile
- * @param       $errLine
+ * @param int    $errNo
+ * @param string $errStr
+ * @param string $errFile
+ * @param int    $errLine
  * @param  null $errContext
- * @return bool
+ *
+ * @return bool|null
  */
 function XoopsErrorHandler_HandleError($errNo, $errStr, $errFile, $errLine, $errContext = null)
 {

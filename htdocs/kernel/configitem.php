@@ -182,21 +182,16 @@ class XoopsConfigItem extends XoopsObject
         switch ($this->getVar('conf_valuetype')) {
             case 'int':
                 return (int)$this->getVar('conf_value', 'N');
-                break;
             case 'array':
                 $value = @unserialize($this->getVar('conf_value', 'N'));
-
                 return $value ?: array();
             case 'float':
                 $value = $this->getVar('conf_value', 'N');
-
                 return (float)$value;
-                break;
             case 'textarea':
                 return $this->getVar('conf_value');
             default:
                 return $this->getVar('conf_value', 'N');
-                break;
         }
     }
 
@@ -295,20 +290,20 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
     /**
      * Load a config from the database
      *
-     * @param  int $id ID of the config
-     * @return XoopsConfigItem|false reference to the config, FALSE on fail
+     * @param int $id ID of the config
+     * @return false|\XoopsConfigItem reference to the config, FALSE on fail
      */
     public function get($id)
     {
         $config = false;
-        $id     = (int)$id;
+        $id = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('config') . ' WHERE conf_id=' . $id;
             if (!$result = $this->db->query($sql)) {
                 return $config;
             }
             $numrows = $this->db->getRowsNum($result);
-            if ($numrows == 1) {
+            if ($numrows === 1) {
                 $myrow  = $this->db->fetchArray($result);
                 $config = new XoopsConfigItem();
                 $config->assignVars($myrow);

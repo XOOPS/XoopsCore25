@@ -118,7 +118,10 @@ class XoopsPreload
             foreach ($class_methods as $method) {
                 if (strpos($method, 'event') === 0) {
                     $event_name                   = strtolower(str_replace('event', '', $method));
-                    $event                        = array('class_name' => $class_name, 'method' => $method);
+                    $event                        = array(
+                        'class_name' => $class_name,
+                        'method'     => $method,
+                    );
                     $this->_events[$event_name][] = $event;
                 }
             }
@@ -138,7 +141,10 @@ class XoopsPreload
         $event_name = strtolower(str_replace('.', '', $event_name));
         if (isset($this->_events[$event_name])) {
             foreach ($this->_events[$event_name] as $event) {
-                call_user_func(array($event['class_name'], $event['method']), $args);
+                call_user_func(array(
+                                   $event['class_name'],
+                                   $event['method'],
+                               ), $args);
             }
         }
     }

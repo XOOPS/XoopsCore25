@@ -44,8 +44,17 @@ class SystemFineImUploadHandler extends SystemFineUploadHandler
     public function __construct(\stdClass $claims)
     {
         parent::__construct($claims);
-        $this->allowedMimeTypes = array('image/gif', 'image/jpeg', 'image/png');
-        $this->allowedExtensions = array('gif', 'jpeg', 'jpg', 'png');
+        $this->allowedMimeTypes  = array(
+            'image/gif',
+            'image/jpeg',
+            'image/png',
+        );
+        $this->allowedExtensions = array(
+            'gif',
+            'jpeg',
+            'jpg',
+            'png',
+        );
     }
 
     protected function storeUploadedFile($target, $mimeType, $uuid)
@@ -89,6 +98,9 @@ class SystemFineImUploadHandler extends SystemFineUploadHandler
                 'error' => sprintf(_FAILSAVEIMG, $image->getVar('image_nicename'))
             );
         }
-        return array('success'=> true, "uuid" => $uuid);
+        return array(
+            'success' => true,
+            'uuid'    => $uuid,
+        );
     }
 }

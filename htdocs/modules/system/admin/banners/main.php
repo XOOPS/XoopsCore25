@@ -120,7 +120,8 @@ switch ($op) {
                 xoops_confirm(array(
                                   'ok' => 1,
                                   'bid' => $bid,
-                                  'op' => 'banner_delete'), 'admin.php?fct=banners', sprintf(_AM_SYSTEM_BANNERS_SUREDELE));
+                                  'op'  => 'banner_delete',
+                              ), 'admin.php?fct=banners', sprintf(_AM_SYSTEM_BANNERS_SUREDELE));
             }
         } else {
             redirect_header('admin.php?fct=banners', 1, _AM_SYSTEM_DBERROR);
@@ -148,7 +149,8 @@ switch ($op) {
                 xoops_confirm(array(
                                   'ok' => 1,
                                   'bid' => $bid,
-                                  'op' => 'banner_finish_delete'), 'admin.php?fct=banners', sprintf(_AM_SYSTEM_BANNERS_SUREDELE));
+                                  'op'  => 'banner_finish_delete',
+                              ), 'admin.php?fct=banners', sprintf(_AM_SYSTEM_BANNERS_SUREDELE));
             }
         } else {
             redirect_header('admin.php?fct=banners', 1, _AM_SYSTEM_DBERROR);
@@ -226,7 +228,8 @@ switch ($op) {
                 xoops_confirm(array(
                                   'ok' => 1,
                                   'cid' => $cid,
-                                  'op' => 'banner_client_delete'), 'admin.php?fct=banners', _AM_SYSTEM_BANNERS_SUREDELBNR);
+                                  'op'  => 'banner_client_delete',
+                              ), 'admin.php?fct=banners', _AM_SYSTEM_BANNERS_SUREDELBNR);
             }
         } else {
             redirect_header('admin.php?fct=banners', 1, _AM_SYSTEM_DBERROR);

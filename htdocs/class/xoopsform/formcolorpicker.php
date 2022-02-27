@@ -1,4 +1,5 @@
 <?php
+
 /**
  * XoopsFormColorPicker component class file
  *
@@ -48,7 +49,9 @@ class XoopsFormColorPicker extends XoopsFormText
      */
     public function render()
     {
-        return XoopsFormRenderer::getInstance()->get()->renderFormColorPicker($this);
+        return XoopsFormRenderer::getInstance()
+                                ->get()
+                                ->renderFormColorPicker($this);
     }
 
     /**

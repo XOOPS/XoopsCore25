@@ -29,9 +29,9 @@
  * @param int      height         (optional) maximum height of final image in pixels (e.g. 700);
  * @param string   color          (optional) background hex color for filling transparent PNGs (e.g. 900 or 16a942);
  * @param string   cropratio      (optional) ratio of width to height to crop final image (e.g. 1:1 or 3:2);
- * @param boolean  nocache        (optional) don't read image from the cache;
- * @param boolean  noservercache  (optional) don't read image from the server cache;
- * @param boolean  nobrowsercache (optional) don't read image from the browser cache;
+ * @param bool  nocache        (optional) don't read image from the cache;
+ * @param bool  noservercache  (optional) don't read image from the server cache;
+ * @param bool  nobrowsercache (optional) don't read image from the browser cache;
  * @param int      quality        (optional, 0-100, default: 90) quality of output image;
  * @param mixed    filter         (optional, imagefilter 2nd, 3rd, 4th, 5th arguments, more info on php.net
  *                                 manual) a filter or an array of filters;
@@ -127,7 +127,7 @@ function doConditionalGet($etag, $lastModified)
  *
  * @return resource|\GdImage
  */
-function imageCreateCorners($sourceImage, $radii)
+function imageCreateCorners($sourceImage, array $radii)
 {
     $q = 2; // quality - improve alpha blending by using larger (*$q) image size
 
@@ -388,7 +388,8 @@ $angle = isset($_GET['angle']) ? (float)$_GET['angle'] : false;
 // If we don't have a width or height or color or filter or radius or rotate we simply output the original
 // image and exit
 if (empty($_GET['width']) && empty($_GET['height']) && empty($_GET['color']) && empty($_GET['filter'])
-    && empty($_GET['radius']) && empty($_GET['angle'])) {
+    && empty($_GET['radius']) 
+    && empty($_GET['angle'])) {
     $last_modified_string = gmdate('D, d M Y H:i:s', $imageCreatedTime) . ' GMT';
     $etag = md5($imageData);
     doConditionalGet($etag, $last_modified_string);
@@ -481,7 +482,10 @@ switch ($imageMimetype) {
 imagecopyresampled($destination_image, $sourceImage, 0, 0, $offset_x, $offset_y, $tn_width, $tn_height, $imageWidth, $imageHeight);
 
 // Set background color
-if (in_array($imageMimetype, array('image/gif', 'image/png'))) {
+if (in_array($imageMimetype, array(
+    'image/gif',
+    'image/png',
+))) {
     if (!$color) {
         // If this is a GIF or a PNG, we need to set up transparency
         imagealphablending($destination_image, false);

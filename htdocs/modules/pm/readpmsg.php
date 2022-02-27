@@ -22,7 +22,11 @@ include_once dirname(dirname(__DIR__)) . '/mainfile.php';
 if (!is_object($GLOBALS['xoopsUser'])) {
     redirect_header(XOOPS_URL, 3, _NOPERM);
 }
-$valid_op_requests = array('out', 'save', 'in');
+$valid_op_requests = array(
+    'out',
+    'save',
+    'in',
+);
 $_REQUEST['op']    = !empty($_REQUEST['op']) && in_array($_REQUEST['op'], $valid_op_requests) ? $_REQUEST['op'] : 'in';
 $msg_id            = empty($_REQUEST['msg_id']) ? 0 : (int)$_REQUEST['msg_id'];
 $pm_handler        = xoops_getModuleHandler('message');
@@ -93,8 +97,8 @@ if (is_object($pm) && !empty($_POST['action'])) {
     $res_message = isset($res_message) ? $res_message : ($res ? _PM_ACTION_DONE : _PM_ACTION_ERROR);
     redirect_header('viewpmsg.php?op=' . htmlspecialchars($_REQUEST['op']), 2, $res_message);
 }
-$start                        = !empty($_GET['start']) ? (int)$_GET['start'] : 0;
-$total_messages               = !empty($_GET['total_messages']) ? (int)$_GET['total_messages'] : 0;
+$start                                   = !empty($_GET['start']) ? (int)$_GET['start'] : 0;
+$total_messages                          = !empty($_GET['total_messages']) ? (int)$_GET['total_messages'] : 0;
 $GLOBALS['xoopsOption']['template_main'] = 'pm_readpmsg.tpl';
 include $GLOBALS['xoops']->path('header.php');
 

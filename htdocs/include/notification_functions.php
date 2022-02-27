@@ -138,7 +138,7 @@ function &notificationCommentCategoryInfo($module_id = null)
  * @param  string $category_name Category name
  * @param  bool   $enabled_only  If true, return only enabled events
  * @param  int    $module_id     ID of the module (default current module)
- * @return mixed
+ * @return array
  */
 function &notificationEvents($category_name, $enabled_only, $module_id = null)
 {
@@ -238,7 +238,8 @@ function &notificationEvents($category_name, $enabled_only, $module_id = null)
                     'description'       => _NOT_COMMENT_NOTIFYDSC,
                     'mail_template_dir' => $mail_template_dir,
                     'mail_template'     => 'comment_notify',
-                    'mail_subject'      => _NOT_COMMENT_NOTIFYSBJ);
+                    'mail_subject'      => _NOT_COMMENT_NOTIFYSBJ,
+                );
                 if (!$enabled_only || notificationEventEnabled($category, $event, $module)) {
                     $event_array[] = $event;
                 }
@@ -253,7 +254,8 @@ function &notificationEvents($category_name, $enabled_only, $module_id = null)
                     'mail_template_dir' => $mail_template_dir,
                     'mail_template'     => 'commentsubmit_notify',
                     'mail_subject'      => _NOT_COMMENTSUBMIT_NOTIFYSBJ,
-                    'admin_only'        => 1);
+                    'admin_only'        => 1,
+                );
                 if (!$enabled_only || notificationEventEnabled($category, $event, $module)) {
                     $event_array[] = $event;
                 }
@@ -270,7 +272,8 @@ function &notificationEvents($category_name, $enabled_only, $module_id = null)
                 'category'    => $category['name'],
                 'title'       => _NOT_BOOKMARK_NOTIFY,
                 'caption'     => _NOT_BOOKMARK_NOTIFYCAP,
-                'description' => _NOT_BOOKMARK_NOTIFYDSC);
+                'description' => _NOT_BOOKMARK_NOTIFYDSC,
+            );
             if (!$enabled_only || notificationEventEnabled($category, $event, $module)) {
                 $event_array[] = $event;
             }
@@ -336,7 +339,7 @@ function &notificationEventInfo($category_name, $event_name, $module_id = null)
  * for the selected module.
  *
  * @param  int $module_id ID of the module
- * @return mixed
+ * @return array
  */
 
 function &notificationSubscribableCategoryInfo($module_id = null)

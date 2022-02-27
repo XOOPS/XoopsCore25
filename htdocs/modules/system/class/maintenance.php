@@ -25,7 +25,13 @@
  */
 class SystemMaintenance
 {
+    /**
+     * @var \XoopsMySQLDatabase
+     */
     public $db;
+    /**
+     * @var string
+     */
     public $prefix;
 
     /**
@@ -44,7 +50,6 @@ class SystemMaintenance
      *
      * @param bool $array
      *
-     * @internal param $array
      * @return array|string
      */
     public function displayTables($array = true)
@@ -82,7 +87,7 @@ class SystemMaintenance
      *
      * @author slider84 of Team FrXoops
      *
-     * @return boolean
+     * @return bool
      */
     public function CleanAvatar()
     {

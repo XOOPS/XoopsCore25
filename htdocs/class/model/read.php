@@ -30,8 +30,8 @@ class XoopsModelRead extends XoopsModelAbstract
     /**
      * get all objects matching a condition
      *
-     * @param  CriteriaElement|CriteriaCompo $criteria  {@link CriteriaElement} to match
-     * @param  array           $fields    variables to fetch
+     * @param \CriteriaElement|CriteriaCompo|null $criteria  {@link CriteriaElement} to match
+     * @param  array|null      $fields    variables to fetch
      * @param  bool            $asObject  flag indicating as object, otherwise as array
      * @param  bool            $id_as_key use the ID as key for the array
      * @return array           of objects/array {@link XoopsObject}
@@ -95,7 +95,7 @@ class XoopsModelRead extends XoopsModelAbstract
      *
      * For performance consideration, getAll() is recommended
      *
-     * @param  CriteriaElement $criteria  {@link CriteriaElement} conditions to be met
+     * @param \CriteriaElement|null $criteria  {@link CriteriaElement} conditions to be met
      * @param  bool            $id_as_key use the ID as key for the array
      * @param  bool            $as_object return an array of objects?
      * @return array
@@ -110,7 +110,7 @@ class XoopsModelRead extends XoopsModelAbstract
     /**
      * Retrieve a list of objects data
      *
-     * @param  CriteriaElement $criteria {@link CriteriaElement} conditions to be met
+     * @param \CriteriaElement|null $criteria {@link CriteriaElement} conditions to be met
      * @param  int             $limit    Max number of objects to fetch
      * @param  int             $start    Which record to start at
      * @return array
@@ -152,7 +152,7 @@ class XoopsModelRead extends XoopsModelAbstract
     /**
      * get IDs of objects matching a condition
      *
-     * @param  CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement} to match
+     * @param  \CriteriaElement|CriteriaCompo|null $criteria {@link CriteriaElement} to match
      * @return array           of object IDs
      */
     public function &getIds(CriteriaElement $criteria = null)
@@ -182,8 +182,8 @@ class XoopsModelRead extends XoopsModelAbstract
      *
      * @param  int             $limit    Max number of objects to fetch
      * @param  int             $start    Which record to start at
-     * @param  CriteriaElement $criteria {@link CriteriaElement} to match
-     * @param  array           $fields   variables to fetch
+     * @param \CriteriaElement|null $criteria {@link CriteriaElement} to match
+     * @param  array|null      $fields   variables to fetch
      * @param  bool            $asObject flag indicating as object, otherwise as array
      * @return array           of objects    {@link XoopsObject}
      */

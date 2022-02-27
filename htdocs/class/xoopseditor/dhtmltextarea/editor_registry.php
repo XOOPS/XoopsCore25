@@ -1,4 +1,5 @@
 <?php
+
 /**
  * XOOPS editor
  *
@@ -22,4 +23,5 @@ return $config = array(
     'file'   => XOOPS_ROOT_PATH . '/class/xoopseditor/dhtmltextarea/dhtmltextarea.php',
     'title'  => _XOOPS_EDITOR_DHTMLTEXTAREA,
     'order'  => 2,
-    'nohtml' => 1);
+    'nohtml' => 1,
+);

@@ -123,7 +123,7 @@ class XoopsRankHandler extends XoopsObjectHandler
     /**
      * Get List
      *
-     * @param  CriteriaElement $criteria
+     * @param \CriteriaElement|null $criteria
      * @param  int             $limit
      * @param  int             $start
      * @return array
@@ -218,7 +218,7 @@ class XoUserHandler extends XoopsObjectHandler
     /**
      * Get Count
      *
-     * @param  CriteriaElement $criteria
+     * @param \CriteriaElement|null $criteria
      * @param  array           $groups
      * @return int
      */
@@ -249,7 +249,7 @@ class XoUserHandler extends XoopsObjectHandler
     /**
      * GetAll
      *
-     * @param  CriteriaElement $criteria
+     * @param \CriteriaElement|null $criteria
      * @param  array           $groups
      * @return array of matching objects
      */

@@ -54,7 +54,7 @@ class Zipfile
     /**
      * Last offset position
      *
-     * @var integer $old_offset
+     * @var int $old_offset
      */
     public $old_offset = 0;
 
@@ -64,7 +64,7 @@ class Zipfile
      *
      * @param int $unixtime the current Unix timestamp
      *
-     * @return integer the current date in a four byte DOS format
+     * @return int the current date in a four byte DOS format
      * @access   private
      */
     public function unix2DosTime($unixtime = 0)
@@ -87,7 +87,7 @@ class Zipfile
      *
      * @param string  $data file contents
      * @param string  $name name of the file in the archive (may contains the path)
-     * @param integer $time the current timestamp
+     * @param int $time the current timestamp
      * @access   public
      */
     public function addFile($data, $name, $time = 0)

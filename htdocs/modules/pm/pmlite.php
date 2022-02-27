@@ -94,7 +94,7 @@ if ($op === 'submit') {
         echo "<br><a href=\"javascript:window.close();\">" . _PM_ORCLOSEWINDOW . '</a>';
     }
 } elseif ($reply == 1 || $send == 1 || $send2 == 1 || $sendmod == 1) {
-	$subject = '';
+    $subject = '';
     $message = '';
     if ($reply == 1) {
         $pm_handler = xoops_getModuleHandler('message', 'pm');
@@ -102,8 +102,8 @@ if ($op === 'submit') {
         if ($pm->getVar('to_userid') == $GLOBALS['xoopsUser']->getVar('uid')) {
             $pm_uname = XoopsUser::getUnameFromId($pm->getVar('from_userid'));
             $message  = "[quote]\n";
-            $message .= sprintf(_PM_USERWROTE, $pm_uname);
-            $message .= "\n" . $pm->getVar('msg_text', 'E') . "\n[/quote]";
+            $message  .= sprintf(_PM_USERWROTE, $pm_uname);
+            $message  .= "\n" . $pm->getVar('msg_text', 'E') . "\n[/quote]";
         } else {
             unset($pm);
             $reply = $send2 = 0;
@@ -138,11 +138,11 @@ if ($op === 'submit') {
     }
     $pmform->addElement(new XoopsFormText(_PM_SUBJECTC, 'subject', 30, 100, $subject), true);
 
-    $msg_image   = '';
-    $icons_radio = new XoopsFormRadio(_MESSAGEICON, 'msg_image', $msg_image);
+    $msg_image     = '';
+    $icons_radio   = new XoopsFormRadio(_MESSAGEICON, 'msg_image', $msg_image);
     $subjectImages = array();
     foreach ($subject_icons as $name => $value) {
-        $subjectImages[$name] = '<img src="' . XOOPS_URL . '/images/subject/' . $value .'">';
+        $subjectImages[$name] = '<img src="' . XOOPS_URL . '/images/subject/' . $value . '">';
     }
     $icons_radio->addOptionArray($subjectImages);
     $pmform->addElement($icons_radio);

@@ -183,7 +183,9 @@ class XoopsFormCheckBox extends XoopsFormElement
      */
     public function render()
     {
-        return XoopsFormRenderer::getInstance()->get()->renderFormCheckBox($this);
+        return XoopsFormRenderer::getInstance()
+                                ->get()
+                                ->renderFormCheckBox($this);
     }
 
     /**

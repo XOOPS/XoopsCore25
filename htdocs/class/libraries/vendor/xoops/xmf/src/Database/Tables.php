@@ -640,9 +640,9 @@ class Tables
      *
      * @param string  $table      table
      * @param array   $columns    array of 'column'=>'value' entries
-     * @param boolean $quoteValue true to quote values, false if caller handles quoting
+     * @param bool $quoteValue true to quote values, false if caller handles quoting
      *
-     * @return boolean true if no errors, false if errors encountered
+     * @return bool true if no errors, false if errors encountered
      */
     public function insert($table, $columns, $quoteValue = true)
     {
@@ -673,9 +673,9 @@ class Tables
      * @param string                 $table      table
      * @param array                  $columns    array of 'column'=>'value' entries
      * @param string|CriteriaElement $criteria   string where clause or object criteria
-     * @param boolean                $quoteValue true to quote values, false if caller handles quoting
+     * @param bool                $quoteValue true to quote values, false if caller handles quoting
      *
-     * @return boolean true if no errors, false if errors encountered
+     * @return bool true if no errors, false if errors encountered
      */
     public function update($table, $columns, $criteria, $quoteValue = true)
     {

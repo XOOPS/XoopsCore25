@@ -16,10 +16,10 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_ADMIN')):
     defined('FRAMEWORKS_ART_FUNCTIONS_INI') || include_once __DIR__ . '/functions.ini.php';
 
     /**
-     * @param        $currentoption
+     * @param int    $currentoption
      * @param string $breadcrumb
      *
-     * @return bool
+     * @return bool|null
      */
     function loadModuleAdminMenu($currentoption = -1, $breadcrumb = '')
     {

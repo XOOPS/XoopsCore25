@@ -29,11 +29,24 @@ class XoopsObjectTree
 {
     /**
      * @access private
+     * @var string
      */
     protected $parentId;
+    /**
+     * @var string
+     */
     protected $myId;
+    /**
+     * @var string
+     */
     protected $rootId;
+    /**
+     * @var array
+     */
     protected $tree = array();
+    /**
+     * @var array
+     */
     protected $objects;
 
     /**
@@ -44,7 +57,7 @@ class XoopsObjectTree
      * @param string $parentId  field name of parent object ID
      * @param string $rootId    field name of root object ID
      */
-    public function __construct(&$objectArr, $myId, $parentId, $rootId = null)
+    public function __construct(array &$objectArr, $myId, $parentId, $rootId = null)
     {
         $this->objects = $objectArr;
         $this->myId     = $myId;
@@ -198,7 +211,7 @@ class XoopsObjectTree
      * @param  string  $prefix         String to indent deeper levels
      * @param  string  $selected       Value to display as selected
      * @param  bool    $addEmptyOption Set TRUE to add an empty option with value "0" at the top of the hierarchy
-     * @param  integer $key            ID of the object to display as the root of select options
+     * @param int $key            ID of the object to display as the root of select options
      * @param  string  $extra
      * @return string  HTML select box
      *
@@ -233,7 +246,7 @@ class XoopsObjectTree
      * @param  string  $prefix         String to indent deeper levels
      * @param  string  $selected       Value to display as selected
      * @param  bool    $addEmptyOption Set TRUE to add an empty option with value "0" at the top of the hierarchy
-     * @param  integer $key            ID of the object to display as the root of select options
+     * @param int $key            ID of the object to display as the root of select options
      * @param  string  $extra          extra content to add to the element
      * @param  string  $caption        optional caption for form element
      *
@@ -298,7 +311,7 @@ class XoopsObjectTree
      * @param string $name unknown variable name requested
      *                      currently only '_tree' is supported
      *
-     * @return mixed value
+     * @return array|null value
      */
     public function __get($name)
     {
@@ -310,7 +323,8 @@ class XoopsObjectTree
         trigger_error(
             'Undefined property: XoopsObjectTree::$' . $name .
             " in {$trace[0]['file']} line {$trace[0]['line']}, ",
-            E_USER_NOTICE);
+            E_USER_NOTICE
+        );
         return null;
     }
 }

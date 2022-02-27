@@ -1,4 +1,5 @@
 <?php
+
 /**
  * XOOPS page navigation
  *
@@ -29,10 +30,20 @@ class XoopsPageNav
      * *#@+
      *
      * @access private
+     * @var int
      */
     public $total;
+    /**
+     * @var int
+     */
     public $perpage;
+    /**
+     * @var int
+     */
     public $current;
+    /**
+     * @var string
+     */
     public $url;
     /**
      * *#@-
@@ -62,7 +73,7 @@ class XoopsPageNav
     /**
      * Create text navigation
      *
-     * @param  integer $offset
+     * @param int $offset
      * @return string
      */
     public function renderNav($offset = 4)
@@ -125,7 +136,7 @@ class XoopsPageNav
     /**
      * Create a navigational dropdown list
      *
-     * @param  boolean $showbutton Show the "Go" button?
+     * @param  bool $showbutton Show the "Go" button?
      * @return string
      */
     public function renderSelect($showbutton = false)
@@ -160,7 +171,7 @@ class XoopsPageNav
     /**
      * Create navigation with images
      *
-     * @param  integer $offset
+     * @param int $offset
      * @return string
      */
     public function renderImageNav($offset = 4)
@@ -234,7 +245,8 @@ class XoopsPageNav
      * @param  array $navigation
      * @return string
      */
-	private function displayPageNav($type = 'nav', $navigation = array()){
+    private function displayPageNav($type = 'nav', array $navigation = array())
+    {
 		if (!isset($GLOBALS['xoTheme']) || !is_object($GLOBALS['xoTheme'])) {
 			include_once $GLOBALS['xoops']->path('/class/theme.php');
 			$GLOBALS['xoTheme'] = new \xos_opal_Theme();
@@ -244,7 +256,6 @@ class XoopsPageNav
 		$pageNavTpl->assign('pageNavType', $type);
 		$pageNavTpl->assign('pageNavigation', $navigation);
 		
-		return $pageNavTpl->fetch("db:system_pagenav.tpl");
-		
+        return $pageNavTpl->fetch('db:system_pagenav.tpl');		
 	}
 }

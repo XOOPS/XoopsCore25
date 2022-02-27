@@ -79,7 +79,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      *
      * @param bool $isNew Flag the new objects as "new"?
      *
-     * @return object {@link ProfileProfile}
+     * @return \ProfileProfile {@link ProfileProfile}
      */
     public function create($isNew = true)
     {
@@ -98,17 +98,17 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      * We will create an empty profile if none exists. This behavior allows user objects
      * created outside of profile to be edited correctly in the profile module.
      *
-     * @param integer|null  $uid
+     * @param integer|null  $id
      * @param string[]|null $fields array of field names to fetch, null for all
      *
-     * @return object {@link ProfileProfile}
+     * @return \XoopsObject|null {@link ProfileProfile}
      *
      * @internal This was get($uid, $createOnFailure = true). No callers found using the extra parameter.
      * @internal Modified to match parent signature.
      */
-    public function get($uid = null, $fields = null)
+    public function get($id = null, $fields = null)
     {
-        $obj = parent::get($uid, $fields);
+        $obj = parent::get($id, $fields);
         if (!is_object($obj)) {
             $obj = $this->create();
         }
@@ -121,7 +121,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      *
      * @param bool $isNew
      *
-     * @return ProfileField
+     * @return \ProfileField
      */
     public function createField($isNew = true)
     {
@@ -247,25 +247,25 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
     /**
      * insert a new object in the database
      *
-     * @param XoopsObject|ProfileProfile $obj   reference to the object
+     * @param XoopsObject|ProfileProfile $object reference to the object
      * @param bool                       $force whether to force the query execution despite security settings
      *
      * @return bool FALSE if failed, TRUE if already present and unchanged or successful
      */
-    public function insert(XoopsObject $obj, $force = false)
+    public function insert(XoopsObject $object, $force = false)
     {
-        if (!($obj instanceof $this->className)) {
+        if (!($object instanceof $this->className)) {
             return false;
         }
         $uservars = $this->getUserVars();
         foreach ($uservars as $var) {
-            unset($obj->vars[$var]);
+            unset($object->vars[$var]);
         }
-        if (count($obj->vars) == 0) {
+        if (count($object->vars) == 0) {
             return true;
         }
 
-        return parent::insert($obj, $force);
+        return parent::insert($object, $force);
     }
 
     /**
@@ -283,7 +283,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      *
      * @param CriteriaElement $criteria   CriteriaElement
      * @param array           $searchvars Fields to be fetched
-     * @param array           $groups     for Usergroups is selected (only admin!)
+     * @param array|null      $groups     for Usergroups is selected (only admin!)
      *
      * @return array
      */
@@ -324,7 +324,11 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
         $result    = $this->db->query($sql_users, $limit, $start);
 
         if (!$result) {
-            return array(array(), array(), 0);
+            return array(
+                array(),
+                array(),
+                0,
+            );
         }
         $user_handler = xoops_getHandler('user');
         $uservars     = $this->getUserVars();
@@ -352,6 +356,10 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
             list($count) = $this->db->fetchRow($result);
         }
 
-        return array($users, $profiles, (int)$count);
+        return array(
+            $users,
+            $profiles,
+            (int)$count,
+        );
     }
 }

@@ -8,6 +8,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
+
 /**
  * Installer database configuration page
  *
@@ -25,7 +26,7 @@
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  **/
 
-require_once './include/common.inc.php';
+require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 $pageHasForm = true;
@@ -34,7 +35,12 @@ $pageHasHelp = true;
 $vars =& $_SESSION['settings'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $params = array('DB_TYPE', 'DB_HOST', 'DB_USER', 'DB_PASS');
+    $params = array(
+        'DB_TYPE',
+        'DB_HOST',
+        'DB_USER',
+        'DB_PASS',
+    );
     foreach ($params as $name) {
         $vars[$name] = $_POST[$name];
     }
@@ -45,9 +51,9 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($vars['DB_HOST']) && !empty($vars['DB_USER'])) {
     $hostConnectPrefix = empty($vars['DB_PCONNECT']) ? '' : 'p:';
     mysqli_report(MYSQLI_REPORT_OFF);
-    $link = new mysqli($hostConnectPrefix.$vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS']);
+    $link = new mysqli($hostConnectPrefix . $vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS']);
     if (0 !== $link->connect_errno) {
-        $error = ERR_NO_DBCONNECTION .' (' . $link->connect_errno . ') ' . $link->connect_error;
+        $error = ERR_NO_DBCONNECTION . ' (' . $link->connect_errno . ') ' . $link->connect_error;
     }
     if (empty($error)) {
         $wizard->redirectToPage('+1');
@@ -58,11 +64,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($vars['DB_HOST']) && !empty(
 if (@empty($vars['DB_HOST'])) {
     // Fill with default values
     $vars = array_merge($vars, array(
-                                 'DB_TYPE'     => 'mysql',
-                                 'DB_HOST'     => 'localhost',
-                                 'DB_USER'     => '',
-                                 'DB_PASS'     => '',
-                                 'DB_PCONNECT' => 0));
+        'DB_TYPE' => 'mysql',
+        'DB_HOST' => 'localhost',
+        'DB_USER' => '',
+        'DB_PASS' => '',
+        'DB_PCONNECT' => 0,
+    ));
 }
 ob_start();
 ?>
@@ -90,4 +97,4 @@ ob_start();
 <?php
 $content = ob_get_contents();
 ob_end_clean();
-include './include/install_tpl.php';
+include __DIR__ . '/include/install_tpl.php';

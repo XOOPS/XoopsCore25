@@ -18,7 +18,7 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_CONFIG')):
      *
      *
      * @param    string $dirname module dirname
-     * @return    array
+     * @return array|null
      */
     function mod_loadConfig($dirname = '')
     {
@@ -50,7 +50,7 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_CONFIG')):
     /**
      * @param string $dirname
      *
-     * @return array
+     * @return array|null
      */
     function mod_loadConfg($dirname = '')
     {
@@ -62,7 +62,7 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_CONFIG')):
      *
      *
      * @param    string $dirname module dirname
-     * @return    array
+     * @return array|null
      */
     function mod_fetchConfig($dirname = '')
     {
@@ -93,7 +93,7 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_CONFIG')):
     /**
      * @param string $dirname
      *
-     * @return array
+     * @return array|null
      */
     function mod_fetchConfg($dirname = '')
     {

@@ -32,8 +32,8 @@
       <{$smarty.const._MD_LEXIKON_DEFS}><{$publishedwords}><br>
       <{if $multicats == 1}><{$smarty.const._MD_LEXIKON_CATS}><{$totalcats}><br><{/if}>
       <div style="padding-top: 10px">
-        <input class="btn btn-success btn-sm" type="button" value="<{$smarty.const._MD_LEXIKON_SUBMITENTRY}>" onclick="location.href = 'submit.php'"/>
-        <input class="btn btn-info btn-sm" type="button" value="<{$smarty.const._MD_LEXIKON_REQUESTDEF}>" onclick="location.href = 'request.php' "/>
+        <input class="btn btn-success btn-sm" type="button" value="<{$smarty.const._MD_LEXIKON_SUBMITENTRY}>" onclick="location.href = 'submit.php'">
+        <input class="btn btn-info btn-sm" type="button" value="<{$smarty.const._MD_LEXIKON_REQUESTDEF}>" onclick="location.href = 'request.php' ">
       </div>
     </div>
   </div>
@@ -272,7 +272,7 @@
 <{if $syndication == true}>
     <div align="center" class="clearer" style="padding: 4px;"><br><br>
         <a href="rss.php" title="recent glossary definitions">
-            <img src="assets/images/rss.gif" ALT="RSS" border="0"/>
+            <img src="assets/images/rss.gif" ALT="RSS" border="0">
         </a>
     </div>
 <{/if}>

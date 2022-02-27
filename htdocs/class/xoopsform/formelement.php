@@ -116,6 +116,7 @@ class XoopsFormElement
      * Get form type
      *
      * @deprecated  PLEASE AVOID USING THIS METHOD
+     * @var string
      */
     public $_formtype = '';
 
@@ -157,7 +158,7 @@ class XoopsFormElement
     public function getName($encode = true)
     {
         if (false !== (bool)$encode) {
-            return str_replace('&amp;', '&', htmlspecialchars($this->_name, ENT_QUOTES));
+            return str_replace('&amp;', '&', htmlspecialchars(isset($this->_name) ? $this->_name : '', ENT_QUOTES));
         }
 
         return $this->_name;
@@ -372,7 +373,7 @@ class XoopsFormElement
      * Get the element's nocolspan
      * Modified by Catzwolf
      *
-     * @return string|bool
+     * @return bool
      *
      * @deprecated  PLEASE AVOID USING THIS METHOD
      */

@@ -27,17 +27,45 @@ $xoopsLogger->activated = false;
  */
 class XoopsCaptchaImageHandler
 {
+    /**
+     * @var array
+     */
     public $config  = array();
+    /**
+     * @var mixed
+     */
     public $code;
+    /**
+     * @var string
+     */
     public $mode    = 'gd';
+    /**
+     * @var bool
+     */
     public $invalid = false;
-
-    public $oImage;
+    /**
+     * @var mixed
+     */
+    public $oImage; //mb TODO resource|GdImage|false ??
+    /**
+     * @var string
+     */
     public $font;
+    /**
+     * @var int
+     */
     public $spacing;
+    /**
+     * @var int
+     */
     public $width;
+    /**
+     * @var int
+     */
     public $height;
-
+    /**
+     * @var \XoopsCaptcha
+     */
     public $captchaHandler;
 
     /**
@@ -58,6 +86,7 @@ class XoopsCaptchaImageHandler
 
     /**
      * Create Code
+     * @return bool
      */
     public function generateCode()
     {
@@ -388,7 +417,7 @@ class XoopsCaptchaImageHandler
      *
      *  TODO
      * @param  string $file
-     * @return string
+     * @return string|null
      */
     public function createImageBmp($file = '')
     {

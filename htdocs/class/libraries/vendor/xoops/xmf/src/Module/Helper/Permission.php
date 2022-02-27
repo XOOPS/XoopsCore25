@@ -191,7 +191,7 @@ class Permission extends AbstractHelper
      * @param string $gperm_name   name of the permission to test
      * @param int    $gperm_itemid id of the object to check
      * @param string $caption      caption for form field
-     * @param string $name         name/id of form field
+     * @param string|null $name         name/id of form field
      * @param bool   $include_anon true to include anonymous group
      * @param int    $size         size of list
      * @param bool   $multiple     true to allow multiple selections
@@ -248,7 +248,7 @@ class Permission extends AbstractHelper
     /**
      * Get any groups associated with the current user
      *
-     * @return int|int[] group id(s)
+     * @return int[]|string group id(s)
      */
     protected function getUserGroups()
     {

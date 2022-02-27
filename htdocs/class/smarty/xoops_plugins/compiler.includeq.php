@@ -39,8 +39,8 @@
  * mechanism and thus makes templates inclusion faster. Note that however, this new behavior may
  * create problems in some cases (but you can prevent them most of the times, for example by always
  * using a <var>tmp_</var> prefix for the variables you create in included templates looping sections).
- * @param $tag_args
- * @param $comp
+ * @param string $tag_args
+ * @param Smarty_Compiler $comp
  * @return string
  */
 function smarty_compiler_includeq($tag_args, &$comp)
@@ -74,7 +74,7 @@ function smarty_compiler_includeq($tag_args, &$comp)
 
     //$output .= "\$_smarty_tpl_vars = \$this->_tpl_vars;\n";
     $_params = "array('smarty_include_tpl_file' => " . $include_file . ", 'smarty_include_vars' => array(" . implode(',', (array)$arg_list) . '))';
-    $output .= "\$this->_smarty_include($_params);\n";
+    $output  .= "\$this->_smarty_include($_params);\n";
     //"\$this->_tpl_vars = \$_smarty_tpl_vars;\n" .
     //"unset(\$_smarty_tpl_vars);\n";
 

@@ -43,7 +43,8 @@ class XoopsCaptchaImage extends XoopsCaptchaMethod
                 'imagefilledrectangle',
                 'imagejpeg',
                 'imagedestroy',
-                'imageftbbox');
+                'imageftbbox',
+            );
             foreach ($required_functions as $func) {
                 if (!function_exists($func)) {
                     trigger_error('Function ' . $func . ' is not defined', E_USER_WARNING);
@@ -59,7 +60,7 @@ class XoopsCaptchaImage extends XoopsCaptchaMethod
     /**
      * XoopsCaptchaImage::render()
      *
-     * @return string|void
+     * @return string
      */
     public function render()
     {

@@ -133,7 +133,7 @@ class XoopsFormRendererLegacy implements XoopsFormRendererInterface
     public function renderFormColorPicker(XoopsFormColorPicker $element)
     {
         if (isset($GLOBALS['xoTheme'])) {
-            $GLOBALS['xoTheme']->addScript("browse.php?Frameworks/jquery/jquery.js");
+            $GLOBALS['xoTheme']->addScript('browse.php?Frameworks/jquery/jquery.js');
             $GLOBALS['xoTheme']->addScript('include/spectrum.js');
             $GLOBALS['xoTheme']->addStylesheet('include/spectrum.css');
         } else {
@@ -173,7 +173,7 @@ class XoopsFormRendererLegacy implements XoopsFormRendererInterface
             } else {
                 $GLOBALS['xoTheme']->addScript('/class/textsanitizer/image/image.js', array('type' => 'text/javascript'));
             }
-            $button = "<button type='button' class='btn btn-primary' onclick=\"form_instantPreview('" . XOOPS_URL . "', '" . $element->getName() . "','" . XOOPS_URL . "/images', " . (int)$element->doHtml . ", '" . $GLOBALS['xoopsSecurity']->createToken() . "')\" title='" . _PREVIEW . "'>" . _PREVIEW . "</button>";
+            $button = "<button type='button' class='btn btn-primary' onclick=\"form_instantPreview('" . XOOPS_URL . "', '" . $element->getName() . "','" . XOOPS_URL . "/images', " . (int)$element->doHtml . ", '" . $GLOBALS['xoopsSecurity']->createToken() . "')\" title='" . _PREVIEW . "'>" . _PREVIEW . '</button>';
 
             $ret .= '<br>' . "<div id='" . $element->getName() . "_hidden' style='display: block;'> " . '   <fieldset>' . '       <legend>' . $button . '</legend>' . "       <div id='" . $element->getName() . "_hidden_data'>" . _XOOPS_FORM_PREVIEW_CONTENT . '</div>' . '   </fieldset>' . '</div>';
         }
@@ -263,7 +263,8 @@ EOJS;
             'Helvetica',
             'Impact',
             'Verdana',
-            'Haettenschweiler');
+            'Haettenschweiler',
+        );
         foreach ($fontarray as $font) {
             $fontStr .= " + '<option value=\'{$font}\'>{$font}</option>'";
         }
@@ -278,7 +279,7 @@ EOJS;
                     }
                 }
                 _editor_dialog += '</select>'";
-        $fontStr .= ";";
+        $fontStr .= ';';
         $fontStr .= 'document.write(_editor_dialog); </script>';
 
         $styleStr  = "<button type='button' class='btn btn-default' onclick='xoopsMakeBold(\"{$hiddentext}\", \"{$textarea_id}\");' title='" . _XOOPS_FORM_ALT_BOLD . "' aria-label='Left Align'><span class='fa fa-bold' aria-hidden='true'></span></button>";

@@ -47,7 +47,7 @@
                 </li>
 
                 <{if $video.useradminvideo}>
-                    <li><i class="glyphicon glyphicon-edit"></i><{$video.usermodify}></li>
+                    <li><i class="glyphicon glyphicon-edit"></i><{$video.usermodify|default:false}></li>
                 <{/if}>
 
                 <li><i class="glyphicon glyphicon-share-alt"></i>
@@ -96,7 +96,7 @@
             <{/if}>
         </div>
 
-        <div class="col-md-12 text-center xoopstube-credits"><em><{$lang_copyright}></em></div>
+        <div class="col-md-12 text-center xoopstube-credits"><em><{$lang_copyright|default:''}></em></div>
 
         <div class="col-md-12">
             <{if $video.showsbookmarx > 0}>

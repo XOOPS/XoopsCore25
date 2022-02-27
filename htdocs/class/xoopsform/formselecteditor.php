@@ -26,24 +26,37 @@ xoops_load('XoopsFormElementTray');
  */
 class XoopsFormSelectEditor extends XoopsFormElementTray
 {
+    /**
+     * @var array
+     */
     public $allowed_editors = array();
+    /**
+     * @var string
+     */
     public $form;
+    /**
+     * @var string|null
+     */
     public $value;
+    /**
+     * @var string
+     */
     public $name;
+    /**
+     * @var bool
+     */
     public $nohtml;
 
     /**
      * Constructor
      *
-     * @param string    $form  the form calling the editor selection
+     * @param XoopsForm $form  the form calling the editor selection
      * @param string    $name  editor name
      * @param string    $value Pre-selected text value
      * @param bool      $nohtml
      * @param array     $allowed_editors
-     *
      */
-
-    public function __construct($form, $name = 'editor', $value = null, $nohtml = false, $allowed_editors = array())
+    public function __construct($form, $name = 'editor', $value = null, $nohtml = false, array $allowed_editors = array())
     {
         parent::__construct(_SELECT);
         $this->allowed_editors = $allowed_editors;

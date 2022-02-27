@@ -96,7 +96,7 @@ class XoopsImageSetHandler extends XoopsObjectHandler
     /**
      * Create a new {@link XoopsImageSet}
      *
-     * @param  boolean $isNew Flag the object as "new"
+     * @param  bool $isNew Flag the object as "new"
      * @return XoopsImageSet
      **/
     public function create($isNew = true)
@@ -114,12 +114,12 @@ class XoopsImageSetHandler extends XoopsObjectHandler
      *
      * @param int $id ID
      *
+     * @return false|\XoopsImageSet {@link XoopsImageSet}, FALSE on fail
      * @internal param bool $getbinary
-     * @return XoopsImageSet|false {@link XoopsImageSet}, FALSE on fail
      */
     public function get($id)
     {
-        $id     = (int)$id;
+        $id = (int)$id;
         $imgset = false;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('imgset') . ' WHERE imgset_id=' . $id;
@@ -128,7 +128,7 @@ class XoopsImageSetHandler extends XoopsObjectHandler
             }
             $numrows = $this->db->getRowsNum($result);
             if ($numrows == 1) {
-                $imgset = new XoopsImageSet();
+                $imgset = new \XoopsImageSet();
                 $imgset->assignVars($this->db->fetchArray($result));
             }
         }
@@ -203,7 +203,7 @@ class XoopsImageSetHandler extends XoopsObjectHandler
      * Load {@link XoopsImageSet}s from the database
      *
      * @param CriteriaElement|CriteriaCompo $criteria  {@link CriteriaElement}
-     * @param boolean         $id_as_key Use the ID as key into the array
+     * @param bool                          $id_as_key Use the ID as key into the array
      * @internal param bool $getbinary
      * @return array Array of {@link XoopsImageSet} objects
      */

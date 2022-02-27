@@ -32,6 +32,9 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class xos_opal_ThemeFactory
 {
+    /**
+     * @var string
+     */
     public $xoBundleIdentifier = 'xos_opal_ThemeFactory';
     /**
      * Currently enabled themes (if empty, all the themes in themes/ are allowed)
@@ -139,7 +142,8 @@ class xos_opal_AdminThemeFactory extends xos_opal_ThemeFactory
                                     'theme_icons' => $inst->url . '/icons',
                                     'theme_css'   => $inst->url . '/css',
                                     'theme_js'    => $inst->url . '/js',
-                                    'theme_lang'  => $inst->url . '/language'));
+                                    'theme_lang'  => $inst->url . '/language',
+                                ));
 
         return $inst;
     }
@@ -168,6 +172,9 @@ class xos_opal_Theme
      * @var string
      */
     public $path = '';
+    /**
+     * @var string
+     */
     public $url  = '';
 
     /**
@@ -196,8 +203,13 @@ class xos_opal_Theme
      * @var string
      */
     public $contentTemplate = '';
-
+    /**
+     * @var int
+     */
     public $contentCacheLifetime = 0;
+    /**
+     * @var int
+     */
     public $contentCacheId;
 
     /**
@@ -212,15 +224,17 @@ class xos_opal_Theme
      * @var array
      * @access public
      */
-    public $plugins     = array(
-        'xos_logos_PageBuilder');
+    public $plugins = array('xos_logos_PageBuilder');
+    /**
+     * @var int
+     */
     public $renderCount = 0;
     /**
      * Pointer to the theme template engine
      *
      * @var XoopsTpl
      */
-    public $template = false;
+    public $template = false; //mb TODO - shouldn't it be null, since it is XoopsTpl?
 
     /**
      * Array containing the document meta-information
@@ -233,8 +247,8 @@ class xos_opal_Theme
         //    'Content-Style-Type' => 'text/css') ,
         'meta'   => array(),
         'link'   => array(),
-        'script' => array());
-
+        'script' => array(),
+    );
     /**
      * Array of strings to be inserted in the head tag of HTML documents
      *
@@ -251,7 +265,7 @@ class xos_opal_Theme
     /**
      * User extra information for cache id, like language, user groups
      *
-     * @var boolean
+     * @var bool
      */
     public $use_extra_cache_id = true;
 
@@ -311,8 +325,8 @@ class xos_opal_Theme
             $xoops_startpage = 'system';
         }
         // call the theme_autorun.php if the theme has one
-        if (file_exists($this->path . "/theme_autorun.php")) {
-            include_once($this->path . "/theme_autorun.php");
+        if (file_exists($this->path . '/theme_autorun.php')) {
+            include_once($this->path . '/theme_autorun.php');
         }
 
         $searchConfig = $configHandler->getConfigsByCat(XOOPS_CONF_SEARCH);
@@ -446,7 +460,7 @@ class xos_opal_Theme
             $uri                            = str_replace(XOOPS_URL, '', $_SERVER['REQUEST_URI']);
             // Clean uri by removing session id
             if (defined('SID') && SID && strpos($uri, SID)) {
-                $uri = preg_replace("/([\?&])(" . SID . "$|" . SID . '&)/', "\\1", $uri);
+                $uri = preg_replace('/([\?&])(' . SID . '$|' . SID . '&)/', "\\1", $uri);
             }
             $this->contentCacheId = $this->generateCacheId('page_' . substr(md5($uri), 0, 8));
             if ($this->template->is_cached($template, $this->contentCacheId)) {
@@ -470,9 +484,9 @@ class xos_opal_Theme
      * If render() hasn't been called before, the theme defaults will be used for the canvas and
      * page template (and xoopsOption['template_main'] for the content).
      *
-     * @param string $canvasTpl  The canvas template, if different from the theme default
-     * @param string $pageTpl    The page template, if different from the theme default (unsupported, 2.3+ only)
-     * @param string $contentTpl The content template
+     * @param string|null $canvasTpl  The canvas template, if different from the theme default
+     * @param string|null $pageTpl    The page template, if different from the theme default (unsupported, 2.3+ only)
+     * @param string|null $contentTpl The content template
      * @param array  $vars       Template variables to send to the template engine
      *
      * @return bool
@@ -506,7 +520,7 @@ class xos_opal_Theme
 
         //save meta information of cached pages
         if ($this->contentCacheLifetime && $this->contentCacheId && !$contentTpl) {
-            $content['htmlHeadStrings'] = $this->htmlHeadStrings;
+            $content['htmlHeadStrings'] = isset($this->htmlHeadStrings) ? $this->htmlHeadStrings : array();
             $content['metas']           = $this->metas;
             $content['xoops_pagetitle'] =& $this->template->get_template_vars('xoops_pagetitle');
             $content['header']          = $header;
@@ -520,7 +534,8 @@ class xos_opal_Theme
             'description',
             'rating',
             'author',
-            'copyright');
+            'copyright',
+        );
         foreach ($this->metas['meta'] as $name => $value) {
             if (in_array($name, $old)) {
                 $this->template->assign("xoops_meta_$name", htmlspecialchars($value, ENT_QUOTES));
@@ -598,7 +613,7 @@ class xos_opal_Theme
      * Load theme specific language constants
      *
      * @param string $type     language type, like 'main', 'admin'; Needs to be declared in theme xo-info.php
-     * @param string $language specific language
+     * @param string|null $language specific language
      *
      * @return bool|mixed
      */
@@ -723,9 +738,9 @@ class xos_opal_Theme
 
     /**
      * Set a meta http-equiv value
-     * @param         $name
-     * @param  null   $value
-     * @return string
+     * @param string  $name
+     * @param array|string|null    $value
+     * @return string|null
      */
     public function addHttpMeta($name, $value = null)
     {
@@ -740,7 +755,7 @@ class xos_opal_Theme
      * Change output page meta-information
      * @param  string $type
      * @param  string $name
-     * @param  string $value
+     * @param string|array $value
      * @return string
      */
     public function addMeta($type = 'meta', $name = '', $value = '')

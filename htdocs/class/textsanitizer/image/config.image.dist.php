@@ -1,4 +1,5 @@
 <?php
+
 /**
  * TextSanitizer extension
  *
@@ -24,4 +25,5 @@ return $config = array(
     // Resize the image down to max_width set below
     'resize'    => 1,
     // Maximum width of an image displayed on page, otherwise it will be resized
-    'max_width' => 300);
+    'max_width' => 300,
+);

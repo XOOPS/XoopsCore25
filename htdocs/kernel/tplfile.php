@@ -31,7 +31,7 @@ class XoopsTplfile extends XoopsObject
     /**
      * Constructor
      *
-     * @return XoopsTplfile
+     * @return void
      */
     public function __construct()
     {
@@ -192,12 +192,12 @@ class XoopsTplfile extends XoopsObject
 class XoopsTplfileHandler extends XoopsObjectHandler
 {
     /**
-     * create a new Tplfile
+     * create a new XoopsTplfile
      *
-     * @see XoopsBlock
+     * @see \XoopsBlock
      * @param  bool $isNew is the new Tplfile new??
-     * @return XoopsTplfile XoopsTplfile reference to the new Tplfile
-     **/
+     * @return \XoopsTplfile reference to the new XoopsTplfile
+     */
     public function create($isNew = true)
     {
         $tplfile = new XoopsTplfile();
@@ -211,12 +211,12 @@ class XoopsTplfileHandler extends XoopsObjectHandler
     /**
      * retrieve a specific {@link XoopsTplfile}
      *
-     * @see XoopsBlock
+     * @see \XoopsBlock
      *
      * @param int  $id tpl_id of the block to retrieve
      * @param bool $getsource
      *
-     * @return XoopsTplfile|false XoopsTplfile reference to the Tplfile
+     * @return \XoopsTplfile|false reference to the Tplfile
      */
     public function get($id, $getsource = false)
     {
@@ -248,7 +248,7 @@ class XoopsTplfileHandler extends XoopsObjectHandler
      *
      * @return bool true on success, otherwise false
      */
-    public function loadSource(XoopsObject $tplfile)
+    public function loadSource(XoopsObject $tplfile) //mb TODO it's not being used
     {
         $className = 'XoopsTplfile';
         if (!($tplfile instanceof $className)) {
@@ -324,7 +324,7 @@ class XoopsTplfileHandler extends XoopsObjectHandler
     }
 
     /**
-     * Update Tplfile, even if a safe transaction (i.e. http get)
+     * Update XoopsTplfile, even if a safe transaction (i.e. http get)
      *
      * @param  XoopsTplfile $tplfile
      * @return bool true on success, otherwise false
@@ -471,13 +471,13 @@ class XoopsTplfileHandler extends XoopsObjectHandler
     /**
      * Find Template File
      *
-     * @param  string       $tplset
-     * @param  string|array $type
-     * @param  string       $refid
-     * @param  string       $module
-     * @param  string       $file
+     * @param  string|null       $tplset
+     * @param  string|array|null $type
+     * @param  string|null       $refid
+     * @param  string|null       $module
+     * @param  string|null       $file
      * @param  bool|string  $getsource
-     * @return array|object
+     * @return array
      */
     public function find($tplset = null, $type = null, $refid = null, $module = null, $file = null, $getsource = false)
     {

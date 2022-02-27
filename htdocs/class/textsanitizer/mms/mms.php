@@ -1,4 +1,5 @@
 <?php
+
 /**
  * TextSanitizer extension
  *
@@ -25,22 +26,22 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 class MytsMms extends MyTextSanitizerExtension
 {
     /**
-     * @param $textarea_id
+     * @param string $textarea_id
      *
      * @return array
      */
     public function encode($textarea_id)
     {
-        $config     = parent::loadConfig(__DIR__);
+        $config = parent::loadConfig(__DIR__);
         if ($config['enable_mms_entry'] === false) {
             return array();
         }
         $code = "<button type='button' class='btn btn-default btn-sm' onclick='xoopsCodeMms(\"{$textarea_id}\",\""
-            . htmlspecialchars(_XOOPS_FORM_ENTERMMSURL, ENT_QUOTES) . "\",\""
-            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\""
-            . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES)
-            . "\");' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALTMMS
-            . "'><span class='fa fa-fw fa-server' aria-hidden='true'></span></button>";
+                . htmlspecialchars(_XOOPS_FORM_ENTERMMSURL, ENT_QUOTES) . "\",\""
+                . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\""
+                . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES)
+                . "\");' onmouseover='style.cursor=\"hand\"' title='" . _XOOPS_FORM_ALTMMS
+                . "'><span class='fa fa-fw fa-server' aria-hidden='true'></span></button>";
 
         //$code       = "<img src='{$this->image_path}/mmssrc.gif' alt='" . _XOOPS_FORM_ALTMMS . "' title='" . _XOOPS_FORM_ALTMMS . "' '". "' onclick='xoopsCodeMms(\"{$textarea_id}\",\"" . htmlspecialchars(_XOOPS_FORM_ENTERMMSURL, ENT_QUOTES) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERHEIGHT, ENT_QUOTES) . "\",\"" . htmlspecialchars(_XOOPS_FORM_ALT_ENTERWIDTH, ENT_QUOTES) . "\");'  onmouseover='style.cursor=\"hand\"'/>&nbsp;";
         $javascript = <<<EOH
@@ -66,18 +67,19 @@ EOH;
 
         return array(
             $code,
-            $javascript);
+            $javascript,
+        );
     }
 
     /**
-     * @param $ts
+     * @param MyTextSanitizer $ts
      *
      * @return bool
      */
     public function load($ts)
     {
         $ts->patterns[] = "/\[mms=(['\"]?)([^\"']*),([^\"']*)\\1]([^\"]*)\[\/mms\]/sU";
-        $rp             = "<OBJECT id=videowindow1 height='\\3' width='\\2' classid='CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6'>";
+        $rp = "<OBJECT id=videowindow1 height='\\3' width='\\2' classid='CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6'>";
         $rp .= "<PARAM NAME=\"URL\" VALUE=\"\\4\">";
         $rp .= "<PARAM NAME=\"rate\" VALUE=\"1\">";
         $rp .= "<PARAM NAME=\"balance\" VALUE=\"0\">";

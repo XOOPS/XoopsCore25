@@ -39,8 +39,17 @@ include_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
  **/
 class Db_manager
 {
+    /**
+     * @var array
+     */
     public $s_tables = array();
+    /**
+     * @var array
+     */
     public $f_tables = array();
+    /**
+     * @var XoopsDatabase
+     */
     public $db;
 
     /**
@@ -86,13 +95,14 @@ class Db_manager
     }
 
     /**
-     * @param $sql_file_path
+     * @param string $sql_file_path
      *
      * @return bool
      */
     public function queryFromFile($sql_file_path)
     {
         $tables = array();
+        $pieces = array();
 
         if (!file_exists($sql_file_path)) {
             return false;
@@ -105,10 +115,10 @@ class Db_manager
             // [0] contains the prefixed query
             // [4] contains unprefixed table name
             $prefixed_query = SqlUtility::prefixQuery($piece, $this->db->prefix());
-            if ($prefixed_query != false) {
+            if ($prefixed_query !== false) {
                 $table = $this->db->prefix($prefixed_query[4]);
                 if ($prefixed_query[1] === 'CREATE TABLE') {
-                    if ($this->db->query($prefixed_query[0]) != false) {
+                    if ($this->db->query($prefixed_query[0]) !== false) {
                         if (!isset($this->s_tables['create'][$table])) {
                             $this->s_tables['create'][$table] = 1;
                         }
@@ -118,7 +128,7 @@ class Db_manager
                         }
                     }
                 } elseif ($prefixed_query[1] === 'INSERT INTO') {
-                    if ($this->db->query($prefixed_query[0]) != false) {
+                    if ($this->db->query($prefixed_query[0]) !== false) {
                         if (!isset($this->s_tables['insert'][$table])) {
                             $this->s_tables['insert'][$table] = 1;
                         } else {
@@ -132,7 +142,7 @@ class Db_manager
                         }
                     }
                 } elseif ($prefixed_query[1] === 'ALTER TABLE') {
-                    if ($this->db->query($prefixed_query[0]) != false) {
+                    if ($this->db->query($prefixed_query[0]) !== false) {
                         if (!isset($this->s_tables['alter'][$table])) {
                             $this->s_tables['alter'][$table] = 1;
                         }
@@ -142,7 +152,7 @@ class Db_manager
                         }
                     }
                 } elseif ($prefixed_query[1] === 'DROP TABLE') {
-                    if ($this->db->query('DROP TABLE ' . $table) != false) {
+                    if ($this->db->query('DROP TABLE ' . $table) !== false) {
                         if (!isset($this->s_tables['drop'][$table])) {
                             $this->s_tables['drop'][$table] = 1;
                         }
@@ -158,23 +168,36 @@ class Db_manager
         return true;
     }
 
+    /**
+     * @var array
+     */
     public $successStrings = array(
         'create' => TABLE_CREATED,
         'insert' => ROWS_INSERTED,
         'alter'  => TABLE_ALTERED,
-        'drop'   => TABLE_DROPPED);
+        'drop'   => TABLE_DROPPED,
+    );
+    /**
+     * @var array
+     */
     public $failureStrings = array(
         'create' => TABLE_NOT_CREATED,
         'insert' => ROWS_FAILED,
         'alter'  => TABLE_NOT_ALTERED,
-        'drop'   => TABLE_NOT_DROPPED);
+        'drop'   => TABLE_NOT_DROPPED,
+    );
 
     /**
      * @return string
      */
     public function report()
     {
-        $commands = array('create', 'insert', 'alter', 'drop');
+        $commands = array(
+            'create',
+            'insert',
+            'alter',
+            'drop',
+        );
         $content  = '<ul class="log">';
         foreach ($commands as $cmd) {
             if (!@empty($this->s_tables[$cmd])) {
