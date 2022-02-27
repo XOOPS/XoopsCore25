@@ -29,8 +29,8 @@
 require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
-include_once './class/pathcontroller.php';
-include_once '../include/functions.php';
+include_once __DIR__ . '/class/pathcontroller.php';
+include_once dirname(__DIR__) . '/include/functions.php';
 
 $pageHasForm = true;
 $pageHasHelp = true;

@@ -58,11 +58,11 @@ class XoopsInstallWizard
         // Load the main language file
         $this->initLanguage(!empty($_COOKIE['xo_install_lang']) ? $_COOKIE['xo_install_lang'] : 'english');
         // Setup pages
-        include_once './include/page.php';
+        include_once dirname(__DIR__) . '/include/page.php';
         $this->pages = $pages;
 
         // Load default configs
-        include_once './include/config.php';
+        include_once dirname(__DIR__) . '/include/config.php';
         $this->configs = $configs;
         /*
         // Database type
@@ -142,7 +142,7 @@ class XoopsInstallWizard
             return install_acceptUser($_COOKIE['xo_install_user']);
         }
         if (empty($GLOBALS['xoopsUser'])) {
-            redirect_header('../user.php');
+            redirect_header(dirname(dirname(__DIR__)) . '/user.php');
         }
         if (!$GLOBALS['xoopsUser']->isAdmin()) {
             return false;
@@ -183,11 +183,10 @@ class XoopsInstallWizard
      */
     public function setPage($page)
     {
-        $page = (int)$page;
         $pages = array_keys($this->pages);
-        if ($page && $page >= 0 && $page < count($pages)) {
-            $this->pageIndex   = (int)$page;
-            $this->currentPage = $pages[(int)$page];
+        if ((int)$page && $page >= 0 && $page < count($pages)) {
+            $this->pageIndex   = $page;
+            $this->currentPage = $pages[$page];
         } elseif (isset($this->pages[$page])) {
             $this->currentPage = $page;
             $this->pageIndex   = array_search($this->currentPage, $pages);
@@ -215,7 +214,7 @@ class XoopsInstallWizard
     }
 
     /**
-     * @param $page
+     * @param array $page
      *
      * @return string
      */

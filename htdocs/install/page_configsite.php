@@ -19,10 +19,10 @@ $xoopsOption['hascommon']  = true;
 require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 if (!@include_once "../modules/system/language/{$wizard->language}/admin.php") {
-    include_once '../modules/system/language/english/admin.php';
+    include_once dirname(dirname(__DIR__)) . '/modules/system/language/english/admin.php';
 }
 if (!@include_once "../modules/system/language/{$wizard->language}/admin/preferences.php") {
-    include_once '../modules/system/language/english/admin/preferences.php';
+    include_once dirname(dirname(__DIR__)) . '/modules/system/language/english/admin/preferences.php';
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

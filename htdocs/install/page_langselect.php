@@ -51,7 +51,7 @@ $content     = <<<EOT
     <select name="lang" id="lang" class="form-control">
 EOT;
 
-$languages = getDirList('./language/');
+$languages = getDirList( __DIR__ . '/language/');
 foreach ($languages as $lang) {
     $sel     = ($lang == $wizard->language) ? ' selected' : '';
     $content .= "<option value=\"{$lang}\"{$sel}>{$lang}</option>\n";

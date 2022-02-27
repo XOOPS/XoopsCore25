@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         return 302;
     }
 } else {
-    include_once './class/dbmanager.php';
+    include_once  __DIR__ . '/class/dbmanager.php';
     $dbm = new Db_manager();
 
     if (!$dbm->isConnectable()) {

@@ -217,7 +217,7 @@ function xoDiagBoolSetting($name, $wanted = false, $severe = false)
  */
 function xoDiagIfWritable($path)
 {
-    $path  = '../' . $path;
+    $path  = dirname(dirname(__DIR__)) . '/' . $path;
     $error = true;
     if (!is_dir($path)) {
         if (file_exists($path) && !is_writable($path)) {

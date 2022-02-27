@@ -36,7 +36,7 @@ include "./language/{$wizard->language}/welcome.php";
 
 $writable = '<div class="alert alert-warning"><ul style="list-style: none;">';
 foreach ($wizard->configs['writable'] as $key => $value) {
-    if (is_dir('../' . $value)) {
+    if (is_dir(dirname(__DIR__) . '/' . $value)) {
         $writable .= '<li><span class="fa fa-fw fa-folder-open-o"></span> <strong>' . $value . '</strong></li>';
     } else {
         $writable .= '<li><span class="fa fa-fw fa-file-code-o"></span> <strong>' . $value . '</strong></li>';

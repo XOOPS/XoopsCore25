@@ -33,8 +33,8 @@ $pageHasHelp = false;
 
 $vars =& $_SESSION['settings'];
 
-include_once '../mainfile.php';
-include_once './class/dbmanager.php';
+include_once dirname(__DIR__) . '/mainfile.php';
+include_once  __DIR__ . '/class/dbmanager.php';
 $dbm = new Db_manager();
 
 if (!$dbm->isConnectable()) {
@@ -53,7 +53,7 @@ $update  = false;
 
 extract($_SESSION['siteconfig'], EXTR_SKIP);
 
-include_once './include/makedata.php';
+include_once __DIR__ . '/include/makedata.php';
 //$cm = 'dummy';
 $wizard->loadLangFile('install2');
 
@@ -71,8 +71,8 @@ $error = false;
 $hashedAdminPass = password_hash($adminpass, PASSWORD_DEFAULT);
 
 if ($process) {
-    $result  = $dbm->queryFromFile('./sql/' . XOOPS_DB_TYPE . '.data.sql');
-    $result  = $dbm->queryFromFile('./language/' . $wizard->language . '/' . XOOPS_DB_TYPE . '.lang.data.sql');
+    $result  = $dbm->queryFromFile( __DIR__ . '/sql/' . XOOPS_DB_TYPE . '.data.sql');
+    $result  = $dbm->queryFromFile( __DIR__ . '/language/' . $wizard->language . '/' . XOOPS_DB_TYPE . '.lang.data.sql');
     $group   = make_groups($dbm);
     $result  = make_data($dbm, $adminname, $hashedAdminPass, $adminmail, $wizard->language, $group);
     $content = '<div class="alert alert-success"><span class="fa fa-check text-success"></span> '

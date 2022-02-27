@@ -118,9 +118,6 @@ include __DIR__ . '/include/install_tpl.php';
  */
 function writeConfigurationFile(array $vars, $path, $sourceName, $fileName)
 {
-    $path       = (string)$path;
-    $sourceName = (string)$sourceName;
-    $fileName   = (string)$fileName;
     $path .= '/';
     if (!@copy($path . $sourceName, $path . $fileName)) {
         return sprintf(ERR_COPY_MAINFILE, $fileName);
@@ -164,7 +161,6 @@ function writeConfigurationFile(array $vars, $path, $sourceName, $fileName)
  */
 function getStats($filename)
 {
-    $filename = (string)$filename;
     $stat = stat($filename);
     if (false === $stat) {
         return false;

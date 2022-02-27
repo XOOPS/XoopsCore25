@@ -34,8 +34,8 @@ $pageHasHelp = false;
 
 $vars =& $_SESSION['settings'];
 
-include_once '../mainfile.php';
-include_once './class/dbmanager.php';
+include_once dirname(__DIR__) . '/mainfile.php';
+include_once __DIR__ . '/class/dbmanager.php';
 $dbm = new Db_manager();
 
 if (!$dbm->isConnectable()) {
@@ -46,7 +46,7 @@ if (!$dbm->isConnectable()) {
 if ($dbm->tableExists('users')) {
     $content = '<div class="alert alert-info"><span class="fa fa-info-circle text-info"></span> ' . XOOPS_TABLES_FOUND . '</div>';
 } else {
-    $result  = $dbm->queryFromFile('./sql/' . XOOPS_DB_TYPE . '.structure.sql');
+    $result  = $dbm->queryFromFile( __DIR__ . '/sql/' . XOOPS_DB_TYPE . '.structure.sql');
     $content = '<div class="alert alert-success"><span class="fa fa-check text-success"></span> ' . XOOPS_TABLES_CREATED
                . '</div><div class="well">' . $dbm->report() . '</div>';
 }
