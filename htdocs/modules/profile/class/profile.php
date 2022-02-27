@@ -26,7 +26,7 @@
 class ProfileProfile extends XoopsObject
 {
     /**
-     * @param $fields
+     * @param array $fields
      */
     public function __construct($fields)
     {
@@ -55,7 +55,7 @@ class ProfileProfile extends XoopsObject
 class ProfileProfileHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * holds reference to {@link profileFieldHandler} object
+     * holds reference to {@link ProfileFieldHandler} object
      */
     public $_fHandler;
 
@@ -330,13 +330,14 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
                 0,
             );
         }
-        $user_handler = xoops_getHandler('user');
-        $uservars     = $this->getUserVars();
-        $users        = array();
-        $profiles     = array();
+        /** @var \XoopsUserHandler $userHandler */
+        $userHandler = xoops_getHandler('user');
+        $uservars    = $this->getUserVars();
+        $users       = array();
+        $profiles    = array();
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $profile = $this->create(false);
-            $user    = $user_handler->create(false);
+            $user    = $userHandler->create(false);
 
             foreach ($myrow as $name => $value) {
                 if (in_array($name, $uservars)) {

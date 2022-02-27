@@ -44,7 +44,8 @@ switch ($op) {
         $button_tray->addElement(new XoopsFormButton('', 'delete', _DELETE, 'submit'));
         $form->addElement($button_tray);
         $form->display();
-    // no break;
+     break;
+
     case 'new':
         xoops_loadLanguage('main', $GLOBALS['xoopsModule']->getVar('dirname', 'n'));
         include_once dirname(__DIR__) . '/include/forms.php';

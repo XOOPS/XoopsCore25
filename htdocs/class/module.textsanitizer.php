@@ -35,7 +35,7 @@ class MyTextSanitizerExtension
      */
     public $ts;
     /**
-     * @var \XoopsConfig
+     * @var array
      */
     public $config;
     /**
@@ -195,7 +195,7 @@ class MyTextSanitizer
      */
     public $path_plugin;
     /**
-     * @var \XoopsConfig
+     * @var array|string
      */
     public $config;
 
@@ -428,7 +428,7 @@ class MyTextSanitizer
         if (empty($text) || empty($instance->config['truncate_length']) || strlen($text) < $instance->config['truncate_length']) {
             return $text;
         }
-        $len = floor($instance->config['truncate_length'] / 2);
+        $len = (int)floor($instance->config['truncate_length'] / 2);
         $ret = substr($text, 0, $len) . ' ... ' . substr($text, 5 - $len);
 
         return $ret;
@@ -573,10 +573,10 @@ class MyTextSanitizer
     /**
      * Convert special characters to HTML entities
      *
-     * @param  string $text    string being converted
-     * @param  int|null    $quote_style
+     * @param string      $text    string being converted
+     * @param int|null    $quote_style
      * @param string|null $charset character set used in conversion
-     * @param  bool   $double_encode
+     * @param bool        $double_encode
      * @return string
      */
     public function htmlSpecialChars($text, $quote_style = null, $charset = null, $double_encode = true)
@@ -586,9 +586,9 @@ class MyTextSanitizer
         }
 
         if (version_compare(phpversion(), '5.2.3', '>=')) {
-            $text = htmlspecialchars(isset($text) ? $text : '', $quote_style, $charset ?: (defined('_CHARSET') ? _CHARSET : 'UTF-8'), $double_encode);
+            $text = htmlspecialchars(($text) ?: '', $quote_style, $charset ?: (defined('_CHARSET') ? _CHARSET : 'UTF-8'), $double_encode);
         } else {
-            $text = htmlspecialchars(isset($text) ? $text : '', $quote_style);
+            $text = htmlspecialchars(($text) ?: '', $quote_style);
         }
 
         return preg_replace(array('/&amp;/i', '/&nbsp;/i'), array('&', '&amp;nbsp;'), $text);
@@ -620,7 +620,7 @@ class MyTextSanitizer
     {
         $charset = (defined('_CHARSET') ? _CHARSET : 'UTF-8');
         if (function_exists('mb_convert_encoding')) {
-            $text = mb_convert_encoding(isset($text) ? $text : '', $charset, mb_detect_encoding(isset($text) ? $text : '', mb_detect_order(), true));
+            $text = mb_convert_encoding(($text) ?: '', $charset, mb_detect_encoding(($text) ?: '', mb_detect_order(), true));
         }
         if ($html && $br) {
             $testText = strip_tags($text);
@@ -723,7 +723,7 @@ class MyTextSanitizer
     }
 
     /**
-     * @param $match
+     * @param array $match
      *
      * @return string
      */
