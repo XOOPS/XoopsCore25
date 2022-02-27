@@ -22,7 +22,7 @@ if (!function_exists('protector_oninstall_base')) {
      */
     function protector_oninstall_base(XoopsModule $module, $mydirname)
     {
-        /** @varXoopsModule $module */
+        /** @var XoopsModule $module */
         // translations on module install
 
         global $ret; // TODO :-D

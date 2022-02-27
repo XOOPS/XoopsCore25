@@ -219,11 +219,11 @@ EOAVJS;
         $start = Request::getInt('start', 0);
         $limit = 20; // how many to make available per page
 
-        /** @varXoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $modules        = $module_handler->getObjects(new Criteria('isactive', 1), true);
 
-        /** @varXoopsOnlineHandler $onlineHandler */
+        /** @var XoopsOnlineHandler $onlineHandler */
         $onlineHandler = xoops_getHandler('online');
         $onlineTotal   = $onlineHandler->getCount();
         $criteria      = new CriteriaCompo();

@@ -42,7 +42,7 @@ switch ($op) {
         $xoopsTpl->assign('sitename', htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES));
         $target = htmlspecialchars($target, ENT_QUOTES);
         $xoopsTpl->assign('target', $target);
-        /** @varXoopsImageCategoryHandler $imgcat_handler */
+        /** @var XoopsImageCategoryHandler $imgcat_handler */
         $imgcat_handler = xoops_getHandler('imagecategory');
         $catlist        = $imgcat_handler->getList($group, 'imgcat_read', 1);
         $catcount       = count($catlist);
@@ -151,7 +151,7 @@ switch ($op) {
         if (!is_object($imgcat)) {
             $error = true;
         } else {
-            /** @varXoopsGroupPermHandler $imgcatperm_handler */
+            /** @var XoopsGroupPermHandler $imgcatperm_handler */
             $imgcatperm_handler = xoops_getHandler('groupperm');
             if (is_object($xoopsUser)) {
                 if (!$imgcatperm_handler->checkRight('imgcat_write', $imgcat_id, $xoopsUser->getGroups())) {

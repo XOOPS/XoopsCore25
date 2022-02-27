@@ -36,7 +36,7 @@ if ($admintest != 0) {
             // Include Configuration file
             require XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/admin/' . $fct . '/xoops_version.php';
             // Get System permission handler
-            /** @varXoopsGroupPermHandler $sysperm_handler */
+            /** @var XoopsGroupPermHandler $sysperm_handler */
             $sysperm_handler = xoops_getHandler('groupperm');
 
             $category = !empty($modversion['category']) ? (int)$modversion['category'] : 0;
@@ -74,7 +74,7 @@ if (false !== $error) {
 	$op = Request::getString('op', '');
     if ($op === 'system_activate') {
         $part           = Request::getString('type', '');
-        /** @varXoopsConfigHandler $config_handler */
+        /** @var XoopsConfigHandler $config_handler */
         $config_handler = xoops_getHandler('config');
 
         $criteria = new Criteria('conf_name', 'active_' . $part);

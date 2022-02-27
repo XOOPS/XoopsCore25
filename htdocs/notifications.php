@@ -61,7 +61,7 @@ switch ($op) {
         $notifications        = $notification_handler->getObjects($criteria);
 
         // Generate the info for the template
-        /** @varXoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         include_once $GLOBALS['xoops']->path('include/notification_functions.php');
         $modules       = array();

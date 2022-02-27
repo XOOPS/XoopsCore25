@@ -57,7 +57,7 @@ if (is_array($_POST['perms']) && !empty($_POST['perms'])) {
                                 }
                             }
                         }
-                        /** @varXoopsGroupPerm $gperm */
+                        /** @var XoopsGroupPerm $gperm */
                         $gperm = $gperm_handler->create();
                         $gperm->setVar('gperm_groupid', $group_id);
                         $gperm->setVar('gperm_name', $perm_name);

@@ -69,7 +69,7 @@ switch ($op) {
         $form->addElement(new XoopsFormRadioYN(_AM_SYSTEM_TEMPLATES_FORCE_GENERATED, 'force_generated', 0, _YES, _NO), true);
 
         $modules        = new XoopsFormSelect(_AM_SYSTEM_TEMPLATES_SELECT_MODULES, 'select_modules');
-        /** @varXoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $criteria       = new CriteriaCompo(new Criteria('isactive', 1));
         $moduleslist    = $module_handler->getList($criteria, true);
@@ -116,7 +116,7 @@ switch ($op) {
                 $tplset = Request::getString('tplset', 'default');
 
                 //on crée uniquement les templates qui n'existent pas
-                /** @varXoopsModuleHandler $module_handler */
+                /** @var XoopsModuleHandler $module_handler */
                 $module_handler = xoops_getHandler('module');
                 /** @var XoopsTplsetHandler $tplset_handler */
                 $tplset_handler = xoops_getHandler('tplset');

@@ -234,7 +234,7 @@ switch ($op) {
             if (is_object($xoopsUser)) {
                 if (!$xoopsUser->isAdmin($com_modid)) {
                     include_once $GLOBALS['xoops']->path('modules/system/constants.php');
-                    /** @varXoopsGroupPermHandler $sysperm_handler */
+                    /** @var XoopsGroupPermHandler $sysperm_handler */
                     $sysperm_handler = xoops_getHandler('groupperm');
                     if (!$sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $xoopsUser->getGroups())) {
                         $dohtml = 0;
@@ -287,7 +287,7 @@ switch ($op) {
 
             if (is_object($xoopsUser)) {
                 include_once $GLOBALS['xoops']->path('modules/system/constants.php');
-                /** @varXoopsGroupPermHandler $sysperm_handler */
+                /** @var XoopsGroupPermHandler $sysperm_handler */
                 $sysperm_handler = xoops_getHandler('groupperm');
                 if ($xoopsUser->isAdmin($com_modid) || $sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $xoopsUser->getGroups())) {
                     if (!empty($com_status) && $com_status != XOOPS_COMMENT_PENDING) {
@@ -333,7 +333,7 @@ switch ($op) {
             $comment->setVar('com_ip', \Xmf\IPAddress::fromRequest()->asReadable());
             if (is_object($xoopsUser)) {
                 include_once $GLOBALS['xoops']->path('modules/system/constants.php');
-                /** @varXoopsGroupPermHandler $sysperm_handler */
+                /** @var XoopsGroupPermHandler $sysperm_handler */
                 $sysperm_handler = xoops_getHandler('groupperm');
                 if ($xoopsUser->isAdmin($com_modid) || $sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $xoopsUser->getGroups())) {
                     $comment->setVar('com_status', XOOPS_COMMENT_ACTIVE);
@@ -477,7 +477,7 @@ switch ($op) {
             // increment user post if needed
             $uid = $comment->getVar('com_uid');
             if ($uid > 0 && false !== $add_userpost) {
-                /** @varXoopsMemberHandler $member_handler */
+                /** @var XoopsMemberHandler $member_handler */
                 $member_handler = xoops_getHandler('member');
                 $poster         = $member_handler->getUser($uid);
                 if (is_object($poster)) {
@@ -499,7 +499,7 @@ switch ($op) {
                 // module).
                 $comment_tags = array();
                 if ('system' === $xoopsModule->getVar('dirname')) {
-                    /** @varXoopsModuleHandler $module_handler */
+                    /** @var XoopsModuleHandler $module_handler */
                     $module_handler = xoops_getHandler('module');
                     $not_module     = $module_handler->get($not_modid);
                 } else {

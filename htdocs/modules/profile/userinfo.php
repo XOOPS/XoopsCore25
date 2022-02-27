@@ -40,7 +40,7 @@ if (is_object($GLOBALS['xoopsUser']) && $uid == $GLOBALS['xoopsUser']->getVar('u
     $GLOBALS['xoopsOption']['template_main']                                                   = 'profile_userinfo.tpl';
     include $GLOBALS['xoops']->path('header.php');
 
-    /** @varXoopsConfigHandler $config_handler */
+    /** @var XoopsConfigHandler $config_handler */
     $config_handler             = xoops_getHandler('config');
     $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
@@ -59,7 +59,7 @@ if (is_object($GLOBALS['xoopsUser']) && $uid == $GLOBALS['xoopsUser']->getVar('u
     $GLOBALS['xoopsTpl']->assign('user_changeemail', $GLOBALS['xoopsConfigUser']['allow_chgmail']);
     $thisUser =& $GLOBALS['xoopsUser'];
 } else {
-    /** @varXoopsMemberHandler $member_handler */
+    /** @var XoopsMemberHandler $member_handler */
     $member_handler = xoops_getHandler('member');
     $thisUser       = $member_handler->getUser($uid);
 
@@ -184,7 +184,7 @@ $GLOBALS['xoopsTpl']->assign('categories', $categories);
 // Dynamic user profiles end
 
 if ($GLOBALS['xoopsModuleConfig']['profile_search']) {
-    /** @varXoopsModuleHandler $module_handler */
+    /** @var XoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
     $criteria       = new CriteriaCompo(new Criteria('hassearch', 1));
     $criteria->add(new Criteria('isactive', 1));

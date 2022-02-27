@@ -38,11 +38,11 @@ function notificationEnabled($style, $module_id = null)
         if (!isset($module_id)) {
             return false;
         }
-        /** @varXoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $module         = $module_handler->get($module_id);
         if (!empty($module) && $module->getVar('hasnotification') == 1) {
-            /** @varXoopsConfigHandler $config_handler */
+            /** @var XoopsConfigHandler $config_handler */
             $config_handler = xoops_getHandler('config');
             $config         = $config_handler->getConfigsByCat(0, $module_id);
             $status         = $config['notification_enabled'];
@@ -76,7 +76,7 @@ function &notificationCategoryInfo($category_name = '', $module_id = null)
         $module_id = !empty($xoopsModule) ? $xoopsModule->getVar('mid') : 0;
         $module    =& $xoopsModule;
     } else {
-        /** @varXoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $module         = $module_handler->get($module_id);
     }
@@ -147,12 +147,12 @@ function &notificationEvents($category_name, $enabled_only, $module_id = null)
         $module_id = !empty($xoopsModule) ? $xoopsModule->getVar('mid') : 0;
         $module    =& $xoopsModule;
     } else {
-        /** @varXoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $module         = $module_handler->get($module_id);
     }
     $not_config     = $module->getInfo('notification');
-    /** @varXoopsConfigHandler $config_handler */
+    /** @var XoopsConfigHandler $config_handler */
     $config_handler = xoops_getHandler('config');
     $mod_config     = $config_handler->getConfigsByCat(0, $module_id);
 
@@ -297,7 +297,7 @@ function &notificationEvents($category_name, $enabled_only, $module_id = null)
  **/
 function notificationEventEnabled(&$category, &$event, &$module)
 {
-    /** @varXoopsConfigHandler $config_handler */
+    /** @var XoopsConfigHandler $config_handler */
     $config_handler = xoops_getHandler('config');
     $mod_config     = $config_handler->getConfigsByCat(0, $module->getVar('mid'));
 

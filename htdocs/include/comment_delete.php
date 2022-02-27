@@ -147,7 +147,7 @@ switch ($op) {
 
         // update user posts if its not an anonymous post
         if ($comment->getVar('com_uid') != 0) {
-            /** @varXoopsMemberHandler $member_handler */
+            /** @var XoopsMemberHandler $member_handler */
             $member_handler = xoops_getHandler('member');
             $com_poster     = $member_handler->getUser($comment->getVar('com_uid'));
             if (is_object($com_poster)) {
@@ -214,7 +214,7 @@ switch ($op) {
         $child_comments[$com_id] = &$comment;
         $msgs                    = array();
         $deleted_num             = array();
-        /** @varXoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler          = xoops_getHandler('member');
         foreach (array_keys($child_comments) as $i) {
             if (!$comment_handler->delete($child_comments[$i])) {

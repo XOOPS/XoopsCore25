@@ -67,7 +67,7 @@ switch ($op) {
         $xoBreadCrumb->render();
 
         // Initialize module handler
-        /** @varXoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $modules        = $module_handler->getObjects(null, true);
         $criteria       = new CriteriaCompo(new Criteria('hasmain', 1));
@@ -77,10 +77,10 @@ switch ($op) {
         $display_list = $module_handler->getList($criteria);
         unset($criteria);
         // Initialize blocks handler
-        /** @varSystemBlockHandler $block_handler */
+        /** @var SystemBlockHandler $block_handler */
         $block_handler = xoops_getModuleHandler('block');
         // Initialize module handler
-        /** @varXoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         $modules        = $module_handler->getObjects(null, true);
 
@@ -112,7 +112,7 @@ switch ($op) {
         // For selection of group access
         $sel_grp = new XoopsFormSelect(_AM_SYSTEM_BLOCKS_GROUP, 'selgrp', $selgrp);
         $sel_grp->setExtra("onchange='submit()'");
-        /** @varXoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $group_list     = $member_handler->getGroupList();
         $sel_grp->addOption(-1, _AM_SYSTEM_BLOCKS_TYPES);
@@ -198,7 +198,7 @@ switch ($op) {
 
     case 'display':
         // Initialize blocks handler
-        /** @varSystemBlockHandler $block_handler */
+        /** @var SystemBlockHandler $block_handler */
         $block_handler = xoops_getModuleHandler('block');
         // Get variable
         $block_id = Request::getInt('bid', 0);
@@ -251,7 +251,7 @@ switch ($op) {
             redirect_header('admin.php?fct=blocksadmin', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         // Initialize blocks handler
-        /** @varXoopsBlockHandler $block_handler */
+        /** @var XoopsBlockHandler $block_handler */
         $block_handler = xoops_getModuleHandler('block');
         $block         = $block_handler->create();
         $block->setVars($_POST);
@@ -344,7 +344,7 @@ switch ($op) {
                 }
             }
         }
-        /** @varXoopsGroupPermHandler $groupperm_handler */
+        /** @var XoopsGroupPermHandler $groupperm_handler */
         $groupperm_handler  = xoops_getHandler('groupperm');
         $groups             = $_POST['groups'];
         $groups_with_access = $groupperm_handler->getGroupIds('block_read', $newid);
@@ -405,7 +405,7 @@ switch ($op) {
 
     case 'delete':
         // Initialize blocks handler
-        /** @varSystemBlockHandler $block_handler */
+        /** @var SystemBlockHandler $block_handler */
         $block_handler = xoops_getModuleHandler('block');
         // Get block id
         $block_id = Request::getInt('bid', 0);
@@ -493,7 +493,7 @@ switch ($op) {
             $xoBreadCrumb->addLink(_AM_SYSTEM_BLOCKS_ADMIN, system_adminVersion('blocksadmin', 'adminpath'));
             $xoBreadCrumb->addLink(_AM_SYSTEM_BLOCKS_CLONEBLOCK);
             $xoBreadCrumb->render();
-            /** @varXoopsBlock $block */
+            /** @var XoopsBlock $block */
             $block     = $block_handler->get($block_id);
             $blockform = $block->getForm('clone');
             $xoopsTpl->assign('blockform', $blockform->render());

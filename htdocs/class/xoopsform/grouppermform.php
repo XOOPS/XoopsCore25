@@ -139,7 +139,7 @@ class XoopsGroupPermForm extends XoopsForm
         }
         /** @var XoopsGroupPermHandler $gperm_handler */
         $gperm_handler  = xoops_getHandler('groupperm');
-        /** @varXoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $glist          = $member_handler->getGroupList();
         foreach (array_keys($glist) as $i) {

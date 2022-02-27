@@ -79,7 +79,7 @@ function form_user($add_or_edit, $user = '')
         $groups              = array(XOOPS_GROUP_USERS);
     } else {
         //Edit user
-        /** @varXoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $user           = $member_handler->getUser($uid);
         if (is_object($user)) {

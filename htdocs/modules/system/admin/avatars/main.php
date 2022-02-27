@@ -50,7 +50,7 @@ switch ($op) {
         /** @var XoopsAvatarHandler $avt_handler */
         $avt_handler = xoops_getModuleHandler('avatar');
         // Get User Config
-        /** @varXoopsConfigHandler $config_handler */
+        /** @var XoopsConfigHandler $config_handler */
         $config_handler  = xoops_getHandler('config');
         $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
         // User language
@@ -173,7 +173,7 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=avatars', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        /** @varXoopsConfigHandler $config_handler */
+        /** @var XoopsConfigHandler $config_handler */
         $config_handler  = xoops_getHandler('config');
         $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
         // Upload class
@@ -366,7 +366,7 @@ switch ($op) {
         $xoBreadCrumb->addLink(_AM_SYSTEM_AVATAR_MANAGER, system_adminVersion('avatars', 'adminpath'));
         $xoBreadCrumb->addLink(_AM_SYSTEM_AVATAR_MULTIUPLOAD);
         $xoBreadCrumb->render();
-        /** @varXoopsConfigHandler $config_handler */
+        /** @var XoopsConfigHandler $config_handler */
         $config_handler  = xoops_getHandler('config');
         $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 

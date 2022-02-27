@@ -72,7 +72,7 @@ switch ($op) {
                 $groups['groups_id']   = $groups_id;
                 $groups['name']        = $groups_arr[$i]->getVar('name');
                 $groups['description'] = $groups_arr[$i]->getVar('description');
-                /** @varSystemMemberHandler $member_handler */
+                /** @var SystemMemberHandler $member_handler */
                 $member_handler        = xoops_getHandler('member', 'system');
                 if ($groups_id != XOOPS_GROUP_ANONYMOUS) {
                     $group_id_arr[0]              = $groups_id;
@@ -150,7 +150,7 @@ switch ($op) {
         $admin_mids    = Request::getArray('admin_mids', array());
         $read_mids     = Request::getArray('read_mids', array());
         $read_bids     = Request::getArray('read_bids', array());
-        /** @varXoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $group          = $member_handler->createGroup();
         $group->setVar('name', $_POST['name']);
@@ -215,7 +215,7 @@ switch ($op) {
         $admin_mids    = Request::getArray('admin_mids', array());
         $read_mids     = Request::getArray('read_mids', array());
         $read_bids     = Request::getArray('read_bids', array());
-        /** @varXoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $gid            = Request::getInt('g_id', 0);
         if ($gid > 0) {
@@ -308,11 +308,11 @@ switch ($op) {
                         XOOPS_GROUP_USERS,
                         XOOPS_GROUP_ANONYMOUS,
                     ))) {
-                    /** @varXoopsMemberHandler $member_handler */
+                    /** @var XoopsMemberHandler $member_handler */
                     $member_handler = xoops_getHandler('member');
                     $group          = $member_handler->getGroup($groups_id);
                     $member_handler->deleteGroup($group);
-                    /** @varXoopsGroupPermHandler $gperm_handler */
+                    /** @var XoopsGroupPermHandler $gperm_handler */
                     $gperm_handler = xoops_getHandler('groupperm');
                     $gperm_handler->deleteByGroup($groups_id);
                     redirect_header('admin.php?fct=groups', 1, _AM_SYSTEM_GROUPS_DBUPDATED);

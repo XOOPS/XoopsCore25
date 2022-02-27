@@ -178,7 +178,7 @@ switch ($op) {
             $stop .= $xoopsCaptcha->getMessage() . '<br>';
         }
         if (empty($stop)) {
-            /** @varXoopsMemberHandler $member_handler */
+            /** @var XoopsMemberHandler $member_handler */
             $member_handler = xoops_getHandler('member');
             /** @var XoopsUser $newuser */
             $newuser        = $member_handler->createUser();
@@ -246,7 +246,7 @@ switch ($op) {
                 $xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
                 $xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
                 $xoopsMailer->assign('SITEURL', XOOPS_URL . '/');
-                /** @varXoopsMemberHandler $member_handler */
+                /** @var XoopsMemberHandler $member_handler */
                 $member_handler = xoops_getHandler('member');
                 $xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['activation_group']));
                 $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
@@ -262,7 +262,7 @@ switch ($op) {
                 $xoopsMailer = xoops_getMailer();
                 $xoopsMailer->reset();
                 $xoopsMailer->useMail();
-                /** @varXoopsMemberHandler $member_handler */
+                /** @var XoopsMemberHandler $member_handler */
                 $member_handler = xoops_getHandler('member');
                 $xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['new_user_notify_group']));
                 $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
@@ -286,7 +286,7 @@ switch ($op) {
         if (empty($id)) {
             redirect_header('index.php', 1, '');
         }
-    /** @varXoopsMemberHandler $member_handler */
+    /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         /** @var XoopsUser $thisuser */
         $thisuser       = $member_handler->getUser($id);

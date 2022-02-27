@@ -33,9 +33,9 @@ $xoBreadCrumb->addLink(_AM_SYSTEM_HELP, 'help.php');
 
 // If $mid > 0, we're in a module's help section.
 if ($mid > 0) {
-    /** @varXoopsModuleHandler $module_handler */
+    /** @var XoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
-    /** @varXoopsModule $module */
+    /** @var XoopsModule $module */
     $module         = $module_handler->get($mid);
 
     $xoBreadCrumb->addLink($module->getVar('name'), 'help.php?mid=' . $module->getVar('mid', 's'));
@@ -118,7 +118,7 @@ if ($mid > 0) {
     $xoBreadCrumb->render();
 
     // Get Module Handler
-    /** @varXoopsModuleHandler $module_handler */
+    /** @var XoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
     $criteria       = new CriteriaCompo();
     $criteria->setOrder('weight');

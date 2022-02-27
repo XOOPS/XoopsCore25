@@ -155,7 +155,7 @@ switch ($op) {
         $GLOBALS['xoopsTpl']->assign('page_title', _PROFILE_MA_SEARCH);
 
         //added count user
-        /** @varXoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $acttotal       = $member_handler->getUserCount(new Criteria('level', 0, '>'));
         $total          = sprintf(_PROFILE_MA_ACTUS, "<span style='color:#ff0000;'>{$acttotal}</span>");
@@ -171,7 +171,7 @@ switch ($op) {
             'title' => _SEARCH,
         );
         $xoBreadcrumbs[] = array('title' => _PROFILE_MA_RESULTS);
-        /** @varXoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         // Dynamic fields
         $profile_handler = xoops_getModuleHandler('profile');

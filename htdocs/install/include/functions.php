@@ -37,7 +37,7 @@ function install_acceptUser($hash = '')
         return false;
     }
     $uname = $claims->uname;
-    /** @varXoopsMemberHandler $memberHandler */
+    /** @var XoopsMemberHandler $memberHandler */
     $memberHandler = xoops_getHandler('member');
     $users = $memberHandler->getUsers(new Criteria('uname', $uname));
     $user = array_pop($users);

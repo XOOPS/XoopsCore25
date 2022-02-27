@@ -91,7 +91,7 @@ class XoopsUser extends XoopsObject
             if (is_array($id)) {
                 $this->assignVars($id);
             } else {
-                /** @varXoopsMemberHandler $member_handler */
+                /** @var XoopsMemberHandler $member_handler */
                 $member_handler = xoops_getHandler('member');
                 $user           = $member_handler->getUser($id);
                 foreach ($user->vars as $k => $v) {
@@ -125,7 +125,7 @@ class XoopsUser extends XoopsObject
         $userid  = (int)$userid;
         $usereal = (int)$usereal;
         if ($userid > 0) {
-            /** @varXoopsMemberHandler $member_handler */
+            /** @var XoopsMemberHandler $member_handler */
             $member_handler = xoops_getHandler('member');
             $user           = $member_handler->getUser($userid);
             if (is_object($user)) {
@@ -154,7 +154,7 @@ class XoopsUser extends XoopsObject
      */
     public function incrementPost()
     {
-        /** @varXoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
 
         return $member_handler->updateUserByField($this, 'posts', $this->getVar('posts') + 1);
@@ -180,7 +180,7 @@ class XoopsUser extends XoopsObject
     public function &getGroups()
     {
         if (empty($this->_groups)) {
-            /** @varXoopsMemberHandler $member_handler */
+            /** @var XoopsMemberHandler $member_handler */
             $member_handler = xoops_getHandler('member');
             $this->_groups  = $member_handler->getGroupsByUser($this->getVar('uid'));
         }
@@ -218,7 +218,7 @@ class XoopsUser extends XoopsObject
         } elseif ((int)$module_id < 1) {
             $module_id = 0;
         }
-        /** @varXoopsGroupPermHandler $moduleperm_handler */
+        /** @var XoopsGroupPermHandler $moduleperm_handler */
         $moduleperm_handler = xoops_getHandler('groupperm');
 
         return $moduleperm_handler->checkRight('module_admin', $module_id, $this->getGroups());
@@ -254,7 +254,7 @@ class XoopsUser extends XoopsObject
     public function isOnline()
     {
         if (!isset($this->_isOnline)) {
-            /** @varXoopsOnlineHandler $online_handler */
+            /** @var XoopsOnlineHandler $online_handler */
             $onlinehandler   = xoops_getHandler('online');
             $this->_isOnline = ($onlinehandler->getCount(new Criteria('online_uid', $this->getVar('uid'))) > 0);// ? true : false;
         }

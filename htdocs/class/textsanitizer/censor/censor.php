@@ -37,7 +37,7 @@ class MytsCensor extends MyTextSanitizerExtension
     {
         static $censorConf;
         if (!isset($censorConf)) {
-            /** @varXoopsConfigHandler $config_handler */
+            /** @var XoopsConfigHandler $config_handler */
             $config_handler = xoops_getHandler('config');
             $censorConf     = $config_handler->getConfigsByCat(XOOPS_CONF_CENSOR);
             $config         = parent::loadConfig(__DIR__);

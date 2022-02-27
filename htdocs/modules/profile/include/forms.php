@@ -236,7 +236,7 @@ function profile_getFieldForm(ProfileField $field, $action = false)
                 break;
         }
     }
-    /** @varXoopsGroupPermHandler $groupperm_handler */
+    /** @var XoopsGroupPermHandler $groupperm_handler */
     $groupperm_handler = xoops_getHandler('groupperm');
     $searchable_types  = array(
         'textbox',
@@ -329,7 +329,7 @@ function profile_getRegisterForm(XoopsUser $user, $profile, $step = null)
 
     include_once $GLOBALS['xoops']->path('class/xoopsformloader.php');
     if (empty($GLOBALS['xoopsConfigUser'])) {
-        /** @varXoopsConfigHandler $config_handler */
+        /** @var XoopsConfigHandler $config_handler */
         $config_handler             = xoops_getHandler('config');
         $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
     }
@@ -455,7 +455,7 @@ function profile_getUserForm(XoopsUser $user, ProfileProfile $profile = null, $a
         $action = $_SERVER['REQUEST_URI'];
     }
     if (empty($GLOBALS['xoopsConfigUser'])) {
-        /** @varXoopsConfigHandler $config_handler */
+        /** @var XoopsConfigHandler $config_handler */
         $config_handler             = xoops_getHandler('config');
         $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
     }
@@ -465,11 +465,11 @@ function profile_getUserForm(XoopsUser $user, ProfileProfile $profile = null, $a
     $title = $user->isNew() ? _PROFILE_AM_ADDUSER : _US_EDITPROFILE;
 
     $form = new XoopsThemeForm($title, 'userinfo', $action, 'post', true);
-    /** @varProfileProfileHandler $profile_handler */
+    /** @var ProfileProfileHandler $profile_handler */
     $profile_handler = xoops_getModuleHandler('profile');
     // Dynamic fields
     if (!$profile) {
-        /** @varProfileProfileHandler $profile_handler */
+        /** @var ProfileProfileHandler $profile_handler */
         $profile_handler = xoops_getModuleHandler('profile', 'profile');
         $profile         = $profile_handler->get($user->getVar('uid'));
     }
@@ -616,7 +616,7 @@ function profile_getStepForm(ProfileRegstep $step = null, $action = false)
         $action = $_SERVER['REQUEST_URI'];
     }
     if (empty($GLOBALS['xoopsConfigUser'])) {
-        /** @varXoopsConfigHandler $config_handler */
+        /** @var XoopsConfigHandler $config_handler */
         $config_handler             = xoops_getHandler('config');
         $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
     }

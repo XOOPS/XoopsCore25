@@ -65,7 +65,7 @@ if (!$allowed) {
         unset($_SESSION['redirect_message']);
     }
 
-    /** @varXoopsConfigHandler $config_handler */
+    /** @var XoopsConfigHandler $config_handler */
     $config_handler = xoops_getHandler('config');
     $criteria       = new CriteriaCompo(new Criteria('conf_modid', 0));
     $criteria->add(new Criteria('conf_catid', XOOPS_CONF_METAFOOTER));
