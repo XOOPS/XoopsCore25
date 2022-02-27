@@ -33,7 +33,7 @@ $groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGr
 $admin         = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_IMAGE, $groups);
 
 // check categories readability/writability by group
-/** @var \XoopsImagecategoryHandler $imgcat_handler */
+/** @var \XoopsImageCategoryHandler $imgcat_handler */
 $imgcat_handler = xoops_getHandler('imagecategory');
 $catreadlist    = $imgcat_handler->getList($groups, 'imgcat_read', 1);    // get readable categories
 $catwritelist   = $imgcat_handler->getList($groups, 'imgcat_write', 1);  // get writable categories

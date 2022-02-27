@@ -30,7 +30,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  * @author              Kazumi Ono    <onokazu@xoops.org>
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
  */
-class XoopsImagecategory extends XoopsObject
+class XoopsImageCategory extends XoopsObject
 {
     /**
      * @var int
@@ -183,17 +183,17 @@ class XoopsImagecategory extends XoopsObject
  *
  * @author  Kazumi Ono <onokazu@xoops.org>
  */
-class XoopsImagecategoryHandler extends XoopsObjectHandler
+class XoopsImageCategoryHandler extends XoopsObjectHandler
 {
     /**
      * Create a new {@link XoopsImageCategory}
      *
      * @param  bool $isNew Flag the object as "new"
-     * @return XoopsImagecategory
+     * @return XoopsImageCategory
      **/
     public function create($isNew = true)
     {
-        $imgcat = new XoopsImagecategory();
+        $imgcat = new XoopsImageCategory();
         if ($isNew) {
             $imgcat->setNew();
         }
@@ -220,7 +220,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
             }
             $numrows = $this->db->getRowsNum($result);
             if ($numrows == 1) {
-                $imgcat = new \XoopsImagecategory();
+                $imgcat = new \XoopsImageCategory();
                 $imgcat->assignVars($this->db->fetchArray($result));
             }
         }
@@ -295,7 +295,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
      *
      * @param \CriteriaElement|null $criteria
      * @param  bool            $id_as_key if true, use id as array key
-     * @return array of XoopsImagecategory objects
+     * @return array of XoopsImageCategory objects
      */
     public function getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
@@ -314,7 +314,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
             return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
-            $imgcat = new XoopsImagecategory();
+            $imgcat = new XoopsImageCategory();
             $imgcat->assignVars($myrow);
             if (!$id_as_key) {
                 $ret[] = $imgcat;

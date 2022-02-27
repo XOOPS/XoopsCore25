@@ -42,7 +42,7 @@ switch ($op) {
         $xoopsTpl->assign('sitename', htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES));
         $target = htmlspecialchars($target, ENT_QUOTES);
         $xoopsTpl->assign('target', $target);
-        /* @var XoopsImagecategoryHandler $imgcat_handler */
+        /* @var XoopsImageCategoryHandler $imgcat_handler */
         $imgcat_handler = xoops_getHandler('imagecategory');
         $catlist        = $imgcat_handler->getList($group, 'imgcat_read', 1);
         $catcount       = count($catlist);
