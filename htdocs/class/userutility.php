@@ -29,11 +29,11 @@ class XoopsUserUtility
     /**
      * XoopsUserUtility::sendWelcome
      *
-     * @param mixed $user
+     * @param XoopsUser|null $user
      *
      * @return bool
      */
-    public static function sendWelcome($user)
+    public static function sendWelcome(XoopsUser $user = null) //mb TODO not used anywhere, delete?
     {
         global $xoopsConfigUser, $xoopsConfig;
 
@@ -141,6 +141,7 @@ class XoopsUserUtility
             }
         }
         $uname = xoops_trim($uname);
+        $restriction = '';
         switch ($xoopsConfigUser['uname_test_level']) {
             case 0:
                 // strict
@@ -217,7 +218,7 @@ class XoopsUserUtility
      * Adapted from PMA_getIp() [phpmyadmin project]
      *
      * @param  bool $asString requiring integer or dotted string
-     * @return mixed string or integer value for the IP
+     * @return int|string|false string or integer value for the IP
      */
     public static function getIP($asString = false)
     {
@@ -300,9 +301,9 @@ class XoopsUserUtility
     /**
      * XoopsUserUtility::getUnameFromId()
      *
-     * @param  mixed $userid
-     * @param  mixed $usereal
-     * @param  mixed $linked
+     * @param int|string $userid
+     * @param bool       $usereal
+     * @param bool       $linked
      * @return string
      */
     public static function getUnameFromId($userid, $usereal = false, $linked = false)

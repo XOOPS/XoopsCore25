@@ -241,7 +241,7 @@ class XoopsMailer
     // public
 
     /**
-     * @param $value
+     * @param string $value
      */
     public function setTemplate($value)
     {
@@ -251,7 +251,7 @@ class XoopsMailer
     // pupblic
 
     /**
-     * @param $value
+     * @param string $value
      */
     public function setFromEmail($value)
     {
@@ -261,7 +261,7 @@ class XoopsMailer
     // public
 
     /**
-     * @param $value
+     * @param string $value
      */
     public function setFromName($value)
     {
@@ -271,7 +271,7 @@ class XoopsMailer
     // RMV-NOTIFY
     // public
     /**
-     * @param $user
+     * @param \XoopsUser $user
      */
     public function setFromUser($user)
     {
@@ -283,7 +283,7 @@ class XoopsMailer
     // public
 
     /**
-     * @param $value
+     * @param string $value
      */
     public function setPriority($value)
     {
@@ -293,7 +293,7 @@ class XoopsMailer
     // public
 
     /**
-     * @param $value
+     * @param string $value
      */
     public function setSubject($value)
     {
@@ -440,9 +440,9 @@ class XoopsMailer
     // private
 
     /**
-     * @param $uid
-     * @param $subject
-     * @param $body
+     * @param int $uid
+     * @param string $subject
+     * @param string $body
      *
      * @return bool
      */
@@ -468,10 +468,10 @@ class XoopsMailer
      *
      * Uses the new XoopsMultiMailer
      *
-     * @param $email
-     * @param $subject
-     * @param $body
-     * @param $headers
+     * @param string $email
+     * @param string $subject
+     * @param string $body
+     * @param string $headers
      *
      * @return bool
      */
@@ -580,7 +580,7 @@ class XoopsMailer
     // public
 
     /**
-     * @param $value
+     * @param string $value
      */
     public function addHeaders($value)
     {
@@ -590,7 +590,7 @@ class XoopsMailer
     // public
 
     /**
-     * @param $email
+     * @param array|string $email
      */
     public function setToEmails($email)
     {
@@ -608,7 +608,7 @@ class XoopsMailer
     // public
 
     /**
-     * @param $user
+     * @param array|\XoopsUser $user
      */
     public function setToUsers($user)
     {
@@ -626,7 +626,7 @@ class XoopsMailer
     // public
 
     /**
-     * @param $group
+     * @param array|\XoopsGroup $group
      */
     public function setToGroups($group)
     {
@@ -646,9 +646,9 @@ class XoopsMailer
     // abstract
     // to be overridden by lang specific mail class, if needed
     /**
-     * @param $text
+     * @param string $text
      *
-     * @return mixed
+     * @return string
      */
     public function encodeFromName($text)
     {
@@ -658,9 +658,9 @@ class XoopsMailer
     // abstract
     // to be overridden by lang specific mail class, if needed
     /**
-     * @param $text
+     * @param string $text
      *
-     * @return mixed
+     * @return string
      */
     public function encodeSubject($text)
     {
@@ -670,7 +670,7 @@ class XoopsMailer
     // abstract
     // to be overridden by lang specific mail class, if needed
     /**
-     * @param $text
+     * @param string $text
      */
     public function encodeBody(&$text)
     {

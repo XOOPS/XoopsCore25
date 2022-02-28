@@ -65,7 +65,7 @@ if (!class_exists('XoopsGTicket')) {
             return '<input type="hidden" name="XOOPS_G_TICKET" value="' . $this->issue($salt, $timeout, $area) . '" />';
         }
 
-        // returns an object of XoopsFormHidden including theh ticket
+        // returns an object of XoopsFormHidden including the ticket
 
         /**
          * @param string $salt
