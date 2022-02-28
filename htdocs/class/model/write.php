@@ -403,7 +403,7 @@ class XoopsModelWrite extends XoopsModelAbstract
             $set_clause .= $this->handler->db->quote($fieldvalue);
         }
         $sql = 'UPDATE `' . $this->handler->table . '` SET ' . $set_clause;
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (($criteria instanceof \CriteriaCompo) || ($criteria instanceof \Criteria)) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         $queryFunc = empty($force) ? 'query' : 'queryF';

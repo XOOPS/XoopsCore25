@@ -92,7 +92,7 @@ class XoopsModelJoint extends XoopsModelAbstract
         $start = null;
         // $field_object = empty($field_object) ? $field_link : $field_object;
         $sql = " SELECT {$select}" . " FROM {$this->handler->table} AS o" . " LEFT JOIN {$this->handler->table_link} AS l ON o.{$this->handler->field_object} = l.{$this->handler->field_link}";
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (($criteria instanceof \CriteriaCompo) || ($criteria instanceof \Criteria)) {
             $sql .= ' ' . $criteria->renderWhere();
             if ($sort = $criteria->getSort()) {
                 $sql .= " ORDER BY {$sort} " . $criteria->getOrder();
@@ -138,7 +138,7 @@ class XoopsModelJoint extends XoopsModelAbstract
         }
 
         $sql = " SELECT COUNT(DISTINCT o.{$this->handler->keyName}) AS count" . " FROM {$this->handler->table} AS o" . " LEFT JOIN {$this->handler->table_link} AS l ON o.{$this->handler->field_object} = l.{$this->handler->field_link}";
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (($criteria instanceof \CriteriaCompo) || ($criteria instanceof \Criteria)) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->handler->db->query($sql)) {
@@ -161,7 +161,7 @@ class XoopsModelJoint extends XoopsModelAbstract
             return null;
         }
         $sql = " SELECT l.{$this->handler->field_link}, COUNT(*)" . " FROM {$this->handler->table} AS o" . " LEFT JOIN {$this->handler->table_link} AS l ON o.{$this->handler->field_object} = l.{$this->handler->field_link}";
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (($criteria instanceof \CriteriaCompo) || ($criteria instanceof \Criteria)) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         $sql .= " GROUP BY l.{$this->handler->field_link}";
@@ -193,7 +193,7 @@ class XoopsModelJoint extends XoopsModelAbstract
             $set[] = "o.{$key}=" . $this->handler->db->quoteString($val);
         }
         $sql = " UPDATE {$this->handler->table} AS o" . ' SET ' . implode(', ', $set) . " LEFT JOIN {$this->handler->table_link} AS l ON o.{$this->handler->field_object} = l.{$this->handler->field_link}";
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (($criteria instanceof \CriteriaCompo) || ($criteria instanceof \Criteria)) {
             $sql .= ' ' . $criteria->renderWhere();
         }
 
@@ -212,7 +212,7 @@ class XoopsModelJoint extends XoopsModelAbstract
             return null;
         }
         $sql = "DELETE FROM {$this->handler->table} AS o " . " LEFT JOIN {$this->handler->table_link} AS l ON o.{$this->handler->field_object} = l.{$this->handler->field_link}";
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (($criteria instanceof \CriteriaCompo) || ($criteria instanceof \Criteria)) {
             $sql .= ' ' . $criteria->renderWhere();
         }
 

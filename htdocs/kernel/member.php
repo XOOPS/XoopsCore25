@@ -492,7 +492,7 @@ class XoopsMemberHandler
         }
 
         $limit = $start = 0;
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (($criteria instanceof \CriteriaCompo) || ($criteria instanceof \Criteria)) {
             $criteriaCompo->add($criteria, 'AND');
             $sql_criteria = $criteriaCompo->render();
             if ($criteria->getSort() != '') {
@@ -548,7 +548,7 @@ class XoopsMemberHandler
                          . ' m ' . "WHERE m.groupid IN {$group_in} and m.uid = u.uid) ";
         }
 
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (($criteria instanceof \CriteriaCompo) || ($criteria instanceof \Criteria)) {
             $criteriaCompo->add($criteria, 'AND');
         }
         $sql_criteria = $criteriaCompo->render();
