@@ -562,6 +562,7 @@ class XoopsBlock extends XoopsObject
      */
     public static function getAllBlocksByGroup($groupid, $asobject = true, $side = null, $visible = null, $orderby = 'b.weight,b.bid', $isactive = 1)
     {
+        /** @var XoopsMySQLDatabase $db */
         $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $ret = array();
         $sql = 'SELECT b.* ';
@@ -629,6 +630,7 @@ class XoopsBlock extends XoopsObject
      */
     public function getAllBlocks($rettype = 'object', $side = null, $visible = null, $orderby = 'side,weight,bid', $isactive = 1)
     {
+        /** @var XoopsMySQLDatabase $db */
         $db          = XoopsDatabaseFactory::getDatabaseConnection();
         $ret         = array();
         $where_query = ' WHERE isactive=' . $isactive;
@@ -691,6 +693,7 @@ class XoopsBlock extends XoopsObject
     public static function getByModule($moduleid, $asobject = true)
     {
         $moduleid = (int)$moduleid;
+        /** @var XoopsMySQLDatabase $db */
         $db       = XoopsDatabaseFactory::getDatabaseConnection();
         if ($asobject == true) {
             $sql = $sql = 'SELECT * FROM ' . $db->prefix('newblocks') . ' WHERE mid=' . $moduleid;
@@ -713,12 +716,12 @@ class XoopsBlock extends XoopsObject
     /**
      * XoopsBlock::getAllByGroupModule()
      *
-     * @param mixed   $groupid
-     * @param int   $module_id
-     * @param mixed     $toponlyblock
-     * @param mixed     $visible
-     * @param string    $orderby
-     * @param int   $isactive
+     * @param mixed  $groupid
+     * @param int    $module_id
+     * @param mixed  $toponlyblock
+     * @param mixed  $visible
+     * @param string $orderby
+     * @param int    $isactive
      * @return array
      *
      * @deprecated (This also appears, dead, in XoopsBlockHandler)
@@ -726,6 +729,7 @@ class XoopsBlock extends XoopsObject
     public function getAllByGroupModule($groupid, $module_id = 0, $toponlyblock = false, $visible = null, $orderby = 'b.weight, m.block_id', $isactive = 1)
     {
         $isactive = (int)$isactive;
+        /** @var XoopsMySQLDatabase $db */
         $db       = XoopsDatabaseFactory::getDatabaseConnection();
         $ret      = array();
         if (isset($groupid)) {
@@ -793,6 +797,7 @@ class XoopsBlock extends XoopsObject
      */
     public function getNonGroupedBlocks($module_id = 0, $toponlyblock = false, $visible = null, $orderby = 'b.weight, m.block_id', $isactive = 1)
     {
+        /** @var XoopsMySQLDatabase $db */
         $db   = XoopsDatabaseFactory::getDatabaseConnection();
         $ret  = array();
         $bids = array();
@@ -861,6 +866,7 @@ class XoopsBlock extends XoopsObject
             // invalid query
             return 0;
         }
+        /** @var XoopsMySQLDatabase $db */
         $db = XoopsDatabaseFactory::getDatabaseConnection();
         if (isset($showFunc)) {
             // showFunc is set for more strict comparison
@@ -918,6 +924,7 @@ class XoopsBlockHandler extends XoopsObjectHandler
      */
     public function get($id)
     {
+        /** @var XoopsMySQLDatabase $db */
         $block = false;
         $id = (int)$id;
         if ($id > 0) {
@@ -974,6 +981,7 @@ class XoopsBlockHandler extends XoopsObjectHandler
         $block_type = $block->getVar('block_type', 'n');
         $dirname = $block->getVar('dirname', 'n');
 
+        /** @var XoopsMySQLDatabase $db */
         if ($block->isNew()) {
             $bid = $this->db->genId('newblocks_bid_seq');
             $sql = sprintf(
