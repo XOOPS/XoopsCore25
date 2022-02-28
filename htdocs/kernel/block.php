@@ -66,6 +66,7 @@ class XoopsBlock extends XoopsObject
             if (is_array($id)) {
                 $this->assignVars($id);
             } else {
+                /** @var \XoopsBlockHandler $blkhandler */
                 $blkhandler = xoops_getHandler('block');
                 $obj        = $blkhandler->get($id);
                 foreach (array_keys($obj->getVars()) as $i) {
@@ -332,13 +333,13 @@ class XoopsBlock extends XoopsObject
 
                     return $myts->displayTarea($content, 0, 0);
                 }
-                break;
+
             case 'e':
                 return $this->getVar('content', 'e');
-                break;
+
             default:
                 return $this->getVar('content', 'n');
-                break;
+
         }
     }
 
