@@ -408,12 +408,12 @@ function notificationGenerateConfig(&$category, &$event, $type)
         case 'option_value':
         case 'name':
             return 'notify:' . $category['name'] . '-' . $event['name'];
-            break;
+
         case 'option_name':
             return $category['name'] . '-' . $event['name'];
-            break;
+
         default:
             return false;
-            break;
+
     }
 }

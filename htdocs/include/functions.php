@@ -922,7 +922,7 @@ function xoops_getMailer()
  *
  * @param int   $rank_id
  * @param mixed $posts
- * @return array|false
+ * @return array
  */
 function xoops_getrank($rank_id = 0, $posts = 0)
 {
@@ -964,12 +964,13 @@ function xoops_substr($str, $start, $length, $trimmarker = '...')
 // We want to be able to delete by module, by user, or by item.
 // How do we specify this??
 /**
- * @param $module_id
+ * @param int $module_id
  *
- * @return mixed
+ * @return bool
  */
 function xoops_notification_deletebymodule($module_id)
 {
+    /** @var \XoopsNotificationHandler $notification_handler */
     $notification_handler = xoops_getHandler('notification');
 
     return $notification_handler->unsubscribeByModule($module_id);
@@ -983,6 +984,7 @@ function xoops_notification_deletebymodule($module_id)
  */
 function xoops_notification_deletebyuser($user_id)
 {
+    /** @var \XoopsNotificationHandler $notification_handler */
     $notification_handler = xoops_getHandler('notification');
 
     return $notification_handler->unsubscribeByUser($user_id);
@@ -998,6 +1000,7 @@ function xoops_notification_deletebyuser($user_id)
  */
 function xoops_notification_deletebyitem($module_id, $category, $item_id)
 {
+    /** @var \XoopsNotificationHandler $notification_handler */
     $notification_handler = xoops_getHandler('notification');
 
     return $notification_handler->unsubscribeByItem($module_id, $category, $item_id);

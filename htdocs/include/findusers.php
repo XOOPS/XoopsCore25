@@ -83,7 +83,7 @@ class XoopsRankHandler extends XoopsObjectHandler
     }
 
     /**
-     * Create Object
+     * Create XoopsRank
      *
      * @param  bool $isNew
      * @return XoopsRank
@@ -99,10 +99,10 @@ class XoopsRankHandler extends XoopsObjectHandler
     }
 
     /**
-     * Get Object
+     * Get XoopsRank
      *
      * @param  int $id
-     * @return object
+     * @return XoopsRank|null
      */
     public function get($id = 0)
     {
@@ -136,7 +136,7 @@ class XoopsRankHandler extends XoopsObjectHandler
         }
 
         $sql = 'SELECT rank_id, rank_title FROM ' . $this->db->prefix('ranks');
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (($criteria instanceof \CriteriaCompo) || ($criteria instanceof \Criteria)) {
             $sql .= ' ' . $criteria->renderWhere();
             if ($criteria->getSort() != '') {
                 $sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
@@ -234,7 +234,7 @@ class XoUserHandler extends XoopsObjectHandler
         } else {
             $sql = '    SELECT COUNT(DISTINCT u.uid) FROM ' . $this->db->prefix('users') . ' AS u' . '    LEFT JOIN ' . $this->db->prefix('groups_users_link') . ' AS g ON g.uid = u.uid' . '    WHERE g.groupid IN (' . implode(', ', array_map('intval', $groups)) . ')';
         }
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (($criteria instanceof \CriteriaCompo) || ($criteria instanceof \Criteria)) {
             // Use the direct renderer, assuming no `uid` in criteria
             if ($render = $criteria->render()) {
                 $sql .= ' AND ' . $render;
@@ -267,7 +267,7 @@ class XoUserHandler extends XoopsObjectHandler
         } else {
             $sql = '    SELECT u.* FROM ' . $this->db->prefix('users') . ' AS u' . '    LEFT JOIN ' . $this->db->prefix('groups_users_link') . ' AS g ON g.uid = u.uid' . '    WHERE g.groupid IN (' . implode(', ', array_map('intval', $groups)) . ')';
         }
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (($criteria instanceof \CriteriaCompo) || ($criteria instanceof \Criteria)) {
             if ($render = $criteria->render()) {
                 $sql .= ' AND ' . $render;
             }
@@ -421,7 +421,7 @@ if (!Request::hasVar('user_submit', 'POST')) {
     $form->addElement($sort_select);
     $form->addElement($order_select);
 
-    $form->addElement(new XoopsFormText(_MA_USER_LIMIT, 'limit', 6, 6, Request::getInt('limit', 50, 'POST')));
+    $form->addElement(new XoopsFormText(_MA_USER_LIMIT, 'limit', 6, Request::getInt('limit', 50, 'POST'), ''));
     $form->addElement(new XoopsFormHidden('mode', $mode));
     $form->addElement(new XoopsFormHidden('target', Request::getString('target', '', 'POST')));
     $form->addElement(new XoopsFormHidden('multiple', $multiple));
