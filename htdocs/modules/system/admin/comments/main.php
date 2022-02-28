@@ -74,7 +74,7 @@ $module          = !isset($_REQUEST['module']) ? 0 : (int)$_REQUEST['module'];
 $modules_Handler = xoops_getHandler('module');
 $module_array    = $modules_Handler->getList(new Criteria('hascomments', 1));
 $module_array[0] = _AM_SYSTEM_COMMENTS_FORM_ALL_MODS;
-/* @var  XoopsCommentHandler $comment_handler */
+/** @var  XoopsCommentHandler $comment_handler */
 $comment_handler = xoops_getHandler('comment');
 
 switch ($op) {

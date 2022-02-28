@@ -1,8 +1,8 @@
 <?php
-// Skip for ORETEKI XOOPS
-if (defined('XOOPS_ORETEKI')) {
-    return null;
-}
+
+use XoopsModules\Protector;
+
+require_once __DIR__ . '/admin_header.php';
 
 global $xoopsModule;
 $mydirpath = dirname(__DIR__);
@@ -23,6 +23,8 @@ if (file_exists("$mydirpath/language/$language/modinfo.php")) {
     // fallback english
     include_once "$mytrustdirpath/language/english/modinfo.php";
 }
+
+$adminmenu = array();
 
 include dirname(__DIR__) . '/admin_menu.php';
 
@@ -45,7 +47,7 @@ if (file_exists(XOOPS_TRUST_PATH . '/libs/altsys/myblocksadmin.php')) {
 }
 
 // preferences
-/* @var XoopsConfigHandler $config_handler */
+/** @var XoopsConfigHandler $config_handler */
 $config_handler = xoops_getHandler('config');
 if (count($config_handler->getConfigs(new Criteria('conf_modid', $xoopsModule->mid()))) > 0) {
     if (file_exists(XOOPS_TRUST_PATH . '/libs/altsys/mypreferences.php')) {

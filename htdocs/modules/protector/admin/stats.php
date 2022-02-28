@@ -10,7 +10,7 @@
  * @package    gwiki
  */
 
-include __DIR__ . '/../../../mainfile.php';
+require dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
 $mydirname = basename( dirname(__DIR__) ) ;
 $mydirpath = dirname(__DIR__) ;
 require $mydirpath.'/mytrustdirname.php' ; // set $mytrustdirname

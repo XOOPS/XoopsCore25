@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $pageHasForm = true;
 $pageHasHelp = true;
 
-/* @var XoopsConfigHandler $config_handler */
+/** @var XoopsConfigHandler $config_handler */
 $config_handler = xoops_getHandler('config');
 $criteria       = new CriteriaCompo();
 $criteria->add(new Criteria('conf_modid', 0));

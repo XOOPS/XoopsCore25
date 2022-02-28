@@ -15,7 +15,7 @@
  * @since               2.0.0
  */
 
-/* @var XoopsAvatarHandler $avt_handler */
+/** @var XoopsAvatarHandler $avt_handler */
 
 include __DIR__ . '/mainfile.php';
 
@@ -34,7 +34,7 @@ if (!is_object($xoopsUser)) {
 
 // initialize $op variable
 $op = XoopsRequest::getCmd('op', 'editprofile');
-/* @var XoopsConfigHandler $config_handler */
+/** @var XoopsConfigHandler $config_handler */
 $config_handler  = xoops_getHandler('config');
 $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 $myts            = MyTextSanitizer::getInstance();

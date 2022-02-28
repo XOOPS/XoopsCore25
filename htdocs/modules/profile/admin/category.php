@@ -28,7 +28,7 @@ echo $indexAdmin->renderButton('right', '');
 
 $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : (isset($_REQUEST['id']) ? 'edit' : 'list');
 
-/* @var ProfileCategoryHandler $categoryHandler */
+/** @var ProfileCategoryHandler $categoryHandler */
 $categoryHandler = xoops_getModuleHandler('category');
 switch ($op) {
     default:

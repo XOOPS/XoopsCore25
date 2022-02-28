@@ -30,11 +30,11 @@ if (!xoops_getModuleOption('active_banners', 'system')) {
 // Parameters
 $nb_aff = xoops_getModuleOption('banners_pager', 'system');
 // Classes
-/* @var  SystemBannerHandler $banner_Handler */
+/** @var  SystemBannerHandler $banner_Handler */
 $banner_Handler        = xoops_getModuleHandler('banner', 'system');
-/* @var  SystemBannerfinishHandler $banner_finish_Handler */
+/** @var  SystemBannerfinishHandler $banner_finish_Handler */
 $banner_finish_Handler = xoops_getModuleHandler('bannerfinish', 'system');
-/* @var  SystemBannerclientHandler $banner_client_Handler */
+/** @var  SystemBannerclientHandler $banner_client_Handler */
 $banner_client_Handler = xoops_getModuleHandler('bannerclient', 'system');
 // Get Action type
 $op = Request::getString('op', 'default');

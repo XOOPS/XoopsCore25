@@ -1,10 +1,17 @@
 <?php
-// start hack by Trabis
-if (!class_exists('ProtectorRegistry')) {
-    exit('Registry not found');
-}
 
-$registry  = ProtectorRegistry::getInstance();
+use XoopsModules\Protector;
+use XoopsModules\Protector\Registry;
+
+require_once __DIR__ . '/preloads/autoloader.php';
+
+// start hack by Trabis
+//if (!class_exists('Registry')) {
+//    exit('Registry not found');
+//}
+
+
+$registry  = Registry::getInstance();
 $mydirname = $registry->getEntry('mydirname');
 $mydirpath = $registry->getEntry('mydirpath');
 $language  = $registry->getEntry('language');
@@ -28,15 +35,15 @@ if (!function_exists('protector_oninstall_base')) {
         global $ret; // TODO :-D
 
         // for Cube 2.1
-        if (defined('XOOPS_CUBE_LEGACY')) {
-            $root =& XCube_Root::getSingleton();
-            $root->mDelegateManager->add('Legacy.Admin.Event.ModuleInstall.' . ucfirst($mydirname) . '.Success', 'protector_message_append_oninstall');
-            $ret = array();
-        } else {
+//        if (defined('XOOPS_CUBE_LEGACY')) {
+//            $root =& XCube_Root::getSingleton();
+//            $root->mDelegateManager->add('Legacy.Admin.Event.ModuleInstall.' . ucfirst($mydirname) . '.Success', 'protector_message_append_oninstall');
+//            $ret = array();
+//        } else {
             if (!is_array($ret)) {
                 $ret = array();
             }
-        }
+//        }
 
         $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $mid = $module->getVar('mid');

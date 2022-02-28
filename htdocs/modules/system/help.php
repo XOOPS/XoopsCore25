@@ -13,7 +13,7 @@
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Andricq Nicolas (AKA MusS)
  */
-/* @var XoopsModule $module */
+/** @var XoopsModule $module */
 use Xmf\Request;
 
 // Include header

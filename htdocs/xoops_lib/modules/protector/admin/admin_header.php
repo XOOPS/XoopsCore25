@@ -16,28 +16,25 @@
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
 
-//include_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
-include_once XOOPS_ROOT_PATH . '/mainfile.php';
+use Xmf\Module\Admin;
+use XoopsModules\Protector;
+
+require_once dirname(__DIR__) . '/preloads/autoloader.php';
 
 include_once XOOPS_ROOT_PATH . '/include/cp_header.php';
-include_once XOOPS_ROOT_PATH . '/include/cp_functions.php';
 
-//include '../../../include/cp_header.php';
-//require_once XOOPS_ROOT_PATH . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname') . '/include/functions.php';
+global $xoopsUser, $xoopsModule, $xoopsModule, $xoopsConfig;
 
-if (file_exists($GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/moduleadmin.php'))) {
-    include_once $GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/moduleadmin.php');
-    //return true;
-} else {
-    redirect_header('../../../admin.php', 5, _AM_MODULEADMIN_MISSING, false);
-    //return false;
-}
+$adminObject = Admin::getInstance();
 
 $myts = MyTextSanitizer::getInstance();
 
-$moduleInfo = $module_handler->get($xoopsModule->getVar('mid'));
-$pathIcon16 = XOOPS_URL . '/' . $moduleInfo->getInfo('icons16');
-$pathIcon32 = XOOPS_URL . '/' . $moduleInfo->getInfo('icons32');
+//$moduleInfo = $module_handler->get($xoopsModule->getVar('mid'));
+//$pathIcon16 = XOOPS_URL . '/' . $moduleInfo->getInfo('icons16');
+//$pathIcon32 = XOOPS_URL . '/' . $moduleInfo->getInfo('icons32');
+
+$pathIcon16 = Admin::iconUrl('', '16');
+$pathIcon32 = Admin::iconUrl('', '32');
 
 if ($xoopsUser) {
     /** @var XoopsGroupPermHandler $moduleperm_handler */

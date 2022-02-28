@@ -17,14 +17,17 @@
  * @author       XOOPS Development Team, Raul Recio (AKA UNFOR)
  */
 
-include_once 'admin_header.php';
+use Xmf\Module\Admin;
+use XoopsModules\Protector;
+
+require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
-$indexAdmin = new ModuleAdmin();
+$adminObject = Admin::getInstance();
 
-echo $indexAdmin->addNavigation(basename(__FILE__));
-echo $indexAdmin->renderIndex();
+$adminObject->displayNavigation(basename(__FILE__));
+$adminObject->displayIndex();
 
 include 'admin_footer.php';
-//xoops_cp_footer();
+
 

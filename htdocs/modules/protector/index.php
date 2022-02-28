@@ -7,6 +7,8 @@ $mydirname = basename(__DIR__);
 $mydirpath = __DIR__;
 require $mydirpath . '/mytrustdirname.php'; // set $mytrustdirname
 
+require XOOPS_TRUST_PATH . '/modules/protector/preloads/autoloader.php';
+
 if (@$_GET['mode'] === 'admin') {
     require XOOPS_TRUST_PATH . '/modules/' . $mytrustdirname . '/admin.php';
 } else {

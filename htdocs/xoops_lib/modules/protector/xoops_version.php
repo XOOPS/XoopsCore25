@@ -1,10 +1,17 @@
 <?php
-// start hack by Trabis
-if (!class_exists('ProtectorRegistry')) {
-    exit('Registry not found');
-}
 
-$registry  = ProtectorRegistry::getInstance();
+use XoopsModules\Protector;
+use XoopsModules\Protector\Guardian;
+use XoopsModules\Protector\Registry;
+
+require __DIR__ . '/preloads/autoloader.php';
+
+// start hack by Trabis
+//if (!class_exists('Registry')) {
+//    exit('Registry not found');
+//}
+
+$registry  = Registry::getInstance();
 $mydirname = $registry->getEntry('mydirname');
 $mydirpath = $registry->getEntry('mydirpath');
 $language  = $registry->getEntry('language');
@@ -20,9 +27,12 @@ if (file_exists(__DIR__ . '/language/' . $language . '/modinfo.php')) {
 $constpref = '_MI_' . strtoupper($mydirname);
 // end hack
 
+$modversion['version']        = '4.0.0';
+$modversion['module_status']  = 'Alpha 1';
+$modversion['release_date']   = '2022/02/26';
 $modversion['name']           = constant($constpref . '_NAME');
 $modversion['description']    = constant($constpref . '_DESC');
-$modversion['version']        = (float) file_get_contents(__DIR__ . '/include/version.txt');
+$modversion['version']        = file_get_contents(__DIR__ . '/include/version.txt');
 $modversion['credits']        = 'PEAK Corp.';
 $modversion['author']         = 'GIJ=CHECKMATE PEAK Corp.(http://www.peak.ne.jp/)';
 $modversion['help']           = 'page=help';
@@ -38,8 +48,6 @@ $modversion['icons16']        = 'Frameworks/moduleclasses/icons/16';
 $modversion['icons32']        = 'Frameworks/moduleclasses/icons/32';
 
 //about
-$modversion['module_status']       = 'Final';
-$modversion['release_date']        = '2019/02/18';
 $modversion['module_website_url']  = 'https://xoops.org/';
 $modversion['module_website_name'] = 'XOOPS';
 $modversion['min_php']             = '5.3.9';

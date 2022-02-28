@@ -29,7 +29,7 @@ xoops_loadLanguage('user');
 xoops_load('XoopsUserUtility');
 
 $myts = MyTextSanitizer::getInstance();
-/* @var XoopsConfigHandler $config_handler */
+/** @var XoopsConfigHandler $config_handler */
 $config_handler  = xoops_getHandler('config');
 $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 

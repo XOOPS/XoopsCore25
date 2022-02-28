@@ -1,6 +1,10 @@
 <?php
-include '../../../include/cp_header.php';
-include 'admin_header.php';
+
+use XoopsModules\Protector;
+
+require_once __DIR__ . '/admin_header.php';
+
+/** @var XoopsMySQLDatabase $db */
 $db = XoopsDatabaseFactory::getDatabaseConnection();
 
 // beggining of Output

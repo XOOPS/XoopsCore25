@@ -15,8 +15,8 @@
  * @author              Maxime Cointin (AKA Kraven30)
  * @package             system
  */
-/* @var XoopsUser $xoopsUser */
-/* @var XoopsModule $xoopsModule */
+/** @var XoopsUser $xoopsUser */
+/** @var XoopsModule $xoopsModule */
 use Xmf\Request;
 
 require dirname(dirname(dirname(dirname(__DIR__)))) . '/mainfile.php';

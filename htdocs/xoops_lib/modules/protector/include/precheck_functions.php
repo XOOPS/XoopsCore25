@@ -1,5 +1,11 @@
 <?php
 
+
+use XoopsModules\Protector;
+use XoopsModules\Protector\Guardian;
+
+require_once dirname(__DIR__) . '/preloads/autoloader.php';
+
 /**
  * @return bool|null
  */
@@ -11,10 +17,10 @@ function protector_prepare()
     }
 
     // Protector class
-    require_once dirname(__DIR__) . '/class/protector.php';
+//    require_once dirname(__DIR__) . '/class/protector.php';
 
     // Protector object
-    $protector = Protector::getInstance();
+    $protector = Guardian::getInstance();
     $conf      = $protector->getConf();
 
     // bandwidth limitation

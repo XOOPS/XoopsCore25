@@ -34,7 +34,7 @@ if ($uid <= 0) {
     redirect_header('index.php', 3, _US_SELECTNG);
 }
 
-/* @var  XoopsGroupPermHandler $gperm_handler */
+/** @var  XoopsGroupPermHandler $gperm_handler */
 $gperm_handler = xoops_getHandler('groupperm');
 $groups        = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 
@@ -163,7 +163,7 @@ $date = $thisUser->getVar('last_login');
 if (!empty($date)) {
     $xoopsTpl->assign('user_lastlogin', formatTimestamp($date, 'm'));
 }
-/* @var XoopsModuleHandler $module_handler */
+/** @var XoopsModuleHandler $module_handler */
 $module_handler = xoops_getHandler('module');
 $criteria       = new CriteriaCompo(new Criteria('hassearch', 1));
 $criteria->add(new Criteria('isactive', 1));

@@ -1,4 +1,5 @@
-<?php
+<?php namespace XoopsModules\Protector;
+
 //  Author: Trabis
 //  URL: http://www.xuups.com
 //  E-Mail: lusopoemas@gmail.com
@@ -6,9 +7,9 @@
 defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 /**
- * Class ProtectorRegistry
+ * Class Registry
  */
-class ProtectorRegistry
+class Registry
 {
     /**
      * @var array
@@ -20,7 +21,7 @@ class ProtectorRegistry
     public $_locks;
 
     /**
-     * ProtectorRegistry constructor.
+     * Registry constructor.
      */
     protected function __construct()
     {
@@ -29,13 +30,13 @@ class ProtectorRegistry
     }
 
     /**
-     * @return ProtectorRegistry
+     * @return Registry
      */
     public static function getInstance()
     {
         static $instance = false;
         if (!$instance) {
-            $instance = new ProtectorRegistry();
+            $instance = new Registry();
         }
 
         return $instance;

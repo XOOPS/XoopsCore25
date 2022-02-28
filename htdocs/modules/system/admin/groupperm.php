@@ -16,7 +16,7 @@
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
-/* @var  XoopsUser $xoopsUser */
+/** @var  XoopsUser $xoopsUser */
 include_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 $modid = isset($_POST['modid']) ? (int)$_POST['modid'] : 0;
 
@@ -24,7 +24,7 @@ $modid = isset($_POST['modid']) ? (int)$_POST['modid'] : 0;
 if ($modid <= 1 || !is_object($xoopsUser) || !$xoopsUser->isAdmin($modid)) {
     redirect_header(XOOPS_URL . '/index.php', 1, _NOPERM);
 }
-/* @var XoopsModuleHandler $module_handler */
+/** @var XoopsModuleHandler $module_handler */
 $module_handler = xoops_getHandler('module');
 $module         = $module_handler->get($modid);
 if (!is_object($module) || !$module->getVar('isactive')) {
@@ -33,7 +33,7 @@ if (!is_object($module) || !$module->getVar('isactive')) {
 
 $msg = array();
 
-/* @var XoopsMemberHandler $member_handler */
+/** @var XoopsMemberHandler $member_handler */
 $member_handler = xoops_getHandler('member');
 $group_list     = $member_handler->getGroupList();
 

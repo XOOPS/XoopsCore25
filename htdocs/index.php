@@ -17,7 +17,7 @@
  * @author              Skalpa Keo <skalpa@xoops.org>
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
-/* @var  XoopsUser $xoopsUser */
+/** @var  XoopsUser $xoopsUser */
 
 if (file_exists(__DIR__ . '/mainfile.php')) {
     include __DIR__ . '/mainfile.php';

@@ -1,4 +1,4 @@
-<?php
+<?php namespace XoopsModules\Protector;
 
 if (file_exists(XOOPS_ROOT_PATH . '/class/database/drivers/' . XOOPS_DB_TYPE . '/database.php')) {
     require_once XOOPS_ROOT_PATH . '/class/database/drivers/' . XOOPS_DB_TYPE . '/database.php';
@@ -34,7 +34,7 @@ class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
      */
     public function __construct()
     {
-        $protector               = Protector::getInstance();
+        $protector               = Guardian::getInstance();
         $this->doubtful_requests = $protector->getDblayertrapDoubtfuls();
         $this->doubtful_needles  = array_merge($this->doubtful_needles, $this->doubtful_requests);
     }
@@ -44,7 +44,7 @@ class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
      */
     public function injectionFound($sql)
     {
-        $protector = Protector::getInstance();
+        $protector = Guardian::getInstance();
 
         $protector->last_error_type = 'SQL Injection';
         $protector->message .= $sql;

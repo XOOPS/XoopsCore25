@@ -16,15 +16,16 @@
  * @author              Mage, Mamba
  **/
 
-include '../../../include/cp_header.php';
-include '../../../class/xoopsformloader.php';
-include 'admin_header.php';
+use Xmf\Module\Admin;
+use XoopsModules\Protector;
+/** @var Admin $adminObject */
+
+require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
-$aboutAdmin = new ModuleAdmin();
-
-echo $aboutAdmin->addNavigation(basename(__FILE__));
-echo $aboutAdmin->renderAbout('xoopsfoundation@gmail.com', false);
+$adminObject->displayNavigation(basename(__FILE__));
+$adminObject::setPaypal('xoopsfoundation@gmail.com');
+$adminObject->displayAbout(false);
 
 include 'admin_footer.php';
-xoops_cp_footer();
+

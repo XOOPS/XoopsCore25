@@ -1,5 +1,9 @@
 <?php
 
+use XoopsModules\Protector;
+
+require_once dirname(__DIR__) . '/preloads/autoloader.php';
+
 require_once __DIR__ . '/precheck_functions.php';
 
 if (class_exists('Database')) {
@@ -9,7 +13,8 @@ if (class_exists('Database')) {
 }
 
 define('PROTECTOR_PRECHECK_INCLUDED', 1);
-define('PROTECTOR_VERSION', (float) file_get_contents(__DIR__ . '/version.txt'));
+define('PROTECTOR_VERSION0', (float)file_get_contents(__DIR__ . '/version.txt'));
+define('PROTECTOR_VERSION', file_get_contents(__DIR__ . '/version.txt'));
 
 // set $_SERVER['REQUEST_URI'] for IIS
 if (empty($_SERVER['REQUEST_URI'])) {         // Not defined by IIS

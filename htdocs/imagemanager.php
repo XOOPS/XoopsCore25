@@ -14,7 +14,7 @@
  * @package             core
  * @since               2.0.0
  */
-/* @var  XoopsUser $xoopsUser */
+/** @var  XoopsUser $xoopsUser */
 
 include __DIR__ . '/mainfile.php';
 XoopsLoad::load('XoopsRequest');

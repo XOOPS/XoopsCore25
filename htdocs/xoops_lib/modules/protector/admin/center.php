@@ -1,10 +1,16 @@
 <?php
-//require_once XOOPS_ROOT_PATH.'/include/cp_header.php' ;
-include_once 'admin_header.php'; //mb problem: it shows always the same "Center" tab
+
+use XoopsModules\Protector;
+use XoopsModules\Protector\XoopsGTicket;
+use XoopsModules\Protector\Guardian;
+
+require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
+
 include __DIR__ . '/mymenu.php';
 require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-require_once dirname(__DIR__) . '/class/gtickets.php';
+//require_once dirname(__DIR__) . '/class/gtickets.php';
+$xoopsGTicket = new XoopsGTicket();
 
 //dirty trick to get navigation working with system menus
 if (isset($_GET['num'])) {
@@ -12,19 +18,20 @@ if (isset($_GET['num'])) {
 }
 
 $myts = MyTextSanitizer::getInstance();
+/** @var XoopsMySQLDatabase $db */
 $db   = XoopsDatabaseFactory::getDatabaseConnection();
 
 // GET vars
 $pos = empty($_GET['pos']) ? 0 : (int)$_GET['pos'];
 $num = empty($_GET['num']) ? 20 : (int)$_GET['num'];
 
+$mydirname = basename( dirname(__DIR__) ) ;
 // Table Name
 $log_table = $db->prefix($mydirname . '_log');
 
 // Protector object
-require_once dirname(__DIR__) . '/class/protector.php';
-$db        = XoopsDatabaseFactory::getDatabaseConnection();
-$protector = Protector::getInstance($db->conn);
+//require_once dirname(__DIR__) . '/class/protector.php';
+$protector = Guardian::getInstance();
 $conf      = $protector->getConf();
 
 //
@@ -142,6 +149,8 @@ foreach ($num_array as $n) {
 }
 
 // beggining of Output
+
+global $xoopsModule;
 
 // title
 echo "<h3 style='text-align:left;'>" . $xoopsModule->name() . "</h3>\n";
@@ -297,17 +306,17 @@ echo "
 xoops_cp_footer();
 
 /**
- * @param $a
- * @param $b
+ * @param string $a
+ * @param string $b
  *
  * @return int
  */
 function protector_ip_cmp($a, $b)
 {
     $as   = explode('.', $a);
-    $aval = @$as[0] * 167777216 + @$as[1] * 65536 + @$as[2] * 256 + @$as[3];
+    $aval = @(int)$as[0] * 167777216 + @(int)$as[1] * 65536 + @(int)$as[2] * 256 + @(int)$as[3];
     $bs   = explode('.', $b);
-    $bval = @$bs[0] * 167777216 + @$bs[1] * 65536 + @$bs[2] * 256 + @$bs[3];
+    $bval = @(int)$bs[0] * 167777216 + @(int)$bs[1] * 65536 + @(int)$bs[2] * 256 + @(int)$bs[3];
 
     return $aval > $bval ? 1 : -1;
 }

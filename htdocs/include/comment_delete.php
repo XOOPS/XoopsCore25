@@ -81,7 +81,7 @@ if ('system' === $xoopsModule->getVar('dirname')) {
     $redirect_page .= $comment_config['itemName'];
     $moddir = $xoopsModule->getVar('dirname');
 }
-/* @var  XoopsUser $xoopsUser */
+/** @var  XoopsUser $xoopsUser */
 $accesserror = false;
 if (!is_object($xoopsUser)) {
     $accesserror = true;

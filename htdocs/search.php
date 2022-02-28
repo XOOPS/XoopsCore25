@@ -26,7 +26,7 @@
 include __DIR__ . '/mainfile.php';
 
 xoops_loadLanguage('search');
-/* @var XoopsConfigHandler $config_handler */
+/** @var XoopsConfigHandler $config_handler */
 $config_handler    = xoops_getHandler('config');
 $xoopsConfigSearch = $config_handler->getConfigsByCat(XOOPS_CONF_SEARCH);
 
@@ -86,7 +86,7 @@ if ($action === 'results') {
 }
 $GLOBALS['xoopsOption']['template_main'] = 'system_search.tpl';
 $groups            = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
-/* @var  XoopsGroupPermHandler $gperm_handler */
+/** @var  XoopsGroupPermHandler $gperm_handler */
 $gperm_handler     = xoops_getHandler('groupperm');
 $available_modules = $gperm_handler->getItemIds('module_read', $groups);
 if ($action === 'search') {

@@ -18,7 +18,7 @@
 
 $xoopsOption['pagetype'] = 'user';
 include __DIR__ . '/header.php';
-/* @var XoopsConfigHandler $config_handler */
+/** @var XoopsConfigHandler $config_handler */
 $config_handler             = xoops_getHandler('config');
 $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 

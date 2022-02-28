@@ -1,16 +1,22 @@
 <?php
-// start hack by Trabis
-if (!class_exists('ProtectorRegistry')) {
-    exit('Registry not found');
-}
 
-$registry  = ProtectorRegistry::getInstance();
+use XoopsModules\Protector;
+use XoopsModules\Protector\Registry;
+
+require_once __DIR__ . '/preloads/autoloader.php';
+
+// start hack by Trabis
+//if (!class_exists('Registry')) {
+//    exit('Registry not found');
+//}
+
+$registry  = Registry::getInstance();
 $mydirname = $registry->getEntry('mydirname');
 $mydirpath = $registry->getEntry('mydirpath');
 $language  = $registry->getEntry('language');
 // end hack by Trabis
 
-/* @var XoopsModuleHandler $module_handler */
+/** @var XoopsModuleHandler $module_handler */
 $module_handler = xoops_getHandler('module');
 $xoopsModule    = XoopsModule::getByDirname($mydirname);
 $moduleInfo     = $module_handler->get($xoopsModule->getVar('mid'));

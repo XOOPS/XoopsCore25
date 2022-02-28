@@ -220,7 +220,7 @@ if (!empty($_POST)) {
 } else {
     exit();
 }
-/* @var  XoopsUser $xoopsUser */
+/** @var  XoopsUser $xoopsUser */
 switch ($op) {
     case 'delete':
         include_once $GLOBALS['xoops']->path('include/comment_delete.php');

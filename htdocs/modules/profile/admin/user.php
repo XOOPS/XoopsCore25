@@ -28,7 +28,7 @@ $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list';
 if ($op === 'editordelete') {
     $op = isset($_REQUEST['delete']) ? 'delete' : 'edit';
 }
-/* @var XoopsMemberHandler $handler */
+/** @var XoopsMemberHandler $handler */
 $handler = xoops_getHandler('member');
 
 switch ($op) {

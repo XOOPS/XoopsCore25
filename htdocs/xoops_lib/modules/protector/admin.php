@@ -1,36 +1,46 @@
 <?php
-// start hack by Trabis
-if (!class_exists('ProtectorRegistry')) {
-    exit('Registry not found');
-}
 
-$registry  = ProtectorRegistry::getInstance();
+use XoopsModules\Protector\Registry;
+
+require __DIR__ . '/preloads/autoloader.php';
+
+// start hack by Trabis
+//if (!class_exists('Registry')) {
+//    exit('Registry not found');
+//}
+
+
+global $xoopsUser;
+
+$registry  = Registry::getInstance();
 $mydirname = $registry->getEntry('mydirname');
 $mydirpath = $registry->getEntry('mydirpath');
 $language  = $registry->getEntry('language');
 // end hack by Trabis
+
+require XOOPS_ROOT_PATH . '/include/cp_functions.php';
 
 $mytrustdirname = basename(__DIR__);
 $mytrustdirpath = __DIR__;
 
 // environment
 require_once XOOPS_ROOT_PATH . '/class/template.php';
-/* @var XoopsModuleHandler $module_handler */
+/** @var XoopsModuleHandler $module_handler */
 $module_handler    = xoops_getHandler('module');
 $xoopsModule       = $module_handler->getByDirname($mydirname);
-/* @var XoopsConfigHandler $config_handler */
+/** @var XoopsConfigHandler $config_handler */
 $config_handler    = xoops_getHandler('config');
 $xoopsModuleConfig = $config_handler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
 
 // check permission of 'module_admin' of this module
-/* @var XoopsGroupPermHandler $moduleperm_handler */
+/** @var XoopsGroupPermHandler $moduleperm_handler */
 $moduleperm_handler = xoops_getHandler('groupperm');
 if (!is_object(@$xoopsUser) || !$moduleperm_handler->checkRight('module_admin', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
     die('only admin can access this area');
 }
 
 $xoopsOption['pagetype'] = 'admin';
-require XOOPS_ROOT_PATH . '/include/cp_functions.php';
+//require XOOPS_ROOT_PATH . '/include/cp_functions.php';
 
 // language files (admin.php)
 //$language = empty( $xoopsConfig['language'] ) ? 'english' : $xoopsConfig['language'] ;  //hack by Trabis

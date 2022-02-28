@@ -1,5 +1,11 @@
 <?php
 
+
+use XoopsModules\Protector;
+use XoopsModules\Protector\Guardian;
+
+require_once dirname(__DIR__) . '/preloads/autoloader.php';
+
 /**
  * @return bool|null
  */
@@ -23,9 +29,9 @@ function protector_postcommon()
     }
 
     // Protector object
-    require_once dirname(__DIR__) . '/class/protector.php';
+//    require_once dirname(__DIR__) . '/class/protector.php';
     $db        = XoopsDatabaseFactory::getDatabaseConnection();
-    $protector = Protector::getInstance();
+    $protector = Guardian::getInstance();
     $protector->setConn($db->conn);
     $protector->updateConfFromDb();
     $conf = $protector->getConf();

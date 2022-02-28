@@ -16,9 +16,9 @@
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
-/* @var XoopsUser $xoopsUser */
+/** @var XoopsUser $xoopsUser */
 
-/* @var XoopsModule $xoopsModule */
+/** @var XoopsModule $xoopsModule */
 
 use Xmf\Request;
 
@@ -38,7 +38,7 @@ $op = Request::getString('op', 'list');
 $image_id = Request::getInt('image_id', 0);
 $imgcat_id = Request::getInt('imgcat_id', 0);
 
-/* @var  XoopsGroupPermHandler $gperm_handler */
+/** @var  XoopsGroupPermHandler $gperm_handler */
 $gperm_handler = xoops_getHandler('groupperm');
 $groups        = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 

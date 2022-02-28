@@ -17,8 +17,8 @@
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
 
-/* @var XoopsUser $xoopsUser */
-/* @var XoopsModule $xoopsModule */
+/** @var XoopsUser $xoopsUser */
+/** @var XoopsModule $xoopsModule */
 
 use Xmf\Request;
 
@@ -31,9 +31,9 @@ $nb_group = xoops_getModuleOption('groups_pager', 'system');
 // Get Action type
 $op = Request::getString('op', 'list');
 // Get groups handler
-/* @var SystemGroupHandler $groups_Handler */
+/** @var SystemGroupHandler $groups_Handler */
 $groups_Handler = xoops_getModuleHandler('group', 'system');
-/* @var XoopsMemberHandler $member_handler */
+/** @var XoopsMemberHandler $member_handler */
 $member_handler = xoops_getHandler('member');
 // Define main template
 $GLOBALS['xoopsOption']['template_main'] = 'system_groups.tpl';

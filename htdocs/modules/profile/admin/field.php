@@ -26,7 +26,7 @@ echo $indexAdmin->addNavigation(basename(__FILE__));
 echo $indexAdmin->renderButton('right', '');
 
 $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : (isset($_REQUEST['id']) ? 'edit' : 'list');
-/* @var XoopsModuleHandler $profilefield_handler */
+/** @var XoopsModuleHandler $profilefield_handler */
 $profilefield_handler = xoops_getModuleHandler('field');
 
 switch ($op) {

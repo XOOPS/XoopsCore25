@@ -23,7 +23,7 @@ $xoopsOption['pagetype'] = 'admin';
 include_once dirname(__DIR__) . '/mainfile.php';
 include_once $GLOBALS['xoops']->path('include/cp_functions.php');
 
-/* @var XoopsGroupPermHandler $moduleperm_handler */
+/** @var XoopsGroupPermHandler $moduleperm_handler */
 $moduleperm_handler = xoops_getHandler('groupperm');
 if ($xoopsUser) {
     $url_arr        = explode('/', strstr($_SERVER['REQUEST_URI'], '/modules/'));

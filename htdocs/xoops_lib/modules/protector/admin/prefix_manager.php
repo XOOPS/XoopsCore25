@@ -1,8 +1,18 @@
 <?php
-include '../../../include/cp_header.php';
-include 'admin_header.php';
-require_once dirname(__DIR__) . '/class/gtickets.php';
+
+use XoopsModules\Protector;
+use XoopsModules\Protector\XoopsGTicket;
+
+require_once __DIR__ . '/admin_header.php';
+
+global $xoopsLogger, $xoopsGTicket;
+
+$xoopsGTicket = new XoopsGTicket();
+
+//require_once dirname(__DIR__) . '/class/gtickets.php';
+/** @var XoopsMySQLDatabase $db */
 $db = XoopsDatabaseFactory::getDatabaseConnection();
+
 
 // COPY TABLES
 if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
@@ -15,7 +25,7 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
         redirect_header(XOOPS_URL . '/', 3, $xoopsGTicket->getErrors());
     }
 
-    $new_prefix = empty($_POST['new_prefix']) ? 'x' . substr(md5(time()), -5) : $_POST['new_prefix'];
+    $new_prefix = empty($_POST['new_prefix']) ? 'x' . substr(md5((string)time()), -5) : $_POST['new_prefix'];
     $old_prefix = $_POST['old_prefix'];
 
     $srs = $db->queryF('SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`');

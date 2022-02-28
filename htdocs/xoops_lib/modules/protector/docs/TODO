@@ -1,0 +1,20 @@
+- RBLに登録されたIPからの書込（ホワイトリスト？）
+
+$xoopsOption['nocommon'] の時のpostcheck処理がまったく行われないことの影響チェック
+
+- 空フォルダでIndex処理がされていないもののチェック (+Indexes対策)
+-- 面倒な割に意味が薄い？
+
+他のモジュールから、大きな傘(anti-XSS, anti-SQL-Injection)が有効かどうかを確認する手段を提供する
+
+---------------------------------------------------------
+English:
+--Writing from IP registered in RBL (whitelist?)
+
+Check the effect that postcheck processing is not performed at all when $ xoopsOption ['nocommon']
+
+--Check for empty folders that have not been indexed (+ Indexes countermeasures)
+--Is it meaningless for the troublesome?
+
+Provide a way to check if a large umbrella (anti-XSS, anti-SQL-Injection) is valid from other modules
+
