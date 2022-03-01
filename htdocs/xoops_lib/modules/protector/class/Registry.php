@@ -62,7 +62,7 @@ class Registry
     }
 
     /**
-     * @param $key
+     * @param string $key
      */
     public function unsetEntry($key)
     {
@@ -70,9 +70,9 @@ class Registry
     }
 
     /**
-     * @param $key
+     * @param string $key
      *
-     * @return mixed|string|null
+     * @return mixed|null
      */
     public function getEntry($key)
     {
@@ -84,7 +84,7 @@ class Registry
     }
 
     /**
-     * @param $key
+     * @param string $key
      *
      * @return bool
      */
@@ -94,7 +94,7 @@ class Registry
     }
 
     /**
-     * @param $key
+     * @param string $key
      *
      * @return bool
      */
@@ -106,7 +106,7 @@ class Registry
     }
 
     /**
-     * @param $key
+     * @param string $key
      */
     public function unlockEntry($key)
     {
@@ -114,7 +114,7 @@ class Registry
     }
 
     /**
-     * @param $key
+     * @param string $key
      *
      * @return bool
      */
