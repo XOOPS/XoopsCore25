@@ -134,7 +134,7 @@ class XoopsSecurity
     /**
      * Check whether a token value is expired or not
      *
-     * @param string $token token
+     * @param array $token token
      *
      * @return bool
      */
