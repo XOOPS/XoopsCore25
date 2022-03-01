@@ -88,6 +88,7 @@ switch ($op) {
 
         $uid = empty($_POST['uid']) ? 0 : (int)$_POST['uid'];
         if (!empty($uid)) {
+            /** @var XoopsUser $user */
             $user = $handler->getUser($uid);
             /** @var \ProfileProfile $profile */
             $profile = $profile_handler->get($uid);

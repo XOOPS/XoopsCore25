@@ -43,7 +43,7 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_USER')):
 
     /**
      * @param mixed $uid
-     * @param int  $usereal
+     * @param bool  $usereal
      * @param bool $linked
      *
      * @return string

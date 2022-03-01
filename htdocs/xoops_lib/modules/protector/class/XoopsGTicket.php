@@ -54,7 +54,7 @@ if (!class_exists('XoopsGTicket')) {
         // render form as plain html
 
         /**
-         * @param string $salt
+         * @param string|int $salt
          * @param int    $timeout
          * @param string $area
          *

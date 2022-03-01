@@ -72,7 +72,7 @@ class Registry
     /**
      * @param $key
      *
-     * @return null
+     * @return mixed|string|null
      */
     public function getEntry($key)
     {

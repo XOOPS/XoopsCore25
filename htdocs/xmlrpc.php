@@ -33,6 +33,7 @@ $parser   = new XoopsXmlRpcParser(rawurlencode($http_raw_post_data));
 if (!$parser->parse()) {
     $response->add(new XoopsXmlRpcFault(102));
 } else {
+    $params = $parser->getParam();
     /** @var XoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
     $module         = $module_handler->getByDirname('news');
@@ -46,16 +47,16 @@ if (!$parser->parse()) {
                 break;
             case 'metaWeblog':
                 include_once $GLOBALS['xoops']->path('class/xml/rpc/metaweblogapi.php');
-                $rpc_api = new MetaWeblogApi($parser->getParam(), $response, $module);
+                $rpc_api = new MetaWeblogApi($params, $response, $module);
                 break;
             case 'mt':
                 include_once $GLOBALS['xoops']->path('class/xml/rpc/movabletypeapi.php');
-                $rpc_api = new MovableTypeApi($parser->getParam(), $response, $module);
+                $rpc_api = new MovableTypeApi($params, $response, $module);
                 break;
             case 'xoops':
             default:
                 include_once $GLOBALS['xoops']->path('class/xml/rpc/xoopsapi.php');
-                $rpc_api = new XoopsApi($parser->getParam(), $response, $module);
+                $rpc_api = new XoopsApi($params, $response, $module);
                 break;
         }
         $method = $methods[1];
