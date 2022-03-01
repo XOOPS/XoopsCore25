@@ -19,6 +19,9 @@
 use Xmf\Module\Admin;
 use XoopsModules\Protector;
 
+CONST MODULES = '/modules/';
+CONST LANGUAGE = '/language/';
+
 require_once dirname(__DIR__) . '/preloads/autoloader.php';
 
 include_once XOOPS_ROOT_PATH . '/include/cp_header.php';
@@ -54,12 +57,12 @@ if (!isset($xoopsTpl) || !is_object($xoopsTpl)) {
 $xoopsTpl->assign('pathIcon16', $pathIcon16);
 
 // Load language files
-if (!@include_once(XOOPS_TRUST_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/admin.php')) {
-    include_once(XOOPS_TRUST_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/english/admin.php');
+if (!@include(XOOPS_TRUST_PATH . MODULES . $xoopsModule->getVar('dirname') . LANGUAGE . $xoopsConfig['language'] . '/admin.php')) {
+    include_once(XOOPS_TRUST_PATH . MODULES . $xoopsModule->getVar('dirname') . LANGUAGE . 'english/admin.php');
 }
-if (!@include_once(XOOPS_TRUST_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/modinfo.php')) {
-    include_once(XOOPS_TRUST_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/english/modinfo.php');
+if (!@include(XOOPS_TRUST_PATH . MODULES . $xoopsModule->getVar('dirname') . LANGUAGE . $xoopsConfig['language'] . '/modinfo.php')) {
+    include_once(XOOPS_TRUST_PATH . MODULES . $xoopsModule->getVar('dirname') . LANGUAGE . 'english/modinfo.php');
 }
-if (!@include_once(XOOPS_TRUST_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/main.php')) {
-    include_once(XOOPS_TRUST_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/english/main.php');
+if (!@include(XOOPS_TRUST_PATH . MODULES . $xoopsModule->getVar('dirname') . LANGUAGE . $xoopsConfig['language'] . '/main.php')) {
+    include_once(XOOPS_TRUST_PATH . MODULES . $xoopsModule->getVar('dirname') . LANGUAGE . 'english/main.php');
 }
