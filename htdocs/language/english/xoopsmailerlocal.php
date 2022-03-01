@@ -44,7 +44,7 @@ class XoopsMailerLocal extends XoopsMailer
      *
      * @param string $text
      *
-     * @return mixed
+     * @return string
      */
     public function encodeFromName($text)
     {
@@ -59,7 +59,7 @@ class XoopsMailerLocal extends XoopsMailer
      *
      * @param string $text
      *
-     * @return mixed
+     * @return string
      */
     public function encodeSubject($text)
     {

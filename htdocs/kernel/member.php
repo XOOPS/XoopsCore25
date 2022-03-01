@@ -84,7 +84,7 @@ class XoopsMemberHandler
     /**
      * create a new user
      *
-     * @return XoopsUser reference to the new user
+     * @return XoopsObject reference to the new XoopsUser
      */
     public function createUser()
     {

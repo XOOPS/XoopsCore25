@@ -209,10 +209,10 @@ class XoopsForm
     }
 
     /**
-     * @param        $value
-     * @param        $key
-     * @param        $ret
-     * @param string $hashinfo
+     * @param array|string $value
+     * @param string       $key
+     * @param string       $ret
+     * @param string       $hashinfo
      *
      * @return string
      */

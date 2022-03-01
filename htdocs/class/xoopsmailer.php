@@ -510,7 +510,7 @@ class XoopsMailer
     /**
      * @param bool $ashtml
      *
-     * @return string
+     * @return string|array
      */
     public function getErrors($ashtml = true)
     {
@@ -535,7 +535,7 @@ class XoopsMailer
     /**
      * @param bool $ashtml
      *
-     * @return string
+     * @return string|array
      */
     public function getSuccess($ashtml = true)
     {

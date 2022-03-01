@@ -153,7 +153,7 @@ class XoopsModelJoint extends XoopsModelAbstract
      * array of count of objects matching a condition of, groupby linked object keyname
      *
      * @param  \CriteriaElement|CriteriaCompo|null $criteria {@link CriteriaElement} to match
-     * @return int|array|false|null    count of objects
+     * @return array|false|null    count of objects in array
      */
     public function getCountsByLink(CriteriaElement $criteria = null)
     {

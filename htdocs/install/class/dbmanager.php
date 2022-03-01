@@ -228,7 +228,7 @@ class Db_manager
     /**
      * @param string $sql
      *
-     * @return mixed
+     * @return bool|\mysqli_result //mb TODO originally mixed
      */
     public function query($sql)
     {
@@ -241,7 +241,7 @@ class Db_manager
     /**
      * @param string $table
      *
-     * @return mixed
+     * @return string //mb TODO originally mixed
      */
     public function prefix($table)
     {
@@ -253,7 +253,7 @@ class Db_manager
     /**
      * @param mysqli_result $ret
      *
-     * @return mixed
+     * @return array|false //mb TODO originally mixed
      */
     public function fetchArray($ret)
     {

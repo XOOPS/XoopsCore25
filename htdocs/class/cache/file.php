@@ -55,7 +55,7 @@ class XoopsCacheFile extends XoopsCacheEngine
     /**
      * Instance of File class
      *
-     * @var object
+     * @var object|null
      * @access private
      */
     private $file;

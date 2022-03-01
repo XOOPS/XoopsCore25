@@ -122,7 +122,7 @@ class XoopsAuthProvisionning
      * @param array       $datas
      * @param string      $uname
      * @param string|null $pwd
-     * @return bool
+     * @return bool|XoopsUser
      */
     public function add($datas, $uname, $pwd = null)
     {
@@ -167,7 +167,7 @@ class XoopsAuthProvisionning
      * @param array       $datas
      * @param string      $uname
      * @param string|null $pwd
-     * @return bool
+     * @return bool|XoopsUser
      */
     public function change(&$xoopsUser, $datas, $uname, $pwd = null)
     {

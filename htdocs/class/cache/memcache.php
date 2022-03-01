@@ -54,7 +54,7 @@ class XoopsCacheMemcache extends XoopsCacheEngine
     /**
      * Memcache wrapper.
      *
-     * @var object
+     * @var object|null
      * @access private
      */
     private $memcache;

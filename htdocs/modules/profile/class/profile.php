@@ -121,7 +121,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      *
      * @param bool $isNew
      *
-     * @return \ProfileField
+     * @return XoopsObject|
      */
     public function createField($isNew = true)
     {
@@ -161,12 +161,12 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
     /**
      * Insert a field in the database
      *
-     * @param ProfileField $field
+     * @param XoopsObject $field
      * @param bool         $force
      *
-     * @return bool
+     * @return mixed
      */
-    public function insertField(ProfileField $field, $force = false)
+    public function insertField(XoopsObject $field, $force = false)
     {
         return $this->_fHandler->insert($field, $force);
     }
@@ -174,12 +174,12 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
     /**
      * Delete a field from the database
      *
-     * @param ProfileField $field
+     * @param XoopsObject $field
      * @param bool         $force
      *
-     * @return bool
+     * @return bool|void
      */
-    public function deleteField(ProfileField $field, $force = false)
+    public function deleteField(XoopsObject $field, $force = false)
     {
         return $this->_fHandler->delete($field, $force);
     }
@@ -250,7 +250,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
      * @param XoopsObject|ProfileProfile $object reference to the object
      * @param bool                       $force whether to force the query execution despite security settings
      *
-     * @return bool FALSE if failed, TRUE if already present and unchanged or successful
+     * @return mixed FALSE if failed, TRUE if already present and unchanged or successful
      */
     public function insert(XoopsObject $object, $force = false)
     {

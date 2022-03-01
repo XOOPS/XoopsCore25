@@ -461,7 +461,7 @@ class XoopsFileHandler
     /**
      * Returns the Filesize, either in bytes or in human-readable format.
      *
-     * @return string|false |int filesize as int or as a human-readable string
+     * @return false|int filesize as int or as a human-readable string  //mb TODO originally included also string
      * @access   public
      */
     public function size()

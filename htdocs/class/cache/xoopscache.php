@@ -46,7 +46,7 @@ class XoopsCache
     /**
      * Holds name of the current configuration being used
      *
-     * @var array
+     * @var array|null
      * @access private
      */
     private $name;
@@ -262,7 +262,7 @@ class XoopsCache
      *
      * @param  string $key    Identifier for the data
      * @param  string|array $config name of the configuration to use
-     * @return bool|null The cached data, or false if the data doesn't exist, has expired, or if there was an error fetching it
+     * @return mixed The cached data, or false if the data doesn't exist, has expired, or if there was an error fetching it
      * @access public
      */
     public static function read($key, $config = null)

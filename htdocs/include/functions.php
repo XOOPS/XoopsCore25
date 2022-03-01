@@ -1153,11 +1153,11 @@ function xoops_getOption($option)
 /**
  * xoops_getConfigOption()
  *
- * @param array        $option
+ * @param string|int   $option
  * @param array|string $type
- * @internal param string $dirname
- * @deprecated
  * @return bool|string
+ * @deprecated
+ * @internal param string $dirname
  */
 function xoops_getConfigOption($option, $type = 'XOOPS_CONF')
 {
