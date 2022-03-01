@@ -251,7 +251,7 @@ while (false !== (list($lid, $uid, $ip, $agent, $type, $description, $timestamp,
 
     $ip = htmlspecialchars($ip, ENT_QUOTES);
     $type = htmlspecialchars($type, ENT_QUOTES);
-    if ('{"' == substr($description, 0, 2)) {
+    if ('{"' == substr($description, 0, 2) && defined('JSON_PRETTY_PRINT')) {
         $temp = json_decode($description);
         if (is_object($temp)) {
             $description = json_encode($temp, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
