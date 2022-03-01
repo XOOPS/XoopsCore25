@@ -1,0 +1,417 @@
+[xlang:en]
+= CHANGES = 
+
+CHANGES are moved into README after 2.57
+
+2.57 (2006/07/17)
+- fixed treating blob on backing up in prefix_manager (thx fbs777)
+- fixed some notices
+- updated gticket into version2
+- disabled onInstall (2.57a)
+
+2.56 (2006/03/30)
+- modified error handling when config can't be received
+- modified DOS/CRAWLER skipping for nocommon=1 module (thx sleo577)
+- updated german (thx rene) 2.56a
+
+2.55 (2006/02/11)
+- fixed anti-multiple-content-type allows .tar.gz (thx gusagi)
+- updated mymenu for compatibility with XC2.1
+- updated Spanish language files (thx bezoops)
+
+2.54 (2005/12/08)
+- added backup feature into prefix_manager (experimental)
+- added a check multiple dot file uploading (=multiple content-type for apache)
+- updated portuguesebr language files (thx Izzy)
+- modified anti camouflaged image file uploading system with some open_basedir restrictions (thx stefan88) - 2.54a
+- modified some initial settings and documents - 2.54a
+
+2.53 (2005/11/30)
+ - added anti camouflaged image file upload (==IE Content-Type XSS)
+ - modified the action when DB is busy
+ - fixed some bugs cause Notices
+ - modified imcompatibities with XOOPS 2.2.3
+ - moved document files under docs/ (for hiding protector's version)
+ - updated mymenu into 0.15a
+ - modified the action against PHP_SELF/PATH_INFO XSS
+ - modified the module icon (thx Argon)
+ - updated and renamed Polish language files from polski (thx Tomasz)
+ - updated French language files (thx marco)
+ - updated Italian language files (thx Defkon1)
+ - fixed packaging errors in zip files (thx Dave_L) 2.53a
+
+2.52 (2005/8/27)
+ - changed the feature of disabling xmlrpc.php in any path (wordpress etc.)
+ - modified the logging rule about xmlrpc.php
+ - added Russian language files (thx Sergey)
+
+2.51 (2005/8/24)
+ - added an option of IP mask bits against session hi-jacking
+ - added an advisory about session.use_trans_sid
+ - modified codes against PHP_SELF XSS
+ - updated French language files (thx HEMON)
+
+2.50 release (2005/8/22)
+ - added a protection against PHP_SELF XSS
+ - updated Brazilian Portuguese & Spanish language files (thx Yuji)
+
+2.50 beta2 (2005/7/31)
+ - changed "2.0.9.2 holes" into "disable features"
+ - added "num" select box
+ - updated Traditional Chinese language files (thx Kikuchi)
+ - updated Brazilian Portuguese & Spanish language files (thx Yuji)
+
+2.50 beta1 (2005/7/22)
+ - added an option "DOS/CRAWLER skip modules"
+ - modified adding some indexes of tables which protector accesses
+ - added an option "reliable IPs"
+ - added a feature of anti-BruteForceAttacks
+
+2.40 release (2005/7/21)
+ - added a protection from 'criteria attack' for xoops <= 2.0.10*
+ - modified Italian language files (thx Defkon1)
+ - added Finnish language files (thx kokko)
+ - added Polish language files (thx Tomasz)
+
+2.40RC2 (2005/4/4)
+ - modified the updating routine to delete old protector block (thx Dava_L)
+ - updated Brazilian Portuguese & Spanish language files (thx Yuji)
+
+2.40RC (2005/3/31)
+ - modified URI of attacking simulation in advisory (thx satanas)
+ - modified checking *check.inc.php included in advisory (thx peter & Dave_L)
+ - modified password for disabling bad_ips to be encrypted
+ - eliminate protector block
+ - modified only GET vars will be checked with "doubtful file spec"
+
+2.38 (2005/3/18)
+ - modified system of rollbacking .htaccess in DoS or CRAWLER
+ - updated Italian language files (thx Defkon1)
+
+2.37 (2005/3/9)
+ - fixed missing dbname quoting in prefix manager (thx king76)
+ - modified log level of Null-byte to 64
+
+2.36 (2005/3/9)
+ - modified the pattern of bad_ext
+
+2.35 (2005/3/5)
+ - updated myblocksadmin 0.27 & mymenu 0.12
+ - added a logging level
+ - added an option for disabling whole of Protector for debugging (thx Dave_L)
+ - updated Traditional Chinese language files (thx Kikuchi)
+ - updated French language files (thx HEMON) 2.35a
+ - updated Brazilian Portuguese & Spanish language files (thx Yuji) 2.35a
+
+2.34 (2005/2/18)
+ - fixed a typo in protecting session hijacking (thx blues)
+ - modified messages on forced exiting against specifical features (thx suin)
+ - added an option of 'Deny by .htaccess' against DoS experimentaly
+
+2.33 (2005/2/11)
+ - modified the action when '../../' found (thx mayor)
+ - modified IP check disabled with XoopsGTicket
+
+2.32 (2005/2/1)
+ - modified enabling "MySQL/Blocks debug" with strict checking (thx jseymour)
+
+2.31 (2005/1/30)
+ - fixed recognization of root controllers (thx nobunobu)
+ - modified compatibility with IIS (thx okuhiki)
+ - updated French language files (thx HMN)  (2.31a)
+ - added German language files (thx Rene)  (2.31b)
+
+2.30 release (2005/1/30)
+ - modified some default values of configs.
+ - updated Italian language files (thx Defkon1)
+ - updated Brazilian Portuguese & Spanish language files (thx Yuji)
+ - added Dutch language files (thx Dirk Louwers)
+
+2.30RC5 (2005/1/22)
+ - fixed some non-harmful typos
+ - updated Italian language files (thx Defkon1)
+
+2.30RC4 (2005/1/21)
+ - fixed postcheck.inc.php with $xoopsConfig['nocommon'] (thx dendeke)
+
+2.30RC3 (2005/1/21)
+ - modified anti null-byte from die to sanitize
+ - modified prefix manager a little
+ - added French language files (thx HMN)
+ - added Italian language files (thx Defkon1)
+
+2.30RC2 (2005/1/20)
+ - fixed prefix manager
+
+2.30RC (2005/1/19)
+ - added prefix manager
+ - added 2.0.9.2 specific patches (Special thx to zx team!)
+ - added checker against null-byte attack
+ - modified doubtful file specifications (thx minahito)
+ - added anti session hi-jacking
+ - added include/postcheck.inc.php (Notice: mainfile.php should be rewritten)
+ - modified options about contami & SQL Injections
+
+2.22 (2005/1/4) (not so important fixes)
+ - fixed a typo in check_dos_attack_* (thx Mithrandir)
+ - modified with REQUEST_URI for IIS
+ - updated myblocksadmin 0.22 & mymenu 0.07
+
+2.21 (2004/12/31)
+ - fixed a missing pattern with contami checking (thx onokazu)
+
+2.20 (2004/12/27)
+ - fixed a missing pattern with contami checking (thx JM2)
+ - fixed typo missing global for HTTP_*_VARS
+ - added logging doubtful file spec
+ - updated Brazilian Portuguese & Spanish language files (thx Marcelo Yuji Himoro)
+ - updated traditional Chinese language files (thx Kikuchi)
+
+2.20RC3 (2004/12/18)
+ - added "Patch doubtful file specifications" (thx JM2)
+ - added Spanish language files (thx Marcelo Yuji Himoro)
+
+2.20RC2 (2004/12/16)
+ - updated myblocksadmin (0.12) & mymenu (0.06)
+ - modified Brazilian Portuguese language files (thx Marcelo Yuji Himoro)
+
+2.20RC (2004/12/15)
+ - modified to use $_GET or $_POST instead of $HTTP_*_VARS (for PHP5)
+ - added a feature to rescue
+ - added to store user_agent
+ - modified Anti-DoS routine radically
+ - added each settings of "F5 attacks" and "high load crawlers"
+ - fixed not to "Force intval" against array
+ - modified a pattern finding UNION
+
+2.11 (2004/9/30)
+ - fixed some typos
+
+2.10a (2004/9/27)
+ - modified Brazilian Portuguese language files (thx Marcelo Yuji Himoro)
+
+2.10 (2004/9/22)
+ - added checker to uploaded files
+ - added security advisory
+ - modified as selectable whether sanitizing or not against SQL Injections
+ - fixed short tags (thx t_miyabi)
+ - added traditional Chinese language files (thx Kikuchi)
+
+2.01 (2004/9/11)
+ - added some checks of contamination to some super globals
+ - modified Brazilian Portuguese language files (thx Marcelo Yuji Himoro)
+
+2.0  (2004/9/10)
+ - The 1st release as Xoops Protector.
+
+
+
+[/xlang:en][xlang:ja]
+
+●変更履歴
+
+3.0以降についてはREADME内に移動
+
+2.57 (2006/07/17)
+- プレフィックスマネージャのバックアップでBLOBの処理がおかしかったのを修正 (thx fbs777)
+- いくつか出ているNoticeを修正
+- gticket2 に更新
+- onInstall処理をやめた (2.57a)
+
+2.56 (2006/03/30)
+- コンフィグが取れないときのエラー処理を強制終了に変更した
+- common.phpを読み込まないモジュールについても、DOS/CRAWLER処理にかからない設定を有効にした
+
+2.55 (2006/02/11)
+- 複数の.が存在するファイルでも、.tar.gzだけは通すように修正 (thx gusagi)
+- mymenuにおけるXoopsCube 2.1との互換性問題解消
+- スペイン語ファイル更新 (thx bezoops)
+
+2.54 (2005/12/08)
+- PREFIXマネージャにPREFIX毎のバックアップ機能をつけた (まだ実験段階です!)
+- 複数の.が存在するファイルをアップロード出来ないように変更 (Apacheの仕様対策)
+- ブラジルポルトガル語ファイルの更新 (thx Izzy)
+- 偽装画像ファイルチェッカーがopen_basedir制限にひっかかっていたのを修正 (thx stefan88) - 2.54a
+- 各種設定の初期値をいくつかと、ドキュメントの修正 - 2.54a
+
+2.53 (2005/11/30)
+ - 偽装画像ファイルアップロードによるIEのXSS対策コードの追加
+ - データベースがbusy時にPath Disclosureとなっていた問題を改善
+ - Noticeを発生していたいくつかのミスを修正
+ - 管理画面が XOOPS 2.2.3 でエラーを起こしていた互換性問題の改善
+ - ドキュメントをdocsディレクトリに移動 (ドキュメントからのバージョン漏洩防止）
+ - updated mymenu into 0.15a
+ - PHP_SELF/PATH_INFO XSS対策をもう少し緩くした（強制終了からurlencode相当に）
+ - モジュールアイコンの変更 (thx Argon)
+ - ポーランド語ファイルの更新 (thx Tomasz)
+ - フランス語ファイルの更新 (thx marco)
+ - イタリア語ファイルの更新 (thx Defkon1)
+ - zipファイルのパッケージミスを修正 (thx Dave_L) 2.53a
+
+2.52 (2005/8/27)
+ - WordPressモジュール等についても、xmlrpc.php機能を無効化するように仕様変更
+ - xmlrpc 攻撃についてのログが重複出力されないように仕様変更
+ - ロシア語ファイル追加 (thx Sergey)
+
+2.51 (2005/8/24)
+ - セッションハイジャック対策で、IPマスクを指定できるようにした
+ - session.use_trans_sid についての注意書き追加
+ - PHP_SELF XSS 対策コードの改善
+ - フランス語ファイル更新 (thx HEMON)
+
+2.50 正式版 (2005/8/22)
+ - PHP_SELF XSS 対策コード追加
+ - ブラジルポルトガル語・スペイン語ファイルを更新 (thx Yuji)
+
+2.50 beta2 (2005/7/31)
+ - "2.0.9.2の穴"というY/Nの設定項目を、選択式の"機能無効化"に変更した
+ - ログ管理でページあたりの表示件数を変更できるようにした
+ - 繁体中国語ファイルを更新 (thx Kikuchi)
+ - ブラジルポルトガル語・スペイン語ファイルを更新 (thx Yuji)
+
+2.50 beta1 (2005/7/22)
+ - 「DoS/Crawlerチェックをスキップするモジュール」というオプションの追加
+ - indexをつけ忘れていたフィールドにあらためてindex付与
+ - 「信用するIPアドレス」オプションの追加
+ - パスワード総当たり方式への対抗策追加
+
+2.40 正式版 (2005/7/21)
+ - criteria attack への対策コード追加 (xoops <= 2.0.10*用)
+ - イタリア語ファイル更新 (thx Defkon1)
+ - フィンランド語ファイル追加 (thx kokko)
+ - ポーランド語ファイル追加 (thx Tomasz)
+
+2.40RC2 (2005/4/4)
+ - モジュールアップデート時にブロックを削除するようにした (thx Dava_L)
+ - ブラジルポルトガル語・スペイン語ファイルを更新 (thx Yuji)
+
+2.40RC (2005/3/31)
+ - ブロックでのチェックの全廃
+ - 動作チェック用URIの修正 (thx satanas)
+ - *check.inc.phpが効いているかどうかのチェック方法を修正 (thx peter & Dave_L)
+ - IP拒否解除パスワードの自動ハッシュ化
+ - 「疑わしいファイル指定の禁止」を、GETだけを対象にするようにした
+
+2.38 (2005/3/18)
+ - DoS対策などで、.htaccess DENYを使う場合、ファイルが壊れた時のロールバック追加
+ - イタリア語言語ファイルの更新 (thx Defkon1)
+
+2.37 (2005/3/9)
+ - prefix manager でDB名のクオーティング忘れを修正 (thx king76)
+ - Null-byte も、quite で消えるように
+
+2.36 (2005/3/9)
+ - 禁止拡張子に抜けがあったのを修正
+
+2.35 (2005/3/5)
+ - updated myblocksadmin 0.27 & mymenu 0.12
+ - ログレベルの導入（詳しくはMEMO参照）
+ - 一時的に全体の動作をOffにするオプションをつけた (thx Dave_L)
+ - 繁体中国語ファイルを更新 (thx Kikuchi)
+ - フランス語ファイルを更新 (thx HEMON) 2.35a
+ - ブラジルポルトガル語・スペイン語ファイルを更新 (thx Yuji) 2.35a
+
+2.34 (2005/2/18)
+ - セッションハイジャック対策でゲストの処理を間違っていたのを修正 (thx blues)
+ - 特定パターン防御で強制終了する場合のメッセージを修正 (thx suin)
+ - DoS系防御で、.htaccess に DENY FROM を書き込むというオプションを実験的に追加
+
+2.33 (2005/2/11)
+ - 「疑わしいファイル指定」で無限に .が増えるコードを修正 (thx mayor)
+ - チケットシステムからIPチェックを排除
+
+2.32 (2005/2/1)
+ - 無効化していたMySQL/ブロックデバッグをチェックかけてから通すようにした (thx jseymour)
+
+2.31 (2005/1/30)
+ - モジュール内ファイルをルートコントローラと誤認識する問題の解決 (thx nobunobu)
+ - IIS互換性の改善 (thx okuhiki)
+ - フランス語ファイル更新 (thx HMN)  (2.31a)
+ - ドイツ語ファイルを追加 (thx Rene)  (2.31b)
+
+2.30 リリース版 (2005/1/30)
+ - いくつかのデフォルト設定値を変更した
+ - イタリア語ファイル更新 (thx Defkon1)
+ - ブラジルポルトガル語・スペイン語ファイルを更新 (thx Marcelo Yuji Himoro)
+ - オランダ語ファイルを追加 (thx Dirk Louwers)
+
+2.30RC5 (2005/1/22)
+ - 細かなtypoの修正 (さほど重要ではないのであわてて上書きする必要はありません)
+ - イタリア語ファイル更新 (thx Defkon1)
+
+2.30RC4 (2005/1/21)
+ - postcheck.inc.php において、nocommon状態のエラーをFix (thx dendeke)
+
+2.30RC3 (2005/1/21)
+ - ヌルバイト文字列への対策を、強制終了からサニタイズに変更
+ - PREFIX マネージャの微調整
+ - フランス語ファイルを追加 (thx HMN)
+ - イタリア語ファイルを追加 (thx Defkon1)
+
+2.30RC2 (2005/1/20)
+ - PREFIX マネージャの修正
+
+2.30RC (2005/1/19)
+ - PREFIX マネージャの作成
+ - 2.0.9.2固有穴への対応 (Special thx to zx team!)
+ - ヌルバイト文字列への対策
+ - ディレクトリ遡りチェックが甘かったのを改善 (thx minahito)
+ - セッションハイジャック対策の追加
+ - postcheck.inc.php の追加 (パッチの当て方が変わっています）
+ - 変数汚染・SQL Injection２種の設定方法を変更
+
+2.22 (2005/1/4) (そんなに重要じゃない修正です)
+ - check_dos_attack_* におけるtypo修正 (thx Mithrandir)
+ - IISだとREQUEST_URIが取得できないことへの対応
+ - updated myblocksadmin 0.22 & mymenu 0.07
+
+2.21 (2004/12/31)
+ - 変数汚染のチェック漏れ修正 (thx onokazu)
+
+2.20 (2004/12/27)
+ - 変数汚染のチェック漏れ修正(thx JM2)
+ - HTTP_*_VARS のglobal指定忘れ修正
+ - ファイル指定遡りをログ記録するようにした
+ - ブラジルポルトガル語・スペイン語ファイルを更新 (thx Marcelo Yuji Himoro)
+ - 繁体中国語ファイルを更新 (thx Kikuchi)
+
+2.20RC3 (2004/12/18)
+ - 「疑わしいファイル指定を禁止する」オプションの追加 (thx JM2)
+ - スペイン語ファイルを追加 (thx Marcelo Yuji Himoro)
+
+2.20RC2 (2004/12/16)
+ - updated myblocksadmin (0.12) & mymenu (0.06)
+ - ブラジルポルトガル語ファイルを更新 (thx Marcelo Yuji Himoro)
+
+2.20RC (2004/12/15)
+ - HTTP_*_VARSの廃止 (PHP5用)
+ - レスキュー機能の追加
+ - エージェントも記録するように変更
+ - Anti-DoSのルーチンをまるまる書換え
+ - F5アタック・クローラー・歓迎すべきサーチエンジンで、それぞれ処理分けした
+ - 強制intvalが配列に対しても行われてしまっていたのを修正
+ - UNION発見パターンに抜けがあったのを修正
+
+2.11 (2004/9/30)
+ - typo がいくつかあったので修正
+
+2.10a (2004/9/27)
+ - ブラジルポルトガル語ファイルを更新 (thx Marcelo Yuji Himoro)
+
+2.10 (2004/9/22)
+ - アップロードファイルの拡張子チェックを追加
+ - SQL Injectionがらみのサニタイズを、選択可能とした
+ - セキュリティガイドを追加
+ - 2箇所あった short tag を潰した (thx t_miyabi)
+ - 繁体中国語ファイルを追加 (thx Kikuchi)
+
+2.01 (2004/9/11)
+ - 変数汚染チェックで足りなかったのを追加
+ - ブラジルのポルトガル語ファイルを更新 (thx Marcelo Yuji Himoro)
+
+2.0  (2004/9/10)
+ - Xoops Protector としての最初のリリース
+
+
+
+[/xlang:ja]
