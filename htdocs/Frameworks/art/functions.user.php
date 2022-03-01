@@ -48,7 +48,7 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_USER')):
      *
      * @return string
      */
-    function mod_getUnameFromId($uid, $usereal = 0, $linked = false)
+    function mod_getUnameFromId($uid, $usereal = false, $linked = false)
     {
         $GLOBALS['xoopsLogger']->addDeprecated("Deprecated function '" . __FUNCTION__ . "', user XoopsUserUtility directly.");
 

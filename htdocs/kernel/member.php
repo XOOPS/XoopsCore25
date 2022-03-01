@@ -97,7 +97,7 @@ class XoopsMemberHandler
      * retrieve a group
      *
      * @param  int $id ID for the group
-     * @return XoopsGroup reference to the group
+     * @return XoopsGroup|false reference to the group
      */
     public function getGroup($id)
     {
