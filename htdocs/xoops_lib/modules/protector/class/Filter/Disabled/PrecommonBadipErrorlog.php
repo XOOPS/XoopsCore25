@@ -6,7 +6,7 @@ use XoopsModules\Protector\FilterAbstract;
 /**
  * Class PostcommonBadipErrorlog
  */
-class PostcommonBadipErrorlog extends FilterAbstract
+class PrecommonBadipErrorlog extends FilterAbstract
 {
     public function execute()
     {

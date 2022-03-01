@@ -1,7 +1,7 @@
 <?php namespace XoopsModules\Protector;
 
-
 // Filter Handler class (singleton)
+
 /**
  * Class FilterHandler
  */
@@ -21,8 +21,8 @@ class FilterHandler
      */
     protected function __construct()
     {
-        $this->protector    = Guardian::getInstance();
-        $this->filters_base = dirname(__DIR__) . '/filters_enabled';
+        $this->protector = Guardian::getInstance();
+        $this->filters_base = dirname(__DIR__) . '/class/Filter/Enabled/';
     }
 
     /**
@@ -39,6 +39,7 @@ class FilterHandler
     }
 
     // return: false : execute default action
+
     /**
      * @param string $type
      *
@@ -50,17 +51,15 @@ class FilterHandler
 
         $dh = opendir($this->filters_base);
         while (($file = readdir($dh)) !== false) {
-            if (strncmp($file, $type . '_', strlen($type) + 1) === 0) {
-                include_once $this->filters_base . '/' . $file;
-                $plugin_name = 'protector_' . substr($file, 0, -4);
-                if (function_exists($plugin_name)) {
-                    // old way
-                    $ret |= call_user_func($plugin_name);
-                } elseif (class_exists($plugin_name)) {
-                    // newer way
-                    $plugin_obj = new $plugin_name(); //old code is -> $plugin_obj =& new $plugin_name() ; //hack by Trabis
-                    $ret |= $plugin_obj->execute();
+            if (strncmp($file, $type, strlen($type)) === 0) {
+                $pluginName = substr($file, 0, -4);
+
+                $class = __NAMESPACE__ . '\Filter\Enabled\\' . $pluginName;
+                if (!class_exists($class)) {
+                    throw new \RuntimeException("Class '$class' not found");
                 }
+                $pluginObj = new $class();
+                $ret        |= $pluginObj->execute();
             }
         }
         closedir($dh);

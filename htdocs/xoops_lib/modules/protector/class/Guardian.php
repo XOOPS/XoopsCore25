@@ -306,7 +306,7 @@ class Guardian
             header('Location: ' . XOOPS_URL . '/');
             exit;
         } else {
-            $ret = $this->call_filter('prepurge_exit');
+            $ret = $this->call_filter('PrepurgeExit');
             if ($ret == false) {
                 die('Protector detects attacking actions');
             }
@@ -1338,7 +1338,7 @@ class Guardian
             // $result = $xoopsDB->queryF( "UPDATE ".$xoopsDB->prefix($this->mydirname.'_access')." SET expire=UNIX_TIMESTAMP()+300 WHERE ip='$ip4sql' AND expire<UNIX_TIMESTAMP()+300" ) ;
 
             // call the filter first
-            $ret = $this->call_filter('f5attack_overrun');
+            $ret = $this->call_filter('F5attackOverrun');
 
             // actions for F5 Attack
             $this->_done_dos       = true;
@@ -1395,7 +1395,7 @@ class Guardian
         if ($crawler_count > $this->_conf['dos_crcount']) {
 
             // call the filter first
-            $ret = $this->call_filter('crawler_overrun');
+            $ret = $this->call_filter('CrawlerOverrun');
 
             // actions for bad Crawler
             $this->_done_dos       = true;
@@ -1478,7 +1478,7 @@ class Guardian
             $this->last_error_type = 'BruteForce';
             $this->message .= "Trying to login as '" . addslashes($victim_uname) . "' found.\n";
             $this->output_log('BRUTE FORCE', 0, true, 1);
-            $ret = $this->call_filter('bruteforce_overrun');
+            $ret = $this->call_filter('BruteforceOverrun');
             if ($ret == false) {
                 exit;
             }
@@ -1534,7 +1534,7 @@ class Guardian
         if ($this->_spamcount_uri >= $points4deny) {
             $this->message .= @$_SERVER['REQUEST_URI'] . " SPAM POINT: $this->_spamcount_uri\n";
             $this->output_log('URI SPAM', $uid, false, 128);
-            $ret = $this->call_filter('spamcheck_overrun');
+            $ret = $this->call_filter('SpamcheckOverrun');
             if ($ret == false) {
                 exit;
             }
@@ -1645,8 +1645,8 @@ class Guardian
     public function call_filter($type, $dying_message = '')
     {
 //        require_once __DIR__ . '/ProtectorFilter.php';
-        $filter_handler = FilterHandler::getInstance();
-        $ret            = $filter_handler->execute($type);
+        $filterHandler = FilterHandler::getInstance();
+        $ret            = $filterHandler->execute($type);
         if ($ret == false && $dying_message) {
             die($dying_message);
         }

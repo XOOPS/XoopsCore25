@@ -7,7 +7,7 @@ use XoopsModules\Protector\FilterAbstract;
 /**
  * Class PostcommonBwlimitErrorlog
  */
-class PostcommonBwlimitErrorlog extends FilterAbstract
+class PrecommonBwlimitErrorlog extends FilterAbstract
 {
     public function execute()
     {

@@ -10,7 +10,7 @@ define('PROTECTOR_BADIP_REDIRECTION_URI', 'http://yahoo.com/');
 /**
  * Class PostcommonBadipRedirection
  */
-class PostcommonBadipRedirection extends FilterAbstract
+class PrecommonBadipRedirection extends FilterAbstract
 {
     public function execute()
     {

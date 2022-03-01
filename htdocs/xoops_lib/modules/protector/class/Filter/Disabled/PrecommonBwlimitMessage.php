@@ -6,7 +6,7 @@ use XoopsModules\Protector\FilterAbstract;
 /**
  * Class PostcommonBwlimitMessage
  */
-class PostcommonBwlimitMessage extends FilterAbstract
+class PrecommonBwlimitMessage extends FilterAbstract
 {
     public function execute()
     {

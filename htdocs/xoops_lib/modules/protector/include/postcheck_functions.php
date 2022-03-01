@@ -187,13 +187,13 @@ function protector_postcommon()
         }
 
         // filter plugins for POST on postcommon stage
-        $protector->call_filter('postcommon_post');
+        $protector->call_filter('PostcommonPost');
     }
 
     // register.php Protection - both core and profile module have a register.php
     // There should be an event to trigger this check instead of filename sniffing.
     if (basename($_SERVER['SCRIPT_FILENAME']) == 'register.php') {
-        $protector->call_filter('postcommon_register');
+        $protector->call_filter('PostcommonRegister');
     }
     return null;
 }
