@@ -28,6 +28,6 @@ $adminObject = Admin::getInstance();
 $adminObject->displayNavigation(basename(__FILE__));
 $adminObject->displayIndex();
 
-include 'admin_footer.php';
+require __DIR__ . '/admin_footer.php';
 
 

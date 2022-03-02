@@ -6,10 +6,9 @@ use XoopsModules\Protector\Registry;
 require_once __DIR__ . '/preloads/autoloader.php';
 
 // start hack by Trabis
-//if (!class_exists('Registry')) {
-//    exit('Registry not found');
-//}
-
+if (!class_exists('XoopsModules\Protector\Registry')) {
+    exit('Registry not found');
+}
 
 $registry  = Registry::getInstance();
 $mydirname = $registry->getEntry('mydirname');
@@ -17,7 +16,7 @@ $mydirpath = $registry->getEntry('mydirpath');
 $language  = $registry->getEntry('language');
 // end hack by Trabis
 
-eval(' function xoops_module_install_' . $mydirname . '( $module ) { return protector_oninstall_base( $module , "' . $mydirname . '" ) ; } ');
+eval(' function xoops_module_install_' . $mydirname . '( $module ) { return protector_oninstall_base( $module , "' . $mydirname . '" );} ');
 
 if (!function_exists('protector_oninstall_base')) {
 
@@ -55,11 +54,11 @@ if (!function_exists('protector_oninstall_base')) {
             $ret[] = 'SQL file found at <b>' . htmlspecialchars($sql_file_path) . '</b>.<br> Creating tables...';
 
             if (file_exists(XOOPS_ROOT_PATH . '/class/database/oldsqlutility.php')) {
-                include_once XOOPS_ROOT_PATH . '/class/database/oldsqlutility.php';
-                $sqlutil = new OldSqlUtility(); //old code is -> $sqlutil =& new OldSqlUtility ; //hack by Trabis
+                require_once XOOPS_ROOT_PATH . '/class/database/oldsqlutility.php';
+                $sqlutil = new OldSqlUtility(); //old code is -> $sqlutil = new OldSqlUtility ; //hack by Trabis
             } else {
-                include_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
-                $sqlutil = new SqlUtility(); //old code is -> $sqlutil =& new SqlUtility ; //hack by Trabis
+                require_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
+                $sqlutil = new SqlUtility(); //old code is -> $sqlutil = new SqlUtility ; //hack by Trabis
             }
 
             $sql_query = trim(file_get_contents($sql_file_path));
@@ -83,14 +82,14 @@ if (!function_exists('protector_oninstall_base')) {
                         $ret[]            = 'Table <b>' . htmlspecialchars($prefix_mod . '_' . $prefixed_query[4]) . '</b> created.<br>';
                         $created_tables[] = $prefixed_query[4];
                     } else {
-                        $ret[] = 'Data inserted to table <b>' . htmlspecialchars($prefix_mod . '_' . $prefixed_query[4]) . '</b>.</br />';
+                        $ret[] = 'Data inserted to table <b>' . htmlspecialchars($prefix_mod . '_' . $prefixed_query[4]) . '</b>.</br>';
                     }
                 }
             }
         }
 
         // TEMPLATES
-        $tplfile_handler = xoops_getHandler('tplfile');
+        $tplfileHandler = xoops_getHandler('tplfile');
         $tpl_path        = __DIR__ . '/templates';
         if ($handler = @opendir($tpl_path . '/')) {
             while (($file = readdir($handler)) !== false) {
@@ -105,7 +104,7 @@ if (!function_exists('protector_oninstall_base')) {
                         '.js',
                     ))) {
                     $mtime   = (int)(@filemtime($file_path));
-                    $tplfile = $tplfile_handler->create();
+                    $tplfile = $tplfileHandler->create();
                     $tplfile->setVar('tpl_source', file_get_contents($file_path), true);
                     $tplfile->setVar('tpl_refid', $mid);
                     $tplfile->setVar('tpl_tplset', 'default');
@@ -115,14 +114,14 @@ if (!function_exists('protector_oninstall_base')) {
                     $tplfile->setVar('tpl_lastmodified', $mtime);
                     $tplfile->setVar('tpl_lastimported', 0);
                     $tplfile->setVar('tpl_type', 'module');
-                    if (!$tplfile_handler->insert($tplfile)) {
+                    if (!$tplfileHandler->insert($tplfile)) {
                         $ret[] = '<span style="color:#ff0000;">ERROR: Could not insert template <b>' . htmlspecialchars($mydirname . '_' . $file) . '</b> to the database.</span><br>';
                     } else {
                         $tplid = $tplfile->getVar('tpl_id');
                         $ret[] = 'Template <b>' . htmlspecialchars($mydirname . '_' . $file) . '</b> added to the database. (ID: <b>' . $tplid . '</b>)<br>';
                         // generate compiled file
-                        include_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
-                        include_once XOOPS_ROOT_PATH . '/class/template.php';
+                        require_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
+                        require_once XOOPS_ROOT_PATH . '/class/template.php';
                         if (!xoops_template_touch($tplid)) {
                             $ret[] = '<span style="color:#ff0000;">ERROR: Failed compiling template <b>' . htmlspecialchars($mydirname . '_' . $file) . '</b>.</span><br>';
                         } else {
@@ -133,8 +132,8 @@ if (!function_exists('protector_oninstall_base')) {
             }
             closedir($handler);
         }
-        include_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
-        include_once XOOPS_ROOT_PATH . '/class/template.php';
+        require_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
+        require_once XOOPS_ROOT_PATH . '/class/template.php';
         xoops_template_clear_module_cache($mid);
 
         return true;

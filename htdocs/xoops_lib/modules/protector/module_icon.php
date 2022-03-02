@@ -4,9 +4,9 @@ use XoopsModules\Protector;
 use XoopsModules\Protector\Registry;
 
 // start hack by Trabis
-//if (!class_exists('Registry')) {
-//    exit('Registry not found');
-//}
+if (!class_exists('XoopsModules\Protector\Registry')) {
+    exit('Registry not found');
+}
 
 $registry  = Registry::getInstance();
 $mydirname = $registry->getEntry('mydirname');

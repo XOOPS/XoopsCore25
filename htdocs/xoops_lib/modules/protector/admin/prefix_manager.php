@@ -215,14 +215,14 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
 
 // beggining of Output
 xoops_cp_header();
-include __DIR__ . '/mymenu.php';
+require __DIR__ . '/mymenu.php';
 
 // query
 $srs = $db->queryF('SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`');
 if (!$db->getRowsNum($srs)) {
     die('You are not allowed to copy tables');
-    xoops_cp_footer();
-    exit;
+//    xoops_cp_footer();
+//    exit;
 }
 
 // search prefixes
@@ -276,7 +276,7 @@ foreach ($prefixes as $prefix) {
         $del_button   = '';
         $style_append = 'background-color:#FFFFFF';
     } else {
-        $del_button   = "<input type='submit' name='delete' value='delete' onclick='return confirm(\"" . _AM_CONFIRM_DELETE . "\")' />";
+        $del_button   = "<input type='submit' name='delete' value='delete' onclick='return confirm(\"" . _AM_CONFIRM_DELETE . "\")'>";
         $style_append = '';
     }
 
@@ -288,17 +288,17 @@ foreach ($prefixes as $prefix) {
         <td class='odd' style='text-align:center;$style_append;' nowrap='nowrap'>
             <form action='?page=prefix_manager' method='POST' style='margin:0;'>
                 $ticket_input
-                <input type='hidden' name='old_prefix' value='$prefix4disp' />
-                <input type='text' name='new_prefix' size='8' maxlength='16' />
-                <input type='submit' name='copy' value='copy' />
+                <input type='hidden' name='old_prefix' value='$prefix4disp'>
+                <input type='text' name='new_prefix' size='8' maxlength='16'>
+                <input type='submit' name='copy' value='copy'>
             </form>
         </td>
         <td class='odd' style='text-align:center;$style_append;'>
             <form action='?page=prefix_manager' method='POST' style='margin:0;'>
                 $ticket_input
-                <input type='hidden' name='prefix' value='$prefix4disp' />
+                <input type='hidden' name='prefix' value='$prefix4disp'>
                 $del_button
-                <input type='submit' name='backup' value='backup' onclick='this.form.target=\"_blank\"' />
+                <input type='submit' name='backup' value='backup' onclick='this.form.target=\"_blank\"'>
             </form>
         </td>
     </tr>\n";

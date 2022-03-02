@@ -20,7 +20,7 @@ class FilterAbstract
         $lang            = empty($GLOBALS['xoopsConfig']['language']) ? @$this->protector->_conf['default_lang'] : $GLOBALS['xoopsConfig']['language'];
         @include dirname(__DIR__) . '/language/' . $lang . '/main.php';
         if (!defined('_MD_PROTECTOR_YOUAREBADIP')) {
-            include_once dirname(__DIR__) . '/language/english/main.php';
+            require_once dirname(__DIR__) . '/language/english/main.php';
         }
     }
 

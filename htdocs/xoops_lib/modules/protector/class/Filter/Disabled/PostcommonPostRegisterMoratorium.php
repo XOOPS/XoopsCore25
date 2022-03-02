@@ -23,7 +23,7 @@ class PostcommonPostRegisterMoratorium extends FilterAbstract
 
         $moratorium_result = (int)(($xoopsUser->getVar('user_regdate') + PROTECTOR_POSTCOMMON_POST_REGISTER_MORATORIUM * 60 - time()) / 60);
         if ($moratorium_result > 0) {
-            if (preg_match('#(https?\:|\[\/url\]|www\.)#', serialize($_POST))) {
+            if (preg_match('#^(https?\:|\[\/url\]|www\.)#', serialize($_POST))) {
                 printf(_MD_PROTECTOR_FMT_REGISTER_MORATORIUM, $moratorium_result);
                 exit;
             }

@@ -50,7 +50,7 @@ class Registry
      */
     public function setEntry($key, $item)
     {
-        if ($this->isLocked($key) == true) {
+        if ($this->isLocked($key) === true) {
             trigger_error('Unable to set entry `' . $key . '`. Entry is locked.', E_USER_WARNING);
 
             return false;
@@ -76,7 +76,7 @@ class Registry
      */
     public function getEntry($key)
     {
-        if (isset($this->_entries[$key]) == false) {
+        if (isset($this->_entries[$key]) === false) {
             return null;
         }
 
@@ -120,7 +120,7 @@ class Registry
      */
     public function isLocked($key)
     {
-        return (isset($this->_locks[$key]) == true);
+        return (isset($this->_locks[$key]) === true);
     }
 
     public function unsetAll()

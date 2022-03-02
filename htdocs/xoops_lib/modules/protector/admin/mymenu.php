@@ -5,7 +5,9 @@ use XoopsModules\Protector;
 require_once __DIR__ . '/admin_header.php';
 
 global $xoopsModule;
+$mydirname = basename(dirname(__DIR__));
 $mydirpath = dirname(__DIR__);
+$mytrustdirpath = dirname(__DIR__);
 
 if (!is_object($xoopsModule)) {
     die('$xoopsModule is not set');
@@ -15,13 +17,13 @@ if (!is_object($xoopsModule)) {
 $language = empty($xoopsConfig['language']) ? 'english' : $xoopsConfig['language'];
 if (file_exists("$mydirpath/language/$language/modinfo.php")) {
     // user customized language file
-    include_once "$mydirpath/language/$language/modinfo.php";
+    require_once "$mydirpath/language/$language/modinfo.php";
 } elseif (file_exists("$mytrustdirpath/language/$language/modinfo.php")) {
     // default language file
-    include_once "$mytrustdirpath/language/$language/modinfo.php";
+    require_once "$mytrustdirpath/language/$language/modinfo.php";
 } else {
     // fallback english
-    include_once "$mytrustdirpath/language/english/modinfo.php";
+    require_once "$mytrustdirpath/language/english/modinfo.php";
 }
 
 $adminmenu = array();
@@ -47,9 +49,9 @@ if (file_exists(XOOPS_TRUST_PATH . '/libs/altsys/myblocksadmin.php')) {
 }
 
 // preferences
-/** @var XoopsConfigHandler $config_handler */
-$config_handler = xoops_getHandler('config');
-if (count($config_handler->getConfigs(new Criteria('conf_modid', $xoopsModule->mid()))) > 0) {
+/** @var XoopsConfigHandler $configHandler */
+$configHandler = xoops_getHandler('config');
+if (count($configHandler->getConfigs(new Criteria('conf_modid', $xoopsModule->mid()))) > 0) {
     if (file_exists(XOOPS_TRUST_PATH . '/libs/altsys/mypreferences.php')) {
         // mypreferences
         $title       = defined('_MD_A_MYMENU_MYPREFERENCES') ? _MD_A_MYMENU_MYPREFERENCES : _PREFERENCES;
@@ -102,7 +104,7 @@ echo "<div style='text-align:left;width:98%;'>" ;
 foreach( $adminmenu as $menuitem ) {
     echo "<div style='float:left;height:1.5em;'><nobr><a href='".htmlspecialchars($menuitem['link'],ENT_QUOTES)."' style='background-color:{$menuitem['color']};font:normal normal bold 9pt/12pt;'>".htmlspecialchars($menuitem['title'],ENT_QUOTES)."</a> | </nobr></div>\n" ;
 }
-echo "</div>\n<hr style='clear:left;display:block;' />\n" ;
+echo "</div>\n<hr style='clear:left;display:block;'>\n" ;
 */
 // end hack by Mage
 

@@ -255,11 +255,11 @@ class Guardian
         }
 
         $result = @mysqli_query($this->_conn, 'SELECT conf_name,conf_value FROM ' . XOOPS_DB_PREFIX . "_config WHERE conf_title like '" . $constpref . "%'");
-        if (!$result || mysqli_num_rows($result) < 5) {
+        if (!$result || $GLOBALS['xoopsDB']->getRowsNum($result) < 5) {
             return false;
         }
         $db_conf = array();
-        while (list($key, $val) = mysqli_fetch_row($result)) {
+        while (list($key, $val) = $GLOBALS['xoopsDB']->fetchRow($result)) {
             $db_conf[$key] = $val;
         }
         $db_conf_serialized = serialize($db_conf);
@@ -307,7 +307,7 @@ class Guardian
             exit;
         } else {
             $ret = $this->call_filter('PrepurgeExit');
-            if ($ret == false) {
+            if ($ret === false) {
                 die('Protector detects attacking actions');
             }
         }
@@ -407,7 +407,7 @@ class Guardian
 
         if ($unique_check) {
             $result = mysqli_query($this->_conn, 'SELECT ip,type FROM ' . XOOPS_DB_PREFIX . '_' . $this->mydirname . '_log ORDER BY timestamp DESC LIMIT 1');
-            list($last_ip, $last_type) = mysqli_fetch_row($result);
+            list($last_ip, $last_type) = $GLOBALS['xoopsDB']->fetchRow($result);
             if ($last_ip == $ip && $last_type == $type) {
                 $this->_logged = true;
 
@@ -418,10 +418,10 @@ class Guardian
         mysqli_query(
             $this->_conn,
             'INSERT INTO ' . XOOPS_DB_PREFIX . '_' . $this->mydirname . "_log SET ip='"
-            . mysqli_real_escape_string($this->_conn, $ip) . "',agent='"
-            . mysqli_real_escape_string($this->_conn, $agent) . "',type='"
-            . mysqli_real_escape_string($this->_conn, $type) . "',description='"
-            . mysqli_real_escape_string($this->_conn, $this->message) . "',uid='"
+            . $GLOBALS['xoopsDB']->escape($this->_conn, $ip) . "',agent='"
+            . $GLOBALS['xoopsDB']->escape($this->_conn, $agent) . "',type='"
+            . $GLOBALS['xoopsDB']->escape($this->_conn, $type) . "',description='"
+            . $GLOBALS['xoopsDB']->escape($this->_conn, $this->message) . "',uid='"
             . (int)$uid . "',timestamp=NOW()"
         );
         $this->_logged = true;
@@ -836,7 +836,7 @@ class Guardian
      */
     public function intval_allrequestsendid()
     {
-        global $HTTP_GET_VARS, $HTTP_POST_VARS, $HTTP_COOKIE_VARS;
+        global $_GET, $_POST, $_COOKIE;
 
         if ($this->_done_intval) {
             return true;
@@ -847,7 +847,7 @@ class Guardian
         foreach ($_GET as $key => $val) {
             if (substr($key, -2) === 'id' && !is_array($_GET[$key])) {
                 $newval     = preg_replace('/[^0-9a-zA-Z_-]/', '', $val);
-                $_GET[$key] = $HTTP_GET_VARS[$key] = $newval;
+                $_GET[$key] = $_GET[$key] = $newval;
                 if ($_REQUEST[$key] == $_GET[$key]) {
                     $_REQUEST[$key] = $newval;
                 }
@@ -856,7 +856,7 @@ class Guardian
         foreach ($_POST as $key => $val) {
             if (substr($key, -2) === 'id' && !is_array($_POST[$key])) {
                 $newval      = preg_replace('/[^0-9a-zA-Z_-]/', '', $val);
-                $_POST[$key] = $HTTP_POST_VARS[$key] = $newval;
+                $_POST[$key] = $_POST[$key] = $newval;
                 if ($_REQUEST[$key] == $_POST[$key]) {
                     $_REQUEST[$key] = $newval;
                 }
@@ -865,7 +865,7 @@ class Guardian
         foreach ($_COOKIE as $key => $val) {
             if (substr($key, -2) === 'id' && !is_array($_COOKIE[$key])) {
                 $newval        = preg_replace('/[^0-9a-zA-Z_-]/', '', $val);
-                $_COOKIE[$key] = $HTTP_COOKIE_VARS[$key] = $newval;
+                $_COOKIE[$key] = $_COOKIE[$key] = $newval;
                 if ($_REQUEST[$key] == $_COOKIE[$key]) {
                     $_REQUEST[$key] = $newval;
                 }
@@ -880,7 +880,7 @@ class Guardian
      */
     public function eliminate_dotdot()
     {
-        global $HTTP_GET_VARS, $HTTP_POST_VARS, $HTTP_COOKIE_VARS;
+        global $_GET, $_POST, $_COOKIE;
 
         if ($this->_done_dotdot) {
             return true;
@@ -900,7 +900,7 @@ class Guardian
                 if (substr($sanitized_val, -2) !== ' .') {
                     $sanitized_val .= ' .';
                 }
-                $_GET[$key] = $HTTP_GET_VARS[$key] = $sanitized_val;
+                $_GET[$key] = $_GET[$key] = $sanitized_val;
                 if ($_REQUEST[$key] == $_GET[$key]) {
                     $_REQUEST[$key] = $sanitized_val;
                 }
@@ -915,7 +915,7 @@ class Guardian
                     $this->output_log( $this->last_error_type , 0 , false , 128 ) ;
                     $sanitized_val = str_replace( chr(0) , '' , $val ) ;
                     if( substr( $sanitized_val , -2 ) != ' .' ) $sanitized_val .= ' .' ;
-                    $_POST[ $key ] = $HTTP_POST_VARS[ $key ] = $sanitized_val ;
+                    $_POST[ $key ] = $_POST[ $key ] = $sanitized_val ;
                     if ($_REQUEST[ $key ] == $_POST[ $key ]) {
                         $_REQUEST[ $key ] = $sanitized_val ;
                     }
@@ -929,7 +929,7 @@ class Guardian
                     $this->output_log( $this->last_error_type , 0 , false , 128 ) ;
                     $sanitized_val = str_replace( chr(0) , '' , $val ) ;
                     if( substr( $sanitized_val , -2 ) != ' .' ) $sanitized_val .= ' .' ;
-                    $_COOKIE[ $key ] = $HTTP_COOKIE_VARS[ $key ] = $sanitized_val ;
+                    $_COOKIE[ $key ] = $_COOKIE[ $key ] = $sanitized_val ;
                     if ($_REQUEST[ $key ] == $_COOKIE[ $key ]) {
                         $_REQUEST[ $key ] = $sanitized_val ;
                     }
@@ -940,17 +940,18 @@ class Guardian
     }
 
     /**
-     * @param array|string $current
-     * @param array        $indexes
+     * @param array $current
+     * @param array $indexes
      *
      * @return bool|array
      */
     public function &get_ref_from_base64index(&$current, $indexes)
     {
+        $false = false;
         foreach ($indexes as $index) {
             $index = base64_decode($index);
             if (!is_array($current)) {
-                return false;
+                return $false;
             }
             $current =& $current[$index];
         }
@@ -966,7 +967,7 @@ class Guardian
      */
     public function replace_doubtful($key, $val)
     {
-        global $HTTP_GET_VARS, $HTTP_POST_VARS, $HTTP_COOKIE_VARS;
+        global $_GET, $_POST, $_COOKIE;
 
         $index_expression = '';
         $indexes          = explode('_', $key);
@@ -975,15 +976,15 @@ class Guardian
         switch ($base_array) {
             case 'G' :
                 $main_ref   =& $this->get_ref_from_base64index($_GET, $indexes);
-                $legacy_ref =& $this->get_ref_from_base64index($HTTP_GET_VARS, $indexes);
+                $legacy_ref =& $this->get_ref_from_base64index($_GET, $indexes);
                 break;
             case 'P' :
                 $main_ref   =& $this->get_ref_from_base64index($_POST, $indexes);
-                $legacy_ref =& $this->get_ref_from_base64index($HTTP_POST_VARS, $indexes);
+                $legacy_ref =& $this->get_ref_from_base64index($_POST, $indexes);
                 break;
             case 'C' :
                 $main_ref   =& $this->get_ref_from_base64index($_COOKIE, $indexes);
-                $legacy_ref =& $this->get_ref_from_base64index($HTTP_COOKIE_VARS, $indexes);
+                $legacy_ref =& $this->get_ref_from_base64index($_COOKIE, $indexes);
                 break;
             default :
                 exit;
@@ -1479,7 +1480,7 @@ class Guardian
             $this->message .= "Trying to login as '" . addslashes($victim_uname) . "' found.\n";
             $this->output_log('BRUTE FORCE', 0, true, 1);
             $ret = $this->call_filter('BruteforceOverrun');
-            if ($ret == false) {
+            if ($ret === false) {
                 exit;
             }
         }
@@ -1535,7 +1536,7 @@ class Guardian
             $this->message .= @$_SERVER['REQUEST_URI'] . " SPAM POINT: $this->_spamcount_uri\n";
             $this->output_log('URI SPAM', $uid, false, 128);
             $ret = $this->call_filter('SpamcheckOverrun');
-            if ($ret == false) {
+            if ($ret === false) {
                 exit;
             }
         }
@@ -1546,7 +1547,7 @@ class Guardian
      */
     public function disable_features()
     {
-        global $HTTP_POST_VARS, $HTTP_GET_VARS, $HTTP_COOKIE_VARS;
+        global $_POST, $_GET, $_COOKIE;
 
         // disable "Notice: Undefined index: ..."
         $error_reporting_level = error_reporting(0);
@@ -1609,19 +1610,19 @@ class Guardian
 
             // preview CSRF zx 2004/12/14
             // news submit.php
-            if (substr(@$_SERVER['SCRIPT_NAME'], -23) === 'modules/news/submit.php' && isset($_POST['preview']) && strpos(@$_SERVER['HTTP_REFERER'], XOOPS_URL . '/modules/news/submit.php') !== 0) {
-                $HTTP_POST_VARS['nohtml'] = $_POST['nohtml'] = 1;
+            if (substr(@$_SERVER['SCRIPT_NAME'], -23) === 'modules/news/submit.php' && isset($_POST['preview']) && strpos(@\Xmf\Request::getString('HTTP_REFERER', '', 'SERVER'), XOOPS_URL . '/modules/news/submit.php') !== 0) {
+                $_POST['nohtml'] = $_POST['nohtml'] = 1;
             }
             // news admin/index.php
-            if (substr(@$_SERVER['SCRIPT_NAME'], -28) === 'modules/news/admin/index.php' && ($_POST['op'] === 'preview' || $_GET['op'] === 'preview') && strpos(@$_SERVER['HTTP_REFERER'], XOOPS_URL . '/modules/news/admin/index.php') !== 0) {
-                $HTTP_POST_VARS['nohtml'] = $_POST['nohtml'] = 1;
+            if (substr(@$_SERVER['SCRIPT_NAME'], -28) === 'modules/news/admin/index.php' && ($_POST['op'] === 'preview' || $_GET['op'] === 'preview') && strpos(@\Xmf\Request::getString('HTTP_REFERER', '', 'SERVER'), XOOPS_URL . '/modules/news/admin/index.php') !== 0) {
+                $_POST['nohtml'] = $_POST['nohtml'] = 1;
             }
             // comment comment_post.php
-            if (isset($_POST['com_dopreview']) && false === strpos(substr(@$_SERVER['HTTP_REFERER'], -16), 'comment_post.php')) {
-                $HTTP_POST_VARS['dohtml'] = $_POST['dohtml'] = 0;
+            if (isset($_POST['com_dopreview']) && false === strpos(substr(@\Xmf\Request::getString('HTTP_REFERER', '', 'SERVER'), -16), 'comment_post.php')) {
+                $_POST['dohtml'] = $_POST['dohtml'] = 0;
             }
             // disable preview of system's blocksadmin
-            if (substr(@$_SERVER['SCRIPT_NAME'], -24) === 'modules/system/admin.php' && ($_GET['fct'] === 'blocksadmin' || $_POST['fct'] === 'blocksadmin') && isset($_POST['previewblock']) /* && strpos( $_SERVER['HTTP_REFERER'] , XOOPS_URL.'/modules/system/admin.php' ) !== 0 */) {
+            if (substr(@$_SERVER['SCRIPT_NAME'], -24) === 'modules/system/admin.php' && ($_GET['fct'] === 'blocksadmin' || $_POST['fct'] === 'blocksadmin') && isset($_POST['previewblock']) /* && strpos( \Xmf\Request::getString('HTTP_REFERER', '', 'SERVER') , XOOPS_URL.'/modules/system/admin.php' ) !== 0 */) {
                 die("Danger! don't use this preview. Use 'altsys module' instead.(by Protector)");
             }
             // tpl preview
@@ -1647,7 +1648,7 @@ class Guardian
 //        require_once __DIR__ . '/ProtectorFilter.php';
         $filterHandler = FilterHandler::getInstance();
         $ret            = $filterHandler->execute($type);
-        if ($ret == false && $dying_message) {
+        if ($ret === false && $dying_message) {
             die($dying_message);
         }
 

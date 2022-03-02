@@ -6,9 +6,9 @@ use XoopsModules\Protector\Registry;
 require_once __DIR__ . '/preloads/autoloader.php';
 
 // start hack by Trabis
-//if (!class_exists('Registry')) {
-//    exit('Registry not found');
-//}
+if (!class_exists('XoopsModules\Protector\Registry')) {
+    exit('Registry not found');
+}
 
 $registry  = Registry::getInstance();
 $mydirname = $registry->getEntry('mydirname');
@@ -16,7 +16,7 @@ $mydirpath = $registry->getEntry('mydirpath');
 $language  = $registry->getEntry('language');
 // end hack by Trabis
 
-eval(' function xoops_module_uninstall_' . $mydirname . '( $module ) { return protector_onuninstall_base( $module , "' . $mydirname . '" ) ; } ');
+eval(' function xoops_module_uninstall_' . $mydirname . '( $module ) { return protector_onuninstall_base( $module , "' . $mydirname . '" );} ');
 
 if (!function_exists('protector_onuninstall_base')) {
 
@@ -50,7 +50,7 @@ if (!function_exists('protector_onuninstall_base')) {
         $sql_file_path = __DIR__ . '/sql/mysql.sql';
         $prefix_mod    = $db->prefix() . '_' . $mydirname;
         if (file_exists($sql_file_path)) {
-            $ret[]     = 'SQL file found at <b>' . htmlspecialchars($sql_file_path) . '</b>.<br  /> Deleting tables...<br>';
+            $ret[]     = 'SQL file found at <b>' . htmlspecialchars($sql_file_path) . '</b>.<br > Deleting tables...<br>';
             $sql_lines = file($sql_file_path);
             foreach ($sql_lines as $sql_line) {
                 if (preg_match('/^CREATE TABLE \`?([a-zA-Z0-9_-]+)\`? /i', $sql_line, $regs)) {
@@ -65,13 +65,13 @@ if (!function_exists('protector_onuninstall_base')) {
         }
 
         // TEMPLATES (Not necessary because modulesadmin removes all templates)
-        /* $tplfile_handler = xoops_getHandler( 'tplfile' ) ;
-        $templates =& $tplfile_handler->find( null , 'module' , $mid ) ;
+        /* $tplfileHandler = xoops_getHandler( 'tplfile' ) ;
+        $templates =& $tplfileHandler->find( null , 'module' , $mid ) ;
         $tcount = count( $templates ) ;
         if ($tcount > 0) {
             $ret[] = 'Deleting templates...' ;
             for ($i = 0 ; $i < $tcount ; ++$i) {
-                if ( ! $tplfile_handler->delete( $templates[$i] ) ) {
+                if ( ! $tplfileHandler->delete( $templates[$i] ) ) {
                     $ret[] = '<span style="color:#ff0000;">ERROR: Could not delete template '.$templates[$i]->getVar('tpl_file','s').' from the database. Template ID: <b>'.$templates[$i]->getVar('tpl_id','s').'</b></span><br>';
                 } else {
                     $ret[] = 'Template <b>'.$templates[$i]->getVar('tpl_file','s').'</b> deleted from the database. Template ID: <b>'.$templates[$i]->getVar('tpl_id','s').'</b><br>';

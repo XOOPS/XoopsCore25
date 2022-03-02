@@ -6,9 +6,9 @@ use XoopsModules\Protector\Registry;
 require_once __DIR__ . '/preloads/autoloader.php';
 
 // start hack by Trabis
-//if (!class_exists('Registry')) {
-//    exit('Registry not found');
-//}
+if (!class_exists('XoopsModules\Protector\Registry')) {
+    exit('Registry not found');
+}
 
 $registry  = Registry::getInstance();
 $mydirname = $registry->getEntry('mydirname');
@@ -29,13 +29,13 @@ if (!function_exists('protector_notify_base')) {
      */
     function protector_notify_base($mydirname, $category, $item_id)
     {
-        include_once __DIR__ . '/include/common_functions.php';
+        require_once __DIR__ . '/include/common_functions.php';
 
         $db = XoopsDatabaseFactory::getDatabaseConnection();
 
-        /** @var XoopsModuleHandler $module_handler */
-        $module_handler = xoops_getHandler('module');
-        $module         = $module_handler->getByDirname($mydirname);
+        /** @var XoopsModuleHandler $moduleHandler */
+        $moduleHandler = xoops_getHandler('module');
+        $module         = $moduleHandler->getByDirname($mydirname);
 
         if ($category === 'global') {
             $item['name'] = '';

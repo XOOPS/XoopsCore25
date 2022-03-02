@@ -6,9 +6,9 @@ use XoopsModules\Protector\Registry;
 require_once __DIR__ . '/preloads/autoloader.php';
 
 // start hack by Trabis
-//if (!class_exists('Registry')) {
-//    exit('Registry not found');
-//}
+if (!class_exists('XoopsModules\Protector\Registry')) {
+    exit('Registry not found');
+}
 
 $registry  = Registry::getInstance();
 $mydirname = $registry->getEntry('mydirname');
@@ -68,7 +68,7 @@ if (!function_exists('protector_onupdate_base')) {
         }
 
         // TEMPLATES (all templates have been already removed by modulesadmin)
-        $tplfile_handler = xoops_getHandler('tplfile');
+        $tplfileHandler = xoops_getHandler('tplfile');
         $tpl_path        = __DIR__ . '/templates';
         if ($handler = @opendir($tpl_path . '/')) {
             while (($file = readdir($handler)) !== false) {
@@ -83,7 +83,7 @@ if (!function_exists('protector_onupdate_base')) {
                         '.js',
                     ))) {
                     $mtime   = (int)(@filemtime($file_path));
-                    $tplfile = $tplfile_handler->create();
+                    $tplfile = $tplfileHandler->create();
                     $tplfile->setVar('tpl_source', file_get_contents($file_path), true);
                     $tplfile->setVar('tpl_refid', $mid);
                     $tplfile->setVar('tpl_tplset', 'default');
@@ -93,14 +93,14 @@ if (!function_exists('protector_onupdate_base')) {
                     $tplfile->setVar('tpl_lastmodified', $mtime);
                     $tplfile->setVar('tpl_lastimported', 0);
                     $tplfile->setVar('tpl_type', 'module');
-                    if (!$tplfile_handler->insert($tplfile)) {
+                    if (!$tplfileHandler->insert($tplfile)) {
                         $msgs[] = '<span style="color:#ff0000;">ERROR: Could not insert template <b>' . htmlspecialchars($mydirname . '_' . $file) . '</b> to the database.</span>';
                     } else {
                         $tplid  = $tplfile->getVar('tpl_id');
                         $msgs[] = 'Template <b>' . htmlspecialchars($mydirname . '_' . $file) . '</b> added to the database. (ID: <b>' . $tplid . '</b>)';
                         // generate compiled file
-                        include_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
-                        include_once XOOPS_ROOT_PATH . '/class/template.php';
+                        require_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
+                        require_once XOOPS_ROOT_PATH . '/class/template.php';
                         if (!xoops_template_touch($tplid)) {
                             $msgs[] = '<span style="color:#ff0000;">ERROR: Failed compiling template <b>' . htmlspecialchars($mydirname . '_' . $file) . '</b>.</span>';
                         } else {
@@ -111,8 +111,8 @@ if (!function_exists('protector_onupdate_base')) {
             }
             closedir($handler);
         }
-        include_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
-        include_once XOOPS_ROOT_PATH . '/class/template.php';
+        require_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
+        require_once XOOPS_ROOT_PATH . '/class/template.php';
         xoops_template_clear_module_cache($mid);
 
         return true;

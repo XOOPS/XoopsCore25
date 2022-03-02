@@ -1,5 +1,6 @@
 <?php
 
+use Xmf\Request;
 use XoopsModules\Protector;
 use XoopsModules\Protector\XoopsGTicket;
 use XoopsModules\Protector\Guardian;
@@ -7,7 +8,7 @@ use XoopsModules\Protector\Guardian;
 require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
-include __DIR__ . '/mymenu.php';
+require __DIR__ . '/mymenu.php';
 require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 //require_once dirname(__DIR__) . '/class/gtickets.php';
 $xoopsGTicket = new XoopsGTicket();
@@ -22,8 +23,8 @@ $myts = MyTextSanitizer::getInstance();
 $db   = XoopsDatabaseFactory::getDatabaseConnection();
 
 // GET vars
-$pos = empty($_GET['pos']) ? 0 : (int)$_GET['pos'];
-$num = empty($_GET['num']) ? 20 : (int)$_GET['num'];
+$pos = Request::getInt('pos', 0, 'GET'); //empty($_GET['pos']) ? 0 : (int)$_GET['pos'];
+$num = Request::getInt('num', 20, 'GET'); //empty($_GET['num']) ? 20 : (int)$_GET['num'];
 
 $mydirname = basename( dirname(__DIR__) ) ;
 // Table Name
@@ -62,7 +63,7 @@ if (!empty($_POST['action'])) {
         foreach (array_keys($group1_ips) as $i) {
             $group1_ips[$i] = trim($group1_ips[$i]);
         }
-        $fp = @fopen($protector->get_filepath4group1ips(), 'w');
+        $fp = @fopen($protector->get_filepath4group1ips(), 'wb');
         if ($fp) {
             @flock($fp, LOCK_EX);
             fwrite($fp, serialize(array_unique($group1_ips)) . "\n");
@@ -126,7 +127,8 @@ if (!empty($_POST['action'])) {
 // query for listing
 $rs = $db->query("SELECT count(lid) FROM $log_table");
 list($numrows) = $db->fetchRow($rs);
-$prs = $db->query("SELECT l.lid, l.uid, l.ip, l.agent, l.type, l.description, UNIX_TIMESTAMP(l.timestamp), u.uname FROM $log_table l LEFT JOIN " . $db->prefix('users') . " u ON l.uid=u.uid ORDER BY timestamp DESC LIMIT $pos,$num");
+$sql = "SELECT l.lid, l.uid, l.ip, l.agent, l.type, l.description, UNIX_TIMESTAMP(l.timestamp), u.uname FROM $log_table l LEFT JOIN " . $db->prefix('users') . " u ON l.uid=u.uid ORDER BY timestamp DESC LIMIT $pos,$num";
+$prs = $db->query($sql);
 
 // Page Navigation
 $nav      = new XoopsPageNav($numrows, $num, $pos, 'pos', "page=center&num=$num");
@@ -180,7 +182,7 @@ $group1_ips4disp = htmlspecialchars(implode("\n", $group1_ips), ENT_QUOTES);
 echo "
 <form name='ConfigForm' action='' method='POST'>
 " . $xoopsGTicket->getTicketHtml(__LINE__, 1800, 'protector_admin') . "
-<input type='hidden' name='action' value='update_ips' />
+<input type='hidden' name='action' value='update_ips'>
 <table width='95%' class='outer' cellpadding='4' cellspacing='1'>
   <tr valign='top' align='left'>
     <td class='head'>
@@ -206,7 +208,7 @@ echo "
     <td class='head'>
     </td>
     <td class='even'>
-      <input type='submit' value='" . _GO . "' />
+      <input type='submit' value='" . _GO . "'>
     </td>
   </tr>
 </table>
@@ -231,10 +233,10 @@ echo "
 </form>
 <form name='MainForm' action='' method='POST' style='margin-top:0;'>
 " . $xoopsGTicket->getTicketHtml(__LINE__, 1800, 'protector_admin') . "
-<input type='hidden' name='action' value='' />
+<input type='hidden' name='action' value=''>
 <table width='95%' class='outer' cellpadding='4' cellspacing='1'>
   <tr valign='middle'>
-    <th width='5'><input type='checkbox' name='dummy' onclick=\"with(document.MainForm){for (i=0;i<length;i++) {if (elements[i].type=='checkbox') {elements[i].checked=this.checked;}}}\" /></th>
+    <th width='5'><input type='checkbox' name='dummy' onclick=\"with(document.MainForm){for (i=0;i<length;i++) {if (elements[i].type=='checkbox') {elements[i].checked=this.checked;}}}\"></th>
     <th>" . _AM_TH_DATETIME . '</th>
     <th>' . _AM_TH_USER . '</th>
     <th>' . _AM_TH_IP . '<br>' . _AM_TH_AGENT . '</th>
@@ -270,11 +272,11 @@ while (false !== (list($lid, $uid, $ip, $agent, $type, $description, $timestamp,
         $agent_short = substr($agent, 0, strpos($agent, ' '));
     }
     $agent4disp = htmlspecialchars($agent, ENT_QUOTES);
-    $agent_desc = $agent == $agent_short ? $agent4disp : htmlspecialchars($agent_short, ENT_QUOTES) . "<img src='../images/dotdotdot.gif' alt='$agent4disp' title='$agent4disp' />";
+    $agent_desc = $agent == $agent_short ? $agent4disp : htmlspecialchars($agent_short, ENT_QUOTES) . "<img src='../images/dotdotdot.gif' alt='$agent4disp' title='$agent4disp'>";
 
     echo "
   <tr>
-    <td class='$oddeven'><input type='checkbox' name='ids[]' value='$lid' /></td>
+    <td class='$oddeven'><input type='checkbox' name='ids[]' value='$lid'></td>
     <td class='$oddeven'>" . formatTimestamp($timestamp) . "</td>
     <td class='$oddeven'>$uname</td>
     <td class='$oddeven'>$ip<br>$agent_desc</td>
@@ -286,8 +288,8 @@ while (false !== (list($lid, $uid, $ip, $agent, $type, $description, $timestamp,
 // footer of log listing
 echo "
   <tr>
-    <td colspan='8' align='left'>" . _AM_LABEL_REMOVE . "<input type='button' value='" . _AM_BUTTON_REMOVE . "' onclick='if (confirm(\"" . _AM_JS_REMOVECONFIRM . "\")) {document.MainForm.action.value=\"delete\"; submit();}' />
-    &nbsp " . _AM_LABEL_BAN_BY_IP . "<input type='button' value='" . _AM_BUTTON_BAN_BY_IP . "' onclick='if (confirm(\"" . _AM_JS_BANCONFIRM . "\")) {document.MainForm.action.value=\"banbyip\"; submit();}' /></td>
+    <td colspan='8' align='left'>" . _AM_LABEL_REMOVE . "<input type='button' value='" . _AM_BUTTON_REMOVE . "' onclick='if (confirm(\"" . _AM_JS_REMOVECONFIRM . "\")) {document.MainForm.action.value=\"delete\"; submit();}'>
+    &nbsp " . _AM_LABEL_BAN_BY_IP . "<input type='button' value='" . _AM_BUTTON_BAN_BY_IP . "' onclick='if (confirm(\"" . _AM_JS_BANCONFIRM . "\")) {document.MainForm.action.value=\"banbyip\"; submit();}'></td>
   </tr>
 </table>
 <div align='right'>
@@ -295,9 +297,9 @@ echo "
 </div>
 <div style='clear:both;'><br><br></div>
 <div align='right'>
-" . _AM_LABEL_COMPACTLOG . "<input type='button' value='" . _AM_BUTTON_COMPACTLOG . "' onclick='if (confirm(\"" . _AM_JS_COMPACTLOGCONFIRM . "\")) {document.MainForm.action.value=\"compactlog\"; submit();}' />
+" . _AM_LABEL_COMPACTLOG . "<input type='button' value='" . _AM_BUTTON_COMPACTLOG . "' onclick='if (confirm(\"" . _AM_JS_COMPACTLOGCONFIRM . "\")) {document.MainForm.action.value=\"compactlog\"; submit();}'>
 &nbsp;
-" . _AM_LABEL_REMOVEALL . "<input type='button' value='" . _AM_BUTTON_REMOVEALL . "' onclick='if (confirm(\"" . _AM_JS_REMOVEALLCONFIRM . "\")) {document.MainForm.action.value=\"deleteall\"; submit();}' />
+" . _AM_LABEL_REMOVEALL . "<input type='button' value='" . _AM_BUTTON_REMOVEALL . "' onclick='if (confirm(\"" . _AM_JS_REMOVEALLCONFIRM . "\")) {document.MainForm.action.value=\"deleteall\"; submit();}'>
 </div>
 </form>
 </td></tr></table>

@@ -5,18 +5,17 @@ use XoopsModules\Protector\Registry;
 require __DIR__ . '/preloads/autoloader.php';
 
 // start hack by Trabis
-//if (!class_exists('Registry')) {
-//    exit('Registry not found');
-//}
-
-
-global $xoopsUser;
+if (!class_exists('XoopsModules\Protector\Registry')) {
+    exit('Registry not found');
+}
 
 $registry  = Registry::getInstance();
 $mydirname = $registry->getEntry('mydirname');
 $mydirpath = $registry->getEntry('mydirpath');
 $language  = $registry->getEntry('language');
 // end hack by Trabis
+
+global $xoopsUser;
 
 require XOOPS_ROOT_PATH . '/include/cp_functions.php';
 
@@ -25,17 +24,17 @@ $mytrustdirpath = __DIR__;
 
 // environment
 require_once XOOPS_ROOT_PATH . '/class/template.php';
-/** @var XoopsModuleHandler $module_handler */
-$module_handler    = xoops_getHandler('module');
-$xoopsModule       = $module_handler->getByDirname($mydirname);
-/** @var XoopsConfigHandler $config_handler */
-$config_handler    = xoops_getHandler('config');
-$xoopsModuleConfig = $config_handler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
+/** @var XoopsModuleHandler $moduleHandler */
+$moduleHandler    = xoops_getHandler('module');
+$xoopsModule       = $moduleHandler->getByDirname($mydirname);
+/** @var XoopsConfigHandler $configHandler */
+$configHandler    = xoops_getHandler('config');
+$xoopsModuleConfig = $configHandler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
 
 // check permission of 'module_admin' of this module
-/** @var XoopsGroupPermHandler $moduleperm_handler */
-$moduleperm_handler = xoops_getHandler('groupperm');
-if (!is_object(@$xoopsUser) || !$moduleperm_handler->checkRight('module_admin', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
+/** @var XoopsGroupPermHandler $modulepermHandler */
+$modulepermHandler = xoops_getHandler('groupperm');
+if (!is_object(@$xoopsUser) || !$modulepermHandler->checkRight('module_admin', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
     die('only admin can access this area');
 }
 
@@ -46,26 +45,26 @@ $xoopsOption['pagetype'] = 'admin';
 //$language = empty( $xoopsConfig['language'] ) ? 'english' : $xoopsConfig['language'] ;  //hack by Trabis
 if (file_exists("$mydirpath/language/$language/admin.php")) {
     // user customized language file
-    include_once "$mydirpath/language/$language/admin.php";
+    require_once "$mydirpath/language/$language/admin.php";
 } elseif (file_exists("$mytrustdirpath/language/$language/admin.php")) {
     // default language file
-    include_once "$mytrustdirpath/language/$language/admin.php";
+    require_once "$mytrustdirpath/language/$language/admin.php";
 } else {
     // fallback english
-    include_once "$mytrustdirpath/language/english/admin.php";
+    require_once "$mytrustdirpath/language/english/admin.php";
 }
 
 // language files (main.php)
 //$language = empty( $xoopsConfig['language'] ) ? 'english' : $xoopsConfig['language'] ;  //hack by Trabis
 if (file_exists("$mydirpath/language/$language/main.php")) {
     // user customized language file
-    include_once "$mydirpath/language/$language/main.php";
+    require_once "$mydirpath/language/$language/main.php";
 } elseif (file_exists("$mytrustdirpath/language/$language/main.php")) {
     // default language file
-    include_once "$mytrustdirpath/language/$language/main.php";
+    require_once "$mytrustdirpath/language/$language/main.php";
 } else {
     // fallback english
-    include_once "$mytrustdirpath/language/english/main.php";
+    require_once "$mytrustdirpath/language/english/main.php";
 }
 
 if (!empty($_GET['lib'])) {
