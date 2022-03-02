@@ -266,7 +266,7 @@ class Guardian
 
         // update config cache
         if ($db_conf_serialized != $this->_conf_serialized) {
-            $fp = fopen($this->get_filepath4confighcache(), 'w');
+            $fp = fopen($this->get_filepath4confighcache(), 'wb');
             fwrite($fp, $db_conf_serialized);
             fclose($fp);
             $this->_conf = $db_conf;
@@ -438,7 +438,7 @@ class Guardian
     {
         $expire = min((int)$expire, time() + 300);
 
-        $fp = @fopen($this->get_filepath4bwlimit(), 'w');
+        $fp = @fopen($this->get_filepath4bwlimit(), 'wb');
         if ($fp) {
             @flock($fp, LOCK_EX);
             fwrite($fp, $expire . "\n");
@@ -479,7 +479,7 @@ class Guardian
     {
         asort($bad_ips);
 
-        $fp = @fopen($this->get_filepath4badips(), 'w');
+        $fp = @fopen($this->get_filepath4badips(), 'wb');
         if ($fp) {
             @flock($fp, LOCK_EX);
             fwrite($fp, serialize($bad_ips) . "\n");
@@ -673,7 +673,7 @@ class Guardian
 
         // make backup as uploads/.htaccess.bak automatically
         if ($ht_body && !file_exists($backup_htaccess)) {
-            $fw = fopen($backup_htaccess, 'w');
+            $fw = fopen($backup_htaccess, 'wb');
             fwrite($fw, $ht_body);
             fclose($fw);
         }
@@ -699,7 +699,7 @@ class Guardian
 
         // error_log( "$new_ht_body\n" , 3 , "/tmp/error_log" ) ;
 
-        $fw = fopen($target_htaccess, 'w');
+        $fw = fopen($target_htaccess, 'wb');
         @flock($fw, LOCK_EX);
         fwrite($fw, $new_ht_body);
         @flock($fw, LOCK_UN);
