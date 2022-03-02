@@ -362,7 +362,7 @@ class Guardian
         global $xoopsUser;
 
         if (is_object($xoopsUser)) {
-            /** @var XoopsMemberHandler */
+            /** @var XoopsUserHandler */
             $userHandler = xoops_getHandler('user');
             $xoopsUser->setVar('level', 0);
             $actkey = substr(md5(uniqid(mt_rand(), 1)), 0, 8);
