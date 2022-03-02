@@ -672,14 +672,14 @@ class Guardian
         $ht_body = file_get_contents($target_htaccess);
 
         // make backup as uploads/.htaccess.bak automatically
-        if ($ht_body && !file_exists($backup_htaccess)) {
+        if ($ht_body && !is_file($backup_htaccess)) {
             $fw = fopen($backup_htaccess, 'wb');
             fwrite($fw, $ht_body);
             fclose($fw);
         }
 
         // if .htaccess is broken, restore from backup
-        if (!$ht_body && file_exists($backup_htaccess)) {
+        if (!$ht_body && is_file($backup_htaccess)) {
             $ht_body = file_get_contents($backup_htaccess);
         }
 

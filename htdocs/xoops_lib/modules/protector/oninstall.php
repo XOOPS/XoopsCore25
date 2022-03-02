@@ -50,10 +50,10 @@ if (!function_exists('protector_oninstall_base')) {
         // TABLES (loading mysql.sql)
         $sql_file_path = __DIR__ . '/sql/mysql.sql';
         $prefix_mod    = $db->prefix() . '_' . $mydirname;
-        if (file_exists($sql_file_path)) {
+        if (is_file($sql_file_path)) {
             $ret[] = 'SQL file found at <b>' . htmlspecialchars($sql_file_path) . '</b>.<br> Creating tables...';
 
-            if (file_exists(XOOPS_ROOT_PATH . '/class/database/oldsqlutility.php')) {
+            if (is_file(XOOPS_ROOT_PATH . '/class/database/oldsqlutility.php')) {
                 require_once XOOPS_ROOT_PATH . '/class/database/oldsqlutility.php';
                 $sqlutil = new OldSqlUtility(); //old code is -> $sqlutil = new OldSqlUtility ; //hack by Trabis
             } else {
