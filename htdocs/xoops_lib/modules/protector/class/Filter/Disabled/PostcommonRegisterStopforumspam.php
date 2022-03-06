@@ -35,27 +35,29 @@ class PostcommonRegisterStopforumspam extends FilterAbstract
             return true;
         }
 
-        $report = array();
+        $report          = array();
         $report['email'] = isset($_POST['email']) ? $_POST['email'] : null;
-        $report['ip'] = $_SERVER['REMOTE_ADDR'];
+        $report['ip']    = $_SERVER['REMOTE_ADDR'];
         $report['uname'] = isset($_POST['uname']) ? $_POST['uname'] : null;
-        $result = $this->protector->stopForumSpamLookup($report['email'], $report['ip'], $report['uname']);
+        $result          = $this->protector->stopForumSpamLookup($report['email'], $report['ip'], $report['uname']);
         if (false === $result || isset($result['http_code'])) {
             // the look up failed at the http level, log it for now?
-            $report['result'] = $result;
+            $report['result']         = $result;
             $this->protector->message = json_encode($report);
             $this->protector->output_log('SFS-UNKNOWN');
             return true;
         }
-        foreach ($result as $entry) {
-            if (isset($entry['confidence']) && ((float) $entry['confidence'] > $this->minimumConfidence)) {
-                $report['result'] = $result;
-                $this->protector->message = json_encode($report);
-                $this->protector->output_log('SFS SPAM Registration');
-                // write any message as you like
-                echo 'This registration attempt has been denied. '
-                    . 'If you feel this is in error, please contact the site administrator.';
-                exit;
+        if (is_array($result)) {
+            foreach ($result as $entry) {
+                if (isset($entry['confidence']) && ((float)$entry['confidence'] > $this->minimumConfidence)) {
+                    $report['result']         = $result;
+                    $this->protector->message = json_encode($report);
+                    $this->protector->output_log('SFS SPAM Registration');
+                    // write any message as you like
+                    echo 'This registration attempt has been denied. '
+                         . 'If you feel this is in error, please contact the site administrator.';
+                    exit;
+                }
             }
         }
     }

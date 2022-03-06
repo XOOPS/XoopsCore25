@@ -358,7 +358,7 @@ class Guardian
      */
     public function deactivateCurrentUser()
     {
-        /** @var XoopsUser $xoopsUser */
+        /** @var \XoopsUser|\XoopsObject $xoopsUser */
         global $xoopsUser;
 
         if (is_object($xoopsUser)) {
@@ -1241,7 +1241,7 @@ class Guardian
      * @param string $ip
      * @param string $username
      *
-     * @return string|bool
+     * @return mixed
      */
     public function stopForumSpamLookup($email, $ip, $username)
     {
