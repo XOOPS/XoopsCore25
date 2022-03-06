@@ -943,14 +943,14 @@ class Guardian
      * @param array $current
      * @param array $indexes
      *
-     * @return bool|array
+     * @return bool|string
      */
     public function &get_ref_from_base64index(&$current, $indexes)
     {
         $false = false;
         foreach ($indexes as $index) {
             $index = base64_decode($index);
-            if (!is_array($current)) {
+            if (!is_array($current) || $index === false) {
                 return $false;
             }
             $current =& $current[$index];
