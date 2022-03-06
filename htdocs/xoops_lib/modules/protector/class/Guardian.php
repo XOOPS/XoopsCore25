@@ -1055,7 +1055,7 @@ class Guardian
                 }
 
                 // anti multiple dot file (Apache mod_mime.c)
-                if (count(explode('.', str_replace('.tar.gz', '.tgz', $_file['name']))) > 2) {
+                if (substr_count(str_replace('.tar.gz', '.tgz', $_file['name']), '.') + 1 > 2) {
                     $this->message .= "Attempt to multiple dot file {$_file['name']}.\n";
                     $this->_safe_badext    = false;
                     $this->last_error_type = 'UPLOAD';
