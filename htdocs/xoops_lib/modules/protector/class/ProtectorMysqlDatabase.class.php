@@ -9,9 +9,9 @@ if (file_exists(XOOPS_ROOT_PATH . '/class/database/drivers/' . XOOPS_DB_TYPE . '
 require_once XOOPS_ROOT_PATH . '/class/database/database.php';
 
 /**
- * Class ProtectorMySQLDatabase
+ * Class ProtectorMysqlDatabase
  */
-class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
+class ProtectorMysqlDatabase extends XoopsMySQLDatabaseProxy
 {
     /**
      * @var array
@@ -30,7 +30,7 @@ class ProtectorMySQLDatabase extends XoopsMySQLDatabaseProxy
     );
 
     /**
-     * ProtectorMySQLDatabase constructor.
+     * ProtectorMysqlDatabase constructor.
      */
     public function __construct()
     {
