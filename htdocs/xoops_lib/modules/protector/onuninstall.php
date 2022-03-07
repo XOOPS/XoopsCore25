@@ -83,18 +83,18 @@ if (!function_exists('protector_onuninstall_base')) {
         return true;
     }
 
-    /**
-     * @param \XoopsModule $module_obj
-     * @param object $log
-     */
-    function protector_message_append_onuninstall(&$module_obj, &$log)
-    {
-        if (is_array(@$GLOBALS['ret'])) {
-            foreach ($GLOBALS['ret'] as $message) {
-                $log->add(strip_tags($message));
-            }
-        }
-
-        // use mLog->addWarning() or mLog->addError() if necessary
-    }
+//    /**
+//     * @param \XoopsModule $module_obj
+//     * @param object $log
+//     */
+//    function protector_message_append_onuninstall(&$module_obj, &$log)
+//    {
+//        if (is_array(@$GLOBALS['ret'])) {
+//            foreach ($GLOBALS['ret'] as $message) {
+//                $log->add(strip_tags($message));
+//            }
+//        }
+//
+//        // use mLog->addWarning() or mLog->addError() if necessary
+//    }
 }

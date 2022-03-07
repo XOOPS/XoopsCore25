@@ -45,7 +45,7 @@ if (!function_exists('protector_oninstall_base')) {
 //        }
 
         $db  = XoopsDatabaseFactory::getDatabaseConnection();
-        $mid = $module->getVar('mid');
+        $mid = (int)$module->getVar('mid');
 
         // TABLES (loading mysql.sql)
         $sql_file_path = __DIR__ . '/sql/mysql.sql';
@@ -61,7 +61,7 @@ if (!function_exists('protector_oninstall_base')) {
                 $sqlutil = new SqlUtility(); //old code is -> $sqlutil = new SqlUtility ; //hack by Trabis
 //            }
 
-            $sql_query = trim(file_get_contents($sql_file_path));
+            $sql_query = trim((string)file_get_contents($sql_file_path));
             $pieces    = array();
             $sqlutil::splitMySqlFile($pieces, $sql_query);
             $created_tables = array();
@@ -89,6 +89,7 @@ if (!function_exists('protector_oninstall_base')) {
         }
 
         // TEMPLATES
+        /** @var \XoopsTplfileHandler $tplfileHandler */
         $tplfileHandler = xoops_getHandler('tplfile');
         $tpl_path        = __DIR__ . '/templates';
         if ($handler = @opendir($tpl_path . '/')) {
@@ -122,7 +123,7 @@ if (!function_exists('protector_oninstall_base')) {
                         // generate compiled file
                         require_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
                         require_once XOOPS_ROOT_PATH . '/class/template.php';
-                        if (!xoops_template_touch($tplid)) {
+                        if (!xoops_template_touch((int)$tplid)) {
                             $ret[] = '<span style="color:#ff0000;">ERROR: Failed compiling template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES | ENT_HTML5) . '</b>.</span><br>';
                         } else {
                             $ret[] = 'Template <b>' . htmlspecialchars($mydirname . '_' . $file, ENT_QUOTES | ENT_HTML5) . '</b> compiled.</span><br>';
@@ -139,18 +140,19 @@ if (!function_exists('protector_oninstall_base')) {
         return true;
     }
 
-    /**
-     * @param \XoopsModule $module_obj
-     * @param object $log
-     */
-    function protector_message_append_oninstall(&$module_obj, &$log)
-    {
-        if (is_array(@$GLOBALS['ret'])) {
-            foreach ($GLOBALS['ret'] as $message) {
-                $log->add(strip_tags($message));
-            }
-        }
-
-        // use mLog->addWarning() or mLog->addError() if necessary
-    }
+//    /**
+//     * @param \XoopsModule $module_obj
+//     * @param object $log
+//     * @return void
+//     */
+//    function protector_message_append_oninstall(&$module_obj, &$log)
+//    {
+//        if (is_array(@$GLOBALS['ret'])) {
+//            foreach ($GLOBALS['ret'] as $message) {
+//                $log->add(strip_tags($message));
+//            }
+//        }
+//
+//        // use mLog->addWarning() or mLog->addError() if necessary
+//    }
 }

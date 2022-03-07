@@ -119,18 +119,18 @@ if (!function_exists('protector_onupdate_base')) {
         return true;
     }
 
-    /**
-     * @param \XoopsModule $module_obj
-     * @param object $log
-     */
-    function protector_message_append_onupdate(&$module_obj, $log)
-    {
-        if (is_array(@$GLOBALS['msgs'])) {
-            foreach ($GLOBALS['msgs'] as $message) {
-                $log->add(strip_tags($message));
-            }
-        }
-
-        // use mLog->addWarning() or mLog->addError() if necessary
-    }
+//    /**
+//     * @param \XoopsModule $module_obj
+//     * @param object $log
+//     */
+//    function protector_message_append_onupdate(&$module_obj, $log)
+//    {
+//        if (is_array(@$GLOBALS['msgs'])) {
+//            foreach ($GLOBALS['msgs'] as $message) {
+//                $log->add(strip_tags($message));
+//            }
+//        }
+//
+//        // use mLog->addWarning() or mLog->addError() if necessary
+//    }
 }
