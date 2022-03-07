@@ -307,7 +307,7 @@ class Guardian
             exit;
         } else {
             $ret = $this->call_filter('PrepurgeExit');
-            if ($ret === false) {
+            if (false === $ret) {
                 die('Protector detects attacking actions');
             }
         }
@@ -684,7 +684,7 @@ class Guardian
         }
 
         // new .htaccess
-        if ($ht_body === false) {
+        if (false === $ht_body) {
             $ht_body = '';
         }
 
@@ -845,7 +845,7 @@ class Guardian
         }
 
         foreach ($_GET as $key => $val) {
-            if (substr($key, -2) === 'id' && !is_array($_GET[$key])) {
+            if ('id' === substr($key, -2) && !is_array($_GET[$key])) {
                 $newval     = preg_replace('/[^0-9a-zA-Z_-]/', '', $val);
                 $_GET[$key] = $_GET[$key] = $newval;
                 if ($_REQUEST[$key] == $_GET[$key]) {
@@ -854,7 +854,7 @@ class Guardian
             }
         }
         foreach ($_POST as $key => $val) {
-            if (substr($key, -2) === 'id' && !is_array($_POST[$key])) {
+            if ('id' === substr($key, -2) && !is_array($_POST[$key])) {
                 $newval      = preg_replace('/[^0-9a-zA-Z_-]/', '', $val);
                 $_POST[$key] = $_POST[$key] = $newval;
                 if ($_REQUEST[$key] == $_POST[$key]) {
@@ -863,7 +863,7 @@ class Guardian
             }
         }
         foreach ($_COOKIE as $key => $val) {
-            if (substr($key, -2) === 'id' && !is_array($_COOKIE[$key])) {
+            if ('id' === substr($key, -2) && !is_array($_COOKIE[$key])) {
                 $newval        = preg_replace('/[^0-9a-zA-Z_-]/', '', $val);
                 $_COOKIE[$key] = $_COOKIE[$key] = $newval;
                 if ($_REQUEST[$key] == $_COOKIE[$key]) {
@@ -892,12 +892,12 @@ class Guardian
             if (is_array($_GET[$key])) {
                 continue;
             }
-            if (substr(trim($val), 0, 3) === '../' || false !== strpos($val, '/../')) {
+            if ('../' === substr(trim($val), 0, 3) || false !== strpos($val, '/../')) {
                 $this->last_error_type = 'DirTraversal';
                 $this->message .= "Directory Traversal '$val' found.\n";
                 $this->output_log($this->last_error_type, 0, false, 64);
                 $sanitized_val = str_replace(chr(0), '', $val);
-                if (substr($sanitized_val, -2) !== ' .') {
+                if (' .' !== substr($sanitized_val, -2)) {
                     $sanitized_val .= ' .';
                 }
                 $_GET[$key] = $_GET[$key] = $sanitized_val;
@@ -950,7 +950,7 @@ class Guardian
         $false = false;
         foreach ($indexes as $index) {
             $index = base64_decode($index);
-            if (!is_array($current) || $index === false) {
+            if (!is_array($current) || false === $index) {
                 return $false;
             }
             $current =& $current[$index];
@@ -993,7 +993,7 @@ class Guardian
             exit;
         }
         $request_ref =& $this->get_ref_from_base64index($_REQUEST, $indexes);
-        if ($request_ref !== false && $main_ref == $request_ref) {
+        if (false !== $request_ref && $main_ref == $request_ref) {
             $request_ref = $val;
         }
         $main_ref   = $val;
@@ -1048,9 +1048,9 @@ class Guardian
             }
             if (!empty($_file['name']) && is_string($_file['name'])) {
                 $ext = strtolower(substr(strrchr($_file['name'], '.'), 1));
-                if ($ext === 'jpeg') {
+                if ('jpeg' === $ext) {
                     $ext = 'jpg';
-                } elseif ($ext === 'tiff') {
+                } elseif ('tiff' === $ext) {
                     $ext = 'tif';
                 }
 
@@ -1071,7 +1071,7 @@ class Guardian
                 // anti camouflaged image file
                 if (in_array($ext, $image_extensions)) {
                     $image_attributes = @getimagesize($_file['tmp_name']);
-                    if ($image_attributes === false && is_uploaded_file($_file['tmp_name'])) {
+                    if (false === $image_attributes && is_uploaded_file($_file['tmp_name'])) {
                         // open_basedir restriction
                         $temp_file = XOOPS_ROOT_PATH . '/uploads/protector_upload_temporary' . md5(time());
                         move_uploaded_file($_file['tmp_name'], $temp_file);
@@ -1079,7 +1079,7 @@ class Guardian
                         @unlink($temp_file);
                     }
 
-                    if ($image_attributes === false || $image_extensions[(int)$image_attributes[2]] != $ext) {
+                    if (false === $image_attributes || $image_extensions[(int)$image_attributes[2]] != $ext) {
                         $this->message .= "Attempt to upload camouflaged image file {$_file['name']}.\n";
                         $this->_safe_badext    = false;
                         $this->last_error_type = 'UPLOAD';
@@ -1127,7 +1127,7 @@ class Guardian
             $str = $val;
             while ($str = strstr($str, '/*')) { /* */
                 $str = strstr(substr($str, 2), '*/');
-                if ($str === false) {
+                if (false === $str) {
                     $this->message .= "Isolated comment-in found. ($val)\n";
                     if ($sanitize) {
                         $this->replace_doubtful($key, $val . '*/');
@@ -1177,7 +1177,7 @@ class Guardian
      */
     public function stopforumspam($uid)
     {
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        if ('POST' !== $_SERVER['REQUEST_METHOD']) {
             return false;
         }
 
@@ -1304,7 +1304,7 @@ class Guardian
         );
 
         // for older versions before updating this module
-        if ($result === false) {
+        if (false === $result) {
             $this->_done_dos = true;
 
             return true;
@@ -1377,7 +1377,7 @@ class Guardian
         }
 
         // Check its Agent
-        if (trim($this->_conf['dos_crsafe']) != '' && preg_match($this->_conf['dos_crsafe'], @$_SERVER['HTTP_USER_AGENT'])) {
+        if ('' != trim($this->_conf['dos_crsafe']) && preg_match($this->_conf['dos_crsafe'], @$_SERVER['HTTP_USER_AGENT'])) {
             // welcomed crawler
             $this->_done_dos = true;
 
@@ -1454,7 +1454,7 @@ class Guardian
 
         $victim_uname = empty($_COOKIE['autologin_uname']) ? $_POST['uname'] : $_COOKIE['autologin_uname'];
         // some UA send 'deleted' as a value of the deleted cookie.
-        if ($victim_uname === 'deleted') {
+        if ('deleted' === $victim_uname) {
             return null;
         }
         $mal4sql = $xoopsDB->quote("BRUTE FORCE: $victim_uname");
@@ -1480,7 +1480,7 @@ class Guardian
             $this->message .= "Trying to login as '" . addslashes($victim_uname) . "' found.\n";
             $this->output_log('BRUTE FORCE', 0, true, 1);
             $ret = $this->call_filter('BruteforceOverrun');
-            if ($ret === false) {
+            if (false === $ret) {
                 exit;
             }
         }
@@ -1508,7 +1508,7 @@ class Guardian
             // count URI up
             $count = -1;
             foreach (preg_split('#https?\:\/\/#i', $val) as $fragment) {
-                if (strncmp($fragment, $http_host, strlen($http_host)) !== 0) {
+                if (0 !== strncmp($fragment, $http_host, strlen($http_host))) {
                     ++$count;
                 }
             }
@@ -1536,7 +1536,7 @@ class Guardian
             $this->message .= @$_SERVER['REQUEST_URI'] . " SPAM POINT: $this->_spamcount_uri\n";
             $this->output_log('URI SPAM', $uid, false, 128);
             $ret = $this->call_filter('SpamcheckOverrun');
-            if ($ret === false) {
+            if (false === $ret) {
                 exit;
             }
         }
@@ -1559,14 +1559,14 @@ class Guardian
 
             // zx 2005/1/5 disable xmlrpc.php in root
             if (/* ! stristr( $_SERVER['SCRIPT_NAME'] , 'modules' ) && */
-                substr(@$_SERVER['SCRIPT_NAME'], -10) === 'xmlrpc.php'
+                'xmlrpc.php' === substr(@$_SERVER['SCRIPT_NAME'], -10)
             ) {
                 $this->output_log('xmlrpc', 0, true, 1);
                 exit;
             }
 
             // security bug of class/criteria.php 2005/6/27
-            if ((isset($_POST['uname']) && $_POST['uname'] === '0') || (isset($_COOKIE['autologin_pass']) && $_COOKIE['autologin_pass'] === '0')) {
+            if ((isset($_POST['uname']) && '0' === $_POST['uname']) || (isset($_COOKIE['autologin_pass']) && '0' === $_COOKIE['autologin_pass'])) {
                 $this->output_log('CRITERIA');
                 exit;
             }
@@ -1580,26 +1580,26 @@ class Guardian
             // root controllers
             if (false === stripos(@$_SERVER['SCRIPT_NAME'], 'modules')) {
                 // zx 2004/12/13 misc.php debug (file check)
-                if (substr(@$_SERVER['SCRIPT_NAME'], -8) === 'misc.php' && ($_GET['type'] === 'debug' || $_POST['type'] === 'debug') && !preg_match('/^dummy_\d+\.html$/', $_GET['file'])) {
+                if ('misc.php' === substr(@$_SERVER['SCRIPT_NAME'], -8) && ('debug' === $_GET['type'] || 'debug' === $_POST['type']) && !preg_match('/^dummy_\d+\.html$/', $_GET['file'])) {
                     $this->output_log('misc debug');
                     exit;
                 }
 
                 // zx 2004/12/13 misc.php smilies
-                if (substr(@$_SERVER['SCRIPT_NAME'], -8) === 'misc.php' && ($_GET['type'] === 'smilies' || $_POST['type'] === 'smilies') && !preg_match('/^[0-9a-z_]*$/i', $_GET['target'])) {
+                if ('misc.php' === substr(@$_SERVER['SCRIPT_NAME'], -8) && ('smilies' === $_GET['type'] || 'smilies' === $_POST['type']) && !preg_match('/^[0-9a-z_]*$/i', $_GET['target'])) {
                     $this->output_log('misc smilies');
                     exit;
                 }
 
                 // zx 2005/1/5 edituser.php avatarchoose
-                if (substr(@$_SERVER['SCRIPT_NAME'], -12) === 'edituser.php' && $_POST['op'] === 'avatarchoose' && false !== strpos($_POST['user_avatar'], '..')) {
+                if ('edituser.php' === substr(@$_SERVER['SCRIPT_NAME'], -12) && 'avatarchoose' === $_POST['op'] && false !== strpos($_POST['user_avatar'], '..')) {
                     $this->output_log('edituser avatarchoose');
                     exit;
                 }
             }
 
             // zx 2005/1/4 findusers
-            if (substr(@$_SERVER['SCRIPT_NAME'], -24) === 'modules/system/admin.php' && ($_GET['fct'] === 'findusers' || $_POST['fct'] === 'findusers')) {
+            if ('modules/system/admin.php' === substr(@$_SERVER['SCRIPT_NAME'], -24) && ('findusers' === $_GET['fct'] || 'findusers' === $_POST['fct'])) {
                 foreach ($_POST as $key => $val) {
                     if (false !== strpos($key, "'") || false !== strpos($val, "'")) {
                         $this->output_log('findusers');
@@ -1610,11 +1610,11 @@ class Guardian
 
             // preview CSRF zx 2004/12/14
             // news submit.php
-            if (substr(@$_SERVER['SCRIPT_NAME'], -23) === 'modules/news/submit.php' && isset($_POST['preview']) && strpos(@\Xmf\Request::getString('HTTP_REFERER', '', 'SERVER'), XOOPS_URL . '/modules/news/submit.php') !== 0) {
+            if ('modules/news/submit.php' === substr(@$_SERVER['SCRIPT_NAME'], -23) && isset($_POST['preview']) && 0 !== strpos(@\Xmf\Request::getString('HTTP_REFERER', '', 'SERVER'), XOOPS_URL . '/modules/news/submit.php')) {
                 $_POST['nohtml'] = $_POST['nohtml'] = 1;
             }
             // news admin/index.php
-            if (substr(@$_SERVER['SCRIPT_NAME'], -28) === 'modules/news/admin/index.php' && ($_POST['op'] === 'preview' || $_GET['op'] === 'preview') && strpos(@\Xmf\Request::getString('HTTP_REFERER', '', 'SERVER'), XOOPS_URL . '/modules/news/admin/index.php') !== 0) {
+            if ('modules/news/admin/index.php' === substr(@$_SERVER['SCRIPT_NAME'], -28) && ('preview' === $_POST['op'] || 'preview' === $_GET['op']) && 0 !== strpos(@\Xmf\Request::getString('HTTP_REFERER', '', 'SERVER'), XOOPS_URL . '/modules/news/admin/index.php')) {
                 $_POST['nohtml'] = $_POST['nohtml'] = 1;
             }
             // comment comment_post.php
@@ -1622,12 +1622,12 @@ class Guardian
                 $_POST['dohtml'] = $_POST['dohtml'] = 0;
             }
             // disable preview of system's blocksadmin
-            if (substr(@$_SERVER['SCRIPT_NAME'], -24) === 'modules/system/admin.php' && ($_GET['fct'] === 'blocksadmin' || $_POST['fct'] === 'blocksadmin') && isset($_POST['previewblock']) /* && strpos( \Xmf\Request::getString('HTTP_REFERER', '', 'SERVER') , XOOPS_URL.'/modules/system/admin.php' ) !== 0 */) {
+            if ('modules/system/admin.php' === substr(@$_SERVER['SCRIPT_NAME'], -24) && ('blocksadmin' === $_GET['fct'] || 'blocksadmin' === $_POST['fct']) && isset($_POST['previewblock']) /* && strpos( \Xmf\Request::getString('HTTP_REFERER', '', 'SERVER') , XOOPS_URL.'/modules/system/admin.php' ) !== 0 */) {
                 die("Danger! don't use this preview. Use 'altsys module' instead.(by Protector)");
             }
             // tpl preview
-            if (substr(@$_SERVER['SCRIPT_NAME'], -24) === 'modules/system/admin.php' && ($_GET['fct'] === 'tplsets' || $_POST['fct'] === 'tplsets')) {
-                if ($_POST['op'] === 'previewpopup' || $_GET['op'] === 'previewpopup' || isset($_POST['previewtpl'])) {
+            if ('modules/system/admin.php' === substr(@$_SERVER['SCRIPT_NAME'], -24) && ('tplsets' === $_GET['fct'] || 'tplsets' === $_POST['fct'])) {
+                if ('previewpopup' === $_POST['op'] || 'previewpopup' === $_GET['op'] || isset($_POST['previewtpl'])) {
                     die("Danger! don't use this preview.(by Protector)");
                 }
             }
@@ -1648,7 +1648,7 @@ class Guardian
 //        require_once __DIR__ . '/ProtectorFilter.php';
         $filterHandler = FilterHandler::getInstance();
         $ret            = $filterHandler->execute($type);
-        if ($ret === false && $dying_message) {
+        if (false === $ret && $dying_message) {
             die($dying_message);
         }
 

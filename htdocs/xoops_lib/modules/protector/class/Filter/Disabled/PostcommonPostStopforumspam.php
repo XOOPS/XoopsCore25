@@ -35,7 +35,7 @@ class PostcommonPostStopforumspam extends FilterAbstract
         global $xoopsUser;
 
         // we only check POST transactions
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !is_object($xoopsUser)) {
+        if ('POST' !== $_SERVER['REQUEST_METHOD'] || !is_object($xoopsUser)) {
             return true;
         }
 

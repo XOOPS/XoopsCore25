@@ -38,7 +38,7 @@ if (!function_exists('protector_notify_base')) {
         $moduleHandler = xoops_getHandler('module');
         $module         = $moduleHandler->getByDirname($mydirname);
 
-        if ($category === 'global') {
+        if ('global' === $category) {
             $item['name'] = '';
             $item['url']  = '';
 

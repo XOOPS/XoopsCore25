@@ -85,7 +85,7 @@ echo "</b><br><br></dl>\n";
 
 // XOOPS_DB_PREFIX
 echo "<dl><dt>'XOOPS_DB_PREFIX' : ";
-$safe = strtolower(XOOPS_DB_PREFIX) !== 'xoops';
+$safe = 'xoops' !== strtolower(XOOPS_DB_PREFIX);
 if ($safe) {
     echo XOOPS_DB_PREFIX . " &nbsp; <span style='color:green;font-weight:bold;'>OK</span></dt>\n<dd>";
 } else {
@@ -111,7 +111,7 @@ echo "</b><br><br></dl>\n";
 // patch to databasefactory.php
 echo "<dl><dt>'databasefactory.php' : ";
 $db = XoopsDatabaseFactory::getDatabaseConnection();
-if (substr(@XOOPS_VERSION, 6, 3) < 2.4 && strtolower(get_class($db)) !== 'protectormysqldatabase') {
+if (substr(@XOOPS_VERSION, 6, 3) < 2.4 && 'protectormysqldatabase' !== strtolower(get_class($db))) {
     echo "<span style='color:red;font-weight:bold;'>" . _AM_ADV_DBFACTORYUNPATCHED . "</span></dt>\n";
 } else {
     echo _AM_ADV_DBFACTORYPATCHED . "<span style='color:green;font-weight:bold;'> OK</span></dt>\n";

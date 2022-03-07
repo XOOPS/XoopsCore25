@@ -183,7 +183,7 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
     $prefix = $_POST['prefix'];
 
     // check if prefix is working
-    if ($prefix == XOOPS_DB_PREFIX) {
+    if (XOOPS_DB_PREFIX == $prefix) {
         die("You can't drop working tables");
     }
 
@@ -229,7 +229,7 @@ if (!$db->getRowsNum($srs)) {
 $tables   = array();
 $prefixes = array();
 while (false !== ($row_table = $db->fetchArray($srs))) {
-    if (substr($row_table['Name'], -6) === '_users') {
+    if ('_users' === substr($row_table['Name'], -6)) {
         $prefixes[] = array(
             'name'    => substr($row_table['Name'], 0, -6),
             'updated' => $row_table['Update_time'],
@@ -272,7 +272,7 @@ foreach ($prefixes as $prefix) {
     $prefix4disp  = htmlspecialchars($prefix['name'], ENT_QUOTES);
     $ticket_input = $xoopsGTicket->getTicketHtml(__LINE__, 1800, 'protector_admin');
 
-    if ($prefix['name'] == XOOPS_DB_PREFIX) {
+    if (XOOPS_DB_PREFIX == $prefix['name']) {
         $del_button   = '';
         $style_append = 'background-color:#FFFFFF';
     } else {

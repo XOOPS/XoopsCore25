@@ -25,7 +25,7 @@ function protector_postcommon()
     }
 
     // configs writable check
-    if (@$_SERVER['REQUEST_URI'] === '/admin.php' && !is_writable(dirname(__DIR__) . '/configs')) {
+    if ('/admin.php' === @$_SERVER['REQUEST_URI'] && !is_writable(dirname(__DIR__) . '/configs')) {
         trigger_error('You should turn the directory ' . dirname(__DIR__) . '/configs writable', E_USER_WARNING);
     }
 
@@ -51,7 +51,7 @@ function protector_postcommon()
         /** @var \XoopsConfigHandler $configHandler */
         $configHandler    = xoops_getHandler('config');
         $xoopsMailerConfig = $configHandler->getConfigsByCat(XOOPS_CONF_MAILER);
-        if ($xoopsMailerConfig['mailmethod'] === 'sendmail' && md5_file(XOOPS_ROOT_PATH . '/class/mail/phpmailer/class.phpmailer.php') === 'ee1c09a8e579631f0511972f929fe36a') {
+        if ('sendmail' === $xoopsMailerConfig['mailmethod'] && 'ee1c09a8e579631f0511972f929fe36a' === md5_file(XOOPS_ROOT_PATH . '/class/mail/phpmailer/class.phpmailer.php')) {
             echo '<strong>phpmailer security hole! Change the preferences of mail from "sendmail" to another, or upgrade the core right now! (message by protector)</strong>';
         }
     }
@@ -96,7 +96,7 @@ function protector_postcommon()
         $can_ban = true;
     }
     // CHECK for spammers IPS/EMAILS during POST Actions
-    if (@$conf['stopforumspam_action'] !== 'none') {
+    if ('none' !== @$conf['stopforumspam_action']) {
         $protector->stopforumspam($uid);
     }
 
@@ -195,7 +195,7 @@ function protector_postcommon()
 
     // register.php Protection - both core and profile module have a register.php
     // There should be an event to trigger this check instead of filename sniffing.
-    if (basename($_SERVER['SCRIPT_FILENAME']) === 'register.php') {
+    if ('register.php' === basename($_SERVER['SCRIPT_FILENAME'])) {
         $protector->call_filter('PostcommonRegister');
     }
     return null;

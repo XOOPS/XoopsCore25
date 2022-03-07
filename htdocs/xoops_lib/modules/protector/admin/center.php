@@ -46,7 +46,7 @@ if (!empty($_POST['action'])) {
         redirect_header(XOOPS_URL . '/', 3, $xoopsGTicket->getErrors());
     }
 
-    if ($_POST['action'] === 'update_ips') {
+    if ('update_ips' === $_POST['action']) {
         $error_msg = '';
 
         $lines   = empty($_POST['bad_ips']) ? array() : explode("\n", trim($_POST['bad_ips']));
@@ -76,7 +76,7 @@ if (!empty($_POST['action'])) {
         $redirect_msg = $error_msg ? : _AM_MSG_IPFILESUPDATED;
         redirect_header('center.php?page=center', 2, $redirect_msg);
         exit;
-    } elseif ($_POST['action'] === 'delete' && isset($_POST['ids']) && is_array($_POST['ids'])) {
+    } elseif ('delete' === $_POST['action'] && isset($_POST['ids']) && is_array($_POST['ids'])) {
         // remove selected records
         foreach ($_POST['ids'] as $lid) {
             $lid = (int)$lid;
@@ -84,7 +84,7 @@ if (!empty($_POST['action'])) {
         }
         redirect_header('center.php?page=center', 2, _AM_MSG_REMOVED);
         exit;
-    } elseif ($_POST['action'] === 'banbyip' && isset($_POST['ids']) && is_array($_POST['ids'])) {
+    } elseif ('banbyip' === $_POST['action'] && isset($_POST['ids']) && is_array($_POST['ids'])) {
         // remove selected records
         foreach ($_POST['ids'] as $lid) {
             $lid = (int)$lid;
@@ -97,12 +97,12 @@ if (!empty($_POST['action'])) {
         }
         redirect_header('center.php?page=center', 2, _AM_MSG_BANNEDIP);
         exit;
-    } elseif ($_POST['action'] === 'deleteall') {
+    } elseif ('deleteall' === $_POST['action']) {
         // remove all records
         $db->query("DELETE FROM $log_table");
         redirect_header('center.php?page=center', 2, _AM_MSG_REMOVED);
         exit;
-    } elseif ($_POST['action'] === 'compactlog') {
+    } elseif ('compactlog' === $_POST['action']) {
         // compactize records (removing duplicated records (ip,type)
         $result = $db->query("SELECT `lid`,`ip`,`type` FROM $log_table ORDER BY lid DESC");
         $buf    = array();
@@ -248,7 +248,7 @@ echo "
 // body of log listing
 $oddeven = 'odd';
 while (list($lid, $uid, $ip, $agent, $type, $description, $timestamp, $uname) = $db->fetchRow($prs)) {
-    $oddeven = ($oddeven === 'odd' ? 'even' : 'odd');
+    $oddeven = ('odd' === $oddeven ? 'even' : 'odd');
     $style = '';
 
     $ip = htmlspecialchars($ip, ENT_QUOTES);

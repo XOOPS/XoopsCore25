@@ -28,7 +28,7 @@ class PostcommonRegisterStopforumspam extends FilterAbstract
     public function execute()
     {
         // we only check the registration main post which should not match these conditions
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST'
+        if ('POST' !== $_SERVER['REQUEST_METHOD']
             || !isset($_POST['email'])
             || !isset($_POST['uname'])
         ) {

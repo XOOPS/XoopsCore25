@@ -139,7 +139,7 @@ class PostcommonPostLanguageMatch extends FilterAbstract
         }
 
         // we only check POST transactions
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        if ('POST' !== $_SERVER['REQUEST_METHOD']) {
             return true;
         }
 

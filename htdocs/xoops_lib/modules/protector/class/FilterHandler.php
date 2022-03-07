@@ -50,8 +50,8 @@ class FilterHandler
         $ret = 0;
 
         $dh = opendir($this->filters_base);
-        while (($file = readdir($dh)) !== false) {
-            if (strncmp($file, $type, strlen($type)) === 0) {
+        while (false !== ($file = readdir($dh))) {
+            if (0 === strncmp($file, $type, strlen($type))) {
                 $pluginName = substr($file, 0, -4);
 
                 $class = __NAMESPACE__ . '\Filter\Enabled\\' . $pluginName;

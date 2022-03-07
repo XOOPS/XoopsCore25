@@ -92,8 +92,8 @@ if (!function_exists('protector_oninstall_base')) {
         $tplfileHandler = xoops_getHandler('tplfile');
         $tpl_path        = __DIR__ . '/templates';
         if ($handler = @opendir($tpl_path . '/')) {
-            while (($file = readdir($handler)) !== false) {
-                if (substr($file, 0, 1) === '.') {
+            while (false !== ($file = readdir($handler))) {
+                if ('.' === substr($file, 0, 1)) {
                     continue;
                 }
                 $file_path = $tpl_path . '/' . $file;

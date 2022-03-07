@@ -50,7 +50,7 @@ if (!function_exists('protector_onupdate_base')) {
 
         // configs (Though I know it is not a recommended way...)
         $check_sql = 'SHOW COLUMNS FROM ' . $db->prefix('config') . " LIKE 'conf_title'";
-        if (($result = $db->query($check_sql)) && ($myrow = $db->fetchArray($result)) && @$myrow['Type'] === 'varchar(30)') {
+        if (($result = $db->query($check_sql)) && ($myrow = $db->fetchArray($result)) && 'varchar(30)' === @$myrow['Type']) {
             $db->queryF('ALTER TABLE ' . $db->prefix('config') . " MODIFY `conf_title` varchar(255) NOT NULL default '', MODIFY `conf_desc` varchar(255) NOT NULL default ''");
         }
         list(, $create_string) = $db->fetchRow($db->query('SHOW CREATE TABLE ' . $db->prefix('config')));
@@ -72,8 +72,8 @@ if (!function_exists('protector_onupdate_base')) {
         $tplfileHandler = xoops_getHandler('tplfile');
         $tpl_path       = __DIR__ . '/templates';
         if ($handler = @opendir($tpl_path . '/')) {
-            while (($file = readdir($handler)) !== false) {
-                if (substr($file, 0, 1) === '.') {
+            while (false !== ($file = readdir($handler))) {
+                if ('.' === substr($file, 0, 1)) {
                     continue;
                 }
                 $file_path = $tpl_path . '/' . $file;
