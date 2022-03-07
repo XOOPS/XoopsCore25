@@ -7,7 +7,7 @@
 class FilterAbstract
 {
     /**
-     * @var \Protector
+     * @var Guardian
      */
     public $protector;
 
