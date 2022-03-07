@@ -56,7 +56,7 @@ class XoopsAuthAds extends XoopsAuthLdap
      *
      * @param  string $uname Username
      * @param  string $pwd   Password
-     * @return bool|null
+     * @return bool|XoopsUser|null
      */
     public function authenticate($uname, $pwd = null)
     {
