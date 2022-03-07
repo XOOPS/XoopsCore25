@@ -23,15 +23,16 @@ if (!function_exists('protector_notify_base')) {
     /**
      * @param string $mydirname
      * @param string $category
-     * @param $item_id
+     * @param int $item_id
      *
      * @return array|null
      */
     function protector_notify_base($mydirname, $category, $item_id)
     {
-        require_once __DIR__ . '/include/common_functions.php';
+//        require_once __DIR__ . '/include/common_functions.php'; //mb not used
+//        $db = XoopsDatabaseFactory::getDatabaseConnection();  //mb not used
 
-        $db = XoopsDatabaseFactory::getDatabaseConnection();
+        $item = array();
 
         /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');

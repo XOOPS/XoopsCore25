@@ -56,9 +56,11 @@ class PostcommonRegisterStopforumspam extends FilterAbstract
                     // write any message as you like
                     echo 'This registration attempt has been denied. '
                          . 'If you feel this is in error, please contact the site administrator.';
-                    exit;
+//                    exit;
+                    return false;
                 }
             }
         }
+        return true;
     }
 }

@@ -140,8 +140,8 @@ if (!function_exists('protector_oninstall_base')) {
     }
 
     /**
-     * @param $module_obj
-     * @param $log
+     * @param \XoopsModule $module_obj
+     * @param object $log
      */
     function protector_message_append_oninstall(&$module_obj, &$log)
     {

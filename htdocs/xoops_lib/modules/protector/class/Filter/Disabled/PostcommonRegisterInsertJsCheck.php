@@ -8,6 +8,9 @@ use XoopsModules\Protector\FilterAbstract;
  */
 class PostcommonRegisterInsertJsCheck extends FilterAbstract
 {
+
+    public $errors = array();
+
     /**
      * @return bool
      */
@@ -29,7 +32,7 @@ class PostcommonRegisterInsertJsCheck extends FilterAbstract
 
     // insert javascript into the registering form
     /**
-     * @param $s
+     * @param array|string $s
      *
      * @return array|string|string[]|null
      */

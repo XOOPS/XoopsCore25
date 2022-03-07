@@ -17,7 +17,8 @@ function protector_postcommon()
     if (substr(@XOOPS_VERSION, 6, 3) > 2.0 && false !== stripos(@$_SERVER['REQUEST_URI'], 'modules/system/admin.php?fct=preferences')) {
         /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
-        $module         = $moduleHandler->get((int)(@$_GET['mod']));
+        /** @var \XoopsModule $module */
+        $module = $moduleHandler->get((int)(@$_GET['mod']));
         if (is_object($module)) {
             $module->getInfo();
         }
@@ -30,6 +31,7 @@ function protector_postcommon()
 
     // Protector object
 //    require_once dirname(__DIR__) . '/class/protector.php';
+    /** @var \XoopsMySQLDatabase $db */
     $db        = XoopsDatabaseFactory::getDatabaseConnection();
     $protector = Guardian::getInstance();
     $protector->setConn($db->conn);
@@ -60,6 +62,7 @@ function protector_postcommon()
     }
 
     // group1_ips (groupid=1)
+    /** @var \XoopsUser $xoopsUser */
     if (is_object($xoopsUser) && in_array(1, $xoopsUser->getGroups())) {
         $group1_ips = $protector->get_group1_ips(true);
         if (implode('', array_keys($group1_ips))) {
@@ -82,7 +85,7 @@ function protector_postcommon()
 
     // user information (uid and can be banned)
     if (is_object(@$xoopsUser)) {
-        $uid     = $xoopsUser->getVar('uid');
+        $uid     = (int)$xoopsUser->getVar('uid');
         $can_ban = count(@array_intersect($xoopsUser->getGroups(), @unserialize(@$conf['bip_except']))) ? false : true;
     } else {
         // login failed check
@@ -116,7 +119,7 @@ function protector_postcommon()
         }
     } else {
         foreach ($skip_dirnames as $skip_dirname) {
-            if ($skip_dirname && false !== strpos(getcwd(), $skip_dirname)) {
+            if ($skip_dirname && false !== strpos((string)getcwd(), $skip_dirname)) {
                 $dos_skipping = true;
                 break;
             }
@@ -141,7 +144,7 @@ function protector_postcommon()
     $ip = \Xmf\IPAddress::fromRequest();
     $maskCheck = true;
     if (isset($_SESSION['protector_last_ip'])) {
-        $maskCheck = $ip->sameSubnet($_SESSION['protector_last_ip'], $ipv4Mask, $ipv6Mask);
+        $maskCheck = $ip->sameSubnet($_SESSION['protector_last_ip'], (int)$ipv4Mask, (int)$ipv6Mask);
     }
     if (!$maskCheck) {
         if (is_object($xoopsUser) && count(array_intersect($xoopsUser->getGroups(), unserialize($conf['groups_denyipmove'])))) {
@@ -151,7 +154,7 @@ function protector_postcommon()
     $_SESSION['protector_last_ip'] = $ip->asReadable();
 
     // SQL Injection "Isolated /*"
-    if (!$protector->check_sql_isolatedcommentin(@$conf['isocom_action'] & 1)) {
+    if (!$protector->check_sql_isolatedcommentin((bool)(@$conf['isocom_action'] & 1))) {
         if (($conf['isocom_action'] & 8) && $can_ban) {
             $protector->register_bad_ips();
         } elseif (($conf['isocom_action'] & 4) && $can_ban) {
@@ -164,7 +167,7 @@ function protector_postcommon()
     }
 
     // SQL Injection "UNION"
-    if (!$protector->check_sql_union(@$conf['union_action'] & 1)) {
+    if (!$protector->check_sql_union((bool)(@$conf['union_action'] & 1))) {
         if (($conf['union_action'] & 8) && $can_ban) {
             $protector->register_bad_ips();
         } elseif (($conf['union_action'] & 4) && $can_ban) {
@@ -180,7 +183,7 @@ function protector_postcommon()
         // SPAM Check
         if (is_object($xoopsUser)) {
             if (!$xoopsUser->isAdmin() && $conf['spamcount_uri4user']) {
-                $protector->spam_check((int)$conf['spamcount_uri4user'], $xoopsUser->getVar('uid'));
+                $protector->spam_check((int)$conf['spamcount_uri4user'], (int)$xoopsUser->getVar('uid'));
             }
         } elseif ($conf['spamcount_uri4guest']) {
             $protector->spam_check((int)$conf['spamcount_uri4guest'], 0);
@@ -192,7 +195,7 @@ function protector_postcommon()
 
     // register.php Protection - both core and profile module have a register.php
     // There should be an event to trigger this check instead of filename sniffing.
-    if (basename($_SERVER['SCRIPT_FILENAME']) == 'register.php') {
+    if (basename($_SERVER['SCRIPT_FILENAME']) === 'register.php') {
         $protector->call_filter('PostcommonRegister');
     }
     return null;

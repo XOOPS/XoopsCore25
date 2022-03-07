@@ -40,7 +40,7 @@ class ProtectorMysqlDatabase extends XoopsMySQLDatabaseProxy
     }
 
     /**
-     * @param $sql
+     * @param string $sql
      */
     public function injectionFound($sql)
     {
@@ -53,7 +53,7 @@ class ProtectorMysqlDatabase extends XoopsMySQLDatabaseProxy
     }
 
     /**
-     * @param $sql
+     * @param string $sql
      *
      * @return array
      */
@@ -119,7 +119,7 @@ class ProtectorMysqlDatabase extends XoopsMySQLDatabaseProxy
     }
 
     /**
-     * @param $sql
+     * @param string $sql
      */
     public function checkSql($sql)
     {

@@ -43,8 +43,8 @@ class Registry
     }
 
     /**
-     * @param $key
-     * @param $item
+     * @param string $key
+     * @param string $item
      *
      * @return bool
      */
@@ -72,7 +72,7 @@ class Registry
     /**
      * @param string $key
      *
-     * @return mixed|null
+     * @return string|null
      */
     public function getEntry($key)
     {

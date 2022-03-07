@@ -318,8 +318,8 @@ if (!class_exists('XoopsGTicket')) {
         }
 
         /**
-         * @param $key_name
-         * @param $tmp_array
+         * @param string $key_name
+         * @param array $tmp_array
          *
          * @return array
          */
@@ -392,10 +392,10 @@ if (!class_exists('XoopsGTicket')) {
         }
 
         /**
-         * @param $errNo
-         * @param $errStr
-         * @param $errFile
-         * @param $errLine
+         * @param string $errNo
+         * @param string $errStr
+         * @param string $errFile
+         * @param string $errLine
          * @return null
          */
         public function errorHandler4FindOutput($errNo, $errStr, $errFile, $errLine)

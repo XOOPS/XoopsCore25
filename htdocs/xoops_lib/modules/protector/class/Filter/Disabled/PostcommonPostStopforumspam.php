@@ -47,7 +47,7 @@ class PostcommonPostStopforumspam extends FilterAbstract
         $report = array();
         $report['email'] = $xoopsUser->email();
         $report['ip'] = $_SERVER['REMOTE_ADDR'];
-        $result = $this->protector->stopForumSpamLookup($report['email'], $report['ip'], null);
+        $result = $this->protector->stopForumSpamLookup($report['email'], $report['ip']);
         if (false === $result || isset($result['http_code'])) {
             return true;
         }
@@ -66,8 +66,10 @@ class PostcommonPostStopforumspam extends FilterAbstract
                 // write any message as you like
                 echo 'Your post has been denied. '
                     . 'If you feel this is in error, please contact the site administrator.';
-                exit;
+//                exit;
+                return false;
             }
         }
+        return true;
     }
 }

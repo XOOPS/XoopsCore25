@@ -21,8 +21,8 @@ eval(' function xoops_module_uninstall_' . $mydirname . '( $module ) { return pr
 if (!function_exists('protector_onuninstall_base')) {
 
     /**
-     * @param $module
-     * @param $mydirname
+     * @param \XoopsModule$module
+     * @param string $mydirname
      *
      * @return bool
      */
@@ -84,8 +84,8 @@ if (!function_exists('protector_onuninstall_base')) {
     }
 
     /**
-     * @param $module_obj
-     * @param $log
+     * @param \XoopsModule $module_obj
+     * @param object $log
      */
     function protector_message_append_onuninstall(&$module_obj, &$log)
     {

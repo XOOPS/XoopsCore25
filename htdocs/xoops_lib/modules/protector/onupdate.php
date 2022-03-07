@@ -21,8 +21,8 @@ eval(' function xoops_module_update_' . $mydirname . '( $module ) { return prote
 if (!function_exists('protector_onupdate_base')) {
 
     /**
-     * @param $module
-     * @param $mydirname
+     * @param \XoopsModule $module
+     * @param string $mydirname
      *
      * @return bool
      */
@@ -33,15 +33,15 @@ if (!function_exists('protector_onupdate_base')) {
         global $msgs; // TODO :-D
 
         // for Cube 2.1
-        if (defined('XOOPS_CUBE_LEGACY')) {
-            $root =& XCube_Root::getSingleton();
-            $root->mDelegateManager->add('Legacy.Admin.Event.ModuleUpdate.' . ucfirst($mydirname) . '.Success', 'protector_message_append_onupdate');
-            $msgs = array();
-        } else {
+//        if (defined('XOOPS_CUBE_LEGACY')) {
+//            $root =& XCube_Root::getSingleton();
+//            $root->mDelegateManager->add('Legacy.Admin.Event.ModuleUpdate.' . ucfirst($mydirname) . '.Success', 'protector_message_append_onupdate');
+//            $msgs = array();
+//        } else {
             if (!is_array($msgs)) {
                 $msgs = array();
             }
-        }
+//        }
 
         $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $mid = $module->getVar('mid');
@@ -68,8 +68,9 @@ if (!function_exists('protector_onupdate_base')) {
         }
 
         // TEMPLATES (all templates have been already removed by modulesadmin)
+        /** @var \XoopsTplfileHandler $tplfileHandler */
         $tplfileHandler = xoops_getHandler('tplfile');
-        $tpl_path        = __DIR__ . '/templates';
+        $tpl_path       = __DIR__ . '/templates';
         if ($handler = @opendir($tpl_path . '/')) {
             while (($file = readdir($handler)) !== false) {
                 if (substr($file, 0, 1) === '.') {
@@ -119,8 +120,8 @@ if (!function_exists('protector_onupdate_base')) {
     }
 
     /**
-     * @param $module_obj
-     * @param $log
+     * @param \XoopsModule $module_obj
+     * @param object $log
      */
     function protector_message_append_onupdate(&$module_obj, $log)
     {

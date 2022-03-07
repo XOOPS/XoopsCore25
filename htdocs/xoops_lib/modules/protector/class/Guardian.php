@@ -127,9 +127,9 @@ class Guardian
      */
     public $_dos_stage; //mb TODO is not used anywhere
     /**
-     * @var string
+     * @var string|null
      */
-    public $ip_matched_info; //mb TODO could be also null
+    public $ip_matched_info; //mb TODO could be also null or int
     /**
      * @var string
      */
@@ -250,7 +250,7 @@ class Guardian
     {
         $constpref = '_MI_' . strtoupper($this->mydirname);
 
-        if (empty($this->_conn)) {
+        if (null === ($this->_conn)) {
             return false;
         }
 
@@ -276,7 +276,7 @@ class Guardian
     }
 
     /**
-     * @param $conn
+     * @param \mysqli $conn
      *
      * @return void
      */
@@ -390,9 +390,9 @@ class Guardian
             return true;
         }
 
-        if (empty($this->_conn)) {
+        if (null === ($this->_conn)) {
             mysqli_report(MYSQLI_REPORT_OFF);
-            $this->_conn = new mysqli(XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS);
+            $this->_conn = new \mysqli(XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS);
             if (0 !== $this->_conn->connect_errno) {
                 die('db connection failed.');
             }
@@ -430,7 +430,7 @@ class Guardian
     }
 
     /**
-     * @param $expire
+     * @param int $expire
      *
      * @return bool
      */
@@ -471,7 +471,7 @@ class Guardian
     }
 
     /**
-     * @param $bad_ips
+     * @param array $bad_ips
      *
      * @return bool
      */
@@ -517,7 +517,7 @@ class Guardian
     /**
      * @param bool $with_jailed_time
      *
-     * @return array|mixed
+     * @return array
      */
     public function get_bad_ips($with_jailed_time = false)
     {
@@ -555,7 +555,7 @@ class Guardian
     /**
      * @param bool $with_info
      *
-     * @return array|mixed
+     * @return array
      */
     public function get_group1_ips($with_info = false)
     {
@@ -747,7 +747,7 @@ class Guardian
     public function dblayertrap_init($force_override = false)
     {
         if (!empty($GLOBALS['xoopsOption']['nocommon']) || defined('_LEGACY_PREVENT_EXEC_COMMON_') || defined('_LEGACY_PREVENT_LOAD_CORE_')) {
-            return null;
+//            return null;
         } // skip
 
         $this->_dblayertrap_doubtfuls = array();
@@ -1239,11 +1239,11 @@ class Guardian
     /**
      * @param string $email
      * @param string $ip
-     * @param string $username
+     * @param string|null $username
      *
      * @return mixed
      */
-    public function stopForumSpamLookup($email, $ip, $username)
+    public function stopForumSpamLookup($email, $ip, $username = null)
     {
         if (!function_exists('curl_init')) {
             return false;

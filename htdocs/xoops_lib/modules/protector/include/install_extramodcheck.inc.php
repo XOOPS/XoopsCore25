@@ -1,8 +1,8 @@
 <?php
 
 /**
- * @param $xoops_root_path
- * @param $mytrustdirname
+ * @param string $xoops_root_path
+ * @param string $mytrustdirname
  *
  * @return array
  */

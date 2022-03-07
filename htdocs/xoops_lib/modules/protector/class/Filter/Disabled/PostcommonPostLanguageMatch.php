@@ -144,7 +144,7 @@ class PostcommonPostLanguageMatch extends FilterAbstract
         }
 
         // don't process for admin and experienced users
-        if (is_object($xoopsUser) && ($xoopsUser->isAdmin() || $this->minPosts < $xoopsUser->posts())) {
+        if (is_object($xoopsUser) && (($xoopsUser->isAdmin() || $this->minPosts < $xoopsUser->posts()))) {
             return true;
         }
 
