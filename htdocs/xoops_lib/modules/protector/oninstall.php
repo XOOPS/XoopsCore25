@@ -53,13 +53,13 @@ if (!function_exists('protector_oninstall_base')) {
         if (is_file($sql_file_path)) {
             $ret[] = 'SQL file found at <b>' . htmlspecialchars($sql_file_path, ENT_QUOTES | ENT_HTML5) . '</b>.<br> Creating tables...';
 
-            if (is_file(XOOPS_ROOT_PATH . '/class/database/oldsqlutility.php')) {
-                require_once XOOPS_ROOT_PATH . '/class/database/oldsqlutility.php';
-                $sqlutil = new OldSqlUtility(); //old code is -> $sqlutil = new OldSqlUtility ; //hack by Trabis
-            } else {
+//            if (is_file(XOOPS_ROOT_PATH . '/class/database/oldsqlutility.php')) {
+//                require_once XOOPS_ROOT_PATH . '/class/database/oldsqlutility.php';
+//                $sqlutil = new OldSqlUtility(); //old code is -> $sqlutil = new OldSqlUtility ; //hack by Trabis
+//            } else {
                 require_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
                 $sqlutil = new SqlUtility(); //old code is -> $sqlutil = new SqlUtility ; //hack by Trabis
-            }
+//            }
 
             $sql_query = trim(file_get_contents($sql_file_path));
             $pieces    = array();
