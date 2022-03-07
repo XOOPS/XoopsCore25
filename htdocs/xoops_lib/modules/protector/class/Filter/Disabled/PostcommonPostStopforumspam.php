@@ -2,6 +2,7 @@
 
 use XoopsModules\Protector;
 use XoopsModules\Protector\FilterAbstract;
+
 /**
  * Check post attempts for "spaminess" on stopforumspam.com
  * Please see http://www.stopforumspam.com/usage before enabling for restrictions and conditions
@@ -30,7 +31,7 @@ class PostcommonPostStopforumspam extends FilterAbstract
      */
     public function execute()
     {
-        /** @var XoopsUser $xoopsUser */
+        /** @var \XoopsUser $xoopsUser */
         global $xoopsUser;
 
         // we only check POST transactions

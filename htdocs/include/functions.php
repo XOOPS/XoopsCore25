@@ -1208,7 +1208,7 @@ function xoops_setConfigOption($option, $new = null)
  *
  * @param mixed  $option
  * @param string $dirname
- * @return bool
+ * @return bool|mixed
  * @deprecated
  */
 function xoops_getModuleOption($option, $dirname = '')

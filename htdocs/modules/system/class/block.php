@@ -139,6 +139,7 @@ class SystemBlock extends XoopsBlock
             }
         } else {
             if ($this->getVar('template') !== '') {
+                /** @var \XoopsTplfileHandler $tplfile_handler */
                 $tplfile_handler = xoops_getHandler('tplfile');
                 $btemplate       = $tplfile_handler->find($GLOBALS['xoopsConfig']['template_set'], 'block', $this->getVar('bid'));
                 if (count($btemplate) > 0) {

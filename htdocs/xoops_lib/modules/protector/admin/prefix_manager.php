@@ -10,7 +10,7 @@ global $xoopsLogger, $xoopsGTicket;
 $xoopsGTicket = new XoopsGTicket();
 
 //require_once dirname(__DIR__) . '/class/gtickets.php';
-/** @var XoopsMySQLDatabase $db */
+/** @var \XoopsMySQLDatabase $db */
 $db = XoopsDatabaseFactory::getDatabaseConnection();
 
 

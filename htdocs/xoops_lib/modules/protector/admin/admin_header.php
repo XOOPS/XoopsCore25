@@ -40,7 +40,7 @@ $pathIcon16 = Admin::iconUrl('', '16');
 $pathIcon32 = Admin::iconUrl('', '32');
 
 if ($xoopsUser) {
-    /** @var XoopsGroupPermHandler $modulepermHandler */
+    /** @var \XoopsGroupPermHandler $modulepermHandler */
     $modulepermHandler = xoops_getHandler('groupperm');
     if (!$modulepermHandler->checkRight('module_admin', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
         redirect_header(XOOPS_URL, 1, _NOPERM);

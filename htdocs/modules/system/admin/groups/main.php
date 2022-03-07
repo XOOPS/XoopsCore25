@@ -39,7 +39,10 @@ $member_handler = xoops_getHandler('member');
 $GLOBALS['xoopsOption']['template_main'] = 'system_groups.tpl';
 // Call Header
 xoops_cp_header();
+/** @var SystemBreadcrumb $xoBreadCrumb */
 $xoBreadCrumb->addLink(_AM_SYSTEM_GROUPS_NAV_MANAGER, system_adminVersion('groups', 'adminpath'));
+/** @var \XoopsTpl $xoopsTpl */
+/** @var \xos_opal_Theme $xoTheme */
 
 switch ($op) {
     case 'list':
@@ -114,6 +117,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(_AM_SYSTEM_GROUPS_NAV_TIPS_2);
         $xoBreadCrumb->render();
         // Create form
+        /** @var SystemGroup $obj */
         $obj  = $groups_Handler->create();
         $form = $obj->getForm();
         // Assign form
@@ -132,6 +136,7 @@ switch ($op) {
         // Create form
         $groups_id = Request::getInt('groups_id', 0);
         if ($groups_id > 0) {
+            /** @var SystemGroup $obj */
             $obj  = $groups_Handler->get($groups_id);
             $form = $obj->getForm();
             // Assign form

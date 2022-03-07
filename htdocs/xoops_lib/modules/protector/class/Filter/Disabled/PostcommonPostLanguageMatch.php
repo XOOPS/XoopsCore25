@@ -131,7 +131,7 @@ class PostcommonPostLanguageMatch extends FilterAbstract
      */
     public function execute()
     {
-        /** @var XoopsUser $xoopsUser */
+        /** @var \XoopsUser $xoopsUser */
         global $xoopsUser;
 
         if (!function_exists('mb_strlen')) {

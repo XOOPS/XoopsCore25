@@ -16,6 +16,7 @@
  */
 
 include __DIR__ . '/mainfile.php';
+/** @var XoopsPreload $xoopsPreload */
 $xoopsPreload = XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.pmlite.start');
 

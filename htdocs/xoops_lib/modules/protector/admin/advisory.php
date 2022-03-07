@@ -4,7 +4,7 @@ use XoopsModules\Protector;
 
 require_once __DIR__ . '/admin_header.php';
 
-/** @var XoopsMySQLDatabase $db */
+/** @var \XoopsMySQLDatabase $db */
 $db = XoopsDatabaseFactory::getDatabaseConnection();
 
 // beggining of Output

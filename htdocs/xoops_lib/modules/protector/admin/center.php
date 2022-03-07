@@ -19,7 +19,7 @@ if (isset($_GET['num'])) {
 }
 
 $myts = MyTextSanitizer::getInstance();
-/** @var XoopsMySQLDatabase $db */
+/** @var \XoopsMySQLDatabase $db */
 $db   = XoopsDatabaseFactory::getDatabaseConnection();
 
 // GET vars

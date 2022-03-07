@@ -47,9 +47,9 @@ class SystemBlockLinkModule extends XoopsObject
 class SystemBlockLinkModuleHandler extends XoopsPersistableObjectHandler
 {
     /**
-     * @param null|XoopsDatabase $db
+     * @param null|\XoopsDatabase $db
      */
-    public function __construct(XoopsDatabase $db)
+    public function __construct(\XoopsDatabase $db = null)
     {
         parent::__construct($db, 'block_module_link', 'SystemBlockLinkModule', 'block_id', 'module_id');
     }

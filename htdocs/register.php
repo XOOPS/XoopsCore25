@@ -38,10 +38,10 @@ if (empty($xoopsConfigUser['allow_register'])) {
 }
 
 /**
- * @param $uname
- * @param $email
- * @param $pass
- * @param $vpass
+ * @param string $uname
+ * @param string $email
+ * @param string|null $pass
+ * @param string|null $vpass
  *
  * @return bool|string
  */
@@ -189,7 +189,7 @@ switch ($op) {
                 $newuser->setVar('url', formatURL($url), true);
             }
             $newuser->setVar('user_avatar', 'avatars/blank.gif', true);
-            $actkey = substr(md5(uniqid(mt_rand(), 1)), 0, 8);
+            $actkey = substr(md5(uniqid((string)mt_rand(), true)), 0, 8);
             $newuser->setVar('actkey', $actkey, true);
             $newuser->setVar('pass', password_hash($pass, PASSWORD_DEFAULT), true);
             $newuser->setVar('timezone_offset', $timezone_offset, true);

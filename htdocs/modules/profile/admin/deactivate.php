@@ -25,7 +25,7 @@ if ($level===0) {
     $user->setVar('level', 0);
     // reset the activation key so it cannot be reused
     // this now gets done at activation, but we do it here also to fix accounts created before the change.
-    $actkey = substr(md5(uniqid(mt_rand(), 1)), 0, 8);
+    $actkey = substr(md5(uniqid((string)mt_rand(), true)), 0, 8);
     $user->setVar('actkey', $actkey);
     $result = $member_handler->insertUser($user);
 } else {
