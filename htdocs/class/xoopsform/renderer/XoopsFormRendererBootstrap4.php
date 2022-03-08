@@ -434,29 +434,31 @@ EOJS;
     public function renderFormElementTray(XoopsFormElementTray $element)
     {
         $count = 0;
-        $ret = '<span class="form-inline">';
+        $ret = '';
         foreach ($element->getElements() as $ele) {
-            if ($count > 0) {
+            $inline = ('<br>' == $element->getDelimeter());
+            if ($count > 0 && !$inline) {
                 $ret .= $element->getDelimeter();
             }
+            if ($inline) {
+                $ret .= '<span class="form-inline">';
+            }
             if ($ele->getCaption() != '') {
-                $ret .= $ele->getCaption() . '&nbsp;';
+                $ret .= '<label for="' . $ele->getName() . '" class="form-label text-sm-right">'
+                    . $ele->getCaption()
+                    . ($ele->isRequired() ? '<span class="caption-required">*</span>' : '')
+                    . '</label>&nbsp;';
+
             }
             $ret .= $ele->render() . NWLINE;
+            if ($inline) {
+                $ret .= '</span>';
+            }
             if (!$ele->isHidden()) {
                 ++$count;
             }
         }
-        /*
-        if (substr_count($ret, '<div class="form-group form-inline">') > 0) {
-            $ret = str_replace('<div class="form-group form-inline">', '', $ret);
-            $ret = str_replace('</div>', '', $ret);
-        }
-        if (substr_count($ret, '<div class="checkbox-inline">') > 0) {
-            $ret = str_replace('<div class="checkbox-inline">', '', $ret);
-        }
-        */
-        $ret .= '</span>';
+
         return $ret;
     }
 
@@ -469,7 +471,6 @@ EOJS;
      */
     public function renderFormFile(XoopsFormFile $element)
     {
-
         return '<input type="file" class="form-control"  name="' . $element->getName()
         . '" id="' . $element->getName()
         . '" title="' . $element->getTitle() . '" ' . $element->getExtra() . '>'
@@ -487,7 +488,7 @@ EOJS;
      */
     public function renderFormLabel(XoopsFormLabel $element)
     {
-        return '<div class="form-control-static" id="' . $element->getName() . '">' . $element->getValue() . '</div>';
+        return '<label class="col-form-label" id="' . $element->getName() . '">' . $element->getValue();
     }
 
     /**
