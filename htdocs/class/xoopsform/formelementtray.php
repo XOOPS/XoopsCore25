@@ -24,6 +24,9 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class XoopsFormElementTray extends XoopsFormElement
 {
+    const ORIENTATION_HORIZONTAL = 'horizontal';
+    const ORIENTATION_VERTICAL   = 'vertical';
+
     /**
      * array of form element objects
      *
@@ -38,6 +41,8 @@ class XoopsFormElementTray extends XoopsFormElement
      * @var array
      */
     public $_required = array();
+
+    protected $orientation;
 
     /**
      * HTML to seperate the elements
@@ -155,6 +160,48 @@ class XoopsFormElementTray extends XoopsFormElement
     public function getDelimeter($encode = false)
     {
         return $encode ? htmlspecialchars(str_replace('&nbsp;', ' ', $this->_delimeter)) : $this->_delimeter;
+    }
+
+    /**
+     * setOrientation() communicate to renderer the expected tray orientation
+     *   \XoopsFormElementTray::ORIENTATION_HORIZONTAL for across
+     *   \XoopsFormElementTray::ORIENTATION_VERTICAL for up and down
+     *
+     * If not set explicitly, a default value will be assigned on getOrientation()
+     *
+     * @param string $direction ORIENTATION constant
+     */
+    public function setOrientation($direction)
+    {
+        if ($direction !== self::ORIENTATION_VERTICAL) {
+            $direction = self::ORIENTATION_HORIZONTAL;
+        }
+        $this->orientation = $direction;
+    }
+
+    /**
+     * getOrientation() return the expected tray orientation
+     *
+     * The value will be assigned a default value if not previously set.
+     *
+     * The default logic considers the presence of an html br tag in _delimeter
+     * as implying ORIENTATION_VERTICAL for bc
+     *
+     * @return string either \XoopsFormElementTray::ORIENTATION_HORIZONTAL
+     *                    or \XoopsFormElementTray::ORIENTATION_VERTICAL\
+    */
+    public function getOrientation()
+    {
+        if (!isset($this->orientation)) {
+            if(false !== stripos($this->_delimeter, '<br')) {
+                $this->orientation = self::ORIENTATION_VERTICAL;
+                // strip tag as renderer should supply the relevant html
+            } else {
+                $this->orientation = self::ORIENTATION_HORIZONTAL;
+            }
+        }
+        $this->_delimeter = preg_replace('#<br ?\/?>#i', '', $this->_delimeter);
+        return $this->orientation;
     }
 
     /**

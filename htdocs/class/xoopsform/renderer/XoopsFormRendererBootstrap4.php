@@ -434,9 +434,9 @@ EOJS;
     public function renderFormElementTray(XoopsFormElementTray $element)
     {
         $count = 0;
+        $inline = (\XoopsFormElementTray::ORIENTATION_VERTICAL === $element->getOrientation());
         $ret = '';
         foreach ($element->getElements() as $ele) {
-            $inline = ('<br>' == $element->getDelimeter());
             if ($count > 0 && !$inline) {
                 $ret .= $element->getDelimeter();
             }
