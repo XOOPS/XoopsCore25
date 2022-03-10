@@ -136,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $content .= '</div>';
             $content .= '<div class="col-md-7">';
             $content .= '<h3>' . $module->getInfo('name');
-            $content .= ' <small> ' . number_format(round($module->getInfo('version'), 2), 2)
+            $content .= ' <small> ' . $module->getInfo('version')
                 . ' (' . $module->getInfo('dirname') . ')' . '</small>' . '</h3>';
             $content .= '<i>' . $module->getInfo('description') . '</i>';
             $content .= '</div>';
