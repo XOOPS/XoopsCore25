@@ -679,7 +679,7 @@ function xoops_getbanner()
     /** @var XoopsMySQLDatabase $db */
     $db      = XoopsDatabaseFactory::getDatabaseConnection();
     $bresult = $db->query('SELECT COUNT(*) FROM ' . $db->prefix('banner'));
-    [$numrows] = $db->fetchRow($bresult);
+    list($numrows) = $db->fetchRow($bresult);
     if ($numrows > 1) {
         --$numrows;
         $bannum = mt_rand(0, $numrows);
@@ -688,7 +688,7 @@ function xoops_getbanner()
     }
     if ($numrows > 0) {
         $bresult = $db->query('SELECT * FROM ' . $db->prefix('banner'), 1, $bannum);
-        [$bid, $cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date, $htmlbanner, $htmlcode] = $db->fetchRow($bresult);
+        list($bid, $cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date, $htmlbanner, $htmlcode) = $db->fetchRow($bresult);
         if ($xoopsConfig['my_ip'] == xoops_getenv('REMOTE_ADDR')) {
             // EMPTY
         } else {

@@ -877,7 +877,7 @@ class XoopsBlock extends XoopsObject
         if (!$result = $db->query($sql)) {
             return 0;
         }
-        [$count] = $db->fetchRow($result);
+        list($count) = $db->fetchRow($result);
 
         return $count;
     }
