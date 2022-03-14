@@ -18,6 +18,8 @@
  * @author              Kris <kris@frxoops.org>
  */
 
+use Xmf\Request;
+
 $xoopsOption['pagetype'] = 'banners';
 include __DIR__ . '/mainfile.php';
 
@@ -325,9 +327,6 @@ function clickbanner($bid)
     redirect_header(XOOPS_URL, 3, _BANNERS_NO_ID);
 }
 
-XoopsLoad::load('XoopsFilterInput');
-$myts = MyTextSanitizer::getInstance();
-
 $op = '';
 $clean_bid = 0;
 $clean_cid = 0;
@@ -336,42 +335,41 @@ $clean_pass = '';
 $clean_url = '';
 if (!empty($_POST['op'])) {
     // from $_POST we use keys: op, login, pass, url, pass, bid, cid
-    $op = trim(XoopsFilterInput::clean($_POST['op'], 'STRING'));
+    $op = Request::getCmd('op', '', 'POST');
 
     if (isset($_POST['login'])) {
-        $clean_login = trim(XoopsFilterInput::clean($myts->stripSlashesGPC($_POST['login']), 'STRING'));
+        $clean_login = Request::getString('login', '', 'POST');
     }
 
     if (isset($_POST['pass'])) {
-        $clean_pass = trim(XoopsFilterInput::clean($myts->stripSlashesGPC($_POST['pass']), 'STRING'));
+        $clean_pass = Request::getString('pass', '', 'POST');
     }
 
     if (isset($_POST['url'])) {
-        $clean_url = trim(XoopsFilterInput::clean($myts->stripSlashesGPC($_POST['url']), 'WEBURL'));
+        $clean_url = Request::getUrl('url', '', 'POST');
     }
 
     if (isset($_POST['bid'])) {
-        $clean_bid = XoopsFilterInput::clean($_POST['bid'], 'INT');
+        $clean_bid = Request::getInt('bid', 0, 'POST');
     }
 
     if (isset($_POST['cid'])) {
-        $clean_cid = XoopsFilterInput::clean($_POST['cid'], 'INT');
+        $clean_cid = Request::getInt('cid', 0, 'POST');
     }
 } elseif (!empty($_GET['op'])) {
-    // from $_POST we use keys: op, bid, cid
-    $op = trim(XoopsFilterInput::clean($_GET['op'], 'STRING'));
+    // from $_GET we use keys: op, bid, cid
+    $op = Request::getCmd('op', '', 'GET');
 
 
     if (isset($_GET['bid'])) {
-        $clean_bid = XoopsFilterInput::clean($_GET['bid'], 'INT');
+        $clean_bid = Request::getInt('bid', 0, 'GET');
     }
 
     if (isset($_GET['cid'])) {
-        $clean_cid = XoopsFilterInput::clean($_GET['cid'], 'INT');
+        $clean_cid = Request::getInt('cid', 0, 'GET');
     }
 }
 
-$myts = MyTextSanitizer::getInstance();
 switch ($op) {
     case 'click':
         $bid = $clean_bid;

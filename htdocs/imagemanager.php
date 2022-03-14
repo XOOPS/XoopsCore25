@@ -16,21 +16,23 @@
  */
 /** @var  XoopsUser $xoopsUser */
 
+use Xmf\Request;
+
 include __DIR__ . '/mainfile.php';
-XoopsLoad::load('XoopsRequest');
 
 // Get Action type
-$op = XoopsRequest::getCmd('op', 'list');
+$op = Request::getCmd('op', 'list');
 
 switch ($op) {
     case 'list':
     default:
-        XoopsLoad::load('XoopsFilterInput');
+//        XoopsLoad::load('XoopsFilterInput');
         if (isset($_REQUEST['target'])) {
-            $target = trim(XoopsFilterInput::clean($_REQUEST['target'], 'WORD'));
+            $target = Request::getWord('target', '', 'REQUEST'); //trim(XoopsFilterInput::clean($_REQUEST['target'], 'WORD'));
         } else {
             exit('Target not set');
         }
+
         if (!is_object($xoopsUser)) {
             $group = array(XOOPS_GROUP_ANONYMOUS);
         } else {
@@ -138,9 +140,8 @@ switch ($op) {
         break;
 
     case 'upload':
-        XoopsLoad::load('XoopsFilterInput');
         if (isset($_REQUEST['target'])) {
-            $target = trim(XoopsFilterInput::clean($_REQUEST['target'], 'WORD'));
+            $target = $target = Request::getWord('target', '', 'REQUEST');
         } else {
             exit('Target not set');
         }

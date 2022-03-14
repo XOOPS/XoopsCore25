@@ -21,6 +21,9 @@
  * @since               2.0.0
  * @author              Kazumi Ono <webmaster@myweb.ne.jp>
  */
+
+use Xmf\Request;
+
 include __DIR__ . '/mainfile.php';
 $xoopsPreload = XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.register.start');
@@ -52,69 +55,29 @@ function userCheck($uname, $email, $pass, $vpass)
     return XoopsUserUtility::validate($uname, $email, $pass, $vpass);
 }
 
-XoopsLoad::load('XoopsFilterInput');
 // from $_POST we use keys: op, uname, email, url, pass, vpass, timezone_offset,
 //                          user_viewemail, user_mailok, agree_disc
-$op = 'register';
-if (isset($_POST['op'])) {
-    $op = trim(XoopsFilterInput::clean($_POST['op'], 'STRING'));
-}
-
-$uname = '';
-if (isset($_POST['uname'])) {
-    $uname = trim(XoopsFilterInput::clean($myts->stripSlashesGPC($_POST['uname']), 'STRING'));
-}
-
-$email = '';
-if (isset($_POST['email'])) {
-    $email = trim(XoopsFilterInput::clean($myts->stripSlashesGPC($_POST['email']), 'STRING'));
-}
-
-$url = '';
-if (isset($_POST['url'])) {
-    $url = trim(XoopsFilterInput::clean($myts->stripSlashesGPC($_POST['url']), 'WEBURL'));
-}
-
-$pass = '';
-if (isset($_POST['pass'])) {
-    $pass = trim(XoopsFilterInput::clean($myts->stripSlashesGPC($_POST['pass']), 'STRING'));
-}
-
-$vpass = '';
-if (isset($_POST['vpass'])) {
-    $vpass = trim(XoopsFilterInput::clean($myts->stripSlashesGPC($_POST['vpass']), 'STRING'));
-}
-
-$timezone_offset = $xoopsConfig['default_TZ'];
-if (isset($_POST['timezone_offset'])) {
-    $timezone_offset = XoopsFilterInput::clean($_POST['timezone_offset'], 'FLOAT');
-}
-
-$user_viewemail = false;
-if (isset($_POST['user_viewemail'])) {
-    $user_viewemail = XoopsFilterInput::clean($_POST['user_viewemail'], 'BOOL');
-}
-
-$user_mailok = false;
-if (isset($_POST['user_mailok'])) {
-    $user_mailok = XoopsFilterInput::clean($_POST['user_mailok'], 'BOOL');
-}
-
-$agree_disc = false;
-if (isset($_POST['agree_disc'])) {
-    $agree_disc = XoopsFilterInput::clean($_POST['agree_disc'], 'BOOL');
-}
+    $op = Request::getCmd('op', 'register', 'POST');
+    $uname = Request::getString('uname', '', 'POST');
+    $email = Request::getEmail('email', '', 'POST');
+    $url = Request::getUrl('url', '', 'POST');
+    $pass = Request::getString('pass', '', 'POST');
+    $vpass = Request::getString('vpass', '', 'POST');
+    $timezone_offset = Request::getFloat('cid', $xoopsConfig['default_TZ'], 'POST');
+    $user_viewemail = Request::getBool('user_viewemail', false, 'POST');
+    $user_mailok = Request::getBool('user_mailok', false, 'POST');
+    $agree_disc = Request::getBool('agree_disc', false, 'POST');
 
 // from $_GET we may use keys: op, id, actkey
 $clean_id     = '';
 $clean_actkey = '';
 if (!isset($_POST['op']) && isset($_GET['op'])) {
-    $op = XoopsFilterInput::clean($_GET['op'], 'STRING');
+    $op = Request::getCmd('op', 'register', 'GET');
     if (isset($_GET['id'])) {
-        $clean_id = XoopsFilterInput::clean($_GET['id'], 'INT');
+        $clean_id =  Request::getInt('id', '', 'POST');
     }
     if (isset($_GET['actkey'])) {
-        $clean_actkey = XoopsFilterInput::clean($_GET['actkey'], 'STRING');
+        $clean_actkey =  Request::getCmd('actkey', '', 'GET');
     }
     $op = in_array($op, array(
         'actv',
