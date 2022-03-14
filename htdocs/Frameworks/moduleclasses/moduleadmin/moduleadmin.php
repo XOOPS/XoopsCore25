@@ -225,8 +225,8 @@ class ModuleAdmin
     }
 
     /**
-     * @param        $title
-     * @param        $link
+     * @param string $title
+     * @param string $link
      * @param string $icon
      * @param string $extra
      *
@@ -423,7 +423,7 @@ class ModuleAdmin
     // $title: title of an InfoBox
     //******************************************************************************************************************
     /**
-     * @param $title
+     * @param string $title
      *
      * @return bool
      */
@@ -446,8 +446,8 @@ class ModuleAdmin
     //                                      For this type ("chmod"), the value is an array: array(path, chmod)
     //******************************************************************************************************************
     /**
-     * @param        $label
-     * @param        $text
+     * @param string $label
+     * @param string $text
      * @param string $value
      * @param string $color
      * @param string $type
@@ -515,7 +515,7 @@ class ModuleAdmin
         $date         = explode('/', $date);
         $author       = explode(',', $this->_obj->getInfo('author'));
         $nickname     = explode(',', $this->_obj->getInfo('nickname'));
-        $release_date = formatTimestamp(mktime(0, 0, 0, $date[1], $date[2], $date[0]), 's');
+        $release_date = formatTimestamp(mktime(0, 0, 0, (int)$date[1], (int)$date[2], (int)$date[0]), 's');
         $module_dir   = $this->_obj->getVar('dirname');
         $module_info  = "<div id=\"about\"><label class=\"label_after\">" . _AM_MODULEADMIN_ABOUT_DESCRIPTION . "</label>\n"
                       . "<text>" . $this->_obj->getInfo('description') . "</text><br>\n"
