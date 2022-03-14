@@ -71,7 +71,7 @@ function system_loadLanguage($name, $domain = '', $language = null)
     }
     $language = empty($language) ? $GLOBALS['xoopsConfig']['language'] : $language;
     $path     = 'modules/' . $domain . '/language/';
-    if (file_exists($file = $GLOBALS['xoops']->path($path . $language . '/admin/' . $name . '.php'))) {
+    if (is_file($file = $GLOBALS['xoops']->path($path . $language . '/admin/' . $name . '.php'))) {
         $ret = include_once $file;
     } else {
         $ret = include_once $GLOBALS['xoops']->path($path . 'english/admin/' . $name . '.php');
@@ -93,7 +93,7 @@ function system_adminVersion($version, $value = '')
         return $tblVersion[$version . '.' . $value];
     }
     $path = XOOPS_ROOT_PATH . '/modules/system/admin/' . $version . '/xoops_version.php';
-    if (file_exists($path)) {
+    if (is_file($path)) {
         include $path;
 
         $retvalue                            = $modversion[$value];

@@ -212,10 +212,10 @@ class SystemBlock extends XoopsBlock
             if (!$edit_func) {
                 return false;
             }
-            if (file_exists($GLOBALS['xoops']->path('modules/' . $this->getVar('dirname') . '/blocks/' . $this->getVar('func_file')))) {
-                if (file_exists($file = $GLOBALS['xoops']->path('modules/' . $this->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/blocks.php'))) {
+            if (is_file($GLOBALS['xoops']->path('modules/' . $this->getVar('dirname') . '/blocks/' . $this->getVar('func_file')))) {
+                if (is_file($file = $GLOBALS['xoops']->path('modules/' . $this->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/blocks.php'))) {
                     include_once $file;
-                } elseif (file_exists($file = $GLOBALS['xoops']->path('modules/' . $this->getVar('dirname') . '/language/english/blocks.php'))) {
+                } elseif (is_file($file = $GLOBALS['xoops']->path('modules/' . $this->getVar('dirname') . '/language/english/blocks.php'))) {
                     include_once $file;
                 }
                 include_once $GLOBALS['xoops']->path('modules/' . $this->getVar('dirname') . '/blocks/' . $this->getVar('func_file'));

@@ -166,7 +166,7 @@ class XoopsMultiMailer extends PHPMailer
         }
         $this->CharSet = strtolower(_CHARSET);
         $xoopsLanguage = preg_replace('/[^a-zA-Z0-9_-]/', '', $GLOBALS['xoopsConfig']['language']);
-        if (file_exists(XOOPS_ROOT_PATH . '/language/' . $xoopsLanguage . '/phpmailer.php')) {
+        if (is_file(XOOPS_ROOT_PATH . '/language/' . $xoopsLanguage . '/phpmailer.php')) {
             include XOOPS_ROOT_PATH . '/language/' . $xoopsLanguage . '/phpmailer.php';
             $this->language = $PHPMAILER_LANG;
         } else {

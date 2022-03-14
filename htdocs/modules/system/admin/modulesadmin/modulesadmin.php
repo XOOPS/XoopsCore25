@@ -115,7 +115,7 @@ function xoops_module_install($dirname)
             $sqlfile = $module->getInfo('sqlfile');
             if (is_array($sqlfile) && !empty($sqlfile[XOOPS_DB_TYPE])) {
                 $sql_file_path = XOOPS_ROOT_PATH . '/modules/' . $dirname . '/' . $sqlfile[XOOPS_DB_TYPE];
-                if (!file_exists($sql_file_path)) {
+                if (!is_file($sql_file_path)) {
                     $errs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_SQL_NOT_FOUND, "<strong>{$sql_file_path}</strong>");
                     $error  = true;
                 } else {
@@ -559,7 +559,7 @@ function &xoops_module_gettemplate($dirname, $template, $type = '')
             $path = XOOPS_ROOT_PATH . '/modules/' . $dirname . '/templates/' . $template;
             break;
     }
-    if (!file_exists($path)) {
+    if (!is_file($path)) {
         return $ret;
     } else {
         $lines = file($path);

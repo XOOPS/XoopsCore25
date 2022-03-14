@@ -31,7 +31,7 @@ function altsys_include_mymenu()
         $mytrustdirpath . '/mymenu.php');
 
     foreach ($mymenu_find_paths as $mymenu_find_path) {
-        if (file_exists($mymenu_find_path)) {
+        if (is_file($mymenu_find_path)) {
             include $mymenu_find_path;
             include_once __DIR__ . '/adminmenu_functions.php';
             altsys_adminmenu_insert_mymenu($xoopsModule);
@@ -48,13 +48,13 @@ function altsys_include_language_file($type)
 {
     $mylang = $GLOBALS['xoopsConfig']['language'];
 
-    if (file_exists(XOOPS_ROOT_PATH . '/modules/altsys/language/' . $mylang . '/' . $type . '.php')) {
+    if (is_file(XOOPS_ROOT_PATH . '/modules/altsys/language/' . $mylang . '/' . $type . '.php')) {
         include_once XOOPS_ROOT_PATH . '/modules/altsys/language/' . $mylang . '/' . $type . '.php';
-    } elseif (file_exists(XOOPS_TRUST_PATH . '/libs/altsys/language/' . $mylang . '/' . $type . '.php')) {
+    } elseif (is_file(XOOPS_TRUST_PATH . '/libs/altsys/language/' . $mylang . '/' . $type . '.php')) {
         include_once XOOPS_TRUST_PATH . '/libs/altsys/language/' . $mylang . '/' . $type . '.php';
-    } elseif (file_exists(XOOPS_ROOT_PATH . '/modules/altsys/language/english/' . $type . '.php')) {
+    } elseif (is_file(XOOPS_ROOT_PATH . '/modules/altsys/language/english/' . $type . '.php')) {
         include_once XOOPS_ROOT_PATH . '/modules/altsys/language/english/' . $type . '.php';
-    } elseif (file_exists(XOOPS_TRUST_PATH . '/libs/altsys/language/english/' . $type . '.php')) {
+    } elseif (is_file(XOOPS_TRUST_PATH . '/libs/altsys/language/english/' . $type . '.php')) {
         include_once XOOPS_TRUST_PATH . '/libs/altsys/language/english/' . $type . '.php';
     }
 }

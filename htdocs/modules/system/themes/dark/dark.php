@@ -328,7 +328,7 @@ class XoopsGuiDark extends XoopsSystemGui
         ));
 
         //add OPTIONS/links for local support
-        if (file_exists($file = XOOPS_ADMINTHEME_PATH . '/dark/language/' . $xoopsConfig['language'] . '/localsupport.php')) {
+        if (is_file($file = XOOPS_ADMINTHEME_PATH . '/dark/language/' . $xoopsConfig['language'] . '/localsupport.php')) {
             $links = include XOOPS_ADMINTHEME_PATH . '/dark/language/' . $xoopsConfig['language'] . '/localsupport.php';
             if (count($links) > 0) {
                 $tpl->append('navitems', array(
@@ -340,7 +340,7 @@ class XoopsGuiDark extends XoopsSystemGui
         }
 
         if (is_object($xoopsModule) || !empty($_GET['xoopsorgnews'])) {
-            if (is_object($xoopsModule) && file_exists($file = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/' . $xoopsModule->getInfo('adminmenu'))) {
+            if (is_object($xoopsModule) && is_file($file = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/' . $xoopsModule->getInfo('adminmenu'))) {
                 include $file;
             }
 

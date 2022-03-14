@@ -220,7 +220,7 @@ function xoDiagIfWritable($path)
     $path  = dirname(dirname(__DIR__)) . '/' . $path;
     $error = true;
     if (!is_dir($path)) {
-        if (file_exists($path) && !is_writable($path)) {
+        if (is_dir($path) && !is_writable($path)) {
             @chmod($path, 0664);
             $error = !is_writable($path);
         }

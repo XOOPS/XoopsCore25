@@ -109,7 +109,7 @@ class XoopsLoad
             }
 
             return true;
-        } elseif (file_exists($file = XOOPS_ROOT_PATH . '/class/' . $name . '.php')) {
+        } elseif (is_file($file = XOOPS_ROOT_PATH . '/class/' . $name . '.php')) {
             include_once $file;
             $class = 'Xoops' . ucfirst($name);
             if (class_exists($class)) {
@@ -131,7 +131,7 @@ class XoopsLoad
      */
     public static function loadFramework($name)
     {
-        if (!file_exists($file = XOOPS_ROOT_PATH . '/Frameworks/' . $name . '/xoops' . $name . '.php')) {
+        if (!is_file($file = XOOPS_ROOT_PATH . '/Frameworks/' . $name . '/xoops' . $name . '.php')) {
             trigger_error('File ' . str_replace(XOOPS_ROOT_PATH, '', $file) . ' not found in file ' . __FILE__ . ' at line ' . __LINE__, E_USER_WARNING);
 
             return false;
@@ -157,7 +157,7 @@ class XoopsLoad
         if (empty($dirname)) {
             return false;
         }
-        if (file_exists($file = XOOPS_ROOT_PATH . '/modules/' . $dirname . '/class/' . $name . '.php')) {
+        if (is_file($file = XOOPS_ROOT_PATH . '/modules/' . $dirname . '/class/' . $name . '.php')) {
             include_once $file;
             if (class_exists(ucfirst($dirname) . ucfirst($name))) {
                 return true;
@@ -258,7 +258,7 @@ class XoopsLoad
             } else {
                 return false;
             }
-            if (file_exists($file = XOOPS_ROOT_PATH . '/modules/' . $dirname . '/include/autoload.php')) {
+            if (is_file($file = XOOPS_ROOT_PATH . '/modules/' . $dirname . '/include/autoload.php')) {
                 if (!$configs = include $file) {
                     return false;
                 }

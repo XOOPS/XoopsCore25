@@ -198,7 +198,7 @@ class XoopsModule extends XoopsObject
      */
     public function loadAdminMenu()
     {
-        if ($this->getInfo('adminmenu') && $this->getInfo('adminmenu') != '' && file_exists(XOOPS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu'))) {
+        if ($this->getInfo('adminmenu') && $this->getInfo('adminmenu') != '' && is_file(XOOPS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu'))) {
             $adminmenu = array();
             include XOOPS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu');
             $this->adminmenu =& $adminmenu;
@@ -237,13 +237,13 @@ class XoopsModule extends XoopsObject
             return true;
         }
         global $xoopsConfig;
-        if (file_exists($file = $GLOBALS['xoops']->path('modules/' . $dirname . '/language/' . $xoopsConfig['language'] . '/modinfo.php'))) {
+        if (is_file($file = $GLOBALS['xoops']->path('modules/' . $dirname . '/language/' . $xoopsConfig['language'] . '/modinfo.php'))) {
             include_once $file;
-        } elseif (file_exists($file = $GLOBALS['xoops']->path('modules/' . $dirname . '/language/english/modinfo.php'))) {
+        } elseif (is_file($file = $GLOBALS['xoops']->path('modules/' . $dirname . '/language/english/modinfo.php'))) {
             include_once $file;
         }
 
-        if (!file_exists($file = $GLOBALS['xoops']->path('modules/' . $dirname . '/xoops_version.php'))) {
+        if (!is_file($file = $GLOBALS['xoops']->path('modules/' . $dirname . '/xoops_version.php'))) {
             if (false !== (bool)$verbose) {
                 echo "Module File for $dirname Not Found!";
             }
@@ -276,7 +276,7 @@ class XoopsModule extends XoopsObject
         if ($this->getVar('hassearch') != 1 || !isset($search['file']) || !isset($search['func']) || $search['func'] == '' || $search['file'] == '') {
             return false;
         }
-        if (file_exists($file = $GLOBALS['xoops']->path('modules/' . $this->getVar('dirname') . '/' . $search['file']))) {
+        if (is_file($file = $GLOBALS['xoops']->path('modules/' . $this->getVar('dirname') . '/' . $search['file']))) {
             include_once $file;
         } else {
             return false;

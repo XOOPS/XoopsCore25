@@ -107,7 +107,7 @@ class Db_manager
         $tables = array();
         $pieces = array();
 
-        if (!file_exists($sql_file_path)) {
+        if (!is_file($sql_file_path)) {
             return false;
         }
         $sql_query = trim(fread(fopen($sql_file_path, 'r'), filesize($sql_file_path)));

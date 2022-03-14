@@ -202,7 +202,7 @@ class Upgrade_2511 extends XoopsUpgrade
      */
     private function copyFile($source, $destination)
     {
-        if (!file_exists($destination)) { // don't overwrite anything
+        if (!is_file($destination)) { // don't overwrite anything
             $result = copy($source, $destination);
             if (false === $result) {
                 $this->logs[] = sprintf('Captcha config file copy %s failed', basename($source));
@@ -267,7 +267,7 @@ class Upgrade_2511 extends XoopsUpgrade
     {
         $source = XOOPS_VAR_PATH . '/configs/xoopsconfig.dist.php';
         $destination = XOOPS_VAR_PATH . '/configs/xoopsconfig.php';
-        if (!file_exists($destination)) { // don't overwrite anything
+        if (!is_file($destination)) { // don't overwrite anything
             $result = copy($source, $destination);
             if (false === $result) {
                 $this->logs[] = 'xoopsconfig.php file copy failed';
@@ -307,7 +307,7 @@ class Upgrade_2511 extends XoopsUpgrade
      */
     protected function buildListTSConfigs()
     {
-        if (file_exists(XOOPS_ROOT_PATH . '/class/textsanitizer/config.php')) {
+        if (is_file(XOOPS_ROOT_PATH . '/class/textsanitizer/config.php')) {
             $config = include XOOPS_ROOT_PATH . '/class/textsanitizer/config.php';
             if (is_array($config) && array_key_exists('extentions', $config)) {
                 $this->textsanitizerConfigFiles = array(
@@ -355,7 +355,7 @@ class Upgrade_2511 extends XoopsUpgrade
         foreach ($this->textsanitizerConfigFiles as $source => $destination) {
             $src  = XOOPS_ROOT_PATH . '/class/textsanitizer/' . $source;
             $dest = XOOPS_VAR_PATH . '/configs/textsanitizer/' . $destination;
-            if (!file_exists($dest) && file_exists($src)) {
+            if (!is_file($dest) && is_file($src)) {
                 $result = copy($src, $dest);
                 if (false === $result) {
                     $this->logs[] = sprintf('textsanitizer file copy to %s failed', $destination);

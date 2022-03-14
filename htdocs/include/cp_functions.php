@@ -233,7 +233,7 @@ function xoops_write_index_file($path = '')
 
     $path     = substr($path, -1) === '/' ? substr($path, 0, -1) : $path;
     $filename = $path . '/index.php';
-    if (file_exists($filename)) {
+    if (is_file($filename)) {
         return true;
     }
     if (!$file = fopen($filename, 'w')) {

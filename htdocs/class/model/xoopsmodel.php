@@ -73,7 +73,7 @@ class XoopsModelFactory
     {
         static $handlers;
         if (!isset($handlers[$name])) {
-            if (file_exists($file = __DIR__ . '/' . $name . '.php')) {
+            if (is_file($file = __DIR__ . '/' . $name . '.php')) {
                 include_once $file;
                 $className = 'XoopsModel' . ucfirst($name);
                 $handler   = new $className();

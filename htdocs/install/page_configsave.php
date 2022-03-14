@@ -298,7 +298,7 @@ function copyConfigDistFiles(array $vars)
     /* xoopsconfig.php */
     $source = $vars['VAR_PATH'] . '/configs/xoopsconfig.dist.php';
     $destination = $vars['VAR_PATH'] . '/configs/xoopsconfig.php';
-    if (!file_exists($destination)) { // don't overwrite anything
+    if (!is_file($destination)) { // don't overwrite anything
         $result = copy($source, $destination);
         $result ? ++$copied : ++$failed;
         if (false === $result) {
@@ -317,7 +317,7 @@ function copyConfigDistFiles(array $vars)
     foreach ($captchaConfigFiles as $source => $destination) {
         $src  = $vars['ROOT_PATH'] . '/class/captcha/' . $source;
         $dest = $vars['VAR_PATH'] . '/configs/captcha/' . $destination;
-        if (!file_exists($dest) && file_exists($src)) {
+        if (!is_file($dest) && is_file($src)) {
             $result = copy($src, $dest);
             $result ? ++$copied : ++$failed;
             if (false === $result) {
@@ -343,7 +343,7 @@ function copyConfigDistFiles(array $vars)
     foreach ($textsanitizerConfigFiles as $source => $destination) {
         $src  = $vars['ROOT_PATH'] . '/class/textsanitizer/' . $source;
         $dest = $vars['VAR_PATH'] . '/configs/textsanitizer/' . $destination;
-        if (!file_exists($dest) && file_exists($src)) {
+        if (!is_file($dest) && is_file($src)) {
             $result = copy($src, $dest);
             $result ? ++$copied : ++$failed;
             if (false === $result) {

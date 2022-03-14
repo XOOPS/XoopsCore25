@@ -85,7 +85,7 @@ class XoopsCache
     private function loadEngine($name)
     {
         if (!class_exists('XoopsCache' . ucfirst($name))) {
-            if (file_exists($file = __DIR__ . '/' . strtolower($name) . '.php')) {
+            if (is_file($file = __DIR__ . '/' . strtolower($name) . '.php')) {
                 include $file;
             } else {
                 trigger_error('File :' . $file . ' not found in file : ' . __FILE__ . ' at line: ' . __LINE__, E_USER_WARNING);

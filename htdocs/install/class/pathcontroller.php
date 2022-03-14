@@ -312,7 +312,7 @@ class PathStuffController
     public function makeWritable($path, $create = true)
     {
         $mode = intval('0777', 8);
-        if (!file_exists($path)) {
+        if (!is_dir($path)) {
             if (!$create) {
                 return false;
             } else {

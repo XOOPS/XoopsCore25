@@ -156,7 +156,7 @@ class XoopsInstallWizard
      */
     public function loadLangFile($file)
     {
-        if (file_exists("./language/{$this->language}/{$file}.php")) {
+        if (is_file("./language/{$this->language}/{$file}.php")) {
             include_once "./language/{$this->language}/{$file}.php";
         } else {
             include_once "./language/english/$file.php";

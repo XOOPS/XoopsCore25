@@ -355,10 +355,10 @@ class XoopsBlock extends XoopsObject
             if (!$edit_func) {
                 return false;
             }
-            if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/blocks/' . $this->getVar('func_file'))) {
-                if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php')) {
+            if (is_file(XOOPS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/blocks/' . $this->getVar('func_file'))) {
+                if (is_file(XOOPS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php')) {
                     include_once XOOPS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/blocks.php';
-                } elseif (file_exists(XOOPS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/language/english/blocks.php')) {
+                } elseif (is_file(XOOPS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/language/english/blocks.php')) {
                     include_once XOOPS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/language/english/blocks.php';
                 }
                 include_once XOOPS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/blocks/' . $this->getVar('func_file');
@@ -465,7 +465,7 @@ class XoopsBlock extends XoopsObject
             if (!$show_func) {
                 return false;
             }
-            if (!file_exists($func_file = $GLOBALS['xoops']->path('modules/' . $this->getVar('dirname') . '/blocks/' . $this->getVar('func_file')))) {
+            if (!is_file($func_file = $GLOBALS['xoops']->path('modules/' . $this->getVar('dirname') . '/blocks/' . $this->getVar('func_file')))) {
                 return false;
             }
             // must get lang files b4 including the file
@@ -877,7 +877,7 @@ class XoopsBlock extends XoopsObject
         if (!$result = $db->query($sql)) {
             return 0;
         }
-        list($count) = $db->fetchRow($result);
+        [$count] = $db->fetchRow($result);
 
         return $count;
     }

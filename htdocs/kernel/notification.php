@@ -697,7 +697,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
         if (!empty($not_config)) {
             if (!empty($not_config['tags_file'])) {
                 $tags_file = $GLOBALS['xoops']->path('modules/' . $module->getVar('dirname') . '/' . $not_config['tags_file']);
-                if (file_exists($tags_file)) {
+                if (is_file($tags_file)) {
                     include_once $tags_file;
                     if (!empty($not_config['tags_func'])) {
                         $tags_func = $not_config['tags_func'];
@@ -710,7 +710,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
             // RMV-NEW
             if (!empty($not_config['lookup_file'])) {
                 $lookup_file = $GLOBALS['xoops']->path('modules/' . $module->getVar('dirname') . '/' . $not_config['lookup_file']);
-                if (file_exists($lookup_file)) {
+                if (is_file($lookup_file)) {
                     include_once $lookup_file;
                     if (!empty($not_config['lookup_func'])) {
                         $lookup_func = $not_config['lookup_func'];

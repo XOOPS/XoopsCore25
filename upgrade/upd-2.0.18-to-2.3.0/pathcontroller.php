@@ -228,7 +228,7 @@ class PathStuffController
      */
     public function makeWritable($path, $group = false, $create = true)
     {
-        if (!file_exists($path)) {
+        if (!is_dir($path)) {
             if (!$create) {
                 return false;
             } else {
