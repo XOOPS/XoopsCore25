@@ -68,7 +68,6 @@ class ModuleAdmin
      */
     public function getInfo()
     {
-        $infoArray = array();
         if (!isset($infoArray) || empty($infoArray)) {
             $infoArray                = array();
             $infoArray['version']     = $this->getVersion();
