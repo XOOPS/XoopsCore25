@@ -182,7 +182,7 @@ if (!defined('FRAMEWORKS_ART_FUNCTIONS_INI')):
         /**
          * @param string|array|object    $message
          * @param int $userlevel
-         * @return null
+         * @return null|void
          */
         function xoops_message($message, $userlevel = 0)
         {
