@@ -79,7 +79,7 @@ class FilterInput
         'script',
         'style',
         'title',
-        'xml',
+        'xml'
     );
     // also will strip ALL event handlers
     /**

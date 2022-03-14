@@ -26,9 +26,8 @@ $op = Request::getCmd('op', 'list');
 switch ($op) {
     case 'list':
     default:
-//        XoopsLoad::load('XoopsFilterInput');
         if (isset($_REQUEST['target'])) {
-            $target = Request::getWord('target', '', 'REQUEST'); //trim(XoopsFilterInput::clean($_REQUEST['target'], 'WORD'));
+            $target = Request::getWord('target', '', 'REQUEST');
         } else {
             exit('Target not set');
         }

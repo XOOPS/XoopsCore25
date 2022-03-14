@@ -461,7 +461,7 @@ class Metagen
             "'&(iexcl|#161);'i",
             "'&(cent|#162);'i",
             "'&(pound|#163);'i",
-            "'&(copy|#169);'i",
+            "'&(copy|#169);'i"
         );
 
         $replace = array(
@@ -477,7 +477,7 @@ class Metagen
             chr(161),
             chr(162),
             chr(163),
-            chr(169),
+            chr(169)
         );
 
         $text = preg_replace($search, $replace, $document);
