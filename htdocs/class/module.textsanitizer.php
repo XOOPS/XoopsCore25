@@ -62,7 +62,7 @@ class MyTextSanitizerExtension
             $configFileName = $pathConfig . '/config.php';
             $distFileName = $pathDist . '/config.dist.php';
         }
-        if (!file_exists($configFileName)) {
+        if (!is_file($configFileName)) {
             if (false === copy($distFileName, $configFileName)) {
                 trigger_error('Could not create textsanitizer config file ' . basename($configFileName));
                 return $a = array();
@@ -198,7 +198,7 @@ class MyTextSanitizer
         $configFileName = $this->path_config . '/config.php';
         $distFileName = $this->path_basic . '/config.dist.php';
 
-        if (!file_exists($configFileName)) {
+        if (!is_file($configFileName)) {
             if (false===copy($distFileName, $configFileName)) {
                 trigger_error('Could not create textsanitizer config file ' . basename($configFileName));
                 return array();
@@ -740,9 +740,9 @@ class MyTextSanitizer
      */
     public function loadExtension($name)
     {
-        if (file_exists($file = $this->path_basic . '/' . $name . '/' . $name . '.php')) {
+        if (is_file($file = $this->path_basic . '/' . $name . '/' . $name . '.php')) {
             include_once $file;
-        } elseif (file_exists($file = $this->path_plugin . '/' . $name . '/' . $name . '.php')) {
+        } elseif (is_file($file = $this->path_plugin . '/' . $name . '/' . $name . '.php')) {
             include_once $file;
         } else {
             return false;

@@ -69,9 +69,9 @@ class UpgradeControl
 
         $language = (null === $language) ? $this->upgradeLanguage : $language;
 
-        if (file_exists("./language/{$language}/{$domain}.php")) {
+        if (is_file("./language/{$language}/{$domain}.php")) {
             include_once "./language/{$language}/{$domain}.php";
-        } elseif (file_exists("./language/english/{$domain}.php")) {
+        } elseif (is_file("./language/english/{$domain}.php")) {
             include_once "./language/english/{$domain}.php";
         }
 

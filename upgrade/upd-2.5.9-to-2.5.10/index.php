@@ -96,7 +96,7 @@ class Upgrade_2510 extends XoopsUpgrade
         $sourcePath = XOOPS_PATH . '/modules/protector/configs/';
         $destinationPath = XOOPS_VAR_PATH . '/protector/';
 
-        if (!file_exists($destinationPath)) {
+        if (!is_dir($destinationPath)) {
             mkdir($destinationPath);
         }
         $directory = dir($sourcePath);

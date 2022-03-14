@@ -439,7 +439,7 @@ class XoopsFileHandler
      */
     public function exists()
     {
-        $exists = (file_exists($this->pwd()) && is_file($this->pwd()));
+        $exists = (is_file($this->pwd()) && is_file($this->pwd()));
 
         return $exists;
     }

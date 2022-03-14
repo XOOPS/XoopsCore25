@@ -169,12 +169,12 @@ class XoopsEditorHandler
             xoops_load('XoopsLists');
             $_list = XoopsLists::getDirListAsArray($this->root_path . '/');
             foreach ($_list as $item) {
-                if (file_exists($file = $this->root_path . '/' . $item . '/language/' . $GLOBALS['xoopsConfig']['language'] . '.php')) {
+                if (is_file($file = $this->root_path . '/' . $item . '/language/' . $GLOBALS['xoopsConfig']['language'] . '.php')) {
                     include_once $file;
-                } elseif (file_exists($file = $this->root_path . '/' . $item . '/language/english.php')) {
+                } elseif (is_file($file = $this->root_path . '/' . $item . '/language/english.php')) {
                     include_once $file;
                 }
-                if (file_exists($file = $this->root_path . '/' . $item . '/editor_registry.php')) {
+                if (is_file($file = $this->root_path . '/' . $item . '/editor_registry.php')) {
                     include $file;
                     if (empty($config['order'])) {
                         continue;
@@ -247,12 +247,12 @@ class XoopsEditorHandler
             return $editor;
         }
         $editor_path = $this->root_path . '/' . $name;
-        if (file_exists($file = $editor_path . '/language/' . $GLOBALS['xoopsConfig']['language'] . '.php')) {
+        if (is_file($file = $editor_path . '/language/' . $GLOBALS['xoopsConfig']['language'] . '.php')) {
             include_once $file;
-        } elseif (file_exists($file = $editor_path . '/language/english.php')) {
+        } elseif (is_file($file = $editor_path . '/language/english.php')) {
             include_once $file;
         }
-        if (file_exists($file = $editor_path . '/editor_registry.php')) {
+        if (is_file($file = $editor_path . '/editor_registry.php')) {
             include $file;
         } else {
             return $editor;

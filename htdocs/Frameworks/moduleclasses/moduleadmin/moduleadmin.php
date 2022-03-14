@@ -121,8 +121,8 @@ class ModuleAdmin
     public function loadLanguage()
     {
         $language = $GLOBALS['xoopsConfig']['language'];
-        if (!file_exists($fileinc = XOOPS_ROOT_PATH . "/Frameworks/moduleclasses/moduleadmin/language/{$language}/main.php")) {
-            if (!file_exists($fileinc = XOOPS_ROOT_PATH . '/Frameworks/moduleclasses/moduleadmin/language/english/main.php')) {
+        if (!is_file($fileinc = XOOPS_ROOT_PATH . "/Frameworks/moduleclasses/moduleadmin/language/{$language}/main.php")) {
+            if (!is_file($fileinc = XOOPS_ROOT_PATH . '/Frameworks/moduleclasses/moduleadmin/language/english/main.php')) {
                 return false;
             }
         }

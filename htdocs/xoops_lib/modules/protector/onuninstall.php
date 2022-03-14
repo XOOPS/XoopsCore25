@@ -43,7 +43,7 @@ if (!function_exists('protector_onuninstall_base')) {
         // TABLES (loading mysql.sql)
         $sql_file_path = __DIR__ . '/sql/mysql.sql';
         $prefix_mod    = $db->prefix() . '_' . $mydirname;
-        if (file_exists($sql_file_path)) {
+        if (is_file($sql_file_path)) {
             $ret[]     = 'SQL file found at <b>' . htmlspecialchars($sql_file_path) . '</b>.<br  /> Deleting tables...<br>';
             $sql_lines = file($sql_file_path);
             foreach ($sql_lines as $sql_line) {

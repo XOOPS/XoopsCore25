@@ -595,7 +595,7 @@ EOJS;
     public function renderFormTextDateSelect(XoopsFormTextDateSelect $element)
     {
         static $included = false;
-        if (file_exists(XOOPS_ROOT_PATH . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/calendar.php')) {
+        if (is_file(XOOPS_ROOT_PATH . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/calendar.php')) {
             include_once XOOPS_ROOT_PATH . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/calendar.php';
         } else {
             include_once XOOPS_ROOT_PATH . '/language/english/calendar.php';

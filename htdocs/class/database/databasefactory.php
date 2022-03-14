@@ -46,7 +46,7 @@ class XoopsDatabaseFactory
     {
         static $instance;
         if (!isset($instance)) {
-            if (file_exists($file = XOOPS_ROOT_PATH . '/class/database/' . XOOPS_DB_TYPE . 'database.php')) {
+            if (is_file($file = XOOPS_ROOT_PATH . '/class/database/' . XOOPS_DB_TYPE . 'database.php')) {
                 require_once $file;
 
                 if (!defined('XOOPS_DB_PROXY')) {
@@ -84,7 +84,7 @@ class XoopsDatabaseFactory
     {
         static $database;
         if (!isset($database)) {
-            if (file_exists($file = XOOPS_ROOT_PATH . '/class/database/' . XOOPS_DB_TYPE . 'database.php')) {
+            if (is_file($file = XOOPS_ROOT_PATH . '/class/database/' . XOOPS_DB_TYPE . 'database.php')) {
                 include_once $file;
                 if (!defined('XOOPS_DB_PROXY')) {
                     $class = 'Xoops' . XOOPS_DB_TYPE . 'DatabaseSafe';

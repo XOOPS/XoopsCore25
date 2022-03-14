@@ -32,7 +32,7 @@ function xoops_getHandler($name, $optional = false)
     static $handlers;
     $name = strtolower(trim($name));
     if (!isset($handlers[$name])) {
-        if (file_exists($hnd_file = XOOPS_ROOT_PATH . '/kernel/' . $name . '.php')) {
+        if (is_file($hnd_file = XOOPS_ROOT_PATH . '/kernel/' . $name . '.php')) {
             require_once $hnd_file;
         }
         $class = 'Xoops' . ucfirst($name) . 'Handler';
@@ -76,7 +76,7 @@ function xoops_getModuleHandler($name = null, $module_dir = null, $optional = fa
     }
     $name = (!isset($name)) ? $module_dir : trim($name);
     if (!isset($handlers[$module_dir][$name])) {
-        if (file_exists($hnd_file = XOOPS_ROOT_PATH . "/modules/{$module_dir}/class/{$name}.php")) {
+        if (is_file($hnd_file = XOOPS_ROOT_PATH . "/modules/{$module_dir}/class/{$name}.php")) {
             include_once $hnd_file;
         }
         $class = ucfirst(strtolower($module_dir)) . ucfirst($name) . 'Handler';
@@ -145,8 +145,8 @@ function xoops_loadLanguage($name, $domain = '', $language = null)
     }
     $language = empty($language) ? $GLOBALS['xoopsConfig']['language'] : $language;
     $path     = ((empty($domain) || 'global' === $domain) ? '' : "modules/{$domain}/") . 'language';
-    if (!file_exists($fileinc = $GLOBALS['xoops']->path("{$path}/{$language}/{$name}.php"))) {
-        if (!file_exists($fileinc = $GLOBALS['xoops']->path("{$path}/english/{$name}.php"))) {
+    if (!is_file($fileinc = $GLOBALS['xoops']->path("{$path}/{$language}/{$name}.php"))) {
+        if (!is_file($fileinc = $GLOBALS['xoops']->path("{$path}/english/{$name}.php"))) {
             return false;
         }
     }
@@ -678,7 +678,7 @@ function xoops_getbanner()
 
     $db      = XoopsDatabaseFactory::getDatabaseConnection();
     $bresult = $db->query('SELECT COUNT(*) FROM ' . $db->prefix('banner'));
-    list($numrows) = $db->fetchRow($bresult);
+    [$numrows] = $db->fetchRow($bresult);
     if ($numrows > 1) {
         --$numrows;
         $bannum = mt_rand(0, $numrows);
@@ -687,7 +687,7 @@ function xoops_getbanner()
     }
     if ($numrows > 0) {
         $bresult = $db->query('SELECT * FROM ' . $db->prefix('banner'), 1, $bannum);
-        list($bid, $cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date, $htmlbanner, $htmlcode) = $db->fetchRow($bresult);
+        [$bid, $cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date, $htmlbanner, $htmlcode] = $db->fetchRow($bresult);
         if ($xoopsConfig['my_ip'] == xoops_getenv('REMOTE_ADDR')) {
             // EMPTY
         } else {
@@ -887,9 +887,9 @@ function xoops_getMailer()
         return $mailer;
     }
     include_once XOOPS_ROOT_PATH . '/class/xoopsmailer.php';
-    if (file_exists($file = XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/xoopsmailerlocal.php')) {
+    if (is_file($file = XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/xoopsmailerlocal.php')) {
         include_once $file;
-    } elseif (file_exists($file = XOOPS_ROOT_PATH . '/language/english/xoopsmailerlocal.php')) {
+    } elseif (is_file($file = XOOPS_ROOT_PATH . '/language/english/xoopsmailerlocal.php')) {
         include_once $file;
     }
     unset($mailer);

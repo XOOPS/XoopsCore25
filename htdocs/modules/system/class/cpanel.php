@@ -69,7 +69,7 @@ class XoopsSystemCpanel
             }
         }
         if (!isset($this->gui)) {
-            if (file_exists($file = XOOPS_ADMINTHEME_PATH . '/transition/transition.php')) {
+            if (is_file($file = XOOPS_ADMINTHEME_PATH . '/transition/transition.php')) {
                 include_once $file;
                 $this->gui             = new XoopsGuiTransition();
                 $this->gui->foldername = 'transition';
@@ -88,7 +88,7 @@ class XoopsSystemCpanel
         xoops_load('XoopsLists');
         $lists = XoopsLists::getDirListAsArray(XOOPS_ADMINTHEME_PATH);
         foreach (array_keys($lists) as $gui) {
-            if (file_exists($file = XOOPS_ADMINTHEME_PATH . '/' . $gui . '/' . $gui . '.php')) {
+            if (is_file($file = XOOPS_ADMINTHEME_PATH . '/' . $gui . '/' . $gui . '.php')) {
                 include_once $file;
                 if (class_exists($class = 'XoopsGui' . ucfirst($gui))) {
                     if (call_user_func(array($class, 'validate'))) {

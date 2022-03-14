@@ -102,7 +102,7 @@ abstract class SystemFineUploadHandler
         $targetPath = join(DIRECTORY_SEPARATOR, array($uploadDirectory, $uuid, $name));
         $this->uploadName = $name;
 
-        if (!file_exists($targetPath)) {
+        if (!is_file($targetPath)) {
             mkdir(dirname($targetPath), 0777, true);
         }
         $target = fopen($targetPath, 'wb');
@@ -240,7 +240,7 @@ abstract class SystemFineUploadHandler
 
             $targetFolder = $this->chunksFolder.DIRECTORY_SEPARATOR.$uuid;
 
-            if (!file_exists($targetFolder)) {
+            if (!is_dir($targetFolder)) {
                 mkdir($targetFolder, 0775, true);
             }
 

@@ -93,7 +93,7 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
     $time = time();
     $dbm->insert('tplset', " VALUES (1, 'default', 'XOOPS Default Template Set', '', " . $time . ')');
     // system modules
-    if (file_exists('../modules/system/language/' . $language . '/modinfo.php')) {
+    if (is_file('../modules/system/language/' . $language . '/modinfo.php')) {
         include '../modules/system/language/' . $language . '/modinfo.php';
     } else {
         include '../modules/system/language/english/modinfo.php';

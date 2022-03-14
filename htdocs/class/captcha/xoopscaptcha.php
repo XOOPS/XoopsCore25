@@ -79,16 +79,16 @@ class XoopsCaptcha
         $plugin_config = array();
         $filename      = empty($methodname) ? 'config.php' : 'config.' . $methodname . '.php';
         $distfilename  = empty($methodname) ? 'config.dist.php' : 'config.' . $methodname . '.dist.php';
-        if (file_exists($file = $this->path_config . '/' . $filename)) {
+        if (is_file($file = $this->path_config . '/' . $filename)) {
             $basic_config = include $file;
-        } elseif (file_exists($distfile = $this->path_basic . '/' . $distfilename)) {
+        } elseif (is_file($distfile = $this->path_basic . '/' . $distfilename)) {
             $basic_config = include $distfile;
             if (false===copy($distfile, $file)) {
                 trigger_error('Could not create captcha config file ' . $filename);
             }
         }
         // use of the path_plugin
-        if (file_exists($file = $this->path_plugin . '/' . $filename)) {
+        if (is_file($file = $this->path_plugin . '/' . $filename)) {
             $plugin_config = include $file;
         }
 
@@ -142,10 +142,10 @@ class XoopsCaptcha
             return $this->handler;
         }
         $this->handler = null;
-        if (file_exists($file = $this->path_basic . '/' . $name . '.php')) {
+        if (is_file($file = $this->path_basic . '/' . $name . '.php')) {
             require_once $file;
         } else {
-            if (file_exists($file = $this->path_plugin . '/' . $name . '.php')) {
+            if (is_file($file = $this->path_plugin . '/' . $name . '.php')) {
                 require_once $file;
             }
         }

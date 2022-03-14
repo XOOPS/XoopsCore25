@@ -238,7 +238,7 @@ class TinyMCE
         $xoopsPlugins = array();
         $allplugins   = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . $this->rootpath . '/plugins');
         foreach ($allplugins as $plugin) {
-            if (strpos(strtolower($plugin), 'xoops') != false && file_exists(XOOPS_ROOT_PATH . $this->config['rootpath'] . "/include/$plugin.php")) {
+            if (strpos(strtolower($plugin), 'xoops') != false && is_file(XOOPS_ROOT_PATH . $this->config['rootpath'] . "/include/$plugin.php")) {
                 if ($right = @include XOOPS_ROOT_PATH . $this->config['rootpath'] . "/include/$plugin.php") {
                     $xoopsPlugins[$plugin] = $plugin;
                 }

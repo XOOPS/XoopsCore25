@@ -520,7 +520,7 @@ class Tar
     public function addFile($filename, $binary = false)
     {
         // Make sure the file we are adding exists!
-        if (!file_exists($filename)) {
+        if (!is_file($filename)) {
             return false;
         }
         // Make sure there are no other files in the archive that have this same filename

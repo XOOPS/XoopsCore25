@@ -920,10 +920,10 @@ class XoopsObject
         $loaded = 1;
 
         $path = empty($this->plugin_path) ? __DIR__ . '/filters' : $this->plugin_path;
-        if (file_exists($file = $path . '/filter.php')) {
+        if (is_file($file = $path . '/filter.php')) {
             include_once $file;
             foreach ($this->_filters as $f) {
-                if (file_exists($file = $path . '/' . strtolower($f) . 'php')) {
+                if (is_file($file = $path . '/' . strtolower($f) . 'php')) {
                     include_once $file;
                 }
             }
@@ -964,7 +964,7 @@ class XoopsObject
             XoopsCache::write('system_modules_active', $modules_active);
         }
         foreach ($modules_active as $dirname) {
-            if (file_exists($file = XOOPS_ROOT_PATH . '/modules/' . $dirname . '/filter/' . $class . '.' . $method . '.php')) {
+            if (is_file($file = XOOPS_ROOT_PATH . '/modules/' . $dirname . '/filter/' . $class . '.' . $method . '.php')) {
                 include_once $file;
                 if (function_exists($class . '_' . $method)) {
                     call_user_func_array($dirname . '_' . $class . '_' . $method, array(&$this));
