@@ -80,7 +80,7 @@ class XoopsCacheModel extends XoopsCacheEngine
     /**
      * Model instance.
      *
-     * @var object
+     * @var array
      * @access private
      */
     public $fields = array();
