@@ -21,10 +21,10 @@
 $xoopsOption['pagetype'] = 'banners';
 include __DIR__ . '/mainfile.php';
 
-/********************************************/
-/* Function to let your client login to see */
-/* the stats                                */
-/********************************************/
+/**
+ * Function to let your client login to see the stats
+ * @return void
+ */
 function clientlogin()
 {
     global $xoopsDB, $xoopsLogger, $xoopsConfig;
@@ -90,10 +90,10 @@ function clientlogin()
     include $GLOBALS['xoops']->path('footer.php');
 }
 
-/*********************************************/
-/* Function to display the banners stats for */
-/* each client                               */
-/*********************************************/
+/**
+ * Function to display the banners stats for each client
+ * @return void
+ */
 function bannerstats()
 {
     global $xoopsDB, $xoopsConfig, $xoopsLogger, $myts;
@@ -131,7 +131,7 @@ function bannerstats()
             if ($impmade == 0) {
                 $percent = 0;
             } else {
-                $percent = substr(100 * $clicks / $impmade, 0, 5);
+                $percent = substr((string)(100 * $clicks / $impmade), 0, 5);
             }
             if ($imptotal == 0) {
                 $left = _BANNERS_UNLIMITED;
@@ -203,7 +203,7 @@ function bannerstats()
                 if ($impressions == 0) {
                     $percent = 0;
                 } else {
-                    $percent = substr(100 * $clicks / $impressions, 0, 5);
+                    $percent = substr((string)(100 * $clicks / $impressions), 0, 5);
                 }
                 $class = ($i % 2 == 0) ? 'even' : 'odd';
                 echo "<tbody><tr class='{$class}'>
@@ -222,13 +222,11 @@ function bannerstats()
     }
 }
 
-/*********************************************/
-/* Function to let the client E-mail his     */
-/* banner Stats                              */
-/*********************************************/
 /**
- * @param $cid
- * @param $bid
+ * Function to let the client E-mail his banner Stats
+ * @param int|string $cid
+ * @param int|string $bid
+ * @return void
  */
 function emailStats($cid, $bid)
 {
@@ -247,7 +245,7 @@ function emailStats($cid, $bid)
                         if ($impmade == 0) {
                             $percent = 0;
                         } else {
-                            $percent = substr(100 * $clicks / $impmade, 0, 5);
+                            $percent = substr((string)(100 * $clicks / $impmade), 0, 5);
                         }
                         if ($imptotal == 0) {
                             $left     = _BANNERS_UNLIMITED;
@@ -275,14 +273,12 @@ function emailStats($cid, $bid)
     redirect_header('banners.php', 2);
 }
 
-/*********************************************/
-/* Function to let the client to change the  */
-/* url for his banner                        */
-/*********************************************/
 /**
- * @param $cid
- * @param $bid
- * @param $url
+ * Function to let the client to change the  url for his banner
+ * @param int|string $cid
+ * @param int|string $bid
+ * @param string $url
+ * @return void
  */
 function change_banner_url_by_client($cid, $bid, $url)
 {
@@ -305,7 +301,8 @@ function change_banner_url_by_client($cid, $bid, $url)
 }
 
 /**
- * @param $bid
+ * @param int|string $bid
+ * @return void
  */
 function clickbanner($bid)
 {
@@ -332,31 +329,31 @@ XoopsLoad::load('XoopsFilterInput');
 $myts = MyTextSanitizer::getInstance();
 
 $op = '';
+$clean_bid = 0;
+$clean_cid = 0;
+$clean_login = '';
+$clean_pass = '';
+$clean_url = '';
 if (!empty($_POST['op'])) {
     // from $_POST we use keys: op, login, pass, url, pass, bid, cid
     $op = trim(XoopsFilterInput::clean($_POST['op'], 'STRING'));
 
-    $clean_login = '';
     if (isset($_POST['login'])) {
         $clean_login = trim(XoopsFilterInput::clean($myts->stripSlashesGPC($_POST['login']), 'STRING'));
     }
 
-    $clean_pass = '';
     if (isset($_POST['pass'])) {
         $clean_pass = trim(XoopsFilterInput::clean($myts->stripSlashesGPC($_POST['pass']), 'STRING'));
     }
 
-    $clean_url = '';
     if (isset($_POST['url'])) {
         $clean_url = trim(XoopsFilterInput::clean($myts->stripSlashesGPC($_POST['url']), 'WEBURL'));
     }
 
-    $clean_bid = 0;
     if (isset($_POST['bid'])) {
         $clean_bid = XoopsFilterInput::clean($_POST['bid'], 'INT');
     }
 
-    $clean_cid = 0;
     if (isset($_POST['cid'])) {
         $clean_cid = XoopsFilterInput::clean($_POST['cid'], 'INT');
     }
@@ -364,12 +361,11 @@ if (!empty($_POST['op'])) {
     // from $_POST we use keys: op, bid, cid
     $op = trim(XoopsFilterInput::clean($_GET['op'], 'STRING'));
 
-    $clean_bid = 0;
+
     if (isset($_GET['bid'])) {
         $clean_bid = XoopsFilterInput::clean($_GET['bid'], 'INT');
     }
 
-    $clean_cid = 0;
     if (isset($_GET['cid'])) {
         $clean_cid = XoopsFilterInput::clean($_GET['cid'], 'INT');
     }
