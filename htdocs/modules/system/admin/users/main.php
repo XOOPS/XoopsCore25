@@ -331,7 +331,7 @@ switch ($op) {
         $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
         $xoTheme->addScript('browse.php?Frameworks/jquery/plugins/jquery.ui.js');
         //table sorting does not work with select boxes
-        //$xoTheme->addScript('browse.php?Frameworks/jquery/plugins/jquery.tablesorter.js');
+        $xoTheme->addScript('browse.php?Frameworks/jquery/plugins/jquery.tablesorter.js');
         $xoTheme->addScript('modules/system/js/admin.js');
         //Recherche approfondie
 

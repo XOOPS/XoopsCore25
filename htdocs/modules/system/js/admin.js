@@ -45,15 +45,15 @@ $(document).ready(function () {
         $("#xo-bannersfinish-sorter").tablesorter({sortList: [[0, 0]], headers: {6: {sorter: false}}});
         $("#xo-bannersclient-sorter").tablesorter({sortList: [[0, 0]], headers: {4: {sorter: false}}});
         // Comments
-        $("#xo-comment-sorter").tablesorter({sortList: [[2, 0]], headers: {1: {sorter: false}, 7: {sorter: false}}});
+        $("#xo-comment-sorter").tablesorter({sortList: [[2, 0]], headers: {0: {sorter: false}, 1: {sorter: false}, 8: {sorter: false}}});
         // Groups
         $("#xo-group-sorter").tablesorter({sortList: [[0, 0]], headers: {4: {sorter: false}}});
         // User Rank
-        $("#xo-rank-sorter").tablesorter({sortList: [[0, 0]], headers: {4: {sorter: false}, 5: {sorter: false}}});
+        $("#xo-rank-sorter").tablesorter({sortList: [[0, 0]], headers: {5: {sorter: false}}});
         // Users
-        $("#xo-users-sorter").tablesorter({sortList: [[2, 0]], headers: {0: {sorter: false}, 1: {sorter: false}, 7: {sorter: false}}});
+        $("#xo-users-sorter").tablesorter({sortList: [[2, 0]], headers: {0: {sorter: false}, 1: {sorter: false}, 8: {sorter: false}}});
         // Smilies
-        $("#xo-smilies-sorter").tablesorter({sortList: [[0, 0]], headers: {1: {sorter: false}, 3: {sorter: false}, 4: {sorter: false}}});
+        $("#xo-smilies-sorter").tablesorter({sortList: [[0, 0]], headers: {1: {sorter: false}, 4: {sorter: false}}});
     }
 
     var c = system_readCookie('xoopsModsView');

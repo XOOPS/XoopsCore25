@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="clear"></div>
-    <table id="xo-comment-sorter" cellspacing="1" class="outer tablesorter">
+    <table id="xo-comment-sorter" cellspacing="1" class="outer tablesorter tablesorter-blue">
         <thead>
         <tr>
             <th class="txtcenter width5"><input name='allbox' id='allbox' onclick='xoopsCheckAll("commentslist", "allbox");' type='checkbox'

@@ -39,7 +39,7 @@ $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . xoops_getModuleO
 // Define scripts
 $xoTheme->addScript('browse.php?Frameworks/jquery/jquery.js');
 $xoTheme->addScript('browse.php?Frameworks/jquery/plugins/jquery.ui.js');
-//$xoTheme->addScript('browse.php?Frameworks/jquery/plugins/jquery.tablesorter.js');
+$xoTheme->addScript('browse.php?Frameworks/jquery/plugins/jquery.tablesorter.js');
 $xoTheme->addScript('modules/system/js/admin.js');
 // Define Breadcrumb and tips
 $xoBreadCrumb->addLink(_AM_SYSTEM_COMMENTS_NAV_MANAGER, system_adminVersion('comments', 'adminpath'));
