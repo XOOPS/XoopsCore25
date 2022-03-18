@@ -118,7 +118,7 @@ class SystemMaintenance
                 }
                 closedir($dirHandle);
             }
-			file_put_contents($dir . 'index.php', '<?php' . PHP_EOL  . 'header("HTTP/1.0 404 Not Found");');
+			file_put_contents($dir . 'index.php', '<?php' . PHP_EOL  . 'header("HTTP/1.0 404 Not Found");' . PHP_EOL);
         }
     }
 
