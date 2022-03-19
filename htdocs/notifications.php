@@ -15,6 +15,8 @@
  * @since               2.0.0
  */
 
+use Xmf\Request;
+
 $xoopsOption['pagetype'] = 'notification';
 include __DIR__ . '/mainfile.php';
 

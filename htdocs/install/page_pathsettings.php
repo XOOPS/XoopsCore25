@@ -25,6 +25,8 @@
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  **/
 
+use Xmf\Request;
+
 require_once './include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 

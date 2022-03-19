@@ -16,6 +16,8 @@
  * @author              Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://jp.xoops.org/
  */
 
+use Xmf\Request;
+
 if (!defined('XOOPS_ROOT_PATH') || !is_object($xoopsModule)) {
     die('Restricted access');
 }

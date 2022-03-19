@@ -259,7 +259,7 @@ function imageFilenameCheck($imageUrl)
  */
 // Get id (Xoops image) or url or src (standard image)
 $imageId = Request::getInt('id', 0, 'GET');
-$imageUrl = Request::getUrl('url', Request::getString('src', false, 'GET'), 'GET');
+$imageUrl = Request::getUrl('url', Request::getString('src', '', 'GET'), 'GET');
 
 if (!empty($imageId)) {
     // If image is a Xoops image
