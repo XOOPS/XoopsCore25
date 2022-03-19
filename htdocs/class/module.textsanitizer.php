@@ -74,7 +74,7 @@ class MyTextSanitizerExtension
             $configFileName = $pathConfig . '/config.php';
             $distFileName = $pathDist . '/config.dist.php';
         }
-        if (!is_file($configFileName)) {
+        if (!file_exists($configFileName)) {
             if (false === copy($distFileName, $configFileName)) {
                 trigger_error('Could not create textsanitizer config file ' . basename($configFileName));
                 return $a = array();
@@ -233,7 +233,7 @@ class MyTextSanitizer
         $configFileName = $this->path_config . '/config.php';
         $distFileName = $this->path_basic . '/config.dist.php';
 
-        if (!is_file($configFileName)) {
+        if (!file_exists($configFileName)) {
             if (false===copy($distFileName, $configFileName)) {
                 trigger_error('Could not create textsanitizer config file ' . basename($configFileName));
                 return array();
@@ -329,91 +329,39 @@ class MyTextSanitizer
     }
 
     /**
-     * @param array $match
+     * Callback to process email address match
+     *
+     * @param array $match array of matched elements
      *
      * @return string
      */
-    public function makeClickableCallback01($match)
+    protected function makeClickableCallbackEmailAddress($match)
     {
-        return $match[1] . "<a href=\"$match[2]://$match[3]\" title=\"$match[2]://$match[3]\" rel=\"noopener external\">$match[2]://" . $this->truncate($match[3]) . '</a>';
-    }
-
-    /**
-     * @param array $match
-     *
-     * @return string
-     */
-    public function makeClickableCallback02($match)
-    {
-        return $match[1] . "<a href=\"http://www.$match[2]$match[6]\" title=\"www.$match[2]$match[6]\" rel=\"noopener external\">" . $this->truncate('www.' . $match[2] . $match[6]) . '</a>';
-    }
-
-    /**
-     * @param array $match
-     *
-     * @return string
-     */
-    public function makeClickableCallback03($match)
-    {
-        return $match[1] . "<a href=\"ftp://ftp.$match[2].$match[3]\" title=\"ftp.$match[2].$match[3]\" rel=\"external\">" . $this->truncate('ftp.' . $match[2] . $match[3]) . '</a>';
-    }
-
-    /**
-     * @param array $match
-     *
-     * @return string
-     */
-    public function makeClickableCallback04($match)
-    {
-        return $match[1] . "<a href=\"mailto:$match[2]@$match[3]\" title=\"$match[2]@$match[3]\">" . $this->truncate($match[2] . '@' . $match[3]) . '</a>';
+        return $match[1] . "<a href=\"mailto:$match[2]@$match[3]\" title=\"$match[2]@$match[3]\">" . $match[2] . '@' . $match[3] . '</a>';
     }
 
     /**
      * Make links in the text clickable
+     * Presently handles email addresses and http, https, ftp and sftp urls
+     * (Note: at this time, major browsers no longer directly handle ftp/sftp urls.)
      *
      * @param  string $text
      * @return string
      */
-    public function makeClickable(&$text)
+    public function makeClickable($text)
     {
-        $text1 = $text;
-
-        $valid_chars = 'a-z0-9\/\-_+=.~!%@?#&;:$\|';
-        $end_chars   = 'a-z0-9\/\-_+=~!%@?#&;:$\|';
-
-        //        $patterns   = array();
-        //        $replacements   = array();
-        //
-        //        $patterns[]     = "/(^|[^]_a-z0-9-=\"'\/])([a-z]+?):\/\/([{$valid_chars}]+[{$end_chars}])/ei";
-        //        $replacements[] = "'\\1<a href=\"\\2://\\3\" title=\"\\2://\\3\" rel=\"external\">\\2://'.MyTextSanitizer::truncate( '\\3' ).'</a>'";
-        //
-        //
-        //        $patterns[]     = "/(^|[^]_a-z0-9-=\"'\/:\.])www\.((([a-zA-Z0-9\-]*\.){1,}){1}([a-zA-Z]{2,6}){1})((\/([a-zA-Z0-9\-\._\?\,\'\/\\+&%\$#\=~])*)*)/ei";
-        //        $replacements[] = "'\\1<a href=\"http://www.\\2\\6\" title=\"www.\\2\\6\" rel=\"external\">'.MyTextSanitizer::truncate( 'www.\\2\\6' ).'</a>'";
-        //
-        //        $patterns[]     = "/(^|[^]_a-z0-9-=\"'\/])ftp\.([a-z0-9\-]+)\.([{$valid_chars}]+[{$end_chars}])/ei";
-        //        $replacements[] = "'\\1<a href=\"ftp://ftp.\\2.\\3\" title=\"ftp.\\2.\\3\" rel=\"external\">'.MyTextSanitizer::truncate( 'ftp.\\2.\\3' ).'</a>'";
-        //
-        //        $patterns[]     = "/(^|[^]_a-z0-9-=\"'\/:\.])([-_a-z0-9\'+*$^&%=~!?{}]++(?:\.[-_a-z0-9\'+*$^&%=~!?{}]+)*+)@((?:(?![-.])[-a-z0-9.]+(?<![-.])\.[a-z]{2,6}|\d{1,3}(?:\.\d{1,3}){3})(?::\d++)?)/ei";
-        //        $replacements[] = "'\\1<a href=\"mailto:\\2@\\3\" title=\"\\2@\\3\">'.MyTextSanitizer::truncate( '\\2@\\3' ).'</a>'";
-        //
-        //        $text = preg_replace($patterns, $replacements, $text);
-        //
-        //----------------------------------------------------------------------------------
-
-        $pattern = "/(^|[^]_a-z0-9-=\"'\/])([a-z]+?):\/\/([{$valid_chars}]+[{$end_chars}])/i";
-        $text1   = preg_replace_callback($pattern, 'self::makeClickableCallback01', $text1);
-
-        $pattern = "/(^|[^]_a-z0-9-=\"'\/:\.])www\.((([a-zA-Z0-9\-]*\.){1,}){1}([a-zA-Z]{2,6}){1})((\/([a-zA-Z0-9\-\._\?\,\'\/\\+&%\$#\=~])*)*)/i";
-        $text1   = preg_replace_callback($pattern, 'self::makeClickableCallback02', $text1);
-
-        $pattern = "/(^|[^]_a-z0-9-=\"'\/])ftp\.([a-z0-9\-]+)\.([{$valid_chars}]+[{$end_chars}])/i";
-        $text1   = preg_replace_callback($pattern, 'self::makeClickableCallback03', $text1);
-
         $pattern = "/(^|[^]_a-z0-9-=\"'\/:\.])([-_a-z0-9\'+*$^&%=~!?{}]++(?:\.[-_a-z0-9\'+*$^&%=~!?{}]+)*+)@((?:(?![-.])[-a-z0-9.]+(?<![-.])\.[a-z]{2,6}|\d{1,3}(?:\.\d{1,3}){3})(?::\d++)?)/i";
-        $text1   = preg_replace_callback($pattern, 'self::makeClickableCallback04', $text1);
+        $text = preg_replace_callback($pattern, 'self::makeClickableCallbackEmailAddress', $text);
 
-        return $text1;
+        $pattern = "%(https?://)([-A-Z0-9./_*?&:;=#\[\]\%@]+)%i";
+        $replacement = '<a href="$1$2" target="_blank" rel="external noopener nofollow">$1$2</a>';
+        $text = preg_replace($pattern, $replacement, $text);
+
+        $pattern = "%(s?ftp://)([-A-Z0-9./_*?&:;=#\[\]\%@]+)%i";
+        $replacement = '<a href="$1$2" target="_blank" rel="external">$1$2</a>';
+        $text = preg_replace($pattern, $replacement, $text);
+
+        return $text;
     }
 
     /**
@@ -573,10 +521,10 @@ class MyTextSanitizer
     /**
      * Convert special characters to HTML entities
      *
-     * @param string      $text    string being converted
-     * @param int|null    $quote_style
+     * @param  string $text    string being converted
+     * @param  int|null    $quote_style
      * @param string|null $charset character set used in conversion
-     * @param bool        $double_encode
+     * @param  bool   $double_encode
      * @return string
      */
     public function htmlSpecialChars($text, $quote_style = null, $charset = null, $double_encode = true)
@@ -584,7 +532,7 @@ class MyTextSanitizer
         if ($quote_style === null) {
             $quote_style = ENT_QUOTES;
         }
-
+        $text = (string) $text;
         if (version_compare(phpversion(), '5.2.3', '>=')) {
             $text = htmlspecialchars(($text) ?: '', $quote_style, $charset ?: (defined('_CHARSET') ? _CHARSET : 'UTF-8'), $double_encode);
         } else {
@@ -745,10 +693,7 @@ class MyTextSanitizer
             return $text;
         }
         $patterns = '/\[code([^\]]*?)\](.*)\[\/code\]/sU';
-        $text1    = preg_replace_callback($patterns, array(
-            $this,
-            'codeConvCallback',
-        ),  $text);
+        $text1    = preg_replace_callback($patterns, array($this, 'codeConvCallback'),  $text);
 
         return $text1;
     }
@@ -778,9 +723,9 @@ class MyTextSanitizer
      */
     public function loadExtension($name)
     {
-        if (is_file($file = $this->path_basic . '/' . $name . '/' . $name . '.php')) {
+        if (file_exists($file = $this->path_basic . '/' . $name . '/' . $name . '.php')) {
             include_once $file;
-        } elseif (is_file($file = $this->path_plugin . '/' . $name . '/' . $name . '.php')) {
+        } elseif (file_exists($file = $this->path_plugin . '/' . $name . '/' . $name . '.php')) {
             include_once $file;
         } else {
             return false;
@@ -806,10 +751,7 @@ class MyTextSanitizer
         $args      = array_slice(func_get_args(), 1);
         array_unshift($args, $this);
 
-        return call_user_func_array(array(
-                                        $extension,
-                                        'load',
-                                    ), $args);
+        return call_user_func_array(array($extension, 'load'), $args);
     }
 
     /**

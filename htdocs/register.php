@@ -249,7 +249,7 @@ switch ($op) {
         if (empty($id)) {
             redirect_header('index.php', 1, '');
         }
-    /** @var XoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         /** @var XoopsUser $thisuser */
         $thisuser       = $member_handler->getUser($id);

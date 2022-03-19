@@ -57,10 +57,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (count($msgs) > 0) {
         $content = '<div class="alert alert-success"><span class="fa fa-check text-success"></span> '
-                   . INSTALLED_MODULES . '</div><div class="well"><ul class="list-unstyled">';
+            . INSTALLED_MODULES . '</div><div class="well"><ul class="list-unstyled">';
         foreach ($msgs as $msg) {
             $noAnchors = preg_replace(array('"<a (.*?)>"', '"</a>"'), array('',''), $msg);
-            $content   .= "<li>{$noAnchors}</li>";
+            $content .= "<li>{$noAnchors}</li>";
         }
         $content .= '</ul></div>';
     } else {
@@ -92,10 +92,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $toinstal = 0;
 
     $javascript = '';
-    $content    = '';
-    $content    .= '<div class="panel panel-info">';
-    $content    .= '<div class="panel-heading">' . MODULES_AVAILABLE . '</div>';
-    $content    .= '<div class="panel-body">';
+    $content  = '';
+    $content .= '<div class="panel panel-info">';
+    $content .= '<div class="panel-heading">' . MODULES_AVAILABLE . '</div>';
+    $content .= '<div class="panel-body">';
 
     foreach ($dirlist as $file) {
         clearstatcache();
@@ -118,26 +118,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $moduleYN->addOption(1, sprintf(INSTALL_THIS_MODULE, $module->getInfo('name')));
             $moduleYN->setExtra("onclick='selectModule(\"" . $file . "\", this)'");
             $form->addElement($moduleYN);
-            /*
-                        $content .= "<tr id='" . $file . "'" . $style . ">\n";
-                        $content .= "    <td class='img' ><img src='" . XOOPS_URL . '/modules/' . $module->getInfo('dirname') . '/' . $module->getInfo('image') . "' alt='" . $module->getInfo('name') . "'/></td>\n";
-                        $content .= '    <td>';
-                        $content .= '        ' . $module->getInfo('name') . '&nbsp;' . number_format(round($module->getInfo('version'), 2), 2) . '&nbsp;(' . $module->getInfo('dirname') . ')';
-                        $content .= '        <br>' . $module->getInfo('description');
-                        $content .= "    </td>\n";
-                        $content .= "    <td class='yesno'>";
-                        $content .= $moduleYN->render();
-                        $content .= "    </td></tr>\n";
-            */
+/*
+            $content .= "<tr id='" . $file . "'" . $style . ">\n";
+            $content .= "    <td class='img' ><img src='" . XOOPS_URL . '/modules/' . $module->getInfo('dirname') . '/' . $module->getInfo('image') . "' alt='" . $module->getInfo('name') . "'/></td>\n";
+            $content .= '    <td>';
+            $content .= '        ' . $module->getInfo('name') . '&nbsp;' . number_format(round($module->getInfo('version'), 2), 2) . '&nbsp;(' . $module->getInfo('dirname') . ')';
+            $content .= '        <br>' . $module->getInfo('description');
+            $content .= "    </td>\n";
+            $content .= "    <td class='yesno'>";
+            $content .= $moduleYN->render();
+            $content .= "    </td></tr>\n";
+*/
             $content .= '<div class="row module-row" id="' . $file . '">';
             $content .= '<div class="col-md-2">';
             $content .= '<br><img src="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname')
-                        . '/' . $module->getInfo('image') . '" alt="' . $module->getInfo('name') . '">';
+                . '/' . $module->getInfo('image') . '" alt="' . $module->getInfo('name') . '">';
             $content .= '</div>';
             $content .= '<div class="col-md-7">';
             $content .= '<h3>' . $module->getInfo('name');
-            $content .= ' <small> ' . number_format(round($module->getInfo('version'), 2), 2)
-                        . ' (' . $module->getInfo('dirname') . ')' . '</small>' . '</h3>';
+            $content .= ' <small> ' . $module->getInfo('version')
+                . ' (' . $module->getInfo('dirname') . ')' . '</small>' . '</h3>';
             $content .= '<i>' . $module->getInfo('description') . '</i>';
             $content .= '</div>';
             $content .= '<div class="col-md-3"><br><br><br>' . $moduleYN->render() . '</div>';

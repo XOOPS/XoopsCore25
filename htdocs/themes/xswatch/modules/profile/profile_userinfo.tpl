@@ -1,4 +1,4 @@
-<{includeq file="db:profile_breadcrumbs.tpl"}>
+<{include file="db:profile_breadcrumbs.tpl"}>
 <div class="row">
     <div class="col-xs-6 col-md-6 aligncenter">
         <{if $avatar}>

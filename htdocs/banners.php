@@ -327,6 +327,7 @@ function clickbanner($bid)
     redirect_header(XOOPS_URL, 3, _BANNERS_NO_ID);
 }
 
+XoopsLoad::load('XoopsFilterInput');
 $op = '';
 $clean_bid = 0;
 $clean_cid = 0;
