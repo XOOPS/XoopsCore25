@@ -68,7 +68,7 @@ class XoopsGuiDark extends XoopsSystemGui
         $currentScript = str_replace(XOOPS_ROOT_PATH . '/', '', $_SERVER['SCRIPT_FILENAME']);
 
         if('admin.php' == $currentScript){
-            $show = isset($_GET['show']) ? $_GET['show'] : '';
+            $show = Request::getString('show', '', 'GET');
             if('info' == $show){
                 $tpl->assign('showTransitionInfo', true);
             }

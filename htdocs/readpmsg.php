@@ -15,6 +15,8 @@
  * @since               2.0.0
  */
 
+use Xmf\Request;
+
 include __DIR__ . '/mainfile.php';
 $xoopsPreload = XoopsPreload::getInstance();
 $xoopsPreload->triggerEvent('core.readpmsg.start');
@@ -31,19 +33,19 @@ if (!is_object($xoopsUser)) {
             exit();
         } elseif (empty($_REQUEST['ok'])) {
             include $GLOBALS['xoops']->path('header.php');
-            xoops_confirm(array('ok' => 1, 'delete' => 1, 'msg_id' => (int)$_POST['msg_id']), $_SERVER['REQUEST_URI'], _PM_SURE_TO_DELETE);
+            xoops_confirm(array('ok' => 1, 'delete' => 1, 'msg_id' => Request::getInt('msg_id', 0, 'POST')), $_SERVER['REQUEST_URI'], _PM_SURE_TO_DELETE);
             include $GLOBALS['xoops']->path('footer.php');
             exit();
         }
-        $pm = $pm_handler->get((int)$_POST['msg_id']);
+        $pm = $pm_handler->get(Request::getInt('msg_id', 0, 'POST'));
         if (!is_object($pm) || $pm->getVar('to_userid') != $xoopsUser->getVar('uid') || !$pm_handler->delete($pm)) {
             exit();
         } else {
             redirect_header('viewpmsg.php', 1, _PM_DELETED);
         }
     }
-    $start          = !empty($_GET['start']) ? (int)$_GET['start'] : 0;
-    $total_messages = !empty($_GET['total_messages']) ? (int)$_GET['total_messages'] : 0;
+    $start          = !empty($_GET['start']) ? Request::getInt('start', 0, 'GET') : 0;
+    $total_messages = !empty($_GET['total_messages']) ? Request::getInt('total_messages', 0, 'GET') : 0;
     include $GLOBALS['xoops']->path('header.php');
     $criteria = new Criteria('to_userid', $xoopsUser->getVar('uid'));
     $criteria->setLimit(1);

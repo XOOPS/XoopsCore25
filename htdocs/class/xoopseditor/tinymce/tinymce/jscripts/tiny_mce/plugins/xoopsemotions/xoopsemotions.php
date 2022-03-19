@@ -12,6 +12,8 @@
  * @author              Laurent JEN <dugris@frxoops.org>
  */
 
+use Xmf\Request;
+
 // load mainfile.php - start
 $current_path = __DIR__;
 if (DIRECTORY_SEPARATOR !== '/') {
@@ -39,12 +41,8 @@ $groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGr
 $gperm_handler = xoops_getHandler('groupperm');
 $admin         = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_SMILE, $groups);
 
-$op = '';
-if (!empty($_GET['op'])) {
-    $op = trim($_GET['op']);
-} elseif (!empty($_POST['op'])) {
-    $op = trim($_POST['op']);
-}
+$op = Request::getString('op', '', 'GET');
+$op = Request::getString('op', $op, 'POST');
 
 $myts = MyTextSanitizer::getInstance();
 

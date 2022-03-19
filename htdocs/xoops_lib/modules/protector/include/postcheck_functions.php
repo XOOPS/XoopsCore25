@@ -1,5 +1,7 @@
 <?php
 
+use Xmf\Request;
+
 /**
  * @return bool
  */

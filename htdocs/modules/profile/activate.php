@@ -17,13 +17,15 @@
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
 
+use Xmf\Request;
+
 $xoopsOption['pagetype'] = 'user';
 include __DIR__ . '/header.php';
 
 include $GLOBALS['xoops']->path('header.php');
 if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
-    $id     = (int)$_GET['id'];
-    $actkey = trim($_GET['actkey']);
+    $id     = Request::getInt('id', 0, 'GET');
+    $actkey = Request::getString('actkey', '', 'GET');
     if (empty($id)) {
         redirect_header(XOOPS_URL, 1, '');
     }

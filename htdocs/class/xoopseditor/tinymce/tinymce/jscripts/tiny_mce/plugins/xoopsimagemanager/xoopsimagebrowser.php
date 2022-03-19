@@ -12,6 +12,8 @@
  * @author              Laurent JEN <dugris@frxoops.org>
  */
 
+use Xmf\Request;
+
 // load mainfile.php
 $current_path = __DIR__;
 if (DIRECTORY_SEPARATOR !== '/') {
@@ -71,19 +73,19 @@ if (!isset($_REQUEST['target'])) {
 }
 
 if (isset($_GET['op'])) {
-    $op = trim($_GET['op']);
+    $op = Request::getString('op', '', 'GET');
 }
 
 if (isset($_GET['target'])) {
-    $target = trim($_GET['target']);
+    $target = Request::getString('target', '', 'GET');
 }
 
 if (isset($_GET['image_id'])) {
-    $image_id = (int)$_GET['image_id'];
+    $image_id = Request::getInt('image_id', 0, 'GET');
 }
 
 if (isset($_GET['imgcat_id'])) {
-    $imgcat_id = (int)$_GET['imgcat_id'];
+    $imgcat_id = Request::getInt('imgcat_id', 0, 'GET');
 }
 
 if (isset($imgcat_id)) {
@@ -470,7 +472,7 @@ if ($op === 'listimg') {
 
     $criteria = new Criteria('imgcat_id', $imgcat_id);
     $imgcount = $image_handler->getCount($criteria);
-    $start    = isset($_GET['start']) ? (int)$_GET['start'] : 0;
+    $start    = Request::getInt('start', 0, 'GET');
     $criteria->setStart($start);
     $criteria->setSort('image_id');
     $criteria->setOrder('DESC');

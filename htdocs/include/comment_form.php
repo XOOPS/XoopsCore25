@@ -140,9 +140,9 @@ if ('system' !== $xoopsModule->getVar('dirname')) {
             // This routine is included from forms accessed via both GET and POST
             $hidden_value = '';
             if (isset($_POST[$extra_param])) {
-                $hidden_value = $myts->stripSlashesGPC($_POST[$extra_param]);
+                $hidden_value = $myts->stripSlashesGPC(Request::getString($extra_param, '', 'POST'));
             } elseif (isset($_GET[$extra_param])) {
-                $hidden_value = $myts->stripSlashesGPC($_GET[$extra_param]);
+                $hidden_value = $myts->stripSlashesGPC(Request::getString($extra_param, '', 'GET'));
             }
             $cform->addElement(new XoopsFormHidden($extra_param, $hidden_value));
         }

@@ -20,6 +20,8 @@
 /* @var XoopsConfigItem $xoopsConfig */
 
 
+use Xmf\Request;
+
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 include_once $GLOBALS['xoops']->path('include/comment_constants.php');
@@ -29,8 +31,10 @@ if (('system' !== $xoopsModule->getVar('dirname') && XOOPS_COMMENT_APPROVENONE =
 }
 
 xoops_loadLanguage('comment');
-$com_id   = isset($_GET['com_id']) ? (int)$_GET['com_id'] : 0;
-$com_mode = isset($_GET['com_mode']) ? htmlspecialchars(trim($_GET['com_mode']), ENT_QUOTES) : '';
+$com_id   = Request::getInt('com_id', 0, 'GET');
+$com_mode = htmlspecialchars(Request::getString('com_mode', '', 'GET'), ENT_QUOTES);
+
+
 if ($com_mode == '') {
     if (is_object($xoopsUser)) {
         $com_mode = $xoopsUser->getVar('umode');
@@ -45,7 +49,7 @@ if (!isset($_GET['com_order'])) {
         $com_order = $xoopsConfig['com_order'];
     }
 } else {
-    $com_order = (int)$_GET['com_order'];
+    $com_order =  Request::getInt('com_order', 0, 'GET');
 }
 $comment_handler = xoops_getHandler('comment');
 $comment         = $comment_handler->get($com_id);
