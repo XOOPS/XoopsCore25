@@ -170,10 +170,11 @@ class SystemMenuHandler
         $i        = 0;
 
         /**
-         * Selects current menu tab
+         * Select current menu tab, sets id names for menu tabs
          */
+        $j=0;
         foreach ($this->_menutabs as $k => $menus) {
-            $menuItems[] = $menus;
+            $menuItems[] = 'modmenu_' . $j++;
         }
         $breadcrumb                = $menuItems[$currentoption];
         $menuItems[$currentoption] = 'current';
