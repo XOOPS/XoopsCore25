@@ -19,7 +19,7 @@
         </div>
     </div>
     <div class="clear">&nbsp;</div>
-    <table id="xo-users-sorter" cellspacing="1" class="outer tablesorter">
+    <table id="xo-users-sorter" cellspacing="1" class="outer tablesorter tablesorter-blue">
         <thead>
         <tr>
             <th class="txtcenter width3"><input name='allbox' id='allbox' onclick='xoopsCheckAll("memberslist", "allbox");' type='checkbox'

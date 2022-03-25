@@ -24,7 +24,7 @@
     </tr>
 </table>
 <{if $banner_count|default:false == true}>
-    <table id="xo-bannerslist-sorter" cellspacing="1" class="outer tablesorter">
+    <table id="xo-bannerslist-sorter" cellspacing="1" class="outer tablesorter tablesorter-blue">
         <thead>
         <tr>
             <th class="txtcenter"><{$smarty.const._AM_SYSTEM_BANNERS_IMPRESION}></th>
@@ -74,7 +74,7 @@
 <!--Banner Finish-->
 <{if $banner_finish_count|default:false == true}>
     <h4><{$smarty.const._AM_SYSTEM_BANNERS_FINISHBNR}></h4>
-    <table id="xo-bannersfinish-sorter" cellspacing="1" class="outer tablesorter">
+    <table id="xo-bannersfinish-sorter" cellspacing="1" class="outer tablesorter tablesorter-blue">
         <thead>
         <tr>
             <th class="txtcenter"><{$smarty.const._AM_SYSTEM_BANNERS_IMPD}></th>
@@ -114,7 +114,7 @@
 <!--Banner Client-->
 <{if $banner_client_count|default:false == true}>
     <h4><{$smarty.const._AM_SYSTEM_BANNERS_ADVCLI}></h4>
-    <table id="xo-bannersclient-sorter" cellspacing="1" class="outer tablesorter">
+    <table id="xo-bannersclient-sorter" cellspacing="1" class="outer tablesorter tablesorter-blue">
         <thead>
         <tr>
             <th class="txtcenter"><{$smarty.const._AM_SYSTEM_BANNERS_CLINAME}></th>

@@ -9,7 +9,7 @@
             </button>
         </div>
     </div>
-    <table id="xo-group-sorter" cellspacing="1" class="outer tablesorter">
+    <table id="xo-group-sorter" cellspacing="1" class="outer tablesorter tablesorter-blue">
         <thead>
         <tr>
             <th class="txtcenter width5"><{$smarty.const._AM_SYSTEM_GROUPS_ID}></th>

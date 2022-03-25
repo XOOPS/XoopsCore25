@@ -13,7 +13,7 @@
             </a>
         </div>
     </div>
-    <table id="xo-rank-sorter" cellspacing="1" class="outer tablesorter">
+    <table id="xo-rank-sorter" cellspacing="1" class="outer tablesorter tablesorter-blue">
         <thead>
         <tr>
             <th class="txtcenter"><{$smarty.const._AM_SYSTEM_USERRANK_IMAGE}></th>

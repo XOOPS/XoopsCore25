@@ -13,7 +13,7 @@
             </a>
         </div>
     </div>
-    <table id="xo-smilies-sorter" cellspacing="1" class="outer tablesorter">
+    <table id="xo-smilies-sorter" cellspacing="1" class="outer tablesorter tablesorter-blue">
         <thead>
         <tr>
             <th class="txtcenter"><{$smarty.const._AM_SYSTEM_SMILIES_CODE}></th>
