@@ -421,7 +421,7 @@ class XoopsBlock extends XoopsObject
     /**
      * Store Block Data to Database
      *
-     * @return int $id
+     * @return int|false id of inserted block, or false on failure
      *
      * @deprecated
      */
@@ -429,7 +429,10 @@ class XoopsBlock extends XoopsObject
     {
         /** @var XoopsBlockHandler $blkhandler */
         $blkhandler = xoops_getHandler('block');
-        return $blkhandler->insert($this);
+        if (false === $blkhandler->insert($this)) {
+            return false;
+        }
+        return (int) $this->bid();
     }
 
     /**
