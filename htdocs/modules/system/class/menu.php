@@ -168,13 +168,13 @@ class SystemMenuHandler
         global $modversion;
         $_dirname = $this->_obj->getVar('dirname');
         $i        = 0;
+        $j        = 0;
 
         /**
-         * Select current menu tab, sets id names for menu tabs
+         * Selects current menu tab
          */
-        $j=0;
         foreach ($this->_menutabs as $k => $menus) {
-            $menuItems[] = 'modmenu_' . $j++;
+            $menuItems[] = 'modmenu_' . ++$j;
         }
         $breadcrumb                = $menuItems[$currentoption];
         $menuItems[$currentoption] = 'current';
