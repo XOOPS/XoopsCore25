@@ -426,6 +426,7 @@ class XoopsObject
      */
     public function getVar($key, $format = 's')
     {
+        $format = (null === $format) ? 's' : (string) $format;
         $ret = null;
         if (!isset($this->vars[$key])) {
             return $ret;
@@ -878,7 +879,7 @@ class XoopsObject
 
                 }
             }
-            $this->cleanVars[$k] = str_replace('\\"', '"', $cleanv);
+            $this->cleanVars[$k] = str_replace('\\"', '"', (string) $cleanv);
             unset($cleanv);
         }
         if (count($this->_errors) > 0) {
