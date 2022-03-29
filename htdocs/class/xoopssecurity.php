@@ -227,7 +227,8 @@ class XoopsSecurity
     {
         global $xoopsConfig;
 
-        $ip = IPAddress::fromRequest();
+        $addr = IPAddress::fromRequest();
+        $ip = $addr->asReadable();
         if ($xoopsConfig['enable_badips'] == 1 && $ip != '0.0.0.0') {
             foreach ($xoopsConfig['bad_ips'] as $bi) {
                 if (!empty($bi) && preg_match('/' . $bi . '/', $ip)) {
