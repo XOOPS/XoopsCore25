@@ -257,4 +257,24 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
 
         return $ret;
     }
+
+    /**
+     * get count of matching configoption rows
+     *
+     * @param CriteriaElement $criteria
+     *
+     * @return int Count of matching XoopsConfigOption
+     */
+    public function getCount(CriteriaElement $criteria = null)
+    {
+        $sql = 'SELECT COUNT(*) as `count` FROM ' . $this->db->prefix('configoption');
+        if (isset($criteria) && $criteria instanceof \CriteriaElement) {
+            $sql .= ' ' . $criteria->renderWhere();
+        }
+        $result = $this->db->query($sql);
+        $row = $this->db->fetchArray($result);
+        $count = $row['count'];
+        $this->db->freeRecordSet($result);
+        return (int)$count;
+    }
 }
