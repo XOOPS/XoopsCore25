@@ -120,6 +120,8 @@ class XoopsModelRead extends XoopsModelAbstract
         $ret = array();
         if ($criteria == null) {
             $criteria = new CriteriaCompo();
+            $criteria->setLimit($limit);
+            $criteria->setStart($start);
         }
 
         $sql = "SELECT `{$this->handler->keyName}`";
@@ -132,8 +134,10 @@ class XoopsModelRead extends XoopsModelAbstract
             if ($sort = $criteria->getSort()) {
                 $sql .= ' ORDER BY ' . $sort . ' ' . $criteria->getOrder();
             }
-            $limit = $criteria->getLimit();
-            $start = $criteria->getStart();
+            if ((0 == $limit) && (0 == $start)) {
+                $limit = $criteria->getLimit();
+                $start = $criteria->getStart();
+            }
         }
         $result = $this->handler->db->query($sql, $limit, $start);
         if (!$result) {
