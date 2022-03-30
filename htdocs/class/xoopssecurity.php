@@ -1,4 +1,7 @@
 <?php
+
+use Xmf\IPAddress;
+
 /**
  * XOOPS security handler
  *
@@ -223,14 +226,16 @@ class XoopsSecurity
     public function checkBadips()
     {
         global $xoopsConfig;
-        if ($xoopsConfig['enable_badips'] == 1 && isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] != '') {
+
+        $addr = IPAddress::fromRequest();
+        $ip = $addr->asReadable();
+        if ($xoopsConfig['enable_badips'] == 1 && $ip != '0.0.0.0') {
             foreach ($xoopsConfig['bad_ips'] as $bi) {
-                if (!empty($bi) && preg_match('/' . $bi . '/', $_SERVER['REMOTE_ADDR'])) {
+                if (!empty($bi) && preg_match('/' . $bi . '/', $ip)) {
                     exit();
                 }
             }
         }
-        unset($bi, $bad_ips, $xoopsConfig['badips']);
     }
 
     /**
