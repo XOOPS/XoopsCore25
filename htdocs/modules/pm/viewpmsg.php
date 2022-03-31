@@ -35,6 +35,7 @@ if (!in_array($op, $valid_op_requests)) {
 }
 
 $start = Request::getInt('start', 0);
+/** @var \PmMessageHandler $pm_handler */
 $pm_handler = xoops_getModuleHandler('message');
 
 if (isset($_POST['delete_messages']) && (isset($_POST['msg_id']) || isset($_POST['msg_ids']))) {
