@@ -23,6 +23,7 @@ $indexAdmin = new ModuleAdmin();
 echo $indexAdmin->addNavigation(basename(__FILE__));
 
 $op         = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'form';
+/** @var \PmMessageHandler $pm_handler */
 $pm_handler = xoops_getModuleHandler('message');
 
 switch ($op) {
