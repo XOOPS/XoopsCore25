@@ -420,11 +420,11 @@ class XoopsObject
      * YOU SHOULD NOT USE ANY OF THE UNICODE TYPES, THEY WILL BE REMOVED
      *
      * @access public
-     * @param  string $key    key of the object's variable to be returned
-     * @param  string $format format to use for the output
+     * @param string      $key    key of the object's variable to be returned
+     * @param string|null $format format to use for the output
      * @return mixed  formatted value of the variable
      */
-    public function getVar($key, $format = 's')
+    public function getVar($key, $format = null)
     {
         $format = (null === $format) ? 's' : (string) $format;
         $ret = null;
