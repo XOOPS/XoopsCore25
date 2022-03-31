@@ -197,11 +197,11 @@ class XoopsModule extends XoopsObject
      */
     public function loadAdminMenu()
     {
+        $adminmenu = array();
         if ($this->getInfo('adminmenu') && $this->getInfo('adminmenu') != '' && file_exists(XOOPS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu'))) {
-            $adminmenu = array();
             include XOOPS_ROOT_PATH . '/modules/' . $this->getVar('dirname') . '/' . $this->getInfo('adminmenu');
-            $this->adminmenu =& $adminmenu;
         }
+        $this->adminmenu =& $adminmenu;
     }
 
     /**
