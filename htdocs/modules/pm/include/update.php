@@ -32,7 +32,7 @@ require_once $path . '/include' . '/cp_header.php';
 function xoops_module_update_pm(XoopsModule $module, $oldversion = null)
 {
     global $xoopsDB;
-    if ($oldversion <= 100) {
+    if ($oldversion <= '1.0.0') {
         // Check pm table version
         $sql = 'SHOW COLUMNS FROM ' . $xoopsDB->prefix('priv_msgs');
         if (!$result = $xoopsDB->queryF($sql)) {
@@ -48,7 +48,7 @@ function xoops_module_update_pm(XoopsModule $module, $oldversion = null)
         }
     }
 
-    if ($oldversion < 110) {
+    if ($oldversion < '1.1.0') {
         // remove old html template files
         $templateDirectory = XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'n') . '/templates/';
         $template_list     = array_diff(scandir($templateDirectory), array('..', '.'));

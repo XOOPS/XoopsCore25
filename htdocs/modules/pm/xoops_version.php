@@ -25,7 +25,7 @@
 
 $modversion                   = array();
 $modversion['name']           = _PM_MI_NAME;
-$modversion['version']        = 1.14;
+$modversion['version']        = '1.1.4-Stable';
 $modversion['description']    = _PM_MI_DESC;
 $modversion['author']         = 'Jan Pedersen, Taiwen Jiang';
 $modversion['credits']        = 'The XOOPS Project, Wanikoo';
@@ -39,7 +39,6 @@ $modversion['icons16']        = '../../Frameworks/moduleclasses/icons/16';
 $modversion['icons32']        = '../../Frameworks/moduleclasses/icons/32';
 
 //about
-$modversion['module_status']       = 'Final';
 $modversion['release_date']        = '2019/02/18';
 $modversion['module_website_url']  = 'https://xoops.org/';
 $modversion['module_website_name'] = 'XOOPS';
