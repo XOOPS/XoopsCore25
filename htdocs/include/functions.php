@@ -22,8 +22,8 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 /**
  * xoops_getHandler()
  *
- * @param mixed $name
- * @param mixed $optional
+ * @param string $name
+ * @param bool   $optional
  *
  * @return XoopsObjectHandler|false
  */
@@ -55,9 +55,9 @@ function xoops_getHandler($name, $optional = false)
 /**
  * xoops_getModuleHandler()
  *
- * @param mixed $name
- * @param mixed $module_dir
- * @param mixed $optional
+ * @param string $name
+ * @param mixed  $module_dir
+ * @param bool   $optional
  * @return XoopsObjectHandler|false
  */
 function xoops_getModuleHandler($name = null, $module_dir = null, $optional = false)
@@ -324,6 +324,35 @@ function xoops_error($msg, $title = '')
                 $key = '';
             }
             xoops_error($value, $key);
+        }
+    } else {
+        echo "<div>{$msg}</div>";
+    }
+    echo '</div>';
+}
+
+/**
+ * xoops_warning
+ *
+ * @param mixed  $msg
+ * @param string $title
+ * @return void
+ */
+function xoops_warning($msg, $title = '')
+{
+    echo '<div class="warningMsg">';
+    if ($title != '') {
+        echo '<strong>' . $title . '</strong><br><br>';
+    }
+    if (is_object($msg)) {
+        $msg = (array)$msg;
+    }
+    if (is_array($msg)) {
+        foreach ($msg as $key => $value) {
+            if (is_numeric($key)) {
+                $key = '';
+            }
+            xoops_warning($value, $key);
         }
     } else {
         echo "<div>{$msg}</div>";

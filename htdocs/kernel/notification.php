@@ -576,17 +576,18 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      * @param int    $module_id Module ID
      * @param int    $item_id   Item ID
      * @param string $order     Sort order
+     * @param int    $mode      not_mode    see include/notification_constants.php
      *
      * @param null   $status
      *
      * @return array Array of {@link XoopsNotification} objects
      */
-    public function getByItemId($module_id, $item_id, $order = null, $status = null)
+    public function getByItemId($module_id, $item_id, $order = null, $mode = null)
     {
-        $criteria = new CriteriaCompo(new Criteria('com_modid', (int)$module_id));
-        $criteria->add(new Criteria('com_itemid', (int)$item_id));
-        if (isset($status)) {
-            $criteria->add(new Criteria('com_status', (int)$status));
+        $criteria = new CriteriaCompo(new Criteria('not_modid', (int)$module_id));
+        $criteria->add(new Criteria('not_itemid', (int)$item_id));
+        if (isset($mode)) {
+            $criteria->add(new Criteria('not_mode', (int)$mode));
         }
         if (isset($order)) {
             $criteria->setOrder($order);

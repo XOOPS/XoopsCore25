@@ -259,6 +259,9 @@ class XoopsFormElement
      */
     public function getTitle($encode = true)
     {
+        if(!isset($this->_caption)) { 
+            $this->_caption = '';
+        }
         if (strlen($this->_description) > 0) {
             return $encode ? htmlspecialchars(strip_tags($this->_caption . ' - ' . $this->_description), ENT_QUOTES) : strip_tags($this->_caption . ' - ' . $this->_description);
         } else {
@@ -273,7 +276,7 @@ class XoopsFormElement
      */
     public function setDescription($description)
     {
-        $this->_description = trim($description);
+        $this->_description = (isset($description) && !empty($description)) ? trim($description) : $description;
     }
 
     /**

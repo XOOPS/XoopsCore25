@@ -18,10 +18,10 @@
             <div class="modal-body">
                 <form class="form-horizontal" method="get" action="<{$pageName}>">
                     <div class="form-group">
-                    <{$commentModeSelect->render()}>
+                    <{$commentModeSelect->render()|replace:'id="com_mode"':''}>
                     </div>
                     <div class="form-group">
-                    <{$commentOrderSelect->render()}>
+                    <{$commentOrderSelect->render()|replace:'id="com_order"':''}>
                     </div>
                     <div class="form-group">
                     <{$commentRefreshButton->render()}>

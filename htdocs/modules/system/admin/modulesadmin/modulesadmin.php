@@ -489,14 +489,19 @@ function xoops_module_install($dirname)
             $blocks = $module->getInfo('blocks');
             $redDevider = '<span class="red bold">  |  </span>';
             $msgs[] = '<div class="noininstall center"><a href="admin.php?fct=modulesadmin">' . _AM_SYSTEM_MODULES_BTOMADMIN . '</a> |
-                        <a href="admin.php?fct=modulesadmin&op=installlist">' . _AM_SYSTEM_MODULES_TOINSTALL . '</a> | ';
+                        <a href="admin.php?fct=modulesadmin&op=installlist">' . _AM_SYSTEM_MODULES_TOINSTALL . '</a>';
             $msgs[] = '<br><span class="red bold">' . _AM_SYSTEM_MODULES_MODULE . ' ' . $module->getInfo('name') . ': </span></div>';
             if ($blocks !== false) {
                 $msgs[] = '<div class="noininstall center"><a href="admin.php?fct=blocksadmin&op=list&filter=1&selgen=' . $newmid . '&selmod=-2&selgrp=-1&selvis=-1&filsave=1">' . _AM_SYSTEM_BLOCKS . '</a></div>';
             }
-            $msgs[] = '<div class="noininstall center"><a href="admin.php?fct=preferences&op=showmod&mod=' . $newmid . '">' . _AM_SYSTEM_PREF . '</a>';
-            $msgs[] = '<a href="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname', 'e') . '/' . $module->getInfo('adminindex') . '">' . _AM_SYSTEM_MODULES_ADMIN . '</a>';
-
+			if ($module->getInfo('config') !== false) {
+				$msgs[] = '<div class="noininstall center"><a href="admin.php?fct=preferences&op=showmod&mod=' . $newmid . '">' . _AM_SYSTEM_PREF . '</a>';
+            } else {
+				$msgs[] = '<div class="noininstall center">';
+			}
+			if ($module->getInfo('adminindex') != ''){
+				$msgs[] = '<a href="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname', 'e') . '/' . $module->getInfo('adminindex') . '">' . _AM_SYSTEM_MODULES_INSTALL_THISMODULE . '</a>';
+			}
             $testdataDirectory = XOOPS_ROOT_PATH . '/modules/' . $module->getInfo('dirname', 'e') . '/testdata';
             if (file_exists($testdataDirectory)) {
                 $msgs[] = '<a href="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname', 'e') . '/testdata/index.php?op=load' . '">' . _AM_SYSTEM_MODULES_INSTALL_TESTDATA . '</a></div>';
@@ -768,7 +773,7 @@ function xoops_module_uninstall($dirname)
             $msgs[] = '<p>' . sprintf(_AM_SYSTEM_MODULES_OKUNINS, '<strong>' . $module->getVar('name') . '</strong>') . '</p>';
         }
         $msgs[] = '</div></div>';
-        $msgs[] = '<div class="center"><a href="admin.php?fct=modulesadmin">' . _AM_SYSTEM_MODULES_BTOMADMIN . '</a></div>';
+		$msgs[] = '<div class="center"><a href="admin.php?fct=modulesadmin">' . _AM_SYSTEM_MODULES_BTOMADMIN . '</a></div>';
         $ret    = implode('<br>', $msgs);
 
         return $ret;
@@ -1276,7 +1281,7 @@ function xoops_module_update($dirname)
         }
         $msgs[] = sprintf(_AM_SYSTEM_MODULES_OKUPD, '<strong>' . $module->getVar('name', 's') . '</strong>');
         $msgs[] = '</div></div>';
-        $msgs[] = '<div class="center"><a href="admin.php?fct=modulesadmin">' . _AM_SYSTEM_MODULES_BTOMADMIN . '</a>  | <a href="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname', 'e') . '/' . $module->getInfo('adminindex') . '">' . _AM_SYSTEM_MODULES_ADMIN . '</a></div>';
+		$msgs[] = '<div class="center"><a href="admin.php?fct=modulesadmin">' . _AM_SYSTEM_MODULES_BTOMADMIN . '</a>  | <a href="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname', 'e') . '/' . $module->getInfo('adminindex') . '">' . _AM_SYSTEM_MODULES_INSTALL_THISMODULE . '</a></div>';
         //        foreach ($msgs as $msg) {
         //            echo $msg . '<br>';
         //        }
@@ -1425,8 +1430,13 @@ function xoops_module_log_header($module, $title)
 {
     $msgs[] = '<div class="header">';
     $msgs[] = $errs[] = '<h4>' . $title . $module->getInfo('name', 's') . '</h4>';
+
     if ($module->getInfo('image') !== false && trim($module->getInfo('image')) != '') {
-        $msgs[] = '<img src="' . XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . trim($module->getInfo('image')) . '" alt="" />';
+        if (_AM_SYSTEM_MODULES_ACTIVATE === $title) {
+            $msgs[] = '<a href="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname', 'e') . '/' . $module->getInfo('adminindex') . '"><img src="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname', 'e') . '/' . trim($module->getInfo('image')) . '" alt="" /></a>';
+        } else {
+            $msgs[] = '<img src="' . XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . trim($module->getInfo('image')) . '" alt="" />';
+        }
     }
     $msgs[] = '<strong>' . _VERSION . ':</strong> ' . $module->getInfo('version');
     if ($module->getInfo('author') !== false && trim($module->getInfo('author')) != '') {

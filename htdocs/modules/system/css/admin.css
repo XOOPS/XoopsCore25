@@ -395,7 +395,7 @@ ul.jqueryFileTree a:hover {
 }
 
 /* ===== Redirect messages ===== */
-.errorMsg, .confirmMsg, .resultMsg {
+.errorMsg, .confirmMsg, .resultMsg, .warningMsg {
     padding: .8em;
     text-align: center;
     margin-bottom: 1em;
@@ -406,6 +406,12 @@ ul.jqueryFileTree a:hover {
     background-color: #FBE3E4;
     color: #D12F19;
     border-color: #FBC2C4;
+}
+
+.warningMsg {
+    background-color: #FEEFB3;
+    color: #9F6000;
+    border-color: #FED5B3;
 }
 
 .confirmMsg {
@@ -423,6 +429,11 @@ ul.jqueryFileTree a:hover {
 .errorMsg a {
     background-color: transparent;
     color: #D12F19;
+}
+
+.warningMsg a {
+    background-color: transparent;
+    color: #9F6000;
 }
 
 .confirmMsg a {

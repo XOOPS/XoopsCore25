@@ -14,20 +14,20 @@
  * @package             core
  * @since               2.0.0
  */
-/* @var  XoopsUser $xoopsUser */
+/** @var  XoopsUser $xoopsUser */
+
+use Xmf\Request;
 
 include __DIR__ . '/mainfile.php';
-XoopsLoad::load('XoopsRequest');
 
 // Get Action type
-$op = XoopsRequest::getCmd('op', 'list');
+$op = Request::getCmd('op', 'list');
 
 switch ($op) {
     case 'list':
     default:
-        XoopsLoad::load('XoopsFilterInput');
         if (isset($_REQUEST['target'])) {
-            $target = trim(XoopsFilterInput::clean($_REQUEST['target'], 'WORD'));
+            $target = Request::getWord('target', '', 'REQUEST');
         } else {
             exit('Target not set');
         }
@@ -42,7 +42,7 @@ switch ($op) {
         $xoopsTpl->assign('sitename', htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES));
         $target = htmlspecialchars($target, ENT_QUOTES);
         $xoopsTpl->assign('target', $target);
-        /* @var XoopsImagecategoryHandler $imgcat_handler */
+        /** @var XoopsImageCategoryHandler $imgcat_handler */
         $imgcat_handler = xoops_getHandler('imagecategory');
         $catlist        = $imgcat_handler->getList($group, 'imgcat_read', 1);
         $catcount       = count($catlist);
@@ -138,9 +138,8 @@ switch ($op) {
         break;
 
     case 'upload':
-        XoopsLoad::load('XoopsFilterInput');
         if (isset($_REQUEST['target'])) {
-            $target = trim(XoopsFilterInput::clean($_REQUEST['target'], 'WORD'));
+            $target = $target = Request::getWord('target', '', 'REQUEST');
         } else {
             exit('Target not set');
         }
@@ -151,7 +150,7 @@ switch ($op) {
         if (!is_object($imgcat)) {
             $error = true;
         } else {
-            /* @var XoopsGroupPermHandler $imgcatperm_handler */
+            /** @var XoopsGroupPermHandler $imgcatperm_handler */
             $imgcatperm_handler = xoops_getHandler('groupperm');
             if (is_object($xoopsUser)) {
                 if (!$imgcatperm_handler->checkRight('imgcat_write', $imgcat_id, $xoopsUser->getGroups())) {

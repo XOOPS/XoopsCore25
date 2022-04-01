@@ -1,20 +1,18 @@
 <{include file="db:profile_breadcrumbs.tpl"}>
 <div class="row">
-    <div class="col-xs-6 col-md-6 aligncenter">
+    <div class="col-md-6 text-center">
         <{if $avatar}>
             <img src="<{$avatar}>" alt="<{$uname}>" class="img-responsive img-rounded img-thumbnail">
         <{/if}>
-        <div class="aligncenter">
             <ul class="list-unstyled">
                 <li><span class="label label-info"><{$uname}></span></li>
                 <{if $email}>
                     <li><span class="label label-info"><{$email}></span></li>
                 <{/if}>
             </ul>
-        </div><!-- .aligncenter -->
-    </div><!-- .col-md-6 .aligncenter -->
+    </div><!-- .col-md-6 -->
 
-    <div class="col-xs-6 col-md-6">
+    <div class="col-md-6">
         <{if !$user_ownpage && $xoops_isuser == true}>
             <form name="usernav" action="user.php" method="post">
                 <input class="btn btn-primary btn-xs btn-block" type="button" value="<{$smarty.const._PROFILE_MA_SENDPM}>"
@@ -73,11 +71,29 @@
     <ul class="profile-values list-unstyled">
         <li class="profile-category-title"><{$recent_activity}></li>
         <{foreach item=module from=$modules}>
-            <li><strong><{$module.name}></strong></li>
-            <{foreach item=result from=$module.results}>
-                <li><img src="<{$result.image}>" alt="<{$module.name}>"> <a href="<{$result.link}>"><{$result.title}></a> (<{$result.time}>)</li>
-            <{/foreach}>
-            <{$module.showall_link}>
-        <{/foreach}>
+<!-- alain01 -->
+            <div class="card my-3">
+                <div class="card-header"><h5><{$module.name}> <{if $module.showall_link}><span class="x-small">| <{$module.showall_link}></span><{/if}></h5></div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <{foreach item=result from=$module.results}>
+                        <li class="list-group-item list-group-item-action">
+                            <{assign var="url_image_overloaded" value=$xoops_imageurl|cat:"modules/"|cat:$result.image|replace:"$xoops_url/modules/":''}>
+                            <{assign var="path_image_overloaded" value=$xoops_rootpath|cat:"/themes/"|cat:$xoops_theme|cat:"/"|cat:$url_image_overloaded|replace:$xoops_imageurl:''}>
+
+                            <{if file_exists($path_image_overloaded)}>
+                                <div class="d-inline"><img src="<{$url_image_overloaded}>" alt="<{$module.name}>"> <a href="<{$result.link}>"><{$result.title}></a></div>
+                                <span class="d-inline d-sm-none"><br /></span>
+                                <div class="d-inline text-muted"><small><span class="fa fa-calendar fa-sm ml-2"></span> <{$result.time}></small></div>
+                                <br />
+                            <{else}>
+                                <img src="<{$result.image}>" alt="<{$module.name}>"> <a href="<{$result.link}>"><{$result.title}></a> <small><span class="fa fa-calendar fa-sm ml-2"></span> <{$result.time}></small><br />
+                            <{/if}>
+                        </li>
+                        <{/foreach}>
+                    </ul>
+                </div>
+            </div>
+       <{/foreach}>
     </ul>
 <{/if}>

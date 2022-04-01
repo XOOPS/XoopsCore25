@@ -609,7 +609,7 @@ class ModuleAdmin
         $navigation = '';
         $path       = XOOPS_URL . '/modules/' . $this->_obj->getVar('dirname') . '/';
         $this->_obj->loadAdminMenu();
-        foreach (array_keys($this->_obj->adminmenu) as $i) {
+        foreach (array_keys((array) $this->_obj->adminmenu) as $i) {
             if ($this->_obj->adminmenu[$i]['link'] == 'admin/' . $menu) {
                 $navigation .= $this->_obj->adminmenu[$i]['title'] . ' | ';
                 $ret = "<div class=\"CPbigTitle\" style=\"background-image: url(" . $path . $this->_obj->adminmenu[$i]['icon'] . "); background-repeat: no-repeat; background-position: left; padding-left: 50px;\">

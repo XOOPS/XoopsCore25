@@ -60,7 +60,7 @@ class ProfileCorePreload extends XoopsPreloadItem
     {
         $email = isset($_GET['email']) ? trim($_GET['email']) : '';
         $email = isset($_POST['email']) ? trim($_POST['email']) : $email;
-        header("location: ./modules/profile/lostpass.php?email={$email}" . (empty($_GET['code']) ? '' : '&' . $_GET['code']));
+        header("location: ./modules/profile/lostpass.php?email={$email}" . (empty($_GET['code']) ? '' : '&code=' . $_GET['code']));
         exit();
     }
 

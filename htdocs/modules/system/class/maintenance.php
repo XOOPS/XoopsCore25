@@ -112,12 +112,13 @@ class SystemMaintenance
         if (is_dir($dir)) {
             if ($dirHandle = opendir($dir)) {
                 while (($file = readdir($dirHandle)) !== false) {
-                    if (filetype($dir . $file) === 'file' && $file !== 'index.php') {
+                    if (filetype($dir . $file) === 'file') {
                         unlink($dir . $file);
                     }
                 }
                 closedir($dirHandle);
             }
+			file_put_contents($dir . 'index.php', '<?php' . PHP_EOL  . 'header("HTTP/1.0 404 Not Found");' . PHP_EOL);
         }
     }
 
