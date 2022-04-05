@@ -501,7 +501,7 @@ class Upgrade_2511 extends XoopsUpgrade
         $count = 0;
         foreach ($modulesColumnNames as $column) {
             $attributes = $migrate->getColumnAttributes($modulesTableName, $column);
-            if (0 === strpos(trim($attributes), 'smallint')) {
+            if (is_string($attributes) && 0 === strpos(trim($attributes), 'smallint')) {
                 $count++;
                 $migrate->alterColumn($modulesTableName, $column, 'varchar(12) NOT NULL DEFAULT \'\'');
             }
