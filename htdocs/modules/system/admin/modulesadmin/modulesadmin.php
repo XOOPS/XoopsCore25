@@ -79,13 +79,12 @@ function xoops_module_install($dirname)
         $error = false;
         $errs  = array();
         $msgs  = array();
-
         $msgs[] = '<div id="xo-module-log"><div class="header">';
         $msgs[] = $errs[] = '<h4>' . _AM_SYSTEM_MODULES_INSTALLING . $module->getInfo('name', 's') . '</h4>';
         if ($module->getInfo('image') !== false && trim($module->getInfo('image')) != '') {
             $msgs[] = '<a href="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname', 'e') . '/' . $module->getInfo('adminindex') . '"><img src="' . XOOPS_URL . '/modules/' . $dirname . '/' . trim($module->getInfo('image')) . '" alt="" /></a>';
         }
-        $msgs[] = '<strong>' . _VERSION . ':</strong> ' . $module->getInfo('version') . '&nbsp;' . $module->getInfo('module_status');
+        $msgs[] = '<strong>' . _VERSION . ':</strong> ' . $module->getInfo('version');
         if ($module->getInfo('author') !== false && trim($module->getInfo('author')) != '') {
             $msgs[] = '<strong>' . _AUTHOR . ':</strong> ' . htmlspecialchars(trim($module->getInfo('author')));
         }
@@ -621,7 +620,7 @@ function xoops_module_uninstall($dirname)
         if ($module->getInfo('image') !== false && trim($module->getInfo('image')) != '') {
             $msgs[] = '<img src="' . XOOPS_URL . '/modules/' . $dirname . '/' . trim($module->getInfo('image')) . '" alt="" />';
         }
-        $msgs[] = '<strong>' . _VERSION . ':</strong> ' . $module->getInfo('version') . '&nbsp;' . $module->getInfo('module_status');
+        $msgs[] = '<strong>' . _VERSION . ':</strong> ' . $module->getInfo('version');
         if ($module->getInfo('author') !== false && trim($module->getInfo('author')) != '') {
             $msgs[] = '<strong>' . _AUTHOR . ':</strong> ' . htmlspecialchars(trim($module->getInfo('author')));
         }
@@ -833,7 +832,7 @@ function xoops_module_update($dirname)
         if ($module->getInfo('image') !== false && trim($module->getInfo('image')) != '') {
             $msgs[] = '<img src="' . XOOPS_URL . '/modules/' . $dirname . '/' . trim($module->getInfo('image')) . '" alt="" />';
         }
-        $msgs[] = '<strong>' . _VERSION . ':</strong> ' . $module->getInfo('version') . '&nbsp;' . $module->getInfo('module_status');
+        $msgs[] = '<strong>' . _VERSION . ':</strong> ' . $module->getInfo('version');
         if ($module->getInfo('author') !== false && trim($module->getInfo('author')) != '') {
             $msgs[] = '<strong>' . _AUTHOR . ':</strong> ' . $myts->htmlSpecialChars(trim($module->getInfo('author')));
         }
@@ -1439,8 +1438,7 @@ function xoops_module_log_header($module, $title)
             $msgs[] = '<img src="' . XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . trim($module->getInfo('image')) . '" alt="" />';
         }
     }
-
-    $msgs[] = '<strong>' . _VERSION . ':</strong> ' . $module->getInfo('version') . '&nbsp;' . $module->getInfo('module_status');
+    $msgs[] = '<strong>' . _VERSION . ':</strong> ' . $module->getInfo('version');
     if ($module->getInfo('author') !== false && trim($module->getInfo('author')) != '') {
         $msgs[] = '<strong>' . _AUTHOR . ':</strong> ' . htmlspecialchars(trim($module->getInfo('author')));
     }

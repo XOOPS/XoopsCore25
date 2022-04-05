@@ -49,7 +49,7 @@
                             <{if $row.warning_update == 1}>
                                 <strong class="red"><{$row.version}></strong>
                             <{else}>
-                                <{$row.version}> <{$row.module_status}>
+                                <{$row.version}>
                             <{/if}>
                         </td>
                         <td><{$row.last_update}></td>
@@ -107,7 +107,7 @@
                                 <br>
                                 <{$smarty.const._AM_SYSTEM_MODULES_UPDATE}>
                             <{else}>
-                                <{$row.version}> <{$row.module_status}>
+                                <{$row.version}>
                             <{/if}>
                         </td>
                         <td><{$row.last_update}></td>
@@ -175,7 +175,7 @@
                                 <br>
                                 <{$smarty.const._AM_SYSTEM_MODULES_UPDATE}>
                             <{else}>
-                                <{$row.version}> <{$row.module_status}>
+                                <{$row.version}>
                             <{/if}>
                         </td>
                         <td><{$row.last_update}></td>
@@ -251,7 +251,7 @@
                         <span class="spacer bold"><{$row.name}></span>
                     </div>
                 </td>
-                <td><{$row.version}> <{$row.module_status}></td>
+                <td><{$row.version}></td>
                 <td class="xo-modsimages">
                     <a class="tooltip" href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&amp;op=install&amp;module=<{$row.dirname}>"
                        title="<{$smarty.const._AM_SYSTEM_MODULES_INSTALL}>">
@@ -274,7 +274,7 @@
                 </td>
                 <td>
                     <ul class="xo-moduleinfos">
-                        <li><span class="bold"><{$smarty.const._VERSION}></span>&nbsp;:&nbsp;<{$row.version}> <{$row.module_status}></li>
+                        <li><span class="bold"><{$smarty.const._VERSION}></span>&nbsp;:&nbsp;<{$row.version}></li>
                         <li><span class="bold"><{$smarty.const._AUTHOR}></span>&nbsp;:&nbsp;<{$row.author}></li>
                         <li><span class="bold"><{$smarty.const._CREDITS}></span>&nbsp;:&nbsp;<{$row.credits}></li>
                         <li><span class="bold"><{$smarty.const._LICENCE}></span>&nbsp;:&nbsp;<{$row.license}></li>
