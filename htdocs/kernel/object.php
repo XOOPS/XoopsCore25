@@ -1120,11 +1120,11 @@ class XoopsObjectHandler
     /**
      * gets a value object
      *
-     * @param int $int_id
+     * @param int $id
      * @abstract
      * @return XoopsObject
      */
-    public function get($int_id)
+    public function get($id)
     {
     }
 
