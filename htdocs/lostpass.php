@@ -24,8 +24,8 @@ $xoopsPreload->triggerEvent('core.lostpass.start');
 
 xoops_loadLanguage('user');
 
-$email = Request::getString('email', '', 'GET');
-$email = Request::getString('email', $email, 'POST');
+$email = Request::getEmail('email', '', 'GET');
+$email = Request::getEmail('email', $email, 'POST');
 
 if ($email == '') {
     redirect_header('user.php', 2, _US_SORRYNOTFOUND);
