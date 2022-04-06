@@ -156,7 +156,7 @@ class XoopsGuiDark extends XoopsSystemGui
         } else {
             $moddir  = $xoopsModule->getVar('dirname', 'n');
             $modpath = XOOPS_URL . '/modules/' . $moddir;
-            $modname = $xoopsModule->getInfo('name') . '  (' . $xoopsModule->getInfo('version') . '  ' . $xoopsModule->getInfo('module_status') . ')';
+            $modname = $xoopsModule->getInfo('name') . '  (' . $xoopsModule->getInfo('version') . ')';
             $modid   = $xoopsModule->getVar('mid');
 
             $mod_options = $xoopsModule->getAdminMenu();
