@@ -227,7 +227,12 @@ function xoops_module_install($dirname)
                         }
                         $options = '';
                         if (!empty($block['options'])) {
-                            $options = trim($block['options']);
+                            if (is_array($block['options'])) {
+                                $options = implode('|', $block['options']);
+                            } else {
+                                $options = $block['options'];
+                            }
+                            $options = trim($options);
                         }
                         $newbid    = $db->genId($db->prefix('newblocks') . '_bid_seq');
                         $edit_func = isset($block['edit_func']) ? trim($block['edit_func']) : '';
