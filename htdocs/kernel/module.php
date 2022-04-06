@@ -179,10 +179,10 @@ class XoopsModule extends XoopsObject
     {
 		$version1 = strtolower($version1);
 		$version2 = strtolower($version2);
-		if (true == strpos($version2, '-stable')){
+		if (false !== strpos($version2, '-stable')){
 			$version2 = substr($version2, 0, strpos($version2, '-stable'));
 		}
-		if (true == strpos($version1, '-stable')){
+		if (false !== strpos($version1, '-stable')){
 			$version1 = substr($version1, 0, strpos($version1, '-stable'));
 		}
 		return version_compare($version1, $version2, $operator);
