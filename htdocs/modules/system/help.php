@@ -106,6 +106,8 @@ if ($mid > 0) {
     } else {
         if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/' . $xoopsConfig['language'] . '/help/module_index.html')) {
             $helpcontent = $xoopsTpl->fetch(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/' . $xoopsConfig['language'] . '/help/module_index.html');
+        } elseif (file_exists(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/' . $xoopsConfig['language'] . '/help/module_index.tpl')) {
+            $helpcontent = $xoopsTpl->fetch(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/' . $xoopsConfig['language'] . '/help/module_index.tpl');
         } else {
             $helpcontent = $module->getInfo('description');
             $helpcontent = '<div id="non-modhelp">' . $helpcontent . '</div>';
