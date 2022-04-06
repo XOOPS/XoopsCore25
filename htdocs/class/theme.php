@@ -498,7 +498,10 @@ class xos_opal_Theme
             $GLOBALS['xoopsOption']['xoops_pagetitle']     = $content['xoops_pagetitle'];
             $GLOBALS['xoopsOption']['xoops_module_header'] = $content['header'];
         }
-
+        /* if cache was not found, define $content[] */
+        if (!isset($content) || false === $content) {
+            $content = array();
+        }
         if (!empty($GLOBALS['xoopsOption']['xoops_pagetitle'])) {
             $this->template->assign('xoops_pagetitle', $GLOBALS['xoopsOption']['xoops_pagetitle']);
         }
@@ -878,6 +881,7 @@ class xos_opal_Theme
      */
     public function resourcePath($path)
     {
+        $path = (string) $path;
         if (substr($path, 0, 1) === '/') {
             $path = substr($path, 1);
         }
