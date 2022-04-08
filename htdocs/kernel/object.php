@@ -473,7 +473,7 @@ class XoopsObject
                         break 1;
                     case 'e':
                     case 'edit':
-                        return htmlspecialchars($ret, ENT_QUOTES);
+                        return htmlspecialchars((string)$ret, ENT_QUOTES);
                         break 1;
                     case 'p':
                     case 'preview':

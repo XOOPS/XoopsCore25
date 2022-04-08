@@ -346,7 +346,7 @@ class Criteria extends CriteriaElement
         if (in_array(strtoupper($this->operator), array('IS NULL', 'IS NOT NULL'))) {
             $clause .= ' ' . $this->operator;
         } else {
-            if ('' === ($value = trim($this->value))) {
+            if ('' === ($value = trim((string)$this->value))) {
                 return '';
             }
             if (!in_array(strtoupper($this->operator), array('IN', 'NOT IN'))) {

@@ -77,7 +77,7 @@ if (!is_object($xoopsUser)) {
         } else {
             echo $xoopsConfig['anonymous']; // we need to do this for deleted users
         }
-        $iconName = htmlspecialchars($pm_arr[0]->getVar('msg_image', 'E'), ENT_QUOTES);
+        $iconName = htmlspecialchars((string)$pm_arr[0]->getVar('msg_image', 'E'), ENT_QUOTES);
         if ($iconName != '') {
             echo "</td><td><img src='images/subject/" . $iconName . "' alt='' />&nbsp;" . _PM_SENTC . '' . formatTimestamp($pm_arr[0]->getVar('msg_time'));
         } else {
