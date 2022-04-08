@@ -157,7 +157,7 @@ class XoopsFormElement
     public function getName($encode = true)
     {
         if (false !== (bool)$encode) {
-            return str_replace('&amp;', '&', htmlspecialchars($this->_name, ENT_QUOTES));
+            return str_replace('&amp;', '&', htmlspecialchars((string)$this->_name, ENT_QUOTES));
         }
 
         return $this->_name;
