@@ -388,8 +388,8 @@ class XoopsAvatarHandler extends XoopsObjectHandler
     /**
      * Get a list of Avatars
      *
-     * @param  string $avatar_type
-     * @param  string $avatar_display
+     * @param  string    $avatar_type 'S' for system, 'C' for custom
+     * @param  bool|null $avatar_display null lists all, bool respects avatar_display
      * @return array
      */
     public function getList($avatar_type = null, $avatar_display = null)

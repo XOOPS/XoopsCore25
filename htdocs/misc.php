@@ -68,7 +68,7 @@ EOSMJS;
         case 'avatars':
             /* @var  XoopsAvatarHandler $avatarHandler */
             $avatarHandler = xoops_getHandler('avatar');
-            $avatarsList = $avatarHandler->getList('S');
+            $avatarsList = $avatarHandler->getList('S', true);
 
             $upload_url = XOOPS_UPLOAD_URL . '/';
             $javaScript = <<<EOAVJS
