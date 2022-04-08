@@ -77,7 +77,7 @@ if (!is_object($xoopsUser)) {
         } else {
             echo "<td class='aligntop width5 txtcenter'><img src='images/email_notread.png' alt='" . _PM_NOTREAD . "' title='" . _PM_NOTREAD . "' /></td>\n";
         }
-        $iconName = htmlspecialchars($pm_arr[$i]->getVar('msg_image', 'E'), ENT_QUOTES);
+        $iconName = htmlspecialchars((string)$pm_arr[$i]->getVar('msg_image', 'E'), ENT_QUOTES);
         if ($iconName != '') {
             echo "<td class='aligntop width5 txtcenter'><img src='images/subject/" . $iconName . "' alt='' /></td>\n";
         } else {
