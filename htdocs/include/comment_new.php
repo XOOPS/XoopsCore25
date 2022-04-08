@@ -72,11 +72,11 @@ if ($com_itemid > 0) {
     $com_pid    = 0;
     $com_rootid = 0;
     $com_text   = '';
-    // Start Add by voltan
+    // Start added by voltan
     $com_user  = '';
     $com_email = '';
     $com_url   = '';
-    // End Add by voltan
+    // End added by voltan
     include_once $GLOBALS['xoops']->path('include/comment_form.php');
     include_once $GLOBALS['xoops']->path('footer.php');
 }

@@ -928,7 +928,7 @@ function xoops_getrank($rank_id = 0, $posts = 0)
 }
 
 /**
- * Returns the portion of string specified by the start and length parameters. If $trimmarker is supplied, it is appended to the return string. This function works fine with multi-byte characters if mb_* functions exist on the server.
+ * Returns the portion of string specified by the start and length parameters. If $trimmarker is supplied, it is appended to the return string. This function works fine with multibyte characters if mb_* functions exist on the server.
  *
  * @param string $str
  * @param int    $start

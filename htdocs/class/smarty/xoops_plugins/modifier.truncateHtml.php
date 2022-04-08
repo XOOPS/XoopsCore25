@@ -258,7 +258,7 @@ if (!class_exists('\BaseStringHelper', false)) {
          *
          * @param string $string        Input string
          * @param string $with          Part to search inside the $string
-         * @param bool   $caseSensitive Case sensitive search. Default is true. When case sensitive is enabled, $with must exactly match the starting of the string in order to get a true value.
+         * @param bool   $caseSensitive Case-sensitive search. Default is true. When case-sensitive is enabled, $with must exactly match the starting of the string in order to get a true value.
          *
          * @return bool Returns true if first input starts with second input, false otherwise
          */
@@ -279,8 +279,8 @@ if (!class_exists('\BaseStringHelper', false)) {
          * Binary and multibyte safe.
          *
          * @param string $string        Input string to check
-         * @param string $with          Part to search inside of the $string.
-         * @param bool   $caseSensitive Case sensitive search. Default is true. When case sensitive is enabled, $with must exactly match the ending of the string in order to get a true value.
+         * @param string $with          Part to search inside the $string.
+         * @param bool   $caseSensitive Case-sensitive search. Default is true. When case-sensitive is enabled, $with must exactly match the ending of the string in order to get a true value.
          *
          * @return bool Returns true if first input ends with second input, false otherwise
          */
@@ -422,7 +422,7 @@ if (!class_exists('\BaseStringHelper', false)) {
         public static function floatToString($number)
         {
             // . and , are the only decimal separators known in ICU data,
-            // so its safe to call str_replace here
+            // so it's safe to call str_replace here
             return str_replace(',', '.', (string)$number);
         }
 
@@ -434,7 +434,7 @@ if (!class_exists('\BaseStringHelper', false)) {
          * @param string $string  the tested string.
          * @param array  $options options for matching. Valid options are:
          *
-         * - caseSensitive: bool, whether pattern should be case sensitive. Defaults to `true`.
+         * - caseSensitive: bool, whether pattern should be case-sensitive. Defaults to `true`.
          * - escape: bool, whether backslash escaping is enabled. Defaults to `true`.
          * - filePath: bool, whether slashes in string only matches slashes in the given pattern. Defaults to `false`.
          *

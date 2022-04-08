@@ -363,7 +363,7 @@ class XoopsCaptcha
 /**
  * Abstract class for CAPTCHA method
  *
- * Currently there are two types of CAPTCHA forms, text and image
+ * Currently, there are two types of CAPTCHA forms, text and image
  * The default mode is "text", it can be changed in the priority:
  * 1 If mode is set through XoopsFormCaptcha::setConfig("mode", $mode), take it
  * 2 Elseif mode is set though captcha/config.php, take it

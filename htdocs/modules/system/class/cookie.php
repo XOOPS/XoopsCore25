@@ -138,7 +138,7 @@ class Cookie
         } // Return single key if it's set
         elseif (isset($_COOKIE[$key])) {
             return $_COOKIE[$key];
-        } // Otherwise return null
+        } // Otherwise, return null
         else {
             return null;
         }

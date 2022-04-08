@@ -8,8 +8,8 @@ Theme specific templates are generally compatible with and in many cases borrowe
 
 Features:
 - emphasis on better mobile experience
-- self hosted, with no off domain resources required
-- built in EU cookie compliance
+- self-hosted, with no off-domain resources required
+- built-in EU cookie compliance
 - administrator toolbar with block edit feature
 
 Customize xSwatch:

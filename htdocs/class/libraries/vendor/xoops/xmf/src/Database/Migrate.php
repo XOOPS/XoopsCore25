@@ -21,7 +21,7 @@ use Xmf\Yaml;
  * and build a work queue of DDL/SQL to transform the existing tables to the
  * target definitions.
  *
- * Typically Migrate will be extended by a module specific class that will supply custom
+ * Typically, Migrate will be extended by a module specific class that will supply custom
  * logic (see preSyncActions() method.)
  *
  * @category  Xmf\Database\Migrate

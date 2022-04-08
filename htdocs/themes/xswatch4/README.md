@@ -8,8 +8,8 @@ The default theme is based on [Bootswatch Cerulean](https://bootswatch.com/cerul
 Features:
 
 - Emphasis on better mobile experience
-- Self hosted, with no off domain resources required
-- Built in cookie consent
+- self-hosted, with no off-domain resources required
+- Built-in cookie consent
 - Administrator toolbar with block edit feature
 - Switch between light and dark theme based on media queries
 

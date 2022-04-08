@@ -603,7 +603,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      * @param int    $item_id      ID of the item
      * @param array  $events       trigger events
      * @param array  $extra_tags   array of substitutions for template to be
-     *                              merged with the one from function..
+     *                              merged with the one from function.
      * @param array  $user_list    only notify the selected users
      * @param int    $module_id    ID of the module
      * @param int    $omit_user_id ID of the user to omit from notifications. (default to current user).  set to 0 for all users to receive notification.

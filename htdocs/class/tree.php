@@ -296,7 +296,7 @@ class XoopsObjectTree
      * when code was modernized. This will keep them running for now.
      *
      * @param string $name unknown variable name requested
-     *                      currently only '_tree' is supported
+     *                      currently, only '_tree' is supported
      *
      * @return mixed value
      */

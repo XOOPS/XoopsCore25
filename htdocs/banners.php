@@ -276,7 +276,7 @@ function emailStats($cid, $bid)
 }
 
 /**
- * Function to let the client to change the  url for his banner
+ * Function to let the client change the URL for his banner
  * @param int|string $cid
  * @param int|string $bid
  * @param string $url

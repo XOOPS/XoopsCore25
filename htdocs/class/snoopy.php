@@ -538,7 +538,7 @@ class Snoopy
 
     /*======================================================================*\
         Function:	_striplinks
-        Purpose:	strip the hyperlinks from an html document
+        Purpose:	strip the hyperlinks from an HTML document
         Input:		$document	document to strip.
         Output:		$match		an array of the links
     \*======================================================================*/
@@ -570,7 +570,7 @@ class Snoopy
 
     /*======================================================================*\
         Function:	_stripform
-        Purpose:	strip the form elements from an html document
+        Purpose:	strip the form elements from an HTML document
         Input:		$document	document to strip.
         Output:		$match		an array of the links
     \*======================================================================*/
@@ -589,7 +589,7 @@ class Snoopy
 
     /*======================================================================*\
         Function:	_striptext
-        Purpose:	strip the text from an html document
+        Purpose:	strip the text from an HTML document
         Input:		$document	document to strip.
         Output:		$text		the resulting text
     \*======================================================================*/

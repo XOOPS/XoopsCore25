@@ -4,7 +4,7 @@
     pageSize:        Number of items in each page
     offset:            Index of the 1st item currently displayed
     linksCount:        Number of direct links to show (default to 5)
-    url:            URL mask used to generate links (%s will be replace by offset)
+    url:            URL mask used to generate links (%s will be replaced by offset)
     itemsCount=$items_count pageSize=$module_config.perpage offset=$offset
     url="viewcat.php?cid=`$entity.cid`&orderby=`$sort_order`&offset=%s"
 */

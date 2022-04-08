@@ -44,13 +44,13 @@ if (isset($xoopsModuleConfig['com_rule'])) {
 }
 
 $cform->addElement(new XoopsFormText(_CM_TITLE, 'com_title', 50, 255, $com_title), true);
-// Start add by voltan
+// Start added by voltan
 if (!($com_user == '' && $com_email == '') || !$xoopsUser) {
     $cform->addElement(new XoopsFormText(_CM_USER, 'com_user', 50, 60, $com_user), true);
     $cform->addElement(new XoopsFormText(_CM_EMAIL, 'com_email', 50, 60, $com_email), true);
     $cform->addElement(new XoopsFormText(_CM_URL, 'com_url', 50, 60, $com_url), false);
 }
-// End add by voltan
+// End added by voltan
 $icons_radio   = new XoopsFormRadio(_MESSAGEICON, 'com_icon', $com_icon);
 $subject_icons = XoopsLists::getSubjectsList();
 foreach ($subject_icons as $iconfile) {

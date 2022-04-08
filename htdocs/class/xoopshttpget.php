@@ -29,7 +29,7 @@ class XoopsHttpGet
      *
      * @param string $url the url to process
      *
-     * @throws \RuntimeException if neither curl extension or stream wrappers (allow_url_fopen) is available
+     * @throws \RuntimeException if neither curl extension nor stream wrappers (allow_url_fopen) is available
      */
     public function __construct($url)
     {

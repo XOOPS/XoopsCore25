@@ -74,10 +74,10 @@ if (is_object($GLOBALS['xoopsUser']) && $uid == $GLOBALS['xoopsUser']->getVar('u
      * Note:
      * "thisUser" refers to the user whose profile will be accessed; "xoopsUser" refers to the current user $GLOBALS['xoopsUser']
      * "Basic Groups" refer to XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS and XOOPS_GROUP_ANONYMOUS;
-     * "Non Basic Groups" refer to all other custom groups
+     * "Non-Basic Groups" refer to all other custom groups
      *
      * Admin groups: If thisUser belongs to admin groups, the xoopsUser has access if and only if one of xoopsUser's groups is allowed to access admin group; else
-     * Non basic groups: If thisUser belongs to one or more non basic groups, the xoopsUser has access if and only if one of xoopsUser's groups is allowed to allowed to any of the non basic groups; else
+     * Non-basic groups: If thisUser belongs to one or more non-basic groups, the xoopsUser has access if and only if one of xoopsUser's groups is allowed to any of the non-basic groups; else
      * User group: If thisUser belongs to User group only, the xoopsUser has access if and only if one of his groups is allowed to access User group
      *
      */

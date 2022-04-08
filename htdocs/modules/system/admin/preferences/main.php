@@ -78,7 +78,7 @@ switch ($op) {
                 case 'textarea':
                     $myts = MyTextSanitizer::getInstance();
                     if ($config[$i]->getVar('conf_valuetype') === 'array') {
-                        // this is exceptional.. only when value type is arrayneed a smarter way for this
+                        // this is exceptional. only when value type is arrayneed a smarter way for this
                         $ele = ($config[$i]->getVar('conf_value') != '') ? new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), $myts->htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50) : new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), '', 5, 50);
                     } else {
                         $ele = new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), $myts->htmlSpecialChars($config[$i]->getConfValueForOutput()), 5, 50);
@@ -276,12 +276,12 @@ switch ($op) {
 
         xoops_loadLanguage('modinfo', $module->getVar('dirname'));
 
-        // if has comments feature, need comment lang file
+        // if it has comments feature, need comment lang file
         if ($module->getVar('hascomments') == 1) {
             xoops_loadLanguage('comment');
         }
         // RMV-NOTIFY
-        // if has notification feature, need notification lang file
+        // if it has notification feature, need notification lang file
         if ($module->getVar('hasnotification') == 1) {
             xoops_loadLanguage('notification');
         }
@@ -301,7 +301,7 @@ switch ($op) {
                 case 'textarea':
                     $myts = MyTextSanitizer::getInstance();
                     if ($config[$i]->getVar('conf_valuetype') === 'array') {
-                        // this is exceptional.. only when value type is arrayneed a smarter way for this
+                        // this is exceptional. only when value type is arrayneed a smarter way for this
                         $ele = ($config[$i]->getVar('conf_value') != '') ? new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), $myts->htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50) : new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), '', 5, 50);
                     } else {
                         $ele = new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), $myts->htmlSpecialChars($config[$i]->getConfValueForOutput()), 5, 50);
@@ -372,7 +372,7 @@ switch ($op) {
 
                 case 'line_break':
                     $myts = MyTextSanitizer::getInstance();
-                    $form->insertBreak('<div style="text-align:center">' . $title . '</div>', $myts->htmlSpecialChars($config[$i]->getConfValueForOutput()));
+                    $form->insertBreak('<div style="text-align:center">' . $title . '</div>', $myts->htmlSpecialChars($config[$i]->getConfValueForOutput()));
                     break;
 
                 case 'textbox':
@@ -447,7 +447,7 @@ switch ($op) {
                             $xoopsTpl->clear_compiled_tpl();
 
                             // generate compiled files for the new theme
-                            // block files only for now..
+                            // block files only for now.
                             $tplfile_handler = xoops_getHandler('tplfile');
                             $dtemplates      = $tplfile_handler->find('default', 'block');
                             $dcount          = count($dtemplates);

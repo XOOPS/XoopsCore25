@@ -120,7 +120,7 @@ if ($uid == 0) {
     $profile = $profile_handler->get($uid);
 }
 
-// Lets merge current $_POST  with $_SESSION['profile_post'] so we can have access to info submited in previous steps
+// Let's merge current $_POST  with $_SESSION['profile_post'] so we can have access to info submited in previous steps
 // Get all fields that we can expect from a $_POST inlcuding our private '_message_'
 $fieldnames = array();
 foreach (array_keys($fields) as $i) {
@@ -212,7 +212,7 @@ if ($current_step > 0 && empty($stop) && (!empty($steps[$current_step - 1]['step
     if (empty($stop)) {
         $isNew = $newuser->isNew();
 
-        //Did created an user already? If not then let us set some extra info
+        //Did you create a user already? If not, then let us set some extra info
         if ($isNew) {
             $uname = isset($_POST['uname']) ? $myts->stripSlashesGPC(trim($_POST['uname'])) : '';
             $email = isset($_POST['email']) ? $myts->stripSlashesGPC(trim($_POST['email'])) : '';

@@ -85,7 +85,7 @@ if (!empty($_POST)) {
             $error_message .= $xoopsCaptcha->getMessage() . '<br>';
         }
 
-        // Start add by voltan
+        // Start added by voltan
         xoops_load('XoopsUserUtility');
         xoops_loadLanguage('user');
         $myts = MyTextSanitizer::getInstance();
@@ -202,7 +202,7 @@ if (!empty($_POST)) {
         if (!empty($error_message)) {
             $op = 'preview';
         }
-        // End add by voltan
+        // End added by voltan
     }
 
     $com_mode   = isset($_POST['com_mode']) ? htmlspecialchars(trim($_POST['com_mode']), ENT_QUOTES) : 'flat';
@@ -273,9 +273,9 @@ switch ($op) {
         XoopsLoad::load('XoopsRequest');
         $doimage         = 1;
         $comment_handler = xoops_getHandler('comment');
-        // Start add by voltan
+        // Start added by voltan
         $myts = MyTextSanitizer::getInstance();
-        // Edit add by voltan
+        // Edit added by voltan
         $add_userpost     = false;
         $call_approvefunc = false;
         $call_updatefunc  = false;
@@ -403,11 +403,11 @@ switch ($op) {
         $comment->setVar('com_icon', $com_icon);
         $comment->setVar('com_modified', time());
         $comment->setVar('com_modid', $com_modid);
-        // Start add by voltan
+        // Start added by voltan
         $comment->setVar('com_user', $com_user);
         $comment->setVar('com_email', $com_email);
         $comment->setVar('com_url', $com_url);
-        // End add by voltan
+        // End added by voltan
         if (isset($extra_params)) {
             $comment->setVar('com_exparams', $extra_params);
         }

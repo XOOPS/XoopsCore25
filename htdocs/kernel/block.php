@@ -436,7 +436,7 @@ class XoopsBlock extends XoopsObject
     }
 
     /**
-     * Delete a ID from the database
+     * Delete an ID from the database
      *
      * @return bool
      *

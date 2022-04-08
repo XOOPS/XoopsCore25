@@ -505,7 +505,7 @@ function b_system_notification_show()
         return false; // do not display block
     }
     $notification_handler = xoops_getHandler('notification');
-    // Now build the a nested associative array of info to pass
+    // Now build the nested associative array of info to pass
     // to the block template.
     $block      = array();
     $categories =& notificationSubscribableCategoryInfo();
