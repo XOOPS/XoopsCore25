@@ -4,7 +4,7 @@
  * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license          GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license          GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          installer
  * @since            2.3.0
  * @author           Haruki Setoyama  <haruki@planewave.org>
@@ -26,7 +26,7 @@ if (!@include_once "../modules/system/language/{$wizard->language}/admin/prefere
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    /* @var XoopsConfigHandler $config_handler */
+    /** @var XoopsConfigHandler $config_handler */
     $config_handler = xoops_getHandler('config');
     if (array_key_exists('conf_ids', $_REQUEST)) {
         foreach ($_REQUEST['conf_ids'] as $key => $conf_id) {
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    /* @var XoopsMemberHandler $member_handler */
+    /** @var XoopsMemberHandler $member_handler */
     $member_handler = xoops_getHandler('member');
     $member_handler->updateUsersByField('theme', $new_value);
 
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $pageHasForm = true;
 $pageHasHelp = false;
 
-/* @var XoopsConfigHandler $config_handler */
+/** @var XoopsConfigHandler $config_handler */
 $config_handler = xoops_getHandler('config');
 $criteria       = new CriteriaCompo();
 $criteria->add(new Criteria('conf_modid', 0));

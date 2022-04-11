@@ -33,7 +33,7 @@ class SystemMaintenance
      */
     public function __construct()
     {
-        /* @var XoopsMySQLDatabase $db */
+        /** @var XoopsMySQLDatabase $db */
         $db           = XoopsDatabaseFactory::getDatabaseConnection();
         $this->db     = $db;
         $this->prefix = $this->db->prefix . '_';
@@ -118,7 +118,7 @@ class SystemMaintenance
                 }
                 closedir($dirHandle);
             }
-			file_put_contents($dir . 'index.php', '<?php' . PHP_EOL  . 'header("HTTP/1.0 404 Not Found");' . PHP_EOL);
+			file_put_contents($dir . 'index.php', '<?php' . PHP_EOL  . 'header(\'HTTP/1.0 404 Not Found\');' . PHP_EOL);
         }
     }
 
@@ -271,7 +271,7 @@ class SystemMaintenance
         $class        = 'odd';
         $modulesCount = count($modules);
         for ($i = 0; $i < $modulesCount; ++$i) {
-            /* @var XoopsModuleHandler $module_handler */
+            /** @var XoopsModuleHandler $module_handler */
             $module_handler = xoops_getHandler('module');
             $module         = $module_handler->getByDirname($modules[$i]);
             $ret[1] .= '<tr><th colspan="3" align="left">' . ucfirst($modules[$i]) . '</th></tr>';

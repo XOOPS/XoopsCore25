@@ -28,7 +28,7 @@ $content .= '
     <li>Prepare a database for your XOOPS site.</li>
     <li>Prepare user account and grant the user the access to the database.</li>
     <li>Make these directories and files writable: %s</li>
-    <li>For security considerations, you are strongly advised to move the two directories below out of <a href="http://phpsec.org/projects/guide/3.html" rel="external">document root</a> and change the folder names: %s</li>
+    <li>For security considerations, you are strongly advised to move the two directories below out of <a href="https://privacyaustralia.net/phpsec/projects/guide/php-security-guide-databases-and-sql/" rel="external">document root</a> and change the folder names: %s</li>
     <li>Create (if not already present) and make these directories writable: %s</li>
     <li>Turn cookie and JavaScript of your browser on.</li>
 </ol>

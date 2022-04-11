@@ -855,7 +855,7 @@ class Snoopy
 
         // gunzip
         if ($is_gzipped) {
-            // per http://www.php.net/manual/en/function.gzencode.php
+            // per https://www.php.net/manual/en/function.gzencode.php
             $results = substr($results, 10);
             $results = gzinflate($results);
         }

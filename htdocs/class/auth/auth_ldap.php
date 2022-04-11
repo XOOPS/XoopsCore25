@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright           The XOOPS Project (http://xoops.org)
+ * @copyright           The XOOPS Project (https://xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @subpackage          auth
@@ -178,7 +178,7 @@ class XoopsAuthLdap extends XoopsAuth
     {
         $this->_dao = $dao;
         // The config handler object allows us to look at the configuration options that are stored in the database
-        /* @var XoopsConfigHandler $config_handler */
+        /** @var XoopsConfigHandler $config_handler */
         $config_handler = xoops_getHandler('config');
         $config         = $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
         $confcount      = count($config);

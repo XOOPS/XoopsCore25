@@ -1,6 +1,6 @@
 <?php
 //  Author: Trabis
-//  URL: http://www.xuups.com
+//  URL: https://xoops.org
 //  E-Mail: lusopoemas@gmail.com
 
 defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');

@@ -954,7 +954,7 @@ class XoopsObject
         xoops_load('XoopsCache');
         $class = get_class($this);
         if (!$modules_active = XoopsCache::read('system_modules_active')) {
-            /* @var XoopsModuleHandler $module_handler */
+            /** @var XoopsModuleHandler $module_handler */
             $module_handler = xoops_getHandler('module');
             $modules_obj    = $module_handler->getObjects(new Criteria('isactive', 1));
             $modules_active = array();
@@ -1090,7 +1090,7 @@ class XoopsObjectHandler
      */
     public function __construct(XoopsDatabase $db)
     {
-        /* @var XoopsMySQLDatabase $db */
+        /** @var XoopsMySQLDatabase $db */
         $this->db = $db;
     }
 

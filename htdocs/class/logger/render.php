@@ -25,7 +25,7 @@ $ret = '';
 if ($mode === 'popup') {
     $dump    = $this->dump('');
     $content = '
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <head>
     <meta http-equiv="content-language" content="' . _LANGCODE . '" />
     <meta http-equiv="content-type" content="text/html; charset=' . _CHARSET . '" />

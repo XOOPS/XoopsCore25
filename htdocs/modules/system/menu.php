@@ -10,8 +10,8 @@
  */
 
 /**
- * @copyright    XOOPS Project http://xoops.org/
- * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright    XOOPS Project https://xoops.org/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
@@ -22,7 +22,7 @@
 $groups = $GLOBALS['xoopsUser']->getGroups();
 $all_ok = false;
 if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
-    /* @var XoopsGroupPermHandler $sysperm_handler */
+    /** @var XoopsGroupPermHandler $sysperm_handler */
     $sysperm_handler = xoops_getHandler('groupperm');
     $ok_syscats      = $sysperm_handler->getItemIds('system_admin', $groups);
 } else {

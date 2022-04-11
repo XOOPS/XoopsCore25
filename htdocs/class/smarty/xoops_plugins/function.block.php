@@ -1,7 +1,7 @@
 <?php
 
 //  Author: Trabis
-//  URL: http://www.xuups.com
+//  URL: https://xoops.org
 //  E-Mail: lusopoemas@gmail.com
 //  Plugin version: 1.1
 //  Release date: 06-04-2009
@@ -43,7 +43,7 @@ function smarty_function_block($params, &$smarty)
 
     static $block_objs;
     if (!isset($block_objs[$block_id])) {
-        /* @var XoopsBlockHandler $blkhandler */
+        /** @var XoopsBlockHandler $blkhandler */
         $blkhandler = xoops_getHandler('block');
         $blockObj   = $blkhandler->get($block_id);
 

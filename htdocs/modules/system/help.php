@@ -13,7 +13,7 @@
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author              Andricq Nicolas (AKA MusS)
  */
-/* @var XoopsModule $module */
+/** @var XoopsModule $module */
 use Xmf\Request;
 
 // Include header
@@ -33,9 +33,9 @@ $xoBreadCrumb->addLink(_AM_SYSTEM_HELP, 'help.php');
 
 // If $mid > 0, we're in a module's help section.
 if ($mid > 0) {
-    /* @var XoopsModuleHandler $module_handler */
+    /** @var XoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
-    /* @var XoopsModule $module */
+    /** @var XoopsModule $module */
     $module         = $module_handler->get($mid);
 
     $xoBreadCrumb->addLink($module->getVar('name'), 'help.php?mid=' . $module->getVar('mid', 's'));
@@ -120,7 +120,7 @@ if ($mid > 0) {
     $xoBreadCrumb->render();
 
     // Get Module Handler
-    /* @var XoopsModuleHandler $module_handler */
+    /** @var XoopsModuleHandler $module_handler */
     $module_handler = xoops_getHandler('module');
     $criteria       = new CriteriaCompo();
     $criteria->setOrder('weight');

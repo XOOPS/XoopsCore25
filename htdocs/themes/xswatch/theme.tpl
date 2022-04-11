@@ -119,13 +119,13 @@
 <footer class="footer">
     <h3>
         <{$xoops_footer}>
-        <a href="http://xoops.org" title="Design by: XOOPS UI/UX Team" target="_blank" class="credits visible-md visible-sm visible-lg">
+        <a href="https://xoops.org" title="Design by: XOOPS UI/UX Team" target="_blank" class="credits visible-md visible-sm visible-lg">
             <img src="<{xoImgUrl}>images/favicon.png" alt="Design by: XOOPS UI/UX Team">
         </a>
     </h3>
 </footer>
 <div class="aligncenter comments-nav visible-xs">
-    <a href="http://xoops.org" title="Design by: XOOPS UI/UX Team" target="_blank">
+    <a href="https://xoops.org" title="Design by: XOOPS UI/UX Team" target="_blank">
         <img src="<{xoImgUrl}>images/favicon.png" alt="Design by: XOOPS UI/UX Team">
     </a>
 </div>

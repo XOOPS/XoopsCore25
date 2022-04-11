@@ -28,7 +28,7 @@ use Xmf\Language;
  * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2011-2018 XOOPS Project (https://xoops.org)
- * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license   GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link      https://xoops.org
  */
 class Tables
@@ -624,7 +624,7 @@ class Tables
             if (is_scalar($criteria)) {
                 $where = $criteria;
             } elseif (is_object($criteria)) {
-                /* @var  \CriteriaCompo $criteria */
+                /** @var  \CriteriaCompo $criteria */
                 $where = $criteria->renderWhere();
             }
             $this->queue[] = "DELETE FROM `{$tableDef['name']}` {$where}";
@@ -685,7 +685,7 @@ class Tables
             if (is_scalar($criteria)) {
                 $where = $criteria;
             } elseif (is_object($criteria)) {
-                /* @var  \CriteriaCompo $criteria */
+                /** @var  \CriteriaCompo $criteria */
                 $where = $criteria->renderWhere();
             }
             $colSql = '';

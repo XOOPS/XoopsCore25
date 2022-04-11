@@ -158,7 +158,7 @@ class XoopsModule extends XoopsObject
     }
 	
 	/**
-     * Get statut
+     * Get status
      *
      * @return string
      */
@@ -467,7 +467,7 @@ class XoopsModule extends XoopsObject
      */
     public static function getByDirname($dirname)
     {
-        /* @var XoopsModuleHandler $modhandler */
+        /** @var XoopsModuleHandler $modhandler */
         $modhandler = xoops_getHandler('module');
         $inst       = $modhandler->getByDirname($dirname);
 

@@ -272,7 +272,7 @@ class ProfileField extends XoopsObject
                 break;
 
             case 'group':
-                /* @var XoopsMemberHandler $member_handler */
+                /** @var XoopsMemberHandler $member_handler */
                 $member_handler = xoops_getHandler('member');
                 $options        = $member_handler->getGroupList();
                 $ret            = isset($options[$value]) ? $options[$value] : '';
@@ -281,7 +281,7 @@ class ProfileField extends XoopsObject
                 break;
 
             case 'group_multi':
-                /* @var XoopsMemberHandler $member_handler */
+                /** @var XoopsMemberHandler $member_handler */
                 $member_handler = xoops_getHandler('member');
                 $options        = $member_handler->getGroupList();
                 $ret            = array();
@@ -398,7 +398,7 @@ class ProfileField extends XoopsObject
      */
     public function getUserVars()
     {
-        /* @var ProfileProfileHandler $profile_handler */
+        /** @var ProfileProfileHandler $profile_handler */
         $profile_handler = xoops_getModuleHandler('profile', 'profile');
 
         return $profile_handler->getUserVars();
@@ -456,7 +456,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
         if (!($obj instanceof $this->className)) {
             return false;
         }
-         /* @var ProfileProfileHandler $profile_handler */
+         /** @var ProfileProfileHandler $profile_handler */
         $profile_handler = xoops_getModuleHandler('profile', 'profile');
         $obj->setVar('field_name', str_replace(' ', '_', $obj->getVar('field_name')));
         $obj->cleanVars();
@@ -598,7 +598,7 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
         if (!($obj instanceof $this->className)) {
             return false;
         }
-         /* @var ProfileProfileHandler $profile_handler */
+         /** @var ProfileProfileHandler $profile_handler */
         $profile_handler = xoops_getModuleHandler('profile', 'profile');
         // remove column from table
         $sql = 'ALTER TABLE ' . $profile_handler->table . ' DROP `' . $obj->getVar('field_name', 'n') . '`';
@@ -609,12 +609,12 @@ class ProfileFieldHandler extends XoopsPersistableObjectHandler
             }
 
             if ($obj->getVar('field_show') || $obj->getVar('field_edit')) {
-                /* @var XoopsModuleHandler $module_handler */
+                /** @var XoopsModuleHandler $module_handler */
                 $module_handler = xoops_getHandler('module');
                 $profile_module = $module_handler->getByDirname('profile');
                 if (is_object($profile_module)) {
                     // Remove group permissions
-                    /* @var XoopsGroupPermHandler $groupperm_handler */
+                    /** @var XoopsGroupPermHandler $groupperm_handler */
                     $groupperm_handler = xoops_getHandler('groupperm');
                     $criteria          = new CriteriaCompo(new Criteria('gperm_modid', $profile_module->getVar('mid')));
                     $criteria->add(new Criteria('gperm_itemid', $obj->getVar('field_id')));

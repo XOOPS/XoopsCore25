@@ -85,7 +85,7 @@ if (!class_exists('\BaseStringHelper', false)) {
          *                       no limit on length i.e. the output will be until the end of the string.
          *
          * @return string the extracted part of string, or FALSE on failure or an empty string.
-         * @see http://www.php.net/manual/en/function.substr.php
+         * @see https://www.php.net/manual/en/function.substr.php
          */
         public static function byteSubstr($string, $start, $length = null)
         {
@@ -104,7 +104,7 @@ if (!class_exists('\BaseStringHelper', false)) {
          * @param string $suffix If the name component ends in suffix this will also be cut off.
          *
          * @return string the trailing name component of the given path.
-         * @see http://www.php.net/manual/en/function.basename.php
+         * @see https://www.php.net/manual/en/function.basename.php
          */
         public static function basename($path, $suffix = '')
         {
@@ -127,7 +127,7 @@ if (!class_exists('\BaseStringHelper', false)) {
          * @param string $path A path string.
          *
          * @return string the parent directory's path.
-         * @see http://www.php.net/manual/en/function.basename.php
+         * @see https://www.php.net/manual/en/function.basename.php
          */
         public static function dirname($path)
         {
@@ -290,7 +290,7 @@ if (!class_exists('\BaseStringHelper', false)) {
                 return true;
             }
             if ($caseSensitive) {
-                // Warning check, see http://php.net/manual/en/function.substr-compare.php#refsect1-function.substr-compare-returnvalues
+                // Warning check, see https://php.net/manual/en/function.substr-compare.php#refsect1-function.substr-compare-returnvalues
                 if (static::byteLength($string) < $bytes) {
                     return false;
                 }

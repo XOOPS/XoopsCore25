@@ -25,7 +25,7 @@ use Xmf\Language;
  * @author    trabis <lusopoemas@gmail.com>
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2016-2018 XOOPS Project (https://xoops.org)
- * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license   GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link      https://xoops.org
  */
 abstract class GenericHelper extends AbstractHelper
@@ -141,7 +141,7 @@ abstract class GenericHelper extends AbstractHelper
         ) {
             $this->module = $xoopsModule;
         } else {
-            /* @var \XoopsModuleHandler $module_handler */
+            /** @var \XoopsModuleHandler $module_handler */
             $module_handler = xoops_getHandler('module');
             $this->module = $module_handler->getByDirname($this->dirname);
         }
@@ -163,7 +163,7 @@ abstract class GenericHelper extends AbstractHelper
             global $xoopsModuleConfig;
             $this->configs = $xoopsModuleConfig;
         } else {
-            /* @var \XoopsConfigHandler $config_handler */
+            /** @var \XoopsConfigHandler $config_handler */
             $config_handler = xoops_getHandler('config');
             $this->configs = $config_handler->getConfigsByCat(0, $this->getModule()->getVar('mid'));
         }

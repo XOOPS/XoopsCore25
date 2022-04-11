@@ -430,7 +430,7 @@ class XoopsCommentRenderer
     {
         $poster['id'] = (int)$poster_id;
         if ($poster['id'] > 0) {
-            /* @var  XoopsUser $com_poster */
+            /** @var  XoopsUser $com_poster */
             $com_poster = $this->_memberHandler->getUser($poster['id']);
             if (is_object($com_poster)) {
                 $poster['uname']      = '<a href="' . XOOPS_URL . '/userinfo.php?uid=' . $poster['id'] . '">' . $com_poster->getVar('uname') . '</a>';

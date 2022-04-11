@@ -1,12 +1,12 @@
 {* Smarty *}
 {* debug.tpl, last updated version 2.1.0 *}
 {* @author     debianus *}
-{* @copyright  http://www.impresscms.org/ The ImpressCMS Project *}
+{* @copyright  https://www.impresscms.org/ The ImpressCMS Project *}
 {* @license	   https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL) *}
 {assign_debug_info}
 {capture assign=debug_output}
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "https://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
     <title>Smarty Debug Console</title>
 {literal}

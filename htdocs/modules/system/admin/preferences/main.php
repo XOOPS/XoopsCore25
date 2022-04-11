@@ -10,8 +10,8 @@
  */
 
 /**
- * @copyright    XOOPS Project http://xoops.org/
- * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright    XOOPS Project https://xoops.org/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
@@ -62,7 +62,7 @@ switch ($op) {
         $xoopsTpl->assign('breadcrumb', 1);
 
         $form           = new XoopsThemeForm(constant($confcat->getVar('confcat_name')), 'pref_form', 'admin.php?fct=preferences', 'post', true);
-        /* @var XoopsConfigHandler $config_handler */
+        /** @var XoopsConfigHandler $config_handler */
         $config_handler = xoops_getHandler('config');
         $criteria       = new CriteriaCompo();
         $criteria->add(new Criteria('conf_modid', 0));
@@ -257,7 +257,7 @@ switch ($op) {
 
     case 'showmod':
 
-        /* @var XoopsConfigHandler $config_handler */
+        /** @var XoopsConfigHandler $config_handler */
         $config_handler = xoops_getHandler('config');
         $mod            = isset($_REQUEST['mod']) ? (int)$_REQUEST['mod'] : 0;
         if ($mod <= 0) {
@@ -431,7 +431,7 @@ switch ($op) {
 
                     // if default theme has been changed
                     if (!$theme_updated && $config->getVar('conf_catid') == XOOPS_CONF && $config->getVar('conf_name') === 'theme_set') {
-                        /* @var XoopsMemberHandler $member_handler */
+                        /** @var XoopsMemberHandler $member_handler */
                         $member_handler = xoops_getHandler('member');
                         $member_handler->updateUsersByField('theme', ${$config->getVar('conf_name')});
                         $theme_updated = true;
@@ -482,10 +482,10 @@ switch ($op) {
 
                     // add read permission for the start module to all groups
                     if (!$startmod_updated && $new_value != '--' && $config->getVar('conf_catid') == XOOPS_CONF && $config->getVar('conf_name') === 'startpage') {
-                        /* @var XoopsMemberHandler $member_handler */
+                        /** @var XoopsMemberHandler $member_handler */
                         $member_handler     = xoops_getHandler('member');
                         $groups             = $member_handler->getGroupList();
-                        /* @var XoopsGroupPermHandler $moduleperm_handler */
+                        /** @var XoopsGroupPermHandler $moduleperm_handler */
                         $moduleperm_handler = xoops_getHandler('groupperm');
                         $module_handler     = xoops_getHandler('module');
                         $module             = $module_handler->getByDirname($new_value);

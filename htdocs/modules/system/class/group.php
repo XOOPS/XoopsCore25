@@ -52,17 +52,17 @@ class SystemGroup extends XoopsGroup
             $r_mod_value   = array();
             $r_block_value = array();
         } else {
-            /* @var XoopsGroupPermHandler $sysperm_handler */
+            /** @var XoopsGroupPermHandler $sysperm_handler */
             $sysperm_handler    = xoops_getHandler('groupperm');
             $s_cat_value        = $sysperm_handler->getItemIds('system_admin', $this->getVar('groupid'));
-            /* @var XoopsMemberHandler $member_handler */
+            /** @var XoopsMemberHandler $member_handler */
             $member_handler     = xoops_getHandler('member');
             $thisgroup          = $member_handler->getGroup($this->getVar('groupid'));
-            /* @var XoopsGroupPermHandler $moduleperm_handler */
+            /** @var XoopsGroupPermHandler $moduleperm_handler */
             $moduleperm_handler = xoops_getHandler('groupperm');
             $a_mod_value        = $moduleperm_handler->getItemIds('module_admin', $thisgroup->getVar('groupid'));
             $r_mod_value        = $moduleperm_handler->getItemIds('module_read', $thisgroup->getVar('groupid'));
-            /* @var  XoopsGroupPermHandler $gperm_handler */
+            /** @var  XoopsGroupPermHandler $gperm_handler */
             $gperm_handler      = xoops_getHandler('groupperm');
             $r_block_value      = $gperm_handler->getItemIds('block_read', $this->getVar('groupid'));
         }
@@ -111,7 +111,7 @@ class SystemGroup extends XoopsGroup
 
         $a_mod_checkbox          = new XoopsFormCheckBox('', 'admin_mids[]', $a_mod_value);
         $a_mod_checkbox->columns = 5;
-        /* @var XoopsModuleHandler $module_handler */
+        /** @var XoopsModuleHandler $module_handler */
         $module_handler          = xoops_getHandler('module');
         $criteria                = new CriteriaCompo(new Criteria('hasadmin', 1));
         $criteria->add(new Criteria('isactive', 1));
@@ -139,7 +139,7 @@ class SystemGroup extends XoopsGroup
         $criteria->setOrder('ASC');
         $module_list    = $module_handler->getList($criteria);
         $module_list[0] = _AM_SYSTEM_GROUPS_CUSTOMBLOCK;
-        /* @var XoopsBlockHandler $block_handler */
+        /** @var XoopsBlockHandler $block_handler */
         $block_handler = xoops_getHandler('block');
         $blocks_obj    = $block_handler->getObjects(new Criteria('mid', "('" . implode("', '", array_keys($module_list)) . "')", 'IN'), true);
 

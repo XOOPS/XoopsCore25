@@ -447,7 +447,7 @@ abstract class SystemFineUploadHandler
      * Determines whether a directory can be accessed.
      *
      * is_executable() is not reliable on Windows prior PHP 5.0.0
-     *  (http://www.php.net/manual/en/function.is-executable.php)
+     *  (https://www.php.net/manual/en/function.is-executable.php)
      * The following tests if the current OS is Windows and if so, merely
      * checks if the folder is writable;
      * otherwise, it checks additionally for executable status (like before).

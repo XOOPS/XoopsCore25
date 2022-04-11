@@ -10,7 +10,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license             GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             profile
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
@@ -33,7 +33,7 @@ if (!empty($_GET['op']) && in_array($_GET['op'], array('actv', 'activate'))) {
 xoops_load('XoopsUserUtility');
 $myts = MyTextSanitizer::getInstance();
 
-/* @var XoopsConfigHandler $config_handler */
+/** @var XoopsConfigHandler $config_handler */
 $config_handler             = xoops_getHandler('config');
 $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 if (empty($GLOBALS['xoopsConfigUser']['allow_register'])) {
@@ -91,7 +91,7 @@ if (isset($steps[$current_step])) {
     $xoBreadcrumbs[] = array('title' => $steps[$current_step]['step_name']);
 }
 
-/* @var XoopsMemberHandler $member_handler */
+/** @var XoopsMemberHandler $member_handler */
 $member_handler  = xoops_getHandler('member');
 $profile_handler = xoops_getModuleHandler('profile');
 

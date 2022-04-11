@@ -16,7 +16,7 @@
  * @author              Skalpa Keo <skalpa@xoops.org>
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
-/* @var  XoopsUser $xoopsUser */
+/** @var  XoopsUser $xoopsUser */
 
 function fatalPhpErrorHandler($e = null) {
     $messageFormat = '<br><div>Fatal %s %s file: %s : %d </div>';

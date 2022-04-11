@@ -10,8 +10,8 @@
  */
 
 /**
- * @copyright    XOOPS Project http://xoops.org/
- * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright    XOOPS Project https://xoops.org/
+ * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
@@ -34,7 +34,7 @@ $upload_size = 500000;
 // Get Action type
 $op = Request::getString('op', 'list');
 // Get smilies handler
-/* @var  SystemsmiliesHandler $smilies_Handler */
+/** @var  SystemsmiliesHandler $smilies_Handler */
 $smilies_Handler = xoops_getModuleHandler('smilies', 'system');
 // Define main template
 $GLOBALS['xoopsOption']['template_main'] = 'system_smilies.tpl';

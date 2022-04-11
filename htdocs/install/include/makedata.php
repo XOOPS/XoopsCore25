@@ -15,7 +15,7 @@
  * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
  *
  * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license             GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license             GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             installer
  * @since               2.3.0
  * @author              Haruki Setoyama <haruki@planewave.org>
@@ -60,7 +60,7 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
     // $dbm = new Db_manager;
     $tables = array();
     // data for table 'groups_users_link'
-    /* @var  Db_manager $dbm */
+    /** @var  Db_manager $dbm */
     $dbm->insert('groups_users_link', ' VALUES (0, ' . $groups['XOOPS_GROUP_ADMIN'] . ', 1)');
     $dbm->insert('groups_users_link', ' VALUES (0, ' . $groups['XOOPS_GROUP_USERS'] . ', 1)');
     // data for table 'group_permission'
@@ -87,8 +87,8 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
     $dbm->insert('group_permission', ' VALUES(0,' . $groups['XOOPS_GROUP_ADMIN'] . ",16,1,'system_admin')");
     $dbm->insert('group_permission', ' VALUES(0,' . $groups['XOOPS_GROUP_ADMIN'] . ",17,1,'system_admin')");
     // data for table 'banner'
-    $dbm->insert('banner', " (bid, cid, imptotal, impmade, clicks, imageurl, clickurl, date, htmlbanner, htmlcode) VALUES (0, 1, 0, 1, 0, '" . XOOPS_URL . "/images/banners/xoops_banner_2.gif', 'http://www.xoops.org/', 1008813250, 0, '')");
-    $dbm->insert('banner', " (bid, cid, imptotal, impmade, clicks, imageurl, clickurl, date, htmlbanner, htmlcode) VALUES (0, 1, 0, 1, 0, '" . XOOPS_URL . "/images/banners/xoopsifyIt.gif', 'http://www.xoops.org/', 1008813250, 1, '')");
+    $dbm->insert('banner', " (bid, cid, imptotal, impmade, clicks, imageurl, clickurl, date, htmlbanner, htmlcode) VALUES (0, 1, 0, 1, 0, '" . XOOPS_URL . "/images/banners/xoops_banner_2.gif', 'http://xoops.org/', 1008813250, 0, '')");
+    $dbm->insert('banner', " (bid, cid, imptotal, impmade, clicks, imageurl, clickurl, date, htmlbanner, htmlcode) VALUES (0, 1, 0, 1, 0, '" . XOOPS_URL . "/images/banners/xoopsifyIt.gif', 'http://xoops.org/', 1008813250, 1, '')");
     // default theme
     $time = time();
     $dbm->insert('tplset', " VALUES (1, 'default', 'XOOPS Default Template Set', '', " . $time . ')');

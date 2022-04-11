@@ -15,7 +15,7 @@
  * @since               2.3.0
  * @author              Taiwen Jiang <phppp@users.sourceforge.net>
  */
-/* @var  XoopsUser $xoopsUser */
+/** @var  XoopsUser $xoopsUser */
 
 use Xmf\Request;
 
@@ -372,7 +372,7 @@ if (!Request::hasVar('user_submit', 'POST')) {
         );
         $level_radio->addOptionArray($levels);
 
-        /* @var XoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $groups         = $member_handler->getGroupList();
         $groups[0]      = _ALL;

@@ -24,7 +24,7 @@ use Xmf\Language;
  * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2011-2021 XOOPS Project (https://xoops.org)
- * @license   GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license   GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  */
 class Admin
 {

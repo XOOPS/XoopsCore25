@@ -21,7 +21,7 @@ use Xmf\Module\Helper;
  * @author    trabis <lusopoemas@gmail.com>
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2011-2018 XOOPS Project (https://xoops.org)
- * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license   GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link      https://xoops.org
  */
 class Permission extends AbstractHelper
@@ -50,7 +50,7 @@ class Permission extends AbstractHelper
     {
         $this->mid = $this->module->getVar('mid');
         $this->dirname = $this->module->getVar('dirname');
-        /* @var $this->permissionHandler XoopsGroupPermHandler */
+        /** @var $this->permissionHandler XoopsGroupPermHandler */
         $this->permissionHandler = xoops_getHandler('groupperm');
     }
 

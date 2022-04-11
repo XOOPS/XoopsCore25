@@ -24,7 +24,7 @@ namespace Xmf;
  * @author    trabis <lusopoemas@gmail.com>
  * @author    Joomla!
  * @copyright 2011-2018 XOOPS Project (https://xoops.org)
- * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license   GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link      https://xoops.org
  */
 class Request
@@ -349,7 +349,7 @@ class Request
                     $headers[strtolower($name)] = $value;
                 }
             } else {
-                // From joyview - http://php.net/manual/en/function.getallheaders.php
+                // From joyview - https://php.net/manual/en/function.getallheaders.php
                 foreach ($_SERVER as $name => $value) {
                     if (substr($name, 0, 5) === 'HTTP_') {
                         $translatedName = str_replace(' ', '-', strtolower(str_replace('_', ' ', substr($name, 5))));
