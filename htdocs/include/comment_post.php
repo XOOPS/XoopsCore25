@@ -142,7 +142,7 @@ if (!empty($_POST)) {
         $com_url = Request::getUrl('com_url', '', 'POST');
         if ('' !== $com_url) {
             $com_url = filter_var($com_url, FILTER_VALIDATE_URL);
-            if (is_string($com_url) && (false === preg_match("#^https?://#", $com_url)))  {
+            if (is_string($com_url) && (false === preg_match("#^https?://#", $com_url))) {
                 $com_url = false;
             }
             if (false === $com_url) {
@@ -171,7 +171,7 @@ if (!empty($_POST)) {
         // End add by voltan
     }
 
-    $com_mode   = htmlspecialchars(Request::getInt('com_mode', 'flat', 'POST'));
+    $com_mode   = htmlspecialchars(Request::getString('com_mode', 'flat', 'POST'));
     $com_order  = Request::getInt('com_order', XOOPS_COMMENT_OLD1ST, 'POST') ;
     $com_itemid = Request::getInt('com_itemid', 0, 'POST');
     $com_pid    = Request::getInt('com_pid', 0, 'POST');
@@ -179,9 +179,9 @@ if (!empty($_POST)) {
     $com_status = Request::getInt('com_status', 0, 'post');
     $dosmiley   = (int) Request::getBool('dosmiley', false, 'post');
     $doxcode    = (int) Request::getBool('doxcode', false, 'post');
-    $dobr       = (int) Request::getInt('dobr', false, 'post');
-    $dohtml     = (int) Request::getInt('dohtml', false, 'post');
-    $doimage    = (int) Request::getInt('doimage', false, 'post');
+    $dobr       = (int) Request::getBool('dobr', false, 'post');
+    $dohtml     = (int) Request::getBool('dohtml', false, 'post');
+    $doimage    = (int) Request::getBool('doimage', false, 'post');
     $com_icon   = Request::getString('com_icon', '', 'post');
 
     $com_title  = Request::getString('com_title', _NOTITLE, 'post');
