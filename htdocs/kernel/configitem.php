@@ -216,7 +216,7 @@ class XoopsConfigItem extends XoopsObject
                 $this->setVar('conf_value', serialize($value), $force_slash);
                 break;
             case 'text':
-                $this->setVar('conf_value', trim($value), $force_slash);
+                $this->setVar('conf_value', trim((string)$value), $force_slash);
                 break;
             default:
                 $this->setVar('conf_value', $value, $force_slash);
