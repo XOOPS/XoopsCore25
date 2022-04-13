@@ -59,6 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($vars['DB_NAME'])) {
     $error    = validateDbCharset($link, $vars['DB_CHARSET'], $vars['DB_COLLATION']);
     $db_exist = true;
     if (empty($error)) {
+        mysqli_report(MYSQLI_REPORT_OFF);
         if (!@mysqli_select_db($link, $dbName)) {
             // Database not here: try to create it
             $result = mysqli_query($link, 'CREATE DATABASE `' . $dbName . '`');
