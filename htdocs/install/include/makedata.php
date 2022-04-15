@@ -104,7 +104,7 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
     include_once '../modules/system/xoops_version.php';
     $time = time();
     // RMV-NOTIFY (updated for extra column in table)
-    $dbm->insert('modules', " VALUES (1, '" . _MI_SYSTEM_NAME . "', " . ($modversion['version'] * 100) . ', ' . $time . ", 0, 1, 'system', 0, 1, 0, 0, 0, 0)");
+    $dbm->insert('modules', " VALUES (1, '" . _MI_SYSTEM_NAME . "', '" . $modversion['version'] . "', " . $time . ", 0, 1, 'system', 0, 1, 0, 0, 0, 0)");
 
     foreach ($modversion['templates'] as $tplfile) {
         // Main templates
