@@ -174,9 +174,12 @@ class SystemMenuHandler
          */
         $j=0;
         foreach ($this->_menutabs as $k => $menus) {
+            if ($j == $currentoption) {
+                $breadcrumb = $menus;
+            }
             $menuItems[] = 'modmenu_' . $j++;
         }
-        $breadcrumb                = $menuItems[$currentoption];
+
         $menuItems[$currentoption] = 'current';
         $menu                      = "<div id='buttontop_mod'>";
         $menu .= "<table style='width: 100%; padding: 0;' cellspacing='0'>\n<tr>";
