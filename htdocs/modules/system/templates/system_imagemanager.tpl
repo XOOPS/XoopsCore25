@@ -56,8 +56,8 @@
         </tr>
     </table>
 </form>
-<div id="pagenav"><{$pagenav}></div>
-<{if $image_total > 0}>
+<div id="pagenav"><{$pagenav|default:''}></div>
+<{if $image_total|default:0 > 0}>
     <table cellspacing="0" id="imagemain">
         <tr>
             <th><{$lang_imagename}></th>
@@ -81,7 +81,7 @@
     <div id="welcomenot"></div>
 <{/if}>
 
-<div id="pagenav"><{$pagenav}></div>
+<div id="pagenav"><{$pagenav|default:''}></div>
 
 <div id="footer">
     <input value="<{$lang_close}>" type="button" onclick="window.close();"/>
