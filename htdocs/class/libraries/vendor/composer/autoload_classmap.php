@@ -11,6 +11,7 @@ return array(
     'Firebase\\JWT\\ExpiredException' => $vendorDir . '/firebase/php-jwt/src/ExpiredException.php',
     'Firebase\\JWT\\JWK' => $vendorDir . '/firebase/php-jwt/src/JWK.php',
     'Firebase\\JWT\\JWT' => $vendorDir . '/firebase/php-jwt/src/JWT.php',
+    'Firebase\\JWT\\Key' => $vendorDir . '/firebase/php-jwt/src/Key.php',
     'Firebase\\JWT\\SignatureInvalidException' => $vendorDir . '/firebase/php-jwt/src/SignatureInvalidException.php',
     'Geekwright\\RegDom\\PublicSuffixList' => $vendorDir . '/geekwright/regdom/src/PublicSuffixList.php',
     'Geekwright\\RegDom\\RegisteredDomain' => $vendorDir . '/geekwright/regdom/src/RegisteredDomain.php',
