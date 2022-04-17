@@ -115,7 +115,7 @@ class XoopsImageSetHandler extends XoopsObjectHandler
      * @param int $id ID
      *
      * @internal param bool $getbinary
-     * @return XoopsImageSet {@link XoopsImageSet}, FALSE on fail
+     * @return XoopsImageSet|false {@link XoopsImageSet}, FALSE on fail
      */
     public function get($id)
     {
@@ -240,7 +240,7 @@ class XoopsImageSetHandler extends XoopsObjectHandler
      *
      * @param  int    $imgset_id
      * @param  string $tplset_name
-     * @return array
+     * @return array|bool
      */
     public function linkThemeset($imgset_id, $tplset_name)
     {
@@ -266,7 +266,7 @@ class XoopsImageSetHandler extends XoopsObjectHandler
      *
      * @param  int    $imgset_id
      * @param  string $tplset_name
-     * @return array
+     * @return array|bool
      */
     public function unlinkThemeset($imgset_id, $tplset_name)
     {
