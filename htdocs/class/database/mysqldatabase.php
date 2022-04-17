@@ -166,7 +166,7 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
      */
     public function getRowsNum($result)
     {
-        return @mysqli_num_rows($result);
+        return (int)@mysqli_num_rows($result);
     }
 
     /**
