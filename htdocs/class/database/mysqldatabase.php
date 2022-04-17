@@ -176,7 +176,7 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
      */
     public function getAffectedRows()
     {
-        return mysqli_affected_rows($this->conn);
+        return (int)mysqli_affected_rows($this->conn);
     }
 
     /**
