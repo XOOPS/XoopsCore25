@@ -329,6 +329,7 @@ if ($isadmin || ($catreadcount > 0) || ($catwritecount > 0)) {
         if ($imagecategory->getVar('imgcat_type') !== 'C') {
             redirect_header($current_file . '?target=' . $target, 3, _AM_SYSTEM_IMAGES_SCATDELNG);
         }
+        /** @var \XoopsImageHandler $image_handler */
         $image_handler = xoops_getHandler('image');
         $images        = $image_handler->getObjects(new Criteria('imgcat_id', $imgcat_id), true, false);
         $errors        = array();
