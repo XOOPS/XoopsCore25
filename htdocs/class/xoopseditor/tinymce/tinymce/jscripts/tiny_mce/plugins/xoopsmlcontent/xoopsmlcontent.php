@@ -33,6 +33,7 @@ function langDropdown()
         if (is_object($xlanguage) && $xlanguage->getVar('isactive')) {
             include_once(XOOPS_ROOT_PATH . '/modules/xlanguage/include/vars.php');
             include_once(XOOPS_ROOT_PATH . '/modules/xlanguage/include/functions.php');
+            /** @var LanguageHandler $xlanguage_handler */
             $xlanguage_handler = xoops_getModuleHandler('language', 'xlanguage');
             $xlanguage_handler->loadConfig();
             $lang_list =& $xlanguage_handler->getAllList();
