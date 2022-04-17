@@ -78,6 +78,24 @@ class Permission extends AbstractHelper
     }
 
     /**
+     * Get all item IDs for which a group (or set of groups) has a specific permission
+     * Return an array of items for which the specified groups have the named permission
+     *
+     * @param string $gperm_name  Name of permission
+     * @param int|array $gperm_groupid A group ID or an array of group IDs
+     *
+     * @return array array of item IDs
+     */
+    public function getItemIds($gperm_name, $gperm_groupid)
+    {
+        return $this->permissionHandler->getItemIds(
+            $gperm_name,
+            $gperm_groupid,
+            $this->mid
+        );
+    }
+
+    /**
      * Redirect to a url if user does not have permission for an item
      *
      * @param string $gperm_name   name of the permission to test
