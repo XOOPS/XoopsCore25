@@ -67,8 +67,9 @@ Updated libraries and assets:
 - HTML Purifier to 4.14 (mamba)
 - phpThumb has been removed #939
 - bootstrap 3.4.1 (geekwright)
-- jQuery to 3.5.1 (geekwright)
+- jQuery to 3.6.0 (geekwright)
 - Smarty to v2.6.32 (mamba)
+- jQuery UI 1.13.1 (mamba)
 
 ===================================
 2.5.11 Beta1             2020/02/14
