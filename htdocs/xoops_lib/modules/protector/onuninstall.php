@@ -39,6 +39,9 @@ if (!function_exists('protector_onuninstall_base')) {
 
         $db  = XoopsDatabaseFactory::getDatabaseConnection();
         $mid = $module->getVar('mid');
+        if (!is_array($ret)) {
+            $ret = array();
+        }
 
         // TABLES (loading mysql.sql)
         $sql_file_path = __DIR__ . '/sql/mysql.sql';
