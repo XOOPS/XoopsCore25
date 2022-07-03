@@ -25,6 +25,9 @@
  */
 class ProfileProfile extends XoopsObject
 {
+    public $profile_id;
+    public $handler;
+
     /**
      * @param $fields
      */
@@ -323,7 +326,8 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
         $sql_users = $sql_select . $sql_from . $sql_clause . $sql_order;
         $result    = $this->db->query($sql_users, $limit, $start);
 
-        if (!$result) {
+//        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             return array(array(), array(), 0);
         }
         $user_handler = xoops_getHandler('user');
@@ -349,7 +353,9 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
         if ((!empty($limit) && $count >= $limit) || !empty($start)) {
             $sql_count = 'SELECT COUNT(*)' . $sql_from . $sql_clause;
             $result    = $this->db->query($sql_count);
-            list($count) = $this->db->fetchRow($result);
+            if ($this->db->isResultSet($result)) {
+                list($count) = $this->db->fetchRow($result);
+            }
         }
 
         return array($users, $profiles, (int)$count);
