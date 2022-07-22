@@ -18,6 +18,8 @@
 
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
+require_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
+
 /**
  * Class for users
  * @author              Kazumi Ono <onokazu@xoops.org>
@@ -80,8 +82,8 @@ class XoopsUser extends XoopsObject
         $this->initVar('umode', XOBJ_DTYPE_OTHER, null, false);
         $this->initVar('uorder', XOBJ_DTYPE_INT, 1, false);
         // RMV-NOTIFY
-        $this->initVar('notify_method', XOBJ_DTYPE_OTHER, 1, false);
-        $this->initVar('notify_mode', XOBJ_DTYPE_OTHER, 0, false);
+        $this->initVar('notify_method', XOBJ_DTYPE_OTHER, XOOPS_NOTIFICATION_METHOD_PM, false);
+        $this->initVar('notify_mode', XOBJ_DTYPE_OTHER, XOOPS_NOTIFICATION_MODE_SENDALWAYS, false);
         $this->initVar('user_occ', XOBJ_DTYPE_TXTBOX, null, false, 100);
         $this->initVar('bio', XOBJ_DTYPE_TXTAREA, null, false, null);
         $this->initVar('user_intrest', XOBJ_DTYPE_TXTBOX, null, false, 150);
