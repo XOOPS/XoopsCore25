@@ -293,8 +293,13 @@ define('_MD_AM_CPANELDSC', 'For backend');
 define('_MD_AM_WELCOMETYPE', 'Sending welcoming message');
 define('_MD_AM_WELCOMETYPE_DESC', 'The way of sending out a welcoming message to a user upon his successful registration.');
 define('_MD_AM_WELCOMETYPE_EMAIL', 'Email');
-define('_MD_AM_WELCOMETYPE_PM', 'Message');
-define('_MD_AM_WELCOMETYPE_BOTH', 'Email and message');
+define('_MD_AM_WELCOMETYPE_PM', 'Private message');
+define('_MD_AM_WELCOMETYPE_BOTH', 'Email and private message');
+define('_MD_AM_DEFAULT_NOTIFICATION_METHOD', 'Default notification method');
+define('_MD_AM_DEFAULT_NOTIFICATION_METHOD_DESC', 'For new users when they subscribe to notifications from, e.g., a forum.');
+define('_MD_AM_DEFAULT_NOTIFICATION_METHOD_DISABLE', 'Temporarily disable');
+define('_MD_AM_DEFAULT_NOTIFICATION_METHOD_EMAIL', 'Email');
+define('_MD_AM_DEFAULT_NOTIFICATION_METHOD_PM', 'Private message');
 define('_MD_AM_MODULEPREF', 'Module Preferences');
 // Preference module system
 define('_AM_SYSTEM_PREFERENCES_SETTINGS', 'System Module Settings');
