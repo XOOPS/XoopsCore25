@@ -157,12 +157,13 @@ class XoopsNotification extends XoopsObject
     public function notifyUser($template_dir, $template, $subject, $tags)
     {
         // Check the user's notification preference.
-        /* @var XoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $user           = $member_handler->getUser($this->getVar('not_uid'));
-        if (!is_object($user)) {
+        if (!is_object($user) || !$user->isActive()) {
             return true;
         }
+
         $method = $user->getVar('notify_method');
 
         $xoopsMailer = xoops_getMailer();
