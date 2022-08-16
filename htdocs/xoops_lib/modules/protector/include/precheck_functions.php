@@ -129,6 +129,8 @@ function protector_phar_check($item, $key)
     $check = preg_match('#^\s*phar://#', $item);
     if(1===$check) {
         $protector = Protector::getInstance();
+        $protector->message = 'Protector detects attacking actions';
+        $protector->output_log('PHAR');
         $protector->purge(false);
     }
 }
