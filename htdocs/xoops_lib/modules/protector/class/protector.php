@@ -418,7 +418,12 @@ class Protector
      */
     public function get_bad_ips($with_jailed_time = false)
     {
-        list($bad_ips_serialized) = @file(Protector::get_filepath4badips());
+        //        list($bad_ips_serialized) = @file(Protector::get_filepath4badips());
+        $filepath4badips = @file(Protector::get_filepath4badips());
+
+        if (is_array($filepath4badips) && isset($filepath4badips[0])) {
+            list($bad_ips_serialized) = $filepath4badips;
+        }
         $bad_ips = empty($bad_ips_serialized) ? array() : @unserialize($bad_ips_serialized, array('allowed_classes' => false));
         if (!is_array($bad_ips) || isset($bad_ips[0])) {
             $bad_ips = array();
@@ -456,7 +461,13 @@ class Protector
      */
     public function get_group1_ips($with_info = false)
     {
-        list($group1_ips_serialized) = @file(Protector::get_filepath4group1ips());
+        //        list($group1_ips_serialized) = @file(Protector::get_filepath4group1ips());
+        $filepath4group1ips = @file(Protector::get_filepath4group1ips());
+
+        if (is_array($filepath4group1ips) && isset($filepath4group1ips[0])) {
+            list($group1_ips_serialized) = $filepath4group1ips;
+        }
+
         $group1_ips = empty($group1_ips_serialized) ? array() : @unserialize($group1_ips_serialized, array('allowed_classes' => false));
         if (!is_array($group1_ips)) {
             $group1_ips = array();
