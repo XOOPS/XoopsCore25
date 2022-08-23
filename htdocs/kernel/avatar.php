@@ -29,6 +29,16 @@ class XoopsAvatar extends XoopsObject
 {
     public $_userCount;
 
+    //PHP 8.2 Dynamic properties deprecated
+    public $avatar_id;
+    public $avatar_file;
+    public $avatar_name;
+    public $avatar_mimetype;
+    public $avatar_created;
+    public $avatar_display;
+    public $avatar_weight;
+    public $avatar_type;
+
     /**
      * Constructor
      */

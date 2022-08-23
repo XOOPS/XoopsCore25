@@ -25,6 +25,12 @@
  */
 class ProfileCategory extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $cat_id;
+    public $cat_title;
+    public $cat_description;
+    public $cat_weight;
+
     /**
      *
      */

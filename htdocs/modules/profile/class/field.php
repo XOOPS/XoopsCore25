@@ -25,6 +25,25 @@
  */
 class ProfileField extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $field_id;
+    public $cat_id;
+    public $field_type;
+    public $field_valuetype;
+    public $field_name;
+    public $field_title;
+    public $field_description;
+    public $field_required; //0 = no, 1 = yes
+    public $field_maxlength;
+    public $field_weight;
+    public $field_default;
+    public $field_notnull;
+    public $field_edit;
+    public $field_show;
+    public $field_config;
+    public $field_options;
+    public $step_id;
+
     /**
      *
      */

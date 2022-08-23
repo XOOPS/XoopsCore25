@@ -33,6 +33,16 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 class XoopsImagecategory extends XoopsObject
 {
     public $_imageCount;
+    //PHP 8.2 Dynamic properties deprecated
+    public $imgcat_id;
+    public $imgcat_name;
+    public $imgcat_display;
+    public $imgcat_weight;
+    public $imgcat_maxsize;
+    public $imgcat_maxwidth;
+    public $imgcat_maxheight;
+    public $imgcat_type;
+    public $imgcat_storetype;
 
     /**
      * Constructor
