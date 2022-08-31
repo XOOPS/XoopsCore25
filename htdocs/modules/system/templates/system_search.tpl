@@ -59,7 +59,7 @@
 			<{$smarty.const._SR_NOMATCH}>
 		</p>
 	<{/if}>
-	<{if $previous || next}>
+	<{if $previous || $next}>
 		<br>
 		<table>
 			<tr>

@@ -13,6 +13,7 @@ class ComposerStaticInit6352cb8ef79af2c7649e83bf921c4678
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
         'e40631d46120a9c38ea139981f8dab26' => __DIR__ . '/..' . '/ircmaxell/password-compat/lib/password.php',
         'def43f6c87e4f8dfd0c9e1b1bab14fe8' => __DIR__ . '/..' . '/symfony/polyfill-iconv/bootstrap.php',
+        'de2dd2b3c16f4ba958f0437e8840a923' => __DIR__ . '/..' . '/boenrobot/money_format_polyfill/src/money_format.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -100,6 +101,7 @@ class ComposerStaticInit6352cb8ef79af2c7649e83bf921c4678
         'Firebase\\JWT\\ExpiredException' => __DIR__ . '/..' . '/firebase/php-jwt/src/ExpiredException.php',
         'Firebase\\JWT\\JWK' => __DIR__ . '/..' . '/firebase/php-jwt/src/JWK.php',
         'Firebase\\JWT\\JWT' => __DIR__ . '/..' . '/firebase/php-jwt/src/JWT.php',
+        'Firebase\\JWT\\Key' => __DIR__ . '/..' . '/firebase/php-jwt/src/Key.php',
         'Firebase\\JWT\\SignatureInvalidException' => __DIR__ . '/..' . '/firebase/php-jwt/src/SignatureInvalidException.php',
         'Geekwright\\RegDom\\PublicSuffixList' => __DIR__ . '/..' . '/geekwright/regdom/src/PublicSuffixList.php',
         'Geekwright\\RegDom\\RegisteredDomain' => __DIR__ . '/..' . '/geekwright/regdom/src/RegisteredDomain.php',

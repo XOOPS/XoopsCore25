@@ -44,7 +44,7 @@ if (!empty($_POST['action'])) {
         $lines   = empty($_POST['bad_ips']) ? array() : explode("\n", trim($_POST['bad_ips']));
         $bad_ips = array();
         foreach ($lines as $line) {
-            @list($bad_ip, $jailed_time) = explode(':', $line, 2);
+            @list($bad_ip, $jailed_time) = explode('|', $line, 2);
             $bad_ips[trim($bad_ip)] = empty($jailed_time) ? 0x7fffffff : (int)$jailed_time;
         }
         if (!$protector->write_file_badips($bad_ips)) {
@@ -152,8 +152,8 @@ $bad_ips = $protector->get_bad_ips(true);
 uksort($bad_ips, 'protector_ip_cmp');
 $bad_ips4disp = '';
 foreach ($bad_ips as $bad_ip => $jailed_time) {
-    $line = $jailed_time ? $bad_ip . ':' . $jailed_time : $bad_ip;
-    $line = str_replace(':2147483647', '', $line); // remove :0x7fffffff
+    $line = $jailed_time ? $bad_ip . '|' . $jailed_time : $bad_ip;
+    $line = str_replace('|2147483647', '', $line); // remove :0x7fffffff
     $bad_ips4disp .= htmlspecialchars($line, ENT_QUOTES) . "\n";
 }
 
@@ -173,7 +173,7 @@ echo "
       " . _AM_TH_BADIPS . "
     </td>
     <td class='even'>
-      <textarea name='bad_ips' id='bad_ips' style='width:200px;height:60px;'>$bad_ips4disp</textarea>
+      <textarea name='bad_ips' id='bad_ips' style='width:360px;height:60px;' spellcheck='false'>$bad_ips4disp</textarea>
       <br>
       " . htmlspecialchars($protector->get_filepath4badips()) . "
     </td>
@@ -183,7 +183,7 @@ echo "
       " . _AM_TH_GROUP1IPS . "
     </td>
     <td class='even'>
-      <textarea name='group1_ips' id='group1_ips' style='width:200px;height:60px;'>$group1_ips4disp</textarea>
+      <textarea name='group1_ips' id='group1_ips' style='width:360px;height:60px;' spellcheck='false'>$group1_ips4disp</textarea>
       <br>
       " . htmlspecialchars($protector->get_filepath4group1ips()) . "
     </td>
@@ -237,7 +237,7 @@ while (false !== (list($lid, $uid, $ip, $agent, $type, $description, $timestamp,
 
     $ip = htmlspecialchars($ip, ENT_QUOTES);
     $type = htmlspecialchars($type, ENT_QUOTES);
-    if ('{"' == substr($description, 0, 2)) {
+    if ('{"' == substr($description, 0, 2) && defined('JSON_PRETTY_PRINT')) {
         $temp = json_decode($description);
         if (is_object($temp)) {
             $description = json_encode($temp, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE);
@@ -248,7 +248,9 @@ while (false !== (list($lid, $uid, $ip, $agent, $type, $description, $timestamp,
     $uname = htmlspecialchars(($uid ? $uname : _GUESTS), ENT_QUOTES);
 
     // make agents shorter
-    if (preg_match('/MSIE\s+([0-9.]+)/', $agent, $regs)) {
+    if (preg_match('/Chrome\/([0-9.]+)/', $agent, $regs)) {
+        $agent_short = 'Chrome ' . $regs[1];
+    } elseif (preg_match('/MSIE\s+([0-9.]+)/', $agent, $regs)) {
         $agent_short = 'IE ' . $regs[1];
     } elseif (false !== stripos($agent, 'Gecko')) {
         $agent_short = strrchr($agent, ' ');
@@ -292,17 +294,48 @@ echo "
 xoops_cp_footer();
 
 /**
- * @param $a
- * @param $b
+ * Callback used by uksort and usort for ip sorting
+ *
+ * @param string $a
+ * @param string $b
  *
  * @return int
  */
 function protector_ip_cmp($a, $b)
 {
-    $as   = explode('.', $a);
-    $aval = @$as[0] * 167777216 + @$as[1] * 65536 + @$as[2] * 256 + @$as[3];
-    $bs   = explode('.', $b);
-    $bval = @$bs[0] * 167777216 + @$bs[1] * 65536 + @$bs[2] * 256 + @$bs[3];
+    // ipv6 below ipv4
+    if ((false === strpos($a, ':')) && false !== strpos($b, ':')) {
+        return -1;
+    }
+    // ipv4 above ipv6
+    if ((false === strpos($a, '.')) && false !== strpos($b, '.')) {
+        return 1;
+    }
+    // normalize ipv4 before comparing
+    if ((is_int(strpos($a, '.'))) && (is_int(strpos($b, '.')))) {
+        $a = protector_normalize_ipv4($a);
+        $b = protector_normalize_ipv4($b);
+    }
+    return strcasecmp($a, $b);
+}
 
-    return $aval > $bval ? 1 : -1;
+/**
+ * pad all octets in an ipv4 address to 3 digits for sorting
+ *
+ * @param string $n ipv4 address
+ *
+ * @return string
+ */
+function protector_normalize_ipv4($n)
+{
+    $temp = explode('.', $n);
+    $n = '';
+    foreach($temp as $k=>$v) {
+        $t = '00'. $v;
+        $n .= substr($t, -3);
+        if ($k<3) {
+            $n .= '.';
+        }
+    }
+    return $n;
 }

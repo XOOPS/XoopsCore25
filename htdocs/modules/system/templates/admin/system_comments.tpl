@@ -1,4 +1,4 @@
-<{includeq file="db:system_header.tpl"}>
+<{include file="db:system_header.tpl"}>
 <!--Comments-->
 <{if $form|default:false}>
     <div class="spacer"><{$form}></div>

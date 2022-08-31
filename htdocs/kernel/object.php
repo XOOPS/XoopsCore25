@@ -183,13 +183,13 @@ class XoopsObject
      *
      * @access   public
      *
-     * @param string $key
-     * @param int    $data_type set to one of XOBJ_DTYPE_XXX constants (set to XOBJ_DTYPE_OTHER if no data type checking nor text sanitizing is required)
-     * @param null   $value
-     * @param bool   $required  require html form input?
-     * @param int    $maxlength for XOBJ_DTYPE_TXTBOX type only
-     * @param string $options
-     * @param string $enumerations
+     * @param string   $key
+     * @param int      $data_type set to one of XOBJ_DTYPE_XXX constants (set to XOBJ_DTYPE_OTHER if no data type checking nor text sanitizing is required)
+     * @param mixed    $value
+     * @param bool     $required  require html form input?
+     * @param int|null $maxlength for XOBJ_DTYPE_TXTBOX type only
+     * @param string   $options
+     * @param string   $enumerations
      *
      * @return void
      */
@@ -420,12 +420,13 @@ class XoopsObject
      * YOU SHOULD NOT USE ANY OF THE UNICODE TYPES, THEY WILL BE REMOVED
      *
      * @access public
-     * @param  string $key    key of the object's variable to be returned
-     * @param  string $format format to use for the output
+     * @param string      $key    key of the object's variable to be returned
+     * @param string|null $format format to use for the output
      * @return mixed  formatted value of the variable
      */
-    public function getVar($key, $format = 's')
+    public function getVar($key, $format = null)
     {
+        $format = (null === $format) ? 's' : (string) $format;
         $ret = null;
         if (!isset($this->vars[$key])) {
             return $ret;
@@ -472,7 +473,7 @@ class XoopsObject
                         break 1;
                     case 'e':
                     case 'edit':
-                        return htmlspecialchars($ret, ENT_QUOTES);
+                        return htmlspecialchars((string)$ret, ENT_QUOTES);
                         break 1;
                     case 'p':
                     case 'preview':
@@ -878,7 +879,7 @@ class XoopsObject
 
                 }
             }
-            $this->cleanVars[$k] = str_replace('\\"', '"', $cleanv);
+            $this->cleanVars[$k] = str_replace('\\"', '"', (string) $cleanv);
             unset($cleanv);
         }
         if (count($this->_errors) > 0) {
@@ -1119,11 +1120,11 @@ class XoopsObjectHandler
     /**
      * gets a value object
      *
-     * @param int $int_id
+     * @param int $id
      * @abstract
      * @return XoopsObject
      */
-    public function get($int_id)
+    public function get($id)
     {
     }
 

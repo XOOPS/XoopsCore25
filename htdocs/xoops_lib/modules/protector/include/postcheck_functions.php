@@ -61,7 +61,7 @@ function protector_postcommon()
     }
 
     // reliable ips
-    $reliable_ips = @unserialize(@$conf['reliable_ips']);
+    $reliable_ips = @unserialize(@$conf['reliable_ips'], array('allowed_classes' => false));
     if (is_array($reliable_ips)) {
         foreach ($reliable_ips as $reliable_ip) {
             if (!empty($reliable_ip) && preg_match('/' . $reliable_ip . '/', $_SERVER['REMOTE_ADDR'])) {
@@ -73,7 +73,7 @@ function protector_postcommon()
     // user information (uid and can be banned)
     if (is_object(@$xoopsUser)) {
         $uid     = $xoopsUser->getVar('uid');
-        $can_ban = count(@array_intersect($xoopsUser->getGroups(), @unserialize(@$conf['bip_except']))) ? false : true;
+        $can_ban = count(@array_intersect($xoopsUser->getGroups(), @unserialize(@$conf['bip_except'], array('allowed_classes' => false)))) ? false : true;
     } else {
         // login failed check
         if ((!empty($_POST['uname']) && !empty($_POST['pass'])) || (!empty($_COOKIE['autologin_uname']) && !empty($_COOKIE['autologin_pass']))) {
@@ -134,7 +134,7 @@ function protector_postcommon()
         $maskCheck = $ip->sameSubnet($_SESSION['protector_last_ip'], $ipv4Mask, $ipv6Mask);
     }
     if (!$maskCheck) {
-        if (is_object($xoopsUser) && count(array_intersect($xoopsUser->getGroups(), unserialize($conf['groups_denyipmove'])))) {
+        if (is_object($xoopsUser) && count(array_intersect($xoopsUser->getGroups(), unserialize($conf['groups_denyipmove'], array('allowed_classes' => false))))) {
             $protector->purge(true);
         }
     }

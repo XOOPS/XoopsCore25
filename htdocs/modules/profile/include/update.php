@@ -31,11 +31,11 @@ require_once $path . '/include' . '/cp_header.php';
  */
 function xoops_module_update_profile(XoopsModule $module, $oldversion = null)
 {
-    if ($oldversion < 162) {
+    if ($oldversion < '1.6.2') {
         $GLOBALS['xoopsDB']->queryF('UPDATE `' . $GLOBALS['xoopsDB']->prefix('profile_field') . ' SET field_valuetype=2 WHERE field_name=umode');
     }
 
-    if ($oldversion < 100) {
+    if ($oldversion < '1.0.0') {
 
         // Drop old category table
         $sql = 'DROP TABLE ' . $GLOBALS['xoopsDB']->prefix('profile_category');
@@ -108,11 +108,11 @@ function xoops_module_update_profile(XoopsModule $module, $oldversion = null)
         $GLOBALS['xoopsDB']->queryF($sql);
     }
 
-    if ($oldversion < 162) {
+    if ($oldversion < '1.6.2') {
         $GLOBALS['xoopsDB']->queryF('UPDATE `' . $GLOBALS['xoopsDB']->prefix('profile_field') . "` SET `field_valuetype`=1 WHERE `field_name`='umode'");
     }
 
-    if ($oldversion < 186) {
+    if ($oldversion < '1.8.6') {
         // delete old html template files
         $templateDirectory = XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'n') . '/templates/';
         $template_list     = array_diff(scandir($templateDirectory), array('..', '.'));
@@ -137,7 +137,7 @@ function xoops_module_update_profile(XoopsModule $module, $oldversion = null)
         $GLOBALS['xoopsDB']->queryF($sql);
     }
 
-    if ($oldversion < 188) {
+    if ($oldversion < '1.8.8') {
         // update user_sig field to use dhtml editor
         $tables = new Xmf\Database\Tables();
         $tables->useTable('profile_field');

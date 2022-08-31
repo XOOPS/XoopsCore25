@@ -24,13 +24,20 @@
         <link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/xoops.css">
         <link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="<{xoImgUrl}><{$xswatchCss}>/cookieconsent.css">
+        <{* Edit css/my_xoops.css to customize your css definitions and override Bootstrap definitions for the unique variant *}>
+        <link rel="stylesheet" type="text/css" href="<{xoImgUrl}>css/my_xoops.css">
     <{else}>
         <link rel="stylesheet" media="(prefers-color-scheme: light)" href="<{xoImgUrl}><{$xswatchCss}>/xoops.css">
         <link rel="stylesheet" media="(prefers-color-scheme: light)" href="<{xoImgUrl}><{$xswatchCss}>/bootstrap.min.css">
         <link rel="stylesheet" media="(prefers-color-scheme: light)" href="<{xoImgUrl}><{$xswatchCss}>/cookieconsent.css">
+        <{* Edit css/my_xoops.css to customize your css definitions and override Bootstrap definitions for the light variant *}>
+        <link rel="stylesheet" media="(prefers-color-scheme: light)" href="<{xoImgUrl}>css/my_xoops.css">
+
         <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="<{xoImgUrl}><{$xswatchDarkCss}>/xoops.css">
         <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="<{xoImgUrl}><{$xswatchDarkCss}>/bootstrap.min.css">
         <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="<{xoImgUrl}><{$xswatchDarkCss}>/cookieconsent.css">
+        <{* Edit css/my_xoops_dark.css to customize your css definitions and override Bootstrap definitions for the dark variant *}>
+        <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="<{xoImgUrl}>css/my_xoops_dark.css">
     <{/if}>
 
     <script src="<{$xoops_url}>/browse.php?Frameworks/jquery/jquery.js"></script>
@@ -109,16 +116,14 @@
 <footer class="footer">
     <h3>
         <{$xoops_footer}>
-        <a href="http://xoops.org" title="Design by: XOOPS UI/UX Team" target="_blank" class="credits d-none d-sm-block">
+        <a href="https://xoops.org" title="Design by: XOOPS UI/UX Team" target="_blank" class="credits d-none d-sm-block">
             <img src="<{xoImgUrl}>images/favicon.png" alt="Design by: XOOPS UI/UX Team">
         </a>
     </h3>
-</footer>
-<div class="aligncenter comments-nav d-block d-sm-none">
-    <a href="http://xoops.org" title="Design by: XOOPS UI/UX Team" target="_blank">
+    <a href="https://xoops.org" title="Design by: XOOPS UI/UX Team" target="_blank" class="credits text-center d-block d-sm-none">
         <img src="<{xoImgUrl}>images/favicon.png" alt="Design by: XOOPS UI/UX Team">
     </a>
-</div>
+</footer>
 <{if $xoops_isadmin|default:false}><{include file="$theme_name/tpl/nav-admin.tpl"}><{/if}>
 <!-- Inbox alert -->
 <{if $xoops_isuser|default:false}><{include file="$theme_name/tpl/inboxAlert.tpl"}><{/if}>

@@ -1,5 +1,5 @@
 <ul id="xo-breadcrumb" class="ui-corner-all" style="background-image:url('<{xoAdminNav bc_bg.png}>'); ">
-    <{foreach item=breadcrumb from=$xo_sys_breadcrumb}>
+    <{foreach item=breadcrumb from=$xo_sys_breadcrumb|default:null}>
         <{if $breadcrumb.home}>
             <li><a class="tooltip" href="<{$breadcrumb.link}>" title="<{$breadcrumb.title}>" style="background-image:url('<{xoAdminNav bc_separator.png}>');"><img
                             class="home" src="<{xoAdminNav home.png}>" alt="<{$breadcrumb.title}>"/></a></li>
@@ -25,7 +25,7 @@
 </ul>
 <{if $help_content|default:false}>
     <div class="hide" id="xo-system-help">
-        <{includeq file="$help_content"}>
+        <{include file="$help_content"}>
     </div>
 <{/if}>
 <{if $xo_sys_tips|default:false}>

@@ -346,7 +346,7 @@ class Criteria extends CriteriaElement
         if (in_array(strtoupper($this->operator), array('IS NULL', 'IS NOT NULL'))) {
             $clause .= ' ' . $this->operator;
         } else {
-            if ('' === ($value = trim($this->value))) {
+            if ('' === ($value = trim((string)$this->value))) {
                 return '';
             }
             if (!in_array(strtoupper($this->operator), array('IN', 'NOT IN'))) {
@@ -384,6 +384,7 @@ class Criteria extends CriteriaElement
             if ($this->operator === 'IN') {
                 $newvalue = str_replace(array('(', ')'), '', $this->value);
                 $tab      = explode(',', $newvalue);
+                $clause = '';
                 foreach ($tab as $uid) {
                     $clause .= "({$this->column}={$uid})";
                 }

@@ -431,7 +431,8 @@ if ($op === 'list') {
         // get all categories
         $imagecategories = $imgcat_handler->getObjects();
         $catcount        = count($imagecategories);
-        $image_handler   = xoops_getHandler('image');
+        /** @var \XoopsImageHandler $image_handler */
+        $image_handler = xoops_getHandler('image');
         for ($i = 0; $i < $catcount; ++$i) {
             echo '<tr valign="top" align="left"><td class="head">';
             if (in_array($imagecategories[$i]->getVar('imgcat_id'), array_keys($catreadlist))) {

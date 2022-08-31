@@ -64,7 +64,7 @@ if (isset($xoopsConfig['startpage']) && $xoopsConfig['startpage'] != '' && $xoop
     }
 
     chdir('modules/' . $xoopsConfig['startpage'] . '/');
-    xoops_loadLanguage('main', $xoopsModule->getVar('dirname', 'n'));
+    xoops_loadLanguage('main', (string)$xoopsModule->getVar('dirname', 'n'));
     $parsed = parse_url(XOOPS_URL);
     $url    = isset($parsed['scheme']) ? $parsed['scheme'] . '://' : 'http://';
     if (isset($parsed['host'])) {

@@ -2,8 +2,8 @@
     <form method="get" action="<{$pageName}>">
         <div class="left col-md-8" style="display:inline-block">
             <{$smarty.const.THEME_COMMENT_OPTIONS}>
-            <{$commentModeSelect->render()}>
-            <{$commentOrderSelect->render()}>
+            <{$commentModeSelect->render()|replace:'id="com_mode"':''}>
+            <{$commentOrderSelect->render()|replace:'id="com_order"':''}>
             <{$commentRefreshButton->render()}>
         </div>
     <{if ($commentPostButton|default:false) }>

@@ -211,12 +211,12 @@ class XoopsConfigItem extends XoopsObject
         switch ($this->getVar('conf_valuetype')) {
             case 'array':
                 if (!is_array($value)) {
-                    $value = explode('|', trim($value));
+                    $value = explode('|', trim((string)$value));
                 }
                 $this->setVar('conf_value', serialize($value), $force_slash);
                 break;
             case 'text':
-                $this->setVar('conf_value', trim($value), $force_slash);
+                $this->setVar('conf_value', trim((string)$value), $force_slash);
                 break;
             default:
                 $this->setVar('conf_value', $value, $force_slash);

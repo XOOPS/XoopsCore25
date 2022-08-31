@@ -304,10 +304,14 @@ EOJS;
     public function renderFormElementTray(XoopsFormElementTray $element)
     {
         $count = 0;
+        $isVertical = (\XoopsFormElementTray::ORIENTATION_VERTICAL === $element->getOrientation());
         $ret   = '';
         foreach ($element->getElements() as $ele) {
             if ($count > 0) {
                 $ret .= $element->getDelimeter();
+                if ($isVertical) {
+                    $ret .= '<br>';
+                }
             }
             if ($ele->getCaption() != '') {
                 $ret .= $ele->getCaption() . '&nbsp;';

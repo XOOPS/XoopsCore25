@@ -1,4 +1,4 @@
-<{includeq file="db:system_header.tpl"}>
+<{include file="db:system_header.tpl"}>
 <!--Banner-->
 <table class='width100 bnone' cellspacing='1'>
     <tr>

@@ -91,7 +91,7 @@ class XoopsImageSet extends XoopsObject
  *
  * @author  Kazumi Ono <onokazu@xoops.org>
  */
-class XoopsImagesetHandler extends XoopsObjectHandler
+class XoopsImageSetHandler extends XoopsObjectHandler
 {
     /**
      * Create a new {@link XoopsImageSet}
@@ -145,7 +145,7 @@ class XoopsImagesetHandler extends XoopsObjectHandler
      */
     public function insert(XoopsObject $imgset)
     {
-        $className = 'XoopsComment';
+        $className = 'XoopsImageSet';
         if (!($imgset instanceof $className)) {
             return false;
         }
@@ -185,7 +185,7 @@ class XoopsImagesetHandler extends XoopsObjectHandler
      */
     public function delete(XoopsObject $imgset)
     {
-        $className = 'XoopsComment';
+        $className = 'XoopsImageSet';
         if (!($imgset instanceof $className)) {
             return false;
         }

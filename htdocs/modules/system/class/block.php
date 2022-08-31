@@ -79,7 +79,7 @@ class SystemBlock extends XoopsBlock
         }
         $form = new XoopsThemeForm($title, 'blockform', 'admin.php', 'post', true);
         if (!$this->isNew()) {
-            $form->addElement(new XoopsFormLabel(_AM_SYSTEM_BLOCKS_NAME, $this->getVar('name')));
+			$form->addElement(new XoopsFormLabel(_AM_SYSTEM_BLOCKS_NAME, $this->getVar('name') . ' [' . $this->getVar('dirname') . ']'));
         }
         // Side position
         $side_select = new XoopsFormSelect(_AM_SYSTEM_BLOCKS_TYPE, 'side', $this->getVar('side'));

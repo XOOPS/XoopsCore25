@@ -55,11 +55,11 @@ class XoopsModelStats extends XoopsModelAbstract
         if ($groupby == false) {
             list($count) = $this->handler->db->fetchRow($result);
 
-            return $count;
+            return (int) $count;
         } else {
             $ret = array();
             while (false !== (list($id, $count) = $this->handler->db->fetchRow($result))) {
-                $ret[$id] = $count;
+                $ret[$id] = (int) $count;
             }
 
             return $ret;
@@ -70,7 +70,7 @@ class XoopsModelStats extends XoopsModelAbstract
      * get counts matching a condition
      *
      * @param  CriteriaElement|CriteriaCompo  $criteria {@link CriteriaElement} to match
-     * @return array  of conunts
+     * @return array  of counts
      */
     public function getCounts(CriteriaElement $criteria = null)
     {
@@ -92,7 +92,7 @@ class XoopsModelStats extends XoopsModelAbstract
             return $ret;
         }
         while (false !== (list($id, $count) = $this->handler->db->fetchRow($result))) {
-            $ret[$id] = $count;
+            $ret[$id] = (int) $count;
         }
 
         return $ret;

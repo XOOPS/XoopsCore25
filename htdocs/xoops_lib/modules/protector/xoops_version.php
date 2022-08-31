@@ -22,7 +22,7 @@ $constpref = '_MI_' . strtoupper($mydirname);
 
 $modversion['name']           = constant($constpref . '_NAME');
 $modversion['description']    = constant($constpref . '_DESC');
-$modversion['version']        = (float) file_get_contents(__DIR__ . '/include/version.txt');
+$modversion['version']        = (string) file_get_contents(__DIR__ . '/include/version.txt');
 $modversion['credits']        = 'PEAK Corp.';
 $modversion['author']         = 'GIJ=CHECKMATE PEAK Corp.(http://www.peak.ne.jp/)';
 $modversion['help']           = 'page=help';
@@ -38,7 +38,6 @@ $modversion['icons16']        = 'Frameworks/moduleclasses/icons/16';
 $modversion['icons32']        = 'Frameworks/moduleclasses/icons/32';
 
 //about
-$modversion['module_status']       = 'Final';
 $modversion['release_date']        = '2019/02/18';
 $modversion['module_website_url']  = 'https://xoops.org/';
 $modversion['module_website_name'] = 'XOOPS';
