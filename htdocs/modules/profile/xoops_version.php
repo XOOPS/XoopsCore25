@@ -24,7 +24,7 @@
  */
 $modversion                   = array();
 $modversion['name']           = _PROFILE_MI_NAME;
-$modversion['version']        = 1.91;
+$modversion['version']        = '1.9.1-Stable';
 $modversion['description']    = _PROFILE_MI_DESC;
 $modversion['author']         = 'Jan Pedersen, Taiwen Jiang, alfred, Wishcraft';
 $modversion['credits']        = 'Ackbarr, mboyden, marco, mamba, trabis, etc.';
@@ -38,7 +38,6 @@ $modversion['icons16']        = '../../Frameworks/moduleclasses/icons/16';
 $modversion['icons32']        = '../../Frameworks/moduleclasses/icons/32';
 
 //about
-$modversion['module_status']       = 'Final';
 $modversion['release_date']        = '2019/02/18';
 $modversion['module_website_url']  = 'https://xoops.org/';
 $modversion['module_website_name'] = 'XOOPS';

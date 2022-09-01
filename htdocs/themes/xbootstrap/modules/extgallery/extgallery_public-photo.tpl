@@ -3,7 +3,7 @@
         <ul class="breadcrumb">
             <li><a title="<{$extgalleryName}>" href="<{xoAppUrl modules/extgallery/}>"><{$extgalleryName}></a></li>
 
-            <{foreachq item=node from=$catPath name=breadcrumb}>
+            <{foreach item=node from=$catPath name=breadcrumb}>
             <li>
                 <a href="<{xoAppUrl modules/extgallery/}>public-<{if $node.cat_isalbum}><{$display_type}><{else}>categories<{/if}>.php?id=<{$node.cat_id}>"
                    title="<{$node.cat_name}>"><{$node.cat_name}></a></li>
@@ -74,10 +74,10 @@
             </div>
         <{/if}>
 
-        <{foreachq item=pluginLink from=$pluginPhotoAlbumLink}>
+        <{foreach item=pluginLink from=$pluginPhotoAlbumLink}>
         <a href="<{$pluginLink.link}><{$photo.photo_id}>" title="<{$pluginLink.name}>"><{$pluginLink.name}></a>
         <{/foreach}>
-        <{foreachq item=pluginLink from=$photo.link}>
+        <{foreach item=pluginLink from=$photo.link}>
         <a href="<{$pluginLink.link}><{$photo.photo_id}>" title="<{$pluginLink.name}>"><{$pluginLink.name}></a>
         <{/foreach}>
 

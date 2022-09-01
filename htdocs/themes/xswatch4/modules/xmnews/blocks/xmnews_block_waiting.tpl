@@ -1,4 +1,4 @@
-<{if $block.news != ''}>
+<{if $block.news|default:'' != ''}>
 	<table class="table table-striped table-hover table-sm">
 		<thead class="bg-warning">
 			<tr>
@@ -25,7 +25,7 @@
 				<{/if}>
 				<td class="text-center text-warning text-nowrap"><{$waitingnews.author}></td>
 				<td class="text-center">
-					<a class="btn btn-outline-primary text-warning" title="<{$smarty.const._MA_XMNEWS_EDIT}>" href="<{$xoops_url}>/modules/xmnews/action.php?op=edit&amp;news_id=<{$waitingnews.id}>"><i class="fas fa-edit" aria-hidden="true"></i></a>
+					<a class="btn btn-outline-primary text-warning" title="<{$smarty.const._MA_XMNEWS_EDIT}>" href="<{$xoops_url}>/modules/xmnews/action.php?op=edit&amp;news_id=<{$waitingnews.id}>"><i class="fa fa-edit" aria-hidden="true"></i></a>
 				</td>
 			</tr>
 		<{/foreach}>

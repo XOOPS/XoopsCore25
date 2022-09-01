@@ -26,7 +26,7 @@
     <!-- Fine Uploader JS file
     ====================================================================== -->
     <script src="<{$xoops_url}>/media/fine-uploader/fine-uploader.js"></script>
-    <{includeq file="db:system_trigger_uploads.tpl"}>
+    <{include file="db:system_trigger_uploads.tpl"}>
     <!-- fine-upload -->
 </head>
 

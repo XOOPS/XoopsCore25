@@ -160,7 +160,7 @@ if (is_object($pm) && !empty($pm)) {
 
     $message              = $pm->getValues();
     $message['msg_time']  = formatTimestamp($pm->getVar('msg_time'));
-    $message['msg_image'] = htmlspecialchars($message['msg_image'], ENT_QUOTES);
+    $message['msg_image'] = htmlspecialchars((string)$message['msg_image'], ENT_QUOTES);
 }
 $GLOBALS['xoopsTpl']->assign('message', $message);
 $GLOBALS['xoopsTpl']->assign('op', $_REQUEST['op']);

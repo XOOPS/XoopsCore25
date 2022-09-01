@@ -394,7 +394,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
             return false;
         }
 
-        $sql = sprintf('DELETE FROM %s WHERE linkid = %u', $this->db->prefix('groups_users_link'), $groupm->getVar('linkid'));
+        $sql = sprintf('DELETE FROM %s WHERE linkid = %u', $this->db->prefix('groups_users_link'), $mship->getVar('linkid'));
         if (!$result = $this->db->query($sql)) {
             return false;
         }

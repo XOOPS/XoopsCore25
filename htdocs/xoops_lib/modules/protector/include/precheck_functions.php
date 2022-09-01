@@ -39,10 +39,10 @@ function protector_prepare()
     }
 
     // reliable ips
-    $reliable_ips = @unserialize(@$conf['reliable_ips']);
+    $reliable_ips = @unserialize(@$conf['reliable_ips'], array('allowed_classes' => false));
     if (!is_array($reliable_ips)) {
         // for the environment of (buggy core version && magic_quotes_gpc)
-        $reliable_ips = @unserialize(stripslashes(@$conf['reliable_ips']));
+        $reliable_ips = @unserialize(stripslashes(@$conf['reliable_ips']), array('allowed_classes' => false));
         if (!is_array($reliable_ips)) {
             $reliable_ips = array();
         }

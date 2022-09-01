@@ -1,4 +1,4 @@
-<{includeq file="db:profile_breadcrumbs.tpl"}>
+<{include file="db:profile_breadcrumbs.tpl"}>
 <div>( <{$total_users}> )</div>
 <{if $users}>
     <table>

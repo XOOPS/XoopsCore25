@@ -1,4 +1,4 @@
-<{includeq file="db:system_header.tpl"}>
+<{include file="db:system_header.tpl"}>
 <table id="help-system">
     <tr>
         <td class="width20">

@@ -2,8 +2,8 @@
     <table width="95%" class="outer" cellspacing="1">
         <tr>
             <td class="even" align="center">
-                <{$commentModeSelect->render()}>
-                <{$commentOrderSelect->render()}>
+                <{$commentModeSelect->render()|replace:'id="com_mode"':''}>
+                <{$commentOrderSelect->render()|replace:'id="com_order"':''}>
                 <{$commentRefreshButton->render()}>
                 <{if ($commentPostButton|default:false) }>
                 <{$commentPostButton->render()}>

@@ -35,6 +35,7 @@ if (!in_array($op, $valid_op_requests)) {
 }
 
 $start = Request::getInt('start', 0);
+/** @var \PmMessageHandler $pm_handler */
 $pm_handler = xoops_getModuleHandler('message');
 
 if (isset($_POST['delete_messages']) && (isset($_POST['msg_id']) || isset($_POST['msg_ids']))) {
@@ -211,7 +212,7 @@ if (count($pm_arr) > 0) {
     $senders        = $member_handler->getUserList(new Criteria('uid', '(' . implode(', ', array_unique($uids)) . ')', 'IN'));
     foreach (array_keys($pm_arr) as $i) {
         $message              = $pm_arr[$i];
-        $message['msg_image'] = htmlspecialchars($message['msg_image'], ENT_QUOTES);
+        $message['msg_image'] = htmlspecialchars((string)$message['msg_image'], ENT_QUOTES);
         $message['msg_time']  = formatTimestamp($message['msg_time']);
         if ($op === 'out') {
             $message['postername'] = $senders[$pm_arr[$i]['to_userid']];

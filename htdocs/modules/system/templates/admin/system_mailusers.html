@@ -1,5 +1,5 @@
 <!--smilies-->
-<{includeq file="db:system_header.tpl"}>
+<{include file="db:system_header.tpl"}>
 <!-- Display mailusers form  -->
 <br>
 <{if $form|default:false}>

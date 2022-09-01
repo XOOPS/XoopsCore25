@@ -27,7 +27,7 @@ function xoops_module_update_system(XoopsModule $module, $prev_version = null)
 {
     // irmtfan bug fix: solve templates duplicate issue
     $ret = null;
-    if ($prev_version < 211) {
+    if ($prev_version < '2.1.1') {
         $ret = update_system_v211($module);
     }
     $errors = $module->getErrors();

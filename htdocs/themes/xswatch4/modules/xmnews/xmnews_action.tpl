@@ -25,8 +25,8 @@
 		<div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
 			<{foreach item=category from=$categories}>
 			<div class="col-6 col-sm-4 col-md-3 p-2">
-				<div class="card">
-					<div class="card-header text-center">
+				<div class="card" <{if $category.color != false}>style="border-color : <{$category.color}>;"<{/if}>>
+					<div class="card-header text-center" <{if $category.color != false}>style="background-color : <{$category.color}>;"<{/if}>>
 						<a class="text-decoration-none" title="<{$category.name}>" href="action.php?op=loadnews&category_id=<{$category.id}>">
 							<{$category.name}>
 						</a>

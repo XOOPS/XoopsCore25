@@ -1,9 +1,9 @@
 <{if $xoBlocks.canvas_left && $xoBlocks.canvas_right}>
-    <div class="col-12 col-md-6">
+    <div class="col-md-6">
 <{elseif $xoBlocks.canvas_left}>
-    <div class="col-12 col-md-9">
+    <div class="col-md-9">
 <{elseif $xoBlocks.canvas_right}>
-    <div class="col-9 col-sm-9">
+    <div class="col-md-9">
 <{else}>
     <div class="col-12">
 <{/if}>

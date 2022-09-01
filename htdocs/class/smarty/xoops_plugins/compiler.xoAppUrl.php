@@ -52,7 +52,7 @@
 function smarty_compiler_xoAppUrl($argStr, &$compiler)
 {
     global $xoops;
-    $argStr = trim($argStr);
+    $argStr = trim((string) $argStr);
 
     @list($url, $params) = explode(' ', $argStr, 2);
 

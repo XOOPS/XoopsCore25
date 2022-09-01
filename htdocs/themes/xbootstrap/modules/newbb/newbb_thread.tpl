@@ -74,7 +74,7 @@
 
         <ul class="list-unstyled">
             <{if $topic_post.poster_ip}>
-                <li>IP: <a href="http://www.whois.sc/<{$topic_post.poster_ip}>" target="_blank"><{$topic_post.poster_ip}></a></li>
+                <li>IP: <a href="https://www.whois.sc/<{$topic_post.poster_ip}>" target="_blank"><{$topic_post.poster_ip}></a></li>
             <{/if}>
 
             <{if $topic_post.poster.uid|default:'' gt 0}>

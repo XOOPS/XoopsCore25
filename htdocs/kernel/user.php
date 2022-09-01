@@ -252,7 +252,7 @@ class XoopsUser extends XoopsObject
     public function isOnline()
     {
         if (!isset($this->_isOnline)) {
-            /* @var XoopsOnlineHandler $online_handler */
+            /* @var XoopsOnlineHandler $onlinehandler */
             $onlinehandler   = xoops_getHandler('online');
             $this->_isOnline = ($onlinehandler->getCount(new Criteria('online_uid', $this->getVar('uid'))) > 0);// ? true : false;
         }

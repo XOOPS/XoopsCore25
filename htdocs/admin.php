@@ -32,6 +32,8 @@ xoops_cp_header();
 /**
  * Error warning messages
  */
+ // Define Stylesheet
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
 if (!isset($xoopsConfig['admin_warnings_enable']) || $xoopsConfig['admin_warnings_enable']) {
     // recommend lowest security supported version at time of XOOPS release
     // see: http://php.net/supported-versions.php
@@ -74,6 +76,12 @@ if (!isset($xoopsConfig['admin_warnings_enable']) || $xoopsConfig['admin_warning
         xoops_error(sprintf(_AD_WARNINGXOOPSLIBINSIDE, XOOPS_VAR_PATH));
         echo '<br>';
     }
+}
+
+if (!empty($_GET['xoopsorgnews']) && !function_exists('xml_parser_create')) {
+    xoops_warning(_AD_WARNING_NO_XML);
+    echo '<br>';
+    unset($_GET['xoopsorgnews']);
 }
 
 if (!empty($_GET['xoopsorgnews'])) {

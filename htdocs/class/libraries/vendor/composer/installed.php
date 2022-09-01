@@ -1,141 +1,149 @@
-<?php return array (
-  'root' => 
-  array (
-    'pretty_version' => 'dev-master',
-    'version' => 'dev-master',
-    'aliases' => 
-    array (
+<?php return array(
+    'root' => array(
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'type' => 'project',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'reference' => '872dcd4cc1f0074d8aba26c0eee2f799107a88d6',
+        'name' => 'xoopscore25/libraries',
+        'dev' => false,
     ),
-    'reference' => '14bff2c7fac9f09164b40af2f33c5871eac83eb6',
-    'name' => 'xoopscore25/libraries',
-  ),
-  'versions' => 
-  array (
-    'firebase/php-jwt' => 
-    array (
-      'pretty_version' => 'v5.2.1',
-      'version' => '5.2.1.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'f42c9110abe98dd6cfe9053c49bc86acc70b2d23',
+    'versions' => array(
+        'boenrobot/money_format_polyfill' => array(
+            'pretty_version' => '1.0.2',
+            'version' => '1.0.2.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../boenrobot/money_format_polyfill',
+            'aliases' => array(),
+            'reference' => 'adb894c5f15405f6fe22a0f830cda518caeee0ff',
+            'dev_requirement' => false,
+        ),
+        'firebase/php-jwt' => array(
+            'pretty_version' => 'v5.5.1',
+            'version' => '5.5.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../firebase/php-jwt',
+            'aliases' => array(),
+            'reference' => '83b609028194aa042ea33b5af2d41a7427de80e6',
+            'dev_requirement' => false,
+        ),
+        'geekwright/regdom' => array(
+            'pretty_version' => 'v1.0.7',
+            'version' => '1.0.7.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../geekwright/regdom',
+            'aliases' => array(),
+            'reference' => '612f44ec78d04c23107731b89494285caf73e324',
+            'dev_requirement' => false,
+        ),
+        'ircmaxell/password-compat' => array(
+            'pretty_version' => 'v1.0.4',
+            'version' => '1.0.4.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../ircmaxell/password-compat',
+            'aliases' => array(),
+            'reference' => '5c5cde8822a69545767f7c7f3058cb15ff84614c',
+            'dev_requirement' => false,
+        ),
+        'kint-php/kint' => array(
+            'pretty_version' => '3.3',
+            'version' => '3.3.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../kint-php/kint',
+            'aliases' => array(),
+            'reference' => '335ac1bcaf04d87df70d8aa51e8887ba2c6d203b',
+            'dev_requirement' => false,
+        ),
+        'paragonie/random_compat' => array(
+            'pretty_version' => 'v2.0.21',
+            'version' => '2.0.21.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../paragonie/random_compat',
+            'aliases' => array(),
+            'reference' => '96c132c7f2f7bc3230723b66e89f8f150b29d5ae',
+            'dev_requirement' => false,
+        ),
+        'smottt/wideimage' => array(
+            'pretty_version' => '1.1.4',
+            'version' => '1.1.4.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../smottt/wideimage',
+            'aliases' => array(),
+            'reference' => '755d1b2b474ce9c32092aa6ac0357ebf857545f5',
+            'dev_requirement' => false,
+        ),
+        'symfony/polyfill-ctype' => array(
+            'pretty_version' => 'v1.19.0',
+            'version' => '1.19.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/polyfill-ctype',
+            'aliases' => array(),
+            'reference' => 'aed596913b70fae57be53d86faa2e9ef85a2297b',
+            'dev_requirement' => false,
+        ),
+        'symfony/polyfill-iconv' => array(
+            'pretty_version' => 'v1.19.0',
+            'version' => '1.19.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/polyfill-iconv',
+            'aliases' => array(),
+            'reference' => '085241787d52fa6f7a774fd034135fef0cfd5496',
+            'dev_requirement' => false,
+        ),
+        'symfony/polyfill-mbstring' => array(
+            'pretty_version' => 'v1.19.0',
+            'version' => '1.19.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/polyfill-mbstring',
+            'aliases' => array(),
+            'reference' => 'b5f7b932ee6fa802fc792eabd77c4c88084517ce',
+            'dev_requirement' => false,
+        ),
+        'symfony/yaml' => array(
+            'pretty_version' => 'v2.8.52',
+            'version' => '2.8.52.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/yaml',
+            'aliases' => array(),
+            'reference' => '02c1859112aa779d9ab394ae4f3381911d84052b',
+            'dev_requirement' => false,
+        ),
+        'webmozart/assert' => array(
+            'pretty_version' => '1.9.1',
+            'version' => '1.9.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../webmozart/assert',
+            'aliases' => array(),
+            'reference' => 'bafc69caeb4d49c39fd0779086c03a3738cbb389',
+            'dev_requirement' => false,
+        ),
+        'xoops/base-requires25' => array(
+            'pretty_version' => 'v1.0.4',
+            'version' => '1.0.4.0',
+            'type' => 'project',
+            'install_path' => __DIR__ . '/../xoops/base-requires25',
+            'aliases' => array(),
+            'reference' => '589f42b839105749b32f937e9c4c14a893ae8aed',
+            'dev_requirement' => false,
+        ),
+        'xoops/xmf' => array(
+            'pretty_version' => 'v1.2.26',
+            'version' => '1.2.26.0',
+            'type' => 'project',
+            'install_path' => __DIR__ . '/../xoops/xmf',
+            'aliases' => array(),
+            'reference' => '8987315e9575d94abaf6c7964d0eddd00ec0a992',
+            'dev_requirement' => false,
+        ),
+        'xoopscore25/libraries' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'type' => 'project',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'reference' => '872dcd4cc1f0074d8aba26c0eee2f799107a88d6',
+            'dev_requirement' => false,
+        ),
     ),
-    'geekwright/regdom' => 
-    array (
-      'pretty_version' => 'v1.0.6',
-      'version' => '1.0.6.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '4aaa27c5edc4ca590d19d9cf33354f519d4733bd',
-    ),
-    'ircmaxell/password-compat' => 
-    array (
-      'pretty_version' => 'v1.0.4',
-      'version' => '1.0.4.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '5c5cde8822a69545767f7c7f3058cb15ff84614c',
-    ),
-    'kint-php/kint' => 
-    array (
-      'pretty_version' => '3.3',
-      'version' => '3.3.0.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '335ac1bcaf04d87df70d8aa51e8887ba2c6d203b',
-    ),
-    'paragonie/random_compat' => 
-    array (
-      'pretty_version' => 'v2.0.20',
-      'version' => '2.0.20.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '0f1f60250fccffeaf5dda91eea1c018aed1adc2a',
-    ),
-    'smottt/wideimage' => 
-    array (
-      'pretty_version' => '1.1.4',
-      'version' => '1.1.4.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '755d1b2b474ce9c32092aa6ac0357ebf857545f5',
-    ),
-    'symfony/polyfill-ctype' => 
-    array (
-      'pretty_version' => 'v1.19.0',
-      'version' => '1.19.0.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'aed596913b70fae57be53d86faa2e9ef85a2297b',
-    ),
-    'symfony/polyfill-iconv' => 
-    array (
-      'pretty_version' => 'v1.19.0',
-      'version' => '1.19.0.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '085241787d52fa6f7a774fd034135fef0cfd5496',
-    ),
-    'symfony/polyfill-mbstring' => 
-    array (
-      'pretty_version' => 'v1.19.0',
-      'version' => '1.19.0.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'b5f7b932ee6fa802fc792eabd77c4c88084517ce',
-    ),
-    'symfony/yaml' => 
-    array (
-      'pretty_version' => 'v2.8.52',
-      'version' => '2.8.52.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '02c1859112aa779d9ab394ae4f3381911d84052b',
-    ),
-    'webmozart/assert' => 
-    array (
-      'pretty_version' => '1.9.1',
-      'version' => '1.9.1.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'bafc69caeb4d49c39fd0779086c03a3738cbb389',
-    ),
-    'xoops/base-requires25' => 
-    array (
-      'pretty_version' => 'v1.0.3',
-      'version' => '1.0.3.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '274aef0e1b6c67f80a2f094b5f353e9ee9912e02',
-    ),
-    'xoops/xmf' => 
-    array (
-      'pretty_version' => 'v1.2.25',
-      'version' => '1.2.25.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '0f73d7cab150771faa3bbf022d25769f6b5ec226',
-    ),
-    'xoopscore25/libraries' => 
-    array (
-      'pretty_version' => 'dev-master',
-      'version' => 'dev-master',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '14bff2c7fac9f09164b40af2f33c5871eac83eb6',
-    ),
-  ),
 );

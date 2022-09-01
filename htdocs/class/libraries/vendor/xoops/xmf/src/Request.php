@@ -553,7 +553,7 @@ class Request
         static $safeHtmlFilter = null;
 
         // convert $var in array if $type is ARRAY
-        if (strtolower($type) === 'array' && !is_array($var)) {
+        if (strtolower((string)$type) === 'array' && !is_array($var)) {
             $var = array($var);
         }
 
