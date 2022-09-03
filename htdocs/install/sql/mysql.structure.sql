@@ -462,7 +462,7 @@ CREATE TABLE session (
   sess_updated int(10) unsigned NOT NULL default '0',
   sess_ip varchar(45) NOT NULL default '',
   sess_data text,
-  PRIMARY KEY  (sess_id),
+  PRIMARY KEY  (sess_id(200)),
   KEY updated (sess_updated)
 ) ENGINE=MyISAM;
 # --------------------------------------------------------

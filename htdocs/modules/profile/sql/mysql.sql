@@ -27,7 +27,7 @@ CREATE TABLE `profile_field` (
   `step_id`             smallint(3) unsigned    NOT NULL default '0',
   
   PRIMARY KEY  (`field_id`),
-  UNIQUE KEY `field_name` (`field_name`),
+  UNIQUE KEY `field_name` (`field_name`(100)),
   KEY `step` (`step_id`, `field_weight`)
 ) ENGINE=MyISAM;
 
@@ -48,7 +48,7 @@ CREATE TABLE `profile_regstep` (
   `step_save`       tinyint(1) unsigned     NOT NULL default '0',
   
   PRIMARY KEY (`step_id`),
-  KEY `sort` (`step_order`, `step_name`)
+  KEY `sort` (`step_order`, `step_name`(100))
 ) ENGINE=MyISAM;
 
 CREATE TABLE `profile_profile` (
