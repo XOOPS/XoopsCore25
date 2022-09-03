@@ -224,6 +224,7 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 * Smarty defaults by @mambax7 in https://github.com/XOOPS/XoopsCore25/pull/1226
 * Update to XMF 1.2.26 by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1227
 * Missing files from PR 1227 by @geekwright in https://github.com/XOOPS/XoopsCore25/pull/1228
+* changelog 2.5.11 Beta 2
 
 Updated libraries and assets:
 - Smarty: allow StdClass to be cast to array when compiling foreach (mamba)
