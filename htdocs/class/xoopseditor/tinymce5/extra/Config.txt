@@ -1,0 +1,4 @@
+To integrate the css of your theme in tinymce (for an identical rendering in the tinymce window and your theme),
+it is necessary to copy the css file from this folder to the root of your theme.
+
+If you use several css files, it is necessary to include them in tinymce.css (@import url ());
