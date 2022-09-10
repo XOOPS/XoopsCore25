@@ -12,7 +12,7 @@ CREATE TABLE `profile_field` (
   `cat_id`              smallint(5) unsigned    NOT NULL default '0',
   `field_type`          varchar(30)             NOT NULL default '',
   `field_valuetype`     tinyint(2) unsigned     NOT NULL default '0',
-  `field_name`          varchar(255)            NOT NULL default '',
+  `field_name`          varchar(64)             NOT NULL default '',
   `field_title`         varchar(255)            NOT NULL default '',
   `field_description`   text,
   `field_required`      tinyint(1) unsigned     NOT NULL default '0',
@@ -27,7 +27,7 @@ CREATE TABLE `profile_field` (
   `step_id`             smallint(3) unsigned    NOT NULL default '0',
   
   PRIMARY KEY  (`field_id`),
-  UNIQUE KEY `field_name` (`field_name`(100)),
+  UNIQUE KEY `field_name` (`field_name`),
   KEY `step` (`step_id`, `field_weight`)
 ) ENGINE=MyISAM;
 
