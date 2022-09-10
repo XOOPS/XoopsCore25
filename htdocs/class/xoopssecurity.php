@@ -214,7 +214,7 @@ class XoopsSecurity
                      'xoopsOption',
                      'xoopsModule',
                      'xoopsModuleConfig',
-                'xoopsRequestUri',
+                     'xoopsRequestUri',
             ) as $bad_global
         ) {
             if (isset($_REQUEST[$bad_global])) {
