@@ -352,6 +352,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
             if (!$this->db->isResultSet($result)) {
                 \trigger_error("Query Failed! SQL: $sql_count- Error: " . $this->db->error(), E_USER_ERROR);
             }
+            list($count) = $this->db->fetchRow($result);
         }
 
         return array($users, $profiles, (int)$count);
