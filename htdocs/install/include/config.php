@@ -91,16 +91,16 @@ $configs['modules'] = array();
 
 // xoops_lib, xoops_data directories
 $configs['xoopsPathDefault'] = array(
-    'lib'  => 'xoops_lib',
     'data' => 'xoops_data',
+    'lib'  => 'xoops_lib',
 );
 
 // writable xoops_lib, xoops_data directories
 $configs['dataPath'] = array(
     'caches'    => array(
-        'xoops_cache',
         'smarty_cache',
         'smarty_compile',
+        'xoops_cache',
         ),
     'configs'   => array(
         'captcha',

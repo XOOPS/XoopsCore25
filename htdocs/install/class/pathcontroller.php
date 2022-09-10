@@ -21,8 +21,8 @@ class PathStuffController
      */
     public $xoopsPath = array(
         'root' => '',
-        'lib'  => '',
         'data' => '',
+        'lib'  => '',
     );
     /**
      * @var array
@@ -36,9 +36,9 @@ class PathStuffController
      */
     public $dataPath = array(
         'caches'    => array(
-            'xoops_cache',
             'smarty_cache',
             'smarty_compile',
+            'xoops_cache',
         ),
         'configs'   => array(
             'captcha',
