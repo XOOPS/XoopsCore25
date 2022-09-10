@@ -14,13 +14,7 @@ namespace Geekwright\RegDom;
  */
 class RegisteredDomain
 {
-    /**
-     * @var array|null
-     */
     protected $tree;
-    /**
-     * @var \Geekwright\RegDom\PublicSuffixList|null
-     */
     protected $psl;
 
     /**
@@ -202,7 +196,7 @@ class RegisteredDomain
      * @param string[] $remainingSigningDomainParts parts of domain being queried
      * @param string[] $treeNode                    subset of tree array by reference
      *
-     * @return string|null
+     * @return null|string
      */
     protected function findRegisteredDomain($remainingSigningDomainParts, &$treeNode)
     {

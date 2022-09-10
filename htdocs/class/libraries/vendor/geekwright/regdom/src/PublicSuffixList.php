@@ -13,30 +13,12 @@ namespace Geekwright\RegDom;
  */
 class PublicSuffixList
 {
-    /**
-     * @var string
-     */
     protected $sourceURL = 'https://publicsuffix.org/list/public_suffix_list.dat';
-    /**
-     * @var string
-     */
     protected $localPSL = 'public_suffix_list.dat';
-    /**
-     * @var string
-     */
     protected $cachedPrefix = 'cached_';
 
-    /**
-     * @var array
-     */
-    protected $tree; //mb TODO - could be also null
-    /**
-     * @var string
-     */
-    protected $url;  //mb TODO - could be also null
-    /**
-     * @var string
-     */
+    protected $tree;
+    protected $url;
     protected $dataDir = '/../data/'; // relative to __DIR__
 
     /**
@@ -114,7 +96,7 @@ class PublicSuffixList
         $lines = explode("\n", $fileData);
 
         foreach ($lines as $line) {
-            if ($this->startsWith($line, '//') || $line == '') {
+            if ($this->startsWith($line, "//") || $line == '') {
                 continue;
             }
 
@@ -151,14 +133,14 @@ class PublicSuffixList
         $dom = trim(array_pop($tldParts));
 
         $isNotDomain = false;
-        if ($this->startsWith($dom, '!')) {
+        if ($this->startsWith($dom, "!")) {
             $dom = substr($dom, 1);
             $isNotDomain = true;
         }
 
         if (!array_key_exists($dom, $node)) {
             if ($isNotDomain) {
-                $node[$dom] = array('!' => '');
+                $node[$dom] = array("!" => "");
             } else {
                 $node[$dom] = array();
             }
@@ -187,7 +169,7 @@ class PublicSuffixList
      * Read PSL from the URL or file specified in $this->url.
      * If we process a remote URL, save a local copy.
      *
-     * @return bool|string PSL file contents or false on error
+     * @return string|false PSL file contents or false on error
      */
     protected function readPSL()
     {
@@ -237,14 +219,14 @@ class PublicSuffixList
      *
      * @param string $url URL/filename of source PSL
      *
-     * @return bool|string[] PSL tree
+     * @return false|string[] PSL tree
      */
     protected function readCachedPSL($url)
     {
         $cacheFile = $this->getCacheFileName($url);
         if (file_exists($cacheFile)) {
             $cachedTree = file_get_contents($cacheFile);
-            return unserialize($cachedTree);
+            return unserialize($cachedTree, array('allowed_classes' => false));
         }
         return false;
     }
@@ -276,7 +258,7 @@ class PublicSuffixList
     /**
      * Set localPSL name based on URL
      *
-     * @param string|null  $url the URL for the PSL
+     * @param null|string $url the URL for the PSL
      *
      * @return void (sets $this->localPSL)
      */

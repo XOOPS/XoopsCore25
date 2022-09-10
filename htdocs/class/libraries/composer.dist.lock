@@ -4,20 +4,70 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "05df5551ec464d49a98ad50505109550",
+    "content-hash": "b8cb282d750023f685dfaf9b6e1c58a2",
     "packages": [
         {
-            "name": "firebase/php-jwt",
-            "version": "v5.2.1",
+            "name": "boenrobot/money_format_polyfill",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/firebase/php-jwt.git",
-                "reference": "f42c9110abe98dd6cfe9053c49bc86acc70b2d23"
+                "url": "https://github.com/boenrobot/money_format_polyfill.git",
+                "reference": "adb894c5f15405f6fe22a0f830cda518caeee0ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/f42c9110abe98dd6cfe9053c49bc86acc70b2d23",
-                "reference": "f42c9110abe98dd6cfe9053c49bc86acc70b2d23",
+                "url": "https://api.github.com/repos/boenrobot/money_format_polyfill/zipball/adb894c5f15405f6fe22a0f830cda518caeee0ff",
+                "reference": "adb894c5f15405f6fe22a0f830cda518caeee0ff",
+                "shasum": ""
+            },
+            "require-dev": {
+                "squizlabs/php_codesniffer": "@stable"
+            },
+            "suggest": {
+                "boenrobot/composer-install-library-of-functions": "To remove the polyfill from the autoloader if not needed."
+            },
+            "type": "library",
+            "extra": {
+                "functionmap": {
+                    "autoload": {
+                        "money_format": "src/money_format.php"
+                    }
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/money_format.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Vasil Rangelov",
+                    "email": "boen.robot@gmail.com"
+                }
+            ],
+            "description": "A polyfill for PHP's money_format() function, intended for Windows. Source from Rafael M. Salvioni (in the comments for money_format()).",
+            "support": {
+                "issues": "https://github.com/boenrobot/money_format_polyfill/issues",
+                "source": "https://github.com/boenrobot/money_format_polyfill/tree/master"
+            },
+            "time": "2020-04-03T11:54:18+00:00"
+        },
+        {
+            "name": "firebase/php-jwt",
+            "version": "v5.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/firebase/php-jwt.git",
+                "reference": "83b609028194aa042ea33b5af2d41a7427de80e6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/83b609028194aa042ea33b5af2d41a7427de80e6",
+                "reference": "83b609028194aa042ea33b5af2d41a7427de80e6",
                 "shasum": ""
             },
             "require": {
@@ -25,6 +75,9 @@
             },
             "require-dev": {
                 "phpunit/phpunit": ">=4.8 <=9"
+            },
+            "suggest": {
+                "paragonie/sodium_compat": "Support EdDSA (Ed25519) signatures when libsodium is not present"
             },
             "type": "library",
             "autoload": {
@@ -56,22 +109,22 @@
             ],
             "support": {
                 "issues": "https://github.com/firebase/php-jwt/issues",
-                "source": "https://github.com/firebase/php-jwt/tree/v5.2.1"
+                "source": "https://github.com/firebase/php-jwt/tree/v5.5.1"
             },
-            "time": "2021-02-12T00:02:00+00:00"
+            "time": "2021-11-08T20:18:51+00:00"
         },
         {
             "name": "geekwright/regdom",
-            "version": "v1.0.6",
+            "version": "v1.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/geekwright/RegDom.git",
-                "reference": "4aaa27c5edc4ca590d19d9cf33354f519d4733bd"
+                "reference": "612f44ec78d04c23107731b89494285caf73e324"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/geekwright/RegDom/zipball/4aaa27c5edc4ca590d19d9cf33354f519d4733bd",
-                "reference": "4aaa27c5edc4ca590d19d9cf33354f519d4733bd",
+                "url": "https://api.github.com/repos/geekwright/RegDom/zipball/612f44ec78d04c23107731b89494285caf73e324",
+                "reference": "612f44ec78d04c23107731b89494285caf73e324",
                 "shasum": ""
             },
             "require": {
@@ -110,9 +163,9 @@
             ],
             "support": {
                 "issues": "https://github.com/geekwright/RegDom/issues",
-                "source": "https://github.com/geekwright/RegDom/tree/v1.0.6"
+                "source": "https://github.com/geekwright/RegDom/tree/v1.0.7"
             },
-            "time": "2019-08-31T04:33:03+00:00"
+            "time": "2022-04-08T21:58:34+00:00"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -236,23 +289,23 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v2.0.20",
+            "version": "v2.0.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "0f1f60250fccffeaf5dda91eea1c018aed1adc2a"
+                "reference": "96c132c7f2f7bc3230723b66e89f8f150b29d5ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/0f1f60250fccffeaf5dda91eea1c018aed1adc2a",
-                "reference": "0f1f60250fccffeaf5dda91eea1c018aed1adc2a",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/96c132c7f2f7bc3230723b66e89f8f150b29d5ae",
+                "reference": "96c132c7f2f7bc3230723b66e89f8f150b29d5ae",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.*|5.*"
+                "phpunit/phpunit": "*"
             },
             "suggest": {
                 "ext-libsodium": "Provides a modern crypto API that can be used to generate random bytes."
@@ -286,7 +339,7 @@
                 "issues": "https://github.com/paragonie/random_compat/issues",
                 "source": "https://github.com/paragonie/random_compat"
             },
-            "time": "2021-04-17T09:33:01+00:00"
+            "time": "2022-02-16T17:07:03+00:00"
         },
         {
             "name": "smottt/wideimage",
@@ -358,12 +411,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Ctype\\": ""
-                },
                 "files": [
                     "bootstrap.php"
-                ]
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Ctype\\": ""
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -437,12 +490,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Iconv\\": ""
-                },
                 "files": [
                     "bootstrap.php"
-                ]
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Iconv\\": ""
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -517,12 +570,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Mbstring\\": ""
-                },
                 "files": [
                     "bootstrap.php"
-                ]
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Mbstring\\": ""
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -674,26 +727,27 @@
         },
         {
             "name": "xoops/base-requires25",
-            "version": "v1.0.3",
+            "version": "v1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/XOOPS/base-requires25.git",
-                "reference": "274aef0e1b6c67f80a2f094b5f353e9ee9912e02"
+                "reference": "589f42b839105749b32f937e9c4c14a893ae8aed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/XOOPS/base-requires25/zipball/274aef0e1b6c67f80a2f094b5f353e9ee9912e02",
-                "reference": "274aef0e1b6c67f80a2f094b5f353e9ee9912e02",
+                "url": "https://api.github.com/repos/XOOPS/base-requires25/zipball/589f42b839105749b32f937e9c4c14a893ae8aed",
+                "reference": "589f42b839105749b32f937e9c4c14a893ae8aed",
                 "shasum": ""
             },
             "require": {
+                "boenrobot/money_format_polyfill": "^1.0.2",
                 "geekwright/regdom": "^1.0.0",
                 "ircmaxell/password-compat": "^1.0.4",
                 "php": ">=5.3.9",
                 "smottt/wideimage": "^1.1.4",
                 "symfony/polyfill-iconv": "^1.10.0",
                 "symfony/polyfill-mbstring": "^1.10.0",
-                "xoops/xmf": "^1.2.25"
+                "xoops/xmf": "^1.2.26"
             },
             "type": "project",
             "notification-url": "https://packagist.org/downloads/",
@@ -703,22 +757,22 @@
             "description": "Primary dependencies for XOOPS/XoopsCore25",
             "support": {
                 "issues": "https://github.com/XOOPS/base-requires25/issues",
-                "source": "https://github.com/XOOPS/base-requires25/tree/v1.0.3"
+                "source": "https://github.com/XOOPS/base-requires25/tree/v1.0.4"
             },
-            "time": "2021-05-07T15:38:03+00:00"
+            "time": "2022-04-16T20:58:42+00:00"
         },
         {
             "name": "xoops/xmf",
-            "version": "v1.2.25",
+            "version": "v1.2.26",
             "source": {
                 "type": "git",
                 "url": "https://github.com/XOOPS/xmf.git",
-                "reference": "0f73d7cab150771faa3bbf022d25769f6b5ec226"
+                "reference": "8987315e9575d94abaf6c7964d0eddd00ec0a992"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/XOOPS/xmf/zipball/0f73d7cab150771faa3bbf022d25769f6b5ec226",
-                "reference": "0f73d7cab150771faa3bbf022d25769f6b5ec226",
+                "url": "https://api.github.com/repos/XOOPS/xmf/zipball/8987315e9575d94abaf6c7964d0eddd00ec0a992",
+                "reference": "8987315e9575d94abaf6c7964d0eddd00ec0a992",
                 "shasum": ""
             },
             "require": {
@@ -746,9 +800,9 @@
             "description": "XMF - XOOPS Module Framework",
             "support": {
                 "issues": "https://github.com/XOOPS/xmf/issues",
-                "source": "https://github.com/XOOPS/xmf/tree/v1.2.25"
+                "source": "https://github.com/XOOPS/xmf/tree/v1.2.26"
             },
-            "time": "2021-05-07T15:23:17+00:00"
+            "time": "2022-04-13T15:15:11+00:00"
         }
     ],
     "packages-dev": [],
@@ -762,5 +816,5 @@
     "platform-overrides": {
         "php": "5.3.9"
     },
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.2.0"
 }
