@@ -146,6 +146,13 @@ function xoops_module_update_profile(XoopsModule $module, $oldversion = null)
         $tables->executeQueue(true);
     }
 
+    if ($oldversion < '1.9.2') {
+        // decrease field_name field's size from 200 to 64
+        $sql          = 'ALTER TABLE ' . $GLOBALS['xoopsDB']->prefix('profile_field') . " CHANGE `field_name` `field_name` VARCHAR(64) NOT NULL DEFAULT ''";
+        $GLOBALS['xoopsDB']->queryF($sql);
+
+    }
+
     $profile_handler = xoops_getModuleHandler('profile', $module->getVar('dirname', 'n'));
     $profile_handler->cleanOrphan($GLOBALS['xoopsDB']->prefix('users'), 'uid', 'profile_id');
     $field_handler = xoops_getModuleHandler('field', $module->getVar('dirname', 'n'));
