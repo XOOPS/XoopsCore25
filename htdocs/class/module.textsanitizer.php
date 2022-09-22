@@ -318,11 +318,11 @@ class MyTextSanitizer
         $pattern = "/(^|[^]_a-z0-9-=\"'\/:\.])([-_a-z0-9\'+*$^&%=~!?{}]++(?:\.[-_a-z0-9\'+*$^&%=~!?{}]+)*+)@((?:(?![-.])[-a-z0-9.]+(?<![-.])\.[a-z]{2,6}|\d{1,3}(?:\.\d{1,3}){3})(?::\d++)?)/i";
         $text = preg_replace_callback($pattern, 'self::makeClickableCallbackEmailAddress', $text);
 
-        $pattern = "%(https?://)([-A-Z0-9./_*?&:;=#\[\]\%@]+)%i";
+        $pattern = "/(?:\s+|^)(https?:\/\/)([-A-Z0-9.\_*?&:;=#\/\[\]\%@]+)/i";
         $replacement = '<a href="$1$2" target="_blank" rel="external noopener nofollow">$1$2</a>';
         $text = preg_replace($pattern, $replacement, $text);
 
-        $pattern = "%(s?ftp://)([-A-Z0-9./_*?&:;=#\[\]\%@]+)%i";
+        $pattern = "%(?:\s+|^)(s?ftp://)([-A-Z0-9./_*?&:;=#\[\]\%@]+)%i";
         $replacement = '<a href="$1$2" target="_blank" rel="external">$1$2</a>';
         $text = preg_replace($pattern, $replacement, $text);
 
