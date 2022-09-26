@@ -136,7 +136,7 @@ abstract class XoopsMySQLDatabase extends XoopsDatabase
     }
 
     /**
-     * XoopsMySQLiDatabase::fetchObject()
+     * XoopsMySQLDatabase::fetchObject()
      *
      * @param mysqli_result $result
      * @return stdClass|false false on end of data
