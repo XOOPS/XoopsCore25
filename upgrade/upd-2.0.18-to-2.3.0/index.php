@@ -87,8 +87,9 @@ class Upgrade_230 extends XoopsUpgrade
         // MySQL 5.0+
         //$sql = "SHOW KEYS FROM `" . $GLOBALS['xoopsDB']->prefix('block_module_link') . "` WHERE `KEY_NAME` LIKE 'PRIMARY'";
         $sql = 'SHOW KEYS FROM `' . $GLOBALS['xoopsDB']->prefix('block_module_link') . '`';
-        if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
-            return false;
+        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
         }
         while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
             if ($row['Key_name'] === 'PRIMARY') {
@@ -105,8 +106,9 @@ class Upgrade_230 extends XoopsUpgrade
     public function apply_bmlink()
     {
         $sql = 'SHOW KEYS FROM `' . $GLOBALS['xoopsDB']->prefix('block_module_link') . '`';
-        if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
-            return false;
+        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
         }
         $keys_drop   = array();
         $primary_add = true;
@@ -301,7 +303,11 @@ class Upgrade_230 extends XoopsUpgrade
         if (!empty($tables)) {
             foreach ((array)$tables as $table) {
                 // Analyze tables for string types columns and generate his binary and string correctness sql sentences.
-                $resource = $GLOBALS['xoopsDB']->queryF("DESCRIBE $table");
+                $sql = "DESCRIBE $table";
+                $resource = $GLOBALS['xoopsDB']->queryF($sql);
+                if (!$GLOBALS['xoopsDB']->isResultSet($resource)) {
+                    \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
+                }
                 while (false !== ($result = $GLOBALS['xoopsDB']->fetchArray($resource))) {
                     if (preg_match('/(char)|(text)|(enum)|(set)/', $result['Type'])) {
                         // String Type SQL Sentence.
@@ -320,7 +326,11 @@ class Upgrade_230 extends XoopsUpgrade
 
                 // Analyze table indexs for any FULLTEXT-Type of index in the table.
                 $fulltext_indexes = array();
-                $resource         = $GLOBALS['xoopsDB']->queryF("SHOW INDEX FROM `$table`");
+                $sql         = "SHOW INDEX FROM `$table`";
+                $resource = $GLOBALS['xoopsDB']->queryF($sql);
+                if (!$GLOBALS['xoopsDB']->isResultSet($resource)) {
+                    \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
+                }
                 while (false !== ($result = $GLOBALS['xoopsDB']->fetchArray($resource))) {
                     if (preg_match('/FULLTEXT/', $result['Index_type'])) {
                         $fulltext_indexes[$result['Key_name']][$result['Column_name']] = 1;

@@ -50,7 +50,11 @@ class SystemMaintenance
     public function displayTables($array = true)
     {
         $tables = array();
-        $result = $this->db->queryF('SHOW TABLES');
+        $sql = 'SHOW TABLES';
+        $result = $this->db->queryF($sql);
+        if (!$this->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+        }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $value          = array_values($myrow);
             $value          = substr($value[0], strlen(XOOPS_DB_PREFIX) + 1);
@@ -86,7 +90,11 @@ class SystemMaintenance
      */
     public function CleanAvatar()
     {
-        $result = $this->db->queryF('SELECT avatar_id, avatar_file FROM ' . $this->db->prefix('avatar') . " WHERE avatar_type='C' AND avatar_id IN (" . 'SELECT t1.avatar_id FROM ' . $this->db->prefix('avatar_user_link') . ' AS t1 ' . 'LEFT JOIN ' . $this->db->prefix('users') . ' AS t2 ON t2.uid=t1.user_id ' . 'WHERE t2.uid IS NULL)');
+        $sql = 'SELECT avatar_id, avatar_file FROM ' . $this->db->prefix('avatar') . " WHERE avatar_type='C' AND avatar_id IN (" . 'SELECT t1.avatar_id FROM ' . $this->db->prefix('avatar_user_link') . ' AS t1 ' . 'LEFT JOIN ' . $this->db->prefix('users') . ' AS t2 ON t2.uid=t1.user_id ' . 'WHERE t2.uid IS NULL)';
+        $result = $this->db->queryF($sql);
+        if (!$this->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+        }
 
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             //delete file
@@ -306,7 +314,11 @@ class SystemMaintenance
     public function dump_table_structure($ret, $table, $drop, $class)
     {
         $verif  = false;
-        $result = $this->db->queryF('SHOW create table `' . $table . '`;');
+        $sql = 'SHOW create table `' . $table . '`;';
+        $result = $this->db->queryF($sql);
+        if (!$this->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+        }
         if ($result) {
             if ($row = $this->db->fetchArray($result)) {
                 $ret[0] .= '# Table structure for table `' . $table . "` \n\n";

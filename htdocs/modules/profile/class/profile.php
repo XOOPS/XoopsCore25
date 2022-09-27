@@ -322,10 +322,10 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
 
         $sql_users = $sql_select . $sql_from . $sql_clause . $sql_order;
         $result    = $this->db->query($sql_users, $limit, $start);
-
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             return array(array(), array(), 0);
         }
+
         $user_handler = xoops_getHandler('user');
         $uservars     = $this->getUserVars();
         $users        = array();

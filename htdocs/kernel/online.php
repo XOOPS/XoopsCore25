@@ -163,8 +163,8 @@ class XoopsOnlineHandler
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
-            return false;
+        if (!$this->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[] = $myrow;

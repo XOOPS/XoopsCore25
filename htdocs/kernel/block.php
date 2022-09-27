@@ -600,6 +600,9 @@ class XoopsBlock extends XoopsObject
         }
         $sql .= " ORDER BY $orderby";
         $result = $db->query($sql);
+        if (!$db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+        }
         $added  = array();
         while (false !== ($myrow = $db->fetchArray($result))) {
             if (!in_array($myrow['bid'], $added)) {
@@ -653,6 +656,9 @@ class XoopsBlock extends XoopsObject
             case 'object':
                 $sql    = 'SELECT * FROM ' . $db->prefix('newblocks') . '' . $where_query;
                 $result = $db->query($sql);
+                if (!$db->isResultSet($result)) {
+                    \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+                }
                 while (false !== ($myrow = $db->fetchArray($result))) {
                     $ret[] = new XoopsBlock($myrow);
                 }
@@ -660,6 +666,9 @@ class XoopsBlock extends XoopsObject
             case 'list':
                 $sql    = 'SELECT * FROM ' . $db->prefix('newblocks') . '' . $where_query;
                 $result = $db->query($sql);
+                if (!$db->isResultSet($result)) {
+                    \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+                }
                 while (false !== ($myrow = $db->fetchArray($result))) {
                     $block                      = new XoopsBlock($myrow);
                     $title                      = $block->getVar('title');
@@ -670,6 +679,9 @@ class XoopsBlock extends XoopsObject
             case 'id':
                 $sql    = 'SELECT bid FROM ' . $db->prefix('newblocks') . '' . $where_query;
                 $result = $db->query($sql);
+                if (!$db->isResultSet($result)) {
+                    \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+                }
                 while (false !== ($myrow = $db->fetchArray($result))) {
                     $ret[] = $myrow['bid'];
                 }
@@ -698,6 +710,9 @@ class XoopsBlock extends XoopsObject
             $sql = 'SELECT bid FROM ' . $db->prefix('newblocks') . ' WHERE mid=' . $moduleid;
         }
         $result = $db->query($sql);
+        if (!$db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+        }
         $ret    = array();
         while (false !== ($myrow = $db->fetchArray($result))) {
             if ($asobject) {
@@ -738,6 +753,9 @@ class XoopsBlock extends XoopsObject
                 }
             }
             $result   = $db->query($sql);
+            if (!$db->isResultSet($result)) {
+                \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+            }
             $blockids = array();
             while (false !== ($myrow = $db->fetchArray($result))) {
                 $blockids[] = $myrow['gperm_itemid'];
@@ -770,6 +788,9 @@ class XoopsBlock extends XoopsObject
         }
         $sql .= ' ORDER BY ' . $orderby;
         $result = $db->query($sql);
+        if (!$db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+        }
         while (false !== ($myrow = $db->fetchArray($result))) {
             $block              = new XoopsBlock($myrow);
             $ret[$myrow['bid']] = &$block;
@@ -797,18 +818,24 @@ class XoopsBlock extends XoopsObject
         $ret  = array();
         $bids = array();
         $sql  = 'SELECT DISTINCT(bid) from ' . $db->prefix('newblocks');
-        if ($result = $db->query($sql)) {
+        $result = $db->query($sql);
+        if (!$db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+        }
             while (false !== ($myrow = $db->fetchArray($result))) {
                 $bids[] = $myrow['bid'];
             }
-        }
+
         $sql     = 'SELECT DISTINCT(p.gperm_itemid) from ' . $db->prefix('group_permission') . ' p, ' . $db->prefix('groups') . " g WHERE g.groupid=p.gperm_groupid AND p.gperm_name='block_read'";
         $grouped = array();
-        if ($result = $db->query($sql)) {
+        $result = $db->query($sql);
+        if (!$db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+        }
             while (false !== ($myrow = $db->fetchArray($result))) {
                 $grouped[] = $myrow['gperm_itemid'];
             }
-        }
+
         $non_grouped = array_diff($bids, $grouped);
         if (!empty($non_grouped)) {
             $sql = 'SELECT b.* FROM ' . $db->prefix('newblocks') . ' b, ' . $db->prefix('block_module_link') . ' m WHERE m.block_id=b.bid';
@@ -833,6 +860,9 @@ class XoopsBlock extends XoopsObject
             $sql .= ' AND b.bid IN (' . implode(',', $non_grouped) . ')';
             $sql .= ' ORDER BY ' . $orderby;
             $result = $db->query($sql);
+            if (!$db->isResultSet($result)) {
+                \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+            }
             while (false !== ($myrow = $db->fetchArray($result))) {
                 $block              = new XoopsBlock($myrow);
                 $ret[$myrow['bid']] =& $block;
@@ -922,13 +952,16 @@ class XoopsBlockHandler extends XoopsObjectHandler
         $id    = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('newblocks') . ' WHERE bid=' . $id;
-            if ($result = $this->db->query($sql)) {
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
+                \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            }
                 $numrows = $this->db->getRowsNum($result);
                 if ($numrows == 1) {
                     $block = new XoopsBlock();
                     $block->assignVars($this->db->fetchArray($result));
                 }
-            }
+
         }
 
         return $block;
@@ -1081,8 +1114,8 @@ class XoopsBlockHandler extends XoopsObjectHandler
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
-            return $ret;
+        if (!$this->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $block = new XoopsBlock();

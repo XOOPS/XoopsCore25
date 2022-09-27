@@ -144,8 +144,9 @@ class XoopsGroupHandler extends XoopsObjectHandler
         $group = false;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('groups') . ' WHERE groupid=' . $id;
-            if (!$result = $this->db->query($sql)) {
-                return $group;
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
+                \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
             }
             $numrows = $this->db->getRowsNum($result);
             if ($numrows == 1) {
@@ -235,8 +236,8 @@ class XoopsGroupHandler extends XoopsObjectHandler
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
-            return $ret;
+         if (!$this->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $group = new XoopsGroup();
@@ -328,8 +329,9 @@ class XoopsMembershipHandler extends XoopsObjectHandler
         $mship = false;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('groups_users_link') . ' WHERE linkid=' . $id;
-            if (!$result = $this->db->query($sql)) {
-                return $mship;
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
+                \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
             }
             $numrows = $this->db->getRowsNum($result);
             if ($numrows == 1) {
@@ -420,8 +422,8 @@ class XoopsMembershipHandler extends XoopsObjectHandler
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
-            return $ret;
+        if (!$this->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $mship = new XoopsMembership();
@@ -491,8 +493,8 @@ class XoopsMembershipHandler extends XoopsObjectHandler
         $ret    = array();
         $sql    = 'SELECT groupid FROM ' . $this->db->prefix('groups_users_link') . ' WHERE uid=' . (int)$uid;
         $result = $this->db->query($sql);
-        if (!$result) {
-            return $ret;
+        if (!$this->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[] = $myrow['groupid'];
@@ -516,8 +518,8 @@ class XoopsMembershipHandler extends XoopsObjectHandler
         $ret    = array();
         $sql    = 'SELECT uid FROM ' . $this->db->prefix('groups_users_link') . ' WHERE groupid=' . (int)$groupid;
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
-            return $ret;
+        if (!$this->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[] = $myrow['uid'];

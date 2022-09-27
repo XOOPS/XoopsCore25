@@ -139,8 +139,9 @@ class SystemAvatarHandler extends XoopsAvatarHandler
         $id     = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('avatar') . ' WHERE avatar_id=' . $id;
-            if (!$result = $this->db->query($sql)) {
-                return false;
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
+                \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
             }
             $numrows = $this->db->getRowsNum($result);
             if ($numrows == 1) {

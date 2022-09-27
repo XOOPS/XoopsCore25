@@ -323,7 +323,10 @@ class Upgrade_220 extends XoopsUpgrade
         $result = $xoopsDB->queryF($sql);
 
         $sql       = '   SELECT b.*, i.instanceid ' . '   FROM ' . $xoopsDB->prefix('block_instance') . ' AS i LEFT JOIN ' . $xoopsDB->prefix('newblocks_bak') . ' AS b ON b.bid = i.bid ' . '   GROUP BY b.dirname, b.bid, i.instanceid';
-        $result    = $xoopsDB->query($sql);
+        $result = $xoopsDB->query($sql);
+        if (!$xoopsDB->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
+        }
         $dirname   = '';
         $bid       = 0;
         $block_key = null;
@@ -357,7 +360,10 @@ class Upgrade_220 extends XoopsUpgrade
 
         $sql = '   SELECT b.* ' . '   FROM ' . $xoopsDB->prefix('newblocks_bak') . ' AS b LEFT JOIN ' . $xoopsDB->prefix('block_instance') . ' AS i ON b.bid = i.bid ' . '   WHERE i.instanceid IS NULL';
         '   GROUP BY b.dirname, b.bid';
-        $result    = $xoopsDB->query($sql);
+        $result = $xoopsDB->query($sql);
+        if (!$xoopsDB->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
+        }
         $dirname   = '';
         $bid       = 0;
         $block_key = null;

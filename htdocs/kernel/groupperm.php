@@ -161,8 +161,9 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
         $perm = false;
         if ($id > 0) {
             $sql = sprintf('SELECT * FROM %s WHERE gperm_id = %u', $this->db->prefix('group_permission'), $id);
-            if (!$result = $this->db->query($sql)) {
-                return $perm;
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
+                \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
             }
             $numrows = $this->db->getRowsNum($result);
             if ($numrows == 1) {
@@ -253,8 +254,8 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
-            return $ret;
+        if (!$this->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $perm = new XoopsGroupPerm();

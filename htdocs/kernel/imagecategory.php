@@ -212,8 +212,9 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
         $imgcat = false;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('imagecategory') . ' WHERE imgcat_id=' . $id;
-            if (!$result = $this->db->query($sql)) {
-                return $imgcat;
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
+                \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
             }
             $numrows = $this->db->getRowsNum($result);
             if ($numrows == 1) {
@@ -307,8 +308,8 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
         }
         $sql .= ' ORDER BY imgcat_weight, imgcat_id ASC';
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
-            return $ret;
+        if (!$this->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $imgcat = new XoopsImagecategory();

@@ -51,6 +51,9 @@ $rawStats['']['week'] = 0;
 $rawStats['']['day'] = 0;
 $rawStats['']['hour'] = 0;
 $result = $xoopsDB->query($sql);
+if (!$xoopsDB->isResultSet($result)) {
+    \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
+}
 while (false !== ($row = $xoopsDB->fetchArray($result))) {
     $rawStats[$row['type']][$row['age']] = $row['count'];
 }

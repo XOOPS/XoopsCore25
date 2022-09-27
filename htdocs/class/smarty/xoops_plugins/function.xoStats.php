@@ -111,6 +111,9 @@ function xoStatsRegen()
     //Total Post Count
     $sql = 'SELECT SUM(posts) AS totalposts FROM ' . $GLOBALS['xoopsDB']->prefix('users') . ' WHERE level > 0';
     $result = $GLOBALS['xoopsDB']->query($sql);
+    if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+        \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
+    }
     $myrow = $GLOBALS['xoopsDB']->fetchArray($result);
     $stats['totalPosts'] = $myrow['totalposts'];
 

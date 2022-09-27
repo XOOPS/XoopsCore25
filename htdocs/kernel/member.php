@@ -503,8 +503,9 @@ class XoopsMemberHandler
             $sql .= $sql_criteria;
         }
 
-        if (!$result = $this->userHandler->db->query($sql, $limit, $start)) {
-            return $ret;
+        $result = $this->userHandler->db->query($sql, $limit, $start);
+        if (!$this->userHandler->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->userHandler->db->error(), E_USER_ERROR);
         }
         while (false !== ($myrow = $this->userHandler->db->fetchArray($result))) {
             if ($asobject) {

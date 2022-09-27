@@ -143,8 +143,9 @@ class XoopsTplsetHandler extends XoopsObjectHandler
         $id     = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('tplset') . ' WHERE tplset_id=' . $id;
-            if (!$result = $this->db->query($sql)) {
-                return $tplset;
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
+                \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
             }
             $numrows = $this->db->getRowsNum($result);
             if ($numrows == 1) {
@@ -172,8 +173,9 @@ class XoopsTplsetHandler extends XoopsObjectHandler
         $tplset_name = trim($tplset_name);
         if ($tplset_name != '') {
             $sql = 'SELECT * FROM ' . $this->db->prefix('tplset') . ' WHERE tplset_name=' . $this->db->quoteString($tplset_name);
-            if (!$result = $this->db->query($sql)) {
-                return $tplset;
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
+                \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
             }
             $numrows = $this->db->getRowsNum($result);
             if ($numrows == 1) {
@@ -265,8 +267,8 @@ class XoopsTplsetHandler extends XoopsObjectHandler
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
-            return $ret;
+        if (!$this->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $tplset = new XoopsTplset();

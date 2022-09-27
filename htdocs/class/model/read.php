@@ -61,6 +61,9 @@ class XoopsModelRead extends XoopsModelAbstract
             $start = $criteria->getStart();
         }
         $result = $this->handler->db->query($sql, $limit, $start);
+        if (!$this->handler->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->handler->db->error(), E_USER_ERROR);
+        }
         $ret    = array();
         if (false !== $result) {
             if ($asObject) {
@@ -140,8 +143,11 @@ class XoopsModelRead extends XoopsModelAbstract
             }
         }
         $result = $this->handler->db->query($sql, $limit, $start);
-        if (!$result) {
-            return $ret;
+//        if (!$result) {
+//            return $ret;
+//        }
+        if (!$this->handler->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->handler->db->error(), E_USER_ERROR);
         }
 
         $myts = MyTextSanitizer::getInstance();
@@ -169,9 +175,12 @@ class XoopsModelRead extends XoopsModelAbstract
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
         }
-        if (!$result = $this->handler->db->query($sql, $limit, $start)) {
-            return $ret;
+        $result = $this->handler->db->query($sql, $limit, $start);
+        if (!$this->handler->db->isResultSet($result)) {
+            // return $ret;
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->handler->db->error(), E_USER_ERROR);
         }
+
         while (false !== ($myrow = $this->handler->db->fetchArray($result))) {
             $ret[] = $myrow[$this->handler->keyName];
         }

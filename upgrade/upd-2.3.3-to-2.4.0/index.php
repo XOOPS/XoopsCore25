@@ -178,8 +178,10 @@ class Upgrade_240 extends XoopsUpgrade
 
         foreach ($tables as $table => $keys) {
             $sql = 'SHOW KEYS FROM `' . $GLOBALS['xoopsDB']->prefix($table) . '`';
-            if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
-                continue;
+            $result = $GLOBALS['xoopsDB']->queryF($sql);
+            if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+                //                continue;
+                \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
             }
             $existing_keys = array();
             while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
@@ -209,8 +211,10 @@ class Upgrade_240 extends XoopsUpgrade
 
         foreach ($tables as $table => $keys) {
             $sql = 'SHOW KEYS FROM `' . $GLOBALS['xoopsDB']->prefix($table) . '`';
-            if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
-                continue;
+            $result = $GLOBALS['xoopsDB']->queryF($sql);
+            if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+//                continue;
+                \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
             }
             $existing_keys = array();
             while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {

@@ -920,7 +920,11 @@ function xoops_getrank($rank_id = 0, $posts = 0)
     } else {
         $sql = 'SELECT rank_title AS title, rank_image AS image FROM ' . $db->prefix('ranks') . ' WHERE rank_min <= ' . $posts . ' AND rank_max >= ' . $posts . ' AND rank_special = 0';
     }
-    $rank          = $db->fetchArray($db->query($sql));
+    $result = $db->query($sql);
+    if (!$db->isResultSet($result)) {
+        \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+    }
+    $rank          = $db->fetchArray($result);
     $rank['title'] = $myts->htmlSpecialChars($rank['title']);
     $rank['id']    = $rank_id;
 

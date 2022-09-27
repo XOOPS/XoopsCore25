@@ -84,7 +84,12 @@ class XoopsComments extends XoopsObject
     {
         $id  = (int)$id;
         $sql = 'SELECT * FROM ' . $this->ctable . ' WHERE comment_id=' . $id;
-        $arr = $this->db->fetchArray($this->db->query($sql));
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+        }
+
+        $arr = $this->db->fetchArray($result);
         $this->assignVars($arr);
     }
 
@@ -201,12 +206,18 @@ class XoopsComments extends XoopsObject
         if (!$asobject) {
             $sql    = 'SELECT comment_id FROM ' . $this->ctable . "$where_query ORDER BY $orderby";
             $result = $this->db->query($sql, $limit, $start);
+            if (!$this->db->isResultSet($result)) {
+                \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            }
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $ret[] = $myrow['comment_id'];
             }
         } else {
             $sql    = 'SELECT * FROM ' . $this->ctable . '' . $where_query . " ORDER BY $orderby";
             $result = $this->db->query($sql, $limit, $start);
+            if (!$this->db->isResultSet($result)) {
+                \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            }
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $ret[] = new XoopsComments($this->ctable, $myrow);
             }

@@ -68,11 +68,14 @@ switch ($op) {
                 $criteria->add($table['criteria']);
             }
             $sql = 'SELECT COUNT(*) AS total FROM ' . $xoopsDB->prefix($table['table_name']) . ' ' . $criteria->renderWhere();
-            if ($result = $xoopsDB->query($sql)) {
+            $result = $xoopsDB->query($sql);
+            if (!$xoopsDB->isResultSet($result)) {
+                \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
+            }
                 if ($row = $xoopsDB->fetchArray($result)) {
                     $total_posts += $row['total'];
                 }
-            }
+
         }
 
         $sql = 'UPDATE ' . $xoopsDB->prefix('users') . " SET posts = '" . $total_posts . "' WHERE uid = '" . $uid . "'";

@@ -13,6 +13,9 @@ class Upgrade_2018 extends XoopsUpgrade
         $db     = $GLOBALS['xoopsDB'];
         $sql    = 'SHOW COLUMNS FROM ' . $db->prefix('config') . " LIKE 'conf_title'";
         $result = $db->queryF($sql);
+        if (!$db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+        }
         while (false !== ($row = $db->fetchArray($result))) {
             if (strtolower(trim($row['Type'])) === 'varchar(255)') {
                 return true;

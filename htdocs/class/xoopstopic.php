@@ -89,7 +89,11 @@ class XoopsTopic
     {
         $topicid = (int)$topicid;
         $sql     = 'SELECT * FROM ' . $this->table . ' WHERE topic_id=' . $topicid . '';
-        $array   = $this->db->fetchArray($this->db->query($sql));
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+        }
+        $array   = $this->db->fetchArray($result);
         $this->makeTopic($array);
     }
 
@@ -380,7 +384,11 @@ class XoopsTopic
      */
     public function getTopicsList()
     {
-        $result = $this->db->query('SELECT topic_id, topic_pid, topic_title FROM ' . $this->table);
+        $sql = 'SELECT topic_id, topic_pid, topic_title FROM ' . $this->table;
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+        }
         $ret    = array();
         $myts   = MyTextSanitizer::getInstance();
         while (false !== ($myrow = $this->db->fetchArray($result))) {

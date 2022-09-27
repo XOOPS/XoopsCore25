@@ -715,8 +715,9 @@ class XoopsModuleHandler extends XoopsObjectHandler
                 return $_cachedModule_mid[$id];
             } else {
                 $sql = 'SELECT * FROM ' . $this->db->prefix('modules') . ' WHERE mid = ' . $id;
-                if (!$result = $this->db->query($sql)) {
-                    return $module;
+                $result = $this->db->query($sql);
+                if (!$this->db->isResultSet($result)) {
+                    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
                 }
                 $numrows = $this->db->getRowsNum($result);
                 if ($numrows == 1) {
@@ -754,8 +755,9 @@ class XoopsModuleHandler extends XoopsObjectHandler
         } else {
             $module = false;
             $sql    = 'SELECT * FROM ' . $this->db->prefix('modules') . " WHERE dirname = '" . trim($dirname) . "'";
-            if (!$result = $this->db->query($sql)) {
-                return $module;
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
+                \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
             }
             $numrows = $this->db->getRowsNum($result);
             if ($numrows == 1) {
@@ -840,12 +842,15 @@ class XoopsModuleHandler extends XoopsObjectHandler
         $this->db->query($sql);
 
         $sql = sprintf('SELECT block_id FROM %s WHERE module_id = %u', $this->db->prefix('block_module_link'), $module->getVar('mid'));
-        if ($result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+        }
             $block_id_arr = array();
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $block_id_arr[] = $myrow['block_id'];
             }
-        }
+
         // loop through block_id_arr
         if (isset($block_id_arr)) {
             foreach ($block_id_arr as $i) {
@@ -895,8 +900,8 @@ class XoopsModuleHandler extends XoopsObjectHandler
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
-            return $ret;
+        if (!$this->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $module = new XoopsModule();

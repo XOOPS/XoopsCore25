@@ -1389,8 +1389,9 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
         }
         $sql = sprintf('SELECT %s FROM %s WHERE %s = %s', $select, $this->table, $this->keyName, $this->db->quote($id));
         //$sql = "SELECT {$select} FROM {$this->table} WHERE {$this->keyName} = " . $this->db->quote($id);
-        if (!$result = $this->db->query($sql)) {
-            return $object;
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
         }
         if (!$this->db->getRowsNum($result)) {
             return $object;

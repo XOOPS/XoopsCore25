@@ -38,14 +38,18 @@ function getDbCharsets()
 
     $charsets['utf8'] = array();
     $ut8_available    = false;
-    if ($result = $GLOBALS['xoopsDB']->queryF('SHOW CHARSET')) {
-        while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
-            $charsets[$row['Charset']]['desc'] = $row['Description'];
-            if ($row['Charset'] === 'utf8') {
-                $ut8_available = true;
-            }
+    $sql              = 'SHOW CHARSET';
+    $result = $GLOBALS['xoopsDB']->queryF($sql);
+    if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+        \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
+    }
+    while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
+        $charsets[$row['Charset']]['desc'] = $row['Description'];
+        if ($row['Charset'] === 'utf8') {
+            $ut8_available = true;
         }
     }
+
     if (!$ut8_available) {
         unset($charsets['utf8']);
     }
@@ -61,10 +65,14 @@ function getDbCollations()
     $collations = array();
     $charsets   = getDbCharsets();
 
-    if ($result = $GLOBALS['xoopsDB']->queryF('SHOW COLLATION')) {
-        while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
-            $charsets[$row['Charset']]['collation'][] = $row['Collation'];
-        }
+    $sql    = 'SHOW COLLATION';
+    $result = $GLOBALS['xoopsDB']->queryF($sql);
+    if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+        \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
+    }
+
+    while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
+        $charsets[$row['Charset']]['collation'][] = $row['Collation'];
     }
 
     return $charsets;
