@@ -314,22 +314,22 @@ class Upgrade_230 extends XoopsUpgrade
             foreach ((array)$tables as $table) {
                 // Analyze tables for string types columns and generate his binary and string correctness sql sentences.
                 $sql = "DESCRIBE $table";
-                $resource = $GLOBALS['xoopsDB']->queryF($sql);
-                if (!$GLOBALS['xoopsDB']->isResultSet($resource)) {
+                $result = $GLOBALS['xoopsDB']->queryF($sql);
+                if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
                     \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
                 }
-                while (false !== ($result = $GLOBALS['xoopsDB']->fetchArray($resource))) {
-                    if (preg_match('/(char)|(text)|(enum)|(set)/', $result['Type'])) {
+                while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
+                    if (preg_match('/(char)|(text)|(enum)|(set)/', $myrow['Type'])) {
                         // String Type SQL Sentence.
-                        $string_querys[] = "ALTER TABLE `$table` MODIFY `" . $result['Field'] . '` ' . $result['Type'] . " CHARACTER SET $charset COLLATE $collation " . (((!empty($result['Default'])) || ($result['Default'] === '0') || ($result['Default'] === 0)) ? "DEFAULT '" . $result['Default'] . "' " : '') . ('YES' === $result['Null'] ? '' : 'NOT ') . 'NULL';
+                        $string_querys[] = "ALTER TABLE `$table` MODIFY `" . $myrow['Field'] . '` ' . $myrow['Type'] . " CHARACTER SET $charset COLLATE $collation " . (((!empty($myrow['Default'])) || ($myrow['Default'] === '0') || ($myrow['Default'] === 0)) ? "DEFAULT '" . $myrow['Default'] . "' " : '') . ('YES' === $myrow['Null'] ? '' : 'NOT ') . 'NULL';
 
                         // Binary String Type SQL Sentence.
-                        if (preg_match('/(enum)|(set)/', $result['Type'])) {
-                            $binary_querys[] = "ALTER TABLE `$table` MODIFY `" . $result['Field'] . '` ' . $result['Type'] . ' CHARACTER SET binary ' . (((!empty($result['Default'])) || ($result['Default'] === '0') || ($result['Default'] === 0)) ? "DEFAULT '" . $result['Default'] . "' " : '') . ('YES' === $result['Null'] ? '' : 'NOT ') . 'NULL';
+                        if (preg_match('/(enum)|(set)/', $myrow['Type'])) {
+                            $binary_querys[] = "ALTER TABLE `$table` MODIFY `" . $myrow['Field'] . '` ' . $myrow['Type'] . ' CHARACTER SET binary ' . (((!empty($myrow['Default'])) || ($myrow['Default'] === '0') || ($myrow['Default'] === 0)) ? "DEFAULT '" . $myrow['Default'] . "' " : '') . ('YES' === $myrow['Null'] ? '' : 'NOT ') . 'NULL';
                         } else {
-                            $result['Type']  = str_replace('char', 'binary', $result['Type']);
-                            $result['Type']  = str_replace('text', 'blob', $result['Type']);
-                            $binary_querys[] = "ALTER TABLE `$table` MODIFY `" . $result['Field'] . '` ' . $result['Type'] . ' ' . (((!empty($result['Default'])) || ($result['Default'] === '0') || ($result['Default'] === 0)) ? "DEFAULT '" . $result['Default'] . "' " : '') . ('YES' === $result['Null'] ? '' : 'NOT ') . 'NULL';
+                            $myrow['Type']  = str_replace('char', 'binary', $myrow['Type']);
+                            $myrow['Type']  = str_replace('text', 'blob', $myrow['Type']);
+                            $binary_querys[] = "ALTER TABLE `$table` MODIFY `" . $myrow['Field'] . '` ' . $myrow['Type'] . ' ' . (((!empty($myrow['Default'])) || ($myrow['Default'] === '0') || ($myrow['Default'] === 0)) ? "DEFAULT '" . $myrow['Default'] . "' " : '') . ('YES' === $myrow['Null'] ? '' : 'NOT ') . 'NULL';
                         }
                     }
                 }
@@ -337,13 +337,13 @@ class Upgrade_230 extends XoopsUpgrade
                 // Analyze table indexs for any FULLTEXT-Type of index in the table.
                 $fulltext_indexes = array();
                 $sql         = "SHOW INDEX FROM `$table`";
-                $resource = $GLOBALS['xoopsDB']->queryF($sql);
-                if (!$GLOBALS['xoopsDB']->isResultSet($resource)) {
+                $result = $GLOBALS['xoopsDB']->queryF($sql);
+                if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
                     \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
                 }
-                while (false !== ($result = $GLOBALS['xoopsDB']->fetchArray($resource))) {
-                    if (preg_match('/FULLTEXT/', $result['Index_type'])) {
-                        $fulltext_indexes[$result['Key_name']][$result['Column_name']] = 1;
+                while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
+                    if (preg_match('/FULLTEXT/', $myrow['Index_type'])) {
+                        $fulltext_indexes[$myrow['Key_name']][$myrow['Column_name']] = 1;
                     }
                 }
 
