@@ -24,6 +24,11 @@
  */
 class ProfileVisibility extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $field_id;
+    public $user_group;
+    public $profile_group;
+
     /**
      *
      */

@@ -29,6 +29,13 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class XoopsGroupPerm extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $gperm_id;
+    public $gperm_groupid;
+    public $gperm_itemid;
+    public $gperm_modid;
+    public $gperm_name;
+
     /**
      * Constructor
      *

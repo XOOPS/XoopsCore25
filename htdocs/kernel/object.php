@@ -1159,6 +1159,10 @@ class XoopsObjectHandler
  */
 class XoopsPersistableObjectHandler extends XoopsObjectHandler
 {
+
+    //PHP 8.2 Dynamic properties deprecated
+    public $table_link;
+
     /**
      * holds reference to custom extended object handler
      *

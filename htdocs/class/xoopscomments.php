@@ -41,6 +41,22 @@ class XoopsComments extends XoopsObject
      * @var \XoopsMySQLDatabase
      */
     public $db;
+    //PHP 8.2 Dynamic properties deprecated
+    public $comment_id;
+    public $item_id;
+    public $order;
+    public $mode;
+    public $subject;
+    public $comment;
+    public $ip;
+    public $pid;
+    public $date;
+    public $nohtml;
+    public $nosmiley;
+    public $noxcode;
+    public $user_id;
+    public $icon;
+    public $prefix;
 
     /**
      * @param      $ctable

@@ -27,6 +27,12 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class XoopsConfigOption extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $confop_id;
+    public $confop_name;
+    public $confop_value;
+    public $conf_id;
+    
     /**
      * Constructor
      */

@@ -27,6 +27,11 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class XoopsConfigCategory extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $confcat_id;
+    public $confcat_name;
+    public $confcat_order;
+
     /**
      * Constructor
      *

@@ -27,6 +27,33 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class XoopsComment extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $com_id;
+    public $com_pid;
+    public $com_modid;
+    public $com_icon;
+    public $com_title;
+    public $com_text;
+    public $com_created;
+    public $com_modified;
+    public $com_uid;
+    // Start Add by voltan
+    public $com_user;
+    public $com_email;
+    public $com_url;
+    // End Add by voltan
+    public $com_ip;
+    public $com_sig;
+    public $com_itemid;
+    public $com_rootid;
+    public $com_status;
+    public $com_exparams;
+    public $dohtml;
+    public $dosmiley;
+    public $doxcode;
+    public $doimage;
+    public $dobr;
+
     /**
      * Constructor
      **/
