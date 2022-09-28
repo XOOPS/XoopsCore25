@@ -80,8 +80,9 @@ if (!empty($_POST['action'])) {
         // remove selected records
         foreach ($_POST['ids'] as $lid) {
             $lid = (int)$lid;
-            $result = $db->query("SELECT `ip` FROM $log_table WHERE lid='$lid'");
-            if (false !== $result) {
+            $sql = "SELECT `ip` FROM $log_table WHERE lid='$lid'";
+            $result = $db->query($sql);
+            if (!$db->isResultSet($result)) {
                 list($ip) = $db->fetchRow($result);
                 $protector->register_bad_ips(0, $ip);
             }
@@ -96,7 +97,11 @@ if (!empty($_POST['action'])) {
         exit;
     } elseif ($_POST['action'] === 'compactlog') {
         // compactize records (removing duplicated records (ip,type)
-        $result = $db->query("SELECT `lid`,`ip`,`type` FROM $log_table ORDER BY lid DESC");
+        $sql = "SELECT `lid`,`ip`,`type` FROM $log_table ORDER BY lid DESC";
+        $result = $db->query($sql);
+        if (!$db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+        }
         $buf    = array();
         $ids    = array();
         while (false !== (list($lid, $ip, $type) = $db->fetchRow($result))) {
@@ -117,9 +122,18 @@ if (!empty($_POST['action'])) {
 //
 
 // query for listing
-$rs = $db->query("SELECT count(lid) FROM $log_table");
-list($numrows) = $db->fetchRow($rs);
-$prs = $db->query("SELECT l.lid, l.uid, l.ip, l.agent, l.type, l.description, UNIX_TIMESTAMP(l.timestamp), u.uname FROM $log_table l LEFT JOIN " . $db->prefix('users') . " u ON l.uid=u.uid ORDER BY timestamp DESC LIMIT $pos,$num");
+$sql = "SELECT count(lid) FROM $log_table";
+$result = $db->query($sql);
+if (!$db->isResultSet($result)) {
+    \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+}
+list($numrows) = $db->fetchRow($result);
+
+$sql = "SELECT l.lid, l.uid, l.ip, l.agent, l.type, l.description, UNIX_TIMESTAMP(l.timestamp), u.uname FROM $log_table l LEFT JOIN " . $db->prefix('users') . " u ON l.uid=u.uid ORDER BY timestamp DESC LIMIT $pos,$num";
+$result = $db->query($sql);
+if (!$db->isResultSet($result)) {
+    \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+}
 
 // Page Navigation
 $nav      = new XoopsPageNav($numrows, $num, $pos, 'pos', "page=center&num=$num");
@@ -231,7 +245,7 @@ echo "
 
 // body of log listing
 $oddeven = 'odd';
-while (false !== (list($lid, $uid, $ip, $agent, $type, $description, $timestamp, $uname) = $db->fetchRow($prs))) {
+while (false !== (list($lid, $uid, $ip, $agent, $type, $description, $timestamp, $uname) = $db->fetchRow($result))) {
     $oddeven = ($oddeven === 'odd' ? 'even' : 'odd');
     $style = '';
 

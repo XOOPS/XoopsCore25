@@ -347,8 +347,9 @@ class SystemMaintenance
     public function dump_table_datas($ret, $table)
     {
         $count  = 0;
-        $result = $this->db->queryF('SELECT * FROM ' . $table . ';');
-        if ($result) {
+        $sql = 'SELECT * FROM ' . $table . ';';
+        $result = $this->db->queryF($sql);
+        if ($this->db->isResultSet($result)) {
             $num_rows   = $this->db->getRowsNum($result);
             $num_fields = $this->db->getFieldsNum($result);
 

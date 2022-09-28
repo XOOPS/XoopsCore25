@@ -898,7 +898,9 @@ class XoopsBlock extends XoopsObject
         } else {
             $sql = sprintf('SELECT COUNT(*) FROM %s WHERE mid = %d AND func_num = %d', $db->prefix('newblocks'), $moduleId, $funcNum);
         }
-        if (!$result = $db->query($sql)) {
+        $result = $db->query($sql);
+        if (!$db->isResultSet($result)) {
+            //            \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
             return 0;
         }
         list($count) = $db->fetchRow($result);

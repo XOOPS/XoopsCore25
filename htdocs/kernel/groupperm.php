@@ -285,8 +285,9 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
             $sql .= ' ' . $criteria->renderWhere();
         }
         $result = $this->db->query($sql);
-        if (!$result) {
-            return 0;
+        if (!$this->db->isResultSet($result)) {
+            //            return 0;
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
         }
         list($count) = $this->db->fetchRow($result);
 

@@ -338,7 +338,9 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
             $where = $criteria->render();
             $sql .= ($where != '') ? ' AND ' . $where : '';
         }
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
+            //            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
             return 0;
         }
         list($count) = $this->db->fetchRow($result);

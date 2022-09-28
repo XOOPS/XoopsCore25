@@ -249,6 +249,9 @@ class XoUserHandler extends XoopsObjectHandler
             }
         }
         $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+        }
         list($count) = $this->db->fetchRow($result);
 
         return $count;

@@ -385,6 +385,9 @@ class XoopsMemberHandler
 
         /** @var mysqli_result $result */
         $result = $db->query($sql);
+        if (!$db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+        }
         if ($result) {
             $row = $db->fetchRow($result);
             if ($row) {
@@ -552,8 +555,9 @@ class XoopsMemberHandler
         if ($sql_criteria) {
             $sql .= ' AND ' . $sql_criteria;
         }
-
-        if (!$result = $this->userHandler->db->query($sql)) {
+        $result = $this->userHandler->db->query($sql);
+        if (!$this->userHandler->db->isResultSet($result)) {
+            //            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->userHandler->db->error(), E_USER_ERROR);
             return $ret;
         }
         list($ret) = $this->userHandler->db->fetchRow($result);

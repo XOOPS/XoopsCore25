@@ -168,8 +168,9 @@ class XoopsModelJoint extends XoopsModelAbstract
             $sql .= ' ' . $criteria->renderWhere();
         }
         $sql .= " GROUP BY l.{$this->handler->field_link}";
-        if (!$result = $this->handler->db->query($sql)) {
-            return false;
+        $result = $this->handler->db->query($sql);
+        if (!$this->handler->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->handler->db->error(), E_USER_ERROR);
         }
         $ret = array();
         while (false !== (list($id, $count) = $this->handler->db->fetchRow($result))) {

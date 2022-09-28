@@ -61,11 +61,14 @@ class ProfileVisibilityHandler extends XoopsPersistableObjectHandler
         $profile_groups[] = $user_groups[] = 0;
         $sql  = "SELECT field_id FROM {$this->table} WHERE profile_group IN (" . implode(',', $profile_groups) . ')';
         $sql .= ' AND user_group IN (' . implode(',', $user_groups) . ')';
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+        }
         $field_ids = array();
-        if ($result = $this->db->query($sql)) {
-            while (false !== (list($field_id) = $this->db->fetchRow($result))) {
-                $field_ids[] = $field_id;
-            }
+
+        while (false !== (list($field_id) = $this->db->fetchRow($result))) {
+            $field_ids[] = $field_id;
         }
 
         return $field_ids;

@@ -316,6 +316,9 @@ class Upgrade_220 extends XoopsUpgrade
 
         $sql    = '   SELECT MAX(instanceid) FROM ' . $xoopsDB->prefix('block_instance');
         $result = $xoopsDB->query($sql);
+        if (!$xoopsDB->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
+        }
         list($MaxInstanceId) = $xoopsDB->fetchRow($result);
 
         // Change custom block mid from 1 to 0
@@ -404,6 +407,9 @@ class Upgrade_220 extends XoopsUpgrade
         // Deal with custom blocks, convert options to type and content
         $sql    = 'SELECT bid, options FROM `' . $xoopsDB->prefix('newblocks') . "` WHERE show_func='b_system_custom_show'";
         $result = $xoopsDB->query($sql);
+        if (!$xoopsDB->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
+        }
         while (false !== (list($bid, $options) = $xoopsDB->fetchRow($result))) {
             $_options = unserialize($options);
             $content  = $_options[0];
@@ -416,6 +422,9 @@ class Upgrade_220 extends XoopsUpgrade
         $result = $xoopsDB->queryF($sql);
         $sql    = 'SELECT bid, options FROM `' . $xoopsDB->prefix('newblocks') . "` WHERE show_func <> 'b_system_custom_show' AND options <> ''";
         $result = $xoopsDB->query($sql);
+        if (!$xoopsDB->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
+        }
         while (false !== (list($bid, $_options) = $xoopsDB->fetchRow($result))) {
             $options = unserialize($_options);
             if (empty($options) || !is_array($options)) {

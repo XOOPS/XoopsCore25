@@ -96,7 +96,11 @@ class XoopsTree
     {
         $sel_id  = (int)$sel_id;
         $idarray = array();
-        $result  = $this->db->query('SELECT ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id . '');
+        $sql  = 'SELECT ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id . '';
+        $result  = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+        }
         $count   = $this->db->getRowsNum($result);
         if ($count == 0) {
             return $idarray;
@@ -124,6 +128,9 @@ class XoopsTree
             $sql .= " ORDER BY $order";
         }
         $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+        }
         $count  = $this->db->getRowsNum($result);
         if ($count == 0) {
             return $idarray;
@@ -151,7 +158,10 @@ class XoopsTree
         if ($order != '') {
             $sql .= " ORDER BY $order";
         }
-        $result = $this->db->query($sql);
+        $result  = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+        }
         list($r_id) = $this->db->fetchRow($result);
         if ($r_id == 0) {
             return $idarray;
@@ -174,7 +184,11 @@ class XoopsTree
     public function getPathFromId($sel_id, $title, $path = '')
     {
         $sel_id = (int)$sel_id;
-        $result = $this->db->query('SELECT ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . "=$sel_id");
+        $sql = 'SELECT ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . "=$sel_id";
+        $result  = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+        }
         if ($this->db->getRowsNum($result) == 0) {
             return $path;
         }
@@ -217,6 +231,9 @@ class XoopsTree
             $sql .= " ORDER BY $order";
         }
         $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+        }
         if ($none) {
             echo "<option value='0'>----</option>\n";
         }
@@ -255,7 +272,10 @@ class XoopsTree
         $path   = !empty($path) ? '&nbsp;:&nbsp;' . $path : $path;
         $sel_id = (int)$sel_id;
         $sql    = 'SELECT ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . "=$sel_id";
-        $result = $this->db->query($sql);
+         $result  = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+        }
         if ($this->db->getRowsNum($result) == 0) {
             return $path;
         }
@@ -282,7 +302,11 @@ class XoopsTree
     public function getIdPathFromId($sel_id, $path = '')
     {
         $sel_id = (int)$sel_id;
-        $result = $this->db->query('SELECT ' . $this->pid . ' FROM ' . $this->table . ' WHERE ' . $this->id . "=$sel_id");
+        $sql    = 'SELECT ' . $this->pid . ' FROM ' . $this->table . ' WHERE ' . $this->id . "=$sel_id";
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+        }
         if ($this->db->getRowsNum($result) == 0) {
             return $path;
         }

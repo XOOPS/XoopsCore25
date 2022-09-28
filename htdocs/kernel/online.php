@@ -80,7 +80,12 @@ class XoopsOnlineHandler
             $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('online')
                    . " WHERE online_uid={$uid} AND online_ip={$ip}";
         }
-        list($count) = $this->db->fetchRow($this->db->queryF($sql));
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+        }
+
+        list($count) = $this->db->fetchRow($result);
         if ($count > 0) {
             $sql = 'UPDATE ' . $this->db->prefix('online')
                    . " SET online_updated = {$time}, online_module = {$module} WHERE online_uid = {$uid}";
@@ -187,7 +192,9 @@ class XoopsOnlineHandler
         if (is_object($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
+//            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
             return false;
         }
         list($ret) = $this->db->fetchRow($result);

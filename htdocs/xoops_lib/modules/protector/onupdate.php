@@ -52,7 +52,13 @@ if (!function_exists('protector_onupdate_base')) {
         if (($myrow = $db->fetchArray($result)) && @$myrow['Type'] === 'varchar(30)') {
             $db->queryF('ALTER TABLE ' . $db->prefix('config') . " MODIFY `conf_title` varchar(255) NOT NULL default '', MODIFY `conf_desc` varchar(255) NOT NULL default ''");
         }
-        list(, $create_string) = $db->fetchRow($db->query('SHOW CREATE TABLE ' . $db->prefix('config')));
+
+        $sql = 'SHOW CREATE TABLE ' . $db->prefix('config');
+        $result = $db->query($sql);
+        if (!$db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+        }
+        list(, $create_string) = $db->fetchRow($result);
         foreach (explode('KEY', $create_string) as $line) {
             if (preg_match('/(\`conf\_title_\d+\`) \(\`conf\_title\`\)/', $line, $regs)) {
                 $db->query('ALTER TABLE ' . $db->prefix('config') . ' DROP KEY ' . $regs[1]);
@@ -61,7 +67,12 @@ if (!function_exists('protector_onupdate_base')) {
         $db->query('ALTER TABLE ' . $db->prefix('config') . ' ADD KEY `conf_title` (`conf_title`)');
 
         // 2.x -> 3.0
-        list(, $create_string) = $db->fetchRow($db->query('SHOW CREATE TABLE ' . $db->prefix($mydirname . '_log')));
+        $sql = 'SHOW CREATE TABLE ' . $db->prefix($mydirname . '_log');
+        $result = $db->query($sql);
+        if (!$db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+        }
+        list(, $create_string) = $db->fetchRow($result);
         if (preg_match('/timestamp\(/i', $create_string)) {
             $db->query('ALTER TABLE ' . $db->prefix($mydirname . '_log') . ' MODIFY `timestamp` DATETIME');
         }

@@ -49,8 +49,8 @@ class XoopsModelStats extends XoopsModelAbstract
             $sql .= $criteria->getGroupby();
         }
         $result = $this->handler->db->query($sql);
-        if (!$result) {
-            return 0;
+        if (!$this->handler->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->handler->db->error(), E_USER_ERROR);
         }
         if ($groupby == false) {
             list($count) = $this->handler->db->fetchRow($result);
@@ -88,8 +88,9 @@ class XoopsModelStats extends XoopsModelAbstract
             }
         }
         $sql = "SELECT {$groupby_key}, COUNT(*) AS count" . " FROM `{$this->handler->table}`" . " {$sql_where}" . " GROUP BY {$groupby_key}";
-        if (!$result = $this->handler->db->query($sql, $limit, $start)) {
-            return $ret;
+        $result = $this->handler->db->query($sql, $limit, $start);
+        if (!$this->handler->db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->handler->db->error(), E_USER_ERROR);
         }
         while (false !== (list($id, $count) = $this->handler->db->fetchRow($result))) {
             $ret[$id] = (int) $count;

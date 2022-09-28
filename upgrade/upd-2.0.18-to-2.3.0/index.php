@@ -46,7 +46,9 @@ class Upgrade_230 extends XoopsUpgrade
     public function check_config()
     {
         $sql = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` IN ('welcome_type', 'cpanel')";
-        if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+//            \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
             return false;
         }
         list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
@@ -147,7 +149,8 @@ class Upgrade_230 extends XoopsUpgrade
 
         $welcometype_installed = false;
         $sql                   = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` = 'welcome_type'";
-        if ($result = $GLOBALS['xoopsDB']->queryF($sql)) {
+        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        if ($GLOBALS['xoopsDB']->isResultSet($result)) {
             list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
             if ($count == 1) {
                 $welcometype_installed = true;
@@ -264,10 +267,16 @@ class Upgrade_230 extends XoopsUpgrade
     public function convert_db($charset, $collation)
     {
         $sql = 'ALTER DATABASE `' . XOOPS_DB_NAME . '` DEFAULT CHARACTER SET ' . $GLOBALS['xoopsDB']->quote($charset) . ' COLLATE ' . $GLOBALS['xoopsDB']->quote($collation);
-        if (!$GLOBALS['xoopsDB']->queryF($sql)) {
+        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+            //            \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
             return false;
         }
-        if (!$result = $GLOBALS['xoopsDB']->queryF("SHOW TABLES LIKE '" . XOOPS_DB_PREFIX . "\_%'")) {
+
+        $sql = "SHOW TABLES LIKE '" . XOOPS_DB_PREFIX . "\_%'";
+        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+            //            \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
             return false;
         }
         $tables = array();

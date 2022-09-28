@@ -677,8 +677,12 @@ function xoops_getbanner()
     global $xoopsConfig;
 
     $db      = XoopsDatabaseFactory::getDatabaseConnection();
-    $bresult = $db->query('SELECT COUNT(*) FROM ' . $db->prefix('banner'));
-    list($numrows) = $db->fetchRow($bresult);
+    $sql = 'SELECT COUNT(*) FROM ' . $db->prefix('banner');
+    $result = $this->db->query($sql);
+    if (!$db->isResultSet($result)) {
+        \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+    }
+    list($numrows) = $db->fetchRow($result);
     if ($numrows > 1) {
         --$numrows;
         $bannum = mt_rand(0, $numrows);
@@ -686,13 +690,18 @@ function xoops_getbanner()
         $bannum = 0;
     }
     if ($numrows > 0) {
-        $bresult = $db->query('SELECT * FROM ' . $db->prefix('banner'), 1, $bannum);
-        list($bid, $cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date, $htmlbanner, $htmlcode) = $db->fetchRow($bresult);
+        $sql = 'SELECT * FROM ' . $db->prefix('banner');
+        $result = $db->query($sql, 1, $bannum);
+        if (!$db->isResultSet($result)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+        }
+        list($bid, $cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date, $htmlbanner, $htmlcode) = $db->fetchRow($result);
         if ($xoopsConfig['my_ip'] == xoops_getenv('REMOTE_ADDR')) {
             // EMPTY
         } else {
             ++$impmade;
-            $db->queryF(sprintf('UPDATE %s SET impmade = %u WHERE bid = %u', $db->prefix('banner'), $impmade, $bid));
+            $sql = sprintf('UPDATE %s SET impmade = %u WHERE bid = %u', $db->prefix('banner'), $impmade, $bid);
+            $db->queryF($sql);
             /**
              * Check if this impression is the last one
              */

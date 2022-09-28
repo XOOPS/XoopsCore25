@@ -100,7 +100,12 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
         if (substr($table, 0, strlen($prefix) + 1) !== $prefix . '_') {
             continue;
         }
-        $drawCreate = $db->queryF("SHOW CREATE TABLE `$table`");
+        $sql = "SHOW CREATE TABLE `$table`";
+        $drawCreate = $db->queryF($sql);
+        if (!$db->isResultSet($drawCreate)) {
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+        }
+
         $create = $db->fetchRow($drawCreate);
         $db->freeRecordSet($drawCreate);
 

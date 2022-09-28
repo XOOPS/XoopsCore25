@@ -30,7 +30,9 @@ class Upgrade_250 extends XoopsUpgrade
     public function check_config()
     {
         $sql = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` IN ('break1', 'usetips')";
-        if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+            //            \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
             return false;
         }
         list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
@@ -44,7 +46,9 @@ class Upgrade_250 extends XoopsUpgrade
     public function check_templates()
     {
         $sql = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('tplfile') . "` WHERE `tpl_file` IN ('system_header.html', 'system_header.tpl') AND `tpl_type` = 'admin'";
-        if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+            //            \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
             return false;
         }
         list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
@@ -60,7 +64,9 @@ class Upgrade_250 extends XoopsUpgrade
         $dbm = new Db_manager();
 
         $sql = 'SELECT conf_id FROM `' . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` IN ('cpanel')";
-        if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+        $result = $GLOBALS['xoopsDB']->queryF($sql);
+        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+            //            \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
             return false;
         }
         $count = $GLOBALS['xoopsDB']->fetchRow($result);
