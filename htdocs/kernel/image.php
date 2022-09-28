@@ -26,6 +26,17 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class XoopsImage extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $image_id;
+    public $image_nam;
+    public $image_nicename;
+    public $image_mimetype;
+    public $image_created;
+    public $image_display;
+    public $image_weight;
+    public $image_body;
+    public $imgcat_id;
+
     /**
      * Constructor
      **/
