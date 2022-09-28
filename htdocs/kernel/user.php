@@ -48,6 +48,40 @@ class XoopsUser extends XoopsObject
      */
     public $_isOnline;
 
+    //PHP 8.2 Dynamic properties deprecated
+    public $uid;
+    public $name;
+    public $uname;
+    public $email;
+    public $url;
+    public $user_avatar;
+    public $user_regdate;
+    public $user_icq;
+    public $user_from;
+    public $user_sig;
+    public $user_viewemail;
+    public $actkey;
+    public $user_aim;
+    public $user_yim;
+    public $user_msnm;
+    public $pass;
+    public $posts;
+    public $attachsig;
+    public $rank;
+    public $level;
+    public $theme;
+    public $timezone_offset;
+    public $last_login;
+    public $umode;
+    public $uorder;
+    // RMV-NOTIFY
+    public $notify_method;
+    public $notify_mode;
+    public $user_occ;
+    public $bio;
+    public $user_intrest;
+    public $user_mailok;
+
     /**
      * constructor
      * @param array|null $id ID of the user to be loaded from the database.

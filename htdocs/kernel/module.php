@@ -40,6 +40,22 @@ class XoopsModule extends XoopsObject
      */
     public $_msg;
 
+    //PHP 8.2 Dynamic properties deprecated
+    public $mid;
+    public $name;
+    public $version;
+    public $last_update;
+    public $weight;
+    public $isactive;
+    public $dirname;
+    public $hasmain;
+    public $hasadmin;
+    public $hassearch;
+    public $hasconfig;
+    public $hascomments;
+    // RMV-NOTIFY
+    public $hasnotification;
+
     /**
      * Constructor
      */

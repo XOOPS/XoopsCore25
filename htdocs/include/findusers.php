@@ -50,6 +50,14 @@ xoops_loadLanguage('findusers');
  */
 class XoopsRank extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $rank_id;
+    public $rank_title;
+    public $rank_min;
+    public $rank_max;
+    public $rank_special;
+    public $rank_image;
+    
     /**
      * Construct
      *

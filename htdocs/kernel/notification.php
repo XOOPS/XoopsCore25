@@ -33,6 +33,15 @@ include_once $GLOBALS['xoops']->path('include/notification_functions.php');
  */
 class XoopsNotification extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $not_id;
+    public $not_modid;
+    public $not_category;
+    public $not_itemid;
+    public $not_event;
+    public $not_uid;
+    public $not_mode;
+
     /**
      * Constructor
      **/

@@ -28,6 +28,18 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  **/
 class XoopsTplfile extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $tpl_id;
+    public $tpl_refid;
+    public $tpl_tplset;
+    public $tpl_file;
+    public $tpl_desc;
+    public $tpl_lastmodified;
+    public $tpl_lastimported;
+    public $tpl_module;
+    public $tpl_type;
+    public $tpl_source;
+
     /**
      * Constructor
      *

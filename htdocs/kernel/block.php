@@ -30,6 +30,29 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class XoopsBlock extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $bid;
+    public $mid;
+    public $func_num;
+    public $options;
+    public $name;
+    //public $position;
+    public $title;
+    public $content;
+    public $side;
+    public $weight;
+    public $visible;
+    public $block_type;
+    public $c_type;
+    public $isactive;
+    public $dirname;
+    public $func_file;
+    public $show_func;
+    public $edit_func;
+    public $template;
+    public $bcachetime;
+    public $last_modified;
+
     /**
      * constructor
      *
