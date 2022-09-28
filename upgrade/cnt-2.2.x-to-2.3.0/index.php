@@ -32,9 +32,11 @@ class Upgrade_220 extends XoopsUpgrade
     {
         $sql    = 'SHOW COLUMNS FROM `' . $GLOBALS['xoopsDB']->prefix('configcategory') . "` LIKE 'confcat_modid'";
         $result = $GLOBALS['xoopsDB']->queryF($sql);
-        if (!$result) {
+        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+            //        \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
             return true;
         }
+
         return !($GLOBALS['xoopsDB']->getRowsNum($result) > 0);
     }
 
@@ -51,7 +53,8 @@ class Upgrade_220 extends XoopsUpgrade
         }
         $sql    = 'SHOW COLUMNS FROM ' . $GLOBALS['xoopsDB']->prefix('users') . " LIKE 'posts'";
         $result = $GLOBALS['xoopsDB']->queryF($sql);
-        if (!$result) {
+        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+            //        \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
             return false;
         }
 
@@ -66,7 +69,8 @@ class Upgrade_220 extends XoopsUpgrade
     {
         $sql    = "SHOW TABLES LIKE '" . $GLOBALS['xoopsDB']->prefix('block_instance') . "'";
         $result = $GLOBALS['xoopsDB']->queryF($sql);
-        if (!$result) {
+        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+            //        \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
             return true;
         }
 

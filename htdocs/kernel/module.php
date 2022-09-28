@@ -855,7 +855,8 @@ class XoopsModuleHandler extends XoopsObjectHandler
         if (isset($block_id_arr)) {
             foreach ($block_id_arr as $i) {
                 $sql = sprintf('SELECT block_id FROM %s WHERE module_id != %u AND block_id = %u', $this->db->prefix('block_module_link'), $module->getVar('mid'), $i);
-                if ($result2 = $this->db->query($sql)) {
+                $result2 = $this->db->query($sql);
+                if ($this->db->isResultSet($result2)) {
                     if (0 < $this->db->getRowsNum($result2)) {
                         // this block has other entries, so delete the entry for this module
                         $sql = sprintf('DELETE FROM %s WHERE (module_id = %u) AND (block_id = %u)', $this->db->prefix('block_module_link'), $module->getVar('mid'), $i);

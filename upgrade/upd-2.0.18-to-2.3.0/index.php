@@ -64,7 +64,8 @@ class Upgrade_230 extends XoopsUpgrade
     {
         $sql    = "SHOW TABLES LIKE '" . $GLOBALS['xoopsDB']->prefix('cache_model') . "'";
         $result = $GLOBALS['xoopsDB']->queryF($sql);
-        if (!$result) {
+        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+            //        \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
             return false;
         }
 
