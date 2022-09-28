@@ -37,6 +37,7 @@ xoops_loadLanguage('global');
  */
 class XoopsTpl extends Smarty
 {
+    public $currentTheme;
     /**
      * XoopsTpl constructor.
      */

@@ -30,6 +30,7 @@ class XoopsInstallWizard
     public $currentPage = 'langselect';
     public $pageIndex   = 0;
     public $configs     = array();
+    public $form;
 
     /**
      * @return bool
