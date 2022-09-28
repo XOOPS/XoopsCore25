@@ -385,10 +385,7 @@ class XoopsMemberHandler
 
         /** @var mysqli_result $result */
         $result = $db->query($sql);
-        if (!$db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
-        }
-        if ($result) {
+        if ($db->isResultSet($result) {
             $row = $db->fetchRow($result);
             if ($row) {
                 $columnLength = $row[0];
@@ -508,7 +505,8 @@ class XoopsMemberHandler
 
         $result = $this->userHandler->db->query($sql, $limit, $start);
         if (!$this->userHandler->db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->userHandler->db->error(), E_USER_ERROR);
+            //    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->userHandler->db->error(), E_USER_ERROR);
+            return $ret;
         }
         while (false !== ($myrow = $this->userHandler->db->fetchArray($result))) {
             if ($asobject) {

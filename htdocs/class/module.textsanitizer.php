@@ -255,14 +255,13 @@ class MyTextSanitizer
     {
         if (count($this->smileys) == 0) {
             /* @var XoopsMySQLDatabase $xoopsDB */
-            $xoopsDB   = XoopsDatabaseFactory::getDatabaseConnection();
-            $sql       = 'SELECT * FROM ' . $xoopsDB->prefix('smiles');
-            $result = $xoopsDB->query($sql);
-            if (!$xoopsDB->isResultSet($result)) {
-                \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
-            }
-            while (false !== ($smiles = $xoopsDB->fetchArray($result))) {
-                $this->smileys[] = $smiles;
+            $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
+            $sql     = 'SELECT * FROM ' . $xoopsDB->prefix('smiles');
+            $result  = $xoopsDB->query($sql);
+            if ($xoopsDB->isResultSet($result)) {
+                while (false !== ($smiles = $xoopsDB->fetchArray($result))) {
+                    $this->smileys[] = $smiles;
+                }
             }
         }
         if ($isAll) {

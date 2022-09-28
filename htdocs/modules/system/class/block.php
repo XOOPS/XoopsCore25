@@ -346,7 +346,8 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
         }
         $result = $this->db->query($sql, $limit, $start);
         if (!$this->db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            //    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            return $ret;
         }
 
         if ($as_object) {
@@ -576,21 +577,19 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
         $bids = array();
         $sql  = 'SELECT DISTINCT(bid) from ' . $db->prefix('newblocks');
         $result = $db->query($sql);
-        if (!$db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
-        }
-        while (false !== ($myrow = $db->fetchArray($result))) {
-            $bids[] = $myrow['bid'];
+        if ($db->isResultSet($result)) {
+            while (false !== ($myrow = $db->fetchArray($result))) {
+                $bids[] = $myrow['bid'];
+            }
         }
 
         $sql     = 'SELECT DISTINCT(p.gperm_itemid) from ' . $db->prefix('group_permission') . ' p, ' . $db->prefix('groups') . " g WHERE g.groupid=p.gperm_groupid AND p.gperm_name='block_read'";
         $grouped = array();
         $result = $db->query($sql);
-        if (!$db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
-        }
-        while (false !== ($myrow = $db->fetchArray($result))) {
-            $grouped[] = $myrow['gperm_itemid'];
+        if ($db->isResultSet($result)) {
+            while (false !== ($myrow = $db->fetchArray($result))) {
+                $grouped[] = $myrow['gperm_itemid'];
+            }
         }
 
         $non_grouped = array_diff($bids, $grouped);

@@ -80,7 +80,7 @@ class XoopsOnlineHandler
             $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('online')
                    . " WHERE online_uid={$uid} AND online_ip={$ip}";
         }
-        $result = $this->db->query($sql);
+        $result = $this->db->queryF($sql);
         if (!$this->db->isResultSet($result)) {
             \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
         }
@@ -169,7 +169,8 @@ class XoopsOnlineHandler
         }
         $result = $this->db->query($sql, $limit, $start);
         if (!$this->db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            //    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            return false;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[] = $myrow;

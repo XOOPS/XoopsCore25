@@ -143,12 +143,10 @@ class XoopsModelRead extends XoopsModelAbstract
             }
         }
         $result = $this->handler->db->query($sql, $limit, $start);
-//        if (!$result) {
-//            return $ret;
-//        }
         if (!$this->handler->db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->handler->db->error(), E_USER_ERROR);
-        }
+        //    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->handler->db->error(), E_USER_ERROR);
+            return $ret;        
+            }
 
         $myts = MyTextSanitizer::getInstance();
         while (false !== ($myrow = $this->handler->db->fetchArray($result))) {
@@ -177,9 +175,9 @@ class XoopsModelRead extends XoopsModelAbstract
         }
         $result = $this->handler->db->query($sql, $limit, $start);
         if (!$this->handler->db->isResultSet($result)) {
-            // return $ret;
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->handler->db->error(), E_USER_ERROR);
-        }
+        //    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->handler->db->error(), E_USER_ERROR);
+            return $ret;    
+         }
 
         while (false !== ($myrow = $this->handler->db->fetchArray($result))) {
             $ret[] = $myrow[$this->handler->keyName];

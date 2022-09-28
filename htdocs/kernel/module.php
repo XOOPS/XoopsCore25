@@ -717,7 +717,8 @@ class XoopsModuleHandler extends XoopsObjectHandler
                 $sql = 'SELECT * FROM ' . $this->db->prefix('modules') . ' WHERE mid = ' . $id;
                 $result = $this->db->query($sql);
                 if (!$this->db->isResultSet($result)) {
-                    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+                    //    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+                    return $module;
                 }
                 $numrows = $this->db->getRowsNum($result);
                 if ($numrows == 1) {
@@ -757,7 +758,8 @@ class XoopsModuleHandler extends XoopsObjectHandler
             $sql    = 'SELECT * FROM ' . $this->db->prefix('modules') . " WHERE dirname = '" . trim($dirname) . "'";
             $result = $this->db->query($sql);
             if (!$this->db->isResultSet($result)) {
-                \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+                //    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+                return $module;
             }
             $numrows = $this->db->getRowsNum($result);
             if ($numrows == 1) {
@@ -843,14 +845,12 @@ class XoopsModuleHandler extends XoopsObjectHandler
 
         $sql = sprintf('SELECT block_id FROM %s WHERE module_id = %u', $this->db->prefix('block_module_link'), $module->getVar('mid'));
         $result = $this->db->query($sql);
-        if (!$this->db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
-        }
+        if ($this->db->isResultSet($result)) {
             $block_id_arr = array();
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $block_id_arr[] = $myrow['block_id'];
             }
-
+        }    
         // loop through block_id_arr
         if (isset($block_id_arr)) {
             foreach ($block_id_arr as $i) {
@@ -902,7 +902,8 @@ class XoopsModuleHandler extends XoopsObjectHandler
         }
         $result = $this->db->query($sql, $limit, $start);
         if (!$this->db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            //    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $module = new XoopsModule();

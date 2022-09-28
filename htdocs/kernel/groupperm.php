@@ -163,7 +163,8 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
             $sql = sprintf('SELECT * FROM %s WHERE gperm_id = %u', $this->db->prefix('group_permission'), $id);
             $result = $this->db->query($sql);
             if (!$this->db->isResultSet($result)) {
-                \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+                //    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+                return $perm;
             }
             $numrows = $this->db->getRowsNum($result);
             if ($numrows == 1) {
@@ -255,7 +256,8 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
         }
         $result = $this->db->query($sql, $limit, $start);
         if (!$this->db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            //    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $perm = new XoopsGroupPerm();
@@ -286,8 +288,8 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
         }
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
-            //            return 0;
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            //    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            return 0;
         }
         list($count) = $this->db->fetchRow($result);
 

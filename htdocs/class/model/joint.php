@@ -145,7 +145,8 @@ class XoopsModelJoint extends XoopsModelAbstract
         }
         $result = $this->handler->db->query($sql);
         if (!$this->handler->db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->handler->db->error(), E_USER_ERROR);
+        //    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->handler->db->error(), E_USER_ERROR);
+            return false;
         }
         $myrow = $this->handler->db->fetchArray($result);
 
@@ -170,7 +171,8 @@ class XoopsModelJoint extends XoopsModelAbstract
         $sql .= " GROUP BY l.{$this->handler->field_link}";
         $result = $this->handler->db->query($sql);
         if (!$this->handler->db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->handler->db->error(), E_USER_ERROR);
+        //    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->handler->db->error(), E_USER_ERROR);
+            return false;
         }
         $ret = array();
         while (false !== (list($id, $count) = $this->handler->db->fetchRow($result))) {

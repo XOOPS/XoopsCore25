@@ -306,7 +306,8 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
             $sql = 'SELECT * FROM ' . $this->db->prefix('config') . ' WHERE conf_id=' . $id;
             $result = $this->db->query($sql);
             if (!$this->db->isResultSet($result)) {
-                \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+                //    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+                return $config;
             }
             $numrows = $this->db->getRowsNum($result);
             if ($numrows == 1) {
@@ -408,7 +409,8 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
         }
         $result = $this->db->query($sql, $limit, $start);
         if (!$this->db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            //    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            return false;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $config = new XoopsConfigItem();

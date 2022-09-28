@@ -50,7 +50,8 @@ class XoopsModelStats extends XoopsModelAbstract
         }
         $result = $this->handler->db->query($sql);
         if (!$this->handler->db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->handler->db->error(), E_USER_ERROR);
+            // \trigger_error("Query Failed! SQL: $sql- Error: " . $this->handler->db->error(), E_USER_ERROR);
+            return 0;
         }
         if ($groupby == false) {
             list($count) = $this->handler->db->fetchRow($result);
@@ -90,7 +91,8 @@ class XoopsModelStats extends XoopsModelAbstract
         $sql = "SELECT {$groupby_key}, COUNT(*) AS count" . " FROM `{$this->handler->table}`" . " {$sql_where}" . " GROUP BY {$groupby_key}";
         $result = $this->handler->db->query($sql, $limit, $start);
         if (!$this->handler->db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->handler->db->error(), E_USER_ERROR);
+            // \trigger_error("Query Failed! SQL: $sql- Error: " . $this->handler->db->error(), E_USER_ERROR);
+            return $ret;
         }
         while (false !== (list($id, $count) = $this->handler->db->fetchRow($result))) {
             $ret[$id] = (int) $count;

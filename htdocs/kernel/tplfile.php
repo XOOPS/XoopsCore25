@@ -230,7 +230,8 @@ class XoopsTplfileHandler extends XoopsObjectHandler
             }
             $result = $this->db->query($sql);
             if (!$this->db->isResultSet($result)) {
-                \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+                //    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+                return $tplfile;
             }
             $numrows = $this->db->getRowsNum($result);
             if ($numrows == 1) {
@@ -260,7 +261,8 @@ class XoopsTplfileHandler extends XoopsObjectHandler
             $sql = 'SELECT tpl_source FROM ' . $this->db->prefix('tplsource') . ' WHERE tpl_id=' . $tplfile->getVar('tpl_id');
             $result = $this->db->query($sql);
             if (!$this->db->isResultSet($result)) {
-                \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+                //    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+                return false;
             }
             $myrow = $this->db->fetchArray($result);
             $tplfile->assignVar('tpl_source', $myrow['tpl_source']);
@@ -411,7 +413,8 @@ class XoopsTplfileHandler extends XoopsObjectHandler
         }
         $result = $this->db->query($sql, $limit, $start);
         if (!$this->db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            //    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $tplfile = new XoopsTplfile();
@@ -461,7 +464,8 @@ class XoopsTplfileHandler extends XoopsObjectHandler
         $sql    = 'SELECT tpl_module, COUNT(tpl_id) AS count FROM ' . $this->db->prefix('tplfile') . " WHERE tpl_tplset='" . $tplset . "' GROUP BY tpl_module";
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            //    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             if ($myrow['tpl_module'] != '') {

@@ -110,14 +110,12 @@ class XoopsRankHandler extends XoopsObjectHandler
         $sql    = 'SELECT * FROM ' . $this->db->prefix('ranks') . ' WHERE rank_id = ' . $this->db->quoteString($id);
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            //    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            $ret = null;
+
+            return $ret;
         }
 
-//        if (!$result) {
-//            $ret = null;
-//
-//            return $ret;
-//        }
         while (false !== ($row = $this->db->fetchArray($result))) {
             $object->assignVars($row);
         }
@@ -150,11 +148,9 @@ class XoopsRankHandler extends XoopsObjectHandler
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-//        if (!$result) {
-//            return $ret;
-//        }
         if (!$this->db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            //   \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            return $ret;
         }
         $myts = MyTextSanitizer::getInstance();
         while (false !== ($myrow = $this->db->fetchArray($result))) {

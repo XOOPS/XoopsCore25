@@ -316,10 +316,7 @@ class SystemMaintenance
         $verif  = false;
         $sql = 'SHOW create table `' . $table . '`;';
         $result = $this->db->queryF($sql);
-        if (!$this->db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
-        }
-        if ($result) {
+        if ($this->db->isResultSet($result)) {
             if ($row = $this->db->fetchArray($result)) {
                 $ret[0] .= '# Table structure for table `' . $table . "` \n\n";
                 if ($drop == 1) {
@@ -329,10 +326,13 @@ class SystemMaintenance
                 $ret[0] .= $row['Create Table'] . ";\n\n";
             }
         }
+
         $ret[1] .= '<tr class="' . $class . '"><td align="center">' . $table . '</td><td class="xo-actions txtcenter">';
         $ret[1] .= ($verif === true) ? '<img src="' . system_AdminIcons('success.png') . '" />' : '<img src="' . system_AdminIcons('cancel.png') . '" />';
         $ret[1] .= '</td>';
-        $this->db->freeRecordSet($result);
+        if ($this->db->isResultSet($result)) {
+            $this->db->freeRecordSet($result);
+        }
 
         return $ret;
     }
