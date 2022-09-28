@@ -398,7 +398,9 @@ class SystemMaintenance
         $ret[1] .= '<td align="center">';
         $ret[1] .= $count . '&nbsp;' . _AM_SYSTEM_MAINTENANCE_DUMP_RECORDS . '</td></tr>';
         $ret[0] .= "\n";
-        $this->db->freeRecordSet($result);
+        if ($this->db->isResultSet($result)) {
+            $this->db->freeRecordSet($result);
+        }
         $ret[0] .= "\n";
 
         return $ret;

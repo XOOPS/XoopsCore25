@@ -171,7 +171,9 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
         }
 
         $exportString .= $insertValues;
-        $db->freeRecordSet($result);
+        if ($this->db->isResultSet($result)) {
+            $db->freeRecordSet($result);
+        }
     }
 
     header('Content-Type: Application/octet-stream');

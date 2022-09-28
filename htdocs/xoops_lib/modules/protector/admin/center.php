@@ -82,11 +82,16 @@ if (!empty($_POST['action'])) {
             $lid = (int)$lid;
             $sql = "SELECT `ip` FROM $log_table WHERE lid='$lid'";
             $result = $db->query($sql);
+
             if (!$db->isResultSet($result)) {
                 list($ip) = $db->fetchRow($result);
                 $protector->register_bad_ips(0, $ip);
             }
-            $db->freeRecordSet($result);
+
+            if ($db->isResultSet($result)) {
+                $db->freeRecordSet($result);
+            }
+
         }
         redirect_header('center.php?page=center', 2, _AM_MSG_BANNEDIP);
         exit;
