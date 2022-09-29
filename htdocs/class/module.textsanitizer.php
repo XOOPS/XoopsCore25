@@ -317,6 +317,9 @@ class MyTextSanitizer
     {
         $pattern = "/(^|[^]_a-z0-9-=\"'\/:\.])([-_a-z0-9\'+*$^&%=~!?{}]++(?:\.[-_a-z0-9\'+*$^&%=~!?{}]+)*+)@((?:(?![-.])[-a-z0-9.]+(?<![-.])\.[a-z]{2,6}|\d{1,3}(?:\.\d{1,3}){3})(?::\d++)?)/i";
         $text = preg_replace_callback($pattern, 'self::makeClickableCallbackEmailAddress', $text);
+        //TODO after moving to PHP 7+ as minimum version, let's convert it to this
+//        $text = preg_replace_callback($pattern, self::class . '::makeClickableCallbackEmailAddress', $text);
+
 
         $pattern = "/(?:\s+|^)(https?:\/\/)([-A-Z0-9.\_*?&:;=#\/\[\]\%@]+)/i";
         $replacement = '<a href="$1$2" target="_blank" rel="external noopener nofollow">$1$2</a>';
