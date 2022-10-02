@@ -54,7 +54,15 @@ function smarty_compiler_xoAppUrl($argStr, &$compiler)
     global $xoops;
     $argStr = trim((string) $argStr);
 
+//    @list($url, $params) = explode(' ', $argStr, 2);
+
+    if (strpos($argStr, ' ') !== false) {
     @list($url, $params) = explode(' ', $argStr, 2);
+    } else {
+        $url = $argStr;
+        $params = '';
+    }
+
 
     if (substr($url, 0, 1) === '/') {
         $url = 'www' . $url;

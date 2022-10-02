@@ -50,7 +50,14 @@ class xos_kernel_Xoops2
     {
         // removed , $error_type = E_USER_WARNING
         $path = '';
+//      @list($root, $path) = explode('/', $url, 2);
+        if (strpos($url, '/') !== false) {
         @list($root, $path) = explode('/', $url, 2);
+        } else {
+            $root = $url;
+            $path = '';
+        }
+
         if (!isset($this->paths[$root])) {
             list($root, $path) = array('www', $url);
         }
