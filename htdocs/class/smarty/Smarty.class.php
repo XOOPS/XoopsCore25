@@ -638,7 +638,7 @@ class Smarty
             }
         } else {
             if ($tpl_var != '' && isset($value)) {
-                if(!@is_array($this->_tpl_vars[$tpl_var])) {
+                if(isset($this->_tpl_vars[$tpl_var]) && !@is_array($this->_tpl_vars[$tpl_var])) {
                     settype($this->_tpl_vars[$tpl_var],'array');
                 }
                 if($merge && is_array($value)) {
@@ -661,7 +661,7 @@ class Smarty
     function append_by_ref($tpl_var, &$value, $merge=false)
     {
         if ($tpl_var != '' && isset($value)) {
-            if(!@is_array($this->_tpl_vars[$tpl_var])) {
+            if(isset($this->_tpl_vars[$tpl_var]) && !@is_array($this->_tpl_vars[$tpl_var])) {
              settype($this->_tpl_vars[$tpl_var],'array');
             }
             if ($merge && is_array($value)) {
@@ -1146,7 +1146,7 @@ class Smarty
                     $this->debugging = true;
                 }
             } else {
-                $this->debugging = (bool)($this->request_use_auto_globals ? @$_COOKIE['SMARTY_DEBUG'] : @$GLOBALS['HTTP_COOKIE_VARS']['SMARTY_DEBUG']);
+                $this->debugging = (bool)($this->request_use_auto_globals ? (isset($_COOKIE['SMARTY_DEBUG']) ? $_COOKIE['SMARTY_DEBUG'] : false) : (isset($GLOBALS['HTTP_COOKIE_VARS']['SMARTY_DEBUG']) ? $GLOBALS['HTTP_COOKIE_VARS']['SMARTY_DEBUG'] : false));
             }
         }
 
@@ -1777,13 +1777,13 @@ class Smarty
      */
     function _unlink($resource, $exp_time = null)
     {
-        if(isset($exp_time)) {
-            if(time() - @filemtime($resource) >= $exp_time) {
+        if (isset($exp_time)) {
+            if (time() - @filemtime($resource) >= $exp_time) {
                 return @unlink($resource);
             }
         } else {
             if (file_exists($resource)) {
-            return @unlink($resource);
+                return @unlink($resource);
             }
         }
     }
