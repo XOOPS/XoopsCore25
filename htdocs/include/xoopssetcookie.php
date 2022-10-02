@@ -56,7 +56,7 @@ function xoops_setcookie()
 
     // after php 7.3 we just let php do it
     if (PHP_VERSION_ID >= 70300) {
-        return setcookie($args['name'], $args['value'], $args['options']);
+        return setcookie($args['name'], (string)$args['value'], $args['options']);
     }
     // render and send our own headers below php 7.3
     header(xoops_buildCookieHeader($args), false);
