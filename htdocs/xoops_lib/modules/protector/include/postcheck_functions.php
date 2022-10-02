@@ -11,7 +11,7 @@ function protector_postcommon()
     if (substr(@XOOPS_VERSION, 6, 3) > 2.0 && false !== stripos(@$_SERVER['REQUEST_URI'], 'modules/system/admin.php?fct=preferences')) {
         /* @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
-        $module         = $module_handler->get((int)(@$_GET['mod']));
+        $module         = $module_handler->get((int)((isset($_GET['mod']) ? $_GET['mod'] : 0)));
         if (is_object($module)) {
             $module->getInfo();
         }

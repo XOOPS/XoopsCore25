@@ -161,7 +161,7 @@ if (!ini_get('date.timezone')) {
 $xoops->gzipCompression();
 
 /**
- * Start of Error Reportings.
+ * Start of Error Reporting.
  */
 if ($xoopsConfig['debug_mode'] == 1 || $xoopsConfig['debug_mode'] == 2) {
     xoops_loadLanguage('logger');

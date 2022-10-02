@@ -3,11 +3,11 @@
         <{if $xoops_contents}>
             <div id="xo-content">
                 <{*Display Admin menu*}>
-                <{if $xo_system_menu|default:false}><{$xo_system_menu}><{/if}>
+                <{if isset($xo_system_menu)}><{$xo_system_menu}><{/if}>
                 <{$xoops_contents}>
             </div>
         <{/if}>
-        <{if $modules|default:false}>
+        <{if isset($modules)}>
             <div>
                 <div id="xo-index">
                     <div id="xo-body-icons" class="xo-index-option"><{include file="$theme_tpl/xo_icons.tpl"}></div>

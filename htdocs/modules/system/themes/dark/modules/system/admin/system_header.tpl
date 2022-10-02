@@ -28,7 +28,7 @@
         <{include file="$help_content"}>
     </div>
 <{/if}>
-<{if $xo_sys_tips|default:false}>
+<{if isset($xo_sys_tips)}>
     <div class="tips ui-corner-all">
         <img class="floatleft tooltip" src="<{xoAdminIcons tips.png}>" alt="<{$smarty.const._AM_SYSTEM_TIPS}>" title="<{$smarty.const._AM_SYSTEM_TIPS}>"/>
 
