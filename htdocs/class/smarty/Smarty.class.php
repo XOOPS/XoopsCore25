@@ -1782,7 +1782,9 @@ class Smarty
                 return @unlink($resource);
             }
         } else {
+            if (file_exists($resource)) {
             return @unlink($resource);
+            }
         }
     }
 
