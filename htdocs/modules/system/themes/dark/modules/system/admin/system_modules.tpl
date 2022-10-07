@@ -215,7 +215,7 @@
             </tr>
             </tfoot>
         </table>
-        <{php}>echo $GLOBALS['xoopsSecurity']->getTokenHTML();<{/php}>
+        <{securityToken}>
     </form>
 <{/if}>
 
