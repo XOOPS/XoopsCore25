@@ -27,18 +27,18 @@
 class MyTextSanitizerExtension
 {
     public $instance;
-    public $ts;
+    public $myts;
     public $config;
     public $image_path;
 
     /**
      * Constructor
      *
-     * @param MyTextSanitizer $ts
+     * @param MyTextSanitizer $myts
      */
-    public function __construct(MyTextSanitizer $ts)
+    public function __construct(MyTextSanitizer $myts)
     {
-        $this->ts         = $ts;
+        $this->myts         = $myts;
         $this->image_path = XOOPS_URL . '/images/form';
     }
 
@@ -50,10 +50,10 @@ class MyTextSanitizerExtension
      */
     public static function loadConfig($path = null)
     {
-        $ts   = MyTextSanitizer::getInstance();
+        $myts   = \MyTextSanitizer::getInstance();
         $extensionName = (null === $path) ? '' : basename($path);
-        $pathDist = $ts->path_basic;
-        $pathConfig = $ts->path_config;
+        $pathDist = $myts->path_basic;
+        $pathConfig = $myts->path_config;
 
         if ('' !== $extensionName) {
             $configFileName = $pathConfig . '/config.' . $extensionName . '.php';
@@ -152,11 +152,8 @@ class MyTextSanitizer
     public $text         = '';
     public $patterns     = array();
     public $replacements = array();
-
-    //mb------------------------------
     public $callbackPatterns = array();
     public $callbacks        = array();
-    //mb------------------------------
 
     public $path_basic;
     public $path_config;
@@ -337,7 +334,7 @@ class MyTextSanitizer
      */
     public function truncate($text)
     {
-        $instance = MyTextSanitizer::getInstance();
+        $instance = \MyTextSanitizer::getInstance();
         if (empty($text) || empty($instance->config['truncate_length']) || strlen($text) < $instance->config['truncate_length']) {
             return $text;
         }

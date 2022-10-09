@@ -55,7 +55,7 @@ EOSMJS;
                 $variables['lang_clicksmile'] = _MSC_CLICKASMILIE;
                 $variables['lang_close'] = _CLOSE;
                 $variables['upload_url'] = XOOPS_UPLOAD_URL .'/';
-                $myts = MyTextSanitizer::getInstance();
+                $myts = \MyTextSanitizer::getInstance();
                 if ($smiles = $myts->getSmileys(false)) {
                     $variables['smilies'] = $smiles;
                 } else {

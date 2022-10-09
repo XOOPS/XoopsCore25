@@ -163,16 +163,16 @@ class XoopsUser extends XoopsObject
             $member_handler = xoops_getHandler('member');
             $user           = $member_handler->getUser($userid);
             if (is_object($user)) {
-                $ts = MyTextSanitizer::getInstance();
+                $myts = \MyTextSanitizer::getInstance();
                 if ($usereal) {
                     $name = $user->getVar('name');
                     if ($name != '') {
-                        return $ts->htmlSpecialChars($name);
+                        return $myts->htmlSpecialChars($name);
                     } else {
-                        return $ts->htmlSpecialChars($user->getVar('uname'));
+                        return $myts->htmlSpecialChars($user->getVar('uname'));
                     }
                 } else {
-                    return $ts->htmlSpecialChars($user->getVar('uname'));
+                    return $myts->htmlSpecialChars($user->getVar('uname'));
                 }
             }
         }

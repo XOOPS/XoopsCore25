@@ -80,7 +80,7 @@ if (is_object($xoopsUser)) {
     include $GLOBALS['xoops']->path('header.php');
     $xoopsTpl->assign('user_ownpage', false);
 }
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 if (is_object($xoopsUser) && $isAdmin) {
     $xoopsTpl->assign('lang_editprofile', _US_EDITPROFILE);
     $xoopsTpl->assign('lang_deleteaccount', _US_DELACCOUNT);

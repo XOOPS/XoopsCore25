@@ -120,7 +120,7 @@ class XoopsUserUtility
         $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
         xoops_loadLanguage('user');
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
 
         $xoopsUser_isAdmin = is_object($xoopsUser) && $xoopsUser->isAdmin();
         $stop              = '';
@@ -269,7 +269,7 @@ class XoopsUserUtility
         }
         $userid = array_map('intval', array_filter($uid));
 
-        $myts  = MyTextSanitizer::getInstance();
+        $myts  = \MyTextSanitizer::getInstance();
         $users = array();
         if (count($userid) > 0) {
             /** @var XoopsMySQLDatabase $xoopsDB */
@@ -307,7 +307,7 @@ class XoopsUserUtility
      */
     public static function getUnameFromId($userid, $usereal = false, $linked = false)
     {
-        $myts     = MyTextSanitizer::getInstance();
+        $myts     = \MyTextSanitizer::getInstance();
         $userid   = (int)$userid;
         $username = '';
         if ($userid > 0) {

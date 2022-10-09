@@ -41,10 +41,10 @@ EOH;
     }
 
     // The code parser
-    function load($ts)
+    function load($myts)
     {
-        $ts->patterns[] = "/\[mycode\]([^\]]*)\[\/mycode\]/esU";
-        $ts->replacements[] = __CLASS__."::decode( '\\1' )";
+        $myts->patterns[] = "/\[mycode\]([^\]]*)\[\/mycode\]/esU";
+        $myts->replacements[] = __CLASS__."::decode( '\\1' )";
     }
 
     // Processing the text

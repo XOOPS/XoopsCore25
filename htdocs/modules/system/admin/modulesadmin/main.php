@@ -41,7 +41,7 @@ if (in_array($op, array('confirm', 'submit', 'install_ok', 'update_ok', 'uninsta
         $op = 'list';
     }
 }
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 
 switch ($op) {
     case 'list':

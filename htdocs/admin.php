@@ -86,7 +86,7 @@ if (!empty($_GET['xoopsorgnews']) && !function_exists('xml_parser_create')) {
 
 if (!empty($_GET['xoopsorgnews'])) {
     // Multiple feeds
-    $myts     = MyTextSanitizer::getInstance();
+    $myts     = \MyTextSanitizer::getInstance();
     $rssurl   = array();
     $rssurl[] = 'https://xoops.org/modules/publisher/backend.php';
     if ($URLs = include $GLOBALS['xoops']->path('language/' . xoops_getConfigOption('language') . '/backend.php')) {
