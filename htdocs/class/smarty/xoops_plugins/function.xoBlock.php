@@ -5,7 +5,7 @@
 //  E-Mail: lusopoemas@gmail.com
 //  Plugin version: 1.1
 //  Release date: 06-04-2009
-//  Usage : just place <{block id=1}> inside any template or theme, replace '1' with the id of the block you want to show
+//  Usage : just place <{xoBlock id=1}> inside any template or theme, replace '1' with the id of the block you want to show
 //
 //  Other options:
 //  display = 'title' -> shows just title
@@ -15,19 +15,19 @@
 //  cache = 3600 -> overwrite cache time(in seconds)
 //
 //  Examples:
-//  <{block id=1 display="title"}>   displays just the block title
-//  <{block id=1}>                   displays just the block content
-//  <{block id=7 display="none"}>    does not display nothing but executes the block, this can go for online block or to trigger some cron block
-//  <{block id=600 groups="0|1" cache=20}>  display block just for this 2 groups and sets a cache of 20 seconds
-//  <{block id=600 options="100|100|s_poweredby.gif|0"}> displays block with diferent options
+//  <{xoBlock id=1 display="title"}>   displays just the block title
+//  <{xoBlock id=1}>                   displays just the block content
+//  <{xoBlock id=7 display="none"}>    does not display nothing but executes the block, this can go for online block or to trigger some cron block
+//  <{xoBlock id=600 groups="0|1" cache=20}>  display block just for this 2 groups and sets a cache of 20 seconds
+//  <{xoBlock id=600 options="100|100|s_poweredby.gif|0"}> displays block with diferent options
 
 /**
- * @param $params
- * @param $smarty
+ * @param string[] $params
+ * @param Smarty   $smarty
  *
  * @return mixed
  */
-function smarty_function_block($params, &$smarty)
+function smarty_function_xoBlock($params, $smarty)
 {
     if (!isset($params['id'])) {
         return null;
