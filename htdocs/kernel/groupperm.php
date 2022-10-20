@@ -141,9 +141,9 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
     /**
      * Create a new {@link XoopsGroupPerm}
      *
-     * @param bool $isNew
+     * @param bool $isNew Flag the object as "new"?
      *
-     * @return bool $isNew  Flag the object as "new"?
+     * @return XoopsGroupPerm
      */
     public function create($isNew = true)
     {
