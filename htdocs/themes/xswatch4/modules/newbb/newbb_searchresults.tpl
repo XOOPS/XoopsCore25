@@ -35,11 +35,11 @@
         <{/section}>
         <!-- end search results -->
 
-        <{if $search_next or $search_prev}>
+        <{if $search_next|default:'' or $search_prev|default:''}>
         <tr>
             <!-- irmtfan hardcode removed align="left" -->
-            <td colspan="2" class="align_left"><{$search_prev}> </td>
-            <td colspan="2" class="align_right"> <{$search_next}></td>
+            <td colspan="2" class="align_left"><{$search_prev|default:''}> </td>
+            <td colspan="2" class="align_right"> <{$search_next|default:''}></td>
         </tr>
         <{/if}>
         </tbody>
