@@ -161,7 +161,7 @@
                                     </a>
                                 <{/if}>
                                 <!-- Forum description -->
-                                <{if $forum.forum_desc != ""}>
+                                <{if $forum.forum_desc|default:'' != ''}>
                                     <button class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#forumDesc-<{$forum.forum_id}>"><span
                                                 class="glyphicon glyphicon-info-sign"></span></button>
                                     <div class="modal fade" id="forumDesc-<{$forum.forum_id}>" tabindex="-1" role="dialog" aria-labelledby="ForumDescription"

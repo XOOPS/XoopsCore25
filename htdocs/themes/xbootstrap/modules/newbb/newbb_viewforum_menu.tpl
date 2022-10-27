@@ -14,7 +14,7 @@
 
 <{if $typeOptions}>
     <select class="form-control" name="type" id="type" onchange="if(this.options[this.selectedIndex].value.length >0 )    { window.location=this.options[this.selectedIndex].value;}">
-        <option value=""><{$smarty.const._MD_NEWBB_NEWBB_TYPE}></option>
+        <option value=""><{$smarty.const._MD_NEWBB_TYPE}></option>
         <{foreach item=opt from=$typeOptions}>
         <option value="<{$opt.link}>"><{$opt.title}></option>
         <{/foreach}>
