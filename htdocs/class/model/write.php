@@ -76,9 +76,9 @@ class XoopsModelWrite extends XoopsModelAbstract
                         continue 2;
                     }
                     if (!$v['not_gpc']) {
-                        $cleanv = $ts->stripSlashesGPC($ts->censorString($cleanv));
+                        $cleanv = $ts->stripSlashesGPC($ts->executeExtension('censor', $cleanv));
                     } else {
-                        $cleanv = $ts->censorString($cleanv);
+                        $cleanv = $ts->executeExtension('censor', $cleanv);
                     }
                     $cleanv = str_replace('\\"', '"', $this->handler->db->quote($cleanv));
                     break;
@@ -93,9 +93,9 @@ class XoopsModelWrite extends XoopsModelAbstract
                         if (!empty($vars['dohtml']['value'])) {
                             $cleanv = $ts->textFilter($cleanv);
                         }
-                        $cleanv = $ts->stripSlashesGPC($ts->censorString($cleanv));
+                        $cleanv = $ts->stripSlashesGPC($ts->executeExtension('censor', $cleanv));
                     } else {
-                        $cleanv = $ts->censorString($cleanv);
+                        $cleanv = $ts->executeExtension('censor', $cleanv);
                     }
                     $cleanv = str_replace('\\"', '"', $this->handler->db->quote($cleanv));
                     break;
@@ -110,9 +110,9 @@ class XoopsModelWrite extends XoopsModelAbstract
                         continue 2;
                     }
                     if (!$v['not_gpc']) {
-                        $cleanv = $ts->stripSlashesGPC($ts->censorString($cleanv));
+                        $cleanv = $ts->stripSlashesGPC($ts->executeExtension('censor', $cleanv));
                     } else {
-                        $cleanv = $ts->censorString($cleanv);
+                        $cleanv = $ts->executeExtension('censor', $cleanv);
                     }
                     $cleanv = str_replace('\\"', '"', $this->handler->db->quote($cleanv));
                     break;
@@ -126,9 +126,9 @@ class XoopsModelWrite extends XoopsModelAbstract
                         if (!empty($vars['dohtml']['value'])) {
                             $cleanv = $ts->textFilter($cleanv);
                         }
-                        $cleanv = $ts->stripSlashesGPC($ts->censorString($cleanv));
+                        $cleanv = $ts->stripSlashesGPC($ts->executeExtension('censor', $cleanv));
                     } else {
-                        $cleanv = $ts->censorString($cleanv);
+                        $cleanv = $ts->executeExtension('censor', $cleanv);
                     }
                     $cleanv = str_replace('\\"', '"', $this->handler->db->quote($cleanv));
                     break;

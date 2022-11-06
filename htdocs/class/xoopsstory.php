@@ -220,9 +220,9 @@ class XoopsStory
     {
         //$newpost = 0;
         $myts     = MyTextSanitizer::getInstance();
-        $title    = $myts->censorString($this->title);
-        $hometext = $myts->censorString($this->hometext);
-        $bodytext = $myts->censorString($this->bodytext);
+        $title    = $myts->executeExtension('censor', $this->title);
+        $hometext = $myts->executeExtension('censor', $this->hometext);
+        $bodytext = $myts->executeExtension('censor', $this->bodytext);
         $title    = $myts->addSlashes($title);
         $hometext = $myts->addSlashes($hometext);
         $bodytext = $myts->addSlashes($bodytext);

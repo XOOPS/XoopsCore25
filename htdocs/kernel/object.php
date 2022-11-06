@@ -745,9 +745,9 @@ class XoopsObject
                             continue 2;
                         }
                         if (!$v['not_gpc']) {
-                            $cleanv = $ts->stripSlashesGPC($ts->censorString($cleanv));
+                            $cleanv = $ts->stripSlashesGPC($ts->executeExtension('censor', $cleanv));
                         } else {
-                            $cleanv = $ts->censorString($cleanv);
+                            $cleanv = $ts->executeExtension('censor', $cleanv);
                         }
                         break;
                     case XOBJ_DTYPE_TXTAREA:
@@ -756,9 +756,9 @@ class XoopsObject
                             continue 2;
                         }
                         if (!$v['not_gpc']) {
-                            $cleanv = $ts->stripSlashesGPC($ts->censorString($cleanv));
+                            $cleanv = $ts->stripSlashesGPC($ts->executeExtension('censor', $cleanv));
                         } else {
-                            $cleanv = $ts->censorString($cleanv);
+                            $cleanv = $ts->executeExtension('censor', $cleanv);
                         }
                         break;
                     case XOBJ_DTYPE_SOURCE:
@@ -827,9 +827,9 @@ class XoopsObject
                             continue 2;
                         }
                         if (!$v['not_gpc']) {
-                            $cleanv = $ts->stripSlashesGPC($ts->censorString($cleanv));
+                            $cleanv = $ts->stripSlashesGPC($ts->executeExtension('censor', $cleanv));
                         } else {
-                            $cleanv = $ts->censorString($cleanv);
+                            $cleanv = $ts->executeExtension('censor', $cleanv);
                         }
                         break;
                     case XOBJ_DTYPE_UNICODE_TXTAREA:
@@ -839,9 +839,9 @@ class XoopsObject
                         }
                         $cleanv = xoops_convert_encode($cleanv);
                         if (!$v['not_gpc']) {
-                            $cleanv = $ts->stripSlashesGPC($ts->censorString($cleanv));
+                            $cleanv = $ts->stripSlashesGPC($ts->executeExtension('censor', $cleanv));
                         } else {
-                            $cleanv = $ts->censorString($cleanv);
+                            $cleanv = $ts->executeExtension('censor', $cleanv);
                         }
                         break;
                     case XOBJ_DTYPE_UNICODE_EMAIL:
