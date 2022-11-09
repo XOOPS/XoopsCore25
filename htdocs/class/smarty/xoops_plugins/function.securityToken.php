@@ -2,7 +2,7 @@
 /**
  * XOOPS securityToken Smarty compiler plug-in
  *
- * @copyright   XOOPS Project (http://xoops.org)
+ * @copyright   (c) 2016-2022 XOOPS Project (https://xoops.org)
  * @license     GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author      Richard Griffith <richard@geekwright.com>
  */
@@ -19,15 +19,16 @@
  * This is intended to replace token generations done in {php} tags which are removed
  * in Smarty 3 and beyond
  *
- * @param $params
- * @param $smarty
+ * @param string[] $params optional 'name' parameter for token
+ * @param Smarty   $smarty
  *
- * @return null
+ * @return void
  */
-function smarty_function_securityToken($params, &$smarty)
+function smarty_function_securityToken($params, $smarty)
 {
     if (!empty($params['name'])) {
         $name = $params['name'];
+        $name = trim($name, "' \t\n\r\0");
         echo $GLOBALS['xoopsSecurity']->getTokenHTML($name);
     } else {
         echo $GLOBALS['xoopsSecurity']->getTokenHTML();
