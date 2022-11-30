@@ -192,6 +192,6 @@ class XoopsOnlineHandler
         }
         list($ret) = $this->db->fetchRow($result);
 
-        return $ret;
+        return (int)$ret;
     }
 }

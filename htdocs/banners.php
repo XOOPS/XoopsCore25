@@ -106,13 +106,13 @@ function bannerstats()
     list($cid, $name, $passwd) = $xoopsDB->fetchRow($result);
     if ($_SESSION['banner_pass'] == $passwd) {
         include $GLOBALS['xoops']->path('header.php');
+        $cid = (int)$cid;
         $GLOBALS['xoTheme']->addStylesheet(null, null, '
             #bannerstats {}
             #bannerstats td {
                 text-align: center;
             }
         ');
-
         echo "<div id='bannerstats'>
               <h4 class='content_title'>" . sprintf(_BANNERS_TITLE, $name) . "</h4><hr />
               <table summary=''>

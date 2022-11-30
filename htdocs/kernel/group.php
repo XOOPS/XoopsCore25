@@ -466,7 +466,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
         }
         list($count) = $this->db->fetchRow($result);
 
-        return $count;
+        return (int)$count;
     }
 
     /**
