@@ -251,7 +251,7 @@ class XoUserHandler extends XoopsObjectHandler
         $result = $this->db->query($sql);
         list($count) = $this->db->fetchRow($result);
 
-        return $count;
+        return (int)$count;
     }
 
     /**

@@ -896,7 +896,7 @@ class XoopsBlock extends XoopsObject
         }
         list($count) = $db->fetchRow($result);
 
-        return $count;
+        return (int)$count;
     }
 }
 

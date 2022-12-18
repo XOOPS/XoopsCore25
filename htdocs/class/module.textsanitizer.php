@@ -595,7 +595,6 @@ class MyTextSanitizer
      *
      * @param  string $text
      * @return string
-     * @deprecated
      */
     public function &censorString(&$text)
     {
