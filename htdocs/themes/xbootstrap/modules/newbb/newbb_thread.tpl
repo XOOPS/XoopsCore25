@@ -7,7 +7,7 @@
     <{$topic_post.poster.link}>
 
     <{if $topic_post.poster.uid|default:'' gt -1}>
-        <{if $topic_post.poster.uid != 0}>
+        <{if $topic_post.poster.uid|default:0 != 0}>
             <{if $topic_post.poster.avatar != "blank.gif"}>
                     <img src="<{$xoops_upload_url}>/<{$topic_post.poster.avatar}>" alt="<{$topic_post.poster.name}>" class="img-circle img-thumbnail">
                 <{else}>
@@ -21,7 +21,7 @@
                 </ul>
             <{/if}>
 
-                <{if $infobox.show}>
+                <{if $infobox.show|default:''}>
                     <a data-toggle="collapse" href="#<{$topic_post.post_id}>" title="<{$smarty.const.THEME_INFO}>" class="btn btn-primary btn-sm mb10"><span class="glyphicon glyphicon-info-sign"></span></a>
                     <div id="<{$topic_post.post_id}>" class="collapse">
                         <ul class="list-unstyled text-left">
@@ -49,13 +49,13 @@
                             <{/if}>
                             </li>
 
-                            <{if $topic_post.poster.digests gt 0}>
+                            <{if $topic_post.poster.digests|default:'' gt 0}>
                             <li>
                                 <{$smarty.const._MD_NEWBB_DIGESTS}>: <{$topic_post.poster.digests}>
                             </li>
                             <{/if}>
 
-                            <{if $topic_post.poster.level}>
+                            <{if $topic_post.poster.level|default:''}>
                                 <li><{$topic_post.poster.level}></li>
                             <{/if}>
 
@@ -122,7 +122,7 @@
     <{if $topic_post.thread_action}>
         <{foreach item=btn from=$topic_post.thread_action}>
             <a href="<{$btn.link}>&amp;post_id=<{$topic_post.post_id}>" title="<{$btn.name}>" <{if $btn.target}>target="<{$btn.target}>"<{/if}>>
-                <{$btn.image}>
+                <{$btn.image|default:''}>
             </a>
         <{/foreach}>
     <{/if}>
