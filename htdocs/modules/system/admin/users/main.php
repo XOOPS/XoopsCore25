@@ -35,7 +35,7 @@ $GLOBALS['xoopsOption']['template_main'] = 'system_users.tpl';
 // Call Header
 xoops_cp_header();
 
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 // Define Stylesheet
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . xoops_getModuleOption('jquery_theme', 'system') . '/ui.all.css');

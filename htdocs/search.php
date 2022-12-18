@@ -100,7 +100,7 @@ if ($andor !== 'OR' && $andor !== 'exact' && $andor !== 'AND') {
     $andor = 'AND';
 }
 
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 if ($action !== 'showallbyuser') {
     if ($andor !== 'exact') {
         $ignored_queries = array(); // holds kewords that are shorter than allowed minmum length

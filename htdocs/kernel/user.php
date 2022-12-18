@@ -164,11 +164,11 @@ class XoopsUser extends XoopsObject
             $member_handler = xoops_getHandler('member');
             $user           = $member_handler->getUser($userid);
             if (is_object($user)) {
-                $ts = MyTextSanitizer::getInstance();
-				if ($usereal && $user->getVar('name')) {
-                    $username = $ts->htmlSpecialChars($user->getVar('name'));
+                $myts = \MyTextSanitizer::getInstance();
+                if ($usereal && $user->getVar('name')) {
+                    $username = $myts->htmlSpecialChars($user->getVar('name'));
                 } else {
-                    $username = $ts->htmlSpecialChars($user->getVar('uname'));
+                    $username = $myts->htmlSpecialChars($user->getVar('uname'));
                 }
                 if (!empty($linked)) {
                     $username = '<a href="' . XOOPS_URL . '/userinfo.php?uid=' . $userid . '" title="' . $username . '">' . $username . '</a>';

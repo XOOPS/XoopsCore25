@@ -94,7 +94,7 @@ if (!empty($_POST)) {
         // Start add by voltan
         xoops_load('XoopsUserUtility');
         xoops_loadLanguage('user');
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
 
         // Check user name
         $search_arr  = array(
@@ -196,7 +196,7 @@ switch ($op) {
         break;
 
     case 'preview':
-        $myts      = MyTextSanitizer::getInstance();
+        $myts      = \MyTextSanitizer::getInstance();
         $doimage   = 1;
         if ($dohtml != 0) {
             if (is_object($xoopsUser)) {
@@ -241,7 +241,7 @@ switch ($op) {
         $doimage         = 1;
         $comment_handler = xoops_getHandler('comment');
         // Start add by voltan
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         // Edit add by voltan
         $add_userpost     = false;
         $call_approvefunc = false;

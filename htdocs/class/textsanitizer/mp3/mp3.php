@@ -69,19 +69,15 @@ EOF;
     }
 
     /**
-     * @param $ts
+     * @param MyTextSanitizer $myts
      *
      * @return bool
      */
-    public function load($ts)
+    public function load(MyTextSanitizer $myts)
     {
-        //        $ts->patterns[] = "/\[mp3\](.*?)\[\/mp3\]/es";
-        //        $ts->replacements[] = __CLASS__ . "::decode( '\\1' )";
-        //mb------------------------------
-        $ts->callbackPatterns[] = "/\[mp3\](.*?)\[\/mp3\]/s";
-        $ts->callbacks[]        = __CLASS__ . '::myCallback';
+        $myts->callbackPatterns[] = "/\[mp3\](.*?)\[\/mp3\]/s";
+        $myts->callbacks[]        = __CLASS__ . '::myCallback';
 
-        //mb------------------------------
         return true;
     }
 

@@ -26,7 +26,7 @@ if (!is_object($GLOBALS['xoopsUser'])) {
     redirect_header(XOOPS_URL, 3, _US_NOEDITRIGHT);
 }
 
-$myts                       = MyTextSanitizer::getInstance();
+$myts                       = \MyTextSanitizer::getInstance();
 $op                         = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'editprofile';
 /* @var XoopsConfigHandler $config_handler */
 $config_handler             = xoops_getHandler('config');

@@ -24,14 +24,14 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 class MytsIframe extends MyTextSanitizerExtension
 {
     /**
-     * @param $ts
+     * @param MyTextSanitizer $myts
      *
      * @return bool
      */
-    public function load($ts)
+    public function load(MyTextSanitizer $myts)
     {
-        $ts->patterns[]     = "/\[iframe=(['\"]?)([^\"']*)\\1]([^\"]*)\[\/iframe\]/sU";
-        $ts->replacements[] = "<iframe src='\\3' width='100%' height='\\2' scrolling='auto' frameborder='yes' marginwidth='0' marginheight='0' noresize></iframe>";
+        $myts->patterns[]     = "/\[iframe=(['\"]?)([^\"']*)\\1]([^\"]*)\[\/iframe\]/sU";
+        $myts->replacements[] = "<iframe src='\\3' width='100%' height='\\2' scrolling='auto' frameborder='yes' marginwidth='0' marginheight='0' noresize></iframe>";
 
         return true;
     }
