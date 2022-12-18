@@ -185,13 +185,13 @@ class XoopsUserUtility
         $sql    = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix('users') . '` WHERE `uname` = ' . $xoopsDB->quote(addslashes($uname)) . (($uid > 0) ? " AND `uid` <> {$uid}" : '');
         $result = $xoopsDB->query($sql);
         list($count) = $xoopsDB->fetchRow($result);
-        if ($count > 0) {
+        if ((int)$count > 0) {
             $stop .= _US_NICKNAMETAKEN . '<br>';
         }
         $sql    = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix('users') . '` WHERE `email` = ' . $xoopsDB->quote(addslashes($email)) . (($uid > 0) ? " AND `uid` <> {$uid}" : '');
         $result = $xoopsDB->query($sql);
         list($count) = $xoopsDB->fetchRow($result);
-        if ($count > 0) {
+        if ((int)$count > 0) {
             $stop .= _US_EMAILTAKEN . '<br>';
         }
         // If password is not set, skip password validation
