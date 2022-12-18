@@ -138,9 +138,11 @@
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=1" title="<{$smarty.const._MD_NEWBB_SPLIT_ONE}>">
             <{$smarty.const._MD_NEWBB_SPLIT_ONE}>
         </a>
+            |
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=2" title="<{$smarty.const._MD_NEWBB_SPLIT_TREE}>">
             <{$smarty.const._MD_NEWBB_SPLIT_TREE}>
         </a>
+            |
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=3" title="<{$smarty.const._MD_NEWBB_SPLIT_ALL}>">
             <{$smarty.const._MD_NEWBB_SPLIT_ALL}>
         </a>
