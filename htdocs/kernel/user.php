@@ -150,11 +150,12 @@ class XoopsUser extends XoopsObject
      * Updated by Catzwolf 11 Jan 2004
      * find the username for a given ID
      *
-     * @param  int $userid  ID of the user to find
-     * @param  int $usereal switch for usename or realname
+     * @param  int  $userid  ID of the user to find
+     * @param  int  $usereal switch for usename or realname
+     * @param  bool $linked add a link
      * @return string name of the user. name for 'anonymous' if not found.
      */
-    public static function getUnameFromId($userid, $usereal = 0)
+    public static function getUnameFromId($userid, $usereal = 0, $linked = false)
     {
         $userid  = (int)$userid;
         $usereal = (int)$usereal;
@@ -164,16 +165,15 @@ class XoopsUser extends XoopsObject
             $user           = $member_handler->getUser($userid);
             if (is_object($user)) {
                 $ts = MyTextSanitizer::getInstance();
-                if ($usereal) {
-                    $name = $user->getVar('name');
-                    if ($name != '') {
-                        return $ts->htmlSpecialChars($name);
-                    } else {
-                        return $ts->htmlSpecialChars($user->getVar('uname'));
-                    }
+				if ($usereal && $user->getVar('name')) {
+                    $username = $ts->htmlSpecialChars($user->getVar('name'));
                 } else {
-                    return $ts->htmlSpecialChars($user->getVar('uname'));
+                    $username = $ts->htmlSpecialChars($user->getVar('uname'));
                 }
+                if (!empty($linked)) {
+                    $username = '<a href="' . XOOPS_URL . '/userinfo.php?uid=' . $userid . '" title="' . $username . '">' . $username . '</a>';
+                }
+				return $username;
             }
         }
 
