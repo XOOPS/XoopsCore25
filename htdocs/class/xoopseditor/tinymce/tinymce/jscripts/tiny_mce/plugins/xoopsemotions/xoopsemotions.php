@@ -41,8 +41,8 @@ $groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGr
 $gperm_handler = xoops_getHandler('groupperm');
 $admin         = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_SMILE, $groups);
 
-$op = Request::getString('op', '', 'GET');
-$op = Request::getString('op', $op, 'POST');
+$op = Request::getString('op', '', 'POST');
+$op = Request::getString('op', $op, 'GET');
 
 $myts = MyTextSanitizer::getInstance();
 
