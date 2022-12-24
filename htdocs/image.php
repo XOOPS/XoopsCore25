@@ -366,8 +366,8 @@ if (!isset($_GET['nocache']) && !isset($_GET['noservercache']) && !empty($cached
  * Get/check editing parameters
  */
 // width, height
-$max_width = $width = Request::getInt('width', 0, 'GET');
-$max_height = $height = Request::getInt('height', 0, 'GET');
+$max_width = Request::getInt('width', 0, 'GET');
+$max_height = Request::getInt('height', 0, 'GET');
 // If either a max width or max height are not specified, we default to something large so the unspecified
 // dimension isn't a constraint on our resized image.
 // If neither are specified but the color is, we aren't going to be resizing at all, just coloring.
