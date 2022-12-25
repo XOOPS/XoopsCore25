@@ -595,16 +595,16 @@ switch ($op) {
                 $match = (!empty($_REQUEST['user_msnm_match'])) ? (int)$_REQUEST['user_msnm_match'] : XOOPS_MATCH_START;
                 switch ($match) {
                     case XOOPS_MATCH_START:
-                        $criteria->add(new Criteria('user_msnm', $myts->addSlashes(trim(Request::getString('user_msnm', ''))) . '%', 'LIKE'));
+                        $criteria->add(new Criteria('user_msnm', $myts->addSlashes(Request::getString('user_msnm', '')) . '%', 'LIKE'));
                         break;
                     case XOOPS_MATCH_END:
-                        $criteria->add(new Criteria('user_msnm', '%' . $myts->addSlashes(trim(Request::getString('user_msnm', ''))), 'LIKE'));
+                        $criteria->add(new Criteria('user_msnm', '%' . $myts->addSlashes(Request::getString('user_msnm', '')), 'LIKE'));
                         break;
                     case XOOPS_MATCH_EQUAL:
-                        $criteria->add(new Criteria('user_msnm', $myts->addSlashes(trim(Request::getString('user_msnm', '')))));
+                        $criteria->add(new Criteria('user_msnm', $myts->addSlashes(Request::getString('user_msnm', ''))));
                         break;
                     case XOOPS_MATCH_CONTAIN:
-                        $criteria->add(new Criteria('user_msnm', '%' . $myts->addSlashes(trim(Request::getString('user_msnm', ''))) . '%', 'LIKE'));
+                        $criteria->add(new Criteria('user_msnm', '%' . $myts->addSlashes(Request::getString('user_msnm', '')) . '%', 'LIKE'));
                         break;
                 }
                 $requete_pagenav .= '&amp;user_msnm=' . htmlspecialchars(Request::getString('user_msnm', '')) . '&amp;user_msnm_match=' . htmlspecialchars($_REQUEST['user_msnm_match']);
@@ -612,19 +612,19 @@ switch ($op) {
             }
 
             if (!empty($_REQUEST['user_from'])) {
-                $criteria->add(new Criteria('user_from', '%' . $myts->addSlashes(trim(Request::getString('user_from', ''))) . '%', 'LIKE'));
+                $criteria->add(new Criteria('user_from', '%' . $myts->addSlashes(Request::getString('user_from', '')) . '%', 'LIKE'));
                 $requete_pagenav .= '&amp;user_from=' . htmlspecialchars(Request::getString('user_from', ''));
                 $requete_search .= 'from : ' . Request::getString('user_from', '') . '<br>';
             }
 
             if (!empty($_REQUEST['user_intrest'])) {
-                $criteria->add(new Criteria('user_intrest', '%' . $myts->addSlashes(trim(Request::getString('user_intrest', ''))) . '%', 'LIKE'));
+                $criteria->add(new Criteria('user_intrest', '%' . $myts->addSlashes(Request::getString('user_intrest', '')) . '%', 'LIKE'));
                 $requete_pagenav .= '&amp;user_intrest=' . htmlspecialchars(Request::getString('user_intrest', ''));
                 $requete_search .= 'interet : ' . Request::getString('user_intrest', '') . '<br>';
             }
 
             if (!empty($_REQUEST['user_occ'])) {
-                $criteria->add(new Criteria('user_occ', '%' . $myts->addSlashes(trim(Request::getString('user_occ', ''))) . '%', 'LIKE'));
+                $criteria->add(new Criteria('user_occ', '%' . $myts->addSlashes(Request::getString('user_occ', '')) . '%', 'LIKE'));
                 $requete_pagenav .= '&amp;user_occ=' . htmlspecialchars(Request::getString('user_occ', ''));
                 $requete_search .= 'location : ' . Request::getString('user_occ', '') . '<br>';
             }
