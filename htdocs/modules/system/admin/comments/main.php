@@ -196,7 +196,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(_AM_SYSTEM_COMMENTS_NAV_TIPS);
         $xoBreadCrumb->render();
 
-        $myts             = MyTextSanitizer::getInstance();
+        $myts             = \MyTextSanitizer::getInstance();
         /* @var  XoopsCommentHandler $comments_Handler */
         $comments_Handler = xoops_getHandler('comment');
         $comments_module  = '';

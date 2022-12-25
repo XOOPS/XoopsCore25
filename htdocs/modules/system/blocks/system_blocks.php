@@ -310,7 +310,7 @@ function b_system_info_show($options)
 {
     global $xoopsConfig, $xoopsUser;
     $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
-    $myts    = MyTextSanitizer::getInstance();
+    $myts    = \MyTextSanitizer::getInstance();
     $block   = array();
     if (!empty($options[3])) {
         $block['showgroups'] = true;

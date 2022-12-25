@@ -179,7 +179,7 @@ class XoopsOnlineHandler
      *
      * @param CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement}
      *
-     * @return bool
+     * @return int
      */
     public function getCount(CriteriaElement $criteria = null)
     {
@@ -188,10 +188,10 @@ class XoopsOnlineHandler
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->db->query($sql)) {
-            return false;
+            return 0;
         }
         list($ret) = $this->db->fetchRow($result);
 
-        return $ret;
+        return (int)$ret;
     }
 }

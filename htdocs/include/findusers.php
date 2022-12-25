@@ -50,6 +50,14 @@ xoops_loadLanguage('findusers');
  */
 class XoopsRank extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $rank_id;
+    public $rank_title;
+    public $rank_min;
+    public $rank_max;
+    public $rank_special;
+    public $rank_image;
+    
     /**
      * Construct
      *
@@ -148,7 +156,7 @@ class XoopsRankHandler extends XoopsObjectHandler
         if (!$result) {
             return $ret;
         }
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[$myrow['rank_id']] = $myts->htmlSpecialChars($myrow['rank_title']);
         }
@@ -243,7 +251,7 @@ class XoUserHandler extends XoopsObjectHandler
         $result = $this->db->query($sql);
         list($count) = $this->db->fetchRow($result);
 
-        return $count;
+        return (int)$count;
     }
 
     /**
@@ -443,7 +451,7 @@ if (!Request::hasVar('user_submit', 'POST')) {
     echo '(' . sprintf(_MA_USER_ACTUS, "<span style='color:#ff0000;'>$acttotal</span>") . ' ' . sprintf(_MA_USER_INACTUS, "<span style='color:#ff0000;'>$inacttotal</span>") . ')';
     $form->display();
 } else {
-    $myts  = MyTextSanitizer::getInstance();
+    $myts  = \MyTextSanitizer::getInstance();
     $limit = Request::getInt('limit', 50, 'POST');
     $start = Request::getInt('start', 0, 'POST');
     if (Request::hasVar('query', 'POST')) {

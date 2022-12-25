@@ -29,6 +29,13 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class XoopsGroupPerm extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $gperm_id;
+    public $gperm_groupid;
+    public $gperm_itemid;
+    public $gperm_modid;
+    public $gperm_name;
+
     /**
      * Constructor
      *
@@ -134,9 +141,9 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
     /**
      * Create a new {@link XoopsGroupPerm}
      *
-     * @param bool $isNew
+     * @param bool $isNew Flag the object as "new"?
      *
-     * @return bool $isNew  Flag the object as "new"?
+     * @return XoopsGroupPerm
      */
     public function create($isNew = true)
     {
@@ -289,7 +296,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
         }
         list($count) = $this->db->fetchRow($result);
 
-        return $count;
+        return (int)$count;
     }
 
     /**

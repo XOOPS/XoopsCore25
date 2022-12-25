@@ -26,6 +26,12 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class XoopsGroup extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $groupid;
+    public $name;
+    public $description;
+    public $group_type;
+
     /**
      * constructor
      */
@@ -262,6 +268,11 @@ class XoopsGroupHandler extends XoopsObjectHandler
  */
 class XoopsMembership extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $linkid;
+    public $groupid;
+    public $uid;
+
     /**
      * constructor
      */
@@ -455,7 +466,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
         }
         list($count) = $this->db->fetchRow($result);
 
-        return $count;
+        return (int)$count;
     }
 
     /**

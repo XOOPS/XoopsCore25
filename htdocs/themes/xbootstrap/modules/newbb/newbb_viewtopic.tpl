@@ -75,10 +75,10 @@
 
     <{if $mode lte 1}>
         <{if $topic_poll|default:''}>
-            <{if $topic_pollresult}>
-                <{include file="db:newbb_poll_results.tpl" poll=$poll}>
+            <{if $topic_pollresult|default:''}>
+                <{include file="db:newbb_poll_results.tpl" poll=$poll|default:''}>
             <{else}>
-                <{include file="db:newbb_poll_view.tpl" poll=$poll}>
+                <{include file="db:newbb_poll_view.tpl" poll=$poll|default:''}>
             <{/if}>
         <{/if}>
     <{/if}>

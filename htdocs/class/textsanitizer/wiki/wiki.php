@@ -76,16 +76,12 @@ EOH;
     }
 
     /**
-     * @param $ts
+     * @param MyTextSanitizer $myts
      */
-    public function load($ts)
+    public function load(MyTextSanitizer $myts)
     {
-        //        $ts->patterns[] = "/\[\[([^\]]*)\]\]/esU";
-        //        $ts->replacements[] = __CLASS__ . "::decode( '\\1' )";
-        //mb------------------------------
-        $ts->callbackPatterns[] = "/\[\[([^\]]*)\]\]/sU";
-        $ts->callbacks[]        = __CLASS__ . '::myCallback';
-        //mb------------------------------
+        $myts->callbackPatterns[] = "/\[\[([^\]]*)\]\]/sU";
+        $myts->callbacks[]        = __CLASS__ . '::myCallback';
     }
 
     /**

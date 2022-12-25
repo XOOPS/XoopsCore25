@@ -24,6 +24,13 @@
  */
 class ProfileRegstep extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $step_id;
+    public $step_name;
+    public $step_desc;
+    public $step_order;
+    public $step_save;
+
     /**
      *
      */

@@ -23,6 +23,10 @@
  */
 class SystemBlockLinkModule extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $block_id;
+    public $module_id;
+    
     /**
      *
      */

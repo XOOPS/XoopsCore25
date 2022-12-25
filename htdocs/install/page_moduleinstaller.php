@@ -47,9 +47,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $xoopsConfig    = $config_handler->getConfigsByCat(XOOPS_CONF);
 
     $msgs = array();
-    foreach ($_REQUEST['modules'] as $dirname => $installmod) {
-        if ($installmod) {
-            $msgs[] = xoops_module_install($dirname);
+    if (isset($_REQUEST['modules']) && is_array($_REQUEST['modules'])) {
+        foreach ($_REQUEST['modules'] as $dirname => $installmod) {
+            if ($installmod) {
+                $msgs[] = xoops_module_install($dirname);
+            }
         }
     }
 
