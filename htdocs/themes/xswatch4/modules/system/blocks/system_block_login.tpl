@@ -1,5 +1,5 @@
 <div class="loginform">
-    <form action="<{xoAppUrl user.php}>" method="post" role="form">
+    <form action="<{xoAppUrl 'user.php'}>" method="post" role="form">
         <div class="form-group">
             <{$block.lang_username}>
             <input class="form-control" type="text" name="uname" placeholder="<{$smarty.const.THEME_LOGIN}>">
@@ -24,7 +24,7 @@
         <input type="submit" class="btn btn-primary btn-block btn-sm" value="<{$block.lang_login}>">
         <{$block.sslloginlink|default:''}>
     </form>
-    <a class="btn btn-info btn-xs btn-block" href="<{xoAppUrl user.php#lost}>" title="<{$block.lang_lostpass}>"><{$block.lang_lostpass}></a>
+    <a class="btn btn-info btn-xs btn-block" href="<{xoAppUrl 'user.php#lost'}>" title="<{$block.lang_lostpass}>"><{$block.lang_lostpass}></a>
 
-    <a class="btn btn-info btn-xs btn-block" href="<{xoAppUrl register.php}>" title="<{$block.lang_registernow}>"><{$block.lang_registernow}></a>
+    <a class="btn btn-info btn-xs btn-block" href="<{xoAppUrl 'register.php'}>" title="<{$block.lang_registernow}>"><{$block.lang_registernow}></a>
 </div>

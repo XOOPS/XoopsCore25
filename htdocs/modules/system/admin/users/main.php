@@ -881,8 +881,14 @@ switch ($op) {
             if ($users_count > $user_limit) {
                 include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
                 $nav = new XoopsPageNav($users_count, $user_limit, $start, 'start', 'fct=users&amp;op=default' . $requete_pagenav);
-                $xoopsTpl->assign('nav', $nav->renderNav());
+$temp = $nav->renderNav(); \Xmf\Debug::dump($temp);
+                $xoopsTpl->assign('nav', $temp); //$nav->renderNav());
             }
+            $dstart = \Xmf\Request::getInt('dstart', 0);
+            include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
+            $nav = new XoopsPageNav(100, 20, $dstart, 'dstart');
+            echo '<div text-align="left">' . $nav->renderNav() . '</div>';
+
         }
         break;
 }

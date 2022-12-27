@@ -16,17 +16,17 @@
     <{/if}>
 
     <!-- path favicon -->
-    <link rel="shortcut icon" type="image/ico" href="<{xoImgUrl icons/favicon.ico}>"/>
-    <link rel="icon" type="image/png" href="<{xoImgUrl icons/favicon.png}>"/>
+    <link rel="shortcut icon" type="image/ico" href="<{xoImgUrl 'icons/favicon.ico'}>"/>
+    <link rel="icon" type="image/png" href="<{xoImgUrl 'icons/favicon.png'}>"/>
 
     <!-- include xoops.js and others via header.php -->
     <{$xoops_module_header}>
 
     <!-- Xoops style sheet -->
-    <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl xoops.css}>"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl 'xoops.css'}>"/>
 
     <!-- Theme style sheets -->
-    <link rel="stylesheet" type="text/css" media="screen" title="Color" href="<{xoImgUrl style.css}>"/>
+    <link rel="stylesheet" type="text/css" media="screen" title="Color" href="<{xoImgUrl 'style.css'}>"/>
 
 </head>
 <body id="xo-refresh">
@@ -35,7 +35,7 @@
         <div class="message">
             <{$message}>
             <br>
-            <img src="<{xoImgUrl icons/ajax_indicator_01.gif}>" alt="<{$message}>"/>
+            <img src="<{xoImgUrl 'icons/ajax_indicator_01.gif'}>" alt="<{$message}>"/>
         </div>
         <div class="notreload">
             <{$lang_ifnotreload}>

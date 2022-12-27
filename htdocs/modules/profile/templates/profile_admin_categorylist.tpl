@@ -11,11 +11,11 @@
             <td><{$category.cat_description}></td>
             <td align="center"><{$category.cat_weight}></td>
             <td align="center">
-                <a href="category.php?id=<{$category.cat_id}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 edit.png}>"
+                <a href="category.php?id=<{$category.cat_id}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 'edit.png'}>"
                                                                                                     alt="<{$smarty.const._EDIT}>"
                                                                                                     title="<{$smarty.const._EDIT}>"/></a>
                 &nbsp;<a href="category.php?op=delete&amp;id=<{$category.cat_id}>" title="<{$smarty.const._DELETE}>"><img
-                            src="<{xoModuleIcons16 delete.png}>" alt="<{$smarty.const._DELETE}>" title="<{$smarty.const._DELETE}>"</a>
+                            src="<{xoModuleIcons16 'delete.png'}>" alt="<{$smarty.const._DELETE}>" title="<{$smarty.const._DELETE}>"</a>
             </td>
         </tr>
     <{/foreach}>

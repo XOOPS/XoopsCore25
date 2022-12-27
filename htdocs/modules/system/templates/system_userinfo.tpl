@@ -25,9 +25,9 @@
     <table class="width70 aligncenter bnone">
         <tr class="txtcenter">
             <td><input type="button" value="<{$lang_editprofile}>"
-                       onclick="location='<{$xoops_url}>/modules/system/admin.php?fct=users&amp;uid=<{$user_uid}>&amp;op=modifyUser'"/>
+                       onclick="location='<{$xoops_url}>/modules/system/admin.php?fct=users&amp;uid=<{$user_uid}>&amp;op=users_edit'"/>
                 <input type="button" value="<{$lang_deleteaccount}>"
-                       onclick="location='<{$xoops_url}>/modules/system/admin.php?fct=users&amp;op=delUser&amp;uid=<{$user_uid}>'"/>
+                       onclick="location='<{$xoops_url}>/modules/system/admin.php?fct=users&amp;op=users_delete&amp;uid=<{$user_uid}>'"/>
         </tr>
     </table>
     <br>
@@ -168,7 +168,7 @@
         <strong><a href="<{$result.link}>" title="<{$result.title}>"><{$result.title}></a></strong>
         <br>
 		<span class="x-small">(<{$result.time|default:''}>)</span>
-		<br>	
+		<br>
     <{/foreach}>
     <!-- end results item loop -->
 

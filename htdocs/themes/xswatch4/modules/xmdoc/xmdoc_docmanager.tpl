@@ -4,10 +4,10 @@
     <meta http-equiv="content-type" content="text/html; charset=<{$xoops_charset}>">
     <meta http-equiv="content-language" content="<{$xoops_langcode}>">
     <title>Xmdoc manager</title>
-    <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl xoops.css}>">
-	<link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl modules/system/css/imagemanager.css}>">
-	<link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl modules/system/css/admin.css}>">
-    <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl media/font-awesome/css/font-awesome.min.css}>">
+    <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl 'xoops.css'}>">
+	<link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl 'modules/system/css/imagemanager.css'}>">
+	<link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl 'modules/system/css/admin.css'}>">
+    <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl 'media/font-awesome/css/font-awesome.min.css'}>">
 	<{if $bootstrap_css != ''}>
 	<link rel="stylesheet" type="text/css" media="screen" href="<{$bootstrap_css}>">
 	<{/if}>
@@ -27,14 +27,14 @@
 				<div class="card-body">
 					<div class="row">
 						<{foreach item=seldoc from=$seldoc}>
-							<div class="col-6 col-sm-3 col-lg-2 p-1">	
-								<div class="card">								
+							<div class="col-6 col-sm-3 col-lg-2 p-1">
+								<div class="card">
 									<div class="card-body text-center text-truncate"><strong><{$seldoc.name}></strong><br><{$seldoc.logo}></div>
 								</div>
 							</div>
 						<{/foreach}>
 					</div>
-					<div class="alert alert-warning" role="alert">						
+					<div class="alert alert-warning" role="alert">
 						<{if $seldoc_count > 1}>
 							<{$smarty.const._MA_XMDOC_FORMDOC_WARNING}>
 						<{else}>
@@ -53,7 +53,7 @@
 				<div class="card-header"><{$smarty.const._MA_XMDOC_FORMDOC_NODOCSELECTED}></div>
 			<{/if}>
 		</div>
-		
+
 		<div class="card text-center mb-3">
 			<div class="card-header"><{$smarty.const._MA_XMDOC_FORMDOC_ADD}></div>
 			<div class="card-body">
@@ -80,12 +80,12 @@
 					<{if $document|default:'' != ""}>
 						<div class="">
 							<form name="formsel" id="formsel" action="docmanager.php" method="post">
-								
+
 								<!--<table cellspacing="0" id="imagemain">-->
 								<table class="table table-hover table-striped table-bordered mt-4" id="">
 									<thead>
 										<tr class="table-secondary">
-											<th class="text-center" colspan="4" ><{$smarty.const._MA_XMDOC_FORMDOC_LISTDOCUMENT}></th>	
+											<th class="text-center" colspan="4" ><{$smarty.const._MA_XMDOC_FORMDOC_LISTDOCUMENT}></th>
 										</tr>
 										<tr class="table-secondary">
 											<th class="text-center"><{$smarty.const._MA_XMDOC_FORMDOC_SELECT}></th>
@@ -101,9 +101,9 @@
 
 <!--
 												<input type="checkbox" name="selDocs[]" id="selDocs<{$document.id}>"  title="Selectio documents" value="<{$document.id}>"  />
--->												
-												
-												
+-->
+
+
 												<fieldset>
 													<div class="form-group">
 														<div class="custom-control custom-checkbox">

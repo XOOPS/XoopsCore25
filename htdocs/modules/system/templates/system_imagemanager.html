@@ -22,9 +22,9 @@
         }
         //-->
     </script>
-    <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl xoops.css}>">
-    <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl modules/system/css/imagemanager.css}>">
-    <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl media/font-awesome/css/font-awesome.min.css}>">
+    <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl 'xoops.css'}>">
+    <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl 'modules/system/css/imagemanager.css'}>">
+    <link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl 'media/font-awesome/css/font-awesome.min.css'}>">
 
     <{php}>
         $language = $GLOBALS['xoopsConfig']['language'];
