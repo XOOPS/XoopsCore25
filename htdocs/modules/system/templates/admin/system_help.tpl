@@ -5,8 +5,8 @@
             <{if $help|default:false}>
                 <div class="xo-help-menu">
                     <h2 class="head"><{$modname}></h2>
-                    <{foreach item=help from=$help}>
-                        <div class="<{cycle values='odd, even'}>"><a href="<{$help.link}>"><{$help.name}></a></div>
+                    <{foreach item=helpitem from=$help}>
+                        <div class="<{cycle values='odd, even'}>"><a href="<{$helpitem.link}>"><{$helpitem.name}></a></div>
                     <{/foreach}>
                 </div>
             <{/if}>
