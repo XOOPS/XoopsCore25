@@ -11,21 +11,21 @@
 		<{$nomatch}>
 		<br>
 	<{else}>
-		<{foreach item=search from=$search}>
+		<{foreach item=searchitem from=$search}>
 			<div class="card my-3">
 				<div class="card-header">
 					<h5>
-						<{$search.module_name}>
-						<{if $search.module_show_all|default:false}>
-							<span class="d-none d-sm-inline"><span class="x-small">| <a href="<{$search.module_show_all}>"><{$smarty.const._SR_SHOWALLR}></a></span></span>
-							<span class="d-inline d-sm-none">| <span class="ml-2"></span><a href="<{$search.module_show_all}>"><span class="fa fa-search-plus fa-flip-horizontal fa-lg"></span></a></span>
+						<{$searchitem.module_name}>
+						<{if $searchitem.module_show_all|default:false}>
+							<span class="d-none d-sm-inline"><span class="x-small">| <a href="<{$searchitem.module_show_all}>"><{$smarty.const._SR_SHOWALLR}></a></span></span>
+							<span class="d-inline d-sm-none">| <span class="ml-2"></span><a href="<{$searchitem.module_show_all}>"><span class="fa fa-search-plus fa-flip-horizontal fa-lg"></span></a></span>
 						<{/if}>
 					</h5>
 				</div>
 
 				<div class="card-body">
 					<ul class="list-group list-group-flush">
-						<{foreach item=data from=$search.module_data}>
+						<{foreach item=data from=$searchitem.module_data}>
 							<li class="list-group-item list-group-item-action">
 	<!-- Alain01 -->
 								<{assign var="url_image_overloaded" value=$xoops_imageurl|cat:$data.image_link}>

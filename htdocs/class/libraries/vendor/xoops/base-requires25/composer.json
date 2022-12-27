@@ -10,6 +10,7 @@
         "geekwright/regdom": "^1.0.0",
         "symfony/polyfill-iconv": "^1.10.0",
         "symfony/polyfill-mbstring": "^1.10.0",
+        "smarty/smarty": "^3.1.47",
         "boenrobot/money_format_polyfill": "^1.0.2",
         "smottt/wideimage": "^1.1.4"
     }

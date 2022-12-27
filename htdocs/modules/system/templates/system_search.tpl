@@ -11,9 +11,9 @@
 		<{$nomatch}>
 		<br>
 	<{else}>
-		<{foreach item=search from=$search}>
-			<h4><{$search.module_name}></h4>
-			<{foreach item=data from=$search.module_data}>
+		<{foreach item=searchitem from=$search}>
+			<h4><{$searchitem.module_name}></h4>
+			<{foreach item=data from=$searchitem.module_data}>
 				<img src="<{$data.image_link}>" title="<{$data.image_title}>" alt="<{$data.image_title}>"/> <a href="<{$data.link}>"><{$data.link_title}></a>
 				<br>
 				<{if $data.uname|default:''}>
@@ -26,9 +26,9 @@
 					<br>
 				<{/if}>
 			<{/foreach}>
-			<{if $search.module_show_all|default:false}>
+			<{if $searchitem.module_show_all|default:false}>
 				<p>
-					<a href="<{$search.module_show_all}>"><{$smarty.const._SR_SHOWALLR}></a>
+					<a href="<{$searchitem.module_show_all}>"><{$smarty.const._SR_SHOWALLR}></a>
 				</p>
 			<{/if}>
 		<{/foreach}>
