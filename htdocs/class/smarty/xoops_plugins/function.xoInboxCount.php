@@ -9,11 +9,11 @@
  * - assign = variable name to assign with the current unread message count
  * - total  = variable name to assign with the current inbox total
  *
- * @param $params
- * @param $smarty
+ * @param string[] $params
+ * @param Smarty   $smarty
  * @return null
  */
-function smarty_function_xoInboxCount($params, &$smarty)
+function smarty_function_xoInboxCount($params, $smarty)
 {
     global $xoopsUser;
 
