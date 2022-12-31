@@ -385,7 +385,7 @@ class XoopsMemberHandler
 
         /** @var mysqli_result $result */
         $result = $db->query($sql);
-        if ($db->isResultSet($result) {
+        if ($db->isResultSet($result)) {
             $row = $db->fetchRow($result);
             if ($row) {
                 $columnLength = $row[0];

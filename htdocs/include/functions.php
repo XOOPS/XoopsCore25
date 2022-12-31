@@ -678,7 +678,7 @@ function xoops_getbanner()
 
     $db      = XoopsDatabaseFactory::getDatabaseConnection();
     $sql = 'SELECT COUNT(*) FROM ' . $db->prefix('banner');
-    $result = $this->db->query($sql);
+    $result = $db->query($sql);
     if (!$db->isResultSet($result)) {
         \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
     }
