@@ -36,7 +36,7 @@ if (!defined('XOOPS_FOOTER_INCLUDED')) {
         if (!isset($xoopsOption['show_rblock'])) {
             $xoopsOption['show_rblock'] = 0;
         }
-        themefooter($xoopsOption['show_rblock'], $footer);
+//        themefooter($xoopsOption['show_rblock'], $footer);
         xoops_footer();
     } else {
         // RMV-NOTIFY
