@@ -34,6 +34,7 @@ class XoopsPageNav
     public $perpage;
     public $current;
     public $url;
+    public $extra;
     /**
      * *#@-
      */
