@@ -43,9 +43,12 @@ if (!isset($xoopsConfig['admin_warnings_enable']) || $xoopsConfig['admin_warning
         echo '<br>';
     }
 
-    if (is_dir(XOOPS_ROOT_PATH . '/install/')) {
-        xoops_error(sprintf(_AD_WARNINGINSTALL, XOOPS_ROOT_PATH . '/install/'));
-        echo '<br>';
+	$installDirs = glob(XOOPS_ROOT_PATH . '/install*', GLOB_ONLYDIR);
+    if (!empty($installDirs)) {
+        foreach ($installDirs as $installDir) {
+            xoops_error(sprintf(_AD_WARNINGINSTALL, $installDir));
+			echo '<br>';
+        }
     }
 
     if (is_writable(XOOPS_ROOT_PATH . '/mainfile.php')) {
