@@ -528,7 +528,7 @@ class Upgrade_2511 extends XoopsUpgrade
     {
         $migrate = new Tables();
         $count = $this->fromSmallintToVarchar($migrate, $this->modulesTableName, $this->modulesColumnNames);
-        return $count > 0;
+        return $count == 0;
     }
 
     /**
