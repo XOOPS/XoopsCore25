@@ -155,9 +155,9 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
     // data for table 'block_module_link'
     $sql    = 'SELECT bid, side FROM ' . $dbm->prefix('newblocks');
     $result = $dbm->query($sql);
-    if (!$dbm->isResultSet($result)) {
-        \trigger_error("Query Failed! SQL: $sql- Error: " . $dbm->error(), E_USER_ERROR);
-    }
+//    if (!$dbm->isResultSet($result)) {
+//        \trigger_error("Query Failed! SQL: $sql- Error: " . $dbm->error(), E_USER_ERROR);
+//    }
     while (false !== ($myrow = $dbm->fetchArray($result))) {
         if ($myrow['side'] == 0) {
             $dbm->insert('block_module_link', ' VALUES (' . $myrow['bid'] . ', 0)');

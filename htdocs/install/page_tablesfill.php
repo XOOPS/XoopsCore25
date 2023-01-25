@@ -42,9 +42,12 @@ if (!$dbm->isConnectable()) {
     exit();
 }
 $sql = 'SELECT COUNT(*) FROM ' . $dbm->db->prefix('users');
-$result = $dbm->db->query($sql);
+$result = $dbm->query($sql);
 if (!$dbm->db->isResultSet($result)) {
-//    \trigger_error("Query Failed! SQL: $sql- Error: " . $dbm->db->error(), E_USER_ERROR);
+    \trigger_error("Query Failed! SQL: $sql- Error: " . $dbm->db->error(), E_USER_ERROR);
+}
+
+if (!$result) {
     $wizard->redirectToPage('dbsettings');
     exit();
 }

@@ -77,10 +77,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $sql = 'SELECT COUNT(*) FROM ' . $dbm->db->prefix('users');
     $result = $dbm->db->query($sql);
-    if (!$dbm->db->isResultSet($result)) {
-        \trigger_error("Query Failed! SQL: $sql- Error: " . $dbm->db->error(), E_USER_ERROR);
+    if ($dbm->db->isResultSet($result)) {
+        list($isadmin) = $dbm->db->fetchRow($result);
     }
-    list($isadmin) = $dbm->db->fetchRow($result);
 }
 
 ob_start();
