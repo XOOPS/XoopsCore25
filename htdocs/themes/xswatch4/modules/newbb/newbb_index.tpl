@@ -97,7 +97,7 @@
             <td class="d-none d-sm-table-cell"><{$forum.forum_topics}></td>
             <td class="d-none d-sm-table-cell"><{$forum.forum_posts}></td>
             <td>
-                <{if $forum.forum_lastpost_subject|default:''}>
+                <{if isset($forum.forum_lastpost_subject)}>
                 <{$forum.forum_lastpost_time}> <{$smarty.const._MD_NEWBB_BY}> <{$forum.forum_lastpost_user}>
                 <br>
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$forum.forum_lastpost_id}>">
@@ -107,7 +107,7 @@
                 <{else}>
                 <{$smarty.const._MD_NEWBB_NOTOPIC}>
                 <{/if}>
-                <{if $forum.subforum|default:false}>
+                <{if isset($forum.subforum)}>
                 <br><{$smarty.const._MD_NEWBB_SUBFORUMS}> <i class="fa fa-chevron-down" aria-hidden="true"></i>
                 <{foreach item=subforum from=$forum.subforum|default:false}><br>
                 [<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$subforum.forum_id}>"><{$subforum.forum_name}></a>]

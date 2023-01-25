@@ -75,7 +75,7 @@
 
     <{if $mode lte 1}>
         <{if $topic_poll|default:''}>
-            <{if $topic_pollresult|default:''}>
+            <{if isset($topic_pollresult)}>
                 <{include file="db:newbb_poll_results.tpl" poll=$poll|default:''}>
             <{else}>
                 <{include file="db:newbb_poll_view.tpl" poll=$poll|default:''}>

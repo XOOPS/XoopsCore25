@@ -8,7 +8,7 @@
 <div class="col-3 text-center newbb-user-data">
     <{$topic_post.poster.link}>
 
-    <{if $topic_post.poster.uid|default:'' gt -1}>
+    <{if isset($topic_post.poster.uid) &&  $topic_post.poster.uid gt -1}>
         <{if $topic_post.poster.uid != 0}>
             <{if $topic_post.poster.avatar != "blank.gif"}>
                     <img src="<{$xoops_upload_url}>/<{$topic_post.poster.avatar}>" alt="<{$topic_post.poster.name}>" class="img-circle img-thumbnail">
@@ -23,7 +23,7 @@
                 </ul>
             <{/if}>
 
-                <{if $infobox.show|default:''}>
+                <{if isset($infobox.show)}>
                     <button  data-toggle="collapse" data-target="#p<{$topic_post.post_id}>" title="<{$smarty.const.THEME_INFO}>" class="btn btn-primary btn-sm mb10"><span class="fa fa-info"></span></button>
                     <div id="p<{$topic_post.post_id}>" class="collapse">
                         <ul class="list-unstyled text-left">
@@ -56,7 +56,7 @@
                             </li>
                             <{/if}>
 
-                            <{if $topic_post.poster.level|default:''}>
+                            <{if isset($topic_post.poster.level)}>
                                 <li><{$topic_post.poster.level}></li>
                             <{/if}>
 
@@ -78,7 +78,7 @@
                 <li><span class="d-none d-sm-block small">IP: <a href="http://www.whois.sc/<{$topic_post.poster_ip}>" target="_blank"><{$topic_post.poster_ip}></a></li>
             <{/if}>
 
-            <{if $topic_post.poster.uid|default:'' gt 0}>
+            <{if isset($topic_post.poster.uid) &&  $topic_post.poster.uid gt 0}>
             <li><span class="small"><span class="d-none d-sm-block"><{$smarty.const._MD_NEWBB_POSTEDON}></span><{$topic_post.post_date}></span></li>
             <{/if}>
         </ul>

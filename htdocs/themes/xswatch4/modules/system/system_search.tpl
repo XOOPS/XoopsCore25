@@ -1,4 +1,4 @@
-<{if $results|default:false}>
+<{if isset($results)}>	
 	<h3><{$smarty.const._SR_SEARCHRESULTS}></h3>
 	<{$smarty.const._SR_KEYWORDS}>: <mark><{$keywords}></mark>
 	<br>
@@ -6,7 +6,7 @@
 		<{$error_length}> <strong><{$error_keywords}></strong>
 		<br>
 	<{/if}>
-	<{if $nomatch|default:false}>
+	<{if isset($nomatch)}>	
 		<br>
 		<{$nomatch}>
 		<br>
@@ -16,7 +16,7 @@
 				<div class="card-header">
 					<h5>
 						<{$search.module_name}>
-						<{if $search.module_show_all|default:false}>
+					<{if isset($search.module_show_all)}>
 							<span class="d-none d-sm-inline"><span class="x-small">| <a href="<{$search.module_show_all}>"><{$smarty.const._SR_SHOWALLR}></a></span></span>
 							<span class="d-inline d-sm-none">| <span class="ml-2"></span><a href="<{$search.module_show_all}>"><span class="fa fa-search-plus fa-flip-horizontal fa-lg"></span></a></span>
 						<{/if}>
@@ -36,7 +36,7 @@
 									<div class="d-inline"><img src="<{$data.image_link}>" title="<{$data.image_title}>" alt="<{$data.image_title}>"/> <a href="<{$data.link}>"><{$data.link_title}></a></div>
 								<{/if}>
 
-								<{if $data.uname|default:''}>
+							<{if isset($data.uname)}>
 
 									<div class="d-none d-md-inline">
 										<br />
@@ -55,10 +55,10 @@
 		<{/foreach}>
 	<{/if}>
 <{/if}>
-<{if $showallbyuser|default:false}>
+<{if isset($showallbyuser)}>
 	<h3><{$smarty.const._SR_SEARCHRESULTS}></h3>
-	<{if $nomatch|default:false != true}>
-		<{if $showall|default:false}>
+	<{if isset($nomatch) && $nomatch != true}>
+		<{if isset($showall)}>
 			<{$smarty.const._SR_KEYWORDS}>: <mark><{$keywords}></mark>
 			<br>
 		<{/if}>
@@ -150,13 +150,13 @@
 			</div>
 
 		</div>
-	<{else}>
+	<{if isset($nomatch)}>
 		<p>
 			<{$smarty.const._SR_NOMATCH}>
 		</p>
 	<{/if}>
 <{/if}>
-<{if $form|default:''}>
+<{if isset($form)}>
 	<hr>
 	<{$form}>
 <{/if}>
