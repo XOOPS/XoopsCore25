@@ -26,7 +26,8 @@ if ($modid <= 1 || !is_object($xoopsUser) || !$xoopsUser->isAdmin($modid)) {
 }
 /* @var XoopsModuleHandler $module_handler */
 $module_handler = xoops_getHandler('module');
-$module         = $module_handler->get($modid);
+/** @var \XoopsModule $module */
+$module = $module_handler->get($modid);
 if (!is_object($module) || !$module->getVar('isactive')) {
     redirect_header(XOOPS_URL . '/admin.php', 1, _MODULENOEXIST);
 }

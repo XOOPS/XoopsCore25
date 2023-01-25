@@ -170,6 +170,7 @@ $criteria->add(new Criteria('isactive', 1));
 $mids = array_keys($module_handler->getList($criteria));
 foreach ($mids as $mid) {
     if ($gperm_handler->checkRight('module_read', $mid, $groups)) {
+        /** @var XoopsModule $module */
         $module  = $module_handler->get($mid);
         $results = $module->search('', '', 5, 0, $thisUser->getVar('uid'));
         if ($results) {
