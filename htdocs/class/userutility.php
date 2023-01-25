@@ -120,7 +120,7 @@ class XoopsUserUtility
         $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
         xoops_loadLanguage('user');
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
 
         $xoopsUser_isAdmin = is_object($xoopsUser) && $xoopsUser->isAdmin();
         $stop              = '';
@@ -188,7 +188,7 @@ class XoopsUserUtility
             \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
         }
         list($count) = $xoopsDB->fetchRow($result);
-        if ($count > 0) {
+        if ((int)$count > 0) {
             $stop .= _US_NICKNAMETAKEN . '<br>';
         }
         $sql    = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix('users') . '` WHERE `email` = ' . $xoopsDB->quote(addslashes($email)) . (($uid > 0) ? " AND `uid` <> {$uid}" : '');
@@ -197,7 +197,7 @@ class XoopsUserUtility
             \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
         }
         list($count) = $xoopsDB->fetchRow($result);
-        if ($count > 0) {
+        if ((int)$count > 0) {
             $stop .= _US_EMAILTAKEN . '<br>';
         }
         // If password is not set, skip password validation
@@ -275,7 +275,7 @@ class XoopsUserUtility
         }
         $userid = array_map('intval', array_filter($uid));
 
-        $myts  = MyTextSanitizer::getInstance();
+        $myts  = \MyTextSanitizer::getInstance();
         $users = array();
         if (count($userid) > 0) {
             /** @var XoopsMySQLDatabase $xoopsDB */
@@ -316,7 +316,7 @@ class XoopsUserUtility
      */
     public static function getUnameFromId($userid, $usereal = false, $linked = false)
     {
-        $myts     = MyTextSanitizer::getInstance();
+        $myts     = \MyTextSanitizer::getInstance();
         $userid   = (int)$userid;
         $username = '';
         if ($userid > 0) {

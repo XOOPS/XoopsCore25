@@ -560,6 +560,6 @@ class XoopsMemberHandler
         }
         list($ret) = $this->userHandler->db->fetchRow($result);
 
-        return $ret;
+        return (int)$ret;
     }
 }

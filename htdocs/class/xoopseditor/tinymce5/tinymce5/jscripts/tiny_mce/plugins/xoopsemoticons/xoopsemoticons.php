@@ -49,7 +49,7 @@ if (!empty($_GET['op'])) {
     $op = trim($_POST['op']);
 }
 
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 $time = time();
 if (!isset($_SESSION['XoopsEmotions']) && @$_SESSION['XoopsEmotions_expire'] < $time) {
     $_SESSION['XoopsEmotions']        = $myts->getSmileys();

@@ -70,17 +70,12 @@ EOH;
     }
 
     /**
-     * @param $ts
+     * @param MyTextSanitizer $myts
      */
-    public function load($ts)
+    public function load(MyTextSanitizer $myts)
     {
-        //        $ts->patterns[] = "/\[youtube=(['\"]?)([^\"']*),([^\"']*)\\1]([^\"]*)\[\/youtube\]/esU";
-        //        $ts->replacements[] = __CLASS__ . "::decode( '\\4', '\\2', '\\3' )";
-
-        //mb------------------------------
-        $ts->callbackPatterns[] = "/\[youtube=(['\"]?)([^\"']*),([^\"']*)\\1]([^\"]*)\[\/youtube\]/sU";
-        $ts->callbacks[]        = __CLASS__ . '::myCallback';
-        //mb------------------------------
+        $myts->callbackPatterns[] = "/\[youtube=(['\"]?)([^\"']*),([^\"']*)\\1]([^\"]*)\[\/youtube\]/sU";
+        $myts->callbacks[]        = __CLASS__ . '::myCallback';
     }
 
     /**

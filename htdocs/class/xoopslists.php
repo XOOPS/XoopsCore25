@@ -648,7 +648,7 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
         {
             /** @var \XoopsMySQLDatabase $db */
             $db     = XoopsDatabaseFactory::getDatabaseConnection();
-            $myts   = MyTextSanitizer::getInstance();
+            $myts   = \MyTextSanitizer::getInstance();
             $sql    = sprintf('SELECT rank_id, rank_title FROM ' . $db->prefix('ranks') . ' WHERE rank_special = %u', 1);
             $ret    = array();
             $result = $db->query($sql);

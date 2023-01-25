@@ -76,20 +76,15 @@ EOF;
     }
 
     /**
-     * @param $ts
+     * @param MyTextSanitizer $myts
      *
      * @return bool
      */
-    public function load($ts)
+    public function load(MyTextSanitizer $myts)
     {
-        //        $ts->patterns[] = "/\[(swf|flash)=(['\"]?)([^\"']*),([^\"']*)\\2]([^\"]*)\[\/\\1\]/esU";
-        //        $ts->replacements[] = __CLASS__ . "::decode( '\\5', '\\3', '\\4' )";
+        $myts->callbackPatterns[] = "/\[(swf|flash)=(['\"]?)([^\"']*),([^\"']*)\\2]([^\"]*)\[\/\\1\]/sU";
+        $myts->callbacks[]        = __CLASS__ . '::myCallback';
 
-        //mb------------------------------
-        $ts->callbackPatterns[] = "/\[(swf|flash)=(['\"]?)([^\"']*),([^\"']*)\\2]([^\"]*)\[\/\\1\]/sU";
-        $ts->callbacks[]        = __CLASS__ . '::myCallback';
-
-        //mb------------------------------
         return true;
     }
 

@@ -345,12 +345,12 @@ class XoopsBlock extends XoopsObject
 
                     return str_replace('{X_SITEURL}', XOOPS_URL . '/', $content);
                 } elseif ($c_type === 'S') {
-                    $myts    = MyTextSanitizer::getInstance();
+                    $myts    = \MyTextSanitizer::getInstance();
                     $content = str_replace('{X_SITEURL}', XOOPS_URL . '/', $this->getVar('content', 'n'));
 
                     return $myts->displayTarea($content, 0, 1);
                 } else {
-                    $myts    = MyTextSanitizer::getInstance();
+                    $myts    = \MyTextSanitizer::getInstance();
                     $content = str_replace('{X_SITEURL}', XOOPS_URL . '/', $this->getVar('content', 'n'));
 
                     return $myts->displayTarea($content, 0, 0);
@@ -929,7 +929,7 @@ class XoopsBlock extends XoopsObject
         }
         list($count) = $db->fetchRow($result);
 
-        return $count;
+        return (int)$count;
     }
 }
 

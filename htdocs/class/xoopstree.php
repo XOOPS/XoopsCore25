@@ -144,10 +144,11 @@ class XoopsTree
     }
 
     //returns an array of ALL parent ids for a given id($sel_id)
+
     /**
-     * @param        $sel_id
-     * @param string $order
-     * @param array  $idarray
+     * @param string|int $sel_id
+     * @param string     $order
+     * @param array      $idarray
      *
      * @return array
      */
@@ -163,7 +164,8 @@ class XoopsTree
             \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
         }
         list($r_id) = $this->db->fetchRow($result);
-        if ($r_id == 0) {
+        $r_id = (int)$r_id;
+        if ($r_id === 0) {
             return $idarray;
         }
         $idarray[] = $r_id;
@@ -175,9 +177,9 @@ class XoopsTree
     //generates path from the root id to a given id($sel_id)
     // the path is delimetered with "/"
     /**
-     * @param        $sel_id
-     * @param        $title
-     * @param string $path
+     * @param string|int $sel_id
+     * @param string     $title
+     * @param string     $path
      *
      * @return string
      */
@@ -193,10 +195,11 @@ class XoopsTree
             return $path;
         }
         list($parentid, $name) = $this->db->fetchRow($result);
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
+        $parentid = (int)$parentid;
         $name = $myts->htmlSpecialChars($name);
         $path = '/' . $name . $path . '';
-        if ($parentid == 0) {
+        if ($parentid === 0) {
             return $path;
         }
         $path = $this->getPathFromId($parentid, $title, $path);
@@ -220,7 +223,7 @@ class XoopsTree
         if ($sel_name == '') {
             $sel_name = $this->id;
         }
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         echo "<select name='" . $sel_name . "'";
         if ($onchange != '') {
             echo " onchange='" . $onchange . "'";
@@ -260,9 +263,9 @@ class XoopsTree
 
     //generates nicely formatted linked path from the root id to a given id
     /**
-     * @param        $sel_id
-     * @param        $title
-     * @param        $funcURL
+     * @param string|int    $sel_id
+     * @param string $title
+     * @param string $funcURL
      * @param string $path
      *
      * @return string
@@ -280,10 +283,11 @@ class XoopsTree
             return $path;
         }
         list($parentid, $name) = $this->db->fetchRow($result);
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         $name = $myts->htmlSpecialChars($name);
+        $parentid = (int)$parentid;
         $path = "<a href='" . $funcURL . '&amp;' . $this->id . '=' . $sel_id . "'>" . $name . '</a>' . $path . '';
-        if ($parentid == 0) {
+        if ($parentid === 0) {
             return $path;
         }
         $path = $this->getNicePathFromId($parentid, $title, $funcURL, $path);
@@ -294,8 +298,8 @@ class XoopsTree
     //generates id path from the root id to a given id
     // the path is delimetered with "/"
     /**
-     * @param        $sel_id
-     * @param string $path
+     * @param string|int $sel_id
+     * @param string     $path
      *
      * @return string
      */
@@ -312,7 +316,8 @@ class XoopsTree
         }
         list($parentid) = $this->db->fetchRow($result);
         $path = '/' . $sel_id . $path . '';
-        if ($parentid == 0) {
+        $parentid = (int)$parentid;
+        if ($parentid === 0) {
             return $path;
         }
         $path = $this->getIdPathFromId($parentid, $path);

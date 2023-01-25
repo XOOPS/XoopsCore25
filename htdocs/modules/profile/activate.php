@@ -46,7 +46,7 @@ if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
                 $config_handler             = xoops_getHandler('config');
                 $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
                 if ($GLOBALS['xoopsConfigUser']['activation_type'] == 2) {
-                    $myts        = MyTextSanitizer::getInstance();
+                    $myts        = \MyTextSanitizer::getInstance();
                     $xoopsMailer = xoops_getMailer();
                     $xoopsMailer->useMail();
                     $xoopsMailer->setTemplate('activated.tpl');
@@ -74,7 +74,7 @@ if (!empty($_GET['id']) && !empty($_GET['actkey'])) {
     }
     // Not implemented yet: re-send activiation code
 } elseif (!empty($_REQUEST['email']) && $xoopsConfigUser['activation_type'] != 0) {
-    $myts           = MyTextSanitizer::getInstance();
+    $myts           = \MyTextSanitizer::getInstance();
     /* @var XoopsMemberHandler $member_handler */
     $member_handler = xoops_getHandler('member');
     $getuser        = $member_handler->getUsers(new Criteria('email', $myts->addSlashes(trim($_REQUEST['email']))));

@@ -185,7 +185,7 @@ class XoopsOnlineHandler
      *
      * @param CriteriaElement|CriteriaCompo $criteria {@link CriteriaElement}
      *
-     * @return bool
+     * @return int
      */
     public function getCount(CriteriaElement $criteria = null)
     {
@@ -196,10 +196,10 @@ class XoopsOnlineHandler
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
 //            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
-            return false;
+            return 0;
         }
         list($ret) = $this->db->fetchRow($result);
 
-        return $ret;
+        return (int)$ret;
     }
 }

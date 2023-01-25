@@ -87,7 +87,7 @@ if (@empty($vars['DB_NAME'])) {
     // Fill with default values
     $vars = array_merge($vars, array(
                                  'DB_NAME'      => '',
-                                 'DB_CHARSET'   => 'utf8',
+                                 'DB_CHARSET'   => 'utf8mb4',
                                  'DB_COLLATION' => '',
                                  'DB_PREFIX'    => 'x' . substr(md5(time()), 0, 3)));
 }

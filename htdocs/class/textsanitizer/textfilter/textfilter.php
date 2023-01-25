@@ -29,13 +29,13 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 class MytsTextfilter extends MyTextSanitizerExtension
 {
     /**
-     * @param      $ts
+     * @param MyTextSanitizer $myts
      * @param      $text
      * @param bool $force
      *
      * @return mixed
      */
-    public function load($ts, $text, $force = false)
+    public function load($myts, $text, $force = false)
     {
         global $xoopsUser, $xoopsConfig, $xoopsUserIsAdmin;
         if (empty($force) && $xoopsUserIsAdmin) {
@@ -43,7 +43,7 @@ class MytsTextfilter extends MyTextSanitizerExtension
         }
         // Built-in filters for XSS scripts
         // To be improved
-        $text = $ts->filterXss($text);
+        $text = $myts->filterXss($text);
 
         if (xoops_load('purifier', 'framework')) {
             $text = XoopsPurifier::purify($text);

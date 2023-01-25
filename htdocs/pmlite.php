@@ -59,7 +59,7 @@ if (!in_array($method, $safeMethods)) {
 }
 
 if (is_object($xoopsUser)) {
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     if ($op === 'submit') {
         $sql = 'SELECT COUNT(*) FROM ' . $xoopsDB->prefix('users') . ' WHERE uid=' . XoopsRequest::getInt('to_userid', 0, 'POST') . '';
         $result = $xoopsDB->query($sql);

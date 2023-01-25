@@ -24,19 +24,19 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 class MytsSyntaxhighlight extends MyTextSanitizerExtension
 {
     /**
-     * @param $ts
+     * @param MyTextSanitizer $myts
      * @param $source
      * @param $language
      *
      * @return bool|mixed|string
      */
-    public function load($ts, $source, $language)
+    public function load($myts, $source, $language)
     {
         $config = parent::loadConfig(__DIR__);
         if (empty($config['highlight'])) {
             return "<pre>{$source}</pre>";
         }
-        $source = $ts->undoHtmlSpecialChars($source);
+        $source = $myts->undoHtmlSpecialChars($source);
         $source = stripslashes($source);
         $source = $this->php($source);
 
