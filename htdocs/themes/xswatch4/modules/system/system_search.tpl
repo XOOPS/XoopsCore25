@@ -150,7 +150,7 @@
 			</div>
 
 		</div>
-	<{if isset($nomatch)}>
+	<{else}>
 		<p>
 			<{$smarty.const._SR_NOMATCH}>
 		</p>
