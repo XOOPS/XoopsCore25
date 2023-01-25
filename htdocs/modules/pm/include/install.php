@@ -25,9 +25,9 @@ function xoops_module_install_pm(XoopsModule $module)
 
     // Check pm table version
     $sql = 'SHOW COLUMNS FROM ' . $xoopsDB->prefix('priv_msgs');
-    $result = $this->db->queryF($sql);
-    if (!$this->db->isResultSet($result)) {
-//        \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+    $result = $xoopsDB->queryF($sql);
+    if (!$xoopsDB->isResultSet($result)) {
+//        \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
         return false;
     }
 
