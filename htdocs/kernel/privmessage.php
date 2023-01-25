@@ -178,7 +178,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
     /**
      * Load a {@link XoopsPrivmessage} object
      * @param  int $id ID of the message
-     * @return XoopsPrivmessage
+     * @return XoopsPrivmessage|false
      **/
     public function get($id)
     {

@@ -189,7 +189,7 @@ class XoopsImageHandler extends XoopsObjectHandler
      *
      * @param  int     $id ID
      * @param  boolean $getbinary
-     * @return XoopsImage {@link XoopsImage}, FALSE on fail
+     * @return XoopsImage|false {@link XoopsImage}, false on fail
      **/
     public function get($id, $getbinary = true)
     {

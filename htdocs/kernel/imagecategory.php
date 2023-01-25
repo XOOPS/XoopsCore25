@@ -214,7 +214,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
      * @param int $id ID
      *
      * @internal param bool $getbinary
-     * @return XoopsImageCategory {@link XoopsImageCategory}, FALSE on fail
+     * @return XoopsImageCategory|false {@link XoopsImageCategory}, false on fail
      */
     public function get($id)
     {

@@ -131,7 +131,7 @@ class SystemAvatarHandler extends XoopsAvatarHandler
      * Egt Object
      *
      * @param  int $id
-     * @return object
+     * @return object|false
      */
     public function get($id)
     {

@@ -379,7 +379,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
      *
      * @param int $id ID
      *
-     * @return XoopsComment {@link XoopsComment}, FALSE on fail
+     * @return XoopsComment|false {@link XoopsComment}, false on fail
      **/
     public function get($id)
     {

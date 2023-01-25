@@ -142,7 +142,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
      * retrieve a specific group
      *
      * @param  int $id ID of the group to get
-     * @return XoopsGroup XoopsGroup reference to the group object, FALSE if failed
+     * @return XoopsGroup|false XoopsGroup reference to the group object, false if failed
      */
     public function get($id)
     {

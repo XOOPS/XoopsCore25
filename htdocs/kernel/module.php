@@ -718,7 +718,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
      * Load a module from the database
      *
      * @param  int $id ID of the module
-     * @return object FALSE on fail
+     * @return XoopsObject|false false on fail
      */
     public function get($id)
     {

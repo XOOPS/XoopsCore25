@@ -307,7 +307,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
      * Load a config from the database
      *
      * @param  int $id ID of the config
-     * @return XoopsConfigItem reference to the config, FALSE on fail
+     * @return XoopsConfigItem|false reference to the config, false on fail
      */
     public function get($id)
     {
@@ -421,7 +421,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
         $result = $this->db->query($sql, $limit, $start);
         if (!$this->db->isResultSet($result)) {
             //    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
-            return false;
+            return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $config = new XoopsConfigItem();
