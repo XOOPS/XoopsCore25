@@ -29,7 +29,7 @@
 <{/if}>
 <br>
 
-<div class="text-center bg-secondary">
+<div>
     <img src="<{$block.logourl}>" alt=""/>
 	<br>
 	<{$block.recommendlink}>
