@@ -1,6 +1,5 @@
-<table style="background-color: inherit;">
-
-    <{if $block.showgroups == true}>
+<{if $block.showgroups == true}>
+	<table style="background-color: inherit;">
 
         <!-- start group loop -->
         <{foreach item=group from=$block.groups}>
@@ -25,11 +24,13 @@
 
         <{/foreach}>
         <!-- end group loop -->
-    <{/if}>
-</table>
 
+	</table>
+<{/if}>
 <br>
 
-<div>
-    <img src="<{$block.logourl}>" alt=""/><br><{$block.recommendlink}>
+<div class="text-center bg-secondary">
+    <img src="<{$block.logourl}>" alt=""/>
+	<br>
+	<{$block.recommendlink}>
 </div>
