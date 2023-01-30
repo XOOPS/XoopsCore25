@@ -3,9 +3,15 @@
 
         <!-- start group loop -->
         <{foreach item=group from=$block.groups}>
-            <tr>
-                <th colspan="2"><{$group.name|default:''}></th>
-            </tr>
+
+			<{if $group.name|default:'' != ''}>
+				<thead> 
+					<tr>
+						<th colspan="2"><{$group.name}></th>
+					</tr>
+				</thead> 
+            <{/if}>
+
             <!-- start group member loop -->
             <{foreach item=user from=$group.users}>
                 <tr>
@@ -30,7 +36,5 @@
 <br>
 
 <div>
-    <img src="<{$block.logourl}>" alt=""/>
-	<br>
-	<{$block.recommendlink}>
+    <img src="<{$block.logourl}>" alt=""/><br><{$block.recommendlink}>
 </div>
