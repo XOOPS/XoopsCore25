@@ -103,15 +103,11 @@ class XoopsTpl extends SmartyBC
      * @param  mixed $resourceName
      * @return bool
      */
-    public function touch($resourceName)
+    public function XoopsTouch($resourceName)
     {
-        $isForced            = $this->force_compile;
-        $this->force_compile = true;
-        $this->clear_cache($resourceName);
-        $result              = $this->_compile_resource($resourceName, $this->_get_compile_path($resourceName));
-        $this->force_compile = $isForced;
-
-        return $result;
+		//$result = $this->compileAllTemplates($resourceName, true); // May be necessary?
+		$this->clearCache($resourceName);
+        return true;
     }
 
     /**
@@ -163,19 +159,11 @@ class XoopsTpl extends SmartyBC
      * @param  mixed $template_set
      * @return bool
      */
-    public function clearCache($module_dirname = null, $theme_set = null, $template_set = null)
+    public function XoopsClearCache($module_dirname = null, $theme_set = null, $template_set = null)
     {
         $compile_id = $this->compile_id;
         $this->setCompileId($module_dirname, $template_set, $theme_set);
-        $_params           = array(
-            'auto_base'   => $this->cache_dir,
-            'auto_source' => null,
-            'auto_id'     => $this->compile_id,
-            'exp_time'    => null);
-        $this->_compile_id = $this->compile_id = $compile_id;
-        require_once SMARTY_CORE_DIR . 'core.rm_auto.php';
-
-        return smarty_core_rm_auto($_params, $this);
+        return $this->clear_compiled_tpl(null, $compile_id);
     }
 
     /**
@@ -292,7 +280,7 @@ class XoopsTpl extends SmartyBC
  * @param  boolean $clear_old
  * @return boolean
  */
-function xoops_template_touch($tpl_id, $clear_old = true)
+function xoops_template_touch($tpl_id)
 {
     $tplfile_handler = xoops_getHandler('tplfile');
     $tplfile         = $tplfile_handler->get((int)$tpl_id);
@@ -301,7 +289,7 @@ function xoops_template_touch($tpl_id, $clear_old = true)
         $file = $tplfile->getVar('tpl_file', 'n');
         $tpl  = new XoopsTpl();
 
-        return $tpl->touch('db:' . $file);
+        return $tpl->XoopsTouch('db:' . $file);
     }
 
     return false;
