@@ -103,7 +103,7 @@ class XoopsTpl extends SmartyBC
      * @param  mixed $resourceName
      * @return bool
      */
-    public function XoopsTouch($resourceName)
+    public function xoopsTouch($resourceName)
     {
 		//$result = $this->compileAllTemplates($resourceName, true); // May be necessary?
 		$this->clearCache($resourceName);
@@ -159,7 +159,7 @@ class XoopsTpl extends SmartyBC
      * @param  mixed $template_set
      * @return bool
      */
-    public function XoopsClearCache($module_dirname = null, $theme_set = null, $template_set = null)
+    public function xoopsClearCache($module_dirname = null, $theme_set = null, $template_set = null)
     {
         $compile_id = $this->compile_id;
         $this->setCompileId($module_dirname, $template_set, $theme_set);
@@ -289,7 +289,7 @@ function xoops_template_touch($tpl_id)
         $file = $tplfile->getVar('tpl_file', 'n');
         $tpl  = new XoopsTpl();
 
-        return $tpl->XoopsTouch('db:' . $file);
+        return $tpl->xoopsTouch('db:' . $file);
     }
 
     return false;
