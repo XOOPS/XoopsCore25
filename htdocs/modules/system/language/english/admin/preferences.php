@@ -48,7 +48,7 @@ define('_MD_AM_STRICT', 'Strict (only alphabets and numbers)');
 define('_MD_AM_MEDIUM', 'Medium');
 define('_MD_AM_LIGHT', 'Light (recommended for multi-byte chars)');
 define('_MD_AM_USERCOOKIE', 'Name for user cookies.');
-define('_MD_AM_USERCOOKIEDSC', "If the cookie name is set, 'Remember me' will be enabled for user login. If a user has chosen 'Remember me', he will be logged in automatically. The expiration for the cookie is one year.");
+define('_MD_AM_USERCOOKIEDSC', "If the cookie name is set, 'Remember me' will be enabled for user login. If a user has chosen 'Remember me', they will be logged in automatically. The expiration for the cookie is one year.");
 define('_MD_AM_USEMYSESS', 'Use custom session');
 define('_MD_AM_USEMYSESSDSC', 'Select yes to customize session related values.');
 define('_MD_AM_SESSNAME', 'Session name');
@@ -291,7 +291,7 @@ define('_MD_AM_LDAP_PROVIS_UPD_DESC', 'The XOOPS User account is always synchron
 define('_MD_AM_CPANEL', 'Control Panel GUI');
 define('_MD_AM_CPANELDSC', 'For backend');
 define('_MD_AM_WELCOMETYPE', 'Sending welcoming message');
-define('_MD_AM_WELCOMETYPE_DESC', 'The way of sending out a welcoming message to a user upon his successful registration.');
+define('_MD_AM_WELCOMETYPE_DESC', 'The method for sending a welcome message to a user upon their successful registration.');
 define('_MD_AM_WELCOMETYPE_EMAIL', 'Email');
 define('_MD_AM_WELCOMETYPE_PM', 'Message');
 define('_MD_AM_WELCOMETYPE_BOTH', 'Email and message');
