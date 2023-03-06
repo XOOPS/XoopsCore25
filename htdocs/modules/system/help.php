@@ -135,7 +135,7 @@ if ($mid > 0) {
         $listed_mods[$i]                = $module->toArray();
         $listed_mods[$i]['image']       = $module->getInfo('image');
         $listed_mods[$i]['adminindex']  = $module->getInfo('adminindex');
-        $listed_mods[$i]['version']     = round($module->getVar('version') / 100, 2);
+        $listed_mods[$i]['version']     = $module->getVar('version');
         $listed_mods[$i]['last_update'] = formatTimestamp($module->getVar('last_update'), 'm');
         $listed_mods[$i]['author']      = $module->getInfo('author');
         $listed_mods[$i]['credits']     = $module->getInfo('credits');
