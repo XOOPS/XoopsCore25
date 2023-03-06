@@ -157,12 +157,13 @@ class XoopsNotification extends XoopsObject
     public function notifyUser($template_dir, $template, $subject, $tags)
     {
         // Check the user's notification preference.
-        /* @var XoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $user           = $member_handler->getUser($this->getVar('not_uid'));
-        if (!is_object($user)) {
+        if (!is_object($user) || !$user->isActive()) {
             return true;
         }
+
         $method = $user->getVar('notify_method');
 
         $xoopsMailer = xoops_getMailer();
@@ -617,7 +618,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      * @param int    $item_id      ID of the item
      * @param array  $events       trigger events
      * @param array  $extra_tags   array of substitutions for template to be
-     *                              merged with the one from function..
+     *                              merged with the one from function.
      * @param array  $user_list    only notify the selected users
      * @param int    $module_id    ID of the module
      * @param int    $omit_user_id ID of the user to omit from notifications. (default to current user).  set to 0 for all users to receive notification.

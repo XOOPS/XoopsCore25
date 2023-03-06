@@ -87,7 +87,7 @@ EOH;
      */
     public static function decode($url, $width, $height)
     {
-        // modernized responsive youtube handling suggested by XOOPS user xd9527 -- thanks!
+        // modernized responsive YouTube handling suggested by XOOPS user xd9527 -- thanks!
         // http://xoops.org/modules/newbb/viewtopic.php?post_id=359913
 
         // match known youtube urls
@@ -96,7 +96,7 @@ EOH;
             .'([^"&?/ ]{11})%i';
 
         if (preg_match($youtubeRegex, $url, $match)) {
-            $videoId = $match[1]; // extract just the video id from a url
+            $videoId = $match[1]; // extract just the video id from a URL
         } elseif (preg_match('%^[^"&?/ ]{11}$%', $url)) {
             $videoId = $url; // have a bare video id
         } else {

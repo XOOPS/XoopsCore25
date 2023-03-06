@@ -47,7 +47,7 @@ class Helper extends GenericHelper
             if (class_exists('Xoops', false)) {
                 $instance[$dirname] = \Xoops\Module\Helper::getHelper($dirname);
             } else {
-                // otherwise get a GenericHelper instance for dirname
+                // otherwise, get a GenericHelper instance for dirname
                 if (xoops_isActiveModule($dirname)) {
                     $instance[$dirname] = new static($dirname);
                 }

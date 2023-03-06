@@ -74,7 +74,7 @@ $clean_actkey = '';
 if (!isset($_POST['op']) && isset($_GET['op'])) {
     $op = Request::getCmd('op', 'register', 'GET');
     if (isset($_GET['id'])) {
-        $clean_id =  Request::getInt('id', '', 'POST');
+        $clean_id =  Request::getInt('id', '', 'GET');
     }
     if (isset($_GET['actkey'])) {
         $clean_actkey =  Request::getCmd('actkey', '', 'GET');

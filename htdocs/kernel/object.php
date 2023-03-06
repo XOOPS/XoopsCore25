@@ -1178,7 +1178,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * holds reference to predefined extended object handlers: read, stats, joint, write, sync
      *
-     * The handlers hold methods for different purposes, which could be all put together inside of current class.
+     * The handlers hold methods for different purposes, which could be all put together inside the current class.
      * However, load codes only if they are necessary, thus they are now split out.
      *
      * var array of objects

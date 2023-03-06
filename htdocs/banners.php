@@ -239,7 +239,7 @@ function bannerstats()
 }
 
 /**
- * Function to let the client E-mail his banner Stats
+ * Function to let clients email their banner's stats
  * @param int|string $cid
  * @param int|string $bid
  * @return void
@@ -294,7 +294,7 @@ function emailStats($cid, $bid)
 }
 
 /**
- * Function to let the client to change the  url for his banner
+ * Function to let clients change their banner's URL
  * @param int|string $cid
  * @param int|string $bid
  * @param string $url

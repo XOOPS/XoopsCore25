@@ -192,9 +192,9 @@
     <{/if}>
 
     <{if $rating_enable}>
-        <!-- do do something -->
+        <!-- do something -->
     <{else}>
-        <!-- do do something -->
+        <!-- do something -->
     <{/if}>
 </div><!-- .newbb-topicslist -->
 

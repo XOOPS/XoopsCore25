@@ -28,7 +28,7 @@
  * Certain ranges are common to all languages, whitespace, punctuations, currency symbols, emoji, etc.
  * These are automatically excluded from the analysis.
  *
- * If site requirements are for multiple languages concurrently, a $customRange can be set to to include
+ * If site requirements are for multiple languages concurrently, a $customRange can be set to include
  * the requirements of both languages.
  *
  * Ranges are in regular expression format as used in preg_replace()

@@ -160,7 +160,7 @@ if ($mid > 0) {
             }
             unset($dirlist);
 
-            // Handling for all other modules
+            // Handling for all the other modules
         } else {
             $helplist = $module->getInfo('helpsection');
             $k        = 0;

@@ -62,7 +62,7 @@ if (defined('FOR_XOOPS_LANG_CHECKER') || !defined($constpref . '_LOADED')) {
     define($constpref . '_FILE_DOTDOTDSC', 'It eliminates ".." from all requests looks like Directory Traversals');
 
     define($constpref . '_BF_COUNT', 'Anti Brute Force');
-    define($constpref . '_BF_COUNTDSC', 'Set count you allow guest try to login within 10 minutes. If someone fails to login more than this number, her/his IP will be banned.');
+    define($constpref . '_BF_COUNTDSC', "Set the maximum number of times a guest is allowed to try and login within 10 minutes. If the failed attempts to login exceed this, the guest's IP address will be banned.");
 
     define($constpref . '_BWLIMIT_COUNT', 'Bandwidth limitation');
     define($constpref . '_BWLIMIT_COUNTDSC', 'Specify the max access to mainfile.php during watching time. This value should be 0 for normal environments which have enough CPU bandwidth. The number fewer than 10 will be ignored.');

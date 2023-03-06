@@ -286,7 +286,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
         } else {
             $xoopsTpl->assign('commentform', '');
         }
-        // End add by voltan
+        // End added by voltan
 
         $xoopsTpl->assign(array(
                               'commentsnav'        => $navbar,

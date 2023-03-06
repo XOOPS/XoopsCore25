@@ -69,11 +69,11 @@ class XoopsComment extends XoopsObject
         $this->initVar('com_created', XOBJ_DTYPE_INT, 0, false);
         $this->initVar('com_modified', XOBJ_DTYPE_INT, 0, false);
         $this->initVar('com_uid', XOBJ_DTYPE_INT, 0, true);
-        // Start Add by voltan
+        // Start added by voltan
         $this->initVar('com_user', XOBJ_DTYPE_TXTBOX, null, false, 60);
         $this->initVar('com_email', XOBJ_DTYPE_TXTBOX, null, false, 60);
         $this->initVar('com_url', XOBJ_DTYPE_TXTBOX, null, false, 60);
-        // End Add by voltan
+        // End added by voltan
         $this->initVar('com_ip', XOBJ_DTYPE_OTHER, null, false);
         $this->initVar('com_sig', XOBJ_DTYPE_INT, 0, false);
         $this->initVar('com_itemid', XOBJ_DTYPE_INT, 0, false);
@@ -187,7 +187,7 @@ class XoopsComment extends XoopsObject
         return $this->getVar('com_uid', $format);
     }
 
-    // Start Add by voltan
+    // Start added by voltan
     /**
      * Returns Class Base Variable com_user
      * @param string $format
@@ -217,7 +217,7 @@ class XoopsComment extends XoopsObject
     {
         return $this->getVar('com_url', $format);
     }
-    // End Add by voltan
+    // End added by voltan
 
     /**
      * Returns Class Base Variable com_ip

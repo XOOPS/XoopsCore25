@@ -44,7 +44,7 @@
         <br>
         an anti-SPAM plugin.
         <br>
-        Post without multi-byte characters will be rejected.
+        Post without multibyte characters will be rejected.
         <br>
         This plugin is only for sites of japanese, tchinese, schinese, and korean.
     </p>
@@ -72,7 +72,7 @@
 
     <p class="even">- precommon_bwlimit_errorlog.php
         <br>
-        When band width limitation works unfortunately, this plugin logs it into Apache's error_log.
+        When bandwidth limitation works unfortunately, this plugin logs it into Apache's error_log.
     </p>
 
     <p>All plugins named *_errorlog.php log some informations into Apaches error_log.</p>
