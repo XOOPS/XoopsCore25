@@ -56,7 +56,7 @@ if (!is_object($GLOBALS['xoopsUser'])) {
 }
 xoops_header();
 
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 if ($op === 'submit') {
     /* @var XoopsMemberHandler $member_handler */
     $member_handler = xoops_getHandler('member');

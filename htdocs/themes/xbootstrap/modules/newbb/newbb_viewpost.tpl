@@ -4,7 +4,7 @@
         <!-- irmtfan hardcode removed align="left" -->
         <hr class="align_left" width="50%" size="1">
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMHOME}></a>
-        <{if $parent_forum}>
+        <{if $parent_forum|default:''}>
             <span class="delimiter">&raquo;</span>
             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$parent_forum}>"><{$parent_name}></a>
             <span class="delimiter">&raquo;</span>
@@ -103,7 +103,7 @@
 <!-- irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" -->
 <div class="pagenav">
     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$post.topic_id}>"><strong><{$smarty.const._MD_NEWBB_VIEWTOPIC}></strong></a>
-    <{if !$forum_name }>
+    <{if !$forum_name|default:'' }>
         |
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$post.forum_id}>"><strong><{$smarty.const._MD_NEWBB_VIEWFORUM}></strong></a>
     <{/if}>
@@ -153,7 +153,7 @@
 </div>
 <div class="clear"></div>
 <br>
-<{if $online}>
+<{if $online|default:''}>
     <br>
     <{include file="db:newbb_online.tpl"}>
 <{/if}>

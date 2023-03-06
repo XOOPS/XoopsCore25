@@ -1,4 +1,19 @@
 <?php
+/* patch to keep Snoopy working in PHP8 for now */
+if (!function_exists('each')) {
+    /**
+     * @param array $a
+     *
+     * @return array|false
+     */
+    function each(&$a)
+    {
+        $key = key($a);
+        $value = current($a);
+        next($a);
+        return is_null($key) ? false : array(1 => $value, 'value' => $value, 0 => $key, 'key' => $key);
+    }
+}
 
 /*************************************************
  *
@@ -25,6 +40,8 @@
  *
  * The latest version of Snoopy can be obtained from:
  * http://snoopy.sourceforge.net/
+ *
+ * @deprecated please, find another way
  *************************************************/
 class Snoopy
 {

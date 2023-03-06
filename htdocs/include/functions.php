@@ -912,7 +912,7 @@ function xoops_getMailer()
 function xoops_getrank($rank_id = 0, $posts = 0)
 {
     $db      = XoopsDatabaseFactory::getDatabaseConnection();
-    $myts    = MyTextSanitizer::getInstance();
+    $myts    = \MyTextSanitizer::getInstance();
     $rank_id = (int)$rank_id;
     $posts   = (int)$posts;
     if ($rank_id != 0) {

@@ -36,7 +36,7 @@ if ($com_itemid > 0) {
                   <tr><td><br>' . $com_replytext . '<br></td></tr>
                   </table>';
         }
-        $myts      = MyTextSanitizer::getInstance();
+        $myts      = \MyTextSanitizer::getInstance();
         $com_title = $myts->htmlSpecialChars($com_replytitle);
         if (!preg_match('/^' . _RE . '/i', $com_title)) {
             $com_title = _RE . ' ' . xoops_substr($com_title, 0, 56);

@@ -173,7 +173,7 @@
             <{$topic.topic_title}>
         </a></div>
 
-<{*         <{$topic.attachment}> <{$topic.topic_page_jump}> *}>
+<{*         <{$topic.attachment|default:''}> <{$topic.topic_page_jump}> *}>
 
         <div class="col-md-2 visible-lg visible-md"><label class="label label-info"><span class="glyphicon glyphicon-user"></span> <{$topic.topic_poster}></label></div>
         <div class="col-md-2 visible-lg visible-md"><{$topic.topic_time}></div>
@@ -224,7 +224,7 @@
 
 <div class="row collapse" id="forum-info">
     <div class="col-sm-6 col-md-6">
-        <{foreach item=perm from=$permission_table}>
+        <{foreach item=perm from=$permission_table|default:''}>
             <{$perm}>
         <{/foreach}>
     </div>
@@ -245,7 +245,7 @@
     <{include file="db:newbb_online.tpl"}>
 <{/if}>
 
-<a title="NewBB" href="https://xoops.org" class="btn btn-xs btn-success">NewBB Version  <{$version/100}></a>
+<a title="NewBB" href="https://xoops.org" class="btn btn-xs btn-success">NewBB Version  <{$version}></a>
 <{if $rss_button}>
     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?f=<{$forum_id}>" target="_blank" title="RSS FEED">
         <{$rss_button}>

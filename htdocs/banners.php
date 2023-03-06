@@ -113,7 +113,6 @@ function bannerstats()
                 text-align: center;
             }
         ');
-
         echo "<div id='bannerstats'>
               <h4 class='content_title'>" . sprintf(_BANNERS_TITLE, $name) . "</h4><hr />
               <table summary=''>

@@ -1,3 +1,12 @@
+1.9.2-Beta1
+--------------------------------------
+- UTF8mb4: subsetting in sorting on step_order in profile_regstep (mamba)
+- UTF8mb4: decrease field_name field's size from 200 to 64 (geekwright/mamba)
+
+1.9.1 Stable
+--------------------------------------
+- semantic versioning
+
 1.86 RC2
 --------------------------------------
 - moved all images, CSS, and JS files to /assets (mamba)

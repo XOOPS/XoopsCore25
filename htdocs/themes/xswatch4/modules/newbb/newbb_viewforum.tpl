@@ -27,7 +27,7 @@
             <{/if}>
         <{/if}>
 
-        <{if $forum_topictype}><{$forum_topictype}><{/if}>
+        <{if $forum_topictype|default:''}><{$forum_topictype}><{/if}>
 
         <{if $forum_topicstatus}>
             <span class="btn btn-info"><{$forum_topicstatus}></span>
@@ -41,7 +41,7 @@
             <span class="fa fa-search"></span>
         </a>
 
-        <{if $subforum}>
+        <{if $subforum|default:''}>
             <{include file="db:newbb_viewforum_subforum.tpl"}>
         <{/if}>
         </div>
@@ -212,7 +212,7 @@
 
 <div class="row collapse" id="forum-info">
     <div class="col-sm-6 col-md-6">
-        <{foreach item=perm from=$permission_table}>
+        <{foreach item=perm from=$permission_table|default:''}>
             <{$perm}>
         <{/foreach}>
     </div>
@@ -233,7 +233,7 @@
     <{include file="db:newbb_online.tpl"}>
 <{/if}>
 
-<a title="NewBB" href="https://xoops.org" class="btn btn-xs btn-success">NewBB Version  <{$version/100}></a>
+<a title="NewBB" href="https://xoops.org" class="btn btn-xs btn-success">NewBB Version  <{$version}></a>
 <{if $rss_button}>
     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?f=<{$forum_id}>" target="_blank" title="RSS FEED">
         <{$rss_button}>

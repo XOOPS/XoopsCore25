@@ -511,7 +511,7 @@ class xos_opal_Theme
         if ($this->contentCacheLifetime && $this->contentCacheId && !$contentTpl) {
             $content['htmlHeadStrings'] = $this->htmlHeadStrings;
             $content['metas']           = $this->metas;
-            $content['xoops_pagetitle'] =& $this->template->get_template_vars('xoops_pagetitle');
+            $content['xoops_pagetitle'] = $this->template->get_template_vars('xoops_pagetitle');
             $content['header']          = $header;
             $cache->write($this->contentCacheId, $content);
         }

@@ -1,0 +1,24 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  phpunit:
+    strategy:
+      fail-fast: false
+      matrix:
+        php_version: ["7.1", "7.4"]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: php-actions/composer@v6
+        with:
+          php_version: "7.4"
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php_version }}
+          coverage: xdebug
+      - name: Unit Tests
+        run: vendor/bin/phpunit --stderr

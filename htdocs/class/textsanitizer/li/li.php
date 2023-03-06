@@ -25,14 +25,14 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 class MytsLi extends MyTextSanitizerExtension
 {
     /**
-     * @param $ts
+     * @param MyTextSanitizer $myts
      *
      * @return bool
      */
-    public function load($ts)
+    public function load(MyTextSanitizer $myts)
     {
-        $ts->patterns[]     = "/\[li](.*)\[\/li\]/sU";
-        $ts->replacements[] = '<li>\\1</li>';
+        $myts->patterns[]     = "/\[li](.*)\[\/li\]/sU";
+        $myts->replacements[] = '<li>\\1</li>';
 
         return true;
     }

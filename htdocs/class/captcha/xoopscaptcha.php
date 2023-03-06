@@ -209,9 +209,9 @@ class XoopsCaptcha
     public function verify($skipMember = null, $name = null)
     {
         $sessionName = empty($name) ? $this->name : $name;
-        $skipMember  = ($skipMember === null) ? $_SESSION["{$sessionName}_skipmember"] : $skipMember;
-        $maxAttempts = $_SESSION["{$sessionName}_maxattempts"];
-        $attempt     = $_SESSION["{$sessionName}_attempt"];
+        $skipMember  = ($skipMember === null) && isset($_SESSION["{$sessionName}_skipmember"]) ? $_SESSION["{$sessionName}_skipmember"] : $skipMember;
+        $maxAttempts = isset($_SESSION["{$sessionName}_maxattempts"]) ? $_SESSION["{$sessionName}_maxattempts"] : $this->config['maxattempts'];
+        $attempt     = isset($_SESSION["{$sessionName}_attempt"]) ? $_SESSION["{$sessionName}_attempt"] : 0;
         $is_valid    = false;
         // Skip CAPTCHA verification if disabled
         if (!$this->isActive()) {

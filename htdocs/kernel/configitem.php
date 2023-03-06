@@ -44,6 +44,17 @@ class XoopsConfigItem extends XoopsObject
      * @access    private
      */
     public $_confOptions = array();
+    //PHP 8.2 Dynamic properties deprecated
+    public $conf_id;
+    public $conf_modid;
+    public $conf_catid;
+    public $conf_name;
+    public $conf_title;
+    public $conf_value;
+    public $conf_desc;
+    public $conf_formtype;
+    public $conf_valuetype;
+    public $conf_order;
 
     /**
      * Constructor
@@ -216,7 +227,7 @@ class XoopsConfigItem extends XoopsObject
                 $this->setVar('conf_value', serialize($value), $force_slash);
                 break;
             case 'text':
-                $this->setVar('conf_value', trim($value), $force_slash);
+                $this->setVar('conf_value', trim((string)$value), $force_slash);
                 break;
             default:
                 $this->setVar('conf_value', $value, $force_slash);
@@ -441,6 +452,6 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
         }
         list($count) = $this->db->fetchRow($result);
 
-        return $count;
+        return (int)$count;
     }
 }

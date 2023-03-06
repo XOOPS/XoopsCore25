@@ -1,0 +1,18 @@
+
+.center, .txtcenter {
+    text-align: center;
+}
+
+.xo-actions button img, .xo-actions a img, .xo-actions img {
+    padding: 0 2px;
+    border: none;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.card-imagemanager img {
+    height: 150px;
+    object-fit: cover;
+    transition: all .30s ease-in-out;
+}

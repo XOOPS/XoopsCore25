@@ -62,7 +62,7 @@ class Protector
 
         // Preferences from configs/cache
         $this->_conf_serialized = @file_get_contents($this->get_filepath4confighcache());
-        $this->_conf            = @unserialize($this->_conf_serialized);
+        $this->_conf            = @unserialize($this->_conf_serialized, array('allowed_classes' => false));
         if (empty($this->_conf)) {
             $this->_conf = array();
         }
@@ -418,8 +418,13 @@ class Protector
      */
     public function get_bad_ips($with_jailed_time = false)
     {
-        list($bad_ips_serialized) = @file(Protector::get_filepath4badips());
-        $bad_ips = empty($bad_ips_serialized) ? array() : @unserialize($bad_ips_serialized);
+        //        list($bad_ips_serialized) = @file(Protector::get_filepath4badips());
+        $filepath4badips = @file(Protector::get_filepath4badips());
+
+        if (is_array($filepath4badips) && isset($filepath4badips[0])) {
+            list($bad_ips_serialized) = $filepath4badips;
+        }
+        $bad_ips = empty($bad_ips_serialized) ? array() : @unserialize($bad_ips_serialized, array('allowed_classes' => false));
         if (!is_array($bad_ips) || isset($bad_ips[0])) {
             $bad_ips = array();
         }
@@ -456,8 +461,14 @@ class Protector
      */
     public function get_group1_ips($with_info = false)
     {
-        list($group1_ips_serialized) = @file(Protector::get_filepath4group1ips());
-        $group1_ips = empty($group1_ips_serialized) ? array() : @unserialize($group1_ips_serialized);
+        //        list($group1_ips_serialized) = @file(Protector::get_filepath4group1ips());
+        $filepath4group1ips = @file(Protector::get_filepath4group1ips());
+
+        if (is_array($filepath4group1ips) && isset($filepath4group1ips[0])) {
+            list($group1_ips_serialized) = $filepath4group1ips;
+        }
+
+        $group1_ips = empty($group1_ips_serialized) ? array() : @unserialize($group1_ips_serialized, array('allowed_classes' => false));
         if (!is_array($group1_ips)) {
             $group1_ips = array();
         }
@@ -1334,11 +1345,14 @@ class Protector
                          . " SET ip={$ip4sql}, request_uri={$uri4sql}, malicious_actions={$mal4sql}, expire=UNIX_TIMESTAMP()+600";
 
         // count check
-        $result = $xoopsDB->query(
-            'SELECT COUNT(*) FROM ' . $xoopsDB->prefix($this->mydirname . '_access')
-            . " WHERE ip={$ip4sql} AND malicious_actions like 'BRUTE FORCE:%'"
-        );
-        list($bf_count) = $xoopsDB->fetchRow($result);
+        $bf_count = 0;
+        $sql = 'SELECT COUNT(*) FROM ' . $xoopsDB->prefix($this->mydirname . '_access') . " WHERE ip={$ip4sql} AND malicious_actions like 'BRUTE FORCE:%'";
+        $result = $xoopsDB->query($sql);
+        if ($xoopsDB->isResultSet($result)) {
+            list($bf_count) = $xoopsDB->fetchRow($result);}
+        else{
+            \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
+        }
         if ($bf_count > $this->_conf['bf_count']) {
             $this->register_bad_ips(time() + $this->_conf['banip_time0']);
             $this->last_error_type = 'BruteForce';
