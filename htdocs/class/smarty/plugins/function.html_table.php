@@ -12,7 +12,7 @@
  * Type:     function<br>
  * Name:     html_table<br>
  * Date:     Feb 17, 2003<br>
- * Purpose:  make an html table from an array of data<br>
+ * Purpose:  make a HTML table from an array of data<br>
  * Input:<br>
  *         - loop = array to loop through
  *         - cols = number of columns, comma separated list of column names

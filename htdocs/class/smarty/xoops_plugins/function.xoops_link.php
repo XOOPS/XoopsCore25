@@ -55,7 +55,7 @@ function smarty_function_xoops_link($params, &$smarty)
             $pos = strpos($szvar, '=');
             if ($pos != false) {             // If a value is specified, use it
                 $vars[] = array('name' => substr($szvar, 0, $pos), 'value' => substr($szvar, $pos + 1));
-            } else {                         // Otherwise use current one (if any)
+            } else {                         // Otherwise, use current one (if any)
                 if (isset($_POST[$szvar])) {
                     $vars[] = array('name' => $szvar, 'value' => $_POST[$szvar]);
                 } elseif (isset($_GET[$szvar])) {

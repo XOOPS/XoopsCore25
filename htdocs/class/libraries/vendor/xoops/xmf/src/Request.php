@@ -332,7 +332,7 @@ class Request
     /**
      * get request header
      *
-     * @param string      $headerName name of header to retrieve, case insensitive
+     * @param string      $headerName name of header to retrieve, case-insensitive
      * @param string|null $default    default to return if named header is not found
      *
      * @return string header value or default if header was not found
@@ -563,7 +563,7 @@ class Request
         }
 
         // Now we handle input filtering
-        // If the allow raw flag is set, do not modify the variable
+        // If the 'allow raw' flag is set, do not modify the variable
         if (!($mask & static::MASK_ALLOW_RAW)) {
             if ($mask & static::MASK_ALLOW_HTML) {
                 // If the allow html flag is set, apply a safe html filter to the variable

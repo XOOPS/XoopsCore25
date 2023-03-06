@@ -184,7 +184,7 @@ class XoopsFormElementTray extends XoopsFormElement
      *
      * The value will be assigned a default value if not previously set.
      *
-     * The default logic considers the presence of an html br tag in _delimeter
+     * The default logic considers the presence of an HTML br tag in _delimeter
      * as implying ORIENTATION_VERTICAL for bc
      *
      * @return string either \XoopsFormElementTray::ORIENTATION_HORIZONTAL

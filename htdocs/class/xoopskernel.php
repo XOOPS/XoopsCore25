@@ -65,7 +65,7 @@ class xos_kernel_Xoops2
     }
 
     /**
-     * Convert a XOOPS path to an URL
+     * Convert a XOOPS path to a URL
      * @param $url
      * @return mixed|string
      */
@@ -75,7 +75,7 @@ class xos_kernel_Xoops2
     }
 
     /**
-     * Build an URL with the specified request params
+     * Build a URL with the specified request params
      * @param         $url
      * @param  array  $params
      * @return string
@@ -128,7 +128,7 @@ class xos_kernel_Xoops2
     public function gzipCompression()
     {
         /**
-         * Disable gzip compression if PHP is run under CLI mode and needs refactored to work correctly
+         * Disable gzip compression if PHP is run under CLI mode and needs to be refactored to work correctly
          */
         if (empty($_SERVER['SERVER_NAME']) || substr(PHP_SAPI, 0, 3) === 'cli') {
             xoops_setConfigOption('gzip_compression', 0);
