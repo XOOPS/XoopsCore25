@@ -17,8 +17,8 @@
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-require_once $GLOBALS['xoops']->path('kernel/user.php');
-require_once $GLOBALS['xoops']->path('kernel/group.php');
+require_once __DIR__ . '/user.php';
+require_once __DIR__ . '/group.php';
 
 /**
  * XOOPS member handler class.
