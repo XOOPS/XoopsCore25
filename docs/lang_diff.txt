@@ -69,6 +69,12 @@ htdocs/modules/system/language/english/admin/images.php
 htdocs/modules/system/language/english/admin/modulesadmin.php
 - added define('_AM_SYSTEM_MODULES_INSTALL_THISMODULE', 'This Module Admin');
 
+DELETED FILES:
+htdocs/modules/system/language/english/admin/users.php
+- deleted define('_AM_SYSTEM_USERS_MODIFYUSER', 'Modify User');
+- deleted define('_AM_SYSTEM_USERS_DELUSER', 'Delete User');
+- deleted define('_AM_SYSTEM_USERS_GO', 'Go!');
+
 ================================
 2019/04/29: Version 2.5.10 Final
 ================================

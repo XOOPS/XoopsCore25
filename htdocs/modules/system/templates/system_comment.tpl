@@ -29,7 +29,7 @@
     <{/if}>
 
     <td class="odd">
-        <div class="comTitle"><{$comment.image}><{$comment.title}></div>
+        <div class="comTitle"><{$comment.image|default:''}><{$comment.title}></div>
         <div class="comText"><{$comment.text}></div>
     </td>
 </tr>
