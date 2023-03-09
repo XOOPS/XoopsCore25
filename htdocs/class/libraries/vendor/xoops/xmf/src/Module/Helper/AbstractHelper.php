@@ -60,7 +60,9 @@ abstract class AbstractHelper
             if (isset($xoops)) {
                 $this->module = $xoops->module;
             } else {
-                $this->module = $GLOBALS['xoopsModule'];
+//                $this->module = $GLOBALS['xoopsModule'];
+                global $xoopsModule;
+                $this->module = $xoopsModule;
             }
         } else {
             // assume dirname specified, try to get a module object
