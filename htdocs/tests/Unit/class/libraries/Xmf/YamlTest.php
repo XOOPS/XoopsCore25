@@ -45,7 +45,7 @@ class YamlTest extends TestCase
         $inputArray = ['one' => 1, 'two' => [1, 2], 'three' => ''];
 
         $byteCount = Yaml::save($inputArray, $tmpfname);
-        $this->assertNotSame($byteCount, false);
+        $this->assertNotSame(false, $byteCount);
         $this->assertGreaterThan(0, $byteCount);
 
         $outputArray = Yaml::read($tmpfname);
@@ -100,7 +100,7 @@ class YamlTest extends TestCase
         $inputArray = ['one' => 1, 'two' => [1, 2], 'three' => ''];
 
         $byteCount = Yaml::saveWrapped($inputArray, $tmpfname);
-        $this->assertNotSame($byteCount, false);
+        $this->assertNotSame(false, $byteCount);
         $this->assertGreaterThan(0, $byteCount);
 
         $outputArray = Yaml::readWrapped($tmpfname);
