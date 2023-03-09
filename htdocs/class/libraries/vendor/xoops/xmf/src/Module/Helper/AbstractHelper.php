@@ -38,7 +38,7 @@ abstract class AbstractHelper
     /**
      * @var bool true if debug is enabled
      */
-    protected $debug;
+    public $debug;
 
     /**
      * Instantiate a XoopsModule object for the helper to use.
