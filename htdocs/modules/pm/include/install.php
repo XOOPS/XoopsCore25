@@ -27,7 +27,9 @@ function xoops_module_install_pm(XoopsModule $module)
     $sql = 'SHOW COLUMNS FROM ' . $xoopsDB->prefix('priv_msgs');
     $result = $xoopsDB->queryF($sql);
     if (!$xoopsDB->isResultSet($result)) {
-//        \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
+        // throw new \RuntimeException(
+        //   \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+        // );
         return false;
     }
 

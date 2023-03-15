@@ -82,7 +82,9 @@ class XoopsOnlineHandler
         }
         $result = $this->db->queryF($sql);
         if (!$this->db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+            );
         }
 
         list($count) = $this->db->fetchRow($result);
@@ -169,7 +171,9 @@ class XoopsOnlineHandler
         }
         $result = $this->db->query($sql, $limit, $start);
         if (!$this->db->isResultSet($result)) {
-            //    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            //  throw new \RuntimeException(
+            //       \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+            //   );
             return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
@@ -195,7 +199,9 @@ class XoopsOnlineHandler
         }
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
-//            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            // throw new \RuntimeException(
+            //       \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+            // );
             return 0;
         }
         list($ret) = $this->db->fetchRow($result);

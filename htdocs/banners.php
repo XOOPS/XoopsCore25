@@ -105,7 +105,9 @@ function bannerstats()
     $sql = sprintf('SELECT cid, name, passwd FROM %s WHERE login=%s', $xoopsDB->prefix('bannerclient'), $xoopsDB->quoteString($_SESSION['banner_login']));
     $result = $xoopsDB->query($sql);
     if (!$xoopsDB->isResultSet($result)) {
-        \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
+        throw new \RuntimeException(
+            \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+        );
     }
     list($cid, $name, $passwd) = $xoopsDB->fetchRow($result);
     if ($_SESSION['banner_pass'] == $passwd) {
@@ -134,7 +136,9 @@ function bannerstats()
         $sql = 'SELECT bid, imptotal, impmade, clicks, date FROM ' . $xoopsDB->prefix('banner') . " WHERE cid={$cid}";
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+            );
         }
         $i      = 0;
         while (false !== (list($bid, $imptotal, $impmade, $clicks, $date) = $xoopsDB->fetchRow($result))) {
@@ -166,7 +170,9 @@ function bannerstats()
         $sql = 'SELECT bid, imageurl, clickurl, htmlbanner, htmlcode FROM ' . $xoopsDB->prefix('banner') . " WHERE cid={$cid}";
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+            );
         }
         while (false !== (list($bid, $imageurl, $clickurl, $htmlbanner, $htmlcode) = $xoopsDB->fetchRow($result))) {
             $numrows = $xoopsDB->getRowsNum($result);
@@ -333,7 +339,9 @@ function clickbanner($bid)
         $sql = 'SELECT clickurl FROM ' . $xoopsDB->prefix('banner') . " WHERE bid={$bid}";
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+            );
         }
         list($clickurl) = $xoopsDB->fetchRow($result);
         if ($clickurl) {

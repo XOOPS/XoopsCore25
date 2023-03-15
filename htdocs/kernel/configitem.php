@@ -317,7 +317,9 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
             $sql = 'SELECT * FROM ' . $this->db->prefix('config') . ' WHERE conf_id=' . $id;
             $result = $this->db->query($sql);
             if (!$this->db->isResultSet($result)) {
-                //    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+                // throw new \RuntimeException(
+                //       \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                // );
                 return $config;
             }
             $numrows = $this->db->getRowsNum($result);
@@ -420,7 +422,9 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
         }
         $result = $this->db->query($sql, $limit, $start);
         if (!$this->db->isResultSet($result)) {
-            //    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            // throw new \RuntimeException(
+            //       \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+            // );
             return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
@@ -451,7 +455,9 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
         }
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
-            //            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            // throw new \RuntimeException(
+            //       \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+            // );
             return 0;
         }
         list($count) = $this->db->fetchRow($result);

@@ -112,7 +112,9 @@ function xoStatsRegen()
     $sql = 'SELECT SUM(posts) AS totalposts FROM ' . $GLOBALS['xoopsDB']->prefix('users') . ' WHERE level > 0';
     $result = $GLOBALS['xoopsDB']->query($sql);
     if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
-        \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
+        throw new \RuntimeException(
+            \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(), E_USER_ERROR
+        );
     }
     $myrow = $GLOBALS['xoopsDB']->fetchArray($result);
     $stats['totalPosts'] = $myrow['totalposts'];

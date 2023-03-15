@@ -185,7 +185,9 @@ class XoopsUserUtility
         $sql    = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix('users') . '` WHERE `uname` = ' . $xoopsDB->quote(addslashes($uname)) . (($uid > 0) ? " AND `uid` <> {$uid}" : '');
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+            );
         }
         list($count) = $xoopsDB->fetchRow($result);
         if ((int)$count > 0) {
@@ -194,7 +196,9 @@ class XoopsUserUtility
         $sql    = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix('users') . '` WHERE `email` = ' . $xoopsDB->quote(addslashes($email)) . (($uid > 0) ? " AND `uid` <> {$uid}" : '');
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+            );
         }
         list($count) = $xoopsDB->fetchRow($result);
         if ((int)$count > 0) {
@@ -283,7 +287,9 @@ class XoopsUserUtility
             $sql     = 'SELECT uid, uname, name FROM ' . $xoopsDB->prefix('users') . ' WHERE level > 0 AND uid IN(' . implode(',', array_unique($userid)) . ')';
             $result = $xoopsDB->query($sql);
             if (!$xoopsDB->isResultSet($result)) {
-//                \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
+                // throw new \RuntimeException(
+                //   \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                // );
                 return $users;
             }
 

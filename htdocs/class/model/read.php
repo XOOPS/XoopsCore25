@@ -62,7 +62,9 @@ class XoopsModelRead extends XoopsModelAbstract
         }
         $result = $this->handler->db->query($sql, $limit, $start);
         if (!$this->handler->db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->handler->db->error(), E_USER_ERROR);
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->handler->db->error(), E_USER_ERROR
+            );
         }
         $ret    = array();
         if (false !== $result) {
@@ -144,7 +146,9 @@ class XoopsModelRead extends XoopsModelAbstract
         }
         $result = $this->handler->db->query($sql, $limit, $start);
         if (!$this->handler->db->isResultSet($result)) {
-        //    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->handler->db->error(), E_USER_ERROR);
+//            throw new \RuntimeException(
+//                \sprintf(_DB_QUERY_ERROR, $sql) . $this->handler->db->error(), E_USER_ERROR
+//            );
             return $ret;        
             }
 
@@ -175,7 +179,9 @@ class XoopsModelRead extends XoopsModelAbstract
         }
         $result = $this->handler->db->query($sql, $limit, $start);
         if (!$this->handler->db->isResultSet($result)) {
-        //    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->handler->db->error(), E_USER_ERROR);
+//            throw new \RuntimeException(
+//                \sprintf(_DB_QUERY_ERROR, $sql) . $this->handler->db->error(), E_USER_ERROR
+//            );
             return $ret;    
          }
 

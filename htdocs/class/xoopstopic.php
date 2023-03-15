@@ -91,7 +91,9 @@ class XoopsTopic
         $sql     = 'SELECT * FROM ' . $this->table . ' WHERE topic_id=' . $topicid . '';
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+            );
         }
         $array   = $this->db->fetchArray($result);
         $this->makeTopic($array);
@@ -387,7 +389,9 @@ class XoopsTopic
         $sql = 'SELECT topic_id, topic_pid, topic_title FROM ' . $this->table;
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+            );
         }
         $ret    = array();
         $myts   = \MyTextSanitizer::getInstance();
@@ -409,7 +413,9 @@ class XoopsTopic
         $sql = 'SELECT COUNT(*) from ' . $this->table . ' WHERE topic_pid = ' . (int)$pid . " AND topic_title = '" . trim($title) . "'";
         $result  = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+               throw new \RuntimeException(
+       \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+   );
         }
         list($count) = $this->db->fetchRow($result);
         if ($count > 0) {

@@ -44,7 +44,9 @@ if (!$dbm->isConnectable()) {
 $sql = 'SELECT COUNT(*) FROM ' . $dbm->db->prefix('users');
 $result = $dbm->query($sql);
 if (!$dbm->db->isResultSet($result)) {
-    \trigger_error("Query Failed! SQL: $sql- Error: " . $dbm->db->error(), E_USER_ERROR);
+        throw new \RuntimeException(
+        \sprintf(_DB_QUERY_ERROR, $sql) . $dbm->db->error(), E_USER_ERROR
+    );
 }
 
 if (!$result) {

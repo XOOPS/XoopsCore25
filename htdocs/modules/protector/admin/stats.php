@@ -46,7 +46,9 @@ $sql .= 'UNION ALL ';
 $sql .= sprintf($queryFormat, 'hour', 60*60);
 $result = $xoopsDB->query($sql);
 if (!$xoopsDB->isResultSet($result)) {
-    \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
+    throw new \RuntimeException(
+        \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+    );
 }
 
 $rawStats = array();

@@ -52,7 +52,9 @@ if (!function_exists('protector_onupdate_base')) {
         $sql = 'SHOW CREATE TABLE ' . $db->prefix('config');
         $result = $db->query($sql);
         if (!$db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+            );
         }
         list(, $create_string) = $db->fetchRow($result);
 
@@ -67,7 +69,9 @@ if (!function_exists('protector_onupdate_base')) {
         $sql = 'SHOW CREATE TABLE ' . $db->prefix($mydirname . '_log');
         $result = $db->query($sql);
         if (!$db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+            );
         }
         list(, $create_string) = $db->fetchRow($result);
         if (preg_match('/timestamp\(/i', $create_string)) {

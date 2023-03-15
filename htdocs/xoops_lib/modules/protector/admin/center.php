@@ -105,7 +105,9 @@ if (!empty($_POST['action'])) {
         $sql = "SELECT `lid`,`ip`,`type` FROM $log_table ORDER BY lid DESC";
         $result = $db->query($sql);
         if (!$db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+            );
         }
         $buf    = array();
         $ids    = array();
@@ -130,14 +132,18 @@ if (!empty($_POST['action'])) {
 $sql = "SELECT count(lid) FROM $log_table";
 $result = $db->query($sql);
 if (!$db->isResultSet($result)) {
-    \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+    throw new \RuntimeException(
+        \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+    );
 }
 list($numrows) = $db->fetchRow($result);
 
 $sql = "SELECT l.lid, l.uid, l.ip, l.agent, l.type, l.description, UNIX_TIMESTAMP(l.timestamp), u.uname FROM $log_table l LEFT JOIN " . $db->prefix('users') . " u ON l.uid=u.uid ORDER BY timestamp DESC LIMIT $pos,$num";
 $result = $db->query($sql);
 if (!$db->isResultSet($result)) {
-    \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+    throw new \RuntimeException(
+        \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+    );
 }
 
 // Page Navigation

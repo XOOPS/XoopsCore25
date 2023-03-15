@@ -267,7 +267,9 @@ function synchronize($uid, $type)
             $result = $xoopsDB->query($sql);
             if (!$xoopsDB->isResultSet($result)) {
                 redirect_header('admin.php?fct=users', 1, sprintf(_AM_SYSTEM_USERS_CNGUSERID, $uid));
-//                \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
+                // throw new \RuntimeException(
+                //   \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                // );
             }
 
             while (false !== ($data = $xoopsDB->fetchArray($result))) {

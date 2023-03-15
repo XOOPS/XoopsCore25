@@ -17,8 +17,8 @@
  */
 defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
-require_once $GLOBALS['xoops']->path('kernel/user.php');
-require_once $GLOBALS['xoops']->path('kernel/group.php');
+require_once __DIR__ . '/user.php';
+require_once __DIR__ . '/group.php';
 
 /**
  * XOOPS member handler class.
@@ -505,7 +505,9 @@ class XoopsMemberHandler
 
         $result = $this->userHandler->db->query($sql, $limit, $start);
         if (!$this->userHandler->db->isResultSet($result)) {
-            //    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->userHandler->db->error(), E_USER_ERROR);
+            //            throw new \RuntimeException(
+            //                \sprintf(_DB_QUERY_ERROR, $sql) . $this->userHandler->db->error(), E_USER_ERROR
+            //            );
             return $ret;
         }
         while (false !== ($myrow = $this->userHandler->db->fetchArray($result))) {
@@ -555,7 +557,9 @@ class XoopsMemberHandler
         }
         $result = $this->userHandler->db->query($sql);
         if (!$this->userHandler->db->isResultSet($result)) {
-            //            \trigger_error("Query Failed! SQL: $sql- Error: " . $this->userHandler->db->error(), E_USER_ERROR);
+            //            throw new \RuntimeException(
+            //                \sprintf(_DB_QUERY_ERROR, $sql) . $this->userHandler->db->error(), E_USER_ERROR
+            //            );
             return $ret;
         }
         list($ret) = $this->userHandler->db->fetchRow($result);

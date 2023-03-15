@@ -21,7 +21,9 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
     $sql = 'SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`';
     $srs = $db->queryF($sql);
     if (!$db->isResultSet($srs)) {
-        \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+        throw new \RuntimeException(
+            \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+        );
     }
 
     if (!$db->getRowsNum($srs)) {
@@ -41,7 +43,9 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
         $sql = 'SHOW CREATE TABLE ' . $old_table;
         $crs = $db->queryF($sql);
         if (!$db->isResultSet($crs)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+            );
         }
 
         if (!$db->getRowsNum($crs)) {
@@ -86,7 +90,9 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
     $sql = 'SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`';
     $srs = $db->queryF($sql);
     if (!$db->isResultSet($srs)) {
-        \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+        throw new \RuntimeException(
+            \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+        );
     }
     if (!$db->getRowsNum($srs)) {
         die('You are not allowed to delete tables');
@@ -103,7 +109,9 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
         $sql = "SHOW CREATE TABLE `$table`";
         $drawCreate = $db->queryF($sql);
         if (!$db->isResultSet($drawCreate)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+            );
         }
 
         $create = $db->fetchRow($drawCreate);
@@ -113,7 +121,9 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
         $sql      = "SELECT * FROM `$table`";
         $result = $db->query($sql);
         if (!$db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+            );
         }
         $fieldCount  = $db->getFieldsNum($result);
 
@@ -211,7 +221,9 @@ if (!empty($_POST['copy']) && !empty($_POST['old_prefix'])) {
     $sql = 'SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`';
     $srs = $db->queryF($sql);
     if (!$db->isResultSet($srs)) {
-        \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+        throw new \RuntimeException(
+            \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+        );
     }
     if (!$db->getRowsNum($srs)) {
         die('You are not allowed to delete tables');
@@ -239,7 +251,9 @@ include __DIR__ . '/mymenu.php';
 $sql = 'SHOW TABLE STATUS FROM `' . XOOPS_DB_NAME . '`';
 $srs = $db->queryF($sql);
 if (!$db->isResultSet($srs)) {
-    \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+    throw new \RuntimeException(
+        \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+    );
 }
 if (!$db->getRowsNum($srs)) {
     die('You are not allowed to copy tables');

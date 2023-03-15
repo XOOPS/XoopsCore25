@@ -1197,11 +1197,11 @@ class Protector
             $sql = 'SELECT COUNT(*) FROM ' . $xoopsDB->prefix($this->mydirname . '_access');
             $result = $xoopsDB->query($sql);
             if ($xoopsDB->isResultSet($result)) {
-            list($bw_count) = $xoopsDB->fetchRow($result);
-            if ($bw_count > $this->_conf['bwlimit_count']) {
-                $this->write_file_bwlimit(time() + $this->_conf['dos_expire']);
+                list($bw_count) = $xoopsDB->fetchRow($result);
+                if ($bw_count > $this->_conf['bwlimit_count']) {
+                    $this->write_file_bwlimit(time() + $this->_conf['dos_expire']);
+                }
             }
-        }
         }
 
         // F5 attack check (High load & same URI)
@@ -1209,7 +1209,9 @@ class Protector
         $sql = 'SELECT COUNT(*) FROM ' . $xoopsDB->prefix($this->mydirname . '_access') . " WHERE ip={$ip4sql} AND request_uri={$uri4sql}";
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+            );
         }
         list($f5_count) = $xoopsDB->fetchRow($result);
         if ($f5_count > $this->_conf['dos_f5count']) {
@@ -1270,7 +1272,9 @@ class Protector
         $sql = 'SELECT COUNT(*) FROM ' . $xoopsDB->prefix($this->mydirname . '_access') . " WHERE ip={$ip4sql}";
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
-//            \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
+            //            throw new \RuntimeException(
+            //                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+            //            );
             return false;
         }
         list($crawler_count) = $xoopsDB->fetchRow($result);
@@ -1358,9 +1362,11 @@ class Protector
         $sql = 'SELECT COUNT(*) FROM ' . $xoopsDB->prefix($this->mydirname . '_access') . " WHERE ip={$ip4sql} AND malicious_actions like 'BRUTE FORCE:%'";
         $result = $xoopsDB->query($sql);
         if ($xoopsDB->isResultSet($result)) {
-            list($bf_count) = $xoopsDB->fetchRow($result);}
-        else{
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $xoopsDB->error(), E_USER_ERROR);
+            list($bf_count) = $xoopsDB->fetchRow($result);
+        } else {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+            );
         }
         if ($bf_count > $this->_conf['bf_count']) {
             $this->register_bad_ips(time() + $this->_conf['banip_time0']);

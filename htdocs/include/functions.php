@@ -19,6 +19,8 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /** @var \XoopsNotificationHandler $notification_handler */
 
+require_once __DIR__ . '/common.php';
+
 /**
  * xoops_getHandler()
  *
@@ -143,7 +145,9 @@ function xoops_loadLanguage($name, $domain = '', $language = null)
     if (empty($name)) {
         return false;
     }
-    $language = empty($language) ? $GLOBALS['xoopsConfig']['language'] : $language;
+//    $language = empty($language) ? $GLOBALS['xoopsConfig']['language'] : $language;
+    global $xoopsConfig;
+    $language = empty($language) ? $xoopsConfig['language'] : $language;
     $path     = ((empty($domain) || 'global' === $domain) ? '' : "modules/{$domain}/") . 'language';
     if (!file_exists($fileinc = $GLOBALS['xoops']->path("{$path}/{$language}/{$name}.php"))) {
         if (!file_exists($fileinc = $GLOBALS['xoops']->path("{$path}/english/{$name}.php"))) {
@@ -680,7 +684,9 @@ function xoops_getbanner()
     $sql = 'SELECT COUNT(*) FROM ' . $db->prefix('banner');
     $result = $db->query($sql);
     if (!$db->isResultSet($result)) {
-        \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+        throw new \RuntimeException(
+            \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+        );
     }
     list($numrows) = $db->fetchRow($result);
     if ($numrows > 1) {
@@ -693,7 +699,9 @@ function xoops_getbanner()
         $sql = 'SELECT * FROM ' . $db->prefix('banner');
         $result = $db->query($sql, 1, $bannum);
         if (!$db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+            );
         }
         list($bid, $cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date, $htmlbanner, $htmlcode) = $db->fetchRow($result);
         if ($xoopsConfig['my_ip'] == xoops_getenv('REMOTE_ADDR')) {
@@ -931,7 +939,9 @@ function xoops_getrank($rank_id = 0, $posts = 0)
     }
     $result = $db->query($sql);
     if (!$db->isResultSet($result)) {
-        \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+            throw new \RuntimeException(
+          \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+    );
     }
     $rank          = $db->fetchArray($result);
     $rank['title'] = $myts->htmlSpecialChars($rank['title']);

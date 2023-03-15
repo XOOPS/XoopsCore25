@@ -346,7 +346,9 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
         }
         $result = $this->db->query($sql, $limit, $start);
         if (!$this->db->isResultSet($result)) {
-            //    \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+            // throw new \RuntimeException(
+            //       \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+            // );
             return $ret;
         }
 
@@ -438,7 +440,9 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
         $sql .= " ORDER BY $orderby";
         $result = $db->query($sql);
         if (!$db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+            );
         }
         $added  = array();
         while (false !== ($myrow = $db->fetchArray($result))) {
@@ -473,7 +477,9 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
             }
             $result = $this->db->query($sql);
             if (!$this->db->isResultSet($result)) {
-                \trigger_error("Query Failed! SQL: $sql- Error: " . $this->db->error(), E_USER_ERROR);
+                throw new \RuntimeException(
+                    \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+                );
             }
             $blockids = array();
             while (false !== ($myrow = $this->db->fetchArray($result))) {
@@ -515,7 +521,9 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
             }
             $result = $db->query($sql);
             if (!$db->isResultSet($result)) {
-                \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+                throw new \RuntimeException(
+                    \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                );
             }
             $blockids = array();
             while (false !== ($myrow = $db->fetchArray($result))) {
@@ -550,7 +558,9 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
         $sql .= ' ORDER BY ' . $orderby;
         $result = $db->query($sql);
         if (!$db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+            );
         }
         while (false !== ($myrow = $db->fetchArray($result))) {
             $block              = new XoopsBlock($myrow);
@@ -617,7 +627,9 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
             $sql .= ' ORDER BY ' . $orderby;
             $result = $db->query($sql);
             if (!$db->isResultSet($result)) {
-                \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+                throw new \RuntimeException(
+                    \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                );
             }
             while (false !== ($myrow = $db->fetchArray($result))) {
                 $block              = new XoopsBlock($myrow);
@@ -655,7 +667,9 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
         }
         $result = $db->query($sql);
         if (!$db->isResultSet($result)) {
-            //            \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
+            // throw new \RuntimeException(
+            //       \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+            // );
             return 0;
         }
         list($count) = $db->fetchRow($result);
