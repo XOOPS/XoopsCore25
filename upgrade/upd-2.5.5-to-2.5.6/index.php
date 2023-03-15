@@ -32,7 +32,9 @@ class Upgrade_256 extends XoopsUpgrade
         $sql = 'SHOW COLUMNS FROM ' . $GLOBALS['xoopsDB']->prefix('xoopscomments') . " LIKE 'com_user'";
         $result = $GLOBALS['xoopsDB']->queryF($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(), E_USER_ERROR
+            );
         }
 
         return ($GLOBALS['xoopsDB']->getRowsNum($result) > 0);
@@ -48,7 +50,9 @@ class Upgrade_256 extends XoopsUpgrade
         $sql = 'SHOW COLUMNS FROM ' . $GLOBALS['xoopsDB']->prefix('xoopscomments') . " LIKE 'com_email'";
         $result = $GLOBALS['xoopsDB']->queryF($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(), E_USER_ERROR
+            );
         }
 
         return ($GLOBALS['xoopsDB']->getRowsNum($result) > 0);
@@ -64,7 +68,9 @@ class Upgrade_256 extends XoopsUpgrade
         $sql = 'SHOW COLUMNS FROM ' . $GLOBALS['xoopsDB']->prefix('xoopscomments') . " LIKE 'com_url'";
         $result = $GLOBALS['xoopsDB']->queryF($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(), E_USER_ERROR
+            );
         }
 
         return ($GLOBALS['xoopsDB']->getRowsNum($result) > 0);

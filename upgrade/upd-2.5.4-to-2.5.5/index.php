@@ -28,7 +28,9 @@ class Upgrade_255 extends XoopsUpgrade
             $sql = 'SHOW KEYS FROM `' . $GLOBALS['xoopsDB']->prefix($table) . '`';
             $result = $GLOBALS['xoopsDB']->queryF($sql);
             if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
-                //                \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
+                // throw new \RuntimeException(
+                //     \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(), E_USER_ERROR
+                // );
                 continue;
             }
             $existing_keys = array();
@@ -58,7 +60,9 @@ class Upgrade_255 extends XoopsUpgrade
             $sql = 'SHOW KEYS FROM `' . $GLOBALS['xoopsDB']->prefix($table) . '`';
             $result = $GLOBALS['xoopsDB']->queryF($sql);
             if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
-                //                \trigger_error("Query Failed! SQL: $sql- Error: " . $GLOBALS['xoopsDB']->error(), E_USER_ERROR);
+                // throw new \RuntimeException(
+                //     \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(), E_USER_ERROR
+                // );
                 continue;
             }
             $existing_keys = array();
