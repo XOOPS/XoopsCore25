@@ -35,7 +35,7 @@
         <{/section}>
         <!-- end search results -->
 
-        <{if $search_next|default:'' or $search_prev|default:''}>
+        <{if isset($search_next) or isset($search_prev)}>
         <tr>
             <!-- irmtfan hardcode removed align="left" -->
             <td colspan="2" class="align_left"><{$search_prev|default:''}> </td>

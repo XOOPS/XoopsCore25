@@ -652,6 +652,11 @@ if (!defined('XOOPS_LISTS_INCLUDED')) {
             $sql    = sprintf('SELECT rank_id, rank_title FROM ' . $db->prefix('ranks') . ' WHERE rank_special = %u', 1);
             $ret    = array();
             $result = $db->query($sql);
+            if (!$db->isResultSet($result)) {
+                throw new \RuntimeException(
+                    \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+                );
+            }
             while (false !== ($myrow = $db->fetchArray($result))) {
                 $ret[$myrow['rank_id']] = $myts->htmlSpecialChars($myrow['rank_title']);
             }

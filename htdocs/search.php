@@ -224,8 +224,9 @@ switch ($action) {
 		$xoopsTpl->assign('showallbyuser', true);
     /* @var XoopsModuleHandler $module_handler */
 		$module_handler = xoops_getHandler('module');
-        $module         = $module_handler->get($mid);
-        $results        = $module->search($queries, $andor, 20, $start, $uid);
+    /** @var XoopsModule $module */
+    $module      = $module_handler->get($mid);
+        $results = $module->search($queries, $andor, 20, $start, $uid);
 		$results?$count = count($results):$count = 0;
         if (is_array($results) && $count > 0) {
             $next_results = $module->search($queries, $andor, 1, $start + 20, $uid);

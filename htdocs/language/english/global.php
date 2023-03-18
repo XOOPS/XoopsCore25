@@ -263,3 +263,4 @@ define('_MD_MESSAGEC', 'Message:');
 define('_PRINT', 'Print');
 define('_PDF', 'PDF');
 define('_OFF', 'Off');
+define('_DB_QUERY_ERROR', 'Query Failed! SQL: %s - Error: ');

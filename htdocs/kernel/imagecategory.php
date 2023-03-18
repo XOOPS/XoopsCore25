@@ -214,7 +214,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
      * @param int $id ID
      *
      * @internal param bool $getbinary
-     * @return XoopsImageCategory {@link XoopsImageCategory}, FALSE on fail
+     * @return XoopsImageCategory|false {@link XoopsImageCategory}, false on fail
      */
     public function get($id)
     {
@@ -222,7 +222,8 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
         $imgcat = false;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('imagecategory') . ' WHERE imgcat_id=' . $id;
-            if (!$result = $this->db->query($sql)) {
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
                 return $imgcat;
             }
             $numrows = $this->db->getRowsNum($result);
@@ -317,7 +318,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
         }
         $sql .= ' ORDER BY imgcat_weight, imgcat_id ASC';
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
@@ -347,7 +348,8 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
             $where = $criteria->render();
             $sql .= ($where != '') ? ' AND ' . $where : '';
         }
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
             return 0;
         }
         list($count) = $this->db->fetchRow($result);
