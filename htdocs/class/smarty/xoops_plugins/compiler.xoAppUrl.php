@@ -27,9 +27,9 @@
  * To use it, you just need to provide a location in a format XOOPS understands.
  *
  * <code>
- * // Generate an URL using a physical path
+ * // Generate a URL using a physical path
  * ([xoAppUrl modules/something/yourpage.php])
- * // Generate an URL using a module+location identifier (2.3+)
+ * // Generate a URL using a module+location identifier (2.3+)
  * ([xoAppUrl mod_xoops_Identification#logout])
  * </code>
  *

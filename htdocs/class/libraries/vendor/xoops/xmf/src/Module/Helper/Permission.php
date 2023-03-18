@@ -96,7 +96,7 @@ class Permission extends AbstractHelper
     }
 
     /**
-     * Redirect to a url if user does not have permission for an item
+     * Redirect to a URL if user does not have permission for an item
      *
      * @param string $gperm_name   name of the permission to test
      * @param int    $gperm_itemid id of the object to check

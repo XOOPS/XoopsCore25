@@ -73,7 +73,7 @@ class XoopsDatabaseFactory
     }
 
     /**
-     * Gets a reference to the only instance of database class. Currently
+     * Gets a reference to the only instance of database class. Currently,
      * only being used within the installer.
      *
      * @static

@@ -19,19 +19,19 @@
 <div class="clear"></div>
 <br>
 
-<{if $disclaimer}>
+<{if $disclaimer|default:''}>
     <div class="confirmMsg"><{$disclaimer}></div>
     <div class="clear"></div>
     <br>
 <{/if}>
 
-<{if $error_message}>
+<{if $error_message|default:''}>
     <div class="errorMsg"><{$error_message}></div>
     <div class="clear"></div>
     <br>
 <{/if}>
 
-<{if $post_preview}>
+<{if $post_preview|default:''}>
     <table width='100%' class='outer' cellspacing='1'>
         <tr valign="top">
             <td class="head"><{$post_preview.subject}></td>
@@ -50,14 +50,14 @@
       method="<{$form_post.method}>" <{$form_post.extra}> >
 	  <div class="form-group row">
         <{foreach item=element from=$form_post.elements}>
-        <{if $element.hidden != true}>
+       <{if $element.hidden|default:false != true}>
 			<label class="col-xs-12 col-sm-2 col-form-label text-sm-right">
-				<{$element.caption}>
-                <{if $element.required}><span class="caption-required">*</span><{/if}>
+				<{$element.caption|default:''}>
+                <{if $element.required|default:''}><span class="caption-required">*</span><{/if}>
 			</label>
 			<div class="col-xs-12 col-sm-10">
 				<{$element.body}>
-				<{if $element.description != ''}>
+				<{if $element.description|default:'' != ''}>
 					<p class="form-text text-muted"><{$element.description}></p>
 				 <{/if}>
 			</div>
@@ -65,7 +65,7 @@
         <{/foreach}>
 		</div>
     <{foreach item=element from=$form_post.elements}>
-    <{if $element.hidden == true}>
+    <{if $element.hidden|default:false == true}>
         <{$element.body}>
     <{/if}>
     <{/foreach}>
@@ -74,7 +74,7 @@
 <div class="clear"></div>
 <br>
 
-<{if $posts_context}>
+<{if $posts_context|default:''}>
     <table width='100%' class='outer' cellspacing='1'>
         <{foreach item=post from=$posts_context}>
         <tr valign="top">

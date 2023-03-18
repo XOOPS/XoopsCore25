@@ -27,6 +27,20 @@
  */
 class PmMessage extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $msg_id;
+    public $msg_image;
+    public $subject;
+    public $from_userid;
+    public $to_userid;
+    public $msg_time;
+    public $msg_text;
+    public $read_msg;
+    public $from_delete;
+    public $to_delete;
+    public $from_save;
+    public $to_save;
+
     /**
      *
      */

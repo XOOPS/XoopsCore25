@@ -288,7 +288,7 @@ class Tables
         // Find table def.
         if (isset($this->tables[$table])) {
             $tableDef = $this->tables[$table];
-            // loop thru and find the column
+            // loop through and find the column
             foreach ($tableDef['columns'] as $col) {
                 if (strcasecmp($col['name'], $column) === 0) {
                     return $col['attributes'];
@@ -336,7 +336,7 @@ class Tables
             $tableDef = &$this->tables[$table];
             // Is this on a table we are adding?
             if (isset($tableDef['create']) && $tableDef['create']) {
-                // loop thru and find the column
+                // loop through and find the column
                 foreach ($tableDef['columns'] as &$col) {
                     if (strcasecmp($col['name'], $column) == 0) {
                         $col['name'] = $newName;
@@ -349,7 +349,7 @@ class Tables
             } else {
                 $this->queue[] = "ALTER TABLE `{$tableDef['name']}` " .
                     "CHANGE COLUMN `{$column}` `{$newName}` {$attributes} ";
-                // loop thru and find the column
+                // loop through and find the column
                 foreach ($tableDef['columns'] as &$col) {
                     if (strcasecmp($col['name'], $column) == 0) {
                         $col['name'] = $newName;

@@ -72,7 +72,7 @@ class XoopsFormSelect extends XoopsFormElement
      * @param string $caption  Caption
      * @param string $name     "name" attribute
      * @param mixed  $value    Pre-selected value (or array of them).
-     * @param int    $size     Number or rows. "1" makes a drop-down-list
+     * @param int    $size     Number of rows. "1" makes a drop-down-list
      * @param bool   $multiple Allow multiple selections?
      */
     public function __construct($caption, $name, $value = null, $size = 1, $multiple = false)
@@ -173,7 +173,7 @@ class XoopsFormSelect extends XoopsFormElement
     /**
      * Get an array with all the options
      *
-     * Note: both name and value should be sanitized. However for backward compatibility, only value is sanitized for now.
+     * Note: both name and value should be sanitized. However, for backward compatibility, only value is sanitized for now.
      *
      * @param bool|int $encode To sanitizer the text? potential values: 0 - skip; 1 - only for value; 2 - for both value and name
      *

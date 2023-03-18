@@ -33,7 +33,7 @@ class XoopsFormSelectTheme extends XoopsFormSelect
      * @param string $caption
      * @param string $name
      * @param mixed  $value             Pre-selected value (or array of them).
-     * @param int    $size              Number or rows. "1" makes a drop-down-list
+     * @param int    $size              Number of rows. "1" makes a drop-down-list
      * @param bool   $theme_set_allowed Flag to use only selectable theme
      */
     public function __construct($caption, $name, $value = null, $size = 1, $theme_set_allowed = false)

@@ -76,9 +76,9 @@ switch ($op) {
             switch ($config[$i]->getVar('conf_formtype')) {
 
                 case 'textarea':
-                    $myts = MyTextSanitizer::getInstance();
+                    $myts = \MyTextSanitizer::getInstance();
                     if ($config[$i]->getVar('conf_valuetype') === 'array') {
-                        // this is exceptional.. only when value type is arrayneed a smarter way for this
+                        // this is exceptional. Only when value type is an array, need a smarter way for this
                         $ele = ($config[$i]->getVar('conf_value') != '') ? new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), $myts->htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50) : new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), '', 5, 50);
                     } else {
                         $ele = new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), $myts->htmlSpecialChars($config[$i]->getConfValueForOutput()), 5, 50);
@@ -223,23 +223,23 @@ switch ($op) {
                     break;
 
                 case 'password':
-                    $myts = MyTextSanitizer::getInstance();
+                    $myts = \MyTextSanitizer::getInstance();
                     $ele  = new XoopsFormPassword($title, $config[$i]->getVar('conf_name'), 50, 255, $myts->htmlSpecialChars($config[$i]->getConfValueForOutput()));
                     break;
 
                 case 'color':
-                    $myts = MyTextSanitizer::getInstance();
+                    $myts = \MyTextSanitizer::getInstance();
                     $ele  = new XoopsFormColorPicker($title, $config[$i]->getVar('conf_name'), $myts->htmlSpecialChars($config[$i]->getConfValueForOutput()));
                     break;
 
                 case 'hidden':
-                    $myts = MyTextSanitizer::getInstance();
+                    $myts = \MyTextSanitizer::getInstance();
                     $ele  = new XoopsFormHidden($config[$i]->getVar('conf_name'), $myts->htmlSpecialChars($config[$i]->getConfValueForOutput()));
                     break;
 
                 case 'textbox':
                 default:
-                    $myts = MyTextSanitizer::getInstance();
+                    $myts = \MyTextSanitizer::getInstance();
                     $ele  = new XoopsFormText($title, $config[$i]->getVar('conf_name'), 50, 255, $myts->htmlSpecialChars($config[$i]->getConfValueForOutput()));
                     break;
 
@@ -276,19 +276,19 @@ switch ($op) {
 
         xoops_loadLanguage('modinfo', $module->getVar('dirname'));
 
-        // if has comments feature, need comment lang file
+        // if it has comments feature, need comment lang file
         if ($module->getVar('hascomments') == 1) {
             xoops_loadLanguage('comment');
         }
         // RMV-NOTIFY
-        // if has notification feature, need notification lang file
+        // if it has notification feature, need notification lang file
         if ($module->getVar('hasnotification') == 1) {
             xoops_loadLanguage('notification');
         }
 
         $modname = $module->getVar('name');
         if (!empty($_REQUEST['redirect'])) {
-            $myts = MyTextSanitizer::getInstance();
+            $myts = \MyTextSanitizer::getInstance();
             $form->addElement(new XoopsFormHidden('redirect', $myts->htmlSpecialChars($_REQUEST['redirect'])));
         } elseif ($module->getInfo('adminindex')) {
             $form->addElement(new XoopsFormHidden('redirect', XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . $module->getInfo('adminindex')));
@@ -299,9 +299,9 @@ switch ($op) {
             switch ($config[$i]->getVar('conf_formtype')) {
 
                 case 'textarea':
-                    $myts = MyTextSanitizer::getInstance();
+                    $myts = \MyTextSanitizer::getInstance();
                     if ($config[$i]->getVar('conf_valuetype') === 'array') {
-                        // this is exceptional.. only when value type is arrayneed a smarter way for this
+                        // this is exceptional. Only when value type is an array, need a smarter way for this
                         $ele = ($config[$i]->getVar('conf_value') != '') ? new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), $myts->htmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50) : new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), '', 5, 50);
                     } else {
                         $ele = new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), $myts->htmlSpecialChars($config[$i]->getConfValueForOutput()), 5, 50);
@@ -356,28 +356,28 @@ switch ($op) {
                     break;
 
                 case 'password':
-                    $myts = MyTextSanitizer::getInstance();
+                    $myts = \MyTextSanitizer::getInstance();
                     $ele  = new XoopsFormPassword($title, $config[$i]->getVar('conf_name'), 50, 255, $myts->htmlSpecialChars($config[$i]->getConfValueForOutput()));
                     break;
 
                 case 'color':
-                    $myts = MyTextSanitizer::getInstance();
+                    $myts = \MyTextSanitizer::getInstance();
                     $ele  = new XoopsFormColorPicker($title, $config[$i]->getVar('conf_name'), $myts->htmlSpecialChars($config[$i]->getConfValueForOutput()));
                     break;
 
                 case 'hidden':
-                    $myts = MyTextSanitizer::getInstance();
+                    $myts = \MyTextSanitizer::getInstance();
                     $ele  = new XoopsFormHidden($config[$i]->getVar('conf_name'), $myts->htmlSpecialChars($config[$i]->getConfValueForOutput()));
                     break;
 
                 case 'line_break':
-                    $myts = MyTextSanitizer::getInstance();
-                    $form->insertBreak('<div style="text-align:center">' . $title . '</div>', $myts->htmlSpecialChars($config[$i]->getConfValueForOutput()));
+                    $myts = \MyTextSanitizer::getInstance();
+                    $form->insertBreak('<div style="text-align:center">' . $title . '</div>', $myts->htmlSpecialChars($config[$i]->getConfValueForOutput()));
                     break;
 
                 case 'textbox':
                 default:
-                    $myts = MyTextSanitizer::getInstance();
+                    $myts = \MyTextSanitizer::getInstance();
                     $ele  = new XoopsFormText($title, $config[$i]->getVar('conf_name'), 50, 255, $myts->htmlSpecialChars($config[$i]->getConfValueForOutput()));
                     break;
 
@@ -447,7 +447,7 @@ switch ($op) {
                             $xoopsTpl->clear_compiled_tpl();
 
                             // generate compiled files for the new theme
-                            // block files only for now..
+                            // block files only for now.
                             $tplfile_handler = xoops_getHandler('tplfile');
                             $dtemplates      = $tplfile_handler->find('default', 'block');
                             $dcount          = count($dtemplates);

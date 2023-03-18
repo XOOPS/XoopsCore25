@@ -15,7 +15,7 @@ use Xmf\Language;
 
 /**
  * GenericHelper implements a Xoops 2.6 Xoops\Module\Helper\HelperAbstract.
- * We use it pre 2.6 systems so we can encapsulate many of the changes
+ * We use it pre 2.6 systems, so we can encapsulate many of the changes
  * needed to make modules more compatible with 2.6 in these methods.
  * The most common deprecated warnings can be avoided by using module
  * helper methods.

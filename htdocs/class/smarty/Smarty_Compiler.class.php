@@ -73,6 +73,14 @@ class Smarty_Compiler extends Smarty {
     var $_strip_depth           =   0;
     var $_additional_newline    =   "\n";
 
+    //PHP 8.2 Dynamic properties deprecated
+    public $_dvar_math_regexp;
+    public $_dvar_math_var_regexp;
+    public $_obj_restricted_param_regexp;
+    public $_obj_single_param_regexp;
+    public $_param_regexp;
+    public $_plugins_code;
+
     /**#@-*/
     /**
      * The class constructor.

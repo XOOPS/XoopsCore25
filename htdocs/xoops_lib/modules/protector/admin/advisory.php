@@ -54,7 +54,7 @@ echo "</b><br><br></dl>\n";
 
 // register_long_arrays -- enabling deprecated feature opens potential attack surface
 // This option was removed in PHP 5.4, and is no longer supported in XOOPS.
-// Any code still using the the long arrays ($HTTP_GET_VARS, $HTTP_POST_VARS, $HTTP_COOKIE_VARS)
+// Any code still using the long arrays ($HTTP_GET_VARS, $HTTP_POST_VARS, $HTTP_COOKIE_VARS)
 // should be considered "suspect."
 if (version_compare(PHP_VERSION, '5.4.0', '<')) {
     echo "<dl><dt>'register_long_arrays' : ";

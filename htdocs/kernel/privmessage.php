@@ -27,6 +27,16 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  **/
 class XoopsPrivmessage extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $msg_id;
+    public $msg_image;
+    public $subject;
+    public $from_userid;
+    public $to_userid;
+    public $msg_time;
+    public $msg_text;
+    public $read_msg;
+
     /**
      * constructor
      **/
@@ -306,7 +316,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
         }
         list($count) = $this->db->fetchRow($result);
 
-        return $count;
+        return (int)$count;
     }
 
     /**

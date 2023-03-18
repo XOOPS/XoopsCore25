@@ -95,7 +95,7 @@ function xoops_module_install($dirname)
             include_once XOOPS_ROOT_PATH . '/modules/' . $dirname . '/' . trim($install_script);
         }
         $func = "xoops_module_pre_install_{$dirname}";
-        // If pre install function is defined, execute
+        // If pre-install function is defined, execute
         if (function_exists($func)) {
             $result = $func($module);
             if (!$result) {
@@ -795,7 +795,7 @@ function xoops_module_update($dirname)
     $dirname = trim($dirname);
     $xoopsDB =& $GLOBALS['xoopsDB'];
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
     $dirname        = $myts->htmlSpecialChars(trim($dirname));
     /* @var XoopsModuleHandler $module_handler */
@@ -981,7 +981,7 @@ function xoops_module_update($dirname)
                                 $tplfile_new->setVar('tpl_desc', $block['description'], true);
                                 $tplfile_new->setVar('tpl_lastmodified', time());
                                 $tplfile_new->setVar('tpl_lastimported', 0);
-                                $tplfile_new->setVar('tpl_file', $block['template'], true); // irmtfan bug fix:  block template file will not updated after update the module
+                                $tplfile_new->setVar('tpl_file', $block['template'], true); // irmtfan bug fix:  block template file will not be updated after update the module
                                 if (!$tplfile_handler->insert($tplfile_new)) {
                                     $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_TEMPLATE_UPDATE_ERROR, '<strong>' . $block['template'] . '</strong>') . '</span>';
                                 } else {
@@ -1414,7 +1414,7 @@ function xoops_module_change($mid, $name)
     $module_handler = xoops_getHandler('module');
     $module         = $module_handler->get($mid);
     $module->setVar('name', $name);
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     if (!$module_handler->insert($module)) {
         $ret = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILORDER, '<strong>' . $myts->stripSlashesGPC($name) . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br>';
         $ret .= $module->getHtmlErrors() . '</p>';

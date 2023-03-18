@@ -62,6 +62,9 @@ define('SMARTY_PHP_ALLOW',      3);
  */
 class Smarty
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $_cache_include_info;
+
     /**#@+
      * Smarty Configuration Section
      */

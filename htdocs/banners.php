@@ -106,13 +106,13 @@ function bannerstats()
     list($cid, $name, $passwd) = $xoopsDB->fetchRow($result);
     if ($_SESSION['banner_pass'] == $passwd) {
         include $GLOBALS['xoops']->path('header.php');
+        $cid = (int)$cid;
         $GLOBALS['xoTheme']->addStylesheet(null, null, '
             #bannerstats {}
             #bannerstats td {
                 text-align: center;
             }
         ');
-
         echo "<div id='bannerstats'>
               <h4 class='content_title'>" . sprintf(_BANNERS_TITLE, $name) . "</h4><hr />
               <table summary=''>
@@ -225,7 +225,7 @@ function bannerstats()
 }
 
 /**
- * Function to let the client E-mail his banner Stats
+ * Function to let clients email their banner's stats
  * @param int|string $cid
  * @param int|string $bid
  * @return void
@@ -276,7 +276,7 @@ function emailStats($cid, $bid)
 }
 
 /**
- * Function to let the client to change the  url for his banner
+ * Function to let clients change their banner's URL
  * @param int|string $cid
  * @param int|string $bid
  * @param string $url

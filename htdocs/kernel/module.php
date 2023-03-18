@@ -40,6 +40,22 @@ class XoopsModule extends XoopsObject
      */
     public $_msg;
 
+    //PHP 8.2 Dynamic properties deprecated
+    public $mid;
+    public $name;
+    public $version;
+    public $last_update;
+    public $weight;
+    public $isactive;
+    public $dirname;
+    public $hasmain;
+    public $hasadmin;
+    public $hassearch;
+    public $hasconfig;
+    public $hascomments;
+    // RMV-NOTIFY
+    public $hasnotification;
+
     /**
      * Constructor
      */
@@ -856,7 +872,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
                         $sql = sprintf('DELETE FROM %s WHERE (module_id = %u) AND (block_id = %u)', $this->db->prefix('block_module_link'), $module->getVar('mid'), $i);
                         $this->db->query($sql);
                     } else {
-                        // this block doesnt have other entries, so disable the block and let it show on top page only. otherwise, this block will not display anymore on block admin page!
+                        // this block doesn't have other entries, so disable the block and let it show on top page only. otherwise, this block will not display anymore on block admin page!
                         $sql = sprintf('UPDATE %s SET visible = 0 WHERE bid = %u', $this->db->prefix('newblocks'), $i);
                         $this->db->query($sql);
                         $sql = sprintf('UPDATE %s SET module_id = -1 WHERE module_id = %u', $this->db->prefix('block_module_link'), $module->getVar('mid'));
@@ -929,7 +945,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
         }
         list($count) = $this->db->fetchRow($result);
 
-        return $count;
+        return (int)$count;
     }
 
     /**

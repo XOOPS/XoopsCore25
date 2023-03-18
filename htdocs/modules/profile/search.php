@@ -18,7 +18,7 @@
  */
 
 include __DIR__ . '/header.php';
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 
 $limit_default    = 20;
 $op               = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'search';

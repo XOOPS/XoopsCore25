@@ -301,7 +301,7 @@ function smarty_function_html_select_date($params, &$smarty)
         }
     }
 
-    // Loop thru the field_order field
+    // Loop through the field_order field
     for ($i = 0; $i <= 2; $i++){
         $c = substr($field_order, $i, 1);
         switch ($c){
