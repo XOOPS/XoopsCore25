@@ -56,6 +56,7 @@ class XoopsMailer
     // sender UID
     // private
     public $fromUser;
+    public $priority;
     // array of user class objects
     // private
     public $toUsers;
@@ -87,6 +88,7 @@ class XoopsMailer
     public $template;
     // private
     public $templatedir;
+    public $LE;
     // protected
     public $charSet = 'iso-8859-1';
     // protected

@@ -26,6 +26,7 @@ class TinyMCE
     public        $rootpath;
     public        $config                = array();
     public        $setting               = array();
+    public        $xoopsPlugins          = array();
     public static $LastOfElementsTinymce = '';
     public static $ListOfElementsTinymce = array();
 

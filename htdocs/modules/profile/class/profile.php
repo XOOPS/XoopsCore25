@@ -25,7 +25,6 @@
  */
 class ProfileProfile extends XoopsObject
 {
-    //PHP 8.2 Dynamic properties deprecated
     public $profile_id;
     public $handler;
 
