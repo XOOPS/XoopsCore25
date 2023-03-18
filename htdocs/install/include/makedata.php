@@ -155,7 +155,11 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
     // data for table 'block_module_link'
     $sql    = 'SELECT bid, side FROM ' . $dbm->prefix('newblocks');
     $result = $dbm->query($sql);
-
+    //    if (!$dbm->isResultSet($result)) {
+    //    throw new \RuntimeException(
+    //        \sprintf(_DB_QUERY_ERROR, $sql) . $dbm->error(), E_USER_ERROR
+    //    );
+    //    }
     while (false !== ($myrow = $dbm->fetchArray($result))) {
         if ($myrow['side'] == 0) {
             $dbm->insert('block_module_link', ' VALUES (' . $myrow['bid'] . ', 0)');

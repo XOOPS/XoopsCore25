@@ -75,8 +75,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    $res = $dbm->query('SELECT COUNT(*) FROM ' . $dbm->db->prefix('users'));
-    list($isadmin) = $dbm->db->fetchRow($res);
+    $sql = 'SELECT COUNT(*) FROM ' . $dbm->db->prefix('users');
+    $result = $dbm->db->query($sql);
+    if ($dbm->db->isResultSet($result)) {
+        list($isadmin) = $dbm->db->fetchRow($result);
+    }
 }
 
 ob_start();

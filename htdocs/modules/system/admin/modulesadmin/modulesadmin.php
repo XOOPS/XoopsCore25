@@ -95,7 +95,7 @@ function xoops_module_install($dirname)
             include_once XOOPS_ROOT_PATH . '/modules/' . $dirname . '/' . trim($install_script);
         }
         $func = "xoops_module_pre_install_{$dirname}";
-        // If pre install function is defined, execute
+        // If pre-install function is defined, execute
         if (function_exists($func)) {
             $result = $func($module);
             if (!$result) {
@@ -956,6 +956,11 @@ function xoops_module_update($dirname)
                     }
                     $sql     = 'SELECT bid, name FROM ' . $xoopsDB->prefix('newblocks') . ' WHERE mid=' . $module->getVar('mid') . ' AND func_num=' . $i . " AND show_func='" . addslashes($block['show_func']) . "' AND func_file='" . addslashes($block['file']) . "'";
                     $fresult = $xoopsDB->query($sql);
+                    if (!$xoopsDB->isResultSet($fresult)) {
+                        throw new \RuntimeException(
+                            \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                        );
+                    }
                     $fcount  = 0;
                     while (false !== ($fblock = $xoopsDB->fetchArray($fresult))) {
                         ++$fcount;
@@ -981,7 +986,7 @@ function xoops_module_update($dirname)
                                 $tplfile_new->setVar('tpl_desc', $block['description'], true);
                                 $tplfile_new->setVar('tpl_lastmodified', time());
                                 $tplfile_new->setVar('tpl_lastimported', 0);
-                                $tplfile_new->setVar('tpl_file', $block['template'], true); // irmtfan bug fix:  block template file will not updated after update the module
+                                $tplfile_new->setVar('tpl_file', $block['template'], true); // irmtfan bug fix:  block template file will not be updated after update the module
                                 if (!$tplfile_handler->insert($tplfile_new)) {
                                     $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_TEMPLATE_UPDATE_ERROR, '<strong>' . $block['template'] . '</strong>') . '</span>';
                                 } else {

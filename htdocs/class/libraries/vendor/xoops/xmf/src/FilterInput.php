@@ -65,7 +65,7 @@ class FilterInput
         'title',
         'xml'
     );
-    // also will strip ALL event handlers
+    // also, it will strip ALL event handlers
     protected $attrBlacklist = array('action', 'background', 'codebase', 'dynsrc', 'lowsrc');
 
     /**

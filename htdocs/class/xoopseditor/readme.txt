@@ -22,6 +22,6 @@ user guide:
 3.4 XOOPS/uploads/fckeditor/: to create the folder if FCKeditor is enabled, used for uploads from where the upload folder is not specified
 3.5 ./tinymce/tinymce/jscripts/: download your local language files from http://tinymce.moxiecode.com/language.php
 
-4 check file names: for filename case sensitive system, make sure you have the file names literally correct, i.e., "FCKeditor" is not identical to "fckeditor"
+4 check file names: for filename case-sensitive system, make sure you have the file names literally correct, i.e., "FCKeditor" is not identical to "fckeditor"
 
 5 check /xoopseditor/sampleform.inc.php for development guide

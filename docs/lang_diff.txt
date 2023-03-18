@@ -4,6 +4,14 @@ LANGUAGE DIFFERENCES
 Below are language differences from a version to next version.
 
 ================================
+2023/03/19: Version 2.5.11-RC1
+================================
+
+CHANGED FILES:
+htdocs/language/english/global.php
+- added define('_DB_QUERY_ERROR', 'Query Failed! SQL: %s - Error: ');
+
+================================
 2021/09/02: Version 2.5.11-Betas
 ================================
 
@@ -68,6 +76,12 @@ htdocs/modules/system/language/english/admin/images.php
 
 htdocs/modules/system/language/english/admin/modulesadmin.php
 - added define('_AM_SYSTEM_MODULES_INSTALL_THISMODULE', 'This Module Admin');
+
+DELETED FILES:
+htdocs/modules/system/language/english/admin/users.php
+- deleted define('_AM_SYSTEM_USERS_MODIFYUSER', 'Modify User');
+- deleted define('_AM_SYSTEM_USERS_DELUSER', 'Delete User');
+- deleted define('_AM_SYSTEM_USERS_GO', 'Go!');
 
 ================================
 2019/04/29: Version 2.5.10 Final

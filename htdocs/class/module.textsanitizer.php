@@ -253,8 +253,10 @@ class MyTextSanitizer
         if (count($this->smileys) == 0) {
             /* @var XoopsMySQLDatabase $xoopsDB */
             $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
-            if ($getsmiles = $xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('smiles'))) {
-                while (false !== ($smiles = $xoopsDB->fetchArray($getsmiles))) {
+            $sql     = 'SELECT * FROM ' . $xoopsDB->prefix('smiles');
+            $result  = $xoopsDB->query($sql);
+            if ($xoopsDB->isResultSet($result)) {
+                while (false !== ($smiles = $xoopsDB->fetchArray($result))) {
                     $this->smileys[] = $smiles;
                 }
             }
@@ -352,7 +354,7 @@ class MyTextSanitizer
      *
      * @param  string   $text
      * @param  bool|int $allowimage Allow images in the text?
-     *                              On FALSE, uses links to images.
+     *                              On FALSE, uses links to the images.
      * @return string
      */
     public function &xoopsCodeDecode(&$text, $allowimage = 1)

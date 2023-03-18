@@ -27,7 +27,9 @@
             <{/if}>
         <{/if}>
 
-        <{if $forum_topictype|default:''}><{$forum_topictype}><{/if}>
+        <{if isset($forum_topictype)}>
+            <{$forum_topictype}>
+        <{/if}>
 
         <{if $forum_topicstatus}>
             <span class="btn btn-info"><{$forum_topicstatus}></span>
@@ -41,7 +43,7 @@
             <span class="fa fa-search"></span>
         </a>
 
-        <{if $subforum|default:''}>
+        <{if isset($subforum)}>
             <{include file="db:newbb_viewforum_subforum.tpl"}>
         <{/if}>
         </div>

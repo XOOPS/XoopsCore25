@@ -41,13 +41,20 @@ if (!$dbm->isConnectable()) {
     $wizard->redirectToPage('dbsettings');
     exit();
 }
-$res = $dbm->query('SELECT COUNT(*) FROM ' . $dbm->db->prefix('users'));
-if (!$res) {
+$sql = 'SELECT COUNT(*) FROM ' . $dbm->db->prefix('users');
+$result = $dbm->query($sql);
+if (!$dbm->db->isResultSet($result)) {
+        throw new \RuntimeException(
+        \sprintf(_DB_QUERY_ERROR, $sql) . $dbm->db->error(), E_USER_ERROR
+    );
+}
+
+if (!$result) {
     $wizard->redirectToPage('dbsettings');
     exit();
 }
 
-list($count) = $dbm->db->fetchRow($res);
+list($count) = $dbm->db->fetchRow($result);
 $process = ($count == 0);
 $update  = false;
 

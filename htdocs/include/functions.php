@@ -19,6 +19,8 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /** @var \XoopsNotificationHandler $notification_handler */
 
+require_once __DIR__ . '/common.php';
+
 /**
  * xoops_getHandler()
  *
@@ -143,7 +145,9 @@ function xoops_loadLanguage($name, $domain = '', $language = null)
     if (empty($name)) {
         return false;
     }
-    $language = empty($language) ? $GLOBALS['xoopsConfig']['language'] : $language;
+//    $language = empty($language) ? $GLOBALS['xoopsConfig']['language'] : $language;
+    global $xoopsConfig;
+    $language = empty($language) ? $xoopsConfig['language'] : $language;
     $path     = ((empty($domain) || 'global' === $domain) ? '' : "modules/{$domain}/") . 'language';
     if (!file_exists($fileinc = $GLOBALS['xoops']->path("{$path}/{$language}/{$name}.php"))) {
         if (!file_exists($fileinc = $GLOBALS['xoops']->path("{$path}/english/{$name}.php"))) {
@@ -677,8 +681,14 @@ function xoops_getbanner()
     global $xoopsConfig;
 
     $db      = XoopsDatabaseFactory::getDatabaseConnection();
-    $bresult = $db->query('SELECT COUNT(*) FROM ' . $db->prefix('banner'));
-    list($numrows) = $db->fetchRow($bresult);
+    $sql = 'SELECT COUNT(*) FROM ' . $db->prefix('banner');
+    $result = $db->query($sql);
+    if (!$db->isResultSet($result)) {
+        throw new \RuntimeException(
+            \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+        );
+    }
+    list($numrows) = $db->fetchRow($result);
     if ($numrows > 1) {
         --$numrows;
         $bannum = mt_rand(0, $numrows);
@@ -686,13 +696,20 @@ function xoops_getbanner()
         $bannum = 0;
     }
     if ($numrows > 0) {
-        $bresult = $db->query('SELECT * FROM ' . $db->prefix('banner'), 1, $bannum);
-        list($bid, $cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date, $htmlbanner, $htmlcode) = $db->fetchRow($bresult);
+        $sql = 'SELECT * FROM ' . $db->prefix('banner');
+        $result = $db->query($sql, 1, $bannum);
+        if (!$db->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+            );
+        }
+        list($bid, $cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date, $htmlbanner, $htmlcode) = $db->fetchRow($result);
         if ($xoopsConfig['my_ip'] == xoops_getenv('REMOTE_ADDR')) {
             // EMPTY
         } else {
             ++$impmade;
-            $db->queryF(sprintf('UPDATE %s SET impmade = %u WHERE bid = %u', $db->prefix('banner'), $impmade, $bid));
+            $sql = sprintf('UPDATE %s SET impmade = %u WHERE bid = %u', $db->prefix('banner'), $impmade, $bid);
+            $db->queryF($sql);
             /**
              * Check if this impression is the last one
              */
@@ -920,7 +937,13 @@ function xoops_getrank($rank_id = 0, $posts = 0)
     } else {
         $sql = 'SELECT rank_title AS title, rank_image AS image FROM ' . $db->prefix('ranks') . ' WHERE rank_min <= ' . $posts . ' AND rank_max >= ' . $posts . ' AND rank_special = 0';
     }
-    $rank          = $db->fetchArray($db->query($sql));
+    $result = $db->query($sql);
+    if (!$db->isResultSet($result)) {
+            throw new \RuntimeException(
+          \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+    );
+    }
+    $rank          = $db->fetchArray($result);
     $rank['title'] = $myts->htmlSpecialChars($rank['title']);
     $rank['id']    = $rank_id;
 
@@ -928,7 +951,7 @@ function xoops_getrank($rank_id = 0, $posts = 0)
 }
 
 /**
- * Returns the portion of string specified by the start and length parameters. If $trimmarker is supplied, it is appended to the return string. This function works fine with multi-byte characters if mb_* functions exist on the server.
+ * Returns the portion of string specified by the start and length parameters. If $trimmarker is supplied, it is appended to the return string. This function works fine with multibyte characters if mb_* functions exist on the server.
  *
  * @param string $str
  * @param int    $start

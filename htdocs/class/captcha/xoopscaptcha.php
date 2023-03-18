@@ -209,9 +209,9 @@ class XoopsCaptcha
     public function verify($skipMember = null, $name = null)
     {
         $sessionName = empty($name) ? $this->name : $name;
-        $skipMember  = ($skipMember === null) ? $_SESSION["{$sessionName}_skipmember"] : $skipMember;
-        $maxAttempts = $_SESSION["{$sessionName}_maxattempts"];
-        $attempt     = $_SESSION["{$sessionName}_attempt"];
+        $skipMember  = ($skipMember === null) && isset($_SESSION["{$sessionName}_skipmember"]) ? $_SESSION["{$sessionName}_skipmember"] : $skipMember;
+        $maxAttempts = isset($_SESSION["{$sessionName}_maxattempts"]) ? $_SESSION["{$sessionName}_maxattempts"] : $this->config['maxattempts'];
+        $attempt     = isset($_SESSION["{$sessionName}_attempt"]) ? $_SESSION["{$sessionName}_attempt"] : 0;
         $is_valid    = false;
         // Skip CAPTCHA verification if disabled
         if (!$this->isActive()) {
@@ -363,7 +363,7 @@ class XoopsCaptcha
 /**
  * Abstract class for CAPTCHA method
  *
- * Currently there are two types of CAPTCHA forms, text and image
+ * Currently, there are two types of CAPTCHA forms, text and image
  * The default mode is "text", it can be changed in the priority:
  * 1 If mode is set through XoopsFormCaptcha::setConfig("mode", $mode), take it
  * 2 Elseif mode is set though captcha/config.php, take it

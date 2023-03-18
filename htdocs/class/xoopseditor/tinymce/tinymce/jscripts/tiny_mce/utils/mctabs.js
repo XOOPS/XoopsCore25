@@ -76,7 +76,7 @@ MCTabs.prototype.displayTab = function(tab_id, panel_id, avoid_focus) {
 	if (tabElm && tabContainerElm) {
 		nodes = tabContainerElm.childNodes;
 
-		// Hide all other tabs
+		// Hide all the other tabs
 		for (i = 0; i < nodes.length; i++) {
 			if (nodes[i].nodeName == "LI") {
 				t.hideTab(nodes[i]);
@@ -90,7 +90,7 @@ MCTabs.prototype.displayTab = function(tab_id, panel_id, avoid_focus) {
 	if (panelElm && panelContainerElm) {
 		nodes = panelContainerElm.childNodes;
 
-		// Hide all other panels
+		// Hide all the other panels
 		for (i = 0; i < nodes.length; i++) {
 			if (nodes[i].nodeName == "DIV")
 				t.hidePanel(nodes[i]);

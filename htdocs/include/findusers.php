@@ -116,11 +116,13 @@ class XoopsRankHandler extends XoopsObjectHandler
     {
         $object = $this->create(false);
         $sql    = 'SELECT * FROM ' . $this->db->prefix('ranks') . ' WHERE rank_id = ' . $this->db->quoteString($id);
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
             $ret = null;
 
             return $ret;
         }
+
         while (false !== ($row = $this->db->fetchArray($result))) {
             $object->assignVars($row);
         }
@@ -153,7 +155,7 @@ class XoopsRankHandler extends XoopsObjectHandler
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             return $ret;
         }
         $myts = \MyTextSanitizer::getInstance();
@@ -249,6 +251,11 @@ class XoUserHandler extends XoopsObjectHandler
             }
         }
         $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+            );
+        }
         list($count) = $this->db->fetchRow($result);
 
         return (int)$count;
@@ -290,6 +297,11 @@ class XoUserHandler extends XoopsObjectHandler
             $sql .= ' ORDER BY u.uid ASC';
         }
         $result = $this->db->query($sql, $limit, $start);
+        if (!$this->db->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+            );
+        }
         $ret    = array();
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $object = $this->create(false);

@@ -56,7 +56,7 @@ class Upgrade_259 extends XoopsUpgrade
 
         /** @var mysqli_result $result */
         $result = $db->query($sql);
-        if ($result) {
+        if ($db->isResultSet($result)) {
             $row = $db->fetchRow($result);
             if ($row) {
                 $columnLength = $row[0];

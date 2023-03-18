@@ -133,7 +133,7 @@ class XoopsAuthLdap extends XoopsAuth
          */
         "\xc2\x99" => "\xe2\x84\xa2",
         /**
-         * TRADE MARK SIGN
+         * TRADEMARK SIGN
          */
         "\xc2\x9a" => "\xc5\xa1",
         /**

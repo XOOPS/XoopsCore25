@@ -8,6 +8,8 @@ XOOPS 2.5.x Changelog (Language changes: see: /docs/lang_diff.txt)
 
 Updated libraries and assets:
 - HTML Purifier to 4.15 (mamba)
+- jQuery to 3.6.3 (mamba)
+- jQuery UI 1.13.2 (mamba)
 
 ===================================
 2.5.11 Beta2           2022/08/03

@@ -11,7 +11,8 @@ function protector_postcommon()
     if (substr(@XOOPS_VERSION, 6, 3) > 2.0 && false !== stripos(@$_SERVER['REQUEST_URI'], 'modules/system/admin.php?fct=preferences')) {
         /* @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
-        $module         = $module_handler->get((int)(@$_GET['mod']));
+        /** @var XoopsModule $module */
+        $module = $module_handler->get((int)(@$_GET['mod']));
         if (is_object($module)) {
             $module->getInfo();
         }
@@ -87,7 +88,7 @@ function protector_postcommon()
         $protector->stopforumspam($uid);
     }
 
-    // If precheck has already judged that he should be banned
+    // If precheck has already judged that they should be banned
     if ($can_ban && $protector->_should_be_banned) {
         $protector->register_bad_ips();
     } elseif ($can_ban && $protector->_should_be_banned_time0) {

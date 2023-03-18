@@ -272,7 +272,13 @@ class XoopsStory
     {
         $storyid = (int)$storyid;
         $sql     = 'SELECT * FROM ' . $this->table . ' WHERE storyid=' . $storyid . '';
-        $array   = $this->db->fetchArray($this->db->query($sql));
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+            );
+        }
+        $array   = $this->db->fetchArray($result);
         $this->makeStory($array);
     }
 

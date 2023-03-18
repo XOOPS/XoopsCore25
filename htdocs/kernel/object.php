@@ -1178,7 +1178,7 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
     /**
      * holds reference to predefined extended object handlers: read, stats, joint, write, sync
      *
-     * The handlers hold methods for different purposes, which could be all put together inside of current class.
+     * The handlers hold methods for different purposes, which could be all put together inside the current class.
      * However, load codes only if they are necessary, thus they are now split out.
      *
      * var array of objects
@@ -1393,7 +1393,8 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
         }
         $sql = sprintf('SELECT %s FROM %s WHERE %s = %s', $select, $this->table, $this->keyName, $this->db->quote($id));
         //$sql = "SELECT {$select} FROM {$this->table} WHERE {$this->keyName} = " . $this->db->quote($id);
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
             return $object;
         }
         if (!$this->db->getRowsNum($result)) {

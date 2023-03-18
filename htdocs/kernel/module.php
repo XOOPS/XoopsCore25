@@ -31,9 +31,9 @@ class XoopsModule extends XoopsObject
     public $modinfo;
     /**
      *
-     * @var string
+     * @var array
      */
-    public $adminmenu;
+    public $adminmenu = array();
     /**
      *
      * @var array
@@ -254,7 +254,7 @@ class XoopsModule extends XoopsObject
     /**
      * Get the admin menu for the module
      *
-     * @return string
+     * @return array
      */
     public function &getAdminMenu()
     {
@@ -718,7 +718,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
      * Load a module from the database
      *
      * @param  int $id ID of the module
-     * @return object FALSE on fail
+     * @return XoopsObject|false false on fail
      */
     public function get($id)
     {
@@ -731,7 +731,8 @@ class XoopsModuleHandler extends XoopsObjectHandler
                 return $_cachedModule_mid[$id];
             } else {
                 $sql = 'SELECT * FROM ' . $this->db->prefix('modules') . ' WHERE mid = ' . $id;
-                if (!$result = $this->db->query($sql)) {
+                $result = $this->db->query($sql);
+                if (!$this->db->isResultSet($result)) {
                     return $module;
                 }
                 $numrows = $this->db->getRowsNum($result);
@@ -770,7 +771,8 @@ class XoopsModuleHandler extends XoopsObjectHandler
         } else {
             $module = false;
             $sql    = 'SELECT * FROM ' . $this->db->prefix('modules') . " WHERE dirname = '" . trim($dirname) . "'";
-            if (!$result = $this->db->query($sql)) {
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
                 return $module;
             }
             $numrows = $this->db->getRowsNum($result);
@@ -856,23 +858,25 @@ class XoopsModuleHandler extends XoopsObjectHandler
         $this->db->query($sql);
 
         $sql = sprintf('SELECT block_id FROM %s WHERE module_id = %u', $this->db->prefix('block_module_link'), $module->getVar('mid'));
-        if ($result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if ($this->db->isResultSet($result)) {
             $block_id_arr = array();
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $block_id_arr[] = $myrow['block_id'];
             }
-        }
+        }    
         // loop through block_id_arr
         if (isset($block_id_arr)) {
             foreach ($block_id_arr as $i) {
                 $sql = sprintf('SELECT block_id FROM %s WHERE module_id != %u AND block_id = %u', $this->db->prefix('block_module_link'), $module->getVar('mid'), $i);
-                if ($result2 = $this->db->query($sql)) {
+                $result2 = $this->db->query($sql);
+                if ($this->db->isResultSet($result2)) {
                     if (0 < $this->db->getRowsNum($result2)) {
                         // this block has other entries, so delete the entry for this module
                         $sql = sprintf('DELETE FROM %s WHERE (module_id = %u) AND (block_id = %u)', $this->db->prefix('block_module_link'), $module->getVar('mid'), $i);
                         $this->db->query($sql);
                     } else {
-                        // this block doesnt have other entries, so disable the block and let it show on top page only. otherwise, this block will not display anymore on block admin page!
+                        // this block doesn't have other entries, so disable the block and let it show on top page only. otherwise, this block will not display anymore on block admin page!
                         $sql = sprintf('UPDATE %s SET visible = 0 WHERE bid = %u', $this->db->prefix('newblocks'), $i);
                         $this->db->query($sql);
                         $sql = sprintf('UPDATE %s SET module_id = -1 WHERE module_id = %u', $this->db->prefix('block_module_link'), $module->getVar('mid'));
@@ -911,7 +915,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
@@ -940,7 +944,8 @@ class XoopsModuleHandler extends XoopsObjectHandler
         if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
             return 0;
         }
         list($count) = $this->db->fetchRow($result);

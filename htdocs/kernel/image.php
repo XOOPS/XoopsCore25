@@ -189,7 +189,7 @@ class XoopsImageHandler extends XoopsObjectHandler
      *
      * @param  int     $id ID
      * @param  boolean $getbinary
-     * @return XoopsImage {@link XoopsImage}, FALSE on fail
+     * @return XoopsImage|false {@link XoopsImage}, false on fail
      **/
     public function get($id, $getbinary = true)
     {
@@ -197,7 +197,8 @@ class XoopsImageHandler extends XoopsObjectHandler
         $id    = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT i.*, b.image_body FROM ' . $this->db->prefix('image') . ' i LEFT JOIN ' . $this->db->prefix('imagebody') . ' b ON b.image_id=i.image_id WHERE i.image_id=' . $id;
-            if (!$result = $this->db->query($sql)) {
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
                 return $image;
             }
             $numrows = $this->db->getRowsNum($result);
@@ -320,7 +321,7 @@ class XoopsImageHandler extends XoopsObjectHandler
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
@@ -349,7 +350,8 @@ class XoopsImageHandler extends XoopsObjectHandler
         if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
             return 0;
         }
         list($count) = $this->db->fetchRow($result);

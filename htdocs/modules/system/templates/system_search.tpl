@@ -1,4 +1,4 @@
-<{if $results|default:false}>
+<{if isset($results)}>
 	<h3><{$smarty.const._SR_SEARCHRESULTS}></h3>
 	<{$smarty.const._SR_KEYWORDS}>: <strong><{$keywords}></strong>
 	<br>
@@ -16,7 +16,7 @@
 			<{foreach item=data from=$search.module_data}>
 				<img src="<{$data.image_link}>" title="<{$data.image_title}>" alt="<{$data.image_title}>"/> <a href="<{$data.link}>"><{$data.link_title}></a>
 				<br>
-				<{if $data.uname|default:''}>
+			<{if isset($data.uname)}>
 					<span class='x-small'>
 						<a href="<{$data.uname_link}>"><{$data.uname}></a>
 						<{if $data.time}>
@@ -36,8 +36,8 @@
 <{/if}>
 <{if $showallbyuser|default:false}>
 	<h3><{$smarty.const._SR_SEARCHRESULTS}></h3>
-	<{if $nomatch|default:false != true}>
-		<{if $showall|default:false}>
+	<{if isset($nomatch) && $nomatch != true}>
+		<{if isset($showall)}>
 			<{$smarty.const._SR_KEYWORDS}>: <strong><{$keywords}></strong>
 			<br>
 		<{/if}>
@@ -80,7 +80,7 @@
 		<{/if}>
 	<{/if}>
 <{/if}>
-<{if $form|default:''}>
+<{if isset($form)}>
 	<br>
 	<{$form}>
 <{/if}>

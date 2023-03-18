@@ -91,7 +91,7 @@ if (!empty($_POST)) {
             $error_message .= $xoopsCaptcha->getMessage() . '<br>';
         }
 
-        // Start add by voltan
+        // Start added by voltan
         xoops_load('XoopsUserUtility');
         xoops_loadLanguage('user');
         $myts = \MyTextSanitizer::getInstance();
@@ -136,7 +136,7 @@ if (!empty($_POST)) {
         $com_user = Request::getString('com_user', 'POST', '');
         $com_user = str_replace($search_arr, '', $com_user);
         //$com_user = strtolower($com_user);
-        $com_user = htmlentities($com_user, ENT_COMPAT, 'utf-8');
+        $com_user    = htmlentities($com_user, ENT_COMPAT, 'utf-8');
 
         // Check Url
         $com_url = Request::getUrl('com_url', '', 'POST');
@@ -168,24 +168,24 @@ if (!empty($_POST)) {
         if (!empty($error_message)) {
             $op = 'preview';
         }
-        // End add by voltan
+        // End added by voltan
     }
 
     $com_mode   = htmlspecialchars(Request::getString('com_mode', 'flat', 'POST'));
     $com_order  = Request::getInt('com_order', XOOPS_COMMENT_OLD1ST, 'POST') ;
     $com_itemid = Request::getInt('com_itemid', 0, 'POST');
     $com_pid    = Request::getInt('com_pid', 0, 'POST');
-    $com_rootid = Request::getInt('com_rootid', 0, 'post');
-    $com_status = Request::getInt('com_status', 0, 'post');
-    $dosmiley   = (int) Request::getBool('dosmiley', false, 'post');
-    $doxcode    = (int) Request::getBool('doxcode', false, 'post');
-    $dobr       = (int) Request::getBool('dobr', false, 'post');
-    $dohtml     = (int) Request::getBool('dohtml', false, 'post');
-    $doimage    = (int) Request::getBool('doimage', false, 'post');
-    $com_icon   = Request::getString('com_icon', '', 'post');
+    $com_rootid = Request::getInt('com_rootid', 0, 'POST');
+    $com_status = Request::getInt('com_status', 0, 'POST');
+    $dosmiley   = (int) Request::getBool('dosmiley', false, 'POST');
+    $doxcode    = (int) Request::getBool('doxcode', false, 'POST');
+    $dobr       = (int) Request::getBool('dobr', false, 'POST');
+    $dohtml     = (int) Request::getBool('dohtml', false, 'POST');
+    $doimage    = (int) Request::getBool('doimage', false, 'POST');
+    $com_icon   = Request::getString('com_icon', '', 'POST');
 
-    $com_title  = Request::getString('com_title', _NOTITLE, 'post');
-    $com_text   = Request::getString('com_text', '', 'post');
+    $com_title  = Request::getString('com_title', _NOTITLE, 'POST');
+    $com_text   = Request::getString('com_text', '', 'POST');
 } else {
     exit();
 }
@@ -240,9 +240,9 @@ switch ($op) {
         XoopsLoad::load('XoopsRequest');
         $doimage         = 1;
         $comment_handler = xoops_getHandler('comment');
-        // Start add by voltan
+        // Start added by voltan
         $myts = \MyTextSanitizer::getInstance();
-        // Edit add by voltan
+        // Edit added by voltan
         $add_userpost     = false;
         $call_approvefunc = false;
         $call_updatefunc  = false;
@@ -360,7 +360,7 @@ switch ($op) {
             }
             $comment->setVar('com_uid', $uid);
         }
-        $comment->setVar('com_title', XoopsRequest::getString('com_title', _NOTITLE, 'POST'));
+        $comment->setVar('com_title', Request::getString('com_title', _NOTITLE, 'POST'));
         $comment->setVar('com_text', $com_text);
         $comment->setVar('dohtml', $dohtml);
         $comment->setVar('dosmiley', $dosmiley);
@@ -370,11 +370,11 @@ switch ($op) {
         $comment->setVar('com_icon', $com_icon);
         $comment->setVar('com_modified', time());
         $comment->setVar('com_modid', $com_modid);
-        // Start add by voltan
+        // Start added by voltan
         $comment->setVar('com_user', $com_user);
         $comment->setVar('com_email', $com_email);
         $comment->setVar('com_url', $com_url);
-        // End add by voltan
+        // End added by voltan
         if (isset($extra_params)) {
             $comment->setVar('com_exparams', $extra_params);
         }

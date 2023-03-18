@@ -34,7 +34,7 @@ abstract class KeyAbstract
     /**
      * KeyAbstract constructor.
      * @param StorageInterface $storage key store
-     * @param string           $name    case insensitive key name, allow only A-Z, 0-9, _ and -
+     * @param string           $name    case-insensitive key name, allow only A-Z, 0-9, _ and -
      */
     public function __construct(StorageInterface $storage, $name)
     {
