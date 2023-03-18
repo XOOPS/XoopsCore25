@@ -146,10 +146,7 @@ class XoopsModelRead extends XoopsModelAbstract
         }
         $result = $this->handler->db->query($sql, $limit, $start);
         if (!$this->handler->db->isResultSet($result)) {
-//            throw new \RuntimeException(
-//                \sprintf(_DB_QUERY_ERROR, $sql) . $this->handler->db->error(), E_USER_ERROR
-//            );
-            return $ret;        
+            return $ret;
             }
 
         $myts = \MyTextSanitizer::getInstance();
@@ -179,10 +176,7 @@ class XoopsModelRead extends XoopsModelAbstract
         }
         $result = $this->handler->db->query($sql, $limit, $start);
         if (!$this->handler->db->isResultSet($result)) {
-//            throw new \RuntimeException(
-//                \sprintf(_DB_QUERY_ERROR, $sql) . $this->handler->db->error(), E_USER_ERROR
-//            );
-            return $ret;    
+            return $ret;
          }
 
         while (false !== ($myrow = $this->handler->db->fetchArray($result))) {

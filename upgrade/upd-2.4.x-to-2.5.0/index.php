@@ -32,9 +32,6 @@ class Upgrade_250 extends XoopsUpgrade
         $sql = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` IN ('break1', 'usetips')";
         $result = $GLOBALS['xoopsDB']->queryF($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
-            // throw new \RuntimeException(
-            //     \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(), E_USER_ERROR
-            // );
             return false;
         }
         list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
@@ -50,9 +47,6 @@ class Upgrade_250 extends XoopsUpgrade
         $sql = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('tplfile') . "` WHERE `tpl_file` IN ('system_header.html', 'system_header.tpl') AND `tpl_type` = 'admin'";
         $result = $GLOBALS['xoopsDB']->queryF($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
-            // throw new \RuntimeException(
-            //     \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(), E_USER_ERROR
-            // );
             return false;
         }
         list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
@@ -70,9 +64,6 @@ class Upgrade_250 extends XoopsUpgrade
         $sql = 'SELECT conf_id FROM `' . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` IN ('cpanel')";
         $result = $GLOBALS['xoopsDB']->queryF($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
-            // throw new \RuntimeException(
-            //     \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(), E_USER_ERROR
-            // );
             return false;
         }
         $count = $GLOBALS['xoopsDB']->fetchRow($result);

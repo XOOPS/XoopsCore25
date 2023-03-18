@@ -346,9 +346,6 @@ class SystemBlockHandler extends XoopsPersistableObjectHandler
         }
         $result = $this->db->query($sql, $limit, $start);
         if (!$this->db->isResultSet($result)) {
-            // throw new \RuntimeException(
-            //       \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
-            // );
             return $ret;
         }
 

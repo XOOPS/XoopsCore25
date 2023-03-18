@@ -118,9 +118,6 @@ class XoopsRankHandler extends XoopsObjectHandler
         $sql    = 'SELECT * FROM ' . $this->db->prefix('ranks') . ' WHERE rank_id = ' . $this->db->quoteString($id);
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
-            //       // throw new \RuntimeException(
-            //       \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
-            // );
             $ret = null;
 
             return $ret;
@@ -159,9 +156,6 @@ class XoopsRankHandler extends XoopsObjectHandler
         }
         $result = $this->db->query($sql, $limit, $start);
         if (!$this->db->isResultSet($result)) {
-            //      // throw new \RuntimeException(
-            //       \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
-            // );
             return $ret;
         }
         $myts = \MyTextSanitizer::getInstance();

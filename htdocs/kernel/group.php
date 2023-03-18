@@ -152,9 +152,6 @@ class XoopsGroupHandler extends XoopsObjectHandler
             $sql = 'SELECT * FROM ' . $this->db->prefix('groups') . ' WHERE groupid=' . $id;
             $result = $this->db->query($sql);
             if (!$this->db->isResultSet($result)) {
-                // throw new \RuntimeException(
-                //       \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
-                // );
                 return $group;
             }
             $numrows = $this->db->getRowsNum($result);
@@ -246,9 +243,6 @@ class XoopsGroupHandler extends XoopsObjectHandler
         }
         $result = $this->db->query($sql, $limit, $start);
          if (!$this->db->isResultSet($result)) {
-             // throw new \RuntimeException(
-             //       \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
-             // );
             return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
@@ -348,9 +342,6 @@ class XoopsMembershipHandler extends XoopsObjectHandler
             $sql = 'SELECT * FROM ' . $this->db->prefix('groups_users_link') . ' WHERE linkid=' . $id;
             $result = $this->db->query($sql);
             if (!$this->db->isResultSet($result)) {
-                // throw new \RuntimeException(
-                //       \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
-                // );
                 return $mship;
             }
             $numrows = $this->db->getRowsNum($result);
@@ -443,9 +434,6 @@ class XoopsMembershipHandler extends XoopsObjectHandler
         }
         $result = $this->db->query($sql, $limit, $start);
         if (!$this->db->isResultSet($result)) {
-            // throw new \RuntimeException(
-            //       \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
-            // );
             return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
@@ -497,9 +485,6 @@ class XoopsMembershipHandler extends XoopsObjectHandler
         }
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
-            // throw new \RuntimeException(
-            //       \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
-            // );
             return false;
         }
 
@@ -521,9 +506,6 @@ class XoopsMembershipHandler extends XoopsObjectHandler
         $sql    = 'SELECT groupid FROM ' . $this->db->prefix('groups_users_link') . ' WHERE uid=' . (int)$uid;
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
-            // throw new \RuntimeException(
-            //       \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
-            // );
             return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
@@ -549,9 +531,6 @@ class XoopsMembershipHandler extends XoopsObjectHandler
         $sql    = 'SELECT uid FROM ' . $this->db->prefix('groups_users_link') . ' WHERE groupid=' . (int)$groupid;
         $result = $this->db->query($sql, $limit, $start);
         if (!$this->db->isResultSet($result)) {
-            // throw new \RuntimeException(
-            //       \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
-            // );
             return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {

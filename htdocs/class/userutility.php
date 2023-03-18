@@ -287,9 +287,6 @@ class XoopsUserUtility
             $sql     = 'SELECT uid, uname, name FROM ' . $xoopsDB->prefix('users') . ' WHERE level > 0 AND uid IN(' . implode(',', array_unique($userid)) . ')';
             $result = $xoopsDB->query($sql);
             if (!$xoopsDB->isResultSet($result)) {
-                // throw new \RuntimeException(
-                //   \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
-                // );
                 return $users;
             }
 

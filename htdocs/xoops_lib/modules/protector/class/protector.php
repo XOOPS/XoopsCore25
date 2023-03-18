@@ -1272,9 +1272,6 @@ class Protector
         $sql = 'SELECT COUNT(*) FROM ' . $xoopsDB->prefix($this->mydirname . '_access') . " WHERE ip={$ip4sql}";
         $result = $xoopsDB->query($sql);
         if (!$xoopsDB->isResultSet($result)) {
-            //            throw new \RuntimeException(
-            //                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
-            //            );
             return false;
         }
         list($crawler_count) = $xoopsDB->fetchRow($result);

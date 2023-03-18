@@ -37,9 +37,6 @@ function xoops_module_update_pm(XoopsModule $module, $oldversion = null)
         $sql = 'SHOW COLUMNS FROM ' . $xoopsDB->prefix('priv_msgs');
         $result = $xoopsDB->queryF($sql);
         if (!$xoopsDB->isResultSet($result)) {
-            // throw new \RuntimeException(
-            //   \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
-            // );
             return false;
         }
         // Migrate from existent pm module

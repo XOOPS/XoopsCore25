@@ -1395,9 +1395,6 @@ class XoopsPersistableObjectHandler extends XoopsObjectHandler
         //$sql = "SELECT {$select} FROM {$this->table} WHERE {$this->keyName} = " . $this->db->quote($id);
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
-            // throw new \RuntimeException(
-            //       \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
-            // );
             return $object;
         }
         if (!$this->db->getRowsNum($result)) {

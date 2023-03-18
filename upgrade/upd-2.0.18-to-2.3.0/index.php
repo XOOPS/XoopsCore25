@@ -48,9 +48,6 @@ class Upgrade_230 extends XoopsUpgrade
         $sql = 'SELECT COUNT(*) FROM `' . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` IN ('welcome_type', 'cpanel')";
         $result = $GLOBALS['xoopsDB']->queryF($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
-            // throw new \RuntimeException(
-            //     \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(), E_USER_ERROR
-            // );
             return false;
         }
         list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
@@ -67,9 +64,6 @@ class Upgrade_230 extends XoopsUpgrade
         $sql    = "SHOW TABLES LIKE '" . $GLOBALS['xoopsDB']->prefix('cache_model') . "'";
         $result = $GLOBALS['xoopsDB']->queryF($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
-            // throw new \RuntimeException(
-            //     \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(), E_USER_ERROR
-            // );
             return false;
         }
 
@@ -96,9 +90,6 @@ class Upgrade_230 extends XoopsUpgrade
         $sql = 'SHOW KEYS FROM `' . $GLOBALS['xoopsDB']->prefix('block_module_link') . '`';
         $result = $GLOBALS['xoopsDB']->queryF($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
-            // throw new \RuntimeException(
-            //     \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(), E_USER_ERROR
-            // );
             return false;
         }
         while (false !== ($row = $GLOBALS['xoopsDB']->fetchArray($result))) {
@@ -118,9 +109,6 @@ class Upgrade_230 extends XoopsUpgrade
         $sql = 'SHOW KEYS FROM `' . $GLOBALS['xoopsDB']->prefix('block_module_link') . '`';
         $result = $GLOBALS['xoopsDB']->queryF($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
-            // throw new \RuntimeException(
-            //     \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(), E_USER_ERROR
-            // );
             return false;
         }
         $keys_drop   = array();
@@ -280,18 +268,12 @@ class Upgrade_230 extends XoopsUpgrade
         $sql = 'ALTER DATABASE `' . XOOPS_DB_NAME . '` DEFAULT CHARACTER SET ' . $GLOBALS['xoopsDB']->quote($charset) . ' COLLATE ' . $GLOBALS['xoopsDB']->quote($collation);
         $result = $GLOBALS['xoopsDB']->queryF($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
-            // throw new \RuntimeException(
-            //     \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(), E_USER_ERROR
-            // );
             return false;
         }
 
         $sql = "SHOW TABLES LIKE '" . XOOPS_DB_PREFIX . "\_%'";
         $result = $GLOBALS['xoopsDB']->queryF($sql);
         if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
-            // throw new \RuntimeException(
-            //     \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(), E_USER_ERROR
-            // );
             return false;
         }
         $tables = array();

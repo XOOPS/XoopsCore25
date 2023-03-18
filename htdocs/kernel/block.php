@@ -938,9 +938,6 @@ class XoopsBlock extends XoopsObject
         }
         $result = $db->query($sql);
         if (!$db->isResultSet($result)) {
-            //               // throw new \RuntimeException(
-            //       \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
-            // );
             return 0;
         }
         list($count) = $db->fetchRow($result);
@@ -1155,9 +1152,6 @@ class XoopsBlockHandler extends XoopsObjectHandler
         }
         $result = $this->db->query($sql, $limit, $start);
         if (!$this->db->isResultSet($result)) {
-            //    // throw new \RuntimeException(
-            //       \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
-            // );
             return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {

@@ -505,9 +505,6 @@ class XoopsMemberHandler
 
         $result = $this->userHandler->db->query($sql, $limit, $start);
         if (!$this->userHandler->db->isResultSet($result)) {
-            //            throw new \RuntimeException(
-            //                \sprintf(_DB_QUERY_ERROR, $sql) . $this->userHandler->db->error(), E_USER_ERROR
-            //            );
             return $ret;
         }
         while (false !== ($myrow = $this->userHandler->db->fetchArray($result))) {
@@ -557,9 +554,6 @@ class XoopsMemberHandler
         }
         $result = $this->userHandler->db->query($sql);
         if (!$this->userHandler->db->isResultSet($result)) {
-            //            throw new \RuntimeException(
-            //                \sprintf(_DB_QUERY_ERROR, $sql) . $this->userHandler->db->error(), E_USER_ERROR
-            //            );
             return $ret;
         }
         list($ret) = $this->userHandler->db->fetchRow($result);

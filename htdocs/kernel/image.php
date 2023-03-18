@@ -199,9 +199,6 @@ class XoopsImageHandler extends XoopsObjectHandler
             $sql = 'SELECT i.*, b.image_body FROM ' . $this->db->prefix('image') . ' i LEFT JOIN ' . $this->db->prefix('imagebody') . ' b ON b.image_id=i.image_id WHERE i.image_id=' . $id;
             $result = $this->db->query($sql);
             if (!$this->db->isResultSet($result)) {
-                // throw new \RuntimeException(
-                //       \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
-                // );
                 return $image;
             }
             $numrows = $this->db->getRowsNum($result);
@@ -325,9 +322,6 @@ class XoopsImageHandler extends XoopsObjectHandler
         }
         $result = $this->db->query($sql, $limit, $start);
         if (!$this->db->isResultSet($result)) {
-            // throw new \RuntimeException(
-            //       \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
-            // );
             return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
@@ -358,9 +352,6 @@ class XoopsImageHandler extends XoopsObjectHandler
         }
         $result = $this->db->query($sql);
         if (!$this->db->isResultSet($result)) {
-            // throw new \RuntimeException(
-            //       \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
-            // );
             return 0;
         }
         list($count) = $this->db->fetchRow($result);
