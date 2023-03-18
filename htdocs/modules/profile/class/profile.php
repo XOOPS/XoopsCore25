@@ -25,7 +25,6 @@
  */
 class ProfileProfile extends XoopsObject
 {
-    //PHP 8.2 Dynamic properties deprecated
     public $profile_id;
     public $handler;
 
@@ -327,7 +326,7 @@ class ProfileProfileHandler extends XoopsPersistableObjectHandler
         $sql_users = $sql_select . $sql_from . $sql_clause . $sql_order;
         $result    = $this->db->query($sql_users, $limit, $start);
 
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             return array(array(), array(), 0);
         }
         $user_handler = xoops_getHandler('user');
