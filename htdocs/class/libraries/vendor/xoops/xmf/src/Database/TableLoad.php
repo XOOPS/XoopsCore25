@@ -135,9 +135,6 @@ class TableLoad
         }
 
         $result = $db->query($sql);
-        if (!$db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
-        }
         $row = $db->fetchArray($result);
         $count = $row['count'];
         $db->freeRecordSet($result);
@@ -166,9 +163,6 @@ class TableLoad
         }
         $rows = array();
         $result = $db->query($sql);
-        if (!$db->isResultSet($result)) {
-            \trigger_error("Query Failed! SQL: $sql- Error: " . $db->error(), E_USER_ERROR);
-        }
         if ($result) {
             while (false !== ($row = $db->fetchArray($result))) {
                 $rows[] = $row;
