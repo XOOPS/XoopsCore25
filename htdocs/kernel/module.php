@@ -33,7 +33,7 @@ class XoopsModule extends XoopsObject
      *
      * @var array
      */
-    public $adminmenu = array();
+    public $adminmenu;
     /**
      *
      * @var array
@@ -172,7 +172,7 @@ class XoopsModule extends XoopsObject
 
         return $this->modinfo;
     }
-	
+
 	/**
      * Get statut
      *
@@ -182,7 +182,7 @@ class XoopsModule extends XoopsObject
     {
 		return substr(strrchr($this->getVar('version'), '-'), 1);
     }
-	
+
 	/**
      * Compares two "XOOPS-standardized" version number strings.
      *
@@ -864,7 +864,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
             while (false !== ($myrow = $this->db->fetchArray($result))) {
                 $block_id_arr[] = $myrow['block_id'];
             }
-        }    
+        }
         // loop through block_id_arr
         if (isset($block_id_arr)) {
             foreach ($block_id_arr as $i) {
