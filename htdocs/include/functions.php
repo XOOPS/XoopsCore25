@@ -19,8 +19,6 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /** @var \XoopsNotificationHandler $notification_handler */
 
-require_once __DIR__ . '/common.php';
-
 /**
  * xoops_getHandler()
  *
