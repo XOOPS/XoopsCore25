@@ -1,5 +1,5 @@
 <div class="txtcenter">
-    <form style="margin-top: 0;" action="{xoAppUrl 'fuser.php'}" method="post">
+    <form style="margin-top: 0;" action="<{xoAppUrl 'user.php'}>" method="post">
         <{$block.lang_username}><br>
         <input type="text" name="uname" size="12" value="<{$block.unamevalue}>" maxlength="25"/><br>
         <{$block.lang_password}><br>
