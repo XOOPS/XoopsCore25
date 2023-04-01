@@ -55,17 +55,17 @@
         },
         {
             "name": "firebase/php-jwt",
-            "version": "v5.5.1",
-            "version_normalized": "5.5.1.0",
+            "version": "v6.0.0",
+            "version_normalized": "6.0.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/firebase/php-jwt.git",
-                "reference": "83b609028194aa042ea33b5af2d41a7427de80e6"
+                "reference": "0541cba75ab108ef901985e68055a92646c73534"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/83b609028194aa042ea33b5af2d41a7427de80e6",
-                "reference": "83b609028194aa042ea33b5af2d41a7427de80e6",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/0541cba75ab108ef901985e68055a92646c73534",
+                "reference": "0541cba75ab108ef901985e68055a92646c73534",
                 "shasum": ""
             },
             "require": {
@@ -77,7 +77,7 @@
             "suggest": {
                 "paragonie/sodium_compat": "Support EdDSA (Ed25519) signatures when libsodium is not present"
             },
-            "time": "2021-11-08T20:18:51+00:00",
+            "time": "2022-01-24T15:18:34+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -109,7 +109,7 @@
             ],
             "support": {
                 "issues": "https://github.com/firebase/php-jwt/issues",
-                "source": "https://github.com/firebase/php-jwt/tree/v5.5.1"
+                "source": "https://github.com/firebase/php-jwt/tree/v6.0.0"
             },
             "install-path": "../firebase/php-jwt"
         },
@@ -355,17 +355,17 @@
         },
         {
             "name": "smarty/smarty",
-            "version": "v3.1.47",
-            "version_normalized": "3.1.47.0",
+            "version": "v3.1.48",
+            "version_normalized": "3.1.48.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/smarty-php/smarty.git",
-                "reference": "a09364fe1706cb465e910eb040e592053d7effb8"
+                "reference": "2fc443806cdcaee4441be4d0bb09f8fa56a17f2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/smarty-php/smarty/zipball/a09364fe1706cb465e910eb040e592053d7effb8",
-                "reference": "a09364fe1706cb465e910eb040e592053d7effb8",
+                "url": "https://api.github.com/repos/smarty-php/smarty/zipball/2fc443806cdcaee4441be4d0bb09f8fa56a17f2c",
+                "reference": "2fc443806cdcaee4441be4d0bb09f8fa56a17f2c",
                 "shasum": ""
             },
             "require": {
@@ -375,7 +375,7 @@
                 "phpunit/phpunit": "^7.5 || ^6.5 || ^5.7 || ^4.8",
                 "smarty/smarty-lexer": "^3.1"
             },
-            "time": "2022-09-14T11:29:00+00:00",
+            "time": "2023-03-28T19:45:54+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -415,7 +415,7 @@
                 "forum": "http://www.smarty.net/forums/",
                 "irc": "irc://irc.freenode.org/smarty",
                 "issues": "https://github.com/smarty-php/smarty/issues",
-                "source": "https://github.com/smarty-php/smarty/tree/v3.1.47"
+                "source": "https://github.com/smarty-php/smarty/tree/v3.1.48"
             },
             "install-path": "../smarty/smarty"
         },
@@ -863,21 +863,21 @@
         },
         {
             "name": "xoops/xmf",
-            "version": "v1.2.26",
-            "version_normalized": "1.2.26.0",
+            "version": "v1.2.27",
+            "version_normalized": "1.2.27.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/XOOPS/xmf.git",
-                "reference": "8987315e9575d94abaf6c7964d0eddd00ec0a992"
+                "reference": "c52381bc84ca0050d93472181a006e4b0aaaa470"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/XOOPS/xmf/zipball/8987315e9575d94abaf6c7964d0eddd00ec0a992",
-                "reference": "8987315e9575d94abaf6c7964d0eddd00ec0a992",
+                "url": "https://api.github.com/repos/XOOPS/xmf/zipball/c52381bc84ca0050d93472181a006e4b0aaaa470",
+                "reference": "c52381bc84ca0050d93472181a006e4b0aaaa470",
                 "shasum": ""
             },
             "require": {
-                "firebase/php-jwt": "^5.0",
+                "firebase/php-jwt": "6.0.0",
                 "kint-php/kint": "^3.3",
                 "paragonie/random_compat": "^2",
                 "php": ">=5.3.9",
@@ -888,7 +888,7 @@
                 "phpunit/phpunit": "^7.0",
                 "roave/security-advisories": "dev-master"
             },
-            "time": "2022-04-13T15:15:11+00:00",
+            "time": "2023-03-19T16:02:58+00:00",
             "type": "project",
             "installation-source": "dist",
             "autoload": {
@@ -903,7 +903,7 @@
             "description": "XMF - XOOPS Module Framework",
             "support": {
                 "issues": "https://github.com/XOOPS/xmf/issues",
-                "source": "https://github.com/XOOPS/xmf/tree/v1.2.26"
+                "source": "https://github.com/XOOPS/xmf/tree/v1.2.27"
             },
             "install-path": "../xoops/xmf"
         }

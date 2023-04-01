@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.48] - 2023-03-28
+
+### Security
+- Fixed Cross site scripting vulnerability in Javascript escaping.  This addresses CVE-2023-28447.
+
+### Fixed
+- Output buffer is now cleaned for internal PHP errors as well, not just for Exceptions [#514](https://github.com/smarty-php/smarty/issues/514)
+
 ## [3.1.47] - 2022-09-14
 
 ### Security
@@ -14,7 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixed use of `rand()` without a parameter in math function [#794](https://github.com/smarty-php/smarty/issues/794)
 - Fixed unselected year/month/day not working in html_select_date [#395](https://github.com/smarty-php/smarty/issues/395)
-
+- Updated requirement contraint for 'php' in composer.json to correctly reflect that Smarty3 does not support PHP8. Please upgrade to Smarty4 to use PHP8. 
+ 
 ## [3.1.46] - 2022-08-01
 
 ### Fixed
