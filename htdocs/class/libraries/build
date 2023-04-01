@@ -3,5 +3,7 @@ COMPOSER='composer.dist.json' composer update --prefer-dist --no-dev -a
 rm -r vendor/smottt/wideimage/demo
 rm -r vendor/smottt/wideimage/test
 rm -r vendor/kint-php/kint/build
+# apply patches
+patch -N vendor/symfony/yaml/Inline.php patches/Inline.php.patch
 # freshen public suffix list
 vendor/bin/reloadpsl
