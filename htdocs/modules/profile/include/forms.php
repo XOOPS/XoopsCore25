@@ -524,10 +524,10 @@ function profile_getUserForm(XoopsUser $user, ProfileProfile $profile = null, $a
             $fieldinfo['element']  = $fields[$i]->getEditElement($user, $profile);
             $fieldinfo['required'] = $fields[$i]->getVar('field_required');
 
-            $key              = @$all_categories[$fields[$i]->getVar('cat_id')]['cat_weight'] * $count_fields + $fields[$i]->getVar('cat_id');
+            $key              = isset($all_categories[$fields[$i]->getVar('cat_id')]['cat_weight']) ? (int)($all_categories[$fields[$i]->getVar('cat_id')]['cat_weight'] * $count_fields) + $fields[$i]->getVar('cat_id') : 0;
             $elements[$key][] = $fieldinfo;
             $weights[$key][]  = $fields[$i]->getVar('field_weight');
-            $categories[$key] = @$all_categories[$fields[$i]->getVar('cat_id')];
+            $categories[$key] = isset($all_categories[$fields[$i]->getVar('cat_id')]) ? $all_categories[$fields[$i]->getVar('cat_id')] : null;
         }
     }
 

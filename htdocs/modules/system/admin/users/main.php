@@ -105,7 +105,7 @@ switch ($op) {
             redirect_header('admin.php?fct=users', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
         }
 
-        if (@isset($_REQUEST['memberslist_id']) || @$_REQUEST['memberslist_id'] !== '') {
+        if (isset($_REQUEST['memberslist_id']) && !empty($_REQUEST['memberslist_id'])) {
             $xoBreadCrumb->render();
             $error = '';
             foreach ($_REQUEST['memberslist_id'] as $del) {

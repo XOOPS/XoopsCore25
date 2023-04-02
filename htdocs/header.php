@@ -36,7 +36,7 @@ require_once $GLOBALS['xoops']->path('class/template.php');
 require_once $GLOBALS['xoops']->path('class/theme.php');
 require_once $GLOBALS['xoops']->path('class/theme_blocks.php');
 
-if (@$GLOBALS['xoopsOption']['template_main']) {
+if (isset($GLOBALS['xoopsOption']['template_main'])) {
 	if (false === strpos($GLOBALS['xoopsOption']['template_main'], ':')) {
 		$GLOBALS['xoopsOption']['template_main'] = 'db:' . $GLOBALS['xoopsOption']['template_main'];
 	}
@@ -50,7 +50,7 @@ $xoopsThemeFactory->defaultTheme  = $xoopsConfig['theme_set'];
 /**
  * @var xos_opal_Theme
  */
-$xoTheme  = $xoopsThemeFactory->createInstance(array('contentTemplate' => @$xoopsOption['template_main']));
+$xoTheme  = $xoopsThemeFactory->createInstance(array('contentTemplate' => isset($xoopsOption['template_main'])? $xoopsOption['template_main'] : array()));
 $xoopsTpl = $xoTheme->template;
 
 $xoopsPreload->triggerEvent('core.header.addmeta');
@@ -76,7 +76,7 @@ if (@is_object($xoTheme->plugins['xos_logos_PageBuilder'])) {
 
 // Sets cache time
 if (!empty($xoopsModule)) {
-	$xoTheme->contentCacheLifetime = @$xoopsConfig['module_cache'][$xoopsModule->getVar('mid', 'n')];
+	$xoTheme->contentCacheLifetime = isset($xoopsConfig['module_cache'][$xoopsModule->getVar('mid', 'n')]) ? $xoopsConfig['module_cache'][$xoopsModule->getVar('mid', 'n')] : 0;
 	// Tricky solution for setting cache time for homepage
 } elseif (!empty($GLOBALS['xoopsOption']['template_main']) && $GLOBALS['xoopsOption']['template_main'] === 'db:system_homepage.tpl') {
 	$xoTheme->contentCacheLifetime = 604800;

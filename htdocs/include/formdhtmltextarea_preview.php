@@ -24,7 +24,7 @@ $myts                   = \MyTextSanitizer::getInstance();
 XoopsLoad::load('XoopsRequest');
 $content = rawurldecode(XoopsRequest::getText('text', '', 'POST'));
 
-if (!$GLOBALS['xoopsSecurity']->validateToken(@$_POST['token'], false)) {
+if (!$GLOBALS['xoopsSecurity']->validateToken(XoopsRequest::getString('token'), false)) {
     $content = 'Direct access is not allowed!!!';
 }
 $html    = empty($_POST['html']) ? 0 : 1;

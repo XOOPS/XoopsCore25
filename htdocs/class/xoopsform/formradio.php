@@ -60,9 +60,9 @@ class XoopsFormRadio extends XoopsFormElement
     /**
      * Constructor
      *
-     * @param string $caption Caption
-     * @param string $name    "name" attribute
-     * @param string $value   Pre-selected value
+     * @param string      $caption Caption
+     * @param string      $name    "name" attribute
+     * @param string|null $value   Pre-selected value
      * @param string $delimeter
      */
     public function __construct($caption, $name, $value = null, $delimeter = '&nbsp;')

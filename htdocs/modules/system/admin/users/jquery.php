@@ -28,11 +28,7 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
     exit(_NOPERM);
 }
 
-if (isset($_REQUEST['op'])) {
-    $op = $_REQUEST['op'];
-} else {
-    @$op = 'default';
-}
+$op = Request::getString('op', 'default', 'REQUEST');
 
 switch ($op) {
 

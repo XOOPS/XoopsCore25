@@ -22,7 +22,7 @@ function protector_prepare()
     array_walk_recursive($_POST, 'protector_phar_check');
 
     // bandwidth limitation
-    if (@$conf['bwlimit_count'] >= 10) {
+    if (isset($conf['bwlimit_count']) && $conf['bwlimit_count'] >= 10) {
         $bwexpire = $protector->get_bwlimit();
         if ($bwexpire > time()) {
             header('HTTP/1.0 503 Service unavailable');
@@ -43,10 +43,15 @@ function protector_prepare()
     }
 
     // reliable ips
-    $reliable_ips = @unserialize(@$conf['reliable_ips'], array('allowed_classes' => false));
-    if (!is_array($reliable_ips)) {
+    if (isset($conf['reliable_ips'])) {
+        $reliable_ips = unserialize($conf['reliable_ips'], array('allowed_classes' => false));
+    } else {
+        $reliable_ips = array();
+    }
+
         // for the environment of (buggy core version && magic_quotes_gpc)
-        $reliable_ips = @unserialize(stripslashes(@$conf['reliable_ips']), array('allowed_classes' => false));
+    if (!is_array($reliable_ips) && isset($conf['reliable_ips'])) {
+        $reliable_ips = unserialize(stripslashes($conf['reliable_ips']), array('allowed_classes' => false));
         if (!is_array($reliable_ips)) {
             $reliable_ips = array();
         }
@@ -59,7 +64,8 @@ function protector_prepare()
     }
 
     // "DB Layer Trapper"
-    $force_override = strstr(@$_SERVER['REQUEST_URI'], 'protector/admin/index.php?page=advisory') ? true : false;
+    $force_override = (strstr($_SERVER['REQUEST_URI'], 'protector/admin/index.php?page=advisory') !== false) ? true : false;
+
     // $force_override = true ;
     if ($force_override || !empty($conf['enable_dblayertrap'])) {
         @define('PROTECTOR_ENABLED_ANTI_SQL_INJECTION', 1);
@@ -90,8 +96,8 @@ function protector_prepare()
 
     // Variables contamination
     if (!$protector->check_contami_systemglobals()) {
-        if (@$conf['contami_action'] & 4) {
-            if (@$conf['contami_action'] & 8) {
+        if (isset($conf['contami_action']) && ($conf['contami_action'] & 4)) {
+            if ($conf['contami_action'] & 8) {
                 $protector->_should_be_banned = true;
             } else {
                 $protector->_should_be_banned_time0 = true;
@@ -100,7 +106,7 @@ function protector_prepare()
         }
 
         $protector->output_log($protector->last_error_type);
-        if (@$conf['contami_action'] & 2) {
+        if (isset($conf['contami_action']) && ($conf['contami_action'] & 2)) {
             $protector->purge();
         }
     }

@@ -62,7 +62,7 @@ class XoopsSystemGui
         require_once XOOPS_ROOT_PATH . '/class/template.php';
         require_once XOOPS_ROOT_PATH . '/class/theme.php';
 
-        if (@$GLOBALS['xoopsOption']['template_main']) {
+        if (isset($GLOBALS['xoopsOption']['template_main'])) {
             if (false === strpos($GLOBALS['xoopsOption']['template_main'], ':')) {
                 $GLOBALS['xoopsOption']['template_main'] = 'db:' . $GLOBALS['xoopsOption']['template_main'];
             }
@@ -72,7 +72,7 @@ class XoopsSystemGui
         $this->xoTheme     =& $adminThemeFactory->createInstance(array(
                                                                      'folderName'      => $this->foldername,
                                                                      'themesPath'      => 'modules/system/themes',
-                                                                     'contentTemplate' => @$GLOBALS['xoopsOption']['template_main']));
+                                                                     'contentTemplate' => isset($GLOBALS['xoopsOption']['template_main'])? $GLOBALS['xoopsOption']['template_main'] :''));
 
         $this->xoTheme->loadLocalization('admin');
         $this->template =& $this->xoTheme->template;

@@ -62,7 +62,7 @@ class xos_opal_ThemeFactory
     {
         // Grab the theme folder from request vars if present
         if (empty($options['folderName'])) {
-            if (($req = @$_REQUEST['xoops_theme_select']) && $this->isThemeAllowed($req)) {
+            if (isset($_REQUEST['xoops_theme_select']) && ($req = $_REQUEST['xoops_theme_select']) && $this->isThemeAllowed($req)) {
                 $options['folderName'] = $req;
                 if (isset($_SESSION) && $this->allowUserSelection) {
                     $_SESSION[$this->xoBundleIdentifier]['defaultTheme'] = $req;
@@ -797,7 +797,7 @@ class xos_opal_Theme
                 case 'script':
                     foreach ($this->metas[$type] as $attrs) {
                         $str .= '<script' . $this->renderAttributes($attrs) . '>';
-                        if (@$attrs['_']) {
+                        if (isset($attrs['_'])) {
                             $str .= "\n//<![CDATA[\n" . $attrs['_'] . "\n//]]>";
                         }
                         $str .= "</script>\n";
@@ -812,8 +812,8 @@ class xos_opal_Theme
                     break;
                 case 'stylesheet':
                     foreach ($this->metas[$type] as $attrs) {
-                        if (@$attrs['_']) {
-                            $str .= '<style' . $this->renderAttributes($attrs) . ">\n/* <![CDATA[ */\n" . $attrs['_'] . "\n/* //]]> */\n</style>";
+                        if (isset($attrs['_'])) {
+                            $str .= '<style' . $this->renderAttributes($attrs) . ">\n/* <![CDATA[ */\n" . (isset($attrs['_'])?$attrs['_']:'') . "\n/* //]]> */\n</style>";
                         } else {
                             $str .= '<link rel="stylesheet"' . $this->renderAttributes($attrs) . " />\n";
                         }

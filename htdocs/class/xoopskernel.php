@@ -163,9 +163,10 @@ class xos_kernel_Xoops2
          */
         if (empty($_SERVER['REQUEST_URI'])) { // Not defined by IIS
             // Under some configs, IIS makes SCRIPT_NAME point to php.exe :-(
-            if (!($_SERVER['REQUEST_URI'] = @$_SERVER['PHP_SELF'])) {
+            if (!(isset($_SERVER['PHP_SELF']) && ($_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF']))) {
                 $_SERVER['REQUEST_URI'] = $_SERVER['SCRIPT_NAME'];
             }
+
             if (isset($_SERVER['QUERY_STRING'])) {
                 $_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING'];
             }

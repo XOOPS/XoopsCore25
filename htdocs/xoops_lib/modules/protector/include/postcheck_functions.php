@@ -8,18 +8,18 @@ function protector_postcommon()
     global $xoopsUser, $xoopsModule;
 
     // patch for 2.2.x from xoops.org (I know this is not so beautiful...)
-    if (substr(@XOOPS_VERSION, 6, 3) > 2.0 && false !== stripos(@$_SERVER['REQUEST_URI'], 'modules/system/admin.php?fct=preferences')) {
+    if (defined('XOOPS_VERSION') && substr(XOOPS_VERSION, 6, 3) > 2.0 && isset($_SERVER['REQUEST_URI']) && false !== stripos($_SERVER['REQUEST_URI'], 'modules/system/admin.php?fct=preferences')) {
         /* @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
         /** @var XoopsModule $module */
-        $module = $module_handler->get((int)(@$_GET['mod']));
+        $module = (isset($_GET['mod'])) ? $module_handler->get((int)$_GET['mod']) : null;
         if (is_object($module)) {
             $module->getInfo();
         }
     }
 
     // configs writable check
-    if (@$_SERVER['REQUEST_URI'] === '/admin.php' && !is_writable(dirname(__DIR__) . '/configs')) {
+    if (isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] === '/admin.php' && !is_writable(dirname(__DIR__) . '/configs')) {
         trigger_error('You should turn the directory ' . dirname(__DIR__) . '/configs writable', E_USER_WARNING);
     }
 
@@ -62,7 +62,8 @@ function protector_postcommon()
     }
 
     // reliable ips
-    $reliable_ips = @unserialize(@$conf['reliable_ips'], array('allowed_classes' => false));
+    $reliable_ips = isset($conf['reliable_ips']) ? unserialize($conf['reliable_ips'], array('allowed_classes' => false)) : null;
+
     if (is_array($reliable_ips)) {
         foreach ($reliable_ips as $reliable_ip) {
             if (!empty($reliable_ip) && preg_match('/' . $reliable_ip . '/', $_SERVER['REMOTE_ADDR'])) {
@@ -72,9 +73,9 @@ function protector_postcommon()
     }
 
     // user information (uid and can be banned)
-    if (is_object(@$xoopsUser)) {
+    if (isset($xoopsUser) && is_object($xoopsUser)) {
         $uid     = $xoopsUser->getVar('uid');
-        $can_ban = count(@array_intersect($xoopsUser->getGroups(), @unserialize(@$conf['bip_except'], array('allowed_classes' => false)))) ? false : true;
+        $can_ban = count(array_intersect($xoopsUser->getGroups(), unserialize($conf['bip_except'], array('allowed_classes' => false)))) ? false : true;
     } else {
         // login failed check
         if ((!empty($_POST['uname']) && !empty($_POST['pass'])) || (!empty($_COOKIE['autologin_uname']) && !empty($_COOKIE['autologin_pass']))) {
@@ -84,9 +85,10 @@ function protector_postcommon()
         $can_ban = true;
     }
     // CHECK for spammers IPS/EMAILS during POST Actions
-    if (@$conf['stopforumspam_action'] !== 'none') {
+    if (isset($conf['stopforumspam_action']) && $conf['stopforumspam_action'] !== 'none') {
         $protector->stopforumspam($uid);
     }
+
 
     // If precheck has already judged that they should be banned
     if ($can_ban && $protector->_should_be_banned) {
@@ -97,11 +99,11 @@ function protector_postcommon()
 
     // DOS/CRAWLER skipping based on 'dirname' or getcwd()
     $dos_skipping  = false;
-    $skip_dirnames = explode('|', @$conf['dos_skipmodules']);
+    $skip_dirnames = isset($conf['dos_skipmodules']) ? explode('|', $conf['dos_skipmodules']) : array();
     if (!is_array($skip_dirnames)) {
         $skip_dirnames = array();
     }
-    if (is_object(@$xoopsModule)) {
+    if (isset($xoopsModule) && is_object($xoopsModule)) {
         if (in_array($xoopsModule->getVar('dirname'), $skip_dirnames)) {
             $dos_skipping = true;
         }
@@ -125,7 +127,7 @@ function protector_postcommon()
     }
 
     // check session hi-jacking
-    $masks = @$conf['session_fixed_topbit'];
+    $masks = isset($conf['session_fixed_topbit']) ? $conf['session_fixed_topbit'] : null;
     $maskArray = explode('/', $masks);
     $ipv4Mask = empty($maskArray[0]) ? 24 : $maskArray[0];
     $ipv6Mask = (!isset($maskArray[1])) ? 56 : $maskArray[1];
@@ -142,7 +144,7 @@ function protector_postcommon()
     $_SESSION['protector_last_ip'] = $ip->asReadable();
 
     // SQL Injection "Isolated /*"
-    if (!$protector->check_sql_isolatedcommentin(@$conf['isocom_action'] & 1)) {
+    if (!$protector->check_sql_isolatedcommentin(isset($conf['isocom_action']) ? $conf['isocom_action'] & 1 : 0)) {
         if (($conf['isocom_action'] & 8) && $can_ban) {
             $protector->register_bad_ips();
         } elseif (($conf['isocom_action'] & 4) && $can_ban) {
@@ -155,7 +157,7 @@ function protector_postcommon()
     }
 
     // SQL Injection "UNION"
-    if (!$protector->check_sql_union(@$conf['union_action'] & 1)) {
+    if (!$protector->check_sql_union(isset($conf['union_action']) ? $conf['union_action'] & 1 : 0)) {
         if (($conf['union_action'] & 8) && $can_ban) {
             $protector->register_bad_ips();
         } elseif (($conf['union_action'] & 4) && $can_ban) {

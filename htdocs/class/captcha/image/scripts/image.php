@@ -244,18 +244,20 @@ class XoopsCaptchaImageHandler
     {
         if ($RandImage = $this->loadBackground()) {
             $ImageType = @getimagesize($RandImage);
-            switch (@$ImageType[2]) {
-                case 1:
-                    $BackgroundImage = imagecreatefromgif($RandImage);
-                    break;
+            if (isset($ImageType[2])) {
+                switch ($ImageType[2]) {
+                    case 1:
+                        $BackgroundImage = imagecreatefromgif($RandImage);
+                        break;
 
-                case 2:
-                    $BackgroundImage = imagecreatefromjpeg($RandImage);
-                    break;
+                    case 2:
+                        $BackgroundImage = imagecreatefromjpeg($RandImage);
+                        break;
 
-                case 3:
-                    $BackgroundImage = imagecreatefrompng($RandImage);
-                    break;
+                    case 3:
+                        $BackgroundImage = imagecreatefrompng($RandImage);
+                        break;
+                }
             }
         }
         if (!empty($BackgroundImage)) {

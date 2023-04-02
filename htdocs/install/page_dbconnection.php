@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     foreach ($params as $name) {
         $vars[$name] = $_POST[$name];
     }
-    $vars['DB_PCONNECT'] = @$_POST['DB_PCONNECT'] ? 1 : 0;
+    $vars['DB_PCONNECT'] = isset($_POST['DB_PCONNECT']) ? 1 : 0;
 }
 
 $error = '';

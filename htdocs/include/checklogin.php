@@ -104,11 +104,12 @@ if (false !== $user) {
         } else {
             $url .= $_SERVER['HTTP_HOST'];
         }
-        if (@$parsed['path']) {
+        if (isset($parsed['path']) && $parsed['path']) {
             if (strncmp($parsed['path'], $xoops_redirect, strlen($parsed['path']))) {
                 $url .= $parsed['path'];
             }
         }
+
         $url .= $xoops_redirect;
     } else {
         $url = XOOPS_URL . '/index.php';

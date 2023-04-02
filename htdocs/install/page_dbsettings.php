@@ -42,7 +42,7 @@ if (0 !== $link->connect_errno) {
     exit();
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['charset']) && @$_GET['action'] === 'updateCollation') {
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['charset']) && (isset($_GET['action']) && $_GET['action'] === 'updateCollation')) {
     echo xoFormFieldCollation('DB_COLLATION', $vars['DB_COLLATION'], DB_COLLATION_LABEL, DB_COLLATION_HELP, $link, $_GET['charset']);
     exit();
 }

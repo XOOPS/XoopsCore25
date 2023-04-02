@@ -203,7 +203,7 @@ switch ($op) {
             }
             if (!empty($criteria) || !empty($_POST['mail_to_group'])) {
                 $criteria_object = new CriteriaCompo();
-                $criteria_object->setStart(@$_POST['mail_start']);
+                $criteria_object->setStart(isset($_POST['mail_start']) ? $_POST['mail_start'] : 0);
                 $criteria_object->setLimit($limit);
                 foreach ($criteria as $c) {
                     list($field, $op, $value) = explode(' ', $c);
@@ -264,7 +264,7 @@ switch ($op) {
                             $form->addElement($group_hidden);
                         }
                     }
-                    $inactive_hidden    = new XoopsFormHidden('mail_inactive', @$_POST['mail_inactive']);
+                    $inactive_hidden    = new XoopsFormHidden('mail_inactive', isset($_POST['mail_inactive']) ? $_POST['mail_inactive'] : '');
                     $lastlog_min_hidden = new XoopsFormHidden('mail_lastlog_min', $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['mail_lastlog_min'])));
                     $lastlog_max_hidden = new XoopsFormHidden('mail_lastlog_max', $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['mail_lastlog_max'])));
                     $regd_min_hidden    = new XoopsFormHidden('mail_regd_min', $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['mail_regd_min'])));
@@ -276,7 +276,7 @@ switch ($op) {
                     $subject_hidden     = new XoopsFormHidden('mail_subject', $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['mail_subject'])));
                     $body_hidden        = new XoopsFormHidden('mail_body', $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['mail_body'])));
                     $start_hidden       = new XoopsFormHidden('mail_start', $_POST['mail_start'] + $limit);
-                    $mail_mailok_hidden = new XoopsFormHidden('mail_mailok', $myts->htmlSpecialChars($myts->stripSlashesGPC(@$_POST['mail_mailok'])));
+                    $mail_mailok_hidden = new XoopsFormHidden('mail_mailok', isset($_POST['mail_mailok']) ? $myts->stripSlashesGPC(trim($_POST['mail_mailok'])) : '');
                     $op_hidden          = new XoopsFormHidden('op', 'send');
                     $submit_button      = new XoopsFormButton('', 'mail_submit', _AM_SYSTEM_MAILUSERS_SENDNEXT, 'submit');
                     $sent_label         = new XoopsFormLabel(_AM_SYSTEM_MAILUSERS_SENT, sprintf(_AM_SYSTEM_MAILUSERS_SENTNUM, $_POST['mail_start'] + 1, $_POST['mail_start'] + $limit, $count_criteria + $added_count - $limit));

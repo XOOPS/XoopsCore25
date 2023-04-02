@@ -53,7 +53,7 @@ if (!$allowed) {
                           'xoops_requesturi'  => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES),
                           'xoops_sitename'    => htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES),
                           'xoops_slogan'      => htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES),
-                          'xoops_dirname'     => @$xoopsModule ? $xoopsModule->getVar('dirname') : 'system',
+                          'xoops_dirname'     => !empty($xoopsModule) ? $xoopsModule->getVar('dirname') : 'system',
                           'xoops_banner'      => $xoopsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
                           'xoops_pagetitle'   => isset($xoopsModule) && is_object($xoopsModule) ? $xoopsModule->getVar('name') : htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES),
                           'lang_login'        => _LOGIN,

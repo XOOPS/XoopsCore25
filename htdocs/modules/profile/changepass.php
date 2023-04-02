@@ -41,9 +41,9 @@ if (!isset($_POST['submit'])) {
     $config_handler             = xoops_getHandler('config');
     $GLOBALS['xoopsConfigUser'] = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
     $myts                       = \MyTextSanitizer::getInstance();
-    $oldpass                    = @$myts->stripSlashesGPC(trim($_POST['oldpass']));
-    $password                   = @$myts->stripSlashesGPC(trim($_POST['newpass']));
-    $vpass                      = @$myts->stripSlashesGPC(trim($_POST['vpass']));
+    $oldpass                    = isset($_POST['oldpass']) ? $myts->stripSlashesGPC(trim($_POST['oldpass'])) : '';
+    $password                   = isset($_POST['newpass']) ? $myts->stripSlashesGPC(trim($_POST['newpass'])) : '';
+    $vpass                      = isset($_POST['vpass']) ? $myts->stripSlashesGPC(trim($_POST['vpass'])) : '';
     $errors                     = array();
     if (!password_verify($oldpass, $GLOBALS['xoopsUser']->getVar('pass', 'n'))) {
         $errors[] = _PROFILE_MA_WRONGPASSWORD;

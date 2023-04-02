@@ -19,7 +19,9 @@ class Protector_postcommon_post_deny_by_httpbl extends ProtectorFilterAbstract
 
         global $xoopsUser;
 
-        $rev_ip = implode('.', array_reverse(explode('.', @$_SERVER['REMOTE_ADDR'])));
+        if (isset($_SERVER['REMOTE_ADDR'])) {
+            $rev_ip = implode('.', array_reverse(explode('.', $_SERVER['REMOTE_ADDR'])));
+        }
         // test
         // $rev_ip = '162.142.248.125' ;
 

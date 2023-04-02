@@ -45,7 +45,7 @@ if (!function_exists('protector_onupdate_base')) {
         // configs (Though I know it is not a recommended way...)
         $sql = 'SHOW COLUMNS FROM ' . $db->prefix('config') . " LIKE 'conf_title'";
         $result = $db->query($sql);
-        if ($db->isResultSet($result) && ($myrow = $db->fetchArray($result)) && @$myrow['Type'] === 'varchar(30)') {
+        if ($db->isResultSet($result) && ($myrow = $db->fetchArray($result)) && isset($myrow['Type']) && $myrow['Type'] === 'varchar(30)') {
             $db->queryF('ALTER TABLE ' . $db->prefix('config') . " MODIFY `conf_title` varchar(255) NOT NULL default '', MODIFY `conf_desc` varchar(255) NOT NULL default ''");
         }
 
@@ -130,7 +130,7 @@ if (!function_exists('protector_onupdate_base')) {
      */
     function protector_message_append_onupdate(&$module_obj, &$log)
     {
-        if (is_array(@$GLOBALS['msgs'])) {
+        if (isset($GLOBALS['msgs']) && is_array($GLOBALS['msgs'])) {
             foreach ($GLOBALS['msgs'] as $message) {
                 $log->add(strip_tags($message));
             }
