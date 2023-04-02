@@ -188,7 +188,7 @@ class xos_logos_PageBuilder
         $cacheid = $this->generateCacheId('blk_' . $xobject->getVar('bid'));
 
         $xoopsLogger = XoopsLogger::getInstance();
-        if (!$bcachetime || !$template->is_cached($tplName, $cacheid)) {
+        if (!$bcachetime || !$template->isCached($tplName, $cacheid)) {
 
             //Get theme metas
             if ($this->theme && $bcachetime) {

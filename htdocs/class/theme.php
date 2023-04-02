@@ -449,7 +449,7 @@ class xos_opal_Theme
                 $uri = preg_replace("/([\?&])(" . SID . "$|" . SID . '&)/', "\\1", $uri);
             }
             $this->contentCacheId = $this->generateCacheId('page_' . substr(md5($uri), 0, 8));
-            if ($this->template->is_cached($template, $this->contentCacheId)) {
+            if ($this->template->isCached($template, $this->contentCacheId)) {
                 $xoopsLogger = XoopsLogger::getInstance();
                 $xoopsLogger->addExtra($template, sprintf('Cached (regenerates every %d seconds)', $this->contentCacheLifetime));
                 $this->render(null, null, $template);
