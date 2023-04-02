@@ -505,13 +505,13 @@ class xos_opal_Theme
         if (!empty($GLOBALS['xoopsOption']['xoops_pagetitle'])) {
             $this->template->assign('xoops_pagetitle', $GLOBALS['xoopsOption']['xoops_pagetitle']);
         }
-        $header = empty($GLOBALS['xoopsOption']['xoops_module_header']) ? $this->template->get_template_vars('xoops_module_header') : $GLOBALS['xoopsOption']['xoops_module_header'];
+        $header = empty($GLOBALS['xoopsOption']['xoops_module_header']) ? $this->template->getTemplateVars('xoops_module_header') : $GLOBALS['xoopsOption']['xoops_module_header'];
 
         //save meta information of cached pages
         if ($this->contentCacheLifetime && $this->contentCacheId && !$contentTpl) {
             $content['htmlHeadStrings'] = $this->htmlHeadStrings;
             $content['metas']           = $this->metas;
-            $content['xoops_pagetitle'] = $this->template->get_template_vars('xoops_pagetitle');
+            $content['xoops_pagetitle'] = $this->template->getTemplateVars('xoops_pagetitle');
             $content['header']          = $header;
             $cache->write($this->contentCacheId, $content);
         }
@@ -531,7 +531,7 @@ class xos_opal_Theme
             }
         }
 
-        // We assume no overlap between $GLOBALS['xoopsOption']['xoops_module_header'] and $this->template->get_template_vars( 'xoops_module_header' ) ?
+        // We assume no overlap between $GLOBALS['xoopsOption']['xoops_module_header'] and $this->template->getTemplateVars( 'xoops_module_header' ) ?
         $this->template->assign('xoops_module_header', $this->renderMetas(null, true) . "\n" . $header);
 
         if ($canvasTpl) {
