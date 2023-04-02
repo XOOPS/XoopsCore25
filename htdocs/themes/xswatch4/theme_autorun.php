@@ -2,7 +2,13 @@
 xoops_load('XoopsFormRendererBootstrap4');
 XoopsFormRenderer::getInstance()->set(new XoopsFormRendererBootstrap4());
 
-/* Check if tinyMce 5 is seleected in system configuration */
+/** @var XoopsTpl */
+global $xoopsTpl;
+if(!empty($xoopsTpl)) {
+    $xoopsTpl->addConfigDir(__DIR__);
+}
+
+/* Check if tinyMce 5 is selected in system configuration */
 $editor = xoops_getModuleOption('blocks_editor', 'system');
 if ($editor != 'tinymce5') {
     $editor = xoops_getModuleOption('comments_editor', 'system');

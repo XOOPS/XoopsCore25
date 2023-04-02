@@ -19,7 +19,7 @@
         </li>
         <{/if}>
         <li>
-        <a class="tooltip" href="<{xoAppUrl modules/system/help.php}>" title="<{$smarty.const._AM_SYSTEM_HELP}>">
+        <a class="tooltip" href="<{xoAppUrl 'modules/system/help.php'}>" title="<{$smarty.const._AM_SYSTEM_HELP}>">
             <img src='<{"$theme_icons/help.png"}>'/>
         </a>
         </li>

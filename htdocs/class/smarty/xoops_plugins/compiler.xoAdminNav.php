@@ -11,18 +11,21 @@
 /**
  * xoAdminNav Smarty compiler plug-in
  *
- * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright    (c) 2000-2022 XOOPS Project (https://xoops.org)
  * @license          GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author           Andricq Nicolas (AKA MusS)
  * @since            2.5
- * @param $argStr
- * @param $smarty
+ * @param string[] $params
+ * @param Smarty   $smarty
  * @return string
  */
 
-function smarty_compiler_xoAdminNav($argStr, &$smarty)
+function smarty_compiler_xoAdminNav($params, $smarty)
 {
     global $xoops, $xoTheme;
+
+    $argStr = reset($params);
+    $argStr = trim($argStr,"' \t\n\r\0");
 
     $icons = xoops_getModuleOption('typebreadcrumb', 'system');
     if ($icons == '') {
@@ -37,5 +40,5 @@ function smarty_compiler_xoAdminNav($argStr, &$smarty)
         }
     }
 
-    return "\necho '" . addslashes($url) . "';";
+    return "<?php echo '" . addslashes($url) . "'; ?>";
 }
