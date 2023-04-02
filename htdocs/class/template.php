@@ -163,7 +163,7 @@ class XoopsTpl extends SmartyBC
     {
         $compile_id = $this->compile_id;
         $this->setCompileId($module_dirname, $template_set, $theme_set);
-        return $this->clear_compiled_tpl(null, $compile_id);
+        return $this->clearCompiledTemplate(null, $compile_id);
     }
 
     /**
