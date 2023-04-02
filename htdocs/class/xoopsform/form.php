@@ -126,7 +126,7 @@ class XoopsForm
         $this->_action  = $action;
         $this->_method  = $method;
         $this->_summary = $summary;
-        if ($addtoken != false) {
+        if (false != $addtoken) {
             $this->addElement(new XoopsFormHiddenToken());
         }
     }
@@ -162,38 +162,62 @@ class XoopsForm
         switch ($hashinfo) {
             case 'md5':
 
-                @$var['name'] = md5(get_class($object));
+                if (!isset($var['name'])) {
+                    $var['name'] = '';
+                }
+                $var['name'] = md5(get_class($object));
 
                 foreach (get_object_vars($object) as $key => $value) {
                     if ($key !== '_objid') {
-                        @$var['value'] = $this->getArrayID($value, $key, $var['value'], $hashinfo);
+                        if (!isset($var['value'])) {
+                            $var['value'] = '';
+                        }
+                        $var['value'] = $this->getArrayID($value, $key, $var['value'], $hashinfo);
                     }
                 }
 
                 foreach (get_class_methods($object) as $key => $value) {
-                    @$var['func'] = $this->getArrayID($value, $key, $var['func'], $hashinfo);
+                    if (!isset($var['func'])) {
+                        $var['func'] = '';
+                    }
+                    $var['func'] = $this->getArrayID($value, $key, $var['func'], $hashinfo);
                 }
 
-                @$this->_objid = md5($var['name'] . ':' . $var['func'] . ':' . $var['value']);
+                if (!isset($this->_objid)) {
+                    $this->_objid = '';
+                }
+                $this->_objid = md5($var['name'] . ':' . $var['func'] . ':' . $var['value']);
 
                 return $this->_objid;
                 break;
 
             default:
 
-                @$var['name'] = sha1(get_class($object));
+                if (!isset($var['name'])) {
+                    $var['name'] = '';
+                }
+                $var['name'] = sha1(get_class($object));
 
                 foreach (get_object_vars($object) as $key => $value) {
                     if ($key !== '_objid') {
-                        @$var['value'] = $this->getArrayID($value, $key, $var['value'], $hashinfo);
+                        if (!isset($var['value'])) {
+                            $var['value'] = '';
+                        }
+                        $var['value'] = $this->getArrayID($value, $key, $var['value'], $hashinfo);
                     }
                 }
 
                 foreach (get_class_methods($object) as $key => $value) {
-                    @$var['func'] = $this->getArrayID($value, $key, $var['func'], $hashinfo);
+                    if (!isset($var['func'])) {
+                        $var['func'] = '';
+                    }
+                    $var['func'] = $this->getArrayID($value, $key, $var['func'], $hashinfo);
                 }
 
-                @$this->_objid = sha1($var['name'] . ':' . $var['func'] . ':' . $var['value']);
+                if (!isset($this->_objid)) {
+                    $this->_objid = '';
+                }
+                $this->_objid = sha1($var['name'] . ':' . $var['func'] . ':' . $var['value']);
 
                 return $this->_objid;
 
@@ -212,23 +236,29 @@ class XoopsForm
     {
         switch ($hashinfo) {
             case 'md5':
+                if (!isset($ret)) {
+                    $ret = '';
+                }
                 if (is_array($value)) {
                     foreach ($value as $keyb => $valueb) {
-                        @$ret = md5($ret . ':' . $this->getArrayID($valueb, $keyb, $ret, $hashinfo));
+                        $ret = md5($ret . ':' . $this->getArrayID($valueb, $keyb, $ret, $hashinfo));
                     }
                 } else {
-                    @$ret = md5($ret . ':' . $key . ':' . $value);
+                    $ret = md5($ret . ':' . $key . ':' . $value);
                 }
 
                 return $ret;
                 break;
             default:
+                if (!isset($ret)) {
+                    $ret = '';
+                }
                 if (is_array($value)) {
                     foreach ($value as $keyb => $valueb) {
-                        @$ret = sha1($ret . ':' . $this->getArrayID($valueb, $keyb, $ret, $hashinfo));
+                        $ret = sha1($ret . ':' . $this->getArrayID($valueb, $keyb, $ret, $hashinfo));
                     }
                 } else {
-                    @$ret = sha1($ret . ':' . $key . ':' . $value);
+                    $ret = sha1($ret . ':' . $key . ':' . $value);
                 }
 
                 return $ret;
