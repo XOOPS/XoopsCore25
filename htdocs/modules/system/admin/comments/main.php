@@ -15,7 +15,7 @@
  * @package
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
- */ 
+ */
 use Xmf\Request;
 
 // Check users rights
@@ -300,8 +300,8 @@ switch ($op) {
                 $comments['comments_modid']        = @$module_array[$comments_arr[$i]->getVar('com_modid')];
                 //$comments['comments_view_edit_delete'] = '<img class="cursorpointer" onclick="display_dialog('.$com_id.', true, true, \'slide\', \'slide\', 300, 500);" src="images/icons/view.png" alt="'._AM_SYSTEM_COMMENTS_VIEW.'" title="'._AM_SYSTEM_COMMENTS_VIEW.'" /><a href="admin/comments/comment_edit.php?com_id='.$com_id.'"><img src="./images/icons/edit.png" border="0" alt="'._EDIT.'" title="'._EDIT.'"></a><a href="admin/comments/comment_delete.php?com_id='.$com_id.'"><img src="./images/icons/delete.png" border="0" alt="'._DELETE.'" title="'._DELETE.'"></a>';
 
-                $xoopsTpl->append_by_ref('comments', $comments);
-                $xoopsTpl->append_by_ref('comments_popup', $comments);
+                $xoopsTpl->appendByRef('comments', $comments);
+                $xoopsTpl->appendByRef('comments_popup', $comments);
                 unset($comments);
             }
 

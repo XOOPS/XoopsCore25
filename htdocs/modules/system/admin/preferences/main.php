@@ -548,7 +548,7 @@ switch ($op) {
             $preferences['newline'] = ($count_prefs % $nbcolonnes_pref == 1);// ? true : false;
             $xoopsTpl->assign('newline', $preferences['newline']);
 
-            $xoopsTpl->append_by_ref('preferences', $preferences);
+            $xoopsTpl->appendByRef('preferences', $preferences);
             unset($preferences);
         }
         $xoopsTpl->assign('menu', 1);

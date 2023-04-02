@@ -204,7 +204,7 @@ switch ($action) {
                     }
 					$search_arr['module_name'] = $module_name;
 					$search_arr['module_data'] = $results_arr;
-					$xoopsTpl->append_by_ref('search', $search_arr);
+					$xoopsTpl->appendByRef('search', $search_arr);
 					unset($results_arr, $search_arr);
                 }
             }
@@ -271,7 +271,7 @@ switch ($action) {
 				if (!empty($results[$i]['time'])){
 					$results_arr['time'] = formatTimestamp((int)$results[$i]['time']);
 				}
-				$xoopsTpl->append_by_ref('results_arr', $results_arr);
+				$xoopsTpl->appendByRef('results_arr', $results_arr);
 				unset($results_arr);
             }
             $search_url = XOOPS_URL . '/search.php?query=' . urlencode(stripslashes(implode(' ', $queries)));
