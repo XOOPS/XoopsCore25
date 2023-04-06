@@ -19,7 +19,7 @@
             <tr class="<{cycle values='even,odd'}>">
                 <td class="bold width15">
                     <a class="tooltip" href="admin.php?fct=<{$menuitem.file}>" title="<{$smarty.const._AM_SYSTEM_GO}>: <{$menuitem.title}>">
-                        <img class="xo-imgmini" src='<{$theme_icons}>/<{$menu.icon}>' alt="<{$menu.title}>"/>
+                        <img class="xo-imgmini" src='<{$theme_icons}>/<{$menuitem.icon}>' alt="<{$menuitem.title}>"/>
                         <{$menuitem.title}>
                     </a>
                 </td>
