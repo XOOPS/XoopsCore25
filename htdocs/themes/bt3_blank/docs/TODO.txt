@@ -1,0 +1,21 @@
+----- publisher module ------
+To have the publisher module working 100% with the xBootstrap theme you have to overwrite some module files
+
+Go to publisher >> Preferences
+Change "Articles display type" to: -WF Section Style-
+
+   
+----- Avatars Dimensions --
+Recomended avatars dimensions:
+350x350
+
+----- eXtgallery Thumbs Dimensions --
+Recomended:
+350x240
+And regenerate all albuns thumbs.
+
+----- XOOPS Tube module ---
+Recomended xoops tube thumbs dimensions:
+300x250
+
+Replace file "video.php" in "xoopstube/include/" by file in "xBootstrap/docs/xoopstube/include/video.php"
