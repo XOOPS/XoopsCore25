@@ -1,8 +1,8 @@
 <{include file="db:system_header.tpl"}>
 <{if $install_mods|default:false}>
     <script type="text/javascript">
-        IMG_ON = '<{xoAdminIcons "success.png"}>';
-        IMG_OFF = '<{xoAdminIcons "cancel.png"}>';
+        IMG_ON = "<{xoAdminIcons 'success.png'}>";
+        IMG_OFF = "<{xoAdminIcons 'cancel.png'}>";
     </script>
     <div class="floatleft">
         <img class="cursorpointer tooltip" onclick="system_moduleLargeView();" src="<{xoAdminIcons 'view_large.png'}>"
@@ -219,7 +219,7 @@
     </form>
 <{/if}>
 
-<{if $toinstall_mods|default:false}>
+<{if !empty($toinstall_mods)}>
     <div class="floatleft">
         <img class="cursorpointer tooltip" onclick="system_moduleLargeView();" src="<{xoAdminIcons 'view_large.png'}>"
              alt="<{$smarty.const._AM_SYSTEM_MODULES_VIEWLARGE}>" title="<{$smarty.const._AM_SYSTEM_MODULES_VIEWLARGE}>"/>
