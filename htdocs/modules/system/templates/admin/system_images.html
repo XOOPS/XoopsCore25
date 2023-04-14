@@ -292,8 +292,8 @@
     </div>
 <{/if}>
 <script type="text/javascript">
-    IMG_ON = '<{xoAdminIcons "success.png"}>';
-    IMG_OFF = '<{xoAdminIcons "cancel.png"}>';
+    IMG_ON = "<{xoAdminIcons 'success.png'}>";
+    IMG_OFF = "<{xoAdminIcons 'cancel.png'}>";
 
     $('.lightbox').lightBox({
         imageLoading: 'language/<{$xoops_language|default:english}>/images/lightbox-ico-loading.gif',
