@@ -1,7 +1,7 @@
 <{include file="db:system_header.tpl"}>
 <script type="text/javascript">
-    IMG_ON = '<{xoAdminIcons "success.png"}>';
-    IMG_OFF = '<{xoAdminIcons "cancel.png"}>';
+    IMG_ON = "<{xoAdminIcons 'success.png'}>";
+    IMG_OFF = "<{xoAdminIcons 'cancel.png'}>";
 </script>
 <table cellspacing="1" class="outer">
     <thead>
@@ -19,7 +19,7 @@
             <tr class="<{cycle values='even,odd'}>">
                 <td class="bold width15">
                     <a class="tooltip" href="admin.php?fct=<{$menuitem.file}>" title="<{$smarty.const._AM_SYSTEM_GO}>: <{$menuitem.title}>">
-                        <img class="xo-imgmini" src='<{$theme_icons}>/<{$menuitem.icon}>' alt="<{$menuitem.title}>"/>
+                        <img class="xo-imgmini" src='<{$theme_icons}>/<{$menuitem.icon|default:''}>' alt="<{$menuitem.title|default:''}>"/>
                         <{$menuitem.title}>
                     </a>
                 </td>

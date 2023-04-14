@@ -1,8 +1,8 @@
 <{include file="db:system_header.tpl"}>
 <{if $install_mods|default:false}>
     <script type="text/javascript">
-        IMG_ON = '<{xoAdminIcons "success.png"}>';
-        IMG_OFF = '<{xoAdminIcons "cancel.png"}>';
+        IMG_ON = "<{xoAdminIcons 'success.png'}>";
+        IMG_OFF = "<{xoAdminIcons 'cancel.png'}>";
     </script>
     <div class="floatleft">
         <img class="cursorpointer tooltip" onclick="system_moduleLargeView();" src="<{xoAdminIcons 'view_large.png'}>"

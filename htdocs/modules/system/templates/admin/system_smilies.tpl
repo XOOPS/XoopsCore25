@@ -1,8 +1,8 @@
 <!--smilies-->
 <{include file="db:system_header.tpl"}>
 <script type="text/javascript">
-    IMG_ON = '<{xoAdminIcons "success.png"}>';
-    IMG_OFF = '<{xoAdminIcons "cancel.png"}>';
+    IMG_ON = "<{xoAdminIcons 'success.png'}>";
+    IMG_OFF = "<{xoAdminIcons 'cancel.png'}>";
 </script>
 <{if $smilies_count|default:false == true}>
     <div class="floatright">
