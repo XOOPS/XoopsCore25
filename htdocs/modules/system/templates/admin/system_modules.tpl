@@ -219,7 +219,7 @@
     </form>
 <{/if}>
 
-<{if !empty($toinstall_mods)}>
+<{if $toinstall_mods|default:false}>
     <div class="floatleft">
         <img class="cursorpointer tooltip" onclick="system_moduleLargeView();" src="<{xoAdminIcons 'view_large.png'}>"
              alt="<{$smarty.const._AM_SYSTEM_MODULES_VIEWLARGE}>" title="<{$smarty.const._AM_SYSTEM_MODULES_VIEWLARGE}>"/>
