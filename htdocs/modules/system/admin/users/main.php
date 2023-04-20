@@ -870,8 +870,8 @@ switch ($op) {
 
                     $users['posts'] = $users_arr[$i]->getVar('posts');
 
-                    $xoopsTpl->append_by_ref('users', $users);
-                    $xoopsTpl->append_by_ref('users_popup', $users);
+                    $xoopsTpl->appendByRef('users', $users);
+                    $xoopsTpl->appendByRef('users_popup', $users);
                     unset($users);
                 }
             } else {
