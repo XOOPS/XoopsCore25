@@ -93,7 +93,7 @@ class xos_kernel_Xoops2
         }
         if (!empty($params)) {
             foreach ($params as $k => $v) {
-                $params[$k] = $k . '=' . rawurlencode($v);
+                $params[$k] = $k . '=' . rawurlencode((string)$v);
             }
             $url .= '?' . implode('&', $params);
         }
