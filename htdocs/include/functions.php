@@ -476,7 +476,7 @@ function xoops_getUserTimestamp($time, $timeoffset = '')
     }
     $usertimestamp = (int)$time + ((float)$timeoffset - $xoopsConfig['server_TZ']) * 3600;
 
-    return $usertimestamp;
+    return (int)$usertimestamp;
 }
 
 /**
