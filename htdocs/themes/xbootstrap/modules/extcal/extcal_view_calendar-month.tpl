@@ -53,7 +53,7 @@
                                     class="extcalTips"
                                     title="<{$event.event_title}> :: <b><{$lang.start}></b> <{$event.formated_event_start}><br /><b><{$lang.end}></b> <{$event.formated_event_end}>"><{$event.event_title}></a>
                         </div>
-                        <div style="background-color:#<{$event.cat.cat_color}>; height:2px; font-size:2px;">
+                        <div style="background-color:#<{$event.cat.cat_color|default:''}>; height:2px; font-size:2px;">
                             &nbsp;
                         </div>
                     <{/if}>
@@ -66,7 +66,7 @@
             <th colspan="8">
                 <{foreach item=cat from=$cats}>
                 <div style="float:left; margin-left:5px;">
-                    <div style="float:left; background-color:#<{$cat.cat_color}>; border:1px solid white; margin-right:5px;">
+                    <div style="float:left; background-color:#<{$cat.cat_color|default:''}>; border:1px solid white; margin-right:5px;">
                         &nbsp;
                     </div>
                     <{$cat.cat_name}>
@@ -78,6 +78,6 @@
 </div>
 
 <div style="text-align:right;"><a
-            href="<{$xoops_url}>/modules/extcal/rss.php?cat=<{$selectedCat}>"><img
+            href="<{$xoops_url}>/modules/extcal/rss.php?cat=<{$selectedCat|default:''}>"><img
                 src="assets/images/icons/rss.gif" alt="RSS Feed"/></a></div>
 <{include file='db:system_notification_select.tpl'}>
