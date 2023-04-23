@@ -624,7 +624,7 @@ class XoopsMediaUploader
         $patterns = array();
         $replaces = array();
         foreach ($this->extensionsToBeSanitized as $ext) {
-            $patterns[] = "/\." . preg_quote($ext) . "\./i";
+            $patterns[] = "/\." . preg_quote($ext, '/') . "\./i";
             $replaces[] = '_' . $ext . '.';
         }
         $this->mediaName = preg_replace($patterns, $replaces, $this->mediaName);

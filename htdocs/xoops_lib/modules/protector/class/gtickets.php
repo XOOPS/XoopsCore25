@@ -374,7 +374,7 @@ if (!class_exists('XoopsGTicket')) {
          */
         public function errorHandler4FindOutput($errNo, $errStr, $errFile, $errLine)
         {
-            if (preg_match('?' . preg_quote(XOOPS_ROOT_PATH) . '([^:]+)\:(\d+)?', $errStr, $regs)) {
+            if (preg_match('#' . preg_quote(XOOPS_ROOT_PATH, '#') . '([^:]+)\:(\d+)?#', $errStr, $regs)) {
                 echo 'Irregular output! check the file ' . htmlspecialchars($regs[1]) . ' line ' . htmlspecialchars($regs[2]);
             } else {
                 echo 'Irregular output! check language files etc.';
