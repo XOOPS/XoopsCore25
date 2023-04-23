@@ -200,7 +200,7 @@ echo "
     <td class='even'>
       <textarea name='bad_ips' id='bad_ips' style='width:360px;height:60px;' spellcheck='false'>$bad_ips4disp</textarea>
       <br>
-      " . htmlspecialchars($protector->get_filepath4badips()) . "
+      " . htmlspecialchars($protector->get_filepath4badips(), ENT_QUOTES | ENT_HTML5) . "
     </td>
   </tr>
   <tr valign='top' align='left'>
@@ -210,7 +210,7 @@ echo "
     <td class='even'>
       <textarea name='group1_ips' id='group1_ips' style='width:360px;height:60px;' spellcheck='false'>$group1_ips4disp</textarea>
       <br>
-      " . htmlspecialchars($protector->get_filepath4group1ips()) . "
+      " . htmlspecialchars($protector->get_filepath4group1ips(), ENT_QUOTES | ENT_HTML5) . "
     </td>
   </tr>
   <tr valign='top' align='left'>

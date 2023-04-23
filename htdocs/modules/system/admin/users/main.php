@@ -153,11 +153,11 @@ switch ($op) {
             $edituser = $member_handler->getUser($uid);
             if ($edituser->getVar('uname', 'n') != $_REQUEST['username'] && $member_handler->getUserCount(new Criteria('uname', $myts->addSlashes($_REQUEST['username']))) > 0) {
                 xoops_cp_header();
-                xoops_error(sprintf(_AM_SYSTEM_USERS_PSEUDO_ERROR, htmlspecialchars($_REQUEST['username'])));
+                xoops_error(sprintf(_AM_SYSTEM_USERS_PSEUDO_ERROR, htmlspecialchars($_REQUEST['username'], ENT_QUOTES | ENT_HTML5)));
                 xoops_cp_footer();
             } elseif ($edituser->getVar('email', 'n') != $_REQUEST['email'] && $member_handler->getUserCount(new Criteria('email', $myts->addSlashes($_REQUEST['email']))) > 0) {
                 xoops_cp_header();
-                xoops_error(sprintf(_AM_SYSTEM_USERS_MAIL_ERROR, htmlspecialchars($_REQUEST['email'])));
+                xoops_error(sprintf(_AM_SYSTEM_USERS_MAIL_ERROR, htmlspecialchars($_REQUEST['email'], ENT_QUOTES | ENT_HTML5)));
                 xoops_cp_footer();
             } else {
                 $edituser->setVar('name', $_REQUEST['name']);
@@ -234,7 +234,7 @@ switch ($op) {
                 $member_handler = xoops_getHandler('member');
                 // make sure the username doesnt exist yet
                 if ($member_handler->getUserCount(new Criteria('uname', $myts->addSlashes($_REQUEST['username']))) > 0) {
-                    $adduser_errormsg = 'User name ' . htmlspecialchars($_REQUEST['username']) . ' already exists';
+                    $adduser_errormsg = 'User name ' . htmlspecialchars($_REQUEST['username'], ENT_QUOTES | ENT_HTML5) . ' already exists';
                 } else {
                     $newuser = $member_handler->createUser();
                     if (isset($user_viewemail)) {
@@ -486,7 +486,7 @@ switch ($op) {
                         $criteria->add(new Criteria('uname', '%' . $myts->addSlashes(trim($_REQUEST['user_uname'])) . '%', 'LIKE'));
                         break;
                 }
-                $requete_pagenav .= '&amp;user_uname=' . htmlspecialchars($_REQUEST['user_uname']) . '&amp;user_uname_match=' . htmlspecialchars($_REQUEST['user_uname_match']);
+                $requete_pagenav .= '&amp;user_uname=' . htmlspecialchars($_REQUEST['user_uname'], ENT_QUOTES | ENT_HTML5) . '&amp;user_uname_match=' . htmlspecialchars($_REQUEST['user_uname_match'], ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'uname : ' . $_REQUEST['user_uname'] . ' et user_uname_match=' . $_REQUEST['user_uname_match'] . '<br>';
             }
             if (!empty($_REQUEST['user_name'])) {
@@ -505,7 +505,7 @@ switch ($op) {
                         $criteria->add(new Criteria('name', '%' . $myts->addSlashes(trim($_POST['user_name'])) . '%', 'LIKE'));
                         break;
                 }
-                $requete_pagenav .= '&amp;user_name=' . htmlspecialchars($_REQUEST['user_name']) . '&amp;user_name_match=' . htmlspecialchars($_REQUEST['user_name_match']);
+                $requete_pagenav .= '&amp;user_name=' . htmlspecialchars($_REQUEST['user_name'], ENT_QUOTES | ENT_HTML5) . '&amp;user_name_match=' . htmlspecialchars($_REQUEST['user_name_match'], ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'name : ' . $_REQUEST['user_name'] . ' et user_name_match=' . $_REQUEST['user_name_match'] . '<br>';
             }
             if (!empty($_REQUEST['user_email'])) {
@@ -524,13 +524,13 @@ switch ($op) {
                         $criteria->add(new Criteria('email', '%' . $myts->addSlashes(trim($_REQUEST['user_email'])) . '%', 'LIKE'));
                         break;
                 }
-                $requete_pagenav .= '&amp;user_email=' . htmlspecialchars($_REQUEST['user_email']) . '&amp;user_email_match=' . htmlspecialchars($_REQUEST['user_email_match']);
+                $requete_pagenav .= '&amp;user_email=' . htmlspecialchars($_REQUEST['user_email'], ENT_QUOTES | ENT_HTML5) . '&amp;user_email_match=' . htmlspecialchars($_REQUEST['user_email_match'], ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'email : ' . $_REQUEST['user_email'] . ' et user_email_match=' . $_REQUEST['user_email_match'] . '<br>';
             }
             if (!empty($_REQUEST['user_url'])) {
                 $url = formatURL(trim($_REQUEST['user_url']));
                 $criteria->add(new Criteria('url', '%' . $myts->addSlashes($url) . '%', 'LIKE'));
-                $requete_pagenav .= '&amp;user_url=' . htmlspecialchars($_REQUEST['user_url']);
+                $requete_pagenav .= '&amp;user_url=' . htmlspecialchars($_REQUEST['user_url'], ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'url : ' . $_REQUEST['user_url'] . '<br>';
             }
             if (!empty($_REQUEST['user_icq'])) {
@@ -549,7 +549,7 @@ switch ($op) {
                         $criteria->add(new Criteria('user_icq', '%' . $myts->addSlashes(trim($_REQUEST['user_icq'])) . '%', 'LIKE'));
                         break;
                 }
-                $requete_pagenav .= '&amp;user_icq=' . htmlspecialchars($_REQUEST['user_icq']) . '&amp;user_icq_match=' . htmlspecialchars($_REQUEST['user_icq_match']);
+                $requete_pagenav .= '&amp;user_icq=' . htmlspecialchars($_REQUEST['user_icq'], ENT_QUOTES | ENT_HTML5) . '&amp;user_icq_match=' . htmlspecialchars($_REQUEST['user_icq_match'], ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'icq : ' . $_REQUEST['user_icq'] . ' et user_icq_match=' . $_REQUEST['user_icq_match'] . '<br>';
             }
             if (!empty($_REQUEST['user_aim'])) {
@@ -568,7 +568,7 @@ switch ($op) {
                         $criteria->add(new Criteria('user_aim', '%' . $myts->addSlashes(trim($_REQUEST['user_aim'])) . '%', 'LIKE'));
                         break;
                 }
-                $requete_pagenav .= '&amp;user_aim=' . htmlspecialchars($_REQUEST['user_aim']) . '&amp;user_aim_match=' . htmlspecialchars($_REQUEST['user_aim_match']);
+                $requete_pagenav .= '&amp;user_aim=' . htmlspecialchars($_REQUEST['user_aim'], ENT_QUOTES | ENT_HTML5) . '&amp;user_aim_match=' . htmlspecialchars($_REQUEST['user_aim_match'], ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'aim : ' . $_REQUEST['user_aim'] . ' et user_aim_match=' . $_REQUEST['user_aim_match'] . '<br>';
             }
             if (!empty($_REQUEST['user_yim'])) {
@@ -587,7 +587,7 @@ switch ($op) {
                         $criteria->add(new Criteria('user_yim', '%' . $myts->addSlashes(trim($_REQUEST['user_yim'])) . '%', 'LIKE'));
                         break;
                 }
-                $requete_pagenav .= '&amp;user_yim=' . htmlspecialchars($_REQUEST['user_yim']) . '&amp;user_yim_match=' . htmlspecialchars($_REQUEST['user_yim_match']);
+                $requete_pagenav .= '&amp;user_yim=' . htmlspecialchars($_REQUEST['user_yim'], ENT_QUOTES | ENT_HTML5) . '&amp;user_yim_match=' . htmlspecialchars($_REQUEST['user_yim_match'], ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'yim : ' . $_REQUEST['user_yim'] . ' et user_yim_match=' . $_REQUEST['user_yim_match'] . '<br>';
             }
             if (!empty($_REQUEST['user_msnm'])) {
@@ -606,25 +606,25 @@ switch ($op) {
                         $criteria->add(new Criteria('user_msnm', '%' . $myts->addSlashes(trim($_REQUEST['user_msnm'])) . '%', 'LIKE'));
                         break;
                 }
-                $requete_pagenav .= '&amp;user_msnm=' . htmlspecialchars($_REQUEST['user_msnm']) . '&amp;user_msnm_match=' . htmlspecialchars($_REQUEST['user_msnm_match']);
+                $requete_pagenav .= '&amp;user_msnm=' . htmlspecialchars($_REQUEST['user_msnm'], ENT_QUOTES | ENT_HTML5) . '&amp;user_msnm_match=' . htmlspecialchars($_REQUEST['user_msnm_match'], ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'msn : ' . $_REQUEST['user_msnm'] . ' et user_msnm_match=' . $_REQUEST['user_msnm_match'] . '<br>';
             }
 
             if (!empty($_REQUEST['user_from'])) {
                 $criteria->add(new Criteria('user_from', '%' . $myts->addSlashes(trim($_REQUEST['user_from'])) . '%', 'LIKE'));
-                $requete_pagenav .= '&amp;user_from=' . htmlspecialchars($_REQUEST['user_from']);
+                $requete_pagenav .= '&amp;user_from=' . htmlspecialchars($_REQUEST['user_from'], ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'from : ' . $_REQUEST['user_from'] . '<br>';
             }
 
             if (!empty($_REQUEST['user_intrest'])) {
                 $criteria->add(new Criteria('user_intrest', '%' . $myts->addSlashes(trim($_REQUEST['user_intrest'])) . '%', 'LIKE'));
-                $requete_pagenav .= '&amp;user_intrest=' . htmlspecialchars($_REQUEST['user_intrest']);
+                $requete_pagenav .= '&amp;user_intrest=' . htmlspecialchars($_REQUEST['user_intrest'], ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'interet : ' . $_REQUEST['user_intrest'] . '<br>';
             }
 
             if (!empty($_REQUEST['user_occ'])) {
                 $criteria->add(new Criteria('user_occ', '%' . $myts->addSlashes(trim($_REQUEST['user_occ'])) . '%', 'LIKE'));
-                $requete_pagenav .= '&amp;user_occ=' . htmlspecialchars($_REQUEST['user_occ']);
+                $requete_pagenav .= '&amp;user_occ=' . htmlspecialchars($_REQUEST['user_occ'], ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'location : ' . $_REQUEST['user_occ'] . '<br>';
             }
 
@@ -634,7 +634,7 @@ switch ($op) {
                 if ($time > 0) {
                     $criteria->add(new Criteria('last_login', $time, '<'));
                 }
-                $requete_pagenav .= '&amp;user_lastlog_more=' . htmlspecialchars($_REQUEST['user_lastlog_more']);
+                $requete_pagenav .= '&amp;user_lastlog_more=' . htmlspecialchars($_REQUEST['user_lastlog_more'], ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'derniere connexion apres : ' . $_REQUEST['user_lastlog_more'] . '<br>';
             }
 
@@ -644,7 +644,7 @@ switch ($op) {
                 if ($time > 0) {
                     $criteria->add(new Criteria('last_login', $time, '>'));
                 }
-                $requete_pagenav .= '&amp;user_lastlog_less=' . htmlspecialchars($_REQUEST['user_lastlog_less']);
+                $requete_pagenav .= '&amp;user_lastlog_less=' . htmlspecialchars($_REQUEST['user_lastlog_less'], ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'derniere connexion avant : ' . $_REQUEST['user_lastlog_less'] . '<br>';
             }
 
@@ -654,7 +654,7 @@ switch ($op) {
                 if ($time > 0) {
                     $criteria->add(new Criteria('user_regdate', $time, '<'));
                 }
-                $requete_pagenav .= '&amp;user_regdate=' . htmlspecialchars($_REQUEST['user_regdate']);
+                $requete_pagenav .= '&amp;user_regdate=' . htmlspecialchars($_REQUEST['user_regdate'], ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'enregistre apres : ' . $_REQUEST['user_reg_more'] . '<br>';
             }
 
@@ -664,19 +664,19 @@ switch ($op) {
                 if ($time > 0) {
                     $criteria->add(new Criteria('user_regdate', $time, '>'));
                 }
-                $requete_pagenav .= '&amp;user_reg_less=' . htmlspecialchars($_REQUEST['user_reg_less']);
+                $requete_pagenav .= '&amp;user_reg_less=' . htmlspecialchars($_REQUEST['user_reg_less'], ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'enregistre avant : ' . $_REQUEST['user_reg_less'] . '<br>';
             }
 
             if (!empty($_REQUEST['user_posts_more']) && is_numeric($_REQUEST['user_posts_more'])) {
                 $criteria->add(new Criteria('posts', (int)$_REQUEST['user_posts_more'], '>'));
-                $requete_pagenav .= '&amp;user_posts_more=' . htmlspecialchars($_REQUEST['user_posts_more']);
+                $requete_pagenav .= '&amp;user_posts_more=' . htmlspecialchars($_REQUEST['user_posts_more'], ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'posts plus de : ' . $_REQUEST['user_posts_more'] . '<br>';
             }
 
             if (!empty($_REQUEST['user_posts_less']) && is_numeric($_REQUEST['user_posts_less'])) {
                 $criteria->add(new Criteria('posts', (int)$_REQUEST['user_posts_less'], '<'));
-                $requete_pagenav .= '&amp;user_posts_less=' . htmlspecialchars($_REQUEST['user_posts_less']);
+                $requete_pagenav .= '&amp;user_posts_less=' . htmlspecialchars($_REQUEST['user_posts_less'], ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'post moins de : ' . $_REQUEST['user_posts_less'] . '<br>';
             }
 
@@ -688,7 +688,7 @@ switch ($op) {
                 } else {
                     $criteria->add(new Criteria('user_mailok', 0, '>='));
                 }
-                $requete_pagenav .= '&amp;user_mailok=' . htmlspecialchars($_REQUEST['user_mailok']);
+                $requete_pagenav .= '&amp;user_mailok=' . htmlspecialchars($_REQUEST['user_mailok'], ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'accept email : ' . $_REQUEST['user_mailok'] . '<br>';
             }
 
@@ -702,7 +702,7 @@ switch ($op) {
                     $user_type = 'actv';
                     $requete_search .= 'actif ou inactif : actif<br>';
                 }
-                $requete_pagenav .= '&amp;user_type=' . htmlspecialchars($_REQUEST['user_type']);
+                $requete_pagenav .= '&amp;user_type=' . htmlspecialchars($_REQUEST['user_type'], ENT_QUOTES | ENT_HTML5);
             } else {
                 $criteria->add(new Criteria('level', 0, '>='));
                 $user_type = '';
@@ -713,7 +713,7 @@ switch ($op) {
             $validsort = array('uname', 'email', 'last_login', 'user_regdate', 'posts');
             if (isset($_REQUEST['user_sort'])) {
                 $sort = (!in_array($_REQUEST['user_sort'], $validsort)) ? 'uid' : $_REQUEST['user_sort'];
-                $requete_pagenav .= '&amp;user_sort=' . htmlspecialchars($_REQUEST['user_sort']);
+                $requete_pagenav .= '&amp;user_sort=' . htmlspecialchars($_REQUEST['user_sort'], ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'order by : ' . $sort . '<br>';
             } else {
                 $sort = 'uid';
@@ -734,7 +734,7 @@ switch ($op) {
             $user_limit = xoops_getModuleOption('users_pager', 'system');
             if (isset($_REQUEST['user_limit'])) {
                 $user_limit = $_REQUEST['user_limit'];
-                $requete_pagenav .= '&amp;user_limit=' . htmlspecialchars($_REQUEST['user_limit']);
+                $requete_pagenav .= '&amp;user_limit=' . htmlspecialchars($_REQUEST['user_limit'], ENT_QUOTES | ENT_HTML5);
                 $requete_search .= 'limit : ' . $user_limit . '<br>';
             } else {
                 $requete_pagenav .= '&amp;user_limit=' . xoops_getModuleOption('users_pager', 'system');
@@ -752,7 +752,7 @@ switch ($op) {
                         $groups = array_map('intval', $_REQUEST['selgroups']);
                     }
                 }
-                $requete_pagenav .= '&amp;selgroups=' . htmlspecialchars($_REQUEST['selgroups']);
+                $requete_pagenav .= '&amp;selgroups=' . htmlspecialchars($_REQUEST['selgroups'], ENT_QUOTES | ENT_HTML5);
             } else {
                 $groups = array();
             }
