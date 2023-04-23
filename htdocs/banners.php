@@ -165,7 +165,7 @@ function bannerstats()
         }
         echo "</table>
               <br><br>
-              <h4 class='content_title'>" . _BANNERS_FOW_IN . htmlspecialchars($xoopsConfig['sitename']) . '</h4><hr />';
+              <h4 class='content_title'>" . _BANNERS_FOW_IN . htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES | ENT_HTML5) . '</h4><hr />';
 
         $sql = 'SELECT bid, imageurl, clickurl, htmlbanner, htmlcode FROM ' . $xoopsDB->prefix('banner') . " WHERE cid={$cid}";
         $result = $xoopsDB->query($sql);

@@ -54,7 +54,7 @@ if ('system' === $xoopsModule->getVar('dirname')) {
             $extraVar = Request::getString($extra_param, 'POST', '');
             $extra_params .=
                 ($extraVar !== '')
-                    ? $extra_param . '=' . htmlspecialchars($extraVar) . '&amp;'
+                    ? $extra_param . '=' . htmlspecialchars($extraVar, ENT_QUOTES | ENT_HTML5) . '&amp;'
                     : $extra_param . '=&amp;';
         }
         $redirect_page .= $extra_params;
@@ -171,7 +171,7 @@ if (!empty($_POST)) {
         // End added by voltan
     }
 
-    $com_mode   = htmlspecialchars(Request::getString('com_mode', 'flat', 'POST'));
+    $com_mode   = htmlspecialchars(Request::getString('com_mode', 'flat', 'POST'), ENT_QUOTES | ENT_HTML5);
     $com_order  = Request::getInt('com_order', XOOPS_COMMENT_OLD1ST, 'POST') ;
     $com_itemid = Request::getInt('com_itemid', 0, 'POST');
     $com_pid    = Request::getInt('com_pid', 0, 'POST');
@@ -477,7 +477,7 @@ switch ($op) {
                     if (isset($com_config['extraParams']) && is_array($com_config['extraParams'])) {
                         $extra_params = '';
                         foreach ($com_config['extraParams'] as $extra_param) {
-                            $extra_params .= isset($_POST[$extra_param]) ? $extra_param . '=' . htmlspecialchars($_POST[$extra_param]) . '&amp;' : $extra_param . '=&amp;';
+                            $extra_params .= isset($_POST[$extra_param]) ? $extra_param . '=' . htmlspecialchars($_POST[$extra_param], ENT_QUOTES | ENT_HTML5) . '&amp;' : $extra_param . '=&amp;';
                         }
                         $comment_url .= $extra_params;
                     }

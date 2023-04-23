@@ -37,5 +37,5 @@ function smarty_compiler_xoAppUrl($params, Smarty $smarty)
     if (strpos($url, '/') === 0) {
         $url = 'www' . $url;
     }
-    return "<?php echo '" . addslashes(htmlspecialchars($xoops->url($url))) . "'; ?>";
+    return "<?php echo '" . addslashes(htmlspecialchars($xoops->url($url), ENT_QUOTES | ENT_HTML5)) . "'; ?>";
 }

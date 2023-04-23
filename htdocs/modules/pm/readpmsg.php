@@ -91,7 +91,7 @@ if (is_object($pm) && !empty($_POST['action'])) {
         }
     }
     $res_message = isset($res_message) ? $res_message : ($res ? _PM_ACTION_DONE : _PM_ACTION_ERROR);
-    redirect_header('viewpmsg.php?op=' . htmlspecialchars($_REQUEST['op']), 2, $res_message);
+    redirect_header('viewpmsg.php?op=' . htmlspecialchars($_REQUEST['op'], ENT_QUOTES | ENT_HTML5), 2, $res_message);
 }
 $start                        = !empty($_GET['start']) ? (int)$_GET['start'] : 0;
 $total_messages               = !empty($_GET['total_messages']) ? (int)$_GET['total_messages'] : 0;

@@ -95,7 +95,7 @@ if (@empty($vars['DB_NAME'])) {
 ob_start();
 ?>
 <?php if (!empty($error)) {
-    echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . htmlspecialchars($error) . "</div>\n";
+    echo '<div class="alert alert-danger"><span class="fa fa-ban text-danger"></span> ' . htmlspecialchars($error, ENT_QUOTES | ENT_HTML5) . "</div>\n";
 } ?>
 
     <script type="text/javascript">

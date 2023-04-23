@@ -18,7 +18,7 @@
 include __DIR__ . '/mainfile.php';
 
 header('Content-Type: text/html');
-echo '<html><head><title>' . htmlspecialchars($xoopsConfig['sitename']) . "</title>
+echo '<html><head><title>' . htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES | ENT_HTML5) . "</title>
       <meta name='HandheldFriendly' content='True' />
       <meta name='PalmComputingPlatform' content='True' />
       </head>
@@ -34,10 +34,10 @@ if (!$xoopsDB->isResultSet($result)) {
    );
 } else {
     echo "<img src='images/logo.gif' alt='" . htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES) . "' border='0' /><br>";
-    echo '<h2>' . htmlspecialchars($xoopsConfig['slogan']) . '</h2>';
+    echo '<h2>' . htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES | ENT_HTML5) . '</h2>';
     echo '<div>';
     while (false !== (list($storyid, $title) = $xoopsDB->fetchRow($result))) {
-        echo "<a href='" . XOOPS_URL . "/modules/news/print.php?storyid=$storyid'>" . htmlspecialchars($title) . '</a><br>';
+        echo "<a href='" . XOOPS_URL . "/modules/news/print.php?storyid=$storyid'>" . htmlspecialchars($title, ENT_QUOTES | ENT_HTML5) . '</a><br>';
     }
     echo '</div>';
 }

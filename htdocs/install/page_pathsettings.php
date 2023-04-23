@@ -38,7 +38,7 @@ $ctrl = new PathStuffController($wizard->configs['xoopsPathDefault'], $wizard->c
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && @$_GET['var'] && @$_GET['action'] === 'checkpath') {
     $path                   = $_GET['var'];
-    $ctrl->xoopsPath[$path] = htmlspecialchars(trim($_GET['path']));
+    $ctrl->xoopsPath[$path] = htmlspecialchars(trim($_GET['path']), ENT_QUOTES | ENT_HTML5);
     echo genPathCheckHtml($path, $ctrl->checkPath($path));
     exit();
 }

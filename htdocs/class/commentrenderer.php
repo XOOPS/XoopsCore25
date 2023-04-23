@@ -480,7 +480,7 @@ class XoopsCommentRenderer
      */
     public function _getTitleIcon($icon_image)
     {
-        $icon_image = htmlspecialchars(trim($icon_image));
+        $icon_image = htmlspecialchars(trim($icon_image), ENT_QUOTES | ENT_HTML5);
         if ($icon_image != '') {
             if (false !== $this->_doIconCheck) {
                 if (!file_exists($GLOBALS['xoops']->path('images/subject/' . $icon_image))) {

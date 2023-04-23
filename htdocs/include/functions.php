@@ -415,11 +415,11 @@ function xoops_confirm($hiddens, $action, $msg, $submit = '', $addtoken = true)
     foreach ($hiddens as $name => $value) {
         if (is_array($value)) {
             foreach ($value as $caption => $newvalue) {
-                $tempHiddens .= '<input type="radio" name="' . $name . '" value="' . htmlspecialchars($newvalue) . '" /> ' . $caption;
+                $tempHiddens .= '<input type="radio" name="' . $name . '" value="' . htmlspecialchars($newvalue, ENT_QUOTES | ENT_HTML5) . '" /> ' . $caption;
             }
             $tempHiddens .= '<br>';
         } else {
-            $tempHiddens .= '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($value) . '" />';
+            $tempHiddens .= '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($value, ENT_QUOTES | ENT_HTML5) . '" />';
         }
     }
 	$confirmTpl->assign('hiddens', $tempHiddens);
@@ -439,11 +439,11 @@ function xoops_confirm($hiddens, $action, $msg, $submit = '', $addtoken = true)
 		foreach ($hiddens as $name => $value) {
 			if (is_array($value)) {
 				foreach ($value as $caption => $newvalue) {
-					echo '<input type="radio" name="' . $name . '" value="' . htmlspecialchars($newvalue) . '" /> ' . $caption;
+					echo '<input type="radio" name="' . $name . '" value="' . htmlspecialchars($newvalue, ENT_QUOTES | ENT_HTML5) . '" /> ' . $caption;
 				}
 				echo '<br>';
 			} else {
-				echo '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($value) . '" />';
+				echo '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($value, ENT_QUOTES | ENT_HTML5) . '" />';
 			}
 		}
 		if ($addtoken != false) {

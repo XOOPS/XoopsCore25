@@ -129,9 +129,9 @@ if (empty($mode) || $mode === 'queries') {
         $query_time = isset($q['query_time']) ? sprintf('%0.6f - ', $q['query_time']) : '';
 
         if (isset($q['error'])) {
-            $ret .= '<tr class="' . $class . '"><td><span style="color:#ff0000;">' . $query_time . htmlentities($sql) . '<br><strong>Error number:</strong> ' . $q['errno'] . '<br><strong>Error message:</strong> ' . $q['error'] . '</span></td></tr>';
+            $ret .= '<tr class="' . $class . '"><td><span style="color:#ff0000;">' . $query_time . htmlentities($sql, ENT_QUOTES | ENT_HTML5) . '<br><strong>Error number:</strong> ' . $q['errno'] . '<br><strong>Error message:</strong> ' . $q['error'] . '</span></td></tr>';
         } else {
-            $ret .= '<tr class="' . $class . '"><td>' . $query_time . htmlentities($sql) . '</td></tr>';
+            $ret .= '<tr class="' . $class . '"><td>' . $query_time . htmlentities($sql, ENT_QUOTES | ENT_HTML5) . '</td></tr>';
         }
 
         $class = ($class === 'odd') ? 'even' : 'odd';
@@ -156,7 +156,7 @@ if (empty($mode) || $mode === 'extra') {
     $ret .= '<table id="xo-logger-extra" class="outer"><tr><th colspan="2">' . _LOGGER_EXTRA . '</th></tr>';
     foreach ($this->extra as $ex) {
         $ret .= '<tr><td class="' . $class . '"><strong>';
-        $ret .= htmlspecialchars($ex['name']) . ':</strong> ' . htmlspecialchars($ex['msg']);
+        $ret .= htmlspecialchars($ex['name'], ENT_QUOTES | ENT_HTML5) . ':</strong> ' . htmlspecialchars($ex['msg'], ENT_QUOTES | ENT_HTML5);
         $ret .= '</td></tr>';
         $class = ($class === 'odd') ? 'even' : 'odd';
     }
@@ -167,7 +167,7 @@ if (empty($mode) || $mode === 'timers') {
     $ret .= '<table id="xo-logger-timers" class="outer"><tr><th colspan="2">' . _LOGGER_TIMERS . '</th></tr>';
     foreach ($this->logstart as $k => $v) {
         $ret .= '<tr><td class="' . $class . '"><strong>';
-        $ret .= sprintf(_LOGGER_TIMETOLOAD, htmlspecialchars($k) . '</strong>', '<span style="color:#ff0000;">' . sprintf('%.03f', $this->dumpTime($k)) . '</span>');
+        $ret .= sprintf(_LOGGER_TIMETOLOAD, htmlspecialchars($k, ENT_QUOTES | ENT_HTML5) . '</strong>', '<span style="color:#ff0000;">' . sprintf('%.03f', $this->dumpTime($k)) . '</span>');
         $ret .= '</td></tr>';
         $class = ($class === 'odd') ? 'even' : 'odd';
     }
