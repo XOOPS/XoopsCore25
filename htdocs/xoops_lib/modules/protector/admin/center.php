@@ -1,6 +1,6 @@
 <?php
 //require_once XOOPS_ROOT_PATH.'/include/cp_header.php' ;
-include_once 'admin_header.php'; //mb problem: it shows always the same "Center" tab
+include_once __DIR__ . '/admin_header.php'; //mb problem: it shows always the same "Center" tab
 xoops_cp_header();
 include __DIR__ . '/mymenu.php';
 require_once XOOPS_ROOT_PATH . '/class/pagenav.php';

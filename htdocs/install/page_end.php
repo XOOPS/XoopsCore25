@@ -25,11 +25,11 @@
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  **/
 
-require_once './include/common.inc.php';
-include_once '../class/xoopsload.php';
-include_once '../class/preload.php';
-include_once '../class/database/databasefactory.php';
-include_once '../class/logger/xoopslogger.php';
+require_once __DIR__ . '/include/common.inc.php';
+include_once __DIR__ . '/../class/xoopsload.php';
+include_once __DIR__ . '/../class/preload.php';
+include_once __DIR__ . '/../class/database/databasefactory.php';
+include_once __DIR__ . '/../class/logger/xoopslogger.php';
 
 $_SESSION = array();
 xoops_setcookie('xo_install_user', '', null, null, null);
@@ -43,6 +43,6 @@ $installer_modified    = 'install_remove_' . $install_rename_suffix;
 $pageHasForm = false;
 
 $content = '';
-include "./language/{$wizard->language}/finish.php";
+include __DIR__ . "/language/{$wizard->language}/finish.php";
 
-include './include/install_tpl.php';
+include __DIR__ . '/includeinstall_tpl.php';

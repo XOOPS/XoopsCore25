@@ -25,7 +25,7 @@
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  **/
 
-require_once './include/common.inc.php';
+require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 $pageHasForm = false;
@@ -33,8 +33,8 @@ $pageHasHelp = false;
 
 $vars =& $_SESSION['settings'];
 
-include_once '../mainfile.php';
-include_once './class/dbmanager.php';
+include_once __DIR__ . '/../mainfile.php';
+include_once __DIR__ . '/class/dbmanager.php';
 $dbm = new Db_manager();
 
 if (!$dbm->isConnectable()) {
@@ -49,4 +49,4 @@ if ($dbm->tableExists('users')) {
     $content = '<div class="alert alert-success"><span class="fa fa-check text-success"></span> ' . XOOPS_TABLES_CREATED
         . '</div><div class="well">' . $dbm->report() . '</div>';
 }
-include './include/install_tpl.php';
+include __DIR__ . '/includeinstall_tpl.php';

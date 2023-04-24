@@ -17,7 +17,7 @@
  * @author       XOOPS Development Team, Raul Recio (AKA UNFOR)
  */
 
-include_once 'admin_header.php';
+include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
 $indexAdmin = new ModuleAdmin();
@@ -25,6 +25,6 @@ $indexAdmin = new ModuleAdmin();
 echo $indexAdmin->addNavigation(basename(__FILE__));
 echo $indexAdmin->renderIndex();
 
-include 'admin_footer.php';
+include __DIR__ . '/admin_footer.php';
 //xoops_cp_footer();
 

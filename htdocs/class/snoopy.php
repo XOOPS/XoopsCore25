@@ -1151,7 +1151,7 @@ class Snoopy
                 break;
 
             case "multipart/form-data":
-                $this->_mime_boundary = "Snoopy" . md5(uniqid(microtime()));
+                $this->_mime_boundary = "Snoopy" . md5(uniqid(microtime(), true));
 
                 reset($formvars);
                 while (list($key, $val) = each($formvars)) {
