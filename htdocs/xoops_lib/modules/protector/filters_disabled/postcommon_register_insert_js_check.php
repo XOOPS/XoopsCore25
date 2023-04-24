@@ -60,7 +60,20 @@ class Protector_postcommon_register_insert_js_check extends ProtectorFilterAbstr
         foreach ($as_md5array as $key => $val) {
             $as_md5shuffle[] = array('key' => $key, 'val' => $val);
         }
-        shuffle($as_md5shuffle);
+
+        // Shuffle the array using mt_rand
+        for ($i = count($as_md5shuffle) - 1; $i > 0; $i--) {
+            $j = mt_rand(0, $i);
+            $temp = $as_md5shuffle[$i];
+            $as_md5shuffle[$i] = $as_md5shuffle[$j];
+            $as_md5shuffle[$j] = $temp;
+        }
+//TODO in PHP 7.2+ change the above to:
+//        $seed = random_bytes(64);
+//        mt_srand($seed);
+//        shuffle($as_md5shuffle);
+
+
         $js_in_validate_function = "antispam_md5s=new Array(32);\n";
         foreach ($as_md5shuffle as $item) {
             $key = $item['key'];
