@@ -1343,8 +1343,8 @@ img.avatar {
 
 .vert .carousel-item-next,
 .vert .active.carousel-item-right {
-    -webkit-transform: translate3d(0, 100% 0);
-    transform: translate3d(0, 100% 0);
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
 }
 
 .vert .carousel-item-prev,
