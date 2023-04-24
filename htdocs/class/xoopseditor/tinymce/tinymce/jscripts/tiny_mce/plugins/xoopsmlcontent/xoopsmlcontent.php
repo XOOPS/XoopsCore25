@@ -101,7 +101,7 @@ echo '<meta http-equiv="content-language" content="' . _LANGCODE . '" />';
 
                 <tr>
                     <td class="even">
-                    <?php langDropdown(); ?></th>
+                    <?php langDropdown(); ?></td>
                 </tr>
 
                 <tr>

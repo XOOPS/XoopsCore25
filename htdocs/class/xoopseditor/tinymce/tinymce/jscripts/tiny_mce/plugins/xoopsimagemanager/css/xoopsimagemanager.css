@@ -1,6 +1,7 @@
-    margin:                     0 auto;
-
-    #src_list, #over_list, #out_list {
+html, body {
+    margin: 0 auto;
+}
+#src_list, #over_list, #out_list {
     width:                      280px;
 }
 .mceActionPanel {
