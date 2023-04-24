@@ -37,7 +37,7 @@ $key = \Xmf\Jwt\KeyFactory::build('install');
 $key->kill();
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
-$install_rename_suffix = uniqid(substr(md5($x = mt_rand()) . $x, -10));
+$install_rename_suffix = uniqid(substr(md5($x = mt_rand()) . $x, -10), true);
 $installer_modified    = 'install_remove_' . $install_rename_suffix;
 
 $pageHasForm = false;
