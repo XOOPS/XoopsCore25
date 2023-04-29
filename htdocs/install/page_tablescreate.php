@@ -49,4 +49,4 @@ if ($dbm->tableExists('users')) {
     $content = '<div class="alert alert-success"><span class="fa fa-check text-success"></span> ' . XOOPS_TABLES_CREATED
         . '</div><div class="well">' . $dbm->report() . '</div>';
 }
-include __DIR__ . '/includeinstall_tpl.php';
+include __DIR__ . '/include/install_tpl.php';

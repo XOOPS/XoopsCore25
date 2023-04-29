@@ -58,4 +58,4 @@ $configs = $config_handler->getConfigs($criteria);
 include __DIR__ . '/include/createconfigform.php';
 $wizard->form = createConfigform($configs);
 $content      = $wizard->CreateForm();
-include __DIR__ . '/includeinstall_tpl.php';
+include __DIR__ . '/include/install_tpl.php';

@@ -59,4 +59,4 @@ include __DIR__ . '/includecreateconfigform.php';
 $wizard->form = createThemeform($config);
 $content      = $wizard->CreateForm();
 
-include __DIR__ . '/includeinstall_tpl.php';
+include __DIR__ . '/include/install_tpl.php';

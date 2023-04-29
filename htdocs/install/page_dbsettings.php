@@ -121,4 +121,4 @@ ob_start();
 <?php
 $content = ob_get_contents();
 ob_end_clean();
-include __DIR__ . '/includeinstall_tpl.php';
+include __DIR__ . '/include/install_tpl.php';

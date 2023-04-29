@@ -156,4 +156,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-include __DIR__ . '/includeinstall_tpl.php';
+include __DIR__ . '/include/install_tpl.php';

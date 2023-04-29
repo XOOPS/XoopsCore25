@@ -61,4 +61,4 @@ $content .=<<<EOB
 EOB;
 
 
-include __DIR__ . '/includeinstall_tpl.php';
+include __DIR__ . '/include/install_tpl.php';

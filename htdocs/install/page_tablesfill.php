@@ -101,4 +101,4 @@ if (!empty($_SESSION['settings']['authorized']) && !empty($adminname) && !empty(
     xoops_setcookie('xo_install_user', $token, 0, null, null, null, true);
 }
 
-include __DIR__ . '/includeinstall_tpl.php';
+include __DIR__ . '/include/install_tpl.php';

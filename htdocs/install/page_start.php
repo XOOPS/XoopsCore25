@@ -62,4 +62,4 @@ $writable_trust .= '</ul></div>';
 
 $content = sprintf($content, $writable, $xoops_trust, $writable_trust);
 
-include __DIR__ . '/includeinstall_tpl.php';
+include __DIR__ . '/include/install_tpl.php';

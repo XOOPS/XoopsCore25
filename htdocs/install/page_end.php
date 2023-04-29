@@ -45,4 +45,4 @@ $pageHasForm = false;
 $content = '';
 include __DIR__ . "/language/{$wizard->language}/finish.php";
 
-include __DIR__ . '/includeinstall_tpl.php';
+include __DIR__ . '/include/install_tpl.php';
