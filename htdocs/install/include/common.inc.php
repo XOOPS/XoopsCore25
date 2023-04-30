@@ -69,7 +69,7 @@ if (empty($xoopsOption['hascommon'])) {
     session_start();
 
     if (PHP_VERSION_ID < 70300) {
-        require_once __DIR__ . '/../include/xoopssetcookie.php';
+        require_once __DIR__ . '/../../include/xoopssetcookie.php';
         xoops_setcookie(session_name(), session_id(), $options);
     }
 
@@ -81,12 +81,12 @@ if (!defined('XOOPS_ROOT_PATH')) {
 }
 
 date_default_timezone_set(@date_default_timezone_get());
-include __DIR__ . '/class/installwizard.php';
-include_once __DIR__ . '/../include/version.php';
-require_once __DIR__ . '/../include/xoopssetcookie.php';
-include_once __DIR__ . '/include/functions.php';
-include_once __DIR__ . '/../class/module.textsanitizer.php';
-include_once __DIR__ . '/../class/libraries/vendor/autoload.php';
+include __DIR__ . '/../class/installwizard.php';
+include_once __DIR__ . '/../../include/version.php';
+require_once __DIR__ . '/../../include/xoopssetcookie.php';
+include_once __DIR__ . '/../include/functions.php';
+include_once __DIR__ . '/../../class/module.textsanitizer.php';
+include_once __DIR__ . '/../../class/libraries/vendor/autoload.php';
 
 $pageHasHelp = false;
 $pageHasForm = false;

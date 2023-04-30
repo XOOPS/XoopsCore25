@@ -213,8 +213,8 @@ class PathStuffController
         if ($PATH === 'root' || empty($PATH)) {
             $path = 'root';
             if (is_dir($this->xoopsPath[$path]) && is_readable($this->xoopsPath[$path])) {
-                @include_once __DIR__ . "/{$this->xoopsPath[$path]}/include/version.php";
-                if (file_exists(__DIR__ . "/{$this->xoopsPath[$path]}/mainfile.dist.php") && defined('XOOPS_VERSION')) {
+                @include_once "{$this->xoopsPath[$path]}/include/version.php";
+                if (file_exists("{$this->xoopsPath[$path]}/mainfile.dist.php") && defined('XOOPS_VERSION')) {
                     $this->validPath[$path] = 1;
                 }
             }
