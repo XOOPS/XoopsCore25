@@ -44,11 +44,11 @@ class XoopsInstallWizard
         // Load the main language file
         $this->initLanguage(!empty($_COOKIE['xo_install_lang']) ? $_COOKIE['xo_install_lang'] : 'english');
         // Setup pages
-        include_once './include/page.php';
+        include_once __DIR__ . '/include/page.php';
         $this->pages = $pages;
 
         // Load default configs
-        include_once './include/config.php';
+        include_once __DIR__ . '/include/config.php';
         $this->configs = $configs;
         /*
         // Database type
@@ -143,9 +143,9 @@ class XoopsInstallWizard
     public function loadLangFile($file)
     {
         if (file_exists("./language/{$this->language}/{$file}.php")) {
-            include_once "./language/{$this->language}/{$file}.php";
+            include_once __DIR__ . "/language/{$this->language}/{$file}.php";
         } else {
-            include_once "./language/english/$file.php";
+            include_once __DIR__ . "/language/english/$file.php";
         }
     }
 

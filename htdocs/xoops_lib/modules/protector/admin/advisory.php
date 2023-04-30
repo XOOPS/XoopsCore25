@@ -1,6 +1,6 @@
 <?php
-include '../../../include/cp_header.php';
-include 'admin_header.php';
+include __DIR__ . '/../../../include/cp_header.php';
+include __DIR__ . '/admin_header.php';
 $db = XoopsDatabaseFactory::getDatabaseConnection();
 
 // beggining of Output

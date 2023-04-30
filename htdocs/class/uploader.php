@@ -24,7 +24,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  *
  * Example of usage (single file):
  * <code>
- * include_once 'uploader.php';
+ * include_once __DIR__ . '/uploader.php';
  * $allowed_mimetypes = array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png');
  * $maxfilesize = 50000;
  * $maxfilewidth = 120;
@@ -46,7 +46,7 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  *
  * Example of usage (multiple file):
  * <code>
- * include_once 'uploader.php';
+ * include_once __DIR__ . '/uploader.php';
  * $allowed_mimetypes = array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png');
  * $maxfilesize = 50000;
  * $maxfilewidth = 120;
