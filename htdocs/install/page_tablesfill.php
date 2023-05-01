@@ -25,7 +25,7 @@
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  */
 
-require_once './include/common.inc.php';
+require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 $pageHasForm = false;
@@ -33,8 +33,8 @@ $pageHasHelp = false;
 
 $vars =& $_SESSION['settings'];
 
-include_once '../mainfile.php';
-include_once './class/dbmanager.php';
+include_once __DIR__ . '/../mainfile.php';
+include_once __DIR__ . '/class/dbmanager.php';
 $dbm = new Db_manager();
 
 if (!$dbm->isConnectable()) {
@@ -60,7 +60,7 @@ $update  = false;
 
 extract($_SESSION['siteconfig'], EXTR_SKIP);
 
-include_once './include/makedata.php';
+include_once __DIR__ . '/include/makedata.php';
 //$cm = 'dummy';
 $wizard->loadLangFile('install2');
 
@@ -101,4 +101,4 @@ if (!empty($_SESSION['settings']['authorized']) && !empty($adminname) && !empty(
     xoops_setcookie('xo_install_user', $token, 0, null, null, null, true);
 }
 
-include './include/install_tpl.php';
+include __DIR__ . '/include/install_tpl.php';

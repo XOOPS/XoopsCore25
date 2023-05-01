@@ -66,7 +66,7 @@ $catwritelist   = $imgcat_handler->getList($groups, 'imgcat_write', 1);  // get 
 $catreadcount  = count($catreadlist);        // count readable categories
 $catwritecount = count($catwritelist);      // count writable categories
 
-include_once 'XoopsFormRendererBootstrap4.php';
+include_once __DIR__ . '/XoopsFormRendererBootstrap4.php';
 XoopsFormRenderer::getInstance()->set(new XoopsFormRendererBootstrap4());
 
 // check/set parameters - start
