@@ -77,7 +77,7 @@ class ModuleAdmin
         /**
          * version is rev of this class
          */
-        include_once 'xoops_version.php';
+        include_once __DIR__ . '/xoops_version.php';
         $version = XOOPS_FRAMEWORKS_MODULEADMIN_VERSION;
 
         return $version;
@@ -92,7 +92,7 @@ class ModuleAdmin
         /**
          * version is rev of this class
          */
-        include_once 'xoops_version.php';
+        include_once __DIR__ . '/xoops_version.php';
         $releasedate = XOOPS_FRAMEWORKS_MODULEADMIN_RELEASEDATE;
 
         return $releasedate;
@@ -510,7 +510,7 @@ class ModuleAdmin
                       . "<label class=\"label_after\">" . _AM_MODULEADMIN_ABOUT_UPDATEDATE . "</label>\n"
                       . "<text class=\"bold\">" . formatTimestamp($this->_obj->getVar('last_update'), 'm') . "</text><br>\n"
                       . "<label class=\"label_after\">" . _AM_MODULEADMIN_ABOUT_MODULESTATUS . "</label>\n"
-                      . "<text>" . $this->_obj->getInfo('module_status') . "</text><br>\n"
+                      . "<text>" . $this->_obj->getStatus() . "</text><br>\n"
                       . "<label class=\"label_after\">" . _AM_MODULEADMIN_ABOUT_WEBSITE . "</label>\n"
                       . "<text><a class=\"tooltip\" href=\"http://" . $this->_obj->getInfo('module_website_url') . "\" rel=\"external\" title=\""
                       . $this->_obj->getInfo('module_website_name') . " - " . $this->_obj->getInfo('module_website_url') . "\">"
@@ -531,7 +531,7 @@ class ModuleAdmin
              . "<img src=\"" . XOOPS_URL . '/modules/' . $module_dir . '/' . $this->_obj->getInfo('image') . "\" alt=\"" . $module_dir . "\" style=\"float: left; margin-right: 10px;\">\n"
              . "</td><td>\n"
              . "<div style=\"margin-top: 1px; margin-bottom: 4px; font-size: 18px; line-height: 18px; color: #2F5376; font-weight: bold;\">\n"
-             . $this->_obj->getInfo('name') . ' ' . $this->_obj->getInfo('version') . ' ' . $this->_obj->getInfo('module_status') . " ({$release_date})\n"
+             . $this->_obj->getInfo('name') . ' ' . $this->_obj->getVar('version') . ' ' . " ({$release_date})\n"
              . "<br>\n"
              . "</div>\n"
              . "<div style=\"line-height: 16px; font-weight: bold;\">\n"
@@ -555,8 +555,7 @@ class ModuleAdmin
                   . "<input name=\"currency_code\" type=\"hidden\" value=\"" . _AM_MODULEADMIN_ABOUT_AMOUNT_CURRENCY . "\">\n"
                   . "<label class=\"label_after\" for=\"amount\">" . _AM_MODULEADMIN_ABOUT_AMOUNT . "</label><text><input class=\"donate_amount\" type=\"text\" name=\"amount\" value=\"" . _AM_MODULEADMIN_ABOUT_AMOUNT_SUGGESTED . "\" title=\"" . _AM_MODULEADMIN_ABOUT_AMOUNT_TTL . "\" pattern=\"" . _AM_MODULEADMIN_ABOUT_AMOUNT_PATTERN . "\"></text>\n"
                   . "<br>\n"
-                  . "<text><input type=\"image\" name=\"submit\" class=\"donate_button\" src=\"https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif\" alt=\"" . _AM_MODULEADMIN_ABOUT_DONATE_IMG_ALT . "\"></text>\n"
-                  . "<img alt=\"\" height=\"1\" src=\"https://www.paypalobjects.com/en_US/i/scr/pixel.gif\" style=\"border-width: 0px;\" width=\"1\">\n"
+                  . "<text><input type=\"image\" name=\"submit\" class=\"donate_button\" src=\"" . XOOPS_URL . "/images/btn_donate_LG.png\" alt=\"" . _AM_MODULEADMIN_ABOUT_DONATE_IMG_ALT . "\"></text>\n"
                   . "</form>\n"
                   . "<br>\n"
                   . "</fieldset>\n"
@@ -609,7 +608,7 @@ class ModuleAdmin
         $navigation = '';
         $path       = XOOPS_URL . '/modules/' . $this->_obj->getVar('dirname') . '/';
         $this->_obj->loadAdminMenu();
-        foreach (array_keys($this->_obj->adminmenu) as $i) {
+        foreach (array_keys((array) $this->_obj->adminmenu) as $i) {
             if ($this->_obj->adminmenu[$i]['link'] == 'admin/' . $menu) {
                 $navigation .= $this->_obj->adminmenu[$i]['title'] . ' | ';
                 $ret = "<div class=\"CPbigTitle\" style=\"background-image: url(" . $path . $this->_obj->adminmenu[$i]['icon'] . "); background-repeat: no-repeat; background-position: left; padding-left: 50px;\">

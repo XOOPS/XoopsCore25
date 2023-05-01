@@ -44,7 +44,7 @@ $admin         = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_SMILE, 
 $op = Request::getString('op', '', 'POST');
 $op = Request::getString('op', $op, 'GET');
 
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 
 if ($admin && $op === 'SmilesAdd') {
     if (!$GLOBALS['xoopsSecurity']->check()) {

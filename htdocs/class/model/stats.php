@@ -49,7 +49,7 @@ class XoopsModelStats extends XoopsModelAbstract
             $sql .= $criteria->getGroupby();
         }
         $result = $this->handler->db->query($sql);
-        if (!$result) {
+        if (!$this->handler->db->isResultSet($result)) {
             return 0;
         }
         if ($groupby == false) {
@@ -88,7 +88,8 @@ class XoopsModelStats extends XoopsModelAbstract
             }
         }
         $sql = "SELECT {$groupby_key}, COUNT(*) AS count" . " FROM `{$this->handler->table}`" . " {$sql_where}" . " GROUP BY {$groupby_key}";
-        if (!$result = $this->handler->db->query($sql, $limit, $start)) {
+        $result = $this->handler->db->query($sql, $limit, $start);
+        if (!$this->handler->db->isResultSet($result)) {
             return $ret;
         }
         while (false !== (list($id, $count) = $this->handler->db->fetchRow($result))) {

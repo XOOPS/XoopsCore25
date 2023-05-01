@@ -35,7 +35,7 @@ if (!defined('XOOPS_ROOT_PATH')) {
  */
 function genPathCheckHtml($path, $valid)
 {
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     if ($valid) {
         switch ($path) {
             case 'lib':
@@ -67,7 +67,7 @@ if ($res = $ctrl->execute()) {
     return $res;
 }
 
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 
 ?>
 

@@ -30,13 +30,13 @@ include_once XOOPS_ROOT_PATH . '/modules/system/admin/users/users.php';
 // Get Action type
 $op = Request::getString('op', 'default');
 /* @var XoopsMemberHandler $member_handler */
-$member_handler = xoops_getHandler('member', 'system');
+$member_handler = xoops_getHandler('member');
 // Define main template
 $GLOBALS['xoopsOption']['template_main'] = 'system_users.tpl';
 // Call Header
 xoops_cp_header();
 
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 // Define Stylesheet
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/ui/' . xoops_getModuleOption('jquery_theme', 'system') . '/ui.all.css');
@@ -871,8 +871,8 @@ switch ($op) {
 
                     $users['posts'] = $users_arr[$i]->getVar('posts');
 
-                    $xoopsTpl->append_by_ref('users', $users);
-                    $xoopsTpl->append_by_ref('users_popup', $users);
+                    $xoopsTpl->appendByRef('users', $users);
+                    $xoopsTpl->appendByRef('users_popup', $users);
                     unset($users);
                 }
             } else {

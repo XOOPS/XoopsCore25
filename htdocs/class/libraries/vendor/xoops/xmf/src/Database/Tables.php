@@ -27,8 +27,8 @@ use Xmf\Language;
  * @category  Xmf\Database\Tables
  * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
- * @copyright 2011-2018 XOOPS Project (https://xoops.org)
- * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright 2011-2023 XOOPS Project (https://xoops.org)
+ * @license   GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link      https://xoops.org
  */
 class Tables
@@ -281,14 +281,14 @@ class Tables
      * @param string $table  table containing the column
      * @param string $column column to alter
      *
-     * @return string|bool attribute string, or false if error encountered
+     * @return string|false attribute string, or false if error encountered
      */
     public function getColumnAttributes($table, $column)
     {
         // Find table def.
         if (isset($this->tables[$table])) {
             $tableDef = $this->tables[$table];
-            // loop thru and find the column
+            // loop through and find the column
             foreach ($tableDef['columns'] as $col) {
                 if (strcasecmp($col['name'], $column) === 0) {
                     return $col['attributes'];
@@ -304,7 +304,7 @@ class Tables
      *
      * @param string $table get indexes for this named table
      *
-     * @return array|bool array of indexes, or false if error encountered
+     * @return array|false array of indexes, or false if error encountered
      */
     public function getTableIndexes($table)
     {
@@ -336,7 +336,7 @@ class Tables
             $tableDef = &$this->tables[$table];
             // Is this on a table we are adding?
             if (isset($tableDef['create']) && $tableDef['create']) {
-                // loop thru and find the column
+                // loop through and find the column
                 foreach ($tableDef['columns'] as &$col) {
                     if (strcasecmp($col['name'], $column) == 0) {
                         $col['name'] = $newName;
@@ -349,7 +349,7 @@ class Tables
             } else {
                 $this->queue[] = "ALTER TABLE `{$tableDef['name']}` " .
                     "CHANGE COLUMN `{$column}` `{$newName}` {$attributes} ";
-                // loop thru and find the column
+                // loop through and find the column
                 foreach ($tableDef['columns'] as &$col) {
                     if (strcasecmp($col['name'], $column) == 0) {
                         $col['name'] = $newName;
@@ -805,6 +805,32 @@ class Tables
     }
 
     /**
+     * create default value clause for DDL
+     *
+     * @param string|null $default the default value to be quoted
+     *
+     * @return string the correctly quoted default value
+     */
+    protected function quoteDefaultClause($default)
+    {
+        // . (($column['COLUMN_DEFAULT'] === null) ? '' : " DEFAULT '" . $column['COLUMN_DEFAULT'] . "' ")
+        // no default specified
+        if (null===$default) {
+            return '';
+        }
+
+        // functions should not be quoted
+        // this section will need expanded when XOOPS minimum is no longer a mysql 5 version
+        // Until mysql 8, only allowed function is CURRENT_TIMESTAMP
+        if ($default === 'CURRENT_TIMESTAMP') {
+            return ' DEFAULT CURRENT_TIMESTAMP ';
+        }
+
+        // surround default with quotes
+        return " DEFAULT '{$default}' ";
+    }
+
+    /**
      * get table definition from INFORMATION_SCHEMA
      *
      * @param string $table table
@@ -846,8 +872,9 @@ class Tables
         while ($column = $this->fetch($result)) {
             $attributes = ' ' . $column['COLUMN_TYPE'] . ' '
                 . (($column['IS_NULLABLE'] === 'NO') ? ' NOT NULL ' : '')
-                . (($column['COLUMN_DEFAULT'] === null) ? '' : " DEFAULT '" . $column['COLUMN_DEFAULT'] . "' ")
-                . $column['EXTRA'];
+                . $this->quoteDefaultClause($column['COLUMN_DEFAULT'])
+                //. $column['EXTRA'];
+                . str_replace('DEFAULT_GENERATED ', '', $column['EXTRA']);
 
             $columnDef = array(
                 'name' => $column['COLUMN_NAME'],

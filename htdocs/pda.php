@@ -27,8 +27,11 @@ echo '<html><head><title>' . htmlspecialchars($xoopsConfig['sitename']) . "</tit
 $sql    = 'SELECT storyid, title FROM ' . $xoopsDB->prefix('stories') . ' WHERE published>0 AND published<' . time() . ' ORDER BY published DESC';
 $result = $xoopsDB->query($sql, 10, 0);
 //TODO Remove this hardcoded string
-if (!$result) {
-    echo 'An error occured';
+if (!$xoopsDB->isResultSet($result)) {
+    //    echo 'An error occured';
+       throw new \RuntimeException(
+       \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+   );
 } else {
     echo "<img src='images/logo.gif' alt='" . htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES) . "' border='0' /><br>";
     echo '<h2>' . htmlspecialchars($xoopsConfig['slogan']) . '</h2>';

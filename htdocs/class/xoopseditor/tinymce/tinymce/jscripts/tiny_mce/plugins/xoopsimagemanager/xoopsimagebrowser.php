@@ -56,7 +56,7 @@ $gperm_handler = xoops_getHandler('groupperm');
 $groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 $isadmin       = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_IMAGE, $groups);
 
-// check categories readability/writability
+// check category readability/writability
 /** @var \XoopsImagecategoryHandler $imgcat_handler */
 $imgcat_handler = xoops_getHandler('imagecategory');
 $catreadlist    = $imgcat_handler->getList($groups, 'imgcat_read', 1);    // get readable categories
@@ -433,7 +433,8 @@ if ($op === 'list') {
         // get all categories
         $imagecategories = $imgcat_handler->getObjects();
         $catcount        = count($imagecategories);
-        $image_handler   = xoops_getHandler('image');
+        /** @var \XoopsImageHandler $image_handler */
+        $image_handler = xoops_getHandler('image');
         for ($i = 0; $i < $catcount; ++$i) {
             echo '<tr valign="top" align="left"><td class="head">';
             if (in_array($imagecategories[$i]->getVar('imgcat_id'), array_keys($catreadlist))) {

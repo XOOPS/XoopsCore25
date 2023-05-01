@@ -8,7 +8,7 @@
 <div class="col-3 text-center newbb-user-data">
     <{$topic_post.poster.link}>
 
-    <{if $topic_post.poster.uid gt -1}>
+    <{if isset($topic_post.poster.uid) &&  $topic_post.poster.uid gt -1}>
         <{if $topic_post.poster.uid != 0}>
             <{if $topic_post.poster.avatar != "blank.gif"}>
                     <img src="<{$xoops_upload_url}>/<{$topic_post.poster.avatar}>" alt="<{$topic_post.poster.name}>" class="img-circle img-thumbnail">
@@ -23,7 +23,7 @@
                 </ul>
             <{/if}>
 
-                <{if $infobox.show}>
+                <{if isset($infobox.show)}>
                     <button  data-toggle="collapse" data-target="#p<{$topic_post.post_id}>" title="<{$smarty.const.THEME_INFO}>" class="btn btn-primary btn-sm mb10"><span class="fa fa-info"></span></button>
                     <div id="p<{$topic_post.post_id}>" class="collapse">
                         <ul class="list-unstyled text-left">
@@ -50,14 +50,13 @@
                                 0
                             <{/if}>
                             </li>
-
-                            <{if $topic_post.poster.digests gt 0}>
+                                <{if isset($topic_post.poster.digests) && is_array($topic_post.poster.digests) && $topic_post.poster.digests gt 0}>
                             <li>
                                 <{$smarty.const._MD_NEWBB_DIGESTS}>: <{$topic_post.poster.digests}>
                             </li>
                             <{/if}>
 
-                            <{if $topic_post.poster.level}>
+                            <{if isset($topic_post.poster.level)}>
                                 <li><{$topic_post.poster.level}></li>
                             <{/if}>
 
@@ -79,7 +78,7 @@
                 <li><span class="d-none d-sm-block small">IP: <a href="http://www.whois.sc/<{$topic_post.poster_ip}>" target="_blank"><{$topic_post.poster_ip}></a></li>
             <{/if}>
 
-            <{if $topic_post.poster.uid gt 0}>
+            <{if isset($topic_post.poster.uid) &&  $topic_post.poster.uid gt 0}>
             <li><span class="small"><span class="d-none d-sm-block"><{$smarty.const._MD_NEWBB_POSTEDON}></span><{$topic_post.post_date}></span></li>
             <{/if}>
         </ul>
@@ -92,7 +91,7 @@
         <strong><{$topic_post.post_title}></strong>
 
         <{if $topic_post.post_id > 0}>
-            <a id="<{$forum_post_prefix}><{$topic_post.post_id}>" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$topic_post.post_id}>#forumpost<{$topic_post.post_no}>" title="<{$topic_post.post_no}>" class="newbb-post-anchor">
+            <a id="<{$forum_post_prefix|default:''}><{$topic_post.post_id}>" href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$topic_post.post_id}>#forumpost<{$topic_post.post_no}>" title="<{$topic_post.post_no}>" class="newbb-post-anchor">
                 #<{$topic_post.post_no}>
             </a>
         <{/if}>
@@ -127,7 +126,7 @@
     <{if $topic_post.thread_action}>
         <{foreach item=btn from=$topic_post.thread_action}>
             <a href="<{$btn.link}>&amp;post_id=<{$topic_post.post_id}>" title="<{$btn.name}>" <{if $btn.target}>target="<{$btn.target}>"<{/if}>>
-                <{$btn.image}>
+                <{$btn.image|default:''}>
             </a>
         <{/foreach}>
     <{/if}>
@@ -138,9 +137,11 @@
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=1" title="<{$smarty.const._MD_NEWBB_SPLIT_ONE}>">
             <{$smarty.const._MD_NEWBB_SPLIT_ONE}>
         </a>
+            |
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=2" title="<{$smarty.const._MD_NEWBB_SPLIT_TREE}>">
             <{$smarty.const._MD_NEWBB_SPLIT_TREE}>
         </a>
+            |
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/action.post.php?post_id=<{$topic_post.post_id}>&amp;op=split&amp;mode=3" title="<{$smarty.const._MD_NEWBB_SPLIT_ALL}>">
             <{$smarty.const._MD_NEWBB_SPLIT_ALL}>
         </a>

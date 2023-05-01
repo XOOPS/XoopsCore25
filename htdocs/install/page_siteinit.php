@@ -25,7 +25,7 @@
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  **/
 
-require_once './include/common.inc.php';
+require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 $pageHasForm = true;
@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         return 302;
     }
 } else {
-    include_once './class/dbmanager.php';
+    include_once __DIR__ . '/class/dbmanager.php';
     $dbm = new Db_manager();
 
     if (!$dbm->isConnectable()) {
@@ -75,8 +75,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    $res = $dbm->query('SELECT COUNT(*) FROM ' . $dbm->db->prefix('users'));
-    list($isadmin) = $dbm->db->fetchRow($res);
+    $sql = 'SELECT COUNT(*) FROM ' . $dbm->db->prefix('users');
+    $result = $dbm->db->query($sql);
+    if ($dbm->db->isResultSet($result)) {
+        list($isadmin) = $dbm->db->fetchRow($result);
+    }
 }
 
 ob_start();
@@ -160,4 +163,4 @@ if ($isadmin) {
 $content = ob_get_contents();
 ob_end_clean();
 $error = !empty($error);
-include './include/install_tpl.php';
+include __DIR__ . '/include/install_tpl.php';

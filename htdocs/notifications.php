@@ -76,6 +76,7 @@ switch ($op) {
                 $prev_modid      = $modid;
                 $prev_category   = -1;
                 $prev_item       = -1;
+                /** @var \XoopsModule $module */
                 $module          = $module_handler->get($modid);
                 $modules[$modid] = array(
                     'id'         => $modid,

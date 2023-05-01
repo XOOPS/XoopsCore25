@@ -24,6 +24,10 @@
  */
 class ProfileVisibility extends XoopsObject
 {
+    public $field_id;
+    public $user_group;
+    public $profile_group;
+
     /**
      *
      */
@@ -62,7 +66,8 @@ class ProfileVisibilityHandler extends XoopsPersistableObjectHandler
         $sql  = "SELECT field_id FROM {$this->table} WHERE profile_group IN (" . implode(',', $profile_groups) . ')';
         $sql .= ' AND user_group IN (' . implode(',', $user_groups) . ')';
         $field_ids = array();
-        if ($result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if ($this->db->isResultSet($result)) {
             while (false !== (list($field_id) = $this->db->fetchRow($result))) {
                 $field_ids[] = $field_id;
             }

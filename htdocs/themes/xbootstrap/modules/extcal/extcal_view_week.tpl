@@ -32,7 +32,7 @@
         <{foreach item=event from=$events}>
             <tr>
                 <td colspan="3" class="odd" style="vertical-align:middle;">
-                    <div style="height:20px; width:5px; background-color:#<{$event.cat.cat_color}>; border:1px solid black; float:left; margin-right:5px;"></div>
+                    <div style="height:20px; width:5px; background-color:#<{$event.cat.cat_color|default:''}>; border:1px solid black; float:left; margin-right:5px;"></div>
                     <{$event.formated_event_start}>&nbsp;&nbsp;<a
                             href="<{$xoops_url}>/modules/extcal/event.php?event=<{$event.event_id}>"
                             class="extcalTips"
@@ -44,7 +44,7 @@
             <th colspan="3">
                 <{foreach item=cat from=$cats}>
                     <div style="float:left; margin-left:5px;">
-                        <div style="float:left; background-color:#<{$cat.cat_color}>; border:1px solid white; margin-right:5px;">
+                        <div style="float:left; background-color:#<{$cat.cat_color|default:''}>; border:1px solid white; margin-right:5px;">
                             &nbsp;
                         </div>
                         <{$cat.cat_name}>
@@ -55,6 +55,6 @@
     </table>
 </div>
 <div style="text-align:right;"><a
-            href="<{$xoops_url}>/modules/extcal/rss.php?cat=<{$selectedCat}>"><img
+            href="<{$xoops_url}>/modules/extcal/rss.php?cat=<{$selectedCat|default:''}>"><img
                 src="assets/images/icons/rss.gif" alt="RSS Feed"/></a></div>
 <{include file='db:system_notification_select.tpl'}>

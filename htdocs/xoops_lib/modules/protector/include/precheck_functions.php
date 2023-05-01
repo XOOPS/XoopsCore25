@@ -17,6 +17,10 @@ function protector_prepare()
     $protector = Protector::getInstance();
     $conf      = $protector->getConf();
 
+    // phar wrapper deserialization
+    array_walk_recursive($_GET, 'protector_phar_check');
+    array_walk_recursive($_POST, 'protector_phar_check');
+
     // bandwidth limitation
     if (@$conf['bwlimit_count'] >= 10) {
         $bwexpire = $protector->get_bwlimit();
@@ -39,10 +43,10 @@ function protector_prepare()
     }
 
     // reliable ips
-    $reliable_ips = @unserialize(@$conf['reliable_ips']);
+    $reliable_ips = @unserialize(@$conf['reliable_ips'], array('allowed_classes' => false));
     if (!is_array($reliable_ips)) {
         // for the environment of (buggy core version && magic_quotes_gpc)
-        $reliable_ips = @unserialize(stripslashes(@$conf['reliable_ips']));
+        $reliable_ips = @unserialize(stripslashes(@$conf['reliable_ips']), array('allowed_classes' => false));
         if (!is_array($reliable_ips)) {
             $reliable_ips = array();
         }
@@ -110,4 +114,23 @@ function protector_prepare()
         $protector->disable_features();
     }
     return null;
+}
+
+/**
+ * Callback for array_walk_recursive to check for phar wrapper
+ *
+ * @param mixed $item
+ * @param mixed $key
+ *
+ * @return void
+ */
+function protector_phar_check($item, $key)
+{
+    $check = preg_match('#^\s*phar://#', $item);
+    if(1===$check) {
+        $protector = Protector::getInstance();
+        $protector->message = 'Protector detects attacking actions';
+        $protector->output_log('PHAR');
+        $protector->purge(false);
+    }
 }

@@ -341,7 +341,7 @@ CREATE TABLE imgsetimg (
 CREATE TABLE modules (
   mid smallint(5) unsigned NOT NULL auto_increment,
   name varchar(150) NOT NULL default '',
-  version smallint(5) unsigned NOT NULL default '100',
+  version varchar(32) NOT NULL default '',
   last_update int(10) unsigned NOT NULL default '0',
   weight smallint(3) unsigned NOT NULL default '0',
   isactive tinyint(1) unsigned NOT NULL default '0',
@@ -427,10 +427,15 @@ CREATE TABLE priv_msgs (
   msg_time int(10) unsigned NOT NULL default '0',
   msg_text text,
   read_msg tinyint(1) unsigned NOT NULL default '0',
+  from_delete tinyint(1) unsigned     NOT NULL default '1',
+  from_save   tinyint(1) unsigned     NOT NULL default '0',
+  to_delete   tinyint(1) unsigned     NOT NULL default '0',
+  to_save     tinyint(1) unsigned     NOT NULL default '0',
   PRIMARY KEY  (msg_id),
   KEY to_userid (to_userid),
   KEY touseridreadmsg (to_userid,read_msg),
-  KEY msgidfromuserid (from_userid, msg_id)
+  KEY msgidfromuserid (from_userid, msg_id),
+  KEY prune (`msg_time`, `read_msg`, `from_save`, `to_delete`)
 ) ENGINE=MyISAM;
 # --------------------------------------------------------
 

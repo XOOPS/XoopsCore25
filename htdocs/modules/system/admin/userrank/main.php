@@ -83,7 +83,7 @@ switch ($op) {
                 $userrank['rank_special'] = $userrank_arr[$i]->getVar('rank_special');
                 $rank_img                 = $userrank_arr[$i]->getVar('rank_image') ?: 'blank.gif';
                 $userrank['rank_image']   = '<img src="' . XOOPS_UPLOAD_URL . '/' . $rank_img . '" alt="" />';
-                $xoopsTpl->append_by_ref('userrank', $userrank);
+                $xoopsTpl->appendByRef('userrank', $userrank);
                 unset($userrank);
             }
         }

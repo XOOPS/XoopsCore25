@@ -37,14 +37,14 @@
                             <input type="hidden" name="oldweight[<{$field.field_id}>]" value="<{$field.field_weight}>"/>
                             <input type="hidden" name="oldcat[<{$field.field_id}>]" value="<{$field.cat_id}>"/>
                             <input type="hidden" name="field_ids[]" value="<{$field.field_id}>"/>
-                            <a href="field.php?id=<{$field.field_id}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 edit.png}>"
+                            <a href="field.php?id=<{$field.field_id}>" title="<{$smarty.const._EDIT}>"><img src="<{xoModuleIcons16 'edit.png'}>"
                                                                                                             alt="<{$smarty.const._EDIT}>"
                                                                                                             title="<{$smarty.const._EDIT}>"/></a>
                         <{/if}>
                         <{if $field.canDelete}>
                             &nbsp;
                             <a href="field.php?op=delete&amp;id=<{$field.field_id}>" title="<{$smarty.const._DELETE}>"><img
-                                        src="<{xoModuleIcons16 delete.png}>" alt="<{$smarty.const._DELETE}>" title="<{$smarty.const._DELETE}>"</a>
+                                        src="<{xoModuleIcons16 'delete.png'}>" alt="<{$smarty.const._DELETE}>" title="<{$smarty.const._DELETE}>"</a>
                         <{/if}>
                     </td>
                 </tr>

@@ -248,21 +248,24 @@ function synchronize($uid, $type)
                     $criteria->add($table['criteria']);
                 }
                 $sql = 'SELECT COUNT(*) AS total FROM ' . $xoopsDB->prefix($table['table_name']) . ' ' . $criteria->renderWhere();
-                if ($result = $xoopsDB->query($sql)) {
+                $result = $xoopsDB->query($sql);
+                if ($xoopsDB->isResultSet($result)) {
                     if ($row = $xoopsDB->fetchArray($result)) {
                         $total_posts += $row['total'];
                     }
                 }
             }
             $sql = 'UPDATE ' . $xoopsDB->prefix('users') . " SET posts = '" . $total_posts . "' WHERE uid = '" . $uid . "'";
-            if (!$result = $xoopsDB->queryF($sql)) {
+            $result = $xoopsDB->queryF($sql);
+            if (!$xoopsDB->isResultSet($result)) {
                 redirect_header('admin.php?fct=users', 1, _AM_SYSTEM_USERS_CNUUSER);
             }
             break;
 
         case 'all users':
             $sql = 'SELECT uid FROM ' . $xoopsDB->prefix('users') . '';
-            if (!$result = $xoopsDB->query($sql)) {
+            $result = $xoopsDB->query($sql);
+            if (!$xoopsDB->isResultSet($result)) {
                 redirect_header('admin.php?fct=users', 1, sprintf(_AM_SYSTEM_USERS_CNGUSERID, $uid));
             }
 

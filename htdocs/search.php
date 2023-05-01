@@ -103,7 +103,7 @@ if ($andor !== 'OR' && $andor !== 'exact' && $andor !== 'AND') {
     $andor = 'AND';
 }
 
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 if ($action !== 'showallbyuser') {
     if ($andor !== 'exact') {
         $ignored_queries = array(); // holds kewords that are shorter than allowed minmum length
@@ -165,7 +165,7 @@ switch ($action) {
 		$xoopsTpl->assign('error_keywords', $error_keywords);
 		$results_arr = array();
         foreach ($mids as $mid) {
-            $mid = (int)$mid;			
+            $mid = (int)$mid;
             if (in_array($mid, $available_modules)) {
                 $module  = $modules[$mid];
                 $results = $module->search($queries, $andor, 5, 0);
@@ -176,20 +176,20 @@ switch ($action) {
 				}
                 if (is_array($results) && $count > 0) {
                     $nomatch = false;
-					$module_name = $module->getVar('name');					
+					$module_name = $module->getVar('name');
                     for ($i = 0; $i < $count; ++$i) {
                         if (isset($results[$i]['image']) && $results[$i]['image'] != '') {
 							$results_arr[$i]['image_link'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['image'];
                         } else {
-							$results_arr[$i]['image_link'] = 'images/icons/posticon2.gif';							
+							$results_arr[$i]['image_link'] = 'images/icons/posticon2.gif';
                         }
 						$results_arr[$i]['image_title'] = $module->getVar('name');
                         if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
-                            $results[$i]['link'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['link']; 
+                            $results[$i]['link'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['link'];
                         }
 						$results_arr[$i]['link'] = $results[$i]['link'];
 						$results_arr[$i]['link_title'] = $myts->htmlSpecialChars($results[$i]['title']);
-						
+
                         $results[$i]['uid'] = @(int)$results[$i]['uid'];
                         if (!empty($results[$i]['uid'])) {
                             $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
@@ -207,13 +207,13 @@ switch ($action) {
                     }
 					$search_arr['module_name'] = $module_name;
 					$search_arr['module_data'] = $results_arr;
-					$xoopsTpl->append_by_ref('search', $search_arr);
+					$xoopsTpl->appendByRef('search', $search_arr);
 					unset($results_arr, $search_arr);
                 }
-            }			
+            }
             unset($results, $module, $module_name);
         }
-		
+
         if ($nomatch) {
 			$xoopsTpl->assign('nomatch', _SR_NOMATCH);
         }
@@ -227,9 +227,10 @@ switch ($action) {
 		$xoopsTpl->assign('showallbyuser', true);
     /* @var XoopsModuleHandler $module_handler */
 		$module_handler = xoops_getHandler('module');
-        $module         = $module_handler->get($mid);
-        $results        = $module->search($queries, $andor, 20, $start, $uid);
-        $count          = count($results);
+    /** @var XoopsModule $module */
+    $module      = $module_handler->get($mid);
+        $results = $module->search($queries, $andor, 20, $start, $uid);
+		$results?$count = count($results):$count = 0;
         if (is_array($results) && $count > 0) {
             $next_results = $module->search($queries, $andor, 1, $start + 20, $uid);
             $next_count   = count($next_results);
@@ -273,7 +274,7 @@ switch ($action) {
 				if (!empty($results[$i]['time'])){
 					$results_arr['time'] = formatTimestamp((int)$results[$i]['time']);
 				}
-				$xoopsTpl->append_by_ref('results_arr', $results_arr);
+				$xoopsTpl->appendByRef('results_arr', $results_arr);
 				unset($results_arr);
             }
             $search_url = XOOPS_URL . '/search.php?query=' . urlencode(stripslashes(implode(' ', $queries)));
@@ -282,7 +283,7 @@ switch ($action) {
                 $search_url .= "&uid={$uid}";
             }
             if ($start > 0) {
-                $prev = $start - 20;				
+                $prev = $start - 20;
                 $search_url_prev = $search_url . "&start={$prev}";
 				$xoopsTpl->assign('previous', htmlspecialchars($search_url_prev));
             }

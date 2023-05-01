@@ -41,7 +41,7 @@ class XoopsThemeForm extends XoopsForm
     /**
      * create HTML to output the form as a theme-enabled table with validation.
      *
-     * YOU SHOULD AVOID TO USE THE FOLLOWING Nocolspan METHOD, IT WILL BE REMOVED
+     * YOU SHOULD AVOID THE USE THE FOLLOWING Nocolspan METHOD, IT WILL BE REMOVED
      *
      * To use the noColspan simply use the following example:
      *

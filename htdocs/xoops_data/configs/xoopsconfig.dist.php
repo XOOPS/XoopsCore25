@@ -14,9 +14,9 @@ return array(
      *   - To use a custom editor, e.g. 'MyEditor' class located in "/modules/myeditor/myeditor.php":
      *       $options['editor'] = array('MyEditor', XOOPS_ROOT_PATH . "/modules/myeditor/myeditor.php");
      *
-     *   For pre-configured settings, which will force to use a editor if no specific editor is set for call
+     *   For pre-configured settings, which will force to use an editor if no specific editor is set for call
      *     - Set up custom configs: in XOOPS_VAR_PATH . '/configs/xoopsconfig.php'
-     *     - set a editor as default, e.g. a pre-configured editor 'fckeditor':
+     *     - set an editor as default, e.g. a pre-configured editor 'fckeditor':
      *         'editor' => 'fckeditor',
      *     - set a custom editor 'MyEditor' class located in "/modules/myeditor/myeditor.php":
      *         'editor' => array('MyEditor', XOOPS_ROOT_PATH . "/modules/myeditor/myeditor.php"),

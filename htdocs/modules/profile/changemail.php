@@ -38,7 +38,7 @@ if (!isset($_POST['submit']) || !isset($_POST['passwd'])) {
     $form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
     $form->assign($GLOBALS['xoopsTpl']);
 } else {
-    $myts   = MyTextSanitizer::getInstance();
+    $myts   = \MyTextSanitizer::getInstance();
     $pass   = @$myts->stripSlashesGPC(trim($_POST['passwd']));
     $email  = @$myts->stripSlashesGPC(trim($_POST['newmail']));
     $errors = array();

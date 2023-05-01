@@ -38,7 +38,7 @@ if ($com_itemid > 0) {
                   <tr><td><br>' . $com_replytext . '<br></td></tr>
                   </table>';
         }
-        $myts      = MyTextSanitizer::getInstance();
+        $myts      = \MyTextSanitizer::getInstance();
         $com_title = $myts->htmlSpecialChars($com_replytitle);
         if (!preg_match('/^' . _RE . '/i', $com_title)) {
             $com_title = _RE . ' ' . xoops_substr($com_title, 0, 56);
@@ -75,11 +75,11 @@ if ($com_itemid > 0) {
     $com_pid    = 0;
     $com_rootid = 0;
     $com_text   = '';
-    // Start Add by voltan
+    // Start added by voltan
     $com_user  = '';
     $com_email = '';
     $com_url   = '';
-    // End Add by voltan
+    // End added by voltan
     include_once $GLOBALS['xoops']->path('include/comment_form.php');
     include_once $GLOBALS['xoops']->path('footer.php');
 }

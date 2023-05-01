@@ -29,6 +29,16 @@ class XoopsAvatar extends XoopsObject
 {
     public $_userCount;
 
+    //PHP 8.2 Dynamic properties deprecated
+    public $avatar_id;
+    public $avatar_file;
+    public $avatar_name;
+    public $avatar_mimetype;
+    public $avatar_created;
+    public $avatar_display;
+    public $avatar_weight;
+    public $avatar_type;
+
     /**
      * Constructor
      */
@@ -189,7 +199,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
      * Egt Object
      *
      * @param  int $id
-     * @return XoopsAvatar
+     * @return XoopsAvatar|false
      */
     public function get($id)
     {
@@ -197,7 +207,8 @@ class XoopsAvatarHandler extends XoopsObjectHandler
         $id     = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('avatar') . ' WHERE avatar_id=' . $id;
-            if (!$result = $this->db->query($sql)) {
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
                 return false;
             }
             $numrows = $this->db->getRowsNum($result);
@@ -295,8 +306,10 @@ class XoopsAvatarHandler extends XoopsObjectHandler
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
-            return $ret;
+        if (!$this->db->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+            );
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $avatar = new XoopsAvatar();
@@ -327,12 +340,14 @@ class XoopsAvatarHandler extends XoopsObjectHandler
         if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
             return 0;
         }
+
         list($count) = $this->db->fetchRow($result);
 
-        return $count;
+        return (int)$count;
     }
 
     /**
@@ -375,7 +390,8 @@ class XoopsAvatarHandler extends XoopsObjectHandler
             return false;
         }
         $sql = 'SELECT user_id FROM ' . $this->db->prefix('avatar_user_link') . ' WHERE avatar_id=' . $avatar->getVar('avatar_id');
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
             return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
@@ -388,8 +404,8 @@ class XoopsAvatarHandler extends XoopsObjectHandler
     /**
      * Get a list of Avatars
      *
-     * @param  string $avatar_type
-     * @param  string $avatar_display
+     * @param  string    $avatar_type 'S' for system, 'C' for custom
+     * @param  bool|null $avatar_display null lists all, bool respects avatar_display
      * @return array
      */
     public function getList($avatar_type = null, $avatar_display = null)

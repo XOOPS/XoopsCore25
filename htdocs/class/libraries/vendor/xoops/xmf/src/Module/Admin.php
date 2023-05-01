@@ -23,7 +23,7 @@ use Xmf\Language;
  * @category  Xmf\Module\Admin
  * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
- * @copyright 2011-2021 XOOPS Project (https://xoops.org)
+ * @copyright 2011-2023 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  */
 class Admin
@@ -48,7 +48,7 @@ class Admin
     /**
      * Retrieve a module admin instance
      *
-     * If we are on a next generation system this will be the a native Xoops\Module\Admin instance.
+     * If we are on a next generation system this will be the native Xoops\Module\Admin instance.
      * Older systems with the Frameworks based admin class will get an instance of this class which
      * provides compatible methods built from the old Frameworks version.
      *
@@ -346,7 +346,7 @@ class Admin
      * Check for installed module and version and do addConfigBoxLine()
      *
      * @param string  $moddir     - module directory name
-     * @param integer $minversion - minimum acceptable module version (100 = V1.00)
+     * @param integer $minversion - minimum acceptable module version
      *
      * @return bool true if requested version of the module is available
      */
@@ -356,15 +356,15 @@ class Admin
         $helper = Helper::getHelper($moddir);
         if (is_object($helper) && is_object($helper->getModule())) {
             $mod_modversion = $helper->getModule()->getVar('version');
-            $mod_version_f = $mod_modversion / 100;
-            $min_version_f = $minversion / 100;
+            $mod_version_f = $mod_modversion;
+            $min_version_f = $minversion;
             $value = sprintf(
                 _AM_XMF_MODULE_VERSION,
                 strtoupper($moddir),
                 $min_version_f,
                 $mod_version_f
             );
-            if ($mod_modversion >= $minversion) {
+            if ($helper->getModule()->versionCompare($min_version_f, $mod_version_f, '<=')) {
                 $this->addConfigAccept($value);
                 $return = true;
             } else {
@@ -374,7 +374,7 @@ class Admin
             $value = sprintf(
                 _AM_XMF_MODULE_NOTFOUND,
                 strtoupper($moddir),
-                $minversion / 100
+                $minversion
             );
             $this->addConfigError($value);
         }
@@ -459,7 +459,7 @@ class Admin
     }
 
     /**
-     * set paypal for 2.5.x renderAbout
+     * set PayPal for 2.5.x renderAbout
      *
      * not part of next generation Xoops\Module\Admin
      *

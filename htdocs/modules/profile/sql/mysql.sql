@@ -12,7 +12,7 @@ CREATE TABLE `profile_field` (
   `cat_id`              smallint(5) unsigned    NOT NULL default '0',
   `field_type`          varchar(30)             NOT NULL default '',
   `field_valuetype`     tinyint(2) unsigned     NOT NULL default '0',
-  `field_name`          varchar(255)            NOT NULL default '',
+  `field_name`          varchar(64)             NOT NULL default '',
   `field_title`         varchar(255)            NOT NULL default '',
   `field_description`   text,
   `field_required`      tinyint(1) unsigned     NOT NULL default '0',
@@ -48,7 +48,7 @@ CREATE TABLE `profile_regstep` (
   `step_save`       tinyint(1) unsigned     NOT NULL default '0',
   
   PRIMARY KEY (`step_id`),
-  KEY `sort` (`step_order`, `step_name`)
+  KEY `sort` (`step_order`, `step_name`(100))
 ) ENGINE=MyISAM;
 
 CREATE TABLE `profile_profile` (

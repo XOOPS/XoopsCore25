@@ -79,13 +79,12 @@ function xoops_module_install($dirname)
         $error = false;
         $errs  = array();
         $msgs  = array();
-
         $msgs[] = '<div id="xo-module-log"><div class="header">';
         $msgs[] = $errs[] = '<h4>' . _AM_SYSTEM_MODULES_INSTALLING . $module->getInfo('name', 's') . '</h4>';
         if ($module->getInfo('image') !== false && trim($module->getInfo('image')) != '') {
             $msgs[] = '<a href="' . XOOPS_URL . '/modules/' . $module->getInfo('dirname', 'e') . '/' . $module->getInfo('adminindex') . '"><img src="' . XOOPS_URL . '/modules/' . $dirname . '/' . trim($module->getInfo('image')) . '" alt="" /></a>';
         }
-        $msgs[] = '<strong>' . _VERSION . ':</strong> ' . $module->getInfo('version') . '&nbsp;' . $module->getInfo('module_status');
+        $msgs[] = '<strong>' . _VERSION . ':</strong> ' . $module->getInfo('version');
         if ($module->getInfo('author') !== false && trim($module->getInfo('author')) != '') {
             $msgs[] = '<strong>' . _AUTHOR . ':</strong> ' . htmlspecialchars(trim($module->getInfo('author')));
         }
@@ -96,7 +95,7 @@ function xoops_module_install($dirname)
             include_once XOOPS_ROOT_PATH . '/modules/' . $dirname . '/' . trim($install_script);
         }
         $func = "xoops_module_pre_install_{$dirname}";
-        // If pre install function is defined, execute
+        // If pre-install function is defined, execute
         if (function_exists($func)) {
             $result = $func($module);
             if (!$result) {
@@ -228,7 +227,12 @@ function xoops_module_install($dirname)
                         }
                         $options = '';
                         if (!empty($block['options'])) {
-                            $options = trim($block['options']);
+                            if (is_array($block['options'])) {
+                                $options = implode('|', $block['options']);
+                            } else {
+                                $options = $block['options'];
+                            }
+                            $options = trim($options);
                         }
                         $newbid    = $db->genId($db->prefix('newblocks') . '_bid_seq');
                         $edit_func = isset($block['edit_func']) ? trim($block['edit_func']) : '';
@@ -621,7 +625,7 @@ function xoops_module_uninstall($dirname)
         if ($module->getInfo('image') !== false && trim($module->getInfo('image')) != '') {
             $msgs[] = '<img src="' . XOOPS_URL . '/modules/' . $dirname . '/' . trim($module->getInfo('image')) . '" alt="" />';
         }
-        $msgs[] = '<strong>' . _VERSION . ':</strong> ' . $module->getInfo('version') . '&nbsp;' . $module->getInfo('module_status');
+        $msgs[] = '<strong>' . _VERSION . ':</strong> ' . $module->getInfo('version');
         if ($module->getInfo('author') !== false && trim($module->getInfo('author')) != '') {
             $msgs[] = '<strong>' . _AUTHOR . ':</strong> ' . htmlspecialchars(trim($module->getInfo('author')));
         }
@@ -791,7 +795,7 @@ function xoops_module_update($dirname)
     $dirname = trim($dirname);
     $xoopsDB =& $GLOBALS['xoopsDB'];
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
     $dirname        = $myts->htmlSpecialChars(trim($dirname));
     /* @var XoopsModuleHandler $module_handler */
@@ -800,7 +804,7 @@ function xoops_module_update($dirname)
     // Save current version for use in the update function
     $prev_version = $module->getVar('version');
     $clearTpl     = new XoopsTpl();
-    $clearTpl->clearCache($dirname);
+    $clearTpl->xoopsClearCache($dirname);
 
     // we don't want to change the module name set by admin
     $temp_name = $module->getVar('name');
@@ -833,7 +837,7 @@ function xoops_module_update($dirname)
         if ($module->getInfo('image') !== false && trim($module->getInfo('image')) != '') {
             $msgs[] = '<img src="' . XOOPS_URL . '/modules/' . $dirname . '/' . trim($module->getInfo('image')) . '" alt="" />';
         }
-        $msgs[] = '<strong>' . _VERSION . ':</strong> ' . $module->getInfo('version') . '&nbsp;' . $module->getInfo('module_status');
+        $msgs[] = '<strong>' . _VERSION . ':</strong> ' . $module->getInfo('version');
         if ($module->getInfo('author') !== false && trim($module->getInfo('author')) != '') {
             $msgs[] = '<strong>' . _AUTHOR . ':</strong> ' . $myts->htmlSpecialChars(trim($module->getInfo('author')));
         }
@@ -952,6 +956,11 @@ function xoops_module_update($dirname)
                     }
                     $sql     = 'SELECT bid, name FROM ' . $xoopsDB->prefix('newblocks') . ' WHERE mid=' . $module->getVar('mid') . ' AND func_num=' . $i . " AND show_func='" . addslashes($block['show_func']) . "' AND func_file='" . addslashes($block['file']) . "'";
                     $fresult = $xoopsDB->query($sql);
+                    if (!$xoopsDB->isResultSet($fresult)) {
+                        throw new \RuntimeException(
+                            \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+                        );
+                    }
                     $fcount  = 0;
                     while (false !== ($fblock = $xoopsDB->fetchArray($fresult))) {
                         ++$fcount;
@@ -977,7 +986,7 @@ function xoops_module_update($dirname)
                                 $tplfile_new->setVar('tpl_desc', $block['description'], true);
                                 $tplfile_new->setVar('tpl_lastmodified', time());
                                 $tplfile_new->setVar('tpl_lastimported', 0);
-                                $tplfile_new->setVar('tpl_file', $block['template'], true); // irmtfan bug fix:  block template file will not updated after update the module
+                                $tplfile_new->setVar('tpl_file', $block['template'], true); // irmtfan bug fix:  block template file will not be updated after update the module
                                 if (!$tplfile_handler->insert($tplfile_new)) {
                                     $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">' . sprintf(_AM_SYSTEM_MODULES_TEMPLATE_UPDATE_ERROR, '<strong>' . $block['template'] . '</strong>') . '</span>';
                                 } else {
@@ -1410,7 +1419,7 @@ function xoops_module_change($mid, $name)
     $module_handler = xoops_getHandler('module');
     $module         = $module_handler->get($mid);
     $module->setVar('name', $name);
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     if (!$module_handler->insert($module)) {
         $ret = '<p>' . sprintf(_AM_SYSTEM_MODULES_FAILORDER, '<strong>' . $myts->stripSlashesGPC($name) . '</strong>') . '&nbsp;' . _AM_SYSTEM_MODULES_ERRORSC . '<br>';
         $ret .= $module->getHtmlErrors() . '</p>';
@@ -1439,8 +1448,7 @@ function xoops_module_log_header($module, $title)
             $msgs[] = '<img src="' . XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . trim($module->getInfo('image')) . '" alt="" />';
         }
     }
-
-    $msgs[] = '<strong>' . _VERSION . ':</strong> ' . $module->getInfo('version') . '&nbsp;' . $module->getInfo('module_status');
+    $msgs[] = '<strong>' . _VERSION . ':</strong> ' . $module->getInfo('version');
     if ($module->getInfo('author') !== false && trim($module->getInfo('author')) != '') {
         $msgs[] = '<strong>' . _AUTHOR . ':</strong> ' . htmlspecialchars(trim($module->getInfo('author')));
     }

@@ -288,7 +288,7 @@ class XoopsFolderHandler
      */
     public function isWindowsPath($path)
     {
-        if (preg_match('/^[A-Z]:\\\\/i', $path)) {
+        if (preg_match('/^[A-Z]:\\\\/i', (string)$path)) {
             return true;
         }
 
@@ -831,7 +831,7 @@ class XoopsFolderHandler
             $newparts[] = $part;
         }
         $newpath .= implode('/', $newparts);
-        if (strlen($path > 1) && $path[strlen($path) - 1] === '/') {
+        if ((strlen($path) > 1) && $path[strlen($path) - 1] === '/') {
             $newpath .= '/';
         }
 
@@ -849,7 +849,7 @@ class XoopsFolderHandler
      */
     public function isSlashTerm($path)
     {
-        if (preg_match('/[\/\\\]$/', $path)) {
+        if (preg_match('/[\/\\\]$/', (string)$path)) {
             return true;
         }
 

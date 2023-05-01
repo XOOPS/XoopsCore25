@@ -25,9 +25,11 @@ function xoops_module_install_pm(XoopsModule $module)
 
     // Check pm table version
     $sql = 'SHOW COLUMNS FROM ' . $xoopsDB->prefix('priv_msgs');
-    if (!$result = $xoopsDB->queryF($sql)) {
+    $result = $xoopsDB->queryF($sql);
+    if (!$xoopsDB->isResultSet($result)) {
         return false;
     }
+
     // Migrate from existent pm module
     if (($rows = $xoopsDB->getRowsNum($result)) == 12) {
         return true;

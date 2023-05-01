@@ -70,13 +70,13 @@ EOH;
     }
 
     /**
-     * @param $ts
+     * @param MyTextSanitizer $myts
      *
      * @return bool
      */
-    public function load($ts)
+    public function load(MyTextSanitizer $myts)
     {
-        $ts->patterns[] = "/\[mms=(['\"]?)([^\"']*),([^\"']*)\\1]([^\"]*)\[\/mms\]/sU";
+        $myts->patterns[] = "/\[mms=(['\"]?)([^\"']*),([^\"']*)\\1]([^\"]*)\[\/mms\]/sU";
         $rp             = "<OBJECT id=videowindow1 height='\\3' width='\\2' classid='CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6'>";
         $rp .= "<PARAM NAME=\"URL\" VALUE=\"\\4\">";
         $rp .= "<PARAM NAME=\"rate\" VALUE=\"1\">";
@@ -104,7 +104,7 @@ EOH;
         $rp .= "<PARAM NAME=\"_cx\" VALUE=\"12700\">";
         $rp .= "<PARAM NAME=\"_cy\" VALUE=\"8731\">";
         $rp .= '</OBJECT>';
-        $ts->replacements[] = $rp;
+        $myts->replacements[] = $rp;
 
         return true;
     }

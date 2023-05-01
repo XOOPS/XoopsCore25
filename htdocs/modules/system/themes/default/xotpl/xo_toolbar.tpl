@@ -14,7 +14,7 @@
                 <img src="<{$theme_icons}>/prefs.png" alt="<{$smarty.const._OXYGEN_SITEPREF}>"/>
             </a>
         <{/if}>
-        <a class="tooltip" href="<{xoAppUrl modules/system/help.php}>" title="<{$smarty.const._AM_SYSTEM_HELP}>">
+        <a class="tooltip" href="<{xoAppUrl 'modules/system/help.php'}>" title="<{$smarty.const._AM_SYSTEM_HELP}>">
             <img src='<{"$theme_icons/help.png"}>'/>
         </a>
     </div>

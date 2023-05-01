@@ -429,7 +429,7 @@ class XoopsLogger
  * NB: You're not supposed to call this function directly, if you don't understand why, then
  * you'd better spend some time reading your PHP manual before you hurt somebody
  *
- * @internal : Using a function and not calling the handler method directly because of old PHP versions
+ * @internal Using a function and not calling the handler method directly because of old PHP versions
  * set_error_handler() have problems with the array( obj,methodname ) syntax
  * @param       $errNo
  * @param       $errStr

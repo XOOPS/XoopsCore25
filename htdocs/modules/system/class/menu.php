@@ -170,12 +170,16 @@ class SystemMenuHandler
         $i        = 0;
 
         /**
-         * Selects current menu tab
+         * Select current menu tab, sets id names for menu tabs
          */
+        $j=0;
         foreach ($this->_menutabs as $k => $menus) {
-            $menuItems[] = $menus;
+            if ($j == $currentoption) {
+                $breadcrumb = $menus;
+            }
+            $menuItems[] = 'modmenu_' . $j++;
         }
-        $breadcrumb                = $menuItems[$currentoption];
+
         $menuItems[$currentoption] = 'current';
         $menu                      = "<div id='buttontop_mod'>";
         $menu .= "<table style='width: 100%; padding: 0;' cellspacing='0'>\n<tr>";

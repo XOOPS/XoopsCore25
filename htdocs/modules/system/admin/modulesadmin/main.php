@@ -41,7 +41,7 @@ if (in_array($op, array('confirm', 'submit', 'install_ok', 'update_ok', 'uninsta
         $op = 'list';
     }
 }
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 
 switch ($op) {
     case 'list':
@@ -80,18 +80,23 @@ switch ($op) {
             $listed_mods[$i]['name']          = htmlspecialchars($module->getVar('name'), ENT_QUOTES);
             $listed_mods[$i]['image']         = $module->getInfo('image');
             $listed_mods[$i]['adminindex']    = $module->getInfo('adminindex');
-            $listed_mods[$i]['version']       = round($module->getVar('version') / 100, 2);
-            $listed_mods[$i]['module_status'] = $module->getInfo('module_status');
+            $listed_mods[$i]['version']       = $module->getVar('version');
             $listed_mods[$i]['last_update']   = formatTimestamp($module->getVar('last_update'), 'm');
             $listed_mods[$i]['author']        = $module->getInfo('author');
             $listed_mods[$i]['credits']       = $module->getInfo('credits');
             $listed_mods[$i]['license']       = $module->getInfo('license');
             $listed_mods[$i]['description']   = $module->getInfo('description');
-            if (round((float)$module->getInfo('version'), 2) != $listed_mods[$i]['version']) {
+			
+			if (true === $module->versionCompare($listed_mods[$i]['version'], $module->getInfo('version'))) {
                 $listed_mods[$i]['warning_update'] = true;
             } else {
                 $listed_mods[$i]['warning_update'] = false;
             }
+			// Only to request the update because since xoops 2.5.11 the version is a character string.This condition can be removed from xoops 2.5.12.
+			if (strpos($listed_mods[$i]['version'], '.') === false){
+				$listed_mods[$i]['warning_update'] = true;
+			}
+			
             $install_mods[] = $module->getInfo('dirname');
             unset($module);
             ++$i;
@@ -159,8 +164,7 @@ switch ($op) {
                     $toinstall_mods[$i]['name']          = htmlspecialchars($module->getInfo('name'), ENT_QUOTES);
                     $toinstall_mods[$i]['dirname']       = $module->getInfo('dirname');
                     $toinstall_mods[$i]['image']         = $module->getInfo('image');
-                    $toinstall_mods[$i]['version']       = round((float)$module->getInfo('version'), 2);
-                    $toinstall_mods[$i]['module_status'] = $module->getInfo('module_status');
+                    $toinstall_mods[$i]['version']       = $module->getInfo('version');
                     $toinstall_mods[$i]['author']        = $module->getInfo('author');
                     $toinstall_mods[$i]['credits']       = $module->getInfo('credits');
                     $toinstall_mods[$i]['license']       = $module->getInfo('license');

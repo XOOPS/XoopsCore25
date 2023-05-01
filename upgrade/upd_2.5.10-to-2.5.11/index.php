@@ -5,7 +5,7 @@ use Xmf\Database\Tables;
 /**
  * Upgrade from 2.5.10 to 2.5.11
  *
- * @copyright    (c) 2000-2021 XOOPS Project (https://xoops.org)
+ * @copyright    (c) 2000-2022 XOOPS Project (https://xoops.org)
  * @license          GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package          Upgrade
  * @since            2.5.11
@@ -22,6 +22,7 @@ class Upgrade_2511 extends XoopsUpgrade
         $this->tasks = array(
             'bannerintsize',
             'captchadata',
+            'modulesvarchar',
             'qmail',
             'rmindexhtml',
             'textsanitizer',
@@ -57,9 +58,9 @@ class Upgrade_2511 extends XoopsUpgrade
      * Determine if columns are declared mediumint, and if
      * so, queue ddl to alter to int.
      *
-     * @param $migrate           \Xmf\Database\Tables
-     * @param $bannerTableName   string
-     * @param $bannerColumnNames string[] array of columns to check
+     * @param Tables   $migrate
+     * @param string   $bannerTableName
+     * @param string[] $bannerColumnNames array of columns to check
      *
      * @return integer count of queue items added
      */
@@ -100,13 +101,14 @@ class Upgrade_2511 extends XoopsUpgrade
      */
     public function apply_bannerintsize()
     {
-        $migrate = new \Xmf\Database\Tables();
+        $migrate = new Tables();
 
         $count = $this->fromMediumToInt($migrate, $this->bannerTableName, $this->bannerColumnNames);
 
         $result = $migrate->executeQueue(true);
         if (false === $result) {
-            $this->logs[] = sprintf('Migration of %s table failed. Error: %s - %s' .
+            $this->logs[] = sprintf(
+                'Migration of %s table failed. Error: %s - %s' .
                 $this->bannerTableName,
                 $migrate->getLastErrNo(),
                 $migrate->getLastError()
@@ -137,7 +139,7 @@ class Upgrade_2511 extends XoopsUpgrade
 
         /** @var mysqli_result $result */
         $result = $db->query($sql);
-        if ($result) {
+        if ($db->isResultSet($result)) {
             $row = $db->fetchRow($result);
             if ($row) {
                 $count = $row[0];
@@ -169,17 +171,22 @@ class Upgrade_2511 extends XoopsUpgrade
     /**
      * Do we need to move captcha writable data?
      *
-     * @return bool
+     * @return bool true if patch IS applied, false if NOT applied
      */
     public function check_captchadata()
     {
         $captchaConfigFile = XOOPS_VAR_PATH . '/configs/captcha/config.php';
+        $oldCaptchaConfigFile = XOOPS_ROOT_PATH . '/class/captcha/config.php';
+        if (!file_exists($oldCaptchaConfigFile)) { // nothing to copy
+            return true;
+        }
         return file_exists($captchaConfigFile);
     }
 
     /**
      * Attempt to make the supplied path
-     * @param $newPath string
+     *
+     * @param string $newPath
      *
      * @return bool
      */
@@ -195,8 +202,8 @@ class Upgrade_2511 extends XoopsUpgrade
     /**
      * Copy file $source to $destination
      *
-     * @param $source      string
-     * @param $destination string
+     * @param string $source
+     * @param string $destination
      *
      * @return bool true if successful, false on error
      */
@@ -300,10 +307,11 @@ class Upgrade_2511 extends XoopsUpgrade
 
     /**
      * Build a list of config files using the existing textsanitizer/config.php
+     * each as source name => destination name in $this->textsanitizerConfigFiles
+     *
      * This should prevent some issues with customized systems.
      *
-     * @return string[] array of existing ts and extension config files
-     *                  each as source name => destination name
+     * @return void
      */
     protected function buildListTSConfigs()
     {
@@ -482,6 +490,70 @@ class Upgrade_2511 extends XoopsUpgrade
             }
         }
         return $i;
+    }
+
+    /**
+     * Determine if columns are declared smallint, and if
+     * so, queue ddl to alter to varchar.
+     *
+     * @param Tables   $migrate
+     * @param string   $modulesTableName
+     * @param string[] $modulesColumnNames  array of columns to check
+     *
+     * @return integer count of queue items added
+     */
+    protected function fromSmallintToVarchar(Tables $migrate, $modulesTableName, $modulesColumnNames)
+    {
+        $migrate->useTable($modulesTableName);
+        $count = 0;
+        foreach ($modulesColumnNames as $column) {
+            $attributes = $migrate->getColumnAttributes($modulesTableName, $column);
+            if (is_string($attributes) && 0 === strpos(trim($attributes), 'smallint')) {
+                $count++;
+                $migrate->alterColumn($modulesTableName, $column, 'varchar(32) NOT NULL DEFAULT \'\'');
+            }
+        }
+        return $count;
+    }
+
+    private $modulesTableName = 'modules';
+    private $modulesColumnNames = array('version');
+
+    /**
+     * Increase version columns from smallint to varchar
+     *
+     * @return bool true if patch IS applied, false if NOT applied
+     */
+    public function check_modulesvarchar()
+    {
+        $migrate = new Tables();
+        $count = $this->fromSmallintToVarchar($migrate, $this->modulesTableName, $this->modulesColumnNames);
+        return $count == 0;
+    }
+
+    /**
+     * Increase version columns from smallint to varchar
+     *
+     * @return bool true if applied, false if failed
+     */
+    public function apply_modulesvarchar()
+    {
+        $migrate = new Tables();
+
+        $count = $this->fromSmallintToVarchar($migrate, $this->modulesTableName, $this->modulesColumnNames);
+
+        $result = $migrate->executeQueue(true);
+        if (false === $result) {
+            $this->logs[] = sprintf(
+                'Migration of %s table failed. Error: %s - %s' .
+                $this->modulesTableName,
+                $migrate->getLastErrNo(),
+                $migrate->getLastError()
+            );
+            return false;
+        }
+
+        return true;
     }
 }
 

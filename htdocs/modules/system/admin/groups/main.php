@@ -71,7 +71,7 @@ switch ($op) {
                 $groups['name']        = $groups_arr[$i]->getVar('name');
                 $groups['description'] = $groups_arr[$i]->getVar('description');
                 /* @var SystemMemberHandler $member_handler */
-                $member_handler        = xoops_getHandler('member', 'system');
+                $member_handler        = xoops_getHandler('member');
                 if ($groups_id != XOOPS_GROUP_ANONYMOUS) {
                     $group_id_arr[0]              = $groups_id;
                     $nb_users_by_groups           = $member_handler->getUserCountByGroupLink($group_id_arr);
@@ -87,7 +87,7 @@ switch ($op) {
                                      <img src="./images/icons/delete.png" border="0" alt="' . _AM_SYSTEM_GROUPS_DELETE . '" title="' . _AM_SYSTEM_GROUPS_DELETE . '"></a>';
                 }
                 $groups['edit_delete'] = $edit_delete;
-                $xoopsTpl->append_by_ref('groups', $groups);
+                $xoopsTpl->appendByRef('groups', $groups);
                 unset($groups);
             }
         }

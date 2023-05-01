@@ -11,18 +11,21 @@
 /**
  * xoAdminIcons Smarty compiler plug-in
  *
- * @copyright    (c) 2000-2021 XOOPS Project (https://xoops.org)
+ * @copyright    (c) 2000-2022 XOOPS Project (https://xoops.org)
  * @license          GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author           Andricq Nicolas (AKA MusS)
  * @since            2.5
- * @param $argStr
- * @param $smarty
+ * @param string[] $params
+ * @param Smarty   $smarty
  * @return string
  */
 
-function smarty_compiler_xoAdminIcons($argStr, &$smarty)
+function smarty_compiler_xoAdminIcons($params, $smarty)
 {
     global $xoops, $xoTheme;
+
+    $argStr = reset($params);
+    $argStr = trim($argStr,"' \t\n\r\0");
 
     $icons = xoops_getModuleOption('typeicons', 'system');
     if ($icons == '') {
@@ -39,5 +42,5 @@ function smarty_compiler_xoAdminIcons($argStr, &$smarty)
         }
     }
 
-    return "\necho '" . addslashes($url) . "';";
+    return "<?php echo '" . addslashes($url) . "'; ?>";
 }

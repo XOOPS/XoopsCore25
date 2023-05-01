@@ -53,7 +53,7 @@ if ($mid > 0) {
                 if ($modversion['help']) {
                     $help['name'] = system_adminVersion($directory, 'name');
                     $help['link'] = 'help.php?mid=' . $mid . '&amp;' . system_adminVersion($directory, 'help');
-                    $xoopsTpl->append_by_ref('help', $help);
+                    $xoopsTpl->appendByRef('help', $help);
                     unset($help);
                 }
                 unset($modversion);
@@ -82,7 +82,7 @@ if ($mid > 0) {
         if (($module->getInfo('help') !== '') && ($j == 0)) {
             $help['name'] = $module->getInfo('name');
             $help['link'] = 'help.php?mid=' . $mid . '&amp;' . $module->getInfo('help');
-            $xoopsTpl->append_by_ref('help', $help);
+            $xoopsTpl->appendByRef('help', $help);
         }
         unset($help);
     }
@@ -106,6 +106,8 @@ if ($mid > 0) {
     } else {
         if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/' . $xoopsConfig['language'] . '/help/module_index.html')) {
             $helpcontent = $xoopsTpl->fetch(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/' . $xoopsConfig['language'] . '/help/module_index.html');
+        } elseif (file_exists(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/' . $xoopsConfig['language'] . '/help/module_index.tpl')) {
+            $helpcontent = $xoopsTpl->fetch(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname', 'e') . '/language/' . $xoopsConfig['language'] . '/help/module_index.tpl');
         } else {
             $helpcontent = $module->getInfo('description');
             $helpcontent = '<div id="non-modhelp">' . $helpcontent . '</div>';
@@ -133,7 +135,7 @@ if ($mid > 0) {
         $listed_mods[$i]                = $module->toArray();
         $listed_mods[$i]['image']       = $module->getInfo('image');
         $listed_mods[$i]['adminindex']  = $module->getInfo('adminindex');
-        $listed_mods[$i]['version']     = round($module->getVar('version') / 100, 2);
+        $listed_mods[$i]['version']     = $module->getVar('version');
         $listed_mods[$i]['last_update'] = formatTimestamp($module->getVar('last_update'), 'm');
         $listed_mods[$i]['author']      = $module->getInfo('author');
         $listed_mods[$i]['credits']     = $module->getInfo('credits');
@@ -158,7 +160,7 @@ if ($mid > 0) {
             }
             unset($dirlist);
 
-            // Handling for all other modules
+            // Handling for all the other modules
         } else {
             $helplist = $module->getInfo('helpsection');
             $k        = 0;

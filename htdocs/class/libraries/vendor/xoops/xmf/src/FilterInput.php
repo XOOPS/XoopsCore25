@@ -28,7 +28,7 @@ namespace Xmf;
  * @author    Richard Griffith <richard@geekwright.com>
  * @copyright 2005 Daniel Morris
  * @copyright 2005 - 2013 Open Source Matters, Inc. All rights reserved.
- * @copyright 2011-2018 XOOPS Project (https://xoops.org)
+ * @copyright 2011-2023 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @link      https://xoops.org
  */
@@ -65,7 +65,7 @@ class FilterInput
         'title',
         'xml'
     );
-    // also will strip ALL event handlers
+    // also, it will strip ALL event handlers
     protected $attrBlacklist = array('action', 'background', 'codebase', 'dynsrc', 'lowsrc');
 
     /**

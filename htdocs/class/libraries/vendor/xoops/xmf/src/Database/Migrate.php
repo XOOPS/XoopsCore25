@@ -21,14 +21,14 @@ use Xmf\Yaml;
  * and build a work queue of DDL/SQL to transform the existing tables to the
  * target definitions.
  *
- * Typically Migrate will be extended by a module specific class that will supply custom
+ * Typically, Migrate will be extended by a module specific class that will supply custom
  * logic (see preSyncActions() method.)
  *
  * @category  Xmf\Database\Migrate
  * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
- * @copyright 2018 XOOPS Project (https://xoops.org)
- * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright 2018-2023 XOOPS Project (https://xoops.org)
+ * @license   GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link      https://xoops.org
  */
 class Migrate
@@ -68,7 +68,18 @@ class Migrate
         if (empty($this->moduleTables)) {
             throw new \RuntimeException("No tables established in module");
         }
-        $version = $module->getInfo('version');
+
+        $version = preg_replace_callback(
+            '/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/',
+            function ($match) {
+                $semver = $match[1] . '_' . $match[2] . '_' .$match[3];
+                if (!empty($match[4])) {
+                    $semver .= '_' . substr($match[4], 0, 8);
+                }
+                return $semver;
+            },
+            $module->getInfo('version'));
+
         $this->tableDefinitionFile = $this->helper->path("sql/{$dirname}_{$version}_migrate.yml");
         $this->tableHandler = new Tables();
     }
@@ -103,7 +114,9 @@ class Migrate
     public function getCurrentSchema()
     {
         foreach ($this->moduleTables as $tableName) {
-            $this->tableHandler->useTable($tableName);
+            if (false === $this->tableHandler->useTable($tableName)) {
+                $this->tableHandler->addTable($tableName);
+            }
         }
 
         return $this->tableHandler->dumpTables();

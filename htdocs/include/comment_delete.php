@@ -145,7 +145,7 @@ switch ($op) {
             }
         }
 
-        // update user posts if its not an anonymous post
+        // update user posts if it's not an anonymous post
         if ($comment->getVar('com_uid') != 0) {
             /* @var XoopsMemberHandler $member_handler */
             $member_handler = xoops_getHandler('member');
