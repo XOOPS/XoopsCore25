@@ -91,7 +91,7 @@ class XoopsSystemGui
 
             foreach (array_keys($xoopsModule->adminmenu) as $item) {
                 $sys_menu[$item]['link'] = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/' . $xoopsModule->adminmenu[$item]['link'];
-                $GLOBALS['xoopsTpl']->append_by_ref('sys_menu', $sys_menu);
+                $GLOBALS['xoopsTpl']->appendByRef('sys_menu', $sys_menu);
                 unset($sys_menu);
             }
         }

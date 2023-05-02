@@ -53,7 +53,9 @@ function xoops_setcookie()
 
     // make samesite=strict the default
     $args['options']['samesite'] = isset($args['options']['samesite']) ? $args['options']['samesite'] : 'strict';
-
+    if (!isset($args['value'])){
+        $args['value'] = '';
+    }
     // after php 7.3 we just let php do it
     if (PHP_VERSION_ID >= 70300) {
         return setcookie($args['name'], (string)$args['value'], $args['options']);

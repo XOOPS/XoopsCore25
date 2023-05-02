@@ -46,7 +46,7 @@ if (!empty($_GET['op'])) {
     $op = trim($_POST['op']);
 }
 
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 
 if ($admin && $op === 'SmilesAdd') {
     if (!$GLOBALS['xoopsSecurity']->check()) {

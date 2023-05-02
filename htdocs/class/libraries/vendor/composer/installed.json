@@ -7,12 +7,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/boenrobot/money_format_polyfill.git",
-                "reference": "adb894c5f15405f6fe22a0f830cda518caeee0ff"
+                "reference": "918ce589839b3a5236191e6581f8438077f7587d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/boenrobot/money_format_polyfill/zipball/adb894c5f15405f6fe22a0f830cda518caeee0ff",
-                "reference": "adb894c5f15405f6fe22a0f830cda518caeee0ff",
+                "url": "https://api.github.com/repos/boenrobot/money_format_polyfill/zipball/918ce589839b3a5236191e6581f8438077f7587d",
+                "reference": "918ce589839b3a5236191e6581f8438077f7587d",
                 "shasum": ""
             },
             "require-dev": {
@@ -21,7 +21,7 @@
             "suggest": {
                 "boenrobot/composer-install-library-of-functions": "To remove the polyfill from the autoloader if not needed."
             },
-            "time": "2020-04-03T11:54:18+00:00",
+            "time": "2022-09-07T11:23:36+00:00",
             "type": "library",
             "extra": {
                 "functionmap": {
@@ -49,23 +49,23 @@
             "description": "A polyfill for PHP's money_format() function, intended for Windows. Source from Rafael M. Salvioni (in the comments for money_format()).",
             "support": {
                 "issues": "https://github.com/boenrobot/money_format_polyfill/issues",
-                "source": "https://github.com/boenrobot/money_format_polyfill/tree/master"
+                "source": "https://github.com/boenrobot/money_format_polyfill/tree/1.0.2"
             },
             "install-path": "../boenrobot/money_format_polyfill"
         },
         {
             "name": "firebase/php-jwt",
-            "version": "v5.5.1",
-            "version_normalized": "5.5.1.0",
+            "version": "v6.0.0",
+            "version_normalized": "6.0.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/firebase/php-jwt.git",
-                "reference": "83b609028194aa042ea33b5af2d41a7427de80e6"
+                "reference": "0541cba75ab108ef901985e68055a92646c73534"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/83b609028194aa042ea33b5af2d41a7427de80e6",
-                "reference": "83b609028194aa042ea33b5af2d41a7427de80e6",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/0541cba75ab108ef901985e68055a92646c73534",
+                "reference": "0541cba75ab108ef901985e68055a92646c73534",
                 "shasum": ""
             },
             "require": {
@@ -77,7 +77,7 @@
             "suggest": {
                 "paragonie/sodium_compat": "Support EdDSA (Ed25519) signatures when libsodium is not present"
             },
-            "time": "2021-11-08T20:18:51+00:00",
+            "time": "2022-01-24T15:18:34+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -109,23 +109,23 @@
             ],
             "support": {
                 "issues": "https://github.com/firebase/php-jwt/issues",
-                "source": "https://github.com/firebase/php-jwt/tree/v5.5.1"
+                "source": "https://github.com/firebase/php-jwt/tree/v6.0.0"
             },
             "install-path": "../firebase/php-jwt"
         },
         {
             "name": "geekwright/regdom",
-            "version": "v1.0.7",
-            "version_normalized": "1.0.7.0",
+            "version": "v1.0.8",
+            "version_normalized": "1.0.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/geekwright/RegDom.git",
-                "reference": "612f44ec78d04c23107731b89494285caf73e324"
+                "reference": "c87227e25482d0157e978ccc54804cdabf3d91d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/geekwright/RegDom/zipball/612f44ec78d04c23107731b89494285caf73e324",
-                "reference": "612f44ec78d04c23107731b89494285caf73e324",
+                "url": "https://api.github.com/repos/geekwright/RegDom/zipball/c87227e25482d0157e978ccc54804cdabf3d91d5",
+                "reference": "c87227e25482d0157e978ccc54804cdabf3d91d5",
                 "shasum": ""
             },
             "require": {
@@ -135,7 +135,7 @@
             "require-dev": {
                 "phpunit/phpunit": "^4.8|^5.7"
             },
-            "time": "2022-04-08T21:58:34+00:00",
+            "time": "2023-04-30T17:37:56+00:00",
             "bin": [
                 "bin/reloadpsl"
             ],
@@ -166,7 +166,7 @@
             ],
             "support": {
                 "issues": "https://github.com/geekwright/RegDom/issues",
-                "source": "https://github.com/geekwright/RegDom/tree/v1.0.7"
+                "source": "https://github.com/geekwright/RegDom/tree/v1.0.8"
             },
             "install-path": "../geekwright/regdom"
         },
@@ -352,6 +352,72 @@
                 "source": "https://github.com/paragonie/random_compat"
             },
             "install-path": "../paragonie/random_compat"
+        },
+        {
+            "name": "smarty/smarty",
+            "version": "v3.1.48",
+            "version_normalized": "3.1.48.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/smarty-php/smarty.git",
+                "reference": "2fc443806cdcaee4441be4d0bb09f8fa56a17f2c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/smarty-php/smarty/zipball/2fc443806cdcaee4441be4d0bb09f8fa56a17f2c",
+                "reference": "2fc443806cdcaee4441be4d0bb09f8fa56a17f2c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.2 || ^7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.5 || ^6.5 || ^5.7 || ^4.8",
+                "smarty/smarty-lexer": "^3.1"
+            },
+            "time": "2023-03-28T19:45:54+00:00",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.1.x-dev"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "classmap": [
+                    "libs/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Monte Ohrt",
+                    "email": "monte@ohrt.com"
+                },
+                {
+                    "name": "Uwe Tews",
+                    "email": "uwe.tews@googlemail.com"
+                },
+                {
+                    "name": "Rodney Rehm",
+                    "email": "rodney.rehm@medialize.de"
+                }
+            ],
+            "description": "Smarty - the compiling PHP template engine",
+            "homepage": "http://www.smarty.net",
+            "keywords": [
+                "templating"
+            ],
+            "support": {
+                "forum": "http://www.smarty.net/forums/",
+                "irc": "irc://irc.freenode.org/smarty",
+                "issues": "https://github.com/smarty-php/smarty/issues",
+                "source": "https://github.com/smarty-php/smarty/tree/v3.1.48"
+            },
+            "install-path": "../smarty/smarty"
         },
         {
             "name": "smottt/wideimage",
@@ -757,17 +823,17 @@
         },
         {
             "name": "xoops/base-requires25",
-            "version": "v1.0.4",
-            "version_normalized": "1.0.4.0",
+            "version": "v1.1.0",
+            "version_normalized": "1.1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/XOOPS/base-requires25.git",
-                "reference": "589f42b839105749b32f937e9c4c14a893ae8aed"
+                "reference": "231706709c81e82a5b14ba6e954df2cf8a67b782"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/XOOPS/base-requires25/zipball/589f42b839105749b32f937e9c4c14a893ae8aed",
-                "reference": "589f42b839105749b32f937e9c4c14a893ae8aed",
+                "url": "https://api.github.com/repos/XOOPS/base-requires25/zipball/231706709c81e82a5b14ba6e954df2cf8a67b782",
+                "reference": "231706709c81e82a5b14ba6e954df2cf8a67b782",
                 "shasum": ""
             },
             "require": {
@@ -775,12 +841,13 @@
                 "geekwright/regdom": "^1.0.0",
                 "ircmaxell/password-compat": "^1.0.4",
                 "php": ">=5.3.9",
+                "smarty/smarty": "^3.1.47",
                 "smottt/wideimage": "^1.1.4",
                 "symfony/polyfill-iconv": "^1.10.0",
                 "symfony/polyfill-mbstring": "^1.10.0",
                 "xoops/xmf": "^1.2.26"
             },
-            "time": "2022-04-16T20:58:42+00:00",
+            "time": "2022-10-07T22:26:58+00:00",
             "type": "project",
             "installation-source": "dist",
             "notification-url": "https://packagist.org/downloads/",
@@ -790,27 +857,27 @@
             "description": "Primary dependencies for XOOPS/XoopsCore25",
             "support": {
                 "issues": "https://github.com/XOOPS/base-requires25/issues",
-                "source": "https://github.com/XOOPS/base-requires25/tree/v1.0.4"
+                "source": "https://github.com/XOOPS/base-requires25/tree/v1.1.0"
             },
             "install-path": "../xoops/base-requires25"
         },
         {
             "name": "xoops/xmf",
-            "version": "v1.2.26",
-            "version_normalized": "1.2.26.0",
+            "version": "v1.2.27",
+            "version_normalized": "1.2.27.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/XOOPS/xmf.git",
-                "reference": "8987315e9575d94abaf6c7964d0eddd00ec0a992"
+                "reference": "c52381bc84ca0050d93472181a006e4b0aaaa470"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/XOOPS/xmf/zipball/8987315e9575d94abaf6c7964d0eddd00ec0a992",
-                "reference": "8987315e9575d94abaf6c7964d0eddd00ec0a992",
+                "url": "https://api.github.com/repos/XOOPS/xmf/zipball/c52381bc84ca0050d93472181a006e4b0aaaa470",
+                "reference": "c52381bc84ca0050d93472181a006e4b0aaaa470",
                 "shasum": ""
             },
             "require": {
-                "firebase/php-jwt": "^5.0",
+                "firebase/php-jwt": "6.0.0",
                 "kint-php/kint": "^3.3",
                 "paragonie/random_compat": "^2",
                 "php": ">=5.3.9",
@@ -821,7 +888,7 @@
                 "phpunit/phpunit": "^7.0",
                 "roave/security-advisories": "dev-master"
             },
-            "time": "2022-04-13T15:15:11+00:00",
+            "time": "2023-03-19T16:02:58+00:00",
             "type": "project",
             "installation-source": "dist",
             "autoload": {
@@ -836,7 +903,7 @@
             "description": "XMF - XOOPS Module Framework",
             "support": {
                 "issues": "https://github.com/XOOPS/xmf/issues",
-                "source": "https://github.com/XOOPS/xmf/tree/v1.2.26"
+                "source": "https://github.com/XOOPS/xmf/tree/v1.2.27"
             },
             "install-path": "../xoops/xmf"
         }

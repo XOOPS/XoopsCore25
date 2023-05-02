@@ -20,7 +20,7 @@ use Xmf\Module\Helper;
  * @package   Xmf
  * @author    trabis <lusopoemas@gmail.com>
  * @author    Richard Griffith <richard@geekwright.com>
- * @copyright 2011-2018 XOOPS Project (https://xoops.org)
+ * @copyright 2011-2023 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @link      https://xoops.org
  */
@@ -96,7 +96,7 @@ class Permission extends AbstractHelper
     }
 
     /**
-     * Redirect to a url if user does not have permission for an item
+     * Redirect to a URL if user does not have permission for an item
      *
      * @param string $gperm_name   name of the permission to test
      * @param int    $gperm_itemid id of the object to check

@@ -59,10 +59,16 @@ if (!in_array($method, $safeMethods)) {
 }
 
 if (is_object($xoopsUser)) {
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     if ($op === 'submit') {
-        $res = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('users') . ' WHERE uid=' . XoopsRequest::getInt('to_userid', 0, 'POST') . '');
-        list($count) = $xoopsDB->fetchRow($res);
+        $sql = 'SELECT COUNT(*) FROM ' . $xoopsDB->prefix('users') . ' WHERE uid=' . XoopsRequest::getInt('to_userid', 0, 'POST') . '';
+        $result = $xoopsDB->query($sql);
+        if (!$xoopsDB->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+            );
+        }
+        list($count) = $xoopsDB->fetchRow($result);
         if ($count != 1) {
             echo '<br><br><div><h4>' . _PM_USERNOEXIST . '<br>';
             echo _PM_PLZTRYAGAIN . '</h4><br>';

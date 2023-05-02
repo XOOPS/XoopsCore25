@@ -831,7 +831,7 @@ class XoopsFolderHandler
             $newparts[] = $part;
         }
         $newpath .= implode('/', $newparts);
-        if (strlen($path > 1) && $path[strlen($path) - 1] === '/') {
+        if ((strlen($path) > 1) && $path[strlen($path) - 1] === '/') {
             $newpath .= '/';
         }
 

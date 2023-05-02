@@ -44,7 +44,7 @@ class XoopsAuth
 
     /**
      * @param  string $uname
-     * @abstract need to be write in the derived class
+     * @abstract need to be written in the derived class
      */
     public function authenticate($uname)
     {

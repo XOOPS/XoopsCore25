@@ -142,7 +142,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
      * retrieve a specific group
      *
      * @param  int $id ID of the group to get
-     * @return XoopsGroup XoopsGroup reference to the group object, FALSE if failed
+     * @return XoopsGroup|false XoopsGroup reference to the group object, false if failed
      */
     public function get($id)
     {
@@ -150,7 +150,8 @@ class XoopsGroupHandler extends XoopsObjectHandler
         $group = false;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('groups') . ' WHERE groupid=' . $id;
-            if (!$result = $this->db->query($sql)) {
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
                 return $group;
             }
             $numrows = $this->db->getRowsNum($result);
@@ -241,7 +242,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
+         if (!$this->db->isResultSet($result)) {
             return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
@@ -339,7 +340,8 @@ class XoopsMembershipHandler extends XoopsObjectHandler
         $mship = false;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('groups_users_link') . ' WHERE linkid=' . $id;
-            if (!$result = $this->db->query($sql)) {
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
                 return $mship;
             }
             $numrows = $this->db->getRowsNum($result);
@@ -431,7 +433,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
@@ -466,7 +468,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
         }
         list($count) = $this->db->fetchRow($result);
 
-        return $count;
+        return (int)$count;
     }
 
     /**
@@ -481,7 +483,8 @@ class XoopsMembershipHandler extends XoopsObjectHandler
         if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
             return false;
         }
 
@@ -502,7 +505,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
         $ret    = array();
         $sql    = 'SELECT groupid FROM ' . $this->db->prefix('groups_users_link') . ' WHERE uid=' . (int)$uid;
         $result = $this->db->query($sql);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
@@ -527,7 +530,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
         $ret    = array();
         $sql    = 'SELECT uid FROM ' . $this->db->prefix('groups_users_link') . ' WHERE groupid=' . (int)$groupid;
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {

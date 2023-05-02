@@ -16,13 +16,13 @@
 <{/if}>
 
 <!-- Rss -->
-<link rel="alternate" type="application/rss+xml" title="" href="<{xoAppUrl backend.php}>"/>
+<link rel="alternate" type="application/rss+xml" title="" href="<{xoAppUrl 'backend.php'}>"/>
 
 <!-- path favicon -->
-<link rel="shortcut icon" type="image/ico" href="<{xoAppUrl favicon.ico}>"/>
+<link rel="shortcut icon" type="image/ico" href="<{xoAppUrl 'favicon.ico'}>"/>
 
 <!-- Xoops style sheet -->
-<link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl xoops.css}>"/>
+<link rel="stylesheet" type="text/css" media="screen" href="<{xoAppUrl 'xoops.css'}>"/>
 
 <!-- customized header contents -->
 <{$xoops_module_header}>

@@ -143,7 +143,9 @@ function xoops_loadLanguage($name, $domain = '', $language = null)
     if (empty($name)) {
         return false;
     }
-    $language = empty($language) ? $GLOBALS['xoopsConfig']['language'] : $language;
+//    $language = empty($language) ? $GLOBALS['xoopsConfig']['language'] : $language;
+    global $xoopsConfig;
+    $language = empty($language) ? $xoopsConfig['language'] : $language;
     $path     = ((empty($domain) || 'global' === $domain) ? '' : "modules/{$domain}/") . 'language';
     if (!file_exists($fileinc = $GLOBALS['xoops']->path("{$path}/{$language}/{$name}.php"))) {
         if (!file_exists($fileinc = $GLOBALS['xoops']->path("{$path}/english/{$name}.php"))) {
@@ -401,15 +403,15 @@ function xoops_result($msg, $title = '')
  */
 function xoops_confirm($hiddens, $action, $msg, $submit = '', $addtoken = true)
 {
-	if (!isset($GLOBALS['xoTheme']) || !is_object($GLOBALS['xoTheme'])) {
-		include_once $GLOBALS['xoops']->path('/class/theme.php');
-		$GLOBALS['xoTheme'] = new \xos_opal_Theme();
-	}
-	require_once $GLOBALS['xoops']->path('/class/template.php');
-	$confirmTpl = new \XoopsTpl();
-	$confirmTpl->assign('msg', $msg);
-	$confirmTpl->assign('action', $action);
-	$tempHiddens = '';
+    if (!isset($GLOBALS['xoTheme']) || !is_object($GLOBALS['xoTheme'])) {
+        include_once $GLOBALS['xoops']->path('/class/theme.php');
+        $GLOBALS['xoTheme'] = new \xos_opal_Theme();
+    }
+    require_once $GLOBALS['xoops']->path('/class/template.php');
+    $confirmTpl = new \XoopsTpl();
+    $confirmTpl->assign('msg', $msg);
+    $confirmTpl->assign('action', $action);
+    $tempHiddens = '';
     foreach ($hiddens as $name => $value) {
         if (is_array($value)) {
             foreach ($value as $caption => $newvalue) {
@@ -420,39 +422,39 @@ function xoops_confirm($hiddens, $action, $msg, $submit = '', $addtoken = true)
             $tempHiddens .= '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($value) . '" />';
         }
     }
-	$confirmTpl->assign('hiddens', $tempHiddens);
-	$confirmTpl->assign('addtoken', $addtoken);
-	if ($addtoken != false) {
-		$confirmTpl->assign('token', $GLOBALS['xoopsSecurity']->getTokenHTML());
-	}
+    $confirmTpl->assign('hiddens', $tempHiddens);
+    $confirmTpl->assign('addtoken', $addtoken);
+    if ($addtoken != false) {
+        $confirmTpl->assign('token', $GLOBALS['xoopsSecurity']->getTokenHTML());
+    }
     $submit = ($submit != '') ? trim($submit) : _SUBMIT;
-	$confirmTpl->assign('submit', $submit);
-	$html = $confirmTpl->fetch("db:system_confirm.tpl");
-	if (!empty($html)) {
-		echo $html;
-	} else {
-		$submit = ($submit != '') ? trim($submit) : _SUBMIT;
-		echo '<div class="confirmMsg">' . $msg . '<br>
-			  <form method="post" action="' . $action . '">';
-		foreach ($hiddens as $name => $value) {
-			if (is_array($value)) {
-				foreach ($value as $caption => $newvalue) {
-					echo '<input type="radio" name="' . $name . '" value="' . htmlspecialchars($newvalue) . '" /> ' . $caption;
-				}
-				echo '<br>';
-			} else {
-				echo '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($value) . '" />';
-			}
-		}
-		if ($addtoken != false) {
-			echo $GLOBALS['xoopsSecurity']->getTokenHTML();
-		}
-		// TODO - these buttons should go through formRenderer
-		echo '<input type="submit" class="btn btn-default btn-secondary" name="confirm_submit" value="' . $submit . '" title="' . $submit . '"/>
-			  <input type="button" class="btn btn-default btn-secondary" name="confirm_back" value="' . _CANCEL . '" onclick="history.go(-1);" title="' . _CANCEL . '" />
-			  </form>
-			  </div>';
-	}
+    $confirmTpl->assign('submit', $submit);
+    $html = $confirmTpl->fetch("db:system_confirm.tpl");
+    if (!empty($html)) {
+        echo $html;
+    } else {
+        $submit = ($submit != '') ? trim($submit) : _SUBMIT;
+        echo '<div class="confirmMsg">' . $msg . '<br>
+              <form method="post" action="' . $action . '">';
+        foreach ($hiddens as $name => $value) {
+            if (is_array($value)) {
+                foreach ($value as $caption => $newvalue) {
+                    echo '<input type="radio" name="' . $name . '" value="' . htmlspecialchars($newvalue) . '" /> ' . $caption;
+                }
+                echo '<br>';
+            } else {
+                echo '<input type="hidden" name="' . $name . '" value="' . htmlspecialchars($value) . '" />';
+            }
+        }
+        if ($addtoken != false) {
+            echo $GLOBALS['xoopsSecurity']->getTokenHTML();
+        }
+        // TODO - these buttons should go through formRenderer
+        echo '<input type="submit" class="btn btn-default btn-secondary" name="confirm_submit" value="' . $submit . '" title="' . $submit . '"/>
+              <input type="button" class="btn btn-default btn-secondary" name="confirm_back" value="' . _CANCEL . '" onclick="history.go(-1);" title="' . _CANCEL . '" />
+              </form>
+              </div>';
+    }
 }
 
 /**
@@ -474,7 +476,7 @@ function xoops_getUserTimestamp($time, $timeoffset = '')
     }
     $usertimestamp = (int)$time + ((float)$timeoffset - $xoopsConfig['server_TZ']) * 3600;
 
-    return $usertimestamp;
+    return (int)$usertimestamp;
 }
 
 /**
@@ -677,8 +679,14 @@ function xoops_getbanner()
     global $xoopsConfig;
 
     $db      = XoopsDatabaseFactory::getDatabaseConnection();
-    $bresult = $db->query('SELECT COUNT(*) FROM ' . $db->prefix('banner'));
-    list($numrows) = $db->fetchRow($bresult);
+    $sql = 'SELECT COUNT(*) FROM ' . $db->prefix('banner');
+    $result = $db->query($sql);
+    if (!$db->isResultSet($result)) {
+        throw new \RuntimeException(
+            \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+        );
+    }
+    list($numrows) = $db->fetchRow($result);
     if ($numrows > 1) {
         --$numrows;
         $bannum = mt_rand(0, $numrows);
@@ -686,13 +694,20 @@ function xoops_getbanner()
         $bannum = 0;
     }
     if ($numrows > 0) {
-        $bresult = $db->query('SELECT * FROM ' . $db->prefix('banner'), 1, $bannum);
-        list($bid, $cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date, $htmlbanner, $htmlcode) = $db->fetchRow($bresult);
+        $sql = 'SELECT * FROM ' . $db->prefix('banner');
+        $result = $db->query($sql, 1, $bannum);
+        if (!$db->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+            );
+        }
+        list($bid, $cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date, $htmlbanner, $htmlcode) = $db->fetchRow($result);
         if ($xoopsConfig['my_ip'] == xoops_getenv('REMOTE_ADDR')) {
             // EMPTY
         } else {
             ++$impmade;
-            $db->queryF(sprintf('UPDATE %s SET impmade = %u WHERE bid = %u', $db->prefix('banner'), $impmade, $bid));
+            $sql = sprintf('UPDATE %s SET impmade = %u WHERE bid = %u', $db->prefix('banner'), $impmade, $bid);
+            $db->queryF($sql);
             /**
              * Check if this impression is the last one
              */
@@ -912,7 +927,7 @@ function xoops_getMailer()
 function xoops_getrank($rank_id = 0, $posts = 0)
 {
     $db      = XoopsDatabaseFactory::getDatabaseConnection();
-    $myts    = MyTextSanitizer::getInstance();
+    $myts    = \MyTextSanitizer::getInstance();
     $rank_id = (int)$rank_id;
     $posts   = (int)$posts;
     if ($rank_id != 0) {
@@ -920,7 +935,13 @@ function xoops_getrank($rank_id = 0, $posts = 0)
     } else {
         $sql = 'SELECT rank_title AS title, rank_image AS image FROM ' . $db->prefix('ranks') . ' WHERE rank_min <= ' . $posts . ' AND rank_max >= ' . $posts . ' AND rank_special = 0';
     }
-    $rank          = $db->fetchArray($db->query($sql));
+    $result = $db->query($sql);
+    if (!$db->isResultSet($result)) {
+            throw new \RuntimeException(
+          \sprintf(_DB_QUERY_ERROR, $sql) . $db->error(), E_USER_ERROR
+    );
+    }
+    $rank          = $db->fetchArray($result);
     $rank['title'] = $myts->htmlSpecialChars($rank['title']);
     $rank['id']    = $rank_id;
 
@@ -928,7 +949,7 @@ function xoops_getrank($rank_id = 0, $posts = 0)
 }
 
 /**
- * Returns the portion of string specified by the start and length parameters. If $trimmarker is supplied, it is appended to the return string. This function works fine with multi-byte characters if mb_* functions exist on the server.
+ * Returns the portion of string specified by the start and length parameters. If $trimmarker is supplied, it is appended to the return string. This function works fine with multibyte characters if mb_* functions exist on the server.
  *
  * @param string $str
  * @param int    $start
@@ -1267,6 +1288,25 @@ function xoops_getUrlDomain($url)
     }
 
     return $domain;
+}
+
+/**
+ * Check that the variable passed as $name is set, and if not, set with the specified $default.
+ *
+ * Note that $name is passed by reference, so it will be established in the caller's context
+ * if not already set. The value of $name is returned for convenience as well.
+ *
+ * @param mixed $name    Passed by reference variable. Will be created if is not set.
+ * @param mixed $default The default to use if $name is not set
+ *
+ * @return mixed the value in $name
+ */
+function makeSet(&$name, $default)
+{
+    if (!isset($name)) {
+        $name = $default;
+    }
+    return $name;
 }
 
 include_once __DIR__ . '/functions.encoding.php';

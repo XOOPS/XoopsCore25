@@ -178,7 +178,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
     /**
      * Load a {@link XoopsPrivmessage} object
      * @param  int $id ID of the message
-     * @return XoopsPrivmessage
+     * @return XoopsPrivmessage|false
      **/
     public function get($id)
     {
@@ -186,7 +186,8 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
         $id = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('priv_msgs') . ' WHERE msg_id=' . $id;
-            if (!$result = $this->db->query($sql)) {
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
                 return $pm;
             }
             $numrows = $this->db->getRowsNum($result);
@@ -283,7 +284,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
@@ -311,12 +312,13 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
         if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
             return 0;
         }
         list($count) = $this->db->fetchRow($result);
 
-        return $count;
+        return (int)$count;
     }
 
     /**

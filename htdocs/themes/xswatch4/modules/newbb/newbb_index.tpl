@@ -26,11 +26,11 @@
                         </a>
 
                         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=pending#admin" title="<{$smarty.const._MD_NEWBB_TYPE_PENDING}>" class="btn btn-primary">
-                            <span class="fa fa-check-square-o" aria-hidden="true"></span> <{if $wait_new_topic}><span class="badge badge-light badge-pill"><{$wait_new_topic}></span><{/if}>
+                            <span class="fa fa-check-square-o" aria-hidden="true"></span> <{if $wait_new_topic|default:''}><span class="badge badge-light badge-pill"><{$wait_new_topic}></span><{/if}>
                         </a>
 
                         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=deleted#admin" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>" class="btn btn-danger">
-                            <span class="fa fa-trash-o" aria-hidden="true"></span> <{if $delete_topic}><span class="badge badge-light badge-pill"><{$delete_topic}></span><{/if}>
+                            <span class="fa fa-trash-o" aria-hidden="true"></span> <{if $delete_topic|default:''}><span class="badge badge-light badge-pill"><{$delete_topic}></span><{/if}>
                         </a>
                 </div>
             </div>
@@ -44,14 +44,14 @@
                     </a>
 
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=pending#admin" title="<{$smarty.const._MD_NEWBB_TYPE_PENDING}>" class="btn btn-primary">
-                        <span class="fa fa-check-square-o" aria-hidden="true"></span> <{if $wait_new_post}><span class="badge badge-light badge-pill"><{$wait_new_post}></span><{/if}>
+                        <span class="fa fa-check-square-o" aria-hidden="true"></span> <{if $wait_new_post|default:''}><span class="badge badge-light badge-pill"><{$wait_new_post}></span><{/if}>
                     </a>
 
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=deleted#admin" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>" class="btn btn-primary">
-                        <span class="fa fa-trash-o" aria-hidden="true"></span> <{if $delete_post}><span class="badge badge-light badge-pill"><{$delete_post}></span><{/if}>
+                        <span class="fa fa-trash-o" aria-hidden="true"></span> <{if $delete_post|default:''}><span class="badge badge-light badge-pill"><{$delete_post}></span><{/if}>
                     </a>
 
-                    <{if $report_post}>
+                    <{if $report_post|default:''}>
                     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/admin_report.php" title="_MD_NEWBB_REPORT" class="btn btn-primary">
                         <span class="fa fa-thumbs-o-down" aria-hidden="true"></span> <span class="badge badge-light badge-pill"><{$reported_coun badge-pillt}></span>
                     </a>
@@ -91,13 +91,13 @@
         <tbody>
         <{foreach item=forum from=$category.forums}>
         <tr>
-            <td><{$forum.forum_folder}></td>
+            <td><{$forum.forum_folder|default:''}></td>
             <td><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$forum.forum_id}>" title="<{$forum.forum_name}>"><{$forum.forum_name}></a>
                 <br><small><{$forum.forum_desc}></small></td>
             <td class="d-none d-sm-table-cell"><{$forum.forum_topics}></td>
             <td class="d-none d-sm-table-cell"><{$forum.forum_posts}></td>
             <td>
-                <{if $forum.forum_lastpost_subject}>
+                <{if isset($forum.forum_lastpost_subject)}>
                 <{$forum.forum_lastpost_time}> <{$smarty.const._MD_NEWBB_BY}> <{$forum.forum_lastpost_user}>
                 <br>
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?post_id=<{$forum.forum_lastpost_id}>">
@@ -107,9 +107,9 @@
                 <{else}>
                 <{$smarty.const._MD_NEWBB_NOTOPIC}>
                 <{/if}>
-                <{if $forum.subforum}>
+                <{if isset($forum.subforum)}>
                 <br><{$smarty.const._MD_NEWBB_SUBFORUMS}> <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                <{foreach item=subforum from=$forum.subforum}><br>
+                <{foreach item=subforum from=$forum.subforum|default:false}><br>
                 [<a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$subforum.forum_id}>"><{$subforum.forum_name}></a>]
                 <{/foreach}>
                 <{/if}>
@@ -156,14 +156,14 @@
 
                         <li><{$smarty.const._MD_NEWBB_TOTALTOPICSC}>
                             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php" title="<{$smarty.const._MD_NEWBB_ALL}>">
-                                <{$stats[0].topic.total}>
+                                <{$stats[0].topic.total|default:''}>
                             </a></li>
 
                         <li><{$smarty.const._MD_NEWBB_TOTALPOSTSC}>
                             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php" title="<{$smarty.const._MD_NEWBB_ALLPOSTS}>">
-                                <{$stats[0].post.total}>
+                                <{$stats[0].post.total|default:''}>
                             </a></li>
-                        <{if $stats[0].digest.total}>
+                        <{if $stats[0].digest.total|default:''}>
                             <li><{$smarty.const._MD_NEWBB_TOTALDIGESTSC}>
                                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=digest" title="<{$smarty.const._MD_NEWBB_TOTALDIGESTSC}>">
                                     <{$stats[0].digest.total}>
@@ -204,7 +204,7 @@
             <{include file="db:newbb_online.tpl"}>
         <{/if}>
 
-        <a title="NewBB" href="https://xoops.org" class="btn btn-success">NewBB Version <{$version/100}></a>
+        <a title="NewBB" href="https://xoops.org" class="btn btn-success">NewBB Version <{$version}></a>
         <{if $rss_button}>
             <div class="text-right">
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?c=<{$viewcat}>" target="_blank" title="RSS FEED">

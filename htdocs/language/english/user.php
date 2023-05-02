@@ -44,7 +44,7 @@ define('_US_NOREGISTER', 'Sorry, we are currently closed for new user registrati
 // %s is username. This is a subject for email
 define('_US_USERKEYFOR', 'User activation key for %s');
 define('_US_YOURREGISTERED', 'You are now registered. An email containing an user activation key has been sent to the email account you provided. Please follow the instructions in the email to activate your account. ');
-define('_US_YOURREGMAILNG', 'You are now registered. However, we were unable to send the activation email to your email account due to an internal error that had occurred on our server. We are sorry for the inconvenience, please send the webmaster an email notifying him/her of the situation.');
+define('_US_YOURREGMAILNG', 'You are now registered. However, we were unable to send the activation email to your email account due to an internal error that has occurred on our server. We are sorry for the inconvenience, please send the webmaster an email to notify them of the situation.');
 define('_US_YOURREGISTERED2', 'You are now registered.  Please wait for your account to be activated by the adminstrators.  You will receive an email once you are activated.  This could take a while so please be patient.');
 // %s is your site name
 define('_US_NEWUSERREGAT', 'New user registration at %s');

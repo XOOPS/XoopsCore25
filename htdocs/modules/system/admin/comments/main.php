@@ -15,7 +15,7 @@
  * @package
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
- */ 
+ */
 use Xmf\Request;
 
 // Check users rights
@@ -76,6 +76,7 @@ switch ($op) {
             if (is_object($comment)) {
                 /* @var XoopsModuleHandler $module_handler */
                 $module_handler = xoops_getHandler('module');
+                /** @var \XoopsModule $module */
                 $module         = $module_handler->get($comment->getVar('com_modid'));
                 $comment_config = $module->getInfo('comments');
                 header('Location: ' . XOOPS_URL . '/modules/' . $module->getVar('dirname') . '/' . $comment_config['pageName'] . '?' . $comment_config['itemName'] . '=' . $comment->getVar('com_itemid') . '&com_id=' . $comment->getVar('com_id') . '&com_rootid=' . $comment->getVar('com_rootid') . '&com_mode=thread&' . str_replace('&amp;', '&', $comment->getVar('com_exparams')) . '#comment' . $comment->getVar('com_id'));
@@ -196,7 +197,7 @@ switch ($op) {
         $xoBreadCrumb->addTips(_AM_SYSTEM_COMMENTS_NAV_TIPS);
         $xoBreadCrumb->render();
 
-        $myts             = MyTextSanitizer::getInstance();
+        $myts             = \MyTextSanitizer::getInstance();
         /* @var  XoopsCommentHandler $comments_Handler */
         $comments_Handler = xoops_getHandler('comment');
         $comments_module  = '';
@@ -299,8 +300,8 @@ switch ($op) {
                 $comments['comments_modid']        = @$module_array[$comments_arr[$i]->getVar('com_modid')];
                 //$comments['comments_view_edit_delete'] = '<img class="cursorpointer" onclick="display_dialog('.$com_id.', true, true, \'slide\', \'slide\', 300, 500);" src="images/icons/view.png" alt="'._AM_SYSTEM_COMMENTS_VIEW.'" title="'._AM_SYSTEM_COMMENTS_VIEW.'" /><a href="admin/comments/comment_edit.php?com_id='.$com_id.'"><img src="./images/icons/edit.png" border="0" alt="'._EDIT.'" title="'._EDIT.'"></a><a href="admin/comments/comment_delete.php?com_id='.$com_id.'"><img src="./images/icons/delete.png" border="0" alt="'._DELETE.'" title="'._DELETE.'"></a>';
 
-                $xoopsTpl->append_by_ref('comments', $comments);
-                $xoopsTpl->append_by_ref('comments_popup', $comments);
+                $xoopsTpl->appendByRef('comments', $comments);
+                $xoopsTpl->appendByRef('comments_popup', $comments);
                 unset($comments);
             }
 

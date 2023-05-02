@@ -191,7 +191,7 @@ if (false !== $error) {
                             break;
                     }
                 }
-                $xoopsTpl->append_by_ref('menu', $menu);
+                $xoopsTpl->appendByRef('menu', $menu);
                 unset($menu);
             }
             unset($modversion);

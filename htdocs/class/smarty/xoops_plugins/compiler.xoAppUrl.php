@@ -2,11 +2,11 @@
 /**
  * xoAppUrl Smarty compiler plug-in
  *
- * See the enclosed file LICENSE for licensing information.
- * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
+ * See the enclosed file LICENSE for licensing information. If you did not
+ * receive this file, get it at http://www.gnu.org/licenses/gpl-2.0.html
  *
- * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license          GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright   (c) 2000-2022 XOOPS Project (https://xoops.org)
+ * @license     GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author           Skalpa Keo <skalpa@xoops.org>
  * @package          xos_opal
  * @subpackage       xos_opal_Smarty
@@ -14,87 +14,28 @@
  */
 
 /**
- * Inserts the URL of an application page
+ * Build application relative URL
  *
  * This plug-in allows you to generate a module location URL. It uses any URL rewriting
  * mechanism and rules you'll have configured for the system.
  *
- * To ensure this can be as optimized as possible, it accepts 2 modes of operation:
+ * // Generate a URL using a physical path
+ * <{xoAppUrl 'modules/something/yourpage.php'}>
  *
- * <b>Static address generation</b>:<br>
- * This is the default mode and fastest mode. When used, the URL is generated during
- * the template compilation, and statically written in the compiled template file.
- * To use it, you just need to provide a location in a format XOOPS understands.
+ * The path should be in a form understood by Xoops::url()
  *
- * <code>
- * // Generate an URL using a physical path
- * ([xoAppUrl modules/something/yourpage.php])
- * // Generate an URL using a module+location identifier (2.3+)
- * ([xoAppUrl mod_xoops_Identification#logout])
- * </code>
- *
- * <b>Dynamic address generation</b>:<br>
- * The is the slowest mode, and its use should be prevented unless necessary. Here,
- * the URL is generated dynamically each time the template is displayed, thus allowing
- * you to use the value of a template variable in the location string. To use it, you
- * must surround your location with double-quotes ("), and use the
- * {@link http://smarty.php.net/manual/en/language.syntax.quotes.php Smarty quoted strings}
- * syntax to insert variables values.
- *
- * <code>
- * // Use the value of the $sortby template variable in the URL
- * ([xoAppUrl "modules/something/yourpage.php?order=`$sortby`"])
- * </code>
- * @param $argStr
- * @param $compiler
+ * @param string[] $params
+ * @param Smarty   $smarty
  * @return string
  */
-function smarty_compiler_xoAppUrl($argStr, &$compiler)
+function smarty_compiler_xoAppUrl($params, Smarty $smarty)
 {
     global $xoops;
-    $argStr = trim((string) $argStr);
+    $arg = reset($params);
+    $url = trim($arg, " '\"\t\n\r\0\x0B");
 
-//    @list($url, $params) = explode(' ', $argStr, 2);
-
-    if (strpos($argStr, ' ') !== false) {
-    @list($url, $params) = explode(' ', $argStr, 2);
-    } else {
-        $url = $argStr;
-        $params = '';
-    }
-
-
-    if (substr($url, 0, 1) === '/') {
+    if (strpos($url, '/') === 0) {
         $url = 'www' . $url;
     }
-    // Static URL generation
-    if (strpos($argStr, '$') === false && $url !== '.') {
-        if (isset($params)) {
-            $params = $compiler->_parse_attrs($params, false);
-            foreach ($params as $k => $v) {
-                if (in_array(substr($v, 0, 1), array('"', "'"))) {
-                    $params[$k] = substr($v, 1, -1);
-                }
-            }
-            $url = $xoops->buildUrl($url, $params);
-        }
-        $url = $xoops->path($url, true);
-
-        return "echo '" . addslashes(htmlspecialchars($url)) . "';";
-    }
-    // Dynamic URL generation
-    $str = "\$xoops->path('$url', true)";
-    if ($url === '.') {
-        $str = "\$_SERVER['REQUEST_URI']";
-    }
-    if (isset($params)) {
-        $params = $compiler->_parse_attrs($params, false);
-        $str    = "\$xoops->buildUrl($str, array(\n";
-        foreach ($params as $k => $v) {
-            $str .= var_export($k, true) . " => $v,\n";
-        }
-        $str .= '))';
-    }
-
-    return "echo htmlspecialchars($str);";
+    return "<?php echo '" . addslashes(htmlspecialchars($xoops->url($url))) . "'; ?>";
 }

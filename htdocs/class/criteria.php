@@ -319,7 +319,7 @@ class Criteria extends CriteriaElement
          * A common custom in some older programs was to use "new Criteria(1, '1')" to
          * create an always true clause, WHERE 1 = "1"
          *
-         * This is no longer needed and now no longer works. Instead use "new Criteria('')"
+         * This is no longer needed and now no longer works. Instead, use "new Criteria('')"
          * or "new CriteriaCompo()", either of which will produce no WHERE clause.
          *
          * The following is a temporary workaround for the old technique

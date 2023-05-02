@@ -307,7 +307,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
      * Load a config from the database
      *
      * @param  int $id ID of the config
-     * @return XoopsConfigItem reference to the config, FALSE on fail
+     * @return XoopsConfigItem|false reference to the config, false on fail
      */
     public function get($id)
     {
@@ -315,7 +315,8 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
         $id     = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('config') . ' WHERE conf_id=' . $id;
-            if (!$result = $this->db->query($sql)) {
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
                 return $config;
             }
             $numrows = $this->db->getRowsNum($result);
@@ -417,8 +418,8 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
-            return false;
+        if (!$this->db->isResultSet($result)) {
+            return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $config = new XoopsConfigItem();
@@ -447,11 +448,11 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
             $sql .= ' ' . $criteria->renderWhere();
         }
         $result = $this->db->query($sql);
-        if (!$result) {
-            return false;
+        if (!$this->db->isResultSet($result)) {
+            return 0;
         }
         list($count) = $this->db->fetchRow($result);
 
-        return $count;
+        return (int)$count;
     }
 }

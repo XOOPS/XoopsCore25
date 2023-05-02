@@ -77,7 +77,7 @@ class ModuleAdmin
         /**
          * version is rev of this class
          */
-        include_once 'xoops_version.php';
+        include_once __DIR__ . '/xoops_version.php';
         $version = XOOPS_FRAMEWORKS_MODULEADMIN_VERSION;
 
         return $version;
@@ -92,7 +92,7 @@ class ModuleAdmin
         /**
          * version is rev of this class
          */
-        include_once 'xoops_version.php';
+        include_once __DIR__ . '/xoops_version.php';
         $releasedate = XOOPS_FRAMEWORKS_MODULEADMIN_RELEASEDATE;
 
         return $releasedate;
@@ -555,8 +555,7 @@ class ModuleAdmin
                   . "<input name=\"currency_code\" type=\"hidden\" value=\"" . _AM_MODULEADMIN_ABOUT_AMOUNT_CURRENCY . "\">\n"
                   . "<label class=\"label_after\" for=\"amount\">" . _AM_MODULEADMIN_ABOUT_AMOUNT . "</label><text><input class=\"donate_amount\" type=\"text\" name=\"amount\" value=\"" . _AM_MODULEADMIN_ABOUT_AMOUNT_SUGGESTED . "\" title=\"" . _AM_MODULEADMIN_ABOUT_AMOUNT_TTL . "\" pattern=\"" . _AM_MODULEADMIN_ABOUT_AMOUNT_PATTERN . "\"></text>\n"
                   . "<br>\n"
-                  . "<text><input type=\"image\" name=\"submit\" class=\"donate_button\" src=\"https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif\" alt=\"" . _AM_MODULEADMIN_ABOUT_DONATE_IMG_ALT . "\"></text>\n"
-                  . "<img alt=\"\" height=\"1\" src=\"https://www.paypalobjects.com/en_US/i/scr/pixel.gif\" style=\"border-width: 0px;\" width=\"1\">\n"
+                  . "<text><input type=\"image\" name=\"submit\" class=\"donate_button\" src=\"" . XOOPS_URL . "/images/btn_donate_LG.png\" alt=\"" . _AM_MODULEADMIN_ABOUT_DONATE_IMG_ALT . "\"></text>\n"
                   . "</form>\n"
                   . "<br>\n"
                   . "</fieldset>\n"

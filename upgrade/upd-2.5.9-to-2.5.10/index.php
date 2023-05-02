@@ -46,7 +46,7 @@ class Upgrade_2510 extends XoopsUpgrade
 
         /** @var mysqli_result $result */
         $result = $db->query($sql);
-        if ($result) {
+        if ($db->isResultSet($result)) {
             $row = $db->fetchRow($result);
             if ($row) {
                 $count = $row[0];

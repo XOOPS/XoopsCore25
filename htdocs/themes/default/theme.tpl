@@ -17,17 +17,17 @@
     <meta name="generator" content="XOOPS"/>
 
     <!-- Rss -->
-    <link rel="alternate" type="application/rss+xml" title="" href="<{xoAppUrl backend.php}>"/>
+    <link rel="alternate" type="application/rss+xml" title="" href="<{xoAppUrl 'backend.php'}>"/>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/ico" href="<{xoImgUrl icons/favicon.ico}>"/>
-    <link rel="icon" type="image/png" href="<{xoImgUrl icons/favicon.png}>"/>
+    <link rel="shortcut icon" type="image/ico" href="<{xoImgUrl 'icons/favicon.ico'}>"/>
+    <link rel="icon" type="image/png" href="<{xoImgUrl 'icons/favicon.png'}>"/>
 
     <!-- Sheet Css -->
-    <link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{xoAppUrl xoops.css}>"/>
-    <link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{xoImgUrl style.css}>"/>
+    <link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{xoAppUrl 'xoops.css'}>"/>
+    <link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{xoImgUrl 'style.css'}>"/>
     <!--[if lte IE 8]>
-    <link rel="stylesheet" href="<{xoImgUrl styleIE8.css}>" type="text/css"/>
+    <link rel="stylesheet" href="<{xoImgUrl 'styleIE8.css'}>" type="text/css"/>
     <![endif]-->
 
     <!-- customized header contents -->
@@ -38,7 +38,7 @@
 <!-- Start Header -->
 <table cellspacing="0">
     <tr id="header">
-        <td id="headerlogo"><a href="<{xoAppUrl /}>" title="<{$xoops_sitename}>"><img src="<{xoImgUrl xoops-logo.png}>"
+        <td id="headerlogo"><a href="<{xoAppUrl '/'}>" title="<{$xoops_sitename}>"><img src="<{xoImgUrl 'xoops-logo.png'}>"
                                                                                       alt="<{$xoops_sitename}>"/></a></td>
         <td id="headerbanner"><{$xoops_banner}></td>
     </tr>

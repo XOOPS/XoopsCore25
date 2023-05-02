@@ -23,7 +23,7 @@
                         </a>
 
                         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=deleted#admin" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>" class="btn btn-xs btn-danger">
-                            <{if $delete_topic}><span class="badge"><{$delete_topic}></span><{/if}> <{$smarty.const._MD_NEWBB_TYPE_DELETED}>
+                            <{if isset($delete_topic)}><span class="badge"><{$delete_topic}></span><{/if}> <{$smarty.const._MD_NEWBB_TYPE_DELETED}>
                         </a>
                     </div>
                 <{/if}>
@@ -42,10 +42,10 @@
                         </a>
 
                         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php?status=deleted#admin" title="<{$smarty.const._MD_NEWBB_TYPE_DELETED}>" class="btn btn-xs btn-primary">
-                            <{if $delete_post}>(<span style="color:#ff0000;"><{$delete_post}></span>)<{/if}> <{$smarty.const._MD_NEWBB_TYPE_DELETED}>
+                            <{if isset($delete_post)}>(<span style="color:#ff0000;"><{$delete_post}></span>)<{/if}> <{$smarty.const._MD_NEWBB_TYPE_DELETED}>
                         </a>
 
-                        <{if $report_post}>
+                        <{if isset($report_post)}>
                             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/admin_report.php" title="<{$report_post}>" class="btn btn-xs btn-primary">
                                 <{$report_post}>
                             </a>
@@ -161,7 +161,7 @@
                                     </a>
                                 <{/if}>
                                 <!-- Forum description -->
-                                <{if $forum.forum_desc != ""}>
+                                <{if isset($forum.forum_desc)}>
                                     <button class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#forumDesc-<{$forum.forum_id}>"><span
                                                 class="glyphicon glyphicon-info-sign"></span></button>
                                     <div class="modal fade" id="forumDesc-<{$forum.forum_id}>" tabindex="-1" role="dialog" aria-labelledby="ForumDescription"
@@ -274,14 +274,14 @@
 
                         <li><{$smarty.const._MD_NEWBB_TOTALTOPICSC}>
                             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php" title="<{$smarty.const._MD_NEWBB_ALL}>">
-                                <{$stats[0].topic.total}>
+                                <{$stats[0].topic.total|default:''}>
                             </a></li>
 
                         <li><{$smarty.const._MD_NEWBB_TOTALPOSTSC}>
                             <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewpost.php" title="<{$smarty.const._MD_NEWBB_ALLPOSTS}>">
-                                <{$stats[0].post.total}>
+                                <{$stats[0].post.total|default:''}>
                             </a></li>
-                        <{if $stats[0].digest.total}>
+                        <{if isset($stats[0].digest.total)}>
                             <li><{$smarty.const._MD_NEWBB_TOTALDIGESTSC}>
                                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/list.topic.php?status=digest" title="<{$smarty.const._MD_NEWBB_TOTALDIGESTSC}>">
                                     <{$stats[0].digest.total}>
@@ -322,7 +322,7 @@
             <{include file="db:newbb_online.tpl"}>
         <{/if}>
 
-        <a title="NewBB" href="https://xoops.org" class="btn btn-xs btn-success">NewBB Version <{$version/100}></a>
+        <a title="NewBB" href="https://xoops.org" class="btn btn-xs btn-success">NewBB Version <{$version}></a>
         <{if $rss_button}>
             <div class="text-right">
                 <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/rss.php?c=<{$viewcat}>" target="_blank" title="RSS FEED">

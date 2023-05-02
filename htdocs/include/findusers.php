@@ -116,11 +116,13 @@ class XoopsRankHandler extends XoopsObjectHandler
     {
         $object = $this->create(false);
         $sql    = 'SELECT * FROM ' . $this->db->prefix('ranks') . ' WHERE rank_id = ' . $this->db->quoteString($id);
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
             $ret = null;
 
             return $ret;
         }
+
         while (false !== ($row = $this->db->fetchArray($result))) {
             $object->assignVars($row);
         }
@@ -153,10 +155,10 @@ class XoopsRankHandler extends XoopsObjectHandler
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             return $ret;
         }
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[$myrow['rank_id']] = $myts->htmlSpecialChars($myrow['rank_title']);
         }
@@ -249,9 +251,14 @@ class XoUserHandler extends XoopsObjectHandler
             }
         }
         $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+            );
+        }
         list($count) = $this->db->fetchRow($result);
 
-        return $count;
+        return (int)$count;
     }
 
     /**
@@ -290,6 +297,11 @@ class XoUserHandler extends XoopsObjectHandler
             $sql .= ' ORDER BY u.uid ASC';
         }
         $result = $this->db->query($sql, $limit, $start);
+        if (!$this->db->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+            );
+        }
         $ret    = array();
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $object = $this->create(false);
@@ -451,7 +463,7 @@ if (!Request::hasVar('user_submit', 'POST')) {
     echo '(' . sprintf(_MA_USER_ACTUS, "<span style='color:#ff0000;'>$acttotal</span>") . ' ' . sprintf(_MA_USER_INACTUS, "<span style='color:#ff0000;'>$inacttotal</span>") . ')';
     $form->display();
 } else {
-    $myts  = MyTextSanitizer::getInstance();
+    $myts  = \MyTextSanitizer::getInstance();
     $limit = Request::getInt('limit', 50, 'POST');
     $start = Request::getInt('start', 0, 'POST');
     if (Request::hasVar('query', 'POST')) {

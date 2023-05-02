@@ -20,7 +20,7 @@
 
 $loadCommon = !isset($xoopsOption['nocommon']);
 $xoopsOption['nocommon'] = true;
-include_once '../mainfile.php';
+include_once __DIR__ . '/../mainfile.php';
 
 $mainfileKeys = array(
     // in mainfile.php

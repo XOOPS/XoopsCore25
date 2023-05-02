@@ -23,7 +23,7 @@ use Xmf\Language;
  * @category  Xmf\Module\Admin
  * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
- * @copyright 2011-2022 XOOPS Project (https://xoops.org)
+ * @copyright 2011-2023 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  */
 class Admin
@@ -48,7 +48,7 @@ class Admin
     /**
      * Retrieve a module admin instance
      *
-     * If we are on a next generation system this will be the a native Xoops\Module\Admin instance.
+     * If we are on a next generation system this will be the native Xoops\Module\Admin instance.
      * Older systems with the Frameworks based admin class will get an instance of this class which
      * provides compatible methods built from the old Frameworks version.
      *
@@ -459,7 +459,7 @@ class Admin
     }
 
     /**
-     * set paypal for 2.5.x renderAbout
+     * set PayPal for 2.5.x renderAbout
      *
      * not part of next generation Xoops\Module\Admin
      *

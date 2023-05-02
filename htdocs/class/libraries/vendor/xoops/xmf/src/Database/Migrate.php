@@ -21,13 +21,13 @@ use Xmf\Yaml;
  * and build a work queue of DDL/SQL to transform the existing tables to the
  * target definitions.
  *
- * Typically Migrate will be extended by a module specific class that will supply custom
+ * Typically, Migrate will be extended by a module specific class that will supply custom
  * logic (see preSyncActions() method.)
  *
  * @category  Xmf\Database\Migrate
  * @package   Xmf
  * @author    Richard Griffith <richard@geekwright.com>
- * @copyright 2018-2022 XOOPS Project (https://xoops.org)
+ * @copyright 2018-2023 XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @link      https://xoops.org
  */

@@ -157,12 +157,13 @@ class XoopsNotification extends XoopsObject
     public function notifyUser($template_dir, $template, $subject, $tags)
     {
         // Check the user's notification preference.
-        /* @var XoopsMemberHandler $member_handler */
+        /** @var XoopsMemberHandler $member_handler */
         $member_handler = xoops_getHandler('member');
         $user           = $member_handler->getUser($this->getVar('not_uid'));
-        if (!is_object($user)) {
+        if (!is_object($user) || !$user->isActive()) {
             return true;
         }
+
         $method = $user->getVar('notify_method');
 
         $xoopsMailer = xoops_getMailer();
@@ -256,7 +257,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      *
      * @param int $id ID
      *
-     * @return XoopsNotification {@link XoopsNotification}, FALSE on fail
+     * @return XoopsNotification|false {@link XoopsNotification}, false on fail
      **/
     public function get($id)
     {
@@ -264,7 +265,8 @@ class XoopsNotificationHandler extends XoopsObjectHandler
         $id           = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('xoopsnotifications') . ' WHERE not_id=' . $id;
-            if (!$result = $this->db->query($sql)) {
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
                 return $notification;
             }
             $numrows = $this->db->getRowsNum($result);
@@ -359,7 +361,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
@@ -390,12 +392,13 @@ class XoopsNotificationHandler extends XoopsObjectHandler
         if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-        if (!$result = $this->db->query($sql)) {
+        $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
             return 0;
         }
         list($count) = $this->db->fetchRow($result);
 
-        return $count;
+        return (int)$count;
     }
 
     /**
@@ -612,7 +615,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
      * @param int    $item_id      ID of the item
      * @param array  $events       trigger events
      * @param array  $extra_tags   array of substitutions for template to be
-     *                              merged with the one from function..
+     *                              merged with the one from function.
      * @param array  $user_list    only notify the selected users
      * @param int    $module_id    ID of the module
      * @param int    $omit_user_id ID of the user to omit from notifications. (default to current user).  set to 0 for all users to receive notification.

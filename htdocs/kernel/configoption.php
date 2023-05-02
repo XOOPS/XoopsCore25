@@ -131,7 +131,7 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
      *
      * @param int $id ID of the option
      *
-     * @return XoopsConfigOption reference to the {@link XoopsConfigOption}, FALSE on fail
+     * @return XoopsConfigOption|false reference to the {@link XoopsConfigOption}, false on fail
      */
     public function get($id)
     {
@@ -139,7 +139,8 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
         $id         = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('configoption') . ' WHERE confop_id=' . $id;
-            if (!$result = $this->db->query($sql)) {
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
                 return $confoption;
             }
             $numrows = $this->db->getRowsNum($result);
@@ -247,7 +248,7 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
@@ -278,6 +279,11 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
             $sql .= ' ' . $criteria->renderWhere();
         }
         $result = $this->db->query($sql);
+        if (!$this->db->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+            );
+        }
         $row = $this->db->fetchArray($result);
         $count = $row['count'];
         $this->db->freeRecordSet($result);
