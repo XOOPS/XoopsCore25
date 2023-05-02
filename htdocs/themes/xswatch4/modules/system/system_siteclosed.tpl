@@ -28,11 +28,11 @@
         <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="<{$xoops_imageurl}><{$xswatchDarkCss}>/bootstrap.min.css">
     <{/if}>
 
-    <link rel="stylesheet" type="text/css" href="<{xoAppUrl media/font-awesome/css/font-awesome.min.css}>">
+    <link rel="stylesheet" type="text/css" href="<{xoAppUrl 'media/font-awesome/css/font-awesome.min.css'}>">
     <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_themecss}>">
     <script src="<{$xoops_url}>/browse.php?Frameworks/jquery/jquery.js"></script>
     <script src="<{$xoops_imageurl}>js/bootstrap.bundle.min.js"></script>
-    <link rel="alternate" type="application/rss+xml" title="" href="<{xoAppUrl backend.php}>">
+    <link rel="alternate" type="application/rss+xml" title="" href="<{xoAppUrl 'backend.php'}>">
 
     <title><{if $xoops_dirname == "system"}><{$xoops_sitename}><{if $xoops_pagetitle !=''}> - <{$xoops_pagetitle}><{/if}><{else}><{if $xoops_pagetitle
         !=''}><{$xoops_pagetitle}> - <{$xoops_sitename}><{/if}><{/if}></title>
@@ -52,7 +52,7 @@
                 <{if $redirect_message|default:false}>
                     <p class="text-warning"><{$redirect_message}></p>
                 <{/if}>
-                <form action="<{xoAppUrl user.php}>" method="post" role="form" class="form-horizontal">
+                <form action="<{xoAppUrl 'user.php'}>" method="post" role="form" class="form-horizontal">
                     <label for="xo-login-uname"><{$lang_username}></label>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">

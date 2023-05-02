@@ -2,30 +2,30 @@
 <{include file="db:extcal_navbar.tpl"}>
 
 <div class="container">
-<div style="background-color:#<{$event.cat.cat_color}>; height: 4px;">&nbsp;</div>
+<div style="background-color:#<{$event.cat.cat_color|default:''}>; height: 4px;">&nbsp;</div>
 <div class="row mb-3">
     <div class="col-12 col-md-6 mt-2">
-        <h6><{$event.cat.cat_name}></h6>
-        <h3><{$event.event_title}></h3>
-        <div class="mb-2"><{$event.formated_event_start}></div>
+        <h6><{$event.cat.cat_name|default:''}></h6>
+        <h3><{$event.event_title|default:''}></h3>
+        <div class="mb-2"><{$event.formated_event_start|default:''}></div>
         <{assign var='desctext' value=`$smarty.const._MD_EXTCAL_LOCATION_DESCRIPTION`}>
         <{assign var='desclink' value="… <a href=\"#desc\" title=\"$desctext\"><span class=\"fa fa-forward\"></span></a>"}>
         <div><{$event.event_desc|truncateHtml:60:$desclink}></div>
     </div>
     <div class="col-12 col-md-6">
-        <{if $event.event_picture1 || $event.event_picture2}>
+        <{if $event.event_picture1|default:false || $event.event_picture2|default:false}>
         <div id="extEventSlides" class="carousel slide mt-2 mb-2" data-ride="carousel">
             <div class="carousel-inner">
                 <{assign var=active value=' active'}>
-                <{if $event.event_picture1}>
-                <div class="carousel-item<{$active}>">
-                    <img class="img-fluid" src="<{$xoops_url}>/uploads/extcal/<{$event.event_picture1}>" alt="<{$event.event_title}>">
+                <{if $event.event_picture1|default:false}>
+                <div class="carousel-item<{$active|default:false}>">
+                    <img class="img-fluid" src="<{$xoops_url}>/uploads/extcal/<{$event.event_picture1}>" alt="<{$event.event_title|default:false}>">
                 </div>
                 <{assign var=active value=''}>
                 <{/if}>
-                <{if $event.event_picture2}>
+                <{if $event.event_picture2|default:false}>
                 <div class="carousel-item<{$active}>">
-                    <img class="img-fluid" src="<{$xoops_url}>/uploads/extcal/<{$event.event_picture2}>" alt="<{$event.event_title}>">
+                    <img class="img-fluid" src="<{$xoops_url}>/uploads/extcal/<{$event.event_picture2}>" alt="<{$event.event_title|default:false}>">
                 </div>
                 <{assign var=active value=''}>
                 <{/if}>
@@ -45,25 +45,25 @@
     </div>
 </div>
 <div class="mb-3">
-    <h4><{$event.event_title}></h4>
+    <h4><{$event.event_title|default:false}></h4>
     <strong><{$smarty.const._MD_EXTCAL_START}> </strong> <{$event.formated_event_start}>
     <br><br>
-    <{if $event.formated_event_start != $event.formated_event_end}>
+    <{if $event.formated_event_start|default:false != $event.formated_event_end|default:false}>
     <strong><{$smarty.const._MD_EXTCAL_END}> </strong> <{$event.formated_event_end}>
     <br><br>
     <{/if}>
 </div>
 
-<{if $event.event_desc != ''}>
+<{if $event.event_desc|default:'' != ''}>
 <div id="desc" class="mb-3">
     <h5><{$smarty.const._MD_EXTCAL_LOCATION_DESCRIPTION}></h5>
 
-    <{$event_desc}>
+    <{$event_desc|default:''}>
     <br>
 </div>
 <{/if}>
 
-<{if $event.event_address != ''}>
+<{if $event.event_address|default:'' != ''}>
 <div class="mb-3">
     <h5><{$smarty.const._MD_EXTCAL_LOCATION_ADRESSE}></h5>
     <{$event_address}>
@@ -72,17 +72,17 @@
 </div>
 <{/if}>
 
-<{if $location.id.value != 0}>
+<{if $location.id.value|default:0 != 0}>
 <div class="mb-3">
     <h5><{$smarty.const._MD_EXTCAL_LOCATION}></h5>
     <a class="btn btn-primary mb-3" href="./location.php?location_id=<{$event.event_location}>">
-        <{$location.nom.value}>
+        <{$location.nom.value|default:''}>
     </a>
     <br>
-    <{if $location.adresse.value}><{$location.adresse.value}><br><{/if}>
-    <{if $location.adresse2.value}><{$location.adresse2.value}><br><{/if}>
-    <{if $location.ville.value}><{$location.ville.value}><{/if}>
-    <{if $location.cp.value}><{$location.cp.value}><br><{/if}>
+    <{if $location.adresse.value|default:false}><{$location.adresse.value}><br><{/if}>
+    <{if $location.adresse2.value|default:false}><{$location.adresse2.value}><br><{/if}>
+    <{if $location.ville.value|default:false}><{$location.ville.value}><{/if}>
+    <{if $location.cp.value|default:false}><{$location.cp.value}><br><{/if}>
     <{* if $location.adresse.value}><{$location.adresse.value}><br><{/if}>
     <{if $location.ville.value}><{$location.ville.value}><br><{/if}>
     <{if $location.telephone.value}><{$location.telephone.value}><br><{/if}>
@@ -96,7 +96,7 @@
     <a href='<{$location.map.value}>' target='blanck'><{$smarty.const._MD_EXTCAL_LOCALISATION}></a>
     <br>
     <{/if*}>
-    <{if $location.logo.value}>
+    <{if $location.logo.value|default:false}>
     <a href="<{$xoops_url}>/uploads/extcal/location/<{$location.logo.value}>">
         <img src="<{$xoops_url}>/uploads/extcal/location/<{$location.logo.value}>" height="150px"/>
     </a>
@@ -106,16 +106,16 @@
 <{/if}>
 
 <div class="mb-3">
-    <{if $event.event_organisateur}>
+    <{if $event.event_organisateur|default:false}>
     <h5><{$smarty.const._MD_EXTCAL_ORGANISATEUR}></h5>
     <{$event.event_organisateur}>
     <{/if}>
-    <{if $event.event_contact}><{$event.event_contact}><br><{/if}>
-    <{if $event.event_email}><a href="mailto:<{$event.event_email}>"><{$event.event_email}></a><br><{/if}>
-    <{if $event.event_url}><a href="<{$event.event_url}>" target="_blank"><{$event.event_url}></a><br><{/if}>
+    <{if $event.event_contact|default:false}><{$event.event_contact}><br><{/if}>
+    <{if $event.event_email|default:false}><a href="mailto:<{$event.event_email}>"><{$event.event_email}></a><br><{/if}>
+    <{if $event.event_url|default:false}><a href="<{$event.event_url}>" target="_blank"><{$event.event_url}></a><br><{/if}>
 </div>
 
-<{if $event.event_price}>
+<{if $event.event_price|default:false}>
 <div class="mb-3">
 <strong><{$smarty.const._MD_EXTCAL_LOCATION_TARIFS}></strong>
                 <{$event.event_price}>
@@ -145,10 +145,10 @@
 </div>
 <{/if}>
 
-<{if $whosGoing}>
+<{if $whosGoing|default:false}>
 <div class="mt-3 mb-3">
     <h5><{$smarty.const._MD_EXTCAL_WHOS_GOING}> <span class="badge badge-secondary"><{$eventmember.member.nbUser}></span></h5>
-    <{foreach name=eventMemberList from=$eventmember.member.userList item=member}><{if $smarty.foreach.eventMemberList.first != 1}>, <{/if}>
+    <{foreach name=eventMemberList from=$eventmember.member.userList|default:array() item=member}><{if $smarty.foreach.eventMemberList.first != 1}>, <{/if}>
     <a href="<{$xoops_url}>/userinfo.php?uid=<{$member.uid}>"><{$member.uname}></a>
     <{/foreach}>
     <{if $eventmember.member.show_button}>
@@ -162,10 +162,10 @@
 </div>
 <{/if}>
 
-<{if $whosNotGoing}>
+<{if $whosNotGoing|default:false}>
 <div class="mt-3 mb-3">
     <h5><{$smarty.const._MD_EXTCAL_WHOSNOT_GOING}> <span class="badge badge-secondary"><{$eventmember.notmember.nbUser}></span></h5>
-    <{foreach name=eventMemberList from=$eventmember.notmember.userList item=member}><{if $smarty.foreach.eventMemberList.first != 1}>, <{/if}>
+    <{foreach name=eventMemberList from=$eventmember.notmember.userList|default:array() item=member}><{if $smarty.foreach.eventMemberList.first != 1}>, <{/if}>
     <a href="<{$xoops_url}>/userinfo.php?uid=<{$member.uid}>"><{$member.uname}></a>
     <{/foreach}>
     <{if $eventmember.notmember.show_button}>
@@ -182,11 +182,11 @@
     <div class="row mb-3">
         <hr>
         <div class="float-right">
-        <a href="<{$xoops_url}>/modules/extcal/print.php?event=<{$event.event_id}>"
+        <a href="<{$xoops_url}>/modules/extcal/print.php?event=<{$event.event_id|default:false}>"
            title="<{$smarty.const._MD_EXTCAL_ICONE_PRINT}>">
             <span class="fa fa-fw fa-2x fa-print"></span>
         </a>
-        <{if $isAdmin || $canEdit}>
+        <{if $isAdmin|default:false || $canEdit|default:false}>
         <a href="<{$smarty.const._EXTCAL_FILE_NEW_EVENT}>?event=<{$event.event_id}>&action=edit"
            title="<{$smarty.const._MD_EXTCAL_ICONE_EDIT}>">
             <span class="fa fa-fw fa-2x fa-pencil-square-o"></span>
@@ -196,8 +196,8 @@
             <span class="fa fa-fw fa-2x fa-clone"></span>
         </a>
         <{/if}>
-        <{if $isAdmin}>
-        <a href="admin/event.php?op=delete&event_id=<{$event.event_id}>"
+        <{if $isAdmin|default:false}>
+        <a href="admin/event.php?op=delete&event_id=<{$event.event_id|default:false}>"
            title="<{$smarty.const._MD_EXTCAL_ICONE_DELETE}>">
             <span class="fa fa-fw fa-2x fa-trash-o"></span>
         </a>
@@ -224,17 +224,17 @@
 <{* include file="db:extcal_buttons_event.tpl" *}>
 
 <div class="align-content-center mt-3">
-    <{$commentsnav}>
+    <{$commentsnav|default:false}>
 </div>
-<div class="row d-flex justify-content-center"><{$lang_notice}></div>
+<div class="row d-flex justify-content-center"><{$lang_notice|default:false}></div>
 
 <div style="margin-top: 10px;">
     <!-- start comments loop -->
-    <{if $comment_mode == "flat"}>
+    <{if $comment_mode|default:false == "flat"}>
         <{include file="db:system_comments_flat.tpl"}>
-    <{elseif $comment_mode == "thread"}>
+    <{elseif $comment_mode|default:false == "thread"}>
         <{include file="db:system_comments_thread.tpl"}>
-    <{elseif $comment_mode == "nest"}>
+    <{elseif $comment_mode|default:false == "nest"}>
         <{include file="db:system_comments_nest.tpl"}>
     <{/if}>
     <!-- end comments loop -->

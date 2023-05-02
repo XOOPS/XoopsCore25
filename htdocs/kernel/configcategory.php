@@ -27,6 +27,11 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class XoopsConfigCategory extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $confcat_id;
+    public $confcat_name;
+    public $confcat_order;
+
     /**
      * Constructor
      *
@@ -116,7 +121,7 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
      *
      * @param int $id ID
      *
-     * @return XoopsConfigCategory {@link XoopsConfigCategory}, FALSE on fail
+     * @return XoopsConfigCategory|false {@link XoopsConfigCategory}, false on fail
      */
     public function get($id)
     {
@@ -124,7 +129,8 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
         $id      = (int)$id;
         if ($id > 0) {
             $sql = 'SELECT * FROM ' . $this->db->prefix('configcategory') . ' WHERE confcat_id=' . $id;
-            if (!$result = $this->db->query($sql)) {
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
                 return $confcat;
             }
             $numrows = $this->db->getRowsNum($result);
@@ -222,7 +228,7 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {

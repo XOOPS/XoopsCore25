@@ -5,7 +5,7 @@
         <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/index.php"><{$smarty.const._MD_NEWBB_FORUMHOME}></a></li>
 
         <!-- If is subforum-->
-        <{if $parent_forum}>
+        <{if isset($parent_forum)}>
         <li class="breadcrumb-item"><a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$parent_forum}>"><{$parent_name}></a></li>
         <{/if}>
 
@@ -105,7 +105,7 @@
 <!-- irmtfan hardcode removed style="padding: 5px;float: right; text-align:right;" -->
 <div class="pagenav">
     <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewtopic.php?topic_id=<{$post.topic_id}>"><strong><{$smarty.const._MD_NEWBB_VIEWTOPIC}></strong></a>
-    <{if !$forum_name }>
+    <{if !isset($forum_name) }>
         |
         <a href="<{$xoops_url}>/modules/<{$xoops_dirname}>/viewforum.php?forum=<{$post.forum_id}>"><strong><{$smarty.const._MD_NEWBB_VIEWFORUM}></strong></a>
     <{/if}>
@@ -151,7 +151,7 @@
 </div>
 <div class="clear"></div>
 <br>
-<{if $online}>
+<{if isset($online)}>
     <br>
     <{include file="db:newbb_online.tpl"}>
 <{/if}>

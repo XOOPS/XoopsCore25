@@ -2,23 +2,35 @@
 /**
  * XOOPS securityToken Smarty compiler plug-in
  *
- * @copyright   XOOPS Project (https://xoops.org)
- * @license     GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright   (c) 2016-2022 XOOPS Project (https://xoops.org)
+ * @license     GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author      Richard Griffith <richard@geekwright.com>
  */
 
 /**
  * Inserts a XOOPS security token
  *
- * Not sure if this is a good idea (sounds like application logic, not presentation,)
- * but there are several token generations done in {php} tags which don't work with
- * Smarty 3.1
+ * Examples: <{securityToken}>
+ *           <{securityToken name="XOOPS_TOKEN"}>
  *
- * @param $params
- * @param $smarty
- * @return null
+ * Create and render a XoopsFormHiddenToken element. If no 'name' argument is specified
+ * the default value will be used.
+ *
+ * This is intended to replace token generations done in {php} tags which are removed
+ * in Smarty 3 and beyond
+ *
+ * @param string[] $params optional 'name' parameter for token
+ * @param Smarty   $smarty
+ *
+ * @return void
  */
-function smarty_function_securityToken($params, &$smarty)
+function smarty_function_securityToken($params, $smarty)
 {
-    echo $GLOBALS['xoopsSecurity']->getTokenHTML();
+    if (!empty($params['name'])) {
+        $name = $params['name'];
+        $name = trim($name, "' \t\n\r\0");
+        echo $GLOBALS['xoopsSecurity']->getTokenHTML($name);
+    } else {
+        echo $GLOBALS['xoopsSecurity']->getTokenHTML();
+    }
 }

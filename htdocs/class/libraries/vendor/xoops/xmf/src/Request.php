@@ -23,8 +23,8 @@ namespace Xmf;
  * @author    Richard Griffith <richard@geekwright.com>
  * @author    trabis <lusopoemas@gmail.com>
  * @author    Joomla!
- * @copyright 2011-2018 XOOPS Project (https://xoops.org)
- * @license   GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @copyright 2011-2023 XOOPS Project (https://xoops.org)
+ * @license   GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @link      https://xoops.org
  */
 class Request
@@ -332,7 +332,7 @@ class Request
     /**
      * get request header
      *
-     * @param string      $headerName name of header to retrieve, case insensitive
+     * @param string      $headerName name of header to retrieve, case-insensitive
      * @param string|null $default    default to return if named header is not found
      *
      * @return string header value or default if header was not found
@@ -349,7 +349,7 @@ class Request
                     $headers[strtolower($name)] = $value;
                 }
             } else {
-                // From joyview - https://php.net/manual/en/function.getallheaders.php
+                // From joyview - http://php.net/manual/en/function.getallheaders.php
                 foreach ($_SERVER as $name => $value) {
                     if (substr($name, 0, 5) === 'HTTP_') {
                         $translatedName = str_replace(' ', '-', strtolower(str_replace('_', ' ', substr($name, 5))));
@@ -553,7 +553,7 @@ class Request
         static $safeHtmlFilter = null;
 
         // convert $var in array if $type is ARRAY
-        if (strtolower($type) === 'array' && !is_array($var)) {
+        if (strtolower((string)$type) === 'array' && !is_array($var)) {
             $var = array($var);
         }
 
@@ -563,7 +563,7 @@ class Request
         }
 
         // Now we handle input filtering
-        // If the allow raw flag is set, do not modify the variable
+        // If the 'allow raw' flag is set, do not modify the variable
         if (!($mask & static::MASK_ALLOW_RAW)) {
             if ($mask & static::MASK_ALLOW_HTML) {
                 // If the allow html flag is set, apply a safe html filter to the variable

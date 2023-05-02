@@ -26,6 +26,15 @@
  */
 class SystemBannerclient extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $cid;
+    public $name;
+    public $contact;
+    public $email;
+    public $login;
+    public $passwd;
+    public $extrainfo;
+
     /**
      *
      */

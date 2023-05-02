@@ -26,7 +26,7 @@
  * @param $dbm
  * @return bool
  */
-// include_once './class/dbmanager.php';
+// include_once __DIR__ . '/class/dbmanager.php';
 // RMV
 // TODO: Shouldn't we insert specific field names??  That way we can use
 // the defaults specified in the database...!!!! (and don't have problem
@@ -94,17 +94,17 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
     $dbm->insert('tplset', " VALUES (1, 'default', 'XOOPS Default Template Set', '', " . $time . ')');
     // system modules
     if (file_exists('../modules/system/language/' . $language . '/modinfo.php')) {
-        include '../modules/system/language/' . $language . '/modinfo.php';
+        include __DIR__ . '/../modules/system/language/' . $language . '/modinfo.php';
     } else {
-        include '../modules/system/language/english/modinfo.php';
+        include __DIR__ . '/../modules/system/language/english/modinfo.php';
         $language = 'english';
     }
 
     $modversion = array();
-    include_once '../modules/system/xoops_version.php';
+    include_once __DIR__ . '/../modules/system/xoops_version.php';
     $time = time();
     // RMV-NOTIFY (updated for extra column in table)
-    $dbm->insert('modules', " VALUES (1, '" . _MI_SYSTEM_NAME . "', " . ($modversion['version'] * 100) . ', ' . $time . ", 0, 1, 'system', 0, 1, 0, 0, 0, 0)");
+    $dbm->insert('modules', " VALUES (1, '" . _MI_SYSTEM_NAME . "', '" . $modversion['version'] . "', " . $time . ", 0, 1, 'system', 0, 1, 0, 0, 0, 0)");
 
     foreach ($modversion['templates'] as $tplfile) {
         // Main templates
@@ -155,7 +155,11 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
     // data for table 'block_module_link'
     $sql    = 'SELECT bid, side FROM ' . $dbm->prefix('newblocks');
     $result = $dbm->query($sql);
-
+    //    if (!$dbm->isResultSet($result)) {
+    //    throw new \RuntimeException(
+    //        \sprintf(_DB_QUERY_ERROR, $sql) . $dbm->error(), E_USER_ERROR
+    //    );
+    //    }
     while (false !== ($myrow = $dbm->fetchArray($result))) {
         if ($myrow['side'] == 0) {
             $dbm->insert('block_module_link', ' VALUES (' . $myrow['bid'] . ', 0)');
@@ -308,7 +312,7 @@ function make_data(&$dbm, $adminname, $hashedAdminPass, $adminmail, $language, $
 
     $dbm->insert('config', " VALUES (134, 0, 1, 'redirect_message_ajax', '_MD_AM_CUSTOM_REDIRECT', '1', '_MD_AM_CUSTOM_REDIRECT_DESC', 'yesno', 'int', 12)");
 
-    require_once '../class/xoopslists.php';
+    require_once __DIR__ . '/../class/xoopslists.php';
     $editors = XoopsLists::getDirListAsArray('../class/xoopseditor');
     $conf    = 36;
     foreach ($editors as $dir) {

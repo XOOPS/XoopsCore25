@@ -25,14 +25,14 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 class MytsUl extends MyTextSanitizerExtension
 {
     /**
-     * @param $ts
+     * @param MyTextSanitizer $myts
      *
      * @return bool
      */
-    public function load($ts)
+    public function load(MyTextSanitizer $myts)
     {
-        $ts->patterns[]     = "/\[ul](.*)\[\/ul\]/sU";
-        $ts->replacements[] = '<ul>\\1</ul>';
+        $myts->patterns[]     = "/\[ul](.*)\[\/ul\]/sU";
+        $myts->replacements[] = '<ul>\\1</ul>';
 
         return true;
     }

@@ -25,7 +25,7 @@
  * @author           DuGris (aka L. JEN) <dugris@frxoops.org>
  **/
 
-require_once './include/common.inc.php';
+require_once __DIR__ . '/include/common.inc.php';
 defined('XOOPS_INSTALL') || die('XOOPS Installation wizard die');
 
 $pageHasForm = true;
@@ -34,7 +34,8 @@ $pageHasHelp = true;
 $vars =& $_SESSION['settings'];
 
 $hostConnectPrefix = empty($vars['DB_PCONNECT']) ? '' : 'p:';
-$link = mysqli_connect($hostConnectPrefix.$vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS']);
+mysqli_report(MYSQLI_REPORT_OFF);
+$link = new mysqli($hostConnectPrefix.$vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS']);
 if (0 !== $link->connect_errno) {
     $error = ERR_NO_DBCONNECTION .' (' . $link->connect_errno . ') ' . $link->connect_error;
     $wizard->redirectToPage('-1', $error);
@@ -86,7 +87,7 @@ if (@empty($vars['DB_NAME'])) {
     // Fill with default values
     $vars = array_merge($vars, array(
                                  'DB_NAME'      => '',
-                                 'DB_CHARSET'   => 'utf8',
+                                 'DB_CHARSET'   => 'utf8mb4',
                                  'DB_COLLATION' => '',
                                  'DB_PREFIX'    => 'x' . substr(md5(time()), 0, 3)));
 }
@@ -120,4 +121,4 @@ ob_start();
 <?php
 $content = ob_get_contents();
 ob_end_clean();
-include './include/install_tpl.php';
+include __DIR__ . '/include/install_tpl.php';

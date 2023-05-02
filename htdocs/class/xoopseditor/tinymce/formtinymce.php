@@ -27,6 +27,7 @@ xoops_load('XoopsEditor');
  */
 class XoopsFormTinymce extends XoopsEditor
 {
+    public $config;
     public $language;
     public $width  = '100%';
     public $height = '500px';

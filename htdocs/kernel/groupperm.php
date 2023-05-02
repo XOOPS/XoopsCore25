@@ -29,6 +29,13 @@ defined('XOOPS_ROOT_PATH') || exit('Restricted access');
  */
 class XoopsGroupPerm extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $gperm_id;
+    public $gperm_groupid;
+    public $gperm_itemid;
+    public $gperm_modid;
+    public $gperm_name;
+
     /**
      * Constructor
      *
@@ -134,9 +141,9 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
     /**
      * Create a new {@link XoopsGroupPerm}
      *
-     * @param bool $isNew
+     * @param bool $isNew Flag the object as "new"?
      *
-     * @return bool $isNew  Flag the object as "new"?
+     * @return XoopsGroupPerm
      */
     public function create($isNew = true)
     {
@@ -153,7 +160,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
      *
      * @param int $id ID
      *
-     * @return XoopsGroupPerm {@link XoopsGroupPerm}, FALSE on fail
+     * @return XoopsGroupPerm|false {@link XoopsGroupPerm}, false on fail
      */
     public function get($id)
     {
@@ -161,7 +168,8 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
         $perm = false;
         if ($id > 0) {
             $sql = sprintf('SELECT * FROM %s WHERE gperm_id = %u', $this->db->prefix('group_permission'), $id);
-            if (!$result = $this->db->query($sql)) {
+            $result = $this->db->query($sql);
+            if (!$this->db->isResultSet($result)) {
                 return $perm;
             }
             $numrows = $this->db->getRowsNum($result);
@@ -253,7 +261,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
             $start = $criteria->getStart();
         }
         $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
@@ -284,12 +292,12 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
             $sql .= ' ' . $criteria->renderWhere();
         }
         $result = $this->db->query($sql);
-        if (!$result) {
+        if (!$this->db->isResultSet($result)) {
             return 0;
         }
         list($count) = $this->db->fetchRow($result);
 
-        return $count;
+        return (int)$count;
     }
 
     /**

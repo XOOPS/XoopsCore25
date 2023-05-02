@@ -120,7 +120,7 @@ class XoopsUpgrade
             $sql .= " WHERE {$condition}";
         }
         $result = $db->query($sql);
-        if ($result) {
+        if ($db->isResultSet($result)) {
             $row = $db->fetchRow($result);
             if ($row) {
                 return $row[0];

@@ -48,7 +48,7 @@ class xos_logos_PageBuilder
     {
         $this->retrieveBlocks();
         if ($this->theme) {
-            $this->theme->template->assign_by_ref('xoBlocks', $this->blocks);
+            $this->theme->template->assignByRef('xoBlocks', $this->blocks);
         }
 
         return true;
@@ -188,7 +188,7 @@ class xos_logos_PageBuilder
         $cacheid = $this->generateCacheId('blk_' . $xobject->getVar('bid'));
 
         $xoopsLogger = XoopsLogger::getInstance();
-        if (!$bcachetime || !$template->is_cached($tplName, $cacheid)) {
+        if (!$bcachetime || !$template->isCached($tplName, $cacheid)) {
 
             //Get theme metas
             if ($this->theme && $bcachetime) {

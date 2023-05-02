@@ -27,18 +27,18 @@
 class MyTextSanitizerExtension
 {
     public $instance;
-    public $ts;
+    public $myts;
     public $config;
     public $image_path;
 
     /**
      * Constructor
      *
-     * @param MyTextSanitizer $ts
+     * @param MyTextSanitizer $myts
      */
-    public function __construct(MyTextSanitizer $ts)
+    public function __construct(MyTextSanitizer $myts)
     {
-        $this->ts         = $ts;
+        $this->myts         = $myts;
         $this->image_path = XOOPS_URL . '/images/form';
     }
 
@@ -50,10 +50,10 @@ class MyTextSanitizerExtension
      */
     public static function loadConfig($path = null)
     {
-        $ts   = MyTextSanitizer::getInstance();
+        $myts   = \MyTextSanitizer::getInstance();
         $extensionName = (null === $path) ? '' : basename($path);
-        $pathDist = $ts->path_basic;
-        $pathConfig = $ts->path_config;
+        $pathDist = $myts->path_basic;
+        $pathConfig = $myts->path_config;
 
         if ('' !== $extensionName) {
             $configFileName = $pathConfig . '/config.' . $extensionName . '.php';
@@ -152,11 +152,8 @@ class MyTextSanitizer
     public $text         = '';
     public $patterns     = array();
     public $replacements = array();
-
-    //mb------------------------------
     public $callbackPatterns = array();
     public $callbacks        = array();
-    //mb------------------------------
 
     public $path_basic;
     public $path_config;
@@ -256,8 +253,10 @@ class MyTextSanitizer
         if (count($this->smileys) == 0) {
             /** @var XoopsMySQLDatabase $xoopsDB */
             $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
-            if ($getsmiles = $xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('smiles'))) {
-                while (false !== ($smiles = $xoopsDB->fetchArray($getsmiles))) {
+            $sql     = 'SELECT * FROM ' . $xoopsDB->prefix('smiles');
+            $result  = $xoopsDB->query($sql);
+            if ($xoopsDB->isResultSet($result)) {
+                while (false !== ($smiles = $xoopsDB->fetchArray($result))) {
                     $this->smileys[] = $smiles;
                 }
             }
@@ -317,12 +316,15 @@ class MyTextSanitizer
     {
         $pattern = "/(^|[^]_a-z0-9-=\"'\/:\.])([-_a-z0-9\'+*$^&%=~!?{}]++(?:\.[-_a-z0-9\'+*$^&%=~!?{}]+)*+)@((?:(?![-.])[-a-z0-9.]+(?<![-.])\.[a-z]{2,6}|\d{1,3}(?:\.\d{1,3}){3})(?::\d++)?)/i";
         $text = preg_replace_callback($pattern, 'self::makeClickableCallbackEmailAddress', $text);
+        //TODO after moving to PHP 7+ as minimum version, let's convert it to this
+//        $text = preg_replace_callback($pattern, self::class . '::makeClickableCallbackEmailAddress', $text);
 
-        $pattern = "%(https?://)([-A-Z0-9./_*?&:;=#\[\]\%@]+)%i";
+
+        $pattern = "/(?:\s+|^)(https?:\/\/)([-A-Z0-9.\_*?&:;=#\/\[\]\%@]+)/i";
         $replacement = '<a href="$1$2" target="_blank" rel="external noopener nofollow">$1$2</a>';
         $text = preg_replace($pattern, $replacement, $text);
 
-        $pattern = "%(s?ftp://)([-A-Z0-9./_*?&:;=#\[\]\%@]+)%i";
+        $pattern = "%(?:\s+|^)(s?ftp://)([-A-Z0-9./_*?&:;=#\[\]\%@]+)%i";
         $replacement = '<a href="$1$2" target="_blank" rel="external">$1$2</a>';
         $text = preg_replace($pattern, $replacement, $text);
 
@@ -337,7 +339,7 @@ class MyTextSanitizer
      */
     public function truncate($text)
     {
-        $instance = MyTextSanitizer::getInstance();
+        $instance = \MyTextSanitizer::getInstance();
         if (empty($text) || empty($instance->config['truncate_length']) || strlen($text) < $instance->config['truncate_length']) {
             return $text;
         }
@@ -352,7 +354,7 @@ class MyTextSanitizer
      *
      * @param  string   $text
      * @param  bool|int $allowimage Allow images in the text?
-     *                              On FALSE, uses links to images.
+     *                              On FALSE, uses links to the images.
      * @return string
      */
     public function &xoopsCodeDecode(&$text, $allowimage = 1)
@@ -598,7 +600,6 @@ class MyTextSanitizer
      *
      * @param  string $text
      * @return string
-     * @deprecated
      */
     public function &censorString(&$text)
     {

@@ -1,5 +1,5 @@
 <{if $publisher_display_breadcrumb}>
-    <!-- Do not display breadcrumb if you are on indexpage or you do not want to display the module name -->
+    <!-- Do not display breadcrumb if you are on indexpage, or you do not want to display the module name -->
     <{if $module_home || $categoryPath}>
         <ol class="breadcrumb">
             <{if $module_home}>

@@ -2,15 +2,15 @@
 /**
  * xoImgUrl Smarty compiler plug-in
  *
- * See the enclosed file LICENSE for licensing information.
- * If you did not receive this file, get it at https://www.gnu.org/licenses/gpl-2.0.html
+ * See the enclosed file LICENSE for licensing information. If you did not
+ * receive this file, get it at http://www.gnu.org/licenses/gpl-2.0.html
  *
- * @copyright    (c) 2000-2016 XOOPS Project (www.xoops.org)
- * @license          GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
- * @author           Skalpa Keo <skalpa@xoops.org>
- * @package          xos_opal
- * @subpackage       xos_opal_Smarty
- * @since            2.0.14
+ * @copyright   (c) 2000-2022 XOOPS Project (https://xoops.org)
+ * @license     GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author      Skalpa Keo <skalpa@xoops.org>
+ * @package     xos_opal
+ * @subpackage  xos_opal_Smarty
+ * @since       2.0.14
  */
 
 /**
@@ -28,15 +28,18 @@
  * <b>Note:</b> the themes inheritance system can generate many filesystem accesses depending
  * on your themes configuration. Because of this, the use of the dynamic syntax with this plug-in
  * is not possible right now.
- * @param $argStr
- * @param $smarty
+ *
+ * @param string[] $params
+ * @param Smarty   $smarty
  * @return string
  */
 
-function smarty_compiler_xoImgUrl($argStr, &$smarty)
+function smarty_compiler_xoImgUrl($params, Smarty $smarty)
 {
     global $xoops, $xoTheme;
-    $path = (isset($xoTheme) && is_object($xoTheme)) ? $xoTheme->resourcePath($argStr) : $argStr;
-
-    return "\necho '" . addslashes($xoops->url($path)) . "';";
+    $arg = reset($params);
+    $arg = trim($arg, " '\"\t\n\r\0\x0B");
+    $path = (isset($xoTheme) && is_object($xoTheme)) ? $xoTheme->resourcePath($arg) : $arg;
+//$xoops->events()->triggerEvent('debug.log', $path);
+    return "<?php echo '" . addslashes($xoops->url($path)) . "'; ?>";
 }

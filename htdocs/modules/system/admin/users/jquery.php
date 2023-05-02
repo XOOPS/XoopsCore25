@@ -68,7 +68,8 @@ switch ($op) {
                 $criteria->add($table['criteria']);
             }
             $sql = 'SELECT COUNT(*) AS total FROM ' . $xoopsDB->prefix($table['table_name']) . ' ' . $criteria->renderWhere();
-            if ($result = $xoopsDB->query($sql)) {
+            $result = $xoopsDB->query($sql);
+            if ($xoopsDB->isResultSet($result)) {
                 if ($row = $xoopsDB->fetchArray($result)) {
                     $total_posts += $row['total'];
                 }

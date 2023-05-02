@@ -11,7 +11,7 @@
 
 /**
  * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team
@@ -42,10 +42,12 @@
  */
 
 /**
- * @param $params
- * @param $smarty
+ * @param string[] $params
+ * @param Smarty   $smarty
+ *
+ * @return void
  */
-function smarty_function_xoMemberInfo($params, &$smarty)
+function smarty_function_xoMemberInfo($params, $smarty)
 {
     global $xoopsUser, $xoopsConfig;
 

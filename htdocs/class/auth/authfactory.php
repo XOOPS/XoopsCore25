@@ -56,7 +56,7 @@ class XoopsAuthFactory
             } else {
                 $xoops_auth_method = $authConfig['auth_method'];
             }
-            // Verify if uname allow to bypass LDAP auth
+            // Verify if uname allows to bypass LDAP auth
             if (in_array($uname, $authConfig['ldap_users_bypass'])) {
                 $xoops_auth_method = 'xoops';
             }

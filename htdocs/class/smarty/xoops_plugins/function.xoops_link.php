@@ -11,7 +11,7 @@
 
 /**
  * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team
@@ -41,8 +41,10 @@
  */
 
 /**
- * @param $params
- * @param $smarty
+ * @param string[] $params
+ * @param Smarty   $smarty
+ *
+ * @return void
  */
 function smarty_function_xoops_link($params, &$smarty)
 {
@@ -55,7 +57,7 @@ function smarty_function_xoops_link($params, &$smarty)
             $pos = strpos($szvar, '=');
             if ($pos != false) {             // If a value is specified, use it
                 $vars[] = array('name' => substr($szvar, 0, $pos), 'value' => substr($szvar, $pos + 1));
-            } else {                         // Otherwise use current one (if any)
+            } else {                         // Otherwise, use current one (if any)
                 if (isset($_POST[$szvar])) {
                     $vars[] = array('name' => $szvar, 'value' => $_POST[$szvar]);
                 } elseif (isset($_GET[$szvar])) {

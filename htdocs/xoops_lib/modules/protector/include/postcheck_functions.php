@@ -11,7 +11,8 @@ function protector_postcommon()
     if (substr(@XOOPS_VERSION, 6, 3) > 2.0 && false !== stripos(@$_SERVER['REQUEST_URI'], 'modules/system/admin.php?fct=preferences')) {
         /** @var XoopsModuleHandler $module_handler */
         $module_handler = xoops_getHandler('module');
-        $module         = $module_handler->get((int)(@$_GET['mod']));
+        /** @var XoopsModule $module */
+        $module = $module_handler->get((int)(@$_GET['mod']));
         if (is_object($module)) {
             $module->getInfo();
         }
@@ -61,7 +62,7 @@ function protector_postcommon()
     }
 
     // reliable ips
-    $reliable_ips = @unserialize(@$conf['reliable_ips']);
+    $reliable_ips = @unserialize(@$conf['reliable_ips'], array('allowed_classes' => false));
     if (is_array($reliable_ips)) {
         foreach ($reliable_ips as $reliable_ip) {
             if (!empty($reliable_ip) && preg_match('/' . $reliable_ip . '/', $_SERVER['REMOTE_ADDR'])) {
@@ -73,7 +74,7 @@ function protector_postcommon()
     // user information (uid and can be banned)
     if (is_object(@$xoopsUser)) {
         $uid     = $xoopsUser->getVar('uid');
-        $can_ban = count(@array_intersect($xoopsUser->getGroups(), @unserialize(@$conf['bip_except']))) ? false : true;
+        $can_ban = count(@array_intersect($xoopsUser->getGroups(), @unserialize(@$conf['bip_except'], array('allowed_classes' => false)))) ? false : true;
     } else {
         // login failed check
         if ((!empty($_POST['uname']) && !empty($_POST['pass'])) || (!empty($_COOKIE['autologin_uname']) && !empty($_COOKIE['autologin_pass']))) {
@@ -87,7 +88,7 @@ function protector_postcommon()
         $protector->stopforumspam($uid);
     }
 
-    // If precheck has already judged that he should be banned
+    // If precheck has already judged that they should be banned
     if ($can_ban && $protector->_should_be_banned) {
         $protector->register_bad_ips();
     } elseif ($can_ban && $protector->_should_be_banned_time0) {
@@ -134,7 +135,7 @@ function protector_postcommon()
         $maskCheck = $ip->sameSubnet($_SESSION['protector_last_ip'], $ipv4Mask, $ipv6Mask);
     }
     if (!$maskCheck) {
-        if (is_object($xoopsUser) && count(array_intersect($xoopsUser->getGroups(), unserialize($conf['groups_denyipmove'])))) {
+        if (is_object($xoopsUser) && count(array_intersect($xoopsUser->getGroups(), unserialize($conf['groups_denyipmove'], array('allowed_classes' => false))))) {
             $protector->purge(true);
         }
     }

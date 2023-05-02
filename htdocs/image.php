@@ -16,7 +16,7 @@
  * @author              luciorota <lucio.rota@gmail.com>, Joe Lencioni <joe@shiftingpixel.com>
  *
  * Enhanced image access/edit
- * This enhanced version is very useful in many cases, for example when you need a
+ * This enhanced version is very useful in many cases, for example when you need the
  * smallest version of an image. This script uses Xoops cache to minimize server load.
  *
  *
@@ -33,8 +33,8 @@
  * @param boolean  noservercache  (optional) don't read image from the server cache;
  * @param boolean  nobrowsercache (optional) don't read image from the browser cache;
  * @param int      quality        (optional, 0-100, default: 90) quality of output image;
- * @param mixed    filter         (optional, imagefilter 2nd, 3rd, 4th, 5th arguments, more info on php.net
- *                                 manual) a filter or an array of filters;
+ * @param mixed    filter         (optional, imagefilter 2nd, 3rd, 4th, 5th arguments, more info on php.net manual)
+ *                                 a filter or an array of filters;
  * @param int      radius         (optional, 1, 2, 3 or 4 integer values, CW) round corner radius
  * @param float    angle          (optional), rotation angle)
  *
@@ -407,12 +407,12 @@ if (isset($_GET['cropratio'])) {
         $ratio_computed = $imageWidth / $imageHeight;
         $crop_radio_computed = (float)$crop_ratio[0] / (float)$crop_ratio[1];
         if ($ratio_computed < $crop_radio_computed) {
-            // Image is too tall so we will crop the top and bottom
+            // Image is too tall, so we will crop the top and bottom
             $orig_height = $imageHeight;
             $imageHeight = $imageWidth / $crop_radio_computed;
             $offset_y = ($orig_height - $imageHeight) / 2;
         } elseif ($ratio_computed > $crop_radio_computed) {
-            // Image is too wide so we will crop off the left and right sides
+            // Image is too wide, so we will crop off the left and right sides
             $orig_width = $imageWidth;
             $imageWidth = $imageHeight * $crop_radio_computed;
             $offset_x = ($orig_width - $imageWidth) / 2;

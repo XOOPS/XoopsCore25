@@ -1,0 +1,31 @@
+{
+    "name": "boenrobot/money_format_polyfill",
+    "description": "A polyfill for PHP's money_format() function, intended for Windows. Source from Rafael M. Salvioni (in the comments for money_format()).",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vasil Rangelov",
+            "email": "boen.robot@gmail.com"
+        }
+    ],
+    "require": {
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "@stable"
+    },
+    "suggest": {
+        "boenrobot/composer-install-library-of-functions": "To remove the polyfill from the autoloader if not needed."
+    },
+    "extra": {
+        "functionmap": {
+            "autoload": {
+                "money_format": "src/money_format.php"
+            }
+        }
+    },
+    "autoload": {
+        "files": [
+            "src/money_format.php"
+        ]
+    }
+}

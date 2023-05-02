@@ -26,6 +26,13 @@
  */
 class SystemSmilies extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $id;
+    public $code;
+    public $smile_url;
+    public $emotion;
+    public $display;
+
     /**
      *
      */

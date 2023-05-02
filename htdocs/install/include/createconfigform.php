@@ -60,7 +60,7 @@ function createConfigform($config)
         switch ($config[$i]->getVar('conf_formtype')) {
             case 'textarea':
                 if ($config[$i]->getVar('conf_valuetype') === 'array') {
-                    // this is exceptional.. only when value type is arrayneed a smarter way for this
+                    // this is exceptional. Only when value type is array, we need a smarter way for this
                     $ele = ($config[$i]->getVar('conf_value') != '') ? new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), installerHtmlSpecialChars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50) : new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), '', 5, 50);
                 } else {
                     $ele = new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), installerHtmlSpecialChars($config[$i]->getConfValueForOutput()), 5, 100);

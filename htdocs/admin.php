@@ -35,7 +35,7 @@ xoops_cp_header();
  // Define Stylesheet
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/system/css/admin.css');
 if (!isset($xoopsConfig['admin_warnings_enable']) || $xoopsConfig['admin_warnings_enable']) {
-    // recommend lowest security supported version at time of XOOPS release
+    // recommend the lowest security supported version at time of XOOPS release
     // see: https://php.net/supported-versions.php
     $minRecommendedPHP = '7.3.0';
     if (version_compare(PHP_VERSION, $minRecommendedPHP) < 0) {
@@ -43,9 +43,12 @@ if (!isset($xoopsConfig['admin_warnings_enable']) || $xoopsConfig['admin_warning
         echo '<br>';
     }
 
-    if (is_dir(XOOPS_ROOT_PATH . '/install/')) {
-        xoops_error(sprintf(_AD_WARNINGINSTALL, XOOPS_ROOT_PATH . '/install/'));
+	$installDirs = glob(XOOPS_ROOT_PATH . '/install*', GLOB_ONLYDIR);
+    if (!empty($installDirs)) {
+        foreach ($installDirs as $installDir) {
+            xoops_error(sprintf(_AD_WARNINGINSTALL, $installDir));
         echo '<br>';
+    }
     }
 
     if (is_writable(XOOPS_ROOT_PATH . '/mainfile.php')) {
@@ -86,7 +89,7 @@ if (!empty($_GET['xoopsorgnews']) && !function_exists('xml_parser_create')) {
 
 if (!empty($_GET['xoopsorgnews'])) {
     // Multiple feeds
-    $myts     = MyTextSanitizer::getInstance();
+    $myts     = \MyTextSanitizer::getInstance();
     $rssurl   = array();
     $rssurl[] = 'https://xoops.org/modules/publisher/backend.php';
     if ($URLs = include $GLOBALS['xoops']->path('language/' . xoops_getConfigOption('language') . '/backend.php')) {

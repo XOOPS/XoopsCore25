@@ -32,9 +32,10 @@ class Upgrade_220 extends XoopsUpgrade
     {
         $sql    = 'SHOW COLUMNS FROM `' . $GLOBALS['xoopsDB']->prefix('configcategory') . "` LIKE 'confcat_modid'";
         $result = $GLOBALS['xoopsDB']->queryF($sql);
-        if (!$result) {
+        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
             return true;
         }
+
         return !($GLOBALS['xoopsDB']->getRowsNum($result) > 0);
     }
 
@@ -51,7 +52,7 @@ class Upgrade_220 extends XoopsUpgrade
         }
         $sql    = 'SHOW COLUMNS FROM ' . $GLOBALS['xoopsDB']->prefix('users') . " LIKE 'posts'";
         $result = $GLOBALS['xoopsDB']->queryF($sql);
-        if (!$result) {
+        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
             return false;
         }
 
@@ -66,7 +67,7 @@ class Upgrade_220 extends XoopsUpgrade
     {
         $sql    = "SHOW TABLES LIKE '" . $GLOBALS['xoopsDB']->prefix('block_instance') . "'";
         $result = $GLOBALS['xoopsDB']->queryF($sql);
-        if (!$result) {
+        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
             return true;
         }
 
@@ -316,6 +317,12 @@ class Upgrade_220 extends XoopsUpgrade
 
         $sql    = '   SELECT MAX(instanceid) FROM ' . $xoopsDB->prefix('block_instance');
         $result = $xoopsDB->query($sql);
+        if (!$xoopsDB->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+            );
+        }
+
         list($MaxInstanceId) = $xoopsDB->fetchRow($result);
 
         // Change custom block mid from 1 to 0
@@ -323,7 +330,12 @@ class Upgrade_220 extends XoopsUpgrade
         $result = $xoopsDB->queryF($sql);
 
         $sql       = '   SELECT b.*, i.instanceid ' . '   FROM ' . $xoopsDB->prefix('block_instance') . ' AS i LEFT JOIN ' . $xoopsDB->prefix('newblocks_bak') . ' AS b ON b.bid = i.bid ' . '   GROUP BY b.dirname, b.bid, i.instanceid';
-        $result    = $xoopsDB->query($sql);
+        $result = $xoopsDB->query($sql);
+        if (!$xoopsDB->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+            );
+        }
         $dirname   = '';
         $bid       = 0;
         $block_key = null;
@@ -357,7 +369,12 @@ class Upgrade_220 extends XoopsUpgrade
 
         $sql = '   SELECT b.* ' . '   FROM ' . $xoopsDB->prefix('newblocks_bak') . ' AS b LEFT JOIN ' . $xoopsDB->prefix('block_instance') . ' AS i ON b.bid = i.bid ' . '   WHERE i.instanceid IS NULL';
         '   GROUP BY b.dirname, b.bid';
-        $result    = $xoopsDB->query($sql);
+        $result = $xoopsDB->query($sql);
+        if (!$xoopsDB->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+            );
+        }
         $dirname   = '';
         $bid       = 0;
         $block_key = null;
@@ -398,6 +415,11 @@ class Upgrade_220 extends XoopsUpgrade
         // Deal with custom blocks, convert options to type and content
         $sql    = 'SELECT bid, options FROM `' . $xoopsDB->prefix('newblocks') . "` WHERE show_func='b_system_custom_show'";
         $result = $xoopsDB->query($sql);
+        if (!$xoopsDB->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+            );
+        }
         while (false !== (list($bid, $options) = $xoopsDB->fetchRow($result))) {
             $_options = unserialize($options);
             $content  = $_options[0];
@@ -410,6 +432,11 @@ class Upgrade_220 extends XoopsUpgrade
         $result = $xoopsDB->queryF($sql);
         $sql    = 'SELECT bid, options FROM `' . $xoopsDB->prefix('newblocks') . "` WHERE show_func <> 'b_system_custom_show' AND options <> ''";
         $result = $xoopsDB->query($sql);
+        if (!$xoopsDB->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $xoopsDB->error(), E_USER_ERROR
+            );
+        }
         while (false !== (list($bid, $_options) = $xoopsDB->fetchRow($result))) {
             $options = unserialize($_options);
             if (empty($options) || !is_array($options)) {

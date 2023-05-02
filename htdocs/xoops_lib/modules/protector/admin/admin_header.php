@@ -22,7 +22,7 @@ include_once XOOPS_ROOT_PATH . '/mainfile.php';
 include_once XOOPS_ROOT_PATH . '/include/cp_header.php';
 include_once XOOPS_ROOT_PATH . '/include/cp_functions.php';
 
-//include '../../../include/cp_header.php';
+//include __DIR__ . '/../../../include/cp_header.php';
 //require_once XOOPS_ROOT_PATH . '/modules/' . $GLOBALS['xoopsModule']->getVar('dirname') . '/include/functions.php';
 
 if (file_exists($GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/moduleadmin.php'))) {
@@ -33,7 +33,7 @@ if (file_exists($GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/m
     //return false;
 }
 
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 
 $moduleInfo = $module_handler->get($xoopsModule->getVar('mid'));
 $pathIcon16 = XOOPS_URL . '/' . $moduleInfo->getInfo('icons16');

@@ -51,6 +51,6 @@ if (file_exists($file = $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVa
 } elseif (file_exists($file = $GLOBALS['xoops']->path('modules/' . $xoopsModule->getVar('dirname') . '/language/english/admin.php'))) {
     include_once $file;
 }
-// I will disable this because module developer should nod be forced to have a admin.php
+// I will disable this because module developer should not be forced to have an admin.php
 // xoops_loadLanguage('admin', $xoopsModule->getVar('dirname'));
 

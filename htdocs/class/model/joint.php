@@ -104,6 +104,11 @@ class XoopsModelJoint extends XoopsModelAbstract
             $sql .= " ORDER BY o.{$this->handler->keyName} DESC";
         }
         $result = $this->handler->db->query($sql, $limit, $start);
+        if (!$this->handler->db->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->handler->db->error(), E_USER_ERROR
+            );
+        }
         $ret    = array();
         if ($asObject) {
             while (false !== ($myrow = $this->handler->db->fetchArray($result))) {
@@ -140,7 +145,8 @@ class XoopsModelJoint extends XoopsModelAbstract
         if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-        if (!$result = $this->handler->db->query($sql)) {
+        $result = $this->handler->db->query($sql);
+        if (!$this->handler->db->isResultSet($result)) {
             return false;
         }
         $myrow = $this->handler->db->fetchArray($result);
@@ -164,7 +170,8 @@ class XoopsModelJoint extends XoopsModelAbstract
             $sql .= ' ' . $criteria->renderWhere();
         }
         $sql .= " GROUP BY l.{$this->handler->field_link}";
-        if (!$result = $this->handler->db->query($sql)) {
+        $result = $this->handler->db->query($sql);
+        if (!$this->handler->db->isResultSet($result)) {
             return false;
         }
         $ret = array();

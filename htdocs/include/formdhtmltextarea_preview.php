@@ -19,7 +19,7 @@
 include_once dirname(__DIR__) . '/mainfile.php';
 
 $xoopsLogger->activated = false;
-$myts                   = MyTextSanitizer::getInstance();
+$myts                   = \MyTextSanitizer::getInstance();
 
 XoopsLoad::load('XoopsRequest');
 $content = rawurldecode(XoopsRequest::getText('text', '', 'POST'));

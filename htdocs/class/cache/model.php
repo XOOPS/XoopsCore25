@@ -197,6 +197,11 @@ class XoopsCacheModel extends XoopsCacheEngine
  */
 class XoopsCacheModelObject extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $key;
+    public $data;
+    public $expires;
+
     /**
      * Constructor
      */

@@ -11,21 +11,21 @@
 /**
  * xoModuleIcons16 Smarty compiler plug-in
  *
- * @copyright    (c) 2000-2021 XOOPS Project (https://xoops.org)
- * @license          GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
- * @author           Andricq Nicolas (AKA MusS)
- * @since            2.5.2
- * @param $argStr
- * @param $smarty
+ * @copyright    (c) 2000-2022 XOOPS Project (https://xoops.org)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       Andricq Nicolas (AKA MusS)
+ * @since        2.5.2
+ * @param string[] $params
+ * @param Smarty   $smarty
  * @return string
  */
 
-function smarty_compiler_xoModuleIconsBookmarks($argStr, &$smarty)
+function smarty_compiler_xoModuleIconsBookmarks($params, $smarty)
 {
     global $xoops, $xoTheme;
 
-    //    $icons = xoops_getModuleOption('typeicons', 'system');
-    //    if ( $icons == '' ) $icons = 'default';
+    $argStr = reset($params);
+    $argStr = trim($argStr,"' \t\n\r\0");
 
     if (file_exists($xoops->path('Frameworks/moduleclasses/icons/bookmarks/index.php'))) {
         $url = $xoops->url('Frameworks/moduleclasses/icons/bookmarks/' . $argStr);
@@ -37,5 +37,5 @@ function smarty_compiler_xoModuleIconsBookmarks($argStr, &$smarty)
         }
     }
 
-    return "\necho '" . addslashes($url) . "';";
+    return "<?php echo '" . addslashes($url) . "'; ?>";
 }

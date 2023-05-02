@@ -31,7 +31,7 @@ $xoopsPreload->triggerEvent('core.register.start');
 xoops_loadLanguage('user');
 xoops_load('XoopsUserUtility');
 
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 /** @var XoopsConfigHandler $config_handler */
 $config_handler  = xoops_getHandler('config');
 $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
@@ -74,7 +74,7 @@ $clean_actkey = '';
 if (!isset($_POST['op']) && isset($_GET['op'])) {
     $op = Request::getCmd('op', 'register', 'GET');
     if (isset($_GET['id'])) {
-        $clean_id =  Request::getInt('id', '', 'POST');
+        $clean_id =  Request::getInt('id', '', 'GET');
     }
     if (isset($_GET['actkey'])) {
         $clean_actkey =  Request::getCmd('actkey', '', 'GET');
@@ -267,7 +267,7 @@ switch ($op) {
                     $config_handler  = xoops_getHandler('config');
                     $xoopsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
                     if ($xoopsConfigUser['activation_type'] == 2) {
-                        $myts        = MyTextSanitizer::getInstance();
+                        $myts        = \MyTextSanitizer::getInstance();
                         $xoopsMailer = xoops_getMailer();
                         $xoopsMailer->useMail();
                         $xoopsMailer->setTemplate('activated.tpl');

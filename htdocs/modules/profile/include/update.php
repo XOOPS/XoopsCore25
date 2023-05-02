@@ -58,7 +58,12 @@ function xoops_module_update_profile(XoopsModule $module, $oldversion = null)
         $skip_fields[] = 'newemail';
         $skip_fields[] = 'pm_link';
         $sql           = 'SELECT * FROM `' . $GLOBALS['xoopsDB']->prefix('user_profile_field') . "` WHERE `field_name` NOT IN ('" . implode("', '", $skip_fields) . "')";
-        $result        = $GLOBALS['xoopsDB']->query($sql);
+        $result = $GLOBALS['xoopsDB']->query($sql);
+        if (!$GLOBALS['xoopsDB']->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $GLOBALS['xoopsDB']->error(), E_USER_ERROR
+            );
+        }
         $fields        = array();
         while (false !== ($myrow = $GLOBALS['xoopsDB']->fetchArray($result))) {
             $fields[] = $myrow['field_name'];
@@ -144,6 +149,13 @@ function xoops_module_update_profile(XoopsModule $module, $oldversion = null)
         $criteria = new Criteria('field_name', 'user_sig', '=');
         $tables->update('profile_field', array('field_type' => 'dhtml'), $criteria);
         $tables->executeQueue(true);
+    }
+
+    if ($oldversion < '1.9.2') {
+        // decrease field_name field's size from 200 to 64
+        $sql          = 'ALTER TABLE ' . $GLOBALS['xoopsDB']->prefix('profile_field') . " CHANGE `field_name` `field_name` VARCHAR(64) NOT NULL DEFAULT ''";
+        $GLOBALS['xoopsDB']->queryF($sql);
+
     }
 
     $profile_handler = xoops_getModuleHandler('profile', $module->getVar('dirname', 'n'));

@@ -38,7 +38,7 @@ class XoopsFormSelectUser extends XoopsFormElementTray
      *                                 For an item with massive members, such as "Registered Users", "$value"
      *                                 should be used to store selected temporary users only instead of all
      *                                 members of that item
-     * @param int    $size             Number or rows. "1" makes a drop-down-list.
+     * @param int    $size             Number of rows. "1" makes a drop-down-list.
      * @param bool   $multiple         Allow multiple selections?
      */
     public function __construct($caption, $name, $includeAnonymous = false, $value = null, $size = 1, $multiple = false)

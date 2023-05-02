@@ -26,6 +26,14 @@
  */
 class SystemBannerFinish extends XoopsObject
 {
+    //PHP 8.2 Dynamic properties deprecated
+    public $bid;
+    public $cid;
+    public $impressions;
+    public $clicks;
+    public $datestart;
+    public $dateend;
+    
     /**
      *
      */

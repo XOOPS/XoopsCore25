@@ -65,11 +65,11 @@ $com_text        = $comment->getVar('com_text', 'e');
 $com_pid         = $comment->getVar('com_pid');
 $com_status      = $comment->getVar('com_status');
 $com_rootid      = $comment->getVar('com_rootid');
-// Start Add by voltan
+// Start added by voltan
 $com_user  = $comment->getVar('com_user');
 $com_email = $comment->getVar('com_email');
 $com_url   = $comment->getVar('com_url');
-// End Add by voltan
+// End added by voltan
 
 if ($xoopsModule->getVar('dirname') !== 'system') {
     include $GLOBALS['xoops']->path('header.php');

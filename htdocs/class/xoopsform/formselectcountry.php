@@ -34,7 +34,7 @@ class XoopsFormSelectCountry extends XoopsFormSelect
      * @param string $name    "name" attribute
      * @param mixed  $value   Pre-selected value (or array of them).
      *                        Legal are all 2-letter country codes (in capitals).
-     * @param int    $size    Number or rows. "1" makes a drop-down-list
+     * @param int    $size    Number of rows. "1" makes a drop-down-list
      */
     public function __construct($caption, $name, $value = null, $size = 1)
     {

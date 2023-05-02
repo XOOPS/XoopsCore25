@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @copyright       (c) 2000-2023 XOOPS Project (www.xoops.org)
  * @license             GNU GPL 2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package             kernel
  * @since               2.0.0
@@ -28,7 +28,7 @@ if (!defined('XOOPS_FOOTER_INCLUDED')) {
 
     if ($xoopsOption['theme_use_smarty'] == 0) {
         // the old way
-        $footer = htmlspecialchars($xoopsConfigMetaFooter['footer']) . '<br><div class="txtcenter small">Powered by XOOPS &copy; <a href="https://xoops.org" rel="external" title="The XOOPS Project">The XOOPS Project</a></div>';
+        $footer = htmlspecialchars($xoopsConfigMetaFooter['footer']) . '<br><div class="txtcenter small">Powered by XOOPS &copy; <a href="http://xoops.org" rel="external" title="The XOOPS Project">The XOOPS Project</a></div>';
         if (isset($GLOBALS['xoopsOption']['template_main'])) {
             $xoopsTpl->caching = 0;
             $xoopsTpl->display('db:' . $GLOBALS['xoopsOption']['template_main']);
@@ -64,7 +64,6 @@ if (!defined('XOOPS_FOOTER_INCLUDED')) {
         }
 
         $xoTheme->render();
-    }
     $xoopsLogger->stopTime();
 }
 

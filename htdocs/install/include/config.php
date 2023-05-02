@@ -42,16 +42,38 @@ $configs['language_files'] = array(
 
 // extension_loaded
 $configs['extensions'] = array(
-    'mbstring' => array('MBString', sprintf(PHP_EXTENSION, CHAR_ENCODING)),
-    'intl'     => array('Intl', sprintf(PHP_EXTENSION, INTL_SUPPORT)),
-    'iconv'    => array('Iconv', sprintf(PHP_EXTENSION, ICONV_CONVERSION)),
-    'xml'      => array('XML', sprintf(PHP_EXTENSION, XML_PARSING)),
-    'zlib'     => array('Zlib', sprintf(PHP_EXTENSION, ZLIB_COMPRESSION)),
+    'mbstring' => array(
+        'MBString',
+        sprintf(PHP_EXTENSION, CHAR_ENCODING),
+    ),
+    'intl'     => array(
+        'Intl',
+        sprintf(PHP_EXTENSION, INTL_SUPPORT),
+    ),
+    'iconv'    => array(
+        'Iconv',
+        sprintf(PHP_EXTENSION, ICONV_CONVERSION),
+    ),
+    'xml'      => array(
+        'XML',
+        sprintf(PHP_EXTENSION, XML_PARSING),
+    ),
+    'zlib'     => array(
+        'Zlib',
+        sprintf(PHP_EXTENSION, ZLIB_COMPRESSION),
+    ),
     'gd'       => array(
         (function_exists('gd_info') && $gdlib = @gd_info()) ? 'GD ' . $gdlib['GD Version'] : '',
-        sprintf(PHP_EXTENSION, IMAGE_FUNCTIONS)),
-    'exif'     => array('Exif', sprintf(PHP_EXTENSION, IMAGE_METAS)),
-    'curl'     => array('Curl', sprintf(PHP_EXTENSION, CURL_HTTP)),
+        sprintf(PHP_EXTENSION, IMAGE_FUNCTIONS),
+    ),
+    'exif'     => array(
+        'Exif',
+        sprintf(PHP_EXTENSION, IMAGE_METAS),
+    ),
+    'curl'     => array(
+        'Curl',
+        sprintf(PHP_EXTENSION, CURL_HTTP),
+    ),
 );
 
 // Writable files and directories
@@ -69,17 +91,17 @@ $configs['modules'] = array();
 
 // xoops_lib, xoops_data directories
 $configs['xoopsPathDefault'] = array(
-    'lib'  => 'xoops_lib',
     'data' => 'xoops_data',
+    'lib'  => 'xoops_lib',
 );
 
 // writable xoops_lib, xoops_data directories
 $configs['dataPath'] = array(
     'caches'    => array(
-        'xoops_cache',
         'smarty_cache',
         'smarty_compile',
-        ),
+        'xoops_cache',
+    ),
     'configs'   => array(
         'captcha',
         'textsanitizer',

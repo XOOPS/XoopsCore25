@@ -9,8 +9,8 @@ CREATE TABLE log (
   timestamp DATETIME,
   PRIMARY KEY (lid) ,
   KEY (uid) ,
-  KEY (ip) ,
-  KEY (type) ,
+  KEY (ip(100)) ,
+  KEY (type(100)) ,
   KEY (timestamp)
 ) ENGINE=MyISAM;
 
@@ -19,8 +19,8 @@ CREATE TABLE access (
   request_uri varchar(255) NOT NULL default '',
   malicious_actions varchar(255) NOT NULL default '',
   expire int NOT NULL default 0,
-  KEY (ip),
-  KEY (request_uri),
-  KEY (malicious_actions),
+  KEY (ip(100)),
+  KEY (request_uri(100)),
+  KEY (malicious_actions(100)),
   KEY (expire)
 ) ENGINE=MyISAM;

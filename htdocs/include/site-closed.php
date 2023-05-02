@@ -89,9 +89,9 @@ if (!$allowed) {
     $xoopsTpl->debugging_ctrl = 'none';
     $xoopsTpl->caching        = 0;
     // handle error and transition to tpl naming convention
-    if ($xoopsTpl->template_exists('db:system_siteclosed.tpl')) {
+    if ($xoopsTpl->templateExists('db:system_siteclosed.tpl')) {
         $xoopsTpl->display('db:system_siteclosed.tpl');
-    } elseif ($xoopsTpl->template_exists('db:system_siteclosed.html')) {
+    } elseif ($xoopsTpl->templateExists('db:system_siteclosed.html')) {
         $xoopsTpl->display('db:system_siteclosed.html');
     } else {
         echo $xoopsConfig['closesite_text'];

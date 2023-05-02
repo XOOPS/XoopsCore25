@@ -156,7 +156,7 @@ switch ($op) {
 		if (!empty($blocks_arr)){
 			foreach (array_keys($blocks_arr) as $i) {
 				$arr[$i] = $blocks_arr[$i]->toArray();
-				$xoopsTpl->append_by_ref('blocks', $arr[$i]);
+				$xoopsTpl->appendByRef('blocks', $arr[$i]);
 			}
 		} else {
 			$xoopsTpl->assign('blocks', array());
@@ -257,7 +257,7 @@ switch ($op) {
         $block->setVars($_POST);
         $content = isset($_POST['content_block']) ? $_POST['content_block'] : '';
         $block->setVar('content', $content);
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         echo '<div id="xo-preview-dialog" title="' . $block->getVar('title', 's') . '">' . $block->getContent('s', $block->getVar('c_type')) . '</div>';
         break;
 

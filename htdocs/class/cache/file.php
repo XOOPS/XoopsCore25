@@ -212,7 +212,7 @@ class XoopsCacheFile extends XoopsCacheEngine
             $data = stripslashes($data);
             // $data = preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $data);
             $data = preg_replace_callback('!s:(\d+):"(.*?)";!s', function ($m) { return 's:' . strlen($m[2]) . ':"' . $m[2] . '";'; }, $data);
-            $data = unserialize($data);
+            $data = unserialize($data, array('allowed_classes' => false));
             if (is_array($data)) {
                 XoopsLoad::load('XoopsUtility');
                 $data = XoopsUtility::recursive('stripslashes', $data);

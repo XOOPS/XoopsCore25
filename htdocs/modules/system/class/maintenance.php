@@ -50,13 +50,19 @@ class SystemMaintenance
     public function displayTables($array = true)
     {
         $tables = array();
-        $result = $this->db->queryF('SHOW TABLES');
+        $sql = 'SHOW TABLES';
+        $result = $this->db->queryF($sql);
+        if (!$this->db->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+            );
+        }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $value          = array_values($myrow);
             $value          = substr($value[0], strlen(XOOPS_DB_PREFIX) + 1);
             $tables[$value] = $value;
         }
-        if (true === (bool) $array) {
+        if (true === (bool)$array) {
             return $tables;
         } else {
             return implode(',', $tables);
@@ -86,7 +92,13 @@ class SystemMaintenance
      */
     public function CleanAvatar()
     {
-        $result = $this->db->queryF('SELECT avatar_id, avatar_file FROM ' . $this->db->prefix('avatar') . " WHERE avatar_type='C' AND avatar_id IN (" . 'SELECT t1.avatar_id FROM ' . $this->db->prefix('avatar_user_link') . ' AS t1 ' . 'LEFT JOIN ' . $this->db->prefix('users') . ' AS t2 ON t2.uid=t1.user_id ' . 'WHERE t2.uid IS NULL)');
+        $sql = 'SELECT avatar_id, avatar_file FROM ' . $this->db->prefix('avatar') . " WHERE avatar_type='C' AND avatar_id IN (" . 'SELECT t1.avatar_id FROM ' . $this->db->prefix('avatar_user_link') . ' AS t1 ' . 'LEFT JOIN ' . $this->db->prefix('users') . ' AS t2 ON t2.uid=t1.user_id ' . 'WHERE t2.uid IS NULL)';
+        $result = $this->db->queryF($sql);
+        if (!$this->db->isResultSet($result)) {
+            throw new \RuntimeException(
+                \sprintf(_DB_QUERY_ERROR, $sql) . $this->db->error(), E_USER_ERROR
+            );
+        }
 
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             //delete file
@@ -306,8 +318,9 @@ class SystemMaintenance
     public function dump_table_structure($ret, $table, $drop, $class)
     {
         $verif  = false;
-        $result = $this->db->queryF('SHOW create table `' . $table . '`;');
-        if ($result) {
+        $sql = 'SHOW create table `' . $table . '`;';
+        $result = $this->db->queryF($sql);
+        if ($this->db->isResultSet($result)) {
             if ($row = $this->db->fetchArray($result)) {
                 $ret[0] .= '# Table structure for table `' . $table . "` \n\n";
                 if ($drop == 1) {
@@ -317,10 +330,13 @@ class SystemMaintenance
                 $ret[0] .= $row['Create Table'] . ";\n\n";
             }
         }
+
         $ret[1] .= '<tr class="' . $class . '"><td align="center">' . $table . '</td><td class="xo-actions txtcenter">';
         $ret[1] .= ($verif === true) ? '<img src="' . system_AdminIcons('success.png') . '" />' : '<img src="' . system_AdminIcons('cancel.png') . '" />';
         $ret[1] .= '</td>';
-        $this->db->freeRecordSet($result);
+        if ($this->db->isResultSet($result)) {
+            $this->db->freeRecordSet($result);
+        }
 
         return $ret;
     }
@@ -335,8 +351,9 @@ class SystemMaintenance
     public function dump_table_datas($ret, $table)
     {
         $count  = 0;
-        $result = $this->db->queryF('SELECT * FROM ' . $table . ';');
-        if ($result) {
+        $sql = 'SELECT * FROM ' . $table . ';';
+        $result = $this->db->queryF($sql);
+        if ($this->db->isResultSet($result)) {
             $num_rows   = $this->db->getRowsNum($result);
             $num_fields = $this->db->getFieldsNum($result);
 
@@ -385,7 +402,9 @@ class SystemMaintenance
         $ret[1] .= '<td align="center">';
         $ret[1] .= $count . '&nbsp;' . _AM_SYSTEM_MAINTENANCE_DUMP_RECORDS . '</td></tr>';
         $ret[0] .= "\n";
-        $this->db->freeRecordSet($result);
+        if ($this->db->isResultSet($result)) {
+            $this->db->freeRecordSet($result);
+        }
         $ret[0] .= "\n";
 
         return $ret;

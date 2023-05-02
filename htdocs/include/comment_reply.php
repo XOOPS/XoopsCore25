@@ -74,11 +74,11 @@ $doimage    = 1;
 $com_icon   = '';
 $com_rootid = $comment->getVar('com_rootid');
 $com_itemid = $comment->getVar('com_itemid');
-// Start Add by voltan
+// Start added by voltan
 $com_user  = '';
 $com_email = '';
 $com_url   = '';
-// End Add by voltan
+// End added by voltan
 
 include_once $GLOBALS['xoops']->path('header.php');
 echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer">

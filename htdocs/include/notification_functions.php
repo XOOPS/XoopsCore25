@@ -365,7 +365,7 @@ function &notificationSubscribableCategoryInfo($module_id = null)
         if (!in_array($script_name, $subscribe_from)) {
             continue;
         }
-        // If 'item_name' is missing, automatic match.  Otherwise
+        // If 'item_name' is missing, automatic match.  Otherwise,
         // check if that argument exists...
         if (empty($category['item_name'])) {
             $category['item_name'] = '';

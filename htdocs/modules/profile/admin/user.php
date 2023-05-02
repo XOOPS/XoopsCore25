@@ -110,7 +110,7 @@ switch ($op) {
             $user->setVar('level', 1);
             $user->setVar('user_avatar', 'avatars/blank.gif');
         }
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         $user->setVar('uname', $_POST['uname']);
         $user->setVar('email', trim($_POST['email']));
         if (isset($_POST['level']) && $user->getVar('level') != (int)$_POST['level']) {

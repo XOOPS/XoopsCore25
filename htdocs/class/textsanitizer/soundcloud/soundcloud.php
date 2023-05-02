@@ -40,12 +40,12 @@ EOH;
     }
 
     /**
-     * @param $ts
+     * @param MyTextSanitizer $myts
      */
-    public function load($ts)
+    public function load(MyTextSanitizer $myts)
     {
-        $ts->callbackPatterns[] = "/\[soundcloud\](http[s]?:\/\/[^\"'<>]*)(.*)\[\/soundcloud\]/sU";
-        $ts->callbacks[]        = __CLASS__ . '::myCallback';
+        $myts->callbackPatterns[] = "/\[soundcloud\](http[s]?:\/\/[^\"'<>]*)(.*)\[\/soundcloud\]/sU";
+        $myts->callbacks[]        = __CLASS__ . '::myCallback';
     }
 
     /**
