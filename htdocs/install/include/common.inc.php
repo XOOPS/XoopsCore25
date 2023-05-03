@@ -75,7 +75,7 @@ if (empty($xoopsOption['hascommon'])) {
 
 }
 
-@include __DIR__ . '/../mainfile.php';
+@include __DIR__ . '/../../mainfile.php';
 if (!defined('XOOPS_ROOT_PATH')) {
     define('XOOPS_ROOT_PATH', str_replace("\\", '/', realpath('../')));
 }
