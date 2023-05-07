@@ -39,8 +39,8 @@ if (!defined('_XOOPS_FATAL_MESSAGE')) {
     include_once (XOOPS_ROOT_PATH . '/include/defines.php');
 }
 if (!defined('_DB_QUERY_ERROR')) {
-    if (file_exists(XOOPS_ROOT_PATH . "/language/{$language}/english/global.php")) {
-        include_once (XOOPS_ROOT_PATH . "/language/{$language}/english/global.php");
+    if (file_exists(XOOPS_ROOT_PATH . "/language/{$wizard->language}/english/global.php")) {
+        include_once (XOOPS_ROOT_PATH . "/language/{$wizard->language}/english/global.php");
     } else {
         include_once (XOOPS_ROOT_PATH . '/language/english/global.php');
     }
