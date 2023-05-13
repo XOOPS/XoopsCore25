@@ -253,7 +253,7 @@ class XoopsLogger
     public function handleException($e)
     {
         if ($this->isThrowable($e)) {
-            $msg = get_class($e) . ': ' . $this->sanitizeDbMessage($e->getMessage());
+            $msg = get_class($e) . ': ' . $this->sanitizePath($this->sanitizeDbMessage($e->getMessage()));
             $this->handleError(E_USER_ERROR, $msg, $e->getFile(), $e->getLine());
         }
     }
