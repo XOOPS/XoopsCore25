@@ -41,12 +41,12 @@
             <!-- Start Header -->
             <table cellspacing="0">
                 <tr id="header">
-                    <td id="headerlogo"><a href="<{xoAppUrl /}>" title="<{$xoops_sitename}>"><img src="<{xoImgUrl 'xoops-logo.png'}>"
+                    <td id="headerlogo"><a href="<{xoAppUrl '/'}>" title="<{$xoops_sitename}>"><img src="<{xoImgUrl 'xoops-logo.png'}>"
                                                                                                   alt="<{$xoops_sitename}>"/></a></td>
                     <td id="headerbanner"><{$xoops_banner}></td>
                     <td id="xo-userbar_siteclosed">
                         <!-- menu in anonymous mode  -->
-                        <form method="post" action="<{xoAppUrl /user.php op=login}>">
+                        <form method="post" action="<{xoAppUrl'/user.php op=login'}>">
                             <input name="uname" type="text" title=""/>
                             <input name="pass" type="password" title=""/>
                             <input type="hidden" name="xoops_redirect" value="<{$smarty.server.REQUEST_URI}>"/>
