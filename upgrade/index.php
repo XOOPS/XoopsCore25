@@ -77,6 +77,11 @@ $upgradeControl->buildUpgradeQueue();
 ob_start();
 global $xoopsUser;
 if (!$xoopsUser || !$xoopsUser->isAdmin()) {
+    if (file_exists(__DIR__ . "../language/{$upgradeControl->upgradeLanguage}/user.php")) {
+        include_once __DIR__ . "../language/{$upgradeControl->upgradeLanguage}/user.php";
+    } else {
+        include_once __DIR__ . '../language/english/user.php';
+    }
     include_once __DIR__ . '/login.php';
 } else {
     $op = Xmf\Request::getCmd('action', '');
