@@ -39,9 +39,13 @@ if (empty($_POST['uname']) || empty($_POST['pass'])) {
 
     // For XOOPS 2.2*
     if (!is_object($user)) {
-        $criteria = new CriteriaCompo(new Criteria('loginname', $uname));
-        $criteria->add(new Criteria('pass', md5($pass)));
-        list($user) = $member_handler->getUsers($criteria);
+        try {
+            $criteria = new CriteriaCompo(new Criteria('loginname', $uname));
+            $criteria->add(new Criteria('pass', md5($pass)));
+            list($user) = $member_handler->getUsers($criteria);
+        } catch (\RuntimeException $e) {
+            $user = false;
+        }
     }
 
     $isAllowed = false;
