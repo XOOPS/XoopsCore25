@@ -46,7 +46,7 @@ class XoopsLocalAbstract
 
         return $str;
     }
-    // Each local language should define its own equalient utf8_encode
+    // Each local language should define its own equivalent utf8_encode
     /**
      * XoopsLocalAbstract::utf8_encode()
      *
@@ -62,6 +62,24 @@ class XoopsLocalAbstract
         }
 
         return utf8_encode($text);
+    }
+
+    // Each local language should define its own equivalent utf8_encode
+    /**
+     * XoopsLocalAbstract::utf8_decode()
+     *
+     * @param  mixed $text
+     * @return string
+     */
+    public static function utf8_decode($text)
+    {
+        if (XOOPS_USE_MULTIBYTES == 1) {
+            if (function_exists('mb_convert_encoding')) {
+                return mb_convert_encoding($text, 'ISO-8859-1', 'auto');
+            }
+        }
+
+        return utf8_decode($text);
     }
 
     /**

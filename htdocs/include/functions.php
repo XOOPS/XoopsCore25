@@ -1105,6 +1105,19 @@ function xoops_utf8_encode(&$text)
 }
 
 /**
+ * xoops_utf8_decode()
+ *
+ * @param mixed $text
+ * @return string
+ */
+function xoops_utf8_decode(&$text)
+{
+    xoops_load('XoopsLocal');
+
+    return XoopsLocal::utf8_decode($text);
+}
+
+/**
  * xoops_convert_encoding()
  *
  * @param mixed $text

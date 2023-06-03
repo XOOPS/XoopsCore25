@@ -373,7 +373,8 @@ switch ($op) {
             // Save modif
             if (isset($_REQUEST['templates'])) {
                 $open = fopen('' . $path_file . '', 'w+');
-                if (!fwrite($open, utf8_encode(stripslashes($_REQUEST['templates'])))) {
+                $temp = stripslashes($_REQUEST['templates']);
+                if (!fwrite($open, xoops_utf8_encode($temp))) {
                     redirect_header('admin.php?fct=tplsets', 2, _AM_SYSTEM_TEMPLATES_ERROR);
                 }
                 fclose($open);
