@@ -22,19 +22,12 @@ if (!function_exists('protector_onupdate_base')) {
      */
     function protector_onupdate_base($module, $mydirname)
     {
-        // transations on module update
+        // translations on module update
 
         global $msgs; // TODO :-D
 
-        // for Cube 2.1
-        if (defined('XOOPS_CUBE_LEGACY')) {
-            $root =& XCube_Root::getSingleton();
-            $root->mDelegateManager->add('Legacy.Admin.Event.ModuleUpdate.' . ucfirst($mydirname) . '.Success', 'protector_message_append_onupdate');
+        if (!is_array($msgs)) {
             $msgs = array();
-        } else {
-            if (!is_array($msgs)) {
-                $msgs = array();
-            }
         }
 
         $db  = XoopsDatabaseFactory::getDatabaseConnection();
